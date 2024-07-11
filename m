@@ -1,154 +1,224 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD43E150992
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 08:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066E01509AE
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 08:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720686465; cv=none; b=Q4be6mu1BTj+gE9t2XrY8cRFXrWqDSlWItbvzdNucCZ/QTbBjoBHCHSmSHvPe/nYgbz/xLeaGOP1BICLxhpGJxtNTg358Keq3lHkPksIF98DgYVQykCd+EZNZ0/bT/gK+tkuUijPn1b3tdZOFF9jFsjMPTq3gIDqWRYdAAfAqlk=
+	t=1720686650; cv=none; b=P18p3AJ96JJax5Rlnygtjdr+18zjS07sHQoA5zamnUb5jhFbaHerSQQNp0ZESggIDuQr34qqhtgjSLPq331BJfRRbAYzN1CcBkOeoQ0ObAc4D0hyIksrEX03Bgb/TLkjnMg4P1APFETsc1mGR2FJyQ1PI0C9tlozFtCpKpDBUEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720686465; c=relaxed/simple;
-	bh=JqF2jGlN/XNLaD3sH56cxrTiPDb9p406BCxNGxzNO2k=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OOfnIJjXD/Q+oqO9H1Ck0KbI9JCtnCdulnEi0MDKjj97J1tRke6sA/1YJpLlJuRDSAlzhl7oh8h2RFy2HIv4R2b/hCEiQGmwjp6jb4t/IXnnf+k+TNKzO00hj0tDvZkWy6nZCKMWG98LNYOSWycv6EqEoC+qMUKlXiRpco+reBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=noMOZFDj; arc=none smtp.client-ip=209.85.160.42
+	s=arc-20240116; t=1720686650; c=relaxed/simple;
+	bh=RalRJlHEPwucvcdHhkfKK3Gam4Y2uPap9sWC+2v31R0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BGi3vAQqsAs6OAT1ITTD3ICov14cDp/OmD2V6T/QbUg8WI3YsR4bQHpbmrCIhBg18gXTtuqk6iYsxeIvsu9PnA3q+wC5XTVu2M232PfmyF6SWc+b+hDCW3wpSx0mxSVgNaSz+qn9ijMqf1ylREOUYJ8cMP0u0CYyAIO3YC4zpo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JZsIKUzZ; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="noMOZFDj"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-25d6dd59170so324985fac.0
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 01:27:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JZsIKUzZ"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42561c16ffeso4060965e9.3
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 01:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720686463; x=1721291263; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jvp9c6qHjArmuVg4mxdmTzJ+GndaFkFKtvjk08v/Rl4=;
-        b=noMOZFDjqyUB9g9DHBCYPBxxnhC8famXJe4VUOBMpehntZrZRv3FjJkBrJFCPKrNi9
-         8IaMbiErbFzZIU9IrwIrdy0h06fhJsAFTVPXANhqeJM43luS3uvL2p5qbZBBl+amL1jg
-         JOxVia33PeDfFFaIvMZfd8t2bkW+9cNCdY3QszTwKHy959IpaFheSIk1QeMfGl1cJJm6
-         aVBBV3S6txjyLYUzXyTLGFxBvfyEmxYmbqZiyszcE+7RApHIwOzpkp73O45TXfPoYkFx
-         HXBE0YbrC7eUuL8XS/PEpHX6EGbrhB2rPWX9iUMf/kqywTRiNdZ0x5xTpakUacrh6RwT
-         6t8A==
+        d=gmail.com; s=20230601; t=1720686647; x=1721291447; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Swt1Tg0KKRoXwRJ9D7Sxj6jcA0FAcpla3w0tbc8bXOw=;
+        b=JZsIKUzZPOS3/kZ6f8SfrSYDqWGf35nb0e/B+/rXiPCYHz7qRRcbK+B3umt6nP7z34
+         WSbhJNa9kyPIsUTHWdw+Pz7UumgzNvJeUHQzR1hG9JPmFepVDWzQSLZgsq0iLbjJI6jD
+         TBq0ulue9Y7XnxdPS+JQHrEeRmXlXhKxczOEPmHEUB1sm03yQ34UB0HqzUrdahzq66NB
+         Oo1JIcugsuV83i+0wI3TrDe3+FiSOmjAZ2BnD4aOuaLZy5+4heTwFhIEqad885rsqycd
+         jh7chwx9/VJpdtsOwEW7/NGemxjlC55DRA1XqRh2l9J6CjC01bbikJjMK9jL0Mjnhsry
+         Tqvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720686463; x=1721291263;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jvp9c6qHjArmuVg4mxdmTzJ+GndaFkFKtvjk08v/Rl4=;
-        b=mfdrD9hM1SSBFFVk08yV4yJd8SYo1JU2Gkz5GezQQsoQjS6vnTre0tWPhpD2u1itYK
-         UdQVoxsh9b/tM/4q1QpqlKvCl2GPYe4rjStcRcV28RHADllY+oTPHbV0mHVqAj+2IykK
-         GdgHLFPr/U4qVBbSJ3/s1yftJVEwjJpHTJQ1KuRfG1sjIY9gw/Fbk2OH7Va/+/NS6duj
-         7K9tvl1zU9tORhFiV38A7+cGnXCclJe/seXv76t6wM9cbrJI9CKg/DYVut/5Xc6wIq9O
-         CLkJTWElohcdp7ZlbJY6Rsf18PvrmUP/p5/hpniOR4g5C62pE9u7e/CXP2676OvwyTnb
-         cDXg==
-X-Gm-Message-State: AOJu0YypCY+F2ye2nG8RU1m0SIIc/dqWLKH+8xBVEsOhc7OpwQDb3Oo4
-	3f0vM05Hb8nACznpY5l0ek2tTsdmxVKrcZ8P2UKBJ/2RPeyMjQGOi3SCwS11jpGUvfpbiwb8jZT
-	j7o3udSlO9PaPntFYDWcInGJUVAU=
-X-Google-Smtp-Source: AGHT+IGLWDV8Mc4AWc1B0QdNWfkn2KG8E9pGqdA1GZd6NMJ67mvhP0Pqls4PERVu2JpjKn+E7vC/zS38E/NQP2EVbfA=
-X-Received: by 2002:a05:6870:7009:b0:25e:1cde:f5c6 with SMTP id
- 586e51a60fabf-25eaec6dc95mr6187236fac.53.1720686462361; Thu, 11 Jul 2024
- 01:27:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 Jul 2024 01:27:41 -0700
+        d=1e100.net; s=20230601; t=1720686647; x=1721291447;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Swt1Tg0KKRoXwRJ9D7Sxj6jcA0FAcpla3w0tbc8bXOw=;
+        b=QK9nohuRm1+SUGNPo++LueM0n/N/3+S7E4v6bv+2/VErdYIHqujiVj/Y79LAlSWXXX
+         60LUg6BBcLoPEmPe7qUHbS/e33BLQSiG1e9RFa9fWryUuD3rIvR/Uob36tXKFAe2Aosd
+         5lx4qGRaWt0F9Ez9KHw6rkTCgzabwVxoFERwXqe4r6efJHVb+kg2n8Zc9ZdglXUdsq6o
+         sqCCoNO1mb0QB9ZY9byfJgAAmFrFWNWDS3IaRQgdxgVmBlQXgHAfJGozm8Tz7Ov2r8ds
+         ybYyNjmLyjIZKHj11GBeW9W0XPIJPdPrWWBP/V47CtQbVJYU10qmrPDUjWn9VPhs86eb
+         FAAw==
+X-Forwarded-Encrypted: i=1; AJvYcCXx6dlHQxam/mYobXIh9w02VVK0XeaaZECJCjz5oEzO6dyOs8RjzQRxuzfa+epTGRwSah4XXu9Cbt0Y0TaC7Xb+2fon
+X-Gm-Message-State: AOJu0Yxn5Sq9XAdFA7TJjMW4zaUyFFNU2lUO7lVekeahInegwr9uER9v
+	a3Bj9a2qocFPpFOWqFVi26A0TrXu5IRxMvpflh8wxBj8VpGvoHIlqjbCTvo7
+X-Google-Smtp-Source: AGHT+IGaAw0v43P4yymHmYxWfNvG4PvOHUDBuo4I6kgZW9he8mlZmkIEs63qjBNAuCnPDoUTxc7rjw==
+X-Received: by 2002:a05:600c:1594:b0:426:6ea2:31af with SMTP id 5b1f17b1804b1-426708fa7dbmr48517195e9.37.1720686646936;
+        Thu, 11 Jul 2024 01:30:46 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:8da7:30a3:c67a:daf8])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264d5101ffsm263674305e9.16.2024.07.11.01.30.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 01:30:46 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq8qy9z14t.fsf@gitster.g>
+To: karthik.188@gmail.com
+Cc: chriscool@tuxfamily.org,
+	git@vger.kernel.org,
+	jltobler@gmail.com
+Subject: [PATCH v2 0/8] clang-format: add more rules and enable on CI
+Date: Thu, 11 Jul 2024 10:30:35 +0200
+Message-ID: <20240711083043.1732288-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240708092317.267915-1-karthik.188@gmail.com>
 References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-9-karthik.188@gmail.com> <xmqqbk37hjma.fsf@gitster.g>
- <CAOLa=ZQdPTnLp63eFiq1oOkgukBGsug==Cam0hGW_9koCefhGA@mail.gmail.com> <xmqq8qy9z14t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 11 Jul 2024 01:27:41 -0700
-Message-ID: <CAOLa=ZSUZGqxHbEtpR3fadOFf=YPVxbo8W7SwyB9j5am14EB7A@mail.gmail.com>
-Subject: Re: [PATCH 8/8] check-whitespace: detect if no base_commit is provided
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
-Content-Type: multipart/mixed; boundary="0000000000005c021e061cf489d1"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---0000000000005c021e061cf489d1
-Content-Type: text/plain; charset="UTF-8"
+This is v2 of my series to add clang-format to the CI.
 
-Junio C Hamano <gitster@pobox.com> writes:
+The series was mostly inspired by a patch sent recently to 'include
+kh_foreach* macros in ForEachMacros' [1]. I was wondering why we don't
+run the formatting on CI and reduce some of the workload of reviewers.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Yeah, makes sense. I think I'll simply add in
->>
->>     if ! git rev-parse --quiet --verify "${baseCommit}"
->>     then
->>         echo "Invalid <BASE_COMMIT> '${baseCommit}'"
->>         exit 1
->>     fi
->
-> It would make the intent a lot clearer.  Good.
->
->>>> +if test $? -ne 0
->>>> +then
->>>> +	echo -n $gitLogOutput
->>>
->>> What is "-n" doing here?  Why are you squashing run of spaces in the
->>> $gitLogOutput variable into a space by not "quoting" inside a dq-pair?
->>>
->>
->> I actually didn't know about this. Thanks for informing.
->>
->>>> +	exit 1
->>>> +fi
->>>
->>> Looking for "--check" in
->>>
->>> 	$ git log --help
->>>
->>> tells me that the command exits with non-zero status if problems are
->>> found, so wouldn't that mean the cases with problems always exit
->>> early, bypassing the while loop with full of bash-ism that comes
->>> after this block?
->>>
->>
->> It should exist with a non-zero code, but since we're capturing it in
->> the while loop, it doesn't stop the slow.
->
-> Sorry, but I am confused.  The control would not even reach a "while
-> loop", I am afraid.
->
-> I was commenting on the exit status check done here:
->
->     +gitLogOutput=$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)
->     +if test $? -ne 0
->     +then
->     +	echo -n $gitLogOutput
->     +	exit 1
->     +fi
->
-> Even though the output is captured in a variable, the exit status of
-> "git log --check" is still seen by the shell and "if test $? = 0"
-> next line say "ah, the thing exited with non-zero status so lets
-> echo the whole thing and exit with 1", before it gets to the while
-> loop we have below the above piece of code, no?
+We have a '.clang-format' file to provide rules for code formatting.
+The commits 1-6 aims to add more rules to the file while deprecating old
+ones.
 
-My bad, I thought you were referring to the code before my changes. Yes,
-here you're right, we don't need the check since the shell would capture
-the non-zero status.
+Commit 7 enables CI action on GitHub and GitLab to also check for the
+code formatting. Currently, it is allowed to fail. This way we can build
+confidence and fine tune the values as needed and finally enforce the
+check in a future patch. I'm not well versed with GitHub workflows, and
+I mostly tried to copy existing work there. Expecting some feedback in
+that section!
 
---0000000000005c021e061cf489d1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3a6f359bf2ac28e4_0.1
+Commit 8 fixes an existing issue with the 'check-whitespace' job, which
+is failing as success in the GitLab CI.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hUGwzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnNyQy80aEp4azVjdzJ0RUJXTTNEY1lTR2hqdTdhawpwaEprb0Y4T3Av
-RWJjVHE3aVU5NytmVVg0TC9YSmNub1BZelFoMFp4UTNDcEwyZGlxTUlzeldtZ3ZyWG9KQXZFClY4
-SVFSTzNPUmtna1JDNmp0TDVwcys2RCtYZXg1VUhrenMzYVc4L2F4bW4xN0NsYUdRS1FRbFNNa0Z4
-ZGJ4NmMKV2tHNytjUDlROFlvK243dXhNenIremo5Q3JPNzNUOHdUTCtmZXFPWTJRenlRVVBwNDJm
-SDZRcndleE5JMVdyUwpSb3JUdS9La2djRzhTcUplVFowc0dmRXZjejREWlVlcUl2MmhZUXJPQ1VI
-RjlvY2xxVlowQXlkYklYSzRLRXJlCnlta0ZqM1ltMFQwY3BEK2VoODg3NFZ6ZnhRVWRBam5wQm9C
-elNHN2lsY0RPZ3ZYRkNjc3lPcFRJUG4vSVhqM0sKb21SdnR5UWorUldleVJIVndtQkc4ZzVnTkZM
-UGUyMUNyZHB5TDhnSVZTL3owdUM4aWhkb25NR2RmQ1dWVC9KWgpaRTlQVmdtc1V1bE9mZVRBeXRv
-KytPNGorZTFZTlExaE53UW5lZDlrTFNINkszTlB2VHlnVjY4eGYvc3gzU0psCmZsNGJwcEY0RW5O
-MzlaWm9QMTNZNThuM1QzZVpTRE5KdkpyV09Xdz0KPXFMRlUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000005c021e061cf489d1--
+1: https://lore.kernel.org/git/4e7893f5-2dd9-46cf-8a64-cf780f4e1730@web.de/
+
+Changes against v1:
+* Fixed a lot of typos.
+* Added more details about the warnings specified by clang-format for
+'RemoveBracesLLVM' in commit 5. Added more details too.
+* The last two commits were modified to use "CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+and fallback to "CI_MERGE_REQUEST_DIFF_BASE_SHA" if the former is not
+available in GitLab's CI.
+* Use `!/bin/sh` for the run-style-check script.
+* Modified the last commit to remove block around the && check in the
+whitespace script.
+* Use `git rev-parse --verify --quiet` to verify the base commit.
+
+
+Karthik Nayak (8):
+  clang-format: indent preprocessor directives after hash
+  clang-format: avoid spacing around bitfield colon
+  clang-format: ensure files end with newlines
+  clang-format: replace deprecated option with 'SpacesInParens'
+  clang-format: avoid braces on simple single-statement bodies
+  clang-format: formalize some of the spacing rules
+  ci: run style check on GitHub and GitLab
+  check-whitespace: detect if no base_commit is provided
+
+ .clang-format                     | 42 +++++++++++++++++++++++++++----
+ .github/workflows/check-style.yml | 29 +++++++++++++++++++++
+ .gitlab-ci.yml                    | 24 +++++++++++++++++-
+ ci/check-whitespace.sh            | 10 ++++++--
+ ci/install-dependencies.sh        |  2 +-
+ ci/run-style-check.sh             |  8 ++++++
+ 6 files changed, 106 insertions(+), 9 deletions(-)
+ create mode 100644 .github/workflows/check-style.yml
+ create mode 100755 ci/run-style-check.sh
+
+Range-diff against v1:
+1:  6cf91ffc86 = 1:  6cf91ffc86 clang-format: indent preprocessor directives after hash
+2:  beb002885f = 2:  beb002885f clang-format: avoid spacing around bitfield colon
+3:  3031be43e7 = 3:  3031be43e7 clang-format: ensure files end with newlines
+4:  bc1550e300 = 4:  bc1550e300 clang-format: replace deprecated option with 'SpacesInParens'
+5:  cb6097aa22 ! 5:  840318a4c9 clang-format: avoid braces on simple single-statement bodies
+    @@ Commit message
+         Set the 'RemoveBracesLLVM' to 'true' which ensures that we avoid curly
+         braces for single-statement bodies in conditional blocks.
+     
+    +    This option does come with two warnings:
+    +
+    +        This option will be renamed and expanded to support other styles.
+    +
+    +    and
+    +
+    +        Setting this option to true could lead to incorrect code formatting
+    +        due to clang-format’s lack of complete semantic information. As
+    +        such, extra care should be taken to review code changes made by
+    +        this option.
+    +
+    +    The latter seems to be of concern. But since we only use clang-format to
+    +    verify the format and not to apply formatting, we should be okay here.
+    +
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## .clang-format ##
+    @@ .clang-format: IndentWrappedFunctionNames: false
+      PointerAlignment: Right
+      
+     +# Remove optional braces of control statements (if, else, for, and while)
+    -+# according to the LLVM coding style
+    -+# This avoids braces on simple single-statement bodies of statements.
+    ++# according to the LLVM coding style. This avoids braces on simple
+    ++# single-statement bodies of statements but keeps braces if one side of
+    ++# if/else if/.../else cascade has multi-statement body.
+     +RemoveBracesLLVM: true
+     +
+      # Don't insert a space after a cast
+6:  c4b6e1e82f ! 6:  0ecfd8d24b clang-format: formalize some of the spacing rules
+    @@ Commit message
+         clang-format: formalize some of the spacing rules
+     
+         There are some spacing rules that we follow in the project and it makes
+    -    sen to formalize them:
+    +    sense to formalize them:
+         * Ensure there is no space inserted after the logical not '!' operator.
+    -    * Ensure there is no space before the case statement's color.
+    +    * Ensure there is no space before the case statement's colon.
+         * Ensure there is no space before the first bracket '[' of an array.
+         * Ensure there is no space in empty blocks.
+     
+7:  37f1e5c702 ! 7:  11a9ac4935 ci: run style check on GitHub and GitLab
+    @@ Commit message
+         this job to fail, so we can validate if this is useful and eventually
+         enforce it.
+     
+    +    For GitLab, we use the 'CI_MERGE_REQUEST_TARGET_BRANCH_SHA' variable by
+    +    default to obtain the base SHA of the merged pipeline (which is only
+    +    available for merged pipelines [1]). Otherwise we use the
+    +    'CI_MERGE_REQUEST_DIFF_BASE_SHA' variable.
+    +
+    +    [1]: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-for-merge-request-pipelines
+    +
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## .github/workflows/check-style.yml (new) ##
+    @@ .gitlab-ci.yml: check-whitespace:
+     +  before_script:
+     +    - ./ci/install-dependencies.sh
+     +  script:
+    -+    - ./ci/run-style-check.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+    ++    - |
+    ++      if [ -z ${CI_MERGE_REQUEST_TARGET_BRANCH_SHA} ]; then
+    ++        ./ci/run-style-check.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+    ++      else
+    ++        ./ci/run-style-check.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+    ++      fi
+     +  rules:
+     +    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+     +
+    @@ ci/install-dependencies.sh: ubuntu-*)
+     
+      ## ci/run-style-check.sh (new) ##
+     @@
+    -+#!/usr/bin/env sh
+    ++#!/bin/sh
+     +#
+     +# Perform style check
+     +#
+8:  c6d07402af < -:  ---------- check-whitespace: detect if no base_commit is provided
+-:  ---------- > 8:  caccbf8264 check-whitespace: detect if no base_commit is provided
+-- 
+2.45.1
+
