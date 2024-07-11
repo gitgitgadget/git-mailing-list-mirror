@@ -1,149 +1,126 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6877415533B
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D40E16EB4E
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 21:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720731460; cv=none; b=CVbchMHHLOWf0pyc3E0OC2a/hN4Ratg1BBHeSEocDytYFhmjsyABtVsb9Fm5Xij69UVGH5/IojkRXGRfuZzMncNEF0LnGS6azN7GuUqLRnh613A5/6TBw4iBB9QpMw9cxKe6h+NeqE+/JiM6UGWYxWNGbgia7WrOiWkoaa3Rp40=
+	t=1720733198; cv=none; b=CPCYLukmcFOfY7sHxPqrKpW6g4QtmkGhnPFG7gKW7H5GL2AHGwZAB3OvK+1lAc9YrkB2xVFQSwqllt65zhtDeX7bqqRvvpTvc2KgbQpFAtSmoF3Je7QJ9z2rfnbCvMOynHXb5LtRKqICS1sIXNQPJ2bDxRq9XNTNm9xlSSHAggg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720731460; c=relaxed/simple;
-	bh=yP7o3vj2C9GOALG9wra3VjAQks72PY23bt+xamTlgJU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r0QtyrSKGKZoSIfmMnUnB8fVe76meqhWq/7XxoBf4+ipLIiQaqUrW3C4BFQtfWftpGzw2weKmChiDAbdMwijQXjOdeuxHhWE/zOYNEekFBQNpxYt4u9femhiWh+JUjldLgvvSCZnYR6iHmkmhyyZgjSOiXKvdc4BMKqK+tVcYvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Zdlna7dG; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Zdlna7dG"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-44a8b140a1bso75961cf.0
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 13:57:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720731457; x=1721336257; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zErR5mwLN6n60PW9f1piH4NhiKlneBz4ZuFA+TFxV7Q=;
-        b=Zdlna7dGXHIyC6Fy9i0UNz1YShwTUVO256yH4vNheSz7VrZMrqVCloU5YsESRlQh0p
-         TQlsiQ2rMu49KvWHkEgdwJ9WPCiWEoDF5lwYRV2/97ZyegJqqMr9VQnRzOnRvLbf6K23
-         jhLEEOw9LvCOJfTAaUxWFGnp7o8kpD0gDGIGnR/9akLe0dTfvhqyBHay3YpipiZhheGh
-         m/B1B1Ykw5I3W6Sc3db6vyPs6f2ZrWgjsCG9Dz6yFDr0vHN/6p5WUFPyCv30/Kwn87kP
-         LgMWmGlEd52GkIKX5TByRS9C4U6DYm8womS3aICv7vAhjAWpoC5JwPRjeW4sNcHsk6cy
-         hNRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720731457; x=1721336257;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zErR5mwLN6n60PW9f1piH4NhiKlneBz4ZuFA+TFxV7Q=;
-        b=Jah1nT4xZtLIE1lvQcb9hRijAosZs0dOYpFT7+TqZ10igKmONoOEzxYCMazGqm7cZw
-         LMk62EK+xdBrwlgF32yD38qnsj5bPBrYaAIg3zR0gHiRkS3QeYdas08BHr8cbDTCVIBw
-         Tfq/5rdpQKtGs25eLU/d+CT23zzwcxeWCgwYvs5H1bp2v5BCv2nT7cf3cS6Gw6SMRmNm
-         5lS4tcSzZnsdeUeHbfzZlgVZ+s5wwu6rIPDTGo3miFZloQHwY2+NnG/Vtip4oTCm/F5G
-         6f12RJ5T6YSM4FSeNyZu8BPsPM3JuSrjAcg7KFo+7IYmcIFSb+3Pl2lcE5cQQ5wmGx6X
-         wP6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUbwoSsp5QVZ3KZ8X+P+v1roPWEe/hza9AWV5QewMkrnvA+aEhRnOHjvTyl16s1H8wufCfao+lJIGa9Ujo4UHhEAjpF
-X-Gm-Message-State: AOJu0YxPfdlFZWOrt8F5ooCdncvJsXsgzigm3zd//k95mg/q3rkJU08R
-	qK0UQ3pnmDELT8zgnWtax/qV7zhqL382s/43W3NZPfZT5vYhfrqG8JQdqyvyzs8mUquNFbOQLkv
-	Z4mGg5wcbWiTyY6X90L3owRksJTQfJPZGTxTx
-X-Google-Smtp-Source: AGHT+IG9V0RRbIueZBIr7eNDAS04ARSVVolxyfZcfqy2JU3I28Py49gM3TcX5P3lUFBLqSxMinH4+NlvR8glr+S8UEM=
-X-Received: by 2002:ac8:5ad6:0:b0:447:ec33:f488 with SMTP id
- d75a77b69052e-44e7341af84mr1008311cf.4.1720731457315; Thu, 11 Jul 2024
- 13:57:37 -0700 (PDT)
+	s=arc-20240116; t=1720733198; c=relaxed/simple;
+	bh=MT35yYSRbrqokaBbzd7o7JDYcRtxKPybDhQZcXS1Dd4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QZOftin2ammwf14Dlv9OIK5XPVxcUpt5LjMuh1w9dLVPO+hR01bVeQBf/GRQQedoZLZ1YZJEsAJ8cf7ey6JoMdHXna/o/bdf/bGRiTUcSoKFP2hTdRvKv3OK4j6/WvamjsWV3CdnRCufl1esXraBfSXU2MpuHSWhzE0E71wE7H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19427 invoked by uid 109); 11 Jul 2024 21:26:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jul 2024 21:26:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25163 invoked by uid 111); 11 Jul 2024 21:26:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jul 2024 17:26:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Jul 2024 17:26:28 -0400
+From: Jeff King <peff@peff.net>
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, Ilya Tumaykin <itumaykin@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
+Message-ID: <20240711212628.GA3648684@coredump.intra.peff.net>
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+ <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com>
+ <xmqq4j937pyf.fsf@gitster.g>
+ <20240710093610.GA2076910@coredump.intra.peff.net>
+ <d5d27cad-bacb-4a79-bb50-e65d2bb6808b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240709225042.2005233-1-emilyshaffer@google.com>
- <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com>
- <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
-In-Reply-To: <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Thu, 11 Jul 2024 13:57:23 -0700
-Message-ID: <CAJoAoZmUXGO7U+ee+-Uz0qFib3xEdOy9Bp+RChC6=XoU=7NPbQ@mail.gmail.com>
-Subject: Re: [PATCH] Documentation: add platform support policy
-To: Kyle Lippincott <spectral@google.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d5d27cad-bacb-4a79-bb50-e65d2bb6808b@gmail.com>
 
-On Thu, Jul 11, 2024 at 1:12=E2=80=AFPM Kyle Lippincott <spectral@google.co=
-m> wrote:
->
-> On Thu, Jul 11, 2024 at 11:15=E2=80=AFAM Emily Shaffer <nasamuffin@google=
-.com> wrote:
-> >
-> > On Tue, Jul 9, 2024 at 4:16=E2=80=AFPM brian m. carlson
-> > > I think it's also worth discussing what we require from a platform we=
-'re
-> > > willing to support.  For example, we might require that the platform
-> > > pass the entire testsuite (ignoring irrelevant tests or tests for thi=
-ngs
-> > > that platform doesn't use, such as Perl) or be actively pursuing an
-> > > attempt to do so.  We may also want to require that an OS be actively
-> > > receiving security support so that we don't have people asking us to
-> > > carry patches for actively obsolete OSes, such as CentOS 6.  Finally,
-> > > some sort of time limit may be helpful, since some Linux vendors are =
-now
-> > > offering 15 years of support, and we really may not want to target
-> > > really ancient versions of things like libcurl.
-> >
-> > I sort of wonder how much of this is taken care of by expressing
-> > "fully supported" as "can run in GitHub Actions". Even if an LTS
-> > distro is 12 years old and using ancient curl, will GitHub still be
-> > able to run it in a VM/container? Maybe there's no such guarantee,
-> > since you can hook up self-hosted runners (which sounds more appealing
-> > if someone's got something weird enough it doesn't run well in a
-> > container).
-> >
-> > I'm not sure which of these requirements we'd want to enumerate - but
-> > does it make sense to tack it onto the end of this doc? Something
-> > like:
-> >
-> > """
-> > Minimum Requirements
-> > ------
-> >
-> > Even if tests or CI runners are added to guarantee support, supported
-> > platforms must:
-> >
-> > * Be compatible with C99
-> > * Use curl vX.Y.Z or later
-> > * Use zlib vA.B.C or later
-> > ...
-> > """
->
-> My concern with actually listing what the minimum requirements are is
-> that we then need a process for raising the minimum requirements. For
-> C specification, I can see that rightfully being an involved
-> conversation and achieving consensus that this is the right time to do
-> it. For things like library versions, I'm less comfortable with it
-> because if we have to raise the minimum bar for some urgent reason,
-> there's the potential for additional friction with these platforms
-> claiming that we stated we'd support them (ex: we say you need to be
-> able to use libfoo v3.x.x (v4.x.x had some breaking changes, but
-> coexists with v3, so we just stuck with v3), and some security fix
-> that we need to receive only exists on the v4 version, so now we need
-> to port to using v4 so that we get the security fix).
->
-> I think it's probably fine to list minimum requirements, as long as we
-> have something conveying "and possibly other criteria". I don't want
-> this interpreted as a "do this, and we will try hard to not break
-> you", it should be interpreted as "if you can't do at least this, we
-> won't even look at patches/tests/CI to unbreak you/keep you unbroken"
+On Wed, Jul 10, 2024 at 02:46:30PM +0100, Phillip Wood wrote:
 
-Yeah, I agree that I'm somewhat uninterested in enumerating a set of
-deps/criteria that will then magically assure it works - that does
-sound like a hassle to keep up-to-date, and in fact I think would set
-us backwards from the goal of this doc. We'd feel tied to that
-criteria without any ability to move forward, which would probably be
-our current status quo or worse.
+> > It's tempting to say that we should just make sure that we generate a
+> > diff without that option. But we may parse diffs not only generated by
+> > Git, but ones that users have manually edited. And POSIX calls the
+> > decision of whether to print the space here "implementation-defined".
+> 
+> Do we ever parse an edited hunk with this code? I'm not sure there is a
+> way of splitting a hunk after it has been edited as I don't think we
+> ever display it again.
 
-So, I'll make it clear to reflect the second thing you're saying in the rer=
-oll.
+Hmm, I just assumed this code would see the edited hunk, but now I'm not
+sure. Note that the changes required do go outside of split_hunk(); the
+initial parse_diff() needs to decide whether the hunk is splittable in
+the first place (as an aside, that puzzled me at first why just changing
+split_hunk() was enough for the case that started this thread, but not
+the one in the included test. The difference is that without the empty
+line as context, the hunk in the test wouldn't be splittable at all).
 
- - Emily
+But looking closer: yes, I do think parse_diff() is used only for the
+initial patch. So we really would only see git-generated patches here.
+Which I think takes away my ambiguity concern, but does mean the commit
+message is wrong.
+
+> > I don't think we'd ever generate this ourselves, but could somebody
+> > manually edit a hunk into this shape? When I tried it in practice, it
+> > looks like we fail to apply the result even before my patch, though. I'm
+> > not sure why that is. If I put "some garbage" without the blank line, we
+> > correctly realize it should be discarded. It's possible I'm just holding
+> > it wrong.
+> 
+> When we recount the hunk after it has been edited we ignore lines that
+> don't begin with '+', '-', ' ', or '\n' so if you add some garbage at
+> the end of the hunk the recounted hunk header excludes it when it gets
+> applied.
+
+OK, that makes sense. And we could never rely on the hunk header in the
+edited hunk anyway, since the whole point is that we have to recount it.
+So the user must accept that an extra blank line is potential context
+(and that goes all the way back to bcdd297b78 (built-in add -p:
+implement hunk editing, 2019-12-13).
+
+> I think your patch looks good. I did wonder if we wanted to fix this
+> by normalizing context lines instead as shown in the diff below. That
+> might make it less likely to miss adding "|| '\n'" in future code that
+> is looking for a context line but I don't have a strong preference
+> either way.
+
+Yeah, I had a similar thought, but it got messy because we have to deal
+with the source buffer. But the extra "char ch" you added in the patch
+below fixes that. I think the result is better.
+
+Looking at the blank-line handling in recount_edited_hunk(), we also
+handle a CRLF empty line there. Should we do so here, too? If so, then
+it would just be a matter of touching normalize_marker() in your patch.
+
+Do you want to just re-send your patch with a commit message to replace
+mine? (Feel free to steal the non-wrong parts of my message ;) ).
+
+> ---- >8 ----
+> diff --git a/add-patch.c b/add-patch.c
+> index d8ea05ff108..795aa772b7a 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -400,6 +400,12 @@ static void complete_file(char marker, struct hunk *hunk)
+>  		hunk->splittable_into++;
+>  }
+> +/* Empty context lines may omit the leading ' ' */
+> +static int normalize_marker(char marker)
+> +{
+> +	return marker == '\n' ? ' ' : marker;
+> +}
+> +
+>  static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+
+Minor nit: missing blank line between functions.
+
+-Peff
