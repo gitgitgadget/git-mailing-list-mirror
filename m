@@ -1,185 +1,149 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB3A38DD9
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:38:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6877415533B
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:57:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720730294; cv=none; b=tizDfloOGLg/ml7Y210ZtV7/Vw+1AEQ61vLsdJj24ASA9W+z2hllZ91eetuA+GcnbIgpAYk9sDh5wDodNV7I/YBJXONLzA8JnOAdvzBBcU6EDBW3mcqewtvoB0OBVuuk/1L7O45xdWkyhO4O5nViqFza/FXI1ZQrnHlN9wDi2sc=
+	t=1720731460; cv=none; b=CVbchMHHLOWf0pyc3E0OC2a/hN4Ratg1BBHeSEocDytYFhmjsyABtVsb9Fm5Xij69UVGH5/IojkRXGRfuZzMncNEF0LnGS6azN7GuUqLRnh613A5/6TBw4iBB9QpMw9cxKe6h+NeqE+/JiM6UGWYxWNGbgia7WrOiWkoaa3Rp40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720730294; c=relaxed/simple;
-	bh=KHBBekLaNWv80fi7/6Wv/dq9va9hKWbvP9BBCMOUL24=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EW2Z7IPURMeE5GkKUEZnl+s67/Nthm/JrmJWPqsrjaHJ4hgFEfDqpiUBeijAZy1ZW3Cb+vGmgOD5WS2PXkfNLioTK8kf/RyOaZM7GaUwh5nFo/KVEKowPlS4lZ+qiATCHpKS4fd5XjUVznBz7e+irofVG/Z+esJ1i4ec5NOlm9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHkhx/Mr; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720731460; c=relaxed/simple;
+	bh=yP7o3vj2C9GOALG9wra3VjAQks72PY23bt+xamTlgJU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r0QtyrSKGKZoSIfmMnUnB8fVe76meqhWq/7XxoBf4+ipLIiQaqUrW3C4BFQtfWftpGzw2weKmChiDAbdMwijQXjOdeuxHhWE/zOYNEekFBQNpxYt4u9femhiWh+JUjldLgvvSCZnYR6iHmkmhyyZgjSOiXKvdc4BMKqK+tVcYvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Zdlna7dG; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHkhx/Mr"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D8F693FA79;
-	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=KHBBekLaNWv80fi7/6Wv/dq9va9hKWbvP9BBCM
-	OUL24=; b=gHkhx/MrO2AIvD6SmICvRH+CIK2uOlSWRY0HDY5JJD1JT3PcWNipIY
-	ZsxBNVSUvICV/3m5+jMJc1LgKId2/SXZ8jGK28E9EpQMMhT3dehT+UDaarsnm/ff
-	9C1IyZJe4+JtQabsDmEmtZ7IowJK7+Cw44fchgByx6DA4ifY6ez6M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CE1833FA78;
-	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3355E3FA76;
-	Thu, 11 Jul 2024 16:38:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  chriscool@tuxfamily.org
-Subject: Re: [PATCH v3 2/7] t: harmonize t-reftable-merged.c with coding
- guidelines
-In-Reply-To: <20240711040854.4602-3-chandrapratap3519@gmail.com> (Chandra
-	Pratap's message of "Thu, 11 Jul 2024 09:28:31 +0530")
-References: <20240709053847.4453-1-chandrapratap3519@gmail.com>
-	<20240711040854.4602-1-chandrapratap3519@gmail.com>
-	<20240711040854.4602-3-chandrapratap3519@gmail.com>
-Date: Thu, 11 Jul 2024 13:38:09 -0700
-Message-ID: <xmqq7cdrr7f2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Zdlna7dG"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-44a8b140a1bso75961cf.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 13:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1720731457; x=1721336257; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zErR5mwLN6n60PW9f1piH4NhiKlneBz4ZuFA+TFxV7Q=;
+        b=Zdlna7dGXHIyC6Fy9i0UNz1YShwTUVO256yH4vNheSz7VrZMrqVCloU5YsESRlQh0p
+         TQlsiQ2rMu49KvWHkEgdwJ9WPCiWEoDF5lwYRV2/97ZyegJqqMr9VQnRzOnRvLbf6K23
+         jhLEEOw9LvCOJfTAaUxWFGnp7o8kpD0gDGIGnR/9akLe0dTfvhqyBHay3YpipiZhheGh
+         m/B1B1Ykw5I3W6Sc3db6vyPs6f2ZrWgjsCG9Dz6yFDr0vHN/6p5WUFPyCv30/Kwn87kP
+         LgMWmGlEd52GkIKX5TByRS9C4U6DYm8womS3aICv7vAhjAWpoC5JwPRjeW4sNcHsk6cy
+         hNRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720731457; x=1721336257;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zErR5mwLN6n60PW9f1piH4NhiKlneBz4ZuFA+TFxV7Q=;
+        b=Jah1nT4xZtLIE1lvQcb9hRijAosZs0dOYpFT7+TqZ10igKmONoOEzxYCMazGqm7cZw
+         LMk62EK+xdBrwlgF32yD38qnsj5bPBrYaAIg3zR0gHiRkS3QeYdas08BHr8cbDTCVIBw
+         Tfq/5rdpQKtGs25eLU/d+CT23zzwcxeWCgwYvs5H1bp2v5BCv2nT7cf3cS6Gw6SMRmNm
+         5lS4tcSzZnsdeUeHbfzZlgVZ+s5wwu6rIPDTGo3miFZloQHwY2+NnG/Vtip4oTCm/F5G
+         6f12RJ5T6YSM4FSeNyZu8BPsPM3JuSrjAcg7KFo+7IYmcIFSb+3Pl2lcE5cQQ5wmGx6X
+         wP6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUbwoSsp5QVZ3KZ8X+P+v1roPWEe/hza9AWV5QewMkrnvA+aEhRnOHjvTyl16s1H8wufCfao+lJIGa9Ujo4UHhEAjpF
+X-Gm-Message-State: AOJu0YxPfdlFZWOrt8F5ooCdncvJsXsgzigm3zd//k95mg/q3rkJU08R
+	qK0UQ3pnmDELT8zgnWtax/qV7zhqL382s/43W3NZPfZT5vYhfrqG8JQdqyvyzs8mUquNFbOQLkv
+	Z4mGg5wcbWiTyY6X90L3owRksJTQfJPZGTxTx
+X-Google-Smtp-Source: AGHT+IG9V0RRbIueZBIr7eNDAS04ARSVVolxyfZcfqy2JU3I28Py49gM3TcX5P3lUFBLqSxMinH4+NlvR8glr+S8UEM=
+X-Received: by 2002:ac8:5ad6:0:b0:447:ec33:f488 with SMTP id
+ d75a77b69052e-44e7341af84mr1008311cf.4.1720731457315; Thu, 11 Jul 2024
+ 13:57:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7D22C446-3FC5-11EF-98AD-965B910A682E-77302942!pb-smtp2.pobox.com
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
+ <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com>
+ <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
+In-Reply-To: <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Thu, 11 Jul 2024 13:57:23 -0700
+Message-ID: <CAJoAoZmUXGO7U+ee+-Uz0qFib3xEdOy9Bp+RChC6=XoU=7NPbQ@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+To: Kyle Lippincott <spectral@google.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+On Thu, Jul 11, 2024 at 1:12=E2=80=AFPM Kyle Lippincott <spectral@google.co=
+m> wrote:
+>
+> On Thu, Jul 11, 2024 at 11:15=E2=80=AFAM Emily Shaffer <nasamuffin@google=
+.com> wrote:
+> >
+> > On Tue, Jul 9, 2024 at 4:16=E2=80=AFPM brian m. carlson
+> > > I think it's also worth discussing what we require from a platform we=
+'re
+> > > willing to support.  For example, we might require that the platform
+> > > pass the entire testsuite (ignoring irrelevant tests or tests for thi=
+ngs
+> > > that platform doesn't use, such as Perl) or be actively pursuing an
+> > > attempt to do so.  We may also want to require that an OS be actively
+> > > receiving security support so that we don't have people asking us to
+> > > carry patches for actively obsolete OSes, such as CentOS 6.  Finally,
+> > > some sort of time limit may be helpful, since some Linux vendors are =
+now
+> > > offering 15 years of support, and we really may not want to target
+> > > really ancient versions of things like libcurl.
+> >
+> > I sort of wonder how much of this is taken care of by expressing
+> > "fully supported" as "can run in GitHub Actions". Even if an LTS
+> > distro is 12 years old and using ancient curl, will GitHub still be
+> > able to run it in a VM/container? Maybe there's no such guarantee,
+> > since you can hook up self-hosted runners (which sounds more appealing
+> > if someone's got something weird enough it doesn't run well in a
+> > container).
+> >
+> > I'm not sure which of these requirements we'd want to enumerate - but
+> > does it make sense to tack it onto the end of this doc? Something
+> > like:
+> >
+> > """
+> > Minimum Requirements
+> > ------
+> >
+> > Even if tests or CI runners are added to guarantee support, supported
+> > platforms must:
+> >
+> > * Be compatible with C99
+> > * Use curl vX.Y.Z or later
+> > * Use zlib vA.B.C or later
+> > ...
+> > """
+>
+> My concern with actually listing what the minimum requirements are is
+> that we then need a process for raising the minimum requirements. For
+> C specification, I can see that rightfully being an involved
+> conversation and achieving consensus that this is the right time to do
+> it. For things like library versions, I'm less comfortable with it
+> because if we have to raise the minimum bar for some urgent reason,
+> there's the potential for additional friction with these platforms
+> claiming that we stated we'd support them (ex: we say you need to be
+> able to use libfoo v3.x.x (v4.x.x had some breaking changes, but
+> coexists with v3, so we just stuck with v3), and some security fix
+> that we need to receive only exists on the v4 version, so now we need
+> to port to using v4 so that we get the security fix).
+>
+> I think it's probably fine to list minimum requirements, as long as we
+> have something conveying "and possibly other criteria". I don't want
+> this interpreted as a "do this, and we will try hard to not break
+> you", it should be interpreted as "if you can't do at least this, we
+> won't even look at patches/tests/CI to unbreak you/keep you unbroken"
 
-It is very nice that the steps [1/7] and [2/7] are split this way.
+Yeah, I agree that I'm somewhat uninterested in enumerating a set of
+deps/criteria that will then magically assure it works - that does
+sound like a hassle to keep up-to-date, and in fact I think would set
+us backwards from the goal of this doc. We'd feel tied to that
+criteria without any ability to move forward, which would probably be
+our current status quo or worse.
 
-> Harmonize the newly ported test unit-tests/t-reftable-merged.c
-> with the following guidelines:
-> - Single line control flow statements like 'for' and 'if'
->   must omit curly braces.
+So, I'll make it clear to reflect the second thing you're saying in the rer=
+oll.
 
-OK.
-
-> - Structs must be 0-initialized with '= { 0 }' instead of '= { NULL }'.
-
-Correct.
-
-> - Array indices must be of type 'size_t', not 'int'.
-
-OK, but "must be" is probably a bit too strong (see below).
-
-> - It is fine to use C99 initial declaration in 'for' loop.
-
-Yes, it is fine.  You do not have to, but you can.
-
-> @@ -68,7 +66,6 @@ static void write_test_log_table(struct strbuf *buf,
->  				 struct reftable_log_record logs[], int n,
->  				 uint64_t update_index)
->  {
-> -	int i = 0;
->  	int err;
->  
->  	struct reftable_write_options opts = {
-> @@ -79,7 +76,7 @@ static void write_test_log_table(struct strbuf *buf,
->  	w = reftable_new_writer(&strbuf_add_void, &noop_flush, buf, &opts);
->  	reftable_writer_set_limits(w, update_index, update_index);
->  
-> -	for (i = 0; i < n; i++) {
-> +	for (int i = 0; i < n; i++) {
->  		int err = reftable_writer_add_log(w, &logs[i]);
-
-Did you mean size_t instead of int here?  Probably not, because the
-iteration goes up to "int n" that is supplied by the caller of this
-test, so iterating with "int" is perfectly fine here.
-
-So, "must be size_t" is already violated here.  You could update the
-type of the incoming parameter "n", but given that this is a test
-program that deals with a known logs[] array of a small bounded
-size, that may be way overkill and "int" can be justified, too.
-On the other hand, if it does not require too much investigation,
-you may want to check the caller and if it can be updated to use
-"size_t" instead of "int".
-
-The general rule is probably "think twice before using 'int' as an
-array index; otherwise use 'size_t'", which covers what I said in
-the above paragraph.
-
-> @@ -121,8 +118,7 @@ merged_table_from_records(struct reftable_ref_record **refs,
->  
->  static void readers_destroy(struct reftable_reader **readers, size_t n)
->  {
-> -	int i = 0;
-> -	for (; i < n; i++)
-> +	for (size_t i = 0; i < n; i++)
->  		reftable_reader_free(readers[i]);
->  	reftable_free(readers);
->  }
-
-Much better.
-
-> @@ -148,9 +144,8 @@ static void t_merged_single_record(void)
->  	struct reftable_reader **readers = NULL;
->  	struct reftable_merged_table *mt =
->  		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 2);
-> -	int i;
-> -	struct reftable_ref_record ref = { NULL };
-> -	struct reftable_iterator it = { NULL };
-> +	struct reftable_ref_record ref = { 0 };
-> +	struct reftable_iterator it = { 0 };
->  	int err;
->  
->  	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-> @@ -164,9 +159,8 @@ static void t_merged_single_record(void)
->  	reftable_iterator_destroy(&it);
->  	readers_destroy(readers, 2);
->  	reftable_merged_table_free(mt);
-> -	for (i = 0; i < ARRAY_SIZE(bufs); i++) {
-> +	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
->  		strbuf_release(&bufs[i]);
-> -	}
-
-OK.  size_t is overkill here because bufs[] is a function local
-array with only two elements in it, but once the patch to use
-"size_t" (i.e., this one) is written, it is not worth to go in and
-make it use "int" again.
-
-> @@ -226,12 +220,12 @@ static void t_merged_refs(void)
->  	struct reftable_reader **readers = NULL;
->  	struct reftable_merged_table *mt =
->  		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
-> -	struct reftable_iterator it = { NULL };
-> +	struct reftable_iterator it = { 0 };
->  	int err;
->  	struct reftable_ref_record *out = NULL;
->  	size_t len = 0;
->  	size_t cap = 0;
-> -	int i = 0;
-> +	size_t i;
-
-OK.  It is good that we got rid of useless initialization, as this
-is used to drive more than one loops below.
-
-> @@ -358,12 +349,12 @@ static void t_merged_logs(void)
->  	struct reftable_reader **readers = NULL;
->  	struct reftable_merged_table *mt = merged_table_from_log_records(
->  		logs, &bs, &readers, sizes, bufs, 3);
-> -	struct reftable_iterator it = { NULL };
-> +	struct reftable_iterator it = { 0 };
->  	int err;
->  	struct reftable_log_record *out = NULL;
->  	size_t len = 0;
->  	size_t cap = 0;
-> -	int i = 0;
-> +	size_t i = 0;
-
-Lose the useless initialization here, too.
+ - Emily
