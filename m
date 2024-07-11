@@ -1,118 +1,248 @@
-Received: from well.jabatus.fr (well.jabatus.fr [109.234.163.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D7A1667FA
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 14:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.234.163.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6251607B0
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 14:03:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720706629; cv=none; b=pKyKI6WdWm4X2QRZjav9qOBbDrJ4onSbP3EJdgbKYRWIDvq6SOtnYApouDzveVqpT20gn4M4tnpo8n6PwsxKZVIrWIk7aFmu1UWHzsiNt1p3aFfhKZqP08y35/AdA3LhFT9MFJFue6PjJYibbqEAVO8mSNjc+vlOD6p58c0JeKs=
+	t=1720706632; cv=none; b=Hj/ti8MNXY8lXnplu1bCczfvs79+NiQ5bgnWvmc4NPxUMftfPr/2ZlZv2cEc5ZGK1GwfAEcbiW6kbBNparofwFzgD0BB1mNvd1t5td/NhAx4mQc2Vxov+FGKCvuo3TwkyhYmEFJ0R/ggr9Ox2Hqlywr316ezvS/kxTUOktxrKew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720706629; c=relaxed/simple;
-	bh=xau9RRIEBT/bKXY8AnkHGrFQKDSChdeoQynE4oll9s8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dPrKUu3uGdSNbnlegCY+418DO8sVujWoNdqaQ4lyZKdQ6UqcsHe3ZSMyTzbLy7CvcOgEvzCYF9iNF6sKjzPjzYkBf/wbhVqaPlx9OrjXonnG3Su71y2jtgpzaPHqwvoRCEsxzOzWHfpOZVA4HhLiCPUVORnjh3LlwYwBgxnkdWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=loiseau.fr; spf=pass smtp.mailfrom=loiseau.fr; dkim=pass (2048-bit key) header.d=loiseau.fr header.i=@loiseau.fr header.b=vRtXeAD9; arc=none smtp.client-ip=109.234.163.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=loiseau.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loiseau.fr
+	s=arc-20240116; t=1720706632; c=relaxed/simple;
+	bh=oCxqCdEeD2h4fve5R6zQezjb9Hx+wMRq0ZcPr0GKfRE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kGNN8+E4lB97Teg45jffnEb7QrWuV3X1o/cm0XlXryWY4k5a2NzCqHyxBA1v0oOJgth5chv4vQZpnQBh0TnsSSimUxwZmUE7MtMj/VoWvnGhJrFDoEucJhLd09qbaH9/lnnivySDmaCPsJLY41upPR6W6xK4i+8EcbWw10qHv9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHbLHYPm; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=loiseau.fr header.i=@loiseau.fr header.b="vRtXeAD9"
-X-MailPropre-MailScanner-From: anthony@loiseau.fr
-X-MailPropre-MailScanner-SpamCheck: not spam, SpamAssassin (cached,
-	score=-23.959, required 5, autolearn=disabled, BAYES_05 2.00,
-	MED_SPX 1.00, RCVD_IN_DNSWL_HI 0.01, SPF_HELO_NONE 0.00,
-	SPF_PASS -1.50, SUKC_2 0.01, SUKEN_2 0.01, VM03 0.01,
-	WHLISHOS -25.50)
-X-MailPropre-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
-X-MailPropre-MailScanner-ID: 85115E04D6.A56DE
-X-MailPropre-MailScanner-Information: Please contact the ISP for more information
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=loiseau.fr;
-	s=default; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=HKbrh/Fibc0jCYiOR9ZanejpcBZ9lm+e+T9VdvGPGnA=; b=vRtXeAD9VqYUkCzFCMsRs3qFeP
-	8qlstWxM38hwW47jtHmk0/LcrKhfrDl9PTMqIH/XtLUMCCYZIyyL2lJw3eYZvY28HNcp/jg+K8mwp
-	oo1yGvwCWdmMxMgXP3Vk1+R8qbV+ijO4uzX1I2jrqejiyBCdbmDuaYUWOOZmTRY9eT0mmzi4Upwmc
-	8z8UwWfRDsPniO+O3fbFlZUzKmYZNN6jjjJjouWM1tJFUPfms0vSRA7CNuDcaj/IIX2fsbijkdZx+
-	ILlEzBmTigYUFAOY5q5cr1pCc7fZPeocHMKmubEyy8JeaVJgKtygXYh9w5EEzAUsc53jE4vSOWBLW
-	JKOfOOHQ==;
-From: Anthony Loiseau <anthony@loiseau.fr>
-To: git@vger.kernel.org
-Cc: Anthony Loiseau <anthony@loiseau.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Joshua Williams <joshua.williams@qlogic.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>
-Subject: [PATCH] git-gui: do not exit upon prepare-commit-msg hook failure
-Date: Thu, 11 Jul 2024 15:25:39 +0200
-Message-ID: <20240711132542.9792-1-anthony@loiseau.fr>
-X-Mailer: git-send-email 2.45.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHbLHYPm"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fb1c918860so14457245ad.1
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 07:03:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720706630; x=1721311430; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5+2qSLCVgbdRGnRoY1VGP90H9oa+1yKokOZClIjvkec=;
+        b=kHbLHYPmnlZCN6bPOjESdk1Egjblz6wQxYW6TOjfxW5JqiZwlomeqwuHbZvKp1T4Ih
+         Nc8q9w3fURCog3PJR69YenjX+cFXkY0Wi0eI1jIa3x065EnKJXfwa12b9+f4fMNZfuSV
+         uO9FneShloa2bIcaI9NdiD7OU06Jx2OgXELJv+8El01XJfFQByboZEUmyCIAVMJaqDSh
+         dCk1JC6ViCg+Al4wHrL/E6KB+afW5QlZO3EwWgahRhPQunKisIV+5yDLLPAXag1ASaPQ
+         ieSgIqKGCj4fEf7n4fsWS/MdMrRbOLfVC7zk9ME09d7/1C282/netoO5h3qXQ9EV2zlB
+         6BfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720706630; x=1721311430;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5+2qSLCVgbdRGnRoY1VGP90H9oa+1yKokOZClIjvkec=;
+        b=jJLUp4GoZcFacmIeIr+T7gh/P96DScwDYM0nnIKUrEt0SeBviOg4vTgo2IH8w+lVdg
+         ns/c7KpIYll2zkSbnlBoQaK1Xc8G0j0f4iweLgz1xwNlz4r/odFg9wza8aWzaaNUuHk4
+         eoMh/TMW/qlM2neiOZC5VrpzaAHu1eBqkimA+EOp0w85N2JkD6qMrz7hK5542S1heahW
+         z+ixMmvOlrX8+TCFRA0qyPZwzQK4/o83nk9n4pel+H59OjInEzfeHtCuDsULZGY73mkC
+         NXmfh9cgUhHs7ho/E01+WSyc4Msa+dwRaXfAgLWblCSFzOBIO7l0ccFlSvB12LN1bViI
+         ESHw==
+X-Gm-Message-State: AOJu0YwvEWIQhRTKM3Fa8WiPYF7z2O5tCvxkilnlJ3RtkzRqMeafgHr9
+	qNGwPNp9m+sTmoEhNl0hVc0G3boJF8w/iLL3PMpFXFz0e8tzgpno
+X-Google-Smtp-Source: AGHT+IHr5R2hUs1sEikGOu+mWUa9h8bddxvsJImUW0Te25uJPGWUWzxGPd4TJRH0EeI3qlScY7NqLQ==
+X-Received: by 2002:a17:902:e88d:b0:1f7:1d71:25aa with SMTP id d9443c01a7336-1fbdb9c1cc4mr38704975ad.6.1720706630121;
+        Thu, 11 Jul 2024 07:03:50 -0700 (PDT)
+Received: from [192.168.43.32] (200.149.159.133.rev.vmobile.jp. [133.159.149.200])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ad0298sm50802295ad.278.2024.07.11.07.03.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jul 2024 07:03:49 -0700 (PDT)
+Message-ID: <369826d0-ffeb-4f17-88ee-c168a99c8289@gmail.com>
+Date: Thu, 11 Jul 2024 23:03:46 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] test-lib: GIT_TEST_SANITIZE_LEAK_LOG enabled by
+ default
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <598149bf-6541-4c9e-8c94-a108e3ee7fd7@gmail.com>
+ <d5c307e3-79c5-4795-838d-4a425b012ec0@gmail.com>
+ <20240710071621.GA2049772@coredump.intra.peff.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240710071621.GA2049772@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - sucre.o2switch.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - loiseau.fr
-X-Get-Message-Sender-Via: sucre.o2switch.net: authenticated_id: anthony@loiseau.fr
-X-Authenticated-Sender: sucre.o2switch.net: anthony@loiseau.fr
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 
-Targeted issue
-==============
+On Wed, Jul 10, 2024 at 03:16:21AM -0400, Jeff King wrote:
+> On Wed, Jul 10, 2024 at 11:30:13AM +0900, Rubén Justo wrote:
+> 
+> > As we currently describe in t/README, it can happen that:
+> > 
+> >     Some tests run "git" (or "test-tool" etc.) without properly checking
+> >     the exit code, or git will invoke itself and fail to ferry the
+> >     abort() exit code to the original caller.
+> > 
+> > Therefore, GIT_TEST_SANITIZE_LEAK_LOG=true is needed to be set to
+> > capture all memory leaks triggered by our tests.
+> > 
+> > It seems unnecessary to force users to remember this option, as
+> > forgetting it could lead to missed memory leaks.
+> > 
+> > We could solve the problem by setting GIT_TEST_SANITIZE_LEAK_LOG to
+> > "true" by default, but that might suggest we think "false" makes sense,
+> > which isn't the case.
+> > 
+> > Therefore, the best approach is to remove the option entirely while
+> > maintaining the capability to detect memory leaks in blind spots of our
+> > tests.
+> 
+> Yeah, I think that reasoning makes sense.
+> 
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index 814578ffc6..51f8f59a29 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -370,7 +370,6 @@ linux-musl)
+> >  linux-leaks|linux-reftable-leaks)
+> >  	export SANITIZE=leak
+> >  	export GIT_TEST_PASSING_SANITIZE_LEAK=true
+> > -	export GIT_TEST_SANITIZE_LEAK_LOG=true
+> >  	;;
+> 
+> OK, we can drop this line snice it's now the default. Good.
+> 
+> > diff --git a/t/README b/t/README
+> > index d9e0e07506..c2a732d59e 100644
+> > --- a/t/README
+> > +++ b/t/README
+> > @@ -382,33 +382,9 @@ mapping between "TEST_PASSES_SANITIZE_LEAK=true" and
+> > those tests that
+> >  pass under "SANITIZE=leak". This is especially useful when testing a
+> >  series that fixes various memory leaks with "git rebase -x".
+> > 
+> > -GIT_TEST_SANITIZE_LEAK_LOG=true will log memory leaks to
+> > -"test-results/$TEST_NAME.leak/trace.*" files. The logs include a
+> > -"dedup_token" (see +"ASAN_OPTIONS=help=1 ./git") and other options to
+> > -make logs +machine-readable.
+> > -
+> > -With GIT_TEST_SANITIZE_LEAK_LOG=true we'll look at the leak logs
+> > -before exiting and exit on failure if the logs showed that we had a
+> > -memory leak, even if the test itself would have otherwise passed. This
+> > -allows us to catch e.g. missing &&-chaining. This is especially useful
+> > -when combined with "GIT_TEST_PASSING_SANITIZE_LEAK", see below.
+> > -
+> >  GIT_TEST_PASSING_SANITIZE_LEAK=check when combined with "--immediate"
+> >  will run to completion faster, and result in the same failing
+> >  tests. The only practical reason to run
+> > -GIT_TEST_PASSING_SANITIZE_LEAK=check without "--immediate" is to
+> > -combine it with "GIT_TEST_SANITIZE_LEAK_LOG=true". If we stop at the
+> > -first failing test case our leak logs won't show subsequent leaks we
+> > -might have run into.
+> > -
+> > -GIT_TEST_PASSING_SANITIZE_LEAK=(true|check) will not catch all memory
+> > -leaks unless combined with GIT_TEST_SANITIZE_LEAK_LOG=true. Some tests
+> > -run "git" (or "test-tool" etc.) without properly checking the exit
+> > -code, or git will invoke itself and fail to ferry the abort() exit
+> > -code to the original caller. When the two modes are combined we'll
+> > -look at the "test-results/$TEST_NAME.leak/trace.*" files at the end of
+> > -the test run to see if had memory leaks which the test itself didn't
+> > -catch.
+> 
+> After this patch, the documentation seems to end abruptly with "The only
+> practical reason to run". I think we need to either delete those lines,
+> too, or complete the thought.
 
-git-gui is currently unusable when prepare-commit-msg hook fails, since
-it closes as soon as user dismiss modal error popup shown on start.
+I accidentally left that line unfinished.  I'll fix it. 
 
-Proposal
-========
+> 
+> I do think they are saying something useful, which is: in "check" mode,
+> you should always use "--immediate" since the point is just to find
+> scripts which aren't labeled correctly. But I think that is true whether
+> you are using the leak log or not. Your log will be incomplete, of
+> course, if you used "--immediate", but the point is to see whether we
+> find even one.
+> 
+> >  GIT_TEST_PROTOCOL_VERSION=<n>, when set, makes 'protocol.version'
+> >  default to n.
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 79d3e0e7d9..942828c55d 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1270,8 +1270,8 @@ check_test_results_san_file_ () {
+> >  		say "As TEST_PASSES_SANITIZE_LEAK=true isn't set the above leak is 'ok'
+> > with GIT_TEST_PASSING_SANITIZE_LEAK=check" &&
+> >  		invert_exit_code=t
+> >  	else
+> > -		say "With GIT_TEST_SANITIZE_LEAK_LOG=true our logs revealed a memory
+> > leak, exit non-zero!" &&
+> > -		invert_exit_code=t
+> > +		say "Our logs revealed a leak!" &&
+> > +		test "$test_failure" != 0 || invert_exit_code=t
+> >  	fi
+> >  }
+> 
+> This adds back in the test_failure fix from 47c6d4dad2 (test-lib: fix
+> GIT_TEST_SANITIZE_LEAK_LOG, 2024-06-30), but in a different way. I think
+> we'd want to build on top, and then you just need to update the messages
+> on either side of that final elif/else.
 
-Next mail is a proposal to make this failure non-fatal. Popup is still
-shown but not in its fatal variant (which removes the "you must fix this
-before commiting" unwanted sentence), and git-gui is not terminated upon
-popup dismiss.
+OK.  I think simplifying those lines introduced unnecessary noise.  I'll
+discard it and just adjust the messages. 
 
-With this proposal, user is clearly aware of a prepare-commit-msg hook
-failure but is not denied to use git-gui and can even commit.
-Pre-filled commit message content is likely empty or not filled in this
-case, which is not a big issue.
+> 
+> > @@ -1555,28 +1555,28 @@ then
+> >  		passes_sanitize_leak=t
+> >  	fi
+> > 
+> > -	if test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check"
+> > +	if test -z "$passes_sanitize_leak" &&
+> > +	   ! test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check" &&
+> > +	   test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+> >  	then
+> > -		sanitize_leak_check=t
+> > -		if test -n "$invert_exit_code"
+> > +		skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+> > +		test_done
+> > +	else
+> > +		if test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check"
+> >  		then
+> > [...]
+> 
+> I'm not sure why we need to touch this block. The "if
+> GIT_TEST_SANITIZE_LEAK_LOG" just below it I assumed would go away. But
+> all of this has to do with "check" versus "true", etc? There might be
+> new refactoring / simplification opportunities opened up by getting rid
+> of the LEAK_LOG variable, but we should do those on top.
+> 
+> I guess what's happening is that you've rearranged it so that:
+> 
+> > -	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
+> > -	then
+> >  		if ! mkdir -p "$TEST_RESULTS_SAN_DIR"
+> >  		then
+> >  			BAIL_OUT "cannot create $TEST_RESULTS_SAN_DIR"
+> 
+> ...when this conditional goes away, the existing body is still in the
+> "else". But even though it would make the diff noisy to reindent, I
+> think we are better off doing so to make it clear what the actual change
+> is.
 
-Other hooks are not affected. commit-msg hook and next ones are still
-triggered upon commit action, telling commit can not be performed (fatal
-variant of the popup) without terminating git-gui upon dismiss.
+OK.
 
-How to test
-===========
+> 
+> > @@ -1599,9 +1599,6 @@ elif test "$GIT_TEST_PASSING_SANITIZE_LEAK" = "check"
+> > ||
+> >       test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+> >  then
+> >  	BAIL_OUT_ENV_NEEDS_SANITIZE_LEAK "GIT_TEST_PASSING_SANITIZE_LEAK=true"
+> > -elif test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
+> > -then
+> > -	BAIL_OUT_ENV_NEEDS_SANITIZE_LEAK "GIT_TEST_SANITIZE_LEAK_LOG=true"
+> >  fi
+> 
+> OK, this final elif is responsible for complaining when you set LEAK_LOG
+> but don't have an actual leak-checking build. But once it goes away,
+> there's no need to complain. Makes sense.
+> 
 
-cat > .git/hooks/fake_failing_hook <<EOF
-#!/bin/sh
-echo 'FAKE FAILING HOOK $0' >&2
-exit 1
-EOF
-
-for i in .git/hooks/*.sample
-do
-	ln -svf fake_failing_hook "${i%%.sample}"
-done
-
-chmod u+x .git/hooks/*
-rm .git/GITGUI_MSG
-git gui
-
-
-Anthony Loiseau (1):
-  git-gui: do not exit upon prepare-commit-msg hook failure
-
- git-gui/git-gui.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
--- 
-2.45.2
-
+Thanks for reviewing the patch.
