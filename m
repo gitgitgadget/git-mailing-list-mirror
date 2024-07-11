@@ -1,240 +1,205 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B85A12B171
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B56E12B171
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 20:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720729488; cv=none; b=a6FLAlrOKpYB7h0HVtftFi/ZQslYylF6F3hfkTu0QuyavTUyt4T3uf8dQXWUh5zQZQ9UymmaZhiMswVYmM1e7VL1EglFjyo3iBi7AoDjXYw9g+VtZ/6ZPEzW6A18hYN2T3+r6CLuk3YqCBOfK/xqcslHxsshwa2QgjMqzSqE9J4=
+	t=1720729563; cv=none; b=VWUo+6vg8eDgSv4nGRG9MvThx6e9aGU+2Cn2DAXKWnSlGN0TQiljkQkxRM+EyenWttxxUQ9OqNDzPCbUb/sQUDr6SRHpxxN9XvwT2rEhoxieaKl+g6idPQqi3/lJpAlFUd8Eh1rwTt1QFBBJBBD3rViZ3vb7LzDPfMZPTtXa63o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720729488; c=relaxed/simple;
-	bh=TlIK9A7MfTkDzW5QUDjTcKBLX5erJOOTb1tY/ccV+Qc=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gW1o1N2g6/jhMVJOnZMfwEcTqCOj3QhuJbi+JJSuzsPGvPuki1FrwhRU8OI1frT/2k6xXN3/Cj51J96FR7VcmWOoggNgaeb7ILLMUEvfl2BnDA3a3VojHFb83hZfuRrUZhWrS2ZDXJ0yK191WGvf/uvvG54ZGRAonjoZ1M2q+6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46BKOTEv3934698
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 20:24:29 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Kyle Lippincott'" <spectral@google.com>,
-        "'Emily Shaffer'" <nasamuffin@google.com>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Emily Shaffer'" <emilyshaffer@google.com>, <git@vger.kernel.org>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-References: <20240709225042.2005233-1-emilyshaffer@google.com> <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com> <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
-In-Reply-To: <CAO_smViKbb5pKKsfEV9nMLNJEjJ34HU0fUZmG8EPJjXq2fnviQ@mail.gmail.com>
-Subject: RE: [PATCH] Documentation: add platform support policy
-Date: Thu, 11 Jul 2024 16:24:24 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00e501dad3d0$5577e4f0$0067aed0$@nexbridge.com>
+	s=arc-20240116; t=1720729563; c=relaxed/simple;
+	bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QISZaHs0c7SEg7sJLjGkHfu9uTeY8HK5TTpPFdpmomAxUk4GLOGRL1C3KGOWwTjitypP6jGmBC6MM2dRdHZKtq8HZKiiJr12QUcA6C2pwIKYi8pJVS3oYcIoreHWfSdrJfKU6NQPceDAy7QHqHZORKEUEJb5yG408VWmR/eHY4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=klOGL3ks; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="klOGL3ks"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab8cso2390167a12.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 13:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1720729559; x=1721334359; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
+        b=klOGL3ksvCfCugKjT0A4di0IizkU7xE/IF+ACSn9f/Y+KNRahwmI5cJAYkYEaBYbpe
+         xBHtFB03PnSOrDiwqYXoOY26b5BjX8Q8TgF+DKKCjGrOMr8hm9W1HP7eBNdgukZoNWRo
+         djMF3l1XM6wNJeTofPFpEgG9FSo0ch1l4t1WedM6cwkMOL3EdDO9zKO2rjQeVPzPPc7B
+         k5buL0BERQFJv8kHZ3Pmabw7rjwdLcEuXnZx9/9/EaUR+u766y6Fgjrs5CBSPIbcCgEA
+         3gxH93sZupeCc5Q4nb0X7vX7v5pqyvrXOA6dAifZPeyrBmwChaeY2VKbHmqiJKzzHKko
+         nAjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720729559; x=1721334359;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zwfNw0ls1M8QokhDbS/B4SoO9NjaWP2wtNbkdA4a8PQ=;
+        b=dz0uZmcgmdkFJmue9uOqSPD/MHajp91GJuF+10p3znUMSbVPTOzP6jKE6STnIibUsE
+         xefKFWXxUw7IeixWYc5/dM6ZMcZu2vGTsjvPPXrjc+C1Bill1h/x/xIQS35PWQ7IDmRZ
+         iyq5tkfGcqcdM9b7m0SgGsS6QEJmca+RmS/XdsRV2VXxzKjFPcbQIWdPdm4x/WlCNZCB
+         qcETA1RpgTF3oB8wy8+edOJK7Gk5ThDQ7/sOTaYJax3Dm+kGuYo6WdEmjr9ByJsaU5j8
+         Hj+/H5xv9uBCD0rSj6wCbapu6Q8ZSXE6PE7eJ++97pKiGJmXDl6dCey+6ZWW7JY9yrdV
+         /5Eg==
+X-Gm-Message-State: AOJu0YzeB/nUi584VHSGWk4Lx4kMcarlI+seYmwBNynQxoF3nAWgeKyd
+	sLgHMp5UnKS6+3E9zFT7szBZbGUqgOOUzgf2Z1I7U//Bpj44Q6kPb8sa1i9rg+tXaJYQfXixlvJ
+	4SeJ1Tpd6JonDhYSStmujnW9umjLy3MwHzkYjXeCaRy4giZG/EQ==
+X-Google-Smtp-Source: AGHT+IHj8zMp4GLNnrYxPGJscaBb3usNMBm4xOquhlKlEf5D16bwD205aFSYL4w4+TbewS6wOYpy8Bxvvlhc1ANgo9s=
+X-Received: by 2002:a17:907:9496:b0:a72:7f22:5f9e with SMTP id
+ a640c23a62f3a-a780b88062bmr810516666b.57.1720729559079; Thu, 11 Jul 2024
+ 13:25:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
+ <CAO_smVjZ7DSPdL+KYCm2mQ=q55XbEH7Vu_jLxkAa5WTcD9rq8A@mail.gmail.com> <CAJoAoZmo6ey1RAqgtM098LLLrdKODf2OYyV=YqyFH5VXiSB6RQ@mail.gmail.com>
+In-Reply-To: <CAJoAoZmo6ey1RAqgtM098LLLrdKODf2OYyV=YqyFH5VXiSB6RQ@mail.gmail.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 11 Jul 2024 13:25:42 -0700
+Message-ID: <CAO_smVjpsVZj29s9dKQNy8Jos8HvxmRcc4S25WmngGb2HQB88w@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLOJF488y2+/PGZbbSRsjvDFvsFqgHGsZGHAOpA7/wBYP2wY6/qxnUg
-Content-Language: en-ca
 
-On Thursday, July 11, 2024 4:13 PM, Kyle Lippincott wrote:
->On Thu, Jul 11, 2024 at 11:15=E2=80=AFAM Emily Shaffer =
-<nasamuffin@google.com> wrote:
->>
->> On Tue, Jul 9, 2024 at 4:16=E2=80=AFPM brian m. carlson
->> <sandals@crustytoothpaste.net> wrote:
->> >
->> > On 2024-07-09 at 22:50:42, Emily Shaffer wrote:
->> > > Right now, this doc talks about "guarantees." I used that =
-phrasing
->> > > based on what I've observed to be an implicit expectation that we
->> > > guarantee support; it could be this isn't actually a guarantee
->> > > that the community is willing to make, so I am hoping we can =
-discuss it and
->come up with the right term.
->> >
->> > I think it might be helpful to look at what some other projects do.
->> > Rust has a concept of tiered support, and it requires platforms to
->> > have maintainers who will commit to support an OS.  I don't think =
-we
->> > necessarily need to be so formal, but if nobody's stepping up to
->> > monitor an OS or architecture, it may break at any time and we =
-won't
->> > be able to consider it when deciding on features we require from =
-the
->> > platform (such as Rust, C versions, or POSIX versions).
->>
->> It took me a little time to find it, so here's the link for others:
->> https://doc.rust-lang.org/nightly/rustc/platform-support.html
->>
->> I do think it's interesting that while Rust splits their tiers based
->> on how much of it will definitely work (definitely builds+tests,
->> definitely builds, probably builds maybe), which is different from =
-how
->> I sliced it by time (works on release, works on stable, works on
->> unstable). This kind of lines up with what you mentioned next about
->> the tests (or some subset) working, which I hadn't considered, =
-either.
->>
->> >
->> > I think it's also worth discussing what we require from a platform
->> > we're willing to support.  For example, we might require that the
->> > platform pass the entire testsuite (ignoring irrelevant tests or
->> > tests for things that platform doesn't use, such as Perl) or be
->> > actively pursuing an attempt to do so.  We may also want to require
->> > that an OS be actively receiving security support so that we don't
->> > have people asking us to carry patches for actively obsolete OSes,
->> > such as CentOS 6.  Finally, some sort of time limit may be helpful,
->> > since some Linux vendors are now offering 15 years of support, and
->> > we really may not want to target really ancient versions of things =
-like libcurl.
->>
->> I sort of wonder how much of this is taken care of by expressing
->> "fully supported" as "can run in GitHub Actions". Even if an LTS
->> distro is 12 years old and using ancient curl, will GitHub still be
->> able to run it in a VM/container? Maybe there's no such guarantee,
->> since you can hook up self-hosted runners (which sounds more =
-appealing
->> if someone's got something weird enough it doesn't run well in a
->> container).
->>
->> I'm not sure which of these requirements we'd want to enumerate - but
->> does it make sense to tack it onto the end of this doc? Something
->> like:
->>
->> """
->> Minimum Requirements
->> ------
->>
->> Even if tests or CI runners are added to guarantee support, supported
->> platforms must:
->>
->> * Be compatible with C99
->> * Use curl vX.Y.Z or later
->> * Use zlib vA.B.C or later
->> ...
->> """
+On Thu, Jul 11, 2024 at 11:37=E2=80=AFAM Emily Shaffer <nasamuffin@google.c=
+om> wrote:
 >
->My concern with actually listing what the minimum requirements are is =
-that we
->then need a process for raising the minimum requirements. For C =
-specification, I can
->see that rightfully being an involved conversation and achieving =
-consensus that this
->is the right time to do it. For things like library versions, I'm less =
-comfortable with it
->because if we have to raise the minimum bar for some urgent reason, =
-there's the
->potential for additional friction with these platforms claiming that we =
-stated we'd
->support them (ex: we say you need to be able to use libfoo v3.x.x =
-(v4.x.x had some
->breaking changes, but coexists with v3, so we just stuck with v3), and =
-some security
->fix that we need to receive only exists on the v4 version, so now we =
-need to port to
->using v4 so that we get the security fix).
+> On Wed, Jul 10, 2024 at 12:11=E2=80=AFPM Kyle Lippincott <spectral@google=
+.com> wrote:
+> >
+> > On Tue, Jul 9, 2024 at 3:50=E2=80=AFPM Emily Shaffer <emilyshaffer@goog=
+le.com> wrote:
+> > > +* If you rely on some configuration or behavior, add a test for it. =
+You may
+> > > +find it easier to add a unit test ensuring the behavior you need tha=
+n to add an
+> > > +integration test; either one works. Untested behavior is subject to =
+breakage at
+> > > +any time.
+> >
+> > Should we state that we reserve the right to reject these tests if
+> > they would put what we feel is an excessive burden on the git
+> > developers? i.e. a requirement to use C89 would be rejected
+> > (obviously). a requirement to support 16-bit platforms would also be
+> > rejected. I don't know that we need to list examples for what we'd
+> > reject, they could be implied that we're likely to accept anything
+> > else.
 >
->I think it's probably fine to list minimum requirements, as long as we =
-have
->something conveying "and possibly other criteria". I don't want this =
-interpreted as a
->"do this, and we will try hard to not break you", it should be =
-interpreted as "if you
->can't do at least this, we won't even look at patches/tests/CI to =
-unbreak you/keep
->you unbroken"
+> brian mentioned something similar in their review, to which I proposed
+> a minimum requirements field[1]; I think this would work for that too?
+> Thoughts?
+>
+> > > +** Clearly label these tests as necessary for platform compatibility=
+. Add them
+> > > +to an isolated compatibility-related test suite, like a new t* file =
+or unit test
+> > > +suite, so that they're easy to remove when compatibility is no longe=
+r required.
+> > > +If the specific compatibility need is gated behind an issue with ano=
+ther
+> > > +project, link to documentation of that issue (like a bug or email th=
+read) to
+> > > +make it easier to tell when that compatibility need goes away.
+> >
+> > I think that we likely won't have the ability to investigate whether
+> > it's _truly_ gone away ourselves, and there's no guarantee that the
+> > person that added these tests will be able to vet it either (maybe
+> > they've switched jobs, for example).
+> >
+> > I think we should take a stance that may be considered hostile, but I
+> > can't really think of a better one:
+> > - there needs to be a regular (6 month? 12 month? no longer than 12
+> > month surely...) reaffirmation by the interested party that this is
+> > still a requirement for them. This comes in the form of updating a
+> > date in the codebase, not just a message on the list. If this
+> > reaffirmation does not happen, we are allowed to assume that this is
+> > not needed anymore and remove the test that's binding us to supporting
+> > that.
+>
+> I like the idea of the date in code, because that's "polled" rather
+> than "pushed" - when I break the test, I can go look at it, and see a
+> condition like "Until July 1st, 2024" and say "well it's July 11th, so
+> I don't care, deleted!" - or, more likely, I can see that date expired
+> a year and a half ago :)
+>
+> > We should probably go a step further and intentionally violate
+> > the test condition, so that any builds done by the interested parties
+> > break immediately (which should be caught by the other processes
+> > documented here; if they don't break, then it was correct to remove
+> > the restriction).
+>
+> ...but this seems harder to keep track of. Where are we remembering
+> these "due dates" and remembering to break them on purpose? I'm not
+> sure that there's a good way to enforce this.
 
-I have similar concerns both in terms of compilers and libraries. I am =
-maintaining two exotic platforms, NonStop x86 and ia64. The ia64 is =
-going off support "soon". In x86, we have more recent tooling, but not =
-everything. It is at an older POSIX level. However, getting libraries =
-built is either going hat in hand to HPE asking for updates on libraries =
-or porting them myself. This is hard because gcc is not available, nor =
-is likely to ever be - so anything with gcc in the mandatory toolchain =
-is out of the question. For ia64, it doesn't matter much, and freezing =
-on 2.49, or slightly later than 2.50 is not a horrible decision. I do =
-have to keep x86 alive for the foreseeable future. My only real time =
-limit is getting a 64-bit time_t (not available yet) in a 64-bit git =
-build (also not possible yet) - which really depends on 64-bit versions =
-of dependencies from the vendor, which is not easy to make happen. So, =
-time limits are a definite concern and policies on those are important =
-to quantify. Fortunately, I am monitoring and building git frequently =
-looking for trouble. I think that part is important for any exotic =
-maintainer and probably should be officially quantified/sanctioned.
+Ah, I was unclear - I was saying when we remove the test, we should
+intentionally add a use of the thing the test was preventing us from
+using. So if there's a test saying "you can't use printf()", when
+removing that test, we should add a use of printf in the same series.
+I was intentionally being vague about "when" we should remove these
+tests, and how long we should consider the newly added printf
+provisional (and possibly going to be rolled back), like in our
+current test balloons. Just: if you're removing an expired
+platform-support-policy test, add something to the codebase (possibly
+just another test) that exercises the previously forbidden aspect, if
+possible.
+
+This is likely to happen organically: most people aren't going to
+notice an expired platform-support-policy test and remove it just
+because. They'll trip over it while attempting to work on a feature,
+notice it's expired, and remove it as part of the series that makes
+use of it. But if someone is trying to be helpful and clean up expired
+platform-support-policy tests without having the goal of immediately
+using it, they should be encouraged to invert the test so that we
+don't have potentially months of time difference between "implicitly
+allowed again [since there's no test preventing its use]" and the
+actual usage being added.
 
 >
->>
->> >
->> > At the same time, we do have people actively building Git on a
->> > variety of platforms and a huge number of architectures, including
->> > most Linux distros and the BSDs, and we will want to be cognizant
->> > that we should avoid breaking those environments when possible, =
-even
->> > though, say, the porters for some of those OSes or architectures =
-may
->> > not actively follow the list (due to limited porters and lots of
->> > porting work).  I imagine we might say that released architectures
->> > on certain distros (Debian comes to mind as a very portable option) =
-might be
->implicitly supported.
->>
->> Are they implicitly supported, or are they explicitly supported via
->> the GH runners? Or indirectly supported? For example, the Actions
->> suite tests on Ubuntu; at least once upon a time Ubuntu was derived
->> from Debian (is it still? I don't play with distros much anymore); so
->> would that mean that running tests in Ubuntu also implies they will
->> pass in Debian?
->>
->> (By the way, I think we should probably just add a BSD test runner to
->> Actions config; we test on MacOS but that's not that closely related.
->> It seems like it might be a pretty easy lift to do that.)
->>
->> >
->> > > +Compatible on `next`
->> > > +--------------------
->> > > +
->> > > +To guarantee that `next` will work for your platform, avoiding
->> > > +reactive debugging and fixing:
->> > > +
->> > > +* You should add a runner for your platform to the GitHub =
-Actions CI suite.
->> > > +This suite is run when any Git developer proposes a new patch,
->> > > +and having a runner for your platform/configuration means every
->> > > +developer will know if they break you, immediately.
->> >
->> > I think this is a particularly helpful approach.  I understand the
->> > Linux runners support nested virtualization, so it's possible to =
-run
->> > tests in a VM on a Linux runner on OSes that Actions doesn't
->> > natively support.  I do this for several of my Rust projects[0] on
->> > FreeBSD and NetBSD, for example, and it should work on platforms
->> > that support Vagrant and run on x86-64.
->> >
->> > That won't catch things like alignment problems which don't affect
->> > x86-64, but it does catch a lot of general portability problems =
-that
->> > are OS-related.
->> >
->> > I'm in agreement with all of your suggestions, by the way, and I
->> > appreciate you opening this discussion.
->> >
->> > [0] An example for the curious is muter: =
-https://github.com/bk2204/muter.
->>
->> Neat :)
->>
->> > --
->> > brian m. carlson (they/them or he/him) Toronto, Ontario, CA
->>
+> > - _most_ of these restrictions should probably have a limited number
+> > of reaffirmations? I feel like this needs to be handled on a
+> > case-by-case basis, but I want us to be clear that just because we
+> > accepted these restrictions in the past doesn't mean we will accept
+> > them indefinitely.
+> > - Just because there's a reaffirmation doesn't mean we're guaranteeing
+> > we won't delete the test before the affirmation "expires". If there's
+> > an urgent security need to do something, and it can't be done without
+> > breaking this, we'll choose to break this test. If there's general
+> > consensus to do something (adopt a new language standard version, for
+> > example), there's no guarantee we'll wait until all the existing
+> > affirmations expire.
+>
+> I honestly like this point more than the previous one. Limiting by a
+> number, even one that changes, feels less flexible than allowing
+> ourselves to say "enough of this nonsense, it's the Century of the
+> Fruitbat, we really want to use <C11 feature> so you can get
+> maintenance updates instead now".
 
+Yeah, that's fair. Let's withdraw my suggestion of a limited number of
+reaffirmations. :) That works well if the goal is to have a temporary
+restriction while work is actively happening to remove its necessity,
+but that's less likely to be the case here. If we can't move to C42
+because it's not supported on Linux Distro 2050=E2=84=A2 yet, users of Linu=
+x
+Distro 2050=E2=84=A2 aren't able to promise eventual support of C42 or
+accelerate that happening.
+
+>
+> >
+> > The thinking here is that this test is imposing a restriction on the
+> > git developers that we've agreed to take on as a favor: we are going
+> > to restrict ourselves from doing X _for the time being_ not
+> > necessarily because it'll break you, but because it's a bad experience
+> > for the git developers to create a patch series that lands and then
+> > gets backed out when the breakage on $non_standard_platform is
+> > detected on seen/next/master.
+>
+> 1: https://lore.kernel.org/git/CAO_smVjZ7DSPdL+KYCm2mQ=3Dq55XbEH7Vu_jLxkA=
+a5WTcD9rq8A@mail.gmail.com/T/#m9d7656905be500a97ee6f86b030e94c91a79507a
