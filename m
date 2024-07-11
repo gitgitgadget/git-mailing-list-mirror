@@ -1,171 +1,167 @@
 Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0292200A9
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 18:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DA026AEC
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 18:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720722410; cv=none; b=eMhFbqLikuCbaJIS0XyMC1IOq30eXnNTbQ5Irgnekhinj6/3hiWZ302IlMrUiM8OAYJAs93+amIWTV9mrIzuPEQt0R62gKImOdkthHlnfQvDthgQF/Lbcqc0wmo9lNy1v0H6tiGbfpRhMF0xT04Ui7JDM1s9sxoUwZcuC5Df0Nk=
+	t=1720723070; cv=none; b=s6HAacH54bsSF+no1exrcXu7sQRbscIRSkURK15PsDEgI1VoCV1qQ2shPNCmX7OqqYDhVVYVB1abGVa58IiLLj+tqq1eMIieX8YGd/CikGMxYrA4NtwmJJCkyuCeC/n+A9fFSeHwYOryZ1FNHC0g9H+SRs+IXIUUGwAI12X+IsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720722410; c=relaxed/simple;
-	bh=uCAha8EPirVoGG4/JubvNGlc6zW8KTFurVrdlABrHlQ=;
+	s=arc-20240116; t=1720723070; c=relaxed/simple;
+	bh=CqGEny5bJ4jktanyxvstBcnIAV34LTIHVMMSIVvb66I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JMlg5nUrhlVDiqrr+7R1aUfdJSbdOMNcjhydNIh808U1cpfHu9D66Wh/wWA5iTzdMXyHUOB+kQ4JhSAFS2fVBrfV4UOdcCjylP66uaB3eIA3GoO18WGK29Rti8ftQgMIik04SmMEWEnTfcxiwsyyumXgM5IU5Cc9Z10Oxhc+2pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0TElhI4G; arc=none smtp.client-ip=209.85.160.179
+	 To:Cc:Content-Type; b=imgalqY45UrCipKpWRwI8NAlJQEMOEUesEjAjrJWcadzAfd6UkQ9CNuMmqclw/9LW/maSajWqNs2JtA1Fq65HuqYaeyWvJxD/URWPy1lOcwLOih6/wL/7NxG+fS73U49Pg3NugwRarPuUEYqj8p3ujsgxwB5xK1PuvWFxtcaSDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yevnhqG0; arc=none smtp.client-ip=209.85.160.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0TElhI4G"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-447df43324fso38461cf.1
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 11:26:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yevnhqG0"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-44a8b140a1bso34421cf.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 11:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720722407; x=1721327207; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1720723068; x=1721327868; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DL7xwbCUwAWRktCHr+Jnu4cT3lCg1yBUnaUVuC5y/6o=;
-        b=0TElhI4GkPf4UgJUrSWeBvGKHQQNAotsc4t1/NeovhG807gnqpCVgsawLaHlLmwF59
-         4awi/V19np/yYIUikES+zsg9+AqCs+9vwD4R5XdOWATx6BEQHAVAEXzpq/fWF9fartyQ
-         GkNJhRfLd1p5iaMFs4tQAKeJuPdu0KYppHbu7gNRC/P6X7dst/pbe1UxsVKEylTo74SU
-         50H4f8AU/1TJK9iU6T1R79hOUxJlIG14tfHk2JgO/8BNHqBxNtj1JEA78uHV2l/+IJ2r
-         iKOh7Q8L0i9cu5TgPef8FdQ4PKLVXIAbMwdaSekYAAoPB6+xV7W80ZguMaweFqz+8prL
-         JZNg==
+        bh=CqGEny5bJ4jktanyxvstBcnIAV34LTIHVMMSIVvb66I=;
+        b=yevnhqG0djdHokFBQ+FqrBy4UZ4mbErqkfgTOvVnAgvN6LO4VD6aFoYeeMLCQbF5sR
+         SzwAE8K43qaPVJ5QOXWkkYEJWuxktQ29ZjaKPV4Q0sGkGYOZhi9BWNTlclNhR84TTjLn
+         5R+uraWkz/OF0+Df4EGm46Tg1u3WbT/xVznp41dSyLoipmXvmqZaPnfuglnQhlo/z6R8
+         nUvmPShstUUimadj6aXVwbxjhAcvbIMVk93zzUwTV6+WUeDw9Ye5eTXeCMXWEmEk/FoN
+         MoPAGn5qh/4lK2xsQoTP73JfOKuuxTjEJ6M8s5ouGGzPaSdu9OjlgWj8pPFGQtf3UH04
+         8qWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720722407; x=1721327207;
+        d=1e100.net; s=20230601; t=1720723068; x=1721327868;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DL7xwbCUwAWRktCHr+Jnu4cT3lCg1yBUnaUVuC5y/6o=;
-        b=guEeW+P0tY5xi4OesXDLf7MKXkOlz0SpTieL1zH07iwcY3awAuajUQhN4qQk2gUW+N
-         1HhXw6fbKgNCSyL0wNzBJUzktn/MxtZfqUcWc4y08SZqeUZSqQNhou36QkBocOIS1JYs
-         9H1cIefnziLwILL4JeaGi19WwagMofQdipeDqeD3z2FgZ9EXf11FzQITsQ0BCVnCSNdp
-         F2ypT1eo8wQGkvpghZe+TWh59GZl58pfgjw+SF6o/u6bZMNUK7YqCZK0Tph0Go8wpApW
-         BawfmhHMmN0KTrD7jBydkvdNRbQdq55ybnCcAPXuK5kTRYu5KCGWqpHBVjNsLlEbs5Vo
-         zkyw==
-X-Gm-Message-State: AOJu0YykB8Ce0+qHNOYQSyqF1hRkm9+Ko8f3GoOVh5f9zbOc4rN0e3Bd
-	9sLPg7X0lcuddn82pO6+ik0FMbxVR7UiFbI/J2gGsc7OW1qaM3LKejEbt23dqjdjknouCe/+uXF
-	+uEnmBCKMXanjli5h6VqTx7Moa+hTLO3Fp4ryO+cxiD5Kuyb+S/VZ
-X-Google-Smtp-Source: AGHT+IGLSWJsWvveKkL234mCKp1dTE+EgWkJEXPgUE1z11P8ddH6N66JdRJc8XvPpaNsCC2shTAHulrkdnbLeW4vrGw=
-X-Received: by 2002:ac8:4550:0:b0:441:5e6c:426c with SMTP id
- d75a77b69052e-44e798b8f88mr164621cf.17.1720722407414; Thu, 11 Jul 2024
- 11:26:47 -0700 (PDT)
+        bh=CqGEny5bJ4jktanyxvstBcnIAV34LTIHVMMSIVvb66I=;
+        b=lHmXaBWKPgJ6Pn5NBXm4o7vfv2Nyc5ezM078x2cNYW3s99TRqeu8KYE9s2a2WReWQ7
+         Z2G6W+afltS2iVeAx3lGumSfIICIjULhuwP+11mZu+C/sxoNyuDxzj/iBzwixtP3ze1m
+         Kw4MJwtO8qkFcQaOgmaAho3IiJ4t4PC1OcHz+vtpXV/LgjPmJgznoT7lxAMLpATKFCRI
+         2bVeHKWqId6WRTrifo3B5PsH4vgLDC089L2cyTeCWWdpP4ACFi5Fue19LI/G/4w1zzc1
+         YfN7t5z/oZvf44S9pAy59oSa5XUCqJvId1aFAT+V9OOlU/NqH1OUnk3khSkBw9BpNPsA
+         zYjA==
+X-Gm-Message-State: AOJu0YyWvrY7uP1oq4s76iDtMH8d4dISnCHDuKv7izZI6MQER4baogXu
+	oJTzE2cJ1SIL4XJGj4PmUMnqd0b9KjlbIqV8RFgJjq4rbBfbvQ/O5luQbE/t9h+rsT6mgJWUXv5
+	gLpu1Pk5IEuOlBZ313POxxvlnxOda9lUsltON
+X-Google-Smtp-Source: AGHT+IGpgcYMuT+PpajltmXJgpMaPFqZvlRiABjOcWe3/QYISMqf5IDRmdFpQZ6JGfOtkYT3VH4fgW6ynSB2Nx1PwV0=
+X-Received: by 2002:a05:622a:1908:b0:447:f44d:d0ed with SMTP id
+ d75a77b69052e-44e75be4459mr355651cf.1.1720723067974; Thu, 11 Jul 2024
+ 11:37:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240709225042.2005233-1-emilyshaffer@google.com>
- <xmqqfrsi9i8y.fsf@gitster.g> <CAJoAoZn6zB+e5x6FEvesu173dHhgWBt7ZQ51H8ebp31kQKFCgw@mail.gmail.com>
- <xmqq5xtdvwdm.fsf@gitster.g>
-In-Reply-To: <xmqq5xtdvwdm.fsf@gitster.g>
+References: <20240709225042.2005233-1-emilyshaffer@google.com> <CAO_smVjZ7DSPdL+KYCm2mQ=q55XbEH7Vu_jLxkAa5WTcD9rq8A@mail.gmail.com>
+In-Reply-To: <CAO_smVjZ7DSPdL+KYCm2mQ=q55XbEH7Vu_jLxkAa5WTcD9rq8A@mail.gmail.com>
 From: Emily Shaffer <nasamuffin@google.com>
-Date: Thu, 11 Jul 2024 11:26:36 -0700
-Message-ID: <CAJoAoZmJVtu1+1K_B8NcsYKiw+6D9GhtXZcZ44VV-Xp3T5mKgQ@mail.gmail.com>
+Date: Thu, 11 Jul 2024 11:37:35 -0700
+Message-ID: <CAJoAoZmo6ey1RAqgtM098LLLrdKODf2OYyV=YqyFH5VXiSB6RQ@mail.gmail.com>
 Subject: Re: [PATCH] Documentation: add platform support policy
-To: Junio C Hamano <gitster@pobox.com>
+To: Kyle Lippincott <spectral@google.com>
 Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 10, 2024 at 1:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Wed, Jul 10, 2024 at 12:11=E2=80=AFPM Kyle Lippincott <spectral@google.c=
+om> wrote:
 >
-> Emily Shaffer <nasamuffin@google.com> writes:
+> On Tue, Jul 9, 2024 at 3:50=E2=80=AFPM Emily Shaffer <emilyshaffer@google=
+.com> wrote:
+> > +* If you rely on some configuration or behavior, add a test for it. Yo=
+u may
+> > +find it easier to add a unit test ensuring the behavior you need than =
+to add an
+> > +integration test; either one works. Untested behavior is subject to br=
+eakage at
+> > +any time.
 >
-> >> > +Compatible on `master` and point releases
-> >> > +-----------------------------------------
-> >> > +
-> >> > +To guarantee that `master` and all point releases work for your pla=
-tform the
-> >> > +first time:
-> >>
-> >> OK, as most of the changes go to `master` before getting merged down
-> >> to `maint` to become part of the next maintenance release, actively
-> >> protecting `master` from bugs is worthwhile.  What about changes
-> >> that do not come via the `master` branch?  Should they also join the
-> >> security list and have an early access to the cabal material?
-> >
-> > Good question, I actually am not sure of the answer. Does that make it
-> > too easy for anybody to claim they maintain some random platform and
-> > therefore they'd like to see all the RCE howtos weeks before they are
-> > fixed? I guess that we already have distro packagers in security
-> > list/cabal, so it may not be worse exposure than that.
->
-> Stopping at saying "You may want to ask to join the security list"
-> and then leave the vetting process out of the guidelines for the
-> contributor (i.e. out of this document) may strike a good balance.
->
-> We will obviously be careful about whom to add to the security list,
-> but that does not change where people hear about the list and apply
-> to join.
+> Should we state that we reserve the right to reject these tests if
+> they would put what we feel is an excessive burden on the git
+> developers? i.e. a requirement to use C89 would be rejected
+> (obviously). a requirement to support 16-bit platforms would also be
+> rejected. I don't know that we need to list examples for what we'd
+> reject, they could be implied that we're likely to accept anything
+> else.
 
-Thanks, done.
+brian mentioned something similar in their review, to which I proposed
+a minimum requirements field[1]; I think this would work for that too?
+Thoughts?
 
-> >> All of the above are actually applicable to any active contributors
-> >> on any platforms.
-> >> ...
-> >
-> > Hits close to home ;)
-> >
-> > Does this mean that this part of the document should go somewhere else
-> > and we should just use a pointer here? Is there a guide handy for "how
-> > to soft-fork Git"?
+> > +** Clearly label these tests as necessary for platform compatibility. =
+Add them
+> > +to an isolated compatibility-related test suite, like a new t* file or=
+ unit test
+> > +suite, so that they're easy to remove when compatibility is no longer =
+required.
+> > +If the specific compatibility need is gated behind an issue with anoth=
+er
+> > +project, link to documentation of that issue (like a bug or email thre=
+ad) to
+> > +make it easier to tell when that compatibility need goes away.
 >
-> Once we have a contributor guidelines this is a good material to
-> migrate there, but that would probably wait after the dust from this
-> document settles.
+> I think that we likely won't have the ability to investigate whether
+> it's _truly_ gone away ourselves, and there's no guarantee that the
+> person that added these tests will be able to vet it either (maybe
+> they've switched jobs, for example).
+>
+> I think we should take a stance that may be considered hostile, but I
+> can't really think of a better one:
+> - there needs to be a regular (6 month? 12 month? no longer than 12
+> month surely...) reaffirmation by the interested party that this is
+> still a requirement for them. This comes in the form of updating a
+> date in the codebase, not just a message on the list. If this
+> reaffirmation does not happen, we are allowed to assume that this is
+> not needed anymore and remove the test that's binding us to supporting
+> that.
 
-Ok. For now I'll leave it as-is.
+I like the idea of the date in code, because that's "polled" rather
+than "pushed" - when I break the test, I can go look at it, and see a
+condition like "Until July 1st, 2024" and say "well it's July 11th, so
+I don't care, deleted!" - or, more likely, I can see that date expired
+a year and a half ago :)
+
+> We should probably go a step further and intentionally violate
+> the test condition, so that any builds done by the interested parties
+> break immediately (which should be caught by the other processes
+> documented here; if they don't break, then it was correct to remove
+> the restriction).
+
+...but this seems harder to keep track of. Where are we remembering
+these "due dates" and remembering to break them on purpose? I'm not
+sure that there's a good way to enforce this.
+
+> - _most_ of these restrictions should probably have a limited number
+> of reaffirmations? I feel like this needs to be handled on a
+> case-by-case basis, but I want us to be clear that just because we
+> accepted these restrictions in the past doesn't mean we will accept
+> them indefinitely.
+> - Just because there's a reaffirmation doesn't mean we're guaranteeing
+> we won't delete the test before the affirmation "expires". If there's
+> an urgent security need to do something, and it can't be done without
+> breaking this, we'll choose to break this test. If there's general
+> consensus to do something (adopt a new language standard version, for
+> example), there's no guarantee we'll wait until all the existing
+> affirmations expire.
+
+I honestly like this point more than the previous one. Limiting by a
+number, even one that changes, feels less flexible than allowing
+ourselves to say "enough of this nonsense, it's the Century of the
+Fruitbat, we really want to use <C11 feature> so you can get
+maintenance updates instead now".
 
 >
-> > Maybe something like this is better?
-> >
-> > "Work closely with the developer fixing the issue; the turnaround to
-> > check that a proposed fix works for your platform should be fast
-> > enough that it doesn't hinder the developer working on that fix. If
-> > the turnaround is too slow, fixing the issue may miss the next release
-> > or the developer may lose interest in working on the fix at all."
->
-> I think that is a good approach to take.  "We will not promise to
-> wait for you if you are slow, and that is not limited to those who
-> are working on minority/niche platforms" is a good point to make.
->
-> >> > +* If you rely on Git avoiding a specific pattern that doesn't work =
-well with
-> >> > +your platform (like a certain malloc pattern), if possible, add a c=
-occicheck
-> >> > +rule to ensure that pattern is not used.
-> >>
-> >> Sorry, but I do not quite follow you here.
-> >>
-> >> In general, it is a bad idea to promise that we are willing to tie
-> >> our hands with coccicheck to satisfy needs by exotic platforms,
-> >> without first having a chance to see and evaluate such needs.
-> >>
-> >> "if possible, add" -> "sometimes it may turn out to be a good idea
-> >> to add", perhaps?
-> >
-> > Maybe it is better to ask them to discuss it with us on-list, and that
-> > the result of that discussion may be that they should add some such
-> > test? Or, do we want to firmly say, no coccicheck restrictions based
-> > on platform, give us a CI runner or bust? I don't feel super strongly
-> > either way - writing this section I was trying to come up with any way
-> > to get on-demand ~instant (<1hr) feedback to any contributor, and this
-> > seemed like one someone could do. That doesn't mean we have to let
-> > them, if we don't like this way.
->
-> Yes.  If you want to add additional constraints on how the codebase
-> does things, discuss it on list first and work with us to come up
-> with a way to without forcing too many unnecessary constraints on
-> other platforms.  It may result in keeping the generic codebase
-> pristine and free from #ifdef and having platform specific code
-> somewhere in compat/ but such details do not have to be spelled
-> out---they will be different case-by-case and we will hopefully
-> devise new and improved ways to deal with them.
+> The thinking here is that this test is imposing a restriction on the
+> git developers that we've agreed to take on as a favor: we are going
+> to restrict ourselves from doing X _for the time being_ not
+> necessarily because it'll break you, but because it's a bad experience
+> for the git developers to create a patch series that lands and then
+> gets backed out when the breakage on $non_standard_platform is
+> detected on seen/next/master.
 
-Ok. I've got a rephrasing for the next reroll; still thinking I can
-get that sent by tomorrow latest. Thanks!
-
- - Emily
+1: https://lore.kernel.org/git/CAO_smVjZ7DSPdL+KYCm2mQ=3Dq55XbEH7Vu_jLxkAa5=
+WTcD9rq8A@mail.gmail.com/T/#m9d7656905be500a97ee6f86b030e94c91a79507a
