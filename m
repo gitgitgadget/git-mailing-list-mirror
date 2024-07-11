@@ -1,124 +1,201 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC45B15B0F9
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 12:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D95F14F9DA
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 12:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720699421; cv=none; b=CSeJ0NPqosJuhibGrsnNfY+VKlNF5A32KS+ijJABwHZFso8LADm2um1PTPfvhrVPov0hN4uhlb3Oc9/2fwQxwIFZrO29oeYqmaLCv9O245tmnSPF2WD1mV7Khtn7FLkvm44ZHtwjWu1OBsWVfLAnLh6fdjIRi3Wz9HB7YPAzI1c=
+	t=1720701594; cv=none; b=BBgRDTbv+MoXOgPEASQWvk15KjqAr1AkPEF/eOUCb/tugw7mTdu6Gbk2JsfMbh6reQArtRxE2+wcOUce2MaQ0X5ahkLMQWBEwkW4wZ7sAPT7OhQ9SxaaPYpzK8/VAJpqDUPboHUpS1TDY7QQN2L/NpgREX9eQW6mtk8XiUdIg+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720699421; c=relaxed/simple;
-	bh=bZXNi9akDZF2r910OiOElkF6lHacl5qsGG0iJAfFqRo=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=GV3PpppWd12O0Yb1STw/g+qZsz9g9KGyC86fbCjbO+2/VivovdarRoIDyHv2E0++ZY/O2miNmcFT2DyTmeJgCEamzBUkZFHrFduXwcTsS38kOVjItOayW3P48ux+zS9SNIP9gxUoKsepyyvnPbvefxwX0Yk95aEa5HwiLtSBpXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=SOyIXF1r; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1720701594; c=relaxed/simple;
+	bh=trMQ7IDeyqrwNODR5BbfQvpP4mgGunNOVVY6DNwEajo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lySWVSF+8ucGNamtTyIXoJ+YFul0uuxhC6iIK0rqvlLsEIXOv5R2QVF/QcgzXGlGWAbD7aiS7uhYieMNhlCPXlpeanrjig1g51+Rbl5lcdwxVp6UOLD0hPEqar3eBGcsCrRVP8qDlQCovDruAoos6D2xIDBoVUgPM7C1wQjkTUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9uYO3os; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="SOyIXF1r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1720699404; x=1721304204;
-	i=johannes.schindelin@gmx.de;
-	bh=F78m3v/wG1FSS3YbZbw0QXYEOVI6GpKpm6dve/qA9o0=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=SOyIXF1r/rwVvr08Ia8nGMi7G5gzP/nM6Pj/YTQ6oPftPHSySOA7lLuZDVzFw41L
-	 X1ys+GbIWTW8MCU54oJR/EYEDfKe+p2+izD4TyfRx3JAQ8Y/Qs5Tya5p+vtvTaGH9
-	 dYjXwTT4Ehs0JEYjIReGGrWKRHLxfBXewvItwz89SEmmXCXEJLMX+0GHYx17xe6Ut
-	 yAfV41VAfPZ19qEiunN+i+qmCzXEFVD1/tnDKgqiZYxR2+oaBqaLEv//665u7DeZy
-	 AWfT++/Y27mjqX/WI6v4zP8L78LUE2sFB9S7ZfjYV1osfbYQRLh/p7pY12LUBQ67m
-	 zACTX6AhzqgJkSwVnA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.84]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEFzx-1sZLJJ29rx-000urr; Thu, 11
- Jul 2024 14:03:24 +0200
-Date: Thu, 11 Jul 2024 14:03:23 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: phillip.wood@dunelm.org.uk
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-    "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] var(win32): do report the GIT_SHELL_PATH that is actually
- used
-In-Reply-To: <8612a47b-18c4-4071-8827-56b4f3bd0d80@gmail.com>
-Message-ID: <66345b2d-6662-710a-5513-6cc70507b4d0@gmx.de>
-References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com> <8612a47b-18c4-4071-8827-56b4f3bd0d80@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9uYO3os"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-70445f0d9b8so469535a34.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 05:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720701592; x=1721306392; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VUbOyLFI9X0gfZuOeKbRFo+QjO/z/B+oxVHS2XjRNA8=;
+        b=c9uYO3osP/qWzbMMmumRqsTvEq/5Zu9hrc90Jf6tiLuWOdzTKo5VSi+XWuEd+hIj9f
+         HpNzz9uW1iijy9YWQH1wKP0cFTPh9JqX6ZkGTKCyL6KcNfipzEVtkjYBk2f0YOCWFjyZ
+         TcZuwAYyjWNeNkJGJHop05u8Vb4c5AOlooHdK74+wxMb3eDo18GFuFE/pB/gNUUBuveu
+         FW/Qo6pzr2cbbIM6afVodUjB7yKHuer54ByXJNUZLpyLpZP/oSuPyWP++n+AL8pSbyCz
+         dH88ndIx6qrnlhu9lf4aQCNS8USOivtAH8mZmDeEUHtify/0hpJTV/hxXrXREWRWuHDZ
+         4gaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720701592; x=1721306392;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VUbOyLFI9X0gfZuOeKbRFo+QjO/z/B+oxVHS2XjRNA8=;
+        b=K4fo99fyVuLoNdlrNUeZ1NkzEhBmEyQvSQM8LJUIM9OGMTdcim5wHbf8XGe+KuRKp8
+         b/u34AIYstYLyr3ViC27Icz/W0m82/cDouFzZXXNHDoP7pEWDC+RQ9FX+4XaxnygJOCO
+         npdqrx5HejPSjemb+y/xiUYPKgs3h+lDXmCeSuMCoK98wXKF1Tk6sLa4c85pJBBlzsmR
+         OdoS5WOFbKgD0UzdZoxO/cfa18pksVGAuza+A9FKfssvNxORWjVGqJ2XZptEyh5aMizz
+         qeh78KOjXCGi6hWzqVyMwBOybG6zJrNI+XsSN3MDNcgqdafdh+gsN0y4nrrrxPoZjNzo
+         bp1w==
+X-Gm-Message-State: AOJu0YycXnlpLscHRm4dPeH+qRaRO8ZBdgjHWHBlGcPgTLWg6cqagykg
+	GV8bcGS+mw933jkudplSdQQeAZPSkygYDAGcsMs6rn34sgXAJ4NBSulm9A==
+X-Google-Smtp-Source: AGHT+IFKH6oFuKpSTyk7yvfZy346IXFCfdy6SgJPuYE9a1SI4ibMTiErk068ZCof4H7w1pfoMs1sVA==
+X-Received: by 2002:a05:6870:171e:b0:258:3455:4b02 with SMTP id 586e51a60fabf-25eaec511f3mr6820633fac.51.1720701592326;
+        Thu, 11 Jul 2024 05:39:52 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b439e95afsm5527372b3a.210.2024.07.11.05.39.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 05:39:51 -0700 (PDT)
+Date: Thu, 11 Jul 2024 20:39:52 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [GSoC][PATCH v10 06/10] builtin/refs: add verify subcommand and
+ verbose_refs for "fsck_options"
+Message-ID: <Zo_SmLOg8znMJm52@ArchLinux>
+References: <Zo6eJi8BePrQxTQV@ArchLinux>
+ <Zo6fFS7xzFwWKrEW@ArchLinux>
+ <xmqq7cdtue7c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YQuOb+slHGrGG56+N6kQ8SNpCfcGgQetduEj+cO7t4Fr0QU4wVP
- D/Vo7uUw9bs8sBn3sOsNj1t8CiD14d9A3SqIns7aZ1NgU4J7YGOYhXXTZd0IWdBhfO8fOmK
- rDmMye+rgd3a+q/m5xCHFGzoi7ZHkWWCOqsuNJ0kcBK16u4UKA6yUtl06TPiMyxOZ3AjJ50
- 71K10Gwa3ueZL5N08PjQg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tKkApB7/5w8=;usjr6688e30Jh8pXvtJcmapOtxP
- xbeQx9C5VKv2ulGBNAm/J5kP8FNpSKiI45ltO+5uBXTEwKIo39E/OOawIpvvXam49NTQWVtxG
- 5r6kBmaK2SFgIWgBXNOu33+eqfS/+8kA49H1ydztUQh5rRG47E/1Culk8RzKQs0ohdMoVjqre
- rjBKL9iFSQgAzFOLNH2ndx2mdsCmMuv9BYCyjrfppxGMtxaqRQhKOHvuSE75mKIjOqWq//8+c
- 60slh6xYkykEreCcmaDTA0qwHrVJ/avwjrJXLY6+VyPeCbtb+Dhd21vhc6luZ/7BVrcL4ic67
- x+8w3Zm8O0LvTxsh6raQnywLub/Lts9mZ8W4IYegUivWaw/myWDsOhIfTBx9iOOMP3aB1xXnh
- m4rjfY5piM1rEaXkXfDyDdZNrRMnrn4TYqCWAbDAOfFdDWhMqmaInlVat4cqAU+5DhdgOaBb0
- 0J4T4f9WFCQsrWvSjTAWr6y8yU3SH2VakYCJUfej2fo0fuXqgTO1PpeklWp6KlQSObo/W0FtW
- So/+iro1UDQ7APRCnGW+mgTYAGw10edW4RZg1sktvuctNUza7Zef9Hj+J6JeL1h04XeOMhTTY
- 6OMt6uRzrL2m+8UDM6jNSOjfCzUmWUj7B8z5Zo3rf7WHfFUGBCDQDSFfqT7UU536eIjo+N0ra
- 6knYBTqZMq62XBwqpkAMUJHtDtmWQk0BtoVI99Vy3Lww4ysNKrsYZfN2qLGtdvPsgsVwhwaqN
- IdKLz5ACzvO30DB+oEsrOwVOrwlpv/g46qLILauDzJ1Gbthm8GtRWzqOjsWMRUdayYOs+fhh6
- S7U3SlOh7KIwhYWTj1NyGX3w==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7cdtue7c.fsf@gitster.g>
 
-Hi Phillip,
+On Wed, Jul 10, 2024 at 02:31:03PM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > Subject: Re: [GSoC][PATCH v10 06/10] builtin/refs: add verify subcommand and verbose_refs for "fsck_options"
+> 
+> Just saying
+> 
+> 	git refs: add verify subcommand
+> 
+> would be clearer.  If you really want to talk about two modes, you
+> could say
+> 
+> 	git refs: add "verify [--strict|--verbose]" subcommand
+> 
+> but that may be too much.
+> 
 
-On Tue, 9 Jul 2024, Phillip Wood wrote:
+Thanks, I will change in the next version.
 
-> On 08/07/2024 14:02, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Thanks for putting a patch together so quickly
->
-> >   static char *shell_path(int ident_flag UNUSED)
-> >   {
-> > +#ifdef WIN32
-> > +	char *p =3D locate_in_PATH("sh");
->
-> If I'm reading is_busybox_applet() (which only exists in git-for-windows=
-)
-> correctly then this will return "busybox.exe" under mingit-busybox rathe=
-r than
-> ash.exe, so the calling program would have to know to set argv[0] (which=
- is
-> likely not possible unless the calling program is written in C) or pass =
-"sh"
-> as the first argument. As the code to support busybox does not exist ups=
-tream
-> I guess that's best handled downstream.
+> > Introduce a new subcommand "verify" in git-refs(1) to allow the user to
+> > check the reference database consistency and also this subcommand will
+> > be used as the entry point of checking refs for "git-fsck(1)". Last, add
+> > "verbose_refs" field into "fsck_options" to indicate whether we should
+> > print verbose messages when checking refs consistency.
+> 
+> Is there a reason why this has to be verbose_refs and not a simple
+> verbose bit?  When people see how it is useful to ask for the
+> verbose output while checking refs, wouldn't people wish to add the
+> same "--verbose" support while checking objects, and at that point,
+> wouldn't it be awkward to add verbose_objs member to the struct and
+> having to flip both bits on?
+> 
 
-BusyBox-w32 is unfortunately displaying strange performance patterns. It
-is partially (and expectedly) faster than the MSYS2 Bash, but in other
-scenarios it is substantially slower (which is totally unexpected).
+Actually, this is really what I thought. I just want to provide more
+find-grained control here. However, when I implemented the code, I also
+felt awkward about this. I can't find the balance here.
 
-Some time ago, I tried to make this all work and investigate the
-unexpected performance issues (and hoped to fix them, too), but ran out of
-time [*1*]. That was almost two years ago, and I am unsure whether I will
-ever be able to elevate the BusyBox flavor of MinGit to a non-experimental
-state.
+I will improve this in the next version.
 
-My original plan was to eventually no longer include `busybox.exe` in
-the mingit-busybox packages, but instead a copy of that executable with
-the name `sh.exe` and thereby have it work without that hack in the Git
-code to call the `busybox.exe` with the `sh` argument inserted before the
-regular command-line arguments.
+> > Mentored-by: Patrick Steinhardt <ps@pks.im>
+> > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> > Signed-off-by: shejialuo <shejialuo@gmail.com>
+> > ---
+> >  Documentation/git-refs.txt | 13 +++++++++++
+> >  builtin/refs.c             | 44 ++++++++++++++++++++++++++++++++++++++
+> >  fsck.h                     |  1 +
+> >  3 files changed, 58 insertions(+)
+> >
+> > diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
+> > index 5b99e04385..1244a85b64 100644
+> > --- a/Documentation/git-refs.txt
+> > +++ b/Documentation/git-refs.txt
+> > @@ -10,6 +10,7 @@ SYNOPSIS
+> >  --------
+> >  [verse]
+> >  'git refs migrate' --ref-format=<format> [--dry-run]
+> > +'git refs verify' [--strict] [--verbose]
+> >  
+> >  DESCRIPTION
+> >  -----------
+> > @@ -22,6 +23,9 @@ COMMANDS
+> >  migrate::
+> >  	Migrate ref store between different formats.
+> >  
+> > +verify::
+> > +	Verify reference database consistency.
+> > +
+> 
+> The error reporting function for refs consistency check was still
+> about reporting a problem for a single ref.  I am wondering how
+> consistency violations that are not about a single ref should be
+> handled.  For example, if refs/packed-backend.c:packed_fsck() finds
+> that the file is not sorted properly or has some unparseable garbage
+> in it, it is not something you can report as "refs/heads/main is
+> broken", but those who are interested in seeing the "reference
+> database consistency" verified, it is very much what they want the
+> tool to notice.  How would detection of such a breakage that is not
+> attributed to a single ref fit in this "ref consistency check
+> infrastructure" that was introduced by [05/10]?
+> 
 
-In the context of the patch (or now: patch series) at hand, I don't think
-we need to let BusyBox play any role.
+Yes, I didn't consider other cases. Although I have said in the subject
+that this series is to set up the infrastructure of fscking refs. It's
+a little hard for me to set up a perfect "fsck_refs_report" at the
+moment.
 
-Ciao,
-Johannes
+As you said, I think currently I should consider about the packed-refs
+in this series. I will find a way to achieve this in the next version.
+Well, I could say I intentionally ignored this problem. But we should
+face the problem directly.
 
-Footnote *1*: Interested parties can find the latest state here:
-https://github.com/git-for-windows/git/compare/main...dscho:git:busybox
+Really thanks.
+
+> > +	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
+> > +	if (argc)
+> > +		usage(_("too many arguments"));
+> 
+> I do not think we want to change this line in this topic, but
+> because I noticed that the issue is widespread, let me make a note
+> here that we may want to clean up all the commands that give this
+> message as a #leftoverbit item:
+> 
+>     $ git cmd foo baz
+>     usage: too many arguments
+> 
+> is very unfriendly in that it is not immediately obvious to users
+> which arguments are excess.  Should they have given "git cmd<RET>"?
+> Is it "git cmd foo" that does not take any argument?
+> 
+> If you said something like
+> 
+>     $ git refs verify baz
+>     error: 'git refs verify' takes no arguments
+> 
+> or even
+> 
+>     $ git refs verify baz
+>     error: unknown argument 'baz' given to 'git refs verify'
+> 
+> it would be much more helpful.
+> 
+
+I will improve this in the next version.
+
+> 
+> Thanks.
