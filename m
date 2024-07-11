@@ -1,142 +1,189 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D12B15539A
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 09:18:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2237E1552E7
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 09:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720689523; cv=none; b=qpUshmIjNx+yqAqpVUMea7vHh/ErrPpf+Foj8+vAqzX/Q37FaaBbVmpgDw0FsAoP/KBD7MYQI85j3GHvHRY5Ec/ogma5OxZGPG+zsVqJL4G9tSaccGdWvE4o1rxf6dS7ncmPw5/cV/w/S0XR+xCX376ikJPbmVj0KeOEXsS81H4=
+	t=1720690512; cv=none; b=eqLJD8cmXFFOgzt1HTLzyxMV20YJtJr1RT+JYrR3pUGKyttLrvqw62Bs1Lee2G1mvVJZYg480uqrQT3Jy0cVhjEZflxyyqDiUCj0H20KxZr6DKgPenRN74BYN1JmWeDtMUVhDJ5NjaXTJ/11JBlMkE7NgpOl8RrZgHh2AwRbQK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720689523; c=relaxed/simple;
-	bh=9nsHVtSzpmMrP8gogQl2rv/z4qelLjZ5ZSGACPIYsSM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qfrUdqXGGSssb5TbJv8CoJ4IKSO3JzVoYVzBD6NfYCRSzjyAjpMCMXX7i1o+PLYzGWlt1CIbSF4Rnlxtx9Q+fDRdmP58f1cS6OmYKq4ABSXJgMVUiih+xb1/wVOHlqtBNpQ6LK6u/mi+maRAihldIkjLwXpdeGYQprp/JOKkjpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JE0C0fQs; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1720690512; c=relaxed/simple;
+	bh=l3lORvygJA+iZ4RgFURIwcnst4AptY2zAPzSNnak6VQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cHfzIN9dFJJQ2F8YIO9NbCF+aiaiJ1FuHIMKMebVNugUxUy4R+itv2IUS7d2e+hpCka5gWB4yhc2gStwVjSFHzMv/rcGh6m/1pp+bKOLk/enoF7DKv2m3oVjFW9h3Grdm05Svjddn8QPLfkqZGUJVMVrMch2amUAJkoZJON/cS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LM37wIRM; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JE0C0fQs"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-59589a9be92so898554a12.2
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 02:18:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LM37wIRM"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-25cba5eea69so326892fac.2
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 02:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720689520; x=1721294320; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:reply-to
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9EfBrHxV9D96cCz2m89pOM0q4AyTLnfUBJabbw7TSBQ=;
-        b=JE0C0fQsmAjWyZdyK89rsw0bOJiyR/q4y2ywD1H/0DCKD9waJVCgV8GIiCq7LZofx/
-         ZACTyJcfBYaaxSwi/GeKPuX87ezkXkOzjjjQdSR0cuO3vvcvq40biV5+T4PdxoRKtJM6
-         papU39j9+yMYuhHeDqcRWvUB7zzN6PIj9Snr//v5tMNJ7ps8RNQudpEVhPK7Tb8oVLFK
-         jR1g34T5l19tUKsaXhDxiimrcwYMG/aRMmDPeietnp6QscHD7lLBdp6P1Gb4d8EocdWC
-         f5dnXuXjAYtvqhqqToUz81jHsKJoqU1qWXE2oYwfcXIttnfugv0VCFIAosoyqtp+tb1r
-         Qj3A==
+        d=gmail.com; s=20230601; t=1720690510; x=1721295310; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KdVKK9CzchpKJBdO+F4Q89hw2FryHdyoDiO/CnXVIHk=;
+        b=LM37wIRMeMzhgerzNYndGoK7rPHyXsb9VxbpTiXpMvfO6S1XI1S117y/C9yli6h5XG
+         pt9zyUgFQ1FtZafzCcOx7N8jFktNcIqH4RWtN4yygsT+LhGgn8O3ZXOOAMcCnuPVH/jU
+         peI8HPkTuMVHDLtkvQBJHVH9/wvLag9E1QRUifPOW7t87p3cK4vhfO/PX65jTghu2B2o
+         iGDNQ9yLuAaiR/XDsM1Eq4tWPZpT4YVqdl5XymhxrI+SsuQHSOVftUsWBViux9r7uL5r
+         vEwP+kjvfSoGJ0Rm6iM+1VpOsY81+LUzF029kOeMzSe6dw2lCT/QAGnzBb5Hf3I5tWyN
+         Xatw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720689520; x=1721294320;
-        h=content-transfer-encoding:in-reply-to:from:reply-to
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9EfBrHxV9D96cCz2m89pOM0q4AyTLnfUBJabbw7TSBQ=;
-        b=RHONseg8Eg6C7WUAQI1s05mVKRELX2P6tlO7xvnSD28Esi0BzytvhxUvORMZ7JvMW9
-         cQTbkzrcXp1IGLeBtFcj0nDbMCvDVsrDLMcSl/XGAoqYknwwVjgE0sW7jo2xScm/fdgW
-         XDh5VJAhegMYkKkL3293wIOmXbItibkypH2hgNPDdYvnmL3ryUDwqHQO3rhxlT3rgyPl
-         RK1vKZUBnEmNAVUNVzopVBGY9r8bpQRLdl/EYy1t4yK6Lwi3wTs6jpGFnd/gTQBQXN+H
-         cwfWtH0AkkYF0BAnkfBMtjLW+dlt1SILmJL+yCkEHNyk1eUZCwIIwa8C5dfkRxXMZ47m
-         QtFw==
-X-Gm-Message-State: AOJu0Yx5ANcZhp52oWfpd0l0GLPnSgjVvV59B7yTBIzjsl4nP9o1nsjz
-	kmtdMTl3ooF9Mpj3qHrnWcK2cE9FTjaxKCbDhex9XSmjqxCC9Aoz
-X-Google-Smtp-Source: AGHT+IF6NMxT/ROUavTyU4TYb4mqHEU2QZpdYuczDkalxYt1doNjoDTaXfankh50rjqjCo6dqjcgdg==
-X-Received: by 2002:a17:907:9496:b0:a72:7f22:5f9e with SMTP id a640c23a62f3a-a780b88062bmr671909466b.57.1720689519374;
-        Thu, 11 Jul 2024 02:18:39 -0700 (PDT)
-Received: from [172.30.9.8] ([131.228.32.168])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a7ff722sm235626266b.123.2024.07.11.02.18.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 02:18:38 -0700 (PDT)
-Message-ID: <3f69ec61-1ee3-4f4b-a773-86cbf73a627b@gmail.com>
-Date: Thu, 11 Jul 2024 11:18:37 +0200
+        d=1e100.net; s=20230601; t=1720690510; x=1721295310;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KdVKK9CzchpKJBdO+F4Q89hw2FryHdyoDiO/CnXVIHk=;
+        b=UhLnq9ouh74zyXY5wuUyv3/ucwbSym05gKfznSj178jtNwEodTXymoHCPKEqebKy8l
+         JcEPZbh1V+6vjuxwUgiTS12KsymN6I+d+8s+m+eLw+Gceo196BPyj9zkYMv+8xlbFimS
+         CkZNQGAfYz6ZR+zLf/scYOiEzMyqqDl+bxqw/obYRzapsY5IamuSMhGKytQrPL+Bcxdi
+         91Z27lP7NczS1eLy1z/l2N5Jq7zv3Jn4i2uEqutzsoiI+zMkhcUHyRrDTEe66NesOV41
+         94WDXNOm7iB7wpdoeSXHs6Bhaf/hF69oH5rVuHTkUFob/W5Gg1c+3x/BnsndkJj2U5ZW
+         GM9A==
+X-Forwarded-Encrypted: i=1; AJvYcCWVGcmU96qOiqU2e+vykNtuBPtIGM2Oxyac4oUsoLqXBrsVWfeUUEHa4xqutHWwP2/Y9zd+WMnAinql7iEYElYVq3Jn
+X-Gm-Message-State: AOJu0YxBIrJggKCoEnJ8vISbt6EnYHdg4aHtfFXSXYexteSJYr8P1HtY
+	Y6O7iWDheAw2lxLSsz9LX9IPMxC7hOI37GXpqq3vdjUjZPyUEIiTI7w+unWL9DVo91ydA5SLBLt
+	UHOujz8yp0pZmPL15zgzBhRwz70k=
+X-Google-Smtp-Source: AGHT+IGXN6e/+JcYZR9khx47Nh1udBvVeNtBpxtex8bWYmAOKxC+rMhCT+OMKB6ghtesgSe1VehrCML5zmwq8Z7LVww=
+X-Received: by 2002:a05:6870:9a0c:b0:254:a009:4c2f with SMTP id
+ 586e51a60fabf-25eaebdf9e8mr7078390fac.37.1720690510007; Thu, 11 Jul 2024
+ 02:35:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 11 Jul 2024 02:35:09 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20240710154620.GA3097664@coredump.intra.peff.net>
+References: <20240708140350.622986-1-karthik.188@gmail.com>
+ <20240709144931.1146528-1-karthik.188@gmail.com> <xmqq4j8yflrq.fsf@gitster.g>
+ <CAOLa=ZQXZ6DyE3YjuVU48nQcj0xuW7uPoPvg2yqktk+S6gXwsg@mail.gmail.com> <20240710154620.GA3097664@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: update http.cookieFile with in-memory cookie
- processing
-To: Junio C Hamano <gitster@pobox.com>,
- Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com>
- <xmqq4j8ycgjj.fsf@gitster.g>
-Content-Language: en-US
-Reply-To: xmqq4j8ycgjj.fsf@gitster.g
-From: Piotr Szlazak <piotr.szlazak@gmail.com>
-In-Reply-To: <xmqq4j8ycgjj.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Thu, 11 Jul 2024 02:35:08 -0700
+Message-ID: <CAOLa=ZT-psS1NecoppGOVdxgn+kMqi8qx2vCLMKNXB4n+5hE0A@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/push: call set_refspecs after validating remote
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000009e3181061cf57a75"
 
-On 10.07.2024 01:05, Junio C Hamano wrote:
-> "Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>   http.cookieFile::
->>   	The pathname of a file containing previously stored cookie lines,
->> -	which should be used
->> -	in the Git http session, if they match the server. The file format
->> -	of the file to read cookies from should be plain HTTP headers or
->> -	the Netscape/Mozilla cookie file format (see `curl(1)`).
->> +	which should be used in the Git http session, if they match the server.
->> +	The file format of the file to read cookies from should be plain HTTP
->> +	headers or the Netscape/Mozilla cookie file format (see `curl(1)`).
-> With line wrapping it is hard to see if there is any change above
-> here, but I assume there is none?
+--0000000000009e3181061cf57a75
+Content-Type: text/plain; charset="UTF-8"
 
-Sorry for bad formatting, I'm still learning.
+Jeff King <peff@peff.net> writes:
 
+> On Wed, Jul 10, 2024 at 06:12:21AM -0700, Karthik Nayak wrote:
 >
->> +	Set it to empty value, to enable in-memory cookies processing.
-> Is it understandable what "in-memory cookies processing" means to
-> expected audience of this manual page?  I somehow doubt it (I
-> certainly do not know what you wanted it to mean).
+>> > In any case, an obvious additional fix on top of your change might
+>> > be to do something like this:
+>> >
+>> >         diff --git i/remote.c w/remote.c
+>> >         index 5fa046c8f8..d7f9ba3571 100644
+>> >         --- i/remote.c
+>> >         +++ w/remote.c
+>> >         @@ -682,7 +682,7 @@ remotes_remote_get_1(
+>> >                 struct remote *ret;
+>> >                 int name_given = 0;
+>> >
+>> >         -	if (name)
+>> >         +	if (name && *name)
+>> >                         name_given = 1;
+>> >                 else
+>> >                         name = get_default(remote_state, remote_state->current_branch,
+>> >
+>> > which would give us the default remote name, and we would not call
+>> > add_url_alias() with a bogus empty string to nuke the list.
+>> >
+>>
+>> I'm a bit skeptical of making this change. Mostly from the user's
+>> perspective.
+>>
+>> With my patch currently:
+>>
+>>     $ git push "" refs/heads/master
+>>     fatal: bad repository ''
+>>
+>> But with this added, we'd be doing
+>>
+>>     $ git push "" refs/heads/master
+>>     Everything up-to-date
+>>
+>> This is because we actually obtained the default remote here. Isn't this
+>> confusing from a user's perspective? I mean I agree that an empty repo
+>> name is something we should support, but it also shouldn't be something
+>> we simply ignore?
+>
+> Oh, I misread Junio's patch in my earlier response. I was focused on not
+> setting name_given, which I thought would result in a NULL return value,
+> and didn't notice that it would also mean using the default remote.
+> Something like:
+>
+> diff --git a/remote.c b/remote.c
+> index 7f6406aaa2..883cf6086e 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -703,7 +703,7 @@ remotes_remote_get_1(struct remote_state *remote_state, const char *name,
+>  		if (!valid_remote(ret))
+>  			read_branches_file(remote_state, ret);
+>  	}
+> -	if (name_given && !valid_remote(ret))
+> +	if (name_given && *name && !valid_remote(ret))
+>  		add_url_alias(remote_state, ret, name);
+>  	if (!valid_remote(ret))
+>  		return NULL;
+>
+> was more what I was thinking. That is, inhibit the empty string
+> explicitly rather than letting the emergent behavior of add_url_alias()
+> do it for us. Or maybe even just:
+>
+> diff --git a/remote.c b/remote.c
+> index 7f6406aaa2..a0b166131f 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -690,9 +690,11 @@ remotes_remote_get_1(struct remote_state *remote_state, const char *name,
+>  	struct remote *ret;
+>  	int name_given = 0;
+>
+> -	if (name)
+> +	if (name) {
+> +		if (!name)
+> +			return NULL;
+>  		name_given = 1;
+> -	else
+> +	} else
+>  		name = get_default(remote_state, remote_state->current_branch,
+>  				   &name_given);
+>
+>
+> to bail immediately.
+>
+> But all of that would be internal refactoring / cleanup on top of your
+> patch. The user-facing behavior would be the same.
+>
+> -Peff
 
+These should work as intended on top of my patch. But I will skip doing
+these changes for now. I do see the merit but I think it is also okay
+the way it is now.
 
-I pushed PATCH 2, this time without curl/libcurl terminology (i.e. 
-without calling it in-memory cookie processing). Hope it helps. I also 
-mentioned there that http.saveCookies has no effect if '' was used for 
-http.cookieFile.
+--0000000000009e3181061cf57a75
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 78c498e96ba5435c_0.1
 
-Regards!
-
--- 
-
-Piotr Szlazak
-
-
->
-> https://curl.se/libcurl/c/CURLOPT_COOKIEFILE.html has this to say:
->
->      By passing the empty string ("") to this option, you enable the
->      cookie engine without reading any initial cookies.
->
-> But http.cookiefile is also used for CURLOPT_COOKIEJAR when
-> http.savecookies is true.  Its documentation page does not say what
-> would happen if you give an empty string to it.
->
-> So, a casual one-line mention you added is a bit irresponsible.  At
-> least you should warn against setting http.savecookies if the user
-> chooses to use "" for this, or better yet, fix the codepath to use
-> http.savecookies to prevent us from writing to a file with an empty
-> filename.
->
-> Also the libcURL documentation for CURLOPT_COOKIEFILE has another
-> thing that is a bit worrysome:
->
->      If you tell libcurl the filename is "-" (just a single minus
->      sign), libcurl instead reads from stdin.
->
-> So you can easily get your git get stuck by doing
->
->      git -c http.cookiefile=- fetch https://.....
->
-> as libcURL will want to read from your stdin, while you are waiting
-> for the fetch to finish and are not typing anything?
->
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hUHAwZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOThLREFDYldGUTZZSlB2WUJTZ3JQZFBIWHhneWRVUQoxdFFXV2p5ZGM4
+YWx6WTVML24rR0x0a3g5N3VoTVdkZmlQKytwWk9LTGhCcXRBOUllN2dudWc5TWtiWldBSGhhCndL
+My9NRDQ2bE1IbjBQVEpMMTc5dXJZTUpFUW9SRkw5VHA3dUhHeHdwZ2ppTjlUczRTLzJYZnJvTHFX
+bEt6d3UKbjhwNUhETXhrNWpxUUhjOCtVeVNjRTRkZVRjRklsRk1yNWM2RDhTSzNLeUZSVy9YSVg4
+dWVuZkM4ZXlyTTVRRgplM0hJbzdLUWxlRG44S0NGQzhDdXRiNVFsQjVCaUo3d0h5NzNOa1JreFlz
+aHFuSXdRbmhSZE5EMGlqRkNGYm5pClRacVU4OFVpaVhlRkoxZmhnQllpSjQrcVZ2M0w5a2I1dWpX
+bEVad3kyekJYZ01qSUFKYnEwc0xxSnl3cU5ldEIKYTFxbmhaSlZRTFY0M2xKQmw1TXNhbnJyVlVn
+YXJ3S3RMMjYxSDlCR3VhNFZXKy93OWcyTEEraCtheHFQcjJyZQo1SEd3eElleFdPTER3U01lT2Vq
+MkJYdjQ1WmVJN3JFdHJmQThHRnJmcVhxWDNUeldUYzZrajhHaFFUUGFMY1BRCm5lV3FNYzhvWWMx
+OG5DZXZjSGpiTXNNWVVFSkRBSXJCaU5rYVFUST0KPUVsOXkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009e3181061cf57a75--
