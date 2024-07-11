@@ -1,191 +1,189 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B1015AADE
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 08:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67781581F0
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 08:36:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720686658; cv=none; b=NtVtpIx1gudUmIxEQB2DXNVY2/lc54LD2es7TFC3+FKHorekYC0dK1pcmBjMJMhvHoKYkbidd/i7rndeYO+5Wbj6T4Hqot58sc+oHZvsmqqfBXdVwq1qbOI64M8booJTQRnVIvifAs7avV1Qux48+frkySXEbivnK4Ov/PUaFBI=
+	t=1720687014; cv=none; b=XFxr0e4Vbd7oUTibgSiTwZJV90pxaPAXkMk0BzeQACkaHTpH0vXekqb7mlHotToZdoqNXZAGTp5Tfo2jeHHtcdVHZAyipMOEP9G3oJ2hrq9sc1Tt9S8SNRmrnqoxNMHrNJFCP5hIJZMahWeOx5H+hhx7fnkQkwBPi+9Y3KJYqB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720686658; c=relaxed/simple;
-	bh=FY7iq+o9Jdlvx6uO13rMRxAKbPkrnBgYppJ6U9yNyfA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jh5veXd/i4jfAUUNjl4icvzzT3TDxOgKHUizzVLJzmXrBDkAsqVy4AWjSUKrhr6TF2lGS2+fuxGrIah/nmaz3nuydNTe1bsO755bHNJEhAVuivfXwEymbHu+EgUVs3ksh7nEglE0uAmgvLUukaybeczhS1sHZy2AVW6+pojbI9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mMa+KVRC; arc=none smtp.client-ip=209.85.208.177
+	s=arc-20240116; t=1720687014; c=relaxed/simple;
+	bh=poDMSwEc6B3SCAgLbOXGWv/CHhTC072yPl7VgW2bHJc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qbVSulglq7lUy2FEpa0HXGRGZgbjxRPOE3WjmCisQnYM/Pxk8I5PQXWQijYM3c1HQY7oym5GyulKIZLoONcEODnHIIvkE4MIfUMQrha4d9JGfNJHNRedX36CcRRwOIB3rZlXJgkKrc4GwPvU8xoGo7ytJZAqpgQ/Ig/GNJQSNwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kZwk/n0h; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mMa+KVRC"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2eebc76119aso6835781fa.2
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 01:30:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZwk/n0h"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-367ab76d5e1so182170f8f.3
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 01:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720686654; x=1721291454; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1720687011; x=1721291811; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L5SUSF9m7+RPYWOPd0jRlpGmlM9LjgaKphpw+G8CHMY=;
-        b=mMa+KVRCoGcL13Sw0FlctGSNVdXyGXBH0T674jIQaUckq5stlBBj4ridUnl5yzZacn
-         JUQzs2Ejj3CisSNJaemUopIsKU88Awg5CTTyi7Y/2+Lhdso0rixg3/KkT1db31vmMW0B
-         Iv0xpucMKiRUigBXhr/w5tKlZ1XoidFGUMNZfkC+kKLM3oGsMltTQZUH3blA7+eMj26/
-         Nt5Fmzs7sKv/tGNL9ViUGY7BScsqH3dlY0u36Atmv/wvm17r+Tp3Y9b72w//+aU4X17s
-         piWLB1HxrwYOxHUgXUDH1/ed1h/gb/YZt0AfydZSEAoBjOVMgP70WnmxdKqJuA8cGYCj
-         unqQ==
+        bh=Nz0sBk0HrVeC3HH2mUkH55UALO3tE+nZbAKvzx3coII=;
+        b=kZwk/n0hpulad1W3Ovy/SLsLthwD+OnBYG1JFU0NVKQZ7uCwI0LO/xW33u8yRe1Qdf
+         0+Sj+Yh9OSHAMvqDi4JSjALgMZ+/nISuSPcg/MQ6qkFz2din9GOojIvUUicQ97mnX1Li
+         XTlY2gm2o2jImvf/u5eW/JYEcixps0QosjZIfeXLGVN+/pycZiWXWy9quz2rIFcIMzQ1
+         VNPewiV31WmtYZgperMvRiW+1CIRNYJX2kvszZRRrI4WRIkSc4+XekZTJVhein/6KKng
+         ifaCBRasPWoTIrH64ZujJJv9/WMadkDqEaYsqEm/htR5vvh7MLNcXpQwTbSJB6ufAuGw
+         zZpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720686654; x=1721291454;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1720687011; x=1721291811;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L5SUSF9m7+RPYWOPd0jRlpGmlM9LjgaKphpw+G8CHMY=;
-        b=jbTJbntc7xGkDxH60ZHwaixVtHsPtE6GT1QE+5a9RouSUaRLTL9GYmnfOv+ULWnXou
-         OlwTqMSOA4VJz8/ewRp+tKT84ewjweeNAcD5Zeah0/BwU8PyXpTzITZkSNs8xQHWw9tS
-         jcJBWDDSyDaYvXDNb7hEO2p6/CZGPNaggnZmGDNSmK91naNpRVQDDkjnS1yDnbIEgA0h
-         0ElFSh+tF3PXNIqifr+nbXGR9abQodnC4ZVEuK1q3zFjNriNKT/T+ag4w7ogQWa5Hv9/
-         r4+kgUeX2CjFE2LACmuHjnUD18fPLAnYWCaBxXShdrjfUFleKi4jwT77DFIxJf8lk4vJ
-         NLVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWkAWWUMTsM3RewFj7IbDx4Cg0thfbc7pxF56+30NuL19McaN84zp3+Cy2arEmi8tXt9iqFdCxX2yPYOuSTJSxJSD7d
-X-Gm-Message-State: AOJu0YxCitojn2krHqnBe26TgcFVZi6J59/4RgYKO4GAEGddAnfZ2N6P
-	KG2OA2jhwkvjjoDo3ZTFFEgkRCPhrSoQjIvwo4WdQZ+O2Y3SfV20
-X-Google-Smtp-Source: AGHT+IHUafPQiBQzkXT5erPC6+td211BpeZrNG9XGXqIikQVEkY02ZjrnYjj09JcUxZ8QDYpFkvx3Q==
-X-Received: by 2002:a05:651c:1a0f:b0:2ec:5ff1:2274 with SMTP id 38308e7fff4ca-2eeb31027acmr72220461fa.25.1720686653454;
-        Thu, 11 Jul 2024 01:30:53 -0700 (PDT)
-Received: from laptop.fritz.box ([2a02:2455:826e:4900:8da7:30a3:c67a:daf8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264d5101ffsm263674305e9.16.2024.07.11.01.30.52
+        bh=Nz0sBk0HrVeC3HH2mUkH55UALO3tE+nZbAKvzx3coII=;
+        b=eqIYr30HhRz2Y75dlLWeGK3kMmqvVUmON+BjxlP/eKrWgQYqJCZzlGel/YCUoygLoB
+         CvK4QbgawsrZHsdSSPhFMhV/dEiCgiA4lInueiG9DgtgGjcqpDto9fsmW2SmhlxZ80Dt
+         Aec8XkTTtxNaTYQ1Diq465poHoArUOUdOM3c92/ihIHX+4JMwD95ZlJQykuq1pSQYDa8
+         w9FvZT1QY+XXicL3CoIklxdqFv9ROvG95uGn9hjKQeGWz5PDpuQ1LF6z1eqXqbNSRi9J
+         ZowvNg6rvnaWlyI/E5iFkRTaqDe5sRFcJIISdUJSo9vi3w286zrFFSBlKfT2oTtNDazI
+         eyAw==
+X-Gm-Message-State: AOJu0Yx/VKiama0AiBBcz4YzaEZpMGvxohnyoFUe+EKpFZVeTUPy5m8+
+	SLfyT1WzXe6uefmBsZeAcK/L6bGoct+nAXGuAEl+i7u13rtXYA7fjvhFoA==
+X-Google-Smtp-Source: AGHT+IEwKBnaz/55nIv8ZbpICYF6wRA86qwpSQ58wdPfkdBFCaqCjc0H67DjKgU/ExioNFnW1vjA5w==
+X-Received: by 2002:a5d:634d:0:b0:360:7506:2b8 with SMTP id ffacd0b85a97d-367ceacb21emr5205405f8f.52.1720687010354;
+        Thu, 11 Jul 2024 01:36:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde8425asm7116338f8f.26.2024.07.11.01.36.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jul 2024 01:30:53 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: chriscool@tuxfamily.org,
-	git@vger.kernel.org,
-	jltobler@gmail.com
-Subject: [PATCH v2 7/8] ci: run style check on GitHub and GitLab
-Date: Thu, 11 Jul 2024 10:30:42 +0200
-Message-ID: <20240711083043.1732288-8-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240711083043.1732288-1-karthik.188@gmail.com>
-References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240711083043.1732288-1-karthik.188@gmail.com>
+        Thu, 11 Jul 2024 01:36:49 -0700 (PDT)
+Message-Id: <pull.1733.v2.git.git.1720687008915.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com>
+References: <pull.1733.git.git.1719177846725.gitgitgadget@gmail.com>
+From: "Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 11 Jul 2024 08:36:48 +0000
+Subject: [PATCH v2] doc: update http.cookieFile with in-memory cookie
+ processing
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Junio C Hamano <gitster@pobox.com>,
+    Piotr Szlazak <piotr.szlazak@gmail.com>,
+    Piotr Szlazak <piotr.szlazak@gmail.com>
 
-We don't run style checks on our CI, even though we have a
-'.clang-format' setup in the repository. Let's add one, the job will
-validate only against the new commits added and will only run on merge
-requests. Since we're introducing it for the first time, let's allow
-this job to fail, so we can validate if this is useful and eventually
-enforce it.
+From: Piotr Szlazak <piotr.szlazak@gmail.com>
 
-For GitLab, we use the 'CI_MERGE_REQUEST_TARGET_BRANCH_SHA' variable by
-default to obtain the base SHA of the merged pipeline (which is only
-available for merged pipelines [1]). Otherwise we use the
-'CI_MERGE_REQUEST_DIFF_BASE_SHA' variable.
+Information added how to enable in-memory cookies
+processing. Cookies from server will be accepted and send
+back in successive requests within same connection.
 
-[1]: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-for-merge-request-pipelines
+At the moment documentation only mentions how to read
+cookies from the given file and how to save them to the file
+using http.saveCookies.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+curl / libcurl will process cookies in memory if file name
+is blank. Check curl manpage:
+https://curl.se/docs/manpage.html#-b
+This is described here in more details:
+https://everything.curl.dev/http/cookies/engine.html
+And also explained here:
+https://www.youtube.com/watch?v=V5vZWHP-RqU&t=11459s
+
+Git documentation was updated to include suggestion how to
+enable this by setting empty value for http.cookieFile.
+
+Changes since V1:
+- better explanation what in-memory processing means
+- added explanation that http.saveCookies does not work
+  if http.cookieFile was set to empty value
+
+Signed-off-by: Piotr Szlazak <piotr.szlazak@gmail.com>
 ---
- .github/workflows/check-style.yml | 29 +++++++++++++++++++++++++++++
- .gitlab-ci.yml                    | 17 +++++++++++++++++
- ci/install-dependencies.sh        |  2 +-
- ci/run-style-check.sh             |  8 ++++++++
- 4 files changed, 55 insertions(+), 1 deletion(-)
- create mode 100644 .github/workflows/check-style.yml
- create mode 100755 ci/run-style-check.sh
+    Update http.cookieFile with in-memory cookie processing
 
-diff --git a/.github/workflows/check-style.yml b/.github/workflows/check-style.yml
-new file mode 100644
-index 0000000000..27276dfe5e
---- /dev/null
-+++ b/.github/workflows/check-style.yml
-@@ -0,0 +1,29 @@
-+name: check-style
-+
-+# Get the repository with all commits to ensure that we can analyze
-+# all of the commits contributed via the Pull Request.
-+
-+on:
-+  pull_request:
-+    types: [opened, synchronize]
-+
-+# Avoid unnecessary builds. Unlike the main CI jobs, these are not
-+# ci-configurable (but could be).
-+concurrency:
-+  group: ${{ github.workflow }}-${{ github.ref }}
-+  cancel-in-progress: true
-+
-+jobs:
-+  check-style:
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v4
-+      with:
-+        fetch-depth: 0
-+
-+    - name: git clang-format
-+      continue-on-error: true
-+      id: check_out
-+      run: |
-+        ./ci/run-style-check.sh \
-+          "${{github.event.pull_request.base.sha}}"
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 37b991e080..dc43fc8ba8 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -123,6 +123,23 @@ check-whitespace:
-   rules:
-     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1733%2Fpszlazak%2Fdocumentation-cookieFile-in-memory-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1733/pszlazak/documentation-cookieFile-in-memory-v2
+Pull-Request: https://github.com/git/git/pull/1733
+
+Range-diff vs v1:
+
+ 1:  5e9b3924224 ! 1:  c4d41b5884d doc: update http.cookieFile with in-memory cookie processing
+     @@ Commit message
+          Git documentation was updated to include suggestion how to
+          enable this by setting empty value for http.cookieFile.
+      
+     +    Changes since V1:
+     +    - better explanation what in-memory processing means
+     +    - added explanation that http.saveCookies does not work
+     +      if http.cookieFile was set to empty value
+     +
+          Signed-off-by: Piotr Szlazak <piotr.szlazak@gmail.com>
+      
+       ## Documentation/config/http.txt ##
+     @@ Documentation/config/http.txt: http.extraHeader::
+      -	in the Git http session, if they match the server. The file format
+      -	of the file to read cookies from should be plain HTTP headers or
+      -	the Netscape/Mozilla cookie file format (see `curl(1)`).
+     +-	NOTE that the file specified with http.cookieFile is used only as
+     +-	input unless http.saveCookies is set.
+      +	which should be used in the Git http session, if they match the server.
+      +	The file format of the file to read cookies from should be plain HTTP
+      +	headers or the Netscape/Mozilla cookie file format (see `curl(1)`).
+     -+	Set it to empty value, to enable in-memory cookies processing.
+     - 	NOTE that the file specified with http.cookieFile is used only as
+     - 	input unless http.saveCookies is set.
+     ++	Set it to empty value (''), to accept only new cookies from the server and
+     ++	send them back in successive requests within same connection. NOTE that the
+     ++	file specified with http.cookieFile is used only as input unless
+     ++	http.saveCookies is set.
+     + 
+     + http.saveCookies::
+     + 	If set, store cookies received during requests to the file specified by
+     +-	http.cookieFile. Has no effect if http.cookieFile is unset.
+     ++	http.cookieFile. Has no effect if http.cookieFile is not set or set to empty
+     ++	value ('').
+       
+     + http.version::
+     + 	Use the specified HTTP protocol version when communicating with a server.
+
+
+ Documentation/config/http.txt | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index 2d4e0c9b869..e71ca11c10b 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -78,16 +78,18 @@ http.extraHeader::
  
-+check-style:
-+  image: ubuntu:latest
-+  allow_failure: true
-+  variables:
-+    CC: clang
-+  before_script:
-+    - ./ci/install-dependencies.sh
-+  script:
-+    - |
-+      if [ -z ${CI_MERGE_REQUEST_TARGET_BRANCH_SHA} ]; then
-+        ./ci/run-style-check.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
-+      else
-+        ./ci/run-style-check.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
-+      fi
-+  rules:
-+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-+
- documentation:
-   image: ubuntu:latest
-   variables:
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 6ec0f85972..46fe12a690 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -43,7 +43,7 @@ ubuntu-*)
- 		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
- 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
- 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
--		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
-+		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE clang-format
+ http.cookieFile::
+ 	The pathname of a file containing previously stored cookie lines,
+-	which should be used
+-	in the Git http session, if they match the server. The file format
+-	of the file to read cookies from should be plain HTTP headers or
+-	the Netscape/Mozilla cookie file format (see `curl(1)`).
+-	NOTE that the file specified with http.cookieFile is used only as
+-	input unless http.saveCookies is set.
++	which should be used in the Git http session, if they match the server.
++	The file format of the file to read cookies from should be plain HTTP
++	headers or the Netscape/Mozilla cookie file format (see `curl(1)`).
++	Set it to empty value (''), to accept only new cookies from the server and
++	send them back in successive requests within same connection. NOTE that the
++	file specified with http.cookieFile is used only as input unless
++	http.saveCookies is set.
  
- 	mkdir --parents "$CUSTOM_PATH"
- 	wget --quiet --directory-prefix="$CUSTOM_PATH" \
-diff --git a/ci/run-style-check.sh b/ci/run-style-check.sh
-new file mode 100755
-index 0000000000..76dd37d22b
---- /dev/null
-+++ b/ci/run-style-check.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+#
-+# Perform style check
-+#
-+
-+baseCommit=$1
-+
-+git clang-format --style file --diff --extensions c,h "$baseCommit"
+ http.saveCookies::
+ 	If set, store cookies received during requests to the file specified by
+-	http.cookieFile. Has no effect if http.cookieFile is unset.
++	http.cookieFile. Has no effect if http.cookieFile is not set or set to empty
++	value ('').
+ 
+ http.version::
+ 	Use the specified HTTP protocol version when communicating with a server.
+
+base-commit: 66ac6e4bcd111be3fa9c2a6b3fafea718d00678d
 -- 
-2.45.1
-
+gitgitgadget
