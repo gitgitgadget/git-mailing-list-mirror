@@ -1,108 +1,154 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B8854903
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 04:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD43E150992
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 08:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720670994; cv=none; b=ogJ8DNKzBpkRLqCcPajBved/nQZeCAXT/RRqQHD2sZ8zG2lkQQ7hLI/neba4pVIG2A0toUISuorhQTe6YtuSksuNnKqASQr6H1PnUilSR9rOmPu4VDc3YGWKIeGYKRW6XyIhvGZ058HcFcETnx+yUyEOXuZgc3V9aQOpe6MlydE=
+	t=1720686465; cv=none; b=Q4be6mu1BTj+gE9t2XrY8cRFXrWqDSlWItbvzdNucCZ/QTbBjoBHCHSmSHvPe/nYgbz/xLeaGOP1BICLxhpGJxtNTg358Keq3lHkPksIF98DgYVQykCd+EZNZ0/bT/gK+tkuUijPn1b3tdZOFF9jFsjMPTq3gIDqWRYdAAfAqlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720670994; c=relaxed/simple;
-	bh=l5uqwurD+3TOp7t7S3q28Z/Pfk66dmXTC1ZyMCMOlKQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRlQ2+3A+B6FDWXG8zgLKccO9PFayro1+TGHI4fwsyoSEA0mKsiSVrncZ9z4X9tmief/muaachgp3xdDiUWUrkLVu1XIr+8WgLM/ZVSZ7FmUB9EAPDnCWD+0R85bfIoxjlNlf8wcoTCr27I4gawlbcatik84UT2ZMFB4J7bSURs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hK/6vOHd; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1720686465; c=relaxed/simple;
+	bh=JqF2jGlN/XNLaD3sH56cxrTiPDb9p406BCxNGxzNO2k=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OOfnIJjXD/Q+oqO9H1Ck0KbI9JCtnCdulnEi0MDKjj97J1tRke6sA/1YJpLlJuRDSAlzhl7oh8h2RFy2HIv4R2b/hCEiQGmwjp6jb4t/IXnnf+k+TNKzO00hj0tDvZkWy6nZCKMWG98LNYOSWycv6EqEoC+qMUKlXiRpco+reBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=noMOZFDj; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hK/6vOHd"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7594c490b04so266412a12.3
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 21:09:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="noMOZFDj"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-25d6dd59170so324985fac.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 01:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720670992; x=1721275792; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UVhbZ210atv7iBD7UCwbY0VDecl1P8xa+7T0BYoV9xs=;
-        b=hK/6vOHdsTdKGl+e+H23O1ggu5X0A0WNLHebtc5tut4jcJdYYkqDxQHdEf5f42N0pD
-         D/X2E2EFyHT7vPXNJdn8+QkFtOR4blxx75XVkh4vJ6shvv35yOv9bGIOmHt2NiCfyaHf
-         f7t17bnhk5b+c8u7bq8M1aIThzKN7aKnUjV5EAKiyvGpj9ISddpFWdLyO3v1xz1Th1j8
-         7psZ+BD0N41oaOVyrbhPJBe28Fr6y34x2LQ5DOgpy8EoiBb2Y54H4GQ0ycw4RqwII83F
-         68f3s0dnWfaOyLFvRzEWBvcTu3hlZc7MrqppxOxQcQkGPMMZrr9bUmDIoljhISt0DpWG
-         npUQ==
+        d=gmail.com; s=20230601; t=1720686463; x=1721291263; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jvp9c6qHjArmuVg4mxdmTzJ+GndaFkFKtvjk08v/Rl4=;
+        b=noMOZFDjqyUB9g9DHBCYPBxxnhC8famXJe4VUOBMpehntZrZRv3FjJkBrJFCPKrNi9
+         8IaMbiErbFzZIU9IrwIrdy0h06fhJsAFTVPXANhqeJM43luS3uvL2p5qbZBBl+amL1jg
+         JOxVia33PeDfFFaIvMZfd8t2bkW+9cNCdY3QszTwKHy959IpaFheSIk1QeMfGl1cJJm6
+         aVBBV3S6txjyLYUzXyTLGFxBvfyEmxYmbqZiyszcE+7RApHIwOzpkp73O45TXfPoYkFx
+         HXBE0YbrC7eUuL8XS/PEpHX6EGbrhB2rPWX9iUMf/kqywTRiNdZ0x5xTpakUacrh6RwT
+         6t8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720670992; x=1721275792;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UVhbZ210atv7iBD7UCwbY0VDecl1P8xa+7T0BYoV9xs=;
-        b=L9nK19DFPO2CAFnjSsX4AybR1pMDy7tjbW+uR9iHHoYRe+Tp0bkuCddkA7kY6aJzI8
-         G8IsYcDHMWcXJD57HfpFdMR4EMoEuhv5oz3IXiVWj1x5rkS2GvWV2UsrS9SaAiJDKdgL
-         /Y0sd8fv32Qh0Jq94eHOKaZJlNte84QV5XBMgq43QjMubCnnG2bYd01/AbsLHbOII9/q
-         5PMsOxQ6UMbH8ngDD1tGoPjlUB0MLPrDoTl8FT79Ul7xQuARN0hU0B1Zw9E32UOVoLj7
-         1E+YsLsIkCzht6UiIlEjXtyEgfzGa03mrFC2L2eL35IrjaTk35sg5IzipGrjFnb+2bym
-         HEQQ==
-X-Gm-Message-State: AOJu0Yx+SXmCTJXzxNfhNPk4JbrfbjxSoDBTsOUt9JsADqBvBKY6qnF/
-	4lSoFOmyROIEHikO9Pi7nPZ+epK8s/mLWZ27ZdAcfv3Qhzyi4OuzYUxjMOtx
-X-Google-Smtp-Source: AGHT+IEE2UcEIZWGffXMhzttDE0jOWuG+0MT6tImKa/rCEjtzZLB8BgLMfTZXXL1pq4IDm4jE+lsRQ==
-X-Received: by 2002:a05:6a20:748d:b0:1c0:f267:11ad with SMTP id adf61e73a8af0-1c29821d031mr10466415637.19.1720670992071;
-        Wed, 10 Jul 2024 21:09:52 -0700 (PDT)
-Received: from Ubuntu.. ([106.206.206.104])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fbb6abf738sm40808595ad.198.2024.07.10.21.09.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 21:09:51 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: karthik.188@gmail.com,
-	chriscool@tuxfamily.org
-Subject: [PATCH v3 7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
-Date: Thu, 11 Jul 2024 09:28:36 +0530
-Message-ID: <20240711040854.4602-8-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240711040854.4602-1-chandrapratap3519@gmail.com>
-References: <20240709053847.4453-1-chandrapratap3519@gmail.com>
- <20240711040854.4602-1-chandrapratap3519@gmail.com>
+        d=1e100.net; s=20230601; t=1720686463; x=1721291263;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jvp9c6qHjArmuVg4mxdmTzJ+GndaFkFKtvjk08v/Rl4=;
+        b=mfdrD9hM1SSBFFVk08yV4yJd8SYo1JU2Gkz5GezQQsoQjS6vnTre0tWPhpD2u1itYK
+         UdQVoxsh9b/tM/4q1QpqlKvCl2GPYe4rjStcRcV28RHADllY+oTPHbV0mHVqAj+2IykK
+         GdgHLFPr/U4qVBbSJ3/s1yftJVEwjJpHTJQ1KuRfG1sjIY9gw/Fbk2OH7Va/+/NS6duj
+         7K9tvl1zU9tORhFiV38A7+cGnXCclJe/seXv76t6wM9cbrJI9CKg/DYVut/5Xc6wIq9O
+         CLkJTWElohcdp7ZlbJY6Rsf18PvrmUP/p5/hpniOR4g5C62pE9u7e/CXP2676OvwyTnb
+         cDXg==
+X-Gm-Message-State: AOJu0YypCY+F2ye2nG8RU1m0SIIc/dqWLKH+8xBVEsOhc7OpwQDb3Oo4
+	3f0vM05Hb8nACznpY5l0ek2tTsdmxVKrcZ8P2UKBJ/2RPeyMjQGOi3SCwS11jpGUvfpbiwb8jZT
+	j7o3udSlO9PaPntFYDWcInGJUVAU=
+X-Google-Smtp-Source: AGHT+IGLWDV8Mc4AWc1B0QdNWfkn2KG8E9pGqdA1GZd6NMJ67mvhP0Pqls4PERVu2JpjKn+E7vC/zS38E/NQP2EVbfA=
+X-Received: by 2002:a05:6870:7009:b0:25e:1cde:f5c6 with SMTP id
+ 586e51a60fabf-25eaec6dc95mr6187236fac.53.1720686462361; Thu, 11 Jul 2024
+ 01:27:42 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 11 Jul 2024 01:27:41 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq8qy9z14t.fsf@gitster.g>
+References: <20240708092317.267915-1-karthik.188@gmail.com>
+ <20240708092317.267915-9-karthik.188@gmail.com> <xmqqbk37hjma.fsf@gitster.g>
+ <CAOLa=ZQdPTnLp63eFiq1oOkgukBGsug==Cam0hGW_9koCefhGA@mail.gmail.com> <xmqq8qy9z14t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Thu, 11 Jul 2024 01:27:41 -0700
+Message-ID: <CAOLa=ZSUZGqxHbEtpR3fadOFf=YPVxbo8W7SwyB9j5am14EB7A@mail.gmail.com>
+Subject: Re: [PATCH 8/8] check-whitespace: detect if no base_commit is provided
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
+Content-Type: multipart/mixed; boundary="0000000000005c021e061cf489d1"
 
-When calling reftable_new_merged_table(), if the hash ID of the
-passed reftable_table parameter doesn't match the passed hash_id
-parameter, a REFTABLE_FORMAT_ERROR is thrown. This case is
-currently left unexercised, so add a test for the same.
+--0000000000005c021e061cf489d1
+Content-Type: text/plain; charset="UTF-8"
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-merged.c | 3 +++
- 1 file changed, 3 insertions(+)
+Junio C Hamano <gitster@pobox.com> writes:
 
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index e0054e379e..50047aa90b 100644
---- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -11,6 +11,7 @@ license that can be found in the LICENSE file or at
- #include "reftable/constants.h"
- #include "reftable/merged.h"
- #include "reftable/reader.h"
-+#include "reftable/reftable-error.h"
- #include "reftable/reftable-generic.h"
- #include "reftable/reftable-merged.h"
- #include "reftable/reftable-writer.h"
-@@ -440,6 +441,8 @@ static void t_default_write_opts(void)
- 	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
- 
- 	reftable_table_from_reader(&tab[0], rd);
-+	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA256_FORMAT_ID);
-+	check_int(err, ==, REFTABLE_FORMAT_ERROR);
- 	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
- 	check(!err);
- 
--- 
-2.45.GIT
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Yeah, makes sense. I think I'll simply add in
+>>
+>>     if ! git rev-parse --quiet --verify "${baseCommit}"
+>>     then
+>>         echo "Invalid <BASE_COMMIT> '${baseCommit}'"
+>>         exit 1
+>>     fi
+>
+> It would make the intent a lot clearer.  Good.
+>
+>>>> +if test $? -ne 0
+>>>> +then
+>>>> +	echo -n $gitLogOutput
+>>>
+>>> What is "-n" doing here?  Why are you squashing run of spaces in the
+>>> $gitLogOutput variable into a space by not "quoting" inside a dq-pair?
+>>>
+>>
+>> I actually didn't know about this. Thanks for informing.
+>>
+>>>> +	exit 1
+>>>> +fi
+>>>
+>>> Looking for "--check" in
+>>>
+>>> 	$ git log --help
+>>>
+>>> tells me that the command exits with non-zero status if problems are
+>>> found, so wouldn't that mean the cases with problems always exit
+>>> early, bypassing the while loop with full of bash-ism that comes
+>>> after this block?
+>>>
+>>
+>> It should exist with a non-zero code, but since we're capturing it in
+>> the while loop, it doesn't stop the slow.
+>
+> Sorry, but I am confused.  The control would not even reach a "while
+> loop", I am afraid.
+>
+> I was commenting on the exit status check done here:
+>
+>     +gitLogOutput=$(git log --check --pretty=format:"---% h% s" "${baseCommit}"..)
+>     +if test $? -ne 0
+>     +then
+>     +	echo -n $gitLogOutput
+>     +	exit 1
+>     +fi
+>
+> Even though the output is captured in a variable, the exit status of
+> "git log --check" is still seen by the shell and "if test $? = 0"
+> next line say "ah, the thing exited with non-zero status so lets
+> echo the whole thing and exit with 1", before it gets to the while
+> loop we have below the above piece of code, no?
 
+My bad, I thought you were referring to the code before my changes. Yes,
+here you're right, we don't need the check since the shell would capture
+the non-zero status.
+
+--0000000000005c021e061cf489d1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 3a6f359bf2ac28e4_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hUGwzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnNyQy80aEp4azVjdzJ0RUJXTTNEY1lTR2hqdTdhawpwaEprb0Y4T3Av
+RWJjVHE3aVU5NytmVVg0TC9YSmNub1BZelFoMFp4UTNDcEwyZGlxTUlzeldtZ3ZyWG9KQXZFClY4
+SVFSTzNPUmtna1JDNmp0TDVwcys2RCtYZXg1VUhrenMzYVc4L2F4bW4xN0NsYUdRS1FRbFNNa0Z4
+ZGJ4NmMKV2tHNytjUDlROFlvK243dXhNenIremo5Q3JPNzNUOHdUTCtmZXFPWTJRenlRVVBwNDJm
+SDZRcndleE5JMVdyUwpSb3JUdS9La2djRzhTcUplVFowc0dmRXZjejREWlVlcUl2MmhZUXJPQ1VI
+RjlvY2xxVlowQXlkYklYSzRLRXJlCnlta0ZqM1ltMFQwY3BEK2VoODg3NFZ6ZnhRVWRBam5wQm9C
+elNHN2lsY0RPZ3ZYRkNjc3lPcFRJUG4vSVhqM0sKb21SdnR5UWorUldleVJIVndtQkc4ZzVnTkZM
+UGUyMUNyZHB5TDhnSVZTL3owdUM4aWhkb25NR2RmQ1dWVC9KWgpaRTlQVmdtc1V1bE9mZVRBeXRv
+KytPNGorZTFZTlExaE53UW5lZDlrTFNINkszTlB2VHlnVjY4eGYvc3gzU0psCmZsNGJwcEY0RW5O
+MzlaWm9QMTNZNThuM1QzZVpTRE5KdkpyV09Xdz0KPXFMRlUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005c021e061cf489d1--
