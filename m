@@ -1,120 +1,142 @@
-Received: from email.lodispoto.com (email.lodispoto.com [192.46.218.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F5B1527A7
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 23:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.46.218.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7657E1366
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 04:09:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720653907; cv=none; b=atZ7CjxYunHvQ2m7j7NYX1SwP+JFbEZFE0yVCRMdLyrDNqcsFlSFsNwtIyOdTQ2Q+tqYm8DXZmulN+6Xh4GXAUTnO9pSjGaDrGDfaZ4rqkmvmUNTf4vLjTnylI/PvuJgobPifHqfP3SlWcp/fPpXdjOOpIm7W+HqVIleiTh/BUI=
+	t=1720670975; cv=none; b=Vc8x4MLAVo3wYokB8r57ymZKxPM/BAUjKDUq6w1FYdzd9FKSruF7uW0AyTKisMjXfLJflADjFe6Go9+Th7jGjegnWQnSOxN/4IjFWmRFHHGUVGMss/XeZkRfrs+xg0orogyWr+vFqBMGA/gUV1pKhBqOWrW+9Szwxr4ipIx+sms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720653907; c=relaxed/simple;
-	bh=agR5cY2C1lXvwGEamm4sznp13RWDiyAfdJM0syQZrsc=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Tf1mpi27DFQ5zvn3aQOSBt1qpe+zqj5QykEhcm/oBWcwG2yUXkT+c/y2v9BOvR44UXASdMIlHYd/mPef0dkyhzvaJLNocFsZfqhdlUXeiJt2KXogcY2K9PyX/RjgrZiAvxgXnzOboVqh2BCL3fuQJaZrka4lq9Crnfhc+6ThNAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lodispoto.com; spf=pass smtp.mailfrom=lodispoto.com; dkim=pass (2048-bit key) header.d=lodispoto.com header.i=@lodispoto.com header.b=hbQWflvF; arc=none smtp.client-ip=192.46.218.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lodispoto.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lodispoto.com
+	s=arc-20240116; t=1720670975; c=relaxed/simple;
+	bh=tTGs3UwDxrPv9Z/OM/koyduDipcUZ/0WdvNVuYxCM6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GGQOX6G8m3MzWx1SVDFw7iVmW95wEvTrwdlGE70EN+Wv4Rs2z4MAYr7Uti3nATs+9DcPKquD5GDqsUXpMLxZUE28OKSiaB15Far/VKInW5JtJ/HhQ4kosVyRSvN80AnRhqXJM/AaYIdANk8feb1bd6lpVXXEmN55M59eIUX0toc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T16Ct6As; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lodispoto.com header.i=@lodispoto.com header.b="hbQWflvF"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 499D6418EF
-	for <git@vger.kernel.org>; Wed, 10 Jul 2024 18:16:52 -0500 (CDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lodispoto.com;
-	s=dkim; t=1720653412; h=from:subject:date:message-id:to:mime-version:content-type:
-	 content-transfer-encoding:content-language:autocrypt;
-	bh=/nOYnkczQKDrFX+w5ZcavJ4ABn/od3O/eRl83CPhS54=;
-	b=hbQWflvFWN/qE4p2JpoJtsoJY3vO2NnqE/cFuSDixt/QO/VRj++1Ab6yprrsQ79FFPFSSG
-	MM01hfqmU956Di++mQGJW6VQ4jCNblXlNv5jFxHS5/Sc0hdqbpLpg1Z9C5hpP50pU0QlyH
-	hknumKdTfV0RImfbXlqlaNQ1jetHTxPr7h2trSfS7q+KbYRsVqp2vjz6Rbav9OL2+jOqTA
-	c8LqGmIgPxUFBTTfquqqSunfcT19lMxU0nML6V1v3H8b6hdGKToFMeD7sMUiYwlkzrW7pV
-	Zu6fBnjBNzIPaGV28m7Ttk6qyat87Gjd3DWCDVcEwePdD4NAISLjSjmsoMTBNQ==
-Message-ID: <dd703bdc-f485-4162-92a5-fd2828b69604@lodispoto.com>
-Date: Wed, 10 Jul 2024 18:16:50 -0500
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T16Ct6As"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-70df213542bso253397a12.3
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 21:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720670973; x=1721275773; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=haRYTXByZXcA1Nc2wfCK3DYYeF2zAYOstxNO7FTJX8w=;
+        b=T16Ct6As2sD/Ldj0RkWOlwJISQAc/EGuSA3ABXpjJr9TY/xlaQka61lCEoLNV4PrZd
+         k71tDPD50zkGiG07gaawNjM3m/FbBUxLy73p1EoLvjFB1g1C4OeE0PMbD/AA4mbV2p68
+         Vn7OzlWiy+nwCl+KlEdXPwA+5lYFPOUf6nytSP+rarczGP2GwIPpV9HJit0BnXmRnFV+
+         mjB1e8rY3ow6+htSmpv2cL6PXWpvfnrFKdJt13MnRqjagKAu60mgRL83KOCOLTN1zFNh
+         6MvjflQi8/1ORr9VVlNv854XvV3of7J3AmZ5SovZxBh82jW9NlOHgSrwx60G1pOWBzex
+         bzRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720670973; x=1721275773;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=haRYTXByZXcA1Nc2wfCK3DYYeF2zAYOstxNO7FTJX8w=;
+        b=T28ScaKJQcoth3SRNwUc8Mvl7UsAbaUfM/3QVMJc3Eo9q/zMJCtvMGgXGwrc3eGjps
+         wiyql6oojKwNfcFcyAZO1lqin/jhFyd3PTcl4/rUGbZyYdTSGhmdnyDlMEXg27BcfK4f
+         4HZKGtjnyBTtpnS978MxQmq15OQBpwYTS3aUNzJl1qMA4Ir+SDgZBjKZ64+q0CMl6daw
+         I6b7nQO3Ohr9fzU/7oUUX9cfqbFUh7+W/0cxqkDeYOZslg3i9G0WdXJrJQSDzSodsOYY
+         2FdBTKER++tkJC1BsdDMlib5VJ3D33NPsstXcKhVapDxNww+GRB7FXQuNq7UJdHhQnaR
+         rV4g==
+X-Gm-Message-State: AOJu0Yywae0tg++w1qKRIUE3ZKEGqrrQja0TUHtFSTZCmVS+C0UXTygP
+	jo08SXwv8eSInvxE0URVZ6lKBqCeQC0oEw6ruZkPHYzHTnSZCaW0Exx8aSv+
+X-Google-Smtp-Source: AGHT+IERBvgSITWQAHOxOvbxgFtTKJdcyGMtRdVJ5Aa/bP3HmJZLHg0zzIDX+zZJE1FfU7T/SDk0WQ==
+X-Received: by 2002:a05:6a20:2588:b0:1be:ffe4:b2a2 with SMTP id adf61e73a8af0-1c298203941mr8499311637.7.1720670973099;
+        Wed, 10 Jul 2024 21:09:33 -0700 (PDT)
+Received: from Ubuntu.. ([106.206.206.104])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fbb6abf738sm40808595ad.198.2024.07.10.21.09.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jul 2024 21:09:32 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	chriscool@tuxfamily.org
+Subject: [GSoC][PATCH v3 0/7] t: port reftable/merged_test.c to the unit testing framework
+Date: Thu, 11 Jul 2024 09:28:29 +0530
+Message-ID: <20240711040854.4602-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.GIT
+In-Reply-To: <20240709053847.4453-1-chandrapratap3519@gmail.com>
+References: <20240709053847.4453-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Mike Lodispoto <mike@lodispoto.com>
-Subject: Shared bare repository dubious ownership error after 2.40.1-r0
-Autocrypt: addr=mike@lodispoto.com; keydata=
- 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
- JH53RA1MTroCbT76gd1+LosO
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
 
-Hello,
+In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+testing framework written entirely in C was introduced to the Git project
+aimed at simplifying testing and reducing test run times.
+Currently, tests for the reftable refs-backend are performed by a custom
+testing framework defined by reftable/test_framework.{c, h}. Port
+reftable/merged_test.c to the unit testing framework and improve upon
+the ported test.
 
-I use bare shared repositories on Alpine Edge, which have been working 
-perfectly until I updated git recently (from 2.38.5-r0 to 2.45.2-r1).
+The first patch in the series moves the test to the unit testing framework,
+and the rest of the patches improve upon the ported test.
 
-My setup is a git user which owns all repositories (/home/git/*.git). 
-Each repository has a group, so the ownership is git:projectname. The 
-group has the same permissions as the user (-rw-rw----)
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-To give access to the repository, I have a user set up for the 
-developer, and then I add them to the group. Each repository was 
-initialized with 'git init --bare --shared'. In the config file, 
-'sharedrepository = 1' is set under [core].
+---
+Changes in v3:
+- Remove merged_test_main() from reftable/reftable-tests.h
+- Fix a typo in patch 7
 
-My issue is that somewhere between 2.40.1-r0 and 2.43.4-r0 on the 
-server, I start getting the following error on the server with a user in 
-the group, and remotely (tried with client version 2.39.2 and 2.45.2) 
-through a user in the group:
+CI/PR: https://github.com/gitgitgadget/git/pull/1755
 
-| $ git pull
-| fatal: detected dubious ownership in repository at '/home/git/project.git'
-| To add an exception for this directory, call:
-|
-|         git config --global --add safe.directory /home/git/project.git
-| fatal: Could not read from remote repository.
-|
-| Please make sure you have the correct access rights
-| and the repository exists.
+Chandra Pratap (7):
+[PATCH 1/7] t: move reftable/merged_test.c to the unit testing framework
+[PATCH 2/7] t: harmonize t-reftable-merged.c with coding guidelines
+[PATCH 3/7] t-reftable-merged: improve the test for t_merged_single_record()
+[PATCH 4/7] t-reftable-merged: improve the const-correctness of helper functions
+[PATCH 5/7] t-reftable-merged: add tests for reftable_merged_table_max_update_index
+[PATCH 6/7] t-reftable-merged: use reftable_ref_record_equal to compare ref records
+[PATCH 7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
 
-When using git 2.40.1-r0 or below, it all works and I get this:
+Makefile                                                   |   2 +-
+t/helper/test-reftable.c                                   |   1 -
+reftable/reftable-tests.h				   |   1 -
+reftable/merged_test.c => t/unit-tests/t-reftable-merged.c | 202 +++++++++++++++----------------
+4 files changed, 103 insertions(+), 103 deletions(-)
 
-| $ git pull
-| Already up to date.
+Range-diff against v2:
+1:  0d71deffad ! 1:  9c9fbaf75c t: move reftable/merged_test.c to the unit testing framework
+    @@ Makefile: REFTABLE_OBJS += reftable/writer.o
+      REFTABLE_TEST_OBJS += reftable/record_test.o
+      REFTABLE_TEST_OBJS += reftable/readwrite_test.o
 
-Is there a breaking change I missed that I need to change my 
-configuration for?
+    + ## reftable/reftable-tests.h ##
+    +@@ reftable/reftable-tests.h: license that can be found in the LICENSE file or at
+    +
+    + int basics_test_main(int argc, const char **argv);
+    + int block_test_main(int argc, const char **argv);
+    +-int merged_test_main(int argc, const char **argv);
+    + int pq_test_main(int argc, const char **argv);
+    + int record_test_main(int argc, const char **argv);
+    + int readwrite_test_main(int argc, const char **argv);
+    +
+      ## t/helper/test-reftable.c ##
+     @@ t/helper/test-reftable.c: int cmd__reftable(int argc, const char **argv)
+      	tree_test_main(argc, argv);
+2:  a449e2edcf = 2:  08c993f5f6 t: harmonize t-reftable-merged.c with coding guidelines
+3:  20fb20bb59 = 3:  fa3085bd9b t-reftable-merged: improve the test t_merged_single_record()
+4:  617f668b08 = 4:  d491c1f383 t-reftable-merged: improve the const-correctness of helper functions
+5:  bf51af687f = 5:  ee9909f7ce t-reftable-merged: add tests for reftable_merged_table_max_update_index
+6:  e2b8f6b3fe = 6:  5ce16e9cfc t-reftable-merged: use reftable_ref_record_equal to compare ref records
+7:  b606d67ee7 ! 7:  d090e9ca5b t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
+    @@ Commit message
+         t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
 
-Thank you,
-
-Michael Lodispoto
+         When calling reftable_new_merged_table(), if the hash ID of the
+    -    passsed reftable_table parameter doesn't match the passed hash_id
+    +    passed reftable_table parameter doesn't match the passed hash_id
+         parameter, a REFTABLE_FORMAT_ERROR is thrown. This case is
+         currently left unexercised, so add a test for the same.
 
