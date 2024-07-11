@@ -1,426 +1,1150 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763E54963F
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 23:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A784F1E2
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 23:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720740270; cv=none; b=u4xv+1DihTfjXdjbJl9XdFqG3zbOMGLURwTS1B4QkZ3iU8ehU9EcbiIN8YNxbSUFme6Ish/uGx12RwaJVQIRi3HgeFfNZeyR+wbIKDK4HhPXIDZuZ41z/bSTsE9VmoHKq/oOG7UAQ8d/AJtUVNCIVrIgA5wQCWv/6RDh2j328xM=
+	t=1720741952; cv=none; b=Ul4sVGtL0MD/TQ5y2NKcNCteCGFF/s4TmvQFkmkPHRSqTOnM0wNV7Bv+0In7jq44ngqWb0GQ3CY60VO1S8M2E5dA09NXk+xnSpzLmxBdSEyAnuH654Zlsgyl3qw784aBHSaX/B3tAvKDHqFYnkNUpxm32Bv4i+nkZuDzCPzj5Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720740270; c=relaxed/simple;
-	bh=Vm/BNkUcnmxu+xEy40QRmUtllkqTkaHduztLPKE9m2U=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=ZAPRq+j34qZIjWl3ALXaWFLbqoISBOw5jv9ibpYBU4O4qOO60y6i9z7avfgMIzgaHsftqL7inYhRqKQQwy7SIAae7Z3jpY9yj9pGtz0kzfYttJjon0sf0gsLkoIunMfxyoWzbAiqv6RfRTLhmMuc6eIhjhzULyEkbyKDAk0UO+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IFGNDfV6; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--emilyshaffer.bounces.google.com
+	s=arc-20240116; t=1720741952; c=relaxed/simple;
+	bh=qRAtMpCfs/VogZZ937CNW2OeKMUpmSF1JVVFX9u0cmg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AanCpHGDAZqIRWJK0+oFTZKSLjYrd9BPYCVu+nE0vhK9RoJUyCzOJaeMoouPdU1sQipIqq/QpWnIqXwLjA1PiC2HpVNfVWZhKSDvJe2NKF+QRK9gHdZ39nFeRV6HXX8x6btLHUn4u39hP8iQR+x1rsMnR8gnCnhiSKR7xfhR+fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YP1XaU7L; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IFGNDfV6"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e057ae54529so2423375276.2
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 16:24:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YP1XaU7L"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-37613975e20so6343375ab.2
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 16:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720740267; x=1721345067; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=S6Yvv+laa2n/+9daDCd3HF8uKnHw/GxQRGbvesbN67k=;
-        b=IFGNDfV6XOBSvHmcLsBbsTjrK+2Z8+TB1U7zOplqSFJILMVAf61AtWKk5AYYeEH3YI
-         V/QRQyUQexkGn61b/loq3KcIZI05mSzDVYbOWhUYqsgSvTaRiaQNUisaGpSdRUezvz6N
-         2rFZpxbWFYA0bmCGmh6RAnXm6LxWTHfRNjtUgMpJLU7Uek2y9hbiFW5EXswQkInLk43w
-         HK65JG2EImAtmjvlzYmpHUQ+ZWfwliOYJ1MeQvGFj54xwmQDZdbbpjVIGkC16SqoGdFI
-         B2EK/DGHIY43kea8I+Bvp+jDYMZV1gSikNXpWWQ0B/yf2egBCvFQ1kh+0QWw89sA4THn
-         U09A==
+        d=gmail.com; s=20230601; t=1720741948; x=1721346748; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dK36+++idxFxiBr7De/ThWoTv5NaStK007jx0D3AY8k=;
+        b=YP1XaU7LfNOs/JM0hRi64Ygc3M4xyF3lMfTORtgf4D9qJ6ydoIdPextMhc2DYa8ABQ
+         tc8xnVdH7qYuwymtHcxYI/xHu9wWE5g8H4Z4ATPQC5p5+l8EKZ8ostcsERMcl9u4xbpF
+         PUgFj9keN0bxLd9LZSntLA4AHYYSzZNALBq9TgfCrHxZWs5CvdCFl4llg+bsltSPrMIQ
+         UibOPdd5ONsx1Nt5SX5Vw417P5OPAalygJUk8j8sPpDJl+lBTJ+LwXUTVetFbO9Xogp3
+         cWHg2zI3tKffXQEVI/ngoECamOqyp9jzR4oUMmLsZJPY/Hip+s2SxEm1xKM7PNGhaRgd
+         +Sbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720740267; x=1721345067;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S6Yvv+laa2n/+9daDCd3HF8uKnHw/GxQRGbvesbN67k=;
-        b=hW8wQhxiZS6WZ/T+EXvbt9mI9ZI+e+ZUU4m3yiWrb5KSG2ijG3wk+Ixi7eNkk3AeNy
-         mlIs77h/NLq/I8Xc1tHa5UtBj39ke/3ONO7eXP0FX04WnQUiyP+4l52cvhnnkVzuH6ia
-         mRnCsIuF763uu72SV5xWl65ZPvsuuEZRtccexMlyjijFCTiTdrLqs9czbleaMFU9e0FW
-         LMi3kXGBRunso8JPNgo4xXC5PBiX5enNZpCTW6B+e0YVJYQ4N0/hBulai0YMWkOF9xAw
-         I7oHf8JKIm7jN7tEnX9RBhakdBHWUDWtbtmOi11bdpqm1mFHFW8d8fH1gehMo1mh0+6E
-         8Opw==
-X-Gm-Message-State: AOJu0Ywan6eO0rh5WSSCdJJbbM58E1g+JbSjnyJiT8pu2qipuy/FCJXQ
-	fJ0RrsmTkKfDVnS+cswyvmnI1ss+SrHPKBmORibaBsDphMV/6rYI6OQ72bu3K4vjfnbs0OArFPS
-	/1HRj5wSMTNI2isRie+1FWC8eZtahA6+G/7CXc+wNh3RpxkhvE2sdqFDjX46Yb5QyUeGE9tbV2A
-	P28rLDL/jFt3E+tJeIY4V3IGBPCQ7XGZU0J9IB/sejjZesb3buwyexY5ojFagf
-X-Google-Smtp-Source: AGHT+IHTmPfB02B/KK/zF6plpvS3bGpsWnlJPY7gYwVHn9GyrFII+ozYS3n469gmZmHA6l57ayl2fxnJ5ZyXclCv9YY=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2d3:204:8bae:f5f4:9f6c:1d58])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6902:1002:b0:e02:b51f:ceac with
- SMTP id 3f1490d57ef6-e041b1415d3mr432673276.9.1720740267447; Thu, 11 Jul 2024
- 16:24:27 -0700 (PDT)
-Date: Thu, 11 Jul 2024 16:24:13 -0700
-In-Reply-To: <20240709225042.2005233-1-emilyshaffer@google.com>
+        d=1e100.net; s=20230601; t=1720741948; x=1721346748;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dK36+++idxFxiBr7De/ThWoTv5NaStK007jx0D3AY8k=;
+        b=kAfz3TmA13rLGa/NarAzWXBuqQw7X8uwTgTZyYXfVK8VagF8tSMHTayr4NautPDyxL
+         jdcPzALhM/43abFPfWpG4VHtNI8mPk04TAdKzug5k4Dxv45SMxdajJ2KCEnp9Yt3P3wt
+         FrizY0fAWrp23dnxQ4v5FGKS0Dtnt/NmvJQcKpoFO8rE5P5iBH/CbknqfAqGYdjQJJDk
+         p6HBOBTioUGGp2/9O4CDfzxYSglqOOl5MEHAKtp/9wn0zqqM4YWPhsHyQCLDlby+uUr2
+         LMNNmtfpSnaKZfidRswqL5McQmcaCNrOh6dODH4pzrscLwrRvdvdSxD8zbGa6dr+Lude
+         xuPg==
+X-Gm-Message-State: AOJu0Yz12L5RR80yMzC08L09tmoSFNsvNurbeQnJV1CmaczauwWgCDA6
+	QHI0efwTwM9hmCenO/nw+jJiMTYY4Wr07895A9GPfs/12QoaSIDrl/AAj+wT
+X-Google-Smtp-Source: AGHT+IHfpEQBFV2KnMh4nag8Jcq/W8EeLJfLZKLJxrG0YT7Km9MGigzg977Z8XbWso3OUNybM4mdpw==
+X-Received: by 2002:a05:6e02:194c:b0:375:da94:e46b with SMTP id e9e14a558f8ab-38a56f062a1mr118519985ab.5.1720741948279;
+        Thu, 11 Jul 2024 16:52:28 -0700 (PDT)
+Received: from localhost.localdomain ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b43898de8sm6255216b3a.27.2024.07.11.16.52.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 16:52:27 -0700 (PDT)
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [GSoC][PATCH v3] t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
+Date: Fri, 12 Jul 2024 05:21:42 +0530
+Message-ID: <20240711235159.5320-1-shyamthakkar001@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240708161641.10335-2-shyamthakkar001@gmail.com>
+References: <20240708161641.10335-2-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.993.g49e7a77208-goog
-Message-ID: <20240711232413.693444-1-emilyshaffer@google.com>
-Subject: [PATCH v2] Documentation: add platform support policy
-From: Emily Shaffer <emilyshaffer@google.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>, 
-	"=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Supporting many platforms is only easy when we have the right tools to
-ensure that support.
+helper/test-hashmap.c along with t0011-hashmap.sh test the hashmap.h
+library. Migrate them to the unit testing framework for better
+debugging, runtime performance and concise code.
 
-Teach platform maintainers how they can help us to help them, by
-explaining what kind of tooling support we would like to have, and what
-level of support becomes available as a result. Provide examples so that
-platform maintainers can see what we're asking for in practice.
+Along with the migration, make 'add' tests from the shellscript order
+agnostic in unit tests, since they iterate over entries with the same
+keys and we do not guarantee the order.
 
-With this policy in place, we can make changes with stronger assurance
-that we are not breaking anybody we promised not to. Instead, we can
-feel confident that our existing testing and integration practices
-protect those who care from breakage.
+The helper/test-hashmap.c is still not removed because it contains a
+performance test meant to be run by the user directly (not used in
+t/perf). And it makes sense for such a utility to be a helper.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Helped-by: Josh Steadmon <steadmon@google.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 ---
-
-New in v2:
-
-- Added a "minimum requirements" list in response to brian and Kyle's
-  suggestions. This doesn't mean "if you meet these requirements, we'll
-  work hard to make sure Git works for you"; it means "if you don't meet
-  these requirements, then your tests/runners/patches are not welcome."
-  Would appreciate someone double-checking the language to make sure
-  that's conveyed (nicely). Also, the list of requirements right now is
-  very short, because I didn't want to make any assumptions :) so if
-  there are more that I should add, please suggest them (or, maybe it
-  makes more sense to suggest them as a follow-on patch).
-
-- Added a section for a list of platform maintainers so we know who to
-  contact. I guess this could probably use dates (although we have the
-  `git blame`) to ensure that it's not too stale. I didn't add Dscho,
-  because I figured we had better double-check with him before signing
-  him up to anything; will add him to CC for this round. I didn't add
-  avarab for AIX because the last I heard about it was years ago; will
-  CC him too. Are there others that people know of?
-
-- Fixed some typos Junio pointed out. I'm all thumbs.
-
-- Reworded the "if we break release, we'll fix by next release" language
-  to be less specific and hopefully more honest.
-
-- Gave more detail about which branches are worth watching, and linked
-  to the maintainer guide rather than the workflows guide. Also
-  suggested watching `cabal`/security list.
-
-- Made testing turnaround time requirement less specific (and more
-  intimidating). Happy to hear suggestions for rephrasing, I'm worried
-  it may be a little rude as is.
-
-- Stopped mentioning coccicheck specifically; instead, invite people to
-  discuss possible compatibility restrictions with the mailing list, as
-  no one size fits all. I'd be happy to know if this is clear as written
-  or not.
-
-- Recommended tests restricting use of platform features come with an
-  expiration date, and why. If I didn't get the reasoning right, please
-  let me know and suggest a rephrase.
-
-- Suggested that GitHub Actions aren't the only way to do on-demand CI,
-  and if you come up with another way to do it that is as low-effort for
-  developers, that's OK too.
-
-Thanks,
-
- - Emily
-
-v1 description at
-https://lore.kernel.org/git/20240709225042.2005233-1-emilyshaffer@google.com/
----
- Documentation/Makefile                       |   1 +
- Documentation/technical/platform-support.txt | 138 +++++++++++++++++++
- 2 files changed, 139 insertions(+)
- create mode 100644 Documentation/technical/platform-support.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index dc65759cb1..462af0311f 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -118,6 +118,7 @@ TECH_DOCS += technical/multi-pack-index
- TECH_DOCS += technical/pack-heuristics
- TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
-+TECH_DOCS += technical/platform-support
- TECH_DOCS += technical/racy-git
- TECH_DOCS += technical/reftable
- TECH_DOCS += technical/scalar
-diff --git a/Documentation/technical/platform-support.txt b/Documentation/technical/platform-support.txt
-new file mode 100644
-index 0000000000..b818e6a402
---- /dev/null
-+++ b/Documentation/technical/platform-support.txt
-@@ -0,0 +1,138 @@
-+Platform Support Policy
-+=======================
-+
-+Git has a history of providing broad "support" for exotic platforms and older
-+platforms, without an explicit commitment. This support becomes easier to
-+maintain (and possible to commit to) when Git developers are provided with
-+adequate tooling to test for compatibility. Various levels of tooling will
-+allow us to make more solid commitments around Git's compatibility with your
-+platform.
-+
-+Compatible by next release
-+--------------------------
-+
-+To increase probability that compatibility issues introduced in a release
-+will be fixed in a later release:
-+
-+* You should send a bug report as soon as you notice the breakage on your
-+platform. The sooner you notice, the better; watching `seen` means you can
-+notice problems before they are considered "done with review"; whereas watching
-+`master` means the stable branch could break for your platform, but you have a
-+decent chance of avoiding a tagged release breaking you. See "The Policy" in the
-+link:../howto/maintain-git.txt[maintainer's guide] for an overview of which
-+branches are used in git.git, and how.
-+* The bug report should include information about what platform you are using.
-+* You should also use linkgit:git-bisect[1] and determine which commit
-+introduced the breakage.
-+* Please include any information you have about the nature of the breakage: is
-+it a memory alignment issue? Is an underlying library missing or broken for
-+your platform? Is there some quirk about your platform which means typical
-+practices (like malloc) behave strangely?
-+* Once we begin to fix the issue, please work closely with the contributor
-+working on it to test the proposed fix against your platform.
-+
-+Example: NonStop
-+https://lore.kernel.org/git/01bd01da681a$b8d70a70$2a851f50$@nexbridge.com/[reports
-+problems] when they're noticed.
-+
-+Compatible on `master` and point releases
-+-----------------------------------------
-+
-+To guarantee that `master` and all point releases work for your platform the
-+first time:
-+
-+* You should run nightly tests against the `next` branch and publish breakage
-+reports to the mailing list immediately when they happen.
-+** You may want to ask to join the mailto:git-security@googlegroups.com[security
-+mailing list] in order to run tests against the fixes proposed there, too.
-+* It may make sense to automate these; if you do, make sure they are not noisy
-+(you don't need to send a report when everything works, only when something
-+breaks).
-+* Breakage reports should be actionable - include clear error messages that can
-+help developers who may not have access to test directly on your platform.
-+* You should use git-bisect and determine which commit introduced the breakage;
-+if you can't do this with automation, you should do this yourself manually as
-+soon as you notice a breakage report was sent.
-+* You should either:
-+** Provide VM access on-demand to a trusted developer working to fix the issue,
-+so they can test their fix, OR
-+** Work closely with the developer fixing the issue; the turnaround to check
-+that their proposed fix works for your platform should be fast enough that it
-+doesn't hinder the developer working on that fix. Slow testing turnarounds may
-+cause the fix to miss the next release, or the developer may lose interest in
-+working on the fix at all.
-+
-+Example:
-+https://lore.kernel.org/git/CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrqmHCJB4Q@mail.gmail.com/[AIX]
-+provides a build farm and runs tests against release candidates.
-+
-+Compatible on `next`
-+--------------------
-+
-+To guarantee that `next` will work for your platform, avoiding reactive
-+debugging and fixing:
-+
-+* You should add a runner for your platform to the GitHub Actions CI suite.
-+This suite is run when any Git developer proposes a new patch, and having a
-+runner for your platform/configuration means every developer will know if they
-+break you, immediately.
-+** If adding it to GitHub Actions is infeasible (due to architecture constraints
-+or for performance reasons), any other method which runs as automatically and
-+quickly as possible works, too. For example, a service which snoops on the
-+mailing list and automatically runs tests on new [PATCH] emails, replying to the
-+author with the results, would also be within the spirit of this requirement.
-+* If you rely on Git avoiding a specific pattern that doesn't work well with
-+your platform (like a certain malloc pattern), raise it on the mailing list.
-+There are a few ways to avoid these breakages, so we'll work case-by-case to
-+find a solution that doesn't unnecessarily constrain other platforms to keep
-+compatibility with yours.
-+* If you rely on some configuration or behavior, add a test for it.  Untested
-+behavior is subject to breakage at any time.
-+** Clearly label these tests as necessary for platform compatibility. Add them
-+to an isolated compatibility-related test suite, like a new t* file or unit test
-+suite, so that they're easy to remove when compatibility is no longer required.
-+If the specific compatibility need is gated behind an issue with another
-+project, link to documentation of that issue (like a bug or email thread) to
-+make it easier to tell when that compatibility need goes away.
-+** Include a comment with an expiration date for these tests no more than 1 year
-+from now. You can update the expiration date if your platform still needs that
-+assurance down the road, but we need to know you still care about that
-+compatibility case and are working to make it unnecessary.
-+
-+Example: We run our
-+https://git.kernel.org/pub/scm/git/git.git/tree/.github/workflows/main.yml[CI
-+suite] on Windows, Ubuntu, Mac, and others.
-+
-+Getting help writing platform support patches
-+---------------------------------------------
-+
-+In general, when sending patches to fix platform support problems, follow
-+these guidelines to make sure the patch is reviewed with the appropriate level
-+of urgency:
-+
-+* Clearly state in the commit message that you are fixing a platform breakage,
-+and for which platform.
-+* Use the CI and test suite to ensure that the fix for your platform doesn't
-+break other platforms.
-+* If possible, add a test ensuring this regression doesn't happen again. If
-+it's not possible to add a test, explain why in the commit message.
-+
-+Minimum Requirements
-+--------------------
-+
-+Even if platform maintainers are willing to add tests or CI runners, we will
-+not consider helping to support platforms that do not meet these minimum
-+requirements:
-+
-+* Has C99 or C11
-+* Has dependencies which were released in the past 10 years
-+* Has active security support (taking security releases of dependencies, etc)
-+
-+Platform Maintainers
-+--------------------
-+
-+If you maintain a platform, or Git for that platform, and intend to work with
-+the Git project to ensure compatibility, please send a patch to add yourself to
-+this list.
-+
-+NonStop: Randall S. Becker <rsbecker@nexbridge.com>
-
-Range-diff against v1:
-1:  71e537e11d ! 1:  653661002c Documentation: add platform support policy
+Range-diff against v2:
+1:  bbb4f2f23e ! 1:  03ba77665e t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
+    @@ Commit message
      
-      ## Documentation/Makefile ##
-     @@ Documentation/Makefile: TECH_DOCS += technical/multi-pack-index
-    @@ Documentation/technical/platform-support.txt (new)
+         helper/test-hashmap.c along with t0011-hashmap.sh test the hashmap.h
+         library. Migrate them to the unit testing framework for better
+    -    debugging, runtime performance and consice code.
+    +    debugging, runtime performance and concise code.
+     
+         Along with the migration, make 'add' tests from the shellscript order
+         agnostic in unit tests, since they iterate over entries with the same
+    @@ Commit message
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+    +    Helped-by: Josh Steadmon <steadmon@google.com>
+    +    Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+         Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+     
+      ## Makefile ##
+    @@ t/unit-tests/t-hashmap.c (new)
+     +		struct test_entry, ent);
+     +}
      +
-     +Git has a history of providing broad "support" for exotic platforms and older
-     +platforms, without an explicit commitment. This support becomes easier to
-    -+maintain (and possible to commit to) when Git developers are providing with
-    -+adequate tooling to test for compatibility. Variouis levels of tooling will
-    ++maintain (and possible to commit to) when Git developers are provided with
-    ++adequate tooling to test for compatibility. Various levels of tooling will
-     +allow us to make more solid commitments around Git's compatibility with your
-     +platform.
+    -+static int key_val_contains(const char *key_val[][3], size_t n,
+    ++static int key_val_contains(const char *key_val[][2], char seen[], size_t n,
+     +			    struct test_entry *entry)
+     +{
+     +	for (size_t i = 0; i < n; i++) {
+     +		if (!strcmp(entry->key, key_val[i][0]) &&
+     +		    !strcmp(get_value(entry), key_val[i][1])) {
+    -+			if (!strcmp(key_val[i][2], "USED"))
+    ++			if (seen[i])
+     +				return 2;
+    -+			key_val[i][2] = "USED";
+    ++			seen[i] = 1;
+     +			return 0;
+     +		}
+     +	}
+    @@ t/unit-tests/t-hashmap.c (new)
+     +	hashmap_clear_and_free(&map, struct test_entry, ent);
+     +}
      +
-    -+Compatible by vN+1 release
-    ++Compatible by next release
-     +--------------------------
+    -+static void t_put(struct hashmap *map, int ignore_case)
+    -+{
+    -+	struct test_entry *entry;
+    -+	const char *key_val[][2] = { { "key1", "value1" },
+    -+				     { "key2", "value2" },
+    -+				     { "fooBarFrotz", "value3" } };
+    -+
+    -+	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+    -+		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+    -+		check(hashmap_put_entry(map, entry, ent) == NULL);
+    -+	}
+    -+
+    -+	entry = alloc_test_entry(ignore_case, "foobarfrotz", "value4");
+    -+	entry = hashmap_put_entry(map, entry, ent);
+    -+	check(ignore_case ? entry != NULL : entry == NULL);
+    -+	free(entry);
+    -+
+    -+	check_int(map->tablesize, ==, 64);
+    -+	check_int(hashmap_get_size(map), ==,
+    -+		  ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
+    -+}
+    -+
+     +static void t_replace(struct hashmap *map, int ignore_case)
+     +{
+     +	struct test_entry *entry;
      +
-    -+To increase probability that compatibility issues introduced in a point release
-    -+will be fixed by the next point release:
-    ++To increase probability that compatibility issues introduced in a release
-    ++will be fixed in a later release:
+     +	entry = alloc_test_entry(ignore_case, "key1", "value1");
+    -+	check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
      +
-     +* You should send a bug report as soon as you notice the breakage on your
-    -+platform. The sooner you notice, the better; it's better for you to watch `seen`
-    -+than to watch `master`. See linkgit:gitworkflows[7] under "Graduation" for an
-    -+overview of which branches are used in git.git, and how.
-    ++platform. The sooner you notice, the better; watching `seen` means you can
-    ++notice problems before they are considered "done with review"; whereas watching
-    ++`master` means the stable branch could break for your platform, but you have a
-    ++decent chance of avoiding a tagged release breaking you. See "The Policy" in the
-    ++link:../howto/maintain-git.txt[maintainer's guide] for an overview of which
-    ++branches are used in git.git, and how.
-     +* The bug report should include information about what platform you are using.
-     +* You should also use linkgit:git-bisect[1] and determine which commit
-     +introduced the breakage.
-    @@ Documentation/technical/platform-support.txt (new)
+     +	entry = alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
+     +				 "value2");
+    @@ t/unit-tests/t-hashmap.c (new)
+     +	free(entry);
      +
-     +* You should run nightly tests against the `next` branch and publish breakage
-     +reports to the mailing list immediately when they happen.
-    ++** You may want to ask to join the mailto:git-security@googlegroups.com[security
-    ++mailing list] in order to run tests against the fixes proposed there, too.
-     +* It may make sense to automate these; if you do, make sure they are not noisy
-     +(you don't need to send a report when everything works, only when something
-     +breaks).
-    @@ Documentation/technical/platform-support.txt (new)
-     +* You should either:
-     +** Provide VM access on-demand to a trusted developer working to fix the issue,
-     +so they can test their fix, OR
-    -+** Work closely with the developer fixing the issue - testing turnaround to
-    -+check whether the fix works for your platform should not be longer than a
-    -+business day.
-    ++** Work closely with the developer fixing the issue; the turnaround to check
-    ++that their proposed fix works for your platform should be fast enough that it
-    ++doesn't hinder the developer working on that fix. Slow testing turnarounds may
-    ++cause the fix to miss the next release, or the developer may lose interest in
-    ++working on the fix at all.
+     +	entry = alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
+    -+	check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
      +
-     +Example:
-     +https://lore.kernel.org/git/CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrqmHCJB4Q@mail.gmail.com/[AIX]
-    @@ Documentation/technical/platform-support.txt (new)
-     +This suite is run when any Git developer proposes a new patch, and having a
-     +runner for your platform/configuration means every developer will know if they
-     +break you, immediately.
-    ++** If adding it to GitHub Actions is infeasible (due to architecture constraints
-    ++or for performance reasons), any other method which runs as automatically and
-    ++quickly as possible works, too. For example, a service which snoops on the
-    ++mailing list and automatically runs tests on new [PATCH] emails, replying to the
-    ++author with the results, would also be within the spirit of this requirement.
-     +* If you rely on Git avoiding a specific pattern that doesn't work well with
-    -+your platform (like a certain malloc pattern), if possible, add a coccicheck
-    -+rule to ensure that pattern is not used.
-    -+* If you rely on some configuration or behavior, add a test for it. You may
-    -+find it easier to add a unit test ensuring the behavior you need than to add an
-    -+integration test; either one works. Untested behavior is subject to breakage at
-    -+any time.
-    ++your platform (like a certain malloc pattern), raise it on the mailing list.
-    ++There are a few ways to avoid these breakages, so we'll work case-by-case to
-    ++find a solution that doesn't unnecessarily constrain other platforms to keep
-    ++compatibility with yours.
-    ++* If you rely on some configuration or behavior, add a test for it.  Untested
-    ++behavior is subject to breakage at any time.
-     +** Clearly label these tests as necessary for platform compatibility. Add them
-     +to an isolated compatibility-related test suite, like a new t* file or unit test
-     +suite, so that they're easy to remove when compatibility is no longer required.
-     +If the specific compatibility need is gated behind an issue with another
-     +project, link to documentation of that issue (like a bug or email thread) to
-     +make it easier to tell when that compatibility need goes away.
-    ++** Include a comment with an expiration date for these tests no more than 1 year
-    ++from now. You can update the expiration date if your platform still needs that
-    ++assurance down the road, but we need to know you still care about that
-    ++compatibility case and are working to make it unnecessary.
+     +	entry = alloc_test_entry(ignore_case,
+     +				 ignore_case ? "foobarfrotz" : "fooBarFrotz",
+    @@ t/unit-tests/t-hashmap.c (new)
      +
-     +Example: We run our
-     +https://git.kernel.org/pub/scm/git/git.git/tree/.github/workflows/main.yml[CI
-    @@ Documentation/technical/platform-support.txt (new)
-     +break other platforms.
-     +* If possible, add a test ensuring this regression doesn't happen again. If
-     +it's not possible to add a test, explain why in the commit message.
+     +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+     +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+    -+		check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
+     +	}
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
+     +		entry = get_test_entry(map, ignore_case, query[i][0]);
+     +		if (check(entry != NULL))
+     +			check_str(get_value(entry), query[i][1]);
+    ++		else
+    ++			test_msg("query key: %s", query[i][0]);
+     +	}
+     +
+    -+	check(get_test_entry(map, ignore_case, "notInMap") == NULL);
+    ++	check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
+    ++	check_int(map->tablesize, ==, 64);
+    ++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
+     +}
+     +
+     +static void t_add(struct hashmap *map, int ignore_case)
+     +{
+     +	struct test_entry *entry;
+    -+	const char *key_val[][3] = {
+    -+		{ "key1", "value1", "UNUSED" },
+    -+		{ ignore_case ? "Key1" : "key1", "value2", "UNUSED" },
+    -+		{ "fooBarFrotz", "value3", "UNUSED" },
+    -+		{ ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4", "UNUSED" }
+    ++	const char *key_val[][2] = {
+    ++		{ "key1", "value1" },
+    ++		{ ignore_case ? "Key1" : "key1", "value2" },
+    ++		{ "fooBarFrotz", "value3" },
+    ++		{ ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4" }
+     +	};
+     +	const char *queries[] = { "key1",
+     +				  ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
+    ++	char seen[ARRAY_SIZE(key_val)] = { 0 };
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+     +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+    @@ t/unit-tests/t-hashmap.c (new)
+     +		{
+     +			int ret;
+     +			if (!check_int((ret = key_val_contains(
+    -+						key_val, ARRAY_SIZE(key_val),
+    -+						entry)), ==, 0)) {
+    ++						key_val, seen,
+    ++						ARRAY_SIZE(key_val), entry)),
+    ++				       ==, 0)) {
+     +				switch (ret) {
+     +				case 1:
+     +					test_msg("found entry was not given in the input\n"
+    @@ t/unit-tests/t-hashmap.c (new)
+     +		}
+     +		check_int(count, ==, 2);
+     +	}
     ++
-    ++Minimum Requirements
-    ++--------------------
+    ++	for (size_t i = 0; i < ARRAY_SIZE(seen); i++) {
+    ++		if (!check_int(seen[i], ==, 1))
+    ++			test_msg("following key-val pair was not iterated over:\n"
+    ++				 "    key: %s\n  value: %s",
+    ++				 key_val[i][0], key_val[i][1]);
+    ++	}
     ++
-    ++Even if platform maintainers are willing to add tests or CI runners, we will
-    ++not consider helping to support platforms that do not meet these minimum
-    ++requirements:
+     +	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
+    -+	check(get_test_entry(map, ignore_case, "notInMap") == NULL);
+    ++	check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
+     +}
+     +
+     +static void t_remove(struct hashmap *map, int ignore_case)
+    @@ t/unit-tests/t-hashmap.c (new)
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+     +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+    -+		check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
+     +	}
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(remove); i++) {
+    @@ t/unit-tests/t-hashmap.c (new)
+     +	}
+     +
+     +	entry = alloc_test_entry(ignore_case, "notInMap", "");
+    -+	check(hashmap_remove_entry(map, entry, ent, "notInMap") == NULL);
+    ++	check_pointer_eq(hashmap_remove_entry(map, entry, ent, "notInMap"), NULL);
+     +	free(entry);
     ++
-    ++* Has C99 or C11
-    ++* Has dependencies which were released in the past 10 years
-    ++* Has active security support (taking security releases of dependencies, etc)
+    ++	check_int(map->tablesize, ==, 64);
+    ++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val) - ARRAY_SIZE(remove));
+     +}
+     +
+     +static void t_iterate(struct hashmap *map, int ignore_case)
+     +{
+     +	struct test_entry *entry;
+     +	struct hashmap_iter iter;
+    -+	const char *key_val[][3] = { { "key1", "value1", "UNUSED" },
+    -+				     { "key2", "value2", "UNUSED" },
+    -+				     { "fooBarFrotz", "value3", "UNUSED" } };
+    -+	int count = 0;
+    ++	const char *key_val[][2] = { { "key1", "value1" },
+    ++				     { "key2", "value2" },
+    ++				     { "fooBarFrotz", "value3" } };
+    ++	char seen[ARRAY_SIZE(key_val)] = { 0 };
+     +
+     +	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
+     +		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
+    -+		check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
+     +	}
+     +
+     +	hashmap_for_each_entry(map, &iter, entry, ent /* member name */)
+     +	{
+     +		int ret;
+    -+		if (!check_int((ret = key_val_contains(key_val, ARRAY_SIZE(key_val),
+    ++		if (!check_int((ret = key_val_contains(key_val, seen,
+    ++						       ARRAY_SIZE(key_val),
+     +						       entry)), ==, 0)) {
+     +			switch (ret) {
+     +			case 1:
+    @@ t/unit-tests/t-hashmap.c (new)
+     +					 entry->key, get_value(entry));
+     +				break;
+     +			}
+    -+		} else {
+    -+			count++;
+     +		}
+     +	}
+    -+	check_int(count, ==, ARRAY_SIZE(key_val));
     ++
-    ++Platform Maintainers
-    ++--------------------
+    ++	for (size_t i = 0; i < ARRAY_SIZE(seen); i++) {
+    ++		if (!check_int(seen[i], ==, 1))
+    ++			test_msg("following key-val pair was not iterated over:\n"
+    ++				 "    key: %s\n  value: %s",
+    ++				 key_val[i][0], key_val[i][1]);
+    ++	}
     ++
-    ++If you maintain a platform, or Git for that platform, and intend to work with
-    ++the Git project to ensure compatibility, please send a patch to add yourself to
-    ++this list.
-    ++
-    ++NonStop: Randall S. Becker <rsbecker@nexbridge.com>
+     +	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
+     +}
+     +
+    @@ t/unit-tests/t-hashmap.c (new)
+     +		char *key = xstrfmt("key%d", i);
+     +		char *value = xstrfmt("value%d", i);
+     +		entry = alloc_test_entry(ignore_case, key, value);
+    -+		check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
+     +		free(key);
+     +		free(value);
+     +	}
+    @@ t/unit-tests/t-hashmap.c (new)
+     +	check_int(hashmap_get_size(map), ==, 51);
+     +
+     +	entry = alloc_test_entry(ignore_case, "key52", "value52");
+    -+	check(hashmap_put_entry(map, entry, ent) == NULL);
+    ++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
+     +	check_int(map->tablesize, ==, 256);
+     +	check_int(hashmap_get_size(map), ==, 52);
+     +
+    @@ t/unit-tests/t-hashmap.c (new)
+     +		else if (!check(i1 != values[i]))
+     +			test_msg("strintern(%s) returns input pointer\n",
+     +				 values[i]);
+    -+		else if (!check(i1 == i2))
+    ++		else if (!check_pointer_eq(i1, i2))
+     +			test_msg("address('%s') != address('%s'), so strintern('%s') != strintern('%s')",
+     +				 i1, i2, values[i], values[i]);
+     +		else
+    @@ t/unit-tests/t-hashmap.c (new)
+     +
+     +int cmd_main(int argc UNUSED, const char **argv UNUSED)
+     +{
+    -+	TEST(setup(t_put, 0), "put works");
+    -+	TEST(setup(t_put, 1), "put (case insensitive) works");
+     +	TEST(setup(t_replace, 0), "replace works");
+     +	TEST(setup(t_replace, 1), "replace (case insensitive) works");
+     +	TEST(setup(t_get, 0), "get works");
+
+ Makefile                 |   1 +
+ t/helper/test-hashmap.c  | 100 +----------
+ t/t0011-hashmap.sh       | 260 ----------------------------
+ t/unit-tests/t-hashmap.c | 358 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 361 insertions(+), 358 deletions(-)
+ delete mode 100755 t/t0011-hashmap.sh
+ create mode 100644 t/unit-tests/t-hashmap.c
+
+diff --git a/Makefile b/Makefile
+index 3eab701b10..74bb026610 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1336,6 +1336,7 @@ THIRD_PARTY_SOURCES += sha1dc/%
+ UNIT_TEST_PROGRAMS += t-ctype
+ UNIT_TEST_PROGRAMS += t-example-decorate
+ UNIT_TEST_PROGRAMS += t-hash
++UNIT_TEST_PROGRAMS += t-hashmap
+ UNIT_TEST_PROGRAMS += t-mem-pool
+ UNIT_TEST_PROGRAMS += t-oidtree
+ UNIT_TEST_PROGRAMS += t-prio-queue
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index 2912899558..7b854a7030 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -12,11 +12,6 @@ struct test_entry
+ 	char key[FLEX_ARRAY];
+ };
+ 
+-static const char *get_value(const struct test_entry *e)
+-{
+-	return e->key + strlen(e->key) + 1;
+-}
+-
+ static int test_entry_cmp(const void *cmp_data,
+ 			  const struct hashmap_entry *eptr,
+ 			  const struct hashmap_entry *entry_or_key,
+@@ -141,30 +136,16 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+ /*
+  * Read stdin line by line and print result of commands to stdout:
+  *
+- * hash key -> strhash(key) memhash(key) strihash(key) memihash(key)
+- * put key value -> NULL / old value
+- * get key -> NULL / value
+- * remove key -> NULL / old value
+- * iterate -> key1 value1\nkey2 value2\n...
+- * size -> tablesize numentries
+- *
+  * perfhashmap method rounds -> test hashmap.[ch] performance
+  */
+ int cmd__hashmap(int argc, const char **argv)
+ {
+ 	struct string_list parts = STRING_LIST_INIT_NODUP;
+ 	struct strbuf line = STRBUF_INIT;
+-	int icase;
+-	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &icase);
+-
+-	/* init hash map */
+-	icase = argc > 1 && !strcmp("ignorecase", argv[1]);
+ 
+ 	/* process commands from stdin */
+ 	while (strbuf_getline(&line, stdin) != EOF) {
+ 		char *cmd, *p1, *p2;
+-		unsigned int hash = 0;
+-		struct test_entry *entry;
+ 
+ 		/* break line into command and up to two parameters */
+ 		string_list_setlen(&parts, 0);
+@@ -180,84 +161,8 @@ int cmd__hashmap(int argc, const char **argv)
+ 		cmd = parts.items[0].string;
+ 		p1 = parts.nr >= 1 ? parts.items[1].string : NULL;
+ 		p2 = parts.nr >= 2 ? parts.items[2].string : NULL;
+-		if (p1)
+-			hash = icase ? strihash(p1) : strhash(p1);
+-
+-		if (!strcmp("add", cmd) && p1 && p2) {
+-
+-			/* create entry with key = p1, value = p2 */
+-			entry = alloc_test_entry(hash, p1, p2);
+-
+-			/* add to hashmap */
+-			hashmap_add(&map, &entry->ent);
+-
+-		} else if (!strcmp("put", cmd) && p1 && p2) {
+-
+-			/* create entry with key = p1, value = p2 */
+-			entry = alloc_test_entry(hash, p1, p2);
+-
+-			/* add / replace entry */
+-			entry = hashmap_put_entry(&map, entry, ent);
+-
+-			/* print and free replaced entry, if any */
+-			puts(entry ? get_value(entry) : "NULL");
+-			free(entry);
+-
+-		} else if (!strcmp("get", cmd) && p1) {
+-			/* lookup entry in hashmap */
+-			entry = hashmap_get_entry_from_hash(&map, hash, p1,
+-							struct test_entry, ent);
+-
+-			/* print result */
+-			if (!entry)
+-				puts("NULL");
+-			hashmap_for_each_entry_from(&map, entry, ent)
+-				puts(get_value(entry));
+-
+-		} else if (!strcmp("remove", cmd) && p1) {
+-
+-			/* setup static key */
+-			struct hashmap_entry key;
+-			struct hashmap_entry *rm;
+-			hashmap_entry_init(&key, hash);
+-
+-			/* remove entry from hashmap */
+-			rm = hashmap_remove(&map, &key, p1);
+-			entry = rm ? container_of(rm, struct test_entry, ent)
+-					: NULL;
+-
+-			/* print result and free entry*/
+-			puts(entry ? get_value(entry) : "NULL");
+-			free(entry);
+-
+-		} else if (!strcmp("iterate", cmd)) {
+-			struct hashmap_iter iter;
+-
+-			hashmap_for_each_entry(&map, &iter, entry,
+-						ent /* member name */)
+-				printf("%s %s\n", entry->key, get_value(entry));
+-
+-		} else if (!strcmp("size", cmd)) {
+-
+-			/* print table sizes */
+-			printf("%u %u\n", map.tablesize,
+-			       hashmap_get_size(&map));
+-
+-		} else if (!strcmp("intern", cmd) && p1) {
+-
+-			/* test that strintern works */
+-			const char *i1 = strintern(p1);
+-			const char *i2 = strintern(p1);
+-			if (strcmp(i1, p1))
+-				printf("strintern(%s) returns %s\n", p1, i1);
+-			else if (i1 == p1)
+-				printf("strintern(%s) returns input pointer\n", p1);
+-			else if (i1 != i2)
+-				printf("strintern(%s) != strintern(%s)", i1, i2);
+-			else
+-				printf("%s\n", i1);
+-
+-		} else if (!strcmp("perfhashmap", cmd) && p1 && p2) {
++	
++		if (!strcmp("perfhashmap", cmd) && p1 && p2) {
+ 
+ 			perf_hashmap(atoi(p1), atoi(p2));
+ 
+@@ -270,6 +175,5 @@ int cmd__hashmap(int argc, const char **argv)
+ 
+ 	string_list_clear(&parts, 0);
+ 	strbuf_release(&line);
+-	hashmap_clear_and_free(&map, struct test_entry, ent);
+ 	return 0;
+ }
+diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
+deleted file mode 100755
+index 46e74ad107..0000000000
+--- a/t/t0011-hashmap.sh
++++ /dev/null
+@@ -1,260 +0,0 @@
+-#!/bin/sh
+-
+-test_description='test hashmap and string hash functions'
+-
+-TEST_PASSES_SANITIZE_LEAK=true
+-. ./test-lib.sh
+-
+-test_hashmap() {
+-	echo "$1" | test-tool hashmap $3 > actual &&
+-	echo "$2" > expect &&
+-	test_cmp expect actual
+-}
+-
+-test_expect_success 'put' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-put foobarfrotz value4
+-size" "NULL
+-NULL
+-NULL
+-NULL
+-64 4"
+-
+-'
+-
+-test_expect_success 'put (case insensitive)' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-size" "NULL
+-NULL
+-NULL
+-64 3" ignorecase
+-
+-'
+-
+-test_expect_success 'replace' '
+-
+-test_hashmap "put key1 value1
+-put key1 value2
+-put fooBarFrotz value3
+-put fooBarFrotz value4
+-size" "NULL
+-value1
+-NULL
+-value3
+-64 2"
+-
+-'
+-
+-test_expect_success 'replace (case insensitive)' '
+-
+-test_hashmap "put key1 value1
+-put Key1 value2
+-put fooBarFrotz value3
+-put foobarfrotz value4
+-size" "NULL
+-value1
+-NULL
+-value3
+-64 2" ignorecase
+-
+-'
+-
+-test_expect_success 'get' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-put foobarfrotz value4
+-get key1
+-get key2
+-get fooBarFrotz
+-get notInMap" "NULL
+-NULL
+-NULL
+-NULL
+-value1
+-value2
+-value3
+-NULL"
+-
+-'
+-
+-test_expect_success 'get (case insensitive)' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-get Key1
+-get keY2
+-get foobarfrotz
+-get notInMap" "NULL
+-NULL
+-NULL
+-value1
+-value2
+-value3
+-NULL" ignorecase
+-
+-'
+-
+-test_expect_success 'add' '
+-
+-test_hashmap "add key1 value1
+-add key1 value2
+-add fooBarFrotz value3
+-add fooBarFrotz value4
+-get key1
+-get fooBarFrotz
+-get notInMap" "value2
+-value1
+-value4
+-value3
+-NULL"
+-
+-'
+-
+-test_expect_success 'add (case insensitive)' '
+-
+-test_hashmap "add key1 value1
+-add Key1 value2
+-add fooBarFrotz value3
+-add foobarfrotz value4
+-get key1
+-get Foobarfrotz
+-get notInMap" "value2
+-value1
+-value4
+-value3
+-NULL" ignorecase
+-
+-'
+-
+-test_expect_success 'remove' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-remove key1
+-remove key2
+-remove notInMap
+-size" "NULL
+-NULL
+-NULL
+-value1
+-value2
+-NULL
+-64 1"
+-
+-'
+-
+-test_expect_success 'remove (case insensitive)' '
+-
+-test_hashmap "put key1 value1
+-put key2 value2
+-put fooBarFrotz value3
+-remove Key1
+-remove keY2
+-remove notInMap
+-size" "NULL
+-NULL
+-NULL
+-value1
+-value2
+-NULL
+-64 1" ignorecase
+-
+-'
+-
+-test_expect_success 'iterate' '
+-	test-tool hashmap >actual.raw <<-\EOF &&
+-	put key1 value1
+-	put key2 value2
+-	put fooBarFrotz value3
+-	iterate
+-	EOF
+-
+-	cat >expect <<-\EOF &&
+-	NULL
+-	NULL
+-	NULL
+-	fooBarFrotz value3
+-	key1 value1
+-	key2 value2
+-	EOF
+-
+-	sort <actual.raw >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'iterate (case insensitive)' '
+-	test-tool hashmap ignorecase >actual.raw <<-\EOF &&
+-	put key1 value1
+-	put key2 value2
+-	put fooBarFrotz value3
+-	iterate
+-	EOF
+-
+-	cat >expect <<-\EOF &&
+-	NULL
+-	NULL
+-	NULL
+-	fooBarFrotz value3
+-	key1 value1
+-	key2 value2
+-	EOF
+-
+-	sort <actual.raw >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'grow / shrink' '
+-
+-	rm -f in &&
+-	rm -f expect &&
+-	for n in $(test_seq 51)
+-	do
+-		echo put key$n value$n >> in &&
+-		echo NULL >> expect || return 1
+-	done &&
+-	echo size >> in &&
+-	echo 64 51 >> expect &&
+-	echo put key52 value52 >> in &&
+-	echo NULL >> expect &&
+-	echo size >> in &&
+-	echo 256 52 >> expect &&
+-	for n in $(test_seq 12)
+-	do
+-		echo remove key$n >> in &&
+-		echo value$n >> expect || return 1
+-	done &&
+-	echo size >> in &&
+-	echo 256 40 >> expect &&
+-	echo remove key40 >> in &&
+-	echo value40 >> expect &&
+-	echo size >> in &&
+-	echo 64 39 >> expect &&
+-	test-tool hashmap <in >out &&
+-	test_cmp expect out
+-
+-'
+-
+-test_expect_success 'string interning' '
+-
+-test_hashmap "intern value1
+-intern Value1
+-intern value2
+-intern value2
+-" "value1
+-Value1
+-value2
+-value2"
+-
+-'
+-
+-test_done
+diff --git a/t/unit-tests/t-hashmap.c b/t/unit-tests/t-hashmap.c
+new file mode 100644
+index 0000000000..3112b10b33
+--- /dev/null
++++ b/t/unit-tests/t-hashmap.c
+@@ -0,0 +1,358 @@
++#include "test-lib.h"
++#include "hashmap.h"
++#include "strbuf.h"
++
++struct test_entry {
++	int padding; /* hashmap entry no longer needs to be the first member */
++	struct hashmap_entry ent;
++	/* key and value as two \0-terminated strings */
++	char key[FLEX_ARRAY];
++};
++
++static int test_entry_cmp(const void *cmp_data,
++			  const struct hashmap_entry *eptr,
++			  const struct hashmap_entry *entry_or_key,
++			  const void *keydata)
++{
++	const int ignore_case = cmp_data ? *((int *)cmp_data) : 0;
++	const struct test_entry *e1, *e2;
++	const char *key = keydata;
++
++	e1 = container_of(eptr, const struct test_entry, ent);
++	e2 = container_of(entry_or_key, const struct test_entry, ent);
++
++	if (ignore_case)
++		return strcasecmp(e1->key, key ? key : e2->key);
++	else
++		return strcmp(e1->key, key ? key : e2->key);
++}
++
++static const char *get_value(const struct test_entry *e)
++{
++	return e->key + strlen(e->key) + 1;
++}
++
++static struct test_entry *alloc_test_entry(unsigned int ignore_case,
++					   const char *key, const char *value)
++{
++	size_t klen = strlen(key);
++	size_t vlen = strlen(value);
++	unsigned int hash = ignore_case ? strihash(key) : strhash(key);
++	struct test_entry *entry = xmalloc(st_add4(sizeof(*entry), klen, vlen, 2));
++
++	hashmap_entry_init(&entry->ent, hash);
++	memcpy(entry->key, key, klen + 1);
++	memcpy(entry->key + klen + 1, value, vlen + 1);
++	return entry;
++}
++
++static struct test_entry *get_test_entry(struct hashmap *map,
++					 unsigned int ignore_case, const char *key)
++{
++	return hashmap_get_entry_from_hash(
++		map, ignore_case ? strihash(key) : strhash(key), key,
++		struct test_entry, ent);
++}
++
++static int key_val_contains(const char *key_val[][2], char seen[], size_t n,
++			    struct test_entry *entry)
++{
++	for (size_t i = 0; i < n; i++) {
++		if (!strcmp(entry->key, key_val[i][0]) &&
++		    !strcmp(get_value(entry), key_val[i][1])) {
++			if (seen[i])
++				return 2;
++			seen[i] = 1;
++			return 0;
++		}
++	}
++	return 1;
++}
++
++static void setup(void (*f)(struct hashmap *map, int ignore_case),
++		  int ignore_case)
++{
++	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &ignore_case);
++
++	f(&map, ignore_case);
++	hashmap_clear_and_free(&map, struct test_entry, ent);
++}
++
++static void t_replace(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry;
++
++	entry = alloc_test_entry(ignore_case, "key1", "value1");
++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++
++	entry = alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
++				 "value2");
++	entry = hashmap_put_entry(map, entry, ent);
++	if (check(entry != NULL))
++		check_str(get_value(entry), "value1");
++	free(entry);
++
++	entry = alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++
++	entry = alloc_test_entry(ignore_case,
++				 ignore_case ? "foobarfrotz" : "fooBarFrotz",
++				 "value4");
++	entry = hashmap_put_entry(map, entry, ent);
++	if (check(entry != NULL))
++		check_str(get_value(entry), "value3");
++	free(entry);
++}
++
++static void t_get(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry;
++	const char *key_val[][2] = { { "key1", "value1" },
++				     { "key2", "value2" },
++				     { "fooBarFrotz", "value3" },
++				     { ignore_case ? "key4" : "foobarfrotz", "value4" } };
++	const char *query[][2] = {
++		{ ignore_case ? "Key1" : "key1", "value1" },
++		{ ignore_case ? "keY2" : "key2", "value2" },
++		{ ignore_case ? "foobarfrotz" : "fooBarFrotz", "value3" }
++	};
++
++	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
++		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
++		entry = get_test_entry(map, ignore_case, query[i][0]);
++		if (check(entry != NULL))
++			check_str(get_value(entry), query[i][1]);
++		else
++			test_msg("query key: %s", query[i][0]);
++	}
++
++	check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
++	check_int(map->tablesize, ==, 64);
++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
++}
++
++static void t_add(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry;
++	const char *key_val[][2] = {
++		{ "key1", "value1" },
++		{ ignore_case ? "Key1" : "key1", "value2" },
++		{ "fooBarFrotz", "value3" },
++		{ ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4" }
++	};
++	const char *queries[] = { "key1",
++				  ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
++	char seen[ARRAY_SIZE(key_val)] = { 0 };
++
++	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
++		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
++		hashmap_add(map, &entry->ent);
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(queries); i++) {
++		int count = 0;
++		entry = hashmap_get_entry_from_hash(map,
++			ignore_case ? strihash(queries[i]) :
++				      strhash(queries[i]),
++			queries[i], struct test_entry, ent);
++
++		hashmap_for_each_entry_from(map, entry, ent)
++		{
++			int ret;
++			if (!check_int((ret = key_val_contains(
++						key_val, seen,
++						ARRAY_SIZE(key_val), entry)),
++				       ==, 0)) {
++				switch (ret) {
++				case 1:
++					test_msg("found entry was not given in the input\n"
++						 "    key: %s\n  value: %s",
++						 entry->key, get_value(entry));
++					break;
++				case 2:
++					test_msg("duplicate entry detected\n"
++						 "    key: %s\n  value: %s",
++						 entry->key, get_value(entry));
++					break;
++				}
++			} else {
++				count++;
++			}
++		}
++		check_int(count, ==, 2);
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(seen); i++) {
++		if (!check_int(seen[i], ==, 1))
++			test_msg("following key-val pair was not iterated over:\n"
++				 "    key: %s\n  value: %s",
++				 key_val[i][0], key_val[i][1]);
++	}
++
++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
++	check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
++}
++
++static void t_remove(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry, *removed;
++	const char *key_val[][2] = { { "key1", "value1" },
++				     { "key2", "value2" },
++				     { "fooBarFrotz", "value3" } };
++	const char *remove[][2] = { { ignore_case ? "Key1" : "key1", "value1" },
++				    { ignore_case ? "keY2" : "key2", "value2" } };
++
++	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
++		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(remove); i++) {
++		entry = alloc_test_entry(ignore_case, remove[i][0], "");
++		removed = hashmap_remove_entry(map, entry, ent, remove[i][0]);
++		if (check(removed != NULL))
++			check_str(get_value(removed), remove[i][1]);
++		free(entry);
++		free(removed);
++	}
++
++	entry = alloc_test_entry(ignore_case, "notInMap", "");
++	check_pointer_eq(hashmap_remove_entry(map, entry, ent, "notInMap"), NULL);
++	free(entry);
++
++	check_int(map->tablesize, ==, 64);
++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val) - ARRAY_SIZE(remove));
++}
++
++static void t_iterate(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry;
++	struct hashmap_iter iter;
++	const char *key_val[][2] = { { "key1", "value1" },
++				     { "key2", "value2" },
++				     { "fooBarFrotz", "value3" } };
++	char seen[ARRAY_SIZE(key_val)] = { 0 };
++
++	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
++		entry = alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++	}
++
++	hashmap_for_each_entry(map, &iter, entry, ent /* member name */)
++	{
++		int ret;
++		if (!check_int((ret = key_val_contains(key_val, seen,
++						       ARRAY_SIZE(key_val),
++						       entry)), ==, 0)) {
++			switch (ret) {
++			case 1:
++				test_msg("found entry was not given in the input\n"
++					 "    key: %s\n  value: %s",
++					 entry->key, get_value(entry));
++				break;
++			case 2:
++				test_msg("duplicate entry detected\n"
++					 "    key: %s\n  value: %s",
++					 entry->key, get_value(entry));
++				break;
++			}
++		}
++	}
++
++	for (size_t i = 0; i < ARRAY_SIZE(seen); i++) {
++		if (!check_int(seen[i], ==, 1))
++			test_msg("following key-val pair was not iterated over:\n"
++				 "    key: %s\n  value: %s",
++				 key_val[i][0], key_val[i][1]);
++	}
++
++	check_int(hashmap_get_size(map), ==, ARRAY_SIZE(key_val));
++}
++
++static void t_alloc(struct hashmap *map, int ignore_case)
++{
++	struct test_entry *entry, *removed;
++
++	for (int i = 1; i <= 51; i++) {
++		char *key = xstrfmt("key%d", i);
++		char *value = xstrfmt("value%d", i);
++		entry = alloc_test_entry(ignore_case, key, value);
++		check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++		free(key);
++		free(value);
++	}
++	check_int(map->tablesize, ==, 64);
++	check_int(hashmap_get_size(map), ==, 51);
++
++	entry = alloc_test_entry(ignore_case, "key52", "value52");
++	check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
++	check_int(map->tablesize, ==, 256);
++	check_int(hashmap_get_size(map), ==, 52);
++
++	for (int i = 1; i <= 12; i++) {
++		char *key = xstrfmt("key%d", i);
++		char *value = xstrfmt("value%d", i);
++
++		entry = alloc_test_entry(ignore_case, key, "");
++		removed = hashmap_remove_entry(map, entry, ent, key);
++		if (check(removed != NULL))
++			check_str(value, get_value(removed));
++		free(key);
++		free(value);
++		free(entry);
++		free(removed);
++	}
++	check_int(map->tablesize, ==, 256);
++	check_int(hashmap_get_size(map), ==, 40);
++
++	entry = alloc_test_entry(ignore_case, "key40", "");
++	removed = hashmap_remove_entry(map, entry, ent, "key40");
++	if (check(removed != NULL))
++		check_str("value40", get_value(removed));
++	check_int(map->tablesize, ==, 64);
++	check_int(hashmap_get_size(map), ==, 39);
++	free(entry);
++	free(removed);
++}
++
++static void t_intern(struct hashmap *map, int ignore_case)
++{
++	const char *values[] = { "value1", "Value1", "value2", "value2" };
++
++	for (size_t i = 0; i < ARRAY_SIZE(values); i++) {
++		const char *i1 = strintern(values[i]);
++		const char *i2 = strintern(values[i]);
++
++		if (!check(!strcmp(i1, values[i])))
++			test_msg("strintern(%s) returns %s\n", values[i], i1);
++		else if (!check(i1 != values[i]))
++			test_msg("strintern(%s) returns input pointer\n",
++				 values[i]);
++		else if (!check_pointer_eq(i1, i2))
++			test_msg("address('%s') != address('%s'), so strintern('%s') != strintern('%s')",
++				 i1, i2, values[i], values[i]);
++		else
++			check_str(i1, values[i]);
++	}
++}
++
++int cmd_main(int argc UNUSED, const char **argv UNUSED)
++{
++	TEST(setup(t_replace, 0), "replace works");
++	TEST(setup(t_replace, 1), "replace (case insensitive) works");
++	TEST(setup(t_get, 0), "get works");
++	TEST(setup(t_get, 1), "get (case insensitive) works");
++	TEST(setup(t_add, 0), "add works");
++	TEST(setup(t_add, 1), "add (case insensitive) works");
++	TEST(setup(t_remove, 0), "remove works");
++	TEST(setup(t_remove, 1), "remove (case insensitive) works");
++	TEST(setup(t_iterate, 0), "iterate works");
++	TEST(setup(t_iterate, 1), "iterate (case insensitive) works");
++	TEST(setup(t_alloc, 0), "grow / shrink works");
++	TEST(setup(t_intern, 0), "string interning works");
++	return test_done();
++}
 -- 
-2.45.2.993.g49e7a77208-goog
+2.45.2
 
