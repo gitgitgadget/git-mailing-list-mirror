@@ -1,63 +1,63 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551F38F83
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 04:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B8854903
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 04:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720670991; cv=none; b=qMMbR0W2gDZQ03O9Pw9nQE8bKC+ow2buUe4eLToPOLWm9JMeodyLDrP+BwMz0hUBzvcd6R271cbAExlDt1I1H6HjdIyjd7Jqq95xjMd7AUPXvMjpW+elydV4zFo+EjLcxIrrmXQ+Lklvbrf2TyKCWujkA9cKrXvMbMHPMXhEA6A=
+	t=1720670994; cv=none; b=ogJ8DNKzBpkRLqCcPajBved/nQZeCAXT/RRqQHD2sZ8zG2lkQQ7hLI/neba4pVIG2A0toUISuorhQTe6YtuSksuNnKqASQr6H1PnUilSR9rOmPu4VDc3YGWKIeGYKRW6XyIhvGZ058HcFcETnx+yUyEOXuZgc3V9aQOpe6MlydE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720670991; c=relaxed/simple;
-	bh=OD+GO8550twbMVzG9AAs5aAq7KepI+V75WkLQFvA4QQ=;
+	s=arc-20240116; t=1720670994; c=relaxed/simple;
+	bh=l5uqwurD+3TOp7t7S3q28Z/Pfk66dmXTC1ZyMCMOlKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSw9OCb1QUT9++9r+nrXBhMCrZS0JzBhPevkm9T4w4YyyZlUkt6sb3DcZoEHnf2Xl4ewkf39S322cLAuupiIchD9/hf+JBqQxTRqNdeiQT/cFO3a5S3hNLPsut+NkMDyPSlj85eTb/vFtaSYCccppyIofbRaUh+xf+R7H4UCXLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iJur9PEr; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version; b=QRlQ2+3A+B6FDWXG8zgLKccO9PFayro1+TGHI4fwsyoSEA0mKsiSVrncZ9z4X9tmief/muaachgp3xdDiUWUrkLVu1XIr+8WgLM/ZVSZ7FmUB9EAPDnCWD+0R85bfIoxjlNlf8wcoTCr27I4gawlbcatik84UT2ZMFB4J7bSURs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hK/6vOHd; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iJur9PEr"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70b09cb7776so409373b3a.1
-        for <git@vger.kernel.org>; Wed, 10 Jul 2024 21:09:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hK/6vOHd"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7594c490b04so266412a12.3
+        for <git@vger.kernel.org>; Wed, 10 Jul 2024 21:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720670989; x=1721275789; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720670992; x=1721275792; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FKeqbJfd22/l6XZAYdto0akFbaV3uneX2ubhfZFO1zE=;
-        b=iJur9PEr6chTQwbPiQXbW6dCdFFLSARLYzSUy2dMWQtLOJPsbBA9UUE3u7YzGp2Y1y
-         IMvwIAYjGZT/E+McijypBTEv4ugdDqe8wbZFpftBcj7jLTVYRBx/JzGREAnGVudOd2YT
-         1wIuTFbP+3ZoccTOP/yWGb0lEZt75Gp6sYZD4kx7OxJExzrmtRCM7HW2kv4SbuiRPhs1
-         5ghDlu3C5/aIEHqUvdVIcb0Se0JckreSc97tCN3rICOSocwyRKv14H79jVCJt0n5/sS4
-         gycpj0zjpOTPDDKXDLlpPF6mS30mbiKZfUXGDeGzpX0KoaBWOzkstU2TnQPuqlqGNHWT
-         LJ6g==
+        bh=UVhbZ210atv7iBD7UCwbY0VDecl1P8xa+7T0BYoV9xs=;
+        b=hK/6vOHdsTdKGl+e+H23O1ggu5X0A0WNLHebtc5tut4jcJdYYkqDxQHdEf5f42N0pD
+         D/X2E2EFyHT7vPXNJdn8+QkFtOR4blxx75XVkh4vJ6shvv35yOv9bGIOmHt2NiCfyaHf
+         f7t17bnhk5b+c8u7bq8M1aIThzKN7aKnUjV5EAKiyvGpj9ISddpFWdLyO3v1xz1Th1j8
+         7psZ+BD0N41oaOVyrbhPJBe28Fr6y34x2LQ5DOgpy8EoiBb2Y54H4GQ0ycw4RqwII83F
+         68f3s0dnWfaOyLFvRzEWBvcTu3hlZc7MrqppxOxQcQkGPMMZrr9bUmDIoljhISt0DpWG
+         npUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720670989; x=1721275789;
+        d=1e100.net; s=20230601; t=1720670992; x=1721275792;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FKeqbJfd22/l6XZAYdto0akFbaV3uneX2ubhfZFO1zE=;
-        b=eT1Ixnt/2B95d/k0TnMxVWOMGGDjkubEjZb0fGLUGa1PGaoeDvbpvfDVQLWTuDAjR0
-         xNhcSzTdBfGRKNZygKda1OxgeQfnYRseeQYnYXRFMW3I6lHsxHW23JaiRzSgMEM74oUV
-         aDPvH029jVLOSX773SYEX+P1pPAPzL0eIIM/dUF21+YEhBvM9CehK/xP6q5eZBxsbzfn
-         ElfkX3lRX6bL/JbjNfPBIcBD/R2/vGUY0tH5tF51Ei+sudaEZkqzzkQF4D5pEuHJpaSD
-         vd+7JGJST2xykDIlOIJHN0CZtAkoxInVPPIA2606avVQDiZpqZiJB5ih6v0OWhcPJ1rD
-         oCUw==
-X-Gm-Message-State: AOJu0YzTww/PDesb8x9EKrBA+E3OYRAGc/UnbYHsotPLdi3e2fc4cx2a
-	NXuWTaEQMN/tfD5WHNndp3ZWFXNF0Hk3+9iVqYs+BYtFkSULacmi3QWId/Ct
-X-Google-Smtp-Source: AGHT+IHASsCjtkpCKEsRcWH7847SFSp4yBv/Wlh7bRboKCgLa/nvv6C8crdHOcI6sArxpq8EDtcCfg==
-X-Received: by 2002:a05:6a20:4320:b0:1c2:8af6:31d3 with SMTP id adf61e73a8af0-1c29820b81dmr9401767637.10.1720670989430;
-        Wed, 10 Jul 2024 21:09:49 -0700 (PDT)
+        bh=UVhbZ210atv7iBD7UCwbY0VDecl1P8xa+7T0BYoV9xs=;
+        b=L9nK19DFPO2CAFnjSsX4AybR1pMDy7tjbW+uR9iHHoYRe+Tp0bkuCddkA7kY6aJzI8
+         G8IsYcDHMWcXJD57HfpFdMR4EMoEuhv5oz3IXiVWj1x5rkS2GvWV2UsrS9SaAiJDKdgL
+         /Y0sd8fv32Qh0Jq94eHOKaZJlNte84QV5XBMgq43QjMubCnnG2bYd01/AbsLHbOII9/q
+         5PMsOxQ6UMbH8ngDD1tGoPjlUB0MLPrDoTl8FT79Ul7xQuARN0hU0B1Zw9E32UOVoLj7
+         1E+YsLsIkCzht6UiIlEjXtyEgfzGa03mrFC2L2eL35IrjaTk35sg5IzipGrjFnb+2bym
+         HEQQ==
+X-Gm-Message-State: AOJu0Yx+SXmCTJXzxNfhNPk4JbrfbjxSoDBTsOUt9JsADqBvBKY6qnF/
+	4lSoFOmyROIEHikO9Pi7nPZ+epK8s/mLWZ27ZdAcfv3Qhzyi4OuzYUxjMOtx
+X-Google-Smtp-Source: AGHT+IEE2UcEIZWGffXMhzttDE0jOWuG+0MT6tImKa/rCEjtzZLB8BgLMfTZXXL1pq4IDm4jE+lsRQ==
+X-Received: by 2002:a05:6a20:748d:b0:1c0:f267:11ad with SMTP id adf61e73a8af0-1c29821d031mr10466415637.19.1720670992071;
+        Wed, 10 Jul 2024 21:09:52 -0700 (PDT)
 Received: from Ubuntu.. ([106.206.206.104])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fbb6abf738sm40808595ad.198.2024.07.10.21.09.47
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fbb6abf738sm40808595ad.198.2024.07.10.21.09.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 21:09:48 -0700 (PDT)
+        Wed, 10 Jul 2024 21:09:51 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: karthik.188@gmail.com,
 	chriscool@tuxfamily.org
-Subject: [PATCH v3 6/7] t-reftable-merged: use reftable_ref_record_equal to compare ref records
-Date: Thu, 11 Jul 2024 09:28:35 +0530
-Message-ID: <20240711040854.4602-7-chandrapratap3519@gmail.com>
+Subject: [PATCH v3 7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
+Date: Thu, 11 Jul 2024 09:28:36 +0530
+Message-ID: <20240711040854.4602-8-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240711040854.4602-1-chandrapratap3519@gmail.com>
 References: <20240709053847.4453-1-chandrapratap3519@gmail.com>
@@ -70,32 +70,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the test t_merged_single_record() defined in t-reftable-merged.c,
-the 'input' and 'expected' ref records are checked for equality
-by comparing their update indices. It is very much possible for
-two different ref records to have the same update indices. Use
-reftable_ref_record_equal() instead for a stronger check.
+When calling reftable_new_merged_table(), if the hash ID of the
+passed reftable_table parameter doesn't match the passed hash_id
+parameter, a REFTABLE_FORMAT_ERROR is thrown. This case is
+currently left unexercised, so add a test for the same.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-merged.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/unit-tests/t-reftable-merged.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index ffc9bd25d2..e0054e379e 100644
+index e0054e379e..50047aa90b 100644
 --- a/t/unit-tests/t-reftable-merged.c
 +++ b/t/unit-tests/t-reftable-merged.c
-@@ -158,7 +158,7 @@ static void t_merged_single_record(void)
+@@ -11,6 +11,7 @@ license that can be found in the LICENSE file or at
+ #include "reftable/constants.h"
+ #include "reftable/merged.h"
+ #include "reftable/reader.h"
++#include "reftable/reftable-error.h"
+ #include "reftable/reftable-generic.h"
+ #include "reftable/reftable-merged.h"
+ #include "reftable/reftable-writer.h"
+@@ -440,6 +441,8 @@ static void t_default_write_opts(void)
+ 	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
  
- 	err = reftable_iterator_next_ref(&it, &ref);
+ 	reftable_table_from_reader(&tab[0], rd);
++	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA256_FORMAT_ID);
++	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+ 	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
  	check(!err);
--	check_int(ref.update_index, ==, 2);
-+	check(reftable_ref_record_equal(&r2[0], &ref, GIT_SHA1_RAWSZ));
- 	reftable_ref_record_release(&ref);
- 	reftable_iterator_destroy(&it);
- 	readers_destroy(readers, 3);
+ 
 -- 
 2.45.GIT
 
