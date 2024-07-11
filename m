@@ -1,145 +1,254 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0D21A2566
-	for <git@vger.kernel.org>; Thu, 11 Jul 2024 23:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B34F1E2
+	for <git@vger.kernel.org>; Thu, 11 Jul 2024 23:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720739510; cv=none; b=P6gmXSbikO9zp7C6y2DItWwcuRfJBsyHDeFK9+tMRiwKhdgoK45yYJ295eWMwxM9HoF6+WTSheqJp4+a5oYQaR7EnTpU9FxkNCsGZOG4zuXLqRfQ1tsGqKAUVAs/Fu2JJRpIa2G6EwXK1Use2zb1cvxR/SsHXJ8rHiBVqCSrN2A=
+	t=1720739752; cv=none; b=MVb9sqdr/YzT/DJTL8AkkEEzUV1Swggm4Pt7xj03v3pOYN9SKAPiJOsbznyIGY6GpVTmfayfqBr2gVix/OJobw9lrdqsrt3X2xxIzLKQhAosfgPUj9IPlH932gHEYruI7DO+fyql9q65hKpEiqR6R1f2FcLcixrl7tpS/G5N6vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720739510; c=relaxed/simple;
-	bh=vPT+TOEiMe/bjQeQ0jCb6acz4GYnr54LsJHfh1fhtc4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DeDIQkC3k84dD0BNH35LcLhNwwX3bp+a3UN8kwBjB3Pfk6M68PK3MEau42cueHpYN8NtXeT/EPerLcWiQK3Gt26X0SHUrguYGvUqqnrWWqCx822SZ3s+7p4JmqYuz+mI2aqhAeANhWBkN0REIkp7/ofxwFIuhqnoUKBggAN0ID4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=htCMcIgy; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720739752; c=relaxed/simple;
+	bh=7WsuhAo8fMmFJUrrXNOVHkt4Dqx+aea5hFCD0Zm8tdw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=JudGeivJJ6OvBkfj2qMJYJa5MhTW5o1JGxEnjv8dvb6xK1p3ADmSd0qM1booD5l0FigPyBBkl/KNaVqzrtbbvy+vnUgOjpHnFiCpUQpC3OQ+LcrBm2utw8Kn6iCOjR5OckALdeZuxwFPQNwK5NpdS09M6SOvw/toh3NczU2b4Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W3I0lPPT; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="htCMcIgy"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2eeb2d60efbso16685301fa.1
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 16:11:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W3I0lPPT"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-44a8b140a1bso111771cf.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 16:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720739506; x=1721344306; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1720739749; x=1721344549; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dkJwz/YY+MwgxQ1TrFALyw+kqQQqMj4QPMpSB0JQrS4=;
-        b=htCMcIgyzMcCaaoPp751YJy0c+R/eAxRf8anx59drTVLLj9Mn4A+b9Re1mTEeZbvsA
-         /SVD0KfH+KqxUZilSrN+8m5nv0GVC5+laG/lvG84aq15nFzKnGroMEzSSAdoV3UAoExs
-         WqL9AkN5vQvB5ir8tQV932qKxPLY61722eoG+iNCb0bNTob5wDrHKqzvkqhhU8msKybx
-         atmFlwL6nVOg0bs5iKgpyEEedGj6FFRFfTBsPCuqM0N/smxODrWK7MjOQ5wlmymPyYTq
-         ScXBt2veyV+hpBIqlVV0i+CE/4IynMjk9aRv76OILQJ+2VeflN0HMHytrH673gThzGa2
-         zIbg==
+        bh=FeevlQXVq1lfiv/C1gpygGjfTyO2sjcs/30p2Y2iVr8=;
+        b=W3I0lPPTnyWzPVDVHZaGN2s2nw2D4FmM/rLWyhrlYwzBgMYl5tnxRIFOJgy111mTJ/
+         z8OI0bdwSnNwIHx1SuBBCDuecHwjseS4W6I5CW0JItuJlkJXDOkp3LOqau1RpLr3TwBY
+         fCfNIQ01wv9B2q2xUKAMAvicWxJgAHwsOPKv6stemvsHiSQIYfKRLpbdLVar4zjQ8iKA
+         k2lpqQ5BlUmqfCCJRAGJcEV1+JO5y7XFKS4VT2Xoo1Gl6Fe8Qq/Fa1hFgAASTOdUvYwe
+         0DXiy1kmg8Smpq5zwoZQz+Y+wWRk0mzkJ90xUW2ni7D7qeds2dGjXN4cmU3cOWvtmxgX
+         vqLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720739506; x=1721344306;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1720739749; x=1721344549;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dkJwz/YY+MwgxQ1TrFALyw+kqQQqMj4QPMpSB0JQrS4=;
-        b=oxIQVbb7EXnxE02H1w0AUSbtQyD82H1tixA23o1CZExipXHbarirsMFCyheSK5ZxWw
-         qkKz1pRWNc8C+uCgeOUKsTSpTpwGhCwjkxYtC95Se6wr6i23c2bJwI3dM7gTbiSWFwnW
-         f+jjLRGvSY8DNxk/rSwJYAgeTywfpY3hjX3fe0iV3EPm04Z9mAY+zrcBLnncZAXrz4V2
-         tLWoQHbFAs+tadm09lu8wSegG/MV9WE3qVyHkKvNup8oEe4IkAfC9oQorM1fNRvv7Xcp
-         /oJxmJA6bnjb5TB7q8+36MfIZwE2TMfLfNALA06XD18OB7QhFQ+rYsfbrAabht8Ytoy6
-         Mz5w==
-X-Gm-Message-State: AOJu0YzpVo04GRaRQDARWyGS1TMtyS33qM2wvoS9rhnIZEP9yOUyfKrn
-	hw67VXKSTSljNoOGvomIbpdYCdVT6VKa7cXY6+IQCLt6q4qZDwUk+5ZSsA==
-X-Google-Smtp-Source: AGHT+IHhsDr7b4tFQfsLaawas4lUPGVQNzlpZkvgkc/R1clmfoMdSH5yzNPuZCeD7oIoqLRQ78rUAQ==
-X-Received: by 2002:a2e:9bd5:0:b0:2ec:56ce:d50e with SMTP id 38308e7fff4ca-2eeb30bc5f4mr63264371fa.3.1720739505524;
-        Thu, 11 Jul 2024 16:11:45 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde84798sm8790470f8f.38.2024.07.11.16.11.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jul 2024 16:11:44 -0700 (PDT)
-Message-Id: <8bfd23cfa00c351ffdcc25bd29f3b84089544a56.1720739496.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
-References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
-	<pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 11 Jul 2024 23:11:36 +0000
-Subject: [PATCH v2 7/7] var(win32): do report the GIT_SHELL_PATH that is
- actually used
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=FeevlQXVq1lfiv/C1gpygGjfTyO2sjcs/30p2Y2iVr8=;
+        b=M8TZsYjPbR8uZMhoPDcEU8MTR3MSFuqcAPlx73eIQ7jJsff5AOYdWOIm4Emi2g/ets
+         KrS0322lHNsIR3cq3g9Aq4qXEkrpmPS0xxG9xPLgZxaiLQqpzOZttNYFWWi6Uhn2LsTs
+         VnOShgoS5PEsg7I/A5YAdksGh4B3Wcl6/+cExMCeUppDojzzqQc9qbC27nwMXDjSptpl
+         2FqlsPB52rP5D+2E5bPHQDfkEvmYcYSgTxvBessir7skXTWpbSh0bu19ctyjZTwqsh1U
+         Yu8gTBJj0pomcwlTo1rrR3xVl4m3ORCkkJB+ITQfXSmw94V5a+7QNDzlCORG0GAecQCK
+         CIWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXRYpsdRoBBQsKb7EaKAvsVgk37RIREGJDGqGmRbJgRBErSVRTOQBzkpN8WzUOZO4S+Jxxvv0lP6Zppp9DIVHuwGoqA
+X-Gm-Message-State: AOJu0Yx8ZxsGNWW4KPOvj23HQcGBQl19WytHGiQHQ6EUsKQW0oX4+CsI
+	xgXczq4RXcQwLlOmYYMJI+36LN3zT9GeDLPGiD5iM5+7YHtV1y5tT0GwafGRzFFkwGDMtJmpGSE
+	J7sxtGerVBDMknCH+r5gT9aO/Hytw8yIPfU5N
+X-Google-Smtp-Source: AGHT+IH2ptLF3b/2Ev3O0L266KZc25wfkyulgami83Bg3GbS6AT06yDmsO5Ysr1DdEKPHd1/jLppiRbzsgw5gy8fQks=
+X-Received: by 2002:a05:622a:164a:b0:447:e76a:c04b with SMTP id
+ d75a77b69052e-44e7341afe7mr1492301cf.10.1720739748997; Thu, 11 Jul 2024
+ 16:15:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
+ <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com>
+ <ZpBbgXYQlpHZa3xR@tapette.crustytoothpaste.net>
+In-Reply-To: <ZpBbgXYQlpHZa3xR@tapette.crustytoothpaste.net>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Thu, 11 Jul 2024 16:15:35 -0700
+Message-ID: <CAJoAoZn+R3qhoVA=av8NMcCAJyRHOe6QTXV=pyjs80JmV0mVzw@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Emily Shaffer <nasamuffin@google.com>, 
+	Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Jul 11, 2024 at 3:24=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2024-07-11 at 18:14:36, Emily Shaffer wrote:
+> > On Tue, Jul 9, 2024 at 4:16=E2=80=AFPM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> > >
+> > > I think it's also worth discussing what we require from a platform we=
+'re
+> > > willing to support.  For example, we might require that the platform
+> > > pass the entire testsuite (ignoring irrelevant tests or tests for thi=
+ngs
+> > > that platform doesn't use, such as Perl) or be actively pursuing an
+> > > attempt to do so.  We may also want to require that an OS be actively
+> > > receiving security support so that we don't have people asking us to
+> > > carry patches for actively obsolete OSes, such as CentOS 6.  Finally,
+> > > some sort of time limit may be helpful, since some Linux vendors are =
+now
+> > > offering 15 years of support, and we really may not want to target
+> > > really ancient versions of things like libcurl.
+> >
+> > I sort of wonder how much of this is taken care of by expressing
+> > "fully supported" as "can run in GitHub Actions". Even if an LTS
+> > distro is 12 years old and using ancient curl, will GitHub still be
+> > able to run it in a VM/container? Maybe there's no such guarantee,
+> > since you can hook up self-hosted runners (which sounds more appealing
+> > if someone's got something weird enough it doesn't run well in a
+> > container).
+>
+> Some older OSes require kernel features that aren't compiled in by
+> default, so containers are out.  For example, CentOS 6 won't run on a
+> modern kernel because it lacks whatever the predecessor to the vDSO was
+> (which can be recompiled into the kernel, but nobody does that).
 
-On Windows, Unix-like paths like `/bin/sh` make very little sense. In
-the best case, they simply don't work, in the worst case they are
-misinterpreted as absolute paths that are relative to the drive
-associated with the current directory.
+Is this hinting that we should mention a minimum kernel version for
+Linux-kernel-based OSes?
 
-To that end, Git does not actually use the path `/bin/sh` that is
-recorded e.g. when `run_command()` is called with a Unix shell
-command-line. Instead, as of 776297548e (Do not use SHELL_PATH from
-build system in prepare_shell_cmd on Windows, 2012-04-17), it
-re-interprets `/bin/sh` as "look up `sh` on the `PATH` and use the
-result instead".
+>
+> We also don't really want to be on the hook for trying to support OSes
+> that get no security support.  We don't want to be running an OS
+> connected to the Internet that has known root security holes, even in a
+> CI environment, so I think _someone_ should be providing security
+> support for it to their customers or the public free of charge.
 
-This is the logic users expect to be followed when running `git var
-GIT_SHELL_PATH`.
+Agreed - I added this to the minimum requirement section like you suggest.
 
-However, when 1e65721227 (var: add support for listing the shell,
-2023-06-27) introduced support for `git var GIT_SHELL_PATH`, Windows was
-not special-cased as above, which is why it outputs `/bin/sh` even
-though that disagrees with what Git actually uses.
+>
+> I also want to let us use new features from time to time that may not be
+> able to be conditionally compiled in (such as new Perl features), so I
+> think maybe setting a hard limit on a supported age of software might be
+> a good idea.  If we want to have good support for LTS Linux distros, we
+> could set it at 10 years initially.
 
-Let's fix this by using the exact same logic as `prepare_shell_cmd()`,
-adjusting the Windows-specific `git var GIT_SHELL_PATH` test case to
-verify that it actually finds a working executable.
+Sure, I added this to the minimum requirements for now.
 
-Reported-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/var.c      | 3 ++-
- t/t0007-git-var.sh | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+>
+> Also, if we do decide to adopt Rust in the future, we'll need to
+> consider a different lifetime policy for that.  I try to support an old
+> Debian release for a year after the new one comes out, which is about
+> three years for a compiler version, but anything older that that becomes
+> a real bear to support because most dependencies won't support older
+> versions.  Since we're not using Rust now, we don't have to consider
+> that at the moment, but it's a thing to think about when we're
+> discussing policy since different language communities have different
+> expectations.  We might find that we need different policies for, say,
+> Perl than we do for C.
 
-diff --git a/builtin/var.c b/builtin/var.c
-index 5dc384810c0..e30ff45be1c 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -12,6 +12,7 @@
- #include "refs.h"
- #include "path.h"
- #include "strbuf.h"
-+#include "run-command.h"
- 
- static const char var_usage[] = "git var (-l | <variable>)";
- 
-@@ -51,7 +52,7 @@ static char *default_branch(int ident_flag UNUSED)
- 
- static char *shell_path(int ident_flag UNUSED)
- {
--	return xstrdup(SHELL_PATH);
-+	return git_shell_path();
- }
- 
- static char *git_attr_val_system(int ident_flag UNUSED)
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index ff4fd9348cc..9fc58823873 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -157,7 +157,7 @@ test_expect_success POSIXPERM 'GIT_SHELL_PATH points to a valid executable' '
- test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' '
- 	shellpath=$(git var GIT_SHELL_PATH) &&
- 	case "$shellpath" in
--	*sh) ;;
-+	[A-Z]:/*/sh.exe) test -f "$shellpath";;
- 	*) return 1;;
- 	esac
- '
--- 
-gitgitgadget
+Yes, definitely, the Rust bits will be a whole different conversation.
+I do think it's gated behind this - is it ok for us to even add Rust,
+given our current support story? - so I'm happy to punt on it for now,
+frankly.
+
+>
+> > """
+> > Minimum Requirements
+> > ------
+> >
+> > Even if tests or CI runners are added to guarantee support, supported
+> > platforms must:
+> >
+> > * Be compatible with C99
+> > * Use curl vX.Y.Z or later
+> > * Use zlib vA.B.C or later
+> > ...
+> > """
+>
+> I think to start off, we could say that it has to have C99 or C11, that
+> dependencies must have been released upstream in the past 10 years, and
+> that the platform and dependencies must have security support.
+>
+> I mention C99 or C11 because Windows _does_ have C11 but not C99; they
+> are mostly compatible, but not entirely.  FreeBSD also _requires_ C11
+> for its header files and won't compile with C99.  I think the difference
+> is small enough that we can paper over it ourselves with little
+> difficulty, though.
+
+Added both for reroll. Thanks for the thoughtful suggestions :)
+
+>
+> > > At the same time, we do have people actively building Git on a variet=
+y
+> > > of platforms and a huge number of architectures, including most Linux
+> > > distros and the BSDs, and we will want to be cognizant that we should
+> > > avoid breaking those environments when possible, even though, say, th=
+e
+> > > porters for some of those OSes or architectures may not actively foll=
+ow
+> > > the list (due to limited porters and lots of porting work).  I imagin=
+e
+> > > we might say that released architectures on certain distros (Debian
+> > > comes to mind as a very portable option) might be implicitly supporte=
+d.
+> >
+> > Are they implicitly supported, or are they explicitly supported via
+> > the GH runners? Or indirectly supported? For example, the Actions
+> > suite tests on Ubuntu; at least once upon a time Ubuntu was derived
+> > from Debian (is it still? I don't play with distros much anymore); so
+> > would that mean that running tests in Ubuntu also implies they will
+> > pass in Debian?
+>
+> Ubuntu is still derived from Debian.  It is likely that things which
+> work in one will work in another, but not guaranteed.
+>
+> I mention Debian is because it has a large variety of supported
+> architectures.  I absolutely don't want to say, "Oh, you have MIPS
+> hardware, too bad if Git doesn't work for you."  (I assure you the
+> distro maintainers will be displeased if we break Git on less common
+> architectures, as will I.)  In fact, MIPS is an architecture that
+> requires natural alignment and can be big-endian, so it's very useful in
+> helping us find places we wrote invalid or unportable C.
+>
+> The reason I'm very hesitant to require that we run everything in GitHub
+> Actions because it only supports two architectures.  ARM64 and RISC-V
+> are really popular, and I can tell you that running even a Linux
+> container in emulation is really quite slow.  I do it for my projects,
+> but Git LFS only builds one set of non-x86 packages (the latest Debian)
+> because emulation is far too slow to build the normal suite of five or
+> six packages.
+
+Does that restriction apply to just GitHub-hosted runners, though?
+Would it be possible for an interested party to set up self-hosted
+runners (configured via GH Actions) that are using AMD or POWER or
+whatever? (For example, I think it would be quite feasible for Google
+to donate some compute for this, though no promises).
+
+The appeal is not "because GitHub Actions are great!" for me - the
+appeal is "because most Git developers run the CI this way if they
+remember to or use GGG, and Junio runs it on `seen` all the time". If
+there's some other recommendation for self-service CI runs that don't
+need some careful reminding or secret knowledge to run, I'm happy with
+that too. (For example, if someone wants to set up some bot that looks
+for new [PATCH]-shaped emails, applies, builds, runs tests, and mails
+test results to the author after run, that would fit into the spirit
+of this point, although that sounds like a lot of setup to me.)
+
+>
+> And it's actually much easier to run Linux binaries in emulation in a
+> container because QEMU supports that natively.  Most other OSes must run
+> a full OS in emulation, which is slower.  There also aren't usually
+> pre-made images for that; I tend to use Vagrant, which has pre-built
+> images for x86-64, but I don't really want to be bootstrapping OS images
+> other architectures in CI.
+>
+> So I'd say that we might want to consider supporting all release
+> architectures on specific OSes.  I think Debian is one of the more
+> portable Linux distros (more portable than Ubuntu).  Debian has also
+> abandoned some architectures that you can't buy anymore, like Itanium,
+> so that might be a reasonable limit on how far we're willing to go.
+
+Sounds neat - I wonder if this is something I should start asking
+around about within Google and find out if we can contribute. It might
+be feasible.
+
+Based on this mail, I'll try to reword the bit about "add a GitHub
+runner" to make it a little less GitHub-prescriptive.
+
+Should have a reroll in the next 30min, it was ready to go and then I
+got this mail :)
+
+Thanks!
+ - Emily
