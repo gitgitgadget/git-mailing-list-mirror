@@ -1,85 +1,137 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E515577E
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 22:16:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3334D108
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 22:50:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720822608; cv=none; b=sw7luZNEp5oQTXk/wsRYa6L3NdEnpDmC8n/6ktL7s9amRJ6eOtWC16NXCzdiBP9WALY32jwVWz6DULk5M1i82mbh7zCBSW2Igl/vmKor4C4m86UKg60tEWBJm7lwcTp3QemYdMz2mxywXmg1qK0lCSGQd6jT4RRBCkDR7ZSwtTs=
+	t=1720824624; cv=none; b=Ee4T+4UmbfXqmiVZDIzBFvZLIt6pqEeAYtXYyyIRtmhFs4h89vHODd1MAPIZqwdr2Oi17ytDNkNdzMfT9bmZexi/k27dx5qzheyJ+qAFcSRRLkQfCMslHrBKi9z96v6jwkd4zDO/GPW2RkaIqyXV931a2jPmWHmnACxMWd2RiMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720822608; c=relaxed/simple;
-	bh=PNn02v7m9/GqtzzKQ146/r3ZBvXkREI+ESMniAtf92I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jv5zJY5IK/BaEF0vw6CeMMcqvdk8teXX8A5k2zmQTu35r+DFMLWiD4rsQrav8DxTC2zpersjAsQzgc6j14V2RjJhUQXH1lz6WEdDlUm/loX8m7+d1vFhbLVmJgPh4WbgtgfTTwvglsQrmz7crANUD1+Xb3wiDKNbABkpV9EZDmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jp/np1I/; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720824624; c=relaxed/simple;
+	bh=KwEZXOyhpUkI0o+TGv8GIcSueORLGyZFJywdpJWDPwA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LJyY0Mx7biAYkF8q+LRiLNEINaUwbC+6pUUSZaRlx8xlIchjbCc/jZO5LMembdIwVuxOKHksc61NDfgujn7f5GXN8WiFahv9xrGeiv1MCIs1zlVoeN9oPN6HGOtfPobzRIYP9VMb7ih3Om4T5pm0UVs9LVkIQD12jbT5rqU5kHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H8PvZD9r; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jp/np1I/"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C6B23559D;
-	Fri, 12 Jul 2024 18:16:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PNn02v7m9/GqtzzKQ146/r3ZBvXkREI+ESMniA
-	tf92I=; b=jp/np1I/HvwKjYIyijBhKRaTfqb2Lqrpj3fTPAkmqmIDIu7NJ2l37e
-	QV5soIHfE+Q1DUr7ILWcoy3XLru++qVbnqv0OZ06/aQ3IHAj9W7Jj0XWeMpiDErf
-	u3+92TodkLT4CMAYsUcKi9cpyxGD4SE2b/suK2nQm2mXCaRY/zDVg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7402A3559C;
-	Fri, 12 Jul 2024 18:16:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 923CE3559B;
-	Fri, 12 Jul 2024 18:16:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/7] var(win32): do report the GIT_SHELL_PATH that is
- actually used
-In-Reply-To: <3b687707-7aa7-4f4f-8043-0e31fb0c09ce@gmail.com> (Phillip Wood's
-	message of "Fri, 12 Jul 2024 14:51:37 +0100")
-References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
-	<pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
-	<3b687707-7aa7-4f4f-8043-0e31fb0c09ce@gmail.com>
-Date: Fri, 12 Jul 2024 15:16:44 -0700
-Message-ID: <xmqq5xtal0hf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8PvZD9r"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7035e281970so1441090a34.0
+        for <git@vger.kernel.org>; Fri, 12 Jul 2024 15:50:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720824622; x=1721429422; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lyBwyyVwhvYmvTRmpP0L//oP9KVirE2Y+Zli6kdQ9yg=;
+        b=H8PvZD9rD565FtaWd6+CF7aOx8vFOXybDK+HGo3SCxLflD6Phu4/gBePbILmpgGzKE
+         j0nc/tZPSVWTtTz0pTdpvI+zeTnRQ50UfHVNplA1GkIAzfc52z+TnSAw30ujUYfYwbE2
+         y8ieXDIQzi5mAzEUrLh6dfJ/tVFHodLEyYedx9c7N8uSYJPH7NzaGKTyqz47xodlMR/l
+         SabH5dCfA4ovtxBBsulQdOorurz7u+sYiHH5qqSITrxNj0J+Xnzmit86yNHeFv3crgBq
+         7+MqAhIS85T8dEG5i4/GLImyDA0Za8F/fDxMgl62roQc1BQo4pYsX+LxKNz5rdYP4yVf
+         UgCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720824622; x=1721429422;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lyBwyyVwhvYmvTRmpP0L//oP9KVirE2Y+Zli6kdQ9yg=;
+        b=j1oJtrvlFUSsWsVRr5G+44y8i8jibcJ8mmHL0vNBonO4m3gCHVVpHA0ebRiGwDtppe
+         ozDvTXcnyOgq+9+jlwIBJ3xrOtVpj64fZI24tPKd/zwh04kpw83dpKFrOr9MeSXbgrxA
+         V1wuYjXAOkCo5pPZUp0YexW9/ua5WqBk4AypEtg7cNbSJzV31FLMBP3jBP5z2NtzKfB2
+         8WzGfnn7Uwd67vVtS7vH68h9kaTo3nh1CT+pJWADNguLUVtVWuk7y+UTVDr7x4ecuB9i
+         EyZ+5T9laYgTO8TsDg+bQh16tMHOsMsuVA2dBUpN2x5J55v9fqHFlieFfGireA+4CoRZ
+         D2Lw==
+X-Gm-Message-State: AOJu0Yy8taBGvl8Nm0m62OVEkX/dOEWkBjWiOgHY7/lpniUySLru1lUP
+	0Vh/Zcux/CPzLw8lVoQghVUn88Vlx1rptBv9V8w2StB3BWo5vS194PTGfA==
+X-Google-Smtp-Source: AGHT+IE031//8MT/KV5KRMm1hPwnXiZA5AqWB307LzMyuCc5jIg1DnjgIAI88gvh+E3DzYkwe639yw==
+X-Received: by 2002:a05:6808:212a:b0:3d9:25ec:d9ff with SMTP id 5614622812f47-3daa9710217mr1974997b6e.20.1720824621846;
+        Fri, 12 Jul 2024 15:50:21 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3d9e09061b3sm923582b6e.58.2024.07.12.15.50.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jul 2024 15:50:21 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] doc: clarify post-receive hook behavior
+Date: Fri, 12 Jul 2024 17:47:48 -0500
+Message-ID: <20240712224748.56843-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6CCC9C0C-409C-11EF-9CE3-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+The `githooks` documentation mentions that the post-receive hook
+executes once after git-receive-pack(1) updates all references and that
+it also receives the same information as the pre-receive hook on
+standard input. This is misleading though because the hook only
+executes once if at least one of the attempted reference updates is
+successful. Also, while each line provided on standard input is in the
+same format as the pre-receive hook, the information received only
+includes the set of references that were successfully updated.
 
-> Hi Johannes
->
-> On 12/07/2024 00:11, Johannes Schindelin via GitGitGadget wrote:
->> Changes since v1:
->>   * This patch series now shares the logic that determines the path
->> of the
->>     Unix shell that Git uses between prepare_shell_cmd() and git var
->>     GIT_SHELL_PATH.
->
-> This was a pleasant read, each step was well described and easy to
-> follow.
+Update the documentation to clarify these points and also provide a
+reference to the post-receive hook section of the `git-receive-pack`
+documentation which has additional information.
 
-Ditto.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
 
-> I've left a couple of comments but I think this is good as it
-> is.
->
-> Thanks
+---
 
-Thanks, both.
+Greetings all,
+
+I was recently looking into post-receive hooks and found some of its
+documentation[1] a bit misleading. With this patch, the `githooks`
+documentation is updated to better align with the hooks documentation
+for `git-receive-pack`[2]. Thanks for taking a look!
+
+-Justin
+
+1: https://git-scm.com/docs/githooks#post-receive
+2: https://git-scm.com/docs/git-receive-pack#_post_receive_hook
+---
+ Documentation/githooks.txt | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 06e997131b..f9eb396a79 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -415,13 +415,13 @@ post-receive
+ 
+ This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
+ `git push` and updates reference(s) in its repository.
+-It executes on the remote repository once after all the refs have
+-been updated.
++It executes on the remote repository once if any of the attempted ref
++updates are successful.
+ 
+-This hook executes once for the receive operation.  It takes no
+-arguments, but gets the same information as the
+-<<pre-receive,'pre-receive'>>
+-hook does on its standard input.
++For a receive operation, this hook executes a single time at most.  It
++takes no arguments, but for each ref successfully updated, it receives a
++line on standard input that follows the same format as the
++<<pre-receive,'pre-receive'>> hook.
+ 
+ This hook does not affect the outcome of `git receive-pack`, as it
+ is called after the real work is done.
+@@ -448,6 +448,9 @@ environment variables will not be set. If the client selects
+ to use push options, but doesn't transmit any, the count variable
+ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
+ 
++See the link:git-receive-pack.html#_post_receive_hook[post-receive hook]
++section in linkgit:git-receive-pack[1] for additional details.
++
+ [[post-update]]
+ post-update
+ ~~~~~~~~~~~
+
+base-commit: a7dae3bdc8b516d36f630b12bb01e853a667e0d9
+-- 
+2.45.2
+
