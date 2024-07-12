@@ -1,201 +1,114 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C3E224D6
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 19:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131E82D627
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 20:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720813620; cv=none; b=Ffjqdf2PYyl7nu7aClfT/HVRCzDICAcq2jMQLLTmyE6JRszbyVUmzmduNGg22YrKDzQJCjl44qeVRRD0ibPTuxGf/RjheOvAtaqmcHmnlCh9cJahbBCq0pEgBAD9zDr2r4c1pgpGtiyIs9CCQSepI8hC7KQiEssh2NnCjEm9CZ0=
+	t=1720816455; cv=none; b=okJiC34Lfr8i+M2nSll0gNVM6inuOwZsLV0yqJbmCD9SdDl2i357Ox2gsCAzdZONQr0oq99Dzy7TM8p3XwUzsKFBPGHqtj1XnRoEppGYOVZ9nVWdvFR4DYn7hXI9mQy1eStHc6a9Z7UhzWGpD34Gw7HzyY0bUUv5HhaoIq743V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720813620; c=relaxed/simple;
-	bh=8S38K/ykidft9/C/I90iFiRWcXQWkB0/DIld/vKsbNs=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D9ko+M8zMadlACD7wD2R7SAW8iHYuHvNekM+GGrWcHY5lt6Ahpht8UiOMXmtwp33R9s3o95cwsg8NYSRy0NLrJkiFZQTYHEcWESeqC2FQjJDbUdPRYeBiyL9qBLH4+oQvepJ6GdMdepBfgVx6Tk7j40jCJsIoO2OcRK70JcMCQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46CJkjM54146033
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 19:46:46 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Emily Shaffer'" <nasamuffin@google.com>
-Cc: "'Emily Shaffer'" <emilyshaffer@google.com>, <git@vger.kernel.org>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-References: <20240709225042.2005233-1-emilyshaffer@google.com> <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com> <ZpBbgXYQlpHZa3xR@tapette.crustytoothpaste.net> <CAJoAoZn+R3qhoVA=av8NMcCAJyRHOe6QTXV=pyjs80JmV0mVzw@mail.gmail.com> <ZpGFHWZTWAQUXGCe@tapette.crustytoothpaste.net>
-In-Reply-To: <ZpGFHWZTWAQUXGCe@tapette.crustytoothpaste.net>
-Subject: RE: [PATCH] Documentation: add platform support policy
-Date: Fri, 12 Jul 2024 15:46:40 -0400
-Organization: Nexbridge Inc.
-Message-ID: <01b101dad494$3ad61d50$b08257f0$@nexbridge.com>
+	s=arc-20240116; t=1720816455; c=relaxed/simple;
+	bh=81GfMqiX442cJhhBN9tKk9bqmwvSXjbZeXjEkM4Dyrc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=pHw4D+MiBzkqV5Cjuahrduq9NsrkEsGmLBJU3XMmj2+ngHCYDXpkVA1ruw4jL3u/NWy6kKTWvga5zVhYT+kJ/Isz1XbOK8Go9bnE/2aIGSNHX1AFBha52M8KDFxZWo0eGt1KxOFrLbbIZXye7R8cv+pBeiWxyCV8MaB6CMGxFdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XJemYW4L; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XJemYW4L"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-36785e72a48so1303491f8f.3
+        for <git@vger.kernel.org>; Fri, 12 Jul 2024 13:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720816452; x=1721421252; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2WlUcyRhwplk7TLU8TMfq9cws7IeNP+Z3NDPa85+0VE=;
+        b=XJemYW4Lqwdp+4YnEtwwtZmg9vI+0a8dV11VqfO8T+ofDdsrUNCVXq8X0dcqPHxJ3Q
+         ViPCWGDFo/xi7sVWqby5C3COMYEdprTHYRI+O3Nj6iayj1c4cc3uAGaiUwvu6tjrgOU9
+         ndjaFeoxv2v7GWYsNioen7KtZ+Pd+Unm1c21Av4sz1GYuKLQPMRUPgAnpnqZPgFoB4fC
+         NiWiaDvYy9UBxD9j0ToucRgREWocUpBC9yi6xCf7BBnGS89sI0OlrprvvHFSQfpQz4fG
+         WzauGdQg2KdEFDQP7NsaftqUXGowD3dDnewWSPebbZTvAaoILm6SSeHCVJ3rxPzqbu1f
+         oshg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720816452; x=1721421252;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2WlUcyRhwplk7TLU8TMfq9cws7IeNP+Z3NDPa85+0VE=;
+        b=vUP7B3DJ6QJhU+wbAekhLW7Oi3UlE6PsUT7mFNjD7zB4ALf8tvUsfz7Tm6CZ4FAb0Y
+         PUEwNsmxw9g3XCXegrtGG8mXwbsiNZu0AhCSSkMVdkB/ffCuWNDBv/us0kDLXTmgd4X1
+         38UnkA6ZsstHv2b0+lW5FGwr2uIa+5yaycxDWX27HuqW03q8H0qS+6+VipZFmbhfbDls
+         JQMOrYrtdLkAa2wR/hEwSybZL19d+7nxPiVHxBb7W1cbNJyHistYj0uOGNse3acf146C
+         z+XsFb1E1A+7oEuAXhoecpVI5G/g0nswUoI3AnG2tSWHpJkGw39XzdY5qiXDUFxRW8jQ
+         /RMA==
+X-Gm-Message-State: AOJu0YwEZrxhZjBorrzyQgF6cQaPrJjPH2r73blTcxD28i5jgcV1EC1B
+	T9ZV5bxjjQjsFfKriiFuHgGnIRVQk5dcSReyt6GK2AkIZCIekOAy1ZIjLQ==
+X-Google-Smtp-Source: AGHT+IG9ZBjwLmjjGdREQUTxtnq5jE+sJe47NH34Mkn1SfYVj04RZKHPBe1TXxrNZigXQ0aBoF/22g==
+X-Received: by 2002:a5d:5f47:0:b0:35f:d70:6193 with SMTP id ffacd0b85a97d-367cea96353mr11329724f8f.41.1720816451743;
+        Fri, 12 Jul 2024 13:34:11 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde7deeasm11129273f8f.8.2024.07.12.13.34.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jul 2024 13:34:11 -0700 (PDT)
+Message-Id: <pull.1761.git.1720816450344.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 12 Jul 2024 20:34:10 +0000
+Subject: [PATCH] cmake: fix build of `t-oidtree`
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLOJF488y2+/PGZbbSRsjvDFvsFqgHGsZGHAOpA7/wCL7BPKQKzK0piAcfeU7OvwgCXkA==
-Content-Language: en-ca
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Friday, July 12, 2024 3:34 PM, brian m. carlson wrote:
->Subject: Re: [PATCH] Documentation: add platform support policy
->
->On 2024-07-11 at 23:15:35, Emily Shaffer wrote:
->> On Thu, Jul 11, 2024 at 3:24=E2=80=AFPM brian m. carlson
->> <sandals@crustytoothpaste.net> wrote:
->> > Some older OSes require kernel features that aren't compiled in by
->> > default, so containers are out.  For example, CentOS 6 won't run on
->> > a modern kernel because it lacks whatever the predecessor to the
->> > vDSO was (which can be recompiled into the kernel, but nobody does =
-that).
->>
->> Is this hinting that we should mention a minimum kernel version for
->> Linux-kernel-based OSes?
->
->This is actually a feature that still exists in the kernel and could be =
-enabled for newer
->kernels, but because distros don't use it (they use the vDSO instead), =
-they don't
->compile it in.
->
->I'm not sure a minimum kernel version is helpful, because most of the =
-LTS distro
->kernels backport features, like Red Hat backported getrandom for =
-example.  In the
->interests of getting to a useful agreement, I think for now we should =
-just punt on
->this and having a 10 year lifespan will probably do the trick, and we =
-can determine
->in the future if we need to apply more stringent measures.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When looking at the "exotics", many have their own kernel lifespans. =
-When worrying about NonStop, for example, the Kernel version stays =
-around about 5 years under full support, then goes another few until =
-retired. I think it is important for people to know the compatible =
-versions of the kernel builds have. I do track those for the platform.
+When the `oidtree` test helper was turned into a unit test, a new
+`lib-oid` source file was added as dependency. This was only done in the
+Makefile so far, but also needs to be done in the CMake definition.
 
->> > We also don't really want to be on the hook for trying to support
->> > OSes Ubuntu is still derived from Debian.  It is likely that things
->> > which work in one will work in another, but not guaranteed.
->> >
->> > I mention Debian is because it has a large variety of supported
->> > architectures.  I absolutely don't want to say, "Oh, you have MIPS
->> > hardware, too bad if Git doesn't work for you."  (I assure you the
->> > distro maintainers will be displeased if we break Git on less =
-common
->> > architectures, as will I.)  In fact, MIPS is an architecture that
->> > requires natural alignment and can be big-endian, so it's very
->> > useful in helping us find places we wrote invalid or unportable C.
->> >
->> > The reason I'm very hesitant to require that we run everything in
->> > GitHub Actions because it only supports two architectures.  ARM64
->> > and RISC-V are really popular, and I can tell you that running even
->> > a Linux container in emulation is really quite slow.  I do it for =
-my
->> > projects, but Git LFS only builds one set of non-x86 packages (the
->> > latest Debian) because emulation is far too slow to build the =
-normal
->> > suite of five or six packages.
->>
->> Does that restriction apply to just GitHub-hosted runners, though?
->> Would it be possible for an interested party to set up self-hosted
->> runners (configured via GH Actions) that are using AMD or POWER or
->> whatever? (For example, I think it would be quite feasible for Google
->> to donate some compute for this, though no promises).
->
->Self-hosted runners on public code are very hard to secure.  You're =
-basically letting
->arbitrary people on the Internet run code on those machines and make =
-outgoing
->network connections (due to the fact that you can push whatever into a =
-PR
->branch), with all of the potential for abuse that that involves (and as =
-my colleagues
->can tell you, there's a whole lot of it).  GitHub has taken extensive =
-pains to secure
->GitHub Actions runners in the cloud, and while we use self-hosted =
-runners for some
->internal projects, they are absolutely not allowed for any public =
-project for that
->reason.
+This is a companion of ed548408723d (t/: migrate helper/test-oidtree.c
+to unit-tests/t-oidtree.c, 2024-06-08).
 
-I'm not sure this applies to some of the exotics. NonStop cannot run the =
-Google CI code. While we could, in theory, connect to via SSH to run =
-builds, my system is behind a VPN/Firewall, which would make the builds =
-impossible. I do build using Jenkins based on an SCM poll. It's not =
-perfect and some tests do not run correctly in Jenkins but do outside. I =
-would like to provide the feedback to the git team, somehow, on what =
-built successfully or not, outside of the mailing list.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    cmake: fix build of t-oidtree
+    
+    This is based on the gt/unit-test-oidtree branch.
+    
+    /cc "Ghanshyam Thakkar" shyamthakkar001@gmail.com
 
->I would be delighted if Google were willing to do that, but I think =
-you're going to
->need help from teams like Google Cloud who are going to be used to =
-dealing with
->abuse at scale, like cryptocurrency miners and such.  Unfortunately, =
-there are many
->people who act in a less than lovely way and will exploit whatever they =
-can to make
->a buck.
->
->I will also note that the official Actions runner is in C# and only =
-runs on a handful of
->platforms due to the lack of portability of C#.  (It might =
-theoretically run on Mono,
->which would increase its portability, but I must profess my complete =
-ignorance on
->anything about that code.) I also know of an unofficial one in Go[0], =
-which I'm for
->obvious reasons unable to endorse, encourage, or speak about =
-authoritatively in
->any way, but that would still exclude some platforms and architectures =
-which don't
->support Go.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1761%2Fdscho%2Fcmake-vs-t-oidtree-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1761/dscho/cmake-vs-t-oidtree-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1761
 
-We don't have C# or Go, nor are likely to any time soon, so that is a =
-problem.=20
+ contrib/buildsystems/CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->
->> The appeal is not "because GitHub Actions are great!" for me - the
->> appeal is "because most Git developers run the CI this way if they
->> remember to or use GGG, and Junio runs it on `seen` all the time". If
->> there's some other recommendation for self-service CI runs that don't
->> need some careful reminding or secret knowledge to run, I'm happy =
-with
->> that too. (For example, if someone wants to set up some bot that =
-looks
->> for new [PATCH]-shaped emails, applies, builds, runs tests, and mails
->> test results to the author after run, that would fit into the spirit
->> of this point, although that sounds like a lot of setup to me.)
->
->Yeah, I understand what you're going for.  If there were some super =
-easy way to get
->everything running in an automatic CI, I'm all for it.  I think CI is =
-the easiest way to
->make sure we don't break anything.
->
->I think it's worth trying to get CI set up for whatever we can, and if =
-CI is a possibility
->somewhere, it becomes a lot easier to say yes.
->
->> Should have a reroll in the next 30min, it was ready to go and then I
->> got this mail :)
->
->Sounds good.  I don't think anything in this email should affect that =
-reroll.
->
->[0] https://github.com/ChristopherHX/github-act-runner
->--
->brian m. carlson (they/them or he/him)
->Toronto, Ontario, CA
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 2f9c33585c6..832f46b316b 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -976,11 +976,12 @@ list(TRANSFORM test-reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ 
+ #unit-tests
+ add_library(unit-test-lib OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/test-lib.c)
++add_library(unit-test-lib-oid OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/lib-oid.c)
+ 
+ parse_makefile_for_scripts(unit_test_PROGRAMS "UNIT_TEST_PROGRAMS" "")
+ foreach(unit_test ${unit_test_PROGRAMS})
+ 	add_executable("${unit_test}" "${CMAKE_SOURCE_DIR}/t/unit-tests/${unit_test}.c")
+-	target_link_libraries("${unit_test}" unit-test-lib common-main)
++	target_link_libraries("${unit_test}" unit-test-lib unit-test-lib-oid common-main)
+ 	set_target_properties("${unit_test}"
+ 		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
+ 	if(MSVC)
 
---Randall
-
+base-commit: ed548408723d6e969160279398cc47f88f5700bc
+-- 
+gitgitgadget
