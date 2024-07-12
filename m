@@ -1,142 +1,145 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7903385C56
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 08:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3D185C56
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 08:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720774141; cv=none; b=ftnjoXND7mHj1OyabQeYag7KlYCqR1PODGgbvedhOAcmZWthHVniOreUgb8PGQUKBcFXVN5RKF73KTLo3/jthKLm/o3rGVfrhxd0JLymiYis2GJdMxL8a6wciQZNpqNwF/bBQHuJzUvjUNuQiR5QRc7/EzCPGCmOJKb22uWhcwk=
+	t=1720774285; cv=none; b=HkCKfWgPHmYeTDvHdXRs3IfLbdfRlGVy+p+nH1mqcY8rbu24Z+vy/hm9J5u/J9b5bUU8v1mCvwrZ8ixPFVdDAGvs2EcJ/UxpbmOZodSYGGRJvu23OJeYg/NrNlWwomY/kOEW6gBCK2WtdEZWUrl9nY+zcE0etGwey/KGgygChCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720774141; c=relaxed/simple;
-	bh=G5AzKbZ/ozSfnneLxTR8o3wdSTc85sqN8YkHGa8DJjU=;
+	s=arc-20240116; t=1720774285; c=relaxed/simple;
+	bh=AiMEYAQ1OwYIy5q9NZRsbio5MgcnL1DU3cLFZ6YPXpg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IIU9slJWfGgU6ejZHxkBoA9HyUWnwpffXNuuZ+WMKDPZd/gRtSwqXrWxAalxzDw4dk+1DdQPT0oFl1cgOmMGJGpq0GYNZsUSImPhm738qReDwfWtjauOBkK+vJh+H2g6DLJH0byzOl6R4x6DcBA7M/WRaHSGAjbj2XZwIusc6YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UyB6TLrt; arc=none smtp.client-ip=209.85.167.173
+	 To:Cc:Content-Type; b=idO4WScdW3iUp83zO9FVBSzJJbx25qNopYXqqWKTCjT7oD61vn5cyKuTBJYQ/qryjuYxAj8YnTMVD4/T5sf/VNpV02XApFcuZeldRLv+fUNjhOdyWc36CQUbXItGdVa6Ga1ytUzwy/hlttLYndOLNnxgo5t6tHIxbU+8zdmw65w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TIzusVVo; arc=none smtp.client-ip=209.85.160.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UyB6TLrt"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c9cc681e4fso926245b6e.0
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 01:49:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TIzusVVo"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-25e2cc76becso768978fac.3
+        for <git@vger.kernel.org>; Fri, 12 Jul 2024 01:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720774139; x=1721378939; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720774283; x=1721379083; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6i8hS+EOcUno+5GwvK+rgfguImBVcmJAnohOk3Iuvpc=;
-        b=UyB6TLrtBjwRonSf7hvNcOHNP+7Sjr7nJpl120B26J5SHB2qbNNnZfR5qfeLkYWbD7
-         2JsESKAkCj1jkUhq53Zl7HbIfrlZwLYJAf9SX4AzYOTHzMv/tmfrnr0cttCHk1ZOI0Lt
-         KCoU0L+dHc3c+UXU3FrR1jDlML+s/6ENuYxmBmhJgw2Pr9PBXXVtGAn/seRz6luiGGPO
-         6HOMfAhsymK0y90dIG8pmjNSl1Ud3uWEcH5gdH9LyPmIKn8aEO+2/v34eIq2suP/z3AE
-         OVh0XoEo4ih5x39PfaRrgZgeuWsv4IVChP1dJZkxIxQgcMVlxyFnvYXlDO9tO01v1kPq
-         fzOw==
+        bh=wgdM/BeIBbGCmo8y/ljrg9A9RjXDxiE3ODwQEINfAFo=;
+        b=TIzusVVoXtcDRvh3FnQzqxsyx8pgWg8s2FJzTdldw8dsVPuYK4KM0DiwpquVk/kq/1
+         ghkYDzm5GtPZolNWiQKeYmzwiettOQBCcDu1j2gBVdC89mKDkjNJqbKQQp9G116oiwqO
+         nLcz1Wcv/0/9ewWqnKZlS+Lm7+reDs1jakOBtgMRcdDR0hpljOEZ141PNBcDyMTyRIXS
+         XBq6CeISEGqsVvmWXfo7sV6kn9+EMFvOt3f/iblQirHfjQy6owj0lZVpfBCoOKqsL5hU
+         InVhetelGa0bzhIoncGtpC7VC0mH78S3x6RdT5k4p86GnYzKXvTSNIsMoq5Zi9nl0LKd
+         C2wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720774139; x=1721378939;
+        d=1e100.net; s=20230601; t=1720774283; x=1721379083;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6i8hS+EOcUno+5GwvK+rgfguImBVcmJAnohOk3Iuvpc=;
-        b=Sokl0MH3uMQMaNzkeJcnqGcnoDIfhY+GMgJkGgPjQnZzq93Mbla+psxaOy+3FCMo0K
-         4djjzSqccTKxHInQeJ6RSFVPGF4VT0dmrSF6RSRT4GZQcSqSTxnzYl1+aTKoZpKhEgpZ
-         ognW8RbSEVj4aizCb+9GVCMJVp//rOX09xkDI19Q+PMp0+lS+vvay4/mkvCspEsIYRjk
-         595WBP2F38ZXs6HB0IW3jZ6TwQRqlSEPDAgcO3u4M+1mJpTVYc1UqXmlC7qGtvnBRQlY
-         bcrBtfIhWsO4Ao/Gb4FOxAlTru62oJhneq0sPKYzNGUSHLbTo6bWpxkZUazXP/mOBAPl
-         SBYg==
-X-Forwarded-Encrypted: i=1; AJvYcCXCMShqxqdskN5EfBZ+qRLYRV5AlHOEk+iLeVC07ToUHMzXugzkJ4BFggBWKzyqkxGNLWVb+YXcsdgtzDg2B6vziNeV
-X-Gm-Message-State: AOJu0YzIQ1inHloXmmLgIIpbHoduSMadQHdF1BbwmMS8Zk0RNHHwLoNN
-	ry0TN7JcxV4EvOiJd3eEbw1lX52p5lFM4IEPs9qe+au0GbC5FdMdefHZDjEIU2LnJ68t2xa1sKK
-	DBP7TpW/++QW24aWQ5eTFHxThMCz+El2J
-X-Google-Smtp-Source: AGHT+IEy+KXrdSIgDhQd8Jt6M4TyuL8vnkLVeWRHTu9PK4gBXrWCJAFDRB3wei5vqRQ7WTOFXa3iBPe+8HMPefauepw=
-X-Received: by 2002:a05:6870:75c9:b0:25e:29e7:14c2 with SMTP id
- 586e51a60fabf-25eaec13a77mr7831986fac.38.1720774139470; Fri, 12 Jul 2024
- 01:48:59 -0700 (PDT)
+        bh=wgdM/BeIBbGCmo8y/ljrg9A9RjXDxiE3ODwQEINfAFo=;
+        b=J7qGjHr/pS1C3kXQp6P/GMKaFtitqqDf3GxMCk04soNvnvs04fAsWz4gUYoyV6wx4x
+         lKAj4WHxTX/60oLJ+ndNT5a6yhzUdMz7YiFfuRu2Bm49vTRdB/kX9ckQkEr1KTCFM9EW
+         pO+JUZ2ErT160Rae9C1e3aNlqupII3HpoudQMr12swtSdleyXIDMIFAdovTa8lk+v/eH
+         fTm01HzyJWZcg5YYBIDA6bSmx+wnB4hDu7D0n020VT5KHzVPx5hnCSMbhndJy/I4QMQJ
+         lA8SAGE4OJvZ/DxSiTsXiy8OrG4txM1raAbPwZeE8c8SaKsZ7bQd0bEIM0u2i/G3oHwM
+         9fYA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEZSYhMY2KWopYbiNk+1Wg+4Hy71azv6rqyGLGpNuzRSJpBqq2BImli5dHCaB+XbewIuO8xFdAyiRbuAdXwaf5i0i2
+X-Gm-Message-State: AOJu0YzgWuXwZxp0WoTfST7CaB/5oM+uWG8GX553i5wPLBPLsneg7Ieu
+	z04SHUy0dHPsWJyjdKOtONuP73mOxUsqvHC8MNVG2RexO1+CwaOXDC5LOk2V0h7bbtKH36KRWcq
+	SNtIHmvBrSzODPOJIQ47NMl407eA=
+X-Google-Smtp-Source: AGHT+IFwWRrgQLShRhW5cds1ccfT1r8s6u30dGOMnm2fdlMSq3bWJFyUJm+qE3VDCq3Nb/UiU0rQYxwKGHgxWNtUy80=
+X-Received: by 2002:a05:6870:56a6:b0:255:1bb8:85ea with SMTP id
+ 586e51a60fabf-25eae7a4091mr9601764fac.14.1720774283311; Fri, 12 Jul 2024
+ 01:51:23 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 12 Jul 2024 03:48:58 -0500
+ HTTPREST; Fri, 12 Jul 2024 04:51:22 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqcynjswz7.fsf@gitster.g>
+In-Reply-To: <xmqqikxbsy4d.fsf@gitster.g>
 References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240711083043.1732288-1-karthik.188@gmail.com> <20240711083043.1732288-6-karthik.188@gmail.com>
- <xmqqcynjswz7.fsf@gitster.g>
+ <20240711083043.1732288-1-karthik.188@gmail.com> <20240711083043.1732288-9-karthik.188@gmail.com>
+ <zq2x3k5gshs5jgx6zglfdzu4kx6vrrzugfvd4w4pjfh6uyjc4r@4x2zt2ftfmsq> <xmqqikxbsy4d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 12 Jul 2024 03:48:58 -0500
-Message-ID: <CAOLa=ZSJ-PQ+8rsURP16QQ_K8rR8xrhFO8tnAPSZD88COrzj1w@mail.gmail.com>
-Subject: Re: [PATCH v2 5/8] clang-format: avoid braces on simple
- single-statement bodies
-To: Junio C Hamano <gitster@pobox.com>
-Cc: chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000528312061d08f3d0"
+Date: Fri, 12 Jul 2024 04:51:22 -0400
+Message-ID: <CAOLa=ZSR=mMMnYNrpKc9ivOx4vbzJF7c5e3632NpX4XYFdLMmg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] check-whitespace: detect if no base_commit is provided
+To: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Cc: chriscool@tuxfamily.org, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000e559f4061d08fbda"
 
---000000000000528312061d08f3d0
+--000000000000e559f4061d08fbda
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Justin Tobler <jltobler@gmail.com> writes:
 >
->>     Setting this option to true could lead to incorrect code formatting
->>     due to clang-format=E2=80=99s lack of complete semantic information.=
- As
->>     such, extra care should be taken to review code changes made by
->>     this option.
+>>> +      if [ -z ${CI_MERGE_REQUEST_TARGET_BRANCH_SHA} ]; then
+>>> +        ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+>>> +      else
+>>> +        ./ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+>>> +      fi
 >>
->> The latter seems to be of concern. But since we only use clang-format to
->> verify the format and not to apply formatting, we should be okay here.
+>> Not worth a reroll, but it would be nice to have a comment here
+>> explaining why we have this fallback as, to me at least, it is not very
+>> obvious.
 >
-> Hmph.  Could you tell me where I can read more about "we tell
-> clang-format only to verify but not to apply"?  If that is truely
-> the case, perhaps I shouldn't be worried to much, but it is not
-> clear to me how we enforce that this is to be used only for
-> verification with non-zero false positive, and never for
-> reformatting before submission.
+> FWIW, it is not obvious to me, either ;-)
+>
+> Another thing that I find somewhat disturbing is that the
+> conditional seems the other way around.  It shouldn't be saying "If
+> B is not available, use A, otherwise use B", as if A is known to be
+> usable always.  It should be more like
+>
+> 	if test -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+> 	then
+> 		ci/check-whitespace.sh "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+> 	elif test -n "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+> 	then
+> 		ci/check-whitespace.sh "$CI_MERGE_REQUEST_TARGET_BRANCH_SHA"
+> 	else
+> 		... noop?  barf? ...
+> 	fi
+>
+> shouldn't it?
 >
 
-I was referring to the fact that, we expose '.clang-format' via 'make
-style' which only prints the diff to the STDOUT. The user has to still
-manually make these changes.
+Agreed, that a comment would be nice here. Will add if I reroll!
 
-However users could be using tools to auto-format on save and this could
-be an issue.
+In this case A ("$CI_MERGE_REQUEST_DIFF_BASE_SHA") is known to be usable
+always [1].
 
-> The senario I was worried about was this.  We aadd to .clang-format
-> that is in-tree, and not just CI jobs but our human contributors may
-> use it to check what they newly wrote before committing and they may
-> even take the differences as suggested fixes (which may end up
-> breaking their working code).
+[1]: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+
+>>>    rules:
+>>>      - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+>>>
+>> [snip]
+>>
+>> Overall the GitLab CI changes look good to me. Thanks :)
 >
-> Thanks.
+> Thanks for a review.  Very much appreciated.
 
-I totally see your point here.
+Thanks both of you!
 
-If the contributors do end up with bad formatting because clang messed
-it up, that is an okay situation, since that shouldn't happen often, and
-when it does, it would be the same situation as without this check,
-wherein we rely on reviewers. The issue is whether it would break their
-code, I couldn't find anything on this.
-
-But overall, while I personally find this check useful, I'm happy to
-drop it, My goal is to ensure we run this on CI as a first step :)
-
---000000000000528312061d08f3d0
+--000000000000e559f4061d08fbda
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 3bfb3b2048bdc48b_0.1
+X-Attachment-Id: b8e62344803309ee_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hUTdma1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMDE5REFDVE5tSzM5YUttcGd2bnQzR3c3ZFhkM1crMQp4cHlQTGdLcDI3
-SG8yM0VpMmZmK2NONUNyckQvVTdiOWV5YTY4Nmp5K2MySW81ZFlRdnMxWFpBalJQbzhoWCtpCmFJ
-SnI2OHlhREFYdlFIYVI5WFp2TnBTL2ZFWGJ2NHVkM3lJbXM3WW5KdDFQeHU5TXBsWjkvVVUvczRR
-cWEyK0cKb2tuVytiL2l5T3ppQlBFMytDcEpsdm1sSDhjTUp0dFRwQVUzUExYMUxHNC9MUmsxMi9N
-YU9RSldGQXdiWlV4MAp3NGIrNVZMd1dVZVY4RkdBZi9VTUFKei9MamNrQ09FZ0JtR2JpUUlsc29C
-WVZEdDFLYWE2NkN5eXNCSmRmd0kvCmM1N0h3Ukx6TGdIYi96bjVWeFh2K0QzdktmMDJjcWoxcHNw
-bGlJbVdoM1lReHEvRWxQUmRCTmxYbTJpUWh1VnoKNVpVSmZCZ1N3ejgwN3NPNFlxMWNJbjlMYU5r
-bE9IMXdoVDhFbHZZMFpBekZqUlN6U2JiTG9JWVA5a2NLOXBNeQpnSVJzUzJNQTFwUFpqeWF2MVc3
-Y0F0aXhZcnJhbklTdURJNDBXdkQxTWZSakxtSXhQeUorbk9IZmRmNy8rcDcxCkhnRGZlOUpveit4
-YW1DNkpicTIwZHJoUWxPZEtBL2dvQlc2aEdyMD0KPWVNV28KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hUTdva1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOU9MQy80cjViUVJRVzF2WG96UkVGeDZYRklFTDJ2RQo5dm9URWV0YjlR
+OWZ6YVhJdGozOEY4Nk9KLy9jQUhRUVNWRi9iRnB2TnRuUkxOSG4rWld3OENGSHowbUJ1RUZYCi8v
+SWtCVGJJNWRFQnZUcmc3TlUrcU5QQ3RkZTR6d2grU0d1aDNIckM3MCtNdUR0aTBvSUg3bmtlY05Y
+LzJuMmUKL05UaHQwcTkzSVp0RFFGc1h5cURzZDdiNGhSVzlJT3VMVFdnQWhMTHF2QWM3WG90U0Z5
+QXZ1aTlEaFEzNk0xTgozMW5mUTU2dTR2eGlvU0Vxd2dyNW1Kc2lYdEEyVm82SnlpQjg2d0JncTN6
+Wm9qNmo0cFVGQ0FWUkZqdmpoZlB6Ck9PMUZISWdqbE5ZNUtyRk8xbGxQVS95TXI2TTZ6OG95ck1J
+QmFiM3V2cDA5SGlUZ1NrRFZzeGZFa0MvMzFaaDQKR1Z3K0x6Z1RXMDlwY3VydjhPZUhyajljSzlT
+a1J6RW5mZGRRMEJtNkxNSVBPZGtUdmZ4MEx5UWl2cXZ3ZnMwZwpENlBYOGNkZU5tazd3VFZKZDA0
+Qng0TGhLcjczOThBaE8rK3ArNEZXSVcyaFFZY2xTbHZBTGxBVmlYR2Z6YnRDCjJtQjd5Y2s1MitT
+Wk5qN2x2WC9mQWZCQTEzcFhadzM0OERJdG9kST0KPVZPeTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000528312061d08f3d0--
+--000000000000e559f4061d08fbda--
