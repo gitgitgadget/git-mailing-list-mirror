@@ -1,1183 +1,607 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB75621
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 00:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BF62F22
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 00:03:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720742458; cv=none; b=m8syLv2tSZI/sw0mRxSVHK0I7rdIxvdE4kg9QTIsOUrGA7Okc2D9K5ZtAztD4/HwS5o26uW51kVvtzdb1VUigxrV8ye1ExG61pucIbje+ddsx2Q6LcpkZhdyTw2aeQrQhuW0FUBCVHW7ZOfyR99G2efX/w+4gnMzLL4PeG+mzL4=
+	t=1720742604; cv=none; b=G2NL8ccGPnxM79bNl+Bqe/fjv/jYmB9/kId+SsbI3LzEKdfQ4svGQkBuSe2QNoQtBnNDYYJsM8x3MK4K7X1M6+LSyT4gOQRD4pu3KFXxVz0uzbxtMQVdZ+FG3X+WYSXpk3K/DNZ/rQdbE/6EwSyZi/6PvKUgTB521+rGIiYdWU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720742458; c=relaxed/simple;
-	bh=mU8GbWu4bKUuQRSegSb6odryiGkQzXWq0YW8cpenayM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=uNqMib+FbTWrx/IZLiHpGGxXb0BiKl1l0hyjXnuxFiZWJHej0FTSIuMnw1qgHhOJ/l8AQvTMyj2ZaLUvr5fc9zni2o4i0dnUhHr0AkpuQ8CDqSC68drXG3Qe28sdm1dQEaLMzEYJvZ58v42ZqpR6O3xR3KfWTHcyw7yq4LrF1UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLG06q0C; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720742604; c=relaxed/simple;
+	bh=AATp2I48Bt9yUPOfAyEAqhK0MTaMBivUya/VY+AgqUs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=A4kCYln4Z6RwX0T6NK89g35KaHf7cCZVNCkGfW3rdDCKObaSjOC/2qb8KkNaA3od5xDe2FYmGQzN8U8b5uJQcbfs5KfjH7WgXqg+cZknz5WGiSsh1MhXBzBN5/4FQWDme1sEic/7KoVtszpJiGFA2WvqtYfERqdUEhUSL5TL2HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mKGlUCo1; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLG06q0C"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-7515437ff16so951214a12.2
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 17:00:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720742455; x=1721347255; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oVAgPI/mw+zkgpO9bxc6bRhUau0wB/kQfwgua9X+WHQ=;
-        b=hLG06q0CEYGiKhnMDrTeLgOHVw0oGyAozNG20p/BWkN05ktL2AAK47Kv1wpbcQ25oP
-         9A+strU/eoNwXukVSWvs6AF2i5PuDa0ixZzsyiIIGUVoxpJDZ41SJJbLHCP7Fo7KVMMz
-         IUkHIAGRYEuyd4fdVTcO5S+WNAtSkZuvGOYA9CZCo5q9q12DQ7T6/ZZxgW87xmaGGmy0
-         cKSHyHdhIPUvXzbJbM0sgvrDiMXWPm+Oqf3Crn+thh3eRInodi6G2vwBP4+6OKlJTr28
-         SRPWekAk0KrQj1NdxizPl10RO0pNodI4LdqbpclTA15r8aVh2GO2sl6sQ3q5ju14TApl
-         s7hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720742455; x=1721347255;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oVAgPI/mw+zkgpO9bxc6bRhUau0wB/kQfwgua9X+WHQ=;
-        b=Po+LOYxdgr/rZObuVnE1hGqRGeZPrH8WHksiynY6aEPzQqMzCA0cCL3zcRWZR4GEPb
-         ii1L0xA7zNTAkjO/7UotvZr9tvNr6Fr+4NZhiaACGjU59ehxiKadB5JmYv6z2VsCu/uk
-         NXMSHSk2ZmNscqawyKcxvExwbwkjUCCStTyeCWdb35Zm8hPH/Wpqu5a5PJy3+1nYG1AW
-         Mat1WrXL0qOfeexPzn9kB7wdshKQGY0Q+K4sWB5Z7SXmD/rseWBcpj2wqojsE98h7Q67
-         Dxm2UIzxt1UxeJkvAYpYndfe87WII6iZ6d/D1KTKsSk8czgLGcGKdX370Kqmlucomxvv
-         qLgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEXETfjQNKRdrpyBO4Y/BjCWWKBHigQVRJxsO7afrb8IfTQObVKyfCeaAI0+eD8LQM0zhNSaibFBiXNDtluC8hrfXy
-X-Gm-Message-State: AOJu0YwipS0KHnfxMU94eWqioaGKjUecOWkFv2jPy/fs3gWOpvgwKenZ
-	Kuj23QRQa8CtkmVUPgqIhV9gnLPzLrOWGb7mpJbUTxWu2TrlKHD/r2A11hka
-X-Google-Smtp-Source: AGHT+IHOdmX74Nmy8ZQ2XDmzJ94S1r8YSzJJlTWo1KnwdtoQ3tu9zv30a2D2Fd+2zpdrPJGztatINA==
-X-Received: by 2002:a05:6a20:7fa9:b0:1c0:f1c9:6846 with SMTP id adf61e73a8af0-1c2984c8526mr12340210637.42.1720742454525;
-        Thu, 11 Jul 2024 17:00:54 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-77d682b3895sm4906477a12.87.2024.07.11.17.00.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 17:00:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mKGlUCo1"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 80A6B1BA11;
+	Thu, 11 Jul 2024 20:03:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=A
+	ATp2I48Bt9yUPOfAyEAqhK0MTaMBivUya/VY+AgqUs=; b=mKGlUCo19Y3otnWtK
+	unag0wTMGRIobPjiGouloiy4CTGai8TobREWzD7LQenXjZcqVNePfx340LkKKvm4
+	HjcKFP5BTa6r06xxqeknockzwOCZqimWygCFOwCgmsOpBbz6j2W6E+uTIf18Ot9K
+	+IOST+WlXpyHroALFDWnhPdfLo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 786AD1BA10;
+	Thu, 11 Jul 2024 20:03:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 730B41BA0D;
+	Thu, 11 Jul 2024 20:03:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Jul 2024, #03; Thu, 11)
+X-master-at: 557ae147e6cdc9db121269b058c757ac5092f9c9
+X-next-at: 2a221341d9b66d14d948b71e4edd3494e5dd692c
+Date: Thu, 11 Jul 2024 17:03:09 -0700
+Message-ID: <xmqqttgvpjcy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 12 Jul 2024 05:30:48 +0530
-Message-Id: <D2N4AG0P10QT.2EMBZAPNDBSP0@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Christian Couder"
- <christian.couder@gmail.com>, "Christian Couder" <chriscool@tuxfamily.org>,
- "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>, "Josh Steadmon"
- <steadmon@google.com>, "Phillip Wood" <phillip.wood123@gmail.com>
-Subject: Re: [GSoC][PATCH v3] t: port helper/test-hashmap.c to
- unit-tests/t-hashmap.c
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>, <git@vger.kernel.org>
-References: <20240708161641.10335-2-shyamthakkar001@gmail.com>
- <20240711235159.5320-1-shyamthakkar001@gmail.com>
-In-Reply-To: <20240711235159.5320-1-shyamthakkar001@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 20A8B802-3FE2-11EF-9003-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> wrote:
-> helper/test-hashmap.c along with t0011-hashmap.sh test the hashmap.h
-> library. Migrate them to the unit testing framework for better
-> debugging, runtime performance and concise code.
->
-> Along with the migration, make 'add' tests from the shellscript order
-> agnostic in unit tests, since they iterate over entries with the same
-> keys and we do not guarantee the order.
->
-> The helper/test-hashmap.c is still not removed because it contains a
-> performance test meant to be run by the user directly (not used in
-> t/perf). And it makes sense for such a utility to be a helper.
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Helped-by: Josh Steadmon <steadmon@google.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> ---
-Changes in v3:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-- I have removed the t_put() tests as they were identical to
-  t_get() minus the size checks at the end. So, I've added those size
-  checks to t_get().
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-- Besides that I've replaced check() with check_pointer_eq() where ever
-  applicable.
- =20
-- And replaced the third elements of key_val[] which recorded
-  the presence of certain key-val pair with 'char seen[]'.
+With maint, master, next, seen, todo:
 
-- Added some test_msg() statements for better debugging.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-- Fixed typo in commit message.
+With all the integration branches and topics broken out:
 
-Thanks.
+	https://github.com/gitster/git/
 
-> Range-diff against v2:
-> 1: bbb4f2f23e ! 1: 03ba77665e t: port helper/test-hashmap.c to
-> unit-tests/t-hashmap.c
-> @@ Commit message
->     =20
-> helper/test-hashmap.c along with t0011-hashmap.sh test the hashmap.h
-> library. Migrate them to the unit testing framework for better
-> - debugging, runtime performance and consice code.
-> + debugging, runtime performance and concise code.
->     =20
-> Along with the migration, make 'add' tests from the shellscript order
-> agnostic in unit tests, since they iterate over entries with the same
-> @@ Commit message
->     =20
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> + Helped-by: Josh Steadmon <steadmon@google.com>
-> + Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
->     =20
-> ## Makefile ##
-> @@ t/unit-tests/t-hashmap.c (new)
-> + struct test_entry, ent);
-> +}
-> +
-> -+static int key_val_contains(const char *key_val[][3], size_t n,
-> ++static int key_val_contains(const char *key_val[][2], char seen[],
-> size_t n,
-> + struct test_entry *entry)
-> +{
-> + for (size_t i =3D 0; i < n; i++) {
-> + if (!strcmp(entry->key, key_val[i][0]) &&
-> + !strcmp(get_value(entry), key_val[i][1])) {
-> -+ if (!strcmp(key_val[i][2], "USED"))
-> ++ if (seen[i])
-> + return 2;
-> -+ key_val[i][2] =3D "USED";
-> ++ seen[i] =3D 1;
-> + return 0;
-> + }
-> + }
-> @@ t/unit-tests/t-hashmap.c (new)
-> + hashmap_clear_and_free(&map, struct test_entry, ent);
-> +}
-> +
-> -+static void t_put(struct hashmap *map, int ignore_case)
-> -+{
-> -+ struct test_entry *entry;
-> -+ const char *key_val[][2] =3D { { "key1", "value1" },
-> -+ { "key2", "value2" },
-> -+ { "fooBarFrotz", "value3" } };
-> -+
-> -+ for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> -+ entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> -+ }
-> -+
-> -+ entry =3D alloc_test_entry(ignore_case, "foobarfrotz", "value4");
-> -+ entry =3D hashmap_put_entry(map, entry, ent);
-> -+ check(ignore_case ? entry !=3D NULL : entry =3D=3D NULL);
-> -+ free(entry);
-> -+
-> -+ check_int(map->tablesize, =3D=3D, 64);
-> -+ check_int(hashmap_get_size(map), =3D=3D,
-> -+ ignore_case ? ARRAY_SIZE(key_val) : ARRAY_SIZE(key_val) + 1);
-> -+}
-> -+
-> +static void t_replace(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> +
-> + entry =3D alloc_test_entry(ignore_case, "key1", "value1");
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> +
-> + entry =3D alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
-> + "value2");
-> @@ t/unit-tests/t-hashmap.c (new)
-> + free(entry);
-> +
-> + entry =3D alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> +
-> + entry =3D alloc_test_entry(ignore_case,
-> + ignore_case ? "foobarfrotz" : "fooBarFrotz",
-> @@ t/unit-tests/t-hashmap.c (new)
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(query); i++) {
-> + entry =3D get_test_entry(map, ignore_case, query[i][0]);
-> + if (check(entry !=3D NULL))
-> + check_str(get_value(entry), query[i][1]);
-> ++ else
-> ++ test_msg("query key: %s", query[i][0]);
-> + }
-> +
-> -+ check(get_test_entry(map, ignore_case, "notInMap") =3D=3D NULL);
-> ++ check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
-> ++ check_int(map->tablesize, =3D=3D, 64);
-> ++ check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> +}
-> +
-> +static void t_add(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> -+ const char *key_val[][3] =3D {
-> -+ { "key1", "value1", "UNUSED" },
-> -+ { ignore_case ? "Key1" : "key1", "value2", "UNUSED" },
-> -+ { "fooBarFrotz", "value3", "UNUSED" },
-> -+ { ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4", "UNUSED" }
-> ++ const char *key_val[][2] =3D {
-> ++ { "key1", "value1" },
-> ++ { ignore_case ? "Key1" : "key1", "value2" },
-> ++ { "fooBarFrotz", "value3" },
-> ++ { ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4" }
-> + };
-> + const char *queries[] =3D { "key1",
-> + ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
-> ++ char seen[ARRAY_SIZE(key_val)] =3D { 0 };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> @@ t/unit-tests/t-hashmap.c (new)
-> + {
-> + int ret;
-> + if (!check_int((ret =3D key_val_contains(
-> -+ key_val, ARRAY_SIZE(key_val),
-> -+ entry)), =3D=3D, 0)) {
-> ++ key_val, seen,
-> ++ ARRAY_SIZE(key_val), entry)),
-> ++ =3D=3D, 0)) {
-> + switch (ret) {
-> + case 1:
-> + test_msg("found entry was not given in the input\n"
-> @@ t/unit-tests/t-hashmap.c (new)
-> + }
-> + check_int(count, =3D=3D, 2);
-> + }
-> ++
-> ++ for (size_t i =3D 0; i < ARRAY_SIZE(seen); i++) {
-> ++ if (!check_int(seen[i], =3D=3D, 1))
-> ++ test_msg("following key-val pair was not iterated over:\n"
-> ++ " key: %s\n value: %s",
-> ++ key_val[i][0], key_val[i][1]);
-> ++ }
-> ++
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> -+ check(get_test_entry(map, ignore_case, "notInMap") =3D=3D NULL);
-> ++ check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
-> +}
-> +
-> +static void t_remove(struct hashmap *map, int ignore_case)
-> @@ t/unit-tests/t-hashmap.c (new)
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(remove); i++) {
-> @@ t/unit-tests/t-hashmap.c (new)
-> + }
-> +
-> + entry =3D alloc_test_entry(ignore_case, "notInMap", "");
-> -+ check(hashmap_remove_entry(map, entry, ent, "notInMap") =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_remove_entry(map, entry, ent, "notInMap"),
-> NULL);
-> + free(entry);
-> ++
-> ++ check_int(map->tablesize, =3D=3D, 64);
-> ++ check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val) -
-> ARRAY_SIZE(remove));
-> +}
-> +
-> +static void t_iterate(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> + struct hashmap_iter iter;
-> -+ const char *key_val[][3] =3D { { "key1", "value1", "UNUSED" },
-> -+ { "key2", "value2", "UNUSED" },
-> -+ { "fooBarFrotz", "value3", "UNUSED" } };
-> -+ int count =3D 0;
-> ++ const char *key_val[][2] =3D { { "key1", "value1" },
-> ++ { "key2", "value2" },
-> ++ { "fooBarFrotz", "value3" } };
-> ++ char seen[ARRAY_SIZE(key_val)] =3D { 0 };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + hashmap_for_each_entry(map, &iter, entry, ent /* member name */)
-> + {
-> + int ret;
-> -+ if (!check_int((ret =3D key_val_contains(key_val, ARRAY_SIZE(key_val),
-> ++ if (!check_int((ret =3D key_val_contains(key_val, seen,
-> ++ ARRAY_SIZE(key_val),
-> + entry)), =3D=3D, 0)) {
-> + switch (ret) {
-> + case 1:
-> @@ t/unit-tests/t-hashmap.c (new)
-> + entry->key, get_value(entry));
-> + break;
-> + }
-> -+ } else {
-> -+ count++;
-> + }
-> + }
-> -+ check_int(count, =3D=3D, ARRAY_SIZE(key_val));
-> ++
-> ++ for (size_t i =3D 0; i < ARRAY_SIZE(seen); i++) {
-> ++ if (!check_int(seen[i], =3D=3D, 1))
-> ++ test_msg("following key-val pair was not iterated over:\n"
-> ++ " key: %s\n value: %s",
-> ++ key_val[i][0], key_val[i][1]);
-> ++ }
-> ++
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> +}
-> +
-> @@ t/unit-tests/t-hashmap.c (new)
-> + char *key =3D xstrfmt("key%d", i);
-> + char *value =3D xstrfmt("value%d", i);
-> + entry =3D alloc_test_entry(ignore_case, key, value);
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + free(key);
-> + free(value);
-> + }
-> @@ t/unit-tests/t-hashmap.c (new)
-> + check_int(hashmap_get_size(map), =3D=3D, 51);
-> +
-> + entry =3D alloc_test_entry(ignore_case, "key52", "value52");
-> -+ check(hashmap_put_entry(map, entry, ent) =3D=3D NULL);
-> ++ check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + check_int(map->tablesize, =3D=3D, 256);
-> + check_int(hashmap_get_size(map), =3D=3D, 52);
-> +
-> @@ t/unit-tests/t-hashmap.c (new)
-> + else if (!check(i1 !=3D values[i]))
-> + test_msg("strintern(%s) returns input pointer\n",
-> + values[i]);
-> -+ else if (!check(i1 =3D=3D i2))
-> ++ else if (!check_pointer_eq(i1, i2))
-> + test_msg("address('%s') !=3D address('%s'), so strintern('%s') !=3D
-> strintern('%s')",
-> + i1, i2, values[i], values[i]);
-> + else
-> @@ t/unit-tests/t-hashmap.c (new)
-> +
-> +int cmd_main(int argc UNUSED, const char **argv UNUSED)
-> +{
-> -+ TEST(setup(t_put, 0), "put works");
-> -+ TEST(setup(t_put, 1), "put (case insensitive) works");
-> + TEST(setup(t_replace, 0), "replace works");
-> + TEST(setup(t_replace, 1), "replace (case insensitive) works");
-> + TEST(setup(t_get, 0), "get works");
->
-> Makefile | 1 +
-> t/helper/test-hashmap.c | 100 +----------
-> t/t0011-hashmap.sh | 260 ----------------------------
-> t/unit-tests/t-hashmap.c | 358 +++++++++++++++++++++++++++++++++++++++
-> 4 files changed, 361 insertions(+), 358 deletions(-)
-> delete mode 100755 t/t0011-hashmap.sh
-> create mode 100644 t/unit-tests/t-hashmap.c
->
-> diff --git a/Makefile b/Makefile
-> index 3eab701b10..74bb026610 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1336,6 +1336,7 @@ THIRD_PARTY_SOURCES +=3D sha1dc/%
-> UNIT_TEST_PROGRAMS +=3D t-ctype
-> UNIT_TEST_PROGRAMS +=3D t-example-decorate
-> UNIT_TEST_PROGRAMS +=3D t-hash
-> +UNIT_TEST_PROGRAMS +=3D t-hashmap
-> UNIT_TEST_PROGRAMS +=3D t-mem-pool
-> UNIT_TEST_PROGRAMS +=3D t-oidtree
-> UNIT_TEST_PROGRAMS +=3D t-prio-queue
-> diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-> index 2912899558..7b854a7030 100644
-> --- a/t/helper/test-hashmap.c
-> +++ b/t/helper/test-hashmap.c
-> @@ -12,11 +12,6 @@ struct test_entry
-> char key[FLEX_ARRAY];
-> };
-> =20
-> -static const char *get_value(const struct test_entry *e)
-> -{
-> - return e->key + strlen(e->key) + 1;
-> -}
-> -
-> static int test_entry_cmp(const void *cmp_data,
-> const struct hashmap_entry *eptr,
-> const struct hashmap_entry *entry_or_key,
-> @@ -141,30 +136,16 @@ static void perf_hashmap(unsigned int method,
-> unsigned int rounds)
-> /*
-> * Read stdin line by line and print result of commands to stdout:
-> *
-> - * hash key -> strhash(key) memhash(key) strihash(key) memihash(key)
-> - * put key value -> NULL / old value
-> - * get key -> NULL / value
-> - * remove key -> NULL / old value
-> - * iterate -> key1 value1\nkey2 value2\n...
-> - * size -> tablesize numentries
-> - *
-> * perfhashmap method rounds -> test hashmap.[ch] performance
-> */
-> int cmd__hashmap(int argc, const char **argv)
-> {
-> struct string_list parts =3D STRING_LIST_INIT_NODUP;
-> struct strbuf line =3D STRBUF_INIT;
-> - int icase;
-> - struct hashmap map =3D HASHMAP_INIT(test_entry_cmp, &icase);
-> -
-> - /* init hash map */
-> - icase =3D argc > 1 && !strcmp("ignorecase", argv[1]);
-> =20
-> /* process commands from stdin */
-> while (strbuf_getline(&line, stdin) !=3D EOF) {
-> char *cmd, *p1, *p2;
-> - unsigned int hash =3D 0;
-> - struct test_entry *entry;
-> =20
-> /* break line into command and up to two parameters */
-> string_list_setlen(&parts, 0);
-> @@ -180,84 +161,8 @@ int cmd__hashmap(int argc, const char **argv)
-> cmd =3D parts.items[0].string;
-> p1 =3D parts.nr >=3D 1 ? parts.items[1].string : NULL;
-> p2 =3D parts.nr >=3D 2 ? parts.items[2].string : NULL;
-> - if (p1)
-> - hash =3D icase ? strihash(p1) : strhash(p1);
-> -
-> - if (!strcmp("add", cmd) && p1 && p2) {
-> -
-> - /* create entry with key =3D p1, value =3D p2 */
-> - entry =3D alloc_test_entry(hash, p1, p2);
-> -
-> - /* add to hashmap */
-> - hashmap_add(&map, &entry->ent);
-> -
-> - } else if (!strcmp("put", cmd) && p1 && p2) {
-> -
-> - /* create entry with key =3D p1, value =3D p2 */
-> - entry =3D alloc_test_entry(hash, p1, p2);
-> -
-> - /* add / replace entry */
-> - entry =3D hashmap_put_entry(&map, entry, ent);
-> -
-> - /* print and free replaced entry, if any */
-> - puts(entry ? get_value(entry) : "NULL");
-> - free(entry);
-> -
-> - } else if (!strcmp("get", cmd) && p1) {
-> - /* lookup entry in hashmap */
-> - entry =3D hashmap_get_entry_from_hash(&map, hash, p1,
-> - struct test_entry, ent);
-> -
-> - /* print result */
-> - if (!entry)
-> - puts("NULL");
-> - hashmap_for_each_entry_from(&map, entry, ent)
-> - puts(get_value(entry));
-> -
-> - } else if (!strcmp("remove", cmd) && p1) {
-> -
-> - /* setup static key */
-> - struct hashmap_entry key;
-> - struct hashmap_entry *rm;
-> - hashmap_entry_init(&key, hash);
-> -
-> - /* remove entry from hashmap */
-> - rm =3D hashmap_remove(&map, &key, p1);
-> - entry =3D rm ? container_of(rm, struct test_entry, ent)
-> - : NULL;
-> -
-> - /* print result and free entry*/
-> - puts(entry ? get_value(entry) : "NULL");
-> - free(entry);
-> -
-> - } else if (!strcmp("iterate", cmd)) {
-> - struct hashmap_iter iter;
-> -
-> - hashmap_for_each_entry(&map, &iter, entry,
-> - ent /* member name */)
-> - printf("%s %s\n", entry->key, get_value(entry));
-> -
-> - } else if (!strcmp("size", cmd)) {
-> -
-> - /* print table sizes */
-> - printf("%u %u\n", map.tablesize,
-> - hashmap_get_size(&map));
-> -
-> - } else if (!strcmp("intern", cmd) && p1) {
-> -
-> - /* test that strintern works */
-> - const char *i1 =3D strintern(p1);
-> - const char *i2 =3D strintern(p1);
-> - if (strcmp(i1, p1))
-> - printf("strintern(%s) returns %s\n", p1, i1);
-> - else if (i1 =3D=3D p1)
-> - printf("strintern(%s) returns input pointer\n", p1);
-> - else if (i1 !=3D i2)
-> - printf("strintern(%s) !=3D strintern(%s)", i1, i2);
-> - else
-> - printf("%s\n", i1);
-> -
-> - } else if (!strcmp("perfhashmap", cmd) && p1 && p2) {
-> +
-> + if (!strcmp("perfhashmap", cmd) && p1 && p2) {
-> =20
-> perf_hashmap(atoi(p1), atoi(p2));
-> =20
-> @@ -270,6 +175,5 @@ int cmd__hashmap(int argc, const char **argv)
-> =20
-> string_list_clear(&parts, 0);
-> strbuf_release(&line);
-> - hashmap_clear_and_free(&map, struct test_entry, ent);
-> return 0;
-> }
-> diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
-> deleted file mode 100755
-> index 46e74ad107..0000000000
-> --- a/t/t0011-hashmap.sh
-> +++ /dev/null
-> @@ -1,260 +0,0 @@
-> -#!/bin/sh
-> -
-> -test_description=3D'test hashmap and string hash functions'
-> -
-> -TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> -. ./test-lib.sh
-> -
-> -test_hashmap() {
-> - echo "$1" | test-tool hashmap $3 > actual &&
-> - echo "$2" > expect &&
-> - test_cmp expect actual
-> -}
-> -
-> -test_expect_success 'put' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -put foobarfrotz value4
-> -size" "NULL
-> -NULL
-> -NULL
-> -NULL
-> -64 4"
-> -
-> -'
-> -
-> -test_expect_success 'put (case insensitive)' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -size" "NULL
-> -NULL
-> -NULL
-> -64 3" ignorecase
-> -
-> -'
-> -
-> -test_expect_success 'replace' '
-> -
-> -test_hashmap "put key1 value1
-> -put key1 value2
-> -put fooBarFrotz value3
-> -put fooBarFrotz value4
-> -size" "NULL
-> -value1
-> -NULL
-> -value3
-> -64 2"
-> -
-> -'
-> -
-> -test_expect_success 'replace (case insensitive)' '
-> -
-> -test_hashmap "put key1 value1
-> -put Key1 value2
-> -put fooBarFrotz value3
-> -put foobarfrotz value4
-> -size" "NULL
-> -value1
-> -NULL
-> -value3
-> -64 2" ignorecase
-> -
-> -'
-> -
-> -test_expect_success 'get' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -put foobarfrotz value4
-> -get key1
-> -get key2
-> -get fooBarFrotz
-> -get notInMap" "NULL
-> -NULL
-> -NULL
-> -NULL
-> -value1
-> -value2
-> -value3
-> -NULL"
-> -
-> -'
-> -
-> -test_expect_success 'get (case insensitive)' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -get Key1
-> -get keY2
-> -get foobarfrotz
-> -get notInMap" "NULL
-> -NULL
-> -NULL
-> -value1
-> -value2
-> -value3
-> -NULL" ignorecase
-> -
-> -'
-> -
-> -test_expect_success 'add' '
-> -
-> -test_hashmap "add key1 value1
-> -add key1 value2
-> -add fooBarFrotz value3
-> -add fooBarFrotz value4
-> -get key1
-> -get fooBarFrotz
-> -get notInMap" "value2
-> -value1
-> -value4
-> -value3
-> -NULL"
-> -
-> -'
-> -
-> -test_expect_success 'add (case insensitive)' '
-> -
-> -test_hashmap "add key1 value1
-> -add Key1 value2
-> -add fooBarFrotz value3
-> -add foobarfrotz value4
-> -get key1
-> -get Foobarfrotz
-> -get notInMap" "value2
-> -value1
-> -value4
-> -value3
-> -NULL" ignorecase
-> -
-> -'
-> -
-> -test_expect_success 'remove' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -remove key1
-> -remove key2
-> -remove notInMap
-> -size" "NULL
-> -NULL
-> -NULL
-> -value1
-> -value2
-> -NULL
-> -64 1"
-> -
-> -'
-> -
-> -test_expect_success 'remove (case insensitive)' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -remove Key1
-> -remove keY2
-> -remove notInMap
-> -size" "NULL
-> -NULL
-> -NULL
-> -value1
-> -value2
-> -NULL
-> -64 1" ignorecase
-> -
-> -'
-> -
-> -test_expect_success 'iterate' '
-> - test-tool hashmap >actual.raw <<-\EOF &&
-> - put key1 value1
-> - put key2 value2
-> - put fooBarFrotz value3
-> - iterate
-> - EOF
-> -
-> - cat >expect <<-\EOF &&
-> - NULL
-> - NULL
-> - NULL
-> - fooBarFrotz value3
-> - key1 value1
-> - key2 value2
-> - EOF
-> -
-> - sort <actual.raw >actual &&
-> - test_cmp expect actual
-> -'
-> -
-> -test_expect_success 'iterate (case insensitive)' '
-> - test-tool hashmap ignorecase >actual.raw <<-\EOF &&
-> - put key1 value1
-> - put key2 value2
-> - put fooBarFrotz value3
-> - iterate
-> - EOF
-> -
-> - cat >expect <<-\EOF &&
-> - NULL
-> - NULL
-> - NULL
-> - fooBarFrotz value3
-> - key1 value1
-> - key2 value2
-> - EOF
-> -
-> - sort <actual.raw >actual &&
-> - test_cmp expect actual
-> -'
-> -
-> -test_expect_success 'grow / shrink' '
-> -
-> - rm -f in &&
-> - rm -f expect &&
-> - for n in $(test_seq 51)
-> - do
-> - echo put key$n value$n >> in &&
-> - echo NULL >> expect || return 1
-> - done &&
-> - echo size >> in &&
-> - echo 64 51 >> expect &&
-> - echo put key52 value52 >> in &&
-> - echo NULL >> expect &&
-> - echo size >> in &&
-> - echo 256 52 >> expect &&
-> - for n in $(test_seq 12)
-> - do
-> - echo remove key$n >> in &&
-> - echo value$n >> expect || return 1
-> - done &&
-> - echo size >> in &&
-> - echo 256 40 >> expect &&
-> - echo remove key40 >> in &&
-> - echo value40 >> expect &&
-> - echo size >> in &&
-> - echo 64 39 >> expect &&
-> - test-tool hashmap <in >out &&
-> - test_cmp expect out
-> -
-> -'
-> -
-> -test_expect_success 'string interning' '
-> -
-> -test_hashmap "intern value1
-> -intern Value1
-> -intern value2
-> -intern value2
-> -" "value1
-> -Value1
-> -value2
-> -value2"
-> -
-> -'
-> -
-> -test_done
-> diff --git a/t/unit-tests/t-hashmap.c b/t/unit-tests/t-hashmap.c
-> new file mode 100644
-> index 0000000000..3112b10b33
-> --- /dev/null
-> +++ b/t/unit-tests/t-hashmap.c
-> @@ -0,0 +1,358 @@
-> +#include "test-lib.h"
-> +#include "hashmap.h"
-> +#include "strbuf.h"
-> +
-> +struct test_entry {
-> + int padding; /* hashmap entry no longer needs to be the first member
-> */
-> + struct hashmap_entry ent;
-> + /* key and value as two \0-terminated strings */
-> + char key[FLEX_ARRAY];
-> +};
-> +
-> +static int test_entry_cmp(const void *cmp_data,
-> + const struct hashmap_entry *eptr,
-> + const struct hashmap_entry *entry_or_key,
-> + const void *keydata)
-> +{
-> + const int ignore_case =3D cmp_data ? *((int *)cmp_data) : 0;
-> + const struct test_entry *e1, *e2;
-> + const char *key =3D keydata;
-> +
-> + e1 =3D container_of(eptr, const struct test_entry, ent);
-> + e2 =3D container_of(entry_or_key, const struct test_entry, ent);
-> +
-> + if (ignore_case)
-> + return strcasecmp(e1->key, key ? key : e2->key);
-> + else
-> + return strcmp(e1->key, key ? key : e2->key);
-> +}
-> +
-> +static const char *get_value(const struct test_entry *e)
-> +{
-> + return e->key + strlen(e->key) + 1;
-> +}
-> +
-> +static struct test_entry *alloc_test_entry(unsigned int ignore_case,
-> + const char *key, const char *value)
-> +{
-> + size_t klen =3D strlen(key);
-> + size_t vlen =3D strlen(value);
-> + unsigned int hash =3D ignore_case ? strihash(key) : strhash(key);
-> + struct test_entry *entry =3D xmalloc(st_add4(sizeof(*entry), klen, vlen=
-,
-> 2));
-> +
-> + hashmap_entry_init(&entry->ent, hash);
-> + memcpy(entry->key, key, klen + 1);
-> + memcpy(entry->key + klen + 1, value, vlen + 1);
-> + return entry;
-> +}
-> +
-> +static struct test_entry *get_test_entry(struct hashmap *map,
-> + unsigned int ignore_case, const char *key)
-> +{
-> + return hashmap_get_entry_from_hash(
-> + map, ignore_case ? strihash(key) : strhash(key), key,
-> + struct test_entry, ent);
-> +}
-> +
-> +static int key_val_contains(const char *key_val[][2], char seen[],
-> size_t n,
-> + struct test_entry *entry)
-> +{
-> + for (size_t i =3D 0; i < n; i++) {
-> + if (!strcmp(entry->key, key_val[i][0]) &&
-> + !strcmp(get_value(entry), key_val[i][1])) {
-> + if (seen[i])
-> + return 2;
-> + seen[i] =3D 1;
-> + return 0;
-> + }
-> + }
-> + return 1;
-> +}
-> +
-> +static void setup(void (*f)(struct hashmap *map, int ignore_case),
-> + int ignore_case)
-> +{
-> + struct hashmap map =3D HASHMAP_INIT(test_entry_cmp, &ignore_case);
-> +
-> + f(&map, ignore_case);
-> + hashmap_clear_and_free(&map, struct test_entry, ent);
-> +}
-> +
-> +static void t_replace(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> +
-> + entry =3D alloc_test_entry(ignore_case, "key1", "value1");
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> +
-> + entry =3D alloc_test_entry(ignore_case, ignore_case ? "Key1" : "key1",
-> + "value2");
-> + entry =3D hashmap_put_entry(map, entry, ent);
-> + if (check(entry !=3D NULL))
-> + check_str(get_value(entry), "value1");
-> + free(entry);
-> +
-> + entry =3D alloc_test_entry(ignore_case, "fooBarFrotz", "value3");
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> +
-> + entry =3D alloc_test_entry(ignore_case,
-> + ignore_case ? "foobarfrotz" : "fooBarFrotz",
-> + "value4");
-> + entry =3D hashmap_put_entry(map, entry, ent);
-> + if (check(entry !=3D NULL))
-> + check_str(get_value(entry), "value3");
-> + free(entry);
-> +}
-> +
-> +static void t_get(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> + const char *key_val[][2] =3D { { "key1", "value1" },
-> + { "key2", "value2" },
-> + { "fooBarFrotz", "value3" },
-> + { ignore_case ? "key4" : "foobarfrotz", "value4" } };
-> + const char *query[][2] =3D {
-> + { ignore_case ? "Key1" : "key1", "value1" },
-> + { ignore_case ? "keY2" : "key2", "value2" },
-> + { ignore_case ? "foobarfrotz" : "fooBarFrotz", "value3" }
-> + };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(query); i++) {
-> + entry =3D get_test_entry(map, ignore_case, query[i][0]);
-> + if (check(entry !=3D NULL))
-> + check_str(get_value(entry), query[i][1]);
-> + else
-> + test_msg("query key: %s", query[i][0]);
-> + }
-> +
-> + check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
-> + check_int(map->tablesize, =3D=3D, 64);
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> +}
-> +
-> +static void t_add(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> + const char *key_val[][2] =3D {
-> + { "key1", "value1" },
-> + { ignore_case ? "Key1" : "key1", "value2" },
-> + { "fooBarFrotz", "value3" },
-> + { ignore_case ? "Foobarfrotz" : "fooBarFrotz", "value4" }
-> + };
-> + const char *queries[] =3D { "key1",
-> + ignore_case ? "Foobarfrotz" : "fooBarFrotz" };
-> + char seen[ARRAY_SIZE(key_val)] =3D { 0 };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> + hashmap_add(map, &entry->ent);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(queries); i++) {
-> + int count =3D 0;
-> + entry =3D hashmap_get_entry_from_hash(map,
-> + ignore_case ? strihash(queries[i]) :
-> + strhash(queries[i]),
-> + queries[i], struct test_entry, ent);
-> +
-> + hashmap_for_each_entry_from(map, entry, ent)
-> + {
-> + int ret;
-> + if (!check_int((ret =3D key_val_contains(
-> + key_val, seen,
-> + ARRAY_SIZE(key_val), entry)),
-> + =3D=3D, 0)) {
-> + switch (ret) {
-> + case 1:
-> + test_msg("found entry was not given in the input\n"
-> + " key: %s\n value: %s",
-> + entry->key, get_value(entry));
-> + break;
-> + case 2:
-> + test_msg("duplicate entry detected\n"
-> + " key: %s\n value: %s",
-> + entry->key, get_value(entry));
-> + break;
-> + }
-> + } else {
-> + count++;
-> + }
-> + }
-> + check_int(count, =3D=3D, 2);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(seen); i++) {
-> + if (!check_int(seen[i], =3D=3D, 1))
-> + test_msg("following key-val pair was not iterated over:\n"
-> + " key: %s\n value: %s",
-> + key_val[i][0], key_val[i][1]);
-> + }
-> +
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> + check_pointer_eq(get_test_entry(map, ignore_case, "notInMap"), NULL);
-> +}
-> +
-> +static void t_remove(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry, *removed;
-> + const char *key_val[][2] =3D { { "key1", "value1" },
-> + { "key2", "value2" },
-> + { "fooBarFrotz", "value3" } };
-> + const char *remove[][2] =3D { { ignore_case ? "Key1" : "key1", "value1"
-> },
-> + { ignore_case ? "keY2" : "key2", "value2" } };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(remove); i++) {
-> + entry =3D alloc_test_entry(ignore_case, remove[i][0], "");
-> + removed =3D hashmap_remove_entry(map, entry, ent, remove[i][0]);
-> + if (check(removed !=3D NULL))
-> + check_str(get_value(removed), remove[i][1]);
-> + free(entry);
-> + free(removed);
-> + }
-> +
-> + entry =3D alloc_test_entry(ignore_case, "notInMap", "");
-> + check_pointer_eq(hashmap_remove_entry(map, entry, ent, "notInMap"),
-> NULL);
-> + free(entry);
-> +
-> + check_int(map->tablesize, =3D=3D, 64);
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val) -
-> ARRAY_SIZE(remove));
-> +}
-> +
-> +static void t_iterate(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry;
-> + struct hashmap_iter iter;
-> + const char *key_val[][2] =3D { { "key1", "value1" },
-> + { "key2", "value2" },
-> + { "fooBarFrotz", "value3" } };
-> + char seen[ARRAY_SIZE(key_val)] =3D { 0 };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(key_val); i++) {
-> + entry =3D alloc_test_entry(ignore_case, key_val[i][0], key_val[i][1]);
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + }
-> +
-> + hashmap_for_each_entry(map, &iter, entry, ent /* member name */)
-> + {
-> + int ret;
-> + if (!check_int((ret =3D key_val_contains(key_val, seen,
-> + ARRAY_SIZE(key_val),
-> + entry)), =3D=3D, 0)) {
-> + switch (ret) {
-> + case 1:
-> + test_msg("found entry was not given in the input\n"
-> + " key: %s\n value: %s",
-> + entry->key, get_value(entry));
-> + break;
-> + case 2:
-> + test_msg("duplicate entry detected\n"
-> + " key: %s\n value: %s",
-> + entry->key, get_value(entry));
-> + break;
-> + }
-> + }
-> + }
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(seen); i++) {
-> + if (!check_int(seen[i], =3D=3D, 1))
-> + test_msg("following key-val pair was not iterated over:\n"
-> + " key: %s\n value: %s",
-> + key_val[i][0], key_val[i][1]);
-> + }
-> +
-> + check_int(hashmap_get_size(map), =3D=3D, ARRAY_SIZE(key_val));
-> +}
-> +
-> +static void t_alloc(struct hashmap *map, int ignore_case)
-> +{
-> + struct test_entry *entry, *removed;
-> +
-> + for (int i =3D 1; i <=3D 51; i++) {
-> + char *key =3D xstrfmt("key%d", i);
-> + char *value =3D xstrfmt("value%d", i);
-> + entry =3D alloc_test_entry(ignore_case, key, value);
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + free(key);
-> + free(value);
-> + }
-> + check_int(map->tablesize, =3D=3D, 64);
-> + check_int(hashmap_get_size(map), =3D=3D, 51);
-> +
-> + entry =3D alloc_test_entry(ignore_case, "key52", "value52");
-> + check_pointer_eq(hashmap_put_entry(map, entry, ent), NULL);
-> + check_int(map->tablesize, =3D=3D, 256);
-> + check_int(hashmap_get_size(map), =3D=3D, 52);
-> +
-> + for (int i =3D 1; i <=3D 12; i++) {
-> + char *key =3D xstrfmt("key%d", i);
-> + char *value =3D xstrfmt("value%d", i);
-> +
-> + entry =3D alloc_test_entry(ignore_case, key, "");
-> + removed =3D hashmap_remove_entry(map, entry, ent, key);
-> + if (check(removed !=3D NULL))
-> + check_str(value, get_value(removed));
-> + free(key);
-> + free(value);
-> + free(entry);
-> + free(removed);
-> + }
-> + check_int(map->tablesize, =3D=3D, 256);
-> + check_int(hashmap_get_size(map), =3D=3D, 40);
-> +
-> + entry =3D alloc_test_entry(ignore_case, "key40", "");
-> + removed =3D hashmap_remove_entry(map, entry, ent, "key40");
-> + if (check(removed !=3D NULL))
-> + check_str("value40", get_value(removed));
-> + check_int(map->tablesize, =3D=3D, 64);
-> + check_int(hashmap_get_size(map), =3D=3D, 39);
-> + free(entry);
-> + free(removed);
-> +}
-> +
-> +static void t_intern(struct hashmap *map, int ignore_case)
-> +{
-> + const char *values[] =3D { "value1", "Value1", "value2", "value2" };
-> +
-> + for (size_t i =3D 0; i < ARRAY_SIZE(values); i++) {
-> + const char *i1 =3D strintern(values[i]);
-> + const char *i2 =3D strintern(values[i]);
-> +
-> + if (!check(!strcmp(i1, values[i])))
-> + test_msg("strintern(%s) returns %s\n", values[i], i1);
-> + else if (!check(i1 !=3D values[i]))
-> + test_msg("strintern(%s) returns input pointer\n",
-> + values[i]);
-> + else if (!check_pointer_eq(i1, i2))
-> + test_msg("address('%s') !=3D address('%s'), so strintern('%s') !=3D
-> strintern('%s')",
-> + i1, i2, values[i], values[i]);
-> + else
-> + check_str(i1, values[i]);
-> + }
-> +}
-> +
-> +int cmd_main(int argc UNUSED, const char **argv UNUSED)
-> +{
-> + TEST(setup(t_replace, 0), "replace works");
-> + TEST(setup(t_replace, 1), "replace (case insensitive) works");
-> + TEST(setup(t_get, 0), "get works");
-> + TEST(setup(t_get, 1), "get (case insensitive) works");
-> + TEST(setup(t_add, 0), "add works");
-> + TEST(setup(t_add, 1), "add (case insensitive) works");
-> + TEST(setup(t_remove, 0), "remove works");
-> + TEST(setup(t_remove, 1), "remove (case insensitive) works");
-> + TEST(setup(t_iterate, 0), "iterate works");
-> + TEST(setup(t_iterate, 1), "iterate (case insensitive) works");
-> + TEST(setup(t_alloc, 0), "grow / shrink works");
-> + TEST(setup(t_intern, 0), "string interning works");
-> + return test_done();
-> +}
-> --
-> 2.45.2
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[New Topics]
+
+* jc/where-is-bash-for-ci (2024-07-08) 1 commit
+  (merged to 'next' on 2024-07-09 at 14b00e672e)
+ + ci: unify bash calling convention
+
+ Shell script clean-up.
+
+ Will merge to 'master'.
+ source: <xmqqwmlvcx9g.fsf_-_@gitster.g>
+
+
+* kn/push-empty-fix (2024-07-09) 1 commit
+ - builtin/push: call set_refspecs after validating remote
+
+ "git push '' HEAD:there" used to hit a BUG(); it has been corrected
+ to die with "fatal: bad repository ''".
+
+ Expecting a reroll.
+ cf. <xmqq4j8yflrq.fsf@gitster.g>
+ source: <20240709144931.1146528-1-karthik.188@gmail.com>
+
+
+* ad/merge-with-diff-algorithm (2024-07-10) 1 commit
+  (merged to 'next' on 2024-07-11 at 2a221341d9)
+ + merge-recursive: honor diff.algorithm
+
+ Many Porcelain commands that internally use the merge machinery
+ were taught to consistently honor the diff.algorithm configuration.
+
+ Will merge to 'master'.
+ source: <pull.1743.v2.git.git.1720551701648.gitgitgadget@gmail.com>
+
+
+* jc/http-cookiefile (2024-07-09) 1 commit
+  (merged to 'next' on 2024-07-11 at abdd5711d2)
+ + http.c: cookie file tightening
+
+ The http.cookieFile and http.saveCookies configuration variables
+ have a few values that need to be avoided, which are now ignored
+ with warning messages.
+
+ Will merge to 'master'.
+ source: <xmqqed82cgmj.fsf@gitster.g>
+
+
+* jk/add-patch-with-suppress-blank-empty (2024-07-10) 1 commit
+  (merged to 'next' on 2024-07-11 at cec8ebb668)
+ + add-patch: handle splitting hunks with diff.suppressBlankEmpty
+
+ When the diff.suppressBlankEmpty configuration variable is set,
+ "git add -p" failed to process a patch with an unmodified empty
+ line, which has been corrected.
+
+ Will merge to 'master'.
+ source: <20240710093610.GA2076910@coredump.intra.peff.net>
+
+--------------------------------------------------
+[Stalled]
+
+* cp/unit-test-reftable-tree (2024-06-13) 5 commits
+ - t-reftable-tree: improve the test for infix_walk()
+ - t-reftable-tree: add test for non-existent key
+ - t-reftable-tree: split test_tree() into two sub-test functions
+ - t: move reftable/tree_test.c to the unit testing framework
+ - reftable: remove unnecessary curly braces in reftable/tree.c
+
+ A test in reftable library has been rewritten using the unit test
+ framework.
+
+ Needs review.
+ source: <20240612130217.8877-1-chandrapratap3519@gmail.com>
+
+
+* sj/ref-fsck (2024-07-10) 10 commits
+ - fsck: add ref content check for files backend
+ - fsck: add ref name check for files backend
+ - files-backend: add unified interface for refs scanning
+ - builtin/fsck: add `git-refs verify` child process
+ - builtin/refs: add verify subcommand and verbose_refs for "fsck_options"
+ - refs: set up ref consistency check infrastructure
+ - fsck: add refs-related error report function
+ - fsck: add a unified interface for reporting fsck messages
+ - fsck: rename objects-related fsck error functions
+ - fsck: rename "skiplist" to "skip_oids"
+
+ "git fsck" infrastructure has been taught to also check the sanity
+ of the ref database, in addition to the object database.
+
+ Needs review.
+ source: <Zo6eJi8BePrQxTQV@ArchLinux>
+
+
+* cp/unit-test-reftable-pq (2024-06-14) 7 commits
+ - t-reftable-pq: add tests for merged_iter_pqueue_top()
+ - t-reftable-pq: add test for index based comparison
+ - t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+ - t-reftable-pq: make merged_iter_pqueue_check() static
+ - t: move reftable/pq_test.c to the unit testing framework
+ - reftable: change the type of array indices to 'size_t' in reftable/pq.c
+ - reftable: remove unncessary curly braces in reftable/pq.c
+
+ The tests for "pq" part of reftable library got rewritten to use
+ the unit test framework.
+
+ Needs review.
+ source: <20240614095136.12052-1-chandrapratap3519@gmail.com>
+
+
+* tb/incremental-midx-part-1 (2024-06-07) 19 commits
+ - midx: implement support for writing incremental MIDX chains
+ - t/t5313-pack-bounds-checks.sh: prepare for sub-directories
+ - t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+ - midx: implement verification support for incremental MIDXs
+ - midx: support reading incremental MIDX chains
+ - midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
+ - midx: teach `midx_preferred_pack()` about incremental MIDXs
+ - midx: teach `midx_contains_pack()` about incremental MIDXs
+ - midx: remove unused `midx_locate_pack()`
+ - midx: teach `fill_midx_entry()` about incremental MIDXs
+ - midx: teach `nth_midxed_offset()` about incremental MIDXs
+ - midx: teach `bsearch_midx()` about incremental MIDXs
+ - midx: introduce `bsearch_one_midx()`
+ - midx: teach `nth_bitmapped_pack()` about incremental MIDXs
+ - midx: teach `nth_midxed_object_oid()` about incremental MIDXs
+ - midx: teach `prepare_midx_pack()` about incremental MIDXs
+ - midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
+ - midx: add new fields for incremental MIDX chains
+ - Documentation: describe incremental MIDX format
+
+ Incremental updates of multi-pack index files.
+
+ Needs review.
+ source: <cover.1717715060.git.me@ttaylorr.com>
+
+
+* vd/mktree (2024-06-20) 17 commits
+ - mktree: remove entries when mode is 0
+ - mktree: allow deeper paths in input
+ - mktree: optionally add to an existing tree
+ - mktree: add directory-file conflict hashmap
+ - mktree: use iterator struct to add tree entries to index
+ - mktree: create tree using an in-core index
+ - mktree: overwrite duplicate entries
+ - mktree: validate paths more carefully
+ - mktree: add a --literally option
+ - mktree.c: do not fail on mismatched submodule type
+ - mktree: use read_index_info to read stdin lines
+ - index-info.c: parse object type in provided in read_index_info
+ - index-info.c: return unrecognized lines to caller
+ - update-index: generalize 'read_index_info'
+ - mktree: use non-static tree_entry array
+ - mktree: rename treeent to tree_entry
+ - mktree: use OPT_BOOL
+
+ "git mktree" has been rewritten, taking advantage of the cache-tree
+ API.
+
+ Will merge to 'next'?
+ source: <pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
+
+
+* pp/add-parse-range-unit-test (2024-05-27) 1 commit
+ - apply: add unit tests for parse_range
+
+ A unit test for code that parses the hunk offset and length from a
+ patch fragment header as been added.
+
+ Expecting a reroll.
+ cf. <b7eca313-9ea8-4132-ba1d-ed9236e07095@gmail.com>
+ source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
+
+
+* cw/git-std-lib (2024-02-28) 4 commits
+ . SQUASH??? get rid of apparent debugging crufts
+ . test-stdlib: show that git-std-lib is independent
+ . git-std-lib: introduce Git Standard Library
+ . pager: include stdint.h because uintmax_t is used
+
+ Split libgit.a out to a separate git-std-lib tor easier reuse.
+
+ Expecting a reroll.
+ source: <cover.1696021277.git.jonathantanmy@google.com>
+
+--------------------------------------------------
+[Cooking]
+
+* jc/checkout-no-op-switch-errors (2024-07-02) 1 commit
+ - checkout: special case error messages during noop switching
+
+ "git checkout --ours" (no other arguments) complained that the
+ option is incompatible with branch switching, which is technically
+ correct, but found confusing by some users.  It now says that the
+ user needs to give pathspec to specify what paths to checkout.
+
+ Needs review.
+ source: <xmqqikxnqzz4.fsf@gitster.g>
+
+
+* jc/disable-push-nego-for-deletion (2024-07-02) 1 commit
+  (merged to 'next' on 2024-07-08 at 18411fb8ac)
+ + push: avoid showing false negotiation errors
+
+ "git push" that pushes only deletion gave an unnecessary and
+ harmless error message when push negotiation is configured, which
+ has been corrected.
+
+ Will merge to 'master'.
+ source: <xmqqo77fr2h0.fsf@gitster.g>
+
+
+* bc/gitfaq-more (2024-07-09) 4 commits
+  (merged to 'next' on 2024-07-10 at eeec4009e4)
+ + doc: mention that proxies must be completely transparent
+ + gitfaq: add entry about syncing working trees
+ + gitfaq: give advice on using eol attribute in gitattributes
+ + gitfaq: add documentation on proxies
+
+ A handful of entries are added to the GitFAQ document.
+
+ Will merge to 'master'.
+ source: <20240709233746.445860-1-sandals@crustytoothpaste.net>
+
+
+* cp/unit-test-reftable-merged (2024-07-11) 7 commits
+ - t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
+ - t-reftable-merged: use reftable_ref_record_equal to compare ref records
+ - t-reftable-merged: add tests for reftable_merged_table_max_update_index
+ - t-reftable-merged: improve the const-correctness of helper functions
+ - t-reftable-merged: improve the test t_merged_single_record()
+ - t: harmonize t-reftable-merged.c with coding guidelines
+ - t: move reftable/merged_test.c to the unit testing framework
+
+ Another reftable test has been ported to use the unit test framework.
+
+ Looking good.
+ source: <20240711040854.4602-1-chandrapratap3519@gmail.com>
+
+
+* ds/advice-sparse-index-expansion (2024-07-08) 1 commit
+  (merged to 'next' on 2024-07-09 at c821020b13)
+ + advice: warn when sparse index expands
+
+ A new warning message is issued when a command has to expand a
+ sparse index to handle working tree cruft that are outside of the
+ sparse checkout.
+
+ Will merge to 'master'.
+ source: <pull.1756.v2.git.1720448038745.gitgitgadget@gmail.com>
+
+
+* am/gitweb-feed-use-committer-date (2024-07-07) 1 commit
+  (merged to 'next' on 2024-07-08 at 65215ab842)
+ + gitweb: rss/atom change published/updated date to committer date
+
+ GitWeb update to use committer date consistently in rss/atom feeds.
+
+ Will merge to 'master'.
+ source: <20240707184813.33166-1-080ariel@gmail.com>
+
+
+* rs/clang-format-updates (2024-07-06) 1 commit
+  (merged to 'next' on 2024-07-08 at d2b5b41844)
+ + clang-format: include kh_foreach* macros in ForEachMacros
+
+ Custom control structures we invented more recently have been
+ taught to the clang-format file.
+
+ Will merge to 'master'.
+ source: <4e7893f5-2dd9-46cf-8a64-cf780f4e1730@web.de>
+
+
+* rs/t-strvec-use-test-msg (2024-07-06) 1 commit
+  (merged to 'next' on 2024-07-08 at c28c2553de)
+ + t-strvec: use test_msg()
+
+ Unit test clean-up.
+
+ Will merge to 'master'.
+ source: <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
+
+
+* tb/dev-build-pedantic-fix (2024-07-06) 1 commit
+  (merged to 'next' on 2024-07-08 at 7f34cc6c5b)
+ + config.mak.dev: fix typo when enabling -Wpedantic
+
+ Developer build procedure fix.
+
+ Will merge to 'master'.
+ source: <cbc9446b1b0f2453b96aa9c0d89b9ec086a619bd.1720205457.git.me@ttaylorr.com>
+
+
+* gt/unit-test-hashmap (2024-07-08) 1 commit
+ - t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
+
+ An existing test of hashmap API has been rewritten with the
+ unit-test framework.
+
+ Needs review.
+ source: <20240708161641.10335-2-shyamthakkar001@gmail.com>
+
+
+* ri/doc-show-branch-fix (2024-07-08) 1 commit
+  (merged to 'next' on 2024-07-08 at efcb154dfe)
+ + doc: fix the max number of branches shown by "show-branch"
+
+ Docfix.
+
+ Will merge to 'master'.
+ source: <pull.1757.v5.git.1720444080034.gitgitgadget@gmail.com>
+
+
+* as/pathspec-h-typofix (2024-07-01) 1 commit
+  (merged to 'next' on 2024-07-02 at ae7cee4189)
+ + pathspec: fix typo "glossary-context.txt" -> "glossary-content.txt"
+
+ Typofix.
+
+ Will merge to 'master'.
+ source: <20240629193137.54037-1-abhijeet.nkt@gmail.com>
+
+
+* gt/unit-test-oidmap (2024-07-03) 1 commit
+  (merged to 'next' on 2024-07-08 at 4e7394fc67)
+ + t: migrate helper/test-oidmap.c to unit-tests/t-oidmap.c
+
+ An existing test of oidmap API has been rewritten with the
+ unit-test framework.
+
+ Will merge to 'master'.
+ source: <20240703062958.23262-2-shyamthakkar001@gmail.com>
+
+
+* jk/test-body-in-here-doc (2024-07-10) 10 commits
+  (merged to 'next' on 2024-07-11 at 854733cffc)
+ + t/.gitattributes: ignore whitespace in chainlint expect files
+ + t: convert some here-doc test bodies
+ + test-lib: allow test snippets as here-docs
+ + chainlint.pl: add tests for test body in heredoc
+ + chainlint.pl: recognize test bodies defined via heredoc
+ + chainlint.pl: check line numbers in expected output
+ + chainlint.pl: force CRLF conversion when opening input files
+ + chainlint.pl: do not spawn more threads than we have scripts
+ + chainlint.pl: only start threads if jobs > 1
+ + chainlint.pl: add test_expect_success call to test snippets
+
+ The test framework learns to take the test body not as a single
+ string but as a here-document.
+
+ Will merge to 'master'.
+ source: <20240710083416.GA2060328@coredump.intra.peff.net>
+
+
+* rj/t0612-no-longer-leaks (2024-07-01) 1 commit
+  (merged to 'next' on 2024-07-08 at a63b027a20)
+ + t0612: mark as leak-free
+
+ A test that no longer leaks has been marked as such.
+
+ Will merge to 'master'.
+ source: <86427b9e-9574-4e61-890a-691779a8da82@gmail.com>
+
+
+* rj/t0613-no-longer-leaks (2024-07-01) 1 commit
+  (merged to 'next' on 2024-07-08 at b6149c3032)
+ + t0613: mark as leak-free
+
+ A test that no longer leaks has been marked as such.
+
+ Will merge to 'master'.
+ source: <23d41343-54fd-46c6-9d78-369e8009fa0b@gmail.com>
+
+
+* rj/test-sanitize-leak-log-fix (2024-07-11) 2 commits
+  (merged to 'next' on 2024-07-11 at 9961f42025)
+ + test-lib: GIT_TEST_SANITIZE_LEAK_LOG enabled by default
+  (merged to 'next' on 2024-07-08 at c7ee7d03e1)
+ + test-lib: fix GIT_TEST_SANITIZE_LEAK_LOG
+
+ Tests that use GIT_TEST_SANITIZE_LEAK_LOG feature got their exit
+ status inverted, which has been corrected.
+
+ Will merge to 'master'.
+ source: <f4ae6e2a-218a-419c-b6c4-59a08be247a0@gmail.com>
+ source: <fe8cd0d1-e451-43d0-b033-11bbb6d1ed56@gmail.com>
+
+
+* rs/simplify-submodule-helper-super-prefix-invocation (2024-07-01) 1 commit
+  (merged to 'next' on 2024-07-02 at 06e1677920)
+ + submodule--helper: use strvec_pushf() for --super-prefix
+
+ Code clean-up.
+
+ Will merge to 'master'.
+ source: <fb79ebc4-5ecf-4257-ac2e-39f98db5649c@web.de>
+
+
+* rs/unit-tests-test-run (2024-07-01) 6 commits
+ - t-strbuf: use TEST_RUN
+ - t-strvec: use TEST_RUN
+ - t-reftable-basics: use TEST_RUN
+ - t-ctype: use TEST_RUN
+ - unit-tests: add TEST_RUN
+ - t0080: move expected output to a file
+
+ Unit-test framework clean-up.
+
+ Expecting a reroll.
+ cf. <97390954-49bc-48c4-bab1-95be10717aca@web.de>
+ source: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+
+
+* cp/unit-test-reftable-record (2024-07-02) 11 commits
+  (merged to 'next' on 2024-07-08 at b534dac338)
+ + t-reftable-record: add tests for reftable_log_record_compare_key()
+ + t-reftable-record: add tests for reftable_ref_record_compare_name()
+ + t-reftable-record: add index tests for reftable_record_is_deletion()
+ + t-reftable-record: add obj tests for reftable_record_is_deletion()
+ + t-reftable-record: add log tests for reftable_record_is_deletion()
+ + t-reftable-record: add ref tests for reftable_record_is_deletion()
+ + t-reftable-record: add comparison tests for obj records
+ + t-reftable-record: add comparison tests for index records
+ + t-reftable-record: add comparison tests for ref records
+ + t-reftable-record: add reftable_record_cmp() tests for log records
+ + t: move reftable/record_test.c to the unit testing framework
+
+ A test in reftable library has been rewritten using the unit test
+ framework.
+
+ Will merge to 'master'.
+ cf. <CAOLa=ZT_x1Kf7EopU+RbBFzX3EPU5NWx6f8L9Uw=sM0MbCXDAQ@mail.gmail.com>
+ source: <20240702074906.5587-1-chandrapratap3519@gmail.com>
+
+
+* as/describe-broken-refresh-index-fix (2024-06-26) 1 commit
+  (merged to 'next' on 2024-07-08 at 2307a4a4ae)
+ + describe: refresh the index when 'broken' flag is used
+
+ "git describe --dirty --broken" forgot to refresh the index before
+ seeing if there is any chang, ("git describe --dirty" correctly did
+ so), which has been corrected.
+
+ Will merge to 'master'.
+ source: <20240626190801.68472-1-abhijeet.nkt@gmail.com>
+
+
+* cb/send-email-sanitize-trailer-addresses (2024-07-01) 1 commit
+  (merged to 'next' on 2024-07-09 at 442a99106a)
+ + git-send-email: use sanitized address when reading mbox body
+
+ Address-looking strings found on the trailer are now placed on the
+ Cc: list after running through sanitize_address.
+
+ Will merge to 'master'.
+ source: <20240701090115.56957-1-csokas.bence@prolan.hu>
+
+
+* jk/tests-without-dns (2024-06-26) 3 commits
+  (merged to 'next' on 2024-07-08 at 21af592457)
+ + t/lib-bundle-uri: use local fake bundle URLs
+ + t5551: do not confirm that bogus url cannot be used
+ + t5553: use local url for invalid fetch
+
+ Test suite has been taught not to unnecessarily rely on DNS failing
+ a bogus external name.
+
+ Will merge to 'master'.
+ source: <20240626205355.GA1009060@coredump.intra.peff.net>
+
+
+* bc/http-proactive-auth (2024-07-09) 1 commit
+  (merged to 'next' on 2024-07-10 at 29b050bf0e)
+ + http: allow authenticating proactively
+
+ The http transport can now be told to send request with
+ authentication material without first getting a 401 response.
+
+ Will merge to 'master'.
+ source: <20240710000155.947377-2-sandals@crustytoothpaste.net>
+
+
+* jc/patch-id (2024-06-21) 5 commits
+ - patch-id: tighten code to detect the patch header
+ - patch-id: rewrite code that detects the beginning of a patch
+ - patch-id: make get_one_patchid() more extensible
+ - patch-id: call flush_current_id() only when needed
+ - t4204: patch-id supports various input format
+
+ The patch parser in "git patch-id" has been tightened to avoid
+ getting confused by lines that look like a patch header in the log
+ message.
+
+ Needs review.
+ source: <20240621231826.3280338-1-gitster@pobox.com>
+
+
+* en/ort-inner-merge-error-fix (2024-07-06) 8 commits
+  (merged to 'next' on 2024-07-09 at 74bdae0b3b)
+ + merge-ort: fix missing early return
+  (merged to 'next' on 2024-06-28 at a85fe270e6)
+ + merge-ort: convert more error() cases to path_msg()
+ + merge-ort: upon merge abort, only show messages causing the abort
+ + merge-ort: loosen commented requirements
+ + merge-ort: clearer propagation of failure-to-function from merge_submodule
+ + merge-ort: fix type of local 'clean' var in handle_content_merge ()
+ + merge-ort: maintain expected invariant for priv member
+ + merge-ort: extract handling of priv member into reusable function
+
+ The "ort" merge backend saw one bugfix for a crash that happens
+ when inner merge gets killed, and assorted code clean-ups.
+
+ Will merge to 'master'.
+ source: <pull.1748.v2.git.1718766019.gitgitgadget@gmail.com>
