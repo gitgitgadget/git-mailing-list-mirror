@@ -1,190 +1,96 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214A115098E
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 13:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1E913F439
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 14:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720792304; cv=none; b=oTHABxNV18VGEVXr7d8rWet6IA60yavQ5WHx/V+0UKnsYCgXj9VpFbcgF4Sa0HLtMvKZj+u+Id4tmGPC44Rx2gb41K+8ZE45uEAnuCEafW0dktS2OVHkJJRmj4chopDS3PMY+HawnJ9UH6vWbLVTarNPD1wcdwl3umrLj+Ye8d4=
+	t=1720794267; cv=none; b=HiOQm5R4T2UJOzWOYbOHx0y3o9qKUK9fx0ObB62f0Anzxpn6jMYhCj8T/Vhq5JGEj1DPAW9huZxL8klWPO9ep1Q9WyURFL/MlAWDm8nxT51BbaaGcFiMZ8zBDOYY9ppXR7U9JN4LDgpoPcwlFLRhcHC0ok2RtDZ59vg7zutLvv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720792304; c=relaxed/simple;
-	bh=HPJLoJV+J6Jdl+RC+6zRxOT00qGzv8dSzJW9PhmO3t8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qeJd5cAaKaV8hKdq6sS/bpRRCtHpQEuHLHn7BBscPAvvIr++nwbb9pmaW9s6EsrnpbChI7VYElKwdGL/NH7VMPEbtDbRD1l0lrkM0WFpP9YnwMEg3LbCGryMqGG58Ng1DK40qnqL/k3QYYx1JCNk28b72sEYDEO/8UzQmRL3qy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSwIrE8Y; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1720794267; c=relaxed/simple;
+	bh=qnYqJWqW1fCYpRSEGSe6iXjxJVLUVY53aNp6lotcwBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pSUgBM3uDNx7jDY8KI6/5XvzhkPUJcveJ5j9RhMkcRzS+qwqsiHDbJFWUd2riut5jKnCy2QckdgwJAg07+UCE5Z3ojwip2YvIaWHe+r1eTQGNrscUNfp+szPy5rFv4ZLay9UwaevoimJl/585o7noE6SelgLJahhvSibJ2ytSiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TBU7BXEg; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSwIrE8Y"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ee9505cd37so18655911fa.2
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 06:51:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TBU7BXEg"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-76b3c938153so38883a12.1
+        for <git@vger.kernel.org>; Fri, 12 Jul 2024 07:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720792301; x=1721397101; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bz2NUeM7KwcmMgAqkqfXbBRDJhO4rNEo2sOAF/DuyCU=;
-        b=eSwIrE8YMmAsYj+XYb9Z+jLg3jnjy2EutyQgkbiPjVKw0wFCp0JPCb/8nnXBna6FTe
-         dR4HQmMGYlIB5jbQ3F1oJXhvutJuNI046ZeigZe2i3mtuAx6IgyddVD1JXVpln8M9GQk
-         b2RSqYU3Zlw/+e3RExIUhFUJkGZGdSOF7B2YmmRdx4g1ePvHm32+UzpGrUvpg0ZkDfvM
-         7q8RqYt1ugCkEMiDhuWRHyt4gIYKQnM8dKYjtHl48V3xvamIgmalz1CBtdxY0iFv2DuF
-         +icNorzw2qzq55/7OGIzGqUykvHzSS//gtABqOe1H9xzK0SmiRboGnCHl8+Ri3kdA2CY
-         0y3g==
+        d=gmail.com; s=20230601; t=1720794265; x=1721399065; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eTb3qamtsEe/8vFq+xODLPl1dIllwPMMzQd3DxZNPHc=;
+        b=TBU7BXEgsxsMMdGvR6gqspx3pOHvH4CEwts+PTGHrH+63qUmobNysHNNfiMu3Q9+mr
+         vwPSpEy3zKp6Iyuzxtv4rKM2r2RwkqWKa9yz+3HScswY2naA+7LmpgsP486KvdOQ2Dhp
+         Pi5bgVayj9PonGDe2tcYXRYW9IFBrd6mLOsUn2mVhCpcYSDSeuq6h2Rn1CtduzmFFaxJ
+         RYDgXUwYlh2Na/sDIN6lkro52oxdC2qxp8DF4BsV7u7Shkym+Q4Cfj1osPFjvLm+3WI3
+         QaxNS5FPtnkvjLR+gaAKaWgsSpm2sM+Vy/xV3k86ljDBxSS+JyhJ2i0jGBEOYQffm6PH
+         bEMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720792301; x=1721397101;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bz2NUeM7KwcmMgAqkqfXbBRDJhO4rNEo2sOAF/DuyCU=;
-        b=kM5aPeJW4WQU5CUynq8wDSHKJENkv2FTOIMBsmH0gxmTHZLXHgAxCeIj07ORcZ9eiu
-         GKWTWZIVvhSXElyvN3dPw+A/banQC1D/XqbAsgKLhAwWf7fjhiw46OMC5z7BWjZefP3i
-         WX99GqK/zFCWFSi/dC9OiXLBJFX4+61K9V4fRXJY9sf8CVWQWtty/HLqkoZrOk8p6Vd4
-         c0pSzkqT4OWIB6KKN05y7ib/Gyfno1m7ZQVgjc3BDxtrWiCmXC1WSZ2FCnZmpcXkySOJ
-         79rF1nK/nsk7W94rb/VDrU6M2LOuc1xOHG53OVXIBHCas2E/aHfqsLBxhv9mK1+SLe2H
-         xzeg==
-X-Forwarded-Encrypted: i=1; AJvYcCUuDKT2NDZiR3c/2yXkrg4ZN0dmM74qU3edVXi6+9LfKbJdv06x7Oc2Ra245A5P6falK3xvb5P4g+vs+bERRQt7sVAe
-X-Gm-Message-State: AOJu0Yzzryjy0uLzZTpu1Zmjj57cEFZ9+Su1pZ9YgbbsODdp0bCponCD
-	kF9TrHrM+QktNK8SVZHPItEn25T02qT46UtXVvvJtcBVFWF1xDIr
-X-Google-Smtp-Source: AGHT+IHa59kLnnbi4hSPVPYh55ePK1kG1J1r+Y8wE3Oy7KxmCFjSibADfAN5gVxIvdlmETHNd6SXww==
-X-Received: by 2002:a2e:780a:0:b0:2ee:daf3:88c3 with SMTP id 38308e7fff4ca-2eedaf388f4mr1841291fa.41.1720792300794;
-        Fri, 12 Jul 2024 06:51:40 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f2d7489sm24359775e9.44.2024.07.12.06.51.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 06:51:40 -0700 (PDT)
-Message-ID: <3b687707-7aa7-4f4f-8043-0e31fb0c09ce@gmail.com>
-Date: Fri, 12 Jul 2024 14:51:37 +0100
+        d=1e100.net; s=20230601; t=1720794265; x=1721399065;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eTb3qamtsEe/8vFq+xODLPl1dIllwPMMzQd3DxZNPHc=;
+        b=IqZ+NAKFIP444NzPxAoangityDIFPU3N/XM5RRoXndQ0I5ojOqpa28ubsJ7YbeeMPi
+         Yun/tw1U7x3yLTuuGMiCgEhR9mAdWDHkOPgLNV5g9fQ/68VgTLXvrZaqW0a9bfMNhVbd
+         0NR915GVOjCUYhpO/r/Po3mJBDNYTiADGyOhPMkeVrC1Sw8eYps+rzeOVsqLgixZV5Un
+         ujtEL0UQy0pQUkxmDMsmG5eDoVDiKX5Zkq8iCOBzUk/b4/Cj4JyLN7xPwfwGfnY8f2OM
+         lWLpQi99SLerN974qGXUQSe/V9Z4lrYc87vDewLyuo0MMzCVnSI2i8b0UC6wjKoPW6u/
+         3E1Q==
+X-Gm-Message-State: AOJu0YyXGqtoY1HciTPAz4L0rOCRErIEAZxdyxdJgx/qOXNPWrSI/XGe
+	71DXE4TGFZDcKYR1z0EmPzp9KGkAj9dl459/uf69Z/DThaeT1x5j+Urea0z6
+X-Google-Smtp-Source: AGHT+IHaV/vHYf8DcEA0QQov6oLChC2DUSt7teRh6idprod7wsgRkAoOD3F1fo8gJgZR51GBiuke1A==
+X-Received: by 2002:a05:6a20:12c9:b0:1c3:c1d0:227 with SMTP id adf61e73a8af0-1c3c1d00351mr1630219637.8.1720794265187;
+        Fri, 12 Jul 2024 07:24:25 -0700 (PDT)
+Received: from TTPL-LNV-0102.. ([49.248.29.250])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b43898c73sm7537188b3a.30.2024.07.12.07.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jul 2024 07:24:24 -0700 (PDT)
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+To: git@vger.kernel.org
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] show-index: fix uninitialized hash function
+Date: Fri, 12 Jul 2024 19:53:26 +0530
+Message-ID: <20240712142326.266533-1-abhijeet.nkt@gmail.com>
+X-Mailer: git-send-email 2.45.2.827.g557ae147e6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/7] var(win32): do report the GIT_SHELL_PATH that is
- actually used
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
- <pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Johannes
+As stated in the docs, show-index should use SHA1 as the default hash algorithm
+when run outsize of a repository.  However, 'the_hash_algo' is currently left
+uninitialized if we are not in a repository and no explicit hash funciton is
+specified, causing a crash.  Fix it by falling back to SHA1 when it is found
+uninitialized.
 
-On 12/07/2024 00:11, Johannes Schindelin via GitGitGadget wrote:
-> Changes since v1:
-> 
->   * This patch series now shares the logic that determines the path of the
->     Unix shell that Git uses between prepare_shell_cmd() and git var
->     GIT_SHELL_PATH.
+Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+---
+ builtin/show-index.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This was a pleasant read, each step was well described and easy to 
-follow. I've left a couple of comments but I think this is good as it is.
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index 540dc3dad1..bb6d9e3c40 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -35,6 +35,9 @@ int cmd_show_index(int argc, const char **argv, const char *prefix)
+ 		repo_set_hash_algo(the_repository, hash_algo);
+ 	}
+ 
++	if (!the_hash_algo)
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++
+ 	hashsz = the_hash_algo->rawsz;
+ 
+ 	if (fread(top_index, 2 * 4, 1, stdin) != 1)
+-- 
+2.45.2.827.g557ae147e6
 
-Thanks
-
-Phillip
-
-> Johannes Schindelin (7):
->    run-command: refactor getting the Unix shell path into its own
->      function
->    strvec: declare the `strvec_push_nodup()` function globally
->    win32: override `fspathcmp()` with a directory separator-aware version
->    mingw(is_msys2_sh): handle forward slashes in the `sh.exe` path, too
->    run-command(win32): resolve the path to the Unix shell early
->    run-command: declare the `git_shell_path()` function globally
->    var(win32): do report the GIT_SHELL_PATH that is actually used
-> 
->   builtin/var.c             |  3 ++-
->   compat/mingw.c            |  2 +-
->   compat/win32/path-utils.c | 25 +++++++++++++++++++++++++
->   compat/win32/path-utils.h |  2 ++
->   dir.c                     |  2 +-
->   dir.h                     |  2 +-
->   git-compat-util.h         |  5 +++++
->   run-command.c             | 17 ++++++++++++-----
->   run-command.h             |  5 +++++
->   strvec.c                  |  2 +-
->   strvec.h                  |  3 +++
->   t/t0007-git-var.sh        |  2 +-
->   12 files changed, 59 insertions(+), 11 deletions(-)
-> 
-> 
-> base-commit: 06e570c0dfb2a2deb64d217db78e2ec21672f558
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1760%2Fdscho%2Fgit-var-on-windows-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1760/dscho/git-var-on-windows-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1760
-> 
-> Range-diff vs v1:
-> 
->   -:  ----------- > 1:  e0970381042 run-command: refactor getting the Unix shell path into its own function
->   -:  ----------- > 2:  91ebccbc39f strvec: declare the `strvec_push_nodup()` function globally
->   -:  ----------- > 3:  a718183bb3b win32: override `fspathcmp()` with a directory separator-aware version
->   -:  ----------- > 4:  f04cfd91bd9 mingw(is_msys2_sh): handle forward slashes in the `sh.exe` path, too
->   -:  ----------- > 5:  707daf246bd run-command(win32): resolve the path to the Unix shell early
->   -:  ----------- > 6:  a74a7b4bb11 run-command: declare the `git_shell_path()` function globally
->   1:  ef62c3fc122 ! 7:  8bfd23cfa00 var(win32): do report the GIT_SHELL_PATH that is actually used
->       @@ Commit message
->            associated with the current directory.
->        
->            To that end, Git does not actually use the path `/bin/sh` that is
->       -    recorded e.g. in Unix shell scripts' hash-bang lines. Instead, as of
->       -    776297548e (Do not use SHELL_PATH from build system in prepare_shell_cmd
->       -    on Windows, 2012-04-17), it re-interprets `/bin/sh` as "look up `sh` on
->       -    the `PATH` and use the result instead".
->       +    recorded e.g. when `run_command()` is called with a Unix shell
->       +    command-line. Instead, as of 776297548e (Do not use SHELL_PATH from
->       +    build system in prepare_shell_cmd on Windows, 2012-04-17), it
->       +    re-interprets `/bin/sh` as "look up `sh` on the `PATH` and use the
->       +    result instead".
->       +
->       +    This is the logic users expect to be followed when running `git var
->       +    GIT_SHELL_PATH`.
->        
->            However, when 1e65721227 (var: add support for listing the shell,
->            2023-06-27) introduced support for `git var GIT_SHELL_PATH`, Windows was
->            not special-cased as above, which is why it outputs `/bin/sh` even
->            though that disagrees with what Git actually uses.
->        
->       -    Let's fix this, and also adjust the corresponding test case to verify
->       -    that it actually finds a working executable.
->       +    Let's fix this by using the exact same logic as `prepare_shell_cmd()`,
->       +    adjusting the Windows-specific `git var GIT_SHELL_PATH` test case to
->       +    verify that it actually finds a working executable.
->        
->            Reported-by: Phillip Wood <phillip.wood123@gmail.com>
->            Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->        
->         ## builtin/var.c ##
->       +@@
->       + #include "refs.h"
->       + #include "path.h"
->       + #include "strbuf.h"
->       ++#include "run-command.h"
->       +
->       + static const char var_usage[] = "git var (-l | <variable>)";
->       +
->        @@ builtin/var.c: static char *default_branch(int ident_flag UNUSED)
->         
->         static char *shell_path(int ident_flag UNUSED)
->         {
->       -+#ifdef WIN32
->       -+	char *p = locate_in_PATH("sh");
->       -+	convert_slashes(p);
->       -+	return p;
->       -+#else
->       - 	return xstrdup(SHELL_PATH);
->       -+#endif
->       +-	return xstrdup(SHELL_PATH);
->       ++	return git_shell_path();
->         }
->         
->         static char *git_attr_val_system(int ident_flag UNUSED)
-> 
