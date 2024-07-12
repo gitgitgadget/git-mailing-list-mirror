@@ -1,1041 +1,261 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C060343AA9
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 17:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFCF17555
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 18:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720806100; cv=none; b=rSOOQh1KmJSSB2nAx6b+VAbRz5Flx9dAeQx9NzVya2jg9plzpgmyqDGWRe+dEh7fzfkXaBPa9bfPFldmfx8am9wwoJE58IB6UwhmXiDFoQsPvURIWVTsQLUDWhFQ2L0wmTo23dV10rTP3pvqnha9hVP1VZ8KEdZIgt/NHNMkY/0=
+	t=1720808145; cv=none; b=BEQz0lloeXrClnZ7v0UyvraIeJe9RVI8CTXZfOnKXAcFaWTNCt6evPNtACJwewKaCEXDklUY47sMdrmhfq1mLEzZhDam1F3DTb9ICtanz61i8j3Z1XYCY09Q/5nReLXrC+Pdhnbit798J0fLkXai2996dkAyy85oWSaZE28npyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720806100; c=relaxed/simple;
-	bh=Z246bjSBiEsNqkmJBlHpcobhcx5+Mo6dfKW54niONxg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u5eYwIvbJtb5/ukqV+tmPHBsdWzvmNefUnPZ0vYGGMgTw/cF8RGlorkUP4O92Y8lW0UIWQMrZ21+bJG81SC8cnvVEViklEwTf9PWwALCU28CFwImwnKTLq/LXvNYaQ+drbzHCloKTvXiZ5isQKO4GSjo5ktuEFaIGNLTV0cHakU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jK/2IcyD; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720808145; c=relaxed/simple;
+	bh=7EfyGd7MExWRb6iFf17NXDMs/hyp3d6AFM4sszvxf/g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gQKoxvck3IPnAUr3S0TT8dJzqScVsUIxHGfxsNEgb5ZBO91NoMna37n32ql1qNAMvYhZfG9PI9gy0m0KRmsmIHg5VrzjvtDdgUeyDXEmzMSrX5nzujUS1+nHrqYBZKm8IepfA8EiXxrpwkcSUtmW9DMDjyOyLgBbppR2HWtZImw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=onujtXnT; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jK/2IcyD"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-655fa53c64cso24338027b3.3
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 10:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720806097; x=1721410897; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w6oJ1XrcSAaEnDmhpInm1jcjWUkm99FpJs4UY5Cb2GM=;
-        b=jK/2IcyDgtc8u7zXhSQblT8COV8DpFTtYBmRNep+cvVH59baITChgUn80yc5eyz8gD
-         isZIEQyMCSrzxvqRjhgAHU+qK5ZXR3qh5vmv7z1bfnTshmn+Fj0kM8eWAkBGuEIYdt2v
-         PJnG9n8eWUeeXACi6epJirWK1AlhChmlAwv0pOTjEMQeRlZn8Fy99nsEUCTAQm6H+gBO
-         AZoTNLALO+rgMSAwA7AuJSQeOODTVSothIJCFAXS4/PyOOBrvRVs3nj3AnoTKO9kAtWK
-         sK5Fwltu5W6G3fVa9NaUlfgPhVcOOzy2b5kxXs+ZJozt1nA/gsbBDFxiQD7hCLhDjMZT
-         Yusg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720806097; x=1721410897;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w6oJ1XrcSAaEnDmhpInm1jcjWUkm99FpJs4UY5Cb2GM=;
-        b=ZemQfYzOjoVdpo7j67+R4e7SLZJYKOlpNaAXsmauaYqVLxUf7QDdX0tnajstew1vyM
-         MYrTHGRwcRgsX7dvJUVdUown1EjWKGAQROU9CTaUb1jb+mXb1lcCOV8b9kOsRx/7GC3a
-         hKZ/Rtj2TBKVaHNnpNgK+hKrISPlMEs3i26aLEiCuISzxNqS8Yp6vCo9gXlrPcnEOTsY
-         VovmwaUQve2GNhLBK5luHLaQL4MDUsgL8hrwvVubSKAFaqGLjn+nygkEwXpXqOERRe/Z
-         HxOstNR3l7RO1eLxzG7vMwXb2XvPAtq5wZk5WDVxNkB6tlVeX8KBq7jbyacqMICRwhxJ
-         +XpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVepMX6ko5ev8+Dyhyyt7vllxgfva0ykDI47FMjXV40wuL/aGGEwxwPJ2aRp5/Xf0Dw7lcbbCOYJcjELS00FgKPABo5
-X-Gm-Message-State: AOJu0Yxv6DAahbl4idzOnldZMi2qGg+Xd/fVtUn4vXKD+wKDP6kPuonY
-	9KtztrdhCop05WLY958CVTmv51Gx5gQi4cml16wL0wjmtieQmxCAOcfX5/d9TodhPe3zymf11wz
-	JrryqQ/ZbKgvKgyo9CzfkVPyW5Xg=
-X-Google-Smtp-Source: AGHT+IEmnvrnWO0VI+jjiyWf1nlXhFX7uyDjva2hSxvhsfzkDTAm+gF1CQS+UmCNUhv9pbgMc8s1udqn1SAyFHuk8Ac=
-X-Received: by 2002:a05:690c:6684:b0:64b:f86:b7a8 with SMTP id
- 00721157ae682-658ee6998f4mr166676967b3.10.1720806096455; Fri, 12 Jul 2024
- 10:41:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="onujtXnT"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D9C023799;
+	Fri, 12 Jul 2024 14:15:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7EfyGd7MExWRb6iFf17NXDMs/hyp3d6AFM4ssz
+	vxf/g=; b=onujtXnTOQ4THVi7g2FOM+OB++AX5iOrC1uYC9VGopLB58+bIG+Vrg
+	2EsFYTOoB7E9Vt9c8wWLsVuupzvjLXXpXjiqgoQfR+Q/8uFEnemZ57C5x4rqght7
+	6Hp2SHplEyEzunsARrvoqeQJ0XSS/hC4yp8LMlUPES3L1Q6ma/U3o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E99AC23798;
+	Fri, 12 Jul 2024 14:15:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C7BD23797;
+	Fri, 12 Jul 2024 14:15:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org,  "Randall S. Becker" <rsbecker@nexbridge.com>,
+  Taylor Blau <me@ttaylorr.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>,  =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bja?=
+ =?utf-8?Q?rmason?=
+ <avarab@gmail.com>
+Subject: Re: [PATCH v2] Documentation: add platform support policy
+In-Reply-To: <20240711232413.693444-1-emilyshaffer@google.com> (Emily
+	Shaffer's message of "Thu, 11 Jul 2024 16:24:13 -0700")
+References: <20240711232413.693444-1-emilyshaffer@google.com>
+Date: Fri, 12 Jul 2024 11:15:37 -0700
+Message-ID: <xmqqed7ylbna.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240628190503.67389-7-eric.peijian@gmail.com> <7lc6m7627sojdzabmz6pvaulbrcods6tqf7bnf3vxqsxzievjl@ixbispu2b3ch>
-In-Reply-To: <7lc6m7627sojdzabmz6pvaulbrcods6tqf7bnf3vxqsxzievjl@ixbispu2b3ch>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Fri, 12 Jul 2024 13:41:25 -0400
-Message-ID: <CAN2LT1AKqSJvUiXphH8MZ5vwOKLy=qAhBUy7=y_yFF8JfO2KuA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] cat-file: add remote-object-info to batch-command
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan <calvinwan@google.com>, 
-	Jonathan Tan <jonathantanmy@google.com>, John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BE0FFE5A-407A-11EF-91E5-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-On Mon, Jul 8, 2024 at 9:51=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
-rote:
->
-> On 24/06/28 03:05PM, Eric Ju wrote:
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > Since the `info` command in cat-file --batch-command prints object info
-> > for a given object, it is natural to add another command in cat-file
-> > --batch-command to print object info for a given object from a remote.
-> > Add `remote-object-info` to cat-file --batch-command.
-> >
-> > While `info` takes object ids one at a time, this creates overhead when
-> > making requests to a server so `remote-object-info` instead can take
-> > multiple object ids at once.
-> >
-> > cat-file --batch-command is generally implemented in the following
-> > manner:
-> >
-> >  - Receive and parse input from user
-> >  - Call respective function attached to command
-> >  - Set batch mode state, get object info, print object info
-> >
-> > In --buffer mode, this changes to:
-> >
-> >  - Receive and parse input from user
-> >  - Store respective function attached to command in a queue
-> >  - After flush, loop through commands in queue
-> >     - Call respective function attached to command
-> >     - Set batch mode state, get object info, print object info
->
-> So the problem is that there is overhead associated with getting object
-> info from the remote. Therefore, remote-object-info also supports
-> batching objects together. This seems reasonable.
->
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Thank you, Justin. Yes, you are right, whenever remote-object-info is
-called there is an overhead. I will explain where this overhead
-happens in the following reply.
+> +Platform Support Policy
+> +=======================
 
-> >
-> > Notice how the getting and printing of object info is accomplished one
-> > at a time. As described above, this creates a problem for making
-> > requests to a server. Therefore, `remote-object-info` is implemented in
-> > the following manner:
-> >
-> >  - Receive and parse input from user
-> >  If command is `remote-object-info`:
-> >     - Get object info from remote
-> >     - Loop through object info
-> >         - Call respective function attached to `info`
-> >         - Set batch mode state, use passed in object info, print object
-> >           info
-> >  Else:
-> >     - Call respective function attached to command
-> >     - Parse input, get object info, print object info
-> >
-> > And finally for --buffer mode `remote-object-info`:
-> >  - Receive and parse input from user
-> >  - Store respective function attached to command in a queue
-> >  - After flush, loop through commands in queue:
-> >     If command is `remote-object-info`:
-> >         - Get object info from remote
-> >         - Loop through object info
-> >             - Call respective function attached to `info`
-> >             - Set batch mode state, use passed in object info, print
-> >               object info
-> >     Else:
-> >         - Call respective function attached to command
-> >         - Set batch mode state, get object info, print object info
-> >
-> > To summarize, `remote-object-info` gets object info from the remote and
-> > then generates multiple `info` commands with the object info passed in.
-> >
-> > In order for remote-object-info to avoid remote communication overhead
-> > in the non-buffer mode, the objects are passed in as such:
->
-> Even in non-buffer mode, having separate remote-object-info commands
-> would result in additional overhead correct? From my understanding each
-> command is executed sequently, so multiples of remote-object-info would
-> always result in additional overhead.
->
+Paraphrasing a bit for my understanding (read: not suggestions to
+rewrite), with some comments (read: might suggest rewrites).
 
-Thank you. No matter what mode it is (buffer or non-buffer), the
-overhead of remote-object-info is always there. To my understanding,
-there are two parts in the overhead:
-1. Setting up a connection. This is happening in `connect_setup()` in
-`fetch_object_info()` function.
-2. Sending request buf. This includes initializing the packet reader
-in `packet_reader_init()` and putting OIDs in the request buff in
-`send_object_info_request()`. Both of them are called in the
-`fetch_object_info()` function.
+> +Git has a history of providing broad "support" for exotic platforms and older
+> +platforms, without an explicit commitment.
 
-It would be more efficient to send multiple OIDs over one request
-packet in one connection in the form of  remote-object-info <remote>
-<oid> <oid> ... <oid>
+    There currently is no level of guarantees given.
 
-> >
-> > remote-object-info <remote> <oid> <oid> ... <oid>
-> >
-> > rather than
-> >
-> > remote-object-info <remote> <oid>
-> > remote-object-info <remote> <oid>
-> > ...
-> > remote-object-info <remote> <oid>
-> >
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
-> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> > Helped-by: Christian Couder <chriscool@tuxfamily.org>
->
-> I think the sign-offs are supposed to go at the bottom.
->
+> +This support becomes easier to
+> +maintain (and possible to commit to)
 
-Thank you. I am fixing it in v2.
+    We want to give better support and certain levels of guarantees?
+    (this is left unsaid, though).
 
-> [snip]
-> > @@ -526,51 +533,118 @@ static void batch_one_object(const char *obj_nam=
-e,
-> >               (opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0);
-> >       enum get_oid_result result;
-> >
-> > -     result =3D get_oid_with_context(the_repository, obj_name,
-> > -                                   flags, &data->oid, &ctx);
-> > -     if (result !=3D FOUND) {
-> > -             switch (result) {
-> > -             case MISSING_OBJECT:
-> > -                     printf("%s missing%c", obj_name, opt->output_deli=
-m);
-> > -                     break;
-> > -             case SHORT_NAME_AMBIGUOUS:
-> > -                     printf("%s ambiguous%c", obj_name, opt->output_de=
-lim);
-> > -                     break;
-> > -             case DANGLING_SYMLINK:
-> > -                     printf("dangling %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             case SYMLINK_LOOP:
-> > -                     printf("loop %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             case NOT_DIR:
-> > -                     printf("notdir %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             default:
-> > -                     BUG("unknown get_sha1_with_context result %d\n",
-> > -                            result);
-> > -                     break;
-> > +     if (!opt->use_remote_info) {
->
-> When using the remote-object-info command, the object in question is
-> supposed to be on the remote and may not exist locally. Therefore we
-> skip over `get_oid_with_context()`.
->
+If we don't want that, then we would not care what would make
+the support easier to maintain, so that's implied.  Do we want
+to make it more explicit?  Perhaps
 
-Thank you. Yes, that is the reason. I reworded your comment and added
-it to the code in v2 to make it easier to follow.
+    Stakeholders of such platforms, however, may want to have a more
+    predictable support commitments.  It would require ...
 
-> > +             result =3D get_oid_with_context(the_repository, obj_name,
-> > +                                             flags, &data->oid, &ctx);
-> > +             if (result !=3D FOUND) {
-> > +                     switch (result) {
-> > +                     case MISSING_OBJECT:
-> > +                             printf("%s missing%c", obj_name, opt->out=
-put_delim);
-> > +                             break;
-> > +                     case SHORT_NAME_AMBIGUOUS:
-> > +                             printf("%s ambiguous%c", obj_name, opt->o=
-utput_delim);
-> > +                             break;
-> > +                     case DANGLING_SYMLINK:
-> > +                             printf("dangling %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     case SYMLINK_LOOP:
-> > +                             printf("loop %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     case NOT_DIR:
-> > +                             printf("notdir %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     default:
-> > +                             BUG("unknown get_sha1_with_context result=
- %d\n",
-> > +                                     result);
-> > +                             break;
-> > +                     }
-> > +                     fflush(stdout);
-> > +                     return;
-> >               }
-> > -             fflush(stdout);
-> > -             return;
-> > -     }
-> >
-> > -     if (ctx.mode =3D=3D 0) {
-> > -             printf("symlink %"PRIuMAX"%c%s%c",
-> > -                    (uintmax_t)ctx.symlink_path.len,
-> > -                    opt->output_delim, ctx.symlink_path.buf, opt->outp=
-ut_delim);
-> > -             fflush(stdout);
-> > -             return;
-> > +             if (ctx.mode =3D=3D 0) {
-> > +                     printf("symlink %"PRIuMAX"%c%s%c",
-> > +                             (uintmax_t)ctx.symlink_path.len,
-> > +                             opt->output_delim, ctx.symlink_path.buf, =
-opt->output_delim);
-> > +                     fflush(stdout);
-> > +                     return;
-> > +             }
-> >       }
-> >
-> >       batch_object_write(obj_name, scratch, opt, data, NULL, 0);
-> >  }
-> >
-> > +static int get_remote_info(struct batch_options *opt, int argc, const =
-char **argv)
-> > +{
-> > +     int retval =3D 0;
-> > +     struct remote *remote =3D NULL;
-> > +     struct object_id oid;
-> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
-;
-> > +     static struct transport *gtransport;
-> > +
-> > +     /*
-> > +      * Change the format to "%(objectname) %(objectsize)" when
-> > +      * remote-object-info command is used. Once we start supporting o=
-bjecttype
-> > +      * the default format should change to DEFAULT_FORMAT
-> > +     */
-> > +     if (!opt->format) {
-> > +             opt->format =3D "%(objectname) %(objectsize)";
-> > +     }
->
-> We should omit the parenthesis for single line if statements.
->
+> when Git developers are provided with
+> +adequate tooling to test for compatibility.
 
-Thank you. Fixed in V2.
+    ... platform stakeholders to supply Git developers adequate
+    tooling to test for compatibility and to develop workarounds for
+    platform specific quirks, which may be hard to find for such
+    exotic and/or older platforms without platform stakeholders'
+    involvement.
 
-> > +
-> > +     remote =3D remote_get(argv[0]);
-> > +     if (!remote)
-> > +             die(_("must supply valid remote when using remote-object-=
-info"));
-> > +     oid_array_clear(&object_info_oids);
-> > +     for (size_t i =3D 1; i < argc; i++) {
-> > +             if (get_oid_hex(argv[i], &oid))
-> > +                     die(_("Not a valid object name %s"), argv[i]);
-> > +             oid_array_append(&object_info_oids, &oid);
-> > +     }
-> > +
-> > +     gtransport =3D transport_get(remote, NULL);
-> > +     if (gtransport->smart_options) {
-> > +             int include_size =3D 0;
-> > +
-> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> > +             gtransport->smart_options->object_info =3D 1;
-> > +             gtransport->smart_options->object_info_oids =3D &object_i=
-nfo_oids;
-> > +             /*
-> > +              * 'size' is the only option currently supported.
-> > +              * Other options that are passed in the format will exit =
-with error.
-> > +              */
-> > +             if (strstr(opt->format, "%(objectsize)")) {
-> > +                     string_list_append(&object_info_options, "size");
-> > +                     include_size =3D 1;
-> > +             }
-> > +             if (strstr(opt->format, "%(objecttype)")) {
-> > +                     die(_("objecttype is currently not supported with=
- remote-object-info"));
-> > +             }
->
-> Another single line if statement above that should omit the parenthesis.
->
+> Various levels of tooling will
+> +allow us to make more solid commitments around Git's compatibility with your
+> +platform.
 
-Thank you. Fixed in V2.
+Good.
 
-> > +             if (strstr(opt->format, "%(objectsize:disk)"))
-> > +                     die(_("objectsize:disk is currently not supported=
- with remote-object-info"));
-> > +             if (strstr(opt->format, "%(deltabase)"))
-> > +                     die(_("deltabase is currently not supported with =
-remote-object-info"));
-> > +             if (object_info_options.nr > 0) {
-> > +                     gtransport->smart_options->object_info_options =
-=3D &object_info_options;
-> > +                     for (size_t i =3D 0; i < object_info_oids.nr; i++=
-) {
-> > +                             if (include_size)
-> > +                                     remote_object_info[i].sizep =3D x=
-calloc(1, sizeof(long));
-> > +                     }
-> > +                     gtransport->smart_options->object_info_data =3D &=
-remote_object_info;
-> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
-;
-> > +             }
-> > +     } else {
-> > +             retval =3D -1;
-> > +     }
-> > +
-> > +     return retval;
-> > +}
-> > +
-> >  struct object_cb_data {
-> >       struct batch_options *opt;
-> >       struct expand_data *expand;
-> > @@ -642,6 +716,7 @@ typedef void (*parse_cmd_fn_t)(struct batch_options=
- *, const char *,
-> >  struct queued_cmd {
-> >       parse_cmd_fn_t fn;
-> >       char *line;
-> > +     const char *name;
->
-> Since special handling is needed for the remote-object-info command, we
-> record the queued command names to check against later.
->
+All of this document assumes that a working port of Git once existed
+in the near past for a platform, and we outline the levels of
+investment platform stakeholders can make in order to keep it
+working, and expected outcome depending on the level of their
+investment.  The document does not cover "I now have this exotic
+box---could you port Git to it?"
 
-Yes. We need to compare the function name to do special handling
-later. But I think we can have a better solution here instead of doing
-a name comparison. Please see my reply below.
+Is it something we want to clarify in this part of the document?
 
-> >  };
-> >
-> >  static void parse_cmd_contents(struct batch_options *opt,
-> > @@ -662,6 +737,55 @@ static void parse_cmd_info(struct batch_options *o=
-pt,
-> >       batch_one_object(line, output, opt, data);
-> >  }
-> >
-> > +static const struct parse_cmd {
-> > +     const char *name;
-> > +     parse_cmd_fn_t fn;
-> > +     unsigned takes_args;
-> > +} commands[] =3D {
-> > +     { "contents", parse_cmd_contents, 1 },
-> > +     { "info", parse_cmd_info, 1 },
-> > +     { "remote-object-info", parse_cmd_info, 1 },
-> > +     { "flush", NULL, 0 },
-> > +};
-> > +
-> > +static void parse_remote_info(struct batch_options *opt,
-> > +                        char *line,
-> > +                        struct strbuf *output,
-> > +                        struct expand_data *data,
-> > +                        const struct parse_cmd *p_cmd,
-> > +                        struct queued_cmd *q_cmd)
->
-> It seems a little confusing to me that `parse_remote_info()` accepts
-> both a `parse_cmd` and `queued_cmd`, but only expects to use one or the
-> other. It looks like this is done because `dispatch_calls()` already
-> accepts `queued_cmd`, but now needs to call `parse_remote_info()`.
->
-> Since it is only the underlying command function that is needed by
-> `parse_remote_info()`
->
+> +Compatible by next release
+> +--------------------------
+> +
+> +To increase probability that compatibility issues introduced in a release
+> +will be fixed in a later release:
+> +
+> +* You should send a bug report as soon as you notice the breakage on your
+> +platform. The sooner you notice, the better; watching `seen` means you can
+> +notice problems before they are considered "done with review"; whereas watching
+> +`master` means the stable branch could break for your platform, but you have a
+> +decent chance of avoiding a tagged release breaking you. See "The Policy" in the
+> +link:../howto/maintain-git.txt[maintainer's guide] for an overview of which
+> +branches are used in git.git, and how.
+> +* The bug report should include information about what platform you are using.
+> +* You should also use linkgit:git-bisect[1] and determine which commit
+> +introduced the breakage.
+> +* Please include any information you have about the nature of the breakage: is
+> +it a memory alignment issue? Is an underlying library missing or broken for
+> +your platform? Is there some quirk about your platform which means typical
+> +practices (like malloc) behave strangely?
+> +* Once we begin to fix the issue, please work closely with the contributor
+> +working on it to test the proposed fix against your platform.
 
-Thank you. I agree. I did some refactoring. Please see me reply below.
+This is a source to be reformatted by AsciiDoc so it _should not_
+matter [*], but I find it utterly unreadable if a bulletted list of
+paragraphs are formatted like the above.
 
+    Side note: ... but it does matter because what we look at while
+               editing is this .txt source file.
 
-> > +{
-> > +     int count;
-> > +     const char **argv;
-> > +
-> > +     count =3D split_cmdline(line, &argv);
-> > +     if (get_remote_info(opt, count, argv))
-> > +             goto cleanup;
-> > +     opt->use_remote_info =3D 1;
-> > +     data->skip_object_info =3D 1;
-> > +     data->mark_query =3D 0;
-> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
-> > +             if (remote_object_info[i].sizep)
-> > +                     data->size =3D *remote_object_info[i].sizep;
-> > +             if (remote_object_info[i].typep)
-> > +                     data->type =3D *remote_object_info[i].typep;
-> > +
-> > +             data->oid =3D object_info_oids.oid[i];
-> > +             if (p_cmd)
-> > +                     p_cmd->fn(opt, argv[i+1], output, data);
-> > +             else
-> > +                     q_cmd->fn(opt, argv[i+1], output, data);
-> > +     }
-> > +     opt->use_remote_info =3D 0;
-> > +     data->skip_object_info =3D 0;
-> > +     data->mark_query =3D 1;
-> > +
-> > +cleanup:
-> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++)
-> > +             free_object_info_contents(&remote_object_info[i]);
-> > +     free(remote_object_info);
-> > +}
-> > +
-> >  static void dispatch_calls(struct batch_options *opt,
-> >               struct strbuf *output,
-> >               struct expand_data *data,
-> > @@ -671,8 +795,12 @@ static void dispatch_calls(struct batch_options *o=
-pt,
-> >       if (!opt->buffer_output)
-> >               die(_("flush is only for --buffer mode"));
-> >
-> > -     for (int i =3D 0; i < nr; i++)
-> > -             cmd[i].fn(opt, cmd[i].line, output, data);
-> > +     for (int i =3D 0; i < nr; i++) {
-> > +             if (!strcmp(cmd[i].name, "remote-object-info"))
-> > +                     parse_remote_info(opt, cmd[i].line, output, data,=
- NULL, &cmd[i]);
->
-> If we adapt `parse_remote_info()` to accept the command function we
-> could pass cmd->fn here instead.
->
+I locally reformatted the above like so:
 
-Thank you. I think I can push it a bit further.
+        To increase probability that compatibility issues introduced in a release
+        will be fixed in a later release:
 
-Under the hood, parse_remote_info will use parse_cmd_info to print the
-retrieved information to the client. That is why it had this line
-originally:
-  ...
-   { "remote-object-info", parse_cmd_info, 1 },
-  ...
+        * You should send a bug report as soon as you notice the breakage on
+          your platform. The sooner you notice, the better; watching `seen`
+          means you can notice problems before they are considered "done
+          with review"; whereas watching `master` means the stable branch
+          could break for your platform, but you have a decent chance of
+          avoiding a tagged release breaking you. See "The Policy" in the
+          link:../howto/maintain-git.txt[maintainer's guide] for an overview
+          of which branches are used in git.git, and how.
 
-Inspired by your comment, I am thinking if I can adapt
-parse_remote_info() 's signature to the same as parse_cmd_info(). It
-would make the code cleaner. To be specific. I can
+        * The bug report should include information about what platform you are using.
 
-1. get rid of name cooperation in
-   ...
-   if (!strcmp(cmd[i].name, "remote-object-info"))
-       parse_remote_info(opt, cmd[i].line, output, data, NULL, &cmd[I]);
-   else
-       cmd[i].fn(opt, cmd[i].line, output, data);
-   ...
-   and I can just use `cmd[i].fn(opt, cmd[i].line, output, data)`
+        * You should also use linkgit:git-bisect[1] and determine which
+          commit introduced the breakage.
 
-2. get rid of
-   ...
-   if (p_cmd)
-        p_cmd->fn(opt, argv[i+1], output, data);
-   else
-        q_cmd->fn(opt, argv[i+1], output, data);
-   ...
+to have the second and subsequent lines indented to begin at the
+same column as the first line, and have a blank line between
+bulletted list entries, which made it easier to scan the source text.
+Such a reformatting did not appear to make any changes when the
+resulting HTML file was rendered (via "lynx -dump").
 
-I will make this change in V2.
+This might be my personal preference, and if other people prefer the
+more dense form used inthe patch, then I wouldn't complain.
 
-> > +             else
-> > +                     cmd[i].fn(opt, cmd[i].line, output, data);
-> > +     }
-> >
-> >       fflush(stdout);
-> >  }
-> > @@ -685,17 +813,6 @@ static void free_cmds(struct queued_cmd *cmd, size=
-_t *nr)
-> >       *nr =3D 0;
-> >  }
-> >
-> > -
-> > -static const struct parse_cmd {
-> > -     const char *name;
-> > -     parse_cmd_fn_t fn;
-> > -     unsigned takes_args;
-> > -} commands[] =3D {
-> > -     { "contents", parse_cmd_contents, 1},
-> > -     { "info", parse_cmd_info, 1},
-> > -     { "flush", NULL, 0},
-> > -};
-> > -
-> >  static void batch_objects_command(struct batch_options *opt,
-> >                                   struct strbuf *output,
-> >                                   struct expand_data *data)
-> > @@ -740,11 +857,17 @@ static void batch_objects_command(struct batch_op=
-tions *opt,
-> >                       dispatch_calls(opt, output, data, queued_cmd, nr)=
-;
-> >                       free_cmds(queued_cmd, &nr);
-> >               } else if (!opt->buffer_output) {
-> > -                     cmd->fn(opt, p, output, data);
-> > +                     if (!strcmp(cmd->name, "remote-object-info")) {
-> > +                             char *line =3D xstrdup_or_null(p);
-> > +                             parse_remote_info(opt, line, output, data=
-, cmd, NULL);
->
-> Same here, if we adapt `parse_remote_info()` to accept the command
-> function we could pass cmd->fn here instead.
+Regarding this point.
 
-Thank you. Please see my reply above.
+> +* Please include any information you have about the nature of the breakage: is
+> +it a memory alignment issue? Is an underlying library missing or broken for
+> +your platform? Is there some quirk about your platform which means typical
+> +practices (like malloc) behave strangely?
 
-> > +                     } else {
-> > +                             cmd->fn(opt, p, output, data);
-> > +                     }
-> >               } else {
-> >                       ALLOC_GROW(queued_cmd, nr + 1, alloc);
-> >                       call.fn =3D cmd->fn;
-> >                       call.line =3D xstrdup_or_null(p);
-> > +                     call.name =3D cmd->name;
-> >                       queued_cmd[nr++] =3D call;
-> >               }
-> >       }
-> > @@ -761,8 +884,6 @@ static void batch_objects_command(struct batch_opti=
-ons *opt,
-> >       strbuf_release(&input);
-> >  }
-> >
-> > -#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
-> > -
-> >  static int batch_objects(struct batch_options *opt)
-> >  {
-> >       struct strbuf input =3D STRBUF_INIT;
-> [snip]
+How deep do we expect platform stakeholders to dig in their initial
+contact to us?  In order to make a firm "It is a memory alignment
+issue" would be helped by having otherwise identical version of Git
+built from the same source on a more mainstream platform (say,
+Debian GNU/Linux running on x86_64) and the exotic platform in
+question, to be able to say "Ahh, x86 is lenient to unaligned access
+and that is why this problem wasn't noticed by developers, but on my
+platform this matters".  Is such a comparison something we may want
+to hint here?  Perhaps at the end of "use git-bisect to find the
+exact commit", add something like
 
-On Mon, Jul 8, 2024 at 9:51=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
-rote:
->
-> On 24/06/28 03:05PM, Eric Ju wrote:
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > Since the `info` command in cat-file --batch-command prints object info
-> > for a given object, it is natural to add another command in cat-file
-> > --batch-command to print object info for a given object from a remote.
-> > Add `remote-object-info` to cat-file --batch-command.
-> >
-> > While `info` takes object ids one at a time, this creates overhead when
-> > making requests to a server so `remote-object-info` instead can take
-> > multiple object ids at once.
-> >
-> > cat-file --batch-command is generally implemented in the following
-> > manner:
-> >
-> >  - Receive and parse input from user
-> >  - Call respective function attached to command
-> >  - Set batch mode state, get object info, print object info
-> >
-> > In --buffer mode, this changes to:
-> >
-> >  - Receive and parse input from user
-> >  - Store respective function attached to command in a queue
-> >  - After flush, loop through commands in queue
-> >     - Call respective function attached to command
-> >     - Set batch mode state, get object info, print object info
->
-> So the problem is that there is overhead associated with getting object
-> info from the remote. Therefore, remote-object-info also supports
-> batching objects together. This seems reasonable.
->
-> >
-> > Notice how the getting and printing of object info is accomplished one
-> > at a time. As described above, this creates a problem for making
-> > requests to a server. Therefore, `remote-object-info` is implemented in
-> > the following manner:
-> >
-> >  - Receive and parse input from user
-> >  If command is `remote-object-info`:
-> >     - Get object info from remote
-> >     - Loop through object info
-> >         - Call respective function attached to `info`
-> >         - Set batch mode state, use passed in object info, print object
-> >           info
-> >  Else:
-> >     - Call respective function attached to command
-> >     - Parse input, get object info, print object info
-> >
-> > And finally for --buffer mode `remote-object-info`:
-> >  - Receive and parse input from user
-> >  - Store respective function attached to command in a queue
-> >  - After flush, loop through commands in queue:
-> >     If command is `remote-object-info`:
-> >         - Get object info from remote
-> >         - Loop through object info
-> >             - Call respective function attached to `info`
-> >             - Set batch mode state, use passed in object info, print
-> >               object info
-> >     Else:
-> >         - Call respective function attached to command
-> >         - Set batch mode state, get object info, print object info
-> >
-> > To summarize, `remote-object-info` gets object info from the remote and
-> > then generates multiple `info` commands with the object info passed in.
-> >
-> > In order for remote-object-info to avoid remote communication overhead
-> > in the non-buffer mode, the objects are passed in as such:
->
-> Even in non-buffer mode, having separate remote-object-info commands
-> would result in additional overhead correct? From my understanding each
-> command is executed sequently, so multiples of remote-object-info would
-> always result in additional overhead.
->
-> >
-> > remote-object-info <remote> <oid> <oid> ... <oid>
-> >
-> > rather than
-> >
-> > remote-object-info <remote> <oid>
-> > remote-object-info <remote> <oid>
-> > ...
-> > remote-object-info <remote> <oid>
-> >
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
-> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> > Helped-by: Christian Couder <chriscool@tuxfamily.org>
->
-> I think the sign-offs are supposed to go at the bottom.
->
-> [snip]
-> > @@ -526,51 +533,118 @@ static void batch_one_object(const char *obj_nam=
-e,
-> >               (opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0);
-> >       enum get_oid_result result;
-> >
-> > -     result =3D get_oid_with_context(the_repository, obj_name,
-> > -                                   flags, &data->oid, &ctx);
-> > -     if (result !=3D FOUND) {
-> > -             switch (result) {
-> > -             case MISSING_OBJECT:
-> > -                     printf("%s missing%c", obj_name, opt->output_deli=
-m);
-> > -                     break;
-> > -             case SHORT_NAME_AMBIGUOUS:
-> > -                     printf("%s ambiguous%c", obj_name, opt->output_de=
-lim);
-> > -                     break;
-> > -             case DANGLING_SYMLINK:
-> > -                     printf("dangling %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             case SYMLINK_LOOP:
-> > -                     printf("loop %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             case NOT_DIR:
-> > -                     printf("notdir %"PRIuMAX"%c%s%c",
-> > -                            (uintmax_t)strlen(obj_name),
-> > -                            opt->output_delim, obj_name, opt->output_d=
-elim);
-> > -                     break;
-> > -             default:
-> > -                     BUG("unknown get_sha1_with_context result %d\n",
-> > -                            result);
-> > -                     break;
-> > +     if (!opt->use_remote_info) {
->
-> When using the remote-object-info command, the object in question is
-> supposed to be on the remote and may not exist locally. Therefore we
-> skip over `get_oid_with_context()`.
->
-> > +             result =3D get_oid_with_context(the_repository, obj_name,
-> > +                                             flags, &data->oid, &ctx);
-> > +             if (result !=3D FOUND) {
-> > +                     switch (result) {
-> > +                     case MISSING_OBJECT:
-> > +                             printf("%s missing%c", obj_name, opt->out=
-put_delim);
-> > +                             break;
-> > +                     case SHORT_NAME_AMBIGUOUS:
-> > +                             printf("%s ambiguous%c", obj_name, opt->o=
-utput_delim);
-> > +                             break;
-> > +                     case DANGLING_SYMLINK:
-> > +                             printf("dangling %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     case SYMLINK_LOOP:
-> > +                             printf("loop %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     case NOT_DIR:
-> > +                             printf("notdir %"PRIuMAX"%c%s%c",
-> > +                                     (uintmax_t)strlen(obj_name),
-> > +                                     opt->output_delim, obj_name, opt-=
->output_delim);
-> > +                             break;
-> > +                     default:
-> > +                             BUG("unknown get_sha1_with_context result=
- %d\n",
-> > +                                     result);
-> > +                             break;
-> > +                     }
-> > +                     fflush(stdout);
-> > +                     return;
-> >               }
-> > -             fflush(stdout);
-> > -             return;
-> > -     }
-> >
-> > -     if (ctx.mode =3D=3D 0) {
-> > -             printf("symlink %"PRIuMAX"%c%s%c",
-> > -                    (uintmax_t)ctx.symlink_path.len,
-> > -                    opt->output_delim, ctx.symlink_path.buf, opt->outp=
-ut_delim);
-> > -             fflush(stdout);
-> > -             return;
-> > +             if (ctx.mode =3D=3D 0) {
-> > +                     printf("symlink %"PRIuMAX"%c%s%c",
-> > +                             (uintmax_t)ctx.symlink_path.len,
-> > +                             opt->output_delim, ctx.symlink_path.buf, =
-opt->output_delim);
-> > +                     fflush(stdout);
-> > +                     return;
-> > +             }
-> >       }
-> >
-> >       batch_object_write(obj_name, scratch, opt, data, NULL, 0);
-> >  }
-> >
-> > +static int get_remote_info(struct batch_options *opt, int argc, const =
-char **argv)
-> > +{
-> > +     int retval =3D 0;
-> > +     struct remote *remote =3D NULL;
-> > +     struct object_id oid;
-> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
-;
-> > +     static struct transport *gtransport;
-> > +
-> > +     /*
-> > +      * Change the format to "%(objectname) %(objectsize)" when
-> > +      * remote-object-info command is used. Once we start supporting o=
-bjecttype
-> > +      * the default format should change to DEFAULT_FORMAT
-> > +     */
-> > +     if (!opt->format) {
-> > +             opt->format =3D "%(objectname) %(objectsize)";
-> > +     }
->
-> We should omit the parenthesis for single line if statements.
->
-> > +
-> > +     remote =3D remote_get(argv[0]);
-> > +     if (!remote)
-> > +             die(_("must supply valid remote when using remote-object-=
-info"));
-> > +     oid_array_clear(&object_info_oids);
-> > +     for (size_t i =3D 1; i < argc; i++) {
-> > +             if (get_oid_hex(argv[i], &oid))
-> > +                     die(_("Not a valid object name %s"), argv[i]);
-> > +             oid_array_append(&object_info_oids, &oid);
-> > +     }
-> > +
-> > +     gtransport =3D transport_get(remote, NULL);
-> > +     if (gtransport->smart_options) {
-> > +             int include_size =3D 0;
-> > +
-> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> > +             gtransport->smart_options->object_info =3D 1;
-> > +             gtransport->smart_options->object_info_oids =3D &object_i=
-nfo_oids;
-> > +             /*
-> > +              * 'size' is the only option currently supported.
-> > +              * Other options that are passed in the format will exit =
-with error.
-> > +              */
-> > +             if (strstr(opt->format, "%(objectsize)")) {
-> > +                     string_list_append(&object_info_options, "size");
-> > +                     include_size =3D 1;
-> > +             }
-> > +             if (strstr(opt->format, "%(objecttype)")) {
-> > +                     die(_("objecttype is currently not supported with=
- remote-object-info"));
-> > +             }
->
-> Another single line if statement above that should omit the parenthesis.
->
-> > +             if (strstr(opt->format, "%(objectsize:disk)"))
-> > +                     die(_("objectsize:disk is currently not supported=
- with remote-object-info"));
-> > +             if (strstr(opt->format, "%(deltabase)"))
-> > +                     die(_("deltabase is currently not supported with =
-remote-object-info"));
-> > +             if (object_info_options.nr > 0) {
-> > +                     gtransport->smart_options->object_info_options =
-=3D &object_info_options;
-> > +                     for (size_t i =3D 0; i < object_info_oids.nr; i++=
-) {
-> > +                             if (include_size)
-> > +                                     remote_object_info[i].sizep =3D x=
-calloc(1, sizeof(long));
-> > +                     }
-> > +                     gtransport->smart_options->object_info_data =3D &=
-remote_object_info;
-> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
-;
-> > +             }
-> > +     } else {
-> > +             retval =3D -1;
-> > +     }
-> > +
-> > +     return retval;
-> > +}
-> > +
-> >  struct object_cb_data {
-> >       struct batch_options *opt;
-> >       struct expand_data *expand;
-> > @@ -642,6 +716,7 @@ typedef void (*parse_cmd_fn_t)(struct batch_options=
- *, const char *,
-> >  struct queued_cmd {
-> >       parse_cmd_fn_t fn;
-> >       char *line;
-> > +     const char *name;
->
-> Since special handling is needed for the remote-object-info command, we
-> record the queued command names to check against later.
->
-> >  };
-> >
-> >  static void parse_cmd_contents(struct batch_options *opt,
-> > @@ -662,6 +737,55 @@ static void parse_cmd_info(struct batch_options *o=
-pt,
-> >       batch_one_object(line, output, opt, data);
-> >  }
-> >
-> > +static const struct parse_cmd {
-> > +     const char *name;
-> > +     parse_cmd_fn_t fn;
-> > +     unsigned takes_args;
-> > +} commands[] =3D {
-> > +     { "contents", parse_cmd_contents, 1 },
-> > +     { "info", parse_cmd_info, 1 },
-> > +     { "remote-object-info", parse_cmd_info, 1 },
-> > +     { "flush", NULL, 0 },
-> > +};
-> > +
-> > +static void parse_remote_info(struct batch_options *opt,
-> > +                        char *line,
-> > +                        struct strbuf *output,
-> > +                        struct expand_data *data,
-> > +                        const struct parse_cmd *p_cmd,
-> > +                        struct queued_cmd *q_cmd)
->
-> It seems a little confusing to me that `parse_remote_info()` accepts
-> both a `parse_cmd` and `queued_cmd`, but only expects to use one or the
-> other. It looks like this is done because `dispatch_calls()` already
-> accepts `queued_cmd`, but now needs to call `parse_remote_info()`.
->
-> Since it is only the underlying command function that is needed by
-> `parse_remote_info()`
->
-> > +{
-> > +     int count;
-> > +     const char **argv;
-> > +
-> > +     count =3D split_cmdline(line, &argv);
-> > +     if (get_remote_info(opt, count, argv))
-> > +             goto cleanup;
-> > +     opt->use_remote_info =3D 1;
-> > +     data->skip_object_info =3D 1;
-> > +     data->mark_query =3D 0;
-> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
-> > +             if (remote_object_info[i].sizep)
-> > +                     data->size =3D *remote_object_info[i].sizep;
-> > +             if (remote_object_info[i].typep)
-> > +                     data->type =3D *remote_object_info[i].typep;
-> > +
-> > +             data->oid =3D object_info_oids.oid[i];
-> > +             if (p_cmd)
-> > +                     p_cmd->fn(opt, argv[i+1], output, data);
-> > +             else
-> > +                     q_cmd->fn(opt, argv[i+1], output, data);
-> > +     }
-> > +     opt->use_remote_info =3D 0;
-> > +     data->skip_object_info =3D 0;
-> > +     data->mark_query =3D 1;
-> > +
-> > +cleanup:
-> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++)
-> > +             free_object_info_contents(&remote_object_info[i]);
-> > +     free(remote_object_info);
-> > +}
-> > +
-> >  static void dispatch_calls(struct batch_options *opt,
-> >               struct strbuf *output,
-> >               struct expand_data *data,
-> > @@ -671,8 +795,12 @@ static void dispatch_calls(struct batch_options *o=
-pt,
-> >       if (!opt->buffer_output)
-> >               die(_("flush is only for --buffer mode"));
-> >
-> > -     for (int i =3D 0; i < nr; i++)
-> > -             cmd[i].fn(opt, cmd[i].line, output, data);
-> > +     for (int i =3D 0; i < nr; i++) {
-> > +             if (!strcmp(cmd[i].name, "remote-object-info"))
-> > +                     parse_remote_info(opt, cmd[i].line, output, data,=
- NULL, &cmd[i]);
->
-> If we adapt `parse_remote_info()` to accept the command function we
-> could pass cmd->fn here instead.
->
-> > +             else
-> > +                     cmd[i].fn(opt, cmd[i].line, output, data);
-> > +     }
-> >
-> >       fflush(stdout);
-> >  }
-> > @@ -685,17 +813,6 @@ static void free_cmds(struct queued_cmd *cmd, size=
-_t *nr)
-> >       *nr =3D 0;
-> >  }
-> >
-> > -
-> > -static const struct parse_cmd {
-> > -     const char *name;
-> > -     parse_cmd_fn_t fn;
-> > -     unsigned takes_args;
-> > -} commands[] =3D {
-> > -     { "contents", parse_cmd_contents, 1},
-> > -     { "info", parse_cmd_info, 1},
-> > -     { "flush", NULL, 0},
-> > -};
-> > -
-> >  static void batch_objects_command(struct batch_options *opt,
-> >                                   struct strbuf *output,
-> >                                   struct expand_data *data)
-> > @@ -740,11 +857,17 @@ static void batch_objects_command(struct batch_op=
-tions *opt,
-> >                       dispatch_calls(opt, output, data, queued_cmd, nr)=
-;
-> >                       free_cmds(queued_cmd, &nr);
-> >               } else if (!opt->buffer_output) {
-> > -                     cmd->fn(opt, p, output, data);
-> > +                     if (!strcmp(cmd->name, "remote-object-info")) {
-> > +                             char *line =3D xstrdup_or_null(p);
-> > +                             parse_remote_info(opt, line, output, data=
-, cmd, NULL);
->
-> Same here, if we adapt `parse_remote_info()` to accept the command
-> function we could pass cmd->fn here instead.
->
-> > +                     } else {
-> > +                             cmd->fn(opt, p, output, data);
-> > +                     }
-> >               } else {
-> >                       ALLOC_GROW(queued_cmd, nr + 1, alloc);
-> >                       call.fn =3D cmd->fn;
-> >                       call.line =3D xstrdup_or_null(p);
-> > +                     call.name =3D cmd->name;
-> >                       queued_cmd[nr++] =3D call;
-> >               }
-> >       }
-> > @@ -761,8 +884,6 @@ static void batch_objects_command(struct batch_opti=
-ons *opt,
-> >       strbuf_release(&input);
-> >  }
-> >
-> > -#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
-> > -
-> >  static int batch_objects(struct batch_options *opt)
-> >  {
-> >       struct strbuf input =3D STRBUF_INIT;
-> [snip]
+    Build Git from exactly the same source files on your platform
+    and one of the mainstream platforms and see if the problem you
+    noticed appears on both, or only on your platform.  If the
+    former, the suggestions in this document does not apply, but of
+    course we do greatly appreciate such a bug report that will help
+    users of every platform.
+
+Note that the above would apply equally for any compatibility
+levels, not limited to those who expect "by next release".
+
+> +Example: NonStop
+> +https://lore.kernel.org/git/01bd01da681a$b8d70a70$2a851f50$@nexbridge.com/[reports
+> +problems] when they're noticed.
+> +
+> +Compatible on `master` and point releases
+> +-----------------------------------------
+> +
+> +To guarantee that `master` and all point releases work for your platform the
+> +first time:
+> +
+> +* You should run nightly tests against the `next` branch and publish breakage
+> +reports to the mailing list immediately when they happen.
+> +** You may want to ask to join the mailto:git-security@googlegroups.com[security
+> +mailing list] in order to run tests against the fixes proposed there, too.
+> +* It may make sense to automate these; if you do, make sure they are not noisy
+> +(you don't need to send a report when everything works, only when something
+> +breaks).
+
+Also, the same problem that was reported yesterday for yesterday's
+'next' does not have to be reported for today's 'next', even if they
+are different, as long as the breakage is the same.
+
+> +Compatible on `next`
+> +--------------------
+> +
+> +To guarantee that `next` will work for your platform, avoiding reactive
+> +debugging and fixing:
+
+Applies to the phrasing at the beginning of the previous section as
+well, but I found it easier to read if you flipped the order from
+"do Y and you get X" from "you want X, so do Y", e.g.
+
+    We can avoid reactive debugging and fixing, if you make sure
+    'next' keeps working for your platform.
+
+Do we assume that readers are familiar with the way how `master` and
+`next` are used?  Otherwise
+
+    We can avoid reactive debugging and fixing, if you make sure the
+    'next' branch keeps working for your platform.  The changes in
+    this branch are what the developers finished reviewing and are
+    expected to appear in the next tagged release.  Unless you stop
+    them, that is.
+
+> +* You should add a runner for your platform to the GitHub Actions CI suite.
+> +This suite is run when any Git developer proposes a new patch, and having a
+> +runner for your platform/configuration means every developer will know if they
+> +break you, immediately.
+
+I am a bit surprised that nobody from GitLab complained so far, but
+the contents of the ci/ hierarchy has been reorganized and it is my
+understanding that we now consider both GitLab CI and GitHub Actions
+first-class citizens.
+
+> +** If adding it to GitHub Actions is infeasible (due to architecture constraints
+> +or for performance reasons), any other method which runs as automatically and
+> +quickly as possible works, too. For example, a service which snoops on the
+> +mailing list and automatically runs tests on new [PATCH] emails, replying to the
+> +author with the results, would also be within the spirit of this requirement.
+
+Again, "do not be too noisy" principle should be stressed, no?  If
+it breaks only on the exotic platform in question, please do notify,
+but if the breakage is shared with all the other platforms, then...?
