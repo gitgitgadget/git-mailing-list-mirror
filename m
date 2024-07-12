@@ -1,104 +1,135 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B4D1741FE
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 15:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E068A15ECE1
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 15:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720798185; cv=none; b=eJWBFCQQk2TMEZDKfdZKszRKodov7Xl6/Fl3xhOL4cpK7Ll0/ZHKfNpUf9tTQwhdXm9ciwLsBEtCGi7YThbYYPJVhQt2JogY1dAplMmi7IOIke2mhIP08+vV4cXVP+KIeUEYL4ww3ZOfOWBQX3DnREjvhmDw8URKRlaYttWdNwo=
+	t=1720798512; cv=none; b=OIYi7a3UZ8JIKRKon3N1R0T0Ah29lSFk78+JqJe3wlnkbZ/LtjYXBoIDuUmEAMsqxAteiHMHN29UiSIfkzNqBajt2h+zgrDB8CIVj/4g1SxrOOMA+F5E523/xPvBc69ZaUV67xhtqsj0Y5pQROLoEsHgV490uGH8h0dPZH6oH1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720798185; c=relaxed/simple;
-	bh=lWwmjHgppq07OfA9izn/Gofkh7gRRLOPS8KgN7NGoqM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LW+sC9TxsgiHc2yEySsOar3XWptgg3Ps8WYjUnix4503z7QHQVuZrxpbeY/xvp1WKtMGTEr1NwGZrt8tg4cYC7U89jnMETqFs31Alp+hiEpPg3psHLbdWs38/mwG84ioydIKQwkUicKTw8DfqM2RHfaL259fT+2GS78d2ZTMfqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VOLs6h2+; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720798512; c=relaxed/simple;
+	bh=/+t3IXEfINgudyvOVIk1l27y9I1fi5j/Coe4TRilUuw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cg65CJalTM/kfLXYme3xHkds8TnV6Z5cdH1HhtvFQ8THeDjR/fyDCSW+z4WuFiEqtiF492clXTmhoYhIIqxrXlWd8yzEgt5C1e5P7jGDyJSHLOaME/5m+x5fxE0pRACizQSpsRePlD5WF4nOTCAq1+v/JGhG6G3NKdCtWh75/y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gCD7bsZ+; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VOLs6h2+"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ee910d6aaeso27535751fa.1
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 08:29:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720798182; x=1721402982; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZE/d+tp+ZMiPc8+JD9ZyMQ+cVyeZ/ifEvVvyNB05+wM=;
-        b=VOLs6h2+S9517UN91FKG+mFE+vHwY7+RJJ1BgXDFz2TcQPiO+4/5jJ+2WpUnVuB03U
-         QIgah36TKkboj+FLFWMapxFjy/kuNZOEc1fbk9PETLnOd+bDB6nrXhZjcRclF1kMg9QA
-         dTntKgBih0PpAGAZLQkeYg7lJXpYhEI869XjydAj5xxl88UIigKWphVRXLujghpH7oA1
-         0QSmcCyxr1tma0FKLqfs9/EsZ15DzeK5uERRndDC09aLMa2BrGQvoAHkIr+45DmP7UjU
-         RC5npcKxEzgKCqiLuBo90yR0MdxVDHkRjBTASrfevVjf49r0ciNjP7k0WnoeYq0TdWql
-         Zxcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720798182; x=1721402982;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZE/d+tp+ZMiPc8+JD9ZyMQ+cVyeZ/ifEvVvyNB05+wM=;
-        b=dB4JbsTuOM/BdueuFWayre8/GWKnzSQn7+GPO7VzVTLXV5bJc9Zi3hCzRNrQif+l+d
-         xSjkh9+O+RHw7czG52Q2lc/1sR7ufEoD8VVYTTX6/PAK5W2b1sQgmqclDTyd4G2f1dHl
-         0Sye4doBIcEgn/c6vnq5iuIjvGsB5KY6tXYxN1qoomJelPWLkH4F8zj0nZxy2yJOe9BT
-         WudOvGwVSbO9kGWzbfxza4ZoJAiJnoJvHextVln4HaL5xd0N2lS4eFD2szxDGCzJd1LA
-         XpZKw6XDZHo5VlaXMtoN0snWMzYX2C0vfR7CXGeyvyMdMIoK2LIjcAkIYrZfP/h0AUJa
-         0V6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXv9Z0aA4jar3hrJasBq7s6OGfK2L5y0GgyJRla9dPkipksYltmB+F36M3eJtp0edpqPb87zXyxUVhjgE6eEZtMBjjQ
-X-Gm-Message-State: AOJu0YzX0l8JZPFqCIbnjuooe7ugEw23+p6BtDKZpEYWrg9QROFNA2Y5
-	aaERuzFitf83zOMJDYoER4067cNyJT17PjdBmskHKw/OxWRFTTMT
-X-Google-Smtp-Source: AGHT+IHhbDwxlecTeG6znFnyKioFA99wV6VImJ5h2etI8kcvA7j9T4JjOZeJUDGzOnz8Tft8kIIUqA==
-X-Received: by 2002:a2e:8297:0:b0:2ec:6639:120a with SMTP id 38308e7fff4ca-2eeb30bbb0fmr80946281fa.10.1720798181769;
-        Fri, 12 Jul 2024 08:29:41 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f239883sm26744965e9.10.2024.07.12.08.29.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 08:29:41 -0700 (PDT)
-Message-ID: <42867b72-58e0-48d7-86eb-7c312db942dd@gmail.com>
-Date: Fri, 12 Jul 2024 16:29:37 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gCD7bsZ+"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 55FA72F66A;
+	Fri, 12 Jul 2024 11:35:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=/+t3IXEfINgudyvOVIk1l27y9I1fi5j/Coe4TR
+	ilUuw=; b=gCD7bsZ+e8Jf+BJxTHwS1HgZ+iyUfjQNZU8ucgi2AP6N4yTHwQaXeZ
+	nl84aOAgmO5x7PNGOdPv8Rek6Vmxnct7W27LQyLz1QhGLysdfhewBsPwOQ+kfVHl
+	DHkyHyR8OunnKFuKpwoBBtthx+cXjDVl/TcPPMQniYaYRfA9g41Gs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4E1612F669;
+	Fri, 12 Jul 2024 11:35:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5C2E02F668;
+	Fri, 12 Jul 2024 11:35:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 7/7] var(win32): do report the GIT_SHELL_PATH that is
+ actually used
+In-Reply-To: <8bfd23cfa00c351ffdcc25bd29f3b84089544a56.1720739496.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 11 Jul 2024
+	23:11:36 +0000")
+References: <pull.1760.git.1720443778074.gitgitgadget@gmail.com>
+	<pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
+	<8bfd23cfa00c351ffdcc25bd29f3b84089544a56.1720739496.git.gitgitgadget@gmail.com>
+Date: Fri, 12 Jul 2024 08:35:03 -0700
+Message-ID: <xmqqikxaoc7s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/8] clang-format: avoid braces on simple
- single-statement bodies
-To: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
-Cc: chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com
-References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240711083043.1732288-1-karthik.188@gmail.com>
- <20240711083043.1732288-6-karthik.188@gmail.com> <xmqqcynjswz7.fsf@gitster.g>
- <CAOLa=ZSJ-PQ+8rsURP16QQ_K8rR8xrhFO8tnAPSZD88COrzj1w@mail.gmail.com>
- <xmqq7cdqpry4.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq7cdqpry4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4FF21A40-4064-11EF-A311-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-On 12/07/2024 16:09, Junio C Hamano wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Of course if we really wanted to avoid end-user confusion and still
-> want to have this in CI (if only to see how well the rule fares, and
-> what the actual false-positive rate is), we _could_ run CI's job
-> with custom .clang-format file that is not visible to end-users in
-> their normal checkout, or something silly like that.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> On Windows, Unix-like paths like `/bin/sh` make very little sense. In
+> the best case, they simply don't work, in the worst case they are
+> misinterpreted as absolute paths that are relative to the drive
+> associated with the current directory.
+> To that end, ...
 
-Getting some idea of how useful the auto-formatter is would be valuable 
-I think.
+This does not quite explain why a hardcoded full path does not make
+sense, though.  If you do not want "relative to the current drive",
+you can even hardcode the path including the drive letter and now it
+no longer falls into that "worst case" because there is no way to
+misinterpret it as such.  I think the real reason is that the port's
+"relocatable" nature does not mix well with the "let's make sure we
+know what we use exactly by deciding the paths to various tools at
+compile time" mentality.  So if I were rerolling this I would say
 
-> If we are
-> going to use it, then we should use it everywhere, making sure
-> everybody is careful.  If the cost of forcing everybody to be
-> careful is too high, we may want to retract it, but we won't know
-> until we try.
+	Git ported to Windows expect to be installed at user-chosen
+	places, which means hardcoded paths to tools decided at
+	compile time are bad fit.
 
-It would be great if we could find a way to auto-format the code without 
-inconveniencing contributors.
+or something.
 
-Best Wishes
+But it does not matter if the stated reason is to use the "find 'sh'
+that is on PATH" approach was taken tells the whole story or not.
+The important thing is that we do ...
 
-Phillip
+> Git does not actually use the path `/bin/sh` that is
+> recorded e.g. when `run_command()` is called with a Unix shell
+> command-line. Instead, as of 776297548e (Do not use SHELL_PATH from
+> build system in prepare_shell_cmd on Windows, 2012-04-17), it
+> re-interprets `/bin/sh` as "look up `sh` on the `PATH` and use the
+> result instead".
+
+... this.  And with the design constraints that it has to be
+installable anywhere and cannot rely on compile-time determined
+hardcoded paths, the above design decision is a very valid one.
+
+> This is the logic users expect to be followed when running `git var
+> GIT_SHELL_PATH`.
+
+And matching `git var GIT_SHELL_PATH` to what the code path does
+make sense.
+
+> diff --git a/builtin/var.c b/builtin/var.c
+> index 5dc384810c0..e30ff45be1c 100644
+> --- a/builtin/var.c
+> +++ b/builtin/var.c
+> @@ -12,6 +12,7 @@
+>  #include "refs.h"
+>  #include "path.h"
+>  #include "strbuf.h"
+> +#include "run-command.h"
+>  
+>  static const char var_usage[] = "git var (-l | <variable>)";
+>  
+> @@ -51,7 +52,7 @@ static char *default_branch(int ident_flag UNUSED)
+>  
+>  static char *shell_path(int ident_flag UNUSED)
+>  {
+> -	return xstrdup(SHELL_PATH);
+> +	return git_shell_path();
+>  }
+
+Simple and clear.  Nicely concluded.
+
+Thanks.  Will queue.
 
