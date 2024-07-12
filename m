@@ -1,192 +1,407 @@
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2115.outbound.protection.outlook.com [40.107.104.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B44C4A3D
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 04:10:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.104.115
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720757451; cv=fail; b=u4qQS6YhEiIi4Y0vVDTYPbwaFVw7xJM6E/iPl3rT8wV5YOFW9nV6fWsTkXCQewTD1diVup1PjE62TBlMlnz4UX9660VDRVa5PBvruGzq8DUhmiHr3nENzfcgzdV8kuGkkktqBPUZdgegY9yMVNS5OA+Q8Dxnazv1Xde1L9lLB7M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720757451; c=relaxed/simple;
-	bh=zEwhhvvrWND6+iBq5wSfxwrg2cUUnGrt8ECCxvXppSs=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=KKqxXsA81LxuH1jeT/groXKoxDuOc0Euji60ErF9vCVh+KLSM4s9b3kwHMjkfZ7jIHQm6ksJ6nVsv74AcQg70agL+bZU+0Cp8rNEwr+5GdGCri1pu0VMoR1+V4eJzLZzIt1FGkVB2N/eMav2Jo4pEyiPPpmStUvEOdn8MvTkOM4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axway.com; spf=pass smtp.mailfrom=axway.com; dkim=pass (1024-bit key) header.d=axway.com header.i=@axway.com header.b=YwREm/Ep; arc=fail smtp.client-ip=40.107.104.115
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axway.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axway.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A35182A0
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 05:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1720763481; cv=none; b=Une1TSUiq6pYSBaT/jvKLccHAysSSzghnPR4Nu7JcxmkcIpec8onZ/D3T9UVRH8ZOLOkMX5Z7vZHEdMlEkjwl00x1Zb2M4TNl538mw6EF4Q8PNO9FVY7hC5VYR5rLjNsbFTSC+QRf6xG1vrt6S5YCA+CwkbtmNSBdawkC4QDn0U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1720763481; c=relaxed/simple;
+	bh=Ud1CcjKOs+sEQrYwDefKahcPEB3Uedzcz0eHMFs8log=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RouwHXXEGBiP/EVPMDE4L2Be0mv1JYojeL7yhJZce3RmkjzVIPxmrg8lqpKWXgX6L4zdhD3sXX8tIt1P6x1dq7o/pbAN4mLPja9KTB1gRq+CzC4PSiU0hV+CG3SlEPXWGZhQYJM87Tw7ilNsJsbxXuVVExSr3xN0D49nVk0Kot0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kubTuX1x; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=axway.com header.i=@axway.com header.b="YwREm/Ep"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bahUoDoj7YNxpYEPu4oZV5xm1FTBaloK6WycQicucKVs9jhnOXVLSmuHoE07hkawlnP5C/0fSl/2EEywSLBNNf7biQWppprmRrD61sVqkOLSeLLC6uY9BE+HR7AJ2OW2a47Lb7Ts9ck3PiG9JkveiPjomOA6bbEaqSwjFWWogA+egEztN158MGb9BzUDOKnljiK4VSllrzGnbe2S34N0cSFqm0Tj9dAIW8Q++cdh9lfBjmOJQIDzN7Oqhkd+6+an7XTViu90qUqouFX9mLLlHDiA/3mNYO/A1G6EUWqSBEz6Y9e/1G3eRHYB1p3lvlpFO16/+2uLg+tFnr6QcN9KLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zEwhhvvrWND6+iBq5wSfxwrg2cUUnGrt8ECCxvXppSs=;
- b=rMwVa+ufyL6gXzN2D+8iIYiBcAYe1fbM//g0qde8K58ieVX2WflxplaXJeDOO4wxtJ8qQAWwUPI6Vx0Q4bVCnNTr3Xk04FPntHLuBUHbPJDaJeJOPOGMAEn42lm4hIoDv7QYnAufYPoC+OgJWPnWPVJz00fc5h3ig22YLYipAIIloG3UiglJPX7DCv5sKFgJSJlSsTixLuLCGCNQPTw/dGe2XmSZHD3WYVozfJ0X6LZqsArWz0UU/9q7TZK7hM0+/V1qod0m5wm80szgxZxnvxwGRU7F3JImPoNVn+9Hp3ZC8SaNKKpaYe8CX4r4/pk/2tjvR2VKBjVzUD9aOGqOkg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axway.com; dmarc=pass action=none header.from=axway.com;
- dkim=pass header.d=axway.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axway.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zEwhhvvrWND6+iBq5wSfxwrg2cUUnGrt8ECCxvXppSs=;
- b=YwREm/EpLrNR+TjJfqoUzKcrWW6K6IeCg/8/hHI9ldRI7iq7TYVu9yfqDLTbCoMN1uk+9fcEjP1OrYfBbVmTfSBnAqlSqmRnE4O/RFoAceL/Fsgg5lixvmtdtSfXzFftEcKv3yqA6jujR5q86AxgSZ/1PnWrRHkLJ1SvR5Mwh1k=
-Received: from DB9P190MB1500.EURP190.PROD.OUTLOOK.COM (2603:10a6:10:241::20)
- by PA4P190MB1311.EURP190.PROD.OUTLOOK.COM (2603:10a6:102:10c::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.36; Fri, 12 Jul
- 2024 04:10:45 +0000
-Received: from DB9P190MB1500.EURP190.PROD.OUTLOOK.COM
- ([fe80::ae53:db19:bf45:8560]) by DB9P190MB1500.EURP190.PROD.OUTLOOK.COM
- ([fe80::ae53:db19:bf45:8560%5]) with mapi id 15.20.7762.020; Fri, 12 Jul 2024
- 04:10:44 +0000
-From: Arpit Gupta <argupta@axway.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Issue : Writing commits into the git repository takes longer than
- expected
-Thread-Topic: Issue : Writing commits into the git repository takes longer
- than expected
-Thread-Index: AdrUEVkwgFM2CZsnR1WSBief/Uniew==
-Date: Fri, 12 Jul 2024 04:10:44 +0000
-Message-ID:
- <DB9P190MB15008877ED559C3ED70050E3A7A62@DB9P190MB1500.EURP190.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-lsi-version: 1.0
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axway.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB9P190MB1500:EE_|PA4P190MB1311:EE_
-x-ms-office365-filtering-correlation-id: 5c6ca3c3-e462-484b-3567-08dca2289a2e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?xpepkmoL28/vhqOzSeTAF8ciGZDbk7YCaOe9G6E9Hg3Kv+PwyFTUduKyp3T9?=
- =?us-ascii?Q?Xoqqvte/fCM43nVyUmGlsdFqNF5zkx/THGbQrBeAzp3SuDoTrhjgb9Zcp0Rd?=
- =?us-ascii?Q?P2lZcHdOcMqxPFHSeUxCbIj7nq4DyIGttUpbuiR6BUXPbZZeLo7+06fBwaHq?=
- =?us-ascii?Q?J0LgyltK/5SkeafTcU4Ldee6dho57d6k50umfNCU3BcdWG4Y5VF7GTJJ+jLk?=
- =?us-ascii?Q?BYBI2jqhkfu7dGTxR9zexfd26LPPIYdCF5eoCD6b1TA5H0HboLG9aiKKcwi7?=
- =?us-ascii?Q?MF1Fks9yCMXNZt+ngUv6Xl+o5gVjFKl8jkGIOG5Qa7ZxScwa9pEX4fQd/ck4?=
- =?us-ascii?Q?1PdQ4JhednFdDSZgGe4esRogw1zfrhQdtmyoumPP03PQ8A7Wk7WayD3OaM42?=
- =?us-ascii?Q?vpO2Unjxyh+Sx1fpy+eK5JrejhDdS0ncCtiDVd6uaYz+PL/nUWwULA3mQU7r?=
- =?us-ascii?Q?ihnKDPrt7G3CO8+IuzaRTpl1TN6yqfDQWtWRbimFkrVwTVn7MPCl91B4TbuC?=
- =?us-ascii?Q?GZH40vkX/okHdtXDZio9ria8cNgWniilCxUAOHzZlUhn5kaB4RuPdaAmocRZ?=
- =?us-ascii?Q?9A+TeHjhtHCvyeI16OYcODnZChFSJBjPoLUx/YY/fqHSS/+Y7K7bvCajkNrl?=
- =?us-ascii?Q?MO7rTI5DH4E6bQSjfA7ydpMf5sdUeMfx+BpnQKyMxcZDQWCfszz+nXNq1hHF?=
- =?us-ascii?Q?2/Wa8pKmBDezKcAsL+oFoxeoeKzRHt6brByc5SbZr1Zh2qJyO4dtGEb8+hrK?=
- =?us-ascii?Q?FlZcrowQKo0ZL0HGnEPubkMMiEnIK3WOCRulNDAlxaeqvGBV5utsJHbGVcdc?=
- =?us-ascii?Q?wkUd/2LlRz7BSBWLlm0mrthnxume6ATVqAaPcDa45t6cpkG1qGKl19r3sVJn?=
- =?us-ascii?Q?1FrqFjPQLPDpbr67fLujWEy4fdhF44UEHyRf6wrSChfPPs9of3zBkvCzp/Zm?=
- =?us-ascii?Q?pJC97ofwqZFLaw0Q2cytrnZiJstAwQBmqULt8hYyfEoQqWc/IMWR+St+3ht3?=
- =?us-ascii?Q?8XoMqxCg2NRzH0Not47f6gc1TPHV1tU0aaccCSvCSUxArxImbf85GciK7vuA?=
- =?us-ascii?Q?PeGJeCI4v4qfnDMTjM+QcN25riW/x7pTde6nIFJ31QIOykc9AH2K6HT4IM6G?=
- =?us-ascii?Q?8Qq0UoQlOJBI39nqjMGWHoxp7zg8Q2m8fbeSmind1TJS6zrgHJ3NpNVMLyXA?=
- =?us-ascii?Q?nJGCnItI/Ync2q2HFCWrqMQivwpdhlOs0kKgGJ/nxaXdIdWjjwyqs4XBwmBa?=
- =?us-ascii?Q?c4HyUhaz+jJzE8WM+hKX4WbNiC/8eyMG4SJkTDNTBNe2o7BYrJ55mHnF/Ocj?=
- =?us-ascii?Q?hWwZsroXVA0GJ9dqlHN/CQBK8UAPApLSRMhpjBV3MIYkVwjhNJF4QBeppVcg?=
- =?us-ascii?Q?O9z3J+NPOR2W8H9iQ4Rv+Oo1QAQlxmpqegyWDESyeRdnYPR4Rw=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9P190MB1500.EURP190.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?Oma8yvCyqTYL5EEFGc/z40zON9iMp9FZwbhLPHKI7p442Wbtq4TBxIkdDqAJ?=
- =?us-ascii?Q?nc2e7HlURGU4hnUqHkDJfs644kMuEuw803tSwcLC16r1jVJb4trfDXlO1tVy?=
- =?us-ascii?Q?iHrPLGfE7vdpXfbt8blzxj1+kqMBf6N8YAetrgDTNR3Tc3nV01wnHAMSrFgG?=
- =?us-ascii?Q?aE6BK/qI9DSfuK/MTdaoNkSRB04C5ptN3niJ7olhwfm/K5D3mKe7WpJRHQtk?=
- =?us-ascii?Q?zXbXSQv6TTfMkTDcMrJl3EIfjwnhbNet/r320ur7AxNV9OcIiQtYVrUeKQ+3?=
- =?us-ascii?Q?DD0szsIKSp7MaeRtVG9FIbygAwMAUjEtAuY9DX8hj1QY6GzfQII4MjnWgmuN?=
- =?us-ascii?Q?KLmfdXMrPDUAewBk58ubp554G6fmhQTFdxuuh/Da19q9SoXLpQ90Uw8Ac+4R?=
- =?us-ascii?Q?3anxZti23AFcFeq/NMa5RWxiG6/EtcOqU8/Ftu8ZMTN5TwYbXe5ANK76cIK1?=
- =?us-ascii?Q?HVhRvyolR4KbodZ/RMfT/tsoovgCTDn5Ci4BqIXBpFFdrH20EiquPYSCqc0i?=
- =?us-ascii?Q?3Lhk8fpYPRZ14Pac+vTcoi5fseiaKziQUSVpf+8pxJbbiXgy6RoxUoq9TOQ0?=
- =?us-ascii?Q?mtv2/ZZi7VDYLcsw2p8i0O/MyKEMd0qpy5x7ECiRHjT5Gc4pDntSQUUof4nl?=
- =?us-ascii?Q?yWoL3DU30UyvAw0niV3Ffz4aHxMHzWr1gLa5Mi3xeYWtXDALZbnBJakx3Exj?=
- =?us-ascii?Q?nkEResZ9r8hrqWGU7ky0mkQTexiKqOK/VdjAHB0aGr+YRfTELYUG4X6xY2tQ?=
- =?us-ascii?Q?u3kUfdONYY1E0YtT3PVAxaP9jhYpDkKlxqdpH/NiXvOjwD8AeGioohTmHmOC?=
- =?us-ascii?Q?JGDwNfiNR2bE0wZtFIHlMRbjalQYGBVDbnjeS4KsXlcbRP1iPAdrLnjn5Jl9?=
- =?us-ascii?Q?tJSuE69XjdSEgIwsFb8G/lhMXqDZb+U6zzzoo8hs9sPSJo9mEWKjH0NEOEZD?=
- =?us-ascii?Q?J0nlcIcEBZcF9sYng2VGr0HmradQRkOv9fPFAdFRi3kkRTkoxO1naaA917w4?=
- =?us-ascii?Q?mw05ahXAaBlEmmTc+CtUABIJRidOBySC3o4Kxo3x7NHEA77CIwsYTCapkiJS?=
- =?us-ascii?Q?SEc8ZtK9C1NIn66uWIXIL31LSd93IrKUnskM6ACAz7LhCz+NzOVtgNcmIHGv?=
- =?us-ascii?Q?iFOChKvkRnbBI3muNnXBi+WZF7ajebNM1OadLnlEy9e3R3fvsr8Fgq2nI4vy?=
- =?us-ascii?Q?YhAWSFHDo1egQiP5qvAUxGUavEzw54gjYZDFfbDmPeaB3ejVBlBe2g9Cjp0n?=
- =?us-ascii?Q?5E26XPuBmyVTq4Rq0il98dye6gLM7g4vpyvtgSkZn/KSMoIWgL+KSIsS4Vgi?=
- =?us-ascii?Q?gGnIDJuQyRXHFnQQfkYmtjjhAUL7KelHqemAwKeyptPfyuM0MiEsQgJzhLOx?=
- =?us-ascii?Q?vC3VbY+pdi/hOJIkCFlVljtPeSn4Ac4XmwdmzEl0vHIzBYaGpWn4fO2Xa9Hh?=
- =?us-ascii?Q?SOR0KIK258lByrDCuDKHT7dXjcrdaaxFt8lphbEbCq1/IR25XK0Pw6e/T12E?=
- =?us-ascii?Q?/aZLQ99K2FNf3amR9J21XgLVsay46gKrkZTE6GzuYdWEl3dHQCWx1JG1a8u8?=
- =?us-ascii?Q?akZ2Qnux4gXs7V+zmwM=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kubTuX1x"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-70b702be5e4so159465b3a.0
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 22:51:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720763478; x=1721368278; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cM7SAR5JILsoFVvosMlVXxM2q2+Fn8FnYkBHmSnMvrI=;
+        b=kubTuX1x7KN+FN5TxOmsBLxxiKq0BfDY2JBUr824ZWEJe/qCbnA+HGzjyU8AYPcNhp
+         6hwOE4tK8+tWAX3lE+I5xsOCNvOIbkZeghT1daqjfJv1nZsnBL0WUwvCrsGPgVoe1DZG
+         EkbHEXhHqJvlOq74N8KxImt2+SyR3rgPq16/188y1mAmBOl0Y4PXSK2fRHbuiZkrvp0X
+         28KCF0G1vOVO9EqCnsO/vsENdbVkGqNyXrj0clbF1rHO/6RY2iisEjy9xmvCtzgkeqxq
+         ug4+fbEE4GOPaVAobGaz9U8VtGEdUzpULTkEZnRkTF5L2nHKqdmPVXtjVoAabumpalcF
+         tYOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720763478; x=1721368278;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cM7SAR5JILsoFVvosMlVXxM2q2+Fn8FnYkBHmSnMvrI=;
+        b=GRj/JCzJYfL7gMdy8gRDNrwY6W5wvP8FpYmqedGPGnILGRTEu+Q/UylBMxaJF6fbhx
+         OvIF5a31rQBnvo+1fNClxxtCW0MlwUhdnm8xjl/ai2CjLHhBwU6AkuNl7f7T6PnHjmgD
+         td3AZFoMXk5sKhIBkZwb+tbu1DIlMyyD1ATAGpFqoatqklMI3XRoE1geCYr/wcLvsHkc
+         mPPPVUxLk72maqgBIlCuOuP5yr590tAjFAzDvehSxWbbRDiNduJd29mJ0pbLtB5rZCWb
+         LsYAVTanE4LjYnkpIV32AoOEYT1HYsslBb7Qqp606A1cgNQ4fcGu9k9rMwMAV4D52qXs
+         5Lsg==
+X-Gm-Message-State: AOJu0YxicXdk0DzzgbAquyg40XvlZnvL3lW13MXmhExp2B9PYMJAM5Q6
+	touQpwZjbnua9bauAFb7CIw8obIYmjurSQcs6HW0kkxBVCzPmkScw+zIYQ==
+X-Google-Smtp-Source: AGHT+IHSX2BFpgemwXVsO+IaaIi8NkVkCcCLjzJ/iMZ3M65EQo88AJDylZ4l+uTZ5fzmbKfNec6wuA==
+X-Received: by 2002:a05:6a00:4b12:b0:704:2f65:4996 with SMTP id d2e1a72fcca58-70b43543af1mr12681934b3a.11.1720763477841;
+        Thu, 11 Jul 2024 22:51:17 -0700 (PDT)
+Received: from Ubuntu.. ([117.96.148.106])
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70b4397f475sm6604651b3a.150.2024.07.11.22.51.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 22:51:17 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	chriscool@tuxfamily.org
+Subject: [PATCH v4 1/7] t: move reftable/merged_test.c to the unit testing framework
+Date: Fri, 12 Jul 2024 11:08:57 +0530
+Message-ID: <20240712055041.6476-2-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.GIT
+In-Reply-To: <20240712055041.6476-1-chandrapratap3519@gmail.com>
+References: <20240711040854.4602-1-chandrapratap3519@gmail.com>
+ <20240712055041.6476-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: axway.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB9P190MB1500.EURP190.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c6ca3c3-e462-484b-3567-08dca2289a2e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jul 2024 04:10:44.8266
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 300f59df-78e6-436f-9b27-b64973e34f7d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xYJLktTwVDU71PTGZ2c0VR9JNNR1JBTCBUoZlw4aeHn5odhtOIUJNaHjL3aeqyTkcamlOSPRu4crpq04y/tSJA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4P190MB1311
+Content-Transfer-Encoding: 8bit
 
-Hi,
+reftable/merged_test.c exercises the functions defined in
+reftable/merged.{c, h}. Migrate reftable/merged_test.c to the unit
+testing framework. Migration involves refactoring the tests
+to use the unit testing framework instead of reftable's test
+framework and renaming the tests according to unit-tests' naming
+conventions.
 
-We are maintaining the different versions of data in git repository using j=
-git maven library. So, a commit is done on the repository containing proper=
-ties such as author name, date and time, action, and the file path.
-The file path refers the xml file which contains the action performed and i=
-s stored inside the repository.
+Also, move strbuf_add_void() and noop_flush() from
+reftable/test_framework.c to the ported test. This is because
+both these functions are used in the merged tests and
+reftable/test_framework.{c, h} is not #included in the ported test.
 
-We have a job running every 5 minutes that commits the information onto the=
- repository and the XML file content is over-written every time. Usually, t=
-he commits and writing of XML file takes around 4-5 seconds but sometimes t=
-he time while committing as well as writing the data increases which also i=
-ncrease the overall CPU utilization of the machine. This behavior is incons=
-istent with respect to the process and occurs randomly but during this beha=
-vior, there is a time when the CPU utilization becomes high that all other =
-running processes hangs up which demands the restart of the server.
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+---
+ Makefile                                      |   2 +-
+ reftable/reftable-tests.h                     |   1 -
+ t/helper/test-reftable.c                      |   1 -
+ .../unit-tests/t-reftable-merged.c            | 113 +++++++++---------
+ 4 files changed, 60 insertions(+), 57 deletions(-)
+ rename reftable/merged_test.c => t/unit-tests/t-reftable-merged.c (84%)
 
-Furthermore,
->> The XML files that are being written as content are multi-line. There ar=
-e 2 tags present in the file and each tag are on their own line (one tag be=
-ing the child of the other). The file size isn't large. It is hardly 2-3kb.=
- Below is the sample structure of the XML file being added as a part of con=
-tent:
+diff --git a/Makefile b/Makefile
+index 3eab701b10..e5d1b53991 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1340,6 +1340,7 @@ UNIT_TEST_PROGRAMS += t-mem-pool
+ UNIT_TEST_PROGRAMS += t-oidtree
+ UNIT_TEST_PROGRAMS += t-prio-queue
+ UNIT_TEST_PROGRAMS += t-reftable-basics
++UNIT_TEST_PROGRAMS += t-reftable-merged
+ UNIT_TEST_PROGRAMS += t-strbuf
+ UNIT_TEST_PROGRAMS += t-strcmp-offset
+ UNIT_TEST_PROGRAMS += t-strvec
+@@ -2679,7 +2680,6 @@ REFTABLE_OBJS += reftable/writer.o
+ 
+ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/dump.o
+-REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/pq_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
+ REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
+index 114cc3d053..d5e03dcc1b 100644
+--- a/reftable/reftable-tests.h
++++ b/reftable/reftable-tests.h
+@@ -11,7 +11,6 @@ license that can be found in the LICENSE file or at
+ 
+ int basics_test_main(int argc, const char **argv);
+ int block_test_main(int argc, const char **argv);
+-int merged_test_main(int argc, const char **argv);
+ int pq_test_main(int argc, const char **argv);
+ int record_test_main(int argc, const char **argv);
+ int readwrite_test_main(int argc, const char **argv);
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 9160bc5da6..0357718fa8 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -10,7 +10,6 @@ int cmd__reftable(int argc, const char **argv)
+ 	tree_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
+-	merged_test_main(argc, argv);
+ 	stack_test_main(argc, argv);
+ 	return 0;
+ }
+diff --git a/reftable/merged_test.c b/t/unit-tests/t-reftable-merged.c
+similarity index 84%
+rename from reftable/merged_test.c
+rename to t/unit-tests/t-reftable-merged.c
+index a9d6661c13..78a864a54f 100644
+--- a/reftable/merged_test.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -6,20 +6,25 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
+ 
+-#include "merged.h"
+-
+-#include "system.h"
++#include "test-lib.h"
++#include "reftable/blocksource.h"
++#include "reftable/constants.h"
++#include "reftable/merged.h"
++#include "reftable/reader.h"
++#include "reftable/reftable-generic.h"
++#include "reftable/reftable-merged.h"
++#include "reftable/reftable-writer.h"
++
++static ssize_t strbuf_add_void(void *b, const void *data, size_t sz)
++{
++	strbuf_add(b, data, sz);
++	return sz;
++}
+ 
+-#include "basics.h"
+-#include "blocksource.h"
+-#include "constants.h"
+-#include "reader.h"
+-#include "record.h"
+-#include "test_framework.h"
+-#include "reftable-merged.h"
+-#include "reftable-tests.h"
+-#include "reftable-generic.h"
+-#include "reftable-writer.h"
++static int noop_flush(void *arg)
++{
++	return 0;
++}
+ 
+ static void write_test_table(struct strbuf *buf,
+ 			     struct reftable_ref_record refs[], int n)
+@@ -49,12 +54,12 @@ static void write_test_table(struct strbuf *buf,
+ 	for (i = 0; i < n; i++) {
+ 		uint64_t before = refs[i].update_index;
+ 		int n = reftable_writer_add_ref(w, &refs[i]);
+-		EXPECT(n == 0);
+-		EXPECT(before == refs[i].update_index);
++		check_int(n, ==, 0);
++		check_int(before, ==, refs[i].update_index);
+ 	}
+ 
+ 	err = reftable_writer_close(w);
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	reftable_writer_free(w);
+ }
+@@ -76,11 +81,11 @@ static void write_test_log_table(struct strbuf *buf,
+ 
+ 	for (i = 0; i < n; i++) {
+ 		int err = reftable_writer_add_log(w, &logs[i]);
+-		EXPECT_ERR(err);
++		check(!err);
+ 	}
+ 
+ 	err = reftable_writer_close(w);
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	reftable_writer_free(w);
+ }
+@@ -105,12 +110,12 @@ merged_table_from_records(struct reftable_ref_record **refs,
+ 
+ 		err = reftable_new_reader(&(*readers)[i], &(*source)[i],
+ 					  "name");
+-		EXPECT_ERR(err);
++		check(!err);
+ 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
+ 	}
+ 
+ 	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
+-	EXPECT_ERR(err);
++	check(!err);
+ 	return mt;
+ }
+ 
+@@ -122,7 +127,7 @@ static void readers_destroy(struct reftable_reader **readers, size_t n)
+ 	reftable_free(readers);
+ }
+ 
+-static void test_merged_between(void)
++static void t_merged_single_record(void)
+ {
+ 	struct reftable_ref_record r1[] = { {
+ 		.refname = (char *) "b",
+@@ -150,11 +155,11 @@ static void test_merged_between(void)
+ 
+ 	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+ 	err = reftable_iterator_seek_ref(&it, "a");
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	err = reftable_iterator_next_ref(&it, &ref);
+-	EXPECT_ERR(err);
+-	EXPECT(ref.update_index == 2);
++	check(!err);
++	check_int(ref.update_index, ==, 2);
+ 	reftable_ref_record_release(&ref);
+ 	reftable_iterator_destroy(&it);
+ 	readers_destroy(readers, 2);
+@@ -165,7 +170,7 @@ static void test_merged_between(void)
+ 	reftable_free(bs);
+ }
+ 
+-static void test_merged(void)
++static void t_merged_refs(void)
+ {
+ 	struct reftable_ref_record r1[] = {
+ 		{
+@@ -230,9 +235,9 @@ static void test_merged(void)
+ 
+ 	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+ 	err = reftable_iterator_seek_ref(&it, "a");
+-	EXPECT_ERR(err);
+-	EXPECT(reftable_merged_table_hash_id(mt) == GIT_SHA1_FORMAT_ID);
+-	EXPECT(reftable_merged_table_min_update_index(mt) == 1);
++	check(!err);
++	check_int(reftable_merged_table_hash_id(mt), ==, GIT_SHA1_FORMAT_ID);
++	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+ 
+ 	while (len < 100) { /* cap loops/recursion. */
+ 		struct reftable_ref_record ref = { NULL };
+@@ -245,9 +250,9 @@ static void test_merged(void)
+ 	}
+ 	reftable_iterator_destroy(&it);
+ 
+-	EXPECT(ARRAY_SIZE(want) == len);
++	check_int(ARRAY_SIZE(want), ==, len);
+ 	for (i = 0; i < len; i++) {
+-		EXPECT(reftable_ref_record_equal(want[i], &out[i],
++		check(reftable_ref_record_equal(want[i], &out[i],
+ 						 GIT_SHA1_RAWSZ));
+ 	}
+ 	for (i = 0; i < len; i++) {
+@@ -283,16 +288,16 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+ 
+ 		err = reftable_new_reader(&(*readers)[i], &(*source)[i],
+ 					  "name");
+-		EXPECT_ERR(err);
++		check(!err);
+ 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
+ 	}
+ 
+ 	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
+-	EXPECT_ERR(err);
++	check(!err);
+ 	return mt;
+ }
+ 
+-static void test_merged_logs(void)
++static void t_merged_logs(void)
+ {
+ 	struct reftable_log_record r1[] = {
+ 		{
+@@ -362,9 +367,9 @@ static void test_merged_logs(void)
+ 
+ 	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
+ 	err = reftable_iterator_seek_log(&it, "a");
+-	EXPECT_ERR(err);
+-	EXPECT(reftable_merged_table_hash_id(mt) == GIT_SHA1_FORMAT_ID);
+-	EXPECT(reftable_merged_table_min_update_index(mt) == 1);
++	check(!err);
++	check_int(reftable_merged_table_hash_id(mt), ==, GIT_SHA1_FORMAT_ID);
++	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+ 
+ 	while (len < 100) { /* cap loops/recursion. */
+ 		struct reftable_log_record log = { NULL };
+@@ -377,19 +382,19 @@ static void test_merged_logs(void)
+ 	}
+ 	reftable_iterator_destroy(&it);
+ 
+-	EXPECT(ARRAY_SIZE(want) == len);
++	check_int(ARRAY_SIZE(want), ==, len);
+ 	for (i = 0; i < len; i++) {
+-		EXPECT(reftable_log_record_equal(want[i], &out[i],
++		check(reftable_log_record_equal(want[i], &out[i],
+ 						 GIT_SHA1_RAWSZ));
+ 	}
+ 
+ 	merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
+ 	err = reftable_iterator_seek_log_at(&it, "a", 2);
+-	EXPECT_ERR(err);
++	check(!err);
+ 	reftable_log_record_release(&out[0]);
+ 	err = reftable_iterator_next_log(&it, &out[0]);
+-	EXPECT_ERR(err);
+-	EXPECT(reftable_log_record_equal(&out[0], &r3[0], GIT_SHA1_RAWSZ));
++	check(!err);
++	check(reftable_log_record_equal(&out[0], &r3[0], GIT_SHA1_RAWSZ));
+ 	reftable_iterator_destroy(&it);
+ 
+ 	for (i = 0; i < len; i++) {
+@@ -405,7 +410,7 @@ static void test_merged_logs(void)
+ 	reftable_free(bs);
+ }
+ 
+-static void test_default_write_opts(void)
++static void t_default_write_opts(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -426,36 +431,36 @@ static void test_default_write_opts(void)
+ 	reftable_writer_set_limits(w, 1, 1);
+ 
+ 	err = reftable_writer_add_ref(w, &rec);
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	err = reftable_writer_close(w);
+-	EXPECT_ERR(err);
++	check(!err);
+ 	reftable_writer_free(w);
+ 
+ 	block_source_from_strbuf(&source, &buf);
+ 
+ 	err = reftable_new_reader(&rd, &source, "filename");
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	hash_id = reftable_reader_hash_id(rd);
+-	EXPECT(hash_id == GIT_SHA1_FORMAT_ID);
++	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
+ 
+ 	reftable_table_from_reader(&tab[0], rd);
+ 	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
+-	EXPECT_ERR(err);
++	check(!err);
+ 
+ 	reftable_reader_free(rd);
+ 	reftable_merged_table_free(merged);
+ 	strbuf_release(&buf);
+ }
+ 
+-/* XXX test refs_for(oid) */
+ 
+-int merged_test_main(int argc, const char *argv[])
++int cmd_main(int argc, const char *argv[])
+ {
+-	RUN_TEST(test_merged_logs);
+-	RUN_TEST(test_merged_between);
+-	RUN_TEST(test_merged);
+-	RUN_TEST(test_default_write_opts);
+-	return 0;
++	TEST(t_default_write_opts(), "merged table with default write opts");
++	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
++	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
++	TEST(t_merged_single_record(), "ref ocurring in only one record can be fetched");
++
++	return test_done();
+ }
+-- 
+2.45.GIT
 
-<?xml version=3D"1.0" encoding=3D"UTF-8" standalone=3D"yes"?> <ServiceName =
-type=3DServiceType> <property>PropertyValue</property>
-</ServiceName>
-
->> There are no virus scans running in the repository. Also, the git LFS is=
-n't involved in this scenario.
->> There might be a case as when the commit time starts increasing (initial=
-ly from 4-5s to 30s to 1min to 6-7min) and during that time another commit =
-call also starts as there is a scheduler of 5 minutes which triggers this a=
-ction. But this will only cause a certain amount of delay and it shouldn't =
-be the factor to increase the CPU Utilization.
-Also, the machine memory size is 32GB and the machine type is /dev/nvme2n1
-
-The commit time starts increasing from 4-5s and goes up to 6-7mins, what co=
-uld be the trigger for the commit to increase from 4-5s to 1min and so on i=
-n this scenario since before that there can't be any parallel commits ongoi=
-ng onto the repository? Also, as I mentioned before, this issue is totally =
-inconsistent.
-Let me know in case any other information is required.
-
-Could you please suggest which areas should we look for while identifying t=
-he cause of this issue? Also, does frequent commit of the content onto repo=
-sitory can trigger this issue?=20
-In your view, what might be the trigger of this issue and how we can procee=
-d to resolve it?
-
-Thanks & Regards,
-Arpit Gupta
