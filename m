@@ -1,71 +1,71 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96482176AAB
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 16:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BB617799B
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 17:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720803252; cv=none; b=eD27i2KWMFto9XGllYPgs16LYF8718icFfaiWI8zy9wmuxjdc1/x6r7L1+cVeUeddA0OsiQiSK6y7EVdE3JnOJA/fI6gXQVw87EKN2HUp8Ms4t1ayEQP3b4MYOTi+NyUGtO/2XMv5M9y8n17wIjq5VG3LQWA4c8qNzVp1YGlthk=
+	t=1720804464; cv=none; b=DTJj+4EwTq5slXqE2pFFQGasU4CZ7d016p0mSJnIs7bqCvC4IbTylodC+5K+6iCVay2WNafQIT41BkpZDtit8lYLUuytoGeG/3x1tqS+QfyFhkZ6V5ty7aIBoRTlYCJTflblyweu00wppEQoJmwbDkPQm3tRvrX1JhmI7jqb8Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720803252; c=relaxed/simple;
-	bh=CUIvv4PygKhEvjbN9L9WKJ0UQVALUvZBm+82Y23+awc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IQoYEcSiyRGydElqcBnBWuaCwBsqPZSvKqHe+UnyWwrCEdI8FvtO43KVgQ3nKDzi9F/pn8L+9Ne26j8351zjO7aTlUrLfBlFjeXSF+45fYnOOLmSN5Gjn1hUGGB8VC0bRXOfGSBee7VQxtrMIpU1XLYUvGcGEVkT0dAuaShB60g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-79f18509e76so136145385a.1
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 09:54:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720803249; x=1721408049;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nlwArA8VvvNnND/QBRlFj2EvxcjfE2/7EP5S3vwekdE=;
-        b=xEeT0PDqCZJ6yvAuF4ZN4tf8i2SDYVEcVMqVfJ2xu/tPBAlMx10FN+9NMsUBBnVRRY
-         qJeidy0wtFwvChIm5zOSu/NN4BEK1Rbzkj28KAI4pLStd9rhJBBGwo42sxc3XJGgDk+1
-         hB5EMcwH8O6s1lGxVP2melmm0oGTJLkgEEXEIPqCOBbZ0U8TnUPMGezBEereQGR7zAdH
-         Iz0PvgQtLB/SXyu7yjin+v8JkUeYeNc84hIB71QyKLh10xJDARfbRoFW4bduB3ImZ3Iy
-         /i5xIFaH2ILaOnPo3K5fIHEZzqBg2zyKH72C/BDBo+1bx0APwucXfEzkNEgBcuyzkK7j
-         LQNQ==
-X-Gm-Message-State: AOJu0Yy7mdUVhKW5dla/jMR9VuA6X4nVy/r345V6bE7gBjeaKBYC1x7J
-	rfLpaJeUyrjeIXr1XuEEalAvpuO+WfOHfRfHNosWaqTXYvvsWYXiZbRvZIolxHeeIj6Mz5+udhk
-	t5tvDy/C2x7WEmGjUy827859VWZw=
-X-Google-Smtp-Source: AGHT+IHdW9haZUPGVwpAd6077Y7OtOnmJtgVUaXG/4lKud3ZgpCcjlWR9NpnNJNfxa7dQHyvRVyVYpRxk8Hh4waxRlE=
-X-Received: by 2002:ad4:5f06:0:b0:6b5:7fb9:747 with SMTP id
- 6a1803df08f44-6b61bc7ef9fmr139163276d6.2.1720803249504; Fri, 12 Jul 2024
- 09:54:09 -0700 (PDT)
+	s=arc-20240116; t=1720804464; c=relaxed/simple;
+	bh=XKUSyHCfvI1q2nTXcyjA4jEdfwijguqWHXPPRL01Xsg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WKkJiXCJkIBtLQtr2aG37bwgRbxWfwQRXKURVMuYU2GbZgIFV9eZonLXxFmOdGdixs3l0kXeLZu/WfU4DT9HrBgeCRp1sDjUhEl8/u6feHojFBtsgd2JYItzzKvqcH2LV/MIwBQKWwwmJCWFd2mIh98mbKESjbcZiWFQKUxT3/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XOVbLJvS; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XOVbLJvS"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B587A332B2;
+	Fri, 12 Jul 2024 13:14:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=XKUSyHCfvI1q2nTXcyjA4jEdfwijguqWHXPPRL
+	01Xsg=; b=XOVbLJvSlZk2Auf2aNcMRBIkvEjhnfgRNeo/0+yBYQMqC0nxNr2uUl
+	9ofAXiwY3VCZsjUnqUIRcPNkPPh2DHJJ7EVYpKLsfUxcitE4qU0Hf8k+tvvxF1Q9
+	iSSbnggBhN1GzU10dpn49mU9tVtX3zJ0Z4YoamrBriortGRXhGIjA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC393332B1;
+	Fri, 12 Jul 2024 13:14:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 24DFE332B0;
+	Fri, 12 Jul 2024 13:14:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+Cc: <git@vger.kernel.org>,  "Christian Couder" <christian.couder@gmail.com>,
+  "Christian Couder" <chriscool@tuxfamily.org>,  "Kaartic Sivaraam"
+ <kaartic.sivaraam@gmail.com>,  "Josh Steadmon" <steadmon@google.com>,
+  "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [GSoC][PATCH v3] t: port helper/test-hashmap.c to
+ unit-tests/t-hashmap.c
+In-Reply-To: <D2N4AG0P10QT.2EMBZAPNDBSP0@gmail.com> (Ghanshyam Thakkar's
+	message of "Fri, 12 Jul 2024 05:30:48 +0530")
+References: <20240708161641.10335-2-shyamthakkar001@gmail.com>
+	<20240711235159.5320-1-shyamthakkar001@gmail.com>
+	<D2N4AG0P10QT.2EMBZAPNDBSP0@gmail.com>
+X-Gnus-Delayed: Fri, 12 Jul 2024 11:55:30 -0700
+Date: Fri, 12 Jul 2024 10:14:20 -0700
+Message-ID: <xmqqcynimt1v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240712142326.266533-1-abhijeet.nkt@gmail.com>
-In-Reply-To: <20240712142326.266533-1-abhijeet.nkt@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 12 Jul 2024 12:53:58 -0400
-Message-ID: <CAPig+cT+X2k4RfTb_mjErQ6reXk44SzbTaXpzQdgLJ+TugtiXQ@mail.gmail.com>
-Subject: Re: [PATCH] show-index: fix uninitialized hash function
-To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2DDCFEF8-4072-11EF-B4FF-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, Jul 12, 2024 at 10:24=E2=80=AFAM Abhijeet Sonar <abhijeet.nkt@gmail=
-.com> wrote:
-> As stated in the docs, show-index should use SHA1 as the default hash alg=
-orithm
-> when run outsize of a repository.  However, 'the_hash_algo' is currently =
-left
-> uninitialized if we are not in a repository and no explicit hash funciton=
- is
+"Ghanshyam Thakkar" <shyamthakkar001@gmail.com> writes:
 
-s/funciton/function/
+> - And replaced the third elements of key_val[] which recorded
+>   the presence of certain key-val pair with 'char seen[]'.
 
-> specified, causing a crash.  Fix it by falling back to SHA1 when it is fo=
-und
-> uninitialized.
->
-> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+It makes it in-line with the oidmap test, which is good.
