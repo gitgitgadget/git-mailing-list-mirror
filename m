@@ -1,105 +1,131 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A209B1BC3C
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 23:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7941BC3C
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 23:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720825492; cv=none; b=Kxeb/kyBMy+a9ccSRrv93X/D+SFUgXylHqTNHEPk2DK8BPHa+O808VrTDjteh3K9Qp0bLLq0hbsKZSU694M36vYhPvUq1mmh7EJ4dnVK7UOk97ZAUU+H+WUxWdhwTUVHOLsuqvrTGvRZgZyCQbKpcogyAHadPbPslJm3ZCoK0MM=
+	t=1720825910; cv=none; b=MAzQzOq0P5Uus1dUmxt+uZ7ZYsRIaiM9WTX6cI8yrAsZYaDHCh/GAHTvLusjMjYEIEyJMAQE0KlLpeuMiqud/CtzyLg1lrSn2QnM+DwGqCLeAXJN2T5/nm3dAfS4Jz4wnw+8xaCosvFvnkBWnFPhFDVhK1NPNFBvNLhX5C+UXDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720825492; c=relaxed/simple;
-	bh=s8lxR8Wi3WENU56SIB//U4A3B1vDFgt7hCUixyml1/Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=S3odKGzae80H3hCH70aYS/zvcu23h1u6jYAKrNHE16r2BsKCmM4BIz/0S4bEFL2ZqAismbkB++wQgqQBnusxB3omGAuUNeSqxPJzBxP/mJD+1WW+x7BELerRMkMFLIJYYCoWLi616cWhrl3lRwJXflRSaTZeZK0/4OHsyclBIJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RJ05XDds; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720825910; c=relaxed/simple;
+	bh=gLbKeE4W/XptNkoT+D9AUe2rWPDXEeYD+bJY0gW6k8s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cCiZ9jo4B3Y3qtcQ9AiiQfv+jmfweK+4nO6JCDqiMVgC5rxy3xMLo+9PXParx72lMfIx4qw8f684KAgHqH2Z6HzeM2oucSP03dcRsufsyzWJrffwCpG8okuSzq2SsfFK/QFOIfPymP7YX+KMb77Pl2Cz67Qn1UQs6f+0tS5/e00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rGFTRJ+R; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RJ05XDds"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70af0684c2bso1993004b3a.0
-        for <git@vger.kernel.org>; Fri, 12 Jul 2024 16:04:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720825491; x=1721430291; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bGfJkHX12bDBWzEANwbqMC6vYYRz83LY7VC+eIEcKl8=;
-        b=RJ05XDdsdZ3OFWWYssPovBLXqo4E2Cpx62m0SEEwcsUX3DjyBPU2fBgv9dro9zGCjh
-         dOTropM28DHeK3twqfEbYRhfsLSGK/OtubJe9efy4Q6jKcueOUZ1Dh/6WRp4O5Tq2ybc
-         yeINWKPrRLYgCommO7tVurkGdO8z4Of5zqySFTMT/x38eSOmlCsxZAindlgS/0GjMWHA
-         aZ4JRPm8K9lUJC6UbCCDZp1J7PvlKoXEofRQqt1SuXNw+l1ciDqrC9hmMhUYwFjouPD9
-         bS0fKL395AU0fn5s8pdKkmnq79M2lsQvdM9+xcIlJ3lvl/ZuIXj9vSTwvtdzUWCtxzzL
-         In8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720825491; x=1721430291;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bGfJkHX12bDBWzEANwbqMC6vYYRz83LY7VC+eIEcKl8=;
-        b=FJperE3G8+drdv+Z7WcPf3WD0UZh+mv/Fasma3nIK9JM1hYa2wBo9QxJUUiFyer0WD
-         uBnJDmssKivqpL05i6IVMSCYVX3Kz2ZQVpilAeoCiEIFjnKE88xogH0avtnAUktS6Az1
-         bvNa1mwtPoncu6UsUz17elrZ9ql1syQBXAyW/1mtlV38iZM3u8GJWuo1hOL37iLEdyoY
-         rDSVS3zY9jADTIabtJB3NOCGi7U5vEG9c/ejI6x6HQxIkebHoPpQ+UvAFBVmw/NiFqFp
-         alZLRsVs5L2wihdt3w0g0O+QKuttQokqMUqbkC7ahO0VBz7GRUNNCy4KBKnEo81f3SYP
-         Vimw==
-X-Gm-Message-State: AOJu0Yykm/EhpcP23F+gOtLOi2K9XTY7wVU2B0P9HL9Qz7tBDdIU98UW
-	FnTph3CWNmkd4AC55QGCbui1PdZOzFUsjPNZmjhwA6x7GVSfs9OM
-X-Google-Smtp-Source: AGHT+IHWFn6HT8POpZ2pTrm097vVVRjdumYhd3+DBFYvuCSsqsCb4JhbyVeXW6kRZ2uAZbYC/h9ndA==
-X-Received: by 2002:a05:6a20:3945:b0:1c0:f2d9:a44a with SMTP id adf61e73a8af0-1c29821fb37mr14432848637.22.1720825490739;
-        Fri, 12 Jul 2024 16:04:50 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2cacd6da78fsm2068734a91.45.2024.07.12.16.04.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 16:04:50 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rGFTRJ+R"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EEAE025C25;
+	Fri, 12 Jul 2024 19:11:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=gLbKeE4W/XptNkoT+D9AUe2rWPDXEeYD+bJY0g
+	W6k8s=; b=rGFTRJ+RZcmeli/HH0z8H/IEfxL77963YjI+t7hRLLKQD8TXa3dIJ8
+	+b1I6jTVFfXo0wZcBA1LoMfYKSEjoCPfval7U9oW6cKHB5cxjB2t3GYvXlfGyt8A
+	kJqHLo/q+MMutk7tFhfhHUxfYiKFHlpcI6rd8MLtNe//cRyijXWgk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E7A1C25C24;
+	Fri, 12 Jul 2024 19:11:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1172C25C23;
+	Fri, 12 Jul 2024 19:11:45 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] doc: clarify post-receive hook behavior
+In-Reply-To: <20240712224748.56843-1-jltobler@gmail.com> (Justin Tobler's
+	message of "Fri, 12 Jul 2024 17:47:48 -0500")
+References: <20240712224748.56843-1-jltobler@gmail.com>
+Date: Fri, 12 Jul 2024 16:11:43 -0700
+Message-ID: <xmqq8qy6jjdc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 13 Jul 2024 04:34:46 +0530
-Message-Id: <D2NXQ2WZFF24.1GVN7WUJ5PCHZ@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Johannes Schindelin via
- GitGitGadget" <gitgitgadget@gmail.com>
-Cc: <git@vger.kernel.org>, "Johannes Schindelin"
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] cmake: fix build of `t-oidtree`
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-References: <pull.1761.git.1720816450344.gitgitgadget@gmail.com>
- <xmqqa5iml28j.fsf@gitster.g>
-In-Reply-To: <xmqqa5iml28j.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1B6F37A4-40A4-11EF-B009-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When the `oidtree` test helper was turned into a unit test, a new
-> > `lib-oid` source file was added as dependency. This was only done in th=
-e
-> > Makefile so far, but also needs to be done in the CMake definition.
-> >
-> > This is a companion of ed548408723d (t/: migrate helper/test-oidtree.c
-> > to unit-tests/t-oidtree.c, 2024-06-08).
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     cmake: fix build of t-oidtree
-> >    =20
-> >     This is based on the gt/unit-test-oidtree branch.
-> >    =20
-> >     /cc "Ghanshyam Thakkar" shyamthakkar001@gmail.com
->
-> The base topic has been merged last month during this cycle, so the
-> fix must be merged down to the 'master' before the release. Will
-> queue.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Changes look correct to me. I was not aware of the existance of
-CMakeLists in the tree cause there was no mention of CMake support
-in the docs about building git from source, but it was my mistake
-for grepping for 'test-lib' in just the Makefile instead of project
-wide. Apologies for the negligance and thanks for the patch.
+> The `githooks` documentation mentions that the post-receive hook
+> executes once after git-receive-pack(1) updates all references and that
+> it also receives the same information as the pre-receive hook on
+> standard input. This is misleading though because the hook only
+> executes once if at least one of the attempted reference updates is
+> successful. Also, while each line provided on standard input is in the
+> same format as the pre-receive hook, the information received only
+> includes the set of references that were successfully updated.
 
+Yup, it sounds like is a sensible design that gives the most useful
+information to the hook.
+
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 06e997131b..f9eb396a79 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -415,13 +415,13 @@ post-receive
+>  
+>  This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
+>  `git push` and updates reference(s) in its repository.
+> -It executes on the remote repository once after all the refs have
+> -been updated.
+> +It executes on the remote repository once if any of the attempted ref
+> +updates are successful.
+
+We could instead say "at least one of", but "any of" should be fine.
+OK.
+
+> -This hook executes once for the receive operation.  
+> +For a receive operation, this hook executes a single time at most.  
+
+Hmph, maybe we can strike this sentence as we already said "once" in
+the previous paragraph.  The intention of the original description
+that said "only after" was to convey two things:
+
+ (1) it runs only once, and
+ (2) it does not run before all the ref-update requests have been
+     processed (either successfully or unsuccessfully).  
+
+If the "only after" was not serving the original purpose of
+conveying both of the two, then perhaps we should remove the word
+"once" from the previous paragraph instead and keep this sentence.
+
+My preference is revert your "once after" -> "once if" to get back
+to the original "once after", and then remove "this hook executes
+once for the receive operaiton" of the original, without adding your
+"For a receieve ... at most".
+
+    The hook executes on the remote repository once after all the
+    proposed ref updates are processed and if at least one ref is
+    updated as the result.
+
+> -It takes no
+> -arguments, but gets the same information as the
+> -<<pre-receive,'pre-receive'>>
+> -hook does on its standard input.
+> -It
+> +takes no arguments, but for each ref successfully updated, it receives a
+> +line on standard input that follows the same format as the
+> +<<pre-receive,'pre-receive'>> hook.
+
+This part of the update is great.  The "but" there is annoying, but
+that badness was inherited from the original and not a fault of this
+patch.  If I were writing it from scratch I would probably have said
+something like:
+
+    The hook takes no arguments.  It receives one line on standard
+    input for each ref that is successfully updated in the same
+    format as the pre-receive hook.
+
+Thanks.
