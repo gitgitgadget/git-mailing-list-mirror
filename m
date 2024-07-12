@@ -1,79 +1,64 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6E01BDE6
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 20:46:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0771BDD5
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 21:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720817203; cv=none; b=XEPvpkQUyKQe0H366/F0R675A/An6K/4zA9GRW43aDxD9rZuyiNxyZPaGD7nJO5yJLL4/B7UufeXksWYs+/MMrze7bpD2+6WqDC+K4YRQlHi6Pm0H/m+KISUPMb4UVku7D82VmyTq8vxoKUGs1ox+reVqbqVk9Wg+9dGCrzmPVA=
+	t=1720820337; cv=none; b=mYSqDfWH5EMMPihk+7ripJi98rua/fHdRQFYlT4phqbwkukFyNhGF6zOGi20xs56Ci4vr8NbV+4L8Hlq2mGSAHChDKdAaTCU1U/UyZ5Ufne6VaiyxLed7VWp4rTH2AGw5jviur8KHd8jKoW/nRb+fl0QgE8kfD5FnGjRlh+cyzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720817203; c=relaxed/simple;
-	bh=brnK5SfD33TdjyUps2lRvzI+dZBu1+GcgGyJzY1F4KI=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=o1VLmeOiBcYq99DrZypUpr4UoAszKVcm2RSxG9fok4S37j1kAt1Ff0nK8epbYeAcWoVjd7qzxGEve2n1cm+Kyhi2cBjoJSWv3eLL3kVuwCUkbnGVpV9irSXwJFbKJlfBSitxbgzDFyazwiMCDTUPNGo0RhRiKH0J7bhYsz7U8JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=kLwwUNE8; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1720820337; c=relaxed/simple;
+	bh=XxBeLG0MBMluDFv34pU3XsuPIy7KQ3AXkZRFTnd6BPE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r/9AYagArozBu4sCXQ0gEPZutY18TjZl/0lJIHE2ykIGg4eVseZ6bI46uq7yBhnU6aKUfgzBMKkoc2XqVMYE7P8pBfularrrRcB4lcDnMolJnA05+cJGKNTjC8EMgcXMmpe8FTSR0/wsBfIf06JjK0yto79CydcK9EjuKwWA2+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LXhtn7Qy; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="kLwwUNE8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1720817198; x=1721421998;
-	i=johannes.schindelin@gmx.de;
-	bh=tsF36pcY3XOimsWFapzmjEtExI/6NCnuiiapteqAgwE=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=kLwwUNE8640jq8pGOMtsEvZrrdWaa9OfQWDCd2zBKNfpyYoyxZJCt/q+Dn50YgJL
-	 /KI3k9D8NcUgLjNc9q4zsQvB13AXZm+asO3jXp54ko7Wh8B57DaBbnZlNp8qw4wH1
-	 u/R9Fofq3+jzEsDIUkcd9gbNDq87Px6Pgsdf2mvmXiZmF7GAKxy5QzeCgO5IyCJk7
-	 aTu+4QjNPokt70Ty2ncl9lD/uhRCnkCMNqchkf9bXnmdMpV1ByxOLT/OHgoB98w/0
-	 c7IXd5o07HLLTP37un+y+RqYQcPToHCN6/bqr53MWx45t3Qux8Qh9wk5dd0ZrhmvI
-	 H7iJkcWKOeQ8GGjXBA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.84]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgNh1-1rsCOn2TkN-00p7sC; Fri, 12
- Jul 2024 22:46:38 +0200
-Date: Fri, 12 Jul 2024 22:46:38 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LXhtn7Qy"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5085A35176;
+	Fri, 12 Jul 2024 17:38:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=XxBeLG0MBMluDFv34pU3XsuPIy7KQ3AXkZRFTn
+	d6BPE=; b=LXhtn7QyvnHplAneOXEos7OBIY3skWx1tDEQCCV/dcJavixcdJCGsE
+	9RRez8KFzS8kHl15CaHc2hZxwJDR2EDHe5j7JcZb1/xyxavZBggQlpLJ0Y2MmGDO
+	nfNduuKBgdpo4cGk0kogXjK3/nc2hSm3DoIfDNl/8SFcfA6iwq5l8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 469A435175;
+	Fri, 12 Jul 2024 17:38:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.219.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A44D235174;
+	Fri, 12 Jul 2024 17:38:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH] cmake: fix build of `t-oidtree`
-In-Reply-To: <pull.1761.git.1720816450344.gitgitgadget@gmail.com>
-Message-ID: <d6bb6432-b10b-a665-1dc0-1a4df4a6495c@gmx.de>
+In-Reply-To: <pull.1761.git.1720816450344.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Fri, 12 Jul 2024 20:34:10
+	+0000")
 References: <pull.1761.git.1720816450344.gitgitgadget@gmail.com>
+Date: Fri, 12 Jul 2024 14:38:52 -0700
+Message-ID: <xmqqa5iml28j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UB0b1/h8IalGGSJJ+33H9JDlE0GfdZSJQyYSPW9e6yfaFiDXKx3
- ohIaJKDBNl7C6/bsIodzLJy7aZQXFlQl+81UlGAOmkfFdzKmS21yE6DhRaHMcXNfoQMczGb
- M/IHVoPauNcaMdYSQQKNf/ChxmbkvxE3+oJe2RYYJ+eWpFH3n1rfbChL2OBOla9r1wbQyM6
- hALYnodLVXvFcPhOAeh+w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:mCnoush+hOE=;OOJppY/KUN6mYXCbR2earvVI/bt
- FtPB/VhML69O/E5goTSuTgQqeVsFB/nyOvQx3uFQg2n8qHR9Mu++9OwftrtV/rc2zCbCEadrG
- WdhLmbk4EbuPG/2F7+Adx8LnFlHlaSH12NyTw6ZLRV/+jV2yT7f+YUJmIGJhYlZkIyT8Rt+gk
- EC+WdbtZjMk2vWnCo1ta2ACiWNwYMOO7TMLFcd/lkWYlImaJTqEMRX+Qnk7+iLecP4W7cJdHn
- nl7RK7UL2JvjmGkQmP931sjf9WnkJjJwBbw/q9wdMDw+7tO9tUtd0uicEus2vf/qY2NFoQHtP
- Jb8c5h0SmGFX1WJ0xy4yDhbMKjYpTlcYOIRArvJU0XW4ppLl+BvxKXTYffaUcZ50gB/QVA0Dp
- RicRK5WvbZ6ByFfcrWJNZgoOSeOb1hCY7w7ZNIV5+MeaaNIGagGdWsFfZ5lWiFfP2MPf1x9VK
- /f0PjVKj4LIHuQJo8cniViOhApl5E6uTZ7QKB900jCPeUXRANDdgfWiatBLsSlMj+38WMqd2y
- aI1LL3EFOaErDpiK5hHTWDlO2mVkTiAJPElUkjPk4pawTsz/mlkrvYPqpA+HdZjY5EzT1/ekA
- 0M/j4wcirunx19OZJjNl2Sbxmt8S0EdWXZJXAfaIf4CANT3fs2JaVpIRt4Ju9QnFQUIFSISDM
- SWV58+kWaiLDNuhFQL3RTikeK9LYUIgBKJNTAItk2hFoatokZSxlMVQNQ+scNsdozyLN6ZPA5
- 4wmtXSu6g8Ux3vPUHdeDF8LreBvb56Jm3DYuWAVlrZvbFUOZxNlTg58zVMeqTX+iOA5DnnjwU
- psMKuV3/K+DFKsBPM9LUKLbhVsqh1d/P43Nn65+Jx/dGw=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 229FEAE4-4097-11EF-BC16-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Hi,
-
-now Cc:ing Ghanshyam correctly. Sorry for that.
-
-On Fri, 12 Jul 2024, Johannes Schindelin via GitGitGadget wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
@@ -87,47 +72,13 @@ On Fri, 12 Jul 2024, Johannes Schindelin via GitGitGadget wrote:
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
 >     cmake: fix build of t-oidtree
->
+>     
 >     This is based on the gt/unit-test-oidtree branch.
->
+>     
 >     /cc "Ghanshyam Thakkar" shyamthakkar001@gmail.com
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1761%2=
-Fdscho%2Fcmake-vs-t-oidtree-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1761/dsch=
-o/cmake-vs-t-oidtree-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1761
->
->  contrib/buildsystems/CMakeLists.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/=
-CMakeLists.txt
-> index 2f9c33585c6..832f46b316b 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -976,11 +976,12 @@ list(TRANSFORM test-reftable_SOURCES PREPEND "${CM=
-AKE_SOURCE_DIR}/")
->
->  #unit-tests
->  add_library(unit-test-lib OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/test-=
-lib.c)
-> +add_library(unit-test-lib-oid OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/l=
-ib-oid.c)
->
->  parse_makefile_for_scripts(unit_test_PROGRAMS "UNIT_TEST_PROGRAMS" "")
->  foreach(unit_test ${unit_test_PROGRAMS})
->  	add_executable("${unit_test}" "${CMAKE_SOURCE_DIR}/t/unit-tests/${unit=
-_test}.c")
-> -	target_link_libraries("${unit_test}" unit-test-lib common-main)
-> +	target_link_libraries("${unit_test}" unit-test-lib unit-test-lib-oid c=
-ommon-main)
->  	set_target_properties("${unit_test}"
->  		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/=
-bin)
->  	if(MSVC)
->
-> base-commit: ed548408723d6e969160279398cc47f88f5700bc
-> --
-> gitgitgadget
->
+
+The base topic has been merged last month during this cycle, so the
+fix must be merged down to the 'master' before the release.  Will
+queue.
+
+Thanks.
