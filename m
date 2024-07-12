@@ -1,1228 +1,1041 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DBC170826;
-	Fri, 12 Jul 2024 17:14:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C060343AA9
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 17:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720804465; cv=none; b=TGFu6FFEvb7EhDMh7npQKz73THI7fUHuCaf5mpmXQ7ZwqjPwtHX+embfRV4eaD/b9FPGZs45KzEraJk8/EAREtRUaif/rGmgk64AuTcEKegLslkjii7BfpwyO+SjJ7ruWMHRCXo49LAYXncJpWKK2+0xKHYk4NC+GgQJoKcXIik=
+	t=1720806100; cv=none; b=rSOOQh1KmJSSB2nAx6b+VAbRz5Flx9dAeQx9NzVya2jg9plzpgmyqDGWRe+dEh7fzfkXaBPa9bfPFldmfx8am9wwoJE58IB6UwhmXiDFoQsPvURIWVTsQLUDWhFQ2L0wmTo23dV10rTP3pvqnha9hVP1VZ8KEdZIgt/NHNMkY/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720804465; c=relaxed/simple;
-	bh=9NUGzAr1GhXsovYxgwME6eLe1MTBQRGcC0qFUgmTeq8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Jqepr0/UxijtoFJes5Mlh0KVRge56FolabXGMtqICqzrfKaciyQRGcoOYco+QU32AvfwvL/Ev4oGpO4hq15ZCEbD6BzAIquL7N79m6MxvXP8koWe67JT4Ry+xoK3X3+eqZNE7K85n/HMcM0Si1xVSr7YwiDhzdysTqk/Zma+M80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyoQZP76; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720806100; c=relaxed/simple;
+	bh=Z246bjSBiEsNqkmJBlHpcobhcx5+Mo6dfKW54niONxg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u5eYwIvbJtb5/ukqV+tmPHBsdWzvmNefUnPZ0vYGGMgTw/cF8RGlorkUP4O92Y8lW0UIWQMrZ21+bJG81SC8cnvVEViklEwTf9PWwALCU28CFwImwnKTLq/LXvNYaQ+drbzHCloKTvXiZ5isQKO4GSjo5ktuEFaIGNLTV0cHakU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jK/2IcyD; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyoQZP76"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 739DC332AF;
-	Fri, 12 Jul 2024 13:14:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=9NUGzAr1GhXsovYxgwME6eLe1
-	MTBQRGcC0qFUgmTeq8=; b=fyoQZP76RJ+1MDHzkgWEUrhJxWEpUN8pmiEZsEcyX
-	xS42B2vSUunEdcAwE3Zw5IzQlm8ixubhAY951yM59Y4fEQCOILgkrUowAPNLoyl1
-	m7zWrnEHcc9lbO+Xt8iFSKppcraRNE7Kc7JRlouATXQEpBkOi+//Uslm0ySmislr
-	cA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A073332AE;
-	Fri, 12 Jul 2024 13:14:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.219.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B2CE1332AD;
-	Fri, 12 Jul 2024 13:14:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.46.0-rc0
-Date: Fri, 12 Jul 2024 10:14:13 -0700
-Message-ID: <xmqqjzhqmt22.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jK/2IcyD"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-655fa53c64cso24338027b3.3
+        for <git@vger.kernel.org>; Fri, 12 Jul 2024 10:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720806097; x=1721410897; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w6oJ1XrcSAaEnDmhpInm1jcjWUkm99FpJs4UY5Cb2GM=;
+        b=jK/2IcyDgtc8u7zXhSQblT8COV8DpFTtYBmRNep+cvVH59baITChgUn80yc5eyz8gD
+         isZIEQyMCSrzxvqRjhgAHU+qK5ZXR3qh5vmv7z1bfnTshmn+Fj0kM8eWAkBGuEIYdt2v
+         PJnG9n8eWUeeXACi6epJirWK1AlhChmlAwv0pOTjEMQeRlZn8Fy99nsEUCTAQm6H+gBO
+         AZoTNLALO+rgMSAwA7AuJSQeOODTVSothIJCFAXS4/PyOOBrvRVs3nj3AnoTKO9kAtWK
+         sK5Fwltu5W6G3fVa9NaUlfgPhVcOOzy2b5kxXs+ZJozt1nA/gsbBDFxiQD7hCLhDjMZT
+         Yusg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720806097; x=1721410897;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w6oJ1XrcSAaEnDmhpInm1jcjWUkm99FpJs4UY5Cb2GM=;
+        b=ZemQfYzOjoVdpo7j67+R4e7SLZJYKOlpNaAXsmauaYqVLxUf7QDdX0tnajstew1vyM
+         MYrTHGRwcRgsX7dvJUVdUown1EjWKGAQROU9CTaUb1jb+mXb1lcCOV8b9kOsRx/7GC3a
+         hKZ/Rtj2TBKVaHNnpNgK+hKrISPlMEs3i26aLEiCuISzxNqS8Yp6vCo9gXlrPcnEOTsY
+         VovmwaUQve2GNhLBK5luHLaQL4MDUsgL8hrwvVubSKAFaqGLjn+nygkEwXpXqOERRe/Z
+         HxOstNR3l7RO1eLxzG7vMwXb2XvPAtq5wZk5WDVxNkB6tlVeX8KBq7jbyacqMICRwhxJ
+         +XpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVepMX6ko5ev8+Dyhyyt7vllxgfva0ykDI47FMjXV40wuL/aGGEwxwPJ2aRp5/Xf0Dw7lcbbCOYJcjELS00FgKPABo5
+X-Gm-Message-State: AOJu0Yxv6DAahbl4idzOnldZMi2qGg+Xd/fVtUn4vXKD+wKDP6kPuonY
+	9KtztrdhCop05WLY958CVTmv51Gx5gQi4cml16wL0wjmtieQmxCAOcfX5/d9TodhPe3zymf11wz
+	JrryqQ/ZbKgvKgyo9CzfkVPyW5Xg=
+X-Google-Smtp-Source: AGHT+IEmnvrnWO0VI+jjiyWf1nlXhFX7uyDjva2hSxvhsfzkDTAm+gF1CQS+UmCNUhv9pbgMc8s1udqn1SAyFHuk8Ac=
+X-Received: by 2002:a05:690c:6684:b0:64b:f86:b7a8 with SMTP id
+ 00721157ae682-658ee6998f4mr166676967b3.10.1720806096455; Fri, 12 Jul 2024
+ 10:41:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 2A09448A-4072-11EF-B9F7-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20240628190503.67389-7-eric.peijian@gmail.com> <7lc6m7627sojdzabmz6pvaulbrcods6tqf7bnf3vxqsxzievjl@ixbispu2b3ch>
+In-Reply-To: <7lc6m7627sojdzabmz6pvaulbrcods6tqf7bnf3vxqsxzievjl@ixbispu2b3ch>
+From: Peijian Ju <eric.peijian@gmail.com>
+Date: Fri, 12 Jul 2024 13:41:25 -0400
+Message-ID: <CAN2LT1AKqSJvUiXphH8MZ5vwOKLy=qAhBUy7=y_yFF8JfO2KuA@mail.gmail.com>
+Subject: Re: [PATCH 6/6] cat-file: add remote-object-info to batch-command
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan <calvinwan@google.com>, 
+	Jonathan Tan <jonathantanmy@google.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-An early preview release Git v2.46.0-rc0 is now available for
-testing at the usual places.  It is comprised of 602 non-merge
-commits since v2.45.2, contributed by 66 people, 19 of which are
-new faces [*].
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/testing/
-
-The following public repositories all have a copy of the
-'v2.46.0-rc0' tag and the 'master' branch that the tag points at:
-
-  url =3D https://git.kernel.org/pub/scm/git/git
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.45.2 are as follows.
-Welcome to the Git development community!
-
-  Aaron Plattner, Abhijeet Sonar, Darcy Burke, David Bimmler, Dov
-  Murik, Dr. David Alan Gilbert, Fahad Alrashed, Heghedus Razvan,
-  Ivan Tse, James Liu, Jun T, Koji Nakamaru, L=C3=A9onard Michelet,
-  lolligerhans@gmx.de, Marcel Telka, Mathew George, Roland Hieber,
-  Shane Sun, and Tom Hughes.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Achu Luma, Adam Johnson, Beat Bolli, brian m. carlson, Chandra
-  Pratap, Christian Couder, Dario Gjorgjevski, D. Ben Knoble,
-  Derrick Stolee, Dragan Simic, Elijah Newren, Eric Sunshine,
-  Eric Wong, Ghanshyam Thakkar, Ian Wienand, Jeff King, Johannes
-  Schindelin, Johannes Sixt, John Passaro, John Paul Adrian
-  Glaubitz, Jonathan Nieder, Jonathan Tan, Josh Soref, Josh
-  Steadmon, Junio C Hamano, Justin Tobler, Kaartic Sivaraam,
-  Karthik Nayak, Kirill Smelkov, Kyle Lippincott, Kyle Zhao,
-  Linus Arver, Mike Hommey, Orgad Shaneh, =C3=98ystein Walle, Patrick
-  Steinhardt, Peter Krefting, Phillip Wood, Randall S. Becker,
-  Ren=C3=A9 Scharfe, Rub=C3=A9n Justo, Stefan Haller, SZEDER G=C3=A1bor,
-  Taylor Blau, Torsten B=C3=B6gershausen, Victoria Dye, and Xing Xin.
-
-[*] We are counting not just the authorship contribution but issue
-    reporting, mentoring, helping and reviewing that are recorded in
-    the commit trailers.
-
-----------------------------------------------------------------
-
-Git v2.46 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-
-Backward Compatibility Notes
-
- (None at this moment)
-
-UI, Workflows & Features
-
- * The "--rfc" option of "git format-patch" learned to take an
-   optional string value to be used in place of "RFC" to tweak the
-   "[PATCH]" on the subject header.
-
- * The credential helper protocol, together with the HTTP layer, have
-   been enhanced to support authentication schemes different from
-   username & password pair, like Bearer and NTLM.
-
- * Command line completion script (in contrib/) learned to complete
-   "git symbolic-ref" a bit better (you need to enable plumbing
-   commands to be completed with GIT_COMPLETION_SHOW_ALL_COMMANDS).
-
- * When the user responds to a prompt given by "git add -p" with an
-   unsupported command, list of available commands were given, which
-   was too much if the user knew what they wanted to type but merely
-   made a typo.  Now the user gets a much shorter error message.
-
- * The color parsing code learned to handle 12-bit RGB colors, spelled
-   as "#RGB" (in addition to "#RRGGBB" that is already supported).
-
- * The operation mode options (like "--get") the "git config" command
-   uses have been deprecated and replaced with subcommands (like "git
-   config get").
-
- * "git tag" learned the "--trailer" option to futz with the trailers
-   in the same way as "git commit" does.
-
- * A new global "--no-advice" option can be used to disable all advice
-   messages, which is meant to be used only in scripts.
-
- * Updates to symbolic refs can now be made as a part of ref
-   transaction.
-
- * The trailer API has been reshuffled a bit.
-
- * Terminology to call various ref-like things are getting
-   straightened out.
-
- * The command line completion script (in contrib/) has been adjusted
-   to the recent update to "git config" that adopted subcommand based
-   UI.
-
- * The knobs to tweak how reftable files are written have been made
-   available as configuration variables.
-
- * When "git push" notices that the commit at the tip of the ref on
-   the other side it is about to overwrite does not exist locally, it
-   used to first try fetching it if the local repository is a partial
-   clone. The command has been taught not to do so and immediately
-   fail instead.
-
- * The promisor.quiet configuration knob can be set to true to make
-   lazy fetching from promisor remotes silent.
-
- * The inter/range-diff output has been moved to the end of the patch
-   when format-patch adds it to a single patch, instead of writing it
-   before the patch text, to be consistent with what is done for a
-   cover letter for a multi-patch series.
-
- * A new command has been added to migrate a repository that uses the
-   files backend for its ref storage to use the reftable backend, with
-   limitations.
-
- * "git diff --exit-code --ext-diff" learned to take the exit status
-   of the external diff driver into account when deciding the exit
-   status of the overall "git diff" invocation when configured to do
-   so.
-
- * "git update-ref --stdin" learned to handle transactional updates of
-   symbolic-refs.
-
- * "git format-patch --interdiff" for multi-patch series learned to
-   turn on cover letters automatically (unless told never to enable
-   cover letter with "--no-cover-letter" and such).
-
- * The "--heads" option of "ls-remote" and "show-ref" has been been
-   deprecated; "--branches" replaces "--heads".
-
- * For over a year, setting add.interactive.useBuiltin configuration
-   variable did nothing but giving a "this does not do anything"
-   warning.  The warning has been removed.
-
-
-Performance, Internal Implementation, Development Support etc.
-
- * Advertise "git contacts", a tool for newcomers to find people to
-   ask review for their patches, a bit more in our developer
-   documentation.
-
- * In addition to building the objects needed, try to link the objects
-   that are used in fuzzer tests, to make sure at least they build
-   without bitrot, in Linux CI runs.
-
- * Code to write out reftable has seen some optimization and
-   simplification.
-
- * Tests to ensure interoperability between reftable written by jgit
-   and our code have been added and enabled in CI.
-
- * The singleton index_state instance "the_index" has been eliminated
-   by always instantiating "the_repository" and replacing references
-   to "the_index"  with references to its .index member.
-
- * Git-GUI has a new maintainer, Johannes Sixt.
-
- * The "test-tool" has been taught to run testsuite tests in parallel,
-   bypassing the need to use the "prove" tool.
-
- * The "whitespace check" task that was enabled for GitHub Actions CI
-   has been ported to GitLab CI.
-
- * The refs API lost functions that implicitly assumes to work on the
-   primary ref_store by forcing the callers to pass a ref_store as an
-   argument.
-
- * Code clean-up to reduce inter-function communication inside
-   builtin/config.c done via the use of global variables.
-
- * The pack bitmap code saw some clean-up to prepare for a follow-up topi=
-c.
-
- * Preliminary code clean-up for "git send-email".
-
- * The default "creation-factor" used by "git format-patch" has been
-   raised to make it more aggressively find matching commits.
-
- * Before discovering the repository details, We used to assume SHA-1
-   as the "default" hash function, which has been corrected. Hopefully
-   this will smoke out codepaths that rely on such an unwarranted
-   assumptions.
-
- * The project decision making policy has been documented.
-
- * The strcmp-offset tests have been rewritten using the unit test
-   framework.
-
- * "git add -p" learned to complain when an answer with more than one
-   letter is given to a prompt that expects a single letter answer.
-
- * The alias-expanded command lines are logged to the trace output.
-
- * A new test was added to ensure git commands that are designed to
-   run outside repositories do work.
-
- * Basic unit tests for reftable have been reimplemented under the
-   unit test framework.
-
- * A pair of test helpers that essentially are unit tests on hash
-   algorithms have been rewritten using the unit-tests framework.
-
- * A test helper that essentially is unit tests on the "decorate"
-   logic has been rewritten using the unit-tests framework.
-
- * Many memory leaks in the sparse-checkout code paths have been
-   plugged.
-
- * "make check-docs" noticed problems and reported to its output but
-   failed to signal its findings with its exit status, which has been
-   corrected.
-
- * Building with "-Werror -Wwrite-strings" is now supported.
-
- * To help developers, the build procedure now allows builders to use
-   CFLAGS_APPEND to specify additional CFLAGS.
-
- * "oidtree" tests were rewritten to use the unit test framework.
-
- * The structure of the document that records longer-term project
-   decisions to deprecate/remove/update various behaviour has been
-   outlined.
-
- * The pseudo-merge reachability bitmap to help more efficient storage
-   of the reachability bitmap in a repository with too many refs has
-   been added.
-
- * When "git merge" sees that the index cannot be refreshed (e.g. due
-   to another process doing the same in the background), it died but
-   after writing MERGE_HEAD etc. files, which was useless for the
-   purpose to recover from the failure.
-
- * The output from "git cat-file --batch-check" and "--batch-command
-   (info)" should not be unbuffered, for which some tests have been
-   added.
-
- * A CPP macro USE_THE_REPOSITORY_VARIABLE is introduced to help
-   transition the codebase to rely less on the availability of the
-   singleton the_repository instance.
-
- * "git version --build-options" reports the version information of
-   OpenSSL and other libraries (if used) in the build.
-
- * Memory ownership rules for the in-core representation of
-   remote.*.url configuration values have been straightened out, which
-   resulted in a few leak fixes and code clarification.
-
- * When bundleURI interface fetches multiple bundles, Git failed to
-   take full advantage of all bundles and ended up slurping duplicated
-   objects, which has been corrected..
-
- * The code to deal with modified paths that are out-of-cone in a
-   sparsely checked out working tree has been optimized.
-
-
-Fixes since v2.45
------------------
-
- * "git rebase --signoff" used to forget that it needs to add a
-   sign-off to the resulting commit when told to continue after a
-   conflict stops its operation.
-
- * The procedure to build multi-pack-index got confused by the
-   replace-refs mechanism, which has been corrected by disabling the
-   latter.
-
- * The "-k" and "--rfc" options of "format-patch" will now error out
-   when used together, as one tells us not to add anything to the
-   title of the commit, and the other one tells us to add "RFC" in
-   addition to "PATCH".
-
- * "git stash -S" did not handle binary files correctly, which has
-   been corrected.
-
- * A scheduled "git maintenance" job is expected to work on all
-   repositories it knows about, but it stopped at the first one that
-   errored out.  Now it keeps going.
-
- * zsh can pretend to be a normal shell pretty well except for some
-   glitches that we tickle in some of our scripts. Work them around
-   so that "vimdiff" and our test suite works well enough with it.
-
- * Command line completion support for zsh (in contrib/) has been
-   updated to stop exposing internal state to end-user shell
-   interaction.
-
- * Tests that try to corrupt in-repository files in chunked format did
-   not work well on macOS due to its broken "mv", which has been
-   worked around.
-
- * The maximum size of attribute files is enforced more consistently.
-
- * Unbreak CI jobs so that we do not attempt to use Python 2 that has
-   been removed from the platform.
-
- * Git 2.43 started using the tree of HEAD as the source of attributes
-   in a bare repository, which has severe performance implications.
-   For now, revert the change, without ripping out a more explicit
-   support for the attr.tree configuration variable.
-
- * The "--exit-code" option of "git diff" command learned to work with
-   the "--ext-diff" option.
-
- * Windows CI running in GitHub Actions started complaining about the
-   order of arguments given to calloc(); the imported regex code uses
-   the wrong order almost consistently, which has been corrected.
-
- * Expose "name conflict" error when a ref creation fails due to D/F
-   conflict in the ref namespace, to improve an error message given by
-   "git fetch".
-   (merge 9339fca23e it/refs-name-conflict later to maint).
-
- * The SubmittingPatches document now refers folks to manpages
-   translation project.
-
- * The documentation for "git diff --name-only" has been clarified
-   that it is about showing the names in the post-image tree.
-
- * The credential helper that talks with osx keychain learned to avoid
-   storing back the authentication material it just got received from
-   the keychain.
-   (merge e1ab45b2da kn/osxkeychain-skip-idempotent-store later to maint)=
-.
-
- * The chainlint script (invoked during "make test") did nothing when
-   it failed to detect the number of available CPUs.  It now falls
-   back to 1 CPU to avoid the problem.
-
- * Revert overly aggressive "layered defence" that went into 2.45.1
-   and friends, which broke "git-lfs", "git-annex", and other use
-   cases, so that we can rebuild necessary counterparts in the open.
-
- * "git init" in an already created directory, when the user
-   configuration has includeif.onbranch, started to fail recently,
-   which has been corrected.
-
- * Memory leaks in "git mv" has been plugged.
-
- * The safe.directory configuration knob has been updated to
-   optionally allow leading path matches.
-
- * An overly large ".gitignore" files are now rejected silently.
-
- * Upon expiration event, the credential subsystem forgot to clear
-   in-core authentication material other than password (whose support
-   was added recently), which has been corrected.
-
- * Fix for an embarrassing typo that prevented Python2 tests from running
-   anywhere.
-
- * Varargs functions that are unannotated as printf-like or execl-like
-   have been annotated as such.
-
- * "git am" has a safety feature to prevent it from starting a new
-   session when there already is a session going.  It reliably
-   triggers when a mbox is given on the command line, but it has to
-   rely on the tty-ness of the standard input.  Add an explicit way to
-   opt out of this safety with a command line option.
-   (merge 62c71ace44 jk/am-retry later to maint).
-
- * A leak in "git imap-send" that somehow escapes LSan has been
-   plugged.
-
- * Setting core.abbrev too early before the repository set-up
-   (typically in "git clone") caused segfault, which as been
-   corrected.
-
- * When the user adds to "git rebase -i" instruction to "pick" a merge
-   commit, the error experience is not pleasant.  Such an error is now
-   caught earlier in the process that parses the todo list.
-
- * We forgot to normalize the result of getcwd() to NFC on macOS where
-   all other paths are normalized, which has been corrected.  This still
-   does not address the case where core.precomposeUnicode configuration
-   is not defined globally.
-
- * Earlier we stopped using the tree of HEAD as the default source of
-   attributes in a bare repository, but failed to document it.  This
-   has been corrected.
-
- * "git update-server-info" and "git commit-graph --write" have been
-   updated to use the tempfile API to avoid leaving cruft after
-   failing.
-
- * An unused extern declaration for mingw has been removed to prevent
-   it from causing build failure.
-
- * A helper function shared between two tests had a copy-paste bug,
-   which has been corrected.
-
- * "git fetch-pack -k -k" without passing "--lock-pack" (which we
-   never do ourselves) did not work at all, which has been corrected.
-
- * CI job to build minimum fuzzers learned to pass NO_CURL=3DNoThanks to
-   the build procedure, as its build environment does not offer, or
-   the rest of the build needs, anything cURL.
-   (merge 4e66b5a990 jc/fuzz-sans-curl later to maint).
-
- * "git diff --no-ext-diff" when diff.external is configured ignored
-   the "--color-moved" option.
-   (merge 0f4b0d4cf0 rs/diff-color-moved-w-no-ext-diff-fix later to maint=
-).
-
- * "git archive --add-virtual-file=3D<path>:<contents>" never paid
-   attention to the --prefix=3D<prefix> option but the documentation
-   said it would. The documentation has been corrected.
-   (merge 72c282098d jc/archive-prefix-with-add-virtual-file later to mai=
-nt).
-
- * When GIT_PAGER failed to spawn, depending on the code path taken,
-   we failed immediately (correct) or just spew the payload to the
-   standard output (incorrect).  The code now always fail immediately
-   when GIT_PAGER fails.
-   (merge 78f0a5d187 rj/pager-die-upon-exec-failure later to maint).
-
- * date parser updates to be more careful about underflowing epoch
-   based timestamp.
-   (merge 9d69789770 db/date-underflow-fix later to maint).
-
- * The Bloom filter used for path limited history traversal was broken
-   on systems whose "char" is unsigned; update the implementation and
-   bump the format version to 2.
-   (merge 9c8a9ec787 tb/path-filter-fix later to maint).
-
- * Typofix.
-   (merge 231cf7370e as/pathspec-h-typofix later to maint).
-
- * Code clean-up.
-   (merge 4b837f821e rs/simplify-submodule-helper-super-prefix-invocation=
- later to maint).
-
- * Other code cleanup, docfix, build fix, etc.
-   (merge 493fdae046 ew/object-convert-leakfix later to maint).
-   (merge 00f3661a0a ss/doc-eol-attr-fix later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.45.2 are as follows:
-
-Aaron Plattner (1):
-      credential: clear expired c->credential, unify secret clearing
-
-Abhijeet Sonar (1):
-      pathspec: fix typo "glossary-context.txt" -> "glossary-content.txt"
-
-Adam Johnson (1):
-      stash: fix "--staged" with binary files
-
-Beat Bolli (3):
-      t/t4026-color: remove an extra double quote character
-      t/t4026-color: add test coverage for invalid RGB colors
-      color: add support for 12-bit RGB colors
-
-Chandra Pratap (5):
-      t: move reftable/basics_test.c to the unit testing framework
-      t: move tests from reftable/stack_test.c to the new unit test
-      t: move tests from reftable/record_test.c to the new unit test
-      t: add test for put_be16()
-      t: improve the test-case for parse_names()
-
-D. Ben Knoble (1):
-      completion: zsh: stop leaking local cache variable
-
-Darcy Burke (1):
-      date: detect underflow/overflow when parsing dates with timezone of=
-fset
-
-Derrick Stolee (7):
-      scalar: avoid segfault in reconfigure --all
-      commit-graph: increment progress indicator
-      sparse-checkout: refactor skip worktree retry logic
-      sparse-index: refactor path_found()
-      sparse-index: use strbuf in path_found()
-      sparse-index: count lstat() calls
-      sparse-index: improve lstat caching of sparse paths
-
-Dov Murik (1):
-      documentation: git-update-index: add --show-index-version to synops=
-is
-
-Dr. David Alan Gilbert (1):
-      fetch-pack: remove unused 'struct loose_object_iter'
-
-Dragan Simic (3):
-      send-email: move newline characters out of a few translatable strin=
-gs
-      format-patch: ensure that --rfc and -k are mutually exclusive
-      doc: interactive.singleKey is disabled by default
-
-Eric Sunshine (2):
-      chainlint.pl: make CPU count computation more robust
-      chainlint.pl: latch CPU count directly reported by /proc/cpuinfo
-
-Eric Wong (3):
-      Git.pm: use array in command_bidi_pipe example
-      t1006: ensure cat-file info isn't buffered by default
-      object-file: fix leak on conversion failure
-
-Fahad Alrashed (1):
-      git-p4: show Perforce error to the user
-
-Ghanshyam Thakkar (5):
-      t/: port helper/test-strcmp-offset.c to unit-tests/t-strcmp-offset.=
-c
-      t/: migrate helper/test-example-decorate to the unit testing framew=
-ork
-      strbuf: introduce strbuf_addstrings() to repeatedly add a string
-      t/: migrate helper/test-{sha1, sha256} to unit-tests/t-hash
-      t/: migrate helper/test-oidtree.c to unit-tests/t-oidtree.c
-
-Ian Wienand (3):
-      Documentation: alias: rework notes into points
-      Documentation: alias: add notes on shell expansion
-      run-command: show prepared command
-
-Ivan Tse (1):
-      refs: return conflict error when checking packed refs
-
-James Liu (3):
-      doc: clean up usage documentation for --no-* opts
-      doc: add spacing around paginate options
-      advice: add --no-advice global option
-
-Jeff King (41):
-      t/Makefile: run unit tests alongside shell tests
-      ci: update coverity runs_on_pool reference
-      ci: drop mention of BREW_INSTALL_PACKAGES variable
-      ci: avoid bare "gcc" for osx-gcc job
-      ci: stop installing "gcc-13" for osx-gcc
-      t-strvec: use va_end() to match va_start()
-      t-strvec: mark variable-arg helper with LAST_ARG_MUST_BE_NULL
-      mv: move src_dir cleanup to end of cmd_mv()
-      mv: factor out empty src_dir removal
-      mv: replace src_dir with a strvec
-      dir.c: skip .gitignore, etc larger than INT_MAX
-      sparse-checkout: free string list in write_cone_to_file()
-      sparse-checkout: pass string literals directly to add_pattern()
-      dir.c: free strings in sparse cone pattern hashmaps
-      sparse-checkout: clear patterns when init() sees existing sparse fi=
-le
-      dir.c: free removed sparse-pattern hashmap entries
-      dir.c: reduce max pattern file size to 100MB
-      dir.c: always copy input to add_pattern()
-      sparse-checkout: reuse --stdin buffer when reading patterns
-      sparse-checkout: always free "line" strbuf after reading input
-      sparse-checkout: refactor temporary sparse_checkout_patterns
-      sparse-checkout: free sparse_filename after use
-      sparse-checkout: free pattern list in sparse_checkout_list()
-      sparse-checkout: free string list after displaying
-      sparse-checkout: free duplicate hashmap entries
-      am: add explicit "--retry" option
-      test-terminal: drop stdin handling
-      imap-send: free all_msgs strbuf in "out" label
-      archive: fix check for missing url
-      remote: refactor alias_url() memory ownership
-      remote: transfer ownership of memory in add_url(), etc
-      remote: use strvecs to store remote url/pushurl
-      remote: simplify url/pushurl selection
-      config: document remote.*.url/pushurl interaction
-      remote: allow resetting url list
-      t5801: make remote-testgit GIT_DIR setup more robust
-      t5801: test remote.*.vcs config
-      remote: always require at least one url in a remote
-      remote: drop checks for zero-url case
-      fetch-pack: fix segfault when fscking without --lock-pack
-      t5500: fix mistaken $SERVER reference in helper function
-
-Johannes Schindelin (4):
-      for-each-repo: optionally keep going on an error
-      maintenance: running maintenance should not stop on errors
-      cmake: let `test-tool` run the unit tests, too
-      mingw: drop bogus (and unneeded) declaration of `_pgmptr`
-
-Johannes Sixt (1):
-      git-gui: note the new maintainer
-
-John Passaro (3):
-      builtin/commit: use ARGV macro to collect trailers
-      builtin/commit: refactor --trailer logic
-      builtin/tag: add --trailer option
-
-John Paul Adrian Glaubitz (1):
-      chainlint.pl: fix incorrect CPU count on Linux SPARC
-
-Jonathan Tan (1):
-      gitformat-commit-graph: describe version 2 of BDAT
-
-Josh Soref (2):
-      doc: update links to current pages
-      doc: switch links to https
-
-Josh Steadmon (8):
-      fuzz: link fuzz programs with `make all` on Linux
-      t0080: turn t-basic unit test into a helper
-      test-tool run-command testsuite: get shell from env
-      test-tool run-command testsuite: remove hardcoded filter
-      test-tool run-command testsuite: support unit tests
-      unit tests: add rule for running with test-tool
-      ci: use test-tool as unit test runner on Windows
-      doc: describe the project's decision-making process
-
-Junio C Hamano (61):
-      format-patch: allow --rfc to optionally take a value, like --rfc=3D=
-WIP
-      format-patch: "--rfc=3D-(WIP)" appends to produce [PATCH (WIP)]
-      Start the 2.46 cycle
-      rev-parse: document how --is-* options work outside a repository
-      t/lib-chunk: work around broken "mv" on some vintage of macOS
-      stop using HEAD for attributes in bare repository by default
-      Makefile(s): do not enforce "all indents must be done with tab"
-      format-patch: run range-diff with larger creation-factor
-      t0018: two small fixes
-      The second batch
-      SubmittingPatches: move the patch-flow section earlier
-      SubmittingPatches: extend the "flow" section
-      SubmittingPatches: welcome the new maintainer of git-gui part
-      compat/regex: fix argument order to calloc(3)
-      The third batch
-      The fourth batch
-      Revert "diff: fix --exit-code with external diff"
-      The fifth batch
-      t0017: clarify dubious test set-up
-      SubmittingPatches: advertise git-manpages-l10n project a bit
-      diff: document what --name-only shows
-      The sixth batch
-      setup: add an escape hatch for "no more default hash algorithm" cha=
-nge
-      t1517: test commands that are designed to be run outside repository
-      apply: fix uninitialized hash function
-      add-patch: enforce only one-letter response to prompts
-      The seventh batch
-      show_log: factor out interdiff/range-diff generation
-      format-patch: move range/inter diff at the end of a single patch ou=
-tput
-      The eighth batch
-      safe.directory: allow "lead/ing/path/*" match
-      The ninth batch
-      t1517: more coverage for commands that work without repository
-      Post 2.45.2 updates
-      The tenth batch
-      imap-send: minimum leakfix
-      refs: call branches branches
-      ls-remote: introduce --branches and deprecate --heads
-      show-ref: introduce --branches and deprecate --heads
-      attr.tree: HEAD:.gitattributes is no longer the default in a bare r=
-epo
-      add-i: finally retire add.interactive.useBuiltin
-      The eleventh batch
-      worktree_git_path(): move the declaration to path.h
-      __attribute__: trace2_region_enter_printf() is like "printf"
-      __attribute__: remove redundant attribute declaration for git_die_c=
-onfig()
-      __attribute__: mark some functions with LAST_ARG_MUST_BE_NULL
-      __attribute__: add a few missing format attributes
-      The twelfth batch
-      The thirteenth batch
-      The fourteenth batch
-      The fifteenth batch
-      fuzz: minimum fuzzers environment lacks libcURL
-      The sixteenth batch
-      t0006: simplify prerequisites
-      archive: document that --add-virtual-file takes full path
-      The seventeenth batch
-      More post 2.45.2 updates from the 'master' front
-      Yet another batch of post 2.45.2 updates from the 'master' front
-      The eighteenth batch
-      The ninteenth batch
-      Git 2.46-rc0
-
-Justin Tobler (6):
-      doc: clarify practices for submitting updated patch versions
-      ci: pre-collapse GitLab CI sections
-      github-ci: fix link to whitespace error
-      ci: separate whitespace check script
-      ci: make the whitespace report optional
-      gitlab-ci: add whitespace error check
-
-Karthik Nayak (16):
-      refs: accept symref values in `ref_transaction_update()`
-      files-backend: extract out `create_symref_lock()`
-      refs: support symrefs in 'reference-transaction' hook
-      refs: move `original_update_refname` to 'refs.c'
-      refs: add support for transactional symref updates
-      refs: use transaction in `refs_create_symref()`
-      refs: rename `refs_create_symref()` to `refs_update_symref()`
-      refs: remove `create_symref` and associated dead code
-      SubmittingPatches: add section for iterating patches
-      refs: create and use `ref_update_expects_existing_old_ref()`
-      refs: specify error for regular refs with `old_target`
-      update-ref: add support for 'symref-verify' command
-      update-ref: add support for 'symref-delete' command
-      update-ref: add support for 'symref-create' command
-      reftable: pick either 'oid' or 'target' for new updates
-      update-ref: add support for 'symref-update' command
-
-Koji Nakamaru (2):
-      osxkeychain: exclusive lock to serialize execution of operations
-      osxkeychain: state to skip unnecessary store operations
-
-Kyle Lippincott (1):
-      attr: fix msan issue in read_attr_from_index
-
-Kyle Zhao (1):
-      merge: avoid write merge state when unable to write index
-
-Linus Arver (18):
-      MyFirstContribution: mention contrib/contacts/git-contacts
-      SubmittingPatches: clarify 'git-contacts' location
-      SubmittingPatches: mention GitGitGadget
-      SubmittingPatches: quote commands
-      SubmittingPatches: discuss reviewers first
-      SubmittingPatches: dedupe discussion of security patches
-      SubmittingPatches: add heading for format-patch and send-email
-      SubmittingPatches: demonstrate using git-contacts with git-send-ema=
-il
-      Makefile: sort UNIT_TEST_PROGRAMS
-      trailer: add unit tests for trailer iterator
-      trailer: teach iterator about non-trailer lines
-      sequencer: use the trailer iterator
-      interpret-trailers: access trailer_info with new helpers
-      trailer: make parse_trailers() return trailer_info pointer
-      trailer: make trailer_info struct private
-      trailer: retire trailer_info_get() from API
-      trailer: document parse_trailers() usage
-      trailer unit tests: inspect iterator contents
-
-Marcel Telka (9):
-      t/t0211-trace2-perf.sh: fix typo patern -> pattern
-      Switch grep from non-portable BRE to portable ERE
-      t/t9902-completion.sh: backslashes in echo
-      t/t0600-reffiles-backend.sh: rm -v is not portable
-      t/t4202-log.sh: fix misspelled variable
-      t/t1700-split-index.sh: mv -v is not portable
-      t/t9118-git-svn-funky-branch-names.sh: sed needs semicolon
-      t/t9001-send-email.sh: sed - remove the i flag for s
-      scalar: make enlistment delete to work on all POSIX platforms
-
-Mike Hommey (1):
-      win32: fix building with NO_UNIX_SOCKETS
-
-Orgad Shaneh (1):
-      git-gui: fix inability to quit after closing another instance
-
-Patrick Steinhardt (262):
-      refs/reftable: fix D/F conflict error message on ref copy
-      refs/reftable: perform explicit D/F check when writing symrefs
-      refs/reftable: skip duplicate name checks
-      reftable: remove name checks
-      refs/reftable: don't recompute committer ident
-      reftable/writer: refactorings for `writer_add_record()`
-      reftable/writer: refactorings for `writer_flush_nonempty_block()`
-      reftable/writer: unify releasing memory
-      reftable/writer: reset `last_key` instead of releasing it
-      reftable/block: reuse zstream when writing log blocks
-      reftable/block: reuse compressed array
-      ci: rename "runs_on_pool" to "distro"
-      ci: expose distro name in dockerized GitHub jobs
-      ci: skip sudo when we are already root
-      ci: drop duplicate package installation for "linux-gcc-default"
-      ci: convert "install-dependencies.sh" to use "/bin/sh"
-      ci: merge custom PATH directories
-      ci: fix setup of custom path for GitLab CI
-      ci: merge scripts which install dependencies
-      ci: make Perforce binaries executable for all users
-      ci: install JGit dependency
-      t06xx: always execute backend-specific tests
-      t0610: fix non-portable variable assignment
-      t0612: add tests to exercise Git/JGit reftable compatibility
-      t/helper: stop using `the_index`
-      builtin: stop using `the_index`
-      repository: initialize index in `repo_init()`
-      builtin/clone: stop using `the_index`
-      repository: drop `the_index` variable
-      repository: drop `initialize_the_repository()`
-      config: clarify memory ownership when preparing comment strings
-      builtin/config: move option array around
-      builtin/config: move "fixed-value" option to correct group
-      builtin/config: use `OPT_CMDMODE()` to specify modes
-      builtin/config: pull out function to handle config location
-      builtin/config: pull out function to handle `--null`
-      builtin/config: introduce "list" subcommand
-      builtin/config: introduce "get" subcommand
-      builtin/config: introduce "set" subcommand
-      builtin/config: introduce "unset" subcommand
-      builtin/config: introduce "rename-section" subcommand
-      builtin/config: introduce "remove-section" subcommand
-      builtin/config: introduce "edit" subcommand
-      builtin/config: display subcommand help
-      gitlab-ci: add smoke test for fuzzers
-      ci: fix Python dependency on Ubuntu 24.04
-      path: harden validation of HEAD with non-standard hashes
-      path: move `validate_headref()` to its only user
-      parse-options-cb: only abbreviate hashes when hash algo is known
-      attr: don't recompute default attribute source
-      attr: fix BUG() when parsing attrs outside of repo
-      remote-curl: fix parsing of detached SHA256 heads
-      builtin/rev-parse: allow shortening to more than 40 hex characters
-      builtin/blame: don't access potentially unitialized `the_hash_algo`
-      builtin/bundle: abort "verify" early when there is no repository
-      builtin/diff: explicitly set hash algo when there is no repo
-      builtin/shortlog: don't set up revisions without repo
-      oss-fuzz/commit-graph: set up hash algorithm
-      repository: stop setting SHA1 as the default object hash
-      refs: introduce missing functions that accept a `struct ref_store`
-      refs: add `exclude_patterns` parameter to `for_each_fullref_in()`
-      cocci: introduce rules to transform "refs" to pass ref store
-      cocci: apply rules to rewrite callers of "refs" interfaces
-      refs: remove functions without ref store
-      gitlab-ci: fix installing dependencies for fuzz smoke tests
-      reftable: consistently refer to `reftable_write_options` as `opts`
-      reftable: pass opts as constant pointer
-      reftable/writer: drop static variable used to initialize strbuf
-      reftable/writer: improve error when passed an invalid block size
-      reftable/dump: support dumping a table's block structure
-      refs/reftable: allow configuring block size
-      reftable: use `uint16_t` to track restart interval
-      refs/reftable: allow configuring restart interval
-      refs/reftable: allow disabling writing the object index
-      reftable: make the compaction factor configurable
-      refs/reftable: allow configuring geometric factor
-      reftable/block: use `size_t` to track restart point index
-      reftable/reader: avoid copying index iterator
-      reftable/reader: unify indexed and linear seeking
-      reftable/reader: separate concerns of table iter and reftable reade=
-r
-      reftable/reader: inline `reader_seek_internal()`
-      reftable/reader: set up the reader when initializing table iterator
-      reftable/merged: split up initialization and seeking of records
-      reftable/merged: simplify indices for subiterators
-      reftable/generic: move seeking of records into the iterator
-      reftable/generic: adapt interface to allow reuse of iterators
-      reftable/reader: adapt interface to allow reuse of iterators
-      reftable/stack: provide convenience functions to create iterators
-      reftable/merged: adapt interface to allow reuse of iterators
-      builtin/config: stop printing full usage on misuse
-      builtin/config: move legacy mode into its own function
-      builtin/config: move subcommand options into `cmd_config()`
-      builtin/config: move legacy options into `cmd_config()`
-      builtin/config: move actions into `cmd_config_actions()`
-      builtin/config: check for writeability after source is set up
-      config: make the config source const
-      builtin/config: refactor functions to have common exit paths
-      builtin/config: move location options into local variables
-      builtin/config: move display options into local variables
-      builtin/config: move type options into display options
-      builtin/config: move default value into display options
-      builtin/config: move `respect_includes_opt` into location options
-      builtin/config: convert `do_not_match` to a local variable
-      builtin/config: convert `value_pattern` to a local variable
-      builtin/config: convert `regexp` to a local variable
-      builtin/config: convert `key_regexp` to a local variable
-      builtin/config: convert `key` to a local variable
-      builtin/config: track "fixed value" option via flags only
-      builtin/config: convert flags to a local variable
-      builtin/config: pass data between callbacks via local variables
-      Documentation/glossary: redefine pseudorefs as special refs
-      Documentation/glossary: clarify limitations of pseudorefs
-      Documentation/glossary: define root refs as refs
-      refs: rename `is_pseudoref()` to `is_root_ref()`
-      refs: rename `is_special_ref()` to `is_pseudo_ref()`
-      refs: do not check ref existence in `is_root_ref()`
-      refs: classify HEAD as a root ref
-      refs: pseudorefs are no refs
-      ref-filter: properly distinuish pseudo and root refs
-      refs: refuse to write pseudorefs
-      completion: adapt git-config(1) to complete subcommands
-      refs: adjust names for `init` and `init_db` callbacks
-      refs: rename `init_db` callback to avoid confusion
-      refs: implement releasing ref storages
-      refs: track ref stores via strmap
-      refs: pass repo when retrieving submodule ref store
-      refs: refactor `resolve_gitlink_ref()` to accept a repository
-      refs: retrieve worktree ref stores via associated repository
-      refs: convert iteration over replace refs to accept ref store
-      refs: pass ref store when detecting dangling symrefs
-      refs: move object peeling into "object.c"
-      refs: pass repo when peeling objects
-      refs: drop `git_default_branch_name()`
-      refs: remove `dwim_log()`
-      refs/files: use correct repository
-      refs/files: remove references to `the_hash_algo`
-      refs/packed: remove references to `the_hash_algo`
-      builtin/patch-id: fix uninitialized hash function
-      builtin/hash-object: fix uninitialized hash function
-      setup: fix bug with "includeIf.onbranch" when initializing dir
-      ci: add missing dependency for TTY prereq
-      transport-helper: fix leaking helper name
-      t: mark a bunch of tests as leak-free
-      strbuf: fix leak when `appendwholeline()` fails with EOF
-      checkout: clarify memory ownership in `unique_tracking_name()`
-      http: refactor code to clarify memory ownership
-      config: clarify memory ownership in `git_config_pathname()`
-      diff: refactor code to clarify memory ownership of prefixes
-      convert: refactor code to clarify ownership of check_roundtrip_enco=
-ding
-      builtin/log: stop using globals for log config
-      builtin/log: stop using globals for format config
-      config: clarify memory ownership in `git_config_string()`
-      config: plug various memory leaks
-      builtin/credential: clear credential before exit
-      commit-reach: fix memory leak in `ahead_behind()`
-      submodule: fix leaking memory for submodule entries
-      strvec: add functions to replace and remove strings
-      builtin/mv: refactor `add_slash()` to always return allocated strin=
-gs
-      builtin/mv duplicate string list memory
-      builtin/mv: refactor to use `struct strvec`
-      builtin/mv: fix leaks for submodule gitfile paths
-      Makefile: extract script to lint missing/extraneous manpages
-      Documentation/lint-manpages: bubble up errors
-      gitlab-ci: add job to run `make check-docs`
-      ci/test-documentation: work around SyntaxWarning in Python 3.12
-      setup: unset ref storage when reinitializing repository version
-      refs: convert ref storage format to an enum
-      refs: pass storage format to `ref_store_init()` explicitly
-      refs: allow to skip creation of reflog entries
-      refs/files: refactor `add_pseudoref_and_head_entries()`
-      refs/files: extract function to iterate through root refs
-      refs/files: fix NULL pointer deref when releasing ref store
-      reftable: inline `merged_table_release()`
-      worktree: don't store main worktree twice
-      refs: implement removal of ref storages
-      refs: implement logic to migrate between ref storage formats
-      builtin/refs: new command to migrate ref storage formats
-      ci: fix check for Ubuntu 20.04
-      global: improve const correctness when assigning string constants
-      global: convert intentionally-leaking config strings to consts
-      refs/reftable: stop micro-optimizing refname allocations on copy
-      reftable: cast away constness when assigning constants to records
-      refspec: remove global tag refspec structure
-      builtin/remote: cast away constness in `get_head_names()`
-      diff: cast string constant in `fill_textconv()`
-      line-log: stop assigning string constant to file parent buffer
-      line-log: always allocate the output prefix
-      entry: refactor how we remove items for delayed checkouts
-      ident: add casts for fallback name and GECOS
-      object-file: mark cached object buffers as const
-      object-file: make `buf` parameter of `index_mem()` a constant
-      pretty: add casts for decoration option pointers
-      compat/win32: fix const-correctness with string constants
-      http: do not assign string constant to non-const field
-      parse-options: cast long name for OPTION_ALIAS
-      send-pack: always allocate receive status
-      remote-curl: avoid assigning string constant to non-const variable
-      revision: always store allocated strings in output encoding
-      mailmap: always store allocated strings in mailmap blob
-      imap-send: drop global `imap_server_conf` variable
-      imap-send: fix leaking memory in `imap_server_conf`
-      builtin/rebase: do not assign default backend to non-constant field
-      builtin/rebase: always store allocated string in `options.strategy`
-      builtin/merge: always store allocated strings in `pull_twohead`
-      config.mak.dev: enable `-Wwrite-strings` warning
-      revision: fix memory leak when reversing revisions
-      parse-options: fix leaks for users of OPT_FILENAME
-      notes-utils: free note trees when releasing copied notes
-      bundle: plug leaks in `create_bundle()`
-      biultin/rev-parse: fix memory leaks in `--parseopt` mode
-      merge-recursive: fix leaking rename conflict info
-      revision: fix leaking display notes
-      notes: fix memory leak when pruning notes
-      builtin/rev-list: fix leaking bitmap index when calculating disk us=
-age
-      object-name: free leaking object contexts
-      builtin/difftool: plug memory leaks in `run_dir_diff()`
-      builtin/merge-recursive: fix leaking object ID bases
-      merge-recursive: fix memory leak when finalizing merge
-      builtin/log: fix leaking commit list in git-cherry(1)
-      revision: free diff options
-      builtin/stash: fix leak in `show_stash()`
-      rerere: fix various trivial leaks
-      config: fix leaking "core.notesref" variable
-      commit: fix leaking parents when calling `commit_tree_extended()`
-      sequencer: fix leaking string buffer in `commit_staged_changes()`
-      apply: fix leaking string in `match_fragment()`
-      builtin/clone: plug leaking HEAD ref in `wanted_peer_refs()`
-      sequencer: fix memory leaks in `make_script_with_merges()`
-      builtin/merge: fix leaking `struct cmdnames` in `get_strategy()`
-      merge: fix leaking merge bases
-      line-range: plug leaking find functions
-      blame: fix leaking data for blame scoreboards
-      builtin/blame: fix leaking prefixed paths
-      builtin/blame: fix leaking ignore revs files
-      Makefile: add ability to append to CFLAGS and LDFLAGS
-      config: fix segfault when parsing "core.abbrev" without repo
-      parse-options-cb: stop clamping "--abbrev=3D" to hash length
-      object-name: don't try to abbreviate to lengths greater than hexsz
-      docs: introduce document to announce breaking changes
-      BreakingChanges: document upcoming change from "sha1" to "sha256"
-      BreakingChanges: document removal of grafting
-      BreakingChanges: document that we do not plan to deprecate git-chec=
-kout
-      hash: drop (mostly) unused `is_empty_{blob,tree}_sha1()` functions
-      hash: require hash algorithm in `hasheq()`, `hashcmp()` and `hashcl=
-r()`
-      hash: require hash algorithm in `oidread()` and `oidclr()`
-      global: ensure that object IDs are always padded
-      hash: convert `oidcmp()` and `oideq()` to compare whole hash
-      hash: make `is_null_oid()` independent of `the_repository`
-      hash: require hash algorithm in `is_empty_{blob,tree}_oid()`
-      hash: require hash algorithm in `empty_tree_oid_hex()`
-      global: introduce `USE_THE_REPOSITORY_VARIABLE` macro
-      refs: avoid include cycle with "repository.h"
-      hash-ll: merge with "hash.h"
-      http-fetch: don't crash when parsing packfile without a repo
-      oidset: pass hash algorithm when parsing file
-      protocol-caps: use hash algorithm from passed-in repository
-      replace-object: use hash algorithm from passed-in repository
-      compat/fsmonitor: fix socket path in networked SHA256 repos
-      t/helper: use correct object hash in partial-clone helper
-      t/helper: fix segfault in "oid-array" command without repository
-      t/helper: remove dependency on `the_repository` in "proc-receive"
-      hex: guard declarations with `USE_THE_REPOSITORY_VARIABLE`
-
-Peter Krefting (1):
-      git-gui: sv.po: Update Swedish translation (576t0f0u)
-
-Phillip Wood (7):
-      sequencer: always free "struct replay_opts"
-      sequencer: start removing private fields from public API
-      sequencer: move current fixups to private context
-      sequencer: store commit message in private context
-      rebase -m: fix --signoff with conflicts
-      rebase -i: pass struct replay_opts to parse_insn_line()
-      rebase -i: improve error message when picking merge
-
-Randall S. Becker (3):
-      version: --build-options reports OpenSSL version information
-      version: teach --build-options to reports libcurl version informati=
-on
-      version: teach --build-options to reports zlib version information
-
-Ren=C3=A9 Scharfe (10):
-      diff-lib: stop calling diff_setup_done() in do_diff_cache()
-      diff: report unmerged paths as changes in run_diff_cmd()
-      diff: fix --exit-code with external diff
-      difftool: add env vars directly in run_file_diff()
-      t4020: test exit code with external diffs
-      userdiff: add and use struct external_diff
-      diff: let external diffs report that changes are uninteresting
-      commit: remove find_header_mem()
-      diff: allow --color-moved with --no-ext-diff
-      submodule--helper: use strvec_pushf() for --super-prefix
-
-Roland Hieber (3):
-      completion: add 'symbolic-ref'
-      completion: improve docs for using __git_complete
-      completion: add docs on how to add subcommand completions
-
-Rub=C3=A9n Justo (5):
-      add-patch: do not show UI messages on stderr
-      add-patch: response to unknown command
-      t4014: cleanups in a few tests
-      format-patch: assume --cover-letter for diff in multi-patch series
-      pager: die when paging to non-existing command
-
-Shane Sun (1):
-      doc: fix case error of eol attribute in example
-
-Taylor Blau (62):
-      attr.c: move ATTR_MAX_FILE_SIZE check into read_attr_from_buf()
-      Makefile(s): avoid recipe prefix in conditional statements
-      object.h: add flags allocated by pack-bitmap.h
-      pack-bitmap-write.c: move commit_positions into commit_pos fields
-      pack-bitmap: avoid use of static `bitmap_writer`
-      pack-bitmap: drop unused `max_bitmaps` parameter
-      pack-bitmap-write.c: avoid uninitialized 'write_as' field
-      pack-bitmap: introduce `bitmap_writer_free()`
-      Documentation/gitpacking.txt: initial commit
-      Documentation/gitpacking.txt: describe pseudo-merge bitmaps
-      Documentation/technical: describe pseudo-merge bitmaps format
-      ewah: implement `ewah_bitmap_is_subset()`
-      pack-bitmap: move some initialization to `bitmap_writer_init()`
-      pseudo-merge.ch: initial commit
-      pack-bitmap-write: support storing pseudo-merge commits
-      pack-bitmap: implement `bitmap_writer_has_bitmapped_object_id()`
-      pack-bitmap: make `bitmap_writer_push_bitmapped_commit()` public
-      config: introduce `git_config_double()`
-      pseudo-merge: implement support for selecting pseudo-merge commits
-      pack-bitmap-write.c: write pseudo-merge table
-      pack-bitmap: extract `read_bitmap()` function
-      pseudo-merge: scaffolding for reads
-      pack-bitmap.c: read pseudo-merge extension
-      pseudo-merge: implement support for reading pseudo-merge commits
-      ewah: implement `ewah_bitmap_popcount()`
-      pack-bitmap: implement test helpers for pseudo-merge
-      t/test-lib-functions.sh: support `--notick` in `test_commit_bulk()`
-      pack-bitmap.c: use pseudo-merges during traversal
-      pack-bitmap: extra trace2 information
-      ewah: `bitmap_equals_ewah()`
-      pseudo-merge: implement support for finding existing merges
-      t/perf: implement performance tests for pseudo-merge bitmaps
-      midx-write.c: tolerate `--preferred-pack` without bitmaps
-      midx-write.c: reduce argument count for `get_sorted_entries()`
-      midx-write.c: pass `start_pack` to `compute_sorted_entries()`
-      midx-write.c: extract `should_include_pack()`
-      midx-write.c: extract `fill_packs_from_midx()`
-      midx-write.c: support reading an existing MIDX with `packs_to_inclu=
-de`
-      midx: replace `get_midx_rev_filename()` with a generic helper
-      pack-bitmap.c: reimplement `midx_bitmap_filename()` with helper
-      commit-graph.c: remove temporary graph layers on exit
-      server-info.c: remove temporary info files on exit
-      midx-write.c: do not read existing MIDX with `packs_to_include`
-      pack-bitmap.c: avoid uninitialized `pack_int_id` during reuse
-      pack-revindex.c: guard against out-of-bounds pack lookups
-      Documentation/technical/bitmap-format.txt: add missing position tab=
-le
-      pack-bitmap.c: ensure pseudo-merge offset reads are bounded
-      t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-      revision.c: consult Bloom filters for root commits
-      commit-graph: ensure Bloom filters are read with consistent setting=
-s
-      t/helper/test-read-graph.c: extract `dump_graph_info()`
-      bloom.h: make `load_bloom_filter_from_graph()` public
-      t/helper/test-read-graph: implement `bloom-filters` mode
-      t4216: test changed path filters with high bit paths
-      repo-settings: introduce commitgraph.changedPathsVersion
-      bloom: annotate filters with hash version
-      bloom: prepare to discard incompatible Bloom filters
-      commit-graph: unconditionally load Bloom filters
-      commit-graph: new Bloom filter version that fixes murmur3
-      object.h: fix mis-aligned flag bits table
-      commit-graph: reuse existing Bloom filters where possible
-      bloom: introduce `deinit_bloom_filters()`
-
-Tom Hughes (2):
-      push: don't fetch commit object when checking existence
-      promisor-remote: add promisor.quiet configuration option
-
-Torsten B=C3=B6gershausen (1):
-      macOS: ls-files path fails if path of workdir is NFD
-
-Victoria Dye (1):
-      Documentation/git-merge-tree.txt: document -X
-
-Xing Xin (4):
-      midx: disable replace objects
-      bundle-uri: verify oid before writing refs
-      fetch-pack: expose fsckObjects configuration logic
-      unbundle: extend object verification for fetches
-
-brian m. carlson (19):
-      credential: add an authtype field
-      remote-curl: reset headers on new request
-      http: use new headers for each object request
-      credential: add a field for pre-encoded credentials
-      credential: gate new fields on capability
-      credential: add a field called "ephemeral"
-      docs: indicate new credential protocol fields
-      http: add support for authtype and credential
-      credential: add an argument to keep state
-      credential: enable state capability
-      docs: set a limit on credential line length
-      t5563: refactor for multi-stage authentication
-      credential: add support for multistage credential rounds
-      t: add credential tests for authtype
-      credential-cache: implement authtype capability
-      credential: add method for querying capabilities
-      t4046: avoid continue in &&-chain for zsh
-      vimdiff: make script and tests work with zsh
-      git-gui: po: fix typo in French "aper=C3=A7u"
-
-=C3=98ystein Walle (1):
-      Documentation: Mention that refspecs are explained elsewhere
-
+On Mon, Jul 8, 2024 at 9:51=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
+rote:
+>
+> On 24/06/28 03:05PM, Eric Ju wrote:
+> > From: Calvin Wan <calvinwan@google.com>
+> >
+> > Since the `info` command in cat-file --batch-command prints object info
+> > for a given object, it is natural to add another command in cat-file
+> > --batch-command to print object info for a given object from a remote.
+> > Add `remote-object-info` to cat-file --batch-command.
+> >
+> > While `info` takes object ids one at a time, this creates overhead when
+> > making requests to a server so `remote-object-info` instead can take
+> > multiple object ids at once.
+> >
+> > cat-file --batch-command is generally implemented in the following
+> > manner:
+> >
+> >  - Receive and parse input from user
+> >  - Call respective function attached to command
+> >  - Set batch mode state, get object info, print object info
+> >
+> > In --buffer mode, this changes to:
+> >
+> >  - Receive and parse input from user
+> >  - Store respective function attached to command in a queue
+> >  - After flush, loop through commands in queue
+> >     - Call respective function attached to command
+> >     - Set batch mode state, get object info, print object info
+>
+> So the problem is that there is overhead associated with getting object
+> info from the remote. Therefore, remote-object-info also supports
+> batching objects together. This seems reasonable.
+>
+
+Thank you, Justin. Yes, you are right, whenever remote-object-info is
+called there is an overhead. I will explain where this overhead
+happens in the following reply.
+
+> >
+> > Notice how the getting and printing of object info is accomplished one
+> > at a time. As described above, this creates a problem for making
+> > requests to a server. Therefore, `remote-object-info` is implemented in
+> > the following manner:
+> >
+> >  - Receive and parse input from user
+> >  If command is `remote-object-info`:
+> >     - Get object info from remote
+> >     - Loop through object info
+> >         - Call respective function attached to `info`
+> >         - Set batch mode state, use passed in object info, print object
+> >           info
+> >  Else:
+> >     - Call respective function attached to command
+> >     - Parse input, get object info, print object info
+> >
+> > And finally for --buffer mode `remote-object-info`:
+> >  - Receive and parse input from user
+> >  - Store respective function attached to command in a queue
+> >  - After flush, loop through commands in queue:
+> >     If command is `remote-object-info`:
+> >         - Get object info from remote
+> >         - Loop through object info
+> >             - Call respective function attached to `info`
+> >             - Set batch mode state, use passed in object info, print
+> >               object info
+> >     Else:
+> >         - Call respective function attached to command
+> >         - Set batch mode state, get object info, print object info
+> >
+> > To summarize, `remote-object-info` gets object info from the remote and
+> > then generates multiple `info` commands with the object info passed in.
+> >
+> > In order for remote-object-info to avoid remote communication overhead
+> > in the non-buffer mode, the objects are passed in as such:
+>
+> Even in non-buffer mode, having separate remote-object-info commands
+> would result in additional overhead correct? From my understanding each
+> command is executed sequently, so multiples of remote-object-info would
+> always result in additional overhead.
+>
+
+Thank you. No matter what mode it is (buffer or non-buffer), the
+overhead of remote-object-info is always there. To my understanding,
+there are two parts in the overhead:
+1. Setting up a connection. This is happening in `connect_setup()` in
+`fetch_object_info()` function.
+2. Sending request buf. This includes initializing the packet reader
+in `packet_reader_init()` and putting OIDs in the request buff in
+`send_object_info_request()`. Both of them are called in the
+`fetch_object_info()` function.
+
+It would be more efficient to send multiple OIDs over one request
+packet in one connection in the form of  remote-object-info <remote>
+<oid> <oid> ... <oid>
+
+> >
+> > remote-object-info <remote> <oid> <oid> ... <oid>
+> >
+> > rather than
+> >
+> > remote-object-info <remote> <oid>
+> > remote-object-info <remote> <oid>
+> > ...
+> > remote-object-info <remote> <oid>
+> >
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> > Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
+> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> > Helped-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> I think the sign-offs are supposed to go at the bottom.
+>
+
+Thank you. I am fixing it in v2.
+
+> [snip]
+> > @@ -526,51 +533,118 @@ static void batch_one_object(const char *obj_nam=
+e,
+> >               (opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0);
+> >       enum get_oid_result result;
+> >
+> > -     result =3D get_oid_with_context(the_repository, obj_name,
+> > -                                   flags, &data->oid, &ctx);
+> > -     if (result !=3D FOUND) {
+> > -             switch (result) {
+> > -             case MISSING_OBJECT:
+> > -                     printf("%s missing%c", obj_name, opt->output_deli=
+m);
+> > -                     break;
+> > -             case SHORT_NAME_AMBIGUOUS:
+> > -                     printf("%s ambiguous%c", obj_name, opt->output_de=
+lim);
+> > -                     break;
+> > -             case DANGLING_SYMLINK:
+> > -                     printf("dangling %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             case SYMLINK_LOOP:
+> > -                     printf("loop %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             case NOT_DIR:
+> > -                     printf("notdir %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             default:
+> > -                     BUG("unknown get_sha1_with_context result %d\n",
+> > -                            result);
+> > -                     break;
+> > +     if (!opt->use_remote_info) {
+>
+> When using the remote-object-info command, the object in question is
+> supposed to be on the remote and may not exist locally. Therefore we
+> skip over `get_oid_with_context()`.
+>
+
+Thank you. Yes, that is the reason. I reworded your comment and added
+it to the code in v2 to make it easier to follow.
+
+> > +             result =3D get_oid_with_context(the_repository, obj_name,
+> > +                                             flags, &data->oid, &ctx);
+> > +             if (result !=3D FOUND) {
+> > +                     switch (result) {
+> > +                     case MISSING_OBJECT:
+> > +                             printf("%s missing%c", obj_name, opt->out=
+put_delim);
+> > +                             break;
+> > +                     case SHORT_NAME_AMBIGUOUS:
+> > +                             printf("%s ambiguous%c", obj_name, opt->o=
+utput_delim);
+> > +                             break;
+> > +                     case DANGLING_SYMLINK:
+> > +                             printf("dangling %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     case SYMLINK_LOOP:
+> > +                             printf("loop %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     case NOT_DIR:
+> > +                             printf("notdir %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     default:
+> > +                             BUG("unknown get_sha1_with_context result=
+ %d\n",
+> > +                                     result);
+> > +                             break;
+> > +                     }
+> > +                     fflush(stdout);
+> > +                     return;
+> >               }
+> > -             fflush(stdout);
+> > -             return;
+> > -     }
+> >
+> > -     if (ctx.mode =3D=3D 0) {
+> > -             printf("symlink %"PRIuMAX"%c%s%c",
+> > -                    (uintmax_t)ctx.symlink_path.len,
+> > -                    opt->output_delim, ctx.symlink_path.buf, opt->outp=
+ut_delim);
+> > -             fflush(stdout);
+> > -             return;
+> > +             if (ctx.mode =3D=3D 0) {
+> > +                     printf("symlink %"PRIuMAX"%c%s%c",
+> > +                             (uintmax_t)ctx.symlink_path.len,
+> > +                             opt->output_delim, ctx.symlink_path.buf, =
+opt->output_delim);
+> > +                     fflush(stdout);
+> > +                     return;
+> > +             }
+> >       }
+> >
+> >       batch_object_write(obj_name, scratch, opt, data, NULL, 0);
+> >  }
+> >
+> > +static int get_remote_info(struct batch_options *opt, int argc, const =
+char **argv)
+> > +{
+> > +     int retval =3D 0;
+> > +     struct remote *remote =3D NULL;
+> > +     struct object_id oid;
+> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+;
+> > +     static struct transport *gtransport;
+> > +
+> > +     /*
+> > +      * Change the format to "%(objectname) %(objectsize)" when
+> > +      * remote-object-info command is used. Once we start supporting o=
+bjecttype
+> > +      * the default format should change to DEFAULT_FORMAT
+> > +     */
+> > +     if (!opt->format) {
+> > +             opt->format =3D "%(objectname) %(objectsize)";
+> > +     }
+>
+> We should omit the parenthesis for single line if statements.
+>
+
+Thank you. Fixed in V2.
+
+> > +
+> > +     remote =3D remote_get(argv[0]);
+> > +     if (!remote)
+> > +             die(_("must supply valid remote when using remote-object-=
+info"));
+> > +     oid_array_clear(&object_info_oids);
+> > +     for (size_t i =3D 1; i < argc; i++) {
+> > +             if (get_oid_hex(argv[i], &oid))
+> > +                     die(_("Not a valid object name %s"), argv[i]);
+> > +             oid_array_append(&object_info_oids, &oid);
+> > +     }
+> > +
+> > +     gtransport =3D transport_get(remote, NULL);
+> > +     if (gtransport->smart_options) {
+> > +             int include_size =3D 0;
+> > +
+> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
+> > +             gtransport->smart_options->object_info =3D 1;
+> > +             gtransport->smart_options->object_info_oids =3D &object_i=
+nfo_oids;
+> > +             /*
+> > +              * 'size' is the only option currently supported.
+> > +              * Other options that are passed in the format will exit =
+with error.
+> > +              */
+> > +             if (strstr(opt->format, "%(objectsize)")) {
+> > +                     string_list_append(&object_info_options, "size");
+> > +                     include_size =3D 1;
+> > +             }
+> > +             if (strstr(opt->format, "%(objecttype)")) {
+> > +                     die(_("objecttype is currently not supported with=
+ remote-object-info"));
+> > +             }
+>
+> Another single line if statement above that should omit the parenthesis.
+>
+
+Thank you. Fixed in V2.
+
+> > +             if (strstr(opt->format, "%(objectsize:disk)"))
+> > +                     die(_("objectsize:disk is currently not supported=
+ with remote-object-info"));
+> > +             if (strstr(opt->format, "%(deltabase)"))
+> > +                     die(_("deltabase is currently not supported with =
+remote-object-info"));
+> > +             if (object_info_options.nr > 0) {
+> > +                     gtransport->smart_options->object_info_options =
+=3D &object_info_options;
+> > +                     for (size_t i =3D 0; i < object_info_oids.nr; i++=
+) {
+> > +                             if (include_size)
+> > +                                     remote_object_info[i].sizep =3D x=
+calloc(1, sizeof(long));
+> > +                     }
+> > +                     gtransport->smart_options->object_info_data =3D &=
+remote_object_info;
+> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
+;
+> > +             }
+> > +     } else {
+> > +             retval =3D -1;
+> > +     }
+> > +
+> > +     return retval;
+> > +}
+> > +
+> >  struct object_cb_data {
+> >       struct batch_options *opt;
+> >       struct expand_data *expand;
+> > @@ -642,6 +716,7 @@ typedef void (*parse_cmd_fn_t)(struct batch_options=
+ *, const char *,
+> >  struct queued_cmd {
+> >       parse_cmd_fn_t fn;
+> >       char *line;
+> > +     const char *name;
+>
+> Since special handling is needed for the remote-object-info command, we
+> record the queued command names to check against later.
+>
+
+Yes. We need to compare the function name to do special handling
+later. But I think we can have a better solution here instead of doing
+a name comparison. Please see my reply below.
+
+> >  };
+> >
+> >  static void parse_cmd_contents(struct batch_options *opt,
+> > @@ -662,6 +737,55 @@ static void parse_cmd_info(struct batch_options *o=
+pt,
+> >       batch_one_object(line, output, opt, data);
+> >  }
+> >
+> > +static const struct parse_cmd {
+> > +     const char *name;
+> > +     parse_cmd_fn_t fn;
+> > +     unsigned takes_args;
+> > +} commands[] =3D {
+> > +     { "contents", parse_cmd_contents, 1 },
+> > +     { "info", parse_cmd_info, 1 },
+> > +     { "remote-object-info", parse_cmd_info, 1 },
+> > +     { "flush", NULL, 0 },
+> > +};
+> > +
+> > +static void parse_remote_info(struct batch_options *opt,
+> > +                        char *line,
+> > +                        struct strbuf *output,
+> > +                        struct expand_data *data,
+> > +                        const struct parse_cmd *p_cmd,
+> > +                        struct queued_cmd *q_cmd)
+>
+> It seems a little confusing to me that `parse_remote_info()` accepts
+> both a `parse_cmd` and `queued_cmd`, but only expects to use one or the
+> other. It looks like this is done because `dispatch_calls()` already
+> accepts `queued_cmd`, but now needs to call `parse_remote_info()`.
+>
+> Since it is only the underlying command function that is needed by
+> `parse_remote_info()`
+>
+
+Thank you. I agree. I did some refactoring. Please see me reply below.
+
+
+> > +{
+> > +     int count;
+> > +     const char **argv;
+> > +
+> > +     count =3D split_cmdline(line, &argv);
+> > +     if (get_remote_info(opt, count, argv))
+> > +             goto cleanup;
+> > +     opt->use_remote_info =3D 1;
+> > +     data->skip_object_info =3D 1;
+> > +     data->mark_query =3D 0;
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
+> > +             if (remote_object_info[i].sizep)
+> > +                     data->size =3D *remote_object_info[i].sizep;
+> > +             if (remote_object_info[i].typep)
+> > +                     data->type =3D *remote_object_info[i].typep;
+> > +
+> > +             data->oid =3D object_info_oids.oid[i];
+> > +             if (p_cmd)
+> > +                     p_cmd->fn(opt, argv[i+1], output, data);
+> > +             else
+> > +                     q_cmd->fn(opt, argv[i+1], output, data);
+> > +     }
+> > +     opt->use_remote_info =3D 0;
+> > +     data->skip_object_info =3D 0;
+> > +     data->mark_query =3D 1;
+> > +
+> > +cleanup:
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++)
+> > +             free_object_info_contents(&remote_object_info[i]);
+> > +     free(remote_object_info);
+> > +}
+> > +
+> >  static void dispatch_calls(struct batch_options *opt,
+> >               struct strbuf *output,
+> >               struct expand_data *data,
+> > @@ -671,8 +795,12 @@ static void dispatch_calls(struct batch_options *o=
+pt,
+> >       if (!opt->buffer_output)
+> >               die(_("flush is only for --buffer mode"));
+> >
+> > -     for (int i =3D 0; i < nr; i++)
+> > -             cmd[i].fn(opt, cmd[i].line, output, data);
+> > +     for (int i =3D 0; i < nr; i++) {
+> > +             if (!strcmp(cmd[i].name, "remote-object-info"))
+> > +                     parse_remote_info(opt, cmd[i].line, output, data,=
+ NULL, &cmd[i]);
+>
+> If we adapt `parse_remote_info()` to accept the command function we
+> could pass cmd->fn here instead.
+>
+
+Thank you. I think I can push it a bit further.
+
+Under the hood, parse_remote_info will use parse_cmd_info to print the
+retrieved information to the client. That is why it had this line
+originally:
+  ...
+   { "remote-object-info", parse_cmd_info, 1 },
+  ...
+
+Inspired by your comment, I am thinking if I can adapt
+parse_remote_info() 's signature to the same as parse_cmd_info(). It
+would make the code cleaner. To be specific. I can
+
+1. get rid of name cooperation in
+   ...
+   if (!strcmp(cmd[i].name, "remote-object-info"))
+       parse_remote_info(opt, cmd[i].line, output, data, NULL, &cmd[I]);
+   else
+       cmd[i].fn(opt, cmd[i].line, output, data);
+   ...
+   and I can just use `cmd[i].fn(opt, cmd[i].line, output, data)`
+
+2. get rid of
+   ...
+   if (p_cmd)
+        p_cmd->fn(opt, argv[i+1], output, data);
+   else
+        q_cmd->fn(opt, argv[i+1], output, data);
+   ...
+
+I will make this change in V2.
+
+> > +             else
+> > +                     cmd[i].fn(opt, cmd[i].line, output, data);
+> > +     }
+> >
+> >       fflush(stdout);
+> >  }
+> > @@ -685,17 +813,6 @@ static void free_cmds(struct queued_cmd *cmd, size=
+_t *nr)
+> >       *nr =3D 0;
+> >  }
+> >
+> > -
+> > -static const struct parse_cmd {
+> > -     const char *name;
+> > -     parse_cmd_fn_t fn;
+> > -     unsigned takes_args;
+> > -} commands[] =3D {
+> > -     { "contents", parse_cmd_contents, 1},
+> > -     { "info", parse_cmd_info, 1},
+> > -     { "flush", NULL, 0},
+> > -};
+> > -
+> >  static void batch_objects_command(struct batch_options *opt,
+> >                                   struct strbuf *output,
+> >                                   struct expand_data *data)
+> > @@ -740,11 +857,17 @@ static void batch_objects_command(struct batch_op=
+tions *opt,
+> >                       dispatch_calls(opt, output, data, queued_cmd, nr)=
+;
+> >                       free_cmds(queued_cmd, &nr);
+> >               } else if (!opt->buffer_output) {
+> > -                     cmd->fn(opt, p, output, data);
+> > +                     if (!strcmp(cmd->name, "remote-object-info")) {
+> > +                             char *line =3D xstrdup_or_null(p);
+> > +                             parse_remote_info(opt, line, output, data=
+, cmd, NULL);
+>
+> Same here, if we adapt `parse_remote_info()` to accept the command
+> function we could pass cmd->fn here instead.
+
+Thank you. Please see my reply above.
+
+> > +                     } else {
+> > +                             cmd->fn(opt, p, output, data);
+> > +                     }
+> >               } else {
+> >                       ALLOC_GROW(queued_cmd, nr + 1, alloc);
+> >                       call.fn =3D cmd->fn;
+> >                       call.line =3D xstrdup_or_null(p);
+> > +                     call.name =3D cmd->name;
+> >                       queued_cmd[nr++] =3D call;
+> >               }
+> >       }
+> > @@ -761,8 +884,6 @@ static void batch_objects_command(struct batch_opti=
+ons *opt,
+> >       strbuf_release(&input);
+> >  }
+> >
+> > -#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
+> > -
+> >  static int batch_objects(struct batch_options *opt)
+> >  {
+> >       struct strbuf input =3D STRBUF_INIT;
+> [snip]
+
+On Mon, Jul 8, 2024 at 9:51=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
+rote:
+>
+> On 24/06/28 03:05PM, Eric Ju wrote:
+> > From: Calvin Wan <calvinwan@google.com>
+> >
+> > Since the `info` command in cat-file --batch-command prints object info
+> > for a given object, it is natural to add another command in cat-file
+> > --batch-command to print object info for a given object from a remote.
+> > Add `remote-object-info` to cat-file --batch-command.
+> >
+> > While `info` takes object ids one at a time, this creates overhead when
+> > making requests to a server so `remote-object-info` instead can take
+> > multiple object ids at once.
+> >
+> > cat-file --batch-command is generally implemented in the following
+> > manner:
+> >
+> >  - Receive and parse input from user
+> >  - Call respective function attached to command
+> >  - Set batch mode state, get object info, print object info
+> >
+> > In --buffer mode, this changes to:
+> >
+> >  - Receive and parse input from user
+> >  - Store respective function attached to command in a queue
+> >  - After flush, loop through commands in queue
+> >     - Call respective function attached to command
+> >     - Set batch mode state, get object info, print object info
+>
+> So the problem is that there is overhead associated with getting object
+> info from the remote. Therefore, remote-object-info also supports
+> batching objects together. This seems reasonable.
+>
+> >
+> > Notice how the getting and printing of object info is accomplished one
+> > at a time. As described above, this creates a problem for making
+> > requests to a server. Therefore, `remote-object-info` is implemented in
+> > the following manner:
+> >
+> >  - Receive and parse input from user
+> >  If command is `remote-object-info`:
+> >     - Get object info from remote
+> >     - Loop through object info
+> >         - Call respective function attached to `info`
+> >         - Set batch mode state, use passed in object info, print object
+> >           info
+> >  Else:
+> >     - Call respective function attached to command
+> >     - Parse input, get object info, print object info
+> >
+> > And finally for --buffer mode `remote-object-info`:
+> >  - Receive and parse input from user
+> >  - Store respective function attached to command in a queue
+> >  - After flush, loop through commands in queue:
+> >     If command is `remote-object-info`:
+> >         - Get object info from remote
+> >         - Loop through object info
+> >             - Call respective function attached to `info`
+> >             - Set batch mode state, use passed in object info, print
+> >               object info
+> >     Else:
+> >         - Call respective function attached to command
+> >         - Set batch mode state, get object info, print object info
+> >
+> > To summarize, `remote-object-info` gets object info from the remote and
+> > then generates multiple `info` commands with the object info passed in.
+> >
+> > In order for remote-object-info to avoid remote communication overhead
+> > in the non-buffer mode, the objects are passed in as such:
+>
+> Even in non-buffer mode, having separate remote-object-info commands
+> would result in additional overhead correct? From my understanding each
+> command is executed sequently, so multiples of remote-object-info would
+> always result in additional overhead.
+>
+> >
+> > remote-object-info <remote> <oid> <oid> ... <oid>
+> >
+> > rather than
+> >
+> > remote-object-info <remote> <oid>
+> > remote-object-info <remote> <oid>
+> > ...
+> > remote-object-info <remote> <oid>
+> >
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> > Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
+> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> > Helped-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> I think the sign-offs are supposed to go at the bottom.
+>
+> [snip]
+> > @@ -526,51 +533,118 @@ static void batch_one_object(const char *obj_nam=
+e,
+> >               (opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0);
+> >       enum get_oid_result result;
+> >
+> > -     result =3D get_oid_with_context(the_repository, obj_name,
+> > -                                   flags, &data->oid, &ctx);
+> > -     if (result !=3D FOUND) {
+> > -             switch (result) {
+> > -             case MISSING_OBJECT:
+> > -                     printf("%s missing%c", obj_name, opt->output_deli=
+m);
+> > -                     break;
+> > -             case SHORT_NAME_AMBIGUOUS:
+> > -                     printf("%s ambiguous%c", obj_name, opt->output_de=
+lim);
+> > -                     break;
+> > -             case DANGLING_SYMLINK:
+> > -                     printf("dangling %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             case SYMLINK_LOOP:
+> > -                     printf("loop %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             case NOT_DIR:
+> > -                     printf("notdir %"PRIuMAX"%c%s%c",
+> > -                            (uintmax_t)strlen(obj_name),
+> > -                            opt->output_delim, obj_name, opt->output_d=
+elim);
+> > -                     break;
+> > -             default:
+> > -                     BUG("unknown get_sha1_with_context result %d\n",
+> > -                            result);
+> > -                     break;
+> > +     if (!opt->use_remote_info) {
+>
+> When using the remote-object-info command, the object in question is
+> supposed to be on the remote and may not exist locally. Therefore we
+> skip over `get_oid_with_context()`.
+>
+> > +             result =3D get_oid_with_context(the_repository, obj_name,
+> > +                                             flags, &data->oid, &ctx);
+> > +             if (result !=3D FOUND) {
+> > +                     switch (result) {
+> > +                     case MISSING_OBJECT:
+> > +                             printf("%s missing%c", obj_name, opt->out=
+put_delim);
+> > +                             break;
+> > +                     case SHORT_NAME_AMBIGUOUS:
+> > +                             printf("%s ambiguous%c", obj_name, opt->o=
+utput_delim);
+> > +                             break;
+> > +                     case DANGLING_SYMLINK:
+> > +                             printf("dangling %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     case SYMLINK_LOOP:
+> > +                             printf("loop %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     case NOT_DIR:
+> > +                             printf("notdir %"PRIuMAX"%c%s%c",
+> > +                                     (uintmax_t)strlen(obj_name),
+> > +                                     opt->output_delim, obj_name, opt-=
+>output_delim);
+> > +                             break;
+> > +                     default:
+> > +                             BUG("unknown get_sha1_with_context result=
+ %d\n",
+> > +                                     result);
+> > +                             break;
+> > +                     }
+> > +                     fflush(stdout);
+> > +                     return;
+> >               }
+> > -             fflush(stdout);
+> > -             return;
+> > -     }
+> >
+> > -     if (ctx.mode =3D=3D 0) {
+> > -             printf("symlink %"PRIuMAX"%c%s%c",
+> > -                    (uintmax_t)ctx.symlink_path.len,
+> > -                    opt->output_delim, ctx.symlink_path.buf, opt->outp=
+ut_delim);
+> > -             fflush(stdout);
+> > -             return;
+> > +             if (ctx.mode =3D=3D 0) {
+> > +                     printf("symlink %"PRIuMAX"%c%s%c",
+> > +                             (uintmax_t)ctx.symlink_path.len,
+> > +                             opt->output_delim, ctx.symlink_path.buf, =
+opt->output_delim);
+> > +                     fflush(stdout);
+> > +                     return;
+> > +             }
+> >       }
+> >
+> >       batch_object_write(obj_name, scratch, opt, data, NULL, 0);
+> >  }
+> >
+> > +static int get_remote_info(struct batch_options *opt, int argc, const =
+char **argv)
+> > +{
+> > +     int retval =3D 0;
+> > +     struct remote *remote =3D NULL;
+> > +     struct object_id oid;
+> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+;
+> > +     static struct transport *gtransport;
+> > +
+> > +     /*
+> > +      * Change the format to "%(objectname) %(objectsize)" when
+> > +      * remote-object-info command is used. Once we start supporting o=
+bjecttype
+> > +      * the default format should change to DEFAULT_FORMAT
+> > +     */
+> > +     if (!opt->format) {
+> > +             opt->format =3D "%(objectname) %(objectsize)";
+> > +     }
+>
+> We should omit the parenthesis for single line if statements.
+>
+> > +
+> > +     remote =3D remote_get(argv[0]);
+> > +     if (!remote)
+> > +             die(_("must supply valid remote when using remote-object-=
+info"));
+> > +     oid_array_clear(&object_info_oids);
+> > +     for (size_t i =3D 1; i < argc; i++) {
+> > +             if (get_oid_hex(argv[i], &oid))
+> > +                     die(_("Not a valid object name %s"), argv[i]);
+> > +             oid_array_append(&object_info_oids, &oid);
+> > +     }
+> > +
+> > +     gtransport =3D transport_get(remote, NULL);
+> > +     if (gtransport->smart_options) {
+> > +             int include_size =3D 0;
+> > +
+> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
+> > +             gtransport->smart_options->object_info =3D 1;
+> > +             gtransport->smart_options->object_info_oids =3D &object_i=
+nfo_oids;
+> > +             /*
+> > +              * 'size' is the only option currently supported.
+> > +              * Other options that are passed in the format will exit =
+with error.
+> > +              */
+> > +             if (strstr(opt->format, "%(objectsize)")) {
+> > +                     string_list_append(&object_info_options, "size");
+> > +                     include_size =3D 1;
+> > +             }
+> > +             if (strstr(opt->format, "%(objecttype)")) {
+> > +                     die(_("objecttype is currently not supported with=
+ remote-object-info"));
+> > +             }
+>
+> Another single line if statement above that should omit the parenthesis.
+>
+> > +             if (strstr(opt->format, "%(objectsize:disk)"))
+> > +                     die(_("objectsize:disk is currently not supported=
+ with remote-object-info"));
+> > +             if (strstr(opt->format, "%(deltabase)"))
+> > +                     die(_("deltabase is currently not supported with =
+remote-object-info"));
+> > +             if (object_info_options.nr > 0) {
+> > +                     gtransport->smart_options->object_info_options =
+=3D &object_info_options;
+> > +                     for (size_t i =3D 0; i < object_info_oids.nr; i++=
+) {
+> > +                             if (include_size)
+> > +                                     remote_object_info[i].sizep =3D x=
+calloc(1, sizeof(long));
+> > +                     }
+> > +                     gtransport->smart_options->object_info_data =3D &=
+remote_object_info;
+> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
+;
+> > +             }
+> > +     } else {
+> > +             retval =3D -1;
+> > +     }
+> > +
+> > +     return retval;
+> > +}
+> > +
+> >  struct object_cb_data {
+> >       struct batch_options *opt;
+> >       struct expand_data *expand;
+> > @@ -642,6 +716,7 @@ typedef void (*parse_cmd_fn_t)(struct batch_options=
+ *, const char *,
+> >  struct queued_cmd {
+> >       parse_cmd_fn_t fn;
+> >       char *line;
+> > +     const char *name;
+>
+> Since special handling is needed for the remote-object-info command, we
+> record the queued command names to check against later.
+>
+> >  };
+> >
+> >  static void parse_cmd_contents(struct batch_options *opt,
+> > @@ -662,6 +737,55 @@ static void parse_cmd_info(struct batch_options *o=
+pt,
+> >       batch_one_object(line, output, opt, data);
+> >  }
+> >
+> > +static const struct parse_cmd {
+> > +     const char *name;
+> > +     parse_cmd_fn_t fn;
+> > +     unsigned takes_args;
+> > +} commands[] =3D {
+> > +     { "contents", parse_cmd_contents, 1 },
+> > +     { "info", parse_cmd_info, 1 },
+> > +     { "remote-object-info", parse_cmd_info, 1 },
+> > +     { "flush", NULL, 0 },
+> > +};
+> > +
+> > +static void parse_remote_info(struct batch_options *opt,
+> > +                        char *line,
+> > +                        struct strbuf *output,
+> > +                        struct expand_data *data,
+> > +                        const struct parse_cmd *p_cmd,
+> > +                        struct queued_cmd *q_cmd)
+>
+> It seems a little confusing to me that `parse_remote_info()` accepts
+> both a `parse_cmd` and `queued_cmd`, but only expects to use one or the
+> other. It looks like this is done because `dispatch_calls()` already
+> accepts `queued_cmd`, but now needs to call `parse_remote_info()`.
+>
+> Since it is only the underlying command function that is needed by
+> `parse_remote_info()`
+>
+> > +{
+> > +     int count;
+> > +     const char **argv;
+> > +
+> > +     count =3D split_cmdline(line, &argv);
+> > +     if (get_remote_info(opt, count, argv))
+> > +             goto cleanup;
+> > +     opt->use_remote_info =3D 1;
+> > +     data->skip_object_info =3D 1;
+> > +     data->mark_query =3D 0;
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
+> > +             if (remote_object_info[i].sizep)
+> > +                     data->size =3D *remote_object_info[i].sizep;
+> > +             if (remote_object_info[i].typep)
+> > +                     data->type =3D *remote_object_info[i].typep;
+> > +
+> > +             data->oid =3D object_info_oids.oid[i];
+> > +             if (p_cmd)
+> > +                     p_cmd->fn(opt, argv[i+1], output, data);
+> > +             else
+> > +                     q_cmd->fn(opt, argv[i+1], output, data);
+> > +     }
+> > +     opt->use_remote_info =3D 0;
+> > +     data->skip_object_info =3D 0;
+> > +     data->mark_query =3D 1;
+> > +
+> > +cleanup:
+> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++)
+> > +             free_object_info_contents(&remote_object_info[i]);
+> > +     free(remote_object_info);
+> > +}
+> > +
+> >  static void dispatch_calls(struct batch_options *opt,
+> >               struct strbuf *output,
+> >               struct expand_data *data,
+> > @@ -671,8 +795,12 @@ static void dispatch_calls(struct batch_options *o=
+pt,
+> >       if (!opt->buffer_output)
+> >               die(_("flush is only for --buffer mode"));
+> >
+> > -     for (int i =3D 0; i < nr; i++)
+> > -             cmd[i].fn(opt, cmd[i].line, output, data);
+> > +     for (int i =3D 0; i < nr; i++) {
+> > +             if (!strcmp(cmd[i].name, "remote-object-info"))
+> > +                     parse_remote_info(opt, cmd[i].line, output, data,=
+ NULL, &cmd[i]);
+>
+> If we adapt `parse_remote_info()` to accept the command function we
+> could pass cmd->fn here instead.
+>
+> > +             else
+> > +                     cmd[i].fn(opt, cmd[i].line, output, data);
+> > +     }
+> >
+> >       fflush(stdout);
+> >  }
+> > @@ -685,17 +813,6 @@ static void free_cmds(struct queued_cmd *cmd, size=
+_t *nr)
+> >       *nr =3D 0;
+> >  }
+> >
+> > -
+> > -static const struct parse_cmd {
+> > -     const char *name;
+> > -     parse_cmd_fn_t fn;
+> > -     unsigned takes_args;
+> > -} commands[] =3D {
+> > -     { "contents", parse_cmd_contents, 1},
+> > -     { "info", parse_cmd_info, 1},
+> > -     { "flush", NULL, 0},
+> > -};
+> > -
+> >  static void batch_objects_command(struct batch_options *opt,
+> >                                   struct strbuf *output,
+> >                                   struct expand_data *data)
+> > @@ -740,11 +857,17 @@ static void batch_objects_command(struct batch_op=
+tions *opt,
+> >                       dispatch_calls(opt, output, data, queued_cmd, nr)=
+;
+> >                       free_cmds(queued_cmd, &nr);
+> >               } else if (!opt->buffer_output) {
+> > -                     cmd->fn(opt, p, output, data);
+> > +                     if (!strcmp(cmd->name, "remote-object-info")) {
+> > +                             char *line =3D xstrdup_or_null(p);
+> > +                             parse_remote_info(opt, line, output, data=
+, cmd, NULL);
+>
+> Same here, if we adapt `parse_remote_info()` to accept the command
+> function we could pass cmd->fn here instead.
+>
+> > +                     } else {
+> > +                             cmd->fn(opt, p, output, data);
+> > +                     }
+> >               } else {
+> >                       ALLOC_GROW(queued_cmd, nr + 1, alloc);
+> >                       call.fn =3D cmd->fn;
+> >                       call.line =3D xstrdup_or_null(p);
+> > +                     call.name =3D cmd->name;
+> >                       queued_cmd[nr++] =3D call;
+> >               }
+> >       }
+> > @@ -761,8 +884,6 @@ static void batch_objects_command(struct batch_opti=
+ons *opt,
+> >       strbuf_release(&input);
+> >  }
+> >
+> > -#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
+> > -
+> >  static int batch_objects(struct batch_options *opt)
+> >  {
+> >       struct strbuf input =3D STRBUF_INIT;
+> [snip]
