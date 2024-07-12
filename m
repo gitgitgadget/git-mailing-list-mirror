@@ -1,58 +1,58 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B903646
-	for <git@vger.kernel.org>; Fri, 12 Jul 2024 01:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FCF10E9
+	for <git@vger.kernel.org>; Fri, 12 Jul 2024 01:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720746043; cv=none; b=N0zFms/u7AFeEfjpFKfAslJhj4OCNQjMJDtqcHYv8CZASizXlaF8jkXG+nDRHYma+oO8zng9wrL/F9jg0nNasqFt4GaDsid9ljdeMprc8NczNjidIhW1Mn7o8VajCjRp6abJXk6uSiR4Dw13fVqP1gzyUxetZF2JVw/l7MXYVzo=
+	t=1720746054; cv=none; b=UKCUVz33UjhHLJCbhqEoBeWIvMqFLl2PvUmW7AJN4/ictRFsX1B+4d5fpA17GGDj091U+X2i7lx29cIZ0ok1413AzpE2Fyi/yhiAZUSzzBNrk6C8OKc9LsKKrP+zMaAAGvgBKLLATgUYgQK0vnbffap1wx+eTCBSlkRT7bZcxdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720746043; c=relaxed/simple;
-	bh=K2qQ4YxVn4IcZ6zjYncqGH51QLHRQj3SNWIzA/2G3WQ=;
+	s=arc-20240116; t=1720746054; c=relaxed/simple;
+	bh=IocAn3QdAZZdfiPTYqrCUs8kspnsG4E5Ghv0+2JhKCQ=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=phCtpzPt2Jc75nCQ0EUA95XKQv3yh6Xwwvl6fvWqpw8TV9qcqhGr2aTDVn7V3W3J6Tm2hJedkfYF7SvdQVSuqLtU4V/BLCaiVl11IgheYvDBQsX8z8lZtyr1NRDdlXAciCTselk7CDiuGznciJcvaahh7nVBvTpehbnaxywLugU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QS/ghc+V; arc=none smtp.client-ip=209.85.161.50
+	 In-Reply-To:Content-Type; b=dmcjwXUltlt5tARDZhZe5Ez4QeKJXN8i5jpQUqfv+oD6/LZW5ev49Jm8h1Ge+IrAxUsIEQ1w7mrt6lYHL5BYdKcQ5gxs3WTc8ttmGOcqnREllrj8UzjxEWy3R36YSUf2yN6JQf+jrGfLPBUGuT7/HnXPRavbpRj7oMVhxwLbZvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VmVe1xlW; arc=none smtp.client-ip=209.85.166.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QS/ghc+V"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5c661e75ff6so706240eaf.2
-        for <git@vger.kernel.org>; Thu, 11 Jul 2024 18:00:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VmVe1xlW"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-375af3538f2so5798615ab.3
+        for <git@vger.kernel.org>; Thu, 11 Jul 2024 18:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720746040; x=1721350840; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720746052; x=1721350852; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=QSt/KlFZjITo82bf+j4HAf/SX8KZJF5mpo/JA5V78xA=;
-        b=QS/ghc+VXBCLN2yFYaNDd16R0y9iQB9BQJGXvXAY+zlnigbt6d/9N0LQzw80okzmMj
-         wfA9UKyLxHarRkRRfGR1CNsBgkMkhliKjrJ4rYykO990AKMIztuI3vIcH7EKMe075xzN
-         AfANtYdGEBcRV40fORJL3L1mU1MBxoWamlWyuseywCUxkOYJsswhzqgOEYYJEQDekhwr
-         0i+ulxIMfo6UdONvHrxc34ZXNQT8gW+MKSXAPUgMPlJwwIEfBPVHzT0HCkPv/q4VGOlA
-         xImQRqrk5j2tfkvxgQCH85AE69jDB/H5v9eauDztPeMA+Y9TV2i/hFHVHRD1aU1XAlsJ
-         Unvg==
+        bh=9CRxaq3bF1Ug2b9v12SMlvjREeqlUde/obnHVSoHnjc=;
+        b=VmVe1xlWe4gze6XdB+0zr9hgPtg2/JZXUpBmo3GndfsQKhAOMZveGMaH2eCUaTCnzH
+         YlW3PecPzP9Y9+zbPSceR9DHAx2lAT2U30+yieXp3bhSqDn5G/i219h2TdVRvTneTKCy
+         oBF5Poxe+9kV1epPVWIpkzgxhKzVB/M2SCNxYVsVwnMtzGHCzlkyHwgyJ25ZgoXYHCaw
+         KPkTZXO4txpKZq65qqvz59z6g8/szqj7bSTKCsWxIxyW7u+yiYgRskM4uy1cDpFeh4FV
+         XfX83LtwAiEKcVPuSZRqOFSepqqJSvNt6g4P7/tyhge61fybkIW+a6wV5LepyH7XWr/G
+         ZULw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720746040; x=1721350840;
+        d=1e100.net; s=20230601; t=1720746052; x=1721350852;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSt/KlFZjITo82bf+j4HAf/SX8KZJF5mpo/JA5V78xA=;
-        b=DIoXR+RjKm2zlFVZSfdUD5E7RG9JNOTzpNT5Otnp4PBChE+8KwwXdh4mr38xFsf5/x
-         uz2iI8dRPhc90eJxiiyTxwxWoqTkM8oLTRqbxnn8lke0X4BIjyvLdVg+3unK4/dtZHEz
-         cuiQm1W2HNRWgWo/L7E5KjD3UvhkI5/PGiWiSVy7lgTR2WaoRmMGcZqNPL48AoDvIeMX
-         U4khO+oz3Ms/exLBLLi3iz42KRY6B1C/QnoLJaENOKcQJw8zcmJ+gP5PZtxl14zozw1Q
-         HsjhA2MXercZWT1l8bWWz+RvfihGH2f4Czjh14LET5qofi6jZjmCEwuJZ8OSrALaDBwp
-         NHSg==
-X-Gm-Message-State: AOJu0YyGfue5WCYPxyPzNTMA3LiHZme+A8Kgs1Ie1CGQ+kp04MUk6rnD
-	442Bd005SLGMlL7Apn1zENNJI5Hu8fFn/cWH+EzivoenDMGHpM74cF8w5Q==
-X-Google-Smtp-Source: AGHT+IFdmuy4RXnPn3utpzcodrKd+Cr9y0YDQL0f36TwKpPt71DE1IDZLMW+0qOl1dkOl9mFGEqHuA==
-X-Received: by 2002:a05:6870:fba2:b0:25e:27bd:885 with SMTP id 586e51a60fabf-25eaec56995mr9069860fac.57.1720746040510;
-        Thu, 11 Jul 2024 18:00:40 -0700 (PDT)
+        bh=9CRxaq3bF1Ug2b9v12SMlvjREeqlUde/obnHVSoHnjc=;
+        b=JGpNyUo7Aazbia0ijy5neA4e6q8WS8lA8891BN3xqO6mDnRV8MtqL2qNW9w/8Zdif6
+         97yNFOvnvzATWLOkYNyH7Sgp/w+Se7WOFnYYuQkX+hP8fIBxWNykaQtaNfawbpdYUyTj
+         49aYyJAl+Mx0NXA1BNIPrBL5dHFaUFCBcKu5v45/0WOjmKWZawuyRWWxb5wUC7s3/yEL
+         tIbwCNgt0Q9CWSFw4WGiaXZBSjtmHtcgRYAsODe8mAej6/s73mv8fI9LlEcaa1rjYsb0
+         JmD+TQqpBNSl78yvGyDlhxSYiR5gpmfg+K8wEenD+uGtnY2veSwEO0Ja+ehiDRCStOIh
+         QDZA==
+X-Gm-Message-State: AOJu0YwE1aorIerng4JYSmtBFnvfxQJXOjlmUQLC//sPZ87zpOdKUlMf
+	Q9XywBhJbGfhFNzkd9NwLjpgiY2v57Lgu3HLkOR2rnFSGAH1jruOKVLo+g==
+X-Google-Smtp-Source: AGHT+IFFOQqyZxEsq7nfHwv69SsSLqyxQptgfJwjt/gg0Wb5xrKvKUGT04K5/cDuNmvI8HeoA0jGlg==
+X-Received: by 2002:a05:6e02:b49:b0:383:284:113 with SMTP id e9e14a558f8ab-38a57214449mr126898985ab.4.1720746051638;
+        Thu, 11 Jul 2024 18:00:51 -0700 (PDT)
 Received: from gmail.com (p4357013-ipoe.ipoe.ocn.ne.jp. [123.222.98.12])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b438e6d4fsm6494111b3a.91.2024.07.11.18.00.38
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-77d5f0ab0d8sm4909240a12.19.2024.07.11.18.00.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 18:00:39 -0700 (PDT)
-Message-ID: <4b5d0e7c-9492-4495-9bc1-40ebea850fde@gmail.com>
-Date: Fri, 12 Jul 2024 10:00:37 +0900
+        Thu, 11 Jul 2024 18:00:51 -0700 (PDT)
+Message-ID: <5effca4d-536c-4e51-a024-5f1e90583176@gmail.com>
+Date: Fri, 12 Jul 2024 10:00:48 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,7 +60,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 3/4] pager: introduce wait_for_pager
+Subject: [PATCH 4/4] add-patch: render hunks through the pager
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Git List <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
@@ -71,131 +71,133 @@ In-Reply-To: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Since f67b45f862 (Introduce trivial new pager.c helper infrastructure,
-2006-02-28) we have the machinery to send our output to a pager.
-
-That machinery, once set up, does not allow us to regain the original
-stdio streams.
-
-In the interactive commands (i.e.: add -p) we want to use the pager for
-some output, while maintaining the interaction with the user.
-
-Modify the pager machinery so that we can use setup_pager and, once
-we've finished sending the desired output for the pager, wait for the
-pager termination using a new function wait_for_pager.   Make this
-function reset the pager machinery before returning.
+Make the print command to trigger the pager when invoked using a capital
+'P', to make it easier for the user to review long hunks.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- pager.c | 43 +++++++++++++++++++++++++++++++++++++------
- pager.h |  1 +
- 2 files changed, 38 insertions(+), 6 deletions(-)
+ add-patch.c                | 18 +++++++++++++---
+ t/t3701-add-interactive.sh | 44 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/pager.c b/pager.c
-index 251adfc2ad..bea4345f6f 100644
---- a/pager.c
-+++ b/pager.c
-@@ -14,7 +14,7 @@ int pager_use_color = 1;
+diff --git a/add-patch.c b/add-patch.c
+index 6e176cd21a..f2c76b7d83 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -7,9 +7,11 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "object-name.h"
++#include "pager.h"
+ #include "read-cache-ll.h"
+ #include "repository.h"
+ #include "strbuf.h"
++#include "sigchain.h"
+ #include "run-command.h"
+ #include "strvec.h"
+ #include "pathspec.h"
+@@ -1391,7 +1393,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
+    "/ - search for a hunk matching the given regex\n"
+    "s - split the current hunk into smaller hunks\n"
+    "e - manually edit the current hunk\n"
+-   "p - print the current hunk\n"
++   "p - print the current hunk, 'P' to use the pager\n"
+    "? - print help\n");
  
- static struct child_process pager_process;
- static char *pager_program;
--static int close_fd2;
-+static int old_fd1 = -1, old_fd2 = -1;
+ static int patch_update_file(struct add_p_state *s,
+@@ -1402,7 +1404,7 @@ static int patch_update_file(struct add_p_state *s,
+ 	struct hunk *hunk;
+ 	char ch;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	int colored = !!s->colored.len, quit = 0;
++	int colored = !!s->colored.len, quit = 0, use_pager = 0;
+ 	enum prompt_mode_type prompt_mode_type;
+ 	enum {
+ 		ALLOW_GOTO_PREVIOUS_HUNK = 1 << 0,
+@@ -1452,9 +1454,18 @@ static int patch_update_file(struct add_p_state *s,
+ 		strbuf_reset(&s->buf);
+ 		if (file_diff->hunk_nr) {
+ 			if (rendered_hunk_index != hunk_index) {
++				if (use_pager) {
++					setup_pager();
++					sigchain_push(SIGPIPE, SIG_IGN);
++				}
+ 				render_hunk(s, hunk, 0, colored, &s->buf);
+ 				fputs(s->buf.buf, stdout);
+ 				rendered_hunk_index = hunk_index;
++				if (use_pager) {
++					sigchain_pop(SIGPIPE);
++					wait_for_pager();
++					use_pager = 0;
++				}
+ 			}
  
- /* Is the value coming back from term_columns() just a guess? */
- static int term_columns_guessed;
-@@ -24,11 +24,11 @@ static void close_pager_fds(void)
- {
- 	/* signal EOF to pager */
- 	close(1);
--	if (close_fd2)
-+	if (old_fd2 != -1)
- 		close(2);
- }
+ 			strbuf_reset(&s->buf);
+@@ -1675,8 +1686,9 @@ static int patch_update_file(struct add_p_state *s,
+ 				hunk->use = USE_HUNK;
+ 				goto soft_increment;
+ 			}
+-		} else if (s->answer.buf[0] == 'p') {
++		} else if (ch == 'p') {
+ 			rendered_hunk_index = -1;
++			use_pager = (s->answer.buf[0] == 'P') ? 1 : 0;
+ 		} else if (s->answer.buf[0] == '?') {
+ 			const char *p = _(help_patch_remainder), *eol = p;
  
--static void wait_for_pager_atexit(void)
-+static void finish_pager(void)
- {
- 	fflush(stdout);
- 	fflush(stderr);
-@@ -36,8 +36,34 @@ static void wait_for_pager_atexit(void)
- 	finish_command(&pager_process);
- }
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 6daf3a6be0..bf82a9dc35 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -591,6 +591,50 @@ test_expect_success 'print again the hunk' '
+ 	test_cmp expect actual.trimmed
+ '
  
-+static void wait_for_pager_atexit(void)
-+{
-+	if (old_fd1 == -1)
-+		return;
++test_expect_success TTY 'print again the hunk (PAGER)' '
++	test_when_finished "git reset" &&
++	cat >expect <<-EOF &&
++	<GREEN>+<RESET><GREEN>15<RESET>
++	 20<RESET>
++	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
++	PAGER  10<RESET>
++	PAGER <GREEN>+<RESET><GREEN>15<RESET>
++	PAGER  20<RESET>
++	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>
++	EOF
++	test_write_lines s y g 1 P |
++	(
++		GIT_PAGER="sed s/^/PAGER\ /" &&
++		export GIT_PAGER &&
++		test_terminal git add -p >actual
++	) &&
++	tail -n 7 <actual | test_decode_color >actual.trimmed &&
++	test_cmp expect actual.trimmed
++'
 +
-+	finish_pager();
-+}
++test_expect_success TTY 'P does not break if pager ends unexpectly' '
++	test_when_finished "rm -f huge_file; git reset" &&
++	printf "%2500000s" Y >huge_file &&
++	git add -N huge_file &&
++	cat >expect <<-EOF &&
++	<GREEN>+<RESET><GREEN>22<RESET>
++	<GREEN>+<RESET><GREEN>23<RESET>
++	<GREEN>+<RESET><GREEN>24<RESET>
++	 30<RESET>
++	 40<RESET>
++	 50<RESET>
++	<BOLD;BLUE>(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? <RESET>
++	EOF
++	test_write_lines P |
++	(
++		GIT_PAGER="head -1" &&
++		export GIT_PAGER &&
++		test_terminal git add -p >actual
++	) &&
++	tail -n 7 <actual | test_decode_color >actual.trimmed &&
++	test_cmp expect actual.trimmed
++'
 +
-+void wait_for_pager(void)
-+{
-+	finish_pager();
-+	sigchain_pop_common();
-+	unsetenv("GIT_PAGER_IN_USE");
-+	dup2(old_fd1, 1);
-+	close(old_fd1);
-+	old_fd1 = -1;
-+	if (old_fd2 != -1) {
-+		dup2(old_fd2, 2);
-+		close(old_fd2);
-+		old_fd2 = -1;
-+	}
-+}
-+
- static void wait_for_pager_signal(int signo)
- {
-+	if (old_fd1 == -1)
-+		return;
-+
- 	close_pager_fds();
- 	finish_command_in_signal(&pager_process);
- 	sigchain_pop(signo);
-@@ -113,6 +139,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
- 
- void setup_pager(void)
- {
-+	static int once = 0;
- 	const char *pager = git_pager(isatty(1));
- 
- 	if (!pager)
-@@ -142,16 +169,20 @@ void setup_pager(void)
- 		die("unable to execute pager '%s'", pager);
- 
- 	/* original process continues, but writes to the pipe */
-+	old_fd1 = dup(1);
- 	dup2(pager_process.in, 1);
- 	if (isatty(2)) {
--		close_fd2 = 1;
-+		old_fd2 = dup(2);
- 		dup2(pager_process.in, 2);
- 	}
- 	close(pager_process.in);
- 
--	/* this makes sure that the parent terminates after the pager */
- 	sigchain_push_common(wait_for_pager_signal);
--	atexit(wait_for_pager_atexit);
-+
-+	if (!once) {
-+		once++;
-+		atexit(wait_for_pager_atexit);
-+	}
- }
- 
- int pager_in_use(void)
-diff --git a/pager.h b/pager.h
-index b77433026d..103ecac476 100644
---- a/pager.h
-+++ b/pager.h
-@@ -5,6 +5,7 @@ struct child_process;
- 
- const char *git_pager(int stdout_is_tty);
- void setup_pager(void);
-+void wait_for_pager(void);
- int pager_in_use(void);
- int term_columns(void);
- void term_clear_line(void);
+ test_expect_success 'split hunk "add -p (edit)"' '
+ 	# Split, say Edit and do nothing.  Then:
+ 	#
 -- 
 2.45.1
