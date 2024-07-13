@@ -1,150 +1,96 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1000D130486
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 14:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4CD22318
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 15:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720880199; cv=none; b=gu3LfHq4vLGEL+bo73dhD9bjotRSLwbpBMaCqo3JIATSOj7hc5FuQ8avFKaQjr+8JIKG7SAd0hQmDWGWel78VudeyIbHQl98HgO/Xk30pHqNnpTtpdzbEsJaWCp6yTxHeOC1kvjcWpcNllMwEiiy9oxm6zHjrAX3u91cbaGHBB8=
+	t=1720885058; cv=none; b=Dipk0Je5BpWEZGq/UeC1In9Ul5OvHWfK/e2QGJooeuE9ZCipM0jb+BtNM94tNemrlxSt0ev4lL/Mn2za1VEnqKBeZ2P6e8f6HNp8U1Z+K/tN6eugSR+5O4lSc4UD1xEfJrRx4imGVP+uar1dYOwUPbUosOcvXQZvodbtjQzSBAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720880199; c=relaxed/simple;
-	bh=qOaOa+7R0xAYHhymzDvBTpPFuYq4EoMXZjdOGgVOtvY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m9qIKMb7x2z9Q6JETLT6zzMrgw675geuCDz2qn0S2EnsbfbCQYUrv8Gho0YXADus7xJYKHwtwWVLCf3D22c1gk/kclcUzHUrFiEbWZJGY3JgsAsEDTKtJ81DFZTiYN063BsVTOGcZOjfwLYPSQovBRxC65XDuVhKQuS/dg0l2dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZetQ3eVZ; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720885058; c=relaxed/simple;
+	bh=8UML6Gs/rJnBbXDkDxKzv6b61RqXoJb6HM+NSmlgDNQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H8yE5pvvryjzrzT/zlKtQhSZ+7Micq5afizd1jb7cEXuYt75/DbcShskhux8RHECb4rPPXVHqMu9kHarMXcyZ/6TWkApIG3ugs1CO4zlJ8zvfcyZVMKLy3rUE662aEr3bDGp/HMpRbz172kAMm1eKduRf2WpKee4x4p2RbZONgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dg3HsIzt; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZetQ3eVZ"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-25e150603a6so1455988fac.3
-        for <git@vger.kernel.org>; Sat, 13 Jul 2024 07:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720880197; x=1721484997; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+Q2vr9+2f+ZmZXExjqf/ZTKVeGkwIXDsmc/yUrCl0k=;
-        b=ZetQ3eVZg1+pkWdzYdS2WqGyrvQavmihkm3GFNGcuRIWpYQ581lfcI7ZlU+L/0K2B9
-         yartMRNOyPMMxMDOevWq8vIxTM9aqrNrG7th2L1xfEtUdOGtxY+9OTiyxacgAImB2U7G
-         mWdkrUUu5yJN3Sb6TvGnD+LAC1Y5XAFsnvLKblNWoXMhw7g7YMjAHLvibFPVHD23Vmlt
-         e4bVD4j9XNOblcQspme3a4cP5hfrwc93N6yfXi/IF2DgxxdnrH1Pd9wVo/jU4lpMlldZ
-         8icNnmQopvVuBYk5g/bknKaFX6ke5QP7VaiAZovvx18GmYUFBO/bp+uOJh+0C2TUNUPj
-         8zVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720880197; x=1721484997;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+Q2vr9+2f+ZmZXExjqf/ZTKVeGkwIXDsmc/yUrCl0k=;
-        b=RC2u4Ut0ZdlnWjWpXoDrh8R3GO8DZC+yvroDDOEAdf6759t0CN0DTF5XZ05DB8C9TY
-         re9JrBdLSWcee9e+iJNu9JD68d7Tn5xvfgxCU71AbzFvAJ3ZhUMryZsrTcBineyHoqsh
-         ZdjU3XKaXUwAO0re0rId/b0q6kf5kCtVeQKLqCjbUjaWnZccPdibFHxhFVPFif9gHr4J
-         b+Fkxt4mO57JmkjKzlYJD3Soo6uCFl0JYbinPa0/kFRyKlVC/YGTTqsdEKYuGZ6HA2wn
-         xrShGEGwg72f8kosxRiWw7sj+vfaFicu9sqgbeirdlaSedGxPl1crT+TXGSAFDksiE3G
-         4UVQ==
-X-Gm-Message-State: AOJu0YxIu2OTe5JPbkjVkN0TCZV/7r5ZApZlr/bqTNnUo1T4Q09sVDZA
-	MbekxvZo8roS71mLJXhOQrvPYL2UsFNYmBos/cjbBA0QLWc1cnO6SBsiMT1r8/3EQOpWqTvSXT/
-	h65zntJ8uoE9IV8nTw5jiKxhwBDM=
-X-Google-Smtp-Source: AGHT+IEeciVfOzJWuCkMK+GeLPt1vxYqB8shPaY0r/9bQBbYiDDq2VWtu2L+QclvyoTmjLAlM8IaW2YCQgIKxV+aos4=
-X-Received: by 2002:a05:6871:3b26:b0:25e:b732:a913 with SMTP id
- 586e51a60fabf-25eb732a937mr7817578fac.0.1720880196878; Sat, 13 Jul 2024
- 07:16:36 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 13 Jul 2024 10:16:35 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <57402963-a95a-4bd8-9eb1-1764e0611bb5@gmail.com>
-References: <20240708092317.267915-1-karthik.188@gmail.com>
- <20240708092317.267915-6-karthik.188@gmail.com> <xmqqle2bj0dl.fsf@gitster.g>
- <CAOLa=ZSb_S7X7pdFPp0r5bfNc3o95mGe5pU+rC1T_yM89NRqCw@mail.gmail.com>
- <12830e1d-598d-4e7d-abd6-3349800e277a@gmail.com> <CAOLa=ZSrVOBkziX+z3g1RqudiLp=SN4gW=OL5Ky++KukPF=QXA@mail.gmail.com>
- <57402963-a95a-4bd8-9eb1-1764e0611bb5@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dg3HsIzt"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 658CF2A1F8;
+	Sat, 13 Jul 2024 11:37:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8UML6Gs/rJnBbXDkDxKzv6b61RqXoJb6HM+NSm
+	lgDNQ=; b=dg3HsIzt64JcEwYdsBfmaxlARsT6rmklzbv0eZ2f4o0L9QQKDQwQqg
+	LZOU3vQQluHCMAasR8KCjxCcDjfe4SBofSCV+vTGAeAFcWQJcnvBMrecltP0hRnb
+	itv3CqCGK1oSL+tKU8SPldwLHTcrYGKXi7nfA7mmdmVa2ZqS8eZMU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D5912A1F7;
+	Sat, 13 Jul 2024 11:37:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C15922A1F6;
+	Sat, 13 Jul 2024 11:37:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: chriscool@tuxfamily.org,  git@vger.kernel.org,  jltobler@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 8/8] ci/style-check: add `RemoveBracesLLVM` to
+ '.clang-format'
+In-Reply-To: <20240713134518.773053-9-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Sat, 13 Jul 2024 15:45:18 +0200")
+References: <20240711083043.1732288-1-karthik.188@gmail.com>
+	<20240713134518.773053-1-karthik.188@gmail.com>
+	<20240713134518.773053-9-karthik.188@gmail.com>
+Date: Sat, 13 Jul 2024 08:37:33 -0700
+Message-ID: <xmqqa5ilcngi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 13 Jul 2024 10:16:35 -0400
-Message-ID: <CAOLa=ZSiJArgDr6oDTbHN2vaF1mjUjrKbKbw4aDOjMf-bMUFyA@mail.gmail.com>
-Subject: Re: [PATCH 5/8] clang-format: avoid braces on simple single-statement bodies
-To: phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, 
-	Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, chriscool@tuxfamily.org
-Content-Type: multipart/mixed; boundary="000000000000d620cc061d21a48d"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D36B6326-412D-11EF-BDE9-965B910A682E-77302942!pb-smtp2.pobox.com
 
---000000000000d620cc061d21a48d
-Content-Type: text/plain; charset="UTF-8"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-phillip.wood123@gmail.com writes:
+> +# [1]: https://clang.llvm.org/docs/ClangFormatStyleOptions.html#removebracesllvm
+> +echo "RemoveBracesLLVM: true" >> .clang-format
+> +
+>  git clang-format --style file --diff --extensions c,h "$baseCommit"
 
-> On 13/07/2024 13:30, Karthik Nayak wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->  >
->>> I'm a bit confused - what does "allowed to fail" mean? We don't have any
->>> automated requirements on the CI passing. We don't want to train
->>> contributors to routinely ignore CI failures but if they don't get a
->>> notification that this job failed how do they know to correct the
->>> formatting?
->>>
->>
->> Well, it mostly means that the CI would show the style-check job as
->> failed, but the overall pipeline would be successful.
->
-> Ah, I didn't know that was a possibility - do users still get emails
-> about the failed job?
->
+Style: lose the SP between the redirection operator and its operand.
 
-I know in GitLab, users _wouldn't_ get an email. This would be a nice
-intermediate step, but I think it is still okay.
+I know this is well intentioned, but will there be any downsides for
+running the check always against a dirty working tree?  
 
->> We want to ideally
->> fail the pipeline too, but I'm being careful to not disrupt things
->> suddenly and I think once we see what false positive rate is and once we
->> fine tune this settings maybe over the next release or so, we can
->> enforce this.
->
-> Starting gently to get some experience with the auto formatter sounds
-> sensible. Thanks for working on this, I really hope that once we've got
-> more experience with clang format we can figure out how to enable it
-> unconditionally.
->
-> Best Wishes
->
-> Phillip
+I know during a CI run, the working tree will not be completely
+clean, as we create and leave build artifacts, but this is as far as
+I know the first instance of us munging a tracked path, changing the
+working tree in a way that "git describe --dirty" would notice.
 
-Just to clarify, enabling an auto-formatter would always be left to the
-user. From the project's perspective, the goal would be to have checks
-to notify us (us as in the Git project) if a particular patch series
-fails to comply to our standards.
+This is done as the last (and only) step of check-style job and the
+ci/run-style-check.sh script may not do anything like "git describe
+--dirty" right now, but things can change.  Perhaps I am worried
+about this a bit too much.
 
-This is done by enforcing the CI rule _eventually_. Users can also
-benefit from this if they use the CI for development purposes. One good
-example being users of GitGitGadget, where they would be notified of
-failures in the CI. Another example is contributions coming from GitLab,
-where our team uses the CI before sending patches upstream.
+I unfortunately couldn't find an option to "git clang-format" to
+tell it to read from an extra file in addition to the usual
+".clang-format" file---if such an option existed, we obviously could
+use an untracked/ignored file to prepare the custom format file and
+use it without making the working tree dirty.
 
-Since the Git project already comes with a '.clang-format', users can
-already enable auto-formatting on their end. I know the clangd LSP
-already supports this. ;)
+So perhaps the posted change, while making us feel dirty, is the
+best we could do for this step.
 
-Thanks
-Karthik
+Thanks.
 
---000000000000d620cc061d21a48d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: bea9710d8ebea59c_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hU2pFSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mdytzQy80dDUveHlqang2d1h0K1FIcW5pd25qR1RkcgpaTnp5VWJvMGJi
-YjVMS2I0MFBudm5DZDVhOGNsd2FtNGR2eGRUbW04YTRiWEp3OUlxcUIzZXlZTnFOaDdURWRUCms5
-V1N6bHB1Yk14TnRBcmo1azM1MWRzQ1B3d2cvbEgzdDZIeDRCSUpyQllXK3dBdTJDTUx5SXZoZmdO
-ay9pQmUKUFNtRUlzcnc5MWdjbFBuSkJDd2ZRV0VwbzljNm1lUDB3RHVrd3ZIdTk1WXFTbmxLREFo
-OXR6TkE5Z1VMZklBYgpZN3ZWYXU2YTRIWVc2ejQyNjhuTDJMZnRXMlhpa1lSTU9WN1JCZWdJMTNP
-NWs2eVEzdVlGa2U3c25obk5ZeUpFCnVhOUhJUk5aMUFyWDR3QURJV083dVpQclhHUTl2azgzZ00w
-ZnpqUlc3b3pDNUlnS2kzRG5SUjBTNURiUzBEcG0KY2xIYWNOOXJRQTFqSWVMdlVvK3pTUVlBb0Jz
-ZmRpcnZRdldsMTlHUEtoUFBickZ4WUYxamVLc3FqeStJQWpCawpDVStwWTgyUG4zMEpXc1NJZVFR
-L1FhTEQ1cm93ZUdtaVVzMVVQcTFVcjB0bmtxeGlQZW5IMFlSdTVRVk9jMHo2Ci80NW9mUEJaTVVa
-QklTalBWZEd5R0pLMXp1TllvY2V2Z3pFS2dwaz0KPXhxQ0MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d620cc061d21a48d--
