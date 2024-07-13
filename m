@@ -1,31 +1,31 @@
 Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D83F13A86A
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 16:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEDD13A86A
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 16:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720888737; cv=none; b=N2N0WqoARXewsXOs4xeT3pgaNQ6MlKFG7u4JB1xvjwUnIO1LkMfzkwvCGtb5Bs2I8hXoTeUnlY6Mk+m0J/rmZzeRHjyM6MOL424qPljVlHROMrT0ORE0phrxveh/KOF0SbhM0vAZX8lRYyjUDVkppXCrGj+9f0VJdm7czD6jJU0=
+	t=1720888900; cv=none; b=C/AaRA/PRoPrDm2P4um6rPH3RVZb84Jvr2XTxEzZlEvFM3j2Xyt5cw6UWwzTf1iAv5P1UyHT82/WToKbMu+32WUFoQK6kg8NQcVStRb0eaUs5XH5CYryOxSxOj4x3XMHs/Zj1Xv3JdXSMv0SVZhkunPW34hXDqyIaOs+luo2J/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720888737; c=relaxed/simple;
-	bh=6wswJ5AtwqmLfvuJqAdL/25O5Q/nxwGfWT4Ax2cOmIE=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nemaZ+vV8ikTZHEtvsWTeWAAu6mT0WSP+3YJHNnfMLtq/9OXA6HsZNBZIkWgx7oSP7bNP1MCo7V/yfbgD06Z7xYoB51JnO46V2U6V4UOfCIH6DGfz3QDQGQlNp4LBkADR8HANPsjKXUoXlUULbSqFAqdHW0ZIUh3ksudvVjzoRc=
+	s=arc-20240116; t=1720888900; c=relaxed/simple;
+	bh=D3exVCS/ON/C9lWGStT6pFfGnCOhGpC5Y5O3lcORYJ4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kzDFc7p+wCJLuCdMFuAJwjDqJte63zakbQjzhqcOBs4o4yeetX/qABvHw0Yjbf21Jw+JZZ5gvOh1eX2Bkv96pat9zMbepWCMDVJNj08EHnGd0zbDgq0W3zrFGuHP4Vg6Hgy3YamYHAT9MVRTPHZB8GNxXutSWzGn0jNH82bkifc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
 X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
 Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
 	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46DGckmU107587
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46DGfaJW108039
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 16:38:46 GMT
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 16:41:37 GMT
 Reply-To: <rsbecker@nexbridge.com>
 From: <rsbecker@nexbridge.com>
 To: <git@vger.kernel.org>
-Subject: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
-Date: Sat, 13 Jul 2024 12:38:41 -0400
+Subject: [Test Breakage 2.46.0-rc0] Test t4135.06 fails on NonStop
+Date: Sat, 13 Jul 2024 12:41:31 -0400
 Organization: Nexbridge Inc.
-Message-ID: <024101dad543$221b4ab0$6651e010$@nexbridge.com>
+Message-ID: <024201dad543$877221e0$965665a0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -36,72 +36,75 @@ Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdrVQrCyd5dQdMswTPiJl647hSafUg==
+Thread-Index: AdrVQ4P1wRYJ50XsTBaCiqxpsK0mRw==
 Content-Language: en-ca
 
-Here is the breakage. I included the prior test log in case there was a
-dependency.
+Here is the breakage. This looks like a non-portable dependency on /dev/zero
+was introduced.
 
-checking prerequisite: TTY
+expecting success of 4153.6 '--reject overrides --no-reject':
+        rm -fr .git/rebase-apply &&
+        git reset --hard &&
+        git checkout first &&
+        rm -f file.rej &&
 
-mkdir -p "$TRASH_DIRECTORY/prereq-test-dir-TTY" &&
-(
-        cd "$TRASH_DIRECTORY/prereq-test-dir-TTY" &&
-        test_have_prereq PERL &&
+        test_must_fail git am --no-reject side1.eml &&
+        test_path_is_dir .git/rebase-apply &&
+        test_path_is_missing file.rej &&
 
-        # Reading from the pty master seems to get stuck _sometimes_
-        # on Mac OS X 10.5.0, using Perl 5.10.0 or 5.8.9.
-        #
-        # Reproduction recipe: run
-        #
-        #       i=0
-        #       while ./test-terminal.perl echo hi $i
-        #       do
-        #               : $((i = $i + 1))
-        #       done
-        #
-        # After 2000 iterations or so it hangs.
-        # https://rt.cpan.org/Ticket/Display.html?id=65692
-        #
-        test "$(uname -s)" != Darwin &&
+        test_must_fail git am --retry --reject </dev/zero &&
+        test_path_is_dir .git/rebase-apply &&
+        test_path_is_file file.rej
 
-        perl "$TEST_DIRECTORY"/test-terminal.perl \
-                sh -c "test -t 1 && test -t 2"
++ rm -fr .git/rebase-apply
++ git reset --hard
+HEAD is now at 4f3810f side2
++ git checkout first
+Warning: you are leaving 2 commits behind, not connected to
+any of your branches:
 
-)
-+ mkdir -p /home/randall/git/t/trash
-directory.t0021-conversion/prereq-test-dir-TTY
-+ cd /home/randall/git/t/trash
-directory.t0021-conversion/prereq-test-dir-TTY
-+ test_have_prereq PERL
-+ uname -s
-+ test NONSTOP_KERNEL != Darwin
-+ perl /home/randall/git/t/test-terminal.perl sh -c test -t 1 && test -t 2
-Can't locate IO/Pty.pm in @INC (you may need to install the IO::Pty module)
-(@INC contains: /usr/lib/perl5/site_perl/5.30.3/nonstop_kernel
-/usr/lib/perl5/site_perl/5.30.3 /usr/lib/perl5/5.30.3/nonstop_kernel
-/usr/lib/perl5/5.30.3 /usr/lib/perl5/site_perl) at
-/home/randall/git/t/test-terminal.perl line 5.
-BEGIN failed--compilation aborted at /home/randall/git/t/test-terminal.perl
-line 5.
-error: last command exited with $?=162
-prerequisite TTY not satisfied
-ok 34 # skip delayed checkout shows progress by default on tty (pathspec
-checkout) (missing TTY of PERL,TTY)
+  4f3810f side2
+  deca85c side1
 
-expecting success of 0021.35 'delayed checkout ommits progress on non-tty
-(pathspec checkout)':
-                test_delayed_checkout_progress ! git checkout $opt
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
 
-+ test_delayed_checkout_progress ! git checkout .
-test_delayed_checkout_progress: test: argument expected
-error: last command exited with $?=127
-not ok 35 - delayed checkout ommits progress on non-tty (pathspec checkout)
+ git branch <new-branch-name> 4f3810f
+
+HEAD is now at 3aaf771 first
++ rm -f file.rej
++ test_must_fail git am --no-reject side1.eml
+Applying: side1
+error: patch failed: file:1
+error: file: patch does not apply
+Patch failed at 0001 side1
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+hint: When you have resolved this problem, run "git am --continue".
+hint: If you prefer to skip this patch, run "git am --skip" instead.
+hint: To restore the original branch and stop patching, run "git am
+--abort".
+hint: Disable this message with "git config advice.mergeConflict false"
++ test_path_is_dir .git/rebase-apply
++ test_path_is_missing file.rej
++ test_must_fail git am --retry --reject
++ test_eval_inner_[6]: /dev/zero: cannot open
+error: last command exited with $?=1
+not ok 6 - --reject overrides --no-reject
 #
-#                       test_delayed_checkout_progress ! git checkout $opt
+#               rm -fr .git/rebase-apply &&
+#               git reset --hard &&
+#               git checkout first &&
+#               rm -f file.rej &&
 #
-1..35
-
+#               test_must_fail git am --no-reject side1.eml &&
+#               test_path_is_dir .git/rebase-apply &&
+#               test_path_is_missing file.rej &&
+#
+#               test_must_fail git am --retry --reject </dev/zero &&
+#               test_path_is_dir .git/rebase-apply &&
+#               test_path_is_file file.rej
+#
+1..6
 
 --
 Brief whoami: NonStop&UNIX developer since approximately
