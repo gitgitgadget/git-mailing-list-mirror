@@ -1,59 +1,60 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9E1311A1
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 13:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7994A3D
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 13:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720876789; cv=none; b=puZyWly4SNeEUAF2tE8zK+NzLPQ2BI3VJYNUNCW88DRSBTE9ysudArF0iMs+6baOFIr08RThn1vsiC2zq3aP5uGxJqGWRcG0vY8Tsel72Qr5XSJ0MlvqXpb+UE7VP1mJdLyyHMi5MnqKSnBskOfOJFyBCQok20+pcq6L8biC9RY=
+	t=1720877238; cv=none; b=jdJPWBwtS2rqCaAXOUB2bO+2ho5kTi4NY+8pul441erEAWF8b2krSXbHqOx/HILw4X9+6MNIbH0YPnX2130SsaigYKdgZvPubi0KXRnxcY8DPriTJT4buV+pqQrHnvY/DzG952s6Pg5D1yuZOaIMOK1XEdvJOagfZBltbDS1Aag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720876789; c=relaxed/simple;
-	bh=McymfI9AIShWOwmLm7N3LHAWcEhFgWac1OTcQdjmcVo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KT977kFABYQ0zgJuExZXOk/MX9Rw//YXAnqLh6qbHbvplUG+dmMQk+7nFySZJAHBCOUPoIDbktTyIH8s4IKVAApVsgOn1E6rB+PEXIMVdeMoPm9IAnoo3hUsA2kylHQfUhsqqg945ha4AHhRo/3x45g5dw7D3WjA/HZWivSzku8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMfDQN87; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1720877238; c=relaxed/simple;
+	bh=t7GjW6KOVo60b6ZoRKIvbsVDAN7tadDQbjGYAJEWOK0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZWmmlS465atHEavUvUmaPDbP+vIAUO+as7T5aciffkp1lnE0xnO9AzeEA2PF61wzHvMhXs3shWtwHLnpUNAWxQZZ3BP2CXO5V17UVeqhAQJGQGtktLZwxph0baNWyXzZha63vYdAot5OuE/QPis4r2/dAhxgTy+30p6ACvoB33Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YRvf982y; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMfDQN87"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42660b8dd27so18938575e9.3
-        for <git@vger.kernel.org>; Sat, 13 Jul 2024 06:19:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRvf982y"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4266b1f1b21so18960155e9.1
+        for <git@vger.kernel.org>; Sat, 13 Jul 2024 06:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720876786; x=1721481586; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xMg9TQzkNlJFCtNJE1/evvlQKRlk/C/KWP+8N/whKNk=;
-        b=RMfDQN87uJEC61PY1eA2PkkA8alCz2SsE7LHuqQsiFoF+de9LraYQeGI5eqFMfl4eQ
-         rWNTE7F9h6pBUQuWrdnlQ9bPBk5sYUSh6Lki81zoXWhLWRM5nm7Ef35SWp7b7wL1NuC0
-         MGsQS+SPDL81/MKEInpD5DdbiLyzwwURuyqvKVQ65XZwCUfvQKrF7s3D70VBCQZOBLJB
-         rbQVikOPOjOZvIvcDkx3CTYSbAHRwtDk6KXRjTLzIDOnkuR4vVffjI5d5OQFntxRw7rB
-         NEOvoKuFI9Ue2ojDTmIsY8xQb4Lv1hSat+7dneT1a5UV8Xva5KAycckH/Aek0hTfGuIq
-         fnrw==
+        d=gmail.com; s=20230601; t=1720877235; x=1721482035; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2kmSnJYL1b1VGITrlNF0u2OQhqQnK4yOqoFKniefjpo=;
+        b=YRvf982yhzZPEYrO37fJtLegM8aiKas3GmzneQ93UzZW0ODsYH81k8RzQ/3c5QNxsB
+         4hF7P88YgPMZff1/PZpNo7WyQ/WjsTuH5jhiudhvsaVjLVye6ug1dbXto15h5Ysdvm3x
+         a6GCNfPJVWQ5dSAUHERHaHgJAMexf5lmU3rxPAoSwkbbqyLcL4f5fop/QNOrjfDd3Q1O
+         fETYwAZLhnlRTiNRul6Q0alGx9A6RCV7umZfzIVp6W7EKupj5T1ipMMq12HIJYuV4rsJ
+         EmEyBT9ocSfQtzVkgma64PlyJwA4xHNN9Z9erZCCZfjdCWVJpj/bKJsKexcCfgezbwgp
+         ffpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720876786; x=1721481586;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xMg9TQzkNlJFCtNJE1/evvlQKRlk/C/KWP+8N/whKNk=;
-        b=LOLFeUCd4OAnmMUyODJC/+W7LDK8FBhprM9jPVIr7iXfwtyunAsYmQP95KtvfIlV3r
-         dAxfFsmvwmnIQW+EnW0rXyS8AkgkaocAiQ1romaTAYU3tyuaATpE6zWe+FJsS2VasTie
-         UvRGYbwJveSqySCxkpOVPgQO6AugjonFaWldTJjXztajukCVuPrcdZ678/lrg9O1DQDX
-         qdG5aWdj5GQZyAaPBrwrsUVcyFPotzuFqEsH6zhcygwhRt27Kz079IUiBFasdOb7ugaj
-         hVmmWbAbhU70aPEvq5D4l5tqu2zreXDDGsqjSsDT198J63PUGo7K+ZdTru8fuPHue4Eq
-         TNLA==
-X-Forwarded-Encrypted: i=1; AJvYcCWIyoAYdVB0yBe7/XVd6EWtfYqz7JjnUh+mIkJc3iKy2OQbWcfxLTDhHZkmHMWuzwzAZpfHhh3wm+bQELyaWLwwJ+8b
-X-Gm-Message-State: AOJu0Yw1cB1xG1mut8m0SNDh4psjKS1eeE8lf1sWWeenm0gRAZoLr6l6
-	6WYvc260jpRnNwqEjD0sEuHruc5g6Lk5oXtByw+mE37oiAYVsVNN
-X-Google-Smtp-Source: AGHT+IEkK7JlJFeG6M92ih9zP44W4cEAgnnEX6ew06AMoK6k/XNEbCipz7H+rEWfnnWVXIBIxbpu1Q==
-X-Received: by 2002:a05:600c:6dc5:b0:426:5b84:86d2 with SMTP id 5b1f17b1804b1-426707e32a0mr94054905e9.20.1720876785975;
-        Sat, 13 Jul 2024 06:19:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720877235; x=1721482035;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2kmSnJYL1b1VGITrlNF0u2OQhqQnK4yOqoFKniefjpo=;
+        b=gbyJFSPA60K+BCriR0AXpMr0sSY7BI1KobKlsTkCyIrC90GdXvK7nqWmnCYIIUqNy4
+         rp694Mfszkbev3FZd+D3JDX08hCNHTguPznrZN162My4wJjdSk6ogqIXZUxBozb9tFdC
+         J5SaK+pSwPpUwuL583BI/exkwbHBIsYBJlbz156o8dxJLseTjUhKXyqVo7y/tltAQbFC
+         /ejeQ6fP7V7X3IF5EaJDTzUUCqToYeIitkrn2H0lnDhAmvEOPmAcD37xNFxjakzk1s6H
+         oWk9+Ea+4HOakc1xCbSVC3feHk65fYkOcySTY2OTF4qeuPHpk3m/hv0qa9dKFwns5A0E
+         hDpA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVkXEB/R3oQ46epOg/nxogSxgwlNAov2VXguVOfX4wwLHOSlPw/a6ltQ0MxYNrahjpsTcXSmtTMywesATJJVj6BgEQ
+X-Gm-Message-State: AOJu0YzActnLLLjkSOMMt7T4qM0wR5PTghgTK5D2wot9cwADuw09+9si
+	KMCTXDHiZS/4PpaUDJGslWiDi+GgplzhIgXvhRvPfYARoTNHVLOh
+X-Google-Smtp-Source: AGHT+IFDOFud1xUD+FuVcLgw/lyWQZiYxlZUHomcOVtq6gxiMTFc2j3qEn0bLxHa6GBMzUFmIOWmIQ==
+X-Received: by 2002:adf:f288:0:b0:367:9851:4f22 with SMTP id ffacd0b85a97d-367ceadb1bamr9199231f8f.58.1720877234833;
+        Sat, 13 Jul 2024 06:27:14 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f25a962sm54537245e9.12.2024.07.13.06.19.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680db04748sm1386609f8f.102.2024.07.13.06.27.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Jul 2024 06:19:45 -0700 (PDT)
-Message-ID: <622849f1-de52-4b92-9465-931014c8d3eb@gmail.com>
-Date: Sat, 13 Jul 2024 14:19:39 +0100
+        Sat, 13 Jul 2024 06:27:14 -0700 (PDT)
+Message-ID: <954d67b1-8819-4bfc-ae10-f04beca5419a@gmail.com>
+Date: Sat, 13 Jul 2024 14:27:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,67 +62,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC/PATCH] add-patch: handle splitting hunks with
- diff.suppressBlankEmpty
-To: Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, Ilya Tumaykin <itumaykin@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
- <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com> <xmqq4j937pyf.fsf@gitster.g>
- <20240710093610.GA2076910@coredump.intra.peff.net>
- <d5d27cad-bacb-4a79-bb50-e65d2bb6808b@gmail.com>
- <20240711212628.GA3648684@coredump.intra.peff.net>
+Subject: Re: [PATCH 2/6] unit-tests: add TEST_RUN
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, phillip.wood@dunelm.org.uk,
+ Git List <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <8175f239-8d4e-49f7-ae0d-dba7df8c365d@web.de>
+ <51ebc0fd-ddae-4bdb-a5d6-c92ce8b1f3e6@gmail.com>
+ <97390954-49bc-48c4-bab1-95be10717aca@web.de>
+ <8802b3ab-9986-47bd-be80-51ac599b2892@gmail.com>
+ <6c83357a-825f-49d9-8cc2-e81415e8010d@web.de>
+ <62d221cc-532a-4a6d-8e96-b5a246ddeb1b@web.de>
+ <69ec31f8-2cac-48c3-a513-0f7f21607c88@gmail.com> <xmqq8qyblwpn.fsf@gitster.g>
+ <xmqqa5iot01s.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240711212628.GA3648684@coredump.intra.peff.net>
+In-Reply-To: <xmqqa5iot01s.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Peff
+On 11/07/2024 16:34, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> So, perhaps test_if_XXXXXX() but it is not quite clear to me when
+> TEST_RUN() wants to return true, so I cannot come up with an
+> appropriate value to fill the XXXXXX part.  If this is about
+> honoring GIT_SKIP_TESTS or something similar, then I may suggest
+> test_if_enabled(), but that does not seem like it.  So...
 
-On 11/07/2024 22:26, Jeff King wrote:
-> On Wed, Jul 10, 2024 at 02:46:30PM +0100, Phillip Wood wrote:
- >
->> I think your patch looks good. I did wonder if we wanted to fix this
->> by normalizing context lines instead as shown in the diff below. That
->> might make it less likely to miss adding "|| '\n'" in future code that
->> is looking for a context line but I don't have a strong preference
->> either way.
-> 
-> Yeah, I had a similar thought, but it got messy because we have to deal
-> with the source buffer. But the extra "char ch" you added in the patch
-> below fixes that. I think the result is better.
-> 
-> Looking at the blank-line handling in recount_edited_hunk(), we also
-> handle a CRLF empty line there. Should we do so here, too? If so, then
-> it would just be a matter of touching normalize_marker() in your patch.
-> 
-> Do you want to just re-send your patch with a commit message to replace
-> mine? (Feel free to steal the non-wrong parts of my message ;) ).
-
-Thanks, I'll do that
+TEST_RUN() returns true if the test has not been skipped i.e. the test 
+should be run. At the moment the only way to skip a test is to call 
+test_skip_all() in a previous test. In the future I expect we'll add 
+something like the "--run" option we have for the integration tests.
 
 Best Wishes
 
 Phillip
 
->> ---- >8 ----
->> diff --git a/add-patch.c b/add-patch.c
->> index d8ea05ff108..795aa772b7a 100644
->> --- a/add-patch.c
->> +++ b/add-patch.c
->> @@ -400,6 +400,12 @@ static void complete_file(char marker, struct hunk *hunk)
->>   		hunk->splittable_into++;
->>   }
->> +/* Empty context lines may omit the leading ' ' */
->> +static int normalize_marker(char marker)
->> +{
->> +	return marker == '\n' ? ' ' : marker;
->> +}
->> +
->>   static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
-> 
-> Minor nit: missing blank line between functions.
-> 
-> -Peff
