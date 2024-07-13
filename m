@@ -1,83 +1,109 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A5313B2A5
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 17:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD95A43ADE
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 20:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720890508; cv=none; b=sW8vxdUvkv2asn6Zttr/EFo59DOVfjW7peENHpkBWjlgC35je4hBycCf3OTvoSRD8qxacVXwlxgyyyMWarjgOSZtwfMbx1kbeXS/qK9+M6QzaHkyMespi+RcJ5bFRneFN9XhFAElZAQ78+k72JJDmPKs3liBrFGbqEj7oxkFKBA=
+	t=1720903814; cv=none; b=D3wOSwR/SaZAllfulZejIu2tHvaMs68PRgYW39gonxsgEztW05u1yaghErF9s0YQMxyqwJsTdAYpD1asgMZrvn9yZPj4bWXplStTUhi1N+/yHmhWBSp8FpOZX7dnKax8t13AQIuyTfNTnDbMVQTORGvWnXeDrB5oicaJDQE+lkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720890508; c=relaxed/simple;
-	bh=D1od7YOXBhK7Z5zDGPCZNdmRXRH7oFw83HSUuuD9XlQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r5jnM93M8FqKbdkhAxNcrBZ5dADhtU5AydVOCXXSEmBiDsK1Osu/Z3twbqm0ghrsVyq6rw0LnehpYe/bHYRVBfUADrnRJm+pW+7F6BehAVh/Z+G2e7XJ+7S77lI3rBxf6JPTRUjP5yOjWpe6vcLKNJ+SgjZfkdnBsMzuMl1OEfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PzEhMHSA; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PzEhMHSA"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A12C02ACB0;
-	Sat, 13 Jul 2024 13:08:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=D1od7YOXBhK7
-	Z5zDGPCZNdmRXRH7oFw83HSUuuD9XlQ=; b=PzEhMHSAzUsw/24RRvpWn5oIIkbE
-	ZZvgVabkUFTqgEmqVh8iV09WEK+IZvMpMB+0f9PX4l8XWtEaT+WslHtgzvzWbgh0
-	rTzzvDYrsPFhZCcd+0poiv0wab7SL+NOcyYHu2lh6mxDiL79atmfps1haxd9tr3p
-	5jnjeAGlXrhEwwg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 981142ACAF;
-	Sat, 13 Jul 2024 13:08:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0435C2ACAE;
-	Sat, 13 Jul 2024 13:08:23 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Dragan Simic <dsimic@manjaro.org>,
-  Jeff King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/4] use the pager in 'add -p'
-In-Reply-To: <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sun, 14 Jul 2024 01:26:00 +0900")
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
-	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
-Date: Sat, 13 Jul 2024 10:08:22 -0700
-Message-ID: <xmqq7cdpb4op.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1720903814; c=relaxed/simple;
+	bh=0fOl9FMjF0+060EZtYz98RvxDFIb+5lUtvcGBHRyRV4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XNL0h3tmSOtCyjieVSLob5qYk68mYeWgRbxXgcOrgtzz75ixb12lzDrmlkwR2B6dNfSOBD3RNo64PeRDiwHM+uHgkeW0UOX3XqxUvIIrLjh1l8xWrRcin5MoXS8XWgqcwBgg5y2tPE5M/+ONr7QLKmThGLQ1Wn7VaPSKbrF0NRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144221249.atnat0030.highway.webapn.at [89.144.221.249])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4WM0vt6spHzRpKn;
+	Sat, 13 Jul 2024 22:50:02 +0200 (CEST)
+Message-ID: <7789e98f-df21-4390-943c-1c96262bd0d6@kdbg.org>
+Date: Sat, 13 Jul 2024 22:50:01 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 8368AF34-413A-11EF-AEE1-965B910A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-gui: do not exit upon prepare-commit-msg hook failure
+Content-Language: en-US
+To: Anthony Loiseau <anthony@loiseau.fr>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Pat Thoyts <patthoyts@users.sourceforge.net>,
+ Joshua Williams <joshua.williams@qlogic.com>, git@vger.kernel.org
+References: <20240711132542.9792-1-anthony@loiseau.fr>
+ <20240711132542.9792-2-anthony@loiseau.fr>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20240711132542.9792-2-anthony@loiseau.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+[j6t: removed Shawn from the Cc list]
 
->     -+	test_write_lines P |
->     -+	(
->     -+		GIT_PAGER=3D"head -1" &&
->     -+		export GIT_PAGER &&
->     -+		test_terminal git add -p >actual
->     -+	) &&
->     -+	tail -n 7 <actual | test_decode_color >actual.trimmed &&
->     -+	test_cmp expect actual.trimmed
->     ++	test_write_lines P q | GIT_PAGER=3D"head -c 1" test_terminal git=
- add -p >actual
->      +'
+Am 11.07.24 um 15:25 schrieb Anthony Loiseau:
+> prepare-commit-msg hook is fired as soon git-gui is started
+> and upon F5 in order to pre-fill commit message area.
+> 
+> Having it fatal, forcibly exiting app when this hook fails
+> rendered git-gui unusable in this case. Fix this by not
+> treating this hook as fatal, and not exiting app when failure
+> popup is dismissed.
 
-"make test" has this to say:
+It is understandable that a Git GUI that cannot be started looks like a
+problem that needs solving. However, I am not happy with the proposed
+solution.
 
-t3701-add-interactive.sh:619: error: head -c is not portable (use test_co=
-py_bytes BYTES <file >out): test_write_lines P q | GIT_PAGER=3D"head -c 1=
-" test_terminal git add -p >actual
-gmake[1]: *** [Makefile:132: test-lint-shell-syntax] Error 1
+The first reason is that even if Git GUI can now run, the error message
+still reappears every time when Rescan (F5) is used and must be
+dismissed each time. (The version of Git GUI that I use does a rescan on
+window activation and now runs into rescan loop after the dismission; I
+can't even exit Git GUI anymore.)
+
+> This way, user can use git-gui when he/she dismisses failure popup
+> of a failed prepare-commit-msg hook.
+> 
+> Note that this commit does not deny user from commiting when
+> prepare-commit-msg failed. Message is simply not pre-filled.
+
+This is the second reason. As a first step, an attempt should be made to
+fill the edit box with the unprocessed commit message.
+
+I am unsure what next steps should be, though.
+
+- Should we not allow to make a commit?
+- Should we allow to edit the message and then permit a commit?
+
+I can't tell, because I do not know for what purposes people use the
+prepare-commit-msg hook.
+
+Without these two points addressed, I consider it better that Git GUI
+does not even start or exits.
+
+> 
+> Signed-off-by: Anthony Loiseau <anthony@loiseau.fr>
+> ---
+>  git-gui/git-gui.sh | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 8fe7538e72..ab6caaf2ae 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -1643,9 +1643,8 @@ proc prepare_commit_msg_hook_wait {fd_ph} {
+>  	if {[eof $fd_ph]} {
+>  		if {[catch {close $fd_ph}]} {
+>  			ui_status [mc "Commit declined by prepare-commit-msg hook."]
+> -			hook_failed_popup prepare-commit-msg $pch_error
+> +			hook_failed_popup prepare-commit-msg $pch_error 0
+>  			catch {file delete [gitdir PREPARE_COMMIT_MSG]}
+> -			exit 1
+>  		} else {
+>  			load_message PREPARE_COMMIT_MSG
+>  		}
+
+Below this context is the same catch {file delete ...}. Since it is now
+reached, the instance in the if-branch should be removed.
+
+-- Hannes
+
