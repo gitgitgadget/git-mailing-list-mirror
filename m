@@ -1,64 +1,64 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC69A1411DE
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 21:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580551420A8
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 21:08:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720904911; cv=none; b=nmuZKrPPbOl64pJwGSy4THjrc8oK0o43NwFPzCrLJ9uCiBWOa3t83Qrua6fYSW4Liqvn8JFlUZUOzH4k075vo6MXKLzrE9Pt50HHaVu1/vubwbc5SeiC6t6HwYwSfjcq7uZbfP3TfVF6L6tL+JJsTFaxs6KhoGKjB81vEI2FlH8=
+	t=1720904912; cv=none; b=Ki0aJfdDgZ+3kLY04oORhl3xX9gyVdSl+FGidBAk1YbLZ1VoWN71kC27PEj7wK5+aZwHy027VWqkbOOYqqqgQ493R/p6yFUnpFfdv5dSBj8f0dl0jAWQxsf6ueR4Df4a+GCXZcrkGMdghVB+5k8AYf3RxjKxFmY16D08yzUJqzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720904911; c=relaxed/simple;
-	bh=u8yaTDujhV2/Nu4OVUSQjQlDfgzdR329gA/H50m5rl8=;
+	s=arc-20240116; t=1720904912; c=relaxed/simple;
+	bh=MIwsxKQCc6L1ypFrSWOoIhAUtc7BOba8IDgNM12CZxk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VHaV0+5FZd0aJB1vt8bllLEp2VbftJDUx8YNYii0zsW9AKsrJ/awFYIYQUaospH+MwKgMcbZA8UjO5vGfNfB5Kb/eMSMJTB/FoucFHUjfd11rSx88xL03jyOK8XdHRsZbEcjaoRnKevHLFRql3WhOZ0gBN+bsxgdRZCowKt9O+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8MNVvIK; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=JC/4iUSxgLPJbLAXWX9aB2H2aWm6cAhNfzZ3QcHdyluHhPa+oyyOgT/m7WhnAI7SuGc/pDQg9uf22lb7iDRxg595hYABbWEk4u6bHpRjk2IdeVYkYaia9rHf8zzvllAwd51s+ZhxODHdwUvncDyuIihMLMtYaD6jU7YXFdSatio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hG6qCyPZ; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8MNVvIK"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42797289c8bso22553645e9.0
-        for <git@vger.kernel.org>; Sat, 13 Jul 2024 14:08:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hG6qCyPZ"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-426717a2d12so18284375e9.0
+        for <git@vger.kernel.org>; Sat, 13 Jul 2024 14:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1720904908; x=1721509708; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CocVMwk0JIazwXWV9OwSdYVdQb6i/4AS+rSFmyyw4fI=;
-        b=D8MNVvIKnM+vFOAELHQZICEgwwHsM3QuNEeIaPgUjmraxGh8RXOnsKhuIe5oczEfdJ
-         rJvwNm4DFaoLu7ZHTW0NK6nzocXX5ABSDgbuTqQMeUPsyaKOBEBTh+lWcDgRc/yYw/Nw
-         YPak3BRcKl9uS6f8OkpUSgaSRlKIhNjO/O6tfuDs7zTDjo0ehS3dYsaJnhWLf7tb6lwU
-         uwP9RI52x+CpfPR7l+A+mUUkpTJhItvMhokakor/+vPQrDmtBuLte+IPYHDBKjXimfy2
-         5UgQ8PYk0vMbDATkt5o+wHMTqwqHJ/Xc7jMTxAA4GDuWIEAGu2pPscxZN8Zsc3yf0zmZ
-         w3hw==
+        bh=MpbfQ6cIUNHUjgSnKnj7SnzmfwlwJBl0mHg3GxACDxI=;
+        b=hG6qCyPZIvzepR3rFlhxHvilvp10sJZx947/P4VXsFZBzkIuj8n9O30GHOLiN2bK3X
+         AZLUXNr/vqMn8pF4R78nF2+nUUYA4opuBDlwEL197Zzi+pzKreoBrjd6PPWGAbGX7vSm
+         Eqx8ixDE8tr6U03xWQUTMr3IF9teDQqgoq9NVq8ORO+z3q5r3MhSdGlejQL69CnLhzfu
+         /zqk2GhuNMGPdsFpFkwsSE6zbBX8K7zyMG1u6CnTyzlZtn3ROGKfRg7061j9k3V3Hy4V
+         eCoQfqxokcVuJQoSHN+UgYrI2UElBuX/9dnSzIuikOtPvaWKOf1/PyjHQPnAhakymwM1
+         Z6AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1720904908; x=1721509708;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CocVMwk0JIazwXWV9OwSdYVdQb6i/4AS+rSFmyyw4fI=;
-        b=HJN2so1E2mRHQam7EXUGQgs0ULB7gVG39wRtNVrYIYHwSBJv1BT72sj5OFIXhljgEB
-         6Dvk469XGTg5jMiwFjqMSKgjjw7e+Cf38PY+uaNlfM4PA4lMewaDZ/U0u7eZPygLLTyH
-         mkv4QD1JrivXDnviI3QaesiD73ljuMUpfWgfA9HPEVwwM0BoTS2xarAMEmR+mPpdFUm4
-         KWN05EQX+FpQmiwLN7KhwmVO97rnlmnZnpDFHF864GPvdxHPUW8zXaOR01g/PziAvQPY
-         feCfmHzYFtnWyKy37LTnt/5AqHaWcz3WTGj+tXt0KG7V1E/WFelZWYM6JbA1YCZ+LvEU
-         vplg==
-X-Gm-Message-State: AOJu0YzNwmdWwD5VBO/HxhF4H91wz1ERO7RygTo9AKm0NYSHZGi9R2KH
-	ekYCMqtqA3RS2cSr7SaRZew4tgIu4+7zo1+pjnKaHXkNQj6OpBaH+Bkzeg==
-X-Google-Smtp-Source: AGHT+IE83J523w8We6kN0ozoYhxpPAnjYWBJMVNBDjJ7nYmRYX/K7DSJA10cGzTCBFlJ8foHZAYUSQ==
-X-Received: by 2002:a05:600c:42d3:b0:426:5546:71a with SMTP id 5b1f17b1804b1-426705ce6f0mr95601275e9.2.1720904907640;
-        Sat, 13 Jul 2024 14:08:27 -0700 (PDT)
+        bh=MpbfQ6cIUNHUjgSnKnj7SnzmfwlwJBl0mHg3GxACDxI=;
+        b=MsnLPoL19/v8QChpQi57WJD0mboHLoJvsaiC5Nye1y+8hbYXM2sqwm0/LEFDpWBjjF
+         uyDg+I3X1btonZCzo86FkwTi3wQg3YZaK7eZosUv3ZRyVvCjmTSDnlQ6J1JDra5pyY7L
+         0AD8mKinwmUzybcYLCt5S+NhXQA9723AGLL7AgBDg2mVJl9VDasINMETkAQAPPb2c93u
+         3VTc5Jfh7WUz3upHcrFXMbRtwEnaD/tgj8rWCIDCdGnjLOymFrCWWWv8XsuNdrLCsj9/
+         05Eeci+47DbZqYlYYRpn20L7ZPavWJ9WIVpnli3zcnX3MN309zuXa7GWN1esN33/VyLP
+         xlJw==
+X-Gm-Message-State: AOJu0Yx/D/VLJjMt1le9J0lvGOzNYz5Kewogak4kopg9EbkhZNNySOv0
+	CqCqsjPhKl/aK+IcKGex5ATG6ZbB6ceDQJdpCJW4NrlsbksVSgxNgqQ2aw==
+X-Google-Smtp-Source: AGHT+IGESz23EecRfOvwPqkK7HxiPPr0LOxbP8hOXUd3pzec8QaWOVfgJp3Moj7ljqAGRXjdmgsxFA==
+X-Received: by 2002:a05:600c:4793:b0:426:67f9:a7d8 with SMTP id 5b1f17b1804b1-4279dae2aedmr58167215e9.9.1720904908378;
+        Sat, 13 Jul 2024 14:08:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427a5e83273sm33295895e9.17.2024.07.13.14.08.27
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f2cc42esm67891135e9.32.2024.07.13.14.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jul 2024 14:08:27 -0700 (PDT)
-Message-Id: <e0970381042e4e35074c5f095959d3379aad6d9d.1720904905.git.gitgitgadget@gmail.com>
+        Sat, 13 Jul 2024 14:08:28 -0700 (PDT)
+Message-Id: <91ebccbc39f21fa73af8bc8c81af721f1ca201bd.1720904905.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1760.v3.git.1720904905.gitgitgadget@gmail.com>
 References: <pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
 	<pull.1760.v3.git.1720904905.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 13 Jul 2024 21:08:18 +0000
-Subject: [PATCH v3 1/7] run-command: refactor getting the Unix shell path into
- its own function
+Date: Sat, 13 Jul 2024 21:08:19 +0000
+Subject: [PATCH v3 2/7] strvec: declare the `strvec_push_nodup()` function
+ globally
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,45 +76,50 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This encapsulates the platform-specific logic better.
+This function differs from `strvec_push()` in that it takes ownership of
+the allocated string that is passed as second argument.
+
+This is useful when appending elements to the string array that have
+been freshly allocated and serve no further other purpose after that.
+
+Without declaring this function globally, call sites would allocate the
+memory, only to have `strvec_push()` duplicate the string, and then the
+first copy would need to be released. Having this function globally
+avoids that kind of unnecessary work.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- run-command.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ strvec.c | 2 +-
+ strvec.h | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/run-command.c b/run-command.c
-index d9f80fabe6e..59e433bf91c 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -274,17 +274,22 @@ int sane_execvp(const char *file, char * const argv[])
- 	return -1;
+diff --git a/strvec.c b/strvec.c
+index d4073ec9fa2..f712070f574 100644
+--- a/strvec.c
++++ b/strvec.c
+@@ -10,7 +10,7 @@ void strvec_init(struct strvec *array)
+ 	memcpy(array, &blank, sizeof(*array));
  }
  
-+static const char *git_shell_path(void)
-+{
-+#ifndef GIT_WINDOWS_NATIVE
-+	return SHELL_PATH;
-+#else
-+	return "sh";
-+#endif
-+}
-+
- static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
+-static void strvec_push_nodup(struct strvec *array, const char *value)
++void strvec_push_nodup(struct strvec *array, char *value)
  {
- 	if (!argv[0])
- 		BUG("shell command is empty");
+ 	if (array->v == empty_strvec)
+ 		array->v = NULL;
+diff --git a/strvec.h b/strvec.h
+index 6c7e8b7d503..4b73c1f092e 100644
+--- a/strvec.h
++++ b/strvec.h
+@@ -46,6 +46,9 @@ void strvec_init(struct strvec *);
+ /* Push a copy of a string onto the end of the array. */
+ const char *strvec_push(struct strvec *, const char *);
  
- 	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
--#ifndef GIT_WINDOWS_NATIVE
--		strvec_push(out, SHELL_PATH);
--#else
--		strvec_push(out, "sh");
--#endif
-+		strvec_push(out, git_shell_path());
- 		strvec_push(out, "-c");
- 
- 		/*
++/* Push an allocated string onto the end of the array, taking ownership. */
++void strvec_push_nodup(struct strvec *array, char *value);
++
+ /**
+  * Format a string and push it onto the end of the array. This is a
+  * convenience wrapper combining `strbuf_addf` and `strvec_push`.
 -- 
 gitgitgadget
 
