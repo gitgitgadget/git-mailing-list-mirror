@@ -1,78 +1,166 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BE11B960
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 09:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A54C2F2A
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 09:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720861963; cv=none; b=c3/om7v73Js2UPjd+wRPT2ZG2jHsPve6dp9UonT+rkyCu9KlMQckH+8d2pGkj/dUdPBmfpw+q/3qXdxxA/1GJ77lLHeJdv+GL5TLWbjkvYSdVpZzgHIvMGf1KjDUeqA7mUuKhR1QMgVgyQEZiNqhcuEKUv7v++LDr9VGA1TX4Hk=
+	t=1720862716; cv=none; b=Ij1Hxb/mkH53+LqTPGU7BmnPf/vVPlW2okq+ZV0CLaxhx+QzuM0b2KswcRUI31mfd4/jFCOkrsOphchUH7uRMbrFYrnz0kU0y2BNTEel0pVltPDsTqkS7ct4OuO2Q+yje08hAgz3vM1MZ+1Eo2Hiq2n/2CJcHyFjW4ZZQ02rEBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720861963; c=relaxed/simple;
-	bh=E02lVAgofGaoMGFUDuW3v95F+ubCMVqUK5qTICKVoaM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SGBBXGPBijXgrTD5+WWlIE+CJJ9aAnOVDSIMPGx/mTtZfLKdtojLWXH+AHrBblvGJ/E9e6UkeD0bGSQf7UPR8w/KSUGrayb49Ls9Ip6Ljxbr/p8R1/7C69Jk90A9md/xbRPCnypHWOsNccq6ya6s65cdYJHnLyjv+uLG/tVrhk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sGXApxT3; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720862716; c=relaxed/simple;
+	bh=lxMgcaC7veSP/64n3gDW2qV9k6ioN+1NMtC+oVUOid0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uV1pMODlIxvQ5/EWvhX1na0UtbvtsrtVc2E4pj0Oy6UV/Vs1QeOcwWYAb5uIfV9cBaLL1ZqSmVRpJgoW7ALc/7wA97U2dPOs8atLBUoem/j6+OG0jPBXwH7BAbzZCy9eKjOrKb3w+T5rWoQvNVeqW55P9rDYlkwt3/w2SFjn5A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VtDbSaod; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sGXApxT3"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C80841A01C;
-	Sat, 13 Jul 2024 05:12:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=E02lVAgofGao
-	MGFUDuW3v95F+ubCMVqUK5qTICKVoaM=; b=sGXApxT3eNTqOQhYXclbhOovdJxe
-	6IyY01BJwFjx1Htz3HRtL4JH25llX6Q6I9OsFbSosxVt2kLQMEsucPJMQfuLNaFX
-	0wO8CmJmypINzcGM1c2+2r/BiqUEV0dkMd1BPZzwgkYcAaf32WtOTZMYibLOF5g2
-	MozeZiSlda3NEpE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFC551A01B;
-	Sat, 13 Jul 2024 05:12:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 379781A019;
-	Sat, 13 Jul 2024 05:12:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
- Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] add-patch: render hunks through the pager
-In-Reply-To: <ba8ad59d-d125-41d9-a482-ee8eda187762@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sat, 13 Jul 2024 01:24:32 +0900")
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
-	<5effca4d-536c-4e51-a024-5f1e90583176@gmail.com>
-	<803b10ed-1cb3-4314-82c9-cf48d5d0bb90@gmail.com>
-	<ba8ad59d-d125-41d9-a482-ee8eda187762@gmail.com>
-Date: Sat, 13 Jul 2024 02:12:38 -0700
-Message-ID: <xmqqsewdd5a1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VtDbSaod"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fb3cf78fa6so17863525ad.1
+        for <git@vger.kernel.org>; Sat, 13 Jul 2024 02:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720862714; x=1721467514; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nkdBVaqxHF191eL8oqD4QhDOCt0IrpT+Ak/U/FNYPeM=;
+        b=VtDbSaodPC8oTJ2QMj44hHQCff5mFBokWWT6diFpebTkyU5NytpD2Snrvt5wKionsb
+         nWZeBHqK7RDTdKpLW5tcPzhxHL/wTqZSB87zgplvZcmyHPGaloMHQliF8yCmFiv1FEpC
+         NcnxirYUXkOAnv2hTFNx5JBZE2ne/dCvsitMr8Vje4MJS/hwWwfYf4PbIKCtxfMXCiyg
+         mQ3PY2twwjMLkp8oKwPdoduODqjpSl2BtxvqLpwRDf7QgsnlMgO/SF6rDydVqCHjZdTA
+         X3JyVLe0iQZhE9a/SzwAEl5zTDVMMjBQBAkxB3GVUMhWpnKgXpY1MMcdvgC6j/QnzgUh
+         Uw3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720862714; x=1721467514;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nkdBVaqxHF191eL8oqD4QhDOCt0IrpT+Ak/U/FNYPeM=;
+        b=bnkmqLKuw1y7gxXpMRrCDC2JqoNfMx1gbNpWhAf4nS4IzkTdYJY4QwS7JTTk7Nd3Jz
+         HXwDJgG1+qAsNg4Mr7HrT2j8Uwp6PEAUR+q4BxzSjF0l9JPJ7naLOWC5oDZwfQ+Gx/BZ
+         uu3Sw645ZTV0iBGWpmk50NX7Abo+38oiM/3smAcfdacNLRUmgNpvmiP11QqMs5vCVU2b
+         nMy3OyBvBrJ1nNWgdAoViP7O1PQTpWQJaUJym8oC6THG1cHO0mhawSm06GQggG5wy8eL
+         g2ZWxvwouXjQVXT/zzXi6KXJYFXfNFsbaIZb5AFCVOMEF4C73W3VCEkTO1xam6CiqujI
+         dtBw==
+X-Gm-Message-State: AOJu0YwVEbFQYNbOhQIRewxdXyAcfQm3U1LrWTVEskE0zAI3PLOyBdtS
+	2Wvw6EkXOj7/6oOH0Dbzemartkh8xdPZp4wyF/xeuYrkY2LTk5pdozxa1KVs
+X-Google-Smtp-Source: AGHT+IE4zP3Ei/oNxqU582devSyRWmTUY/GX4+AeS3iEJDYVRdu6tk80Fw2UIU25XXZnhE6jSpWUUw==
+X-Received: by 2002:a17:902:8305:b0:1fa:fc69:7a81 with SMTP id d9443c01a7336-1fbb6d54716mr89240355ad.29.1720862714307;
+        Sat, 13 Jul 2024 02:25:14 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bbb0625sm6913925ad.93.2024.07.13.02.25.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 Jul 2024 02:25:13 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Jordi Mas <jmas@softcatala.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.46.0
+Date: Sat, 13 Jul 2024 17:25:09 +0800
+Message-Id: <20240713092509.29229-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 0DFBC93A-40F8-11EF-AD25-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Hi,
 
->> What is huge_file doing and what happens to the single line of pager o=
-utput?
->
-> The huge file is to make sure we are receiving a SIGPIPE.  We don't
-> really care about the line "head -1" produces, only that we don't
-> break due to the SIGPIPE that occurs.
+Git v2.46.0-rc0 has been released, and it's time to start a new round of
+git l10n.  This time there are 102 updated messages need to be translated
+since the last release. Please send your pull request to the l10n
+coordinator's repository below before this update window closes on
+Sun, 28 Jul 2024.
 
-That deserves to be explained in the proposed log message, I think.
+    https://github.com/git-l10n/git-po/
 
-Thanks.
+The following description of our l10n workflow is from the "po/README.md"
+file.
 
+
+## The "po/git.pot" file is a generated file, no longer in the repository
+
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the cooresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodate "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sun, 28 Jul 2024. **
+
+
+--
+Jiang Xin
