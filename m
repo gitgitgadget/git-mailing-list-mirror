@@ -1,64 +1,64 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145D61411DE
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 21:08:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2219114C586
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 21:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720904914; cv=none; b=GcumEATxoow0qPiord4GQOV3JJ33qSyGiUyAOKFyo3Nj4QzxDZx8a/FsqEqzxif/n0L2TVxN2S/3MFjzs5TheILiNlGFeBfSk5Y2dSFFCF/Gm8Wdpg40HKPbEKqGV/1psG+xkDrrAdP6k9vq8gNPh28Kv86qHwJfMUA+ddb66bg=
+	t=1720904915; cv=none; b=TOTKsnenslgO158DkCvAg6sBkrcCedHkpQ+1epD78KD48rSHLXJqXJuJyQZDlyg/wcgetRHjbQbaJEt1ri0YPh9fvq6mpfwLHGHmpAgPEV3xBkE1R46PIOCqdAIZxA8CJVTOqe+tuqLZrXYl/R4IC9TlEhWhSpBL7FAQcCOY0Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720904914; c=relaxed/simple;
-	bh=X4hE+H8Z1mDrZwOiKzXK0l++3FlajlA8Z1GvV7ZqIAg=;
+	s=arc-20240116; t=1720904915; c=relaxed/simple;
+	bh=Zn6Q79lF4XV6seukFGYGo0mSUEYlc/kiG1ZjPcbLdcs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ukgRAiO3IFJe+dIiSbW1rMKpXaRL3lkk8uKT7GzdOjSFzHMJ7nlzI9EX54xO1noNt4wXrI2vMDGQtGlS2JJZD0hOJTNVvLssCHApUzexCxdDf9WsS17oS7s6J56Xz1ITajkAl3fCJamuinreYb5kEXFEqGrGOgcxj5pEC55eVU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MKJc9CCq; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:To:Cc; b=jhXP/WEwom8FlUi2oF8loOggZoITprLu3xoyM2TZ1i2ZQ6F9RenslRCZaViq+6PxC3N0dhwJ/sdTeAC4hGimMF3FTwcKx/p6mBuE6C24jbiZ0hwO1LxylDilE8fpt1mWEZty5QR+P/6qxErbG6lfEwiMIqn0cn3yWmG2WiftJeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltyONaPs; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MKJc9CCq"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4265c2b602aso20416745e9.3
-        for <git@vger.kernel.org>; Sat, 13 Jul 2024 14:08:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltyONaPs"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-367818349a0so1760176f8f.1
+        for <git@vger.kernel.org>; Sat, 13 Jul 2024 14:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720904911; x=1721509711; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720904912; x=1721509712; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mCqo5imxUdi2MwtXOaJpLZGB4nbapaxdZRNCFgMicOY=;
-        b=MKJc9CCqyiFHpRcLpFFEcjMbBAqbaMFB8YelUaVpk4FxFvaHH0mITtI+u+L9XwLc09
-         TN8pjA7sZpRr6x6gCknBFY+bBMNwMXMFLQUbSznWZv7VNgXcGli5MxL+CYVzvpU7fTg4
-         go0h5yDpmndTOGjosuEpyFpvouAdEZ42amuQ8Lh5tf3EXUw/npFUTSk17RmYThvACOlR
-         r/bYV1WTv59CASYBe9zmWxGab9wahnN7S88dkJN1gJEkd27H6/5g/M+gUtjceHTB/ybG
-         /pad6qlYt3bk52A80OJuer9DeYkCiJERVtaFP4U0TKIeKVE4VfpsPXl9O4X2HHFAoAy7
-         csqQ==
+        bh=pKJhnuUlrb2EY3P+9i3X5QJfDX5c5R6ixjlHNz1mdSA=;
+        b=ltyONaPsq2QU0Y2HimRJD1u1hiVV2pC48tO8T3qCvTcA4SwfIUFwDvwQ+oeJYLpiOq
+         Y42git/YRuNEdCTHu/0UDfWO8DLiSmjNRHlG/NLR/4MHaT9i59j6J6undoi75l9PKVLY
+         Kb7AkeUxqoSCUhqKZDj/NqPFnxi79Lx5AjnxWKboaefVswCKDa0HVBJy0FNjusYZhPa8
+         mj2wY7WaKguE4iMNAUE8C0gnuIITKS0etYa51wjqXoAhEw6dr7cg5eAKlhyWwGxWAgca
+         Vxc2UEaZKv9qfl6NNbIbvXqyyCfK7F6McFVwDNdAXdGvg7t1QIaNZ0+ZUYcMTVRrsnwB
+         MC9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720904911; x=1721509711;
+        d=1e100.net; s=20230601; t=1720904912; x=1721509712;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mCqo5imxUdi2MwtXOaJpLZGB4nbapaxdZRNCFgMicOY=;
-        b=rdXOHqmqXRVkatoTJaQSmSFKwiso+T7B9KtzORTwkzW/igaHEQCUb/C3jLQves0Tij
-         LYEYy9gc4G/zOFi2xM6b/s5VAZgourq26IX7b0640kAvQDogQqZ9RgUmY+PRHUWsijwv
-         /cOmZ/epXiab6EkpFjldWM+b2NRizff8s0gDHh+i6egzMhsJDU5GngZ63a8SyPW3/GHN
-         7pFH59Xv9MDFxBSGFpnqb7noEh6o5kiH/ztCEn1BDahtbqrK6E6wJhjEuAel9/zFXP82
-         1HMd6sAZBlYKGVnkowPFnSmcnk/qDyacKiBoANOBcKc0HklR4HWpbBLkpJPFK6+uH8YY
-         Zc1w==
-X-Gm-Message-State: AOJu0YwPe7IdcOe7da7sjh8n1bZb6a2Ms+FuMXNdlgP5jywoRng05kCT
-	3bWiRnFxkNiIA7L4ai3m1pWE+AeuRDcLeNx2SF53yHV7+s7PwrR4ufDOTA==
-X-Google-Smtp-Source: AGHT+IH1UeknvOA8ABcD9Z/MTIyAhPed3QNSaPtOGGmYCsSCEFwCc/7/RpcYSMmLNgUuE8/YV0ZZVg==
-X-Received: by 2002:a05:600c:4982:b0:426:6314:3336 with SMTP id 5b1f17b1804b1-426708fa8bbmr98307445e9.36.1720904910866;
-        Sat, 13 Jul 2024 14:08:30 -0700 (PDT)
+        bh=pKJhnuUlrb2EY3P+9i3X5QJfDX5c5R6ixjlHNz1mdSA=;
+        b=tw4FwOr41yQkzJ86etsAvvxgIQyxsQt0pZJArIgBZjTOpAmaSdbJOS3+3au/yK7nCh
+         3hwG6ghaCVRAP7Yzh7yIL+yHfCAik2yYXv/POyP3Dkkc9auq5W6Q9LdFtc3rskd4UTqV
+         8Kc6gW0rD0vYwnxmLG28p73pbs03Css33OLdRg/Bn0R8AhGbRaymoC9MlOOKc5jF2Woq
+         UcGKQJdklIxD9AHnRCoN7TqTkpwCkoLh7sc5xC2tkUwlyM3T9Y1e67bA9tFaqgpCxq1n
+         jgEanIzPandsjgVdxVRgyAUBLfMP5BDcoQPJOFeWkxywctOYvwGkNu2zU5uTLPTBI3C/
+         PILQ==
+X-Gm-Message-State: AOJu0YyvKPL3fBa1DoLcjVqFdPGMoha5ZxZ1OeQDRc/GixhaJFCWn7g/
+	aupXXFsexnBKFfjKUd8ClQMP2jS/M7nEYFY92TMxeJyaTvC/juXIRgbNEA==
+X-Google-Smtp-Source: AGHT+IH5Y71I1PDIPC7YQ856+WDHlOWvUzZUSTG5LY0ZaTAaJxpLDwViz2f4V7Ofr1pQ3MgOIzZ1KQ==
+X-Received: by 2002:a05:6000:156a:b0:366:d5ea:6098 with SMTP id ffacd0b85a97d-367cea46b19mr12580137f8f.3.1720904912101;
+        Sat, 13 Jul 2024 14:08:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427a5edb4a3sm32755025e9.31.2024.07.13.14.08.29
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680db0f26esm2360691f8f.116.2024.07.13.14.08.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jul 2024 14:08:29 -0700 (PDT)
-Message-Id: <60fde81d35ce58975307e507debbb27ade10853d.1720904905.git.gitgitgadget@gmail.com>
+        Sat, 13 Jul 2024 14:08:31 -0700 (PDT)
+Message-Id: <797cf9094ea39e9bedb2e60ef86fe3ca089009ba.1720904905.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1760.v3.git.1720904905.gitgitgadget@gmail.com>
 References: <pull.1760.v2.git.1720739496.gitgitgadget@gmail.com>
 	<pull.1760.v3.git.1720904905.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 13 Jul 2024 21:08:21 +0000
-Subject: [PATCH v3 4/7] mingw(is_msys2_sh): handle forward slashes in the
- `sh.exe` path, too
+Date: Sat, 13 Jul 2024 21:08:22 +0000
+Subject: [PATCH v3 5/7] run-command(win32): resolve the path to the Unix shell
+ early
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,38 +76,62 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Whether the full path to the MSYS2 Bash is specified using backslashes
-or forward slashes, in either case the command-line arguments need to be
-quoted in the MSYS2-specific manner instead of using regular Win32
-command-line quoting rules.
+In 776297548e (Do not use SHELL_PATH from build system in
+prepare_shell_cmd on Windows, 2012-04-17), the hard-coded path to the
+Unix shell was replaced by passing `sh` instead when executing Unix
+shell scripts in Git.
 
-In preparation for `prepare_shell_cmd()` to use the full path to
-`sh.exe` (with forward slashes for consistency), let's teach the
-`is_msys2_sh()` function about this; Otherwise 5580.4 'clone with
-backslashed path' would fail once `prepare_shell_cmd()` uses the full
-path instead of merely `sh`.
+This was done because the hard-coded path to the Unix shell is incorrect
+on Windows because it not only is a Unix-style absolute path instead of
+a Windows one, but Git uses the runtime prefix feature on Windows, i.e.
+the correct path cannot be hard-coded.
 
-This patch relies on the just-introduced fix where `fspathcmp()` handles
-backslashes and forward slashes as equivalent on Windows.
+Naturally, the `sh` argument will be resolved to the full path of said
+executable eventually.
+
+To help fixing the bug where `git var GIT_SHELL_PATH` currently does not
+reflect that logic, but shows that incorrect hard-coded Unix-style
+absolute path, let's resolve the full path to the `sh` executable early
+in the `git_shell_path()` function so that we can use it in `git var`,
+too, and be sure that the output is equivalent to what `run_command()`
+does when it is asked to execute a command-line using a Unix shell.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ run-command.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6097b8f9e60..29d3f09768c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1546,7 +1546,7 @@ static int is_msys2_sh(const char *cmd)
- 		return ret;
- 	}
+diff --git a/run-command.c b/run-command.c
+index 59e433bf91c..60a79db8f0e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -274,12 +274,14 @@ int sane_execvp(const char *file, char * const argv[])
+ 	return -1;
+ }
  
--	if (ends_with(cmd, "\\sh.exe")) {
-+	if (ends_with(cmd, "\\sh.exe") || ends_with(cmd, "/sh.exe")) {
- 		static char *sh;
+-static const char *git_shell_path(void)
++static char *git_shell_path(void)
+ {
+ #ifndef GIT_WINDOWS_NATIVE
+-	return SHELL_PATH;
++	return xstrdup(SHELL_PATH);
+ #else
+-	return "sh";
++	char *p = locate_in_PATH("sh");
++	convert_slashes(p);
++	return p;
+ #endif
+ }
  
- 		if (!sh)
+@@ -289,7 +291,7 @@ static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
+ 		BUG("shell command is empty");
+ 
+ 	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
+-		strvec_push(out, git_shell_path());
++		strvec_push_nodup(out, git_shell_path());
+ 		strvec_push(out, "-c");
+ 
+ 		/*
 -- 
 gitgitgadget
 
