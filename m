@@ -1,97 +1,83 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCA217C73
-	for <git@vger.kernel.org>; Sat, 13 Jul 2024 17:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A5313B2A5
+	for <git@vger.kernel.org>; Sat, 13 Jul 2024 17:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720890245; cv=none; b=urohWmJbbHoFmlAl0/JeuRdKYxZeCWnl0tpgNv5nt4DblyCz5cu6dYE6pz8Q/r1JMdif58nk9r8xiN6EWwNqlAEgW4dktOgnd2W8rKTQhakyhiLzklod9gas7o68jck7IsOaTbWz6QcE1+hImXTJOqjD7dbMgXYLJjRIoBMxytc=
+	t=1720890508; cv=none; b=sW8vxdUvkv2asn6Zttr/EFo59DOVfjW7peENHpkBWjlgC35je4hBycCf3OTvoSRD8qxacVXwlxgyyyMWarjgOSZtwfMbx1kbeXS/qK9+M6QzaHkyMespi+RcJ5bFRneFN9XhFAElZAQ78+k72JJDmPKs3liBrFGbqEj7oxkFKBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720890245; c=relaxed/simple;
-	bh=UFs8/tVqodXubdJl4Dy5YR6E2BmQPx6Jqv3njPS9iXE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ox6ix8/7koxMRfLZurfB4OjK+5u8HLGoQ93SN7i74B7doo0Uzy2yy2Zm+HuiUXD3CMs57ul5oQ1KkbV5YAHsTvOtZCbsN6MbObLoMKF3CTJuhssI2MRL6eyhrLkDLqILuPW7CwzuuhjhacnaUdyi7rVgiJDi52UXQsoF9BfhZlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=0q7rLhSS; arc=none smtp.client-ip=212.227.126.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
+	s=arc-20240116; t=1720890508; c=relaxed/simple;
+	bh=D1od7YOXBhK7Z5zDGPCZNdmRXRH7oFw83HSUuuD9XlQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r5jnM93M8FqKbdkhAxNcrBZ5dADhtU5AydVOCXXSEmBiDsK1Osu/Z3twbqm0ghrsVyq6rw0LnehpYe/bHYRVBfUADrnRJm+pW+7F6BehAVh/Z+G2e7XJ+7S77lI3rBxf6JPTRUjP5yOjWpe6vcLKNJ+SgjZfkdnBsMzuMl1OEfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PzEhMHSA; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="0q7rLhSS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delpeuch.eu;
-	s=s1-ionos; t=1720890240; x=1721495040; i=antonin@delpeuch.eu;
-	bh=SuYltWXnaMGeNU3FjB8nUltmh2DtXKHNAn7mLPDqqfA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=0q7rLhSSZLj7vOh7hDYk8vQ4wBqKBiq3FeX0OENTg2uQTQHeAQxhfo50yR6XQM1q
-	 JWsQ0tqAwKN4MUv9kbIHgZbABFp5HQSaQ+lD1Eu+7o/MNt8jjuN8t1BBy+f5823zZ
-	 UTDkVEfDMNq69ByqJzlyKSRlKZkFqmc9bHuiyNdmdGgvVOxygK9n+nqyZZ5BOpDcg
-	 RO8iIe3CwBO09ky6Zy4udCoH+5INm94YatGeRI3xagIa+OljEBqxBHYATdhAFpRWz
-	 54/cZ3cZqnjBzphQ2P7iX9tvHV/f9Dbw7T0k0Dppi5sRJxD2w9FcDqx/0ziJn2LAV
-	 wkMsQH/n2E8pkX2j/w==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.178.21] ([79.246.85.203]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MD9jV-1sbiUy1DSj-00B2Lw; Sat, 13 Jul 2024 18:50:49 +0200
-Message-ID: <9ff7c0e6-af29-48a2-bec7-be4554681671@delpeuch.eu>
-Date: Sat, 13 Jul 2024 18:50:42 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PzEhMHSA"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A12C02ACB0;
+	Sat, 13 Jul 2024 13:08:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=D1od7YOXBhK7
+	Z5zDGPCZNdmRXRH7oFw83HSUuuD9XlQ=; b=PzEhMHSAzUsw/24RRvpWn5oIIkbE
+	ZZvgVabkUFTqgEmqVh8iV09WEK+IZvMpMB+0f9PX4l8XWtEaT+WslHtgzvzWbgh0
+	rTzzvDYrsPFhZCcd+0poiv0wab7SL+NOcyYHu2lh6mxDiL79atmfps1haxd9tr3p
+	5jnjeAGlXrhEwwg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 981142ACAF;
+	Sat, 13 Jul 2024 13:08:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0435C2ACAE;
+	Sat, 13 Jul 2024 13:08:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Dragan Simic <dsimic@manjaro.org>,
+  Jeff King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/4] use the pager in 'add -p'
+In-Reply-To: <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Sun, 14 Jul 2024 01:26:00 +0900")
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+Date: Sat, 13 Jul 2024 10:08:22 -0700
+Message-ID: <xmqq7cdpb4op.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] merge-recursive: honor diff.algorithm
-To: Junio C Hamano <gitster@pobox.com>,
- Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-References: <pull.1743.git.git.1720431288496.gitgitgadget@gmail.com>
- <pull.1743.v2.git.git.1720551701648.gitgitgadget@gmail.com>
- <xmqqmsmpw2mp.fsf@gitster.g>
-Content-Language: en-US
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <xmqqmsmpw2mp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 8368AF34-413A-11EF-AEE1-965B910A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NTx57mvc1ZQUhVZT1TTzhrL/Jz5+gX0URiiTrCMEfOr2/AtN3iz
- cfJZzSVbaNm6Yglj897g0T8qL3yH2uZwRiOQlXGudpCnsMEPkX8dlbOQ3bTCeWSnPNaAxTL
- aYtuklOIo81klxk2MpdvBVAtUOy98XNohZ1gyouYt9NzVFdOBgMIjBljLGnJhmpWCRBQKuD
- ykYVnHVhvJQkMQ+x4LLwA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:czGsfrMeYmw=;ogfEQ7hPaYPr9AMjEM/qMhal1S9
- g1J4PHK4OVnzb210o/Eo7lgKjg5EUi+5wniAjxF9o3bT/bbsal7yJeQup8EtLoVeftksNHL+l
- 3qS9IZ4Krjc6ObFjgaYYQKFm7WIiFUSIe3mN/nbu+qYVV3XkPIYY6blJEKTAbqRQvrSxpzlyF
- fmkY5QDv1HBY0eJ8lqc/ecEIVeGhKB475/HmA/gro8eCw1KlY/kNq6rZamn7PVijrLhlCCLcq
- zQyh8fSFKm3LYFIB4VvMKvc0oHLiy3XU4Lhl6TExUZCvFKkJoo5/ex2DgNWpXZWPewfIH7CX/
- 0nXWtFAZdFIfQIC8F3a2SbVBEG3OaKLrt7ypKqttZre50yS24KOBM+yBIHnm4FP5cFypwV3ey
- ctQdvJsVwmuJSxn+FUmMMBYbIRzsMGn2DBYlw7MkAB+8kL4EQHJKMV132NioiLCcahTs/4tq9
- HhrzdICda5uD2QX1CNBk8WnfZZPqG+2efMUKNRqpEeS+1ZkaeJ2nfdFuJTdqbkZ2874tpMBlE
- 82e7mBK8cJRWm/83fr6I2KAXUs+YLWwWmX0P3sVv2Y4DF0vPwO6kdH0YICdRBYTiDAKXjDPEv
- TqscMCV3oqA5ZMiVIxneIwWz6DmpOw2BQRjj88vDFglMOLriWAih3m7NiW3QGAq4o5g3euL92
- dLhG95Bfv5UbnpFUeSigdEuMXXEoEnMpXbKuMyuPwm3Z6X74Vy1jOanlaEXEIBVtvcHxUuQPH
- pMhGiqDNhTkbSs/bIaiymJqdFH4p75B1g==
 
-On 10/07/2024 19:58, Junio C Hamano wrote:
-> Since be733e12 (Merge branch 'en/merge-tree', 2022-07-14),
-> merge-tree is no longer an interrogator but works as an manipulator.
-> As it is meant to be used as a building block that gives a reliable
-> and repeatable output, I am tempted to say it should be categorized
-> as a plumbing, but second opinions do count.  Elijah Cc'ed as it was
-> his "fault" to add "--write-tree" mode to the command and forgetting
-> to update command-list.txt ;-)
-I'm happy to change it to use the "basic" config if you prefer. I have
-to admit I don't have a good overview of what's porcelain or plumbing.
-> Isn't log-tree shared with things like "git diff-tree" porcelain?
-I'm happy to also change this, but looking at the call hierarchy we seem
-to have a complicated entanglement of porcelain and plumbing commands
-here, so to separate them is probably more involved.
-> Can't we save the scarce resource that is test number
-> and make these not about "I test cherry-pick" and "I test merge"?
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-Yes I agree, let me submit a new patch which does that already. I wasn't
-sure if it was worth including tests for different commands anyway.
+>     -+	test_write_lines P |
+>     -+	(
+>     -+		GIT_PAGER=3D"head -1" &&
+>     -+		export GIT_PAGER &&
+>     -+		test_terminal git add -p >actual
+>     -+	) &&
+>     -+	tail -n 7 <actual | test_decode_color >actual.trimmed &&
+>     -+	test_cmp expect actual.trimmed
+>     ++	test_write_lines P q | GIT_PAGER=3D"head -c 1" test_terminal git=
+ add -p >actual
+>      +'
 
-Antonin
+"make test" has this to say:
 
+t3701-add-interactive.sh:619: error: head -c is not portable (use test_co=
+py_bytes BYTES <file >out): test_write_lines P q | GIT_PAGER=3D"head -c 1=
+" test_terminal git add -p >actual
+gmake[1]: *** [Makefile:132: test-lint-shell-syntax] Error 1
