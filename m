@@ -1,203 +1,131 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BDD26AD3
-	for <git@vger.kernel.org>; Sun, 14 Jul 2024 16:04:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B0282FA
+	for <git@vger.kernel.org>; Sun, 14 Jul 2024 17:00:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720973074; cv=none; b=d5VrN8eRjurVS2ooYxT5RV5sxbh64DXtxl4W6U3g8bOCsVNqWgYy/iaN6mR/i+fjLBPt+NeH/EKHyOoODcE5yY5KMs6O99wQPjV2xG3F4+jfQgptQTohmHtJAOM4MY0866CfVfc6rix3Bx0vOdBE2paoFbzNFr9o3AbwNIZT7bA=
+	t=1720976417; cv=none; b=G+0CfdhYRvTbVZEOmVvnWftDdvQIUX36tiiCYeHLmZIncstid/gxWcdziHfeg/tj1vA9qB3xL4stisWWA4xlsL5F8bTz3l9eOCLfburOwgUf1zL/Syp/TmBnREPZ8t1gq0EgpH83YZKmuX8nsG8nvlXHwo2ZAlIsA5G4x+79CFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720973074; c=relaxed/simple;
-	bh=fNXegqUDwxgs+eMz5yiR/4ne8X7p5Hh0Qw3YZayAA00=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=R3QLmsVQPjwXCNxwV9vV5rLyBGacYob6bKSSdiLidYsLNmyTUXxdyrDAkZX4xUTe26pT+c2klkwUa6xXitcrj5sfFhL573zyw70vsWifmLe61cZ6Ahrku+esgFDfJAejNdbQIgISge6S2ibFWcLwhdQTkiPjkUw3rNimgFWN/H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dIAo6Mdp; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720976417; c=relaxed/simple;
+	bh=wS+CXvtI2Tu01tluqu7jnV3MPoGnDM4adis9BKZC+mM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A58clEhtvgD4KHAa9LHMkz434pht8wi460qrrDd57KhQYfhKBRA1s6Ijgio6fHfnkawFBdRf62jqa3dJtIcH2OH8F9GbaQY6aGWgGx1MTgsf1UbKVQImxX7VwDQexJqZMx3B+NWcRtRD+aBNvnM4LuYBkTI0tpbhjm4JvfaHuFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gFzPiKkO; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dIAo6Mdp"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-78c84837564so794553a12.3
-        for <git@vger.kernel.org>; Sun, 14 Jul 2024 09:04:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720973072; x=1721577872; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7YHMSX46FOELsX2EgPGA/HPy2dBfN6dzGHsTHxlhZls=;
-        b=dIAo6Mdpb9+grI3wFOwyy/kDp6bT+iJzaXEag4AMJYa4JLvyW2qLwK0Ahqsuunm7FR
-         y/GV37khSjdNdYYiE7tckHaWy2vvlPjcuJx8N+LzIacyf3Vm/QhszMSNa/52HR50Ovc9
-         cn3dyDigQFJrJl/xEw4vBvriE/+BFLqnOmnejz3B7jKAwT2Wr53eP01Omygyq3bxUEct
-         68nZphwNmCRK3sNHImzwaV5neIH2QSMe1bKuT84a3d1/pql5Ns1k/hXdRYoDx3Dj3vZu
-         848Y5/aisTIKKeviGjPh0zl8xNqApD75ip9vOx1hqHrkBeVt0ST8gL3lr7l/s8qGZrG7
-         lugA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720973072; x=1721577872;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7YHMSX46FOELsX2EgPGA/HPy2dBfN6dzGHsTHxlhZls=;
-        b=BrjxrO18sfo/1+hJCmPh1pkAEW7hVqf6budgc5lQ0o5GNT9JyXQwUXPcLfRiPOVI/k
-         Cv6Fvk9L7KHvZBdZ/Xf7VUzTiye1qeP9OYm/fKVYO3EjFhpNM6cKiBIc35MsoGL6fing
-         obKIGqOQkN5RHlFM8CIpuPvPKbmx0H+8r8kaa6D9YAxNqzKW/u1xX8scz1aP727kAxW9
-         TjDG552Fe9igJd8Cy4iABkytstHF7gpmKKPzOGHP8Prrn3bj7FHAxf2V6jMKoobKgF+c
-         HPLW0D3Vny2wU3z+/3ZIqdAF+iUKvaqm98bA4FuW3HwhQY+jhnyT4HQkwhsJ4kowBhFC
-         m7CA==
-X-Gm-Message-State: AOJu0YwE6ad1h0ddmsQDEJTl6P6J0csJ91E+ZNJyH5LLAG0BrVsn+tij
-	7NKEQxM78Ns4HBCPWXvga06jxpW3GBkch+1S0X64j0FH1+PpA+Xj0f8XKA==
-X-Google-Smtp-Source: AGHT+IHEwoyYUAHMMvlRLh+rSaPYwDO95eVIc/eaDp/cBc9fgj7hHsL2lLUS5SaQW3+RMAspLSwVPg==
-X-Received: by 2002:a05:6a21:7101:b0:1c3:b1e6:d27f with SMTP id adf61e73a8af0-1c3b1e6d2bcmr9117160637.46.1720973071864;
-        Sun, 14 Jul 2024 09:04:31 -0700 (PDT)
-Received: from gmail.com (p4357013-ipoe.ipoe.ocn.ne.jp. [123.222.98.12])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2cacd419b60sm4723244a91.26.2024.07.14.09.04.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Jul 2024 09:04:31 -0700 (PDT)
-Message-ID: <f48ac176-9938-4677-a956-350fb50dbc0f@gmail.com>
-Date: Mon, 15 Jul 2024 01:04:28 +0900
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gFzPiKkO"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 67E1527CF1;
+	Sun, 14 Jul 2024 13:00:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wS+CXvtI2Tu01tluqu7jnV3MPoGnDM4adis9BK
+	ZC+mM=; b=gFzPiKkOpf6A2GIRpjjNRgWh/0cyk8eB8663itYRT3l8gCH+ca43La
+	x6HwY+Nu+7rHUM66LaIc430LfRV7miq6PMU4WE79J7AoWR7sxVUSzA3Kk2uoYg5t
+	Dd7TKETFjH0M+do9mjQzmDzo+vICLZwPqaOKM3KUZ7aYmWlU1Tteg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C9E227CED;
+	Sun, 14 Jul 2024 13:00:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 995C827CEA;
+	Sun, 14 Jul 2024 13:00:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
+In-Reply-To: <001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Sun, 14 Jul 2024 09:29:41
+	-0400")
+References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>
+	<xmqq8qy4adl4.fsf@gitster.g>
+	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
+Date: Sun, 14 Jul 2024 10:00:12 -0700
+Message-ID: <xmqqttgr9aeb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 3/4] pager: introduce wait_for_pager
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
- Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-Content-Language: en-US
-In-Reply-To: <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8986D6F2-4202-11EF-B82E-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Since f67b45f862 (Introduce trivial new pager.c helper infrastructure,
-2006-02-28) we have the machinery to send our output to a pager.
+<rsbecker@nexbridge.com> writes:
 
-That machinery, once set up, does not allow us to regain the original
-stdio streams.
+> This looks like a different between ksh and bash. Under bash, the test
+> works. I can live with that but will have to force bash to be used as the
+> shebang #!/bin/sh defaults to ksh on this box.
 
-In the interactive commands (i.e.: add -p) we want to use the pager for
-some output, while maintaining the interaction with the user.
+It turns out that the version of ksh I used in my description does
+not seem to grok "local" at all. I vaguely recall that we've written
+off various hobbist reimplementation of ksh as unusable enough, but
+this one is ksh93 direct from AT&T Research.
 
-Modify the pager machinery so that we can use setup_pager and, once
-we've finished sending the desired output for the pager, wait for the
-pager termination using a new function wait_for_pager.   Make this
-function reset the pager machinery before returning.
+I guess when we said "as long as we limit our use to a simple 'this
+variable has visibility limited to the function and its children'
+and nothing else, it is portable enough across practically everybody
+we care about", we have written off the real ksh, too.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
+In the meantime, we may want to document this in a more prominent
+way.  Perhaps like so:
+
+-------- >8 --------------- >8 --------------- >8 --------
+Subject: doc: guide to use of "local" shell language construct
+
+The scripted Porcelain commands do not allow use of "local" because
+it is not universally supported, but we use it liberally in our test
+scripts, which means some POSIX compliant shells (like "ksh93") can
+not be used to run our tests.
+
+Document the status quo, and hint that we might want to change the
+situation in the fiture.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- pager.c | 43 +++++++++++++++++++++++++++++++++++++------
- pager.h |  1 +
- 2 files changed, 38 insertions(+), 6 deletions(-)
+ Documentation/CodingGuidelines | 4 +++-
+ t/README                       | 8 ++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/pager.c b/pager.c
-index 251adfc2ad..bea4345f6f 100644
---- a/pager.c
-+++ b/pager.c
-@@ -14,7 +14,7 @@ int pager_use_color = 1;
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index 1d92b2da03..68b7210f48 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -186,7 +186,9 @@ For shell scripts specifically (not exhaustive):
+  - Even though "local" is not part of POSIX, we make heavy use of it
+    in our test suite.  We do not use it in scripted Porcelains, and
+    hopefully nobody starts using "local" before they are reimplemented
+-   in C ;-)
++   in C ;-) Notably, ksh (not just reimplementations but the real one
++   from AT&T Research) does not support "local" and cannot be used,
++   which we might want to reconsider.
  
- static struct child_process pager_process;
- static char *pager_program;
--static int close_fd2;
-+static int old_fd1 = -1, old_fd2 = -1;
+  - Some versions of shell do not understand "export variable=value",
+    so we write "variable=value" and then "export variable" on two
+diff --git c/t/README w/t/README
+index d9e0e07506..1d39d8cfd5 100644
+--- c/t/README
++++ w/t/README
+@@ -850,6 +850,14 @@ And here are the "don'ts:"
+    but the best indication is to just run the tests with prove(1),
+    it'll complain if anything is amiss.
  
- /* Is the value coming back from term_columns() just a guess? */
- static int term_columns_guessed;
-@@ -24,11 +24,11 @@ static void close_pager_fds(void)
- {
- 	/* signal EOF to pager */
- 	close(1);
--	if (close_fd2)
-+	if (old_fd2 != -1)
- 		close(2);
- }
- 
--static void wait_for_pager_atexit(void)
-+static void finish_pager(void)
- {
- 	fflush(stdout);
- 	fflush(stderr);
-@@ -36,8 +36,34 @@ static void wait_for_pager_atexit(void)
- 	finish_command(&pager_process);
- }
- 
-+static void wait_for_pager_atexit(void)
-+{
-+	if (old_fd1 == -1)
-+		return;
++ - Don't overuse "local"
 +
-+	finish_pager();
-+}
++   Because strictly POSIX-compliant shells do not have to support
++   "local", we avoid using it in our scripted Porcelain scripts, but
++   we have allowed use of "local" in test scripts.  We may want to
++   reconsider this and rewrite our tests to also run on shells like
++   ksh93.  Do not add new use of "local" unnecessarily.
 +
-+void wait_for_pager(void)
-+{
-+	finish_pager();
-+	sigchain_pop_common();
-+	unsetenv("GIT_PAGER_IN_USE");
-+	dup2(old_fd1, 1);
-+	close(old_fd1);
-+	old_fd1 = -1;
-+	if (old_fd2 != -1) {
-+		dup2(old_fd2, 2);
-+		close(old_fd2);
-+		old_fd2 = -1;
-+	}
-+}
-+
- static void wait_for_pager_signal(int signo)
- {
-+	if (old_fd1 == -1)
-+		return;
-+
- 	close_pager_fds();
- 	finish_command_in_signal(&pager_process);
- 	sigchain_pop(signo);
-@@ -113,6 +139,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
  
- void setup_pager(void)
- {
-+	static int once = 0;
- 	const char *pager = git_pager(isatty(1));
- 
- 	if (!pager)
-@@ -142,16 +169,20 @@ void setup_pager(void)
- 		die("unable to execute pager '%s'", pager);
- 
- 	/* original process continues, but writes to the pipe */
-+	old_fd1 = dup(1);
- 	dup2(pager_process.in, 1);
- 	if (isatty(2)) {
--		close_fd2 = 1;
-+		old_fd2 = dup(2);
- 		dup2(pager_process.in, 2);
- 	}
- 	close(pager_process.in);
- 
--	/* this makes sure that the parent terminates after the pager */
- 	sigchain_push_common(wait_for_pager_signal);
--	atexit(wait_for_pager_atexit);
-+
-+	if (!once) {
-+		once++;
-+		atexit(wait_for_pager_atexit);
-+	}
- }
- 
- int pager_in_use(void)
-diff --git a/pager.h b/pager.h
-index b77433026d..103ecac476 100644
---- a/pager.h
-+++ b/pager.h
-@@ -5,6 +5,7 @@ struct child_process;
- 
- const char *git_pager(int stdout_is_tty);
- void setup_pager(void);
-+void wait_for_pager(void);
- int pager_in_use(void);
- int term_columns(void);
- void term_clear_line(void);
--- 
-2.46.0.rc0.4.g913e7f3d09
+ Skipping tests
+ --------------
