@@ -1,98 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F76AE54D
-	for <git@vger.kernel.org>; Sun, 14 Jul 2024 07:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FF72C9D
+	for <git@vger.kernel.org>; Sun, 14 Jul 2024 10:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720940762; cv=none; b=aopAtLajX1LXp7IeS789YqCCK6CNoipC0mBjanGXNvEdP2Revc8j2Sxw2gw7kf4vELQTD56JWsS4qCZ6G0IyQYKPaLR5H724q6oL9q6dqcfpANdOYVF4/Ng4MDxVo5QCC1F+2bwKE+TGh1aoGJL/DoMvPVb9+w+9fUFDNaO67jw=
+	t=1720952245; cv=none; b=esX9zP/F9r3tQtvMkHdvywT2GLgvT76RPzizlcV9XDaC863Cv9sk+HDmd1dCSxcYWcA5UYFd7Ua7R1KYDegolLIR3TdCF305vSAA+73s957Zg9yQC5TPmxPfhzrTKkjMX2D1z7lLdGvYoJ8aPRKuQvBdji+qEzbYMMcrgvxgNzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720940762; c=relaxed/simple;
-	bh=b7FKtuWC4RZmf3yc4lr0tn8E4vJ/WPI2qgH07HmZn8c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tq05qAH/okjeFqGaPyf6bf5JAUtrC8PlKqLiVpofmkUpqA3pYg0A5PYEePWgUUy0Vs3rBCi9Hr/fbM4eBSZnBbYk2RHPEjsprNDvkFv2twTq+tpsM/bbvoEm8Oi29g7rDCdSXm3E59kcaDXSYw3K4B0KAP6Sl3aPeHUu1TxM6fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 24280 invoked by uid 109); 14 Jul 2024 07:05:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 14 Jul 2024 07:05:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18011 invoked by uid 111); 14 Jul 2024 07:05:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 14 Jul 2024 03:05:56 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 14 Jul 2024 03:05:58 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: [Test Breakage 2.46.0-rc0] Test t4135.06 fails on NonStop
-Message-ID: <20240714070558.GA575927@coredump.intra.peff.net>
-References: <024201dad543$877221e0$965665a0$@nexbridge.com>
- <xmqqv818aezm.fsf@gitster.g>
+	s=arc-20240116; t=1720952245; c=relaxed/simple;
+	bh=hbCD0KXynFZ+BBiANAujVJJWhQQIPPOklVM3Gd428KA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kD9BR0K52/BQvFjxepdXrBYzhDSDT//gI26VOXu3y0zjsp+nFUvfO1tz4m4B3f+Y7pEFM9GHGlscGWO4W69MUsDkE0wtNWpJB3MOAYjZ8EKpdT8qM5YSbK/CaDMvBp/o/05Qe/PkZFTlgdZqDMGQh25nsodzqJk2t0kqz04ONbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XNvlKDY+; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XNvlKDY+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1720952230; x=1721557030; i=l.s.r@web.de;
+	bh=2gqdWVRKXGSYsluRh2G2i38T+rf27Mmu8TwheiZmaE8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=XNvlKDY+he6yy6Z390vsrN9d01NqZKZf3fGj3Onh2rPcyeKQq4qUcOAD5r5bCOPG
+	 cLPsmvtlJQq+gRzllEmaflfOd341Hpr5e9cC0nht70oOUfm3xgs1eutv2IrTIhcV0
+	 TTd+/5aR8cAZYnhak9YomiWu5Yu1MsbPfQu/5VwXTS809tJV1jOdwuUre28IqoJr9
+	 NmMEXTW2g2y+PI0UNMag5a+ZpgghCDnEZSwjSLWTE0MYbpiIZLccUHrVvwkiqFNTY
+	 f4SHqt2Pb11n2fLAsPPuVZV0Mht6rTYovPo6Bq/FcEkBcq060yNCWEu24A0U8CuU3
+	 q9YfJAVrhiXPCCTIug==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4bUg-1sTUFn43L4-0000Sj; Sun, 14
+ Jul 2024 12:17:10 +0200
+Message-ID: <442b692d-a51b-4f45-a131-a44ac08c431b@web.de>
+Date: Sun, 14 Jul 2024 12:17:09 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv818aezm.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH v2] t-strvec: use test_msg()
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+ <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
+ <20240709113201.GA994226@coredump.intra.peff.net>
+Content-Language: en-US
+In-Reply-To: <20240709113201.GA994226@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jj83k2q7m0R1oTUOH8/N9yC2jy6uS830EX67S9/f37DryMrhOxA
+ R8pDrTNlSieLoEBg9/BrYB9vF6SmO36M2uG++B2qRl0EOyQbISh0XTH0F5a8+T4ZpJzLQ+R
+ shQlwn17TKYMfsx3u4wucQOoJYZK2ToyzsTiZdUDhlvQtM3Ll+WcmeKK/9BXDMUTiGpPpfy
+ WyxeQKg/MMUMSxl8bkVRA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:JvFgvqSHp9Q=;c8NPefQnj8lmYYh002y/ueDS51E
+ 7HzsNZa3NFhMCKBSkwiEYbvdPP0gB+EsF+z/e1uKe8VbItzizchHDllSnctOU77uPHWkjTZac
+ EulknQhjfdBXXG9hsQRVFjxWEpw9O3+bu7Aa5XijTBm7qB/iIOplFBINzFkUSNWyx2jlmPSyD
+ MsqNgzNEPjbnFNj8CD+LL4HNz4GahzADwoSpFyDGAjj9BE6qmAMSUzNh/zG8UTGxBs3S1bYAO
+ x8aU4oDMTIJnORiI6NycJcaWW07o0DXjw1ByB/pcB/ULl9vRDbZxUGRrFXfIyHHQIhfnGV3n7
+ Vk+xZ6V7RyV3lop8eD+WQM80dWikNsmzRKSTYW7Ya8ySaC2JapcPZWsbreFeyxACch5/mn6k2
+ Ei9Vx7uRh0HoVNlrDDektXbH4N5h1ftLWf0k6daJOCMnzURgvVeGMIkDEe+cgSNC7qo6vfxV+
+ VNyhWNIGnz45SEmyek3nmU3xRv5lVXgSiN2YVCZxA19bgpmgW5vOFsi5LMiiUsAhl2TGlVB5n
+ OOi8pksSxypNuoOkXXtsNhQvVzxTzkY4zVOLj5AvD4Ofp3lzZ7Ka29lXNXgCWZshOFduMiT3m
+ 7z8pTIWniFtMcWD/LfdW9pD7flK+ijCo9pqmRBWh3IM6dMaKYNqXp0O0QnY+OTt7vrWXbJrh4
+ hA21WbRORtX/mXQxgP5G6L0WOZVVygaRPTXCqfxZnCfRqPYzQysG2A8iefhqa+RJFDZvLKxxi
+ IlqcUw631hCgGdAV4aDbu/mXPui5Pu7Wwn4RFI8bPvSLg9UbwyG79505J4XgYAKMTGjG8oODa
+ MWD6PAUdQVrOFZUi7u+0gk6g==
 
-On Sat, Jul 13, 2024 at 07:23:25PM -0700, Junio C Hamano wrote:
+Am 09.07.24 um 13:32 schrieb Jeff King:
+> On Fri, Jul 05, 2024 at 07:03:36PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+>> diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
+>> index d4615ab06d..236203af61 100644
+>> --- a/t/unit-tests/t-strvec.c
+>> +++ b/t/unit-tests/t-strvec.c
+>> @@ -17,12 +17,12 @@ static void check_strvec_loc(const char *loc, struc=
+t strvec *vec, ...)
+>>  			break;
+>>
+>>  		if (!check_uint(vec->nr, >, nr) ||
+>> -		    !check_uint(vec->alloc, >, nr) ||
+>> -		    !check_str(vec->v[nr], str)) {
+>> -			struct strbuf msg =3D STRBUF_INIT;
+>> -			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
+>> -			test_assert(loc, msg.buf, 0);
+>> -			strbuf_release(&msg);
+>> +		    !check_uint(vec->alloc, >, nr)) {
+>> +			va_end(ap);
+>> +			return;
+>> +		}
+>> +		if (!check_str(vec->v[nr], str)) {
+>> +			test_msg("     nr: %"PRIuMAX, (uintmax_t)nr);
+>>  			va_end(ap);
+>>  			return;
+>>  		}
+>
+> The "loc" parameter to the function is now unused. Should it be removed,
+> or is it a bug that we are no longer reporting the caller's location?
 
-> And this hunk uses /dev/zero the same way before and after.  The
-> older use of /dev/zero in these tests were from 852a1710 (am: let
-> command-line options override saved options, 2015-08-04), which was
-> part of v2.6.0 that was tagged in late Sep 2015.
-> 
-> In short this is nothing new in this release.
+It's a bug.  If only there was a way to detect such an unused parameter
+automatically.. ;->
 
-One thing my recent patch did was remove the TTY prereq from those
-tests. So it's possible that they're now being run on his platform for
-the first time.
+> Should we be using check_str_loc() in the post-image?
 
-> Preparing a garbage file that is sufficiently large (like 1kB) and
-> feeding from that file to the commands instead of from /dev/null may
-> be sufficient to reduce the dependence of /dev/zero but given that
-> this is ancient, there are many other uses of /dev/zero in the test
-> directory, it does not seem ultra-urgent to address this, at least
-> to me.  Certainly not during the pre-release freeze.
+Yes, and check_uint_loc() and check_pointer_eq_loc() as well.  Which
+would be a pain.  Or we drag everything into the macro check_strvec and
+get the caller's line number for free.
 
-The other mentions of /dev/zero that I see are all in tests marked as
-EXPENSIVE, which likewise aren't run normally.
-
-So I think it is plausibly a new issue for some platforms, though I
-agree it is not super urgent.
-
-With --retry I think we would not actually read stdin at all, so we
-could just remove the mention of /dev/zero entirely. But if we wanted to
-be sure it did not read and choke on any input provided, I think just:
-
-diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-override-opts.sh
-index a4d0c03ca6..76783bdd67 100755
---- a/t/t4153-am-resume-override-opts.sh
-+++ b/t/t4153-am-resume-override-opts.sh
-@@ -45,6 +45,7 @@ test_expect_success '--3way overrides --no-3way' '
- 
- 	# Applying side1 with am --3way will succeed due to the threeway-merge.
- 	# Applying side2 will fail as --3way does not apply to it.
-+	echo garbage |
- 	test_must_fail git am --retry --3way &&
- 	test_path_is_dir .git/rebase-apply &&
- 	test side1 = "$(cat file2)"
-@@ -99,7 +100,8 @@ test_expect_success '--reject overrides --no-reject' '
- 	test_path_is_dir .git/rebase-apply &&
- 	test_path_is_missing file.rej &&
- 
--	test_must_fail git am --retry --reject </dev/zero &&
-+	echo garbage |
-+	test_must_fail git am --retry --reject &&
- 	test_path_is_dir .git/rebase-apply &&
- 	test_path_is_file file.rej
- '
-
-would be sufficient.
-
--Peff
+Ren=C3=A9
