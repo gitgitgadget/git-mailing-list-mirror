@@ -1,131 +1,78 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B0282FA
-	for <git@vger.kernel.org>; Sun, 14 Jul 2024 17:00:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6215C139CFF
+	for <git@vger.kernel.org>; Sun, 14 Jul 2024 17:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720976417; cv=none; b=G+0CfdhYRvTbVZEOmVvnWftDdvQIUX36tiiCYeHLmZIncstid/gxWcdziHfeg/tj1vA9qB3xL4stisWWA4xlsL5F8bTz3l9eOCLfburOwgUf1zL/Syp/TmBnREPZ8t1gq0EgpH83YZKmuX8nsG8nvlXHwo2ZAlIsA5G4x+79CFg=
+	t=1720976806; cv=none; b=S2fVAI447ek0KZEnRzQUPteO4nCO5WrHSj1oSKEyQEpNFlHLurOQxiTnO6bnYOvkvFjp4IA/+7vhdljECmGc7eSmw54GMvj3LWyvu0Jn5m2nQKPZp42n21tpEI+8xo9KhkTtJjP2V+MUA4dZHWTHUJKBoG8cJS5VFm3xkHwka+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720976417; c=relaxed/simple;
-	bh=wS+CXvtI2Tu01tluqu7jnV3MPoGnDM4adis9BKZC+mM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A58clEhtvgD4KHAa9LHMkz434pht8wi460qrrDd57KhQYfhKBRA1s6Ijgio6fHfnkawFBdRf62jqa3dJtIcH2OH8F9GbaQY6aGWgGx1MTgsf1UbKVQImxX7VwDQexJqZMx3B+NWcRtRD+aBNvnM4LuYBkTI0tpbhjm4JvfaHuFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gFzPiKkO; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1720976806; c=relaxed/simple;
+	bh=r3eFq96VQnUmoKDE5qQf5Cv5Oq3uxVLQL8aIHO/Jpnc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=eU9MGH44XxC1rI0FtSFSNDX8PpkkS2alt2UEY4AUi7xAanQznCiCkozrc5DdQcRysFB5G4dygZOKnHjiNWxqhEZdA4ANmnMZWvHlXt/kc2wssMFe0SG8Rqt+dl4fV+Q0YxUTo5De2USabylnJjXyo3ZPfVmgdKuc+P0htYZNSWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=GVl7CtnP; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gFzPiKkO"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 67E1527CF1;
-	Sun, 14 Jul 2024 13:00:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wS+CXvtI2Tu01tluqu7jnV3MPoGnDM4adis9BK
-	ZC+mM=; b=gFzPiKkOpf6A2GIRpjjNRgWh/0cyk8eB8663itYRT3l8gCH+ca43La
-	x6HwY+Nu+7rHUM66LaIc430LfRV7miq6PMU4WE79J7AoWR7sxVUSzA3Kk2uoYg5t
-	Dd7TKETFjH0M+do9mjQzmDzo+vICLZwPqaOKM3KUZ7aYmWlU1Tteg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C9E227CED;
-	Sun, 14 Jul 2024 13:00:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 995C827CEA;
-	Sun, 14 Jul 2024 13:00:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
-In-Reply-To: <001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Sun, 14 Jul 2024 09:29:41
-	-0400")
-References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>
-	<xmqq8qy4adl4.fsf@gitster.g>
-	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
-Date: Sun, 14 Jul 2024 10:00:12 -0700
-Message-ID: <xmqqttgr9aeb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GVl7CtnP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1720976791; x=1721581591; i=l.s.r@web.de;
+	bh=MoY1mp0ageR8xQtyedW/hcfK1BjDZkHAUQ4yYcIcTFY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=GVl7CtnPrqNMaoiCr91OI/ViSAKnf9GkgwmP42OuI3PEjLpd+0g8sgWxtOnIBBaR
+	 Vc6rnxQtVHTmCRyEy8y7jP1ZsBeWA/TtMJl1N3FqUsDgU+8lu0OIErIPzVZtdnavs
+	 1CPSeMHEY/TSRBngaZMWfm9WFqBqEJxXN2gqtNsP3iRHEEZhN+coqQDWxcfw2Ea8V
+	 o1znlQJi1+M3bymDUWe3QDAu0NV/Y/ymWEJwj1eQtbDSUrPfGZDyk4RGSI+KH7I15
+	 CjomGBsPxCJSriKfb0gG6zv9r0w2soM1vmqZnoVjzZksqLD2hM5lqJICXGL+uBeiy
+	 GT1h2cPxFziG7F8/SA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MUUAG-1stXnC3TGa-00V52T; Sun, 14
+ Jul 2024 19:06:30 +0200
+Message-ID: <d91c794a-296f-469d-9f1d-0b45351e8ba7@web.de>
+Date: Sun, 14 Jul 2024 19:06:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8986D6F2-4202-11EF-B82E-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] t-strvec: improve check_strvec() output
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood
+ <phillip.wood@dunelm.org.uk>, Jeff King <peff@peff.net>
+References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+ <5bbef273-382e-4096-9ca6-d74781223e55@web.de>
+Content-Language: en-US
+In-Reply-To: <5bbef273-382e-4096-9ca6-d74781223e55@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:odmaZ6TCBCY83a2nhu3LTpRKqIKi19t2oLxSq6SaDzXUvkO1/Uw
+ s0cBDWlOlbr/FzW484kXquEOa01fXGJS8VyUFho9mGXlRPs5BZ+f1f4ZN/H7LC48u1Z7EY7
+ 87IWafSWJqUcU6I2qJJ9VfpGMMOYCgdb/r/yuO8ATuw1if2eHdzIbEv25Zo9J0pc/LAkfjU
+ 38n/WcxE7AWSGaS9Sc4Xg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:UXYNNhEn1eM=;0DcU9AKdOOsKLau0jjglxMQ7L55
+ wB64XE5db1sf700Lr0PVJsYhCm1b/ThgICm7/NRgyS+RErLzur8V9awz2B4lMiqgtmuwcg+f/
+ YBMKK6G8Zs97Ukq7nfc16qCLTIWkyn4ZnN9qZC+AqDQxEfJ5gjCbLLh4WNeVlFEBllIVfiBIM
+ +PeEpC+cyjjxqqPwrriPAP+M23kzvQHRmbRhDhwDZ+5nJZ+S4YYCBJjrw1ap/+aqhYUMHvsgT
+ r7cyb8eVKPR73xajQnS8Ru9f7FiXbFdSLL9tk7NfnI+9rL/rxQZvn+y/2zjoDB6638nBZbdHf
+ k67QIOI3C5qrRssMy0CyXXGy5wjFen91k9D9BiG93/Gsutrqp/Q/gT/YEAU/zU7AC+hOOtgGQ
+ Em8QQ/HckTTj4C5z9aAw5yHFRkeUnNe5/ePvNg0LVL1pFkN4gVYr7NXaLpnM4VhJowQkBIWBH
+ 4mqT8HFUmraR/R3LrPLrHsLU2X0ABuCkOPfk0Yz6dga4DF3ziZ0DdJkJeR247oY0SELl9BUmN
+ Rr7kHazYtGZxM5DaMU94SfDxCR+NhFwyu/OMtUsGo4r+arswpQAb3YTWY+xNsbN8Fuw3ioqPS
+ iaKFIyxGl00ChPa/MyW/yVSo0H5nj5RxP3EIMA6yEDVbMXJbYQ7wrcbjq22IOm7izJc4d9WLJ
+ wet/bjsudsISUSlGcs8xgHZM+ys0KwdjqjmB4XNXONWNmvB/EoNy8zl1RG3XQ7J333ivnHwdu
+ 0J129Gnq9zhCP3PrvbQQW+z5ajvdTPvQNon9w9kVitRzdQSQAOvbYNRVObCghPRpV5IMzwNMp
+ TvO9d+bqcCN2aNNGBRcqlnHQ==
 
-<rsbecker@nexbridge.com> writes:
+Oh, v2 is already on next.  Will send the equivalent of v3 as an update
+on top of next as a replacement.
 
-> This looks like a different between ksh and bash. Under bash, the test
-> works. I can live with that but will have to force bash to be used as the
-> shebang #!/bin/sh defaults to ksh on this box.
-
-It turns out that the version of ksh I used in my description does
-not seem to grok "local" at all. I vaguely recall that we've written
-off various hobbist reimplementation of ksh as unusable enough, but
-this one is ksh93 direct from AT&T Research.
-
-I guess when we said "as long as we limit our use to a simple 'this
-variable has visibility limited to the function and its children'
-and nothing else, it is portable enough across practically everybody
-we care about", we have written off the real ksh, too.
-
-In the meantime, we may want to document this in a more prominent
-way.  Perhaps like so:
-
--------- >8 --------------- >8 --------------- >8 --------
-Subject: doc: guide to use of "local" shell language construct
-
-The scripted Porcelain commands do not allow use of "local" because
-it is not universally supported, but we use it liberally in our test
-scripts, which means some POSIX compliant shells (like "ksh93") can
-not be used to run our tests.
-
-Document the status quo, and hint that we might want to change the
-situation in the fiture.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/CodingGuidelines | 4 +++-
- t/README                       | 8 ++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
-index 1d92b2da03..68b7210f48 100644
---- c/Documentation/CodingGuidelines
-+++ w/Documentation/CodingGuidelines
-@@ -186,7 +186,9 @@ For shell scripts specifically (not exhaustive):
-  - Even though "local" is not part of POSIX, we make heavy use of it
-    in our test suite.  We do not use it in scripted Porcelains, and
-    hopefully nobody starts using "local" before they are reimplemented
--   in C ;-)
-+   in C ;-) Notably, ksh (not just reimplementations but the real one
-+   from AT&T Research) does not support "local" and cannot be used,
-+   which we might want to reconsider.
- 
-  - Some versions of shell do not understand "export variable=value",
-    so we write "variable=value" and then "export variable" on two
-diff --git c/t/README w/t/README
-index d9e0e07506..1d39d8cfd5 100644
---- c/t/README
-+++ w/t/README
-@@ -850,6 +850,14 @@ And here are the "don'ts:"
-    but the best indication is to just run the tests with prove(1),
-    it'll complain if anything is amiss.
- 
-+ - Don't overuse "local"
-+
-+   Because strictly POSIX-compliant shells do not have to support
-+   "local", we avoid using it in our scripted Porcelain scripts, but
-+   we have allowed use of "local" in test scripts.  We may want to
-+   reconsider this and rewrite our tests to also run on shells like
-+   ksh93.  Do not add new use of "local" unnecessarily.
-+
- 
- Skipping tests
- --------------
+Ren=C3=A9
