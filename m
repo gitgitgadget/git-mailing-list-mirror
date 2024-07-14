@@ -1,35 +1,35 @@
 Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A057130486
-	for <git@vger.kernel.org>; Sun, 14 Jul 2024 13:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865F72BD18
+	for <git@vger.kernel.org>; Sun, 14 Jul 2024 13:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720963791; cv=none; b=H5207nfUHP61shxb+0Xw+gdEgbRq8PEQPdYjSWca5bq2U9TE1GIr9AJX5SyIQ3DxANW4p9YTkbs1i5OOX8U1KUZI64CUoCbmJ/+e9RM76sk0JdBStuFm5OzJbn73oohC79ukB6fivRjhBNclMTFwcysQfYW1XVTWi4kxVxbfssA=
+	t=1720964212; cv=none; b=Pbu+FWn3E4v6zQDV3c8YH4cZKLkJyxTsuwloU0m3fsb39iIC3ZqE9aFaOda3NNU1GWmDex/3PrCXT4pSkN1WveIZ8pz3Pa1wUNu1ndPjat48ZEkZvvbjzrOxEQxvvkl6sCJbecC9igLsXI2xTuMjsOuYaScw4wWP3tIYIOWJ5TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720963791; c=relaxed/simple;
-	bh=Z7IZzfeHfh82eSBpGo8ohV+kpQJIY4hD63Lp0WK/dgU=;
+	s=arc-20240116; t=1720964212; c=relaxed/simple;
+	bh=jmacS5BWk+Ww4Q3iOdARMsXBiUQhA5WD2RzcITeV/7U=;
 	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ss3Kz8AcKYWyfSIcfCpH3cTKVAC6dHoBSSvi7M+K/JDD9O7w2UAsElNah7nYEPrTXBrerJ/ryHGcIe/a3Vr0qH34NnG1RR6d23SKQE8GNxE/uavJVihN9DmFgHFA3LqHkCVAPadUnaVDXkO1yUQ2gTwsaqmXozAEX0v9SCho8Nk=
+	 MIME-Version:Content-Type; b=lMqbRzKp264iHdtb/fXbAkHCPXnS9PzC9iddZLThHPPx5ivbvxxLT5lN7QrUNXj9PPx/49y7K1YgPjGoX07qGPmszYaW/XSI9twUnPGRjGijBnFIC1BqtHe0+cVzcETy4XGc5MkLUwiLHJMbdHb7H9FYTPV3ksNfZu1l1AJTdYY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
 X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
 Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
 	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46EDTjJY237140
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46EDajik237768
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 14 Jul 2024 13:29:46 GMT
+	Sun, 14 Jul 2024 13:36:46 GMT
 Reply-To: <rsbecker@nexbridge.com>
 From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
+To: "'Jeff King'" <peff@peff.net>, "'Junio C Hamano'" <gitster@pobox.com>
 Cc: <git@vger.kernel.org>
-References: <024101dad543$221b4ab0$6651e010$@nexbridge.com> <xmqq8qy4adl4.fsf@gitster.g>
-In-Reply-To: <xmqq8qy4adl4.fsf@gitster.g>
-Subject: RE: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
-Date: Sun, 14 Jul 2024 09:29:41 -0400
+References: <024201dad543$877221e0$965665a0$@nexbridge.com> <xmqqv818aezm.fsf@gitster.g> <20240714070558.GA575927@coredump.intra.peff.net>
+In-Reply-To: <20240714070558.GA575927@coredump.intra.peff.net>
+Subject: RE: [Test Breakage 2.46.0-rc0] Test t4135.06 fails on NonStop
+Date: Sun, 14 Jul 2024 09:36:41 -0400
 Organization: Nexbridge Inc.
-Message-ID: <001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
+Message-ID: <002001dad5f2$df7b69a0$9e723ce0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,134 +37,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: AQLxORQfyENxav+zmXZW2AfFrMp2ygG7wSa1r7uS6hA=
+Thread-Index: AQJckAmmCZK41Ze1gwmoqh/WdA7U+QGrrguYATpsQYyw25NWMA==
 
-On Saturday, July 13, 2024 10:54 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
+On Sunday, July 14, 2024 3:06 Am, Peff wrote:
+>To: Junio C Hamano <gitster@pobox.com>
+>Cc: rsbecker@nexbridge.com; git@vger.kernel.org
+>Subject: Re: [Test Breakage 2.46.0-rc0] Test t4135.06 fails on NonStop
 >
->> ok 34 # skip delayed checkout shows progress by default on tty
->> (pathspec
->> checkout) (missing TTY of PERL,TTY)
+>On Sat, Jul 13, 2024 at 07:23:25PM -0700, Junio C Hamano wrote:
+>
+>> And this hunk uses /dev/zero the same way before and after.  The =
+older
+>> use of /dev/zero in these tests were from 852a1710 (am: let
+>> command-line options override saved options, 2015-08-04), which was
+>> part of v2.6.0 that was tagged in late Sep 2015.
 >>
->> expecting success of 0021.35 'delayed checkout ommits progress on
->> non-tty (pathspec checkout)':
->>                 test_delayed_checkout_progress ! git checkout $opt
->>
->> + test_delayed_checkout_progress ! git checkout .
->> test_delayed_checkout_progress: test: argument expected
+>> In short this is nothing new in this release.
 >
->This "test: argument expected" is curious.
->
->The shell function reads like so and it hasn't changed since
->7a132c62 (checkout: make delayed checkout respect --quiet and
---no-progress,
->2021-08-26) introduced it, and there are 3 uses of "test" builtin function.
->
->        test_delayed_checkout_progress () {
->                if test "$1" = "!"
->                then
->                        local expect_progress=N &&
->                        shift
->                else
->                        local expect_progress=
->                fi &&
->
->                if test $# -lt 1
->                then
->                        BUG "no command given to
-test_delayed_checkout_progress"
->                fi &&
->
->                (
->                        cd progress &&
->                        GIT_PROGRESS_DELAY=0 &&
->                        export GIT_PROGRESS_DELAY &&
->                        rm -f *.a delay-progress.log &&
->
->                        "$@" 2>err &&
->                        grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"
-delay-progress.log
->&&
->                        if test "$expect_progress" = N
->                        then
->                                ! grep "Filtering content" err
->                        else
->                                grep "Filtering content" err
->                        fi
->                )
->        }
->
->I do not see how any of these tests can be fed a list of zero or more
-argument that
->causes it to barf with "argument expected", when
->
->	test_delayed_checkout_progress ! git checkout .
->
->is run.  The first "are we negated?" test gets
->
->	test "!" = "!"
->
->and shifts that "!" away, the second test that checks the number of
-arguments do
->not need any extra quoting (in other words, $# can never be an empty
-string, so
->
->	test $# -lt 1
->
->cannot become "test -lt 1" that would barf, like so:
->
->	$ ksh -c 'test -lt 1'
->	ksh: test: argument expected
->
->And whether expect_progress gets an empty string or N (we should have got N
-in
->there, if the shell is so broken that the first comparison between "!" and
-"!" were
->botched and the variable got assigned an empty string, or "local" were
-botched and
->the variable were somehow left uninitialized, expect_progress could be a
-value we
->do not expect), the last test to switch between !grep and grep can never
-break like
->so:
->
->	$ ksh -c 'test = N'
->	ksh: test: argument expected
->
->because $expect_progress is inside a pair of double quotes.
->
->In the above "thinking out aloud", I invoked ksh because bash and dash
-gives
->different error messages.
->
->Another remotely curious thing is that I am not sure how "local" in the
-outer shell
->influences the use of the variable in the subshell
->(read: now I am speculating if the above code uses some constructs that are
-so
->tricky to implement correctly and an unfortunate bug gets triggered in your
-shell),
->but even if such a bug caused a nonsense value to be assigned to
-$expect_progress,
->I do not see how it can cause "test" to barf with "argument expected".
->
->So, I am not sure what is going on at all.
->
->In any case, this does not sound anything recent.  Do you know that this
-used to
->work in previous releases?  Could this be caused by changes in your
-environment
->(like which shell is used)?
+>One thing my recent patch did was remove the TTY prereq from those =
+tests. So it's
+>possible that they're now being run on his platform for the first time.
 
-This looks like a different between ksh and bash. Under bash, the test
-works. I can live with that but will have to force bash to be used as the
-shebang #!/bin/sh defaults to ksh on this box.
+Good catch. That was it. From the prior CI build:
+*** t4153-am-resume-override-opts.sh ***
+ok 1 - setup
+ok 2 # skip --3way overrides --no-3way (missing TTY)
+ok 3 - --no-quiet overrides --quiet
+ok 4 - --signoff overrides --no-signoff
+ok 5 # skip --reject overrides --no-reject (missing TTY)
 
-Thanks for looking.
+>> Preparing a garbage file that is sufficiently large (like 1kB) and
+>> feeding from that file to the commands instead of from /dev/null may
+>> be sufficient to reduce the dependence of /dev/zero but given that
+>> this is ancient, there are many other uses of /dev/zero in the test
+>> directory, it does not seem ultra-urgent to address this, at least to
+>> me.  Certainly not during the pre-release freeze.
+>
+>The other mentions of /dev/zero that I see are all in tests marked as =
+EXPENSIVE,
+>which likewise aren't run normally.
+>
+>So I think it is plausibly a new issue for some platforms, though I =
+agree it is not super
+>urgent.
+>
+>With --retry I think we would not actually read stdin at all, so we =
+could just remove
+>the mention of /dev/zero entirely. But if we wanted to be sure it did =
+not read and
+>choke on any input provided, I think just:
+>
+>diff --git a/t/t4153-am-resume-override-opts.sh =
+b/t/t4153-am-resume-override-
+>opts.sh
+>index a4d0c03ca6..76783bdd67 100755
+>--- a/t/t4153-am-resume-override-opts.sh
+>+++ b/t/t4153-am-resume-override-opts.sh
+>@@ -45,6 +45,7 @@ test_expect_success '--3way overrides --no-3way' '
+>
+> 	# Applying side1 with am --3way will succeed due to the =
+threeway-merge.
+> 	# Applying side2 will fail as --3way does not apply to it.
+>+	echo garbage |
+> 	test_must_fail git am --retry --3way &&
+> 	test_path_is_dir .git/rebase-apply &&
+> 	test side1 =3D "$(cat file2)"
+>@@ -99,7 +100,8 @@ test_expect_success '--reject overrides --no-reject' =
+'
+> 	test_path_is_dir .git/rebase-apply &&
+> 	test_path_is_missing file.rej &&
+>
+>-	test_must_fail git am --retry --reject </dev/zero &&
+>+	echo garbage |
+>+	test_must_fail git am --retry --reject &&
+> 	test_path_is_dir .git/rebase-apply &&
+> 	test_path_is_file file.rej
+> '
+>
+>would be sufficient.
 
---Randall
+And it does work properly on the box. Thanks.
+ok 1 - setup
+ok 2 - --retry fails without in-progress operation
+ok 3 - --3way overrides --no-3way
+ok 4 - --no-quiet overrides --quiet
+ok 5 - --signoff overrides --no-signoff
+ok 6 - --reject overrides --no-reject
+# passed all 6 test(s)
+1..6
+
+Thanks,
+Randall
 
