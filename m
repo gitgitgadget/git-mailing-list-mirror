@@ -1,99 +1,83 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA79482EF
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 18:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADC113792B
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 18:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721067794; cv=none; b=q42gtkJi7tWOdRrlcX7JVHlCnbuyoxxYXHpjZKeWR3Zgi6pBp3K9JEmdya2ZS/2ZaLbsTT3ycoV+LbUMdUOIb9gJIwdPtnY6jdPdWcva7E0FTviYn2Ijf/B7/FU+5l9agNCx3tnKc5OBhWrds5mV5s6SIYgaXXoaf8kHHzV1fos=
+	t=1721068423; cv=none; b=ctzqBVtANtGrwoALVsMrEoWrdSvVvfuUBaurys7mYPagvgT8mL0+KiBcSTW9vpfJiBSgH86PRW9GTewcZHH4TdqpjSWZSwVquoaQv1U3JcY4vf9J6kubbwWWbdMndlVDCWXMvJShmMDzx53+efesus3Bg6xHgrEewfsSVvbQTZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721067794; c=relaxed/simple;
-	bh=CoMlD+5MpvpOFg1GUZ1asCVFHSxn68sfaFCKQu3/6io=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oX0e3K7s+b8UpRB9CEpUira6UpAm0VsK3FFIHmkQsDLxrSBgP4zRiencUyd6SofexDbYYUx4suKaLKwnEc8eS9hLofLgS3J9iU60CwB0sjdRMUX2xFUleR5SW/c9ogWcod/804Ya6RrUkhO12b0XhWSetqTlBpylJXC0k21lnoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIWsty39; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721068423; c=relaxed/simple;
+	bh=7JVFtOj8UoDsbSdCgsY629ZoN21SvMHcvZJuYHdMbjg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rdb9+WNJuRDqP7AkvvEZQYqF+pVFMcxRuM9RD3BCRjh/zs9XsEyX6OkjN7JHveOhyJT3o5BE2WJz5CVaqV35qLosOSYZ+Kzm+jCD9DqcsTzNDp08THdAHUS/OIi6IC7gPPSHGefb07Czt6NIw3jM6wHhl1xhJCWJewX+YVaLMG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OcT5TYP2; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIWsty39"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-703775e4d5dso2371955a34.0
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 11:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721067792; x=1721672592; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aBmv4P3W7Lu0VCiG7EkcwoRr4WCiRtn1QFh0Qg0yCx8=;
-        b=BIWsty39AGNlM5EAB5Mwwlzel/xOD8A13lpUxelx0t5R7owF0/i8Y7gLWM8hbgOQy9
-         J8yeAoFZgvT1Rn0OSVJkh+W+RjNPhXYnIlpcfcjiyO87jNxVhkuFF6Q1yaSDuR0PzBJs
-         Qg6M+yjBGH90p0DAk8F3cMMs0g5wU04y9Xnfl3fcSmUgo/67P6D7PS9Z5vzyI17nWKz2
-         eEBwplIZLArNn9jwY51zKQNBrk1ehdZYdI3BUUpmciugNcJy/v2wwrzv0K7HwlACy3Yf
-         RIhYZ/KTwfXpjid+L4bCGP8T9Y7FXrnm3YPwaKFF0iYnJ61KCwYYuCXL09/HuWJXz0e7
-         pj+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721067792; x=1721672592;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aBmv4P3W7Lu0VCiG7EkcwoRr4WCiRtn1QFh0Qg0yCx8=;
-        b=M0zuGqrFqmXaSmT0O+CHN/JqbvbM12oBH2mInoanZ7jZgAqVuu3OnPKaRI6KB3whA8
-         WrWb1qYURLnxJno9aOzAOH5zi1ivKxUgNlbVJVmmRUL3pl5tD8E3u+ESqENo1mQUBqPK
-         hdXt5X8zXZrcJyUnmL2UPoEgAokI0XVJuvw3m15tJSeubfWDzfcL3PmBtVruJe8Ct6tY
-         Wgch9BwtyiHdghZsa/TRnERrx9cn9d+maUPO1QcvUcveF045ovodDJx3UiwbSp25BGEr
-         3IFk0pIKlu0hZgrRMtvo8x0qGTF2wlyKNrTR1HbQnYKsEtCoSkANsmRvZ2CzxLGdU7j3
-         vYOQ==
-X-Gm-Message-State: AOJu0YyarlsJFW4EjPIrYr8ABW7/lJVxxDL+3dGbsFspH130jzyD+Obt
-	WNX3ZKohYM+1kNwkS4lvuo4FQefB7e9pJ5cF6gCnyF0jV05X/gdjPU980w==
-X-Google-Smtp-Source: AGHT+IE+64p6v8y6EUoxU0XP55GGBQ7YAHizCcJ40Ro5vJSmrlijoVhff9HWz5VGEU9gNl3WDiK5TQ==
-X-Received: by 2002:a05:6830:f8d:b0:704:46da:5fa0 with SMTP id 46e09a7af769-708d833da11mr445343a34.10.1721067792143;
-        Mon, 15 Jul 2024 11:23:12 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-708c0d2fcc2sm1044574a34.77.2024.07.15.11.23.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jul 2024 11:23:11 -0700 (PDT)
-Date: Mon, 15 Jul 2024 13:22:36 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] doc: clarify post-receive hook behavior
-Message-ID: <dzdoaldgm5sk25ll57okroqcnhqurtoqmo7d5xsjnrjpgveqzx@63w4uav6jtd6>
-References: <20240712224748.56843-1-jltobler@gmail.com>
- <20240714194626.29512-2-jltobler@gmail.com>
- <xmqqfrsa7j4p.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OcT5TYP2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 651E72C5E6;
+	Mon, 15 Jul 2024 14:33:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7JVFtOj8UoDsbSdCgsY629ZoN21SvMHcvZJuYH
+	dMbjg=; b=OcT5TYP21qsptrjEAaskBAZemtX03DMUKYuS2R5Gd7gESKGCBie8/X
+	FMk7QfdXKp0YIQO4R34+rYquNnnpvPwTM+zO63spnfu+BdRvD1dI37VMHac2Jg/w
+	DP+QPOcEmN1CNIa5BnStwrsMYT+6cKciOj24eYQL35nIb3mmtSa+A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D3F42C5E5;
+	Mon, 15 Jul 2024 14:33:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 811B62C5E4;
+	Mon, 15 Jul 2024 14:33:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,  <git@vger.kernel.org>
+Subject: Re: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
+In-Reply-To: <00c001dad6dd$f336c3e0$d9a44ba0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 15 Jul 2024 13:39:25
+	-0400")
+References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>
+	<xmqq8qy4adl4.fsf@gitster.g>
+	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
+	<xmqqttgr9aeb.fsf@gitster.g>
+	<ZpQVwyVQT8Wf5AeX@tapette.crustytoothpaste.net>
+	<004501dad61b$b35b7f30$1a127d90$@nexbridge.com>
+	<ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net>
+	<xmqqv8167kd8.fsf@gitster.g>
+	<00af01dad6cc$41f10d40$c5d327c0$@nexbridge.com>
+	<xmqqh6cq4ngc.fsf@gitster.g>
+	<00c001dad6dd$f336c3e0$d9a44ba0$@nexbridge.com>
+Date: Mon, 15 Jul 2024 11:33:35 -0700
+Message-ID: <xmqqsewa33pc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfrsa7j4p.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C01F96D2-42D8-11EF-9E7B-C38742FD603B-77302942!pb-smtp20.pobox.com
 
-On 24/07/15 08:46AM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > +See the link:git-receive-pack.html#_post_receive_hook[post-receive hook]
-> > +section in linkgit:git-receive-pack[1] for additional details.
-> 
-> Use of link:*.html to point to the HTML version of the manual page
-> is questionable.  Do we have any example that uses such a link
-> already?  What would this line do to those who read the manual page,
-> not HTML, iow, "git receive-pack --help -m"?
+<rsbecker@nexbridge.com> writes:
 
-The manual page for git(1) makes use of link:*.html to point to HTML
-documentation.
+>>As I speculated earlier in an earlier message, the breakage you reported
+> may have to
+>>do with interaction between "local" and use of a subshell, and perhaps we
+> can also
+>>check that pattern in the test.
+>
+> That is that I am also suggesting but did not say it as precisely. Thanks.
 
-  - Documentation/git.txt
-  - https://git-scm.com/docs/git
+Oh, I see.  Are you volunteering to come up with a minimum addition
+to t0000.1 then?
 
-In the manual page it appears to specify a path to HTML file in the
-NOTES section. I'm not sure this is a good thing though because the file
-cannot be expected to exist at the path.
-
-> The latter link using linkgit: is bog standard and perfectly fine.
-
-I think it makes the most sense to drop the link:*html used here and
-just rely on the linkgit: reference. I'll adjust this in v3. Thanks for
-the feedback.
-
--Justin
+Thanks.
