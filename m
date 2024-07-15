@@ -1,143 +1,133 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC378F9EC
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 15:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC143F9EC
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 15:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721057582; cv=none; b=bq7Cl9PjDleIPmdIqURFLu6TZmpnlslwSDs+nAFbVKwAtv15jEp4KnAXcsgkOyf+k+jdJbz0FcVhsfeAzfChX8fTpGPeH7D1Y0QfKGFtN7dMtgMzfZYVpk6Sahqw1Hqlv1AmO28VIBlQvAc8GvI8UbGi2gWVv81n3gNLTHiUlhY=
+	t=1721057985; cv=none; b=utXXAGEdE66MBAP2Lv9qAsFbKteQU3w01HZYvgp6Im7EEqkCfg4UyWM1H9ecjnR/v1adGVCYWj0SqJseoUJgDOtZk1xtPZXunW4SUrRUMpqk01LnA7rwEB+WI3RRxlQCsQiSuIQwPCCU1ZgsTgjkoARBdGoaj/JNMVcwvhNK0rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721057582; c=relaxed/simple;
-	bh=7ezorumeZ/mAfqsKQvUD+YOU7wmXSq29tFA7HMgwO/0=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fUkKlrAvIeybP6IlJCYnb1ICiF5r/IrApyNLIqNOctKn1CT8I/da8VcUALDnUjN7I6kJHw61II/lUt2VnNb13lI7gnvyLoJqw6dnNOqKJMfAdbDFv+h40paaOCN2qUCRLUH8bqiAHCxx/4kRid+tkRFC6V+jLx3CQxtkI+Snx0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46FFWpkY421612
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 15 Jul 2024 15:32:52 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>	<xmqq8qy4adl4.fsf@gitster.g>	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>	<xmqqttgr9aeb.fsf@gitster.g>	<ZpQVwyVQT8Wf5AeX@tapette.crustytoothpaste.net>	<004501dad61b$b35b7f30$1a127d90$@nexbridge.com>	<ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net> <xmqqv8167kd8.fsf@gitster.g>
-In-Reply-To: <xmqqv8167kd8.fsf@gitster.g>
-Subject: RE: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
-Date: Mon, 15 Jul 2024 11:32:46 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00af01dad6cc$41f10d40$c5d327c0$@nexbridge.com>
+	s=arc-20240116; t=1721057985; c=relaxed/simple;
+	bh=3dgcuWf8G8Yrl/DZiD2e3kBvZnYaEm4eWpOxi+O9bzE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bGl86Pqe8rZdcOMaM8UgaMLy8SyA/Iu5bvzYtzfcFX13UUHUqUDaCHqNPU+gZ3mIJEMvj+b1gUNGLIS/1g91VZE4aj7Du6jxpwIDd1qG7zOHa7WBSBsgw9Wjf4YSP8OMCf30oWooDquSD74/znY6WwqoKOhygQW2qXDQLuGNouQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OHYTVlCw; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OHYTVlCw"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D21221AA4;
+	Mon, 15 Jul 2024 11:39:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=3dgcuWf8G8Yr
+	l/DZiD2e3kBvZnYaEm4eWpOxi+O9bzE=; b=OHYTVlCwwzwCD7rXLYHBBoWS7Lqt
+	wzlfQ93WFoEI8a8X6k/F7X25NP/JTota8/r6E4ue0avMlHPDmuW44itJu9GOdTxd
+	QyEyAXLBMgT94oyzggPIZR1FbPAsvSNw8SvnT7qyR4P8Zwwee55oTpNnv5IIr5P2
+	cyLPTBOIXQz1aXQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 853AA21AA3;
+	Mon, 15 Jul 2024 11:39:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 12DED21AA1;
+	Mon, 15 Jul 2024 11:39:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Alexander Shopov <ash@kambanaria.org>
+Cc: git@vger.kernel.org,  worldhello.net@gmail.com
+Subject: Re: [PATCH 3 1/1] parse-options: localize mark-up of placeholder
+ text in the short help
+In-Reply-To: <CAP6f5MkGQssKyAdgN3rbzfTZtPgETaSjpm3JevuaLg-vh_pNug@mail.gmail.com>
+	(Alexander Shopov's message of "Sun, 14 Jul 2024 22:41:28 +0200")
+References: <xmqqttij86lc.fsf@gitster.g>
+	<20240707153526.97984-2-ash@kambanaria.org>
+	<CAP6f5MkGQssKyAdgN3rbzfTZtPgETaSjpm3JevuaLg-vh_pNug@mail.gmail.com>
+Date: Mon, 15 Jul 2024 08:39:38 -0700
+Message-ID: <xmqqjzhm7jgl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQLxORQfyENxav+zmXZW2AfFrMp2ygG7wSa1AglWfbcCCOoxCwFeXAgQAPqT5zMCVerbsANm6pyfr1wHetA=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 72EA8B50-42C0-11EF-8F5B-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Monday, July 15, 2024 11:20 AM, Junio C Hamano wrote:
->"brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> I think we had discussed that you were using AT&T ksh on NonStop,
->> which would explain the situation.  That's the most common version of
->> ksh on proprietary Unix systems, and you can usually detect it with
->> something like this:
->
->What is sad is that we have this as literally the very first thing in our
-test suite, as
->t0000.1, but ...
->
->        try_local_xy () {
->                local x="local" y="alsolocal" &&
->                echo "$x $y"
->        }
->
->        # Check whether the shell supports the "local" keyword. "local" is
-not
->        # POSIX-standard, but it is very widely supported by
-POSIX-compliant
->        # shells, and we rely on it within Git's test framework.
->        #
->        # If your shell fails this test, the results of other tests may be
->        # unreliable. You may wish to report the problem to the Git mailing
->        # list <git@vger.kernel.org>, as it could cause us to reconsider
->        # relying on "local".
->        test_expect_success 'verify that the running shell supports
-"local"' '
->                x="notlocal" &&
->                y="alsonotlocal" &&
->                echo "local alsolocal" >expected1 &&
->                try_local_xy >actual1 &&
->                test_cmp expected1 actual1 &&
->                echo "notlocal alsonotlocal" >expected2 &&
->                echo "$x $y" >actual2 &&
->                test_cmp expected2 actual2
->        '
->
->... apparently it is just like any other test failure, so unless the tester
-is running
->
->	$ shell t0000-basic.sh -i
->
->reading the output, *AND* goes to the test script to read that comment, the
-helpful
->comment can easily be missed.
->
->I am wondering if it is worth doing something like this.
->
->
-> t/t0000-basic.sh | 13 ++++++++++++-
-> 1 file changed, 12 insertions(+), 1 deletion(-)
->
->diff --git c/t/t0000-basic.sh w/t/t0000-basic.sh index
-98b81e4d63..3cb8243cb4
->100755
->--- c/t/t0000-basic.sh
->+++ w/t/t0000-basic.sh
->@@ -34,7 +34,7 @@ try_local_xy () {
-> # unreliable. You may wish to report the problem to the Git mailing  #
-list
-><git@vger.kernel.org>, as it could cause us to reconsider  # relying on
-"local".
->-test_expect_success 'verify that the running shell supports "local"' '
->+test_lazy_prereeq WORKING_LOCAL '
-> 	x="notlocal" &&
-> 	y="alsonotlocal" &&
-> 	echo "local alsolocal" >expected1 &&
->@@ -45,6 +45,17 @@ test_expect_success 'verify that the running shell
-supports
->"local"' '
-> 	test_cmp expected2 actual2
-> '
->
->+if ! test_have_prereq WORKING_LOCAL
->+then
->+	skip_all='
->+		Your shell has no working "local", no tests will work.
->+		You may wish to report the problem to the Git mailing
->+		list <git@vger.kernel.org>, unless it is AT&T ksh,
->+		which we know lacks "local".  In the meantime, use
->+		shells that support "local", like dash, bash, pdksh...'
->+	test_done
->+fi
->+
-> ################################################################
-> # git init has been done in an empty repository.
-> # make sure it is empty.
+Alexander Shopov <ash@kambanaria.org> writes:
 
-What is strange is that when running on NonStop using ksh, t0000.1 has never
-failed. I think the situation is subtly different from what we are solving.
-My take is that there is a difference in the local vs. non-local variable
-set semantic, rather than just accepting the keyword. I would propose that
-we need a more comprehensive local test to verify the actual expected
-semantics rather than just testing the syntax.
+> Will the patch for expose substitution hint chars be included in 2.46?
+> Should I do anything more?
 
+Sorry, I lost track.  Did we resolve why "<>" is special and but
+"[]" is OK to leave out of the translatable text?  IOW, is there
+much point in advising the translators that "<>" is something
+specifically they are allowed to change?
+
+Stepping back a bit, would translators (especially for languages
+without any need for the ability to replace <> with something else)
+understand when told
+
+    TRANSLATORS: change `<>' to other characters or leave as is
+
+why anybody would want to change it in the first place?  Stepping
+back even a bit more, probably making it clear to them what these
+instances of [<%s>], [=3D<%s>], etc., are doing would be sufficient
+to help them making the right decision?
+
+If a translator for a hypothetical language that uses say =E2=80=9E%s=E2=80=
+=9C
+reads
+
+	/* TRANSLATORS: <%s> here stands for an command line argument */
+	_("<%s>")
+
+in the comment, wouldn't that be sufficient to tell them they are
+allowed to change "<>" to "=E2=80=9E=E2=80=9C"?
+
+Similarly, explaining [<%s>] as "optional command line argument",
+would tell them that it is OK for them to replace not just <> but
+also [] if their language requires such a change, no?
+
+Thanks for pinging.
+
+>> diff --git a/parse-options.c b/parse-options.c
+>> index 30b9e68f8a..06d962b00e 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -1070,11 +1070,17 @@ static int usage_argh(const struct option *opt=
+s, FILE *outfile)
+>>                 !opts->argh || !!strpbrk(opts->argh, "()<>[]|");
+>>         if (opts->flags & PARSE_OPT_OPTARG)
+>>                 if (opts->long_name)
+>> -                       s =3D literal ? "[=3D%s]" : "[=3D<%s>]";
+>> +                       s =3D literal ? "[=3D%s]" :
+>> +                         /* TRANSLATORS: change `<>' to other charact=
+ers or leave as is */
+>> +                         _("[=3D<%s>]");
+>>                 else
+>> -                       s =3D literal ? "[%s]" : "[<%s>]";
+>> +                       s =3D literal ? "[%s]" :
+>> +                         /* TRANSLATORS: change `<>' to other charact=
+ers or leave as is */
+>> +                         _("[<%s>]");
+>>         else
+>> -               s =3D literal ? " %s" : " <%s>";
+>> +               s =3D literal ? " %s" :
+>> +                 /* TRANSLATORS: change `<>' to other characters or l=
+eave as is */
+>> +                 _(" <%s>");
+>>         return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _=
+("..."));
+>>  }
+>>
+>> --
+>> 2.45.2
+>>
