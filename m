@@ -1,112 +1,129 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9002AF1E
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 20:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700C96F068
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 20:18:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721074621; cv=none; b=fnHySL5rGLvgJhDlDLYzJsG4kTbp5yq+9ON/UbPvSNJoAIzvSJseG8mpP70Q9PqSowTL+FMV8raUtCh1ycyAJjqAOHjOhz4c3QI9Qnbqb7zk47jlWGHkUF46Z2DHnulB/Kt5nsaxRTmouXDc3M63U2RehZn6yVDEu3luEWmNqmc=
+	t=1721074738; cv=none; b=ndfzm92jzidf3KkXZbacl8oMMdJesrY/650+5uGLmOgEMfuVO5XymyEx/bMOOdaip0d7DpU2BDRYVWnfn5nFKRBpVb1U2Acajt6OStFwrAB5FtnsP1dhCLV63Et1jVrYHf5quoF8WqTqV6BcxzFGnVfRMjgOk90aakptrgyrUTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721074621; c=relaxed/simple;
-	bh=yhTDLWpx8uPeTYdNZpFMlj2ZbCzenjebYjaSL+OHFbI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=SN1WjT1DtyrwW0BaGue85u5wjtAQS93cmH1jB25t/htPEsC0QjTbXwLxhKZKnoXJNgr3KoWchz2Xv6oz9prpu9zvZwbmH6Ri1Cic7HJ599PalzCjPdDDaP2lT9d9BozrPB8a3sOS+iiD9q1+woP2R/5WYEer7P8SygaKUxIcouY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aPc/3cb/; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721074738; c=relaxed/simple;
+	bh=Isw7ecjIr/6BnfQj2OgvMUuNdP6lT+SD3iSrAqVs7A4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N2iJu/R+lSrgCxfcdxxfFoCIagLvZnmIbezJjBEbCvfS/ToDC4aCNxNw/i2wfcuzLoa7Pdgbzut+LcSC7jd5AVvgHn7MXq7LragfgaK8KFujUtcylELkdLcQe1ljSioXTfbt99gH390UJVjpVtj2mmYF3pyHW9FaXFR/+LJc/ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dT2kmo9t; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aPc/3cb/"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-70b4267ccfcso3529733b3a.3
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 13:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721074619; x=1721679419; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5bRG4bQ8IHEkOJrYeFSzdf5TdJ9gKyML12FWszXlbXk=;
-        b=aPc/3cb/t5yT7zEXAk1pxfL+IRG2gsJ8TqKNAt/GK55LXI1FVLIjU1etmh7NdHBw6h
-         RDqIQB2KooDFkm7ts1GcZrhvrR95M/GbfIVhajVxfoIjK+eAdy1PLQeWy/LfGWBPcO5W
-         todMTY5UhMJZC6yOPx3Ky98eSd+B4s+6P8N8z3M5m+1wNfwl2G9+J1hIQzrEIG+03GtD
-         VuzvM1JcqS/hMamRRtidZUBu6RvPAaKx2WbH17T7Gaa1qhcbedkbkry2Yy1xwZ/sOhzG
-         uq5a2pHbNaau7kgAPi0zEPOm+kPIiwK+s4ab/GtXZrxUDiwq87RCpzHfAVtv+P9KavV2
-         FPZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721074619; x=1721679419;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5bRG4bQ8IHEkOJrYeFSzdf5TdJ9gKyML12FWszXlbXk=;
-        b=FjfELuoZn1UxnCDqIrd2rOP9OInyMlHkE1EuR+ppCv2/+lyIxtVpz/c/KUcdRuJXai
-         hE9iLNblEmFc1Gx5MgZrMRms2HN0tg3GZQXOHl/WUXYemFVt1xgPfjl8prrvpa4ysyjg
-         1e3dVBGgjlx4clmQCau2wFzQ/rpWyEDNhNxhMHCt7EKjVRVxIV8WP/wcpET5Uee3qPiM
-         L4XUVARW5ITy1hBwZoMykle6e5w6fOr3FwaJbbD6AZXZ7NO4wIy9nMN65o7hSBLwyJlO
-         KoNqN7kP8wHgw/VqfHwZiL8wf73wsUMlU5EZQZZXDH8CryML1fozlU2HqhujhrTPNJSK
-         B9sg==
-X-Gm-Message-State: AOJu0YyXGjc6+XZX/Z/SbLTsmTsPGPMVnuoUbtoXTe1BpNEJ3CjBg5Xl
-	WnV8/lxGipa1EYFiPBZLfhNXC0kTF71bPQEWk5bxPspnYRJ8cYSXWAxZ6Q==
-X-Google-Smtp-Source: AGHT+IGwIhz0AxVjnWo2i5WJ61rFakL+PRW4jiuBINl0x8I6NNtAp6xPddheBc5rFJiHkPp449EZtg==
-X-Received: by 2002:a05:6a00:b4a:b0:706:7052:205 with SMTP id d2e1a72fcca58-70c1fbae7e4mr199280b3a.18.1721074619264;
-        Mon, 15 Jul 2024 13:16:59 -0700 (PDT)
-Received: from gmail.com (p4453252-ipxg23001hodogaya.kanagawa.ocn.ne.jp. [153.204.169.252])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-78e338dcb64sm3714095a12.20.2024.07.15.13.16.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jul 2024 13:16:58 -0700 (PDT)
-Message-ID: <a70bddd4-ef2d-488e-a2cf-48515f5df357@gmail.com>
-Date: Tue, 16 Jul 2024 05:16:55 +0900
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dT2kmo9t"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 24A4A349D6;
+	Mon, 15 Jul 2024 16:18:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Isw7ecjIr/6BnfQj2OgvMUuNdP6lT+SD3iSrAq
+	Vs7A4=; b=dT2kmo9t1fV5+oFGls29lMq44heouEx2TRcaLb8LSbLJ3aOK4ILpW/
+	7omjuQQtxsqT2fZwMqxA7UyWewhJ7AFQ/MrvcF3IvFOkxQ+trApN/mIQLdbfTPRD
+	hxj65JQe30KtyN/Wt5cK8+7G2o7PxO5GkT2sa2OSzwRjXRvjiKyK8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B659349D5;
+	Mon, 15 Jul 2024 16:18:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 84A9B349D4;
+	Mon, 15 Jul 2024 16:18:53 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Scott Moser <scott.moser@chainguard.dev>
+Cc: git@vger.kernel.org
+Subject: Re: Can dependency on /bin/sh be removed?
+In-Reply-To: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
+	(Scott Moser's message of "Mon, 15 Jul 2024 14:41:43 -0400")
+References: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
+Date: Mon, 15 Jul 2024 13:18:52 -0700
+Message-ID: <xmqq8qy21k9f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v4 0/4] add-patch: render hunks through the pager
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
- Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-Content-Language: en-US
-In-Reply-To: <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 74C2FBC0-42E7-11EF-970F-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Make the test name more descriptive and avoid unnecessary redirection.
+Scott Moser <scott.moser@chainguard.dev> writes:
 
-Thanks.
+>   [credential-helper]
+>   helper = /bin/myhelper
+>
+> In that case, the shell is only being used to tokenize 'myhelper get'.
+>
+> Is there a solution that I'm missing here?
 
-Rubén Justo (4):
-  add-patch: test for 'p' command
-  pager: do not close fd 2 unnecessarily
-  pager: introduce wait_for_pager
-  add-patch: render hunks through the pager
+Isn't the above example faulty?  Shouldn't it be more like
 
- add-patch.c                | 18 ++++++++++++---
- pager.c                    | 45 +++++++++++++++++++++++++++++++++-----
- pager.h                    |  1 +
- t/t3701-add-interactive.sh | 44 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 100 insertions(+), 8 deletions(-)
+	[credential]
+		helper = /bin/myhelper
 
-Interdiff against v3:
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 2ac860cc42..c60589cb94 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -612,11 +612,11 @@ test_expect_success TTY 'print again the hunk (PAGER)' '
- 	test_cmp expect actual.trimmed
- '
- 
--test_expect_success TTY 'P does not break if pager ends unexpectedly' '
-+test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
- 	test_when_finished "rm -f huge_file; git reset" &&
- 	printf "\n%2500000s" Y >huge_file &&
- 	git add -N huge_file &&
--	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p >actual
-+	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
- '
- 
- test_expect_success 'split hunk "add -p (edit)"' '
--- 
-2.46.0.rc0.4.g229d67bbd7
+> Would upstream be open to some modifier on the helper value that would
+> indicate "do not pass to shell" ? Like a '@' to indicate "direct
+> invoke" rather than letting shell handle?
+
+Absolutely not.
+
+My first gut reaction regarding what needs to happen was that
+somebody needs to teach credential.c:run_credential_helper() the
+same trick as run-command.c::prepare_shell_cmd().
+
+In the latter codepath, run_command() calls start_command() which in
+turn calls prepare_cmd().  The prepare_cmd() then dispatches between
+prepare_shell_cmd() and strvec_pushv(), but even when .use_shell is
+set and prepare_shell_cmd() is called, prepare_shell_cmd() knows
+that it can bypass the shell altogether if the command is simple
+enough (and /bin/myhelper is indeed simple enough).  And when that
+simplification is taken, shell is not involved at all to run that
+simple command.
+
+Even though the code path starting from start_command() is what
+run_credential_helper() does use, what is run is NOT a simple
+command "/bin/myhelper".  It will receive arguments, like
+
+	/bin/myhelper erase
+	/bin/myhelper get
+	/bin/myhelper store
+
+etc., because the caller appends these operation verbs to the value
+of the configuration variable.  And as you found out, to tokenize them
+into two, we need shell.
+
+We may be able to teach credential.c:credential_do() not to paste
+the operation verb to the command line so early.  Instead you could
+teach the function to send the command line and operation verb
+separately down to run_credential_helper() though.  That way, we
+might be able to avoid the shell in this particular case.  That is,
+if we can 
+
+ * Have start_command() -> prepare_cmd() -> prepare_shell_cmd()
+   codepath to take the usual route _without_ the operation verb
+   tucked to the command line, we would get cmd->args.v[] that does
+   not rely on the shell;
+
+ * Then before the prepared command is executed, if we can somehow
+   _append_ to cmd->args.v[] the operation verb (after all, that
+   wants to become the argv[1] to the spawned command) before
+   start_command() exec's it
+
+then we are done.
+
+Having said that, I do not think you can avoid /bin/sh if your goal
+is "minimal image *to run git*", as there are many things we run,
+starting from the editor and the pager and end-user hooks.  The
+credential helper is probably the least of your problems.  What's a
+minimum /bin/dash image cost these days?
+
+
