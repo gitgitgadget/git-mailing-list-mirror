@@ -1,133 +1,90 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9813052F6F
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 16:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7B420DD2
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 16:41:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721061642; cv=none; b=rkna5GwYdBB2CwH2R1yPkiy9/C0EKUdvS5ZtHQsi9XOuznWjb9G5eqUPl+4beZNGBQc/UTbDmidXs96AVc66LP9xSn92MKHS2PBoX6GoGFqrRqDqOP0fACtsLg+i+tQ8EZuIRK7QcCmd4Jq4v6GAgymQwV3MOv+I1fMdzh4d34M=
+	t=1721061703; cv=none; b=D0Y+HngMh1EmSYfrdv75inusUwEp2ASIGq9zShR7+y0HLYd3lAADu9ZxKqFquwa7ZcRYt9OsfvBrNJEES6t3DW0lh/e7lQrmeYPpcNOUzcxp+L6Iyw1XwnBmXl+cwCRY+CtxQ2spdnpfzrnCPNytRfuL7tbQanT0muKbcgUg4Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721061642; c=relaxed/simple;
-	bh=5srytGP5DHcCzubb+7Yu41fL86DFDqJB9UqNoQPOwJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DxBk2X/rE+2j8NUtDDqfCrFAuDayCuOMKEIq8OGVZCUhMjxxlW872gw8V3qxMBDLFVraA3j2U/1OmgDlCSLPOV6e227hQdenmJQBaxIaW2XsuojLfXMAGhS/wqNTs0N4zaxHew5AjFXTj8ZZfCtt2c11Bq3HuD3gdHI9ll8sz/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YkX/F+8V; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721061703; c=relaxed/simple;
+	bh=nXUMby2sRvpfgH57zZM+tRhd9dqTyoDXOGhL/2J9y+I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k0vhwx5pFvbH8DaZ2UssFbVOSfPHzKeylHXgRPtKG7UDagwfJSuIC2ApT2rkH0REZOvRsoF0iW1tzXsMvi3wq/v331mlOxN8Qqz51UGxk6Z0gMXJsg+F5JcQxVvL+aHc9ROkRCqdV5w1UuBhG12f8CR41VR3BIfU4beJ2LLsK6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ft87KtOX; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YkX/F+8V"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-654cf0a069eso37848557b3.1
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 09:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721061639; x=1721666439; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aJRU6MJ8yZ4F/6dxR3TwDmhK/U9/TlKg9Kxi28UfNtQ=;
-        b=YkX/F+8VVkIF+G6SQDPpw9eK8sVvyEqAyaoH40tR7gbtZikeNQ+6rhjGibET5a2tbF
-         lQJ329cKGNY9R1CZebY1Jr4ea9u6QEz5emtlEKw1eLwMmVqrcQ32Ogh1YhdWEC0XXKi5
-         DRrAf/4uRDpgAkKKYybZIhtExZ1VJXI2gS3juXXVBr5myIXb2OGj2h4aXgN6lcD6HvlX
-         0bXPIopN9wmN6jMcirNw5cbIY9S0zPO2Aw/AFg5rNdJ9Ygd38FOYS1yiXukE78CovbAB
-         wxZMTZntXm83APhnQmbJDOyXW3NidnMt5y0RT30BVyLuiYQSLeNbxHqhJRblouDLe7Is
-         8uFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721061639; x=1721666439;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aJRU6MJ8yZ4F/6dxR3TwDmhK/U9/TlKg9Kxi28UfNtQ=;
-        b=cIUBr40A7bheoek4bh5PgZXWIw4f5nGyc62nMIuAcPUd6bWosPt918j6PYppqUq3P1
-         oa7pJW0kl8JJL/yxJME7GL9Xmk/sfj3NteqF7T5ryqoiSqSIyqU2fROpxOleAX+wfM+A
-         nan1quDa/y4VNxFLIEhe+2hqqoEUK6B0jRF3fIWcQr3BF7SHfCqwm4RBbyYzZYh5+7IA
-         WRQXdUswmMebK1i+g6l26TTjhj1le/0ik1lOBA0uJsfLRCYr8rMIYuhRJrkAZWMaSTSB
-         DQo5NtEGcj/aOBGkyWtMXnIBFflmupNdN5Adn8GPi9YcCyOi1viNuT/Vlhp2lkaDVBc7
-         sd4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU7wOXGR1NPstIkQdKBKcjHD1exucChfknvN2OeTX3Rd+EMv+eHxoHlKWMz0x1d2pC0YgKk+AjqeIgzuO2EnPAPyRNH
-X-Gm-Message-State: AOJu0YwB1uXTM8i75aqjLGBqfMZQFodlj8Pob+T2CWkm9UuVra5848VC
-	ABZ6WM/ES1fnj+menKqhusHH+B7AEusQvJP4DJMuCwCt6na0T7t1HNsXHT+IYDdlmLANaOg1sFX
-	zNmmQF+y2egvM/0huf46ajUPDxevxaAbck6OoaQ==
-X-Google-Smtp-Source: AGHT+IHAo8H8mfgXmk6YBS9YVPhK73tAz8YhqmgFQjuqtxU21HOJC3fDABOtFGYqsyR4prCymChNSwBwdXBctggM0nE=
-X-Received: by 2002:a05:690c:e05:b0:62c:c696:56fd with SMTP id
- 00721157ae682-66355c43757mr189667b3.38.1721061639490; Mon, 15 Jul 2024
- 09:40:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ft87KtOX"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E02E81FEDE;
+	Mon, 15 Jul 2024 12:41:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=nXUMby2sRvpfgH57zZM+tRhd9dqTyoDXOGhL/2
+	J9y+I=; b=ft87KtOXmQTCzBwS3z6e3kuD+vIavPYP66J4zHhAVszybyLNU5g7Mq
+	jxhC3xWg1gyCUBqa1/T6QWXK67LsauMAENujfwqOfmUJD1sNvKWyPT08q2sHgPfH
+	vGxaV4+87VjPvOJBLpfaxlTf0z1y168owFRdJacU+d6IvNmgWAlAk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D7EB81FEDD;
+	Mon, 15 Jul 2024 12:41:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4BD001FEDA;
+	Mon, 15 Jul 2024 12:41:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,  <git@vger.kernel.org>
+Subject: Re: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
+In-Reply-To: <00af01dad6cc$41f10d40$c5d327c0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 15 Jul 2024 11:32:46
+	-0400")
+References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>
+	<xmqq8qy4adl4.fsf@gitster.g>
+	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>
+	<xmqqttgr9aeb.fsf@gitster.g>
+	<ZpQVwyVQT8Wf5AeX@tapette.crustytoothpaste.net>
+	<004501dad61b$b35b7f30$1a127d90$@nexbridge.com>
+	<ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net>
+	<xmqqv8167kd8.fsf@gitster.g>
+	<00af01dad6cc$41f10d40$c5d327c0$@nexbridge.com>
+Date: Mon, 15 Jul 2024 09:41:39 -0700
+Message-ID: <xmqqh6cq4ngc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240628190503.67389-2-eric.peijian@gmail.com> <CAOLa=ZSY1y4wz6M9mOLvTCPoeCmceD-HKqT5tomF+BzbL5yp4Q@mail.gmail.com>
- <CAN2LT1Ctwdij9-DujKeuzPX71mzEoMVbdrTkJ8bpRnX9NAZy9Q@mail.gmail.com> <CAOLa=ZRi2w_CXovpg3h1mfMsOiLWrpS8vL+NzS5o_NwhFdysTg@mail.gmail.com>
-In-Reply-To: <CAOLa=ZRi2w_CXovpg3h1mfMsOiLWrpS8vL+NzS5o_NwhFdysTg@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 15 Jul 2024 12:40:28 -0400
-Message-ID: <CAN2LT1AM5rYpwjZ+rhYerxDkL6mbxr7iDc=wvuhvNKS8VVXQ8w@mail.gmail.com>
-Subject: Re: [PATCH 1/6] fetch-pack: refactor packet writing
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan <calvinwan@google.com>, 
-	Jonathan Tan <jonathantanmy@google.com>, John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1C59885A-42C9-11EF-B582-965B910A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Jul 10, 2024 at 5:39=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Peijian Ju <eric.peijian@gmail.com> writes:
-> [snip]
->
-> >> Right, this commit in itself looks good. But I was curious why we need
-> >> this, so I did a sneak peak into the following commits.
-> >>
-> >> To summarize, we want to call:
-> >>    `write_command_and_capabilities(..., "object-info");`
-> >> in the upcoming patches to get the object-info details from the server=
-.
-> >> But isn't this function too specific to the "fetch" command to be
-> >> generalized to be for "object-info" too?
-> >>
-> >> Wouldn't it make sense to add a custom function for 'object-info' in
-> >> 'connect.c'? Like how we currently have `get_remote_bundle_uri()` for
-> >> 'bundle-uri' and `get_remote_refs` for 'ls-refs'?
-> >
-> > Thank you. I am reading through the old comments left by Taylor
-> > at https://lore.kernel.org/git/YkOPyc9tUfe2Tozx@nand.local/
-> >
-> >   " Makes obvious sense, and this was something that jumped out to me w=
-hen I
-> >   looked at the first and second versions of this patch. I'm glad that
-> >   this is getting factored out."
-> >
-> >
-> > It seems refactoring this into a more general function is on purpose.
-> > It is encouraged to use this general function to request capability
-> > rather than adding a custom function.
-> > Taylor=E2=80=99s comment was 2 years ago, but I think refactoring this =
-into a
-> > more general function to
-> > enforce DRY still makes sense.
->
-> It would make sense then to move the existing users to also use
-> `write_command_and_capabilities` eventually. I guess this could be done
-> in a follow up series.
->
-> Then I would say `write_command_and_capabilities()` should be moved to
-> `transport.c`, no?
+<rsbecker@nexbridge.com> writes:
 
-Thank you. I am not sure about this. Currently, the file dependency is
-like this:
-`transport.c`  -> `fetch-pack.c` -> `connect.c`  where "->" means "depends =
-on".
+> What is strange is that when running on NonStop using ksh, t0000.1 has never
+> failed. I think the situation is subtly different from what we are solving.
+> My take is that there is a difference in the local vs. non-local variable
+> set semantic, rather than just accepting the keyword. I would propose that
+> we need a more comprehensive local test to verify the actual expected
+> semantics rather than just testing the syntax.
 
-Moving `write_command_and_capabilities()` to `transport.c` would make
-circle dependency.
+It is possible that I may be misreading that first test, but as far
+as I can tell, it is testing not just the syntax but tests how the
+variables declared "local" behaves and should notice if they are not
+localized.  It checks that "local" assignments in try_local_xy does
+take effect, and (more importantly) after try_local_xy returns, the
+original values are restored.
 
-If we want `write_command_and_capabilities()` to be a more general
-utility function,
-it seems make more sense to move it to `connect.c`. I saw a bunch of
-these general utility functions
-in `connect.c` such as `send_capabilities()`. Some custom functions
-such as `get_remote_bundle_uri()` and `get_remote_refs`also lives in
-it.
+As I speculated earlier in an earlier message, the breakage you
+reported may have to do with interaction between "local" and use of
+a subshell, and perhaps we can also check that pattern in the test.
 
-Please let me know what you think. Thanks.
+Thanks.
+
+
