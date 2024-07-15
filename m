@@ -1,57 +1,57 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B55F1850B5
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 09:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E3318733D
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 09:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721035856; cv=none; b=nKjpl2yrJzF1Y4JMlE+xhLTvVbJOIGI9m4pbwbQ1P/hvZXDKf0vpgO+T9YQxQem20L8nZeew4+2dh+DNgofOwhVj5vR6xeVrnRzXafzfe9V+jLuCFYh7+4bQKw3c7TwGeNwK/ERhC88gh7zuCgQcNIsSSw3bDeq63WnSY8nROeI=
+	t=1721035857; cv=none; b=uGG47WpuwGyAvYTg0jMdwYp6SD1JGiVdWeNro9x+3win2TEIqMm5/Vt/OWara1fpgV/CBMCKG5KGPDPWIOUgCgC+Gr9iwOOVpWmcfKIUm5ewbZeTiBRqn598IwWflBx7Jk7dsvZtbNXCs2K1S1Phm5uPtdDgQqc1bx6UgjZb8iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721035856; c=relaxed/simple;
-	bh=mGKp73t1gDNv5XhEYpbWC9ylOVN74pdxUlMqwbrFvRs=;
+	s=arc-20240116; t=1721035857; c=relaxed/simple;
+	bh=S7Zo/NpUORndOH2vsbJ5V3SdVDxmqCwBMRY0KwgBPmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwgUQO7/6KoXZV6MbJNPdgbk2/4J52p9Hi+M60OQpp7EbTyITqIDDknTRSX/ILxuQttzXfyOo7cc/j27CKU5Z2tpFQ6+LKHfpGqx1UH9DAckTgj/XfxBg3sntagYYn2VCichi92/EkVvrQVF1vZlPexLxwWVCg6PVgXVxZPonko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cIo+rX3O; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version; b=ZJVoYZ70mMGS1kohX5/au/nIwooYxjg7VlInhL15IO1hGqTVXS0PEiPpiRhRRzFSIVHJ4ZfRfSlYhUjm9i0obichskO/DK8xwi2lF+F/0lDbr//SKVMhMEOI1d6K0i5+XadKkd0ililySSEtUUbWI5oi8Tpdfz9i5lUOBAlPygU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8i3S0Sk; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cIo+rX3O"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-367963ea053so3390459f8f.2
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 02:30:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8i3S0Sk"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-367b0cc6c65so2523498f8f.3
+        for <git@vger.kernel.org>; Mon, 15 Jul 2024 02:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721035853; x=1721640653; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721035854; x=1721640654; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QEj4J1duXKauf+ZuSbER3cN37XrHK4JaDZdLoIf88LY=;
-        b=cIo+rX3O60vAHHNmGmq6oQf9+hgW6AUCEyTQF5bm2PxOYOs2+RdtspDPlGKcYXNDva
-         yIUQ1u12QVuCQ/8bTtRhoDfytxb7PdKDglRPETtBBDi96KUfhg+ls+x2Q6qr9NLzFGMO
-         fReF11C+R1TGR3D+IMlZuaML6ozrO9Q0MPqHzC0nOX/6tp0aFRHPLPThkaVU97lElT6n
-         ybXGgFu6TDWrF8roSEE5cflP8sjsVWKhnOpYznHox/Ab+6+By2aLqJMMY2TflwF3N9X7
-         LITmKLnJIpb9m9Qtpth8yJy7qkw/ByOmCII1eUr6qWTh0OLE6Jn7k40M46Vgz1dvpyl6
-         8GBg==
+        bh=0wNgL1+hL+/hGwg4Th2qpdX12s/4q4BWBjTK648i1So=;
+        b=l8i3S0SkTAy1RJOls9vQBDzxYug1Fu7XsJT+6XWQbTiHWHmQ6neYJXuGUxBnIuN1mw
+         i1mgn3b4LeuCHtbg3Mc09eI+FbIgHYR7nPeC6B03FFueH42c6VbGjYDOlGv+scN0a57j
+         hM37kLN92XktvmN3d4VmzxHtrXQBEjUk1Y5gFncuB5NlWd6v/3ncBiJFVXD9QVPBN213
+         SmPpayd/0iS5HuIUkuxIs+TJlUocjaxGW63KDEYSISkRkkUwE2J2QfqZljcvf57nFLBZ
+         zTIgXAidQRcLoRE7cpycP3wnATQ8+9dRfzbGfJy7Q39Ykv4eu/iQNsADCZjfcrvw0gZt
+         uEUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721035853; x=1721640653;
+        d=1e100.net; s=20230601; t=1721035854; x=1721640654;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QEj4J1duXKauf+ZuSbER3cN37XrHK4JaDZdLoIf88LY=;
-        b=RNRr3AZ6rSia9dSbVxLxvluEwfR8q5eTPgLbFyFlHcv9lqKSKJvpRDojmnNJSvjc/c
-         xyudQktTcmK5+330BbYUDp8DlzWhzIZ/xIPq/EL9F38L3Qhvgo6HCXC11fNHrysj7N8g
-         C2Wr0vISDV3drW07vWY36c9OCXDx5/cidaHhl3ug3t2y7Mbo6DAspw+MIkinS4WmREpg
-         DxSb1v/i/3wKA3FskAFoA3dPuHz49wHdX84bHICQZf/RcjGumtUUM0wI3Sy0rV3E4l6G
-         oRq8R7xdMEiYidk6JRRlSJItpOxZyJ4QivimDrl9jaJ90C+jjTRrkfhtoW/O/C/t8Hky
-         uTKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoW3jTAYbfo3iVGxA4vkOFOlmUTqWe2qORDN6GMz3eXv++CYC3eMEQW3QQ/JUs/JakfC9B88GvOQbOI+HTL+zIEQin
-X-Gm-Message-State: AOJu0YxVldpQTHt2GCggDv99o+vawYzGsrt+Du/hStTNXNg0tBlfG2XW
-	ukBQf0ylUf+VK32ItsNd73vFY56mjrvDTI9CfKrkGD6VuqR+wKwy
-X-Google-Smtp-Source: AGHT+IG6uQPnzHaC8iQeboLuBmmKVP+sGWCBHlWiWpzOMXbTx+9hGET/T0v65cQic5IAaqyvAeX2zA==
-X-Received: by 2002:a5d:4703:0:b0:367:47e6:c7d9 with SMTP id ffacd0b85a97d-367cea95994mr15000134f8f.33.1721035852703;
-        Mon, 15 Jul 2024 02:30:52 -0700 (PDT)
+        bh=0wNgL1+hL+/hGwg4Th2qpdX12s/4q4BWBjTK648i1So=;
+        b=mmzBg0ry8CmxDNg3uj+EJqHiC738ANHfkamjjbc2RQLKQj2cjGnTQbGbF+d0S1XtOE
+         PXI5n+LFifGTBHsI5rlEyJzdvCi8G6zQLwfeN6lkhGrvgfd+F2nynx4ErwnB1KxS5duH
+         PKZ+eSL9Lk5VoNwUunFKV3QPShIwxcb3NhZ6TWqrZk+pbKNVPBHDsFbhW82x3bIR0sR8
+         lk0zesEZtg6QRsjwsWrLvO5M422xaVjH2k7vft7IA91sGSVP59gYGG3vd7JQ9eDD2ds/
+         UFptgGRtCTDhq/NaEopVnmw7oOK2mkTZcmrC0umbFohquDX1IpE7zZWgWHolo6OrfAuz
+         y/og==
+X-Forwarded-Encrypted: i=1; AJvYcCXx9MrK+MHq+pXYnvF6G8AUYjHpnUoKBPkbwkkoRgmwnytUpzfSxWzLboHWX7ZPEVop9YdAnCiiznWBo1U4Oy3tUIA5
+X-Gm-Message-State: AOJu0YxpcXdbcW9UA/WfSum9DcD0u35R8CbyTpvZKtr562GXqZHnLzYg
+	KEmcuJ1FhlHsMItnjIqf+530Ej3avwNpo80EHgFLneQxrVEXuCjV
+X-Google-Smtp-Source: AGHT+IGjV0APN8PFM5UNLr9WTbIhcfqAnsSFu0SPEyEp5W+CXVmT4rXz6DaIy7g96GEvaNsy2Ke0nA==
+X-Received: by 2002:a05:6000:178a:b0:367:992f:6037 with SMTP id ffacd0b85a97d-3680669d9ddmr6813046f8f.16.1721035853900;
+        Mon, 15 Jul 2024 02:30:53 -0700 (PDT)
 Received: from laptop.fritz.box ([2a02:2455:826e:4900:1a3c:da7e:77ea:d1ae])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dafbf19sm5745208f8f.68.2024.07.15.02.30.51
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dafbf19sm5745208f8f.68.2024.07.15.02.30.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jul 2024 02:30:52 -0700 (PDT)
+        Mon, 15 Jul 2024 02:30:53 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: chriscool@tuxfamily.org,
@@ -59,9 +59,9 @@ Cc: chriscool@tuxfamily.org,
 	jltobler@gmail.com,
 	phillip.wood123@gmail.com,
 	gitster@pobox.com
-Subject: [PATCH v4 3/8] clang-format: ensure files end with newlines
-Date: Mon, 15 Jul 2024 11:30:42 +0200
-Message-ID: <20240715093047.49321-4-karthik.188@gmail.com>
+Subject: [PATCH v4 4/8] clang-format: replace deprecated option with 'SpacesInParens'
+Date: Mon, 15 Jul 2024 11:30:43 +0200
+Message-ID: <20240715093047.49321-5-karthik.188@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240715093047.49321-1-karthik.188@gmail.com>
 References: <20240713134518.773053-1-karthik.188@gmail.com>
@@ -74,28 +74,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All our source files end with a newline, let's formalize in
-'.clang-format'.
+Replace the deprecated options 'SpacesInParentheses' and
+'SpaceInEmptyParentheses' with the newer 'SpacesInParens' option. The
+usage is the same.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- .clang-format | 3 +++
- 1 file changed, 3 insertions(+)
+ .clang-format | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/.clang-format b/.clang-format
-index 803b274dd5..4c9751a9db 100644
+index 4c9751a9db..914254a29b 100644
 --- a/.clang-format
 +++ b/.clang-format
-@@ -106,6 +106,9 @@ IndentCaseLabels: false
- # #endif
- IndentPPDirectives: AfterHash
+@@ -134,8 +134,6 @@ SpaceBeforeAssignmentOperators: true
+ # }
+ SpaceBeforeParens: ControlStatements
  
-+# Insert a newline at end of file if missing
-+InsertNewlineAtEOF: true
-+
- # Don't indent a function definition or declaration if it is wrapped after the
- # type
- IndentWrappedFunctionNames: false
+-# Don't insert spaces inside empty '()'
+-SpaceInEmptyParentheses: false
+ 
+ # The number of spaces before trailing line comments (// - comments).
+ # This does not affect trailing block comments (/* - comments).
+@@ -149,9 +147,10 @@ SpacesInCStyleCastParentheses: false
+ # var arr = [1, 2, 3];    not    var arr = [ 1, 2, 3 ];
+ SpacesInContainerLiterals: false
+ 
+-# Don't insert spaces after '(' or before ')'
+-# f(arg);    not    f( arg );
+-SpacesInParentheses: false
++SpacesInParens: Custom
++SpacesInParensOptions:
++  # Don't insert spaces inside empty '()'
++  InEmptyParentheses: false
+ 
+ # Don't insert spaces after '[' or before ']'
+ # int a[5];    not    int a[ 5 ];
 -- 
 2.45.2
 
