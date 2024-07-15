@@ -1,216 +1,105 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529D4433B3
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 14:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2A13D531
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 14:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721052800; cv=none; b=NAsfZzCptc7EtvLIgDHOrBEhleuTlTDaczumluot1Een6HCHP1xViQgrnz2zSsz4VxrN6Egln5ZUcq7Dqeaf3bISaylQGi/7+5Bl50G26HVUWLNKsdgAfhC0EoDDehTkkS/VGf9B73wNmyzrwOp9xcA1kAgtYFMKOC9nBVH8cDA=
+	t=1721054304; cv=none; b=eyOj5TfCe6F/AcuItSfSfz7CWATdyKyDh6eP3wP30jEl+NmqnlMdU5MEOF7E8EuFpDwMSkmT1kHsI0fW6xi6nDviSZkUfdFMuy5L6wWWQy1RPkAvz+az8htlurInumZIZHldBNQkr08ft2f8V/eO2AAOqF1PPnF/zj+O5jo69qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721052800; c=relaxed/simple;
-	bh=wkqC2ABuO88SntrD+HDgXlMPyYhdWELWznPyxM6v7U4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HAcDgxyExT/94Oidc3rMeR3LhK9yq3feuRbl+g9AcVTywiej6tnGLbWBum1tp0M65ATPFwMEgqOsm0Lz6V/gSWBrP0ngRYcQvTyirkXGlmlNYhzZo2L03J0w8vwMY85lHEeseXfrTlDDlSoBAwMOEiK8wP85ZL0U+ATGX0ySr04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Aht9rN3T; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721054304; c=relaxed/simple;
+	bh=gbbfCV0T9NFsgoOjy5wazprU2W6UPm2XeRQEKnikfyY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=przEdSK+yMbbtfavW4j0irqH2cvTSU/ts78eI0DbdKjQhE0Gj+fy2pjxMEH3JjK3mjEKm20nznj94yI4I0A4rNYjgDQgzqALTQ1tnorFTCpjntmVfHpsO69lWWVkxTE7sTV4P/uuK89zv0E/qhNhf+/KrX08oqpMLHW7U+f/4Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EPLCle9j; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aht9rN3T"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3678f36f154so2597480f8f.2
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 07:13:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EPLCle9j"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-447dec80899so22445981cf.2
+        for <git@vger.kernel.org>; Mon, 15 Jul 2024 07:38:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721052797; x=1721657597; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rK4V8Pg7kO6VS8PHjz8IsYcZvghdEwrgGbVTb69QRhk=;
-        b=Aht9rN3TpnHgCwLW7mFn3RkQDI7+k/whINnotHVUULj2CqH6cvaKxeUzxbcCIWgDwG
-         B4SB46mbK5CJ4wvC5o7LTZCoW5IGOJum4dF6rkqgUFWcEqTJYkZasPsRkZqmdsP5l/Oi
-         cOAIz3fj+oF4DM8jk+rJCzV855eV4LfUdAiqg6SSRM4F1jXdmAvW0ZrzruDYzBVcJBfl
-         jINm5iZPlDiqar3dWiFhegOpMbO/zz/AtzqBnOfIWxbQxvL6FdOJ3fR4rlENa687oNwN
-         QqSz5F8VI6Ib2jQp8NTw1l87drwgPKSXL7JQOyYMsb171s2SMPA7znIpSa5fk9Taq/oA
-         4V5Q==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721054302; x=1721659102; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cXS5+Ze1Hi0YskFfINng9bxFRfo21BeLhOVkLiyiszg=;
+        b=EPLCle9jlX1Qt6dc3sq1Z0zcA5ouOdREtXEr9JXkxaVF3OZagNfmMHWJ4PuQoJWZcO
+         N2ccq8ASGwJ+cWvRHmJk8z27J8G754f0h8BcLX1k27oOAE3WfPsVNAnfmMMu+4C7h18e
+         +1a8M+ICbNSn54TMCk5/SbQbTLCqEKwau2SBhMHCJ9CFAKIbcOGWZ0AiggccdFT/stOk
+         DopdNXzNIfp9nmTBzVC3Wm4B45vvvCM6vBY/Hntej6/tYSeR/J5dC5aNR8PyRtmxAC0A
+         xKNeVTeDDOrYKzDDg4YFiBmAAQTtQo+YWEF0iaHT5CunxufNfqBG46tr5SbvCpO2Lp8q
+         4O1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721052797; x=1721657597;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rK4V8Pg7kO6VS8PHjz8IsYcZvghdEwrgGbVTb69QRhk=;
-        b=lD0HMTteeWK/35oYHAdaySLA4qVR+W8nfg1eSWC9tOPVIjIXRCWCOcxi57RsEch75y
-         pUbFSbXmyfIGtPWthjDbupixL8ojFbKN5ENWc3tNhQZWVv9HFxe7AxDAbJYSWW3u9IqM
-         1fvJMlPmKa7piK2Lc6nULEgHY2iWuxJF26+HK0rMyaTMOOff7aJoiG05jnMqvF59oTfx
-         aXRoP+ma8gny02+Lx/TLnfaHYYdzfVh1xP4dgykRGGCHzUf7aeQvEWjfGR1gBzagKroN
-         GjzjWmKilbI3hAT51zxcXH9VmhbjGhOd5haAwXfP3c4GNMR3z7RB5qrw9aSQTj2bAkVI
-         55dQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWncJY/Gkc1RPqNlDFMviY4etxvXc7NZAuq0qfmuOL6v1SADsl3OgW/R9Zx55Eeo0hqY0xyC41HSZ2gy3fbXcC1+pBm
-X-Gm-Message-State: AOJu0Ywi8LuDm2MSuwoCBNwrBTcygLV0c8wMq/KzEREPJgeNYXzjatkT
-	bCFnMe40+RpZnVkK1f7LnonEQ07EjE/6SiUTrC/2qo4z4vZL9d/V
-X-Google-Smtp-Source: AGHT+IEFprTltRtjR67QEVvjKIkbAGLke33FTW2A0Aj9jWbyKozbzgNUdwS6H0FfpjVUZMrKiRLIXQ==
-X-Received: by 2002:a5d:64a6:0:b0:366:e7aa:7fa5 with SMTP id ffacd0b85a97d-367cea46b24mr17528210f8f.1.1721052796357;
-        Mon, 15 Jul 2024 07:13:16 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dab3c38sm6558699f8f.8.2024.07.15.07.13.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jul 2024 07:13:15 -0700 (PDT)
-Message-ID: <384f0147-d611-493b-a3d4-d83c65bd1114@gmail.com>
-Date: Mon, 15 Jul 2024 15:13:09 +0100
+        d=1e100.net; s=20230601; t=1721054302; x=1721659102;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cXS5+Ze1Hi0YskFfINng9bxFRfo21BeLhOVkLiyiszg=;
+        b=X9r447tjd43/480MfWtVVRB60JM8J2anscQIla3UWHm5OgT0zwdero7fgvHOz6b+E9
+         q4vwe+Bi6EqufbdoZrBmrFaP3Hjy3uRwK0RUvBbUZ+fZvoZ+83ceHUNF7WJXEVQQfY/5
+         kOBz8vcKRNiPnko4e2ykaVJ7QnBLF4Um4m95a3P3VcfwelvucLKXDlin5xyc+BDRrCir
+         427G0SEFnGgL8lqKPHIVI+POvpCzadx6s07vJSAR5leDi1EzFjOvlsXdxwC4IIhUg/VH
+         Y8uQFKXNBD2s92s9IYyc6QyEyhsxc4DGESTBSG7YwaMH8oFbhatXV2+LcfMXB+i7obzy
+         R5eA==
+X-Gm-Message-State: AOJu0Ywk5VcLnvryXQcccFIRVUN4JcWkL4rl4QN2VydORT6yYN3ey7JY
+	vW6zlu9ANbMpTXh2b9OaGuiuH4A6sZ7N+DO0fQJaX6yFxNDW2YOI7TJDqBzablBNxd/BSym+WUT
+	w
+X-Google-Smtp-Source: AGHT+IF1HhmjIi7lVoU7AxUpCiCUj3PZ+6S02fdOR0njcOlSg842RYc83ovuIRSdje4quFU/Hlv3Wg==
+X-Received: by 2002:ac8:5852:0:b0:447:f844:54a8 with SMTP id d75a77b69052e-447faac9ce8mr249354911cf.55.1721054301871;
+        Mon, 15 Jul 2024 07:38:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44f5b7f4337sm25406361cf.44.2024.07.15.07.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jul 2024 07:38:21 -0700 (PDT)
+Date: Mon, 15 Jul 2024 10:38:19 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Scott Chacon <schacon@gmail.com>
+Subject: [ANNOUNCE] Tickets available for Git Merge 2024
+Message-ID: <ZpU0WwsrXCF8BC1f@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/4] pager: introduce wait_for_pager
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
- Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
- <f48ac176-9938-4677-a956-350fb50dbc0f@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <f48ac176-9938-4677-a956-350fb50dbc0f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-Hi Rubén
+Tickets are now on sale for Git Merge 2024!
 
-On 14/07/2024 17:04, Rubén Justo wrote:
-> Since f67b45f862 (Introduce trivial new pager.c helper infrastructure,
-> 2006-02-28) we have the machinery to send our output to a pager.
-> 
-> That machinery, once set up, does not allow us to regain the original
-> stdio streams.
-> 
-> In the interactive commands (i.e.: add -p) we want to use the pager for
-> some output, while maintaining the interaction with the user.
-> 
-> Modify the pager machinery so that we can use setup_pager and, once
-> we've finished sending the desired output for the pager, wait for the
-> pager termination using a new function wait_for_pager.   Make this
-> function reset the pager machinery before returning.
+To purchase tickets, you can visit the conference website at:
 
-Do you have any comments on my thoughts in 
-<8434fafe-f545-49bc-8cc1-d4e8fb634bec@gmail.com> ?
+    https://git-merge.com
 
-Best Wishes
+Tickets are on sale for 99€, and purchase of a ticket grants you access
+to both days of the conference, as well as any food/drinks/beer that you
+might want during the conference.
 
-Phillip
+As a reminder, here are some details for the main event:
 
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
->   pager.c | 43 +++++++++++++++++++++++++++++++++++++------
->   pager.h |  1 +
->   2 files changed, 38 insertions(+), 6 deletions(-)
-> 
-> diff --git a/pager.c b/pager.c
-> index 251adfc2ad..bea4345f6f 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -14,7 +14,7 @@ int pager_use_color = 1;
->   
->   static struct child_process pager_process;
->   static char *pager_program;
-> -static int close_fd2;
-> +static int old_fd1 = -1, old_fd2 = -1;
->   
->   /* Is the value coming back from term_columns() just a guess? */
->   static int term_columns_guessed;
-> @@ -24,11 +24,11 @@ static void close_pager_fds(void)
->   {
->   	/* signal EOF to pager */
->   	close(1);
-> -	if (close_fd2)
-> +	if (old_fd2 != -1)
->   		close(2);
->   }
->   
-> -static void wait_for_pager_atexit(void)
-> +static void finish_pager(void)
->   {
->   	fflush(stdout);
->   	fflush(stderr);
-> @@ -36,8 +36,34 @@ static void wait_for_pager_atexit(void)
->   	finish_command(&pager_process);
->   }
->   
-> +static void wait_for_pager_atexit(void)
-> +{
-> +	if (old_fd1 == -1)
-> +		return;
-> +
-> +	finish_pager();
-> +}
-> +
-> +void wait_for_pager(void)
-> +{
-> +	finish_pager();
-> +	sigchain_pop_common();
-> +	unsetenv("GIT_PAGER_IN_USE");
-> +	dup2(old_fd1, 1);
-> +	close(old_fd1);
-> +	old_fd1 = -1;
-> +	if (old_fd2 != -1) {
-> +		dup2(old_fd2, 2);
-> +		close(old_fd2);
-> +		old_fd2 = -1;
-> +	}
-> +}
-> +
->   static void wait_for_pager_signal(int signo)
->   {
-> +	if (old_fd1 == -1)
-> +		return;
-> +
->   	close_pager_fds();
->   	finish_command_in_signal(&pager_process);
->   	sigchain_pop(signo);
-> @@ -113,6 +139,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
->   
->   void setup_pager(void)
->   {
-> +	static int once = 0;
->   	const char *pager = git_pager(isatty(1));
->   
->   	if (!pager)
-> @@ -142,16 +169,20 @@ void setup_pager(void)
->   		die("unable to execute pager '%s'", pager);
->   
->   	/* original process continues, but writes to the pipe */
-> +	old_fd1 = dup(1);
->   	dup2(pager_process.in, 1);
->   	if (isatty(2)) {
-> -		close_fd2 = 1;
-> +		old_fd2 = dup(2);
->   		dup2(pager_process.in, 2);
->   	}
->   	close(pager_process.in);
->   
-> -	/* this makes sure that the parent terminates after the pager */
->   	sigchain_push_common(wait_for_pager_signal);
-> -	atexit(wait_for_pager_atexit);
-> +
-> +	if (!once) {
-> +		once++;
-> +		atexit(wait_for_pager_atexit);
-> +	}
->   }
->   
->   int pager_in_use(void)
-> diff --git a/pager.h b/pager.h
-> index b77433026d..103ecac476 100644
-> --- a/pager.h
-> +++ b/pager.h
-> @@ -5,6 +5,7 @@ struct child_process;
->   
->   const char *git_pager(int stdout_is_tty);
->   void setup_pager(void);
-> +void wait_for_pager(void);
->   int pager_in_use(void);
->   int term_columns(void);
->   void term_clear_line(void);
+    When: September 19th and 20th, 2024
+    Where: Location TBD (Berlin, Germany)
+    What: Talks on the 19th, birds of a feather discussions on the 20th.
+
+The call for proposals (CFP) is still open, but we'll close it on August
+1, 2024. At that point we'll go through the talk submissions and notify
+prospective speakers one way or the other. Submissions are open at:
+
+    https://bit.ly/git-merge-2024-cfp
+
+, and we'll add a link to it from the main site shortly.
+
+As before, if you'd like to come but need financial assistance with
+travel costs, please reach out to either the Git PLC at
+<git@sfconservancy.org>, or Scott directly at <scott@gitbutler.com>.
+
+We'll collect requests and try to make decisions and notify people by
+mid-August, which would hopefully still leave time for making travel
+arrangements.
+
+Thanks,
+Scott Chacon (GitButler)
+Taylor Blau (GitHub)
