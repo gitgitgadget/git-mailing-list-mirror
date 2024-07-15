@@ -1,63 +1,57 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2A13D531
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 14:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6532433B3
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 14:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721054304; cv=none; b=eyOj5TfCe6F/AcuItSfSfz7CWATdyKyDh6eP3wP30jEl+NmqnlMdU5MEOF7E8EuFpDwMSkmT1kHsI0fW6xi6nDviSZkUfdFMuy5L6wWWQy1RPkAvz+az8htlurInumZIZHldBNQkr08ft2f8V/eO2AAOqF1PPnF/zj+O5jo69qs=
+	t=1721054649; cv=none; b=gS/l71alxrcJ43JIB0iAg9plIGa2uIVkbdVLUiKf5ZzVh6F8PrqGW5Nt7+O8gqOttHIg22NPKuvxajkzy0R+zy75lzNsdRAV5FVlaE2drY0ZrnTuNigAZNxvUtnI04fothoqO0aVrz+nYwhpB0mRSci9yGPRWtCKLLyitsOMn4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721054304; c=relaxed/simple;
-	bh=gbbfCV0T9NFsgoOjy5wazprU2W6UPm2XeRQEKnikfyY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=przEdSK+yMbbtfavW4j0irqH2cvTSU/ts78eI0DbdKjQhE0Gj+fy2pjxMEH3JjK3mjEKm20nznj94yI4I0A4rNYjgDQgzqALTQ1tnorFTCpjntmVfHpsO69lWWVkxTE7sTV4P/uuK89zv0E/qhNhf+/KrX08oqpMLHW7U+f/4Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EPLCle9j; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1721054649; c=relaxed/simple;
+	bh=VNvEDTkb/MQVV8UIoJoBKr/KTxTMIXAcwEI/YimRVnI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kjGBNyaG0h/GZj2roNs7Kh+hD5c0D5txUDuKpJdUdIKz1xOZ9GVoPYdjTEbOma4EfDlrNmxJ3okUHqj1jAsdIQrN9Q32K71octhPw6ZEIkSIOm21oLglNt0eTBdbhq7P2J4/nRwPRpFDFO+S2htBdqMgpJOwFcOl1giZrpqd6S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wzaX1Qrp; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EPLCle9j"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-447dec80899so22445981cf.2
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 07:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721054302; x=1721659102; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cXS5+Ze1Hi0YskFfINng9bxFRfo21BeLhOVkLiyiszg=;
-        b=EPLCle9jlX1Qt6dc3sq1Z0zcA5ouOdREtXEr9JXkxaVF3OZagNfmMHWJ4PuQoJWZcO
-         N2ccq8ASGwJ+cWvRHmJk8z27J8G754f0h8BcLX1k27oOAE3WfPsVNAnfmMMu+4C7h18e
-         +1a8M+ICbNSn54TMCk5/SbQbTLCqEKwau2SBhMHCJ9CFAKIbcOGWZ0AiggccdFT/stOk
-         DopdNXzNIfp9nmTBzVC3Wm4B45vvvCM6vBY/Hntej6/tYSeR/J5dC5aNR8PyRtmxAC0A
-         xKNeVTeDDOrYKzDDg4YFiBmAAQTtQo+YWEF0iaHT5CunxufNfqBG46tr5SbvCpO2Lp8q
-         4O1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721054302; x=1721659102;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cXS5+Ze1Hi0YskFfINng9bxFRfo21BeLhOVkLiyiszg=;
-        b=X9r447tjd43/480MfWtVVRB60JM8J2anscQIla3UWHm5OgT0zwdero7fgvHOz6b+E9
-         q4vwe+Bi6EqufbdoZrBmrFaP3Hjy3uRwK0RUvBbUZ+fZvoZ+83ceHUNF7WJXEVQQfY/5
-         kOBz8vcKRNiPnko4e2ykaVJ7QnBLF4Um4m95a3P3VcfwelvucLKXDlin5xyc+BDRrCir
-         427G0SEFnGgL8lqKPHIVI+POvpCzadx6s07vJSAR5leDi1EzFjOvlsXdxwC4IIhUg/VH
-         Y8uQFKXNBD2s92s9IYyc6QyEyhsxc4DGESTBSG7YwaMH8oFbhatXV2+LcfMXB+i7obzy
-         R5eA==
-X-Gm-Message-State: AOJu0Ywk5VcLnvryXQcccFIRVUN4JcWkL4rl4QN2VydORT6yYN3ey7JY
-	vW6zlu9ANbMpTXh2b9OaGuiuH4A6sZ7N+DO0fQJaX6yFxNDW2YOI7TJDqBzablBNxd/BSym+WUT
-	w
-X-Google-Smtp-Source: AGHT+IF1HhmjIi7lVoU7AxUpCiCUj3PZ+6S02fdOR0njcOlSg842RYc83ovuIRSdje4quFU/Hlv3Wg==
-X-Received: by 2002:ac8:5852:0:b0:447:f844:54a8 with SMTP id d75a77b69052e-447faac9ce8mr249354911cf.55.1721054301871;
-        Mon, 15 Jul 2024 07:38:21 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44f5b7f4337sm25406361cf.44.2024.07.15.07.38.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jul 2024 07:38:21 -0700 (PDT)
-Date: Mon, 15 Jul 2024 10:38:19 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Scott Chacon <schacon@gmail.com>
-Subject: [ANNOUNCE] Tickets available for Git Merge 2024
-Message-ID: <ZpU0WwsrXCF8BC1f@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wzaX1Qrp"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D25531B0B;
+	Mon, 15 Jul 2024 10:44:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=VNvEDTkb/MQV
+	V8UIoJoBKr/KTxTMIXAcwEI/YimRVnI=; b=wzaX1Qrp61c2j8NG+lpVwtlx6y34
+	NCnJjFtuxZBXqownkZC5o/3fK5J90sq6zVzY0WOWS0fSAuaUXyzyYfHLJi78TTAi
+	cN4s7dP8q/BrWyW/9o4rPqvdoEzkm8NgN4R3ii5gfMSi1+ODKOj51xBOK+8+APjP
+	ycSAXsa6EF5R2LI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3774031B0A;
+	Mon, 15 Jul 2024 10:44:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E5CB531B09;
+	Mon, 15 Jul 2024 10:44:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/1] t-strvec: improve check_strvec() output
+In-Reply-To: <f2bcee2b-88fa-4dcd-8247-f68d842c6a4c@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 14 Jul 2024 19:06:50 +0200")
+References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+	<983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
+	<f2bcee2b-88fa-4dcd-8247-f68d842c6a4c@web.de>
+Date: Mon, 15 Jul 2024 07:44:03 -0700
+Message-ID: <xmqqcyne90lo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,41 +59,29 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID:
+ AF06ED8E-42B8-11EF-952D-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Tickets are now on sale for Git Merge 2024!
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-To purchase tickets, you can visit the conference website at:
+> The macro check_strvec calls the function check_strvec_loc(), which
+> performs the actual checks.  They report the line number inside that
+> function on error, which is not very helpful.  Before the previous
+> patch half of them triggered an assertion that reported the caller's
+> line number using a custom message, which was more useful, but a bit
+> awkward.
+> ...
+> We can let check_strvec add the terminating NULL for us and remove it
+> from callers, making it impossible to forget.  Leave that conversion fo=
+r
+> a future patch, though, since this reimplementation is already intrusiv=
+e
+> enough.
+>
+> Reported-by: Jeff King <peff@peff.net>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> For next, on top of c6f35e529e t-strvec: use test_msg().
 
-    https://git-merge.com
-
-Tickets are on sale for 99€, and purchase of a ticket grants you access
-to both days of the conference, as well as any food/drinks/beer that you
-might want during the conference.
-
-As a reminder, here are some details for the main event:
-
-    When: September 19th and 20th, 2024
-    Where: Location TBD (Berlin, Germany)
-    What: Talks on the 19th, birds of a feather discussions on the 20th.
-
-The call for proposals (CFP) is still open, but we'll close it on August
-1, 2024. At that point we'll go through the talk submissions and notify
-prospective speakers one way or the other. Submissions are open at:
-
-    https://bit.ly/git-merge-2024-cfp
-
-, and we'll add a link to it from the main site shortly.
-
-As before, if you'd like to come but need financial assistance with
-travel costs, please reach out to either the Git PLC at
-<git@sfconservancy.org>, or Scott directly at <scott@gitbutler.com>.
-
-We'll collect requests and try to make decisions and notify people by
-mid-August, which would hopefully still leave time for making travel
-arrangements.
-
-Thanks,
-Scott Chacon (GitButler)
-Taylor Blau (GitHub)
+Thanks.
