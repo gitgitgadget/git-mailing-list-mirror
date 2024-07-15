@@ -1,125 +1,159 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50711836E7
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 06:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BF74C7C
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 08:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721025772; cv=none; b=HBBZzu21CA6wUbptydxFkn5ZQSsvgnyANVd1ZCyUrMjmx4a7B2svwA+jBimYYdQGEqzSmdTq5l7UqlXoGzqUEtFrdd13OD4QrAbJM8ewn2kaIyqyIZ+cTfE7CX3FzXcYE/Iv9GrQlQR2benbo8ua18mr511nHqABHjwOBdlGSSU=
+	t=1721031053; cv=none; b=mUrniSq4mh/s3alioToMDm/Q6eX9A3XJf8TUgkyY/ghG3nkMd2AyaTgmztCPhk0XD6a0GqONOqkBxqjW/Vb2Q6nJ2Kw2favj8I2iQZ6CTm+5DnYD0VsNZ7zrUwHPRghcAAvZLP5b3IozvLuaWwzLprVnWQGzEI01DT10B1/YRWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721025772; c=relaxed/simple;
-	bh=1ZElPQfVOu/FamtUQukdo1+8jhmD1uN5SSRsgQdKR2E=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=kjKo7EpEX4etLB1X696eTyOcyTu+xHGbvN4Kc7kAD7XcYPal7OlSknNRjlmlBvqCEuWbjaqPTqxnL+lvls56aYxQH1JiB+vt+2ID4cMlLzPB+cWnkFFybe7xNNXffOU4m9O+dAPMn0Qww9dX2pGjvL6Qp96cBq81vl0fAoFmiSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=m4unc67g; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1721031053; c=relaxed/simple;
+	bh=0yq/d3to7z7aMrTKFYyKhcGp1gXLBEBslN4WJ351GOY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VQMr1EgrQyjqKRh/EFXrTuNOYt50Uu/7k0GUtFdMhbt3sLeIsPskwuDlH5X3MPA6EiFOszqQD0IvseakEquatvJ6MB8AQ+xo6NdZ19wotbMBQAriO+xe5LBp1Vxuu+2uUXaqligBqa/y6taD9VZAGpzAPuUi7TbjMGT5x4DpTFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hawiSqZ7; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="m4unc67g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1721025767; x=1721630567;
-	i=johannes.schindelin@gmx.de;
-	bh=WtpebRxFdNdKO5ciutWm8winmQqJFtW5Umvko6OTOeE=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 Content-Type:MIME-Version:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=m4unc67ghzJjJqGbsL1tICdfTp5wBdGY54DLrKc/t7/V4yH+e8GM/XmmUgKOKVIq
-	 bXmytqfVz9KXxgzPlHB2oc3DxnxsF+7RS0i01tM6jZhhmSvttSsXoEal1j/UFStLM
-	 iRfhJMhgm2sNY8wxvMdelHaAtefMHd4fSuCRY7PELQhOiyTGcEVaxD+vUqmmOY4gu
-	 MG7IRdihCkrmjb7fo1jqiSGhdqf1ssvIwdQoOjtyRvCh7oqZP23NWTKfyOenqUvAx
-	 xgagt6vL4agdsRkFnc8lV6hHZ0qRrXHf9/76QUOmmrSLK1MCK1yaeWoEwcA5RamuZ
-	 FrNx7KHrrr0u3AYojQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1429-436.yiaga5qy33te3l4zvvaow0wupa.dx.internal.cloudapp.net
- ([52.238.29.130]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MGhyc-1sYFcq2ZiE-004rZK; Mon, 15 Jul 2024 08:42:47 +0200
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.46.0-rc0
-Date: Mon, 15 Jul 2024 06:42:43 +0000
-Message-ID: <20240715064243.3401-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hawiSqZ7"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-25e150603a6so2019250fac.3
+        for <git@vger.kernel.org>; Mon, 15 Jul 2024 01:10:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721031051; x=1721635851; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gCnP7UxWF76se76XaJ1Ae2jsmSTCD++OomQKacYiPq0=;
+        b=hawiSqZ7d4MgmwC0UTwxGU8RgKeWEYdqChUD02q3X04/Kb1dLR55mCA9zDjrF+OQUA
+         8phb6n1JL7Nw3Esr/6K87Ifwxtlufyb8348p4yYO2iKX93PWRYW3c5/uIQmxWfAgmUw3
+         5shvGMwLJEhc51Fcf9v7xMAlsYYG3iv3ZiL1+RsFV6sWkQMXj8WKz+Wgu7LoOp8q0iz+
+         8tbI3/agLrKzJc0RgSjYH0hQ5vMshth54wr8kAeX3rrm/5XSsA4oUOesw4qRENMna9/X
+         aiYzlV2j5kejsxceMug16+Hv+t7ILEhkw+BgrFK43eWPvDBbDwDogr7RBlk1PFfbj7qi
+         k3Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721031051; x=1721635851;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gCnP7UxWF76se76XaJ1Ae2jsmSTCD++OomQKacYiPq0=;
+        b=bMkk7oN/MKe2izzDzGZCl3z4S9PgBExltKHDb+Be6tQCp8JakduwneGWA2Y7/4nljL
+         E2WjC9/1Ux6vjUw8e5wpo3Ee0nRNONcln9giwOz8ox7Hs4Lf29fQvmneAhlPxWYy+2Zl
+         xRREF7jc+2duXLKMMn22rNFtuiyJ0vOh1oAez1Op68/jJ3Tj6SDqewjXdWROmrwTotwU
+         YXeYqDBMbOIKhImxB2MllXhs59sFmKQ0yTuMeXE/S0+EaObKEuRcHItmUHPxTdhZYBOY
+         AzqHyUrRjHiExmjApQ3I5oyj5izZr0u9W95u5qMV1sgdQt7N/TzOO9OePEuRylf928gs
+         WOUg==
+X-Forwarded-Encrypted: i=1; AJvYcCUUmeSLaZu03GUY3NVCBx8+cbqPJuU8VRbh6Yo34hBomXhoyTGe8u88VAaAe/Qh8RMpAiD8e1aftvf7/o8N7/l+PZPh
+X-Gm-Message-State: AOJu0YwP9a+afkMZDt8U+7lcuY1NqyBLOwZiNEbJC40GpWVH1X817e6k
+	rVHXyCLeXLzZB9mjJwveIsGAUeHyYW/QZF0PlIo/0Ewx2HvE3ZYYAIsI8tFCHM+4e5/qJ0HW4oH
+	i/GCJ5nhvyr3C7wK8TjrEpPOIOC4=
+X-Google-Smtp-Source: AGHT+IFF0W3nox3ft+R/mP7ZPJirfQhtjK3eddPAb4d8rSDm9e99AiWYEibhaT18zlagjVJDcWp643zH9g0FmgXfRkM=
+X-Received: by 2002:a05:6870:f71d:b0:25d:ef22:980a with SMTP id
+ 586e51a60fabf-25eaec16b8dmr15993199fac.43.1721031051266; Mon, 15 Jul 2024
+ 01:10:51 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 15 Jul 2024 04:10:49 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <cccf899d-12c4-4046-a958-33374bb870c6@ramsayjones.plus.com>
+References: <20240711083043.1732288-1-karthik.188@gmail.com>
+ <20240713134518.773053-1-karthik.188@gmail.com> <20240713134518.773053-9-karthik.188@gmail.com>
+ <xmqqa5ilcngi.fsf@gitster.g> <CAOLa=ZTkYs_Wz2YM82Nm0yPJX8-hYV3WC-aMEqYNRoS+2ZpG3A@mail.gmail.com>
+ <cccf899d-12c4-4046-a958-33374bb870c6@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:uZ8SCuXgBVNtA5hRr1VCOsJQOA0W0iy9E6WMHWM2hXWaBuzA9j5
- +EYTyEBicHeUTkFTHAnXrf6tCViZEQYpzsWIo81gTOzI5C+dMCGcmwhNBpzQMgm657ZcXjK
- bvEeIFTvW+zlsUXry45jaCxbazOBqQHpufTEQMSW7NTyk7jObLflC51yge0eOhqeQWx0WOl
- 90n7xD9Rz/uwFgdSNmCBg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:OYrhDRujQsY=;GDEUfGel7/tWkhpEEfcZzCPRLlQ
- aPXwmjNeXtRzBS3dQ8SjRhDRNeL+3FwhSAznQYf3hbHy5WRqhllsnUsR1RA4XDm1ClSLVhFxa
- VxDiWdVIdQMpUA/omfYDC/rvjltPdXX25+oBVvxeZ+Xmju/R32VB8TGwdZVZwlFdBymUj+csj
- 9/KUbiDhw0zumCvefUZhG8+Ry2+8pjO0l5/I8uuQnqnpBji4uXPUgZyzlHfFyEXJC/gqrDDJW
- vVR/lOpG8c8JAy1DE7BLAnw8GQLLLLrwJ+XqhjAbj0zgHm0g8NjaqPQ9SlVXdYmOGzChTVxIU
- 8dmV3Tv9KmUHJhHdjgy7dBXaRa7UnwmS1fOLz8KWh5QfwDRrQnGJ6xJ3BBBFJQTS/+08ybFd0
- mkDXGG+ckebZ7qx7RlaH0xewnbISkm5EjjOtfwxE4jKs75UwG13V5h4Fv4iGtG6AZgwPLIWi4
- +DFSr8SVKmYWGBCpygRatPSkzEnOVJcv3dBFTCGnR6AI8A7iiBRw5VL/F0XkyXbXEqbCIQxe5
- m8najo2O6zAtM6xDY1aujUSHA7Tgm8oFfaeqZI2JD8nnmueCi6rOTSNl9dE/HwiAXf6ybLADW
- ES2o598HepO4DtUyHy5CGsFq+6X5ZONYlFDZjnuGegNcUkJGuvPeTKpY0IbK6ZGhguEPYlNt8
- Iy4GorDpbVirnxrXy8qqVOrjIWa8QydLuuOaJC1SjIW70XPmca59C0PqWWoT6anPqTLkJ5dDF
- NXmoLpzQ4k8iNxKAkU7Z0t2hkbMIwhHKRJ+7cwJQnxGvUxC5AFGtJfKA6X3aNFNMgw9K8lq6g
- 42sXvXs10swIRJfhGSHhkQMw==
+Date: Mon, 15 Jul 2024 04:10:49 -0400
+Message-ID: <CAOLa=ZQfhD21Anzd3wWwWcxji7tJydaiD7mrhReH5zLQdXBWng@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] ci/style-check: add `RemoveBracesLLVM` to '.clang-format'
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>, Junio C Hamano <gitster@pobox.com>
+Cc: chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000756c58061d44c419"
 
-Dear Git users,
+--000000000000756c58061d44c419
+Content-Type: text/plain; charset="UTF-8"
 
-I hereby announce that Git for Windows 2.46.0-rc0 is available from:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.46.0-rc0.windows.1
+> On 13/07/2024 17:46, Karthik Nayak wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+> [snip]
+>
+>>> I unfortunately couldn't find an option to "git clang-format" to
+>>> tell it to read from an extra file in addition to the usual
+>>> ".clang-format" file---if such an option existed, we obviously could
+>>> use an untracked/ignored file to prepare the custom format file and
+>>> use it without making the working tree dirty.
+>>>
+>>
+>> This was also something I looked for, but couldn't find. I should have
+>> added that to the commit message. Will do so in the reroll.
+>>
+>
+> I had a need recently to try applying the git '.clang-format' file to a
+> different project:
+>
+>   $ pwd
+>   /home/ramsay/sparse
+>   $ clang-format --style=file:/home/ramsay/git/.clang-format sparse.c >xxx.c
+>   $ meld sparse.c xxx.c # oh my lord :)
+>
+> Note that I had to specify '/home/ramsay/' rather than just '~', since it
+> does not get recognized/expanded in that position:
+>
+>   $ clang-format --style=file:~/git/.clang-format sparse.c >xxx.c
+>   Error reading ~/git/.clang-format: No such file or directory
+>   $ rm xxx.c
+>
+> Also, as you can see, this was 'clang-format' not 'git-clang-format' (which
+> is what would actually be used in this situation), but the '--help' text
+> claims that:
+>
+>   $ git-clang-format --help | grep style
+>     clangFormat.style
+>     --style STYLE         passed to clang-format
+>   $
+>
+> .. so it should work (but I have not actually tried it, so YMMV ;) ).
+>
+> [So, munging the .clang-format file with sed (say) to a temp file and
+> using the --style=file:tmp-file syntax should (hopefully) work]
+>
+> ATB,
+> Ramsay Jones
+>
+>
 
-Changes since Git for Windows v2.45.2 (June 3rd 2024)
+Hello,
 
-Git for Windows for Windows v2.46 is the last version to support for
-Windows 7 and for Windows 8, see MSYS2's corresponding deprecation
-announcement (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+Providing a path does work indeed. But we were discussing the option to
+provide an additional path apart from the default '.clang-format'. The
+option you mentioned `--style=<file path>` will set the config to the
+contents of <file path>, but we want to add on top of that. So that we
+could hypothetically do something like
 
-Please also note that the 32-bit variant of Git for Windows is
-deprecated; Its last official release is planned for 2025.
+  $ git clang-format --style file --style-append '.ci-clang-format'
+--diff --extensions c,h
 
-New Features
+But seems like this is currently not possible.
 
-  * Comes with Git v2.46.0-rc0.
-  * Comes with OpenSSL v3.2.2.
-  * Comes with PCRE2 v10.44.
-  * Comes with OpenSSH v9.8.P1.
-  * Comes with Git Credential Manager v2.5.1.
-  * Comes with MinTTY v3.7.4.
-  * git config respects two user-wide configs: .gitconfig in the home
-    directory, and .config/git/config. Since the latter isn't a
-    Windows-native directory, Git for Windows now looks for Git/config
-    in the AppData directory, unless .config/git/config exists.
+--000000000000756c58061d44c419
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7904089b465890f9_0.1
 
-Bug Fixes
-
-  * Git Bash's ls command can now be used in OneDrive-managed folders
-    without having to hydrate all the files.
-  * Git LFS v3.5.x and newer no longer support Windows 7. Instead of a
-    helpful error message, it now simply crashes on that Windows
-    version, leaving the user with the error message "panic before
-    malloc heap initialized". This has been addressed: In addition to
-    the unhelpful error message, Git is now saying what is going on and
-    how to get out of the situation.
-
-Git-2.46.0-rc0-64-bit.exe | dbf112c9c18bdbfe3166ec45ad443056f24136e502a8eb9570b877a1dc8ef6b8
-Git-2.46.0-rc0-32-bit.exe | 7793e727e55b8e8b7a6677ea9ecc040692ba8f9629a962afaa2da54edef7fd20
-PortableGit-2.46.0-rc0-64-bit.7z.exe | a16622fcb11233eb447d3c34dec992830d97c641b5293150babad62330b587ae
-PortableGit-2.46.0-rc0-32-bit.7z.exe | a19bd864c1be63133dd548629dbf87375db9d7640a13b17fe6da29295f933254
-MinGit-2.46.0-rc0-64-bit.zip | c7c894ead5affd8958982cd7ac0f0703784561fee1203121707a76172a181a9a
-MinGit-2.46.0-rc0-32-bit.zip | 3487e58bd60d6a9a16771954c82ea7a8f936a8eda60931783890e710e37df9c4
-MinGit-2.46.0-rc0-busybox-64-bit.zip | d9086f0f3010a9dc4d2ed9e1b4dbf48a9ff1b9ec09d3a7a13d34e211693e90f3
-MinGit-2.46.0-rc0-busybox-32-bit.zip | 1efc39ea79bfd9d12e4507140dfbe008894c96c3926df41d68facc7bd2170bd5
-Git-2.46.0-rc0-64-bit.tar.bz2 | 9e7a64a2b17bde4e94a35e4142c981e33c5fc75b660e8b18130a5b5655b082af
-Git-2.46.0-rc0-32-bit.tar.bz2 | 773aa579ed14369471019741ec8d699ef8d9fed2624617184dda0a9e4d54b212
-
-Ciao,
-Johannes
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hVTJZUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0E3Qy8wY0hpZVhNcW9wUGNJT3BIWVJVQUZhb0FSMQppU0hlRkFkZjcw
+VCsycHRLM2ZMZjFRZ1NmWm5URFJiRlBEU3Bvc0NKSXhFSmFBVVNsM2JWMEtXYSt1V1FOVS8wCmFQ
+blVyRVdoMWk3WnlYSzNONXB0ekJpTjZLN0YwcTB2ZzFDaXk4Umxuc3NuMUt3ZTlRU1NhZ1BvWGRB
+OVJ0cDUKZE0rbFNJa004RkVqNGduYTd0NnlCWFFZb21RenBQS0hWcElLU0pQejMzYUVYdlhLYmtH
+YlRkQkhwY0R4TTl2NAo4V1kxeXVvWUQ4V255OE1NL3JCbldrNWxwTXNiU0pWQ2dnakJybXF5TTNI
+Sk5qWjFpK0RWY0dZR0lJY1IxbTBkCjQzZnFkKzFwcEdwVWFnYi9EVlN6UWZwMmxzSDE5YUJEVWtt
+MHVGaks5ajAwc2xHS3o2azFtQmc2M3JzVW0zcmEKTncwaDNuZ2FjQTJaUTBMMnlaY0luUG45OFFj
+a0I1UzBvWXB2cmhmc0Y0Znd2eUpwalhxcGhVMlpKZkY4VjA4bApmVDJ4T0dWTVVscHZrYUh1MXo5
+VTJpZnlIS1U5N1VteDJnM2ZDZHJiUllISmxjNEY0aVo2UytTVjVaeFZ4Q3YxCm1vY29JcFJPcmNH
+aHl1cWZQMHg3YzdQcG5JOXhXZ0M2UWRvODhkST0KPVJqM2YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000756c58061d44c419--
