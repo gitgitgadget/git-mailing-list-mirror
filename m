@@ -1,95 +1,75 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068F117FE
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 00:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1171F61C
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 05:19:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721004239; cv=none; b=FHmrbADtMC4wxp6EIiiGle7odfqHxI5ZHNvh3ctYaz6eFIAnth1fvWZc7RlkZ9rcA89hnHRTQGV2OEur5N56OVlRtuHknuCuxfyohD6FDnjYaLMk6muFlqoM0DbNuC2msLrsFmD/v9x4khgfZpqoB9+1lgr90yLrnratIoU5XPQ=
+	t=1721020750; cv=none; b=YSPDW3FAMXMRN1n6zTzhZ+iLfBbs04lIkCtHeiBf8MqnYLwuUVwzxsf1ZDWMl1OeVX+Uu4paGhYdOMzMqx+Z1+a9vbZJR5mvQVkSIOeiiVbn15yUimsjAti217V/F7YRNpJ/QMYxKo+TjGRvVsBskuUFZ3cO6E9yVpOaLn8q01E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721004239; c=relaxed/simple;
-	bh=f0DWrsdf/uOwBGd8qKHLpDxztREajQx4LmDHlDU0GQU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e5osoXwE0xmFlKmeT61/3P1ix2Lfr3k4bq7tBxYYvgrr5/IG1ghV5cf4KCv3+DLuXWisZKKi6ZHxvan7u/8wg2+/SHoMN/L2oJmolRWIh9d1dtQTPByd6apHAH+kUC/5uxSi08HE13+AYa1uHWIJC+jWp/UFSzK1ibSLusOX+pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=NNPyAPn9; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1721020750; c=relaxed/simple;
+	bh=dKPA/9gBmEf0s9nbaNcBrmNfrBPZWBPzAzEiMYB2GYk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ip1S7xRWaYKLYrHfNkRB8gbiW4uLUN7bb3uLcmSLLJ/h8gLCLHhY5by/EcWf+TKI9cn6pNzs63frCVQX6ZjC3CLNubsiRt9sn+jM3OzMZPA8uhO8ge0Ei5BOEkpsKlwbVbCFhz+xa/pEOwNIPJ9BbevEiKJL/KNASkT8gQ5ST7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JG1lyVUR; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="NNPyAPn9"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA1401F572;
-	Mon, 15 Jul 2024 00:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1721003719;
-	bh=f0DWrsdf/uOwBGd8qKHLpDxztREajQx4LmDHlDU0GQU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=NNPyAPn9lmBIBUQ0WKr67HQukLwXBFZhoeN61k7bfqiYian2HhzM4xZ60aMeAT7CL
-	 GPzPKbfh0WiQHBJOvsMqqpYx9corJzCGaPYEz7V8zZERc0Rqx7RR4j507+2ajChk7k
-	 fWucN7ymxSO1Cd6i9D/Ex/UcFZm4embrRjHEiux8=
-From: Eric Wong <e@80x24.org>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>
-Subject: [PATCH v1 00/10] cat-file speedups
-Date: Mon, 15 Jul 2024 00:35:09 +0000
-Message-ID: <20240715003519.2671385-1-e@80x24.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JG1lyVUR"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52ea929ea56so7137250e87.0
+        for <git@vger.kernel.org>; Sun, 14 Jul 2024 22:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721020747; x=1721625547; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dKPA/9gBmEf0s9nbaNcBrmNfrBPZWBPzAzEiMYB2GYk=;
+        b=JG1lyVURnkku01qGEAYaedOP89JVyIzXI5LZ+s5POooFJQ2aWjAMSdhVgZC66GWT+R
+         Qizhc1BkQUmCW7zWHfyL1ioabNHLN4II1vPKH8csRXJwfB6DySUWEaXkxi8fEiR1bmWj
+         y8RclF7u3HajNIpCmkT44IRIk+qFhHspqruJVesa9QZnOQdvpIFEh/FU/JKkjNCQaU4j
+         a8bQmgEJK1p8EW2ka3bhHwdhPVeSJbRhdCaepMBi0MZZ0iHorYjGNoWAHbuNs8arSgqn
+         CKRQ7uIFDmX2xjfzJjRM7ieGbD1EIf2KHrfMeR1M7jWik0z+SQdbfTr3GD5G8+6+jEgf
+         Z2QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721020747; x=1721625547;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dKPA/9gBmEf0s9nbaNcBrmNfrBPZWBPzAzEiMYB2GYk=;
+        b=cEXT4e4dAX+8ZDhWBIHSj6FMGbLuD+e/s+WUxOAMQ6iZw7jAXReTrmSDwm/OMOa51D
+         IC109cIJw6SwnohH0P/OQqKiEl6PBxB8YVNaD6D5HSpcmF0tFxzB0p8/FXR//K49j6Fu
+         JsigZfKk/qpgjmUgZThHdJOJInFbWMClfy0SGWkShNECkNiE+VsTTXZoc0Uc1VoXTZHk
+         85R7JDishJQldGtFvRbG9UZpgqK1HjvIY4UTiHq1VZlaOuXCcF2r+J4pvhhdzr3eKCSj
+         zYR/m3MH5csSkJvPMBBEzCHgsiDCm18G7OEbWi240X0fKFjzHArEBBmznE9WhAEF3QBm
+         S4VA==
+X-Gm-Message-State: AOJu0YyA+co78KXUBCGswWZs/7YZvRLu4qlrtAVdTj+aF8BxW0r26y9r
+	0V/V9FqQ73oNwuP3QG5PXzqbRY8LXILKKlA/u96Is3IuRO8HhsgI1OWeuYnc06dhxcHpzPi0b8P
+	PoaoyVnMZKpJTYVh4OmhPMgOyVlo1uynJGoesvg==
+X-Google-Smtp-Source: AGHT+IFIBzuE4JrqAs4yHKacwZM+zAvkeTmrP0UiDLusZe+j8K9McfVkKv9OU5yQgQLjrrs+LLf4y8uhp1rlycrtd+o=
+X-Received: by 2002:a05:6512:3f05:b0:52c:db76:2a7a with SMTP id
+ 2adb3069b0e04-52eb99a3560mr15790151e87.34.1721020746314; Sun, 14 Jul 2024
+ 22:19:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CA+J6zkRxnvnybM3vnPXX2YwpW1k-as03+A8kxiJoA8GrA4FSMg@mail.gmail.com>
+ <CA+J6zkQaV9o7eUaD2bshH7zEmF115BbYv_uCFctySQNMgGQc+g@mail.gmail.com>
+ <CA+J6zkRzM33MbMr4-U56M1SFLykx029+SzEeo8vBicBd9Xs8RQ@mail.gmail.com>
+ <CA+J6zkSFCUYLRTRE0Gwug4-fF9f9-YbfRz_atArmMLLCtQDr1g@mail.gmail.com>
+ <CA+J6zkSxcogPXdAdr7VL0B3MnQxQNYwOT5Kw2iK_YfPLW7CMcg@mail.gmail.com> <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+In-Reply-To: <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Mon, 15 Jul 2024 10:48:55 +0530
+Message-ID: <CA+J6zkQ7W=3+aqAHwzXzVM4-mZ9XpCkAfmP-GZ7T4i+i2Gi9aQ@mail.gmail.com>
+Subject: Re: [GSoC] Blog: move and improve reftable tests in the unit testing framework
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 
-This continues the work of Jeff King and my initial work to
-speed up cat-file --batch(-contents)? users in
-https://lore.kernel.org/git/20240621062915.GA2105230@coredump.intra.peff.net/T/
-
-There's more speedups I'm working on, but this series touches
-on the work Jeff and I have already published.
-
-I've started putting some Perl5 + Inline::C benchmarks with
-several knobs up at: git clone https://80x24.org/misc-git-benchmarks.git
-
-I've found it necessary to use schedtool(1) on Linux to pin all
-processes to a single CPU on multicore systems.
-
-Some patches make more sense for largish objects, some for
-smaller objects.  Small objects (several KB) were my main focus,
-but I figure 5/10 could help with some pathological big cases
-and also open the door to expanding the use of caching down the
-line.
-
-10/10 actually ended up being more significant than I originally
-anticipated for repeat lookups of the same objects (common for
-web frontends getting hammered).
-
-Jeff: I started writing commit messages for your patches (1 and
-2), but there's probably better explanations you could do :>
-
-Eric Wong (8):
-  packfile: fix off-by-one in content_limit comparison
-  packfile: inline cache_or_unpack_entry
-  cat-file: use delta_base_cache entries directly
-  packfile: packed_object_info avoids packed_to_object_type
-  object_info: content_limit only applies to blobs
-  cat-file: batch-command uses content_limit
-  cat-file: batch_write: use size_t for length
-  cat-file: use writev(2) if available
-
-Jeff King (2):
-  packfile: move sizep computation
-  packfile: allow content-limit for cat-file
-
- Makefile            |   3 ++
- builtin/cat-file.c  | 124 +++++++++++++++++++++++++++++++-------------
- config.mak.uname    |   5 ++
- git-compat-util.h   |  10 ++++
- object-file.c       |  12 +++++
- object-store-ll.h   |   8 +++
- packfile.c          | 120 ++++++++++++++++++++++++++----------------
- packfile.h          |   4 ++
- t/t1006-cat-file.sh |  19 +++++--
- wrapper.c           |  18 +++++++
- wrapper.h           |   1 +
- write-or-die.c      |  66 +++++++++++++++++++++++
- write-or-die.h      |   2 +
- 13 files changed, 308 insertions(+), 84 deletions(-)
+Hello everyone, here is my blog post for the seventh week of GSoC's
+official Coding period:
+https://chand-ra.github.io/2024/07/14/Coding-Period-Week-7.html
+Please let me know if you have any sort of feedback.
+Posts for the rest of the weeks can be found here: https://chand-ra.github.io/
