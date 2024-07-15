@@ -1,112 +1,112 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B3513C69C
-	for <git@vger.kernel.org>; Sun, 14 Jul 2024 22:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655BE360
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 00:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720995304; cv=none; b=GSuOlmvl8e3Is5bY80N3IupcmorwhiLj3RxXDiRq3Gboe8sePn82NkvWtPtvLQEJDt29qpCBR0KjjEcPJSXn+hr5bbW+ksOfkW5kuwx4z7LFWir7IoNTtMDiofe1V44gFN4Ka1x9tYsqROSYZ9Xb7i1abdKkXscnzWBA9jgHfUU=
+	t=1721003734; cv=none; b=pb8ZiZfEnD13KWy9Ro9HLIpL38ujhUGRd8QJz29F5R5r/InSm3nqu1G+gIY2KvkKDc+RBMDA4qo6D+zLbyIEuYWxVaiVSlpo5D8Qz05rchf+jeQALcemRgijnfxZaeJoUosHmUNCY5J0PjeuD+mvRxigfaxhus5NzZDKatMxxPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720995304; c=relaxed/simple;
-	bh=VkgZM23pjjQnl7FYfHo/V6blsuDO1yhHe2Jc5IPOMsU=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LTNPUEft6QcSwngaKii6Cm7w1BxTa0b37qk3CP83C/lK9yO0kvFtmkhM/RvtHB5N+3QiMw1iXq9XFfrdX7GJMQzCgnCZGBSeF4kr7flV8JwtGkLCJyIZWm7Ryl/6dPvfdgERKz9QoEDO/jMF+Xwoy/udfxjdjpdVNJWahZE1cVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46EMEsbi292246
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 14 Jul 2024 22:14:54 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <024101dad543$221b4ab0$6651e010$@nexbridge.com> <xmqq8qy4adl4.fsf@gitster.g> <001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com> <xmqqttgr9aeb.fsf@gitster.g> <ZpQVwyVQT8Wf5AeX@tapette.crustytoothpaste.net> <004501dad61b$b35b7f30$1a127d90$@nexbridge.com> <ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net>
-In-Reply-To: <ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net>
-Subject: RE: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
-Date: Sun, 14 Jul 2024 18:14:49 -0400
-Organization: Nexbridge Inc.
-Message-ID: <006201dad63b$418c76f0$c4a564d0$@nexbridge.com>
+	s=arc-20240116; t=1721003734; c=relaxed/simple;
+	bh=mQudGzNO+h8/lc43I6VsFekp2tx9bSkvLl4h0JG336Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=elnESpsv9+VzdPmUY97QncWWSIDyf6to+394AEO2XXN+x3VAnbz64R28q1pxDryLRFMGjGYFpK0OuA1bILp3dvH3a1Yn/fAb/ReDHVOVs5v02dUfTEVZGM8WXht2cYv4MK/CwX/d6KGHhLevXo+ErMPUsWTlp27L/iqy/hxgcsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=mdjyel7H; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="mdjyel7H"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F921F5A4;
+	Mon, 15 Jul 2024 00:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1721003720;
+	bh=mQudGzNO+h8/lc43I6VsFekp2tx9bSkvLl4h0JG336Q=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mdjyel7Hex4cJIL91XPtPU3uAUTF/KSk8Q6yg1X8SuJcqS3UwWa99V/Db8vL32WNG
+	 BTuxDH9cDQ9hF60dqlLPmX5GcdO/RpxO6pW1nJYdRmItxGA5cwB2BhoMOzieNmuteL
+	 BBOeqEp3iznKMHy+nXQPQx+uH5Xk4Vivs5ZhN0a8=
+From: Eric Wong <e@80x24.org>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Subject: [PATCH v1 01/10] packfile: move sizep computation
+Date: Mon, 15 Jul 2024 00:35:10 +0000
+Message-ID: <20240715003519.2671385-2-e@80x24.org>
+In-Reply-To: <20240715003519.2671385-1-e@80x24.org>
+References: <20240715003519.2671385-1-e@80x24.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQLxORQfyENxav+zmXZW2AfFrMp2ygG7wSa1AglWfbcCCOoxCwFeXAgQAPqT5zMCVerbsK92GilQ
+Content-Transfer-Encoding: 8bit
 
-On Sunday, July 14, 2024 6:02 PM, brian m. carlson wrote:
->On 2024-07-14 at 18:28:56, rsbecker@nexbridge.com wrote:
->> On Sunday, July 14, 2024 2:16 PM, brian m. carlson wrote:
->> >I don't think this is the right approach.  Every version of ksh
->> >_except_ AT&T ksh works just fine here.  pdksh, mksh, lksh, =
-OpenBSD's
->> >ksh (which is also its /bin/sh) work fine, as do bash, dash,
->> >FreeBSD's sh (ash), Busybox's sh (also ash), and zsh (when run in sh
->> >mode with 5.9 or newer).  AT&T ksh is considering adding local in a =
-newer
->version for this reason.
->> >
->> >Literally only AT&T ksh is not supported here, and so anyone can set
->> >SHELL_PATH to any suitable shell.  I don't think it's useful to get
->> >rid of local when there are a variety of acceptable and portable =
-options.
->>
->> We can add NonStop's ksh to the list of not supported. I'm using
->TEST_SHELL_PATH while running make all in the t directory. Test passes =
-when I use
->bash. For some reason (maybe GNUMake 4.1, which is what I have in my =
-POSIX
->environment, I don't get TEST_SHELL_PATH passed down from the outer =
-Makefile,
->but I can work with that. t0021 is now passing in my current CI stream =
-using bash
->5.0.18.
->
->I think we had discussed that you were using AT&T ksh on NonStop, which =
-would
->explain the situation.  That's the most common version of ksh on =
-proprietary Unix
->systems, and you can usually detect it with something like this:
->
->% ksh -c 'echo $KSH_VERSION'
->Version AJM 93u+m/1.0.8 2024-01-01
->
->Variants of pdksh look like this (this one from OpenBSD):
->
->% ksh -c 'echo $KSH_VERSION'
->@(#)PD KSH v5.2.14 99/07/13.2
->
->And mksh and lksh (which are the same shell, just compiled differently, =
-look like
->this:
->
->% mksh -c 'echo $KSH_VERSION'
->@(#)MIRBSD KSH R59 2024/02/01 +Debian
->
->% lksh -c 'echo $KSH_VERSION'
->@(#)LEGACY KSH R59 2024/02/01 +Debian
->
->I think using bash as a workaround is the right choice here if all you =
-have is AT&T
->ksh.
+From: Jeff King <peff@peff.net>
 
-We did discuss the ksh issue on NonStop but the check for whether this =
-is an AT&T ksh is non-functional (KSH_VERSION is not set). What we did =
-was change SHELL=3D/usr/coreutils/bin/bash and TEST_LINT=3D to get the =
-tests to execute. Unfortunately, the GNU Make we have (4.1) does not =
-pass TEST_SHELL_PATH (also set) down to inner make processes, so we =
-still get stuck with ksh. I changed our CI system to run the test make =
-on its own, which is now working on this test.
+This makes the next commit to avoid redundant object info
+lookups easier to understand.
 
-Regards,
-Randall
+[ew: commit message]
 
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ packfile.c | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
+
+diff --git a/packfile.c b/packfile.c
+index 813584646f..e547522e3d 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1527,7 +1527,8 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 
+ 	/*
+ 	 * We always get the representation type, but only convert it to
+-	 * a "real" type later if the caller is interested.
++	 * a "real" type later if the caller is interested. Likewise...
++	 * tbd.
+ 	 */
+ 	if (oi->contentp) {
+ 		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
+@@ -1536,24 +1537,24 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 			type = OBJ_BAD;
+ 	} else {
+ 		type = unpack_object_header(p, &w_curs, &curpos, &size);
+-	}
+ 
+-	if (!oi->contentp && oi->sizep) {
+-		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+-			off_t tmp_pos = curpos;
+-			off_t base_offset = get_delta_base(p, &w_curs, &tmp_pos,
+-							   type, obj_offset);
+-			if (!base_offset) {
+-				type = OBJ_BAD;
+-				goto out;
++		if (oi->sizep) {
++			if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
++				off_t tmp_pos = curpos;
++				off_t base_offset = get_delta_base(p, &w_curs, &tmp_pos,
++								   type, obj_offset);
++				if (!base_offset) {
++					type = OBJ_BAD;
++					goto out;
++				}
++				*oi->sizep = get_size_from_delta(p, &w_curs, tmp_pos);
++				if (*oi->sizep == 0) {
++					type = OBJ_BAD;
++					goto out;
++				}
++			} else {
++				*oi->sizep = size;
+ 			}
+-			*oi->sizep = get_size_from_delta(p, &w_curs, tmp_pos);
+-			if (*oi->sizep == 0) {
+-				type = OBJ_BAD;
+-				goto out;
+-			}
+-		} else {
+-			*oi->sizep = size;
+ 		}
+ 	}
+ 
