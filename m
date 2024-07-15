@@ -1,424 +1,195 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F434D8A3
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 22:21:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F4513B791
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 22:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721082068; cv=none; b=po/w1NFKjvSRHPx/4m7g/pvRsLjEJTBblbjHzp5J6GZfMRZeJWrb+YBRkFcjiczIYs1mcwaKjayMzNiA1Yp9J6UBxAlsx4uc5GC6voVtND4UJ496OYfsQ+NbjltVHWfthI+mk6ic5p7PIbgkTOAWSdhOswIj0w4/IhWeztaeLfE=
+	t=1721082240; cv=none; b=uaeV1zNm9WCqIBKlu/GnjhSeCjmi27Hc3cc99v6LzHwVHB5c9cLPwXjBqIGkCAWVBBw0lwCfqAeJdOagPLpy+9LLCEFtgWvwuk+zbTb5j4c98ljjCkPyWZd0tKmLCOYqIOhSlwyl9/aiFW/58z8K0P0JRU5O/TgqIg3nS6vEMDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721082068; c=relaxed/simple;
-	bh=uq0zcXHzJDQxsgTjfyT87FobYEpjSPjHK5uf3AR4gCg=;
+	s=arc-20240116; t=1721082240; c=relaxed/simple;
+	bh=fXvHejQ64RCM3VVODNlhW3RPGmgxha1TliujOCPoxxw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZXO/WELaMvqRyS23Lygg5qyzSgxMk3uRfLozZtKdSJmR5d+ui142+dP52vUIiB7xG5JB8rDEC6jZWB0neB6iYJrqOVNNYYPxGm7YlAIngJLrTqPX/CjDW8ZtLp5gWLzB2WOrAFA8q9sZAL3wRg8Q4JmEVVgScVDsLTmn0zm8eOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sRo50DIw; arc=none smtp.client-ip=209.85.160.176
+	 To:Content-Type; b=UClZUMXua26Y4bD5sqcyaO0a3bBun2FxFELNo0YZ3HxXGKqsavL6lDqmGK+k9ztez0vRuN/2mzprdM1SU96Zect6H2P/rvYe0C9JC/GPHrKGiFjgXy8cdlfxBcYw0bnF70wxvQLFrRkFfHHfnwpQTs3dyxh1y0GrLe2jBa/4bS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uV/E7mf3; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sRo50DIw"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-44a8b140a1bso122321cf.0
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 15:21:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uV/E7mf3"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-447df43324fso61731cf.1
+        for <git@vger.kernel.org>; Mon, 15 Jul 2024 15:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1721082066; x=1721686866; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=google.com; s=20230601; t=1721082238; x=1721687038; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A7zQSnGCGNAM9RdkFjSVOszYk1DSXEhzJ0QYX306buM=;
-        b=sRo50DIwPj3t2ccHIai4O55owbKnFNGqrpzQJRKpbOJDgv7kBUi42DnBybNvLcOA2G
-         DIs+76AUjiU5/xqKEdgfj33H7WLMAK2HB0IxoqVvcpbAPhYqgKcyu/QGn2SIyMD751f0
-         3gNCY94TCLNhEQjOYMFQrVeCEoVGeYwlulwlfVitMGl4cx23TMRNzRQEZengLpjJvftx
-         PCNkx/Ty1hkKJ61tGLPzZSTrV0qjgxaufRxl8Zxc+v17yx+mIxYMtYg05Tfj6K0HpRaE
-         boGYppjasTEHSGWLBzsCB3IGEvv7X6jOGMzORqdyKC1KYTZqElokPqmA5LmAXDzlyihh
-         hDxw==
+        bh=8NSd9WOI7fBiA36sTYKUGIO+lA0qHTzal6SXhIZQBXE=;
+        b=uV/E7mf39dc7DnasgaynerSEZH/vH3pmLq4qB7Arl8xgktIqDb61M0RHhsB2fnHGf+
+         Ph145NBNK4JuWNA8GeU6RtkrvsAZItW/AcXcKU5pjYl7Mf+bgo2LfuOD0TCrS5ajYNC1
+         AipuyhK0Odm+h+DinzJlrAXynnsLMg1FcT+AwpxYRneryFULoWIFl5vs3u6+iyeeCBim
+         GnHrDKUYiQzvoeN9waz9BrZYZmTm1qi7LbOkFfqRG8OFLrQoUv8rsvhuUjMASO6EkLWr
+         vsb4rF6aEnrxrR1JGwaxgEdyPoxg+PEwJMrqGDFcAtJAxC2eFbdJJdKUpMf/scUNd7iH
+         yWXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721082066; x=1721686866;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1721082238; x=1721687038;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A7zQSnGCGNAM9RdkFjSVOszYk1DSXEhzJ0QYX306buM=;
-        b=FYyhtLmd4f9E8InRGS1N+BjCefP/Yv2PQzA+90keJj9wKvPf7n2LXHGpazJ8fxd5ZE
-         p8yPrcB/0ngHmcUst1V7aw+b3fFoSd+zYV6GPBt6XcLF4NHgkpxHVR5+W4tAI0amtwrj
-         3SglXOI7+wYuU1w97xm4GDNwCVD/iolu+AoF+exZDeV/xT8k6Zk3m3XCqR3QJi1AQ563
-         SaQVybi2CmgaYB1whpQ6QGLRvWBRP4U1BT6GsW9QbXtFyBXiyKRSmmzyW3mnXKqwvXTK
-         tT4nEzfOhL/OK7uszwnDlCQrU9ZWpt2Xy7vt50ZKp+MqZJp1l5BPr23sWiis80giYnS/
-         dxrQ==
-X-Gm-Message-State: AOJu0YzRFVJuysK6d+RYEPrIg//FxQ6RePfpK5Owbdb91+hBoGAbChg1
-	1KmMhN2jB8VpjoujmFWFOOrByOaImpxhUDuGXupa2/jeji6j+c5Rxo0M5fjHnxsg1ZzyUoDc1lq
-	Sp6YiyvmNfgrjARRaf27Lo9lq2NwticKJIFd2
-X-Google-Smtp-Source: AGHT+IESfuwvgRNnKxYTsUPjfuI2/RC5xOmSghqRS2ERumlF0wml5DFKKlQ8Nbn3uRuMQTcVxPyMHauP6QdBx9FG5s4=
-X-Received: by 2002:a05:622a:1b05:b0:447:e0e1:2a7b with SMTP id
- d75a77b69052e-44f7b93f7d6mr448951cf.23.1721082065302; Mon, 15 Jul 2024
- 15:21:05 -0700 (PDT)
+        bh=8NSd9WOI7fBiA36sTYKUGIO+lA0qHTzal6SXhIZQBXE=;
+        b=Yy769dKzMXH6FIBAMroyMJ0GKOQnUXyRdjccb8S0+y5ytYIhyV+uemWMz3USuQALmg
+         yCNQww05L9g+9ZS/Iz3bCTKtmKKRTzll5qhaBWRPD6SsyrwIC+ebnw3DCGV6qxFLAHf2
+         8IpRnjFNh4Zh6m13g5IiBOCU+ypIAbsE2RCGXmLysrt/BHl5Yr0+RNKEq/Y1JqJGZHFK
+         pM0P4pd1lCPa1J4al9ilctnaDC7IHGsQ2zI0UuZwGK+WpOmo5OnZ9K0q2SqQO5NlI0rP
+         W5enTGY81Tl0pXFOeVj8K54qxjv4er0058kXzR085yUtV+4phlTkaCIzV9gZNbyaoA+5
+         yc2g==
+X-Forwarded-Encrypted: i=1; AJvYcCU5FG68vTgAl+/iP7QhjE/1NlzmseSY6X88QLdDziTjTvHzI2Wgx7hGcSIvP4voDuf1yadtNRdbQ2yzTAjkQbEuNimV
+X-Gm-Message-State: AOJu0YzQ2wqbCJJbdfsy6awUJNY3iIgZEPhng4tifRn0PML8OYePVNHZ
+	47JfoCamtpUHrjGqyYNZDHl4RpCS1CxkKZtS8GfyHMiPm9lo29kkHeMMvvRI4SK1wrbL7qAbOJI
+	f7k4p7yfk3oQBExGa2yokqS+eaNx1mf9Jyj/S
+X-Google-Smtp-Source: AGHT+IHpAk+e4ytPhhox55LXAocD1psy4Rg+VWO/C6hyQc3zpYI0uRDsyhO9ASXT1N/gSUp6O/G3rw/9mHOuEdI8BhA=
+X-Received: by 2002:a05:622a:4203:b0:447:dbac:facd with SMTP id
+ d75a77b69052e-44f7a74192bmr1019131cf.24.1721082237929; Mon, 15 Jul 2024
+ 15:23:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240711232413.693444-1-emilyshaffer@google.com> <xmqqed7ylbna.fsf@gitster.g>
-In-Reply-To: <xmqqed7ylbna.fsf@gitster.g>
+References: <20240709225042.2005233-1-emilyshaffer@google.com>
+ <Zo3EvvSI999ngrLn@tapette.crustytoothpaste.net> <CAJoAoZmq=TyQxnVJvGxqKJj7XqvOxX4osa5Q5K4=w1NMWECBOQ@mail.gmail.com>
+ <ZpBbgXYQlpHZa3xR@tapette.crustytoothpaste.net> <CAJoAoZn+R3qhoVA=av8NMcCAJyRHOe6QTXV=pyjs80JmV0mVzw@mail.gmail.com>
+ <ZpGFHWZTWAQUXGCe@tapette.crustytoothpaste.net>
+In-Reply-To: <ZpGFHWZTWAQUXGCe@tapette.crustytoothpaste.net>
 From: Emily Shaffer <nasamuffin@google.com>
-Date: Mon, 15 Jul 2024 15:20:51 -0700
-Message-ID: <CAJoAoZnUbgX1MpisdS+TkGLFrBUyX_x_M_Q6iZ2n_AhP8r4mNA@mail.gmail.com>
-Subject: Re: [PATCH v2] Documentation: add platform support policy
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <johannes.schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date: Mon, 15 Jul 2024 15:23:46 -0700
+Message-ID: <CAJoAoZmgXRT3162bWkCpu4R4JME9XydPnvuZn6L8fs5G68Bbtw@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: add platform support policy
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Emily Shaffer <nasamuffin@google.com>, 
+	Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 12, 2024 at 11:15=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Fri, Jul 12, 2024 at 12:33=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> Emily Shaffer <emilyshaffer@google.com> writes:
+> On 2024-07-11 at 23:15:35, Emily Shaffer wrote:
+> > On Thu, Jul 11, 2024 at 3:24=E2=80=AFPM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> > > Some older OSes require kernel features that aren't compiled in by
+> > > default, so containers are out.  For example, CentOS 6 won't run on a
+> > > modern kernel because it lacks whatever the predecessor to the vDSO w=
+as
+> > > (which can be recompiled into the kernel, but nobody does that).
+> >
+> > Is this hinting that we should mention a minimum kernel version for
+> > Linux-kernel-based OSes?
 >
-> > +Platform Support Policy
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> This is actually a feature that still exists in the kernel and could be
+> enabled for newer kernels, but because distros don't use it (they use
+> the vDSO instead), they don't compile it in.
 >
-> Paraphrasing a bit for my understanding (read: not suggestions to
-> rewrite), with some comments (read: might suggest rewrites).
->
-> > +Git has a history of providing broad "support" for exotic platforms an=
-d older
-> > +platforms, without an explicit commitment.
->
->     There currently is no level of guarantees given.
->
-> > +This support becomes easier to
-> > +maintain (and possible to commit to)
->
->     We want to give better support and certain levels of guarantees?
->     (this is left unsaid, though).
+> I'm not sure a minimum kernel version is helpful, because most of the
+> LTS distro kernels backport features, like Red Hat backported getrandom
+> for example.  In the interests of getting to a useful agreement, I think
+> for now we should just punt on this and having a 10 year lifespan will
+> probably do the trick, and we can determine in the future if we need to
+> apply more stringent measures.
 
-I guess? Really the way I think of it is: we don't care if we aren't
-guaranteeing your platform, but if you want us to care, you need to
-make it easy for us. We will not do frustrating support work (post a
-patch, wait 2 weeks for someone to notice it broke, try to fix it with
-no repro and limited info, wait another 2 weeks to find out the "fix"
-still didn't work, etc). I think that's a distinction without much
-difference, though :)
-
-> If we don't want that, then we would not care what would make
-> the support easier to maintain, so that's implied.  Do we want
-> to make it more explicit?  Perhaps
->
->     Stakeholders of such platforms, however, may want to have a more
->     predictable support commitments.  It would require ...
->
-> > when Git developers are provided with
-> > +adequate tooling to test for compatibility.
->
->     ... platform stakeholders to supply Git developers adequate
->     tooling to test for compatibility and to develop workarounds for
->     platform specific quirks, which may be hard to find for such
->     exotic and/or older platforms without platform stakeholders'
->     involvement.
-
-If I fudge with the rewrite a little, I get:
-
-"""
-Git has a history of providing broad "support" for exotic platforms
-and older
-platforms, without an explicit commitment. Stakeholders of these platforms =
-may
-want a more predictable support commitment. This is only possible when plat=
-form
-stakeholders supply Git developers with adequate tooling, so we can
-test for
-compatibility or develop workarounds for platform-specific quirks on
-our own.
-Various levels of tooling will allow us to make more solid commitments arou=
-nd
-Git's compatibility with your platform.
-"""
-
-Trying to capture:
-* our current "support" is implicit and could break whenever, doesn't
-that scare you?
-* if you want something better, we need tooling from you
-* generally, the tooling needs to let us self-test things against your plat=
-form
-* you don't have to do it all, but you get less if you do less
-
-I left out the part about platform-specific things being hard to find
-without having access to the platform; that seemed to go without
-saying. But maybe I'm wrong there.
+Sounds good, thanks!
 
 >
-> > Various levels of tooling will
-> > +allow us to make more solid commitments around Git's compatibility wit=
-h your
-> > +platform.
+> > > We also don't really want to be on the hook for trying to support OSe=
+s
+> > > Ubuntu is still derived from Debian.  It is likely that things which
+> > > work in one will work in another, but not guaranteed.
+> > >
+> > > I mention Debian is because it has a large variety of supported
+> > > architectures.  I absolutely don't want to say, "Oh, you have MIPS
+> > > hardware, too bad if Git doesn't work for you."  (I assure you the
+> > > distro maintainers will be displeased if we break Git on less common
+> > > architectures, as will I.)  In fact, MIPS is an architecture that
+> > > requires natural alignment and can be big-endian, so it's very useful=
+ in
+> > > helping us find places we wrote invalid or unportable C.
+> > >
+> > > The reason I'm very hesitant to require that we run everything in Git=
+Hub
+> > > Actions because it only supports two architectures.  ARM64 and RISC-V
+> > > are really popular, and I can tell you that running even a Linux
+> > > container in emulation is really quite slow.  I do it for my projects=
+,
+> > > but Git LFS only builds one set of non-x86 packages (the latest Debia=
+n)
+> > > because emulation is far too slow to build the normal suite of five o=
+r
+> > > six packages.
+> >
+> > Does that restriction apply to just GitHub-hosted runners, though?
+> > Would it be possible for an interested party to set up self-hosted
+> > runners (configured via GH Actions) that are using AMD or POWER or
+> > whatever? (For example, I think it would be quite feasible for Google
+> > to donate some compute for this, though no promises).
 >
-> Good.
+> Self-hosted runners on public code are very hard to secure.  You're
+> basically letting arbitrary people on the Internet run code on those
+> machines and make outgoing network connections (due to the fact that you
+> can push whatever into a PR branch), with all of the potential for abuse
+> that that involves (and as my colleagues can tell you, there's a whole
+> lot of it).  GitHub has taken extensive pains to secure GitHub Actions
+> runners in the cloud, and while we use self-hosted runners for some
+> internal projects, they are absolutely not allowed for any public
+> project for that reason.
 >
-> All of this document assumes that a working port of Git once existed
-> in the near past for a platform, and we outline the levels of
-> investment platform stakeholders can make in order to keep it
-> working, and expected outcome depending on the level of their
-> investment.  The document does not cover "I now have this exotic
-> box---could you port Git to it?"
+> I would be delighted if Google were willing to do that, but I think
+> you're going to need help from teams like Google Cloud who are going to
+> be used to dealing with abuse at scale, like cryptocurrency miners and
+> such.  Unfortunately, there are many people who act in a less than
+> lovely way and will exploit whatever they can to make a buck.
 >
-> Is it something we want to clarify in this part of the document?
+> I will also note that the official Actions runner is in C# and only runs
+> on a handful of platforms due to the lack of portability of C#.  (It
+> might theoretically run on Mono, which would increase its portability,
+> but I must profess my complete ignorance on anything about that code.) I
+> also know of an unofficial one in Go[0], which I'm for obvious reasons
+> unable to endorse, encourage, or speak about authoritatively in any way,
+> but that would still exclude some platforms and architectures which
+> don't support Go.
 
-Clarified like so in my local copy, we can nitpick it a little before
-I send v3 though:
-
-"""
-Note that this document is about maintaining existing support for a platfor=
-m
-that has generally worked in the past; for adding support to a
-platform which
-doesn't generally work with Git, the stakeholders for that platform are exp=
-ected
-to do the bulk of that work themselves. We will consider such patches
-if they
-don't make life harder for other supported platforms, and you may well find=
- a
-contributor interested in working on that support, but the Git
-community as a
-whole doesn't feel an obligation to perform such work.
-"""
-
-Trying to capture:
-* This is only for maintenance
-* If you want to bring up a new platform, that's on you
-* of course, individuals do what they want, so you MIGHT find someone
-to help, but no promises
-
->
-> > +Compatible by next release
-> > +--------------------------
-> > +
-> > +To increase probability that compatibility issues introduced in a rele=
-ase
-> > +will be fixed in a later release:
-> > +
-> > +* You should send a bug report as soon as you notice the breakage on y=
-our
-> > +platform. The sooner you notice, the better; watching `seen` means you=
- can
-> > +notice problems before they are considered "done with review"; whereas=
- watching
-> > +`master` means the stable branch could break for your platform, but yo=
-u have a
-> > +decent chance of avoiding a tagged release breaking you. See "The Poli=
-cy" in the
-> > +link:../howto/maintain-git.txt[maintainer's guide] for an overview of =
-which
-> > +branches are used in git.git, and how.
-> > +* The bug report should include information about what platform you ar=
-e using.
-> > +* You should also use linkgit:git-bisect[1] and determine which commit
-> > +introduced the breakage.
-> > +* Please include any information you have about the nature of the brea=
-kage: is
-> > +it a memory alignment issue? Is an underlying library missing or broke=
-n for
-> > +your platform? Is there some quirk about your platform which means typ=
-ical
-> > +practices (like malloc) behave strangely?
-> > +* Once we begin to fix the issue, please work closely with the contrib=
-utor
-> > +working on it to test the proposed fix against your platform.
->
-> This is a source to be reformatted by AsciiDoc so it _should not_
-> matter [*], but I find it utterly unreadable if a bulletted list of
-> paragraphs are formatted like the above
->
->     Side note: ... but it does matter because what we look at while
->                editing is this .txt source file.
->
-> I locally reformatted the above like so:
->
->         To increase probability that compatibility issues introduced in a=
- release
->         will be fixed in a later release:
->
->         * You should send a bug report as soon as you notice the breakage=
- on
->           your platform. The sooner you notice, the better; watching `see=
-n`
->           means you can notice problems before they are considered "done
->           with review"; whereas watching `master` means the stable branch
->           could break for your platform, but you have a decent chance of
->           avoiding a tagged release breaking you. See "The Policy" in the
->           link:../howto/maintain-git.txt[maintainer's guide] for an overv=
-iew
->           of which branches are used in git.git, and how.
->
->         * The bug report should include information about what platform y=
-ou are using.
->
->         * You should also use linkgit:git-bisect[1] and determine which
->           commit introduced the breakage.
->
-> to have the second and subsequent lines indented to begin at the
-> same column as the first line, and have a blank line between
-> bulletted list entries, which made it easier to scan the source text.
-> Such a reformatting did not appear to make any changes when the
-> resulting HTML file was rendered (via "lynx -dump").
->
-> This might be my personal preference, and if other people prefer the
-> more dense form used inthe patch, then I wouldn't complain.
-
-Nah, I prefer it too, this is just what `<ESC>gq` gave me at first. Will fi=
-x.
-
-The way the nested bullets work in asciidoc they are still justified
-all the way to the left, which means when I align to the space after
-the last * I only get a one-space indent. Is this readable, or should
-I indent more?
-
-"""
-* You should run nightly tests against the `next` branch and publish breaka=
-ge
-  reports to the mailing list immediately when they happen.
-
-** You may want to ask to join the
-mailto:git-security@googlegroups.com[security
-   mailing list] in order to run tests against the fixes proposed there, to=
-o.
-"""
+Do you think it's worth us linking out to some helpful doc (like the
+official one, and someone who doesn't work at GH adding a link to some
+unofficial Golang thing)? I sort of feel like since "you can also DIY
+a scraper that looks at the mailing list if you want" is included, the
+gist makes it across, so I'm tempted not to go into a bunch of
+prescriptive detail here.
 
 >
-> Regarding this point.
+> > The appeal is not "because GitHub Actions are great!" for me - the
+> > appeal is "because most Git developers run the CI this way if they
+> > remember to or use GGG, and Junio runs it on `seen` all the time". If
+> > there's some other recommendation for self-service CI runs that don't
+> > need some careful reminding or secret knowledge to run, I'm happy with
+> > that too. (For example, if someone wants to set up some bot that looks
+> > for new [PATCH]-shaped emails, applies, builds, runs tests, and mails
+> > test results to the author after run, that would fit into the spirit
+> > of this point, although that sounds like a lot of setup to me.)
 >
-> > +* Please include any information you have about the nature of the brea=
-kage: is
-> > +it a memory alignment issue? Is an underlying library missing or broke=
-n for
-> > +your platform? Is there some quirk about your platform which means typ=
-ical
-> > +practices (like malloc) behave strangely?
+> Yeah, I understand what you're going for.  If there were some super easy
+> way to get everything running in an automatic CI, I'm all for it.  I
+> think CI is the easiest way to make sure we don't break anything.
 >
-> How deep do we expect platform stakeholders to dig in their initial
-> contact to us?  In order to make a firm "It is a memory alignment
-> issue" would be helped by having otherwise identical version of Git
-> built from the same source on a more mainstream platform (say,
-> Debian GNU/Linux running on x86_64) and the exotic platform in
-> question, to be able to say "Ahh, x86 is lenient to unaligned access
-> and that is why this problem wasn't noticed by developers, but on my
-> platform this matters".  Is such a comparison something we may want
-> to hint here?  Perhaps at the end of "use git-bisect to find the
-> exact commit", add something like
+> I think it's worth trying to get CI set up for whatever we can, and if
+> CI is a possibility somewhere, it becomes a lot easier to say yes.
 >
->     Build Git from exactly the same source files on your platform
->     and one of the mainstream platforms and see if the problem you
->     noticed appears on both, or only on your platform.  If the
->     former, the suggestions in this document does not apply, but of
->     course we do greatly appreciate such a bug report that will help
->     users of every platform.
+> > Should have a reroll in the next 30min, it was ready to go and then I
+> > got this mail :)
 >
-> Note that the above would apply equally for any compatibility
-> levels, not limited to those who expect "by next release".
-
-Captured a paraphrasing of that. I like that your suggestion doesn't
-get into "how to diagnose that it's *actually* a memory alignment
-problem", but instead is a general reminder to make sure it really is
-a platform-specific issue; it seems to me that that should be common
-sense, but I don't mind calling it out anyway here :)
-
+> Sounds good.  I don't think anything in this email should affect that
+> reroll.
 >
-> > +Example: NonStop
-> > +https://lore.kernel.org/git/01bd01da681a$b8d70a70$2a851f50$@nexbridge.=
-com/[reports
-> > +problems] when they're noticed.
-> > +
-> > +Compatible on `master` and point releases
-> > +-----------------------------------------
-> > +
-> > +To guarantee that `master` and all point releases work for your platfo=
-rm the
-> > +first time:
-> > +
-> > +* You should run nightly tests against the `next` branch and publish b=
-reakage
-> > +reports to the mailing list immediately when they happen.
-> > +** You may want to ask to join the mailto:git-security@googlegroups.co=
-m[security
-> > +mailing list] in order to run tests against the fixes proposed there, =
-too.
-> > +* It may make sense to automate these; if you do, make sure they are n=
-ot noisy
-> > +(you don't need to send a report when everything works, only when some=
-thing
-> > +breaks).
->
-> Also, the same problem that was reported yesterday for yesterday's
-> 'next' does not have to be reported for today's 'next', even if they
-> are different, as long as the breakage is the same.
-
-Called out, thanks.
-
->
-> > +Compatible on `next`
-> > +--------------------
-> > +
-> > +To guarantee that `next` will work for your platform, avoiding reactiv=
-e
-> > +debugging and fixing:
->
-> Applies to the phrasing at the beginning of the previous section as
-> well, but I found it easier to read if you flipped the order from
-> "do Y and you get X" from "you want X, so do Y", e.g.
-
-Clarified, and tried to clarify in previous couple sections too,
-although I think they were not so bad as this one.
-
->
->     We can avoid reactive debugging and fixing, if you make sure
->     'next' keeps working for your platform.
->
-> Do we assume that readers are familiar with the way how `master` and
-> `next` are used?  Otherwise
->
->     We can avoid reactive debugging and fixing, if you make sure the
->     'next' branch keeps working for your platform.  The changes in
->     this branch are what the developers finished reviewing and are
->     expected to appear in the next tagged release.  Unless you stop
->     them, that is.
-
-We linked to how-to-maintain-git earlier in the doc, I linked it again
-here for people who are skimming. Thanks.
-
->
-> > +* You should add a runner for your platform to the GitHub Actions CI s=
-uite.
-> > +This suite is run when any Git developer proposes a new patch, and hav=
-ing a
-> > +runner for your platform/configuration means every developer will know=
- if they
-> > +break you, immediately.
->
-> I am a bit surprised that nobody from GitLab complained so far, but
-> the contents of the ci/ hierarchy has been reorganized and it is my
-> understanding that we now consider both GitLab CI and GitHub Actions
-> first-class citizens.
-
-Added GitLab too and generalized the text referring to GitHub
-specifically further down in the doc. We already have a point about
-"if the existing CI doesn't work, you can roll your own" so I didn't
-try to expand on it more than I already did below, though.
-
->
-> > +** If adding it to GitHub Actions is infeasible (due to architecture c=
-onstraints
-> > +or for performance reasons), any other method which runs as automatica=
-lly and
-> > +quickly as possible works, too. For example, a service which snoops on=
- the
-> > +mailing list and automatically runs tests on new [PATCH] emails, reply=
-ing to the
-> > +author with the results, would also be within the spirit of this requi=
-rement.
->
-> Again, "do not be too noisy" principle should be stressed, no?  If
-> it breaks only on the exotic platform in question, please do notify,
-> but if the breakage is shared with all the other platforms, then...?
-
-I am not sure if I mind, if it's going to individual and not to the
-entire list. I get redundant breakages in GitHub Actions runner review
-if I left off a semicolon, too, right? Maybe I should stress more that
-these don't belong on the list, though?
+> [0] https://github.com/ChristopherHX/github-act-runner
+> --
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
