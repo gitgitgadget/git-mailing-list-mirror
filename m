@@ -1,83 +1,74 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508D04D8A3
-	for <git@vger.kernel.org>; Mon, 15 Jul 2024 17:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80250224EF
+	for <git@vger.kernel.org>; Mon, 15 Jul 2024 17:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721064443; cv=none; b=LmER2PK6BI320P3+7nP6/XztPqzqZjIobFfzPeePLNuoIRU9tXj+4n0U70duhx8kWGdDvLIcw8ACpazX4K+fiRLSrdARZxyEp4og/TUAufnWFDtXM8cAcBEjlXpO9hsI3TOBczBlPWaB83zYQhvlNKwcJveNgVBpxJ3yWoKh3dQ=
+	t=1721065185; cv=none; b=aPJLgo1kXbeR0fHmXXUocgIdDuUj6Lrhm5bav139TGQYsAeD7mpLdMTAI/yw9QWAuA8NUyIOXhgWCOeREaoM9Tc/ipVmJU5dypUfeMN56rnFXfpr3apUmRaf6H+OrQ1gR+oiYz7ragvpUjrFRH0oKYalLEfClUg92bGK8Ky3lf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721064443; c=relaxed/simple;
-	bh=3eVnBjQtMz3VTggoDTJsHq+QLYarAvT7eIIax3ZeG0I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B2Orh1C0fdraxSuTej19ywtl0NY3DtntggDGMxrJu/yV/Wtjza5Qe/MxYFqOab5xneSlOjJlT817P9J898KVI4Hw5uA/tuojHEGFQSdRcG6FUHe4j9HMesq8ghWVJVIzmg0D4x6eBx1MSu0/yCCh7J14cHP+p00+Y7aHaf6TVFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vktT7CKB; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vktT7CKB"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A77B122A62;
-	Mon, 15 Jul 2024 13:27:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3eVnBjQtMz3V
-	TggoDTJsHq+QLYarAvT7eIIax3ZeG0I=; b=vktT7CKBLeyBPPWoWxR5C0n4K/sf
-	a3tQ7el8wwTojFIvOoRbYoofRqFJTf6RA/NdTO3UN6EK4tESwMZjaN/rm3q45cds
-	T7kCpSZPoC1wfaCWBexPXrf7e5KGfYtIxFmLaScKA460+Y6Z2qsdUH6Zo4qQSXrT
-	EzgfM1hbMnhR8R4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A012E22A61;
-	Mon, 15 Jul 2024 13:27:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 298FE22A60;
-	Mon, 15 Jul 2024 13:27:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Phillip Wood <phillip.wood@dunelm.org.uk>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/1] t-strvec: tighten .alloc check in check_strvec
-In-Reply-To: <bf7fd471-18fb-41df-a306-2413c9d441bd@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Mon, 15 Jul 2024 18:47:49 +0200")
-References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
-	<983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
-	<075b3d08-4270-4064-8103-1fece055e197@web.de>
-	<xmqqjzhm90mb.fsf@gitster.g>
-	<bf7fd471-18fb-41df-a306-2413c9d441bd@web.de>
-Date: Mon, 15 Jul 2024 10:27:16 -0700
-Message-ID: <xmqq4j8q4lcb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1721065185; c=relaxed/simple;
+	bh=ryoaSr8blJ3OSfNx1v0XvvToYEn85pFoSmWPGyxedvw=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MXONTiKHz5mZGahWHoG25x8NbsATJxSjME/NKJHy7VYAQPGNRmRhzNQ/DIhY01DiYbN+8UT3pAx251rjGVlibByQvBMbttOngiy0VFX98yBoe0r7irUb6DBvMZpKl9UPZggHn0Ctf3icIWVsYcEa3NjZMmObS+Jna1RjEYsbbgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46FHdUbD446238
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 15 Jul 2024 17:39:31 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>
+References: <024101dad543$221b4ab0$6651e010$@nexbridge.com>	<xmqq8qy4adl4.fsf@gitster.g>	<001f01dad5f1$e518e6e0$af4ab4a0$@nexbridge.com>	<xmqqttgr9aeb.fsf@gitster.g>	<ZpQVwyVQT8Wf5AeX@tapette.crustytoothpaste.net>	<004501dad61b$b35b7f30$1a127d90$@nexbridge.com>	<ZpRKu8Xsz70xNHFp@tapette.crustytoothpaste.net>	<xmqqv8167kd8.fsf@gitster.g>	<00af01dad6cc$41f10d40$c5d327c0$@nexbridge.com> <xmqqh6cq4ngc.fsf@gitster.g>
+In-Reply-To: <xmqqh6cq4ngc.fsf@gitster.g>
+Subject: RE: [Test Breakage 2.46.0-rc0] Test t0021.35 fails on NonStop
+Date: Mon, 15 Jul 2024 13:39:25 -0400
+Organization: Nexbridge Inc.
+Message-ID: <00c001dad6dd$f336c3e0$d9a44ba0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 7C3DD824-42CF-11EF-8A13-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQLxORQfyENxav+zmXZW2AfFrMp2ygG7wSa1AglWfbcCCOoxCwFeXAgQAPqT5zMCVerbsANm6pyfAUDhh9oCbYW5kq8+uBPQ
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
-
->>>  		    check_uint((vec)->nr, =3D=3D, ARRAY_SIZE(expect) - 1) && \
->>> -		    check_uint((vec)->nr, <=3D, (vec)->alloc)) { \
->>> +		    ((vec)->v =3D=3D empty_strvec ? \
->>> +		     check_uint((vec)->nr, =3D=3D, (vec)->alloc) : \
->>> +		     check_uint((vec)->nr, <, (vec)->alloc))) { \
->>
->> Not a huge deal but with empty_strvec, don't we want to barf if
->> nr=3D=3Dalloc=3D=3D1?
+On Monday, July 15, 2024 12:42 PM, Junio C Hamano wrote:
+><rsbecker@nexbridge.com> writes:
 >
-> Yes, and that's handled by the comparison with ARRAY_SIZE(expect) - 1
-> above.
+>> What is strange is that when running on NonStop using ksh, t0000.1 has
+>> never failed. I think the situation is subtly different from what we are
+solving.
+>> My take is that there is a difference in the local vs. non-local
+>> variable set semantic, rather than just accepting the keyword. I would
+>> propose that we need a more comprehensive local test to verify the
+>> actual expected semantics rather than just testing the syntax.
+>
+>It is possible that I may be misreading that first test, but as far as I
+can tell, it is
+>testing not just the syntax but tests how the variables declared "local"
+behaves and
+>should notice if they are not localized.  It checks that "local"
+assignments in
+>try_local_xy does take effect, and (more importantly) after try_local_xy
+returns, the
+>original values are restored.
+>
+>As I speculated earlier in an earlier message, the breakage you reported
+may have to
+>do with interaction between "local" and use of a subshell, and perhaps we
+can also
+>check that pattern in the test.
 
-Ah, OK, thanks.
+That is that I am also suggesting but did not say it as precisely. Thanks.
 
