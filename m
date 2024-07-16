@@ -1,146 +1,130 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7822F56B8C
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 07:57:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED8742AB9
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 08:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721116657; cv=none; b=SXKgFe/2Hhyz6WitR7oMvpPvGZ786V+FkJ3vXRiMz01n0eu0H4kPFQ7J83M3yZ9qA1IsBgVAcL0XAtagrs8FyQZfE6ROZHQapJAXn8LUc0anE1grwwcs0O3TCs9Xqh/wZPlYKY65/92zKDSzESIW/RAjskAjTRRk/yIG/QfLAU8=
+	t=1721117045; cv=none; b=HLpsEnDaw7G/KtSPbIlk+y1trqxZ7ncglMYbT/o5IHtXDAYJacAid3GBDssrhQMWO89Fp/XtZ1QfxpmnS+B4eKgt7WriSXgzyYTU7RvVSrMhuQAFsEqjscx89GXgLu9/H7CoyqpU5nZF8Gh3yw6leqIPFd8suYcOGpOmJhMEnpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721116657; c=relaxed/simple;
-	bh=IgIIT/Q+92maXWSGW4HNii5lovH69ajT7VA9jl4PXCU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usByNM2UODPRPg/XhRq9xeKL4r41tLSQR/ZRaN4yei0RqQZFdh3zSfbH4szQGhvDLb48XDAx+vBrNEyNcfm0ay0nFtNy/HSGQboEVJZCKK1xCmS0iIslUJKO+im6+Gwm0toUHjTsrR/0DBHeggIBqW/9gDkd4TPK+koINiQBRBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lbcei8z+; arc=none smtp.client-ip=209.85.215.173
+	s=arc-20240116; t=1721117045; c=relaxed/simple;
+	bh=a+QSKlYjZUY5GEo+QlCuYrxo6PIlKZFnjPbq1HiuA+4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FRD07ZoClPAnGqT4fK9mm3g8agR6o+RcG8w4HfRN7w3eLPivHspq0rj1ePLvoMmmQ0us0jk+c1FVcCjUC8VmoQgKzN67FATw0lDmsG4EHIfHWF7ILSfl86ugrn5n1cKjmsaVXtNZedljg7kqhiHyTbduziMWOjRWkhwLa2ZYlg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MV4uUniz; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lbcei8z+"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-7163489149eso3764335a12.1
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 00:57:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MV4uUniz"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52e99060b41so5322745e87.2
+        for <git@vger.kernel.org>; Tue, 16 Jul 2024 01:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721116655; x=1721721455; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6g2kOezj5z15y+8p9idCvMvv+eNDfhCRM2vSzksoOYs=;
-        b=Lbcei8z+slpYHUEvuVhHoPooDBFoZx+NgeyyNbRhatp2wB3i07Y4ncPcsqbh3bGIed
-         UhUp1FlIuilJGMTMmyrg3+MRovkzLYzJJbx6w5FqVPlSKNB2KWgaq/ZZ5oksNXU9l2zW
-         Xa+S2zA8dnR+qx+NFuVg4Nz1s1qlQtpzmGJx2PagIYeqqfqnQBFd3ExzRp831KA71Txp
-         rO7iNOL7AlYMhs01D1YJjmzS9pUrQTqjfgQx6KP9OS7nFbHuzUvZbsn1YAvHe2WfZO4Q
-         ywd3S/tIBjq1S0WRzTU6SfZl/UAPnYKLi1xEGgIvEXKWrP2Z0pzdrVI8E2Zfekj4nsdl
-         jlgg==
+        d=gmail.com; s=20230601; t=1721117041; x=1721721841; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5P7w3U/fCA2xgzZvLat+EoMLcMIWimRze864J0pQpGw=;
+        b=MV4uUnizZGqCUE+stiMuPzSRTFtfn3nWZ/v+LJmMUstTpE4SUij5vRPDshOlAynD9x
+         tupKWc4RNB/wtVrz+tlXUWW7vH1SBhuOUSj3afIkNCk/WsV0aLdbBk0ax3JVnPxQKmq1
+         VbnUD0i3IP3DW4sTKBD77NewYQWxsQe9ARbFYEj5MUkL7vAcQk8unloVJ96P6z6gcGH6
+         qy82/IMCNsG4z4EVACwO7m7acszqFZLfLblrM4nB28i1eXm9OoQ2YZ281mhKzHioUhP3
+         /jCdetJ+bitrcKvPss5VczgNV973OX0qenp7ewIYq2PNERd2M1VBvOlHVhnQOgsNGFtv
+         0vXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721116655; x=1721721455;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6g2kOezj5z15y+8p9idCvMvv+eNDfhCRM2vSzksoOYs=;
-        b=tEDXfWATsDUGW4Xdxp7nlAqO34WHjGJaQp+5+FE4ztBdKCzrrepSpI+zamVtCMuxyi
-         5+pdkRmbDp+oCQ9G3mbIgQMAspzoEeGxgK3uYQhadIX0BNebKD6z4rzl+2Ae4m7Ua+LT
-         cicwMN3DxaL/+3tStD+tScDFNc0XQ799buapzBUPEXZN4apkLXjyBqqMSKfw97++IDjt
-         N0zL31MyKzEDjQwgd+JDU1VvoFY5i+/FnBQrSpORNI7/3inMvudcPgzvzOggsHbrukeC
-         D/d4Qpr2EVreX0W9n0gnCLhCPRaYE5f7hzs1lmCMB41DVuPGtiTeDqu4fvtSwWgN+HDT
-         ngrg==
-X-Gm-Message-State: AOJu0YwxrhF+CDOMvQVw8NHsk9RJfAheEhm19f8lkh8YRIyqGqR6Gd6W
-	IZI3ibt4xiCZ2MleRV349EJtlBFM5++PSilyGghf+CHaUKFtdYyDTk9lox7r
-X-Google-Smtp-Source: AGHT+IHGUDaaUGrEE2AXOJAr5ORzGxK3D2+Z12DS4pun5JBMC60w2FgTCNXcTYWOPtmXEtHfuDTkJg==
-X-Received: by 2002:a05:6a21:501:b0:1c0:e612:296d with SMTP id adf61e73a8af0-1c3f12b9ef7mr1318077637.54.1721116654837;
-        Tue, 16 Jul 2024 00:57:34 -0700 (PDT)
-Received: from Ubuntu.. ([106.206.192.176])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fc0bc3a599sm53691435ad.232.2024.07.16.00.57.32
+        d=1e100.net; s=20230601; t=1721117041; x=1721721841;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5P7w3U/fCA2xgzZvLat+EoMLcMIWimRze864J0pQpGw=;
+        b=iTgnJkjchokyMRi5E9sl/g56E7sX3nbCSrU91ePdImUJjzCg896hWjhCqB4tVjepAX
+         H9HkCheZGeHEJtzA+9AXmXn/uLbvpXnU1FRBpdf0e5YVGnjJW/7ckmvNkTiMY5laWxm6
+         1ztQSkT6Qnugmo7HNxlu+Un8BFAcjuf/GpYQruY4306dxMyvc4vQgGWdkuQoTMh3v88f
+         37vwnGb5VgvFqKStDITf+ZxNlxaHjjSIh/zyw0irdL/Q4ykZXmdx1vH6Vk8iezXaLCzt
+         Jbx1aDISrKrKRzO96bqpW1owlbYT6y3U4UgN0dv3c+UTwhQVAd8tEL3mLvkse0DSA0/D
+         11Mg==
+X-Gm-Message-State: AOJu0YzwIVDm0+5iif7rciR7vEVm6bVQVC7tDWa8BDEdl65NUB7RNGWX
+	wm0x2eXuvBMvuzpOsGMMDnoplQ06cTyFyr/0hSNXVDlo2fjfx5zn51jKjQ==
+X-Google-Smtp-Source: AGHT+IHy/LkPx2ikFbMcEb7d35w4KNwJ6JF8YSyrSsZ48N8Mr9HOpf4vvPP6nPwzfrSoErs1o3W3wg==
+X-Received: by 2002:a05:6512:110b:b0:52b:c0cd:7312 with SMTP id 2adb3069b0e04-52edf02ca52mr815161e87.49.1721117040844;
+        Tue, 16 Jul 2024 01:04:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59eaaee1c97sm933784a12.28.2024.07.16.01.04.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 00:57:34 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: karthik188@gmail.com,
-	chriscool@tuxfamily.org
-Subject: [PATCH v4 5/5] t-reftable-tree: improve the test for infix_walk()
-Date: Tue, 16 Jul 2024 13:18:17 +0530
-Message-ID: <20240716075641.4264-6-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240716075641.4264-1-chandrapratap3519@gmail.com>
-References: <20240612130217.8877-1-chandrapratap3519@gmail.com>
- <20240716075641.4264-1-chandrapratap3519@gmail.com>
+        Tue, 16 Jul 2024 01:04:00 -0700 (PDT)
+Message-Id: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
+From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 16 Jul 2024 08:03:59 +0000
+Subject: [PATCH] Fix to avoid high memory footprint
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Haritha  <harithamma.d@ibm.com>,
+    D Harithamma <harithamma.d@ibm.com>
 
-In the current testing setup for infix_walk(), the following
-properties of an infix traversal of a tree remain untested:
-- every node of the tree must be visited
-- every node must be visited exactly once
-In fact, only the property 'traversal in increasing order' is tested.
-Modify test_infix_walk() to check for all the properties above.
+From: D Harithamma <harithamma.d@ibm.com>
 
-This can be achieved by storing the nodes' keys linearly, in a nullified
-buffer, as we visit them and then checking the input keys against this
-buffer in increasing order. By checking that the element just after
-the last input key is 'NULL' in the output buffer, we ensure that
-every node is traversed exactly once.
+This fix avoids high memory footprint when
+adding files that require conversion.
+Git has a trace_encoding routine that prints trace
+output when GIT_TRACE_WORKING_TREE_ENCODING=1 is
+set. This environment variable is used to debug
+the encoding contents.
+When a 40MB file is added, it requests close to
+1.8GB of storage from xrealloc which can lead
+to out of memory errors.
+However, the check for
+GIT_TRACE_WORKING_TREE_ENCODING is done after
+the string is allocated. This resolves high
+memory footprints even when
+GIT_TRACE_WORKING_TREE_ENCODING is not active.
+This fix adds an early exit to avoid the
+unnecessary memory allocation.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Signed-off-by: Haritha D <harithamma.d@ibm.com>
 ---
- t/unit-tests/t-reftable-tree.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+    Fix to avoid high memory footprint
+    
+    This fix avoids high memory footprint when adding files that require
+    conversion
+    
+    Git has a trace_encoding routine that prints trace output when
+    GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment variable is
+    used to debug the encoding contents. When a 40MB file is added, it
+    requests close to 1.8GB of storage from xrealloc which can lead to out
+    of memory errors. However, the check for GIT_TRACE_WORKING_TREE_ENCODING
+    is done after the string is allocated. This resolves high memory
+    footprints even when GIT_TRACE_WORKING_TREE_ENCODING is not active. This
+    fix adds an early exit to avoid the unnecessary memory allocation.
 
-diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tree.c
-index e04e555509..b3d4008e5c 100644
---- a/t/unit-tests/t-reftable-tree.c
-+++ b/t/unit-tests/t-reftable-tree.c
-@@ -15,15 +15,14 @@ static int t_compare(const void *a, const void *b)
- }
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1744%2FHarithaIBM%2FmemFootprintFix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1744/HarithaIBM/memFootprintFix-v1
+Pull-Request: https://github.com/git/git/pull/1744
+
+ convert.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/convert.c b/convert.c
+index d8737fe0f2d..e765bcd53d6 100644
+--- a/convert.c
++++ b/convert.c
+@@ -324,6 +324,11 @@ static void trace_encoding(const char *context, const char *path,
+ 	struct strbuf trace = STRBUF_INIT;
+ 	int i;
  
- struct curry {
--	void *last;
-+	void **arr;
-+	size_t len;
- };
- 
--static void check_increasing(void *arg, void *key)
-+static void store(void *arg, void *key)
- {
- 	struct curry *c = arg;
--	if (c->last)
--		check_int(t_compare(c->last, key), <, 0);
--	c->last = key;
-+	c->arr[c->len++] = key;
- }
- 
- static void t_tree_search(void)
-@@ -51,15 +50,24 @@ static void t_infix_walk(void)
- {
- 	struct tree_node *root = NULL;
- 	void *values[11] = { 0 };
--	struct curry c = { 0 };
-+	void *out[11] = { 0 };
-+	struct curry c = {
-+		.arr = (void **) &out,
-+	};
- 	size_t i = 1;
-+	size_t count = 0;
- 
- 	do {
- 		tree_search(values + i, &root, &t_compare, 1);
- 		i = (i * 7) % 11;
-+		count++;
- 	} while (i != 1);
- 
--	infix_walk(root, &check_increasing, &c);
-+	infix_walk(root, &store, &c);
-+	for (i = 1; i < ARRAY_SIZE(values); i++)
-+		check_pointer_eq(values + i, out[i - 1]);
-+	check(!out[i - 1]);
-+	check_int(c.len, ==, count);
- 	tree_free(root);
- }
- 
++	// If tracing is not on, exit early to avoid high memory footprint
++	if (!trace_pass_fl(&coe)) {
++		return;
++	}
++
+ 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
+ 	for (i = 0; i < len && buf; ++i) {
+ 		strbuf_addf(
+
+base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
 -- 
-2.45.GIT
-
+gitgitgadget
