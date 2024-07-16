@@ -1,90 +1,67 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7511170F
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 02:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F99011711
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 04:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721098786; cv=none; b=rBy4zKDhqC9YNUMrht+ZP0LrAHdIeDnCbpFNp6y8luSVxAKdLgkfojMIbpWQDerDog63w5guna3EAu1gcCjxyr9v4+s5X4wNpj3JWINFvQOA3E8kNn7SndwIoyAA5CIT3MCeVnqel3Obv4IIV1+yzMba/0LDdTJBoW2+u2dL1As=
+	t=1721104653; cv=none; b=NjdIFDTOIVu7woGeH1GTFmumNyvCX6OYt7+DPelRCv+ZWAO1NZacuzM4N19ztz8mSNn6nWGRJ5R0N3TJ/7vN8LFWd3f8gXEalLVsjWJJ9WiDKIDHTxluLZZsKvKAYv2D7Wc35yNn6e5wcJ2QHETOzPEaiRZ8pHDdiimx5j3cgYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721098786; c=relaxed/simple;
-	bh=EpOdS+5c22BuGoOcSyqt2lvP8krqIaUkcR4LWQe/SWE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jZOO7nMqqSB6HAZNdwIA7zOtTV2u0tlobcShE80lgsPkksjj3skdsN67QuS73VH9tjWTpso4As7a3lkXNXzuJAo+VR8bCf0fOPi8fwvfRBrqiogdjqrKAfRD8nR3uF4l90lPlu0ZRTXO/Et0aGKjYB1L5MZ8B/gHO/O1XvDKbAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EhkPuH5C; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EhkPuH5C"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-64b05fab14eso47417417b3.2
-        for <git@vger.kernel.org>; Mon, 15 Jul 2024 19:59:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721098784; x=1721703584; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EpOdS+5c22BuGoOcSyqt2lvP8krqIaUkcR4LWQe/SWE=;
-        b=EhkPuH5CtDtYt4kaO932RVDUftKfqBdpnStPxeKWATHVfbQ+lSTKcM3GlE0L4/g6B9
-         3UHye0UjlZoiG/VohecOmmloGLrTQ8yEinnkKgtLMklch8aNlJsFts+dxEUb9nPzEH2i
-         lXeLr3/6MGRZ58L7mcFajnF3bzGYki7+7BqPy8vO5mPDzK9fR+HG2YHoRyXSDl3o10EJ
-         y0AckyzryjTszj+bSm6PPeOhIZeu7oYsErxHcfbHzOAnXhytnwFaiODJOIYOHMHvCLtj
-         4fCtajgk6jpsne7JoYizjWWlIyH3MSiwWdUbWbc24JjRs3UEtVKvvj0q9RHhCVl8Ml+Y
-         TXFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721098784; x=1721703584;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EpOdS+5c22BuGoOcSyqt2lvP8krqIaUkcR4LWQe/SWE=;
-        b=m1kM27AN/gcPdel3dIT1YMgexMhyHjbj8BOqUk9H1SV3zRv0Bl/78/ejIVxp0CBpAB
-         ef/urMpuxI8hiNguJveYnKZA7biR/djFpmXwZsuvl7+hL0xChb/xgWnFFwc3bzb37ai5
-         3bXEXqAv2CGHdQp5h/ni5aVg34okloBG8020MUXpsjGOzyxHR6NEwW8BXzOTSCMxsVt8
-         xw8Y/KbwgRFEY6o398RuTwMhjGVaeyKgoAWuYNTJULrwwdundJCgL9OzJCZKjbrOzhc4
-         0R/ZZhsLwoxki7fCjlnK0mPDDbWROg5YqoV8HpoUg5+gM8ENML60mso1hhbGQt25vBgF
-         OMrw==
-X-Forwarded-Encrypted: i=1; AJvYcCVYtoRq/Hp45gR/7EJIX4jLHbXBBdtrJrjU/HRbUIhPLxDc5r4x2uNSNH1A/+v2mep7+WNlkrA8IBLqdBO3r+9KrMkD
-X-Gm-Message-State: AOJu0YzjY+2HXVNmfKDot/qw/YVSbg20ZuJZb+5VHio13OFg+IR73Vj7
-	gI3lwe9DSGZzG5/moPbOFDJe6vvctyZ4eIdjTzZbQxuxrIlpsp5pq9QZtHZkPSu1oZjkxwPcIPV
-	kfHwqk0/621G5Eo20nVRDnyoINLk=
-X-Google-Smtp-Source: AGHT+IGMYzeoMOGmeo4loeFFxo29/xCoHqrq/iZjxS8OBFza9kS4qJCdwkc5XaVcgt6DWfV8fk9JjbfOOGIYiHh7Ey0=
-X-Received: by 2002:a05:690c:4b86:b0:627:24d0:5037 with SMTP id
- 00721157ae682-6637e34217bmr13103587b3.0.1721098783971; Mon, 15 Jul 2024
- 19:59:43 -0700 (PDT)
+	s=arc-20240116; t=1721104653; c=relaxed/simple;
+	bh=MlhdZP82XcZHykJdaICpL+813RP9qmkovkwrn74S8PM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I0NJjMUSlAUGTR2ejLS319xnF/g8SmoUSw1U5l0XsTiDhUQcFyvbI50c0z5UFRdbA5rmq7+FZ4AgghdCm4jYf+TJaJ3XUXkV8wMhoJEsDoFlTpWCj8v+P3DKdVUJGMmqmBV2/HkGHO+WHT/Rw4I+68Rcl5ASCdTD2iA0rk8Kq6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 12337 invoked by uid 109); 16 Jul 2024 04:37:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jul 2024 04:37:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6189 invoked by uid 111); 16 Jul 2024 04:37:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jul 2024 00:37:25 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 16 Jul 2024 00:37:27 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3] t-strvec: improve check_strvec() output
+Message-ID: <20240716043727.GA1429885@coredump.intra.peff.net>
+References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
+ <5bbef273-382e-4096-9ca6-d74781223e55@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240628190503.67389-6-eric.peijian@gmail.com> <CAOLa=ZRH7=Uj77Wd4WQW=KR8ppKw6nXZRH7pNZpHBPz4HhX8MQ@mail.gmail.com>
-In-Reply-To: <CAOLa=ZRH7=Uj77Wd4WQW=KR8ppKw6nXZRH7pNZpHBPz4HhX8MQ@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 15 Jul 2024 22:59:32 -0400
-Message-ID: <CAN2LT1A2c6M21GtEhnBN_bNYOW7csKOgK9fK4-f1HKPa-Vb28w@mail.gmail.com>
-Subject: Re: [PATCH 5/6] cat-file: add declaration of variable i inside its
- for loop
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Calvin Wan <calvinwan@google.com>, 
-	Jonathan Tan <jonathantanmy@google.com>, John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5bbef273-382e-4096-9ca6-d74781223e55@web.de>
 
-On Wed, Jul 10, 2024 at 6:16=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Eric Ju <eric.peijian@gmail.com> writes:
->
-> > Some code declares variable i and only uses it
-> > in a for loop, not in any other logic outside the loop.
-> >
-> > Change the declaration of i to be inside the for loop for readability.
-> >
->
-> If we're doing this anyways, we could replace the 'int' with 'size_t'
-> too.
->
+On Sun, Jul 14, 2024 at 12:17:53PM +0200, René Scharfe wrote:
 
-Thank you. Fixed in V2
+> +	do { \
+> +		const char *expect[] = { __VA_ARGS__ }; \
+> +		if (check_uint(ARRAY_SIZE(expect), >, 0) && \
+> +		    check_pointer_eq(expect[ARRAY_SIZE(expect) - 1], NULL) && \
+> +		    check_uint((vec)->nr, ==, ARRAY_SIZE(expect) - 1) && \
+> +		    check_uint((vec)->nr, <=, (vec)->alloc)) { \
+> +			for (size_t i = 0; i < ARRAY_SIZE(expect); i++) { \
+> +				if (!check_str((vec)->v[i], expect[i])) { \
+> +					test_msg("      i: %"PRIuMAX, i); \
+> +					break; \
+> +				} \
+> +			} \
+> +		} \
+> +	} while (0)
 
-> [snip]
+The linux32 CI job seems to complain about this, since the concrete type
+of "i" (a size_t) is "unsigned int" there, but PRIuMAX is %llu.
+Presumably you just need to cast to uintmax_t.
+
+-Peff
