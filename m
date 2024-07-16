@@ -1,54 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8FC6BFC0
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 21:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C35A182B9
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 21:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721164229; cv=none; b=ImS+vJidCLQkXPkwuOUdd1FCx3B2CULIIAnVgJzITjydkm248z1cjfaY1G4bLaSioQHr3HQ77sY9tW0AEt7wYhls/p5XgGGza5eUHScCrGQAcsE9iwkvaEkeEmfE8NeLri8UL4GbLMRGJdg23tLFZx1YgEfmfN7TbeFFFGflPPo=
+	t=1721165475; cv=none; b=TweozKX+ZXt7Aro077xOFGvfGY287BRsof80e27O2p6stGXDUlsAJ1UG0SYu5vOhIwZogE7hv0A2rAjeJQO5pKvXTyHqFsPFzCDSVk8jTpMFPPP5R8WldnUVQ23BGvxLf+XeH25Rzn9PUP/LtdMssJk/kbbDRdEHmdoZfHG8Um8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721164229; c=relaxed/simple;
-	bh=1dJpB6PXnk6xyX2frqwGKQxYj500yMVrOq7u7/aonBA=;
+	s=arc-20240116; t=1721165475; c=relaxed/simple;
+	bh=4KZKalGbKRO7f9id8AnhlXMEDJV4nXntbxBM4/tfKWI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KG5Nb7JqVP/nTAAzGb9W73H8XrrrrgK4W2/SiqZvaMFg2EgI6P3QqAG0jmzTcM5m0cAIs0a6b/mI0vjpUbHkh/Lp+x32Lpdk0Fw4S+SKaB9VIS2YCs2cuyhMKth4N0ixBhW3gPw5M2eR3kDMIBZj70k8REYZBXyORi+QmnT53BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TAG0SWrL; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TAG0SWrL"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B2F83FD77;
-	Tue, 16 Jul 2024 17:10:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1dJpB6PXnk6xyX2frqwGKQxYj500yMVrOq7u7/
-	aonBA=; b=TAG0SWrLpqmZpvPNPDI0bKIi5Zbs8PGmcHQluBRaL47UiadjSDKNXe
-	cExYfMAux/H2uyX5EJozDCx8JPkf6z61So66wwQW1AKThncNuDl/19BBqiEKPDoG
-	QmgmOrCkvQhaHnPw9xK+Jxu09ct93gIOlXhF5DwSEq+aEpK+SjfkQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B4D23FD76;
-	Tue, 16 Jul 2024 17:10:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	 MIME-Version:Content-Type; b=SC6iHvrE6ZYhdFIaQ/bQRIAhJA5b7qMxfrPDTgltr/CMHWhfDpD6Z8rtvPNYN6YI5LkLjPh6eUqvTibz+LF0nIXTTwehrYQNNua8/msUF+UXm992+HEfp+93shdLD6CpHm6iNm5kBPO9TxxHyASK0Ql1fzF9YMy+9dummL+bECs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4WNsgm15Syz1sBpn;
+	Tue, 16 Jul 2024 23:31:00 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 4WNsgm0Mmqz1qqlW;
+	Tue, 16 Jul 2024 23:31:00 +0200 (CEST)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id 88qqxQX1WL8c; Tue, 16 Jul 2024 23:30:59 +0200 (CEST)
+X-Auth-Info: zpPIm2dTXa98UezG2ivEIZwfvsqoJidSgkwSG1UncQradQg4ZmkRkutCKHMmHdry
+Received: from igel.home (aftr-82-135-83-7.dynamic.mnet-online.de [82.135.83.7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFB293FD75;
-	Tue, 16 Jul 2024 17:10:25 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Matthew Hughes <matthewhughes934@gmail.com>
-Cc: Matthew Hughes via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: add builtin diff driver for TypeScript language
-In-Reply-To: <20240716193344.bjb62zsfnrfw3ngf@archP14s> (Matthew Hughes's
-	message of "Tue, 16 Jul 2024 20:33:44 +0100")
-References: <pull.1746.git.git.1721061218993.gitgitgadget@gmail.com>
-	<20240716122112.zqauqgxmng2tk2j6@archP14s>
-	<xmqq5xt5bat7.fsf@gitster.g>
-	<20240716193344.bjb62zsfnrfw3ngf@archP14s>
-Date: Tue, 16 Jul 2024 14:10:24 -0700
-Message-ID: <xmqqjzhl6o1r.fsf@gitster.g>
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Tue, 16 Jul 2024 23:30:59 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 27BC22C21B4; Tue, 16 Jul 2024 23:30:59 +0200 (CEST)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,  Scott Moser
+ <scott.moser@chainguard.dev>,  git@vger.kernel.org
+Subject: Re: Can dependency on /bin/sh be removed?
+In-Reply-To: <20240716192307.GA12536@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 16 Jul 2024 15:23:07 -0400")
+References: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
+	<xmqq8qy21k9f.fsf@gitster.g>
+	<20240715235212.GA628996@coredump.intra.peff.net>
+	<20240716192307.GA12536@coredump.intra.peff.net>
+X-Yow: Yow!  Is this sexual intercourse yet??  Is it, huh, is it??
+Date: Tue, 16 Jul 2024 23:30:59 +0200
+Message-ID: <87jzhlf2i4.fsf@igel.home>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,17 +55,18 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- D2696B44-43B7-11EF-A8B8-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Matthew Hughes <matthewhughes934@gmail.com> writes:
+On Jul 16 2024, Jeff King wrote:
 
-> I'm leaning towards the former case: that this patch was premature.
+> Again, it's possible that we could detect that no shell metacharacters
+> are in play and do the word-splitting ourselves. But at that point I
+> think it should go into run-command's prepare_shell_cmd().
 
-OK.  Then let's take sufficient time.  After all, we are never in a
-hurry ;-)
+This is what GNU make does (see construct_command_argv_internal), for
+performance reason.  But run_command is probably not performance
+critical.
 
-Thanks for giving an honest assessment.  Will keep the topic in
-'seen' without marking it for 'next' (at least until it gets
-replaced with a version that is more suitable to the public).
-
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
