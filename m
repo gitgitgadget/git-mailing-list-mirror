@@ -1,187 +1,214 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F396C4687
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 19:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937884687
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 19:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721159344; cv=none; b=U/Zst4uXjup7MWkXKH+0oPlz/FZ36I3dgW4QX/7MhYskn+KSkbWnKQxzSCrJlU5mF6MvtlPb+82rlHjzTF5VZ0dMau8M9aWcNdBgbSYrXP/wfIgZd22A28QZ0riDcOJlX3DVPPDSGDyoeYm+pSZMjSDDNq8y7GAbFgPb3q74ciA=
+	t=1721159548; cv=none; b=HRorX9PKMnT7QstY1MaEaI0mundH7lsaSa9o0vIjNFYxcvxMHLMZRiXAJn809aUm0VrJh67Ei6e4ujcCb6THe9XFalxt6bcKDg3cwBPrjIPf0Cm7PyLGvqngz6vAiAirW/sNPC1YUmAQLkthkbmI/U78WZp9tUejCdVrNHAvXbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721159344; c=relaxed/simple;
-	bh=J5Xjz8iFTbgy7vCuLEdkdb7+0NP1kBtPBD9QKLwuu/g=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=MWlptXLFfsSrhBRq+UP3vbNEW3TbkmbOhKGPAAF4NrEqvsIoiYR4zn4iYkoSI7vkb3hk3H+elhqRG9U9CIN45Be9XCyCbK2CNMB50UVGzHu4HaTN1iC8V68puKpS5yxQlZH4hi5Q8EysJakNzTrUh+M0Iv8Wtfuecvim+/O3IZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=gFj1+3Iv; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1721159548; c=relaxed/simple;
+	bh=b3XaOQZdNGdhk/OEhm7Hex1jdlFcvSDEQVwctUs1EoM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=munWg+NFvh8Oe6ROygpyx5ar7ped7zjqSnmi748oLXn9f6HHMHq7fUDSnV9TT7gO2Q4dTOuwfu/kGyIWqRT6e3hqUe2uwgkYpHa6Mar7AHIiSSPLkDDbGbIUp2BezSEYCvm/TBJg0lBuUp5MukKdRtPerjlumYbe3LkoDnN0YdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LXcoSNdz; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="gFj1+3Iv"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id To7Qs7Y2qLOPVTo7RsuLrA; Tue, 16 Jul 2024 20:45:51 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1721159151; bh=3cxJs7pkzt89hw968PEOnGVJxfMCf1UFmobs9da6Nag=;
-	h=Date:To:Cc:From:Subject;
-	b=gFj1+3IvXaOZnJ+viASBzkaZ6A128VAHX2L2wOJojn0MxBU+yKB5WafAjoC7UAx5c
-	 h83xVjXnaQZxaw0GbXjw46txwEJe/eEG/mfV/YDbHjS3gFBPjws4hwiGkH5U4SBZtc
-	 fC08ecLMqdNs4eEv0YzsrsV/EeNfdGsb2hdm7GjGm1sWJ/4Uw9SwtOixzFfQvDe04a
-	 b4QS/Xidm+AfAVyIhv7A5KjbdL9DS/rN9QU1Co0ZYLiY5oTygwA6Q12+OnYrbxlRVU
-	 Yfc4KKCjKj3sGGgY4JxQZLCocz0wWet8ZfY70lIqAz7bTdKr3nxGl4HChd/c+k0rsj
-	 /uWID0f7JaPIA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UsvANPwB c=1 sm=1 tr=0 ts=6696cdef
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=o4XeMJcPDZKKO6PKN20A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
-Date: Tue, 16 Jul 2024 20:45:48 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LXcoSNdz"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 665533F49F;
+	Tue, 16 Jul 2024 15:52:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=b3XaOQZdNGdh
+	k/OEhm7Hex1jdlFcvSDEQVwctUs1EoM=; b=LXcoSNdzMQo3bM0KCBTUvAOIY7h5
+	CNzqITFS0CRegKcKVkOSWbbWsECvXkLBf8J73jdKHEx5RdC1uYY2ZCngVO6xJj7F
+	+yp75NDESkcnhh8Qi5DLB+UxrjY1XWM/kBT+yIa+3782zLC6AQN6ZYSmeYqXQ5db
+	xpmBABpgjrtyK4g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DCE33F49E;
+	Tue, 16 Jul 2024 15:52:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9FCB3F49D;
+	Tue, 16 Jul 2024 15:52:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org,  karthik188@gmail.com,  chriscool@tuxfamily.org
+Subject: Re: [GSoC][PATCH v4 0/5] t: port reftable/tree_test.c to the unit
+ testing framework
+In-Reply-To: <20240716075641.4264-1-chandrapratap3519@gmail.com> (Chandra
+	Pratap's message of "Tue, 16 Jul 2024 13:18:12 +0530")
+References: <20240612130217.8877-1-chandrapratap3519@gmail.com>
+	<20240716075641.4264-1-chandrapratap3519@gmail.com>
+Date: Tue, 16 Jul 2024 12:52:23 -0700
+Message-ID: <xmqqh6cp8688.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <adam@dinwoodie.org>,
- Junio C Hamano <gitster@pobox.com>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: v2.46.0-rc0 test failures on cygwin
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNYE3h7ywKkZcDSOlSLBWX/RqQxjPvBWVB7INVIC67fKforVJmePWxCAD9zhG0VYjRtJbKbq4/y+JBH1sBVECsMLuyyEC5ABCunJTeGmCqYX168UE2yt
- HItN41afZEw/luL91QqI52Zll/haHj8ijr1cSrSSrM+Rp2fzsXf1vOYzFqJNtlsw5eG+dUZMiVrXprRlHV1rX+WM0cqozk6yvW4=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ EC3016DC-43AC-11EF-8A93-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
+
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
+
+> In the recent codebase update (commit 8bf6fbd, 2023-12-09), a new unit
+
+Consistently refer to an existing commit with --format=3Dreference.
+
+	$ git show -s --format=3Dreference 8bf6fbd
+	8bf6fbd00d (Merge branch 'js/doc-unit-tests', 2023-12-09)
+
+> testing framework written entirely in C was introduced to the Git proje=
+ct
+> aimed at simplifying testing and reducing test run times.
+
+I doubt that the reason why "unit-tests" written entirely in C was
+introduced is because we wanted to simplify testing and to reduce
+test run times to begin with.  The traditional tests to observe the
+effect visible to end-users by actually running commands that would
+be run by end-users and unit tests serve two separate purposes.  The
+latter does not "simplify", or "reduce time"---you cannot write a
+test "entirely in C" to make sure, say, that "git push --force"
+allows a non-fast-forward update to happen using unit-test
+framework.  The unit-tests cannot replace end-to-end tests.  They
+are complementary.
+
+The statement may need to be rethought.
+
+Or just stop at saying something like
+
+    The reftable library comes with self tests, which are exercised
+    as part of the usual end-to-end tests that are designed to
+    observe the end-user visible effects of Git commands.  What it
+    exercises, however, is a better match to the unit-testing
+    framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
+    2023-12-09), that are designed to observe how low level
+    implementation details, at the level of sequences of individual
+    function calls, behave.
+
+which already covers the next paragraph while at it.
+
+> Currently, tests for the reftable refs-backend are performed by a custo=
+m
+> testing framework defined by reftable/test_framework.{c, h}. Port
+> reftable/tree_test.c to the unit testing framework and improve upon
+> the ported test.
+>
+> The first patch in the series is preparatory cleanup, the second patch
+> moves the test to the unit testing framework, and the rest of the patch=
+es
+> improve upon the ported test.
+>
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+>
+> ---
+> Changes in v4:
+> - Rename the tests to be in-line with unit-tests' standards
+>
+> CI/PR: https://github.com/gitgitgadget/git/pull/1740
+
+By the way, did you rebase the patches?  On which commit is this
+iteration based?  Judging from the second patch, it seems to assume
+that Makefile does not yet have t-reftable-record in it, and it
+applies cleanly to 'master' before 9118e46e (Merge branch
+'cp/unit-test-reftable-record', 2024-07-15).  Newer 'master' has
+textual conflicts (nothing that I cannot resolve, but it shows that
+apparently that anything newer than 9118e46e are not commits that
+you developed this series on).
+
+Has this series even been compile-tested?  I do not think that even
+the unit test added by this series has been run (or compiled).
+
+$ make -j32 t/unit-tests/t-reftable-tree.o
+GIT_VERSION =3D 2.46.0.rc0.27.g0c2075a7c5
+    * new build flags
+    CC t/unit-tests/t-reftable-tree.o
+In file included from t/unit-tests/t-reftable-tree.c:9:
+t/unit-tests/t-reftable-tree.c: In function =E2=80=98t_tree_search=E2=80=99=
+:
+t/unit-tests/t-reftable-tree.c:45:44: error: =E2=80=98test_compare=E2=80=99=
+ undeclared (first use in this function); did you mean =E2=80=98t_compare=
+=E2=80=99?
+   45 |         check(!tree_search(values, &root, &test_compare, 0));
+      |                                            ^~~~~~~~~~~~
+t/unit-tests/test-lib.h:75:45: note: in definition of macro =E2=80=98chec=
+k=E2=80=99
+   75 |         check_bool_loc(TEST_LOCATION(), #x, x)
+      |                                             ^
+t/unit-tests/t-reftable-tree.c:45:44: note: each undeclared identifier is=
+ reported only once for each function it appears in
+   45 |         check(!tree_search(values, &root, &test_compare, 0));
+      |                                            ^~~~~~~~~~~~
+t/unit-tests/test-lib.h:75:45: note: in definition of macro =E2=80=98chec=
+k=E2=80=99
+   75 |         check_bool_loc(TEST_LOCATION(), #x, x)
+      |                                             ^
+make: *** [Makefile:2754: t/unit-tests/t-reftable-tree.o] Error 1
 
 
-The 'Test Summary Report' for the v2.46.0-rc0 test run, on cygwin, includes:
 
-  ...
-  t1460-refs-migrate.sh                            (Wstat: 256 (exited 1) Tests: 30 Failed: 9)
-    Failed tests:  8-15, 29
-    Non-zero exit status: 1
-  ...
 
-Looking at the test output directly, we see:
- 
-  $ pwd
-  /home/ramsay/git
-  $ cd t
-  $ make clean
-  rm -f -r 'chainlinttmp'
-  rm -f -r 'trash directory'.*
-  rm -f -r valgrind/bin
-  rm -f -r 'test-results'
-  rm -f .prove
-  $ ./t1460-refs-migrate.sh -v -i
-  ...
-  ok 7 - files -> reftable: migration with worktree fails
-  
-  expecting success of 1460.8 'files -> reftable: unborn HEAD': 
-  			test_when_finished "rm -rf repo" &&
-  			git init --ref-format=$from_format repo &&
-  			test_migration repo "$to_format"
-  		
-  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t1460-refs-migrate/repo/.git/
-  error: could not link file '.git/ref_migration.sr9pEF/reftable' to '.git/reftable': Permission denied
-  migrated refs can be found at '.git/ref_migration.sr9pEF'
-  not ok 8 - files -> reftable: unborn HEAD
-  #	
-  #				test_when_finished "rm -rf repo" &&
-  #				git init --ref-format=$from_format repo &&
-  #				test_migration repo "$to_format"
-  #			
-  1..8
-  $ 
 
-Note that all of the errors in this test look similar to this one (ie. when
-rename()-ing the 'migrated' reftable directory to .git/reftable we get an
-'Permission denied' error). So the error message is from line 2672 of refs.c
-in the move_files() function.
+Let's concentrate on quality, not quantity; too many topics with the
+same prefix cp/unit-test* seem to be left unreviewed on the list.
 
-Let's have a quick look at the test directory:
+In the meantime, I'll queue the following fix-up on top.  In this
+codebase, it is preferred to write a pointer to a function whose
+name is "func" as just "func", not "&func".
 
-  $ cd trash\ directory.t1460-refs-migrate/
-  $ ls
-  err  expect  repo/
-  $ cd repo
-  $ ls -l .git
-  total 7.0K
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 branches/
-  -rw-r--r-- 1 ramsay None 86 Jul 16 19:53 config
-  -rw-r--r-- 1 ramsay None 73 Jul 16 19:53 description
-  -rw-r--r-- 1 ramsay None 25 Jul 16 19:53 HEAD
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 hooks/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 info/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 objects/
-  drwx------ 1 ramsay None  0 Jul 16 19:53 ref_migration.sr9pEF/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 refs/
 
-Now try to finish the migration by hand:
+ t/unit-tests/t-reftable-tree.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-  $ mv .git/ref_migration.sr9pEF/reftable .git/reftable
-
-Hmm, note no error; of course, the mv command may well do much more than
-the rename() library function, so they are not necessarily equivalent.
-
-  $ ls -l .git
-  total 7.0K
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 branches/
-  -rw-r--r-- 1 ramsay None 86 Jul 16 19:53 config
-  -rw-r--r-- 1 ramsay None 73 Jul 16 19:53 description
-  -rw-r--r-- 1 ramsay None 25 Jul 16 19:53 HEAD
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 hooks/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 info/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 objects/
-  drwx------ 1 ramsay None  0 Jul 16 19:55 ref_migration.sr9pEF/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 refs/
-  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 reftable/
-  $ 
-  $ rm -rf .git/ref_migration.sr9pEF/
-  $ git branch -v
-  fatal: failed to resolve HEAD as a valid ref
-  $ ls -l .git/reftable
-  total 2.0K
-  -rw-r--r-- 1 ramsay None 124 Jul 16 19:53 0x000000000001-0x000000000001-64e987ec.ref
-  -rw-r--r-- 1 ramsay None  43 Jul 16 19:53 tables.list
-  $ xxd .git/reftable/0x000000000001-0x000000000001-64e987ec.ref 
-  00000000: 5245 4654 0100 1000 0000 0000 0000 0001  REFT............
-  00000010: 0000 0000 0000 0001 7200 0038 0023 4845  ........r..8.#HE
-  00000020: 4144 000f 7265 6673 2f68 6561 6473 2f6d  AD..refs/heads/m
-  00000030: 6169 6e00 001c 0001 5245 4654 0100 1000  ain.....REFT....
-  00000040: 0000 0000 0000 0001 0000 0000 0000 0001  ................
-  00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-  00000060: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-  00000070: 0000 0000 0000 0000 b6bf f78a            ............
-  $ 
-
-So, the HEAD ref was referring to refs/heads/main.
-
-  $ pwd
-  /home/ramsay/git/t/trash directory.t1460-refs-migrate/repo
-  $ git init --ref-format=reftable
-  fatal: attempt to reinitialize repository with different reference storage format
-  $ xxd .git/refs/heads 
-  00000000: 7468 6973 2072 6570 6f73 6974 6f72 7920  this repository 
-  00000010: 7573 6573 2074 6865 2072 6566 7461 626c  uses the reftabl
-  00000020: 6520 666f 726d 6174 0a                   e format.
-  $ 
-  $ git branch -v
-  fatal: failed to resolve HEAD as a valid ref
-  $ 
- 
-Hmm, so quite broken :)
-
-Maybe the order of some of the actions in repo_migrate_ref_storage_format() may
-need to be re-thought! ;)
-
-The 'man 3 rename' is not very enlightening; 'The conditions for failure depend
-on the host operating system.'
-
-Unfortunately, I don't have any (well much) spare time to dig further into
-this at the moment, so I thought I should at least report it here for others
-to hopefully find a solution.
-
-ATB,
-Ramsay Jones
+diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tre=
+e.c
+index b3d4008e5c..107f1f69bf 100644
+--- a/t/unit-tests/t-reftable-tree.c
++++ b/t/unit-tests/t-reftable-tree.c
+@@ -33,16 +33,16 @@ static void t_tree_search(void)
+ 	size_t i =3D 1;
+=20
+ 	do {
+-		nodes[i] =3D tree_search(values + i, &root, &t_compare, 1);
++		nodes[i] =3D tree_search(values + i, &root, t_compare, 1);
+ 		i =3D (i * 7) % 11;
+ 	} while (i !=3D 1);
+=20
+ 	for (i =3D 1; i < ARRAY_SIZE(nodes); i++) {
+ 		check_pointer_eq(values + i, nodes[i]->key);
+-		check_pointer_eq(nodes[i], tree_search(values + i, &root, &t_compare, =
+0));
++		check_pointer_eq(nodes[i], tree_search(values + i, &root, t_compare, 0=
+));
+ 	}
+=20
+-	check(!tree_search(values, &root, &test_compare, 0));
++	check(!tree_search(values, &root, t_compare, 0));
+ 	tree_free(root);
+ }
+=20
+@@ -58,7 +58,7 @@ static void t_infix_walk(void)
+ 	size_t count =3D 0;
+=20
+ 	do {
+-		tree_search(values + i, &root, &t_compare, 1);
++		tree_search(values + i, &root, t_compare, 1);
+ 		i =3D (i * 7) % 11;
+ 		count++;
+ 	} while (i !=3D 1);
+--=20
+2.46.0-rc0-137-g851401d64b
 
