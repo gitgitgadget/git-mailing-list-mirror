@@ -1,171 +1,87 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E671E198E80
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 15:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A198927733
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 15:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721143412; cv=none; b=O3VYUpu225gr1ofXllEziS8BvBDcgR+9MqHA4+wvCIwU2jAvRRDL2/sgMUWgVo9/VPusEiY04GfaPLFr146lbICO+Wn6CfzkCyyQAamcO/GM+g5MT8yr3yTxN8xDQYGCwQvmbkcoSxsWJuJnBDI1P2InwjTTB0OaInOYcAU+JrY=
+	t=1721144713; cv=none; b=EGFY48p6V3S2Ztg3MqnueXUMVORsPSpCv9LlScVaMtE4VwXFEgXLOAs3ockvg68WHIoSly1Pb1x6RtFUdXVXU+/vaNVBPnzgOiJIF5PQ3Em1wr2XgyGr+W4WL4qOMQGm28rRWqEeDyxqK4iAys1QoxxmNkzffVKnrnlB28tY7ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721143412; c=relaxed/simple;
-	bh=a56cq1+sSI/hwqOqf3sent/VOwsxLpRkdZPHNFnEa6M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dxdz+Xn0XFrYbuZ4Zv2uD9snhTtYdO21KabNQmhtGB1M+3bXErfQTom0GkV+kPCc3RcRKY15YHIu5MtOOKacUsxEnc3uvi0CRze+skCVhczIv/BYdZQ4yjpG+wvWxD7KvNzIipMvs+Xbz/cLSf07q6dlqmtDfzH/Y6XXpLasgIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chainguard.dev; spf=pass smtp.mailfrom=chainguard.dev; dkim=pass (2048-bit key) header.d=chainguard.dev header.i=@chainguard.dev header.b=eZnswdwF; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chainguard.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chainguard.dev
+	s=arc-20240116; t=1721144713; c=relaxed/simple;
+	bh=lzLqqp33YRFtfNDAKStjVNO0sRXHy608wmOKdnv9xn0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dsVw4q3yi9PYvtkYFfekx7Z7PTWLakECSJWF8WTk8zzkmoB3PlPqjPpf8Oaq6NOVWXqnOaIf7yP7qO6f9wDH9n4IWI5UpbfVDzEU9IEFX1jeyCVZhQnCimol4Iq3hVTNCly/6oLsM3qIveLfPQQGtpXKlQr3h0iCSyV4FDiP554=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v41dznUV; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chainguard.dev header.i=@chainguard.dev header.b="eZnswdwF"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2eede876fbfso41109541fa.1
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 08:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chainguard.dev; s=google; t=1721143407; x=1721748207; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PZuAYIighl+1IrxNi/s6wV2NTmRv3w2lw+fJ57LvyGU=;
-        b=eZnswdwFep+Xxhg0D1pUx1pgQBGyoPojzKhYJ9X4VXlIADUNycaJ4SMdQFc4l0BzNv
-         rOohgVmRl/unyPMRBj0FTH+9RrNruVD0gapAynkKFRH1Qq8lJEdTFkM3LijOp9ZmOwY3
-         HS0ri4ZQKRiyJeZTD/EtzuXzY11KbKSq4gD4cpewcvODlAsoctVplZ2h7CbuoLrAHGM1
-         iNiyNZE1QoHtfJ7donu4IYnCo01PZTmvb+YCxDpUXWWH5t0GoaDd5YkjHG/E8ux43abn
-         rAWCei9s6z4KQDs0+/P/AD+8qzaX8YmLoH0i16GizoG0dBH3gEZN7erwCROOaU8AWYRi
-         y1mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721143407; x=1721748207;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PZuAYIighl+1IrxNi/s6wV2NTmRv3w2lw+fJ57LvyGU=;
-        b=HYIAP2IGD5jMgWjAZlQviRkF2+/sEDRDvnsggPRhV94vFcbDGd5eE+xrPGJqTevBGi
-         ONOXWL6CzY9dL8ebgQ3Sd2oYyXXQwdTgXvs3LF/DyPNydbYOoWEYcSdRTfXxdnhUeMae
-         kufYxNCa06Fjk77ua+ipYyGD72kimwPt4cvdEqjCZFwEflYKx8JDAzZn8IRmYhCoOzrZ
-         sw91Qh426BQjK1Xh9QAPisv3hE1JG1J1apz5ntwhLGTSlWYohHfDVK2HT0NKE0tfpj+m
-         gG1p8X06fcThOHCvbkkN+w4FkL4M4Vz1k/RpxANDNOqccvYTwa6mnoUG2SdimXAdDXvI
-         Ef1A==
-X-Forwarded-Encrypted: i=1; AJvYcCVPr48cxCOBmk0OxpiDgVRlD1YTNiSiD8/VCoUr5VANt2ZRvKR+t5aAMHp/HB0HRfMZn3qdyfqCOP4aGiTixlTUPX4c
-X-Gm-Message-State: AOJu0Yw3lckh59VVWDmPJr4sZS3jZGzFAT+2nAd2FBO+TfC7P/rHrCSp
-	3tNX4kuuUlU2wcmSzY6I6TAfgXZUZKwb4Xks6Sv1PmjWI0D6RKal/YAxdkxNAAefjkg1NJOwwYc
-	woHZTF6aKgogF7u/UThX5R1vEyAmNo7VkthUY2A==
-X-Google-Smtp-Source: AGHT+IHcIpVqN2alwbuBA406LOpDl37aR+6rHmPDniOx2NLFlLbDZk2Br/8Q99GeDQbfPJ/XuTyfPZ2QdbbbOGd/EIY=
-X-Received: by 2002:a2e:9605:0:b0:2ec:500c:b2e0 with SMTP id
- 38308e7fff4ca-2eef4191c4fmr17408011fa.22.1721143406699; Tue, 16 Jul 2024
- 08:23:26 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v41dznUV"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 920433D4A7;
+	Tue, 16 Jul 2024 11:45:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=lzLqqp33YRFtfNDAKStjVNO0sRXHy608wmOKdn
+	v9xn0=; b=v41dznUVxe8GdsCZOaEnCPX1xbwL+FNJLZmYOl+q64YLfOnEq0efkW
+	KitYb3X6VS1tJt351I6ObUIM/KwhSVwaEXBPWAoYGX/3i3N0RpjbY/aaxWATQNyo
+	ezvoKUDPYelEU4p/+BEhmTQa0rN4/DSmphIxuLysk6LcsTquL7pGA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 85AC43D4A6;
+	Tue, 16 Jul 2024 11:45:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4AB33D4A5;
+	Tue, 16 Jul 2024 11:45:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matthew Hughes <matthewhughes934@gmail.com>
+Cc: Matthew Hughes via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] userdiff: add builtin diff driver for TypeScript language
+In-Reply-To: <20240716122112.zqauqgxmng2tk2j6@archP14s> (Matthew Hughes's
+	message of "Tue, 16 Jul 2024 13:21:12 +0100")
+References: <pull.1746.git.git.1721061218993.gitgitgadget@gmail.com>
+	<20240716122112.zqauqgxmng2tk2j6@archP14s>
+Date: Tue, 16 Jul 2024 08:45:08 -0700
+Message-ID: <xmqq5xt5bat7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
- <xmqq8qy21k9f.fsf@gitster.g> <20240715235212.GA628996@coredump.intra.peff.net>
-In-Reply-To: <20240715235212.GA628996@coredump.intra.peff.net>
-From: Scott Moser <scott.moser@chainguard.dev>
-Date: Tue, 16 Jul 2024 11:23:15 -0400
-Message-ID: <CADaTQqB4wm5qzRzgRw7wz1L=Lju=X9iKtktLgdN2MfKf0kg3jA@mail.gmail.com>
-Subject: Re: Can dependency on /bin/sh be removed?
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 61E81456-438A-11EF-8B05-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, Jul 15, 2024 at 7:52=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jul 15, 2024 at 01:18:52PM -0700, Junio C Hamano wrote:
+Matthew Hughes <matthewhughes934@gmail.com> writes:
 
-> Yes, I think this is reasonable. You'd also perhaps want to have it set
-> child->git_cmd as appropriate (though really, I do not think that does
-> anything except stick "git" into child.args[0], so we could just do that
-> ourselves).
->
-> I'm actually a little surprised it was not written this way in the first
-> place.
+> This needs some updates.
 
-I was too.  It seems odd to combine the arguments into a single string
-early.  I was also surprised / didn't realize that 'use_shell' might be
-ignored.
+What does it mean?
 
-> > Having said that, I do not think you can avoid /bin/sh if your goal
-> > is "minimal image *to run git*", as there are many things we run,
-> > starting from the editor and the pager and end-user hooks.  The
-> > credential helper is probably the least of your problems.  What's a
-> > minimum /bin/dash image cost these days?
+The patterns that were posted were so broken that they are unusable
+and harm the users by giving misleading information?
 
-Adding dash is ultimately what we're going to do at least for now.
-That won't get us a pager or an editor.  That's fine.  The image will be
-used in non-interactive environments such as c-i.
+Or do the patterns work just fine in basic or tutorial cases, but
+with more advanced or realistic uses of the language construct, they
+highlight wrong lines as the function header and/or split at wrong
+word boundaries that are obviously much less optimal than ideal that
+any human users would find questionable?
 
-Not being able to utilize your custom hook that runs awk and sed
-is one thing. Not being able to build your private repo from github
-is another.
+In the latter case, how far from the ideal are the decisions done by
+the current patterns, and what's the rough percentage of usual code
+we see in the real world, for which the current patterns do not work
+well?
 
-Thanks for your input.
+What I am trying to gauge is if it is so broken that it should not
+exist (in other words, you regret sending the patch to the list
+before doing these updates), or is "already serviceable, but not
+perfect yet".  Waiting for perfection takes forever.  If the latter,
+letting the general public to use it to gather feedbacks by waiting
+for the dust to settle before making such updates is often better.
 
-On Mon, Jul 15, 2024 at 7:52=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jul 15, 2024 at 01:18:52PM -0700, Junio C Hamano wrote:
->
-> > Even though the code path starting from start_command() is what
-> > run_credential_helper() does use, what is run is NOT a simple
-> > command "/bin/myhelper".  It will receive arguments, like
-> >
-> >       /bin/myhelper erase
-> >       /bin/myhelper get
-> >       /bin/myhelper store
-> >
-> > etc., because the caller appends these operation verbs to the value
-> > of the configuration variable.  And as you found out, to tokenize them
-> > into two, we need shell.
->
-> It is also usually "git myhelper get", and so on (though you can
-> configure a shell command).
->
-> > We may be able to teach credential.c:credential_do() not to paste
-> > the operation verb to the command line so early.  Instead you could
-> > teach the function to send the command line and operation verb
-> > separately down to run_credential_helper() though.  That way, we
-> > might be able to avoid the shell in this particular case.  That is,
-> > if we can
-> >
-> >  * Have start_command() -> prepare_cmd() -> prepare_shell_cmd()
-> >    codepath to take the usual route _without_ the operation verb
-> >    tucked to the command line, we would get cmd->args.v[] that does
-> >    not rely on the shell;
-> >
-> >  * Then before the prepared command is executed, if we can somehow
-> >    _append_ to cmd->args.v[] the operation verb (after all, that
-> >    wants to become the argv[1] to the spawned command) before
-> >    start_command() exec's it
-> >
-> > then we are done.
->
-> Yes, I think this is reasonable. You'd also perhaps want to have it set
-> child->git_cmd as appropriate (though really, I do not think that does
-> anything except stick "git" into child.args[0], so we could just do that
-> ourselves).
->
-> I'm actually a little surprised it was not written this way in the first
-> place. In the non-!, non-absolute-path case we are pasting together a
-> string that will be passed to the shell, and it includes the "helper"
-> argument without further quoting. I don't think you could smuggle a
-> semicolon into there (due to our protocol restrictions), but it does
-> seem like a possible shell injection route.
->
-> I think it probably goes all the way back to my abca927dbe (introduce
-> credentials API, 2011-12-10).
->
-> > Having said that, I do not think you can avoid /bin/sh if your goal
-> > is "minimal image *to run git*", as there are many things we run,
-> > starting from the editor and the pager and end-user hooks.  The
-> > credential helper is probably the least of your problems.  What's a
-> > minimum /bin/dash image cost these days?
->
-> Right. The bigger issue to me is that the credential helper "!" syntax
-> is defined to the end user as running a shell (and ditto for all of
-> those other spots). So any platform where we can't run a shell would not
-> be fully compatible with git on other platforms.
->
-> That may be an OK limitation as long as it is advertised clearly, but
-> the use of a shell here is not just an implementation detail, but an
-> intentional user-facing design.
->
-> -Peff
