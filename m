@@ -1,77 +1,83 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508F2136643
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 13:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C6919DF5B
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 14:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721137692; cv=none; b=eqoMHjcB0thD4AMd3fW8J1CmLkhhdPwXcrM+WHI1cZSuZj0A+9YO8+G1M64IGiZBS+nMpgoHP3+znrQyEEDh+8B2Y0jT8dPZ/caj2PVDOXMtgvJc6uIX/jw9RdMFN/0q/TqXXiRLQ5rKR+cASPYX5D4zkO5HLg2SqRPVbcDU/ic=
+	t=1721140584; cv=none; b=ugAJgub/hWhpgdA2aWmcGH8BTnJXFLMlmEB9eTh4BzUj0drLwHrAQcjllRZNQdeJG2dtmYpHZyfRrPU025rkvPqys8jVHegzbPAnFrJlZEFO5tAFe1yv14FRHlB2yBA1Dub8SNlrtFS2aYvtpCxHp4dKgzc6Wgx1idkZ71VMER4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721137692; c=relaxed/simple;
-	bh=Z+5nhSFq1qenJY+aXFkoDPQ39wh24jCaTcWYwmldoPk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XN/GxFbNlhsfP1EQHKtGhGU2IW42PD43cxCu8wrLMsaVc99SZ2hCF71de8C8LDSzPRf7KdnNZz+IYemPApyicc1AzBQCvNueskha0fljDeC/O8VuNOSZoQk0jw6B8fbDgt+EuKBpPeLG/m7t6DScAF+RcDBGXOMJShR65abazv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTCpUNv4; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1721140584; c=relaxed/simple;
+	bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TE2IzVptKQbEVT8/ryWDz6kRO8OgidUdKX2wDctFiHhwiMX1mFTupZtBz0R51CgQxFcoQhGccgLEb3GGJ/np7M4G1VgAa4oq3DZpxJWAP4vOotp6oICIWHe2A2d8ykIH19Ev4rnGx6VIbcUybFM6IhFkPLoHwIWsWBOYtU+Rg6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J25D1YHT; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTCpUNv4"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70b0d0a7a56so4166056b3a.0
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 06:48:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J25D1YHT"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2c980b55741so3699970a91.2
+        for <git@vger.kernel.org>; Tue, 16 Jul 2024 07:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721137690; x=1721742490; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ajY944qV40SrBOKsnR5So3IcbCzm5kn3Gubx8sIwgKs=;
-        b=dTCpUNv4gxBjOMaN67iH1a7Ln160iP/htSYwPiZDaaIAhzMZ5MtR4TIGXliwQ6uxp5
-         f/6VXJCA/hR/7TJOQlzNi8bej4TRMtYjtGGnHhqhBhL0UA740gBxzJWFhSvW1eUJlBz8
-         kembHZ0jX0FrnIhKzzglykfahViEE0kkQsvDUvnpUkt7dnXgXTkfHgRhT8o7Mb0sC3wY
-         kmwLXsRkeWETauKcXNNMIuF5Q3D1sHdFCLhqT2X7QFL4kX2c4cbxCui11A+cPFbjlmb7
-         Up6GEdTtWLKqhtxHRlWkL/wnojtk128wmx9yqjs1svLwJkBqmrGsX85FTj3GyKrsZj1K
-         0L0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721137690; x=1721742490;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1721140582; x=1721745382; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ajY944qV40SrBOKsnR5So3IcbCzm5kn3Gubx8sIwgKs=;
-        b=cs3GjBStClhqIzWJCBfzi8LE9HxH+D5Id98neD/bioDwAGNq/hT5vZYHDcXbH0SWXM
-         3aBgPuI9/obhgsIs3XxHhPSCEXG1qk3JRiILrD6ndzs7rHwqFZBnvzTXWGg5w41w99Sd
-         r1y486EF1B1Q7/BUVyd2clVza28gQbTBB10MHRP6cdnoa1qoa1zL6rXMYSMPaDZBPoSa
-         dPLAheHnLJ/SLDPoXH6HuvRCHDenfCb+ICZBC6BLPHNG/k10JBRMWHDLyc5ON6bTBOui
-         5A65mil81hDoutp4M0MBlN+5lviS8bHp8soVAClfYinH4ZAgDGjuQRFHQyV+LnKEGiI7
-         1vKA==
-X-Gm-Message-State: AOJu0Yyhg2X0AnE9vtI+tUO0K5Iqh/U12fTItj7EjEI3zIquJEaOrOfe
-	zIrspSXM1tCkuS4AFUdfF5Niu6Nvply8bcjdxqwE3IZc99pOFUbC+F+gyQ==
-X-Google-Smtp-Source: AGHT+IEbKhTqjua8j4ebva7dKR2uS6HfM0KOn4Tikr4CHXrRT3Ribxw3duhvARK3Q1bRUlS/ZF7Fpg==
-X-Received: by 2002:a05:6a00:10c3:b0:706:6c38:31f3 with SMTP id d2e1a72fcca58-70c1fbc227cmr2839842b3a.8.1721137689930;
-        Tue, 16 Jul 2024 06:48:09 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b7ec7d957sm6268414b3a.110.2024.07.16.06.48.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 06:48:09 -0700 (PDT)
-Date: Tue, 16 Jul 2024 21:48:15 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [GSoC]: Implement consistency check for refs blog
-Message-ID: <ZpZ6H6D-a5B9QvhG@ArchLinux>
-References: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+        bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
+        b=J25D1YHTXH/dRCTseZ5IZRqTpLqbkijBVzKpfNmnyrp6OLtsY7UQNleIFpHAQHSuDK
+         d5oJh9Y2X4sF1+94/jEWkdad5rnJJlMs7USSAW8IdwX+w+o9o7+51tvhZPc3hC8gMzGF
+         qDw+Vu9sr/RgQNnIvnZOXYtWt7IFPFZxEU4w6CnGozgE5JK4PjQZg45cPgxivfmZsq1J
+         K+XvbeHhEm8CY+fPliEmsACTTXO+nKHU7r0SiAMLZuMupaAFVNdtCwxEXuGgkf5/+QaZ
+         H8XXDjVb1yMGuFmyAEQ6FOkYZDYKYs80bQK/+3E07rWwhC9jlI25pnHtbgNN/goBlv3K
+         Yb6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721140582; x=1721745382;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
+        b=JbopTL64dBWLS7APs7YPVK/MiAT71j7qF2JptrsRBd2UpcEcq23cKMFpjGOgXvulp1
+         6bCQfHRJflKoJiSUCUJNFuFaX/Ed292S+5GTde+tyYklmtv/YCju9f8xHzDcjmhwWlu7
+         ksgsVJjoyvSZixy09xjPxzsaN9FD1BX5Whm662QADs71SrFb9OpWq6HtI+Ybisu7Ut54
+         6/9Bt92/03YaMlbwO7TLYizratgwt5i4nTuc4Bseu3BZx/JOfgPpkuV1beiRm2pLA9Nr
+         OYp1jTe9C0HnK0G8obQ0oRbInjqXb1A6bmPFKxbtu3tG1DwV4MBVJuZA6cMr4E9styPS
+         Wz0w==
+X-Forwarded-Encrypted: i=1; AJvYcCU4MWucHpPFJRDKJ0o09HQBrV+wI6ZbaC9Ejm+JoBaVlSORF741AlGcEtLCN+RpwPYLLxuO0t4ppEfSQ7V8Mleqe1lM
+X-Gm-Message-State: AOJu0YySsrcpLIsshMbNSDVORHmEI2JfpIRKbwepT4X41a7maceYJtJ3
+	iDW7q0HgBEswbAnwTNpgdLdK+XDOqTe9tLCKeGk6E2y/y90yfFl+9p8VUhyV2jE=
+X-Google-Smtp-Source: AGHT+IFha8UijSPeSIxX7CB0Vfce33rz6WsLTA7YO+RsD90lY+4CSxUG+riESa5JKUBhSLY2LGpBvA==
+X-Received: by 2002:a17:90a:1541:b0:2c8:da73:af82 with SMTP id 98e67ed59e1d1-2cb36cb72e2mr2041103a91.10.1721140582150;
+        Tue, 16 Jul 2024 07:36:22 -0700 (PDT)
+Received: from localhost ([2401:4900:1c80:9ba1:2b04:8394:274b:70f0])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2cacd7037d6sm8369696a91.53.2024.07.16.07.36.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jul 2024 07:36:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZlQ7j9HYVOpP2Xga@ArchLinux>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Jul 2024 20:06:17 +0530
+Message-Id: <D2R1EXZ6J9OU.JE9SD5PBQ5MR@gmail.com>
+Cc: "Christian Couder" <chriscool@tuxfamily.org>, "Kaartic Sivaraam"
+ <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC] Blog: Move existing tests to a unit testing framework
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>, <git@vger.kernel.org>
+References: <uhysopkwfeucsptx4n2jgase2duqhckcgujiyobqd3xw6ioez3@wv2vpethsjre> <D2GPA4L6OZG5.17BQVOVDLS672@gmail.com>
+In-Reply-To: <D2GPA4L6OZG5.17BQVOVDLS672@gmail.com>
 
-Hi All:
+Hey everyone,
 
-This is my week 7 blog:
+My Blog posts from past two weeks can be found here:
 
-  https://luolibrary.com/2024/07/16/GSoC-Week-7/
+Week 6: https://spectre10.github.io/posts/gsoc_week6/
+Week 7: https://spectre10.github.io/posts/gsoc_week7/
 
-Thanks,
-Jialuo
+Let me know if you have any feedback!
+
+Thanks.
+
