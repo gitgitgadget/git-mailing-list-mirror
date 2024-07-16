@@ -1,160 +1,112 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A24101D4
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 18:20:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EA64D8A3
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 19:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721154059; cv=none; b=grCjZG18VXFob703xEO/XrmUTHCGS7F97tsIBUbxOvPyUreR+PW3XWTKq2Dir/h9MAeMqrwV/7vG+Y9eEcA8FdUIduqvrknNqkRLFngdccxGsSNElIlVluIDB/EQOBhmdOVMWrTyB9RzWyOQSCYLOm/az5PQYYkI/SvdqkKx8iw=
+	t=1721158192; cv=none; b=c80l1LBARMlY+07qR5HnfFKk4p9GahJ0n7zpzGwrlf5J4Qtw2U8H3Pt8BZySbm0ZL14GKSOnixGiZbY7ntbjyxXQNXCQjDSWhnZ32+ojd821ODFxsxkY+Zh0atf0EPZNSIM2iR9/D2hQ/d5Shv54BdUjuArXxygNIWTcLOrqbg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721154059; c=relaxed/simple;
-	bh=4jYVuninRxn/vj3M0BAmJYOuFgHv6679gBe1M8uN9s4=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Maq0RV7fFdYpkzs/aL2p4mVGw3Moh+tl7X9aLBTxW7vLZwJUlpDX5YSr3RYMDlM4wGpv9AbXArl/5wcEc+4QhqbHk2T90t0JK1/qFryr+HvzKt5/O/ldhqm/wr0LCxAP3lgORSxYfLiFgpdl9bh3eUPATD+7ajvs8bxmHdRg5tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46GIKfYZ658277
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jul 2024 18:20:41 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Emily Shaffer'" <nasamuffin@google.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc: <git@vger.kernel.org>, "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Johannes Schindelin'" <johannes.schindelin@gmx.de>,
-        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" <avarab@gmail.com>
-References: <20240711232413.693444-1-emilyshaffer@google.com> <xmqqed7ylbna.fsf@gitster.g> <CAJoAoZnUbgX1MpisdS+TkGLFrBUyX_x_M_Q6iZ2n_AhP8r4mNA@mail.gmail.com> <xmqq34oa1an3.fsf@gitster.g> <CAJoAoZnbsqF7xi9AW4--d9Dsfh=GnRuko6rRELsGUW0ihRvaVg@mail.gmail.com>
-In-Reply-To: <CAJoAoZnbsqF7xi9AW4--d9Dsfh=GnRuko6rRELsGUW0ihRvaVg@mail.gmail.com>
-Subject: RE: [PATCH v2] Documentation: add platform support policy
-Date: Tue, 16 Jul 2024 14:20:36 -0400
-Organization: Nexbridge Inc.
-Message-ID: <01a501dad7ac$de59ba20$9b0d2e60$@nexbridge.com>
+	s=arc-20240116; t=1721158192; c=relaxed/simple;
+	bh=mAFz6Ku10HIAq/MjF8+HkGxOBHhFpM6egBl9CQ1O9OA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pFam1DgtfleGUH3QpOgkYRyJRPtygMjGx0LEs2aza2atyARIRKUOShAMASETy37HLI53p7el3208+PIy6OxHGnZvLD3pml8JJ4NC8r+TvtR/wE6D7BjBgfZ6n+tk5zcu5JQ1zu+HjJL0OT/BV5KLxEGrTIgmawJAwKaY+9k/LIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 18331 invoked by uid 109); 16 Jul 2024 19:23:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jul 2024 19:23:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12945 invoked by uid 111); 16 Jul 2024 19:23:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jul 2024 15:23:06 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 16 Jul 2024 15:23:07 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Scott Moser <scott.moser@chainguard.dev>, git@vger.kernel.org
+Subject: Re: Can dependency on /bin/sh be removed?
+Message-ID: <20240716192307.GA12536@coredump.intra.peff.net>
+References: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
+ <xmqq8qy21k9f.fsf@gitster.g>
+ <20240715235212.GA628996@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIFP0bK226z3oZ1ne7kWQpKk7LXQQFQIoQ6ARd1jNwBImJingDQJgansYIIEhA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240715235212.GA628996@coredump.intra.peff.net>
 
-On Tuesday, July 16, 2024 1:59 PM, Emily Shaffer wrote:
->On Mon, Jul 15, 2024 at 4:46=E2=80=AFPM Junio C Hamano =
-<gitster@pobox.com> wrote:
->>
->> Emily Shaffer <nasamuffin@google.com> writes:
->>
->> > If I fudge with the rewrite a little, I get:
->> >
->> > """
->> > Git has a history of providing broad "support" for exotic platforms
->> > and older platforms, without an explicit commitment. Stakeholders =
-of
->> > these platforms may want a more predictable support commitment. =
-This
->> > is only possible when platform stakeholders supply Git developers
->> > with adequate tooling, so we can test for compatibility or develop
->> > workarounds for platform-specific quirks on our own.
->> > Various levels of tooling will allow us to make more solid
->> > commitments around Git's compatibility with your platform.
->> > """
->>
->> This reads well.
->>
->> > """
->> > Note that this document is about maintaining existing support for a
->> > platform that has generally worked in the past; for adding support
->> > to a platform which doesn't generally work with Git, the
->> > stakeholders for that platform are expected to do the bulk of that
->> > work themselves. We will consider such patches if they don't make
->> > life harder for other supported platforms, and you may well find a
->> > contributor interested in working on that support, but the Git
->> > community as a whole doesn't feel an obligation to perform such
->> > work.
->> > """
->>
->> The part before "We will consider" reads very well.  The part after
->> that, I haven't formed a firm opinion on (yet).
->>
->> > """
->> > * You should run nightly tests against the `next` branch and =
-publish breakage
->> >   reports to the mailing list immediately when they happen.
->> >
->> > ** You may want to ask to join the
->> >    mailto:git-security@googlegroups.com[security
->> >    mailing list] in order to run tests against the fixes proposed =
-there, too.
->> > """
->>
->> Looking good, I guess.
->
->It seems like there's not much more in contention from the current =
-responses to
->this thread and v2. I've got a reroll ready with mostly =
-wording/formatting changes
->based on your reply.
->
->I asked Johannes if he wanted to take a look on Discord[1], it seemed =
-like he wasn't
->interested in doing a full review and doesn't want his name on the =
-maintainer list:
->
->me: @dscho did you see
->https://lore.kernel.org/git/20240711232413.693444-1-
->emilyshaffer@google.com/
->? do you want to be written down as windows maintainer? or does this =
-policy differ
->enough from the way GfW works that it doesn't make sense for you?
->[...]
->dscho: That document makes sense for Git, including on the NonStop =
-platform.
+On Mon, Jul 15, 2024 at 07:52:12PM -0400, Jeff King wrote:
 
-Putting it the way below, we could use my team's GitHub Issues list for =
-our fork (we haven't used the fork since 3.0 happened and we finally got =
-to the same code base). The repo is still there, if this team wants it, =
-but I think the general mailing list for NonStop issues is probably =
-better. Most (by a long way) of our issues have ultimately been of =
-general interest. My community is rather shy (not used to mailing lists) =
-and also mostly blocking access to GitHub.com, so... mailing list for =
-discussions.
+> > We may be able to teach credential.c:credential_do() not to paste
+> > the operation verb to the command line so early.  Instead you could
+> > teach the function to send the command line and operation verb
+> > separately down to run_credential_helper() though.  That way, we
+> > might be able to avoid the shell in this particular case.  That is,
+> > if we can 
+> > 
+> >  * Have start_command() -> prepare_cmd() -> prepare_shell_cmd()
+> >    codepath to take the usual route _without_ the operation verb
+> >    tucked to the command line, we would get cmd->args.v[] that does
+> >    not rely on the shell;
+> > 
+> >  * Then before the prepared command is executed, if we can somehow
+> >    _append_ to cmd->args.v[] the operation verb (after all, that
+> >    wants to become the argv[1] to the spawned command) before
+> >    start_command() exec's it
+> > 
+> > then we are done.
+> 
+> Yes, I think this is reasonable. You'd also perhaps want to have it set
+> child->git_cmd as appropriate (though really, I do not think that does
+> anything except stick "git" into child.args[0], so we could just do that
+> ourselves).
+> 
+> I'm actually a little surprised it was not written this way in the first
+> place. In the non-!, non-absolute-path case we are pasting together a
+> string that will be passed to the shell, and it includes the "helper"
+> argument without further quoting. I don't think you could smuggle a
+> semicolon into there (due to our protocol restrictions), but it does
+> seem like a possible shell injection route.
+> 
+> I think it probably goes all the way back to my abca927dbe (introduce
+> credentials API, 2011-12-10).
 
->dscho: For Git for Windows, the processes are substantially different, =
-for example:
->not using a Git mailing list but instead GitHub discussions, issues and =
-pull requests.
->Also, there is no seen, next, master nor maint. There's main.
->me: yeah, I guess I'm really asking - does this do enough for what you =
-need to make
->your GfW fork work
->dscho: So: Thank you for notifying me and asking; I think it'll be fine =
-without my
->name in it.
->
->What's next to move this patch forward? Should I be asking around for =
-more people
->to review it? Or do you think it's close enough to ready that I should =
-send v3
->without waiting longer so you can take it? I took a look at =
-DecisionMaking.txt but
->don't see that there's a clear answer; of the people participating in =
-this thread my
->impression is that we have consensus, but there's also not that many =
-people
->participating.
->
-> - Emily
->
->1:
->https://discord.com/channels/1042895022950994071/1156706741875130499
->/1262827182162575471
->(requires Discord login and Git server membership :/)
+Ah, having tried to refactor it, I see now why it is written as it is.
+Even for a regular helper without "!", it is important that we construct
+a string and pass it to the shell, since it is legal (and even
+encouraged) to do things like:
 
+  [credential]
+  helper = cache --socket=/path/to/socket --timeout=123
+
+Arguably we could have gotten away with word-splitting ourselves,
+sticking the result in child_process.args, and avoided the shell. But
+the use of the shell is documented in gitcredentials(7):
+
+  helper
+    The name of an external credential helper, and any associated
+    options. If the helper name is not an absolute path, then the string
+    git credential- is prepended. The resulting string is executed by
+    the shell (so, for example, setting this to foo --option=bar will
+    execute git credential-foo --option=bar via the shell. See the
+    manual of specific helpers for examples of their use.
+
+So users may be depending on that to do "--socket=$HOME/.foo", or even
+more exotic shell constructs.
+
+Again, it's possible that we could detect that no shell metacharacters
+are in play and do the word-splitting ourselves. But at that point I
+think it should go into run-command's prepare_shell_cmd(). That is, I I
+think it could take space out of the list of metachars that force us to
+invoke the shell, and do the word-splitting there. But not having
+thought very hard about it, there are probably corner cases where that
+optimization is detectable by the user (presumably unusual IFS, but
+maybe more?).
+
+-Peff
