@@ -1,107 +1,187 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B691CD2C
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 19:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F396C4687
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 19:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721158433; cv=none; b=Z3rH7RkZVpXIaH6mjxbgyXYB+caK9dTd0dM9FUWqM4H5CVTrJ2o+OqF9ZHagceQBK/O2RxCkKfbWPpVxFabP2OyAgoYtMEyKzOoGKsA/mIKPT8HF1uHnMW+cMiXRJweyxSFZUT0KD83iousQR91QO8Dv3knsmsebM6/myw+A39I=
+	t=1721159344; cv=none; b=U/Zst4uXjup7MWkXKH+0oPlz/FZ36I3dgW4QX/7MhYskn+KSkbWnKQxzSCrJlU5mF6MvtlPb+82rlHjzTF5VZ0dMau8M9aWcNdBgbSYrXP/wfIgZd22A28QZ0riDcOJlX3DVPPDSGDyoeYm+pSZMjSDDNq8y7GAbFgPb3q74ciA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721158433; c=relaxed/simple;
-	bh=RvxKTGgKVS6tfw41DswlPu0LfFFoXvjxheBUdU3MSdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZXLtPBxgE235tXTmEzAWL0qb7tP5fKnDQ1y66V1yr2oPpvqGnQXbvfI4fH9YwnU+u1BpiS37E+nPVWr25J1jEGWyAqMBeov5Hp2o90068MKMSdqN12oYhvMBXJp1MlX9kMS6L0OfUNhMZ0q+vfmjsZMzgXS7JuhMr98MTxJD2qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSmTrkwC; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721159344; c=relaxed/simple;
+	bh=J5Xjz8iFTbgy7vCuLEdkdb7+0NP1kBtPBD9QKLwuu/g=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=MWlptXLFfsSrhBRq+UP3vbNEW3TbkmbOhKGPAAF4NrEqvsIoiYR4zn4iYkoSI7vkb3hk3H+elhqRG9U9CIN45Be9XCyCbK2CNMB50UVGzHu4HaTN1iC8V68puKpS5yxQlZH4hi5Q8EysJakNzTrUh+M0Iv8Wtfuecvim+/O3IZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=gFj1+3Iv; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSmTrkwC"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-75e7e110e89so3541508a12.3
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 12:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721158431; x=1721763231; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWdLeVnNZEHR4xkE9/SiGBt2n1ZrcxnwOLDx7iDwsqY=;
-        b=cSmTrkwC3OmbCphcStZligkOuwEI7D8mfJ/lCur1CC2naeAdJQl5qLsDeeg+dkMRX7
-         aOUYKry5gLBDUOkqquxpwjcfMsoEcXbgZW0OChPYHsBoXs9h5owGSFz3NeDwWfM4E//I
-         iQlcRCujWeXd2bQw5P/bgEBvupDtB7IpEpmM+gl3MjH78yVDIIEhN53uEJh7sdD8Nc1B
-         6RRLk8v6GiNqWe3RZxyaanX6oDB5PlHkWjubdS2ZbYVuaP5b4r0m2N9nHolcDS/QnNQ1
-         IauFRjjZYaWCoWdAiKt0lhXHB9DzC6baeUKsjJEV41nxDbbiugiRCK4eL/eCQ/FiJis5
-         wkRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721158431; x=1721763231;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EWdLeVnNZEHR4xkE9/SiGBt2n1ZrcxnwOLDx7iDwsqY=;
-        b=NR14EMGrSSJnV2hTaQCjA2DduBV+xhwo92EkCpR8VbcX28TainbAKdVr9Xbz7wdu5t
-         f5mYMYTU8eZH+ZG4Kq60gCDwD4zXhJzYs4VveX9sKYhJ2agBNX2MR5oUV+9mm/+WX6Qx
-         RAebEbQX1IPo3Djx/7q1oXA3hbeRKv7xbNCkoLSBak9wzqCSkdJVWHp9Fy6vT3eQBZcm
-         Vr02eJwdJUN8XvkGWtRa0pra+s2MlGkSiwEeedDZccglOhy+zxK4n3XvP9KAUl00UojC
-         umUZUdi25ovzBupCdlQuH5hNnhtYCtAo7zH24DDwR1nUsHIyMgt6Km7oPyG4IiEuqVYg
-         cALQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVC3M5/mWJMvrXnchEuAj6VB4ZqVzGulfw5FhzyIAX0C1UhpRfCPqJzremo1xTkHMFhjjzBhV9Ry+bBN5vYFmvG9aAF
-X-Gm-Message-State: AOJu0YymaRICn+WovCSnmYoarJV1w50wxnTDlTomPiR6ntpJQZqeBTI1
-	IDe3VXSZHCA4rkSfWiZN0H8LgylkhjnC+2nbKtoH9QS3vnjgBDvI
-X-Google-Smtp-Source: AGHT+IGNvi6x3A8dXrsR4eA1Jm4Sj+6Z5oBABbyHbGcr83cCjghp1FKv/vPOhIFGI3ezfmpBWAXIJA==
-X-Received: by 2002:a05:6a21:118e:b0:1c2:8d0a:8e9a with SMTP id adf61e73a8af0-1c3f1256da4mr3672075637.31.1721158431153;
-        Tue, 16 Jul 2024 12:33:51 -0700 (PDT)
-Received: from archP14s ([193.32.126.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bb7007csm62247725ad.14.2024.07.16.12.33.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 12:33:50 -0700 (PDT)
-Date: Tue, 16 Jul 2024 20:33:44 +0100
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Matthew Hughes via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: add builtin diff driver for TypeScript language
-Message-ID: <20240716193344.bjb62zsfnrfw3ngf@archP14s>
-References: <pull.1746.git.git.1721061218993.gitgitgadget@gmail.com>
- <20240716122112.zqauqgxmng2tk2j6@archP14s>
- <xmqq5xt5bat7.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="gFj1+3Iv"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id To7Qs7Y2qLOPVTo7RsuLrA; Tue, 16 Jul 2024 20:45:51 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1721159151; bh=3cxJs7pkzt89hw968PEOnGVJxfMCf1UFmobs9da6Nag=;
+	h=Date:To:Cc:From:Subject;
+	b=gFj1+3IvXaOZnJ+viASBzkaZ6A128VAHX2L2wOJojn0MxBU+yKB5WafAjoC7UAx5c
+	 h83xVjXnaQZxaw0GbXjw46txwEJe/eEG/mfV/YDbHjS3gFBPjws4hwiGkH5U4SBZtc
+	 fC08ecLMqdNs4eEv0YzsrsV/EeNfdGsb2hdm7GjGm1sWJ/4Uw9SwtOixzFfQvDe04a
+	 b4QS/Xidm+AfAVyIhv7A5KjbdL9DS/rN9QU1Co0ZYLiY5oTygwA6Q12+OnYrbxlRVU
+	 Yfc4KKCjKj3sGGgY4JxQZLCocz0wWet8ZfY70lIqAz7bTdKr3nxGl4HChd/c+k0rsj
+	 /uWID0f7JaPIA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=UsvANPwB c=1 sm=1 tr=0 ts=6696cdef
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=o4XeMJcPDZKKO6PKN20A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
+Date: Tue, 16 Jul 2024 20:45:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5xt5bat7.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <adam@dinwoodie.org>,
+ Junio C Hamano <gitster@pobox.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: v2.46.0-rc0 test failures on cygwin
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfNYE3h7ywKkZcDSOlSLBWX/RqQxjPvBWVB7INVIC67fKforVJmePWxCAD9zhG0VYjRtJbKbq4/y+JBH1sBVECsMLuyyEC5ABCunJTeGmCqYX168UE2yt
+ HItN41afZEw/luL91QqI52Zll/haHj8ijr1cSrSSrM+Rp2fzsXf1vOYzFqJNtlsw5eG+dUZMiVrXprRlHV1rX+WM0cqozk6yvW4=
 
-Oe Tue, Jul 16, 2024 at 08:45:08AM -0700, Junio C Hamano wrote:
-> What does it mean?
-> 
-> The patterns that were posted were so broken that they are unusable
-> and harm the users by giving misleading information?
 
-I think this would be a good summary. It's sufficient for some simpler cases
-considered, and does even give some benefits e.g. for function headers for
-nested functions. However, the cases where it fails can be significant, e.g.
-hundreds of lines away from the correct function header for files with multiple
-consecutive multi-line arrow functions.
+The 'Test Summary Report' for the v2.46.0-rc0 test run, on cygwin, includes:
 
-> In the latter case, how far from the ideal are the decisions done by
-> the current patterns, and what's the rough percentage of usual code
-> we see in the real world, for which the current patterns do not work
-> well?
+  ...
+  t1460-refs-migrate.sh                            (Wstat: 256 (exited 1) Tests: 30 Failed: 9)
+    Failed tests:  8-15, 29
+    Non-zero exit status: 1
+  ...
 
-I think just the missing `export` keyword handling would be equivalent to
-missing all public functions in other programming languages, so that alone
-would be a decent percentage.
+Looking at the test output directly, we see:
+ 
+  $ pwd
+  /home/ramsay/git
+  $ cd t
+  $ make clean
+  rm -f -r 'chainlinttmp'
+  rm -f -r 'trash directory'.*
+  rm -f -r valgrind/bin
+  rm -f -r 'test-results'
+  rm -f .prove
+  $ ./t1460-refs-migrate.sh -v -i
+  ...
+  ok 7 - files -> reftable: migration with worktree fails
+  
+  expecting success of 1460.8 'files -> reftable: unborn HEAD': 
+  			test_when_finished "rm -rf repo" &&
+  			git init --ref-format=$from_format repo &&
+  			test_migration repo "$to_format"
+  		
+  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t1460-refs-migrate/repo/.git/
+  error: could not link file '.git/ref_migration.sr9pEF/reftable' to '.git/reftable': Permission denied
+  migrated refs can be found at '.git/ref_migration.sr9pEF'
+  not ok 8 - files -> reftable: unborn HEAD
+  #	
+  #				test_when_finished "rm -rf repo" &&
+  #				git init --ref-format=$from_format repo &&
+  #				test_migration repo "$to_format"
+  #			
+  1..8
+  $ 
 
-> What I am trying to gauge is if it is so broken that it should not
-> exist (in other words, you regret sending the patch to the list
-> before doing these updates), or is "already serviceable, but not
-> perfect yet".  Waiting for perfection takes forever.  If the latter,
-> letting the general public to use it to gather feedbacks by waiting
-> for the dust to settle before making such updates is often better.
+Note that all of the errors in this test look similar to this one (ie. when
+rename()-ing the 'migrated' reftable directory to .git/reftable we get an
+'Permission denied' error). So the error message is from line 2672 of refs.c
+in the move_files() function.
 
-I'm leaning towards the former case: that this patch was premature. I think
-it's far enough from perfect that it would greatly benefit from me more
-actively reaching out to the TypeScript language team and asking some devs
-there try out the changes and gather some more input (and identify some more
-missing cases, of which I now expect that are many) before getting
-something out to general users.
+Let's have a quick look at the test directory:
+
+  $ cd trash\ directory.t1460-refs-migrate/
+  $ ls
+  err  expect  repo/
+  $ cd repo
+  $ ls -l .git
+  total 7.0K
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 branches/
+  -rw-r--r-- 1 ramsay None 86 Jul 16 19:53 config
+  -rw-r--r-- 1 ramsay None 73 Jul 16 19:53 description
+  -rw-r--r-- 1 ramsay None 25 Jul 16 19:53 HEAD
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 hooks/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 info/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 objects/
+  drwx------ 1 ramsay None  0 Jul 16 19:53 ref_migration.sr9pEF/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 refs/
+
+Now try to finish the migration by hand:
+
+  $ mv .git/ref_migration.sr9pEF/reftable .git/reftable
+
+Hmm, note no error; of course, the mv command may well do much more than
+the rename() library function, so they are not necessarily equivalent.
+
+  $ ls -l .git
+  total 7.0K
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 branches/
+  -rw-r--r-- 1 ramsay None 86 Jul 16 19:53 config
+  -rw-r--r-- 1 ramsay None 73 Jul 16 19:53 description
+  -rw-r--r-- 1 ramsay None 25 Jul 16 19:53 HEAD
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 hooks/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 info/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 objects/
+  drwx------ 1 ramsay None  0 Jul 16 19:55 ref_migration.sr9pEF/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 refs/
+  drwxr-xr-x 1 ramsay None  0 Jul 16 19:53 reftable/
+  $ 
+  $ rm -rf .git/ref_migration.sr9pEF/
+  $ git branch -v
+  fatal: failed to resolve HEAD as a valid ref
+  $ ls -l .git/reftable
+  total 2.0K
+  -rw-r--r-- 1 ramsay None 124 Jul 16 19:53 0x000000000001-0x000000000001-64e987ec.ref
+  -rw-r--r-- 1 ramsay None  43 Jul 16 19:53 tables.list
+  $ xxd .git/reftable/0x000000000001-0x000000000001-64e987ec.ref 
+  00000000: 5245 4654 0100 1000 0000 0000 0000 0001  REFT............
+  00000010: 0000 0000 0000 0001 7200 0038 0023 4845  ........r..8.#HE
+  00000020: 4144 000f 7265 6673 2f68 6561 6473 2f6d  AD..refs/heads/m
+  00000030: 6169 6e00 001c 0001 5245 4654 0100 1000  ain.....REFT....
+  00000040: 0000 0000 0000 0001 0000 0000 0000 0001  ................
+  00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+  00000060: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+  00000070: 0000 0000 0000 0000 b6bf f78a            ............
+  $ 
+
+So, the HEAD ref was referring to refs/heads/main.
+
+  $ pwd
+  /home/ramsay/git/t/trash directory.t1460-refs-migrate/repo
+  $ git init --ref-format=reftable
+  fatal: attempt to reinitialize repository with different reference storage format
+  $ xxd .git/refs/heads 
+  00000000: 7468 6973 2072 6570 6f73 6974 6f72 7920  this repository 
+  00000010: 7573 6573 2074 6865 2072 6566 7461 626c  uses the reftabl
+  00000020: 6520 666f 726d 6174 0a                   e format.
+  $ 
+  $ git branch -v
+  fatal: failed to resolve HEAD as a valid ref
+  $ 
+ 
+Hmm, so quite broken :)
+
+Maybe the order of some of the actions in repo_migrate_ref_storage_format() may
+need to be re-thought! ;)
+
+The 'man 3 rename' is not very enlightening; 'The conditions for failure depend
+on the host operating system.'
+
+Unfortunately, I don't have any (well much) spare time to dig further into
+this at the moment, so I thought I should at least report it here for others
+to hopefully find a solution.
+
+ATB,
+Ramsay Jones
+
