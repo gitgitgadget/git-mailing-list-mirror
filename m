@@ -1,123 +1,168 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0A91DFF0
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 16:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715D818E28
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 17:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721148205; cv=none; b=Q1YQqG3Tz99l9/j6tzJyEkJ0PD2mLGoErcye4mLXayfngf3pRFGTf9gEfBkvtGe2sMECTiUBwjtzPmjL6HQfNDfJLH63PdMyijepigGBx/OO0GO+Ix4lNZs0ATy1+maFPi4T4FuZIfpolIX1wuFlh7pmgjOrJVrB2Z3tgLZBFyU=
+	t=1721152748; cv=none; b=G4H+5NeA/TN6FyTJfzjd2EBInEJSeu4gZHpjqt3M0rRuvGO6ETDeWUOrKKpEfiJYNSdGUjr8O5hRqM6gEZmw2G5pAcatwmB/p4JgL1UlC6D/65DuhHXfp4ZMaTxVLh+WeYBt94gBtxe/PzjFOVCHLk/tNGOdlWrQvG49LVKQmMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721148205; c=relaxed/simple;
-	bh=/AeHEUwWusigrtK69n+awY2S1JjCaADhsPvyncUmusw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F1xGFHgfPrdxqt3s3Oetr1+MUGT0rTOH0TZ+A1MtqpYWk6ACrNWamtZ9yGsWaqh6A2D6/kvLpg5mL5+pR7mZKTKASbTMvL4+NHxziyy/3i2eDO/BZqeqADpXVwLWs1I5qAXYJvchwHbIFGlcLuJfHCdp4dCyoRp2mwlqsep4abM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=E/V4Jjh9; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1721152748; c=relaxed/simple;
+	bh=96nKq3bb/7zEQt/x0TTw3mMlOtVefYqrMr+Zp1Bt01M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rEK9Iq4hjw5fiETdrN8ZX0aDu9dVK41m9doYS2W1O+jEs1WeQrxbwq8QeD3sNvLN/RVJJf0+78gwAKQMNzmQ0bY3Zcz6gqZuI17jog6xDf2xpzHPc5Td50t//ODIGtG/UCObR951eRIoHbKy4Fc11cUJAFrXygxYtrCZYFdmWm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K4kGndF6; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="E/V4Jjh9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1721148187; x=1721752987; i=l.s.r@web.de;
-	bh=jlVzfwzZK5XISVFz2lcFuD5rpDJrSUyl+ViMybKigCY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=E/V4Jjh9nalnwQtjRPpj1aHsEBotWIDmgJfBTsCWYS2lgHw4hyv9gUtAwZheMqPk
-	 F7y0eTQ6scKtiFUSUGQl3tR+K7jY+UuVdQ/ZBgJ0DrI57OuwK1m9b0b64YkU4TmsU
-	 bcW8nfia1YdejevmeuSANc9JW8SXUVdOuG/fM8B4tQraR4bMAeEk/PRWa/e+0jTAI
-	 21wghJ0zd5PaR7XDEg4RQpBQth2awaKfjkkVkdBQKCQu/0XNTlUWouDa83UiK4SVW
-	 1L8t+h+9yeNdgtMe+9E6T4ujq8STykWhBrZTKg/OlLCdxcdQJQGLJN4WW8tEXwbn/
-	 pfo7+YX5efQ0Nx5JEg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N1d7i-1sN4Hy3cl6-011RNJ; Tue, 16
- Jul 2024 18:43:06 +0200
-Message-ID: <824ecb8b-b786-4220-a6b4-598a818bee52@web.de>
-Date: Tue, 16 Jul 2024 18:43:06 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K4kGndF6"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-447f8aa87bfso40881cf.0
+        for <git@vger.kernel.org>; Tue, 16 Jul 2024 10:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1721152745; x=1721757545; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qj+EUwwO02kA0kM1MOTNdInQGK2fjIiZoSVXvDHAN20=;
+        b=K4kGndF6PjnVDTWWAcdjLbFpsLhWnpffUrjwQuzeXF//wn2yqPgmcdUqoJHx7Jk2qA
+         1yQMn3EcDt/uWPfPQ4i+HLCHBj5vOSW6RHMEW3deqO6Tgi7AeEFiTbjgKsOzkEmi+0Qa
+         w6mzREYUHM19iaMdXJkYNOh/aE/fBxZ9rj/WzWc9Jh/CNKIFEWpSVZuu/Ptctj9gYs4I
+         XEuK3OY/1I5SwH+t2ONUZDhimeRBaMPlAn2RdvOPrXXvCdDmUcOwuErwyeVdIG1qFZ/I
+         QKFwlSnLX2gsuOWD49kRKj5+dcFVD+sLDxZ62masP5FLGkghotfAR6Xr6uWMEK3VZYEP
+         aUdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721152745; x=1721757545;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qj+EUwwO02kA0kM1MOTNdInQGK2fjIiZoSVXvDHAN20=;
+        b=PoVnr2hyKPoxuPcg6XBYwnXsTFcBm4AU0EXnajpDyDh9ZK8otNed11i1bTyloGlEk9
+         VAeLKZG33Kz8UM8ku9nvXJqMeZNEEx4H350tP2yO7J2fHYE23N+T8nYNWx8Dlpr77dJ4
+         FbuwgxcL64JKFHeRgwrvCeViSf1fEZ+PO1qkQolH56Hvpmv+DmXNArs7vVR0GMF9HrTq
+         hRZlmFMMQXwH/Wk9rY/+VgJa82rMogvQPF2Xep9aRgCe8RVBLGXldCEUcNK6U+dz6hf5
+         u7FhEQspqNjTswmGOvj1sDqaiA232SbT9KEfyrnqfOfJy8ZdcG7J/CUWuUKqkF43Zfmc
+         HZZQ==
+X-Gm-Message-State: AOJu0YxVhCUwrl+XUmNBVskYDa1nRTZu3SYn3SuQThg+Pf0SnylSk+Co
+	II79AoabMzz/nKf/NA6yB0IoSqSo4jbwooOY7uzR2mQp9LRL+zSjQD50e3jRiv+SWhndoYCUXhs
+	54v95ROskMt/CNPryVQRi/usYArvjdkSv/BGP
+X-Google-Smtp-Source: AGHT+IEduiGrmrduCft8dsRGLmdTkbkl9GXCavLSRQCdVB+gFk+/2d4F1HLP6yywuAIEdrgx2fAA5INgkLkv3sdPLq4=
+X-Received: by 2002:a05:622a:1c08:b0:447:d225:6e3a with SMTP id
+ d75a77b69052e-44f839438acmr181711cf.4.1721152745090; Tue, 16 Jul 2024
+ 10:59:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] t-strvec: use test_msg()
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
- <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
- <20240709113201.GA994226@coredump.intra.peff.net>
- <442b692d-a51b-4f45-a131-a44ac08c431b@web.de>
- <20240716014330.GA639947@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20240716014330.GA639947@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
+References: <20240711232413.693444-1-emilyshaffer@google.com>
+ <xmqqed7ylbna.fsf@gitster.g> <CAJoAoZnUbgX1MpisdS+TkGLFrBUyX_x_M_Q6iZ2n_AhP8r4mNA@mail.gmail.com>
+ <xmqq34oa1an3.fsf@gitster.g>
+In-Reply-To: <xmqq34oa1an3.fsf@gitster.g>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Tue, 16 Jul 2024 10:58:52 -0700
+Message-ID: <CAJoAoZnbsqF7xi9AW4--d9Dsfh=GnRuko6rRELsGUW0ihRvaVg@mail.gmail.com>
+Subject: Re: [PATCH v2] Documentation: add platform support policy
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <johannes.schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:KuZFEaGDxiqeNts7YgbFDOLqWbdPKmN4Yzazi0mGBlFNKoLJy2f
- kjz5ZoVpt5diUAtYn+IzKV8eeH+Ov8dpuilAs66/ZBqwocFrZ62oBQ51HVh3207M7QZdUYn
- BMP0ZwXEQRmIcCE7PEgXQyMZ+zdRhHY0j2f+YFrzHjvATVF1P02mpoqxI74niAT4AWryIfK
- GEtzE4eR4vppkcCy4IG0w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:f9hzoVLgh0c=;bjZ/l9lca8WnhpCn3v7JexeGZJb
- VjgHQRHPkw+Oz5hg9i7MOMdVJyIyooau0ybfQBJJ8IfMxLvRw98B5YsHkquVQFdOMBt4TVRUL
- q0YCO2Ql9cL4Sb3vsQ70Y1LVLDoE79QoWE0xszra2WDkYg3bZYkXjlAmuN+5NSOLaLw0urlDD
- gIIzEN4NU1ASbTgFofoPmErdqjryEXw4lZiHidGxHljcr0HpjM1W4jhCRqg6PkMVtlOPHBMVo
- BtP43zHgCIHxTt9D6clVmw3qfK7yi/kRHby6F4akiIzm6RW1L9GbDycRSmZ/41+tIV3bLfTgq
- jSXRaPlmg2kcqPgrqe1mY2y/cdofpDhXALFHmpgvnsk+p0KND/4O48PHVkAZVZRGETbtgPYKD
- 0j7JjdPVnIA0C7u+GccvOn9/v1+pAlkbMf9TAWE6jc6b5QuyFGTu21xbmLVaM0SbzC28EA5GM
- EzIDK1bAym97aUSIaBCY5qaR0JtSdgtzMqowaMRrzoFZFoTqfHWHOP2lXQBHTqhdJfvXdtTTP
- lzBs3dhlQIibiMZjvRT8qGWFHwLBGFsx/8Y8qLieBaKglxGDD//izqCBcdYijuxAl8eot7q2b
- SX8w39CvjUmKhCDbaThjBgT2iJKhEmNyyJGjUJ7cJVcu5l7eSCgEyUJqdwO+kSiU6CBUf9QKX
- JbgtE+1cZKvdHBSM49/dJwPUePa87/EQLK2XtDvM3S+JKUkiStsXDWd9fG2BtITWrTnTNFPeH
- W3fCCpcUjOS46ScusTYl2IQLd4F3OPO8JvITc6PNzLAFNeP7TtYgmLIoS2B3j3t0gbYA5B5kC
- AQcr0S/FoNq25BXhYyA8tClg==
 
-Am 16.07.24 um 03:43 schrieb Jeff King:
-> On Sun, Jul 14, 2024 at 12:17:09PM +0200, Ren=C3=A9 Scharfe wrote:
+On Mon, Jul 15, 2024 at 4:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->>> Should we be using check_str_loc() in the post-image?
->>
->> Yes, and check_uint_loc() and check_pointer_eq_loc() as well.  Which
->> would be a pain.  Or we drag everything into the macro check_strvec and
->> get the caller's line number for free.
+> Emily Shaffer <nasamuffin@google.com> writes:
 >
-> Is it that big of a pain? It's mostly just passing "loc" along to the
-> relative functions.
+> > If I fudge with the rewrite a little, I get:
+> >
+> > """
+> > Git has a history of providing broad "support" for exotic platforms
+> > and older
+> > platforms, without an explicit commitment. Stakeholders of these platfo=
+rms may
+> > want a more predictable support commitment. This is only possible when =
+platform
+> > stakeholders supply Git developers with adequate tooling, so we can
+> > test for
+> > compatibility or develop workarounds for platform-specific quirks on
+> > our own.
+> > Various levels of tooling will allow us to make more solid commitments =
+around
+> > Git's compatibility with your platform.
+> > """
+>
+> This reads well.
+>
+> > """
+> > Note that this document is about maintaining existing support for a pla=
+tform
+> > that has generally worked in the past; for adding support to a
+> > platform which
+> > doesn't generally work with Git, the stakeholders for that platform are=
+ expected
+> > to do the bulk of that work themselves. We will consider such patches
+> > if they
+> > don't make life harder for other supported platforms, and you may well =
+find a
+> > contributor interested in working on that support, but the Git
+> > community as a
+> > whole doesn't feel an obligation to perform such work.
+> > """
+>
+> The part before "We will consider" reads very well.  The part after
+> that, I haven't formed a firm opinion on (yet).
+>
+> > """
+> > * You should run nightly tests against the `next` branch and publish br=
+eakage
+> >   reports to the mailing list immediately when they happen.
+> >
+> > ** You may want to ask to join the
+> >    mailto:git-security@googlegroups.com[security
+> >    mailing list] in order to run tests against the fixes proposed there=
+, too.
+> > """
+>
+> Looking good, I guess.
 
-That part is bearable.  The pain comes from the need to pass in
-arguments multiple times, for the stringified check description, as part
-of the check result and as separate values.
+It seems like there's not much more in contention from the current
+responses to this thread and v2. I've got a reroll ready with mostly
+wording/formatting changes based on your reply.
 
-It could be mitigated by adding a new macro that takes loc, a, op,
-and b, perhaps called CHECK_UINT_LOC.  That additional evaluation step
-doesn't work nicely with arguments that are themselves macros, though,
-like NULL for string or pointer checks, as those will be expanded,
-changing the message.
+I asked Johannes if he wanted to take a look on Discord[1], it seemed
+like he wasn't interested in doing a full review and doesn't want his
+name on the maintainer list:
 
-> Are the unit tests themselves multi-threaded within a single program?
+me: @dscho did you see
+https://lore.kernel.org/git/20240711232413.693444-1-emilyshaffer@google.com=
+/
+? do you want to be written down as windows maintainer? or does this
+policy differ enough from the way GfW works that it doesn't make sense
+for you?
+[...]
+dscho: That document makes sense for Git, including on the NonStop platform=
+.
+dscho: For Git for Windows, the processes are substantially different,
+for example: not using a Git mailing list but instead GitHub
+discussions, issues and pull requests. Also, there is no seen, next,
+master nor maint. There's main.
+me: yeah, I guess I'm really asking - does this do enough for what you
+need to make your GfW fork work
+dscho: So: Thank you for notifying me and asking; I think it'll be
+fine without my name in it.
 
-No, and check_pointer_eq, check_int, check_uint, and check_char use
-shared global variables to store temporary values (comments rightly
-warn that "this is not thread safe").
+What's next to move this patch forward? Should I be asking around for
+more people to review it? Or do you think it's close enough to ready
+that I should send v3 without waiting longer so you can take it? I
+took a look at DecisionMaking.txt but don't see that there's a clear
+answer; of the people participating in this thread my impression is
+that we have consensus, but there's also not that many people
+participating.
 
-> I'd think not. In which case, I kind of wonder if a simpler pattern
-> would be to just set a global "location" variable (probably as a stack
-> of strings) that all of the individual check functions used. And then we
-> could set it once at the top-level of the test which wants its location
-> reported, and any helper functions that get called in the middle would
-> not have to care. And existing check_foo() functions could use the
-> current file/line location if the stack is empty (so code that isn't
-> using helper functions can remain unaffected).
+ - Emily
 
-That doesn't sound simpler to me, quite the opposite actually.  To the
-point that I don't dare to ask for a demo. o_O
-
-Or perhaps I need to revisit it when I'm no longer tired and hungry.
-
-Ren=C3=A9
-
+1: https://discord.com/channels/1042895022950994071/1156706741875130499/126=
+2827182162575471
+(requires Discord login and Git server membership :/)
