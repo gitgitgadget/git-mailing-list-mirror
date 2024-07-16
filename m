@@ -1,72 +1,112 @@
-Received: from eggs.gnu.org (eggs.gnu.org [209.51.188.92])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E780139D00
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 21:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.51.188.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123DE249F5
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 23:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721166039; cv=none; b=Pz27ZYQU9ik+uEaju6Xrukm2mVa6aklTguxhMJemaP4L9vLMvQ955xcUtedH920dZgLRHI7pTcg5mx4wPPUYr1gfM3I/E3aS/QnKReWOMwd959PtdKRIxyruR+DtmhtpfbklNIniLHE/0S6eNfMWfligjyhp9qvwuT1wiClTHro=
+	t=1721171880; cv=none; b=IhiVdcIR3ijpNIyCB0hY3Q9TD+8fXLCX5sUVRpCvyyhEbV1H+ER/OtK0r9nJgQI64X0o2d7pyDmbeJwVYAtzml3PLCcCRBUaCgBZ7KgC6TiXVaBNtQISE0DmuBFG12gp8BN08Dja7jNiYzJlpgUh7FUXoqSBTKKqmWKijODaYFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721166039; c=relaxed/simple;
-	bh=buApJPshbEtnCMgyStc/bofQVtXP/zPVY2/a2eU7bac=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dZaJtQGIvqUVrb48oGy4m0zw/BDv12hkPSL2OlMlm/3pLMMF0SyCRZhOh0fJlpKJT0md3cDAqMBYcL5x49Iv8evi54+PBNiEFePfkuYSwMCaQqAGjJoLry13aaJg7ty0oa7S+86T98FHKCvTblHWZvzsGzN6eMRg0I8swB/kavw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gnu.org; spf=pass smtp.mailfrom=gnu.org; dkim=pass (2048-bit key) header.d=gnu.org header.i=@gnu.org header.b=f4vQtoX+; arc=none smtp.client-ip=209.51.188.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gnu.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gnu.org
+	s=arc-20240116; t=1721171880; c=relaxed/simple;
+	bh=PNFEp4e9bUa7E/RtEt4SSNWrhSTHSee0mLkpYd8lMqg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eWGXm7GZJbhv3maONGk128Lcv/rsT4noD6tzUkTPAbVbJEup3DF0sH9hzX77gHDpWqj+/cbsof9fZtqfHYM6e2aSUpdhMDFUxTOH69hblBx91KPgeSRqcM0uFI8Z3Ksmi9CR/Dbww01r4TRag1h0HboCAhQurigDQo01thvxpWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UvEZ2I3b; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gnu.org header.i=@gnu.org header.b="f4vQtoX+"
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
-	by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.90_1)
-	(envelope-from <psmith@gnu.org>)
-	id 1sTpuU-0002g0-Q9; Tue, 16 Jul 2024 17:40:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
-	s=fencepost-gnu-org; h=MIME-Version:References:In-Reply-To:Date:To:From:
-	Subject; bh=Bw4k1SdkpSVuQ2Gg3GPvv6qm+tjxTb1S14gYWpt7CXs=; b=f4vQtoX+yP9gQuMwm
-	5stvjjPOqT3Dn3zvfcGEq5ImJC9rEhZmZ07cp6lejrBkiOqyENAeahaLgl1BNw+5Xo1EXxIIt3qwl
-	7qrWJwsFyk6OiWXxyG2d5yC0LcmzBR+1ugHqj55xyrIXM34hHwxyTa5BPtgggJCGIVrVO12Vt9Bdj
-	fYgifxoDMUsOTOH3bCjbFR7OFAYu56r4bBFjZafW1a6RoH/QovssN6ZWONrqGgjzWNTnaJb1wtVs4
-	f0Zw349F3CJGHpX9UOF5+nbwwTFQHEk6KtW4JfPLn1GQImYypVkzaBbJL+t35jdMpvONUka67aR/r
-	vkTnGsgMns2m3WAbw==;
-Message-ID: <d98f82b8b6434c47fc2d9a4ecc870fef336a9e5a.camel@gnu.org>
-Subject: Re: Can dependency on /bin/sh be removed?
-From: Paul Smith <psmith@gnu.org>
-Reply-To: psmith@gnu.org
-To: Andreas Schwab <schwab@linux-m68k.org>, Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Scott Moser
- <scott.moser@chainguard.dev>,  git@vger.kernel.org
-Date: Tue, 16 Jul 2024 17:40:33 -0400
-In-Reply-To: <87jzhlf2i4.fsf@igel.home>
-References: 
-	<CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
-	 <xmqq8qy21k9f.fsf@gitster.g>
-	 <20240715235212.GA628996@coredump.intra.peff.net>
-	 <20240716192307.GA12536@coredump.intra.peff.net> <87jzhlf2i4.fsf@igel.home>
-Organization: GNU's Not UNIX!
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3 (by Flathub.org) 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UvEZ2I3b"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5cebf0b37fcso187303eaf.1
+        for <git@vger.kernel.org>; Tue, 16 Jul 2024 16:17:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721171878; x=1721776678; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j1uPqp0fh3sIF3wG8eBQwaDJVssf8y+Xkb3GmDGjkI0=;
+        b=UvEZ2I3bnyGAwraRu8HWuu7wBJX7Pr1WNIguioabOTo30FL9LiAZyvWYKMQzaIW02X
+         WttTZqR/PotTl2yG0d4NKHztBKV5qn1vegvTtIRo77wE+l8LUcUdUBBbhok3stUabhbD
+         HR1ksj/QvRRIkLE8GmpRfvvFXnh+yFwZgPTdhW4O7zv9lvxtBy3FqNBfTPKtfpzlsvd6
+         RlGkAe0wY+1dTry1ypsaZxyrut2JWu4b15qp1qUUsFTrkPYfhvTUPjC9V4HdU4UfQRFe
+         oBXNquHJRsjANa73VXlimEMJ0CtBAlF7TauP0klrQeJD29RmDKOMnhbhEZYXxiZ72FEg
+         SCaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721171878; x=1721776678;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j1uPqp0fh3sIF3wG8eBQwaDJVssf8y+Xkb3GmDGjkI0=;
+        b=JUYy7Xt4F8KEJ0kJzVZDPTu1wZlgBEF55c+mDxTpyEyDYdYIP4QKkWo1BHhy7A29Uy
+         a4uVVdso003orcEylnqcxeKqpIfPNES8lI7nxYsMpJhapcMlMjFzZvB7AiLTaghxFGzc
+         lWQSIQ45CzgqBcnBZQ6m0LrcQy4q/de+b5Vsj0+KPcCJ7U2wGws5cqL/j4EgNssVRyz9
+         0jxC2H173DXaQVi2gKcSp8gCHd26c9XVlUI6k2JXyje0DC81KbGe7VNDuJkrtet/lJSA
+         4ZiDe7ksETO6xcKRqlR4BFFt8dquE5FX+CIXPr07G9iBucUYhNjTZwSKCA8xPyI8DOK2
+         TvRQ==
+X-Gm-Message-State: AOJu0YzDQLuBPo7kuQ6K5lb5QqHBr6/Q0dhAn4XQjXYMQHd8Tw9O3AVj
+	GvDXpOGWlTMr3Y5jV7dMNxdQk5MVaxiMtG6HPEGhIvUdCVqiL3UiDwApRg==
+X-Google-Smtp-Source: AGHT+IH1SixQDoSc66YobhkaoqENaTsWXskbHbG6IDnaEFzY+a6+MqzTi5N8bRLHNrFhshoCf/PDRw==
+X-Received: by 2002:a05:6359:5f94:b0:1a6:7604:b2bc with SMTP id e5c5f4694b2df-1ac9e6b2507mr11298955d.21.1721171877856;
+        Tue, 16 Jul 2024 16:17:57 -0700 (PDT)
+Received: from thubon.lan ([14.191.223.217])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-78e34f14f53sm5414379a12.51.2024.07.16.16.17.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 16:17:57 -0700 (PDT)
+From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
+Subject: [PATCH] sparse: ignore warning from new glibc headers
+Date: Wed, 17 Jul 2024 06:17:41 +0700
+Message-ID: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.45.2.599.g51c0d632d3b6f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, 2024-07-16 at 23:30 +0200, Andreas Schwab wrote:
-> On Jul 16 2024, Jeff King wrote:
->=20
-> > Again, it's possible that we could detect that no shell
-> > metacharacters are in play and do the word-splitting ourselves. But
-> > at that point I think it should go into run-command's
-> > prepare_shell_cmd().
->=20
-> This is what GNU make does (see construct_command_argv_internal), for
-> performance reason.=C2=A0 But run_command is probably not performance
-> critical.
+With at least glibc 2.39, glibc provides a function declaration that
+matches with this POSIX interface:
 
-Also I would definitely not recommend anyone look at this part of the
-GNU Make code for inspiration.  It's an unholy mess.
+    int regexec(const regex_t *restrict preg, const char *restrict string,
+           size_t nmatch, regmatch_t pmatch[restrict], int eflags);
 
-The concept is very good though.
+such prototype requires variable-length-array for `pmatch'.
+
+Thus, sparse reports this error:
+
+> ../add-patch.c: note: in included file (through ../git-compat-util.h):
+> /usr/include/regex.h:682:41: error: undefined identifier '__nmatch'
+> /usr/include/regex.h:682:41: error: bad constant expression type
+> /usr/include/regex.h:682:41: error: Variable length array is used.
+
+Note: `__nmatch' is POSIX's nmatch.
+
+The glibc's intention is informing their users to provides a large
+enough buffer to hold `__nmatch' results and provides diagnosis if
+necessary.  It's merely a glibc' implementation detail.
+
+Hide that usage from sparse by using standard C11's macro:
+__STDC_NO_VLA__
+
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index bc81d3395032a..4b9daca1dcc58 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1381,7 +1381,7 @@ ARFLAGS = rcs
+ PTHREAD_CFLAGS =
+ 
+ # For the 'sparse' target
+-SPARSE_FLAGS ?= -std=gnu99
++SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
+ SP_EXTRA_FLAGS = -Wno-universal-initializer
+ 
+ # For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
+-- 
+2.45.2.599.g51c0d632d3b6f
+
