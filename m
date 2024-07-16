@@ -1,130 +1,67 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [88.99.235.251])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED8742AB9
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 08:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2C8225D4
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 10:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.99.235.251
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721117045; cv=none; b=HLpsEnDaw7G/KtSPbIlk+y1trqxZ7ncglMYbT/o5IHtXDAYJacAid3GBDssrhQMWO89Fp/XtZ1QfxpmnS+B4eKgt7WriSXgzyYTU7RvVSrMhuQAFsEqjscx89GXgLu9/H7CoyqpU5nZF8Gh3yw6leqIPFd8suYcOGpOmJhMEnpY=
+	t=1721124114; cv=none; b=tlc32y0VHWNMbIUSSWKxNqcHsrs33NdXWPHWBakMwQnTfSmJfPPuR03oAeWEF5RSS4+lR2BcEs5W91pkDTzvUlQN6D/hO6YYnf/kUiJwj7S6mLdA+xOvVqQIBR0UMSEC1Bub7XmK4jS7CNQ3cWix9ZFjbVp8/moiyZVeAHjmoDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721117045; c=relaxed/simple;
-	bh=a+QSKlYjZUY5GEo+QlCuYrxo6PIlKZFnjPbq1HiuA+4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FRD07ZoClPAnGqT4fK9mm3g8agR6o+RcG8w4HfRN7w3eLPivHspq0rj1ePLvoMmmQ0us0jk+c1FVcCjUC8VmoQgKzN67FATw0lDmsG4EHIfHWF7ILSfl86ugrn5n1cKjmsaVXtNZedljg7kqhiHyTbduziMWOjRWkhwLa2ZYlg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MV4uUniz; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MV4uUniz"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52e99060b41so5322745e87.2
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 01:04:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721117041; x=1721721841; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5P7w3U/fCA2xgzZvLat+EoMLcMIWimRze864J0pQpGw=;
-        b=MV4uUnizZGqCUE+stiMuPzSRTFtfn3nWZ/v+LJmMUstTpE4SUij5vRPDshOlAynD9x
-         tupKWc4RNB/wtVrz+tlXUWW7vH1SBhuOUSj3afIkNCk/WsV0aLdbBk0ax3JVnPxQKmq1
-         VbnUD0i3IP3DW4sTKBD77NewYQWxsQe9ARbFYEj5MUkL7vAcQk8unloVJ96P6z6gcGH6
-         qy82/IMCNsG4z4EVACwO7m7acszqFZLfLblrM4nB28i1eXm9OoQ2YZ281mhKzHioUhP3
-         /jCdetJ+bitrcKvPss5VczgNV973OX0qenp7ewIYq2PNERd2M1VBvOlHVhnQOgsNGFtv
-         0vXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721117041; x=1721721841;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5P7w3U/fCA2xgzZvLat+EoMLcMIWimRze864J0pQpGw=;
-        b=iTgnJkjchokyMRi5E9sl/g56E7sX3nbCSrU91ePdImUJjzCg896hWjhCqB4tVjepAX
-         H9HkCheZGeHEJtzA+9AXmXn/uLbvpXnU1FRBpdf0e5YVGnjJW/7ckmvNkTiMY5laWxm6
-         1ztQSkT6Qnugmo7HNxlu+Un8BFAcjuf/GpYQruY4306dxMyvc4vQgGWdkuQoTMh3v88f
-         37vwnGb5VgvFqKStDITf+ZxNlxaHjjSIh/zyw0irdL/Q4ykZXmdx1vH6Vk8iezXaLCzt
-         Jbx1aDISrKrKRzO96bqpW1owlbYT6y3U4UgN0dv3c+UTwhQVAd8tEL3mLvkse0DSA0/D
-         11Mg==
-X-Gm-Message-State: AOJu0YzwIVDm0+5iif7rciR7vEVm6bVQVC7tDWa8BDEdl65NUB7RNGWX
-	wm0x2eXuvBMvuzpOsGMMDnoplQ06cTyFyr/0hSNXVDlo2fjfx5zn51jKjQ==
-X-Google-Smtp-Source: AGHT+IHy/LkPx2ikFbMcEb7d35w4KNwJ6JF8YSyrSsZ48N8Mr9HOpf4vvPP6nPwzfrSoErs1o3W3wg==
-X-Received: by 2002:a05:6512:110b:b0:52b:c0cd:7312 with SMTP id 2adb3069b0e04-52edf02ca52mr815161e87.49.1721117040844;
-        Tue, 16 Jul 2024 01:04:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59eaaee1c97sm933784a12.28.2024.07.16.01.04.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 01:04:00 -0700 (PDT)
-Message-Id: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
-From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 16 Jul 2024 08:03:59 +0000
-Subject: [PATCH] Fix to avoid high memory footprint
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1721124114; c=relaxed/simple;
+	bh=Tq7iOMwyMvSYgmtkDi6vT5uOP+sJQKhjYojwhKjsBqo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=h8dh7rcZfOswzyDajrzwe6+8s/CPR7Mftd3/Smi09zHFA5XsZKHaw6HNjGrNOS3e9XytqCHUVUUqMTHvM3+lYTGXnhMsqP+HgrjHJouX2caLx3SKdsrlY4izSDII+rUCGBNySHodyM+93eMoK7R/UlunjjJjlQrKSYel+Qle6n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eworm.de; spf=pass smtp.mailfrom=leda.eworm.de; arc=none smtp.client-ip=88.99.235.251
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eworm.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leda.eworm.de
+Received: from leda.eworm.de (unknown [194.36.25.21])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx.mylinuxtime.de (Postfix) with ESMTPSA id 12EA2268F27;
+	Tue, 16 Jul 2024 11:56:00 +0200 (CEST)
+Received: by leda.eworm.de (Postfix, from userid 1000)
+	id C45F21841CA; Tue, 16 Jul 2024 11:55:59 +0200 (CEST)
+From: Christian Hesse <list@eworm.de>
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Christian Hesse <mail@eworm.de>
+Subject: [PATCH 1/1] refs: update the version numbers...
+Date: Tue, 16 Jul 2024 11:55:44 +0200
+Message-ID: <20240716095544.65931-1-list@eworm.de>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Haritha  <harithamma.d@ibm.com>,
-    D Harithamma <harithamma.d@ibm.com>
+Content-Transfer-Encoding: 8bit
 
-From: D Harithamma <harithamma.d@ibm.com>
+From: Christian Hesse <mail@eworm.de>
 
-This fix avoids high memory footprint when
-adding files that require conversion.
-Git has a trace_encoding routine that prints trace
-output when GIT_TRACE_WORKING_TREE_ENCODING=1 is
-set. This environment variable is used to debug
-the encoding contents.
-When a 40MB file is added, it requests close to
-1.8GB of storage from xrealloc which can lead
-to out of memory errors.
-However, the check for
-GIT_TRACE_WORKING_TREE_ENCODING is done after
-the string is allocated. This resolves high
-memory footprints even when
-GIT_TRACE_WORKING_TREE_ENCODING is not active.
-This fix adds an early exit to avoid the
-unnecessary memory allocation.
+... as they were one off.
 
-Signed-off-by: Haritha D <harithamma.d@ibm.com>
+Signed-off-by: Christian Hesse <mail@eworm.de>
 ---
-    Fix to avoid high memory footprint
-    
-    This fix avoids high memory footprint when adding files that require
-    conversion
-    
-    Git has a trace_encoding routine that prints trace output when
-    GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment variable is
-    used to debug the encoding contents. When a 40MB file is added, it
-    requests close to 1.8GB of storage from xrealloc which can lead to out
-    of memory errors. However, the check for GIT_TRACE_WORKING_TREE_ENCODING
-    is done after the string is allocated. This resolves high memory
-    footprints even when GIT_TRACE_WORKING_TREE_ENCODING is not active. This
-    fix adds an early exit to avoid the unnecessary memory allocation.
+ refs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1744%2FHarithaIBM%2FmemFootprintFix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1744/HarithaIBM/memFootprintFix-v1
-Pull-Request: https://github.com/git/git/pull/1744
-
- convert.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/convert.c b/convert.c
-index d8737fe0f2d..e765bcd53d6 100644
---- a/convert.c
-+++ b/convert.c
-@@ -324,6 +324,11 @@ static void trace_encoding(const char *context, const char *path,
- 	struct strbuf trace = STRBUF_INIT;
- 	int i;
+diff --git a/refs.h b/refs.h
+index 0ecba21b4a..b3e39bc257 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1087,10 +1087,10 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+ 				    struct strbuf *err);
  
-+	// If tracing is not on, exit early to avoid high memory footprint
-+	if (!trace_pass_fl(&coe)) {
-+		return;
-+	}
-+
- 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
- 	for (i = 0; i < len && buf; ++i) {
- 		strbuf_addf(
-
-base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
+ /*
+- * The following functions have been removed in Git v2.45 in favor of functions
++ * The following functions have been removed in Git v2.46 in favor of functions
+  * that receive a `ref_store` as parameter. The intent of this section is
+  * merely to help patch authors of in-flight series to have a reference what
+- * they should be migrating to. The section will be removed in Git v2.46.
++ * they should be migrating to. The section will be removed in Git v2.47.
+  */
+ #if 0
+ static char *resolve_refdup(const char *refname, int resolve_flags,
 -- 
-gitgitgadget
+2.45.2
+
