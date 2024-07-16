@@ -1,83 +1,105 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C6919DF5B
-	for <git@vger.kernel.org>; Tue, 16 Jul 2024 14:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126AC19AD6B
+	for <git@vger.kernel.org>; Tue, 16 Jul 2024 15:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721140584; cv=none; b=ugAJgub/hWhpgdA2aWmcGH8BTnJXFLMlmEB9eTh4BzUj0drLwHrAQcjllRZNQdeJG2dtmYpHZyfRrPU025rkvPqys8jVHegzbPAnFrJlZEFO5tAFe1yv14FRHlB2yBA1Dub8SNlrtFS2aYvtpCxHp4dKgzc6Wgx1idkZ71VMER4=
+	t=1721142973; cv=none; b=rv3+0leviYAUc3byCxL3wFRmpYMxhKKN8+VJ/Si0f0Ufy6DQw3r/Eo0v6bV6FGAyY3EhTpMPVZmbJ9jabP8YhQn+Cuv4RI4bF8xWm5K+OPV23v5BY2pBDghC2JZOYBGopdeerJ9tOoPpSxsjxYIoRgmAnLRhR9KUOdxP+qayrAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721140584; c=relaxed/simple;
-	bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TE2IzVptKQbEVT8/ryWDz6kRO8OgidUdKX2wDctFiHhwiMX1mFTupZtBz0R51CgQxFcoQhGccgLEb3GGJ/np7M4G1VgAa4oq3DZpxJWAP4vOotp6oICIWHe2A2d8ykIH19Ev4rnGx6VIbcUybFM6IhFkPLoHwIWsWBOYtU+Rg6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J25D1YHT; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721142973; c=relaxed/simple;
+	bh=a6CzHEliF8tEXpAm2Moxxjy3LlOlkRaDR6QBE0texqY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=prhUHqC68KcmYpUWodnMN3BTLAeSC1LwQUzmoz4MMQl5+59CrPLzpuuRhGPJSXXvD6i9sqWnDH9fWMZRkkjs1Bp7ylIByqThdqlzf1BrbUQuGvfa0bcvoRbMP9A23qRDmWHeKnKU7bdNoB7RN+tePdn53UCVg9jYguBY2tITYSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=LHSkcBxv; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J25D1YHT"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2c980b55741so3699970a91.2
-        for <git@vger.kernel.org>; Tue, 16 Jul 2024 07:36:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="LHSkcBxv"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fbd1c26f65so31511185ad.2
+        for <git@vger.kernel.org>; Tue, 16 Jul 2024 08:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721140582; x=1721745382; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
-        b=J25D1YHTXH/dRCTseZ5IZRqTpLqbkijBVzKpfNmnyrp6OLtsY7UQNleIFpHAQHSuDK
-         d5oJh9Y2X4sF1+94/jEWkdad5rnJJlMs7USSAW8IdwX+w+o9o7+51tvhZPc3hC8gMzGF
-         qDw+Vu9sr/RgQNnIvnZOXYtWt7IFPFZxEU4w6CnGozgE5JK4PjQZg45cPgxivfmZsq1J
-         K+XvbeHhEm8CY+fPliEmsACTTXO+nKHU7r0SiAMLZuMupaAFVNdtCwxEXuGgkf5/+QaZ
-         H8XXDjVb1yMGuFmyAEQ6FOkYZDYKYs80bQK/+3E07rWwhC9jlI25pnHtbgNN/goBlv3K
-         Yb6w==
+        d=github.com; s=google; t=1721142971; x=1721747771; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tH0kohYfN/MznaLn50fXl4bcawXzLZeKqkzBDll4Qww=;
+        b=LHSkcBxvi9N+5G1mX8Tf6TdTTX3je2tCaIAeJy73RJQAX+VEKUCQg04jsgGpbd+v3c
+         aDLOzoYglpit2gdfASeROU8I747/Q9eNy0ZW4r4/fYKUvTPBlKy8O88S0rLMY5ontRK9
+         yiG5mduAqMNHdRXmQlqnq/VvlwaF4rkYOSQsHfflgH9+qHb0Lb4AV8LZSY9NnumexZMv
+         C9k9ACaJQMMatT2g+wmR7MURxTfuE4+ZW+JWz5iBnHVmLQj7J+/0F4XHdD525uMnFLHL
+         207hHcr0XJz1hhvOHWT8b2Vs3EcR8OLEbH+LTnIPkaO0rXYZjnG4XFGwi+GnZYfDxS3C
+         +ESg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721140582; x=1721745382;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/lwsXWEzlMebSzYy4w/0C2KvIl8raL5EiKiHJV7H0WQ=;
-        b=JbopTL64dBWLS7APs7YPVK/MiAT71j7qF2JptrsRBd2UpcEcq23cKMFpjGOgXvulp1
-         6bCQfHRJflKoJiSUCUJNFuFaX/Ed292S+5GTde+tyYklmtv/YCju9f8xHzDcjmhwWlu7
-         ksgsVJjoyvSZixy09xjPxzsaN9FD1BX5Whm662QADs71SrFb9OpWq6HtI+Ybisu7Ut54
-         6/9Bt92/03YaMlbwO7TLYizratgwt5i4nTuc4Bseu3BZx/JOfgPpkuV1beiRm2pLA9Nr
-         OYp1jTe9C0HnK0G8obQ0oRbInjqXb1A6bmPFKxbtu3tG1DwV4MBVJuZA6cMr4E9styPS
-         Wz0w==
-X-Forwarded-Encrypted: i=1; AJvYcCU4MWucHpPFJRDKJ0o09HQBrV+wI6ZbaC9Ejm+JoBaVlSORF741AlGcEtLCN+RpwPYLLxuO0t4ppEfSQ7V8Mleqe1lM
-X-Gm-Message-State: AOJu0YySsrcpLIsshMbNSDVORHmEI2JfpIRKbwepT4X41a7maceYJtJ3
-	iDW7q0HgBEswbAnwTNpgdLdK+XDOqTe9tLCKeGk6E2y/y90yfFl+9p8VUhyV2jE=
-X-Google-Smtp-Source: AGHT+IFha8UijSPeSIxX7CB0Vfce33rz6WsLTA7YO+RsD90lY+4CSxUG+riESa5JKUBhSLY2LGpBvA==
-X-Received: by 2002:a17:90a:1541:b0:2c8:da73:af82 with SMTP id 98e67ed59e1d1-2cb36cb72e2mr2041103a91.10.1721140582150;
-        Tue, 16 Jul 2024 07:36:22 -0700 (PDT)
-Received: from localhost ([2401:4900:1c80:9ba1:2b04:8394:274b:70f0])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2cacd7037d6sm8369696a91.53.2024.07.16.07.36.19
+        d=1e100.net; s=20230601; t=1721142971; x=1721747771;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tH0kohYfN/MznaLn50fXl4bcawXzLZeKqkzBDll4Qww=;
+        b=xG9ZR29kGGXlxWi9OPeSHrOQGcIys07vyOtwCuw59boDymMCQ1HioUYn/aHjFOFMtH
+         Yz5r7zpys09CoCFSrdJ2Q7DNN2r4ZKahv7VNEH0MDoAlq8CnXJOq45MGkQypCb2LQv1d
+         nzudi6ljHTv8FuqyL3I+w+u5L+y+StasEtK72VLKoWcUQxH2SxZbhmBmjaxOw3ry4r+c
+         iGmkiqyI7nCJoj92Ff1YEonulHvAR0BoSs9KN8ZrYYyVf4xgXzSY7kcVy0EY3oLwli4q
+         EcUMdFOsFvVcW+rUKDCTfd7rmD/K5vu8NqrcJj/s12ls1FrRr8mzjY9QSAUvz+eY82z+
+         G1Mg==
+X-Forwarded-Encrypted: i=1; AJvYcCWGX/zbSuYCLcmpWiuaA3k8R+c2UklkI9LOCaLtPRCgm0QOH0lCDqmfxOiJ/jEVLnp47zTgj3mSAMIoByxujLcEXknA
+X-Gm-Message-State: AOJu0YzTuWxQSC+7JBUrS4zRulw/DUCR+alv6Y8t4QbDaRNaa87yQbwM
+	no67mz1qr8CPGV9s5iqhkD185T0aRYTGWIRkbNonrf0qAOgBVnGa3mvR8a1W
+X-Google-Smtp-Source: AGHT+IGpcwk9HZFoe9WGZeGlFpc7aOf0sJt0AqOKCYweGhCqCs0wAko2pD+EpthFobqRSSrgPTg+iw==
+X-Received: by 2002:a17:903:1248:b0:1fb:83c5:cf8a with SMTP id d9443c01a7336-1fc3caba2dfmr23966265ad.8.1721142971274;
+        Tue, 16 Jul 2024 08:16:11 -0700 (PDT)
+Received: from [192.168.50.41] (syn-172-091-184-234.res.spectrum.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc4ff05sm59450815ad.274.2024.07.16.08.16.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jul 2024 07:36:21 -0700 (PDT)
+        Tue, 16 Jul 2024 08:16:10 -0700 (PDT)
+Message-ID: <047b889e-fa6d-4c4a-b486-0bc80922c4ca@github.com>
+Date: Tue, 16 Jul 2024 08:16:09 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Jul 2024, #04; Fri, 12)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqbk31b6le.fsf@gitster.g>
+Content-Language: en-US
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqbk31b6le.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 16 Jul 2024 20:06:17 +0530
-Message-Id: <D2R1EXZ6J9OU.JE9SD5PBQ5MR@gmail.com>
-Cc: "Christian Couder" <chriscool@tuxfamily.org>, "Kaartic Sivaraam"
- <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC] Blog: Move existing tests to a unit testing framework
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>, <git@vger.kernel.org>
-References: <uhysopkwfeucsptx4n2jgase2duqhckcgujiyobqd3xw6ioez3@wv2vpethsjre> <D2GPA4L6OZG5.17BQVOVDLS672@gmail.com>
-In-Reply-To: <D2GPA4L6OZG5.17BQVOVDLS672@gmail.com>
+Content-Transfer-Encoding: 7bit
 
-Hey everyone,
+Junio C Hamano wrote:
+> * vd/mktree (2024-06-20) 17 commits
+>  - mktree: remove entries when mode is 0
+>  - mktree: allow deeper paths in input
+>  - mktree: optionally add to an existing tree
+>  - mktree: add directory-file conflict hashmap
+>  - mktree: use iterator struct to add tree entries to index
+>  - mktree: create tree using an in-core index
+>  - mktree: overwrite duplicate entries
+>  - mktree: validate paths more carefully
+>  - mktree: add a --literally option
+>  - mktree.c: do not fail on mismatched submodule type
+>  - mktree: use read_index_info to read stdin lines
+>  - index-info.c: parse object type in provided in read_index_info
+>  - index-info.c: return unrecognized lines to caller
+>  - update-index: generalize 'read_index_info'
+>  - mktree: use non-static tree_entry array
+>  - mktree: rename treeent to tree_entry
+>  - mktree: use OPT_BOOL
+> 
+>  "git mktree" has been rewritten, taking advantage of the cache-tree
+>  API.
+> 
+>  Will merge to 'next'?
+>  source: <pull.1746.v2.git.1718834285.gitgitgadget@gmail.com>
 
-My Blog posts from past two weeks can be found here:
+Please drop this series; I haven't had any time to work on it since your
+latest comments, and likely won't for the foreseeable future. If I do find
+some time to address those comments, I'll resubmit the series.
 
-Week 6: https://spectre10.github.io/posts/gsoc_week6/
-Week 7: https://spectre10.github.io/posts/gsoc_week7/
+Thanks!
 
-Let me know if you have any feedback!
-
-Thanks.
 
