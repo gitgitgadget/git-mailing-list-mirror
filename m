@@ -1,58 +1,41 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7211E4A6
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 17:20:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C83186289
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 18:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721236848; cv=none; b=Ooz9HQysFwHylApHl1JZl/qsIU0dMoubbAKpFu+Twj1aSdqBTD7FvdkwalgOeOng86pPv01kYK/t6Vlma9KdeVgWZinkHk1xYSzc8IBZeWBzw67vWWwSbVLzsRyaCfPRGFUPNhw66OWU/Jqme3VQq7AwOJpiVitlpsd+YCAjFdM=
+	t=1721239737; cv=none; b=gFIfR6fK++DWkSzDJUirv9wcfwfdOiwVEqfwDybHCMubu4g39Im/9374PgtONjJD3wPb+CMSs2/bu2RWakP8nI/woQbPAViZ7WdZU4/0KQtqhD3loC29AvGgxeOYQl3clEpwGX0ZOpscMBWTqjI6uaerARWLZM+43FAVXXEOAB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721236848; c=relaxed/simple;
-	bh=asj0918QInPIPw/wWv4cL6sFDL/oJS+pm3I1VKzuAzY=;
+	s=arc-20240116; t=1721239737; c=relaxed/simple;
+	bh=JpsNe7rwKL7srJxawLlp4ZLHYpjG5w8+5T5ArcN9Wn0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pbWgVRYP+MT5HZgenLqOSckYLp/thiq5pPUf5DELxYdvocU7Nc0ZPTtz2A/WBBjk0wY15k1mxHy++fJYiRe3JkchMllCwkQPpOpIPMgY7E+L0fur3B2X4NIoFHEEU3u7jQ4qKZKFn79DpY1hJWo19pbxy3t+Rf/WVmKKIl5nowU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hA5D0AgX; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=jKF3LW6aBZrbWZRNbLw4QdSDKUfsOMLDMxJ3q0zje7jbk2a0hkKa2/v5vIJq9PR/F9BLSXtvyVPJDFvg1jRoBLJZr8qPuXuLN/10jVFtk7kDqiBAbKqGiCWXGfR6x4zUqTTwdze7uMsZI2UXqdRYjhSL7nvjmcRZQIilXZRfZbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ke8duFIt; arc=none smtp.client-ip=84.93.230.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hA5D0AgX"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70b1207bc22so5906570b3a.3
-        for <git@vger.kernel.org>; Wed, 17 Jul 2024 10:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721236845; x=1721841645; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FX2ta0A7ImfJ/Kb9EzSkhLNTp/WRNMm6vBif/b56EkA=;
-        b=hA5D0AgXw1njP+1f+oLS0sQVitbZ6kPje+HY0WO5JchI0td9VtBMGZB42hazF9QcAf
-         wYcDqlxcbo1JgXHvpsUgK3wTx1FH+OY+ukoNpWFvrAN9xQy7g5D0URX2iE2D0roM3v1g
-         AWw8w26pc+bc43Z2BHWN31s6oOivST4I4c/b6zjhdpiqtrA56kMhCVI5nuqPTsA1JgWM
-         tyhpodQo/v1iCK+rhD4WtNBTU0ZX/kMf+KMuObLA0KCAVWOdjiwfR/DP28NmNlv7uef3
-         broEi+LZ0DkQ0qSPyoxAp+B2rR7V2IOHgzgE/BPCvngit+uR776+K4+W0WukmMDBco1b
-         r7Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721236845; x=1721841645;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FX2ta0A7ImfJ/Kb9EzSkhLNTp/WRNMm6vBif/b56EkA=;
-        b=wQPxgtT1kVGikXap1fnf7dcUdx6YBZgIbGbRco8nmADDNclOblAk011VKOtk+764zh
-         3BL5kkH8mRmm76VfA6lVKeGlZs7gkrYH0pHkk86z/cTkcfc/HOobYQgsY+lSznDxSZqK
-         sCvd/r3DBWmNM3sBSnHgZA3weuBn9h4Bm2Ab6G2BINWzGjNoVWxJiglmxztUHax5PPxZ
-         5YHCEYd+C0kFbAGsLsciy+KFxwvbnZje121WWFZn+s+o4Cct/aFobeVqqf/Mnj8XQ1Vm
-         znlRpOji71gS5CxGgEYg801opisd4bTRSTIdTMZvVkOh5sdP+hjCA0LtanAmMYF8oaJu
-         5+KQ==
-X-Gm-Message-State: AOJu0YyrOen0wMYgO7Z+DBeIXxzlJZmpEFyndeMXyX7xYQFVLlxw0GI9
-	/uNloHzUxHOu2m3HywgHM4nG501b3sUWGkrbHng8cSFN+PRrUUJRMaYakw==
-X-Google-Smtp-Source: AGHT+IFnVzTUkFY1y7AS21M9F6YMEj/y/4U4OyR8EYgkrIgU/dPvj1r40kSYDdfAgfeh6ZmjoxbfmQ==
-X-Received: by 2002:a05:6a21:e8f:b0:1c3:ff33:2471 with SMTP id adf61e73a8af0-1c3ff332722mr2677945637.8.1721236845347;
-        Wed, 17 Jul 2024 10:20:45 -0700 (PDT)
-Received: from gmail.com (29.238.148.210.bn.2iij.net. [210.148.238.29])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc271a9sm77944265ad.172.2024.07.17.10.20.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jul 2024 10:20:44 -0700 (PDT)
-Message-ID: <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
-Date: Thu, 18 Jul 2024 02:20:42 +0900
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ke8duFIt"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id U927s8AOxH4nFU928sEzHO; Wed, 17 Jul 2024 19:05:45 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1721239545; bh=0ZAltQaDXkwTOsRL115cIbVIc5V57LyuYAAsgWkoFZw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ke8duFItJz/+4mwtUrXwP0Uv0AEy0oymMxh1BGqKOGcEc/q2lTjR/jeftTdn/lDtg
+	 5TJYYrffQquNCZAgqzru+iOPEabpcJbGvGrEHnaHUQ1XMOKkt2UTsOxMGsalI0y6h4
+	 LTE/uWPwt5gupJNWGDk1bCdhw6INKNFocnd62YqS5pp2NSREMa7vicBu7CtoNtajUT
+	 UCVX1Tqf0xSnwFgVc3eUgGH7M5hccEL5OqWNTKYsTPnJiZlKzq+2pB4WCSlFpcltzM
+	 HJd6yVGXETRXrHzlsMqqzBkYeDxp3fmxhOGKAjotqaZoWdHPXOPisrFvNS+703W8A/
+	 d6rsuMJKDx3Zg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=f5frB/yM c=1 sm=1 tr=0 ts=669807f9
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=c0QyLF2oPcprBvbjclwA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
+Date: Wed, 17 Jul 2024 19:05:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,65 +43,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
- Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
- <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqttgqyzwa.fsf@gitster.g>
+Subject: Re: v2.46.0-rc0 test failures on cygwin
+To: Jeff King <peff@peff.net>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Adam Dinwoodie <adam@dinwoodie.org>, Junio C Hamano <gitster@pobox.com>
+References: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
+ <20240717064241.GF547635@coredump.intra.peff.net>
+Content-Language: en-GB
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20240717064241.GF547635@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfIYQm5nH44cXQLIOcXQSWa7R6/LaIMKU+ta/qpX4S63IMH0qZpSbnRviSV2v6Dnv6Aksti7+YtZg0WNhshacLKpIOoOLg9XNIVJ89loLDomUrNLf+x84
+ Paqe6sbir+NplRLo7e8eV9tP5bKuuBx9G13IJpU01Yhk3HfkEolkIRFmqUbIiPsyLYCEfB05N2nU/Ut2MMPtfWox9TVCTOLWdXg=
 
-Squashing this fixes the test:
 
---->8---
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c60589cb94..bb360c92a0 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -616,7 +616,12 @@ test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
- 	test_when_finished "rm -f huge_file; git reset" &&
- 	printf "\n%2500000s" Y >huge_file &&
- 	git add -N huge_file &&
--	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
-+	test_write_lines P q |
-+	(
-+		GIT_PAGER="head -n 1" &&
-+		export GIT_PAGER &&
-+		test_terminal git add -p >actual
-+	)
- '
----8<---
+On 17/07/2024 07:42, Jeff King wrote:
+> On Tue, Jul 16, 2024 at 08:45:48PM +0100, Ramsay Jones wrote:
+> 
+>>   error: could not link file '.git/ref_migration.sr9pEF/reftable' to '.git/reftable': Permission denied
+>>   migrated refs can be found at '.git/ref_migration.sr9pEF'
+>> [...]
+>> Now try to finish the migration by hand:
+>>
+>>   $ mv .git/ref_migration.sr9pEF/reftable .git/reftable
+>>
+>> Hmm, note no error; of course, the mv command may well do much more than
+>> the rename() library function, so they are not necessarily equivalent.
+> 
+> This is a shot in the dark, but: could the problem be an open file that
+> cannot be moved? If I run a "ref migrate" on my Linux system in the
+> debugger and stop at move_files(), checking /proc/<pid>/fd shows an open
+> descriptor for .git/ref_migration.WnJ8TS/reftable/tables.list.
 
-However, this error has exposed a problem: calling `wait_for_pager` if
-`setup_pager` hasn't worked is an issue that needs to be addressed in this
-series: `setup_pager` should return a result.  I was planning to do that
-in a future series, for the other commented command: `|[cmd]`.
+Heh, a very good shot in the dark! ;)
 
-I'm wondering if the best way to proceed here is to revert to: 
+> Does the patch below fix things for you? I'm not too familiar with the
+> code, so this is what I cobbled together.  The best response will be
+> from Patrick, but I think he's offline for another week or so. In the
+> meantime, this at least doesn't crash for me. ;) And I confirmed that
+> the tables.list file is closed during the move_files() call.
 
-diff --git a/pager.c b/pager.c
-index 5f0c1e9cce..5586e751dc 100644
---- a/pager.c
-+++ b/pager.c
-@@ -46,6 +46,8 @@ static void wait_for_pager_atexit(void)
+The patch given below fixes the test for me! (I have only run t1460-refs-migrate.sh,
+since the full test-suite takes 6 hours to run, but now all 30 tests pass!)
 
- void wait_for_pager(void)
- {
-+	if (old_fd1 == -1)
-+		return;
- 	finish_pager();
- 	sigchain_pop_common();
- 	unsetenv("GIT_PAGER_IN_USE");
+I also don't know the code well enough to answer your question regarding
+the re-opening of the migrated ref-store, but it doesn't look like it would
+cause any problems (famous last words).
 
-Which resolves the problem.
+Thanks!
 
-This was a change already commented here:
+ATB,
+Ramsay Jones
 
-https://lore.kernel.org/git/3f085795-79bd-4a56-9df8-659e32179925@gmail.com/
+> ---
+> diff --git a/refs.c b/refs.c
+> index bb90a18875..06a0fc5099 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2843,6 +2843,12 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+>  		goto done;
+>  	}
+>  
+> +	/*
+> +	 * Close the new ref store to avoid holding on to any open files
+> +	 * which could interfere with moving things behind the scenes.
+> +	 */
+> +	ref_store_release(new_refs);
+> +
+>  	/*
+>  	 * Until now we were in the non-destructive phase, where we only
+>  	 * populated the new ref store. From hereon though we are about
+> @@ -2874,8 +2880,13 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+>  	 */
+>  	initialize_repository_version(hash_algo_by_ptr(repo->hash_algo), format, 1);
+>  
+> -	free(new_refs->gitdir);
+> -	new_refs->gitdir = xstrdup(old_refs->gitdir);
+> +	/*
+> +	 * Re-open the now-migrated ref store. I'm not sure if this is strictly
+> +	 * needed or not. Perhaps it would also be a good time to check that
+> +	 * we correctly opened it, it's in the expected format, etc?
+> +	 */
+> +	new_refs = ref_store_init(repo, format, old_refs->gitdir,
+> +				  REF_STORE_ALL_CAPS);
+>  	repo->refs_private = new_refs;
+>  	ref_store_release(old_refs);
+>  
+> 
