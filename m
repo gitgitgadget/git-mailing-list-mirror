@@ -1,105 +1,144 @@
-Received: from mail-cbf-ext.charite.de (mail-cbf-ext.charite.de [193.175.73.208])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B590719A
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 09:12:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.175.73.208
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF7E1878
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 10:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721207527; cv=none; b=qwXwLXS1M07+OqYze/bfMtoO4xhz7A7nl5l3ebeSRp75nE6VmRjbEU4w8zFxwK8geiJnMFllSgZGEfBLcnvolFoFkDO6varaXD2vkwnoJzO6A9c+41tLFo2Ak1I9EV6ZJGEuSbXVKy9Dh3UHvFYoLv0T6MmXq9iMWjzzYA/nXIM=
+	t=1721213699; cv=none; b=MoYHLd49w4vwmXK0dvZNseUcPBUmOwJrV9A11e+hH0Q+mpGmA9e0C4Akq5+GcB4xV4MpVuWp3HTv6N17yFfgOFFlFVcxbND/y2ZVuNwffQzIIjFctXkeZ3wYCeLlBIbnFklxmF7NPtgm44vx2LAJT1eTUMrFct/YJkd80cpaGDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721207527; c=relaxed/simple;
-	bh=vtAClbJ8LGLExiq1ryFAW3C7cKWCKPUk3oyYW7wQ+kM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aYbnOvo+C3FfLFOFEkHUVSfKhuGX7SrbJI5CIywpA2Qwv6dH7jI0MKQpbRVbm5YHmkDIq7zc6kmanfE/49SGT3lqqWQde/MQAj4eqD3D9Mef6EjPYXH+USnP4QenOwuaI+qAerRXCSynQob8/r8F0OxgDuoEsdEhBAd0mINQQug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=charite.de; spf=pass smtp.mailfrom=charite.de; dkim=pass (1024-bit key) header.d=charite.de header.i=@charite.de header.b=tRXZch7S; arc=none smtp.client-ip=193.175.73.208
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=charite.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charite.de
+	s=arc-20240116; t=1721213699; c=relaxed/simple;
+	bh=tVjb3dG1j1I32QNK/whwjg9370I7gz8qttirIiLfKTQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dsGDs8slw1tYDCMCXfvxqTgu6+CYPLnaCvI0kivPo8uP+1t28MBRxJxCeJVF8baqKXowvDLmqvoafpKiiH4IpQg1m0Vm08T8qC/C93xhgWMbt0KVZix65OMbQP5O6BJkFo+OqXSW6web86wpNpZGUbo65n24SRqFLkOFwa7rq90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UY2jnDZf; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=charite.de header.i=@charite.de header.b="tRXZch7S"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=charite.de; s=jun2018;
-	t=1721207515;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DZelI2P7ipY8AY1XjdlIG1Na0z+ea+CictHS8EmHTYM=;
-	b=tRXZch7SajbHhh208+KcXpWE4Yj7blmMdGMk2wv4Mw4dD16PGUzDF1UnvswMLTkgTY/3E1
-	F8UdcbCu+mLRb2ICCSCPKeAG47a564ILzyOMNzpZ9UrvtMnVN9CxyGgHK8DGHqpXVphtFC
-	QHrx6AfBOXloj1evC6+4XmEa83jBnB4=
-Received: from [172.29.16.135] (vpn-16-135.vpn.charite.de [172.29.16.135])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out-sv.charite.de (Postfix) with ESMTPS id 4WP9DW0m2Kz6p;
-	Wed, 17 Jul 2024 11:11:54 +0200 (CEST)
-Message-ID: <0a20d825-3430-4397-962c-a6b5e94d70eb@charite.de>
-Date: Wed, 17 Jul 2024 11:11:54 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UY2jnDZf"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52ea1a69624so7082608e87.1
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 03:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721213695; x=1721818495; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AODXixjIjv6/J2hx6hfcRojSXmh+EiFeJZ85SzjOSdE=;
+        b=UY2jnDZf9q+ZPmuXGuWjOm3qcOFc7jB6abH3MAm6hwiLhfVGVFSdZ+9+2pk0afmZ5E
+         Oev01hieGmqarlrFp8MIDjEiRZx8TyvtsuvwKiXoS6Mxls9MtOyFi3OzSbZqGX30Mf0C
+         q/IWXRCy4ZWSvFNjfYiCmU2yXLic0Wxfm57DahC46n8Z+vSgclIdNsajbHUcMW1sgPTe
+         EqNDAZjeoq1KoRnGA7m6zN5zUuMLA+03SOj08Em7897XIRw496KXjntETJzr5GpJ2le2
+         MJBdxUlUowrAjcBvwNOstXvT0K297aD0o0Oiv0YSYR9Xyd29RIY0Iu9ueXr7NtpfWRbK
+         zDRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721213695; x=1721818495;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AODXixjIjv6/J2hx6hfcRojSXmh+EiFeJZ85SzjOSdE=;
+        b=NbrpMPEMvve3iYyoBDO3E6NItXKmIYkuTd69PSMJC8sAUzRRh1WOz6Vft6xRlzmYH+
+         D5EJ7OZY7lE/FZse7+nFGzG2Zn7INCSrqc6tDb9nvigkHZIIwSyICMm9mGANC5RsFyz9
+         dMOnsRfwlpkDfzZpE6GosPlMJYUdlX/zEFzD8eYJYiQbMcLhytmhHiR/0w9BXTnyk+vW
+         m+Plrg1qjF+glKrtdXUUkGLH7w1TKH2S2lHUKkxySHw1Gyf4X+7PyLa1Kg6k56f46Lzk
+         LN1vs/wFHXJT/VbH3S7zHwgRvIl4STFmLfBd40gpzXimCq9o8H4SMtwzWMWdccckl6Yq
+         /kBQ==
+X-Gm-Message-State: AOJu0YwVWvmfDdM2ZW7i4NVn26XYgaxwDrtQkDDoe7LagtVpG/UAblaa
+	sQfq304BDBI2PIqRyqh9fW99MfEilUANKBhVZDGOjdIq7TGk6frb8lnRhg==
+X-Google-Smtp-Source: AGHT+IEvbxEpRXCEJkegF88E9mVpNsEk7ODJeSSVou9lsR7KxFXjjPfqjPjG/YFIsZeDaOBJjSq67Q==
+X-Received: by 2002:a05:6512:33cb:b0:52c:e556:b7e4 with SMTP id 2adb3069b0e04-52ee53bc52fmr940156e87.15.1721213694898;
+        Wed, 17 Jul 2024 03:54:54 -0700 (PDT)
+Received: from localhost.localdomain (78-67-21-133-no600.tbcn.telia.com. [78.67.21.133])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed24e1d33sm1440162e87.44.2024.07.17.03.54.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 03:54:53 -0700 (PDT)
+From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] Documentation/gitpacking: make sample configs listing blocks
+Date: Wed, 17 Jul 2024 12:54:28 +0200
+Message-ID: <20240717105432.2801097-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.46.0.rc0.321.g44c27ab58a
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [ext] Re: bug: `git pull` does not clean up after itself if it
- fails
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-References: <0cc13c53-1d8d-4501-89f2-e8329bc95485@charite.de>
- <20240717055549.GD547635@coredump.intra.peff.net>
-From: Nikolai Zaki <nikolai-waleed.zaki@charite.de>
-In-Reply-To: <20240717055549.GD547635@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Peff,
+This document contains a few sample config snippets. At least with
+Asciidoctor, the section headers are rendered *more* indented than the
+variables that follow:
 
-thanks for your reply. You're right, the problem happens during merge.
+       [bitmapPseudoMerge "all"]
+    pattern = "refs/"
+    ...
 
-Since merge already aborts if the index doesn't match HEAD though, 
-couldn't it be as simple as saving the state of the worktree and then 
-either restoring it in case of failure or applying the diff in case of 
-success?
+To address this, wrap these listings in AsciiDoc listing blocks. Remove
+the indentation from the section headings. This is similar to how we
+handle such sample config elsewhere, e.g., in config.txt.
 
-In terms of git commands I think the following would work:
+While we're here, fix the nearby "wiht" typo.
 
-When `git merge` is run first run `git stash --all` then `git merge` as 
-usual.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ These buglets were introduced in faf558b23e (pseudo-merge: implement
+ support for selecting pseudo-merge commits, 2024-05-23) as part of 
+ tb/pseudo-merge-reachability-bitmap.
 
-If there are non-conflict errors: `git checkout .` and `git clean -f;
+ Documentation/gitpacking.txt | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-If there are no errors `git stash pop`.
-
-
-On 7/17/24 07:55, Jeff King wrote:
-> On Mon, Jul 15, 2024 at 01:19:32PM +0200, Nikolai Zaki wrote:
->
->> What did you do before the bug happened? (Steps to reproduce your issue)
->> In your local repo have a directory that you cannot write to.
->> Pull from a remote that has changes/new files in that directory.
->>
->> What did you expect to happen? (Expected behavior)
->> The pull fails and the local repo in the same state as before.
->>
->> What happened instead? (Actual behavior)
->> All changes to writeable files are applied and all new files in writeable
->> dirs are added.
->> The local HEAD however remained the same.
->>
->> What's different between what you expected and what actually happened?
->> A failed `git pull` inadvertently creates changes and untracked files.
-> A pull is basically fetch followed by merge. So I'd expect us to fail in
-> the merge step, at which point pull would generally leave the state
-> as-is, because merge failures tend to be conflicts.
->
-> So I guess doing what you expect would require a merge which hits a
-> non-conflict error (like an unwriteable directory) to clean up after
-> itself. That's probably not impossible, but it may be rather tricky,
-> especially if we are concerned about unrelated changes in the working
-> tree.
->
-> -Peff
+diff --git a/Documentation/gitpacking.txt b/Documentation/gitpacking.txt
+index 4a6fcba6f7..321154d4e6 100644
+--- a/Documentation/gitpacking.txt
++++ b/Documentation/gitpacking.txt
+@@ -143,14 +143,16 @@ include::config/bitmap-pseudo-merge.txt[]
+ Suppose that you have a repository with a large number of references,
+ and you want a bare-bones configuration of pseudo-merge bitmaps that
+ will enhance bitmap coverage of the `refs/` namespace. You may start
+-wiht a configuration like so:
++with a configuration like so:
+ 
+-    [bitmapPseudoMerge "all"]
++----
++[bitmapPseudoMerge "all"]
+ 	pattern = "refs/"
+ 	threshold = now
+ 	stableThreshold = never
+ 	sampleRate = 100
+ 	maxMerges = 64
++----
+ 
+ This will create pseudo-merge bitmaps for all references, regardless of
+ their age, and group them into 64 pseudo-merge commits.
+@@ -159,8 +161,10 @@ If you wanted to separate tags from branches when generating
+ pseudo-merge commits, you would instead define the pattern with a
+ capture group, like so:
+ 
+-    [bitmapPseudoMerge "all"]
++----
++[bitmapPseudoMerge "all"]
+ 	pattern = "refs/(heads/tags)/"
++----
+ 
+ Suppose instead that you are working in a fork-network repository, with
+ each fork specified by some numeric ID, and whose refs reside in
+@@ -168,12 +172,14 @@ each fork specified by some numeric ID, and whose refs reside in
+ fork) in the network. In this instance, you may instead write something
+ like:
+ 
+-    [bitmapPseudoMerge "all"]
++----
++[bitmapPseudoMerge "all"]
+ 	pattern = "refs/virtual/([0-9]+)/(heads|tags)/"
+ 	threshold = now
+ 	stableThreshold = never
+ 	sampleRate = 100
+ 	maxMerges = 64
++----
+ 
+ Which would generate pseudo-merge group identifiers like "1234-heads",
+ and "5678-tags" (for branches in fork "1234", and tags in remote "5678",
 -- 
-Best,
-Nikolai
+2.46.0.rc0.321.g44c27ab58a
+
