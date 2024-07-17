@@ -1,146 +1,98 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8151836D8
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 19:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C515F1CF90
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 20:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721246272; cv=none; b=Sj74Y997y3M8kRSRL9+Iyc1WO82vhQTUoMQTLRTK5oN9k2/Tka96TCZaFxGG5m461DQs/xJIE2+Pf571I57hRxz7l5Q/5L9EnLfuPM64CsVLv+y1QbanDYfH926pN2yElTqjTyarS36d906kKeXxsWA9R3SoNUNENPOTC7VrGp8=
+	t=1721246639; cv=none; b=o+HNM6J1Rw9htKGAL6kl4U5sqo89gr7TOoZfZ1okd6ZsqW6A9Yv0YVTSwH90s/EnNvxMJxi7uW67RUnZOLEZJa9TtFQC4OB6CnX7ujnfSdlxL3ZkJhGIq5EPCxIODvD7C+FLK9gU1gmTSMJnFTki+nMduqkRf92IpdZ3CaUwd6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721246272; c=relaxed/simple;
-	bh=A9zTyEn1z8U/y4m6EUFixEY3YlRMFDegWDsv0N9HLEY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iOugT5dECrV8bn0anmLvvECmlhRuBrd6RgUUVCFNkb2AOL1XdyNvRvSYgbuqoX13s162RbA4fKbsDkPHhYa8quBc3Qf8matjX/EoRvC2EABfEr40FYW36loaxKhhzhbiz9j27TL2/ZjE+B/Aupy/q98DLcOIU2Id0OhJukMjqB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZPtRNlB; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721246639; c=relaxed/simple;
+	bh=7OEZcTA2LqEd9Cpcltrxwg0RU+jKXhuUpkkyR8KAsJY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MVuWwUQwq7ZNJEeqyEc5sCUs939shBxWV3hp7JQkld/n+4tGCSs+qWdkoP/ZNct94qhagqZhY218OBpChre18yf/QGJZCbsNGEKjVaiSMNGyd1SQhFaUCgfRFUvFqg8KOv69dSA/nZrrV1HAqURLU4KZRq/NhOoliC3S6OY8HnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bCoHEd5D; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZPtRNlB"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-36796a9b636so48234f8f.2
-        for <git@vger.kernel.org>; Wed, 17 Jul 2024 12:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721246269; x=1721851069; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NjZVSqo752Dye64HvgR1tCBp8HywQDVYJVj0q6yc06E=;
-        b=VZPtRNlB3x/UGaIj3e08uxnwZM/5hiWVhFZn7bOEq5GEOnU2aamiqNtEVvU/BuTSwE
-         CSH+gbPvfgPLIPXrNrmSBi7ufQ0amsJPQPpgY3i1eFahzGOAZH0JLvqfHiNDKuaZTtXs
-         XO7/U9A1zGl/jYfNg+LwmOzlCojCIPV28DkmxCfHA+LkAuyrAtEyilViCQfH76Bw4S2T
-         +6WqxUhoGn7QAImdetuU27/uHBNT41DFyF+1leHNDFPTPYfoZh0cv1vAVLYBVlpcqQQ4
-         FcbgnnTAlxA51RetWWZsIDq0lyNe10cv+6WzSOfPe+KI2aYt7ihmODZOm+SeudWgHtYe
-         3KOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721246269; x=1721851069;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NjZVSqo752Dye64HvgR1tCBp8HywQDVYJVj0q6yc06E=;
-        b=dov/TdUv22O+1u6ga47K4mIos6jTfDveTi6XzHGFNenAjFzJL+y3QEeedcAhfU3JEt
-         PzJVZG59uhyJZC/NxqkRcbw8TPJUBHZRFs3GUARrh5lgNcHrAAspTw6n75xiKs0BgO9M
-         p9kZetIcV9DGrFXokDLM9RpX983NgEJ/cSLkxh6AgQ/bEk260FUoXZHlMJdegCi3cqMd
-         0X70oRMKV96zR0WvtA1AVFRFGLiXvhSCL8e9XG47k/dA63oggeB9/p6XO6VMFkOSdGsV
-         XlY6IpxdPVKd1/LdksczKHs/Hp1IKGUc7bk+r/34zkNbjgrqNi3NY0GeXvwyTNjQ1N5v
-         gtjg==
-X-Gm-Message-State: AOJu0Yzh+3+ragLBcr6MzLMgvAxTKwmVLp9OvE9FDlh4vGuSJ3v3b+1T
-	/h/nq+IwNrZbY8s67LqcKQvH1wn7fUElyiOufwwBCijC8LSU/CHolmzzCg==
-X-Google-Smtp-Source: AGHT+IG7+G0wPO1JlZ4qGwlMNrjJdFOH6FkwhvCPhadNjdzRM3MpLxA/9nHklzY4yzZCWjXF7Y3k1A==
-X-Received: by 2002:a5d:5919:0:b0:362:2111:4816 with SMTP id ffacd0b85a97d-368317768ccmr1773223f8f.55.1721246268819;
-        Wed, 17 Jul 2024 12:57:48 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427c780c9d5sm8559885e9.38.2024.07.17.12.57.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jul 2024 12:57:48 -0700 (PDT)
-Message-Id: <10e240202f79a0f50edf47391389c4e0892edf41.1721246266.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1747.git.git.1721246266.gitgitgadget@gmail.com>
-References: <pull.1747.git.git.1721246266.gitgitgadget@gmail.com>
-From: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Jul 2024 19:57:45 +0000
-Subject: [PATCH 2/2] git-svn: use `svn:global-ignores` to create .gitignore
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bCoHEd5D"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FE67192B1;
+	Wed, 17 Jul 2024 16:03:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7OEZcTA2LqEd9Cpcltrxwg0RU+jKXhuUpkkyR8
+	KAsJY=; b=bCoHEd5DD4t5kQNfS6amsyzIgEtBWnnx3IOmqd5vCOT73RoGid/vKJ
+	m6wY92t6xgtefDydMTuUjQbQICj4hvTr2P4tmVq79mx7XoSAj6z2F+R+ajCVhlMM
+	HiVBDlsNAKM8XK/r1tw57T0L9u4LdpI6u84y7nRCQU4ooTYB9coTU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95BC4192B0;
+	Wed, 17 Jul 2024 16:03:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED3CB192A6;
+	Wed, 17 Jul 2024 16:03:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: phillip.wood123@gmail.com
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,  Dragan
+ Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+In-Reply-To: <88f9256e-04ba-4799-8048-406863054106@gmail.com> (phillip's
+	message of "Wed, 17 Jul 2024 20:39:12 +0100")
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+	<1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com>
+	<xmqqttgqyzwa.fsf@gitster.g>
+	<2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+	<88f9256e-04ba-4799-8048-406863054106@gmail.com>
+Date: Wed, 17 Jul 2024 13:03:54 -0700
+Message-ID: <xmqqfrs723bp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alex Galvin <agalvin@comqi.com>,
-    Alex Galvin <agalvin@comqi.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B2982F38-4477-11EF-9A0F-965B910A682E-77302942!pb-smtp2.pobox.com
 
-From: Alex Galvin <agalvin@comqi.com>
+phillip.wood123@gmail.com writes:
 
-Signed-off-by: Alex Galvin <agalvin@comqi.com>
----
- git-svn.perl | 45 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+>> -	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
+>> +	test_write_lines P q |
+>> +	(
+>> +		GIT_PAGER="head -n 1" &&
+>> +		export GIT_PAGER &&
+>> +		test_terminal git add -p >actual
+>> +	)
+>
+> That's surprising, why does running git in a sub-shell stop it from
+> segfaulting?
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b0d0a50984b..a2a46608c9b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1279,12 +1279,20 @@ sub cmd_show_ignore {
- 	$gs->prop_walk($gs->path, $r, sub {
- 		my ($gs, $path, $props) = @_;
- 		print STDOUT "\n# $path\n";
--		my $s = $props->{'svn:ignore'} or return;
--		$s =~ s/[\r\n]+/\n/g;
--		$s =~ s/^\n+//;
--		chomp $s;
--		$s =~ s#^#$path#gm;
--		print STDOUT "$s\n";
-+		if (my $s = $props->{'svn:ignore'}) {
-+			$s =~ s/[\r\n]+/\n/g;
-+			$s =~ s/^\n+//;
-+			chomp $s;
-+			$s =~ s#^#$path#gm;
-+			print STDOUT "$s\n";
-+		}
-+		if (my $s = $props->{'svn:global-ignores'}) {
-+			$s =~ s/[\r\n]+/\n/g;
-+			$s =~ s/^\n+//;
-+			chomp $s;
-+			$s =~ s#^#$path**/#gm;
-+			print STDOUT "$s\n";
-+		}
- 	});
- }
- 
-@@ -1315,16 +1323,25 @@ sub cmd_create_ignore {
- 		# which git won't track
- 		mkpath([$path]) unless -d $path;
- 		my $ignore = $path . '.gitignore';
--		my $s = $props->{'svn:ignore'} or return;
- 		open(GITIGNORE, '>', $ignore)
- 		  or fatal("Failed to open `$ignore' for writing: $!");
--		$s =~ s/[\r\n]+/\n/g;
--		$s =~ s/^\n+//;
--		chomp $s;
--		# Prefix all patterns so that the ignore doesn't apply
--		# to sub-directories.
--		$s =~ s#^#/#gm;
--		print GITIGNORE "$s\n";
-+		if (my $s = $props->{'svn:ignore'}) {
-+			$s =~ s/[\r\n]+/\n/g;
-+			$s =~ s/^\n+//;
-+			chomp $s;
-+			# Prefix all patterns so that the ignore doesn't apply
-+			# to sub-directories.
-+			$s =~ s#^#/#gm;
-+			print GITIGNORE "$s\n";
-+		}
-+		if (my $s = $props->{'svn:global-ignores'}) {
-+			$s =~ s/[\r\n]+/\n/g;
-+			$s =~ s/^\n+//;
-+			chomp $s;
-+			# Global ignores apply to sub-directories, so they are
-+			# not prefixed.
-+			print GITIGNORE "$s\n";
-+		}
- 		close(GITIGNORE)
- 		  or fatal("Failed to close `$ignore': $!");
- 		command_noisy('add', '-f', $ignore);
--- 
-gitgitgadget
+Yeah, it indeed is curious.  
+
+The rewrite resolves another iffy point in the original---you are
+not supposed to attempt a one-shot assignment to the environment
+variable when you are running a shell function, as that is not
+portable.  And the above rewrite is a common way to fix that.
+
+But still, yes, it is curious why the original segfaults.  Is there
+some race there and having a subshell shifts the timing, or
+something?
+
+> My worry was that this would paper over a bug as we shouldn't be
+> calling wait_for_pager() without setting up the pager
+> successfully. How easy would it be to fix the source of the problem?
+
+;-)  Nice to see people trying to do the right thing.
+
+Thanks.
