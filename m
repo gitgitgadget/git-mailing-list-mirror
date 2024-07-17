@@ -1,76 +1,94 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E51A181B8E
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 15:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0231D69E
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 16:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721231339; cv=none; b=plekyHSpwso3V3hd3eH0+1SdRfWBDMiMPbqxhrh26tbnY946+IE9y16k+imLn7YlGvQHjfhnmsbIXBV2FRsKUF28NAeDX61iCXcHWZrbJO9v/qzQ8xI+yebibfuCbaFhJ4H20EqnA1/yFJ6C8AWEWVuOQpbkmjJ68KSmtQwUpIU=
+	t=1721232328; cv=none; b=qtk1GrHQHXGhgUxeXKZx3QKdfn/U3lrYQb89htqiZh4D55k5jeV93AE8YEiS2jK7u/Fi1/5HM0J3exZP0U7KW6PgZZdplvOZQnaUpAkSQ0TU1tqgrc6CRDEK5D1MJCuhNbrEvTcBrlPcLnmjq5odnfSqEcO1x5+GDEobrUg4zPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721231339; c=relaxed/simple;
-	bh=0Z7R2cfi1w/S711e0sJLo7iHixrhi5Fl15KsxU9edFU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ox2iMC2ig3m/WAkE3LLtzLdrl1efVGHfAkNY5oexBNJJXPrxSajaSgQem9qPjSwBamWUuLm7/AZfo7jt61MarjJkpeYJtab/bRVQ46SfcKsjKe28bvTEX3aZbD4MLzT8zAey/VDlbf5xJIFvoESY+Z4BY4RTXli4BASUGWg8Be8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nhR7Knyi; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721232328; c=relaxed/simple;
+	bh=ZJBafaOAbcs3YQ0fz3Y6esMxDohjqCiaxvc8U74h5Xw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mId6rjPHnGPnSIIkMQfqdtCy82oUUQ2e/G3gVq5+1WJWVKQYkDCtJwjKxFU5hs4DR1cHk2BzwDJetQ1dytOjXtq/6OEMwzeOZHhG5wR9AYzc/QWlU3x9ZPL0A4Cm/Cp8U9qY+gEhLGOToeBiaKmErCH5HpGDCXGVCloG3jgFDAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ttx2Jjjn; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nhR7Knyi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B37920406;
-	Wed, 17 Jul 2024 11:48:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0Z7R2cfi1w/S
-	711e0sJLo7iHixrhi5Fl15KsxU9edFU=; b=nhR7Knyi7bhlGikzKpijfy9VRoDQ
-	Qg4SM/ZJYfIgm7pWr9GwNCNXY5nQP17JVKGofYa90KH3FTJiUbNqqJblwgRfhCpG
-	ElnfqSCoz2yWchjsHLh+PAyEnv4FP9Mq2xJruAjGlLobgp+CuXlcSuw9DkNNPjIt
-	TiZk2EJ+sDQpeR4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15EB820405;
-	Wed, 17 Jul 2024 11:48:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FC5320404;
-	Wed, 17 Jul 2024 11:48:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] Documentation/gitpacking: make sample configs listing
- blocks
-In-Reply-To: <20240717105432.2801097-1-martin.agren@gmail.com> ("Martin
-	=?utf-8?Q?=C3=85gren=22's?= message of "Wed, 17 Jul 2024 12:54:28 +0200")
-References: <20240717105432.2801097-1-martin.agren@gmail.com>
-Date: Wed, 17 Jul 2024 08:48:55 -0700
-Message-ID: <xmqq4j8o589k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ttx2Jjjn"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fc47abc040so7185295ad.0
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 09:05:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721232326; x=1721837126; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CDhC1KASRnZ7GWzCMWMIJNl+UB3BlXipOLLDAmzTJiI=;
+        b=Ttx2Jjjn5Uo8N7L+ReO+ztAzvMpu5wCx9B1fRM75fwxUscf5vu/5nacEBxIDarMMin
+         ZjckZlRlB6Lan5fDO1Cq5KDCTrBhhdyM39e1GBpJuCtXcNKviBvvenZhQ0LyY9DJuaey
+         +wanCap3RKYw5tYbG+CdbUKNRKbBgkNQzMgQEnb+A43ssc1Tvz2q13PyrSxk+vsjNMct
+         gH0lG/pX6+oM0oZCru0ROQX/EbPLIzMclHtvTpn2SffVzi9AlW2ZXnU1lBHd18WZlXBJ
+         BA4rTO9vZ+HnDS9NXhFCaPwnDAZb1K1VbsEAHQk+G6Ru82y063jvrMkKVs1iMiTgT2v/
+         KmRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721232326; x=1721837126;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CDhC1KASRnZ7GWzCMWMIJNl+UB3BlXipOLLDAmzTJiI=;
+        b=UZlF/mcBilYAxL0w5iHGWDajY6pIugpdp3avunHijxowNZC2h10sg073aY+JNQ4IAY
+         ZxzMlyFjCDwOKqzPYJfB/CcfErN+MmCoIEOmVTC2ebcWp9Pp6CZoMj7GlZBvOUkbHQyy
+         PFdTXAgYWmDoEMA/HXBlqkfXOk2efDzolcBMeORgUPS5KHBPmiJpT8mbwnmg1ONkbqhq
+         OJDXDVWwlfBbo8Rha2Xemn98PGliLFnWwR5rZmzOHzVJjmQ2S8PMM12+o3O/KL8zIvsy
+         PrztAM1bYdOF4LgAK2KVkk0+xXzrHFMfvPr3m6cxVjQhB7sANgVZAo+Qcg7Z8cLFI/hl
+         /2xA==
+X-Gm-Message-State: AOJu0Yyi73WfPjdyg3flFaz0PwAkP8BROegC5z4oVC07NBG3p9/entDg
+	E79ScHKW6aZVhqAMAs3c8ckZCLgTnwv9153o/LpOro8GE7M0PX9iKvnGcFxEqZg+rCMCOuSKb4k
+	7CSGSuCNIj7WyqsIdYHDEcWCoHqUKJaPK0Z8=
+X-Google-Smtp-Source: AGHT+IHxPlpt8/JEo0jROyJQ2d0kZSUsKpDcBXQBdWmAAt47f6gd3m+DHtzuoHeopghkvXj8cFV99OQxq0jOGTq0GWs=
+X-Received: by 2002:a17:90a:bf85:b0:2c9:815a:80cb with SMTP id
+ 98e67ed59e1d1-2cb527b5aeemr1583312a91.21.1721232325636; Wed, 17 Jul 2024
+ 09:05:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 1355E91A-4454-11EF-A378-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+References: <xmqqikxnqzz4.fsf@gitster.g>
+In-Reply-To: <xmqqikxnqzz4.fsf@gitster.g>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Date: Wed, 17 Jul 2024 18:05:13 +0200
+Message-ID: <CANiSa6hs1AEp1e+o0hT55DvCwPe2EUyU1EXg1E4BKCkeuEOPvw@mail.gmail.com>
+Subject: Re: [PATCH] checkout: special case error messages during noop switching
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Thanks! (This is a fix for a bug I reported internally at work.)
 
-> To address this, wrap these listings in AsciiDoc listing blocks. Remove
-> the indentation from the section headings. This is similar to how we
-> handle such sample config elsewhere, e.g., in config.txt.
+On Tue, Jul 2, 2024 at 10:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> While we're here, fix the nearby "wiht" typo.
->
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  These buglets were introduced in faf558b23e (pseudo-merge: implement
->  support for selecting pseudo-merge commits, 2024-05-23) as part of=20
->  tb/pseudo-merge-reachability-bitmap.
+> "git checkout" ran with no branch and no pathspec behaves like
+> switching the branch to the current branch (in other words, a
+> no-op, except that it gives a side-effect "here are the modified
+> paths" report).  But unlike "git checkout HEAD" or "git checkout
+> main" (when you are on the 'main' branch), the user is much less
+> conscious that they are "switching" to the current branch.
 
-Thanks, will queue.
+Yes, that's exactly what happened to me. I should have used `git
+restore` instead. I know that's the modern way of updating paths, so I
+don't know why I didn't think of it. I just verified that `git restore
+--ours <path>` works for restoring a conflicted file to my side.
+
+> [Footnote]
+>
+>  * Yes, the end-users are irrational.  When they did not give
+>    "--ours", they take it granted that "git checkout" gives a short
+>    status, e.g..
+
+I actually did not even know that it does that :) I'm a bit surprised
+that it does, especially since `git checkout <non-HEAD>` doesn't seem
+to do that. But that's off topic.
