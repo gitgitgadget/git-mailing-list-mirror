@@ -1,114 +1,124 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D8822EEF
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 17:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7211E4A6
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 17:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721236073; cv=none; b=kLXsxyESEuDRLJ4jcwVXLpBd22CWjXWGi1d62JmGpVe21WcF7J/8cO1AvJ/1r56VIcOGgLBuRy3oO7nVpzbKy1t3404ZaCt3cjlBEsE1MruaqKF57Y0gQjQeyLRliNpS3qE1tXapQns8MbQ2af0n98ZR+qsC6QRQgpJlZPCK0BU=
+	t=1721236848; cv=none; b=Ooz9HQysFwHylApHl1JZl/qsIU0dMoubbAKpFu+Twj1aSdqBTD7FvdkwalgOeOng86pPv01kYK/t6Vlma9KdeVgWZinkHk1xYSzc8IBZeWBzw67vWWwSbVLzsRyaCfPRGFUPNhw66OWU/Jqme3VQq7AwOJpiVitlpsd+YCAjFdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721236073; c=relaxed/simple;
-	bh=3dQ3BVqcC+pCf+iKzFX22EmvX0U2i2NhYNvz+vnonwI=;
-	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Subject; b=T/0XKh104JNMQ9jbi3D9B0KZpLh8FTIxpE6F0xCnFWrHEghChSCb2aIa2b7GC2eIusdQriWH+15UnTS5YBMGja/jYo0TsR5UBQy/TkCqIfmYv1ZVZGrL8xaoiq4SEpH1KDboe7I3hseNS9xSQd4JWtuxKzgZaQNK4iiS5jxbHj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=nrg8fpzB; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	s=arc-20240116; t=1721236848; c=relaxed/simple;
+	bh=asj0918QInPIPw/wWv4cL6sFDL/oJS+pm3I1VKzuAzY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pbWgVRYP+MT5HZgenLqOSckYLp/thiq5pPUf5DELxYdvocU7Nc0ZPTtz2A/WBBjk0wY15k1mxHy++fJYiRe3JkchMllCwkQPpOpIPMgY7E+L0fur3B2X4NIoFHEEU3u7jQ4qKZKFn79DpY1hJWo19pbxy3t+Rf/WVmKKIl5nowU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hA5D0AgX; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="nrg8fpzB"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=g.chiark; h=DKIM-Signature-Warning:Subject:To:
-	Date:Message-ID:Content-Transfer-Encoding:Content-Type:MIME-Version:From:
-	Sender:Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=UaPgT7qn0gafoo5oPCoV4NgjfMlM+FSAhnAtsCypGLY=; b=nrg8fpzBEFNB
-	NXKXviUMVk0RuYo5duDaHzGkvBLyYYLwT9a7jnKyW1ybVJHS2LCZG5LFYbapqzetAME7tnp/so7vM
-	D2foWLV2o5goTm35zzln8FdXXGiMOSjVgYQwjIFvEZHIX9/U2CrFeyfA+kjNNAnRPyuztIqaaxPeW
-	CmYRtZF+c4Wu/889uUG1SIbm+pLiwZRMpsq7T4b5R0YlOLIFw31GkrI7If7A0jC0g2esqON8MSHMB
-	aea9Wpvj0GeTwRzoDrjcSOQsPzWK2X1THWPb58nUrmmjPhf+5AgRzPmfuz70n4I11uBsSRm9ib0nU
-	gXk/D0LZmIlTlk3Y+wH9Cw==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1sU7ZM-0004MI-0L
-	for git@vger.kernel.org; Wed, 17 Jul 2024 17:31:56 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hA5D0AgX"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70b1207bc22so5906570b3a.3
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 10:20:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721236845; x=1721841645; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FX2ta0A7ImfJ/Kb9EzSkhLNTp/WRNMm6vBif/b56EkA=;
+        b=hA5D0AgXw1njP+1f+oLS0sQVitbZ6kPje+HY0WO5JchI0td9VtBMGZB42hazF9QcAf
+         wYcDqlxcbo1JgXHvpsUgK3wTx1FH+OY+ukoNpWFvrAN9xQy7g5D0URX2iE2D0roM3v1g
+         AWw8w26pc+bc43Z2BHWN31s6oOivST4I4c/b6zjhdpiqtrA56kMhCVI5nuqPTsA1JgWM
+         tyhpodQo/v1iCK+rhD4WtNBTU0ZX/kMf+KMuObLA0KCAVWOdjiwfR/DP28NmNlv7uef3
+         broEi+LZ0DkQ0qSPyoxAp+B2rR7V2IOHgzgE/BPCvngit+uR776+K4+W0WukmMDBco1b
+         r7Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721236845; x=1721841645;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FX2ta0A7ImfJ/Kb9EzSkhLNTp/WRNMm6vBif/b56EkA=;
+        b=wQPxgtT1kVGikXap1fnf7dcUdx6YBZgIbGbRco8nmADDNclOblAk011VKOtk+764zh
+         3BL5kkH8mRmm76VfA6lVKeGlZs7gkrYH0pHkk86z/cTkcfc/HOobYQgsY+lSznDxSZqK
+         sCvd/r3DBWmNM3sBSnHgZA3weuBn9h4Bm2Ab6G2BINWzGjNoVWxJiglmxztUHax5PPxZ
+         5YHCEYd+C0kFbAGsLsciy+KFxwvbnZje121WWFZn+s+o4Cct/aFobeVqqf/Mnj8XQ1Vm
+         znlRpOji71gS5CxGgEYg801opisd4bTRSTIdTMZvVkOh5sdP+hjCA0LtanAmMYF8oaJu
+         5+KQ==
+X-Gm-Message-State: AOJu0YyrOen0wMYgO7Z+DBeIXxzlJZmpEFyndeMXyX7xYQFVLlxw0GI9
+	/uNloHzUxHOu2m3HywgHM4nG501b3sUWGkrbHng8cSFN+PRrUUJRMaYakw==
+X-Google-Smtp-Source: AGHT+IFnVzTUkFY1y7AS21M9F6YMEj/y/4U4OyR8EYgkrIgU/dPvj1r40kSYDdfAgfeh6ZmjoxbfmQ==
+X-Received: by 2002:a05:6a21:e8f:b0:1c3:ff33:2471 with SMTP id adf61e73a8af0-1c3ff332722mr2677945637.8.1721236845347;
+        Wed, 17 Jul 2024 10:20:45 -0700 (PDT)
+Received: from gmail.com (29.238.148.210.bn.2iij.net. [210.148.238.29])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc271a9sm77944265ad.172.2024.07.17.10.20.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jul 2024 10:20:44 -0700 (PDT)
+Message-ID: <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+Date: Thu, 18 Jul 2024 02:20:42 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
+ Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <xmqqttgqyzwa.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <26263.61947.950592.361959@chiark.greenend.org.uk>
-Date: Wed, 17 Jul 2024 17:31:55 +0100
-To: git@vger.kernel.org
-Subject: git subtree bugs (mishandled merges, recursion depth)
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/ad/add64bdf8e770171c60b2aa901328b04.pem
 
-I have what ought to be a fairly straightforward situation that
-git-subtree seems to be mishandling.
+Squashing this fixes the test:
 
-Steps to reproduce:
+--->8---
 
- git clone https://gitlab.torproject.org/tpo/core/arti.git
- cd arti
- git checkout 01d02118cdda30636e606fc1a89b3e04f28b8ad1
- git subtree split -P maint/rust-maint-common
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index c60589cb94..bb360c92a0 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -616,7 +616,12 @@ test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
+ 	test_when_finished "rm -f huge_file; git reset" &&
+ 	printf "\n%2500000s" Y >huge_file &&
+ 	git add -N huge_file &&
+-	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
++	test_write_lines P q |
++	(
++		GIT_PAGER="head -n 1" &&
++		export GIT_PAGER &&
++		test_terminal git add -p >actual
++	)
+ '
+---8<---
 
-Expected behaviour:
+However, this error has exposed a problem: calling `wait_for_pager` if
+`setup_pager` hasn't worked is an issue that needs to be addressed in this
+series: `setup_pager` should return a result.  I was planning to do that
+in a future series, for the other commented command: `|[cmd]`.
 
- git subtree (hopefully fairly rapidly) prints a the commitid of the
- tip of a branch suitable for merging back to the upstream repo, which
- is at https://gitlab.torproject.org/tpo/core//rust-maint-common
+I'm wondering if the best way to proceed here is to revert to: 
 
- The resulting history ought to have a few dozen commits,
- most of which are the upstream history of the subtree.
+diff --git a/pager.c b/pager.c
+index 5f0c1e9cce..5586e751dc 100644
+--- a/pager.c
++++ b/pager.c
+@@ -46,6 +46,8 @@ static void wait_for_pager_atexit(void)
 
-Actual behaviour (git 2.45.2, Debian amd64 1:2.45.2-1 .deb):
+ void wait_for_pager(void)
+ {
++	if (old_fd1 == -1)
++		return;
+ 	finish_pager();
+ 	sigchain_pop_common();
+ 	unsetenv("GIT_PAGER_IN_USE");
 
- $ git subtree split -P maint/rust-maint-common
- /usr/lib/git-core/git-subtree: 318: Maximum function recursion depth (1000) reached
- $
+Which resolves the problem.
 
-Actual behaviour (git 2.20.1, Debian ancient 1:2.20.1-2+deb10u9):
+This was a change already commented here:
 
- Takes a very long time.  Everntually produces an output commit
- which has most of arti.git#main in its history.
-
-Notes about the source repository:
-
- The state of arti.git:maint/rust-maint-common is the result of the
- following:
-   (i) create a new rust-maint-common.git, and add and edit files
-     (many of these changes came via gitlab MRs, there are merges)
-   (ii) in arti.git, `git subtree add`, and make further changes,
-     to files both within and without the subtree
-   (iii) Make a gitlab MR from (ii) and merge it into arti.git#main.
-     (resulting in a fairly merge-rich history)
-     https://gitlab.torproject.org/tpo/core/arti/-/merge_requests/2267
-
-A workaround:
-
- If I check out main^2 (01d02118cdda30636e606fc1a89b3e04f28b8ad1^2)
- and run git-subtree split using the ancient version of git, it still
- takes ages, but the output is correct.  So the old version of git has
- a bug meaning it can produce higly excessive output, when merges are
- present.
-
- This workaround is only available because right now the history of
- the subtree's files, within arti.git, is fairly simple.
-
- With the new version of git, I get the "recursion depth" error,
- regardless.
-
-Thanks for your attention.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+https://lore.kernel.org/git/3f085795-79bd-4a56-9df8-659e32179925@gmail.com/
