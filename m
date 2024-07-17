@@ -1,62 +1,62 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D211836C2
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 19:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8151836D8
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 19:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721246271; cv=none; b=LUlfjZFl93lHwJXyiQqnsdek7RGpy58bKlqa9BIBRFNAVIA7eZXTneTUw4v1a+T0dyP753C8REPCjTJYgcKCvGa076OmEHaX94kYTNbOpSYN9CWg0RTusTiOOKW/L7V488VYrzIPw/WUBBFZvYCWBYpEqZJzhzmW5m97bY7HIis=
+	t=1721246272; cv=none; b=Sj74Y997y3M8kRSRL9+Iyc1WO82vhQTUoMQTLRTK5oN9k2/Tka96TCZaFxGG5m461DQs/xJIE2+Pf571I57hRxz7l5Q/5L9EnLfuPM64CsVLv+y1QbanDYfH926pN2yElTqjTyarS36d906kKeXxsWA9R3SoNUNENPOTC7VrGp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721246271; c=relaxed/simple;
-	bh=xP+pWEJak37dv+2Ny3NNaKXQQfgQDkCwVrC75aCE00U=;
+	s=arc-20240116; t=1721246272; c=relaxed/simple;
+	bh=A9zTyEn1z8U/y4m6EUFixEY3YlRMFDegWDsv0N9HLEY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HhLLuaTk/h79J4NcXCAK4MtEwA6B5q5sv1enY8Nxg7nGrFDbtwiLzYkJJEqfjE8+/errK0nrmSiWznrABhGGUziRM4dLImAQvob+kcPQMUu6RFmQ95pjr2WYH8nGegZe2dCUKIgI7wXYHsITcEyd7u1nIjlLHEX6IBCEg2OKBFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z7afyu3e; arc=none smtp.client-ip=209.85.221.50
+	 MIME-Version:To:Cc; b=iOugT5dECrV8bn0anmLvvECmlhRuBrd6RgUUVCFNkb2AOL1XdyNvRvSYgbuqoX13s162RbA4fKbsDkPHhYa8quBc3Qf8matjX/EoRvC2EABfEr40FYW36loaxKhhzhbiz9j27TL2/ZjE+B/Aupy/q98DLcOIU2Id0OhJukMjqB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZPtRNlB; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z7afyu3e"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-367a3d1a378so71284f8f.1
-        for <git@vger.kernel.org>; Wed, 17 Jul 2024 12:57:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZPtRNlB"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-36796a9b636so48234f8f.2
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 12:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721246268; x=1721851068; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721246269; x=1721851069; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=giRWkxzMzKVJT0nElbJ8xLdLCzOx3kk3+2KcHMH7b9M=;
-        b=Z7afyu3e1iDEuiF8UYytVetATfS455jZsjWviH6ae/+RIbzvxfrDPI51PXgEnsmGwn
-         mDlE3uHsmg1NqLEKd2UqdnTHK3D0JFqweN/dpKbemgpu43BgMlXpSkleXsmlac0IgPqz
-         g5a5TIO1a2Jql1pDvBmwtrH8xNG4aPGnsi/2IeZx/Mxn+r585Dpz3/ZTcDsHKEdrnTWU
-         6mHemI6Iio64weedlD/3ZqkGbEdx+PnsudRt6fZZ9oZWIYMAWKuDcP6WhOT8EWcxnN7m
-         IOuoKWZ65X9YjNa124w+/Q6naqb8JyOYgQVNk0gsjbCKS1l5GCNXT+pbixGihHBrl2ff
-         3eKQ==
+        bh=NjZVSqo752Dye64HvgR1tCBp8HywQDVYJVj0q6yc06E=;
+        b=VZPtRNlB3x/UGaIj3e08uxnwZM/5hiWVhFZn7bOEq5GEOnU2aamiqNtEVvU/BuTSwE
+         CSH+gbPvfgPLIPXrNrmSBi7ufQ0amsJPQPpgY3i1eFahzGOAZH0JLvqfHiNDKuaZTtXs
+         XO7/U9A1zGl/jYfNg+LwmOzlCojCIPV28DkmxCfHA+LkAuyrAtEyilViCQfH76Bw4S2T
+         +6WqxUhoGn7QAImdetuU27/uHBNT41DFyF+1leHNDFPTPYfoZh0cv1vAVLYBVlpcqQQ4
+         FcbgnnTAlxA51RetWWZsIDq0lyNe10cv+6WzSOfPe+KI2aYt7ihmODZOm+SeudWgHtYe
+         3KOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721246268; x=1721851068;
+        d=1e100.net; s=20230601; t=1721246269; x=1721851069;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=giRWkxzMzKVJT0nElbJ8xLdLCzOx3kk3+2KcHMH7b9M=;
-        b=tyBuJ/cO72z8FtdXX7MYrsu8SdUYJFq++HjCcF9otdPlb450skkirtAkUMBgy5Q8ir
-         /t+nbrZSY+pMAoxYv6iaUwFsQYOyumnJC9vcktegSPM/reSCCx63qQ6nlyfqH7J0Ffdy
-         sN9jSbubnHWB0MwWvxIF3tqx0GLHmTxsU/9F2G/AgcYZmPvsdfepzbHTJgO5tRS7ZkI5
-         bIUn/yJ+3RCMykkoKNH45qf2GTyB3clULC7KvCILy/GcGugPlCo6wL/ih96gz13x2u81
-         Z9ZMuWmlkUBHAsTCRvHYxZdAH12/aMZgVEJuhIFZJDKknvZPRg7aePsTdZ0cFJYae92Y
-         FKIg==
-X-Gm-Message-State: AOJu0Yw/0qxax2W4qLSeCpZtG/2A+l5x59IPl9oFADNfA0ERV0boLzaH
-	M+wL3Fah90hxwSYEvsC68eVUsvvdvzlA5SzvBwnMy8tZK2fHp6X/p/suiQ==
-X-Google-Smtp-Source: AGHT+IEvjSuIMd3pOuyiZ/GH425Emsy7s/JztvIa2b3okgOfidmd43PiOx+mO5LLVLXPXWXWlFm8fQ==
-X-Received: by 2002:a5d:528a:0:b0:366:ec30:adcd with SMTP id ffacd0b85a97d-368315f2017mr2635154f8f.7.1721246267746;
-        Wed, 17 Jul 2024 12:57:47 -0700 (PDT)
+        bh=NjZVSqo752Dye64HvgR1tCBp8HywQDVYJVj0q6yc06E=;
+        b=dov/TdUv22O+1u6ga47K4mIos6jTfDveTi6XzHGFNenAjFzJL+y3QEeedcAhfU3JEt
+         PzJVZG59uhyJZC/NxqkRcbw8TPJUBHZRFs3GUARrh5lgNcHrAAspTw6n75xiKs0BgO9M
+         p9kZetIcV9DGrFXokDLM9RpX983NgEJ/cSLkxh6AgQ/bEk260FUoXZHlMJdegCi3cqMd
+         0X70oRMKV96zR0WvtA1AVFRFGLiXvhSCL8e9XG47k/dA63oggeB9/p6XO6VMFkOSdGsV
+         XlY6IpxdPVKd1/LdksczKHs/Hp1IKGUc7bk+r/34zkNbjgrqNi3NY0GeXvwyTNjQ1N5v
+         gtjg==
+X-Gm-Message-State: AOJu0Yzh+3+ragLBcr6MzLMgvAxTKwmVLp9OvE9FDlh4vGuSJ3v3b+1T
+	/h/nq+IwNrZbY8s67LqcKQvH1wn7fUElyiOufwwBCijC8LSU/CHolmzzCg==
+X-Google-Smtp-Source: AGHT+IG7+G0wPO1JlZ4qGwlMNrjJdFOH6FkwhvCPhadNjdzRM3MpLxA/9nHklzY4yzZCWjXF7Y3k1A==
+X-Received: by 2002:a5d:5919:0:b0:362:2111:4816 with SMTP id ffacd0b85a97d-368317768ccmr1773223f8f.55.1721246268819;
+        Wed, 17 Jul 2024 12:57:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427c7813199sm8954085e9.42.2024.07.17.12.57.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427c780c9d5sm8559885e9.38.2024.07.17.12.57.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jul 2024 12:57:47 -0700 (PDT)
-Message-Id: <27bee8de47b34e8049ad922178bddc16dd2a7274.1721246266.git.gitgitgadget@gmail.com>
+        Wed, 17 Jul 2024 12:57:48 -0700 (PDT)
+Message-Id: <10e240202f79a0f50edf47391389c4e0892edf41.1721246266.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1747.git.git.1721246266.gitgitgadget@gmail.com>
 References: <pull.1747.git.git.1721246266.gitgitgadget@gmail.com>
 From: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Jul 2024 19:57:44 +0000
-Subject: [PATCH 1/2] git-svn: add public property `svn:global-ignores`
+Date: Wed, 17 Jul 2024 19:57:45 +0000
+Subject: [PATCH 2/2] git-svn: use `svn:global-ignores` to create .gitignore
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,22 +74,73 @@ From: Alex Galvin <agalvin@comqi.com>
 
 Signed-off-by: Alex Galvin <agalvin@comqi.com>
 ---
- perl/Git/SVN.pm | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-svn.perl | 45 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 7721708ce5d..b0913ca1b63 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -763,7 +763,7 @@ sub prop_walk {
- 		# this needs to be updated.
- 		++$interesting_props if /^svn:(?:ignore|keywords|executable
- 		                                 |eol-style|mime-type
--						 |externals|needs-lock)$/x;
-+						 |externals|needs-lock|global-ignores)$/x;
- 	}
- 	&$sub($self, $p, $props) if $interesting_props;
+diff --git a/git-svn.perl b/git-svn.perl
+index b0d0a50984b..a2a46608c9b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1279,12 +1279,20 @@ sub cmd_show_ignore {
+ 	$gs->prop_walk($gs->path, $r, sub {
+ 		my ($gs, $path, $props) = @_;
+ 		print STDOUT "\n# $path\n";
+-		my $s = $props->{'svn:ignore'} or return;
+-		$s =~ s/[\r\n]+/\n/g;
+-		$s =~ s/^\n+//;
+-		chomp $s;
+-		$s =~ s#^#$path#gm;
+-		print STDOUT "$s\n";
++		if (my $s = $props->{'svn:ignore'}) {
++			$s =~ s/[\r\n]+/\n/g;
++			$s =~ s/^\n+//;
++			chomp $s;
++			$s =~ s#^#$path#gm;
++			print STDOUT "$s\n";
++		}
++		if (my $s = $props->{'svn:global-ignores'}) {
++			$s =~ s/[\r\n]+/\n/g;
++			$s =~ s/^\n+//;
++			chomp $s;
++			$s =~ s#^#$path**/#gm;
++			print STDOUT "$s\n";
++		}
+ 	});
+ }
  
+@@ -1315,16 +1323,25 @@ sub cmd_create_ignore {
+ 		# which git won't track
+ 		mkpath([$path]) unless -d $path;
+ 		my $ignore = $path . '.gitignore';
+-		my $s = $props->{'svn:ignore'} or return;
+ 		open(GITIGNORE, '>', $ignore)
+ 		  or fatal("Failed to open `$ignore' for writing: $!");
+-		$s =~ s/[\r\n]+/\n/g;
+-		$s =~ s/^\n+//;
+-		chomp $s;
+-		# Prefix all patterns so that the ignore doesn't apply
+-		# to sub-directories.
+-		$s =~ s#^#/#gm;
+-		print GITIGNORE "$s\n";
++		if (my $s = $props->{'svn:ignore'}) {
++			$s =~ s/[\r\n]+/\n/g;
++			$s =~ s/^\n+//;
++			chomp $s;
++			# Prefix all patterns so that the ignore doesn't apply
++			# to sub-directories.
++			$s =~ s#^#/#gm;
++			print GITIGNORE "$s\n";
++		}
++		if (my $s = $props->{'svn:global-ignores'}) {
++			$s =~ s/[\r\n]+/\n/g;
++			$s =~ s/^\n+//;
++			chomp $s;
++			# Global ignores apply to sub-directories, so they are
++			# not prefixed.
++			print GITIGNORE "$s\n";
++		}
+ 		close(GITIGNORE)
+ 		  or fatal("Failed to close `$ignore': $!");
+ 		command_noisy('add', '-f', $ignore);
 -- 
 gitgitgadget
-
