@@ -1,164 +1,395 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11021105.outbound.protection.outlook.com [52.101.62.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D54181D08
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 20:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.105
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721249142; cv=fail; b=PdD/odHHwrMAjrjHELkaAodkHqa9dgnEIc3GY6MQe2aU6WAw1hIh/+2220SsCeCdl6ZX1+k9JztMytKRLKesEOT3F3JTn4QMxCN0ZUtqZj14n4TbWChbs4JxKGcSipOCHcRBxXySI2VKfXeVqGaw8QOuKfuu/OG0YwwneBzrXIE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721249142; c=relaxed/simple;
-	bh=3q77Aw0EmVSlDeVuHU3oi7OyvJb3AIoOAY2GhCLaOxE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=qguuEbtPpIlHa5zi4w6eCjAE84fNIkYGvfDEPAaZl6rZaN3d+7nAm1GrjPvHGIiPToHYS6FcqDKM0CDzayNSZCslZsAUelGvZSxDbLv+ZZsA7NLtbcqT4vphqWlwLhrz4pQb82UHrswLzpz62gbMVcZZkTPB/JwPGCO3lsR6YQU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=PJA3mWIi; arc=fail smtp.client-ip=52.101.62.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7A1850B0
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 21:11:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721250720; cv=none; b=sX9blx+mergOlJmU4TZiFfqRjg24oMvA9pyher7jD/I+BtKICivftpcWRNv8oAef+7DDREk4Cd+hPsDVjdHDOldmmTwxwgeTrEr1s6uYkX+D7V+5w9Ig7glPNX/Aty3sgl02D4xJN6vPyD4RSy+05COFbPnijy5LShZuuBhai7A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721250720; c=relaxed/simple;
+	bh=szQd8O12Dr4/TXJVykx0yldblOuoHe0uA95vr3kNOKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iym0PZHkPcFny7q6dxt4f1hP0fKN26az5UbNLz7BhjK0T6Bp7DLYpGBwb0glSyXtDMdBaqp3WbD5NasU44kDNNOTMAz3SyW5poalofiPa8p29aq9qlIcOuuQcfNOC7GBhTA992gf5U2wHnDbEffBJP5sRuGu0oXHD7BCrmKHDBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=E3q8Ic6b; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="PJA3mWIi"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MXDiIszgtIjH7rYFZrIioiqL/0Mv//2CKIEpyJj+dCVDXiu9pDpd7tGiQmffN2LgHRHtQ0tG77/K0W0e6qqNpRhbIAzOtGeCYgzLCqL0bPZnwShVCemqywPn5z/JX5ZmNybTtsBw7vvIjSHQ0NJjQT3/x+Qdde+4GshONTgoGtvskDoJL7vvr0FhfSmgl85Q30RNDfyNNxGmuAU0W7fH2PTJsJ4Cs78gMgHWw4FOuAWDfvfbu/83V+BK/pPGrU186BrPI/sHKu734Ij5gy6sQry/QAJiEExH20O3EdPhsiURwkPlHZliJbHZVyFONc07mXYW442XkGW/sqzYHwB6aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3q77Aw0EmVSlDeVuHU3oi7OyvJb3AIoOAY2GhCLaOxE=;
- b=XN6eoKAqDYatQeNKxKxk4mjITtQE1rS+yYTziThWz8G8G7cGjo9r7mAXXo0hNpwM9cn8/uaawvjmejvJyrnmoxA5O0AH7gVsf4Ex/boaesfIytiYm5QBuKSc0x+lFP08j/S/o+lxm+BY4gdnc/sSlrE96GAWIfIVZi1WJk1xE8Nb+UkVo0wau/IH65YmiBUClxuWd9aV76qQ6NfbDQHmGHO5HJ5mmquj7JQsPgOFQ9g1EX5ZMQm+jBC64hxRzoNqq//FI+knNDrUdXQ8ufeOSGm8EeQLY+QOpsAWSiv/DlYIl5bvwVqkpMx+EBn73PXCfIieDB4PTjyod1E5OjARaA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3q77Aw0EmVSlDeVuHU3oi7OyvJb3AIoOAY2GhCLaOxE=;
- b=PJA3mWIi37RHfpD1Trz7KzaEhpPguWfaaF5w50NpMKWDCaLHsjhZzaunxlNk660nXiRy25ELe2xE8sMbB9emQB/XqK4XrP9Vf1RtMx3qHpfc7cEB2L5uDO5x1pBPT1FVmKuIKsQGAaaU6yMkzHTV6plI0HHvZC4smQ3D9GX03zg=
-Received: from DM4PR21MB3537.namprd21.prod.outlook.com (2603:10b6:8:a3::20) by
- CH3PPFCCB480946.namprd21.prod.outlook.com (2603:10b6:61f:fc00::18f) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.6; Wed, 17 Jul
- 2024 20:45:27 +0000
-Received: from DM4PR21MB3537.namprd21.prod.outlook.com
- ([fe80::b48c:4890:1ddf:d1dd]) by DM4PR21MB3537.namprd21.prod.outlook.com
- ([fe80::b48c:4890:1ddf:d1dd%6]) with mapi id 15.20.7807.005; Wed, 17 Jul 2024
- 20:45:27 +0000
-From: Jullyana Ramos <jullyana.ramos@microsoft.com>
-To: Junio C Hamano <gitster@pobox.com>, peff <peff@peff.net>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [EXTERNAL] Re: rev-list does not output commit metadata (nor
- honor --format) when --use-bitmap-index is on
-Thread-Topic: [EXTERNAL] Re: rev-list does not output commit metadata (nor
- honor --format) when --use-bitmap-index is on
-Thread-Index: AQHa072wM6Y7JBROdUC6cQdtw7wpV7H6ksYAgACGzC+AAE47wA==
-Date: Wed, 17 Jul 2024 20:45:26 +0000
-Message-ID:
- <DM4PR21MB353707D6B84334AADA816A3B85A32@DM4PR21MB3537.namprd21.prod.outlook.com>
-References:
- <DM4PR21MB3537F74639094ECFA909880C85A52@DM4PR21MB3537.namprd21.prod.outlook.com>
-	<20240717074418.GI547635@coredump.intra.peff.net>
- <xmqq8qy058dd.fsf@gitster.g>
-In-Reply-To: <xmqq8qy058dd.fsf@gitster.g>
-Accept-Language: en-US, en-CA
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2024-07-17T20:45:26.756Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR21MB3537:EE_|CH3PPFCCB480946:EE_
-x-ms-office365-filtering-correlation-id: 339f7852-7c2e-42ab-c9a0-08dca6a1638b
-x-ld-processed: 72f988bf-86f1-41af-91ab-2d7cd011db47,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?UgLKM3cuBEEiycMWtyeaE3dngPqq8eQQKpsT/QGg6XL5Kc/OY9LWx7GPc9?=
- =?iso-8859-1?Q?pDAtGuXibw+Yqtjw+z3+X/AumNALqNm0Jnxym9S7FhOfk2uVORc+2aDScf?=
- =?iso-8859-1?Q?752SEhYbcjwg2G1hn8gPP/Q48sEHIVMUMs9DD+vhpbKoV3fIQDgHHLfiNC?=
- =?iso-8859-1?Q?OuDpruXgBNWWP++N4ZLqIjsBuEt/Cf384W49GgEyiwycW0nTm5GSpqug/Z?=
- =?iso-8859-1?Q?H2mptxwNsruDaJN4z0Ya+xi0v1tr1X/nBhy+lm2/pwSu1eU/WfPbJF6qf+?=
- =?iso-8859-1?Q?i/7RN9+pvrmK+3TZc0AvMBrIRjV3X3BsTlo3/Sc40sbsHzBxT2gPE53gsH?=
- =?iso-8859-1?Q?cNiJmuqI79jRr3grcMWJbbCzG7WFOBu0cFfhbpY1BsgWX3I2Lr6oBFsQzC?=
- =?iso-8859-1?Q?Q3oavfHoVjC01DuQaDjHS1M6HqrSYPExn44TLEhZxF5STx/Or6ey9rhv5T?=
- =?iso-8859-1?Q?ErpfFwJOhcZLzzB09QwaIc0wNidfueuGhhg7rgrzyjbm9IDLhtU5+HPNKU?=
- =?iso-8859-1?Q?intgtqAoAmOfUs6Zi+Da29KzezbSQzVQvT4OktirCX4eW65ZxuZ0+ESmV/?=
- =?iso-8859-1?Q?L3Oc6VDLiS0X5Z6cQ7ZD4sVJCWfQVOksbOmE/Qgfknz1EzNrTdudpRF5jl?=
- =?iso-8859-1?Q?lhWf4APMfCHTrVg4/rloKcY02wDitQyKCYPyjpXk25fIqKa+sZzz8VbkJF?=
- =?iso-8859-1?Q?4/4KiwbwC6hJit5mwRexYfksUZJr18408WnD3Mo3rAit9tJMklhHhIgS9K?=
- =?iso-8859-1?Q?UUQMNpEdiHB80KZzzz5Q29eo7mQPWRJTDGjpKt10uqyT14VdHsnaKQRqiM?=
- =?iso-8859-1?Q?lOAgOjQg0LjREwoHBx5l4Z/hcy/KUYRf4RxT+/76QlrBLB2gfT/UNdvae7?=
- =?iso-8859-1?Q?Ngn4TFNeT/Y1AvPrJKWs7rzT7WDshjB60QTmwGkXCrr1WYotkmBXEKm65n?=
- =?iso-8859-1?Q?Xvk3kYqUrSe2ENqg8s0LYuUXpVLCNDbt6dlIwo3L48xyhN6Vtl/SHEj5vo?=
- =?iso-8859-1?Q?JNC8alqGD2fq/GKt/Q6lMaeUCmll/SMFQhqI8IKFacKQQPhsd0BRbEEOV3?=
- =?iso-8859-1?Q?HB1clrOYCnocrwpBqEeUYSDeWb8NKGrvy3fnK+RFiwG8NlGJBFV4YaMGwQ?=
- =?iso-8859-1?Q?R/IBbn92SSfSgq7YYtmuiaJiX5ybWdD3MbsvlEsgTdfLVBTN+W4TkA0nyC?=
- =?iso-8859-1?Q?KheGljGDqzs8hY70JHuhSGXSa/gH6xTd6dhpRbWZehjBzKoBJmMGe2sNUS?=
- =?iso-8859-1?Q?w5A0LmiXXV7i5xbRR7SZ9tG5kYgVN0tzDbuYkqCYWqipaJXN6dHLdiIvDg?=
- =?iso-8859-1?Q?u8Gt7tjVjNU9RVr/maURacGURMT7qqqa8h4V4uRFqTEz4F1ID1DC4fCSbe?=
- =?iso-8859-1?Q?g66csvZ5IWo0omnWoJc6axy6Rule0cjB2+2RqPDjMsEfMCIwQRFLotOsnb?=
- =?iso-8859-1?Q?sQN8mvBLRYrdVOLLnomt4WSroWutRt8g4kFJBw=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR21MB3537.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?c3ARvKi7N1jubD8b7WXwhFZ+blYrPKdLz/NFvMBlzdllBWq2wturVSt8q3?=
- =?iso-8859-1?Q?H9tRiN5UKoVOmXUfrVeN9iImuiiS/gw+tEkb4KDJDjpIyOlx0FzTjczShL?=
- =?iso-8859-1?Q?OHtfLaw1c5+ukP8XkwKPp/5b8CYIMMvFIMBgNUWB2KjQtf0NaI4aD1fLst?=
- =?iso-8859-1?Q?umIPlzv2rb3w+R8zH6mrN7I0qHdomV8LW4doX4Mi9ZGTi4oHf/MKoTVwpl?=
- =?iso-8859-1?Q?xTdTsXlGotFXDrcZhUiINYu6cGzayZWCPgaMfTM7+g5BokXRtrucylNo/8?=
- =?iso-8859-1?Q?vkbkugS6tvSVcxbI+IMkvrq3oZouyfHaWE25JpQjbiGSX8UjURsMdfBwpz?=
- =?iso-8859-1?Q?8OwqKxjyICevdmwUPL9k5LXOdzijWS9DhAl52yyGr67ou+e9U2oQ9iNw15?=
- =?iso-8859-1?Q?9WUGcanfMSkubc7jzJutTFn99r64p46LSbgLxDDaaOXkhGRjIVE7yOvMzx?=
- =?iso-8859-1?Q?hhejedvSj27B2E3HAK1FZQC5ocBuDkcupEcIfygu0sucypRTduSc2yvRJ7?=
- =?iso-8859-1?Q?NJxM0Rb/6+QgUM71HB3v+oLjNhEnAVPqVHysOV7GKQe1agyV+wfwvCGXKx?=
- =?iso-8859-1?Q?YRNaLLlbatPz6mk3kiyxNvA6kAHRU4PWAwhEzKeiyabz6sXlgn2+NzPuIT?=
- =?iso-8859-1?Q?5awiclVX5vKLc9R6vAgrspqXyUG1Kyc7j76k2HdznZJZJVm7NH7lvQDpFc?=
- =?iso-8859-1?Q?sJyg428eWHe6xqulVgUaVH+4JdOIvNe/KFRG54UWu0fJAESWAwcggsGFGc?=
- =?iso-8859-1?Q?EZokb1AeYU50Chnfz9GGHqyg4SusJ2zf3v6VNtAVQ6i9tbRZPEJKlcuNT1?=
- =?iso-8859-1?Q?+D/om5dBCpuqt4W9EHz5uBgVe002s33Mj4hcrQN/asCUsPGulHFbJv6VvL?=
- =?iso-8859-1?Q?1fwpoMSVfByCFA20Lu2C2bs6JBEd8CNP1vs8LLNaTXw322YEr4V6vNa/fJ?=
- =?iso-8859-1?Q?7Vlzjf0hWtGWMt1VRxr3h2MHzXPxkk6cIcA2Qq6jc+Aoa/dz79NJToRjNL?=
- =?iso-8859-1?Q?ZWZssq4on40sVrv4j9iLxtGUDKW9YdsS9AwKpQ66OV+47EH7BrhOOoAgSz?=
- =?iso-8859-1?Q?CohJ4rSwPdwXpPo9xakYr2PyNDzVu+tngcrJmGD0W5nIy+BIyTOo6eGmat?=
- =?iso-8859-1?Q?HTbrZfx2G93wWV/4Q48xSwqJx8B/xRBNWlO7hShcW+DtUOBHrwibGiftoa?=
- =?iso-8859-1?Q?1i4PyXnGF9DRALsG/yK9psuZRmZ/s0B0K5w7dKkBL/V4kCmcbOc6EQUyVI?=
- =?iso-8859-1?Q?eyFnxmPz2K/fJd2QX+npWBRc2EY62LzB1rNhjGKYOSm6+p9vBi70d8VAVw?=
- =?iso-8859-1?Q?7357NgIfWzB79ZagRI1Br+U2JIywqEcmViYVTJCoesB6vjYhQQLXsIH3KF?=
- =?iso-8859-1?Q?JVIQDcTIdxWBjV2Hivy+Gesv5vEUF4Zm6slPS+V+KV6FPm9eaXLEzQgoUJ?=
- =?iso-8859-1?Q?5VWTHaPSlVWEyB+HhNmWSDkKip7N0QFkL5Obhplqyd5NHHznbcUT1aGiZw?=
- =?iso-8859-1?Q?W9FqvdlpysgjLUjneESuU0Q4jNCCGtMNf2XBsPBaZDsNZKper9nh0kc1+e?=
- =?iso-8859-1?Q?RT+EZLwce3W2AFIQfrTYucGabuAoIj9VQJFUbBnhMAOYzNW8jDqPZUZvdC?=
- =?iso-8859-1?Q?Q22WvYPVb2NRYH24LxGImQKUAWtoo/c4cO?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="E3q8Ic6b"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-654cf0a069eso873357b3.1
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 14:11:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721250716; x=1721855516; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Zuh5KLOI7HuisR8Cfs+SUe4GyjbHmMZF9SFxmTYZzk=;
+        b=E3q8Ic6bboY4K45zPU4hM5rFkdWUUi6z/6WjHZAPcoaLJqMp7nlBGa9j9FWd7wDlze
+         vDOh4+MuasVOsmivdVLcJRcJ61K5F2zO6B2uQxfyVlD+y6nAWtYZhGm1RnbfSXJbgATe
+         wvoVKa0qEmmN7p55BnsncwkN4RjDJQWYXb+44P5xHI0i/CJBPn3WbVjtaxaIzJLvIp4N
+         xIUfHO0srDZ8YetTyxnNbmWfKDO/Hzl4XPnTg/GxDpsq324ck3jhxbMjcvaMvfSSCwiQ
+         2Y8ZHZl9/IoZs7SDO32zjLBZ3S7OOMiT90OrRBpFUT+XB4FpjSJqFkhKfAcDsL08dXCh
+         tcmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721250716; x=1721855516;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Zuh5KLOI7HuisR8Cfs+SUe4GyjbHmMZF9SFxmTYZzk=;
+        b=AU1edgMYNjvkaciOqzibu1le1NY5eNIWjMTnuP6eeuUTpBnOAuJrQ6uDJbCPchLcGe
+         fqakh/LO6OeJj1/shaQ+G6/u0WJcPJUnpL1Bon3ZjnTiQMbkyAjgU2fQBiYPV7l3MkmM
+         uS176DIngI8bDYi6kx1lfNecjjwvb//KDVjJB3ZgCF+K3qt50kubUC0Din9QjNPFNFfa
+         Uld/xg8qjJTcsRiSmToGfTf3TqJkpLXEymtFYG4RH1ptwmIJNRyf03TfcxGxg9xMraGt
+         y9DPX3WFuo+uKKQcumnultrJZ65wBAZWz7O2plA3JtTYhQZ1KTVE59vTE2mFdp6WaJvd
+         XWKw==
+X-Gm-Message-State: AOJu0YxhErdfLUQstbYlu/XFxK7ZJcMNwIcsH4rIjQ5eTrwP6g9W+7IR
+	c+TXP0DaU57S6FPXStqycLB8aBUUjvrUWh9Ycs8gkZtAePz5JTZkki98Kwcpdv2ky4LO1Y516Ox
+	4
+X-Google-Smtp-Source: AGHT+IGwo0Y+ZM0sZZiZVbHXh65U1Z9PMU7HUOltP2/F4PFeQO8f1oDNd4CtJ7u1XDd9+PWuSP4JcQ==
+X-Received: by 2002:a0d:f7c1:0:b0:648:3fb2:753b with SMTP id 00721157ae682-664fe9363b7mr34177077b3.24.1721250716510;
+        Wed, 17 Jul 2024 14:11:56 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-666042beaddsm745167b3.146.2024.07.17.14.11.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 14:11:55 -0700 (PDT)
+Date: Wed, 17 Jul 2024 17:11:54 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 00/19] midx: incremental multi-pack indexes, part one
+Message-ID: <cover.1721250704.git.me@ttaylorr.com>
+References: <cover.1717715060.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR21MB3537.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 339f7852-7c2e-42ab-c9a0-08dca6a1638b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2024 20:45:26.9449
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: LnwzGXua3ythZyc5SLKxhP04DU8JBLXKKT1O46ZmDW/Gm1/zf7lggHGRpDPDcE9Rw3qabM22GinOT3fHsg6IIg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PPFCCB480946
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1717715060.git.me@ttaylorr.com>
 
-I appreciate the context provided by Peff and understand now that bitmap in=
-dex is not compatible with my goal.=0A=
-=0A=
-Experimenting again today, I might have set up the test repository wrong th=
-e first time I tried with 2.3.5. Formatting likely never worked with --use-=
-bitmap-index. Therefore, I can simply remove its usage from the parser I ha=
-ve, as it has been broken from the beginning.=0A=
-=0A=
-I also agree this is a documentation issue. If rev-list docs mentioned it, =
-I wouldn't have filed it as a bug. It would be extra nice if incompatible o=
-ptions were better handled as Junio says.=0A=
-=0A=
-Thank you both for your response.=
+This series implements incremental MIDXs, which allow for storing
+a MIDX across multiple layers, each with their own distinct set of
+packs.
+
+This round is mostly unchanged from the previous since there has not yet
+been substantial review. But it does rebase to current 'master' (which
+is 04f5a52757 (Post 2.46-rc0 batch #2, 2024-07-16), at the time of
+writing).
+
+Importantly, this rebase moves this topic to be based on an ancestor of
+0c5a62f14b (midx-write.c: do not read existing MIDX with
+`packs_to_include`, 2024-06-11), which resulted in a non-trivial
+conflict prior to this rebase.
+
+The rest of the topic is unchanged. I don't expect that we'll see much
+review here for the next couple of weeks while we are in the -rc phase,
+but I figured it would be useful to have it on the list for folks that
+are interested in taking a look.
+
+Thanks in advance for any review! :-)
+
+Taylor Blau (19):
+  Documentation: describe incremental MIDX format
+  midx: add new fields for incremental MIDX chains
+  midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
+  midx: teach `prepare_midx_pack()` about incremental MIDXs
+  midx: teach `nth_midxed_object_oid()` about incremental MIDXs
+  midx: teach `nth_bitmapped_pack()` about incremental MIDXs
+  midx: introduce `bsearch_one_midx()`
+  midx: teach `bsearch_midx()` about incremental MIDXs
+  midx: teach `nth_midxed_offset()` about incremental MIDXs
+  midx: teach `fill_midx_entry()` about incremental MIDXs
+  midx: remove unused `midx_locate_pack()`
+  midx: teach `midx_contains_pack()` about incremental MIDXs
+  midx: teach `midx_preferred_pack()` about incremental MIDXs
+  midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
+  midx: support reading incremental MIDX chains
+  midx: implement verification support for incremental MIDXs
+  t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+  t/t5313-pack-bounds-checks.sh: prepare for sub-directories
+  midx: implement support for writing incremental MIDX chains
+
+ Documentation/git-multi-pack-index.txt       |  11 +-
+ Documentation/technical/multi-pack-index.txt | 100 +++++
+ builtin/multi-pack-index.c                   |   2 +
+ builtin/repack.c                             |   8 +-
+ ci/run-build-and-tests.sh                    |   2 +-
+ midx-write.c                                 | 326 ++++++++++++---
+ midx.c                                       | 410 ++++++++++++++++---
+ midx.h                                       |  26 +-
+ object-name.c                                |  99 ++---
+ packfile.c                                   |  21 +-
+ packfile.h                                   |   4 +
+ t/README                                     |   6 +-
+ t/helper/test-read-midx.c                    |  24 +-
+ t/lib-bitmap.sh                              |   6 +-
+ t/lib-midx.sh                                |  28 ++
+ t/t0410-partial-clone.sh                     |   2 -
+ t/t5310-pack-bitmaps.sh                      |   4 -
+ t/t5313-pack-bounds-checks.sh                |   8 +-
+ t/t5319-multi-pack-index.sh                  |  30 +-
+ t/t5326-multi-pack-bitmaps.sh                |   4 +-
+ t/t5327-multi-pack-bitmaps-rev.sh            |   6 +-
+ t/t5332-multi-pack-reuse.sh                  |   2 +
+ t/t5334-incremental-multi-pack-index.sh      |  46 +++
+ t/t7700-repack.sh                            |  48 +--
+ 24 files changed, 959 insertions(+), 264 deletions(-)
+ create mode 100755 t/t5334-incremental-multi-pack-index.sh
+
+Range-diff against v1:
+ 1:  e5ce916f67 =  1:  014588b3ec Documentation: describe incremental MIDX format
+ 2:  6569289ca7 =  2:  337ebc6de7 midx: add new fields for incremental MIDX chains
+ 3:  d2e845a9d4 =  3:  f449a72877 midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
+ 4:  2100c6ddfa =  4:  f88569c819 midx: teach `prepare_midx_pack()` about incremental MIDXs
+ 5:  454c3d2fe7 !  5:  ec57ff4349 midx: teach `nth_midxed_object_oid()` about incremental MIDXs
+    @@ midx.c: struct object_id *nth_midxed_object_oid(struct object_id *oid,
+      
+     +	n = midx_for_object(&m, n);
+     +
+    - 	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n));
+    + 	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n),
+    + 		the_repository->hash_algo);
+      	return oid;
+    - }
+ 6:  7d945c41bc =  6:  650b8c8c21 midx: teach `nth_bitmapped_pack()` about incremental MIDXs
+ 7:  4d4d924aa2 =  7:  bfd1dadbf1 midx: introduce `bsearch_one_midx()`
+ 8:  86d88bc6a3 =  8:  38bd45bd24 midx: teach `bsearch_midx()` about incremental MIDXs
+ 9:  eb9ed10ca3 =  9:  342ed56033 midx: teach `nth_midxed_offset()` about incremental MIDXs
+10:  36cfdd9b95 = 10:  2b335c45ae midx: teach `fill_midx_entry()` about incremental MIDXs
+11:  1ae5fd7e89 = 11:  22de5898f3 midx: remove unused `midx_locate_pack()`
+12:  e3319967b9 = 12:  fb60f2b022 midx: teach `midx_contains_pack()` about incremental MIDXs
+13:  3b8dffa051 = 13:  38b642d404 midx: teach `midx_preferred_pack()` about incremental MIDXs
+14:  35fbe05a4a = 14:  594386da10 midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
+15:  a5eedb15fa = 15:  dad130799c midx: support reading incremental MIDX chains
+16:  186b15e6bd ! 16:  ad976ef413 midx: implement verification support for incremental MIDXs
+    @@ midx.c: int verify_midx_file(struct repository *r, const char *object_dir, unsig
+     -		{
+     -			close_pack_fd(m->packs[pairs[i-1].pack_int_id]);
+     -			close_pack_index(m->packs[pairs[i-1].pack_int_id]);
+    -+		    m->packs[pairs[i-1].pack_int_id]) {
+    ++		    nth_midxed_pack(m, pairs[i-1].pack_int_id)) {
+     +			uint32_t pack_int_id = pairs[i-1].pack_int_id;
+     +			struct packed_git *p = nth_midxed_pack(m, pack_int_id);
+     +
+17:  94362c057a ! 17:  23912425bf t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+    @@ t/README: GIT_TEST_MULTI_PACK_INDEX=<boolean>, when true, forces the multi-pack-
+     
+      ## t/t0410-partial-clone.sh ##
+     @@ t/t0410-partial-clone.sh: test_description='partial clone'
+    - 
+      . ./test-lib.sh
+    + . "$TEST_DIRECTORY"/lib-terminal.sh
+      
+     -# missing promisor objects cause repacks which write bitmaps to fail
+     -GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
+18:  4442e7ca52 = 18:  814da1916d t/t5313-pack-bounds-checks.sh: prepare for sub-directories
+19:  0cbe34b0bd ! 19:  e2b5961b45 midx: implement support for writing incremental MIDX chains
+    @@ midx-write.c
+      extern int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+      				const char *idx_name);
+      
+    +@@ midx-write.c: struct write_midx_context {
+    + 	size_t nr;
+    + 	size_t alloc;
+    + 	struct multi_pack_index *m;
+    ++	struct multi_pack_index *base_midx;
+    + 	struct progress *progress;
+    + 	unsigned pack_paths_checked;
+    + 
+     @@ midx-write.c: struct write_midx_context {
+      
+      	int preferred_pack_idx;
+    @@ midx-write.c: struct write_midx_context {
+      	struct string_list *to_include;
+      };
+      
+    +@@ midx-write.c: static int should_include_pack(const struct write_midx_context *ctx,
+    + 	 */
+    + 	if (ctx->m && midx_contains_pack(ctx->m, file_name))
+    + 		return 0;
+    ++	else if (ctx->base_midx && midx_contains_pack(ctx->base_midx,
+    ++						      file_name))
+    ++		return 0;
+    + 	else if (ctx->to_include &&
+    + 		 !string_list_has_string(ctx->to_include, file_name))
+    + 		return 0;
+     @@ midx-write.c: static void compute_sorted_entries(struct write_midx_context *ctx,
+      	for (cur_fanout = 0; cur_fanout < 256; cur_fanout++) {
+      		fanout.nr = 0;
+    @@ midx-write.c: static void compute_sorted_entries(struct write_midx_context *ctx,
+      			if (cur_object && oideq(&fanout.entries[cur_object - 1].oid,
+      						&fanout.entries[cur_object].oid))
+      				continue;
+    -+			if (ctx->incremental && ctx->m &&
+    -+			    midx_has_oid(ctx->m, &fanout.entries[cur_object].oid))
+    ++			if (ctx->incremental && ctx->base_midx &&
+    ++			    midx_has_oid(ctx->base_midx,
+    ++					 &fanout.entries[cur_object].oid))
+     +				continue;
+      
+      			ALLOC_GROW(ctx->entries, st_add(ctx->entries_nr, 1),
+    @@ midx-write.c: static int write_midx_revindex(struct hashfile *f,
+     -	uint32_t i;
+     +	uint32_t i, nr_base;
+     +
+    -+	if (ctx->m && ctx->incremental)
+    -+		nr_base = ctx->m->num_objects + ctx->m->num_objects_in_base;
+    ++	if (ctx->incremental && ctx->base_midx)
+    ++		nr_base = ctx->base_midx->num_objects +
+    ++			ctx->base_midx->num_objects_in_base;
+     +	else
+     +		nr_base = 0;
+      
+    @@ midx-write.c: static int midx_pack_order_cmp(const void *va, const void *vb)
+      
+      	trace2_region_enter("midx", "midx_pack_order", the_repository);
+      
+    -+	if (ctx->incremental && ctx->m)
+    -+		base_objects = ctx->m->num_objects + ctx->m->num_objects_in_base;
+    ++	if (ctx->incremental && ctx->base_midx)
+    ++		base_objects = ctx->base_midx->num_objects +
+    ++			ctx->base_midx->num_objects_in_base;
+     +
+     +	ALLOC_ARRAY(pack_order, ctx->entries_nr);
+      	ALLOC_ARRAY(data, ctx->entries_nr);
+    @@ midx-write.c: static struct multi_pack_index *lookup_multi_pack_index(struct rep
+     +	struct multi_pack_index *m;
+      
+     -	for (i = 0; i < ctx->m->num_packs; i++) {
+    --		if (!should_include_pack(ctx, ctx->m->pack_names[i], 0))
+    --			continue;
+    +-		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+     +	for (m = ctx->m; m; m = m->base_midx) {
+     +		uint32_t i;
+    - 
+    --		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+    --
+    --		if (flags & MIDX_WRITE_REV_INDEX || preferred_pack_name) {
+    ++
+     +		for (i = 0; i < m->num_packs; i++) {
+    ++			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+    + 
+    +-		if (flags & MIDX_WRITE_REV_INDEX || preferred_pack_name) {
+      			/*
+      			 * If generating a reverse index, need to have
+      			 * packed_git's loaded to compare their
+    @@ midx-write.c: static struct multi_pack_index *lookup_multi_pack_index(struct rep
+      			 */
+     -			if (prepare_midx_pack(the_repository, ctx->m, i))
+     -				return error(_("could not load pack"));
+    -+			if (!should_include_pack(ctx, m->pack_names[i], 0))
+    -+				continue;
+    - 
+    --			if (open_pack_index(ctx->m->packs[i]))
+    --				die(_("could not open index for %s"),
+    --				    ctx->m->packs[i]->pack_name);
+    -+			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+    -+
+     +			if (flags & MIDX_WRITE_REV_INDEX ||
+     +			    preferred_pack_name) {
+     +				if (prepare_midx_pack(the_repository, m,
+    @@ midx-write.c: static struct multi_pack_index *lookup_multi_pack_index(struct rep
+     +					error(_("could not load pack"));
+     +					return 1;
+     +				}
+    -+
+    + 
+    +-			if (open_pack_index(ctx->m->packs[i]))
+    +-				die(_("could not open index for %s"),
+    +-				    ctx->m->packs[i]->pack_name);
+     +				if (open_pack_index(m->packs[i]))
+     +					die(_("could not open index for %s"),
+     +					    m->packs[i]->pack_name);
+    @@ midx-write.c: static int write_midx_internal(const char *object_dir,
+      	if (safe_create_leading_directories(midx_name.buf))
+      		die_errno(_("unable to create leading directories of %s"),
+      			  midx_name.buf);
+    -@@ midx-write.c: static int write_midx_internal(const char *object_dir,
+    + 
+    +-	if (!packs_to_include) {
+    +-		/*
+    +-		 * Only reference an existing MIDX when not filtering which
+    +-		 * packs to include, since all packs and objects are copied
+    +-		 * blindly from an existing MIDX if one is present.
+    +-		 */
+    +-		ctx.m = lookup_multi_pack_index(the_repository, object_dir);
+    +-	}
+    ++	if (!packs_to_include || ctx.incremental) {
+    ++		struct multi_pack_index *m = lookup_multi_pack_index(the_repository,
+    ++								     object_dir);
+    ++		if (m && !midx_checksum_valid(m)) {
+    ++			warning(_("ignoring existing multi-pack-index; checksum mismatch"));
+    ++			m = NULL;
+    ++		}
+    + 
+    +-	if (ctx.m && !midx_checksum_valid(ctx.m)) {
+    +-		warning(_("ignoring existing multi-pack-index; checksum mismatch"));
+    +-		ctx.m = NULL;
+    ++		if (m) {
+    ++			/*
+    ++			 * Only reference an existing MIDX when not filtering
+    ++			 * which packs to include, since all packs and objects
+    ++			 * are copied blindly from an existing MIDX if one is
+    ++			 * present.
+    ++			 */
+    ++			if (ctx.incremental)
+    ++				ctx.base_midx = m;
+    ++			else if (!packs_to_include)
+    ++				ctx.m = m;
+    ++		}
+      	}
+      
+      	ctx.nr = 0;
+     -	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
+     +	ctx.alloc = ctx.m ? ctx.m->num_packs + ctx.m->num_packs_in_base : 16;
+      	ctx.info = NULL;
+    - 	ctx.to_include = packs_to_include;
+      	ALLOC_ARRAY(ctx.info, ctx.alloc);
+      
+     -	if (ctx.m && fill_packs_from_midx(&ctx, preferred_pack_name,
+     -					  flags) < 0) {
+     -		result = 1;
+     +	if (ctx.incremental) {
+    -+		struct multi_pack_index *m = ctx.m;
+    ++		struct multi_pack_index *m = ctx.base_midx;
+     +		while (m) {
+     +			ctx.num_multi_pack_indexes_before++;
+     +			m = m->base_midx;
+    @@ midx-write.c: static int write_midx_internal(const char *object_dir,
+      	 * have been freed in the previous if block.
+      	 */
+      
+    +-	if (ctx.m)
+     +	CALLOC_ARRAY(keep_hashes, ctx.num_multi_pack_indexes_before + 1);
+     +
+     +	if (ctx.incremental) {
+     +		FILE *chainf = fdopen_lock_file(&lk, "w");
+     +		struct strbuf final_midx_name = STRBUF_INIT;
+    -+		struct multi_pack_index *m = ctx.m;
+    ++		struct multi_pack_index *m = ctx.base_midx;
+     +
+     +		if (!chainf) {
+     +			error_errno(_("unable to open multi-pack-index chain file"));
+     +			return -1;
+     +		}
+     +
+    -+		if (link_midx_to_chain(ctx.m) < 0)
+    ++		if (link_midx_to_chain(ctx.base_midx) < 0)
+     +			return -1;
+     +
+     +		get_split_midx_filename_ext(&final_midx_name, object_dir,
+    @@ midx-write.c: static int write_midx_internal(const char *object_dir,
+     +			xstrdup(hash_to_hex(midx_hash));
+     +	}
+     +
+    - 	if (ctx.m)
+    ++	if (ctx.m || ctx.base_midx)
+      		close_object_store(the_repository->objects);
+      
+      	if (commit_lock_file(&lk) < 0)
+
+base-commit: 04f5a52757cd92347271e24f7cbdfe15dafce3b7
+-- 
+2.46.0.rc0.94.g9b2aff57b3
