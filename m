@@ -1,34 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0155BB64C
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 05:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75416E57E
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 06:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721195752; cv=none; b=he5Q/7HTJ4otDuK0pqhrw+5OoYdCxRB+frmSTDll9S/9VerC5movt7B/la4MT/bQgqt4JMy+pXqtbzIRrFvX8UdeZbn7OV/i+KHmG0ZmqRKwezaL+YkFucdX8VpxE1Kla5YG+s5soR3qVov7oXivMeMSCFhzwisJh6vZb9LljqU=
+	t=1721197015; cv=none; b=ZV1MRjPc+TLVVa70Ye0CRYxlp96k3AYxYk66cEGmw8bh+lv4J5oIon3L7vo/jYAs0b1eZeH3dYUInzGepLn4CpMU4PotdxTIJJg8k3yeUNo63e59clVcJyoDZzAui34o7S1EtzWgsfDcpHyWClS/K7AEHikgLnxzTakmFQWDR6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721195752; c=relaxed/simple;
-	bh=6WW03kfA2Jp4VweakHKiQQnyCMra5079iT35TAbIuQY=;
+	s=arc-20240116; t=1721197015; c=relaxed/simple;
+	bh=h6swU/a8Oi5sHU2s1FPiSOoOeTNepfXO6UZ4HVWDt2g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XAD1AvrRKmcne9PW6ZAiWTcF5/1JGXiUcEiYi3dq+oWoVE3Vw/nlOCMfSqMIzurhxDHJzOo3tqrlac7doKPWxcJyShEPP5wK0IijntjkuugwmES1rJrT6MCQGfBxjM7uQqfdYOLZGzOyyQNl+Y3XloJs0dzzs9np0PKEw3kNvD0=
+	 Content-Type:Content-Disposition:In-Reply-To; b=AuOf+lWWAlsPcOg24lNwxd9yJCoC+5VA+vVYejE4KBwjMZLkTJKY8Oqp1ym6Fp465/Sbzrcho/tP66H97ryWiamnslG/4CdsKKYPvJtr9bHcyQbKSYXh22h17PQLXOV/QGM3ikvpOFD5tR/jpMb1+lze3m0GCoJOwjgezOOEhK8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23438 invoked by uid 109); 17 Jul 2024 05:55:50 -0000
+Received: (qmail 23727 invoked by uid 109); 17 Jul 2024 06:16:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Jul 2024 05:55:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Jul 2024 06:16:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18810 invoked by uid 111); 17 Jul 2024 05:55:47 -0000
+Received: (qmail 18914 invoked by uid 111); 17 Jul 2024 06:16:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 01:55:47 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 02:16:50 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 17 Jul 2024 01:55:49 -0400
+Date: Wed, 17 Jul 2024 02:16:51 -0400
 From: Jeff King <peff@peff.net>
-To: Nikolai Zaki <nikolai-waleed.zaki@charite.de>
-Cc: git@vger.kernel.org
-Subject: Re: bug: `git pull` does not clean up after itself if it fails
-Message-ID: <20240717055549.GD547635@coredump.intra.peff.net>
-References: <0cc13c53-1d8d-4501-89f2-e8329bc95485@charite.de>
+To: Haritha via GitGitGadget <gitgitgadget@gmail.com>
+Cc: Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+	Haritha <harithamma.d@ibm.com>
+Subject: Re: [PATCH] Fix to avoid high memory footprint
+Message-ID: <20240717061651.GE547635@coredump.intra.peff.net>
+References: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,33 +38,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0cc13c53-1d8d-4501-89f2-e8329bc95485@charite.de>
+In-Reply-To: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
 
-On Mon, Jul 15, 2024 at 01:19:32PM +0200, Nikolai Zaki wrote:
+On Tue, Jul 16, 2024 at 08:03:59AM +0000, Haritha  via GitGitGadget wrote:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> In your local repo have a directory that you cannot write to.
-> Pull from a remote that has changes/new files in that directory.
+> From: D Harithamma <harithamma.d@ibm.com>
 > 
-> What did you expect to happen? (Expected behavior)
-> The pull fails and the local repo in the same state as before.
+> This fix avoids high memory footprint when
+> adding files that require conversion.
+> Git has a trace_encoding routine that prints trace
+> output when GIT_TRACE_WORKING_TREE_ENCODING=1 is
+> set. This environment variable is used to debug
+> the encoding contents.
+> When a 40MB file is added, it requests close to
+> 1.8GB of storage from xrealloc which can lead
+> to out of memory errors.
+> However, the check for
+> GIT_TRACE_WORKING_TREE_ENCODING is done after
+> the string is allocated. This resolves high
+> memory footprints even when
+> GIT_TRACE_WORKING_TREE_ENCODING is not active.
+> This fix adds an early exit to avoid the
+> unnecessary memory allocation.
 > 
-> What happened instead? (Actual behavior)
-> All changes to writeable files are applied and all new files in writeable
-> dirs are added.
-> The local HEAD however remained the same.
-> 
-> What's different between what you expected and what actually happened?
-> A failed `git pull` inadvertently creates changes and untracked files.
+> Signed-off-by: Haritha D <harithamma.d@ibm.com>
 
-A pull is basically fetch followed by merge. So I'd expect us to fail in
-the merge step, at which point pull would generally leave the state
-as-is, because merge failures tend to be conflicts.
+Good find. Any trace function should verify that tracing is enabled
+before doing any substantial work.
 
-So I guess doing what you expect would require a merge which hits a
-non-conflict error (like an unwriteable directory) to clean up after
-itself. That's probably not impossible, but it may be rather tricky,
-especially if we are concerned about unrelated changes in the working
-tree.
+Let's take a look at your patch. First, your line wrapping is unusual,
+making the commit message a bit hard to read. We'd usually shoot for ~72
+characters per line. So more like:
+
+> This fix avoids high memory footprint when adding files that require
+> conversion.  Git has a trace_encoding routine that prints trace output
+> when GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment
+> variable is used to debug the encoding contents.  When a 40MB file is
+> added, it requests close to 1.8GB of storage from xrealloc which can
+> lead to out of memory errors.  However, the check for
+> GIT_TRACE_WORKING_TREE_ENCODING is done after the string is allocated.
+> This resolves high memory footprints even when
+> GIT_TRACE_WORKING_TREE_ENCODING is not active.  This fix adds an early
+> exit to avoid the unnecessary memory allocation.
+
+Second, we'd like a full real name in the Signed-off-by line, as you're
+agreeing to the DCO. See:
+
+  https://git-scm.com/docs/SubmittingPatches#sign-off
+
+Likewise, the author name should match the signoff name (you can use
+"git commit --amend --author=..." to fix it).
+
+For the patch itself:
+
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -324,6 +324,11 @@ static void trace_encoding(const char *context, const char *path,
+>  	struct strbuf trace = STRBUF_INIT;
+>  	int i;
+>  
+> +	// If tracing is not on, exit early to avoid high memory footprint
+> +	if (!trace_pass_fl(&coe)) {
+> +		return;
+> +	}
+
+I don't think trace_pass_fl() is what you want. It will return true if
+the trace fd is non-zero (so tracing was requested), but also if the key
+has not yet been initialized (i.e., nobody has used this key to try
+printing anything yet).
+
+I think you'd just use trace_want(&coe) instead.
+
+Also, two style nits:
+
+ - our usual style (see Documentation/CodingGuidelines) is to avoid
+   braces for one-liners.
+
+ - we only use the /* */ comment form, not //. Though IMHO you could
+   skip the comment completely here, as an early-return check in a
+   tracing function is pretty obvious.
+
+It would be nice if we could test this, but besides the wasted work, I
+don't think there's any user-visible behavior (the problem is that we
+are computing things when we're _not_ tracing, so there's nothing for
+the user to see). And there's no provision in our test suite for
+measuring memory usage of a program. So I think we can live without it,
+and just manually verifying that it works (but it would be good to show
+the measurements you did manually in the commit message).
 
 -Peff
