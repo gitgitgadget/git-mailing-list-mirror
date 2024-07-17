@@ -1,114 +1,134 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2DC17E8FA
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 16:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B6C1E4B0
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 16:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721234962; cv=none; b=RkiXIH5JSfcI2Ae+jKdLLNZp0csypMYEREWWB2M6Om3j8AIRJW0iHhZTEJG1a0y0Z6ojszJ0QZI3aPJ6iulec8zw/bw9s6Jnnxlh3lCPkx1aPdOilCXcp5MEN6SgQ+2PGLroPJQA4DJC2PZZioa5gM1vTwzxPrslgCFViYkHLGY=
+	t=1721235253; cv=none; b=CyQPWDLHTI0DZvbW3Ta0fZUWclaRJwQkcn84D28FufzRBkMBTqnU4xedAwDVUVUG6Kbz1NRhekb8k2TtXKlbPdpQMyqt6ClLzt6X8gurpdGhh/X2oqwDfCa+te9y8VS5JHMmPf6UKdevJ0o0/bRIWjjMkWSdAFa4iL4BHqVb/V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721234962; c=relaxed/simple;
-	bh=3dQ3BVqcC+pCf+iKzFX22EmvX0U2i2NhYNvz+vnonwI=;
-	h=From:Message-ID:Date:MIME-Version:Content-Type:To:Subject; b=r5tSN2wgqd1iljkKFQkTubO3PGlY+U67eUWFh4rUVXQBHRnVwN8huVAPy6Mx74gZmy48Hj/S+zalaD2ErdNX/ssid5EwAtIgoh+fWRA3Ztwghu0pF9Yo4eJ/aOyI0CFH8UUrw0pUna48m6L8GsM6h2Kf+EIDGt/A80CoccwPgGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=BbJdhTJV; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	s=arc-20240116; t=1721235253; c=relaxed/simple;
+	bh=zSPMCqgHxmeb7WxmRbQfCpX3S4enQsxEwyFaJPGOguo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ugzZcig8AXFu5Q5cVuFnE/dr9Oej85JKNXWuIbiPh7FniQDj2N3PiF06Ei3TOqA38ISfgXJKqauAmG3wkZAMCWuLhsIR8W+7OHn2rl8dFQA22NQ2zXVHpe+GqziGz8dD4V5/Wo4lFy/afD7ndER0GxtC5S6Pj9e16MqnDAJBJdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i3rvz4gc; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="BbJdhTJV"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=g.chiark; h=DKIM-Signature-Warning:Subject:To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:From:
-	Sender:Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=UaPgT7qn0gafoo5oPCoV4NgjfMlM+FSAhnAtsCypGLY=; b=BbJdhTJVFM5W
-	FMlamgG+VDfHDh8AGPNU0ZGs32anJ+55V4aEBYE7j6b6ab9qVaZHO0REeDfJdmaB1xn7ViNITQe+R
-	Zpx8wqL/mSAY8j/eeTAAiTNkzRm1s44a8sSaRs+Ifh2Q5EN361+7dZwAiC/+2cg/7HDjiaksZvL+m
-	3T8Tf90MyWfcQiVRETn3zrLImAF7eVSI+YWweGqgK4akjHNqG++rHBU4WF3iMiVD5iF/1HEiu5kuB
-	Ag2rEyBOviLi7BYwSgV0BDdp06sF53oKeI1EdFDHnYQELEkfQP9Xfvxt+AzN6btIWn1NWpzpeQPeH
-	5afgUnw4qehyqmEkpudzCg==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1sU7q9-0003ON-SB
-	for git@vger.kernel.org; Wed, 17 Jul 2024 17:49:17 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Message-ID: <26263.62989.829497.450160@chiark.greenend.org.uk>
-Date: Wed, 17 Jul 2024 17:49:17 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i3rvz4gc"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EC61F35EC5;
+	Wed, 17 Jul 2024 12:54:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zSPMCqgHxmeb
+	7WxmRbQfCpX3S4enQsxEwyFaJPGOguo=; b=i3rvz4gcZlo7C1Rg/laGvYQUMd4L
+	0Q0SGh9++enK+1FHM7w0jKAFpxA6j88jItGpAAOymJc1q2mYrDEOyIBXrdG04oIu
+	brB8ipdtSuOUh6QHDnNuyFtWO5j8u8q9vQiSLzciby4k5PzsWqeJuyhPR0J5ETin
+	ljZz6ubq4OJ+bXE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E5BE035EC4;
+	Wed, 17 Jul 2024 12:54:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 73A1A35EC3;
+	Wed, 17 Jul 2024 12:54:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
+In-Reply-To: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+	(=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Wed, 17 Jul
+ 2024 06:17:41 +0700")
+References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+Date: Wed, 17 Jul 2024 09:54:05 -0700
+Message-ID: <xmqqikx42c42.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-Subject: git subtree bugs (mishandled merges, recursion depth)
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/ad/add64bdf8e770171c60b2aa901328b04.pem
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 2E851892-445D-11EF-AFB0-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-I have what ought to be a fairly straightforward situation that
-git-subtree seems to be mishandling.
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail.com> writes:
 
-Steps to reproduce:
+> With at least glibc 2.39, glibc provides a function declaration that
+> matches with this POSIX interface:
+>
+>     int regexec(const regex_t *restrict preg, const char *restrict stri=
+ng,
+>            size_t nmatch, regmatch_t pmatch[restrict], int eflags);
+>
+> such prototype requires variable-length-array for `pmatch'.
+> ...
+> Thus, sparse reports this error:
+>
+>> ../add-patch.c: note: in included file (through ../git-compat-util.h):
+>> /usr/include/regex.h:682:41: error: undefined identifier '__nmatch'
+>> /usr/include/regex.h:682:41: error: bad constant expression type
+>> /usr/include/regex.h:682:41: error: Variable length array is used.
 
- git clone https://gitlab.torproject.org/tpo/core/arti.git
- cd arti
- git checkout 01d02118cdda30636e606fc1a89b3e04f28b8ad1
- git subtree split -P maint/rust-maint-common
+I get the same with=20
 
-Expected behaviour:
+	$ sparse --version
+	v0.6.4-66-g0196afe1
 
- git subtree (hopefully fairly rapidly) prints a the commitid of the
- tip of a branch suitable for merging back to the upstream repo, which
- is at https://gitlab.torproject.org/tpo/core//rust-maint-common
+What I have locally in /usr/include may be a bit older.  It reads
+like this:
 
- The resulting history ought to have a few dozen commits,
- most of which are the upstream history of the subtree.
+        extern int regexec (const regex_t *_Restrict_ __preg,
+                            const char *_Restrict_ __String, size_t __nma=
+tch,
+                            regmatch_t __pmatch[_Restrict_arr_
+                                                _REGEX_NELTS (__nmatch)],
+                            int __eflags);
 
-Actual behaviour (git 2.45.2, Debian amd64 1:2.45.2-1 .deb):
+where _Restrct_arr_ and _Restrict_ would become an empty string for
+older compilers, and _REGEX_NELTS(foo) becomes empty when VLA is not
+available.  I think their intention, when the compiler fully supports
+all the necessary features, is to turn the fourth parameter into
 
- $ git subtree split -P maint/rust-maint-common
- /usr/lib/git-core/git-subtree: 318: Maximum function recursion depth (1000) reached
- $
+	regmatch_t __pmatch[restrict __nmatch]
 
-Actual behaviour (git 2.20.1, Debian ancient 1:2.20.1-2+deb10u9):
+I can see how your patch forces the fourth parameter to become (ISO C99)
 
- Takes a very long time.  Everntually produces an output commit
- which has most of arti.git#main in its history.
+	regmatch_t __pmatch[restrict]
 
-Notes about the source repository:
+or even plain vanilla
 
- The state of arti.git:maint/rust-maint-common is the result of the
- following:
-   (i) create a new rust-maint-common.git, and add and edit files
-     (many of these changes came via gitlab MRs, there are merges)
-   (ii) in arti.git, `git subtree add`, and make further changes,
-     to files both within and without the subtree
-   (iii) Make a gitlab MR from (ii) and merge it into arti.git#main.
-     (resulting in a fairly merge-rich history)
-     https://gitlab.torproject.org/tpo/core/arti/-/merge_requests/2267
+	regmatch_t __pmatch[]
 
-A workaround:
+to erase the mention of __nmatch that is not understood by sparse.
 
- If I check out main^2 (01d02118cdda30636e606fc1a89b3e04f28b8ad1^2)
- and run git-subtree split using the ancient version of git, it still
- takes ages, but the output is correct.  So the old version of git has
- a bug meaning it can produce higly excessive output, when merges are
- present.
+> diff --git a/Makefile b/Makefile
+> index bc81d3395032a..4b9daca1dcc58 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1381,7 +1381,7 @@ ARFLAGS =3D rcs
+>  PTHREAD_CFLAGS =3D
+> =20
+>  # For the 'sparse' target
+> -SPARSE_FLAGS ?=3D -std=3Dgnu99
+> +SPARSE_FLAGS ?=3D -std=3Dgnu99 -D__STDC_NO_VLA__
+>  SP_EXTRA_FLAGS =3D -Wno-universal-initializer
+> =20
+>  # For informing GIT-BUILD-OPTIONS of the SANITIZE=3Dleak,address targe=
+ts
 
- This workaround is only available because right now the history of
- the subtree's files, within arti.git, is fairly simple.
+But it makes me feel a bit dirty to define the macro that only
+compiler implementations are expected to define (or not)[*1*] to
+cause header files behave the way they would with a compiler without
+VLA.  I dunno.
 
- With the new version of git, I get the "recursion depth" error,
- regardless.
+[Reference]
 
-Thanks for your attention.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+ *1* https://port70.net/~nsz/c/c11/n1570.html#6.10.8p2
