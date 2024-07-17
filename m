@@ -1,39 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3775811C83
-	for <git@vger.kernel.org>; Wed, 17 Jul 2024 05:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0155BB64C
+	for <git@vger.kernel.org>; Wed, 17 Jul 2024 05:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721195618; cv=none; b=CUEcDaPQn4VZsgiixuR7pK7j6ege9kCvBqJiMo4v8PhqD/ib5oCD7Q8oToXE6arq2PdKh/i58PokBpyNYbFBqX0nvIsGPdpWy/YpnVLCsU4gMru7gSXuAWnWlRpdgC5zq4X9tCiMRvj+zTZd+inE5I4wK40VBqd14sCKUGN3Iyk=
+	t=1721195752; cv=none; b=he5Q/7HTJ4otDuK0pqhrw+5OoYdCxRB+frmSTDll9S/9VerC5movt7B/la4MT/bQgqt4JMy+pXqtbzIRrFvX8UdeZbn7OV/i+KHmG0ZmqRKwezaL+YkFucdX8VpxE1Kla5YG+s5soR3qVov7oXivMeMSCFhzwisJh6vZb9LljqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721195618; c=relaxed/simple;
-	bh=lsHBwK/A2df8H4nakLaBNxobIYOwN9Hr/jdsLz+fGLo=;
+	s=arc-20240116; t=1721195752; c=relaxed/simple;
+	bh=6WW03kfA2Jp4VweakHKiQQnyCMra5079iT35TAbIuQY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hiOf9ZeUylushf2CeXy26OIn1yI19a2gk//DPt/4svqN4dlt3Rz02eANpZZO6fy3exKEzF9tGBUK3pncOvgP1Aptbuu9A08Ypb41g0OVU7xn1N5FgRlgdeT2/dNHXoWlN5kTcS6n4+/CkbqXQCHm8zRj206ytyIsrvjk4ZMd32g=
+	 Content-Type:Content-Disposition:In-Reply-To; b=XAD1AvrRKmcne9PW6ZAiWTcF5/1JGXiUcEiYi3dq+oWoVE3Vw/nlOCMfSqMIzurhxDHJzOo3tqrlac7doKPWxcJyShEPP5wK0IijntjkuugwmES1rJrT6MCQGfBxjM7uQqfdYOLZGzOyyQNl+Y3XloJs0dzzs9np0PKEw3kNvD0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23407 invoked by uid 109); 17 Jul 2024 05:53:36 -0000
+Received: (qmail 23438 invoked by uid 109); 17 Jul 2024 05:55:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Jul 2024 05:53:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Jul 2024 05:55:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18776 invoked by uid 111); 17 Jul 2024 05:53:34 -0000
+Received: (qmail 18810 invoked by uid 111); 17 Jul 2024 05:55:47 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 01:53:34 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 01:55:47 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 17 Jul 2024 01:53:35 -0400
+Date: Wed, 17 Jul 2024 01:55:49 -0400
 From: Jeff King <peff@peff.net>
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Scott Moser <scott.moser@chainguard.dev>, git@vger.kernel.org
-Subject: Re: Can dependency on /bin/sh be removed?
-Message-ID: <20240717055335.GC547635@coredump.intra.peff.net>
-References: <CADaTQqDZ_6wORXOFc2CE90aizgHJ116NDHZhNeY4Nx7NH8DHJw@mail.gmail.com>
- <xmqq8qy21k9f.fsf@gitster.g>
- <20240715235212.GA628996@coredump.intra.peff.net>
- <20240716192307.GA12536@coredump.intra.peff.net>
- <87jzhlf2i4.fsf@igel.home>
+To: Nikolai Zaki <nikolai-waleed.zaki@charite.de>
+Cc: git@vger.kernel.org
+Subject: Re: bug: `git pull` does not clean up after itself if it fails
+Message-ID: <20240717055549.GD547635@coredump.intra.peff.net>
+References: <0cc13c53-1d8d-4501-89f2-e8329bc95485@charite.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,24 +37,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87jzhlf2i4.fsf@igel.home>
+In-Reply-To: <0cc13c53-1d8d-4501-89f2-e8329bc95485@charite.de>
 
-On Tue, Jul 16, 2024 at 11:30:59PM +0200, Andreas Schwab wrote:
+On Mon, Jul 15, 2024 at 01:19:32PM +0200, Nikolai Zaki wrote:
 
-> On Jul 16 2024, Jeff King wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> In your local repo have a directory that you cannot write to.
+> Pull from a remote that has changes/new files in that directory.
 > 
-> > Again, it's possible that we could detect that no shell metacharacters
-> > are in play and do the word-splitting ourselves. But at that point I
-> > think it should go into run-command's prepare_shell_cmd().
+> What did you expect to happen? (Expected behavior)
+> The pull fails and the local repo in the same state as before.
 > 
-> This is what GNU make does (see construct_command_argv_internal), for
-> performance reason.  But run_command is probably not performance
-> critical.
+> What happened instead? (Actual behavior)
+> All changes to writeable files are applied and all new files in writeable
+> dirs are added.
+> The local HEAD however remained the same.
+> 
+> What's different between what you expected and what actually happened?
+> A failed `git pull` inadvertently creates changes and untracked files.
 
-Thanks, that's interesting to hear. I agree that run_command is not
-usually performance critical. Generally if we find ourselves spawning a
-lot of processes, the right solution is to accomplish the same thing
-with fewer processes (or even in-process), not micro-optimize out the
-intermediate shell.
+A pull is basically fetch followed by merge. So I'd expect us to fail in
+the merge step, at which point pull would generally leave the state
+as-is, because merge failures tend to be conflicts.
+
+So I guess doing what you expect would require a merge which hits a
+non-conflict error (like an unwriteable directory) to clean up after
+itself. That's probably not impossible, but it may be rather tricky,
+especially if we are concerned about unrelated changes in the working
+tree.
 
 -Peff
