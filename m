@@ -1,102 +1,81 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D3F1C36
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 02:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59242052
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721270388; cv=none; b=oRgoSD+o0HjpZqJDGgtS8nowSEhapZ/JUZEpmg9s6JAMemlCJCaAvPkGFG4N0JllN6FBsyqbTxfLlKVScpwqadBWLRKOSoa/AGZ505DfHa1/IWWdK7BQ1YOVgvo5nTKXRAGkne1uxKRgv98uSpHLp+zKpGU367dziIbjl0Tw+6g=
+	t=1721276698; cv=none; b=u1os7ceTwWM9ph44mWkI7MR76uspwkqpJ+g6K+4jmRmE5czOaCrCE5SPyXta5vgIJyeDIINVWDO3vCgb87fPXR5xSsV8XSQb+HKTArJT5JojlJrWD4EfRMQZkiDsMq8bKT4chxybZluH65kOglkxN2cSzjtJS1AJDCvfrqTS/Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721270388; c=relaxed/simple;
-	bh=a90Gcx90gTCSuOGkdPA2NgyRZIDJlAoC7rTffQXAlh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CAVB6Tu/l51XvF2E2i+UVl7BKNArEExzCkTDVO+ctd5n/cA/lUWhE+WOXuf+UNPopVHPb2aTn5eB276Lfq29BmZm1bpFrC+0EwuWtwNFVW7dP7n7PtLGwg4A+hHnbqoGDaxEARbhmtZvXW8+OLfnOwuCQ47ozqtM5QHb8AvAo78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W4d4FW8s; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721276698; c=relaxed/simple;
+	bh=ymH3fpuVJDOKRjWQNNilCYxmMYiVRXkRVUT6P9hTL7I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=tqCYqg03JBIQs+Wa+KMNn5x9t1yZovHGD++gstgqYzcI2Xo8eadDIvWq5eWS5j3JG3ja+oSD/hc/YgSDzDWwDPjm7gqSFcpAWfPOF0tF1t8j6nT7VgCq9xAr19MbqxniW5QMI4Lci/2rKPl8C07uYMqtxmebz2YOTdGuYHUtldI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=BkKJIm09; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W4d4FW8s"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70b4a8a5587so181802b3a.2
-        for <git@vger.kernel.org>; Wed, 17 Jul 2024 19:39:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721270386; x=1721875186; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z8+1CL9rz/Lqe6iu0V1CULmzL9Sgscq7P+epcRFgDq0=;
-        b=W4d4FW8sfsaLHqCQ2+chKBtq0CM5nc1bQlwgYtwnoXpAnbXD5K5lmK+5eWPvGtETbB
-         gSA/AD3tfPMWvX743p3FtIrGhQNuv4rLg8eqyvtRP02aAb52SknHzin01GD7qgcYP87s
-         u7ZlcG1W+1ve2e4jfHy1LKe0/Sh/s5OdXWTczvcJfVRX3XlkBw2sQKTIxsyXuNkHbzPe
-         6jMEdQ3/GJ/CDIF2soTOqqVB5SLQIoH4thfhx+YNrIY6daHHoR7+azM3lu3BAAq4oeYC
-         YC3E1twN1PmrJSI6qpcYdW3fQana51s6Pu4MApyNN57yit1JpJdwuGPw1wV6PO1JwfPz
-         eUIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721270386; x=1721875186;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z8+1CL9rz/Lqe6iu0V1CULmzL9Sgscq7P+epcRFgDq0=;
-        b=GMIRTa8YM+YuNjeSIjHBjspBkhOLkJiD+Y38HDT2GgYTtb9W4sck1vTCg9/FgXX/dv
-         1y865RmWqYAj7Uw2pGAZAjmNj00BLYMbM3n1JFgJIWwSkL3VUY8O3DPSTECRraM0qlAw
-         2rOS/YKM6/FVitNzB5i2/ZwaSZohrtyoMy0a5O/1ikMvtSSsnGxMkTMj4rU/9v8AvCx4
-         4wqCxXP+XrDbsJzxiZb1f9yg/tZpZPKShUXJ/+lIA6WxZ2SdrMbookMpXDZ1esU4fdry
-         P3Tfmj42nFR7PARYnwTtsFQv2WMkj67XY6lSgJoRK58nztvlGnrRBF3+dDeVw9XFen7a
-         o//g==
-X-Forwarded-Encrypted: i=1; AJvYcCUT5tGAnoovdSSDAE1QiFg7JTEZ5+LHeUzNICJ3NmhT0wSWu6lkLyjZn+vKXNjCkZ0kjxOzb0n6DmtP16WrChAoCNX1
-X-Gm-Message-State: AOJu0Yw7iX3m2tx9HjNcaf4lYbB90+KLKvanuCwYQJrBxT8l34cw4EiZ
-	eqyv/bsp7kJ3f6jcBQHCrkTCck/SmL/MEkty9VJPBMZuvt1fald5
-X-Google-Smtp-Source: AGHT+IHlGKR6mueTI3V+DTl1foJRqqabknNWXmee8Wggdaw6OaQTo6DDfaXwvWWuJ9rRHSA7Vhdjig==
-X-Received: by 2002:a05:6a20:d50c:b0:1c2:8c8f:aa0c with SMTP id adf61e73a8af0-1c3fdccd4famr4222743637.12.1721270386062;
-        Wed, 17 Jul 2024 19:39:46 -0700 (PDT)
-Received: from localhost ([14.191.223.217])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc3a26csm84159205ad.192.2024.07.17.19.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jul 2024 19:39:45 -0700 (PDT)
-Date: Thu, 18 Jul 2024 09:39:44 +0700
-From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-Message-ID: <ZpiAcJuAH50UlHIX@danh.dev>
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
- <xmqqikx42c42.fsf@gitster.g>
- <9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
- <xmqqr0br26ok.fsf@gitster.g>
- <8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
- <0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
- <xmqq5xt33a10.fsf@gitster.g>
- <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="BkKJIm09"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask@howdoi.land>)
+	id 1sUIh8-007N38-Jx
+	for git@vger.kernel.org; Thu, 18 Jul 2024 06:24:42 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID;
+	bh=o3WvXpshjiXIoRPT7LBh4m00D5FTaEPkUXF049UCG/I=; b=BkKJIm09osL53YxpXobXUlZipT
+	DbfwsVkcXMrQhrZzGsOiSeThChVTJ+aH9txgV3IwbkHHS/mpFBjJMfHlcOjoZGJQ6UcV8KIgpPWi7
+	55gqmR6MX7ZSLPUg9VFiHTszllWNQ8ulNMl18lq5mpmCeJOWXiVNAbv4UZG1LMNvt31p+aEI+d6t1
+	ASTrGGROv4uHFbUD5tntmLWq9cB/+1qU/k7JuY8+VENwcKWfaImQxkpQHhJ6CLV04NrhblK3PZEZR
+	/qISfrsilsiDpU5pSDA/4DEroeXT9pJiw0a8nVvTMiNy1yN+NYrxA14n4nNtdjuXnJzufohjuqzOA
+	wfV1MOPw==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask@howdoi.land>)
+	id 1sUIh8-0006EJ-7M; Thu, 18 Jul 2024 06:24:42 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1sUIh3-00CUQo-A9; Thu, 18 Jul 2024 06:24:37 +0200
+Message-ID: <984140ad-b2b9-4336-84db-552428071f7e@howdoi.land>
+Date: Wed, 17 Jul 2024 23:24:34 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Shared bare repository dubious ownership error after 2.40.1-r0
+To: Mike Lodispoto <mike@lodispoto.com>, git@vger.kernel.org
+References: <dd703bdc-f485-4162-92a5-fd2828b69604@lodispoto.com>
+Content-Language: en-US
+From: Colin Stagner <ask@howdoi.land>
+In-Reply-To: <dd703bdc-f485-4162-92a5-fd2828b69604@lodispoto.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 2024-07-18 01:02:54+0100, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
-> 
-> 
-> On 17/07/2024 23:53, Junio C Hamano wrote:
-> [snip]
-> > That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
-> > Luc's patch is a sufficient fix without any downsides, no?
-> > 
-> 
-> Yes, assuming you're only concerned with 'make sparse' usage.
-> 
-> BTW, I didn't expect it to take this long for this issue to come
-> back to the list! I expected it to almost immediately cause
-> problems with the sparse ci job, when the version of Ubuntu was
-> updated to the LTS (now previous LTS!). So, I just found a simple
-> solution for now (which turned into 2 years).
+Mike,
 
-Well, yeah, -Wno-vla would work, I used that macro __STDC_NO_VLA__
-because I'm not sure Git want to use vla or not, so I only tried to
-disable it for system headers.
+On 7/10/24 18:16, Mike Lodispoto wrote:
+> | $ git pull
+> | fatal: detected dubious ownership in repository at
+This appears to be known behavior introduced as a fix for 
+CVE-2024-32004. It appears that the safe.directory restrictions now 
+apply to fetch and clone as well. See the release notes for v2.45.1 [1].
 
-And yes, the vla declarationw as added into glibc 2.35.
+You can fix this by adding the path containing your repositories to the 
+safe.directory configuration parameter as Git recommends. Whether or not 
+you should is another matter—this can expose your devs to attacks from 
+other user accounts.
 
--- 
-Danh
+I also have small workgroups that use NFS and other network filesystems 
+to share repositories. Are there any plans to make cloning a local 
+repository safe?
+
+Colin
+
+References
+
+[1]: <https://lore.kernel.org/git/xmqqv83g4937.fsf@gitster.g/>
