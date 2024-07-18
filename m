@@ -1,58 +1,50 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A83C374CC
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF3320B33
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721278068; cv=none; b=uqwE3S9qPigivpHOYqDQK4rQRclfNxrLvJeLGVxXWQGgQb2ZcAnarKNdJvn0Zj6GNXb6Aqfv3iiUmqnb8ZWU1jvwjplvQZ2IOhjIyVRzwOWWyfSWqf6p5Ms8BePvfEe30poI4OC5BQf0yLzUTrg7x6pqDjZnTr7pF7L6VFwky9Q=
+	t=1721278226; cv=none; b=JgoWFWb5m1pCQ4vtNL7pDPM/mGflx04RdmIxJ51bEKq1B0YgjiZSM4NRvNVebjNLBqJZQLjodENfvapVKUq6PfQEpkQGMl6YF7uYY/eArdIpllzUj/A10I2YXnZqm6DkgTEeDziF0kg4Ksl9pDjMJfGIR6k4V+PRs5fBVkBv3Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721278068; c=relaxed/simple;
-	bh=fzmova5BwzurH4/6k1eqTA+1UAQmUPCM+OFthsuVd30=;
+	s=arc-20240116; t=1721278226; c=relaxed/simple;
+	bh=XSXpJomcuf1dz1NDZkFFU1Ng5XFTTXEe+bbQkDtWYfE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eJojul6uKNjjWpeR3nJn6xQjMlX4MiLaX15Obpk3VhK6qGXXuoQRdDBrzku+DXAbH7ik0w9Anoqpct4yVWbFrnLPpH99OF+jwqlCv2bXhL7J0eAVE7dk2olICq9hs08Q6ku/c6CE72Lt9A1BkW37BfGz8qKR+HBpWvQ2oHawaAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=brSUNF8j; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=ATDRh3c9dXbSwKPyZSrbV2HSp8mWDpmHio97Jo92Mn+B7W7oCuOx04DqH/Lv5Vpaghr886iQB8vHEg3ZNReOsRf2E05klQhrKyjUqjBlTIQ5iHoZkMYuHMWHPvcpP3E9Z6ofloTDIgoK2iMzyJSnFKkFFvA9F91qYqinfvwtB4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qOD4LZ8A; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="brSUNF8j"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qOD4LZ8A"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CBB4C267CC;
-	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BCCD26815;
+	Thu, 18 Jul 2024 00:50:24 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fzmova5BwzurH4/6k1eqTA+1UAQmUPCM+OFths
-	uVd30=; b=brSUNF8js6yDr2h43sNoh6KpQGim2aDoWO/vaIq3V/6KpLWmx1XE5q
-	6uE0kgjmhO5W0pI03IWGO9bNsm6/ZKlQ4jG7Z6IX9jFDj8rKFRthUPx8o80vh/yW
-	4gpYYBlcXV8fWqe0r7bJdJS+ODsrvu9Oz2ZBgCqw9Fuv741K9K37A=
+	:content-type; s=sasl; bh=XSXpJomcuf1dz1NDZkFFU1Ng5XFTTXEe+bbQkD
+	tWYfE=; b=qOD4LZ8A/oxLXWSUwm0ix93TERV6gHzxJu+cs1Gpm9V/w4PGpH1xbV
+	JkmNkiJnAcD0mHGf8a4Pdu0qaWK37S/0Nv7U5jqVTWtLUEvD9Yxn1BvJpwhp8yP4
+	lXWr+G3ucaEOeAC9umE7cb+HZ3zW5e0r5PYcPCLaU/wlHjNek0BlA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C1860267CB;
-	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 23D5C26814;
+	Thu, 18 Jul 2024 00:50:24 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 36390267CA;
-	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90D1326813;
+	Thu, 18 Jul 2024 00:50:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-In-Reply-To: <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Thu, 18 Jul 2024 01:02:54 +0100")
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
-	<xmqqikx42c42.fsf@gitster.g>
-	<9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
-	<xmqqr0br26ok.fsf@gitster.g>
-	<8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
-	<0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
-	<xmqq5xt33a10.fsf@gitster.g>
-	<a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
-Date: Wed, 17 Jul 2024 21:47:42 -0700
-Message-ID: <xmqqplrb1f2p.fsf@gitster.g>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Subject: [PATCH 0/2] misc Makefile patches
+In-Reply-To: <7a38d869-8d8a-4922-894c-59ac7fc20449@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Thu, 18 Jul 2024 02:10:48 +0100")
+References: <7a38d869-8d8a-4922-894c-59ac7fc20449@ramsayjones.plus.com>
+Date: Wed, 17 Jul 2024 21:50:22 -0700
+Message-ID: <xmqqle1z1ey9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,30 +54,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- DEB1A2E0-44C0-11EF-9D97-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+ 3E488BA6-44C1-11EF-8E7A-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
 Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> On 17/07/2024 23:53, Junio C Hamano wrote:
-> [snip]
->> That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
->> Luc's patch is a sufficient fix without any downsides, no?
->> 
->
-> Yes, assuming you're only concerned with 'make sparse' usage.
+> These patches have been hanging around for _years_, so I rebased them
+> onto the current master branch @ 04f5a52757 ("Post 2.46-rc0 batch #2",
+> 2024-07-16). This was prompted by the sparse discussion tonight.
 
-Is there anything else in the context of this project I should be
-concerned with, wrt sparse and recent </usr/include/regex.h> that
-uses vla in prototype parameters?
+I do not see any immediate downside, but lack of immediate upside
+matters a lot more at this phase in the cycle.  I may queue them but
+neither looks worth disrupting the upcoming release.  So it would
+have to wait before the 2.46 final before it hits the 'master'
+track.
 
-> BTW, I didn't expect it to take this long for this issue to come
-> back to the list! I expected it to almost immediately cause
-> problems with the sparse ci job, when the version of Ubuntu was
-> updated to the LTS (now previous LTS!). So, I just found a simple
-> solution for now (which turned into 2 years).
-
-;-)
-
-Thanks.  It really makes me appreciate whenever I learn that we are
-blessed with project friends who are involved in many other projects
-we rely on.
+Thanks.
