@@ -1,150 +1,102 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7F81B86F2
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9724C62E
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 07:07:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721278702; cv=none; b=ZVUU1xJjiVNWmtS4us671BRrjsOkjiCqeq6ypxet5vZnZufMjHuWd2YTcQUo8/UjCFDHClVM979NYvdFuy/h5hJKw5oODoTkdF653LMizN/rI35WTx/Dn/4VWFwYizZQwAvgnhmHASN3L4U00blKA1y2l3MQiRIGmALhwb+Jb4w=
+	t=1721286478; cv=none; b=AJqQ87VKPgYGl6qDbMa4NKbARdJ3KxDfA2uH6cHyUngOvHB7AKTeuRFFL8DfjUvxwPdlf25g+wx8DNwD9k4vGiYj3zECtloy+yvv+bGVEVLsi8iOhKs10Bz9dna6UKFX8P/TbyMAeV2oxmY26lUwVMLIaSGXnBzd0A72LfV/L+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721278702; c=relaxed/simple;
-	bh=gnCNHxHX15LNkhi+Udi+nYx4wpXaIgkTNfbyuz5DvoI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZeSbcw9V1LhnufvzWvAvlqsdUSAZwMn16BMhxtYDXfhe40jDdBRduT5JpT8WCml9826Lqfg/3h0tnLcgwetG+ptbtRw0bOhS+hYQ12x3bns8XbBNZl5cNTXdrlFDGPyY/JSTuo+GypKT17rRXHTkYvtV4r8cjJdMdLrjrlL0flE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HZvwQYlo; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721286478; c=relaxed/simple;
+	bh=OttUanscOmOyzDiHxSSUQXzMIUOYYzoiPst/HBQSnTU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iMcOkNkvcObdxjLMEiJZMwY3603nYeZRPNDSRpZxAlqHxdZDqGLvvhfNEJdpeqVBwnhn1AMNXfgRIyjcgLJjaocqlXrw5ldDdOPKSXHcIypkW6fhNiliTONsJo8LF1oYLr0mukKEwT94ZFXdmJ+xHSpO+V9Fstmmo7f9bDKn4SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ExLoSzDj; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HZvwQYlo"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-58b966b4166so294117a12.1
-        for <git@vger.kernel.org>; Wed, 17 Jul 2024 21:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721278699; x=1721883499; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6/lmhEGtaIegWbi6t7mDfzv6aaf1V9t3bxtaY4fCRI4=;
-        b=HZvwQYloLYFsoGPhGh3DYv+Si+XpE76wXuY9Yl6lAtryK7LbtYqTDRqmGOxOApjFTZ
-         +4U0Ne3rEHR0Kw1AxNWIuVT0NrjShNodLvKFCRH1g97ni1RFziIhOM1Vez842HJ3kIMF
-         L9cjTE+tG0m/+laCXc6qrinwOpcPcMj+XYlAPGuHW0TL2+0p5F+M/k0xL0wRzwXkLJZa
-         31avdYy3xYD6hAPehSHJ4G04GzJpDzeWw6ko3MQOsQJ90uF7rV5/hOPoA1Tj7idcBdfH
-         66gbriCWMW7LEsQQLcLlFoblGvqDV6JDCl7CIvPwUk3yeTyq5MDmN+yQh5bj+6/wCLVQ
-         vUOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721278699; x=1721883499;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6/lmhEGtaIegWbi6t7mDfzv6aaf1V9t3bxtaY4fCRI4=;
-        b=Y1kMmGDLtZEHvyU9rPh8+wvXop9Ff6Ta3PJ4DdLEWcTj+gJ8ugzVlyxvnadHwfg2nR
-         kKFjNDfDuAoUJIrkKIs/f/WjtB3exQP5aM7KpPAk96du2Lp0F3NI9RztXt4ID4X96Yke
-         b2WEveoOv63y9wPo+XwV8XQbND5XScn7msXP2ASSITgREzx6nQCOsY+fh7wCor7hGN9B
-         cwkRk410f60scND+0kXkBnMFGvXdBuCzhcNUjHvwF9HUj98FIwr8xoewbgdeHwKfntNx
-         SJ12uChKnOPKnzP0WRg+qFVaPubCmzY5Tz1YYpf9drbQ/Sq9IFx02TCCk93ZXtFc1M+g
-         qUWg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5ISs2NrQi5C8HN8iDgLOiAm2KLL28RfIcLg61b+hoDDmcyemIeBClx1/BFKdXh01DuXQ7QM26aUePZQhL3K+lSXhC
-X-Gm-Message-State: AOJu0YwRpMzG3xbMf4fen8v5CvdTeEe4F4N+UN24NUGN7EIogBF1xTeC
-	FZCyqOmOVd5juaiOWjcrpXNHXWbPbWTn2zkr6siUMYfbTiUo9a/uW32Em90tJar9wBFrsPQGeT6
-	bMDrCMf2jzZBC1flsSvOIIbx+Nqh/AXIq
-X-Google-Smtp-Source: AGHT+IHoRzPnSS4xGyR9eDecq7PWW/lHRVCFjMAQfsDhpCZKgN+czuucrCy6EmOCHf4iCwJcSGGfVD7pOZ/zpn89liw=
-X-Received: by 2002:a17:906:694:b0:a72:80b8:ba5b with SMTP id
- a640c23a62f3a-a7a0134990amr248633566b.56.1721278698417; Wed, 17 Jul 2024
- 21:58:18 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ExLoSzDj"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A6BB2781F;
+	Thu, 18 Jul 2024 03:07:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=OttUanscOmOy
+	zDiHxSSUQXzMIUOYYzoiPst/HBQSnTU=; b=ExLoSzDjteqsG68o7Hq1URzdjHSH
+	fLc9hRDajD5aLeF+kf7bfgROCyNqNdATQJNeYa3WlFJfkWgrnkyiNwDPFXboAU4e
+	gXU9Bf0ooWFCBiJvl9wgPT1RamOaOKendM3aU/lFTGWnE6T+A73PVdYdAYTn9sul
+	jvpGp1TAuuIE/VU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91BE82781E;
+	Thu, 18 Jul 2024 03:07:55 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3F882781D;
+	Thu, 18 Jul 2024 03:07:54 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
+In-Reply-To: <ZpiAcJuAH50UlHIX@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+	"Thu, 18 Jul 2024 09:39:44 +0700")
+References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+	<xmqqikx42c42.fsf@gitster.g>
+	<9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
+	<xmqqr0br26ok.fsf@gitster.g>
+	<8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
+	<0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
+	<xmqq5xt33a10.fsf@gitster.g>
+	<a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
+	<ZpiAcJuAH50UlHIX@danh.dev>
+Date: Thu, 18 Jul 2024 00:07:53 -0700
+Message-ID: <xmqqzfqfyy7q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240612130217.8877-1-chandrapratap3519@gmail.com>
- <20240716075641.4264-1-chandrapratap3519@gmail.com> <20240716075641.4264-3-chandrapratap3519@gmail.com>
- <CAOLa=ZQxDXDDWXQrt9kpykuMr6nxSA8uf2U2nu0ChTf3yuH8sQ@mail.gmail.com>
- <CA+J6zkQLXsDdSa5xjizr82bPUCng0-XZJRNQ1CAV7ttDbE03xA@mail.gmail.com> <irlg4rgsbfedphbxemj6pns35aceuwqrth6gyj6hi56fmr25n6@yvp4od2ydc26>
-In-Reply-To: <irlg4rgsbfedphbxemj6pns35aceuwqrth6gyj6hi56fmr25n6@yvp4od2ydc26>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Thu, 18 Jul 2024 10:28:07 +0530
-Message-ID: <CA+J6zkRWzq_XNf-E7Nx4_D7rOOjN4Bwi4g3zgzV6YCiVoCe8rA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] t: move reftable/tree_test.c to the unit testing framework
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, karthik188@gmail.com, 
-	chriscool@tuxfamily.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 7481F258-44D4-11EF-A43C-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 18 Jul 2024 at 03:45, Justin Tobler <jltobler@gmail.com> wrote:
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail.com> writes:
+
+>> BTW, I didn't expect it to take this long for this issue to come
+>> back to the list! I expected it to almost immediately cause
+>> problems with the sparse ci job, when the version of Ubuntu was
+>> updated to the LTS (now previous LTS!). So, I just found a simple
+>> solution for now (which turned into 2 years).
 >
-> On 24/07/17 08:00PM, Chandra Pratap wrote:
-> > On Wed, 17 Jul 2024 at 18:09, Karthik Nayak <karthik.188@gmail.com> wrote:
-> > >
-> > > Chandra Pratap <chandrapratap3519@gmail.com> writes:
-> > >
-> > > > +struct curry {
-> > > > +     void *last;
-> > > > +};
-> > > > +
-> > > > +static void check_increasing(void *arg, void *key)
-> > > > +{
-> > > > +     struct curry *c = arg;
-> > > > +     if (c->last)
-> > > > +             check_int(t_compare(c->last, key), <, 0);
-> > > > +     c->last = key;
-> > > > +}
-> > > > +
-> > > > +static void t_tree(void)
-> > > > +{
-> > > > +     struct tree_node *root = NULL;
-> > > > +     void *values[11] = { 0 };
-> > >
-> > > Although we were comparing 'char' above, here we have a 'void *' array.
-> > > Why?
-> >
-> > The array is passed as a parameter to the 'tree_search()' function which
-> > requires a void * parameter (i.e. a generic pointer). In the comparison
-> > function (also passed as a parameter), we cast it to our expected type
-> > (a character pointer) and then perform the required comparison.
->
-> The point of `values` is to provide a set of values of type `void **` to
-> be inserted in the tree. As far as I can tell, there is no reason for
-> `values` to be initialized to begin with and is a bit misleading. Might
-> be reasonable to remove its initialization here.
+> Well, yeah, -Wno-vla would work, I used that macro __STDC_NO_VLA__
+> because I'm not sure Git want to use vla or not, so I only tried to
+> disable it for system headers.
 
-The thing is, the values[] array being 0-initialized makes debugging
-a lot easier in the case of a test failure, so I'm not very sure about
-getting rid of the initialization here.
+Defining __STDC_NO_VLA__ would rid use of variable length arrays in
+the regex.h header, so "-Wno-vla" would not be necessary.  It's just
+that it makes me feel a bit dirty to define the macro that only
+compiler implementations are expected to define in order to cause
+header files behave the way they would with a compiler without VLA.
 
-> > > > +     struct tree_node *nodes[11] = { 0 };
-> > > > +     size_t i = 1;
-> > > > +     struct curry c = { 0 };
-> > > > +
-> > > > +     do {
-> > > > +             nodes[i] = tree_search(values + i, &root, &t_compare, 1);
-> > > > +             i = (i * 7) % 11;
-> > >
-> > > It gets weirder, we calculate 'i' as {7, 5, 2, 3, 10, 4, 6, 9, 8, 1}. We
-> > > use that to index 'values', but values is '0' initialized, so we always
-> > > send '0' to tree_search? Doesn't that make this whole thing a moot? Or
-> > > did I miss something?
-> >
-> > We don't use 'i' to index 'values[]', we use it to calculate the next pointer
-> > address to be passed to the 'tree_search()' function (the pointer that is 'i'
-> > ahead of the pointer 'values'), which isn't 0.
->
-> The `i = (i * 7) % 11;` is used to deterministically generate numbers
-> 1-10 in a psuedo-random fashion. These numbers are used as memory
-> offsets to be inserted into the tree. I suspect the psuedo-randomness is
-> useful keys should be ordered when inserted into the tree and that is
-> later validated as part of the in-order traversal that is performed.
+If we apply Luc's patch [*1*] to sparse, the header would use vla in
+parameter in the prototype, sparse would grok it, *and* then
+complain that we are using vla, so we still need "-Wno-vla" on top
+(but "-Wno-vla" alone would not make (unpatched) sparse grok the
+construct, of course).
 
-That's right, the randomness of the insertion order is helpful in validating
-that the tree-functions 'tree_search()' and 'infix_walk()' work according
-to their defined behaviour.
+> And yes, the vla declarationw as added into glibc 2.35.
 
-> While rather compact, I find the test setup here to rather difficult to
-> parse. It might be a good idea to either provide comments explaining
-> this test setup or consider refactoring it. Honestly, I'd personally
-> perfer the tree setup be done more explicitly as I think it would make
-> understanding the test much easier.
+Thanks.
 
-This probably ties in with the comments by Patrick on the previous iteration
-of this patch, that using 'tree_search()' to insert tree nodes leads to
-confusion. Solving that would require efforts outside the scope of this
-patch series though, so I'm more inclined towards providing comments
-and other ways of simplifying this subroutine.
+
+[Reference]
+
+*1* https://lore.kernel.org/all/uug4xslokvlxr6z24q52z4pt7nrtiimbzunz2gz3k=
+pilk4kxts@7jljsksi6baq/
