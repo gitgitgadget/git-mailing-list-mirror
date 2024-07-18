@@ -1,105 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32522139F
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 00:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EE7620
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 01:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721264247; cv=none; b=g2PXL2lvh4gDbh/Zhq3zVp70kjHHSR5LKqh8/iNFARhC8ThaAAUv5UgNaYO82xjUJeygLFKlgYpIyVfsv7b/vfe/ggAX4aMtaYFzLpk601CyrazTFyLyWUnOI4uH/qrT2EzcJJ1GZEWish0FwuOFVAzEFJyXZWS/sFnULLqCvgw=
+	t=1721265146; cv=none; b=ST1LpS8vdpQLqaiFKgk9aIAXeGQhqpVqNvFzZ7ARiEiUiRrHK+7ulBtPIgyAzU1evwDH073oFn5Z8O17nO2LnsR1pjfdXCFSJ+Gu9CMxgLFFfJ2gbNYwaCl5Crni/xKEOoIq4osQAUu0iIAQaU7KE5/voIMs1JfMFI3z3D6d8AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721264247; c=relaxed/simple;
-	bh=ZWPfy6tZVnrBbR4qDwxopRLH9sjGi+LlmGSmBabi6dU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bv4J6/anvaZy6df04BA/siHUGgWvTBoz3Hib6f223mMue1G6zL5e27khfcPyIdzUir+3xnbLAE+Kfc5DPgGjNHjIVAymyVE5qjDWOky7sbBAvXITzHN6ZINXiGyA4T2ljDAf6PfYsQhcxerGKjdi1ohy5R4fwASZvmdpEM87L40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 12316 invoked by uid 109); 18 Jul 2024 00:57:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jul 2024 00:57:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10894 invoked by uid 111); 18 Jul 2024 00:57:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 20:57:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 17 Jul 2024 20:57:23 -0400
-From: Jeff King <peff@peff.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
-	Adam Dinwoodie <adam@dinwoodie.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: v2.46.0-rc0 test failures on cygwin
-Message-ID: <20240718005723.GA675057@coredump.intra.peff.net>
-References: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
- <20240717064241.GF547635@coredump.intra.peff.net>
- <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
+	s=arc-20240116; t=1721265146; c=relaxed/simple;
+	bh=R1774bcsnpwu6tpk44VeUXIhwD7RFid2qgn6g0PQpp8=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=DVIcsJIZ2DB6OBd0n9POaHDSRxP4GMo+AN7TRKze4Xb6rXkjoSUSnMs+jN+PggBwm+A2LOYSvEUumwDDqvtNHgL/DQbjp0WvbyBj0Lq3xQLsP5+Sbx8eTyqSFHZTQwB00MMwRNgJQi19KpVIvf8/0n/ZV6rPhn5QCWLa13seijw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=DhQWGPio; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="DhQWGPio"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id UFgxs5ypoX9c9UFgys8mRE; Thu, 18 Jul 2024 02:12:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1721265140; bh=9yqFoZFLPSkgXcSaw4vNlk8O9vhgJnxnIJTFUNL3Fyg=;
+	h=Date:To:Cc:From:Subject;
+	b=DhQWGPioP09Dukis187+/i3O385ade43Dkz65kwwFXz38k4YjgahzOcLKWW6wN9uW
+	 aeLWZ5pMlOb+JdZ0ngxPVg6ii6ELJeZrDibmX9uPxvY06uOp0r1BKVAuUHwL9DQu0X
+	 T9ivTwVLNkbrdvY6G++DNZTS41/QuCDeafPa4+jiXkZgD6zl9tDXGfE4ZTF+OJ80n0
+	 2oVI3dyqvDinDAEQTCBfqJbB6ITdhMbV45XdzJi3IVGCgqk4BqonHHjfLtoMPIO6Ly
+	 WDswAWInKw8kgUi/lkhaoAGcT7gDhIMDnERUJQmTNRmcv0aNEa20mWuAWC3SG2dZJs
+	 8MiPrqNLqDALw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=NPx2+F6g c=1 sm=1 tr=0 ts=66986bf4
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=F33gzw5oEhwVvDhVDBYA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <587e339a-8520-48d5-8090-e8d8bfb0c1f4@ramsayjones.plus.com>
+Date: Thu, 18 Jul 2024 02:12:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Makefile: drop -Wno-universal-initializer from SP_EXTRA_FLAGS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMsqAFvOnfQ40n4bYxT6HhQJXD6p8nTFp3lPUyHWNkG/455r+sJA7RogGgGrGOYhLcBBv9heUnBz3mMXG8EpnivzDbCcsPcnYPw4qrvEHkCfNx55Go1/
+ OssZS9NK7WYwJdbCWk8laIvld4wNoH2N6BkHb8LmCzU5koDrqX/nxhr2w3uEHE7jS6VFFOZhnICjXTupe3MbskTqGivtNzun4SA=
 
-On Wed, Jul 17, 2024 at 07:05:43PM +0100, Ramsay Jones wrote:
 
-> > This is a shot in the dark, but: could the problem be an open file that
-> > cannot be moved? If I run a "ref migrate" on my Linux system in the
-> > debugger and stop at move_files(), checking /proc/<pid>/fd shows an open
-> > descriptor for .git/ref_migration.WnJ8TS/reftable/tables.list.
-> 
-> Heh, a very good shot in the dark! ;)
+Commit 1c96642326 ("sparse: allow '{ 0 }' to be used without warnings",
+2020-05-22) added -Wno-universal-initializer to the SP_EXTRA_FLAGS in
+order to suppress potential sparse warnings from using '{0}' as an
+aggregate initializer. At that time, the default was for sparse to
+issue warnings (i.e. the default was -Wuniversal-initializer) if such
+an initializer was used to initialize an aggregate whose first member
+was a pointer type. However, this default was changed just a few days
+later to -Wno-universal-initializer (first released in sparse v0.6.2)
+and has been so in all subsequent release versions of sparse.  Thus,
+including -Wno-universal-initializer in the SP_EXTRA_FLAGS variable is
+redundant.
 
-Lucky guess. :) When Junio pointed out that we'd expect Windows to fail
-in that case, too, I thought for sure I was just wrong. So I'm glad it
-worked out.
+Remove the unnecessary warning flag from SP_EXTRA_FLAGS, essentially
+reverting commit 1c96642326.
 
-> The patch given below fixes the test for me! (I have only run t1460-refs-migrate.sh,
-> since the full test-suite takes 6 hours to run, but now all 30 tests pass!)
-> 
-> I also don't know the code well enough to answer your question regarding
-> the re-opening of the migrated ref-store, but it doesn't look like it would
-> cause any problems (famous last words).
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks for testing. This is new in the upcoming release, but I think
-it's localized to the "git ref migrate" command. So aside from the
-annoyance of the test failure for you, it is not too urgent. I'm tempted
-to put it off until Patrick has had a chance to weigh in, even if it
-means missing the v2.46 cutoff.
-
-I'd also be OK with pursuing it in the meantime if folks feel
-differently. Having slept on it, I think the answer to one of my
-questions here...
-
-> > -	free(new_refs->gitdir);
-> > -	new_refs->gitdir = xstrdup(old_refs->gitdir);
-> > +	/*
-> > +	 * Re-open the now-migrated ref store. I'm not sure if this is strictly
-> > +	 * needed or not. Perhaps it would also be a good time to check that
-> > +	 * we correctly opened it, it's in the expected format, etc?
-> > +	 */
-> > +	new_refs = ref_store_init(repo, format, old_refs->gitdir,
-> > +				  REF_STORE_ALL_CAPS);
-> >  	repo->refs_private = new_refs;
-> >  	ref_store_release(old_refs);
-
-...is that we must put _something_ useful into repo->refs_private,
-because old_refs is an alias for it that we are freeing. I suspect that
-"git ref migrate" does not really look at the repo any more after this
-migration function returns, but it makes sense for it to leave things in
-a consistent state.
-
-So my biggest question is just whether there is any downside to doing
-the release/init pair rather than trying to reuse the existing struct.
-
-I do think it probably causes a small memory leak. The "init" function
-allocates the actual ref_store struct, but the "release" function
-doesn't seem to free it. So we are probably leaking the store that
-points to the temp directory. But that is also true of "old_refs", or of
-"new_refs" if we hit an error. So I think the solution is probably for
-init/release to be symmetric, and for the latter to clean up everything.
-But again, I'd prefer to get input from Patrick there.
-
--Peff
+diff --git a/Makefile b/Makefile
+index d6479092a0..ce3ff2476c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1376,7 +1376,7 @@ PTHREAD_CFLAGS =
+ 
+ # For the 'sparse' target
+ SPARSE_FLAGS ?= -std=gnu99
+-SP_EXTRA_FLAGS = -Wno-universal-initializer
++SP_EXTRA_FLAGS =
+ 
+ # For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
+ SANITIZE_LEAK =
+-- 
+2.45.0
