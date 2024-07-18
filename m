@@ -1,82 +1,102 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3772DDB8
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 14:21:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C02DDB8
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 14:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721312500; cv=none; b=YJHYVFQD/ENAPq8YqMht7XSJVvC8mMAMVn7QF88qRg9AgMbgwzBLQupA0y7Af3K6+Nt/4rMhk2quTXcIzsygCV5aiYTS3AEMyHS6mRx3aWaP+7YzxYhS4aK6CFExFf22OmJIvjYBeYU2EyhKbs5toWoVJvA76upX21BXoKQAr94=
+	t=1721312583; cv=none; b=D8mzVI5RFeCxoiT2Oe6fn/FqQgNg9W4aLqsNFv6zLbeQNm3D6tOHKurauNkvV2Z3EXn5lRyqTgUACdl7ve2tYRNKEZUlQM8pwAxeD5dkUPhCYXtF+fkq+f7sN+Nejx0jjRIfPpCEIDqDW+9nmisxmG/EUpFtuuKipJlE3rwvhtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721312500; c=relaxed/simple;
-	bh=xo2OzHspBjdmbX4eGV2qqz8QbYM6cO3m1Eo8SnTngIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mJBk10E9NqTKL3gcV7bK2c8vI6yb/FxMxX/eVpmjdoakCwpT8qty08xfmuxkOTg521YJIZeV6QxyB0vfjgZEc7LyceKkPVUFf2aqZnVmcBgGQ/neanAWkPc7T1hCU4AivbIFiVLgfecTyOKILnBoLCYpu/Cy+f6Ox6i2BrAuw4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EenUFP3G; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721312583; c=relaxed/simple;
+	bh=FRpaWGod5mkBUTNbbTrdihbqhAcNz13QnULuUFfKUTQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eBNv88zXCY3DADe27nL0IOc0YrHlhyP5g6tyS5BI7iGyPlUO9Ep8fwy0nsO6jaBElyigYnvb2/yzlNk+7wUqj2zAJIK0fKWGPzoaKUUFGFufv55iCzamq27s0Vl4QDVDpKj+hYIEAAZEPbydq2sZAt4HqzEWq4aPv83wjJWyjPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YBkKI0gk; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EenUFP3G"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BFF52AB07;
-	Thu, 18 Jul 2024 10:21:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xo2OzHspBjdmbX4eGV2qqz8QbYM6cO3m1Eo8Sn
-	TngIA=; b=EenUFP3G+fkmg+dRD3Tc300wjlrqt3UOHwKs6FwOxXAVb6YHy0U4Bb
-	3zGiD5299+aPU0rjPu2jsDPOEkyBJ+JyhH/SFju0OK+8g4whTXT0MWvBFI2CbhCB
-	uWLp32mR7PnAx+pLIXQFLwIP572MHnGeOY7n7l0pWAerLNjjHGTI8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 853612AB06;
-	Thu, 18 Jul 2024 10:21:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EED3F2AB05;
-	Thu, 18 Jul 2024 10:21:34 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Philip Kaludercic <philipk@posteo.net>
-Cc: git@vger.kernel.org
-Subject: Re: Best practices for indicating what address to send patches to?
-In-Reply-To: <87msmfrn3r.fsf@posteo.net> (Philip Kaludercic's message of "Thu,
-	18 Jul 2024 10:49:44 +0000")
-References: <87msmfrn3r.fsf@posteo.net>
-Date: Thu, 18 Jul 2024 07:21:33 -0700
-Message-ID: <xmqqh6cmzspe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YBkKI0gk"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2eefeab807dso11583061fa.3
+        for <git@vger.kernel.org>; Thu, 18 Jul 2024 07:23:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721312580; x=1721917380; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jwup1fj0Jx8ug8EjFQokbQUFQSpUuaTfgP87jRwfZwI=;
+        b=YBkKI0gk4S4aV6kfI+n4zwX97JlzDauJGelQcqbsqW2BbxyZuQk6qGMPXDPO3jw5Ad
+         ETGGeVsBoll8UPlku//rjtZ4++03Myik4Yx+7eIiZ29H3CGpfWDHj1slWi7TCW6kYD9T
+         f2LGVBdZR7XrdLSFUzOqZDKsz7pCJXA1Rzy0MQQIiZrP9M3MxSkNLam4Eh0BimlTtoHZ
+         aAcwbEc4IqV95zL3zpVeOxoAq8SuNdwkR8itMpYlfkUH0r4hLQdEwV8rYtZKos92ZSnF
+         yLKPCF+qb6TJUYmaHd7lPlbDI6pBVBAlof2o/cCGwLhCzqP9iyZc3k7GkAnImQONaK0n
+         rxyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721312580; x=1721917380;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jwup1fj0Jx8ug8EjFQokbQUFQSpUuaTfgP87jRwfZwI=;
+        b=CfapQnwVKr/ujeDc+k+dPEGrscXxMGIlA8QSg+dvqf8mkDPgPqrk4CdC7U7RscFnpH
+         0Z5nipKyv6yV5tpJbMiqXX/0HbJAjU/GAXmRXTx5mfyTKokZujVy/tej94Ujj2Jn9yib
+         PBjdj/Fdsx0wgKeG040fYSIkNXz2WdXeAzYbOVUWfxwIn+le/Wx5qx7vEOjK6QMxIKNp
+         I1pVmsjotN5vOWTSWWXxNa7HWraVM72ifeoKIxml1APk9JjlXjWNCZAEM5IAL9Etz9y6
+         4qdYlzo0mkiMIcFeoALpHAavDas9mk8P08MZeACOJzJhVb1yayOrvnSnkxLN+1AkqpoW
+         KNRg==
+X-Forwarded-Encrypted: i=1; AJvYcCWAXocbdlENQL5l+y3CmOYM1I7dQKYkg7tx9zs9oSICfBFjE0hakG3LsA6U2ZIO4xGR5dHlpN5lhcOjKQPSqPaAskI+
+X-Gm-Message-State: AOJu0YzuMVHA49tm7WT0KgmnzpfwK7BWCcgXUILqQsIAa8nIadBvgN7C
+	5KoiffYIZq2mzl8yyyn8E/RQeepY2beMCZqj8Xy7rzsSK0slKVuN
+X-Google-Smtp-Source: AGHT+IE1Ft3rwcaWVXUikzNapMA2P8Ccnlj7UUg9nBGsP68r689sDkhKi0+4lVgpBv7G6U6C0vI3Jg==
+X-Received: by 2002:a2e:8e8d:0:b0:2ec:68d9:f3d2 with SMTP id 38308e7fff4ca-2ef05c7990amr19297521fa.20.1721312579463;
+        Thu, 18 Jul 2024 07:22:59 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36853e239cfsm1800260f8f.56.2024.07.18.07.22.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jul 2024 07:22:59 -0700 (PDT)
+Message-ID: <fce1483f-a963-48ef-9613-ec683e34ec6a@gmail.com>
+Date: Thu, 18 Jul 2024 15:22:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 099EC2EE-4511-11EF-88D1-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC/PATCH] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
+To: Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, Ilya Tumaykin <itumaykin@gmail.com>,
+ git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <9b31e86f-c408-4625-8d13-f48a209b541b@gmail.com>
+ <ab974e62-098c-4200-bee3-7de8d9115516@gmail.com> <xmqq4j937pyf.fsf@gitster.g>
+ <20240710093610.GA2076910@coredump.intra.peff.net>
+ <d5d27cad-bacb-4a79-bb50-e65d2bb6808b@gmail.com>
+ <20240711212628.GA3648684@coredump.intra.peff.net>
+ <622849f1-de52-4b92-9465-931014c8d3eb@gmail.com>
+ <20240713212105.GB554779@coredump.intra.peff.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240713212105.GB554779@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Philip Kaludercic <philipk@posteo.net> writes:
+On 13/07/2024 22:21, Jeff King wrote:
+> On Sat, Jul 13, 2024 at 02:19:39PM +0100, phillip.wood123@gmail.com wrote:
+> 
+>>> Do you want to just re-send your patch with a commit message to replace
+>>> mine? (Feel free to steal the non-wrong parts of my message ;) ).
+>>
+>> Thanks, I'll do that
+> 
+> Thanks. Note that mine is in 'next', but I think it would not be a big
+> deal to revert and replace (I'm not sure it is even on track for 2.46
+> anyway).
 
-> Hi, I was wondering if anyone had a good suggestion on how to indicate
-> where to send a patch to.  Ideally I'd like to have "sendemail.to"
-> configured on cloning, but that isn't possible IIUC.  There also doesn't
-> seem to be a conventional file like ".git-email" that would list where
-> to send a patch, without having to look it up.
->
-> Is this intentional, has it been discussed in the past or is there the
-> chance that it might be improved upon in the future?
+Thanks for the heads-up, I see that Junio has reverted it in the latest 
+what's cooking email
 
-The usual convention is to have the patch submission address (if a
-project uses e-mail based patch as its workflow) together with other
-rules and guidelines the contributors are expected to adhere to in
-documents like README, CONTRIBUTING, etc.  As an e-mailed patch that
-does not follow established conventions is not necessarily useful to
-the receiving projects, it is a good practice to put these pieces of
-information crucial to start contributing in a single place.
+Phillip
 
-It would not be an improvement to add a mechanism to make it easier
-to find "here is the address" to a reader who hasn't even discovered
-where these contributor guide documents are.
-
-Thanks.
+> -Peff
+> 
