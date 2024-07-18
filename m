@@ -1,111 +1,124 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08AC8C06
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 19:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF6043172
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 19:55:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721329868; cv=none; b=WnXCxgBZd4wle8vPQPsayNqF7Q2sqNZBU7Ao3FzCk390RbilJqizGxJE61V0hlwSXy0xkJUEwAWnI/6SQBD4K7B9bCKDWbBvNDM/PYgzkF1SzXy87F8XQajuD7CBxby824EhNzwuKQCuuEwWWK6aLYS1eCdxZs2hKhuRRehP+Vw=
+	t=1721332552; cv=none; b=L3kNLjqbgDWvbXtJMZfiozMrdyZL5f9O4yWuya8QmZuzYFqpkQXnlGJwIH8teN86WWBloCqLztVoT832spOwxj1HUEI74r4/7Z/xxAUweKFZ8EAhb5eERJyNvxysF7kZdf3axbeb7/KeS9UI46sZ3cxX/lcWP7H+VyC/Tjwey0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721329868; c=relaxed/simple;
-	bh=XEOPrg2dvpfGN0x0U9lnGcfYdehp4c9ccjnBa9y0UCU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=giOwsA4ofDpEQQq9mSLnr6E/qRvB2Ls8h6QHrPZdFP7qHb6Z7PTzoxCXgx9rczOntBAwIv4od922aaMCVnSxgAovAp6ZwQGtl3u17E8QwxAM7gCx/gKLeLNKrIOoVFOHD3YeVAiVKY/4Ru+3MzVz5C8WIRaAyWmCoXptS6Ib6JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASYjXFQ9; arc=none smtp.client-ip=209.85.128.179
+	s=arc-20240116; t=1721332552; c=relaxed/simple;
+	bh=3pGMGT0Ll7EwkS9Rdl4SNWOqFHptBVsgg5Yqs7bST3A=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Q3i17MlK/1ozmP90PJnFzUMTf59I5lFf0XQX6MYhhPUJ6odyh9ib8zHvgeSKg5o9+XctTmM35mOg67A/JvWythiYwMwWvVLaPduI2LFEhO3wvFIZAVfPWOGUegKlz3tTrYifUIio8rxHhne4WKfIlf+0RRQCZZU4TVSOXUQa6VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lbFch3xZ; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASYjXFQ9"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6510c0c8e29so11531227b3.0
-        for <git@vger.kernel.org>; Thu, 18 Jul 2024 12:11:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lbFch3xZ"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-367ab50a07aso160312f8f.0
+        for <git@vger.kernel.org>; Thu, 18 Jul 2024 12:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721329866; x=1721934666; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Sz414l20AWdyBcF95XgYxzaJCJj7r6j6mL3t2HZn55Y=;
-        b=ASYjXFQ9+spTYI6R6LJV2Jne/F+FXRsjQWYjkKEvbkz26FyNAhUPO9+RlowzdLwTRD
-         WvbJ+vkJP55mfOqFiWp80HehbMFg6/y2lC5JOZ8RPy9fqihHPDzS6q4hje4XqCA0+g21
-         C8JvGS85mO/YdfZRz5kbglpYlRqJs7OyT5QEXQB5jV7JnBTkADAoaYE55EXrmCIYno6C
-         zLOgW7DqnR6A+sJ87aP8ffY81oIjPxViuBEqmU3BlYnJYJHHlzSJnl2XpHRb4mNhXTdm
-         DBoreRfqrp80TIlbrZvsGsKhXnMwEdhUNa24pxX4YJQQJIawQTtCGeC6jE5C3ugbcoM3
-         JCTg==
+        d=gmail.com; s=20230601; t=1721332548; x=1721937348; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=o+cUuL9bmTI7Ev3FXVFvcpXU8/2aQNH0rznrcirZ3Fo=;
+        b=lbFch3xZQzChn6v1E7Cw3PCN4jJ8lyR+vF0JSt0BNPbsHxlvS/PzEV+PBRc2o51Wue
+         +cPC6DPQD6Ep/eWrTMiIEXSs8mpZVba4MgLIqjwkLVuHd3iVYSeMRZp2QNy0BqDBPGtf
+         LrsyBkLJozRFTrsrAiRBo3fsH9FpBL7oirnCPfvGiTE1B4PMjp4Jd7E0DDLb17eLPHqh
+         9NVzsKVCE/QsJ1kgVi77OAcMZyU+DudbgJOUiHdoE1obTqgYRqhxwOeplucIi1hBgBXl
+         X3i+axYg61Sh9IS5wFKEu80aAXKWzFx5GGzR/U3Rm7EBZF25FPsVfHoP0cMXtUnhXRb5
+         fOyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721329866; x=1721934666;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Sz414l20AWdyBcF95XgYxzaJCJj7r6j6mL3t2HZn55Y=;
-        b=oWGYB8JQFzTMlYk44p7bT8G8Z+CGUPoMT4I12hav5Pt+g25H7vFx0kjsYSe8lvjBAn
-         p6TjEJRJti3cBajzdjFexAXaZxc3ziUZZqi+198CUzFfSsxOJzTusF3Bosil5A2zAenE
-         VJ1EHOKTmd3oXmxGoibToGR2Km01na4FoCgoyBMqqT0kKhcV+jtWaHPzg07qQhERyLNA
-         NcgkhHUcMb4+StUKqhLJZbVWZlSSebVx2acWI1KB3YzznSwtGW0VrPqy4n4/hOK62vD2
-         EYgTbLWdV9oIDrbR+vrpR0jvc0ifn/OeAQqRYlgHU/iLyeS0J6dGPFVq+weUisMUmJX/
-         6vZg==
-X-Gm-Message-State: AOJu0YztIMPvAGamemfkp3kMZASIsnJlBAf1QR5b7ESO6N9COG+lcJHz
-	g2z70FytU4Wdt77aAna5Gw56L9wL2ld++gF7vC8Oj2veqUahSlE8DRd0MEdBnNx8c6X/yPUU2x8
-	iEXDPUd9lAzGq5tVfE2hP0l0pcxOhKw==
-X-Google-Smtp-Source: AGHT+IGGzAn1YB24GAAT6U+oTez+/FRwEXwiKwukV31Xhw1KqK2jHcWiFrCN9I2mED2Wm+p5Uz0G6dc58cH0gVlhloE=
-X-Received: by 2002:a0d:c881:0:b0:65f:7765:9687 with SMTP id
- 00721157ae682-664fe83e787mr66142287b3.11.1721329865837; Thu, 18 Jul 2024
- 12:11:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721332548; x=1721937348;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o+cUuL9bmTI7Ev3FXVFvcpXU8/2aQNH0rznrcirZ3Fo=;
+        b=V2dmTlF5UFxkY6MlIcqVRulVKegSYy40xSHeYQswTsCCG0PN+jS8hQLmgLBKKtxE9l
+         N5/mhfoC0d07+FIel8kju3WXGUDpMo10uZqS2df+LJAK9BFJKSKtoG31yX1//9eqiJzO
+         Q47ogtwbcAwOPD+AEfZ9r8c7denT3+J6mxSEgVAw0gP9yf7mackgH4oFSbmExqiTfkeu
+         FzfmCqNk+sqbCjntQ/6V1pw2ZAugWDU3D6cbOocLLEX2nrSwSDXqfNY3AEoDBE4zodaL
+         4sJZHz0HhBCpP07LiJFLbgnAPA9ArlM7Z/XdDq5zgMelBsRN3savy5Q17AmPp3HtJYvj
+         xJYA==
+X-Gm-Message-State: AOJu0YwU07DDWAeP26fhnFeOSsBpDeEjX3huPsygT2PfAvhQPOqdofL1
+	Tsw+KJrIN9i7KFc8o8P+5z+HWZOCfzAexE3/Xc5FdHLIC8agjfS5V3ANCg==
+X-Google-Smtp-Source: AGHT+IHUzTSNUcxn2HuxRe3wy0JXSSVK9bgFaRSPWkcFueFWTtD1oRDVHd1NPAAXDUfHWd8p3S1v8Q==
+X-Received: by 2002:a05:600c:19cc:b0:426:689b:65b7 with SMTP id 5b1f17b1804b1-427c2d2d8fbmr45163135e9.25.1721332548187;
+        Thu, 18 Jul 2024 12:55:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368727f231esm434768f8f.56.2024.07.18.12.55.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jul 2024 12:55:47 -0700 (PDT)
+Message-Id: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Jul 2024 19:55:44 +0000
+Subject: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Jeffrey Barish <jeffbarish73@gmail.com>
-Date: Thu, 18 Jul 2024 13:10:54 -0600
-Message-ID: <CAKjFfK_vcD-36LqYDMfEEjMARGQKFMQbKH7GqUPzrEjU-_HuQw@mail.gmail.com>
-Subject: Bug
 To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000031edb2061d8a57d0"
+Cc: gitster@pobox.com,
+    me@ttayllorr.com,
+    Derrick Stolee <stolee@gmail.com>
 
---00000000000031edb2061d8a57d0
-Content-Type: multipart/alternative; boundary="00000000000031edb0061d8a57ce"
+Here is an issue I noticed while exploring issues with my local copy of a
+large monorepo. I was intending to show some engineers how nice the objects
+were maintained by background maintenance, but saw hundreds of small
+pack-files that were up to two months old. This time matched when I upgraded
+to the microsoft/git fork that included the 2.45.0 release of Git.
 
---00000000000031edb0061d8a57ce
-Content-Type: text/plain; charset="UTF-8"
+The issue is that 'git multi-pack-index repack' was taught to call 'git
+pack-objects' with the new '--stdin-packs' option. However, this changes the
+object selection algorithm. Instead of using the objects referenced by the
+multi-pack-index, it compares pack-files using a list of "included" and
+"excluded" pack-files. This loses some granularity of how the
+multi-pack-index chooses among duplicate objects.
 
+The end result is that some objects that would normally have been included
+in the new pack-file are no longer included. The copy that the
+multi-pack-index references is in the pack-file that was intended to be
+repacked, so that pack-file cannot be expired in the next 'git
+multi-pack-index expire' step and is included again in the batch of objects
+to repack.
+
+In the context of the change that is reverted by this series, it seems the
+motivation of the change was two-fold:
+
+ 1. some I/O benefits to using pack names over object names, and
+ 2. the ability to use an object walk to improve delta compression.
+
+In my local prototyping, I've found that we could improve 'git pack-objects'
+to use an object walk when given a set of objects over stdin without needing
+to use pack-file names. I do not believe the '--stdin-packs' option should
+be used for the 'git multi-pack-index repack' mechanism, or at least should
+be done with great care and only in specific cases where some assumptions
+can be made around duplicate objects and closure under reachability.
+
+However, the prototype I've built to get these benefits is non-trivial due
+to working to guarantee that partial clones do not accidentally download
+missing blobs. That will follow in a separate series that can be reviewed at
+a slower pace.
+
+Thanks, -Stolee
+
+Derrick Stolee (2):
+  t5319: add failing test case for repack/expire
+  midx-write: revert use of --stdin-packs
+
+ midx-write.c                | 18 ++++++------
+ t/t5319-multi-pack-index.sh | 55 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 9 deletions(-)
+
+
+base-commit: bea9ecd24b0c3bf06cab4a851694fe09e7e51408
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1764%2Fderrickstolee%2Fincremental-repack-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1764/derrickstolee/incremental-repack-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1764
 -- 
-Jeffrey Barish
-
---00000000000031edb0061d8a57ce
-Content-Type: text/html; charset="UTF-8"
-
-<div dir="ltr"><br clear="all"><div><br></div><span class="gmail_signature_prefix">-- </span><br><div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature"><div dir="ltr">Jeffrey Barish</div></div></div>
-
---00000000000031edb0061d8a57ce--
---00000000000031edb2061d8a57d0
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2024-07-18-1259.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2024-07-18-1259.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_lyrnbpea0>
-X-Attachment-Id: f_lyrnbpea0
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCgpJIGRpZDoKPGNyZWF0ZSBhIG5ldyByZXBvc2l0b3J5PgpnaXQg
-aW5pdApnaXQgYWRkIC4KZ2l0IGNvbW1pdCAtbSAiSW5pdGlhbCBjb21taXQiCmdpdCByZW1vdGUg
-YWRkIG9yaWdpbiBodHRwczovL2dpdGh1Yi5jb20vamVmZmJhcmlzaC93YXgKZ2l0IHB1c2ggLXUg
-b3JpZ2luIG1hc3RlcgoKV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBi
-ZWhhdmlvcikKCkkgZXhwZWN0ZWQgbXkgZmlsZXMgdG8gZ2V0IHB1c2hlZCB0byBteSByZXBvc2l0
-b3J5LgoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQoKSSBnb3QgYSBw
-b3B1cCB3aW5kb3cgZGVtYW5kaW5nIGEgcGFzc3dvcmQgZm9yIGEgdXNlcm5hbWUgdGhhdCBhcHBl
-YXJzIHRvIGJlIGEgcmFuZG9tIHN0cmluZyBvZiBjaGFyYWN0ZXJzLgoKV2hhdCdzIGRpZmZlcmVu
-dCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwoK
-VGhlIGZpbGVzIHNob3VsZCBiZSB0cmFuc2ZlcnJlZCwgb3IsIGF0IHdvcnN0LCBJIHNob3VsZCBn
-ZXQgYSByZXF1ZXN0IGZvciBhIHBhc3N3b3JkIGZvciB1c2VybmFtZSBqZWZmYmFyaXNoCgpBbnl0
-aGluZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoKCkkgYW0gcHJlcGFyZWQgdG8gZGVsZXRlIG15IGFj
-Y291bnQgYW5kIHN0YXJ0IG92ZXIsIGJ1dCBJIGRvIG5vdCBzZWUgYSB3YXkgdG8gZG8gdGhhdC4g
-SW4gYW55IGNhc2UsIEkgd29uZGVyIHdoZXRoZXIgdGhlcmUgaXMgYSBiZXR0ZXIgc29sdXRpb24u
-CgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3UgY2Fu
-IGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJbmZv
-XQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40My4wCmNwdTogeDg2XzY0Cm5vIGNvbW1pdCBh
-c3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApzaXplb2YtbG9uZzogOApzaXplb2Ytc2l6ZV90OiA4
-CnNoZWxsLXBhdGg6IC9iaW4vc2gKdW5hbWU6IExpbnV4IDYuOC4wLTM4LWdlbmVyaWMgIzM4LVVi
-dW50dSBTTVAgUFJFRU1QVF9EWU5BTUlDIEZyaSBKdW4gIDcgMTU6MjU6MDEgVVRDIDIwMjQgeDg2
-XzY0CmNvbXBpbGVyIGluZm86IGdudWM6IDEzLjIKbGliYyBpbmZvOiBnbGliYzogMi4zOQokU0hF
-TEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiAvYmluL2Jhc2gKCgpbRW5hYmxlZCBI
-b29rc10K
---00000000000031edb2061d8a57d0--
+gitgitgadget
