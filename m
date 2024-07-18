@@ -1,82 +1,105 @@
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F4D10FA
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 00:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32522139F
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 00:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721260981; cv=none; b=G8ZebT+JTPijjkzc1qufHHwFGxUGVCWNaGx1z5u3he0NZFC7d7SqGiO2ZIWuc/kN6cIla8FpCb2CbGr4HTPYV8W/FBOE2Srtjfvq+C1CLuUIfIaHkFXm0RTq5ugUA4IB+SZIEvPQs7gE3d3OXZOH/axCUNyjs824JvayYlqQEpQ=
+	t=1721264247; cv=none; b=g2PXL2lvh4gDbh/Zhq3zVp70kjHHSR5LKqh8/iNFARhC8ThaAAUv5UgNaYO82xjUJeygLFKlgYpIyVfsv7b/vfe/ggAX4aMtaYFzLpk601CyrazTFyLyWUnOI4uH/qrT2EzcJJ1GZEWish0FwuOFVAzEFJyXZWS/sFnULLqCvgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721260981; c=relaxed/simple;
-	bh=nvqBAYmmjWICa7XJJTkwxc/cC3AJZhG+oHBvhqMd+Cg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SffASnXPGzw4LgEDagWq74L2sGsprI3R1GhYUh3HzmaRWzl81irrXd3LWkOAae23+UkcOQJ3h/BTNyZLBsQCQ53cABbv9AeQ8oPa5pjc1fOyM7gGtWOese5oxtE6UMufJq3P960Ts2YKc5Q9bNeUNwZ5Dn08VN5VdaKF6kYwXYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ivRcl04A; arc=none smtp.client-ip=84.93.230.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ivRcl04A"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id UEbms8XZlH4nFUEbnsF0wU; Thu, 18 Jul 2024 01:02:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1721260975; bh=Gh+fu3WLhJaK6MbPhMavtY6Va+CIUm+VLVeFlqRXf1c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ivRcl04AZT2Jhh8XM4lhhoT5k8n6S14V4LSBr6s+IDGtcdrGT/BVPl0XcpJk2Ac/z
-	 IpZZYMyQd13k6nIhUaUcE35/SV40f3BMvjETFjbpyxZJkLhLU9a3qbwLOJKZAVIX1M
-	 xqflmN45D9Hw49EgKYzV5BEmcelwMXvUmbBoGWp/Zfd6S58u3cAl88vJ/mZlTvCHxb
-	 Ujazs3JPkUO8EnrnMbzuToxAh+XQ6ge0rqgZt4FDqhte0lkGUtCrx08Azro7xTFfu+
-	 y78Msc6uI9cZ5GYHjmC7Kil3m5h7SI4eL+BCuSQkAjYaTMu8zI4JtvtkNcGPvDFZ3Y
-	 tlOHCqmKmIgQg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=f5frB/yM c=1 sm=1 tr=0 ts=66985baf
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=B8b9aWka2ieBsoxJgMwA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
-Date: Thu, 18 Jul 2024 01:02:54 +0100
+	s=arc-20240116; t=1721264247; c=relaxed/simple;
+	bh=ZWPfy6tZVnrBbR4qDwxopRLH9sjGi+LlmGSmBabi6dU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bv4J6/anvaZy6df04BA/siHUGgWvTBoz3Hib6f223mMue1G6zL5e27khfcPyIdzUir+3xnbLAE+Kfc5DPgGjNHjIVAymyVE5qjDWOky7sbBAvXITzHN6ZINXiGyA4T2ljDAf6PfYsQhcxerGKjdi1ohy5R4fwASZvmdpEM87L40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 12316 invoked by uid 109); 18 Jul 2024 00:57:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jul 2024 00:57:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10894 invoked by uid 111); 18 Jul 2024 00:57:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Jul 2024 20:57:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 17 Jul 2024 20:57:23 -0400
+From: Jeff King <peff@peff.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+	Adam Dinwoodie <adam@dinwoodie.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: v2.46.0-rc0 test failures on cygwin
+Message-ID: <20240718005723.GA675057@coredump.intra.peff.net>
+References: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
+ <20240717064241.GF547635@coredump.intra.peff.net>
+ <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
- git@vger.kernel.org
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
- <xmqqikx42c42.fsf@gitster.g>
- <9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
- <xmqqr0br26ok.fsf@gitster.g>
- <8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
- <0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
- <xmqq5xt33a10.fsf@gitster.g>
-Content-Language: en-GB
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqq5xt33a10.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfOxcN6HN+gJcQkIr6DiwaUSn2drhAk6gAoqLutbp/2mwHfeO3RLtx6HuMz4jd7LVtsfeK4Wqc7tuglluLm1bB71XhoMAK6cysRFK+YBO1s003CGWhQqu
- xvBEjIgrt/ej8CIifQEvqdSD64IACcFPxOS2gemx1mk1zg6pDD9NQaRjBxk43W3oeawL6cDqSsTF+ookLB+Ln1SqByy3FE3eAiQ=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
 
+On Wed, Jul 17, 2024 at 07:05:43PM +0100, Ramsay Jones wrote:
 
-
-On 17/07/2024 23:53, Junio C Hamano wrote:
-[snip]
-> That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
-> Luc's patch is a sufficient fix without any downsides, no?
+> > This is a shot in the dark, but: could the problem be an open file that
+> > cannot be moved? If I run a "ref migrate" on my Linux system in the
+> > debugger and stop at move_files(), checking /proc/<pid>/fd shows an open
+> > descriptor for .git/ref_migration.WnJ8TS/reftable/tables.list.
 > 
+> Heh, a very good shot in the dark! ;)
 
-Yes, assuming you're only concerned with 'make sparse' usage.
+Lucky guess. :) When Junio pointed out that we'd expect Windows to fail
+in that case, too, I thought for sure I was just wrong. So I'm glad it
+worked out.
 
-BTW, I didn't expect it to take this long for this issue to come
-back to the list! I expected it to almost immediately cause
-problems with the sparse ci job, when the version of Ubuntu was
-updated to the LTS (now previous LTS!). So, I just found a simple
-solution for now (which turned into 2 years).
+> The patch given below fixes the test for me! (I have only run t1460-refs-migrate.sh,
+> since the full test-suite takes 6 hours to run, but now all 30 tests pass!)
+> 
+> I also don't know the code well enough to answer your question regarding
+> the re-opening of the migrated ref-store, but it doesn't look like it would
+> cause any problems (famous last words).
 
-ATB,
-Ramsay Jones
+Thanks for testing. This is new in the upcoming release, but I think
+it's localized to the "git ref migrate" command. So aside from the
+annoyance of the test failure for you, it is not too urgent. I'm tempted
+to put it off until Patrick has had a chance to weigh in, even if it
+means missing the v2.46 cutoff.
+
+I'd also be OK with pursuing it in the meantime if folks feel
+differently. Having slept on it, I think the answer to one of my
+questions here...
+
+> > -	free(new_refs->gitdir);
+> > -	new_refs->gitdir = xstrdup(old_refs->gitdir);
+> > +	/*
+> > +	 * Re-open the now-migrated ref store. I'm not sure if this is strictly
+> > +	 * needed or not. Perhaps it would also be a good time to check that
+> > +	 * we correctly opened it, it's in the expected format, etc?
+> > +	 */
+> > +	new_refs = ref_store_init(repo, format, old_refs->gitdir,
+> > +				  REF_STORE_ALL_CAPS);
+> >  	repo->refs_private = new_refs;
+> >  	ref_store_release(old_refs);
+
+...is that we must put _something_ useful into repo->refs_private,
+because old_refs is an alias for it that we are freeing. I suspect that
+"git ref migrate" does not really look at the repo any more after this
+migration function returns, but it makes sense for it to leave things in
+a consistent state.
+
+So my biggest question is just whether there is any downside to doing
+the release/init pair rather than trying to reuse the existing struct.
+
+I do think it probably causes a small memory leak. The "init" function
+allocates the actual ref_store struct, but the "release" function
+doesn't seem to free it. So we are probably leaking the store that
+points to the temp directory. But that is also true of "old_refs", or of
+"new_refs" if we hit an error. So I think the solution is probably for
+init/release to be symmetric, and for the latter to clean up everything.
+But again, I'd prefer to get input from Patrick there.
+
+-Peff
