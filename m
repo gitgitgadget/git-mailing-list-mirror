@@ -1,64 +1,50 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469212AEE3
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 14:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3772DDB8
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 14:21:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721311513; cv=none; b=pjDbjtDZkMFjjmMWxw9m0O0gpZglQFsrbPwNx8G3Xs1/14y+u1Gjcb8rUgt8Rge0iHfDkgK531AZAO/hDQs3el7mtQgmneIC9JWJmluGCvYf7L4U1dQo2F8UnOLCmWErW7Q0O8dxIP9pQpSQF4LPB4hgDXe0VctBRbnG6ily1Hk=
+	t=1721312500; cv=none; b=YJHYVFQD/ENAPq8YqMht7XSJVvC8mMAMVn7QF88qRg9AgMbgwzBLQupA0y7Af3K6+Nt/4rMhk2quTXcIzsygCV5aiYTS3AEMyHS6mRx3aWaP+7YzxYhS4aK6CFExFf22OmJIvjYBeYU2EyhKbs5toWoVJvA76upX21BXoKQAr94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721311513; c=relaxed/simple;
-	bh=Mp5lYsnqJgSeiRKYajPFoDoz5JmftwSD+zbJk6XAES4=;
+	s=arc-20240116; t=1721312500; c=relaxed/simple;
+	bh=xo2OzHspBjdmbX4eGV2qqz8QbYM6cO3m1Eo8SnTngIA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nd9IYXoWCZbDZMol2LED7hdz4fvsAJ0Hc8Q0S0M1nKCOpNC4iM5tP4VjzUYyuYtQr0hZPs0gPltrngIdyASDSWFmF5z7Vn2SzqNRh8c9eh4hO8no4xgf3G3joWh7uR20+wpOarlFhd//XAJIlAXey8EL4y3SwsdLHNnZf4gODLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gysr4iDG; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=mJBk10E9NqTKL3gcV7bK2c8vI6yb/FxMxX/eVpmjdoakCwpT8qty08xfmuxkOTg521YJIZeV6QxyB0vfjgZEc7LyceKkPVUFf2aqZnVmcBgGQ/neanAWkPc7T1hCU4AivbIFiVLgfecTyOKILnBoLCYpu/Cy+f6Ox6i2BrAuw4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EenUFP3G; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gysr4iDG"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A7EA03C3C1;
-	Thu, 18 Jul 2024 10:05:11 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EenUFP3G"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BFF52AB07;
+	Thu, 18 Jul 2024 10:21:35 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Mp5lYsnqJgSeiRKYajPFoDoz5JmftwSD+zbJk6
-	XAES4=; b=Gysr4iDGwDBlvRLLQQlSXH8yM0BpTFvBY+WzX8QV0ypGBggveTNF+B
-	Pn/OgbwW1mKD9CZUT4dlESRJH3Z42yBRTTKnV/CbfBUc4vmTFnFNsyS80UTxjxcT
-	YukGy95e5vUPnm1zskr3cWBKN4qy+g9X9eUzKCdL2rXEpxsTnYGls=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9FAD13C3C0;
-	Thu, 18 Jul 2024 10:05:11 -0400 (EDT)
+	:content-type; s=sasl; bh=xo2OzHspBjdmbX4eGV2qqz8QbYM6cO3m1Eo8Sn
+	TngIA=; b=EenUFP3G+fkmg+dRD3Tc300wjlrqt3UOHwKs6FwOxXAVb6YHy0U4Bb
+	3zGiD5299+aPU0rjPu2jsDPOEkyBJ+JyhH/SFju0OK+8g4whTXT0MWvBFI2CbhCB
+	uWLp32mR7PnAx+pLIXQFLwIP572MHnGeOY7n7l0pWAerLNjjHGTI8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 853612AB06;
+	Thu, 18 Jul 2024 10:21:35 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 07A233C3BA;
-	Thu, 18 Jul 2024 10:05:06 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EED3F2AB05;
+	Thu, 18 Jul 2024 10:21:34 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  chriscool@tuxfamily.org,
-  git@vger.kernel.org,  jltobler@gmail.com,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 8/8] ci/style-check: add `RemoveBracesLLVM` to
- '.clang-format'
-In-Reply-To: <CAOLa=ZQkxOTSMih+-sKuHRdRFdrzxgiJdzXdyesM3523t65RJA@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 18 Jul 2024 04:18:02 -0400")
-References: <20240711083043.1732288-1-karthik.188@gmail.com>
-	<20240713134518.773053-1-karthik.188@gmail.com>
-	<20240713134518.773053-9-karthik.188@gmail.com>
-	<xmqqa5ilcngi.fsf@gitster.g>
-	<CAOLa=ZTkYs_Wz2YM82Nm0yPJX8-hYV3WC-aMEqYNRoS+2ZpG3A@mail.gmail.com>
-	<cccf899d-12c4-4046-a958-33374bb870c6@ramsayjones.plus.com>
-	<CAOLa=ZQfhD21Anzd3wWwWcxji7tJydaiD7mrhReH5zLQdXBWng@mail.gmail.com>
-	<xmqq7cdm90h7.fsf@gitster.g>
-	<CAOLa=ZTjHKX3EMbVu1_bjdDez=3aODZQYY4npKrCY-7ZRXN1hQ@mail.gmail.com>
-	<xmqqle224npf.fsf@gitster.g>
-	<CAOLa=ZQx4UKMfq7q2GMV6nYQGKeCj0dW_P4kG7yDTcdo--1HHQ@mail.gmail.com>
-	<xmqqcyne30eb.fsf@gitster.g>
-	<CAOLa=ZQkxOTSMih+-sKuHRdRFdrzxgiJdzXdyesM3523t65RJA@mail.gmail.com>
-Date: Thu, 18 Jul 2024 07:05:05 -0700
-Message-ID: <xmqqv812ztgu.fsf@gitster.g>
+To: Philip Kaludercic <philipk@posteo.net>
+Cc: git@vger.kernel.org
+Subject: Re: Best practices for indicating what address to send patches to?
+In-Reply-To: <87msmfrn3r.fsf@posteo.net> (Philip Kaludercic's message of "Thu,
+	18 Jul 2024 10:49:44 +0000")
+References: <87msmfrn3r.fsf@posteo.net>
+Date: Thu, 18 Jul 2024 07:21:33 -0700
+Message-ID: <xmqqh6cmzspe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,15 +54,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- BCC25564-450E-11EF-B529-DFF1FEA446E2-77302942!pb-smtp21.pobox.com
+ 099EC2EE-4511-11EF-88D1-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Philip Kaludercic <philipk@posteo.net> writes:
 
-> Sorry I got a bit busy with work. But I did end up testing out writing
-> to a temp file and it works on both GitHub and GitLab CIs. Also I found
-> some of the rules are too new for the clang-format in GitHub, so I
-> removed some of them.
+> Hi, I was wondering if anyone had a good suggestion on how to indicate
+> where to send a patch to.  Ideally I'd like to have "sendemail.to"
+> configured on cloning, but that isn't possible IIUC.  There also doesn't
+> seem to be a conventional file like ".git-email" that would list where
+> to send a patch, without having to look it up.
+>
+> Is this intentional, has it been discussed in the past or is there the
+> chance that it might be improved upon in the future?
 
-Thanks, both are really appreciated, especially the latter about
-checking the features that are available.
+The usual convention is to have the patch submission address (if a
+project uses e-mail based patch as its workflow) together with other
+rules and guidelines the contributors are expected to adhere to in
+documents like README, CONTRIBUTING, etc.  As an e-mailed patch that
+does not follow established conventions is not necessarily useful to
+the receiving projects, it is a good practice to put these pieces of
+information crucial to start contributing in a single place.
 
+It would not be an improvement to add a mechanism to make it easier
+to find "here is the address" to a reader who hasn't even discovered
+where these contributor guide documents are.
+
+Thanks.
