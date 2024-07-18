@@ -1,124 +1,107 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32A77EF10
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 08:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E6D3A1B0
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 09:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721292390; cv=none; b=fzMA3tr0ez38emVrCusOndTV5TZdpx5qQu1MoID02WJVf4LTweblBmvn1k1fZVm15wRKyFFfD30MyaVKU1V+lQPf+IaYLspM8hnvxi3wvgnWV/MVClmKFSRunEKeEgWrJiTrZi8cWSIxWUGNG+waKa77X8RkoMvCD4vaqKtpOBM=
+	t=1721296115; cv=none; b=AlYbmnpVC2nsWwmXbjTX52mPJ4rZvowSj26KadA4CSbjedJWu7Pd35eUdtXmF18OsmcfdhRe5rPSxdZ4Do3ITpYG7D7alkZitqX4F6mqN1UcGhuIvxn8iuh0q75VVkzZnAXb27f1GJJBc9YJvbyjh8VRoj0A1nhWW0MJx0Gwx30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721292390; c=relaxed/simple;
-	bh=q1Qr03QAKh8qCzjXnZUScnvv0ctZwxIVYI1Mhnbah5E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kLTC+vOmDSlp4QVBiCuQ1tHYOragkViVau84KAI8Ce3HfX0wtfkn6vXsf49+wl/6uYVAXwYscrhO3l2KGQ4bL2dpVgkkGT9UBHHmC1rAQ4xYvbIkqYMbq3odrXaT4EUF9gvlfbxD09szZmWAHEc7DSTFqMZHsM+mGWQ6Gaajy3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TheI7PLc; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1721296115; c=relaxed/simple;
+	bh=7QcApWarojXP1TfI34+VB0bnI9eFs8eqj3tterqmXyE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aFmdn0F3qn2VNGaFpWw1Da6z7454t2j1Dljeg00XC4odZpAzrDQnz+9VTpZYy7PDb0VFZqChYA/PAaZTRjkCqVgLOZygojaFAUW6hIFcn6WlvRfv2gXQt2sOktN7IRTVatjk2Jy6v2ULKKYZ3JC9UQM4jRtCZpgFPXH6kec7cEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NS+LGN49; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TheI7PLc"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1fc424901dbso5372365ad.1
-        for <git@vger.kernel.org>; Thu, 18 Jul 2024 01:46:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NS+LGN49"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ee9b098bd5so8796821fa.0
+        for <git@vger.kernel.org>; Thu, 18 Jul 2024 02:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721292388; x=1721897188; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=AQPC+1V24rDHdWYxjopi7PyTl8x/loOMY8cGHqCGJWg=;
-        b=TheI7PLcGkIbBAMGNEmzQfXxZ2VvQ6ER2Hi0sZJ6IIGeFzUyC9T3f25cd9NxyQtAp0
-         udOuDTnX2ZuxGRrDqbG/2Ck1uWLnJrWTweHoA+54bb+x2UAPPmkK60MribwFZwsuHAjI
-         QPiEiCCQSUr65Sitz2URiLNt9GbBw3Z5U/HkeoaSo9DfMBF0IbBwMYu3XgkUYT97YCSZ
-         FEsMY/if8NuFC4HoJM1dSK4mx0d0tRKXchkEvVJBL0zE2ZWzk67IL80wOysbibCBSF5G
-         7YI8ZJ5gheN/YRUpAfXC7d6P4foI253U6JjKiwBKaWvJE46n+V2EsAzJR3bxfnmqhbk8
-         xGCw==
+        d=gmail.com; s=20230601; t=1721296112; x=1721900912; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q9eQSEu9/72Gcu6H9ZKPi2ojHt6C6sPz7XZBP05LVAo=;
+        b=NS+LGN49l2J5122A0C8mP59Bt5urQUvFupsgZmAYzbPLl5ejhw01u48/QHlAITBnu3
+         FBRbY0JJoUxQhPqgcVIUQjJhABYK0VXWyuZIntFxuxp1bU6c1rjKAYx3jxaeNVXpzbWa
+         wzZOHzXhAMttjIu920cZkyJctbG3/O8exIPiuOk9tyAAGwrFH78waLwwPVwwbROcn5p3
+         PfLYMLDUoU1tEjhWKe7j+bxyHwAcbz9s6BjnVo7irN/tRGv3pqVlBpIclQlKLz1+xL/C
+         7+nVdAGYdLdn6F1gmpiLJ1g51B2M6n6FakdmyDG/hQIowCnXrEmzfJOKTUsaFgRxl4D0
+         5Wpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721292388; x=1721897188;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1721296112; x=1721900912;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AQPC+1V24rDHdWYxjopi7PyTl8x/loOMY8cGHqCGJWg=;
-        b=jMoa5qrSD3zcbC2iti4Sgnt1hWagEuim1fQJ7sVSoU3TQmUXnvTbFxVzBt6bZ3mvei
-         8H4mDxxlHR8xPbypZWVGJHHiK2DQEq0idhHgenfPZFjqvdQwAqu3IhjFOYTSR6P26xU4
-         tTZ9+SUktF7I6kPyAC5dshBz9NoQQ1Wdj7FQuV6oyZ1rClhzkggLk3pqfX78hExPUk1V
-         kaLO6tLy8A8KJC5fONLWsfAQ8RkfVUZ/sLGR5WZL6IY9gF4xuiRrn0gmNvuc+9I6HEk2
-         r5CKO5995dgGbrB/cjPEkvJf9/AbseiUvIaCX4LTBHfbOJZFx1qe6071028K+UJ1cCyr
-         wGwg==
-X-Forwarded-Encrypted: i=1; AJvYcCWck7W0qjEsyN5wv/78fYJ9GpqT1B+3+yO9NrZ4XT/G2IOSFki/2Y9rmB1BkmoPgO5zQKImYcpz5kH6kwx4iVsme3Xc
-X-Gm-Message-State: AOJu0YwdTi5BAi02RJdETgAR9qke8T+afyJk6oa580iNiq5uxQnzQGQh
-	7MBYa+xbbUkiMUlC7ONUCZJd8arPcATc6JZD2lMFSvTutFB01kHLDsJczg==
-X-Google-Smtp-Source: AGHT+IH3Jbj6Mx4JQDFrj+Syhzsx4AuGtEI4Kchm15NXkLYBFD0lRSPIRbtYYeJbT3yZIj8CGJrz+g==
-X-Received: by 2002:a17:903:22c7:b0:1fb:3e8c:95a6 with SMTP id d9443c01a7336-1fc4e6b7a01mr28863785ad.40.1721292387593;
-        Thu, 18 Jul 2024 01:46:27 -0700 (PDT)
-Received: from localhost ([14.191.223.217])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc530bcsm87792995ad.278.2024.07.18.01.46.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jul 2024 01:46:27 -0700 (PDT)
-Date: Thu, 18 Jul 2024 15:46:24 +0700
-From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-Message-ID: <ZpjWYHvCa_Sb_wwk@danh.dev>
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
- <xmqqikx42c42.fsf@gitster.g>
- <9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
- <xmqqr0br26ok.fsf@gitster.g>
- <8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
- <0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
- <xmqq5xt33a10.fsf@gitster.g>
- <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
- <ZpiAcJuAH50UlHIX@danh.dev>
+        bh=Q9eQSEu9/72Gcu6H9ZKPi2ojHt6C6sPz7XZBP05LVAo=;
+        b=D9x9Y9hpDrgTiSGCs3naWf0a1buQckZ6RIZeMDv0E+W+OUUEIbXyQs7RSoqe4p3DHy
+         3sbcLeL87KPulGKPzE1dgzHlpuWW+d1uD6mVEzqjBj6J3Vw60wbDeDJPZGy99sLwpmXM
+         6bVmaCHtf4I1nJaUJOsJ63VoTrYJmCLprZeCrm+RqytfAE+UYMSW3wO6w09JxC5sFASt
+         q6pKdg4JAFRdjwOS2bq1WNt254ZkVFzGzhdDkVgg7We/YsRGS0nbfpAKA0JzpYcCOAZc
+         0bgcCseM03gNbvBK77//K2FKGy7XXA9NdOe3WHRmlAGxPuf2KwVMocgp/jPVDjqNmHAE
+         jWzg==
+X-Forwarded-Encrypted: i=1; AJvYcCVR89l7dBS3shPzzB7Q1ojMshXmbW3/zsDLHk6DFy/8Foxx7pzsQQU1wvC50OZ6c0iVS28YMTYXc5BWDq8DG0vM6JMu
+X-Gm-Message-State: AOJu0YwafcMYX5NBlx1KYJR//OipbnSSAOXw6bOIN5/EyE0t6kdpwYwG
+	5MvWA4h8OAH9sFjv1kmAeMSFutv3delyfyJbet+49Pdx1es3/GQ6
+X-Google-Smtp-Source: AGHT+IHFZ/nm2zzftI0iMaPc9HDVUjB6mjdC5UOs2NjvGBHtWhA5p3HNXLYmdOGrwa+uQpoknlbFJg==
+X-Received: by 2002:a05:651c:2111:b0:2ec:4f01:2c0f with SMTP id 38308e7fff4ca-2ef05c9d73bmr17097291fa.26.1721296109758;
+        Thu, 18 Jul 2024 02:48:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2b1e288sm4298485e9.24.2024.07.18.02.48.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jul 2024 02:48:29 -0700 (PDT)
+Message-ID: <e2532dee-5d16-484e-ba13-840af7b47c27@gmail.com>
+Date: Thu, 18 Jul 2024 10:48:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZpiAcJuAH50UlHIX@danh.dev>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
+ Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+ <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+ <88f9256e-04ba-4799-8048-406863054106@gmail.com> <xmqqfrs723bp.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqfrs723bp.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2024-07-18 09:39:44+0700, Đoàn Trần Công Danh <congdanhqx@gmail.com> wrote:
-> On 2024-07-18 01:02:54+0100, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
-> > 
-> > 
-> > On 17/07/2024 23:53, Junio C Hamano wrote:
-> > [snip]
-> > > That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
-> > > Luc's patch is a sufficient fix without any downsides, no?
-> > > 
-> > 
-> > Yes, assuming you're only concerned with 'make sparse' usage.
-> > 
-> > BTW, I didn't expect it to take this long for this issue to come
-> > back to the list! I expected it to almost immediately cause
-> > problems with the sparse ci job, when the version of Ubuntu was
-> > updated to the LTS (now previous LTS!). So, I just found a simple
-> > solution for now (which turned into 2 years).
+On 17/07/2024 21:03, Junio C Hamano wrote:
+> phillip.wood123@gmail.com writes:
 > 
-> Well, yeah, -Wno-vla would work, I used that macro __STDC_NO_VLA__
-> because I'm not sure Git want to use vla or not, so I only tried to
-> disable it for system headers.
+>>> -	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
+>>> +	test_write_lines P q |
+>>> +	(
+>>> +		GIT_PAGER="head -n 1" &&
+>>> +		export GIT_PAGER &&
+>>> +		test_terminal git add -p >actual
+>>> +	)
+>>
+>> That's surprising, why does running git in a sub-shell stop it from
+>> segfaulting?
+> 
+> Yeah, it indeed is curious.
+> 
+> The rewrite resolves another iffy point in the original---you are
+> not supposed to attempt a one-shot assignment to the environment
+> variable when you are running a shell function, as that is not
+> portable.  And the above rewrite is a common way to fix that.
 
-Eh, I replied too soon, -Wno-vla doesn't work with my compiler:
+Good point, I'd not thought of that.
 
-     $ rm -f builtin/am.sp && make V=1 builtin/am.sp
-     cgcc -no-compile -I. -I.   -fstack-protector-strong -D_FORTIFY_SOURCE=2 -pipe -O2 -g -march=native  -I. -DHAVE_SYSINFO -DGIT_HOST_CPU="\"x86_64\"" -DHAVE_ALLOCA_H  -DUSE_CURL_FOR_IMAP_SEND -DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"git-compat-util.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM '-DPROCFS_EXECUTABLE_PATH="/proc/self/exe"' -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"'  \
-            -Wsparse-error \
-            -std=gnu99 -Wno-universal-initializer -Wno-vla builtin/am.c && \
-     >builtin/am.sp
-    builtin/am.c: note: in included file (through git-compat-util.h, builtin.h):
-    /usr/include/regex.h:682:41: error: undefined identifier '__nmatch'
-    /usr/include/regex.h:682:41: error: bad constant expression type
-    make: *** [Makefile:3263: builtin/am.sp] Error 1
+Best Wishes
 
-    $ gcc --version
-    gcc (GCC) 13.2.0
-    Copyright (C) 2023 Free Software Foundation, Inc.
-    This is free software; see the source for copying conditions.  There is NO
-    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-
-
--- 
-Danh
+Phillip
