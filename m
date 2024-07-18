@@ -1,63 +1,64 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A977E0E9
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 22:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007401442E8
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 22:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721343024; cv=none; b=VZdXwiat7ebXbWqCAyzCdqg9PAGAf3GWtsVNYLDEm8VVm1Gar4vUeUPtgqQF5cyHsn6D9YHFIDYC9gRiIhIPikiUZ9sB9F1Hf2FmNAsgZbz4JsHDHCbrA6ql9scI6VocR1jv2dv99NtInlwclpaTvdZETg8j9ofuBgDDrcc5pkU=
+	t=1721343072; cv=none; b=Amdpe3CRkOZ7dB3OeqRWi1BdRmN0keJVvcSOyY1A6qUR8YYIvOxntHUDcHskiRIiodlMHrcnTnKnLaHbVX+zvPHHkBBO1IBn3jj7nJiET3tF/jWibkokWRMr5O4xQN7/NXZb32bkFmjLoBZ4DKSw5cfL7PNSrxkOCys+uD74AjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721343024; c=relaxed/simple;
-	bh=GEzFc3GPI74SH72OdzNnUnUWeqm9PuJW0hDmPJr+aZ4=;
+	s=arc-20240116; t=1721343072; c=relaxed/simple;
+	bh=npWSgj5e/+6e7MiK5AxgD/vt8pWlAQyEFroxuklYwEQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HF0v/A2fdqWSgUPDw8tqfkgVArvNim96S91lGaVhyLVD3Y31vWnm4Lflkstk4Uk8PQg0cxuc4J7s6USLfmtOlfbMY5zmyhY/fXXtwyj0yhaPtlSn2YIH59teQdivq1It1dCxvlNeU+y3b9s3YqR7yAhIPM88Ed00szk6WDTTR6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=SoPrGw1Y; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=INDf/BV0RpwXJMau1adUV+KHTXXqygZA3mEOhqiN7t3fw5KeNf8yK4PMx6KkIq58mSRApfxUKkGpSLaBJuF7lm+xwobmuyk3cVwO0pE5eZ9BoLNcLv24D+tQzc/kMDs2pFzEVbs9LxZ7cyObdyJ2k18/PDa7uvCfsQHKMsUk5DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=gvLetXfs; arc=none smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SoPrGw1Y"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-79f178e6225so52997485a.2
-        for <git@vger.kernel.org>; Thu, 18 Jul 2024 15:50:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="gvLetXfs"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-8218de5e3beso403858241.3
+        for <git@vger.kernel.org>; Thu, 18 Jul 2024 15:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721343021; x=1721947821; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=N5GrdDvQ3nhXP9xoilCeNDuVaTmOyDGn5xhmA8nN+5o=;
-        b=SoPrGw1Ye8QCPzoJkX4+A9aWtWJtpx6m7uIrK1Mhq6Gb5INDdfQwstwWmfskatfF3s
-         /K+c8aA1sa9K5f70o3D6n+hpvUktmas6t+MecmSKqTzR+GLxYRzQfMWbIQgY7BAIOazt
-         gKKN0vy5IHUFjzakiTbt2UVmUabeTQGuEvWIEhpLLtbflnaVQMzpB2tWslBVuqZZdxjr
-         538bSOF6CKTqhY7Vx/mabGF9QDtiBxyTdvRNmDCVvRbiKhIvfNAaDKCn1Zg9faXD1ze/
-         SR/RDYsYApOO6ULmyUueDFA5c+6vlid5H4m2L9NaDckw84PNWV3sr/xCCw6OOLOFER+Y
-         onLg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721343070; x=1721947870; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HeT6WpVaBFuVia7E6z+Xw1F/ef61S74JF1/OtXBpQEg=;
+        b=gvLetXfs/SKhCHRcOZ8Qnj8zCLMP/9Me6di7qRNv9aYgFmvH3/bGipJdn3VcvapKHu
+         ZN+bC/g69KX/gUsCM7e9yHB/09fBrzoeQJ4S20ro7bOMRjgPDIGDqkfmWg7LzrPsZXYe
+         so9v6q04lB7ABdZ19t0GBFdzps4eQGLIpMEl1J05LvQ4QXNeOrWBYGXleBNWxal7bxeR
+         bjiGF2N6szYt68QCaWXSUQmtr1euHvxe6y0vH3qYY/dYcg5uyasy+df9POKyKwypi//+
+         Gnaseb8XrQnDkHZosi2cQR9XCFmJYTUgboxeAL6JNdr2ZKwg8oCMqIaxuFYFvTu11n+F
+         /gOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721343021; x=1721947821;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N5GrdDvQ3nhXP9xoilCeNDuVaTmOyDGn5xhmA8nN+5o=;
-        b=AIR8ZDmBcB8IciS6AA7zJe1waWsL7/RtXfVJ61JclQjQ1Hr8UNvGqK6gPR/pKNFUP2
-         J0RkOHrP5Mh1XJrNOZ8CAgco3+OqutyH7qnHgtNn5m/oIgE6zHKqdj3ilUPwkqNuirpM
-         WGCLN3J/10TytTb2qiruCnnpT+1WTA1WPdX6jnIQ95ubqUNTnAI1oOp75mrJ65BNNPjB
-         L/rCNwfdjvpXwLsqiYBs06tjvFbw8w5+pia+hZFXw/J1mOn3UY0z+yJkb3pTWvhXvySM
-         gQxCIv56flSI4MQxTsc3Te6nQyUbNGUSkLU3aoMq+3ERZex1nFIkCRcmAoU3+fmJD8lE
-         eapg==
-X-Gm-Message-State: AOJu0Yz7oH6R9m7BWxY0gw2hG/inygZuPyoMyCF53em18rT3EB/dHlio
-	iLwXmsm3qf/RM84w0UP5SJdDbv4ArRuBo002hCSs+2WinnJYtSDD7kEl6I4zmAY=
-X-Google-Smtp-Source: AGHT+IGpmv3cwSRs00pvzGCgGW8Qbih8IwWhOG/l3dEbNZIodSncJt0y7P4pfwyn7VIuAXfAWCsebQ==
-X-Received: by 2002:a05:620a:29c9:b0:79f:726:e2d4 with SMTP id af79cd13be357-7a1874414cfmr799569585a.15.1721343021077;
-        Thu, 18 Jul 2024 15:50:21 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721343070; x=1721947870;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HeT6WpVaBFuVia7E6z+Xw1F/ef61S74JF1/OtXBpQEg=;
+        b=ixqi/s0KtIDuA5m1x019boADi3MJ+Tc4PQRoEIrwfnZJ3xDes3SrCXSSw/ZgpUtS90
+         nnngYNJJeuYwLf5WfpNufUUzH/jTRI/EmdTt/ZlDNfETcPNxeWMm0MfpeemrkW7MU7U7
+         lX2ljPplFc146MlS0+Kv9BZSpMVFtdBEJBxXDz0CLpNxIKd1y15eR+enBttsdh+Mdv7h
+         o8uIC6yANzJC6EX9VTeozrCJEiwaROLUpdzDCtgHm5S5ONlH1waph/Zm0Wo7ZUpwlxse
+         pINPNptqBsEXlnvn8FUA2nb5Oc4Pgwa4RJI1K0fb2siFDnGGNf1iqywZzU7R8b+c9fV7
+         BCBA==
+X-Gm-Message-State: AOJu0YzOJ9gStUUnTTb0C5kDjWP+myNUGs/rcAWTh3DC4xmhj/IWUSOZ
+	33rpf/RSucMrjuPrssPLoIhPtTonq9+ROMQAkOvHSq2Jn4pffk50oODWwgR0QM0=
+X-Google-Smtp-Source: AGHT+IENwmVsvDADSllQ0WOtT28JS/JDUwbuW6iuvyoDMMl9j82G3U/epiitGDxeV57O0ThtQ2OK9A==
+X-Received: by 2002:a05:6102:1521:b0:492:77db:72b7 with SMTP id ada2fe7eead31-49277db8177mr807615137.26.1721343068717;
+        Thu, 18 Jul 2024 15:51:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44f9cdcfdc3sm671741cf.96.2024.07.18.15.50.20
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44f9cd13b51sm748231cf.38.2024.07.18.15.51.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jul 2024 15:50:20 -0700 (PDT)
-Date: Thu, 18 Jul 2024 18:50:19 -0400
+        Thu, 18 Jul 2024 15:51:08 -0700 (PDT)
+Date: Thu, 18 Jul 2024 18:51:07 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
-Message-ID: <ZpmcK23coi5Qqm7E@nand.local>
-References: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
+To: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/gitpacking: make sample configs listing
+ blocks
+Message-ID: <ZpmcW/fT6BZVwE1L@nand.local>
+References: <20240717105432.2801097-1-martin.agren@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,52 +67,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240717105432.2801097-1-martin.agren@gmail.com>
 
-On Thu, Jul 18, 2024 at 07:55:44PM +0000, Derrick Stolee via GitGitGadget wrote:
-> The issue is that 'git multi-pack-index repack' was taught to call 'git
-> pack-objects' with the new '--stdin-packs' option. However, this changes the
-> object selection algorithm. Instead of using the objects referenced by the
-> multi-pack-index, it compares pack-files using a list of "included" and
-> "excluded" pack-files. This loses some granularity of how the
-> multi-pack-index chooses among duplicate objects.
+Hi Martin,
 
-Thank you for looking at this so carefully! Let me double check my own
-understanding.
+On Wed, Jul 17, 2024 at 12:54:28PM +0200, Martin Ågren wrote:
+> ---
+>  These buglets were introduced in faf558b23e (pseudo-merge: implement
+>  support for selecting pseudo-merge commits, 2024-05-23) as part of
+>  tb/pseudo-merge-reachability-bitmap.
+>
+>  Documentation/gitpacking.txt | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
 
-Suppose we have a MIDX with some pack 'P' and say, some commit object
-'C' which appears in that pack. Let's also suppose we have another pack
-'Q' in the same MIDX which also contains 'C', but the MIDX selected its
-copy from pack 'P'.
-
-If we want to combine 'P' with some other packs (excluding 'Q'), then
-the input to --stdin-packs will look something like:
-
-    P.pack
-    ^Q.pack
-    ...
-
-And the resulting pack would not contain 'C', since we would reject it
-via: add_object_entry_from_pack() -> want_object_in_pack() ->
-want_found_object() -> has_object_kept_pack(). The final function there
-would find a copy of 'C' in 'Q', and since 'Q' is excluded, we would
-reject 'C' as unwanted.
-
-So the resulting pack would not contain 'C', and the MIDX would hold
-onto its copy from pack 'P', resulting in 'P' being both (a) in the set
-of packs to repack together, but also (b) non-expireable, since it has
-at least one object selected from it in the MIDX.
-
-> The end result is that some objects that would normally have been included
-> in the new pack-file are no longer included. The copy that the
-> multi-pack-index references is in the pack-file that was intended to be
-> repacked, so that pack-file cannot be expired in the next 'git
-> multi-pack-index expire' step and is included again in the batch of objects
-> to repack.
-
-I think this matches my own understanding, but let me know if I'm
-missing something. Assuming I'm thinking about this the same way you
-are, the fix (stop using --stdin-packss) makes sense to me.
+Oops. Thank you for finding and fixing, it is much appreciated.
 
 Thanks,
 Taylor
