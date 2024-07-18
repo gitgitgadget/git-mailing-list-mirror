@@ -1,88 +1,102 @@
-Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3953F186A
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 01:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D3F1C36
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 02:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721265756; cv=none; b=oIaNxaXWWT3ZhwCJIFUzsL69QDZAbRLTjYcZN8Lh6/OlZQDc4ux4Wl/tMw2/x2e8gUYan0jBC6QVQRgeEQrAzCAiv1KZ+zqlmZ7y1PrEHfWQO117D/5N4xRHLTCeJI09et9PPgcTjAWeFEblShZ6IJmFCuxG0RctTV4gmPBZrbA=
+	t=1721270388; cv=none; b=oRgoSD+o0HjpZqJDGgtS8nowSEhapZ/JUZEpmg9s6JAMemlCJCaAvPkGFG4N0JllN6FBsyqbTxfLlKVScpwqadBWLRKOSoa/AGZ505DfHa1/IWWdK7BQ1YOVgvo5nTKXRAGkne1uxKRgv98uSpHLp+zKpGU367dziIbjl0Tw+6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721265756; c=relaxed/simple;
-	bh=t5yhdpIjRMe3AfCjqKwYUEx1ML5zKE2IATc9oQSWc2Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gz8B7Jrz/MTG/TbldZPEk2e/VtlLUZWYnpaZ5I7BXavCKARxSXrG0KcBr3EUbwWkoCnji0m0JvfeYvjNSrYL5RGOqdMb2TH8b6G9ZgsVeoIZwMvyUiJ9FX/D5JUzC5MNOu7e4yFkWdNCSqyC8OggUrFQMDuLnBFDuliyACHrS/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Z9+gFD8J; arc=none smtp.client-ip=212.159.14.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1721270388; c=relaxed/simple;
+	bh=a90Gcx90gTCSuOGkdPA2NgyRZIDJlAoC7rTffQXAlh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CAVB6Tu/l51XvF2E2i+UVl7BKNArEExzCkTDVO+ctd5n/cA/lUWhE+WOXuf+UNPopVHPb2aTn5eB276Lfq29BmZm1bpFrC+0EwuWtwNFVW7dP7n7PtLGwg4A+hHnbqoGDaxEARbhmtZvXW8+OLfnOwuCQ47ozqtM5QHb8AvAo78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W4d4FW8s; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Z9+gFD8J"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id UFqos5zfwX9c9UFqps8mfz; Thu, 18 Jul 2024 02:22:32 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1721265752; bh=lu6L/PqJNsRC6c8kTVUaIkebQRiw9XPJs80LIiliL8U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Z9+gFD8JsoUHdGQjZxwatv//SOizxagYvz1PsM70fgJ5UQwYpkrUzHQLcDPsKODFU
-	 IIceKC/wlqGXPksC24XvT6/s4L0SgouSeqtCbC3UUTUdvjlcfSMiHpPHT6PC0Yocnr
-	 ib/gPoTYcZOmiJCwCq8dsS+6mAq83B+CiY3sa/W5hhYpn1HUnOLbeyFqr/G33DUvHi
-	 bNgXu43Q+hYellw+0/k/R5vSYUfMvRxfp/FYwv3MasCEIykAk2ER/SLc4EaHmMWpUw
-	 RHHZnuOjsdpdiH+NDUrjru2Aq/gbxcHCztcGL8AxOgfXC/6RRvIQk5rvCMQ781um26
-	 ZCdzhxnObrWRQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=NPx2+F6g c=1 sm=1 tr=0 ts=66986e58
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=7cjchiuPTnGyAZjgmpIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <f97198e1-bfcc-4f3c-ad0a-2dd27d4f20cf@ramsayjones.plus.com>
-Date: Thu, 18 Jul 2024 02:22:30 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W4d4FW8s"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70b4a8a5587so181802b3a.2
+        for <git@vger.kernel.org>; Wed, 17 Jul 2024 19:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721270386; x=1721875186; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=z8+1CL9rz/Lqe6iu0V1CULmzL9Sgscq7P+epcRFgDq0=;
+        b=W4d4FW8sfsaLHqCQ2+chKBtq0CM5nc1bQlwgYtwnoXpAnbXD5K5lmK+5eWPvGtETbB
+         gSA/AD3tfPMWvX743p3FtIrGhQNuv4rLg8eqyvtRP02aAb52SknHzin01GD7qgcYP87s
+         u7ZlcG1W+1ve2e4jfHy1LKe0/Sh/s5OdXWTczvcJfVRX3XlkBw2sQKTIxsyXuNkHbzPe
+         6jMEdQ3/GJ/CDIF2soTOqqVB5SLQIoH4thfhx+YNrIY6daHHoR7+azM3lu3BAAq4oeYC
+         YC3E1twN1PmrJSI6qpcYdW3fQana51s6Pu4MApyNN57yit1JpJdwuGPw1wV6PO1JwfPz
+         eUIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721270386; x=1721875186;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z8+1CL9rz/Lqe6iu0V1CULmzL9Sgscq7P+epcRFgDq0=;
+        b=GMIRTa8YM+YuNjeSIjHBjspBkhOLkJiD+Y38HDT2GgYTtb9W4sck1vTCg9/FgXX/dv
+         1y865RmWqYAj7Uw2pGAZAjmNj00BLYMbM3n1JFgJIWwSkL3VUY8O3DPSTECRraM0qlAw
+         2rOS/YKM6/FVitNzB5i2/ZwaSZohrtyoMy0a5O/1ikMvtSSsnGxMkTMj4rU/9v8AvCx4
+         4wqCxXP+XrDbsJzxiZb1f9yg/tZpZPKShUXJ/+lIA6WxZ2SdrMbookMpXDZ1esU4fdry
+         P3Tfmj42nFR7PARYnwTtsFQv2WMkj67XY6lSgJoRK58nztvlGnrRBF3+dDeVw9XFen7a
+         o//g==
+X-Forwarded-Encrypted: i=1; AJvYcCUT5tGAnoovdSSDAE1QiFg7JTEZ5+LHeUzNICJ3NmhT0wSWu6lkLyjZn+vKXNjCkZ0kjxOzb0n6DmtP16WrChAoCNX1
+X-Gm-Message-State: AOJu0Yw7iX3m2tx9HjNcaf4lYbB90+KLKvanuCwYQJrBxT8l34cw4EiZ
+	eqyv/bsp7kJ3f6jcBQHCrkTCck/SmL/MEkty9VJPBMZuvt1fald5
+X-Google-Smtp-Source: AGHT+IHlGKR6mueTI3V+DTl1foJRqqabknNWXmee8Wggdaw6OaQTo6DDfaXwvWWuJ9rRHSA7Vhdjig==
+X-Received: by 2002:a05:6a20:d50c:b0:1c2:8c8f:aa0c with SMTP id adf61e73a8af0-1c3fdccd4famr4222743637.12.1721270386062;
+        Wed, 17 Jul 2024 19:39:46 -0700 (PDT)
+Received: from localhost ([14.191.223.217])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc3a26csm84159205ad.192.2024.07.17.19.39.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 19:39:45 -0700 (PDT)
+Date: Thu, 18 Jul 2024 09:39:44 +0700
+From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
+Message-ID: <ZpiAcJuAH50UlHIX@danh.dev>
+References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+ <xmqqikx42c42.fsf@gitster.g>
+ <9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
+ <xmqqr0br26ok.fsf@gitster.g>
+ <8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
+ <0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
+ <xmqq5xt33a10.fsf@gitster.g>
+ <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: v2.46.0-rc0 test failures on cygwin
-To: Jeff King <peff@peff.net>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
- Adam Dinwoodie <adam@dinwoodie.org>, Junio C Hamano <gitster@pobox.com>
-References: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
- <20240717064241.GF547635@coredump.intra.peff.net>
- <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
- <20240718005723.GA675057@coredump.intra.peff.net>
-Content-Language: en-GB
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20240718005723.GA675057@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfJPRQfx3pPIIM9oe/BvSzIeEkDiNr5O/wgAhKCiDrEx0VOoB+fMaNVlfCp2pSODvv27pjg18FS7LKkbs7DMJqz5SJ2l3shW6UXNgZZll6X6X+MRj9KS/
- w/ctPc7bMRhDgLwlzHaWM1VUvVNjS64BMR2TBUw+kZiLfj7lZJk0faU6Z6OzPKOO0wagxqOziLpMRX8E0+GrPlvdVbFpIBMKj2c=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
 
-
-
-On 18/07/2024 01:57, Jeff King wrote:
-> On Wed, Jul 17, 2024 at 07:05:43PM +0100, Ramsay Jones wrote:
-[snip]
-
->> I also don't know the code well enough to answer your question regarding
->> the re-opening of the migrated ref-store, but it doesn't look like it would
->> cause any problems (famous last words).
+On 2024-07-18 01:02:54+0100, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
 > 
-> Thanks for testing. This is new in the upcoming release, but I think
-> it's localized to the "git ref migrate" command. So aside from the
-> annoyance of the test failure for you, it is not too urgent. I'm tempted
-> to put it off until Patrick has had a chance to weigh in, even if it
-> means missing the v2.46 cutoff.
+> 
+> On 17/07/2024 23:53, Junio C Hamano wrote:
+> [snip]
+> > That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
+> > Luc's patch is a sufficient fix without any downsides, no?
+> > 
+> 
+> Yes, assuming you're only concerned with 'make sparse' usage.
+> 
+> BTW, I didn't expect it to take this long for this issue to come
+> back to the list! I expected it to almost immediately cause
+> problems with the sparse ci job, when the version of Ubuntu was
+> updated to the LTS (now previous LTS!). So, I just found a simple
+> solution for now (which turned into 2 years).
 
-Yes, I think it would be better for Patrick to take a look. I added Adam to
-the CC list to keep him in the loop (because he is the cygwin git package
-maintainer); he may have a view on the timing issues.
+Well, yeah, -Wno-vla would work, I used that macro __STDC_NO_VLA__
+because I'm not sure Git want to use vla or not, so I only tried to
+disable it for system headers.
 
-Personally, I would be fine with a post v2.46 fix, but it is not up to me. :)
+And yes, the vla declarationw as added into glibc 2.35.
 
-Thanks.
-
-ATB,
-Ramsay Jones
-
+-- 
+Danh
