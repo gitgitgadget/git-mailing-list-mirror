@@ -1,81 +1,91 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59242052
-	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A83C374CC
+	for <git@vger.kernel.org>; Thu, 18 Jul 2024 04:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721276698; cv=none; b=u1os7ceTwWM9ph44mWkI7MR76uspwkqpJ+g6K+4jmRmE5czOaCrCE5SPyXta5vgIJyeDIINVWDO3vCgb87fPXR5xSsV8XSQb+HKTArJT5JojlJrWD4EfRMQZkiDsMq8bKT4chxybZluH65kOglkxN2cSzjtJS1AJDCvfrqTS/Tc=
+	t=1721278068; cv=none; b=uqwE3S9qPigivpHOYqDQK4rQRclfNxrLvJeLGVxXWQGgQb2ZcAnarKNdJvn0Zj6GNXb6Aqfv3iiUmqnb8ZWU1jvwjplvQZ2IOhjIyVRzwOWWyfSWqf6p5Ms8BePvfEe30poI4OC5BQf0yLzUTrg7x6pqDjZnTr7pF7L6VFwky9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721276698; c=relaxed/simple;
-	bh=ymH3fpuVJDOKRjWQNNilCYxmMYiVRXkRVUT6P9hTL7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=tqCYqg03JBIQs+Wa+KMNn5x9t1yZovHGD++gstgqYzcI2Xo8eadDIvWq5eWS5j3JG3ja+oSD/hc/YgSDzDWwDPjm7gqSFcpAWfPOF0tF1t8j6nT7VgCq9xAr19MbqxniW5QMI4Lci/2rKPl8C07uYMqtxmebz2YOTdGuYHUtldI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=BkKJIm09; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1721278068; c=relaxed/simple;
+	bh=fzmova5BwzurH4/6k1eqTA+1UAQmUPCM+OFthsuVd30=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eJojul6uKNjjWpeR3nJn6xQjMlX4MiLaX15Obpk3VhK6qGXXuoQRdDBrzku+DXAbH7ik0w9Anoqpct4yVWbFrnLPpH99OF+jwqlCv2bXhL7J0eAVE7dk2olICq9hs08Q6ku/c6CE72Lt9A1BkW37BfGz8qKR+HBpWvQ2oHawaAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=brSUNF8j; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="BkKJIm09"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask@howdoi.land>)
-	id 1sUIh8-007N38-Jx
-	for git@vger.kernel.org; Thu, 18 Jul 2024 06:24:42 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID;
-	bh=o3WvXpshjiXIoRPT7LBh4m00D5FTaEPkUXF049UCG/I=; b=BkKJIm09osL53YxpXobXUlZipT
-	DbfwsVkcXMrQhrZzGsOiSeThChVTJ+aH9txgV3IwbkHHS/mpFBjJMfHlcOjoZGJQ6UcV8KIgpPWi7
-	55gqmR6MX7ZSLPUg9VFiHTszllWNQ8ulNMl18lq5mpmCeJOWXiVNAbv4UZG1LMNvt31p+aEI+d6t1
-	ASTrGGROv4uHFbUD5tntmLWq9cB/+1qU/k7JuY8+VENwcKWfaImQxkpQHhJ6CLV04NrhblK3PZEZR
-	/qISfrsilsiDpU5pSDA/4DEroeXT9pJiw0a8nVvTMiNy1yN+NYrxA14n4nNtdjuXnJzufohjuqzOA
-	wfV1MOPw==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask@howdoi.land>)
-	id 1sUIh8-0006EJ-7M; Thu, 18 Jul 2024 06:24:42 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1sUIh3-00CUQo-A9; Thu, 18 Jul 2024 06:24:37 +0200
-Message-ID: <984140ad-b2b9-4336-84db-552428071f7e@howdoi.land>
-Date: Wed, 17 Jul 2024 23:24:34 -0500
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="brSUNF8j"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CBB4C267CC;
+	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fzmova5BwzurH4/6k1eqTA+1UAQmUPCM+OFths
+	uVd30=; b=brSUNF8js6yDr2h43sNoh6KpQGim2aDoWO/vaIq3V/6KpLWmx1XE5q
+	6uE0kgjmhO5W0pI03IWGO9bNsm6/ZKlQ4jG7Z6IX9jFDj8rKFRthUPx8o80vh/yW
+	4gpYYBlcXV8fWqe0r7bJdJS+ODsrvu9Oz2ZBgCqw9Fuv741K9K37A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C1860267CB;
+	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 36390267CA;
+	Thu, 18 Jul 2024 00:47:43 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
+In-Reply-To: <a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Thu, 18 Jul 2024 01:02:54 +0100")
+References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+	<xmqqikx42c42.fsf@gitster.g>
+	<9bdac465-5f43-42de-9cad-e6c43a5a53cc@ramsayjones.plus.com>
+	<xmqqr0br26ok.fsf@gitster.g>
+	<8dd1a2c7-5b9f-4e2f-9c5a-d5d5758714e2@ramsayjones.plus.com>
+	<0e2c66ce-d870-4a03-a26e-a928183b9b2b@ramsayjones.plus.com>
+	<xmqq5xt33a10.fsf@gitster.g>
+	<a1a771b5-f8fb-40e3-bae0-6307abbce58a@ramsayjones.plus.com>
+Date: Wed, 17 Jul 2024 21:47:42 -0700
+Message-ID: <xmqqplrb1f2p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Shared bare repository dubious ownership error after 2.40.1-r0
-To: Mike Lodispoto <mike@lodispoto.com>, git@vger.kernel.org
-References: <dd703bdc-f485-4162-92a5-fd2828b69604@lodispoto.com>
-Content-Language: en-US
-From: Colin Stagner <ask@howdoi.land>
-In-Reply-To: <dd703bdc-f485-4162-92a5-fd2828b69604@lodispoto.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DEB1A2E0-44C0-11EF-9D97-5B6DE52EC81B-77302942!pb-smtp1.pobox.com
 
-Mike,
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-On 7/10/24 18:16, Mike Lodispoto wrote:
-> | $ git pull
-> | fatal: detected dubious ownership in repository at
-This appears to be known behavior introduced as a fix for 
-CVE-2024-32004. It appears that the safe.directory restrictions now 
-apply to fetch and clone as well. See the release notes for v2.45.1 [1].
+> On 17/07/2024 23:53, Junio C Hamano wrote:
+> [snip]
+>> That's OK.  So in short, with a separate SP_EXTRA_FLAGS with "-Wno-vla",
+>> Luc's patch is a sufficient fix without any downsides, no?
+>> 
+>
+> Yes, assuming you're only concerned with 'make sparse' usage.
 
-You can fix this by adding the path containing your repositories to the 
-safe.directory configuration parameter as Git recommends. Whether or not 
-you should is another matter—this can expose your devs to attacks from 
-other user accounts.
+Is there anything else in the context of this project I should be
+concerned with, wrt sparse and recent </usr/include/regex.h> that
+uses vla in prototype parameters?
 
-I also have small workgroups that use NFS and other network filesystems 
-to share repositories. Are there any plans to make cloning a local 
-repository safe?
+> BTW, I didn't expect it to take this long for this issue to come
+> back to the list! I expected it to almost immediately cause
+> problems with the sparse ci job, when the version of Ubuntu was
+> updated to the LTS (now previous LTS!). So, I just found a simple
+> solution for now (which turned into 2 years).
 
-Colin
+;-)
 
-References
-
-[1]: <https://lore.kernel.org/git/xmqqv83g4937.fsf@gitster.g/>
+Thanks.  It really makes me appreciate whenever I learn that we are
+blessed with project friends who are involved in many other projects
+we rely on.
