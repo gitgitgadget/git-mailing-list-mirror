@@ -1,93 +1,111 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F8B823A6
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 13:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E413B142642
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 13:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721395498; cv=none; b=TSSYzQlfppOQ4Ks32OKlqkTkGN+bz1YTqKT0kST6IEcQHZNFVByIO686iVnHtRw4qJNLCdtSnLvqIk2KxjsdiY9cYGXgykB4yix0bEu5Yf+NvMFli7N21SwaZ1jqcHC/MzNLSjBiW7AYSofesdDkREPsUBHtUremU3qCcI36oGs=
+	t=1721396317; cv=none; b=e7TpTZaLia+CkZPdoulX3AS9RPk+g8AWYQbeyq224sqf1ACF4geh4LAOUhEg6ANWn8P8XCMguFUxfnM1bAgo5hn8ZKLwbxG53YbBfgEP1heanvEPAAHObb+E1DSj+xXpqKJHpQRO5nm/dtYqEg5s3huxLZ4fDQHKK6vmbwUMmgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721395498; c=relaxed/simple;
-	bh=ynlElgsbwwwxFMjN3na0cr8ZDg/kS0bDU7zDAzVYCbY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qtfOdTMk5Wr0oK1KzQysl46kFBnHbdRbK5YY/WrwWTckqyybRSYNDrlOotbCswisz1pxiiqxe4+xwNdbsCQXqa5GqYmJBO/6ELUHvdvc+/chOLNHTDfkNtPSINyvsJmP0OX/tu2YpNqi1cv0HRU1cvMVex8NO9zOR83UgMKZd2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7/dJW9m; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721396317; c=relaxed/simple;
+	bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K8DVrT3aigIAjwys16nrldBigsoSm2wMV+Ehgyvh5lfyPcSX+FB/yzc8sgWz71sZhpfojw3YJURoPiN9bdeJYLlAsPJrtduFsVlmbflQ9Der7tAwZUZOQMkKWQNSEkMMAlNjsfE7h46wivjM+0+Jfu40DTPmyrF5xwTRtxYZ5FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QI+fvlXu; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7/dJW9m"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7037a208ff5so1092144a34.0
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 06:24:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QI+fvlXu"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-79ef93865afso93565185a.1
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 06:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721395496; x=1722000296; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1AXn9V5e23aZ9Txa9yw0F7cLOxQTnYJmgrzmaQLuXz4=;
-        b=T7/dJW9mxZ+6EXJAYmqVq+TiTxcxSRRGrStP+spQn02pIfFfnlrvl8Q7q/W5AOrntl
-         VwTcseIOzN9VuM2fGhKab5qRodKL2eX/GtYOjhnjiG4Y7+UyMRZ7bu+otcc41v9NvHYi
-         KtvcKHKX0vecI/hTHzaaV4tQeMOv6xn3+3jUM7r9EuhrP2HpWY+gn4ZWv5YffrLqNeeZ
-         ryMEJu9H3PU8qrkFTftKzgKvzvZewaqiPX8fIxYsotBrVs/XrTcj2EoMnrNqFq6TQnr0
-         PyyCVbOGUZ0rvg8ADVX2n0kG34oa1buTGWISNX5HWRvfG8rTvSrfTe6MKcB0mY3NCtLu
-         CE0g==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721396315; x=1722001115; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
+        b=QI+fvlXuJBhOogORaKRiCjmW7YZO8QF/Ay9FRmDZmK4EBypoIejNSqMMsSnaQ6HIoK
+         dE9rwQTZUyUsR8X3QWRDTqInqh+QmBjND+6LjpRORkxUDFkZVuYtj4qxBORjBVSjICvy
+         8GH/X0RtFMXFL/jVeU7LHcjZHnhvVqzTc+CA4UlxiZrADVp7nJlke4y8AhbUeoVGkpwn
+         YZG1wvVeAmNjobd9U5A2edsHIsqYSoB4w1nR83oy2h2Ct5/Joupvqz8oCnltBQpF3oxJ
+         T57zJPCFJBgm01GPTaJ5DA2ZkQI9aGcgnk1uQ1k9J6B5lF+6A5OkQPvaZEZQD+tytIhV
+         KCUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721395496; x=1722000296;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1AXn9V5e23aZ9Txa9yw0F7cLOxQTnYJmgrzmaQLuXz4=;
-        b=QaGy57SiJivnSpkBsotKst991CO3zZu1NbBT2pkpIW5bTZ2ZaSo8TXDlL9izMUoc0z
-         CP21OHvdVIrFp2rGTvySYm9htrCZkZRySlD/xdtY5AzXyG7pw0xQo+YAe/inTCPKObIG
-         RFaOgaJ0tN5fbqLGXliQjMbQLzPicscER0seYd0ek9BdNDRNyoAu9A3CA9FhWjCpUhpE
-         stUvFSeMF2VPnGJBlxuo+l91vsqp2D2Z3tSg1DPKAvWQeXz9FymI30QuwhDFqELSEh+K
-         Lx6+RNBUv3xSrQLTdjhj49b996vgI7/QU3uSR4fhEpjXJ+ulExG5SzxQ+rljweuPBNJ7
-         8eFA==
-X-Gm-Message-State: AOJu0YyaPChqGu7fqdhMW3qP+wearT/AAa2o27fEj4WQ65SwfhaBluVq
-	mvoFUMjqyvHMHpMMGmAf/I+VdTLvwMtePjx2gPrye6YcyyIHPYOZ
-X-Google-Smtp-Source: AGHT+IELQPDH1MhDqtCWzNua3Rp4Fy3JsUvcjg4cRmqQgLjQwVULAGzNysI2BwdwEDZHK1ZROmNb9g==
-X-Received: by 2002:a05:6870:2312:b0:25e:8509:160e with SMTP id 586e51a60fabf-260d9157604mr6273238fac.3.1721395496381;
-        Fri, 19 Jul 2024 06:24:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:2173:6d19:3a2d:9c4d? ([2600:1700:60ba:9810:2173:6d19:3a2d:9c4d])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2610c716a95sm310111fac.9.2024.07.19.06.24.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jul 2024 06:24:55 -0700 (PDT)
-Message-ID: <81c7bd02-0c2d-452f-800e-ca0d3853a941@gmail.com>
-Date: Fri, 19 Jul 2024 09:24:55 -0400
+        d=1e100.net; s=20230601; t=1721396315; x=1722001115;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
+        b=CEDjj/ycklsX3iFpBd77xL6bdtNLAdFrBgocyBbvdIFQIur3AxWFbShJmPIi7YL8VK
+         1PgtDQTm18u33iEMfxCt5MaNQqxBFB+RtyYEws1ZERxU3LpuaUIqRKdv7QQlGx66VuLo
+         cSAOb+C5n1eWItOrbqtpww7VqZvX5dxk4sYAoPHG1KTZs742fLKlDNSQyt633G/eXnx2
+         +g6J+yG0iairdc/Nlk+5uld1YCtJBOOEtzDZmGj1dn49ANLNK+yZaIQgYkhMgp20CKG7
+         cquSdKibDvpTXM/1+vr7mLftKp/hfFeEnVt6vapn6xSFi9rlkkric9RwXc1Lfs16raH5
+         UQTw==
+X-Forwarded-Encrypted: i=1; AJvYcCWe9YqHeJJ6n/tGD1FPbf9s1ofuaBV7EcjgDp/CFmHwiKL1QEr5NnKtPbZNbWWJzzlwHFAZjt/sCkp3K3Y+f1gELAuB
+X-Gm-Message-State: AOJu0YzJyufNQGkOSYGCrhrbpYeTJAhpajDJqgTMYL1VudfOHxEKGzsH
+	WY+Rd0uYf4A8LsDQ9NIzdLZgabIpzAe630ELdScrvvNlGv00KVxFhEP3S2JMGQw=
+X-Google-Smtp-Source: AGHT+IF+PRmiUk5B1V/w0MlFAiIYQHClrX4xAE6imD2Ww4FnklkSQKCOZJN//pw3HVEfUAHsBp9uLQ==
+X-Received: by 2002:a05:620a:2455:b0:79f:18ee:a650 with SMTP id af79cd13be357-7a187446a81mr948111985a.17.1721396314728;
+        Fri, 19 Jul 2024 06:38:34 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a19900d413sm80199585a.70.2024.07.19.06.38.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jul 2024 06:38:34 -0700 (PDT)
+Date: Fri, 19 Jul 2024 09:38:33 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
+Message-ID: <ZppsWZ6u05U65Blp@nand.local>
+References: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
+ <ZpmcK23coi5Qqm7E@nand.local>
+ <118b164e-67c5-4dfc-b440-62b8986bf356@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-References: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
- <xmqqle1ynz18.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqle1ynz18.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <118b164e-67c5-4dfc-b440-62b8986bf356@gmail.com>
 
-On 7/18/24 5:57 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Here is an issue I noticed while exploring issues with my local copy of a
->> large monorepo. I was intending to show some engineers how nice the objects
->> were maintained by background maintenance, but saw hundreds of small
->> pack-files that were up to two months old. This time matched when I upgraded
->> to the microsoft/git fork that included the 2.45.0 release of Git.
-> 
-> I almost said "wow, perfect timing on the -rc1 day", but then
-> realized that this is not a regression during _this_ cycle, but a
-> cycle ago.
+On Fri, Jul 19, 2024 at 09:21:51AM -0400, Derrick Stolee wrote:
+> On 7/18/24 6:50 PM, Taylor Blau wrote:
+>
+> > I think this matches my own understanding, but let me know if I'm
+> > missing something. Assuming I'm thinking about this the same way you
+> > are, the fix (stop using --stdin-packss) makes sense to me.
+>
+> Your interpretation matches mine. Thanks for the careful read.
+>
+> I think we can accomplish similar goals that match the reasoning for
+> --stdin-packs (better deltas while also limiting the object walk to the
+> repacked objects) with some changes to read_object_list_from_stdin(),
+> but that's a more subtle kind of change.
 
-I almost waited until after the release, but I wanted to put the
-information out there just in case you were interested in taking it
-into 2.46.0 or were planning on a 2.45.3.
+FWIW, the main motivation for that change was to limit the amount of
+cross-process I/O that was necessary to generate the new pack. I figured
+that for relatively small amounts of packs which contain relatively
+large amounts of objects that it would be more efficient to write out
+the pack names than the object names.
+
+I was thinking a little bit about how we would alter the behavior of
+'--stdin-packs' to match what the 'multi-pack-index repack' caller
+needs. I agree that it is possible, and I doubly agree that it is subtle
+;-).
+
+TBH, I think that the amount of I/O we're potentially saving is dwarfed
+by the amount of I/O and CPU time it takes to actually generate the new
+pack, so I doubt the effort to make such a subtle change would be all
+that worthwhile, though certainly an interesting exercise ;-).
+
+> Taking this change as-is will cause a regression in the quality of
+> delta choices, but recovers our ability to expire "repacked" pack-files
+> in all cases.
+
+Yeah, definitely.
 
 Thanks,
--Stolee
+Taylor
