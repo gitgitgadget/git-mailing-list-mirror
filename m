@@ -1,106 +1,117 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221581474B3
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 18:34:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD1B4174C
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 20:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721414083; cv=none; b=bnyOfNA4FG9piAzVCP9Bc3oCMhfOpg7+uAtF0r/8ThRS4102mtzPv70rihO6s/CIfMSWCO/KlFAu/TDCE0guA1aa+oEumLojbULXvwGQYJD+0KWttgHyKJ2weDewiwMUxf0FUUC6F4SnSFtrjsWZwUGUlFo8W43zolJiY7NFP98=
+	t=1721420042; cv=none; b=gAKHkR21hSIcs7Ja2SjHHDVG3XKRgzu7Pwh6Zolh8xAT508uZlbPUhlSF7ux9JPpRhzEYhHuLuai32TCi/X5EOHfQ5IuyHLxZkE1k9ki//hNxhdRL9JpffLRbqcZ49n2a5LjFw5RI34VzSl8RXIDLeW56c814UGo+fb/pzS/r7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721414083; c=relaxed/simple;
-	bh=P723GLs0uPi4CwICjNYdsEHHhaUCbs+yuuX/f/GMldc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=IAHA9oAvNfn82+Dev7SR2NWt350UC12NM1sQEsevUcgwo5hFS2cWksIk1YXfS8Dz9weTxqlCKwj+DRVboaAr2qSkS6np1pPgiyuFgDziykecH6+Q8jBvV4lfVtCmz+LsHVH9dGqtyVTFxa0sWa2iL38dMyQedqQZ55JxfmLXZQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mytechnologyco.com; spf=pass smtp.mailfrom=mytechnologyco.com; dkim=pass (2048-bit key) header.d=mytechnologyco.com header.i=@mytechnologyco.com header.b=dby7dbVo; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mytechnologyco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mytechnologyco.com
+	s=arc-20240116; t=1721420042; c=relaxed/simple;
+	bh=R5mqM0zs0e/PKGrNTqA+Gj/typw0alU83m/RtwXjSuI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MeL3TWK3fRMkFrp1JUarTykJw3R9CDb1EewLX/m6QSlu6uYEGRDp6/oJTvSyvK4/p2DX6Ln0L5TgaBu8H7byVKyO39xFdAvJq9eBcc4FxW5qaABKYlKWSRVl7AgTVremORtMbDOy47TVPUvDBsk1fBjqPSKwUNNA65w+x0c8jEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=X07fLN1H; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mytechnologyco.com header.i=@mytechnologyco.com header.b="dby7dbVo"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-81f91171316so1427350241.0
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 11:34:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mytechnologyco.com; s=google; t=1721414081; x=1722018881; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6PZTJ8+f2QktwtxXpm5fQeVDwk3UuImeCdRaBxXObgk=;
-        b=dby7dbVo5qzzaSaa/fYL6Xh5gXeLB3CsyWrx/lRvVZXlc356aVWk6DRB6gI0cR+Nla
-         IfWOYTgQpwxa1drAgNihFzUQEbgpR13XlNz1gsYJSczA65I4SsbIkblj/SoL23vYGb4F
-         Tun340FHYy/bv4tEbaXiG7UsW5RC86Eyn7GSEdiB4G0PhmkrUdDtszahF6yMOOY17LLm
-         TlwPV17pn2IAPO1GPVujf0n0g5iINb7R5W51YO2yBJs0Yjt9XbkABVPbOPobEJI0IEdD
-         DgpRaI1MSru8vupyy0cGz0P9x19aXBsOKdqnsn/gXInwONGMAzP4CNpinBIjt8J1tHwN
-         AxIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721414081; x=1722018881;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6PZTJ8+f2QktwtxXpm5fQeVDwk3UuImeCdRaBxXObgk=;
-        b=QiKlmj09fExIHWGhKBPe2EeL9sAVpOQj/fl8YPViY+ynth+vvXqdv8TZx09XBR4N3Q
-         2akDemS+u6HAw7szVzCzJdkeP12m4Kv/zX1c+7KbRWD15wguhH+Tyhc36DnwBc+3e9Z5
-         sTwJFMYNzD78RxFoZznGmBYd4EWxMjT7AIrWroh22n6jXStU5gXuMICzk8RcoSxnlmRJ
-         sbN0KqtToD6m1OWx8LNVzMu0l1k2CqeZs33wfKahwxZq1G3Cj5jfAgPwSX2/L94lATlH
-         C/NhKpVUz71oIgcvfBQxgp+z0vTWc9wiuJU0paHrojZ5KPIKRsrObueM7kpLu42CnDZn
-         xhQQ==
-X-Gm-Message-State: AOJu0YyvBpapavIDn3HRzzWdj3wttZxMRgLe+CCwgid+2m0C1JoxxMC6
-	RHbmfdrWt+Vq5qnt6jRU4G1WM8UZW2wNsFyr3KWm14RKV9FAE/2ZMqqItnv8W2+cEL5VyifP9O7
-	nlTx1LqHwGX61/kDE5xGnnRncGbziYIw28CMqTY0/lKaINOBUbYQ=
-X-Google-Smtp-Source: AGHT+IF2z9fVI3dd19bGgqjHgUqYeYCMiF6QXLC+gtRPj7tWNlj5ML2/SZRl1ak2UvbUQo6ONKW+OB+vkF9LTiFmAwk=
-X-Received: by 2002:a05:6102:150e:b0:48f:e729:f45b with SMTP id
- ada2fe7eead31-492842ada08mr716890137.8.1721414080764; Fri, 19 Jul 2024
- 11:34:40 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="X07fLN1H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1721420033;
+	bh=R5mqM0zs0e/PKGrNTqA+Gj/typw0alU83m/RtwXjSuI=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=X07fLN1HBnuqQKFMEOahkp86Sved5juX6+EuvXBX2XG1fVbzejk3RxVkVjs8gcl+p
+	 tvSrJMiXp9lFc6V9yQdsTjMNaNINYX9DrgXQnEv1zbrd5S59r0Sgrj3RITd74nesyt
+	 ArABLh4uemB5H6P1UAw0SNFdu2y9Sh66UyG4UJ/aUgZ6sp3cwNYgSkvIG7GS0oDbbN
+	 fwGeobNLvyedvjGMnMzcex/iA+CAU1zWHm7O7iAUcmHCaPY/dagwIuZtzKMsBdbFz9
+	 mZy1l9bmMM02aLMBJksyaVWNexfuUMk0qAymaeERV6R6+ZgNGWa/uTa8tqgq2qR4X5
+	 xOyS4hJk+iVbSJaDkH6WGxN3c5IWdPwlByK0YGvbdJTZuqNAHXDGRw3Pr92U/ZuGBq
+	 bMShIu1bXRn112oQD9m9flmILYrTvQIScrjoDKDPeh42KbA9cHPcgpYEXEufLXRg3x
+	 lO2JlRx4T8G2eX4Ej+DPbmFH57iNNOUFywkvsCxjw51/kPyjDm6
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9A801209B3;
+	Fri, 19 Jul 2024 20:13:53 +0000 (UTC)
+Date: Fri, 19 Jul 2024 20:13:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Roman Dvoskin <rdvoskin@mytechnologyco.com>
+Cc: git@vger.kernel.org
+Subject: Re: Bug report
+Message-ID: <ZprI_wP1km8eA7HA@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Roman Dvoskin <rdvoskin@mytechnologyco.com>, git@vger.kernel.org
+References: <CAKexjB-+6VXE8YXrc1YaOVE6bKs05Ty4XHMSBPRHUcUrxpp31w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Roman Dvoskin <rdvoskin@mytechnologyco.com>
-Date: Fri, 19 Jul 2024 14:34:29 -0400
-Message-ID: <CAKexjB-+6VXE8YXrc1YaOVE6bKs05Ty4XHMSBPRHUcUrxpp31w@mail.gmail.com>
-Subject: Bug report
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000cbcb65061d9df2c3"
-
---000000000000cbcb65061d9df2c3
-Content-Type: multipart/alternative; boundary="000000000000cbcb64061d9df2c1"
-
---000000000000cbcb64061d9df2c1
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zHL/A/dqcavunPUL"
+Content-Disposition: inline
+In-Reply-To: <CAKexjB-+6VXE8YXrc1YaOVE6bKs05Ty4XHMSBPRHUcUrxpp31w@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
+--zHL/A/dqcavunPUL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---000000000000cbcb64061d9df2c1
-Content-Type: text/html; charset="UTF-8"
+Hey,
 
-<div dir="ltr"><br></div>
+On 2024-07-19 at 18:34:29, Roman Dvoskin wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> I renamed an existing branch to a new name
+> What did you expect to happen? (Expected behavior)
+> When I git push I expected the new name to be used to match the remote br=
+anch
+> What happened instead? (Actual behavior)
+> I was prompted to use git push HEAD:<old_branch_name>
+> What's different between what you expected and what actually happened?
+> I expected for the new branch name to be used, as if it was always the br=
+anch name
+> Anything else you want to add:
 
---000000000000cbcb64061d9df2c1--
---000000000000cbcb65061d9df2c3
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2024-07-19-1426.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2024-07-19-1426.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_lyt1hmxe0>
-X-Attachment-Id: f_lyt1hmxe0
+I'm not sure I understand exactly the message that you saw here, and I
+suspect if I don't understand, it's possible other people on the list
+don't either. Could you copy and paste the exact output you saw here so
+that we can see what the prompt looks like and the exact response you
+saw? That would help us understand whether the behaviour you saw is a
+bug or not, or if perhaps maybe the documentation is unclear.
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCkkgcmVuYW1lZCBhbiBleGlzdGluZyBicmFuY2ggdG8gYSBuZXcg
-bmFtZQpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9yKQpX
-aGVuIEkgZ2l0IHB1c2ggSSBleHBlY3RlZCB0aGUgbmV3IG5hbWUgdG8gYmUgdXNlZCB0byBtYXRj
-aCB0aGUgcmVtb3RlIGJyYW5jaApXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZp
-b3IpCkkgd2FzIHByb21wdGVkIHRvIHVzZSBnaXQgcHVzaCBIRUFEOjxvbGRfYnJhbmNoX25hbWU+
-CldoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBhbmQgd2hhdCBhY3R1
-YWxseSBoYXBwZW5lZD8KSSBleHBlY3RlZCBmb3IgdGhlIG5ldyBicmFuY2ggbmFtZSB0byBiZSB1
-c2VkLCBhcyBpZiBpdCB3YXMgYWx3YXlzIHRoZSBicmFuY2ggbmFtZQpBbnl0aGluZyBlbHNlIHlv
-dSB3YW50IHRvIGFkZDoKClBsZWFzZSByZXZpZXcgdGhlIHJlc3Qgb2YgdGhlIGJ1ZyByZXBvcnQg
-YmVsb3cuCllvdSBjYW4gZGVsZXRlIGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4K
-CgpbU3lzdGVtIEluZm9dCmdpdCB2ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjM5LjMgKEFwcGxlIEdp
-dC0xNDYpCmNwdTogeDg2XzY0Cm5vIGNvbW1pdCBhc3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApz
-aXplb2YtbG9uZzogOApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKZmVhdHVy
-ZTogZnNtb25pdG9yLS1kYWVtb24KdW5hbWU6IERhcndpbiAyMy41LjAgRGFyd2luIEtlcm5lbCBW
-ZXJzaW9uIDIzLjUuMDogV2VkIE1heSAgMSAyMDowOTo1MiBQRFQgMjAyNDsgcm9vdDp4bnUtMTAw
-NjMuMTIxLjN+NS9SRUxFQVNFX1g4Nl82NCB4ODZfNjQKY29tcGlsZXIgaW5mbzogY2xhbmc6IDE1
-LjAuMCAoY2xhbmctMTUwMC4zLjkuNCkKbGliYyBpbmZvOiBubyBsaWJjIGluZm9ybWF0aW9uIGF2
-YWlsYWJsZQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiAvYmluL3pzaAoK
-CltFbmFibGVkIEhvb2tzXQpwcmUtY29tbWl0Cg==
---000000000000cbcb65061d9df2c3--
+Also, to be sure I understand, you did something like this:
+
+----
+git branch -m foo bar
+git push origin bar
+----
+
+and you expected the local branch `bar` to be pushed to the remote branch
+`bar`, correct?
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--zHL/A/dqcavunPUL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZprI/wAKCRB8DEliiIei
+gamDAQDGcmwsHhryl7D/fp5X3/Mc6DURUauJdbNgEPvc2CIH1AD/WvFejSjy2c4l
+8iPZFH6L1ujMzIlUG7+ojLBClfr6TQQ=
+=nFBB
+-----END PGP SIGNATURE-----
+
+--zHL/A/dqcavunPUL--
