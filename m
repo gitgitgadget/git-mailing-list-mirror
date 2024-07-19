@@ -1,100 +1,122 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0E713A276
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 14:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C8010E6
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 15:03:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721400625; cv=none; b=KyLWk3k0mlhO7PsonQD+vN8o26IOFt+A5vNavs3+i5s2OsRHe2vVH1ZBVTRc0gEHQvat/0Ryb8574pt1L8MZWLVu7N2MHtJ4Jtogpx8z+mixskeqolGXEFeyhFfsHD85i6EVbTVbtKMIKrTT411bCXulrWnbEIpNepA/B1o4tOI=
+	t=1721401423; cv=none; b=qJw9OA6WAX33xk4ocE8dEXIVlUAdkhY6ZPu4o/vO2cC96ADkG13iTaTwExiQrhj/hMxuuiobnlsaTKS6Pmij9r2ynZ2qzkHqYf0bw0CvuEbZwqLGzkyaX3bi1Z1pOoEs8+K5f5VQ4ZW1pvRiB9mQnu+2vjXxQT98Wur1aAJyQmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721400625; c=relaxed/simple;
-	bh=Swl4lQxRFMcAAJPOJYHO2k39om70uIKA+x0UVIVaNlo=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bk19+/qjWaJhmYsihwrtKB2ASuKpKjUdq2/pFFzeqTtelmUx2kn6yWSK5nZT53Tn9cicCsi9PwNXia7rsBVqSqTWZ5cdrH/B8DB/K7qXfxTsNn+w2IcjEznMQWk2qke0gWmok8IvDWDNiFLcKcThl6cf1yrMJy12azdycypQWcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46JEoApT1237295
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jul 2024 14:50:11 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Ryan Zoeller'" <rtzoeller@rtzoeller.com>
-Cc: <git@vger.kernel.org>
-References: <wglGbP7resY1dIKhfKqMcs6Xxu7f8iWSZ76k-MFC91eKTEWN2Aw4D6TqNAEndu5b1VZMVnOIS8m9HNoZPFxd6NZjKKmW0OmM8h5bAEuwoVY=@rtzoeller.com> <xmqqa5idmops.fsf@gitster.g>
-In-Reply-To: <xmqqa5idmops.fsf@gitster.g>
-Subject: RE: Equivalent of difftool.prompt per tool?
-Date: Fri, 19 Jul 2024 10:50:05 -0400
-Organization: Nexbridge Inc.
-Message-ID: <016801dad9ea$f50d5fc0$df281f40$@nexbridge.com>
+	s=arc-20240116; t=1721401423; c=relaxed/simple;
+	bh=CXOVzqhFXA4m1qjuZW62Pkd7kAU+xqMH2xNAfl7xlW8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Jk4Kv4vX/JEuRKmYwa7El9aOrSDsZRzcTBW9ZxtcC4UgQO27JDXi+pIb+/Eqr/w82I6AUeth6f12zuUGXfZRAnqHMMIZHMau3t17IqvjY7O157+25dznQhHX0st70YaeSjyllOb//mDLP5dpCaZTP8ci7qkEkiCSIpRty98QBkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pGHMeYXL; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pGHMeYXL"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BEE801C7D3;
+	Fri, 19 Jul 2024 11:03:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CXOVzqhFXA4m1qjuZW62Pkd7kAU+xqMH2xNAfl
+	7xlW8=; b=pGHMeYXLraZZwYe4k1mv2C7u8ZodlN1ld0D3YiPFkHt0R4VQSDW5QM
+	wM3eLo9iducRjjQbc5pyG5EdsfGZ6gVYq6rLo+689wCvpSTjQODSrbA4KoSFrcu1
+	01VRIDdez/YRcm/3RjjMBS6yNTWoeWxf4xov93tzYEXUm0hEv339o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B65451C7D2;
+	Fri, 19 Jul 2024 11:03:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C7E2F1C7CF;
+	Fri, 19 Jul 2024 11:03:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: chriscool@tuxfamily.org,  git@vger.kernel.org,  jltobler@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v5 5/6] check-whitespace: detect if no base_commit is
+ provided
+In-Reply-To: <CAOLa=ZQhcb7O4i9E=Xn+9ZbaNhiY0gzD_a2kTqriegF2o-Eeyw@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 19 Jul 2024 01:33:21 -0700")
+References: <20240715093047.49321-1-karthik.188@gmail.com>
+	<20240718081605.452366-1-karthik.188@gmail.com>
+	<20240718081605.452366-6-karthik.188@gmail.com>
+	<xmqqfrs6ycc3.fsf@gitster.g>
+	<CAOLa=ZQhcb7O4i9E=Xn+9ZbaNhiY0gzD_a2kTqriegF2o-Eeyw@mail.gmail.com>
+Date: Fri, 19 Jul 2024 08:03:35 -0700
+Message-ID: <xmqqbk2tl8zc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKvPt7d23A/AtYpvY4z8MqRf9l0hAFFPhIXsEstmXA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 13C35922-45E0-11EF-8AB5-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Friday, July 19, 2024 10:38 AM, Junio C Hamano wrote:
->Ryan Zoeller <rtzoeller@rtzoeller.com> writes:
->
->> Is there a way to specify difftool.prompt on a per-tool basis, without
->> manually passing --prompt or --no-prompt to override the global
->> difftool.prompt setting?
->>
->> I generally want `difftool.prompt = false` set, but one specific tool
->> I use has a high startup time and I'd like confirmation before
->> launching it.
->>
->> If this isn't possible today, is difftool.<tool>.prompt something
->> others would find useful?
->
->I do not use difftool (nor mergetool) myself, but given how
-difftool.<tool>.cmd and
->difftool.<tool>.path behave, it does not sound like an unreasonable feature
-wish.
->
->I'd imagine the feature itself should be trivial to add, but we'd probably
-want to add
->test to t/t7800-difftool.sh, where there are already existing tests for
-inteactions
->between difftool.prompt and various command line options.
->
->Thanks.
->
-> git-difftool--helper.sh | 4 +++-
-> 1 file changed, 3 insertions(+), 1 deletion(-)
->
->diff --git c/git-difftool--helper.sh w/git-difftool--helper.sh index
->dd0c9a5b7f..872d787b09 100755
->--- c/git-difftool--helper.sh
->+++ w/git-difftool--helper.sh
->@@ -12,7 +12,9 @@ TOOL_MODE=diff
-> # and is overridden with $GIT_DIFFTOOL*_PROMPT.
-> should_prompt () {
-> 	prompt_merge=$(git config --bool mergetool.prompt || echo true)
->-	prompt=$(git config --bool difftool.prompt || echo $prompt_merge)
->+	prompt=$(git config --bool "difftool.$merge_tool.prompt" ||
->+		 git config --bool difftool.prompt ||
->+		 echo $prompt_merge)
-> 	if test "$prompt" = true
-> 	then
-> 		test -z "$GIT_DIFFTOOL_NO_PROMPT"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Is it possible that a textconv configuration might be able to assist here by
-declaring a tool under user control for displaying content of files? This
-might give finer grain control prior to launching the diff so that the user
-can set up their desired shell environment with the above to select the
-prompting software?
-Just a thought.
---Randall
+> Thanks Junio for explaining with examples, really nice of you! I'm on
+> the fence with this, even the existing change from the previous more
+> verbose code. I know this is shorter, but it is always more readable to
+> use the longer version with 'test'. I find it hard to remember the
+> specifics.
 
+You'd never remember unless you practice, but it boils down to one
+question: is it reasonable to expect that most developers who need
+to touch this code find it worth to learn to read and write shell
+scripts well in this day and age?  The answer is probably no.
+
+As you may remember, this R=${A-${B?}} dance started at
+
+  https://lore.kernel.org/git/xmqqwmlpb8er.fsf@gitster.g/
+
+where I said:
+
+    ...
+    in a separate "after the dust settles" clean-up #leftoverbits topic.
+
+    We could replace the first 7 lines with a single-liner
+
+       R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA-${CI_MERGE_REQUEST_DIFF_BASE_SHA?}}
+
+    if we wanted to, but all of that will be mere clean-up changes.
+
+Even the longhand to set a single R with if/elif cascade so that we
+can have a single location that invokes ci/run-style-check.sh was
+considered extra clean-up for #leftoverbits at least by me.
+
+But after seeing you used the ${A-${B?}} dance, which is more
+advanced than the #leftoverbits clean-up, I thought you were
+interested in using such a construct that pursues parameter
+expansion mastery, and that was the primary reason why the
+demonstration in the message you are responding to was added.
+
+I personally do not care too deeply which one to use wrt the
+readability, but
+
+	R=${A-${B?}}
+	if test -z "$R"
+	then
+		error
+	fi
+
+looks strange and inconsistent by spreading the error check to two
+places.  The code would be better off if it were
+
+	R=${A-$B}
+	if test -z "$R"
+	then
+		error
+	fi
+
+(or with R=${A:-$B}) instead.  Then it makes it clear that the
+author wanted to take care of the error case with the if part.
