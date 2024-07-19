@@ -1,89 +1,141 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2178828F1
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 15:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116FC4C85
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 15:17:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721402000; cv=none; b=grlgJtlFAPRKYrOR3ApjpRELRcLf9ih4lUkfjmNsXkhmpMDKBIFQDlDhLBc5NnDn2cCJ2blCBwrHGCP4BQQc+crtIzxa9c1w7vByD5Y7aRFHbRu+t1bXNAgti53/tNSmO7DrUad2AqjBDjqkC/L8o95smN69uFEs66e/A/iK7M4=
+	t=1721402277; cv=none; b=lG+QO1q+eIJMT86cUT8MTXL10hwEC99c20RXKDlKmOswiw1rt1+KEYxxv3jN80Zj15POkD7CrbXJC5h7NoK23/ylc8uBbMmsEXedMivh4bLTtshXYGN+78m3Uv0ImoKIjsUL8VSXq2c6LFA3rBBF5Ndpp2sZa0sBnP+77Gr5r7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721402000; c=relaxed/simple;
-	bh=pOruliguOwuO62GefssPpuz4zi7w7VI0z+ndICsTFns=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BFACumPU61iNXZ/IC1Hck2KtLryoJSgsIjUz9xMSvhr74/X9+EJX3mCjc8EpLwCNC5KCQ/rVRwcUDmYwlrJIUfpPAmt6AihIgtdVr2WJeYhW//iqjQjgoNb/RpAFq10bMYHoPk0eZmPX8ku1A1j90oKV8ni3NpxX+QqYUPxYe50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hal4vu5c; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721402277; c=relaxed/simple;
+	bh=V4AZ6QxhWlqfj7ODkmKa2pUzUVZBNqCMccTDmaqXyJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dXcULtROoZQ2SduusQTBHxQdkTDnm75YMelkZJs2lk5izgxZSyj3LMn7m1ASGcJA+5tfoNMaTCs3UMmIK2+I8NirFuc4f73YuVK9H2rdDNWYkyMoaaNPO4FgFKdgsd8UG1hfFn8ElYbxEgXsH3JkBS+aL2iAa0MesPFw+UsVjcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZTikvCtl; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hal4vu5c"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA5BD3711E;
-	Fri, 19 Jul 2024 11:13:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pOruliguOwuO62GefssPpuz4zi7w7VI0z+ndIC
-	sTFns=; b=Hal4vu5cEU+4iJdbv3JAs5EyaL6CbC+cmWryzi7THGHgJqqyD2efEz
-	CdC6hWG/F9+rRjpm8In3XM9OFWJx9BVx/0NhBloDRXyJ0fGr4EAWzQ/Pz/9HZKf9
-	w3zAd2HJ+u7TmxFEpJvQciw+6J8YrwQms62vlFA7Q0HmjC2dLSsiw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E28623711D;
-	Fri, 19 Jul 2024 11:13:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B0E23711A;
-	Fri, 19 Jul 2024 11:13:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
-In-Reply-To: <81c7bd02-0c2d-452f-800e-ca0d3853a941@gmail.com> (Derrick
-	Stolee's message of "Fri, 19 Jul 2024 09:24:55 -0400")
-References: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
-	<xmqqle1ynz18.fsf@gitster.g>
-	<81c7bd02-0c2d-452f-800e-ca0d3853a941@gmail.com>
-Date: Fri, 19 Jul 2024 08:13:16 -0700
-Message-ID: <xmqq34o5l8j7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZTikvCtl"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5a2ffc34677so953144a12.2
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 08:17:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721402274; x=1722007074; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Oq6auB6FnPab8LpTVoFUriqaVEknTLna5I92BaHxlHc=;
+        b=ZTikvCtlA5pCx4YnU9DPLkwCjtwfyBdjWVSj1g9f1E9bHmeg7Q+j1rzzYkd+Dk1/X5
+         SiyiknoixkqBzxb8blOoK/NHplGg7BaNl4PFAudXwkew2NPh7vNtZaUZiQi0xDJJVWuz
+         VxB2Do6HsJsbcZpuYRph0BsLGbjJJTtJxsVTDRmo0sRrWBd2eMJEnIszXK5i14gFaytZ
+         Nmpf/COD77YZxM5YMWWxwhKp7S3fopallGr7FIUiJWgpCy1SDsy0brVg9Zmqj1bdXS3S
+         hvVnjyF2iVJNasnUDFqyjwY2D5eaxu7B12cs1T90XF+FKwt78MPAQkcGlO4YtRz7S/fZ
+         cycw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721402274; x=1722007074;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Oq6auB6FnPab8LpTVoFUriqaVEknTLna5I92BaHxlHc=;
+        b=VIhNOLbN7iurDLC/oWgoS3oRro6zNLilP+i0/qKKoTdyNwNoG0aY91+gdFITZLp5Cq
+         EDAhJFRUwe8yueieqGy3FygGhdNxKstsP9+ruxl4u2qOUEnQ5nPI3HQxtO524f1sc60N
+         fvxA6SHyrqb50G7cCgLG6N7dXnliq8c0E7crB/3uaE4zRHtTnCOn2IocOBBYGVM/G4YV
+         OwZhYFCf1Msn9b/AyXVzy4dgSupfu6fAQ43GiPSQE3TbmJSkzxlHMeHaMsN+xzoDrzqV
+         zkRcF1zv10PTk/ljn1UtF0h8Q8bYpYEdF5ydvlnNyDeMio4CVk5w7g9Qc40jJcQQ3PWi
+         gygA==
+X-Gm-Message-State: AOJu0YxJpluaWL4qYn771g4XZBLxC+ae36GmvQM4ReUp4qSnN0H7MLDH
+	KrRujRd4kDTrrcUJ7kN6ycNzqYfXmhRuBtTk3z+rIrbfTICTjk7gwlYvo2hk
+X-Google-Smtp-Source: AGHT+IG4crZ+4G/YhBrPfjegQIuqtWOeMhvgCP2DXyrXoJoimUYhiBDXm8RtZ5yd381JRiQlAOKE4g==
+X-Received: by 2002:a17:906:fd86:b0:a77:d6c7:df46 with SMTP id a640c23a62f3a-a7a01115e4cmr748671266b.10.1721402273915;
+        Fri, 19 Jul 2024 08:17:53 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a3c78611asm44857566b.45.2024.07.19.08.17.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Jul 2024 08:17:53 -0700 (PDT)
+Message-ID: <6c7dfa30-6d4e-4b87-a25a-c1f85c83a6b1@gmail.com>
+Date: Fri, 19 Jul 2024 16:17:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6D343F52-45E1-11EF-9742-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1763.git.1721312619822.gitgitgadget@gmail.com>
+ <xmqqikx2wtn4.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqikx2wtn4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi Junio
 
-> On 7/18/24 5:57 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->>> Here is an issue I noticed while exploring issues with my local copy of a
->>> large monorepo. I was intending to show some engineers how nice the objects
->>> were maintained by background maintenance, but saw hundreds of small
->>> pack-files that were up to two months old. This time matched when I upgraded
->>> to the microsoft/git fork that included the 2.45.0 release of Git.
->> I almost said "wow, perfect timing on the -rc1 day", but then
->> realized that this is not a regression during _this_ cycle, but a
->> cycle ago.
->
-> I almost waited until after the release, but I wanted to put the
-> information out there just in case you were interested in taking it
-> into 2.46.0 or were planning on a 2.45.3.
+On 18/07/2024 17:29, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> When "add -p" parses diffs, it looks for context lines starting with a
+>> single space. But when diff.suppressBlankEmpty is in effect, an empty
+>> context line will omit the space, giving us a true empty line. This
+>> confuses the parser, which is unable to split based on such a line.
+>>
+>> It's tempting to say that we should just make sure that we generate a
+>> diff without that option.  However, although we do not parse hunks that
+>> the user has manually edited with parse_diff() we do allow the user
+>> to split such hunks. As POSIX calls the decision of whether to print the
+>> space here "implementation-defined" we need to handle edited hunks where
+>> empty context lines omit the space.
+>>
+>> So let's handle both cases: a context line either starts with a space or
+>> consists of a totally empty line by normalizing the first character to a
+>> space when we parse them. Normalizing the first character rather than
+>> changing the code to check for a space or newline will hopefully future
+>> proof against introducing similar bugs if the code is changed.
+>>
+>> Reported-by: Ilya Tumaykin <itumaykin@gmail.com>
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+> 
+> Well written.  Thanks for a pleasant read.
 
-Yup, thanks but this is not exactly a repository breaking data
-corruption bug, and did not look ultra urgent.  Especially if we
-want to pursue a solution that helps both expiring stale packs
-better (which is what you are restoring) and making better delta
-chain selection (which may be what you are losing) at the same time,
-such a change could become a source of data corruption bug, so I'd
-prefer to see it started early in a cycle, rather as a last-minute
-"let's fix this too".
+Thanks to Peff for letting me steal his commit message
 
-Thanks.
+>> @@ -953,7 +960,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+>>   	context_line_count = 0;
+>>   
+>>   	while (splittable_into > 1) {
+>> -		ch = s->plain.buf[current];
+>> +		ch = normalize_marker(s->plain.buf + current);
+> 
+> I wondered if &s->plain.buf[current] is easier to grok, but what's
+> written already is good enough ;-)
+
+Yes I think that would be better
+
+> There is another explicit mention of ' ' in merge_hunks().  Unless
+> we are normalizing the buffer here (which I do not think we do),
+> wouldn't we have to make sure that the code over there also knows
+> that an empty line in a patch is an unmodified empty line?
+> 
+>                  if (plain[overlap_end] != ' ')
+>                          return error(_("expected context line "
+>                                         "#%d in\n%.*s"),
+
+Oh dear, I'm not sure how I missed that. I'll fix that and update the 
+test to make sure it exercises that code path as well.
+
+Thanks for your comments
+
+Phillip
+
+
