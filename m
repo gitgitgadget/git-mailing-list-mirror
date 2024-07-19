@@ -1,111 +1,101 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E413B142642
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 13:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6620815E8B
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 14:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721396317; cv=none; b=e7TpTZaLia+CkZPdoulX3AS9RPk+g8AWYQbeyq224sqf1ACF4geh4LAOUhEg6ANWn8P8XCMguFUxfnM1bAgo5hn8ZKLwbxG53YbBfgEP1heanvEPAAHObb+E1DSj+xXpqKJHpQRO5nm/dtYqEg5s3huxLZ4fDQHKK6vmbwUMmgk=
+	t=1721399916; cv=none; b=MzM13UzdUNvDAUi3/bpxWLNjRaMTkSCbN+fj2T0zYtl7UkwBm21gCJl4Y/z3UDe7RRqTCyQg4lQkXHU4U4i5mw8RIfhRXvEOSmDFPRaxj18CaGKh/cy974l8SO17kppumEAJydBSifUX2Pt6wmY+hEgntiCwkHgZQ23yBgH7N78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721396317; c=relaxed/simple;
-	bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K8DVrT3aigIAjwys16nrldBigsoSm2wMV+Ehgyvh5lfyPcSX+FB/yzc8sgWz71sZhpfojw3YJURoPiN9bdeJYLlAsPJrtduFsVlmbflQ9Der7tAwZUZOQMkKWQNSEkMMAlNjsfE7h46wivjM+0+Jfu40DTPmyrF5xwTRtxYZ5FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QI+fvlXu; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1721399916; c=relaxed/simple;
+	bh=fN60Enfx607R9Rqll/LHiTgQ7tP5IDo6+N3l5/w8pjI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d9+/68iDM49sWIGg+ljzqslj3lw0mK0CqdsKS712ygCYaplcCGRT0IVM0UJQhCkzZF6oUiqvd1uCaXf3hsBEKWBmxGFH5WzAMXdbL2P4bhsJjbsJR5Mk/fmqK/ao4DB+/V9htEgEm/XLANCY7rOd6VFvIorstvehNnhDwlBXMDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CC1HCR+p; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QI+fvlXu"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-79ef93865afso93565185a.1
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 06:38:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1721396315; x=1722001115; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
-        b=QI+fvlXuJBhOogORaKRiCjmW7YZO8QF/Ay9FRmDZmK4EBypoIejNSqMMsSnaQ6HIoK
-         dE9rwQTZUyUsR8X3QWRDTqInqh+QmBjND+6LjpRORkxUDFkZVuYtj4qxBORjBVSjICvy
-         8GH/X0RtFMXFL/jVeU7LHcjZHnhvVqzTc+CA4UlxiZrADVp7nJlke4y8AhbUeoVGkpwn
-         YZG1wvVeAmNjobd9U5A2edsHIsqYSoB4w1nR83oy2h2Ct5/Joupvqz8oCnltBQpF3oxJ
-         T57zJPCFJBgm01GPTaJ5DA2ZkQI9aGcgnk1uQ1k9J6B5lF+6A5OkQPvaZEZQD+tytIhV
-         KCUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721396315; x=1722001115;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KEUzpOZC/56rn5HMQLAyexlRBwnSu1W8LS8OyIrQrQ8=;
-        b=CEDjj/ycklsX3iFpBd77xL6bdtNLAdFrBgocyBbvdIFQIur3AxWFbShJmPIi7YL8VK
-         1PgtDQTm18u33iEMfxCt5MaNQqxBFB+RtyYEws1ZERxU3LpuaUIqRKdv7QQlGx66VuLo
-         cSAOb+C5n1eWItOrbqtpww7VqZvX5dxk4sYAoPHG1KTZs742fLKlDNSQyt633G/eXnx2
-         +g6J+yG0iairdc/Nlk+5uld1YCtJBOOEtzDZmGj1dn49ANLNK+yZaIQgYkhMgp20CKG7
-         cquSdKibDvpTXM/1+vr7mLftKp/hfFeEnVt6vapn6xSFi9rlkkric9RwXc1Lfs16raH5
-         UQTw==
-X-Forwarded-Encrypted: i=1; AJvYcCWe9YqHeJJ6n/tGD1FPbf9s1ofuaBV7EcjgDp/CFmHwiKL1QEr5NnKtPbZNbWWJzzlwHFAZjt/sCkp3K3Y+f1gELAuB
-X-Gm-Message-State: AOJu0YzJyufNQGkOSYGCrhrbpYeTJAhpajDJqgTMYL1VudfOHxEKGzsH
-	WY+Rd0uYf4A8LsDQ9NIzdLZgabIpzAe630ELdScrvvNlGv00KVxFhEP3S2JMGQw=
-X-Google-Smtp-Source: AGHT+IF+PRmiUk5B1V/w0MlFAiIYQHClrX4xAE6imD2Ww4FnklkSQKCOZJN//pw3HVEfUAHsBp9uLQ==
-X-Received: by 2002:a05:620a:2455:b0:79f:18ee:a650 with SMTP id af79cd13be357-7a187446a81mr948111985a.17.1721396314728;
-        Fri, 19 Jul 2024 06:38:34 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a19900d413sm80199585a.70.2024.07.19.06.38.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jul 2024 06:38:34 -0700 (PDT)
-Date: Fri, 19 Jul 2024 09:38:33 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 0/2] Fix background maintenance regression in Git 2.45.0
-Message-ID: <ZppsWZ6u05U65Blp@nand.local>
-References: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
- <ZpmcK23coi5Qqm7E@nand.local>
- <118b164e-67c5-4dfc-b440-62b8986bf356@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CC1HCR+p"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DD2E61C4F8;
+	Fri, 19 Jul 2024 10:38:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fN60Enfx607R9Rqll/LHiTgQ7tP5IDo6+N3l5/
+	w8pjI=; b=CC1HCR+pOcwfhad6ufF50NGg8KD9ylicksRvQibHpT/WfHSACZqlPv
+	rQOt6qJ5vfI0gMOwINmbfVNs3Bf2EmOeQap3XMjS9cveEcS5DqNG4p+YS9V0SyRG
+	D1TER1OACRfaYD6HunMothPyL0juv1UVzRGcHYAwTDHNzlHjsoMlk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C805C1C4F7;
+	Fri, 19 Jul 2024 10:38:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B79F91C4F6;
+	Fri, 19 Jul 2024 10:38:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ryan Zoeller <rtzoeller@rtzoeller.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Equivalent of difftool.prompt per tool?
+In-Reply-To: <wglGbP7resY1dIKhfKqMcs6Xxu7f8iWSZ76k-MFC91eKTEWN2Aw4D6TqNAEndu5b1VZMVnOIS8m9HNoZPFxd6NZjKKmW0OmM8h5bAEuwoVY=@rtzoeller.com>
+	(Ryan Zoeller's message of "Fri, 19 Jul 2024 03:31:11 +0000")
+References: <wglGbP7resY1dIKhfKqMcs6Xxu7f8iWSZ76k-MFC91eKTEWN2Aw4D6TqNAEndu5b1VZMVnOIS8m9HNoZPFxd6NZjKKmW0OmM8h5bAEuwoVY=@rtzoeller.com>
+Date: Fri, 19 Jul 2024 07:38:23 -0700
+Message-ID: <xmqqa5idmops.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <118b164e-67c5-4dfc-b440-62b8986bf356@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8DE7D81C-45DC-11EF-B5B9-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Fri, Jul 19, 2024 at 09:21:51AM -0400, Derrick Stolee wrote:
-> On 7/18/24 6:50 PM, Taylor Blau wrote:
+Ryan Zoeller <rtzoeller@rtzoeller.com> writes:
+
+> Is there a way to specify difftool.prompt on a per-tool basis,
+> without manually passing --prompt or --no-prompt to override the
+> global difftool.prompt setting?
 >
-> > I think this matches my own understanding, but let me know if I'm
-> > missing something. Assuming I'm thinking about this the same way you
-> > are, the fix (stop using --stdin-packss) makes sense to me.
+> I generally want `difftool.prompt = false` set, but one specific
+> tool I use has a high startup time and I'd like confirmation
+> before launching it.
 >
-> Your interpretation matches mine. Thanks for the careful read.
->
-> I think we can accomplish similar goals that match the reasoning for
-> --stdin-packs (better deltas while also limiting the object walk to the
-> repacked objects) with some changes to read_object_list_from_stdin(),
-> but that's a more subtle kind of change.
+> If this isn't possible today, is difftool.<tool>.prompt something
+> others would find useful?
 
-FWIW, the main motivation for that change was to limit the amount of
-cross-process I/O that was necessary to generate the new pack. I figured
-that for relatively small amounts of packs which contain relatively
-large amounts of objects that it would be more efficient to write out
-the pack names than the object names.
+I do not use difftool (nor mergetool) myself, but given how
+difftool.<tool>.cmd and difftool.<tool>.path behave, it does not
+sound like an unreasonable feature wish.
 
-I was thinking a little bit about how we would alter the behavior of
-'--stdin-packs' to match what the 'multi-pack-index repack' caller
-needs. I agree that it is possible, and I doubly agree that it is subtle
-;-).
+I'd imagine the feature itself should be trivial to add, but we'd
+probably want to add test to t/t7800-difftool.sh, where there are
+already existing tests for inteactions between difftool.prompt and
+various command line options.
 
-TBH, I think that the amount of I/O we're potentially saving is dwarfed
-by the amount of I/O and CPU time it takes to actually generate the new
-pack, so I doubt the effort to make such a subtle change would be all
-that worthwhile, though certainly an interesting exercise ;-).
+Thanks.
 
-> Taking this change as-is will cause a regression in the quality of
-> delta choices, but recovers our ability to expire "repacked" pack-files
-> in all cases.
+ git-difftool--helper.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Yeah, definitely.
+diff --git c/git-difftool--helper.sh w/git-difftool--helper.sh
+index dd0c9a5b7f..872d787b09 100755
+--- c/git-difftool--helper.sh
++++ w/git-difftool--helper.sh
+@@ -12,7 +12,9 @@ TOOL_MODE=diff
+ # and is overridden with $GIT_DIFFTOOL*_PROMPT.
+ should_prompt () {
+ 	prompt_merge=$(git config --bool mergetool.prompt || echo true)
+-	prompt=$(git config --bool difftool.prompt || echo $prompt_merge)
++	prompt=$(git config --bool "difftool.$merge_tool.prompt" ||
++		 git config --bool difftool.prompt ||
++		 echo $prompt_merge)
+ 	if test "$prompt" = true
+ 	then
+ 		test -z "$GIT_DIFFTOOL_NO_PROMPT"
 
-Thanks,
-Taylor
