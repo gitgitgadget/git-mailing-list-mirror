@@ -1,113 +1,132 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3753839ACC
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 08:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6922479FE
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 09:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721378039; cv=none; b=eslfki4kLlNj++MvK1j2d5zeNYPeR24ypGn6na075nMQsBOfQL2YgUUign9juQveCoYR36RnOSFD7++wnel3Xthe3qNUf+8Jl1GM/G9DRt1BMW+VCQq7r4yy4YDaj9BpgBeHR22jsISJ7CQyYYawvKioEWblWRnhonP+8NrDRk0=
+	t=1721381685; cv=none; b=O8i61kPiLJtgSxe33EA7l+ASbWG+8RQWWPiERIYxDxiDHibsraRZXXW84pZi9LIqhDVv9d3ydnsGu4tZUgk74/0Hh8k1KHvOBYt+IWKtJaM/RsPbxRJNuN9Q8Ey3GILRbwS2Se5B+I8iHqEg8WbjWJT/wyGkJCfZ+bGiFGnR7jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721378039; c=relaxed/simple;
-	bh=dKqY6+E92Yc/TadQI8nTX4uW2zMfdcIAO5y1Yl0SsXM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ouDfUGkrgQ7kGklE+HTun1EJGMd/CoX0vU423eztV+hr/8XIp+uvelurB270Oxs8PSvbPrif+fF0NrllSWLbcvFfSL46I6uWYQtrf9RsZrlXSB6jOnNXyIDX/9ko0aNb3eGnyZlHwqlt+vPljoMJx9GHJ+/9590aLlYojwZmT6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNSXevZU; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721381685; c=relaxed/simple;
+	bh=i7KbYjyG843U5ekgmcjEXld3p4SY28pLa2df6/ZtbuM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cQe3s/JRv7cuFIR8D0WnyXomaf65TUROZPSUmd1k9qNeUr1dFqOmz3qc5M1wCiv4rdq5gD1Shgh9eZN+ENrUsH2T3Cn6FTAyrSyWqucP2OiElLd2q42MlgQAJHCvhm328nShcu/6D77SCwMotHWKdpiFaMTbHCIlsLc6aNRuAJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=XMb94ZLI; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNSXevZU"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-260e99b6661so730878fac.1
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 01:33:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="XMb94ZLI"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-80a2939265cso54919439f.3
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 02:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721378037; x=1721982837; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KxQo8NsJ0jIBFTb4BQBjcnfoUE2jfWYloEALKvJnAlA=;
-        b=hNSXevZUH4RW5Ydjh0gF0KaFv3Cgo+bi729jZv8TerIhWeRZ2Pn7QgpXXq+P9oWJRl
-         ftlumkaGNHsfNr5fAuN9wSQQO98BxVIlWC1glLtB1AuM62hG48NdviJWrEIVQp/5k99z
-         tJVqmXQioCpYu2IyA5Q5YQflrbHqLn7UqSfdjNYLRzAQ95kTRdQ03YqtkFMDNpDnwcJR
-         +KJHGb7IF6M/haKrn5ccHYgobscVw+6zorcZWXQD6WDZcOx9SCE/0pXQj8RUIuIlXPNb
-         8mPqvUH303BURZTZ0LHJ++pzeKPeYfLjUL0eYKPUaEO1f6sL8UDKks23RYfDQV9rqQCn
-         uCPw==
+        d=bytedance.com; s=google; t=1721381682; x=1721986482; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2lGSgmQ00eqHzxB6DJqWhlXoU/pI5D8hZZabTgvcc8Q=;
+        b=XMb94ZLIj+VkAbEnWvIJ75Uwkv+EiNcgMgMRmkcPN5TENcAg3mgTa5stPFcEgSyyij
+         OYWqcgfTRL0YiAilur3vMOmez2aBOv4I2HL0y3lh1jQgzDIX7XNm1mhK+kSnvsrd/aLN
+         Ub0s4olEfsZz4CRxEIXNlTAAfq1yCBdz5tPeSClfdqqRPDZ03Apf2uLG7jNXweuiBQGU
+         5yefDvrbEyrHrquCgCO/wof21AioZIbtmrwulKS/ziy4UujobR6A87uaV3DodNot2XRV
+         W+LViMiZJQLT6eNHSs5293Pg5vQFbhl22vm+fnaIiphvi4hBGi8OubGiKxGYDldT21GJ
+         IICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721378037; x=1721982837;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KxQo8NsJ0jIBFTb4BQBjcnfoUE2jfWYloEALKvJnAlA=;
-        b=SYdDx7XOFmMrLctBqQmHw1L/KE7WObUPMeG1gVlsePStoB8JdAMyS24d++AwlgRV0t
-         yhKfMIe8VVvAIffWzSy0WA6topw6VCqr4CbPoCKDje/RiYg1flQCjosWH5CRNgW36TC6
-         ndocKxvSbxtbcNi6tSzq7dOEgr742theVRvTvgwtJJYTz9oXqeF5T0nzBRLn2usLBcTs
-         Zhop7pfBRJcIZYJf/HC0GqfVpGSVaNH3mxDO0hROYIAGRVG0QcjPNTgiduoKb9N4DEbU
-         /sjPOQhKDYSF8TnxKleO0QMcD9fQtriQYVDgRGoHfT9iPpkt84LOA6PrQFw7zGZjAhxR
-         Pw0A==
-X-Forwarded-Encrypted: i=1; AJvYcCWwTDGzYXx+grRtchJjLr+0LfvkTePIDovbaxTBZsQ/8t9pVteZiFgUkL03sCZkF4PVyCMHAw9ICLf4EKDvhsqQYbZ1
-X-Gm-Message-State: AOJu0YwN6V6WoxbmUDLEyekxFwqf6u+J3lXlJsdqtI321lTJlArfJz9o
-	S4Uc33KrCvE3OjgsOcMf6l9YYtRDa3dpUShqeI7DUlXFCXUomI/tF0HofAwSvPRoeWrXqtDkpoN
-	KreT2W9m8oV6n6/Z1fNghOOErYQE=
-X-Google-Smtp-Source: AGHT+IG5K+Tnifxcc7cdchI6qO85BgDotEaCTt6/JXQLN2VAwDJCYMuO5cIp/vqSM7aJUBDnYbK0wYjYfSN2wRx0QOA=
-X-Received: by 2002:a05:6870:c6a1:b0:255:43c:dd22 with SMTP id
- 586e51a60fabf-260ef89854amr2278655fac.21.1721378037325; Fri, 19 Jul 2024
- 01:33:57 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 19 Jul 2024 01:33:56 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqsew6wuu9.fsf@gitster.g>
-References: <ZpPEdmUN1Z5tqbK3@ArchLinux> <ZpPFbYOqDVWKz0ic@ArchLinux>
- <CAOLa=ZRYoYfY-P-dzpYbz0Yq44_TYGyJamf1hufJ0fxGZb3Z0Q@mail.gmail.com> <xmqqsew6wuu9.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1721381682; x=1721986482;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2lGSgmQ00eqHzxB6DJqWhlXoU/pI5D8hZZabTgvcc8Q=;
+        b=pr7ge1Zu+d2qiPWpo2v8BrgiPnhlplEBNES7QlIF8jGI6qAom3iESRWfZ1qoyPqIvq
+         f252OKuvLEOiXZwno8JsxKCFR9nkSkfqYpN4G8BF9a1xcAh7PKXbTmZhDhkLph44UO7n
+         rF3qE62geMOZ/q97t4VI2mAiCNVSjzuDiw1J3aLBTdqz9fexzB2qtMq5An+FIuWalTBI
+         WX8Wh2MP3dl9x1nq7+hKxXcbF30cM1RakU1B6ooP9gkyJK+DnziHpIxTTfp+zU1knf50
+         5/cn9vRZTt9j2EpYOJb/TlSNXdD0RBCWYlJOHHPzuhX+nQIWw/PtUiRSJC7+jz6ALWON
+         m6Lw==
+X-Gm-Message-State: AOJu0Yw0lQ+bZjoPKVA8ehbmOshAe/2nW2+RRT/Tyq7o9YKEtQXhtCdt
+	9XUcwXtFh19ZpBocaUNZQFuRTBJpKqwTgXbr9PasYN+Hbt3JPXnk7malkSy9pX6Hnkp8WyyWjeA
+	s
+X-Google-Smtp-Source: AGHT+IFec3ol0AkuY2HfldQcIvGk1OLNcHICr/1e/BAkACNHHw1CuJSYEOA3Of1d3k/JckNEh30GAA==
+X-Received: by 2002:a05:6e02:2164:b0:397:584d:9b73 with SMTP id e9e14a558f8ab-397584d9d43mr42996965ab.7.1721381681956;
+        Fri, 19 Jul 2024 02:34:41 -0700 (PDT)
+Received: from localhost.localdomain ([203.208.167.148])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70cff552816sm831558b3a.139.2024.07.19.02.34.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jul 2024 02:34:41 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH 0/1] Fix bug in revision walk if --exclude-promisor-objects is set
+Date: Fri, 19 Jul 2024 17:34:34 +0800
+Message-ID: <20240719093435.69238-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 19 Jul 2024 01:33:56 -0700
-Message-ID: <CAOLa=ZSx70nT1RoLxwipz5tO=Kkw25QWn_wL4TJRprNSi0cvvg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v11 10/10] fsck: add ref content check for files backend
-To: Junio C Hamano <gitster@pobox.com>
-Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000707e14061d958e9d"
+Content-Transfer-Encoding: quoted-printable
 
---000000000000707e14061d958e9d
-Content-Type: text/plain; charset="UTF-8"
+We use --filter=3Dblob:none to clone our large monorepo. After a while we s=
+tarted getting reports from engineers complaining that their local reposito=
+ry was broken. Upon further investigation, we found that broken repositorie=
+s are missing objects that created in that particular local repository. `gi=
+t fsck` reports "bad object: xxxx".
 
-Junio C Hamano <gitster@pobox.com> writes:
+Here are the minimal steps to recreate issue.
+  # create a normal git repo, add one file and push to remote
+  mkdir full && cd full && git init && touch foo && git add foo && git comm=
+it -m "commit 1" && git push
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> shejialuo <shejialuo@gmail.com> writes:
->> ... 260+ lines of the original removed ...
->>> +		 */
->>
->> What happens if a symbolic reference has trailing garbage ?
->>
->> ... 160+ lines of the original removed ...
->
-> It is a pain to have to look for only a single line with a new piece
-> of information in a 400+ line response, more than 99% of which are
-> quoted original.  Can you trim your quote a bit better?
->
-> Thanks.
+  # partial clone a copy of the repo we just created
+  cd .. && git clone git@example.org:example/foo.git --filter=3Dblob:none p=
+artial
 
-I usually do, I missed out here! Sorry about that.
+  # create a commit in partial cloned repo and push it to remote
+  cd partial && echo 'hello' > foo && git commit -a -m "commit 2" && git pu=
+sh
 
---000000000000707e14061d958e9d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5bf28d8c8b6d116a_0.1
+  # run gc in partial repo
+  git gc --prune=3Dnow
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hYUpQTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnlWQy8wY0Vjb0lSWFhDNityOUVoM0JoMXpCempIQQp4MmNEMHF6M0cr
-dE1TU2ZGNjFvRS9kb1NJamZyV09tQkZTZUJyRXp0TWpLYzROaGNzbEkwQ1NPSGRTY0V5YXpzCnJH
-Sk5uMlhsNkZnRnBudGFWdGRlY3FOQWpCbDY0Z1hLcGgyQ0NZRWZKYTN0OXZrSkZ5WU1ybFhzNzQr
-Uzc0RUIKWUt3MnA3K3NpcU16cTR6UlFXYVJVMEMybU5UTmZYMWVBeWd3TEx5WTJSeERlWHlwRVgv
-bHlFWlBuVk5MWEN3TgpQUGVFZDB5Q0R0S0ljT29aZDdLTWp5NFd6ckYvbVA4SGhmTklSRWNHM1ZW
-V2JacGJoMHFMbHp2d3oyWXg0Um1rCmg1M3Y1bG1ZQzZlaG1VeUVKRmsyeDJjaVpXblMrVzB0UUZZ
-MGVDQ0w4WVBnZ1M4elNKT3hZYkdsY0Z6emlDb1MKbWIwcGR2NHFzMTgzeE1GZGhPMXViRXNvb3Z4
-QkVMeVFDTjRjMkJ5R3dPUTB0d3BvbzFHcGM1TGdNeGpYQm5BcApnSnRicHRBMFZhQTRYMlFqRWVt
-eEJZaUNTWlVPdlAzemZZNUpiSFk4dnhXMEhoY0xNaDN0RTU5cDZjdkRRKzJPCitrcXdUek9QU1VD
-eEFQV2cyN0pmUXdNV1g5bmdiN0xqeVEzcUk5QT0KPXNRVjgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000707e14061d958e9d--
+  # in normal git repo, create another commit on top of the commit we creat=
+ed in partial repo
+  cd ../full && git pull && echo ' world' >> foo && git commit -a -m "commi=
+t 3" && git push
+
+  # pull from remote in partial repo, and run gc again
+  cd ../partial && git pull && git gc --prune=3Dnow
+
+The last `git gc` will error out on fsck with error message like this:
+  error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
+  error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
+
+Note that disabling commit graph on the partial repo will cause`git gc` to =
+exit normally, but will still not solve the underlying problem. And in more=
+ complex situations, disabling commit graph will not avoid the error.
+
+The problem is caused by the wrong result returned by setup_revision with `=
+--exclude-promisor-objects` enabled. `git gc` will call `git repack`, which=
+ will call `git pack-objects` twice on a partially cloned repo. The first c=
+all to pack-objects combines all the promisor packfiles, and the second pac=
+k-objects command packs all reachable non-promisor objects into a normal pa=
+ckfile. However, a bug in setup_revision caused some non-promisor objects t=
+o be mistakenly marked as in promisor packfiles in the second call to pack-=
+objects. These incorrectly marked objects are never repacked, and were dele=
+ted from the object store as a result. In revision.c, `process_parents()` r=
+ecursively marks commit parents as UNINTERESTING if the commit itself is UN=
+INTERESTING. `--exclude-promisor-objects` is implemented as "iterate all ob=
+jects in promisor packfiles, mark them as UNINTERESTING". So when we find a=
+ commit object in a promisor packfile, we also set its ancestors as UNINTER=
+ESTING, whether the ancestor is a promisor object or not. In the example ab=
+ove, "commit 2" is a normal commit object, living in a normal packfile, but=
+ marked as a promisor object and gc'ed from the object store.
+
+Han Young (1):
+  revision: don't set parents as uninteresting if exclude promisor
+
+ revision.c               |  2 +-
+ t/t0410-partial-clone.sh | 22 +++++++++++++++++++++-
+ 2 files changed, 22 insertions(+), 2 deletions(-)
+
+--=20
+2.46.0.rc0.107.gae139121ac.dirty
+
