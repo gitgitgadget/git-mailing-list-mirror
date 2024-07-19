@@ -1,132 +1,152 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6922479FE
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 09:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D92823AC
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 09:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721381685; cv=none; b=O8i61kPiLJtgSxe33EA7l+ASbWG+8RQWWPiERIYxDxiDHibsraRZXXW84pZi9LIqhDVv9d3ydnsGu4tZUgk74/0Hh8k1KHvOBYt+IWKtJaM/RsPbxRJNuN9Q8Ey3GILRbwS2Se5B+I8iHqEg8WbjWJT/wyGkJCfZ+bGiFGnR7jc=
+	t=1721381689; cv=none; b=J6kqIO264zh7WdC7vdiDPEeOOUy+7zZFkYYe1O1LTniTMmCsR3RtpFgbxP0tyAhK1KaRZGL+HCPV8O6F5cazo2ZtARfCLyVHKQdKasASmDYF6im9QE4mLMcrkk+iHKKxtEt5W5rWbZsRPNLAwZpnwFP6OQeFyCrsU/vb2PSn/Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721381685; c=relaxed/simple;
-	bh=i7KbYjyG843U5ekgmcjEXld3p4SY28pLa2df6/ZtbuM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cQe3s/JRv7cuFIR8D0WnyXomaf65TUROZPSUmd1k9qNeUr1dFqOmz3qc5M1wCiv4rdq5gD1Shgh9eZN+ENrUsH2T3Cn6FTAyrSyWqucP2OiElLd2q42MlgQAJHCvhm328nShcu/6D77SCwMotHWKdpiFaMTbHCIlsLc6aNRuAJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=XMb94ZLI; arc=none smtp.client-ip=209.85.166.50
+	s=arc-20240116; t=1721381689; c=relaxed/simple;
+	bh=TjSN7yTcwVnhg/UltJvfFsZtAVP6pazxVdH2J0Z3Ewc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qfkRkPkBBDbe1RVJRR2Hq858a7+LQO0F5KKK/i2TpD/Og2lpGfkTjL6imYKKcE9UZlgMLUXBBuccCV0KzN+pej2GiMHEn/tYymF+aUFNxrMqabLZfwX+Gbpok61HeuI5Cit0R0T5dOLCtAkaatmwTUlSbdCs6ePuxEWyfR+Mxz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=FYiiUNOb; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="XMb94ZLI"
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-80a2939265cso54919439f.3
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 02:34:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="FYiiUNOb"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5b9794dad09so845763eaf.3
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 02:34:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1721381682; x=1721986482; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2lGSgmQ00eqHzxB6DJqWhlXoU/pI5D8hZZabTgvcc8Q=;
-        b=XMb94ZLIj+VkAbEnWvIJ75Uwkv+EiNcgMgMRmkcPN5TENcAg3mgTa5stPFcEgSyyij
-         OYWqcgfTRL0YiAilur3vMOmez2aBOv4I2HL0y3lh1jQgzDIX7XNm1mhK+kSnvsrd/aLN
-         Ub0s4olEfsZz4CRxEIXNlTAAfq1yCBdz5tPeSClfdqqRPDZ03Apf2uLG7jNXweuiBQGU
-         5yefDvrbEyrHrquCgCO/wof21AioZIbtmrwulKS/ziy4UujobR6A87uaV3DodNot2XRV
-         W+LViMiZJQLT6eNHSs5293Pg5vQFbhl22vm+fnaIiphvi4hBGi8OubGiKxGYDldT21GJ
-         IICw==
+        d=bytedance.com; s=google; t=1721381685; x=1721986485; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a5WW247HvliBN1OPdIEqEvhUQIe570PBOqHpe+L/N9Y=;
+        b=FYiiUNObnlO0WviCg8Jzp6FtQi+UhAYHqdx1up6QGPmIQG+xG8epMrl5ZusCp4Xz+S
+         Fr62z0UslzofjiD0Qbw6atwNboNE70SlLvno4hgUmTDcfMGv0xZA1ESADj0JNVAtN3LF
+         RK6NnWEMBm8jHgINAfs4syEQnoCLc0NIedd1Y7jX64uxaXyYE/l8dkVtDJoqBlB7zuF9
+         kcA5MCbVUouw/QfHKrRBG2EzTRuc7qw5tQf1VovoAW5kf3oi39R8FVsHsriRgWej64Yj
+         7Pf/zxC52J552xg7JdFJjRPz9JlVBbZHbnr3fIinIRnjAmbiqKUSO/t8cs5qeB6f9SAx
+         4ymw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721381682; x=1721986482;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2lGSgmQ00eqHzxB6DJqWhlXoU/pI5D8hZZabTgvcc8Q=;
-        b=pr7ge1Zu+d2qiPWpo2v8BrgiPnhlplEBNES7QlIF8jGI6qAom3iESRWfZ1qoyPqIvq
-         f252OKuvLEOiXZwno8JsxKCFR9nkSkfqYpN4G8BF9a1xcAh7PKXbTmZhDhkLph44UO7n
-         rF3qE62geMOZ/q97t4VI2mAiCNVSjzuDiw1J3aLBTdqz9fexzB2qtMq5An+FIuWalTBI
-         WX8Wh2MP3dl9x1nq7+hKxXcbF30cM1RakU1B6ooP9gkyJK+DnziHpIxTTfp+zU1knf50
-         5/cn9vRZTt9j2EpYOJb/TlSNXdD0RBCWYlJOHHPzuhX+nQIWw/PtUiRSJC7+jz6ALWON
-         m6Lw==
-X-Gm-Message-State: AOJu0Yw0lQ+bZjoPKVA8ehbmOshAe/2nW2+RRT/Tyq7o9YKEtQXhtCdt
-	9XUcwXtFh19ZpBocaUNZQFuRTBJpKqwTgXbr9PasYN+Hbt3JPXnk7malkSy9pX6Hnkp8WyyWjeA
-	s
-X-Google-Smtp-Source: AGHT+IFec3ol0AkuY2HfldQcIvGk1OLNcHICr/1e/BAkACNHHw1CuJSYEOA3Of1d3k/JckNEh30GAA==
-X-Received: by 2002:a05:6e02:2164:b0:397:584d:9b73 with SMTP id e9e14a558f8ab-397584d9d43mr42996965ab.7.1721381681956;
-        Fri, 19 Jul 2024 02:34:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721381685; x=1721986485;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a5WW247HvliBN1OPdIEqEvhUQIe570PBOqHpe+L/N9Y=;
+        b=W2V/PtCjBnYGMDmbXu+QtLuQNeIHYPS0WWy1ieyNH0Hu2PtLnahLPh2hOPLMGdOl3f
+         V2hTKWSntRoBhoxZjKfwOwVpXE1k7APnJRgj9m/3mIEZTUCt3sdro6ovubcjn5g9yUeL
+         YRWrEL1l8pC+9sN9LwwGiVWa3ZNLP7PTNPQxJeGa+sXZwMuczNhJ9R37l9zIXv+sILeq
+         FxoI9gUagbUpYi6s2bA9kno7t8wFI3ciHmIoLpvuwE/GDCDguk22j3jDnAlbSH7RKIJU
+         cNUI2SHft3FjsnZ4SRmJtaVVC5yBUJnmiCCuLsXBFY9g96LoMIZB7GQo5KhVW4JI/4Gu
+         klFg==
+X-Gm-Message-State: AOJu0YwXtwPQFzRECyqojXjPlG6aQk2vqFvismzdL8LTEFFsr8n9aAvY
+	dp0wNRjFh5oa157EBeES8HizKbDywdLBuDYVw6wAmydLa3vtCLcOqViauw+4yRciNoRjV2y2Wgv
+	E
+X-Google-Smtp-Source: AGHT+IEyzJ63E1vCsMoOGRZcObVhkkPHhXYV+6IiKltqi9fDtShSKshQisBUh+JPGFy+ySrabsWe5w==
+X-Received: by 2002:a05:6870:30a:b0:25e:281e:190f with SMTP id 586e51a60fabf-260ee83a452mr4512393fac.23.1721381685526;
+        Fri, 19 Jul 2024 02:34:45 -0700 (PDT)
 Received: from localhost.localdomain ([203.208.167.148])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70cff552816sm831558b3a.139.2024.07.19.02.34.40
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70cff552816sm831558b3a.139.2024.07.19.02.34.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jul 2024 02:34:41 -0700 (PDT)
+        Fri, 19 Jul 2024 02:34:45 -0700 (PDT)
 From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH 0/1] Fix bug in revision walk if --exclude-promisor-objects is set
-Date: Fri, 19 Jul 2024 17:34:34 +0800
-Message-ID: <20240719093435.69238-1-hanyang.tony@bytedance.com>
+Cc: Han Young <hanyang.tony@bytedance.com>,
+	C O Xing Xin <xingxin.xx@bytedance.com>
+Subject: [PATCH 1/1] revision: don't set parents as uninteresting if exclude promisor objects
+Date: Fri, 19 Jul 2024 17:34:35 +0800
+Message-ID: <20240719093435.69238-2-hanyang.tony@bytedance.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240719093435.69238-1-hanyang.tony@bytedance.com>
+References: <20240719093435.69238-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-We use --filter=3Dblob:none to clone our large monorepo. After a while we s=
-tarted getting reports from engineers complaining that their local reposito=
-ry was broken. Upon further investigation, we found that broken repositorie=
-s are missing objects that created in that particular local repository. `gi=
-t fsck` reports "bad object: xxxx".
+In revision.c, `process_parents()` recursively marks commit parents 
+as UNINTERESTING if the commit itself is UNINTERESTING.
+`--exclude-promisor-objects` is implemented as 
+"iterate all objects in promisor packfiles, mark them as UNINTERESTING".
+So when we find a commit object in a promisor packfile, we also set its ancestors 
+as UNINTERESTING, whether the ancestor is a promisor object or not.
+This causes normal objects to be falsely marked as promisor objects 
+and removed by `git repack`.
 
-Here are the minimal steps to recreate issue.
-  # create a normal git repo, add one file and push to remote
-  mkdir full && cd full && git init && touch foo && git add foo && git comm=
-it -m "commit 1" && git push
+Stop setting the parents of uninteresting commits' to UNINTERESTING 
+when we exclude promisor objects, and add a test to prevent regression.
 
-  # partial clone a copy of the repo we just created
-  cd .. && git clone git@example.org:example/foo.git --filter=3Dblob:none p=
-artial
+Note that this change would cause rev-list to report incorrect results if 
+`--exclude-promisor-objects` is used with other revision walk filters. But 
+`--exclude-promisor-objects` is for internal use only, so we don't have to worry
+about users using other filters with `--exclude-promisor-objects`.
 
-  # create a commit in partial cloned repo and push it to remote
-  cd partial && echo 'hello' > foo && git commit -a -m "commit 2" && git pu=
-sh
-
-  # run gc in partial repo
-  git gc --prune=3Dnow
-
-  # in normal git repo, create another commit on top of the commit we creat=
-ed in partial repo
-  cd ../full && git pull && echo ' world' >> foo && git commit -a -m "commi=
-t 3" && git push
-
-  # pull from remote in partial repo, and run gc again
-  cd ../partial && git pull && git gc --prune=3Dnow
-
-The last `git gc` will error out on fsck with error message like this:
-  error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
-  error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
-
-Note that disabling commit graph on the partial repo will cause`git gc` to =
-exit normally, but will still not solve the underlying problem. And in more=
- complex situations, disabling commit graph will not avoid the error.
-
-The problem is caused by the wrong result returned by setup_revision with `=
---exclude-promisor-objects` enabled. `git gc` will call `git repack`, which=
- will call `git pack-objects` twice on a partially cloned repo. The first c=
-all to pack-objects combines all the promisor packfiles, and the second pac=
-k-objects command packs all reachable non-promisor objects into a normal pa=
-ckfile. However, a bug in setup_revision caused some non-promisor objects t=
-o be mistakenly marked as in promisor packfiles in the second call to pack-=
-objects. These incorrectly marked objects are never repacked, and were dele=
-ted from the object store as a result. In revision.c, `process_parents()` r=
-ecursively marks commit parents as UNINTERESTING if the commit itself is UN=
-INTERESTING. `--exclude-promisor-objects` is implemented as "iterate all ob=
-jects in promisor packfiles, mark them as UNINTERESTING". So when we find a=
- commit object in a promisor packfile, we also set its ancestors as UNINTER=
-ESTING, whether the ancestor is a promisor object or not. In the example ab=
-ove, "commit 2" is a normal commit object, living in a normal packfile, but=
- marked as a promisor object and gc'ed from the object store.
-
-Han Young (1):
-  revision: don't set parents as uninteresting if exclude promisor
-
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Helped-by: C O Xing Xin <xingxin.xx@bytedance.com>
+---
  revision.c               |  2 +-
  t/t0410-partial-clone.sh | 22 +++++++++++++++++++++-
  2 files changed, 22 insertions(+), 2 deletions(-)
 
---=20
+diff --git a/revision.c b/revision.c
+index 1c0192f522..eacb0c909d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1164,7 +1164,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 	 * wasn't uninteresting), in which case we need
+ 	 * to mark its parents recursively too..
+ 	 */
+-	if (commit->object.flags & UNINTERESTING) {
++	if (!revs->exclude_promisor_objects && commit->object.flags & UNINTERESTING) {
+ 		while (parent) {
+ 			struct commit *p = parent->item;
+ 			parent = parent->next;
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 2c30c86e7b..4ee3437685 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -22,6 +22,17 @@ pack_as_from_promisor () {
+ 	echo $HASH
+ }
+ 
++pack_commit() {
++	HASH=$(echo $1 | git -C repo pack-objects .git/objects/pack/pack --missing=allow-any) &&
++	delete_object repo $1 &&
++	echo $HASH
++}
++
++pack_commit_as_promisor() {
++	HASH=$(pack_commit $1) &&
++	>repo/.git/objects/pack/pack-$HASH.promisor
++}
++
+ promise_and_delete () {
+ 	HASH=$(git -C repo rev-parse "$1") &&
+ 	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
+@@ -369,7 +380,16 @@ test_expect_success 'missing tree objects with --missing=allow-promisor and --ex
+ 	git -C repo rev-list --exclude-promisor-objects --objects HEAD >objs 2>rev_list_err &&
+ 	test_must_be_empty rev_list_err &&
+ 	# 3 commits, no blobs or trees
+-	test_line_count = 3 objs
++	test_line_count = 3 objs &&
++
++	# Pack all three commits into individual packs, and mark the last commit pack as promisor
++	pack_commit_as_promisor $(git -C repo rev-parse baz) &&
++	pack_commit $(git -C repo rev-parse bar) &&
++	pack_commit $(git -C repo rev-parse foo) &&
++	git -C repo rev-list --exclude-promisor-objects --objects HEAD >objs 2>rev_list_err &&
++	test_must_be_empty rev_list_err &&
++	# commits foo and bar should remain
++	test_line_count = 2 objs
+ '
+ 
+ test_expect_success 'missing non-root tree object and rev-list' '
+-- 
 2.46.0.rc0.107.gae139121ac.dirty
 
