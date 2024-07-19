@@ -1,140 +1,113 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C20839ACC
-	for <git@vger.kernel.org>; Fri, 19 Jul 2024 08:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3753839ACC
+	for <git@vger.kernel.org>; Fri, 19 Jul 2024 08:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721378004; cv=none; b=mCPMKl/QDoELrsLIet2MTULNzIqMDazej++U6S8ojdjif9JbyDJ3w7FfWSvcr5Y1hV+rwJPqKsPNYHI2+Foi2Ye6Jn6yasbIdwuodnLKqRzWMxvLwxTssnPZuqiiSTm6XX5DwY7m5kjXKsB4Ft408w5vnJXNJYS/cix6jEKUMLU=
+	t=1721378039; cv=none; b=eslfki4kLlNj++MvK1j2d5zeNYPeR24ypGn6na075nMQsBOfQL2YgUUign9juQveCoYR36RnOSFD7++wnel3Xthe3qNUf+8Jl1GM/G9DRt1BMW+VCQq7r4yy4YDaj9BpgBeHR22jsISJ7CQyYYawvKioEWblWRnhonP+8NrDRk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721378004; c=relaxed/simple;
-	bh=lqTMOawQ9cvFiePggsT3RkX7Iw7hvc1bKaOGO5QvJJk=;
+	s=arc-20240116; t=1721378039; c=relaxed/simple;
+	bh=dKqY6+E92Yc/TadQI8nTX4uW2zMfdcIAO5y1Yl0SsXM=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KVt5AsX9CQLiQKm/mxYSOaJTHVwv7iEPd2Oy/rJsslaNBZ1PK9pr+cNEToLABeqbxcNwQ6iMEQPL5C+RNf5MwzuuOiH3GvPjgAsfsNODw7PKGwntsIlQMhOw1kMzbjx4pZ1EO9mchejBPIYFpLkZ+ClgEQ2arvqWaeORZr4yPqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQ02NIWJ; arc=none smtp.client-ip=209.85.160.47
+	 To:Cc:Content-Type; b=ouDfUGkrgQ7kGklE+HTun1EJGMd/CoX0vU423eztV+hr/8XIp+uvelurB270Oxs8PSvbPrif+fF0NrllSWLbcvFfSL46I6uWYQtrf9RsZrlXSB6jOnNXyIDX/9ko0aNb3eGnyZlHwqlt+vPljoMJx9GHJ+/9590aLlYojwZmT6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNSXevZU; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQ02NIWJ"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-25e3d388580so868818fac.0
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 01:33:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNSXevZU"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-260e99b6661so730878fac.1
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 01:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721378002; x=1721982802; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721378037; x=1721982837; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AvBaAyFbm0VJ3HXTsDQFbB0aTQZS+e4BUkRxuDGdt/Y=;
-        b=eQ02NIWJjutGTI4bgswTbPrB/f50xzy485XqYsGe+aNPpiIR00AG4w3B/uNGRXA0ij
-         4ZW6yjGGuide8vgEA5cW8eC4OPK7Y54ZQWro0zjmWGYH2TxEFXq332Kz1lePjE6Mk+vK
-         7mGW6rXkohKGtVt4uFCgzzLTq2X4YoAe4ZrlxqXSKETTzh1DLvyX/p2l8rmEEFcix6Gv
-         pWeYtNf7BUVCM+oDCcELJzrZfdN5of0NEPTk1kUbINQJT1f58s+ht6PeNMAn3r4uNmal
-         /+0IYOX40HAtL/MBU0syFeFgSjBJ+DG0J18n5a7N+6/CO6KvnUp8p2yQFABu1nf/3M8V
-         4osw==
+        bh=KxQo8NsJ0jIBFTb4BQBjcnfoUE2jfWYloEALKvJnAlA=;
+        b=hNSXevZUH4RW5Ydjh0gF0KaFv3Cgo+bi729jZv8TerIhWeRZ2Pn7QgpXXq+P9oWJRl
+         ftlumkaGNHsfNr5fAuN9wSQQO98BxVIlWC1glLtB1AuM62hG48NdviJWrEIVQp/5k99z
+         tJVqmXQioCpYu2IyA5Q5YQflrbHqLn7UqSfdjNYLRzAQ95kTRdQ03YqtkFMDNpDnwcJR
+         +KJHGb7IF6M/haKrn5ccHYgobscVw+6zorcZWXQD6WDZcOx9SCE/0pXQj8RUIuIlXPNb
+         8mPqvUH303BURZTZ0LHJ++pzeKPeYfLjUL0eYKPUaEO1f6sL8UDKks23RYfDQV9rqQCn
+         uCPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721378002; x=1721982802;
+        d=1e100.net; s=20230601; t=1721378037; x=1721982837;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AvBaAyFbm0VJ3HXTsDQFbB0aTQZS+e4BUkRxuDGdt/Y=;
-        b=HPVAkXonAJS02mJMg1JZX7meff+y/8RESSoqfjZlLfSwYlsppZfORSlXHbvOS74J/k
-         n/GeBCCRpAtWCrbWlHfduZIgLQ842DKFxGDD/ZyW2DdNIM7+VogBnHomYaf03PFAspUN
-         R1unQOgANJeB1Z8AQjTD3iDv175CI7fM7OC6nM3aECqXt+o9hWHIyW64gp58THQSEnT8
-         LPhCzBia/+GfKg0p28k8/nUUUt/w/2hf18hYV/4l11+bo4tHdrHzJ3mwJK9ddm7+xHQc
-         hhi5iqbjzTa3pFmQKmyqld6QrOIbw/p2em0mGTHQ6Gxd8ShX7o38cBuYJclJiKYMFFaC
-         ju+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX9CBBQoUkPdHZHePzhFJ3e1r1RfaYT+oTCKd/qh9hFjISfZD12VCR6lhvbvgmpzgVyD0q+EOfs27ToWfViMpIHIvbl
-X-Gm-Message-State: AOJu0YxbnHGpnv986tQrNE7vedkBio6h+Fo1bFKeG7bJwvdzk8T6uEV9
-	yhlKYAl4X+6H24t+Oc//q7OjdqE6pG9xYGsmlcaNKDccYq8uvNLKPnbLB/eHAY/CfdyA8c8B8Nk
-	IQBBdcoo93w0Dm98YCR7O4MrQPFk=
-X-Google-Smtp-Source: AGHT+IGdySa8pGoBDonVrrjHFT6o8acL6et37lXegfY9yWJGMH/hZFdpzjM30qfCkQgz2pTluFMl8w/mV/uUL932Ep4=
-X-Received: by 2002:a05:6870:71c4:b0:260:f99a:ba39 with SMTP id
- 586e51a60fabf-260f99ace90mr3198540fac.0.1721378002130; Fri, 19 Jul 2024
- 01:33:22 -0700 (PDT)
+        bh=KxQo8NsJ0jIBFTb4BQBjcnfoUE2jfWYloEALKvJnAlA=;
+        b=SYdDx7XOFmMrLctBqQmHw1L/KE7WObUPMeG1gVlsePStoB8JdAMyS24d++AwlgRV0t
+         yhKfMIe8VVvAIffWzSy0WA6topw6VCqr4CbPoCKDje/RiYg1flQCjosWH5CRNgW36TC6
+         ndocKxvSbxtbcNi6tSzq7dOEgr742theVRvTvgwtJJYTz9oXqeF5T0nzBRLn2usLBcTs
+         Zhop7pfBRJcIZYJf/HC0GqfVpGSVaNH3mxDO0hROYIAGRVG0QcjPNTgiduoKb9N4DEbU
+         /sjPOQhKDYSF8TnxKleO0QMcD9fQtriQYVDgRGoHfT9iPpkt84LOA6PrQFw7zGZjAhxR
+         Pw0A==
+X-Forwarded-Encrypted: i=1; AJvYcCWwTDGzYXx+grRtchJjLr+0LfvkTePIDovbaxTBZsQ/8t9pVteZiFgUkL03sCZkF4PVyCMHAw9ICLf4EKDvhsqQYbZ1
+X-Gm-Message-State: AOJu0YwN6V6WoxbmUDLEyekxFwqf6u+J3lXlJsdqtI321lTJlArfJz9o
+	S4Uc33KrCvE3OjgsOcMf6l9YYtRDa3dpUShqeI7DUlXFCXUomI/tF0HofAwSvPRoeWrXqtDkpoN
+	KreT2W9m8oV6n6/Z1fNghOOErYQE=
+X-Google-Smtp-Source: AGHT+IG5K+Tnifxcc7cdchI6qO85BgDotEaCTt6/JXQLN2VAwDJCYMuO5cIp/vqSM7aJUBDnYbK0wYjYfSN2wRx0QOA=
+X-Received: by 2002:a05:6870:c6a1:b0:255:43c:dd22 with SMTP id
+ 586e51a60fabf-260ef89854amr2278655fac.21.1721378037325; Fri, 19 Jul 2024
+ 01:33:57 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 19 Jul 2024 01:33:21 -0700
+ HTTPREST; Fri, 19 Jul 2024 01:33:56 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqfrs6ycc3.fsf@gitster.g>
-References: <20240715093047.49321-1-karthik.188@gmail.com> <20240718081605.452366-1-karthik.188@gmail.com>
- <20240718081605.452366-6-karthik.188@gmail.com> <xmqqfrs6ycc3.fsf@gitster.g>
+In-Reply-To: <xmqqsew6wuu9.fsf@gitster.g>
+References: <ZpPEdmUN1Z5tqbK3@ArchLinux> <ZpPFbYOqDVWKz0ic@ArchLinux>
+ <CAOLa=ZRYoYfY-P-dzpYbz0Yq44_TYGyJamf1hufJ0fxGZb3Z0Q@mail.gmail.com> <xmqqsew6wuu9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 19 Jul 2024 01:33:21 -0700
-Message-ID: <CAOLa=ZQhcb7O4i9E=Xn+9ZbaNhiY0gzD_a2kTqriegF2o-Eeyw@mail.gmail.com>
-Subject: Re: [PATCH v5 5/6] check-whitespace: detect if no base_commit is provided
+Date: Fri, 19 Jul 2024 01:33:56 -0700
+Message-ID: <CAOLa=ZSx70nT1RoLxwipz5tO=Kkw25QWn_wL4TJRprNSi0cvvg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v11 10/10] fsck: add ref content check for files backend
 To: Junio C Hamano <gitster@pobox.com>
-Cc: chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
-	phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000577726061d958c3d"
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000707e14061d958e9d"
 
---000000000000577726061d958c3d
+--000000000000707e14061d958e9d
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> +    - |
->> +      R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA-${CI_MERGE_REQUEST_DIFF_BASE_SHA?}}
->> +
->> +      if test -z "$R"
->> +      then
->> +        echo "CI_MERGE_REQUEST_DIFF_BASE_SHA should always exist!"
->> +        exit 1
->> +      fi
+>> shejialuo <shejialuo@gmail.com> writes:
+>> ... 260+ lines of the original removed ...
+>>> +		 */
+>>
+>> What happens if a symbolic reference has trailing garbage ?
+>>
+>> ... 160+ lines of the original removed ...
 >
-> The same comment applies as the previous step.
->
-> 	R=${A-${B:?}} || exit
->
-> should be sufficient.
->
-> A demonstration.
->
->         $ unset A; unset B; C=${A-${B:?}} && echo "C=$C"
->         bash: B: parameter null or not set
->         $ A=a; unset B; C=${A-${B:?}} && echo "C=$C"
->         C=a
->         $ unset A; B=; C=${A-${B:?}} && echo "C=$C"
->         bash: B: parameter null or not set
->         $ unset A; B=b; C=${A-${B:?}} && echo "C=$C"
->         C=b
->         $ A=a; B=b; C=${A-${B:?}} && echo "C=$C"
->         C=a
->
-> Note that the broken case we do not see C=<value> becaues the
-> assignment fails with non-zero status.
+> It is a pain to have to look for only a single line with a new piece
+> of information in a 400+ line response, more than 99% of which are
+> quoted original.  Can you trim your quote a bit better?
 >
 > Thanks.
 
-Thanks Junio for explaining with examples, really nice of you! I'm on
-the fence with this, even the existing change from the previous more
-verbose code. I know this is shorter, but it is always more readable to
-use the longer version with 'test'. I find it hard to remember the
-specifics. But I don't really care which one makes it in the end.
+I usually do, I missed out here! Sorry about that.
 
-Let me know if you think it is worth a reroll.
-
-Thanks
-
---000000000000577726061d958c3d
+--000000000000707e14061d958e9d
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 5de5e03a5cd24b45_0.1
+X-Attachment-Id: 5bf28d8c8b6d116a_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hYUpNMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN0IwREFDZ2RMMGpmS3hEZTVoZjNXUHRUMERIQ3ZPMAplTDNGcXAwOFRN
-SkJsUzJqWGRTcElmT3J4M2VadEtSLzBqaCtMVFU3emtweGV4MzNJUElaYzExSDJVWThuc1p5CjR6
-MVNzSWhKWXRTaFhRWDJWN3F0bFZ0SUg0SnFlUWVuN1ZEUG9OVU4rMHJHalhzUU5LdHRzR3U4V1k4
-cG1uMVUKZjJwUXZSY2dVRC9PSHlqbmM4cE5vaFo2TDAwcDVJL2ZOTDEzbkpldmI2eHpMUE1QczlM
-SXpONnlnQzVhU0pyaQpBOGxGaldreDlMbmd2TWlROEkxaHVrd0dWaVgvb1ZtSFNYT3phajN0TStQ
-VmZ0RVZKby94cmUvc1FWck5jS2JRCmJDNVFZT1BuQk1oQTdPRTBuQ3lrUHd4NGgwS2owbndRNW5v
-WFRxUXUyVUhYOUN4RDlNK2FuTy96L0prSVlPT08KRGw3dzg5ekJLZG16aEY5WGNlZ2srbU5KMnFG
-WlA0K2FOL1dDQUxuTFNaZE9wNXF3alZJZjFKbzJQUDgveXVOagpFamZUbUlxbjNhQXlHUTNmSjdN
-ZDNJVUlSYkZUckYzNTJ1S3NQMjArSFA1eVZUK2pUZ0FZZGpWRHlBOE1ncHhMCjZFcURobSs1bklL
-RzhXc3Nwelk4ck5vdXlkRmNxNmlUVk5KRUZjaz0KPXRVSUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hYUpQTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnlWQy8wY0Vjb0lSWFhDNityOUVoM0JoMXpCempIQQp4MmNEMHF6M0cr
+dE1TU2ZGNjFvRS9kb1NJamZyV09tQkZTZUJyRXp0TWpLYzROaGNzbEkwQ1NPSGRTY0V5YXpzCnJH
+Sk5uMlhsNkZnRnBudGFWdGRlY3FOQWpCbDY0Z1hLcGgyQ0NZRWZKYTN0OXZrSkZ5WU1ybFhzNzQr
+Uzc0RUIKWUt3MnA3K3NpcU16cTR6UlFXYVJVMEMybU5UTmZYMWVBeWd3TEx5WTJSeERlWHlwRVgv
+bHlFWlBuVk5MWEN3TgpQUGVFZDB5Q0R0S0ljT29aZDdLTWp5NFd6ckYvbVA4SGhmTklSRWNHM1ZW
+V2JacGJoMHFMbHp2d3oyWXg0Um1rCmg1M3Y1bG1ZQzZlaG1VeUVKRmsyeDJjaVpXblMrVzB0UUZZ
+MGVDQ0w4WVBnZ1M4elNKT3hZYkdsY0Z6emlDb1MKbWIwcGR2NHFzMTgzeE1GZGhPMXViRXNvb3Z4
+QkVMeVFDTjRjMkJ5R3dPUTB0d3BvbzFHcGM1TGdNeGpYQm5BcApnSnRicHRBMFZhQTRYMlFqRWVt
+eEJZaUNTWlVPdlAzemZZNUpiSFk4dnhXMEhoY0xNaDN0RTU5cDZjdkRRKzJPCitrcXdUek9QU1VD
+eEFQV2cyN0pmUXdNV1g5bmdiN0xqeVEzcUk5QT0KPXNRVjgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000577726061d958c3d--
+--000000000000707e14061d958e9d--
