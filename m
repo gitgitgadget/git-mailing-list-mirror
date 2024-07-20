@@ -1,62 +1,64 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B8A1E489
-	for <git@vger.kernel.org>; Sat, 20 Jul 2024 16:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DFD1E502
+	for <git@vger.kernel.org>; Sat, 20 Jul 2024 16:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721491327; cv=none; b=NDGmXLT9sq3154WZXdNvLuj9x89C3XyeOyQ70siS6kVc0Uy++Du8NVWC+hJA2UAqAtshdIbFXrzi2PXASII3rKM9x5GNZ7AKUiSwqYgAbzyfwzC/Q2NXnSz+mrLqKsNuotHFqNYOGPYTUIoZstIBKGG+BQlCm6y5vgcJB4ZsAZM=
+	t=1721491328; cv=none; b=a5PDXoC7yOnmbfsMWThuPtC+OfKAh8QrIyzjCIEuAoKbvGBIJy0xqg5TRhBKanP5a4tvyiLQ6qmTF8omFD5G557g9AVTOHhCH7IJL747WdVsw38f3IAGiP2YhNPWxpRsnhTE46wnaMzFIsFs6/3Su1hi6vyfRDV6b+8BGykdLc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721491327; c=relaxed/simple;
-	bh=p0Sd0Ho2nYS27MAXhF2dr7ky9lSjc770EEpqTOV+kX4=;
+	s=arc-20240116; t=1721491328; c=relaxed/simple;
+	bh=3Zbb5H+IUJVXRB7jU1K2M78y/HH5BfOY4pasOivDnjo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MesWLRaOnPC1PwVtbW5jjQG0VCyAGnmFP1GoPtTx+2ZYCEmv4lytz4YrqDgALlTzLh31HKrXm/s/2veojZrRsjJTAi03W9C+OnSt+Zq3GDL5Lh1VvWIyil1yn6K8oU4Ih4xtPC4igV7aRhaF3UjGoMXFgWi0JzkgNdtiJVcrNek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ncOPsUpS; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version:To:Cc; b=MtF4g2/L41GZa3Xj5SLxbktQvP/knP52WDvq2k2tPKHzXtQ2jDtbX3MQV253SwNE2Qj3bcgIb48kVqi3e+HUPdYOpUqOdPPTI5IZy3fTUX6olYlzcDTTctjKUs+Pfdh3uePjJt14nRZhizy/v5J4DREvJ0aF6LAkuZX3eHA4ZGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=me8f82Zq; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ncOPsUpS"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3686b285969so1094729f8f.0
-        for <git@vger.kernel.org>; Sat, 20 Jul 2024 09:02:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="me8f82Zq"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ebe40673d8so36535901fa.3
+        for <git@vger.kernel.org>; Sat, 20 Jul 2024 09:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721491324; x=1722096124; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721491325; x=1722096125; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3e23EM6xY/ea5liJigNFPfbCtIGNIEz+mftnspHNfJA=;
-        b=ncOPsUpSNffisdWUKoreBAcCNA/mgfSplMeiVT4AxezdR4AhSV//CzhhXWrSLxiHds
-         +3U/0D2zP5hH7aqxrq8eu1jIk87HNA8epe2r00HBpNNs1G/uDFzOPHSeoNrEIU5l0WGh
-         lvTSI0k5qPv24MtwD4FEAq81LhQJ8z4tqJeSaHqUM+VeMJhWBkhGet5HHPOEg73MU1gI
-         ekWhgiXvhCpLSxg3oHNTa4sm1saykrSYcgEMwwWt4cP8OBaiW/SseoFKyJu8rLV0Gait
-         2pumUXziUlluoB03fMGv17HHLWbS1ARgVluaGducshN4WCmRaBGCU5a+GxUlvB5E5TrQ
-         Rlew==
+        bh=iTpePuwPS09EDc+EhZPO7bdloD+hfzdeJPMlvWdxeyU=;
+        b=me8f82Zqn8YK3R7ZnPFVh8smmHKEghRDu8e5kVw7xXNmhTk0+KIp+05R5kfrMnDCL7
+         O6+NtTdpjZJ3H3DfJKEGNWEeywTLLNLmHMVaz1wXObCi/e2HZtHFhHIjaVcCzetvArdb
+         28Ni08LhOC2RR004h25l5rpBSjVmuKBc3Hp+IM5URFR5CwSD6FtKMfZYvCRMAONajZ65
+         tqgLAc+T/KTNSMJVBOys2aXVxITx5fMJjgHqAwlael6/WE+cpkSrs+eI3Knm1spfi6bC
+         LiILmVjm67tERqiU5cqxHRjmfCQY4Nme+UYwfktsvG7e23quiu3RX2TGgiKygwr9g21h
+         +C9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721491324; x=1722096124;
+        d=1e100.net; s=20230601; t=1721491325; x=1722096125;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3e23EM6xY/ea5liJigNFPfbCtIGNIEz+mftnspHNfJA=;
-        b=YBVB4J7J0Mcw6cB8wxcxgYrgxC2jHAWZf4HFQtHwSxM3PcweBuijYoeJRSdmtaqVXL
-         UwUVHEQ9IJvp2sqTA4Z84fsK+3Ndjb00jp2qmoad2++l0mBUwc6L3ULxI9dttKcUQdpE
-         vVxenubhyW0PBijzRhm83+zaSuvDv58RnhWpHfRSAUm8PunVWcyUMoG1Wn7Wrmlc/vHm
-         GW1YQBVWG2H71EptrIUspACLOA2pcJpHCTlWzkrqf9DFrQSarCEJl7Rrp2yEzRZj98H/
-         aYBFLI++R+NEg3Z7S4SKL5sYAjtSZhUDVKu9sZjMW89/1uFtnInsd99/JbkrBNI/Gpo4
-         YDyw==
-X-Gm-Message-State: AOJu0Yy9Bh6CGVY241qN7OhJFhts1rYwz79bwPEudL0wpTYCWueqmzfS
-	G6ITx1h4nEMNI+XLKquhCdaXqqo7ku2glZINvypnULqEmNs2NugJTpAxzA==
-X-Google-Smtp-Source: AGHT+IFJNakz6a7DgsGs+6q7z2BuN5cvs1QPL1HSGlljrxFF6DgHQsQ3R8tx79rCPp5yXRVowrfuBg==
-X-Received: by 2002:adf:b31d:0:b0:367:8a72:b8b4 with SMTP id ffacd0b85a97d-369bae46a5fmr1029756f8f.33.1721491323569;
-        Sat, 20 Jul 2024 09:02:03 -0700 (PDT)
+        bh=iTpePuwPS09EDc+EhZPO7bdloD+hfzdeJPMlvWdxeyU=;
+        b=XMMfDYBRmbFFL7zyIdev669eQGLMsSMeGY0aO4pTxv5SkaLUi9qT3eC68f6BcmrTDz
+         4sho2/2eHc76DCRI/QK+W8cpxqi8g//dqPS7wnMfkluEm5EGS1kb5v1KIgZfjPwgqL2Q
+         Ox0lCE7A6+nMpnXZb2+p2z+22S02o5Ab1CuM+ZqnKHsh+aJ3YANKsBBUhECBhMROSNEx
+         YUfXYFQMj9vN/e0vNJCJmU98C0NkcbDnRLP46W+WhOGSwNzwJRUreNitzCblk90KecxW
+         k/G/FcW/OpGrp40Yjy63XLpZry+URkraNoewYWZK/7bRP2udHuSvDkJiOctTQe2pYVAi
+         0WdA==
+X-Gm-Message-State: AOJu0Yzz04d52llt2tsGvhOTuXWNE1H9ErUWL+P3a+BP5WFZ7IhfjJen
+	jfoJ7A2W9iynh/odhhQ1OUT88uKMhuWKpPFp/WmyTSFd8xPGQXhz4aJnNQ==
+X-Google-Smtp-Source: AGHT+IHA7jds5/144Z5jRvHeVM6jeNz9A/BPqykgjwJD0lO7v7PKPkwfohYUmMVTq7owj67jWSWizQ==
+X-Received: by 2002:a2e:8ec9:0:b0:2ef:2658:98f2 with SMTP id 38308e7fff4ca-2ef265899ebmr4787801fa.33.1721491324614;
+        Sat, 20 Jul 2024 09:02:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a94c30sm89722545e9.47.2024.07.20.09.02.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a3b763sm89204965e9.10.2024.07.20.09.02.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jul 2024 09:02:02 -0700 (PDT)
-Message-Id: <pull.1763.v2.git.1721491320.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1763.git.1721312619822.gitgitgadget@gmail.com>
+        Sat, 20 Jul 2024 09:02:03 -0700 (PDT)
+Message-Id: <34d8fd44a97efd5a36003823f7db853291a2543c.1721491320.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1763.v2.git.1721491320.gitgitgadget@gmail.com>
 References: <pull.1763.git.1721312619822.gitgitgadget@gmail.com>
+	<pull.1763.v2.git.1721491320.gitgitgadget@gmail.com>
 From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 20 Jul 2024 16:01:58 +0000
-Subject: [PATCH v2 0/2] add-patch: handle splitting hunks with diff.suppressBlankEmpty
+Date: Sat, 20 Jul 2024 16:01:59 +0000
+Subject: [PATCH v2 1/2] add-patch: handle splitting hunks with
+ diff.suppressBlankEmpty
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,92 +72,131 @@ To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
     Junio C Hamano <gitster@pobox.com>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
     Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This is an alternative to jk/add-patch-with-suppress-blank-empty which was
-recently discarded from next. I hope that normalizing the context marker
-will simplify any future changes to the code.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Changes since V1
+When "add -p" parses diffs, it looks for context lines starting with a
+single space. But when diff.suppressBlankEmpty is in effect, an empty
+context line will omit the space, giving us a true empty line. This
+confuses the parser, which is unable to split based on such a line.
 
- * Updated merge_hunks() to use normalize_marker() as spotted by Junio
- * Updated the test so it checks merge_hunks() as well.
+It's tempting to say that we should just make sure that we generate a
+diff without that option.  However, although we do not parse hunks that
+the user has manually edited with parse_diff() we do allow the user
+to split such hunks. As POSIX calls the decision of whether to print the
+space here "implementation-defined" we need to handle edited hunks where
+empty context lines omit the space.
 
-Phillip Wood (2):
-  add-patch: handle splitting hunks with diff.suppressBlankEmpty
-  add-patch: use normalize_marker() when recounting edited hunk
+So let's handle both cases: a context line either starts with a space or
+consists of a totally empty line by normalizing the first character to a
+space when we parse them. Normalizing the first character rather than
+changing the code to check for a space or newline will hopefully future
+proof against introducing similar bugs if the code is changed.
 
- add-patch.c                | 23 +++++++++++++++--------
+Reported-by: Ilya Tumaykin <itumaykin@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ add-patch.c                | 19 +++++++++++++------
  t/t3701-add-interactive.sh | 19 +++++++++++++++++++
- 2 files changed, 34 insertions(+), 8 deletions(-)
+ 2 files changed, 32 insertions(+), 6 deletions(-)
 
-
-base-commit: 790a17fb19d6eadd16c52e5d284a5c6921744766
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1763%2Fphillipwood%2Fadd-p-suppress-blank-empty-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1763/phillipwood/add-p-suppress-blank-empty-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1763
-
-Range-diff vs v1:
-
- 1:  fd09e66727a ! 1:  34d8fd44a97 add-patch: handle splitting hunks with diff.suppressBlankEmpty
-     @@ add-patch.c: static void complete_file(char marker, struct hunk *hunk)
-       }
-       
-      +/* Empty context lines may omit the leading ' ' */
-     -+static int normalize_marker(char *p)
-     ++static int normalize_marker(const char *p)
-      +{
-      +	return p[0] == '\n' || (p[0] == '\r' && p[1] == '\n') ? ' ' : p[0];
-      +}
-     @@ add-patch.c: static int parse_diff(struct add_p_state *s, const struct pathspec
-       
-       		p = eol == pend ? pend : eol + 1;
-       		hunk->end = p - plain->buf;
-     +@@ add-patch.c: static int merge_hunks(struct add_p_state *s, struct file_diff *file_diff,
-     + 					    (int)(hunk->end - hunk->start),
-     + 					    plain + hunk->start);
-     + 
-     +-				if (plain[overlap_end] != ' ')
-     ++				if (normalize_marker(&plain[overlap_end]) != ' ')
-     + 					return error(_("expected context line "
-     + 						       "#%d in\n%.*s"),
-     + 						     (int)(j + 1),
-      @@ add-patch.c: static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
-       	context_line_count = 0;
-       
-       	while (splittable_into > 1) {
-      -		ch = s->plain.buf[current];
-     -+		ch = normalize_marker(s->plain.buf + current);
-     ++		ch = normalize_marker(&s->plain.buf[current]);
-       
-       		if (!ch)
-       			BUG("buffer overrun while splitting hunks");
-     @@ t/t3701-add-interactive.sh: test_expect_success 'reset -p with unmerged files' '
-       
-      +test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
-      +	test_config diff.suppressBlankEmpty true &&
-     -+	test_write_lines a b c "" d e f >file &&
-     ++	write_script fake-editor.sh <<-\EOF &&
-     ++	tr F G <"$1" >"$1.tmp" &&
-     ++	mv "$1.tmp" "$1"
-     ++	EOF
-     ++
-     ++	test_write_lines a b "" c d  "" e f "" >file &&
-      +	git add file &&
-     -+	test_write_lines p q r "" s t u >file &&
-     -+	test_write_lines s n y q | git add -p &&
-     ++	test_write_lines A b "" c D  "" e F "" >file &&
-     ++	(
-     ++		test_set_editor "$(pwd)/fake-editor.sh" &&
-     ++		test_write_lines s n y e q | git add -p file
-     ++	) &&
-      +	git cat-file blob :file >actual &&
-     -+	test_write_lines a b c "" s t u >expect &&
-     ++	test_write_lines a b "" c D "" e G "" >expect &&
-      +	test_cmp expect actual
-      +'
-      +
- -:  ----------- > 2:  7bdcd2df012 add-patch: use normalize_marker() when recounting edited hunk
-
+diff --git a/add-patch.c b/add-patch.c
+index d8ea05ff108..8feb719483f 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -400,6 +400,12 @@ static void complete_file(char marker, struct hunk *hunk)
+ 		hunk->splittable_into++;
+ }
+ 
++/* Empty context lines may omit the leading ' ' */
++static int normalize_marker(const char *p)
++{
++	return p[0] == '\n' || (p[0] == '\r' && p[1] == '\n') ? ' ' : p[0];
++}
++
+ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ {
+ 	struct strvec args = STRVEC_INIT;
+@@ -485,6 +491,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	while (p != pend) {
+ 		char *eol = memchr(p, '\n', pend - p);
+ 		const char *deleted = NULL, *mode_change = NULL;
++		char ch = normalize_marker(p);
+ 
+ 		if (!eol)
+ 			eol = pend;
+@@ -532,7 +539,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 			 * Start counting into how many hunks this one can be
+ 			 * split
+ 			 */
+-			marker = *p;
++			marker = ch;
+ 		} else if (hunk == &file_diff->head &&
+ 			   starts_with(p, "new file")) {
+ 			file_diff->added = 1;
+@@ -586,10 +593,10 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 			    (int)(eol - (plain->buf + file_diff->head.start)),
+ 			    plain->buf + file_diff->head.start);
+ 
+-		if ((marker == '-' || marker == '+') && *p == ' ')
++		if ((marker == '-' || marker == '+') && ch == ' ')
+ 			hunk->splittable_into++;
+-		if (marker && *p != '\\')
+-			marker = *p;
++		if (marker && ch != '\\')
++			marker = ch;
+ 
+ 		p = eol == pend ? pend : eol + 1;
+ 		hunk->end = p - plain->buf;
+@@ -813,7 +820,7 @@ static int merge_hunks(struct add_p_state *s, struct file_diff *file_diff,
+ 					    (int)(hunk->end - hunk->start),
+ 					    plain + hunk->start);
+ 
+-				if (plain[overlap_end] != ' ')
++				if (normalize_marker(&plain[overlap_end]) != ' ')
+ 					return error(_("expected context line "
+ 						       "#%d in\n%.*s"),
+ 						     (int)(j + 1),
+@@ -953,7 +960,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
+ 	context_line_count = 0;
+ 
+ 	while (splittable_into > 1) {
+-		ch = s->plain.buf[current];
++		ch = normalize_marker(&s->plain.buf[current]);
+ 
+ 		if (!ch)
+ 			BUG("buffer overrun while splitting hunks");
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 5d78868ac16..9a48933cecf 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -1164,4 +1164,23 @@ test_expect_success 'reset -p with unmerged files' '
+ 	test_must_be_empty staged
+ '
+ 
++test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
++	test_config diff.suppressBlankEmpty true &&
++	write_script fake-editor.sh <<-\EOF &&
++	tr F G <"$1" >"$1.tmp" &&
++	mv "$1.tmp" "$1"
++	EOF
++
++	test_write_lines a b "" c d  "" e f "" >file &&
++	git add file &&
++	test_write_lines A b "" c D  "" e F "" >file &&
++	(
++		test_set_editor "$(pwd)/fake-editor.sh" &&
++		test_write_lines s n y e q | git add -p file
++	) &&
++	git cat-file blob :file >actual &&
++	test_write_lines a b "" c D "" e G "" >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
+
