@@ -1,56 +1,56 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4409FC132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2764DC133
 	for <git@vger.kernel.org>; Sat, 20 Jul 2024 03:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721447036; cv=none; b=FO7kjk+1+NjkaCIU5e0bH/DATKQs/kl5rM4LVUYabQQxNvh0D9GK3mB5Ic7CMU2fHrzq999Q0P1uPivng73jh1ADLk3I/L6uaSX8TtdPhRDB2d5PCAr5z47xcP0FBnd3Bez+QCrH5Uof+cUysx8TXhAwcxpf9+GtcWRtJaDctNg=
+	t=1721447037; cv=none; b=hyHk57v2H/a3YQ7EX9/4J2gC9HhFeHTT17V/VugnszMaBVsbkLhVpzxM/6drmL/TkCXr4vCfkZe9osFLPI58mE0Tv6SOq/Mnz805szSzyvsLHr561Nws6k6uX/dFiKaHbp6HqhF0KkSwVu6VhINRP/nTJcQvh6vXDHYdTb/Ch2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721447036; c=relaxed/simple;
-	bh=68J8rWZytDNPK2UF0u450YUZZpabXDXIT8zbqD/y5nE=;
+	s=arc-20240116; t=1721447037; c=relaxed/simple;
+	bh=HWeG/ivjt1g5ClaOquTXlrAteavQUo29TeRLt8oSP4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FStV1OEC+oX/kqKTEhjIfJ3+UhPn3wz1Nkvuwyb6mwnNmqZ0sYvqqL7qBvyk9+ZF45vnBwfbMPd9CR9TpHS3L0CNQYjJdgr8awLRiS7GKLr3uLz8Jj8Xvj+/WE96tQkIvJFIElSlms78UPD1joYAjC7N0n31Icoyza57N81t5tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S4xQ3Gh2; arc=none smtp.client-ip=209.85.222.178
+	 MIME-Version; b=WE7ZGCD4I0QQA/bGficsCRzo/7U9nkIpr/NNeGv+Fsr5dq4PXp3UwAk/RTQByUZgOd+gIJkjiDMvHWk4wVJXtH/ulee/898AFMfnrnwDHTSht8sdfnR0cWxzZa+72NvwgotMHNUHHJZkptN4q4DVKUoXhUvy16Fkz80lxZrDHeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fKkKfZji; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S4xQ3Gh2"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-79f323f084eso135294385a.3
-        for <git@vger.kernel.org>; Fri, 19 Jul 2024 20:43:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKkKfZji"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-79ef72bb8c8so101297385a.2
+        for <git@vger.kernel.org>; Fri, 19 Jul 2024 20:43:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721447034; x=1722051834; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721447035; x=1722051835; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MJvl9xkzpCuXEpujzmUrficdZxEe3PBklsEQh6bXZKE=;
-        b=S4xQ3Gh2FExdgy7YnC1biSNfyaX7sLWj/CDSNmDhiIa4sgzGKG+mpDi+7fmOEGgIte
-         +L8XeKebeo8TonYYd7y2gAEhfhxk8ieUVoCiC6OPvb6aUEHT7Fky0JS3FOMTJOHJmo+L
-         NSHIxHnNUFQS3m0lYvFR/B68/NoKs8MsulpIc5cs6tjiOSA5QxI6UgsRGNmkE00buqQD
-         QGK2FipRFacY5ymeD8a6X/0ijtKV2/Hdfw5cy38sj00qSc2D54qoLUxsQHfTtxOc7wUD
-         F179Rto6V+L7ijNXY7ApjPjno1UT+DYJ7IRHnE40PwMeqW+Vymp+B8Aze5Fa1HPMa3WK
-         kLsQ==
+        bh=zXJpSg21NiWZjerNEeO54cx2aELRqlPQgLqFicUJJKQ=;
+        b=fKkKfZji6o522Rd1Pm0+/IS81Ex6egKdn7itoV2UWdqnPayqvh23BJqcGAOSvw2uL4
+         18GSxIS+2UFoTKNSRfYcZmrL5Wo6ALrrJ2P9DK251nBhjgCRK9vBofofJDr/qV6pmJGR
+         Hw/omeL+XwJLhBDYTihXMYI83yhZ9pJ5IAU+JKQm1Jvgzh4ReKH9y6Hc0Y9W+W3SSxio
+         kCKPv/M+v6KMJd07mhEThLFi6CAH9tEx5mq/SV5vyh830pc0Ox7gdaQIXl6luanfKGBl
+         T3pKcoRpR37cSOUsiRR4FehXVXWdwtf9oO0925QBq40ckmY6bqFDMPsf7Uum4blwbQLB
+         Lggg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721447034; x=1722051834;
+        d=1e100.net; s=20230601; t=1721447035; x=1722051835;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MJvl9xkzpCuXEpujzmUrficdZxEe3PBklsEQh6bXZKE=;
-        b=MLXL/QvuUbY4ngnWk5Oufll4lT7LwGJsFwhife9rCdjwQBKmvqNgiuHfBNnUEYbwwB
-         M4xwGozNVNcofpMZcGZUJMaFaUHUkX6u5UHtwTB4taPTAD7yiqIPXVOgaWkuLDbP8qfp
-         CW522cPI2MDwKSreaWhVKcleNC51tRsKuxrFS0dggx1yfwhI1/o4/rLNRffmnHbwkXwt
-         /zRBCYV996xbaqEtpL3ysWHcoiYo65xMl8Mkq3hH1ExVlU7+XnuhWkTv83VMbtoC8fFR
-         9DH7h9DYjILJPmjT6/Y9CoiGrV76nlSlq9RhuHJN8ZNqHnh14WuIzRgvoU/nxiD4ksaf
-         VnNw==
-X-Gm-Message-State: AOJu0Yy+XeWWWRE488qGX3i23htlPHN5pNzjlPVKz3L5ll7x0DLXG4Ag
-	Vz1xxwByWcyHAtmqTeuGMvSCiZLxDo9JrGCyWQVKAOxhEwg3T4z1tW3dM+2OZYE=
-X-Google-Smtp-Source: AGHT+IG/+/ISRO3yy5FDyVzJMsKFlhdDgK2UIueLgLwaIVJAmWeZZhoFJi7f00Qob9g2h8MhxNz9nA==
-X-Received: by 2002:a05:620a:2889:b0:79f:41b:aaa8 with SMTP id af79cd13be357-7a1a133d645mr204794185a.29.1721447033758;
-        Fri, 19 Jul 2024 20:43:53 -0700 (PDT)
+        bh=zXJpSg21NiWZjerNEeO54cx2aELRqlPQgLqFicUJJKQ=;
+        b=qU2NYTy8AeAuB8uUPtXLHUNbbC5LRn7e4fFYCJIYT4tmVsD/aM7dlg2J6Irzuu1teM
+         QRpg+v4Iu7YIpMIwZvdqh8Q25Cnsd7N6qd5MEuxn9qC+86h0xCTVKa5Qrjzt9edUn2bg
+         GuLqh3L+1YwhKRvyAtplPeJxFNQfmdSjEFeWD/4tdmC8QN1eLiOOnXP0M5IgDSf3KNC6
+         CCTjW5fBEnhTcbqtYqSgjcVJHwD99fS0fxfW95onn/5hVwVQEoPsPkgU0aET95KCUyUE
+         YwS9BczhFlHgMMgUlB1x73yf7st82AqHt7nlI0yD9iVgWDM+UrDkQbZiLxQaU6Kb/xNQ
+         B8uQ==
+X-Gm-Message-State: AOJu0Yz/Hf8TKzAW48MYEP6yjzdsnefsNt7ZCk6VPRIwetvaucHol3x1
+	Bo14cM4P7O8xG2cUM4/yHJwV4uhxO+ktouvO9jM+9vYHVZDSShjii1Wa94+7LZM=
+X-Google-Smtp-Source: AGHT+IEozT0sDFtu+uemyHJL8o1apgQ9P953yY2Tdm9PA9W4GFLKB2+tO3HaIvrMJcIVvy+ZmlB5wg==
+X-Received: by 2002:a05:620a:4249:b0:79e:fd16:6b74 with SMTP id af79cd13be357-7a1a13bea4fmr259572485a.57.1721447034802;
+        Fri, 19 Jul 2024 20:43:54 -0700 (PDT)
 Received: from localhost.localdomain (bras-base-unvlon5586w-grc-14-76-71-94-205.dsl.bell.ca. [76.71.94.205])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a199073b49sm150487385a.100.2024.07.19.20.43.52
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a199073b49sm150487385a.100.2024.07.19.20.43.53
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 19 Jul 2024 20:43:53 -0700 (PDT)
+        Fri, 19 Jul 2024 20:43:54 -0700 (PDT)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -60,9 +60,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v2 1/6] fetch-pack: refactor packet writing
-Date: Fri, 19 Jul 2024 23:43:32 -0400
-Message-ID: <20240720034337.57125-2-eric.peijian@gmail.com>
+Subject: [PATCH v2 2/6] fetch-pack: move fetch initialization
+Date: Fri, 19 Jul 2024 23:43:33 -0400
+Message-ID: <20240720034337.57125-3-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240720034337.57125-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -73,21 +73,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Calvin Wan <calvinwan@google.com>
 
-A subsequent patch needs to write capabilities for another command.
-Refactor write_fetch_command_and_capabilities() to be a more general
-purpose function write_command_and_capabilities(), so that it can be
-used by both fetch and future command.
+There are some variables initialized at the start of the
+do_fetch_pack_v2() state machine. Currently, they are initialized
+in FETCH_CHECK_LOCAL, which is the initial state set at the beginning
+of the function.
 
-Here "command" means the "operations" supported by Git’s wire protocol
-https://git-scm.com/docs/protocol-v2. An example would be a
-git's subcommand, such as git-fetch(1); or an operation supported by
-the server side such as "object-info" implemented in "a2ba162cda
-(object-info: support for retrieving object info, 2021-04-20)".
+However, a subsequent patch will allow for another initial state,
+while still requiring these initialized variables.
+Move the initialization to be before the state machine,
+so that they are set regardless of the initial state.
+
+Note that there is no change in behavior, because we're moving code
+from the beginning of the first state to just before the execution of
+the state machine.
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
@@ -98,45 +100,34 @@ Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 732511604b..9c8cda0f9e 100644
+index 9c8cda0f9e..a605b9a499 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -1312,13 +1312,13 @@ static int add_haves(struct fetch_negotiator *negotiator,
- 	return haves_added;
- }
+@@ -1675,18 +1675,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		reader.me = "fetch-pack";
+ 	}
  
--static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
--						 const struct string_list *server_options)
-+static void write_command_and_capabilities(struct strbuf *req_buf,
-+						 const struct string_list *server_options, const char* command)
- {
- 	const char *hash_name;
++	/* v2 supports these by default */
++	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
++	use_sideband = 2;
++	if (args->depth > 0 || args->deepen_since || args->deepen_not)
++		args->deepen = 1;
++
+ 	while (state != FETCH_DONE) {
+ 		switch (state) {
+ 		case FETCH_CHECK_LOCAL:
+ 			sort_ref_list(&ref, ref_compare_name);
+ 			QSORT(sought, nr_sought, cmp_ref_by_name);
  
--	ensure_server_supports_v2("fetch");
--	packet_buf_write(req_buf, "command=fetch");
-+	ensure_server_supports_v2(command);
-+	packet_buf_write(req_buf, "command=%s", command);
- 	if (server_supports_v2("agent"))
- 		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
- 	if (advertise_sid && server_supports_v2("session-id"))
-@@ -1354,7 +1354,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	int done_sent = 0;
- 	struct strbuf req_buf = STRBUF_INIT;
- 
--	write_fetch_command_and_capabilities(&req_buf, args->server_options);
-+	write_command_and_capabilities(&req_buf, args->server_options, "fetch");
- 
- 	if (args->use_thin_pack)
- 		packet_buf_write(&req_buf, "thin-pack");
-@@ -2172,7 +2172,7 @@ void negotiate_using_fetch(const struct oid_array *negotiation_tips,
- 					   the_repository, "%d",
- 					   negotiation_round);
- 		strbuf_reset(&req_buf);
--		write_fetch_command_and_capabilities(&req_buf, server_options);
-+		write_command_and_capabilities(&req_buf, server_options, "fetch");
- 
- 		packet_buf_write(&req_buf, "wait-for-done");
- 
+-			/* v2 supports these by default */
+-			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
+-			use_sideband = 2;
+-			if (args->depth > 0 || args->deepen_since || args->deepen_not)
+-				args->deepen = 1;
+-
+ 			/* Filter 'ref' by 'sought' and those that aren't local */
+ 			mark_complete_and_common_ref(negotiator, args, &ref);
+ 			filter_refs(args, &ref, sought, nr_sought);
 -- 
 2.45.2
 
