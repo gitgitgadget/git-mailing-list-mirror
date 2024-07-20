@@ -1,256 +1,148 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D58D143733
-	for <git@vger.kernel.org>; Sat, 20 Jul 2024 22:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4034322E
+	for <git@vger.kernel.org>; Sat, 20 Jul 2024 22:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721513377; cv=none; b=Gyzf5sfF5Ej2H44O0ne0z9Fy8nEDu7yj8CXNNIXUpvDpSbRlt+GeGXftTu3G2HXflnO5pto0uQIPULxghoSycpMZn9pJxLIRn9EsKZGQUk2PGA+vUfG/jpaBLWK/MdP41VZmEUSJ/8KVDBElNPVlsqDRWuZhSkIepIxClp8Mje4=
+	t=1721514590; cv=none; b=J4AxsLLF0aZgZMAShPlFlbBqxE+wqbWLP6ZqgaA99AOboW9XW3UCCYwSFaATu8gWEqcoYIgLJPz9DC/VDpwWt8reocTMGXepQsmhATJkKFlWiU0Lkqsq5rh7WbnwLaUcyBPfqXrWtTsMCQrKxgs58PxhqFUXi/Wn+r+djoWjcLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721513377; c=relaxed/simple;
-	bh=ow1TZ4NK1632aAlwLfOaf3nyJJjw558ZRnxIHPkE9IQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jF9DP5ICSAENPc5E6vwpSfsazMqn+OORmuD1j75egzaWUnXCv9Q83+tvBv3+O6KqusrLo7FJgs3ckv/SbILvWnuO/sWYmIhkNZpaWcZz6wW+Bsn28eeSlFqZnxwzw82llZyjeaYP86a+S3UaFKAjltgBEAHS88H9WESV8LCLD18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MuCR+cP/; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721514590; c=relaxed/simple;
+	bh=ku2a9XdAOGGE4veWXJ5cUZRco95xrxks9Pv0zp6gnFo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cBIisxmFr3FPS35nP+yTcbCSNVs1UBROLZosUJlGNGakrFC9fRXC1HRKJMXEhMdNoDnBM9RRyUijfWxFwqVpyT8/GWN2jgUWWBBeEv1JaZtwlj0AnrlKllOPiR19D727ITNjtfd4X1VmP2+FQaBQZNl8PCMOS8NlSeCIVZxJWhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VespZ7x6; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MuCR+cP/"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 237C926908;
-	Sat, 20 Jul 2024 18:09:29 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=ow1TZ4NK1632aAlwLfOaf3nyJ
-	Jjw558ZRnxIHPkE9IQ=; b=MuCR+cP/ZF+ovoZykXfKQ6EQOFVvzNGQ5gDLDVZfP
-	Vs5kDQrD5AsebyPYQpXA9a/QOnPy40kQa62TQh6Xd0dBTkZu2ItdEosNRNCJ4AYh
-	0lWQLjxcpV5JsjQprxpvf46eOrquArLb1e+e4/IDak2CN5zuyH2zCftp0AXSFDve
-	lM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C4CE26907;
-	Sat, 20 Jul 2024 18:09:29 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 92B2926904;
-	Sat, 20 Jul 2024 18:09:25 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 4/2] setup: cache normalized safe.directory configuration
-Date: Sat, 20 Jul 2024 15:09:15 -0700
-Message-ID: <20240720220915.2933266-5-gitster@pobox.com>
-X-Mailer: git-send-email 2.46.0-rc1-48-g0900f1888e
-In-Reply-To: <20240720220915.2933266-1-gitster@pobox.com>
-References: <20240720220915.2933266-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VespZ7x6"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so24608095e9.2
+        for <git@vger.kernel.org>; Sat, 20 Jul 2024 15:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721514587; x=1722119387; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0ZVfe7t0ewxvsgWy+xtQxuUk0YND9wIAEoIL3l6GY/s=;
+        b=VespZ7x6xJGLnRMi1ZBGQbm3IxHP3d9SfRtzfttUUS3Ux42tRFrFrqCOl5W3s0enML
+         AGFR+K7+trxaPOnQDvEhQ+kxczF666ZcFfZSjXx+RPTqlBkx5KhHVEZiRxTlc6PSuB0G
+         q6XhRsP42NgRfyqG/DdGFRIfjOl2hzQd8Q5vVIZ+DXBlv4EdtWpDQ+kLte0G+EWfy5iY
+         kb+uLcljSr9ns2/w7oEt7RsNWsUkpGM35qMGVQw7nlFSDpANhgbjQ/p1QDlE8b28OweS
+         Y5D2yBZx8XKj7bKeC9s1p0LmdRRUgVnN1w4C7m7hAYsYxo0pPzB2FFdh0500OFkXkANV
+         j9Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721514587; x=1722119387;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0ZVfe7t0ewxvsgWy+xtQxuUk0YND9wIAEoIL3l6GY/s=;
+        b=kDVlIRB8jd2u5+GmCvUnbxgnYrPQOhQDLc0A4QxrocWBaX4/E0ko9HXKninsZYYa7G
+         rtlw9o4Ck74NpZys8CwCaDPgAJmIRYMNcshM4XuXCVHDVUXI0rF3NiidqPxpZWuXrz4V
+         frowO6sU6/Wr64y8+hqZs9+d/0q7VPulvGzMl6orHbsqPMjfn7XlN3Ax5MIWMZrXLXOn
+         W7cdBsb9t7a8+KeZuYbF9WlgfuJL2vLe4XdqQjOBqJdKHueX/zViSg+MPs7mqsDtuz/5
+         mx99mjZlFrwg9y56Rs8un5+W61ccU4PdU/3JZSY+NH/SfXQNPG0qHLt6bsWwn4/2He5B
+         M9JA==
+X-Gm-Message-State: AOJu0YzcFKYyXYSJiCrk9tig78pakd3jw4jcZAkLYtEbJa8rjeavhh71
+	lgz30MLyZkUGPdn94PjdoM6HmW5eH1cpy5UBYmtepTT+7u26CNjt
+X-Google-Smtp-Source: AGHT+IF9ifmsm5eOnl42fCOHEgWsfpEA11o6aZHl+3uXB77MzK2qku5KuaJnacj7T5vAqh9ulRhemA==
+X-Received: by 2002:a5d:64ea:0:b0:366:f04d:676f with SMTP id ffacd0b85a97d-369bae3a43emr2197511f8f.12.1721514586582;
+        Sat, 20 Jul 2024 15:29:46 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787cf156sm4706612f8f.70.2024.07.20.15.29.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 20 Jul 2024 15:29:46 -0700 (PDT)
+Message-ID: <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
+Date: Sun, 21 Jul 2024 00:29:44 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- B9D79490-46E4-11EF-9128-92D9AF168FA5-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
+ Jeff King <peff@peff.net>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+ <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+ <88f9256e-04ba-4799-8048-406863054106@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <88f9256e-04ba-4799-8048-406863054106@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-[Do not use. For illustration purposes only]
+On Wed, Jul 17, 2024 at 08:39:12PM +0100, phillip.wood123@gmail.com wrote:
 
-The current check performed in ensure_valid_ownership() reads each
-safe.directory configuration item and normalizes it before checking
-against the path to the repository.
+> On 17/07/2024 18:20, Rubén Justo wrote:
+> > Squashing this fixes the test:
+> > 
+> > --->8---
+> > 
+> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> > index c60589cb94..bb360c92a0 100755
+> > --- a/t/t3701-add-interactive.sh
+> > +++ b/t/t3701-add-interactive.sh
+> > @@ -616,7 +616,12 @@ test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
+> >   	test_when_finished "rm -f huge_file; git reset" &&
+> >   	printf "\n%2500000s" Y >huge_file &&
+> >   	git add -N huge_file &&
+> > -	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
+> > +	test_write_lines P q |
+> > +	(
+> > +		GIT_PAGER="head -n 1" &&
+> > +		export GIT_PAGER &&
+> > +		test_terminal git add -p >actual
+> > +	)
+> 
+> That's surprising, why does running git in a sub-shell stop it from
+> segfaulting?
 
-This is OK as long as we are checking just a single directory, like
-in die_upon_dubious_ownership() and setup_git_directory_gently_1().
-But let's pretend that the latter calls ensure_valid_ownership()
-many times in the loop, and demonstrate how we would avoid having to
-normalize the same safe.directory configuration item over and over.
+The fix isn't the sub-shell;  it's "export GIT_PAGER".
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- setup.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 67 insertions(+), 12 deletions(-)
+> 
+> > ---8<---
+> > 
+> > However, this error has exposed a problem: calling `wait_for_pager` if
+> > `setup_pager` hasn't worked is an issue that needs to be addressed in this
+> > series: `setup_pager` should return a result.  I was planning to do that
+> > in a future series, for the other commented command: `|[cmd]`.
+> 
+> What was causing setup pager to fail in this test?
 
-diff --git a/setup.c b/setup.c
-index 29e23a905c..75bcce0368 100644
---- a/setup.c
-+++ b/setup.c
-@@ -20,6 +20,7 @@
- #include "trace2.h"
- #include "worktree.h"
- #include "exec-cmd.h"
-+#include "strvec.h"
-=20
- static int inside_git_dir =3D -1;
- static int inside_work_tree =3D -1;
-@@ -1217,6 +1218,7 @@ static int canonicalize_ceiling_entry(struct string=
-_list_item *item,
- struct safe_directory_data {
- 	char *path;
- 	int is_safe;
-+	int prenormalized;
- };
-=20
- static int safe_directory_cb(const char *key, const char *value,
-@@ -1236,14 +1238,20 @@ static int safe_directory_cb(const char *key, con=
-st char *value,
-=20
- 		if (!git_config_pathname(&allowed, key, value)) {
- 			const char *check =3D allowed ? allowed : value;
--			char *to_free =3D real_pathdup(check, 0);
--
--			if (!to_free) {
--				warning(_("safe.directory '%s' cannot be normalized"),
--					check);
--				goto next;
--			} else {
-+			char *to_free =3D NULL;
-+
-+			if (!data->prenormalized) {
-+				to_free =3D real_pathdup(check, 0);
-+				if (!to_free) {
-+					warning(_("safe.directory '%s' "
-+						  "cannot be normalized"),
-+						check);
-+					goto next;
-+				}
- 				check =3D to_free;
-+			} else {
-+				to_free =3D NULL;
-+				check =3D value;
- 			}
-=20
- 			if (ends_with(check, "/*")) {
-@@ -1263,6 +1271,39 @@ static int safe_directory_cb(const char *key, cons=
-t char *value,
- 	return 0;
- }
-=20
-+static int prenorm_cb(const char *key, const char *value,
-+		      const struct config_context *ctx UNUSED, void *v_)
-+{
-+	struct strvec *v =3D v_;
-+
-+	if (strcmp(key, "safe.directory"))
-+		return 0;
-+	if (!value || !*value) {
-+		strvec_clear(v);
-+	} else if (!strcmp(value, "*")) {
-+		strvec_push(v, value);
-+	} else {
-+		char *allowed =3D NULL;
-+		if (!git_config_pathname(&allowed, key, value)) {
-+			const char *ccheck =3D allowed ? allowed : value;
-+			char *check =3D real_pathdup(ccheck, 0);
-+			if (check)
-+				strvec_push_nodup(v, check);
-+			else
-+				warning(_("safe.directory '%s' cannot be normalized"),
-+					ccheck);
-+		}
-+		if (allowed !=3D value)
-+			free(allowed);
-+	}
-+	return 0;
-+}
-+
-+static void prenormalize_safe_directory(struct strvec *v)
-+{
-+	git_protected_config(prenorm_cb, v);
-+}
-+
- /*
-  * Check if a repository is safe, by verifying the ownership of the
-  * worktree (if any), the git directory, and the gitfile (if any).
-@@ -1273,6 +1314,7 @@ static int safe_directory_cb(const char *key, const=
- char *value,
-  */
- static int ensure_valid_ownership(const char *gitfile,
- 				  const char *worktree, const char *gitdir,
-+				  struct strvec *safe_cache,
- 				  struct strbuf *report)
- {
- 	struct safe_directory_data data =3D { 0 };
-@@ -1297,8 +1339,15 @@ static int ensure_valid_ownership(const char *gitf=
-ile,
- 	 * constant regardless of what failed above. data.is_safe should be
- 	 * initialized to false, and might be changed by the callback.
- 	 */
--	git_protected_config(safe_directory_cb, &data);
--
-+	if (!safe_cache) {
-+		git_protected_config(safe_directory_cb, &data);
-+	} else {
-+		data.prenormalized =3D 1;
-+		for (size_t i =3D 0; i < safe_cache->nr; i++) {
-+			safe_directory_cb("safe.directory", safe_cache->v[i],
-+					  NULL, &data);
-+		}
-+	}
- 	free(data.path);
- 	return data.is_safe;
- }
-@@ -1309,7 +1358,7 @@ void die_upon_dubious_ownership(const char *gitfile=
-, const char *worktree,
- 	struct strbuf report =3D STRBUF_INIT, quoted =3D STRBUF_INIT;
- 	const char *path;
-=20
--	if (ensure_valid_ownership(gitfile, worktree, gitdir, &report))
-+	if (ensure_valid_ownership(gitfile, worktree, gitdir, NULL, &report))
- 		return;
-=20
- 	strbuf_complete(&report, '\n');
-@@ -1416,6 +1465,7 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 	int ceil_offset =3D -1, min_offset =3D offset_1st_component(dir->buf);
- 	dev_t current_device =3D 0;
- 	int one_filesystem =3D 1;
-+	struct strvec safe_cache =3D STRVEC_INIT;
- 	enum discovery_result result;
-=20
- 	/*
-@@ -1463,6 +1513,8 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 	one_filesystem =3D !git_env_bool("GIT_DISCOVERY_ACROSS_FILESYSTEM", 0);
- 	if (one_filesystem)
- 		current_device =3D get_device_or_die(dir->buf, NULL, 0);
-+
-+	prenormalize_safe_directory(&safe_cache);
- 	for (;;) {
- 		int offset =3D dir->len, error_code =3D 0;
- 		char *gitdir_path =3D NULL;
-@@ -1499,7 +1551,8 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 				gitdir_path ? gitdir_path : gitdirenv;
-=20
- 			if (ensure_valid_ownership(gitfile, dir->buf,
--						   gitdir_candidate, report)) {
-+						   gitdir_candidate,
-+						   &safe_cache, report)) {
- 				strbuf_addstr(gitdir, gitdirenv);
- 				result =3D GIT_DIR_DISCOVERED;
- 			} else
-@@ -1525,7 +1578,8 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 			if (get_allowed_bare_repo() =3D=3D ALLOWED_BARE_REPO_EXPLICIT &&
- 			    !is_implicit_bare_repo(dir->buf))
- 				return GIT_DIR_DISALLOWED_BARE;
--			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report)) {
-+			if (!ensure_valid_ownership(NULL, NULL, dir->buf,
-+						    &safe_cache, report)) {
- 				result =3D GIT_DIR_INVALID_OWNERSHIP;
- 			} else {
- 				strbuf_addstr(gitdir, ".");
-@@ -1555,6 +1609,7 @@ static enum discovery_result setup_git_directory_ge=
-ntly_1(struct strbuf *dir,
- 	}
-=20
- cleanup_and_return:
-+	strvec_clear(&safe_cache);
- 	return result;
- }
-=20
---=20
-2.46.0-rc1-48-g0900f1888e
+Because GIT_PAGER is not being set correctly in the test, "git add -p"
+can use the values defined in the environment where the test is running.
+Usually PAGER is empty or contains "less", but in the environment where
+the fault occurs, it happens to be: "PAGER=cat". 
 
+Since we have an optimization to avoid forking if the pager is "cat",
+courtesy of caef71a535 (Do not fork PAGER=cat, 2006-04-16), then we fail
+in `wait_for_pager()` because we are calling `finish_command()` with an
+uninitialized `pager_process`.
+
+That's why I thought, aligned with what we are already doing in
+`wait_for_pager_at_exit()`, that this is a sensible approach: 
+
+> > I'm wondering if the best way to proceed here is to revert to:
+> > 
+> > diff --git a/pager.c b/pager.c
+> > index 5f0c1e9cce..5586e751dc 100644
+> > --- a/pager.c
+> > +++ b/pager.c
+> > @@ -46,6 +46,8 @@ static void wait_for_pager_atexit(void)
+> > 
+> >   void wait_for_pager(void)
+> >   {
+> > +	if (old_fd1 == -1)
+> > +		return;
+> >   	finish_pager();
+> >   	sigchain_pop_common();
+> >   	unsetenv("GIT_PAGER_IN_USE");
+> >
+> > This was a change already commented here:
+> > 
+> > https://lore.kernel.org/git/3f085795-79bd-4a56-9df8-659e32179925@gmail.com/
