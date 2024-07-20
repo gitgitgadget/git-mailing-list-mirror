@@ -1,135 +1,114 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5810D12EBE1
-	for <git@vger.kernel.org>; Sat, 20 Jul 2024 17:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8A612FF70
+	for <git@vger.kernel.org>; Sat, 20 Jul 2024 17:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721495677; cv=none; b=Kh7BatXiXPh0DXzchyWniEqxqpYr0JaSaCKSyr9c0Jcd5lHC7DCI0baQppYJ4QMA8fTu7g4qUixzF+7LdK0fLEC/VHWnLscJ+gEFOdSAGZDROSGAABMgPTsjIAm0LwzULxQPR8fIcJ/+2OtaXJa4mSz9UzjQFSnzlI2MrzfgMg0=
+	t=1721496858; cv=none; b=Giu2D+MxKuCavsSudcMKjtyy2D+BFB+S+pQp5S37dkzV6HxCOYU+GtFDreaaT1PkoDxvRal9rofWoLc1IIChghICrIpfKE0PJfaHxf9FRNH+i2VZj+L5HbAKSj5+1Nx5LubCSicMdI0vNRpvcE1xh+Jai070m59vIzuloY7Am3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721495677; c=relaxed/simple;
-	bh=8tYLqRU2hk1TlE4AmqqKDQZIeEteH0hxCdR4CHDVAJg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=By5oOZ9PTFzqKtSJLlivEt9AV1qGftD2lqUcs+RjnVoS/GrxG79mIWl5VUZWOtwYJ+VHjPL637tyhSbWsHwtuRl8Rk7vXNy7gJKBAJAr6tJWFPktvbcxCadQSpKAZXLCemEy9jlbQTeScdwDA8TbTKvoxqkhGHXoIeef1pKAvpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=GINJtfSd; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1721496858; c=relaxed/simple;
+	bh=RIoBuo1eMFLS07PfAEfibAkUdpAgpzsVQXUYnI35ZF4=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=nZj/dpkPr4/Bj7dyZ7V0SQpLyXFPq63ApFPbxn3PMtIPlXOAhEUGqAOVK5miah9UGAFy57wABr/4UKIAergaMnHcyDyaUA8xtgfnP7cgpCRz6biOl91ZSiqUYiv+uNV8AbaJu7h8xXpyNvvlcX1icV4w1WOaCVThrwS+0S+ByIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XYAOpbyo; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="GINJtfSd"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5FDF2CD49C
-	for <git@vger.kernel.org>; Sat, 20 Jul 2024 19:14:17 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:c2ce:49ae:b84a:b1f])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 1D18BB0053E;
-	Sat, 20 Jul 2024 19:14:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1721495650;
-	bh=8tYLqRU2hk1TlE4AmqqKDQZIeEteH0hxCdR4CHDVAJg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GINJtfSdDzRkF7zOLteX4yxCL6Hl6DJpJnacVLvxn51L/bUbQoiyxQJBlYTJQoz6X
-	 zIuuo96TtYoG6dWSyCbjeCR+j8DMx//lEqu/F9XL1H31bqkBZrvaHmMbLUjM2qqdp+
-	 7JKq9nP09HcSw3pBRx7GyyCpQJgZ5tWGfTO41jb2xiN98cNArVcyj1EHRedBcpOZ6O
-	 Aq8WOe644bVZqEFL1+6/iqFhcywk4TfSdcS1VuKpgOL4AHVcajXYg8m7wMhzxUSNpG
-	 EbVVl9hskEINL/65CXyFpLxNSalqZIMgPUtHy+tCNNfUGNDThgS59gFM3TXCqODQu9
-	 8McnxU1gPDFBQ==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: Cory Kramer <corykramer@google.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: Documentation Bug
-Date: Sat, 20 Jul 2024 19:14:07 +0200
-Message-ID: <22362805.EfDdHjke4D@cayenne>
-In-Reply-To: <xmqqle1xjm1s.fsf@gitster.g>
-References:
- <CAJ7O7F7Zxd-FUbdJh-zxr1FOrUmZQuwx4CHLbQ-ppbkSN79Z-Q@mail.gmail.com>
- <xmqqle1xjm1s.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XYAOpbyo"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4266dc7591fso19962375e9.0
+        for <git@vger.kernel.org>; Sat, 20 Jul 2024 10:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721496855; x=1722101655; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wYyzzKDTOADggQiYzayKZwt2Pel6N9agcql1kNgMr2w=;
+        b=XYAOpbyolpvhl/xdNFdIdShQcex+OQRgKdDlSil7spLrZOHVE8u+GbTXzBassfkJ9l
+         ZtMaIBlP/e/9LPLwUPr5r0E16pqFLXfxfWMd4BrPYxkAsuqQhSFSkTtkoo69Bclgqe0q
+         xIcxY7lTjGHKOvgWvpk6yPifrtWV36HUgGx3xmL+bvLVpKAVJmdFOWaxx+RSQhqWypD/
+         uTXAWnxofvE1OTw69718aulBL+lHQKIIdrWlfuqy3IXcXucISq96WJ7JnHXc5jn8QIBz
+         n1cMwmkbCLVFp0VygV2VneytC3JRgSCu/SMfuDQhh6bVlYTC5f4tPLI/cFCrH7iuJLY0
+         dZSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721496855; x=1722101655;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wYyzzKDTOADggQiYzayKZwt2Pel6N9agcql1kNgMr2w=;
+        b=vzZ/B26zn3hADK2OW/NVGFUldCiMOAHksnWroXycJJagBOHsNL6stdTt6l/gxejQlK
+         DNO71Y14BI83hS6dW1TvT7KtuzRgrLRGDFDnaRVYpB+43Om6SmT0n0DxrkQSI4kQN4Gk
+         dUgXK0/EiQ4IontLt1qwaVGqhuIwnJZ/B+E5XJ36r8nZYINHVAJBEIT9cNzoVD/rZjH5
+         GehYmZ51uQdHqjxn7CfieX0RWLKnyfu1qF1Bdpm8mZGYkOJ9gmeBvHAoss3wpJk6RD/V
+         uHCc0+ySTidT8aC3T6e32rXEyoGAqpaOOvfK2J5nGfvGq2JHrDLcv0n4PPL14sZBiyzL
+         6FfA==
+X-Gm-Message-State: AOJu0YyTnVfx/AdtpMsI6jS4F6mMoKmM/dLjcX6phSX5OvXNKcf68cY4
+	GG1L8woEvjJsDeKF5K9WNLUkmm6b5VC9Vrz9fjfcKmO7Z/jrvKi60d7Klg==
+X-Google-Smtp-Source: AGHT+IHedRKUzA2shnLxlNU8+EyYIRBMjDzeOs8bVSZAaFxJ6JuV7rHoSdgmvr6+ZlIS9Pb/fakUyQ==
+X-Received: by 2002:adf:dd8e:0:b0:368:4b3a:2022 with SMTP id ffacd0b85a97d-3684b3a20fdmr5362869f8f.6.1721496854689;
+        Sat, 20 Jul 2024 10:34:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ed595sm4298266f8f.107.2024.07.20.10.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jul 2024 10:34:14 -0700 (PDT)
+Message-Id: <pull.1765.git.1721496853517.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 20 Jul 2024 17:34:13 +0000
+Subject: [PATCH] doc: git-clone fix discrepancy between asciidoc and
+ asciidoctor
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-On Friday, 19 July 2024 20:04:15 CEST Junio C Hamano wrote:
-> Cory Kramer <corykramer@google.com> writes:
-> 
-> > In the docs for git-clone the brackets become mismatched for any
-> > options that have a [no-] counterpart.
-> > https://git-scm.com/docs/git-clone
-> 
-> Interesting.  The preformatted pages that were directly generated
-> from the sources at https://git.github.io/htmldocs/git-clone.html
-> has no such breakage.
-> 
-> Cory, thanks for reporting.
-> 
-> I think 76880f05 (doc: git-clone: apply new documentation formatting
-> guidelines, 2024-03-29) is where the alleged "breakage" came from.
-> 
-> Comparing it with pages that weren't updated by the topic that ends
-> at 58dd7e4b (Merge branch 'ja/doc-markup-updates', 2024-04-09), like
-> 
->     https://git-scm.com/docs/git-clone
->     https://git-scm.com/docs/git-add
-> 
-> I notice that the latter is rendered with "--[no-]ignore-removal"
-> correctly shown.
-> 
-> Two possible action items are
-> 
->  - Compare the preformatted pages at https://git.github.io/htmldocs/
->    between git-clone and git-add and re-evaluate if the earlier
->    ja/doc-markup-updates topic did to the SYNOPSIS is really what we
->    want (the difference is harder to assess by looking at the pages
->    at https://git-scm.com/docs/).
-> 
->  - Update the machinery that formats our documentation sources and
->    renders at https://git-scm.com/docs/ to grok the mark-up used by
->    ja/doc-markup-updates topic (currently in use for clone, init,
->    and nothing else).
-> 
-> Do anybody remember what transmongering produces the copy shown at
-> git-scm.com from the source?  Is it computed from the preformatted
-> pages, or from the source?
-> 
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Hello,
+Asciidoc.py does not have the concept of generalized roles, whereas
+asciidoctor interprets [foo]`blah` as blah with role foo in the
+synopsis, making in effect foo disappear in the output. Note that
+square brackets not directly followed by an inline markup do not
+define a role, which is why we do not have the issue on other parts of
+the documentation.
 
-This discrepancy is the another instance of asciidoc.py vs. asciidoctor. The 
-toolchain for git uses asciidoc.py, whereas git-scm.com uses asciidoctor to 
-process the source txt files.
+In order to get a consistant result across asciidoctor and
+asciidoc.py, the hack is to use the {empty} entity
+to split the bracket part from the inline format part.
 
-Asciidoc.py does not have the concept of generalized roles, whereas 
-asciidoctor interprets   [foo]`blah` as blah with role foo in the synopsis, 
-making in effect foo disappear in the output. Note that square brackets not 
-directly followed by an inline markup do not define a role, which is why we do 
-not have the issue on other parts of the documentation.
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+    doc: git-clone fix discrepancy between asciidoc and asciidoctor
 
-This behavior of asciidoctor is not consistant (at least in my understanding), 
-as it behaves like asciidoc.py when the same markup is used in a definition 
-list.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1765%2Fjnavila%2Ffix_git_clone_format-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1765/jnavila/fix_git_clone_format-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1765
 
-In order to get a consistant result across asciidoctor and asciidoc.py, the 
-only hack I have found is to use the {empty} entity to split the bracket part 
-from the inline format part. It is ugly, but unfortunately the roles are a 
-wanted feature by technical writers because it adds semantics to the source.
+ Documentation/git-clone.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-The main difference of rendering introduced by my patch is that placeholders 
-and keywords are clearly differentiated. When visualizing with the man command, 
-the reworked pages are following the general style applied to placeholders 
-(which are underlined) and keywords (which are bold).
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 5de18de2ab8..8e925db7e9c 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -13,9 +13,9 @@ SYNOPSIS
+ 	  [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--mirror`]
+ 	  [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--reference` _<repository>_]
+ 	  [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
+-	  [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`]
+-	  [++--recurse-submodules++[++=++__<pathspec>__]] [`--`[`no-`]`shallow-submodules`]
+-	  [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]`reject-shallow`]
++	  [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`] [`--no-tags`]
++	  [++--recurse-submodules++[++=++__<pathspec>__]] [++--++[++no-++]{empty}++shallow-submodules++]
++	  [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
+ 	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
+ 	  [_<directory>_]
+ 
 
-I can shortly submit a small patch to fix this, by introducing the ugly  
-{empty} entities where needed. Despite not being active lately, I still have 
-in project to propose reworked pages for git-add, git-status, git-diff and git-
-commit in a short future.
-
-Best regards,
-
-JN
-
-
-
-
-
-
+base-commit: a7dae3bdc8b516d36f630b12bb01e853a667e0d9
+-- 
+gitgitgadget
