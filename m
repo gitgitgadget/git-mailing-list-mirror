@@ -1,99 +1,141 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017B41E481
-	for <git@vger.kernel.org>; Sat, 20 Jul 2024 22:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C5D2A1D7
+	for <git@vger.kernel.org>; Sat, 20 Jul 2024 23:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721515522; cv=none; b=JlI8AAekH7dl1bg1c21RyAeblSTZmRSa2BXnSTOHubbvNo5q3USzu9cVYTUYByu55blywJuFJWDqknAPwo+OOLi8rX2WtzNGXT2OQdI0rmx5DWxOciO+5JPwd0Mz2CRq1Ids6hpCAt35zM3U6c4GLGIY8DPq7L7HS5aoQfseEOw=
+	t=1721516476; cv=none; b=dj1rNrv4FJSY9kReM2uUxk5gkKGXqf3YLh2JO22MlE9bKeSQkWT3RgyxIIdFXuoF4Q1D3UuUuTacgXPwV36VAjv1wCUOT+CLq8Vh1ZrkLIb/QVeNokERcbX68T3I0jT+hFP6FfQSHhGU6XwwjSZhwIwiKI9R/RtLzfYQHiWWuXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721515522; c=relaxed/simple;
-	bh=Uu3QxC/Hbq+BhHMsrkU8D9FupIlWHTPH2FEsbnNVfLQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tmUFc6rS8wFH2Cb19E5JeS48X9EmffTwWiXyx55YSn++MfYo9XFaomMG+vg78OXEsEE9wQ0a+2HteF0zlMyUz5wsK+W7bwEG1djix/pAyp6S7EGrlZlJE0MehrD9WofrTe0UZuyMy3e1yNWvN0vT0tsZwFPf1C5a/yPze+OqV+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R45TfLPl; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721516476; c=relaxed/simple;
+	bh=7T7ZYwR10uUkUgugInv6KyjVUeUrOjLgvZBzkisdcN0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=i+wzD9jliZkmVYVsabmkvJYf5Qm20OnopJkyjh29Rt8x7bODp7dTGogJ/sV5skf9IoJ1vhfF+gexdw6Zo5Y8XnIWADEU/hucguJ3okS/nL4sseVuj6sad/Qqj30fY1B8TMh8qozbm50BbOkZ7e5OyTBuI9rPALKLbZewwQYJzcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KGo4rPxr; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R45TfLPl"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42793fc0a6dso21466285e9.0
-        for <git@vger.kernel.org>; Sat, 20 Jul 2024 15:45:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721515519; x=1722120319; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fUqN+jLEnTR9xglUIFpMhos6MMvuSv+zGmU39pRobiM=;
-        b=R45TfLPllKrW9s3YSJboZ0fLD9D7G3Nke+vHydBfXvvqJfbyvtlr5otMqp/7KKDZ3X
-         ypDxB0QR9S7BN0dlaJArrEtXZC/ic3+1vDmEnLYZdI/+P3G1hZc0YWyLig3cxFDLwPQU
-         9/SxM7EMBrGxsdMl/8L/mTU3TvbC/CxN6eBBerD2WRXxkqBpO8scbq5UDuWhkpD47WNo
-         GoSoZ6bc54t37g95OO8PTaNtCTyR/Qxog/B6P8q5bV/I1HRlNnJpOE+swQGXSj9TQlHl
-         7iCJ0LOggnXKyqZSL8bTNFUv2dDy6DGhxi6ZXIlPByApAK1PpY0tfY6LJ9JqIVsmi84s
-         Z4+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721515519; x=1722120319;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fUqN+jLEnTR9xglUIFpMhos6MMvuSv+zGmU39pRobiM=;
-        b=ILfCwy4WZhO8M70ASIBEQYCrVCXrG60AyYvDoUhAe5FC1nE5wWKzI27lSJGLXCR12T
-         ZeEzICNrO/xT0IGmI4Ajgb7wzjgGEO4lYJVetEI30kYJIHGYt2ADea3sP6ugFHpvHgdr
-         43Ah5JnAEggmZGBBUzTVGJBO4uiemx0UprPpKYa9woY33w9kLjgR/EKqe94VYOsH6hQW
-         /ua0K3zd89yAKp9gzfqHwOrzMxqkG7oMoC79tLJycs+xcP/rus/kWpuhfZmUmpn2pbGF
-         mDIheX8WABc1YMtM0ofLQPVLrYRueLtBb/zgoR6xuV5x+gSEnPN5xYS7FHzovQpsWLeg
-         Pryw==
-X-Forwarded-Encrypted: i=1; AJvYcCWtodlMEWvwihWQsbCgBdpKbhTQjjsb+XhOS6cJeg3AJL1rmyNes9unKhCnx18eq/pwu7VBuSxjQjfRPjPeOwadWYMS
-X-Gm-Message-State: AOJu0YxnEW4liGvdDP5fF0HhR4V4T9GpgENniFrQrkR5GyRKbiZyuDB2
-	F1N3hIyaoE8+wREJtQ49xfuKEiwQO+UrfA0MEpUcaFCFHdQ1gXt7
-X-Google-Smtp-Source: AGHT+IE471zvH3gTyg+cpBdcQlf7dCVemKOxSxBqSUOtn8ci+8kq3P54Q2nOSe0xWFQZBo8zQvwqXQ==
-X-Received: by 2002:a05:6000:1fa9:b0:366:ee9b:847 with SMTP id ffacd0b85a97d-369bae49e21mr1881734f8f.14.1721515519169;
-        Sat, 20 Jul 2024 15:45:19 -0700 (PDT)
-Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ec979sm4677555f8f.94.2024.07.20.15.45.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Jul 2024 15:45:18 -0700 (PDT)
-Message-ID: <ba1c3bca-177c-4dae-b4c3-1a4deab27d5e@gmail.com>
-Date: Sun, 21 Jul 2024 00:45:17 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KGo4rPxr"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 08DB0278F5;
+	Sat, 20 Jul 2024 19:01:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7T7ZYwR10uUkUgugInv6KyjVUeUrOjLgvZBzki
+	sdcN0=; b=KGo4rPxr36LTcuoV0xyRfoKThbmBJD2VL5QESSpctXpc1WZKKZHMRH
+	oc01hIH5rdDY9/dDNNUZ5XQbTDtMz2QWwifSwPZlrd06l1xhBf2K8pepVmLSJ8me
+	jLkXSi3gI50iQSHyBV/N5Ia+2Z/kmGCQADCYgrkF6asohsJy1hJhM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00AFA278F4;
+	Sat, 20 Jul 2024 19:01:14 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A0A4278F3;
+	Sat, 20 Jul 2024 19:01:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] asciidoctor: fix `synopsis` rendering
+In-Reply-To: <pull.1749.git.git.1721507416683.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Sat, 20 Jul 2024
+	20:30:16 +0000")
+References: <pull.1749.git.git.1721507416683.gitgitgadget@gmail.com>
+Date: Sat, 20 Jul 2024 16:01:12 -0700
+Message-ID: <xmqqsew3hdmv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
- Dragan Simic <dsimic@manjaro.org>, Jeff King <peff@peff.net>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
- <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
- <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
- <f52d5c9c-e96c-430f-a49a-eb2ee6e19d9f@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <f52d5c9c-e96c-430f-a49a-eb2ee6e19d9f@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F6410B8A-46EB-11EF-8296-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Jul 18, 2024 at 10:58:36AM +0100, phillip.wood123@gmail.com wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> > However, this error has exposed a problem: calling `wait_for_pager` if
-> > `setup_pager` hasn't worked is an issue that needs to be addressed in this
-> > series: `setup_pager` should return a result.
-> 
-> It already dies if we cannot execute the pager so maybe we should just die
-> on other errors as well?
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Since 76880f0510c (doc: git-clone: apply new documentation formatting
+> guidelines, 2024-03-29), the synopsis of `git clone`'s manual page is
+> rendered differently than before; Its parent commit did the same for
+> `git init`.
+>
+> The result looks quite nice. When rendered with AsciiDoc, that is. When
+> rendered using AsciiDoctor, the result is quite unpleasant to my eye,
+> reading something like this:
+>
+> 	SYNOPSIS
+>
+> 	 git clone
+> 	  [
+> 	 --template=
+> 	 <template-directory>]
+> 		  [
+> 	 -l
+> 	 ] [
+> 	 -s
+> 	 ] [
+> 	 --no-hardlinks
+> 	 ] [
+> 	 -q
+> 	 ] [
+> 	[... continuing like this ...]
 
-Honestly, I thought 78f0a5d187 (pager: die when paging to non-existing
-command, 2024-06-23) would be sufficient for this series, but I missed
-the optimization mentioned in my previous message.
+Hmph, this may probably depend on the version of asciidoctor, but I
+am getting quite different output.  It looks very similar to what is
+shown at https://git-scm.com/docs/git-clone/2.45.0.
 
-Thinking in the context of "add -p", it might be more sensible not to
-die but simply show an error, so as not to end the user's interactive
-session.  But it could be a change in a future series and thus avoid
-prolonging this one. 
+Even more puzzling, with or without this patch applied, I do not see
+any difference in the rendered output of samples I used, which were
+"clone", which has the changes from 76880f0510c and "add", which
+hasn't been broken by the series.
 
-However, if you can think of any other cases where we should be stricter
-and die, I'm all ears.
+ $ make -C Documentation USE_ASCIIDOCTOR=YesPlease git-{clone,add}.{html,1}
+ $ man -l Documentation/git-clone.1
+ $ lynx Documentation/git-clone.html
+ $ man -l Documentation/git-add.1
+ $ lynx Documentation/git-add.html
+
+The rendered result is bad in the same way with or without this
+patch applied, and "git clone" manual page is simply incorrect by
+mangling a handful of command line options.  A recent bug report in
+the thread that contains
+
+    https://lore.kernel.org/git/xmqqle1xjm1s.fsf@gitster.g/
+
+gives us more details.
+
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 3f2383a12c7..78e407e4bd1 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -202,6 +202,7 @@ ASCIIDOC_DOCBOOK = docbook5
+>  ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
+>  ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
+>  ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+> +ASCIIDOC_EXTRA += -adocinfo=shared
+>  ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+>  DBLATEX_COMMON =
+>  XMLTO_EXTRA += --skip-validation
+> diff --git a/Documentation/docinfo.html b/Documentation/docinfo.html
+> new file mode 100644
+> index 00000000000..fb3560eb92b
+> --- /dev/null
+> +++ b/Documentation/docinfo.html
+> @@ -0,0 +1,5 @@
+> +<style>
+> +pre>code {
+> +   display: inline;
+> +}
+> +</style>
+>
+> base-commit: 76880f0510c6be9f6385f2d43dcfcba4eca9ccbc
