@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34C7443D
-	for <git@vger.kernel.org>; Sun, 21 Jul 2024 06:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9CC443D
+	for <git@vger.kernel.org>; Sun, 21 Jul 2024 06:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721542970; cv=none; b=lMoldUSkPkYRa3ANAdAMs4OzvFl2RNR8YyZ6ZuFoT878QTBM62F+hwgQiQ1lZhOq15I0vJIHmDunVt/WnuL5+IKFeHkaCTOe+TloAOYtlQLlKmVjiwbTKx32hq0PZ6wpCfd1fZCE2szIxrjv1QzrlVyFIRHIGiq7mK2Sxlq8b38=
+	t=1721543058; cv=none; b=lJ/b7cHJFjeNk58sr5/Qe0qj6baQGyItrka+cFxIlnoxyx+cF0CejPDdb1qHalVcNDYbhZudZf1AaWAZ+CT5BqNdArVEdYT7bxp4chfzbrnLenh4fo6LOfB/r8Q2LmMqjPw6CkDOJCqXhVnyHn/62WE6cBJkRVtbL7GcxivpdfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721542970; c=relaxed/simple;
-	bh=438lcOvmlew/vUJkbq2Wo+GsT0Zjvn85P8sXcjgd4ew=;
+	s=arc-20240116; t=1721543058; c=relaxed/simple;
+	bh=io31Oy+5/NlXxIZbQzVmGIU6zi1zoyNKY1/Zc4oPfpg=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Gzw8mLcBJi7GDrNZlsNvejTZBek2Xa1Be2CJlaF1CyncZznXuTf3PeUKc2l/zSX7OThEsJFEjaLmJFz+bAeUNWjVm9gOqq6xt2Hm3VsRo/YJ33XEyR6qlHgnLy5xdXUxQrzYsplGm/oz1qEbGIGXic9QlewGRL8D7rtV4ij2I5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=TDSq8y3/; arc=none smtp.client-ip=212.227.17.12
+	 In-Reply-To:Content-Type; b=NBNed+iP5aH4sRSQp69o1CTqxoeN03yOjl/hvk+txbTU6RVKyZM2HkNhoXQIde49mRBvW0koTRr4VVrMGoZxA9BSycmskHYxwKk3UAI4e8UNv3u8sNz6XrPzB1TJCMYcNZQgGgB7tXJEtiYWI0fQsX59E5AKO5c/mL4poCaM1t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=bxjqs2/B; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TDSq8y3/"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="bxjqs2/B"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1721542957; x=1722147757; i=l.s.r@web.de;
-	bh=KNsd2zaRe+Lni3oRy7QaGElWYVhhLSZsuuFxqqYmBS0=;
+	s=s29768273; t=1721543039; x=1722147839; i=l.s.r@web.de;
+	bh=LZOyqKP3WaNYlJzJ0ni/WGj1sjbYetLjofukSC3TDFE=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=TDSq8y3/q4KRcLuBQ7hrPAbwluNTRtBvnTAjvWsrPPTQRixfgP4+2qF248km+pJy
-	 +1+BYSwXBCAJEn81WqYnV6hVImet2yhzP6Ty8w7KOYPZt6H1yosoMJKV+9P9QH4XG
-	 80TEJvswynJ+KW0N6DSeD4TrWksMjCFLLUJL13bGohOWitqbp2vqLQ8IVd+t7iRKk
-	 UvMk95GJ+oLigtRGiFQjDmt93hVHnEdoeRRyj+vePCgJGlMpJE+qmvZGrkr7R0Gsw
-	 flLmmLn0HPyOsk+MygHk+Bf+U+RbrGnDApL6xtuhrnJsJUZOAj+ms09w+LM5dETmb
-	 kpJx1fuBQBfcwXYjnw==
+	b=bxjqs2/Brl3fSei6zhf+IE8iO8OwhoxNHaVOvIhzkUQ65GFtt0QCAtg0Htwfifxv
+	 rGb65+pt2v4opPCHwMl1MG1pMp6IGJ6r7W95KPgwy4kWLpnOMmlYa/PRLPHbp35e4
+	 sGcdhRVO66PkVXtAo8g85QL4LUdtQCi/6glsuSgBQYyyLIeTG+vfE7ss9Qjq3tFW1
+	 JxkJWAOsrqT0ZPIezwmddX/eAoyo8m8AaJrqARnZScF2E8AQS3JKvvmxIAKSa/oeY
+	 YZOAmDRd3wtpU1813/MrY1hqGs0bryx47d+myn48+0RTUHiM2UmLT681I4YU7GQKK
+	 ZVCtMDMHyjDdMkUR+A==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MZjIb-1srCN006YZ-00WYTx; Sun, 21
- Jul 2024 08:22:37 +0200
-Message-ID: <d97ae165-988a-4f33-a61c-8254fe138fbe@web.de>
-Date: Sun, 21 Jul 2024 08:22:36 +0200
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MIL4Y-1sYhlD2YFQ-00G2Xh; Sun, 21
+ Jul 2024 08:23:59 +0200
+Message-ID: <e048ef54-5824-452d-ab1f-233581711f4e@web.de>
+Date: Sun, 21 Jul 2024 08:23:59 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 3/6] t-ctype: use for_test
+Subject: [PATCH v2 4/6] t-reftable-basics: use for_test
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -53,54 +53,298 @@ Content-Language: en-US
 In-Reply-To: <da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:CQkCLgtF+U0WYmWlDqV9UIbTdrUj8ktjs5Mc/2KnvSaoUj8PqbU
- 0l6mUA/pd9Apsoqb9stxrpCulcpX2FhaluMD3U8TQTIbmlU4GorbyHqfQbaStnnuO+c5WaN
- mM8rGyl/M6AIc5iIl0mTWhN0r1uW1mHWo5wehmOUjsAA6xdRjeOJO+2ZJHr0IORw5dxpHHw
- ab50PBGHU3t5/Umtw64NA==
+X-Provags-ID: V03:K1:RzNCUUvfwyUcXoPA9I/3hYGxGwxU8pHZC/DK1hvDQKHmy0KXH9j
+ a9hmna+AWdalnClJfLPGC6IXVeMuF8iAMLU+HNSaWQrd88zyYfBnYVri9XvyS4WHQFOeGOG
+ bpmAWIriQqM0rvmnbxDtpM7nrBkhaJHAHzMRuoswOB5xCTi5a4WnqdGIddbr/vop4pv8EAO
+ 1+MSooqOQB3ixOnkfV5Tw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:3e+OszmtUl8=;fkfrsca39cH/YNJlp+EcgOCu0bz
- hG720F0NFlEZBLS0pmw5I3oPcKCkQ2nqGTM4ki7/J7a5UUj6XKg7kNaToV5TQAEm00fktkA5v
- aPLM6HZQ78k7NZervuS+SlWCDtVHz5rZYpUbYhHgqCDDyqPW2QS+FzxTFasIk1JHvPa5g043i
- hjUTOpeRS0eOaoKsbdmYP2wvt+poYDpoLAF749CO8N15QJc2hXKMIhhj+0BJdEVXCz4RIRe5h
- 4eDLat/BTHYU6hqPK1FzCKZ6FrI0TVbAuLsstJ6K1zwDe8+qD8tfC4s5onhLoXW2veh4L2cLL
- +E9V+JnQ7xVe9Tqfjc6BDR3N3nlSuilFC/pEMNg+RlTp5yZfbMTaltce5KryKH2Pem7cxkkCV
- glkn5BMfbnM1r0pO95XaGJs4u3y8i9YwjrwdKOvc+wGTtSs5VVFfyexFnIGpW5EgpUDezIYdL
- wicBzBMCV8Gm3l4KZh5fGqz57fwtdxlnCrHf5fSMP5zYAUwVl6GrIf9e1hnLkiBMzRWekm45W
- QXQD3zRXbar7BgN+hE3SM4XOA3L8ek0LY+QCfsA9hLABx49pVera+t56saPGbbrZv/hSo7Tjb
- Od+/vK9lIvfLzJC+0c0nEDIGdUEsxFkz1UKcGwwZTyTCcPhskS2Tp74HYrXNhre2NJ2+Hbg2h
- 4YGZTuMiG9AR0U5PzuwP0kxrgi5BS6Qob24Hum1bynjEovn2hlTCRkZISEwvcd7ejwN7EfkQJ
- 3L/MQC/+hrWEGh+iaMC2Um2Q3BhEPhcNSjT9pSarL36ye4TCPge4PIr4+0/QiaS+B5qXQngPk
- 9xOTFSpZHO2yNwFxMtijOUlA==
+UI-OutboundReport: notjunk:1;M01:P0:S4LsU8K9n3k=;s9HuJ+jOJqx/8KLswv9V40Y+GKV
+ jkXz7YVe+fptWwGtkyg2oqFTxYRamKurUyZnwJW/C5dCND+d8fYpKWwYkn/JSOok8CAVagAkp
+ WzM9CEPWIKNd+QnOhb/ENXnsp/Nev1GaGunjwNVlQfO1g9aidlRJ/FhfUkItwqUPl51qBzmri
+ JChryUtU5OhQSxyP8VLlfGONuGxBBfbDQm3WY24xJ2NKJoG4X85WjWAifWv1NLQccsJ7e9P7D
+ fTaDXOyjfRHlT78pYqW/LaXibiVLJVwCyWDwMlpG33vtEfp1i/f+tlL5cyzH4RMNlD+BlUX0G
+ 5kgqmBj4k050fuQMxS5A6QYCcCUpftE4zd95D2QnlIjVWsdijvXJN2wCPMmCMDnSs3x74wBT5
+ sQ1zbKS+fgG3AL87imaIFlgJ0ebtTWG4+P9vdND1mUmq+GQ8lMwOAG/zIOtMtT4VDayzQ6jnr
+ alroM3kC2Lc1rki70LmVCoZZ+et0TqgSsSL5tn9DLtbewKb5Fz0W84gzw5sw7t/DpL/4emlpS
+ QvJtDWUlLB16cCHfXpu8zuVWyNZvcYusQCzElpcyzI5D+K6jLy+WkLNat95XnhtRbsNCz/egI
+ sY950LmyjGu5DB3JGq8/DvSlNhlUx1igLI6DXRvoU/CGdVtfFvuDDNGrprFlIsUpSGQCyG4F5
+ b6AHML4aDeA6kASbZ7JgPOB0Kko5oxYjdk2aq0vzo1zfI0nyu38XMGAm8KXGxzWdOMAxONcXF
+ CBT8pbIL0WGFwqnE7476zENXziWp0AcwGHuOREzE81aV5gSEF198LODxDXilNXgShFe29S25c
+ b0V/4TARQm5jg00YV3/Z5mbw==
 
-Use the documented macro for_test instead of the internal functions
-test__run_begin() and test__run_end(), which are supposed to be private
-to the unit test framework.
+The macro TEST takes a single expression.  If a test requires multiple
+statements then they need to be placed in a function that's called in
+the TEST expression.
+
+Remove the overhead of defining and calling single-use functions by
+using for_test instead.
+
+Run the tests in the order of definition.  We can reorder them like that
+because they are independent.  Technically this changes the output, but
+retains the meaning of a full run and allows for easier review e.g. with
+diff option --ignore-all-space.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-ctype.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ t/unit-tests/t-reftable-basics.c | 228 ++++++++++++++-----------------
+ 1 file changed, 106 insertions(+), 122 deletions(-)
 
-diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-index d6ac1fe678..92a05f02b3 100644
-=2D-- a/t/unit-tests/t-ctype.c
-+++ b/t/unit-tests/t-ctype.c
-@@ -4,15 +4,13 @@
- 	size_t len =3D ARRAY_SIZE(string) - 1 + \
- 		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
- 		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) =3D=3D sizeof(char)); \
--	int skip =3D test__run_begin(); \
--	if (!skip) { \
-+	for_test (#class " works") { \
- 		for (int i =3D 0; i < 256; i++) { \
- 			if (!check_int(class(i), =3D=3D, !!memchr(string, i, len)))\
- 				test_msg("      i: 0x%02x", i); \
- 		} \
- 		check(!class(EOF)); \
- 	} \
--	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
- } while (0)
+diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-ba=
+sics.c
+index 4e80bdf16d..eb7af9ade4 100644
+=2D-- a/t/unit-tests/t-reftable-basics.c
++++ b/t/unit-tests/t-reftable-basics.c
+@@ -20,141 +20,125 @@ static int integer_needle_lesseq(size_t i, void *_ar=
+gs)
+ 	return args->needle <=3D args->haystack[i];
+ }
 
- #define DIGIT "0123456789"
+-static void test_binsearch(void)
++int cmd_main(int argc, const char *argv[])
+ {
+-	int haystack[] =3D { 2, 4, 6, 8, 10 };
+-	struct {
+-		int needle;
+-		size_t expected_idx;
+-	} testcases[] =3D {
+-		{-9000, 0},
+-		{-1, 0},
+-		{0, 0},
+-		{2, 0},
+-		{3, 1},
+-		{4, 1},
+-		{7, 3},
+-		{9, 4},
+-		{10, 4},
+-		{11, 5},
+-		{9000, 5},
+-	};
+-
+-	for (size_t i =3D 0; i < ARRAY_SIZE(testcases); i++) {
+-		struct integer_needle_lesseq_args args =3D {
+-			.haystack =3D haystack,
+-			.needle =3D testcases[i].needle,
++	for_test ("binary search with binsearch works") {
++		int haystack[] =3D { 2, 4, 6, 8, 10 };
++		struct {
++			int needle;
++			size_t expected_idx;
++		} testcases[] =3D {
++			{-9000, 0},
++			{-1, 0},
++			{0, 0},
++			{2, 0},
++			{3, 1},
++			{4, 1},
++			{7, 3},
++			{9, 4},
++			{10, 4},
++			{11, 5},
++			{9000, 5},
+ 		};
+-		size_t idx;
+
+-		idx =3D binsearch(ARRAY_SIZE(haystack), &integer_needle_lesseq, &args);
+-		check_int(idx, =3D=3D, testcases[i].expected_idx);
++		for (size_t i =3D 0; i < ARRAY_SIZE(testcases); i++) {
++			struct integer_needle_lesseq_args args =3D {
++				.haystack =3D haystack,
++				.needle =3D testcases[i].needle,
++			};
++			size_t idx;
++
++			idx =3D binsearch(ARRAY_SIZE(haystack),
++					&integer_needle_lesseq, &args);
++			check_int(idx, =3D=3D, testcases[i].expected_idx);
++		}
+ 	}
+-}
+
+-static void test_names_length(void)
+-{
+-	const char *a[] =3D { "a", "b", NULL };
+-	check_int(names_length(a), =3D=3D, 2);
+-}
+-
+-static void test_names_equal(void)
+-{
+-	const char *a[] =3D { "a", "b", "c", NULL };
+-	const char *b[] =3D { "a", "b", "d", NULL };
+-	const char *c[] =3D { "a", "b", NULL };
++	for_test ("names_length retuns size of a NULL-terminated string array") =
+{
++		const char *a[] =3D { "a", "b", NULL };
++		check_int(names_length(a), =3D=3D, 2);
++	}
+
+-	check(names_equal(a, a));
+-	check(!names_equal(a, b));
+-	check(!names_equal(a, c));
+-}
++	for_test ("names_equal compares NULL-terminated string arrays") {
++		const char *a[] =3D { "a", "b", "c", NULL };
++		const char *b[] =3D { "a", "b", "d", NULL };
++		const char *c[] =3D { "a", "b", NULL };
+
+-static void test_parse_names_normal(void)
+-{
+-	char in1[] =3D "line\n";
+-	char in2[] =3D "a\nb\nc";
+-	char **out =3D NULL;
+-	parse_names(in1, strlen(in1), &out);
+-	check_str(out[0], "line");
+-	check(!out[1]);
+-	free_names(out);
+-
+-	parse_names(in2, strlen(in2), &out);
+-	check_str(out[0], "a");
+-	check_str(out[1], "b");
+-	check_str(out[2], "c");
+-	check(!out[3]);
+-	free_names(out);
+-}
++		check(names_equal(a, a));
++		check(!names_equal(a, b));
++		check(!names_equal(a, c));
++	}
+
+-static void test_parse_names_drop_empty(void)
+-{
+-	char in[] =3D "a\n\nb\n";
+-	char **out =3D NULL;
+-	parse_names(in, strlen(in), &out);
+-	check_str(out[0], "a");
+-	/* simply '\n' should be dropped as empty string */
+-	check_str(out[1], "b");
+-	check(!out[2]);
+-	free_names(out);
+-}
++	for_test ("parse_names works for basic input") {
++		char in1[] =3D "line\n";
++		char in2[] =3D "a\nb\nc";
++		char **out =3D NULL;
++		parse_names(in1, strlen(in1), &out);
++		check_str(out[0], "line");
++		check(!out[1]);
++		free_names(out);
++
++		parse_names(in2, strlen(in2), &out);
++		check_str(out[0], "a");
++		check_str(out[1], "b");
++		check_str(out[2], "c");
++		check(!out[3]);
++		free_names(out);
++	}
+
+-static void test_common_prefix(void)
+-{
+-	struct strbuf a =3D STRBUF_INIT;
+-	struct strbuf b =3D STRBUF_INIT;
+-	struct {
+-		const char *a, *b;
+-		int want;
+-	} cases[] =3D {
+-		{"abcdef", "abc", 3},
+-		{ "abc", "ab", 2 },
+-		{ "", "abc", 0 },
+-		{ "abc", "abd", 2 },
+-		{ "abc", "pqr", 0 },
+-	};
+-
+-	for (size_t i =3D 0; i < ARRAY_SIZE(cases); i++) {
+-		strbuf_addstr(&a, cases[i].a);
+-		strbuf_addstr(&b, cases[i].b);
+-		check_int(common_prefix_size(&a, &b), =3D=3D, cases[i].want);
+-		strbuf_reset(&a);
+-		strbuf_reset(&b);
++	for_test ("parse_names drops empty string") {
++		char in[] =3D "a\n\nb\n";
++		char **out =3D NULL;
++		parse_names(in, strlen(in), &out);
++		check_str(out[0], "a");
++		/* simply '\n' should be dropped as empty string */
++		check_str(out[1], "b");
++		check(!out[2]);
++		free_names(out);
+ 	}
+-	strbuf_release(&a);
+-	strbuf_release(&b);
+-}
+
+-static void test_u24_roundtrip(void)
+-{
+-	uint32_t in =3D 0x112233;
+-	uint8_t dest[3];
+-	uint32_t out;
+-	put_be24(dest, in);
+-	out =3D get_be24(dest);
+-	check_int(in, =3D=3D, out);
+-}
++	for_test ("common_prefix_size works") {
++		struct strbuf a =3D STRBUF_INIT;
++		struct strbuf b =3D STRBUF_INIT;
++		struct {
++			const char *a, *b;
++			int want;
++		} cases[] =3D {
++			{"abcdef", "abc", 3},
++			{ "abc", "ab", 2 },
++			{ "", "abc", 0 },
++			{ "abc", "abd", 2 },
++			{ "abc", "pqr", 0 },
++		};
+
+-static void test_u16_roundtrip(void)
+-{
+-	uint32_t in =3D 0xfef1;
+-	uint8_t dest[3];
+-	uint32_t out;
+-	put_be16(dest, in);
+-	out =3D get_be16(dest);
+-	check_int(in, =3D=3D, out);
+-}
++		for (size_t i =3D 0; i < ARRAY_SIZE(cases); i++) {
++			strbuf_addstr(&a, cases[i].a);
++			strbuf_addstr(&b, cases[i].b);
++			check_int(common_prefix_size(&a, &b), =3D=3D, cases[i].want);
++			strbuf_reset(&a);
++			strbuf_reset(&b);
++		}
++		strbuf_release(&a);
++		strbuf_release(&b);
++	}
+
+-int cmd_main(int argc, const char *argv[])
+-{
+-	TEST(test_common_prefix(), "common_prefix_size works");
+-	TEST(test_parse_names_normal(), "parse_names works for basic input");
+-	TEST(test_parse_names_drop_empty(), "parse_names drops empty string");
+-	TEST(test_binsearch(), "binary search with binsearch works");
+-	TEST(test_names_length(), "names_length retuns size of a NULL-terminated=
+ string array");
+-	TEST(test_names_equal(), "names_equal compares NULL-terminated string ar=
+rays");
+-	TEST(test_u24_roundtrip(), "put_be24 and get_be24 work");
+-	TEST(test_u16_roundtrip(), "put_be16 and get_be16 work");
++	for_test ("put_be24 and get_be24 work") {
++		uint32_t in =3D 0x112233;
++		uint8_t dest[3];
++		uint32_t out;
++		put_be24(dest, in);
++		out =3D get_be24(dest);
++		check_int(in, =3D=3D, out);
++	}
++
++	for_test ("put_be16 and get_be16 work") {
++		uint32_t in =3D 0xfef1;
++		uint8_t dest[3];
++		uint32_t out;
++		put_be16(dest, in);
++		out =3D get_be16(dest);
++		check_int(in, =3D=3D, out);
++	}
+
+ 	return test_done();
+ }
 =2D-
 2.45.2
