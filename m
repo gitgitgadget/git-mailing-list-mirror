@@ -1,136 +1,105 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91B9A433A8
-	for <git@vger.kernel.org>; Sun, 21 Jul 2024 13:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06F04414
+	for <git@vger.kernel.org>; Sun, 21 Jul 2024 13:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721567800; cv=none; b=Z+B0W/4thgSnKEHUIJNLYnUbVahSpWth+4pp4DAT9NigT/vPJkMkc/UMU9YOVupaO2jdU0n7l3zHRjQ+I90zPSd9ZegxV8GdO+P5I9yGgHFbDmNz0tCXk7cvAiohvEkjlVz4BmH26bkgg+d9vkjABROEk1UBbAmaVPygvzP8afs=
+	t=1721569724; cv=none; b=J0X1G40et/88qXpvsoxqyYYBysoYa7MdinYOX1x9EeVDlso9L3wHcp+9NfS/FIGT7iArt/18Rlgl5682u/33Q7Vx1czLJ0rcaVGXUhaY8SIjYSToewuD+gyyqRX/vE8ET5FTVQmKEa/rYSCD0z9ppj9VURrl2Q8FC2WABShilEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721567800; c=relaxed/simple;
-	bh=Y/DT3VzJAYCxwBeukuRt/ANNhFzcxiGvNMc9WrmQBCw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mc9EbRYkMIQtruD51H3kagFXJN/JaHvuicT2Q6awXZmI1TW+QdiPBDeQcKMPjSx0NpBsS3EcY2qGYhD0vCA/LGjz7JimBhO9DD0pSBmt+sUQCnfM9qEWj+5yaw0MV4isIHTUMmS+5BfCSL3x8WS14ZPviAnjMp/11QDELhSJM1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=tS8WIRNw; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1721569724; c=relaxed/simple;
+	bh=9Oi9eHq2qZAqoe1NgASJauoDEGqBG3Ljc3yIghsInUg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RV3LxiVoEtdwlTMDDSIwx17/Y5eFesEwetwFUS35Ifqr+mDjCtsd5Doq2J6rjmDHguvlgwruUyKyFToEt5VvOt9pqtqQ5sjSSFOKTzWaWeYP8i5h//ewgyU54+ORxbnXS+jNebX4MwJf+e4bHV4TMAALngeDUWxZ2XoatxKEm88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dinwoodie.org; spf=pass smtp.mailfrom=dinwoodie.org; dkim=pass (2048-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b=F04h2Aw8; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dinwoodie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dinwoodie.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="tS8WIRNw"
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id AD39D871F1E
-	for <git@vger.kernel.org>; Sun, 21 Jul 2024 15:08:56 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:84f9:8e32:233e:cb6e])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 1F7E919F5A5;
-	Sun, 21 Jul 2024 15:08:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1721567329;
-	bh=Y/DT3VzJAYCxwBeukuRt/ANNhFzcxiGvNMc9WrmQBCw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tS8WIRNwKQ+GnoirPGcoPgS9ysbzoQ33t8tRCfEo8Fcjzs6U/mvg5JsJdDqp0LWeY
-	 67yD8Smwtqr/rnKbScAjiAIAk5EGWVUx5/IveYXX4Ty53Q3PptIPJectRQgJ+DKjUH
-	 ewl8a0CJqKplDRnBlc/ZbHKWHMoO0dn6dGabwEuShUFYpEa770Pee10i60RkWRLOH1
-	 2DFrjaUbUG9BLvIHN7gdDHaErqRqAoTazuHMQECgFTzNVHYLLSRtsJ67CBzdBGGcuD
-	 1+dWabF78/9j1vOWXQEYPhZJSqbN3bXjoMWQ4iEjhJZpTPq6Hh1v+YXvXeD7wMSS7T
-	 m8s83/f4xZSxw==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject:
- Re: [PATCH] doc: git-clone fix discrepancy between asciidoc and asciidoctor
-Date: Sun, 21 Jul 2024 15:08:46 +0200
-Message-ID: <8404759.T7Z3S40VBb@cayenne>
-In-Reply-To: <xmqq8qxvhcy5.fsf@gitster.g>
-References:
- <pull.1765.git.1721496853517.gitgitgadget@gmail.com>
- <xmqq8qxvhcy5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b="F04h2Aw8"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-59adf476c9dso382095a12.1
+        for <git@vger.kernel.org>; Sun, 21 Jul 2024 06:48:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google; t=1721569719; x=1722174519; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9Oi9eHq2qZAqoe1NgASJauoDEGqBG3Ljc3yIghsInUg=;
+        b=F04h2Aw8tmMrLOXcwWt2xoIhAQwBgyHUc8vgKC3vGbI1vkP8qqEpQ52E495ynnE14X
+         lD3wV2w+Q2ws6Rv1cui9q35/ktZJ1KOZuHYiFmTCVEDzD6F7EB5LYUxhut8lObsO7MPV
+         JpBDOf8i35Fpi8q5fkwbJ/iMlbCc/d4DwqRBLfUlGOPu2sGK5RCBAD9ozVFoGceDXhZr
+         VakSxzhkSLmfo1eJ59jKqRrmsv4AU6lDIrApViKWRuVItmldyZvT7c1v+NFAxbB1y+tf
+         sjmMQ9Cy3nkN5Me38MLizKxcTy3V0YS+bSnHlGNgtLNxFNKnB1meCWlEBoiod5PSYHkV
+         5H6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721569719; x=1722174519;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9Oi9eHq2qZAqoe1NgASJauoDEGqBG3Ljc3yIghsInUg=;
+        b=YkXLCKyzbKnci1S4SxBnO07HMP4+DVBEwR+gCahGVXV81+mHH5UCmXeTSJzdAqZ0xe
+         0cJn/PbX+ko++3vBHxzkyaQTrkWybaRBNIEGHlaCwXhxv21lHf9zE8gFojapqiy8K0Mu
+         qG+uDwI2FmeT8gJ3n8Kp3+34jwfzlOtD7SI664hS8gmMIDFyWmM+CVRr9eXE3g1bcYKF
+         RYojwZke6qllmh5yPZF4ICq1LweOdeM35HllJj+wZ4lB2CJybijMlZ9bmOkicBHboNhc
+         mAEofJqz6X+IcC0+k1WQw78Tc/RrjA8Kzwz1QwrhGH+AYH7UDpiVnNq2ObzEiGtTWJ9x
+         30OA==
+X-Forwarded-Encrypted: i=1; AJvYcCUhCQumm2Pdd9SlmLEesqS6IFiYZA1USNvxHemlDivtfiHgWawuDwhqLoDMH9MvjCMULodo+QlYmigqFGLvBITb3zrI
+X-Gm-Message-State: AOJu0YweTWKcK+KQ/8NF71JmvncoVnddQw/QyxOaB4iLFydBlznB1ySE
+	jX7tkq9+/xNJfPPRmmQtBxOLcEBtsrWnp2qtqFPHnguN+WQPlcAhXQYEhs35DPBTRxzXXrOVv0l
+	YRJvlamu7cqH5kyaMkiCwrVEKsEfWsGt3x68E
+X-Google-Smtp-Source: AGHT+IFZPQP/45ZdL+RSk0Hr2Z8XXB2V/qGgJ5WAIHQwBTuxF48TU+MfVVXzcxHYqiYQCN8kp2Ixw8D9UvJgb3ViTfE=
+X-Received: by 2002:a05:6402:27c9:b0:5a1:6ed5:19aa with SMTP id
+ 4fb4d7f45d1cf-5a3ee7b2ef7mr2136242a12.1.1721569718879; Sun, 21 Jul 2024
+ 06:48:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <aacb4067-a16b-4953-a72f-3c66efd3cf25@ramsayjones.plus.com>
+ <20240717064241.GF547635@coredump.intra.peff.net> <3e6abe6c-2c15-47f9-89e8-3e8710802562@ramsayjones.plus.com>
+ <20240718005723.GA675057@coredump.intra.peff.net> <f97198e1-bfcc-4f3c-ad0a-2dd27d4f20cf@ramsayjones.plus.com>
+In-Reply-To: <f97198e1-bfcc-4f3c-ad0a-2dd27d4f20cf@ramsayjones.plus.com>
+From: Adam Dinwoodie <adam@dinwoodie.org>
+Date: Sun, 21 Jul 2024 14:48:03 +0100
+Message-ID: <CA+kUOakUYURJN0O+jRHVKdN9O0MY01Ck_PYa3ewipqUrpKFaCA@mail.gmail.com>
+Subject: Re: v2.46.0-rc0 test failures on cygwin
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
 
-Le dimanche 21 juillet 2024, 01:16:02 CEST Junio C Hamano a =E9crit :
-> "Jean-No=EBl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
-> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
-> >
-> > Asciidoc.py does not have the concept of generalized roles, whereas
-> > asciidoctor interprets [foo]`blah` as blah with role foo in the
-> > synopsis, making in effect foo disappear in the output. Note that
-> > square brackets not directly followed by an inline markup do not
-> > define a role, which is why we do not have the issue on other parts of
-> > the documentation.
->=20
-> This was utterly misleading, at least to me, and it took a few times
-> of reading for me to really understand what you wanted to say.
->=20
-> It does not matter that "generalized roles" is not known by
-> AsciiDoc.  What really causes the breakage is that a string inside
-> [square brackets] followed by string inside `a pair of back quotes`
-> is interpreted by Asciidoctor as "generalized roles" (whatever it
-> is), even though we do not care at all about such a feature here.
+On Thu, 18 Jul 2024 at 02:22, Ramsay Jones wrote:
+> On 18/07/2024 01:57, Jeff King wrote:
+> > On Wed, Jul 17, 2024 at 07:05:43PM +0100, Ramsay Jones wrote:
+> [snip]
 >
+> >> I also don't know the code well enough to answer your question regardi=
+ng
+> >> the re-opening of the migrated ref-store, but it doesn't look like it =
+would
+> >> cause any problems (famous last words).
+> >
+> > Thanks for testing. This is new in the upcoming release, but I think
+> > it's localized to the "git ref migrate" command. So aside from the
+> > annoyance of the test failure for you, it is not too urgent. I'm tempte=
+d
+> > to put it off until Patrick has had a chance to weigh in, even if it
+> > means missing the v2.46 cutoff.
+>
+> Yes, I think it would be better for Patrick to take a look. I added Adam =
+to
+> the CC list to keep him in the loop (because he is the cygwin git package
+> maintainer); he may have a view on the timing issues.
+>
+> Personally, I would be fine with a post v2.46 fix, but it is not up to me=
+. :)
 
-Sorry for not being clear. Indeed I was wrong, Asciidoc.py also has this ro=
-le=20
-management  behavior for any other inline markup (++, _, *, ^,  ~) except f=
-or=20
-back-quoted text.
-=20
-> How about phrasing it more like so?
->=20
->     Writing a string inside [square brackets], immediately followed
->     by a string inside `a pair of back quotes`, causes asciidoctor
->     to eliminate the string inside [square brackets], because it is
->     a syntax to trigger a "generalized role" feature, which we do
->     not care about in the context of the synopsis section here.
->=20
->     Work it around by inserting an otherwise no-op {empty} string to
->     forbid asciidoctor from triggering that feature here.  AsciiDoc
->     is not affected negatively by this additional empty string.
->=20
+Absolutely fine with a post-v2.46 fix for Cygwin's official packaging.
+Real Life=E2=84=A2 has meant I'm not on top of the latest releases anyway, =
+so
+needing to wait a bit longer before taking v2.46 won't realistically
+make much difference anyway.
 
-OK, but let's get rid of the "generalized role" stuff, then.=20
-
-> The reondered result _might_ be easier to read than pre-2.45 version
-> of documentation, but I somehow find the updated SYNOPSIS section
-> almost impossible to work with in the source form.  And the need for
-> these otherwise no-op {empty} makes it even less pleasant to work
-> with.
-
-I can only agree. The fact that this "feature" is too easily triggered almo=
-st=20
-voids all the "painless technical doc editing for the rest of us" argument=
-=20
-that is the main selling point of Asciidoc, Markdown and other lightweight=
-=20
-markup systems.
-
->=20
-> I wonder if there is a magic incantation that says "everything
-> should be typeset in monospace in this block, unless ..." so that we
-> can lose all these `back quotes`?  And then the part that follows
-> "unless ..." would say how we mark up the <placeholder> part which
-> is the only thing exempt from "everything is in monospace" default.
-
-While doing the styling of synopsis, I tried to be smarter than that. There=
-=20
-are basically 3 semantic entities in the grammar:
-
- * the _<placeholders>_ in italic
- * the `keywords`, in monospace
- * the grammar signs: [, ], |, ..., (, ), etc. These signs are not typeset.
-
-Setting everything in monospace would mix keywords and grammar.
-
-With this schema in mind, I don't find difficult to understand how the syno=
-psis=20
-is written (putting aside the  {empty} hack). Fair enough, this is more=20
-difficult than just plain text, but the aim is still to get decent output.
-
-
-
+Adam
