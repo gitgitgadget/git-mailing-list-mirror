@@ -1,148 +1,113 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECDB17BC9
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 09:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D704826ADB
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 09:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721638955; cv=none; b=G7BN35uCGCi+3Nt8JPKWM1h09sn8HUv2DJMjvVeBF7hRdE8RpAT05lxmfftza/79+7GqIWTYjmJ5MWLOjMul286ZJ9bYM350kd0LZssrT/v0pGyBRfFA8rKXblQsTBbsmZUKVe4NmP/6tsVuVx8Qr8dUeRSqQSgxH/zov8Vi66o=
+	t=1721641110; cv=none; b=C4NLPAlr9rifL/jIqi3uyMxwyJZmwTN3xYus1nDDzATKTz/cY8gHFw0yoV78jSpdRVsk22exvSyBaIcVCjUyJtiAscevGpCM5veOfzKnIl9vVe90nyaj8u2F4sKoYuj7SQR4trd9hoAbFQFmTQFDo9olRjlm26SKoe6OiozVPXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721638955; c=relaxed/simple;
-	bh=jOIxsZ8tvXi30VDBaqeR07e5G37a5KCxSD8xdK4vqqc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yn04k0yJZFcM4l6YeDcTBvZyU5D1RqNO9FyU86rGwtFbKtM4tnKy07kID+YBnlObMWdWQp0hIVqmpRKfWnGvQ75Gx7+gEo8rVN6qSBBAX1iC63c1cp9S8g724azHYMIZ9kbT7to1Mk8pjfLyslN5ajGDdbGpAaG4mJ0qDyfZpyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MjGXhxbl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PjSh2/JC; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1721641110; c=relaxed/simple;
+	bh=odMwNhRPKEjeKJYNbgtYjPSBmLpELBFYmR+5IDBcPsU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=u4nFwltLAnTq7AVTiPak+6QMsnBufkKkcQSyPB6C/D8IUVUdPmBGoIANmO+/vYzoSwaw+s7p12qpB5bgauN7OA8vEV2cCuSIWETkxbTGvQKHn6HHGM3pmX5s5HXk8OPIGioqkP4PMqKtdupbt9ule6W3ZfB9eQvJB+U/5Xkkh1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=BtqzWHd9; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MjGXhxbl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PjSh2/JC"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EA5021380071;
-	Mon, 22 Jul 2024 05:02:30 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 22 Jul 2024 05:02:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721638950; x=1721725350; bh=jOIxsZ8tvX
-	i30VDBaqeR07e5G37a5KCxSD8xdK4vqqc=; b=MjGXhxbltWwhi4FYugMgq1DUjK
-	hjph217ZmGSDv4wqybOlm1sGcidCX2mIWNvRlp/o4KAc//JuaZ4BTR7HUEawhBbu
-	miaMarFL7uUDN2GuFN8ZRh9sD7teVUGtURK+DiYKPdyHn1Wem2iouUy4d6XGsB8n
-	vREhH+FYEAXQIh32P47eNvCiy6mEPepoYK7mr58UhBpJZFgfgw7WQiNM/XUPj4st
-	CnaLzwncBSxU9camaYiJ7ZQlPHbH/8uPyCs6AKaEEU6P6pK3wf/JF+pA1jpVLs03
-	rkdM2BCSfzSclMBmgWu7FmIA55Af0UZRqvz0knGiBPw0vWDHNx0usavoFIeg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721638950; x=1721725350; bh=jOIxsZ8tvXi30VDBaqeR07e5G37a
-	5KCxSD8xdK4vqqc=; b=PjSh2/JCUIJth2sNGBTqQISicfx9BGaaT0FT9MON6viy
-	TiZQIj6mSdkWp4sBOis+4RKLYQuJI/JV5jCVhswUJi9tG/Yb5cGu8A57U2Iu9o51
-	3lcGLEPuRxb4WN8hRRrk4bIjeFUnNtGm+74P9jQe1kEMnwvAcyzeSbGQBZg5Hj0O
-	zSNlBSqydjjUa8nzrNmzZgugLXuFhyu5Rak5x6s6lKDx8GVeVs4O0X5a/Av5GYUE
-	jKJ0ZNdiJgzLVtwsgdBLkJTYJ5bVV93C23ijbt/GBe28ZhWMBaJsuc3WVZHFIIAP
-	E+M3dmOGgEUGAuF59BmxHlbiHOvJvCrfaMtfz4vifQ==
-X-ME-Sender: <xms:JiCeZjnMuWKe9OnkY-UkMUXUY-eB-i4qn6Ea5uNdL_S3LGovNaD4Dw>
-    <xme:JiCeZm1GGfELZsLIWpQHy1eQjnfAqRZynK3YN1JyuXXs72RNWu8ZYLtpFN0fS2-J0
-    6qd2mFZfQxO_a2ApQ>
-X-ME-Received: <xmr:JiCeZppC5cZqjErQb_nbxuVeEOSb1o6sw8761v-gQPhIfHcrK9XTP7jcYzGHLqgVUhE6SpV5aWVFJ1gCDnCGFVxzeLXMw56n7pmFqKOqPAw6NXbFEQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheejgddutdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:JiCeZrkjT-CMENKzm9GITN899X0YKLPBdnE1BjqvNd9MfruMOFJISw>
-    <xmx:JiCeZh0wmjTeLBf6y2c4pkJa1lRAA3WL-ldHTm5Bv-ldru3BiVITiw>
-    <xmx:JiCeZqsmg-5ehTbtI1Vh4lGqSsKtmIFuKIdXOUTzIgrSgM_Ahe5w2A>
-    <xmx:JiCeZlWq1sTNntJkInuk2Sw5H2sCtZkIhLHHmlkWT--tVoHUm1jZzQ>
-    <xmx:JiCeZqyWS-VC5hV8CZk32YilHpZO2rs2MYBYKepEqwKrM8h2WKCjYUSU>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jul 2024 05:02:29 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id fe0febf5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jul 2024 09:01:15 +0000 (UTC)
-Date: Mon, 22 Jul 2024 11:02:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] t0613: mark as leak-free
-Message-ID: <Zp4gILfskdpc6RUk@tanuki>
-References: <23d41343-54fd-46c6-9d78-369e8009fa0b@gmail.com>
- <20240701035759.GF610406@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="BtqzWHd9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1721641102; x=1722245902;
+	i=johannes.schindelin@gmx.de;
+	bh=odMwNhRPKEjeKJYNbgtYjPSBmLpELBFYmR+5IDBcPsU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=BtqzWHd9oGslrbACHBYRYEq8cf76Ey/9uuBAWS7J3hTlmRCjPmkCsa6Jdyqk0taV
+	 1+28RbGVgaMF9dYqhcFOmIjiekMbfQ7rYL9Q4iymkuDr6z7aWoDDjraY+GNU9LzyZ
+	 WH19jw9k6iznsNZX98La5PKUH1u6h6fuCQQkPVKfSN/2WJ9BztBjj/LWRndS5tsQU
+	 HhHRAwGAPgYPFQYsIrBjS1SmVr/raD+lwZtyNefCJK0/h3VauDvEJpf3T1Dd0FrjR
+	 75HxzqJkW2clnBZ9/4bzDZEtFnLgEL0vKahZaKKm54bkNuL+WKral5AB9swuUD0r6
+	 /lwgiVTImRGGSdj8FA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.58.232]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8QS2-1sRRmf3kA4-00HAJ5; Mon, 22
+ Jul 2024 11:38:21 +0200
+Date: Mon, 22 Jul 2024 11:38:21 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Dragan Simic <dsimic@manjaro.org>
+cc: Junio C Hamano <gitster@pobox.com>, 
+    "Schoonderwaldt, Michel" <michel.schoonderwaldt@sittard-geleen.nl>, 
+    git@vger.kernel.org, git-security@googlegroups.com
+Subject: Re: Request to Update OpenSSH Version in Git due to Security
+ Vulnerabilities (CVE-2006-5051, CVE-2024-6387
+In-Reply-To: <25ce4ec25b054cfbf4c540663c6b6c18@manjaro.org>
+Message-ID: <a658fd0a-59bd-c162-874c-cc5b9926acd5@gmx.de>
+References: <AM9PR07MB71854BD4C1CE7E517203FFB6B1DF2@AM9PR07MB7185.eurprd07.prod.outlook.com> <ffe00b81-5f19-a073-9a9e-ee84b7d3845b@gmx.de> <xmqqa5ipxjdr.fsf@gitster.g> <25ce4ec25b054cfbf4c540663c6b6c18@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sozoOBhy4hoHZqNj"
-Content-Disposition: inline
-In-Reply-To: <20240701035759.GF610406@coredump.intra.peff.net>
-
-
---sozoOBhy4hoHZqNj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Gd+EFQoxWa+uX0FLspDPY0ck+V74kxn3XqksWg4K0lucjT4Ol20
+ cKNfUnsNTfQOA9eOo6q+mQuIezuQ+ILtDoxdU+AiZ2a3DbzXRrzh5D/5pb8KsCzd/2qzy8c
+ 0nCzPQ/ZQCL34fgX8odi5en0dIQ/N5psmMKLj2S77mbhpWQ/w8AxPut0OERovsGlTECQICk
+ 29PKDQEfQ2ozXM4gmHntA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:JFs2ElyPhbc=;fl78nabMJHG4Jf4qljcEoPxwMr0
+ FlY17q0njS+bpS6/v4kbbCrH0QuaJ1qb4s9GAktkFuf0oERXaGoNwufwLhMONDPoLv9L3yLUt
+ T3eKf3ud/pnbgk48mpYKNGYl2NMZtPQQi9QxbgPGRBSsAi8ZUD31Ul71Nn1iIMyZ+kbK+7erD
+ Kvg81p4295FfHDjDyMDMqSclMrn3xzCwMPt9uT1lB9LZFlH/ArptJJ0nJY0Dmviu4EGpNEVlt
+ jrlHP5oYjdQYRhtcEYrsXJtNH1toB2Omjnj07w7c+OZ/dArV9dDXl892Q0CPhrH9Y2rYkzIym
+ yhDww/u1AuH80iYofjXc7LWpATfvZWalfhtMDlznwn+NwbQ9OmUK1sAP4eXhUKzx4CMoxsJR5
+ Adn6kFZQvdLgxGTZYgRFWpRTf6LwgYnh7TRX97Ggveqt3apoFGu1ttctWszyM/+5wpebG5ILT
+ FZMQDKMSLfgPP+8L92U9bxSAOzxJnbAIt+DrS61nCkxaPqSR4kwyUxkAJfjBPGu2GOjM6Nh6O
+ AM5lMND0QIdfdQphbZdY/nnW4fF8UNsFqdslOu683Vl1g3Tkl4zSqJ+tREzRfGunND1MvZUaa
+ TefIpi4JfT6/5PtYqUolGQR9RGrAQhwccJ529DZXSu3XlNdLFtnDvdCfVx/wMjk08grG4zAIU
+ Q9fbmOW+yAmPJbfC6QdJK9y7M370OwIxXUbgUNMCt0qQuNBH2fXQ0xbfVLsm0hYNPH16FUNz7
+ QAlD8z63iBEChqlmei68WvKfyn86IdI0PqdOJl5XplE9ESB7fNnl/lDNoqmqxD39f2KuDssCD
+ /QSzNnAHoH2BmsqYo4/hqEOQ==
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 30, 2024 at 11:57:59PM -0400, Jeff King wrote:
-> On Sun, Jun 30, 2024 at 08:46:38AM +0200, Rub=C3=A9n Justo wrote:
->=20
-> > We can mark t0613 as leak-free:
-> > [...]
-> > I'm not sure why this simple change has fallen through the cracks.
-> > Therefore, it's possible that I'm missing something.
-> >=20
-> > I'd appreciate if someone could double-check.
->=20
-> I'd noticed it, too, while doing recent leak fixes. But since Patrick
-> has been working on leaks and is the go-to person for reftables, I
-> assumed he had already seen it and there was something clever going on. ;)
+Hi Dragan,
 
-Nah, you assumed too much :) I just forgot to mark this as leak-free and
-the topic crossed with my memory-leak-fix topics, so I didn't yet find
-the time to fix it.
+On Wed, 10 Jul 2024, 'Dragan Simic' via Git Security wrote:
 
-It does highlight an issue though: I think memory leak checks should be
-opt-out rather than opt-in by now. Most of our tests run just fine with
-the memory leak checker enabled, and that's also where we want to be
-headed. So making tests opt-out would likely raise more eyebrows when
-new tests are being added that explicitly opt out.
+> On 2024-07-10 19:10, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> > > The crucial part is the `sshd` part. Git for Windows does distribute=
+ the
+> > > `sshd.exe` binary, but it is in no way used by default, nor is there
+> > > support how to set it up to run an SSH server.
+> > >
+> > > Git for Windows is therefore not affected by this vulnerability, and
+> > > therefore it is not crucial to get a new version out as quickly as
+> > > possible. See also my assessment at
+> > > https://github.com/git-for-windows/git/issues/5031#issuecomment-2199=
+722969
+> >
+> > I think I've seen in the past another inquiry about vulnerability
+> > in OpenSSH, which turned out to be irrelevant in the context of Git
+> > for Windows for this exact reason (i.e. "sshd" is problematic but
+> > "ssh" is OK).
+> >
+> > Would it make future confusion like this less likely if you stopped
+> > shipping the sshd and ship only the ssh client?
+>
+> Not shipping sshd.exe would make sense regardless of the associated secu=
+rity
+> issues, because it would prevent accidental enabling of SSH access.
 
-The only reason I didn't send a patch like this yet is that it would of
-course create quite a bit of churn in our tests. I'm not sure whether
-that churn is really worth it, or whether we should instead just
-continue fixing tests until we can get rid of this marking altogether
-because all of our tests pass.
+There is little accidental about starting `sshd` after generating a valid
+host key.
 
-Patrick
+Having said that, `sshd` is not required to run Git, therefore it should
+not be distributed with Git for Windows. This PR addresses that:
+https://github.com/git-for-windows/build-extra/pull/571
 
---sozoOBhy4hoHZqNj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaeIB8ACgkQVbJhu7ck
-PpSnJBAAnqGJf3oHx2bLy5T2hlJnihV5SrV+NlUpuUehXyJDbr7uktOsbezFr+gR
-5qTPWs5zBm+fd7YoRGs5VqHA7DxRPxPQi4WALqO/xyxiM2J2vDI8Y7ala5Odxqms
-FmrD9Du3Ga6OqKbAZU5jGojcDy1UBs8JNstXmoVe7Pe5KrmF7YnH2CCgqlqOt3it
-ak6v47uaro8YOJuwI1TzD19eFYF37JnbQR0aAt+9O/57iR/kjDHt0p4txzxinhwd
-MzW6vJ1q0j90Te+uq5L8bPPyeFz7k4o3H/N1IZE1a7IdQTmcCeKd5idDCyPLcpO4
-nI5MwgQbuehrcEeWZMTmTDYvrvmdQtRU7+EpQKV4/cnP4fFUVOwX234LwbhQa8zZ
-bnZLzVNcq71u7PTwJaTBKtJyhH56kX74kLvSrXr/JrS02x73n4o9ZQEuhSlq77kv
-jWlW4//fM1FLHBEQeyFsxqPTFpGRPFnt88xktjaAA9KHnBDFWKgpEo7FGyZ46OOy
-jCGRHlVWoEhxgr/TfAjRLP1AnJ153JieqE/o0V5hbr05V4nG91TT6chZ0b9f0MRU
-5tbLMQy5AuEI8tQr6Z9A2tRpgWpFQ2clY6GeO2Leon7qveUgomVBXW48zJFQKW7R
-k3tBlGMnh1qkpvrP+Fm3hxCspzaCETVWpkTIWWWwZssGMwqxqRA=
-=wjpA
------END PGP SIGNATURE-----
-
---sozoOBhy4hoHZqNj--
+Thank you,
+Johannes
