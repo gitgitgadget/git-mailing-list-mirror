@@ -1,118 +1,122 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3085A18EB8
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7614AEE7
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721690063; cv=none; b=AtJMCd23LAWXs8OsLzsZAxUYW/IWsXOR79uc/Yt3y+Nf9n0iV4P8xo5Ms/ah9IWbdCY8yGluMghtJ/lYHk8iUd9PfAN4UyPDLFiZyFvAH7Cw8NJ2G/04qB0k39jOtY3zXWq0F3/RmVi4nUWDyc13pwUoQG8wDmbart3YYDOr9dM=
+	t=1721690461; cv=none; b=XfYHGBz5vc+JmCA0uCdFCnnUv5uVkGpUHe3J75su1SDeXPYN5SCcwcx+U4ZeZpGf4ND+Z0Axor3ynyoEBTPRe/xClFECmZQEwV5dWj8ojxS0AxVRWdu4wciNYXwmRyQSo6F30n8wcDAHIA0uEIzUfEEOdb+3/LvJUPYusqHDAcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721690063; c=relaxed/simple;
-	bh=Gi0aqYILqOf36G06pK5mTqfUycyAd+udR5DF0U8QnUc=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=COJ6N/vTyMFhaLJpz5ieD04aaQ+MxGfKyy9QfVG2bcU6WcESTn6aCN6zJSCS+k/eVEmJnv/sVd/48vnU+FZkY1pzs1OEPtOKiXBx/p8+ExQuM9gwL3gnVWLpZ/qqVVEmW+ceNutZaKTL1EZshRbTAsaOxUL9WyEwrUcDJjeMWiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46MNE8BV1743390
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 23:14:08 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Thaina Yu'" <thainayu@gmail.com>
-Cc: <git@vger.kernel.org>
-References: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com> <Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net>
-In-Reply-To: <Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net>
-Subject: RE: [feature request] Is it possible to have git tag can be sorted and filtered by semver?
-Date: Mon, 22 Jul 2024 19:14:03 -0400
-Organization: Nexbridge Inc.
-Message-ID: <031701dadc8c$db6d3370$92479a50$@nexbridge.com>
+	s=arc-20240116; t=1721690461; c=relaxed/simple;
+	bh=4roDbuD397vA3Hhm3pBkAb4xNZUdLi6HqnhqHXfX2Lg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BXqjvI2LrOBJMLj4BKWgmF9tfs0Kscf3PTZb8HvJ8ha2SSTSgrAUCvzI4++eMUOMya2XkLOnzPbRSmIsJX3nVPIQFINW5naSJC4Xkhx62UKM9ywVeDivg2ywPSkxDIZhrBSvEhtEh0pNr2CSn0CrQlkrIun3z98sHWVpb/ZGkUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJjw2jiL; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJjw2jiL"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3684e8220f9so1866034f8f.1
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 16:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721690458; x=1722295258; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=k2Lioz4hdoaAn2/SqCI8hSK2ZY9y/jtZ0pn7DDRQo2Q=;
+        b=ZJjw2jiLeHQzT89V3PIsKXrTym1HVjbhiEUojcrR/SZxAkHcKoQEeBvb5PrG5WUVgZ
+         yKd+1eMHMeKfi9zLjb6jpxxksXN+wSwZP/10+mFn4Ps6ovdUL2M72+uFcf5QusSKAxdc
+         iiV31qqhUE/m0escwtRczpupuhPyvt5q12uX+n1LgJy7Z2wbTd3TKRWuP1PWitVkcBYQ
+         ddrYxZRluDuJyNFs3ACZX/zFoJMN5oxUxthkeF3QfiGzIJNY6MtCd7FHWsNhLEJJa4tV
+         gceiMPsiDQIM/dMQLIWICQ/s2D6RzAh3QncQFPgo2r6bPGy8SKHuKRXpTuuVsLSdhmN+
+         H2gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721690458; x=1722295258;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k2Lioz4hdoaAn2/SqCI8hSK2ZY9y/jtZ0pn7DDRQo2Q=;
+        b=a/mGA1gkoZyGj3bIRe2efRor5YdygnDBRypCiQqAxEh312MhX43LSt7Vw1Pp7YXy3Z
+         7qX7+vCgxXS4lU9Z+VKFtA/vSV5wJlu+gODMftGBjiavT/AECf4+0aZriDgQ+bAq4hvU
+         3WNl/8ZG4bA0jnCGSWe1LF3rnjC6+9Y1dprBgKvD7KVhgUHfFSzgNgB+n8wLaJLOz14R
+         LaR4yK6CYNQWlEhDD78FhEAPIhqSXAGA4FqLkWq2DGmfMYDjS4BuUfZwQh0FoTNas+yF
+         1+e5KHWT/yorP2hMyCIh2yoxjx8qE/dJsNmPgSdOuSR7QAmWeYcTiQ3dWXY4FrQaKTIT
+         gBsA==
+X-Forwarded-Encrypted: i=1; AJvYcCUgYFSw8K4LfqMT+YW38QAPqerwt588gxyFxjYRXK0Vug4335+pmA+53E9Tx9+PnwUVjXjT3oObYne7QbPfgVJ/AAcI
+X-Gm-Message-State: AOJu0YweYalefOZWZg5heGqGrfCboSAw4/hUmTE0hILd7HlzRAQQtqDf
+	0MFJDfgbHlwCldEDdwD9aZOv9CHGASep/evvwBe3egSn6YjPGHt0
+X-Google-Smtp-Source: AGHT+IFkqKQJXYMw8ms2RCBiiloVPFhtEeuJtlTYZ+GWKhg2vdLZDUbFKXwqRg5Bp26V3TsRCc1yMA==
+X-Received: by 2002:adf:fcd0:0:b0:361:e909:60c3 with SMTP id ffacd0b85a97d-369e3e7505amr193800f8f.9.1721690457789;
+        Mon, 22 Jul 2024 16:20:57 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d692976fsm145782665e9.33.2024.07.22.16.20.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jul 2024 16:20:57 -0700 (PDT)
+Message-ID: <43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
+Date: Tue, 23 Jul 2024 01:20:56 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQNZQgdb9BumMJee//uPORLU/o8YkQIdnAccrvWl/zA=
-Content-Language: en-ca
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
+ Dragan Simic <dsimic@manjaro.org>, Jeff King <peff@peff.net>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+ <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+ <88f9256e-04ba-4799-8048-406863054106@gmail.com>
+ <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com> <xmqqv80xcpe5.fsf@gitster.g>
+ <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com> <xmqq7cdd9l0m.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqq7cdd9l0m.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Monday, July 22, 2024 5:31 PM, brian m. carlson wrote:
->On 2024-07-22 at 16:58:11, Thaina Yu wrote:
->> Currently there is `ls-remote` and `tag` that has option to
->> --sort=3Dversion:refname which is really useful when we have tag as
->> version format and let it sort as numeric version
->>
->> But it could be better if we can also sort and filter the version in
->> the range of semver format. So we can use git system as dependency
->> management system natively
->>
->> So I would like to propose a new sort option semver:refname
->>
->> `git ls-remote --sort=3Dsemver:refname myRepoUrl refs/tags/v{^0.*.*}`
->> where brace {} can be used to define semver versioning ranges for the
->> patterns in addition to glob filter
->
->Assuming we add such a feature, how does sorting by SemVer differ from =
-the
->current version sorting?  That is, where is the current version sorting =
-deficient for
->SemVer?  Also, what do you want to happen when a tag doesn't meet =
-SemVer
->requirements (note that the "v" prefix is not allowed in SemVer, =
-although it's
->customary in tags)?
+On Mon, Jul 22, 2024 at 02:25:45PM -0700, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> > To fix the test, as already said, we need this:
+> >
+> > 	test_write_lines P q |
+> > 	(
+> > 		GIT_PAGER="head -n 1" &&
+> > 		export GIT_PAGER &&
+> > 		test_terminal git add -p >actual
+> > 	)
+> 
+> This took sufficiently large amount of collective braincycles, and
+> it would be worth documenting as a separate patch, I would suspect.
+> 
+> Something along the following lines, but please take the authorship
+> *and* give it a better explanation.
 
-Currently, tags would be sorted as follows (simple example):
-1.10.0
-1.2.0
-1.9.1
+Here's an attempt. 
 
-With semver, the tags would be:
-1.2.0
-1.9.1
-1.10.0
+I'm also adding the change for `wait_for_pager`, which could be squashed
+in b29c59e3d2 (pager: introduce wait_for_pager, 2024-07-16).  Although,
+highlighted I think it's interesting as well.  But I don't have a strong
+preference.
 
-My take is that this, if implemented, would need to be more general, and =
-include prefix and suffix handling, so:
-v1.2.0
-v1.9.0
-v1.10.0
+This builds on rj/add-p-pager.
 
-should sort as appropriate. We might need something like v({semver}), or =
-a more general regex-like (prefix){0,1}(semver){1}(suffix){0,1}.
+Thanks. 
 
-While at it, having a reverse sort would also be useful. For platforms =
-that have semver-util, this can be trivially scripted. For exotics, no =
-such luck, as semver-util is not especially portable, not for lack of =
-trying.
+Rubén Justo (2):
+  t3701: avoid one-shot export for shell functions
+  pager: make wait_for_pager a no-op for "cat"
 
->As for the special range syntax, I think the typical suggestion is to =
-filter the output of
->ls-remote or for-each-ref by piping it to a suitable program.  Perl or =
-Ruby are
->common choices here, and both could easily parse SemVer tags.  For =
-example:
->
->  git for-each-ref --sort=3Dv:refname refs/tags/ |
->  ruby -ne 'if %r[\trefs/tags/v(\d+)\.(\d+)\.(\d+)$]; ver =3D
->Regexp.last_match[1..3].map(&:to_i); puts $_ if [[2, 6, 3], ver, [2, =
-15, 2]].sort[1] =3D=3D
->ver; end'
->
->Git is intentionally designed to support this kind of shell scripting.
+ pager.c                    | 3 +++
+ t/t3701-add-interactive.sh | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-I think implementing both wrapped semver and reverse sort in git tag =
-might be useful for large projects, like git and OpenSSL where the =
-number of tags is large. It would make finding time-ordered releases =
-somewhat easier.
 
---Randall
-
+base-commit: 6bc52a5543008bff2c6ec7a0a935c7fc1f79e646
+-- 
+2.45.1
