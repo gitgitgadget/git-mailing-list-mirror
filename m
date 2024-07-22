@@ -1,135 +1,116 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4541C6A8
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446BD4438B
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:30:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721683550; cv=none; b=AGunX9YZkQOb/PJBnTAowGtxmYuAlFgNPxxOISvkPY2FasYUIwtv+fSzWzn2pJp1DleXAj9mALKfZtlrg6bIfyGHN3zB9jwnEStuGIhq/DDgPhF0ajzRC7smW1KHlnRrf4q/b29J5nFro+0+N+42XEAiakDxW3pgVOBnc6Fi4xM=
+	t=1721683855; cv=none; b=Zxm+UnFyS8WEcDo5lBwSu5r5HWupeH1I0ncxO3CAaJ/YgTANhMkjoL/EWDwCJ9ijFRtnQ3O65Ofx7KCqDO804wr4hCRwn9hJlSWouYrIYwZiVyFJ5vQi/Csv1vXnXcFREGSvEcYkInGRi48xEP5s0bZ2BbJPknwj3s/qK7n6NnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721683550; c=relaxed/simple;
-	bh=9dU8QNOav11WSAZLt56RqjAXS4WlR0vER7d2Exkb7/8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hDd6HpQ+rLkHYEZvQBgpc9EMjvbFiSxkjnhV1cFkmB4+6/lNtUxagXblghIwOFSgacNtHyVPlxRhf5+UAuYCphwHGWGxWgvk334+Hek3AAteCUL0tvkGEURx9nc0q0CWb6PuveEKvGhmxUrJTr3LatpwiTRPL+T5+an1Pg93Oig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QrXG5Hjp; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721683855; c=relaxed/simple;
+	bh=1Dkznp153vLO0H1fLAqwqP+J0xOjqeQZyveGQbDWZh4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hz2jjsm1+eV3T8+j/eJslFyTDm5al95Q4oLlcXu5BLKnSfPRnZ+zVVzq6EmxmoNdQNZ/FMxrka0CkyddTzXslwbjVl07v/y3iw/eg4TG1+Tx3f5AQKvmwMkYmy/XFgXlQyIvc5FjN4cxPF62hlCLdBgAA7VOK9aQbY8bkTZ1IVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zyby0+Xj; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QrXG5Hjp"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A94FC3A2F6;
-	Mon, 22 Jul 2024 17:25:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9dU8QNOav11W
-	SAZLt56RqjAXS4WlR0vER7d2Exkb7/8=; b=QrXG5HjpnuGRY4uTaI30a47eiFEJ
-	LQ3QDJg9tZcVZK5mgXNUtPqyTQT7RCEoT6xP1GKd+uonaA1GU3G3Puoz0uZF7fkO
-	R8umQAio1NnYugbNRA4Zvj/r7UmaDiDzzE9ghkM297kJjvOQGbnGUo2CUFJIlZnp
-	VSzNSeVdOWCe2ic=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F4EF3A2F5;
-	Mon, 22 Jul 2024 17:25:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zyby0+Xj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1721683845;
+	bh=1Dkznp153vLO0H1fLAqwqP+J0xOjqeQZyveGQbDWZh4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zyby0+XjI0my7B55ChWzB63XdNml8mBs9RMKMq/bZxm2tCFd4iv4DldA8PXVdvqC1
+	 BuVX1QJbl2zskGqXuPqtvUI6sNx8JCo05YCzfwPxTzV6hwPb0Z1rZ6ymsPtCT5USXD
+	 IPHLUqerUVz0uMk+J66HDZVMtm7axQ8cUGu1Y8fxtdDL7qFb4M0Si1qHgfvi+HCAwv
+	 tE1RVa7zRuCWqpI34Tsl9v9mnxKTA2Dk+RlCKvM5TavfWml6WXiQbsInK8UrDbU5HD
+	 4LCNddi6geeDMVJSt0SKHSNAH2ao94p6RnB6ysyfLnlGyhhdHETmTQb3KoMtDjFHzX
+	 qa3bq/Iuy+4ioFVCTIAHJUCQMkwBY5tT0b6ohCWC0HHYr+TKydj4d4vVoHdUqzlLVB
+	 8zOoTfKEPBsch6pTvB3h0gdyP4podD/HGNwq7kus52AaC53ayC1QXdkXQ+cjDlhjlO
+	 Z038EV7OdwGoIj/ekRi6VnUrN+VEj/Ot1TOSBc9ESRtIN6OjpVy
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 059E23A2F4;
-	Mon, 22 Jul 2024 17:25:46 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
- Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
-In-Reply-To: <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Mon, 22 Jul 2024 21:06:02 +0200")
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
-	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
-	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-	<1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com>
-	<xmqqttgqyzwa.fsf@gitster.g>
-	<2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
-	<88f9256e-04ba-4799-8048-406863054106@gmail.com>
-	<a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
-	<xmqqv80xcpe5.fsf@gitster.g>
-	<079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
-Date: Mon, 22 Jul 2024 14:25:45 -0700
-Message-ID: <xmqq7cdd9l0m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 73323209B3;
+	Mon, 22 Jul 2024 21:30:45 +0000 (UTC)
+Date: Mon, 22 Jul 2024 21:30:43 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Thaina Yu <thainayu@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [feature request] Is it possible to have git tag can be sorted
+ and filtered by semver?
+Message-ID: <Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Thaina Yu <thainayu@gmail.com>, git@vger.kernel.org
+References: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5INLHbCR/K1Iwb60"
+Content-Disposition: inline
+In-Reply-To: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--5INLHbCR/K1Iwb60
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- F5E05958-4870-11EF-8AB8-BAC1940A682E-77302942!pb-smtp2.pobox.com
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On 2024-07-22 at 16:58:11, Thaina Yu wrote:
+> Currently there is `ls-remote` and `tag` that has option to
+> --sort=3Dversion:refname which is really useful when we have tag as
+> version format and let it sort as numeric version
+>=20
+> But it could be better if we can also sort and filter the version in
+> the range of semver format. So we can use git system as dependency
+> management system natively
+>=20
+> So I would like to propose a new sort option semver:refname
+>=20
+> `git ls-remote --sort=3Dsemver:refname myRepoUrl refs/tags/v{^0.*.*}`
+> where brace {} can be used to define semver versioning ranges for the
+> patterns in addition to glob filter
 
-> To fix the test, as already said, we need this:
->
-> 	test_write_lines P q |
-> 	(
-> 		GIT_PAGER=3D"head -n 1" &&
-> 		export GIT_PAGER &&
-> 		test_terminal git add -p >actual
-> 	)
+Assuming we add such a feature, how does sorting by SemVer differ from
+the current version sorting?  That is, where is the current version
+sorting deficient for SemVer?  Also, what do you want to happen when a
+tag doesn't meet SemVer requirements (note that the "v" prefix is not
+allowed in SemVer, although it's customary in tags)?
 
-This took sufficiently large amount of collective braincycles, and
-it would be worth documenting as a separate patch, I would suspect.
+As for the special range syntax, I think the typical suggestion is to
+filter the output of ls-remote or for-each-ref by piping it to a
+suitable program.  Perl or Ruby are common choices here, and both could
+easily parse SemVer tags.  For example:
 
-Something along the following lines, but please take the authorship
-*and* give it a better explanation.
+  git for-each-ref --sort=3Dv:refname refs/tags/ |
+  ruby -ne 'if %r[\trefs/tags/v(\d+)\.(\d+)\.(\d+)$]; ver =3D Regexp.last_m=
+atch[1..3].map(&:to_i); puts $_ if [[2, 6, 3], ver, [2, 15, 2]].sort[1] =3D=
+=3D ver; end'
 
-Thanks.
-
---- >8 ---
-Subject: [PATCH] t3701: avoid one-shot export for shell functions
-
-The common construct
-
-    VAR=3DVAL command args
-
-to temporarily set and export environment variable VAR only while
-"command args" is running is handy, but one of our CI jobs on GitHub
-Actions uses Ubuntu 20.04 running dash 0.5.10.2-6 failed with the
-construct, making only a temporary assignment without exporting the
-variable, when command is *not* an external (in this case, a shell
-function).
-
-The "git add -p" being tested did not get our custom GIT_PAGER,
-which broke the test.
-
-Work it around by explicitly exporting the variable in a subshell.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3701-add-interactive.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c60589cb94..1b8617e0c1 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -616,7 +616,11 @@ test_expect_success TTY 'P handles SIGPIPE when writ=
-ing to pager' '
- 	test_when_finished "rm -f huge_file; git reset" &&
- 	printf "\n%2500000s" Y >huge_file &&
- 	git add -N huge_file &&
--	test_write_lines P q | GIT_PAGER=3D"head -n 1" test_terminal git add -p
-+	test_write_lines P q | (
-+		GIT_PAGER=3D"head -n 1" &&
-+		export GIT_PAGER &&
-+		test_terminal git add -p
-+	)
- '
-=20
- test_expect_success 'split hunk "add -p (edit)"' '
+Git is intentionally designed to support this kind of shell scripting.
 --=20
-2.46.0-rc1-48-g0900f1888e
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
+--5INLHbCR/K1Iwb60
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZp7PggAKCRB8DEliiIei
+gdoYAQCqUG1ZwQ/RsNQy3zuJRf26shXEVT+gmwfncNb9W+vMrQEAgqSnetiDuOIy
+YieEM54VmYoEcdCR5xqM0/5OUclF+Q0=
+=bHk7
+-----END PGP SIGNATURE-----
+
+--5INLHbCR/K1Iwb60--
