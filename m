@@ -1,141 +1,200 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8961607A0
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 07:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7042917C6C
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 08:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721634740; cv=none; b=gK4TjfjvIJKjPTtpSd525gLHNR4LNgQvMRdc5yGn6o4ZxAP2PO/r0ASC+zOw7621s2ScvajbOC1eUG5I+iKGPV4ye8xk4j84wLt5lSfuZN1utv3fOoSO2/NHsNtblNUdtwerIX8N/AD2yWOwL07MetC1dOfyGGkxu4FKojoS668=
+	t=1721635663; cv=none; b=a+MTO61xt0azAjpiV9EYL5LiFKEERGcPZPTK+g2q4L5qRduw4g54ihMOn4WKU+8N9543W4l8srgGb3RTsn8DWvkRjqTgniWf/kVDCOF5Nf3MeZ72/JCdTUDsZEAFrrP1uxTDRGxgQt4vkkUBPahFMI/8ITrooOkHPJ2RKXHvcx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721634740; c=relaxed/simple;
-	bh=BH6HO/BP/SzNl50twwKKc+RnAyqwtKRZqN05TikwdQ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OT+rUgKMWxmNtBa5JMMCBZke18oOhYZvHplszKwHshe1UL0PnaPHl1N79/rSmshGJoUsbTnWtJ/AZWLZ8RKKlkqajYpw8cgU2WGeheaQ2Jaca9SrUkxgvujExN8i/GRwfhi+Iqo2vD84EcVTZLKPlzioipTtQekDRsN8QQZNBmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pxzLbyMQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hv7IVc5w; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1721635663; c=relaxed/simple;
+	bh=FkuZcvlYOayglpaS9kjoSAD0HAY/mFxeot/kyRtGP48=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pbjURCCHj7SmWL49Rr1kM+NT/8VWYH68uNe+096JHWDQu0S2bTqdRZ+DmN5cfTGdCec0qfAb6B8QYkp4M9onOTtNvubJESIMEQnFZppIzzHNb3d8k+KmvfPaHemFswoX+AQQU2qwZLJmb+iKxgZ4HtycQTkr3/4bb3v0m4nwPfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VOj+cDKL; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pxzLbyMQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hv7IVc5w"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id B2ABA114020A;
-	Mon, 22 Jul 2024 03:52:17 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 22 Jul 2024 03:52:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721634737; x=1721721137; bh=7BTVfy1+wt
-	V1Ta/BayYOrcHoMe7Dea4uvpz1qkqp8mU=; b=pxzLbyMQI7ROOBOqZJk4zl5+DL
-	WSmOawG4UF2nsgK1xk05kFKPk+KLz4KS54rjHxAnnm9P1JcIalMZlnAMM6zjBELk
-	pP6P8rirAMpfNWJpyDhDqQC1yCcI/Wbk0ofmAoig1DtbJ5ytRl5go9iJGp3qUVYq
-	F42Gco2lwCiRssNEW0eTF5yufMCMwhLP95Xmwcdi6hk7f+0kK0c2c/6Kim3z+OQ/
-	12P4fJPHH2X05F70qgI/k7F+LsI6aClPv/LHcvt9Z0whASWOcUKaQVOZtiOF0hR8
-	5dOtG1DfPEtrPCptjGQJLIMLnPSutaH97jj+AYotsk0ywoUTsmPPpumRL8ZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721634737; x=1721721137; bh=7BTVfy1+wtV1Ta/BayYOrcHoMe7D
-	ea4uvpz1qkqp8mU=; b=Hv7IVc5wJZT8+HM0k8SZIhdEMDH6duEhWVlouMC6jUN7
-	1wq8BBBudy1QQung3gGvLw2cIGi9x57iBDAAFaqqPVkAiKai2dfCsE5E6vEVJOQy
-	SLSodZGf8i8/Mt6VCoe8j/HlXZkdOaSr1wiXLhZMa84m2l/0bR1K3gIwAvlTOLi2
-	P91MNyqotO6phTVd/ukg2BaCRHiGGX5PVYr9zJF8wVd02ehLVrGMbogT0kkeCIfz
-	VZvhx3DWk6zUWyjPlZXBlSrcJCEolPWdadK+4gXNvTglCkUMgeg6+OpaUk6TNHgM
-	VGB7XsRHSPZzrDssH0DmqEogMYrdiBBuaJ9TPGX2wA==
-X-ME-Sender: <xms:sQ-eZtNSa10o8qR5HXCRrPMxRRsFZchyeYLVMptf-zXstcEHLVm34Q>
-    <xme:sQ-eZv_xlc9onLooU43GXzcEOVa5l_AI8wZPwcddfCl7pJTDM6JPcXmJJvE24pINN
-    K8tWcUDGy6dZStzow>
-X-ME-Received: <xmr:sQ-eZsR7t0qQlmhoZWLILtBfqUth5I-WpNQeboC_Y9cpKK_s6JXDhdkVvaDzfWt8xnirJFs1JYQ9MGbANOdAfF9N0UN29WDImvysSuHctPPyqjdN8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheeigdduvdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:sQ-eZps25f70t8vZj0TqN_5NJ-ZICGT7GmcdXzdkcuYUHkRaKod6hg>
-    <xmx:sQ-eZldGz3MUbm07X2r0ZUy_8IEPOB30R4-AcrmuzGkIkvXxW-tAjg>
-    <xmx:sQ-eZl25jVPYHVrZS3LQKTK99Nl-aR1tFe-DRMXVM9pqPDj8IPQ-kg>
-    <xmx:sQ-eZh8MO-KxF1sfppy3QbUONv0_P26sKw6DcWVIR_2hLo6rgYryFg>
-    <xmx:sQ-eZp4Nfz4tOdbnH_T-SpZzPILGdVlwgcl9L9Fq4e8ivvhc1iAu6UXl>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jul 2024 03:52:16 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ae0bc83a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jul 2024 07:51:02 +0000 (UTC)
-Date: Mon, 22 Jul 2024 09:52:11 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] test-lib: GIT_TEST_SANITIZE_LEAK_LOG enabled by default
-Message-ID: <Zp4Pq-adl2mwA8ql@tanuki>
-References: <598149bf-6541-4c9e-8c94-a108e3ee7fd7@gmail.com>
- <20240710011206.GC1526498@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VOj+cDKL"
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1721635655;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=lfZpifwY0kzrAYfYBxiuPtJj00RIanAtwylqmBLe8rU=;
+	b=VOj+cDKL+m/TGFHBNZLsrd8WzukHJvG8GSsCBgeFcRYJRq8zUoLHa83UUyRkNBZkfsw+cN
+	0boTHDy0uYglI0Jrb5Nvp5WH0X0V++0k95ZNa7BnMS0W0UoFc08qEHVFipdUNFdHTg8FBS
+	lACSjIN88vRHMbkr3XpO/iQsrmYeKRA=
+X-Envelope-To: toon@iotcl.com
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Toon Claes <toon@iotcl.com>
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>
+Subject: [PATCH] fetch: use bundle URIs when having creationToken heuristic
+Date: Mon, 22 Jul 2024 10:07:05 +0200
+Message-ID: <20240722080705.2614195-1-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sC378RLJiYj3FeAM"
-Content-Disposition: inline
-In-Reply-To: <20240710011206.GC1526498@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
+At the moment, bundle URIs are only used on git-clone(1). For a clone
+the use of bundle URI is trivial, because repository is empty so
+downloading bundles will never result in downloading objects that are in
+the repository already.
 
---sC378RLJiYj3FeAM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For git-fetch(1), this more complicated to use bundle URI. We want to
+avoid downloading bundles that only contains objects that are in the
+local repository already.
 
-On Tue, Jul 09, 2024 at 09:12:06PM -0400, Jeff King wrote:
-> On Wed, Jul 10, 2024 at 02:51:58AM +0200, Rub=C3=A9n Justo wrote:
->=20
-> > As we describe in t/README, it can happen that:
-> >=20
-> >     Some tests run "git" (or "test-tool" etc.) without properly checking
-> >     the exit code, or git will invoke itself and fail to ferry the
-> >     abort() exit code to the original caller.
-> >=20
-> > Therefore, GIT_TEST_SANITIZE_LEAK_LOG must be set to true to capture all
-> > memory leaks triggered by the tests when SANITIZE=3Dleak.
-> >=20
-> > Set it to true by default, and stop worrying about someone checking for
-> > leaks who isn't aware of this option and might be missing some leaks.
->=20
-> I'm obviously in favor of this direction, but...why stop here? Do we
-> expect somebody to set it to false? If not, then can't we just get rid
-> of it entirely?
+One way to achieve this is possible when the "creationToken" heuristic
+is used for bundle URIs. With this heuristic, the server sends along a
+creationToken for each bundle. When a client downloads bundles with such
+creationToken, the highest known value is written to
+`fetch.bundleCreationToken` in the git-config. The next time bundles are
+advertised by the server, bundles with a lower creationToken value are
+ignored. This was already implemented by 7903efb717 (bundle-uri:
+download in creationToken order, 2023-01-31) in
+fetch_bundles_by_token().
 
-I'd also be strongly in favor of just removing this variable altogether.
-I found it quite tedious to remember setting it when working on the
-memory leak fixes recently, and I'm not aware of any downsides.
+Using the creationToken heuristic is optional, but without it the
+client has no idea which bundles are new and which only have objects the
+client already has.
 
-Patrick
+With this knowledge, make git-fetch(1) get bundle URI information from
+the server, but only use bundle URIs if the creationToken heuristic is
+used.
 
---sC378RLJiYj3FeAM
-Content-Type: application/pgp-signature; name="signature.asc"
+The code added in builtin/fetch.c is very similar to the code in
+builtin/clone.c, so while at it make sure we always clean up the bundles
+list advertised by the server.
 
------BEGIN PGP SIGNATURE-----
+Signed-off-by: Toon Claes <toon@iotcl.com>
+---
+ builtin/clone.c             | 13 +++++-----
+ builtin/fetch.c             | 17 +++++++++++++
+ t/t5584-fetch-bundle-uri.sh | 49 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 6 deletions(-)
+ create mode 100755 t/t5584-fetch-bundle-uri.sh
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaeD6oACgkQVbJhu7ck
-PpTlDhAAi0ZBWXqZJP5H+PF0z/y+GKdGCb6dN40rTn6n+rXxcwt04ixTfEy4XW6O
-rXHrEC8hT9jABHJYRe8eiGjyanSjcJ1MmqqQ1yQAamqyGBDDw/mP+dheBO1d3GLd
-b5cCTBB8OuWeqXdsQavClR5KJenWezkLguuLqg20MITzai9xvA4ELUHkJbsyG3ew
-JVMKJXh00FwTAHy+u47HK5eVutZ7iHVLZgK6yA+T2Q1fn3rwmBqdlTqcNK4HcWlr
-fe9lDC92UUPbfI1HjRgDl+3UJcQO4DS4MlEwi8+HnxGOoe0/rSLJptrfEfcNrIND
-Uet4M0HsPFN8ylGvsbrPEbkUSo5XR425HGArmHsiv1E397eGIhQXcy1olOJmVNaa
-cXoQKYbA3YFemE80gvc6mUOwa3woq0+LboqToCE7VRsp20XpNFTyOIixWEaomL4e
-ug2l9tkIZLLPqGyXTYH1oJK3zJbbpD3njaGv7s3nc4dwUO7T18SP3dmeILeH27ej
-Eo0PvF5f72bI3anYxtoGw8pot1d3RjCbi0vdmhWfkFwJMvzd9nwKtlPQYTvP7kvx
-kFez7axSjnAU6hcrjvux79oLIzVFk5umwzuUMWISig1BzCRco8L2cphLyxzJkkAC
-zpgoLoRVSvMbxzje2p7lwpEhCDvhI5ia2U7lyiWzfZLJdWrjLf4=
-=3Z3d
------END PGP SIGNATURE-----
+diff --git a/builtin/clone.c b/builtin/clone.c
+index af6017d41a..29f0470aea 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1406,9 +1406,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			git_config_set_gently("fetch.bundleuri", bundle_uri);
+ 	} else {
+ 		/*
+-		* Populate transport->got_remote_bundle_uri and
+-		* transport->bundle_uri. We might get nothing.
+-		*/
++		 * Populate transport->bundles. We might get nothing or fail
++		 * trying, but clone can continue without bundles as well.
++		 */
+ 		transport_get_remote_bundle_uri(transport);
 
---sC378RLJiYj3FeAM--
+ 		if (transport->bundles &&
+@@ -1419,10 +1419,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			else if (fetch_bundle_list(the_repository,
+ 						   transport->bundles))
+ 				warning(_("failed to fetch advertised bundles"));
+-		} else {
+-			clear_bundle_list(transport->bundles);
+-			FREE_AND_NULL(transport->bundles);
+ 		}
++
++		clear_bundle_list(transport->bundles);
++		if (transport->bundles)
++			FREE_AND_NULL(transport->bundles);
+ 	}
+
+ 	if (refs)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 693f02b958..1e944f81af 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1694,6 +1694,23 @@ static int do_fetch(struct transport *transport,
+ 			retcode = 1;
+ 	}
+
++	/*
++	 * Populate transport->bundles. We might get nothing or fail
++	 * trying, but fetch can continue without bundles as well.
++	 */
++	transport_get_remote_bundle_uri(transport);
++
++	if (transport->bundles &&
++	    hashmap_get_size(&transport->bundles->bundles) &&
++	    (transport->bundles->heuristic == BUNDLE_HEURISTIC_CREATIONTOKEN)) {
++		if (fetch_bundle_list(the_repository, transport->bundles))
++			warning(_("failed to fetch advertised bundles"));
++	}
++
++	clear_bundle_list(transport->bundles);
++	if (transport->bundles)
++		FREE_AND_NULL(transport->bundles);
++
+ 	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
+ 				   &fetch_head, config)) {
+ 		retcode = 1;
+diff --git a/t/t5584-fetch-bundle-uri.sh b/t/t5584-fetch-bundle-uri.sh
+new file mode 100755
+index 0000000000..6c2383646e
+--- /dev/null
++++ b/t/t5584-fetch-bundle-uri.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++
++test_description='test use of bundle URI in "git fetch"'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++test_expect_success 'set up repos and bundles' '
++	git init source &&
++	test_commit -C source A &&
++	git clone --no-local source go-A-to-C &&
++	test_commit -C source B &&
++	git clone --no-local source go-B-to-C &&
++	git clone --no-local source go-B-to-D &&
++	git -C source bundle create B.bundle main &&
++	test_commit -C source C &&
++	git -C source bundle create B-to-C.bundle B..main &&
++	git -C source config uploadpack.advertiseBundleURIs true &&
++	git -C source config bundle.version 1 &&
++	git -C source config bundle.mode all &&
++	git -C source config bundle.heuristic creationToken &&
++	git -C source config bundle.bundle-B.uri "file://$(pwd)/source/B.bundle" &&
++	git -C source config bundle.bundle-B.creationToken 1 &&
++	git -C source config bundle.bundle-B-to-C.uri "file://$(pwd)/source/B-to-C.bundle" &&
++	git -C source config bundle.bundle-B-to-C.creationToken 2
++'
++
++test_expect_success 'fetches one bundle URI to get up-to-date' '
++	git -C go-B-to-C -c transfer.bundleURI=true fetch origin &&
++	test 1 = $(ls go-B-to-C/.git/objects/bundles | wc -l) &&
++	test 2 = $(git -C go-B-to-C config fetch.bundleCreationToken)
++'
++
++test_expect_success 'fetches two bundle URIs to get up-to-date' '
++	git -C go-A-to-C -c transfer.bundleURI=true fetch origin &&
++	test 2 = $(ls go-A-to-C/.git/objects/bundles | wc -l) &&
++	test 2 = $(git -C go-A-to-C config fetch.bundleCreationToken)
++'
++
++test_expect_success 'fetches one bundle URI and objects from remote' '
++	test_commit -C source D &&
++	git -C go-B-to-D -c transfer.bundleURI=true fetch origin &&
++	test 1 = $(ls go-B-to-D/.git/objects/bundles | wc -l) &&
++	test 2 = $(git -C go-B-to-D config fetch.bundleCreationToken)
++'
++
++test_done
+--
+2.45.2
