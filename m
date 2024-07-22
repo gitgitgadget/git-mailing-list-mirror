@@ -1,162 +1,274 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE21C695
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 19:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8636317C7C
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 19:13:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721675167; cv=none; b=BurKi1zIN48YL0MYR5epCPu77nmK+mW3GzQQzoCsv2YxFvGMLdzEKLey2+5mOqc+HJMumSdarsNkqKXQhLdfuNDCAruQ6bxiPD8aiTAl4ATpAaRJsLNdeu9Co6R8PA3sQ5NEk+A5MmpbgBCvJZnLI5K2hmAASXVZBZaW6JO2Trk=
+	t=1721675601; cv=none; b=BoyLf94Y/TIK+1k+wVgQJdb0efUuESPNQ5LD3Z+xDpiDbejF5B+2rfn05M10bctWcFg9vllCMzpv2p1B4RjIgPn2PSxlwLilZuiAaUWxLjizrftOQZJSY7LGUucXJAjcIJMxiHH3Ak2qrM8elMl/xfF4lB0mP5C8FXFRlyxnwO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721675167; c=relaxed/simple;
-	bh=2TJYHD9WWhlPolg5DOWCeZCLYSyGRzu+iz6TIrIj1KU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ohsq422i7y80O5cZ0dR4YZo7SFrxoTio+lhA6joJNTglG1rJVSbaz0UW43VaWKZ+SZj+MkOxMoaayVEWCWdkA5x1RGY5Yl6cb22wpiPPTh2uyKn1t3s3HWJcJD1pHrLd35602cbEnjoivztjjChAM/iYYV4z8kbR/7KmaZWVOjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ciQ7ytIy; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721675601; c=relaxed/simple;
+	bh=m8ljtuuyATyLc2JPTP57sgycx1zY/rZ7+jjpiiib+rs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FR1Sm+FPxxTf/7VF4DnjpHZenFB8Sgp0JRJ+9uz2C6NkPPqggf/vrMuQbysuTD6bnRDSdClhs96UbQ1gVkKB9jCA6Is6l8imVsTWhYwm7/S5OXdGX/V/ivkhHBb+f1b9PpICwbndwcQdjRlWV7C637iYMlBlw+OD8HxCGWLouB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JvsvMOZM; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ciQ7ytIy"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-368712acb8dso2191644f8f.2
-        for <git@vger.kernel.org>; Mon, 22 Jul 2024 12:06:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JvsvMOZM"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5a108354819so4194417a12.0
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 12:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721675164; x=1722279964; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p5GuPpNCteLrZVNTjBIiEP2ByyC/GWnV8zTS6a5jPBA=;
-        b=ciQ7ytIy3zXoV7WQUZQu5a3xEb1nvmXzI9OvQ1ZI4ADHVmCISNRbgLj75rEwvlBGoB
-         ddH9qVbC4OGkeUbJXqy8l8+wh1mYVBphWWll2zTYV405LRdHGY48zebpPcJfZx7WR16l
-         8pAsDQs0f4eIwnwwQ4jbs7LzAQRmgxOpeuzNl0797OxTZpeMTuI9bVpw49X5AslFMRuw
-         3MCUkipvNSkgdqm/Jhky+cq7wqjQL+2qlGad2OKipUNKp3GdZ/wEse6cNgJjevuGgigl
-         HC0tX8Ueua+JCqTxxcPk1c5Zw67+2mSdLArFZrqaS3P/jwAeJQMK3K8G8Du5p2UL/Ibp
-         f5/A==
+        d=google.com; s=20230601; t=1721675598; x=1722280398; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hdPGBRsVcJNKoURp7CvTFDIHeLS7dW2UWPi/0SdmGpM=;
+        b=JvsvMOZM2Ko96fdptiD3icNZf0/0zBrbsnKPs/sgUCXHNAY9G7yU3fdHrhPy/u6B6o
+         QnR3LMj4T85fzwAm3j0K+aACHkyyfuJvqK67pq/7jD7BfHBmeK1dmsYxp4Agp2lqqzjz
+         9stVs/gtWqd5HxS8vV0ejMfzd5egYCpYzX8jLiSZzuhyl/kVhRL02rqN6+Jmb3UW87Cw
+         6sux0UEKAC1q7lJVKc6nCWjRfM9TAvrHJ0Qg6eDdqtujzpPfy+M88PJ0aTBmZPX7ZJfL
+         2nLBEAz4m/RNIPc89T2egfB97Op2Be2+8joiMTkrwNQj6EzhWfgq+WHvkLiOxhgATmrM
+         y2dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721675164; x=1722279964;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p5GuPpNCteLrZVNTjBIiEP2ByyC/GWnV8zTS6a5jPBA=;
-        b=aB7aJ4yAf9/B/EJbbYlY4zrMiD76/YaAcLekmQykK0SSD/cUdm3KnRPQwdb/yqZngr
-         tMJq/+SBPE3l0p3JehtNXIAUOqMiK20TWWn+qiKO9QkR32eqO68Am8uxNl0qID3r6NrE
-         2P8pmYEzhHz+bKTiPPZUC0Ok70Z4NOxoM89TvLyOwUHS+hWZ5UgEMm4B3yGaH6zHXSkw
-         m28iQqtCGyigDv3hVMS8i4+g7qd6Gdw7eDrAJ1bnvOZP6ic7NHaamu5ho1rMt/Lf+o98
-         0fz/epxokedNgEG2NfOcDCa54CjodxtftG/XhP729MgUN3QhocZSXWRafF34PbWpmnoA
-         gseg==
-X-Forwarded-Encrypted: i=1; AJvYcCXaSfG5KEuhP93gFyp/MymlAnw/BGFtP+odQS/apNBMMv7Gc/uEofrwwVJIWBVvKjkjVagJVTtr4gkZED9DDq+8WbLj
-X-Gm-Message-State: AOJu0YxuQ9V/t1MOkZ0O6rHYePfXVwzWsJmxz00TdVtetJ/dQK0q2wKd
-	nfAu2+8azo+p1x1QwcpdNa/MMHYOTmPrBhcTfosakNnqkdqQiWjk
-X-Google-Smtp-Source: AGHT+IFaDTNAHlTNCZ6il9VLLq8b+zBMgwSJwvp4BplqkzHivnDo4zfZaoLf3KVnwz565oD436Z1DQ==
-X-Received: by 2002:a05:6000:c4e:b0:368:4226:4085 with SMTP id ffacd0b85a97d-369debfe527mr581256f8f.8.1721675164097;
-        Mon, 22 Jul 2024 12:06:04 -0700 (PDT)
-Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ced05sm9291055f8f.67.2024.07.22.12.06.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jul 2024 12:06:03 -0700 (PDT)
-Message-ID: <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
-Date: Mon, 22 Jul 2024 21:06:02 +0200
+        d=1e100.net; s=20230601; t=1721675598; x=1722280398;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hdPGBRsVcJNKoURp7CvTFDIHeLS7dW2UWPi/0SdmGpM=;
+        b=QT4eOzXsTJ88iTE4sXS4BQq3KvIXUgDFgODTvluuvuXAWcPJaveFoyam+8fxWFGqlo
+         ofMBBxNYr5NrbBj1ivzRlqCo+1lTbZSQvb34e8PpWgRMQVXcXTc0j7XTKncQ+iiedJ2n
+         kQFNnOBCWk6lq0rjeQFjd5FE74//03Ec97vUlCgQ3jDYwTqqVoggt8iP6AHKnakGJQOa
+         mZB5eTULQR+81SeHwsWWUU3MdlvzmT8NpGBQV0Tc2ycfiPcXLKhxjARg9qT3iL2fbjf1
+         RWzmW1VVIRTSjgY9vwZfZeVK1GPRMt9uhResxrVKqO0a8+Yi+wLgnKJC+FhFWxhsYyPr
+         1t0Q==
+X-Gm-Message-State: AOJu0YxD0SKmVpDxdnqA21jHn+NMZuzdZEhQqOa5e156ezLHjHZVSv5S
+	zH8zJqv0+CIxgoHnSLgDCdzcIjHlLlr1ycLUiJz386jjy0qSgjYx+2tn1CjmwdtpUEP9/llv/uU
+	ssTj8pRwGBbL0uT/dIjjZxyuVaWCYCIcL9uQtlQ93BANKBrN2KQ==
+X-Google-Smtp-Source: AGHT+IFmdo+r00pvUTKOMIjJRcNmulehKDd5b09PBEgR69I7U+HWrBYmtXRBDDt+ZxVgB8WUk5HWPsG8hHR46l1xEwQ=
+X-Received: by 2002:a17:907:7285:b0:a77:dd1c:6270 with SMTP id
+ a640c23a62f3a-a7a4bf39d1bmr552711366b.5.1721675597152; Mon, 22 Jul 2024
+ 12:13:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
- Dragan Simic <dsimic@manjaro.org>, Jeff King <peff@peff.net>
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
- <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
- <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
- <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
- <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
- <88f9256e-04ba-4799-8048-406863054106@gmail.com>
- <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com> <xmqqv80xcpe5.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqv80xcpe5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de> <da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
+ <2dff757d-3c5d-4923-97df-26bcb1c21230@web.de>
+In-Reply-To: <2dff757d-3c5d-4923-97df-26bcb1c21230@web.de>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 22 Jul 2024 12:13:00 -0700
+Message-ID: <CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] unit-tests: add for_test
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 22, 2024 at 10:22:58AM -0700, Junio C Hamano wrote:
- 
-> Attached at the end is a test tweak patch, taking inspirations from
-> Phillip's comments, to see what value GIT_PAGER has in the shell
-> function.  I shortened the huge_file a bit so that I do not have to
-> have an infinite scrollback buffer,but otherwise, the test_quirk
-> intermediate shell function should work just like the test_terminal
-> helper in the original position would.
-> 
-> And I see in the output from "sh t3701-add-interactive.sh -i -v":
-> 
->     expecting success of 3701.51 'P handles SIGPIPE when writing to pager': 
->             test_when_finished "rm -f huge_file; git reset" &&
->             printf "\n%250s" Y >huge_file &&
->             git add -N huge_file &&
->             echo "in env: GIT_PAGER=$(env | grep GIT_PAGER=)" &&
->             test_write_lines P q | GIT_PAGER="head -n 1" test_quirk &&
->             echo "after test_quirk returns: GIT_PAGER=$GIT_PAGER"
-> 
->     in env: GIT_PAGER=
->     in test_quirk: GIT_PAGER=head -n 1
->     in env: GIT_PAGER=GIT_PAGER=head -n 1
->     In test_terminal: GIT_PAGER=GIT_PAGER=head -n 1
->     test-terminal: GIT_PAGER=head -n 1
->     diff --git a/huge_file b/huge_file
->     new file mode 100644
->     index 0000000..d06820d
->     --- /dev/null
->     +++ b/huge_file
->     @@ -0,0 +1,2 @@
->     +
->     +                                                                                                                                                                                                                                                         Y
->     \ No newline at end of file
->     (1/1) Stage addition [y,n,q,a,d,e,p,?]? @@ -0,0 +1,2 @@
->     (1/1) Stage addition [y,n,q,a,d,e,p,?]? 
->     after test_quirk returns: GIT_PAGER=
->     Unstaged changes after reset:
->     M       test
->     ok 51 - P handles SIGPIPE when writing to pager
-> 
-> So:
-> 
->  - before the one-shot thing, in the envrionment GIT_PAGER is empty.
->  - in the helper function,
->    - shell variable GIT_PAGER is set to the expected value.
->    - GIT_PAGER env is exported.
->    - test-terminal.perl sees $ENV{GIT_PAGER} set to the expected value.
->  - after the helper returns GIT_PAGER is empty
-> 
-> It's a very convincing theory but it does not seem to match my
-> observation.  Is there a difference in shells used, or something?
+On Sat, Jul 20, 2024 at 11:22=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> w=
+rote:
+>
+> The macro TEST only allows defining a test that consists of a single
+> expression.  Add a new macro, for_test, which provides a way to define
+> unit tests that are made up of one or more statements.
+>
+> for_test allows defining self-contained tests en bloc, a bit like
+> test_expect_success does for regular tests.  It acts like a for loop
+> that runs at most once; the test body is executed if test_skip_all()
+> had not been called before.
 
-Have you tried your tweak in the "linux-gcc (ubuntu-20.04)" test
-environment where the problem was detected?  In that environment, the
-value of GIT_PAGER is not passed to Git in that test. 
+I can see based on this description where the name came from, but
+without this context, it's not clear when reading a test what it
+actually does. The name comes from an implementation detail, and is
+not describing what it _does_, just _how_ it does it.
 
-To fix the test, as already said, we need this:
+Maybe a name like `small_test` or `quick_test` or something like that
+would better express the intended usage?
 
-	test_write_lines P q |
-	(
-		GIT_PAGER="head -n 1" &&
-		export GIT_PAGER &&
-		test_terminal git add -p >actual
-	)
+>
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  .clang-format               |  2 ++
+>  t/helper/test-example-tap.c | 33 +++++++++++++++++++++++++++++++++
+>  t/t0080/expect              | 35 ++++++++++++++++++++++++++++++++++-
+>  t/unit-tests/test-lib.h     | 19 +++++++++++++++++++
+>  4 files changed, 88 insertions(+), 1 deletion(-)
+>
+> diff --git a/.clang-format b/.clang-format
+> index 6408251577..863dc87dfc 100644
+> --- a/.clang-format
+> +++ b/.clang-format
+> @@ -151,6 +151,7 @@ Cpp11BracedListStyle: false
+>  # function calls. Taken from:
+>  #   git grep -h '^#define [^[:space:]]*for_\?each[^[:space:]]*(' |
+>  #   sed "s/^#define /  - '/; s/(.*$/'/" | sort | uniq
+> +# Added for_test from t/unit-tests/test-lib.h manually as a special case=
+.
+>  ForEachMacros:
+>    - 'for_each_builtin'
+>    - 'for_each_string_list_item'
+> @@ -168,6 +169,7 @@ ForEachMacros:
+>    - 'strintmap_for_each_entry'
+>    - 'strmap_for_each_entry'
+>    - 'strset_for_each_entry'
+> +  - 'for_test'
+>
+>  # The maximum number of consecutive empty lines to keep.
+>  MaxEmptyLinesToKeep: 1
+> diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
+> index d072ad559f..51d5e6e75b 100644
+> --- a/t/helper/test-example-tap.c
+> +++ b/t/helper/test-example-tap.c
+> @@ -92,5 +92,38 @@ int cmd__example_tap(int argc, const char **argv)
+>         test_res =3D TEST(t_empty(), "test with no checks");
+>         TEST(check_int(test_res, =3D=3D, 0), "test with no checks returns=
+ 0");
+>
+> +       for_test ("for_test passing test")
+> +               check_int(1, =3D=3D, 1);
 
-And this series also need the other other change that I'm discussing
-with Phillip: 
+I'm concerned that users will write this like:
++       for_test ("for_test passing test");
++               check_int(1, =3D=3D, 1);
 
-diff --git a/pager.c b/pager.c
-index 5f0c1e9cce..5586e751dc 100644
---- a/pager.c
-+++ b/pager.c
-@@ -46,6 +46,8 @@ static void wait_for_pager_atexit(void)
+And the issue won't be caught. Maybe that's fine; the only issue here
+is that it's not going to be as descriptive if it fails, right?
 
- void wait_for_pager(void)
- {
-+       if (old_fd1 == -1)
-+               return;
-        finish_pager();
-        sigchain_pop_common();
-        unsetenv("GIT_PAGER_IN_USE");
+> +       for_test ("for_test failing test")
+> +               check_int(1, =3D=3D, 2);
+> +       for_test ("for_test passing TEST_TODO()")
+> +               TEST_TODO(check(0));
+> +       for_test ("for_test failing TEST_TODO()")
+> +               TEST_TODO(check(1));
+> +       for_test ("for_test test_skip()") {
+> +               check(0);
+> +               test_skip("missing prerequisite");
+> +               check(1);
+> +       }
+> +       for_test ("for_test test_skip() inside TEST_TODO()")
+> +               TEST_TODO((test_skip("missing prerequisite"), 1));
+> +       for_test ("for_test TEST_TODO() after failing check") {
+> +               check(0);
+> +               TEST_TODO(check(0));
+> +       }
+> +       for_test ("for_test failing check after TEST_TODO()") {
+> +               check(1);
+> +               TEST_TODO(check(0));
+> +               check(0);
+> +       }
+> +       for_test ("for_test messages from failing string and char compari=
+son") {
+> +               check_str("\thello\\", "there\"\n");
+> +               check_str("NULL", NULL);
+> +               check_char('a', =3D=3D, '\n');
+> +               check_char('\\', =3D=3D, '\'');
+> +       }
+> +       for_test ("for_test test with no checks")
+> +               ; /* nothing */
+> +
+>         return test_done();
+>  }
+> diff --git a/t/t0080/expect b/t/t0080/expect
+> index 0cfa0dc6d8..583f41b8c9 100644
+> --- a/t/t0080/expect
+> +++ b/t/t0080/expect
+> @@ -40,4 +40,37 @@ not ok 17 - messages from failing string and char comp=
+arison
+>  # BUG: test has no checks at t/helper/test-example-tap.c:92
+>  not ok 18 - test with no checks
+>  ok 19 - test with no checks returns 0
+> -1..19
+> +ok 20 - for_test passing test
+> +# check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:98
+> +#    left: 1
+> +#   right: 2
+> +not ok 21 - for_test failing test
+> +not ok 22 - for_test passing TEST_TODO() # TODO
+> +# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:102
+> +not ok 23 - for_test failing TEST_TODO()
+> +# check "0" failed at t/helper/test-example-tap.c:104
+> +# skipping test - missing prerequisite
+> +# skipping check '1' at t/helper/test-example-tap.c:106
+> +ok 24 - for_test test_skip() # SKIP
+> +# skipping test - missing prerequisite
+> +ok 25 - for_test test_skip() inside TEST_TODO() # SKIP
+> +# check "0" failed at t/helper/test-example-tap.c:111
+> +not ok 26 - for_test TEST_TODO() after failing check
+> +# check "0" failed at t/helper/test-example-tap.c:117
+> +not ok 27 - for_test failing check after TEST_TODO()
+> +# check "!strcmp("\thello\\", "there\"\n")" failed at t/helper/test-exam=
+ple-tap.c:120
+> +#    left: "\011hello\\"
+> +#   right: "there\"\012"
+> +# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:12=
+1
+> +#    left: "NULL"
+> +#   right: NULL
+> +# check "'a' =3D=3D '\n'" failed at t/helper/test-example-tap.c:122
+> +#    left: 'a'
+> +#   right: '\012'
+> +# check "'\\' =3D=3D '\''" failed at t/helper/test-example-tap.c:123
+> +#    left: '\\'
+> +#   right: '\''
+> +not ok 28 - for_test messages from failing string and char comparison
+> +# BUG: test has no checks at t/helper/test-example-tap.c:125
+> +not ok 29 - for_test test with no checks
+> +1..29
+> diff --git a/t/unit-tests/test-lib.h b/t/unit-tests/test-lib.h
+> index 2de6d715d5..12afd47ac9 100644
+> --- a/t/unit-tests/test-lib.h
+> +++ b/t/unit-tests/test-lib.h
+> @@ -14,6 +14,25 @@
+>         test__run_end(test__run_begin() ? 0 : (t, 1),   \
+>                       TEST_LOCATION(),  __VA_ARGS__)
+>
+> +/*
+> + * Run a test unless test_skip_all() has been called.  Acts like a for
+> + * loop that runs at most once, with the test description between the
+> + * parentheses and the test body as a statement or block after them.
+> + * The description for each test should be unique.  E.g.:
+> + *
+> + *  for_test ("something else %d %d", arg1, arg2) {
+> + *          prepare();
+> + *          test_something_else(arg1, arg2);
+> + *          cleanup();
+> + *  }
+> + */
+> +#define for_test(...)                                                  \
+> +       for (int for_test_running_ =3D test__run_begin() ?               =
+ \
+> +               (test__run_end(0, TEST_LOCATION(), __VA_ARGS__), 0) : 1;\
+> +            for_test_running_;                                         \
+> +            test__run_end(1, TEST_LOCATION(), __VA_ARGS__),            \
+> +               for_test_running_ =3D 0)
 
+IMHO: this is borderline "too much magic" for my tastes. I think
+having multiple test functions is generally easier to understand, and
+the overhead isn't really relevant. It's not _as_ compact in the
+source file, and requires that we have both the TEST statement and the
+function (and forgetting the TEST statement means that we won't invoke
+the function). If that is the main issue we're facing here, I wonder
+if there's some other way of resolving that (such as unused function
+detection via some compiler flags; even if it's not detected on all
+platforms, getting at least one of the CI platforms should be
+sufficient to prevent the issue [but we should target as many as
+possible, so it's caught earlier than "I tried to send it to the
+list"])
+
+If others agree that this is a good simplification for the people
+reading the test code (and hopefully for the test author), I'm fine
+with this going in (with a different name). I'm not trying to veto the
+concept.
+
+
+> +
+>  /*
+>   * Print a test plan, should be called before any tests. If the number
+>   * of tests is not known in advance test_done() will automatically
+> --
+> 2.45.2
+>
