@@ -1,55 +1,65 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B578018042
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA32418042
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721691641; cv=none; b=ZHHBOZ2XqMXmR4KULUnv+pZlV3f8C0D8tcQs0VEuEV6swINqDv059mTfdCfN5QnwqTHJOHrvgLtWnHOg8GiEgHFjE3RFJWQqUtqCNEXHakIV+w5QFePE8KkJrlRG1T5bwkH0GHBLYPBw1UHdf7Hrm7++/FVni+D3I7e+l98midE=
+	t=1721691883; cv=none; b=fc0M0sM6lvMvZtfenNHw8hP+UQMTU4sJyd+fLroWJEvphzVvkPwqgL+uVxopmBRqwyzB/xvdGxRrN4drWHUgtGYYg5tMUqFkBWO2aHxMmROrKiDLyvaB6m7vjoWFx1QpVJhxAcswVA6Y5PFT2VU7r/6Ji8bo/zzOKvj0UK/4+VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721691641; c=relaxed/simple;
-	bh=ZCHGEl2IruKZcnMK4UgjEh8mvdJK86WiDOPcqJVkTbU=;
+	s=arc-20240116; t=1721691883; c=relaxed/simple;
+	bh=7P20hHFTsTls+IlAxBFoEn0McJ3pK8YtzEEc0+bib4I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P0RPwqd6Kw9EmpGWHX/U9dxQEbqd+YFTPP+i8OHsiETNiDCYpopAZpDiLlLHKPnklRIKf+bKovtPxoAlLC4da8x+k7UP/29rWRQR+J1mqNTnXGHugImWRD6Ej3dMp5uPyUznU2Y+e78RoISMPRMVy+DmFMG3bSScvNSlqbaY4L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=suFdpSj2; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=jbBKez7JBbKC9ADbnI/oNvy1whoTS2IoSwBK2w2u+uJN2JvZvIXq9PgHMRWEYBp3yW6zgZtMIXKwS0ObRSQkHAAJfyv1bwuYADJVHwyWIM0aWy1GJBxiafU7peZVLsPNNm4X7ca3Kh9vleuV6VbHc+fB1SOewslwpbLMm8fRLCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fcRYpuJZ; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="suFdpSj2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fcRYpuJZ"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B1E92401C;
-	Mon, 22 Jul 2024 19:40:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BCFD24085;
+	Mon, 22 Jul 2024 19:44:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZCHGEl2IruKZcnMK4UgjEh8mvdJK86WiDOPcqJ
-	VkTbU=; b=suFdpSj2JOnVZD4TYmF15oIW7vgM4gWXdATYHLgP5shGQKCvMfF6IL
-	ZlR4kbS6Ge4/m6w6eUfMRuNoQj2IZgqTrIRWBXhNQ9Utg+PiIrBGPnbK0Q8EOcN4
-	HenCyYhjHqk8fwYQbx6JPTAJyuORuGzUrYIB0ybvgMK+i5FEYRCqs=
+	:content-type:content-transfer-encoding; s=sasl; bh=7P20hHFTsTls
+	+IlAxBFoEn0McJ3pK8YtzEEc0+bib4I=; b=fcRYpuJZ3wiT92sDTwMKWRULuH9b
+	NVUi0nhdcJkiwqkluqB02x/JnlrR8jSvyy4/XsQoILcfFn9XEN2gX7laPL4JXTlr
+	Z94wrvQajHBamAp9VvYQjRpPKZxfxwqhkcEtvUhXRW5Wo2hFYHv7nTMyuDREhunZ
+	XvzzOPFDbITU6e8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 704972401B;
-	Mon, 22 Jul 2024 19:40:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7262124084;
+	Mon, 22 Jul 2024 19:44:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C6A8A2401A;
-	Mon, 22 Jul 2024 19:40:37 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9ED524083;
+	Mon, 22 Jul 2024 19:44:39 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,  "'Thaina Yu'"
- <thainayu@gmail.com>,  <git@vger.kernel.org>
-Subject: Re: [feature request] Is it possible to have git tag can be sorted
- and filtered by semver?
-In-Reply-To: <031701dadc8c$db6d3370$92479a50$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Mon, 22 Jul 2024 19:14:03
-	-0400")
-References: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
-	<Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net>
-	<031701dadc8c$db6d3370$92479a50$@nexbridge.com>
-Date: Mon, 22 Jul 2024 16:40:36 -0700
-Message-ID: <xmqqy15t6lmz.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
+ Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t3701: avoid one-shot export for shell functions
+In-Reply-To: <5536b336-5122-47fd-be57-42c299abe60c@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Tue, 23 Jul 2024 01:24:20 +0200")
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+	<1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com>
+	<xmqqttgqyzwa.fsf@gitster.g>
+	<2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+	<88f9256e-04ba-4799-8048-406863054106@gmail.com>
+	<a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
+	<xmqqv80xcpe5.fsf@gitster.g>
+	<079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
+	<xmqq7cdd9l0m.fsf@gitster.g>
+	<43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
+	<5536b336-5122-47fd-be57-42c299abe60c@gmail.com>
+Date: Mon, 22 Jul 2024 16:44:38 -0700
+Message-ID: <xmqqsew16lg9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,69 +67,74 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- CC5CA466-4883-11EF-B7FC-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+ 5CA685BE-4884-11EF-A9FF-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-<rsbecker@nexbridge.com> writes:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-> Currently, tags would be sorted as follows (simple example):
-> 1.10.0
-> 1.2.0
-> 1.9.1
+> The common construct:
 >
-> With semver, the tags would be:
-> 1.2.0
-> 1.9.1
-> 1.10.0
+>     VAR=3DVAL command args
 >
-> My take is that this, if implemented, would need to be more general, and include prefix and suffix handling, so:
-> v1.2.0
-> v1.9.0
-> v1.10.0
+> it's a common way to define one-shot variables within the scope of
+> executing a "command".
 
-Without implemeting anything, wouldn't "--sort=version:refname"
-suggested by Brian work just fine?
+"it's a" -> "is a".
+"define" -> "set and export".
 
-In the git repository:
+> However, when "command" is a function which in turn executes the
+> "command", the behavior varies depending on the shell:
+>
+>  ** Bash 5.2.21 **
+>
+>     $ f () { bash -c 'echo A=3D$A'; }
+>     $ A=3D1 f
+>     A=3D1
+>
+>  ** dash 0.5.12-9 **
+>
+>     $ f () { bash -c 'echo A=3D$A'; }
+>     $ A=3D1 f
+>     A=3D1
+>
+>  ** dash 0.5.10.2-6 **
+>
+>     $ f () { bash -c 'echo A=3D$A'; }
+>     $ A=3D1 f
+>     A=3D
+>
+> One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
+> 0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
+> tested did not get our custom GIT_PAGER, which broke the test.
+>
+> Work it around by explicitly exporting the variable in a subshell.
 
-    $ git tag --sort=version:refname | grep -e 'v2\.[0-9][0-9]*\.[0-9][0-9]*$'
-    v2.0.0
-    ...
-    v2.0.5
-    v2.1.0
-    v2.1.1
-    v2.1.2
-    v2.1.3
-    v2.1.4
-    v2.2.0
-    ...
-    v2.9.0
-    ...
-    v2.9.5
-    v2.10.0
-    v2.10.1
-    v2.10.2
-    v2.10.3
-    v2.10.4
-    v2.10.5
-    v2.11.0
-    ...
-    v2.45.1
-    v2.45.2
+Nicely described.
 
-sorting 2.1.x series a lot earlier than 2.10.x series that is sorted
-after 2.9.x series.
-
-Isn't it exactly what the original requester wants to see?
-
-One mechanism I find it lacking is a mechanism to tell the tool that
--preW in X.Y.Z-preW is a suffix that signals that X.Y.Z-preW comes
-before X.Y.Z, while -postW in X.Y.Z-postW is a suffix that signals
-that X.Y.Z-postW comes after X.Y.Z.  Using such a mechanism, we
-could say v2.1.0-rc0 comes before v2.1.0-rc1, which in turn comes
-before v2.1.0-rc2, which in turn comes before v2.1.0 proper.
-
-But other than the ordering of the final release and -rcX, I think
-"--sort=version:refname" does the right thing already.
-
+>
+> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
+> ---
+>  t/t3701-add-interactive.sh | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index c60589cb94..1b8617e0c1 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -616,7 +616,11 @@ test_expect_success TTY 'P handles SIGPIPE when wr=
+iting to pager' '
+>  	test_when_finished "rm -f huge_file; git reset" &&
+>  	printf "\n%2500000s" Y >huge_file &&
+>  	git add -N huge_file &&
+> -	test_write_lines P q | GIT_PAGER=3D"head -n 1" test_terminal git add =
+-p
+> +	test_write_lines P q | (
+> +		GIT_PAGER=3D"head -n 1" &&
+> +		export GIT_PAGER &&
+> +		test_terminal git add -p
+> +	)
+>  '
+> =20
+>  test_expect_success 'split hunk "add -p (edit)"' '
