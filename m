@@ -1,116 +1,128 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446BD4438B
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:30:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193E83A1B6
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721683855; cv=none; b=Zxm+UnFyS8WEcDo5lBwSu5r5HWupeH1I0ncxO3CAaJ/YgTANhMkjoL/EWDwCJ9ijFRtnQ3O65Ofx7KCqDO804wr4hCRwn9hJlSWouYrIYwZiVyFJ5vQi/Csv1vXnXcFREGSvEcYkInGRi48xEP5s0bZ2BbJPknwj3s/qK7n6NnE=
+	t=1721684133; cv=none; b=lCqVjlgtbQoTSEcmBRlYNBj9NjNEBUGvsChOKeXMGkt9Zkywk+SK911G6yj6MzQemIOVwACRvOJT6ejk//ljhlGI2Yjqg5xQNY1Z7mE3EnNs/YSs2zxHeadfVhGVn4rncusiWoEseahpe+kd3x+zd4+6fsoObR/vNlnMXIO9oRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721683855; c=relaxed/simple;
-	bh=1Dkznp153vLO0H1fLAqwqP+J0xOjqeQZyveGQbDWZh4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hz2jjsm1+eV3T8+j/eJslFyTDm5al95Q4oLlcXu5BLKnSfPRnZ+zVVzq6EmxmoNdQNZ/FMxrka0CkyddTzXslwbjVl07v/y3iw/eg4TG1+Tx3f5AQKvmwMkYmy/XFgXlQyIvc5FjN4cxPF62hlCLdBgAA7VOK9aQbY8bkTZ1IVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zyby0+Xj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1721684133; c=relaxed/simple;
+	bh=4rWYUgojzIuiO7cdkowFhPSz2gP6T1mt6KNcGXhiFCM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BtS+BQchCExKe2qmR9gFlXJBYumBr78K5hroM2raW7hp8CCHN6WxEpi8dBfwb//lASt0bIAGJ8cKI/sRaT7ZmkYTU11/HFUGS0aEPYi5VzQBWHnu89YG+U/NGDPrPWo4xJtG62HAifPUUX2UgAMuvftP5yRRJ9ANRiGXOM4PwFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=orFdFuLD; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zyby0+Xj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1721683845;
-	bh=1Dkznp153vLO0H1fLAqwqP+J0xOjqeQZyveGQbDWZh4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=zyby0+XjI0my7B55ChWzB63XdNml8mBs9RMKMq/bZxm2tCFd4iv4DldA8PXVdvqC1
-	 BuVX1QJbl2zskGqXuPqtvUI6sNx8JCo05YCzfwPxTzV6hwPb0Z1rZ6ymsPtCT5USXD
-	 IPHLUqerUVz0uMk+J66HDZVMtm7axQ8cUGu1Y8fxtdDL7qFb4M0Si1qHgfvi+HCAwv
-	 tE1RVa7zRuCWqpI34Tsl9v9mnxKTA2Dk+RlCKvM5TavfWml6WXiQbsInK8UrDbU5HD
-	 4LCNddi6geeDMVJSt0SKHSNAH2ao94p6RnB6ysyfLnlGyhhdHETmTQb3KoMtDjFHzX
-	 qa3bq/Iuy+4ioFVCTIAHJUCQMkwBY5tT0b6ohCWC0HHYr+TKydj4d4vVoHdUqzlLVB
-	 8zOoTfKEPBsch6pTvB3h0gdyP4podD/HGNwq7kus52AaC53ayC1QXdkXQ+cjDlhjlO
-	 Z038EV7OdwGoIj/ekRi6VnUrN+VEj/Ot1TOSBc9ESRtIN6OjpVy
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 73323209B3;
-	Mon, 22 Jul 2024 21:30:45 +0000 (UTC)
-Date: Mon, 22 Jul 2024 21:30:43 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Thaina Yu <thainayu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [feature request] Is it possible to have git tag can be sorted
- and filtered by semver?
-Message-ID: <Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Thaina Yu <thainayu@gmail.com>, git@vger.kernel.org
-References: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="orFdFuLD"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ef2c56da6cso17447591fa.1
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 14:35:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1721684130; x=1722288930; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v0Nt9zZ+oFxokBRwjcbLtdmNVc6pG5opBWJlv5X4Sc8=;
+        b=orFdFuLDjL864WfYyxLkfJ4eC6QX4VWhiG8piDwwOdoNR3+h0cS2jrcNwuaKQ0al7A
+         CxAHLdv6MfMuMjtyvpMxle+fOWcZU7wsmdztRM/qcYbTIeWYxlL1vcS0aA7PETwIRaJt
+         Jdo+w+rN1e2DEKDTzsdPEh7+Sq0r5OX5OIP4heoQolAk5oKKaVW/Sev/W0oasmFBNTxQ
+         ZcUhG8ULVsVmuJlrEJu4NBmcJ/8ixhJYj2fdOGuDJVibi0e/ooZIw2WcPpF2t6RqYF8v
+         GEvEnq0xgIBxwdx9W0AHAQgYnwG8CWLRY1wDgc6bBI+O5s+y/0ccY5vDIhLZmCaKyVji
+         2puQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721684130; x=1722288930;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v0Nt9zZ+oFxokBRwjcbLtdmNVc6pG5opBWJlv5X4Sc8=;
+        b=v0XnyWtlkbqpjSpLKFuORuSE+gibyAI2pJojNVJL5itq6rTW5HrrSWyDcmYvf5/rrR
+         8F92gkyBLYkHwVzpdrXdcedFCZmYlMZEaX2fZfpLjpGDj+ijP1hacctiQhuqauWkXYQa
+         erFaP0quF+jpq/Dx99qCC07UTk7BPyvaGC9QDoRDuYEt6Am8JNmeNlND5AD70mklZxNB
+         ti3yFKEIk3DoZ3V6khrqbGgvcZWQxxokFCIMnKmr9q6c0wUkuPxKjQrpq790i+OflvkN
+         QZgdTZ1lakdqxq0JLu7QIkDZ2ktcsjoK+9gmZjvT9o9mMtnwGqCRdcl6axeIMkraEXaq
+         DJ3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWaktTOZLi4t7vXTTCfZ+XkuPZtRltv0Y7Qa++aZVlDHWWAkUJ0B2pn5CddgvgoTZC8h5GDQOzGI+KUCXhZ4KNKGrJY
+X-Gm-Message-State: AOJu0YxZWbxvL33qRIzJ/YZ0OzsUEkH/hg0usHsbWo0r8UgcEFLoQbAJ
+	wbwxQk8A8uRgRA/0tzSF9+XGg38XxQ85cleF8nF8aOgFgKeLdDLSnoayY0dbkdTbwC9f1Me3UZw
+	1shVGINPL74Dk2vow8KdHP3A18jhLt010aPe0
+X-Google-Smtp-Source: AGHT+IGcym7yUlAN+w0eUZSY62xC9MG7JSbFvP4oGoPk5KXeRs4QR+3kHzxMRX+LVzxeuFELk18aad5vS+JFGTXgbEA=
+X-Received: by 2002:a05:6512:3b82:b0:52c:d8e9:5d8b with SMTP id
+ 2adb3069b0e04-52efb7c7e96mr5576170e87.25.1721684129767; Mon, 22 Jul 2024
+ 14:35:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5INLHbCR/K1Iwb60"
-Content-Disposition: inline
-In-Reply-To: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---5INLHbCR/K1Iwb60
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20240722065915.80760-1-ericsunshine@charter.net>
+ <20240722065915.80760-4-ericsunshine@charter.net> <CAO_smVg8+WCG0dWZNPVbDM4gBJLLHrg96nOCzje6B3hUGneDGg@mail.gmail.com>
+ <xmqq34o1cn6b.fsf@gitster.g>
+In-Reply-To: <xmqq34o1cn6b.fsf@gitster.g>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 22 Jul 2024 14:35:18 -0700
+Message-ID: <CAO_smVhd_fWkC1=9r_ASCEPoM_rRap3DAWq--nq+6dQ8M8qzjQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] check-non-portable-shell: improve `VAR=val
+ shell-func` detection
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	=?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-07-22 at 16:58:11, Thaina Yu wrote:
-> Currently there is `ls-remote` and `tag` that has option to
-> --sort=3Dversion:refname which is really useful when we have tag as
-> version format and let it sort as numeric version
->=20
-> But it could be better if we can also sort and filter the version in
-> the range of semver format. So we can use git system as dependency
-> management system natively
->=20
-> So I would like to propose a new sort option semver:refname
->=20
-> `git ls-remote --sort=3Dsemver:refname myRepoUrl refs/tags/v{^0.*.*}`
-> where brace {} can be used to define semver versioning ranges for the
-> patterns in addition to glob filter
+On Mon, Jul 22, 2024 at 11:10=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Kyle Lippincott <spectral@google.com> writes:
+>
+> > Is there an example of a shell on Linux that has this behavior that I
+> > can observe, and/or reproduction steps?
+>
+> Every once in a while this comes up and we fix, e.g.
+>
+> https://lore.kernel.org/git/528CE716.8060307@ramsay1.demon.co.uk/
+> https://lore.kernel.org/git/c6efda03848abc00cf8bf8d84fc34ef0d652b64c.1264=
+151435.git.mhagger@alum.mit.edu/
+> https://lore.kernel.org/git/Koa4iojOlOQ_YENPwWXKt7G8Aa1x6UaBnFFtliKdZmpcr=
+rqOBhY7NQ@cipher.nrlssc.navy.mil/
+> https://lore.kernel.org/git/20180713055205.32351-2-sunshine@sunshineco.co=
+m/
 
-Assuming we add such a feature, how does sorting by SemVer differ from
-the current version sorting?  That is, where is the current version
-sorting deficient for SemVer?  Also, what do you want to happen when a
-tag doesn't meet SemVer requirements (note that the "v" prefix is not
-allowed in SemVer, although it's customary in tags)?
+Thanks, this one leads to
+https://lore.kernel.org/git/20180713055205.32351-1-sunshine@sunshineco.com/=
+,
+which references
+https://public-inbox.org/git/xmqqefg8w73c.fsf@gitster-ct.c.googlers.com/T/,
+which claims that `dash` has this behavior 6 years ago. The version of
+`dash` I have on my machine right now doesn't seem to have this issue,
+but I can believe some older version does.
 
-As for the special range syntax, I think the typical suggestion is to
-filter the output of ls-remote or for-each-ref by piping it to a
-suitable program.  Perl or Ruby are common choices here, and both could
-easily parse SemVer tags.  For example:
+> https://lore.kernel.org/git/574E27A4.6040804@ramsayjones.plus.com/
+>
+> which is from a query
+>
+>     https://lore.kernel.org/git/?q=3Done-shot+export+shell+function
+>
+> but unfortunately we do not document which exact shell the observed
+> breakage happened with.
+>
+> The closest article I found that is suitable as a discussion
+> reignitor talks about what POSIX requires, which may be more
+> relevant:
+>
+>   https://lore.kernel.org/git/4B5027B8.2090507@viscovery.net/
 
-  git for-each-ref --sort=3Dv:refname refs/tags/ |
-  ruby -ne 'if %r[\trefs/tags/v(\d+)\.(\d+)\.(\d+)$]; ver =3D Regexp.last_m=
-atch[1..3].map(&:to_i); puts $_ if [[2, 6, 3], ver, [2, 15, 2]].sort[1] =3D=
-=3D ver; end'
+This claims that `ksh` "gets it right", and I can confirm that ksh
+does behave this way on my Linux machine.
 
-Git is intentionally designed to support this kind of shell scripting.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Having just looked at the POSIX standard (I don't think I'm allowed to
+copy from this document), the POSIX standard (POSIX.1-2024, at least)
+explicitly leaves it unspecified whether the variable assignments
+remain in effect after function execution.
 
---5INLHbCR/K1Iwb60
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZp7PggAKCRB8DEliiIei
-gdoYAQCqUG1ZwQ/RsNQy3zuJRf26shXEVT+gmwfncNb9W+vMrQEAgqSnetiDuOIy
-YieEM54VmYoEcdCR5xqM0/5OUclF+Q0=
-=bHk7
------END PGP SIGNATURE-----
-
---5INLHbCR/K1Iwb60--
+Thanks for indulging my curiosity; should we include a statement in
+the linter along the lines of `# POSIX.1-2024 explicitly does not
+specify if variable assignment persists after executing a shell
+function; some shells, such as ksh, have these variables remain.`?
