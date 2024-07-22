@@ -1,74 +1,87 @@
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD961401B
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 22:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1124B4D584
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 22:59:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721688885; cv=none; b=G+1XPuP6Xjr2vO5N9bhHrB1cTqpTM6QHAZjqtll9+eVu/fAUBm+z0Ud+t4aPyY4DMAw3PXm7i1aP6YLutqF/jzqOdyc/lPiEKOgXhZX5fVc/CxT9Oqwq60NFrK0uiTgXffxSrrvt+5XfvKX9kA2XNrshiQWYO6S7Cr7calO3G4g=
+	t=1721689151; cv=none; b=t+PSemzbM4WbyWAt5zVpaJiBoTQNzMqtUTWFm/MvdMJuMeFPmtpMKd3Q01CyGVOZXnAsmI7w/zRYg19cqa+Y/K1MqZ2SmpN1+jaFW0/GufdeHf73ZyOyCG3hc1aNPI8QBzYxr/jhx4Vis0lXNdTzkydSbZfn9ScDTUELw5rR9sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721688885; c=relaxed/simple;
-	bh=FJkIMuWa+KTwuEhmvvrCrDu9wB+BHoSDGp/0EkxDC88=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=PdnSkw/MAT6I9IVYh001LP+i82iKuN976zl75HgkNN/VbB3HFedSMSU77vzZA1eqthkuEaaOY21++aPZIromWX34qYjH0L7LwP/SqhNOJrYIPBKbJ9cChgxPggRGkgHHvnNu63YDKVqykKt+mgVEwaHSAKjF6ezI7s4DuM8hBnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=UFZQHykz; arc=none smtp.client-ip=185.67.36.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
+	s=arc-20240116; t=1721689151; c=relaxed/simple;
+	bh=lEBoLzThJJg4sExJxeeEzjhVr43MorfMMXiHDntfeQg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ED7tfe9LBzalv8h88WPgVc4w2FWVtqs9k7av1slLZcFrqaWeDptqMg0xHzd/mcYnhqKchzc/AEu9BL1K/0kESl3ezoxLC9Q7QLNcBeluk7LZ8qRvZ0rIZrdA70G3sD6r+3aa1X6YqH00lk9GjzwewIz7sow54aaIoJ4H7aaIxN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DJLfHTpP; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="UFZQHykz"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 49042240103
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:54:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
-	t=1721688874; bh=FJkIMuWa+KTwuEhmvvrCrDu9wB+BHoSDGp/0EkxDC88=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:
-	 Content-Transfer-Encoding:From;
-	b=UFZQHykzOBItEYpuGS78Pp10knmoA59zlavINvbdDb/aBt8706DfQe1aJmx8rGUdW
-	 awHvKco6rnEL7qNdOxwC7AShyT2n5oyz6G9bGcCtqwcn6QsdfcSE9LsI2phpQ+tDZm
-	 Eh+tkbWVz+vg1rNBGfJtB4DwJbgV+QyZI/vQZJlan37KOVOPn9W0R55f8qVQD3u5MA
-	 oVOVQ56LGpeOPw/bKIt7BRtuvMW/7v5lGxpTt6SENv/ovR9EI9mfjMUpoBUsZMu4sH
-	 Pg6cuuxWpmw1kCWHzNsZvArrAsOFGfG75XDJ8oOgHCLTnrOHecyBZJcDlfejIOAmVW
-	 Iz/dhrTiX4Fsg==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4WSbFP3F6yz6twK;
-	Tue, 23 Jul 2024 00:54:33 +0200 (CEST)
-From: Tomas Nordin <tomasn@posteo.net>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	charvi077@gmail.com,
-	tomasn@posteo.net
-Subject: [PATCH 1/1] doc: remove dangling closing parenthesis
-Date: Mon, 22 Jul 2024 22:53:02 +0000
-Message-Id: <20240722225302.124356-1-tomasn@posteo.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DJLfHTpP"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D8EFB3B0AB;
+	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=lEBoLzThJJg4sExJxeeEzjhVr43MorfMMXiHDn
+	tfeQg=; b=DJLfHTpPtd/B9Lg+B6W4sv5Hcxr3WVuawy1IUtpYjy3SN56OeB2AML
+	lz+Kg9GMaG0oZrPN9cPWsUOcNfZMXTY6Y/GGinQMBn1fsjU5cF7wI+2JuwWndb8T
+	A3mI6dvo7Q0nLY1/iAHUFevNiWJX5qywSFWnGtU4ZZSeaCZHJ2Cqg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFAA03B0AA;
+	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 378D03B0A9;
+	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tomas Nordin <tomasn@posteo.net>
+Cc: git@vger.kernel.org,  charvi077@gmail.com
+Subject: Re: [PATCH 1/1] doc: remove dangling closing parenthesis
+In-Reply-To: <20240722225302.124356-1-tomasn@posteo.net> (Tomas Nordin's
+	message of "Mon, 22 Jul 2024 22:53:02 +0000")
+References: <20240722225302.124356-1-tomasn@posteo.net>
+Date: Mon, 22 Jul 2024 15:59:06 -0700
+Message-ID: <xmqqy15t824l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 00747202-487E-11EF-9A52-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-The second line of the synopsis, starting with [--dry-run] has a
-dangling closing paren in the second optional group. Probably added by
-mistake, so remove it.
+Tomas Nordin <tomasn@posteo.net> writes:
 
-Signed-off-by: Tomas Nordin <tomasn@posteo.net>
----
- Documentation/git-commit.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> The second line of the synopsis, starting with [--dry-run] has a
+> dangling closing paren in the second optional group. Probably added by
+> mistake, so remove it.
+>
+> Signed-off-by: Tomas Nordin <tomasn@posteo.net>
+> ---
+>  Documentation/git-commit.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index 89ecfc63a8..c822113c11 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -9,7 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
+> -	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+> +	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
+>  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+>  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+>  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 89ecfc63a8..c822113c11 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
--	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
-+	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
--- 
-2.39.2
+Wonderful.  Thanks.
+
+Will queue.
 
