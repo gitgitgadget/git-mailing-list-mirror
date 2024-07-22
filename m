@@ -1,59 +1,59 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7614AEE7
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822A83770D
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:24:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721690461; cv=none; b=XfYHGBz5vc+JmCA0uCdFCnnUv5uVkGpUHe3J75su1SDeXPYN5SCcwcx+U4ZeZpGf4ND+Z0Axor3ynyoEBTPRe/xClFECmZQEwV5dWj8ojxS0AxVRWdu4wciNYXwmRyQSo6F30n8wcDAHIA0uEIzUfEEOdb+3/LvJUPYusqHDAcE=
+	t=1721690665; cv=none; b=BET45tspKv23ebwYj9WpLnOfw+cV5BcPbERBclXz7Ay9kPoMTd60ffXBTUVhptEgwvbCbeHuTsTKgNjPPclnU2f0KBEF3hGZz1se+n7eq6nUiu33DDYPAdl6FBvtBx3/cN2G5KLpg9M5eF2Y1+eBgHhPvPaRsIXKXaLtXDgU+Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721690461; c=relaxed/simple;
-	bh=4roDbuD397vA3Hhm3pBkAb4xNZUdLi6HqnhqHXfX2Lg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BXqjvI2LrOBJMLj4BKWgmF9tfs0Kscf3PTZb8HvJ8ha2SSTSgrAUCvzI4++eMUOMya2XkLOnzPbRSmIsJX3nVPIQFINW5naSJC4Xkhx62UKM9ywVeDivg2ywPSkxDIZhrBSvEhtEh0pNr2CSn0CrQlkrIun3z98sHWVpb/ZGkUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJjw2jiL; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1721690665; c=relaxed/simple;
+	bh=h0jd7je2rVDPXCzkmS5gZd0WP75WR0aXdS9LlEBmEdE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lYAMzClYPQUaVShCc6n6K4dR8ouLhZXkW8TgeHJX+EcXzUwUu+duTfmNVrwB5Am8ng+qbiQU5rXaepxTcEp3kvTd44opso/+Om7owHRc2L/vhl6uiPx3FgSuZ3Yh9iaxj8SrPLUUsCZDVN6yWiBntyrfLslDM6bx8UCVFi3WnsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D20uWdBM; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJjw2jiL"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3684e8220f9so1866034f8f.1
-        for <git@vger.kernel.org>; Mon, 22 Jul 2024 16:20:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D20uWdBM"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4266fd395eeso34926245e9.3
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 16:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721690458; x=1722295258; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k2Lioz4hdoaAn2/SqCI8hSK2ZY9y/jtZ0pn7DDRQo2Q=;
-        b=ZJjw2jiLeHQzT89V3PIsKXrTym1HVjbhiEUojcrR/SZxAkHcKoQEeBvb5PrG5WUVgZ
-         yKd+1eMHMeKfi9zLjb6jpxxksXN+wSwZP/10+mFn4Ps6ovdUL2M72+uFcf5QusSKAxdc
-         iiV31qqhUE/m0escwtRczpupuhPyvt5q12uX+n1LgJy7Z2wbTd3TKRWuP1PWitVkcBYQ
-         ddrYxZRluDuJyNFs3ACZX/zFoJMN5oxUxthkeF3QfiGzIJNY6MtCd7FHWsNhLEJJa4tV
-         gceiMPsiDQIM/dMQLIWICQ/s2D6RzAh3QncQFPgo2r6bPGy8SKHuKRXpTuuVsLSdhmN+
-         H2gA==
+        d=gmail.com; s=20230601; t=1721690662; x=1722295462; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=06txJ3iw5TMQu7XSzh5HLypcYRbcR/3etZ5BHm29j34=;
+        b=D20uWdBMPURx0mt89Z+iZSC0gncQPZMRkIjiKHns2ruKeYiumSP04PbZ/h7YD0vUuI
+         IKOfKMj6vFX18fwrJMHcra3Pfnez86ayChZLK26dIGUy7z5Yhm+1+3IMEsKvsHmhiMxa
+         +SeZ9weeJ9bexNFYnsQdhGAZagjeZLHi6IcpzBe6FnnJsLqAFKtareaL2aYVhKknaAVy
+         y1uhzQrEF9CgxwymccFqhBgQzZzUk/vpogUJla7KomchQRlZdh4sbV6plAiNKfB68y1n
+         6t94HUGpruilqn+DBsmUo9d/smHV8jXl7+G9rRK0FjO8Q500Wa0NNb6DcK/t2uji9xy5
+         xM6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721690458; x=1722295258;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1721690662; x=1722295462;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k2Lioz4hdoaAn2/SqCI8hSK2ZY9y/jtZ0pn7DDRQo2Q=;
-        b=a/mGA1gkoZyGj3bIRe2efRor5YdygnDBRypCiQqAxEh312MhX43LSt7Vw1Pp7YXy3Z
-         7qX7+vCgxXS4lU9Z+VKFtA/vSV5wJlu+gODMftGBjiavT/AECf4+0aZriDgQ+bAq4hvU
-         3WNl/8ZG4bA0jnCGSWe1LF3rnjC6+9Y1dprBgKvD7KVhgUHfFSzgNgB+n8wLaJLOz14R
-         LaR4yK6CYNQWlEhDD78FhEAPIhqSXAGA4FqLkWq2DGmfMYDjS4BuUfZwQh0FoTNas+yF
-         1+e5KHWT/yorP2hMyCIh2yoxjx8qE/dJsNmPgSdOuSR7QAmWeYcTiQ3dWXY4FrQaKTIT
-         gBsA==
-X-Forwarded-Encrypted: i=1; AJvYcCUgYFSw8K4LfqMT+YW38QAPqerwt588gxyFxjYRXK0Vug4335+pmA+53E9Tx9+PnwUVjXjT3oObYne7QbPfgVJ/AAcI
-X-Gm-Message-State: AOJu0YweYalefOZWZg5heGqGrfCboSAw4/hUmTE0hILd7HlzRAQQtqDf
-	0MFJDfgbHlwCldEDdwD9aZOv9CHGASep/evvwBe3egSn6YjPGHt0
-X-Google-Smtp-Source: AGHT+IFkqKQJXYMw8ms2RCBiiloVPFhtEeuJtlTYZ+GWKhg2vdLZDUbFKXwqRg5Bp26V3TsRCc1yMA==
-X-Received: by 2002:adf:fcd0:0:b0:361:e909:60c3 with SMTP id ffacd0b85a97d-369e3e7505amr193800f8f.9.1721690457789;
-        Mon, 22 Jul 2024 16:20:57 -0700 (PDT)
+        bh=06txJ3iw5TMQu7XSzh5HLypcYRbcR/3etZ5BHm29j34=;
+        b=cdM2GhDIrAUz38HoJJOpRsLMtkXEQkof8+EaD9LmspnMD5Ukych6G6lus0F4GQb12P
+         tCT/pA1iaF/JZDnFhGWnilMsfV8k/3CtsbGsw7j/qSK/OgDhNujJ9WBnOpUJfAycRuwl
+         ndhvHS8hDJ1fglQPGk9e37P3ml8mz9fn7tRLFheNBSHWGq/RGvWCd7V4o0pglQ2lMbEK
+         luZRC0MgLJ3FCtGxrLQHUSpIACbWziqyuYAEF7vDkRKPicR7buO0bXeDNUz/LpKFsW6R
+         1t+VQ/eql9SjVaZcbAKSj2ImzdNhIwnGZUvatmORoLscPV55mes//3GSWqJ2/RamsL3w
+         jc/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUPd9ZrUC8x5vZYYvIDkCRcSzCtPeoVpOZkSTGRog7w3Y/ejTUc7nYme2LWk8yTn7Zw0rannVBZWk+pdF22Mz5/fe8A
+X-Gm-Message-State: AOJu0Yx4epxIS30h5ZWUV6zFad8CGk5ZB7Yem6a6kYolCOhn8jKfr3nT
+	il3rtn6BwLGBGAs6r3lO8oLNrpZ5xua1GoF7bEcH1rezeJ1tC+5p
+X-Google-Smtp-Source: AGHT+IEp2Ely1ApACwSxm49+DDFNkIeq4P+KxiQ9Hzo335OAi/WWvZ18bz2C3p509smtbXKDeK7jtw==
+X-Received: by 2002:a05:600c:220f:b0:426:59ec:17a9 with SMTP id 5b1f17b1804b1-427dc55a20bmr61464555e9.22.1721690661499;
+        Mon, 22 Jul 2024 16:24:21 -0700 (PDT)
 Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d692976fsm145782665e9.33.2024.07.22.16.20.57
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d6901781sm145137875e9.14.2024.07.22.16.24.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jul 2024 16:20:57 -0700 (PDT)
-Message-ID: <43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
-Date: Tue, 23 Jul 2024 01:20:56 +0200
+        Mon, 22 Jul 2024 16:24:21 -0700 (PDT)
+Message-ID: <5536b336-5122-47fd-be57-42c299abe60c@gmail.com>
+Date: Tue, 23 Jul 2024 01:24:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,7 +61,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+Subject: [PATCH 1/2] t3701: avoid one-shot export for shell functions
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
  Dragan Simic <dsimic@manjaro.org>, Jeff King <peff@peff.net>
@@ -73,50 +74,67 @@ References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
  <88f9256e-04ba-4799-8048-406863054106@gmail.com>
  <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com> <xmqqv80xcpe5.fsf@gitster.g>
  <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com> <xmqq7cdd9l0m.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+ <43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqq7cdd9l0m.fsf@gitster.g>
+In-Reply-To: <43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 22, 2024 at 02:25:45PM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > To fix the test, as already said, we need this:
-> >
-> > 	test_write_lines P q |
-> > 	(
-> > 		GIT_PAGER="head -n 1" &&
-> > 		export GIT_PAGER &&
-> > 		test_terminal git add -p >actual
-> > 	)
-> 
-> This took sufficiently large amount of collective braincycles, and
-> it would be worth documenting as a separate patch, I would suspect.
-> 
-> Something along the following lines, but please take the authorship
-> *and* give it a better explanation.
+The common construct:
 
-Here's an attempt. 
+    VAR=VAL command args
 
-I'm also adding the change for `wait_for_pager`, which could be squashed
-in b29c59e3d2 (pager: introduce wait_for_pager, 2024-07-16).  Although,
-highlighted I think it's interesting as well.  But I don't have a strong
-preference.
+it's a common way to define one-shot variables within the scope of
+executing a "command".
 
-This builds on rj/add-p-pager.
+However, when "command" is a function which in turn executes the
+"command", the behavior varies depending on the shell:
 
-Thanks. 
+ ** Bash 5.2.21 **
 
-Rubén Justo (2):
-  t3701: avoid one-shot export for shell functions
-  pager: make wait_for_pager a no-op for "cat"
+    $ f () { bash -c 'echo A=$A'; }
+    $ A=1 f
+    A=1
 
- pager.c                    | 3 +++
+ ** dash 0.5.12-9 **
+
+    $ f () { bash -c 'echo A=$A'; }
+    $ A=1 f
+    A=1
+
+ ** dash 0.5.10.2-6 **
+
+    $ f () { bash -c 'echo A=$A'; }
+    $ A=1 f
+    A=
+
+One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
+0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
+tested did not get our custom GIT_PAGER, which broke the test.
+
+Work it around by explicitly exporting the variable in a subshell.
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
  t/t3701-add-interactive.sh | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-
-base-commit: 6bc52a5543008bff2c6ec7a0a935c7fc1f79e646
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index c60589cb94..1b8617e0c1 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -616,7 +616,11 @@ test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
+ 	test_when_finished "rm -f huge_file; git reset" &&
+ 	printf "\n%2500000s" Y >huge_file &&
+ 	git add -N huge_file &&
+-	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
++	test_write_lines P q | (
++		GIT_PAGER="head -n 1" &&
++		export GIT_PAGER &&
++		test_terminal git add -p
++	)
+ '
+ 
+ test_expect_success 'split hunk "add -p (edit)"' '
 -- 
 2.45.1
