@@ -1,51 +1,46 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1124B4D584
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 22:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86193770D
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721689151; cv=none; b=t+PSemzbM4WbyWAt5zVpaJiBoTQNzMqtUTWFm/MvdMJuMeFPmtpMKd3Q01CyGVOZXnAsmI7w/zRYg19cqa+Y/K1MqZ2SmpN1+jaFW0/GufdeHf73ZyOyCG3hc1aNPI8QBzYxr/jhx4Vis0lXNdTzkydSbZfn9ScDTUELw5rR9sE=
+	t=1721689209; cv=none; b=px7bgSM8EogkKRmmSYTGpPXm8H2kB5H39+iEOddyPpJSZ3QYXERoUAv6UeBzvGGBQUoEzGXFOI2NvoB018Df4ET73aXAZkv1jVC3tysFhf2rBnr6ttaGt6jTI0GnFOZ763jQUF8PEShV7ajeX5qonjzbH2SPfL6DMQf8u9n70sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721689151; c=relaxed/simple;
-	bh=lEBoLzThJJg4sExJxeeEzjhVr43MorfMMXiHDntfeQg=;
+	s=arc-20240116; t=1721689209; c=relaxed/simple;
+	bh=+cZGNFYZA4m2C9/kO5kSKJNv+G7NdoqfmLrxOwKcreE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ED7tfe9LBzalv8h88WPgVc4w2FWVtqs9k7av1slLZcFrqaWeDptqMg0xHzd/mcYnhqKchzc/AEu9BL1K/0kESl3ezoxLC9Q7QLNcBeluk7LZ8qRvZ0rIZrdA70G3sD6r+3aa1X6YqH00lk9GjzwewIz7sow54aaIoJ4H7aaIxN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DJLfHTpP; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=hvMX9CQPowPcC7QpVRelPXMVEFt23K1DGWKUmIepKS1cfbqgKpVCpXkOAhQSvVQB8gzr/LI6kjIfg8JbLWjzntZezYMxuQ8Dsds4mM5RseSx4F1zJNs43JMNUn34zM5nVtFjDQnghqxRFIomc7nNMk4P60IhOBORo0QwJg/yXTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net; spf=pass smtp.mailfrom=posteo.net; dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b=XtW0Lyhj; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DJLfHTpP"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D8EFB3B0AB;
-	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=lEBoLzThJJg4sExJxeeEzjhVr43MorfMMXiHDn
-	tfeQg=; b=DJLfHTpPtd/B9Lg+B6W4sv5Hcxr3WVuawy1IUtpYjy3SN56OeB2AML
-	lz+Kg9GMaG0oZrPN9cPWsUOcNfZMXTY6Y/GGinQMBn1fsjU5cF7wI+2JuwWndb8T
-	A3mI6dvo7Q0nLY1/iAHUFevNiWJX5qywSFWnGtU4ZZSeaCZHJ2Cqg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFAA03B0AA;
-	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 378D03B0A9;
-	Mon, 22 Jul 2024 18:59:08 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tomas Nordin <tomasn@posteo.net>
-Cc: git@vger.kernel.org,  charvi077@gmail.com
-Subject: Re: [PATCH 1/1] doc: remove dangling closing parenthesis
-In-Reply-To: <20240722225302.124356-1-tomasn@posteo.net> (Tomas Nordin's
-	message of "Mon, 22 Jul 2024 22:53:02 +0000")
-References: <20240722225302.124356-1-tomasn@posteo.net>
-Date: Mon, 22 Jul 2024 15:59:06 -0700
-Message-ID: <xmqqy15t824l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="XtW0Lyhj"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 03A0B240027
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:59:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1721689199; bh=+cZGNFYZA4m2C9/kO5kSKJNv+G7NdoqfmLrxOwKcreE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 From;
+	b=XtW0Lyhj8KNCVFz8lYMUy9DCFcxNGHAlZmco5GH6aveBHWkRkf0Y1l7BTXpEpT70x
+	 5bL2Yp/FPwnQCu1IMS3XrZM+rzrYlg0UOqRzbzrVncC8LWq3s/Mh0ar+nZxrH9NDzG
+	 kxAGiDDJA6IO2WNGzfRFxna5Bwka0ZhLoLu5kMyUMGNRZ8lfnTATNsaG8WtOshtME7
+	 BqrX9VThC82J3COW7VlDD7QoFlLaxVxijerZMQ1+29yu3Ps++nnxGOnpxeXyyPlWzY
+	 Ql8YkyOrrY48QOG8k8Z8Spw51BugsjHX7PMBCLeZ0vz8UBNbgahF/rR0X74PmCongE
+	 gxcrHwkcqSj0g==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4WSbMf2nJ9z9rxD;
+	Tue, 23 Jul 2024 00:59:58 +0200 (CEST)
+From: Tomas Nordin <tomasn@posteo.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Charvi Mendiratta <charvi077@gmail.com>
+Subject: Re: Unbalanced closing paren in help of git commit
+In-Reply-To: <xmqqed7lb6dt.fsf@gitster.g>
+References: <87o7792xgu.fsf@posteo.net> <xmqqcynnejwl.fsf@gitster.g>
+ <871q3nx7f3.fsf@posteo.net> <xmqqed7lb6dt.fsf@gitster.g>
+Date: Mon, 22 Jul 2024 22:59:57 +0000
+Message-ID: <87jzhdvxqq.fsf@posteo.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,35 +48,20 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 00747202-487E-11EF-9A52-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-Tomas Nordin <tomasn@posteo.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The second line of the synopsis, starting with [--dry-run] has a
-> dangling closing paren in the second optional group. Probably added by
-> mistake, so remove it.
+> We do not "attach" patches to an e-mail, like this.  Please visit 
+> https://lore.kernel.org/git/ and check patch messages from others.
+
+I tried to send the format-patch file using git send-email now. That
+will be in a thread other than this.
+
+> We do not work file-by-file.  If any reader wants to know which
+> paths were affected, they can see the diffstat before the patch.
 >
-> Signed-off-by: Tomas Nordin <tomasn@posteo.net>
-> ---
->  Documentation/git-commit.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 89ecfc63a8..c822113c11 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -9,7 +9,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
-> -	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
-> +	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+> I think what you wrote is just fine otherwise; just drop the "*
+> Documentation/git-commit" line, dedent the body of the paragraph,
+> and typofix the "misstake".
 
-Wonderful.  Thanks.
-
-Will queue.
-
+I made those amendments, lets see if its OK.
