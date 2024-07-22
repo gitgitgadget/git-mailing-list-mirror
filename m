@@ -1,121 +1,117 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F6116EB7B
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 16:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD7016EB6E
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 16:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721666397; cv=none; b=EBHE4FNC18eVd9cR5mvLjPlJqOHpYeU/tk4sZLGEQKpIIjLcUjps/QTJNfWROtjS4ZPiXDMxeOP3t2t21u0mxI1RJLsQA6p6lrcqjhFofbkVblONzG5dr7ju9yZMHfcPHKGCCQYx4X3Uz91fu14D8Q/zbZzrIqdREpM5d1/6VYw=
+	t=1721666712; cv=none; b=RcGaYx7xdiLOfJ5Ipa0zQ1Oqma2vFz2wXbnu/c8jWBCQRxksYOHm6u/LrchTvgRTl7mncCbGbkGmkTUF4G1UN/23i83sRHlTW8YDzGtGwyYIlatA/SoL1r3NBFhHZunlQXnL7nAWLZWUhz35I6YiAMTtjWYJe+iJaGct1UZY1q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721666397; c=relaxed/simple;
-	bh=Aqg9A2qvoJ9o7evgLxcHGHEtnoxD00WYC3m6wELI3cE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HElJt8mwRWmdStL7erk3fWAH7qoNdumtQ8iZCQ+7YB2FfJpuIpVkdk2g8cvy2oR16WfeANk3FjDfjnlJfgAjODExGm2aVTHOEzWz5j18THoXg8JVS3d9ooe6BH/vsAew6h6dmHBaHKBuWcETkwmLcNrMzKy/bZ0fic6xjjyHDGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LSnpzxsW; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721666712; c=relaxed/simple;
+	bh=StT5yfz+OGro6HTsAvAL4JT40w26QaESwG6jADQr4/w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jQGOvlmexerM+pL43lXECPu9CsMmMQvlQW0I+aP6ubFFV3JCQLkFtNq5q9M42onCbvVBYuy5imV2QyWZIUCi2PvNsErn3QOq+gg0mQkOEDJv15KmF17CA6Q9UP2opA4RKSxXS0tneVWkVIQLcpC3z4AIqKgXm2KOgcrEu77rs4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HSz+Z4Iw; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LSnpzxsW"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42F931FC81;
-	Mon, 22 Jul 2024 12:39:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Aqg9A2qvoJ9o
-	7evgLxcHGHEtnoxD00WYC3m6wELI3cE=; b=LSnpzxsWTDAuCI5F2CWrODa1B6FF
-	3gMKZJ07COR6IwITFTfQQO8V98R514g32OXfs8lsAXfjO7mHpbr+ZeasSUaJdwUd
-	+Pe38NqBHsp1yHYWqydPuu1/Ys9H4pD4F8NG/1DGesvqFXI5kR3MeXRInc7eZeZ/
-	Y+z97of+cD2pRaQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A8E81FC80;
-	Mon, 22 Jul 2024 12:39:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A053F1FC7F;
-	Mon, 22 Jul 2024 12:39:48 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] doc: git-clone fix discrepancy between asciidoc and
- asciidoctor
-In-Reply-To: <8404759.T7Z3S40VBb@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Sun, 21 Jul 2024 15:08:46 +0200")
-References: <pull.1765.git.1721496853517.gitgitgadget@gmail.com>
-	<xmqq8qxvhcy5.fsf@gitster.g> <8404759.T7Z3S40VBb@cayenne>
-Date: Mon, 22 Jul 2024 09:39:47 -0700
-Message-ID: <xmqqplr5e5yk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HSz+Z4Iw"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4266ea6a412so32722125e9.1
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 09:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721666709; x=1722271509; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kTE8XlZvfdraby+WChCTuKIjQ3M31Zrn8j99U7eO/B4=;
+        b=HSz+Z4IwjWIWemUwdL004qf+hRoesRdlmMxhIG3iKe8aigh65bZAmzjCU5Sr3YEwEw
+         L0ABQtpmIY+p3PoDDTZH877GA2DNZrdcrrwH2PKEUajsp4vRq77B0XY+1iWjHQKuabBQ
+         qkSnZKzwd+bsN+pytQd6LtVUjnUopWRdYulQC8QsDn4wdjxGq+gs5BMdd8S3tQ88Jc/A
+         vLErjNMDbsIcP5cGXWgd5StCK9fUHVDB1EfYoK0DTX2uNpBJWaAa88aIRHVpA3D+hMCN
+         l8sXbGi6g7nL50env+sZscZzp1NCyhWo0xfmpwECZDnIczxjxQfREEo9a+fexi7rSA9f
+         FTHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721666709; x=1722271509;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kTE8XlZvfdraby+WChCTuKIjQ3M31Zrn8j99U7eO/B4=;
+        b=AVtcAGG1fcUxFv1feFgXSk9c7dOMbG/UOHPmqmWbB7q9/vjYCsIR63+lF3XXLKeHDH
+         meQJZwl1c1AtL+9DQw3u/jkunB1cx2DlouXtXowAhX5I7RIK5YRxS/00D5t/kiROrqb0
+         Xnn9B7fRASsuipVJwXA3dc7EyqIeILxPGSfc7x1JLAZirULyn0YdOpLK2fJtB9Ndoh5j
+         Jj2us7JeAwtwJgd5VZERRN7mPuX6vg8FrSd5XTo1rmckp4vkgkyC7mLmN2ZI4CoQtwJB
+         1eAP5LbMot2IJNpLMt1jCdOzKnRtV3aNEkAJn80dY5TlBDZJlq6KVlIlKylat3FlvgYN
+         0G9Q==
+X-Gm-Message-State: AOJu0YwGEEnBbzKmfq/iLA0jBs+wjLfg8kqm53Q8XNabAaFxmW9/Wgzh
+	sydAfpGGXqsBGb6r2ar8qC8LEdvLJqapXZl+qQ1BojiyX/ygvP3Y
+X-Google-Smtp-Source: AGHT+IHxNxf6Fp9JnfxFdhMZcxM73NqmYD8j3FtGyzaRd+XsXJy7uBXpwyqeib+Rc2madO5zMKaRLg==
+X-Received: by 2002:adf:e30d:0:b0:367:9d05:cf2a with SMTP id ffacd0b85a97d-369dee46159mr292795f8f.42.1721666708427;
+        Mon, 22 Jul 2024 09:45:08 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a7257esm160172295e9.28.2024.07.22.09.45.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jul 2024 09:45:08 -0700 (PDT)
+Message-ID: <48706007-b387-494f-a104-a8a50128cc67@gmail.com>
+Date: Mon, 22 Jul 2024 18:45:07 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 02B0C776-4849-11EF-A3F5-34EEED2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: phillip.wood@dunelm.org.uk
+Cc: Git List <git@vger.kernel.org>, Dragan Simic <dsimic@manjaro.org>,
+ Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+ <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+ <88f9256e-04ba-4799-8048-406863054106@gmail.com>
+ <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
+ <5360ab9d-6d3e-4da0-b1c4-2ff381372c1a@gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <5360ab9d-6d3e-4da0-b1c4-2ff381372c1a@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+On Mon, Jul 22, 2024 at 11:18:00AM +0100, Phillip Wood wrote:
 
-> Sorry for not being clear. Indeed I was wrong, Asciidoc.py also has thi=
-s role=20
-> management  behavior for any other inline markup (++, _, *, ^,  ~) exce=
-pt for=20
-> back-quoted text.
-> =20
->> How about phrasing it more like so?
->>=20
->>     Writing a string inside [square brackets], immediately followed
->>     by a string inside `a pair of back quotes`, causes asciidoctor
->>     to eliminate the string inside [square brackets], because it is
->>     a syntax to trigger a "generalized role" feature, which we do
->>     not care about in the context of the synopsis section here.
->>=20
->>     Work it around by inserting an otherwise no-op {empty} string to
->>     forbid asciidoctor from triggering that feature here.  AsciiDoc
->>     is not affected negatively by this additional empty string.
->>=20
->
-> OK, but let's get rid of the "generalized role" stuff, then.=20
+> > That's why I thought, aligned with what we are already doing in
+> > `wait_for_pager_at_exit()`, that this is a sensible approach:
+> 
+> That extra information is important. When I said [1]
+> 
+> > Isn't it a bug to call this with old_fd1 == -1 or have I missed
+> > something?
+> 
+> What I'd missed was that we can return early without executing anything.
 
-I agree it is not relevant what the feature is called, as that is
-something we did not want to trigger and take advantage of.
+Yep, missing that old optimization is easy ;)
 
-It still is necessary to mention the fact that [strings] are eaten
-by us unknowingly triggering the feature. =20
+> We cannot do
+> 
+> 	if (!git_pager(asatty(1))
+> 		return
+> 
+> at the beginning of wait_for_pager() because if we're running a pager
+> isatty(1) will return false so I think the old_fd as you suggested is the
+> easiest fix.
 
-> While doing the styling of synopsis, I tried to be smarter than that. T=
-here=20
-> are basically 3 semantic entities in the grammar:
->
->  * the _<placeholders>_ in italic
->  * the `keywords`, in monospace
->  * the grammar signs: [, ], |, ..., (, ), etc. These signs are not type=
-set.
->
-> Setting everything in monospace would mix keywords and grammar.
->
-> With this schema in mind, I don't find difficult to understand how the =
-synopsis=20
-> is written (putting aside the  {empty} hack). Fair enough, this is more=
-=20
-> difficult than just plain text, but the aim is still to get decent outp=
-ut.
+Now that we agree, I'll do it :) 
 
-Thanks.
+> The existing callers do not need to know if setup_pager()
+> applied the "cat" optimization because they only setup the pager once. For
+> "add -p" this no-longer applies so we should think about returning a flag to
+> say "there was an error"/"there is no pager or the pager is 'cat'"/"the
+> pager has been started"
 
-It appears that asciidoctor considers `monospaced` that results in
-<code>...</code> is a bad match in the SYNOPSIS section
+I'm not sure it would be valuable for us to make the caller aware that
+"there is no pager or the pager is 'cat' ... just use stdout". 
 
- cf. https://lore.kernel.org/git/xmqqsew3hdmv.fsf@gitster.g/
-
-but we should be able to sort it out.
-
+However, I do agree that probably in the future, if we finally add the
+"|[cmd]" command, we'll need to return some kind of error instead of
+`die()`, in setup_pager().
