@@ -1,51 +1,50 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049FF208CA
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4541C6A8
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 21:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721682401; cv=none; b=FSELlCLOPlPzCGqRBCI0NmIfSzjwRJ/S53f7SlwAKtpQuGXBr/sAz6KcfNRJQSLL2fX+J2hmPLqQ28isLBbGkBj7BAep/eh0uAkZh/7GnuHbagQWS8qVK1sruT/kN5NcmPVm69j5QEn6X2YOifrI3ZkuaRvS1cj45vwK8wOhRpw=
+	t=1721683550; cv=none; b=AGunX9YZkQOb/PJBnTAowGtxmYuAlFgNPxxOISvkPY2FasYUIwtv+fSzWzn2pJp1DleXAj9mALKfZtlrg6bIfyGHN3zB9jwnEStuGIhq/DDgPhF0ajzRC7smW1KHlnRrf4q/b29J5nFro+0+N+42XEAiakDxW3pgVOBnc6Fi4xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721682401; c=relaxed/simple;
-	bh=E/O4XZjVuPK1G6DaultzNxWZH8WurFUK84I55xbRAU4=;
+	s=arc-20240116; t=1721683550; c=relaxed/simple;
+	bh=9dU8QNOav11WSAZLt56RqjAXS4WlR0vER7d2Exkb7/8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XLeEu+RGCSYv3csjGtn8q0lENBywZMoysjUk8aB0ELQZkDzjNVkYhXEO9bk1bpR0KUPOBYAmldgYs0Os4F7z+7p2H3TIU0ttMTKiPt1ECQ4vPCL92QzvmStltg9jNzWTdQ9mH6mNig3oN4jjkazL+OY435m8Q5JuwPc5p5UrEpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vw+/JG1P; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=hDd6HpQ+rLkHYEZvQBgpc9EMjvbFiSxkjnhV1cFkmB4+6/lNtUxagXblghIwOFSgacNtHyVPlxRhf5+UAuYCphwHGWGxWgvk334+Hek3AAteCUL0tvkGEURx9nc0q0CWb6PuveEKvGhmxUrJTr3LatpwiTRPL+T5+an1Pg93Oig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QrXG5Hjp; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vw+/JG1P"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA66822867;
-	Mon, 22 Jul 2024 17:06:38 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QrXG5Hjp"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A94FC3A2F6;
+	Mon, 22 Jul 2024 17:25:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=E/O4XZjVuPK1
-	G6DaultzNxWZH8WurFUK84I55xbRAU4=; b=Vw+/JG1P2PzVIFji9dwxox6T6/1/
-	I+YaCZk0Czo0XIRsSojIOrB+h03Hrso4rv2mIJ2rmggppz4wfMrPe+5YiH3B2fzg
-	pI+mpoIYINaYr5HWHAxrb7d/3JR9q4Z9+7An31XMd752X3grY/8PxYlV6616dCFF
-	icXN5yv10Wb57Uw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E26CF22866;
-	Mon, 22 Jul 2024 17:06:38 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=9dU8QNOav11W
+	SAZLt56RqjAXS4WlR0vER7d2Exkb7/8=; b=QrXG5HjpnuGRY4uTaI30a47eiFEJ
+	LQ3QDJg9tZcVZK5mgXNUtPqyTQT7RCEoT6xP1GKd+uonaA1GU3G3Puoz0uZF7fkO
+	R8umQAio1NnYugbNRA4Zvj/r7UmaDiDzzE9ghkM297kJjvOQGbnGUo2CUFJIlZnp
+	VSzNSeVdOWCe2ic=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F4EF3A2F5;
+	Mon, 22 Jul 2024 17:25:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55FA322865;
-	Mon, 22 Jul 2024 17:06:38 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 059E23A2F4;
+	Mon, 22 Jul 2024 17:25:46 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,
-    Kyle Lippincott <spectral@google.com>,
-    Git List <git@vger.kernel.org>,
-    Dragan Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
-Subject: Re* [PATCH v3 4/4] add-patch: render hunks through the pager
-In-Reply-To: <xmqqa5i9b51m.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	22 Jul 2024 12:27:49 -0700")
+Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
+ Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+In-Reply-To: <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Mon, 22 Jul 2024 21:06:02 +0200")
 References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
 	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
 	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
@@ -56,9 +55,8 @@ References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
 	<a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
 	<xmqqv80xcpe5.fsf@gitster.g>
 	<079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
-	<xmqqa5i9b51m.fsf@gitster.g>
-Date: Mon, 22 Jul 2024 14:06:37 -0700
-Message-ID: <xmqqbk2p9lwi.fsf_-_@gitster.g>
+Date: Mon, 22 Jul 2024 14:25:45 -0700
+Message-ID: <xmqq7cdd9l0m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,100 +66,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 493645A2-486E-11EF-849B-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+ F5E05958-4870-11EF-8AB8-BAC1940A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+> To fix the test, as already said, we need this:
 >
->>> It's a very convincing theory but it does not seem to match my
->>> observation.  Is there a difference in shells used, or something?
->>
->> Have you tried your tweak in the "linux-gcc (ubuntu-20.04)" test
->> environment where the problem was detected?  In that environment, the
->> value of GIT_PAGER is not passed to Git in that test.=20
->
-> So, we may have a shell that does not behave like others ;-)  Do you
-> know what shell is being used?
+> 	test_write_lines P q |
+> 	(
+> 		GIT_PAGER=3D"head -n 1" &&
+> 		export GIT_PAGER &&
+> 		test_terminal git add -p >actual
+> 	)
 
-So we have an answer:
+This took sufficiently large amount of collective braincycles, and
+it would be worth documenting as a separate patch, I would suspect.
 
-  https://github.com/git/git/actions/runs/10047627546/job/27769808515
+Something along the following lines, but please take the authorship
+*and* give it a better explanation.
 
-tells us that the problematic shell is used in the job.
+Thanks.
 
-It is
+--- >8 ---
+Subject: [PATCH] t3701: avoid one-shot export for shell functions
 
-ii  dash           0.5.10.2-6     amd64        POSIX-compliant shell
+The common construct
 
-running on Ubuntu 20.04 that is "too POSIXly correct"[*] and behaves
-differently from what the tests expect.
+    VAR=3DVAL command args
 
-Somebody should write this combination down somewhere in the
-documentation so that we can answer (better yet, we do not have to
-answer) when somebody wonders if we know of a version of shell that
-refuses to do an one-shot export for shell functions as we na=C3=AFvely
-expect.
+to temporarily set and export environment variable VAR only while
+"command args" is running is handy, but one of our CI jobs on GitHub
+Actions uses Ubuntu 20.04 running dash 0.5.10.2-6 failed with the
+construct, making only a temporary assignment without exporting the
+variable, when command is *not* an external (in this case, a shell
+function).
 
+The "git add -p" being tested did not get our custom GIT_PAGER,
+which broke the test.
 
-[Reference]
-
- * https://lore.kernel.org/git/4B5027B8.2090507@viscovery.net/
-
-
------ >8 --------- >8 --------- >8 --------- >8 ----
-CodingGuidelines: give an example shell that "fails" "VAR=3DVAL shell_fun=
-c"
-
-Over the years, we accumulated the community wisdom to avoid the
-common "one-short export" construct for shell functions, but seem to
-have lost on which exact platform it is known to fail.  Now during
-an investigation on a breakage for a recent topic, let's document
-one example of failing shell.
-
-This does *not* mean that we can freely start using the construct
-once Ubuntu 20.04 is retired.  But it does mean that we cannot use
-the construct until Ubuntu 20.04 is fully retired from the machines
-that matter.
+Work it around by explicitly exporting the variable in a subshell.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/CodingGuidelines | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ t/t3701-add-interactive.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuideli=
-nes
-index 1d92b2da03..a3ecb4ac5a 100644
---- c/Documentation/CodingGuidelines
-+++ w/Documentation/CodingGuidelines
-@@ -204,6 +204,29 @@ For shell scripts specifically (not exhaustive):
- 	local variable=3D"$value"
- 	local variable=3D"$(command args)"
-=20
-+ - The common construct
-+
-+	VAR=3DVAL command args
-+
-+   to temporarily set and export environment variable VAR only while
-+   "command args" is running is handy, but some versions of dash (like
-+   0.5.10.2-6 found on Ubuntu 20.04) makes a temporary assignment
-+   without exporting the variable, when command is *not* an external
-+   command.  We often have to resort to subshell with explicit export,
-+   i.e.
-+
-+	(incorrect)
-+	VAR=3DVAL func args
-+
-+	(correct)
-+	(
-+		VAR=3DVAL && export VAR &&
-+		func args
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index c60589cb94..1b8617e0c1 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -616,7 +616,11 @@ test_expect_success TTY 'P handles SIGPIPE when writ=
+ing to pager' '
+ 	test_when_finished "rm -f huge_file; git reset" &&
+ 	printf "\n%2500000s" Y >huge_file &&
+ 	git add -N huge_file &&
+-	test_write_lines P q | GIT_PAGER=3D"head -n 1" test_terminal git add -p
++	test_write_lines P q | (
++		GIT_PAGER=3D"head -n 1" &&
++		export GIT_PAGER &&
++		test_terminal git add -p
 +	)
-+
-+   but be careful that the effect "func" makes to the variables in the
-+   current shell will be lost across the subshell boundary.
-+
-  - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
-    "\xc2\xa2") in printf format strings, since hexadecimal escape
-    sequences are not portable.
+ '
+=20
+ test_expect_success 'split hunk "add -p (edit)"' '
+--=20
+2.46.0-rc1-48-g0900f1888e
+
