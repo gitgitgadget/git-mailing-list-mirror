@@ -1,50 +1,49 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED8017BCD
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68C717BCD
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 23:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721692471; cv=none; b=p0107ivzbnSdgL4RTcRWa2ZmjI4z+iA09+GzyArbZKPKVr+faxyWSYut2lM7bfJAmvaS+dCoxv67PYPDf4KjBMpOW8Gqejj6IUfG8RhgfKbtouewfliyM5eIbcA8odoQns/vpBGVudEA4ddGSLczHPLW/qj5tR+rVUglNhESznk=
+	t=1721692635; cv=none; b=bjshUifuj/BQSR8kJn+J+9OEMmz4tLNbR2EmmNCtmOdTh7O8YCggba4zEimhNIdid3Ar1qgNKtjkEDDupM1DZKnaezFaVUG8EbAFKKEradAaXrQh3jt0wr6AB/eBkhBtkT3XIerKwQL6QB6zPq1rXyMa+5iMsbAhdYvfdCRZd5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721692471; c=relaxed/simple;
-	bh=1M2c9BCYi7xJmr3YWdhB+yFU7RHnFyafT0NATyibwXs=;
+	s=arc-20240116; t=1721692635; c=relaxed/simple;
+	bh=K2mbitRa3vf8HfWEm4Nt+ZzQddSqZLRahbZzDvJDw9c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EcmTdOo+VxYLjaHBTq1Fn1CmkaZVGfNIFvtgRiw6Ghba70PUOfYn9tCZ/HlTLIS5xZfVqIvZs1rTTl0wadfDv4JHaJLvChLOWkm2zEGg1Zk5IgnO6E68Pwj1eRDnOHh9KWQK0b5jrEBCTyZCTtorHf9vhnYbrlapR0Y2fI6koaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dFX9cJyh; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=VzE2KRWkN4bpftG5dxHSX++gQef7li5E9ZDpxIwck9x3znNvCwo4msIb73tbTEy0b0YvuLGaoxCAO2D7cKudiMzD4wnHYBODQcRNvU44csVEwU6IZ4EIDn8rgwXNLOVvus1/Gc4feQ9bdmJZqs/nD1GTCVoAfVDX1ZnTUE+QvZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aK0WhHkP; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dFX9cJyh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aK0WhHkP"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CAB952721A;
-	Mon, 22 Jul 2024 19:54:29 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 59C932728D;
+	Mon, 22 Jul 2024 19:57:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1M2c9BCYi7xJ
-	mr3YWdhB+yFU7RHnFyafT0NATyibwXs=; b=dFX9cJyhzKjU0wzRoQ2w//pHxHQn
-	oVQziSjeeVHZfAk3jnIn8p2FLv01PSaOy9rzXv9NzPs4x7udeVTOJ0XZ9bPLVQfU
-	SBYnlHdYrLz2iuWjzI5x0IH1r2pMJg/nLUzuuiPK9szTef++3cvAiwhwEWdTTv+K
-	NNtjxskTnsPbTI8=
+	:content-type:content-transfer-encoding; s=sasl; bh=K2mbitRa3vf8
+	HfWEm4Nt+ZzQddSqZLRahbZzDvJDw9c=; b=aK0WhHkP16rqPBzY2kWyX+Gok40a
+	g1rDsai+gC3PZLjfE8ez4vBpupjxSN/oTAQMSAiikE8pFr3uFDg+unVXq6nc276e
+	y5QrI2bnOrhYWpgbC55MOn6JMfHaBYVnaG7OVMqR7wcC7iYuc1780kRLno8O+Oc5
+	gvT52HuxQtfGhFk=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C2DD227219;
-	Mon, 22 Jul 2024 19:54:29 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 516282728C;
+	Mon, 22 Jul 2024 19:57:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E4EEE27217;
-	Mon, 22 Jul 2024 19:54:23 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A881727289;
+	Mon, 22 Jul 2024 19:57:08 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
 Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
  Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] pager: make wait_for_pager a no-op for "cat"
-In-Reply-To: <c37f0d54-4ead-422c-8193-f0c2ec84ca4a@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 23 Jul 2024 01:24:45 +0200")
+Subject: Re: [PATCH 1/2] t3701: avoid one-shot export for shell functions
+In-Reply-To: <xmqqsew16lg9.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	22 Jul 2024 16:44:38 -0700")
 References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
 	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
 	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
@@ -57,9 +56,10 @@ References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
 	<079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
 	<xmqq7cdd9l0m.fsf@gitster.g>
 	<43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com>
-	<c37f0d54-4ead-422c-8193-f0c2ec84ca4a@gmail.com>
-Date: Mon, 22 Jul 2024 16:54:22 -0700
-Message-ID: <xmqqikwx6l01.fsf@gitster.g>
+	<5536b336-5122-47fd-be57-42c299abe60c@gmail.com>
+	<xmqqsew16lg9.fsf@gitster.g>
+Date: Mon, 22 Jul 2024 16:57:07 -0700
+Message-ID: <xmqqa5i96kvg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,58 +69,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- B8C4E7CC-4885-11EF-AE38-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+ 1AF81B12-4886-11EF-ACA1-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> If we find that the configured pager is an empty string [*1*] or simply
-> "cat" [*2*], then we return from `setup_pager()` silently without doing
-> anything, allowing the output to go directly to the normal stdout.
-
-I'm tempted to suggest inserting two extra paragraphs here to avoid
-too big a leap in logic flow.
-
-    Even though the caller may properly make matching calls to
-    setup_pager() and wait_for_pager(), setup_pager() may return early
-    without doing much, and the call to wait_for_pager() would segfault.
-
-    This condition can be detected by old_fd1 being -1 (not modified in
-    setup_pager())
-
-> Let's make the call to `wait_for_pager()` for these cases, or any other
-> future optimizations that may occur, also exit silently without doing
-> anything.
+> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 >
->    1.- 402461aab1 (pager: do not fork a pager if PAGER is set to empty.=
-,
->                    2006-04-16)
+>> The common construct:
+>>
+>>     VAR=3DVAL command args
+>>
+>> it's a common way to define one-shot variables within the scope of
+>> executing a "command".
 >
->    2.- caef71a535 (Do not fork PAGER=3Dcat, 2006-04-16)
+> "it's a" -> "is a".
+> "define" -> "set and export".
 >
-> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
-> ---
+>> However, when "command" is a function which in turn executes the
+>> "command", the behavior varies depending on the shell:
+>>
+>>  ** Bash 5.2.21 **
+>>
+>>     $ f () { bash -c 'echo A=3D$A'; }
+>>     $ A=3D1 f
+>>     A=3D1
+>>
+>>  ** dash 0.5.12-9 **
+>>
+>>     $ f () { bash -c 'echo A=3D$A'; }
+>>     $ A=3D1 f
+>>     A=3D1
+>>
+>>  ** dash 0.5.10.2-6 **
+>>
+>>     $ f () { bash -c 'echo A=3D$A'; }
+>>     $ A=3D1 f
+>>     A=3D
 
-I am not 100% sure about the "would segfault", but we'd need to be
-explicit about what badness it causes to call wait_for_pager()
-without starting a pager.  Other than that, well explained.
+Another thing.  Let's insert a paragraph perhaps like this here.
 
-Thanks.
+    Note that POSIX explicitly says the effect of this construct
+    used on a shell function is unspecified.
 
->  pager.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/pager.c b/pager.c
-> index bea4345f6f..896f40fcd2 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -46,6 +46,9 @@ static void wait_for_pager_atexit(void)
-> =20
->  void wait_for_pager(void)
->  {
-> +	if (old_fd1 =3D=3D -1)
-> +		return;
-> +
->  	finish_pager();
->  	sigchain_pop_common();
->  	unsetenv("GIT_PAGER_IN_USE");
+>> One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
+>> 0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
+>> tested did not get our custom GIT_PAGER, which broke the test.
+>>
+>> Work it around by explicitly exporting the variable in a subshell.
+
+That way, we won't give a wrong impression that we can safely start
+using the construct in future once dash 0.5.10.2-6 goes away.
+
