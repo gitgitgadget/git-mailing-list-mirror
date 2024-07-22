@@ -1,62 +1,55 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1311A16F903
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 19:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0316B17166D
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 19:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721676476; cv=none; b=rZtxQcceNYdwHT8TTbtIfv4NO7UC2kLOhRaYywnKrRu63q8G3CKtKZqDuYurK2+X4sueF/FI16P8NN8CSItnbh+oAbeDHV0YwKR8Ri4mGZpDkHmDJTMgcc/c2TwZHAZf+p5ZvbmjAtPvKaZ0DJIdyj7tsd2rn4xKMvVQD76TV3s=
+	t=1721677024; cv=none; b=VLas0WtjrOP1JMgdeG6In9/sQu2EVS7Ug7TbKsDfmS7M+6fPuqHo5n/lZEwSQCXU6LZXQGdKXDbfmGaizD+gcJXqR9rQxi/tvuBxaAj9IKHs2l6ZpZcJ+DYyhhes2sM7Pn9qnaJeAd704+VPNen1qLpKcnZv3zLmLDSQR2R9oT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721676476; c=relaxed/simple;
-	bh=komvcwixj0wpXQrFh2b8V6lnKnpY7S0WQPwDqH/PiUE=;
+	s=arc-20240116; t=1721677024; c=relaxed/simple;
+	bh=OXjv/T+tg88xveeZT7v9eywaqF7HupzJFFXh50OVYIY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iK6k+yNyA3HYnn3CI8ag5/ZLsdJShY95zD4rtdX60lg1c6Wm/O8O72pLWCmJYx0aawzMmdbdv6Qr08aPZ3/2k9PGRL/H7MK3nlPite/Y9bDbVLKGeAQEIYGkR0GqUH2ODU+ihfPLuMOrKpB1LnYg+eQAlQQ/2D8+jiZp2JEStr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BBw1e4HW; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=KpQ+wlFqZfq9CucjhLZRhhJyUKgkm7OwxCiobJmma1teQTpJ/m2SHc5QMNoc7mJ4AMP0uWvRAHnrFawpCayD8zO5pFQFyg1/gACGNuqzyXWiPH6VEHWiTK3lTNdPOHh5q4RvDLE6v1B2PME5Z6osW0n8QM6/EPBj1mbubaWdn90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ntrP8p9N; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BBw1e4HW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ntrP8p9N"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7187A3C1A3;
-	Mon, 22 Jul 2024 15:27:54 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 72B983C2D0;
+	Mon, 22 Jul 2024 15:37:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=komvcwixj0wp
-	XQrFh2b8V6lnKnpY7S0WQPwDqH/PiUE=; b=BBw1e4HW7Tj39sKHK9UAhMnZO9Z8
-	gOMI3dWR6geEN8N28hfDU7VY/mfjxjAbRDnn7zCTdxvsFBia8unAzAytUYekkTij
-	4rtpbIbJb44tDNSHhjLY9kLvM6lHNNp7Kq+b8ODuXLje7Ds1wA0s07Ri+PVWZsP5
-	KJtIYID5LyE0vGc=
+	:content-type; s=sasl; bh=OXjv/T+tg88xveeZT7v9eywaqF7HupzJFFXh50
+	OVYIY=; b=ntrP8p9NVLvNLFM/JVv40nCMCMt3/GzMdXBVFuPGQmYSZFOeB1Zs/z
+	mACZG6xJFgm6hG0llSpyDiNpaaFLODS2NiTE8Q6OKSDa/SlTtljKOhPUcgpLvWCv
+	vQYEB/1yaCjvyvb6vP82s74uLgMe5RXy1sIb6gu2q1hH2fPANu+UM=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A0183C1A2;
-	Mon, 22 Jul 2024 15:27:54 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B2523C2CF;
+	Mon, 22 Jul 2024 15:37:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E65F03C19D;
-	Mon, 22 Jul 2024 15:27:50 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E12973C2CC;
+	Mon, 22 Jul 2024 15:36:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>,  Dragan
- Simic <dsimic@manjaro.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
-In-Reply-To: <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Mon, 22 Jul 2024 21:06:02 +0200")
-References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
-	<ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
-	<efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
-	<1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com>
-	<xmqqttgqyzwa.fsf@gitster.g>
-	<2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
-	<88f9256e-04ba-4799-8048-406863054106@gmail.com>
-	<a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com>
-	<xmqqv80xcpe5.fsf@gitster.g>
-	<079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
-Date: Mon, 22 Jul 2024 12:27:49 -0700
-Message-ID: <xmqqa5i9b51m.fsf@gitster.g>
+To: Kyle Lippincott <spectral@google.com>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
+ <git@vger.kernel.org>,  Phillip
+ Wood <phillip.wood@dunelm.org.uk>,  Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v2 2/6] unit-tests: add for_test
+In-Reply-To: <CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
+	(Kyle Lippincott's message of "Mon, 22 Jul 2024 12:13:00 -0700")
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+	<da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
+	<2dff757d-3c5d-4923-97df-26bcb1c21230@web.de>
+	<CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
+Date: Mon, 22 Jul 2024 12:36:57 -0700
+Message-ID: <xmqq1q3lb4me.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -64,21 +57,71 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7C33A660-4860-11EF-8E5B-92D9AF168FA5-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ C2D26916-4861-11EF-A0E0-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Kyle Lippincott <spectral@google.com> writes:
 
->> It's a very convincing theory but it does not seem to match my
->> observation.  Is there a difference in shells used, or something?
+> I can see based on this description where the name came from, but
+> without this context, it's not clear when reading a test what it
+> actually does. The name comes from an implementation detail, and is
+> not describing what it _does_, just _how_ it does it.
 >
-> Have you tried your tweak in the "linux-gcc (ubuntu-20.04)" test
-> environment where the problem was detected?  In that environment, the
-> value of GIT_PAGER is not passed to Git in that test.=20
+> Maybe a name like `small_test` or `quick_test` or something like that
+> would better express the intended usage?
 
-So, we may have a shell that does not behave like others ;-)  Do you
-know what shell is being used?
+Names that explicitly have C keyword for control structures, e.g.
+"if_somecondition_test()", "while_foo_test()" or "for_test()" is
+vastly preferrable than these, in order to make it clear that we are
+introducing a macro that defines control structure.
+
+>> +       for_test ("for_test passing test")
+>> +               check_int(1, ==, 1);
+>
+> I'm concerned that users will write this like:
+> +       for_test ("for_test passing test");
+> +               check_int(1, ==, 1);
+
+And that is exactly why we want the macro name to include C keyword 
+for control structures.
+
+> And the issue won't be caught.
+
+You are right.  Making an empty body somehow catchable by the
+compiler would be a vast improvement.
+
+>> +#define for_test(...)                                                  \
+>> +       for (int for_test_running_ = test__run_begin() ?                \
+>> +               (test__run_end(0, TEST_LOCATION(), __VA_ARGS__), 0) : 1;\
+>> +            for_test_running_;                                         \
+>> +            test__run_end(1, TEST_LOCATION(), __VA_ARGS__),            \
+>> +               for_test_running_ = 0)
+>
+> IMHO: this is borderline "too much magic" for my tastes. I think
+> having multiple test functions is generally easier to understand, and
+> the overhead isn't really relevant. It's not _as_ compact in the
+> source file, and requires that we have both the TEST statement and the
+> function (and forgetting the TEST statement means that we won't invoke
+> the function). If that is the main issue we're facing here, I wonder
+> if there's some other way of resolving that (such as unused function
+> detection via some compiler flags; even if it's not detected on all
+> platforms, getting at least one of the CI platforms should be
+> sufficient to prevent the issue [but we should target as many as
+> possible, so it's caught earlier than "I tried to send it to the
+> list"])
+
+Interesting.
+
+> If others agree that this is a good simplification for the people
+> reading the test code (and hopefully for the test author), I'm fine
+> with this going in (with a different name). I'm not trying to veto the
+> concept.
+
+OK.  But what you suggested in the previous paragraph has merit.
+Are there other things that could be improved in the existing unit
+test helpers, that would help those who do not use this new for_test()
+thing?  Let's see how the patches to improve them would look like.
 
 Thanks.
+
