@@ -1,112 +1,162 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFC438DC7
-	for <git@vger.kernel.org>; Mon, 22 Jul 2024 18:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE21C695
+	for <git@vger.kernel.org>; Mon, 22 Jul 2024 19:06:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721674741; cv=none; b=c0WyGEZRzsDvyWNXViXVRt1yeQaHBvokZsIt1QfdTNY1CI0Axlrx1OMQPlcvK2/r6KojBjqKUaqZHB4a2Tm5XEXC2LOfkYj0Gz2swTZNMJW9InY+/6nL9vYHcgM0Xg7KYrzQ5tgSRcZYh4VyNNs3bIfYsbgAY4qubMloM+bIpdY=
+	t=1721675167; cv=none; b=BurKi1zIN48YL0MYR5epCPu77nmK+mW3GzQQzoCsv2YxFvGMLdzEKLey2+5mOqc+HJMumSdarsNkqKXQhLdfuNDCAruQ6bxiPD8aiTAl4ATpAaRJsLNdeu9Co6R8PA3sQ5NEk+A5MmpbgBCvJZnLI5K2hmAASXVZBZaW6JO2Trk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721674741; c=relaxed/simple;
-	bh=zI7W5PZpbKFJoga9ALkDEFMclmJMBa8qzBbv4fMljV0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V6XEQ9xyODEBvPtw0eKbR41TL9HVbkN1FYID5GzN20c79INOEG7J9WzTjmHzxF2wXnNv7c1D9REDZDtqMUWKdCFw0cjspJOZVBd32Cef/jTz2oyO3fOdh6zCr18FDOqeJMggiWh2t7tVcCsbsqVdLLtJMk2qlgTdIy3jcxpddeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CjQ0gLtj; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721675167; c=relaxed/simple;
+	bh=2TJYHD9WWhlPolg5DOWCeZCLYSyGRzu+iz6TIrIj1KU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ohsq422i7y80O5cZ0dR4YZo7SFrxoTio+lhA6joJNTglG1rJVSbaz0UW43VaWKZ+SZj+MkOxMoaayVEWCWdkA5x1RGY5Yl6cb22wpiPPTh2uyKn1t3s3HWJcJD1pHrLd35602cbEnjoivztjjChAM/iYYV4z8kbR/7KmaZWVOjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ciQ7ytIy; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CjQ0gLtj"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EB7021398;
-	Mon, 22 Jul 2024 14:58:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zI7W5PZpbKFJoga9ALkDEFMclmJMBa8qzBbv4f
-	MljV0=; b=CjQ0gLtj9kSq9ObhM46EPpBSoUOQBjg/K4AXcML8WUdh/rFgALCCH4
-	+dL3cf0rZG4rZVaoB3akbsyG+3yWZu5hl3mLn3rnYYA0J9OnTzbDRPtFyIvpP1bA
-	gaS0nlezTwQoZJkfdV2wcKq0SF6CWTXslQbvEZasCsICF/88X0Lew=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 070AE21397;
-	Mon, 22 Jul 2024 14:58:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B03821396;
-	Mon, 22 Jul 2024 14:58:56 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tomas Nordin <tomasn@posteo.net>
-Cc: git@vger.kernel.org,  Charvi Mendiratta <charvi077@gmail.com>
-Subject: Re: Unbalanced closing paren in help of git commit
-In-Reply-To: <871q3nx7f3.fsf@posteo.net> (Tomas Nordin's message of "Sun, 21
-	Jul 2024 12:21:04 +0000")
-References: <87o7792xgu.fsf@posteo.net> <xmqqcynnejwl.fsf@gitster.g>
-	<871q3nx7f3.fsf@posteo.net>
-Date: Mon, 22 Jul 2024 11:58:54 -0700
-Message-ID: <xmqqed7lb6dt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ciQ7ytIy"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-368712acb8dso2191644f8f.2
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 12:06:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721675164; x=1722279964; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p5GuPpNCteLrZVNTjBIiEP2ByyC/GWnV8zTS6a5jPBA=;
+        b=ciQ7ytIy3zXoV7WQUZQu5a3xEb1nvmXzI9OvQ1ZI4ADHVmCISNRbgLj75rEwvlBGoB
+         ddH9qVbC4OGkeUbJXqy8l8+wh1mYVBphWWll2zTYV405LRdHGY48zebpPcJfZx7WR16l
+         8pAsDQs0f4eIwnwwQ4jbs7LzAQRmgxOpeuzNl0797OxTZpeMTuI9bVpw49X5AslFMRuw
+         3MCUkipvNSkgdqm/Jhky+cq7wqjQL+2qlGad2OKipUNKp3GdZ/wEse6cNgJjevuGgigl
+         HC0tX8Ueua+JCqTxxcPk1c5Zw67+2mSdLArFZrqaS3P/jwAeJQMK3K8G8Du5p2UL/Ibp
+         f5/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721675164; x=1722279964;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p5GuPpNCteLrZVNTjBIiEP2ByyC/GWnV8zTS6a5jPBA=;
+        b=aB7aJ4yAf9/B/EJbbYlY4zrMiD76/YaAcLekmQykK0SSD/cUdm3KnRPQwdb/yqZngr
+         tMJq/+SBPE3l0p3JehtNXIAUOqMiK20TWWn+qiKO9QkR32eqO68Am8uxNl0qID3r6NrE
+         2P8pmYEzhHz+bKTiPPZUC0Ok70Z4NOxoM89TvLyOwUHS+hWZ5UgEMm4B3yGaH6zHXSkw
+         m28iQqtCGyigDv3hVMS8i4+g7qd6Gdw7eDrAJ1bnvOZP6ic7NHaamu5ho1rMt/Lf+o98
+         0fz/epxokedNgEG2NfOcDCa54CjodxtftG/XhP729MgUN3QhocZSXWRafF34PbWpmnoA
+         gseg==
+X-Forwarded-Encrypted: i=1; AJvYcCXaSfG5KEuhP93gFyp/MymlAnw/BGFtP+odQS/apNBMMv7Gc/uEofrwwVJIWBVvKjkjVagJVTtr4gkZED9DDq+8WbLj
+X-Gm-Message-State: AOJu0YxuQ9V/t1MOkZ0O6rHYePfXVwzWsJmxz00TdVtetJ/dQK0q2wKd
+	nfAu2+8azo+p1x1QwcpdNa/MMHYOTmPrBhcTfosakNnqkdqQiWjk
+X-Google-Smtp-Source: AGHT+IFaDTNAHlTNCZ6il9VLLq8b+zBMgwSJwvp4BplqkzHivnDo4zfZaoLf3KVnwz565oD436Z1DQ==
+X-Received: by 2002:a05:6000:c4e:b0:368:4226:4085 with SMTP id ffacd0b85a97d-369debfe527mr581256f8f.8.1721675164097;
+        Mon, 22 Jul 2024 12:06:04 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ced05sm9291055f8f.67.2024.07.22.12.06.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jul 2024 12:06:03 -0700 (PDT)
+Message-ID: <079901fe-7889-4e1f-bb91-610e1eae25d3@gmail.com>
+Date: Mon, 22 Jul 2024 21:06:02 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 72471118-485C-11EF-89A6-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: render hunks through the pager
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
+ Dragan Simic <dsimic@manjaro.org>, Jeff King <peff@peff.net>
+References: <2653fb37-c8a8-49b1-a804-4be6654a2cad@gmail.com>
+ <ebcba08f-3fbb-4130-93eb-d0e62bfe0a8a@gmail.com>
+ <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
+ <1dc9ebad-768b-4c1a-8a58-8a7a5d24d49e@gmail.com> <xmqqttgqyzwa.fsf@gitster.g>
+ <2b57479c-29c8-4a6e-b7b0-1309395cfbd9@gmail.com>
+ <88f9256e-04ba-4799-8048-406863054106@gmail.com>
+ <a2ea00e2-08e4-4e6b-b81c-ef3ba02b4b1f@gmail.com> <xmqqv80xcpe5.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqv80xcpe5.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Tomas Nordin <tomasn@posteo.net> writes:
+On Mon, Jul 22, 2024 at 10:22:58AM -0700, Junio C Hamano wrote:
+ 
+> Attached at the end is a test tweak patch, taking inspirations from
+> Phillip's comments, to see what value GIT_PAGER has in the shell
+> function.  I shortened the huge_file a bit so that I do not have to
+> have an infinite scrollback buffer,but otherwise, the test_quirk
+> intermediate shell function should work just like the test_terminal
+> helper in the original position would.
+> 
+> And I see in the output from "sh t3701-add-interactive.sh -i -v":
+> 
+>     expecting success of 3701.51 'P handles SIGPIPE when writing to pager': 
+>             test_when_finished "rm -f huge_file; git reset" &&
+>             printf "\n%250s" Y >huge_file &&
+>             git add -N huge_file &&
+>             echo "in env: GIT_PAGER=$(env | grep GIT_PAGER=)" &&
+>             test_write_lines P q | GIT_PAGER="head -n 1" test_quirk &&
+>             echo "after test_quirk returns: GIT_PAGER=$GIT_PAGER"
+> 
+>     in env: GIT_PAGER=
+>     in test_quirk: GIT_PAGER=head -n 1
+>     in env: GIT_PAGER=GIT_PAGER=head -n 1
+>     In test_terminal: GIT_PAGER=GIT_PAGER=head -n 1
+>     test-terminal: GIT_PAGER=head -n 1
+>     diff --git a/huge_file b/huge_file
+>     new file mode 100644
+>     index 0000000..d06820d
+>     --- /dev/null
+>     +++ b/huge_file
+>     @@ -0,0 +1,2 @@
+>     +
+>     +                                                                                                                                                                                                                                                         Y
+>     \ No newline at end of file
+>     (1/1) Stage addition [y,n,q,a,d,e,p,?]? @@ -0,0 +1,2 @@
+>     (1/1) Stage addition [y,n,q,a,d,e,p,?]? 
+>     after test_quirk returns: GIT_PAGER=
+>     Unstaged changes after reset:
+>     M       test
+>     ok 51 - P handles SIGPIPE when writing to pager
+> 
+> So:
+> 
+>  - before the one-shot thing, in the envrionment GIT_PAGER is empty.
+>  - in the helper function,
+>    - shell variable GIT_PAGER is set to the expected value.
+>    - GIT_PAGER env is exported.
+>    - test-terminal.perl sees $ENV{GIT_PAGER} set to the expected value.
+>  - after the helper returns GIT_PAGER is empty
+> 
+> It's a very convincing theory but it does not seem to match my
+> observation.  Is there a difference in shells used, or something?
 
-> So then I make an attempt to provide a patch to remove that closing
-> parenthesis. Please tell if it should be done differently somehow. The
-> patch was done on top of maint.
->
-> From 5da052f43b119949c0ac0c7c3047542bc7474c17 Mon Sep 17 00:00:00 2001
-> From: Tomas Nordin <tomasn@posteo.net>
-> Date: Sun, 21 Jul 2024 13:16:50 +0200
-> Subject: [PATCH] doc: remove dangling closing parenthesis
+Have you tried your tweak in the "linux-gcc (ubuntu-20.04)" test
+environment where the problem was detected?  In that environment, the
+value of GIT_PAGER is not passed to Git in that test. 
 
-We do not "attach" patches to an e-mail, like this.  Please visit 
-https://lore.kernel.org/git/ and check patch messages from others.
+To fix the test, as already said, we need this:
 
-An example:
-  https://lore.kernel.org/git/e048ef54-5824-452d-ab1f-233581711f4e@web.de/
+	test_write_lines P q |
+	(
+		GIT_PAGER="head -n 1" &&
+		export GIT_PAGER &&
+		test_terminal git add -p >actual
+	)
 
-Your Subject: looks good.  It shows that the author read (at least
-some parts of) Documentation/SubmittingPatches.
+And this series also need the other other change that I'm discussing
+with Phillip: 
 
-> * Documentation/git-commit.txt:
->   The second line of the synopsis, starting with [--dry-run] has a
->   dangling closing paren in the second optional group. Probably added by
->   misstake, so remove it.
+diff --git a/pager.c b/pager.c
+index 5f0c1e9cce..5586e751dc 100644
+--- a/pager.c
++++ b/pager.c
+@@ -46,6 +46,8 @@ static void wait_for_pager_atexit(void)
 
-We do not work file-by-file.  If any reader wants to know which
-paths were affected, they can see the diffstat before the patch.
+ void wait_for_pager(void)
+ {
++       if (old_fd1 == -1)
++               return;
+        finish_pager();
+        sigchain_pop_common();
+        unsetenv("GIT_PAGER_IN_USE");
 
-I think what you wrote is just fine otherwise; just drop the "*
-Documentation/git-commit" line, dedent the body of the paragraph,
-and typofix the "misstake".
-
-Thanks.
-
-
-> Signed-off-by: Tomas Nordin <tomasn@posteo.net>
-> ---
->  Documentation/git-commit.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 89ecfc63a8..c822113c11 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -9,7 +9,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
-> -	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
-> +	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
