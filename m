@@ -1,147 +1,131 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B2814F9FE
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 13:00:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B19914EC4D
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 13:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721739616; cv=none; b=KbAM7Jd9sAqCAUlLEdGfZhTXFusVXXHxYyEDTKQpnvy+3bkEQaNkgjtVXeR9cDMIQHKnZap7nd34SzE+IBb4TB3ZyG7ddz1NYJ2UDibk72wlYQQwNk2GZKTInzbVIE7Aw8s5/M0EUESHmhcaPm+wztlqP7fz1Tkae9ffgj6zT5I=
+	t=1721741028; cv=none; b=AcGMY/7nHT35g2LgwFPssQbwZalYqc6rpiouiVPMFcr3DEkeSJej3W0KwwFQc5/pNqAVkiAW7GYhe/pEdFEsfLGQNUDBCbu6quZ1JUK2naQ0Dq7PZaPFDphy2hhW3p96aE6etn4pawYQ/VH6BNu2rfulVfrY8MsL5FtpBwwKHnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721739616; c=relaxed/simple;
-	bh=hVQkpi2W1uS8uExxkiY5mU7qVQjlQ9qXtSvQuZlcliY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RqSB65J6bo9OIMOM43kL3zB5UjhRQeZHvcx9f8Uhw01AuNjJ5jnvmIkgEXUHqOMjGPglvNa7g8XUT7pAuMG0hTIpzjxSQQ6ptsL+lEuvAMz4Bnvt7JW14f2iT+NSEoZ8vd+MMj1MFNiNRIm2SFnSJHgKFrfPFCc+axbidk0UO8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KT/3Tzw+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mOTyElMs; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1721741028; c=relaxed/simple;
+	bh=2Iyh1TA5hHlPO9I3Y0fhJFO2Fhuv6lxtyIcSSODRUM4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rIb8eMv0Wc6DcC3RgdJ+vdiuhtfWpS1SJZ7h+nDBRyDgkjMVpjRoCSlevCuHSS/OcCXhhY23wB+Zpz8xk6OnzFEnWzxJFPhy5h01dpSImcdYwmeLGK2E75GKVe+dzNbgfCR3f3ZXVJR95cfJa3uWyjGdsMQt3WrDFQY7xdsQQ/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RGgeMdEr; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KT/3Tzw+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mOTyElMs"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9DCD91140385;
-	Tue, 23 Jul 2024 09:00:12 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 23 Jul 2024 09:00:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721739612; x=1721826012; bh=H09R/kdxeT
-	qkKdJBGsLkey2zgLRGwjMo2W1V5RydYyo=; b=KT/3Tzw+hBB250KnWvNX1x0Y07
-	6TzhgIFB1nHzGYW04U7Ozxktpaw7hfl6nat+4H+INiFENUedOFvPBGap7m2wScEN
-	g40/HlZ1cgvX+9hBDRxCjDEKh5EYaLLI9YIrOQRYmiecSE3PZwdv/LrKTTiyYWgR
-	XVGn7nKg151taxjEmGm7WmlNkCo+sMLAJ28u4dhzhS5jicvJOWQEYRB7059FHdcV
-	dTU7tJRAvItCOWjEEMMCNT2L6Ov4KXFGimWev0HUaIK/8PubGoNDNY0ET4UYsS1a
-	rpSCACNa6REOUyf7LKQpe+2425bKP/x6ZDx9lJoIRwCi85l5x8i46gc3J/8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721739612; x=1721826012; bh=H09R/kdxeTqkKdJBGsLkey2zgLRG
-	wjMo2W1V5RydYyo=; b=mOTyElMsjf0iZp8ekcbxmIPt/mpvLSUL6D7Uwicm8koH
-	ibXcxYs8xQvsW8eX/HYSde82aDdZhbNYbuwz8erKQOrZ3oyWo6qxPnr9S4/H6/dC
-	Rc60at5hF3SkamaY1JbAXJCzeFXrcjeRbJPdeMa2InWN0+nOuNHSNT//h/+SP9kK
-	3VqjjJjcuffUVVdLUaZRyzlOkRhuhZx+05ZMnFFSE9E4bJHrBzEITAIevoVg4DUW
-	7nuMNdn+3oa7RY5IDkev8HgLr+zY9ckK45WgholugndbhKtYC86VDWYfoND09Gj7
-	ao7SW9xqYznqO7NCc5CMhTiVDGb0D1jRFjqu1M2Nkg==
-X-ME-Sender: <xms:W6mfZmMm4mFhhARcfaAnDR6xB43VM2XQ5h28lG6QNj2CRrCvMC4-jA>
-    <xme:W6mfZk9mAWHyNunOrWD-aE-jWVvbcy4etRYo7aeo8RW5x7kAHIT7_PI2hhhNzStTP
-    dhO-YGVENz0DROYhQ>
-X-ME-Received: <xmr:W6mfZtTht1mK5V91EjWXM_l-kliPYMUs6DXMhcgL2UiOPM1L2QSGIdgRRM68MwTq23Xz6s5JNx1FbuPFWOl7bblFoTLyN7JmSGzao3yTAlbC09-j>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgdehlecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:W6mfZmsLg7SFqxeLSWQRw-IsTkIYN-FxdW_sZOgCnO4WO40tf530Xg>
-    <xmx:W6mfZufC9SToAIj8vYLtYfvmmhXiEotWvs6O-1eWZAr_6DAJ24a-Mw>
-    <xmx:W6mfZq0imgnAhbVFtSHm5-OE7cBI2_b5lkX66qNAk5ZLyTVcSGZKmw>
-    <xmx:W6mfZi_D4QGeh384E1Yjv6z5mHGMqrwRENEzK5CM3vyHvcZfymZVxQ>
-    <xmx:XKmfZmTqAc8Asq2AKdAASudWz0GPypaXB0oIwDtsRmo7T72k_9F5CKdC>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Jul 2024 09:00:10 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 84a114ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 23 Jul 2024 12:58:54 +0000 (UTC)
-Date: Tue, 23 Jul 2024 15:00:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Git List <git@vger.kernel.org>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v2 2/6] unit-tests: add for_test
-Message-ID: <Zp-pVsWeTCbfcquh@tanuki>
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
- <da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
- <2dff757d-3c5d-4923-97df-26bcb1c21230@web.de>
- <CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
- <xmqq1q3lb4me.fsf@gitster.g>
- <Zp9PfdZtWJBp2xgl@tanuki>
- <71aa553e-9b10-4bc7-9c7d-5414691db79a@web.de>
- <Zp99icyrc0rdxg9a@tanuki>
- <0af06e8e-e1d7-4cf6-b968-5dad5f4fef2e@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RGgeMdEr"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42660b8dd27so39497655e9.3
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 06:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721741025; x=1722345825; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=d91mps6EqbWya+UiWp34HxG6Mbc1KTLU0almOo+Uplw=;
+        b=RGgeMdErtdCaZDRdMW7qBOK6vjwavqu9MNm7hxB8r82ZUiybevDSpTJbZibvogiiVa
+         U7FlMxTlbXaoEvlR8aEAaxNLtNKy3eSMJmkEwpwjqgOPc181jFdt3MAe7cgt1Ap0vw8+
+         NPC/tpPTzKUSkRAgZLH84idq+/4oG5NzcWqfmW7AT9oBjx50jL8p5bE/qK2hyJVOdb0N
+         ylSLISHNkiPZNukRmjObTjcHrzDohSRJO+DwSJ+hrn0R3R/MvNOMXcPf4JKXA1eTKHqm
+         UxfS8clNDnf06uzVUcC1vvybmpvdQhg94gxX4TEaXoW98/OkW+KXUfs29VybFJeKzFLV
+         fAAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721741025; x=1722345825;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d91mps6EqbWya+UiWp34HxG6Mbc1KTLU0almOo+Uplw=;
+        b=ALlpiYHVTweQfkUBsiF6czQqrXF08Ff8wHAsWTepVmAftVvSvR3LDvC1pUeIv5BhWf
+         EEclfjMeL9agydz88vBLrVdE6/VdKCMIrPKOwhrRN8Swj42hbizYCffstGpLMPM4Ed9g
+         9s2DENa/C7So6Z6kJ59F1XHSPUxZsYPlSlKGZb6aMT56XaSjcaFrGEiNwPnpQmtlpFAQ
+         CxNJW4Ti6/gHr8WUWyHkve5mv/E99BdyBxDEDZZaYWN9Q13Dh8XfWWbBT9QyTEQtF37P
+         H3uCRix1fTWAcdnSeBCXDK3IXI1Av6+Q3bfcBDBxwgX87xlBNiHa10iuLgyBIxyoarHe
+         lZcg==
+X-Forwarded-Encrypted: i=1; AJvYcCXOmySwQ8E8hEl//n5g/a1ca1OC1k2szR2DZf1Kzc0c5amOw7qgpzky3oCNS2goAn1XuQX2k+CuWrpzZW2LQ3q9KRIV
+X-Gm-Message-State: AOJu0YwcPvEdvLO/jCvbyojylQUVaRtG2L+xxLWTWS8OiazYs7LXIlKH
+	f3XR+v3MFk2vwaKOVq5H8qRnV0x36qxKCpyWBz/FHSD+gorv8mty
+X-Google-Smtp-Source: AGHT+IEPTvUB1fv1vVWvZwBK18m7bAEaGsc0P+okcVjfB1ROtgjjg4Sv7OH271tA4i+pHreIC98+DQ==
+X-Received: by 2002:a05:600c:4451:b0:426:6ea7:3838 with SMTP id 5b1f17b1804b1-427dc569a28mr72003165e9.27.1721741025396;
+        Tue, 23 Jul 2024 06:23:45 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:600:8501:d2c6:37ff:fef6:7b1? ([2a0a:ef40:600:8501:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-427d2a721b7sm197030815e9.27.2024.07.23.06.23.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jul 2024 06:23:45 -0700 (PDT)
+Message-ID: <55857c83-2181-4dcb-b354-f9f7e77cd6b9@gmail.com>
+Date: Tue, 23 Jul 2024 14:23:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6e8GCR4UwLXnZBMw"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/6] unit-tests: add for_test
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Kyle Lippincott
+ <spectral@google.com>, Git List <git@vger.kernel.org>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Josh Steadmon <steadmon@google.com>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
+ <2dff757d-3c5d-4923-97df-26bcb1c21230@web.de>
+ <CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
+ <xmqq1q3lb4me.fsf@gitster.g> <Zp9PfdZtWJBp2xgl@tanuki>
+ <71aa553e-9b10-4bc7-9c7d-5414691db79a@web.de> <Zp99icyrc0rdxg9a@tanuki>
+ <0af06e8e-e1d7-4cf6-b968-5dad5f4fef2e@web.de>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
 In-Reply-To: <0af06e8e-e1d7-4cf6-b968-5dad5f4fef2e@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
---6e8GCR4UwLXnZBMw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jul 23, 2024 at 02:37:35PM +0200, Ren=C3=A9 Scharfe wrote:
+On 23/07/2024 13:37, René Scharfe wrote:
 > Am 23.07.24 um 11:53 schrieb Patrick Steinhardt:
-> > On Tue, Jul 23, 2024 at 11:25:29AM +0200, Ren=C3=A9 Scharfe wrote:
-> >> Am 23.07.24 um 08:36 schrieb Patrick Steinhardt:
-> >>> There is of course some magic involved with how we generate the file.
-> >>
-> >> It requires magic function names and generates code using a different
-> >> language, while for_test is a just single new control flow keyword,
-> >> like the dozen or so we already have.  So the magic employed by the
-> >> libgit2 system is both broader and deeper.
-> >
-> > It is broader, that's certainly true. But it feels more self-contained,
-> > less fragile and easier to read to me compared to macros.
->=20
+>> On Tue, Jul 23, 2024 at 11:25:29AM +0200, René Scharfe wrote:
+>>> Am 23.07.24 um 08:36 schrieb Patrick Steinhardt:
+>>>> There is of course some magic involved with how we generate the file.
+>>>
+>>> It requires magic function names and generates code using a different
+>>> language, while for_test is a just single new control flow keyword,
+>>> like the dozen or so we already have.  So the magic employed by the
+>>> libgit2 system is both broader and deeper.
+>>
+>> It is broader, that's certainly true. But it feels more self-contained,
+>> less fragile and easier to read to me compared to macros.
+> 
 > In which ways can for_test break?
 
-I was mostly referring to the potential for empty-by-accident test
-bodies that were mentioned in other parts of this thread.
+Using a "break" statement to exit the test early will exit the loop 
+without calling test__run_end()
 
-Patrick
+Best Wishes
 
---6e8GCR4UwLXnZBMw
-Content-Type: application/pgp-signature; name="signature.asc"
+Phillip
 
------BEGIN PGP SIGNATURE-----
+> 
+>>>> But I think that would be quite manageable, and ultimately all that the
+>>>> developer would need to care about is writing a `test_foo_something()`
+>>>> function. Everything else would be handled by our infra.
+>>>
+>>> With for_test all the developer has to do is write a test with a
+>>> description, no extra infrastructure beyond the existing unit test
+>>> framework needed.
+>>
+>> True, but it feels like it is an invitation for writing unidiomatic
+>> code to me. Unidiomatic in this context to me mostly means code that is
+>> not self-contained and thus cannot be run standalone.
+> 
+> Partly this is intentional -- I want to do something that the current
+> idiom (the TEST macro) doesn't allow.
+> 
+> It's possible that reducing friction will cause more sloppy tests to
+> be created.  I hope that the bad parts will stand out more when
+> there's less boilerplate code.
+> 
+> René
+> 
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmafqVUACgkQVbJhu7ck
-PpSEQA//Uuqbob7qS4P549GvDH8gm6NeZqvgFSuPd7SGnkHl1xvnfggkLGU1Rfuh
-YuVyt9lNftDcMkTylBl6zOZRgKdSSnAbhtoZ9yGE0Lt73I4cR1iFXnYsiGr6+EJx
-BYIOuXgsf3CeexqroXp5N9Xr7XU3DfIeKpePAYShzS1XyPCqZWO98euuKMVCy/Jj
-bHlsBHxqcIkrzCtsylKcFmug20SonTBCzDEGy0wrhj8HcgO08HwWHLNLB5mgooge
-+bTlULRxQT35E/SX2yr85/RXQD4hGL+3fVNJ35iVoHCKVcBKS0DY2n8PZnzLOIHT
-/3HqFEWNnMerQCI35rVtboxXwC15pxrWsikCAtCNcCg3fB/hUyDVDOYNnB8rUrZO
-Q4wXT8l3yBTU/aVbKScT+5RLc0IULlzdbn9yg0EuqpXl1RgIyW3xET13J6NQruCA
-5nPyneUlT9f372seqst9OMTfj+r9zHBq3eTr20FKLqyQN8YIHRbs+QIV2gWaTT9e
-Fw8JlkZnHcq3MMBhO27AbZfdRCCePhoalFqsSY/JAdKRnTauVD2f3xbwzMAHbWBa
-RXHmurUzWYjzz6adgnTjBzV2fXGiEvmT1Rmm4H6p3OHIBJH+B5TyWV5+ACpc9J97
-cmZrjtGjPfEfuzB+D5/XfiKH78Lr56gtyZ+lQmS1DEx49Loj/D0=
-=YmEh
------END PGP SIGNATURE-----
-
---6e8GCR4UwLXnZBMw--
