@@ -1,83 +1,77 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F00F8814
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19949153800
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721743238; cv=none; b=NKl2ufOZvTjnM535X9SZgNdUZR5HatFAQxqomXH0/pUJTvV2ji6vJaiO6t4GxPgTH4gYOFY9aPs2U/mKHCoIFNlIK127L3SL6ZeOUIfNhCsG3S4qBtQbdP5WscDbqBTbiX7cgMTBODvQyY4YH2XzSLYEOCzUnXqW/6P7Zw/cNXs=
+	t=1721743541; cv=none; b=mU/yH5UGSp6KmwOL8FxbgQBNIpaa023XIDqqf0IbaxVarR+k6zAw5MqaZ3G2spqK3rjshmwIvLQbVrje2I5AFAwtuvJMq36LmhfRq1HNTVvYaB7lgb2kKRvaZ5MbtRKfDUK9eRpVeGUQnxyDVTTjU1ljoBdOpTvCCbYSmjgbWXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721743238; c=relaxed/simple;
-	bh=C5AvEllAS7qEljjwIMlhkfHsSWnU+GZ0OhC72LlykTA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FEw64U/CUac+WALTxyLJKAk5M+J6YNTy3RLlsHHjQdRVFkc2mp2OGex1qgwy57MhWTYEAUWkgU1xg/PgRjBguHyylkSQtDMosB/BTShd+2WC7Rhx/s4tPWzz8wOk2Nj9sTwp6AOtWv0CN1pXCEzgh0DxiZtj0oqVYJUjYPeWzvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bSzpRNDT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XGu2rhLA; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1721743541; c=relaxed/simple;
+	bh=IoR51Pu0Rw4UPSbpXeZdEh5Yatzck2YWkLoGQweREQQ=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ixtwpne0LPopFIhkmPmPhD6ccVy4/78BWrFizXiVOe28GcEttwAO4n1W6FCeTcUM1Y9XDUYl70+Cg4oW5x6LdWC5IKTZKwao1AvBZtTJxMTeR6MECHTtVjiHPei+WH+42ArITyiZjyyCRwUvQgAFkF1fGRnkCRanmbSKUbtIhGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iEim2Doj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mvn7G3j3; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bSzpRNDT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XGu2rhLA"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D9B791380625;
-	Tue, 23 Jul 2024 10:00:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iEim2Doj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mvn7G3j3"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 39CFE1380533
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:38 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 23 Jul 2024 10:00:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by compute1.internal (MEProxy); Tue, 23 Jul 2024 10:05:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721743234; x=1721829634; bh=hl5Jg+LcGJ
-	hkcAwkEx3wkDb8N7PPoZKtgjGNOpHnbco=; b=bSzpRNDTLPHSgxgdpZON3+OA9g
-	KgpCf9ECepTO4qpd3su97Gh3bKjI1g4K5496VLeSLhDhmhrlyev66i86oGpwc20C
-	ZK6mm4GFMAMB7Zy/d7hUekhbpp95BN5tnYc68LimabGiq4zOb/SZ75C6bA4hBwMP
-	EcO+1fimq5T26o0K49kYN7HK5kkDiebYAkRlGQYU/Rn6k1hoO+sgxJ2FcC+rxaT7
-	sARU2xQm+cW7j5CVH8BXtQt0yTFd54h0lTom9FcTIqM9CQ0Fuehe1k4pBsWsRurp
-	HAzjzxSnpp9M5j9gzbDKKDFqZ99CZxq2QWfhxMp/gebGExo33hw0dJXxLpnA==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1721743538; x=1721829938; bh=Sl7oGHG2QzLJK/yKLip1uerYHKJalqRy
+	yLe6pR8O0b8=; b=iEim2DojKtkrAMzrdq5Hm3oYnY3rLRtO16XCATGHtrrQLxuY
+	tYzhwEiJOX12AZvVAFYoU8Scbu/a10T0mn/QFJ/Xv4eqFBnU0g4LODHnt1i6ptH8
+	YWucwFsbCEVJpU78x9ZqP5oTN09VVLn8XEYTXDUEztK4EBW9OEaKlA/DyekoSdCZ
+	nHOd8O9qOTVQJ71ZLVzgKEqD4HFPt+GDS8VlJrztNJseNpuzUWJHS9ytInlUuFRW
+	7rmtoeSm+NsvoD2/cOwaF9rO1mIssxS7jv6fQLHFYhAFJwqQsVQ3VrG97b0nk+Ne
+	Zqtqqg8TPWtgDIOqe9XGIHJQqdRMR6CJm9aqUA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721743234; x=1721829634; bh=hl5Jg+LcGJhkcAwkEx3wkDb8N7PP
-	oZKtgjGNOpHnbco=; b=XGu2rhLAq+OLDF1Yfer71K9HAnNtcVxyCT2Fb/qdl+nl
-	nliiQWepa1ArZE8A6X1n9NVr32Cxa/gLqDaf/2iGIJs0o5KcpA9d2s8VZbAJwOiL
-	Dy2u6JhCqwtwve3ZMwECnQTK+ViV2AM9Y+XDQlHGlhmQEyIDCxYDlGnpQvU4vQc3
-	LdRfL/fOo7rRuvCTnPQqeQwKZKlK38pvS6F1CCI5dlJUrkE0xjE5BDZ34rv4unKN
-	DxV+Rwi4Any8BumGblPIcKKmWqBnLiHE4sjvGmOd8Cq5bgBxg2Cg0IGpeBcu57Yx
-	XsirybRXRazq6Wa0XOK7VO6YAAsov+WCsiqG6V7v8A==
-X-ME-Sender: <xms:grefZtosYVgNWis_lwlFsadq66vXIQuskle9RQ8588pyHSKfaZWA9g>
-    <xme:grefZvoQmpy-0TnHaQHrZYeyD9wY2XeNFboQX1zzZTj0V8_nNrQLxEdym4Bl_4JB1
-    85QxdngAc5_THGkIg>
-X-ME-Received: <xmr:grefZqMusoIPRKoxvT7aA8g-VXcs-VvH_OA43svL7NoMJtIeg2anfCB4GNkIBx1rwCyQ_combnEC9qQnjmZXEMmIz0yG6YNwedXs1KRcScp3Q7kN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgdejudcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1721743538; x=1721829938; bh=Sl7oGHG2QzLJK/yKLip1uerYHKJalqRyyLe
+	6pR8O0b8=; b=mvn7G3j3SLPQxXk1HbwSEtMGxWMHXm9yTeKp5kw3n2C3m0WuAhO
+	PoI6q5CcRgNuMm4TUZQrhkDjqXKMXtqDerYZdOe+vw0fxI5iTtMlqY4Qw2RuFr8R
+	hQO97Mf3o4nbYEoFeEFaykh5Y2Z3GYag8axXc+ZQF8FY4fspEy8yxYda7vA0yXk5
+	Pt4T+mAQKlvNKVpzdk9eskmDo/GlLAI9+ygxZrk0Jv/JdIoDrdqAL4FL9GAqwavo
+	eYoBF7wcz6hIDg9uaMdjSGwr/DEa9FBG94CocBa+gpEFx3vE6m1yKYUYVUuIxbxo
+	5PSBMT6JSnqfgBttxYoCGxiHMNDji1QHhTw==
+X-ME-Sender: <xms:srifZg04aOvncE8EL9l3VGBSqsmgZ2kokbCL5Bro7-_7TERL8MO4BA>
+    <xme:srifZrGnrRfaD-K7FZJmKDC832vPzXOUMwf1J77nEgk0_yj4-exR4G-w6CNzVyVO8
+    uT890sz496AfDnZRQ>
+X-ME-Received: <xmr:srifZo7EJSaQ8iZP86h2YvzLe1wd9-SX41B77N7467d_gpunEVE7Q5lE2tD3svay5-bassITEDG5WLhaf5H9BQoMRIBULD16TvPo3xY0QPyuPu9R>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:grefZo6561jyRhfF1-o-5q4ncbpj2zv3Vj4NtR_t9IC2qcSHzssYgg>
-    <xmx:grefZs5ZPxRf4f6MkXkLkqby4AKnlMPuCvyfsPJVA_8ymq4HMKSbMQ>
-    <xmx:grefZgjtdnigZY5slw_QstGzvstJ2b-no37oDlR0A-wX3k9N0AwW5A>
-    <xmx:grefZu6tlQm9txPyOi4Bx3_tjHvFN_YwGoIXZRf3FqzEN5lJ_0qXBA>
-    <xmx:grefZpt8O_GQ9K_57MwMsok0oE5nviUDR-DhQ-vnke9uAG8lSrjwFnLQ>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderredttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgfdvvd
+    efudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:srifZp2wd8hKdYalSA8SugMPIYv08eurKeuIbUDSugSvTAYwZgK9vA>
+    <xmx:srifZjEFoxb6irBrgvhuB0w4DGTZk8ONJsZqgaqnqMzzaj-HfJb_pQ>
+    <xmx:srifZi_YJeKQtwdUBqbNGF3S5b8ubfeSdnrS2aP7XB5tbCGXAc2OMw>
+    <xmx:srifZonXSMpEGA0wx2JFmRZN130n8-unOLSHjMIDL7_DQFQRQblcvA>
+    <xmx:srifZpNSJ1PPipPnKDp-ZGzQnl5Nv3nq-7Ad-fd3rLIMQ12SFYaA_NY6>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Jul 2024 10:00:32 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:37 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 90193329 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 23 Jul 2024 13:59:15 +0000 (UTC)
-Date: Tue, 23 Jul 2024 16:00:27 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 870dec30 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 23 Jul 2024 14:04:21 +0000 (UTC)
+Date: Tue, 23 Jul 2024 16:05:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t: migrate helper/test-urlmatch-normalization to
- unit tests
-Message-ID: <Zp-3e6VV5bl8dWvR@tanuki>
-References: <20240628125632.45603-1-shyamthakkar001@gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/3] Improvements for Perforce tests
+Message-ID: <cover.1721740612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,78 +79,96 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZTk7oBbCzDQNZC3g"
+	protocol="application/pgp-signature"; boundary="wGRxu801V8zG/qpd"
 Content-Disposition: inline
-In-Reply-To: <20240628125632.45603-1-shyamthakkar001@gmail.com>
 
 
---ZTk7oBbCzDQNZC3g
+--wGRxu801V8zG/qpd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 28, 2024 at 06:26:24PM +0530, Ghanshyam Thakkar wrote:
-> +static void compare_normalized_urls(const char *url1, const char *url2,
-> +				    size_t equal)
-> +{
-> +	char *url1_norm = url_normalize(url1, NULL);
-> +	char *url2_norm = url_normalize(url2, NULL);
-> +
-> +	if (equal) {
-> +		if (!check_str(url1_norm, url2_norm))
-> +			test_msg("input url1: %s\n  input url2: %s", url1,
-> +				 url2);
-> +	} else if (!check_int(strcmp(url1_norm, url2_norm), !=, 0))
-> +		test_msg(" url1_norm: %s\n   url2_norm: %s\n"
-> +			 "  input url1: %s\n  input url2: %s",
-> +			 url1_norm, url2_norm, url1, url2);
+Hi,
 
-Nit: this is missing braces around the `else if` branch. If one of the
-conditional bodies has braces, then all should have according to our
-style guide.
+I was recently trying to figure out whether the Perforce tests are
+memory-leak free, but noticed that the tests don't run at all on my
+machine because I have a newer version of Perforce than our CI. And
+because the on-disk depot format has changed since r21, tests are
+broken.
 
-> +	free(url1_norm);
-> +	free(url2_norm);
-> +}
-> +
-> +static void check_normalized_url_from_file(const char *file, const char *expect)
-> +{
-> +	struct strbuf content = STRBUF_INIT, path = STRBUF_INIT;
-> +
-> +	strbuf_getcwd(&path);
-> +	strbuf_strip_suffix(&path, "/unit-tests/bin"); /* because 'unit-tests-test-tool' is run from 'bin' directory */
-
-Curious: is this a new requirement or do other tests have the same
-requirement? I was under the impression that I could execude the
-resulting unit test binaries from whatever directory I wanted to, but
-didn't verify.
-
-In any case, the line should probably be wrapped as it is overly long.
-
-Other than that this looks good to me. I've gave a cursory read to the
-testcases themselves and they do look like a faithful conversion to me.
+This small series adapts tests to work with both r21 and r23, updates
+the version of Perforce used in CI and then ultimately marks all of the
+Perforce tests as memory-leak free.
 
 Thanks!
 
 Patrick
 
---ZTk7oBbCzDQNZC3g
+Patrick Steinhardt (3):
+  t98xx: fix Perforce tests with p4d r23 and newer
+  ci: update Perforce version to r23.2
+  t98xx: mark Perforce tests as memory-leak free
+
+ ci/install-dependencies.sh                  |  2 +-
+ t/t9800-git-p4-basic.sh                     | 14 ++++++++++++--
+ t/t9801-git-p4-branch.sh                    |  1 +
+ t/t9802-git-p4-filetype.sh                  | 16 +++++++++++++---
+ t/t9803-git-p4-shell-metachars.sh           |  1 +
+ t/t9804-git-p4-label.sh                     |  1 +
+ t/t9805-git-p4-skip-submit-edit.sh          |  1 +
+ t/t9806-git-p4-options.sh                   |  1 +
+ t/t9808-git-p4-chdir.sh                     |  1 +
+ t/t9809-git-p4-client-view.sh               |  1 +
+ t/t9810-git-p4-rcs.sh                       |  1 +
+ t/t9811-git-p4-label-import.sh              |  1 +
+ t/t9812-git-p4-wildcards.sh                 |  1 +
+ t/t9813-git-p4-preserve-users.sh            |  1 +
+ t/t9814-git-p4-rename.sh                    |  1 +
+ t/t9815-git-p4-submit-fail.sh               |  1 +
+ t/t9816-git-p4-locked.sh                    |  1 +
+ t/t9817-git-p4-exclude.sh                   |  1 +
+ t/t9818-git-p4-block.sh                     |  1 +
+ t/t9819-git-p4-case-folding.sh              |  1 +
+ t/t9820-git-p4-editor-handling.sh           |  1 +
+ t/t9821-git-p4-path-variations.sh           |  1 +
+ t/t9822-git-p4-path-encoding.sh             |  1 +
+ t/t9823-git-p4-mock-lfs.sh                  |  1 +
+ t/t9825-git-p4-handle-utf16-without-bom.sh  | 19 ++++++++++++++++---
+ t/t9826-git-p4-keep-empty-commits.sh        |  1 +
+ t/t9827-git-p4-change-filetype.sh           |  1 +
+ t/t9828-git-p4-map-user.sh                  |  1 +
+ t/t9829-git-p4-jobs.sh                      |  1 +
+ t/t9830-git-p4-symlink-dir.sh               |  1 +
+ t/t9831-git-p4-triggers.sh                  |  1 +
+ t/t9832-unshelve.sh                         |  1 +
+ t/t9833-errors.sh                           |  1 +
+ t/t9834-git-p4-file-dir-bug.sh              |  1 +
+ t/t9835-git-p4-metadata-encoding-python2.sh |  1 +
+ t/t9836-git-p4-metadata-encoding-python3.sh |  1 +
+ 36 files changed, 74 insertions(+), 9 deletions(-)
+
+--=20
+2.46.0.rc1.dirty
+
+
+--wGRxu801V8zG/qpd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaft3oACgkQVbJhu7ck
-PpQ9UQ//YCeoC41wh4ZdAy7EWrECrMEszoC4irE/+cXam58sPBewnYRPmXWhcgdn
-s00nnLacbZ3d18CeJGuhsDCfI9DJWd9yYVSYVtFS+SpVOJhSDyJaAdDSQXfonQfn
-k8j/xDOxj2N7NZKh0E0UcOphXVK9PhwBBRx/HAKKAyqVFSgiZXQpp62Skdsz7uQY
-78zFLJ0iHjU1cO3rYXBu0AKpHwKLTvuxK60kmVsdkzL6C6Z1ohlfeA1UfKu4wG97
-pqPapYxoVSgIU3ovrgBPYGDJJey7GRrQQ4FA3aQKAm/JrocuXlz9SP97x/r/bp8e
-/TkCNC1lQlNXqcV0Br9IZ1pCc3u1jg2jk4ZsCuuUQBIeCL3qHfG0+pbauiY46QYv
-+MBAD2AFvmt7wEDPvRJ8BFZIDHsuQraPx5iCyiJqicIvKC/qNodQCaVVo7LnZi7+
-FF5zHAd6FARZgm4KtSxX6Wz0GlB5C0onBVcIoJVR4QA+JOEJcoIxNx5XsVhjw+g3
-yvSfiadXVeTYY739X6r0tjiId3SKch40L+CR1F9wGvBcZvfkolXAnZLT9gUlbTAu
-g22LM502dDXB094Z0ORXAeDcOgQVtLRdJgTvSmfrQnDM8z8at5Am9vjzgNe4UFSF
-MHH+AMAMZtgxNj56Jzg2nQ7I9Ana202abrDVFu/+GZuvoVHj4iY=
-=/U+a
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmafuKwACgkQVbJhu7ck
+PpSIJQ//ZPARkVK15Qx5PqNgPKi3jQqShGxmqnWUHZYvGRQqcT2VL8o2kvm0amlg
+0ZyPLchF5EwimycEditKC0oj9nT4Nc7Cd9wa19RSWGL4++mDxKjRRCZhtMxQ1w/t
+w2g/bMP5evEuNdJl3lKkavHCuTaY3zDWqgg9P3Ldv/XJvO8+TJh71bL0MSw0ACBO
+mBVMyC8wMkWDRDiPngITQyAfJzniWqAcziHEYVNX010GOcMQ+1Bn587RkLKq6e71
+XOytrLygAnqzLjEaO6Jggf+uTfS6N7SrtZpvlbILbvBccZ1SWD/DZJ4oNwRJLGZ7
+tNL9NjLB+nzVBytAvu3iy7AGAiRUrPfubfMECSMBJm458jgbuZe86sAFZa/V879U
+ej252XuA8ANMSwtEXI9zHzaUIGyNQ9lDwee2U4IELJaSJ8aEQ1Ml3qYuWzVoWcyD
+pibKJtBNY6m2aUulPBzz9yCuuXXVnCANkc6rljejdj2GdngESmdp6pRNXIXxP5op
+LDGFZocdXUbp3hIosrDaq5MvvF76h5vak1NDhZ1gt90PY2P2bKVJepa+mifgiRHC
+6hasJRR8dGhmH1kVaVMLUv56t8u5CF1bpjIMHuhMQUZ84UjDt7s/eSAFNQJ/w/uG
+WLokMDAF24/FnS2tYKir3KVKGmTPek6hOWIuygGxrU0UiZJ6W3w=
+=bbNB
 -----END PGP SIGNATURE-----
 
---ZTk7oBbCzDQNZC3g--
+--wGRxu801V8zG/qpd--
