@@ -1,102 +1,96 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAED153810
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 16:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C59157467
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 16:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721752595; cv=none; b=i8RvgdiOg5zhD/+24Aa30ZCE+CPdHFtQ9Pbw7CmAdv+cDISFy/t7WWi60BY050kgM8K9nXp39a8fPAVELtb7TC6ZdbKeVOBJHDz7iWmygiEP7s4AtuGMaX4ayRpYHPDG1ZD6eSiX54GfmPNNLEDC1J9aF9Bje5YjxUny4IlpBos=
+	t=1721753007; cv=none; b=gkR8kMagV3DewpnITnn9j6jodXUZSw6zP4ZMss4vAM5M4kblO+/n4GzvweZrHzlL+7JukuRrBjzRUe/upZlxrwvTuAv1pLJVT9+5A3dCY8BJpcaQk6/LmbRh9xjwdJndgs9LDal+Rn0aRIH++T3mUV9nnDlTP5e9BhPy6/rCCO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721752595; c=relaxed/simple;
-	bh=w346joGELjeis63Oe/cNZ9OFz9pMLMOGAWLfMELTGjE=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=YsQpJ+JI65LdckbzGfdcLnUgfN9pwc7dqasLXlBNklh+6pkkFzduWsrM5Ypx/vsB/q4tdpzklh8+d+yHFPkoS5ew718rLhHzKypOCK0vATA6IFC8zL76EyoK9DDGrUkgf4ueB/cphC2fH0kZBRLXl8n3QVra5ca+ax7NqS1Y7T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=mBSEps2J; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1721753007; c=relaxed/simple;
+	bh=S9Pp0jT5tO5rK3b/BEdbc60EFeOchnDnk990G87oqew=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D0dpX2I3KnmgiOAddvhOLaENc0fmIJwjXf+iBtfqITNnvEnUzLd89r3RA50cIHZB3300FxjDC5d3KXI+ZS5PRUo4be9TdOVIUcd5qAl2QiV7zEuOPWy4D+AyGSKwuVohzZcAf6InzvF4FB7W0q+2RTsJhEeK1yNG26PCEB+YoSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jy2QGy2Y; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="mBSEps2J"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jy2QGy2Y"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6FCA52FFB5;
+	Tue, 23 Jul 2024 12:43:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=S9Pp0jT5tO5r
+	K3b/BEdbc60EFeOchnDnk990G87oqew=; b=jy2QGy2Y6ldeMtxR5HvP1XSbl1sp
+	/C0G1uC/MjHn+ydIRylCsf/ynxPCkHYtMpaWDEcvopV+wOG6DsDQqm2lb6l55p/I
+	2vlzNVsyV05DZoKh8cFXWmsq03CTlLAFarel4RUEuogmZaWzFzmcwAWjAne8c+Lf
+	HZ4OL+W4LsVxwp4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6926E2FFB4;
+	Tue, 23 Jul 2024 12:43:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC0EE2FFB3;
+	Tue, 23 Jul 2024 12:43:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+  Ramsay Jones
+ <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2] asciidoctor: fix `synopsis` rendering
+In-Reply-To: <a1d70653-182e-e063-5438-2b3179d011f7@gmx.de> (Johannes
+	Schindelin's message of "Tue, 23 Jul 2024 16:19:00 +0200 (CEST)")
+References: <pull.1749.git.git.1721507416683.gitgitgadget@gmail.com>
+	<pull.1749.v2.git.git.1721679949618.gitgitgadget@gmail.com>
+	<xmqqplr59mvm.fsf@gitster.g>
+	<a1d70653-182e-e063-5438-2b3179d011f7@gmx.de>
+Date: Tue, 23 Jul 2024 09:43:14 -0700
+Message-ID: <xmqqr0bk2h5p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1721752583;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gx6HE8OxI69ow2pc02mMN9pFV3fvBGTWq65LEVHiyVM=;
-	b=mBSEps2JdTuTS4ewtw9GFK2N0tCUFgRJMn3ED5n/perBsNMQRKbmbSopHpmB8hQOTWPRlV
-	UnxOPV2lKzBB2R5mBoRhUPYRD9PiKZ8Jgf7CAL0+ML6eyr0DNH5Pa3jJMNzg5A8CgS0itg
-	QRKd4E1mm5RnhRqV5UEwTwiPejltgkeCiXgTiN29wcjwUSMQUryoOaVVB9VpeJ369WIAMx
-	gDBEK0bz3TzkjQfrToPmmqG6iutORkJFIymkOUV9GbXt1f1huVT7nQRDM9kfg809NX2aFD
-	DPw73Cg5jxXp16miN4sH605l8zVuhn7+B9jHYf09o8//nsRCGMYrmrv8DOFhdA==
-Date: Tue, 23 Jul 2024 18:36:23 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>, "Schoonderwaldt, Michel"
- <michel.schoonderwaldt@sittard-geleen.nl>, git@vger.kernel.org,
- git-security@googlegroups.com
-Subject: Re: Request to Update OpenSSH Version in Git due to Security
- Vulnerabilities (CVE-2006-5051, CVE-2024-6387
-In-Reply-To: <a658fd0a-59bd-c162-874c-cc5b9926acd5@gmx.de>
-References: <AM9PR07MB71854BD4C1CE7E517203FFB6B1DF2@AM9PR07MB7185.eurprd07.prod.outlook.com>
- <ffe00b81-5f19-a073-9a9e-ee84b7d3845b@gmx.de> <xmqqa5ipxjdr.fsf@gitster.g>
- <25ce4ec25b054cfbf4c540663c6b6c18@manjaro.org>
- <a658fd0a-59bd-c162-874c-cc5b9926acd5@gmx.de>
-Message-ID: <9b075f5b19bc6e31a0f4a829dbc623e8@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ A8ABAA78-4912-11EF-AA93-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hello Johannes,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On 2024-07-22 11:38, Johannes Schindelin wrote:
-> On Wed, 10 Jul 2024, 'Dragan Simic' via Git Security wrote:
-> 
->> On 2024-07-10 19:10, Junio C Hamano wrote:
->> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >
->> > > The crucial part is the `sshd` part. Git for Windows does distribute the
->> > > `sshd.exe` binary, but it is in no way used by default, nor is there
->> > > support how to set it up to run an SSH server.
->> > >
->> > > Git for Windows is therefore not affected by this vulnerability, and
->> > > therefore it is not crucial to get a new version out as quickly as
->> > > possible. See also my assessment at
->> > > https://github.com/git-for-windows/git/issues/5031#issuecomment-2199722969
->> >
->> > I think I've seen in the past another inquiry about vulnerability
->> > in OpenSSH, which turned out to be irrelevant in the context of Git
->> > for Windows for this exact reason (i.e. "sshd" is problematic but
->> > "ssh" is OK).
->> >
->> > Would it make future confusion like this less likely if you stopped
->> > shipping the sshd and ship only the ssh client?
->> 
->> Not shipping sshd.exe would make sense regardless of the associated 
->> security
->> issues, because it would prevent accidental enabling of SSH access.
-> 
-> There is little accidental about starting `sshd` after generating a 
-> valid
-> host key.
+> Hmm. This adds a "template" for no other reason than to appease the rul=
+e
+> that all `.html` files in `Documentation/` _must_ be generated. Typical=
+ly,
+> templates are only added if anything in them needs to be interpolated t=
+o
+> reflect the particular build, which is not the case here.
 
-Well, I don't know what and how Git for Windows does regarding the host
-key generation, so the possibility of accidental starting the shipped
-sshd.exe may actually be quite low.
+Consider that we leave the door open for future enhancements (like,
+lose the conditional compilation and instead make it an empty file
+when AsciiDoc and not asciidoctor is in use).
 
-> Having said that, `sshd` is not required to run Git, therefore it 
-> should
-> not be distributed with Git for Windows. This PR addresses that:
-> https://github.com/git-for-windows/build-extra/pull/571
+> Have you considered one of these alternatives?
 
-Interestingly, that pull request shows that some people actually use(d)
-the shipped sshd.exe, which just shows that nearly every change will
-inevitably break somebody's workflow.
+No, because I am not interested in anything more elaborate a few
+days before tagging -rc2.  If this is not meant for the upcoming
+release, then I am all ears (and eyes), but otherwise, let's just do
+the simplest and the most obvious thing to unbreak users for the
+upcoming release and leave a more elaborate engineering to next
+cycle.
+
+Jean-No=C3=ABl is planning to undo the overly elaborate mark-up and that
+may eliminate the need to work around "<code> in <pre> is made into
+a block element" behaviour of default asciidoctor style in the first
+place, so the longer term plan should take that into account as well.
+
+Thanks.
