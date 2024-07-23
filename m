@@ -1,62 +1,62 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB7E13DDD5
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 19:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7D51428EA
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 19:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721762319; cv=none; b=QFcMgZ0jjaCAg1Tb1OKl8bE5xVbT5w5ux9berqrchHfSwxtd2FQo1nCGlnlYn1L0K0gOeIrb6/tFdXKzAAIZKZhL7U8zpIAO+VW+6Zwi6VCmxKCbgA0OSeJARGuYMGJvgFdQAyz6DIoKxkPHFUHfQ64g+O1Y/IC0fwwSLNgTpoQ=
+	t=1721762319; cv=none; b=srkVsr5+7+kr38uwNXZMIT7p8OO/Mog4yETHCaRH3yIyvv747ig6jbB39LJcLFoo1XCW8vJLlBTXHiMIdThfDTcK+Mwt4C8hDH5/3DKVnyC2THAEALr5IIy0WcWoojuM77aqitCNERatv5AzU1fAC+H7znZu2fbTmIhXsPw1qxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721762319; c=relaxed/simple;
-	bh=6w00k9+c3G9p0OFCKpTfLoJYrHe7xtK6Q68P4pNSGFM=;
+	bh=Q2XHlLPDSA59hcZLR19KMhng2ZRaD9lLdamc7EC/GfY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JxNLVEmgA7rqDq6y4HG80L/ceeMMkSQJKMkuT5Up3Fq4SKBdtrOCDF+cmkhUzWTnWAtIbGdcaMpqI8+19XF4lFSv2KI/CP/vHhMdnOaVpqGoYDIWumeYwzvSd4XZHigLMg/H0RtM//GwtUvOMCx8nCI43V9d/gcwwhgSwnnH02k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaGbrvRM; arc=none smtp.client-ip=209.85.208.44
+	 MIME-Version:To:Cc; b=eW0TE63aqmJlXqPugQJUHYtMMgAjc4eV0NPO5MTvbRrp3HR7f5pmvTSs2iWYD7Fxuw0XUaTDTYBp/cSaywq4qRF4HTwJKEplgqarDJydYtc4Tl13woaM1O2bJWVpn525PdNk2jq7vFpNHbEYSOLeGo96HUvZNpHDD4ztr1QOmEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IYiZ6hzn; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaGbrvRM"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5a309d1a788so5207199a12.3
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 12:18:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYiZ6hzn"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a7a9a369055so101080366b.3
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 12:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1721762315; x=1722367115; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mRA+5SmsjtaOpQD+SKfEoxPR3u9Wix32fAl2ggOOZmo=;
-        b=XaGbrvRMuIsjcj7jbDcpJwUI1yFLNGHFjgYbg9T1bcTwjWs9iVVbpVinBehyKk958A
-         N0b18DxPYtQeRgHmYZQO4zfdlxUM7PdKelM4a4DPqRhpg/n7oLUOnjKCi9YqwJwT0iJK
-         HVnMVLxdOrwxIps7r7C2cBzaaFzpb0rlYsMTEUIKzVWxLgqgtM7el18KHrm/IsQ5PO1v
-         1Lz1CboNx0lJOm9XpoWDWI0VPy1gK2RGdcNqIB41V4Uo8Ga8zCI4lJ70ZtN7/vNNbZAL
-         iErwt4Q2NZaYg+FUs4HErniz3ikl2L8e+a6K812p8das4kGCRkMKuSBN5FdTnf5V9+Lf
-         XTgA==
+        bh=U+v+ejSTc6SCQMvsFihFgg/BNnm4VCnNTZNOsUxclIY=;
+        b=IYiZ6hzn4kd2Wd0xtUrgWk6zEtx5K6PXKz7nJrIeysjLGd7FRHty/haosY3OJXt4mE
+         Wb4SeQtTV5annYY/9UcNnZsebzZGG2nuOKeokCr3+6h3dKzYrrOfX1+xxycFEF1Su2TR
+         Nqw00czmFKeqziHEdN5dXvPFExuy0UBV/vJlCiVm8gmVr3JmuJCsYExU6lJKCtKJI23n
+         F6a/HFYprMrWUhVF9qvQvBSlIotZVS8Zo5wHunJU7eJ2p91qx719p9N8swK5fcUc1KdO
+         1p92L3cjBmMHJWrY5D2usYZVEG/n2+OuJRJEnOJYFCr0nEOgUbywn6wjhXmN1OUGf3Wh
+         HBHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1721762315; x=1722367115;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mRA+5SmsjtaOpQD+SKfEoxPR3u9Wix32fAl2ggOOZmo=;
-        b=sGmMeCOveAmKWMC1G6ed4AhD1mwLm7g0pfWtpp1BuOzoHDzbth3n4NtTY+FE3ry7Zk
-         JwnuzVAu/Z35eLgkqGDmmIwO6rZdWG+X+e/vneclw+Glz0MESwai+QzxaVdBo7ZE44Fp
-         MGV7vb+ODOkjrsjtMg+fAAjmEUsj9UB17yo8VcjtstjO+P4NYfrVZIf6wmhtTUZoEBy3
-         w2brHNQTEjNtyagwGfC6OIiGYWhhqQn5ac2GPhXzp7/AioK/ZxiulVQDqGNXfCEYmmvL
-         3p28PqrZt2cxorNOZzHWC7XXYogvLPx8awpvCD4b/eBGaFV99EPQPCgSAZPfxDdAkekV
-         ffYg==
-X-Gm-Message-State: AOJu0YyF5S7Nfj7hdtfWPtXljE9XM0dTFmp4pni0dVihq0hOAJjl3NQ/
-	b9XKi33tKB/ORL8ayOgbC0yUcHQOaa7ad9uv3hkYc6MCv16Ndtlsvv2IpA==
-X-Google-Smtp-Source: AGHT+IHv7RZW/Y0P2jJkEpAWzQxRNZt96rKc9JKeE/KqYEKP3WgD0Ah0kar6PF4RIWrB/EcNhu9b7w==
-X-Received: by 2002:a50:d6dc:0:b0:5a0:f8a2:9cf5 with SMTP id 4fb4d7f45d1cf-5a3f089d878mr7217660a12.29.1721762314778;
-        Tue, 23 Jul 2024 12:18:34 -0700 (PDT)
+        bh=U+v+ejSTc6SCQMvsFihFgg/BNnm4VCnNTZNOsUxclIY=;
+        b=ZIzDET3NfSnJxfib3MsefCyYXWZ0JANx4wXw6vaTqSevdNrAwhJUafiuKN0Ai08fmx
+         8Xh++fK/iLAFrnSzjHPbqdIkM7e/V6GmKtmYEEfEWvQa74pWEoP1cl9q7iCklxR7gzpd
+         bQBy8AvyverhpwxulPdl2ofI2Opz4ejtIdFpSGrQg5o29Epq+7LZcT1raVSh0kImsmzO
+         n+Ea4WRb+MFm3mHoLi1LjV2KLVxNnJ2lcjBExtDa6/ptn/+Jy2nmwXU2uMojCl4KUuAV
+         RD8ljGEgGw6pbzg2JfFMogZX9YOolvVbC5JDXx0qHtCAWL1cxEmL1u06a2rVWIRCnwy6
+         b/zg==
+X-Gm-Message-State: AOJu0YyOA/2kF3aob8CZn3IZq7DiutXwlgWmn4m07Ah4be+Tuc5+Mvmz
+	QbihWIlX9vGFPkbhQ1XWlFVrcd96Np3tXT8njTYiiKpXqt2veu4lm7tKdw==
+X-Google-Smtp-Source: AGHT+IGOmvt+GP8/Q24rPlB36x66ZlbWQyRyoEjAsXChuGSUkdb/h+9qovgcGty2we/nZGYXh4Hc9g==
+X-Received: by 2002:a17:907:97c4:b0:a79:8149:967a with SMTP id a640c23a62f3a-a7a4c0100c6mr801110066b.16.1721762315522;
+        Tue, 23 Jul 2024 12:18:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30a4d6e67sm7920210a12.17.2024.07.23.12.18.34
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a3c9508d3sm569281866b.204.2024.07.23.12.18.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 12:18:34 -0700 (PDT)
-Message-Id: <4f77b7eb7f1110e47201b8c97c34a0cbcd14e24f.1721762306.git.gitgitgadget@gmail.com>
+        Tue, 23 Jul 2024 12:18:35 -0700 (PDT)
+Message-Id: <1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
 References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
 From: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 23 Jul 2024 19:18:23 +0000
-Subject: [PATCH 5/8] git-prompt: add some missing quotes
+Date: Tue, 23 Jul 2024 19:18:24 +0000
+Subject: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,191 +72,119 @@ Cc: Avi Halachmi <avihpit@yahoo.com>,
 
 From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
 
-The issues which this commit fixes are unlikely to be broken
-in real life, but the fixes improve correctness, and would prevent
-bugs in some uncommon cases, such as weird IFS values.
+$'...' is new in POSIX (2024), and some shells support it in recent
+versions, while others have had it for decades (bash, zsh, ksh93).
 
-Listing some portability guideline here for future reference.
+However, there are still enough shells which don't support it, and
+it's cheap to provide a fallback for them, so let's do that instead
+of dismissing it as "it's compliant".
 
-I'm leaving it to someone else to decide whether to include
-it in the file itself, place is as a new file, or not.
+shells where $'...' works:
+- bash, zsh, ksh93, mksh, busybox-ash, dash master, free/net bsd sh.
 
----------
-
-The command "local" is non standard, but is allowed in this file:
-- Quote initialization if it can expand (local x="$y"). See below.
-- Don't assume initial value after "local x". Either initialize it
-  (local x=..), or set before first use (local x;.. x=..; <use $x>).
-  (between shells, "local x" can unset x, or inherit it, or do x= )
-
-Other non-standard features beyond "local" are to be avoided.
-
-Use the standard "test" - [...] instead of non-standard [[...]] .
-
---------
-
-Quotes (some portability things, but mainly general correctness):
-
-Quotes prevent tilde-expansion of some unquoted literal tildes (~).
-If the expansion is undesirable, quotes would ensure that.
-  Tilds expanded: a=~user:~/ ;  echo ~user ~/dir
-  not expanded:   t="~"; a=${t}user  b=\~foo~;  echo "~user" $t/dir
-
-But the main reason for quoting is to prevent IFS field splitting
-(which also coalesces IFS chars) and glob expansion after parameter
-expansion or command substitution.
-
-In _command-arguments_, expanded/substituted values must be quoted:
-  Good: [ "$mode" = yes ]; local s="*" x="$y" e="$?" z="$(cmd ...)"
-  Bad:  [ $mode = yes ];   local s=*   x=$y   e=$?   z=$(cmd...)
-
-Still in _agumemts_, no need to quote non-expandable values:
-  Good:                 local x=   y=yes;   echo OK
-  OK, but not required: local x="" y="yes"; echo "OK"
-But completely empty (NULL) arguments must be quoted:
-  foo ""   is not the same as:   foo
-
-Assignments in simple commands - with or without an actual command,
-don't need quoting becase there's no IFS split or glob expansion:
-  Good:   s=* a=$b c=$(cmd...)${x# foo }${y-   } [cmd ...]
-  It's also OK to use double quotes, but not required.
-
-This behavior (no IFS/glob) is called "assignment context", and
-"local" does not behave with assignment context in some shells,
-hence we require quotes when using "local" - for compatibility.
-
-First value in 'case...' doesn't IFS-split/glob, doesn't need quotes:
-  Good:       case  * $foo $(cmd...)  in ... ; esac
-  identical:  case "* $foo $(cmd...)" in ... ; esac
-
-Nested quotes in command substitution are fine, often necessary:
-  Good: echo "$(foo... "$x" "$(bar ...)")"
-
-Nested quotes in substring ops are legal, and sometimes needed
-to prevent interpretation as a pattern, but not the most readable:
-  Legal:  foo "${x#*"$y" }"
-
-Nested quotes in "maybe other value" subst are invalid, unnecessary:
-  Good:  local x="${y- }";   foo "${z:+ $a }"
-  Bad:   local x="${y-" "}"; foo "${z:+" $a "}"
-Outer/inner quotes in "maybe other value" have different use cases:
-  "${x-$y}"  always one quoted arg: "$x" if x is set, else "$y".
-  ${x+"$x"}  one quoted arg "$x" if x is set, else no arg at all.
-  Unquoted $x is similar to the second case, but it would get split
-  into few arguments if it includes any of the IFS chars.
-
-Assignments don't need the outer quotes, and the braces delimit the
-value, so nested quotes can be avoided, for readability:
-  a=$(foo "$x")  a=${x#*"$y" }  c=${y- };  bar "$a" "$b" "$c"
+shells where it doesn't work, but the new fallback works:
+- all dash releases (up to 0.5.12), older versions of free/net bsd sh,
+  openbsd sh, pdksh, all Schily Bourne sh variants, yash.
 
 Signed-off-by: Avi Halachmi (:avih) <avihpit@yahoo.com>
 ---
- contrib/completion/git-prompt.sh | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ contrib/completion/git-prompt.sh | 52 +++++++++++++++++++++-----------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
 diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 4781261f868..5d7f236fe48 100644
+index 5d7f236fe48..bbc16417ac9 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -246,7 +246,7 @@ __git_ps1_show_upstream ()
- 		if [ -n "$count" ] && [ -n "$name" ]; then
- 			__git_ps1_upstream_name=$(git rev-parse \
- 				--abbrev-ref "$upstream_type" 2>/dev/null)
--			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
-+			if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
- 				upstream="$upstream \${__git_ps1_upstream_name}"
- 			else
- 				upstream="$upstream ${__git_ps1_upstream_name}"
-@@ -278,12 +278,12 @@ __git_ps1_colorize_gitstring ()
- 		local c_lblue=$'\001\e[1;34m\002'
- 		local c_clear=$'\001\e[0m\002'
- 	fi
--	local bad_color=$c_red
--	local ok_color=$c_green
-+	local bad_color="$c_red"
-+	local ok_color="$c_green"
- 	local flags_color="$c_lblue"
+@@ -111,6 +111,17 @@
+ __git_printf_supports_v=
+ printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
  
- 	local branch_color=""
--	if [ $detached = no ]; then
-+	if [ "$detached" = no ]; then
- 		branch_color="$ok_color"
++__git_SOH=$'\1' __git_STX=$'\2' __git_ESC=$'\33'
++__git_LF=$'\n' __git_CRLF=$'\r\n'
++
++if [ $'\101' != A ]; then  # fallback for shells without $'...'
++   __git_CRLF=$(printf "\r\n\1\2\33")  # CR LF SOH STX ESC
++   __git_ESC=${__git_CRLF#????}; __git_CRLF=${__git_CRLF%?}
++   __git_STX=${__git_CRLF#???};  __git_CRLF=${__git_CRLF%?}
++   __git_SOH=${__git_CRLF#??};   __git_CRLF=${__git_CRLF%?}
++   __git_LF=${__git_CRLF#?}
++fi
++
+ # stores the divergence from upstream in $p
+ # used by GIT_PS1_SHOWUPSTREAM
+ __git_ps1_show_upstream ()
+@@ -118,7 +129,7 @@ __git_ps1_show_upstream ()
+ 	local key value
+ 	local svn_remotes="" svn_url_pattern="" count n
+ 	local upstream_type=git legacy="" verbose="" name=""
+-	local LF=$'\n'
++	local LF="$__git_LF"
+ 
+ 	# get some config options from git-config
+ 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+@@ -271,12 +282,16 @@ __git_ps1_colorize_gitstring ()
+ 		local c_lblue='%F{blue}'
+ 		local c_clear='%f'
  	else
- 		branch_color="$bad_color"
-@@ -360,7 +360,7 @@ __git_sequencer_status ()
- __git_ps1 ()
+-		# Using \001 and \002 around colors is necessary to prevent
+-		# issues with command line editing/browsing/completion!
+-		local c_red=$'\001\e[31m\002'
+-		local c_green=$'\001\e[32m\002'
+-		local c_lblue=$'\001\e[1;34m\002'
+-		local c_clear=$'\001\e[0m\002'
++		# \001 (SOH) and \002 (STX) are 0-width substring markers
++		# which bash/readline identify while calculating the prompt
++		# on-screen width - to exclude 0-screen-width esc sequences.
++		local c_pre="${__git_SOH}${__git_ESC}["
++		local c_post="m${__git_STX}"
++
++		local c_red="${c_pre}31${c_post}"
++		local c_green="${c_pre}32${c_post}"
++		local c_lblue="${c_pre}1;34${c_post}"
++		local c_clear="${c_pre}0${c_post}"
+ 	fi
+ 	local bad_color="$c_red"
+ 	local ok_color="$c_green"
+@@ -312,7 +327,7 @@ __git_ps1_colorize_gitstring ()
+ # variable, in that order.
+ __git_eread ()
  {
- 	# preserve exit status
--	local exit=$?
-+	local exit="$?"
- 	local pcmode=no
- 	local detached=no
- 	local ps1pc_start='\u@\h:\w '
-@@ -379,7 +379,7 @@ __git_ps1 ()
- 		;;
- 		0|1)	printf_format="${1:-$printf_format}"
- 		;;
--		*)	return $exit
-+		*)	return "$exit"
- 		;;
- 	esac
- 
-@@ -427,7 +427,7 @@ __git_ps1 ()
- 	rev_parse_exit_code="$?"
- 
- 	if [ -z "$repo_info" ]; then
--		return $exit
-+		return "$exit"
- 	fi
- 
- 	local short_sha=""
-@@ -449,7 +449,7 @@ __git_ps1 ()
- 	   [ "$(git config --bool bash.hideIfPwdIgnored)" != "false" ] &&
- 	   git check-ignore -q .
- 	then
--		return $exit
-+		return "$exit"
- 	fi
- 
- 	local sparse=""
-@@ -499,7 +499,7 @@ __git_ps1 ()
- 			case "$ref_format" in
- 			files)
- 				if ! __git_eread "$g/HEAD" head; then
--					return $exit
-+					return "$exit"
- 				fi
- 
- 				case $head in
-@@ -597,10 +597,10 @@ __git_ps1 ()
- 		fi
- 	fi
- 
--	local z="${GIT_PS1_STATESEPARATOR-" "}"
-+	local z="${GIT_PS1_STATESEPARATOR- }"
- 
- 	b=${b##refs/heads/}
--	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
-+	if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
- 		__git_ps1_branch_name=$b
- 		b="\${__git_ps1_branch_name}"
- 	fi
-@@ -612,7 +612,7 @@ __git_ps1 ()
- 	local f="$h$w$i$s$u$p"
- 	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}${conflict}"
- 
--	if [ $pcmode = yes ]; then
-+	if [ "$pcmode" = yes ]; then
- 		if [ "${__git_printf_supports_v-}" != yes ]; then
- 			gitstring=$(printf -- "$printf_format" "$gitstring")
- 		else
-@@ -623,5 +623,5 @@ __git_ps1 ()
- 		printf -- "$printf_format" "$gitstring"
- 	fi
- 
--	return $exit
-+	return "$exit"
+-	test -r "$1" && IFS=$'\r\n' read -r "$2" <"$1"
++	test -r "$1" && IFS=$__git_CRLF read -r "$2" <"$1"
  }
+ 
+ # see if a cherry-pick or revert is in progress, if the user has committed a
+@@ -430,19 +445,20 @@ __git_ps1 ()
+ 		return "$exit"
+ 	fi
+ 
++	local LF="$__git_LF"
+ 	local short_sha=""
+ 	if [ "$rev_parse_exit_code" = "0" ]; then
+-		short_sha="${repo_info##*$'\n'}"
+-		repo_info="${repo_info%$'\n'*}"
++		short_sha="${repo_info##*$LF}"
++		repo_info="${repo_info%$LF*}"
+ 	fi
+-	local ref_format="${repo_info##*$'\n'}"
+-	repo_info="${repo_info%$'\n'*}"
+-	local inside_worktree="${repo_info##*$'\n'}"
+-	repo_info="${repo_info%$'\n'*}"
+-	local bare_repo="${repo_info##*$'\n'}"
+-	repo_info="${repo_info%$'\n'*}"
+-	local inside_gitdir="${repo_info##*$'\n'}"
+-	local g="${repo_info%$'\n'*}"
++	local ref_format="${repo_info##*$LF}"
++	repo_info="${repo_info%$LF*}"
++	local inside_worktree="${repo_info##*$LF}"
++	repo_info="${repo_info%$LF*}"
++	local bare_repo="${repo_info##*$LF}"
++	repo_info="${repo_info%$LF*}"
++	local inside_gitdir="${repo_info##*$LF}"
++	local g="${repo_info%$LF*}"
+ 
+ 	if [ "true" = "$inside_worktree" ] &&
+ 	   [ -n "${GIT_PS1_HIDE_IF_PWD_IGNORED-}" ] &&
 -- 
 gitgitgadget
 
