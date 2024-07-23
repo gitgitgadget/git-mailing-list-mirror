@@ -1,77 +1,79 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5137915383C
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF56153BC7
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721743551; cv=none; b=uQEuZQ9pK0btvl4lW05xCblB1KhZ1wNemqHRQcXwbVka+0ArVd2/2dn3i48LL38yeDR2LrMtFTqQwnlXsrU9u8zlprAUE7XWnDtY14rvoxkWQ4w5vu1z5UopIBbU+bPUOaj2y+StoPTECbJUVnIFdaqCoY35/IaflC8axAKl1yw=
+	t=1721743552; cv=none; b=UROXU9QCWB24P0qRotdBSZNdBzzFf3vOMPgmwGlSHnPHAKBSgXEIx/xojKXJ5LX44QaCIpahbvZzre+yZarob1nEnMI/ieF610oBW5RWedQl3zoJv62j7XjbyOQJbO9unnzhWKuD/hc4b1fNaq7Q8OX0fNLixKqVEt907wYkbxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721743551; c=relaxed/simple;
-	bh=36QV/VtoDpFeez34g3nsvYdIehfzG+/E/ND0e0Nl6S0=;
+	s=arc-20240116; t=1721743552; c=relaxed/simple;
+	bh=iu9YX4al7GWHHDDaBiJg3wBZIv0MqBNSBDWtS5P8X/4=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HIwjT5MaSJ/eqkefDQohmWMzzMyImwDhrei8kadr4ea/TYSBuxXPU5ZS5zCpongV6+bomJH/6+s8+kzHHoohBdEICgZK5DIZWrbnTVg+tonzqUf18sQmYm/NlPHbv475+scrYKrWCkwj+WAlXDGqgy6ORwhf+0G/rLKfdm2UAOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RX2g/7MH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BFdQOxbQ; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=XNjhgIkh/9Kabhk9+PNja7P9BRQb9uB3OIH2u19T9+20cZqIoyZzmBf52WlCXMv19uzQhIjyv3KGsMYg0hw+H9+OYDVT3K+TRKnKhaLaezYsju0I22skHENHnvhZxq4aPBv5GKEibKPb+CSbo6tfIs5ZFyVhvHm+i2ayefwRPBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yk6zajnF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IStM4FR9; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RX2g/7MH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BFdQOxbQ"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7A5D41380213
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yk6zajnF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IStM4FR9"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6379913801FF
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 23 Jul 2024 10:05:48 -0400
+  by compute5.internal (MEProxy); Tue, 23 Jul 2024 10:05:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721743548; x=1721829948; bh=K8zP+RBsj+
-	C2ztpkfKhU4As2Ms+ofs9d4cDVRnJYn9Y=; b=RX2g/7MHIQi3hwmCUDl1CbOmLn
-	t3WhZGr6abr763UTb2yPX7XH19TcoRPbW7RMBV54vQ+AXeuUdf+OKTOdz9u4PXEm
-	YbsatNBoeNy1y/z/DN+PX48QksIqKPm1WGAUOZBQgyeTCqppsQ2hQdWKpYoBTnYO
-	pi7iG3MfgpAM0jJVRMryEiexPZd3ex+zfW5bQLMVMo15GJ2LJaKFS482ka+u9m8k
-	N0p0VgvvcN8F5li6YRM05zL4xQKhlL4mQZKJCgm0WJr5eJy+7tN2kik0p7rhlIUK
-	GCNkv7qGbrmAPteKOKFY+ItSUzF7CYb1Vnq4tWVzQcN9qrkCFDbT7/4k5caA==
+	:subject:to:to; s=fm3; t=1721743549; x=1721829949; bh=iu9YX4al7G
+	WHHDDaBiJg3wBZIv0MqBNSBDWtS5P8X/4=; b=Yk6zajnFumxIswzTZX0d6D4oL3
+	U6XQwr13N+5Shl6pz/a+T6pO84cHe1sYDkTDB1QgNRxyPXSdIbJsZLBqpQHF6xZw
+	bYzXIl5Rq4hyi4pQzX6wNMgBlDerGTUw1Yie13v7lPpi9My7vCWSF12ruJD3dJZU
+	2x2qJtMfobMaLsltUTs/+1CLnT8Q1kC3bRss9D1JZTcnOcWpZ50bVhe2sxtbbcXD
+	8mQg2M8/v3w1UpbeS5QZFnWINlWezjAipRuc0EqPDcRgyGxcNlT42Q0SzHyKuWjJ
+	QXWVkf/JBhnn4bhKewG7y77rGB7I+rypmFvraZ6ValBMTMEqezGea4ChpVDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721743548; x=1721829948; bh=K8zP+RBsj+C2ztpkfKhU4As2Ms+o
-	fs9d4cDVRnJYn9Y=; b=BFdQOxbQP82+ryCuTGDAR+3DrPH0eoIMWc77uAUWBDmW
-	cdyJqzUyL2GPFAl3ezEuGmVK/0oSF3FYpyWdHnSvsuPiZGHiVtYGbtgd1uZI+tBL
-	2d8p8RWc1Znc36Vc5+NXJoijH9hm7SNm5c4v8sP8cR2kZah3j/tbUBk/XBt1xkk7
-	e+7wvSeMbm/fcskjYqIx/+ZGORh7ju6a2LfwUQQamAC582SFl2qffa005iilUPR6
-	xvmFfjKkP229gj8Rx13lYa5mVI9Uy+iJNPTxxW9u9MoUyLYvXeBolN0kMwbNA4Km
-	3tIk+PAAEaKInr4RdWwWm5WfZMQ2GWHfdd6Ov18wJQ==
-X-ME-Sender: <xms:vLifZtG8s8voQy1WVA56EOKcL9Wd8iDQznVyoC_5lI69WDgJrz0zQA>
-    <xme:vLifZiVHzc0AsSGesgUJ8Xu3yVCwC9j8GZoSh_2k8d67LYw3Ats_t1FsUifYsFuR5
-    GcVEOfdoWou5jhhDA>
-X-ME-Received: <xmr:vLifZvLgzrE4C-53NktHe_1y_Gd54ZDMrjTnG_7HZSp5qQmAp2_9FzrWlOYBwFTFWsSsNbvZ9mFw5xg6nbdeW_UPiaiwJqmpb6ViFC7sbiZG34Vo>
+	fm3; t=1721743549; x=1721829949; bh=iu9YX4al7GWHHDDaBiJg3wBZIv0M
+	qBNSBDWtS5P8X/4=; b=IStM4FR9j1rirv11NwtJMS3FIY9QkcD/rGEXjTbl/saS
+	36z9ixutaeLinmCmNUTT6UBrZatUoQ8ZD3no3lzh2bkZEAQJ3fNyAT8QtQfMb4wy
+	ebzCiNfDGAr5Oj/c2C8F8iUR6KR7Xl8H6ZrTC+rEIclZHqmVokkcjnlVjl3y5p9S
+	1BW+ntJl09esoZeizhgNP5WvMHZseWVU1c9HOXJScs3vNVwJ88YgJXFLDkKEUIgz
+	YXVZleX8tjqYXPj0Y2/1fqhu0D7sGELiioPMn7RFLHPjMe6sHkaTtbDwBcEMXeQ8
+	fJF5fQYL8Zah3+I7umstWEUrvwZTxQG7FkF4qbFDVw==
+X-ME-Sender: <xms:vbifZvwxkLQhx-x5JKsye99u64w6ewYG9-Uks5zOhgsca9yywK_evw>
+    <xme:vbifZnTMk1LxRwnncw2MihuWWriWR5iPEeo6VHGVnOSkCyzQF2n_R2fNOr7TfAYrr
+    s1uyW04vefw5LgfLQ>
+X-ME-Received: <xmr:vbifZpWd7vym_ugfbbhSKxeQYysP7IPLVDxTEiwOi7BRyO0ANZhpexXFYPAEe83zhs9oDPrLq9Xv5aSytafraeM0-JrV8qWsOdZtQyJ5pUB4iqkw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:vLifZjGfKhMYlRYwZdjQb31SU_5FdhICGNkoxQP3w-QaXKUQ9kSVHw>
-    <xmx:vLifZjWSm-9K90jZNWFXf_riqgqWfCIu_yqswbMXNh0CUqGtoCEQtA>
-    <xmx:vLifZuN6WwqFr7HjP4yoDBlDySpw7HV8v2G9wWyZbwRrUrcysBgiCg>
-    <xmx:vLifZi3WPC-jV9HOHFScCuMPG0HhI6-Z2VTK7pcG4pK2ReVxkggb6g>
-    <xmx:vLifZqf_yX3G0SP1Q7EeKuk2P9UYihH_vA4z12F-JPzfJKrfIXCmAune>
+    shdrihhmqeenucggtffrrghtthgvrhhnpeekheekkedvkedvheeguefhvddvkefgvddtfe
+    ejheevtdetuddtgeeutdduleetheenucffohhmrghinhepphgvrhhfohhrtggvrdgtohhm
+    pdhgihhthhhusgdrtghomhdpvggtlhhiphhsvgdrohhrghdpvddtvdefudduvdeludeghe
+    dtqdhrrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:vbifZphibNPa_oXZm8zPWkzOXteZEuVqZ-2kD179YmSg4xaTXRkYWg>
+    <xmx:vbifZhBPHlZqz0dMTcZk7KAUiTy-lQLI9FFTjCGWtjARAG-4jXNijA>
+    <xmx:vbifZiKmlilCYTDQVphJJsCLNuH2neDoUT0SPPlZCPSD3IxoSQ0Kuw>
+    <xmx:vbifZgDaXCRJjm1umiLvY-u_IOW1kjYKOul5bzn1pvkIANK53jrfxQ>
+    <xmx:vbifZu4ohFVNv51PItAc7y1g6v6iU17ZsPLJRVtTRNFyP5owt_Tlnmzk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:47 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 23 Jul 2024 10:05:48 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 18b2bc47 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 6d6ee2a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 23 Jul 2024 14:04:25 +0000 (UTC)
-Date: Tue, 23 Jul 2024 16:05:37 +0200
+	Tue, 23 Jul 2024 14:04:30 +0000 (UTC)
+Date: Tue, 23 Jul 2024 16:05:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 1/3] t98xx: fix Perforce tests with p4d r23 and newer
-Message-ID: <f40f62f257de38c3a38e942eb9ca1d2109c2b059.1721740612.git.ps@pks.im>
+Subject: [PATCH 2/3] ci: update Perforce version to r23.2
+Message-ID: <ee5d836b779087890acdad061ef6995642942479.1721740612.git.ps@pks.im>
 References: <cover.1721740612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,144 +82,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="w+DKSTaeLoGF4JNB"
+	protocol="application/pgp-signature"; boundary="FItOZVQ0t3x3P+9A"
 Content-Disposition: inline
 In-Reply-To: <cover.1721740612.git.ps@pks.im>
 
 
---w+DKSTaeLoGF4JNB
+--FItOZVQ0t3x3P+9A
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Some of the tests in t98xx modify the Perforce depot in ways that the
-tool wouldn't normally allow. This is done to test behaviour of git-p4
-in certain edge cases that we have observed in the wild, but which
-should in theory not be possible.
-
-Naturally, modifying the depot on disk directly is quite intimate with
-the tool and thus prone to breakage when Perforce updates the way that
-data is stored. And indeed, those tests are broken nowadays with r23 of
-Perforce. While a file revision was previously stored as plain file
-"depot/file,v", it is now stored in a directory "depot/file,d" with
-compression.
-
-Adapt those tests to handle both old- and new-style depot layouts.
+Update our Perforce version from r21.2 to r23.2. Note that the updated
+version is not the newest version. Instead, it is the last version where
+the way that Perforce is being distributed remains the same as in r21.2.
+Newer releases stopped distributing p4 and p4d executablesas well as the
+macOS archives directly and would thus require more work.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t9800-git-p4-basic.sh                    | 13 +++++++++++--
- t/t9802-git-p4-filetype.sh                 | 15 ++++++++++++---
- t/t9825-git-p4-handle-utf16-without-bom.sh | 18 +++++++++++++++---
- 3 files changed, 38 insertions(+), 8 deletions(-)
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index 53af8e34ac..4e95622670 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -297,8 +297,17 @@ test_expect_success 'exit when p4 fails to produce mar=
-shaled output' '
- # p4 changes, files, or describe; just in p4 print.  If P4CLIENT is unset,=
- the
- # message will include "Librarian checkout".
- test_expect_success 'exit gracefully for p4 server errors' '
--	test_when_finished "mv \"$db\"/depot/file1,v,hidden \"$db\"/depot/file1,v=
-" &&
--	mv "$db"/depot/file1,v "$db"/depot/file1,v,hidden &&
-+	case "$(echo "$db"/depot/file1*)" in
-+	*,v)
-+		test_when_finished "mv \"$db\"/depot/file1,v,hidden \"$db\"/depot/file1,=
-v" &&
-+		mv "$db"/depot/file1,v "$db"/depot/file1,v,hidden;;
-+	*,d)
-+		path=3D"$(echo "$db"/depot/file1,d/*.gz)" &&
-+		test_when_finished "mv \"$path\",hidden \"$path\"" &&
-+		mv "$path" "$path",hidden;;
-+	*)
-+		BUG "unhandled p4d layout";;
-+	esac &&
- 	test_when_finished cleanup_git &&
- 	test_expect_code 1 git p4 clone --dest=3D"$git" //depot@1 >out 2>err &&
- 	test_grep "Error from p4 print" err
-diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-index bb236cd2b5..557e11b16c 100755
---- a/t/t9802-git-p4-filetype.sh
-+++ b/t/t9802-git-p4-filetype.sh
-@@ -301,9 +301,18 @@ test_expect_success SYMLINKS 'empty symlink target' '
- 		#     @@
- 		#
- 		cd "$db/depot" &&
--		sed "/@target1/{; s/target1/@/; n; d; }" \
--		    empty-symlink,v >empty-symlink,v.tmp &&
--		mv empty-symlink,v.tmp empty-symlink,v
-+		case "$(echo empty-symlink*)" in
-+		empty-symlink,v)
-+			sed "/@target1/{; s/target1/@/; n; d; }" \
-+			    empty-symlink,v >empty-symlink,v.tmp &&
-+			mv empty-symlink,v.tmp empty-symlink,v;;
-+		empty-symlink,d)
-+			path=3D"empty-symlink,d/$(ls empty-symlink,d/ | tail -n1)" &&
-+			rm "$path" &&
-+			gzip </dev/null >"$path";;
-+		*)
-+			BUG "unhandled p4d layout";;
-+		esac
- 	) &&
- 	(
- 		# Make sure symlink really is empty.  Asking
-diff --git a/t/t9825-git-p4-handle-utf16-without-bom.sh b/t/t9825-git-p4-ha=
-ndle-utf16-without-bom.sh
-index f049ff8229..8e34f72198 100755
---- a/t/t9825-git-p4-handle-utf16-without-bom.sh
-+++ b/t/t9825-git-p4-handle-utf16-without-bom.sh
-@@ -22,9 +22,21 @@ test_expect_success 'init depot with UTF-16 encoded file=
- and artificially remove
- 		cd db &&
- 		p4d -jc &&
- 		# P4D automatically adds a BOM. Remove it here to make the file invalid.
--		sed -e "\$d" depot/file1,v >depot/file1,v.new &&
--		mv depot/file1,v.new depot/file1,v &&
--		printf "@$UTF16@" >>depot/file1,v &&
-+		case "$(echo depot/file1*)" in
-+		depot/file1,v)
-+			sed -e "\$d" depot/file1,v >depot/file1,v.new &&
-+			mv depot/file1,v.new depot/file1,v &&
-+			printf "@$UTF16@" >>depot/file1,v;;
-+		depot/file1,d)
-+			path=3D"$(echo depot/file1,d/*.gz)" &&
-+			gunzip -c "$path" >"$path.unzipped" &&
-+			sed -e "\$d" "$path.unzipped" >"$path.new" &&
-+			printf "$UTF16" >>"$path.new" &&
-+			gzip -c "$path.new" >"$path" &&
-+			rm "$path.unzipped" "$path.new";;
-+		*)
-+			BUG "unhandled p4d layout";;
-+		esac &&
- 		p4d -jrF checkpoint.1
- 	)
- '
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 6ec0f85972..b59fd7c1fd 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -7,7 +7,7 @@
+=20
+ begin_group "Install dependencies"
+=20
+-P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r21.2
++P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r23.2
+ LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$LINUX_GI=
+T_LFS_VERSION
+ JGITWHENCE=3Dhttps://repo.eclipse.org/content/groups/releases//org/eclipse=
+/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.=
+202311291450-r.sh
+=20
 --=20
 2.46.0.rc1.dirty
 
 
---w+DKSTaeLoGF4JNB
+--FItOZVQ0t3x3P+9A
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmafuLAACgkQVbJhu7ck
-PpTwmxAAjYB9O3KZwkhGZqD8zFMo1aYNcGfZ16ZEIxijNYYBJC0DaoHG95tpvCsP
-Wr3TgikSlMG/YfpgT6ksaUuXFnKlndsJvMf10WgLiPwD20tOwZpCDpRcsP3d0sTN
-WMoXhCzFI4K9IuUDm9RawkfnWbY23DvU6BfAABpsl62kOwmd/966pp3Rhi3+aeGV
-HzjmkJpzSgWFmU5oX6zUBLuaiUxv3SBBxSBHHYU/1tB9N+NHb/4XzNuE7dZ2mzv+
-PZ2GDjEXL1M0v18/HHEuahzEV5QfHuH08Lwqt/nBY4LDH6ZxCva/cClj6TyYAl/d
-SJ7/UM74D0hgYWbKkj9/dRQQHBRKcR9meieqr3k3ZrZt1VGtxKy+AKWEtWDJAQqQ
-dNjWet/9QdryiYvy/uwHdkeDTPzRv26jSY3SjPgJCyP7e90D/U4HS9o34cFPHceJ
-Rhy/MQmg3kwF1TwddWzAazY1e0QEt+ueWo1blmtDLKCb5YhvBW4Rig/SzafNBtY0
-g92DLs1UKoJ2LOurc5qrrDmO7zXegXdx2ytQLXB5nI4BtOuPNbt+c3mxvX/zoqvt
-yuUgtY6UmZ10ejHopzvkBtzd7UrJ+PNen7SOi859XoDvOYv4fji6ViE8friqaMme
-Pwa2M+1XmZktjc6HeCy+I7c6MhM5AorHQaWw3IO4E640BjEZid8=
-=rfJw
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmafuLUACgkQVbJhu7ck
+PpQSOQ//WzVHZqjeskvbQnHYRkpELS5KMMCf3Zr496OS/O/7gdsFmLHbpd9tJT/u
+aiYIxw33nDxePNGwSV3REJG9P2lBTpymaBO7aJG1GBai7xeJ8jwwDphMtM3CrRyl
+sutFonm6zgT0H0gYLiBHHS5vTkhDRUxiKB74CQccAiYQz2CmBF7iCCk3NRQ0HTTB
+bCLgjUPLfIFZj3WX2tW4Q7zwNZ8AFCn+H34jyziRWKPKvUhtSyQ3bCybccNxcQoz
+uXzrg77yX7cZJDOnZhm9S95odKZkR5Su36vRrJjBft5FBdUg9ByTjsvFGDvCSfj1
+/YZA2AxUR/IrRUPE3Ct3CPIn4pWL17vA2IctqrL9wBWZOq2c8stLqKdZX/ijftHm
+rxLwdWEPQDPC5eUfBHGsmEUKCVBBPURZJ28bf6paBGm3ad+dFFdrvnCXpEJvgCpJ
+dLj6y3nB+Cr1ELAmxfyAFEZnnNgB/qNxTu5jgK51ePem/g7qI3BGEnn3dFT8/AQA
+tiBGeTbpZWC/aXwsBd1iqWZVJhGfaZw7RERxqQxFOsiKLET8zoOVfxXdMXR6wcjr
+SYfwq4wzgHl1/kb3UeGUUklah1cqH/d/BykQ2cY2GZOKnIISn5qfGujardjFFDJt
+oxeLHGKCDmK8TH2Gby/wigUWde2fF7rScu9rDwYVn/wc2uIB9E0=
+=pmoK
 -----END PGP SIGNATURE-----
 
---w+DKSTaeLoGF4JNB--
+--FItOZVQ0t3x3P+9A--
