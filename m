@@ -1,136 +1,154 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3FC14A0A4
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 08:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFD8DDDC
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 08:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721723750; cv=none; b=Uiebnq/zetLumKMAo3BdcJ3td1b4SrlYNuXOqm/CixUTLcPDSg9wyyv0PtE4cssKpjDQw8AskZl9qSMxTEIemmo+Mf7IPJKOqYDVrHVbG80ON601PbzPTjyFu7eE/0UyOZo/Zf8pavZZriIb7usI5MkiAmoIAosed+KxmBSElmU=
+	t=1721724631; cv=none; b=B0kzGXbx2YjOnP+9/7z+mAn1xo/U3aWbKO9/Vv75cggPaerv6Go544G469Szxc6WNI2mXXZ3RXDfuVb7ZcX7QWGToUVtANgP80c44x23PpJ8Cj1YTFApHCbYvaQceEhsLii4nkJ6i8Q+bClM7LHz0VASofDauhVK0CCaCpNqjWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721723750; c=relaxed/simple;
-	bh=K5d6KoKbzG62WU0JI2tEkmm4t0XIQWLokPhcJTukp3A=;
+	s=arc-20240116; t=1721724631; c=relaxed/simple;
+	bh=UX3MbQgXMOTuuQF9FuaMTgiumAWVQU3waewm4P5Qzrk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oqSjcJWRBH7Esqj+oz9/P90RKmwvMNbiN997h1X2zAWxMvZkSc+n34mdBVyYp/6+tb8IBqX9pPhU4wsNQDGzoBLCaWi4MMm8hUGJakhuHA4RRxCm2JljA2a/kMHssaF81gdahjT90fr4bulJ5APwoG7W/YTKg4KlDPjeJvBfSok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dmc+HnsY; arc=none smtp.client-ip=209.85.160.45
+	 To:Cc:Content-Type; b=W+B6IVPNrJhABdK8bxdAOWsc7Pe+xpbuytJ6nKLYCRFrzylRSm+mWllwICKo6hRyE7Zko/HNdoV/tXajm8Q/fXBm6DaNVosJoT6+wE8LAY5drfEzSSjpBKyk109qPPPuXwMOnXJR5cg0oJxGbMc0gNP4aSFwX6IHPvTl6+BzIaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dcsWGQuv; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dmc+HnsY"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-26119999171so2340386fac.2
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 01:35:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dcsWGQuv"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2eeec60a324so67616841fa.2
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 01:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721723748; x=1722328548; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721724628; x=1722329428; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dbwPYv3X9s6+cIl42kuZ//S6gsisL8UnM+ZWQcknZnM=;
-        b=Dmc+HnsY8/Rswco4coi9RkowxArN430KZBEoTuBevp4k3akyWE3f6AuSHwvAgRtroo
-         ACxY9esGzTLNSE9duRy1SH3XhRwpvLThx/jTYwiCeGMoWwahYKzz/3mFZ+R0BiLy3HCm
-         wd3O2VKOMAAnoAe8FY1b/GF04YBJIw2cvKiLAeQXLPJaYz7vPcNRYWMKE24lnukmvL27
-         5UPKnmP4dX1FCynWa7uyfWylNqF9KTyNY53mICENMlUKRu0XmFZaKDXEAp3slhOO8dyJ
-         Am42W7UXtAUoV2j4C4fYY3/hz+yLxgqybBjt/jNAkL5uJuckCjAzovBwPqwST1V3urpd
-         dYhA==
+        bh=1AXNLXg39nL0JkXdM8prAq1WXceRgpvHbA0/dBKsH98=;
+        b=dcsWGQuv31LsjGlzLM8P9Zh/iGWJi7JcUmpNbz0458YJ/XN/Nu8as2C11pmFt5FR9Y
+         A+PY5aE3yvLAPoPsozIZJdWiECgcuLpsBKsIJ7KilrvQHoiAtTSrRydSPYLO66HV778v
+         MzKAuFgDXJdv3wpu/4LlO4SctONLp29blpX/yjHcxCiQWZdcu8Ck2neVeLl0gqzCPzgF
+         ecqWaguPKvLVO5W3NHl0WA73bWulDm6wakGdaZ3p4DpcAONWSPwwvpcCHhoFLQ0tRG+Q
+         /0qvZUKkzrPZZIAHIsKJhDscS7jE09TFKhZNbw6Ia/1/2lA7T984tLKokanulEE4VU2J
+         p5yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721723748; x=1722328548;
+        d=1e100.net; s=20230601; t=1721724628; x=1722329428;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dbwPYv3X9s6+cIl42kuZ//S6gsisL8UnM+ZWQcknZnM=;
-        b=onVY1H/CsP5NQPrI1Xv7IiWY9k8efS9GwpoPgfcebtK17ChJzkfCas2ixCOkcv4Adh
-         Y5Jmcw/8aUU+yCRr7TAdASxefxiBJrA8lRVB3EbS3tNifud0w3Za1RD3BANJBKD0j5Nl
-         3/OgDfETayqudkrtJd3nK0DKkTPXp1SjdiUwtbeO3AVvMTsmNbD+MU+vf1tL3Xop12gK
-         HV2w8oiKDjNQTbvnRLxonNN2TUX6eLT1ap6cHNn225bdQuWTIykzSe5jAyby4xT23sQ3
-         kco4KcnK2IWNw9uin8umq2o068tetWDxtpiC6kuB6EZVzA+eiKwLeH09On4kBcZUlccH
-         Abgw==
-X-Forwarded-Encrypted: i=1; AJvYcCXJunz96oaOGSsxcM/KzlOHDvD+VfW4yWsx3Xz1vfbGfnuYQoGe70lWJQjjshAaW61nuiRTDbERM3CojNaYYLMKWbsm
-X-Gm-Message-State: AOJu0YxmbBNB1wOx/BVWCTI5GZfgs6+jKUvYi4PHUNlPjOfgqDWmC9GI
-	9y0cbTGs96M1qdyX8sqP7i3B/ycU2xm2/BMYUF5ciL58uwZWQjpFrGHzd6EjOx8HAtvp3mXgIGw
-	uexZj0jKpTe2PAMdtAFskRgovLUU=
-X-Google-Smtp-Source: AGHT+IEQNjgQ0P+4dsCtRv2JxObiCWQx6bOQwNajQxift0ztaTkm9FZtPooW871RqPpCVZ1morisVGMhFbWLniGxkHY=
-X-Received: by 2002:a05:6870:d111:b0:261:acf:e95b with SMTP id
- 586e51a60fabf-26469228613mr1937166fac.36.1721723747744; Tue, 23 Jul 2024
- 01:35:47 -0700 (PDT)
+        bh=1AXNLXg39nL0JkXdM8prAq1WXceRgpvHbA0/dBKsH98=;
+        b=QUaZ17OprQbVbWjV1f2ukgQTY8s/WV8tyklb2171DxJE5OZ2zm5FYZLTsgoe48oJq2
+         Iqknt1nfmUubXvEOQ95+0+8GhSyh8hOjLxyg9/28TR8qgO4y7RWIWnx53SWsLffT5uAX
+         ifhoplSvC3gUv3k3rp0OlQfhYTTHpczaF+4usThOW/INdqqh+SzAnnH+yUWV86K/lD0b
+         VhNGn3TuQXDoK623UW7km7JIhgBOi1lpkohDxAWvlNgeDonEK3TLFaC31C5OWCJpDLGq
+         H5zGiS7EILcQEHrsfZXV3tJnLIvGtkfhUfaCvmtfhRVgWpYhN26mN5d4HpqOwFJXRts+
+         xdFQ==
+X-Gm-Message-State: AOJu0YzvWYK6+RDuRFepzC3tlMtQ+oRLK/ch7ey9uWrJwPHLJEShdUiG
+	jF61dl5xDrKhvEIPNhYwwZLOBk0txOY1spdgIjso4mTeV9gvIUKSCWazzXjBwt3pPNZJhKl+8Fb
+	ccwcoqiilkkqNzOjeyHQdBm6Yb9A=
+X-Google-Smtp-Source: AGHT+IGBjKs0ogbv5+pGwjHNltJzcGMAFac9YktfT90reL23sByBFSRdcNR2DKEyHpaVNkLK2JXMhtOTKcGLoQUBdzU=
+X-Received: by 2002:a05:651c:1a2c:b0:2ef:2b65:1d03 with SMTP id
+ 38308e7fff4ca-2ef2b651e57mr68655911fa.49.1721724627627; Tue, 23 Jul 2024
+ 01:50:27 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 23 Jul 2024 01:35:47 -0700
+ HTTPREST; Tue, 23 Jul 2024 08:50:25 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZpuDCc8SZx8e4mLP@ArchLinux>
-References: <ZpuCg1GL1YE_sJBP@ArchLinux> <ZpuDCc8SZx8e4mLP@ArchLinux>
+In-Reply-To: <xmqqo76p54ib.fsf@gitster.g>
+References: <20240722225302.124356-1-tomasn@posteo.net> <xmqqy15t824l.fsf@gitster.g>
+ <xmqqo76p54ib.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 23 Jul 2024 01:35:47 -0700
-Message-ID: <CAOLa=ZQKvEEKYHj5WACjfAT4DUb3=p2g=WaWHr2zG0FE1UJO_A@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v12 02/10] fsck: add a unified interface for
- reporting fsck messages
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000062dc60061de60c11"
+Date: Tue, 23 Jul 2024 08:50:25 +0000
+Message-ID: <CAOLa=ZSJHz4RXvmmJi=KdDYCQ-3=q0p1KW1WgZAeotSQ+A_UJQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] doc: remove dangling closing parenthesis
+To: Junio C Hamano <gitster@pobox.com>, Tomas Nordin <tomasn@posteo.net>
+Cc: git@vger.kernel.org, charvi077@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000d4c91b061de640b5"
 
---00000000000062dc60061de60c11
+--000000000000d4c91b061de640b5
 Content-Type: text/plain; charset="UTF-8"
 
-shejialuo <shejialuo@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-[snip]
-
-> diff --git a/fsck.h b/fsck.h
-> index bcfb2e34cd..a2ecb39b51 100644
-> --- a/fsck.h
-> +++ b/fsck.h
-> @@ -114,7 +114,9 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type);
->  typedef int (*fsck_walk_func)(struct object *obj, enum object_type object_type,
->  			      void *data, struct fsck_options *options);
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> -/* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
-> +/*
-> + * callback function for reporting errors when checking either objects or refs
-> + */
->  typedef int (*fsck_error)(struct fsck_options *o,
->  			  const struct object_id *oid, enum object_type object_type,
->  			  enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
-> @@ -131,11 +133,24 @@ int fsck_error_cb_print_missing_gitmodules(struct fsck_options *o,
->  					   enum fsck_msg_id msg_id,
->  					   const char *message);
+>> Wonderful.  Thanks.
+>>
+>> Will queue.
 >
-> +/*
-> + * The information for reporting refs-related error message
-> + */
-> +struct fsck_refs_info {
-> +	char *ref_checkee;
-> +	union {
-> +		struct {
-> +			char *sub_ref_checkee;
-> +		} files;
-> +	} u;
-> +};
-> +
+> Spoke too early.  We need a matching change to in-code help,
+> otherwise t0450 would break.
+>
+> Here is what I have, which hopefully needs no more fix-ups.
+>
+> Thanks.
+>
 
-When I suggested using a struct, it was to replace sending both
-'ref_checkee' and 'sub_ref_checkee' to the error functions. I.e to send
-a single struct instead of two different fields. But now, we've included
-it in the 'fsck_options' struct, I don't think it should be part of the
-options. Because the fsck_options is used beyond the error function
-while 'fsck_refs_info' is only needed in the error functions, right?
+Can confirm that your patch below fixes t0450.
 
---00000000000062dc60061de60c11
+> ----- >8 --------- >8 -----
+> Subject: [PATCH] doc: remove dangling closing parenthesis
+>
+> The second line of the synopsis, starting with [--dry-run] has a
+> dangling closing paren in the second optional group. Probably added by
+> mistake, so remove it.
+>
+> Signed-off-by: Tomas Nordin <tomasn@posteo.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-commit.txt | 2 +-
+>  builtin/commit.c             | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index 89ecfc63a8..c822113c11 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -9,7 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
+> -	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+> +	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
+>  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+>  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+>  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 6e1484446b..7f9dd45d05 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -41,7 +41,7 @@
+>
+>  static const char * const builtin_commit_usage[] = {
+>  	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
+> -	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]\n"
+> +	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
+>  	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
+>  	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
+>  	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
+> --
+> 2.46.0-rc1-52-gda884b23f2
+
+Looks good! Thanks.
+
+--000000000000d4c91b061de640b5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 79d2455133f5e187_0.1
+X-Attachment-Id: a9d17ba13d62b02c_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hZmEyRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWlpQy8wYXZNc25DL2k0R21Ta3ZyNlI2UzZFQWZTUgoyUklxS2tTbEZ4
-aFNvOHdGMUdHNjhGMXZLQk9FK0g0UGRtbUtxY2xPbVYrMFBDTnA5ZDJ4OEZxRjJ4ZU5uUmFrCnd2
-d0haRmliVjVlbnJGQlBJcUhsSnFRc2oxZmpwWTZyRWJwb0k2WmV6QzNhNVg1TFk3d2NpUXRIR2Q5
-MnpTZ2YKQ1ZQbnRQWjRkN0RrcVFvek5lTHlrN0tOa0ZGcTYxbUpKdmh5aGxyblh2QkN1cUE4YXVx
-bnV1NVFZaWVPaDZjNQpWRUJGMVBpL1hZZTB3dkVYTE5PejBuU0ZBQzAzcDFDdlFZWGh3enRiY2dj
-SzJVaEFpbU5YUVZXR1JYa1M0ZmtEClBGNWppMm5jTTRqaDRiZGpVL1plNlJMdnNGcm5rWXZkeUNa
-TE1sZlQ5bkRxTmxaczgycXV1VGlQNlMyamxRTlYKVHYvbFVCVHROcXlVZXp4aXlYdTliNlcxcFlI
-NHlOcE90OE1zaUdtU0NRdnBRUmdOZGkvNEVxWlFCZUhrZDEycgpkMEMxYkRuYXo1V0VCTk9QRnhv
-aStWanJBZkNJNUhZNVhkQXQ2T0kwTTE1M3RyVDRPUDdRNnJiZDdPSUdieVM1CmFSZzQyZlVUd2sw
-NlRtTXBERkxDY081Um4wWWNjWWFQWkVMaFlIQT0KPU82MXYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hZmJ0QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNm9QQy8wUUh5NXB1OW5ybzRxK2grbWt6ZmlrRkx2aApNVUpmaE53UWZs
+YWU3bW9TVDVtYzhKZjlFS1FUdDdpS01BcDBPajBlaHM2N1JxM0xyQ1haZXl3eGEwU2NvbVZWCktX
+bWszVjA2YzhES1Q4WUt1VHV4ZXZqVUZqZWptbjJZMTc1L0RSYmwrSFd0eVdaK3YxOFF5M2V0ZlZp
+K2NKUnUKOHh5Lzd4SWJ3M2VtS1RlcVBOWUVsSHNHZlkrMWJZVmhXdjdKK3lYWHUvK2tHbGE5N1dV
+N3p0aG16RjBjWEEycQp1QWUxQ3Y2R1Q0WEZ1K0N3NEp6dFlhZUFwRzBzbXRrMEhCKzJQekN6RlhY
+S1FRZnpFSGFMOVNvNEFIRmR1dC9UCmRJVkFWTU5MSk91NEhrL2lQQktPUWhnWmQycTJaWmptc1JQ
+UWZ2ZzgzNHJiTkxmWUFtbzNSMXU5SzVnNUpWbXAKWitOajk2WUNHbzdMdktzVHVMVTBjajJ6UENE
+VFpHN1RKSGw1TjhBVTMvS2tVaGRTTmt5VWdBYzlPYVlzV21MdQpWbUpVd1NJVW85T3V2dUhSSlRn
+MVpjUHdmbEFNSnA1cDVISlRBVWI4QXp3VjNYdWdSbkdITGxobmJyZTg2RzVPCm1xaTh4NWFPM2Fj
+dExpYW4vSWgrY1FJdzdoTGp5Mi9iV1N0d0ZOZz0KPU53R08KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000062dc60061de60c11--
+--000000000000d4c91b061de640b5--
