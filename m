@@ -1,62 +1,63 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993FD14831C
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 22:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A579149001
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 22:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721774686; cv=none; b=CzitK7HkIv55RrLKee5XuWbNVaLucyw0QAd8ACNqGB20zzIe0QrPnUmcd4maBrMs2QlPE2bAKo7vlgUPqsXCPjaAwKFN0h+4iZ3z9K8y1RdzQmeIUMilJChE/SlvwAC6PG9COzM0hOUG6lCu7bcRbSkaXid1OSzuU6by3Q7S36s=
+	t=1721774687; cv=none; b=E6KvicXOgeg2EJ9aS6rSbqRfxK8R53nyHLs4lNPJoyyCK8bEhBx/TF/g69QGfHLSWgAAuzS5fHGYpYCDFynY5qFODz6AR0eUdlPXWIF9E4m/P6lcEDH/yNXiSuHGoc/BzwsDQ4KLNZq5fy82CkJjcD2GPPpA1DjDN1SE3jN3Hkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721774686; c=relaxed/simple;
-	bh=Pj19QUyKQMcbl924pDcv31ALthBCEF6V8OKRrv2y7Nw=;
+	s=arc-20240116; t=1721774687; c=relaxed/simple;
+	bh=HwOYyNlVu2KoITHjDAubGZsNBBWHEnttgc5RxGbeOQw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=mmRw6EP1Y+6nIGMP+IveWVAoPIsh6BafNz+IjZbfkywweLDWFECnTnChh1YZ5fo5HnyyDA+uA99q9UKuuKF/0jfe0kOvZhF4EYWRrRGQ1TjNREO0tYDEwuuSXOm4XbBSXYTS60plhYRXlvya5hZnInvvJ7pQOd2jomKz4OZc0NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQMss95j; arc=none smtp.client-ip=209.85.221.49
+	 Content-Type:To:Cc; b=CXHC6jUyPr9Ks/UrdmIZm0lPKMayAen+eZqbyMpd7LN9pArn/K33Q2jwQt7COCOkJoBuEJK52CtkYNLXvwt3mhM3G3fH0AAi6JgaX2GtDxlwHvw7Ne1LWgjAPDtwnspAo44QXQ01ufgrmThzAUzG9ob9IAx0snRJtXcJO7A0JDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJ9Em/MK; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQMss95j"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-367963ea053so4373149f8f.2
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 15:44:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJ9Em/MK"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-426717a2d12so1773145e9.0
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 15:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721774682; x=1722379482; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721774684; x=1722379484; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mue7njXRWT3vZuKrZqwg0bNWpCe4CO2PbNnYhaj9FFw=;
-        b=HQMss95jfaZEfNN6/S+RhBw+CSjrAwXhX3KFAGZOvp4om65DBm52D4fBDo67bWrnVW
-         +s+yL1ViShMP/EpkagY6CkaGvTq4KiHUkz/2u/Gjm4G+qaTAtJ4+U8gqe+0KrfrF9BhI
-         r/HmV3QXzrgCfEUBvz32zsSfKi9q/fP5TyZ2tZlUQbL3RJwX8fCLL+t0Y2WdmDHfZ7nv
-         YNj7l2xIBf+Flf1486GQZzIxHSHCJmArdox7tD9cnj7U29rwJUpxPaq5DSinyS9Q0P8Y
-         O1o1Of0rTXwoAL0fOy0LBC6nhx6gifzHLYlquRnAm6eqo5am937tHSsJP3VwVM/+6AkB
-         C7ow==
+        bh=6QsUVdBvGykL5WXisV3H8eJK0qTNDV9vrnAt/mwuyp4=;
+        b=kJ9Em/MKarmvGnsKhrAWVC09o9KqULtf1YDplU2yLLFZ1QMOHWJOJRoNywfQGnqOuc
+         5q7/MFjk5Ytv8UJtgcIK34OJlwn6qh5u4glRT/kUwvA3rPQi/vnTu5ALoFRWZ80ds3Pq
+         KIz9uaX1/NjtfASVY7DlZwYnVutP0Bwky64DvExwBw5Sy3M0+IDTeYofEVGFG7YtzNYU
+         SYa8+Ck9l5IoXnGog5ShVx0RTYY/u8RkzbuJf6UEQ8bxphhqfY0hrHuZy372gvYrcBAZ
+         3ey++Pv2XAjCUS6II4L02i6ZerKwHK4XxZ30AxRBW64LEHNUwCuHgpaXDCz49RVylJF5
+         Yspg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721774682; x=1722379482;
+        d=1e100.net; s=20230601; t=1721774684; x=1722379484;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mue7njXRWT3vZuKrZqwg0bNWpCe4CO2PbNnYhaj9FFw=;
-        b=Vhiz3M4AQ+blHWe5eqhchrx+iyec3/9BLq/A9+7MJqhis2LUqz0QzAvNcjNfH9G8bY
-         SumAfPWqVrcoBG+TB1cH0jMJtKEkS2VM0Yau8lRG25fgvP7dhKyk06pM6vY7vsARL28E
-         mbhUklbjJQ91tj7oYWHADrTFcEinBaHjdywtuMaAzamhLAJvxba9jRV9cuX5k9PeK29i
-         q9aBd17XI5mGdkP0V5Pm1iZM14hpRZWxt+nhA2df4E6kagRrT1UJ5MX4b1o9OBkEu03R
-         57IVnocP7/x5AJp9OcUE6SBSs+MehWS5PxbTAbq5drlhnr7zQHG9k4QTDi4GNvMxQjCS
-         gAlw==
-X-Gm-Message-State: AOJu0Yz1rUp0+1OM6gzM5LMbDKlQMqbsAPCJ9dRbbIC5UcgdbZxl4w9I
-	LZ4WO9w8G5FssAzmxTAKch0DsyUagnQWiiEOd9PyhYNDrhOMOVu942ILIQ==
-X-Google-Smtp-Source: AGHT+IHDsRMBAcFBENNYStKkmiVxbu8ixs+09QrbYltDazY38aE2twd8QJvjAmpie4lT3IZRBkGsRA==
-X-Received: by 2002:adf:b603:0:b0:368:3384:e9da with SMTP id ffacd0b85a97d-369f0aa550amr731909f8f.62.1721774682434;
-        Tue, 23 Jul 2024 15:44:42 -0700 (PDT)
+        bh=6QsUVdBvGykL5WXisV3H8eJK0qTNDV9vrnAt/mwuyp4=;
+        b=EhgaQiolpD1H1FZPOPFROjokbgyn/mlKvXZai+iS+oouKJq1A0WgM2l6ir+VwLrVau
+         5h9riuO3UUDQsH/uR2DuutxBSHFl0FdZx9sqfvviTjqdiROfFCdo8xwKyedk261H/XLp
+         gTY1x35/FSVf2Uu268qiZp8R54jLvOkV0F1YnI7uqUSiEBMzDdykCq/+H+GMogAjYAAL
+         cWDchr3uFLgP5cW9Fo0nBGeh9yoJocuqtmDNwfi+yZGr5XIFHpzoyHqraEbcV9IJ/mEZ
+         plzIIy2K6sStJe2zm+Bo6rGono3TzdB07WFlkomuQRqtuUO83pG0uKymrJz5aZcGhJ2p
+         RYMg==
+X-Gm-Message-State: AOJu0Yxe1SKeqEfLKdfhkv4WNW4NtAF5rDudRdRdY74mtKYLYtd8cIkc
+	camCjYroqpRGWwMhu1D3TRihmR0jqb1ABa6ATvO+JpFaPHlEz0D7j8AZ7w==
+X-Google-Smtp-Source: AGHT+IHU5KI1sWZ/HgydSDq41evf4eSAVuaG19EY+DGiqhdJdELoW0qbA/v4gkKYKvUIVoWK1syN4Q==
+X-Received: by 2002:a05:600c:3b8f:b0:426:65b0:3035 with SMTP id 5b1f17b1804b1-427f9a4b9e0mr479015e9.15.1721774683775;
+        Tue, 23 Jul 2024 15:44:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3687868b5fdsm12524985f8f.38.2024.07.23.15.44.41
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f937348bsm3656145e9.18.2024.07.23.15.44.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 Jul 2024 15:44:42 -0700 (PDT)
-Message-Id: <704f0333ef17c0e3596ba7ef7976ba6584345eff.1721774680.git.gitgitgadget@gmail.com>
+Message-Id: <b0547422e5cf31c1141f2b6078a43e5bc60cb652.1721774680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
 References: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 23 Jul 2024 22:44:38 +0000
-Subject: [PATCH 1/3] doc: introduce a synopsis custom paragraph attribute
+Date: Tue, 23 Jul 2024 22:44:39 +0000
+Subject: [PATCH 2/3] doc: update the guidelines to reflect the current
+ formatting rules
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,125 +73,91 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-In order to follow the common manpage usage, the synopsis of the
-commands needs to be heavily typeset. A first try was performed with
-using native markup, but it turned out to make the document source
-almost unreadable, difficult to write and prone to mistakes with
-unwanted Asciidoc's role attributes.
-
-In order to both simplify the writer's task and obtain a consistant
-typesetting in the synopsis, a custom 'synopsis' paragraph type is
-created and the backends of asciidoc and asciidoctor take in charge to
-correctly add the required typesetting.
-
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/asciidoc.conf             | 14 ++++++++++++++
- Documentation/asciidoctor-extensions.rb | 17 +++++++++++++++++
- Documentation/git-clone.txt             |  2 +-
- Documentation/git-init.txt              |  2 +-
- t/t0450-txt-doc-vs-help.sh              |  7 ++-----
- 5 files changed, 35 insertions(+), 7 deletions(-)
+ Documentation/CodingGuidelines | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 60f76f43edab..cb2a9ca59c65 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -57,3 +57,17 @@ git-relative-html-prefix=
- [linkgit-inlinemacro]
- <a href="{git-relative-html-prefix}{target}.html">{target}{0?({0})}</a>
- endif::backend-xhtml11[]
-+
-+ifdef::backend-docbook[]
-+ifdef::doctype-manpage[]
-+[paradef-default]
-+#synopsis-style=template="verseparagraph",filter="sed -E 's!&lt;[a-z-]+&gt;!<emphasis>\\0</emphasis>!g' -E 's!([a-z-]+)!<literal>\\1</literal>!g'"
-+synopsis-style=template="verseparagraph",filter="perl -pe 's!([\[\] |()>]|^)([=+a-zA-Z0-9-:+=]+)!\\1<literal>\\2</literal>!g;s!(&lt\\;[a-zA-Z0-9-.]+&gt\\;)!<emphasis>\\1</emphasis>!g'"
-+#synopsis-style=template="verseparagraph"
-+endif::doctype-manpage[]
-+endif::backend-docbook[]
-+
-+ifdef::backend-xhtml11[]
-+[paradef-default]
-+synopsis-style=template="verseparagraph",filter="perl -pe 's!([\[\] |()>]|^)([+a-zA-Z0-9-:+=]+)!\\1<code>\\2</code>!g;s!(&lt\\;[a-zA-z0-9-.]+&gt\\;)!<em>\\1</em>!g'"
-+endif::backend-xhtml11[]
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index d906a008039c..d1568f654627 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -39,10 +39,27 @@ module Git
-         output
-       end
-     end
-+
-+    class SynopsisBlock < Asciidoctor::Extensions::BlockProcessor
-+
-+      use_dsl
-+      named :synopsis
-+      parse_content_as :simple
-+
-+      def process parent, reader, attrs
-+        outlines = reader.lines.map do |l|
-+          l.gsub(/([\[\] |()>]|^)([a-zA-Z0-9\-:+=]+)/, '\\1{empty}`\\2`{empty}')
-+           .gsub(/(<[a-zA-Z0-9\-.]+>)/, '__\\1__')
-+           .gsub(']', ']{empty}')
-+        end
-+        create_block parent, :verse, outlines, attrs
-+      end
-+    end
-   end
- end
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 1d92b2da03e8..4d59e8f89ec8 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -760,56 +760,60 @@ Markup:
  
- Asciidoctor::Extensions.register do
-   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
-+  block Git::Documentation::SynopsisBlock
-   postprocessor Git::Documentation::DocumentPostProcessor
- end
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 5de18de2ab83..70a3f0331f83 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -17,7 +17,7 @@ SYNOPSIS
- 	  [++--recurse-submodules++[++=++__<pathspec>__]] [`--`[`no-`]`shallow-submodules`]
- 	  [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]`reject-shallow`]
- 	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
--	  [_<directory>_]
-+	  [__<directory>__]
+ Synopsis Syntax
  
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index daff93bd164b..7cdc693e1c68 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	  [`--separate-git-dir` _<git-dir>_] [++--object-format=++__<format>__]
- 	  [++--ref-format=++__<format>__]
- 	  [`-b` _<branch-name>_ | ++--initial-branch=++__<branch-name>__]
--	  [++--shared++[++=++__<permissions>__]] [_<directory>_]
-+	  [`--shared`[++=++__<permissions>__]] [__<directory>__]
+- Syntax grammar is formatted neither as literal nor as placeholder.
++ The synopsis (a paragraph with [synopsis] attribute) is automatically
++ formatted by the toolchain and does not need typesetting.
  
+  A few commented examples follow to provide reference when writing or
+  modifying command usage strings and synopsis sections in the manual
+  pages:
  
- DESCRIPTION
-diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
-index 69917d7b8459..f9d89949ece3 100755
---- a/t/t0450-txt-doc-vs-help.sh
-+++ b/t/t0450-txt-doc-vs-help.sh
-@@ -56,12 +56,9 @@ txt_to_synopsis () {
- 	fi &&
- 	b2t="$(builtin_to_txt "$builtin")" &&
- 	sed -n \
--		-e '/^\[verse\]$/,/^$/ {
-+		-e '/^\[\(verse\|synopsis\)\]$/,/^$/ {
- 			/^$/d;
--			/^\[verse\]$/d;
--			s/_//g;
--			s/++//g;
--			s/`//g;
-+			/^\[\(verse\|synopsis\)\]$/d;
- 			s/{litdd}/--/g;
- 			s/'\''\(git[ a-z-]*\)'\''/\1/g;
+  Possibility of multiple occurrences is indicated by three dots:
+-   _<file>_...
++   <file>...
+    (One or more of <file>.)
  
+  Optional parts are enclosed in square brackets:
+-   [_<file>_...]
++   [<file>...]
+    (Zero or more of <file>.)
+ 
+-   ++--exec-path++[++=++__<path>__]
++ An optional parameter needs to be typeset with unconstrained pairs
++   [<repository>]
++
++   --exec-path[=<path>]
+    (Option with an optional argument.  Note that the "=" is inside the
+    brackets.)
+ 
+-   [_<patch>_...]
++   [<patch>...]
+    (Zero or more of <patch>.  Note that the dots are inside, not
+    outside the brackets.)
+ 
+  Multiple alternatives are indicated with vertical bars:
+-   [`-q` | `--quiet`]
+-   [`--utf8` | `--no-utf8`]
++   [-q | --quiet]
++   [--utf8 | --no-utf8]
+ 
+  Use spacing around "|" token(s), but not immediately after opening or
+  before closing a [] or () pair:
+-   Do: [`-q` | `--quiet`]
+-   Don't: [`-q`|`--quiet`]
++   Do: [-q | --quiet]
++   Don't: [-q|--quiet]
+ 
+  Don't use spacing around "|" tokens when they're used to separate the
+  alternate arguments of an option:
+-    Do: ++--track++[++=++(`direct`|`inherit`)]`
+-    Don't: ++--track++[++=++(`direct` | `inherit`)]
++    Do: --track[=(direct|inherit)]
++    Don't: --track[=(direct | inherit)]
+ 
+  Parentheses are used for grouping:
+-   [(_<rev>_ | _<range>_)...]
++   [(<rev>|<range>)...]
+    (Any number of either <rev> or <range>.  Parens are needed to make
+    it clear that "..." pertains to both <rev> and <range>.)
+ 
+-   [(`-p` _<parent>_)...]
++   [(-p <parent>)...]
+    (Any number of option -p, each with one <parent> argument.)
+ 
+-   `git remote set-head` _<name>_ (`-a` | `-d` | _<branch>_)
++   git remote set-head <name> (-a|-d|<branch>)
+    (One and only one of "-a", "-d" or "<branch>" _must_ (no square
+    brackets) be provided.)
+ 
+  And a somewhat more contrived example:
+-   `--diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]`
++   --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]
+    Here "=" is outside the brackets, because "--diff-filter=" is a
+    valid usage.  "*" has its own pair of brackets, because it can
+    (optionally) be specified only when one or more of the letters is
 -- 
 gitgitgadget
 
