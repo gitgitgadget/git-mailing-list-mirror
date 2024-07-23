@@ -1,179 +1,76 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3E615351B
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBC2156F46
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721745211; cv=none; b=NZ65QlSOv34qTPUHSVj8AES8L3+5UZQtZN/rK6t1rmVmPoPFzIoBNASK7j1BTEu3WxDc0AEX6Re0jmkBD/XQEuYJciK+HVKxLdr2cwnNo2YrYr/GnvI5MGNlNsfAmXqauRHIOA/36zxzWLm4uC93S9sNqUfYzH6XVP2t9Om+4rs=
+	t=1721746169; cv=none; b=aRU2EdMKXeXALWvIL9subI4QaPMfzQOW8G2sbAN3V9TITv8O2S/nxAu9tVDCuisveHC3lglBiQQd9BUcDqBvXJpy87rH9BcEus7XL/Au0w6Kq0QPXqaDmSYEkXruTrsz826hTuJVo8x+k7vuIqlVQG0CTQDEcAoQGI28+Jb5XSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721745211; c=relaxed/simple;
-	bh=MEGuSBUKeUzZpSZliSD/zkAMrhPHxdlWcalh5uHyUuc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R04nZcjRYIL0aL0t5Xs+h3Ti94k7aIInoHClqoLzzkx+AORhvK+rqUbfroTD+Oj6BAAKSmxbpDbEXs6kvQftEauir5J7WWbIfTq/tbWnpUWK5pYxWX0KOgS4ECqBrB6eiwI3KmSRYR/+8xB/JhqC0jH4N+K/rXyA/UdLskhF0Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=idXV7BSB; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1721746169; c=relaxed/simple;
+	bh=agWXyG2CY7BPcWKP81MqjPlqakRxlrs9C8C3A9gFTuQ=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=IA6NaOlLX9fOxBw99wOuT6gLOBNsvOsoVq1GA6Fd3mtPHQKBhWWblUggdx97u7N5ssHLCY2cZ3SucuQ8+ntQKH0HhnCCMJDnaNw9p+KG4jKRuJRlTcLTB5Hfms5bSaMkG4S+Q1jHuiCR/1eUPkiBt45kA4a3nvwhtMIknCgKz/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQERHRtG; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="idXV7BSB"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1fc4fcbb131so6031855ad.3
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 07:33:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQERHRtG"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-367940c57ddso2946877f8f.3
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 07:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721745209; x=1722350009; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0zju0wvK7Njs4pPvHRfCkm9410+AWuCSnYT0D62v7q0=;
-        b=idXV7BSBeb6LhGSSym7DL8R+orcSkM/nrlmTCkJRDcMc3eHjcpI4E4Qw+KG4zKcmit
-         lVxpSt7jWOsNt8VVICXrY3W3jzHt0oetu+gFleN/4zR13rMPGzo8HTsavvp5hsaNQ0lc
-         1k2UdkguXOWxIPnNxu3bh7yHUiUr+ZTnyOmZnwDtHxJTZkiFwDqpreVZvFz4UrJIOtlW
-         np7Wep55IfDOFG5RyHsnh8xC1R8IALGTbKYz+6V8Y1C5JN+vMioxm7hZBoWp/rrDkOKV
-         nyv8wFvs6uM+qlocjF0XKYpVv74nr2/OFxCvhebPmZe2i2kjbhNUhw3+qse1KeRSopa2
-         IPlQ==
+        d=gmail.com; s=20230601; t=1721746166; x=1722350966; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=agWXyG2CY7BPcWKP81MqjPlqakRxlrs9C8C3A9gFTuQ=;
+        b=HQERHRtGJ6XEu/mgdobRaNdch8Rko6Q9tWqLgMxUfkh9s3TdktUSHkWKEa35Nb/GYg
+         ryVrOQFktRKaSjScOSGMTv5HRUkkTV5NQioN0jnPLB4Uht+7c7ZSrcZOQK4MbGxFC3Ea
+         pCtaUxt2hfGOChrJZGKk1mPQU2nQA1ZRzVip3iK03hxHotWPFkDGBF0px3dB+VvBTnDP
+         ej3JnQ2jlQ8xTOUjCh3czeQ2ELxOEo2+3HBiOGPuqABoPn9gkvrvFTx61h1yvvGX79vN
+         +0zng3aiaKKLjNio5WlC9DJQpFxeImIhz/Q2Vlpyr27a7POybPo7JOQK2UuuTHkzrYWV
+         3kSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721745209; x=1722350009;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0zju0wvK7Njs4pPvHRfCkm9410+AWuCSnYT0D62v7q0=;
-        b=SCbSus0mCsj0ToILxfResIHIiaivvXYhJkTnaobRuiVw/Sx3oxW1cCosT0wWYiWjkN
-         uDOAiWz/krL8vN2+YAIsrhfTWPIkBMTfwoIAk+FohzoFUW2ZTZ08SxHigF3llnLteCgR
-         3BJqziaVU/2RaxKCB4gCCNfTCkAHU/ZNkuPxxYuwHP/XUPIhWI5U27KSE/p1P/EzwPOG
-         6ng2baddccrkVWsnlTVg6B0yWEctZRAdkNBFl9ReEGoHQcDaDIEx1ZhdDyk0Y6AWIH+Z
-         UilUVsQ1XWuRngmyCS/SzAU47CZJXkzTbdZEeekNMGPKQgyVVRNsbXc4bWWZVk7KO+RX
-         kMjQ==
-X-Gm-Message-State: AOJu0Yx6/vk4ekypZLccAII1hdzdcbE5imYkJAs/59eVDWa9t7RAagdx
-	YN4dj9EFSqE6eqyM/QcJ1lU9b/Wzb/4VY9tdCRHRRSSqEjhAgBqIb58nhdfUL1w=
-X-Google-Smtp-Source: AGHT+IGHvRnSep0lx9VMzeRE/+PtDPSYlQscErNN9ugq1VrozK5bOA0QQ0k7bDn0PiyGUi+qEhxF/A==
-X-Received: by 2002:a17:902:e844:b0:1fc:544d:4e2b with SMTP id d9443c01a7336-1fd7457c94cmr89710865ad.33.1721745208653;
-        Tue, 23 Jul 2024 07:33:28 -0700 (PDT)
-Received: from Ubuntu.. ([223.176.63.81])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fd6f256c09sm75301305ad.2.2024.07.23.07.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 07:33:28 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 7/7] t-reftable-pq: add tests for merged_iter_pqueue_top()
-Date: Tue, 23 Jul 2024 19:47:17 +0530
-Message-ID: <20240723143032.4261-8-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240723143032.4261-1-chandrapratap3519@gmail.com>
-References: <20240614095136.12052-1-chandrapratap3519@gmail.com>
- <20240723143032.4261-1-chandrapratap3519@gmail.com>
+        d=1e100.net; s=20230601; t=1721746166; x=1722350966;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=agWXyG2CY7BPcWKP81MqjPlqakRxlrs9C8C3A9gFTuQ=;
+        b=et1eUdTY95CfM4ZKcRUD6cXIbUG3nObFcNDfjheOHwFpzna5mGosoRNtxtU5F7J3k2
+         QAl3do8IQaOxXidtzh8Yf9TB/ysAeyuXvP+GAEGjYyJVozfCNy3lh0Ioh5LldgDdnZHZ
+         OSSJcLawSLwNYgGJBdVtCjOxV+zbjLFhYSSiR5XtRx+zBP8lK1E7FAZIjCgpe4utKfsW
+         IkvGOLseQShXKuzvxMxAM0cy2VryROgk335dXMwQybHsZjYztiszjhkQi1zZSepI2PSR
+         uK3oAH6xne/zpzoQ1FWwXdGOeWOe5PYeWek9VMXxxpg2KR/QicVqXIwAajmjUR9pZzvb
+         01/A==
+X-Gm-Message-State: AOJu0YyO7HfpbGy2edimSM53VTqk5/QjCYQY0pcDV9C3xJVPtuCT47rn
+	ZnMNKcLTgZ9rxboacPjOEQ+o2Xn6f7ZnKgJbJ8uIyZkaFON2on/y/QBFGqBD
+X-Google-Smtp-Source: AGHT+IE0dUeRQMi7f3MFbXJRUFhxb+Gqfq8ZvW4w8XBvzKehXw22qyMe/aEzgVr4QWaUnSefRmZxcw==
+X-Received: by 2002:a5d:4a02:0:b0:368:326e:1df6 with SMTP id ffacd0b85a97d-369bae13a0bmr5519967f8f.19.1721746166369;
+        Tue, 23 Jul 2024 07:49:26 -0700 (PDT)
+Received: from DESKTOP-5DSTT8B ([39.46.228.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d69070desm178099005e9.24.2024.07.23.07.49.25
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 23 Jul 2024 07:49:25 -0700 (PDT)
+Message-ID: <669fc2f5.050a0220.177ed.2752@mx.google.com>
+Date: Tue, 23 Jul 2024 07:49:25 -0700 (PDT)
+X-Google-Original-Date: 23 Jul 2024 07:49:29 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: hyden.classicestimation@gmail.com
+To: git@vger.kernel.org
+Subject: Estimation of Services
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-merged_iter_pqueue_top() as defined by reftable/pq.{c, h} returns
-the element at the top of a priority-queue's heap without removing
-it. Since there are no tests for this function in the existing
-setup, add tests for the same.
-
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-pq.c | 49 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
-
-diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index 23c3f6888b..84b0a3b708 100644
---- a/t/unit-tests/t-reftable-pq.c
-+++ b/t/unit-tests/t-reftable-pq.c
-@@ -18,6 +18,11 @@ static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
- 	}
- }
- 
-+static int pq_entry_equal(struct pq_entry *a, struct pq_entry *b)
-+{
-+	return !reftable_record_cmp(a->rec, b->rec) && (a->index == b->index);
-+}
-+
- static void t_pq_record(void)
- {
- 	struct merged_iter_pqueue pq = { 0 };
-@@ -45,9 +50,11 @@ static void t_pq_record(void)
- 	} while (i != 1);
- 
- 	while (!merged_iter_pqueue_is_empty(pq)) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		if (last)
- 			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
-@@ -82,9 +89,11 @@ static void t_pq_index(void)
- 	}
- 
- 	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		check_int(e.index, ==, i);
- 		if (last)
-@@ -97,10 +106,50 @@ static void t_pq_index(void)
- 	merged_iter_pqueue_release(&pq);
- }
- 
-+static void t_merged_iter_pqueue_top(void)
-+{
-+	struct merged_iter_pqueue pq = { 0 };
-+	struct reftable_record recs[14];
-+	size_t N = ARRAY_SIZE(recs), i;
-+
-+	for (i = 0; i < N; i++) {
-+		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
-+		recs[i].u.ref.refname = xstrdup("refs/heads/master");
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		struct pq_entry e = {
-+			.rec = &recs[i],
-+			.index = i,
-+		};
-+
-+		merged_iter_pqueue_add(&pq, &e);
-+		merged_iter_pqueue_check(&pq);
-+	}
-+
-+	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
-+		struct pq_entry e = merged_iter_pqueue_remove(&pq);
-+
-+		merged_iter_pqueue_check(&pq);
-+		check(pq_entry_equal(&top, &e));
-+		check(reftable_record_equal(top.rec, &recs[i], GIT_SHA1_RAWSZ));
-+		for (size_t j = 0; i < pq.len; j++) {
-+			check(pq_less(&top, &pq.heap[j]));
-+			check_int(top.index, >, j);
-+		}
-+	}
-+
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
-+	merged_iter_pqueue_release(&pq);
-+}
-+
- int cmd_main(int argc, const char *argv[])
- {
- 	TEST(t_pq_record(), "pq works with record-based comparison");
- 	TEST(t_pq_index(), "pq works with index-based comparison");
-+	TEST(t_merged_iter_pqueue_top(), "merged_iter_pqueue_top works");
- 
- 	return test_done();
- }
--- 
-2.45.GIT
+SGVsbG8sDQoNCkRvIHlvdSBuZWVkIHRoZSBlc3RpbWF0aW5nIHNlcnZpY2VzPyBXZSBw
+cm92aWRlIGFyY2hpdGVjdHVyYWwgZGVzaWduaW5nIGFuZCBjb3N0IGVzdGltYXRpbmcg
+c2VydmljZXMgdG8gR0MncywgU3Vi4oCZcyBmaXJtcy4NCg0KU2VuZCB1cyB5b3VyIHBs
+YW5zL3Byb2plY3QgZGV0YWlscyBmb3IgYSBxdW90ZSBvbiBvdXIgc2VydmljZSBjaGFy
+Z2VzIGJlZm9yZSBnZXR0aW5nIHN0YXJ0ZWQuDQoNClBsZWFzZSByZXBseSB0byB0aGlz
+IGVtYWlsIHNvIEkgY2FuIHNoYXJlIHNvbWUgc2FtcGxlcyB3aXRoIHlvdS4gVGhhbmtz
+Lg0KDQpSZWdhcmRzLCANCkh5ZGVuDQpNYXJrZXRpbmcgTWFuYWdlcg0KQ2xhc3NpYyBF
+c3RpbWF0aW9uIExMQw==
 
