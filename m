@@ -1,156 +1,296 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F804139CEE
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF36E137C35
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 14:33:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721744351; cv=none; b=J59+cyxsHQ3OKV9S9s2C5p9qOgYjL0oNbH2wI+NzQ6kvaz2pDsakD5h6TiLz9MwcCVmgL7/xF1s054tLB+fFlr5CHGS61Q0k0O2RYh8JPMpJ51CSShCyXoFLglDZxTElxm1scXMNYUo3gKcCHgHQ4QGeIoqDZ+zCzy9N++XNQXY=
+	t=1721745190; cv=none; b=TpFDyzhYOo5XSQtwKOW0OafDSVce8hNkhI7jXu8XmN3uFu5f3ekj1cCC6e7CvvxUCb3+NViXjmWIDKhfxBP2LAWQHGcHZ/ovrbAO9QlwIa9NOz6yDi36/nNkC3PIjL5vM/Zx0gUOsea9K417BTzK1r3XiV9riJNYAMr8Amv/smc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721744351; c=relaxed/simple;
-	bh=i8GTO5zan7th2IRExUvWfcbaHnJfEt35ySd/FCoK92I=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=RK1dLxm/6AM/Fxn97seI2pRHZIZeHb6PaIflsF9yG3D1XpEGYcEdfv9hT/qosYI8ouDsv9a+PxFD48NJrOqavl930TBFtg85btQ+SkdLcVHdQ1PDNnjLLJPtIwYRKsyb1kvOpboiFvgj2yqaXgaFQltVj/vEKV2xJfu7w9Vcdf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=qMpAYZyS; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1721745190; c=relaxed/simple;
+	bh=Ch9IZEpNJ0cH6eYonm3vUx7fLgsy+IIMfyoZyxabwXE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gzuBkGpcZwGMfS5s7vGZhyH+T8G0rHfWbubd3iVEkwdF1L2epTTHf6L/2tWChYjbF+gTUTVPUnWFa7gFfr/2YMH0aspWSdsrlmBHSdWgNDqovTYqvtC8qnMWyu4WBOcgRFAY3BEWkhOw/Uc96m6LXABe1r6bhKOFtht4bwnK0/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+0i1jlC; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="qMpAYZyS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1721744341; x=1722349141;
-	i=johannes.schindelin@gmx.de;
-	bh=lhOk38neoi4JpbOtBfXtYKsIy+JSLqBNesisPNDFM7o=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=qMpAYZySn466bS5n8qCp8Zd1M5khqYT4I8GiieT7G7NjHULY2vTmO9PtPcND8uaG
-	 gcmyZraJUNkkwxWiuUWY6WjAMKSY648t2WmzNotjp5T9aT0pT5DszXbB5UiteWlyk
-	 6cybetGxyV11Yr4llXXCjQ3c83tRrlRaqMNVWac72s6JxvouG7PKSvlp5kB+ceB5I
-	 6oex4705joFMi2WompNEIus3nj2mOBI234ket5UZhFIdJX+rPAZSLKBQflpng3go1
-	 mceOwpZnBEOugXCgKcIqd9WhVJZdDtn1J4CxMn2JfAj6gQE8C02YTuZyskFy2duQn
-	 bcOyBbbdZE8ozAz1RA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.218]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N63Ra-1sGja10kHY-00wz9Y; Tue, 23
- Jul 2024 16:19:01 +0200
-Date: Tue, 23 Jul 2024 16:19:00 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
-    Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v2] asciidoctor: fix `synopsis` rendering
-In-Reply-To: <xmqqplr59mvm.fsf@gitster.g>
-Message-ID: <a1d70653-182e-e063-5438-2b3179d011f7@gmx.de>
-References: <pull.1749.git.git.1721507416683.gitgitgadget@gmail.com> <pull.1749.v2.git.git.1721679949618.gitgitgadget@gmail.com> <xmqqplr59mvm.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+0i1jlC"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fc49c1f3e5so41979355ad.1
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 07:33:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721745188; x=1722349988; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TO9HpLg2gW7SQ0bGvzar5ZyGO7efRxvFdcyIwYNcC7k=;
+        b=g+0i1jlCQlLTR/cSE4HGUKxuSpXnBW8TupkJe6yQV9kUArhTdi1wg3BuyuTkPocUMC
+         +aADHPuysDT3VWEUl8sm7EAhSK73eYUzqLvkO/Oe4G1k90iMHMdQSJOgme9KdpJ85CKg
+         1h9QTxgd5yN231Dwy3B2xG6KqMdCkE1xb6jWKzoAJnhgpHIm7wlWWF78goAdgASGutAs
+         H57uRvGoN5d3yKjzAl9gsZPuG1+mLIxKuTmm5fz4udWUdQr33SGXnRpBURTgC9ryhU/y
+         tBYSafm8ugGJUZ2tQiNXek/Ye+2L/GXgpnWI9yxZn7buImX0rkO2SzCXTRMtaMIZSYp+
+         c9ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721745188; x=1722349988;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TO9HpLg2gW7SQ0bGvzar5ZyGO7efRxvFdcyIwYNcC7k=;
+        b=j4ewI6IiMNV+zjhh9TK8Ztx87rcKW+IqO3rn3u9cM4PlBj4QcH7AoY3j0xxk+10VIt
+         n27uDOPH9D2ru4ZKDILHiFYkobyh7JJA1ER1cuqLDX7SV2O+n87gnXYevKWv3twhkF3d
+         ZCP4KwCHJwJRgbGk562OTbjCKBS5KZbkw4DpynoXAJ0xn6GZTZdQifLfKfAsICVlOIY3
+         xvFjai3DRVRAwUIBZz/QzVF8GfjZdYEVtySr+lFLV4cLaK+KbsLe/Aa2oq5ywXHHnONn
+         mA814ae8ast49tB4uys7HwLFsbbKu1OJGlWKc3D7SwVu9ESKBZgbFR6ayLBzCr1ioj85
+         QOdA==
+X-Gm-Message-State: AOJu0YyjOUqXYbs4boMh7BMJ7FpJmoSpfiZDCksSxVx2UZDzGd1uclQQ
+	PiptvFunOL84vMp0gZoO9Gjtl10sqyTF0fOxM1cOhZsc7P+4cIyC+1ovszI/rp4=
+X-Google-Smtp-Source: AGHT+IGsX55sLP2iwkg4BKSve7DXUkOAYMQcXyfewffXuvy4fxvrc7yK5EJk51qLKj2P+HqwgLPvBg==
+X-Received: by 2002:a17:902:fac8:b0:1fb:dedd:aa65 with SMTP id d9443c01a7336-1fd74660a72mr50626625ad.42.1721745187412;
+        Tue, 23 Jul 2024 07:33:07 -0700 (PDT)
+Received: from Ubuntu.. ([223.176.63.81])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fd6f256c09sm75301305ad.2.2024.07.23.07.33.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jul 2024 07:33:06 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH v5 0/7] t: port reftable/pq_test.c to the unit testing framework 
+Date: Tue, 23 Jul 2024 19:47:10 +0530
+Message-ID: <20240723143032.4261-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.GIT
+In-Reply-To: <20240614095136.12052-1-chandrapratap3519@gmail.com>
+References: <20240614095136.12052-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZIuTQYqBkNuEa/J4W4xBdfV1MRqk7WHthq8RUrvqWa1PmIv+91t
- ZSdoQ87DxfMH5GURUsDAn5MjwO9JYK00ynPzvN7ohqcSoUcUSHsG3ywooN7QurrZ/eFwGIY
- GamxRhUb667fHgPBfOJS54X7dtOCv4qrp14wIqfXvPT9Z1KQcntQXAAKlJr2F99/4IfDOua
- iMsoM6ip2CwRUsLPdOhbw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:N6ATEM4G9fg=;LP+kYIX+xqtIbSh7WtvwzrCUjxG
- IZa+myiMGqkgIiWBbdvCWQG/GNlboeg8FT7bfZYay4e7QpMrRlAJAtZaqpFbMSWqJvGFwHQqR
- 1/SMfy+HDUD+ob6TyjpG2R/Cn4qxFGOPWXU442r/8UYjwPPr3o2mGdggAinfBFuQljofAcpOg
- FYVrwTXwloZ/SKvSXuoIGwo+AV7xgRDC3o1DWvoT790GQtqokQB6hXTLMQJIULOpvrEcB2WIL
- GlN27gFa3hMsNueXYIaZR7Oxf0KSNA7WiTQEvS/3Sek0DcPIsfqMUfKdvjVQd6X+daVgbi50K
- lwsPK7ZniC9+VcHMMGk5csIslISMzm/zciitX9Xs2P2KUOotYkMjRkFm48IyysQTvoaLRDLgN
- bM1dplBLlsGwi2+yCPK/W+0f21404XpPvHdthp838Rmg1LyYJG8ACmVnC4y19PZNiH/mpYmor
- X2swRYkJu7kbdxLCYnancp8TgNgYwCwfknhAd5vzY7dqNeWYS5NMopd97gqkDSWC3s5rPq0l6
- FdnJWuWE3WjQLi7EXsEn7wm9skLjHuGxH1Q4oHOeJLhcbEI9T9Q4jPMJ2BcuaFlx5qRPFn8Ak
- euh5QoJPhJzELffrm9t/RR3qpzejPnSedJryhXpLrMlJXROEZo2QUIH/xH+cuHmVK47PHoODB
- VdvP1DGV4MGm6Nf+A3P36NckqY8BsjLKofVBCCePpMTmF1H+PpftJmWZ4D8DJSyyDPoCs/Ray
- leZZGRnL9YpFQ4rT9RQdQ1tYsLF+omMTLKbKBco9d0xWkHqmqxfZON9DqwsFcE6v/6woswsP1
- pZoJvVCuYQbbJxMBkBNBIuvA==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Junio,
+The reftable library comes with self tests, which are exercised
+as part of the usual end-to-end tests and are designed to
+observe the end-user visible effects of Git commands. What it
+exercises, however, is a better match for the unit-testing
+framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
+2023-12-09), which is designed to observe how low level
+implementation details, at the level of sequences of individual
+function calls, behave.
 
-On Mon, 22 Jul 2024, Junio C Hamano wrote:
+Hence, port reftable/pq_test.c to the unit testing framework and
+improve upon the ported test. The first two patches in the series
+are preparatory cleanup, the third patch moves the test to the unit
+testing framework, and the rest of the patches improve upon the
+ported test.
 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 78e407e4bd..371d56eb5e 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -209,6 +209,8 @@ XMLTO_EXTRA +=3D --skip-validation
->  XMLTO_EXTRA +=3D -x manpage.xsl
->  endif
->
-> +ASCIIDOC_DEPS +=3D docinfo.html
-> +
->  SHELL_PATH ?=3D $(SHELL)
->  # Shell quote;
->  SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
-> @@ -337,6 +339,9 @@ clean:
->  	$(RM) $(cmds_txt) $(mergetools_txt) *.made
->  	$(RM) GIT-ASCIIDOCFLAGS
->
-> +docinfo.html: docinfo-html.in
-> +	$(QUIET_GEN)$(RM) $@ && cat $< >$@
-> +
->  $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
->  	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -d manpage -o $@ $<
->
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-Hmm. This adds a "template" for no other reason than to appease the rule
-that all `.html` files in `Documentation/` _must_ be generated. Typically,
-templates are only added if anything in them needs to be interpolated to
-reflect the particular build, which is not the case here.
+---
+Changes in v5:
+- Rebase the branch on top of the  latest master branch
+- Rename tests according to unit-tests' conventions
+- remove 'pq_test_main()' from reftable/reftable-test.h
 
-Have you considered one of these alternatives?
+CI/PR for v5: https://github.com/gitgitgadget/git/pull/1745
 
-1. https://docs.asciidoctor.org/asciidoctor/latest/html-backend/default-st=
-ylesheet/#customize-extend
-   talks about two ways to extend the default style sheet that do _not_
-   need to add an `.html` file:
+Chandra Pratap(7):
+reftable: remove unncessary curly braces in reftable/pq.c
+reftable: change the type of array indices to 'size_t' in reftable/pq.c
+t: move reftable/pq_test.c to the unit testing framework
+t-reftable-pq: make merged_iter_pqueue_check() static
+t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+t-reftable-pq: add test for index based comparison
+t-reftable-pq: add tests for merged_iter_pqueue_top()
 
-   a. add a `.css` file instead that `@import`s AsciiDoctor's default styl=
-e
-      sheet from a CDN.
+Makefile                     |   2 +-
+reftable/pq.c                |  29 +++-----
+reftable/pq.h                |   1 -
+reftable/pq_test.c           |  74 ---------------------
+reftable/reftable-tests.h    |   1 -
+t/helper/test-reftable.c     |   1 -
+t/unit-tests/t-reftable-pq.c | 155 +++++++++++++++++++++++++++++++++++++++++++
+7 files changed, 166 insertions(+), 97 deletions(-)
 
-      Upside: it is very clean, short, does not need any Makefile rule to
-      generate a file that is arguable in no need of being generated.
+Range-diff against v4:
+<rebase commits>
+  1:  d3c5605ea2 = 382:  acd9d26aaf reftable: remove unncessary curly braces in reftable/pq.c
+  2:  3c333e7770 = 383:  2e0986207b reftable: change the type of array indices to 'size_t' in reftable/pq.c
+  3:  bf547f705a ! 384:  df06b6d604 t: move reftable/pq_test.c to the unit testing framework
+    @@ Commit message
+         t: move reftable/pq_test.c to the unit testing framework
 
-      Downside: since the `@import` statement cannot refer to a file in th=
-e
-      same directory as the `.css` file, it incurs a web request. This
-      would prevent the build from working on an air-gapped system (such a=
-s
-      when on a beautiful island without internet access).
+         reftable/pq_test.c exercises a priority queue defined by
+    -    reftable/pq.{c, h}. Migrate reftable/pq_test.c to the unit
+    -    testing framework. Migration involves refactoring the tests
+    -    to use the unit testing framework instead of reftable's test
+    -    framework.
+    +    reftable/pq.{c, h}. Migrate reftable/pq_test.c to the unit testing
+    +    framework. Migration involves refactoring the tests to use the unit
+    +    testing framework instead of reftable's test framework, and
+    +    renaming the tests to align with unit-tests' standards.
 
-   b. generate a `.css` file by merging AsciiDoctor's default style sheet
-      with a small CSS snippet.
+         Mentored-by: Patrick Steinhardt <ps@pks.im>
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-      Upside: it is again very clean.
+      ## Makefile ##
+    -@@ Makefile: THIRD_PARTY_SOURCES += sha1dc/%
+    - UNIT_TEST_PROGRAMS += t-ctype
+    - UNIT_TEST_PROGRAMS += t-mem-pool
+    +@@ Makefile: UNIT_TEST_PROGRAMS += t-oidmap
+    + UNIT_TEST_PROGRAMS += t-oidtree
+      UNIT_TEST_PROGRAMS += t-prio-queue
+    + UNIT_TEST_PROGRAMS += t-reftable-basics
+     +UNIT_TEST_PROGRAMS += t-reftable-pq
+    + UNIT_TEST_PROGRAMS += t-reftable-record
+      UNIT_TEST_PROGRAMS += t-strbuf
+      UNIT_TEST_PROGRAMS += t-strcmp-offset
+    - UNIT_TEST_PROGRAMS += t-trailer
+    -@@ Makefile: REFTABLE_TEST_OBJS += reftable/basics_test.o
+    +@@ Makefile: REFTABLE_OBJS += reftable/writer.o
+      REFTABLE_TEST_OBJS += reftable/block_test.o
+      REFTABLE_TEST_OBJS += reftable/dump.o
+      REFTABLE_TEST_OBJS += reftable/merged_test.o
+     -REFTABLE_TEST_OBJS += reftable/pq_test.o
+    - REFTABLE_TEST_OBJS += reftable/record_test.o
+      REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+      REFTABLE_TEST_OBJS += reftable/stack_test.o
+    + REFTABLE_TEST_OBJS += reftable/test_framework.o
+    +
+    + ## reftable/reftable-tests.h ##
+    +@@ reftable/reftable-tests.h: license that can be found in the LICENSE file or at
+    + int basics_test_main(int argc, const char **argv);
+    + int block_test_main(int argc, const char **argv);
+    + int merged_test_main(int argc, const char **argv);
+    +-int pq_test_main(int argc, const char **argv);
+    + int record_test_main(int argc, const char **argv);
+    + int readwrite_test_main(int argc, const char **argv);
+    + int stack_test_main(int argc, const char **argv);
 
-      Downside: this would now require a Makefile rule when previously we
-      managed without one.
+      ## t/helper/test-reftable.c ##
+     @@ t/helper/test-reftable.c: int cmd__reftable(int argc, const char **argv)
+    - 	record_test_main(argc, argv);
+    + 	/* test from simple to complex. */
+      	block_test_main(argc, argv);
+      	tree_test_main(argc, argv);
+     -	pq_test_main(argc, argv);
+    @@ t/unit-tests/t-reftable-pq.c: license that can be found in the LICENSE file or a
+      	}
+      }
 
-2. simply adjust the `check_unignored_build_artifacts()` function to know
-   about `docinfo.html`.
+    - static void test_pq(void)
+    +-static void test_pq(void)
+    ++static void t_pq(void)
+      {
+     -	struct merged_iter_pqueue pq = { NULL };
+     +	struct merged_iter_pqueue pq = { 0 };
+    @@ t/unit-tests/t-reftable-pq.c: static void test_pq(void)
+      {
+     -	RUN_TEST(test_pq);
+     -	return 0;
+    -+	TEST(test_pq(), "pq works");
+    ++	TEST(t_pq(), "pq works");
+     +
+     +	return test_done();
+      }
+  4:  7dd3a2b27f = 385:  40745ab18e t-reftable-pq: make merged_iter_pqueue_check() static
+  5:  c803e7adfc ! 386:  ee8432ac4a t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+    @@ t/unit-tests/t-reftable-pq.c: license that can be found in the LICENSE file or a
+      	}
+      }
 
-   Upside: it is still short and does not need any Makefile rule where
-   previously no such thing was required.
+    -@@ t/unit-tests/t-reftable-pq.c: static void test_pq(void)
+    +@@ t/unit-tests/t-reftable-pq.c: static void t_pq(void)
+      		};
 
-   Downside: the simple rule "all .html files in Documentation/ _must_ be
-   generated" would no longer hold true, making the architecture slightly
-   harder to explain to newcomers.
+      		merged_iter_pqueue_add(&pq, &e);
+  6:  0b03f3567d ! 387:  94a77f5a60 t-reftable-pq: add test for index based comparison
+    @@ t/unit-tests/t-reftable-pq.c: static void merged_iter_pqueue_check(const struct
+      	}
+      }
 
-3. stop mixing generated and source files in `Documentation/`. Instead,
-   put the HTML files into a subdirectory that is clearly marked as
-   containing only generated files.
+    --static void test_pq(void)
+    -+static void test_pq_record(void)
+    +-static void t_pq(void)
+    ++static void t_pq_record(void)
+      {
+      	struct merged_iter_pqueue pq = { 0 };
+      	struct reftable_record recs[54];
+    -@@ t/unit-tests/t-reftable-pq.c: static void test_pq(void)
+    +@@ t/unit-tests/t-reftable-pq.c: static void t_pq(void)
+      	merged_iter_pqueue_release(&pq);
+      }
 
-   Upside: this would provide an overall cleaner architecture.
+    -+static void test_pq_index(void)
+    ++static void t_pq_index(void)
+     +{
+     +	struct merged_iter_pqueue pq = { 0 };
+     +	struct reftable_record recs[14];
+    @@ t/unit-tests/t-reftable-pq.c: static void test_pq(void)
+     +
+      int cmd_main(int argc, const char *argv[])
+      {
+    --	TEST(test_pq(), "pq works");
+    -+	TEST(test_pq_record(), "pq works with record-based comparison");
+    -+	TEST(test_pq_index(), "pq works with index-based comparison");
+    +-	TEST(t_pq(), "pq works");
+    ++	TEST(t_pq_record(), "pq works with record-based comparison");
+    ++	TEST(t_pq_index(), "pq works with index-based comparison");
 
-   Downside: lots of work, may require some convincing of oldtimers who
-   see nothing wrong with mixing source and generated files.
+      	return test_done();
+      }
+  7:  0cdfa6221e ! 388:  9a76f87bd1 t-reftable-pq: add tests for merged_iter_pqueue_top()
+    @@ t/unit-tests/t-reftable-pq.c: static void merged_iter_pqueue_check(const struct
+     +	return !reftable_record_cmp(a->rec, b->rec) && (a->index == b->index);
+     +}
+     +
+    - static void test_pq_record(void)
+    + static void t_pq_record(void)
+      {
+      	struct merged_iter_pqueue pq = { 0 };
+    -@@ t/unit-tests/t-reftable-pq.c: static void test_pq_record(void)
+    +@@ t/unit-tests/t-reftable-pq.c: static void t_pq_record(void)
+      	} while (i != 1);
 
-Ciao,
-Johannes
+      	while (!merged_iter_pqueue_is_empty(pq)) {
+    @@ t/unit-tests/t-reftable-pq.c: static void test_pq_record(void)
+      		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
+      		if (last)
+      			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
+    -@@ t/unit-tests/t-reftable-pq.c: static void test_pq_index(void)
+    +@@ t/unit-tests/t-reftable-pq.c: static void t_pq_index(void)
+      	}
+
+      	for (i = N - 1; !merged_iter_pqueue_is_empty(pq); i--) {
+    @@ t/unit-tests/t-reftable-pq.c: static void test_pq_index(void)
+      		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
+      		check_int(e.index, ==, i);
+      		if (last)
+    -@@ t/unit-tests/t-reftable-pq.c: static void test_pq_index(void)
+    +@@ t/unit-tests/t-reftable-pq.c: static void t_pq_index(void)
+      	merged_iter_pqueue_release(&pq);
+      }
+
+    -+static void test_merged_iter_pqueue_top(void)
+    ++static void t_merged_iter_pqueue_top(void)
+     +{
+     +	struct merged_iter_pqueue pq = { 0 };
+     +	struct reftable_record recs[14];
+    @@ t/unit-tests/t-reftable-pq.c: static void test_pq_index(void)
+     +
+      int cmd_main(int argc, const char *argv[])
+      {
+    - 	TEST(test_pq_record(), "pq works with record-based comparison");
+    - 	TEST(test_pq_index(), "pq works with index-based comparison");
+    -+	TEST(test_merged_iter_pqueue_top(), "merged_iter_pqueue_top works");
+    + 	TEST(t_pq_record(), "pq works with record-based comparison");
+    + 	TEST(t_pq_index(), "pq works with index-based comparison");
+    ++	TEST(t_merged_iter_pqueue_top(), "merged_iter_pqueue_top works");
+
+      	return test_done();
+      }
+
