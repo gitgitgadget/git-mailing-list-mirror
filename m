@@ -1,520 +1,187 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9705C13BC0B
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 02:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CE2132124
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 03:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721703475; cv=none; b=uYgB3po/5lmICHu37DGe+R2qDu719XzlXhEAu3xX2mU+62FyrUEjA7+KVCexhHpr34sJguVqMolzl6+RnYNtIoopeycJUK5jd1R7K9h6mlqMpP8LuLR8SdD5hGnv6RSyD3xvXiPuEn76g7+duxR2jtNlll/ZIfTYZR/U5fjmXYw=
+	t=1721704014; cv=none; b=CNXBZMQzBpvtmec7k83B/FsHGJ6y4KcCkQYGjYQ3TcNgNFL1FR3gjz2Sbhdp/or/i33v6JQrKDQxLVspdsgTlYheRM4NJOqTr/jQK9Ro/rn4Kdm81VGuzzzRBjXiZCFbIU2gEAY2IZwu+WeAyeUKuaJU/KUE4e00a0yZmCqeve8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721703475; c=relaxed/simple;
-	bh=L5MsMWIqhNjUlrtLt0JPW4SMHcEYWKIscRIVwoBUR5o=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WK0R/1yOKrvk4QgahOcrWPldtyM6skzehP17yTH4vNCvI6ycN2CFUMKmhn9IkAEwESqe9b+mglFK71hVR3paei8hKMp3qIocVnt41YfZmhU8GMVMrVenvkECFUCKIfAzX/UNQ1jqwBxXC2BdGZqBaFJkDED45KlX97OsWTa5WiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lehp4HrP; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721704014; c=relaxed/simple;
+	bh=F3VaqGbanMddyHVs06CqdlSaOOTjD5qWPQiGlqygWu4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=GRdlgq7vJrA6qpPgx/6fKOk2EX1oGjRV+ghcK53Y38jx7mxjKm2VF9tycLbiltuygb442ZonCqjUEBmw7kfUYT62W26GW8JgNqmYjBfp5c23L2VlxhOjQZz9nrooL76KxcWNhNUCl4dbUKhnzHSCO8DztBfB0loEkRmFG12RUe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5+V4B8k; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lehp4HrP"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D03DB28DF6;
-	Mon, 22 Jul 2024 22:57:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
-	5MsMWIqhNjUlrtLt0JPW4SMHcEYWKIscRIVwoBUR5o=; b=Lehp4HrPSDENaItee
-	7d6hr8iL5wHqomRZ8Y2sRkkV8xiCyJxfNpapV3lr/C7Nhug1WWbhKy5xSa+m3kV6
-	B5UPe66KWHx2DvPuP+tVzslFES+Jnk/gukPnWkOK0Hz/fgY0Ld/m6AHZ4x8tTQN3
-	ZQjxT4zC1Up1oeff904yKNQGnc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C8CF428DF5;
-	Mon, 22 Jul 2024 22:57:52 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1F09E28DF4;
-	Mon, 22 Jul 2024 22:57:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Jul 2024, #07; Mon, 22)
-X-master-at: d19b6cd2dd72dc811f19df4b32c7ed223256c3ee
-X-next-at: 9573259db95170f58f57a4a1f0dc806cd823113f
-Date: Mon, 22 Jul 2024 19:57:44 -0700
-Message-ID: <xmqqsew04xxz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5+V4B8k"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2cb5789297eso2492199a91.3
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 20:06:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721704012; x=1722308812; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uuHbJW/ctmmKAWACldCs7aYXbrPf94qXGeAEh6xWxSs=;
+        b=F5+V4B8kfx20F2EpvHgwGs9AdFxB4yOPLCthRQS/jkQww4dP//jLT9fY/oP/ZfXcI2
+         itwEtAE594437AL7jDoJJ9Ju87y9NIEfmaJ5IadgAaSgv0ZxDDu4IUiBOhJYrXsJ9K9M
+         qFBbpPnBbpaHSgjuri95wug1NeMokhxWz3AkjMoxq8YnJPQL4XF9FJ50ngWkItgFkP7q
+         sl/qwBdJO7SxKHQbFJTcyj8tA4VpOC7pD1rb0SXGQnDPdTPxPqByigMvi6j9FxSVkKx6
+         O2Nh7aX8XzQvehCzdDkPLHKlgEhmzOrC1x0FFn6EAmxe0jG5iWckBjqtuQ3s5ydprUZ/
+         sAfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721704012; x=1722308812;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uuHbJW/ctmmKAWACldCs7aYXbrPf94qXGeAEh6xWxSs=;
+        b=sT77mPi4EmInfWmaEVQXfh/51frutLvqFRl+a+lyoEewtOjrL9NtGDzo6DzxfDXWCl
+         4UXgCIHC0WLg2gAiMPTKkIWHN88uemg2Iz2rg9rt+nLMtk9wSzXmQKBN23E+RQMzoOn7
+         Jveg6HshP/W+lpaXDEBGeRp+9sWa5fFXNLUfecZIb6BEOkr/IHCY1Il2O+T7u/AuB0L0
+         hZfFj4sM8nqiF5caTJBfdItjKeDSv+0FDzjYTi+Wo6C/hS0ZbL9x2PSzYvRGIoooSjkN
+         3rYCKFswfOzA240Xg8CBUF3RDsooKaCDMzAJ6I14XsVOfHaIHaOr4t7BpaySg+DZqu7X
+         dMsA==
+X-Forwarded-Encrypted: i=1; AJvYcCWXeROWBJSZoQUvQBvCCJ2oAE0bYXiGbJMzdJnqaYLDgy0HBZePIkZcPlOoSltHFPRgkM8LMciJ39LB2GxnTcexvqfe
+X-Gm-Message-State: AOJu0YyjwQoshfezONXkP/6UCs0h6CKHyfuKOKHZzo9bxF9U9RQnRNCo
+	zGirlR7474uOHCxVEjdcxPXyLOb6JvARRRLXhyjyQWuu1yr5zHEeJGt2NrQ2lu4rJx7Cm3XCj7N
+	UimrB7X2dn+l2io8gyKsoyU+DrntidgbqmDs=
+X-Google-Smtp-Source: AGHT+IFSMn76kGedRSeePg/jlli60xeShweKpluvjZKNaw7ux6VxSgQ/fzUksPM2owI+8GUdXWx1pruClCktDlkt8Kg=
+X-Received: by 2002:a17:90a:d188:b0:2c9:6187:98ca with SMTP id
+ 98e67ed59e1d1-2cd27434c50mr4783616a91.22.1721704012246; Mon, 22 Jul 2024
+ 20:06:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 572E356C-489F-11EF-9A33-9625FCCAB05B-77302942!pb-smtp21.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Git 2.46-rc1 has been tagged.  From now on until the final release,
-which is planned to happen near the end of this month, please make
-sure you place priorities on finding and fixing new regressions
-introduced during this cycle over finding and fixing old bugs, over
-any shiny new features.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* ag/git-svn-global-ignores (2024-07-18) 2 commits
- - git-svn: use `svn:global-ignores` to create .gitignore
- - git-svn: add public property `svn:global-ignores`
-
- "git svn" has been taught about svn:global-ignores property
- recent versions of Subversion has.
-
- Needs review.
- source: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
-
-
-* ds/midx-write-repack-fix (2024-07-19) 2 commits
-  (merged to 'next' on 2024-07-22 at 0a64b3ed42)
- + midx-write: revert use of --stdin-packs
- + t5319: add failing test case for repack/expire
-
- Repacking a repository with multi-pack index started making stupid
- pack selections in Git 2.45, which has been corrected.
-
- Will cook in 'next'.
- source: <pull.1764.git.1721332546.gitgitgadget@gmail.com>
-
-
-* jc/how-to-maintain-updates (2024-07-19) 2 commits
- - howto-maintain: update daily tasks
- - howto-maintain: cover a whole development cycle
-
- Doc update.
-
- Will merge to 'next'?
- source: <xmqq1q3phzpi.fsf@gitster.g>
-
-
-* es/shell-check-updates (2024-07-22) 4 commits
- - check-non-portable-shell: suggest alternative for `VAR=val shell-func`
- - check-non-portable-shell: improve `VAR=val shell-func` detection
- - t4034: fix use of one-shot variable assignment with shell function
- - t3430: modernize one-shot "VAR=val shell-func" invocation
-
- Test script linter has been updated to catch an attempt to use
- one-shot export construct "VAR=VAL func" for shell functions (which
- does not work for some shells) better.
-
- Will merge to 'next'?
- source: <20240722065915.80760-1-ericsunshine@charter.net>
-
-
-* ja/doc-markup-updates-fix (2024-07-20) 1 commit
- - doc: git-clone fix discrepancy between asciidoc and asciidoctor
-
- Fix documentation mark-up regression in 2.45.
-
- Will merge to 'next' and then to 'master'.
- source: <pull.1765.git.1721496853517.gitgitgadget@gmail.com>
-
-
-* jc/doc-one-short-export-with-shell-func (2024-07-22) 1 commit
- - CodingGuidelines: document a shell that "fails" "VAR=VAL shell_func"
-
- It has been documented that we avoid "VAR=VAL shell_func" and why.
-
- Will merge to 'next'.
- source: <xmqqwmld55y1.fsf@gitster.g>
-
-
-* jc/safe-directory (2024-07-20) 2 commits
- - safe.directory: normalize the configured path
- - safe.directory: normalize the checked path
-
- Follow-up on 2.45.1 regression fix.
-
- Needs review.
- source: <20240720220915.2933266-1-gitster@pobox.com>
-
-
-* js/doc-markup-updates-fix (2024-07-22) 2 commits
- - SQUASH???
- - asciidoctor: fix `synopsis` rendering
-
- Work around asciidoctor's css that renders `monospace` material
- in the SYNOPSIS section of manual pages as block elements.
-
- Waiting for a review response.
- source: <pull.1749.v2.git.git.1721679949618.gitgitgadget@gmail.com>
-
-
-* pw/add-patch-with-suppress-blank-empty (2024-07-20) 2 commits
-  (merged to 'next' on 2024-07-22 at 5437b7dee3)
- + add-patch: use normalize_marker() when recounting edited hunk
- + add-patch: handle splitting hunks with diff.suppressBlankEmpty
-
- "git add -p" by users with diff.suppressBlankEmpty set to true
- failed to parse the patch that represents an unmodified empty line
- with an empty line (not a line with a single space on it), which
- has been corrected.
-
- Will cook in 'next'.
- source: <pull.1763.v2.git.1721491320.gitgitgadget@gmail.com>
-
-
-* tn/doc-commit-fix (2024-07-22) 1 commit
- - doc: remove dangling closing parenthesis
-
- Docfix.
-
- Will merge to 'next'.
- source: <20240722225302.124356-1-tomasn@posteo.net>
-
---------------------------------------------------
-[Stalled]
-
-* sj/ref-fsck (2024-07-15) 10 commits
- - fsck: add ref content check for files backend
- - fsck: add ref name check for files backend
- - files-backend: add unified interface for refs scanning
- - builtin/fsck: add `git-refs verify` child process
- - git refs: add verify subcommand
- - refs: set up ref consistency check infrastructure
- - fsck: add refs-related error report function
- - fsck: rename objects-related fsck error functions
- - fsck: add a unified interface for reporting fsck messages
- - fsck: rename "skiplist" to "skip_oids"
-
- "git fsck" infrastructure has been taught to also check the sanity
- of the ref database, in addition to the object database.
-
- Needs review.
- source: <ZpPEdmUN1Z5tqbK3@ArchLinux>
-
-
-* cp/unit-test-reftable-pq (2024-06-14) 7 commits
- - t-reftable-pq: add tests for merged_iter_pqueue_top()
- - t-reftable-pq: add test for index based comparison
- - t-reftable-pq: make merged_iter_pqueue_check() callable by reference
- - t-reftable-pq: make merged_iter_pqueue_check() static
- - t: move reftable/pq_test.c to the unit testing framework
- - reftable: change the type of array indices to 'size_t' in reftable/pq.c
- - reftable: remove unncessary curly braces in reftable/pq.c
-
- The tests for "pq" part of reftable library got rewritten to use
- the unit test framework.
-
- Needs review.
- source: <20240614095136.12052-1-chandrapratap3519@gmail.com>
-
-
-* tb/incremental-midx-part-1 (2024-07-17) 19 commits
- - midx: implement support for writing incremental MIDX chains
- - t/t5313-pack-bounds-checks.sh: prepare for sub-directories
- - t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
- - midx: implement verification support for incremental MIDXs
- - midx: support reading incremental MIDX chains
- - midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
- - midx: teach `midx_preferred_pack()` about incremental MIDXs
- - midx: teach `midx_contains_pack()` about incremental MIDXs
- - midx: remove unused `midx_locate_pack()`
- - midx: teach `fill_midx_entry()` about incremental MIDXs
- - midx: teach `nth_midxed_offset()` about incremental MIDXs
- - midx: teach `bsearch_midx()` about incremental MIDXs
- - midx: introduce `bsearch_one_midx()`
- - midx: teach `nth_bitmapped_pack()` about incremental MIDXs
- - midx: teach `nth_midxed_object_oid()` about incremental MIDXs
- - midx: teach `prepare_midx_pack()` about incremental MIDXs
- - midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
- - midx: add new fields for incremental MIDX chains
- - Documentation: describe incremental MIDX format
-
- Incremental updates of multi-pack index files.
-
- Needs review.
- source: <cover.1721250704.git.me@ttaylorr.com>
-
-
-* pp/add-parse-range-unit-test (2024-05-27) 1 commit
- - apply: add unit tests for parse_range
-
- A unit test for code that parses the hunk offset and length from a
- patch fragment header as been added.
-
- Expecting a reroll.
- cf. <b7eca313-9ea8-4132-ba1d-ed9236e07095@gmail.com>
- source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
-
-
-* cw/git-std-lib (2024-02-28) 4 commits
- . SQUASH??? get rid of apparent debugging crufts
- . test-stdlib: show that git-std-lib is independent
- . git-std-lib: introduce Git Standard Library
- . pager: include stdint.h because uintmax_t is used
-
- Split libgit.a out to a separate git-std-lib tor easier reuse.
-
- Expecting a reroll.
- source: <cover.1696021277.git.jonathantanmy@google.com>
-
---------------------------------------------------
-[Cooking]
-
-* cp/unit-test-reftable-tree (2024-07-22) 5 commits
- - t-reftable-tree: improve the test for infix_walk()
- - t-reftable-tree: add test for non-existent key
- - t-reftable-tree: split test_tree() into two sub-test functions
- - t: move reftable/tree_test.c to the unit testing framework
- - reftable: remove unnecessary curly braces in reftable/tree.c
-
- A test in reftable library has been rewritten using the unit test
- framework.
-
- Needs review.
- source: <20240722061836.4176-1-chandrapratap3519@gmail.com>
-
-
-* rj/make-cleanup (2024-07-18) 2 commits
-  (merged to 'next' on 2024-07-22 at bf3991f70f)
- + config.mak.uname: remove unused uname_P variable
- + Makefile: drop -Wno-universal-initializer from SP_EXTRA_FLAGS
-
- A build tweak knob has been simplified by not setting the value
- that is already the default; another unused one has been removed.
-
- Will cook in 'next'.
- source: <0d132370-3e07-4332-bcfb-c4450100d736@ramsayjones.plus.com>
-
-
-* ew/cat-file-optim (2024-07-15) 10 commits
- - cat-file: use writev(2) if available
- - cat-file: batch_write: use size_t for length
- - cat-file: batch-command uses content_limit
- - object_info: content_limit only applies to blobs
- - packfile: packed_object_info avoids packed_to_object_type
- - cat-file: use delta_base_cache entries directly
- - packfile: inline cache_or_unpack_entry
- - packfile: fix off-by-one in content_limit comparison
- - packfile: allow content-limit for cat-file
- - packfile: move sizep computation
-
- "git cat-file --batch" has been optimized.
-
- Needs review.
- source: <20240715003519.2671385-1-e@80x24.org>
-
-
-* jc/document-use-of-local (2024-07-15) 1 commit
- - doc: note that AT&T ksh does not work with our test suite
-
- Doc update.
-
- Needs review.
- source: <xmqq1q3u8zmr.fsf@gitster.g>
-
-
-* jt/doc-post-receive-hook-update (2024-07-15) 1 commit
-  (merged to 'next' on 2024-07-17 at 624ac4ebe2)
- + doc: clarify post-receive hook behavior
-
- Doc update.
-
- Will cook in 'next'.
- source: <20240715183739.7808-1-jltobler@gmail.com>
-
-
-* jc/reflog-expire-lookup-commit-fix (2024-07-16) 1 commit
- - Revert "reflog expire: don't use lookup_commit_reference_gently()"
-
- "git reflog expire" failed to honor annotated tags when computing
- reachable commits.
-
- Needs review.
- source: <xmqqv8156rh2.fsf@gitster.g>
-
-
-* es/doc-platform-support-policy (2024-07-18) 2 commits
- - SQUASH???
- - Documentation: add platform support policy
-
- A policy document that describes platform support levels and
- expectation on platform stakeholders has been introduced.
- source: <20240718173843.2411415-1-emilyshaffer@google.com>
-
-
-* kn/ci-clang-format (2024-07-18) 6 commits
- - ci/style-check: add `RemoveBracesLLVM` in CI job
- - check-whitespace: detect if no base_commit is provided
- - ci: run style check on GitHub and GitLab
- - clang-format: formalize some of the spacing rules
- - clang-format: avoid spacing around bitfield colon
- - clang-format: indent preprocessor directives after hash
-
- A CI job that use clang-format to check coding style issues in new
- code has been added.
-
- Will merge to 'next'.
- source: <20240718081605.452366-1-karthik.188@gmail.com>
-
-
-* rj/add-p-pager (2024-07-22) 6 commits
- - pager: make wait_for_pager a no-op for "cat"
- - t3701: avoid one-shot export for shell functions
- - add-patch: render hunks through the pager
- - pager: introduce wait_for_pager
- - pager: do not close fd 2 unnecessarily
- - add-patch: test for 'p' command
-
- A 'P' command to "git add -p" that passes the patch hunk to the
- pager has been added.
-
- source: <efa98aec-f117-4cfe-a7c2-e8c0adbdb399@gmail.com>
- source: <c37f0d54-4ead-422c-8193-f0c2ec84ca4a@gmail.com>
- source: <5536b336-5122-47fd-be57-42c299abe60c@gmail.com>
-
-
-* ad/merge-with-diff-algorithm (2024-07-13) 1 commit
-  (merged to 'next' on 2024-07-16 at 90fe5aff4d)
- + merge-recursive: honor diff.algorithm
-
- Many Porcelain commands that internally use the merge machinery
- were taught to consistently honor the diff.algorithm configuration.
-
- Will cook in 'next'.
- source: <pull.1743.v3.git.git.1720889507066.gitgitgadget@gmail.com>
-
-
-* jc/checkout-no-op-switch-errors (2024-07-02) 1 commit
-  (merged to 'next' on 2024-07-22 at 9573259db9)
- + checkout: special case error messages during noop switching
-
- "git checkout --ours" (no other arguments) complained that the
- option is incompatible with branch switching, which is technically
- correct, but found confusing by some users.  It now says that the
- user needs to give pathspec to specify what paths to checkout.
-
- Will cook in 'next'.
- source: <xmqqikxnqzz4.fsf@gitster.g>
-
-
-* cp/unit-test-reftable-merged (2024-07-12) 7 commits
- - t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
- - t-reftable-merged: use reftable_ref_record_equal to compare ref records
- - t-reftable-merged: add tests for reftable_merged_table_max_update_index
- - t-reftable-merged: improve the const-correctness of helper functions
- - t-reftable-merged: improve the test t_merged_single_record()
- - t: harmonize t-reftable-merged.c with coding guidelines
- - t: move reftable/merged_test.c to the unit testing framework
-
- Another reftable test has been ported to use the unit test framework.
-
- Will merge to 'next'.
- source: <20240712055041.6476-1-chandrapratap3519@gmail.com>
-
-
-* rs/t-strvec-use-test-msg (2024-07-16) 3 commits
-  (merged to 'next' on 2024-07-16 at 3e860b3f12)
- + t-strvec: fix type mismatch in check_strvec
-  (merged to 'next' on 2024-07-15 at f26e434515)
- + t-strvec: improve check_strvec() output
-  (merged to 'next' on 2024-07-08 at c28c2553de)
- + t-strvec: use test_msg()
-
- Unit test clean-up.
-
- Will cook in 'next'.
- source: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
- source: <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
- source: <1521ed89-989e-452b-b7fc-9e73672e0764@web.de>
-
-
-* gt/unit-test-hashmap (2024-07-12) 1 commit
- - t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
-
- An existing test of hashmap API has been rewritten with the
- unit-test framework.
-
- What's the doneness of this one?
- source: <20240711235159.5320-1-shyamthakkar001@gmail.com>
-
-
-* rs/unit-tests-test-run (2024-07-22) 6 commits
- - t-strbuf: use for_test
- - t-strvec: use for_test
- - t-reftable-basics: use for_test
- - t-ctype: use for_test
- - unit-tests: add for_test
- - t0080: move expected output to a file
-
- Unit-test framework clean-up.
-
- Waiting for a review response.
- cf. <CAO_smVhoobWpsbYHnHJqTj7TJJ1udo_UaGdbOnUqe5jzL+tyaQ@mail.gmail.com>
- source: <da7ed537-1c8e-42ec-aa91-49e1319e8c68@web.de>
-
-
-* jc/patch-id (2024-06-21) 5 commits
- - patch-id: tighten code to detect the patch header
- - patch-id: rewrite code that detects the beginning of a patch
- - patch-id: make get_one_patchid() more extensible
- - patch-id: call flush_current_id() only when needed
- - t4204: patch-id supports various input format
-
- The patch parser in "git patch-id" has been tightened to avoid
- getting confused by lines that look like a patch header in the log
- message.
-
- Needs review.
- source: <20240621231826.3280338-1-gitster@pobox.com>
-
---------------------------------------------------
-[Discarded]
-
-* jk/add-patch-with-suppress-blank-empty (2024-07-10) 1 commit
-  (merged to 'next' on 2024-07-11 at cec8ebb668)
- + add-patch: handle splitting hunks with diff.suppressBlankEmpty
-
- When the diff.suppressBlankEmpty configuration variable is set,
- "git add -p" failed to process a patch with an unmodified empty
- line, which has been corrected.
-
- Reverted out of 'next'.
- source: <20240710093610.GA2076910@coredump.intra.peff.net>
+References: <CADeMgjBeyWkE3mp+-x57NSsyNLQf3cTta+Xm5uyVOQE-rpT6yg@mail.gmail.com>
+ <Zp7Pg7ZOlBZcfJei@tapette.crustytoothpaste.net> <031701dadc8c$db6d3370$92479a50$@nexbridge.com>
+ <Zp7z1eY6GcGzrZaJ@tapette.crustytoothpaste.net>
+In-Reply-To: <Zp7z1eY6GcGzrZaJ@tapette.crustytoothpaste.net>
+From: Thaina Yu <thainayu@gmail.com>
+Date: Tue, 23 Jul 2024 10:06:12 +0700
+Message-ID: <CADeMgjAqgF9K6fOQS07MB71c0OWGsF3TL-QVNX_tt1TpSMv=xg@mail.gmail.com>
+Subject: Re: [feature request] Is it possible to have git tag can be sorted
+ and filtered by semver?
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, rsbecker@nexbridge.com, 
+	Thaina Yu <thainayu@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+The sorting output are not very differ from `--sort=v:refname` the key
+difference is ability to also filter with the semver range
+
+As suggested, the glob pattern start to have a problem filtering out
+the range of tags numerically and so we need to pipe the output to
+another system such as grep. Which is not supported in windows and
+become harder to do a tooling system that need to piped to separate
+platform specific tools. We also need to convert semver into regex
+such that it handle ranges we want properly. So I would like to
+request it to be option of the git itself
+
+As for the syntax. I propose the patterns `refs/tags/v{
+__semverranges__ }` so that `v` may be prefix or not is up to user,
+outside of brace `{}` is just normal glob and only inside will be
+matched as semver. The suffix such as `-alpha0` or `-pre1` or `-rc3`
+should also be sorted with semver rules and filter out all other
+unmatched character (except git tag system suffix such as `^{}`)
+
+On Tue, 23 Jul 2024 at 07:05, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2024-07-22 at 23:14:03, rsbecker@nexbridge.com wrote:
+> > On Monday, July 22, 2024 5:31 PM, brian m. carlson wrote:
+> > >Assuming we add such a feature, how does sorting by SemVer differ from the
+> > >current version sorting?  That is, where is the current version sorting deficient for
+> > >SemVer?  Also, what do you want to happen when a tag doesn't meet SemVer
+> > >requirements (note that the "v" prefix is not allowed in SemVer, although it's
+> > >customary in tags)?
+> >
+> > Currently, tags would be sorted as follows (simple example):
+> > 1.10.0
+> > 1.2.0
+> > 1.9.1
+>
+> I agree that this happens without any --sort option.
+>
+> > With semver, the tags would be:
+> > 1.2.0
+> > 1.9.1
+> > 1.10.0
+> >
+> > My take is that this, if implemented, would need to be more general, and include prefix and suffix handling, so:
+> > v1.2.0
+> > v1.9.0
+> > v1.10.0
+> >
+> > should sort as appropriate. We might need something like v({semver}), or a more general regex-like (prefix){0,1}(semver){1}(suffix){0,1}.
+>
+> However, this is the behaviour I see with --sort=version:refname (or
+> v:refname).  For example, the command I provided below running in the
+> Git repository sorts v2.9.5 before v2.10.0, which I believe is how this
+> was supposed to work.  Of course, I could be totally off base, which is
+> why I'm asking for clarification so I can understand better.
+>
+> I think it's also worth asking what happens for tags that don't match
+> that still.  For example, let's assume for the moment that Git used
+> SemVer.  I have added tags in my Git repo for when I send a series, like
+> so:
+>
+>   7a9ba024ccdc440095537cf53ce69a5749798165 commit refs/tags/sent/credential-alwaysauth/v1
+>   a74efc1699038e898960c2c55185f32aade6a88a commit refs/tags/sent/credential-alwaysauth/v2
+>   ac45947b34d003f827d15a8623c0125fb12ec261 commit refs/tags/sent/credential-alwaysauth/v3
+>
+> Those clearly don't meet SemVer and will need to be sorted _somehow_
+> (before or after SemVer tags?), and users will want to know how.
+>
+> > While at it, having a reverse sort would also be useful. For platforms that have semver-util, this can be trivially scripted. For exotics, no such luck, as semver-util is not especially portable, not for lack of trying.
+>
+> I think we have this by using the `-` prefix, such as
+> `--sort=-version:refname`.  I agree this is very useful, though, since
+> it's an O(n) operation to reverse the list, which, as you mention below,
+> might be large.  If we add SemVer sorting, we'll definitely want it to
+> work nicely with reverse sorting.
+>
+> > >As for the special range syntax, I think the typical suggestion is to filter the output of
+> > >ls-remote or for-each-ref by piping it to a suitable program.  Perl or Ruby are
+> > >common choices here, and both could easily parse SemVer tags.  For example:
+> > >
+> > >  git for-each-ref --sort=v:refname refs/tags/ |
+> > >  ruby -ne 'if %r[\trefs/tags/v(\d+)\.(\d+)\.(\d+)$]; ver =
+> > >Regexp.last_match[1..3].map(&:to_i); puts $_ if [[2, 6, 3], ver, [2, 15, 2]].sort[1] ==
+> > >ver; end'
+> > >
+> > >Git is intentionally designed to support this kind of shell scripting.
+> >
+> > I think implementing both wrapped semver and reverse sort in git tag might be useful for large projects, like git and OpenSSL where the number of tags is large. It would make finding time-ordered releases somewhat easier.
+>
+> My worry is that a special range syntax isn't going to cover all the
+> possible needs.  For example, I might know that [v2.5.1, v4.0.0) will
+> work (despite the incompatible version at v3, my code isn't affected),
+> but it's very difficult to express that via a range, since what I want
+> is basically a tuple sort on [2, 5, 1] <= ver < [4, 0, 0].  That's easy
+> in Ruby (well, it's not pretty[0], but I did it above), but you can't
+> simply specify a range in any one field, because v2.6.0 and v3.0.5 would
+> both match the pattern.
+>
+> This kind of thing is very common with lots of Ruby gems, which, while
+> they have a backwards incompatible change, don't change all that much,
+> so several major versions might be acceptable.  In that context, it's
+> likely that some sort of external filtering might be more general and
+> robust and meet people's needs better.
+>
+> However, I'm open to being convinced otherwise if some compelling syntax
+> comes up.  I'm just asking questions here because I'm not super sure
+> what the use cases are and I think more information about the proposal
+> might help people decide better.
+>
+> [0] That's because Ruby supports comparisons on Array via <=> (and thus
+> sorting), but it doesn't implement < and > themselves (although == is
+> implemented).  Therefore, I had to sort the three versions, and if the
+> given version was still in the middle afterwards, then it was in range.
+>
+> Another, less pretty (in my view) option is to call <=> directly and
+> compare against -1 or 1.  If there are any Rubyists on the list with
+> better ideas, I'm open to hear them.
+> --
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
