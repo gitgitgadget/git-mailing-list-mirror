@@ -1,57 +1,57 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A47E14B082
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 08:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9804E14B094
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 08:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721722878; cv=none; b=NuSlV+w7dUcKFhTAapRfvmeLOz1OzqeHeBPBVaZFMQeOfrt0nm7hTNtaClvUg899z0AJHSCeCG5tSnXrOam6TJVoDS5/FISxDcbAy/vPqZlhChwdn2v4oLtwhuw1Yt2uU9XsKsbU+fL5ld6Ut8DMlaN4cBckT4vJdusBCbmy3Xs=
+	t=1721722879; cv=none; b=s1EnYultb5awV9YHhtjjg5H2yte83/YXwFBgoI5Ot8ExEZZvYCNfcndf24xArZdNtP8Z8A/oQdMajt41Ub+0NBKsRx//TlHdt8d0VyQFh0xBHR//4RE8mtMhoCNPKKrB1pqOIw20lS0Xa4wCturi5Hr64dDhhMKJXQVLvwejE6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721722878; c=relaxed/simple;
-	bh=fXYkwyyNJCLwx/1+LXMILAXgVK2bnFuuMMrPjySB8G8=;
+	s=arc-20240116; t=1721722879; c=relaxed/simple;
+	bh=c57a5FZo8oc1XwZXmAykTqE3C++vUFM1nNGdVk7APJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3ks3FWLmf61KGpzvVFh8pGhSRc/bwuX+BeqTtn9YSXgD/8F09f6zEZW/v6SDdbo52pbCjBO7G3arrhpEJAquAlNoctovUiesmTslTkR9grrEpUTEWa5f32u5IRRsK3fntelqzJZ8BfzM/AsRcqNM/wv0Z3w3ZL9lFoQyZ1To/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YH3VOp5P; arc=none smtp.client-ip=209.85.167.43
+	 MIME-Version; b=fFOy285oMx5DrX0IhVGuYX/tHvBWul8gm3k2CzvrhDXjWLElGDNgRuYeLw996JstiuCvtEOuFDIPldKQg4jVe2glKlhp9kkqsFJfiOk9ilUfzSR+axo26Eyn+QVivKerWimH2nC3BGREP2QeLjwg4uz6LVVx4U0wv2rxi1brVtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B1xzti43; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YH3VOp5P"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52f025bc147so2988945e87.3
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 01:21:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B1xzti43"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a7aa086b077so15712266b.0
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 01:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721722875; x=1722327675; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721722876; x=1722327676; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IXE3MYu8CxgvrX1p6ggHUE0kt8dF7SAUpXUFx2O4fgw=;
-        b=YH3VOp5P0170chaMqmx/WbAZ6Et7IN3e1m5R6XoIKojMvHbr7ln1bNoz3rF/iJMMKO
-         J7Ov16uHe+boq4Ad0FntquO/g20XdpVFkCbOIUAqc8WlZ3U3tNYicNv6/gcquVfbeCAI
-         RoiShCVe6vHcXJvEJVNFRXXEH5uwbSxjnfxOhLtEM6bHZvkTSNRJ6ODQN7WWYYvna97V
-         hzrkunNx8n1pst24GLFFfnnjOKUzA4ZRWiUwFTlOS/XzQWAvgM/olMebDkd95Nx44wuy
-         piYzMBF3C6T6zVDIR2aQBVAmwrlaxTpdIbsOYzGdDIZ0QWzvBuKCipTROEx4kBysM/PV
-         gBSQ==
+        bh=dGFI5dxykS0Ye5JgwzTOfeSKS/2TqbyMZWuGeO3hO3Y=;
+        b=B1xzti43Sn5vkfUcSoiLOVQIVTw7IR9FTO3jMCGYu7Ld50s6X+IN2YlMltE2s86yId
+         06gx5J3nMXn9V0ClABjjYeInQhv3FdZAxMze8ExSxLWUrYuR3oKBIdO+7zTBSeMDl0XE
+         ITivgNgJ47DmPv3iBMrrjJ7QlFB1ZjQ+elpfeNeuWHlUpZrEKaDzBpIfMPfL1Vc2CyWj
+         lksr4ZgTzLUy7ZXrSxtlueGguOYKA2vRYiWNPbGvFtlumwvrMSSirLiCYZLyUlHmZn6F
+         JR8y0nFajOohnIrsvvhosU3BpSRr3EH1KERpeVH8iaAHrh2Ap/5wue2xsRMcwr2Rtry0
+         BeCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721722875; x=1722327675;
+        d=1e100.net; s=20230601; t=1721722876; x=1722327676;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IXE3MYu8CxgvrX1p6ggHUE0kt8dF7SAUpXUFx2O4fgw=;
-        b=OfMhRSiIFyQriA4rFfuac4bf1UjVSgJz2KgDgsrWunCJtEB98zaLz0e5E2qCQVf2cZ
-         0Jg8gS8RjkuXpN638dYjfA9hz1qjPsLjvMCAt+BRW/tJ4kZcOBcB5XrlSjMoTD51Hljk
-         IWhmsLf5fTd/oD0PlVCExfYRO893OZVcIpdeAAKf5gxe+uwrS1D6ZJ1g1s97xLfN5uYy
-         kvWl6mrtRuDhQ29N7vRL1WenRZS8IHEOBrC8VjA2QxEtuWptsR0r6/yYk50ErIlG4Pve
-         KCiiZq1WG//f9G0RBKTD0oUzaT996dIxxNj7fMTS83d1SMxj6BfBHZcbR77yOHIp4bc+
-         FpEg==
-X-Forwarded-Encrypted: i=1; AJvYcCWLLZlNIPAdDg8k8J319unuqJR8Syvb156SSiia8o2915Weh4kqpznorWi4SaOSNSPKK5mpmWzWMplzIOLuW6LqlpIN
-X-Gm-Message-State: AOJu0YysCYQiZbAzsRc2R2TkUcSpqGRCnHidN6Bu8uae0QIqzZoo0HRX
-	ag4iFc5pW2OUqKfhp/7hXsDs/6KmZLS83fjtfVRxPBR5RHZb7RDN
-X-Google-Smtp-Source: AGHT+IFElAXfTYjUilei9DqkXyQZEX8L9asUSvF2RKzShLXmWTRaVWX//rz5Xzns2HkTAiXYF/qnzg==
-X-Received: by 2002:a05:6512:3402:b0:52e:9d6b:2691 with SMTP id 2adb3069b0e04-52efb63433bmr5729532e87.20.1721722874826;
-        Tue, 23 Jul 2024 01:21:14 -0700 (PDT)
+        bh=dGFI5dxykS0Ye5JgwzTOfeSKS/2TqbyMZWuGeO3hO3Y=;
+        b=ByCPzkycMSPtLrA1JAyZmHpM7a69KPDIwAqBVu9Cgl9u6X9b+axLr+2/93GeR95AB3
+         S8AqIBAQ3/dEzSWp5sNXxNBIDo2ciBICudGNi7PkQzhhYXeWLs3Zy+q/2jsDBekc5wYG
+         vi5DHnOmrW6FyTCtJI1ZtNsa8cUOlx19tGdazSR1YKmJMq7k1jbmiE2X9KSUto7psCUq
+         JK2pejHIxIVFXoJpS1lferFYkDKs9b97TGz83Ul6+iEcwblX6G/g4/B8i0m584xvXDCC
+         iPuatMg2UA/blK4/LTJS1xSMVLLv+PDVJ6ZN9hHKW0NhihZBfW6JBR+lBubhwc9tiwwi
+         vHBw==
+X-Forwarded-Encrypted: i=1; AJvYcCUESPOPZuq1qfFEZc3j0eZrNe7R/w4JYae5MAC0orAwF+XcVVcxy0Giv/dBbpBgkSWUgXKmzNAUy0NZEJ2QEBNB0VLz
+X-Gm-Message-State: AOJu0Yy3nh6wxjlzzc9bem6z2kTnU8603AjAVbJYrLS2gyd6ZzYno328
+	27bfRvjnJyuHLrzJL31WKdMzynCHx3WbF67mlQwLcoNzGODB+pnn
+X-Google-Smtp-Source: AGHT+IGn6eR1G0ifflr5Alp126/GGKm2dk1FB16ExrX39TkmK4PGK46ZNRxRIHFA3g9qR2J871nqwA==
+X-Received: by 2002:a17:906:7950:b0:a77:e1c2:3ab with SMTP id a640c23a62f3a-a7a4c41487dmr648638466b.50.1721722875778;
+        Tue, 23 Jul 2024 01:21:15 -0700 (PDT)
 Received: from laptop.fritz.box ([2a02:2455:826e:4900:45ae:72d0:1982:e034])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a9f463194sm24026266b.112.2024.07.23.01.21.13
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a9f463194sm24026266b.112.2024.07.23.01.21.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 01:21:14 -0700 (PDT)
+        Tue, 23 Jul 2024 01:21:15 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: chriscool@tuxfamily.org,
@@ -59,9 +59,9 @@ Cc: chriscool@tuxfamily.org,
 	gitster@pobox.com,
 	jltobler@gmail.com,
 	phillip.wood123@gmail.com
-Subject: [PATCH v6 1/6] clang-format: indent preprocessor directives after hash
-Date: Tue, 23 Jul 2024 10:21:06 +0200
-Message-ID: <20240723082111.874382-2-karthik.188@gmail.com>
+Subject: [PATCH v6 2/6] clang-format: avoid spacing around bitfield colon
+Date: Tue, 23 Jul 2024 10:21:07 +0200
+Message-ID: <20240723082111.874382-3-karthik.188@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723082111.874382-1-karthik.188@gmail.com>
 References: <20240718081605.452366-1-karthik.188@gmail.com>
@@ -74,54 +74,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We do not have a rule around the indentation of preprocessor directives.
-This was also discussed on the list [1], noting how there is often
-inconsistency in the styling. While there was discussion, there was no
-conclusion around what is the preferred style here. One style being
-indenting after the hash:
+The spacing around colons is currently not standardized and as such we
+have the following practices in our code base:
+- Spacing around the colon `int bf : 1`: 146 instances
+- No spacing around the colon `int bf:1`: 148 instances
+- Spacing before the colon `int bf :1`: 6 instances
+- Spacing after the colon `int bf: 1`: 12 instances
 
-    #if FOO
-    #  if BAR
-    #    include <foo>
-    #  endif
-    #endif
-
-The other being before the hash:
-
-    #if FOO
-      #if BAR
-        #include <foo>
-      #endif
-    #endif
-
-Let's pick the former and add 'IndentPPDirectives: AfterHash' value to
-our '.clang-format'. There is no clear reason to pick one over the
-other, but it would definitely be nicer to be consistent.
-
-[1]: https://lore.kernel.org/r/xmqqwmmm1bw6.fsf@gitster.g
+Let's formalize this by picking the most followed pattern and add the
+corresponding style to '.clang-format'.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- .clang-format | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .clang-format | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/.clang-format b/.clang-format
-index 3ed4fac753..5e128519bf 100644
+index 5e128519bf..803b274dd5 100644
 --- a/.clang-format
 +++ b/.clang-format
-@@ -96,6 +96,12 @@ BreakStringLiterals: false
- # Switch statement body is always indented one level more than case labels.
- IndentCaseLabels: false
+@@ -72,6 +72,10 @@ AlwaysBreakAfterReturnType: None
+ BinPackArguments: true
+ BinPackParameters: true
  
-+# Indents directives before the hash.
-+# #if FOO
-+# #  include <foo>
-+# #endif
-+IndentPPDirectives: AfterHash
++# Add no space around the bit field
++# unsigned bf:2;
++BitFieldColonSpacing: None
 +
- # Don't indent a function definition or declaration if it is wrapped after the
- # type
- IndentWrappedFunctionNames: false
+ # Attach braces to surrounding context except break before braces on function
+ # definitions.
+ # void foo()
 -- 
 2.45.2
 
