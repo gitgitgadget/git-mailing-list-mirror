@@ -1,123 +1,217 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06E432C8B
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C2B14287
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 02:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721696062; cv=none; b=WxiCU2eJQW5X+2lWUWp0Z8EBIhMZMqCaudUo3CfJE4CoCzWFabjbZAXI1H6dvlKgfz6Q7obc7c5aYAj7buMNtEVtSrh+zNnrBdgiPCWA28NOG6uKpvmxL55lx0vG4eHeAt50ATfY5ytUjjVgqt9Eko20YRi+mf9TCyc2eBis52c=
+	t=1721701145; cv=none; b=QEA3STLL7QcjKlfN2KI9SYanVsuxCxLZeSz4EaIzPCcQPJXMBHPPQ4OCOGGDHHe9HVUKmsv5+vcpcRr3B0bxWDKnWZiYRLnJIKV7xeqmAtgY6415/cRaeONtS0OI5d1eTVF16iHB7a8qOngnrxvnYwjtdp177K+8LXW6enbflfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721696062; c=relaxed/simple;
-	bh=CkCV3saQ4uQ/MR4ORi/dGb1uZQLc5ph9lClxN1gxVho=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HFZXSy5MjI5290PZBAeQjz7n7dlucCl91bxNhJYP1mllyk048+/JxqHiTtFyVlXCq6NjsV/t9KVUmcoziTZU6RT5YzlWg0ZfUkYRt0jYbi4YYlsrZ9jqNIlLjzD1TxtZ24fflpElFZzFx6uKdzP/Ff5J7q9LnF/JATMt3zuHWpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ICslZASR; arc=none smtp.client-ip=173.228.157.52
+	s=arc-20240116; t=1721701145; c=relaxed/simple;
+	bh=F8V5jTt+SHoXVxEV6lqe5vyFjjresIYjlmMuXIomNk4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZMSfdhP+SGjtL0Tnx7JxY6jalcXghXLkYl8VUMv0TQ9jzX7g/FLZlvica7O0fqOKgZIniqlF1Ur4COkKmRc3O7vXTWciaRRGCef1xc808ifzmReE+A+cY/jmaA8K2fk23o0Uuo1D4BQK5iPNoMggP0PAmohTlHg9C/pTCWCbBWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GDpSHMX1; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ICslZASR"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C92C3F128;
-	Mon, 22 Jul 2024 20:54:20 -0400 (EDT)
-	(envelope-from junio@pobox.com)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GDpSHMX1"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DEB32585D;
+	Mon, 22 Jul 2024 22:19:02 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CkCV3saQ4uQ/
-	MR4ORi/dGb1uZQLc5ph9lClxN1gxVho=; b=ICslZASRlUgrr0tfM6psvBmXM1ZI
-	NTlLH6s82kpBrFKXJJkKeLZa9KOjdxb1uqzt4uSgtrP+m1y553K8jnj9JS29hmkl
-	kmB1Wu/wif56Uls/AJ1e2ySvRizoRbwZ0w7G5W0hBmUJRYLxFhA9DcvFzlkuK61V
-	baZ8DwK2x0Tmpm0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 05FAF3F127;
-	Mon, 22 Jul 2024 20:54:20 -0400 (EDT)
-	(envelope-from junio@pobox.com)
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-transfer-encoding; s=sasl; bh=F8V5jTt+SHoXVxEV6lqe5vyFj
+	jresIYjlmMuXIomNk4=; b=GDpSHMX1N6vnWUg+T6f1soIHCysjq+Hh1u3ypQFUq
+	xagaEuyRUHFTSS4JWewSGFm/WsZHjqVoSlsRly7bRrm7gzhpLdOLVIQl7FX/0Lin
+	yxME/RU2DMKmGmRVKMd7CZYuIZeJb3Kgx3+DbymTqfrZBPWM/9toHJNOJPIdTJNh
+	uM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EC422585C;
+	Mon, 22 Jul 2024 22:19:02 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC0DC3F124;
-	Mon, 22 Jul 2024 20:54:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F22DD2585B;
+	Mon, 22 Jul 2024 22:19:01 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/2] add-p P fixups
-In-Reply-To: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 23 Jul 2024 02:39:58 +0200")
-References: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
-Date: Mon, 22 Jul 2024 17:54:13 -0700
-Message-ID: <xmqqa5i953nu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 0/3] safe.directory clean-up
+Date: Mon, 22 Jul 2024 19:18:57 -0700
+Message-ID: <20240723021900.388020-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.46.0-rc1-52-gda884b23f2
+In-Reply-To: <20240720220915.2933266-1-gitster@pobox.com>
+References: <20240720220915.2933266-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 15264A76-488E-11EF-9286-92D9AF168FA5-77302942!pb-smtp20.pobox.com
+ ED4AF5E0-4899-11EF-A3EA-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Changes since v1:
 
->     +    Note that POSIX is not specific about this behavior:
+ - two "extra" patches for optimization that are unnecessary have
+   been dropped.
+ - a patch to add test for safe.directory=3D"." use case has been
+   added.=20
 
-This is misleading.  It _specifically_ says that the behaviour is
-unspecified.  Here "unspecified" is a term of art with a much less
-vague meaning.  With respect to the points described as unspecified,
-compliant implementations of shell can behave differently, and
-scripts (like our tests) that assume one behaviour cannot complain
-if a POSIX compliant shell implements the behaviour differently and
-"breaks" them.
+Recently we discussed what we should do when either the path
+configured in the safe.directory configuration or coming from
+the caller of ensure_valid_ownership() function as a result of
+repository discovery is not normalized and textual equality check is
+not sufficient.  See the thread the contains
 
-So "POSIX says the behaviour is unspecified" would be more
-appropriate.
+  https://lore.kernel.org/git/6d5b75a6-639d-429b-bd37-232fc6f475af@gmail.=
+com/
 
->     +    http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_ch=
-ap02.html#tag_18_09_01
->     +
->          One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running=
- dash
->          0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" =
-being
->          tested did not get our custom GIT_PAGER, which broke the test.
-> 2:  f45455f1ff ! 2:  b87c3d96e4 pager: make wait_for_pager a no-op for =
-"cat"
->     @@ Commit message
->          "cat" [*2*], then we return from `setup_pager()` silently with=
-out doing
->          anything, allowing the output to go directly to the normal std=
-out.
->     =20
->     -    Let's make the call to `wait_for_pager()` for these cases, or =
-any other
->     -    future optimizations that may occur, also exit silently withou=
-t doing
->     -    anything.
->     +    If `setup_pager()` avoids forking a pager, then when the clien=
-t calls
->     +    the corresponding `wait_for_pager()`, we might fail trying to =
-terminate
->     +    a process that wasn't started.
+Here are three patches that implement the comparison between
+normalized path and configuration value.
 
-It may try to stop one, but because we didn't start one to begin
-with, there is nothing to stop.  Then is there any problem and why?
+Imagine that you have a repository at /mnt/disk4/repos/frotz
+directory but in order to make it simpler to manage and use, you
+have your users use /projects/frotz to access the repository.  A
+symlink /projects/frotz pointing at /mnt/disk4/repos/frotz directory
+allows you to do so.
 
-In other words, I was hoping that we can clearly say what the
-externally visible breakage was.
+ - The first patch normalizes the path to the directory that we
+   suspect is a usable repository, before comparing it with the
+   safe.directory configuration variable.  The safe.directory may
+   say /mnt/disk4/repos/frotz or /mnt/disk4/repos/*, but the path to
+   the repository for the users may be /mnt/disk4/repos/frotz or
+   /projects/frotz, depending on where they come from and what their
+   $PWD makes getcwd() to say.
 
->     +    One solution to avoid this problem could be to make the caller=
- aware
->     +    that `setup_pager()` did nothing, so it could avoid calling
->     +    `wait_for_pager()`.
->     +
->     +    However, let's avoid shifting that responsibility to the calle=
-r and
->     +    instead treat the call to `wait_for_pager()` as a no-op when w=
-e know we
->     +    haven't forked a pager.
+ - The second patch normalizes the value of the safe.directory
+   variable.  This allows safe.directory to say /projects/frotz
+   or /projects/* and have them match /mnt/disk4/repos/frotz (which
+   is how the first patch normalizes the repository path to).
 
-These two paragraphs are good.
+ - The third patch only adds a test to illustrate what happens when
+   the safe.directory configuration is set to ".", which was a
+   plausible setting for those who run "git daemon".  The
+   normalization done by the first two patches is sufficient to make
+   this just work.
 
-Thanks.
+Junio C Hamano (3):
+  safe.directory: normalize the checked path
+  safe.directory: normalize the configured path
+  safe.directory: setting safe.directory=3D"." allows the "current"
+    directory
+
+ setup.c                   |  28 ++++++--
+ t/t0033-safe-directory.sh | 146 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+), 4 deletions(-)
+
+Range-diff against v1:
+1:  20e1160946 ! 1:  86d5c83ee7 safe.directory: normalize the checked pat=
+h
+    @@ t/t0033-safe-directory.sh: test_expect_success 'local clone of uno=
+wned repo acce
+     +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+     +		git config --global safe.directory "$(pwd)/repository"
+     +	) &&
+    -+	git -C repository/ for-each-ref >/dev/null &&
+    -+	git -C repo/ for-each-ref
+    ++	git -C repository for-each-ref &&
+    ++	git -C repository/ for-each-ref &&
+    ++	git -C repo for-each-ref &&
+    ++	git -C repo/ for-each-ref &&
+    ++	test_must_fail git -C repository/.git for-each-ref &&
+    ++	test_must_fail git -C repository/.git/ for-each-ref &&
+    ++	test_must_fail git -C repo/.git for-each-ref &&
+    ++	test_must_fail git -C repo/.git/ for-each-ref
+     +'
+     +
+     +test_expect_success SYMLINKS 'checked leading paths are normalized'=
+ '
+    @@ t/t0033-safe-directory.sh: test_expect_success 'local clone of uno=
+wned repo acce
+     +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+     +		git config --global safe.directory "$(pwd)/repository/*"
+     +	) &&
+    -+	git -C repository/s for-each-ref >/dev/null &&
+    -+	git -C repo/s for-each-ref
+    ++	git -C repository/s for-each-ref &&
+    ++	git -C repository/s/ for-each-ref &&
+    ++	git -C repo/s for-each-ref &&
+    ++	git -C repo/s/ for-each-ref &&
+    ++	git -C repository/s/.git for-each-ref &&
+    ++	git -C repository/s/.git/ for-each-ref &&
+    ++	git -C repo/s/.git for-each-ref &&
+    ++	git -C repo/s/.git/ for-each-ref
+     +'
+     +
+      test_done
+2:  06de9038b7 ! 2:  c4998076da safe.directory: normalize the configured =
+path
+    @@ setup.c: static int safe_directory_cb(const char *key, const char =
+*value,
+    =20
+      ## t/t0033-safe-directory.sh ##
+     @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked =
+leading paths are normalized' '
+    - 	git -C repo/s for-each-ref
+    + 	git -C repo/s/.git/ for-each-ref
+      '
+     =20
+     +test_expect_success SYMLINKS 'configured paths are normalized' '
+    @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked l=
+eading paths a
+     +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+     +		git config --global safe.directory "$(pwd)/repo"
+     +	) &&
+    -+	git -C repository/ for-each-ref >/dev/null &&
+    -+	git -C repo/ for-each-ref
+    ++	git -C repository for-each-ref &&
+    ++	git -C repository/ for-each-ref &&
+    ++	git -C repo for-each-ref &&
+    ++	git -C repo/ for-each-ref &&
+    ++	test_must_fail git -C repository/.git for-each-ref &&
+    ++	test_must_fail git -C repository/.git/ for-each-ref &&
+    ++	test_must_fail git -C repo/.git for-each-ref &&
+    ++	test_must_fail git -C repo/.git/ for-each-ref
+     +'
+     +
+     +test_expect_success SYMLINKS 'configured leading paths are normaliz=
+ed' '
+    @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked l=
+eading paths a
+     +	git init repository/s &&
+     +	ln -s repository repo &&
+     +	(
+    -+		cd repository &&
+    ++		cd repository/s &&
+     +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+     +		test_commit sample
+     +	) &&
+    @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked l=
+eading paths a
+     +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+     +		git config --global safe.directory "$(pwd)/repo/*"
+     +	) &&
+    -+	git -C repository/s for-each-ref >/dev/null &&
+    -+	git -C repo/s for-each-ref
+    ++	git -C repository/s for-each-ref &&
+    ++	git -C repository/s/ for-each-ref &&
+    ++	git -C repository/s/.git for-each-ref &&
+    ++	git -C repository/s/.git/ for-each-ref &&
+    ++	git -C repo/s for-each-ref &&
+    ++	git -C repo/s/ for-each-ref &&
+    ++	git -C repo/s/.git for-each-ref &&
+    ++	git -C repo/s/.git/ for-each-ref
+     +'
+     +
+      test_done
+-:  ---------- > 3:  ffc3f7364e safe.directory: setting safe.directory=3D=
+"." allows the "current" directory
+--=20
+2.46.0-rc1-52-gda884b23f2
+
