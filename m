@@ -1,191 +1,115 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19DA13B599
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 15:07:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC873D55D
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 15:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721747259; cv=none; b=dTQ7NHzUOetW9cQZLzu7KQBVM35I5OF6Vas05D/UbuuLpTDL985Y+C5CtaPrxo2UvtdkIgjC8/Drc7BaozZnlwiEVIySPzcu6E2RGBdnkO9FOWcXEx+WEllIAuxSFD0hwmgbFn0MG0t/fk9HIm0szvNp5ZI9ILZqDcmbgWo3Z6Q=
+	t=1721748515; cv=none; b=jQOEgbrUGjimKdtcawnKedLp0TIYJJNVqh18/47lpVlVJI55dU5FyrSbR12ag/H/hXznzIF05g2ua2+uomM1fiUdDvj/O9Wo5hIUXcxVS1feQCsMYNnBDJYEQ2SECEbnyBiYAE+l2KJv0mqS6VYimHfOURZu8G9X1g8top8ch3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721747259; c=relaxed/simple;
-	bh=XywsUoqkZnbz8+vy4qSTKywKS5b1M1CQc7YUaTsYIOM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=EuXG3cw+IGGysBnvajuMHBqrNOIngOVkr2SWzjexs+ZFTDjpJGRupBm2DkEBLCe+SeLluxQ3W8FDAvId363g0OryQOFioU7C6P+NXRS4vCYtXz4YuWeOkz3oizIiAymyMPQh6SDYEQuY7P7jbukbtLc+ugTepjnh1oOb4tAtWvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dwim.me; spf=pass smtp.mailfrom=dwim.me; dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b=UEvUsXD0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TxrhcjxI; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dwim.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dwim.me
+	s=arc-20240116; t=1721748515; c=relaxed/simple;
+	bh=ksShVy8riI/8xo7L2mYd6v9LYr4q9b4yufPnKQmvgTg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ELLZW5wVz0sETTz15Bhzjmf7PONpghfqFcQiwg+e0h33vZmta0QiOa6aSzPvHlut9IO4PhQhRUWzgPx0VOmgPLStohj7RFVxH/wJJL0bNjYdaaDSYJ2eEedIs385foYl3oS3cjQLMKJBdt+WgAPH1zLz6y8+rm5G7TfVG3AlWe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dtpRzUOA; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dwim.me header.i=@dwim.me header.b="UEvUsXD0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TxrhcjxI"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 82B0311400B3;
-	Tue, 23 Jul 2024 11:07:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Tue, 23 Jul 2024 11:07:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dwim.me; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1721747255;
-	 x=1721833655; bh=cyJ7rp8TOe6oWsOQx2x5sq5vCQCTBaVAHpjP1d2F0b4=; b=
-	UEvUsXD0thYuEfFsSTkl+1GLUEl9cTH7xZ59GbLn9mzEVIEAscbqp5E97HRZn7ng
-	aIsKbKJluUCr59N/08TRpPalgi2BY9J4yWfRMDyXbTyV//Y/FySBSPiJCyv88f1X
-	JKvQdOW5E6RiES966BXC/qxPGS49ukEM+mVl0XNmrHLYrHTo/AmNEdSbq7E3W1W7
-	/6LeuhNSWUWLOAtt23nFIHN88zRr/LqxrgM6DaFcUo2alD5pP7KBR1Quzi3yv2Np
-	w5Pr7uN2p+P5f0GtEQbNOpj12cLW4YbuzKCBpCjdRCp5HpK4mp5RCmf3QXR2yRRv
-	aP/PE7mq9esZJZSXCumzDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721747255; x=
-	1721833655; bh=cyJ7rp8TOe6oWsOQx2x5sq5vCQCTBaVAHpjP1d2F0b4=; b=T
-	xrhcjxIxVxtUx8KF1lfaZy6jYy2Y+oOcQdWGpxoij7e51XJR48unzSdHTBk/60o0
-	0kFg3dJZczFxnyn+drXLDY3Mt683f36UiAlPc7gIt+N5Kh3YpoFg5cOYx6797N2U
-	DS4s6z5VDp+HiOIyWvkW9swkUON6bDOZlIOOpYT5GXdLquXAJR92hkdzWGHCWiOj
-	WR4GCqKJ82R4oGBkHNDOJmIGZbbszBw2QvAQzViapE9a3bCypYDJw2cf8oJJb8jJ
-	5pRyeNTiltyh5xFdhKjXtiqgzf3xdS2Z8iPq/aGTc75HBNelDn7YFunH0IkOTqo3
-	7Xwz6eJWB5c+tS1mj1fNA==
-X-ME-Sender: <xms:N8efZmtZNrjbsemmLiqKjSZMv7NiDHrbcp4ZAg2-aVfVZB9MDeBTTg>
-    <xme:N8efZrdQFMSvaJ5NkFJshyUrsuNq_0hwLX1L2l6NPqZlYoOFRJ9v9ldpmq_-PheY9
-    NcQsrQZNiR4I1Vjmg>
-X-ME-Received: <xmr:N8efZhwgP8_j2jgbznHRGu_Zg4qPrXDCm4JqN_gUofK2KunVTrgxVFc2vd84dAeaMVo6s3rWsDH3S82iu47EWdat88Axv03T4GABdOt3yAhj4RQwIw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgdekgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvveffjghftgfgfgggsehtqh
-    ertddtreejnecuhfhrohhmpeevrghrlhhoshcuofgrrhhtvohnucfpihgvthhouceotghm
-    nhesugifihhmrdhmvgeqnecuggftrfgrthhtvghrnhepleetgfektddugedtveevleekgf
-    elkeejheelleeijeeiffejueefvedtgfelleegnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomheptghmnhesugifihhmrdhmvgdpnhgspghrtghpth
-    htoheptd
-X-ME-Proxy: <xmx:N8efZhNAbRu0O-cUJDoCXYfm5LqEDmQqjFMZzkr9RcUPFQWl0lghfQ>
-    <xmx:N8efZm8e3ZyQF4xUdjFaMLqXkjtoD-g7EDUKvTgSENHNchs7olLCaw>
-    <xmx:N8efZpVLuETHrXYYyxcGDEKhKRbdReE_B8vkPIYQNCrCk5T3Prf73A>
-    <xmx:N8efZvedWSzazIxyZSg5W8JIhZBheFdZWHbQymphrYEvxhrqRsBSVw>
-    <xmx:N8efZoLqPaIQxLaUUSN4XGk7_dBuFooAeaWT7zNTZJ5kJiyMKKdsmqjf>
-Feedback-ID: ifc4b4307:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Jul 2024 11:07:34 -0400 (EDT)
-Message-ID: <520d3ed0d5822e1587d28c25c7843214f15573fb.camel@dwim.me>
-Subject: Re: [PATCH 4/4] remote-curl: read in the push report even if we
- fail to finish sending data
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dtpRzUOA"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E4AD1F855;
+	Tue, 23 Jul 2024 11:28:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ksShVy8riI/8xo7L2mYd6v9LYr4q9b4yufPnKQ
+	mvgTg=; b=dtpRzUOAfblyDYNJgh7vFqZtOGClmgorga4CbJLjsadACSl9+9T7Vp
+	Szt8PXxXhhPyUycMqd3io4/Zcj6vH5PPPeLFZRR/jcAGtDBiJ2IiwAik4AnCOXLE
+	g8aclXCTqhAWp7tUgGM+Zav3UehwCm0bkUh11UhhCT21NCslBMW8Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 960FC1F854;
+	Tue, 23 Jul 2024 11:28:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EB20C1F851;
+	Tue, 23 Jul 2024 11:28:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Date: Tue, 23 Jul 2024 17:07:31 +0200
-In-Reply-To: <20240613095542.GA817573@coredump.intra.peff.net>
-References: <20240612115028.1169183-1-cmn@dwim.me>
-	 <20240612115028.1169183-5-cmn@dwim.me>
-	 <20240613095542.GA817573@coredump.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-1 
+Subject: Re: [PATCH v2] CodingGuidelines: document a shell that "fails"
+ "VAR=VAL shell_func"
+In-Reply-To: <20240723033418.GA1838963@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 22 Jul 2024 23:34:18 -0400")
+References: <xmqqjzhd81la.fsf@gitster.g>
+	<20240723033418.GA1838963@coredump.intra.peff.net>
+Date: Tue, 23 Jul 2024 08:28:27 -0700
+Message-ID: <xmqqfrs03z6s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 36350C82-4908-11EF-A638-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-On Thu, 2024-06-13 at 05:55 -0400, Jeff King wrote:
-> On Wed, Jun 12, 2024 at 01:50:28PM +0200, Carlos Mart=C3=ADn Nieto wrote:
->=20
-> > If we just consume send-pack's output and don't send anything to
-> > remote-helper, it will not update any of its structures and will report
-> > "Everything up-to-date" next to the error message.
->=20
-> OK, consuming the output at the helper level makes some sense to me.
-> But...
->=20
-> > diff --git a/remote-curl.c b/remote-curl.c
-> > index 0b6d7815fdd..9e45e14afec 100644
-> > --- a/remote-curl.c
-> > +++ b/remote-curl.c
-> > @@ -1114,15 +1114,25 @@ static int rpc_service(struct rpc_state *rpc, s=
-truct discovery *heads,
-> > =C2=A0
-> > =C2=A0	close(client.in);
-> > =C2=A0	client.in =3D -1;
-> > -	if (!err) {
-> > -		strbuf_read(rpc_result, client.out, 0);
-> > -	} else {
-> > -		char buf[4096];
-> > -		for (;;)
-> > -			if (xread(client.out, buf, sizeof(buf)) <=3D 0)
-> > -				break;
-> > +
-> > +	/*
-> > +	 * If we encountered an error, we might still get a report. Consume t=
-he
-> > +	 * rest of the packfile and an extra flush and then we can copy
-> > +	 * over the report the same way as in the success case.
-> > +	 */
-> > +	if (err) {
-> > +		int n;
-> > +		do {
-> > +			n =3D packet_read(rpc->out, rpc->buf, rpc->alloc, 0);
-> > +		} while (n > 0);
-> > +
-> > +		/* Read the final flush separating the payload from the report */
-> > +		packet_read(rpc->out, rpc->buf, rpc->alloc, 0);
-> > =C2=A0	}
->=20
-> Isn't this existing code already trying to read everything? I think
-> rpc->out and client.out are synonyms.
+Jeff King <peff@peff.net> writes:
 
-The existing code will read to EOF if we saw an error, ignoring
-anything including any reports.
+> On Mon, Jul 22, 2024 at 04:10:41PM -0700, Junio C Hamano wrote:
+>
+>> Over the years, we accumulated the community wisdom to avoid the
+>> common "one-short export" construct for shell functions, but seem to
+>> have lost on which exact platform it is known to fail.  Now during
+>> an investigation on a breakage for a recent topic, we found one
+>> example of failing shell.  Let's document that.
+>
+> My recollection was that FreeBSD's /bin/sh was the culprit, but I
+> couldn't find any mention digging in the archive. However, I just
+> checked on a FreeBSD 13 VM, and it does have the same problem (that the
+> one-shot variable is not exported). I don't think that changes anything
+> for your patch, but just reinforces this part:
+>
+>> This does *not* mean that we can freely start using the construct
+>> once Ubuntu 20.04 is retired.  But it does mean that we cannot use
+>> the construct until Ubuntu 20.04 is fully retired from the machines
+>> that matter.
+>
+> since now we have one other instance.
+>
+> I thought it also had the issue that the variable would remain set in
+> the caller after the function returned, but it does not seem to do so
+> now (if it ever did).
 
->=20
-> So now instead of reading to EOF, we are reading some set number of
-> packets. This function is used for both fetches and pushes, isn't it? Is
-> the expected number of packets the same for both? What about
-> stateless-connect mode?
->=20
-> > +	/* Copy the report of successes/failures */
-> > +	strbuf_read(rpc_result, client.out, 0);
->=20
-> OK, so this is where we read the result. Which again, only makes sense
-> for send-pack. And in theory we've synchronized the protocol through the
+Yeah, that one is also what POSIX leaves to the implementation, if I
+recall what I read there.
 
-The existing code already tries to read the report regardless of
-pushing or fetch in the non-err case.
+So here is how the part looks like in my tree right now.  
 
-> packet reads above (are we sure that we always enter the read loop above
-> from a predictable synchronization point in the protocol, given that we
-> saw an error?).
+Thanks.
 
-That's what the loop is trying to do. It reads the rest of the
-packfile, and it's trying to get to the flush at the end. This is what
-the while loop above does, that copies between packet_read and
-post_rpc. Given that send-pack is still sending the rest of the
-packfile, it should be the same as if we had been sending the data over
-the network.
-
-It doesn't quite work which is why there's an extra read there but I
-take your point that I forgot that we also run fetches through this so
-it's probably going to be more complicated anyway.
-
->=20
-> What if send-pack doesn't send us anything useful (e.g., it hangs up
-> without sending the report). Shouldn't we take the presence of "err"
-> being non-zero as an indication that things are not well, even if we
-> never get to the send-pack report?
-
-In this case err is non-zero because we got a non-200 HTTP response, if
-I followed the code correctly, so it does mean there was an error, and
-it's true that we don't necessarily know why with just that variable.
-
-
-It's still nicer if we can try to get more data out of send-pack (and
-fetch-pack if it does have more information there), but yes this code
-isn't quite it.
-
-I might just step back on this a bit and split my fixes here as a
-change to make send-pack return an error message should just need a
-change to still forward non-2xx responses if the server claims it to be
-the Git protocol. That still shows the error message from the server
-even if we provide the "Everything up-to-date" message as well.
-
-Cheers,
-   cmn
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index 2151ec51b8..52afb2725f 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -212,11 +212,11 @@ For shell scripts specifically (not exhaustive):
+    "command args" is running is handy, but this triggers an
+    unspecified behaviour according to POSIX when used for a command
+    that is not an external command (like shell functions).  Indeed,
+-   some versions of dash (like 0.5.10.2-6 found on Ubuntu 20.04) and
+-   AT&T ksh do make a temporary assignment without exporting the
+-   variable, in such a case.  Do not use it for shell functions.  A
+-   common workaround is to do an explicit export in a subshell, like
+-   so:
++   dash 0.5.10.2-6 on Ubuntu 20.04, /bin/sh on FreeBSD 13, and AT&T
++   ksh all make a temporary assignment without exporting the variable,
++   in such a case.  As it does not work portably across shells, do not
++   use this syntax for shell functions.  A common workaround is to do
++   an explicit export in a subshell, like so:
+ 
+ 	(incorrect)
+ 	VAR=VAL func args
