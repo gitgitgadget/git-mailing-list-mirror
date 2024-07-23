@@ -1,98 +1,72 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971BC7F
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B808BA40
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721693446; cv=none; b=RtJkWWXWT/hAqfPbf5zM1Xqazr3jHD1xq84qjZcl36PthZubZzLCfIXNtb6Fx/bTRx3zXBkpukKG7Egpj3+RgRymQ882UPXHBXpSFeiaNNxiJMaI94awVvEESl6cX8R4BigMeY1O93V4NsOBy3o/iVEMbpxuyahbAAhzuyce7uU=
+	t=1721694200; cv=none; b=fmAe2lO14KE3scDyCAMFyEGyfIEe/eOV9mnRk3EPwASmIgsNkm4W6Hp/uPRUH0GQZdbeJDUu8V9LkJBt3oc7VdtgAfe7FV6+jTrCamnSPJduhFaQIUhz7KQihSFfth812MEz7cBFJUg+Mi3hGgm2Rhl63W2kUjcMgtZJTIvnMNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721693446; c=relaxed/simple;
-	bh=jew3cAktCBn17Nn1XooEcKdpgdZpyphmFXBQTrKLlOg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nSMWG9i5clMGIgYYTc+hijXTvXqY1NSr6Ar5DSvrP9arwtO8Ixxp50MynlUKJu6EeeIMY3Wz1KnxhlIkyGoilWvHCPIqtLhTMRywS+Pn5MDE6YeRhJHTDMdVBkeWjb6SEFU0KSf9LDAdNe+AjjFDmisrf8RobKv436q1zpC5Cro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-79f16cad2a7so297841285a.0
-        for <git@vger.kernel.org>; Mon, 22 Jul 2024 17:10:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721693443; x=1722298243;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H0+MI7Z3TCZe064jVjqSn+cdurF6maiV7uX7JFKpn8o=;
-        b=GPZ4K7/BEubooBt39Ikaci83Wumc3SOFhoJjLTrCmK2zcweB+R0VtySzMvzxTuwAjk
-         wQScmKHECnoQm1zLMFDSST0ht2ECOb7RxqrHZkyikuY/0DxyvVb0iIr2zuITtwrkdoCX
-         24B5BP7afrXtEJzl2nNQd967qiP5iv7SHg2UzMdRLf1O9fztG7j+7xcfyUc7lAOi+a5z
-         8JkDUL98bMm12AbxGACj8pVUj6qE5PvKRIG4A8LwKkHnhH8e8NjtWektntLLa4rDvGmE
-         czpsNAtCu5GHT8NugATPxZBEEEUQB+qDK2/l4ERL+gOGnjAsBlBeiEZHQLsxk+NymSz7
-         mcEg==
-X-Gm-Message-State: AOJu0YxVT+PufhNdgih41o14UMRvhhtmxcfpSZzTOweewODJgN2kbHM/
-	p6JOU8t2AHrkeNa1d3o1XSGfJXPYC9S4ewmHIXXvzwvqJvOlKbe4OgMB8ltdzbqn1Em10j6sa8v
-	YMlOiBwl7b8YA3HgP123peFc1sUU=
-X-Google-Smtp-Source: AGHT+IEe9NNtdvK1CdI11zg8c32fEz8z4lFL+P9yXXdXdiCfoHkG7GBhd1TDDFuNAruBO+6Hj2apEWyShd4bV3uALJA=
-X-Received: by 2002:a05:6214:29ee:b0:6b5:4e8c:1be0 with SMTP id
- 6a1803df08f44-6b981922a8dmr16426416d6.16.1721693443415; Mon, 22 Jul 2024
- 17:10:43 -0700 (PDT)
+	s=arc-20240116; t=1721694200; c=relaxed/simple;
+	bh=DC4z5jYAS6jQt4eAU2vvA+qs77mQWbyYZdLg/hUa3bg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XisgD+mzgm7KDghLn/JOa2M5KZblHoGCa7M36oEVgrK9/4RBMjMsfpcWP6bArQoQ2rREhiLoTsPesctiFyDLFIbJvLUuVzCgPJVzWCb0TVe+pxHfmf66BmA7JZ2v7/TkhZHFwhhbzauCxKSEhikht+6bNTbdOzXS4esIzmmz4xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RYCkE7XX; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RYCkE7XX"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 80EDE3EC23;
+	Mon, 22 Jul 2024 20:23:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DC4z5jYAS6jQt4eAU2vvA+qs77mQWbyYZdLg/h
+	Ua3bg=; b=RYCkE7XXd8DBJ4fvfzGG/M+UuB8YFffApYWSTuysnhhe/ZCSjd9YXz
+	Qa8Ha2kdogUih7MDB0y0nl0yNrw84hl/2PwAZLncinsmhLLpolIZCx0fW1b6toW+
+	rc/PMZyigrhyJNeaqOA/5+2Cen9Xu28MbcLm2LkY35oW1DZs7mgGw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 799D03EC22;
+	Mon, 22 Jul 2024 20:23:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CABA93EC19;
+	Mon, 22 Jul 2024 20:23:13 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>,
+  =?utf-8?Q?Rub=C3=A9n?=
+ Justo <rjusto@gmail.com>
+Subject: Re: [PATCH v3] CodingGuidelines: document a shell that "fails"
+ "VAR=VAL shell_func"
+In-Reply-To: <CAPig+cQnUBxttpTnucj527T0ExH1fHER4mrbyoU+hEh+Kp+Bow@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 22 Jul 2024 20:10:32 -0400")
+References: <xmqqjzhd81la.fsf@gitster.g> <xmqqwmld55y1.fsf@gitster.g>
+	<CAPig+cQnUBxttpTnucj527T0ExH1fHER4mrbyoU+hEh+Kp+Bow@mail.gmail.com>
+Date: Mon, 22 Jul 2024 17:23:11 -0700
+Message-ID: <xmqqsew1553k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqjzhd81la.fsf@gitster.g> <xmqqwmld55y1.fsf@gitster.g>
-In-Reply-To: <xmqqwmld55y1.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 22 Jul 2024 20:10:32 -0400
-Message-ID: <CAPig+cQnUBxttpTnucj527T0ExH1fHER4mrbyoU+hEh+Kp+Bow@mail.gmail.com>
-Subject: Re: [PATCH v3] CodingGuidelines: document a shell that "fails"
- "VAR=VAL shell_func"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Kyle Lippincott <spectral@google.com>, 
-	=?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BFDD3466-4889-11EF-8851-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-On Mon, Jul 22, 2024 at 8:05=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Over the years, we accumulated the community wisdom to avoid the
-> common "one-short export" construct for shell functions, but seem to
-> have lost on which exact platform it is known to fail.  Now during
-> an investigation on a breakage for a recent topic, we found one
-> example of failing shell.  Let's document that.
-> [...]
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
-nes
-> @@ -204,6 +204,33 @@ For shell scripts specifically (not exhaustive):
-> + - The common construct
-> +
-> +       VAR=3DVAL command args
-> +
-> +   to temporarily set and export environment variable VAR only while
-> +   "command args" is running is handy, but this triggers an
-> +   unspecified behaviour accoreding to POSIX when used for a command
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-s/accoreding/according/
+>> +   to temporarily set and export environment variable VAR only while
+>> +   "command args" is running is handy, but this triggers an
+>> +   unspecified behaviour accoreding to POSIX when used for a command
+>
+> s/accoreding/according/
 
-> +   that is not an external command (like shell functions).  Indeed,
-> +   some versions of dash (like 0.5.10.2-6 found on Ubuntu 20.04) and
-> +   AT&T ksh do make a temporary assignment without exporting the
-> +   variable, in such a case.  Do not use it for shell functions.  A
-> +   common workaround is to do an explicit export in a subshell, like
-> +   so:
-> +
-> +       (incorrect)
-> +       VAR=3DVAL func args
-> +
-> +       (correct)
-> +       (
-> +               VAR=3DVAL &&
-> +               export VAR &&
-> +               func args
-> +       )
-> +
-> +   but be careful that the effect "func" makes to the variables in the
-> +   current shell will be lost across the subshell boundary.
+Thanks.
+
