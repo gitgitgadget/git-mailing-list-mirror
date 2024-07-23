@@ -1,62 +1,62 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B292114264C
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 19:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E86413DDC6
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 19:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721762317; cv=none; b=lN5rUai8lymLEiKlG5Gd7LYGLX/hKV7RnFCSa1jLAAfDWUNLv06+UBgcYEPI5OqJwhKBmVPqGlfRK90Rd3nZpiZvccmhwZoj2ccS9p+J0DJeztFA1Qim2XqZU8cXE5netjuAA/2VYktY+cQDYcnXEwtnjbQCxsQVWg13qxVaAbQ=
+	t=1721762317; cv=none; b=Bcgj3Li73ZU4Fkh8cQ0lmMzhL0xqgbCc1I4p0cAPjI6Jxl1cR8FYiUro8Ca09IBTM1ixedl6AF/fSTZYnuGv3AgiLv8ArtNSRWU7eEEZskfwrxLZMo0YxHeb3F+Idkkv67bIErAajJH8VMngPNEu7jgZLcMKVFguJxix2VPSp4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721762317; c=relaxed/simple;
-	bh=p/jqA9gX8l00DDL8hIGrnZJ3zN3+zLxdtSLBkGRh4Gs=;
+	bh=Y/eflf72LHbfyadXjodWb8yDEzd6vBwvAvyrlVdBjOc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cPiKQv1stkY1YIxb+tHSNEKvxVp5Z3xdcL1ZOG73l7USGI+pZ7wVJASml03st26RXOmrbjUgLta+dQ+UgeJHM7i4sIINPjDObj0TcNIVUvqGW/BhKoMJXbEGThOCwkGq44NrtijcXYt/qEATNKb2hIV1BWrv/FiuKFa2tJ8FRRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVnt1fiL; arc=none smtp.client-ip=209.85.167.49
+	 MIME-Version:To:Cc; b=NxGuG7U3ss0agTTpYvmprmka0jPpkwj1wLj45bj+/iqRnCs2mVmJhcCoSrZWkEaXcRjJ6TXgX2Ocu2HixfpsT2GOQIkGfT8cLB/DYOssp5QYUMLkR7IOTnNG8vDVAOp6YI50qKllR/fd4JyDe7VbZvP0uWVNPvylWXYDzXh6j8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPrqLVV5; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVnt1fiL"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52efd08e6d9so4579706e87.1
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 12:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPrqLVV5"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a7aa4ca9d72so33156666b.0
+        for <git@vger.kernel.org>; Tue, 23 Jul 2024 12:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721762313; x=1722367113; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721762314; x=1722367114; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=scQQcYhZj7QegWybZvw4rIUqVDfa3YFL+8LLt/4ZwzY=;
-        b=gVnt1fiLvRMGJe535JK925/d330qNRvLb4pEdA2utmkdkF+pHmffawbxYrd58wyfE0
-         K0ZeoHQdvQhHWBY48ejGmocBRjaVBOxxnluF5rjbKTb1DrvBAAIsg1AIlTN6R+ZE0nnV
-         REAgmwKypenGinoObXVZbrfrJu20F/r2sjPAPQNZPFZyzjQts6PTSzA/o+/xFUZVpsJu
-         w1KVbB3zGMSzrYl8aHrrkx5j+GajWOpeePIGiIK4Cqsvcw5/LWqnGF0O1CUbOSRicZYo
-         czBQXS3xOCJcgdKjnx41knaGQZcoZnke4sothn11ofgy9gddPZYX+pycNbAzNBJdZTL2
-         Aw0g==
+        bh=VHG2sFf1oXdGYAQiFJCppD/TIS+KE4TS3ITpeGhcpNk=;
+        b=NPrqLVV56Y11fQ8hwubKi9QJQ5h/8de2zfwyaU9VlM9hKxeVNmJtpuE5wOCOUekq67
+         DhMps+NBGP0apgU1LvCI1NC+FBzpwmzW1xbaLiLxqQfH3AKueZLbdNmzfmwf6cyj6IVX
+         5/u68GknDa5NbE0bBcIgTbDw/wPS8Rtf8P0oXIAz7ZMuLBuRt3b1TCm6CEbldsqctU74
+         3EwA1kU+p2aw9/cZ9gXwnf3/7LHpjr544nUQfBNqhR3excq7lWYRLmyTeghZXzZh397/
+         hHkHtE1Txc8TgQHwpL02hWhNajqMYN7a9z4eqJyqXbIRjGHcYTeiKWYKHpwxdkF5xbfF
+         lBmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721762313; x=1722367113;
+        d=1e100.net; s=20230601; t=1721762314; x=1722367114;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=scQQcYhZj7QegWybZvw4rIUqVDfa3YFL+8LLt/4ZwzY=;
-        b=lpPrhxGEuLZbOwvP2aiXLzlSPTkaF0wzh2+dnzr/6LYVfflMBu8ypb5faxpwHwwHu4
-         eDrsuzN9pfNytT2oK5RLgnUB2jSYGwTwGcmkbwCkQDWU6pC7HJEleluQxwcwX6HQdSeq
-         kijjiarCy5QGxLxyR0yaOp537a6j8+8grvC5gmqslL74/aEqDPu1AYbMzouNoko5un67
-         2BkgiA1k7A/vwpW80u5hhNMcM8n3NeTZr3EJVm9rU65cKGhg4OgMWsHTBDYB/pjHac4Z
-         /0VDOWsznNBWhUh2eDGdXzhx0KjW2ptpFUQV9fUQtmYniqCUWJhEjuKv/T8yorhemXkm
-         fGBg==
-X-Gm-Message-State: AOJu0YwIOBlNGrP7QiGxev0foLFkM1gKjWrPtraZFDJ+jQYZLdWK3M2e
-	5IrjXYqTRb1hBLdpU5jbEauskzyxzg9mV1dbvHfMlhX3Q34dJpXHvGIM3A==
-X-Google-Smtp-Source: AGHT+IFL3M1kQRpNAQJp37uQp6vCqY+qJEzy6UrWZ9heXxr4Tj/Z9v9JFEU8QrVJD7nzx/cME/YIXA==
-X-Received: by 2002:a05:6512:23a3:b0:52e:9619:e26a with SMTP id 2adb3069b0e04-52fc404ba59mr2951510e87.26.1721762313033;
+        bh=VHG2sFf1oXdGYAQiFJCppD/TIS+KE4TS3ITpeGhcpNk=;
+        b=DTtNTXJ4v/ZcqotI8lgWJFG91G40IyLIXce2koa/C78tfuIuq4bNRqbk279lvcFZpf
+         GJjpbpAo6Enomi39j1TCNzpU4z44qrW21D5O75G09b1Ckm1UBvNvx+2HOtEmmRLpYi18
+         42X2DVb9Sbuq7fMh/X2g/bxUzPencVQxzbhrPT4CFelZIgI++ZK9S7hdXcRUzVEXlyVT
+         bL/5mF9NamRCT7/IklaDUbOG+knkq50tWlfWo2YngK6z3AjtiG7t33x6dyTY4g5dOu8T
+         KiKIpFKnSLYAsRejTBKBr7mXm2a83yBrVohYdoffA5XvvXVkwVlek+EjdJcApZsanbjI
+         MdeQ==
+X-Gm-Message-State: AOJu0Yyx/gfK2WrNl81dAB7tDlq/w+m8/NDbD46yCXDOvaOQ9s8Jj+3b
+	IhsApxcWN0g+04RKS0Jdbe3AhUE1bljijC/QXCQkQJtjrXRZymni/IDdPg==
+X-Google-Smtp-Source: AGHT+IENQsD1QnAF8VZBpDVAmM4fitwG22Qlepc1OAP4uYlyuYrwInheTh9u2u8IkFjqiZ3AuVjNig==
+X-Received: by 2002:a17:907:1b22:b0:a7a:9f0f:ab2b with SMTP id a640c23a62f3a-a7a9f0fb5e5mr190115666b.32.1721762313906;
         Tue, 23 Jul 2024 12:18:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7aa8d8d0cesm31538666b.138.2024.07.23.12.18.32
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7aaa7a4a76sm24137866b.96.2024.07.23.12.18.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 12:18:32 -0700 (PDT)
-Message-Id: <7e994eae7bc3dfa021262410c801ddb124ce24f1.1721762306.git.gitgitgadget@gmail.com>
+        Tue, 23 Jul 2024 12:18:33 -0700 (PDT)
+Message-Id: <232340902a1feeafe526528eb88b8d0814d11545.1721762306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
 References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
 From: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 23 Jul 2024 19:18:21 +0000
-Subject: [PATCH 3/8] git-prompt: don't use shell arrays
+Date: Tue, 23 Jul 2024 19:18:22 +0000
+Subject: [PATCH 4/8] git-prompt: replace [[...]] with standard code
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,136 +72,141 @@ Cc: Avi Halachmi <avihpit@yahoo.com>,
 
 From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
 
-Arrays only existed in the svn-upstream code, used to:
-- Keep a list of svn remotes.
-- Convert commit msg to array of words, extract the 2nd-to-last word.
+The existing [[...]] tests were either already valid as standard [...]
+tests, or only required minimal retouch:
 
-Except bash/zsh, nearly all shells failed load on syntax errors here.
+Notes:
 
-Now:
-- The svn remotes are a list of newline-terminated values.
-- The 2nd-to-last word is extracted using standard shell substrings.
-- All shells can digest the svn-upstream code.
+- [[...]] doesn't do field splitting and glob expansion, so $var
+  or $(cmd...) don't need quoting, but [... does need quotes.
 
-While using shell field splitting to extract the word is simple, and
-doesn't even need non-standard code, e.g. set -- $(git log -1 ...),
-it would have the same issues as the old array code: it depends on IFS
-which we don't control, and it's subject to glob-expansion, e.g. if
-the message happens to include * or **/* (as this commit message just
-did), then the array could get huge. This was not great.
+- [[ X == Y ]] when Y is a string is same as [ X = Y ], but if Y is
+  a pattern, then we need:  case X in Y)... ; esac  .
 
-Now it uses standard shell substrings, and we know the exact delimiter
-to expect, because it's the match from our grep just one line earlier.
+- [[ ... && ... ]] was replaced with [ ... ] && [ ... ] .
 
-The new word extraction code also fixes svn-upstream in zsh, because
-previously it used arr[len-2], but because in zsh, unlike bash, array
-subscripts are 1-based, it incorrectly extracted the 3rd-to-last word.
-symptom: missing upstream status in a git-svn repo: u=, u+N-M, etc.
+- [[ -o <zsh-option> ]] requires [[...]], so put it in "eval" and only
+  eval it in zsh, so other shells would not abort on syntax error
+  (posix says [[ has unspecified results, shells allowed to reject it)
 
-The breakage in zsh is surprising, because it was last touched by
-  commit d0583da838 (prompt: fix show upstream with svn and zsh),
-claiming to fix exactly that. However, it only mentions syntax fixes.
-It's unclear if behavior was fixed too. But it was broken, now fixed.
+- ((x++)) was changed into x=$((x+1))  (yeah, not [[...]] ...)
 
-Note LF=$'\n' and then using $LF instead of $'\n' few times.
-A future commit will add fallback for shells without $'...', so this
-would be the only line to touch instead of replacing every $'\n' .
+Shells which accepted the previous forms:
+- bash, zsh, ksh93, mksh, openbsd sh, pdksh.
 
-Shells which could run the previous array code:
-- bash
-
-Shells which have arrays but were broken anyway:
-- zsh: 1-based subscript
-- ksh93: no "local" (the new code can't fix this part...)
-- mksh, openbsd sh, pdksh: failed load on syntax error: "for ((...))".
-
-More shells which Failed to load due to syntax error:
-- dash, free/net bsd sh, busybox-ash, Schily Bourne shell, yash.
+Shells which didn't, and now can process it:
+- dash, free/net bsd sh, busybox-ash, Schily Bourne sh, yash.
 
 Signed-off-by: Avi Halachmi (:avih) <avihpit@yahoo.com>
 ---
- contrib/completion/git-prompt.sh | 48 ++++++++++++++++++++------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
+ contrib/completion/git-prompt.sh | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 4cc2cf91bb6..75c3a813fda 100644
+index 75c3a813fda..4781261f868 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -116,10 +116,10 @@ printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
- __git_ps1_show_upstream ()
- {
- 	local key value
--	local svn_remote svn_url_pattern="" count n
-+	local svn_remotes="" svn_url_pattern="" count n
- 	local upstream_type=git legacy="" verbose="" name=""
-+	local LF=$'\n'
- 
--	svn_remote=()
- 	# get some config options from git-config
- 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
- 	while read -r key value; do
-@@ -132,7 +132,7 @@ __git_ps1_show_upstream ()
+@@ -126,7 +126,7 @@ __git_ps1_show_upstream ()
+ 		case "$key" in
+ 		bash.showupstream)
+ 			GIT_PS1_SHOWUPSTREAM="$value"
+-			if [[ -z "${GIT_PS1_SHOWUPSTREAM}" ]]; then
++			if [ -z "${GIT_PS1_SHOWUPSTREAM}" ]; then
+ 				p=""
+ 				return
  			fi
- 			;;
- 		svn-remote.*.url)
--			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
-+			svn_remotes=${svn_remotes}${value}${LF}  # URI\nURI\n...
- 			svn_url_pattern="$svn_url_pattern\\|$value"
- 			upstream_type=svn+git # default upstream type is SVN if available, else git
- 			;;
-@@ -156,25 +156,37 @@ __git_ps1_show_upstream ()
- 	case "$upstream_type" in
- 	git)    upstream_type="@{upstream}" ;;
- 	svn*)
--		# get the upstream from the "git-svn-id: ..." in a commit message
--		# (git-svn uses essentially the same procedure internally)
--		local -a svn_upstream
--		svn_upstream=($(git log --first-parent -1 \
--					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
--		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
--			svn_upstream=${svn_upstream[${#svn_upstream[@]} - 2]}
--			svn_upstream=${svn_upstream%@*}
--			local n_stop="${#svn_remote[@]}"
--			for ((n=1; n <= n_stop; n++)); do
--				svn_upstream=${svn_upstream#${svn_remote[$n]}}
--			done
-+		# successful svn-upstream resolution:
-+		# - get the list of configured svn-remotes ($svn_remotes set above)
-+		# - get the last commit which seems from one of our svn-remotes
-+		# - confirm that it is from one of the svn-remotes
-+		# - use $GIT_SVN_ID if set, else "git-svn"
- 
--			if [[ -z "$svn_upstream" ]]; then
-+		# get upstream from "git-svn-id: UPSTRM@N HASH" in a commit message
-+		# (git-svn uses essentially the same procedure internally)
-+		local svn_upstream="$(
-+			git log --first-parent -1 \
-+				--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null
-+		)"
-+
-+		if [ -n "$svn_upstream" ]; then
-+			# extract the URI, assuming --grep matched the last line
-+			svn_upstream=${svn_upstream##*$LF}  # last line
-+			svn_upstream=${svn_upstream#*: }    # UPSTRM@N HASH
-+			svn_upstream=${svn_upstream%@*}     # UPSTRM
-+
-+			case ${LF}${svn_remotes} in
-+			*"${LF}${svn_upstream}${LF}"*)
-+				# grep indeed matched the last line - it's our remote
- 				# default branch name for checkouts with no layout:
- 				upstream_type=${GIT_SVN_ID:-git-svn}
--			else
-+				;;
-+			*)
-+				# the commit message includes one of our remotes, but
-+				# it's not at the last line. is $svn_upstream junk?
+@@ -187,14 +187,14 @@ __git_ps1_show_upstream ()
  				upstream_type=${svn_upstream#/}
--			fi
-+				;;
-+			esac
- 		elif [[ "svn+git" = "$upstream_type" ]]; then
+ 				;;
+ 			esac
+-		elif [[ "svn+git" = "$upstream_type" ]]; then
++		elif [ "svn+git" = "$upstream_type" ]; then
  			upstream_type="@{upstream}"
  		fi
+ 		;;
+ 	esac
+ 
+ 	# Find how many commits we are ahead/behind our upstream
+-	if [[ -z "$legacy" ]]; then
++	if [ -z "$legacy" ]; then
+ 		count="$(git rev-list --count --left-right \
+ 				"$upstream_type"...HEAD 2>/dev/null)"
+ 	else
+@@ -206,8 +206,8 @@ __git_ps1_show_upstream ()
+ 			for commit in $commits
+ 			do
+ 				case "$commit" in
+-				"<"*) ((behind++)) ;;
+-				*)    ((ahead++))  ;;
++				"<"*) behind=$((behind+1)) ;;
++				*)    ahead=$((ahead+1))   ;;
+ 				esac
+ 			done
+ 			count="$behind	$ahead"
+@@ -217,7 +217,7 @@ __git_ps1_show_upstream ()
+ 	fi
+ 
+ 	# calculate the result
+-	if [[ -z "$verbose" ]]; then
++	if [ -z "$verbose" ]; then
+ 		case "$count" in
+ 		"") # no upstream
+ 			p="" ;;
+@@ -243,7 +243,7 @@ __git_ps1_show_upstream ()
+ 		*)	    # diverged from upstream
+ 			upstream="|u+${count#*	}-${count%	*}" ;;
+ 		esac
+-		if [[ -n "$count" && -n "$name" ]]; then
++		if [ -n "$count" ] && [ -n "$name" ]; then
+ 			__git_ps1_upstream_name=$(git rev-parse \
+ 				--abbrev-ref "$upstream_type" 2>/dev/null)
+ 			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+@@ -265,7 +265,7 @@ __git_ps1_show_upstream ()
+ # their own color.
+ __git_ps1_colorize_gitstring ()
+ {
+-	if [[ -n ${ZSH_VERSION-} ]]; then
++	if [ -n "${ZSH_VERSION-}" ]; then
+ 		local c_red='%F{red}'
+ 		local c_green='%F{green}'
+ 		local c_lblue='%F{blue}'
+@@ -417,7 +417,7 @@ __git_ps1 ()
+ 	# incorrect.)
+ 	#
+ 	local ps1_expanded=yes
+-	[ -z "${ZSH_VERSION-}" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
++	[ -z "${ZSH_VERSION-}" ] || eval '[[ -o PROMPT_SUBST ]]' || ps1_expanded=no
+ 	[ -z "${BASH_VERSION-}" ] || shopt -q promptvars || ps1_expanded=no
+ 
+ 	local repo_info rev_parse_exit_code
+@@ -502,11 +502,13 @@ __git_ps1 ()
+ 					return $exit
+ 				fi
+ 
+-				if [[ $head == "ref: "* ]]; then
++				case $head in
++				"ref: "*)
+ 					head="${head#ref: }"
+-				else
++					;;
++				*)
+ 					head=""
+-				fi
++				esac
+ 				;;
+ 			*)
+ 				head="$(git symbolic-ref HEAD 2>/dev/null)"
+@@ -542,8 +544,8 @@ __git_ps1 ()
+ 	fi
+ 
+ 	local conflict="" # state indicator for unresolved conflicts
+-	if [[ "${GIT_PS1_SHOWCONFLICTSTATE-}" == "yes" ]] &&
+-	   [[ $(git ls-files --unmerged 2>/dev/null) ]]; then
++	if [ "${GIT_PS1_SHOWCONFLICTSTATE-}" = "yes" ] &&
++	   [ "$(git ls-files --unmerged 2>/dev/null)" ]; then
+ 		conflict="|CONFLICT"
+ 	fi
+ 
 -- 
 gitgitgadget
 
