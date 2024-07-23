@@ -1,58 +1,58 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0019712E1D1
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:42:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D4E8F5C
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:42:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721695334; cv=none; b=Mho1BNEASTfO5l6eRuoAbDNSyBU7df4HfRSUVZrjGuYs1wpyd0DFnjmkKG1jiR/cCvmZ5EO/iTIoBh08I+3tb3btQ0BIJ6pTckLYQdloGVNZrBDwjKspVLvO9Uvxrg2w5Nf2oEZP6sOxcFloxwIHUrTFBlYh0xx+OisHo25w0KU=
+	t=1721695380; cv=none; b=u3XvAdoTFCK07klUCTbR5WOy7YZ+t2MbQOo6dk0Z//uDmePHoyDYSfbCiME4chxePFZoHuhjf6BmQlhd7NsY8gCjqkwGmHfDyWg6RItZ2dnN0jadVo5TMxuMmtrV67VDjAULYd1pywTazLqeg0uRDxhWMZEi0eHpkZrEh21YlOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721695334; c=relaxed/simple;
-	bh=v9fWouZ+jNK3DuYDW0yqECcnXiZUUmf75T9+/DO3Aic=;
+	s=arc-20240116; t=1721695380; c=relaxed/simple;
+	bh=GEUaIDHOVzGt0C9TbphyuEFMt69LPQaZ43NA+x3OO20=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=epDmlDYGFtM91XwU4Gmwqoifl+BPk42MJ/XsGd6ReoNN23RqO4NIpskgDEQ7JFw1ZbA9MMqeMcXhF2+7WZ3CH4AYBwuddVFetfsAtoA8kB6plv6z8A6ZTRFgZFHa+KSeAeFEjBgXht7F2fom22QOMkselapjc1/ZPcgiL1WVEGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFOg2fpU; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=hec22KCDXQq9KL/QYqloxtYXvqLmy7Be7xHqT7WTFJ+EICZASMC73XktlZpZV1zliu5OpmLeC2EIAfrQs55sp0PiP59YRgeOTJIk8YlfdapvAeZmcIgcytydWaY6vVtsqwg66lDfH6C4y7miEnpU/lA8b9LLxOMuVivUC3DiRgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0yuYqIq; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFOg2fpU"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4266fd39527so36800575e9.1
-        for <git@vger.kernel.org>; Mon, 22 Jul 2024 17:42:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0yuYqIq"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4266ed6c691so32566405e9.3
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 17:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721695331; x=1722300131; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721695377; x=1722300177; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :reply-to:cc:to:from:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qQUmnsmyBFiKlp1bZUG2SuB5OPBJXNrZiJQWTF+4KkI=;
-        b=HFOg2fpUzhdQO20NPH0nqFfFkxwXialupIWTLVLDumIx+Yk/QnLoBORVgrseNIb6IP
-         p+H4GqblFAhKAl3OvXg8DRZOwCHtl5n7rrmicFUloZmfr/Kp6dq7qRKNZUVamrKaf4BM
-         0+rviFtX80Qg6J6rI9oAHr8SvZYKhQ2WRqYxikRHVxCLEPv+hP7fBu0ORFu98xBXFqdi
-         iGjdWhanQn+vGir3Z4nsCGB9yrBAejvCi6Lo+4ajXIdThCHoXxyCjmuhroiN9rePdWr2
-         4MeAmB5kaQhHyvB4zCKSGx6xdic0TuUvM7oGvtvCrlFov03Pclagc34G2MCTCbyZq42+
-         FC9A==
+        bh=a6Qsb0UIzLI4AN+k9KCBX0fD7DtlXjbwiDUZ+loGjVI=;
+        b=b0yuYqIqzkyD0Myfl2M+iOPBDMCATgU++yAD+TPItRd26M8Ly6Exbem7accmFGMJGI
+         XPH5fq+UxGFFZth/O60hKzSQGDfDxP2Wfco6HgwiD7u/IOcYCQ0+RboCrmL+Go/CH3aG
+         jVvmQmn2KdD43ZyJiQ723lml3as9Yh1DwObTeEOD0v0bNSC+mn9tNimtyE5IET4qIS4F
+         zhLN9UNRS6UFhj2FxP4XDzHj4dF6ZRMGoSYEupClQh0AO1zxRbsvPPBF3tNzjBim3qGd
+         WLdy+7UHahKX57U2iJrUyAcKfan9iVC51rGPmI1vC6/+WNL7X3hEPaW0GLAlA8c+9+nh
+         2u5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721695331; x=1722300131;
+        d=1e100.net; s=20230601; t=1721695377; x=1722300177;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :reply-to:cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qQUmnsmyBFiKlp1bZUG2SuB5OPBJXNrZiJQWTF+4KkI=;
-        b=v1lggXhurX5oOT7qm88wUN4mzCRwejy0eDBbpCg/EFcfsiPZp9vRlqbhg7DhkkHyIO
-         BeC1l+dYXR/+7SEV3j0Ve4xmpqeFm9JPKSkwdskia0X3IYQhYynki0nW8zoRxn3yM7x9
-         pSS3rLnGRgaVPo1iMFUUUObIgF7pbP0WxZOoipY3zjvRJ0lzLqH5W7SG+hCS4cg6BoYg
-         d3O3t5JeYp8mrPaq+gsnYiYY4gWPJprCRDG5r1HpMiY2k1wRlvzbECbUoaaZZiXKskPm
-         G+f1apf19fKQOPjDqyGXo9V+MfImvn6szfLXBXl+le3jw8HKmishSu4nVxT9ocatwwkC
-         aH+Q==
-X-Gm-Message-State: AOJu0YytSEbjyXw7r2Wa62Sj0sSVzBEmyGuiVVk03HT+a7+4aUJKXX8p
-	IVgtcvfR4Pgu7xrQQ1fvuKnF1Xan7a04zIDmdhbc+LvREVzf5AM4
-X-Google-Smtp-Source: AGHT+IE8LlDKV/0jf8RDxYwxfMHjN5wiv3/+JNHAs+q75vghNpL76xLzF/cGsD7oLvL8D+VtYxArKg==
-X-Received: by 2002:a05:600c:354a:b0:426:6921:e3e5 with SMTP id 5b1f17b1804b1-427ed05f101mr9074705e9.24.1721695331275;
-        Mon, 22 Jul 2024 17:42:11 -0700 (PDT)
+        bh=a6Qsb0UIzLI4AN+k9KCBX0fD7DtlXjbwiDUZ+loGjVI=;
+        b=OQ0tDYM8x1rTRw/yS7PNxNuptrvbaTM6W4YM21MLnKqx4ac++DDJj6SZIQYEj66/1H
+         uS08bqjw0VjfAWFMHdefNE9UJ6sd3KoGf3EHOaEnb04YHlT7yW7e0ZSfTEhT1zLs/wmp
+         rKXFhQwg3lqaULRCzHo2zAhgZaHP22M6SKiN+IJInkX+yu53foCbCd7HUUzGrdNDKEj0
+         +b6gTcNMVCJwC4wLvxd5FHaqhD+XL0odllK/Efx55C80y61XK22Fyj90pm5h+6fN2psW
+         85XYUpZEvofgYCGDwg2qgdzfiz5xbL6chQ31QXphqs53TFbSnE5oiUKOW0eHM4ypVBae
+         wNtg==
+X-Gm-Message-State: AOJu0Yx0VKvmWF8bKFpul0FzFs4bxNHybK9JvmG1oBXlpsUDYhyrjGhz
+	RajhOPq13wwBLPep/Ze2v4X0eSeUdUnX3PaCQD2nfIkv4EtgkMQP
+X-Google-Smtp-Source: AGHT+IE4tdSMHErHhQ04lTiHhrGGLTVnSrlEnkBtejDyQ45xGkOREHsSuUevyCXvZbLr5wD/gj/fQw==
+X-Received: by 2002:a05:6000:156e:b0:367:8f81:fa09 with SMTP id ffacd0b85a97d-369bb2a256dmr5566857f8f.47.1721695376968;
+        Mon, 22 Jul 2024 17:42:56 -0700 (PDT)
 Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a3b763sm175639415e9.10.2024.07.22.17.42.10
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ced33sm9922225f8f.86.2024.07.22.17.42.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jul 2024 17:42:10 -0700 (PDT)
-Message-ID: <af444f9c-7f40-4afa-98dc-0b503642b58c@gmail.com>
-Date: Tue, 23 Jul 2024 02:42:10 +0200
+        Mon, 22 Jul 2024 17:42:56 -0700 (PDT)
+Message-ID: <a2d6169f-61ee-4a3f-9f8a-f791229c25a2@gmail.com>
+Date: Tue, 23 Jul 2024 02:42:56 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,7 +60,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 1/2] t3701: avoid one-shot export for shell functions
+Subject: [PATCH v2 2/2] pager: make wait_for_pager a no-op for "cat"
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Git List <git@vger.kernel.org>
@@ -71,65 +71,45 @@ In-Reply-To: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The common construct:
+If we find that the configured pager is an empty string [*1*] or simply
+"cat" [*2*], then we return from `setup_pager()` silently without doing
+anything, allowing the output to go directly to the normal stdout.
 
-    VAR=VAL command args
+If `setup_pager()` avoids forking a pager, then when the client calls
+the corresponding `wait_for_pager()`, we might fail trying to terminate
+a process that wasn't started.
 
-is a common way to set and export one-shot variables within the scope of
-executing a "command".
+One solution to avoid this problem could be to make the caller aware
+that `setup_pager()` did nothing, so it could avoid calling
+`wait_for_pager()`.
 
-However, when "command" is a function which in turn executes the
-"command", the behavior varies depending on the shell:
+However, let's avoid shifting that responsibility to the caller and
+instead treat the call to `wait_for_pager()` as a no-op when we know we
+haven't forked a pager.
 
- ** Bash 5.2.21 **
+   1.- 402461aab1 (pager: do not fork a pager if PAGER is set to empty.,
+                   2006-04-16)
 
-    $ f () { bash -c 'echo A=$A'; }
-    $ A=1 f
-    A=1
-
- ** dash 0.5.12-9 **
-
-    $ f () { bash -c 'echo A=$A'; }
-    $ A=1 f
-    A=1
-
- ** dash 0.5.10.2-6 **
-
-    $ f () { bash -c 'echo A=$A'; }
-    $ A=1 f
-    A=
-
-Note that POSIX is not specific about this behavior:
-
-http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
-
-One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
-0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
-tested did not get our custom GIT_PAGER, which broke the test.
-
-Work it around by explicitly exporting the variable in a subshell.
+   2.- caef71a535 (Do not fork PAGER=cat, 2006-04-16)
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- t/t3701-add-interactive.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ pager.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c60589cb94..1b8617e0c1 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -616,7 +616,11 @@ test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
- 	test_when_finished "rm -f huge_file; git reset" &&
- 	printf "\n%2500000s" Y >huge_file &&
- 	git add -N huge_file &&
--	test_write_lines P q | GIT_PAGER="head -n 1" test_terminal git add -p
-+	test_write_lines P q | (
-+		GIT_PAGER="head -n 1" &&
-+		export GIT_PAGER &&
-+		test_terminal git add -p
-+	)
- '
+diff --git a/pager.c b/pager.c
+index bea4345f6f..896f40fcd2 100644
+--- a/pager.c
++++ b/pager.c
+@@ -46,6 +46,9 @@ static void wait_for_pager_atexit(void)
  
- test_expect_success 'split hunk "add -p (edit)"' '
+ void wait_for_pager(void)
+ {
++	if (old_fd1 == -1)
++		return;
++
+ 	finish_pager();
+ 	sigchain_pop_common();
+ 	unsetenv("GIT_PAGER_IN_USE");
 -- 
 2.45.1
