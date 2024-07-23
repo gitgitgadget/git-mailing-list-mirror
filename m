@@ -1,154 +1,140 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFD8DDDC
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 08:50:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E8413B2AF
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 09:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721724631; cv=none; b=B0kzGXbx2YjOnP+9/7z+mAn1xo/U3aWbKO9/Vv75cggPaerv6Go544G469Szxc6WNI2mXXZ3RXDfuVb7ZcX7QWGToUVtANgP80c44x23PpJ8Cj1YTFApHCbYvaQceEhsLii4nkJ6i8Q+bClM7LHz0VASofDauhVK0CCaCpNqjWU=
+	t=1721725333; cv=none; b=oz9bUItfxA84H1zwcdDCwtP7nW35Jg0AXhQX0Yva5GWPbmyksCGc3WhIYUTLVwSuHtdX1hm6rQFIai0Hx7RBJuwwH/+2rU5gBiTDqouQqPECz87/mc4oh52o2yomVuCXOixUegURQIAvPCqUpRUb+1ecGQD4uQP5W9JKOyia/E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721724631; c=relaxed/simple;
-	bh=UX3MbQgXMOTuuQF9FuaMTgiumAWVQU3waewm4P5Qzrk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W+B6IVPNrJhABdK8bxdAOWsc7Pe+xpbuytJ6nKLYCRFrzylRSm+mWllwICKo6hRyE7Zko/HNdoV/tXajm8Q/fXBm6DaNVosJoT6+wE8LAY5drfEzSSjpBKyk109qPPPuXwMOnXJR5cg0oJxGbMc0gNP4aSFwX6IHPvTl6+BzIaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dcsWGQuv; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721725333; c=relaxed/simple;
+	bh=P4F/MgcKXCIzh1tBXBMZOQScZ3lYOym7luUmC5sOAG4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nWXMkyJ19d8NQtchHedJ5bKwPeo8SHQ2WC13XJQbdcGu0SakR3V40DIEUNJY2msz6RahXVT5l07GL69kaqtP1P0UGd4EBlhMVBU+b6p2V5z/ScMFWnDoyqhp0YRDGMrlC5XW5b6obfWXUIxtn4qlBirZvuynOABM160uJIwKHyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a48sfQhp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SEW1+4Dv; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dcsWGQuv"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2eeec60a324so67616841fa.2
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 01:50:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721724628; x=1722329428; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1AXNLXg39nL0JkXdM8prAq1WXceRgpvHbA0/dBKsH98=;
-        b=dcsWGQuv31LsjGlzLM8P9Zh/iGWJi7JcUmpNbz0458YJ/XN/Nu8as2C11pmFt5FR9Y
-         A+PY5aE3yvLAPoPsozIZJdWiECgcuLpsBKsIJ7KilrvQHoiAtTSrRydSPYLO66HV778v
-         MzKAuFgDXJdv3wpu/4LlO4SctONLp29blpX/yjHcxCiQWZdcu8Ck2neVeLl0gqzCPzgF
-         ecqWaguPKvLVO5W3NHl0WA73bWulDm6wakGdaZ3p4DpcAONWSPwwvpcCHhoFLQ0tRG+Q
-         /0qvZUKkzrPZZIAHIsKJhDscS7jE09TFKhZNbw6Ia/1/2lA7T984tLKokanulEE4VU2J
-         p5yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721724628; x=1722329428;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1AXNLXg39nL0JkXdM8prAq1WXceRgpvHbA0/dBKsH98=;
-        b=QUaZ17OprQbVbWjV1f2ukgQTY8s/WV8tyklb2171DxJE5OZ2zm5FYZLTsgoe48oJq2
-         Iqknt1nfmUubXvEOQ95+0+8GhSyh8hOjLxyg9/28TR8qgO4y7RWIWnx53SWsLffT5uAX
-         ifhoplSvC3gUv3k3rp0OlQfhYTTHpczaF+4usThOW/INdqqh+SzAnnH+yUWV86K/lD0b
-         VhNGn3TuQXDoK623UW7km7JIhgBOi1lpkohDxAWvlNgeDonEK3TLFaC31C5OWCJpDLGq
-         H5zGiS7EILcQEHrsfZXV3tJnLIvGtkfhUfaCvmtfhRVgWpYhN26mN5d4HpqOwFJXRts+
-         xdFQ==
-X-Gm-Message-State: AOJu0YzvWYK6+RDuRFepzC3tlMtQ+oRLK/ch7ey9uWrJwPHLJEShdUiG
-	jF61dl5xDrKhvEIPNhYwwZLOBk0txOY1spdgIjso4mTeV9gvIUKSCWazzXjBwt3pPNZJhKl+8Fb
-	ccwcoqiilkkqNzOjeyHQdBm6Yb9A=
-X-Google-Smtp-Source: AGHT+IGBjKs0ogbv5+pGwjHNltJzcGMAFac9YktfT90reL23sByBFSRdcNR2DKEyHpaVNkLK2JXMhtOTKcGLoQUBdzU=
-X-Received: by 2002:a05:651c:1a2c:b0:2ef:2b65:1d03 with SMTP id
- 38308e7fff4ca-2ef2b651e57mr68655911fa.49.1721724627627; Tue, 23 Jul 2024
- 01:50:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 23 Jul 2024 08:50:25 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqo76p54ib.fsf@gitster.g>
-References: <20240722225302.124356-1-tomasn@posteo.net> <xmqqy15t824l.fsf@gitster.g>
- <xmqqo76p54ib.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a48sfQhp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SEW1+4Dv"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 345F613806EE;
+	Tue, 23 Jul 2024 05:02:08 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 23 Jul 2024 05:02:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1721725328; x=1721811728; bh=VCFNnzfWkZ
+	D7JDdXnal5PwmsycJBTW/1vGkCGMf5BcA=; b=a48sfQhpeSDoSzFdGgjUGJV2Kf
+	eEaR8rg697sO6RcUIVwniRX4VqO/uXXE0QEiYZlKMPLahvKvB5KvD2kw1rwpEkdl
+	IZoiBqiESdX7XMQPWvGc48ZOsZ/xDXgFt3AxEWdN+PA7rXIzoLjstS0LXumCYRCs
+	IEyWiKdrCx1MBkpAqOF6HubN5/UQfvRc5H5DCSLX9iQgKOj2WjvNDJuh+lfqu448
+	cOSJhDu0326nDmOQlFpZOBQYoFVJRy75kRA8b+9IcgF0PW+Uii+VDrI+lY0GOP8G
+	xBdNY0g0GKcQ3jGU9VZ1DV+rA+RZM6jQLjKH9+ES3gGlSCuGkmBO6me/OEYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1721725328; x=1721811728; bh=VCFNnzfWkZD7JDdXnal5PwmsycJB
+	TW/1vGkCGMf5BcA=; b=SEW1+4Dv91wL26NV3nsphb7HOCYNKNUYzWqivmtw75fx
+	9sBjUgqqw8k7tjw34i1POS1Y2as8RH7o010RxW7bsYw7EGiLrMlujRCHOK2ipAbp
+	+k+LO2uIZmLSQ2SVZH3LgUkYrfBLBMnEwOHtm9cO13BhT1tQyOxkj77FRL9fnrJx
+	TBBLT7GWTqNbWcHBbPRu798a/hD6Rv5/i8lBiaX53ImMTWGdO/L38GHBPO/V0Fr1
+	CRej4pEt33hO6neYe8GAmmnSwwbK4CGodxef+apzaxNk9rsBO0Oh3FCV0j9Ot6O2
+	qpnGUQXYk3nB5t4kEUd3cY9uTmOPD/89FKbqA/E76Q==
+X-ME-Sender: <xms:kHGfZuQE_CndyL89BEFVY6YvsESKTxxBPC77FuSSGMzUcW8eRbRHJw>
+    <xme:kHGfZjwJ2c700rdFBAhSTe9NbX4yxABtOPGUPXAd5xd4TTPJCCbT2WzAjfi11MR3s
+    SxDIJUX2iNkQWzttA>
+X-ME-Received: <xmr:kHGfZr0uZZMM-iRJDLIrEifPgsLkUBHFBnXqkPKmcHrM4Xy0x78bjZBaV-C-wVfbVUO5aKyOkqKyzfi1r9xDYiEDdbbHU0vffxeCDufmjl-AelN3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheelgddutdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:kHGfZqAgMuuKP1Y8ypXHAImV4STTv8C-ioN4LRK3X8qnIKs34xbfiQ>
+    <xmx:kHGfZnhoaz2tHtZlHe-c_sxu3SKZiLN6JS-Gm2Epjfe1QB9k7db9xA>
+    <xmx:kHGfZmrnHYZLkJeymq5t1zEh2MaWANNFXUflCCvsnvipWQ9QnNJc1Q>
+    <xmx:kHGfZqhV-qwqfAdi7Bm6_E8kVAGF4155qDnKzoASYa8p-Fumh93-Gg>
+    <xmx:kHGfZnhax9jyjktDBvOmIH7rCv7C_1b8iBNxGr-umT7BjWYugbHci2-g>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Jul 2024 05:02:05 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 85ebe205 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 23 Jul 2024 09:00:49 +0000 (UTC)
+Date: Tue, 23 Jul 2024 11:02:01 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3] Documentation: add platform support policy
+Message-ID: <Zp9xiYVh11KurICO@tanuki>
+References: <20240711232413.693444-1-emilyshaffer@google.com>
+ <20240718173843.2411415-1-emilyshaffer@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 23 Jul 2024 08:50:25 +0000
-Message-ID: <CAOLa=ZSJHz4RXvmmJi=KdDYCQ-3=q0p1KW1WgZAeotSQ+A_UJQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] doc: remove dangling closing parenthesis
-To: Junio C Hamano <gitster@pobox.com>, Tomas Nordin <tomasn@posteo.net>
-Cc: git@vger.kernel.org, charvi077@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000d4c91b061de640b5"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="axgLBM84AgSZaVPB"
+Content-Disposition: inline
+In-Reply-To: <20240718173843.2411415-1-emilyshaffer@google.com>
 
---000000000000d4c91b061de640b5
-Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+--axgLBM84AgSZaVPB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Wonderful.  Thanks.
->>
->> Will queue.
->
-> Spoke too early.  We need a matching change to in-code help,
-> otherwise t0450 would break.
->
-> Here is what I have, which hopefully needs no more fix-ups.
->
-> Thanks.
->
+On Thu, Jul 18, 2024 at 10:38:43AM -0700, Emily Shaffer wrote:
+> +* If you rely on Git avoiding a specific pattern that doesn't work well with
+> +  your platform (like a certain malloc pattern), raise it on the mailing list.
+> +  There are a few ways to avoid these breakages, so we'll work case-by-case to
+> +  find a solution that doesn't unnecessarily constrain other platforms to keep
+> +  compatibility with yours.
 
-Can confirm that your patch below fixes t0450.
+I found the latter part of this bullet point a bit weird. We don't yet
+know about the specific pattern that may fail on any future supported
+platform, so claiming that there are ways to avoid them goes a bit too
+far, no?
 
-> ----- >8 --------- >8 -----
-> Subject: [PATCH] doc: remove dangling closing parenthesis
->
-> The second line of the synopsis, starting with [--dry-run] has a
-> dangling closing paren in the second optional group. Probably added by
-> mistake, so remove it.
->
-> Signed-off-by: Tomas Nordin <tomasn@posteo.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-commit.txt | 2 +-
->  builtin/commit.c             | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 89ecfc63a8..c822113c11 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -9,7 +9,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
-> -	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
-> +	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 6e1484446b..7f9dd45d05 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -41,7 +41,7 @@
->
->  static const char * const builtin_commit_usage[] = {
->  	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
-> -	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]\n"
-> +	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
->  	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
->  	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
->  	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
-> --
-> 2.46.0-rc1-52-gda884b23f2
+> +** Include a comment with an expiration date for these tests no more than 1 year
+> +   from now. You can update the expiration date if your platform still needs
+> +   that assurance down the road, but we need to know you still care about that
+> +   compatibility case and are working to make it unnecessary.
 
-Looks good! Thanks.
+Do we maybe want to replace "from now" with "from when you add them"?
 
---000000000000d4c91b061de640b5
+Other than that this document looks great to me, thanks!
+
+Patrick
+
+--axgLBM84AgSZaVPB
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a9d17ba13d62b02c_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hZmJ0QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNm9QQy8wUUh5NXB1OW5ybzRxK2grbWt6ZmlrRkx2aApNVUpmaE53UWZs
-YWU3bW9TVDVtYzhKZjlFS1FUdDdpS01BcDBPajBlaHM2N1JxM0xyQ1haZXl3eGEwU2NvbVZWCktX
-bWszVjA2YzhES1Q4WUt1VHV4ZXZqVUZqZWptbjJZMTc1L0RSYmwrSFd0eVdaK3YxOFF5M2V0ZlZp
-K2NKUnUKOHh5Lzd4SWJ3M2VtS1RlcVBOWUVsSHNHZlkrMWJZVmhXdjdKK3lYWHUvK2tHbGE5N1dV
-N3p0aG16RjBjWEEycQp1QWUxQ3Y2R1Q0WEZ1K0N3NEp6dFlhZUFwRzBzbXRrMEhCKzJQekN6RlhY
-S1FRZnpFSGFMOVNvNEFIRmR1dC9UCmRJVkFWTU5MSk91NEhrL2lQQktPUWhnWmQycTJaWmptc1JQ
-UWZ2ZzgzNHJiTkxmWUFtbzNSMXU5SzVnNUpWbXAKWitOajk2WUNHbzdMdktzVHVMVTBjajJ6UENE
-VFpHN1RKSGw1TjhBVTMvS2tVaGRTTmt5VWdBYzlPYVlzV21MdQpWbUpVd1NJVW85T3V2dUhSSlRn
-MVpjUHdmbEFNSnA1cDVISlRBVWI4QXp3VjNYdWdSbkdITGxobmJyZTg2RzVPCm1xaTh4NWFPM2Fj
-dExpYW4vSWgrY1FJdzdoTGp5Mi9iV1N0d0ZOZz0KPU53R08KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d4c91b061de640b5--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmafcYgACgkQVbJhu7ck
+PpSzfA//fh+bq1tzGn+ya90kTCorYNN8Tvgieq9KVnqP4blB3owrPrWVj0Tr3Lm4
+Q8xnvOn8AWeOm2IGalK3kKdeNib4gRUAO5FclRHhCvcgTdXKoJ4gPBGUn5j8jPTO
+YZV/VvzkDbe8UmluPD0SwIB/ULsqsYBOU3702EPomIwxiiNdzuKiXx9pNbbQeMbx
+rY3TG9vL099wELW3P+41UjgxAazHWNel4fiU8j4ZX2vJvti2wS3rfFreLUgQQYZ1
+Fqxs12RmXyOnrHhEEl+u+6k6g+hDFlPzt+iGWYTGM+79QyEEzj+7rDPOT4vSCbLD
+Ul2IcTMxnB1bVFJQtIG0vgURyOgiKNngTCbR2ilpPXeiNnvCU57n+zhFhbcm9bNq
+YT+JC9TrpUV/NS1HF/HYdhgyQLd0kkqDlGseF02ftvSaI56BBbCciN2u0+b+UhI8
+wbgbQhidqoNnVRhDXnlSuWHbiQr2tA0kxLdT6AzQqbenade5tO+Bbk4gn9SXiX62
+2N314xrl/hk9hkxULZOVdPlJk8nOIW4WtgOP4BShNRnjiF3Y/EQf4I+KJelfrFtS
+yNSn7M+B/jDBaNQNr7JF/IA5+oDU0XpOfGRlVM/jFStmjS25oL0I47zu8I5l6hcS
+zaYw6regqY16JPGbQVjj0GJ5SdV7s6ShIGkYPJJJfowDWGuVNy0=
+=KLo4
+-----END PGP SIGNATURE-----
+
+--axgLBM84AgSZaVPB--
