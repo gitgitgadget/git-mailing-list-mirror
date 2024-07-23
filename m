@@ -1,115 +1,124 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C176F308
-	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BDE82D93
+	for <git@vger.kernel.org>; Tue, 23 Jul 2024 00:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721694961; cv=none; b=l6asi5BJe0Jdc+KH8bs/t8hrXHpQAb4+IFAG/vgja6/120a5JWzSGnjt5e8r2mHBvsuRBMPCl6CR0JMi/yhuu+kJmUwMHI04h2okJDFQOJ2H2lg7UYKuu30DrM9BH9mAyvi1AhuOVum8w2DBALhQwcl5DKEyggo58fatfTbptyg=
+	t=1721695203; cv=none; b=ELtaH0mvK9/VmYFYCmteCuKeYr5fig2Zp2Qm2Emd5C/OxUfYBGlW3oiU+PbdKF52RpT1IKTi3axXsv96dn6LZzPni4A/sYKmWadbdd+EDcFq4mXCVlbg168x6CRr1bGGWE+vIr6Z12d1v5Jz0/JYuXE+ErLmW9u1oVdh1Mn/1p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721694961; c=relaxed/simple;
-	bh=J/IaWIe94/yknMeOrt3utCXZDtZ2rCo/Cd8JO8VgocA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bw065ypg9DxOTImcqCr1527o/RL5Ja+mGyY8Un8lB3YBrFpX64ESbZD+FC4E5BPv7FCqQwN14DoOTxbshHYCBv9ZXyQbvuMbn5/V48Jm7jFS9Dir9ts6OAjo7vo7Ht5qt2QhPnlHbOlxSGr8LMzoQNR+VwqLCbwQtkMIHNOf+Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BnTB3g9I; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721695203; c=relaxed/simple;
+	bh=d3cpoy+HHm0tma9zsTsqEFYrno2dpyMGB0TYdSyJPEY=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=awkxk8+sPiW8b42PTxs9wJFEuSI/53Fsg5GsAO7b3KrJbimVlfWpDDugi+uEPHSf7tGjy4rRVamAXslXxokZHAiJGaIBPN4dba6oj+tbTzMjOZb+GbAwEtgG1nUAzlZqL/ZjX52bl0a2ufGnz+mmDIniNcDSzWTSJTLnbpVxRdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j0eQ6NTy; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BnTB3g9I"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 68B0E249E6;
-	Mon, 22 Jul 2024 20:35:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=J/IaWIe94/yknMeOrt3utCXZDtZ2rCo/Cd8JO8
-	VgocA=; b=BnTB3g9IzDMxi0ioaTkfGiiqc5DYv1UBIar/wV6WiBL/QhzO/QDlDx
-	WGnKYJb6wZqYpzn+vnuf8Cx0Pv6pMRzvif879KjVL5PZLBsZqRtFWF0dH7bAOhFe
-	vS8nn6eGh3N49kQDNrwGgNiWWiytmcu0ObEwHQi3/7Fqinmikldms=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F733249E5;
-	Mon, 22 Jul 2024 20:35:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7F06249E4;
-	Mon, 22 Jul 2024 20:35:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tomas Nordin <tomasn@posteo.net>
-Cc: git@vger.kernel.org,  charvi077@gmail.com
-Subject: Re: [PATCH 1/1] doc: remove dangling closing parenthesis
-In-Reply-To: <xmqqy15t824l.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	22 Jul 2024 15:59:06 -0700")
-References: <20240722225302.124356-1-tomasn@posteo.net>
-	<xmqqy15t824l.fsf@gitster.g>
-Date: Mon, 22 Jul 2024 17:35:56 -0700
-Message-ID: <xmqqo76p54ib.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0eQ6NTy"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-427d8f1f363so26158845e9.2
+        for <git@vger.kernel.org>; Mon, 22 Jul 2024 17:40:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721695200; x=1722300000; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:reply-to:cc:to:content-language
+         :from:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OsiRCDvqSf3CLdP0ooCEsl8tyQ2Y6Iu8NPtBjYXrM6A=;
+        b=j0eQ6NTykNnO1XGf81qtumTiT9kqwAYEn6kXpQkrvd5po1QoWXnnmELtYyyt+Mm8qF
+         6VVKjjL1xxTNbA03EFZL4eu69BdEGoVBCXbn9Fjm94CgmveownY5aq/U/gPT+665a5Rg
+         G/m0KJe8FwQSjx5soIl7GoSidGn+QyjZtL8T5MyK1JHPjMJ9b9PeyNBIcHLZaswyf9Qn
+         NRUFfGrsm6HllNX2foQG/fTIhKCkT6gDaG+gNNb9zD3fXL8u2+UssaqSdgp9yxxjxokl
+         yFih4LxtSncpbHmMNEVTru29wz1tbv/wko3a/lXu2zO9zjnOLwU++1HUdl4TlqvU2KZJ
+         zWSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721695200; x=1722300000;
+        h=content-transfer-encoding:subject:reply-to:cc:to:content-language
+         :from:user-agent:mime-version:date:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OsiRCDvqSf3CLdP0ooCEsl8tyQ2Y6Iu8NPtBjYXrM6A=;
+        b=jL9KBDmpr1RKKzSpLwh+cAbK0nEJwnjwty9vR3cJU1HHp2z3JY59vrJoWosuEMpAn5
+         og4eKV25lJItoyEAU0hSOWSQRz8dyV/HhTs23EK/bk/ZhXw3GTskZRqCSE68ycb/EnN8
+         cMOIaV5NuRS4t0wLDYYEIiTwUdRCDQwNSocD1obbUpXvjJCvk1Dsgg/mO+7u2MJbVf87
+         RzfLhe/gnmcS25gFEb1yG7scS7MgPypOlqWyLCiUUMy4x/IxwWmsWCgqgQlbkq6H8FFM
+         g7hzOtK8Z2Q499ZMzLNEP1c3UsealWtYAQiq2nM6R9tOJLqmv2WdtLV9EtISt9sp4lWA
+         ZfNw==
+X-Gm-Message-State: AOJu0YxkLogLyeFr6RFhF8gV72fstSbgV4sa0QZta82sPGAqw67B+nYC
+	Ug0rOfbgdSuciET9KALSluOxGtHCPmIHdux2Gu+8Dz+tpz+BbrJLpSXv8Cl4
+X-Google-Smtp-Source: AGHT+IFcqyDHl2zM25BA5tGRGT39mg6PWYDTnLsGuugEaQYyU189qY4cDpP60SsDU+DddzHE7CiWAg==
+X-Received: by 2002:a05:600c:5487:b0:427:9dad:8063 with SMTP id 5b1f17b1804b1-427dc51d315mr44046445e9.12.1721695199881;
+        Mon, 22 Jul 2024 17:39:59 -0700 (PDT)
+Received: from gmail.com (89.red-88-14-41.dynamicip.rima-tde.net. [88.14.41.89])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d68fa171sm149372705e9.1.2024.07.22.17.39.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jul 2024 17:39:59 -0700 (PDT)
+Message-ID: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
+Date: Tue, 23 Jul 2024 02:39:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 87333FDC-488B-11EF-AD69-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+Reply-To: 43e045e5-4c92-4c5f-b183-d63c5b510023@gmail.com
+Subject: [PATCH v2 0/2] add-p P fixups
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Rubén Justo (1):
+  t3701: avoid one-shot export for shell functions
+  pager: make wait_for_pager a no-op for "cat"
 
-> Wonderful.  Thanks.
->
-> Will queue.
+ pager.c                    | 3 +++
+ t/t3701-add-interactive.sh | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Spoke too early.  We need a matching change to in-code help,
-otherwise t0450 would break.
-
-Here is what I have, which hopefully needs no more fix-ups.
-
-Thanks.
-
------ >8 --------- >8 -----
-Subject: [PATCH] doc: remove dangling closing parenthesis
-
-The second line of the synopsis, starting with [--dry-run] has a
-dangling closing paren in the second optional group. Probably added by
-mistake, so remove it.
-
-Signed-off-by: Tomas Nordin <tomasn@posteo.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-commit.txt | 2 +-
- builtin/commit.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 89ecfc63a8..c822113c11 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
--	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
-+	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 6e1484446b..7f9dd45d05 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -41,7 +41,7 @@
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
--	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]\n"
-+	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
- 	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
- 	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
- 	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
+Range-diff against v1:
+1:  c3b8ebbae7 ! 1:  15fbf82fff t3701: avoid one-shot export for shell functions
+    @@ Commit message
+     
+             VAR=VAL command args
+     
+    -    it's a common way to define one-shot variables within the scope of
+    +    is a common way to set and export one-shot variables within the scope of
+         executing a "command".
+     
+         However, when "command" is a function which in turn executes the
+    @@ Commit message
+             $ A=1 f
+             A=
+     
+    +    Note that POSIX is not specific about this behavior:
+    +
+    +    http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
+    +
+         One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
+         0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
+         tested did not get our custom GIT_PAGER, which broke the test.
+2:  f45455f1ff ! 2:  b87c3d96e4 pager: make wait_for_pager a no-op for "cat"
+    @@ Commit message
+         "cat" [*2*], then we return from `setup_pager()` silently without doing
+         anything, allowing the output to go directly to the normal stdout.
+     
+    -    Let's make the call to `wait_for_pager()` for these cases, or any other
+    -    future optimizations that may occur, also exit silently without doing
+    -    anything.
+    +    If `setup_pager()` avoids forking a pager, then when the client calls
+    +    the corresponding `wait_for_pager()`, we might fail trying to terminate
+    +    a process that wasn't started.
+    +
+    +    One solution to avoid this problem could be to make the caller aware
+    +    that `setup_pager()` did nothing, so it could avoid calling
+    +    `wait_for_pager()`.
+    +
+    +    However, let's avoid shifting that responsibility to the caller and
+    +    instead treat the call to `wait_for_pager()` as a no-op when we know we
+    +    haven't forked a pager.
+     
+            1.- 402461aab1 (pager: do not fork a pager if PAGER is set to empty.,
+                            2006-04-16)
 -- 
-2.46.0-rc1-52-gda884b23f2
-
+2.45.1
