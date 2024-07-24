@@ -1,157 +1,87 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3214E1C8
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 07:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90428528F
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 08:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721807506; cv=none; b=joLKUXR8qGxRp/uM7NaPLsTR2cOJWreij51UVB7U9O8I2VhowEMxNctmlKfMMS2HYlTFr/ncdOyduLgaVOAb7czuHjip7jeON30ajZmMLUHew9xnLs4ESGtBXGKL3eaWdE56B3ZZNHP5/q9GCtLx9rhseTsYkYQc1gPeFJuc2LQ=
+	t=1721809586; cv=none; b=evqi699F/AjK1DcLEdCpxuuIPR+0GDIC5tK3RGsxRMxsHL7BrEhpn6rr8lHB5Uf2xKNcvkVAzN+mLC1dpp0t22DpQDPzOEvC9AY/XaDvmQpdL+7TviF0/Z2lEUDkyUWcbDDbLFI1vc4uLVT8aaus+Y1x0gjJqkFzsDvhjJasmDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721807506; c=relaxed/simple;
-	bh=O4S7BInl+ByBOmTPTZOZrBqZRGAdmAulgIPF6Uecvyo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jiSYRnanqdPiK3LxVLrCa+JSL5uFrtEuLBUEz2ypavHMerkvF8y+8MsOEZRMo/oMSJCgirAamfUA7fxMW7/8A8Vgj3geX75/c+XFPCAAQfKcizQf+5lvGHly8rfun5pQVcQsd3v4ydf8k0ZfwYy2hC6zIMnAi4Ef6zpcfpnsA0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TAYpGusM; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721809586; c=relaxed/simple;
+	bh=aO0LCiMDct84RhXjjE+srQi74WJrA+WHiPYFvUNg1HY=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=rxAgC3bPOlnVFSD7gtO2oOgtsel9KZGhV5+OAzZ8hGzxdiNlk65HId7BpnTuSiivomUe8Fu3Qnr0R3u1Tdou9oPSyJPekf9PrahvQzifCD0IAezwnryBvjj148wogv6xhaNuvgdqVEVJMxN278jO1O/HNyQIkU8Q+KkbEGd9qq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=XiAlKlCD; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TAYpGusM"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a77b60cafecso169262766b.1
-        for <git@vger.kernel.org>; Wed, 24 Jul 2024 00:51:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721807503; x=1722412303; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lCIgFG6ZmU+ZIAf4K3LeyaqdIBlyXIRe4lDQo25LSRI=;
-        b=TAYpGusM+8JZvnPUuNazevuS0TzHcbbQTHHsB7U3cddeF+YJo5D9D8xOpDkQV492J/
-         etviEsJcbelxpGSqLZ6L3opKUH8gDJJZPnQaIWuO06c8lktGrNsgw7K86kmgFrArya86
-         KF9gercPhxSLb2MiMtSIF07PF9lJm8rbQKJ1u2H+/puqi5IjNNA6tBJ6xnJ1tm+/JgJ8
-         HNEqVEgq9l2FDeNRcAjuZGVkT8JticDI3fsgje+vMO31tAd9KxFb1I3O2B2mGG1bSEUh
-         XYmG4AtvfNbCb5I8xBKT3YLC6h5KwAN5HijYuYBlGtZdv11i9L4UKtIgkE3HOjN/STyF
-         KKOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721807503; x=1722412303;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lCIgFG6ZmU+ZIAf4K3LeyaqdIBlyXIRe4lDQo25LSRI=;
-        b=xPYoTJBY3Em6ceQEwzI+bKzzYxu4/NUy2rJUjfpg9gMPGNekae1U5huHC0Jif+hQY2
-         4I68M4ue+K/B7ZkKYFB/KmIXjs+KcS8WQp+5GWHqhU40ktdfNVZizj0indVDSRyhIh1L
-         oJ664/BhFrgguglXL/T2+x5vFz06sTGdTZdWxPfCggOPu2uKpn0wGfXxS8ftMKHExub3
-         SVKgvPPQpZ8COUgEXAGUbbFcoSTLdmp0rdO8TDv0d2XmXfiKwXQSrF2bem5MFqc3Qck9
-         0rj+1HR3wF0b/K5AJCZuihSkycVnUkmfgzFRguBeNwdGAZ4ilJ9IpJzhJ8qs08GLBAFT
-         JNpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVb3bKjrVUJQOGW00RRtWA7suAj/TLUyIxAEG/QXjq0lFS+SBTs0Rr32XLX2cr8Z4/n4TW2jzO0VS4ZGIv8AfeeKSeN
-X-Gm-Message-State: AOJu0YzUWLZxSdc0eaP1Ly6D88g19PmD0nZOIPqzH/ZsM7GX+yGgksnD
-	Vsm+QZ6DV4XhKVwOHmtIIuDF4xvLwuVzEG9o8MnIWvdZvvQ7symLr/FJh+DtJ6ikYaT+A9gMGOP
-	2FU2xbpRX9a1g0qsR7hPqgWJpRonTuw==
-X-Google-Smtp-Source: AGHT+IEG+6GnwY+DfQheOB6M/2ExfGaAhUvA9u6hGw1ucncqOVdiFU/cDB/Df0v7lVAQ1MB4T/CYBWutcuNY6pdpzr0=
-X-Received: by 2002:a17:907:d15:b0:a7a:ba59:3166 with SMTP id
- a640c23a62f3a-a7aba594a09mr25741066b.56.1721807502563; Wed, 24 Jul 2024
- 00:51:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="XiAlKlCD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1721809578; x=1722414378;
+	i=johannes.schindelin@gmx.de;
+	bh=aO0LCiMDct84RhXjjE+srQi74WJrA+WHiPYFvUNg1HY=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=XiAlKlCDr6bpAtUjxvGkEYhXGlb+2EP+PZbqA3Go6UtCKzD3qTf9XqQeUPFRteoF
+	 biBDdxotys3yA9iEFuIBI1stMNxA3IbNTt9vxS45OxTid9un55q4wqSJ0WU5IaBx9
+	 j6jb0i+KbpMj2r6BpORAE6oW2OrIJQfmmntsBOk+XPaW65pbMwp6JukI7HNzmtszB
+	 4If2pwsO/jMmkPYagV3hvzvJEoEhmrhXgOlBalc8mvjXy9GnlzAF5SyPqthUpQefr
+	 BRjDN9/9rWpfZguFqtufZsl+LOXdMW9Xq2sKXk66YHIMjD+pZV2rtAib+WFX/hgnZ
+	 VJQIfaWKWZvoTFs+rw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.218]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mel7v-1rya5P38Z3-00lIJ7; Wed, 24
+ Jul 2024 10:26:18 +0200
+Date: Wed, 24 Jul 2024 10:26:18 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Haritha D <Harithamma.D@ibm.com>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Build: support - Fix to avoid high memory footprint
+In-Reply-To: <194BFBB9-FCF0-43F7-BFC2-B055351B5376@ibm.com>
+Message-ID: <7cef2d49-2794-47d8-ca56-8118410aeb48@gmx.de>
+References: <194BFBB9-FCF0-43F7-BFC2-B055351B5376@ibm.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240614095136.12052-1-chandrapratap3519@gmail.com>
- <20240723143032.4261-1-chandrapratap3519@gmail.com> <xmqq5xsw2fyd.fsf@gitster.g>
- <CA+J6zkRKzQGvwhiQdgRqcctDP76y5_v582rRTzEXJyx7=+WRqw@mail.gmail.com> <CAP8UFD12Cqorr7oPS+JfOTYY6LaNUgPEJaEscf-jwLUOur+xqA@mail.gmail.com>
-In-Reply-To: <CAP8UFD12Cqorr7oPS+JfOTYY6LaNUgPEJaEscf-jwLUOur+xqA@mail.gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 24 Jul 2024 13:21:32 +0530
-Message-ID: <CA+J6zkT7px4WPE7F=GnBv9X_piTBOPedbrTekYA1SFriZbbfLQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 0/7] t: port reftable/pq_test.c to the unit
- testing framework
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oehsG4r9d44/dLXNCg3G920NZXgPrJ+R7p/XPeICr/EqYWzTLm0
+ 0/igVHaqUoSBpCjK2Mssf26MbBrtCTL45dGaAIDDtpy2SZkTkdH7m3WAzW/nlIHglRYeBHM
+ yARtMAEToQoCZASaq8/+FZl29QfilYggy/fmkqQ2VpxKOvXNZVYDTvlHuFrKnIugO5lgBvc
+ U6se6/nEOiyWHvcahAPDA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sjTKT7AlLl8=;SqjG37BBlK5EA1Z7eLNKakLR39Q
+ ZbspLmGfFm1wTRS+vm/brVrCQvIE9KbDYrmjXEt3Clm75QWLP58VQKpcCEi2g3FT/sOZxOcDc
+ H1lnMx9p0uXLkUHDNxFv4j2dCPVa8DD4q+f91S2fxpAOotkd5mOcPcNJQcsxiKNVfgJKMrmm6
+ UbYkzASRGD6kZcMDpLHw11Gbsmr8NgcmU5P4a8TU78OcBiE/wAlCfT5gwaRaGrm5khkG8FtGk
+ 2GmpVFEIVjfBIOt829xcQfru4peryUEbcoWyEEMhm3QgEzGe/33Vmg2LaOv7ktgNYTwYOZGqy
+ FZW9RaKtVh2/TT+7V7pE+XwaE9CvjDLaU9+rtSneTEfb+XOdkpy/0KlsGtYaqi0L5ylJf9RyX
+ 6jLz9hBDzWMQQXhVNXPLikIRUDf7iRDoNmXSfPDw4aG5KJ3VRIKg3q/JmS2dJVEM3cXQ2KzNR
+ V/sE+xDTO9Px9t2i52jZoPIWp+jX7iFW/POtKLjhe4g4XaHx/wKxmKLyDwm9VnEXlWRmYweb9
+ qjGJGRxLxrPrWWeRTFRPLauFYRvQa4qZvCQp63UD8yb9HWQ+d4DXO9v7XaqofKz66krxcTPZB
+ PICpSkZq5bvNyCLEpRdt7znLlptIXGdI2ujJp+Gl8VzwzwcYRe77wQ2DaIqXXl7cc4rUGVWoX
+ xij7O9yGngNumokZ5WbexLpKiUrvV5f2zYlXPm8wGWqKwnQRZJShjn18cbL8PKhmRUIYNCwqJ
+ EPCEb550U3//yvX1ceeBVwYQC6mfQVeI+9VWMBoSGiZWY5pOTzyZK6dCRSER4zuR+Of41euJf
+ U9s+c5VRuazuoFmbgxPfRmTNSLcjP4Z7dVQxMrmJbRQxc=
 
-On Wed, 24 Jul 2024 at 12:48, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Wed, Jul 24, 2024 at 7:12=E2=80=AFAM Chandra Pratap
-> <chandrapratap3519@gmail.com> wrote:
-> >
-> > On Tue, 23 Jul 2024 at 22:39, Junio C Hamano <gitster@pobox.com> wrote:
->
-> > > > - Rename tests according to unit-tests' conventions
-> > > > - remove 'pq_test_main()' from reftable/reftable-test.h
-> > > >
-> > > > CI/PR for v5: https://github.com/gitgitgadget/git/pull/1745
-> > >
-> > > By the way, I still haven't got any answer to a question I asked
-> > > long ago on this series, wrt possibly unifying this pq and another
-> > > pq we already use elsewhere in our codebase.  If we are butchering
-> > > what we borrowed from elsewhere and store in reftable/. directory
-> > > and taking responsibility of maintaining it ourselves, we probably
-> > > should consider larger refactoring and cleaning up, and part of it
-> > > we may end up discarding this pq implementation, making the unit
-> > > testing on it a wasted effort.
->
-> I agree it might have been better to start by replacing the pq
-> implementation in reftable/ with our own first, as there would be no
-> need for this patch series, but Chandra's GSoC is about replacing the
-> unit test framework in reftable/ with our own which is still valuable.
-> And I think that at this point it is just simpler to not get
-> distracted by replacing the pq implementation now. It's also not like
-> changing the unit test framework would make replacing the pq
-> implementation harder.
->
-> > I did talk about this with Patrick and Christian on a private slack cha=
-nnel
-> > a few weeks ago and here is how that conversation went:
-> >
-> > Me: Hey, I wanted to talk about the message from Junio the other day.
-> > It is true that through this project, we are modifying the reftable dir=
-ectory
-> > to a point that it is no longer easily usable by someone from outside. =
-If
-> > that is the direction we want to take, wouldn't it make more sense to g=
-et
-> > rid of reftable/pq.{c, h} altogether and use Git's prio-queue instead?
-> >
-> > Christian: Yeah, I think the direction the Git project wants to take is=
- to
-> > integrate the reftable code more and more with the Git code. On the oth=
-er
-> > hand, there are libification projects which are trying to split parts o=
-f the
-> > Git code into libraries usable by other projects. But I don't think eac=
-h of
-> > these libraries should have their own test framework, their own prio-qu=
-eue
-> > implementation, their own string implementation, etc. So, even if I am =
-not
-> > sure about the end result, I think it would be ok to modify the reftabl=
-e code
-> > so that it uses the Git's prio queue and maybe other Git data structure=
-s.
-> > But I'd like Patrick to confirm, and the list to agree to this. So I'd
-> > rather wait
-> > until Patrick is back from his vacation before doing things like replac=
-ing
-> > reftable/pq.{c, h} with Git's prio-queue.
->
-> Yeah, if it had been discussed and agreed on earlier, I think
-> replacing the pq implementation would have made sense. Now I think
-> it's a bit late at this stage in Chandra's GSoC to go in this
-> direction though. I think it's better if he can focus on finishing to
-> replace the unit test framework.
+Hi Haritha,
 
-I'm actually more or less done with porting most of the reftable
-tests to the unit test framework and it shouldn't be long before
-patches for rest of the tests see the mailing list, so I can definitely
-make time for other endeavors like these.
+On Wed, 24 Jul 2024, Haritha D wrote:
 
-The only thing that I think is holding us back from making a change
-like what Junio suggests is 'how far are we willing to butcher our copy
-of reftable/?' From what Patrick said earlier, I think the answer to that i=
-s
-'it is fine to modify reftable/ tests because they don't need to be uniform
-across all implementations of reftable, but modifying other parts to be
-more dependent on Git's internals is a no-go.'
+> I have raised https://github.com/git/git/pull/1744. The win test(5) test
+> case failed stating the reason as "The Operation cancelled". I saw that
+> it failed after 5 hours 59 minutes of running the test cases(build). How
+> do I handle this?
+
+It would seem that the rate of random timeouts and general flakiness of
+Git's test suite has increased as of late.
+
+I started a re-run of the timed-out job:
+https://github.com/git/git/actions/runs/10043066326/job/27846613495?pr=1744
+
+Ciao,
+Johannes
