@@ -1,145 +1,120 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from sonic322-27.consmr.mail.bf2.yahoo.com (sonic322-27.consmr.mail.bf2.yahoo.com [74.6.132.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E723A9
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 00:24:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051F44C84
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 01:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.132.82
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721780681; cv=none; b=ee3qAvwE6Fh5Y5TUuCq/Doi4kXOePUx615iwnngHbgo595jlDEK6nh3iBDiLLmJ++G9QoVCQhj+7WiZGqX2KSqvxHP++gLaQpqK9Y/NCK/Ok3uHG4OFHOcuftVHi1cdk8eSE3P6S7I+y9DOQ/6d4qO6CBxa4YgGnMJMByLWfhHg=
+	t=1721783294; cv=none; b=dhlMAHrAHps5/FPZAvaTx8F7Mq+Ar/2hEjvQzbE8MTOV3HUpR1nsJUJX4uZsZa95l+xh+/SNj7EjBk1UyXzS8mfdnQxnt1XDnAniOXZKeiJCGoSwFUapxxknHOUswbIb1m0enWq+Un+CZyuBDDxKxoRro9cRCB92PSXrnYxpVu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721780681; c=relaxed/simple;
-	bh=kB/Q4YlKhexTkountwdCnhhb6Q1NvHRflIGGD5ZAVGw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=KbkGKOu5MLPgTzBEId5FDk7fm8KtoF8Pxx51U4o+Bqt1xi7LPNGlDKjRlFjKhgq2fseRV+fHOWwhzQMOt+WQEa451HHiyJY2IyWshH7+ORXGScOdgvypBJ5iUs0jpJgioMC4a6JYBVMgiluObhGeJbWuVdIQxRM5uqFPvAh/U1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9Y2PYBg; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721783294; c=relaxed/simple;
+	bh=MAoDJ2B3WJ08WBOtE6S1NjdOuuA7RjvWcHYpWzzymK8=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=YSOfMCpsUDPuNeWWvXRTEfLm5X/WpIwjXfpoD+s/e797brVyd11M/l8UtScYQD9J5PkRxfSmKGM4HdHSMQlRBQ6oP09FkjbOMZG0WwTtmY7dvSamdXzk0qf1We7tswUSet+ZMskWii9aBrLtDJNgzuJ7yWJCwsserSPNeIJ/ito=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=CLJePnFA; arc=none smtp.client-ip=74.6.132.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9Y2PYBg"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-71871d5e087so905925a12.1
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 17:24:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721780679; x=1722385479; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eHHNqNXC1NVjkAHLZOlqR5IWsVHT32l+Ow1UR1eKvDA=;
-        b=l9Y2PYBga79vJJwBmJHDqDyMGxJzFIrNOxRD3Up5lQyl1sjMpsPvwVf2TmZd+wQf0o
-         ZXkPJIQjQIOQ5gLLcYVhouhb5dmL309DtGhaMZj20J0FyaDD15EOURB6CzApkKomBKBA
-         Ik+BUA3/x0PanRMrkKAICHbNDDrhfg6s5IwOVBRiKAqMm0bnlJATk+ZApqOwdGuO5X+T
-         jsJMZ/9hoKyki1mjd9AVE+EvGaNcgDEkDDaA6Y/i/kfgjq/XdYAWjpG0YGaHcr9CgO4o
-         ZFaQ014rUhYpSZ8tFBpO600tq7R0tPLS3OVya9FlF5/7zLK+KJh5a7AtCmTmFydB5LQt
-         VLiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721780679; x=1722385479;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eHHNqNXC1NVjkAHLZOlqR5IWsVHT32l+Ow1UR1eKvDA=;
-        b=QnL0co23hJDejVYono/skxAvYbTFVjjgsvOwIDEqxr0OWWu4KwJKM5Riwq2VW/3tf2
-         pWMygEeWrXF1wNCVk+smbHyTm2p/JubEbhxFhIdw8j3jg4bajcibZUG48sFgmg+XWEw4
-         Uu9rONixDZibIV6Fj/d6dIbE+RlDf/dhCfLFFHx6WmgY6yKA26OVdIZ6oIiqF4eNrTfY
-         EL3JQ/ROvrY2zN5XAkWhQflPKoJdN1I+MNDLjcuEhppCcbxOe57H+YSNTiFWa0U+OB9A
-         Owz6l9N08gpt5Y0M7L/CjRXkVZ6D3xDG69UaUETUquLHWmqOhOiqcJC6XKyZvOYKws18
-         UX8w==
-X-Gm-Message-State: AOJu0YwTDozpe3SqHKp/Bw0bB2xSmWP4FWd46wSxkQk2GyAIpc2dEBCl
-	Df7+zS1OKQI08Q+zxepRCOoRD5upqIz4hYimagmxVlCHG5zrBMud
-X-Google-Smtp-Source: AGHT+IEtYV+eI5pSO7X+1zoNFKj3X+7/yTTb6pKavFBy6Xg7UE42UurIBXuDJhp3hTvSQ3WRvzu1iw==
-X-Received: by 2002:a05:6a20:7f87:b0:1c0:e728:a99e with SMTP id adf61e73a8af0-1c461964102mr998093637.26.1721780679208;
-        Tue, 23 Jul 2024 17:24:39 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70d24655886sm4506922b3a.142.2024.07.23.17.24.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jul 2024 17:24:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="CLJePnFA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721783291; bh=MAoDJ2B3WJ08WBOtE6S1NjdOuuA7RjvWcHYpWzzymK8=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=CLJePnFA+h5acdCrRcGEp7e8r6DH6hz1iQ7sFKKOQOX+mb/udy5V4nZTbSf18ZKcSpmVOn96P7B+8OUI1sar3nLoJsCeGCrhcVyX4i+Wt66VDAps5bUnHmgm6V18qHBvnuAIJrKNEP24hazN5MNtcJAf7RDGT/79tn7V78g3Q2m4pJ9niUBIpvr9jIMfp9D47+jqXmDKCmuPhU3JXQhpWr5C4ymuVTnQ20sFtVMYsOklZMsJmY1kXIxjL+VFCFCdmdsDiZPO+tSDfk8t917h10RHGpWQ1DejZzADKrsOEalDimlpdsxqqNNXd4UTJ3Zr2LKxn4mq9KF38HbBq3J8Ag==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721783291; bh=zlsPKDyas3As4PjRc4e6TvqeT60oCZ7H/OaJTGumfc8=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=F/AxZWbDMq9iDuSoeShLFxjVAW0DH7KQyrJcBKNEs7KcHj3a6l9YRZ2cB0KoCRlQX/JIjsAZtExaUhFQ7ZjfMwWZOwC6rcoGYE+vMgKUFSKAMvgLJnLCc+KbGuUVhvMtJnSp9vWuyo5o6dryLo+W8OpQV/Y+b/xjxwxIx58rVeEqDIJnunHJsKsQSpitU0gea6OMqGqbeAcAkPtZwzyar3VHFsKrH344OeMW4IAw9IwIFLTkYDHJKh54bGw0IHbeCe/8MnNRJYiqjVDSl/M4NR7cEBP/R+ReZlRljRvJMZmz1hiFV8IwIKp/pAfaD4K1RpuTTteuhOIApw9WMj5l5w==
+X-YMail-OSG: bNGkr5sVM1n7iUlO.ZkPacEusJRCiSm1QPZ5HyY4tkeYRN60DKlH68KUOTD48DW
+ uchZFsLOOSnATJWRY5NDG9_s6YkR7uYK2.P9ehnSpv7nQrK4FYDVvM60wlgKwOMZBJQbfVzZk5IE
+ vLONMbXqsqrPnPRK.O5.fz58jJ7znbb3MRN7DpvQoUdnxcwDCxYxkSpyZThh3TpYALTp22CbaGcQ
+ Zffa6dUSb3sPR6nwCEtv0LjV5wB3erYjgg0fl1KegW2wsHq.Oneyx80w5zlAPm55WzxL20r2ydie
+ 0Zd1Cxqijo89LIZ5Z4modsY_959gGdFECF1gj.bAUlXaIzulfTDxskch6zELkwXYx8FFw0UxTYH7
+ ftzPrzweYKMHZKkuy5JLd4O2GmE_RQSuDF8fLmFIgCSIe.IUrchBBIQR8aw35SYW0wIB7lvegOKh
+ RLlXspXEssM6lwOeUmE1Lr5zRrebdisbRajlD9nlhWKIG.ZL2tiKUH9Xh7N_AzP9CHtDnCZ7iPow
+ JNFjgfFxPYbXqOQWcDV4EsIeuxjIBOyQsEW5KdcXLEGR_AdZliT.vigjv38z_16hryVIz2Vtzt0q
+ JWwt.5tNAfcMh27WhoPLf7mHuZczRitCAJfg.4ivLGIrpVcbSatln2zPcNwsZ3zucwG4VnATQJxe
+ ct9m8pHVnonzRUCJhRWphuQO3BqnvYSRb38IGeIved9U52W74xTk7UvWFifCLL4kkMQH60QTJ._M
+ Fox0sSmZouxgCnIOLVurd2z1g9XzPpqnnenvJLn0ZpXKAkWsQXE8KXGJVm0TayX9nB6PWgdaocHA
+ Va2HhcvRSmuXnovQESKPY1OILG0BLGiLtIgnCzKAobhWgO7DWvRnjo980.6LO6qXrx5Bf.l5G6_C
+ Shk3hvJZsMO8E3d5SwRTysSlkjTvcS50anZFzegxM_8lk6TvS.M5YRHf8I5n94uHO556vEcyuxlz
+ jp0brtkfDarACb0KbAj.MWqeO.6dsctOpEaLPgwms1cMBYdtVr2VYg_s9hyr6phMfWcB6g7Tdbl9
+ B1DFSr_rPcgigvI8SYhiryJad9.yXGFzTyrz602eFX0OAvzbIrjk9UH1soD0Nx3Z8XC89fqy30XS
+ uBOUSinlivHjQ5Ozu.f9gf32az.c_WGK_lqlLP0zJmhOVGMSlzPEURmDnDQai3ymjOallMP_omqt
+ U4OOBrFlOxT.Cw5owI9X5aM0RUa0GbZ4KMkq9RKYFJN0ojXxEIL6od50ofDI3B2DkVvmc0NbGOuG
+ 7cv3GzPusgRgY6YgcGWof8Ot7QbFYXhEQe5_cPftRkN6_nos0yT4D_HVM7q2mlZ4Vsvolco6LSog
+ 9veFn7xSnBuPDLGtGmqrboV4.cFH3prgdaHdXmMk9RRis5e_M62j7lz0blm1_SiHg3Z7u6XcgPdQ
+ 2t_JdIJ_qhlwytZ1Z9XEzA4NE2FshQ9qaTDb4XIkF6MD97BgHeZSkl6o5WUZq8Kiress0J37uBDu
+ MP.GqZCZCbC3EibE6q5nYWt_hW74UkvCpNSjP5zvpgyGJmyCg3uV.5r6F5BAWBnOlvlUZBchMRLH
+ WdDp2usLJ7l1q74P372MPJSHYg5irI2l3nT8pBAz6mYm_g.VBGLuLuLF2ZVbaI_IcJCqtytJDE0U
+ CgHE77zkq1z1c2635WzpNlsEx0SEUlPoFUNBl1QcyACO_xpXRke4jvKfGgTI9lhfumLxlwrNE_d7
+ YktUY08nY1Bba7QoRYnPhBfOy7WRD8Y5Wo8oPomMyKQZB4ZlX9xBFsAWp1Msc8_8R8dVApAd4w.5
+ FGrFfD22l25gb7HIVJH2nMKLQZJKd5UUnCcM1fCuAuXMXg3AVocv6jHGtY3L6MBcU2y_Aad1ZIIo
+ gftOkJ9JGRETzOzL_rtfSbeiX.LybZVIBW_V6iwWS_o2MPNCMdWcTL0n1YI7gKAltnuA.BMwWMaS
+ Eduw91GTprRy3P0fO5VFbzbJCeC.SMf5Q4BhF.GMjxlws.radL9FrXzq7hMJKzl3SBCNONuzc4zD
+ p.lkLM1iCS9EV6gjxWBgfpbEve7lRguYBRNmEZf8FkPMwwN06kyGjuTm4mguXTAZVfs.oq8.RZzC
+ p4SVxFjKEhSDunqZYzfd60YPrwWHiQwbHmBibtmZe9fXvPpTEsULkR5kxATou1SUmEJVAJGvB_Yb
+ Zhw_7ac5xbwHH11D1SJFj8pDPFeSeM1Au.sUz8CXm43NPvJ1TFTgTVYk.de.qW5Bw6zKUNrHxioT
+ laz17ve0x4ui0kd.s
+X-Sonic-MF: <avihpit@yahoo.com>
+X-Sonic-ID: 53ae365e-5d87-4b52-9640-fe2e9941a1c5
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic322.consmr.mail.bf2.yahoo.com with HTTP; Wed, 24 Jul 2024 01:08:11 +0000
+Date: Wed, 24 Jul 2024 00:47:54 +0000 (UTC)
+From: avih <avihpit@yahoo.com>
+To: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <332605494.478904.1721782074981@mail.yahoo.com>
+In-Reply-To: <xmqqjzhb28yc.fsf@gitster.g>
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <4f77b7eb7f1110e47201b8c97c34a0cbcd14e24f.1721762306.git.gitgitgadget@gmail.com> <xmqqjzhb28yc.fsf@gitster.g>
+Subject: Re: [PATCH 5/8] git-prompt: add some missing quotes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 24 Jul 2024 05:54:33 +0530
-Message-Id: <D2XCB5UYIB5B.1L3U95DQSWJ2@gmail.com>
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: <git@vger.kernel.org>, "Christian Couder" <christian.couder@gmail.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>, "Christian Couder"
- <chriscool@tuxfamily.org>, "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] t: migrate helper/test-urlmatch-normalization to
- unit tests
-References: <20240628125632.45603-1-shyamthakkar001@gmail.com>
- <Zp-3e6VV5bl8dWvR@tanuki>
-In-Reply-To: <Zp-3e6VV5bl8dWvR@tanuki>
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.22501 YMailNorrin
 
-Patrick Steinhardt <ps@pks.im> wrote:
-> On Fri, Jun 28, 2024 at 06:26:24PM +0530, Ghanshyam Thakkar wrote:
-> > +static void compare_normalized_urls(const char *url1, const char *url2=
-,
-> > +				    size_t equal)
-> > +{
-> > +	char *url1_norm =3D url_normalize(url1, NULL);
-> > +	char *url2_norm =3D url_normalize(url2, NULL);
-> > +
-> > +	if (equal) {
-> > +		if (!check_str(url1_norm, url2_norm))
-> > +			test_msg("input url1: %s\n  input url2: %s", url1,
-> > +				 url2);
-> > +	} else if (!check_int(strcmp(url1_norm, url2_norm), !=3D, 0))
-> > +		test_msg(" url1_norm: %s\n   url2_norm: %s\n"
-> > +			 "  input url1: %s\n  input url2: %s",
-> > +			 url1_norm, url2_norm, url1, url2);
->
-> Nit: this is missing braces around the `else if` branch. If one of the
-> conditional bodies has braces, then all should have according to our
-> style guide.
+ On Tuesday, July 23, 2024 at 10:40:30 PM GMT+3, Junio C Hamano <gitster@po=
+box.com> wrote:
 
-Will update.
+Thanks for the quick reply, and aplogies for my delayed reply.
 
->
-> > +	free(url1_norm);
-> > +	free(url2_norm);
-> > +}
-> > +
-> > +static void check_normalized_url_from_file(const char *file, const cha=
-r *expect)
-> > +{
-> > +	struct strbuf content =3D STRBUF_INIT, path =3D STRBUF_INIT;
-> > +
-> > +	strbuf_getcwd(&path);
-> > +	strbuf_strip_suffix(&path, "/unit-tests/bin"); /* because 'unit-tests=
--test-tool' is run from 'bin' directory */
->
-> Curious: is this a new requirement or do other tests have the same
-> requirement? I was under the impression that I could execude the
-> resulting unit test binaries from whatever directory I wanted to, but
-> didn't verify.
+I replied at the github PR https://github.com/git/git/pull/1750
+and didn't realize GitGitGadget doesn't forward it to the list.
+Then I accidentally sent email with HTML. 3rd time the charm...
 
-I am not aware of any requirements, but if we want to interact with
-other files like in this case (and where we potentially have to
-interact with a test repository), we'd need to have some requirement
-to construct the path to these data files (and the test repository),
-similar to end-to-end tests where they can be run in only t/
-directory. Do you think calling `setup_git_directory()` and then using
-`the_repository->worktree` to get the root of the worktree of Git source
-and then construct the path relative to that, would be useful? That way
-we can atleast call the binaries from anywhere within the tree.
+>> Listing some portability guideline here for future reference.
+>>
+>> I'm leaving it to someone else to decide whether to include
+>> it in the file itself, place is as a new file, or not.
 
-(P.S. I know we want to avoid using `the_repository`, but I don't know
-any other way yet.)
+> Check Documentation/CodingGuidelines; I think we have something to
+> say about local var=3D"val" construct to help dash.
 
->
-> In any case, the line should probably be wrapped as it is overly long.
+I wasn't aware of this file, but I should have searched for it before
+posting. Thanks for the pointer.
 
-Will update.
+As far as I can tell CodingGuidelines and my guideline align perfectly
+on every subject which both mention, down to nuances like that quoted
+initial value in "local", though each also has few subjects which the
+other doesn't.
 
-Thank you.
+> ... If we were rewriting the prompt
+> scripts to be usable by other shells, great.=C2=A0 But then we'd want to
+> make sure it adheres to existing coding guidelines we have.
 
->
-> Other than that this looks good to me. I've gave a cursory read to the
-> testcases themselves and they do look like a faithful conversion to me.
->
-> Thanks!
->
-> Patrick
+Not sure how many prompt scripts there are, but if you're referring
+to the scripts at contrib/completion then only git-prompt.sh is
+applicable in many shells and would gain by being portable. The
+others are shell-specific, so I wouldn't think they need be portable.
 
+As for git-prompt.sh, as far as I can tell, after this patchset, this
+file adheres to CodingGuidelines completely as far as correctness and
+compatibility go.
+
+However, regardless of not being aware of CodingGuidelines, the goal
+of this patchset was to improve compatibility and correctness, and I
+wouldn't have chosen or felt comfortable to included style changes
+("'then' in new line" can have also portability implications, though
+not in the many shells which I tested).
+
+So no change in terms of style, it still diverges from the guidelines.
+
+Shall I add a commit which fixes style issues?
