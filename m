@@ -1,73 +1,88 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE11B15ECEC
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 17:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930AD15F311
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 17:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721841244; cv=none; b=NNkDMJUgrABXeO1bJqwmm6XSvWb0C/Sr9iVEkFNkGe/iPm+s7YB7KSluBoH9ZSIiReYcPu/CTFnG5uMKcxAKEBYbCPDj/6EOx1PSgkj9k6ULx6BX8jHKQ8IbngrE4v4mBUrL2tTg9TCHbXd5yKgEExt2HN6unM+J8wHGhTNxv8g=
+	t=1721841304; cv=none; b=SAIn7KWrFGAbZ/RfNGrJws5GT9evO6vMKKcIn1YstOPKvUwu913R689eZ4eloiNiM16AA4GRTkw+Q3iMt3yRWSTt/LKfdRlvR5cltZjJ4P4t+ozfOKUdHy8fLfV24NwW+SfLrPQ3JOP1oiX2BcCLsru2m6TBdw9+2Cm9r2FtBpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721841244; c=relaxed/simple;
-	bh=XAuUcBIr23E3hRsKCAS982JHQVdLkiwfv3p/vd9Mv1o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JzGm1/29UmyZPq/ebLVqnq5YUFuoChVFBZoIQYeFbTCS1rtjL7CGQbIdDhOL+cFRT+W4EAfbIWgJlUlmandLOmK8bzODz+HFa4EvzA0b+yn1dKYwLJlgc3nTLeyqdJgY1KBdOzWt1Dx+b8H4KGrzxsvs+IRsuKj1HRS43wjvnws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=M7ajt/Ea; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M7ajt/Ea"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6A59196E5;
-	Wed, 24 Jul 2024 13:14:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=XAuUcBIr23E3hRsKCAS982JHQVdLkiwfv3p/vd
-	9Mv1o=; b=M7ajt/EaFg3z2mTTa4gIlPTP8gk7fAVJOhGGq46FET9AsgEyLsAz4S
-	fBrV+9qaLxPFOYXFSEWK8yn7ks0YR5eVAa2W96hhKqg+ZeLqqwB5taBUB6IPZQLU
-	g0bhSVlTAjt00Xf1QOwgxakzKTlL9rKA2qT06uOCUevw4HWRlDfEQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB2FD196E4;
-	Wed, 24 Jul 2024 13:14:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A68C196E3;
-	Wed, 24 Jul 2024 13:14:00 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: avih <avihpit@yahoo.com>
-Cc: Avi Halachmi via GitGitGadget <gitgitgadget@gmail.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH 0/8] git-prompt: support more shells
-In-Reply-To: <xmqq7cdazu4a.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	24 Jul 2024 08:29:09 -0700")
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
-	<ZqAzpYuTrK6L-uyN@tapette.crustytoothpaste.net>
-	<992128710.1986532.1721788902932@mail.yahoo.com>
-	<xmqq7cdazu4a.fsf@gitster.g>
-Date: Wed, 24 Jul 2024 10:13:59 -0700
-Message-ID: <xmqqjzhavhk8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1721841304; c=relaxed/simple;
+	bh=NpypqBZK+hZChB6PQk5xwgNYVY/Lb9irVEM7TFcZa4M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P34iuChHIQT2VUszNc2BnTFlFFaLEMq+5yi+9TVVkGzaUK3oEqOK5oNVNInlRjTYvx8tpKJeTV2Yk3HJRpJbVRl9xXn80lfnkbg/0GXutPiEWV1ezyRV+FH8Rjm3fGz/mNALWI2mUNVw/ZpDMLsgmGCVxeaFp9LKdEwX09KT7i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6b7a0ef0dfcso307096d6.1
+        for <git@vger.kernel.org>; Wed, 24 Jul 2024 10:15:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721841301; x=1722446101;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7iqO5t3isdPH8JicjdFDHxdU+QQ35OsovWvxszyakHk=;
+        b=XNWbKIbHl31xbPr0+Y3etEMioOT0fjczuSX8pirPYkGrAp8as/nIzcDJyxHwdpisHo
+         jKjUsy25EkFhLLxOksA/jW6fZprX1BFC+jWtezw59MUwwJ1Oi96FOCJxsbSHjZZZy7KX
+         ePcAxmK+7D98OFiVI+cYpESxeXlP+lNBRooJdemGMQh0BvMSHCTxCLL7M0F8tDs2tC4h
+         NTXD2tuh/ymhfI6bYKlW1H1kW5OAa4IhlQs0bRsqcwOy9WNxyDl5xbAPbD0iWYNp7tZD
+         eIT3TkMWQvTMKqBNrfBQ5noYySZGp6It5IREuiz2SNh7xgzmfGIfIP5FKoaOJul7YHIG
+         JdQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVRRTo2SPAM3zrtDJh0yGIpMFIk7k8wwoGufxPeNQgF0c7nH3CFR+bhn6BUFhOU44oCeHVelEwh3C2BXE7ulXknJtoh
+X-Gm-Message-State: AOJu0YwkTeDTpt1Ou8PJmnb4w90Nx/v+fPAbeDfXkhJgrzxV94GlW2KT
+	VlpWowmGN8foF9UbD39jAlOciD2bf5Xqm0cbL2ePyEamPda+gc6MU80G/b7wVtYWqWlbTefN8vJ
+	bvy+8/JaDlWK3uTjsvNJBix4jUBs=
+X-Google-Smtp-Source: AGHT+IFsmXl7r/JwRN8Z57SH9DMNtq0ck30rTPx71GQ/BpCNR8h+mD9Jf6/IlksvRT+ZvFN+lPo0ZOsGOhX75oYK5A0=
+X-Received: by 2002:a05:6214:411:b0:6b5:e60c:76dc with SMTP id
+ 6a1803df08f44-6bb3ca0a241mr3517876d6.19.1721841301418; Wed, 24 Jul 2024
+ 10:15:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1ED66576-49E0-11EF-952F-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+References: <CAKOkDnMGRfQoNygYLiAxPZB2q=VMYvw8kyu1dM=pM843-FH41Q@mail.gmail.com>
+ <xmqq1q3iztmi.fsf@gitster.g>
+In-Reply-To: <xmqq1q3iztmi.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 24 Jul 2024 13:14:49 -0400
+Message-ID: <CAPig+cSJKA5+iU6TfRZev_b+ePLJ=wRm-8PLw3wKqJYEEonOVA@mail.gmail.com>
+Subject: Re: EXDEV when re-init with --separate-git-dir option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "Jin, Di" <di_jin@brown.edu>, git@vger.kernel.org, 
+	Nikos Vasilakis <nikos_vasilakis@brown.edu>, michael@greenberg.science
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jul 24, 2024 at 11:40=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> "Jin, Di" <di_jin@brown.edu> writes:
+> > We discovered that re-init with option --separate-git-dir will throw
+> > an EXDEV when the target directory is not on the same file system as
+> > the original directory.
+>
+> Yup, it is hitting the limitation of your filesystem.  The code
+> wants to move the original .git directory together with its contents
+> to a new place, and it makes a single rename() system call to do so.
+> [...]
+> The code path could probably borrow some code to recursively "copy"
+> directory from the local "git clone" code path, and then invent a
+> new code to recursively remove the original ".git", and trigger that
+> new code when rename() fails.
 
-> For the purpose of git-prompt, I think it should be OK (without
-> "local", it is harder, if not impossible, to clobber end-user's
-> shell variable namespace with various temporaries we need to use
-> during prompt computation) to declare that we now support shells
-> other than bash and zsh as long as they are reasonably POSIX and
-> support "local" that is dynamic.
+Re-init with --separate-git-dir isn't the only problem spot. `git
+worktree move` also suffers the same problem for the same reason.
 
-"to clobber" -> "to avoid clobbering", sorry for the noise.
+> But at that point, only as a fall-back measure, it might be simpler
+> and much less error prone to spawn a "mv src dst" as a subprocess
+> using the run_command() API.
+
+This wouldn't help Windows users.
+
+> It would make a good bite-sized #leftoverbits project for aspiring
+> new Git contributors.  Any takers?  ;-)
+
+It might be a bit more than bite-sized, though, considering the above
+points about `git worktree move` also needing such a fix, and having
+to deal with Microsoft Windows.
