@@ -1,80 +1,215 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB41139588
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 20:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9AC446DB
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 21:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721854553; cv=none; b=Te9UHUVLD48d44Kc8AtOrp9BUGJaxD++uy1UqMJxdXFlixqymD7cE8krC1pcWEd8Jhie3DTjNDKygK/VNZOCRXGmazonr/siKdm3qpuvY+MZveYwXWz543QbnaQgtDHe4v5Xn0N5tZ1ONDGUVofH9BtY2AUa8Y2TtwoIcL0dvlQ=
+	t=1721855185; cv=none; b=mrvjF5PT+SeLsgHI1lTwMEH1CH3c633AN20HPd2TZiDFjHs1f3DGI8LyXgNxXcwidAtuEboNt7mBYRilq5emF4eYdmI0FH64qt+hKKFbjprJfg3mxCh9pfZ8qmi37UkkHEp5cqt5rKXnMhXPkVNdquGfVjhQhwVScnnowGX1qig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721854553; c=relaxed/simple;
-	bh=slIv72ASlmj6pHSopwUW3ADO7vkJKlM57CHqr1+QdF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dR3y36kfX4zaOkDKkznWdtJBEJxTXlSlLcyS8R3YJ53XRpBe/faXiydvq1l8aS24yoLIg/ZHOYlnHAUVCNKdIVmzrRDyWMSWSeWC5tcmYxcemBrZgV0RH26AwyOxQKShtzlyB66ptENm7r/imagryohKya31/LeqRud9tjKyWck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 1932 invoked by uid 109); 24 Jul 2024 20:55:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jul 2024 20:55:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14357 invoked by uid 111); 24 Jul 2024 20:55:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jul 2024 16:55:44 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 24 Jul 2024 16:55:41 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Randall S. Becker" <the.n.e.key@gmail.com>, git@vger.kernel.org,
-	"Randall S. Becker" <randall.becker@nexbridge.ca>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v2 1/2] Teach git version --build-options about libcurl
-Message-ID: <20240724205541.GA557365@coredump.intra.peff.net>
-References: <20240621180947.64419-1-randall.becker@nexbridge.ca>
- <20240621180947.64419-2-randall.becker@nexbridge.ca>
- <f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de>
- <xmqqed8me36c.fsf@gitster.g>
- <20240624235557.GA2727@coredump.intra.peff.net>
- <402c12c2-7ada-4d9e-c3da-1a78827e7496@gmx.de>
+	s=arc-20240116; t=1721855185; c=relaxed/simple;
+	bh=+cJ/e8NBGOT1cdANp8mb8EtV8LhpRWnzR8WFlxPyOo4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=hqL0n7Pg7X4eF4j592zBOuMQ5WBd+shJ7AWKemZD90HxJlYu6+7ty5R/hYPiogl1UPie9o3XrlY4RlJ3Xy0iOoeMqob1sYeEhv/o25wJPzzg39j8Tqm9Hih8sBNWlwfB6JKoINnKa10eqJJL3vDV6nmKmLEDA65Ke6uR4tc36Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1xfG2SA; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1xfG2SA"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42803bbf842so1935365e9.1
+        for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721855181; x=1722459981; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Uti0VoYedz1V3c6dfX/HWis1KcuKgV5wOLqhF1qZoK8=;
+        b=l1xfG2SATqP/q+l0iaNvTzxEBww7pJHrW47btb15kfYT9nJWBFh5fHs/IAN8vUX2V5
+         2WYJTQw6cbTmgfpbm28fd66oKIz7B86ape1HaV7deCoNoXQIhtbpFgeGiR+Yp160uRpx
+         Bn4DzrAXYzLmoUdOb38ghPXjFOK5vHIiLQP6yFJnQw+m890OifeI8gzC3MyxxnKx+l/x
+         kzAuuQnE2La9g7nS5a5Urxxk9LcqaU2P68o8sVaMJrH/qtc9Og+BcnLuJqBDfnQUh01L
+         ywgWKpZ7ItNzZZf2fXn5oqAI1DjC197d/4mfTFkp4rMyKC1evwVcFEbhYrMcmD1l02up
+         9Ycw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721855181; x=1722459981;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Uti0VoYedz1V3c6dfX/HWis1KcuKgV5wOLqhF1qZoK8=;
+        b=qbRIlGtum16ovx2MBYOWSvniDzn+F/cR3AN5j0tBsU7++i1kuRJ1+BrnmWp8JqpDyq
+         LCd0LuWEMJwHFSrMwF4qUOYifWsyP6MXzkfLCig/vENkXo9v8XW+N1jXNx4V3rC9ES9s
+         j/7opqppfC+VUyCX/2FpMv1vzWY1d4MyGfZsnStA2gfP5Ue6tw/nNn1eeL0zNhsFkCdb
+         o/qt8YKxCt53Kw4QsGy3TVnAWG9w5TrIG421n68zycqHh3+ES8lIa70wojGzUu7utc20
+         Bt8F57O3diK4lfv98y8Wr9YFZfmrvWy611DqYefvujYUIpES/2UagLeSLE5LeO3c2Lgi
+         zYWg==
+X-Gm-Message-State: AOJu0YxB1QulBmuYpOUrATFnt7x9SVFaXzjpNdVCrTYRSid6znCfetF4
+	9g0XrjvAaqqNhppXX87HicnPCYjCQNgsSM+q0vp5KWCh8JrVsjEYVHTHkg==
+X-Google-Smtp-Source: AGHT+IEy4GCio9zTGpNzFcYrCqEh+hX05wr6d/a/pNHxXCfAcdo++3PfY5mlxnnqlXYFUAfHo9gnnA==
+X-Received: by 2002:a05:600c:a05:b0:426:6ed5:fcb with SMTP id 5b1f17b1804b1-42805504209mr1864555e9.4.1721855180974;
+        Wed, 24 Jul 2024 14:06:20 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787eceb0sm15364614f8f.99.2024.07.24.14.06.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jul 2024 14:06:20 -0700 (PDT)
+Message-Id: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
+References: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 24 Jul 2024 21:06:16 +0000
+Subject: [PATCH v2 0/3] doc: introducing synopsis para
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <402c12c2-7ada-4d9e-c3da-1a78827e7496@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-On Wed, Jul 24, 2024 at 12:48:20PM +0200, Johannes Schindelin wrote:
+Following several issues with the way the formatting of synopsis is done in
+the manpages that were recently reworked, this patch series introduces the
+processing of a new custom paragraph attribute 'synopsis'.
 
-> > But we could also have "git version --build-options" call "remote-https
-> > --build-options" automatically, and just let it dump to the shared
-> > stdout stream.
-> 
-> Teaching `git version` to show the cURL version may not be the best idea,
-> especially when it comes to the version used at runtime and using the
-> command-line option `--build-options` (with the option being specifically
-> about the build, not the runtime, version that was used).
-> 
-> Wouldn't it be better to go with Emily's approach to surface this
-> information via `git bugreport` instead of `git version`, potentially
-> enhanced to show both build-time and runtime version of libcurl?
+This extension is added to asciidoc and asciidoctor and lets write the
+synopsis of the commands without any typeset. The git-init and git-clone
+manpages are converted to this new system.
 
-I don't have a strong preference either way. I naturally turned towards
-"git version" because that's what this thread was about, and also
-because it predates git-bugreport.
+Changes since V1:
 
-It feels like there may be some duplication / overlap between what those
-two things inspect, and we should perhaps unify them. One thing I
-notice about bugreport is that it doesn't have a way to just dump
-information without trying to start a bugreport. I'd be very unlikely to
-use it myself for reporting a bug, but I may want to dump information
-about git while debugging.
+ * switch to sed for asciidoc filter and refine the regex for support under
+   macOS
 
-So whether that is in the form of "git bugreport --dump", or if all of
-the collection is moved to "git version --build-info" and then bugreport
-uses that to fill out its template, I don't care.
+Jean-Noël Avila (3):
+  doc: introduce a synopsis custom paragraph attribute
+  doc: update the guidelines to reflect the current formatting rules
+  doc: apply synopsis simplification on git-clone and git-init
 
--Peff
+ Documentation/CodingGuidelines          | 34 ++++++++++++++-----------
+ Documentation/asciidoc.conf             | 12 +++++++++
+ Documentation/asciidoctor-extensions.rb | 17 +++++++++++++
+ Documentation/git-clone.txt             | 20 +++++++--------
+ Documentation/git-init.txt              | 12 ++++-----
+ t/t0450-txt-doc-vs-help.sh              | 11 +++-----
+ 6 files changed, 68 insertions(+), 38 deletions(-)
+
+
+base-commit: ad57f148c6b5f8735b62238dda8f571c582e0e54
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1766%2Fjnavila%2Fdoc_synopsis_para-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1766/jnavila/doc_synopsis_para-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1766
+
+Range-diff vs v1:
+
+ 1:  704f0333ef1 ! 1:  aba144f4ff3 doc: introduce a synopsis custom paragraph attribute
+     @@ Documentation/asciidoc.conf: git-relative-html-prefix=
+      +ifdef::backend-docbook[]
+      +ifdef::doctype-manpage[]
+      +[paradef-default]
+     -+#synopsis-style=template="verseparagraph",filter="sed -E 's!&lt;[a-z-]+&gt;!<emphasis>\\0</emphasis>!g' -E 's!([a-z-]+)!<literal>\\1</literal>!g'"
+     -+synopsis-style=template="verseparagraph",filter="perl -pe 's!([\[\] |()>]|^)([=+a-zA-Z0-9-:+=]+)!\\1<literal>\\2</literal>!g;s!(&lt\\;[a-zA-Z0-9-.]+&gt\\;)!<emphasis>\\1</emphasis>!g'"
+     -+#synopsis-style=template="verseparagraph"
+     ++synopsis-style=template="verseparagraph",filter="sed -E 's!([\[ |()>]|^|\])([-=a-zA-Z0-9:+.]+)!\\1<literal>\\2</literal>!g;s!&lt;[-a-zA-Z0-9.]+&gt;!<emphasis>\\0</emphasis>!g'"
+      +endif::doctype-manpage[]
+      +endif::backend-docbook[]
+      +
+      +ifdef::backend-xhtml11[]
+      +[paradef-default]
+     -+synopsis-style=template="verseparagraph",filter="perl -pe 's!([\[\] |()>]|^)([+a-zA-Z0-9-:+=]+)!\\1<code>\\2</code>!g;s!(&lt\\;[a-zA-z0-9-.]+&gt\\;)!<em>\\1</em>!g'"
+     ++synopsis-style=template="verseparagraph",filter="sed -E 's!([\[ |()>]|^|\])([-=a-zA-Z0-9:+.]+)!\\1<code>\\2</code>!g;s!&lt;[-a-zA-Z0-9.]+&gt;!<em>\\0</em>!g'"
+      +endif::backend-xhtml11[]
+      
+       ## Documentation/asciidoctor-extensions.rb ##
+     @@ Documentation/asciidoctor-extensions.rb: module Git
+      +
+      +      def process parent, reader, attrs
+      +        outlines = reader.lines.map do |l|
+     -+          l.gsub(/([\[\] |()>]|^)([a-zA-Z0-9\-:+=]+)/, '\\1{empty}`\\2`{empty}')
+     -+           .gsub(/(<[a-zA-Z0-9\-.]+>)/, '__\\1__')
+     ++          l.gsub(/([\[\] |()>]|^)([-a-zA-Z0-9:+=.]+)/, '\\1{empty}`\\2`{empty}')
+     ++           .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+      +           .gsub(']', ']{empty}')
+      +        end
+      +        create_block parent, :verse, outlines, attrs
+     @@ Documentation/asciidoctor-extensions.rb: module Git
+         postprocessor Git::Documentation::DocumentPostProcessor
+       end
+      
+     - ## Documentation/git-clone.txt ##
+     -@@ Documentation/git-clone.txt: SYNOPSIS
+     - 	  [++--recurse-submodules++[++=++__<pathspec>__]] [`--`[`no-`]`shallow-submodules`]
+     - 	  [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]`reject-shallow`]
+     - 	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
+     --	  [_<directory>_]
+     -+	  [__<directory>__]
+     - 
+     - DESCRIPTION
+     - -----------
+     -
+     - ## Documentation/git-init.txt ##
+     -@@ Documentation/git-init.txt: SYNOPSIS
+     - 	  [`--separate-git-dir` _<git-dir>_] [++--object-format=++__<format>__]
+     - 	  [++--ref-format=++__<format>__]
+     - 	  [`-b` _<branch-name>_ | ++--initial-branch=++__<branch-name>__]
+     --	  [++--shared++[++=++__<permissions>__]] [_<directory>_]
+     -+	  [`--shared`[++=++__<permissions>__]] [__<directory>__]
+     - 
+     - 
+     - DESCRIPTION
+     -
+       ## t/t0450-txt-doc-vs-help.sh ##
+      @@ t/t0450-txt-doc-vs-help.sh: txt_to_synopsis () {
+       	fi &&
+       	b2t="$(builtin_to_txt "$builtin")" &&
+       	sed -n \
+      -		-e '/^\[verse\]$/,/^$/ {
+     -+		-e '/^\[\(verse\|synopsis\)\]$/,/^$/ {
+     ++		-E '/^\[(verse|synopsis)\]$/,/^$/ {
+       			/^$/d;
+      -			/^\[verse\]$/d;
+      -			s/_//g;
+      -			s/++//g;
+      -			s/`//g;
+     -+			/^\[\(verse\|synopsis\)\]$/d;
+     - 			s/{litdd}/--/g;
+     - 			s/'\''\(git[ a-z-]*\)'\''/\1/g;
+     +-			s/{litdd}/--/g;
+     +-			s/'\''\(git[ a-z-]*\)'\''/\1/g;
+     ++			/^\[(verse|synopsis)\]$/d;
+     ++			s/\{litdd\}/--/g;
+     ++			s/'\''(git[ a-z-]*)'\''/\1/g;
+       
+     + 			p;
+     + 		}' \
+ 2:  b0547422e5c = 2:  b6387bef40d doc: update the guidelines to reflect the current formatting rules
+ 3:  3bcbe455747 ! 3:  2a61e0945de doc: apply synopsis simplification on git-clone and git-init
+     @@ Documentation/git-clone.txt: git-clone - Clone a repository into a new directory
+      -	  [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--mirror`]
+      -	  [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--reference` _<repository>_]
+      -	  [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
+     --	  [`--depth` _<depth>_] [`--`[`no-`]`single-branch`] [`--no-tags`]
+     --	  [++--recurse-submodules++[++=++__<pathspec>__]] [`--`[`no-`]`shallow-submodules`]
+     --	  [`--`[`no-`]`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]`reject-shallow`]
+     +-	  [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`] [`--no-tags`]
+     +-	  [++--recurse-submodules++[++=++__<pathspec>__]] [++--++[++no-++]{empty}++shallow-submodules++]
+     +-	  [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
+      -	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
+     --	  [__<directory>__]
+     +-	  [_<directory>_]
+      +[synopsis]
+      +git clone [--template=<template-directory>]
+      +	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+     @@ Documentation/git-init.txt: git-init - Create an empty Git repository or reiniti
+      -	  [`--separate-git-dir` _<git-dir>_] [++--object-format=++__<format>__]
+      -	  [++--ref-format=++__<format>__]
+      -	  [`-b` _<branch-name>_ | ++--initial-branch=++__<branch-name>__]
+     --	  [`--shared`[++=++__<permissions>__]] [__<directory>__]
+     +-	  [++--shared++[++=++__<permissions>__]] [_<directory>_]
+      +[synopsis]
+      +git init [-q | --quiet] [--bare] [--template=<template-directory>]
+      +	 [--separate-git-dir <git-dir>] [--object-format=<format>]
+
+-- 
+gitgitgadget
