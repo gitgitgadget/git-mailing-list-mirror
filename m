@@ -1,132 +1,130 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36652158871
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 18:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04B1613D
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 19:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721844158; cv=none; b=b5Zuatli9L5FnqkkXBfXM3VYfHiSUewWOsbgNt0p2GdLTeK1Uqpvcypgfb1Q0kZnV/6AnhaogFVKSJ6XqcKua4qRwe9wTBBZQxRmjw5nUq6WCZJhjOJCrM+8HxFtB49/SXK+5rw8LkE43oY3CpuTPz7WArxw9A/u7hgDP5HfL/U=
+	t=1721849105; cv=none; b=nk9VA4j0qwnbkO+k/BOpzz3kyLlfrBaRKY0R/w5vZEkHhSsg8OyvJWzvYbhOfMO9cJX8mSfJlZAACGgGObeLfqUWo88ftaBiF3uhVVlqQAXs+5DjT63M7eKLqJCniOJgyNdI5YsSd7jsJmmeyjFjGlq/zAsXetXam0skRiXubwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721844158; c=relaxed/simple;
-	bh=ArorJJ7PDtJMcmZC0P3eHc0xpQcPEWU3IKgl2KaIhTo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ipHiE+nSzfdcO8Dy12cPaSmKlnbs7tVXM02DHIfyY27gn9lZjwoL5hBazS2WjNp6x6Zo5A9VleALdkX3U2seMaV4a8v91kyJccaz5a/UQ2WI1tBg1ro4/C74vv3yXI4Bf5wyQu5CmAZ5UdkVw4x0isP25HkWq8slILOfh4yRy/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kpjdh/NY; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721849105; c=relaxed/simple;
+	bh=/v3D0t+cCh8UoYbUipI/EE2Yv+ugzFKu2dK2t5OBdGQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dolvftrdgnVmR3Ic4mWFuPaFyU2hsWnz2NT1d/v2+ZHSjmVzLcJmSnoP9xOExrXLkcCktc4lQVhYRXLJDblmsu1kNR2OcbLi6F2z9juouYev3Z41TidHnoabr6L0JG/awp0I19RZdZDS+ZjGqj5Si5Af61wTygpACXAhahHKU4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GryJ7HZa; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kpjdh/NY"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2366A2A162;
-	Wed, 24 Jul 2024 14:02:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ArorJJ7PDtJMcmZC0P3eHc0xpQcPEWU3IKgl2K
-	aIhTo=; b=kpjdh/NYJPUugGn3odnUJF+4bzKbPf9nZeXA7k4k3NyGIiaog6XqPV
-	lRtiqeff91cTVvbh1yZ6xCgF/9xnjS7XQCRFOXsHtoqIB/AzjdkPaeeJbr4Yzmym
-	89MpjZae7QYARjgLI/uEPJR+U9tpJCLqkBvKTS5VjDhDpEF3d4Oe0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 19EB62A161;
-	Wed, 24 Jul 2024 14:02:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 84D8F2A160;
-	Wed, 24 Jul 2024 14:02:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 3/3] Documentation: document difference between release
- and free
-In-Reply-To: <1841a256-5c01-4892-99c7-ad7df14e6e0e@gmail.com> (Phillip Wood's
-	message of "Wed, 24 Jul 2024 15:30:07 +0100")
-References: <cover.1721818488.git.ps@pks.im>
-	<5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
-	<CAOLa=ZScBn+sMB7BWMpsS=Ld0sUW14Li5JVuKPGKtY91hVo4jA@mail.gmail.com>
-	<ZqD9keTtimiqJnJP@tanuki>
-	<1841a256-5c01-4892-99c7-ad7df14e6e0e@gmail.com>
-Date: Wed, 24 Jul 2024 11:02:34 -0700
-Message-ID: <xmqqed7iu0qt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GryJ7HZa"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3d9de9f8c8dso103771b6e.1
+        for <git@vger.kernel.org>; Wed, 24 Jul 2024 12:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1721849101; x=1722453901; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RMkHpv/6r/ZgB2nCLAd1Qj4+r7Iu/Tj5KDjAQp/uZz8=;
+        b=GryJ7HZaEnt/TsogCnoLJOGRXQ9WPdWtyqTs8mbsv++VoTFSae2e4w8EvHHvDORtc3
+         gAR4qkWNABZvY50W4FJgWZL3AzlKjWe1YCIRuSqB6PLkqGdv7tD2nQDU6TmhL7BVIlKv
+         iw0tZ1OCD8hdFg+3O61DK6SO9TammeMANC/+ACxeNSOvhxc15VU6HqI8pZZxPhYSl8Ug
+         2pxqQlt1gLuGuAuzT6tTk9mJsTq/VKleoGoNNuaayXgyzuhSJiFp5WYfw2to1sfeLa/y
+         yseVNGWwQX7tkRsVa5wGZbWt5i11E2qOnpLNShHon50vx7n3pmnK4PKv9/wJfmwxSEeD
+         CzFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721849101; x=1722453901;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RMkHpv/6r/ZgB2nCLAd1Qj4+r7Iu/Tj5KDjAQp/uZz8=;
+        b=prSx36Lq+a6h2awYm9wjwDQIbTU5bgpgT9y/QQkzzr8yAuef2BrhCh6IOyGMo+dlkJ
+         TsQ3x3n31MCFkvamBGd6kbLwwip+w0NHzdD3KsNSoHB6aj95j0r+6UUGYSaXVsPClhLL
+         4y52nmheNz2J0ntx545jRGaZxSW0TV4i1cBfRiaQo0htWKucsWGb7h7paQcGS7Zelp0A
+         cvS37rpphsuTC51tDGPC4aLEiVlHV2ks5OeunSQTD+URjuyzFsyA5CAP9JRcjKGmYOZo
+         JRLN1dNJPKemtwU16uQs1jw3k+TP4vofCr2kC+DboSefxsyjmVAvzZ/zEASupAQICJIL
+         JDOg==
+X-Gm-Message-State: AOJu0Yy2jAhrXnleiHFlzqxXlYFnVyFnOTnlvJIlSK1/kUhC2pSoYgOy
+	cSByfm/Pk3h+KrwXNqjiIQ6MNkhuqCV3hZXMIFgLN1+TMUbFWs2sspcPiojy66dLn9zpv5MFFVX
+	Xqdbo43XmgAvgOtTT2ebN1Hl/dTN0TuGzWNmM
+X-Google-Smtp-Source: AGHT+IETU7JcSjQ0P2LXzHOaB9z0wGQB2YzCPWvXj5Yef9dCxFbBNutXC09tYjzqKRI1m5NUkwj2nK4jL9+T2yy2yUc=
+X-Received: by 2002:a05:6808:1201:b0:3d8:4603:e7b0 with SMTP id
+ 5614622812f47-3db11033530mr644339b6e.44.1721849101260; Wed, 24 Jul 2024
+ 12:25:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E803B2D6-49E6-11EF-B5E7-BAC1940A682E-77302942!pb-smtp2.pobox.com
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de> <73465c3d-1be0-456b-9471-f875e819c566@web.de>
+ <c51025cc-26e5-41e2-be56-94e141a64f5d@web.de>
+In-Reply-To: <c51025cc-26e5-41e2-be56-94e141a64f5d@web.de>
+From: Kyle Lippincott <spectral@google.com>
+Date: Wed, 24 Jul 2024 12:24:47 -0700
+Message-ID: <CAO_smVi2rJd5SDMsbbxzFUj28a_1KTgdHMz4DTKMsii+Wt5H_Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/7] unit-tests: add for_test
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
->>> I noticed there is also `clear()` used in some places. Should we also
->>> mention that we don't recommend using `clear()` WRT freeing memory?
->> In any case I think we should decide on eithe using `clear()` or
->> using
->> `release()` for consistency's sake. Which of both  we use I don't quite
->> care, but the following very shoddy analysis clearly favors `release()`:
->>      $ git grep '_clear(' | wc -l
->>      844
->>      $ git grep '_release(' | wc -l
->>      2126
+On Wed, Jul 24, 2024 at 7:53=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
 >
-> I think a fairer comparison would be to look at function declarations,
-> not all the call sites.
->
-> $ { git grep 'void [a-z_]*_release(' '*.h'
->     git grep 'static void [a-z_]*_release(' '*.c'
->   } | wc -l
-> 47
-> $ { git grep 'void [a-z_]*_clear(' '*.h'
->     git grep 'static void [a-z_]*_clear(' '*.c'
->   } | wc -l
-> 58
->
-> So we have more _clear() functions than _release() functions. I think
-> there may sometimes be a semantic difference between _clear() and
-> _release() as well where some _clear() functions zero out the struct
-> after freeing the members.
->
-> Thanks for working on this it will be a useful addition to our coding
-> guidelines
+> The macro TEST only allows defining a test that consists of a single
+> expression.  Add a new macro, for_test, which provides a way to define
+> unit tests that are made up of one or more statements.
 
-Thanks for doing a more thorough study of the current codebase.  I
-tend to agree that the number of actual _clear() functions matter a
-lot more than how many callsites call _clear(), and it would make
-sense to standardise on it.  If everything else being equal, it does
-not matter which one we pick, but it rarely happens that everything
-else is equal.
+Perhaps obvious to you and others, but I'm at a loss; can you
+elaborate on why this is a significant problem? Why is having the
+tests in a separate function a significant downside, and what are the
+benefits of this new macro that counteract the "magic" here? I'm not
+seeing it.
 
- - "release" is a bit more cumbersome to type and read than "clear".
+Macros like this require additional cognitive overhead to understand;
+I can't read `for_test ("for_test passing test") check_int(1, =3D=3D, 1);`
+and understand what's going on without going and reading the comment
+above `for_test`. Unlike `TEST(<func>, "<description>")`, I can't even
+_guess_ what it's doing. This macro is project-specific, and this
+knowledge has to be attained by everyone wishing to even read this
+code.
 
- - "clear" at least to me says more about the state of the thing
-   after it got cleared (e.g., I would expect it would be filled
-   with NUL bytes)
+I personally consider the patches that use this to be regressions in
+my ability to read and understand the tests. As an example, one of the
+diff hunks in the strbuf patch (patch #6 in the series) does this:
+-       TEST(setup_populated(t_addch, "initial value", "a"),
+-            "strbuf_addch appends to initial value");
++       for_test ("strbuf_addch appends to initial value") {
++               struct strbuf sb =3D STRBUF_INIT;
++               t_addstr(&sb, "initial value");
++               t_addch(&sb, 'a');
++               t_release(&sb);
++       }
 
- - "release" places a lot more stress on what happens to the things
-   that were contained before the release takes place.
+But the main simplification in that patch (not using
+`setup_populated`) can be achieved without `for_test`:
 
-For example, upon either "clear" or "release", I would expect
-everything pointed by elements in an array member of the struct, and
-the array pointed at by the member, are free'd when we are
-"clearing/releasing" a strvec.  But I may not care what is left in
-it after "release".  It can be left to hold all the bytes the struct
-had before "release" got called, as anybody who called the function
-are not supposed to look at the struct again anyway.  But we may
-choose not to have such a variant and always clear the struct after
-releasing resources it held, just for good hygiene.
++ static void t_addch_appends(void)
++ {
++     struct strbuf sb =3D STRBUF_INIT;
++     t_addstr(&sb, "initial value");
++     t_addch(&sb, 'a');
++     t_release(&sb);
++ }
 
-So in short, I would consider that "clear = release + init".  If we
-want to have both "clear" and "release" and have them distinct
-meaning, that is fine.  If we want to simplify and do without "just
-release and leave them dirty" variant, then we need only one name
-for it, and I do not mind if we called it "release", even though
-I would think "clear" is a better name for the action that behaves
-as if "init" was done at the end to make it reusable.
+-       TEST(setup_populated(t_addch, "initial value", "a"),
+-            "strbuf_addch appends to initial value");
++       TEST(t_addch_appends(), "strbuf_addch appends to initial value");
 
-Thanks.
+It seems to me that all `for_test` is getting us there is an inlining
+of the test logic, which seems like it's optimizing for vertical space
+in the file. Maybe it's because I'm coming from a C++ environment at
+$JOB that's using Google's gunit and gmock frameworks, where every
+test is in its own function and we usually don't even write the main
+function ourselves, but I have a preference for the separate
+functions.
+
+Maybe I'm in the minority, so only consider this at somewhere like a
+-0.5 on this series (fine with deferring to a reviewer who is
+significantly in favor of it, but if there aren't any, I'd lean
+towards not landing this).
