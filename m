@@ -1,165 +1,163 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCFE15B12F
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7893D1591F0
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:51:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721832651; cv=none; b=j9tcBgby1edDK9HB+OxKsaSPgOgB6PFYj2oaZxkPdsYrkC6nMcjbiFgKQyBA3DhRTj8uHUFDQP/kNLXCHYxhIDFbaFxXaUOUI9QCfj9u8eme7Mhcs4KRZNBk+hYIi8+q+ztZlDnoJHgUVDDKPmlQQ1vHSsiWUFPHMAS6jr3SpvY=
+	t=1721832674; cv=none; b=loh52xSNg+KS1k0KauuL1IGR7rHeAo9OTkCLCbNr56TbUfri3UXSzBwsxbrN2Q4hAXGQ8jVfmuXTPRvXk8CR6tHK43ShecVrOM6f/XNYZq7C1YzD0HHWDbYP1kOMqMV7fG48/MkjQkQDCSUuBQOe+k6YfTOEEr/ukQo5mgE2Gng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721832651; c=relaxed/simple;
-	bh=tdBsTN7i54G9a6SiEnvB5+ywIWM8xEY7VASxc09pkFk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raQAmPfTHT9sKxVVdFaN0jl6LAdos19it4UB3XoGnvsFMUH4+VVwKjZnUtIBwgHmCNZfGLqdst3RLpHpDX+0iF+roXEJeQ7zOlEZh/kjkNM6VgEGaAC+/9QAwXhuCR5OfnWGb4Qj3a9Yntz+lHRT2JM0hqaD9Z1jkyZCeCcFeH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TldMvP6C; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1721832674; c=relaxed/simple;
+	bh=JDq64RXePG+G8EDeSz5JWoDmqg39Hi1oSpwuaPQinyI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Kk5/e1c7cQnvFtTp5uXQAMBnQb3DY5QDNHRgf7LZY2EHwA0bm6BFIjknZayNSRC8DH8bH1PPWTCugIKbKr2Jduv77QbXojyhEwNPNsZygpCHalumFNVkgTopZyBo4quEd0orBcGvCjZEUEVH4aLrF14tTfvuVEt73IACsJgv0Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=c5ZE0vIP; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TldMvP6C"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1721832646;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SR6ogoa6u3+CSbxCjfLnfb24Z0gXdjdULcZEMelfFmU=;
-	b=TldMvP6C+xw3+uS1EhmB35Tb/8eCIpsFWuFb9DYz4RpyZPWZ/yKdAhqxU0GQMnqjPQgTzd
-	J928+jjpGDZB26xuByI/Qmf/MKlaQinBvTZhhbA78kHSMZ0oIy83OOY5OcAH2A6fsYsMLw
-	7UC9iiptItypQQXA6SUFuomS/HK/cVM=
-From: Toon Claes <toon@iotcl.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Toon Claes <toon@iotcl.com>
-Subject: [PATCH v2 3/3] fetch: use bundle URIs when having creationToken heuristic
-Date: Wed, 24 Jul 2024 16:49:57 +0200
-Message-ID: <20240724144957.3033840-4-toon@iotcl.com>
-In-Reply-To: <20240724144957.3033840-1-toon@iotcl.com>
-References: <20240722080705.2614195-1-toon@iotcl.com>
- <20240724144957.3033840-1-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="c5ZE0vIP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1721832659; x=1722437459; i=l.s.r@web.de;
+	bh=eMTG/630xRM8kg9Zt0ucP/5EufuV5k0wWTLaXLoczgM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=c5ZE0vIP1jUS+RLS5oc1nihWEYFIrB2/TdZ4ArOaKTN+2AXZLK3O6x4dVdKAeuxL
+	 dvn6BnizQdosA0y9p55SaQjZ112FLyIUU77pBngCP1Yq+c7ATOL0yEsIvouNUxX9i
+	 BpX4bkuy7612Yq/SoArrMIEjmzZ/k79lLCjy/AcargtwZXMwx4ht6tVIpwUX/jz7b
+	 l2eGmDyzfJJXPSfp0uxdO5kFAMi1GZwBBV6xDyfbKwnZX77M/mpVbAU1Dkg2rCgcK
+	 puGg+QwHlBunMSsJtSLBCK5KNrgOQPo4wLnaU1FNRyne/CAXAbxFF31ZemWwek8P+
+	 Gzu3EdKQs1TRXtfWNg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mt8gP-1sHAsc0S9h-00xZJv; Wed, 24
+ Jul 2024 16:50:59 +0200
+Message-ID: <92741509-106a-4eba-b662-74b50f7f859f@web.de>
+Date: Wed, 24 Jul 2024 16:50:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v3 2/7] unit-tests: show location of checks outside of tests
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <73465c3d-1be0-456b-9471-f875e819c566@web.de>
+Content-Language: en-US
+In-Reply-To: <73465c3d-1be0-456b-9471-f875e819c566@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:XOTP+chh/WrwqESJtiqRa/ULcPpLHHIbDcf7FpYhxgNEnmEb/Y6
+ Q6aqf4yeYPPvI7Qd96gSLYv5/19pn7AsvqyYPDadg03RpYtjOAg8eZ/1slwyVsjkLTatPtU
+ aWFLYhfZeUdhVOHBb3igX8h5W5ehfuW8NfcKMutYzcPRSiMuOoKFwFxE6Y33QKUTvEzOc8V
+ Vj7KF5QEEpGEsacDVtYqA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:J6YbM3dobg4=;QG147Z5vXk5/V2CaouzoXiR1VLn
+ ZFr/M1UXW/cpCV/gjYEfPh/429PceFEf4+JPz5JRudLKo4h3x96lHSGF1VZ57B5TIGPSo+QN7
+ SqQ5OHcSgc/hwuYm15ng/BGgVwaFfc7+FsnkylpZ8frMPjIHcbBm5uGc1Iiew5uoU/blWP1SI
+ WcI1iJaFzQJLWrzFk7PB65B+504bIjLqcabYiAz6QMItQZRrju9E3yUYNmlHRRuAukDdvcHZ4
+ ARvdvtpPz6NkqfH5wa5hue+1dZVTwA6i3Kf+JkACd0In4rVp2cRsDgNIdZ1OM8pYpDDnt9M85
+ HkXaRu0QGugFPcwi/Cv4jENG+adEsRo0UxDuxS3DQO4YCe8OBaImjx+5PxhWXQeePaaoIFIEx
+ j9eT8M4VOkN7zcHLUoTrrwBtHtyASNfwynsQu9ElDM/f3sUFU5DFDkW5iacNDosbKTvDQKXqu
+ p087uljJ5gzeRW06yk7jZhgIKH0DX3CQ888ixExfNFqKnX37tuWLTOw4KJAWgy5XLtpGimTan
+ pFzv+SRelqv/pei8B5qGRGcwZOV+jEi4BX9kbCaKcjSfg+GJIwDWq6qTJns06Aki/6gI9rhOW
+ pBRi/fZcUpxl9jNQUWfzYU4llM6ekudydxnRx4+UqiN9EbVZLh0LC0SQF8XJqkDYs/eT/Zc8n
+ WqFG0O3c9K0r/X4UQvN9t7Y6icA8C/hpWUxIAKF8sveiwR8Cd3n0v2pTo+tnViJkbGvzGbFNz
+ hBk14r6b/0IpLsfzbCJZA1RCJJMJcRUC3qc0aFqAzj2miPPX+d30VGI09sd7IVTQHfTugyrAP
+ xF0LMnjuYFYDuC0ep/BH6g6g==
 
-At the moment, bundle URIs are only used by git-clone(1). For a clone
-the use of bundle URI is trivial, because the repository is empty so
-downloading bundles will never result in downloading objects that are in
-the repository already.
+Checks outside of tests are caught at runtime and reported like this:
 
-For git-fetch(1), this more complicated to use bundle URI. We want to
-avoid downloading bundles that only contains objects that are in the
-local repository already.
+ Assertion failed: (ctx.running), function test_assert, file test-lib.c, l=
+ine 267.
 
-One way to achieve this is possible when the "creationToken" heuristic
-is used for bundle URIs. We attempt to download and unbundle the minimum
-number of bundles by creationToken in decreasing order. If we fail to
-unbundle (after a successful download) then move to the next
-non-downloaded bundle and attempt downloading. Once we succeed in
-applying a bundle, move to the previous unapplied bundle and attempt to
-unbundle it again. At the end the highest applied creationToken is
-written to `fetch.bundleCreationToken` in the git-config. The next time
-bundles are advertised by the server, bundles with a lower creationToken
-value are ignored. This was already implemented by
-7903efb717 (bundle-uri: download in creationToken order, 2023-01-31) in
-fetch_bundles_by_token().
+The assert() call aborts the unit test and doesn't reveal the location
+or even the type of the offending check, as test_assert() is called by
+all of them.
 
-Using the creationToken heuristic is optional, but without it the client
-has no idea which bundles are new, how to sort them, and which only have
-objects the client already has.
+Handle it like the opposite case, a test without any checks: Don't
+abort, but report the location of the actual check, along with a message
+explaining the situation.  The output for example above becomes:
 
-With this knowledge, make git-fetch(1) use bundle URIs from the server,
-but only when the creationToken heuristic is used.
+ # BUG: check outside of test at t/helper/test-example-tap.c:75
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- builtin/fetch.c             | 13 ++++++++++
- t/t5584-fetch-bundle-uri.sh | 49 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+)
- create mode 100755 t/t5584-fetch-bundle-uri.sh
+... and the unit test program continues and indicates the error in its
+exit code at the end.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 693f02b958..98e811f438 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1694,6 +1694,19 @@ static int do_fetch(struct transport *transport,
- 			retcode = 1;
- 	}
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Supersedes 9cea2b43b9 (unit-tests: show location of checks outside of
+tests, 2024-07-22) in seen.  Changes: Got a test.
 
-+	if (transport_has_remote_bundle_uri(transport)) {
-+		/*
-+		 * Only use bundle-URIs when they use the creationToken
-+		 * heuristic, this allows us to ensure not downloading bundles
-+		 * we don't need. You can read the comments in
-+		 * fetch_bundles_by_token() to understand how this works.
-+		 */
-+		if (transport->bundles->heuristic == BUNDLE_HEURISTIC_CREATIONTOKEN) {
-+			if (fetch_bundle_list(the_repository, transport->bundles))
-+				warning(_("failed to fetch advertised bundles"));
-+		}
+ t/helper/test-example-tap.c | 2 ++
+ t/t0080-unit-test-output.sh | 5 +++--
+ t/unit-tests/test-lib.c     | 7 ++++++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
+index d072ad559f..79c12b01cd 100644
+=2D-- a/t/helper/test-example-tap.c
++++ b/t/helper/test-example-tap.c
+@@ -72,6 +72,8 @@ static void t_empty(void)
+
+ int cmd__example_tap(int argc, const char **argv)
+ {
++	check(1);
++
+ 	test_res =3D TEST(check_res =3D check_int(1, =3D=3D, 1), "passing test")=
+;
+ 	TEST(t_res(1), "passing test and assertion return 1");
+ 	test_res =3D TEST(check_res =3D check_int(1, =3D=3D, 2), "failing test")=
+;
+diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+index 9ec47b7360..fe221f3bdb 100755
+=2D-- a/t/t0080-unit-test-output.sh
++++ b/t/t0080-unit-test-output.sh
+@@ -7,9 +7,10 @@ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+
+ test_expect_success 'TAP output from unit tests' - <<\EOT
+ 	cat >expect <<-EOF &&
++	# BUG: check outside of test at t/helper/test-example-tap.c:75
+ 	ok 1 - passing test
+ 	ok 2 - passing test and assertion return 1
+-	# check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:77
++	# check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:79
+ 	#    left: 1
+ 	#   right: 2
+ 	not ok 3 - failing test
+@@ -46,7 +47,7 @@ test_expect_success 'TAP output from unit tests' - <<\EO=
+T
+ 	#    left: '\\\\'
+ 	#   right: '\\''
+ 	not ok 17 - messages from failing string and char comparison
+-	# BUG: test has no checks at t/helper/test-example-tap.c:92
++	# BUG: test has no checks at t/helper/test-example-tap.c:94
+ 	not ok 18 - test with no checks
+ 	ok 19 - test with no checks returns 0
+ 	1..19
+diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+index 3c513ce59a..989dc758e6 100644
+=2D-- a/t/unit-tests/test-lib.c
++++ b/t/unit-tests/test-lib.c
+@@ -264,7 +264,12 @@ static void test_todo(void)
+
+ int test_assert(const char *location, const char *check, int ok)
+ {
+-	assert(ctx.running);
++	if (!ctx.running) {
++		test_msg("BUG: check outside of test at %s",
++			 make_relative(location));
++		ctx.failed =3D 1;
++		return 0;
 +	}
-+
- 	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
- 				   &fetch_head, config)) {
- 		retcode = 1;
-diff --git a/t/t5584-fetch-bundle-uri.sh b/t/t5584-fetch-bundle-uri.sh
-new file mode 100755
-index 0000000000..6c2383646e
---- /dev/null
-+++ b/t/t5584-fetch-bundle-uri.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+
-+test_description='test use of bundle URI in "git fetch"'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'set up repos and bundles' '
-+	git init source &&
-+	test_commit -C source A &&
-+	git clone --no-local source go-A-to-C &&
-+	test_commit -C source B &&
-+	git clone --no-local source go-B-to-C &&
-+	git clone --no-local source go-B-to-D &&
-+	git -C source bundle create B.bundle main &&
-+	test_commit -C source C &&
-+	git -C source bundle create B-to-C.bundle B..main &&
-+	git -C source config uploadpack.advertiseBundleURIs true &&
-+	git -C source config bundle.version 1 &&
-+	git -C source config bundle.mode all &&
-+	git -C source config bundle.heuristic creationToken &&
-+	git -C source config bundle.bundle-B.uri "file://$(pwd)/source/B.bundle" &&
-+	git -C source config bundle.bundle-B.creationToken 1 &&
-+	git -C source config bundle.bundle-B-to-C.uri "file://$(pwd)/source/B-to-C.bundle" &&
-+	git -C source config bundle.bundle-B-to-C.creationToken 2
-+'
-+
-+test_expect_success 'fetches one bundle URI to get up-to-date' '
-+	git -C go-B-to-C -c transfer.bundleURI=true fetch origin &&
-+	test 1 = $(ls go-B-to-C/.git/objects/bundles | wc -l) &&
-+	test 2 = $(git -C go-B-to-C config fetch.bundleCreationToken)
-+'
-+
-+test_expect_success 'fetches two bundle URIs to get up-to-date' '
-+	git -C go-A-to-C -c transfer.bundleURI=true fetch origin &&
-+	test 2 = $(ls go-A-to-C/.git/objects/bundles | wc -l) &&
-+	test 2 = $(git -C go-A-to-C config fetch.bundleCreationToken)
-+'
-+
-+test_expect_success 'fetches one bundle URI and objects from remote' '
-+	test_commit -C source D &&
-+	git -C go-B-to-D -c transfer.bundleURI=true fetch origin &&
-+	test 1 = $(ls go-B-to-D/.git/objects/bundles | wc -l) &&
-+	test 2 = $(git -C go-B-to-D config fetch.bundleCreationToken)
-+'
-+
-+test_done
---
+
+ 	if (ctx.result =3D=3D RESULT_SKIP) {
+ 		test_msg("skipping check '%s' at %s", check,
+=2D-
 2.45.2
