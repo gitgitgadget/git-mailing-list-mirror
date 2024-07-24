@@ -1,164 +1,105 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0018713AD3D
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 21:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA095446DB
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 21:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721855339; cv=none; b=F24dB24eUXklJaMB2reuTOF5OJisiha/ogSymJtprvCvcQbDK2dqA1yGuPOCM04g6r1/QKtYA0iEuufV4x6wQ+oH2cF16IU6kZqqE7TtKMQp4Ya7UMM9lGmKtpF/6P/RsfH5R9JZ0NL5LAufzkx8KfGl3DG+JRFH03VvC4oCE5c=
+	t=1721855685; cv=none; b=afUe/5e5Xx/26iBvGMbjQ805miEldnYsHlo6d6/+GOKBBj4n0CAZ1ZiZPl4jTBg1UKYNbsv4wyVFR1FX6uwMRj+DrHID9tHp4lNQqMbtaTQMEvdKdOEeOsc883n/0AoD4RN9O0SPq3dlsUMntffkYnXIu26rIV9KiCcB4uUmdDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721855339; c=relaxed/simple;
-	bh=AKO9PAtXwIDeSM8JWs6uZr0K/wVumcDyDgsXZ9qHfa8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohyoWItpCp69v2N1Ahj4tvxkuCG1eYk2a5BmMS3nDFov/z2GsxXybcc7u75NVwhZ184jkoIOuDfBgWzZN2ZE+JbyX/G5199UWN8x3LHMBlVAzdw48LEixM+RlxcKCxgA08/iBqiBaMSxHMi1B0274j5eN87GjuXlsu4DgdI7FiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 1964 invoked by uid 109); 24 Jul 2024 21:08:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jul 2024 21:08:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14440 invoked by uid 111); 24 Jul 2024 21:08:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jul 2024 17:08:57 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 24 Jul 2024 17:08:54 -0400
-From: Jeff King <peff@peff.net>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Robert Coup <robert.coup@koordinates.com>,
-	git <git@vger.kernel.org>
-Subject: Re: bug/defaults: COMMIT_EDITMSG not reused after a failed commit
-Message-ID: <20240724210854.GB557365@coredump.intra.peff.net>
-References: <CAFLLRpJgpjJpNRC_UpZmUXF2626e0BiH8CkOkoMrX3zcrOp7YA@mail.gmail.com>
- <xmqq1q3iyceq.fsf@gitster.g>
- <20240724-cryptic-private-mustang-3f50aa@meerkat>
+	s=arc-20240116; t=1721855685; c=relaxed/simple;
+	bh=vdt4woLISTRfgH8qCq6hyLOEmGWcFylUIFwpHZdT8aY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KRonoIG7xqCD+V59xEhE2LuYTJrMrlyiizKE8m2NfBk3mgOrZbi9QGPP/eUTddkqHp1Yi7pEHpwXfGItuMI6Hd8Q+Pj3mPswfa7PhF71vA117Gr4O336Vx4d7H6clezSkowdtKJGW5+CvW6/JeZwlsnw+qfG7bfOR7xtr9smsEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=llGfasOV; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="llGfasOV"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4CAAA2FE8A;
+	Wed, 24 Jul 2024 17:14:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=v
+	dt4woLISTRfgH8qCq6hyLOEmGWcFylUIFwpHZdT8aY=; b=llGfasOVCLXgt82ZU
+	1Q+dPtPTffluqese9yQYyeatkywdJJBOFXOQZxoQrIZ08ycyfV5aoMlUfxRyS0yw
+	p4hJFKn+xbMpnb1dD/Hmtioe7IFv4jkauAC+SCl4qAjP4tZ7QRTJqLu4Hg9wKmEG
+	XE/a0ene6LsQ302H8nVUK/2eiY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 45B162FE89;
+	Wed, 24 Jul 2024 17:14:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C25E72FE88;
+	Wed, 24 Jul 2024 17:14:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] ReviewingGuidelines: encourage positive reviews more
+Date: Wed, 24 Jul 2024 14:14:37 -0700
+Message-ID: <xmqqsevysdaa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240724-cryptic-private-mustang-3f50aa@meerkat>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BC67C93A-4A01-11EF-A412-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-On Wed, Jul 24, 2024 at 12:53:36PM -0400, Konstantin Ryabitsev wrote:
+I saw some contributors hesitate to give a positive review on
+patches by their coworkers.  When written well, a positive review
+does not have to be a hollow "looks good" that rubber stamps an
+otherwise useless approval on a topic that is not interesting to
+anybody.
 
-> Yes, I would say even doing the following would result in a better experience
-> for users who don't know about .git/COMMIT_EDITMSG:
-> 
-> 1. when git-commit fails, save the message as .git/FAILED_COMMIT_MSG
-> 2. output "Commit message saved as .git/FAILED_COMMIT_MSG"
+Let's add a few paragraphs to encourage positive reviews, which is a
+bit harder to give than a review to point out things to improve.
 
-I proposed something like (2) long ago. I'll reproduce the (rebased
-forward) patch below, but here's the original thread with a little bit
-of discussion:
-
-  https://lore.kernel.org/git/20120723185218.GC27588@sigill.intra.peff.net/
-
-It just told you about COMMIT_EDITMSG, making it your responsibility to
-recover it before running "git commit" again. Your (1) makes it a little
-nicer, in that you can run "git commit" and then pull the content from
-the other file into your editor. Or we could even provide an option to
-pre-populate the message with it.
-
-Junio was lukewarm on the original, so I'm not sure why I've been
-holding on to it all these years. But maybe it would help as a guide for
-anybody who wants to work on what you've proposed above.
-
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Mon, 23 Jul 2012 14:52:18 -0400
-Subject: [PATCH] commit: give a hint when a commit message has been abandoned
-
-If we launch an editor for the user to create a commit
-message, they may put significant work into doing so.
-Typically we try to check common mistakes that could cause
-the commit to fail early, so that we die before the user
-goes to the trouble.
-
-We may still experience some errors afterwards, though; in
-this case, the user is given no hint that their commit
-message has been saved. Let's tell them where it is.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/commit.c                          | 15 +++++++++++++++
- t/t7500-commit-template-squash-signoff.sh |  3 +--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ Documentation/ReviewingGuidelines.txt | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index dec78dfb86..42fefaa0e3 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -160,6 +160,16 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
- 	return 0;
- }
+diff --git c/Documentation/ReviewingGuidelines.txt w/Documentation/ReviewingGuidelines.txt
+index 515d470d23..f78146a410 100644
+--- c/Documentation/ReviewingGuidelines.txt
++++ w/Documentation/ReviewingGuidelines.txt
+@@ -72,12 +72,29 @@ guidance, and concrete tips for interacting with patches on the mailing list.
+   could fix it. This not only helps the author to understand and fix the issue,
+   it also deepens and improves your understanding of the topic.
  
-+static int mention_abandoned_message;
-+static void maybe_mention_abandoned_message(void)
-+{
-+	if (!mention_abandoned_message)
-+		return;
-+	advise(_("Your commit message has been saved in '%s' and will be\n"
-+		 "overwritten by the next invocation of \"git commit\"."),
-+	       git_path_commit_editmsg());
-+}
+-- Reviews do not need to exclusively point out problems. Feel free to "think out
++- Reviews do not need to exclusively point out problems.  Positive
++  reviews indicate that it is not only the original author of the
++  patches who care about the issue the patches address, and are
++  highly encouraged.
 +
- static int opt_parse_m(const struct option *opt, const char *arg, int unset)
- {
- 	struct strbuf *buf = opt->value;
-@@ -1090,6 +1100,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			exit(1);
- 		}
- 		strvec_clear(&env);
-+		atexit(maybe_mention_abandoned_message);
-+		mention_abandoned_message = 1;
- 	}
++- Do not hesitate to give positive reviews on a series from your
++  work coleague.  If your positive review is written well, it will
++  not make you look as if you two are representing corporate
++  interest on a series that is otherwise uninteresting to other
++  community members.
++
++- Write a positive review in such a way that others can understand
++  why you support the goal, the approach, and the implementation the
++  patches taken.  Make sure to demonstrate that you thoroughly read
++  the series and understood problem area well enough to be able to
++  say if the patches are written well.  Feel free to "think out
+   loud" in your review: describe how you read & understood a complex section of
+   a patch, ask a question about something that confused you, point out something
+-  you found exceptionally well-written, etc. In particular, uplifting feedback
+-  goes a long way towards encouraging contributors to participate more actively
+-  in the Git community.
++  you found exceptionally well-written, etc.
++
++- In particular, uplifting feedback goes a long way towards
++  encouraging contributors to participate more actively in the Git
++  community.
  
- 	if (!no_verify &&
-@@ -1813,11 +1825,13 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
-+		mention_abandoned_message = 0;
- 		exit(1);
- 	}
- 	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
-+		mention_abandoned_message = 0;
- 		exit(1);
- 	}
- 
-@@ -1855,6 +1869,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		die("%s", err.buf);
- 	}
- 
-+	mention_abandoned_message = 0;
- 	sequencer_post_commit_cleanup(the_repository, 0);
- 	unlink(git_path_merge_head(the_repository));
- 	unlink(git_path_merge_msg(the_repository));
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4dca8d97a7..c476a26235 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -396,13 +396,12 @@ test_expect_success 'consecutive amend! commits remove amend! line from commit m
- 
- test_expect_success 'deny to create amend! commit if its commit msg body is empty' '
- 	commit_for_rebase_autosquash_setup &&
--	echo "Aborting commit due to empty commit message body." >expected &&
- 	(
- 		set_fake_editor &&
- 		test_must_fail env FAKE_COMMIT_MESSAGE="amend! target message subject line" \
- 			git commit --fixup=amend:HEAD~ 2>actual
- 	) &&
--	test_cmp expected actual
-+	grep "Aborting commit due to empty commit message body" actual
- '
- 
- test_expect_success 'amend! commit allows empty commit msg body with --allow-empty-message' '
--- 
-2.46.0.rc1.447.g578b9b2b5c
-
+ ==== Performing your review
+ - Provide your review comments per-patch in a plaintext "Reply-All" email to the
