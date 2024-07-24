@@ -1,155 +1,566 @@
-Received: from sonic312-21.consmr.mail.bf2.yahoo.com (sonic312-21.consmr.mail.bf2.yahoo.com [74.6.128.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF7A15FA74
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 17:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.128.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45BC2AE6C;
+	Wed, 24 Jul 2024 17:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721842207; cv=none; b=Xsd4p19alLenDFYeRHX0TCG0Spd1GTlkkoEyWM0E68WkTgBQRTJJa2ESxBve+uSOkmW4hj8nsHvUVMdnfZeydnHo3KHJnwSLyrx90KeVbskiS0V4wMmll0/CG290QXOQ5xqZDtWW2fCqzF8W6yRxVle2WjHbUcj7cBVpUHgGhjI=
+	t=1721842330; cv=none; b=iRHBdexXgkh9M22L7toFnTXmG3ujLxNhoUmwqV4lxQdNKxPIw6cgtXVdAcALATdS7qPGks7q0eBUwt9vQM53RGlgojDwS4kkKcGMUkIihTrY3ciD9hNXsfbFWOgQG4gdA2y44DFCvGgbcPoLJSbSGCGVtDGUDP2TZFFSNoAELMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721842207; c=relaxed/simple;
-	bh=OgPOI410ogwMlr/enMV7brhQsC9wlIob4nz5gNGosFw=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=cSJzpw6QNFnNBgxqHqLZuS1mpVtVL762zSCYUVWg0WyPHIFmJZpw+yT3kZ/+ebvviF84Ht+LkaSH/ffjbaUW5d3OfkNNHoAow9MozUMjpDh2vObUq7yTJrPVGyCFK+DpbFn5sLDhxUBfjDUYKDpXfn7ldMQSl/NA/OFVrbvU1Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=n3RAVL1y; arc=none smtp.client-ip=74.6.128.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1721842330; c=relaxed/simple;
+	bh=0SRzVxIfrGaxcDH8bvRl3DRHc1yXs8V3HeNHfQz5pN8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TVlk7XECXP4uchEUL+ggQcBuXaAn2uuOjOYXPqOguWWS+8ohho545e1ZGTFaUrlWCmxmpt21o1BhunomI6ogvm6edLCaTrPWEpw3drXhoyI4TlfT0tJiVUiC2kkgMshffVlxS7/UR2Xtb5WHjd/doAzu3LEdfg/wsdGU1VT3xAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TQu6Ha37; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="n3RAVL1y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721842205; bh=OgPOI410ogwMlr/enMV7brhQsC9wlIob4nz5gNGosFw=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=n3RAVL1yh4vKU1v52rOCcZ+hi/x/i9JO2dv4za1Rtjaz+v6IFC1tD8xbI9bAeIE+9mpMxl0VDwHZrld5Jqu86QP/M/cKwexzDwQ3Os9ZXRzi7GEN5RzPSgI69UbdarTG36/i/NWWtyc7G47uHydIcZP7gstqjul4wDiGFhsVTlx3owbEVfI/DD1ymxkdShy34Yg4tU2p2fL4raT5oWtze4MAzHzLbWuinR7NnW603xNqgCvj+xZVOuOowTzCMQNKdytFbGl949x6HPM7B7d7wRLO5t9KR3+Tp/p9fr9SRsQIDBgbkU0WOZvprPm01QXXkM1DIGTRd2+YNb8GEyy2tQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721842205; bh=Ys4DOGkqE+FxPnSl9/0ciHsg8CJOqDv0beQRt37FPur=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=JnGF5y5kYGLRt4eP5mLD7QEc90MPMvAYDYBIpZPupZRHQXFJ80q2lKIVPXF7Dc2+zEBGnMmE7iZE1/YExxSmE/PQMy5DNT1gqm98H4TKOIMLyEez4axRu/1jB5Be0+kXZTNMAw6E1Rqb808t3DoYUhsQaZCejJ4da7y6iD2iaT5TtgrBi4TT29jWk3p9HMucOW4czMQVIXuSippi6B57apaTgR4KT3kS3v1uDMNBodK3t8ixtZMFdmPSCwh3Q/l3CygrCAwJFTrAB2yFIa5IbtRSxwdWocCTDb/vTrywJpov6DPdlQkwGI78U8rpzP0LKuxoULGkD308309pg4m9DA==
-X-YMail-OSG: okgwnesVM1lU4yHArhk7pxXhJCZkWl.lKrdH1p8l2gCbJY_9Q7encL_Kh51aQur
- pjSs7.R5R5Qj8vik_Q9DgfC7g0YFeHNNlUb.nDmpM6D9c7YfXQAk.RJd.42Q8nNEDWQnZDMPo8w9
- VhVx9a.7ZWbdD7ClZu2Axu2D.YYricUwba5CUQSqfW44l7qD71tcu9jYX6s411iPwjEyzNfNOwR8
- vcr1jK6oWNVm7fA4U.nWwW0KzBxKxtd5iNO.7gROjwVY9sQdhawhw2zmwmao.rLwdNAFM053TEYy
- g89rkV7ad3Gk4imRiHbC9tqoYBp65rDTp.JJzq5_CS4vbOBE33akA_Jj5SWZJV.iDuWnij0elAye
- cMljM2F7Hdc9qNsz.dO4u3EYZUMH31YzBoqmc.1ILueULjRTWk1LVNJlNIkUo8aPPccFTuXYgAaZ
- IQtnNCveymky4NunkPqngSJKnVFWChfpgeBvHB0fB2XlFqoS63dj9K02hCDnWTUgCe9i0Dd.WhV.
- 522LkpOyymCiz5TfDCTZblISVqz8fmKxx49oVZG7fj1NVXKzZqDzyPOxVJDBPZpQbEQ.2eJfn7OJ
- 9DktwqqvFP0i9d.6NDygJJfCs0IqB48Q10BTUfBBZUJUtkrLWe7.img2LoZDTbraQh9BKwimfrfw
- nJs1Jg7ulgCisWWdVKBM3z4dyIOa0nukp7llNMjxxJpGisgoNDo_ssAz7bruhDiqIkFHgztqIxIf
- HZwgcWFS9ZD3EgkE.Khe6QQvU5pZnk9AVoE4Y465vN5kwGQ6q92yETR8IC6KugT.MBfHRn.Yy2Mi
- IAn84CNkF2DbuxO.aaNzeE_11ZnvUiWhkQavLLwVJR7sdD1cXdtzuf_hM.G.FCOAbO60QPJU0pk.
- tAoSl4nREXWJtBHyO07SPCAlX49FSOZFRteWpg9CRvy7cVqyUvi6vkzsvFrPHlAaSc.l_XJ8FUF4
- vehCa23Yq.LZZHRQp.hN5DP47d2lZFLbqZkQnu.C17hIydsTl_PiUBYQgU9DsSze0qPDR3UEXePS
- 890a4e3Ip9beIIvKVaTVO6uoQciDbOzX9l4LtxmJg.gVapf.KWhst4evVvAHL0O_Ft48J_XxUsUq
- 7owpiTl7764p4PnmGyT0J_EevpDN1kNcTcGjwpoYq0PBIZbXVgVWgGFGrWJZ9fwZi90z5e5OqOPW
- t0aFgRCfLmxJoWUr0zbQALUG_u1zvoPTuKfnuIH7Zs_e_KLk.N7b5mndjkdR0xhnJAktY3lMpJFI
- TCkLyrhQNeHxrBY3eHYhy7jY9RQxfdI6B.1YG7X_l6.36F7ztFyHRNoSZXGqVvaDjtMYlecf8Hkt
- 7TcTQNJduDSZrvTMitBkyjFcq_ioMpBVnQZ9mu7JO3wcSsvdoLVhxHk9aeO_mETu8a1wzEYYJt4I
- PEAQOiEADj13IrNhF1_N8xCbEWiftu5kwOC4DBsu6IWwtdP8miForLUiT9bYe8t3J0Oo8tQew..9
- o6Qn9Hhy33HJ5EweEU4krFCWabn8iwH5jkgsO6U0Z0GgZJMSp5cscvkOpE5VPT_sG6KlU.UOfiLm
- F8nMBXzc_0I9xODpI9D.Hm.TJudAHBCIZ1g7F3g1IYmch9zVN_SOMb0Q2aVswkRdNjnspeB3KKYE
- uYzGNRTDsGq7208AeNiovC4AoCf2JMflPw7AsvTzVv9UuTyChSf7kFq6XcuEeIkMipSh01nnjJDE
- f.UF3KPiDxNUWVtdnG5kYctCZQ45XG.I5t66bUYScpvNw8Am9DmkNbWddrd0sklKJiw50Jz_TddE
- gxQ3KsoMoM0onFiBlyWxaYOjL2xAXTk9Mtv2Gee.vvk9ZTo88UE6_ItqCRieThvFbku4Y505SfzK
- _dP4mpnuX8gw.I8xfMMvzlUJ.BqZiKpxbCiG_eOFG_Uj6aiHCxE3iWTgnapqRqwd5oETGJc6oiHB
- TFe0GaNURSVSzaOM1W2Vaz9qgeW9Qom_ThLQkQYfvJEeqkFgAeXQFPDrqvU2H6YeEhnYUc5hYL6I
- l_2nkRV7.7AF.FSk7ZMGyq2RZEPLsioOzBWjCJ_bW8PR4mQGlZt27c8ZQE28FKv__7cbXi2n3uMM
- OsWfIXH.vmv_9m819_eFo8uea8AKDOA343KpLsJztDnAKgfKY8fViHkJm_jhR.ChlElyg1ei9p9a
- sqq_OvYLLjzywQvx8L7XAQ915zlEnnqfF6qIzOCDtEnEXf0HzZKPkWiebZ6FkYXld5ovbckGMfhL
- kdkcE7jMFp1E-
-X-Sonic-MF: <avihpit@yahoo.com>
-X-Sonic-ID: d8eabc9a-590a-4955-b6c1-3c770bb1f3b1
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.bf2.yahoo.com with HTTP; Wed, 24 Jul 2024 17:30:05 +0000
-Date: Wed, 24 Jul 2024 17:08:03 +0000 (UTC)
-From: avih <avihpit@yahoo.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Avi Halachmi via GitGitGadget <gitgitgadget@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <2104161937.2499137.1721840883913@mail.yahoo.com>
-In-Reply-To: <xmqq7cdazu4a.fsf@gitster.g>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <ZqAzpYuTrK6L-uyN@tapette.crustytoothpaste.net> <992128710.1986532.1721788902932@mail.yahoo.com> <xmqq7cdazu4a.fsf@gitster.g>
-Subject: Re: [PATCH 0/8] git-prompt: support more shells
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TQu6Ha37"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2EE732DD3B;
+	Wed, 24 Jul 2024 13:32:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=0SRzVxIfrGaxcDH8bvRl3DRHc
+	1yXs8V3HeNHfQz5pN8=; b=TQu6Ha37HrfTaf4PuJmFSrCcp1Q7V/ViPxIFZ3lKq
+	OWy5aT+khuPIpPsgtUNq7YCbCWoTF0vwJm3KESZR/ILhDD2P6dfFp7UYS4U0th23
+	gFzHLLOGI0w2+iSpEQ95SvOoCOE8KKGktwTta2LJVbs+G6o94aaV17UEygGeTlPF
+	i8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 26E6B2DD3A;
+	Wed, 24 Jul 2024 13:32:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9D5B92DD38;
+	Wed, 24 Jul 2024 13:31:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+    git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.46.0-rc2
+Date: Wed, 24 Jul 2024 10:31:57 -0700
+Message-ID: <xmqq7cdavgqa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ A1229A98-49E2-11EF-9F03-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.22501 YMailNorrin
 
- On Wednesday, July 24, 2024 at 06:29:12 PM GMT+3, Junio C Hamano <gitster@=
-pobox.com> wrote:
->
-> It is a bit more nuanced than that, though.=C2=A0 Here is what we say:
->
-> - Even though "local" is not part of POSIX, we make heavy use of it
->=C2=A0=C2=A0 in our test suite.=C2=A0 We do not use it in scripted Porcela=
-ins, and
->=C2=A0=C2=A0 hopefully nobody starts using "local" before all shells that =
-matter
->=C2=A0=C2=A0 support it (notably, ksh from AT&T Research does not support =
-it yet).
->
-> For the purpose of git-prompt, I think it should be OK ...
-> to declare that we now support shells
-> other than bash and zsh as long as they are reasonably POSIX and
-> support "local" that is dynamic.
+A release candidate Git v2.46.0-rc2 is now available for testing at
+the usual places.  Relative to -rc1, we fix a few recent small
+regressions and nothing else.
 
-I have to admit I missed "in our test suite".
-Right, so no "local" in Porcelains, but yes in the test suite.
+The tarballs are found at:
 
-But yes, agreed, because it supports so many more shells.
-The commit "git-prompt: ta-da! document.." does document it.
+    https://www.kernel.org/pub/software/scm/git/testing/
 
-> (without
-> "local", it is harder, if not impossible, to clobber end-user's
-> shell variable namespace with various temporaries we need to use
-> during prompt computation)
+The following public repositories all have a copy of the
+'v2.46.0-rc2' tag and the 'master' branch that the tag points at:
 
-It actually is technically possible with git-prompt.sh, with 1 LOC.
-See the "anecdote" at end of the same "ta-da!" commit message which
-does exactly that. Though for obvious reason we can't really do that.
+  url =3D https://git.kernel.org/pub/scm/git/git
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
 
-> Do we know what kind of "local" is ksh93 adding?=C2=A0 The same as their
-> "typeset" that is not dynamic?=C2=A0 That is so different from what other=
-s
-> do and scripts expect to be all that useful, I am afraid.
+----------------------------------------------------------------
 
-I would think it has to be similar enough to other shells, or else it
-creates a compatibility nightmare IMO. But that's a guess.
+Git v2.46 Release Notes (draft)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
 
-Somewhat off topic, so apologies if this shouldn't be here:
+UI, Workflows & Features
 
-As for the Porcelains, I have to assume that it can be unpleasant
-to maintain big scripts without "local". Would there be an interest
-in adding a facility with the same semantics as "local", but posix
-compliant (and also posix-ish shells), for use in Porcelains?
+ * The "--rfc" option of "git format-patch" learned to take an
+   optional string value to be used in place of "RFC" to tweak the
+   "[PATCH]" on the subject header.
 
-It's not a drop-in replacement, but the syntax is reasonable IMO:
+ * The credential helper protocol, together with the HTTP layer, have
+   been enhanced to support authentication schemes different from
+   username & password pair, like Bearer and NTLM.
 
-=C2=A0=C2=A0=C2=A0 locals myfunc x y
-=C2=A0=C2=A0=C2=A0 _myfunc () {
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 echo "$? $1 $2"
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x=3D1 y=3D2
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 33
-=C2=A0=C2=A0=C2=A0 }
+ * Command line completion script (in contrib/) learned to complete
+   "git symbolic-ref" a bit better (you need to enable plumbing
+   commands to be completed with GIT_COMPLETION_SHOW_ALL_COMMANDS).
 
-=C2=A0=C2=A0=C2=A0 x=3Dx; unset y
-=C2=A0=C2=A0=C2=A0 (exit 42) || myfunc foo bar
-=C2=A0=C2=A0=C2=A0 echo "$? $x ${y-unset}"
+ * When the user responds to a prompt given by "git add -p" with an
+   unsupported command, list of available commands were given, which
+   was too much if the user knew what they wanted to type but merely
+   made a typo.  Now the user gets a much shorter error message.
 
-Prints:
-=C2=A0=C2=A0=C2=A0 42 foo bar
-=C2=A0=C2=A0=C2=A0 33 x unset
+ * The color parsing code learned to handle 12-bit RGB colors, spelled
+   as "#RGB" (in addition to "#RRGGBB" that is already supported).
 
-"locals myfunc x y" creates a wrapper function "myfunc" which saves
-the state of $x and $y, calls _myfunc "$@", then restores the state
-(and propagates the initial and final $? appropriately). Recursion is
-supported, the wrapper doesn't create additional variables, and no
-subshells are used at the wrapper (also not at "locals").
+ * The operation mode options (like "--get") the "git config" command
+   uses have been deprecated and replaced with subcommands (like "git
+   config get").
 
-The implementation of "locals" is small (10-20 LOC), but we can't
-expect scripts to embed it, so it would need to be sourced (dot).
+ * "git tag" learned the "--trailer" option to futz with the trailers
+   in the same way as "git commit" does.
 
-If there is interest in such thing, let me know, and I can submit
-a patch (independent of this patchset) to adds such file which
-can then be sourced by other scripts in order to use "locals".
+ * A new global "--no-advice" option can be used to disable all advice
+   messages, which is meant to be used only in scripts.
 
-Unrelated, and it might not mean much, but I did want to thank you
-for maintaining git all those years.
+ * Updates to symbolic refs can now be made as a part of ref
+   transaction.
+
+ * The trailer API has been reshuffled a bit.
+
+ * Terminology to call various ref-like things are getting
+   straightened out.
+
+ * The command line completion script (in contrib/) has been adjusted
+   to the recent update to "git config" that adopted subcommand based
+   UI.
+
+ * The knobs to tweak how reftable files are written have been made
+   available as configuration variables.
+
+ * When "git push" notices that the commit at the tip of the ref on
+   the other side it is about to overwrite does not exist locally, it
+   used to first try fetching it if the local repository is a partial
+   clone. The command has been taught not to do so and immediately
+   fail instead.
+
+ * The promisor.quiet configuration knob can be set to true to make
+   lazy fetching from promisor remotes silent.
+
+ * The inter/range-diff output has been moved to the end of the patch
+   when format-patch adds it to a single patch, instead of writing it
+   before the patch text, to be consistent with what is done for a
+   cover letter for a multi-patch series.
+
+ * A new command has been added to migrate a repository that uses the
+   files backend for its ref storage to use the reftable backend, with
+   limitations.
+
+ * "git diff --exit-code --ext-diff" learned to take the exit status
+   of the external diff driver into account when deciding the exit
+   status of the overall "git diff" invocation when configured to do
+   so.
+
+ * "git update-ref --stdin" learned to handle transactional updates of
+   symbolic-refs.
+
+ * "git format-patch --interdiff" for multi-patch series learned to
+   turn on cover letters automatically (unless told never to enable
+   cover letter with "--no-cover-letter" and such).
+
+ * The "--heads" option of "ls-remote" and "show-ref" has been been
+   deprecated; "--branches" replaces "--heads".
+
+ * For over a year, setting add.interactive.useBuiltin configuration
+   variable did nothing but giving a "this does not do anything"
+   warning.  The warning has been removed.
+
+ * The http transport can now be told to send request with
+   authentication material without first getting a 401 response.
+
+ * A handful of entries are added to the GitFAQ document.
+
+ * "git var GIT_SHELL_PATH" should report the path to the shell used
+   to spawn external commands, but it didn't do so on Windows, which
+   has been corrected.
+
+
+Performance, Internal Implementation, Development Support etc.
+
+ * Advertise "git contacts", a tool for newcomers to find people to
+   ask review for their patches, a bit more in our developer
+   documentation.
+
+ * In addition to building the objects needed, try to link the objects
+   that are used in fuzzer tests, to make sure at least they build
+   without bitrot, in Linux CI runs.
+
+ * Code to write out reftable has seen some optimization and
+   simplification.
+
+ * Tests to ensure interoperability between reftable written by jgit
+   and our code have been added and enabled in CI.
+
+ * The singleton index_state instance "the_index" has been eliminated
+   by always instantiating "the_repository" and replacing references
+   to "the_index"  with references to its .index member.
+
+ * Git-GUI has a new maintainer, Johannes Sixt.
+
+ * The "test-tool" has been taught to run testsuite tests in parallel,
+   bypassing the need to use the "prove" tool.
+
+ * The "whitespace check" task that was enabled for GitHub Actions CI
+   has been ported to GitLab CI.
+
+ * The refs API lost functions that implicitly assumes to work on the
+   primary ref_store by forcing the callers to pass a ref_store as an
+   argument.
+
+ * Code clean-up to reduce inter-function communication inside
+   builtin/config.c done via the use of global variables.
+
+ * The pack bitmap code saw some clean-up to prepare for a follow-up topi=
+c.
+
+ * Preliminary code clean-up for "git send-email".
+
+ * The default "creation-factor" used by "git format-patch" has been
+   raised to make it more aggressively find matching commits.
+
+ * Before discovering the repository details, We used to assume SHA-1
+   as the "default" hash function, which has been corrected. Hopefully
+   this will smoke out codepaths that rely on such an unwarranted
+   assumptions.
+
+ * The project decision making policy has been documented.
+
+ * The strcmp-offset tests have been rewritten using the unit test
+   framework.
+
+ * "git add -p" learned to complain when an answer with more than one
+   letter is given to a prompt that expects a single letter answer.
+
+ * The alias-expanded command lines are logged to the trace output.
+
+ * A new test was added to ensure git commands that are designed to
+   run outside repositories do work.
+
+ * A few tests in reftable library have been rewritten using the
+   unit test framework.
+
+ * A pair of test helpers that essentially are unit tests on hash
+   algorithms have been rewritten using the unit-tests framework.
+
+ * A test helper that essentially is unit tests on the "decorate"
+   logic has been rewritten using the unit-tests framework.
+
+ * Many memory leaks in the sparse-checkout code paths have been
+   plugged.
+
+ * "make check-docs" noticed problems and reported to its output but
+   failed to signal its findings with its exit status, which has been
+   corrected.
+
+ * Building with "-Werror -Wwrite-strings" is now supported.
+
+ * To help developers, the build procedure now allows builders to use
+   CFLAGS_APPEND to specify additional CFLAGS.
+
+ * "oidtree" tests were rewritten to use the unit test framework.
+
+ * The structure of the document that records longer-term project
+   decisions to deprecate/remove/update various behaviour has been
+   outlined.
+
+ * The pseudo-merge reachability bitmap to help more efficient storage
+   of the reachability bitmap in a repository with too many refs has
+   been added.
+
+ * When "git merge" sees that the index cannot be refreshed (e.g. due
+   to another process doing the same in the background), it died but
+   after writing MERGE_HEAD etc. files, which was useless for the
+   purpose to recover from the failure.
+
+ * The output from "git cat-file --batch-check" and "--batch-command
+   (info)" should not be unbuffered, for which some tests have been
+   added.
+
+ * A CPP macro USE_THE_REPOSITORY_VARIABLE is introduced to help
+   transition the codebase to rely less on the availability of the
+   singleton the_repository instance.
+
+ * "git version --build-options" reports the version information of
+   OpenSSL and other libraries (if used) in the build.
+
+ * Memory ownership rules for the in-core representation of
+   remote.*.url configuration values have been straightened out, which
+   resulted in a few leak fixes and code clarification.
+
+ * When bundleURI interface fetches multiple bundles, Git failed to
+   take full advantage of all bundles and ended up slurping duplicated
+   objects, which has been corrected.
+
+ * The code to deal with modified paths that are out-of-cone in a
+   sparsely checked out working tree has been optimized.
+
+ * An existing test of oidmap API has been rewritten with the
+   unit-test framework.
+
+ * The "ort" merge backend saw one bugfix for a crash that happens
+   when inner merge gets killed, and assorted code clean-ups.
+
+ * A new warning message is issued when a command has to expand a
+   sparse index to handle working tree cruft that are outside of the
+   sparse checkout.
+
+ * The test framework learned to take the test body not as a single
+   string but as a here-document.
+
+ * "git push '' HEAD:there" used to hit a BUG(); it has been corrected
+   to die with "fatal: bad repository ''".
+
+ * What happens when http.cookieFile gets the special value "" has
+   been clarified in the documentation.
+
+
+Fixes since v2.45
+-----------------
+
+ * "git rebase --signoff" used to forget that it needs to add a
+   sign-off to the resulting commit when told to continue after a
+   conflict stops its operation.
+
+ * The procedure to build multi-pack-index got confused by the
+   replace-refs mechanism, which has been corrected by disabling the
+   latter.
+
+ * The "-k" and "--rfc" options of "format-patch" will now error out
+   when used together, as one tells us not to add anything to the
+   title of the commit, and the other one tells us to add "RFC" in
+   addition to "PATCH".
+
+ * "git stash -S" did not handle binary files correctly, which has
+   been corrected.
+
+ * A scheduled "git maintenance" job is expected to work on all
+   repositories it knows about, but it stopped at the first one that
+   errored out.  Now it keeps going.
+
+ * zsh can pretend to be a normal shell pretty well except for some
+   glitches that we tickle in some of our scripts. Work them around
+   so that "vimdiff" and our test suite works well enough with it.
+
+ * Command line completion support for zsh (in contrib/) has been
+   updated to stop exposing internal state to end-user shell
+   interaction.
+
+ * Tests that try to corrupt in-repository files in chunked format did
+   not work well on macOS due to its broken "mv", which has been
+   worked around.
+
+ * The maximum size of attribute files is enforced more consistently.
+
+ * Unbreak CI jobs so that we do not attempt to use Python 2 that has
+   been removed from the platform.
+
+ * Git 2.43 started using the tree of HEAD as the source of attributes
+   in a bare repository, which has severe performance implications.
+   For now, revert the change, without ripping out a more explicit
+   support for the attr.tree configuration variable.
+
+ * The "--exit-code" option of "git diff" command learned to work with
+   the "--ext-diff" option.
+
+ * Windows CI running in GitHub Actions started complaining about the
+   order of arguments given to calloc(); the imported regex code uses
+   the wrong order almost consistently, which has been corrected.
+
+ * Expose "name conflict" error when a ref creation fails due to D/F
+   conflict in the ref namespace, to improve an error message given by
+   "git fetch".
+   (merge 9339fca23e it/refs-name-conflict later to maint).
+
+ * The SubmittingPatches document now refers folks to manpages
+   translation project.
+
+ * The documentation for "git diff --name-only" has been clarified
+   that it is about showing the names in the post-image tree.
+
+ * The credential helper that talks with osx keychain learned to avoid
+   storing back the authentication material it just got received from
+   the keychain.
+   (merge e1ab45b2da kn/osxkeychain-skip-idempotent-store later to maint)=
+.
+
+ * The chainlint script (invoked during "make test") did nothing when
+   it failed to detect the number of available CPUs.  It now falls
+   back to 1 CPU to avoid the problem.
+
+ * Revert overly aggressive "layered defence" that went into 2.45.1
+   and friends, which broke "git-lfs", "git-annex", and other use
+   cases, so that we can rebuild necessary counterparts in the open.
+
+ * "git init" in an already created directory, when the user
+   configuration has includeif.onbranch, started to fail recently,
+   which has been corrected.
+
+ * Memory leaks in "git mv" has been plugged.
+
+ * The safe.directory configuration knob has been updated to
+   optionally allow leading path matches.
+
+ * An overly large ".gitignore" files are now rejected silently.
+
+ * Upon expiration event, the credential subsystem forgot to clear
+   in-core authentication material other than password (whose support
+   was added recently), which has been corrected.
+
+ * Fix for an embarrassing typo that prevented Python2 tests from running
+   anywhere.
+
+ * Varargs functions that are unannotated as printf-like or execl-like
+   have been annotated as such.
+
+ * "git am" has a safety feature to prevent it from starting a new
+   session when there already is a session going.  It reliably
+   triggers when a mbox is given on the command line, but it has to
+   rely on the tty-ness of the standard input.  Add an explicit way to
+   opt out of this safety with a command line option.
+   (merge 62c71ace44 jk/am-retry later to maint).
+
+ * A leak in "git imap-send" that somehow escapes LSan has been
+   plugged.
+
+ * Setting core.abbrev too early before the repository set-up
+   (typically in "git clone") caused segfault, which as been
+   corrected.
+
+ * When the user adds to "git rebase -i" instruction to "pick" a merge
+   commit, the error experience is not pleasant.  Such an error is now
+   caught earlier in the process that parses the todo list.
+
+ * We forgot to normalize the result of getcwd() to NFC on macOS where
+   all other paths are normalized, which has been corrected.  This still
+   does not address the case where core.precomposeUnicode configuration
+   is not defined globally.
+
+ * Earlier we stopped using the tree of HEAD as the default source of
+   attributes in a bare repository, but failed to document it.  This
+   has been corrected.
+
+ * "git update-server-info" and "git commit-graph --write" have been
+   updated to use the tempfile API to avoid leaving cruft after
+   failing.
+
+ * An unused extern declaration for mingw has been removed to prevent
+   it from causing build failure.
+
+ * A helper function shared between two tests had a copy-paste bug,
+   which has been corrected.
+
+ * "git fetch-pack -k -k" without passing "--lock-pack" (which we
+   never do ourselves) did not work at all, which has been corrected.
+
+ * CI job to build minimum fuzzers learned to pass NO_CURL=3DNoThanks to
+   the build procedure, as its build environment does not offer, or
+   the rest of the build needs, anything cURL.
+   (merge 4e66b5a990 jc/fuzz-sans-curl later to maint).
+
+ * "git diff --no-ext-diff" when diff.external is configured ignored
+   the "--color-moved" option.
+   (merge 0f4b0d4cf0 rs/diff-color-moved-w-no-ext-diff-fix later to maint=
+).
+
+ * "git archive --add-virtual-file=3D<path>:<contents>" never paid
+   attention to the --prefix=3D<prefix> option but the documentation
+   said it would. The documentation has been corrected.
+   (merge 72c282098d jc/archive-prefix-with-add-virtual-file later to mai=
+nt).
+
+ * When GIT_PAGER failed to spawn, depending on the code path taken,
+   we failed immediately (correct) or just spew the payload to the
+   standard output (incorrect).  The code now always fail immediately
+   when GIT_PAGER fails.
+   (merge 78f0a5d187 rj/pager-die-upon-exec-failure later to maint).
+
+ * date parser updates to be more careful about underflowing epoch
+   based timestamp.
+   (merge 9d69789770 db/date-underflow-fix later to maint).
+
+ * The Bloom filter used for path limited history traversal was broken
+   on systems whose "char" is unsigned; update the implementation and
+   bump the format version to 2.
+   (merge 9c8a9ec787 tb/path-filter-fix later to maint).
+
+ * Typofix.
+   (merge 231cf7370e as/pathspec-h-typofix later to maint).
+
+ * Code clean-up.
+   (merge 4b837f821e rs/simplify-submodule-helper-super-prefix-invocation=
+ later to maint).
+
+ * "git describe --dirty --broken" forgot to refresh the index before
+   seeing if there is any chang, ("git describe --dirty" correctly did
+   so), which has been corrected.
+   (merge b8ae42e292 as/describe-broken-refresh-index-fix later to maint)=
+.
+
+ * Test suite has been taught not to unnecessarily rely on DNS failing
+   a bogus external name.
+   (merge 407cdbd271 jk/tests-without-dns later to maint).
+
+ * GitWeb update to use committer date consistently in rss/atom feeds.
+   (merge cf6ead095b am/gitweb-feed-use-committer-date later to maint).
+
+ * Custom control structures we invented more recently have been
+   taught to the clang-format file.
+   (merge 1457dff9be rs/clang-format-updates later to maint).
+
+ * Developer build procedure fix.
+   (merge df32729866 tb/dev-build-pedantic-fix later to maint).
+
+ * "git push" that pushes only deletion gave an unnecessary and
+   harmless error message when push negotiation is configured, which
+   has been corrected.
+   (merge 4d8ee0317f jc/disable-push-nego-for-deletion later to maint).
+
+ * Address-looking strings found on the trailer are now placed on the
+   Cc: list after running through sanitize_address by "git send-email".
+   (merge c852531f45 cb/send-email-sanitize-trailer-addresses later to ma=
+int).
+
+ * Tests that use GIT_TEST_SANITIZE_LEAK_LOG feature got their exit
+   status inverted, which has been corrected.
+   (merge 8c1d6691bc rj/test-sanitize-leak-log-fix later to maint).
+
+ * The http.cookieFile and http.saveCookies configuration variables
+   have a few values that need to be avoided, which are now ignored
+   with warning messages.
+   (merge 4f5822076f jc/http-cookiefile later to maint).
+
+ * Repacking a repository with multi-pack index started making stupid
+   pack selections in Git 2.45, which has been corrected.
+   (merge 8fb6d11fad ds/midx-write-repack-fix later to maint).
+
+ * Fix documentation mark-up regression in 2.45.
+   (merge 6474da0aa4 ja/doc-markup-updates-fix later to maint).
+
+ * Work around asciidoctor's css that renders `monospace` material
+   in the SYNOPSIS section of manual pages as block elements.
+   (merge d44ce6ddd5 js/doc-markup-updates-fix later to maint).
+
+ * Other code cleanup, docfix, build fix, etc.
+   (merge 493fdae046 ew/object-convert-leakfix later to maint).
+   (merge 00f3661a0a ss/doc-eol-attr-fix later to maint).
+   (merge 428c40da61 ri/doc-show-branch-fix later to maint).
+   (merge 58696bfcaa jc/where-is-bash-for-ci later to maint).
+   (merge 616e94ca24 tb/doc-max-tree-depth-fix later to maint).
+
+----------------------------------------------------------------
+
+Changes since v2.46.0-rc1 are as follows:
+
+Derrick Stolee (2):
+      t5319: add failing test case for repack/expire
+      midx-write: revert use of --stdin-packs
+
+Jean-No=C3=ABl Avila (1):
+      doc: git-clone fix discrepancy between asciidoc and asciidoctor
+
+Johannes Schindelin (1):
+      asciidoctor: fix `synopsis` rendering
+
+Junio C Hamano (2):
+      Doc: fix Asciidoctor css workaround
+      Git 2.46-rc2
+
+Patrick Steinhardt (1):
+      refs: fix format migration on Cygwin
 
