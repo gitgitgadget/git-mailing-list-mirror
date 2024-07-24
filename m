@@ -1,59 +1,40 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8B9159598
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:30:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677C1CAA1
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721831420; cv=none; b=Ha7cDAJSAuTZK1STVdtyCRy1QvjToOFQbRCVVrDP3uCMBZ+B2ArrYji3da2QTPSnn+ahjyweaoxIKxp/TDA0Yvt2FoNboo8AsMxnntV+/Yqwf1R36DCut53KT4M9SiNfGL/otwPJdyMD23nYfC457O3gkHNz87Z0L99BCAFwbsQ=
+	t=1721832177; cv=none; b=EMuZH9H3qpfH/Imkuuijzs6s4b+kFUvBH+UQZFTLLo1Kr3kQLZqMf5CyMkOMPrCPrBrM1TcfyzitfIMDDCY7AjqFJRAzgIa+UAe+/BqQqqceRAUsGcjIdIKuO8vIB11axhtE29zr0QNYWKx2xmBS111t3lwMxBEf0TLAzW8NutM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721831420; c=relaxed/simple;
-	bh=QS/dlGEOu0WtRM3oneN9+nFdNsCWagb5Y2khwGNeSXA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j2KnjAF0GeKCog3jbbTfcZCCOvE65HYVbblIByktUIx++YcU0oesQ0a0pPphOIjjYZ7TsOuKkWK1Q6oGDNHzk6dU1m7TK9Yonm0y4ETvHJY6vg6HX93C1oMqyHsqxvVayC2DhSQY6wEJadZ99r21SFkzj5GjuBqlUf6QC9t43X4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FrqL8Cuq; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721832177; c=relaxed/simple;
+	bh=Qvkvg5sJbg20pgDTAHKPVX92ONZIJWsYBC65U6W4yN8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DqTdbirXW5DBpagptFevSo42EsmedlNWXu/q7PHQIXOADzr4cxb0657wQ2C5EpU//cIGxiMY9Rjdpo2LwJ7emcDzzoqY6QKTwzZLOrJURA1+Ha9yiG9stx9G6OlwostVGyYOq3KDgkcrvn5Sr0VbYecYWkk1MThP2HUvq/0QrmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=dBVwLw8w; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FrqL8Cuq"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4279c924ca7so50542975e9.2
-        for <git@vger.kernel.org>; Wed, 24 Jul 2024 07:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721831417; x=1722436217; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4o1hsFdswC9LF52FjVv2645wXb/g2cWx3Gp+SymjMY4=;
-        b=FrqL8Cuq7h+PUknXa7xMusfHrRb4B7Lcr5jZcsmudjsv5ONH07IoJtF3Y9nCpfrFT+
-         lls8pMfya/jhr5Lk9udd5QGXMggZmTNqJnw2nA1rpGZyocZRyj4Gn0AqYdWj3GgIvhl2
-         hkaJn/CPIOElJEQqjvdorTyFVFXL3o4dAg5sgQtD+fwpENRu+rcBNWyU3BpUau1PtdDW
-         npA0hPjpL5FO24bdngqmEve3STrJHuHN091RFLAWvHsNdYsKINJ+m84jAvv3jskduBUn
-         PU780N+LCqcW+jSqge/qvi9FBaxFNZaubFoA3Cc5q2C9NOUY8L/aNS3bPJza2caOMrTG
-         kxaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721831417; x=1722436217;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4o1hsFdswC9LF52FjVv2645wXb/g2cWx3Gp+SymjMY4=;
-        b=LtquEss/sMsBN2v4nthl5ziywwUrakDol452ePrdN5L6ZLOQOQQayIByy4IAYRYY8t
-         jcb6+i2nZojjmzQDnXs66679NqWjRHVsQxx48xKFlRxpCwxYxFju+jP/fFGvdIXqg/t/
-         RBOlpqAzWrwJhwD7YwWEFLa3UqO0/tDnuBajSQPJjS98OcdG4c9685JPUXOgHhPIMJ8g
-         f2gCoh7o5qM6vwtnMkP/eGM2D6lzFbgBd9nN2nAbvgW54zr1CiIthJpvoh9Kl1CFjgST
-         Ybe9K9RqnQh2JXz6lPx5BaQhUTb9RYDUeV1LH+v4RJWIka1rF/uwhogMoKU/ies5t1do
-         WIzA==
-X-Gm-Message-State: AOJu0YxKck2gBc6SZSdt9Xzmr8Ww7a4B7tkqjJ4wDYPYM7/0prkI/3dA
-	hAnXSbtSJtpCbdVfoxYwcA/7jw1Exx6rcOUA6kjVP5YEAyymt8EG
-X-Google-Smtp-Source: AGHT+IGnjLplKAKCfmGagL+5nXZGOsfMTZ0liZUArknQF4ySyaUgaQHo+fl74boeVjDMQB76qGKPew==
-X-Received: by 2002:a05:600c:5246:b0:426:686f:cb4c with SMTP id 5b1f17b1804b1-427f7a93768mr24715345e9.32.1721831416296;
-        Wed, 24 Jul 2024 07:30:16 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f935dc32sm32171125e9.7.2024.07.24.07.30.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jul 2024 07:30:15 -0700 (PDT)
-Message-ID: <1841a256-5c01-4892-99c7-ad7df14e6e0e@gmail.com>
-Date: Wed, 24 Jul 2024 15:30:07 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="dBVwLw8w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1721832163; x=1722436963; i=l.s.r@web.de;
+	bh=SoMSiylfJhOCbTExPL4tJ3axdlawxbxTrlkFT9V5FU8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=dBVwLw8wzUbetU9gpqZXp5P492OOMwx6FO5jRv8uUiuKymGieQUq1YN0yo9cYUSS
+	 aHgz4zy7m7GyY+ivG6QT7/B1hjl98TyR7vBo3+RyB1hJhv99nM+zMbRn9HIfGxVZw
+	 7CJpzvxt8t9cDHjYh5pGWdMZSQ1KL6RzucZJpaXcoiDK7WJo1eOXht8hKixw5bGt8
+	 OOUOW+Kd1oHd7k72RDEohquusY8DpKsGf8eDxOxpnIbJxUv1pPrOH24npaIRrMqlZ
+	 C0r6LPF1YaCF2p5W02Np4e8mVK75bTuVo5yQRmFseeb5ZCCeAMx5MHeJBOWbEPIKJ
+	 zFJNbF8YI3OIzyKZpQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MoecP-1rv7ec1GET-00cW3E; Wed, 24
+ Jul 2024 16:42:43 +0200
+Message-ID: <73465c3d-1be0-456b-9471-f875e819c566@web.de>
+Date: Wed, 24 Jul 2024 16:42:42 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,69 +42,226 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] Documentation: document difference between release
- and free
-To: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-References: <cover.1721818488.git.ps@pks.im>
- <5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
- <CAOLa=ZScBn+sMB7BWMpsS=Ld0sUW14Li5JVuKPGKtY91hVo4jA@mail.gmail.com>
- <ZqD9keTtimiqJnJP@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v3 0/7] add and use for_test to simplify tests
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
 Content-Language: en-US
-In-Reply-To: <ZqD9keTtimiqJnJP@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:XuABPfRfdvLGonnT+7R62xqqf96Hhkn21fA7dOPhk+BqHKTIWuK
+ JY8NzDU8WZ2Em/NJ0zFIJbUll//ABXYyWUdhWEP2xXiI4aCoTT8xtsbnQiAm8d5x4L/URtA
+ vJdB3fV0uPf8htkKB5M2SF2HeTgmTc3XoIPB6mNkSmOAuY0xFRL8nqXXbdGeQEXak5fWnfg
+ EBgcc62w7S1iKkAZ5i7Nw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Cc0HE62yMn0=;vQZWe/kSNDWEnun6bFrEjNRIuG9
+ sXTr0hFlmWciNgJqJEFJ0L9RCqu1WYiwW3/AHfsMo2PIuEr/BisgUSDEIn4O/K9yzWDtkuoxn
+ MXVukr12Ly2/P1yHivRiWDZ+sgyHWnq5cnDIzgC5Pn6ImcR3XQSzwLIJRsHz+1cL/j8cOExjc
+ OpkoAdWek4rLGVZ/oUhteP7f+5Epx2znbdpnwoowsQzhifUVdbFR4/WAr/fR4TVRjosu4nE2a
+ y6ty3wc8VcbmdqAQcjcfpwYrvLpQP+u3PT7NDytTLMy0Ao/LzJyrUgcG7L+ODejGFGWNuEQVY
+ kpRik7SWkijm2dibuXg6LYtvW8kbVEslsXfUC/IPhkyjUtfjWf65X060fIxa2Nhdtpd5Iev+v
+ YjQr7HgokkIYwHHe2o0HO5Hok6eEO6825jZwyfr1duttKNSbPPbbOvQCwgenduvRD+Tv96P35
+ ssjvotQyRSzyYr3iIRc/OXrmBJtURP6AU0n6lCn79vzigaAwwrP8fDb68K6G4n0DY9FkfOwHI
+ jaTCXrQy0CvWefjFk20hKN9yIwJx9j3GmYMy+ywwxxSGOYlUc+XYlsLiwyyhLs3kUE788UIeW
+ Z/wUsUWXvfO4cX5gjwVi0e4RIM3FxpFbWuxUk5YAHY3aJbycvGv2pai5nRLAJvNtM87u7adWz
+ 4qrOQQsnhghLf/RAAXzEvMWHqnsvwWg0xoe++7rS6Hd8mCNZ8bTehv2K5fIwJxMlxXeCW1q4W
+ fe5Yt1ZmhAna1jjEC1SwRgIhPmO3xHuEkuVfxxHl9OkqpleMaZLCN/R/J6E8+sd4WrjxKFp8u
+ TUgWDM/UXzfac7aSEOamwhEg==
 
-Hi Patrick
+Changes since v2:
+- use nested here-docs in t0080 to reduce quoting and while keeping it
+  self-contained,
+- include spin-off patch 4e1041dc39 (unit-tests: show location of checks
+  outside of tests) from seen, but with a test,
+- document incompatibility of for_test and break,
+- add blank line between variable declarations and rest of strbuf test
+  code to match the original style.
 
-On 24/07/2024 14:11, Patrick Steinhardt wrote:
-> On Wed, Jul 24, 2024 at 04:46:20AM -0700, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>> We semi-regularly have discussions around whether a function shall be
->>> named `release()` or `free()`. For most of the part we use these two
->>> terminologies quite consistently though:
->>>
->>
->> I noticed there is also `clear()` used in some places. Should we also
->> mention that we don't recommend using `clear()` WRT freeing memory?
-> 
-> In any case I think we should decide on eithe using `clear()` or using
-> `release()` for consistency's sake. Which of both  we use I don't quite
-> care, but the following very shoddy analysis clearly favors `release()`:
-> 
->      $ git grep '_clear(' | wc -l
->      844
->      $ git grep '_release(' | wc -l
->      2126
+  t0080: use here-doc test body
+  unit-tests: show location of checks outside of tests
+  unit-tests: add for_test
+  t-ctype: use for_test
+  t-reftable-basics: use for_test
+  t-strvec: use for_test
+  t-strbuf: use for_test
 
-I think a fairer comparison would be to look at function declarations, 
-not all the call sites.
+ .clang-format                    |   2 +
+ t/helper/test-example-tap.c      |  35 +++
+ t/t0080-unit-test-output.sh      |  60 ++++--
+ t/unit-tests/t-ctype.c           |   4 +-
+ t/unit-tests/t-reftable-basics.c | 228 +++++++++-----------
+ t/unit-tests/t-strbuf.c          | 127 +++++------
+ t/unit-tests/t-strvec.c          | 356 ++++++++++++++-----------------
+ t/unit-tests/test-lib.c          |   7 +-
+ t/unit-tests/test-lib.h          |  20 ++
+ 9 files changed, 438 insertions(+), 401 deletions(-)
 
-$ { git grep 'void [a-z_]*_release(' '*.h'
-     git grep 'static void [a-z_]*_release(' '*.c'
-   } | wc -l
-47
-$ { git grep 'void [a-z_]*_clear(' '*.h'
-     git grep 'static void [a-z_]*_clear(' '*.c'
-   } | wc -l
-58
+Range-Diff gegen v2:
+1:  5faabaea54 < -:  ---------- t0080: move expected output to a file
+-:  ---------- > 1:  9b919853df t0080: use here-doc test body
+-:  ---------- > 2:  9cea2b43b9 unit-tests: show location of checks outsid=
+e of tests
+2:  d4f9fa0938 ! 3:  5ea7472d8a unit-tests: add for_test
+    @@ t/helper/test-example-tap.c: int cmd__example_tap(int argc, const c=
+har **argv)
+      	return test_done();
+      }
 
-So we have more _clear() functions than _release() functions. I think 
-there may sometimes be a semantic difference between _clear() and 
-_release() as well where some _clear() functions zero out the struct 
-after freeing the members.
+    - ## t/t0080/expect ##
+    -@@ t/t0080/expect: not ok 17 - messages from failing string and char =
+comparison
+    - # BUG: test has no checks at t/helper/test-example-tap.c:92
+    - not ok 18 - test with no checks
+    - ok 19 - test with no checks returns 0
+    --1..19
+    -+ok 20 - for_test passing test
+    -+# check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:98
+    -+#    left: 1
+    -+#   right: 2
+    -+not ok 21 - for_test failing test
+    -+not ok 22 - for_test passing TEST_TODO() # TODO
+    -+# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:102
+    -+not ok 23 - for_test failing TEST_TODO()
+    -+# check "0" failed at t/helper/test-example-tap.c:104
+    -+# skipping test - missing prerequisite
+    -+# skipping check '1' at t/helper/test-example-tap.c:106
+    -+ok 24 - for_test test_skip() # SKIP
+    -+# skipping test - missing prerequisite
+    -+ok 25 - for_test test_skip() inside TEST_TODO() # SKIP
+    -+# check "0" failed at t/helper/test-example-tap.c:111
+    -+not ok 26 - for_test TEST_TODO() after failing check
+    -+# check "0" failed at t/helper/test-example-tap.c:117
+    -+not ok 27 - for_test failing check after TEST_TODO()
+    -+# check "!strcmp("\thello\\", "there\"\n")" failed at t/helper/test-=
+example-tap.c:120
+    -+#    left: "\011hello\\"
+    -+#   right: "there\"\012"
+    -+# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.=
+c:121
+    -+#    left: "NULL"
+    -+#   right: NULL
+    -+# check "'a' =3D=3D '\n'" failed at t/helper/test-example-tap.c:122
+    -+#    left: 'a'
+    -+#   right: '\012'
+    -+# check "'\\' =3D=3D '\''" failed at t/helper/test-example-tap.c:123
+    -+#    left: '\\'
+    -+#   right: '\''
+    -+not ok 28 - for_test messages from failing string and char compariso=
+n
+    -+# BUG: test has no checks at t/helper/test-example-tap.c:125
+    -+not ok 29 - for_test test with no checks
+    -+1..29
+    + ## t/t0080-unit-test-output.sh ##
+    +@@ t/t0080-unit-test-output.sh: test_expect_success 'TAP output from =
+unit tests' - <<\EOT
+    + 	# BUG: test has no checks at t/helper/test-example-tap.c:94
+    + 	not ok 18 - test with no checks
+    + 	ok 19 - test with no checks returns 0
+    +-	1..19
+    ++	ok 20 - for_test passing test
+    ++	# check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:100
+    ++	#    left: 1
+    ++	#   right: 2
+    ++	not ok 21 - for_test failing test
+    ++	not ok 22 - for_test passing TEST_TODO() # TODO
+    ++	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:10=
+4
+    ++	not ok 23 - for_test failing TEST_TODO()
+    ++	# check "0" failed at t/helper/test-example-tap.c:106
+    ++	# skipping test - missing prerequisite
+    ++	# skipping check '1' at t/helper/test-example-tap.c:108
+    ++	ok 24 - for_test test_skip() # SKIP
+    ++	# skipping test - missing prerequisite
+    ++	ok 25 - for_test test_skip() inside TEST_TODO() # SKIP
+    ++	# check "0" failed at t/helper/test-example-tap.c:113
+    ++	not ok 26 - for_test TEST_TODO() after failing check
+    ++	# check "0" failed at t/helper/test-example-tap.c:119
+    ++	not ok 27 - for_test failing check after TEST_TODO()
+    ++	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/te=
+st-example-tap.c:122
+    ++	#    left: "\011hello\\\\"
+    ++	#   right: "there\"\012"
+    ++	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap=
+.c:123
+    ++	#    left: "NULL"
+    ++	#   right: NULL
+    ++	# check "'a' =3D=3D '\n'" failed at t/helper/test-example-tap.c:124
+    ++	#    left: 'a'
+    ++	#   right: '\012'
+    ++	# check "'\\\\' =3D=3D '\\''" failed at t/helper/test-example-tap.c=
+:125
+    ++	#    left: '\\\\'
+    ++	#   right: '\\''
+    ++	not ok 28 - for_test messages from failing string and char comparis=
+on
+    ++	# BUG: test has no checks at t/helper/test-example-tap.c:127
+    ++	not ok 29 - for_test test with no checks
+    ++	1..29
+    + 	EOF
+    +
+    + 	! test-tool example-tap >actual &&
 
-Thanks for working on this it will be a useful addition to our coding 
-guidelines
-
-Best Wishes
-
-Phillip
-
-> So yeah, I'm happy to explicitly mention that `clear()` shouldn't be
-> used in favor of `release()`.
-> 
-> Patrick
+      ## t/unit-tests/test-lib.h ##
+     @@
+    @@ t/unit-tests/test-lib.h
+     + * Run a test unless test_skip_all() has been called.  Acts like a f=
+or
+     + * loop that runs at most once, with the test description between th=
+e
+     + * parentheses and the test body as a statement or block after them.
+    -+ * The description for each test should be unique.  E.g.:
+    ++ * Supports continue to end the test early, but not break. The
+    ++ * description for each test should be unique.  E.g.:
+     + *
+     + *  for_test ("something else %d %d", arg1, arg2) {
+     + *          prepare();
+3:  a7cd5a2a3a =3D 4:  cf2fa74e9c t-ctype: use for_test
+4:  cc07910f88 =3D 5:  f2e6271124 t-reftable-basics: use for_test
+5:  11c1675a13 =3D 6:  c87a17189c t-strvec: use for_test
+6:  cd79132f95 ! 7:  beaf8194fd t-strbuf: use for_test
+    @@ t/unit-tests/t-strbuf.c: static void t_addstr(struct strbuf *buf, c=
+onst void *da
+     +
+     +	for_test ("strbuf_addch adds char") {
+     +		struct strbuf sb =3D STRBUF_INIT;
+    ++
+     +		t_addch(&sb, 'a');
+     +		t_release(&sb);
+     +	}
+     +
+     +	for_test ("strbuf_addch adds NUL char") {
+     +		struct strbuf sb =3D STRBUF_INIT;
+    ++
+     +		t_addch(&sb, '\0');
+     +		t_release(&sb);
+     +	}
+     +
+     +	for_test ("strbuf_addch appends to initial value") {
+     +		struct strbuf sb =3D STRBUF_INIT;
+    ++
+     +		t_addstr(&sb, "initial value");
+     +		t_addch(&sb, 'a');
+     +		t_release(&sb);
+    @@ t/unit-tests/t-strbuf.c: static void t_addstr(struct strbuf *buf, c=
+onst void *da
+     +
+     +	for_test ("strbuf_addstr adds string") {
+     +		struct strbuf sb =3D STRBUF_INIT;
+    ++
+     +		t_addstr(&sb, "hello there");
+     +		t_release(&sb);
+     +	}
+     +
+     +	for_test ("strbuf_addstr appends string to initial value") {
+     +		struct strbuf sb =3D STRBUF_INIT;
+    ++
+     +		t_addstr(&sb, "initial value");
+     +		t_addstr(&sb, "hello there");
+     +		t_release(&sb);
+7:  83dafb009d < -:  ---------- unit-tests: show location of checks outsid=
+e of tests
+=2D-
+2.45.2
