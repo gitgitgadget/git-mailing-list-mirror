@@ -1,179 +1,143 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0276158A36
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE9C41A80
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721821509; cv=none; b=C6mrc3RSuzlp39y7qMAFAtmx/dH3ENL52obTj3uNDFiV87trsa0Oqq94Uab3zVMU7VUZcMecX3ZyTmfSm3BGJSSTWLnfWJZ0xc19nfcN9U0bJhvlTO7r9VW99NVYg3nXOZgWfA2WqaGbPQuduNbFJFAkxE7wb8EgXSImZE3d+VM=
+	t=1721821583; cv=none; b=FMuMomNY9raumav0Fei2INAr27yQcpVJjKVqTVfoe6O7UDEZiML69xZ29NhsO2ZfwSH7yuuBR2MD/zBWXFm+dm+x4rPEhmi788WOTYh7R6xxE/2ZVf9z4XktnbNngI5udGrJp9wAQOBQEAW86RKPRAuAuczXDUMVVpx88vxOXMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721821509; c=relaxed/simple;
-	bh=o8Ii+keb638e76pNCffq7cD58azl7fRuFq5lmVMT3Vk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lWL60+/+3Smgo8MQRC0Q9BegN3Mnavr6iLSemn+uXkMjbJs515+xGrE4H2yxiAXAhtWpowFwEvffisRni/KSqOA+Ft8L91FWFyWFPmekLKIehPbbqShZS0+PEXhVkGq8xX7IHjdzSooJeMAokuzGiGYinOETI7KcDJl3jeKbRFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kkoQjiQy; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1721821583; c=relaxed/simple;
+	bh=UoVMKcmo7WpLocEeMOzzeRyANvq75198G/lXtPLw510=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=AY3qcjDPZhl5bvav/qdhc+WMzurIOyAIiLCqaXEzK2mjE7GpDS3s9eLiDjKzxqGcu4hStx8VBjGAF1u6n2Fm3LX5nlVYXsEVQ0so+TDe9e6N3wK6J9uOCOMFfSBo5aOe2rLVbxHM3/rlwUAUdH4SYpRsqMd3Ql3C8K5qkMjxKG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fcZ9Z8Ig; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kkoQjiQy"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so58430035e9.2
-        for <git@vger.kernel.org>; Wed, 24 Jul 2024 04:45:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fcZ9Z8Ig"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2610623f445so3290258fac.1
+        for <git@vger.kernel.org>; Wed, 24 Jul 2024 04:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721821506; x=1722426306; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n60XrBbnRBphxdLOallX7knQUSRYJ8MdRWM+lfj/nWM=;
-        b=kkoQjiQyuDQ1d2nYV+Pbbk0AG9cRMmT0NAmYHt9+JNmtW2U3T6cjEl+jGCFCgpCNhP
-         qFFivPOmWbAmSeCaUkIWta8X9VCnhOyCt+834lClaFHktGXyIeX7Fj+LeaGbPsT7qGGK
-         Wz3HKL9iFlhT84OJ5eG2ixMTqgcRnLdeOtwYi4Gk4XVm0qjxsB4V6CD64PZTeJv8Awdl
-         14bYdiedBQw+PhqQW4FOQqVraGdHzxcB7JUb8fU81LZekjvjUXSs7ZchJRL6Nwo+z9BN
-         BkIFPUVFRj2UuZTKJyXD3QHMqqbuFPR2LuGf9S12kAiuQtO3b4vYu/hkcdoj+fR3tuxw
-         9qNg==
+        d=gmail.com; s=20230601; t=1721821581; x=1722426381; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hzIVNnCB4uBRwt/J5MwU6JniwPykyZnckBGh5hZgpHM=;
+        b=fcZ9Z8Ig/ZR73KqLQBpzUdh8uhLeSPnPz42bEGARdnqjiAtOYrtshT2JMKWzCBCL+n
+         n8KJWKOy54MrAEcpk7c5ZXzDRP689cjrkaMjLsSaIHBwehZT7p+EOgcZWKKS+mlQ49/B
+         yPr+8qeHsHNYqlfcjzeIZlveM4sJ9dsodpDEaKWjs++IywbYkGuBQ5cBavqvTp1Ej/yH
+         +HuQ12icwVz5Ba51qu4NnQMzBRaEinRG+cIqwGoM/mxZrlWcGnQnkI3F0DWteCCVI115
+         yj8eaS23e6rP1zFMqKWWAON962Q7VTYPNrkNi6GsC1rsTRWhtmxuGROHHnGq7SkgirqJ
+         MD+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721821506; x=1722426306;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n60XrBbnRBphxdLOallX7knQUSRYJ8MdRWM+lfj/nWM=;
-        b=q1YbNBRsri//OeZEZ2AslGTERQqmXzztSaoUU32jkaf8QOPAxbmW/1COHSy4DuLOMP
-         qVa+bmr+W2CXm9YVXZdxx+Yd5BJpWlAWxpE1hPT7OXTDSbG4v4t2XGdz8l9Wlh/uShm0
-         5bQ80yPCMsLZnHGQzpT11/gvKjCF855V4jpjCxLgksqe/54O+5zGeyqBCqPwVujMgvJj
-         4IOmigeORQ97dhJ0jW4SoL/ilqhAvApL6kLSa4LDCrVpDu1WM/Z0yGU2sxh23/hzCfqM
-         D33cZarT1thyifCNDZbHdTibYFjHWUJONX45C/F1bnoaOU+u/b7/KvdvyvdSeEvBxPlb
-         CFYg==
-X-Gm-Message-State: AOJu0YwqQPKaSY+XKNw+w1re0VuNovUdoqTRnIteQx0JiFlr1KIRqSTW
-	O6fa0sTva56tSOUTa7Ilrx+V3UQrwG9qIW+HLd8U5PYAffcAl8Aree9jLw==
-X-Google-Smtp-Source: AGHT+IGtulV4SKdgSWubw3rDmz4MsZYOGquN14JpTQmU8ID9BNgtBG+PPDF7KhNaCAt08fbfiDbtmg==
-X-Received: by 2002:a05:600c:1906:b0:426:58cb:8ca4 with SMTP id 5b1f17b1804b1-427f7adf1fbmr20863405e9.37.1721821505520;
-        Wed, 24 Jul 2024 04:45:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f9359422sm26688275e9.10.2024.07.24.04.45.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jul 2024 04:45:04 -0700 (PDT)
-Message-Id: <pull.1744.v2.git.git.1721821503173.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
-References: <pull.1744.git.git.1721117039874.gitgitgadget@gmail.com>
-From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jul 2024 11:45:03 +0000
-Subject: [PATCH v2] Fix to avoid high memory footprint
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1721821581; x=1722426381;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hzIVNnCB4uBRwt/J5MwU6JniwPykyZnckBGh5hZgpHM=;
+        b=f6LKAELp0e45eQVmmm/kg+f34V5yRfp9SRhvXWPiXynZW+9sMsHc0AuasuNRLJZlNX
+         oKvYkgfh5Aguzplec973hU2cUopwlT9mmOYHkSqrbG46VfapW/YIruSOqesGqav3efwE
+         t9rLEcrIUW0zd118xPRrr0rAjvx+HgIHpsexb3USLXznnd0gEIUMF9/p3bHSBi4ppkS8
+         4X1EJDRpSa9eRuErxQPmb023kH8Wo525ywCP7a+rleym9FUI15LzDGS2MxIoORuzG0BA
+         S2YTFBai5UyZ9TImN6Sxz+uz6nRL/SOVG9eOST98mvYYamqgjdyB+FVagp9cd0wJeMXd
+         DD2A==
+X-Forwarded-Encrypted: i=1; AJvYcCWS+ho99KYMa4KE1CEVptRNmmCmyrg5Tt/k50/lMzktghRggq6g8cfbGLk2fNzsHV0RGgO+yOU6PV5dAf7UYfdlFNN9
+X-Gm-Message-State: AOJu0YzDpWcd4eoFaP0E86C8M0zLeiU4Sd2RW1CssG5BPf4vWcuTJ2Bn
+	qM7odNHIur4xQx8LWxU9aod/swPhted26M9zz0RrWYphm4j8puN3/lYnoXwlRS1gc8CfgAkX9lc
+	PWCYjUekFkasX0/BKXymv4/+7UVa4fy0x
+X-Google-Smtp-Source: AGHT+IF0vQbPmI7MJtxH8EAmc6RmkzepPn45UnYRmHfpCL7ppv7j+02Nm/yVbK4tPCBqVmcpYmoOgOaoTb8KaFRQCXU=
+X-Received: by 2002:a05:6870:e9aa:b0:261:ab8:3de4 with SMTP id
+ 586e51a60fabf-261213a4a13mr13691224fac.15.1721821580995; Wed, 24 Jul 2024
+ 04:46:20 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jul 2024 04:46:20 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
+References: <cover.1721818488.git.ps@pks.im> <5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Haritha  <harithamma.d@ibm.com>,
-    D Harithamma <harithamma.d@ibm.com>
+Date: Wed, 24 Jul 2024 04:46:20 -0700
+Message-ID: <CAOLa=ZScBn+sMB7BWMpsS=Ld0sUW14Li5JVuKPGKtY91hVo4jA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Documentation: document difference between release
+ and free
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000b3cfe8061dfcd326"
 
-From: D Harithamma <harithamma.d@ibm.com>
+--000000000000b3cfe8061dfcd326
+Content-Type: text/plain; charset="UTF-8"
 
-This fix avoids high memory footprint when adding files that require
-conversion.  Git has a trace_encoding routine that prints trace output
-when GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment
-variable is used to debug the encoding contents.  When a 40MB file is
-added, it requests close to 1.8GB of storage from xrealloc which can
-lead to out of memory errors.  However, the check for
-GIT_TRACE_WORKING_TREE_ENCODING is done after the string is allocated.
-This resolves high memory footprints even when
-GIT_TRACE_WORKING_TREE_ENCODING is not active.  This fix adds an early
-exit to avoid the unnecessary memory allocation.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Harithamma D <harithamma.d@ibm.com>
----
-    Fix to avoid high memory footprint
-    
-    This fix avoids high memory footprint when adding files that require
-    conversion
-    
-    Git has a trace_encoding routine that prints trace output when
-    GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment variable is
-    used to debug the encoding contents. When a 40MB file is added, it
-    requests close to 1.8GB of storage from xrealloc which can lead to out
-    of memory errors. However, the check for GIT_TRACE_WORKING_TREE_ENCODING
-    is done after the string is allocated. This resolves high memory
-    footprints even when GIT_TRACE_WORKING_TREE_ENCODING is not active. This
-    fix adds an early exit to avoid the unnecessary memory allocation.
+> We semi-regularly have discussions around whether a function shall be
+> named `release()` or `free()`. For most of the part we use these two
+> terminologies quite consistently though:
+>
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1744%2FHarithaIBM%2FmemFootprintFix-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1744/HarithaIBM/memFootprintFix-v2
-Pull-Request: https://github.com/git/git/pull/1744
+I noticed there is also `clear()` used in some places. Should we also
+mention that we don't recommend using `clear()` WRT freeing memory?
 
-Range-diff vs v1:
+>   - `release()` only frees internal state of a structure, whereas the
+>     structure itself is not free'd.
+>
+>   - `free()` frees both internal state and the structure itself.
+>
+> Carve out a space where we can add idiomatic names for common functions
+> in our coding guidelines. This space can get extended in the future when
+> we feel the need to document more idiomatic names.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/CodingGuidelines | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 34fcbcb5a4..ace4c4ad0c 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -560,6 +560,18 @@ For C programs:
+>
+>  	void reset_strbuf(struct strbuf *buf);
+>
+> + - There are several common idiomatic names for functions performing
+> +   specific tasks on structures:
+> +
+> +    - `<struct>_init()` initializes a structure without allocating the
+> +      structure itself.
+> +
+> +    - `<struct>_release()` releases a structure's contents without
+> +      freeing the structure.
+> +
+> +    - `<struct>_free()` releases a structure's contents and frees the
+> +      structure.
+> +
+>  For Perl programs:
+>
+>   - Most of the C guidelines above apply.
+> --
+> 2.46.0.rc1.dirty
 
- 1:  51c02f58fd6 ! 1:  500b7eacf2a Fix to avoid high memory footprint
-     @@ Metadata
-       ## Commit message ##
-          Fix to avoid high memory footprint
-      
-     -    This fix avoids high memory footprint when
-     -    adding files that require conversion.
-     -    Git has a trace_encoding routine that prints trace
-     -    output when GIT_TRACE_WORKING_TREE_ENCODING=1 is
-     -    set. This environment variable is used to debug
-     -    the encoding contents.
-     -    When a 40MB file is added, it requests close to
-     -    1.8GB of storage from xrealloc which can lead
-     -    to out of memory errors.
-     -    However, the check for
-     -    GIT_TRACE_WORKING_TREE_ENCODING is done after
-     -    the string is allocated. This resolves high
-     -    memory footprints even when
-     -    GIT_TRACE_WORKING_TREE_ENCODING is not active.
-     -    This fix adds an early exit to avoid the
-     -    unnecessary memory allocation.
-     +    This fix avoids high memory footprint when adding files that require
-     +    conversion.  Git has a trace_encoding routine that prints trace output
-     +    when GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment
-     +    variable is used to debug the encoding contents.  When a 40MB file is
-     +    added, it requests close to 1.8GB of storage from xrealloc which can
-     +    lead to out of memory errors.  However, the check for
-     +    GIT_TRACE_WORKING_TREE_ENCODING is done after the string is allocated.
-     +    This resolves high memory footprints even when
-     +    GIT_TRACE_WORKING_TREE_ENCODING is not active.  This fix adds an early
-     +    exit to avoid the unnecessary memory allocation.
-      
-     -    Signed-off-by: Haritha D <harithamma.d@ibm.com>
-     +    Signed-off-by: Harithamma D <harithamma.d@ibm.com>
-      
-       ## convert.c ##
-      @@ convert.c: static void trace_encoding(const char *context, const char *path,
-       	struct strbuf trace = STRBUF_INIT;
-       	int i;
-       
-     -+	// If tracing is not on, exit early to avoid high memory footprint
-     -+	if (!trace_pass_fl(&coe)) {
-     ++	if (!trace_want(&coe))
-      +		return;
-     -+	}
-      +
-       	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
-       	for (i = 0; i < len && buf; ++i) {
+The patch itself looks good.
 
+--000000000000b3cfe8061dfcd326
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 637cc8f7a695f8fd_0.1
 
- convert.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/convert.c b/convert.c
-index d8737fe0f2d..c4ddc4de81b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -324,6 +324,9 @@ static void trace_encoding(const char *context, const char *path,
- 	struct strbuf trace = STRBUF_INIT;
- 	int i;
- 
-+	if (!trace_want(&coe))
-+		return;
-+
- 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
- 	for (i = 0; i < len && buf; ++i) {
- 		strbuf_addf(
-
-base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
--- 
-gitgitgadget
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hZzZZa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0xEQy85UUN2OVd6aThnZ0pSbVg5c2dkekFRdDlGZgpqSFl1K3JsQjVL
+TWd6eE1RRlQ2cjJVS0I5NjVBbjhlV1dseXRTTDNwN3I3MXduWXkva3RHemExVW5uUno2eUthCnNk
+Q01DbHRnVVU5eGdOa1VvN3JsOXpVV1NlQ1JtU0E1blZlK1hDK1RieU5LQnNxaXRnVHljalRiQXpG
+Z2k4bTMKdm5rM1RKaFJ1Ylg4VUFsNGllUGtFV09aeGNJemZ2Z2JoL2NOelRFTDgxM0tmbFRnWWFX
+ZDdnelkxN0FMRjBYOApPZFhwYUhFcWF4K3AyeHFMNm1SOGZLY0hWZnBWZ2N6dURLWVRHVVVCWUph
+eko2OXkzaGtOMmxrTGV2YmVnMnpICnlRNTV6SG05azloVjExL0lYQWx6cUZoOTJteG55cVozcmxz
+OXBJVFdtSlkwN0h2dU40OGxKNkFzY1pRRXY2cS8KQWpocWNVZDNkR0pkM2hIZ01IcFVXUHFuN0Fj
+cWJmalVmVTlSbHFqN1QzSmVXcExjaHdzRlI0dmNCNjdRRjczQQpXdFkvMnlZSnBzU3FJWjFzalpF
+V2U0bWRWdzRrVXhadXdpNzRJWXZSREF0RHh6clJiZm10TlVXYzZPcUxydnFJCnIrMFliRmJiSjlD
+WmxIN2JpeFczdURxM1lrODcyWmtpS2pJZDd2ST0KPUd4cFIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b3cfe8061dfcd326--
