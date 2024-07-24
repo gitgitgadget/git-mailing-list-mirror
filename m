@@ -1,146 +1,96 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B009313A24D
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 22:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7D82D792
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 23:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721859451; cv=none; b=M5z9AQ3/IBYjNxOAMmK4J2Y5zaPGprVnwZUfYgQ2J/xXPR+WRXVO0CpOaxd3/Wv9SSr9PpPfACHr4ek4bJlYWSWjCfDYvJoQw7EMWSAcPeYNLlj+/UewFzwPBRB6wdxgKrVaq39XeAVjMO/WHQEXKgCCayD74erA3eV0LlPDBFs=
+	t=1721862959; cv=none; b=BvAEcBuVLqfcIDNFcc+dsI7ZTRX0OfhBwwTAy1+xdTn8NUhCF9g3V1B+xv8M3TRs8iu7rQcoTNi/Ox0n7Y/J4g3MDO//pSQ3ZcXk9s0klnGTatUOSY47Z6onDz7KesNHDLzUlASuLiOTqnzJ6E78BmWYwEZItLoi4qD7K0g0SBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721859451; c=relaxed/simple;
-	bh=d/fTRKQOjW1GVOqVKyEImrJc4RX55PKQ58Hwf3CBka8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=AbiBYLN1vtBsVbJ9U2dDhIusDmnIU3rKB4LpdFAPNYGOzfTu5czZCVGACvAo3PjjnHpW/GZz0QRCbv7+GcOn1TttJBGnNBW8cNinQfuW5UcrbVqCD2YfCVCv+ik11KNN5H+qOq4350wMyz6YXzMD/2SEvSVEOA37tgnF6qvFIDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=byCop/DP; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1721862959; c=relaxed/simple;
+	bh=NgkL+n8pjoxL7QKwV3/kvmP/hxBKXiKjJT7XS99QcRc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=biw9htnCT88fegAvj6x1nIH3yI8HuykDYz2NgGGGbTHwcOHOrOJciMP4B7n/od0IKTnuKjD/HvexJcUXgSsdH8phs4OEsgLVsbEiciKeEPFcIHtJV10dmoVOjONtN+HGt8SftPOKGFKVbCDEcXKjmzv1pF8BVAMTnL3K5AXlic4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FI9/Nvar; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="byCop/DP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1721859429; x=1722464229;
-	i=johannes.schindelin@gmx.de;
-	bh=NpTbP+1Kc9QqYX/fSxB6Niis2Gtx63CAKnx2nlfSyIg=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=byCop/DPdlrObKasomuFLDF6N4SvV5IvlJBw+cQceFt8ISzrJPOQI0j1mNshZd0f
-	 64EBaHAZl+KhCKTzdysnh8cMAs4v53SMuMOBwvQXcgV+T5F3FDdmkZjyiIe546LVb
-	 EwPBbth5TGUGontj9vUKDKo8JMB1kTYAwAK+M4t8pLA2O5X8953peX99hmRb9Svxm
-	 ggmwWLGTPqatJD/lXYuHmaSdQapZ4WXbNbgC3az+efJRaul9QXXh95zzrLrvDR4rQ
-	 1sGdkcvgzNBH0h67QZS4OdI25viqQ/2pEqadiSYOE9XtXNRgIKmYzPltdjqBPT7p2
-	 wS2RZCWmZXhn5AUqBQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.218]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDywo-1sP0W90Rym-00GLqd; Thu, 25
- Jul 2024 00:17:09 +0200
-Date: Thu, 25 Jul 2024 00:17:08 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    "Randall S. Becker" <the.n.e.key@gmail.com>, git@vger.kernel.org, 
-    "Randall S. Becker" <randall.becker@nexbridge.ca>, 
-    "Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v2 1/2] Teach git version --build-options about libcurl
-In-Reply-To: <20240724205541.GA557365@coredump.intra.peff.net>
-Message-ID: <8ef819f0-e80a-74ec-274d-fe10991fe992@gmx.de>
-References: <20240621180947.64419-1-randall.becker@nexbridge.ca> <20240621180947.64419-2-randall.becker@nexbridge.ca> <f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de> <xmqqed8me36c.fsf@gitster.g> <20240624235557.GA2727@coredump.intra.peff.net>
- <402c12c2-7ada-4d9e-c3da-1a78827e7496@gmx.de> <20240724205541.GA557365@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FI9/Nvar"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C202C2CCE8;
+	Wed, 24 Jul 2024 19:15:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=NgkL+n8pjoxL
+	7QKwV3/kvmP/hxBKXiKjJT7XS99QcRc=; b=FI9/NvarsfiViya4CFaliAcjjCmR
+	k+k0Pcs06tQAW9FDIbqjj1hC8MAQgI6apqhWDw9bjmeBehgF7QST9mlRfOPAnyDG
+	thEPoz7Z5hxtoKp1SjwRxPUmrBnkMswnuRX7mkHRvcJeBICSW5elh2qrrXwgQAkz
+	a5DrDiZGl03vp9Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id ABED02CCE6;
+	Wed, 24 Jul 2024 19:15:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10CE02CCE5;
+	Wed, 24 Jul 2024 19:15:49 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH v2 0/3] doc: introducing synopsis para
+In-Reply-To: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+	Avila via GitGitGadget"'s message of "Wed, 24 Jul 2024 21:06:16
+	+0000")
+References: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
+	<pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
+Date: Wed, 24 Jul 2024 16:15:48 -0700
+Message-ID: <xmqqcyn2s7ob.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0baq5l4Lh8He0kfFeGpo/JrtsVi4qNT0yewdVAYMz6LSiub/t2p
- mxrq2cPYQiFtNSMeDddrZ0hIwKDY8MrznmW+DzHRTH1gCRwMWIW9t8sbjo+aO61QA68xAQL
- 4+T25lpcqgGAiiHTAR4dF/zUzHAe8m0szr+1lU8H1S0gvsqWcaovaBrsaFRNxpNmO5NGhED
- 1R3Tm44y/mFcUb4U/e9jg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ZKIy0bPbuic=;IwrXZuwtHYVKjr75RB9JCmaYUgB
- AjvrlNHF1Dfp9htdJd9s3eCo+o+lTj9qlWhUL/4QVVNb71PHN3vppI5/TJD/K6aFBVecPBt3i
- oabyJ/yN2upQ+HhQ1I+5dAtLEo3YRard1Vd2g6BDCHwoyLord4UbmQjPNtgqxZ4C+FACjXUnN
- 9wignwAIEoDFT7JW1d0F2YIRHV0zcbnBWDaaevIt0wRaT8ltjG0LTWnWVaPMMd9syvLL8Rvjw
- rx+Oao7nLPsrR/EvPXH+2i55szJaHkceNaxXIVSyABo38zXG1SsaKqS36re7Pqx7fOa6hLoWQ
- zFQbFl2mikl84NOfk5ZyQBufwmCke4CAE58OsjUavmQJKzLw7TnBEqJNy7pisS5+x6M1wY8+C
- Q9qWtZeD3LzQ2+7NiITuyHo87hePu9VkgNBtJ9Kpa8KLycrRPKU5zcnTh55tbJbjt0OINUy0e
- itoJcxenZmoKKmahz+DSoVSCyM/Eu0Bj+cIFSQdiNZpxYWtwo7ooxsntAQMcbwvf16qnCN5WC
- vAUwResqnhI2zeeuYmKIjtmAVdxfvMadjP95yw4TN1BJ+Eg3bmuXEzTIY0+nnTbVf06xYhBjS
- n3RIwRbMy3eW7ufh+85cao58fSNgkYdA8cOvnAxzvS3Uh0Z1i0CTRXxaWH0hbpNF6L5VMMgiB
- jYuhvWEPGMGgiNqEp0aHfA0EzQ7G2ONDOS1x6O+N8HAfjNoNYjVZYOD+ATLId4gTva4TWH4H+
- +JOblAmqQjlo9ZrViHXCgcFff1+St6fI97xaM2B8LGLQM3j04U1C3t0CSpuzZA/sUn6DocySo
- l3PHEOkyl7nV2wRBqkvHZlEZzW01zwA6S2QYHRUmd+qWE=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ AA6C0E10-4A12-11EF-BFE7-BAC1940A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, 24 Jul 2024, Jeff King wrote:
+> Following several issues with the way the formatting of synopsis is don=
+e in
+> the manpages that were recently reworked, this patch series introduces =
+the
+> processing of a new custom paragraph attribute 'synopsis'.
 
-> On Wed, Jul 24, 2024 at 12:48:20PM +0200, Johannes Schindelin wrote:
->
-> > > But we could also have "git version --build-options" call "remote-ht=
-tps
-> > > --build-options" automatically, and just let it dump to the shared
-> > > stdout stream.
-> >
-> > Teaching `git version` to show the cURL version may not be the best id=
-ea,
-> > especially when it comes to the version used at runtime and using the
-> > command-line option `--build-options` (with the option being specifica=
-lly
-> > about the build, not the runtime, version that was used).
-> >
-> > Wouldn't it be better to go with Emily's approach to surface this
-> > information via `git bugreport` instead of `git version`, potentially
-> > enhanced to show both build-time and runtime version of libcurl?
->
-> I don't have a strong preference either way. I naturally turned towards
-> "git version" because that's what this thread was about, and also
-> because it predates git-bugreport.
+The rendered result looks OK but the source being just like what we
+would write in plain text files without any extra mark-up makes it
+look quite nice.
 
-All true, but the name `git version` also sets some expectations. Users
-who run `<command> version` will expect to see the version of the command
-they are actually using currently.
+I wonder what we want to do with some oddballs, like git-shortlog
+that uses "|" not as an alternative but literally a pipe (i.e. "feed
+the output of this other command via a pipe to this command"),
+though.
 
-For example, `curl -V` will list something like:
+    git log --pretty=3Dshort | git shortlog [<options>]
 
-	curl 7.81.0 (x86_64-pc-linux-gnu) libcurl/7.81.0 OpenSSL/3.0.2
-	zlib/1.2.11 brotli/1.0.9 zstd/1.4.8 libidn2/2.3.2 libpsl/0.21.0
-	(+libidn2/2.3.2) libssh/0.9.6/openssl/zlib nghttp2/1.43.0
-	librtmp/2.3 OpenLDAP/2.5.18
+There may be also some page that indicates "this command takes its
+input from its standard input" by using something like
 
-Those are the versions of the components that are actually used when
-invoking `curl` commands, not versions that were present on the machine
-that built the `curl` package.
+    git cmd [--foo] [--bar] <input-file
 
-Compare that to what we're experiencing with Git for Windows v2.46.0-rc2:
-`git version --build-options` lists `libcurl: 8.8.0`. But running `git
-fetch` will actually use libcurl v8.9.0, not v8.8.0. And the output does
-not mention that this is the compile-time version. It lists only one
-version, as if it was the one that the Git executable were using.
+which we may need to think how to handle.  The easiest way out may
+be to say "don't do these to indicate/force where the input comes
+from".  I dunno.
 
-I suspect that this behavior will confuse users, and that this kind of
-user experience will come back to haunt the Git project.
+Thanks.
 
-> It feels like there may be some duplication / overlap between what those
-> two things inspect, and we should perhaps unify them. One thing I
-> notice about bugreport is that it doesn't have a way to just dump
-> information without trying to start a bugreport. I'd be very unlikely to
-> use it myself for reporting a bug, but I may want to dump information
-> about git while debugging.
->
-> So whether that is in the form of "git bugreport --dump", or if all of
-> the collection is moved to "git version --build-info" and then bugreport
-> uses that to fill out its template, I don't care.
 
-I feel that we may need a different command for that than `bugreport
-=2D-dump`, something that reflects that the user wants to gather data to
-investigate an issue, but not necessarily report a bug to the Git project,
-and that we should guide users to use that command instead of `git
-version` when investigating such issues.
-
-A command with a name along the lines of `git diagnose`, I'd say.
-
-Ciao,
-Johannes
