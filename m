@@ -1,113 +1,155 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA00B17753
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 06:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED70F1CAAF
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 06:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721803538; cv=none; b=GPb/KsVt/0lwtAvv+B+v2/38vLbhdqr/nAoIRbtW8FBE+LxrXtO+VbF4VXDaJGqYoO27Gl3fAJT+KeQhkD45SDZiyDTIuaH635r8dS8n1f5m0ztTVsbDSHbDkwnOSMiBjyXMQ3eqmS8WtXozwf5hybPZVB4YPOcEQ/StSSjLDd8=
+	t=1721803821; cv=none; b=BA4dYiPQ37hut5nQxng2YOM+rrip3y38OmAwKhnxr2mGrnnZ6WlRBaplt5U9QH05PV/4dHJAobgNXmeRMuf4legiIAgEXwYNolcrtmDZeXWlbfU+Dyoey10GL1SI/RM4NOU7uho2LMBOncIi6lufKmcGFqQPhfEHWiU5esWRgNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721803538; c=relaxed/simple;
-	bh=/dM5f058iXKjCff5HvFvP5+M/c5sx3E/qD6E/qxHvyA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QogXD3yyDzeSxXLoFevPmffS2Tw8iWMio/TH4NsuS1U4nbWtf4ePV2dmRzI+atpiF5Jc1ro7fM6bRXO2mWlPP/VzmEy5dXgoI3dbSr4qrQ0lBIfKopxBb34QN9JAz8qabX9ZjOR2VE1P6LhheOQauo7cCF4qQ6TXz8o9XjqZmj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aGXKD+T5; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721803821; c=relaxed/simple;
+	bh=vDXg/qT4ZtZ8++jaOSNqa1ZHIkf0i3uHNKo7A8piWfI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nvUEgRhQKERpy3nGq9OxQbH7Rf/AsMwxwGOa+niKfL8b6GT+81umUogq1PAnt2gEMRG8wuFupcqEHzUQkC87KmRPRoxZyu0EkyAANzZ2rZws8CW+fetVqOWBIUtvP24xTM7Rhk7NHNb6pLRpOmd0HLrvenjXVJEMqY5iZKZd650=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ap4nc/sD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BvTwPkhV; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGXKD+T5"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-427b9dcbb09so47535765e9.3
-        for <git@vger.kernel.org>; Tue, 23 Jul 2024 23:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721803535; x=1722408335; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vNOm/bHYOCoY1TSXCqQUF94Tn0bXuni04F5tr0JnUpE=;
-        b=aGXKD+T5U26Z9tADSHaJjy/jBNUtMSU0VyctbWhXNi5PM61+70xVo68Ba4MUu86td9
-         uNQE0Le6ik0twyTOb3KaSWisMIHoTT16fGPAY0SCFI/0dLGqyamiDwibL9jtCPhkUxfJ
-         nEnZD7emdsbnLRdwP3CflrZwj/sk8jykPsvBmRgplkxkLWwGndG95IJuCgVoRxq0gNlH
-         aEnhEH2dyec0H4qRdZdX7mAI79JHHoCfIS38AB90UnDtVO300tJczys3tTavJxykWg66
-         KoACEtcY1C0zRJ0xtU/Wbkn7Nvx3xknw4gC2PdmICvlWUKZ5q5LswMkT5p+npvPXJ1Ck
-         m/dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721803535; x=1722408335;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vNOm/bHYOCoY1TSXCqQUF94Tn0bXuni04F5tr0JnUpE=;
-        b=VuIZzt7YSAjHCb8rXzC2WnWXoD4xRuo86QQYqNF3qooHpNVxO8dbFLdIkvcS6+uWRJ
-         gr0LyUz/c9f3JwbxpCHsYxOjRIlJ0QvBxjSCOAZVAjoujc0n6NsLcKCqUD6tQ4PYaL1b
-         H1ieyt4a2CLVmZH6sKvUlgfxz6mrKpvlWwP4gL1yLutygpKzer2XYK6G0SmYUnGkC5Mr
-         75xtJw7m4yjv4Osb6+f6sNyqoVgpzqxUHCe81DH/oe2F/QMDgfeqFJkeKfSpSzp3RwKK
-         sbE1cQifUF8HowT/t8YP3K5QAorEeDDmScatsDflaO8WZgpqkEtnVkp8wAnlF5g5thdE
-         a9aQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX61XJqbiuc3F1Ek3rvFXWY5vg3aDh+J65BHi/t8Wa1XvuIQTjiJ+WjgQJQA6rrN1/sZrJJe+KPHx9sENK8RTFCRkMU
-X-Gm-Message-State: AOJu0YwEyPY65cZCWnJdy+et2w+rc9kEo32QsAvwota7JNZcffJX+ClM
-	tvzTK1JLNm1vsUMTfvSeLCKcgbQix4uIofNw9wFCNFPO8gfFX7ntAmTpQA==
-X-Google-Smtp-Source: AGHT+IH9wTvtm/AAVv+owuxRLHLAN8qejJ+CCx5t79/0aZyYWK5wAA2YuIrMK1pmyiQEYSoBVPQ0VQ==
-X-Received: by 2002:a05:600c:1550:b0:427:ac40:d4b1 with SMTP id 5b1f17b1804b1-427dc558a2fmr82048555e9.27.1721803534675;
-        Tue, 23 Jul 2024 23:45:34 -0700 (PDT)
-Received: from gmail.com (155.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.155])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f9413501sm14420545e9.43.2024.07.23.23.45.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jul 2024 23:45:34 -0700 (PDT)
-Message-ID: <d3f248de-c424-4fd9-bb54-2314291603e3@gmail.com>
-Date: Wed, 24 Jul 2024 08:45:33 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ap4nc/sD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BvTwPkhV"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 13BEC138057D;
+	Wed, 24 Jul 2024 02:50:18 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Wed, 24 Jul 2024 02:50:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1721803818; x=1721890218; bh=CgWOmYNIL5
+	+ALhWT4zyCzEy7kJzAh9x3lYV/Tnr4mXY=; b=Ap4nc/sDcLJ0LQEr/+69mwXd3T
+	YyobDCHSMTALJfpW9iThYwYBsqw9l6pFuIp3KRe6jO29CxuXl8tyJhkD6dyit9wP
+	flzLfld0IbYWbs1dDWKdhheQHwbr5psP8sNFg+pHCf4JgwnedAqRuQ03+Po6zwGb
+	pwGD7GZ43d7lzFrRX8VfO75M/vaRl2bAZpOKKO3uQB8f+tUag6gKhTE1WqKEuJBl
+	ECkbUfyLPK69UIe+0bcofmrnCNDZdgqi9NeoNVPAWD5lxQIIfcn7RQIy3uGB8Ebo
+	p9+b+9BgrTERuwYWO04Pmw206T/LfwCPsiGI9nYHAkYy9dAYXIeCW44m6UDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1721803818; x=1721890218; bh=CgWOmYNIL5+ALhWT4zyCzEy7kJzA
+	h9x3lYV/Tnr4mXY=; b=BvTwPkhVP9hZMnOE2HJ6Pdb38sTiIEBcIVVlXYSXzUVd
+	eZe7Qtq90mchtQO7Bv26xHAXIHyPf09390DWsuVbV2Y2ecUmRCGGpSRkltVUZYoo
+	6C7U3sRWhDQf/zFWtiCi+a5N49aMkwwc9tVsDX6b9CYLcAgjybMyIhtYOUyL+yQT
+	LfjZahc93i0gv2JltwDY5u6LzxUczdgZXs8re75Jq5rx746TdMZdZpYtveNM5M1n
+	34avqQsp3IhWYF1uQnXnNOJ1T8jScuJ04NU4x/S3A/nneqtQ+TVqJZOfSDwyJhiG
+	sItKrqZKjH9jSXYdqM3y0M1LUL3HnPsJMiDNg6cvig==
+X-ME-Sender: <xms:KaSgZgEu6R2cZSG_FATGYoOj03-lkQ8jGYiI0-MKzRmrem889bgPJA>
+    <xme:KaSgZpWYf8psJbNaXxaSxB2GdpANPK8UzEJNM-mtOjFygSCRgChqkhEOcITZQQjSD
+    13AZZJNKy2f6Dyhdw>
+X-ME-Received: <xmr:KaSgZqItJrJG7-ETBEq0a3kqfnPpmu5oEl4WNXfo1bgB190j_Pe2gMUzcDHr5tezs2o4kc5sSBE_5F2DmKK9uLA1z6rimriBP7STLZQtFxOL2qKT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedtgdduudehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    pedt
+X-ME-Proxy: <xmx:KaSgZiFmfPlynpKph6h-iAn8w-RNkVQfKutiHOcykEUqSo93TatCMQ>
+    <xmx:KaSgZmXmaP7pJQA8OuuykjIIQJHFZM6bSECAljU-DbccD5wlTy8JXA>
+    <xmx:KaSgZlNzqw3DEcDJp0rGFszYPl2MWmgEG6wVheH2Y0zrCQOMEPVMxg>
+    <xmx:KaSgZt09vpgc4i3uCCIXPPYatJrCJNbmfeeiwG2dduPCqbGil0N0eg>
+    <xmx:KqSgZoIVck59vtKbN4go-h0K0fZxXT3X21khsN3hmFMU6dozYxDYJT_P>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Jul 2024 02:50:16 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 5f13e729 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jul 2024 06:48:58 +0000 (UTC)
+Date: Wed, 24 Jul 2024 08:50:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: chriscool@tuxfamily.org, git@vger.kernel.org, gitster@pobox.com,
+	jltobler@gmail.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH v6 1/6] clang-format: indent preprocessor directives
+ after hash
+Message-ID: <ZqCkJHC3ivdNVm9E@tanuki>
+References: <20240718081605.452366-1-karthik.188@gmail.com>
+ <20240723082111.874382-1-karthik.188@gmail.com>
+ <20240723082111.874382-2-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Re* [PATCH] t0613: mark as leak-free
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-References: <23d41343-54fd-46c6-9d78-369e8009fa0b@gmail.com>
- <20240701035759.GF610406@coredump.intra.peff.net> <Zp4gILfskdpc6RUk@tanuki>
- <20240723210339.GD6779@coredump.intra.peff.net>
- <4b1391d5-89c2-41b1-b1de-e1bd26b9f10e@gmail.com> <ZqCOEGfTdOSAL60w@tanuki>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ZqCOEGfTdOSAL60w@tanuki>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="IXvIjh0yn9GBkW2p"
+Content-Disposition: inline
+In-Reply-To: <20240723082111.874382-2-karthik.188@gmail.com>
 
-On Wed, Jul 24, 2024 at 07:16:00AM +0200, Patrick Steinhardt wrote:
-> On Wed, Jul 24, 2024 at 01:07:23AM +0200, Rubén Justo wrote:
-> > On Tue, Jul 23, 2024 at 05:03:39PM -0400, Jeff King wrote:
-> > > On Mon, Jul 22, 2024 at 11:02:24AM +0200, Patrick Steinhardt wrote:
-> > > So I dunno. If we think people are paying attention to CI on their
-> > > topics, and we think that we are close enough to leak-free that (1b)
-> > > won't come up a lot, it might make sense. I'm not quite sure we're there
-> > > yet on the latter, but it's mostly gut feeling (and I know things have
-> > > gotten a bit better recently, too).
-> > 
-> > I don't know either.  Maybe it seems a bit early still considering the
-> > numbers we have: 
-> > 
-> >    $ git grep -l PASSES_SANITIZE_LEAK=true t/t[0-9][0-9][0-9][0-9]-*.sh | wc -l
-> >    678
-> >    $ git grep -L PASSES_SANITIZE_LEAK=true t/t[0-9][0-9][0-9][0-9]-*.sh | wc -l
-> >    329
-> 
-> These numbers aren't quite right -- you have to filter out most of the
-> tests that include "lib-git-svn.sh", which reverses the schema and makes
-> leak checks opt-out (?!).
 
-You are right.  
+--IXvIjh0yn9GBkW2p
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> That brings me to the following hacky numbers:
-> 
->     $ grep -l TEST_PASSES_SANITIZE_LEAK=true t[0-9][0-9][0-9][0-9]-*.sh | grep -v svn | wc -l
->     678
->     $ grep -L TEST_PASSES_SANITIZE_LEAK=true t[0-9][0-9][0-9][0-9]-*.sh | grep -v svn | wc -l
->     261
+On Tue, Jul 23, 2024 at 10:21:06AM +0200, Karthik Nayak wrote:
+> We do not have a rule around the indentation of preprocessor directives.
+> This was also discussed on the list [1], noting how there is often
+> inconsistency in the styling. While there was discussion, there was no
+> conclusion around what is the preferred style here. One style being
+> indenting after the hash:
+>=20
+>     #if FOO
+>     #  if BAR
+>     #    include <foo>
+>     #  endif
+>     #endif
+>=20
+> The other being before the hash:
+>=20
+>     #if FOO
+>       #if BAR
+>         #include <foo>
+>       #endif
+>     #endif
+>=20
+> Let's pick the former and add 'IndentPPDirectives: AfterHash' value to
+> our '.clang-format'. There is no clear reason to pick one over the
+> other, but it would definitely be nicer to be consistent.
+>=20
+> [1]: https://lore.kernel.org/r/xmqqwmmm1bw6.fsf@gitster.g
+>=20
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 
-Out of curiosity, I ran this:
+This doesn't necessarily have to be part of this patch series, but I
+think that we should document this as part of our CodingGuidelines, as
+well. I planned to send an update to the coding guidelines soon anyway,
+so I can handle that once this topic lands.
 
-    $ echo $((329 - $(git grep -l lib-git-svn.sh t/t[0-9][0-9][0-9][0-9]-*.sh | wc -l)))
-    260
+Patrick
 
-which points to t9150-svk-mergetickets.sh.
+--IXvIjh0yn9GBkW2p
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmagpCMACgkQVbJhu7ck
+PpQpOBAAmOHh/cGkip4hGH9e1Jrk8SwTHdi/UsDhDZVEtlOHY66vgwiyA0fcGrGc
+vUDxA9eHpX5oC1zIFi9vqTOb4fXGJdUfUOSXSFWIpdPAvSB1W4/n6HUHgFmP7NEM
+Mx6UQlC+f10DeM806cW0b43EzI4olCM00TZ1FrMaXAnWOSip9q+A78XsTVyflOVh
+Gyxzsl76n462QGGelLA98/uHfbO9aYxtYn336YMNjLVqk/ovjj2EEhmgThIEtK32
+845h8EMBos/ssWMIBBuqGqWI+E3+sSS0NOB9QnLrj5vosaLX4ASB3nClR6SbvmN8
+N+0hi3VNHvOaN2mNxD5giAxjE5x/Kn9OL1FBR2sDsNZzZKAHf7TIW0/aCNAsyyT+
++X4tKhduGqxPHEp+MXz6oJoXHf7d1LZ9mzPsxQzqwby3+JNTDLVboyo6t7K8LL8E
+8bVCOQwsGxn5alLrxYBrbprgRLXB8Ao9vdc45PBJHQwCgLkBARkZNAAeL7zDPcnC
+GQdBz9qqul/B2fwsCf10DazmLGmWtgiyK1xjc+/o1uEMDqv1DLu2GV0Nslw8RTQ5
+L5Jo1m2R9h1TRcyW8RAxT0WbfCz3XGCTvEpkXAEaS/Dl+vn2m1quuiijb7XuKV93
+w63RjrTnxqLQyWlDtC9mNQtviF0vGO2B+kKMM2ebwOIssd/x3Nc=
+=iSaG
+-----END PGP SIGNATURE-----
+
+--IXvIjh0yn9GBkW2p--
