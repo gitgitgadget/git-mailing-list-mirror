@@ -1,141 +1,164 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406C413B58C
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 21:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0018713AD3D
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 21:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721855187; cv=none; b=kes5VWsq+cmnsxT4OjO8NtBSZyAe7NsLraGjRDZmtlFVE5fEDYdR1sifMvqXiHeUun0I5We/HtliR3kq6LC7OcuCtFbE3PEaEuAugg1iumlzzE8E5UPbIGjQshcjWl2QVmdqRg3/hGoj0i2zI1CQOnmxbPhvd6UtqjrqSbv0AT4=
+	t=1721855339; cv=none; b=F24dB24eUXklJaMB2reuTOF5OJisiha/ogSymJtprvCvcQbDK2dqA1yGuPOCM04g6r1/QKtYA0iEuufV4x6wQ+oH2cF16IU6kZqqE7TtKMQp4Ya7UMM9lGmKtpF/6P/RsfH5R9JZ0NL5LAufzkx8KfGl3DG+JRFH03VvC4oCE5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721855187; c=relaxed/simple;
-	bh=X04fEjNN/W/ZyDkTjwIE4A3HTYvwGbGbyzFhXmi3C1Q=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=sqGJ6QJIDOnBrUuGwpSBw+z7OLPNdaqGuezj9dD6caoOn0fK8xX1+KQUpmGiCVeK2zMC8qdmtqyyvzRMqatW5e5SV0Nkc1DGuTONi44BMzbIP3qXECgh43tAbO2SdInh9llBbzMjKhMapGCP2Q6qTdCRiWZBWJdhvtaQLRNnudE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wc3EFSt6; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wc3EFSt6"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so1849065e9.2
-        for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:06:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721855183; x=1722459983; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NhyUs2ExxPK/4v314vdlOlE9WAtjc1QBp4qhny3BFn8=;
-        b=Wc3EFSt6smeeRYK9sFyOfUJ34MEuGYvN7ji6WXJdpx81OFHDaE99DwEF1dAhxubwTl
-         Guvd+Bav0y0B6MM4TRQois13j41Ofevx4qBIP1oW8IOfzfYv/mFi7R3rpFHT22wHF2La
-         mXMTzfV+AO2IlWeaH2p/AgCfUudNXfpn4uEMgahB6A2MEXuw8SS/w9bYtIeBoZ+fG7jZ
-         dj0ofgUvm0Q/tInYTgNayFu3O4TATT7o0SqTev5X1XfzTCMZC4MY60jt9f9DY0PwcDui
-         u38RBxmBcy7nGEESFznu1B17tawiQQvpLLh1fT3/CP8xNhlLd6631xzGZ8Wa+58+NPOt
-         dfNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721855183; x=1722459983;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NhyUs2ExxPK/4v314vdlOlE9WAtjc1QBp4qhny3BFn8=;
-        b=qFLyeT1K8LCCqyNnzKqYJDIS8S353cb17nXSrOYYhLTZ2b5PwfG4w1V5/rwYnPGKGb
-         cVcOPxJKVVcN8lBOt+S21UAb8s8A8LJGviqYvz4EhMdBF2+TXUd0xfCdwnw/DATFs0VZ
-         nuTr9gF+XTz1uzajOFrSCLF0F3c4NBv65mH2TFddBsCkthCLBqPHz+MPPexoNYUbqXgu
-         va3w+j44bvTFMHfkn4PEPsFQ5rxaYc8YDx4YExma5lX9PEWskXkYZ13nm7Fu94HR7Hrz
-         uCa/7cgo7rt9qWnM056pRNH6eIxOiILD5vA2FcCk1Cbl1xlLXMPdkWibj41PgjLzVOn2
-         xshA==
-X-Gm-Message-State: AOJu0YwJNWZZk55X9ogDLxYATSqFHY1soAY8bYyIIrYMfxJB9vl7I09y
-	51VcDgbMfZkwstnnUuXWz1SMzK7k4moGn5Yh0+RBPgrPHXDv3jhet7sQQQ==
-X-Google-Smtp-Source: AGHT+IGAW2rwV1dPEdHkFN3SPKPwzE37YvanitOYuwH80lcGbtgd1WsziC6lFvzfD1mKuBtf7ZnJQw==
-X-Received: by 2002:adf:9b19:0:b0:367:9c46:198 with SMTP id ffacd0b85a97d-36b319e83a8mr578708f8f.1.1721855183204;
-        Wed, 24 Jul 2024 14:06:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-369f7f4e1desm2619794f8f.75.2024.07.24.14.06.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jul 2024 14:06:22 -0700 (PDT)
-Message-Id: <2a61e0945deb204547a930614eec431b50b1bd1d.1721855179.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
-References: <pull.1766.git.1721774680.gitgitgadget@gmail.com>
-	<pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jul 2024 21:06:19 +0000
-Subject: [PATCH v2 3/3] doc: apply synopsis simplification on git-clone and
- git-init
+	s=arc-20240116; t=1721855339; c=relaxed/simple;
+	bh=AKO9PAtXwIDeSM8JWs6uZr0K/wVumcDyDgsXZ9qHfa8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ohyoWItpCp69v2N1Ahj4tvxkuCG1eYk2a5BmMS3nDFov/z2GsxXybcc7u75NVwhZ184jkoIOuDfBgWzZN2ZE+JbyX/G5199UWN8x3LHMBlVAzdw48LEixM+RlxcKCxgA08/iBqiBaMSxHMi1B0274j5eN87GjuXlsu4DgdI7FiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 1964 invoked by uid 109); 24 Jul 2024 21:08:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jul 2024 21:08:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14440 invoked by uid 111); 24 Jul 2024 21:08:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jul 2024 17:08:57 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 24 Jul 2024 17:08:54 -0400
+From: Jeff King <peff@peff.net>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Robert Coup <robert.coup@koordinates.com>,
+	git <git@vger.kernel.org>
+Subject: Re: bug/defaults: COMMIT_EDITMSG not reused after a failed commit
+Message-ID: <20240724210854.GB557365@coredump.intra.peff.net>
+References: <CAFLLRpJgpjJpNRC_UpZmUXF2626e0BiH8CkOkoMrX3zcrOp7YA@mail.gmail.com>
+ <xmqq1q3iyceq.fsf@gitster.g>
+ <20240724-cryptic-private-mustang-3f50aa@meerkat>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240724-cryptic-private-mustang-3f50aa@meerkat>
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+On Wed, Jul 24, 2024 at 12:53:36PM -0400, Konstantin Ryabitsev wrote:
 
-With the new synopsis formatting backend, no special asciidoc markup
-is needed.
+> Yes, I would say even doing the following would result in a better experience
+> for users who don't know about .git/COMMIT_EDITMSG:
+> 
+> 1. when git-commit fails, save the message as .git/FAILED_COMMIT_MSG
+> 2. output "Commit message saved as .git/FAILED_COMMIT_MSG"
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+I proposed something like (2) long ago. I'll reproduce the (rebased
+forward) patch below, but here's the original thread with a little bit
+of discussion:
+
+  https://lore.kernel.org/git/20120723185218.GC27588@sigill.intra.peff.net/
+
+It just told you about COMMIT_EDITMSG, making it your responsibility to
+recover it before running "git commit" again. Your (1) makes it a little
+nicer, in that you can run "git commit" and then pull the content from
+the other file into your editor. Or we could even provide an option to
+pre-populate the message with it.
+
+Junio was lukewarm on the original, so I'm not sure why I've been
+holding on to it all these years. But maybe it would help as a guide for
+anybody who wants to work on what you've proposed above.
+
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Mon, 23 Jul 2012 14:52:18 -0400
+Subject: [PATCH] commit: give a hint when a commit message has been abandoned
+
+If we launch an editor for the user to create a commit
+message, they may put significant work into doing so.
+Typically we try to check common mistakes that could cause
+the commit to fail early, so that we die before the user
+goes to the trouble.
+
+We may still experience some errors afterwards, though; in
+this case, the user is given no hint that their commit
+message has been saved. Let's tell them where it is.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-clone.txt | 20 ++++++++++----------
- Documentation/git-init.txt  | 12 ++++++------
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ builtin/commit.c                          | 15 +++++++++++++++
+ t/t7500-commit-template-squash-signoff.sh |  3 +--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 8e925db7e9c6..53b1c3e23f75 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -8,16 +8,16 @@ git-clone - Clone a repository into a new directory
+diff --git a/builtin/commit.c b/builtin/commit.c
+index dec78dfb86..42fefaa0e3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -160,6 +160,16 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
+ 	return 0;
+ }
  
- SYNOPSIS
- --------
--[verse]
--`git clone` [++--template=++__<template-directory>__]
--	  [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--mirror`]
--	  [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--reference` _<repository>_]
--	  [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
--	  [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`] [`--no-tags`]
--	  [++--recurse-submodules++[++=++__<pathspec>__]] [++--++[++no-++]{empty}++shallow-submodules++]
--	  [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
--	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
--	  [_<directory>_]
-+[synopsis]
-+git clone [--template=<template-directory>]
-+	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
-+	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
-+	  [--dissociate] [--separate-git-dir <git-dir>]
-+	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
-+	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
-+	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
-+	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
-+	  [<directory>]
++static int mention_abandoned_message;
++static void maybe_mention_abandoned_message(void)
++{
++	if (!mention_abandoned_message)
++		return;
++	advise(_("Your commit message has been saved in '%s' and will be\n"
++		 "overwritten by the next invocation of \"git commit\"."),
++	       git_path_commit_editmsg());
++}
++
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct strbuf *buf = opt->value;
+@@ -1090,6 +1100,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			exit(1);
+ 		}
+ 		strvec_clear(&env);
++		atexit(maybe_mention_abandoned_message);
++		mention_abandoned_message = 1;
+ 	}
  
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index daff93bd164b..eba67fdde83f 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -8,12 +8,12 @@ git-init - Create an empty Git repository or reinitialize an existing one
+ 	if (!no_verify &&
+@@ -1813,11 +1825,13 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
+ 		rollback_index_files();
+ 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
++		mention_abandoned_message = 0;
+ 		exit(1);
+ 	}
+ 	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
+ 		rollback_index_files();
+ 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
++		mention_abandoned_message = 0;
+ 		exit(1);
+ 	}
  
- SYNOPSIS
- --------
--[verse]
--`git init` [`-q` | `--quiet`] [`--bare`] [++--template=++__<template-directory>__]
--	  [`--separate-git-dir` _<git-dir>_] [++--object-format=++__<format>__]
--	  [++--ref-format=++__<format>__]
--	  [`-b` _<branch-name>_ | ++--initial-branch=++__<branch-name>__]
--	  [++--shared++[++=++__<permissions>__]] [_<directory>_]
-+[synopsis]
-+git init [-q | --quiet] [--bare] [--template=<template-directory>]
-+	 [--separate-git-dir <git-dir>] [--object-format=<format>]
-+	 [--ref-format=<format>]
-+	 [-b <branch-name> | --initial-branch=<branch-name>]
-+	 [--shared[=<permissions>]] [<directory>]
+@@ -1855,6 +1869,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		die("%s", err.buf);
+ 	}
  
++	mention_abandoned_message = 0;
+ 	sequencer_post_commit_cleanup(the_repository, 0);
+ 	unlink(git_path_merge_head(the_repository));
+ 	unlink(git_path_merge_msg(the_repository));
+diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+index 4dca8d97a7..c476a26235 100755
+--- a/t/t7500-commit-template-squash-signoff.sh
++++ b/t/t7500-commit-template-squash-signoff.sh
+@@ -396,13 +396,12 @@ test_expect_success 'consecutive amend! commits remove amend! line from commit m
  
- DESCRIPTION
+ test_expect_success 'deny to create amend! commit if its commit msg body is empty' '
+ 	commit_for_rebase_autosquash_setup &&
+-	echo "Aborting commit due to empty commit message body." >expected &&
+ 	(
+ 		set_fake_editor &&
+ 		test_must_fail env FAKE_COMMIT_MESSAGE="amend! target message subject line" \
+ 			git commit --fixup=amend:HEAD~ 2>actual
+ 	) &&
+-	test_cmp expected actual
++	grep "Aborting commit due to empty commit message body" actual
+ '
+ 
+ test_expect_success 'amend! commit allows empty commit msg body with --allow-empty-message' '
 -- 
-gitgitgadget
+2.46.0.rc1.447.g578b9b2b5c
+
