@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65545134AC
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72C41CAA1
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 14:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721832904; cv=none; b=bs7o2oqAtsiGq/Xf49KKxAO4Ww/7j/Hf3m5L6oki9cMbA2I3hb6cDStKcSnuWhlX+PkMVN6FKFU38KVXRyCUOUExegtr48dIHvSFCP7/UsDZwdGB07/mjkfRtCb+iBMNggK5wkDgXu6IiqmBDJqyCtrTLWa59HIbXDHLr+4cQsw=
+	t=1721832954; cv=none; b=d93ILbLmZJBAYf2yuTJvgwlfw5/lmk9BGyQ3cLML5br6Zyg8vXB00sFGwo3BXMAGgyaWlgXv9Q6cpyQa3UKuhejXMYWS1Hyb19ouKxeQQMXabebtfwQHPoy2LC7Hvm42kVwSFoWWl7MXXxbUUZGLeYNMgg1V4/qqu+b+uyZ6sFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721832904; c=relaxed/simple;
-	bh=6/zvWS+uE6ktrh+krjLd4/FgIGdgDm4NxCPScVMw+to=;
+	s=arc-20240116; t=1721832954; c=relaxed/simple;
+	bh=drkeA6Sv3wtBP0CemUwWGF89r/xsi/dMoOI0g0WkalA=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sbGAueEERMf99jeRjnPg25/A4835UcxKJHl2dCOBgnWwqqmaVTd1qzujfFbp9xn5euQXyID9rbn5QfQvuhNlti83JGrtBnRfCQ2PH26vXKvyIxltXn2dGqATwHRJyIVWMudSlcpqG3TF18f6r/PsCyDAR975mPZHdOY3d7ZJzfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=YKJIQVW2; arc=none smtp.client-ip=212.227.15.4
+	 In-Reply-To:Content-Type; b=iCB7O8EKTKKdWgsEKbjLWTn/1bEy4n/TAadqCAcZTY4czUMfU1291GUh9a+alqTGeEYNRfrXbhfdQJOXw8JW6kmHZcKgREJoWdzIX8EqOTv83m8NZ6e2YtBU8e7WF2rdd413Z+njAg0kqVaFIb8rUXOYIdqDXXXaO9GQ6S53qMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=konQO/PE; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="YKJIQVW2"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="konQO/PE"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1721832892; x=1722437692; i=l.s.r@web.de;
-	bh=TLZAFtLvqkXdr4Vzjeyfun4VV8Y4MioPLDGDzJv46+k=;
+	s=s29768273; t=1721832942; x=1722437742; i=l.s.r@web.de;
+	bh=9UUNj+ssLcqeIn16ObzSImh7ZHEU2slYp0ve932h9lM=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=YKJIQVW21LLfA6BGwT+PILr9klaIX0Z+YE6HTKdOMU1VK9q0AtiqNehIGH0mFqID
-	 6nj8XbIBc72mrpxnwXqRbYpqEFEtnEN/yIWFnm6r4myZgKsAzbDzh9ahGsRE377BN
-	 E3E0zV5RBWNF6r5O4Rhn74gbtS7zOvBGFLAq47ayqVN8cGWsx/RTeu6o8C849/TdK
-	 SJiIyRjAz9Fuox5lURznmHoSK/Mu55akU3kxp/BsL/TNfB7lRLCtoNMGn+pq0F7nP
-	 AOyzjsfKSNM/V4njmeqogwoJqfQ5mI/LAJ2X08QC3zLtBfzwBGo4Yhkt/uw+UsxsK
-	 R2stmdTXhxwPlAWLUg==
+	b=konQO/PEQbjLQInD3yoYDIbeH/pplE6AWgpU2qyjfQwX9M61vhgr3JpbCWQPajME
+	 KlM2lLCIjXpY0CGLsqO8RWM3meQyEqvx6LsnMvyrZJPekx13F8rMA5JqbxvMzVAg8
+	 Rw9VnUZNoU1SQ3sxOauDAY7AEnq0HEvZDcHthok9ZwN3kDXyvDPb1au5U8tGi2TxL
+	 EkRQuJRKwSEu6/+MXAZHNq+C3L4pZsDJHZPrRUF7ccfWxmYm7Libnes5E6En855Sp
+	 L+DotoVdRwq/lhLbY8WzfA026p3cy7++eexQMMUWfH92ZGgDmLfHICURDUQ5eItEq
+	 nRy1mzKMvVBHowD4Zg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MtPvm-1sJ6701yKE-00zUsz; Wed, 24
- Jul 2024 16:54:52 +0200
-Message-ID: <89c04cd4-11da-46cf-a061-b2e4ba09b99e@web.de>
-Date: Wed, 24 Jul 2024 16:54:52 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M59n6-1sXjKc3ORo-005tFi; Wed, 24
+ Jul 2024 16:55:42 +0200
+Message-ID: <a899a8be-3d14-4b93-ac38-ccb2a5ef1e22@web.de>
+Date: Wed, 24 Jul 2024 16:55:42 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 6/7] t-strvec: use for_test
+Subject: [PATCH v3 7/7] t-strbuf: use for_test
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -53,435 +53,212 @@ Content-Language: en-US
 In-Reply-To: <73465c3d-1be0-456b-9471-f875e819c566@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:k+ggB/jRcuhrFxA/N0rIeeS9vmzISBMqIx8yyaETnEN0A25f7ns
- /u67K8K/XaFFD8ITHT3dRj5fjn8ZpnKHpBanrT8uPaBxbJfrhaHDd24iCtXwDa1iCWZJvI5
- QZD8XYz4DM/v/h7M0FuKhg1oNaERIjHZp2LyjPvRik4+H8iw6vHUGNNnP8nhSlFSNg+QOF5
- 8Es3Nv29cAmtUfyGE1/Lg==
+X-Provags-ID: V03:K1:wzdAaI5gW5WY4PcNdEFsmPB0hpe8Awe2k4sClwR/tpDA791VbID
+ fFvkOVSC/0rREXZHEHakaV8Ld9LAlI6b1rC7q04WokSMLvo+/0gGowh/29wfy3nEDUDm0zP
+ bdurGaDy4N2elVcKRMAd5HEnIZ9A0cbLWWsaklz3KGmDxGzIPbLiOzM4L3DYz60sPVQAUGK
+ ihFVNzreCdCalDv/fwwfA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Y+/s8tI8TYE=;fuoXKOQAGR17GJtPuuWKVA9oBSU
- CNwJN502ecJrhpqaj2UjVaZEQspzRD/Cb9s2XgglZ5urMEol6gK2VmTFLhaArTvUF1D5rBAjQ
- TCfG/wUp/w9zIrB04+mTE3zQ+iDINakuKEj2agdr4L+zaPm6NTJHVRIOXVAnCxc20BITgqRSM
- yb3+sJWtvCEzX2TVEIJV1eTz/awnEi3FM+kkJl1up7RmvBSiVTmpc4mNodnGuctFH5td6cvmU
- h+oP7falBDeUQ6WdlQht7zKZgrnRYh5lnejWu+KEAxOgYO8z9/CDeNAiuvt6GjqtreETjFTxx
- a8XOmJ+CZeihQjMRibQBiFU5vtUvivziOVpePfl9xnbIS1BHz9j/HEaeLJ+xwwFu+eCjuk1rN
- sOgOFbRlhnEsR/y9Y636lR9FW8HXdZkim3lgtudKGIvY4t+hvqtlOwgCHxjj5b8pkb/VnxQAQ
- Z9ogZwNruoMMgNFBS7jptFxOa2joQ37CYDr2tUCKjJ6316Y2uGq9tBKBV4hN4bc45qUlEL7Lq
- T9DBGYa9MWr8DYmUbb0ebsMqNKKHGXBf9A7y3S6XrWLmB6KSQPyZ1f+ZYFXfQ02NL6jJjaqi1
- bZZfLIAybmdMJLeTrZx5g58tROg7Evv1nvC2oLT6P16oSgv5nlhL+djcLTen1Cz1QkvICfD4S
- OhzyiqfBhzMTUI5ele5zZmtWruG1XnsY8Aw/YMwfq2M8eIEJggWTzItynMgh+FVo2KsEqQoC6
- 6CWkKdk4P3RwWkxECkcKmya3+foV24xSHvRp6G/JdUgkCPDutip89K1kqIAqAvlIoHzroznmB
- x8HO5OOlfWH0WClH53RDgdfg==
+UI-OutboundReport: notjunk:1;M01:P0:b0UHleiQ41E=;4tOt7FMOs5nqqm2bsMasBKnpAew
+ dxQjgNOiCONMehgyf3iefib5r5jBvPY6GxUzYbcis/Sunzb52u7NT0rndb6iy7Dk+SIuhrg+9
+ K2QYrYW3sbitUwPRDkV529m/UjbPOzOT4HxMhwUSyYjMfLSX8Vdgb8f87qIa3Gr4Lp9WWX9Md
+ wUnDus0GY520392HN8Idq6ys59/qlir+0+ZFmU4S/Om0Togh7WxeXGPYBT9C1yCuQiYBA9zRH
+ +ajKogq1AVS7A/30bi7oMiYcYdobMp/6Bu1LeoBkIiV31IWZrLmoAA1fK6TdTYjZhwv6U8B9Q
+ FmFF21AYylY9nhXVPZDVEzfO4cUvKByFcIag/mXgcmsUxIGGtUwc3+HXCgOuzazK/6V7qc/uD
+ KLhP6mauPds6o0+HXycu5PGbw3WwxqfvAXAD6UjP7pYm9uILgCQMJJPUPmCf3ogIWz3DHmD7H
+ NZ5rP6zrHPR5aGIdD/QnT35Fc8oAIapB9XwP5iQVGsv3AU3l2/iVmlO2EX1tFlC2ciBAlh/sM
+ cWkHZe5i+kgUpAnjnOfBhJ5+gKvKpVgqfWZS59FhKX/4PNwT+XD9fRndNK0TnnjFwF6V39ySP
+ tYspCcNaVmnnOC8LRTe4Yr68B/uGcllhnLqBFNIqY3DgGU5oR6IOH3+NmP0dhkY0b7w4EaqN+
+ TFrUA0QAjIRytuND+skhVzN1XvI28jBdJv0RRfD2x6Z4XAWbJtZqlcZ1HtKX+dL9ZwkVIRG7v
+ cRaTscnz4SJZqtBwJBSKEKWsNUsjWrscGr7vOdKiQ2Aa1WdK7N7o4og3AxBRQH55I7FObRt0U
+ tpVH+wzeZh0WbdvOFasrBPsQ==
 
 The macro TEST takes a single expression.  If a test requires multiple
 statements then they need to be placed in a function that's called in
-the TEST expression.
+the TEST expression.  The functions setup() and setup_populated() here
+are used for that purpose and take another function as an argument,
+making the control flow hard to follow.
 
-Remove the cognitive overhead of defining and calling single-use
-functions by using for_test instead.
+Remove the overhead of these functions by using for_test instead.  Move
+their duplicate post-condition checks into a new helper, t_release(),
+and let t_addch() and t_addstr() accept properly typed input parameters
+instead of void pointers.
+
+Use the fully checking t_addstr() for adding initial values instead of
+only doing only a length comparison -- there's no need for skipping the
+other checks.
+
+This results in test cases that look much more like strbuf usage in
+production code, only with checked strbuf functions replaced by checking
+wrappers.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-strvec.c | 356 ++++++++++++++++++----------------------
- 1 file changed, 156 insertions(+), 200 deletions(-)
+ t/unit-tests/t-strbuf.c | 127 ++++++++++++++++++++--------------------
+ 1 file changed, 65 insertions(+), 62 deletions(-)
 
-diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/t-strvec.c
-index d4615ab06d..4fa2c21afb 100644
-=2D-- a/t/unit-tests/t-strvec.c
-+++ b/t/unit-tests/t-strvec.c
-@@ -36,237 +36,193 @@ static void check_strvec_loc(const char *loc, struct=
- strvec *vec, ...)
- 	check_pointer_eq(vec->v[nr], NULL);
+diff --git a/t/unit-tests/t-strbuf.c b/t/unit-tests/t-strbuf.c
+index 6027dafef7..1e4a7885c9 100644
+=2D-- a/t/unit-tests/t-strbuf.c
++++ b/t/unit-tests/t-strbuf.c
+@@ -1,32 +1,6 @@
+ #include "test-lib.h"
+ #include "strbuf.h"
+
+-/* wrapper that supplies tests with an empty, initialized strbuf */
+-static void setup(void (*f)(struct strbuf*, const void*),
+-		  const void *data)
+-{
+-	struct strbuf buf =3D STRBUF_INIT;
+-
+-	f(&buf, data);
+-	strbuf_release(&buf);
+-	check_uint(buf.len, =3D=3D, 0);
+-	check_uint(buf.alloc, =3D=3D, 0);
+-}
+-
+-/* wrapper that supplies tests with a populated, initialized strbuf */
+-static void setup_populated(void (*f)(struct strbuf*, const void*),
+-			    const char *init_str, const void *data)
+-{
+-	struct strbuf buf =3D STRBUF_INIT;
+-
+-	strbuf_addstr(&buf, init_str);
+-	check_uint(buf.len, =3D=3D, strlen(init_str));
+-	f(&buf, data);
+-	strbuf_release(&buf);
+-	check_uint(buf.len, =3D=3D, 0);
+-	check_uint(buf.alloc, =3D=3D, 0);
+-}
+-
+ static int assert_sane_strbuf(struct strbuf *buf)
+ {
+ 	/* Initialized strbufs should always have a non-NULL buffer */
+@@ -45,31 +19,8 @@ static int assert_sane_strbuf(struct strbuf *buf)
+ 	return check_uint(buf->len, <, buf->alloc);
  }
 
 -static void t_static_init(void)
-+int cmd_main(int argc, const char **argv)
++static void t_addch(struct strbuf *buf, int ch)
  {
--	struct strvec vec =3D STRVEC_INIT;
--	check_pointer_eq(vec.v, empty_strvec);
--	check_uint(vec.nr, =3D=3D, 0);
--	check_uint(vec.alloc, =3D=3D, 0);
+-	struct strbuf buf =3D STRBUF_INIT;
+-
+-	check_uint(buf.len, =3D=3D, 0);
+-	check_uint(buf.alloc, =3D=3D, 0);
+-	check_char(buf.buf[0], =3D=3D, '\0');
 -}
-+	for_test ("static initialization") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		check_pointer_eq(vec.v, empty_strvec);
-+		check_uint(vec.nr, =3D=3D, 0);
-+		check_uint(vec.alloc, =3D=3D, 0);
-+	}
-
+-
 -static void t_dynamic_init(void)
 -{
--	struct strvec vec;
--	strvec_init(&vec);
--	check_pointer_eq(vec.v, empty_strvec);
--	check_uint(vec.nr, =3D=3D, 0);
--	check_uint(vec.alloc, =3D=3D, 0);
+-	struct strbuf buf;
+-
+-	strbuf_init(&buf, 1024);
+-	check(assert_sane_strbuf(&buf));
+-	check_uint(buf.len, =3D=3D, 0);
+-	check_uint(buf.alloc, >=3D, 1024);
+-	check_char(buf.buf[0], =3D=3D, '\0');
+-	strbuf_release(&buf);
 -}
-+	for_test ("dynamic initialization") {
-+		struct strvec vec;
-+		strvec_init(&vec);
-+		check_pointer_eq(vec.v, empty_strvec);
-+		check_uint(vec.nr, =3D=3D, 0);
-+		check_uint(vec.alloc, =3D=3D, 0);
+-
+-static void t_addch(struct strbuf *buf, const void *data)
+-{
+-	const char *p_ch =3D data;
+-	const char ch =3D *p_ch;
+ 	size_t orig_alloc =3D buf->alloc;
+ 	size_t orig_len =3D buf->len;
+
+@@ -85,9 +36,8 @@ static void t_addch(struct strbuf *buf, const void *data=
+)
+ 	check_char(buf->buf[buf->len], =3D=3D, '\0');
+ }
+
+-static void t_addstr(struct strbuf *buf, const void *data)
++static void t_addstr(struct strbuf *buf, const char *text)
+ {
+-	const char *text =3D data;
+ 	size_t len =3D strlen(text);
+ 	size_t orig_alloc =3D buf->alloc;
+ 	size_t orig_len =3D buf->len;
+@@ -105,18 +55,71 @@ static void t_addstr(struct strbuf *buf, const void *=
+data)
+ 	check_str(buf->buf + orig_len, text);
+ }
+
++static void t_release(struct strbuf *sb)
++{
++	strbuf_release(sb);
++	check_uint(sb->len, =3D=3D, 0);
++	check_uint(sb->alloc, =3D=3D, 0);
++}
++
+ int cmd_main(int argc, const char **argv)
+ {
+-	if (!TEST(t_static_init(), "static initialization works"))
+-		test_skip_all("STRBUF_INIT is broken");
+-	TEST(t_dynamic_init(), "dynamic initialization works");
+-	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
+-	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
+-	TEST(setup_populated(t_addch, "initial value", "a"),
+-	     "strbuf_addch appends to initial value");
+-	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
+-	TEST(setup_populated(t_addstr, "initial value", "hello there"),
+-	     "strbuf_addstr appends string to initial value");
++	for_test ("static initialization works") {
++		struct strbuf buf =3D STRBUF_INIT;
++
++		if (!check_uint(buf.len, =3D=3D, 0) ||
++		    !check_uint(buf.alloc, =3D=3D, 0) ||
++		    !check_char(buf.buf[0], =3D=3D, '\0'))
++			test_skip_all("STRBUF_INIT is broken");
++	}
++
++	for_test ("dynamic initialization works") {
++		struct strbuf buf;
++
++		strbuf_init(&buf, 1024);
++		check(assert_sane_strbuf(&buf));
++		check_uint(buf.len, =3D=3D, 0);
++		check_uint(buf.alloc, >=3D, 1024);
++		check_char(buf.buf[0], =3D=3D, '\0');
++		strbuf_release(&buf);
++	}
++
++	for_test ("strbuf_addch adds char") {
++		struct strbuf sb =3D STRBUF_INIT;
++
++		t_addch(&sb, 'a');
++		t_release(&sb);
++	}
++
++	for_test ("strbuf_addch adds NUL char") {
++		struct strbuf sb =3D STRBUF_INIT;
++
++		t_addch(&sb, '\0');
++		t_release(&sb);
++	}
++
++	for_test ("strbuf_addch appends to initial value") {
++		struct strbuf sb =3D STRBUF_INIT;
++
++		t_addstr(&sb, "initial value");
++		t_addch(&sb, 'a');
++		t_release(&sb);
++	}
++
++	for_test ("strbuf_addstr adds string") {
++		struct strbuf sb =3D STRBUF_INIT;
++
++		t_addstr(&sb, "hello there");
++		t_release(&sb);
++	}
++
++	for_test ("strbuf_addstr appends string to initial value") {
++		struct strbuf sb =3D STRBUF_INIT;
++
++		t_addstr(&sb, "initial value");
++		t_addstr(&sb, "hello there");
++		t_release(&sb);
 +	}
 
--static void t_clear(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_push(&vec, "foo");
--	strvec_clear(&vec);
--	check_pointer_eq(vec.v, empty_strvec);
--	check_uint(vec.nr, =3D=3D, 0);
--	check_uint(vec.alloc, =3D=3D, 0);
--}
-+	for_test ("clear") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_push(&vec, "foo");
-+		strvec_clear(&vec);
-+		check_pointer_eq(vec.v, empty_strvec);
-+		check_uint(vec.nr, =3D=3D, 0);
-+		check_uint(vec.alloc, =3D=3D, 0);
-+	}
-
--static void t_push(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
-+	for_test ("push") {
-+		struct strvec vec =3D STRVEC_INIT;
-
--	strvec_push(&vec, "foo");
--	check_strvec(&vec, "foo", NULL);
-+		strvec_push(&vec, "foo");
-+		check_strvec(&vec, "foo", NULL);
-
--	strvec_push(&vec, "bar");
--	check_strvec(&vec, "foo", "bar", NULL);
-+		strvec_push(&vec, "bar");
-+		check_strvec(&vec, "foo", "bar", NULL);
-
--	strvec_clear(&vec);
--}
-+		strvec_clear(&vec);
-+	}
-
--static void t_pushf(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushf(&vec, "foo: %d", 1);
--	check_strvec(&vec, "foo: 1", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("pushf") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushf(&vec, "foo: %d", 1);
-+		check_strvec(&vec, "foo: 1", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_pushl(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	check_strvec(&vec, "foo", "bar", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("pushl") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		check_strvec(&vec, "foo", "bar", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_pushv(void)
--{
--	const char *strings[] =3D {
--		"foo", "bar", "baz", NULL,
--	};
--	struct strvec vec =3D STRVEC_INIT;
-+	for_test ("pushv") {
-+		const char *strings[] =3D {
-+			"foo", "bar", "baz", NULL,
-+		};
-+		struct strvec vec =3D STRVEC_INIT;
-
--	strvec_pushv(&vec, strings);
--	check_strvec(&vec, "foo", "bar", "baz", NULL);
-+		strvec_pushv(&vec, strings);
-+		check_strvec(&vec, "foo", "bar", "baz", NULL);
-
--	strvec_clear(&vec);
--}
-+		strvec_clear(&vec);
-+	}
-
--static void t_replace_at_head(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_replace(&vec, 0, "replaced");
--	check_strvec(&vec, "replaced", "bar", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("replace at head") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_replace(&vec, 0, "replaced");
-+		check_strvec(&vec, "replaced", "bar", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_replace_at_tail(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_replace(&vec, 2, "replaced");
--	check_strvec(&vec, "foo", "bar", "replaced", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("replace at tail") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_replace(&vec, 2, "replaced");
-+		check_strvec(&vec, "foo", "bar", "replaced", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_replace_in_between(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_replace(&vec, 1, "replaced");
--	check_strvec(&vec, "foo", "replaced", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("replace in between") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_replace(&vec, 1, "replaced");
-+		check_strvec(&vec, "foo", "replaced", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_replace_with_substring(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", NULL);
--	strvec_replace(&vec, 0, vec.v[0] + 1);
--	check_strvec(&vec, "oo", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("replace with substring") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", NULL);
-+		strvec_replace(&vec, 0, vec.v[0] + 1);
-+		check_strvec(&vec, "oo", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_remove_at_head(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_remove(&vec, 0);
--	check_strvec(&vec, "bar", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("remove at head") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_remove(&vec, 0);
-+		check_strvec(&vec, "bar", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_remove_at_tail(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_remove(&vec, 2);
--	check_strvec(&vec, "foo", "bar", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("remove at tail") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_remove(&vec, 2);
-+		check_strvec(&vec, "foo", "bar", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_remove_in_between(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_remove(&vec, 1);
--	check_strvec(&vec, "foo", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("remove in between") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_remove(&vec, 1);
-+		check_strvec(&vec, "foo", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_pop_empty_array(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pop(&vec);
--	check_strvec(&vec, NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("pop with empty array") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pop(&vec);
-+		check_strvec(&vec, NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_pop_non_empty_array(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
--	strvec_pop(&vec);
--	check_strvec(&vec, "foo", "bar", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("pop with non-empty array") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_pushl(&vec, "foo", "bar", "baz", NULL);
-+		strvec_pop(&vec);
-+		check_strvec(&vec, "foo", "bar", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_split_empty_string(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_split(&vec, "");
--	check_strvec(&vec, NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("split empty string") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_split(&vec, "");
-+		check_strvec(&vec, NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_split_single_item(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_split(&vec, "foo");
--	check_strvec(&vec, "foo", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("split single item") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_split(&vec, "foo");
-+		check_strvec(&vec, "foo", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_split_multiple_items(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_split(&vec, "foo bar baz");
--	check_strvec(&vec, "foo", "bar", "baz", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("split multiple items") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_split(&vec, "foo bar baz");
-+		check_strvec(&vec, "foo", "bar", "baz", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_split_whitespace_only(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_split(&vec, " \t\n");
--	check_strvec(&vec, NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("split whitespace only") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_split(&vec, " \t\n");
-+		check_strvec(&vec, NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_split_multiple_consecutive_whitespaces(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	strvec_split(&vec, "foo\n\t bar");
--	check_strvec(&vec, "foo", "bar", NULL);
--	strvec_clear(&vec);
--}
-+	for_test ("split multiple consecutive whitespaces") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		strvec_split(&vec, "foo\n\t bar");
-+		check_strvec(&vec, "foo", "bar", NULL);
-+		strvec_clear(&vec);
-+	}
-
--static void t_detach(void)
--{
--	struct strvec vec =3D STRVEC_INIT;
--	const char **detached;
-+	for_test ("detach") {
-+		struct strvec vec =3D STRVEC_INIT;
-+		const char **detached;
-
--	strvec_push(&vec, "foo");
-+		strvec_push(&vec, "foo");
-
--	detached =3D strvec_detach(&vec);
--	check_str(detached[0], "foo");
--	check_pointer_eq(detached[1], NULL);
-+		detached =3D strvec_detach(&vec);
-+		check_str(detached[0], "foo");
-+		check_pointer_eq(detached[1], NULL);
-
--	check_pointer_eq(vec.v, empty_strvec);
--	check_uint(vec.nr, =3D=3D, 0);
--	check_uint(vec.alloc, =3D=3D, 0);
-+		check_pointer_eq(vec.v, empty_strvec);
-+		check_uint(vec.nr, =3D=3D, 0);
-+		check_uint(vec.alloc, =3D=3D, 0);
-
--	free((char *) detached[0]);
--	free(detached);
--}
-+		free((char *) detached[0]);
-+		free(detached);
-+	}
-
--int cmd_main(int argc, const char **argv)
--{
--	TEST(t_static_init(), "static initialization");
--	TEST(t_dynamic_init(), "dynamic initialization");
--	TEST(t_clear(), "clear");
--	TEST(t_push(), "push");
--	TEST(t_pushf(), "pushf");
--	TEST(t_pushl(), "pushl");
--	TEST(t_pushv(), "pushv");
--	TEST(t_replace_at_head(), "replace at head");
--	TEST(t_replace_in_between(), "replace in between");
--	TEST(t_replace_at_tail(), "replace at tail");
--	TEST(t_replace_with_substring(), "replace with substring");
--	TEST(t_remove_at_head(), "remove at head");
--	TEST(t_remove_in_between(), "remove in between");
--	TEST(t_remove_at_tail(), "remove at tail");
--	TEST(t_pop_empty_array(), "pop with empty array");
--	TEST(t_pop_non_empty_array(), "pop with non-empty array");
--	TEST(t_split_empty_string(), "split empty string");
--	TEST(t_split_single_item(), "split single item");
--	TEST(t_split_multiple_items(), "split multiple items");
--	TEST(t_split_whitespace_only(), "split whitespace only");
--	TEST(t_split_multiple_consecutive_whitespaces(), "split multiple consecu=
-tive whitespaces");
--	TEST(t_detach(), "detach");
  	return test_done();
  }
 =2D-
