@@ -1,152 +1,94 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B7215B140
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 15:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9449E79F0
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 15:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721834525; cv=none; b=hHqm6lEBgCn0sRC8L6KR8VTGvnJBlTEK+OgNQNNaZcNhyzOqn61OM0KVxIdRrAC8kvkGlRrpuVWEM9DhtaEhRwHq1q/s+42Gue6lJwfPPGM0F/c/la0qCeY7fgxy8qyN9o3s8CVfYRd3UAapTo6Q4OgXmEEnIUtvYCevhxfoa5E=
+	t=1721834954; cv=none; b=njuMkQT85u4SMqzOGKXMhEvbmuEjQ3fuUKDZE5jOuO0J6Yk8U0JX84IG14sJHynCMP8JUnUuLUFO8JgDiMmeVWrMLWtTUXp/ICiJ7maE4gEalL4y/buQ4XNrtclBkHIdPtNN11Sv2NonGNbhaylg2tOUJZG3Sx3U9mHiytGBuC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721834525; c=relaxed/simple;
-	bh=7UXehJdfaXst8rJOUEt/OjP3aZPxmybee0KpPPnIH50=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=AvbZec0xNE+/7sphCH1q1ktQoWZt0+RzZJhrZd1SK20GDhxCmkn84ot9T7D1DNNroUi7wcF1pb80IXd2nmS4MNXVX29y/HxCWutClp8DdEh+Rlt/si2BSfQVCSWGys62nRLlV0AXiOu7eWVYHbl+cTE9I/lw1u0jnxs/eL08xkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WAFCG9eH; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721834954; c=relaxed/simple;
+	bh=EVhtY8gGYhM6hSEOR9L8tQ5px5gVtvFkyfVhE05LmQk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jl4SxWM3qGhJjWOnHDExSf3Lp1O/cMeMK7+485cdvAwV/82PmFMEbt0upPsqeCjCpFUWgShwnfKOX8IPAuMYUXS+xcfcTs562yR312d6anT4+SE7uF9AflwHAru6Ij22RxZKFNVmaNjxrYAiiJq/+iXnHZSH+12CjPpqS6cHq9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x+tkBOpp; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WAFCG9eH"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3686b285969so3319226f8f.0
-        for <git@vger.kernel.org>; Wed, 24 Jul 2024 08:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721834522; x=1722439322; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g12quOD9tFxVLeSZ5ehMv9pzmUP37NGFAHHD7uLt/sE=;
-        b=WAFCG9eHsBHo/z8cYtQg+eMKw8I8YzpEUZzd6udEIXjEITmbww5n5yuwbz5e3HN3s/
-         eI6SIEoKVZOTR2ldl+srIPHZbkDNX2lz9RH6BN1gGpZkLdZae32MSJ6OWtAab6pS18gG
-         DlV5a96gz+wr8t5v9+LO/A4HkCc3MyGGTZ04/sa4jC70SBA6X+3LXRK1Fl5wyUJaV9/v
-         fzHbjgOKKX+pJ1SWZC0MCd42SeMFg9s29qYMGLaViqz9j2gLXe1oJy/KWomKjq6dgDdH
-         gKAVmt+66HER3/pCaMe+zBnuYLGKexNmX/wulUc4RgTtT7YF++kDuco4S84Hu3lC7+X3
-         5iGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721834522; x=1722439322;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g12quOD9tFxVLeSZ5ehMv9pzmUP37NGFAHHD7uLt/sE=;
-        b=JqaPEQM0/Qhrn/iGq60nPlusi5NWUhGDXmG24ac5k4AqYy98KtC7DLDxf0hCITf2oL
-         5CPPpSj+KI7gnEyGxVIUEIArafjWh206aNxEh38astjh5G3v21tRciJIGfJ4jpvipX2s
-         3NoILrrfFni+aBU1JMY48Vb/yMC+N/mo0fYOiE27CGiPikdAxU3kDCIPSnejE2HZKOet
-         35AAt4YRq/nipkq1FH8BO4xpBgn6rSRrAueggkv8tWULl/nCMJZ4kp479rLPXbg2cO+g
-         OhkVKbT3iOUVB9MWDFdy7Kxy0QE3y1jOUftaWEodtZXJ8azOBPn0eDVygGS/1yOw80/Y
-         TUwA==
-X-Gm-Message-State: AOJu0YyFOEtojdt0pdejUnEhZN3KvcDtuIbuG9RaWzc4mFfogbYKb9oL
-	NLtIl/NBZYNNsvLSWItTaZR4f1W1tKViyUHejqS0vcVoPtzQ5Ib4
-X-Google-Smtp-Source: AGHT+IFjnpyxTiRHzh+PLGvj+It4HHENZpGCUtLg8rxE9lrlveiqQ+KfCvWOErg19ArCB7XFe1iMqw==
-X-Received: by 2002:a05:6000:1b0a:b0:367:9107:9e11 with SMTP id ffacd0b85a97d-369bb2a94bemr9296269f8f.62.1721834521925;
-        Wed, 24 Jul 2024 08:22:01 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:600:8501:575d:f6b:be83:bc74? ([2a0a:ef40:600:8501:575d:f6b:be83:bc74])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3687868b24csm14584798f8f.25.2024.07.24.08.22.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jul 2024 08:22:01 -0700 (PDT)
-Message-ID: <5735bee3-0532-4894-b717-12a0bdcb9e84@gmail.com>
-Date: Wed, 24 Jul 2024 16:21:53 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x+tkBOpp"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63777188B2;
+	Wed, 24 Jul 2024 11:29:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=EVhtY8gGYhM6hSEOR9L8tQ5px5gVtvFkyfVhE0
+	5LmQk=; b=x+tkBOppAlP2IR7D+5gpoU+i+Im3H6XI3tuDoR2Js2/S1wn1ZbHBaa
+	bepg8iovlb0iFHdHPbUFbfvrenVmKsHIGeQ9aLqeieiIIID7y3sLMzeALKs8JVzy
+	EX4+pVwKOm4rka11y5pTfZW7VsAtNouLbpO9SrJhwNl/1Q8n9au80=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A1E6188B1;
+	Wed, 24 Jul 2024 11:29:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB1D8188AE;
+	Wed, 24 Jul 2024 11:29:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: avih <avihpit@yahoo.com>
+Cc: Avi Halachmi via GitGitGadget <gitgitgadget@gmail.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 0/8] git-prompt: support more shells
+In-Reply-To: <992128710.1986532.1721788902932@mail.yahoo.com> (avih's message
+	of "Wed, 24 Jul 2024 02:41:42 +0000 (UTC)")
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
+	<ZqAzpYuTrK6L-uyN@tapette.crustytoothpaste.net>
+	<992128710.1986532.1721788902932@mail.yahoo.com>
+Date: Wed, 24 Jul 2024 08:29:09 -0700
+Message-ID: <xmqq7cdazu4a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/2] add-p P fixups
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-References: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
- <62af789f-ca19-4f11-9339-a97400f7e70c@gmail.com>
- <2333cb14-f020-451c-ad14-3f30edd152ec@gmail.com>
-Content-Language: en-US
-In-Reply-To: <2333cb14-f020-451c-ad14-3f30edd152ec@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 79933C1E-49D1-11EF-A6FC-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 
-Hi Rubén
+avih <avihpit@yahoo.com> writes:
 
-On 23/07/2024 23:08, Rubén Justo wrote:
-> On Tue, Jul 23, 2024 at 10:15:03AM +0100, Phillip Wood wrote:
-> 
->> As rj/add-p-pager is only in seen I
->> assume you'll re-roll with these squashed in once everyone is happy?
-> 
-> Junio has already integrated these changes into the branch he has in his
-> tree, including a small change to the message to adjust it to his
-> comments, which I think is good.
-> 
-> I hope that what we already have in Junio's tree is the final iteration
-> of this long series and that we can let it settle before making further
-> changes.
+>  On Wednesday, July 24, 2024 at 01:50:16 AM GMT+3, brian m. carlson <sandals@crustytoothpaste.net> wrote:
+>
+>> We explicitly allow `local` in our coding guidelines.
+>
+> Yeah. I missed the guidelines initially, but I got to the same
+> conclusion with git-prompt.sh - to allow only "local" exception.
 
-The resulting tree is good, but the history is not bisectable. You 
-should squash the fixups locally, updating the message of the fixed up 
-commit as needed and submit the result as the final version.
+It is a bit more nuanced than that, though.  Here is what we say:
 
-Best Wishes
+ - Even though "local" is not part of POSIX, we make heavy use of it
+   in our test suite.  We do not use it in scripted Porcelains, and
+   hopefully nobody starts using "local" before all shells that matter
+   support it (notably, ksh from AT&T Research does not support it yet).
 
-Phillip
+For the purpose of git-prompt, I think it should be OK (without
+"local", it is harder, if not impossible, to clobber end-user's
+shell variable namespace with various temporaries we need to use
+during prompt computation) to declare that we now support shells
+other than bash and zsh as long as they are reasonably POSIX and
+support "local" that is dynamic.
 
->>
->> Best Wishes
->>
->> Phillip
->>
->> On 23/07/2024 01:39, Rubén Justo wrote:
->>> Rubén Justo (1):
->>>     t3701: avoid one-shot export for shell functions
->>>     pager: make wait_for_pager a no-op for "cat"
->>>
->>>    pager.c                    | 3 +++
->>>    t/t3701-add-interactive.sh | 6 +++++-
->>>    2 files changed, 8 insertions(+), 1 deletion(-)
->>>
->>> Range-diff against v1:
->>> 1:  c3b8ebbae7 ! 1:  15fbf82fff t3701: avoid one-shot export for shell functions
->>>       @@ Commit message
->>>                VAR=VAL command args
->>>       -    it's a common way to define one-shot variables within the scope of
->>>       +    is a common way to set and export one-shot variables within the scope of
->>>            executing a "command".
->>>            However, when "command" is a function which in turn executes the
->>>       @@ Commit message
->>>                $ A=1 f
->>>                A=
->>>       +    Note that POSIX is not specific about this behavior:
->>>       +
->>>       +    http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
->>>       +
->>>            One of our CI jobs on GitHub Actions uses Ubuntu 20.04 running dash
->>>            0.5.10.2-6, so we failed the test t3701:51;  the "git add -p" being
->>>            tested did not get our custom GIT_PAGER, which broke the test.
->>> 2:  f45455f1ff ! 2:  b87c3d96e4 pager: make wait_for_pager a no-op for "cat"
->>>       @@ Commit message
->>>            "cat" [*2*], then we return from `setup_pager()` silently without doing
->>>            anything, allowing the output to go directly to the normal stdout.
->>>       -    Let's make the call to `wait_for_pager()` for these cases, or any other
->>>       -    future optimizations that may occur, also exit silently without doing
->>>       -    anything.
->>>       +    If `setup_pager()` avoids forking a pager, then when the client calls
->>>       +    the corresponding `wait_for_pager()`, we might fail trying to terminate
->>>       +    a process that wasn't started.
->>>       +
->>>       +    One solution to avoid this problem could be to make the caller aware
->>>       +    that `setup_pager()` did nothing, so it could avoid calling
->>>       +    `wait_for_pager()`.
->>>       +
->>>       +    However, let's avoid shifting that responsibility to the caller and
->>>       +    instead treat the call to `wait_for_pager()` as a no-op when we know we
->>>       +    haven't forked a pager.
->>>               1.- 402461aab1 (pager: do not fork a pager if PAGER is set to empty.,
->>>                               2006-04-16)
+> That's nice. I did try to check whether it's planned, and request if
+> it wasn't, but I didn't find the future plans (but also didn't try
+> too hard). Though I think they're still doing bug fixes for the
+> forseeable future, which is also great. Looking forward to it.
+
+Do we know what kind of "local" is ksh93 adding?  The same as their
+"typeset" that is not dynamic?  That is so different from what others
+do and scripts expect to be all that useful, I am afraid.
+
