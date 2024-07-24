@@ -1,139 +1,134 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87BF152180
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:02:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9162A2595
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721818950; cv=none; b=VAaPky8gVgBKdgPjlYfB/looyvrJqb+eOdIKinO/cgpZ1Jak2zGBbyZIhYgKXlBVPfKkl4c/aXcgONdmEOVM3KA6rrgc37pTYD9ZMjxVQax+EpDr4TRBN+yml9komnPtlYtUSsKCtduUh3HGcLQ5UeuPlHD4gNoSaXdO4JRZprU=
+	t=1721819117; cv=none; b=LXBbHWTpzfKwY8LVlqLOFMfLSl78AaZn/uK07MEbe6EvInI4UclbYuSM1ccesrjiIwr1e2wJaFtetxoRd/7uSprOjdcbA8Qs23Ftw4CIajPVsWLPl8YemMBu6F/zsX/U2QOuPcFWR3xz/2yjpwJIUsmO2dAd1NqtWcUGLjzHbbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721818950; c=relaxed/simple;
-	bh=agTHw0guVEAV8s7heoSOM5jxr3BOsztVpKRSvhQDv2I=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=ITAf/hYSqcW2qV8jBYbBEq5Zjn7WiGXtWTIdh/0TGqM069+jAfErkEboUYqYnTfe/yv4G2rsS2mPNTBJAzViiNCE9+8dnxzqgOc4tK4WFv5/e5zX0e4ZgxiCuZ8ZFlHSev0y+6nzlq7lv/ZxoFFq6Xd3a5wdnqpKpsTRbgEHrdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=KBB25bj8; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1721819117; c=relaxed/simple;
+	bh=LNggavBDKmwvVL2UeHCsm+4MwOSX91LQMvazJpFj8f4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=oG4Yojw54IicEM45FKzfI5fLTzHtHpuVi665Wzq+Ugggb0sSkT4odZ7pC0vtG1x0JkHvvW0pCh7c9Tt/BTuc8/mMFf2DBv88idJtFBEUy45i31eX736Bi2CRv8Yh1utZNFTYUXjRLHSNtgCy54BGZk/F6WicJ4NL4SBXalPsl0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=egwAQzam; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f1zZXO9d; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="KBB25bj8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1721818933; x=1722423733;
-	i=johannes.schindelin@gmx.de;
-	bh=lsWS7xtznTMSPylR19m47jPA0pHkjyOeEvhbOe10C6g=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=KBB25bj8aqHeupE5iuy6tBvx24irgAU/M9TbVcI3LaP5vvAH6wcnpF8HRpU6Pbmv
-	 HfQrI0YgdvCgdi0GoGPXrVst92fx5miwS/IpQNxIZrAZPZZXtu2FuNYWS4u5xgLUS
-	 xDQxdwA+AliGCJTaE7CDtTOpk3FAMKbMKSJbCy/2ES+pIbZXq/GQG5ez3Efl+LfJd
-	 vTiuGv0ZXrKLF0TkLrfG/mY2OzVb5R+13fGJ27o7sO30SQrug6WI9q/wuSlBk3oSd
-	 fa490l4vdbK3eZy9X9YNd8kY9t5x2SAgDZiDNuJQcdw1IhUIXdZh9oSGLVgH/r7AV
-	 tzhLnO6FAQcEpIfNlw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.218]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTAFh-1sjRwA2rNP-00I836; Wed, 24
- Jul 2024 13:02:13 +0200
-Date: Wed, 24 Jul 2024 13:02:12 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Randall Becker <randall.becker@nexbridge.ca>
-cc: "Randall S. Becker" <the.n.e.key@gmail.com>, 
-    "git@vger.kernel.org" <git@vger.kernel.org>, 
-    "Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: RE: [PATCH v2 2/2] Teach git version --build-options about zlib
- versions.
-In-Reply-To: <DS0PR17MB60311800BF14CC1C5C7E707FF4D42@DS0PR17MB6031.namprd17.prod.outlook.com>
-Message-ID: <0bec87dc-d852-4133-1e6d-11e9a1c5df2c@gmx.de>
-References: <20240621180947.64419-1-randall.becker@nexbridge.ca> <20240621180947.64419-3-randall.becker@nexbridge.ca> <80112f79-f2ec-28ff-3ced-9df9d7ea87f0@gmx.de> <DS0PR17MB60311800BF14CC1C5C7E707FF4D42@DS0PR17MB6031.namprd17.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="egwAQzam";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f1zZXO9d"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4E6D8138025F;
+	Wed, 24 Jul 2024 07:05:13 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 24 Jul 2024 07:05:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1721819113; x=1721905513; bh=fKwXMswSqRAaco1xGj/qrVBOauElepo/
+	QfbNqnfUPWA=; b=egwAQzamX8TiDT6IAySBwDwkL/gD/RnaCxR6VkUwvRF+jFuL
+	zQn4MlRGafY9FSDg1KnFMxjsYCHPuciZg1mLnRzCU99ip9uWsK0QZB79BkNynB6Z
+	efstgicsEP2N1OaBoPl0VjtOu94aHOGRUlu4Skpd9/Nuj/xqt+E2+KjSqqefKe60
+	DHfPDX86p2FquucQzwmvDtsvyklBsVVf5OrQFOOE8V8eG+QnrP5T19+WxmcFjEdp
+	1xQDDtFiLrM8idTt3TbNeS2PQpQp7Flo5tiRz/QiyIRV/Wxy0oGwp5FYd6VWclyw
+	jNrNg0/RrtIdmCezQPeNcwtSy5rfCjtZEdn7hw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1721819113; x=1721905513; bh=fKwXMswSqRAaco1xGj/qrVBOauElepo/Qfb
+	NqnfUPWA=; b=f1zZXO9drs3TqZvtRX1J5bmLL7e9N1/MNy1HTDj2dClJLhJjKex
+	vYZY1SqIC8+jbWiaLI2PjNBZ5Y+hEue48f7Fj4lpr8MiUdJtQ6sLDocsw80fOKmY
+	4XGS08aRWDSPXXqNL74+V9PXQHoYJCPOVPNto7zPmeLTYsTO4OfRIoJG4nRpXdHE
+	kANGM6KkhrcrQC4OEXfgOViSP9Pcbos1eY0zEfRpS5nkru7Og6LmnI2AbYf1zU+6
+	zsX0xQvhFqRyWMgTisWRIixZOcH4wj0MROMx+4EBsnrbWGklw1gKwQNDZBK+1iwf
+	eN0q9K+T1OIMIQZVP9NvScTvr9z6By76vJQ==
+X-ME-Sender: <xms:6d-gZiyJYxAJJ3A80Kh0ghAWp7BvrB8f8mYbaBiP589WmEi5Waocfw>
+    <xme:6d-gZuQLJUwznaR-aARKHn43vOCs78O0JU0ULosUwPojn3FE44MD8qxEXvjEBYVVj
+    cpdDiu-QIl7EmbKYg>
+X-ME-Received: <xmr:6d-gZkVABVqQvbMc6nj_80tpGBxA7MdKLJAXk70hXzLtwzR2okxet25ULwzXMVZ8pNc2IWO4c2B-_t6leDA0ospMNlP8NDMVDJDWAhIUP_TXxJod>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdefjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eugfeutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:6d-gZojHeWYMqt7YqeihtVf1ePtpTbd4K7aikrUhy9_bWlxM8Jwthg>
+    <xmx:6d-gZkDpwShJQxv-OwoHkp5zVWjxB7yEl_xCQGuoqcAEJO7VHil27Q>
+    <xmx:6d-gZpJsBpopGJYgnUZUki8PST9rbBNooGkS0CdrEzzanTI6VjaFVw>
+    <xmx:6d-gZrD3fH-sIHpxcpC9mJEP2-Y1wYoqN0FyAKjkJyiBjYIeMiHjKQ>
+    <xmx:6d-gZnPe6ONFr2c_UmKpohlINIzHyfKGj7VO6qLi_D55im4xgL7q9Ads>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Jul 2024 07:05:12 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 2d066e23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jul 2024 11:03:54 +0000 (UTC)
+Date: Wed, 24 Jul 2024 13:05:08 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/3] Documentation: some coding guideline updates
+Message-ID: <cover.1721818488.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Pr7MW0bqiCm6A4at67JsD4iQOsqa6u9MBkqUNFcIZTdh3N6Ec0o
- 4iT+IYEuV2y0Es25mzvJn37s+U3xEn6eguiSpdMcqBmrUm5V936wIjTBNNlupDCrcZP49RH
- hHGDQU0vbxUBvXOuogqTD4woxanmvoPkMo6ZL/6eYWjkHRHDGf7W6Am7aGmblYqB/0IjwqY
- Q10sg0TS/eWa6IZC1L9dw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EYIJ7/32XLM=;AH2d1f2Y3lOLNeJohRf7PKyYB17
- fKhgmH4R9E6vlItzmlOwEQ+CQfVkuosOFPxbB2/RsXo55opkcBMzjppBlSc4tQHvFtZ88SBmK
- wpN1ljeIm+qn+7xoH7VcoMQ8DN6CJYMqXNp9mt6v3W7fXfv97d59zXGsOV3D73GTq7fJzEcA9
- aiWViZNOutaL7xaxka11Ftemkj0tsD6FGJrmEtArpJjtVzMiYZTkzm0fAqtoh6AduXUlr7T75
- JLq8pOJEpz5MgFyPF2PkOpG9AuVu1v6P2IjZiYVBgp6skfdKJpeyj5YOwNt8xQy7cwAuYKtQn
- HELilL3G+gHEWkC/qhev0nkTfWFItmfXjmNJmkZD5g/xJbiU6srRxtpjXBFYt3WXedYJ2UQ4F
- j4oQixIweoN1lpY0569hHFFnm6B0fERQKIkwQAtTIlAgJ/7csZ550mhPcmzDH1VXGDsbm85xG
- 2WmbzaqIKci0gsjCMxfYqHw0oA+87P3mk8sbxSL6pnDm/VK7Myp3pz+qRVNHe7SRLivN5KQ0i
- XV9gPyFNTCPHe593zI+078YCjIlRQPsAaDxPY03gvDxVEFKbPY2S5YzU1ANf5P1GCQ4NFF0AU
- pd4CAtHVKpWAQTokOImj+CiKq5ZUxPxuwf9tPlXX18Sw0NSPoy87GoBVHA0fhurpr/xulKmbR
- GHwh+WWYJ48tcp0yLJWLi9TDCHI3JtEglfn1QbxUhCItwbhL3ErgSkyrSTBoj4lujq7SjsmvP
- xub3ThOQfFnmNYhDfCOTTSFiBcaBChfRr0ruehLt2ZxQBxwG5mqr6Dk0QH6vIlVPYZ6wMXGOX
- Rp0DqYQRS6zoI2O/3WQlZYkw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vfgi2tRnUY/+X9/u"
+Content-Disposition: inline
+
+
+--vfgi2tRnUY/+X9/u
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Randall,
+Hi,
 
-On Mon, 24 Jun 2024, Randall Becker wrote:
+I've had it in my mind for a long time to update our coding guideline
+for some things that I frequently stumble over during code reviews. This
+small patch series fills in those gaps.
 
-> On Monday, June 24, 2024 10:16 AM, Johannes Schindelin wrote:
-> >On Fri, 21 Jun 2024, Randall S. Becker wrote:
-> >
-> >> This change uses the zlib ZLIB_VERSION #define text macro. No
-> >> stringification is required for the variable's use. If the #define is
-> >> not present, that version is not reported.
-> >>
-> >> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> >> ---
-> >>  help.c | 3 +++
-> >>  1 file changed, 3 insertions(+)
-> >>
-> >> diff --git a/help.c b/help.c
-> >> index bf74e935b9..f378750af4 100644
-> >> --- a/help.c
-> >> +++ b/help.c
-> >> @@ -760,6 +760,9 @@ void get_version_info(struct strbuf *buf, int
-> >show_build_options)
-> >>  			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");  #if
-> >defined
-> >> LIBCURL_VERSION
-> >>  		strbuf_addf(buf, "libcurl: %s\n", LIBCURL_VERSION);
-> >> +#endif
-> >> +#if defined ZLIB_VERSION
-> >> +		strbuf_addf(buf, "zlib: %s\n", ZLIB_VERSION);
-> >
-> >This reports what zlib version Git was linked against, at compile time.
-> >That may be misleading e.g. when running with a different version that =
-has a bug.
-> >Would `zlibVersion()` be more useful here?
->
-> Please see my comments on the libcurl sub-thread. Same logic applies her=
-e.
+Thanks!
 
-Let's summarize the part of your comments in that sub-thread that is
-actually relevant here, okay? Here goes my attempt:
+Patrick
 
-	The scenario of concern involved a customer having installed a Git
-	build targeting the wrong library version.
+Patrick Steinhardt (3):
+  Documentation: clarify indentation style for C preprocessor directives
+  Documentation: document naming schema for struct-related functions
+  Documentation: document difference between release and free
 
-Does that sound like a valid summary?
+ Documentation/CodingGuidelines | 41 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-I am quite puzzled what exactly your answer is meant to tell me here,
-though. Is it meant to say:
+--=20
+2.46.0.rc1.dirty
 
-- Yes, it should be `zlibVersion()`, it is the version that is used and
-  that might cause troubles after all,
 
-- No, you want to continue showing the compile-time version, even if the
-  user might actually use a different version depending what is installed
-  in their setup,
+--vfgi2tRnUY/+X9/u
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- Yes _and_ no: both versions need to be displayed, as a discrepancy
-  there might explain reported problems and could therefore be quite
-  useful when handling bug reports.
+-----BEGIN PGP SIGNATURE-----
 
-In other words: Please understand that your answer to my question left me
-wanting for an answer.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmag3+MACgkQVbJhu7ck
+PpQlZRAAqKwdkJg8I6EQ6SQ3ww3ktYkwCDS20unSNomLuMCP3dcYrC77B3IT6lTf
+2DYovsAExFJySp5jRkaAUGABhH6oyP/pWBxszxn9fBlWjj86ubs+taqp3giLhG+U
+s3XSWQDp+nx/K9v3o5+8JNfa6+oSlYztBJzn+NtRLwyrE8suWhy/zph45NqGO8qO
+iDehPv7Ra8o+RfWN8rDw/iQFhKJsW+uiizoAj6F2v32TxdQeQrQwqjpiV20Ep7Pu
+JmtGZIss+GIHbZSIRR39Uz6+qziG4rKsXPTHsYwz1vbu50jkODNkmdDx/YTK8+kN
+YPy7BagbuF+WgilTkjHJl5tWtnXCAu4er0unjn3EduxFKmwMG7E66XxdexYZ1STo
+5V2DZvyMXxGcOMmDM3QhxDAkoDYKjyRawjidGHfrztHsBBSsSQmEJEUhK7bfjgvN
+fbkS3vwR9HuEPbmUV5t6GwEcje+n/Ox7beDf720OQ4QZXloDUBY5y0PKJgw2w6rN
+vsZrmAGO2iO+/G3dHtWN3J/b5mPSBTS3rfXzchs5yzzHhAwdF9fy/ZWkbWPcO1Dd
+TszzGQWS9JRc1EYVu3JZEGlPb2myhoJRzfM2DwFhrjtNThrN43yQjJgFoW7thQal
+vCiiWbcJCUnFVBG6mkqT/BO26S+FWLksqMLtYghZW+Pj0JIudrs=
+=9kDl
+-----END PGP SIGNATURE-----
 
-Ciao,
-Johannes
+--vfgi2tRnUY/+X9/u--
