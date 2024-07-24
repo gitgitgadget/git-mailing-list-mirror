@@ -1,54 +1,54 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279BF1C6A3
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:05:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2713156F48
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 11:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721819125; cv=none; b=pMhhhIUgdWSTWxiDkMFwWIJ2gI/rUO4TWi+rw3u/lyNlvLzogKfMLNmpthFUf9mbRZn/JotvduKorb3vs3fbwGU3RJDWna+Vn1OM3/AK8bXnR56DdLtAVl4eL0yl5Bn/TQzNnT6uWjJffXrV3NdldzH0d5o6sqwGkICGENhcUYA=
+	t=1721819128; cv=none; b=S3/R9Q6jHEwrFiL+0wZnIgIUjdOlCPGLipQHrM5k7HiuUSfAJvATHYc+fG39mTRQxGhx0zaY8bpTAkIPa8f42PFenWFp3Z+GUrMdD5nKoQOYXnrMcluvvTKwmNhT92ratzlwcoPQQ8kDCEJbDn8jXr0ZDcTrRqXAy6cw22HI8QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721819125; c=relaxed/simple;
-	bh=nS55w214nVXTD2VVcf8dRf87QmsiHHFywkqeiqpZ4TE=;
+	s=arc-20240116; t=1721819128; c=relaxed/simple;
+	bh=egUvbGY+ME57I0AcHEgBfXxcx008Y4PnUammvkuHHbk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KrlLFPKBv8wCUMhDN7s9DcHN5Q29LdIfLbjRVIf8Rni2M53L5ZDUdfN8ziqrYh1klZSIuMpU6eNV1hBCAaRCDrAHjPR5493EbH/3Rfj7McGNorp8k34lrYz30X44iwibeEpoLkSzUsm42rdGQmUJMV16lES5Mwct0014XUpyFCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KbFV2uPU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XNV9UCR0; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=WI4y2+6UMDkFGFRRBRwFPSNiAkfBZ+KkCz2faKroyOTk5NfuYwktxuJwio6mc5IFknOUXGt/dIDgeH4hcaxnNQBvnEAQnLjSFeqAi/8EMKIOjrLVwFrTka+WK1LobletTVvP6uz6ddZqZNBcTZkispctYd6DoIgJna9ViFgFzZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DIzFTxmc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JI8GKDNW; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KbFV2uPU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XNV9UCR0"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 9FEFE138067A;
-	Wed, 24 Jul 2024 07:05:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DIzFTxmc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JI8GKDNW"
+Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9B2C71140256;
+	Wed, 24 Jul 2024 07:05:25 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 24 Jul 2024 07:05:21 -0400
+  by compute8.internal (MEProxy); Wed, 24 Jul 2024 07:05:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721819121; x=1721905521; bh=RETWbb3Yig
-	2FdC+intxx2ez18VPRt/+H2leylH3CDTk=; b=KbFV2uPUAThsk/gMW8cs3eZ3W5
-	zvSQ5x9GRuAzd3v+m3+SJfmmmhZpVmOcIakzb0PM+bg8LgipMHCuF2EI3wsYl/XT
-	EwhyYCwazlLOF9wXfOjjPJpYgjUM8QS6g4m4Cx13gxuIt3Di896FD39+9Fpg5Lck
-	5q78sdgyWeHYSfQtkqsYIEmp3GHEz0rBx4bpKJ3N7P48d7ww0y4RWUjHQUdSDtg+
-	t4vf8Wc3y/mi9Ke6wQfpz2s6AtSjtkYps/FD0m78LEK2vh+G71PQlUn/Uj2EVbhz
-	gFHdJMhvoAeQErIvhmCosK2L7xZXLU2/Njqp7f8rcxUYRfRhA69kI3o6oyeA==
+	:subject:to:to; s=fm3; t=1721819125; x=1721905525; bh=VkDrViGblX
+	xKU5Kqnj1AFzTsw1oEgKpqoeaGw2/8Cq8=; b=DIzFTxmc0PnlPY9Q5lNjEHPZrb
+	ZWns10MLxVFHFEF7+2KWiC7n2uCd43ybprG8TLNzwQd+2sMy9q2tZIDyyMOvUtZx
+	vrUTsaqSCU+mr8InZu2rpj+oKvP2PeoF/LkP963+/w3+5jlkFJShhsRj60E6alxV
+	7JoOIv5I+BKfjXjKQi5YYWXvaqYvGwej5dgPmxJcZsTINgvKkriq6z+HTZyJtskt
+	mLxUdOVi+nqGVWwt18+/j4FCWt2w3iq6O3oCEYmgIvY3pvaJ4PCc5edVCdglN9XC
+	dW1M6UJn+Ib19imtkHQhaD96hAKlwQSoE1DC2UKpUJmSn+gpoDgLi/q9IAHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721819121; x=1721905521; bh=RETWbb3Yig2FdC+intxx2ez18VPR
-	t/+H2leylH3CDTk=; b=XNV9UCR0JJKJJmT4uV69bB0VShAAfMVvk9qNvQySwKID
-	OLszP1s4xpCnwFvGUEFbHnFBWI7DS8iOttq4zHAh5qTT4U3jdfZ6OJSTv7j3AMTo
-	bHRW+dCe/6+1fkebv6N8n37zGhts/bQB8E7Z3CGUakEW3zd2xxSlKf2bKF7V3Z/L
-	Y52llPuFMBOuoS3nELNSnoHNPS06mJwP88Slfg2TjXv5ScvOYxdXP9etZvwG+bKQ
-	bZqW1ZN5a0T4WFP10RdfIZidZrnj8yMUAjVO59Zn87qKzEMf3gxrid8FW+l5Oo5/
-	D08obn2sfMOgbILvL8ipabkVZOvuscNU/CNCrl3SSQ==
-X-ME-Sender: <xms:8d-gZmfM2dBo-0mNRv1m0yxxYYVdRmw6mDtGrOItuNGJlCRwzQ1bcw>
-    <xme:8d-gZgOuSqNuJxK28L-Pdh5gxqdb3Jy_kDed2aOsyXJwz5CVynVi3HnNueV2HMRc2
-    DcdIvQ_xBk-y_EVvg>
-X-ME-Received: <xmr:8d-gZnghR5usj70Hopb9il4zFyKrPe6SDFfTX4ftC_0yfjyikR9prMO7viF90y7DeiWKO4YmQloJnnW4uoZxQNZmuCiVo5gDW0-nkd8diFQ-d471>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdefjecutefuodetggdotefrodftvf
+	fm3; t=1721819125; x=1721905525; bh=VkDrViGblXxKU5Kqnj1AFzTsw1oE
+	gKpqoeaGw2/8Cq8=; b=JI8GKDNWRTvXy82mRsFALKqMNdxwJhqzHRpodNDjEePz
+	FUosq+qvMUEl3xb/1K9zi8H3L8Ox32BrwggeJY2lC7lkgTQ6FBYx0g8hQRtOyjUh
+	T5P3yWmAxdgsrySJS98Pg2jGvICdYxy2ON/FPfX/E1TPVcoHKZoXUal9orTEb9UA
+	+lj4jy+eSzcbTdP0hmsYUDZ2xhKK8VrQKPA1EJuB7bHHZAslrQd/XYRg3S1AyPFQ
+	Hgs6bes6uHi9fyGQKGEsfanWyZqyPAmnvUUsX9lnr2YTaO3r8N85VhY5mERasM/4
+	23UPSVPGEYxY/TGnEhQ7xp764AUCiLJmGyHsPZIrzA==
+X-ME-Sender: <xms:9d-gZv2Q2gf28dHhyr710U0IN_EX-ohVSxR4jknlUTEjhYPKyRUaUQ>
+    <xme:9d-gZuElhQ3_aiFSX_rRQa_8-VM1JTG9bQOv2NCzjb466ooia1VLrT7eukXRC6AcY
+    4JmSINYhyDGhDeTpg>
+X-ME-Received: <xmr:9d-gZv6ehWKtlWXivODP77xdJO7ErkekxBTmE9YSHQUjpWIIEJ02LBx2MlRpQrsBHYoavSRgkpZfT8nPwZc5dgG7Lkb_v6T1yqRJtT94USvblQOv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdefiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,24 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdefjecutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:8d-gZj983jSFSODi1GSWZEykesKhqwCciWF1nWYsSdfRgQOjQvIldg>
-    <xmx:8d-gZitFs85_5yMaiRSxXaRXPM0HBtgMA86iZizYe27MOHY0KIwWww>
-    <xmx:8d-gZqGxA6EInW67VeUC3uxUouiXgPeeRiHZlROlMe-3Wml93Ob7qw>
-    <xmx:8d-gZhPZMrFXoWMAjufNfVQDQAM9IJG1B_eor1s2mIessIO5SvMq4A>
-    <xmx:8d-gZr6sE24NQ0PjVNBRh0ft5oDE_b2XKkqtamAtlWCSBRxJd1EJJzyo>
+X-ME-Proxy: <xmx:9d-gZk1SyBqUVpgAdDjo15X_X4uH-_0FDzyFy-Pmen1pnI4KsrLXgw>
+    <xmx:9d-gZiH9e0LFdmQ8Qi5MMkQ4Kv6t6sWPF1jnV5OERweLkz23iMYxgQ>
+    <xmx:9d-gZl8JiS29WIaazssI7Kt6yd6pK5uYyMK8B3lWapOPm9hcDdvI8w>
+    <xmx:9d-gZvno9fnkcfRT2IUp2LZE4VzNzrhio4TUbK09rpNWg9OllfRbaw>
+    <xmx:9d-gZnQtw2XckKgavOFDIQ4M04OzzCVz_dVgrToADiQhn6g8cSinmcO1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jul 2024 07:05:20 -0400 (EDT)
+ 24 Jul 2024 07:05:24 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 99a5a101 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jul 2024 11:04:04 +0000 (UTC)
-Date: Wed, 24 Jul 2024 13:05:17 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id f93409d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jul 2024 11:04:08 +0000 (UTC)
+Date: Wed, 24 Jul 2024 13:05:22 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/3] Documentation: document naming schema for struct-related
- functions
-Message-ID: <7f07bf1f3beee2f74a3572d2b9a8d28b6535053e.1721818488.git.ps@pks.im>
+Subject: [PATCH 3/3] Documentation: document difference between release and
+ free
+Message-ID: <5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
 References: <cover.1721818488.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,60 +82,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BKvuzQf+cgY3ntJe"
+	protocol="application/pgp-signature"; boundary="npYooGDYLKrnOUMx"
 Content-Disposition: inline
 In-Reply-To: <cover.1721818488.git.ps@pks.im>
 
 
---BKvuzQf+cgY3ntJe
+--npYooGDYLKrnOUMx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We nowadays have a proper mishmash of struct-related functions that are
-called `<verb>_<struct>` (e.g. `clear_prio_queue()`) versus functions
-that are called `<struct>_<verb>` (e.g. `strbuf_clear()`). While the
-former style may be easier to tie into a spoken conversation, most of
-our communication happens in text anyway. Furthermore, prefixing
-functions with the name of the structure they operate on makes it way
-easier to group them together, see which functions are related, and will
-also help folks who are using code completion.
+We semi-regularly have discussions around whether a function shall be
+named `release()` or `free()`. For most of the part we use these two
+terminologies quite consistently though:
 
-Let's thus settle on one style, namely the one where functions start
-with the name of the structure they operate on.
+  - `release()` only frees internal state of a structure, whereas the
+    structure itself is not free'd.
+
+  - `free()` frees both internal state and the structure itself.
+
+Carve out a space where we can add idiomatic names for common functions
+in our coding guidelines. This space can get extended in the future when
+we feel the need to document more idiomatic names.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/CodingGuidelines | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ Documentation/CodingGuidelines | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 1d09384f28..34fcbcb5a4 100644
+index 34fcbcb5a4..ace4c4ad0c 100644
 --- a/Documentation/CodingGuidelines
 +++ b/Documentation/CodingGuidelines
-@@ -541,6 +541,25 @@ For C programs:
-    use your own debugger and arguments. Example: `GIT_DEBUGGER=3D"ddd --gd=
-b"
-    ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
+@@ -560,6 +560,18 @@ For C programs:
 =20
-+ - Functions that operate on a specific structure and which are used by
-+   other subsystems shall be named after the structure. The function
-+   name should start with the name of the structure followed by a verb.
-+   E.g.
+ 	void reset_strbuf(struct strbuf *buf);
+=20
++ - There are several common idiomatic names for functions performing
++   specific tasks on structures:
 +
-+	struct strbuf;
++    - `<struct>_init()` initializes a structure without allocating the
++      structure itself.
 +
-+	void strbuf_add(struct strbuf *buf, ...);
++    - `<struct>_release()` releases a structure's contents without
++      freeing the structure.
 +
-+	void strbuf_reset(struct strbuf *buf);
-+
-+    is preferred over:
-+
-+	struct strbuf;
-+
-+	void add_string(struct strbuf *buf, ...);
-+
-+	void reset_strbuf(struct strbuf *buf);
++    - `<struct>_free()` releases a structure's contents and frees the
++      structure.
 +
  For Perl programs:
 =20
@@ -144,24 +137,24 @@ b"
 2.46.0.rc1.dirty
 
 
---BKvuzQf+cgY3ntJe
+--npYooGDYLKrnOUMx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmag3+wACgkQVbJhu7ck
-PpSK+RAArHV19OAKXbmiFJP2BMdwQkrMjjeH2j0RUynvs7b8R2XNQNB1B7o+5BxS
-2KkhBep0ZSJ5pUDB8Tx6H5zjdg4n/z+6VRJRnq35bBxGreR1sfs4B8OSg46xbWTh
-LYWDrc4n4jTuK5mtVqcRcjf2whIcYuIKqfhCkd3e+MCQkNN4Qs9HYb0UFVXaoH9j
-voS29yy+jPBRIs/ZeSWYnsW4DwYpa0si2uIG3MgR5+5xDS4Umy/mdiRiZpSrwU6D
-nxpSJ4M19xfoIWm+X6zHUO8/t7t62G2e0/7ddHMiDPzo7pVINidhKbyv9HX0vvFj
-6xLHrp0H+/4wE9W9WI0bT7+w5atvhbwoS0nS/dx9B956PaoN/4zQp9xW1Vr4A47L
-z8NTeATem43cjcIeNU87bKIvs99EPnUV8Ex33ZX3TCFEBRnY/qHez87S1bFtIJmk
-8pdwFGN7Oyy+tQe/6y2z6MF2D4uRMqjYID7XYl6PYkHDMxYGBjJ/JCPkelUoQsa9
-KqYUwKf6afu6XNMFNsNqA7V7xdEdvkgu3yVEuGoeiJBdE3wtPe4viXi9t9xW+QS9
-tWe37ZBIF8LtT9l+kHzhXy26cShR4lKDhlGJn6/JEHf2ll6Ff+GfGu1Xejcy3Ilc
-ArWRiPucmcX3BSoGGfZrCcfo1NY0yJVYgkG0VDUfq5fK9rV24RI=
-=gJa2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmag3/EACgkQVbJhu7ck
+PpSTKg//RwWz2XmIbmzQna4iiu3fgfy60sP83G24i+6aJA0IynRibjVzqw2TjGG5
+qg1WEfEpiwYAB5+xBy5begF93Ixl9UUZM8edNNG1JjrVd58QxILlrKeEPP06SWxX
+vi4K36dh3IHL8LQgNXPukBbzw8iXqmqZ+eRtWFMF3CPe6z6keg7XbQAxPHNnpsYy
+WFBeRtOqVEGN4ShEAwI5lz0msbRg98CTNy786XxxPp+cY9iD89gHFqAXdpXBowrO
+d9DP8uGu4MKHyWcKFuCz/OIzACcBrDdjiuGuXwlLxLwouZKo/BZ8VymSToLv4SlT
+8ainSmaI5DmRqhxnz0V8Pi+jC0ZzIUxilT1LLIm24cf4H4i08LXNx4vm9aAz8zWT
+nYomu8xvWIJD1yylYseE2yEOfJ2lZ0OpDFI5/cEEU80yU14lY8ZwONqddmn8jQ/2
+gSr4POlOyytmidbHMLVPbnEN1rUUSqBIlgVYjLSqCBd0lGv6LlaS43ABgZakTIeL
+u9tA4fbI64VlxS0GnkzIzyDP9Ypw+5Dto8UV4tE29sxOO52xyvUxztSc+nAndlWY
+bY6xrlD1vyJlH3V6I3pBc3a3K2e0bh/Ol4CkNaT5gQGZxh/frPsXgnNcrR2iNO61
+sCyFtVHdpWBe4Qmf9fPEmTbqLdGGCNYzL9I9Dgo1LqBAw4arLPY=
+=eJEI
 -----END PGP SIGNATURE-----
 
---BKvuzQf+cgY3ntJe--
+--npYooGDYLKrnOUMx--
