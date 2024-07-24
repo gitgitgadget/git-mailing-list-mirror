@@ -1,54 +1,51 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9449E79F0
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 15:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8573915DBBA
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 15:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721834954; cv=none; b=njuMkQT85u4SMqzOGKXMhEvbmuEjQ3fuUKDZE5jOuO0J6Yk8U0JX84IG14sJHynCMP8JUnUuLUFO8JgDiMmeVWrMLWtTUXp/ICiJ7maE4gEalL4y/buQ4XNrtclBkHIdPtNN11Sv2NonGNbhaylg2tOUJZG3Sx3U9mHiytGBuC0=
+	t=1721835594; cv=none; b=hclyRdop0GCM/MlC+Z8e8EVyWzBLWgfwDE2kqPV0Ew6NpfusKy0QTlovwAzFnTqlIjReEcuKkqplJ7+2mujTRQKsWKJ/HHP+JXR6L38Et4IlVJhFwucpbDwxKsKCQ8Clm9UwkZ/n2pMuNLf5naG4L0x0JQtLcgATbOPG9qDYoEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721834954; c=relaxed/simple;
-	bh=EVhtY8gGYhM6hSEOR9L8tQ5px5gVtvFkyfVhE05LmQk=;
+	s=arc-20240116; t=1721835594; c=relaxed/simple;
+	bh=t5yIyvsP1YNoYTqWLglQ1UOCHme5XcJVTThnaDgtmOE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jl4SxWM3qGhJjWOnHDExSf3Lp1O/cMeMK7+485cdvAwV/82PmFMEbt0upPsqeCjCpFUWgShwnfKOX8IPAuMYUXS+xcfcTs562yR312d6anT4+SE7uF9AflwHAru6Ij22RxZKFNVmaNjxrYAiiJq/+iXnHZSH+12CjPpqS6cHq9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x+tkBOpp; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=krO3bY+wi4RbFRn1R8K+s9c+UszLABfZ585aCyZjjckHUUgOkP3dqk/yK30Z9Lc26tWqCQlru6ZZst4QUn4h97tC1uGdZRe20fkmy8Bl76wOQlJqbEHOJMeA3UPMRpooSGTww6KwIa6oY8pu1BH5BvQp7DukQy3sE3CSMykorpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g5f7L5Nq; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x+tkBOpp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g5f7L5Nq"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63777188B2;
-	Wed, 24 Jul 2024 11:29:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71024189E4;
+	Wed, 24 Jul 2024 11:39:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=EVhtY8gGYhM6hSEOR9L8tQ5px5gVtvFkyfVhE0
-	5LmQk=; b=x+tkBOppAlP2IR7D+5gpoU+i+Im3H6XI3tuDoR2Js2/S1wn1ZbHBaa
-	bepg8iovlb0iFHdHPbUFbfvrenVmKsHIGeQ9aLqeieiIIID7y3sLMzeALKs8JVzy
-	EX4+pVwKOm4rka11y5pTfZW7VsAtNouLbpO9SrJhwNl/1Q8n9au80=
+	:content-type; s=sasl; bh=t5yIyvsP1YNoYTqWLglQ1UOCHme5XcJVTThnaD
+	gtmOE=; b=g5f7L5NqdZ4dzDvhIvdnDYOkGCJvl+vieG+w5K4iMDFUsS7hjix/fS
+	AzgOmTnh8x1VKC59c9kz4YItmvltjyerc7+BWWc8pDBf+6hsQu1TViBECMMirKTM
+	vT+v/xvY5B6eoY3vUgriJ3KauxUkh7XP0FiN240FE35SB61uwNyag=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A1E6188B1;
-	Wed, 24 Jul 2024 11:29:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 690C5189E3;
+	Wed, 24 Jul 2024 11:39:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB1D8188AE;
-	Wed, 24 Jul 2024 11:29:10 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C93C6189E2;
+	Wed, 24 Jul 2024 11:39:50 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: avih <avihpit@yahoo.com>
-Cc: Avi Halachmi via GitGitGadget <gitgitgadget@gmail.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH 0/8] git-prompt: support more shells
-In-Reply-To: <992128710.1986532.1721788902932@mail.yahoo.com> (avih's message
-	of "Wed, 24 Jul 2024 02:41:42 +0000 (UTC)")
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
-	<ZqAzpYuTrK6L-uyN@tapette.crustytoothpaste.net>
-	<992128710.1986532.1721788902932@mail.yahoo.com>
-Date: Wed, 24 Jul 2024 08:29:09 -0700
-Message-ID: <xmqq7cdazu4a.fsf@gitster.g>
+To: "Jin, Di" <di_jin@brown.edu>
+Cc: git@vger.kernel.org,  Nikos Vasilakis <nikos_vasilakis@brown.edu>,
+  michael@greenberg.science
+Subject: Re: EXDEV when re-init with --separate-git-dir option
+In-Reply-To: <CAKOkDnMGRfQoNygYLiAxPZB2q=VMYvw8kyu1dM=pM843-FH41Q@mail.gmail.com>
+	(Di Jin's message of "Tue, 23 Jul 2024 22:47:19 -0400")
+References: <CAKOkDnMGRfQoNygYLiAxPZB2q=VMYvw8kyu1dM=pM843-FH41Q@mail.gmail.com>
+Date: Wed, 24 Jul 2024 08:39:49 -0700
+Message-ID: <xmqq1q3iztmi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,37 +55,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 79933C1E-49D1-11EF-A6FC-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+ F70A73BE-49D2-11EF-A558-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 
-avih <avihpit@yahoo.com> writes:
+"Jin, Di" <di_jin@brown.edu> writes:
 
->  On Wednesday, July 24, 2024 at 01:50:16 AM GMT+3, brian m. carlson <sandals@crustytoothpaste.net> wrote:
->
->> We explicitly allow `local` in our coding guidelines.
->
-> Yeah. I missed the guidelines initially, but I got to the same
-> conclusion with git-prompt.sh - to allow only "local" exception.
+> We discovered that re-init with option --separate-git-dir will throw
+> an EXDEV when the target directory is not on the same file system as
+> the original directory.
 
-It is a bit more nuanced than that, though.  Here is what we say:
+Yup, it is hitting the limitation of your filesystem.  The code
+wants to move the original .git directory together with its contents
+to a new place, and it makes a single rename() system call to do so.
+When the system cannot do so, you'd get the error message you are
+seeing ("fatal: unable to move X to Y").
 
- - Even though "local" is not part of POSIX, we make heavy use of it
-   in our test suite.  We do not use it in scripted Porcelains, and
-   hopefully nobody starts using "local" before all shells that matter
-   support it (notably, ksh from AT&T Research does not support it yet).
+The code path could probably borrow some code to recursively "copy"
+directory from the local "git clone" code path, and then invent a
+new code to recursively remove the original ".git", and trigger that
+new code when rename() fails.
 
-For the purpose of git-prompt, I think it should be OK (without
-"local", it is harder, if not impossible, to clobber end-user's
-shell variable namespace with various temporaries we need to use
-during prompt computation) to declare that we now support shells
-other than bash and zsh as long as they are reasonably POSIX and
-support "local" that is dynamic.
+But at that point, only as a fall-back measure, it might be simpler
+and much less error prone to spawn a "mv src dst" as a subprocess
+using the run_command() API.
 
-> That's nice. I did try to check whether it's planned, and request if
-> it wasn't, but I didn't find the future plans (but also didn't try
-> too hard). Though I think they're still doing bug fixes for the
-> forseeable future, which is also great. Looking forward to it.
+It would make a good bite-sized #leftoverbits project for aspiring
+new Git contributors.  Any takers?  ;-)
 
-Do we know what kind of "local" is ksh93 adding?  The same as their
-"typeset" that is not dynamic?  That is so different from what others
-do and scripts expect to be all that useful, I am afraid.
+Thanks.
 
