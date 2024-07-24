@@ -1,54 +1,54 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BFA1C6B4
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 09:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDA12C1A5
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 09:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721811795; cv=none; b=X2VXqD8NaIrW0RL4BR1EBcBU/wHA8/BYtl0PtTk3/HY2X9t9t60GuCy3HeQX1cFy61rRamYQ1eNUxAJCaFMeTSQKV1RNlKi2Is1x8FLcJT4He6nz7FeNj933QmKy5rYXjcIQ5EWV+LV7Xa6HzGaYxdl2uqa35NeZE0Q9e1H7TWI=
+	t=1721812332; cv=none; b=cgDXPeIDipTYXvigwGYiEwuQpH4EJSqE1E6X0Sexlw+0JawyXWiQJvH3UdowknsNx3M+jt7clRXb5ByIdBRKBumBrUtvvV0AZlDf5IPsY0ONyouTjDouMvLYYlZ8heKAbmrHCnKyGfWdtgKZwi9Fwh3t4/jFIwuVD2B78iXA+MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721811795; c=relaxed/simple;
-	bh=xTG3Gkaqy71YSctHQfOF0dbDhcq6fhgOcbtAKVS3oUo=;
+	s=arc-20240116; t=1721812332; c=relaxed/simple;
+	bh=rLzqoGr+9bn9hl6mO116WbCPSYhSFjnnjMIIGmcgXtA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgBCZttRqC5QS3vW2BnbIcX4nytGiK6n+85yP8mkiclWQcNpWOD4dXcqO6RPZ9EBqW2uADoNLDUM/nhdGvyS5JlD7kEM9hfYRDFuVNinEe+epbjADk6Xf9Eyr8ZP1HaWhuS5369CZppCA5znk6gn5XvLCceL2Ka7/fKRjIboJG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UFQi8BNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nAiK5MZ5; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=lzQSlUggETIxoaBrBBtd/gRZRJcRg3rrcMdtKZAovRqMZoT62BqsTRXMRn8OWbmcJFHj1LgkMrVsEegR76xhdXhgTz50RPrINXZ79ddPCzS5MtWdLgIzxI0yKTyN4GCVGqv7E8+MY6rahpLK97yLV8DfdXz6X1sR2OgUi+6oPPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jlNIzhoC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WajimcnJ; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UFQi8BNP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nAiK5MZ5"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5678411400CC;
-	Wed, 24 Jul 2024 05:03:12 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 24 Jul 2024 05:03:12 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jlNIzhoC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WajimcnJ"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 941521380640;
+	Wed, 24 Jul 2024 05:12:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 24 Jul 2024 05:12:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721811792; x=1721898192; bh=ebMkqUqMu1
-	raIgcXtgFBIuY+BMoEBEHFMzNDp8XPBhQ=; b=UFQi8BNP6bBsVMz8PkfKpOpn8h
-	FZIKxXTtF10QcNEe6tzypdmeUvv8pRvLcsIe74yY2wrOBpLh7BoyU8m6j754ZYs6
-	mrwgFFOA++AZYLM5ydq4yZqtB+s0sS2QUAoyEvU/7JTqx0J+EhGsXJajqDDaiasH
-	jOzy47ej6AxVwsCvW12IORlY7IHJu7I3N807P+i04OZ9YKWO4qEFqymeN2BKg9IL
-	sZT0tc2dyjfY1jj4/p34yBABXE/Ld5Dn0NXUWNUkcfVUPt3U0MJQtL4KUU2J+p9P
-	auU2H97EEeoGsseAikmOTytiAVdj2iOnUsKBVARBjLa4TqIZq34gMMoDyT9g==
+	:subject:to:to; s=fm3; t=1721812329; x=1721898729; bh=T8sXQEfsfV
+	zeA0tNa4gQAFWwrsk/eHwnjGPqur6gQYs=; b=jlNIzhoCRDiTaMz/23g7NZGgUg
+	s1jrWJ6jQ/JHwOd++QNmTgMY53Svr8SENLk/YoL15Wg0nhzLR9i1QOXlVR8zJynS
+	tMvzad5EIoc113yW2ipwW7+KZaAkqfEPiLzFrLIh2FgIN7ZVfdCsNRTjXMWdb2ZD
+	ZjDDEAkhH7ChAxqST7QYbJGZTFeCE7V/MlX+S0fbb6PiSiJx9tXncNlw24McJhRI
+	DTvnExLibY/CrXjLDvVV6P5873/mCSCOVSTNmahKto9BRkPzR2WGKCnwluLGnwha
+	s8ZSmj+r4uGYVAxrN2SqF4pbGyG734ttCYp648Cl2h29SPcqxUfOZVgpuZ1Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721811792; x=1721898192; bh=ebMkqUqMu1raIgcXtgFBIuY+BMoE
-	BEHFMzNDp8XPBhQ=; b=nAiK5MZ5lQa1mURW20smPjhBHDUv6LjhVjNmK1GhiHBr
-	nJxvYQakkZ7/WCRsYssswDb++rGMZDF3PExaEaT8DME4yQJw40K7PCQP9CdrJVqE
-	cMEbAu+Dj7rd88UUN6R49nvhZ3k4TWKGOeqUsaX6Mts5DRljw5awd54pI5unr3w0
-	2/rGRREBiXeEEbhV0/RAaPGD/T3IutoLecnsO7KlmUKnIxp691LsbdYerVc2GY61
-	HJ+vbpENPWLCLFM8GLRry6DgVEXyT1al/nE/CT0kN8lsB0u92NDqb+NzLr5leyoq
-	SYAkKCA+MpxxpzCGxgcGZNt6W1lsA16yiyNZ430fvw==
-X-ME-Sender: <xms:UMOgZjReseMOmX5z6KsWPzWQA_bIbgwQ_yCXKX_UfuOeJlzWiiQAYQ>
-    <xme:UMOgZkzwDYWVcPic8tuxhL8EYRWuZTBsMYrCr0PO7w7o9gvO_aWyOn5-7lYAVJRKY
-    pqcVwN2w4_2EpnIgQ>
-X-ME-Received: <xmr:UMOgZo3wQ5ITE7S3uacVs8F_AmRLI_slBwQStLoh82mrNSbj1MdLrzhoYaYSDzjhdsnwL2r4NFdKPoX0J671x_1xNdcnmZXQPumDYs5eDYyNttoi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdduudcutefuodetggdotefrodftvf
+	fm3; t=1721812329; x=1721898729; bh=T8sXQEfsfVzeA0tNa4gQAFWwrsk/
+	eHwnjGPqur6gQYs=; b=WajimcnJpVWEEp98MoQ5wY2EjLwqGh6oRPKq7N2MeLji
+	CXb9j77D1f8KSCU0YxPpd2HvS27o9MtehOs/BBwCMPrFktp39xED+r9jZqvoPUpO
+	T4hp73htgJmqyzdOFptCSVC0q1rWwa85KwSXmObV0VJ+qmAuQdPLVt4uFEEiE4Lz
+	5iu8K3h6W6Ufwprzq39YIYzPdVmqKw29YWbG6jCxiR3zer4uvCL2Mp7ayv6epcye
+	JVhuwyZYbOx9+TyR479yi6p6h+Zb4h1Vnjpr+YW0mv4kyeZqCW5tu01J7ILTafYo
+	7BKEpMxipsgKv0mVvQNfQ/8Hb6IFWFhJdwLX2B8OxA==
+X-ME-Sender: <xms:acWgZmx1bZw_vxJeVGiFgH0WenNXJ96zs0ZkLK1K-D00FobIiBhxSg>
+    <xme:acWgZiQjoCFYOM-2No5Hfb3CiNad46ZoC9BGSz9-Bc0quh0gq2rb_VPZQzkFqlsg3
+    XQrWyCut98zIgj5mw>
+X-ME-Received: <xmr:acWgZoWmUcVAmDGxSzPhm6RdWSEJqEGXgkOC1pyeRx7tZu2VzfLiYxnTiabgHZFo-0mzMeQug-9ANFHPxqCmOfPv0rDgPd-FGcE7v9IsA6LGQhPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugddufecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,26 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedugdduudcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:UMOgZjCG651_ARcaXQ_rGuNZyNj1-UESJ1bgOR6IM-MfsPteCgMhKw>
-    <xmx:UMOgZsgGW2gVTM1BnD1cyKgmQmjI7iYkOWCaZF4pxaI8BaI9DSqMkA>
-    <xmx:UMOgZnovIGh_sI-UVuXw0oSCFY0jQcrNBm-0PAQHbRYh6Cvg7bLKYQ>
-    <xmx:UMOgZnhkcUOfpsELQqkFuRv015IiGCBrtFz505roTbiEzjDGwrS6Iw>
-    <xmx:UMOgZltK7fFlsHx-2H78ZvpKsXt-wKqj8DiD66pVloPNQESeAOyYKHyc>
+X-ME-Proxy: <xmx:acWgZsjQ3nx_LLzncaCNUlKJegyy1vknMBZoNMjgFIlhWa7u0tAz8g>
+    <xmx:acWgZoBZFn_UUdMaXFGoO7XVk6SIMmQmHT_mXV9KT-AP8mMn2m5yPA>
+    <xmx:acWgZtK30zNadYBhPY1wgGRrEicL5R9ZsEFoP4sjCB4508ho1wG3Kw>
+    <xmx:acWgZvCBgUz45fW1g9BTC5aA8YKL4Uok0EUk-IpR7l7Of8lUoCcfOQ>
+    <xmx:acWgZr9eB3lRgL7gGHDNkcjEASaoM86YrtGnuLgxm91OQyLhtcEVhllY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jul 2024 05:03:11 -0400 (EDT)
+ 24 Jul 2024 05:12:08 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id a66ba74b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jul 2024 09:01:53 +0000 (UTC)
-Date: Wed, 24 Jul 2024 11:03:07 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 4bd0667e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jul 2024 09:10:51 +0000 (UTC)
+Date: Wed, 24 Jul 2024 11:12:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 6/7] t-reftable-pq: add test for index based comparison
-Message-ID: <ZqDDS3EhXwDittDr@tanuki>
-References: <20240614095136.12052-1-chandrapratap3519@gmail.com>
- <20240723143032.4261-1-chandrapratap3519@gmail.com>
- <20240723143032.4261-7-chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, chriscool@tuxfamily.org
+Subject: Re: [PATCH v4 4/7] t-reftable-merged: improve the const-correctness
+ of helper functions
+Message-ID: <ZqDFZAWBlW39Q25T@tanuki>
+References: <20240711040854.4602-1-chandrapratap3519@gmail.com>
+ <20240712055041.6476-1-chandrapratap3519@gmail.com>
+ <20240712055041.6476-5-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,82 +84,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ecr04/6WCBBntZDl"
+	protocol="application/pgp-signature"; boundary="4KIgF1NtOS2/RLG3"
 Content-Disposition: inline
-In-Reply-To: <20240723143032.4261-7-chandrapratap3519@gmail.com>
+In-Reply-To: <20240712055041.6476-5-chandrapratap3519@gmail.com>
 
 
---Ecr04/6WCBBntZDl
+--4KIgF1NtOS2/RLG3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 23, 2024 at 07:47:16PM +0530, Chandra Pratap wrote:
-> diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-> index 9230dd9b9e..23c3f6888b 100644
-> --- a/t/unit-tests/t-reftable-pq.c
-> +++ b/t/unit-tests/t-reftable-pq.c
-> @@ -18,7 +18,7 @@ static void merged_iter_pqueue_check(const struct merge=
-d_iter_pqueue *pq)
->  	}
->  }
+On Fri, Jul 12, 2024 at 11:09:00AM +0530, Chandra Pratap wrote:
+> In t-reftable-merged.c, a number of helper functions used by the
+> tests can be re-defined with parameters made 'const' which makes
+> it easier to understand if they're read-only or not. Re-define
+> these functions along these lines.
+>=20
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> ---
+>  t/unit-tests/t-reftable-merged.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-m=
+erged.c
+> index f4c14c5d47..ff2f448bb6 100644
+> --- a/t/unit-tests/t-reftable-merged.c
+> +++ b/t/unit-tests/t-reftable-merged.c
+> @@ -15,7 +15,7 @@ license that can be found in the LICENSE file or at
+>  #include "reftable/reftable-merged.h"
+>  #include "reftable/reftable-writer.h"
 > =20
-> -static void t_pq(void)
-> +static void t_pq_record(void)
->  {
->  	struct merged_iter_pqueue pq =3D { 0 };
->  	struct reftable_record recs[54];
-> @@ -59,9 +59,48 @@ static void t_pq(void)
->  	merged_iter_pqueue_release(&pq);
->  }
-> =20
-> +static void t_pq_index(void)
-> +{
-> +	struct merged_iter_pqueue pq =3D { 0 };
-> +	struct reftable_record recs[14];
-> +	char *last =3D NULL;
-> +	size_t N =3D ARRAY_SIZE(recs), i;
-> +
-> +	for (i =3D 0; i < N; i++) {
-> +		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
-> +		recs[i].u.ref.refname =3D xstrdup("refs/heads/master");
-> +	}
-> +
-> +	for (i =3D 0; i < N; i++) {
-> +		struct pq_entry e =3D {
-> +			.rec =3D &recs[i],
-> +			.index =3D i,
-> +		};
-> +
-> +		merged_iter_pqueue_add(&pq, &e);
-> +		merged_iter_pqueue_check(&pq);
-> +	}
+> -static ssize_t strbuf_add_void(void *b, const void *data, size_t sz)
+> +static ssize_t strbuf_add_void(void *b, const void *data, const size_t s=
+z)
 
-One of those reasons that we use the modulo-loops in the other tests is
-so that the order in which entries are added is mixed. Here we add them
-in priority order already, so that makes the test less interesting. We
-might thus want to do the same here and scramble the order a bit.
+It is quite uncustomary for the Git codebase to mark such plain values
+as `const`. While there is value in marking pointers as constant such
+that the caller knows that the data it points to won't get modified,
+there isn't really any value in marking pass-by-value parameters.
+
+As far as I can see all changes relate to pass-by-value parameters, so
+I'd rather drop this patch.
 
 Patrick
 
---Ecr04/6WCBBntZDl
+--4KIgF1NtOS2/RLG3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmagw0oACgkQVbJhu7ck
-PpQ2lA/9GxoMT5/2Xok20aRTdliO7K10wzGLudo6CL+i8iiUqi0cRnd58ra6+E3s
-b4fXeJQ1QCJyRKyMN3HFvNgkMlEYXmT0cjyfGYjga1kg6vDe8dJ/4PZcBBM2JDYz
-HsRv9evhvVu7zXAuvq2DJXeF/uA8ikcqthpOq6+dQe/l5hQjq6GQ1yfq3S5bU0NR
-H8OlS25lpFCtFeSHHYvaa+5RpsLpky7kQGYXj8msjr52s/tLPtpD5hGy1YvnT6fR
-f3LWSPABmGCoaPCGnZ6g9Mu56ytjSQMlSUrQcRN3Az5g2gzuZ+Z3qqFfJhQLwlbw
-MQWES6U6S3A76qHEuLVWeMIQZb/ESN1nECJcL00fExvQ979250inrjx3z6zT7jyg
-FSWmj8d3kZw/aTphlFO/6A1iyqebGKVQ+2pqm4D+VChAI+Efon9bQ48efHQ7e6Nd
-wgxANRgW7txSalD1pK1+sqrqZ2SntND5f37v4nSSBB1vGyR9LqgkLU3gzr7IYlSW
-c/aM1UmKvzBi+wlRLSjwEaUTQL+6En+UCe7fTxZGuEUk2e+Fjj7axrmMgPDeLU14
-ZFioHOX3Y7usRgYpHm3L+o++dfSFuJJ/52XPRu1vDY3XDvlrHbVCInN7zppuJXjr
-8x1gm/iemKuww0XT4C9xo1i/4m6VamHoY71aX5cjSyWC0EHht4I=
-=CH/4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmagxWMACgkQVbJhu7ck
+PpQUbw/6AzHxFyi0QIRTLFq/yydFL0GfxJaVmiRXidr32NmgcZIzkNS2CtJGih8C
+3UGG0S1wkILA06vsjcRGRm3kvYBcal/g93GJM3518MFIt6LyTpDEfN1gskpvryNg
+whTmSElv8aI7aMI+oxhIw0mQvbFqYi6/T9oomIWHfszaFYe+n36CY9H7FLOTzNyn
+ak/HYzRybtKec+rcnsSY+VK0PHzmdABDh/L5KFFouy3h9WvZI2iron2jWLs1zees
+vYNT3s60BC5B+WL7Lxl6vgAtagh9Zu80/2ZC94rg2kVmpN+4mCUqTtEJ3MCGdgTC
+kTDu6zqiov2iOWdjE+t9y2+MRyU6LfoTXHveyDxlEM42d5afvV8u5DkCA+92zQWZ
+ylzBV/3oshD76tyJ/AIqmcGnxNrbdS5i1xTd8yUsPlWGl1gO4oWAePRIlY77sGVV
+wla2aLusH+Cqb4ZcWHV1tvndeVMAzpsfMg4P0lD0wx19UTDmiKKOhBGHvWAz35fR
+1u9VMjo3CGRtfCKNPXO/OS73+Re68CB5gb7nvfwmbT8x0d6gYn6Vex8D0RPzzcti
+edMD/DUpBVnQpIWfD+C648LdkMnHKJd4MCxmRuqVRBTtQWbHipb39HPjdd05Nafs
+N/ocpYi40l4E6ucwLZwnkSqIl6IMx4vq50xdwGKrAKNmH0QctpU=
+=R+0h
 -----END PGP SIGNATURE-----
 
---Ecr04/6WCBBntZDl--
+--4KIgF1NtOS2/RLG3--
