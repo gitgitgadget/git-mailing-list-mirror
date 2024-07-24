@@ -1,105 +1,137 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109DC1420A8
-	for <git@vger.kernel.org>; Wed, 24 Jul 2024 08:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFAF1CAA1
+	for <git@vger.kernel.org>; Wed, 24 Jul 2024 08:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721810402; cv=none; b=O5TEzzAOJT3p6aqO2u/TCIkZm/LPykQoWs5R2oVBS8oTFlPFlyaU9N5mqbbuuds2W4GdE2MclAesiyTS+uDJxUed2wuV/URqCdK/EbIrOZQThDfzQyYd5FwMh9+u6Eeztc0rDWQlwF7xjAIefqsZLcSCllrw2EYMqb47So2/dNU=
+	t=1721811312; cv=none; b=fnOLqTnphApBUuZL7feVs/pIPSIP5hIso79gfpbStpsdjRTirA5LHoPf76dGV+EgCqSldCISwphlX3xk0iTF1RdKGLNj3Tjog9AdNJpXjvco49YmbxW1unHr7LiUaSKs/y/R7C5Ige7brgDtijPhRFdJkJ8vOVCRMCqNry+dS8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721810402; c=relaxed/simple;
-	bh=+R/yP3BH/N3bs6+akhrsUMggtltaMB2/YxQLu7em81I=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=cS7JNoQlRnB0B7anjKzjYCwG0EK/D0YhpS9Jh2gpFMInr9LHbeI8Vp1LS4/IUGEZHM85dXhJB4qg8o/2+AZtRR5I4fyJXzSr2MnzawIEVFQHcCsJMm2csVaJHbby/a1IExhrIq/TOaIFbFBdFhOsakylJwcV51vDuAPYLZHbY5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=SHcmYrYn; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1721811312; c=relaxed/simple;
+	bh=M44sR28bN1Fiw6Eyfo36LRN4s0QN2VwR6Vi/GCIQ+LM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iGZ020YHXzeaDMSByfSbWtUpugMo2p+zBWWc6eSfTUY989dpjYjaTvn0ukEygiiFG1/eZAgU8bMYEnkTUlMkp/NDdX5vyXYxDhfpspXK/PiVCbb3KZsLFNlJKn7SkF+PnvMOA/YW5s7BMRm6c/Qi+IiDfFY2sjufVibMH3yw3XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNJstPeT; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="SHcmYrYn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1721810394; x=1722415194;
-	i=johannes.schindelin@gmx.de;
-	bh=aRDTcg+KmHrkWmFDcHme7EspdDeFso4TZxOJVlJft2g=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=SHcmYrYnB0n9JXRQGvV3ICcovjtIp/WLpfx0fMoqjgs3p1pziCxoJ9iuutXlCGld
-	 kg6EXa6ZujmWABzIA9+FTbummz0Rc/L7BPBrZ4z9EVFH4F4MIeUQE4MewAIFVlaqy
-	 QvvJk2zDywhMUG58pjM1WQgSWVGsedyq4ky8hkiJktt89M4BkrIqAy2+RJeqXHSbD
-	 W1ThgmqNfbGtvDFeuFe/0Cbl7eE+jojNSJ9XlztdEZ+20c2oCtPmtIrwaukJCt4EL
-	 doxpRMhOGyP6bqw3Px7uXs3XI3C+AF2/X0FFKhtrZeW44izTxRYxBejfqygUmkwTP
-	 JEhnQwqDHhg9MNuxDg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.218]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McH9Y-1s0UVS2maa-00m8GH; Wed, 24
- Jul 2024 10:39:54 +0200
-Date: Wed, 24 Jul 2024 10:39:54 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] ci: update Perforce version to r23.2
-In-Reply-To: <ee5d836b779087890acdad061ef6995642942479.1721740612.git.ps@pks.im>
-Message-ID: <da9c4d1e-0fce-3bf3-c35b-32704a8a2129@gmx.de>
-References: <cover.1721740612.git.ps@pks.im> <ee5d836b779087890acdad061ef6995642942479.1721740612.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNJstPeT"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-260f81f7fb5so3335544fac.0
+        for <git@vger.kernel.org>; Wed, 24 Jul 2024 01:55:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721811310; x=1722416110; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NTnwgqxoiUu/MbdymFollPIxsbXSc9CfONDDBS2GJT0=;
+        b=jNJstPeTf7qbGmTviBbtumfMwqNyOTOb1sMi3ejjA9sT1tOgPRXBBp+BGV1A0NazSo
+         gDDfputBcOD14ns92huQ249WtX+TlO8qAKwIgVY7tLjgM4RUhKPUE8QnPn+a+ACjP/1F
+         ukaaCCQWwiyesC8ixS551LJwmSNKgG3NI+elfY6ciEEE9j5mVIR2zxs4alNNMBB4+j3M
+         diN48ZJiinn6Za6JefdUu11cYVstecPwpQD2oFsmACReZ3O9VWuJzn6p8Gx9TvURpqlC
+         ZI1btihL8TIAVDYQBa+ZgrQj8tk3lw/oiWnEw9wIh/tP1NLUyJD4ooATb3volZWN3o4K
+         nf0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721811310; x=1722416110;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NTnwgqxoiUu/MbdymFollPIxsbXSc9CfONDDBS2GJT0=;
+        b=mJxa8ZrIbt5FZ5mL5QXNbK8YVT4z7aguyBWrYSW/ekaix86XHX7r8LNq7dJGyCKygX
+         Z6QfygGjDHUJ2ZE0i0u6gn/1+N6EVXYUHD0ljF/qg+pRqfPEJSvCxjL06Bj/41t60DYl
+         DBB55TZSdUFUoDzpCfQcfrlTXevJThFJTnQvCiVBl+D79e35UdAfML9EX1s/fZ1zNU44
+         /cT0QRvPJ36HajWhU246oXcjxs2EA9xVAyaxQdxihLsroK3dDUVJzJ9YvprlPpTaS01y
+         PMGNAOe/aO/8c7DNJpdbFpyiGi5x4u1mzPHPShpjtdcKPiPpXHNJZWMuT7xKoLxNkl/n
+         Ar9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVuhpdDsKK8NLe+54y56FNkKUPT3nWIOcRBhrTe7Eepbc40h+x/ddcnQyRVK8fX3ITaPAYocpAG6Ye/weL3111hcbSn
+X-Gm-Message-State: AOJu0YyX0w/vBADuPWFJJin5JElAGcU550Fvc1QDhdb99/poYTe9nNoQ
+	146fJ6QShCjdgFdzUJsCPS6rxHe0g1GA5OECAeXx92etx9SZTy4iPth6GLOl6s/Dj7JCiTCN7wk
+	KC5C9fbyVp84rnB7RQzRd09IozGg=
+X-Google-Smtp-Source: AGHT+IFDA3MiBSGvaO81tjttrDKaTZljB2zvWXbjuGQd8IL1+YtnZ8RKGheF4hO3iPUrvs17yYzKHeZbQWsuj9mOJT4=
+X-Received: by 2002:a05:6870:168d:b0:254:b74e:d654 with SMTP id
+ 586e51a60fabf-261213acf42mr12860404fac.22.1721811310489; Wed, 24 Jul 2024
+ 01:55:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jul 2024 01:55:09 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZqCkJHC3ivdNVm9E@tanuki>
+References: <20240718081605.452366-1-karthik.188@gmail.com>
+ <20240723082111.874382-1-karthik.188@gmail.com> <20240723082111.874382-2-karthik.188@gmail.com>
+ <ZqCkJHC3ivdNVm9E@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/wMdjmBHWQkdZt8+qSlo8b6TYcZK7LSQVoFz0N40CV4QgyP1rOo
- PqbWrBPmcDRqcDhMvRyblaQL7DDwVgeRMJIz86tW4/Jmj1Q/4Fa4pluP55snylIsuXgEov2
- UND964Z4spETlezn55UACHx7StFNcrb+vud1e/boMpcOLR9bLjdl49rs0BEtxGfDypHVEa6
- 2EGIdJybVTxG7+S3O7RKw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NXD0v/5oe5o=;Wm8PTeVdfCbRUeWaKz8vZzuM1DG
- 3Cm3nefYcHGf3L7P04NR+47Q9ZwxFWJLoM6Cyx+r9xwY2jDvJoUreFHc8TP/iTRWiayIXUTUf
- hn+14UvVLMAIJ9QVo6UcKHiieA9YMdBpbpF2ra7I6yd0JpAl8sQ02K0e4S1H6dhkhADf7UJub
- WU8+ZE9kyPQltfXVpmTC2FX7212fDELfKAfsOpy0wgbvAQ0k1w9wQWj96YH5HE/1RtaxL8Fsz
- u0H2CyKSmkRr6asAUDWUpMrtKsm30AnQfBFRBUmPShWIWq1igG6JOi4eMY03NOqSN5gKS6hmq
- BUOQMsBkmQd718BqkhWWlRVPxkxZ+1TM0DQPh+3dpA/sI47BqYNhZ9ZqCb+NJFj2aSORZxCYS
- tvjD7eJ4nz/MO9Gvc3YvbPCGGF+vDH6LifSQLJ5uLgpDJX3mGMkNrNH+xTUPe+/hQj1ZqgFWG
- 5qnY6wUXrUl7D8iCBXhKx4T6FZk321e/7rIn8Z/0fa38K1OF15HxIk0wNXb7S+Ag/RoEeUl/a
- feF+7jE3Byba71rAucQO7OSZfKLJhDerGZdpoJKiZu1lqQv+t0ipk88EBhFJVpZbGfD1SKCc/
- 456kCRSeL+4QetwceNdWNRcHfegi5k8gBQMWbRJelAOGES7nykLWk1iO7/FKv7c1EctNCRR/g
- /xEX5EFOK6pn5Ho1mgrl0VnnOauEr4uPzOs/3PCpIr+B903c79TtxF83QDhlb6xd0b+nUtoHC
- cFI2sZIySOTJJHnNT7qTJ7x6izZBgLGeJw9hn2hwLY0uLbNoTA10DorsPs8VwM3wiLygH6QVF
- 5YRp/M19qJbcUhbbLhjBLJbQ==
+Date: Wed, 24 Jul 2024 01:55:09 -0700
+Message-ID: <CAOLa=ZQ-VAgG3Qby94xz9ih=CROgYsRSUi894p7jErKFVg1xRw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] clang-format: indent preprocessor directives after hash
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chriscool@tuxfamily.org, git@vger.kernel.org, gitster@pobox.com, 
+	jltobler@gmail.com, phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000884e2e061dfa6fb5"
 
-Hi Patrick,
+--000000000000884e2e061dfa6fb5
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 23 Jul 2024, Patrick Steinhardt wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Update our Perforce version from r21.2 to r23.2. Note that the updated
-> version is not the newest version. Instead, it is the last version where
-> the way that Perforce is being distributed remains the same as in r21.2.
-> Newer releases stopped distributing p4 and p4d executablesas well as the
-> macOS archives directly and would thus require more work.
+> On Tue, Jul 23, 2024 at 10:21:06AM +0200, Karthik Nayak wrote:
+>> We do not have a rule around the indentation of preprocessor directives.
+>> This was also discussed on the list [1], noting how there is often
+>> inconsistency in the styling. While there was discussion, there was no
+>> conclusion around what is the preferred style here. One style being
+>> indenting after the hash:
+>>
+>>     #if FOO
+>>     #  if BAR
+>>     #    include <foo>
+>>     #  endif
+>>     #endif
+>>
+>> The other being before the hash:
+>>
+>>     #if FOO
+>>       #if BAR
+>>         #include <foo>
+>>       #endif
+>>     #endif
+>>
+>> Let's pick the former and add 'IndentPPDirectives: AfterHash' value to
+>> our '.clang-format'. There is no clear reason to pick one over the
+>> other, but it would definitely be nicer to be consistent.
+>>
+>> [1]: https://lore.kernel.org/r/xmqqwmmm1bw6.fsf@gitster.g
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>
+> This doesn't necessarily have to be part of this patch series, but I
+> think that we should document this as part of our CodingGuidelines, as
+> well. I planned to send an update to the coding guidelines soon anyway,
+> so I can handle that once this topic lands.
+>
+> Patrick
 
-An alternative would be to simply stop installing `p4` in CI. I would
-actually be in favor of that, for multiple reasons:
+Yeah, that would be great indeed. I think this series is now merged to
+next.
 
-- The pace of reviews and integration of `git-p4` patches has slowed down
-  over the couple of years. For example,
-  https://lore.kernel.org/git/20210510183638.156a6b1d@ado-tr/ has not seen
-  any traction in over three years (most likely because we no longer have
-  any active contributor with a vested interest in `git-p4`), and
-  https://github.com/gitgitgadget/git/pull/1028 and
-  https://github.com/gitgitgadget/git/pull/1070 have not even been
-  submitted to the Git mailing list (most likely because of the hurdles to
-  contribute).
+Thank Patrick
 
-- Over the years, it has been made harder and harder to install Perforce
-  in CI. I spent a good deal of time trying to keep the Homebrew taps up
-  to date (which was hard because Perforce kept replacing the archive
-  behind that URL with newer versions, which always broke Homebrew's SHA
-  check until it was adjusted accordingly).
+--000000000000884e2e061dfa6fb5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c361ae9fd5b7081_0.1
 
-- The `git-p4` tests use quite a bit of time and electricity in all those
-  CI builds. Therefore, it seems desirable to me to stop running these
-  tests as part of the CI builds.
-
-Ciao,
-Johannes
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hZ3dXd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md1puQy93S1E0cU1DYmZJRHNTdHV1djJqMTBndGQzTgpGU1l4d3N6WG9m
+T21OMzNmSmJYbWloU0IreEFUMzhXRno2bnRocWQreUVYZEZmbFcxQzdscm1XSFRFWHdPN0FDCjY3
+cFRTSTdEb29aWFpoM1RhN2Z5aGd6V2Y4T1hGZnlOUjFucTZuV084RG5NMnFZd2Z4YVBJTy9GdFZM
+aWFOdmMKSTlyRlQ2WEw3dGE4anN4TkE1N0pleU5KYzZEMU85alhWakk3YzNWN0FIOXpKR3diUkNZ
+ZkpBY2luRlFEUjVoVAo5QWtiUEU2dUNkcEF6TmV5MWtQcVR2ekwxcWw5bU1aYnR2ZC80OVZic3R2
+STZxK1VBemh1OGxSREFtOHdEQ3ZlCjd3SExESXZnbnR1a21yY25UZzRBODArb0dPOHQzdm9yajl3
+VnQ5Y2l6d0lybUk5S0cyVTB4QUdzZklMbk1XNkIKajNEVFp6L3pPN1kzWEI4am5LaEt2SFJlWVFx
+MWFQNTNEeUVZRENJYTZyWjl0TUMyOTkwTStOOGFvTzlNWFBiVApoajM1MEZkZ1MvblpqMjgvRzVQ
+eERMSjR4Q29uUTFKcDUzb1JqVUY5eE5FdG03VThBeVVlSkR6Mzh4cE9hbWRnCi9xTkNWTDl4Z0p3
+SStYdDliOFBMcWlySnVPYW1HbzBrZzFObFdoTT0KPU5nTkgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000884e2e061dfa6fb5--
