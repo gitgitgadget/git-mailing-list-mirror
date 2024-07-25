@@ -1,100 +1,107 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0161D225CE
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 13:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BF91103
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 13:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721914172; cv=none; b=NOKRpViN8YqCdMzkr90X94iU3ULfmn3gqmJhmoliLuR42DCSrznqXmOS1YzDRE1nawrhTR2ftNe6Lr0j383Wgqo1JvsDCkuNIAQ7xchHDjFiXUC1YFH1+wGe4qxBT1tv3Kkvgc+QV2lEHOJof5uu/+tzDYIlSAs4ySdwIQhzFfQ=
+	t=1721914310; cv=none; b=f54SJcq5M+H0fnVsAGtw8kDYC4O+wOVxibXDACq5XrR+GMu2GLmoP2at60YNugFaFR/BbVwNaLSBBxAce+dYvjthllz0YFpKGWAw7KCMBxiCrCalkEmVRloXByu1YUdafWfQc+7Q5w0eXqSxFMeOOVJUqUYWf3n/Z1n4mvVBXt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721914172; c=relaxed/simple;
-	bh=amebA5ZiRuUPpnez0m13zaDFnBGblEuc3fcHZAvTW34=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=Orrkjj8drWpaEKrQ6gi6sm27Fh3CZf+2PgFhmOGY+Ui7TPqDfxCifMfK3+wmngsHOB1Wx+nHdHAeQNTxzPTrYb43R4zGInq8WAA2bcOUHiiqPfWxbXXzkK++0rq3Ker2NBBJXzVa/shodnGrWBBWFHF4dC4Dyg24vVC3vCWM4ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=I27xmTLP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S5dUO31c; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1721914310; c=relaxed/simple;
+	bh=enlZLLJYCtcIA0uQOu1pGUAR3KXWTCSnFmg4sNoQXwo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=APZ7qjddE8et/qC/mEN9xvl9NA2VD5Kzf/JZ77Rdz4hob2eH9ppSzJ3Mk3wOM193EJ9ljDkrmRiXKmag6vy/qFqYxGYOb/doXYMo7+p2MY/KYxp1GSzvw4rPFk9/9YuKOKiXgXumcmjwUZ9MSfgLf+P3qiPwKa5S7u3iQ8AuFVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4ali5Gc; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="I27xmTLP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S5dUO31c"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 04F1F1140136;
-	Thu, 25 Jul 2024 09:29:29 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute4.internal (MEProxy); Thu, 25 Jul 2024 09:29:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1721914169; x=1722000569; bh=amebA5ZiRuUPpnez0m13zaDFnBGblEuc
-	3fcHZAvTW34=; b=I27xmTLPQWw+e1GWBZ8Yrg1KfOHjp3/12COJP5h5J4q/wW3w
-	8CVY9mZ11rIWfTmA4X1X0yjYLdEAT5aoxPFQFiOK4aMvsiRYkxrpLb/qMpd7jFc1
-	oDPWiNiaIoI6/fRVKe+XM+9X92/2uv03uHKXBSfALBS+WLbbUJq82a/Tis6TBj+G
-	fPVXS4szHINnIVemA80oAJDxysifjiOI0ud/HznJolQwqz2mFvR4/4tFU+Lvk9gh
-	LnESKY5DTlNLXzX77jNVfgITwmSahyFVq9NyOTWrvi15GUuSpIyLihn86jrAhoLb
-	P/ylOa10mW7m4gbgr4SJ5hpDO800v463MtCXTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721914169; x=
-	1722000569; bh=amebA5ZiRuUPpnez0m13zaDFnBGblEuc3fcHZAvTW34=; b=S
-	5dUO31c1Iz1KGxt16d17MgxnsLKuo/BI87EoCKNmkCivGDXl/T3S5K5kVgEFZBM3
-	Xr1XK6gEr5PAa5EXGafrJbtWkrItj1DM+I7wluKl2TAyynMa28TSvGkbUvInR00J
-	dob35L6kjzSKRJ1nvBZuBh12KNZJeGG0Cx2xck1zR1N1wueePVWOfXIqFdU278Nq
-	awRkFbva5pW2ZlNlRQ6lbiFOwhISZtw2pzcrO4XCVAbpPixCJw90Ft72khCv0KaM
-	XNfDYJrHgwfPciR3fXakKwPY0Qg18gZ+c4X9OVwNKuPn36urszFe3XFTeebLhpGx
-	ki8cz4ucrqrjkRGMncq3A==
-X-ME-Sender: <xms:OFOiZmxnsE284hXj8QmO3-qn5N_Xv1722zEcd4fXfJ976vbGcz9WDKM>
-    <xme:OFOiZiQtjdjKJT6ZVPUSZf431f0YUfGnjz8_MAfoQU1suWdzjW6w15rzts45T-bSU
-    p9XklMSYzbZlqJJ6w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieefgdeihecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
-    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhn
-    sggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:OFOiZoXoOteaMen4LvaT6Xd_ptArnr_U0eLFCpQFm7sMSMTWr37S3A>
-    <xmx:OFOiZsjqe4Yt9prtSXPMkKkCdZ-KLBn7qadBco3Iir2HYCGy6JN06g>
-    <xmx:OFOiZoBrVrTTPn4xhJRyx5oA0NbEz62RopYSxvdRPLsM5zdgqHtQ7Q>
-    <xmx:OFOiZtJhRwityHjQtJ2sD5wNv2WZTwrUeLSci6-vG0gMOiOQ1TYXQw>
-    <xmx:OFOiZrNv991RmJFt-ly2r3ZFv26wIK8yzuDFCrLzhU8fTG_UacM-23Xk>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id B13F415A0092; Thu, 25 Jul 2024 09:29:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-582-g5a02f8850-fm-20240719.002-g5a02f885
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4ali5Gc"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e026a2238d8so866193276.0
+        for <git@vger.kernel.org>; Thu, 25 Jul 2024 06:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721914308; x=1722519108; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BsbgTRUFZWRcD2zAmlrolNa3N+tZKg5ZbF1wm+EMyMA=;
+        b=f4ali5Gci2Pci2uVG15p6BOko7spft7zhNlQyj7F3LhB/mSDaHbuaz6AkXD6uZZuGm
+         SQ/WxS5qH4IRY0CrdMXSBpsMXsYZBSp36x8UntdXNAIyoX5pxqT2ZPwLzfGNYyhIv9ee
+         Q9dWJfNvouIdZnUaTciMTji5EI7dd7Cq6XpR/gP6nkGguzTNhHCC6MXWVgg1edVtUi4i
+         BzSWMa1cOVfpC01Y3p+VRYmTlX36Odi2pAPRyvzmh44UGYVd4MM+MZUQpxDK6vFspLYG
+         jCh/a29NnWFRGh4Y0JeMNRTA4+Iaffc+EHAqI5k7I26dVMMazbIALCid38QEyaDLH1id
+         IFWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721914308; x=1722519108;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BsbgTRUFZWRcD2zAmlrolNa3N+tZKg5ZbF1wm+EMyMA=;
+        b=r8yBQdaIUP50P3sHKgmhoKv5NoZx86qGUoUCJorq0jt54p49NbsmTiXh4ztdyxWiBF
+         bP9+acG0bxpwcTP5jR6vKDM14WG/HcUCZCDDsbXwpVMO3BuZ1eu2XWCVuVsmN4RmhcUQ
+         wyGGpWqcucEVGxAl7THdXYAjjevDodM6jjy9ckGxNiA2NF1f0aqmiuN1tp4qprET/F4J
+         RrzkBQ91XGC4GpwzYw7ptW7LtSXagJMz/uaKlaQy1BtUJUX7CFlWPCM+0iILfukABOoC
+         xBMSgp1py7HI6jpMDSnl1QRHCvtzB0maVJ5taAJhiqzhJHFZX8F9q51OlWfN4tMnqlrt
+         tfqg==
+X-Gm-Message-State: AOJu0YytXA0nabUSlb0dXHrw/dLn58j0A1NDcjds/g4MT4+Dj2Bv0yGz
+	038/pWdzKSc/l8h4z3a0i7n98WqPQJB1OTa7FX1bBlkRthLXDXrr
+X-Google-Smtp-Source: AGHT+IFog3CS0GxILlPidcpTjAwd7+a/zT+tc2LtDPU6ClfGJ8KaC+zJt0QfP3FC1yOMvRZjZ7haNg==
+X-Received: by 2002:a05:6902:250f:b0:e0b:3492:69fa with SMTP id 3f1490d57ef6-e0b34926cacmr1222851276.54.1721914308100;
+        Thu, 25 Jul 2024 06:31:48 -0700 (PDT)
+Received: from [10.219.44.67] (syn-076-182-087-058.res.spectrum.com. [76.182.87.58])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e0b29f4f74fsm318806276.17.2024.07.25.06.31.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jul 2024 06:31:47 -0700 (PDT)
+Message-ID: <3fc33179-cd65-454b-a68e-f1113926eefe@gmail.com>
+Date: Thu, 25 Jul 2024 09:31:46 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <e222c920-731c-4b8d-9d84-c9d6b56c4d27@app.fastmail.com>
-In-Reply-To: <20240725093855.4201-2-chandrapratap3519@gmail.com>
-References: <20240723143032.4261-1-chandrapratap3519@gmail.com>
- <20240725093855.4201-1-chandrapratap3519@gmail.com>
- <20240725093855.4201-2-chandrapratap3519@gmail.com>
-Date: Thu, 25 Jul 2024 15:29:08 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Chandra Pratap" <chandrapratap3519@gmail.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>,
- "Christian Couder" <chriscool@tuxfamily.org>, git@vger.kernel.org
-Subject: Re: [PATCH v6 1/7] reftable: remove unncessary curly braces in reftable/pq.c
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ReviewingGuidelines: encourage positive reviews more
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <xmqqsevysdaa.fsf@gitster.g> <ZqH2DK83PoU2786-@tanuki>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ZqH2DK83PoU2786-@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 25, 2024, at 11:25, Chandra Pratap wrote:
-> [=E2=80=A6]
+On 7/25/24 2:51 AM, Patrick Steinhardt wrote:
+> On Wed, Jul 24, 2024 at 02:14:37PM -0700, Junio C Hamano wrote:
+>> I saw some contributors hesitate to give a positive review on
+>> patches by their coworkers.  When written well, a positive review
+>> does not have to be a hollow "looks good" that rubber stamps an
+>> otherwise useless approval on a topic that is not interesting to
+>> anybody.
+> 
+> Oh, yes, this addition is very welcome indeed! It's a painpoint of ours
+> at GitLab, and folks were indeed quite unsure about how to handle
+> positive reviews. I was trying to guide them into the direction of
+> "reverbalizing" and "thinking out aloud" parts of a patch series that
+> are tricky in order to demonstrate that they have indeed read through
+> the patches and understand them. Having all of this written down
+> explicitly should hopefully help them.
 
-s/unncessary/unnecessary/
+I'll add the perspective of my experience here that this is a good
+pattern to follow. One thing that also helps is to avoid doing an
+"internal review" for experienced contributors.
 
-(the subject line)
+When Microsoft was first building up new contributors in this space,
+we were overcautious and performed an internal review before going
+to the mailing list. While this is good for a contributor's first
+series, it loses the benefits of doing review in the open.
 
---=20
-Kristoffer Haugsbakk
+A positive review is great. A constructive review that improves the
+series is even better.
 
+> Except for the typo mentioned by Eric I don't have anything else to add.
+> Thanks!
+
+Same. Thanks for adding this to the official guidelines.
+
+Thanks,
+-Stolee
