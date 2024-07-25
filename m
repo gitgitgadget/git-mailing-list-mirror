@@ -1,155 +1,118 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51F319AD8B
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 17:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BC517588
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 17:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721927434; cv=none; b=URDzna35GdcU1I4s40dW9LbS0NAAwarQlERADsiA4ielj5BToCbKmH1g87XXO/APie8Vg0sqDX9bY06wz+SdRP5UDRrAF34ajeI9sZjVYBNauFbnbzr7sDUY3Pkh8nsL4UO+AU3K2jkeSjB6CvTeurn1Lac/i2gprq4LvcwdusA=
+	t=1721928189; cv=none; b=UDWJiIoI0k3T+M1ev6xd6BzDgMIjtMQ/Sz2OOflBdr+gtRXpuN9PdW/AMdQaFTNo4f6Kb5QPVNeNmGrffQZ6ziFnw5KKUuiJATE7Ebx2gqgfVURB14SaTpZyO82/ff0dXq2OqTlgAFOVWmVLUl1ruv1ZzC5ZLv7xtO0Eg4rPZe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721927434; c=relaxed/simple;
-	bh=M0VJ+nxpJouQdiz4/1dmBVvqQuAt77Kv+NrppHQPGp8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O+f3S4y0HBSQbmrTv9H3Y6oSomdVneQfF0wvJrxKm1KTU+TsFKXXSVh/C9fa84JeqUcJP5NafeZhxZQAaBIbUIORWNG1VKi308LU4Xa/aLL5ShEjuEIK9aJtLIqs9BgJQTnG1GFcnUW9J6Hz4SMw0duOBMlJSUfMDCL4LLrtBys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=feMR6NAi; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721928189; c=relaxed/simple;
+	bh=V2cZGIy2ajpJJSr7vZ5864OUBU4ruyIGp0unIfocnag=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=n/csim8BBQaEYB9SywTgotkXmu7Qm5YVyuuLZJmFWUQumZSgtZ92sExiJlNoqz+k4FA+UsMqNW+vVzvfcRrjLbN0INKj4h7hKZHfvp8HlzI1hRmU2yLxh7eW76kdzKLS9Geh447Z/QxSabQywG+odz9iXniyvq3iku/hBpkqMhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ZVDBId7U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ecIO/VFx; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feMR6NAi"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5a79df5af51so4100440a12.0
-        for <git@vger.kernel.org>; Thu, 25 Jul 2024 10:10:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721927431; x=1722532231; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2jdUaKcr6pG2k4TMdzv/hT2ZL/k2xYsT4NFLIRvDS+M=;
-        b=feMR6NAiBwa83ZkMak+fAHt441B0zE1ZSTyH6NMazYtNUV6TsvdeHJfUAQWx0UNoSw
-         yhlEX3RGKegmn9hGAYxTJewoAE5XVvpZFMkU+nIFykh1KYEtlHfMq0TVy+gFii5GGilS
-         e3s3aEJSm52nMgT0nrMFzKJAMjhaI+dslKGy37brglzi/MhQJmaT/BqxbinVexJ+TZKU
-         oqKKHvsoVu+y5/KSZdgfwch+yJOS2RcsozkysvTSoJcEt+zjcRgTiaDtOI6VqrI2XMNv
-         5A/XPYPCXHQZYsuFMY6QmSa8T3c0ezY6VKxORoIPo0A6cPgsCQGkYklL9XAVou4Ssyg9
-         nD9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721927431; x=1722532231;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2jdUaKcr6pG2k4TMdzv/hT2ZL/k2xYsT4NFLIRvDS+M=;
-        b=RqhxLFkOpInwQA+kyaZDiyus08If7emVUrky/mfMSlQNcROWxjcTPaW/EkKnVB4sTG
-         yQI1QKOoQNcy0vdtMXTTpL1i9e3tlKSYVmJh8gpwgDqq196h5/Jug0gbjLLk7mgMMrak
-         FlyHTuBqmIgMbRtyPWDir2R3PlWE5VXNQFfKp1F3T9SnIPiLYTG7T+9HueOv6LQ35DO3
-         TzHtaGHp78Zqs6ikao2qoN8L+J5VRh8eJeT+YnfAYDGicPE/9Cy4MTZ0/5XDWMCmohwb
-         1aEYguUMszxhL1lNTeKtGPdJIqhGelznqcy8Mw+BkVif2aRjuC5gexKCmUbFc+JR++VB
-         hgfg==
-X-Forwarded-Encrypted: i=1; AJvYcCVFZt+/a9L36ER5/9dOd4vhrRsBk6dlX+yFFbOvIPF+wxdHzI5mm0nt7F6K/bPAjuYgQPMtX0l0UuYEBlQWup+hw+8g
-X-Gm-Message-State: AOJu0YxPvQg0n7MCcSRM7mCWTf88oXhduc40Nb726BKkP8F+7CocW45p
-	une7I+Nhg7ctVigrMFWwBtDJzjs66vX7o2zhTLNbIX8xSQCVQQsPIdC9cAi9qkplIe+4bt2l5b3
-	bTfsSt+xqa+fAwgZ9J5zEOq5WkL8=
-X-Google-Smtp-Source: AGHT+IEszeAoJpsFsLma6hIpbiyJ+xeF/229SI/hiwDpmqyS9MdF8k1gD+UJykhwq85kRfteziGQjX/Y/lJw7NqvE10=
-X-Received: by 2002:a50:d4cf:0:b0:582:7394:a83d with SMTP id
- 4fb4d7f45d1cf-5ab1b762219mr6922065a12.12.1721927430805; Thu, 25 Jul 2024
- 10:10:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ZVDBId7U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ecIO/VFx"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 1934E138016F;
+	Thu, 25 Jul 2024 13:23:05 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute4.internal (MEProxy); Thu, 25 Jul 2024 13:23:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1721928185; x=1722014585; bh=oHtBOgawyQeLLX9svhTLizehZwnMF8NI
+	vRtqoc0CdbM=; b=ZVDBId7UceQ5EIULlTqIJJLOye9VxFrDF9w54RohRds31v67
+	VxoiRxSJVQ9f9QzKhfF8cmDfs7FH9fofy31U43g+dzhA48LupltOBUibEPd3WJL+
+	ZIb8ZvTA7ISJQv7jHEhRVR9lVI2G6T41/T81amTrCGdaO2+jz0be5yn5dJX4eeH8
+	9Djoo5pjE/itGTNVZ2kg08Y5fAGuxwKbqdLrEosigvxQQB4GKefVpvU1XI/eIYrt
+	cYtQbl9TwyF/+p3HuDXWBVu+e0UY+fmcyGGLlKDNcYig2szxj9s1ZBpWRw0rjWtL
+	4RCOyNBvGvqUiptkiRFrhntMltYALMo6RUfo2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721928185; x=
+	1722014585; bh=oHtBOgawyQeLLX9svhTLizehZwnMF8NIvRtqoc0CdbM=; b=e
+	cIO/VFx8rAQWixkm+YaqpNffiPthZB6t550gzfsO9qA2thP9kY5wF5RvaBN4e6Kn
+	Gyt9O0g7NWc1ip/RfZitcgUrPhdcds60nXyM1xLk6gff1hCIIW1S1W19qRYOL/0A
+	aZB4a/AwkffN624GoxGs0hmHUfGu5A0od/pbuCnyYEEzlWX9Nd9G67LkZ2Gys+X4
+	4M0kh3ZaCSYaNsR3jjfQ+ShoNMvGsR/phWbMoTc5tP/rjl9JAASOAnkb8feJuOLo
+	2lsaQc6pNXW70oYOlBN1mpuwdZcr2gikge7QnfQ6OxbM7S4G78/fiRerbpC+c9bQ
+	7v3IxN2yTQxbN8FOnaW5A==
+X-ME-Sender: <xms:-ImiZuGKTVDDlEps87LCHX6PcHpO7l_PFcy5qJnX2RxLl2m0Hcf8lQ0>
+    <xme:-ImiZvVjLElZCUemdWQzLWzG1KB3ofeCzVY1_ZQyNiXDjZdKiSWPz_pfM1zJgrs-S
+    i6bx253f21yj5Npiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieefgdduuddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedviedtvdetleetvdetvdeiveehgfei
+    ffeujedtudfhtdeigeejheehteehfeehveenucffohhmrghinhepghhithhhuhgsrdgtoh
+    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:-ImiZoIF8ZxIp6tryGmIPWcAf1Y_S34eiPOSL0fDmIXwnIr5SuUMMw>
+    <xmx:-ImiZoGQTXL5WPh8Tqj238IXFHeepb7OvxhiDmDiJ55BvB5dxmTk4A>
+    <xmx:-ImiZkUxCqy51jDxnSvbDMACA52zq4mLgcekROgdtWEwgrJzU79_8A>
+    <xmx:-ImiZrOUHSsbepYpA_IXUTpVAH9V59K-0ovVgV5C6gZlbgP-eyEwfQ>
+    <xmx:-YmiZrS9sn42TfjFkJsaiTJFd0LJ5XEmyHYpjVEy7lh6APCCE1CpX3A8>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 9AC7E15A0092; Thu, 25 Jul 2024 13:23:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-582-g5a02f8850-fm-20240719.002-g5a02f885
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1740.git.git.1719947271.gitgitgadget@gmail.com>
- <07d801daccb3$c1de13e0$459a3ba0$@nexbridge.com> <CAJ_CbHX5nyvMy3ZO+YYCWnPhUmS2QZJjTzsePqXT2TEy-LBQfQ@mail.gmail.com>
- <082a01dacd52$056ddf70$10499e50$@nexbridge.com>
-In-Reply-To: <082a01dacd52$056ddf70$10499e50$@nexbridge.com>
-From: Bruce Perry <bruce.a.perry@gmail.com>
-Date: Thu, 25 Jul 2024 11:10:02 -0600
-Message-ID: <CAJ_CbHWMiU0+6kB7mxE+n3x7N4A6GugMkmEQwHLzZiF-_GrxbQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] clone: shallow-submodules should be single-branch by default
-To: rsbecker@nexbridge.com
-Cc: Bruce Perry via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Stefan Beller <stefanbeller@gmail.com>, Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <ae5dc48b-07df-45ab-a3b7-4d5c27fdbfa2@app.fastmail.com>
+In-Reply-To: <xmqqzfq5flfd.fsf@gitster.g>
+References: <20240725144548.3434-1-ddiss@suse.de>
+ <20240725144548.3434-3-ddiss@suse.de> <xmqqzfq5flfd.fsf@gitster.g>
+Date: Thu, 25 Jul 2024 19:22:39 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>, "David Disseldorp" <ddiss@suse.de>
+Cc: git@vger.kernel.org, "Teng Long" <dyroneteng@gmail.com>
+Subject: Re: [PATCH 2/2] notes: revert note_data.given behavior with empty notes add
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Any further comments on this or changes I should make so it can be merged?
-
-The current code behavior does not match the documentation, so
-something should be changed. If these changes are not desired, I could
-submit an alternative patch that changes the documentation to clarify
-what currently happens instead.
-
-
-On Wed, Jul 3, 2024 at 8:05=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
+On Thu, Jul 25, 2024, at 19:09, Junio C Hamano wrote:
+>> Fixes: 90bc19b3ae ("notes.c: introduce '--separator=3D<paragraph-brea=
+k>' option")
+>> Link: https://github.com/ddiss/icyci/issues/12
 >
-> On Wednesday, July 3, 2024 1:00 AM, Bruce Perry wrote:
-> >Perhaps I was using imprecise terminology. This change should not impact=
- whether
-> >submodule clones land in a detached head state, so it should not impact =
-anything
-> >that assumes submodule clones are detached head.
-> >
-> >The change being made is this: "git clone --recurse-submodules --shallow=
--
-> >submodules" currently gives you a submodule with a detached head at the =
-desired
-> >state, but also downloads data for the tips of all branches in the remot=
-e being
-> >cloned (potentially a lot of unneeded data as in my use case). The modif=
-ication
-> >means the same command would give you a detached head at the desired sta=
-te,
-> >plus the tip of only the default branch in the remote. The modified beha=
-vior
-> >matches the current behavior for a simple "git clone" followed by "git s=
-ubmodule
-> >update --init --recurse--submodules --depth=3D1".
-> >
-> >Thanks,
-> >Bruce
-> >
-> >(Resent due to a formatting failure)
-> >
-> >On Tue, Jul 2, 2024, 1:12=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> >>
-> >> On Tuesday, July 2, 2024 3:08 PM, Bruce Perry wrote:
-> >> >I noticed a couple places where the behavior of recursive clones for
-> >> >shallow submodules does not match what is implied by the
-> >> >documentation. Shallow submodules should be, but aren't, single
-> >> >branch by default. It would also be useful to allow users to override
-> >> >the shallow specification in gitmodules on the command line for
-> >> >clones as they can for submodule update. The modification here for th=
-e former is
-> >a bit ugly, but hopefully at least gets the point across to start a disc=
-ussion.
-> >> >First time submitting a patch here, hopefully I'm getting the process=
- right.
-> >> >
-> >> >Bruce Perry (2):
-> >> >  clone: shallow-submodules should be single-branch by default
-> >> >  clone: no-shallow-submodules clone overrides option in gitmodules
-> >> >
-> >> > Documentation/git-clone.txt         |  3 ++
-> >> > Documentation/gitmodules.txt        |  4 +--
-> >> > builtin/clone.c                     | 10 ++++--
-> >> > t/t5614-clone-submodules-shallow.sh | 52
-> >> > +++++++++++++++++++++++------
-> >> > 4 files changed, 53 insertions(+), 16 deletions(-)
-> >> >
-> >> >
-> >> >base-commit: daed0c68e94967bfbb3f87e15f7c9090dc1aa1e1
-> >> >Published-As:
-> >> >https://github.com/gitgitgadget/git/releases/tag/pr-git-
-> >> >1740%2Fbaperry2%2Fsubmods-clone-bug-v1
-> >> >Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-
-> >> >1740/baperry2/submods-clone-bug-v1
-> >> >Pull-Request: https://github.com/git/git/pull/1740
-> >>
-> >> I am concerned about this one. Many CI systems (including Jenkins GitS=
-CM)
-> >assume a detached head for submodule clone/checkout. Adding a branch to =
-the mix
-> >will change the expected semantics. Am I missing something?
+> We generally refrain from using these two trailers.  Please drop them.
 >
-> Thanks for clearing that up. Fine with me.
-> Regards
-> Randall
->
+> Especially "Fixes" claim can later prove incorrect (we thought this
+> was a good fix when committing, but it later turned out to be a bad
+> one), and besides you will be referring to the problematic commit in
+> your proposed log message already anyway.
+
+David, if you want to mention your downstream issue you can use a
+=E2=80=9Cfootnote=E2=80=9D in the commit message:
+
+    With "git notes add -C $blob", the given blob contents are
+    to be made into a note without involving an editor.  But
+    when "--allow-empty" is given, the editor is invoked.[1]
+
+    <rest of the commit message>
+
+    [1] https://github.com/ddiss/icyci/issues/12
+
+    Signed-off-by: =E2=80=A6
+
+This is widely practiced.
+
+--=20
+Kristoffer Haugsbakk
+
