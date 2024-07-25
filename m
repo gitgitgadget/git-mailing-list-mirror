@@ -1,212 +1,156 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695401990BB
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 13:44:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504A19CD0C
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:11:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721915097; cv=none; b=fPPoGEWncnx2IdFs9n7vRwNZpRv5CYL4pmH2nWdjqjc6ZVfZ/uYEjkMHx7Z1+ep7PMp7Q2ltgQJFlOxqxGnSvlEG3BOyIkViwkj0ufVYuMiPo/SAnV3DYySm1JwioKhlAL+i3Pv2a2ZzJQ1Mnz2bDZjEECgp4lnW7acML9gG4eE=
+	t=1721916714; cv=none; b=aOYIuXl2qAmsxi3OT4DA4cvKewJMRy+4mtoLiNsdSs5oGKPOaS3EDABJpv4bUvYes7FGZjXtP9G69p5FBRbQqPtMPT/o9IbR1BBBuL5g6eOc5tkZznzczGLS8S7Dt4tXUIPPzFJIvgdQTjYzGDprb132eusAl7ApcbKqVoh1CXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721915097; c=relaxed/simple;
-	bh=GV734m9V7QNKWSGbLv1Vx8MnN+Z1vTqWLwb9IuSOTUw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=V5NNctcSYVqS0Gu4r+goH4/V1Zoeh0O9nVKRGh9dIXrNj0Fqa16sRHh2MX4tK/MRML0pqT3vtsGdgqle5OksXKJdq9S8Ba8AulM57+WCZPUtNcQwtj+QjpSsIRs7a9ZvLF1ftGM0YfdR0Bq92tDTigqBA5Y8DUw/wXae5dAqt8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RuFeFXXM; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721916714; c=relaxed/simple;
+	bh=pVPruLxTGwIBQlqFgLWOn1RjTh2bVEJxjSlNyj/xRK0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XcZJltYCcykusQIxvZWzjjqe90lPqTM/wmLsyjiXFV/GaPJTDVzMDYQ3b/9WHndkikmaHRF7+mpM31SGSl9qNI6iPbAUHezIsCmr65duVm7nyEH3AZQZMHjewt6+a9//+J0iZRVimtBQwdpGCQL12tM5+VuwEF07qOyWqrJmLDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UfbRht0x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DN8SoF3b; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RuFeFXXM"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42802de6f59so6775325e9.3
-        for <git@vger.kernel.org>; Thu, 25 Jul 2024 06:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721915094; x=1722519894; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8Qc5AaGdblyDK7RC33GVsdYZ4Ocdj86kv+dUg9bCWmw=;
-        b=RuFeFXXMJKzdC5Ru96Al8wFs6akJnCE8s0TXW2AMPjbPgdWhFf1gqJ2k5uHWqajdg2
-         rxsjdJq1E5C568xYTV9d3upnjWt+MGEWWC0ri9BT2yXuPqCfLoOVdgQcX2+40nSF/1GF
-         ckPsjzU5P4QVprde9jqGBavejB+cO5U372kwaAudT6n4iwOIIPryVEtfuk6gj3IWf0lZ
-         cnru58wxBxnK4V3vDzERWeksugzqOjWNFCY0HYyVlxXqUdEn/KIMkcCSbQkNljlIA3Yj
-         rWX066J1mEGCkQSeUKQ4vw8o05JYT3SlAFtar6H9F80qznunNMJnuoRR5jL5Fn14Kmjm
-         Ll6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721915094; x=1722519894;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Qc5AaGdblyDK7RC33GVsdYZ4Ocdj86kv+dUg9bCWmw=;
-        b=Ls6yiUSCTO1DSU/730haTn/1TUxSbli6R+dnCJ+5LQn7rltmIC6PRczSn1DokZibiU
-         R5VoiMFiVJA8fI/+YFH/PECpY9YviCneAVlbdTviwhU9ffE6l4EWqGVaV2LnXeN+W5Xw
-         DbcwlyEGIE8oIWJGRHLVvkIhhQBzjDgYjmOF+WrPFtzMbJpEdo7w/JlD4AuzjA4HQPdn
-         XwFdwECWJzlVzGNK1UHq47ZuBUSHGxlzcJy6jJiSP3bdJy+MgHgP/g2u/is1srva+Wgg
-         ADSywcj+mxd+1/wCcVGQyty10auwcdHgag9Swx/NaJ4YywQcHiXlROb2Y1V3zq3iVMjG
-         ik7Q==
-X-Gm-Message-State: AOJu0YyVjM0q9KnT957Og0HjgOkCD8iBqduXj0QoECic3gu2Di0dI/Zx
-	d4o2bm72jZulU4Rt20C8atgCCrfUX+Y0KBDWpomaUvD0zzKpg/coMTIvGQ==
-X-Google-Smtp-Source: AGHT+IH85M59zSyYQWduRo8/Fk+sf6H/5RhH4PZQyntQ5Xvby9mZcKPfj7yYhm65b+H7bQrxDQKmuw==
-X-Received: by 2002:a05:6000:1567:b0:369:b838:9155 with SMTP id ffacd0b85a97d-36b31b4cff9mr2564303f8f.40.1721915093607;
-        Thu, 25 Jul 2024 06:44:53 -0700 (PDT)
-Received: from gmail.com (155.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.155])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42805730d5bsm38459685e9.8.2024.07.25.06.44.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jul 2024 06:44:53 -0700 (PDT)
-Message-ID: <0c0cff56-d44b-4a95-809e-afdd219539aa@gmail.com>
-Date: Thu, 25 Jul 2024 15:44:52 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UfbRht0x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DN8SoF3b"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 454FB1140101;
+	Thu, 25 Jul 2024 10:11:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 25 Jul 2024 10:11:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1721916710; x=1722003110; bh=ijJm6HbNZ9
+	FuIDSyXECbAxPYpjC4dmQzMwBrAK5KhqY=; b=UfbRht0xgGRvQ8/Adqur2Eo4el
+	LmkrERbkTnrzZYaPnflzNnoAtiNdgKmrTwfONexwvOyZzzOcqBbhPNVnThfHkBch
+	s+iBASg0nDl83DZemKCvyyX4sk4kroI6akf8LOLNWVnaLvttZoxVnhKZUB+7ib5m
+	U609+99vCPgBucbRT4BA3fBUHVJN7NpJHobSDDEnMxaVaXe3FtylqMT6nIJ5nbPg
+	M4BXVsx/SxbbPGnz4/suN+TWAse9DnZPsokMmRk3ngU7N4h5398ZA55QZpBOaT2d
+	oYP+GwxJxqWqdvFaXUbGZ9G4OVgox2Z0t7wzo8Jd3QESARt+peyMQwsivn7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1721916710; x=1722003110; bh=ijJm6HbNZ9FuIDSyXECbAxPYpjC4
+	dmQzMwBrAK5KhqY=; b=DN8SoF3bOp52riVoGIAefc/aMqNlYomysKYpgZtxIqBM
+	wOwn73Ujp3ONG6+jBVg5ZT7uJIblyd0es/COEwrGIrjzgWvyHg74a3vLI6okG0DD
+	YY2gINkECXl4AONTdM8Qm4vAnKIGhN2RUT/HopnMqr4H7N0+g1As95mQTcVfiCYu
+	QF+aHwH9Hl129vstd20VtVFRO22QKBeUi4ZZEhAmuY64aDc2Dd/+v/8Py0JleZxc
+	T0buPAk0n03vsfrMXi07h9sLfeMCN1CtXQOdrY+FuQ3IBQh2AnET4wz3BjzJso/R
+	DYdd98IJ5HfjQVY8yyGNrsGK3y4T36mjjW93VbnKWQ==
+X-ME-Sender: <xms:Jl2iZj-m97FmbLRLCuExhhjWsDGI_PHlCp5Phs09swlaEeEdpxhgpA>
+    <xme:Jl2iZvt-2HF5CisOzbRCq2CDcLr-Krf3n-hnsMeJi1hYumRYkyN4wsxpiM6Ji3vgd
+    04LnvGOQE0IcEzHIw>
+X-ME-Received: <xmr:Jl2iZhDrB6xD_H7bBkddPGanb0B62APEDq6dA44tW3XWVdzn4GBcWG2YeuyRPGi6q7bIfqmoNi3NdY-zMJquG8qJXLrIdDdQnBN_t-CvYxC5T8jI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieefgdejfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:Jl2iZvfhMjQaHpeGmHfIi_t15Bm95T7zBUdRjOjjZuuXHAGrTknrrw>
+    <xmx:Jl2iZoPkpa5GhpMlyMVvZWrRHXXmn0e-HAw-2yu1Tb_IWqNyT1XySQ>
+    <xmx:Jl2iZhmamiuHXOwUGymNv6mEDpfFRipkBCh3hr1I23IJizLr5sh-JA>
+    <xmx:Jl2iZiuk76a2AI6_Sth1hUGVT-38WMkvy7J4pwgCat0e4OT1B83wjA>
+    <xmx:Jl2iZtrJ6Fb38kUUdUJWdzkqzsudbPa27HZ3pfc0PCe2mwPeu2r6BqGS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Jul 2024 10:11:48 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 8f907197 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 25 Jul 2024 14:10:26 +0000 (UTC)
+Date: Thu, 25 Jul 2024 16:11:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] ReviewingGuidelines: encourage positive reviews more
+Message-ID: <ZqJdHlwIhv7NwJzq@tanuki>
+References: <xmqqsevysdaa.fsf@gitster.g>
+ <ZqH2DK83PoU2786-@tanuki>
+ <3fc33179-cd65-454b-a68e-f1113926eefe@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 4/4] add-patch: render hunks through the pager
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
- <62af789f-ca19-4f11-9339-a97400f7e70c@gmail.com>
- <2333cb14-f020-451c-ad14-3f30edd152ec@gmail.com>
- <5735bee3-0532-4894-b717-12a0bdcb9e84@gmail.com>
- <a25c37e2-fcfd-4a4c-890b-a85039ccef12@gmail.com>
- <97902c27-63c9-4537-8ebe-853ef0cb1d3b@gmail.com>
- <88286ad9-eab7-4461-a407-898737faa6a1@gmail.com>
- <76936fb1-446d-455f-b4e7-6e24dda3c17d@gmail.com>
-Content-Language: en-US
-In-Reply-To: <76936fb1-446d-455f-b4e7-6e24dda3c17d@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5GMkjRI3cbdUozXw"
+Content-Disposition: inline
+In-Reply-To: <3fc33179-cd65-454b-a68e-f1113926eefe@gmail.com>
 
-Make the print command trigger the pager when invoked using a capital
-'P', to make it easier for the user to review long hunks.
 
-Note that if the PAGER ends unexpectedly before we've been able to send
-the payload, perhaps because the user is not interested in the whole
-thing, we might receive a SIGPIPE, which would abruptly and unexpectedly
-terminate the interactive session for the user.
+--5GMkjRI3cbdUozXw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Therefore, we need to ignore a possible SIGPIPE signal.  Add a test for
-this, in addition to the test for normal operation.
+On Thu, Jul 25, 2024 at 09:31:46AM -0400, Derrick Stolee wrote:
+> On 7/25/24 2:51 AM, Patrick Steinhardt wrote:
+> > On Wed, Jul 24, 2024 at 02:14:37PM -0700, Junio C Hamano wrote:
+> > > I saw some contributors hesitate to give a positive review on
+> > > patches by their coworkers.  When written well, a positive review
+> > > does not have to be a hollow "looks good" that rubber stamps an
+> > > otherwise useless approval on a topic that is not interesting to
+> > > anybody.
+> >=20
+> > Oh, yes, this addition is very welcome indeed! It's a painpoint of ours
+> > at GitLab, and folks were indeed quite unsure about how to handle
+> > positive reviews. I was trying to guide them into the direction of
+> > "reverbalizing" and "thinking out aloud" parts of a patch series that
+> > are tricky in order to demonstrate that they have indeed read through
+> > the patches and understand them. Having all of this written down
+> > explicitly should hopefully help them.
+>=20
+> I'll add the perspective of my experience here that this is a good
+> pattern to follow. One thing that also helps is to avoid doing an
+> "internal review" for experienced contributors.
 
-For the SIGPIPE test, we need to make sure that we completely fill the
-operating system's buffer, otherwise we might not trigger the SIGPIPE
-signal.  The normal size of this buffer in different OSs varies from a
-few KBs to 1MB.  Use a payload large enough to guarantee that we exceed
-this limit.
+Absolutely! We originally had an internal review first, but I also
+changed that procedure earlier this year. Now we have an optional
+internal review in case people aren't yet all that familiar with the
+mailing list workflow, but more experienced contributors should send
+their patches to the mailing list directly.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- add-patch.c                | 18 +++++++++++++++---
- t/t3701-add-interactive.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 3 deletions(-)
+For one this has sped up our own processes. But second, it allows
+reviewers to get more exposure to the mailing list as they are also
+encouraged to always review on the mailing list directly.
 
-diff --git a/add-patch.c b/add-patch.c
-index 6e176cd21a..f2c76b7d83 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -7,9 +7,11 @@
- #include "environment.h"
- #include "gettext.h"
- #include "object-name.h"
-+#include "pager.h"
- #include "read-cache-ll.h"
- #include "repository.h"
- #include "strbuf.h"
-+#include "sigchain.h"
- #include "run-command.h"
- #include "strvec.h"
- #include "pathspec.h"
-@@ -1391,7 +1393,7 @@ N_("j - leave this hunk undecided, see next undecided hunk\n"
-    "/ - search for a hunk matching the given regex\n"
-    "s - split the current hunk into smaller hunks\n"
-    "e - manually edit the current hunk\n"
--   "p - print the current hunk\n"
-+   "p - print the current hunk, 'P' to use the pager\n"
-    "? - print help\n");
- 
- static int patch_update_file(struct add_p_state *s,
-@@ -1402,7 +1404,7 @@ static int patch_update_file(struct add_p_state *s,
- 	struct hunk *hunk;
- 	char ch;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	int colored = !!s->colored.len, quit = 0;
-+	int colored = !!s->colored.len, quit = 0, use_pager = 0;
- 	enum prompt_mode_type prompt_mode_type;
- 	enum {
- 		ALLOW_GOTO_PREVIOUS_HUNK = 1 << 0,
-@@ -1452,9 +1454,18 @@ static int patch_update_file(struct add_p_state *s,
- 		strbuf_reset(&s->buf);
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
-+				if (use_pager) {
-+					setup_pager();
-+					sigchain_push(SIGPIPE, SIG_IGN);
-+				}
- 				render_hunk(s, hunk, 0, colored, &s->buf);
- 				fputs(s->buf.buf, stdout);
- 				rendered_hunk_index = hunk_index;
-+				if (use_pager) {
-+					sigchain_pop(SIGPIPE);
-+					wait_for_pager();
-+					use_pager = 0;
-+				}
- 			}
- 
- 			strbuf_reset(&s->buf);
-@@ -1675,8 +1686,9 @@ static int patch_update_file(struct add_p_state *s,
- 				hunk->use = USE_HUNK;
- 				goto soft_increment;
- 			}
--		} else if (s->answer.buf[0] == 'p') {
-+		} else if (ch == 'p') {
- 			rendered_hunk_index = -1;
-+			use_pager = (s->answer.buf[0] == 'P') ? 1 : 0;
- 		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 6daf3a6be0..1b8617e0c1 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -591,6 +591,38 @@ test_expect_success 'print again the hunk' '
- 	test_cmp expect actual.trimmed
- '
- 
-+test_expect_success TTY 'print again the hunk (PAGER)' '
-+	test_when_finished "git reset" &&
-+	cat >expect <<-EOF &&
-+	<GREEN>+<RESET><GREEN>15<RESET>
-+	 20<RESET>
-+	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-+	PAGER  10<RESET>
-+	PAGER <GREEN>+<RESET><GREEN>15<RESET>
-+	PAGER  20<RESET>
-+	<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET>
-+	EOF
-+	test_write_lines s y g 1 P |
-+	(
-+		GIT_PAGER="sed s/^/PAGER\ /" &&
-+		export GIT_PAGER &&
-+		test_terminal git add -p >actual
-+	) &&
-+	tail -n 7 <actual | test_decode_color >actual.trimmed &&
-+	test_cmp expect actual.trimmed
-+'
-+
-+test_expect_success TTY 'P handles SIGPIPE when writing to pager' '
-+	test_when_finished "rm -f huge_file; git reset" &&
-+	printf "\n%2500000s" Y >huge_file &&
-+	git add -N huge_file &&
-+	test_write_lines P q | (
-+		GIT_PAGER="head -n 1" &&
-+		export GIT_PAGER &&
-+		test_terminal git add -p
-+	)
-+'
-+
- test_expect_success 'split hunk "add -p (edit)"' '
- 	# Split, say Edit and do nothing.  Then:
- 	#
--- 
-2.46.0.rc0.4.g6f4990c0d4
+> When Microsoft was first building up new contributors in this space,
+> we were overcautious and performed an internal review before going
+> to the mailing list. While this is good for a contributor's first
+> series, it loses the benefits of doing review in the open.
+
+Same.
+
+Patrick
+
+--5GMkjRI3cbdUozXw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaiXR0ACgkQVbJhu7ck
+PpQitQ//cHtQKOXMo8p7c4nNHrpwLZKGZs39o7hq6ysMFSgPy1UE3lKh+18unOHG
+MjS/5loheeD4BATSHDNe15Sge4p2oKkpeF6pbrQCHYM9tK96NyGyJnXOI+exCFfN
+tchG4UPwJyxkdv+fGh+30mt79D8BFCQdqR5Q49JU4REJhs1ICsmoqMb6R3YtiKBF
+VwnSG9rMg4t486ncYnk/ypGg48IOHP1jl1/g89ipoyTkDtSKLvlIlUvz9nLgXoup
+naMPzhqG39S8LmT4IsgRNtF5bVyuemFiUwHDvZQjKzRbIyf2y1JMJsKA74/DHNJV
+jq8RYYE4A9OfL09NYepZboAjKH3/RQYptx1NFUA2EevdjFmuMQgsMLRs9fmpMC48
+bMCRRHIfti8mezlwW1rM48QsYM0Jo5KXbXPEizYdVZsPO33I1AFFvHs0xsS4VZ10
+euRFV0f/wX95hS9JiVT1aOioLOcuZxVRSRvlMrKnSP3842WSGRcaKwik86RpMK8I
+qhEuPYh7s19xMgxAKp6WAPzOigbzjjcBYJ4Wrv3aNP64Y/adNWlOq3PKWwWSHFB/
+wG93bYlgkwVdHd49zsSEE1lmwYlhUmQjApdCa6+r0ewgWZpgwPG9oBkOWYu8iEB6
+anRTK4cdKHiBAgbg0wXNMEvHlOPixXv3Ikzp0em4tpJKAdjTRZo=
+=P52h
+-----END PGP SIGNATURE-----
+
+--5GMkjRI3cbdUozXw--
