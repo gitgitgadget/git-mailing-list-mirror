@@ -1,118 +1,84 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BC517588
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 17:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AA9199E9F
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 17:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721928189; cv=none; b=UDWJiIoI0k3T+M1ev6xd6BzDgMIjtMQ/Sz2OOflBdr+gtRXpuN9PdW/AMdQaFTNo4f6Kb5QPVNeNmGrffQZ6ziFnw5KKUuiJATE7Ebx2gqgfVURB14SaTpZyO82/ff0dXq2OqTlgAFOVWmVLUl1ruv1ZzC5ZLv7xtO0Eg4rPZe0=
+	t=1721928455; cv=none; b=T6aiGAVlaxMh/IwVzit62lHER1O2oBMh5l8t3LPpIZXTGeynYULEH/XCFIxBL1lrRfoBorB0NcuHZLjUmjl86srHdqo9LVFZJBuODOBcE9z5N4x2DKW+9aGZBFsBNvzlDO8s0vJSJf70zfuMlm8h4ZRFmAF4rAulkXTbvmxOqdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721928189; c=relaxed/simple;
-	bh=V2cZGIy2ajpJJSr7vZ5864OUBU4ruyIGp0unIfocnag=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=n/csim8BBQaEYB9SywTgotkXmu7Qm5YVyuuLZJmFWUQumZSgtZ92sExiJlNoqz+k4FA+UsMqNW+vVzvfcRrjLbN0INKj4h7hKZHfvp8HlzI1hRmU2yLxh7eW76kdzKLS9Geh447Z/QxSabQywG+odz9iXniyvq3iku/hBpkqMhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ZVDBId7U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ecIO/VFx; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1721928455; c=relaxed/simple;
+	bh=COdESij+63hB5Cg/FGIbRZrg3XUmEGf12DD7l9BiI4Y=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=p/Dk/IAxQQutWwkDLHC+3mrSXgCC+XR8ZtnFSpSH9eyHEsQBB0WwIu1WyyRLTIQ8jvA0P+rsK9QRvxo4SgOKsKOq8vVRS6ifWUuFqSycJnJGss9zsuv2rJ7jp2phAo2R62wQUp0v3rya2GsN0vsDSfiaSTxrQnua6krFJEIiE7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mlkcVK+5; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ZVDBId7U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ecIO/VFx"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 1934E138016F;
-	Thu, 25 Jul 2024 13:23:05 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute4.internal (MEProxy); Thu, 25 Jul 2024 13:23:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1721928185; x=1722014585; bh=oHtBOgawyQeLLX9svhTLizehZwnMF8NI
-	vRtqoc0CdbM=; b=ZVDBId7UceQ5EIULlTqIJJLOye9VxFrDF9w54RohRds31v67
-	VxoiRxSJVQ9f9QzKhfF8cmDfs7FH9fofy31U43g+dzhA48LupltOBUibEPd3WJL+
-	ZIb8ZvTA7ISJQv7jHEhRVR9lVI2G6T41/T81amTrCGdaO2+jz0be5yn5dJX4eeH8
-	9Djoo5pjE/itGTNVZ2kg08Y5fAGuxwKbqdLrEosigvxQQB4GKefVpvU1XI/eIYrt
-	cYtQbl9TwyF/+p3HuDXWBVu+e0UY+fmcyGGLlKDNcYig2szxj9s1ZBpWRw0rjWtL
-	4RCOyNBvGvqUiptkiRFrhntMltYALMo6RUfo2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721928185; x=
-	1722014585; bh=oHtBOgawyQeLLX9svhTLizehZwnMF8NIvRtqoc0CdbM=; b=e
-	cIO/VFx8rAQWixkm+YaqpNffiPthZB6t550gzfsO9qA2thP9kY5wF5RvaBN4e6Kn
-	Gyt9O0g7NWc1ip/RfZitcgUrPhdcds60nXyM1xLk6gff1hCIIW1S1W19qRYOL/0A
-	aZB4a/AwkffN624GoxGs0hmHUfGu5A0od/pbuCnyYEEzlWX9Nd9G67LkZ2Gys+X4
-	4M0kh3ZaCSYaNsR3jjfQ+ShoNMvGsR/phWbMoTc5tP/rjl9JAASOAnkb8feJuOLo
-	2lsaQc6pNXW70oYOlBN1mpuwdZcr2gikge7QnfQ6OxbM7S4G78/fiRerbpC+c9bQ
-	7v3IxN2yTQxbN8FOnaW5A==
-X-ME-Sender: <xms:-ImiZuGKTVDDlEps87LCHX6PcHpO7l_PFcy5qJnX2RxLl2m0Hcf8lQ0>
-    <xme:-ImiZvVjLElZCUemdWQzLWzG1KB3ofeCzVY1_ZQyNiXDjZdKiSWPz_pfM1zJgrs-S
-    i6bx253f21yj5Npiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieefgdduuddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedviedtvdetleetvdetvdeiveehgfei
-    ffeujedtudfhtdeigeejheehteehfeehveenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:-ImiZoIF8ZxIp6tryGmIPWcAf1Y_S34eiPOSL0fDmIXwnIr5SuUMMw>
-    <xmx:-ImiZoGQTXL5WPh8Tqj238IXFHeepb7OvxhiDmDiJ55BvB5dxmTk4A>
-    <xmx:-ImiZkUxCqy51jDxnSvbDMACA52zq4mLgcekROgdtWEwgrJzU79_8A>
-    <xmx:-ImiZrOUHSsbepYpA_IXUTpVAH9V59K-0ovVgV5C6gZlbgP-eyEwfQ>
-    <xmx:-YmiZrS9sn42TfjFkJsaiTJFd0LJ5XEmyHYpjVEy7lh6APCCE1CpX3A8>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 9AC7E15A0092; Thu, 25 Jul 2024 13:23:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-582-g5a02f8850-fm-20240719.002-g5a02f885
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mlkcVK+5"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E61E29B3A;
+	Thu, 25 Jul 2024 13:27:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=C
+	OdESij+63hB5Cg/FGIbRZrg3XUmEGf12DD7l9BiI4Y=; b=mlkcVK+501i42Anr/
+	M5r8bvDYuWpo5J2zXMRKjg1JeLhxCuPGU2fyZHj6PndBk8ZFNC5baXku0/cH7/VD
+	zBNXqFQptrUXEZvYxeUzVokOa5tMMNqcxQTXAPV6zGlt6U7u6OFaWll65ZXkCCci
+	dD2BFOP5aRjpY14R47ZR1M/i1w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 27BBE29B39;
+	Thu, 25 Jul 2024 13:27:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A939329B37;
+	Thu, 25 Jul 2024 13:27:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] doc: difference in location to apply is "offset", not "fuzz"
+Date: Thu, 25 Jul 2024 10:27:29 -0700
+Message-ID: <xmqqplr1fkla.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <ae5dc48b-07df-45ab-a3b7-4d5c27fdbfa2@app.fastmail.com>
-In-Reply-To: <xmqqzfq5flfd.fsf@gitster.g>
-References: <20240725144548.3434-1-ddiss@suse.de>
- <20240725144548.3434-3-ddiss@suse.de> <xmqqzfq5flfd.fsf@gitster.g>
-Date: Thu, 25 Jul 2024 19:22:39 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>, "David Disseldorp" <ddiss@suse.de>
-Cc: git@vger.kernel.org, "Teng Long" <dyroneteng@gmail.com>
-Subject: Re: [PATCH 2/2] notes: revert note_data.given behavior with empty notes add
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2BD58E34-4AAB-11EF-BD9E-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Thu, Jul 25, 2024, at 19:09, Junio C Hamano wrote:
->> Fixes: 90bc19b3ae ("notes.c: introduce '--separator=3D<paragraph-brea=
-k>' option")
->> Link: https://github.com/ddiss/icyci/issues/12
->
-> We generally refrain from using these two trailers.  Please drop them.
->
-> Especially "Fixes" claim can later prove incorrect (we thought this
-> was a good fix when committing, but it later turned out to be a bad
-> one), and besides you will be referring to the problematic commit in
-> your proposed log message already anyway.
+The documentation to "git rebase" says that the line numbers (in the
+rebased change) may not exactly be the same as the line numbers the
+change gets replayed on top of the new base, but uses a wrong noun
+"fuzz".  It should have said "offset".
 
-David, if you want to mention your downstream issue you can use a
-=E2=80=9Cfootnote=E2=80=9D in the commit message:
+They are both terms of art.  "fuzz" is about context lines not
+exactly matching.  "offset" is about the difference in the location
+that a change was taken from the original and the change gets
+replayed on the target.  "offset" is often inevitable and part of
+normal life.  "fuzz" on the other hand is often a sign of trouble
+(and indeed "Git" refuses to apply a change with "fuzz", except
+there are options to be fuzzy about whitespaces).
 
-    With "git notes add -C $blob", the given blob contents are
-    to be made into a note without involving an editor.  But
-    when "--allow-empty" is given, the editor is invoked.[1]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-rebase.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    <rest of the commit message>
-
-    [1] https://github.com/ddiss/icyci/issues/12
-
-    Signed-off-by: =E2=80=A6
-
-This is widely practiced.
-
---=20
-Kristoffer Haugsbakk
-
+diff --git c/Documentation/git-rebase.txt w/Documentation/git-rebase.txt
+index 74df345f9e..b18cdbc023 100644
+--- c/Documentation/git-rebase.txt
++++ w/Documentation/git-rebase.txt
+@@ -737,7 +737,7 @@ The 'apply' backend works by creating a sequence of patches (by calling
+ `format-patch` internally), and then applying the patches in sequence
+ (calling `am` internally).  Patches are composed of multiple hunks,
+ each with line numbers, a context region, and the actual changes.  The
+-line numbers have to be taken with some fuzz, since the other side
++line numbers have to be taken with some offset, since the other side
+ will likely have inserted or deleted lines earlier in the file.  The
+ context region is meant to help find how to adjust the line numbers in
+ order to apply the changes to the right lines.  However, if multiple
