@@ -1,156 +1,141 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic310-14.consmr.mail.bf2.yahoo.com (sonic310-14.consmr.mail.bf2.yahoo.com [74.6.135.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504A19CD0C
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F533199E9F
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.135.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721916714; cv=none; b=aOYIuXl2qAmsxi3OT4DA4cvKewJMRy+4mtoLiNsdSs5oGKPOaS3EDABJpv4bUvYes7FGZjXtP9G69p5FBRbQqPtMPT/o9IbR1BBBuL5g6eOc5tkZznzczGLS8S7Dt4tXUIPPzFJIvgdQTjYzGDprb132eusAl7ApcbKqVoh1CXk=
+	t=1721918426; cv=none; b=tHvIOdP87fCBdJNCSfU2TwvKpCX3qJgNPurU+7qPop/D7QL9y463CW8SLrCujaGLdcSrYBKOZgY3wc1RiOD6g090Xx447O2lqcH8xNp/TwhgWrmHMH4QHHe7Wam+KGxu9lOOFsXbI9Y0CjnMOXn8EG280AeuIS6F3b+A7loxXPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721916714; c=relaxed/simple;
-	bh=pVPruLxTGwIBQlqFgLWOn1RjTh2bVEJxjSlNyj/xRK0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XcZJltYCcykusQIxvZWzjjqe90lPqTM/wmLsyjiXFV/GaPJTDVzMDYQ3b/9WHndkikmaHRF7+mpM31SGSl9qNI6iPbAUHezIsCmr65duVm7nyEH3AZQZMHjewt6+a9//+J0iZRVimtBQwdpGCQL12tM5+VuwEF07qOyWqrJmLDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UfbRht0x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DN8SoF3b; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1721918426; c=relaxed/simple;
+	bh=B/Aq8jKeDa/YAPsLn5W7I7I436fyz3UwOHCfhyUadeg=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=TnWrm04LOIUCmMOj3zEv9HkL3VyI5f/f1YAKEqUT3AbhzpyRWSz48tXfbqIO2mz1GWjkTNyICV6UQ6flW5bHeG4X4g8TAt/Ttm6GbHnjbN3vNtcWRSnjbn1k0PJiPNfY7/Bvqom6Rj+wRY/HdufWfu2L21l5tZwz59Oi2WH04oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=swJuS+DR; arc=none smtp.client-ip=74.6.135.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UfbRht0x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DN8SoF3b"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 454FB1140101;
-	Thu, 25 Jul 2024 10:11:50 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 25 Jul 2024 10:11:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721916710; x=1722003110; bh=ijJm6HbNZ9
-	FuIDSyXECbAxPYpjC4dmQzMwBrAK5KhqY=; b=UfbRht0xgGRvQ8/Adqur2Eo4el
-	LmkrERbkTnrzZYaPnflzNnoAtiNdgKmrTwfONexwvOyZzzOcqBbhPNVnThfHkBch
-	s+iBASg0nDl83DZemKCvyyX4sk4kroI6akf8LOLNWVnaLvttZoxVnhKZUB+7ib5m
-	U609+99vCPgBucbRT4BA3fBUHVJN7NpJHobSDDEnMxaVaXe3FtylqMT6nIJ5nbPg
-	M4BXVsx/SxbbPGnz4/suN+TWAse9DnZPsokMmRk3ngU7N4h5398ZA55QZpBOaT2d
-	oYP+GwxJxqWqdvFaXUbGZ9G4OVgox2Z0t7wzo8Jd3QESARt+peyMQwsivn7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721916710; x=1722003110; bh=ijJm6HbNZ9FuIDSyXECbAxPYpjC4
-	dmQzMwBrAK5KhqY=; b=DN8SoF3bOp52riVoGIAefc/aMqNlYomysKYpgZtxIqBM
-	wOwn73Ujp3ONG6+jBVg5ZT7uJIblyd0es/COEwrGIrjzgWvyHg74a3vLI6okG0DD
-	YY2gINkECXl4AONTdM8Qm4vAnKIGhN2RUT/HopnMqr4H7N0+g1As95mQTcVfiCYu
-	QF+aHwH9Hl129vstd20VtVFRO22QKBeUi4ZZEhAmuY64aDc2Dd/+v/8Py0JleZxc
-	T0buPAk0n03vsfrMXi07h9sLfeMCN1CtXQOdrY+FuQ3IBQh2AnET4wz3BjzJso/R
-	DYdd98IJ5HfjQVY8yyGNrsGK3y4T36mjjW93VbnKWQ==
-X-ME-Sender: <xms:Jl2iZj-m97FmbLRLCuExhhjWsDGI_PHlCp5Phs09swlaEeEdpxhgpA>
-    <xme:Jl2iZvt-2HF5CisOzbRCq2CDcLr-Krf3n-hnsMeJi1hYumRYkyN4wsxpiM6Ji3vgd
-    04LnvGOQE0IcEzHIw>
-X-ME-Received: <xmr:Jl2iZhDrB6xD_H7bBkddPGanb0B62APEDq6dA44tW3XWVdzn4GBcWG2YeuyRPGi6q7bIfqmoNi3NdY-zMJquG8qJXLrIdDdQnBN_t-CvYxC5T8jI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieefgdejfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:Jl2iZvfhMjQaHpeGmHfIi_t15Bm95T7zBUdRjOjjZuuXHAGrTknrrw>
-    <xmx:Jl2iZoPkpa5GhpMlyMVvZWrRHXXmn0e-HAw-2yu1Tb_IWqNyT1XySQ>
-    <xmx:Jl2iZhmamiuHXOwUGymNv6mEDpfFRipkBCh3hr1I23IJizLr5sh-JA>
-    <xmx:Jl2iZiuk76a2AI6_Sth1hUGVT-38WMkvy7J4pwgCat0e4OT1B83wjA>
-    <xmx:Jl2iZtrJ6Fb38kUUdUJWdzkqzsudbPa27HZ3pfc0PCe2mwPeu2r6BqGS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jul 2024 10:11:48 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 8f907197 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 25 Jul 2024 14:10:26 +0000 (UTC)
-Date: Thu, 25 Jul 2024 16:11:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ReviewingGuidelines: encourage positive reviews more
-Message-ID: <ZqJdHlwIhv7NwJzq@tanuki>
-References: <xmqqsevysdaa.fsf@gitster.g>
- <ZqH2DK83PoU2786-@tanuki>
- <3fc33179-cd65-454b-a68e-f1113926eefe@gmail.com>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="swJuS+DR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721918423; bh=B/Aq8jKeDa/YAPsLn5W7I7I436fyz3UwOHCfhyUadeg=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=swJuS+DRskPbNjKqnlkU8CwyBcaYl4I6ZuzoV6bsiceu0rfaHyJyGqcO0tMgZCxYOASwSjMci0uYUtqSE8GjCbZSAaavo3GxtJXSn2coHdjH1BnGXSRhQdZWcwMsPoS6Hj0iYpviQ76bdGzrokUqoxq77SB/CvMZNjSv9q7AEPK7YZgee92W5AE0vUDWZ0uR2kxX3Ef6vDb2nymiauB0uIRPFIRbxJDbQ9O8ZCpkawzENdHDJSeGEvdaxwdZQUxpp+XgcO5GMVrFvoZ+miez5vR+9EdpOBLX/YHFzfAOrGpOdKG5Ixr3mZI/5a1HZzYljnxLoa31LzuUY7slEZdrKA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721918423; bh=ZlaZLvcS3zS8B0JmE77ScEmDS6h6/eqQou07AqMYDPk=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=trVgqbNGJ+F3Cilncrw2BKBt/xb/Qv5lMnOjStf1zNGrNa5DWrmcItjafkqWBo9fvZ615X2Qsoo8H5CSHXao4nSZ7jUkOQSZC6uYWk2wmapdBdIxCYfbsRCShxBom3jI0jYVQkeXmCYgXfYC5X14dn7n2cHeF7JydrLMfSY8fl9EHagHEKKQ6QibmAaDYjZn9k7pRWIECEt1bsocgdEdVAOaAzDhHuTCAjFidEu6iwyUDAePRSLz+HEMhLaf8ZDssh9n268VuafStPNpseWNYkSRif8ubFhRYd7fidWHOuTplxUFAUae3zcoXeOnC6VDSGQuUTQZpVIQ4UdFS3qOvA==
+X-YMail-OSG: 4WqkhNYVM1n2ia8QVSmlHVDdcRigfvDhY670wptG_mBARrLHMOgtBVTRpby.hZW
+ r5gY.EOojpK8Koaboxi1QrQxBTbqzU6hrcxEX5KyvFY7L8ZTPB8i6LG30THW5pViKWQYZ3kVVlZE
+ OYNLh7fO6yY0_nh0SBiDN7xiCy0YX55UKjiqWX9tn_OuvFFab4ksxGCGHWTo4pRsnKbtxWllFSOY
+ OzlmC3kWpJR97xeA9aX1oMcr_iXJGUtkdIJ15Xs2ccltsS0Prs2dmwtlM8aX8GviQOJIQE8CCFkS
+ n4c_xh9TEafmjAIZHiawp8ZoO_Yg140Mnq.K_krBr4ASUVwYAQbK5TR_xt0jkowEebsd1xRVaBLd
+ TvHij6ZluZCRphYZFzV0V5DavwUojfRiNR5pQbLNroxqa8DVohFJwqE0ilIiNYcaX2wPjNphDLei
+ EssaNSBJx5dAE_RfGwCR2wvBKr99.4zRURsLZHdOgge5XP0I_ExVvt6C9WzYxsOxdurUZI6Pims3
+ 7rjseteDEzA9QBFpNCCHYZHEJp4Lj1YKOEs1bj5hEwpe.AOHKcAffKqWgBGcVmZa_C82x2m.1.3u
+ b_9Nx9zzRMB1iqNSne9FsD0DPJr4vHTEncfCc2cwyJG__b65a1z7zzW9fBKmZHHw.nHRC3pNII_J
+ FvjBVoCwKkP54cMHtyydjsXnxFbfBEgzwSZH4O4eqYB0wrNB.Zh_w6DMv5brn_6lrQaf9TopGHx2
+ H7QQHVKaflPsky2UFqaP.6c_xxmB5m_J5AnYHJ_GnyMtuY8Qlfh1gb_WyzkxY._hJx5xtaJW.eFu
+ jtNTuk8La3h_tLSpjvDiHeB3FZytcWNkRaC6lOFnk3vi9iv9roVei1H..sdNrBFU0GEZFhFDYNaN
+ puaZO0.wzEyclw40Y_fvAUCN9H05U0mS.LLqxlFhAdQ76ruAfndILB9QRu68dhuajwELDYDx8PvH
+ jS3A5dZv6inWsb5lYheIn9uiyIjdlZ2kbxyez1TnQjG.19g.6KuW2prBdCS2aY1KAPzYc00LgEER
+ k8SFYjvtFyHLFR_t9TG13C4c1VFPnt81GriwOfBK_epFudviVi9fmVDhuu8bBc3Po2sjjfzIrltF
+ Y2rRYw1hjwKwtdgcAWPcR0ChnYCQeC3tFO39tYg9VmyDkinTf8Zc1x2pdk6DcGhA2i94plqktoA1
+ AaqouP3J_LMBx5Nb9H_VJleGHRBn8ZQ_fHL9x8e.iSjfQ8YCiIEWP15m5C1BMICYBkVFHexKHRdI
+ xediffLiJ5mZNYVBOIe4B1KD6F.jdhJFxJz4yfrqWiGuTVq4UuNDgQ76nfoQkY7Y1tYgDbsPbinm
+ XWw1WvWLVNtjGisuVH6zy9Jz9muasCmOkLw_MKBVxOz1K5MLLGt7jpwMz4Zzul2TKyLjw_yj9jQd
+ V6TIJ.NIeIzpRMAtticCq4ElOjtAMvYxU.YbP_H5n_xVWKNdw5vy_0gdMAZ82kMbvP9O9MhGOG5t
+ .jhMf2aaUjjWLIqEjd_MCkit10p_IG2MIrOcux83Ib332lBjms6UjuB3ch6baOVxDxH74oztKqA7
+ B4v.zdT05ascgDRMBNxSZx0klTiVHUqx7SZKHjzCh3VAabMu7Ba.eQA9Yp8h.1AJvutptID4G5rq
+ Zi1PpBg2hj5i0494E2qT_sMbHL2aOSAVpMakfxwmnFjKw8FW4m.d6YjR8VOh8x7O9TOPAbNgniwM
+ QRzdEACxZ6_F0Vt0Arw5ZcYGysWRGujS1qTnDnB6vg8dk4vUMo7OTs_bAcDHDQC_pouqmIBZrSog
+ CThgcmCzrgBv7HOxyzOKKM7ly2gEyZTViIQlUBsIGmuoreRLnYREBcYgCh6qnHNt2YDAb3kcC.MT
+ llrRvOTZmR8Lr5p0CP9JnEwv7Pv2WaEnlyRlXqlyfzerq6fWAyjkTeRxN9rk_IzII0jHyw.QVG5K
+ hZ8AgXSU3rk8OlZneLtb2dlAUM1_HunnwZM_kNjQfzi_ariwhkhmJ0JPkR78bKZCo8szpTkgrPgo
+ FIVm_IzBx4rZ75LFeHK.EkdCG68CFL_n_QJEWYz2fBsqf68mwytoM0.c2T6XKDecoIpzZNabtfUQ
+ KuPjTQ.MMBti..O0IYCBSVMy.2v33dEB9_1I5xB_b.uo1KCO.NO_XPGviPH58FPwej3kMqphe1At
+ Cj1b7C57u6VQrFdLWAqDnBWIY2cjnSKLi4XYzCPOg6yP48dSoMxyudWYBWfW1PNxmKSzavjZvsTv
+ 7vXnLtynueLmzLZOV
+X-Sonic-MF: <avihpit@yahoo.com>
+X-Sonic-ID: 811e9906-db25-4ebb-8911-20e540f486af
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.bf2.yahoo.com with HTTP; Thu, 25 Jul 2024 14:40:23 +0000
+Date: Thu, 25 Jul 2024 13:28:13 +0000 (UTC)
+From: avih <avihpit@yahoo.com>
+To: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <258254527.2690084.1721914093743@mail.yahoo.com>
+In-Reply-To: <1106076396.2672924.1721906849141@mail.yahoo.com>
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com> <xmqqy15rzwi5.fsf@gitster.g> <1542063589.2363688.1721786934049@mail.yahoo.com> <1106076396.2672924.1721906849141@mail.yahoo.com>
+Subject: Re: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5GMkjRI3cbdUozXw"
-Content-Disposition: inline
-In-Reply-To: <3fc33179-cd65-454b-a68e-f1113926eefe@gmail.com>
-
-
---5GMkjRI3cbdUozXw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.22501 YMailNorrin
 
-On Thu, Jul 25, 2024 at 09:31:46AM -0400, Derrick Stolee wrote:
-> On 7/25/24 2:51 AM, Patrick Steinhardt wrote:
-> > On Wed, Jul 24, 2024 at 02:14:37PM -0700, Junio C Hamano wrote:
-> > > I saw some contributors hesitate to give a positive review on
-> > > patches by their coworkers.  When written well, a positive review
-> > > does not have to be a hollow "looks good" that rubber stamps an
-> > > otherwise useless approval on a topic that is not interesting to
-> > > anybody.
-> >=20
-> > Oh, yes, this addition is very welcome indeed! It's a painpoint of ours
-> > at GitLab, and folks were indeed quite unsure about how to handle
-> > positive reviews. I was trying to guide them into the direction of
-> > "reverbalizing" and "thinking out aloud" parts of a patch series that
-> > are tricky in order to demonstrate that they have indeed read through
-> > the patches and understand them. Having all of this written down
-> > explicitly should hopefully help them.
->=20
-> I'll add the perspective of my experience here that this is a good
-> pattern to follow. One thing that also helps is to avoid doing an
-> "internal review" for experienced contributors.
+ On Thursday, July 25, 2024 at 02:27:29 PM GMT+3, avih <avihpit@yahoo.com> =
+wrote:
+>
+> So mainly as a general solution, but also applicable to this patch,
+> below is my best generalized solution so far, so that scripts don't
+> have to reinvent the wheel with this "string strip dance" above,
+> but I'm not too happy with it, mainly due to the gotcha that single
+> quotes in the value break the world (escape the "eval").
 
-Absolutely! We originally had an internal review first, but I also
-changed that procedure earlier this year. Now we have an optional
-internal review in case people aren't yet all that familiar with the
-mailing list workflow, but more experienced contributors should send
-their patches to the mailing list directly.
+Pardon the noise.
 
-For one this has sped up our own processes. But second, it allows
-reviewers to get more exposure to the mailing list as they are also
-encouraged to always review on the mailing list directly.
+To summarize the options to replace $'...' portably, like:
 
-> When Microsoft was first building up new contributors in this space,
-> we were overcautious and performed an internal review before going
-> to the mailing list. While this is good for a contributor's first
-> series, it loses the benefits of doing review in the open.
+=C2=A0=C2=A0=C2=A0 __git_SOH=3D$'\1' __git_STX=3D$'\2' __git_ESC=3D$'\33'
+=C2=A0=C2=A0=C2=A0 __git_LF=3D$'\n' __git_CRLF=3D$'\r\n'
 
-Same.
+The current patch has this, which is not fun and not scalable:
 
-Patrick
+=C2=A0=C2=A0 __git_CRLF=3D$(printf "\r\n\1\2\33")=C2=A0 # CR LF SOH STX ESC
+=C2=A0=C2=A0 __git_ESC=3D${__git_CRLF#????}; __git_CRLF=3D${__git_CRLF%?}
+=C2=A0=C2=A0 __git_STX=3D${__git_CRLF#???};=C2=A0 __git_CRLF=3D${__git_CRLF=
+%?}
+=C2=A0=C2=A0 __git_SOH=3D${__git_CRLF#??};=C2=A0=C2=A0 __git_CRLF=3D${__git=
+_CRLF%?}
+=C2=A0=C2=A0 __git_LF=3D${__git_CRLF#?}
 
---5GMkjRI3cbdUozXw
-Content-Type: application/pgp-signature; name="signature.asc"
+If performance is not important, this works (with care about \n):
 
------BEGIN PGP SIGNATURE-----
+=C2=A0=C2=A0 __git_LF=3D$(printf "\nx"); __git_LF=3D${__git_LF%x}
+=C2=A0=C2=A0 __git_STX=3D$(printf '\1')
+=C2=A0=C2=A0 ...
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaiXR0ACgkQVbJhu7ck
-PpQitQ//cHtQKOXMo8p7c4nNHrpwLZKGZs39o7hq6ysMFSgPy1UE3lKh+18unOHG
-MjS/5loheeD4BATSHDNe15Sge4p2oKkpeF6pbrQCHYM9tK96NyGyJnXOI+exCFfN
-tchG4UPwJyxkdv+fGh+30mt79D8BFCQdqR5Q49JU4REJhs1ICsmoqMb6R3YtiKBF
-VwnSG9rMg4t486ncYnk/ypGg48IOHP1jl1/g89ipoyTkDtSKLvlIlUvz9nLgXoup
-naMPzhqG39S8LmT4IsgRNtF5bVyuemFiUwHDvZQjKzRbIyf2y1JMJsKA74/DHNJV
-jq8RYYE4A9OfL09NYepZboAjKH3/RQYptx1NFUA2EevdjFmuMQgsMLRs9fmpMC48
-bMCRRHIfti8mezlwW1rM48QsYM0Jo5KXbXPEizYdVZsPO33I1AFFvHs0xsS4VZ10
-euRFV0f/wX95hS9JiVT1aOioLOcuZxVRSRvlMrKnSP3842WSGRcaKwik86RpMK8I
-qhEuPYh7s19xMgxAKp6WAPzOigbzjjcBYJ4Wrv3aNP64Y/adNWlOq3PKWwWSHFB/
-wG93bYlgkwVdHd49zsSEE1lmwYlhUmQjApdCa6+r0ewgWZpgwPG9oBkOWYu8iEB6
-anRTK4cdKHiBAgbg0wXNMEvHlOPixXv3Ikzp0em4tpJKAdjTRZo=
-=P52h
------END PGP SIGNATURE-----
+A previous message suggested this, which has a beautiful API,
+but it requires an additional non-tiny function, and it also
+hides a great risk of escaping "eval":
 
---5GMkjRI3cbdUozXw--
+=C2=A0=C2=A0=C2=A0 assign_as_fmt () {
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # hides the usage of "eval"
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
+=C2=A0=C2=A0=C2=A0 }
+
+=C2=A0=C2=A0=C2=A0 assign_as_fmt \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_SOH=3D'\1' __git_STX=3D'\2=
+' __git_ESC=3D'\33' \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_LF=3D'\n' __git_CRLF=3D'\r=
+\n'
+
+But then I figured there's another option, which is reasonably
+readable, scalable, small without additional functions, but still
+requires some care, though the risk is not hidden and easy to avoid:
+
+It's basically what the function does, but without a function:
+(double quotes required only if it ends in \n, or for uniformity)
+
+=C2=A0=C2=A0=C2=A0 # doubel-check to ensure the printf output is valid shel=
+l input
+=C2=A0=C2=A0=C2=A0 eval "$(printf '
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_SOH=3D"\1" __git_STX=3D"\2=
+" __git_ESC=3D"\33"
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_LF=3D"\n" __git_CRLF=3D"\r=
+\n"
+=C2=A0=C2=A0=C2=A0 ')"
+
+I think it strikes the best balance between the options, both
+for this patch, and possibly also as a general recomendation.
+
+So unless there are objections or better suggestions, this is
+what I currently prefer for this patch.
