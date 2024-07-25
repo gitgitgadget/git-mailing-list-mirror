@@ -1,132 +1,102 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A24B4C84
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 06:52:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14164C84
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 06:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721890327; cv=none; b=qncnk8I+LfhiQwuYh2gJgn0ivbTe9KI45st/pxAxG8aMaZOsX82mF5Cvs6Zxp0iQ4cTpca7hKISrUcNsVbYP4qwk089cGZRWpdDHQ3p9rnOxBOh0lwxQ3SllLVjwbAETekYee4jqXdAJ1x5avB733UeA8JWe0E6THXNmDMBdjHc=
+	t=1721890339; cv=none; b=aTZGFbN6vVkpJSY7MfeisoqhllxPZzTTK/ix+9I8JWooC2++EfEVr6MOJVr1nGcxjt8pCoKgTKyYgltSD08BNT6q/dLKbTZjn6VYKlHOO858zmsDo+DgXcjsCB5LprzbvgieyltWm1dVWCM49fIfqd4wyUM0UyBb7++HHm1EadA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721890327; c=relaxed/simple;
-	bh=ocbMJqVOHtzLB7yK7+TEejO0poopWW4J28ZqRWTEilM=;
+	s=arc-20240116; t=1721890339; c=relaxed/simple;
+	bh=DP/6nYzsKqNX6SoA9e8sdja7vSM78PcBwHU+iRI4SSI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AP82RY/VMdl7TTFvdG6uOvnZ3t/lywOJ90NJwkyzb0+ULc/yN9YsIi2ZoVvf6o21uLTzkYJqzMZkNO4Uv+PhzM2FN8hkLOU6Pc9QMTq9XlYWfdiqamNvvV8pVcOd4LvNQFqsC5NupkNvatYPWXOLfRWS28TBrjziM1ZeHncYdM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LJsK5QwX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mLR/8vPp; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LJsK5QwX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mLR/8vPp"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 0C7A613805B3;
-	Thu, 25 Jul 2024 02:52:03 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 25 Jul 2024 02:52:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721890323; x=1721976723; bh=oyI1egc8ir
-	EfvZ/LKZFHcMYzm5MmIjZD6FEWu/LJAvE=; b=LJsK5QwXQSPvu4MtmRMEEuMsSb
-	QNZzN7Dng4xkWNC0V4jVNnVa84hlaU/+1BSEdGqmJcMiPu9hGP5FVX7e/zsJyp+R
-	qgcj+p8C9PikrCIYv+SLn2NDw3ZMikYRtjJxoi6MEEom09fVh5LhneP35qBGa5yP
-	F512aLHy8Yue5byFIjWWyWRe6c32DBelDsPzRMO/D/oxl2Ntgd2z+ollCBNjlvfy
-	rFUAVTKu2uHPHTY2Ktyi0+9wSH/XWQ3+yE6FeEJTCrptCH6toFSS23pqbqpqADEZ
-	2XIObKXzOf/k7NpOUbuqves+KNjbZoedJYvSiCi7QtmjUYfyQMUqaIJNaEXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721890323; x=1721976723; bh=oyI1egc8irEfvZ/LKZFHcMYzm5Mm
-	IjZD6FEWu/LJAvE=; b=mLR/8vPpmPfp4q5UzHYh4W2035VkMZi7tJ3iqfeoexqC
-	S5qJ5dIY4vDf24agfvmJAXagNRFmbv/L1dbLRPY2SDn7Ffz1GOIE/3hoRwdOfu5o
-	Igl1WiTBpopp36EPLgljw7QQ0qf2RnfklzKShZng+vhwPOTvWF8V62bolDs5ITHj
-	557Tv4q3AAXneTM9HwZI0zwsyuiB2rm2HKsnBFDncZAlZM5f86uNOaMKNw1fUp9f
-	aSOfFOKBYyw+kRSJ8q2rB3nHCeKwumCBtUKjFFUCv5mfnoMQfJpHfInNwWI7WJWw
-	d6bMSXNPmN6co4SodBLg4sSvzqpYqXy7P+DhQW9csw==
-X-ME-Sender: <xms:EvahZmWneAgK-RA3iQr5f9T83TUbHxV2GcZTqoP2jlTfIOoHq8XemA>
-    <xme:EvahZikg1jBJTRtnanLeF7oKDTvoDlSIF87OfDsdlUU1yLTvP3WeriQj-Lqu0_tWL
-    5ollOxFmt0Skr-uOg>
-X-ME-Received: <xmr:EvahZqbfPFe8fWeB5NX3sUp_KgWwFjo-HIcyB-onJanueD2nrBZAdk1iPojLh-lmfW5HoryAkGsfeAH1kj3KyjhkU0eg9CKTmsRaJeu6eXcLAf5a>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddriedvgdduudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:EvahZtXJxTvmMMhuY4TZY9OBw59bgjjy9bMoKYAUbQAGmHJv7bTFxA>
-    <xmx:EvahZgkSLCl3NRpnXfxtbb14A1whgHm1Jpo4lsty_auu-Pd1480wvw>
-    <xmx:EvahZidgKg_WnscvLDN959G-AgnPHHtn0gTGIFkjbcnn0HMsY0GDKg>
-    <xmx:EvahZiGM_2-AYpcy1cP3l-1KiNPk-fSHwdx_s_K29TaEYeFBZo-7kg>
-    <xmx:E_ahZlz3-ZxUm2_uX2dW8zQ27oA97WXlkDKY5SrHzUBjE1-uwTlL0_c0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Jul 2024 02:52:02 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1d3b8ec7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 25 Jul 2024 06:50:41 +0000 (UTC)
-Date: Thu, 25 Jul 2024 08:51:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] ReviewingGuidelines: encourage positive reviews more
-Message-ID: <ZqH2DK83PoU2786-@tanuki>
-References: <xmqqsevysdaa.fsf@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=mSsRofVjkLypCKgKmblrfyLsys/cQ7+4QZOJcW18cWprxpmG99XSH7d0tzc+/qEfeWyF4AoRgS5QWJBlVju0UQHeE0uPOe4nBeB/o/j1Ij+50XHtEZuUslyB99dmHccBWo3BnhbrwXALq6xnxF6e65mmzgM921qRHhuPcBJwanI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 6038 invoked by uid 109); 25 Jul 2024 06:52:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jul 2024 06:52:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19239 invoked by uid 111); 25 Jul 2024 06:52:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jul 2024 02:52:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 25 Jul 2024 02:52:14 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Randall S. Becker" <the.n.e.key@gmail.com>, git@vger.kernel.org,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>,
+	"Randall S . Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v2 1/2] Teach git version --build-options about libcurl
+Message-ID: <20240725065214.GA590196@coredump.intra.peff.net>
+References: <20240621180947.64419-1-randall.becker@nexbridge.ca>
+ <20240621180947.64419-2-randall.becker@nexbridge.ca>
+ <f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de>
+ <xmqqed8me36c.fsf@gitster.g>
+ <20240624235557.GA2727@coredump.intra.peff.net>
+ <402c12c2-7ada-4d9e-c3da-1a78827e7496@gmx.de>
+ <20240724205541.GA557365@coredump.intra.peff.net>
+ <8ef819f0-e80a-74ec-274d-fe10991fe992@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uw5Xru9tCs0aQZdw"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqsevysdaa.fsf@gitster.g>
+In-Reply-To: <8ef819f0-e80a-74ec-274d-fe10991fe992@gmx.de>
 
+On Thu, Jul 25, 2024 at 12:17:08AM +0200, Johannes Schindelin wrote:
 
---uw5Xru9tCs0aQZdw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> All true, but the name `git version` also sets some expectations. Users
+> who run `<command> version` will expect to see the version of the command
+> they are actually using currently.
+> 
+> For example, `curl -V` will list something like:
+> 
+> 	curl 7.81.0 (x86_64-pc-linux-gnu) libcurl/7.81.0 OpenSSL/3.0.2
+> 	zlib/1.2.11 brotli/1.0.9 zstd/1.4.8 libidn2/2.3.2 libpsl/0.21.0
+> 	(+libidn2/2.3.2) libssh/0.9.6/openssl/zlib nghttp2/1.43.0
+> 	librtmp/2.3 OpenLDAP/2.5.18
+> 
+> Those are the versions of the components that are actually used when
+> invoking `curl` commands, not versions that were present on the machine
+> that built the `curl` package.
+> 
+> Compare that to what we're experiencing with Git for Windows v2.46.0-rc2:
+> `git version --build-options` lists `libcurl: 8.8.0`. But running `git
+> fetch` will actually use libcurl v8.9.0, not v8.8.0. And the output does
+> not mention that this is the compile-time version. It lists only one
+> version, as if it was the one that the Git executable were using.
 
-On Wed, Jul 24, 2024 at 02:14:37PM -0700, Junio C Hamano wrote:
-> I saw some contributors hesitate to give a positive review on
-> patches by their coworkers.  When written well, a positive review
-> does not have to be a hollow "looks good" that rubber stamps an
-> otherwise useless approval on a topic that is not interesting to
-> anybody.
+Well, yes. The whole point of farming it out to remote-curl was so that
+we could show that run-time version, which was what I said in the
+message you were responding to. So I think we agree.
 
-Oh, yes, this addition is very welcome indeed! It's a painpoint of ours
-at GitLab, and folks were indeed quite unsure about how to handle
-positive reviews. I was trying to guide them into the direction of
-"reverbalizing" and "thinking out aloud" parts of a patch series that
-are tricky in order to demonstrate that they have indeed read through
-the patches and understand them. Having all of this written down
-explicitly should hopefully help them.
+I would be fine showing _both_ the run-time and compile-time versions,
+if they are clearly marked.
 
-Except for the typo mentioned by Eric I don't have anything else to add.
-Thanks!
+> > So whether that is in the form of "git bugreport --dump", or if all of
+> > the collection is moved to "git version --build-info" and then bugreport
+> > uses that to fill out its template, I don't care.
+> 
+> I feel that we may need a different command for that than `bugreport
+> --dump`, something that reflects that the user wants to gather data to
+> investigate an issue, but not necessarily report a bug to the Git project,
+> and that we should guide users to use that command instead of `git
+> version` when investigating such issues.
+> 
+> A command with a name along the lines of `git diagnose`, I'd say.
 
-Patrick
+OK. I don't really care much either way how it is spelled, though my
+inclination is that we already have a confusing number of commands and
+should avoid adding more.
 
---uw5Xru9tCs0aQZdw
-Content-Type: application/pgp-signature; name="signature.asc"
+But my main point was that we have two ways of collecting data now, and
+it would be easier for users if they were unified, however the result is
+invoked.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmah9gsACgkQVbJhu7ck
-PpQgNBAArB+vKjEfLk8FZvQu4ayDdWBPK5OKzf47ezkbAzeOMilGzSaIwkJn5w8X
-ajTia/ayBqjdIFjBewxot/lBpkKD3vTD8QBY5cvOzt0YBvwH4Lv57gv+DoXmCMF8
-ykZCAmagqe64DZcjsZZgQqlM3Z6zSCMQnDDy1gZjDp/bBiP/QKXN4ZO+zs12qsec
-XPuvb7RREV844Z4vjh1m0Ng6vfuYErfOpRY+YcFGJA/xwBgrkz6HBhCfYI1sJbAF
-T4UccgvfbYD0vizedTVd1jLoV4NOyk0mGeTuHe/P/ibTuQ7ZyITmh0BpWRTyodOc
-5Yj24AXADzO7aXahiXHOSNKtaHLzAwnUMtVzbN5DLXrG1SXdNer+h1wkNXeZNONh
-HQ/9t8LXtsb5IZoLWZeSN68hf/Me/6MiR30bx2UTeQN2M458wjNPQRsvHwPHqktK
-bZBL47QHIsBayDAre0GkQnUhqzOp0VZEUuhgCiH0QOO+ChsaKCxm4TFPj1hmGbAH
-JJW5gmaZUaUfVkrVk25lDkPSc2i6Zjsh7F1HhMLAv5gaQ6Pvvzd5b0m+F2hdgKti
-aJul8c9QuOnlNdz92rA+/QZAIwdpaiCIRp6GvMBQzy8XE2MH5zaxsy/doOkeVyHT
-gzOBNvlqZ3x85nMVVzUwSQFTkcQuj0X3WiB/GMNCjH068Z1DZVc=
-=rOzc
------END PGP SIGNATURE-----
-
---uw5Xru9tCs0aQZdw--
+-Peff
