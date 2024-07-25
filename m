@@ -1,54 +1,52 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB5F19D07C
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 16:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EFF78676
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 16:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721923929; cv=none; b=j/u25RXBnqOlyOrxcONhmuM1DoD2UUAkzE0pYctK3fyjlrJhgFECO89yDMz41p3R1XxeWdx0wxi6s95cvkOwJW8AAz+FP3VSExId5ysy6b3iBggSvd8kJreM22Yyz+UWMxUhuOQBW+yH8737ieI2U2M1XOyYWP0EizjxYz4BSio=
+	t=1721924058; cv=none; b=Jcj/GUcZD88HcPl7wSZ96G/vyI9ywy9+9iCqNlLcE6rQosiM9rhY79SHUidd2KbqjnhH8fOHBsclq63GJCTs87i8r8EJDoYv982yDVhU+8B7MZmm4ZSVfzfSpoYejDtrFVSrM5XOmNB8jANK7e+JS9iZlTYyOTN+jXeabSXlkf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721923929; c=relaxed/simple;
-	bh=2r2j9XSGCU4cWrjX+WJ63vUHZKS94kVt8olyVI+wJ5g=;
+	s=arc-20240116; t=1721924058; c=relaxed/simple;
+	bh=nlnu8nd6Q2dQgMOIrOXtkn7XbzYOiArU0IGs2LwRZDw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qx3cWSQHKNJV1SwLEiN0P25km/9qWH1fjRKEe0+frHw7JIjJ7K4XvSW+k/KQ81rd/dTmOOBAvUQIP6fPRoNOmBY7nW0BRB60KSmfVSfZjy378HVSVdzfNXErKWex0v1dS3tvfaA54uNvYaVC6bk3jMbb2KgetOlZCGJsMc4kBkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uDW0Gi8P; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=GgDiXf+s17PLtzgN1W3CrMLlxrlq+53dKiCjHPaLcLnVy578yUzn5UYtklWJniAtmd2Kj6hnn2M0DIYbo332GqE2LsB1g7ug3GhZ1/9VNA+0ZGkQ7iazSb3PgvkWNUBc2O2kiDKkKwxaq66WH1hu8lPtMe7oWOOD9ABrKn2TMyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EU2yMQLU; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uDW0Gi8P"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 593E119F88;
-	Thu, 25 Jul 2024 12:12:07 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EU2yMQLU"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3BBF529176;
+	Thu, 25 Jul 2024 12:14:16 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=2r2j9XSGCU4cWrjX+WJ63vUHZKS94kVt8olyVI
-	+wJ5g=; b=uDW0Gi8P6TOeWLcpNg5x/0V6XUd6CkuAJfhGQdb6tWsv4OA+7KTlJC
-	upRylW4guHYanerftsnzdStG6Vvq4+hQIxBKZrPsKuTcDco52+7HalEwOfPzbAgr
-	yv23gc7F4z+dgSVcdKDid5qMhPe5OD9U5VA/VJaawsoQrZod3kXaw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5027319F87;
-	Thu, 25 Jul 2024 12:12:07 -0400 (EDT)
+	:content-type; s=sasl; bh=nlnu8nd6Q2dQgMOIrOXtkn7XbzYOiArU0IGs2L
+	wRZDw=; b=EU2yMQLUPzpXbwUPPSIcv9TBgcimUrFAcKOtPY7uByI/fxaepC0e8h
+	eCppkIcRBKAA4W1VbNl+gU/CXTW5XUkZLWCAQTXQGA24oeopvDl4NOh9ihzSi4jG
+	HgFwowQFh4dV09ZNT5cpXAaXWNcYIkpdw7rwLBMJaiMcADPZKVTCQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 34F5929175;
+	Thu, 25 Jul 2024 12:14:16 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D01F119F85;
-	Thu, 25 Jul 2024 12:12:03 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BDE5629170;
+	Thu, 25 Jul 2024 12:14:12 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Phillip Wood <phillip.wood123@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] safe.directory: setting safe.directory="."
- allows the "current" directory
-In-Reply-To: <ecfd53a7-645b-4e8b-a1e7-17ee5c782ad4@gmail.com> (Phillip Wood's
-	message of "Thu, 25 Jul 2024 10:45:41 +0100")
+Subject: Re: [PATCH v2 0/3] safe.directory clean-up
+In-Reply-To: <d9d1115a-d530-479a-acf8-189713632adf@gmail.com> (Phillip Wood's
+	message of "Thu, 25 Jul 2024 10:45:46 +0100")
 References: <20240720220915.2933266-1-gitster@pobox.com>
 	<20240723021900.388020-1-gitster@pobox.com>
-	<20240723021900.388020-4-gitster@pobox.com>
-	<ecfd53a7-645b-4e8b-a1e7-17ee5c782ad4@gmail.com>
-Date: Thu, 25 Jul 2024 09:12:02 -0700
-Message-ID: <xmqq7cd9jvsd.fsf@gitster.g>
+	<d9d1115a-d530-479a-acf8-189713632adf@gmail.com>
+Date: Thu, 25 Jul 2024 09:14:11 -0700
+Message-ID: <xmqq34nxjvos.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,23 +56,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A1A10BDA-4AA0-11EF-822C-92D9AF168FA5-77302942!pb-smtp20.pobox.com
+ EE797168-4AA0-11EF-BB46-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Hi Junio
->
-> On 23/07/2024 03:19, Junio C Hamano wrote:
->> When "git daemon" enters a repository, it chdir's to the requested
->> repository and then uses "." (the curent directory) to consult the
->> "is this repository considered safe?" when it is not owned by the
->> same owner as the process.
->> Make sure this access will be allowed by setting safe.directory to
->> ".".
->
-> Setting safe.directory to "." should be unnecessary after the previous
-> two patches. It might be better to test that "git daemon" works
-> without safe.directory containing "." instead.
+> Thanks for picking this up, I think this looks like a good approach
+> apart from resolving relative entries in safe.directory which is
+> intrinsically unsafe as we don't know which directory the user wants
+> to consider safe. With these changes it should not be necessary to add
+> "." to safe.directory to get "git daemon" to work and all the other
+> code paths use an absolute path from getcwd() so I don't think there
+> is any need to support relative directories.
 
-Hmph.  Even without the two previous steps, it was a working
-workaround, wasn't it?
+I agree that we could limit to absolute, but that would mean we
+would be breaking a configuration that used to work.  I do not want
+to mix that into this topic.
+
+> I'll be off the list for the next couple of weeks
+
+I'd imagine it would be for a block of fun time?  Enjoy.
+
+In any case, this topic won't be moving in the coming few weeks
+anyway ;-)
+
