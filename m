@@ -1,180 +1,86 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D05B198A2C
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5EF7482
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 15:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918772; cv=none; b=KmVhVCFW7J1pK/izXmE52JsXgVZayEzW8AxYR1UO5/Jce38qM1yf69++QpYT8aZJK/6OCLj8pfIwJZfN1THG+9IWoXlq89q/KlJ7Tw7khUKg8NJpbDbOFMS0R1qTHgig5C6tsdn3bLDSYrYSznRrw9wNFsDDKdOBqiBrMKg+4tc=
+	t=1721919794; cv=none; b=ZtUu6TZ9D2G4E+V+XV2R9njurdyDYdYXBKVDKBvzD9M0gTN414JICA3fLig4l2UWiGXJWLiBcFEi/MpAEF2orHICvjiBM2xHMreWgY4UpbV4OciGGiF50RGTlPkRUWpQieG/VaUt5vIecWu0/fEfbTFLa7rid51eoyNZTmi8ffg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918772; c=relaxed/simple;
-	bh=e3RVkt37UA/feVHJ9wraVMV9OOMAq52Hz0gbeDkWtS8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMQDJVY3n+6m3V26vrjAHX9DctB4Cibbwpq273Drcef3KJ/BBOJNTPAxU7H6O0Wed4ib/qfzD/zns86EnU9iZTB115+GpqarDNTf8bsI0Serp9wuayNz5YsNN8UMQWEjsNhCGM1x+4YQjvXvzrXTkZsO0TO9rwavZ6ZjPxOwEj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TqVSFCXc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LEgmlPkQ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TqVSFCXc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LEgmlPkQ; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1721919794; c=relaxed/simple;
+	bh=dn4MtSpDA6lHICXufhJWGTpPSMu6wp8WsW9UzZKQvJQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A2eN3A9ftBL+3U5MjbdlMBR/C53yq28EvLEeG/+b4+7pH+7m8oqySHxsbW9Lq3llog3k5766rLnI2W+v1zgUHgDtyPWbqmqmwTTcyEYBjmHw3mukf4bk+yGPNwM5KT9lhBz2GMNJCVOSAnJYkgiQAupX3KAttcYD3SvIM3VBJdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jDWAU2Te; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TqVSFCXc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LEgmlPkQ";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TqVSFCXc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LEgmlPkQ"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jDWAU2Te"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 46B98287CA;
+	Thu, 25 Jul 2024 11:03:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=dn4MtSpDA6lHICXufhJWGTpPSMu6wp8WsW9UzZ
+	KQvJQ=; b=jDWAU2Te9Bse2ZRAVNPRXXtGs3tRyBs3iC+oz47pnOe4pRMimTc1jt
+	V9trUg2B9Xg0cfE6iaeriDQGqbIzZBFMuISTXUolbiNF2lar9d5nQvi9sLW3OJTd
+	f2WD5lD/pEbLHmd/LD9yHhdIk3qXS05WepiaGlJCsB7BSfE2/S0D0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F116287C9;
+	Thu, 25 Jul 2024 11:03:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id CB06C1F811;
-	Thu, 25 Jul 2024 14:46:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1721918767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vIOZcQhIyIv/I/jgx2nBKmsiAuqpHEO18iX31W2beLo=;
-	b=TqVSFCXc+kgOms3cRb36pCBBep0/Hz+o8kua2Y9TdsUiaycexoajGgAMYrwz0+dcKZHfK9
-	756Na0kQwgQagEqowCOLqJ+4bzG73Y8xnAm3VfvxaPfP7UVsIV24EYzP3FbPhZWT57ceZG
-	J4CqgE2dR3iKflP8e17u2mkPWH6OZyU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1721918767;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vIOZcQhIyIv/I/jgx2nBKmsiAuqpHEO18iX31W2beLo=;
-	b=LEgmlPkQpq9Xo2dImP6Un1HUzlU955bmfGUDolWT3+ts8f9QR/tHgV99Xjb+nouLD6Awo3
-	impJwwc7/3aKy4DQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1721918767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vIOZcQhIyIv/I/jgx2nBKmsiAuqpHEO18iX31W2beLo=;
-	b=TqVSFCXc+kgOms3cRb36pCBBep0/Hz+o8kua2Y9TdsUiaycexoajGgAMYrwz0+dcKZHfK9
-	756Na0kQwgQagEqowCOLqJ+4bzG73Y8xnAm3VfvxaPfP7UVsIV24EYzP3FbPhZWT57ceZG
-	J4CqgE2dR3iKflP8e17u2mkPWH6OZyU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1721918767;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vIOZcQhIyIv/I/jgx2nBKmsiAuqpHEO18iX31W2beLo=;
-	b=LEgmlPkQpq9Xo2dImP6Un1HUzlU955bmfGUDolWT3+ts8f9QR/tHgV99Xjb+nouLD6Awo3
-	impJwwc7/3aKy4DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A96851368A;
-	Thu, 25 Jul 2024 14:46:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id gMjzJy9lomYiHAAAD6G6ig
-	(envelope-from <ddiss@suse.de>); Thu, 25 Jul 2024 14:46:07 +0000
-From: David Disseldorp <ddiss@suse.de>
-To: git@vger.kernel.org
-Cc: Teng Long <dyroneteng@gmail.com>,
-	David Disseldorp <ddiss@suse.de>
-Subject: [PATCH 2/2] notes: revert note_data.given behavior with empty notes add
-Date: Thu, 25 Jul 2024 16:41:07 +0200
-Message-ID: <20240725144548.3434-3-ddiss@suse.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240725144548.3434-1-ddiss@suse.de>
-References: <20240725144548.3434-1-ddiss@suse.de>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B87E7287C8;
+	Thu, 25 Jul 2024 11:03:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Alexander Shopov <ash@kambanaria.org>,  git@vger.kernel.org,
+  worldhello.net@gmail.com
+Subject: Re: [PATCH  1/1] show-ref: improve short help messages of options
+In-Reply-To: <ZqH7mDh73vkX4bPT@tanuki> (Patrick Steinhardt's message of "Thu,
+	25 Jul 2024 09:15:36 +0200")
+References: <20240724111116.91615-1-ash@kambanaria.org>
+	<ZqH7mDh73vkX4bPT@tanuki>
+Date: Thu, 25 Jul 2024 08:03:06 -0700
+Message-ID: <xmqqr0bhldjp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-6.60 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,suse.de];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RCPT_COUNT_THREE(0.00)[3];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -6.60
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 00EB4218-4A97-11EF-B036-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-Prior to 90bc19b3ae, note_data.given was set alongside an -m, -C or -F
-parameter for add / append. Following 90bc19b3ae, note_data.given is
-only set if the notes data buffer length is non-zero, which results in
-GIT_EDITOR invocation if e.g. a zero length blob object is provided.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Revert to pre-90bc19b3ae note_data.given behavior, to fix
-non-interactive callers.
+> Agreed, I think that this is a sensible change. In practice, this
+> feature can also be combined with `--head`, so in that spirit we might
+> even change it to:
+>
+>     "only show tags (can be combined with --branches and --head)"
+>
+> Not sure though whether this is getting too noisy?
 
-Fixes: 90bc19b3ae ("notes.c: introduce '--separator=<paragraph-break>' option")
-Link: https://github.com/ddiss/icyci/issues/12
-Signed-off-by: David Disseldorp <ddiss@suse.de>
----
- builtin/notes.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+It is somewhat an oxymoron that "*only* show X" can be combined with
+"*only* show Y" in the first place.
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index d9c356e354..3ccb3eb602 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -282,6 +282,7 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
- 	d->messages[d->msg_nr - 1] = msg;
- 	msg->stripspace = STRIPSPACE;
-+	d->given = 1;
- 	return 0;
- }
- 
-@@ -302,6 +303,7 @@ static int parse_file_arg(const struct option *opt, const char *arg, int unset)
- 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
- 	d->messages[d->msg_nr - 1] = msg;
- 	msg->stripspace = STRIPSPACE;
-+	d->given = 1;
- 	return 0;
- }
- 
-@@ -335,6 +337,7 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
- 	d->messages[d->msg_nr - 1] = msg;
- 	msg->stripspace = NO_STRIPSPACE;
-+	d->given = 1;
- 	return 0;
- }
- 
-@@ -515,7 +518,6 @@ static int add(int argc, const char **argv, const char *prefix)
- 
- 	if (d.msg_nr)
- 		concat_messages(&d);
--	d.given = !!d.buf.len;
- 
- 	object_ref = argc > 1 ? argv[1] : "HEAD";
- 
-@@ -692,7 +694,6 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 
- 	if (d.msg_nr)
- 		concat_messages(&d);
--	d.given = !!d.buf.len;
- 
- 	if (d.given && edit)
- 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
--- 
-2.43.0
+For a reader to accept it without finding it awkward, the reader
+must understand that
 
+ (1) the command shows by default everything, but
+
+ (2) if any of these "only show" options are given, the command
+     stops showing everything and the user can pick which subset of
+     "only show" options to give, which work additively.
+
+But if the reader knows that much already, it is redundant to say
+"can be combined with", isn't it?
+
+So, I dunno.
