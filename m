@@ -1,141 +1,139 @@
-Received: from sonic310-14.consmr.mail.bf2.yahoo.com (sonic310-14.consmr.mail.bf2.yahoo.com [74.6.135.124])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F533199E9F
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.135.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886028468
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 14:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918426; cv=none; b=tHvIOdP87fCBdJNCSfU2TwvKpCX3qJgNPurU+7qPop/D7QL9y463CW8SLrCujaGLdcSrYBKOZgY3wc1RiOD6g090Xx447O2lqcH8xNp/TwhgWrmHMH4QHHe7Wam+KGxu9lOOFsXbI9Y0CjnMOXn8EG280AeuIS6F3b+A7loxXPk=
+	t=1721918766; cv=none; b=j8F+Y7idvqISf+hfkYGDv+dyxdJaEh79RIjfBEjpI+/Lq0PUhhhStEgSSoqzR02Q4CADtR5nBoX/Wy4VtChE6KbEajiG7XU8S/J7n3J3EVx4QgcY0RN1oHuVf3kMkcZ9jaaMsb0/uGwfTlolU+6RhEPfxC8EmJp2FH1Iwr/cEVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918426; c=relaxed/simple;
-	bh=B/Aq8jKeDa/YAPsLn5W7I7I436fyz3UwOHCfhyUadeg=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=TnWrm04LOIUCmMOj3zEv9HkL3VyI5f/f1YAKEqUT3AbhzpyRWSz48tXfbqIO2mz1GWjkTNyICV6UQ6flW5bHeG4X4g8TAt/Ttm6GbHnjbN3vNtcWRSnjbn1k0PJiPNfY7/Bvqom6Rj+wRY/HdufWfu2L21l5tZwz59Oi2WH04oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=swJuS+DR; arc=none smtp.client-ip=74.6.135.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1721918766; c=relaxed/simple;
+	bh=f3ahK/m1S7Z1fSBp5e+ln4JRUN+FFDaHYe3KPBGakT4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VGLiNdwKyz98kCuGqUNG6ARyL1itPjP8Y9lAxGR7ZvaWGrkpKu8SxTpNJSCJxv1j9n8SamfPEGJrPG1u8J2SEsx4NXTIO4qiQiN/UXrpv5Lp8AvxAVo3lPPGInTAEyBAp49wW1R/ljCqQxPRQJb+H+Bk++uc1yyK+RNJSgO5CsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=tQzBRRMD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LIPJaxYH; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=tQzBRRMD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LIPJaxYH; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="swJuS+DR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721918423; bh=B/Aq8jKeDa/YAPsLn5W7I7I436fyz3UwOHCfhyUadeg=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=swJuS+DRskPbNjKqnlkU8CwyBcaYl4I6ZuzoV6bsiceu0rfaHyJyGqcO0tMgZCxYOASwSjMci0uYUtqSE8GjCbZSAaavo3GxtJXSn2coHdjH1BnGXSRhQdZWcwMsPoS6Hj0iYpviQ76bdGzrokUqoxq77SB/CvMZNjSv9q7AEPK7YZgee92W5AE0vUDWZ0uR2kxX3Ef6vDb2nymiauB0uIRPFIRbxJDbQ9O8ZCpkawzENdHDJSeGEvdaxwdZQUxpp+XgcO5GMVrFvoZ+miez5vR+9EdpOBLX/YHFzfAOrGpOdKG5Ixr3mZI/5a1HZzYljnxLoa31LzuUY7slEZdrKA==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1721918423; bh=ZlaZLvcS3zS8B0JmE77ScEmDS6h6/eqQou07AqMYDPk=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=trVgqbNGJ+F3Cilncrw2BKBt/xb/Qv5lMnOjStf1zNGrNa5DWrmcItjafkqWBo9fvZ615X2Qsoo8H5CSHXao4nSZ7jUkOQSZC6uYWk2wmapdBdIxCYfbsRCShxBom3jI0jYVQkeXmCYgXfYC5X14dn7n2cHeF7JydrLMfSY8fl9EHagHEKKQ6QibmAaDYjZn9k7pRWIECEt1bsocgdEdVAOaAzDhHuTCAjFidEu6iwyUDAePRSLz+HEMhLaf8ZDssh9n268VuafStPNpseWNYkSRif8ubFhRYd7fidWHOuTplxUFAUae3zcoXeOnC6VDSGQuUTQZpVIQ4UdFS3qOvA==
-X-YMail-OSG: 4WqkhNYVM1n2ia8QVSmlHVDdcRigfvDhY670wptG_mBARrLHMOgtBVTRpby.hZW
- r5gY.EOojpK8Koaboxi1QrQxBTbqzU6hrcxEX5KyvFY7L8ZTPB8i6LG30THW5pViKWQYZ3kVVlZE
- OYNLh7fO6yY0_nh0SBiDN7xiCy0YX55UKjiqWX9tn_OuvFFab4ksxGCGHWTo4pRsnKbtxWllFSOY
- OzlmC3kWpJR97xeA9aX1oMcr_iXJGUtkdIJ15Xs2ccltsS0Prs2dmwtlM8aX8GviQOJIQE8CCFkS
- n4c_xh9TEafmjAIZHiawp8ZoO_Yg140Mnq.K_krBr4ASUVwYAQbK5TR_xt0jkowEebsd1xRVaBLd
- TvHij6ZluZCRphYZFzV0V5DavwUojfRiNR5pQbLNroxqa8DVohFJwqE0ilIiNYcaX2wPjNphDLei
- EssaNSBJx5dAE_RfGwCR2wvBKr99.4zRURsLZHdOgge5XP0I_ExVvt6C9WzYxsOxdurUZI6Pims3
- 7rjseteDEzA9QBFpNCCHYZHEJp4Lj1YKOEs1bj5hEwpe.AOHKcAffKqWgBGcVmZa_C82x2m.1.3u
- b_9Nx9zzRMB1iqNSne9FsD0DPJr4vHTEncfCc2cwyJG__b65a1z7zzW9fBKmZHHw.nHRC3pNII_J
- FvjBVoCwKkP54cMHtyydjsXnxFbfBEgzwSZH4O4eqYB0wrNB.Zh_w6DMv5brn_6lrQaf9TopGHx2
- H7QQHVKaflPsky2UFqaP.6c_xxmB5m_J5AnYHJ_GnyMtuY8Qlfh1gb_WyzkxY._hJx5xtaJW.eFu
- jtNTuk8La3h_tLSpjvDiHeB3FZytcWNkRaC6lOFnk3vi9iv9roVei1H..sdNrBFU0GEZFhFDYNaN
- puaZO0.wzEyclw40Y_fvAUCN9H05U0mS.LLqxlFhAdQ76ruAfndILB9QRu68dhuajwELDYDx8PvH
- jS3A5dZv6inWsb5lYheIn9uiyIjdlZ2kbxyez1TnQjG.19g.6KuW2prBdCS2aY1KAPzYc00LgEER
- k8SFYjvtFyHLFR_t9TG13C4c1VFPnt81GriwOfBK_epFudviVi9fmVDhuu8bBc3Po2sjjfzIrltF
- Y2rRYw1hjwKwtdgcAWPcR0ChnYCQeC3tFO39tYg9VmyDkinTf8Zc1x2pdk6DcGhA2i94plqktoA1
- AaqouP3J_LMBx5Nb9H_VJleGHRBn8ZQ_fHL9x8e.iSjfQ8YCiIEWP15m5C1BMICYBkVFHexKHRdI
- xediffLiJ5mZNYVBOIe4B1KD6F.jdhJFxJz4yfrqWiGuTVq4UuNDgQ76nfoQkY7Y1tYgDbsPbinm
- XWw1WvWLVNtjGisuVH6zy9Jz9muasCmOkLw_MKBVxOz1K5MLLGt7jpwMz4Zzul2TKyLjw_yj9jQd
- V6TIJ.NIeIzpRMAtticCq4ElOjtAMvYxU.YbP_H5n_xVWKNdw5vy_0gdMAZ82kMbvP9O9MhGOG5t
- .jhMf2aaUjjWLIqEjd_MCkit10p_IG2MIrOcux83Ib332lBjms6UjuB3ch6baOVxDxH74oztKqA7
- B4v.zdT05ascgDRMBNxSZx0klTiVHUqx7SZKHjzCh3VAabMu7Ba.eQA9Yp8h.1AJvutptID4G5rq
- Zi1PpBg2hj5i0494E2qT_sMbHL2aOSAVpMakfxwmnFjKw8FW4m.d6YjR8VOh8x7O9TOPAbNgniwM
- QRzdEACxZ6_F0Vt0Arw5ZcYGysWRGujS1qTnDnB6vg8dk4vUMo7OTs_bAcDHDQC_pouqmIBZrSog
- CThgcmCzrgBv7HOxyzOKKM7ly2gEyZTViIQlUBsIGmuoreRLnYREBcYgCh6qnHNt2YDAb3kcC.MT
- llrRvOTZmR8Lr5p0CP9JnEwv7Pv2WaEnlyRlXqlyfzerq6fWAyjkTeRxN9rk_IzII0jHyw.QVG5K
- hZ8AgXSU3rk8OlZneLtb2dlAUM1_HunnwZM_kNjQfzi_ariwhkhmJ0JPkR78bKZCo8szpTkgrPgo
- FIVm_IzBx4rZ75LFeHK.EkdCG68CFL_n_QJEWYz2fBsqf68mwytoM0.c2T6XKDecoIpzZNabtfUQ
- KuPjTQ.MMBti..O0IYCBSVMy.2v33dEB9_1I5xB_b.uo1KCO.NO_XPGviPH58FPwej3kMqphe1At
- Cj1b7C57u6VQrFdLWAqDnBWIY2cjnSKLi4XYzCPOg6yP48dSoMxyudWYBWfW1PNxmKSzavjZvsTv
- 7vXnLtynueLmzLZOV
-X-Sonic-MF: <avihpit@yahoo.com>
-X-Sonic-ID: 811e9906-db25-4ebb-8911-20e540f486af
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.bf2.yahoo.com with HTTP; Thu, 25 Jul 2024 14:40:23 +0000
-Date: Thu, 25 Jul 2024 13:28:13 +0000 (UTC)
-From: avih <avihpit@yahoo.com>
-To: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <258254527.2690084.1721914093743@mail.yahoo.com>
-In-Reply-To: <1106076396.2672924.1721906849141@mail.yahoo.com>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com> <xmqqy15rzwi5.fsf@gitster.g> <1542063589.2363688.1721786934049@mail.yahoo.com> <1106076396.2672924.1721906849141@mail.yahoo.com>
-Subject: Re: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="tQzBRRMD";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LIPJaxYH";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="tQzBRRMD";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LIPJaxYH"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id B22D6219E4;
+	Thu, 25 Jul 2024 14:46:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1721918762; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=dGA1bL5qv7iNipF6BzyFMYNJY4xw2h0De5uU8BjyBXg=;
+	b=tQzBRRMD04FCHKaJXbLAfm+59swec6I98Ch8btpreQf29N8u7DhV//19vbL4vradkM1EyX
+	YTVOs4BkUlrx7p7oWYO1YOo5Dq7XN60GjsGbQY0AZ1H5b1/D5MsloKUoPXARn7kgV1ue+l
+	EzOwcVzxz9fntwYSpzK9Ju3NWISeLAw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1721918762;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=dGA1bL5qv7iNipF6BzyFMYNJY4xw2h0De5uU8BjyBXg=;
+	b=LIPJaxYH7kFBFCQ+pjneqYWEd2WXXRfOV5Kxzib7rA+DwpcPMS120vd1Rv0Je6NKDxdMMg
+	7V5n36tmfyQJifCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1721918762; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=dGA1bL5qv7iNipF6BzyFMYNJY4xw2h0De5uU8BjyBXg=;
+	b=tQzBRRMD04FCHKaJXbLAfm+59swec6I98Ch8btpreQf29N8u7DhV//19vbL4vradkM1EyX
+	YTVOs4BkUlrx7p7oWYO1YOo5Dq7XN60GjsGbQY0AZ1H5b1/D5MsloKUoPXARn7kgV1ue+l
+	EzOwcVzxz9fntwYSpzK9Ju3NWISeLAw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1721918762;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=dGA1bL5qv7iNipF6BzyFMYNJY4xw2h0De5uU8BjyBXg=;
+	b=LIPJaxYH7kFBFCQ+pjneqYWEd2WXXRfOV5Kxzib7rA+DwpcPMS120vd1Rv0Je6NKDxdMMg
+	7V5n36tmfyQJifCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 95A9A1368A;
+	Thu, 25 Jul 2024 14:46:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id OUQLIyplomYiHAAAD6G6ig
+	(envelope-from <ddiss@suse.de>); Thu, 25 Jul 2024 14:46:02 +0000
+From: David Disseldorp <ddiss@suse.de>
+To: git@vger.kernel.org
+Cc: Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH 0/2] notes: fix editor invocation regression
+Date: Thu, 25 Jul 2024 16:41:05 +0200
+Message-ID: <20240725144548.3434-1-ddiss@suse.de>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.22501 YMailNorrin
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.60 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Flag: NO
+X-Spam-Score: -2.60
 
- On Thursday, July 25, 2024 at 02:27:29 PM GMT+3, avih <avihpit@yahoo.com> =
-wrote:
->
-> So mainly as a general solution, but also applicable to this patch,
-> below is my best generalized solution so far, so that scripts don't
-> have to reinvent the wheel with this "string strip dance" above,
-> but I'm not too happy with it, mainly due to the gotcha that single
-> quotes in the value break the world (escape the "eval").
+This patchset attempts to revert editor invocation behavior for empty
+notes, which was inadvertantly changed via 90bc19b3ae ("notes.c:
+introduce '--separator=<paragraph-break>' option").
+The new test passes prior to 90bc19b3ae and after this fix.
 
-Pardon the noise.
+Please cc me in any replies as I'm not subscribed.
 
-To summarize the options to replace $'...' portably, like:
+Cheers, David
 
-=C2=A0=C2=A0=C2=A0 __git_SOH=3D$'\1' __git_STX=3D$'\2' __git_ESC=3D$'\33'
-=C2=A0=C2=A0=C2=A0 __git_LF=3D$'\n' __git_CRLF=3D$'\r\n'
+--
 
-The current patch has this, which is not fun and not scalable:
+The following changes since commit
+ad57f148c6b5f8735b62238dda8f571c582e0e54:
 
-=C2=A0=C2=A0 __git_CRLF=3D$(printf "\r\n\1\2\33")=C2=A0 # CR LF SOH STX ESC
-=C2=A0=C2=A0 __git_ESC=3D${__git_CRLF#????}; __git_CRLF=3D${__git_CRLF%?}
-=C2=A0=C2=A0 __git_STX=3D${__git_CRLF#???};=C2=A0 __git_CRLF=3D${__git_CRLF=
-%?}
-=C2=A0=C2=A0 __git_SOH=3D${__git_CRLF#??};=C2=A0=C2=A0 __git_CRLF=3D${__git=
-_CRLF%?}
-=C2=A0=C2=A0 __git_LF=3D${__git_CRLF#?}
+  Git 2.46-rc2 (2024-07-23 16:54:35 -0700)
 
-If performance is not important, this works (with care about \n):
+are available in the Git repository at:
 
-=C2=A0=C2=A0 __git_LF=3D$(printf "\nx"); __git_LF=3D${__git_LF%x}
-=C2=A0=C2=A0 __git_STX=3D$(printf '\1')
-=C2=A0=C2=A0 ...
+  https://github.com/ddiss/git.git notes_empty_editor_add
 
-A previous message suggested this, which has a beautiful API,
-but it requires an additional non-tiny function, and it also
-hides a great risk of escaping "eval":
+for you to fetch changes up to fa40003e560348e146f11aa85ac1fc5a3d86e31e:
 
-=C2=A0=C2=A0=C2=A0 assign_as_fmt () {
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # hides the usage of "eval"
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
-=C2=A0=C2=A0=C2=A0 }
+  notes: revert note_data.given behavior with empty notes add
+(2024-07-25 15:41:56 +0200)
 
-=C2=A0=C2=A0=C2=A0 assign_as_fmt \
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_SOH=3D'\1' __git_STX=3D'\2=
-' __git_ESC=3D'\33' \
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_LF=3D'\n' __git_CRLF=3D'\r=
-\n'
+----------------------------------------------------------------
+David Disseldorp (2):
+      t3301-notes: check editor isn't invoked for empty notes add
+      notes: revert note_data.given behavior with empty notes add
 
-But then I figured there's another option, which is reasonably
-readable, scalable, small without additional functions, but still
-requires some care, though the risk is not hidden and easy to avoid:
+ builtin/notes.c  | 5 +++--
+ t/t3301-notes.sh | 5 +++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-It's basically what the function does, but without a function:
-(double quotes required only if it ends in \n, or for uniformity)
-
-=C2=A0=C2=A0=C2=A0 # doubel-check to ensure the printf output is valid shel=
-l input
-=C2=A0=C2=A0=C2=A0 eval "$(printf '
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_SOH=3D"\1" __git_STX=3D"\2=
-" __git_ESC=3D"\33"
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __git_LF=3D"\n" __git_CRLF=3D"\r=
-\n"
-=C2=A0=C2=A0=C2=A0 ')"
-
-I think it strikes the best balance between the options, both
-for this patch, and possibly also as a general recomendation.
-
-So unless there are objections or better suggestions, this is
-what I currently prefer for this patch.
