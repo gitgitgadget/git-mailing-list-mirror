@@ -1,59 +1,60 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8593D6AD7
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 09:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051FE197A7E
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 09:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721900745; cv=none; b=P+XfRT+XGZISQ5cAFbmH8h/oX1uP4Djzx+ztsW6MRPG9Pmo7Jh67n4YzsIys2+rpmjyFX/ye+KdZ5rgOkXp9ltQQENm4YwXZeL2JoFkKmojTdPNkn8vsOqMLlUC6gXFkGLCsHw8B+5I3cNZvEUI5Oh3QmmgTbcKinJjbiOyfq3E=
+	t=1721900749; cv=none; b=cYdFUhZizx+5Natv2OaLs6NGtrcweFnhhnqNGJDumH3Jf/nAxwaRsWeTUQJO/gUP04p9j0j3qXHgro8wKf5XVznwhlwFyKpmVXnDx5x+R6ZMNkE/Q2Nuc3ZnMePitQC+is7tblmsXhx6OsLsNuLGE0q04KiosdoRhLSxIKTd6j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721900745; c=relaxed/simple;
-	bh=tQ66PMurgQ/pcSVmrWl7F2munEHjm0o4SHAaVCTENNk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=Vpxezqd2y+o791v/ryu3DtCyxlFx+QNUKwWbelVZvU/bYAGOZJ3tYcMSqoCBt/E/of5X3Ij1xwO7EOvCvk/XLLY9DYMdN/3QFHS+B+SS+q5kG49lOxIU6XuDhtRc/vVVlzOlC5pSEz16irOWV7X5HpasKXIiYsbsK1W/aibkigs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JE8nedVN; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1721900749; c=relaxed/simple;
+	bh=runejZlOSLaODzXqe2CobLR4lF1K/0u1YeMHeQCdfHU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=kMQYj+UeRLhfLrCuoNHKCkxnN6g9Q4qMBMH5LYY8AP7xmKjPAtkxKr9f+v2G4Uff7LL+2evT195VUE/X5aAeBzK7iX4pkyIVnsk6vhRDLa9/0ye3m6hxB047PK2GYRG4ZBCvyIaqq5MZyO6jBr5Wuxktho3a6SU5nY4pr4Ccmyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+HOvuEC; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JE8nedVN"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42808baddf9so1093055e9.3
-        for <git@vger.kernel.org>; Thu, 25 Jul 2024 02:45:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+HOvuEC"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3684e8220f9so350245f8f.1
+        for <git@vger.kernel.org>; Thu, 25 Jul 2024 02:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721900742; x=1722505542; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hmPK1YaWPfONJ48qC1zMzdGUaWJwCJ0uy9qafRdwXZA=;
-        b=JE8nedVNDpYw/iMiQtqWYSYpst5eFFGT/iDEQ7Clv7fUytE21ipNqbv6G0SrZfUlEP
-         ZzqpMie9sjUpYUHiGZIvSkf868kRfcT4p+B1SGxzlbnQz8x50mOXDtlmYYW70/YtpKt/
-         dWHsNFT0t+C8FaQDPAD1q2qLYP7tzEgiTlVmrXs4dh1AD2qRX/QOjT0En5jj967Mh32r
-         0cBD99BXwh/EYu0gmYsina5+BVv3c6iGw99022neB/Da1NOBa8xhRcyKMKi75QV88UaA
-         LMFSTyHaUnGa4QIH7CBXcwJyiBcJiWexs4WJ31S0qxduu1CBJfkw69uBLJEtkLF7X29d
-         gcAg==
+        d=gmail.com; s=20230601; t=1721900746; x=1722505546; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=X1/Bs5/p+DQLa4L8P9A8xOVsYVCewbd0IUffMnTDwwU=;
+        b=C+HOvuECJdUn/MW2ipphqOb5ZmUXS5/DdwqgHlUG6Mmw3+KHQJdlc+EHC5rcqAzWMM
+         6L3pXW1CI+OZ3mtpygjMaF7YSO7QnejjOdlNKZjjlz6l/oXF1b40QousmOK8KEAnfC7s
+         AueU3s3QG9PMQfwt54Wo6DWe2RcYIfmTSmAhsHxPEhm3P/6r2fvSlQA568HgPVh33yXi
+         yR2t1Dqe8xB/EM4VbnpJJDSOWUl0E1ESM5odvf24fLIiX9lR8XsbLu9kvfcgQrlO8vDQ
+         Peh3SA1VtqJ8JOiqBTigsmvDO6zJoVBhQ7Jo502+GagwENW6+FYH297NB2wdfP2qyz3H
+         qAuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721900742; x=1722505542;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hmPK1YaWPfONJ48qC1zMzdGUaWJwCJ0uy9qafRdwXZA=;
-        b=JQ7QV29ln4lEF2rFOw7KTRQ7E+eKhOfC/pLlBfJKF60r0GQute+WctrOfDsCsJdvwS
-         Whd10OHa7gwzJmoyi24eiwJgHtfglLpIEWYpOeWhqgStn6pXJzt+AhRbsJkayAT1lFk5
-         JzE9K+aKJ+qZx9C1PtdL9/CX1HtgYNmz0fyfH1n9Z+LFtcJ+V+OOxBsvHuqz0kM6Kqas
-         4LW+PPqgwi3KHb349bBMvkYAi6dxvWPVSXHLmzm2UMJcl4k1Hyv/Wq3kUzk8nrG8N+r1
-         +MpKA6tbxKFWP8K5phb7y6pMBn1qsjKf8zkJhyHFjVhwvFIB4Xr+6hTfR5D6hlCgLoc0
-         G40Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVs3hVREicK8uuNzq4EMx+UlHYMX1vnYUiAX7rhOufMgONFG4f3r51VjuhwzSeaE7Cgf+FMWoC3KbcM6I/14XAUeA0g
-X-Gm-Message-State: AOJu0YwoxaJvqWomo7xsA9exOD6nBGBgsUvkFaaMrtiCHNJSQmVZfpNh
-	i+4TBzitnh+C77BfmDlWDqForA5OHSviJrMeGV7dXfn7OuOil+wW
-X-Google-Smtp-Source: AGHT+IEeSd1MwIn4YC/aRQlE6OnPKh2NhKtRqbRUlwGaE6pbBVaAZ1cuv13PnaxOpRckiBqIQzbCtA==
-X-Received: by 2002:a5d:494a:0:b0:368:4e35:76f9 with SMTP id ffacd0b85a97d-36b363ea1d9mr1178668f8f.37.1721900741777;
-        Thu, 25 Jul 2024 02:45:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721900746; x=1722505546;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X1/Bs5/p+DQLa4L8P9A8xOVsYVCewbd0IUffMnTDwwU=;
+        b=KRm4kUOYb+Tt7ovY+0a20AO98Zqt0jxWayZPtg7Veshm1/2a2MV+9iGdEfNpMKiLHe
+         cQxsPF0WWSDEps7T0l2Pu9fiXmUk56LtPZmKBwx9a+snfjHWz19fx5Eb8SA/HEu3Gv9f
+         rlXnM5iUHA+VgIR6L/9O5bcE/pJk2cIWc5aKg5hZZwov+ojbq7JeWdo+sdnoDTrik8nD
+         elHpnQKVZ4Rcd2iwyU5RZ6/3GYQzjHIVTreFF3kMKaIGo5/r6kEVgczspAKjaPASnO4P
+         nbg6QQwcRo0hzbxB9tgDU/WAzB0bcUU7wlgeGwijVLrUyHUh2Tys50G7rROUloVIuSgG
+         r/Yg==
+X-Forwarded-Encrypted: i=1; AJvYcCWFsr6afmM6QViq9m2BEqguxGVGF7peLtRcVLnTVX6tfAZJ+7SIWhyM+gdfhD+9Q1DQWLh6YduPx1R5xxKDjbVsi/GZ
+X-Gm-Message-State: AOJu0YzBp2anRqvZ6s4xoPyT++IVk6ItU8nnjbpiJ2zxYBrYxbTGjEh/
+	BsLNA/gwaFcbCqwO7E+wHkm6YIynxS8J+xlLhK/Q9nV07HD33lcl
+X-Google-Smtp-Source: AGHT+IFuU4sfxaNEVZVw0qyFVSJ8u04Sxfk24B3PJntY7lpDKTTOQa/8JmAm8l6HGyXaQcHLPoBnJw==
+X-Received: by 2002:a05:6000:1252:b0:366:e9f7:4e73 with SMTP id ffacd0b85a97d-369f6667f6fmr3517082f8f.5.1721900746347;
+        Thu, 25 Jul 2024 02:45:46 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:683:1601:9ca9:646d:b3da:7e1d? ([2a0a:ef40:683:1601:9ca9:646d:b3da:7e1d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b36857dc2sm1558822f8f.77.2024.07.25.02.45.41
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b36857dc2sm1558822f8f.77.2024.07.25.02.45.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jul 2024 02:45:41 -0700 (PDT)
-Message-ID: <ecfd53a7-645b-4e8b-a1e7-17ee5c782ad4@gmail.com>
-Date: Thu, 25 Jul 2024 10:45:41 +0100
+        Thu, 25 Jul 2024 02:45:46 -0700 (PDT)
+Message-ID: <d9d1115a-d530-479a-acf8-189713632adf@gmail.com>
+Date: Thu, 25 Jul 2024 10:45:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,81 +62,174 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 3/3] safe.directory: setting safe.directory="." allows
- the "current" directory
 Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/3] safe.directory clean-up
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20240720220915.2933266-1-gitster@pobox.com>
  <20240723021900.388020-1-gitster@pobox.com>
- <20240723021900.388020-4-gitster@pobox.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240723021900.388020-4-gitster@pobox.com>
+In-Reply-To: <20240723021900.388020-1-gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Junio
 
-On 23/07/2024 03:19, Junio C Hamano wrote:
-> When "git daemon" enters a repository, it chdir's to the requested
-> repository and then uses "." (the curent directory) to consult the
-> "is this repository considered safe?" when it is not owned by the
-> same owner as the process.
-> 
-> Make sure this access will be allowed by setting safe.directory to
-> ".".
+Thanks for picking this up, I think this looks like a good approach 
+apart from resolving relative entries in safe.directory which is 
+intrinsically unsafe as we don't know which directory the user wants to 
+consider safe. With these changes it should not be necessary to add "." 
+to safe.directory to get "git daemon" to work and all the other code 
+paths use an absolute path from getcwd() so I don't think there is any 
+need to support relative directories.
 
-Setting safe.directory to "." should be unnecessary after the previous 
-two patches. It might be better to test that "git daemon" works without 
-safe.directory containing "." instead.
+I'll be off the list for the next couple of weeks
 
 Best Wishes
 
 Phillip
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   t/t0033-safe-directory.sh | 32 ++++++++++++++++++++++++++++++++
->   1 file changed, 32 insertions(+)
+On 23/07/2024 03:18, Junio C Hamano wrote:
+> Changes since v1:
 > 
-> diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
-> index ea74657255..1eeb794194 100755
-> --- a/t/t0033-safe-directory.sh
-> +++ b/t/t0033-safe-directory.sh
-> @@ -233,4 +233,36 @@ test_expect_success SYMLINKS 'configured leading paths are normalized' '
->   	git -C repo/s/.git/ for-each-ref
->   '
->   
-> +test_expect_success 'safe.directory set to a dot' '
-> +	test_when_finished "rm -rf repository" &&
-> +	(
-> +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
-> +		git config --global --unset-all safe.directory
-> +	) &&
-> +	mkdir -p repository/subdir &&
-> +	git init repository &&
-> +	(
-> +		cd repository &&
-> +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
-> +		test_commit sample
-> +	) &&
-> +
-> +	(
-> +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
-> +		git config --global safe.directory "."
-> +	) &&
-> +	git -C repository for-each-ref &&
-> +	git -C repository/ for-each-ref &&
-> +	git -C repository/.git for-each-ref &&
-> +	git -C repository/.git/ for-each-ref &&
-> +
-> +	# what is allowed is repository/subdir but the repository
-> +	# path is repository.
-> +	test_must_fail git -C repository/subdir for-each-ref &&
-> +
-> +	# likewise, repository .git/refs is allowed with "." but
-> +	# repository/.git that is accessed is not allowed.
-> +	test_must_fail git -C repository/.git/refs for-each-ref
-> +'
-> +
->   test_done
+>   - two "extra" patches for optimization that are unnecessary have
+>     been dropped.
+>   - a patch to add test for safe.directory="." use case has been
+>     added.
+> 
+> Recently we discussed what we should do when either the path
+> configured in the safe.directory configuration or coming from
+> the caller of ensure_valid_ownership() function as a result of
+> repository discovery is not normalized and textual equality check is
+> not sufficient.  See the thread the contains
+> 
+>    https://lore.kernel.org/git/6d5b75a6-639d-429b-bd37-232fc6f475af@gmail.com/
+> 
+> Here are three patches that implement the comparison between
+> normalized path and configuration value.
+> 
+> Imagine that you have a repository at /mnt/disk4/repos/frotz
+> directory but in order to make it simpler to manage and use, you
+> have your users use /projects/frotz to access the repository.  A
+> symlink /projects/frotz pointing at /mnt/disk4/repos/frotz directory
+> allows you to do so.
+> 
+>   - The first patch normalizes the path to the directory that we
+>     suspect is a usable repository, before comparing it with the
+>     safe.directory configuration variable.  The safe.directory may
+>     say /mnt/disk4/repos/frotz or /mnt/disk4/repos/*, but the path to
+>     the repository for the users may be /mnt/disk4/repos/frotz or
+>     /projects/frotz, depending on where they come from and what their
+>     $PWD makes getcwd() to say.
+> 
+>   - The second patch normalizes the value of the safe.directory
+>     variable.  This allows safe.directory to say /projects/frotz
+>     or /projects/* and have them match /mnt/disk4/repos/frotz (which
+>     is how the first patch normalizes the repository path to).
+> 
+>   - The third patch only adds a test to illustrate what happens when
+>     the safe.directory configuration is set to ".", which was a
+>     plausible setting for those who run "git daemon".  The
+>     normalization done by the first two patches is sufficient to make
+>     this just work.
+> 
+> Junio C Hamano (3):
+>    safe.directory: normalize the checked path
+>    safe.directory: normalize the configured path
+>    safe.directory: setting safe.directory="." allows the "current"
+>      directory
+> 
+>   setup.c                   |  28 ++++++--
+>   t/t0033-safe-directory.sh | 146 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 170 insertions(+), 4 deletions(-)
+> 
+> Range-diff against v1:
+> 1:  20e1160946 ! 1:  86d5c83ee7 safe.directory: normalize the checked path
+>      @@ t/t0033-safe-directory.sh: test_expect_success 'local clone of unowned repo acce
+>       +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+>       +		git config --global safe.directory "$(pwd)/repository"
+>       +	) &&
+>      -+	git -C repository/ for-each-ref >/dev/null &&
+>      -+	git -C repo/ for-each-ref
+>      ++	git -C repository for-each-ref &&
+>      ++	git -C repository/ for-each-ref &&
+>      ++	git -C repo for-each-ref &&
+>      ++	git -C repo/ for-each-ref &&
+>      ++	test_must_fail git -C repository/.git for-each-ref &&
+>      ++	test_must_fail git -C repository/.git/ for-each-ref &&
+>      ++	test_must_fail git -C repo/.git for-each-ref &&
+>      ++	test_must_fail git -C repo/.git/ for-each-ref
+>       +'
+>       +
+>       +test_expect_success SYMLINKS 'checked leading paths are normalized' '
+>      @@ t/t0033-safe-directory.sh: test_expect_success 'local clone of unowned repo acce
+>       +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+>       +		git config --global safe.directory "$(pwd)/repository/*"
+>       +	) &&
+>      -+	git -C repository/s for-each-ref >/dev/null &&
+>      -+	git -C repo/s for-each-ref
+>      ++	git -C repository/s for-each-ref &&
+>      ++	git -C repository/s/ for-each-ref &&
+>      ++	git -C repo/s for-each-ref &&
+>      ++	git -C repo/s/ for-each-ref &&
+>      ++	git -C repository/s/.git for-each-ref &&
+>      ++	git -C repository/s/.git/ for-each-ref &&
+>      ++	git -C repo/s/.git for-each-ref &&
+>      ++	git -C repo/s/.git/ for-each-ref
+>       +'
+>       +
+>        test_done
+> 2:  06de9038b7 ! 2:  c4998076da safe.directory: normalize the configured path
+>      @@ setup.c: static int safe_directory_cb(const char *key, const char *value,
+>       
+>        ## t/t0033-safe-directory.sh ##
+>       @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked leading paths are normalized' '
+>      - 	git -C repo/s for-each-ref
+>      + 	git -C repo/s/.git/ for-each-ref
+>        '
+>        
+>       +test_expect_success SYMLINKS 'configured paths are normalized' '
+>      @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked leading paths a
+>       +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+>       +		git config --global safe.directory "$(pwd)/repo"
+>       +	) &&
+>      -+	git -C repository/ for-each-ref >/dev/null &&
+>      -+	git -C repo/ for-each-ref
+>      ++	git -C repository for-each-ref &&
+>      ++	git -C repository/ for-each-ref &&
+>      ++	git -C repo for-each-ref &&
+>      ++	git -C repo/ for-each-ref &&
+>      ++	test_must_fail git -C repository/.git for-each-ref &&
+>      ++	test_must_fail git -C repository/.git/ for-each-ref &&
+>      ++	test_must_fail git -C repo/.git for-each-ref &&
+>      ++	test_must_fail git -C repo/.git/ for-each-ref
+>       +'
+>       +
+>       +test_expect_success SYMLINKS 'configured leading paths are normalized' '
+>      @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked leading paths a
+>       +	git init repository/s &&
+>       +	ln -s repository repo &&
+>       +	(
+>      -+		cd repository &&
+>      ++		cd repository/s &&
+>       +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+>       +		test_commit sample
+>       +	) &&
+>      @@ t/t0033-safe-directory.sh: test_expect_success SYMLINKS 'checked leading paths a
+>       +		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
+>       +		git config --global safe.directory "$(pwd)/repo/*"
+>       +	) &&
+>      -+	git -C repository/s for-each-ref >/dev/null &&
+>      -+	git -C repo/s for-each-ref
+>      ++	git -C repository/s for-each-ref &&
+>      ++	git -C repository/s/ for-each-ref &&
+>      ++	git -C repository/s/.git for-each-ref &&
+>      ++	git -C repository/s/.git/ for-each-ref &&
+>      ++	git -C repo/s for-each-ref &&
+>      ++	git -C repo/s/ for-each-ref &&
+>      ++	git -C repo/s/.git for-each-ref &&
+>      ++	git -C repo/s/.git/ for-each-ref
+>       +'
+>       +
+>        test_done
+> -:  ---------- > 3:  ffc3f7364e safe.directory: setting safe.directory="." allows the "current" directory
