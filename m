@@ -1,95 +1,67 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A2A173323
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 08:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39E913A884
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 09:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721895333; cv=none; b=jwaB0QwlFgBJy0KNf083RCOE2mdxF+MqCwQq2bst8YvVVBL43vaoeTcvFbr1jNr7QINmWvV1NnLK6PXUcEX8Q862ux80trOZGVOVleqnr1czjvbt2WigOCm51HXVo8+vG3NHVXonuR7UaPdwEvilBN3cLZVBvdzUjPkJSXQPLSs=
+	t=1721898997; cv=none; b=Xrg3otDQL27ZFEgIH5oYZW+4gtJFEa9bMcd5jeVP5qNYjcfoCHofUZJvxUNWAzft4ShmKzHRncQKUHyRlo/jYRf44db+iWaT9WEcqXhz07NHba5d3zCSUOTb9/lIi/RJMC210+0+XdRxRDprFOosmnyL2jRTVBcu5a1GrRPD0cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721895333; c=relaxed/simple;
-	bh=gQC35zQo5PCz+9BGX4D+ptDN50+VFto5TzT+YxNJSoI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RCBL13Vfah9CDTNa3LSgAbe6lJbofnP6TsT2mrfeq8dJbT1NadzDadJZjTuxxjmgPgZuJYXItv5bQxFXYuZJLIEuYqbK7JBHHNsCMubGSyVJ3OZHQ1gVBR9JyOuocW09xHgwB9DPGNBEjsyd4g8KXglxmQmTYYHK1j759T2OV6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com; spf=pass smtp.mailfrom=koordinates.com; dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b=DDY4hx8B; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=koordinates.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=koordinates.com
+	s=arc-20240116; t=1721898997; c=relaxed/simple;
+	bh=d4oGuLIbr2Dsp3IaIiiwO2hAfE0ofzh7pVJisTleI6w=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=NdmBNQ9TK9OBA41xWUfv2bgJ4ZDNJHJc22KzXZ6rN3BQAEr46/KiWpHc1pXT6XEdXGSvuTw99yXyV6FjXanfu/nMEHvrNvXsU0AS7s4epO9Ma2DJptfR+AVDNZ2DniIBu/XH+hILQs41J8Y3nlp4qAVONO0fyABCdnlgBk8sQnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+WESkRT; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=koordinates.com header.i=@koordinates.com header.b="DDY4hx8B"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a7ac449a0e6so20309966b.1
-        for <git@vger.kernel.org>; Thu, 25 Jul 2024 01:15:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+WESkRT"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-7aa7703cf08so122254a12.2
+        for <git@vger.kernel.org>; Thu, 25 Jul 2024 02:16:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=koordinates.com; s=google; t=1721895330; x=1722500130; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=gmail.com; s=20230601; t=1721898995; x=1722503795; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qbrvMVPkqxBFrTSRXYJh1qQ/fiktW9SY6AGpd5PY5hM=;
-        b=DDY4hx8B+gwJ8+S5pBlGJ7rJatuNwo0fgeM5nfYiHKYcsq/6DZYM5pPVYMZvr4vrqL
-         j/pYqaMeTG5oaXXGln1cBCw4tZ5Fp8Ztut5Kp9HKy/KY5uci3C1eKJhaGb9OgUJv9LMX
-         PFF4+MMnc8Z9hyvUCWp2Nfe1z07FTbeATJ6ECQae/Cb4MjQQZpIKvVX4daTSFxATA7a+
-         itdG4otjFiuPZ3OJNTfeHlosng2Y8MDgJkTUb71aHsjPOXx21CneNkOr5C1nrSt9wzCb
-         SDTcrXw7KNw+REcbKhKgiAHI/R+TXfSRTCn61FEY9AyUtdkOPlvg8wvzdPo9tiNRK20b
-         JiEA==
+        bh=d4oGuLIbr2Dsp3IaIiiwO2hAfE0ofzh7pVJisTleI6w=;
+        b=C+WESkRTbXLi2kEZep+fmkcKv0oBTs+2lOn/j6+6aUNP/Ib++BLa0asxBsNa41Cmwm
+         H4OSoHVvFGZ/X3KpRReyGkVXruP5t1nUvr/K9sInpt66EbQ5ugHuyOiZRdhk5FYqvKJP
+         HHIMnhrwYhSEurnN7Dza8CxYD8z00HKXoYo7WG9/pMc3p5q13nTH7FG2KsG93re1uYMf
+         CDLAAj6rKE94AgYUhrSnur3vL7Y7u5l8vsGscoj+l9EW+7imtJbRcnsdEu+qFObjAqml
+         N71/C6Kc8j7BG6cIUMXv/92ykppOrqlxc8aGmZzHquTXR0BHeyO+lhd4DvDo7kBHLIIk
+         IPOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721895330; x=1722500130;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=1e100.net; s=20230601; t=1721898995; x=1722503795;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qbrvMVPkqxBFrTSRXYJh1qQ/fiktW9SY6AGpd5PY5hM=;
-        b=A+jmwGcVyX1j45GsQg/WmWmHTYPg3Q5ek09LnSNwFmHzH2Vi7fZ9kq+InWj2r7OPXr
-         F+9uHV4crKzfIwdjiVB1V9bB5wQkvADe89SkKJYGCIADly/fkvHyya6p6WKlxPYtcqYe
-         zB6VmrowG8lGxAD36GHD5rYqwqTmao2e75rfgjuTu2cQJc3nLI1aGt+yzjsGm9KB/+0C
-         +JkJXQRpZ5ErgJZ0KkmIHzmdcxJHoypqLmfJs7sXESfpqIA4eWJEmxfU0IYZ5OyWv0wW
-         CvRJSEbUBupbqS4PQuKluh0IL+EFzZ3LvkFS6epSGQj6oFKP2//Vfl9jvKeBeH9+XTJ+
-         Fidw==
-X-Gm-Message-State: AOJu0Yy4e3kcsIeHb1HFLgLxjpSAEfxtciAsN2x0z3S3BgsvlkUtFqJs
-	DgEPEZXs5nGFLSf4XPm+JGyKjfrgHRWWnOueKXRVoKth6Nv0uxUvJUDkG3xBc2yps2zIZB4VAR7
-	Jx++MmZvY/0KBLk9qavDO94YM6cfQRma6+IHgGGY4jzJXWu5Q5MQ=
-X-Google-Smtp-Source: AGHT+IHrDsW3BiIqnMJulxltj8tE16ta7TVSb2JxkAMYj2MKjStu+wASQanlskPA80vrus9/STaPxsizptYyV2ec2og=
-X-Received: by 2002:a17:907:9404:b0:a7a:a7b8:adb1 with SMTP id
- a640c23a62f3a-a7acb554556mr79181266b.36.1721895330209; Thu, 25 Jul 2024
- 01:15:30 -0700 (PDT)
+        bh=d4oGuLIbr2Dsp3IaIiiwO2hAfE0ofzh7pVJisTleI6w=;
+        b=IUye+7UIgDuxtM+zV9+g6TSYZXTuf6zI37flyjhku664ZCquJztvLYyLFoTA9BfcVK
+         QXL2LDrNjkSDewC/XYzROlwXCkDBCccPYoSQE5lG/yvJlVuwlSIG0kWlID1Pj08ptcl1
+         fc/jL6ZbwLZUxWx/+yWcl+OSM3reLhscYzV1DC9fWnwz7pf6zJwTikU5G6yOVCkMoaZ4
+         Pukluba2SCrE9IpBVY+VMC4hiUSL1ZUcWSVVtTwe+sm9tSzH7ataeIj0sYNDVJE1jkr/
+         MCu+2CEuSdjqocxqU5WgZYgtUhiMiTpD8zdQcUphaRyHkGJiUbbAutzGfrkgLGIzs39n
+         ozNg==
+X-Gm-Message-State: AOJu0YwANSm+Rpc4k4yu+aWzv2/2lc93Kt8TPwPASkbMe9Pf+R9PFo6y
+	8CwtL0pfsEFLAg7GxkKzhdl4MhQUhL7BIHhT1FYuFps3iKD7J3YY1L0LxBuimvA1vWurIpF9qaj
+	uT0vN/0xRBFCWC8oAe7CIM4A93axzsw==
+X-Google-Smtp-Source: AGHT+IFFLNJrg7svxczKtr7g5Aeq/77MkYQCz7aaIFGcFEFtVghNxgBtCCk2M7OolhN7xf6bJ1rVwPoS3h1+ijkCsz8=
+X-Received: by 2002:a17:90b:2d82:b0:2c9:7219:1db0 with SMTP id
+ 98e67ed59e1d1-2cf23772e9cmr2579555a91.3.1721898995103; Thu, 25 Jul 2024
+ 02:16:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFLLRpJgpjJpNRC_UpZmUXF2626e0BiH8CkOkoMrX3zcrOp7YA@mail.gmail.com>
- <xmqq1q3iyceq.fsf@gitster.g>
-In-Reply-To: <xmqq1q3iyceq.fsf@gitster.g>
-From: Robert Coup <robert.coup@koordinates.com>
-Date: Thu, 25 Jul 2024 09:15:14 +0100
-Message-ID: <CAFLLRpKqU7nBGsPsf=kdA9Z4F6QaZ91hsRvArRy0GaCfxUgsTg@mail.gmail.com>
-Subject: Re: bug/defaults: COMMIT_EDITMSG not reused after a failed commit
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git <git@vger.kernel.org>
+From: Dirk Wallenstein <dirk.impersonator@gmail.com>
+Date: Thu, 25 Jul 2024 11:15:58 +0200
+Message-ID: <CAF5qVqoPcji2ZpRWg1NayRcNbbzMg_q5=XAKOSwtWU-zjBHY-Q@mail.gmail.com>
+Subject: unsubscribe
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+Unsubscribe from all and everything. Please.
 
-On Wed, 24 Jul 2024 at 17:37, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Unconditionally doing this change would be disruptive to workflows
-> of existing users.  To them, Git left COMMIT_EDITMSG available even
-> after the commit to them almost forever, but suddenly it stops doing
-> so.
-
-A general question: how far down the "I can imagine a hypothetical
-workflow" route do we need to go? Moreso when the behaviour is
-documented as doing something different, and it's noted in the list
-archive as a bug? I appreciate there's a lot of users out there who do
-a lot of weird and wonderful things. Could it suffice for the
-hypothetical user to have an opt-in way to get to the old behaviour?
-
-Some experimenting reveals a simple `git commit -F
-.git/COMMIT_EDITMSG` doesn't work, since the comments get committed;
-and using `git commit --template .git/COMMIT_EDITMSG` repeats the
-#boilerplate, and results in an "Aborting commit; you did not edit the
-message." error, even when you do. `git commit --edit -F
-.git/COMMIT_EDITMSG --cleanup=strip` works, except it also repeats the
-#boilerplate again, and it's getting unwieldy. I'll explore Jeff's
-patch too.
-
-Thanks,
-
-Rob :)
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen, Dirk Wallenstein
