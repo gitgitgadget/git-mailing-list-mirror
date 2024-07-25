@@ -1,314 +1,183 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F9B14A82
-	for <git@vger.kernel.org>; Thu, 25 Jul 2024 23:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A80414A82
+	for <git@vger.kernel.org>; Thu, 25 Jul 2024 23:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721948854; cv=none; b=dyvg/eSKaktxOyXwdcRqED8xp8E5xwmkyvX2Qdt0Wr8thW5ANQ9Rxqf7jDdzA4lU1nI3R/wyoKzw9rJzxbOfB62XBkKzZIKQ5vtRQvnF40zgrPYVtJkvK+ZGLA1MKTJfmgxHCWHIBnm3V9SimBa080nUebuWyEdZ3egITTeLBnE=
+	t=1721949013; cv=none; b=tGB8SyoN4cBu7sWGw4SglUaFeXImVS9n9Wbkv/brM95nWIls9DPXPBmg3k47PzoPtIjcZQVdDy/3VeG//7GqPizIg2xYbdwnbw1spXrGdz6dGwTc5mW+5v4oIIfNQYlNOWWA2Y6g6TZW0mL9WR1b+PV5MmySb7vzCdx1qGF2UQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721948854; c=relaxed/simple;
-	bh=laRpcQGwwnfdDZnc7rwwABvyeErjlwCKOfFtFeUMFXs=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FufiIpLI8qtCFCDoJcL8Z7XXPYxJc5P8CkWngTNpmHu3clvioPNpLxBjOF8OeUanimciSWJD2/o+dQNS41wm2IJr3XEPxitqyo37+Ls3/sH8S/RiZQN9v931kz7pobTT+uTAnmht1y4YPtRus4qkWNUUgDJIO14Wxz3Wz773fZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vW3Q0ha6; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1721949013; c=relaxed/simple;
+	bh=HvF5PQ+OUy1NoI7LSA4AwK1/u61N0m45Oe5ZDftEHtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=innUmLc6Lmla/hSq7SqdfbQ5tgRuI06HYHRecn8QUk4XRx6BUxOmnwTB9AAX+B94M/DeyMdbKMmUvVCK1RRsigB2Q/H15ShTgeTKepjDKnNP7g4Ofq1eJEeDHegO/6yDH/yUjy3iGlHH3cmOyyS5xeB51SGrvbI8I2nPbXJIE3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=DxlfQUIh; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=NLqvivN+; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=QsrusG6n; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vuJvM1vg; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vW3Q0ha6"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 061BB287B6;
-	Thu, 25 Jul 2024 19:07:30 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=l
-	aRpcQGwwnfdDZnc7rwwABvyeErjlwCKOfFtFeUMFXs=; b=vW3Q0ha6uG52uO4kd
-	+XohG0+fGJS15JXQD/95MSZooCty3TwAnPp6XjrdL2apTyImELdvZdhG4Sc+kOqv
-	I0hhzuoqH70tqryrIrl4FM2T0Ij9yw1dvwmHmMUee8Ey34JFEHlpDifZ3+h9m2y4
-	BbRJscaZwUtDB/B5hpV9nOVq9Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFC1F287B5;
-	Thu, 25 Jul 2024 19:07:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="DxlfQUIh";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="NLqvivN+";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="QsrusG6n";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="vuJvM1vg"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 548B9287B4;
-	Thu, 25 Jul 2024 19:07:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] csum-file: introduce discard_hashfile()
-Date: Thu, 25 Jul 2024 16:07:28 -0700
-Message-ID: <xmqqle1p1367.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 4DE4E1F83B;
+	Thu, 25 Jul 2024 23:10:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1721949007; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RC6Gh9KUDOYDrRhBtgzx7e1h9JEaGxVMq+p5h2TczSQ=;
+	b=DxlfQUIhm2LjeylY/dOoOolnOEVyAfFNdPm2kqVecdVLKRrkFahx0PpCo7b8obyjLWU56E
+	iRS84TOO3uWSfGkvH8tStrR7P29cT/szMfK6rnzAIQY9Up16bzQ24QYjX3D9DacRvFko3i
+	Cz3fk9wTlKv3R8RA2VFVo2pdQbUXUts=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1721949007;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RC6Gh9KUDOYDrRhBtgzx7e1h9JEaGxVMq+p5h2TczSQ=;
+	b=NLqvivN+xYmOCgz1IUJjaNdWtt2wZ7SGvUJNtq68vZSzq4+Ix2ZspwsYefh2y7y2g+3Ps6
+	CemVC1Raspm6iaAg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=QsrusG6n;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vuJvM1vg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1721949006; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RC6Gh9KUDOYDrRhBtgzx7e1h9JEaGxVMq+p5h2TczSQ=;
+	b=QsrusG6nhnVT6qju5qwfJAvWah1mpZEIXtRbVJtaas3qrfyTVJ6FlmehVkzYF+wEWjrSrS
+	Kc84pbnFQeey0s1+623JQhnCmb6R06toR/7/xWQf7fPWNS4XT1DIfUPKUSiaF0iRriCQhB
+	XcrfQN5tH1wX7/4yOJ4iJi6H0Hhumww=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1721949006;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RC6Gh9KUDOYDrRhBtgzx7e1h9JEaGxVMq+p5h2TczSQ=;
+	b=vuJvM1vgumJSd9WUg2nqKXNmH/CCCu1fI6K6LUcUKdMUyMFgMwk8fSheypfiu92vmdoMLP
+	cVnm/O8UrR+530BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1B8A313874;
+	Thu, 25 Jul 2024 23:10:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id FDCmBE7bombKJwAAD6G6ig
+	(envelope-from <ddiss@suse.de>); Thu, 25 Jul 2024 23:10:06 +0000
+Date: Fri, 26 Jul 2024 01:10:04 +0200
+From: David Disseldorp <ddiss@suse.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 1/2] t3301-notes: check editor isn't invoked for empty
+ notes add
+Message-ID: <20240726011004.6bde3938.ddiss@suse.de>
+In-Reply-To: <xmqqle1pigbk.fsf@gitster.g>
+References: <20240725144548.3434-1-ddiss@suse.de>
+	<20240725144548.3434-2-ddiss@suse.de>
+	<xmqqle1pigbk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AA61E57A-4ADA-11EF-9963-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-5.31 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	ARC_NA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
+	RCVD_COUNT_TWO(0.00)[2];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3];
+	MISSING_XM_UA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim]
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -5.31
+X-Rspamd-Queue-Id: 4DE4E1F83B
 
-The hashfile API is used to write out a "hashfile", which has a
-final checksum (typically SHA-1) at the end.  An in-core hashfile
-structure has up to two file descriptors and a few buffers that can
-only be freed by calling a helper function that is private to the
-csum-file implementation.
+On Thu, 25 Jul 2024 09:31:27 -0700, Junio C Hamano wrote:
 
-The usual flow of a user of the API is to first open a file
-descriptor for writing, obtain a hashfile associated with that write
-file descriptor by calling either hashfd() or hashfd_check(), call
-hashwrite() number of times to write data to the file, and then call
-finalize_hashfile(), which appends th checksum to the end of the
-file, closes file descriptors and releases associated buffers.
+> David Disseldorp <ddiss@suse.de> writes:
+> 
+> > 90bc19b3ae ("notes.c: introduce '--separator=<paragraph-break>' option")
+> > changed note_data.given logic such that it's no longer set if a zero
+> > length file or blob object is provided.
+> >
+> > Add a test for this regression by checking whether GIT_EDITOR is
+> > invoked.
+> >
+> > Signed-off-by: David Disseldorp <ddiss@suse.de>
+> > ---
+> >  t/t3301-notes.sh | 5 +++++
+> >  1 file changed, 5 insertions(+)  
+> 
+> Having this test separate from 2/2 breaks bisectability.  For a
+> small test like this, it is often a lot more preferrable to squash
+> it into the patch that updates the behaviour.  It is easy to apply
+> the whole thing, and when the reviewer/tester is curious, it is easy
+> to tentatively "revert" only the behaviour changes out of the
+> working tree to see how the original code behaved against the test
+> to verify the alleged breakages were indeed there in the original.
 
-But what if a caller finds some error after calling hashfd() to
-start the process and/or hashwrite() to send some data to the file,
-and wants to abort the operation?  The underlying file descriptor is
-often managed by the tempfile API, so aborting will clean the file
-out of the filesystem, but the resources associated with the in-core
-hashfile structure is lost.
+Understood. In that case I'll squash both patches together in the next
+version.
 
-Introduce discard_hashfile() API function to allow them to release
-the resources held by a hashfile structure the callers want to
-dispose of, and use that in read-cache.c:do_write_index(), which is
-a central place that writes the index file.
+> > diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> > index 536bd11ff4..c0dbacc161 100755
+> > --- a/t/t3301-notes.sh
+> > +++ b/t/t3301-notes.sh
+> > @@ -1557,4 +1557,9 @@ test_expect_success 'empty notes are displayed by git log' '
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > +test_expect_success 'empty notes do not invoke the editor' '
+> > +	test_commit 18th &&
+> > +	GIT_EDITOR="false" git notes add -C "$empty_blob" --allow-empty
+> > +'  
+> 
+> Clever.  By setting the editor to something that always fails, we
+> will notice if the command invoked it, when we do not expect the
+> editor to be used.
+> 
+> Not questioning the usefulness of this fix, and not suggesting to
+> remove the "--allow-empty" support out of the "git notes" command,
+> but out of curiosity, what are these empty notes used for?
 
-Mark t2107 as leak-free, as this leak in "update-index --cacheinfo"
-test that deliberately makes it fail is now plugged.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- csum-file.c                   |  9 ++++
- csum-file.h                   |  1 +
- read-cache.c                  | 99 +++++++++++++++++++++++++++--------
- t/t2107-update-index-basic.sh |  1 +
- 4 files changed, 89 insertions(+), 21 deletions(-)
-
-diff --git a/csum-file.c b/csum-file.c
-index 8abbf01325..2131ee6b12 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -102,6 +102,15 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 	return fd;
- }
- 
-+void discard_hashfile(struct hashfile *f)
-+{
-+	if (0 <= f->check_fd)
-+		close(f->check_fd);
-+	if (0 <= f->fd)
-+		close(f->fd);
-+	free_hashfile(f);
-+}
-+
- void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- {
- 	while (count) {
-diff --git a/csum-file.h b/csum-file.h
-index 566e05cbd2..36c7c5585f 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -47,6 +47,7 @@ struct hashfile *hashfd(int fd, const char *name);
- struct hashfile *hashfd_check(const char *name);
- struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp);
- int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_component, unsigned int);
-+void discard_hashfile(struct hashfile *);
- void hashwrite(struct hashfile *, const void *, unsigned int);
- void hashflush(struct hashfile *f);
- void crc32_begin(struct hashfile *);
-diff --git a/read-cache.c b/read-cache.c
-index 48bf24f87c..d96a2cb8cf 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2963,7 +2963,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 
- 	if (err) {
- 		free(ieot);
--		return err;
-+		goto discard_hashfile_and_return;
- 	}
- 
- 	offset = hashfile_total(f);
-@@ -2992,8 +2992,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
- 		free(ieot);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 
- 	if (write_extensions & WRITE_SPLIT_INDEX_EXTENSION &&
-@@ -3008,8 +3014,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 					       sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_link_extension() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 	if (write_extensions & WRITE_CACHE_TREE_EXTENSION &&
- 	    !drop_cache_tree && istate->cache_tree) {
-@@ -3019,8 +3031,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_TREE, sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 	if (write_extensions & WRITE_RESOLVE_UNDO_EXTENSION &&
- 	    istate->resolve_undo) {
-@@ -3031,8 +3049,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 					     sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 	if (write_extensions & WRITE_UNTRACKED_CACHE_EXTENSION &&
- 	    istate->untracked) {
-@@ -3043,8 +3067,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 					     sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 	if (write_extensions & WRITE_FSMONITOR_EXTENSION &&
- 	    istate->fsmonitor_last_update) {
-@@ -3054,12 +3084,25 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_FSMONITOR, sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 	if (istate->sparse_index) {
--		if (write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0) < 0)
--			return -1;
-+		err = write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0);
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 
- 	/*
-@@ -3075,8 +3118,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		err = write_index_ext_header(f, NULL, CACHE_EXT_ENDOFINDEXENTRIES, sb.len) < 0;
- 		hashwrite(f, sb.buf, sb.len);
- 		strbuf_release(&sb);
--		if (err)
--			return -1;
-+		/*
-+		 * NEEDSWORK: write_index_ext_header() never returns a failure,
-+		 * and this part may want to be simplified.
-+		 */
-+		if (err) {
-+			err = -1;
-+			goto discard_hashfile_and_return;
-+		}
- 	}
- 
- 	csum_fsync_flag = 0;
-@@ -3085,13 +3134,16 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 
- 	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_INDEX,
- 			  CSUM_HASH_IN_STREAM | csum_fsync_flag);
-+	f = NULL;
- 
- 	if (close_tempfile_gently(tempfile)) {
--		error(_("could not close '%s'"), get_tempfile_path(tempfile));
--		return -1;
-+		err = error(_("could not close '%s'"), get_tempfile_path(tempfile));
-+		goto discard_hashfile_and_return;
-+	}
-+	if (stat(get_tempfile_path(tempfile), &st)) {
-+		err = error_errno(_("could not stat '%s'"), get_tempfile_path(tempfile));
-+		goto discard_hashfile_and_return;
- 	}
--	if (stat(get_tempfile_path(tempfile), &st))
--		return -1;
- 	istate->timestamp.sec = (unsigned int)st.st_mtime;
- 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
- 	trace_performance_since(start, "write index, changed mask = %x", istate->cache_changed);
-@@ -3106,6 +3158,11 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 			   istate->cache_nr);
- 
- 	return 0;
-+
-+discard_hashfile_and_return:
-+	if (f)
-+		discard_hashfile(f);
-+	return err;
- }
- 
- void set_alternate_index_output(const char *name)
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-index cc72ead79f..f0eab13f96 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -5,6 +5,7 @@ test_description='basic update-index tests
- Tests for command-line parsing and basic operation.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'update-index --nonsense fails' '
--- 
-2.46.0-rc2-67-g99767055c1
-
+icyci (https://github.com/ddiss/icyci) attaches test-suite stderr and
+stdout notes following test completion. There's no real value in
+attaching empty e.g. stderr notes, but tests can also provide their own
+arbitrary notes files and may wish to use (empty) note existence as a
+flag in results reporting.
