@@ -1,36 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A3D2EAE5
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 05:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3570D36B11
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 05:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721970176; cv=none; b=ticuuApdq8FciqAZnCUUyFCDX2hM3u1sfI4ZsLzJesNlx7JT77tNt7GKR3uTD+xe0HiTLLaGpvuQxG/edMx6Lwy1Mz8eJq6CUyW0yyttHeJ1+Uat3q+a1o4+3zsMv7Ls+bIJwkHnZnEBET0k+Q9OvJY+/X8wBx5FsrsmSJObwvU=
+	t=1721971585; cv=none; b=H20pmZrMPaUyNH5zZQ6U5e2TqGfg3krSGS1WZP+lYlxDepZfMsI58XvPmZZpLEc8a13/K6bmc2/k06q+p32RU14i4RonnNhyUnrx21TsaWXOkCdp+tD75jT2X28/5s4/f/37eS2RFCiXhk1oV37TbBjuf2LuRSOLzvyM/JRhORc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721970176; c=relaxed/simple;
-	bh=kxVifDFcVNFqwmkBidsyi0UOHPmeqjc2yceJ7ofNUbA=;
+	s=arc-20240116; t=1721971585; c=relaxed/simple;
+	bh=RSIS2A/DbCCfDXfXa3wDEoBWpgY+Gz9jeI0b8y6RgB8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LTtxkLVMgL//Sr8kKJ/ZXvzvsjUl11onnE8esCBZ37Vq6ZYWp9+DTt2ObyZ6/p6EUDzL8aBnYjcgT+7Mg5D9CjiikL3Y0OdPDtiASjlj0TXR33XJ0PSDXjWIfLt3astn4Nboyg2zpQkc6HHetE01ohuq1/KeuNOrks3OB2vIJDY=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gp0VAbVxDW4eFrSCvCTpPxDqetnk4xTuTkuxbH237pwIZafPwhAxDVRGf61/MsnSC6a9EFGX1StsHhEJtzebtk1cNqV5XUb+KhPf8+mF51ADLlb4NzVJtyGrJcxtr+tZnqv5c+u76MXvx3vVWf+DyeK++/r0mURL21ap2JPDBKM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 16138 invoked by uid 109); 26 Jul 2024 05:02:54 -0000
+Received: (qmail 16238 invoked by uid 109); 26 Jul 2024 05:26:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jul 2024 05:02:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jul 2024 05:26:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30827 invoked by uid 111); 26 Jul 2024 05:02:57 -0000
+Received: (qmail 31101 invoked by uid 111); 26 Jul 2024 05:26:26 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jul 2024 01:02:57 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jul 2024 01:26:26 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 26 Jul 2024 01:02:53 -0400
+Date: Fri, 26 Jul 2024 01:26:21 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 2/3] safe.directory: normalize the configured path
-Message-ID: <20240726050253.GC642208@coredump.intra.peff.net>
-References: <20240720220915.2933266-1-gitster@pobox.com>
- <20240723021900.388020-1-gitster@pobox.com>
- <20240723021900.388020-3-gitster@pobox.com>
+To: KwonHyun Kim <kwonhyun.kim@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Possible bug in .gitignore
+Message-ID: <20240726052621.GA647916@coredump.intra.peff.net>
+References: <CADLV-7+fX7jrC8e_nPBHZfg8yXKpjLfPL3MgxS8peUrr8pqQoA@mail.gmail.com>
+ <CADLV-7JN-x8+Y+sVO=O-f4Ur7jw8Bs+z0BzQy5y9GbPTJ9eE_g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,62 +38,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240723021900.388020-3-gitster@pobox.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADLV-7JN-x8+Y+sVO=O-f4Ur7jw8Bs+z0BzQy5y9GbPTJ9eE_g@mail.gmail.com>
 
-On Mon, Jul 22, 2024 at 07:18:59PM -0700, Junio C Hamano wrote:
+On Thu, Jul 25, 2024 at 01:01:45PM +0900, KwonHyun Kim wrote:
 
-> The pathname of a repository comes from getcwd() and it could be a
-> path aliased via symbolic links, e.g., the real directory may be
-> /home/u/repository but a symbolic link /home/u/repo may point at it,
-> and the clone request may come as "git clone file:///home/u/repo/"
+> I am experimenting with git and I found there is something not working
+> as explain in the document
 > 
-> A request to check if /home/u/repository is safe would be rejected
-> if the safe.directory configuration allows /home/u/repo/ but not its
-> alias /home/u/repository/.  Normalize the paths configured for the
-> safe.directory configuration variable before comparing them with the
-> path being checked.
+> When I place `text_[가나].txt` in `.gitignore` it does not ignore
+> text_가.txt nor text_나.txt
+> 
+> I experimented with `text_[ab].txt` and it works fine.
+> 
+> So I thought it might work bytewise so I put
+> `text_[\200-\352][\200-\352][\200-\352].txt` with no effect. (가 is
+> "\352\260\200" when core.quotepath is set to true)
+> 
+> So I think it must be a bug that is that pattern [abc] or [a-z] does
+> not incorporate non-ascii characters. but I am not sure.
 
-This may be a dumb question, but... will this always work, if the config
-option is not necessarily an exact path, and might have globbing
-characters in it?
+The globbing in git is generally done by wildmatch.c, which was imported
+from rsync. Looking in that file, it looks like it does not support
+multi-byte characters at all inside brackets.
 
-We don't currently treat it like a wildmatch glob, but:
+So I don't see a way to make it work except to place the _literal_ bytes
+making up the utf8 sequence, each inside its own single-byte match.
+Like:
 
-  1. We do allow "/*" on the end. Should we strip that off so it doesn't
-     confuse the realpath lookup?
+  printf 'text_[\352\353][\260\202][\200\230].txt\n' >.gitignore
 
-  2. This is shutting the door on using wildmatch or similar in the
-     future. Is that OK?
+But then your .gitignore file is itself invalid utf8 (not to mention
+that this is obviously something a user shouldn't have to do).
 
-> @@ -1236,6 +1236,16 @@ static int safe_directory_cb(const char *key, const char *value,
->  
->  		if (!git_config_pathname(&allowed, key, value)) {
->  			const char *check = allowed ? allowed : value;
-> +			char *to_free = real_pathdup(check, 0);
-> +
-> +			if (!to_free) {
-> +				warning(_("safe.directory '%s' cannot be normalized"),
-> +					check);
-> +				goto next;
-> +			} else {
-> +				check = to_free;
-> +			}
+So I guess the fix would be to teach wildmatch.c to recognize and match
+multi-byte sequences inside []. That probably requires that we assume
+the pattern and the path are utf8, which will usually be true, but not
+always. So we might need some kind of config switch there.
 
-I'm not sure about this warning. I don't know how people use this config
-in the real world, but it seems plausible to me they might have:
-
-  [safe]
-  directory = /home/me/this/always/exists
-  directory = /home/me/this/might/not/exist
-
-perhaps because they're using a generic config file across multiple
-machines. And then they'd get:
-
-  warning: safe.directory '/home/me/this/might/not/exist' cannot be normalized
-
-on every invocation (at least ones that need to consult safe.directory).
-Should we be quiet there, and maybe fall back to using the
-non-normalized path (though I guess if we could not normalize it, that
-probably means it could never match anyway)?
+There are also probably a deep rabbit hole of corner cases there (e.g.,
+NFD vs NFC, matching é versus "e" + combining accent). But I suspect
+that even recognizing multi-byte sequences as a single char to match
+would be big improvement.
 
 -Peff
