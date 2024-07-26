@@ -1,82 +1,177 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C6146BF
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 19:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF68546BF
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 19:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722023326; cv=none; b=CoVUNAJ4JgmeC1/E+VQRTzYhnVZpV+PYDGi9QoIDoFr6o1O8826ob6SxNZkWK7Bn2drNr0HK9VVnjdwPLhVQQxRY3BI3fyA/RJQd4KfZgEAK4850xDxlejr68UGIy1rFOAeVISQInVBMxmolVCxXjVIHxmsimJG2Iqr/SD5PcLg=
+	t=1722023349; cv=none; b=g7TPP2VJ1dhmtuXg1Q0XThJTyriLavC5oRbn62DvKcvaM/jDJ5DxX56KE2By6qYSjoUvv/YGj4KZNiCXbprFKp5EgkNOlxcC30sDqJajcr2Dg3re3Gnk8ahPM7Eoje4iFfhqb1Ifxu4WJwqHETMggmDnF7/9Lw75TPUG4xafDpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722023326; c=relaxed/simple;
-	bh=Z2aD26aORFZsmEc8bKDjsLNphB4NJYNHwHFrDF5XJrA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e8sGAXWQkyt3Q8Qu7N/gFpiQxbkpolCZw1lLm1lvvUzn0IfXrQ6w8lud2o9KW0c8m/m1WiHAoo5beRupK5xwrSzg/qJxI9L69CJv0lD5y6tHtqcwJm5o1/uc1ubfzVXMzHI5tGpAMMpqps195xzeRaFKfCpzWOoSJkes3ABkBKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VXMNE6qB; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722023349; c=relaxed/simple;
+	bh=i9xhwsEYZ7Hj34qKNtn596v8AFApqpma4E2TE9fbygc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=GrCBYiAG9qGHggN2gaFHmc70zd+Rr/VQ5bCAjWnj18z7fR6YLc2YW6YYy2rzQ+j1kTEzEfL21n4z8HvWvKStDSHhzhGhOjrVOHgDFfmCPU6f+Xykzc+LTTsKXMkfFBZi+ezfYSAtw4sm7IjPMZg+RQglCiHBVO9Hl9tk27u5i14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YAI73o1r; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VXMNE6qB"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 272212862F;
-	Fri, 26 Jul 2024 15:48:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Z2aD26aORFZs
-	mEc8bKDjsLNphB4NJYNHwHFrDF5XJrA=; b=VXMNE6qBLKXYbuIuymRGnLmK9d7E
-	RJjyFEreqvntOhyMCCFVNxp4SxN3A0gN4fi8h9X5d38coKUuuL6Ljm+ULEonZc31
-	18OOWRUny1n8dldqUp/GVQl3jLMCt4lg0ygoOYueLzU5QcYy9S+2hQTtiH/fJM58
-	FhPOYxSCjd7an1s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F66B2862E;
-	Fri, 26 Jul 2024 15:48:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 75AEE2862C;
-	Fri, 26 Jul 2024 15:48:36 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Git List <git@vger.kernel.org>
-Subject: Re: Re* [PATCH v2 0/2] add-p P fixups
-In-Reply-To: <1dc4cb5d-966a-402f-a880-42280750b949@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Fri, 26 Jul 2024 21:22:15 +0200")
-References: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
-	<62af789f-ca19-4f11-9339-a97400f7e70c@gmail.com>
-	<2333cb14-f020-451c-ad14-3f30edd152ec@gmail.com>
-	<5735bee3-0532-4894-b717-12a0bdcb9e84@gmail.com>
-	<a25c37e2-fcfd-4a4c-890b-a85039ccef12@gmail.com>
-	<97902c27-63c9-4537-8ebe-853ef0cb1d3b@gmail.com>
-	<xmqqcyn1lcjo.fsf@gitster.g>
-	<24e83a0f-b0c8-4cd5-b321-1d7702b844ce@gmail.com>
-	<xmqqsevwui31.fsf@gitster.g>
-	<1dc4cb5d-966a-402f-a880-42280750b949@gmail.com>
-Date: Fri, 26 Jul 2024 12:48:34 -0700
-Message-ID: <xmqqle1oszn1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YAI73o1r"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f025bc147so2228703e87.3
+        for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722023346; x=1722628146; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=amlbVLdrOg0c06xZOuweahl0TknhXF47nsf23rTfE+U=;
+        b=YAI73o1rCFSrwJS7dDS/HNvYdgkEXZMAJh+u+3INmRNqy9ekpgzRN4qJfKyMZ1rWG6
+         Z3BA8sXPEr1LxQoaRPEf7yUQRFRNxlYMxN/Y6qrDvtngL/NAQOzxf0ypGuDmXfukGC9m
+         axahyTT+buBDEAI13Ir7ItauR+0T8zmDx5fNQxTb+lDf5Wf6LAO+j50VCMXHhh8Rvh1s
+         fULJM+IqfJ295RzZN7QYHwwX052aa2YQrgbEersCrNq2pfeV4K3vqS2TmR9Lh3uXiMVz
+         HFGWWbXzcvRBTBdPu5jU2mRcmdo2LA1/XBhZclu1egJ7/skHc78RI0wAuGzJWEyWJ8F+
+         gKQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722023346; x=1722628146;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=amlbVLdrOg0c06xZOuweahl0TknhXF47nsf23rTfE+U=;
+        b=fpogLFgSueC97d0uzL8/bX5qxP6JQst5bqjebMExKfLRVJX3GtEqhl4b9J+XBy38+9
+         nw68L4s6nLX1EI88G0KrMaKhnyE9pm9xQbnC2LTpNWPY0XUGiZ+Bq6jYcmAxlzLUbZHk
+         bEbbMvLOAl6qfURdKRjsOJPHmE83ZXHB2r4b2UvwG53YJoo4ncEL72WOdBDR1dv8feNC
+         P1PIo8QoV1rURjQmSb+RJ5G1lJyOSLAAS5nun3R00LGTyEUBfdgTL1dH+tXaxeQSmSqB
+         4dpb6MVy7wKzVkmPisG85P3RoQHoNOoD8ypgAkDn2Z3egT0pqvjezD8gxKTPmkDvWt92
+         jxSw==
+X-Gm-Message-State: AOJu0YwuCmz0FVcmtpCdIffSM2TDi3w01EyIWitZfylsTtPFyc/THBER
+	rMj6n7DbOczwiVN31xk2+Vy7ZI0ZFKIygOLc61OV4YstcrrL6jXw+z969i+bCSI/Eu9W2qjq14k
+	YuYOLlr23NpS+xBkEGjQrjJEJtcId3DbG2Fs=
+X-Google-Smtp-Source: AGHT+IGjs6pBNpU6uLmTqbZjoRir42avuWERW/GgznITvjMDDBu9YWOAlRuXtmVXUOWdVzaY0/1EaQ/vD/O+JWxaQQY=
+X-Received: by 2002:a19:f614:0:b0:52e:be49:9d32 with SMTP id
+ 2adb3069b0e04-5309b2c30c0mr473673e87.47.1722023345976; Fri, 26 Jul 2024
+ 12:49:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 0C40D1CC-4B88-11EF-A039-92D9AF168FA5-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CAD+08a87xxVRxO1eiWiam-7xvq=AyKUB-MzqG-r=rM_SYbquBQ@mail.gmail.com>
+In-Reply-To: <CAD+08a87xxVRxO1eiWiam-7xvq=AyKUB-MzqG-r=rM_SYbquBQ@mail.gmail.com>
+From: Tim Abdiukov <tabdiukov@gmail.com>
+Date: Sat, 27 Jul 2024 05:48:55 +1000
+Message-ID: <CAD+08a-+uME7SgmpV_NJ5qmmtxpGeKPYV4wig5w4=gX+GMB7nA@mail.gmail.com>
+Subject: Re: Bug with bash and OpenSSL usage on Windows
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+user@(computer) MINGW64 ~
+$ echo "I can start OpenSSL with no problem"
+I can start OpenSSL with no problem
 
-> I thought it wasn't necessary to modify the first two, which remain
-> correct, and I didn't want to bring them up again.  Additionally,
-> keeping the dates of the first two different from the two modified here
-> could be interesting.
+user@(computer) MINGW64 ~
+$ openssl
+help:
 
-Then at least you should have said so.  From the receiving end, that
-and retracting the first two would look the same, so there needs to
-be some clue to let the receiver tell which one is the case.
+Standard commands
+asn1parse         ca                ciphers           cmp
+cms               crl               crl2pkcs7         dgst
+dhparam           dsa               dsaparam          ec
+ecparam           enc               engine            errstr
+fipsinstall       gendsa            genpkey           genrsa
+help              info              kdf               list
+mac               nseq              ocsp              passwd
+pkcs12            pkcs7             pkcs8             pkey
+pkeyparam         pkeyutl           prime             rand
+rehash            req               rsa               rsautl
+s_client          s_server          s_time            sess_id
+smime             speed             spkac             srp
+storeutl          ts                verify            version
+x509
 
-Thanks.
+Message Digest commands (see the `dgst' command for more details)
+blake2b512        blake2s256        md4               md5
+mdc2              rmd160            sha1              sha224
+sha256            sha3-224          sha3-256          sha3-384
+sha3-512          sha384            sha512            sha512-224
+sha512-256        shake128          shake256          sm3
+
+Cipher commands (see the `enc' command for more details)
+aes-128-cbc       aes-128-ecb       aes-192-cbc       aes-192-ecb
+aes-256-cbc       aes-256-ecb       aria-128-cbc      aria-128-cfb
+aria-128-cfb1     aria-128-cfb8     aria-128-ctr      aria-128-ecb
+aria-128-ofb      aria-192-cbc      aria-192-cfb      aria-192-cfb1
+aria-192-cfb8     aria-192-ctr      aria-192-ecb      aria-192-ofb
+aria-256-cbc      aria-256-cfb      aria-256-cfb1     aria-256-cfb8
+aria-256-ctr      aria-256-ecb      aria-256-ofb      base64
+bf                bf-cbc            bf-cfb            bf-ecb
+bf-ofb            camellia-128-cbc  camellia-128-ecb  camellia-192-cbc
+camellia-192-ecb  camellia-256-cbc  camellia-256-ecb  cast
+cast-cbc          cast5-cbc         cast5-cfb         cast5-ecb
+cast5-ofb         des               des-cbc           des-cfb
+des-ecb           des-ede           des-ede-cbc       des-ede-cfb
+des-ede-ofb       des-ede3          des-ede3-cbc      des-ede3-cfb
+des-ede3-ofb      des-ofb           des3              desx
+idea              idea-cbc          idea-cfb          idea-ecb
+idea-ofb          rc2               rc2-40-cbc        rc2-64-cbc
+rc2-cbc           rc2-cfb           rc2-ecb           rc2-ofb
+rc4               rc4-40            rc5               rc5-cbc
+rc5-cfb           rc5-ecb           rc5-ofb           seed
+seed-cbc          seed-cfb          seed-ecb          seed-ofb
+sm4-cbc           sm4-cfb           sm4-ctr           sm4-ecb
+sm4-ofb           zlib
+
+
+user@(computer) MINGW64 ~
+$ echo "However, if I run it, it just hangs"
+However, if I run it, it just hangs
+
+user@(computer) MINGW64 ~
+$ openssl genrsa -aes256 -out out
+
+On Sat, 27 Jul 2024 at 05:40, Tim Abdiukov <tabdiukov@gmail.com> wrote:
+>
+>   What did you do before the bug happened? (Steps to reproduce your issue)
+> Tried to generate a self-signed certificate using git bash.
+>
+> Using git bash, I ran
+> ```
+> openssl genrsa -aes256 (private key location) 4096
+> ```
+> however, openssl just hung (on Windows). Cmd can execute this command,
+> but bash cannot.
+>
+> What did you expect to happen? (Expected behavior)
+>
+> openssl to generate messages about key generation to stdout
+>
+> What happened instead? (Actual behavior)
+>
+> openssl just hung
+>
+> What's different between what you expected and what actually happened?
+>
+> openssl just hung, rendering it unusable within bash Windows
+>
+> Anything else you want to add:
+>
+> This is an issue specifically with Windows x64.
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+>
+>
+> [System Info]
+> git version:
+> git version 2.45.2.windows.1
+> cpu: x86_64
+> built from commit: 91d03cb2e4fbf6ad961ace739b8a646868cb154d
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> uname: Windows 10.0 19044
+> compiler info: gnuc: 14.1
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+>
+>
+> [Enabled Hooks]
+> not run from a git repository - no hooks to show
