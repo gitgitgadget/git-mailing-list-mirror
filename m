@@ -1,84 +1,107 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3570D36B11
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 05:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63777156898
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 05:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721971585; cv=none; b=H20pmZrMPaUyNH5zZQ6U5e2TqGfg3krSGS1WZP+lYlxDepZfMsI58XvPmZZpLEc8a13/K6bmc2/k06q+p32RU14i4RonnNhyUnrx21TsaWXOkCdp+tD75jT2X28/5s4/f/37eS2RFCiXhk1oV37TbBjuf2LuRSOLzvyM/JRhORc=
+	t=1721973507; cv=none; b=Hm05QnxAHCSWA0CIuVfJ34WssBRmHxdNVMC4CmnGhawLwAEEHUgbBc3vm6+uYNRKz2l+9gGk6dmAJvy15DPZl7oUip1Ve9RNrQMF/+bEKDCp99Uq34X684pecF+SP6LCSrucjHw+IYItdfKqjGingP6nZ8gJAHmbVeGwmrKt+OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721971585; c=relaxed/simple;
-	bh=RSIS2A/DbCCfDXfXa3wDEoBWpgY+Gz9jeI0b8y6RgB8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gp0VAbVxDW4eFrSCvCTpPxDqetnk4xTuTkuxbH237pwIZafPwhAxDVRGf61/MsnSC6a9EFGX1StsHhEJtzebtk1cNqV5XUb+KhPf8+mF51ADLlb4NzVJtyGrJcxtr+tZnqv5c+u76MXvx3vVWf+DyeK++/r0mURL21ap2JPDBKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 16238 invoked by uid 109); 26 Jul 2024 05:26:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jul 2024 05:26:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31101 invoked by uid 111); 26 Jul 2024 05:26:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jul 2024 01:26:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 26 Jul 2024 01:26:21 -0400
-From: Jeff King <peff@peff.net>
-To: KwonHyun Kim <kwonhyun.kim@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Possible bug in .gitignore
-Message-ID: <20240726052621.GA647916@coredump.intra.peff.net>
-References: <CADLV-7+fX7jrC8e_nPBHZfg8yXKpjLfPL3MgxS8peUrr8pqQoA@mail.gmail.com>
- <CADLV-7JN-x8+Y+sVO=O-f4Ur7jw8Bs+z0BzQy5y9GbPTJ9eE_g@mail.gmail.com>
+	s=arc-20240116; t=1721973507; c=relaxed/simple;
+	bh=kgQSLfeM75sjjX+p8RiqPmXl0kMP8xWUALQFR8vdeWg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DmEP08KecEWdbLUtz0ZfYfXOwjHavQtbpBqdDmy1wj2P1AByBu7GzurhnkFAx6Q3ItJfw1zP+17MJz5xi091DgxelT1JgNGwdnYwXr/zw7ezAHCiTlipmvoilt2PeBjObQz/yjYMFiZ8i1EGp0URkrehvWRMEyKhf84si+YmbhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FHSqikJ2; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FHSqikJ2"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5d5bc93e09dso375562eaf.3
+        for <git@vger.kernel.org>; Thu, 25 Jul 2024 22:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721973505; x=1722578305; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:disposition-notification-to
+         :from:content-language:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XqgdbBrXBoshvH6S44L5xF6DlGmYdL8TCNuJijouq5g=;
+        b=FHSqikJ24SgJt2QgyX8BdPEpbwgKvFTngtMivCze9UsBW2IY5Xk3YcmvuShOQrg7Ob
+         +nIZVCs3AFzYXEGpvsuXfB6c5oXF+cH7HmzZsp3RLwwW/t54zQIISlAmXljykaWw6yPT
+         EcNYPqH/VJWEFfnQEutE+dKRSGnOon4zbVZabavSRphDbmO84LeHPaDILTbm9Y3OnSHN
+         XeDwZ1rqdEujS0pIrTGBN9i+wX6uwncWEQm/q1OS/NY9NYsxdWAilXWLuThwvXDnrDhf
+         CHM7CGNDyjXzZv64dcfT0W1uEsuM5DHf8UytL0skeip7TVPUI3Fx7bb+JGQcWbsHoqk/
+         e+bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721973505; x=1722578305;
+        h=content-transfer-encoding:in-reply-to:disposition-notification-to
+         :from:content-language:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XqgdbBrXBoshvH6S44L5xF6DlGmYdL8TCNuJijouq5g=;
+        b=v+aM+a14VpmApfT0W08xbzO5YvC9ckfxe9nVet5jQmUfmzvpCPBmbvfSDoGnef70J/
+         wvCPjBtDNMei1lX0oATASSq9b+1zFFF4eZHpNwtwIdbRGGn8d0eWhh7nLLfIfmVjZGiN
+         jK5siTPAxvcqSXRWpwdRl1orE0sxi+vVFGN7EgYkPLSf4KGaqaaopBmscRAgUFjQVrrY
+         fAeSCcYW9OxHzKToFWLjQv9CFVOTy/ocJNV832rkn4cQ1Fg+ZUlwzFax7kTDWp6K/AsN
+         sU9sSMhOfi4AEV9KSRqkUXioLKX4G+9O74TKh3drsv5LulCeQT4AlUAIS8vKLH9BaItu
+         vLqg==
+X-Forwarded-Encrypted: i=1; AJvYcCWpnyj4yy6/1IZiAYLnrk0e52oBzT0pkROHl8kXT4+SIAcyQbHy94VwUGpMs3mn27twSpZG0rnRtxgYZvBMa5uaR/3k
+X-Gm-Message-State: AOJu0Yx/112ttr/Uyl8FaVRoI24NTKUx9QxaJC1p0nOE7ZxeStCeMTpL
+	14ydMvzYVs5iYnPGU8/jP28u5pwmsaJlgQBgldaYpIM1iTyTLr3T
+X-Google-Smtp-Source: AGHT+IGzz3JHlCeoMBVWGd6/zHYyA8GG01hLFhsv4QmiRF6pfkopVRNzGEGIbz1pm4s6FpDuDGFLLA==
+X-Received: by 2002:a05:6871:33a3:b0:260:e2ea:e680 with SMTP id 586e51a60fabf-264a0c8f175mr5304449fac.10.1721973505279;
+        Thu, 25 Jul 2024 22:58:25 -0700 (PDT)
+Received: from [192.168.6.104] (mail.3111skyline.com. [66.76.46.195])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2653e7a0050sm582993fac.25.2024.07.25.22.58.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jul 2024 22:58:23 -0700 (PDT)
+Message-ID: <5747ba0d-7268-4538-9705-11650a7d6e35@gmail.com>
+Date: Fri, 26 Jul 2024 00:58:22 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADLV-7JN-x8+Y+sVO=O-f4Ur7jw8Bs+z0BzQy5y9GbPTJ9eE_g@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+To: Jamie Landeg-Jones <jamie@catflap.org>, Johannes.Schindelin@gmx.de,
+ gitster@pobox.com
+Cc: msuchanek@suse.de, git@vger.kernel.org
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
+ <20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
+ <202407260038.46Q0ctEV083266@donotpassgo.dyslexicfish.net>
+Content-Language: en-US
+From: "David C. Rankin" <drankinatty@gmail.com>
+In-Reply-To: <202407260038.46Q0ctEV083266@donotpassgo.dyslexicfish.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 25, 2024 at 01:01:45PM +0900, KwonHyun Kim wrote:
-
-> I am experimenting with git and I found there is something not working
-> as explain in the document
+On 7/25/24 7:38 PM, Jamie Landeg-Jones wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
 > 
-> When I place `text_[가나].txt` in `.gitignore` it does not ignore
-> text_가.txt nor text_나.txt
+>> Dscho, the f4aa8c8b (fetch/clone: detect dubious ownership of local
+>> repositories, 2024-04-10) is your brainchild and people seem to be
+>> unhappy about having to adjust their settings.  Are there any advice
+>> you can offer them?
 > 
-> I experimented with `text_[ab].txt` and it works fine.
+> This thread has gone quiet. Is it going to be fixed? The issue isn't that
+> settings need to be adjusted, it's that it no longer works whatever
+> your settings are.
 > 
-> So I thought it might work bytewise so I put
-> `text_[\200-\352][\200-\352][\200-\352].txt` with no effect. (가 is
-> "\352\260\200" when core.quotepath is set to true)
+> I had to go back to.2.45.0
 > 
-> So I think it must be a bug that is that pattern [abc] or [a-z] does
-> not incorporate non-ascii characters. but I am not sure.
+> Cheers
+> 
 
-The globbing in git is generally done by wildmatch.c, which was imported
-from rsync. Looking in that file, it looks like it does not support
-multi-byte characters at all inside brackets.
+I too am stuck. It's a damned if you do, damned if you don't Hobson's choice 
+of git repo ownership on the server. All worked fine serving both https and 
+ssh prior to the change, now it is either one or the other but not both. So 
+either your read-only pulls and clones are hosed, or your read/write are.
 
-So I don't see a way to make it work except to place the _literal_ bytes
-making up the utf8 sequence, each inside its own single-byte match.
-Like:
+If more info is needed, let me know and I'm happy to privide it.
 
-  printf 'text_[\352\353][\260\202][\200\230].txt\n' >.gitignore
+-- 
+David C. Rankin, J.D.,P.E.
 
-But then your .gitignore file is itself invalid utf8 (not to mention
-that this is obviously something a user shouldn't have to do).
-
-So I guess the fix would be to teach wildmatch.c to recognize and match
-multi-byte sequences inside []. That probably requires that we assume
-the pattern and the path are utf8, which will usually be true, but not
-always. So we might need some kind of config switch there.
-
-There are also probably a deep rabbit hole of corner cases there (e.g.,
-NFD vs NFC, matching é versus "e" + combining accent). But I suspect
-that even recognizing multi-byte sequences as a single char to match
-would be big improvement.
-
--Peff
