@@ -1,53 +1,53 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B57179652
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FEF178378
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:18:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996273; cv=none; b=KA9HAb7D3D2fdMpsS8T68P8TiNFwkDvch2XnMNODROber1BRVnTDsT/cjpS8Qwlhyjm38snhKy/y7n0bEYIY3RsgnZ57AAdzUVLc3r3p7KLLqqVreJNVpf7xKIaAgYlWBE5T1q0bcnkWGdy3zGI94oiTWHEYnFtyWTbW7CmA0Hw=
+	t=1721996294; cv=none; b=QTajkTT5tLz9ykqXJOxv7Xlw9xl8slfW7v+wRWHx7Q9NYa5nQEq6Vh8i/4FZLEU0tFc6aSjdTyo4sa+AKoc0wJWC4pAujMQ9Ci4TLDEBgy2Hsv986pyZqfWZhTWE1SdsJcIcOlFsJ6jJnjjyGTwTEYee7mw3vVNYuOHnzCY4cbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996273; c=relaxed/simple;
-	bh=AF9ZiNGG7vJNey1lFBa/JfRU7z8XNp18sHxdqYIV0pQ=;
+	s=arc-20240116; t=1721996294; c=relaxed/simple;
+	bh=FGEooeWHeD4NOrWlUr0g6o3q+d/vNwxkkoAl1aT1wcs=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bLm8WaqBUx0qD18yGoSMUtq7kc2k7npiXtmesIMcs7c34cgtn7RU64ltn3h0ylTMV2B6PC60RyXqY34TaLX0Pf4J2IEF5oQ+EhHbNtfSak1eSmT05NY0hDnZmh3G6ZaUgIYxB6RENE7sJ4QDWWs+LFtu2cwlB5Qi9HCybiu8uH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VxuV+64O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mLYOVjoq; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=sxzRB5SNLnbdqFK7vzoOY5f2msYtjF7d/9th6tU3Xg5WZAvawCRtRaY0YMwMSv/P+5MOaU2O8VTp83RipDOCysoEWuy6pwEbQOGgecG1BhLh4/8dRV7WhAIKcyEnW7Cybn1+ryxgdngnsnNkWVRfmF9PvjzflCm9uVj2PL1cXmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EEDtMOvT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mOW/2oTh; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VxuV+64O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mLYOVjoq"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A3F0F1380602
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:17:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EEDtMOvT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mOW/2oTh"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7829C1140205
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:18:11 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 26 Jul 2024 08:17:51 -0400
+  by compute2.internal (MEProxy); Fri, 26 Jul 2024 08:18:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996271; x=1722082671; bh=nj3cpbyaCL
-	PTXFxQ2U0P3OipQ02VdlkoMGA8clTMt0A=; b=VxuV+64OXl2f2MuG/x5pRArlb+
-	HvvYBkcpFGtIMLgXu+m5dxnC10G5r2p6VtrdG5ktDXtJnv7lkaIOhcS8oPGwHivF
-	IXWZ/iNhjjnkWmcGyRbHk4d9MJYb82Q+Br4Xba3w2Z5jkiAbMy2Wd/mgQu+LSRj0
-	swDP0rT7hhS3TOC8VsBgugzDdkxrd4wnfjsOdAXT3uqjAHcVfbSSSL2OFvWMJ1cV
-	bABqdifiM/KFTnio+UaD/ZgrlN0VNvxfOprngP1Mzq+RvFE2UYTOwmgvvwgRoPNL
-	UgerIRzaUKZIdHQtXPZ9Ek0XU/qa4cVhu59XmZHKNj1VMIIMKDfkx/d9j90w==
+	:subject:to:to; s=fm3; t=1721996291; x=1722082691; bh=6G5HottkRB
+	NwQgrTc9kobVD/9Cbq5r8DDIkmuMKDOJ0=; b=EEDtMOvTTl1bFqWyOs9KfS731Q
+	lie7EZvLKWU5OOuOql/lMLRxpfxbcDMBWTHevD2sK5pOkB1oSKDbA249vjjy8BZF
+	mmWL/uwataM4q7PGwqWKedtXqJsTagyns3UL1UGHwgFhH8C7tqbzgxk5zB0GLMnE
+	1okc/t7d20WXjk3LHLoLG8SoQiJi1JnscbVdpsG7od+/vSWTFKcPdVgYTsZ2y7wm
+	C6kC8yGhQjJ2tqEBH3rRZgra7Nmm92zxQZKq9ybPCScI2SoVyL1pBLO/g6PB8QW0
+	0d6UMiddy/fqyT9esrUzgN2LvjR3tQvqU++1T03IQNQ6eSzYVADibKV9pycg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996271; x=1722082671; bh=nj3cpbyaCLPTXFxQ2U0P3OipQ02V
-	dlkoMGA8clTMt0A=; b=mLYOVjoqhoWL8oOczJNZyNmDlDEkEm3uqqJUG8xAMfs5
-	148PZvLWh6kGnAlssn4qmd8SmJ4Rjrz6vQ+e4u92x8V7gSgITqxH3aXY6hQN3jSz
-	6xGfvUT9Rwb/MOvzaSQHI/csN5oKxzqc+9ak9m4bvJ/lID9UFRArRbzINBcmorrk
-	PlZH8EIMx7w8ksopRhV7/TUzM385+mwOefGL4tYsz4B1fhXyxLyKfv1yD3DhHr/W
-	2XP1tFLkjhtoXkMPcQ9Ylkra0R+qUvbjU1r+lrpribsJP9D3tPze2jY8/ldjS5zi
-	jytr5O+pmQ9U2JlE0P7LurFyFdtkSxOdyr2+W48reg==
-X-ME-Sender: <xms:75OjZo6TKbEjR-CyVR7-q8fw9TdBfRfR93Y9eicb8MnL4-L7TFG0IQ>
-    <xme:75OjZp6DIzyyCt6xFC1B0xaYYdiMJT8asj_RAqVYuoLOOgS7QSPUeuBTUbqh9v5Bo
-    qUMW52NaGkeZV8zuQ>
-X-ME-Received: <xmr:75OjZndWZ9TtlAemBttx15F7wi36WOx5-60uLvl1MjtbYgrALg0LlIrzdohzCpor2S10PqyY0up9SUFfQLH2CmAs4hFCmG0SoXFIIHUfgOVhfF0w>
+	fm3; t=1721996291; x=1722082691; bh=6G5HottkRBNwQgrTc9kobVD/9Cbq
+	5r8DDIkmuMKDOJ0=; b=mOW/2oTh4fRS2UvMVHM8SuL7n90J577FM6IFZJwRusN5
+	X5aNGxV03JOpWKGmzJJ5e+D/V7rug7ROh4HSVEvjgR4D7kufo2d5hQaFxeHMSg8S
+	3hMGk9hoCogMBbZmn81sj/1+ljR44c9q3Xyo/5NkmjGZ9oaLgeNCLb5tXk6O0ZFQ
+	LZSAMLPJ9VCtxx9m6enwKCJxJnk1RXjgBsjPo8b7dQ+J/UXvAo9HkCBFjGc8em2c
+	DVgyu20a28Qf+sEMcKk9eqes5yz1vmz4PW31dmr+QUDFQ2yjAgCzLyq3sAbrnTiQ
+	SxdCCq/muRo3Knf7GfnLZwEGStskOzwrGm9OdN0HcA==
+X-ME-Sender: <xms:A5SjZj-8GnD_vRbO1weqqaJuBY8PlVeKiq4PyEUZMI6DAf4MAS2dRA>
+    <xme:A5SjZvvcjDTNsRjrnDzPrFoLbLIFWNRomH3Esw9j5r60LJmqPe9ziO1NiyAxl_45S
+    b0vyIm4BcwR4OUrDQ>
+X-ME-Received: <xmr:A5SjZhDxR0c2Nulp3nJPS2egQCgD7x-zR8yBDKNl9pEaj3P5I8SzfDYtSfK7tISvGMTQxgoiy9-Xadfs9RAIijJF7EgdobBm0KEmtqQv9y1vKi-O>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -55,23 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
     ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:75OjZtImRnTde9e2ZKztHNJ8H3jPZWrm6kEsc2yFw32gGthil722AA>
-    <xmx:75OjZsL3mqqetkduAs2_yS4zadLKzBxiNfVDj-eNzhmuPrNk5WT9zA>
-    <xmx:75OjZuxlUgJGVZXANw7ABFN-5oo_r2z_LCz8J1RgKOFtvuLcvHOAVw>
-    <xmx:75OjZgL_1BSR0R3JIh7Fdkd8JIqRvezbO15Tk3DkNGAgjId-N04CXQ>
-    <xmx:75OjZmh62LQjuqnIpPod25CFTJYZ8uRCiDS4QdrvkrtB7MVL4oEzbMy6>
+X-ME-Proxy: <xmx:A5SjZvdv2VsPQTpIFOdU3A4FTz8nV-Ga9JHQKce7E4otwmCb3tXQ3Q>
+    <xmx:A5SjZoNaJBwvpzsO4VGzf09SJ1kX8mDffe8RT-TQmzSA8aijBLGiyA>
+    <xmx:A5SjZhnYdjAGSFXM-1PDDPWrvAE7AwsitkIkG2p3p8LkNYTXfqqcOg>
+    <xmx:A5SjZisKasB84q3qZ5J4exPP58WLTedrJpISvRQzzlZrwYJlDfMJnw>
+    <xmx:A5SjZi3jm5aykBEvkAE8DRwYIm1zbium_aEnaW96uqTw32GJOjY8kTzm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 26 Jul 2024 08:17:50 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 26 Jul 2024 08:18:10 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 4fe00da8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id ca5611e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 26 Jul 2024 12:16:28 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:17:40 +0200
+	Fri, 26 Jul 2024 12:16:49 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:17:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 17/23] builtin/worktree: fix leaking derived branch names
-Message-ID: <8a649bf7ed38297c9a2d3ec856368603e31adb7a.1721995576.git.ps@pks.im>
+Subject: [PATCH 18/23] builtin/credential-cache: fix trivial leaks
+Message-ID: <2c7a3694903e54dcfa2eadb3b7fa7828da42f5d3.1721995576.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,121 +80,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xb0U8GxZFFM8HkPg"
+	protocol="application/pgp-signature"; boundary="CeWK5H/kg7qFOMGx"
 Content-Disposition: inline
 In-Reply-To: <cover.1721995576.git.ps@pks.im>
 
 
---xb0U8GxZFFM8HkPg
+--CeWK5H/kg7qFOMGx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are several heuristics that git-worktree(1) uses to derive the
-name of the newly created branch when not given explicitly. These
-heuristics all allocate a new string, but we only end up freeing that
-string in a subset of cases.
+There are two trivial leaks in git-credential-cache(1):
 
-Fix the remaining cases where we didn't yet free the derived branch
-names. While at it, also free `opt_track`, which is being populated via
-an `OPT_PASSTHRU()`.
+  - We leak the child process in `spawn_daemon()`. As we do not call
+    `finish_command()` and instead let the created process daemonize, we
+    have to clear the process manually.
+
+  - We do not free the computed socket path in case it wasn't given via
+    `--socket=3D`.
+
+Plug both of these memory leaks.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/worktree.c      | 7 ++++---
- t/t2400-worktree-add.sh | 1 +
- t/t9902-completion.sh   | 1 +
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ builtin/credential-cache.c  | 9 +++++++--
+ t/t0301-credential-cache.sh | 2 ++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 1d51e54fcd..cec3ada6b0 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -769,7 +769,7 @@ static int add(int ac, const char **av, const char *pre=
-fix)
- 	char *branch_to_free =3D NULL;
- 	char *new_branch_to_free =3D NULL;
- 	const char *new_branch =3D NULL;
--	const char *opt_track =3D NULL;
-+	char *opt_track =3D NULL;
- 	const char *lock_reason =3D NULL;
- 	int keep_locked =3D 0;
- 	int used_new_branch_options;
-@@ -846,7 +846,7 @@ static int add(int ac, const char **av, const char *pre=
-fix)
- 	if (opts.orphan && !new_branch) {
- 		int n;
- 		const char *s =3D worktree_basename(path, &n);
--		new_branch =3D xstrndup(s, n);
-+		new_branch =3D new_branch_to_free =3D xstrndup(s, n);
- 	} else if (opts.orphan) {
- 		; /* no-op */
- 	} else if (opts.detach) {
-@@ -875,7 +875,7 @@ static int add(int ac, const char **av, const char *pre=
-fix)
- 			remote =3D unique_tracking_name(branch, &oid, NULL);
- 			if (remote) {
- 				new_branch =3D branch;
--				branch =3D remote;
-+				branch =3D new_branch_to_free =3D remote;
- 			}
- 		}
+diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+index 3db8df70a9..aaf2f8438b 100644
+--- a/builtin/credential-cache.c
++++ b/builtin/credential-cache.c
+@@ -88,6 +88,8 @@ static void spawn_daemon(const char *socket)
+ 		die_errno("unable to read result code from cache daemon");
+ 	if (r !=3D 3 || memcmp(buf, "ok\n", 3))
+ 		die("cache daemon did not start: %.*s", r, buf);
++
++	child_process_clear(&daemon);
+ 	close(daemon.out);
+ }
 =20
-@@ -923,6 +923,7 @@ static int add(int ac, const char **av, const char *pre=
-fix)
+@@ -137,7 +139,8 @@ static void announce_capabilities(void)
 =20
- 	ret =3D add_worktree(path, branch, &opts);
- 	free(path);
-+	free(opt_track);
- 	free(branch_to_free);
- 	free(new_branch_to_free);
- 	return ret;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index ba320dc417..cfc4aeb179 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -6,6 +6,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ int cmd_credential_cache(int argc, const char **argv, const char *prefix)
+ {
+-	char *socket_path =3D NULL;
++	const char *socket_path_arg =3D NULL;
++	char *socket_path;
+ 	int timeout =3D 900;
+ 	const char *op;
+ 	const char * const usage[] =3D {
+@@ -147,7 +150,7 @@ int cmd_credential_cache(int argc, const char **argv, c=
+onst char *prefix)
+ 	struct option options[] =3D {
+ 		OPT_INTEGER(0, "timeout", &timeout,
+ 			    "number of seconds to cache credentials"),
+-		OPT_STRING(0, "socket", &socket_path, "path",
++		OPT_STRING(0, "socket", &socket_path_arg, "path",
+ 			   "path of cache-daemon socket"),
+ 		OPT_END()
+ 	};
+@@ -160,6 +163,7 @@ int cmd_credential_cache(int argc, const char **argv, c=
+onst char *prefix)
+ 	if (!have_unix_sockets())
+ 		die(_("credential-cache unavailable; no unix socket support"));
 =20
- TEST_CREATE_REPO_NO_TEMPLATE=3D1
++	socket_path =3D xstrdup_or_null(socket_path_arg);
+ 	if (!socket_path)
+ 		socket_path =3D get_socket_path();
+ 	if (!socket_path)
+@@ -176,6 +180,7 @@ int cmd_credential_cache(int argc, const char **argv, c=
+onst char *prefix)
+ 	else
+ 		; /* ignore unknown operation */
+=20
++	free(socket_path);
+ 	return 0;
+ }
+=20
+diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
+index c10e35905e..5d5b64205f 100755
+--- a/t/t0301-credential-cache.sh
++++ b/t/t0301-credential-cache.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+=20
+ test_description=3D'credential-cache tests'
++
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-credential.sh
 =20
- . "$TEST_DIRECTORY"/lib-rebase.sh
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 932d5ad759..cc6aa9f0cd 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -16,6 +16,7 @@ test_untraceable=3DUnfortunatelyYes
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmaster
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./lib-bash.sh
-=20
- complete ()
 --=20
 2.46.0.rc1.dirty
 
 
---xb0U8GxZFFM8HkPg
+--CeWK5H/kg7qFOMGx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk+MACgkQVbJhu7ck
-PpQZXQ/8CKb1dxnz6zj5801ko5fe16MELY7OisDB3W2vDOQ7cym5pPOqudtBR7tS
-b2tKn7si4JBJdAVFCzFWHxDyqPFwpLuB7obKR/8DpneLxn0+8+xsnLMaZvY/+4j5
-7yzLGnwluklvQAn0HR7RCIk5F18MeENV75ZSKMOPATUe3Tsku8+VetaVLyPcA6ZD
-CB/33I5r7j//yR0il6rtCmZzYwJy/+vviwF8xKoqCbotbXVNdI8vN9DBZdbMelhH
-cr9I4Y6UQGNax876pn3TjDEz8wPCVHA3rV02ZsB0f8buIuhG/7/dV2VBAZSICmK4
-7/s0Oq+6LzdB+x4/TFhI9podXwQaNTrZNZTmNtYIbJib+GuJch0rnDjNEwkFi6FD
-RAuNE07s11wvv1in3wIUDvUBrWAXIdXnJfQSGPWlkBQYkXohV3mD3HQwHrXpNdYr
-rZcwBguVWLI0mS9miOgRRvednsz/GvXIkNQAVOQMtWuwHV+ZXeGM5GKFIFS6GKgF
-4fZz/OR4hyr6aLdQulys3jkjdeCKX8kmkMde5o5LMS6kxHnha88vKUFxhJWQ75Uo
-/Q6RzRcVmftdaEnnimfHVNfiTtDHFEaQvEBj8Huo++/6F3lkwCM3jw1CTKqRCZR2
-zp0Pol1iWyR5DMGlhiGfdoOxaOq6fZlgSqXglVIcPy5rmGG1GyI=
-=hY2N
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk/MACgkQVbJhu7ck
+PpSofxAAh9pron6RfGy9YCexsz87zjhGo5oM3nKSaUj6i7u7RNu1HJzaGlynXgbK
+owsSOfLDXteG5cnXkGEO000vJmwo1O4HcHlJm33oDswSH2B4RVW6krAU6Wng/YIM
+EiJnOGALngvj0cU5WcuiQoo/qkMEbRRH6AXXhTFuYUJiKTp3dYjnx8SoxUoe6m0E
+B1dk1x56imePNUJ7LNL0iG1bCWU5zmtmjQVT/wM6q4fkjzdCyA+1cDe/Z/pBn6Sm
+FZ0feEunjsW3867qgckm58UJnbJ2J9RStPQeIXDhD99+jQjzxPPinS4CO4F4i4aQ
+k8iJ5HAKtrhIiEBJyildth1HEl5a0swFa2yaUnAk97ZctGzMT78yHaFtylCEZ5X3
+9W20LqzKiqt4pDxnwp9ketNIJZycJXahwWFoF5dzVHpetnaJNMJM8sXqvI3oDY41
+SsTDdQlhcslbnOs4ZRBv013G1z73hRMlDhB+zPy4EH3lc7gHFISOPljo5T6PA50j
+8ATk4ond3QGV1CHew4b9Pnqy0huvA/xDzP7gSCkcJE2cscu+mb1WofToEdAviXtD
+/1lRrQQWPHMqwUDdU4JD0uecVtBqRsDQlnC2Cs96cYnjX8Kh5bwvdXHVVF2h3u74
+IG3SwfbmqI1XTmz3YkEfEaEfIz6UevixQeiLkJdxB8iG8h4EZPs=
+=0I/r
 -----END PGP SIGNATURE-----
 
---xb0U8GxZFFM8HkPg--
+--CeWK5H/kg7qFOMGx--
