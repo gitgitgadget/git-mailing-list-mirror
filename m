@@ -1,101 +1,182 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F383C0C
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 21:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B97D11C83
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 21:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722028322; cv=none; b=S0TflSCs2wjzYPrKuU/z8NT64COjZ+mGHR88f4fXnz7ShY4hf9SFjwU+t0h5UOeT/RBxKF6Siu20DjBKGXRMWmrKpWvrOcGpUWP9A/vrm55cnPh4DKa+mD8nx0Equ7AQ3UoxmhLEZ+hHYHR4zu5MLvUkTK7Asiwm+BZRdmC9N3k=
+	t=1722030779; cv=none; b=MHVR3EEKgyT6qu1AUe2uRhw3uQ7v3H+HEo91PquJBArQvW2tNo5JYv+BIIXAuUW/+F9M82AOJg1MRsERHd2dY3o5eovOZojr7eGpSavU/tr8mUhM6DKtDsWQYyII4M4dj8yewyCJHvYmlmB08bJNzsH5cZHMizMIecxXC7HFlV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722028322; c=relaxed/simple;
-	bh=3Q6t+eOi7PwnBIHD6vAZd2xiEER49Dzs5pq95z+y5v4=;
+	s=arc-20240116; t=1722030779; c=relaxed/simple;
+	bh=SqocsmPkupQvVI6saOO6odX96d+WXWkdpMNhTFz2Iwc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GAfs8GGpzkEwVzulQwkAdazC1O2a2ScleUvRawFtiIVuygzZZC2N2u5sjTcOHpF8lUOKf0Cgiw5cw/PBft9ZUilYXpZ9jE5QDi1oEdzzNj9u2aPLI7QUYBr2qmqAJ6Du/W+tkve2RoZEXz230BteaVn8t0ZkBIjBce47o2ta/0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 25183 invoked by uid 109); 26 Jul 2024 21:11:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jul 2024 21:11:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8169 invoked by uid 111); 26 Jul 2024 21:11:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jul 2024 17:11:59 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 26 Jul 2024 17:11:56 -0400
-From: Jeff King <peff@peff.net>
-To: Ryan Hendrickson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
-Subject: Re: [PATCH] http: do not ignore proxy path
-Message-ID: <20240726211156.GA714986@coredump.intra.peff.net>
-References: <pull.1767.git.1722009170590.gitgitgadget@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=mFZcFyvLSKoMg+LlNx6eQtBxmiHJowdw/cV7vlZ6aDG3K+wISnZxpW/Lm729dGaNRo9Jjm36K6AUSXAc7qEQvul+p48U/dKQ9jzzg2OIbHaqWjJiRjvLMe0ARkz0xal5Y+1isFtnauQoardIJgR1gM4aQ/3EgSXYdIxD+aJUt9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIUq9rXH; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIUq9rXH"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5d5d077c60aso210232eaf.1
+        for <git@vger.kernel.org>; Fri, 26 Jul 2024 14:52:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722030777; x=1722635577; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tr3Z1Wa0iZclxUB/tSAav7OQ2/pa2W8AH7CmIR3ywYA=;
+        b=lIUq9rXHsDTEG1cjXGLbRuE3hbibp+sGSw8ctcptcL/o/Zx9brPgxYtlU8yvbPl3IQ
+         fxWpwXttoJowsCrzcuILOo4HTTM+LzvZ7eYR91q3V3T8YnCjfFX0/hwsIfJnUcFvQWeX
+         SMw85dilAyT3IcVC3DLZfb789oHL/giepdX8dau9ilz6eiAirQmvRdiJPzkPbXww/OZV
+         qavA1k4C0IBMuB0f7jvOv6AIunG6z+YuEF2j74QNtsWJkCYtyeEVEbTbxeIiBAyyCj+1
+         lFjgfsijyaYuAiQm/2M7AkBeRbCCty/sIx+ECokATe1qjuTlZiOnrm8Y8HjjkD6/6vsW
+         pjEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722030777; x=1722635577;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tr3Z1Wa0iZclxUB/tSAav7OQ2/pa2W8AH7CmIR3ywYA=;
+        b=O8pgBK8mumlENMBX+7XbvW/fpV36/2if/fiE6SxxjVnmt/VtTfFZZDnU28HitUeZJz
+         q68S1t+gOL+esHaFqXLdVgBPF6Jy+IF+XF6/0xCfyN2mD/1lwX3oPnnyGprU++BByMo/
+         DCUIwyULgtc2wMRzUSNoQjMeRnCi+96iqmtUI7nyjkqzKwAlXwPNxAhEy5ffi2yFizNY
+         24KBRz2/bwaxYBK3Xj744ExWGHsdAIvciuDNiTY+SG1mbCjnOsL8i5ZJh3fWJ1dQQgk5
+         lsIMtiFfhHd520TXqQtw+M3T2vV8jvp4QtDhzF0qR9c00LYMRDBcCrDK2r58cG+aB047
+         2TtQ==
+X-Gm-Message-State: AOJu0Yw8OaMgQ0/0NdnZif4hozHwOO6i/rLR+TeshKPFCnhxl3KQj1Xc
+	hRo7S+3KWfS53J9ZmrN66J37pCb8IXZNBVC0QL8vzUrYosLg8Lfn
+X-Google-Smtp-Source: AGHT+IEEucCodOxm4FVkzQuwizCta7bP5h4eqZ9OP47Znu4XBIl3W9OpsYAorT8GIgO4JkDZWA+rig==
+X-Received: by 2002:a05:6820:16a9:b0:5d5:bce7:677 with SMTP id 006d021491bc7-5d5d0ee0328mr947269eaf.7.1722030777025;
+        Fri, 26 Jul 2024 14:52:57 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70930777fd5sm920006a34.54.2024.07.26.14.52.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jul 2024 14:52:56 -0700 (PDT)
+Date: Fri, 26 Jul 2024 16:52:14 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 1/3] clone: remove double bundle list clear code
+Message-ID: <ypkmgjgobu2tn36o7qzultltknaz35qysrfe4y4kce67uysdxk@edmxls7p36mx>
+References: <20240722080705.2614195-1-toon@iotcl.com>
+ <20240724144957.3033840-1-toon@iotcl.com>
+ <20240724144957.3033840-2-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.1767.git.1722009170590.gitgitgadget@gmail.com>
+In-Reply-To: <20240724144957.3033840-2-toon@iotcl.com>
 
-On Fri, Jul 26, 2024 at 03:52:50PM +0000, Ryan Hendrickson via GitGitGadget wrote:
+On 24/07/24 04:49PM, Toon Claes wrote:
+> The bundle list transport->bundles is filled by
+> transport_get_remote_bundle_uri(). Only when the list is not used, it is
+> cleared right away by calling clear_bundle_list().
+> 
+> This looks like we leak memory allocated for the list when
+> transport->bundles *is* used. But in fact, transport->bundles is cleaned
+> up in transport_disconnect() near the end of cmd_clone().
 
->      * Tests: I could use a pointer on how best to add a test for this.
->        Adding a case to t5564-http-proxy.sh seems straightforward but I
->        don't think httpd can be configured to listen to domain sockets; can
->        I use netcat?
+The `transport->bundles` is setup and initialized by `transport_get()`
+and populated by `transport_get_remote_bundle_uri()`. In its current
+form, we clean up `transport->bundles` if it is empty immediately after
+checking the remote for bundles. This is redundant though because the
+cleanup already occurs as part of `transport_disconnect()`.
 
-I don't offhand know of a way to test this without a custom program like
-netcat. If it's the only option, it's OK to use tools that might not be
-available everywhere as long as the tests are marked as optional with
-the appropriate prerequisite. You can find prior art by looking for
-test_lazy_prereq calls (e.g., the ones for GZIP or ZIPINFO are pretty
-straight-forward).
+Since `transport_disconnect()` is already responsible for freeing other
+parts of `transport`, it makes sense to let it be the one to handle it.
 
-I would warn that there are several not-quite-compatible variants of
-netcat floating around, which can create headaches. You might be better
-off with a short perl script using IO::Socket::UNIX or similar.
+> 
+> Remove the double clean up of transport->bundles, and depend solely on
+> transport_disconnect() to take care of it.
+> 
+> Also add a test case that hits this code, but due to other leaks we
+> cannot mark it as leak-free.
+> 
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  builtin/clone.c             |  3 ---
+>  t/t5558-clone-bundle-uri.sh | 28 +++++++++++++++++++++++++++-
+>  2 files changed, 27 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index af6017d41a..aa507395a0 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1419,9 +1419,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  			else if (fetch_bundle_list(the_repository,
+>  						   transport->bundles))
+>  				warning(_("failed to fetch advertised bundles"));
+> -		} else {
+> -			clear_bundle_list(transport->bundles);
+> -			FREE_AND_NULL(transport->bundles);
+>  		}
+>  	}
+> 
+> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+> index cd05321e17..2d6e690fbe 100755
+> --- a/t/t5558-clone-bundle-uri.sh
+> +++ b/t/t5558-clone-bundle-uri.sh
+> @@ -1,6 +1,6 @@
+>  #!/bin/sh
+> 
+> -test_description='test fetching bundles with --bundle-uri'
+> +test_description='test clone with use of bundle-uri'
 
-> diff --git a/http.c b/http.c
-> index 623ed234891..0cd75986a6b 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1265,7 +1265,13 @@ static CURL *get_curl_handle(void)
->  		if (!proxy_auth.host)
->  			die("Invalid proxy URL '%s'", curl_http_proxy);
->  
-> -		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-> +		if (proxy_auth.path) {
-> +			struct strbuf proxy = STRBUF_INIT;
-> +			strbuf_addf(&proxy, "%s/%s", proxy_auth.host, proxy_auth.path);
-> +			curl_easy_setopt(result, CURLOPT_PROXY, proxy.buf);
-> +			strbuf_release(&proxy);
-> +		} else
-> +			curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
+I assume this description was changed because the test pertains to
+clones and not fetches. Might be worth mentioning in the commit message.
 
-The fields in the proxy_auth struct have been parsed from the url, with
-any url encoding removed. But then we paste them back together into a
-pseudo-url without doing any further encoding. Is that correct?
+> 
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-bundle.sh
+> @@ -438,6 +438,32 @@ test_expect_success 'negotiation: bundle list with all wanted commits' '
+>  	test_grep ! "clone> want " trace-packet.txt
+>  '
+> 
+> +test_expect_success 'bundles advertised by the server' '
+> +	test_when_finished rm -f trace*.txt &&
+> +	git clone clone-from clone-advertiser &&
+> +	git -C clone-advertiser config uploadpack.advertiseBundleURIs true &&
+> +	git -C clone-advertiser config bundle.version 1 &&
+> +	git -C clone-advertiser config bundle.mode all &&
+> +	git -C clone-advertiser config bundle.bundle-1.uri "file://$(pwd)/clone-from/bundle-1.bundle" &&
+> +	git -C clone-advertiser config bundle.bundle-2.uri "file://$(pwd)/clone-from/bundle-2.bundle" &&
+> +	git -C clone-advertiser config bundle.bundle-3.uri "file://$(pwd)/clone-from/bundle-3.bundle" &&
+> +	git -C clone-advertiser config bundle.bundle-4.uri "file://$(pwd)/clone-from/bundle-4.bundle" &&
+> +
+> +	GIT_TRACE_PACKET="$(pwd)/trace-packet.txt" \
+> +	git -c transfer.bundleURI=true clone clone-advertiser clone-advertised &&
+> +	git -C clone-advertised for-each-ref --format="%(refname)" >refs &&
+> +	grep "refs/bundles/" refs >actual &&
+> +	cat >expect <<-\EOF &&
+> +	refs/bundles/base
+> +	refs/bundles/left
+> +	refs/bundles/merge
+> +	refs/bundles/right
+> +	EOF
+> +	test_cmp expect actual &&
+> +	# We already have all needed commits so no "want" needed.
+> +	test_grep ! "clone> want " trace-packet.txt
+> +'
+> +
 
-I doubt that the host contains a "/", but if you had a path that
-contained a "%", then the URL form of that is going to be %25. Which is
-curl expecting to get here?
+Looks like this test is validating that a clone is retrieving bundles
+from a remote repository advertising said bundles. We to do so by
+checking for the `refs/bundles/*` references which should only exist if
+the advertised bundles were fetched. This makes sense to me.
 
-I say "pseudo-url" because it is weird to slap a path on the end of the
-hostname but leave off the scheme, etc. Which kind of makes me wonder
-why we pass proxy_auth.host in the first place, and not simply the
-original curl_http_proxy. It looks like a weird interaction between
-372370f167 (http: use credential API to handle proxy authentication,
-2016-01-26) and 57415089bd (http: honor empty http.proxy option to
-bypass proxy, 2017-04-11). The former added a _second_ CURLOPT_PROXY
-call, and the latter removed the first one.
+From the commit message though, I thought the added test might have
+something to do with the changes to when `transport->bundles` was freed.
+I wonder if it would be a good idea to expland on this further in the
+commit message. Or since the added test is somewhat unrelated to this
+patch, maybe it should be a separate patch?
 
-I wonder if we could go back to passing the string straight to curl (as
-we did prior to 2016), and keeping the proxy_auth struct purely as a
-mechanism for gathering credentials. That would presumably fix your use
-case. And this is also perhaps an interesting data point for Junio's
-question about regressions (if people were passing paths, it used to
-work and was broken in 2016).
+-Justin
 
--Peff
+>  #########################################################################
+>  # HTTP tests begin here
+> 
+> --
+> 2.45.2
+> 
