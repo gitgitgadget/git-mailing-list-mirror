@@ -1,93 +1,83 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAD77494
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 15:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EAF12E4A
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 15:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722008539; cv=none; b=a/u76stkHAixjuoefOGGrFkhKrSWAseMyOA07HDNr3X/hsVk+ZA7wjpKwCBiNPSz7B9TXAu8rk4H+VUrGl0ayuE8WgePxsKC5mUw4gAdWI47eXkveXW9fkn+enH06AcUqLtiqDHhBiyyx/jez0jVD8kJGC0Ll6L981Kwxt4ikgw=
+	t=1722008799; cv=none; b=uRPjYgkhM7HW8feXjFYZ4edytyHQRiv60enwv6uBbTEZz0deFQ2G8w7ke6JN0m0Znz3MLDdhX6j99a0F+x53phdGHwjE6qTYChaC6cU8pCcwll4kW3n9/Lec6FjxMVLw2JZrExBhrdw/7E4uZaSCUU45Cs4Ayr8D/p6n7zEDz0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722008539; c=relaxed/simple;
-	bh=xdYPgGI72M1RM5DQR/qhb96POpw9arA+l/p3SCWbciU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=pxxo0qFrYz8upn2sjobXToL1PHRDRVRnbBIWFaa/+wdgrVWnQx6LjjsYNAD8zpub0tS+Ho2janWJQhz2lwlZ7Nl8o3AcSU0SJ+JjcdBbHvy7Ek07yt6URNHri+dGP1NIuOxHSRa/7GMWRM6EaY967EpzlZ8+gUt9rITz+uIn06M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aA0DLp3O; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722008799; c=relaxed/simple;
+	bh=INZ2jyeKomsKLFs+zmUSxj6x7L8himSHZrgYg5LTuBo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PAVhfgWSsy6RRPAjuBKBZyziuYlIbcP9gCSZOP0GN+nElyStMwdKcKsD/FKjaT5QaIktap6UEYn0yqpU3A7wMy/ilaiSMmotTbWk0Iv1O01js7HU/9gNHAwdWj009Xu0fu31W01f/DGJxAGlawwirPvDdOG9IL7gSQcuQbl+jjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yTQ0EiOr; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aA0DLp3O"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e0b111b59dfso2052758276.3
-        for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:42:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722008537; x=1722613337; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vUs+hXgowKRI3H0R38V9qq6KDWlGyAQzRDI0ZaZf7tU=;
-        b=aA0DLp3OUIwg+hbsffATqAsKrVUFxRK7P9Yk9OrRXasvZFA+ez07PJgwjytMjaNRh3
-         WJeJvZ4TJPrNDXPf7CQQ4Gi1wUFHVftmq6wYAOfXaXeyGyjAs2Q0nkdxTWxCveUPge0K
-         nS5XZw+Mf4wEuJuridvXjKBtqJ6PfkOctRaw0HaX8dd51rp1DBRpSjt0G57TgxThtSp4
-         1Nz/s3HsTzcPvUQq5V5Woe1JH86BMKkG2J+m/RSpC3GR/mle1zQDWTQMw1WB7rWUNwWo
-         0vvIbnhO+0LwAoEgf8+F+O65x3xv2od4wrCphBZCLYqSBZKqe339LMYmIgdKKshZe2uj
-         Kx4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722008537; x=1722613337;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vUs+hXgowKRI3H0R38V9qq6KDWlGyAQzRDI0ZaZf7tU=;
-        b=gUhDxihGvvTEold96+xXVydpli7IimN5Wk7yWFdAQ+7f8UwO+bp4fYMQijn+nmXvy9
-         0d5YAY//dTYyeT1wLR7AgIiHn+k71jXVByTo99Ffh2lfapuHmkOG9flTGgIQwu8tsPbu
-         3ZT6FzsrchZVx6VqJZ7kqUdr0UOt9gnCMKvkCcMKgsWXcFobQmWM32eCNQwr78gzQNaq
-         jJojiDafK45Dad5jveguzQXvEaemITt3yfh8QqZ26RGDfQ6i7EHVWcGyrOxqWWsVRVha
-         JKLVUWRvakYrhMnaMQoMQ3Q0qxP48QZ4tQmHXOTJxTxYDoeKDWbJ1YI4xF8nhpKHR8rH
-         vKkg==
-X-Gm-Message-State: AOJu0YzEjFi1SUKTjkXiVHopjfP72wMva8cZwea9fLA/cEyi2oL3STFq
-	E8qmIeNe3F4I30NjrbW/6IS8YT5/Qrz1ydjvlzAsCKTQ3QU4VbZv/bBi8Wp6Oh5PVwxVp3mnY5r
-	gXdljQjEri7+lJprGJz5u4oH6rZpwBi/Y
-X-Google-Smtp-Source: AGHT+IEz2oSckFfwPPeqzpPopGB8o94Zcvj/fKUTmyK8BHhbwLbN2OVM6ubV236v7H34bCZoD8gxp8lt2A3R3Qjr98g=
-X-Received: by 2002:a25:d80f:0:b0:e0b:3dfe:9c7b with SMTP id
- 3f1490d57ef6-e0b5447a0f9mr177634276.20.1722008536697; Fri, 26 Jul 2024
- 08:42:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yTQ0EiOr"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 275D73492D;
+	Fri, 26 Jul 2024 11:46:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=INZ2jyeKomsKLFs+zmUSxj6x7L8himSHZrgYg5
+	LTuBo=; b=yTQ0EiOrpIVmhXT360uKdl3vxVbd0Biv/oIVPMOA+Y1Vn1pWbggxC7
+	BnXyKslsjR+hMrkD2paLh+qvxu1KFMfgAr7byT9iKW+NAk1k6G85DWaz8IU52xk5
+	dhBBrG5uAKSC1D18GNMld+bEdrIZlT0DYYsSblAStyejiF6ofhXjI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 208D73492C;
+	Fri, 26 Jul 2024 11:46:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A78F03492A;
+	Fri, 26 Jul 2024 11:46:33 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Alexander Shopov <ash@kambanaria.org>,  git@vger.kernel.org,
+  worldhello.net@gmail.com
+Subject: Re: [PATCH  1/1] show-ref: improve short help messages of options
+In-Reply-To: <ZqOWUrynjUN2A5TM@tanuki> (Patrick Steinhardt's message of "Fri,
+	26 Jul 2024 14:28:02 +0200")
+References: <20240724111116.91615-1-ash@kambanaria.org>
+	<ZqH7mDh73vkX4bPT@tanuki> <xmqqr0bhldjp.fsf@gitster.g>
+	<ZqOWUrynjUN2A5TM@tanuki>
+Date: Fri, 26 Jul 2024 08:46:32 -0700
+Message-ID: <xmqqle1oxijr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Jayson Rhynas <jayrhynas@gmail.com>
-Date: Fri, 26 Jul 2024 11:41:40 -0400
-Message-ID: <CACStHN-Gs2Sxej+md6zWr3V1dFo+pp=B4yEPm9=uPambDR2NaQ@mail.gmail.com>
-Subject: [PATCH] doc: fix hex code escapes in git-ls-files
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 3BFE01A4-4B66-11EF-B76B-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-The --format option on the git-ls-files man page states that `%xx`
-interpolates to the character with hex code `xx`. This mirrors the
-documentation and behavior of `git for-each-ref --format=...`. However,
-in reality it requires the character with code `XX` to be specified as
-`%xXX`, mirroring the behaviour of  `git log --format`.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Jayson Rhynas <jayrhynas@gmail.com>
----
- Documentation/git-ls-files.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> Meanwhile, I think that the proposed change strictly improves this
+> message and thus don't see a reason not to take it. Unless we see
+> somebody come up with a less-awkward solution, that is.
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index d08c7da8f4..58c529afbe 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -219,9 +219,9 @@ followed by the  ("attr/<eolattr>").
+Oh, that part is uncontroversial.
 
- --format=<format>::
-  A string that interpolates `%(fieldname)` from the result being shown.
-- It also interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
-- interpolates to character with hex code `xx`; for example `%00`
-- interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
-+ It also interpolates `%%` to `%`, and `%xXX` where `XX` are hex digits
-+ interpolates to character with hex code `XX`; for example `%x00`
-+ interpolates to `\0` (NUL), `%x09` to `\t` (TAB) and %x0a to `\n` (LF).
-  --format cannot be combined with `-s`, `-o`, `-k`, `-t`, `--resolve-undo`
-  and `--eol`.
- \--::
+The wording without double-dashes has been with us forever since the
+command was updated to use the parse-options API by 69932bc6
+(show-ref: migrate to parse-options, 2009-06-20), and so far nobody
+complained about it, so while "strictly improves" may be true (i.e.
+the delta may not be negative), the degree of improvement may not be
+all that much to be worth the combined brain cycles we are spending
+on this topic.  Taking the patch would not make the future work any
+harder to truly improve it further, so I do not see any reason not
+to take it.
 
-base-commit: c2b3f2b3cdbf5ad9feb978dd367d77561a1271f7
--- 
-2.44.0
+Thanks.
+
+
+
