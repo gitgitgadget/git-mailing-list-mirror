@@ -1,51 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FDC14A82
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 14:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B769917BB25
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 15:02:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722004879; cv=none; b=OPHRN2tufmIyqlbHkZyJSXz8y1JnYL8rYvO8KiTX3HQHdupPNJ4I3X52QR7c/fA/Zfh9b3jm7MfQH7jkUJpHjcPqCLCIrx94w/nej7W8QKJnlbWlfKdgBc7qJbeTHHS3hVyluWFdIQWvZYFwom0Add6F9kxl6hyw2YJ3ajGVykU=
+	t=1722006129; cv=none; b=U0ldqYpsGAWyK1UoNhbiBIScICfFkOMJn2Cd3LauzlQPSuW+iq/NJzI3p8UeafzizbACx1NgcNw0+xBVjxEE9JpqfSH2YBwq74szhU65GoWda2+ZcWQvb3xL4GTe/nNSqlCSmyP6mCKMq/78dCQ9PLsYflf1JQu22+qbwwS1Lxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722004879; c=relaxed/simple;
-	bh=c2SGBbBPRCMQzbCJRBDLLF6IoF5rCm1TqbOnSmHYPLU=;
+	s=arc-20240116; t=1722006129; c=relaxed/simple;
+	bh=5WmFbi6i/JHmFH1aN+LB0O8SI07ldLLanIQyZya/ZwY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tM+xirft2re/K8BwPHuWZ+uNJdWba2uYgWc5Ei+iVQTCXkF6GvoI/Hc0FzZ1f7VBh4lv0E2WOkDy2aOkQrpA9pmNtxLvMnh4U1HJdLbFDEGqt0ncO5HmsxLUuNCOb4KWcNP1qw9isuI73hVzAG0DwqDptKZI6FPmCa6nvKIFqik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XIEfPOEQ; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=deJu31cZ07Yony5Ml7hVLuwVLOZGyr+J5flTVSxCAhIC6KGIWEpKJRfp7lCcMpssmZh0pRGA9qFd6sVeIKJeakp9hVX/km4sq+PWQpleFiup48BMHqMiIT9pp6rnNkWau/LvG+JAtmyjHpcCk7aXpsQyuAeg2XuaDSpDmkzXKu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TODLtD7E; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XIEfPOEQ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A16E210ED;
-	Fri, 26 Jul 2024 10:41:16 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TODLtD7E"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE6F32FC47;
+	Fri, 26 Jul 2024 11:02:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=c2SGBbBPRCMQzbCJRBDLLF6IoF5rCm1TqbOnSm
-	HYPLU=; b=XIEfPOEQVawrBs79VayjOdpsgUIkqAEXFtgRjG1BC4WWK8bqnQ8fOg
-	nNkJPd2DZ7gdCPK5h444QViIKFdNC3zIWuYw1yc0e2v6y+v3QMTsYZXG3ZZElJs3
-	+SAnCFX7qxSxAcGgmq0gVlu44Pkwf7n7jIq9zX1JctbannZg5KK+s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51283210EC;
-	Fri, 26 Jul 2024 10:41:16 -0400 (EDT)
+	:content-type; s=sasl; bh=5WmFbi6i/JHmFH1aN+LB0O8SI07ldLLanIQyZy
+	a/ZwY=; b=TODLtD7EXdsjYPAR2swaBjUhgwGBRVZtXoAVY1PYc8VGU9GWr/3v+m
+	OKnWyvE5OTb7pTwAoWMWyLQ7/45wf407hZL0ia0chdSFYYQGc6ihVkd8/6zlcwkc
+	kb9uVet93AE2w+wfhZJIvQP0ICog8cuEh4ONSgI6P/wJ2m0ThbU6E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 538032FC46;
+	Fri, 26 Jul 2024 11:02:05 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC9DB210EB;
-	Fri, 26 Jul 2024 10:41:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 538B42FC45;
+	Fri, 26 Jul 2024 11:02:04 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] csum-file: introduce discard_hashfile()
-In-Reply-To: <20240726044216.GA642208@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 26 Jul 2024 00:42:16 -0400")
-References: <xmqqle1p1367.fsf@gitster.g>
-	<20240726044216.GA642208@coredump.intra.peff.net>
-Date: Fri, 26 Jul 2024 07:41:14 -0700
-Message-ID: <xmqqplr0z051.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 2/3] safe.directory: normalize the configured path
+In-Reply-To: <20240726050253.GC642208@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 26 Jul 2024 01:02:53 -0400")
+References: <20240720220915.2933266-1-gitster@pobox.com>
+	<20240723021900.388020-1-gitster@pobox.com>
+	<20240723021900.388020-3-gitster@pobox.com>
+	<20240726050253.GC642208@coredump.intra.peff.net>
+Date: Fri, 26 Jul 2024 08:02:02 -0700
+Message-ID: <xmqqikwsyz6d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,29 +57,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 1CB1B9A2-4B5D-11EF-BD83-BAC1940A682E-77302942!pb-smtp2.pobox.com
+ 04F40F06-4B60-11EF-B2C5-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> There's other repeated cleanup happening here, like free(ieot) and
-> strbuf_release(), which made wonder if we could bump it down to the
-> cleanup label at the end of the function to simplify things. But
-> probably not, as we are often doing that cleanup even in the non-error
-> case. And of course the "sb" strbuf is local to a lot of blocks.
+> This may be a dumb question, but... will this always work, if the config
+> option is not necessarily an exact path, and might have globbing
+> characters in it?
+>
+> We don't currently treat it like a wildmatch glob, but:
+>
+>   1. We do allow "/*" on the end. Should we strip that off so it doesn't
+>      confuse the realpath lookup?
 
-These localized and independent strbuf instances were indeed what
-discouraged me from moving other clean-up to a central place.
+This one I wondered, too, but the test seems to show that it is OK ;-)
 
-> So even if we did want to do it, I think it would come as a separate
-> patch. But mostly I wondered whether the label should be a more generic
-> "cleanup" than "discard_hashfile". We could probably worry about that
-> later, though, if that separate patch ever materializes.
+>   2. This is shutting the door on using wildmatch or similar in the
+>      future. Is that OK?
 
-Yup, I wobbled between a more generic "cleanup" and "hashfile is the
-only thing that needs special clean-up right now", and it does show,
-as you noticed, how the error code paths after calling finalize
-looks like.
+I am inclined to keep this part and any other logic that are meant
+to address "security" things simple and stupid.  So in that sense,
+I am not so worried that it would be hard to retrofit wildmatch to
+this codepath.
 
-I think I'll rename the label to "cleaup".
+> Should we be quiet there, and maybe fall back to using the
+> non-normalized path (though I guess if we could not normalize it, that
+> probably means it could never match anyway)?
 
-Thanks.
+The only reason I did the warning was because it makes me feel a bit
+uneasy to have a configuration item that either gets ignored or
+triggers a fallback behaviour and not to tell users about it.  Other
+than that, I have no strong preference.
+
+Unfortunately this is not a very good fit for the advise mechanism,
+as we do not even have a repository yet.
