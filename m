@@ -1,54 +1,54 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE1A17B506
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323942B9DB
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996911; cv=none; b=l3PoCk1SQc/5jY9UG/tJFboqKpl01a9ih4EtHu3uj702PYMjEDJ7rIbw50GDQMPyMGFJ1pJDyAW1zLxv/nhmRoLss447n1TTGDnw3h2B3YvY22qDLOuc/FnfJGLoV2f0UNybgHyyEe6toMe87OLW9DUcQgk8pxUDeJZnl21T8AY=
+	t=1721998266; cv=none; b=Zc6g5i6AK/lWsxRKXofTxo+G9bR2cNV1m92uj8kix0jg1iTh7maKL0HX3wgOaAuAIekQLAjcUq4lvCe7kAQa9qHeJiaMCnjLACfFEyod6D8QXI9JmK5cCz2hM7O30nemnz1s2Z3mZ+HK6Xysol9/6zpkT3qKs4VFWVaH071x+/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996911; c=relaxed/simple;
-	bh=NWdRViLuSSga3JU1AFU1YKdW/jHs9ircn0tmBHV54rY=;
+	s=arc-20240116; t=1721998266; c=relaxed/simple;
+	bh=nN9096ScGzxgejcx3EHn7v1WWsLcYS82dWyOWclY57E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SuYfNaz0iHkTG9p5v0B+RPOUi1FnmFjDkhdB+NPx17GWYa+gq9l9m8oIe5zPqM/P8eGzAKrXRRzx8Vsee8w88YKHYExqTW3AyicFq+IU5QXH/gtoou81owBC+OFK0mZPARcZzFeR8z8tw3NIw+rNxG6OCy1Txo9PHLk1JFhZL0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yk/6UWPB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eVHZZ5+M; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=bOg0NCGnuUlITS9HV9wxYP/Gt72KuSOOcEcGi57EsKzT9IqJ8VzepCs0m71kattqOFp/ZBB0iF1mqcdWEfbzJJ3jtGf2f38mYnJzynUajfuUoOcZh8XPW/ISeGwSTtmcBEncw7UsO7msMB4aJN2ovFUAlklKvwpxOfOkYocD5GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cvxJ7C2l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hHWWQy1e; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yk/6UWPB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eVHZZ5+M"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 989E311401C4;
-	Fri, 26 Jul 2024 08:28:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 26 Jul 2024 08:28:28 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cvxJ7C2l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hHWWQy1e"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id F26CE13805E4;
+	Fri, 26 Jul 2024 08:51:01 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Fri, 26 Jul 2024 08:51:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996908; x=1722083308; bh=0wgXTzpP1u
-	JrxEvYMk8LVYTL7aQ2/dPc+adHHvy+c+Q=; b=Yk/6UWPBjC0nLGSCKIB7T5qQdc
-	EyFvtHYX3KfVIqhsgrwMYNCULXoU2/K6waXHqX1YmmaXhCHfMiDWuD5uUd7W+WCu
-	X/JDOAcFpLgcyn+aK+SvLAFael357fmu2GXAHg8KDW3ctPo1KupTCJv7PJ2htGGJ
-	vxq9kyi4x/9nFXEPD++cQURhu5YrCXbl5N3esjwphfBFVI/JYjTcK61p1wFlGkZ4
-	XmrrMi+r4WQu3zGA/dSp147fJvLH0aqHSkHaH4cVNGWKmC6OjGT4Xxh6BZenzwhK
-	Qebo8A+qUIWojTEXz7kbSw3PFLadJfihBeswgxozqY2Wi7K914zQsVdk9Z8w==
+	:subject:to:to; s=fm3; t=1721998261; x=1722084661; bh=nN9096ScGz
+	xgejcx3EHn7v1WWsLcYS82dWyOWclY57E=; b=cvxJ7C2ljz2B0Eg5oNBOZHOz52
+	Dz+p7KTknIZ6efKezvVWl3nynYqdLjH/0wEiJFl4cJiWenagDWEBd6i3dlYxQnPn
+	mVNb9fZ9PrwW9Aspvqfy/anFm4wddxPx6tmMKf2yCAkU66fjzFWD6yIXH2qPmMeU
+	2EROtsA1aPbMLbN8EzxAyNk+R2QuCW7hijS1qz0Zhd4pkZUAY89d3xlSvms0Wtai
+	GfWJeJDlg6tCC93kBsYWvjUQT58WyBS5PJLhSoohrr9V4MyOCl+NXdkenv2CLGMv
+	uTYUZCZjhSi3FQl+RWVheIy+8J0+PhMogFwQgzOqiBObPKy2tmzodDii0jGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996908; x=1722083308; bh=0wgXTzpP1uJrxEvYMk8LVYTL7aQ2
-	/dPc+adHHvy+c+Q=; b=eVHZZ5+MHPeuvQBj76WCAU2vUx7h52tec/2XHXkNWjXj
-	BP4FIONVntTIHGW72pi4E+C6cFv7WER00k74cCGvqGpKWKoA76t6HqOD6lAvsHB1
-	OtbQp1i7+VDc2BIa9A8fZeKrWWEnm2iqDUVkgvRlVMNW7CH/EBlZvcRxWGNPf6wY
-	oDTnbDWP7FTbqpDXuK4ZRy9JbxJn/rwlMrrT4eZPRZlbOMzLVOfIBMyhZN4STQSR
-	HhC8H197a80er6YunCBpSgOIQ+IykB/6HxeEft6WsLCAASGzRPTAqro1XvcxorEM
-	Y0SRyrRK+JHFAI+0xSNrYQESjuOrMLGIsINHkbZ5Kg==
-X-ME-Sender: <xms:bJajZqH0PGhW-Beo0aK5Bqf1sp5abuDLEK7ektroEuX6_MC9skwWHw>
-    <xme:bJajZrXqHpAHGtXc08pAf5wds531MM1av0MJ4cPB3R7Xr0iXna3j06A-LCvfI0F_H
-    tbWDQbqRHZ9E-I-Jg>
-X-ME-Received: <xmr:bJajZkLlRHCeOuH0QgI0gaudR2nLrsS04RVBHwOS1JIyAPfHS74XjjDJcBFcEtauaqN-1sH3WIQnU3ZOhKoX3EjlIh1_XhbR-9bZ5J-nfHhjbeMM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehfecutefuodetggdotefrodftvf
+	fm3; t=1721998261; x=1722084661; bh=nN9096ScGzxgejcx3EHn7v1WWsLc
+	YS82dWyOWclY57E=; b=hHWWQy1eYOAKrQfPa8CBBPgkxWulrKYqJFfuV2p6IJRP
+	cfsAIvU947mCdsA+PVolGZedVcUmIFhgkH0u/K7NJjlz+8xp7cKQbImUuNzxIns4
+	utv43pGOMvClHaBFwCRlxlHJw24mjsRMc7GTyjR3W6en6JHgQGwKbELz3ke7adMT
+	YpnXqjbJiv9NIcYrpWPLPParygToa8bfwjcMCxJiFGfG7Dwp0Z04l/PaF8t5qJ0s
+	R1UPb7xdrIKDqRvhvAa3onSeBSG2mDvqlrrh+7Lru0YbTyx0zR6C/p49QWryVT1J
+	jxInsSHJdpO/TMBbim+svz//rLUv9ZmBrv/jyNxFDQ==
+X-ME-Sender: <xms:tZujZqJdNbC2a9jp7eXwae5yHSAL2_hQQ0ScR-AwVXt-R7525rzwrQ>
+    <xme:tZujZiKGJg53wmZPj1Sm75GggnK6LUqQrm79upvSWuOSwbfC5iPsNL1Wqwkvf1lPS
+    ztu5M4WheKS_-yW7Q>
+X-ME-Received: <xmr:tZujZqsAor0jr5LOWi_rioTm1YH3T9UzkVfXMg_u5XzcQq9Gy_iy1F--K-ZIMxereh3j4WhFfaUYnTZ93opCOxedt86Y7EGu6EzSNhvHyD8Dbk5q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,27 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehfecutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:bJajZkFVCo1M59yM4Kygs9F_asZi6h88llin57aNfaOf4LQqpVkApA>
-    <xmx:bJajZgV3Loh7pQx7R91XpY6YoHJhYjnsl7zVWVwLBGQ6gmY26rlL6A>
-    <xmx:bJajZnPHOUqDCqUr1nWEC-6U3T1OO2ZDIu8YcCjB9RW0E1QeeWdAQQ>
-    <xmx:bJajZn3PbI4PiYF6aT97C1rYV2w5by8d9PDqckz4gJ8swpb-HwLnFw>
-    <xmx:bJajZuzw5-U8mpZyHRBTuS9XynGPvi_KGhxr8eXfOurkfzM2CBOn_ePb>
+X-ME-Proxy: <xmx:tZujZvZWG3dLRJalgUnaKtXvqQBBhT2uTjhCcRPFDHK2ztf3BG7seQ>
+    <xmx:tZujZhbP0AHKxPd6S4duBcVhtuftjwBQbpk25MI4_aktMcm1Y6Ug5Q>
+    <xmx:tZujZrCMJN2yl800Ud30dm9DTNSFTP0G3gQuIGFkEsnEqPmp4I5svw>
+    <xmx:tZujZnaY08MCsvbwHSvvwFH6VDM4OrqZZhagWeaoFqdkWWqlwvZVfA>
+    <xmx:tZujZlHYL8BArUtnqnrpFvh5jpFDx0xe0oOquMbZgyxFAj31_v9v8UsE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jul 2024 08:28:27 -0400 (EDT)
+ 26 Jul 2024 08:51:00 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 3c769d5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 26 Jul 2024 12:27:04 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:28:02 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id ce4cced7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 26 Jul 2024 12:49:37 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:50:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexander Shopov <ash@kambanaria.org>, git@vger.kernel.org,
-	worldhello.net@gmail.com
-Subject: Re: [PATCH  1/1] show-ref: improve short help messages of options
-Message-ID: <ZqOWUrynjUN2A5TM@tanuki>
-References: <20240724111116.91615-1-ash@kambanaria.org>
- <ZqH7mDh73vkX4bPT@tanuki>
- <xmqqr0bhldjp.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 3/3] fetch: use bundle URIs when having creationToken
+ heuristic
+Message-ID: <ZqObobw8FsDMkllm@tanuki>
+References: <20240722080705.2614195-1-toon@iotcl.com>
+ <20240724144957.3033840-1-toon@iotcl.com>
+ <20240724144957.3033840-4-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,78 +84,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="16F0NqFvj891JwZO"
+	protocol="application/pgp-signature"; boundary="ZzEgT8aDDda3s6gc"
 Content-Disposition: inline
-In-Reply-To: <xmqqr0bhldjp.fsf@gitster.g>
+In-Reply-To: <20240724144957.3033840-4-toon@iotcl.com>
 
 
---16F0NqFvj891JwZO
+--ZzEgT8aDDda3s6gc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 25, 2024 at 08:03:06AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Agreed, I think that this is a sensible change. In practice, this
-> > feature can also be combined with `--head`, so in that spirit we might
-> > even change it to:
-> >
-> >     "only show tags (can be combined with --branches and --head)"
-> >
-> > Not sure though whether this is getting too noisy?
->=20
-> It is somewhat an oxymoron that "*only* show X" can be combined with
-> "*only* show Y" in the first place.
+On Wed, Jul 24, 2024 at 04:49:57PM +0200, Toon Claes wrote:
+> One way to achieve this is possible when the "creationToken" heuristic
+> is used for bundle URIs. We attempt to download and unbundle the minimum
+> number of bundles by creationToken in decreasing order. If we fail to
+> unbundle (after a successful download) then move to the next
+> non-downloaded bundle and attempt downloading. Once we succeed in
+> applying a bundle, move to the previous unapplied bundle and attempt to
+> unbundle it again. At the end the highest applied creationToken is
+> written to `fetch.bundleCreationToken` in the git-config. The next time
+> bundles are advertised by the server, bundles with a lower creationToken
+> value are ignored. This was already implemented by
+> 7903efb717 (bundle-uri: download in creationToken order, 2023-01-31) in
+> fetch_bundles_by_token().
 
-Yeah, this is the root of the problem why those braces are required in
-the first place. But that being said, the option is somewhat funny
-because it indeed limits what we show to only show tags. The fact that
-it can be combined with other options to expand on what it shows doesn't
-change that, so I think "only" is okay-ish even though it certainly is
-not perfect.
+I think Junio essentially asked this already, but I'm still missing the
+bigger picture here. When the "creationToken" heuristic is applied, the
+effect of your change is that we'll always favor bundle URIs now over
+performing proper fetches, right?
 
-> For a reader to accept it without finding it awkward, the reader
-> must understand that
->=20
->  (1) the command shows by default everything, but
->=20
->  (2) if any of these "only show" options are given, the command
->      stops showing everything and the user can pick which subset of
->      "only show" options to give, which work additively.
->=20
-> But if the reader knows that much already, it is redundant to say
-> "can be combined with", isn't it?
+Now suppose that the server creates new bundled whenever somebody pushes
+a new change to the default branch. We do not really have information
+how this bundle is structured. It _could_ be an incremental bundle, and
+in that case it might be sensible to fetch that bundle. But it could
+also be that the server generates a full bundle including all objects
+transitively reachable from that default branch. Now if we started to
+rely on the "creationToken" heuristic, we would basically end up
+re-downloading the complete repository, which is a strict regression.
 
-Hum. I personally find the way that this is worded intuitive and think
-that I would find it helpful when reading it as a less-knowledgeable
-user. But naturally, I'm quite biased and may be too unimaginative to
-come up with a better wording.
+Now that scenario is of course hypothetical. But the problem is that the
+strategy for how bundle URIs are generated are determined by the hosting
+provider. So ultimately, I expect that the reality will lie somewhere in
+between and be different depending on which hosting solution you use.
 
-Meanwhile, I think that the proposed change strictly improves this
-message and thus don't see a reason not to take it. Unless we see
-somebody come up with a less-awkward solution, that is.
+All of this to me means that the "creationToken" heuristic is not really
+a good signal, unless I'm missing something about the way it works. Is
+there any additional signal provided by the server except for the time
+when the bundle was created? If so, is that information sufficient to
+determine whether it makes sense for a client to fetch a bundle instead
+of performing a "proper" fetch? If not, what is the additional info that
+we would need to make this schema work properly?
+
+So unless I'm missing something, I feel like we need to think bigger and
+design a heuristic that gives us the information needed. Without such a
+heuristic, default-enabling may or may not do the right thing, and we
+have no way to really argue whether it will do as we now depend on
+server operators to do the right thing.
 
 Patrick
 
---16F0NqFvj891JwZO
+--ZzEgT8aDDda3s6gc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajllEACgkQVbJhu7ck
-PpSqfhAAm5C1FH3W6ZS/PEuPR7O0FSixzWsZ23FlLC7iUOvN9Cerh7NQ0hVHVThI
-6XCn1FtLO89LMk7BpDJ8TyuJePlzeNetMhbY6+/pyh+penln3SUNKU7RGlnOlDZS
-QtF4YkmJo1sZ9VMt0wwSzMMZa85xX/C0hpOBIuZ59mavLN01ZPD/zgkZAiTThi2b
-bVHJxx4Wno56DtEurvPZIUTcXQPAXlIbMlw3T3hWK0wWwQv0vlBJmxgEblR7rByY
-uEn+1FmG397SFff3P1frBNA2Zi2HVszPuQMv3J2SmFBfRcslRBXvRNotywiBt8F3
-scky6qHbx8bSiUEPKvhwIaiPPjcUL04opTcGfg3NJSreX9bj9DO/7T/D3UPsQMP6
-zQXmEyfwzo/qBBb8fQ5f4vnVTbioalR623Twa/gilRQGwzqKxThHKECL+eyWsRPo
-YJsZDVfUQFelFIHMYZCL/N7omrhRUBGnRvBrfDfaWnvhoTraxB9Y6y4NzLUjAt5c
-fBdbOHhUVswObLb29DqwENXUcUkmmLhRMK7WcgNpOdFoG76jiOWWq2864Nt+mWpJ
-hUO3d9GbnHDd/JXSQsPys3GrkPPDc9spsysQ7PWKOTT+tP9j6ICFJ+iLolEh8DdW
-zH9IXGaFcRWS8ckqg1J/szLP/r8YTGPUp1/Ps86pDzrrf6WIpC0=
-=SZgi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajm6AACgkQVbJhu7ck
+PpRV0hAAhbw4CUWS4G1VL2W0Ns2PbjFvIlDapCQlDwxHr5U7kzvvrAZXeWlW10jf
+KTM0H/T0D8mtMO1oL8Np8PQv5rzy+bkShvGEwxmhsOjpmduEGgUCUVuzCnZeRc7U
+eksClMVwfhKikiXkPHFpwAui8TBQwttKxbOWfVw70FxI2S/wkFfx6m2jelw0F6ap
+MVmoRlfWst+QgFb3sBPbyQ3hLskNLHDU0M4Rc4bED7lVhLpLZydlCN5RngmiDp7+
+3RP3lZfpmdGQSy7FWt5FHIL51nPJWi97P4DcHbLZKYHwAcDc1KB3h7SjWkDUNtQN
+b17OVZOzYXSsb5vsCY4oLnwx98RBJGBis37AxmUOBs/iPbNAWjroWfJg/ZMwtqDu
+g4WvYatbbWNZPfjD3GHqCBSvIzaPQcPo+tDlHmBwZyDPhHd8XwwB75Lkho09UYu5
+ZNBbvojkA7w9kLTunhZA7QJfogQdn2KPfspE9CFafYO7HGKcXPH6kTBGzs3yUHZ5
+p67zQlrS5gYuMtsb3z03yy4aSAe/4X+wu4JSRnx1YhFLG1ujHLz3cP/JbYvH9nwK
+90cwQt3lCaFu3Dy020fVmgAz4i9u0T29oyNYN+nKWosz3XhhnVeNvg/PjjFOuU0B
+eVhany03DyXkkumi7z7f05h2XI9xYeH8HZzoXr7jFLjVMPmD4TQ=
+=1hZf
 -----END PGP SIGNATURE-----
 
---16F0NqFvj891JwZO--
+--ZzEgT8aDDda3s6gc--
