@@ -1,50 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A7118AEA
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 17:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB311C6BE
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 17:45:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722015149; cv=none; b=PgIwenb/0H9uNgXB4VQntXUcbp7dXmj4NCgl8bSGrLpRKYsMVqocWzT0VxCp5dEWZ68eeutlt2jf6xWpcRJGgHJTpn/y6tLDXirAXbPOPDF5Vc5K6CD8fLEpERGNrnDF8ZhhRWXagZX253d0LHC4m8NvJ/rCovXZ74hID45w8RE=
+	t=1722015920; cv=none; b=kAbbvGDisACAnggQgDcK/SNJtQMWRqewy37Usz++TZG7JuvUAsTcIRU5/AjyykiY8dr3zpUICGOQk0detj8AnxOHnu8rlR1H10lMZGerRnr884X5+c95mP0uUXU4ZCLNWHOv1DYeetcBuPZQxkRf1o97ZZudwXLXBC/hAtdceRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722015149; c=relaxed/simple;
-	bh=TvhmMTu5ndwm616VEZcEVNWg7uv3ODtT3MDG7fAh71s=;
+	s=arc-20240116; t=1722015920; c=relaxed/simple;
+	bh=jYyzNF/B7Cnre47ZPciN/TFYmcFehvRKuBl0JMBFptc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZZ1b4SKBEcn4JHmskf8y3WcsP+9+yjWRk5t55yZQ7498T0Bw/rZxOcpTdDR2JFefAKnAqJXQ8pl9UzAu/oUZh02rA5J3SoxP1xlWaDdt0H3bsZ5MYXj2L2mGJUaeNjbD8PoeJqs9D8Vx7fWXZCDufyXgg0bu1xuIETKcpSRMAoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YpixvCpT; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=nZereXRcCWKHVzPkMW+XIb7AQ85JBZ3LEwK+6oYl7yE3xJjVGBdx5cqdmUJPxpb2eZkgLTPC1QXQ/FxfiVJ1EZ9Md6VB4wfloqcWzc1jJ931tmn6WhYh1oue9hh/L3KfnzRs/XBw/Mi7h2Jam8yemZXQRBLAPp5eayqnBTrHXis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rRjBA/d4; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YpixvCpT"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5721D30F94;
-	Fri, 26 Jul 2024 13:32:26 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rRjBA/d4"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6A8193597C;
+	Fri, 26 Jul 2024 13:45:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=TvhmMTu5ndwm616VEZcEVNWg7uv3ODtT3MDG7f
-	Ah71s=; b=YpixvCpTaKKRH6cqzrDaQSA39DDXpPfwxbTojnXHEHmYTGJftPVfeS
-	i7Ajz2msEclD8LiParricexL7J3wHH3PltgdYixrpeQOJZLuhd44o+PRzXdEj5lU
-	WOKGGrwUnAP/WnMdNsCA76FBHXbLZEkgfCnLB1GDZCOq2zzkZiQEU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F27B30F93;
-	Fri, 26 Jul 2024 13:32:26 -0400 (EDT)
+	:content-type; s=sasl; bh=jYyzNF/B7Cnre47ZPciN/TFYmcFehvRKuBl0JM
+	BFptc=; b=rRjBA/d4vUrMQnIDsX7oe29+cv1CTG9g+lKbgTyovsLZm2X5VaHfcV
+	SZxWvp5N/4PdqTZ+zROSvkA9BiwuEeloZ1yLSjo49fwWzg8eWPaaLZO3Fu0k5bqv
+	whTfpXN7VlFaHOaRI5SRhrxEFH3GzzFlh4gCnpMHnBet6b0YBd4/g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 634B73597B;
+	Fri, 26 Jul 2024 13:45:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFAF530F92;
-	Fri, 26 Jul 2024 13:32:25 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E219C3597A;
+	Fri, 26 Jul 2024 13:45:14 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jayson Rhynas <jayrhynas@gmail.com>
+To: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: fix hex code escapes in git-ls-files
-In-Reply-To: <CACStHN-Gs2Sxej+md6zWr3V1dFo+pp=B4yEPm9=uPambDR2NaQ@mail.gmail.com>
-	(Jayson Rhynas's message of "Fri, 26 Jul 2024 11:41:40 -0400")
-References: <CACStHN-Gs2Sxej+md6zWr3V1dFo+pp=B4yEPm9=uPambDR2NaQ@mail.gmail.com>
-Date: Fri, 26 Jul 2024 10:32:24 -0700
-Message-ID: <xmqqh6ccvz2v.fsf@gitster.g>
+Subject: Re: [PATCH] http: do not ignore proxy path
+In-Reply-To: <6b408a07-f2ff-1e04-5b3a-fd287fb1c151@alum.mit.edu> (Ryan
+	Hendrickson's message of "Fri, 26 Jul 2024 13:12:51 -0400 (EDT)")
+References: <pull.1767.git.1722009170590.gitgitgadget@gmail.com>
+	<xmqqr0bgw1z1.fsf@gitster.g>
+	<6b408a07-f2ff-1e04-5b3a-fd287fb1c151@alum.mit.edu>
+Date: Fri, 26 Jul 2024 10:45:13 -0700
+Message-ID: <xmqq5xssvyhi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,80 +56,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 061A3076-4B75-11EF-A4FF-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+ D094597A-4B76-11EF-AA44-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-Jayson Rhynas <jayrhynas@gmail.com> writes:
+Ryan Hendrickson <ryan.hendrickson@alum.mit.edu> writes:
 
-> The --format option on the git-ls-files man page states that `%xx`
-> interpolates to the character with hex code `xx`. This mirrors the
-> documentation and behavior of `git for-each-ref --format=...`. However,
-> in reality it requires the character with code `XX` to be specified as
-> `%xXX`, mirroring the behaviour of  `git log --format`.
+> For what it's worth, I was following the precedent set by the
+> if-statement starting at line 1256 (a few lines above this patch):
 
-Given that no placeholder strings ls-files uses begin with two
-characters that are valid hexadecimal, it is tempting to say that we
-probably can teach strbuf_expand_literal() to grok %XX the same way
-as %xXX for 256 cases where XX is hexadecimal, and do away with this
-documentation update, and it would make things consistent.
+It is worth nothing.  Existing violation does not make it a good
+idea to add more of them.  It makes it more work to clean them all
+up later.
 
-Doing such a change is also almost trivial (see below).
-
-But "git log --format" shares the code, and over there, %cd is a
-placeholder that is committer datestamp, not a byte with value 205,
-so that would not quite work.
-
-> Signed-off-by: Jayson Rhynas <jayrhynas@gmail.com>
-> ---
->  Documentation/git-ls-files.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>> Could existing users have been taking advantage of the fact that the
+>> extra /path at the end of http.proxy (and $http_proxy and friends)
+>> are ignored?  For them, this change will appear as a regression.
 >
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index d08c7da8f4..58c529afbe 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -219,9 +219,9 @@ followed by the  ("attr/<eolattr>").
+> That is possible, though I have difficulty imagining a scenario in
+> which it would be intentional.
 >
->  --format=<format>::
->   A string that interpolates `%(fieldname)` from the result being shown.
-> - It also interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
-> - interpolates to character with hex code `xx`; for example `%00`
-> - interpolates to `\0` (NUL), `%09` to `\t` (TAB) and %0a to `\n` (LF).
-> + It also interpolates `%%` to `%`, and `%xXX` where `XX` are hex digits
-> + interpolates to character with hex code `XX`; for example `%x00`
-> + interpolates to `\0` (NUL), `%x09` to `\t` (TAB) and %x0a to `\n` (LF).
->   --format cannot be combined with `-s`, `-o`, `-k`, `-t`, `--resolve-undo`
->   and `--eol`.
+> What do you recommend I do about that possibility?
 
-The change looks good.
+I have no idea.  I already said that I am not familiar with this
+code path, and it is likely I am a worse person than you are to find
+a potential creative (ab)uses of the mechanism to take advantage of
+the fact that the current code ignores the path part.
+
+Having said that, given that http.proxy falls back to environment
+variables that have been established a lot longer than Git itself,
+like HTTPS_PROXY etc., if we _know_ that setting HTTPS_PROXY to such
+a value with /path part causes curl (or other popular programs) to
+try using such a value without stripping the path part (and even
+better if that causes them to fail), then such an observation would
+make a very good argument why it is extremely unlikely that existing
+users used such a setting, hence it is unlikely this patch would
+make a regression.
 
 Thanks.
-
-
-
-[DONOTUSE-BROKEN] Allow %XX as a synonym for %xXX
-
- strbuf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git i/strbuf.c w/strbuf.c
-index 3d2189a7f6..3594e10d09 100644
---- i/strbuf.c
-+++ w/strbuf.c
-@@ -443,13 +443,13 @@ size_t strbuf_expand_literal(struct strbuf *sb, const char *placeholder)
- 	case 'n':		/* newline */
- 		strbuf_addch(sb, '\n');
- 		return 1;
--	case 'x':
--		/* %x00 == NUL, %x0a == LF, etc. */
--		ch = hex2chr(placeholder + 1);
-+	default:
-+		/* %x00 == NUL, %x0a == LF, etc., with 'x' being optional */
-+		ch = hex2chr(placeholder + (placeholder[0] == 'x'));
- 		if (ch < 0)
- 			return 0;
- 		strbuf_addch(sb, ch);
--		return 3;
-+		return 2 + (placeholder[0] == 'x');
- 	}
- 	return 0;
- }
