@@ -1,142 +1,83 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84C7EC5
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 14:00:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FDC14A82
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 14:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722002437; cv=none; b=uKPD6JIbSYfmYlUYqgRCbOVtfwkCzUjdwXJ+aCrWn323iDAaOSzuPE/SmH/xhaarV8cSIlbT8/YfgU/4PFb0TQ8f14jkrAO6qO0O0r3Owmj+VKBigRB7mIm+VXZ0EDw8fYaLDwIe4fN6CYZO1NUxKksr+uGLhC5mrTPq/nFmjk0=
+	t=1722004879; cv=none; b=OPHRN2tufmIyqlbHkZyJSXz8y1JnYL8rYvO8KiTX3HQHdupPNJ4I3X52QR7c/fA/Zfh9b3jm7MfQH7jkUJpHjcPqCLCIrx94w/nej7W8QKJnlbWlfKdgBc7qJbeTHHS3hVyluWFdIQWvZYFwom0Add6F9kxl6hyw2YJ3ajGVykU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722002437; c=relaxed/simple;
-	bh=7dk12XI0Xh2hfSU8bCylooAucDb3hcZvX3O6Rsuf4pA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=A4k96LECDaWE7Tkj8rZDVLxXEl5yeuZJ7gBJjQptEuHph9RU87PEQQDwh4c0emK5dTNKdiqr8IMqL5u4ZjIEY6Q2z7JZZXTB3h/IqPq20IFTs3Qv6jg902cn6ezVGTN7JukenkOXs3BKiw3zbkIlAzWGnvKGg/EVNOGWzHQ7wH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c8z15ryj; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722004879; c=relaxed/simple;
+	bh=c2SGBbBPRCMQzbCJRBDLLF6IoF5rCm1TqbOnSmHYPLU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tM+xirft2re/K8BwPHuWZ+uNJdWba2uYgWc5Ei+iVQTCXkF6GvoI/Hc0FzZ1f7VBh4lv0E2WOkDy2aOkQrpA9pmNtxLvMnh4U1HJdLbFDEGqt0ncO5HmsxLUuNCOb4KWcNP1qw9isuI73hVzAG0DwqDptKZI6FPmCa6nvKIFqik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XIEfPOEQ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c8z15ryj"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-427db004e36so15937405e9.3
-        for <git@vger.kernel.org>; Fri, 26 Jul 2024 07:00:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722002434; x=1722607234; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TkZ9lAHpH5zWaVMHVK0LOTynp4GJfGkRxabAto6usGA=;
-        b=c8z15ryjFPz0V2rkV7gQrpRj+OfcQLwqbX5LB9LAUKzranF6qUQMlGht11ExsxD8bO
-         UWak6ogpfk/VI8539HH3U63TPteghm3XVkRJgomc6xuM6bn/H8YGoji9jcBmf09wx+dj
-         KG7NAQhQMMbcK9X//yEs7wja2FNjIGvVdaTYBBORlCkOW4z9HzJEtxbVqQROfKv77XYT
-         yOXyr0895UXb+2VPjsHU0aexR6X1PQavf53xc2ZGOm3q8xCk0nPGH7pwj3RuYWVVxcg8
-         ydoqbYLNXLWHftoHwvquHQZD2+pBk0QJGhf8WcYMebNFa7kBsm0tVPR23GkPg9L1VU/6
-         W9rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722002434; x=1722607234;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TkZ9lAHpH5zWaVMHVK0LOTynp4GJfGkRxabAto6usGA=;
-        b=JxYpYvb34X/1Tf33NV1QRyMIKP2DM8J1rcshf7pvKIMdSu0SrjgxrsKmSmw8IXt8wl
-         vok0u6GAH9jZXx3K9d2VLy73Il8HsZnYTSJtFOOCgbmgt6kiP6l/hEpI5nOB3ZNzIv6u
-         31Ahhl/Ia1GraxlfiR0MHi51M5DXZ1+zAaqDpCcmghCfL8KgVuTkYxPr4+oN9M4z4dPv
-         I37LN9tb1kMHjcMQxjUjCGVxqM+77+ecP5HejQGj5LfPjfZKT6/VW1/4rFGqa2iTtKaS
-         BBbvFTvH8fjOfrkN999YMLKY1m3JPcxrzPLG1dEO0tym3RQ2anwOkfii1VIf8zjJi5P2
-         BPFg==
-X-Gm-Message-State: AOJu0YxrSIyQ6bMRGR4Ao2iWOvGvFIOCNepnU5rEZ9/1WlA/tWIFLbGB
-	K9RYHwogh6Xdvx5g9mIABVz6m1qJku4+M0wvs4P7hZ/JGn+REDt7PA/52g==
-X-Google-Smtp-Source: AGHT+IFlTtVlsfLNXB0gcGstThh2LZWrp+xisgNbH8ykC/2AKPAn5kFSdn4SriS7aTzOSW1RrNp4Pw==
-X-Received: by 2002:a05:600c:4ecc:b0:426:6000:565a with SMTP id 5b1f17b1804b1-428054a023fmr35546645e9.16.1722002433699;
-        Fri, 26 Jul 2024 07:00:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42805730e5dsm80407995e9.2.2024.07.26.07.00.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jul 2024 07:00:33 -0700 (PDT)
-Message-Id: <pull.1744.v4.git.git.1722002432630.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1744.v3.git.git.1721975234873.gitgitgadget@gmail.com>
-References: <pull.1744.v3.git.git.1721975234873.gitgitgadget@gmail.com>
-From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 26 Jul 2024 14:00:32 +0000
-Subject: [PATCH v4] convert: avoid high memory footprint
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XIEfPOEQ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A16E210ED;
+	Fri, 26 Jul 2024 10:41:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=c2SGBbBPRCMQzbCJRBDLLF6IoF5rCm1TqbOnSm
+	HYPLU=; b=XIEfPOEQVawrBs79VayjOdpsgUIkqAEXFtgRjG1BC4WWK8bqnQ8fOg
+	nNkJPd2DZ7gdCPK5h444QViIKFdNC3zIWuYw1yc0e2v6y+v3QMTsYZXG3ZZElJs3
+	+SAnCFX7qxSxAcGgmq0gVlu44Pkwf7n7jIq9zX1JctbannZg5KK+s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51283210EC;
+	Fri, 26 Jul 2024 10:41:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC9DB210EB;
+	Fri, 26 Jul 2024 10:41:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] csum-file: introduce discard_hashfile()
+In-Reply-To: <20240726044216.GA642208@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 26 Jul 2024 00:42:16 -0400")
+References: <xmqqle1p1367.fsf@gitster.g>
+	<20240726044216.GA642208@coredump.intra.peff.net>
+Date: Fri, 26 Jul 2024 07:41:14 -0700
+Message-ID: <xmqqplr0z051.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-    Haritha  <harithamma.d@ibm.com>,
-    D Harithamma <harithamma.d@ibm.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1CB1B9A2-4B5D-11EF-BD83-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-From: D Harithamma <harithamma.d@ibm.com>
+Jeff King <peff@peff.net> writes:
 
-When Git adds a file requiring encoding conversion and tracing of encoding
-conversion is not requested via the GIT_TRACE_WORKING_TREE_ENCODING
-environment variable, the `trace_encoding()` function still allocates &
-prepares "human readable" copies of the file contents before and after
-conversion to show in the trace. This results in a high memory footprint
-and increased runtime without providing any user-visible benefit.
+> There's other repeated cleanup happening here, like free(ieot) and
+> strbuf_release(), which made wonder if we could bump it down to the
+> cleanup label at the end of the function to simplify things. But
+> probably not, as we are often doing that cleanup even in the non-error
+> case. And of course the "sb" strbuf is local to a lot of blocks.
 
-This fix introduces an early exit from the `trace_encoding()` function
-when tracing is not requested, preventing unnecessary memory allocation
-and processing.
+These localized and independent strbuf instances were indeed what
+discouraged me from moving other clean-up to a central place.
 
-Signed-off-by: Harithamma D <harithamma.d@ibm.com>
----
-    Fix to avoid high memory footprint
-    
-    This fix avoids high memory footprint when adding files that require
-    conversion
-    
-    Git has a trace_encoding routine that prints trace output when
-    GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment variable is
-    used to debug the encoding contents. When a 40MB file is added, it
-    requests close to 1.8GB of storage from xrealloc which can lead to out
-    of memory errors. However, the check for GIT_TRACE_WORKING_TREE_ENCODING
-    is done after the string is allocated. This resolves high memory
-    footprints even when GIT_TRACE_WORKING_TREE_ENCODING is not active. This
-    fix adds an early exit to avoid the unnecessary memory allocation.
+> So even if we did want to do it, I think it would come as a separate
+> patch. But mostly I wondered whether the label should be a more generic
+> "cleanup" than "discard_hashfile". We could probably worry about that
+> later, though, if that separate patch ever materializes.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1744%2FHarithaIBM%2FmemFootprintFix-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1744/HarithaIBM/memFootprintFix-v4
-Pull-Request: https://github.com/git/git/pull/1744
+Yup, I wobbled between a more generic "cleanup" and "hashfile is the
+only thing that needs special clean-up right now", and it does show,
+as you noticed, how the error code paths after calling finalize
+looks like.
 
-Range-diff vs v3:
+I think I'll rename the label to "cleaup".
 
- 1:  d864de64380 ! 1:  50758a4fb94 Fix to avoid high memory footprint
-     @@ Metadata
-      Author: D Harithamma <harithamma.d@ibm.com>
-      
-       ## Commit message ##
-     -    Fix to avoid high memory footprint
-     +    convert: avoid high memory footprint
-      
-          When Git adds a file requiring encoding conversion and tracing of encoding
-          conversion is not requested via the GIT_TRACE_WORKING_TREE_ENCODING
-
-
- convert.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/convert.c b/convert.c
-index d8737fe0f2d..c4ddc4de81b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -324,6 +324,9 @@ static void trace_encoding(const char *context, const char *path,
- 	struct strbuf trace = STRBUF_INIT;
- 	int i;
- 
-+	if (!trace_want(&coe))
-+		return;
-+
- 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
- 	for (i = 0; i < len && buf; ++i) {
- 		strbuf_addf(
-
-base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
--- 
-gitgitgadget
+Thanks.
