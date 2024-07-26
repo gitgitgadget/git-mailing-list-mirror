@@ -1,141 +1,118 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DA81F951
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 09:06:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F0219EA
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 09:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721984796; cv=none; b=EizTh2tUstxm9SrUtTdkUgxmmpbZabe4lZ5V6csuknadb03BEZ/0qfoaW975hmJOINnFqzdaogJsMyFiVrWehU07/xi9V/klzIZpNjIMbejk4fAmLZU3pFtHA+EKM+6ES9fHAc4vjlZ93wZa/vjXpunYvEgr0fetOacPk9irNhY=
+	t=1721987755; cv=none; b=iyZrjRDQta2hRr+RT55kvHyGxk8v4M0uVrLriFD57daCVsjkKmLRSHlrQuKZoeWiW8AozcLk6c8QM0ltAlIlRMWjlfktDbhPQ5j5/kf7h+5BQ6i/HCPV/Y+OEmeJzEUrX+AyfY74SelPhSocbCa89vMxzYPzYYlZ807r51PuHuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721984796; c=relaxed/simple;
-	bh=izZ1shifX4tZDxj/4FyqMfamgQCCWYDNrA2wfgV03iY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FmpgVRAntRZCduIOjXhUnQTIdqKMkFV4TAe1JNWG+70D5kIwItlgRImPi1V6zwzmGqqrGEzNa8KePhPIUoXQnWG0YNHjCQl+ZWIOC7x3k290mSoDPxNdGHM40HDDctzV5dTVfKQ+NV2BwO4x3rmmW7J96iTGKJMW2y/2AdtyHNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fPVa1y1g; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721987755; c=relaxed/simple;
+	bh=laSctBR2qTzyI7/i6yrgkbF6BH7KNgLg3UXq8W2Qazc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S/Kgu+useYhrEEmrPCYjnhVdGOn180jju5YJjK3LTPmkCwkuZdVcQhHux8AvtwJ6APfkYuOiOtcQtHE54vnpSd8mY6vjJ0wCLh0+Zd96KijBFqs0EomDWVm4Igy+o1MnMOOFniCmhTKMxAqKTire1Pbfa0YQ+kIcNKMobO5XYXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=o+biIxcC; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fPVa1y1g"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7093d565310so177792a34.2
-        for <git@vger.kernel.org>; Fri, 26 Jul 2024 02:06:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721984793; x=1722589593; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=izZ1shifX4tZDxj/4FyqMfamgQCCWYDNrA2wfgV03iY=;
-        b=fPVa1y1g3Fjf9zLKhjiRMy5Ll3atzDkNkogsvCbzGFxK6S4CEBEFOhx4K+gVnrd9m1
-         skWj3bMvFcnsYb30tItWOqCvs17rvoatdjNL6ed8GMS85Nyh05R/X6+bZMQkF3REvq9G
-         t0HGLMvtokhsEev1zQ/UD0kcf4m9Brfv7QmsQ0ORHpcPJhhx47QEbGVPQIBztSKgDGKw
-         oIqFy4gItCR/kqIc5LO7ggk1qExz1Md3JxlH5+NHuGKIxpYPq7sA/0ZhMbFwBESVEW4E
-         Lbj4OTcjwLhwWAMDTiidtV3STjaYsU48nmG7QGtV8aXxHqObeZ2gD5SzpQcz/1FXw9vN
-         nnzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721984793; x=1722589593;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=izZ1shifX4tZDxj/4FyqMfamgQCCWYDNrA2wfgV03iY=;
-        b=L/waVvvGu+3YtcpB88JD09HthBaO1eyC0CrZcGam7m/3/VV8bg2IcWUXq54OwB4KY3
-         Nh6ZqEwvm1fDBvfr7zMVWijBHGXCKYQPuhr5qCvI62F6i6uI8rfYYfbEdaBT42xrIImq
-         AFAokh1vY1Q5x+BmBtrxCFFop0nNsuEWUZMJptyRv3K5GTCkLXhmKw3pYZvY7EBJzaVw
-         u4IynK7W2tU6imiNDN3uFZn264BxZrCKDKEcc43UQpsY8Ob3szjbiqcsz59T6e2HZWN3
-         xZeePQACL3ein7B6ldbWjugy/BugE7TF6TMOtmYD2Jr7+81hF61dQDQp3KXgjqCku+Gs
-         NGCg==
-X-Forwarded-Encrypted: i=1; AJvYcCXYjgh1uAyKJabmjT9GR6HLlRlQkx2v3wTSCvj5u0fy+XheudKPiwIcKN7hrDfLZBX8kaE044hijptjNbAnH+geStQM
-X-Gm-Message-State: AOJu0YzZhs/38rgHbP/NaHNIFzYvLghNbUcLf+3k7WGiVq3HT12hZ3ww
-	fTKSDUMXWo3klebaReFc7Qk8rEKPzDtWjrl1HP0JuHlT4s9JXOmJifA7VMBQ4xKcLUZ+sv00jHs
-	R0BX+I8tMFtL3tHLrPx/XJ8xLjqM=
-X-Google-Smtp-Source: AGHT+IHyc5tgO1FDDy4oKQnw7u+v8PfiHo9/WAFd4SZ3BUWosGDGac68oaipSrJvWwYJ9nlyGHyYu+IqwIUYPdWoL+0=
-X-Received: by 2002:a05:6870:280c:b0:259:8b4e:e71a with SMTP id
- 586e51a60fabf-264a0f7491emr5933671fac.46.1721984793599; Fri, 26 Jul 2024
- 02:06:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 26 Jul 2024 02:06:32 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20240724144957.3033840-4-toon@iotcl.com>
-References: <20240722080705.2614195-1-toon@iotcl.com> <20240724144957.3033840-1-toon@iotcl.com>
- <20240724144957.3033840-4-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="o+biIxcC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1721987737; x=1722592537; i=tboegi@web.de;
+	bh=N1BWaPxyCJm/09Kr1llejvQclVlsvO9pC5hlhHfWtq8=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=o+biIxcCPkBj2qwTcT0N80LeQm1oM1W008QtZoQTLw+xVmQAHCAcgMxlx6EqF8K2
+	 Fpd90klFgs8Z1I5GVhpqkTjI5t6nUhmSpiunisExdOyAb0U9mUPSlFgnxwGIlRm8m
+	 2zPsOJyFSjoFpLxh0sVtJcGOVTOy6gJacFzRn4KS4usxsss23gp2Du3g8mdqTLt9M
+	 CfcPvV1uYglC5HrxFmK0yb7OWhUB4M181nyrpOi4hMK189wkfJ4+P7ias4Guls/yp
+	 IoL33zpVLDw13tadd21wVFK7JJ+DnXV/vqNsw/vPUprCL6EMJcmQL4sKEdOkzoc33
+	 Qg6TOUxNur2DETSO0w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLzin-1soXZh3iJF-00M2mG; Fri, 26
+ Jul 2024 11:55:36 +0200
+Date: Fri, 26 Jul 2024 11:55:35 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Haritha via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Haritha <harithamma.d@ibm.com>
+Subject: Re: [PATCH v3] Fix to avoid high memory footprint
+Message-ID: <20240726095535.GA32544@tb-raspi4>
+References: <pull.1744.v2.git.git.1721821503173.gitgitgadget@gmail.com>
+ <pull.1744.v3.git.git.1721975234873.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 26 Jul 2024 02:06:32 -0700
-Message-ID: <CAOLa=ZQ5bvWuBVC7FuT6+C2tB9FXr0mmexvBycRwUf6Ak_c_rA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] fetch: use bundle URIs when having creationToken heuristic
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000ee8243061e22d334"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1744.v3.git.git.1721975234873.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:w9duqz12AgUoDekGBU84dK3iH9fmqMr0/9Qg+7V8FoKDrZojq2O
+ /UiYX5DryZd5ZoCXKCGaUA39xE6sTcBXgulISODo1InQJubtZVJgVK8W6f5V0onKKruMqmy
+ ZlcuOuRo9nScAR14BMm6JdrXRIErJe45X/dgvy3Fk6VvdxfjoWLAvObWIDhFB5sLN/6CinS
+ ZyJi3PEyOj5SIc11GNiiQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:NkuQV3bOYb8=;FXoELfs5AoTpCEUrbZ5iBTne3UC
+ M21R7qRAXIlQSA70iNFn9mm3ROwuVs1ctYDQdB/Zwqiz9rsw1StRkVsA6b7+pwMTZayBF/SqM
+ vaUU5nsV6wonQ8t9GCRaCTdT3n6x+gVDewIKkJnlo20pSTTC8wDBWtveYvnGVgQiSih8QLW9r
+ Ljk0uJp9SmuG+EIe5vcCboZgK9PfC+38X0MQv2ihE9kEkUzK8AIsiQrabkLjtFHxUdKFB/tQ4
+ 0fQzmn5NpyEgBVqFcnjiOWMpp3MfAQGVac1wqxvaufeUEnFQhWEvWmtI24wV7JlylEpG6aroF
+ xNQOiUpOsi95NmJolK6mtA1a5FNiZRHuOWa+vgp6pk78Gq2f8v4PUHHnCVvq42hUchraaIkO8
+ 2Y6sSlG5BnAoW+VxXl5YjgZsPA3gfZFXSHyrTAnNglhN+8Tsr9NpaU/P5PivQQLhG0LAlUHIU
+ UScFPo7SQN5m+euvZAO2mOufKeKMwfSMkUmed7dsusf+vrGyf5fvdWo6vOHYDY7hb1HPuhi0O
+ nSZ+1ROfwO3Fd0y5ULafkeaqmk1mqCxOs1HIMpiq3Vf/aRIDmsefBbn34ADNXK4ugaezM68Pz
+ keRrb6sfG7MCC9kk9FBiNFzbH+eSFGlTAVWRWEugL5S49FRWOd6VfmXvV4bX332Bq2QBJq87u
+ 8n5HU7R60u63TbKX40SKqwyb2RZjoTyuGrboz9L0sGdquYAvfLGAfprhc2HS3Mw43cIAEr0QA
+ 8MbfJDkqlOH9a/0rekwAAMltTfYkmGriI19IK16NFrjxUQfhUw0Xn15Wbdw6MB2IiqGPZdF4P
+ eO7XRYBTGapGhFJkUO7ivviQ==
+Content-Transfer-Encoding: quoted-printable
 
---000000000000ee8243061e22d334
-Content-Type: text/plain; charset="UTF-8"
-
-Toon Claes <toon@iotcl.com> writes:
-
-> At the moment, bundle URIs are only used by git-clone(1). For a clone
-> the use of bundle URI is trivial, because the repository is empty so
-> downloading bundles will never result in downloading objects that are in
-> the repository already.
+On Fri, Jul 26, 2024 at 06:27:14AM +0000, Haritha  via GitGitGadget wrote:
+> From: D Harithamma <harithamma.d@ibm.com>
 >
-> For git-fetch(1), this more complicated to use bundle URI. We want to
-
-Nit: s/this/it is/
-
-> avoid downloading bundles that only contains objects that are in the
-> local repository already.
+> When Git adds a file requiring encoding conversion and tracing of encodi=
+ng
+> conversion is not requested via the GIT_TRACE_WORKING_TREE_ENCODING
+> environment variable, the `trace_encoding()` function still allocates &
+> prepares "human readable" copies of the file contents before and after
+> conversion to show in the trace. This results in a high memory footprint
+> and increased runtime without providing any user-visible benefit.
 >
-> One way to achieve this is possible when the "creationToken" heuristic
-> is used for bundle URIs. We attempt to download and unbundle the minimum
-
-This first sentence reads a bit weird. Perhaps, "One way to achieve
-this is to restrict the usage of bundle URIs to the 'creationToken'
-heuristic for git-fetch(1)."?
-
-> number of bundles by creationToken in decreasing order. If we fail to
-> unbundle (after a successful download) then move to the next
-> non-downloaded bundle and attempt downloading. Once we succeed in
-> applying a bundle, move to the previous unapplied bundle and attempt to
-> unbundle it again. At the end the highest applied creationToken is
-> written to `fetch.bundleCreationToken` in the git-config. The next time
-> bundles are advertised by the server, bundles with a lower creationToken
-> value are ignored. This was already implemented by
-> 7903efb717 (bundle-uri: download in creationToken order, 2023-01-31) in
-> fetch_bundles_by_token().
+> This fix introduces an early exit from the `trace_encoding()` function
+> when tracing is not requested, preventing unnecessary memory allocation
+> and processing.
 >
-> Using the creationToken heuristic is optional, but without it the client
-> has no idea which bundles are new, how to sort them, and which only have
-> objects the client already has.
->
-> With this knowledge, make git-fetch(1) use bundle URIs from the server,
-> but only when the creationToken heuristic is used.
+> Signed-off-by: Harithamma D <harithamma.d@ibm.com>
+> ---
+>     Fix to avoid high memory footprint
 >
 
-I would say that apart from all this it is also worth noting that bundle
-URIs are still opt-in from the client side.
+This head line
+> Fix to avoid high memory footprint
+does not tell to much when and how it happens.
+The word "fix" is not realy needed (in this project).
 
-Rest of the patch looks good to me.
+Something like
+ "convert: avoid high memory footprint"
 
-Thanks
+will tell the reader, that only the convert functionality is affected
+by this patch.
 
-[snip]
+Thinking about it, another suggestion may be:
 
---000000000000ee8243061e22d334
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ea147a6d744de867_0.1
+convert: Reduce memory allocation when trace_encoding() is not used
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1halp4Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN2IvQy80K2VwT09Pd3BLc1JkdGpzdW92dXgzMjNERQo3am1ZYkJ4SjFV
-ZWVGRjVJd1k3WGVia3dPT3AyUW9PV0ZVUkVoeVl3Z3lzdGkvWmdWUW50djh6SGd3MHZMb3Q1CkVK
-bUFMaHVEOUZMZGhCQVEwVTRVckFHWkZFeTZLN2FVUXNmQVAzRkJnbXh2eDlaQTB1MXR6ZGZETHpz
-dnA0cXAKMEk3ZnBKRDVQWHdaKzNvRVlSOVkrU2ZYZFlMZzFmbnpPeU9BTk5wakdkVEFmMlpIQzI3
-QXI3VlZYMkNvWW1HMwpnejdIU2F2QWUrUkFLcU5qaXlzUnh6NTFBMmoyR1JLOUdMVE9OTzZITXFP
-a2MwMytRRlJibUVGNW9lZmN1TmNnClg3Mjc4Wk91N2VDU1NnRUJ6TUlTQW1vUC82RzdZNENScUFw
-QlZ0eHd1eUFFTWJ6azRMcTJIOXp5cjA0SktRSkIKczdXUENUb3k1Y2pRSUZsK0ZiVTZ6czdIUGRv
-Y2M5NEdnQ0FHSExuaURGZUgyTC9ITXNzdjFYNEtxSDQ2TFhMbgoycHZ5a0lZNzJjZmRzTjcrTFh1
-MlpKcVB2MFk3UE5mQk5ZZnZiWGhreElBNlI0MVBIeHhzR0ZJdEpYWUduY2JDClpEcTdFWjA4RmY2
-WnVseGJZTSs1bU9acm55QktIZDI3NXJ2SDFOOD0KPWVXMkQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ee8243061e22d334--
+If someone browses through the whole history of Git, this is easier to
+follow.
+
+The exact wording may be improved, important would be to have "convert:"
+
+as the first keyword, and then "memory allocation" and "trace_encoding()"
+give hints, what this is all about in one line.
+
+And the rest looks good.
