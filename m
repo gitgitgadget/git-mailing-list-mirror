@@ -1,53 +1,53 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E697E57E
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43501E57E
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996352; cv=none; b=hvz6GsEUIxueqjRKOwJuSNUDvvIrcVkxKRfyVdPaBewmbLU925NyQqO9Efmlvmv1FxXEApr6jVbU5/yzHpMmRq9n6HdxEKrvF5mBZg8h11zaoiDpaAJ+qd/+CZDrbDdq1tDgvUTdWwqox6rtuE19jZc4J+OfireKs9L52zlHDU8=
+	t=1721996361; cv=none; b=VwyBiE6StCcQlndIuQ1CMnKuh607xXet3ZKrIkUQx2rwyIltDSGrxJeM8PO/0XxtZ0uxtCu6O5h+GqU6AslOjWPXCF51K5zxR6is+Nnv3qWXFHi/JPg58W7mNZ4FLGLN89D3i2nqsQZO4XGUKFKj5SZCmMi0Uk9pBH/COGd7TpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996352; c=relaxed/simple;
-	bh=rmpiy5hwE4FV64d8alnUwdZLadBiln3/H1UwsdLc6Es=;
+	s=arc-20240116; t=1721996361; c=relaxed/simple;
+	bh=ZIY1ixpdXYcyLw4oWIUVCMnZLL53ib7mQXksKLHk+7A=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n9ICUVdDthnbo8zzWJrBDvlW3qekGTbNup6oqUqtLjy5HR8yzyskiJXY34EmPlP0GHebwX9gcSvYGw6yD+8PF+0mX6VVYlZ82tMqL/g4QF4nMCvFK/8/aZNz8JeULbssF+6hH4YhlSaFTZcZ39fz9nTovomogS8KqBVUrDWXoAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gq50Wn2W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VJJ1e5OO; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=bOVSbDsEo5Y2Sz1SLFa7qTDyugMGllgXbitOPRR1fS2jhsqGH8yde6HTEAzpS21ohO++muNitTjheByPHAK9VfPe+cjkBe8qXB7eKZf8ay9ipCYESDEOUxNKvXIuk1GrllH6mC9WE/AzQ13Gc4Txl+GY0FQby0PfOPyqdg/XoAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hkxtizUu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TRgX2fKw; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gq50Wn2W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VJJ1e5OO"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5BA4313800B5
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:19:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hkxtizUu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TRgX2fKw"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4797A114011C
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:19:19 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 26 Jul 2024 08:19:10 -0400
+  by compute7.internal (MEProxy); Fri, 26 Jul 2024 08:19:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996350; x=1722082750; bh=oenikin661
-	0tWh48CMlXxSfi3YtE5E1SlEkRwQxdGyw=; b=gq50Wn2W74D2L1LzlaYYgsGCrh
-	lH9v13ghbXHzvLfGYhjkwki4Zo8Knn6t6zcS4PdlZteEr5Kfa1HvZnRFzoZW0W+U
-	KWBPBgLpp9ZIIjFzzfvsm/rkruOaHrYQ45XyLyzXEfss+CLVNow6d4REDIYownCr
-	VcDGtvZu3pOFzhHh2P7RPtmH7CqU13w/drkDVtlN5p/hwB7PleCt5gadIO9mkhji
-	mxQJC3RDBsPVqMFY3y3MMmnJElBw3i/O9b0lDKiJUA3dDlPfbjfEct1v1TOvYiYp
-	JyyA+NOJcpI0Zan5WgLTVhE4KAsjjGjSYQZWcJFm0JSZl3XlXbkGAl3W5Vdg==
+	:subject:to:to; s=fm3; t=1721996359; x=1722082759; bh=1WlWpc5COf
+	SBO47vkPA6pJKIC5F0q7xhRRb/A7Dcouo=; b=hkxtizUuEd6RH9MPosSJ3NX8ki
+	iByfJe5L7bQea6EPHnsItYF4pvxjQVfEr4AkE6hS4rgqXi5oMmEWMkLY1HySQekG
+	5wUeHLBAqfy941/r+iPWe2G25MbPXEug01RMr2ou8u9GE6e2vpWwCKdC0vLz0/5+
+	bcPcsirh1ZMYEQZnLv+DoW/y+u+NuvbqGr9acaf3lByqtuqJmbjIKyIBJ4X569Sk
+	d7fkUe5XTOcTVvyfTQignMWcZpBw8rSAFOrScR/LZ26nJMyVrtifM+cAx0jy1wrk
+	rJ2c/2YAYN4k5yszDjiaU3hPHHZ8cHg4k8lGCsr2MWXO9gENG9f6q+sX+JQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996350; x=1722082750; bh=oenikin6610tWh48CMlXxSfi3YtE
-	5E1SlEkRwQxdGyw=; b=VJJ1e5OOFw9vN2oE8a8fyzbpOmJXh8hhaSaYJIOy/+LH
-	mUh/hG0xP3iZo9OmQOMuV6cdkvhsgI09NodeDYgf95yhuYRCR6saaam2QQyKOeEF
-	qEvCpLpECMSIHyQa9fMi6RXvbEUxJDvLyZ7w0A8LCRf4pJVPUZCTv7p8+nCoN0EY
-	lof6KfNdLcaSYsEJQ6qaLNBnYih62Y+sbTIN/R1MTrvdVUi8uiSEMqE7a9WCziaL
-	MthOLGk4g6vDtpFe9zdUI9GeKKfZDZx+QG59tyczWDGG4YhRYe65vhpHQoAhVydO
-	kztfLKTzwA95Rr3zMme2W3HhAMKSTJNEFOjQmAV8Zw==
-X-ME-Sender: <xms:PpSjZpoXS4tJKxG19yMPutG88AX7vc6QfjYEhnwXi0Hq4M9BHt3p6w>
-    <xme:PpSjZrqEG1y5w9IERnEc6NEsvTQ70WXJsDPSGEgcqBevlls1kzy8bQE7YSWYay742
-    Wx9Xurlmj81O0ZKjw>
-X-ME-Received: <xmr:PpSjZmP3zo9E6gphJTSqsiWyPTCVztrIBYKfx5BKTP75jxewXeKdPQdJUW_LBLmH3k9Er90aeTZUQm9B-OqghZzx6xH5zxPDE9QaCd21xGY4P1Mr>
+	fm3; t=1721996359; x=1722082759; bh=1WlWpc5COfSBO47vkPA6pJKIC5F0
+	q7xhRRb/A7Dcouo=; b=TRgX2fKwGYfTqt6brBMko3RNqJO2flRmTSi8ipSwjjp0
+	QvMKCd6heRe/BUTPcZOzN/t2Br2YIWQcieQNynfg8IRAvLkpnDrlRYuREZ4O/Li0
+	tgFFAiPW4nYk0Z+KwCb8TZH60GoQ+E5yRQgZ5NBS+InxxNFG+6FFm9iCx/DWopHJ
+	dOwomN2hbSZI9xyjBjQBWlUyLYRywBYs1YLQccu8VGYhCOdiRbS2D/Dy1mpfOPcD
+	tS1Cr4CuN/0Ox3Lc4h/8nRlkKQ2Y+ItvKA8nQr44RCxOv+W+A3wN4YyPLE6sOuaK
+	YxT4iTfMGfN02IB0WfldcC9+L7Ihw4u2xmPQfKSsyg==
+X-ME-Sender: <xms:R5SjZlGlN1wtJogjIDB_GILbCF8eIU7X-mnZ56fdkVoF9dfDpH_SDQ>
+    <xme:R5SjZqVF2i6JeABwHD8T3dJPE4HkX86U8ZGGlffVRuniwDgugQKLxmSGsesqBj4pT
+    rUvTd2Hcsac21sJfQ>
+X-ME-Received: <xmr:R5SjZnI9_k5np0zbZlnTFo5mx6c1drMTEBZX_FV5kXnBPZUcZRk9cZCzBNdi5gnBG_G6pXuTIftVWe59ql3YE-j2KTK-rfncqGUBkXegamyfE7OT>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -55,23 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehvdcutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
     ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:PpSjZk6ziVv1axjQPeW2ZQGQEWz0QTOUy76yZ0FOk1lTqUEopZqhtg>
-    <xmx:PpSjZo4w5dzMZf7VxOPvx6HwnyK_ROyRU_e44CpQa5wrKRe01eRBTw>
-    <xmx:PpSjZsjcA1_1706_PVL_6kuJ3eLlq4TUivFCH67CT0MlAmJreMx0fA>
-    <xmx:PpSjZq5C_ldBiHNWlH8mE4Iqth3bhI9efXP0IXs7_cMEJS7DJUpfgQ>
-    <xmx:PpSjZmSauspzUCaDGHgMgOsMR6HyaJIcamNZc8QPpMfhfE5gtUr-82gI>
+X-ME-Proxy: <xmx:R5SjZrEBcNOIiGAF7mSeL_hVn_Go7uY9u-m6FbiIsZtDP-OvVDPPjA>
+    <xmx:R5SjZrWCpfHZT_x29W8mlnmrHCvc3YIw7TglHDW8L-Tz7Mg1HjuKzA>
+    <xmx:R5SjZmPhqYz9-tACYJ3EBF7lo2k9L5uZOSzXZCRBVIrQTMfBnrJ71g>
+    <xmx:R5SjZq16tZhTqRlejaT7uoX0gL3mGy6fQG-jGeH6uzQCIYU1s_BBjQ>
+    <xmx:R5SjZicyaRs2FbAXRFYXoNGFjAbDQuUqs84eGnZZOw4-If9NTJFVlZOM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 26 Jul 2024 08:19:09 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 26 Jul 2024 08:19:18 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 3c606302 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 70fd3aa0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 26 Jul 2024 12:17:49 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:18:53 +0200
+	Fri, 26 Jul 2024 12:17:58 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:19:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 21/23] entry: fix leaking pathnames during delayed checkout
-Message-ID: <e426fd7ec5b3a93b4110d05fb4e3580c4f6e7d52.1721995576.git.ps@pks.im>
+Subject: [PATCH 22/23] convert: fix leaking config strings
+Message-ID: <8c2a19994fcda53cc1cb315c8ab87a36838d598b.1721995576.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,123 +80,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+RphFvCEjhoWRV0k"
+	protocol="application/pgp-signature"; boundary="k4BJAnhz3WTtK8GK"
 Content-Disposition: inline
 In-Reply-To: <cover.1721995576.git.ps@pks.im>
 
 
---+RphFvCEjhoWRV0k
+--k4BJAnhz3WTtK8GK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When filtering files during delayed checkout, we pass a string list to
-`async_query_available_blobs()`. This list is initialized with NODUP,
-and thus inserted strings will not be owned by the list. In the latter
-function we then try to hand over ownership by passing an `xstrup()`'d
-value to `string_list_insert()`. But this is not how this works: a NODUP
-list does not take ownership of allocated strings and will never free
-them for the caller.
+In `read_convert_config()`, we end up reading some string values into
+variables. We don't free any potentially-existing old values though,
+which will result in a memory leak in case the same key has been defined
+multiple times.
 
-Fix this issue by initializing the list as `DUP` instead and dropping
-the explicit call to `xstrdup()`. This is okay to do given that this is
-the single callsite of `async_query_available_blobs()`.
+Fix those leaks.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- convert.c                               | 2 +-
- entry.c                                 | 4 +++-
- t/t2080-parallel-checkout-basics.sh     | 1 +
- t/t2082-parallel-checkout-attributes.sh | 1 +
- 4 files changed, 6 insertions(+), 2 deletions(-)
+ convert.c             | 12 +++++++++---
+ t/t0021-conversion.sh |  1 +
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index d8737fe0f2..61a540e212 100644
+index 61a540e212..92ce04c406 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -960,7 +960,7 @@ int async_query_available_blobs(const char *cmd, struct=
- string_list *available_p
- 	while ((line =3D packet_read_line(process->out, NULL))) {
- 		const char *path;
- 		if (skip_prefix(line, "pathname=3D", &path))
--			string_list_insert(available_paths, xstrdup(path));
-+			string_list_insert(available_paths, path);
- 		else
- 			; /* ignore unknown keys */
- 	}
-diff --git a/entry.c b/entry.c
-index e7ed440ce2..3143b9996b 100644
---- a/entry.c
-+++ b/entry.c
-@@ -191,7 +191,7 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 		progress =3D start_delayed_progress(_("Filtering content"), dco->paths.n=
-r);
- 	while (dco->filters.nr > 0) {
- 		for_each_string_list_item(filter, &dco->filters) {
--			struct string_list available_paths =3D STRING_LIST_INIT_NODUP;
-+			struct string_list available_paths =3D STRING_LIST_INIT_DUP;
+@@ -1050,14 +1050,20 @@ static int read_convert_config(const char *var, con=
+st char *value,
+ 	 * The command-line will not be interpolated in any way.
+ 	 */
 =20
- 			if (!async_query_available_blobs(filter->string, &available_paths)) {
- 				/* Filter reported an error */
-@@ -245,6 +245,8 @@ int finish_delayed_checkout(struct checkout *state, int=
- show_progress)
- 				} else
- 					errs =3D 1;
- 			}
-+
-+			string_list_clear(&available_paths, 0);
- 		}
+-	if (!strcmp("smudge", key))
++	if (!strcmp("smudge", key)) {
++		FREE_AND_NULL(drv->smudge);
+ 		return git_config_string(&drv->smudge, var, value);
++	}
 =20
- 		filter_string_list(&dco->filters, 0, string_is_not_null, NULL);
-diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkou=
-t-basics.sh
-index 5ffe1a41e2..59e5570cb2 100755
---- a/t/t2080-parallel-checkout-basics.sh
-+++ b/t/t2080-parallel-checkout-basics.sh
-@@ -8,6 +8,7 @@ working tree.
- '
+-	if (!strcmp("clean", key))
++	if (!strcmp("clean", key)) {
++		FREE_AND_NULL(drv->clean);
+ 		return git_config_string(&drv->clean, var, value);
++	}
 =20
- TEST_NO_CREATE_REPO=3D1
+-	if (!strcmp("process", key))
++	if (!strcmp("process", key)) {
++		FREE_AND_NULL(drv->process);
+ 		return git_config_string(&drv->process, var, value);
++	}
+=20
+ 	if (!strcmp("required", key)) {
+ 		drv->required =3D git_config_bool(var, value);
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 0b4997022b..eeb2714d9d 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -5,6 +5,7 @@ test_description=3D'blob conversion via gitattributes'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-parallel-checkout.sh"
+ . "$TEST_DIRECTORY"/lib-terminal.sh
 =20
-diff --git a/t/t2082-parallel-checkout-attributes.sh b/t/t2082-parallel-che=
-ckout-attributes.sh
-index f3511cd43a..aec55496eb 100755
---- a/t/t2082-parallel-checkout-attributes.sh
-+++ b/t/t2082-parallel-checkout-attributes.sh
-@@ -10,6 +10,7 @@ properly (without access to the index or attribute stack).
- '
-=20
- TEST_NO_CREATE_REPO=3D1
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-parallel-checkout.sh"
- . "$TEST_DIRECTORY/lib-encoding.sh"
 --=20
 2.46.0.rc1.dirty
 
 
---+RphFvCEjhoWRV0k
+--k4BJAnhz3WTtK8GK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajlCwACgkQVbJhu7ck
-PpTneg//Zbar9hcktgefJwx1f69e43bexzK/FSx9h0XjETFWpjJXe2H/EkUjZoIK
-IK4rvmS6xNq8DyN0AtIVCf0w++x03QECFkkoR/qF/csLO8DLUWtEjEsu3PCRqarh
-e8UbsstRMdyRvM01yf5As7Urv1epkGyNO6tLrpfj7FaRCd+Ec5Dv7Oyi6swqSH2J
-o1kbU/BsQ1lU7rqv5jAP2dey2PHBoFgRjg9oiVn5Q9JS35GOwIt+4hR9rkBprUaf
-OiFtHZzxZmXPi4olXOcyvYSord4awaZ8n5fGHdAhy03468GDk2r1ytitu8+IpILj
-v8oEtG+HeyTxW/jCFd8eHAEWyZ23JgbF1bJnGwc0jrLxMgIf/kQBtjIck2iANUkB
-4jAjvrW2TWuz2IuwWXedcpIQHCtpuCUSJenODil3az0WqGS8fdYDYD+SoGvwyaMy
-E/r9xu4TTGtVr4T/d21Mt++im0kxfvGqiJRhgF0Kjeyjz/cZQ4bxsCXj/NkSTNMk
-FiYWo+Ob9Y9ERsCjhu/OtyKFnMgnGNvinqFw/fAUyPzSBLXg6gmprCtiHhrUG/D5
-t944J36SA8WypkZJUt8sldcAD9getqJ2hAqDmTr91CWN2Jm7jws20zZZFuBjnKDV
-sfP64g77NCLbQoYpNWtV0QQvjh7+7y428YTqdRkviKpi4F6DSQY=
-=OD8h
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajlD8ACgkQVbJhu7ck
+PpSzHQ//XrlHfE/pg3ns5i0WFjVr3HamGcfBYOn/EszC+pFBeqMq/qiv1EOD7tgK
+vVAReNW8SCDq28cgmmiGXYiEGzQtTgjSn63MkZs+L9Q36dPPhglEkfLuBsGCrpTA
+T0pCM1ZeyVkzb0fSq/P77rSbp4ppTSaAW8iy5m6hsyanB7fZG18f1Tq5oqlsWN+a
+2j9OoJOjJEI4lXKUaBZTQC3HW7rt//NCwxRlq32pC36J809zSU6aZNL6R5Lj396d
+EXVKayuI9dXch9USv9Oht2h4yd0hKQh4KzTSKQjiNtS7nEJyXzJNedjkGHK+wKNi
+8hIbinChThZNygKNVK6t4NpCyLddj1BRpqYeGpz9G3jG4vg15XG9VHoihE3cUtIT
+4+4AvS/I2Ed+AC6a9ZycKKAxEOxD+dhkrPGaGfsr3hHkV3hnPDUt8pFV00eTyJ2r
+jo1HaCnpVjsP2w8NlOKDkMdlbWwFCgGRfPSEqLJMnecuV4fPZITufPFyS97zg49T
+uUI2ioDW+oDuQgHDiawxsEsxspIX5sVPmpZ787pJJ5qcJsOaS/4VvRvOsQT4rQYa
+GsezdvJCJ+2morGe+DKe3aUK2Zd/u3Q+TwOuFf00gYOaEi4BNIfRJIZ6JNJwyvg0
+fNhSpZlVAWrTSiduDm6Xvr8eAZcOrV2jhEhVckug1pteh3FH+Xc=
+=iTjE
 -----END PGP SIGNATURE-----
 
---+RphFvCEjhoWRV0k--
+--k4BJAnhz3WTtK8GK--
