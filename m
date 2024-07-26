@@ -1,111 +1,80 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC36339FDD
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 19:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800B046BF
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 19:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722021740; cv=none; b=GrpJqUJDOdafb5K3VeDcslGlOscigeMettTskYUvim3BS8r+ODvBbBqQNgUS7cG/wnbNHcQtO6Pe8T5kAAou15D2sY3dvI3MWawMrYsEAZCOcK/mpuZVGg7l5Y/wgxtBk70MZgggBgOTL4ukbX176AjIb5dkZmjeWYf0l2vcMZY=
+	t=1722022283; cv=none; b=Z9UhaFk5AVxjj9wXWezt2qOxBGC3IkAX7upTYyjpiSsGSoioxWgHoCquSP6MrCh+wrwV8xjQizMAf/my9objr1iCzhEuCc4irYg1WvtEvhRub1zaPQMigw9Ps7FWzkI3zfab3t4HTId1XZkaRsgWjtyAfadC4zRbamtLFFUOEtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722021740; c=relaxed/simple;
-	bh=vtrMU55nB7vAx+qbcHaPmITJv8l0z5fh0BwrNFsVEhM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oBzcVeJXPZ2kaq7TYH4Vk/7FidvBbjL+/ZREf+HvhNkE/BkrFBvbNS0A5sBCMM1wyWOnBLlUT9aOwjKRpwi31Pleb57aSm2tEHOlwlGnvNAvfRNn+GaGfMmkxDcNp1l6OdzIs/NVC/RNOIHxPfxhhjVXOOnRXNBD4/i4a6Fbo4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WWlMf/6r; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1722022283; c=relaxed/simple;
+	bh=wBBV+UpfE16oqOGt6oJwDNrHJXuZI6ERmiFrk7VdriQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E/6ItJ51YS2a5V2BNSV3RNzO+RRGnN2EJ5+WB2FuSKGf65Xp33Q0P39Fpd73lCLTRYjGxLKl7ETQzPfAVKVeydXkoksTC/SfsSS4whoP1LucyHx1H+I9jPiitTcsQulR91NvlXXvusQiBDJ3NgBoGT60vMrm4m1kCMKHkCISoyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWlMf/6r"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ef2ed592f6so17886551fa.0
-        for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722021737; x=1722626537; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GnVALJEbEg50vN6BUmF2h7LUdvvVdUuQVaGSqKsdYSA=;
-        b=WWlMf/6rnlSGzftD9TEqz5v2feGUUThzmIqyjKmvSj8UgNV0BkQYIKaEPtdeev1xPZ
-         1Rshd79DNN4Iu2Aw5RnY8jqUSlQk7Gr7av4mrrQtUpMe3ZEP9WkU/vqFqtwlfhYXbsVM
-         q6u9CpCA+9h1QAxxHHcs1WlGW4MDmkJ7NzXiIaetMxHDDjgRHtDTEkmNihoHovxw07RQ
-         qSvqrbHCTps9VWFHShlTm3BzCZS83Bumu2jcWq6ZGMoeboEKofwPSwLvsz/6auFev1CN
-         jFgpupkUoqtkhAU8GlzxVuirTKyRDA2w8Hh4tYmg5jfTerJHuea5tW5u3pZoXoBLn3+N
-         9QfA==
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6b79b93a4c9so8747436d6.1
+        for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:31:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722021737; x=1722626537;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnVALJEbEg50vN6BUmF2h7LUdvvVdUuQVaGSqKsdYSA=;
-        b=m3TL5UxMfvqkohHDqIsMF1fgRWvvirSekGR7JWkXUkT4Ew0PsZ4smyhgwFaRwDUo0t
-         ZqEKsdrlmSJkqHlw28e1kC/hO64UCF08oZQrg85NQ8smskCrbGSGB23O2VY7INuX84r9
-         ej/pBOlvtzkgICyvzPtycSPbltapuODl6yy37OeIFI2rmdaAWkpwHCdL8oUl3E6wexuu
-         H8TtZHRG/bA1Gz07zl8LMz6d9nQGULEod0OOHY0aJVa2B4cdO5I0Bj0yy/K1o/MpamqF
-         /psZCm1Nd5x2uDS7hLKeweCFYqYc51Uy/wMQFFhubqmcJXUJtY1/iZZFjSb8SRUGz4q9
-         Os6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVxNEHoywKQtV1JN/OtPp/iMKhBxBoqxKJQcAsNVK1Dxi7mRLww5kKn4BMr16EUQY7uX4qCUEqhu2Oo3iwIPvdtgl7f
-X-Gm-Message-State: AOJu0YyCPCqPGXJK3klG3zBDI4VzDb99zSSiCLM9UzIhLfVhCfeqLqzU
-	0H+DIXDEvX2aCkqcn8cB+Rl24Ogdd7uUuR8UPSXHjQSrCWetROpU8iwIrw==
-X-Google-Smtp-Source: AGHT+IFASqsOOijD4xSDUcSd4CVr6KOoR54UNHOBGlWKqM6rOJ+sDb8uroVbFeEasydS/CBoE7ejIg==
-X-Received: by 2002:a2e:9e81:0:b0:2f0:1fb6:3444 with SMTP id 38308e7fff4ca-2f12ee55d56mr4318741fa.36.1722021736554;
-        Fri, 26 Jul 2024 12:22:16 -0700 (PDT)
-Received: from gmail.com (155.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.155])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f94111c1sm133569355e9.40.2024.07.26.12.22.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jul 2024 12:22:16 -0700 (PDT)
-Message-ID: <1dc4cb5d-966a-402f-a880-42280750b949@gmail.com>
-Date: Fri, 26 Jul 2024 21:22:15 +0200
+        d=1e100.net; s=20230601; t=1722022280; x=1722627080;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8zi67MMIS4xSQvxdcgShOebRvLprTT7OnXab+iPNYYU=;
+        b=HsOuMKptDxSmtuJa6nljUZ2kBMZUvIOV2tA3aLeBGRRvJ5pGYgHI3pwDvFpnDJ1U87
+         /IsZiwCvFivJNJdlPITSFTxTDliq5C8It/Wd61RFDy+5d9P1DPcV3dYvJqDdf7cfyYou
+         kWPeeyefF6Ydl9V/YxTjGtm3r2Il5M50zdnXp98hX+50xEwM8NQnpUacVG/XgphTKNTZ
+         ucANMbv8lmKTROGhOFUdUzNU0hGWLd0/JM99vT8Zp+rOF2CeHuzzLEAXjjVbpXvUwmIM
+         /CkRvS3S82mVTqn0xQyaWf+Trt3SpcNdj/zXyFcMihlf1NOFQFzxUAVJT9TgZBAXH6a5
+         zN2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVRI36K3ivla5EU31q/C8AzS88Bu9GwUiKs56Kc3FUxL8BfkwOv+8S228iahvxFCTL0NLUnL3+MLOlIPLzjVXaxrUVW
+X-Gm-Message-State: AOJu0YwpVXDrgut7sdjI+OgMZmXD9tCzhHo9/9Q94Eo/9MDRVCHK0QdD
+	vwg15fboob4xbGVraiq82MC8dKC/3MuMlXRpFdi6wZDWrhWy2c0ekKBgnK+mzx0SYMxF7Ql/Qaj
+	m/X1tGQcjY/yWigo3UAVxnQtSi9s=
+X-Google-Smtp-Source: AGHT+IF9U37T6TFxtvr2hJt2QX01bpu6CzIKehm+Hoz7iOEter9WSODGgxtUsB4Bwcy6K3ljKVl5OvqiggwYCXNp4rY=
+X-Received: by 2002:a05:6214:1a03:b0:6b5:1cea:649d with SMTP id
+ 6a1803df08f44-6bb562f96e6mr10480686d6.11.1722022280350; Fri, 26 Jul 2024
+ 12:31:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Re* [PATCH v2 0/2] add-p P fixups
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
-References: <7c9ec43d-f52f-49b7-b1f3-fe3c85554006@gmail.com>
- <62af789f-ca19-4f11-9339-a97400f7e70c@gmail.com>
- <2333cb14-f020-451c-ad14-3f30edd152ec@gmail.com>
- <5735bee3-0532-4894-b717-12a0bdcb9e84@gmail.com>
- <a25c37e2-fcfd-4a4c-890b-a85039ccef12@gmail.com>
- <97902c27-63c9-4537-8ebe-853ef0cb1d3b@gmail.com> <xmqqcyn1lcjo.fsf@gitster.g>
- <24e83a0f-b0c8-4cd5-b321-1d7702b844ce@gmail.com> <xmqqsevwui31.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqsevwui31.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240722065915.80760-1-ericsunshine@charter.net>
+ <20240726081522.28015-1-ericsunshine@charter.net> <20240726081522.28015-5-ericsunshine@charter.net>
+ <9d96b89f-f4e4-49f4-aa59-2c229d3988e4@gmail.com>
+In-Reply-To: <9d96b89f-f4e4-49f4-aa59-2c229d3988e4@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 26 Jul 2024 15:31:09 -0400
+Message-ID: <CAPig+cTKnWjaTkh_TwCKqu9Yks9KwOfe_+3xON+ErGYucLny9g@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] check-non-portable-shell: suggest alternative for
+ `VAR=val shell-func`
+To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Kyle Lippincott <spectral@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 26, 2024 at 11:24:50AM -0700, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > On 7/25/24 5:24 PM, Junio C Hamano wrote:
-> >> Phillip Wood <phillip.wood123@gmail.com> writes:
-> >> 
-> >>> ... We
-> >>> can add a comment about the dash problem to the commit message when
-> >>> this fixup is squashed. Also the problem is now documented in
-> >>> Documentation/CodingGuidelines which is more likely to be read by
-> >>> other contributors.
-> >> 
-> >> That is a good thing to take into consideration, indeed.
-> >
-> > Rubén Justo (2):
-> >   pager: introduce wait_for_pager
-> >   add-patch: render hunks through the pager
-> 
-> Hmph, what happened to the first two out of the four patch series?
-> Retracted?  Or you just didn't bother sending the whole thing?
-> 
+On Fri, Jul 26, 2024 at 9:11=E2=80=AFAM Rub=C3=A9n Justo <rjusto@gmail.com>=
+ wrote:
+> On Fri, Jul 26, 2024 at 04:15:21AM -0400, Eric Sunshine wrote:
+> > -             err '"FOO=3Dbar shell_func" is not portable';
+> > +             err '"FOO=3Dbar shell_func" is not portable (use test_env=
+ FOO=3Dbar shell_func)';
+>
+> When someone blames this line in the future, the message of this commit
+> will appear and be informative.  However, I think the message of the
+> previous patch [3/5], which also touches this line, would also be
+> relevant for this context.  And it won't be so obvious to get to that
+> message.  Therefore, it might be worth combining this commit with the
+> previous one.  But I'm not sure the change is worth it to have a new
+> iteration of this series.
 
-No, I just wanted to modify only the two commits in rj/add-p-pager that
-were affected by the fixups. 
-
-I thought it wasn't necessary to modify the first two, which remain
-correct, and I didn't want to bring them up again.  Additionally,
-keeping the dates of the first two different from the two modified here
-could be interesting.
-
-That's the reason.  I didn't want to cause any distraction or add any
-inconvenience, if that has been the case.
+I did consider combining the two patches but decided against it.
+Despite the fact that both patches touch the same line/message, they
+really are two distinct "fixes" as evidenced by the fact that the
+explanation provided by each commit message is entirely orthogonal to
+the other.
