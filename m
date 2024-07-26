@@ -1,77 +1,77 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E73A3D
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0664140E34
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996183; cv=none; b=EvLPNpIEF2miuFGC/jC9kiBQLnlPcKXiPlwbqPlFgJF+pHXLDz6dZ3grfM63YNkAtj+UUCdcxDAituOlIzkf3pKEf5PUiK8LSJhyx7sdB3iFIWE2yO59IRxTE4taxvhU7maSP9uKyX4jwQLLoDWmbOcBF1x2t8DBExU+1fxM07s=
+	t=1721996211; cv=none; b=oIvrrXpBB8VwgaRVUkybCz96AKXesDTbkyd0pXMvU4be8Ihe10feWM7an+F3CelLeZH5znu/6kY2vdJBT2I2XOmlTAV621p2zBL2fkJoBVHQKVCpYgoy37p9DvBUqvO6vyIFU/S2j61ORZREfokeBo04j9K+/LbdMhCdgnpBma4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996183; c=relaxed/simple;
-	bh=WgO0V5fGsyLgT1c1omRgff6xxCugaXOa5zRtefyWaVM=;
+	s=arc-20240116; t=1721996211; c=relaxed/simple;
+	bh=GSUGuR4biMcDrRRdCcZud78q1/tkig2F/k1lHDkN1Hc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mN7LPhucBXl5Z9Gj4pDX6DqfnJj2izKtesCRddgyoYAoqbTM+lkFDMUaARbYhjOMMqdPb12auL8ujJUMDFdtWBfp7KGPuvuy3Ea7zHkUZm4qutQuN06JIKaQw2P1WLIAn6zYbDRRfylxQK5tJ9gwwEiWilcNcwciUTGEs/n2gng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XnkxU+4R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dQCID0GI; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQGlmkw1IIT4xjpHBccwLNeYNGzQBSkRKr8LyxsyHsuNmuQ28pd0S2Pxd8wBr3SyI+R+WhqgIlLns2KtocLZ1nUNWAuRbGR+y5cvINLDbwDBumuZoEcneU9s0chWRTlI3OS1vP+r79NLXKwmo1xrHmRkyOvO2VOE6Vy1n/rqfOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cjpSPIlT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Guf6PASS; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XnkxU+4R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dQCID0GI"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 42B4813805DD
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cjpSPIlT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Guf6PASS"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 5B22E1380502
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:48 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 26 Jul 2024 08:16:21 -0400
+  by compute5.internal (MEProxy); Fri, 26 Jul 2024 08:16:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996181; x=1722082581; bh=f6CX5wCoF2
-	mM3a0adFOCvXdcDzOmI8zntGoaSeAwK3c=; b=XnkxU+4RpIoNE/oNDH5poh5a5T
-	/BKQgz+7mFgP8ROUb+F4loi4WTOnV4+d9gSWXmUf5Ng0oRwUGMBWImeH8RbJZily
-	Vx9p8EpFhXfcR+Qsgs3fV1wbCo5EgWhcv4jBcDoUSHsKSGrx6WssaaPmWihcuHd5
-	VF54hlGLW6n24eIXK9IwjOTTu/bhv2lqBVQ4zOHKk9rR7pSAtR97zAgJcNzOl1O8
-	3rwUUsyc3mxg+NazyECqnV97qQNwVdDu6YU1ltIGeg7w69r8Ao+d8tfxHSB3gGY/
-	r/hebGe84TJo0pJxCIM6HJ4oT1hRpbBkAza3diQRkFVDhStRDby8y19a8qug==
+	:subject:to:to; s=fm3; t=1721996208; x=1722082608; bh=nXEeyZmaW1
+	pOVsP5vw1xvpi4WPMR64kx+0BZA4V+zcU=; b=cjpSPIlTJDShl94OdMvfcM726M
+	XCzRwfQ3vmh4tz8X+lb2VHVOVe78ZaWOUMpUPgC3wMprWk1CaZDmMxQAR84Cwtow
+	IhltdTVPzcvtjRCOsuqDQ/fQptzze1yYhvi9UygTTWb1QqD6oKuq6GQPW27hcglM
+	Vj3qgeEh8XJZgNsTEU7ExbmjM/Pr4V6HLywwDo7ilvQs8109TqOgZZXDz2mx6iB3
+	9hOMOD3m/YwYjbR2F3FS8X7cSEOJjZIz0zmEc3Yd19LMdFogoXAYtbpkssUEzrUg
+	g5k1nk9hwDyrMC8XifQnfxmSH/J99lm9tBskHjpn3J2cUl5GSDlySPA/EMjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996181; x=1722082581; bh=f6CX5wCoF2mM3a0adFOCvXdcDzOm
-	I8zntGoaSeAwK3c=; b=dQCID0GIIIuyFNV8dH+P81U8i7z9B1EbmZ7+6RQkQQMH
-	d01R6/AFQ+juHilMKAD33KgUDj86Niug4ftzWivUyCPKqFucBTCdf/LjJr/KEMN8
-	S9TD0Myio41dRpHTYspkOn7LXvkexa0q8XywFX5aPD99kPveXX4wzta1aZBml3Q6
-	ua0+eGHsMbSPhaRmL7POyadqMl3QK2g0Vz7NIZC8soxbqOHtwqVuxKyyASLFbKCm
-	dqSHK7Nz10VgGfjuIlMBKduyVewSUnQFwtcCIHGxTv+AkZTjvJwBFt4U3gTj1xSj
-	TXTxv79c1S8qUaoG8Eq5rSu1W0/Im2zNDg0xY8ayZA==
-X-ME-Sender: <xms:lZOjZnyiXPKIf_U9gv-vGnztcrf8v3ONNY0S9CSKHTn1DK7WJwUCfA>
-    <xme:lZOjZvSysgUpVXKL7H7Gb4NccB8fv9HP_buNS5X2_Vlkg5dJkdG0qiuks-zzaUA-n
-    jIUUXD_DDuEGRLeng>
-X-ME-Received: <xmr:lZOjZhXCLYIgr9c_zsyYzyWeDBWE5mRqunLYtRdu0tiidu83SChshq21EcdYlHkAYvcR-uPsd5WrNDmQr5QI0wnn2sDZr8-vH8A-Xo-MirjXUnVQ>
+	fm3; t=1721996208; x=1722082608; bh=nXEeyZmaW1pOVsP5vw1xvpi4WPMR
+	64kx+0BZA4V+zcU=; b=Guf6PASSpZsqkFR/6hyqdIH7zjhCe/TXSuJIxebkGEN9
+	UcZ8ErGLqY2w3jJ+FpxZHLamslbreVf11UgQvqdQTHUWSCRnCluNul0/r2IOhCbt
+	0RBD7XjyWT41w31QxzWKO0dazwSHP+zl44UquqZbkiejK6UpLSPw76h1q7pKoFjP
+	sDP1ppjaulxtUIEIjTezokIuOK1efAzBDtCrybFz4B5b0nh4XLdit+7OYaxpB6ur
+	mWTh87pB+5TqEKvsmKZC2PSxTtHBFfdyPeVBUAmSfeZlZXBKMHlYrFXvT+akvMpk
+	hc0BVI7FnlrtR4a6b9UzM+VzqzS841y/KqQXOP+a1g==
+X-ME-Sender: <xms:sJOjZsAENmTvFCB5oxhwqbsnZi6TGPqdSiKDhR8pzCubtlKjvx-KNw>
+    <xme:sJOjZuihOlznfKh28z5bEt3C8S-tj2zAPZQIMe8TVyN_3C6XGZ5SeaSniyjErTLVg
+    D03tQ3Ap3P9Yxzctg>
+X-ME-Received: <xmr:sJOjZvm3rVvJ0GptZ7hxFoGv4GnO3ab4c8hRhu99PactaTy1x6H40JIsnoWs-5ymt3Fr__Gl1aeF8KHz6Ob9tm4sx-Z9YFaiaaHmvOP1m-TOJvXy>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:lZOjZhjtGfDZygzrF-vFmh3ap5aFXUr5BEpGkCxpV7OWWXTMcnGA9g>
-    <xmx:lZOjZpBHcSTwlJ5jQB-JFCbBcHgbFZSM_lMdzUiCc4LZovHZ98XEFA>
-    <xmx:lZOjZqJ0LaTcyj9EtliEFzH2kT2sOvmfyrK3RMmOGSRCVLc6_p_lng>
-    <xmx:lZOjZoDGGTLQd3H5v22Hie8hDq0fEkrr02VuynzDoGIe50ubbei_TA>
-    <xmx:lZOjZm6DaFUGb5EWOn_x9WalvGnwAwvwq2NH3FlvcVvr7M85PdgCFQce>
+X-ME-Proxy: <xmx:sJOjZix3sOhtRwbwAvAYkjlXTevlBMa8I-BLct5kcmnyzTW6kwiJiQ>
+    <xmx:sJOjZhQKCN_rfcuNYIAAcPohSjdGIW8UsOuwXnliq9Lm7oiVI2MHMA>
+    <xmx:sJOjZtbe0FKVI3-mDcDiJzfXMgvv1rPszFuT7NjcFfzySxCTeGUbvA>
+    <xmx:sJOjZqS2CF_9KbhiI7i59uui4YiECzFA5A8M4DibMx84kitDVRhXjQ>
+    <xmx:sJOjZgK8dkHI7KsVBwUzpPTlVsKlEP9gxsvka1RQLcFzefP7xHCOiTVx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:20 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:47 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 5a1e786a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 809716d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 26 Jul 2024 12:14:59 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:16:12 +0200
+	Fri, 26 Jul 2024 12:15:26 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:16:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 11/23] builtin/stash: fix various trivial memory leaks
-Message-ID: <a4b3ca49c9724b79ca695d0db8e45be663a46434.1721995576.git.ps@pks.im>
+Subject: [PATCH 12/23] builtin/rev-parse: fix memory leak with `--parseopt`
+Message-ID: <e277222bd298560b0d7f10cb9b5d0eee5967ba87.1721995576.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,174 +80,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kv01o715cE54Vdnr"
+	protocol="application/pgp-signature"; boundary="9Pgo3LNy3teC7X6b"
 Content-Disposition: inline
 In-Reply-To: <cover.1721995576.git.ps@pks.im>
 
 
---kv01o715cE54Vdnr
+--9Pgo3LNy3teC7X6b
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are multiple trivial memory leaks in git-stash(1). Fix those.
+The `--parseopt` mode allows shell scripts to have the same option
+parsing mode as we have in C builtins. It soaks up a set of option
+descriptions via stdin and massages them into proper `struct option`s
+that we can then use to parse a set of arguments.
+
+We only partially free those options when done though, creating a memory
+leak. Interestingly, we only end up free'ing the first option's help,
+which is of course wrong.
+
+Fix this by freeing all option's help fields as well as their `argh`
+fielids to plug this memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/stash.c                    | 18 ++++++++++++++++--
- t/t2501-cwd-empty.sh               |  1 +
- t/t3903-stash.sh                   |  1 +
- t/t3904-stash-patch.sh             |  2 ++
- t/t3905-stash-include-untracked.sh |  1 +
- t/t7064-wtstatus-pv2.sh            |  1 +
- 6 files changed, 22 insertions(+), 2 deletions(-)
+ builtin/rev-parse.c           | 5 ++++-
+ t/t1502-rev-parse-parseopt.sh | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 46b981c4dd..7f2f989b69 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1521,6 +1521,7 @@ static int do_push_stash(const struct pathspec *ps, c=
-onst char *stash_msg, int q
- 	struct strbuf patch =3D STRBUF_INIT;
- 	struct strbuf stash_msg_buf =3D STRBUF_INIT;
- 	struct strbuf untracked_files =3D STRBUF_INIT;
-+	struct strbuf out =3D STRBUF_INIT;
-=20
- 	if (patch_mode && keep_index =3D=3D -1)
- 		keep_index =3D 1;
-@@ -1626,7 +1627,6 @@ static int do_push_stash(const struct pathspec *ps, c=
-onst char *stash_msg, int q
- 			struct child_process cp_add =3D CHILD_PROCESS_INIT;
- 			struct child_process cp_diff =3D CHILD_PROCESS_INIT;
- 			struct child_process cp_apply =3D CHILD_PROCESS_INIT;
--			struct strbuf out =3D STRBUF_INIT;
-=20
- 			cp_add.git_cmd =3D 1;
- 			strvec_push(&cp_add.args, "add");
-@@ -1718,6 +1718,7 @@ static int do_push_stash(const struct pathspec *ps, c=
-onst char *stash_msg, int q
-=20
- done:
- 	strbuf_release(&patch);
-+	strbuf_release(&out);
- 	free_stash_info(&info);
- 	strbuf_release(&stash_msg_buf);
- 	strbuf_release(&untracked_files);
-@@ -1869,6 +1870,8 @@ int cmd_stash(int argc, const char **argv, const char=
- *prefix)
- 		OPT_SUBCOMMAND_F("save", &fn, save_stash, PARSE_OPT_NOCOMPLETE),
- 		OPT_END()
- 	};
-+	const char **args_copy;
-+	int ret;
-=20
- 	git_config(git_stash_config, NULL);
-=20
-@@ -1892,5 +1895,16 @@ int cmd_stash(int argc, const char **argv, const cha=
-r *prefix)
- 	/* Assume 'stash push' */
- 	strvec_push(&args, "push");
- 	strvec_pushv(&args, argv);
--	return !!push_stash(args.nr, args.v, prefix, 1);
-+
-+	/*
-+	 * `push_stash()` ends up modifying the array, which causes memory
-+	 * leaks if we didn't copy the array here.
-+	 */
-+	DUP_ARRAY(args_copy, args.v, args.nr);
-+
-+	ret =3D !!push_stash(args.nr, args_copy, prefix, 1);
-+
-+	strvec_clear(&args);
-+	free(args_copy);
-+	return ret;
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 2e64f5bda7..5845d3f59b 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -553,7 +553,10 @@ static int cmd_parseopt(int argc, const char **argv, c=
+onst char *prefix)
+ 	strbuf_release(&sb);
+ 	strvec_clear(&longnames);
+ 	strvec_clear(&usage);
+-	free((char *) opts->help);
++	for (size_t i =3D 0; i < opts_nr; i++) {
++		free((char *) opts[i].help);
++		free((char *) opts[i].argh);
++	}
+ 	free(opts);
+ 	return 0;
  }
-diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-index f6d8d7d03d..8af4e8cfe3 100755
---- a/t/t2501-cwd-empty.sh
-+++ b/t/t2501-cwd-empty.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'Test handling of the current working directory becomin=
-g empty'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success setup '
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index a7f71f8126..e4c0937f61 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -8,6 +8,7 @@ test_description=3D'Test git stash'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-unique-files.sh
-=20
-diff --git a/t/t3904-stash-patch.sh b/t/t3904-stash-patch.sh
-index 368fc2a6cc..aa5019fd6c 100755
---- a/t/t3904-stash-patch.sh
-+++ b/t/t3904-stash-patch.sh
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index b754b9fd74..5eaa6428c4 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
 @@ -1,6 +1,8 @@
  #!/bin/sh
 =20
- test_description=3D'stash -p'
+ test_description=3D'test git rev-parse --parseopt'
 +
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./lib-patch-mode.sh
-=20
- test_expect_success 'setup' '
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-unt=
-racked.sh
-index 1289ae3e07..a1733f45c3 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -5,6 +5,7 @@
-=20
- test_description=3D'Test git stash --include-untracked'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- test_expect_success 'stash save --include-untracked some dirty working dir=
-ectory' '
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-index 11884d2fc3..06c1301222 100755
---- a/t/t7064-wtstatus-pv2.sh
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -4,6 +4,7 @@ test_description=3D'git status --porcelain=3Dv2
-=20
- This test exercises porcelain V2 output for git status.'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-=20
+ check_invalid_long_option () {
 --=20
 2.46.0.rc1.dirty
 
 
---kv01o715cE54Vdnr
+--9Pgo3LNy3teC7X6b
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk4sACgkQVbJhu7ck
-PpRbIg//V9lLi3DZgBbPm7OM1FZp4MGD+vPbkKdScmtN5UuRBYLipq992D0EV0rw
-qgFMBJtkN9Cc4ApJE2BOpAQRk/qIjbf9gYUtT4R0U2dtJJhJmwBpt7Nu3AoUfggL
-gHWclZPvPcHDBFwl4MiFiYq9NWWEJbSFmXGCO/6WY2JNkkLOkdkER0m2ngiZ5cSr
-ChEuCWG60hEVQmGH51N+ol+SduHCEuw8HGbjyctAEWQIizq39smra4cW+RZisEjj
-4rzqv2aZUHICSaun5IIemb/SEwLC/e8sKXGMt5vi8bCe3wFE6zzHfsA/XZswX3kc
-fflqTqe1+CIKWU2kwODCSJakZnH56AT/6t9DC9oWjf64BcxpRepjYU/E1BKmnlN+
-ed9v5kQe/Cf+YXkTCsDFN7Swh5UjAQW4fNStmaE7RpYOEelZfn+Ssa37VW3BjVok
-UKgZ5e3i5sco9elgiCwTzXOHO8e3oXEaWaGlI6cpQdrOsaU+A7gGunFrmXZen67g
-9qyFttKYYAUHx7DHVWRaeXgmXnbQiKhhPHM56M/ahftixBDz8IvDan8hn3JXCQ6e
-kYo0qCNWYMN5r7JOucZlZAY13Ce4kbGolsGZu5eoaHTgVOBMvPijUZcq2WWNepbp
-Qwinfg6H+Zzl9F34wYZ9IR7iheIZVhQqqw61e9p8yncZuLoMwJg=
-=xmgI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk5oACgkQVbJhu7ck
+PpQNqw/+J25lCE8yqosz/QRLzma6e1cQE/WLS0eUxuJ/JQhBIcMXX2d8Z00D7zTp
+NcZEKHGrx+X18+RH6Nx6i5MdqzChLMdoL5gpT1h3cacmbJK66FL6q2+IosRmgLKB
+JuJRTuhgKqrupWzJ5kDHHkhhjgrwhaip3k4Lx5AT1r1fJ1AMc66A6/XG6W6CdcI2
+yXuOtLUfgkAPuM5gd/3UYKPC58MgG4uBiA6IIolWXk7g7PXJWax+ICz/pOMaO7/h
+A7Hkfk2AP2WEu9uI0QnYJa0LnoUCPfiJomImf7Cv4H+H+9CWKWoPlex3UFhSjPrr
+NdVFJFnN6WRtZMpQFmmkbMOOpyf4MkpUo4gmDArJgfVg6v6fAOwgBrNY09WqQeid
+uHF5X5hMQTZ79NPK5CyP65gDQYQ8sFJzWcy9S9zYJfgWxxYOyluuuPCEbAh5zQHx
+cyIC6rcnyFJ9cSFP6SecvuvRUJh2nBAuRTVvoGmleVr4JWgTXgGrMlcPoHGDS5YL
+3brs8ljcL/j9QrWneYjTjkneIMGiJEjj/1lyxfxN5uEHM5HlK2F3+5rLoCgTho7v
+0KpGSfYt6zoOZXpOrjlxoHmttN+rFkqhAdg74uYscMX2T3qXqZt8mlVHITV3pOsD
+BFV4cqISdwowEr9/X4NHY4jE6PM3AM67K9tAFwh1CA11YWlwP2k=
+=AiK7
 -----END PGP SIGNATURE-----
 
---kv01o715cE54Vdnr--
+--9Pgo3LNy3teC7X6b--
