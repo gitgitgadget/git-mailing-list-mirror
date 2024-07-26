@@ -1,132 +1,90 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+Received: from impout003.msg.chrl.nc.charter.net (impout003aa.msg.chrl.nc.charter.net [47.43.20.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13ECF628
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2276176AA9
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:17:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.43.20.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721980921; cv=none; b=DjoNwljgfjgO91euetLPfBdugLhLul9VvVyaG3ZaCDaXW2BPrpgwSy9Sy4t7wqGXXZ44EE7PzxJ4KBG+B5tT+uYObn8sNSu/pi/rdbOuOsqCAnxtb8yplcoqUI5zELp4J0QD2vFekiuZ+EH42WTFQaxN0EWU++5p3rdZdAAtMfU=
+	t=1721981873; cv=none; b=LHfzGPneQfBc+EkEFoXVf5G3QIOLwR2TpAYxS7dceKjMoRW4MLwB+yIWqpXJAFV+Sam4g0IKBTt0yTEWwU7SxglpA41W8DUn56eGhMxMYRilDocymD4I9j95WvY34eaGuRfjJJ63jjr/OV/umSH5I/0U40ySr0uF5n6sZGEeHW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721980921; c=relaxed/simple;
-	bh=fkCCzUde4f4XMJzxuPQNt5hg+xZ6EKLcXgcKQ9po6p4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aUh8Fs6iISFZEmzBSd+yNbqIm4a3a+Ish2oFVr42PbUuoAZDu0VSXhYirw/QUHHUchdv25hvpx/lR09xoXP/vUDB9RxjLAA5X+jcJqNk3TjmvkzkjfNY8FcX6aSmtJILTgH+K4ixG/i6pypIcg4gDZcoNQkqnQ8xoeynRXq5/iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=RPaRzW7P; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1721981873; c=relaxed/simple;
+	bh=0Jf0WGx6OBntC8VbAFDxwmkndCCqn7i8vhMb5KBdMps=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Zq9M2+xW1p1vWZ8YPiat0OAysdg3lfkEQmjWYHpFZEMuKOYyuJWQWl61UXD8qlwWDf+YCw+AxgAaOQGX5AJBOWwliFdAjPbSxIgjyTaCUBI7xwaA+kC+BR6PVgkL2w+a3e7nG/yDgbFap0iNb9MC7jGsXpiFFQCiK8+JxmE70J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net; spf=pass smtp.mailfrom=charter.net; dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b=RLra4Bd8; arc=none smtp.client-ip=47.43.20.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="RPaRzW7P"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 247681F572;
-	Fri, 26 Jul 2024 08:01:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1721980919;
-	bh=fkCCzUde4f4XMJzxuPQNt5hg+xZ6EKLcXgcKQ9po6p4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RPaRzW7P3Ue5RBt6MiHH91FJZWxBfb1jRSYAPiNuYGdctV97tMm4QbmzlUS8FFn5v
-	 Avyi62u0WnxSqNtv5R9DkBiQStEYXDKhQiruMz6gfTFp8DuMF5X2DOzqWQ/Ay73ugW
-	 XegLz3WF5xFa9c7mIHb/F68I56L1RSUMVxTcg04M=
-Date: Fri, 26 Jul 2024 08:01:58 +0000
-From: Eric Wong <e@80x24.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 06/10] packfile: packed_object_info avoids
- packed_to_object_type
-Message-ID: <20240726080159.M14165@dcvr>
-References: <20240715003519.2671385-1-e@80x24.org>
- <20240715003519.2671385-7-e@80x24.org>
- <ZqC89ArZWgaZWY7a@tanuki>
+	dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b="RLra4Bd8"
+Received: from localhost.localdomain ([97.71.114.58])
+	by cmsmtp with ESMTPA
+	id XG7MsyipKvFCWXG7ZsRqj9; Fri, 26 Jul 2024 08:16:14 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=charter.net;
+	s=c20240129; t=1721981774;
+	bh=0Jf0WGx6OBntC8VbAFDxwmkndCCqn7i8vhMb5KBdMps=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RLra4Bd83v+HZ/5qIzfu4SDoYiXyYZPOcNFLKpU4+PytZS/ieoxfRlPu1gbL7UEGU
+	 9K2PNvLj8ymHiaxo6K9xJYATPOpjjZJyyPmriIvR2OhIwECJ5gscyYBxsp2YLm+hUL
+	 /pGTSZs2x/N2jZPECXj4oz3Fc8js7quDzbCbxtx0+0EVN2xwcOPh4eMWh3LgJ5SqjF
+	 UDnJgKnIfei2u/jLVUqw0J4YLHw0IoBtx3FSI3noyvDNw5/wDafsB8LgA4UbS4dk2+
+	 1RUpItHdL6eYGmQb15ryBFr5mK8uWW9akdLNx+oPfFyQslz4BWbla09d4VWVruUjH1
+	 xvULombT5vPmQ==
+Authentication-Results: charter.net; auth=pass (LOGIN)
+ smtp.auth=ericsunshine@charter.net
+X-Authority-Analysis: v=2.4 cv=O+w/vg9W c=1 sm=1 tr=0 ts=66a35b4e
+ a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
+ a=1bBlrEcKPFs_eYj-LMwA:9 a=jYKBPJSq9nmHKCndOPe9:22
+From: Eric Sunshine <ericsunshine@charter.net>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 2/5] t4034: fix use of one-shot variable assignment with shell function
+Date: Fri, 26 Jul 2024 04:15:19 -0400
+Message-ID: <20240726081522.28015-3-ericsunshine@charter.net>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240726081522.28015-1-ericsunshine@charter.net>
+References: <20240722065915.80760-1-ericsunshine@charter.net>
+ <20240726081522.28015-1-ericsunshine@charter.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZqC89ArZWgaZWY7a@tanuki>
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfCZ7xnSSVoddY7wDS7a9UL3rdRG1jOIJargj9BEkfqQzFXcaEqnpmVouXaKKtdw7/Jyy+032g33Ixq+rY33GJHdod8FeH2+k7388fg3Q3LptxynKITXz
+ Wq1tOO8olzfFH8kZ52m1UrcHVfMpef28wb8iAxwCOxhmrf3gO4mRc58CdyHT9+Ac1B6tErITJQ3f4u2YudTa/gc0Z9AGKdviHV8VYHe03lrpfMK0m/gwPImq
+ 1SMO5PusgVG7NmdFSEKD0lrr4pjW+7j2nVBgWOhEE2VEpKBynxtr3lRksVFzTVn1J+AkoZe4slZogTckJaZy42nOhWGEedsY2+2tC8XqOFdQyGl4zQal2YRO
+ u6iqgkEz
 
-Patrick Steinhardt <ps@pks.im> wrote:
-> On Mon, Jul 15, 2024 at 12:35:15AM +0000, Eric Wong wrote:
-> > For calls the delta base cache, packed_to_object_type calls
-> > can be omitted.  This prepares us to bypass content_limit for
-> > non-blob types in the following commit.
-> > 
-> > Signed-off-by: Eric Wong <e@80x24.org>
-> > ---
-> >  packfile.c | 18 ++++++++++--------
-> >  1 file changed, 10 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/packfile.c b/packfile.c
-> > index b2660e14f9..c2ba6ab203 100644
-> > --- a/packfile.c
-> > +++ b/packfile.c
-> > @@ -1522,7 +1522,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  {
-> >  	struct pack_window *w_curs = NULL;
-> >  	off_t curpos = obj_offset;
-> > -	enum object_type type;
-> > +	enum object_type type, final_type = OBJ_BAD;
-> >  	struct delta_base_cache_entry *ent;
-> 
-> I think it might help this patch to move `type` to the scopes where it's
-> used to demonstrate that all code paths set `final_type` as expected.
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-The condition at the end of packed_object_info() requires the original
-`type' to keep its top-level scope:
+The behavior of a one-shot environment variable assignment of the form
+"VAR=val cmd" is undefined according to POSIX when "cmd" is a shell
+function. Indeed the behavior differs between shell implementations and
+even different versions of the same shell, thus should be avoided.
 
-        if (oi->delta_base_oid) {
-                if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ t/t4034-diff-words.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-But yeah, the whole function is huge and remains a bit convoluted.
-Inlining cache_or_unpack_entry in 4/10 helped some, I think.
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 74586f3813..4dcd7e9925 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -70,7 +70,7 @@ test_language_driver () {
+ 		word_diff --color-words
+ 	'
+ 	test_expect_success "diff driver '$lang' in Islandic" '
+-		LANG=is_IS.UTF-8 LANGUAGE=is LC_ALL="$is_IS_locale" \
++		test_env LANG=is_IS.UTF-8 LANGUAGE=is LC_ALL="$is_IS_locale" \
+ 		word_diff --color-words
+ 	'
+ }
+-- 
+2.45.2
 
-> >  	/*
-> > @@ -1534,7 +1534,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  	ent = get_delta_base_cache_entry(p, obj_offset);
-> >  	if (ent) {
-> >  		oi->whence = OI_DBCACHED;
-> > -		type = ent->type;
-> > +		final_type = type = ent->type;
-> >  		if (oi->sizep)
-> >  			*oi->sizep = ent->size;
-> >  		if (oi->contentp) {
-> > @@ -1552,6 +1552,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  	} else if (oi->contentp && !oi->content_limit) {
-> >  		*oi->contentp = unpack_entry(r, p, obj_offset, &type,
-> >  						oi->sizep);
-> > +		final_type = type;
-> >  		if (!*oi->contentp)
-> >  			type = OBJ_BAD;
-> >  	} else {
-> > @@ -1581,6 +1582,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  			if (oi->sizep && *oi->sizep <= oi->content_limit) {
-> >  				*oi->contentp = unpack_entry(r, p, obj_offset,
-> >  							&type, oi->sizep);
-> > +				final_type = type;
-> >  				if (!*oi->contentp)
-> >  					type = OBJ_BAD;
-> >  			} else {
-> > @@ -1602,17 +1604,17 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  	}
-> >  
-> >  	if (oi->typep || oi->type_name) {
-> > -		enum object_type ptot;
-> > -		ptot = packed_to_object_type(r, p, obj_offset,
-> > -					     type, &w_curs, curpos);
-> > +		if (final_type < 0)
-> > +			final_type = packed_to_object_type(r, p, obj_offset,
-> > +						     type, &w_curs, curpos);
-> 
-> So this is the actual change we're interested in, right? Instead of
-> unconditionally calling `packed_to_object_type()`, we skip that call in
-> case we know that we have already figured out the correct object type.
-> 
-> Wouldn't it be easier to manage this with a single `type` variable,
-> only, and then conditionally call `packed_to_object_type()` only in the
-> cases where `type != OBJ_OFS_DELTA && type != OBJ_REF_DELTA`? Not sure
-> whether that would be all that useful though given that the function
-> already knows to exit without doing anything in case the type is already
-> properly resolved. So maybe the next patch will enlighten me.
-
-As I mentioned above, I think the `type' var remains necessary.
