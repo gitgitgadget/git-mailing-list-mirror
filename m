@@ -1,54 +1,54 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC9EE57E
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE1A17B506
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996565; cv=none; b=CQlm60MAJlHAWPcz2BygQuxD2c3LJHcUkf2MigWhaRpVnHXQ0mlkINerOrh7knutC40stXKJfRdSEtyqtxB4wmAiNI2mDqg78f7IfZr+o0dStarQLz6i3UJkdlplZBUmP2fHvcRVpjIsjKaDWklGauB4vsKK3BUmPqW8uSSNqic=
+	t=1721996911; cv=none; b=l3PoCk1SQc/5jY9UG/tJFboqKpl01a9ih4EtHu3uj702PYMjEDJ7rIbw50GDQMPyMGFJ1pJDyAW1zLxv/nhmRoLss447n1TTGDnw3h2B3YvY22qDLOuc/FnfJGLoV2f0UNybgHyyEe6toMe87OLW9DUcQgk8pxUDeJZnl21T8AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996565; c=relaxed/simple;
-	bh=Rsx5oJKDIUfDV+YVBQn4gfSe98BcDGyxsHCY4Q4F6+w=;
+	s=arc-20240116; t=1721996911; c=relaxed/simple;
+	bh=NWdRViLuSSga3JU1AFU1YKdW/jHs9ircn0tmBHV54rY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qIr+YyCaJ5rHudBKiJmFdzb1wjS/D+xiyAU56qgqADyD97yNYKdY1phYtO7ycpkNul5YYgh0+bfQtyCFrNByivoVQygCJchdl/CCcOZQGj2J4bCqG6rsGX1zgZIB1Zom56ysBX+/y9/cRwWxgvfdYOwaqiHF6ahArgKk0aP9ZWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mH0znI20; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t401Lh4a; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=SuYfNaz0iHkTG9p5v0B+RPOUi1FnmFjDkhdB+NPx17GWYa+gq9l9m8oIe5zPqM/P8eGzAKrXRRzx8Vsee8w88YKHYExqTW3AyicFq+IU5QXH/gtoou81owBC+OFK0mZPARcZzFeR8z8tw3NIw+rNxG6OCy1Txo9PHLk1JFhZL0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yk/6UWPB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eVHZZ5+M; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mH0znI20";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t401Lh4a"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BBB9D114018D;
-	Fri, 26 Jul 2024 08:22:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yk/6UWPB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eVHZZ5+M"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 989E311401C4;
+	Fri, 26 Jul 2024 08:28:28 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 26 Jul 2024 08:22:42 -0400
+  by compute3.internal (MEProxy); Fri, 26 Jul 2024 08:28:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996562; x=1722082962; bh=/JpQv8thsO
-	kB21aAMPBSpKOCd8lGUZnDzA9s78xioTA=; b=mH0znI20pHx1ZkZIk4iIQ9YoVA
-	YebjJKnuRbD8xjmXKnG2fVLRTURLWOfdXZuKFGBesgCYdmqz2pcugMpH4Ogn5csA
-	xJcGUwOiQUdWkEDTOpRo0IWuQMyFfjaFkO8bUa3OjplDy5JZx/2lAKqa6byB2uCG
-	3QC6oNMsf+AMrUlgDFoVOPVR0WEOz2kWbJ613XuDIopB0PaHotiqDksFa/ptnv8i
-	gJa4/01ZKFYwRStgOPWxTfaTVEwMNod5GOhIJevsJPT/LvcFJYAIGH7iIvlolbi3
-	mBLhge3jbUvtLxtLm4GIfPqRKJ3f8K7pHM/KpSeyQKA8A9vhNZj1X/mbazKg==
+	:subject:to:to; s=fm3; t=1721996908; x=1722083308; bh=0wgXTzpP1u
+	JrxEvYMk8LVYTL7aQ2/dPc+adHHvy+c+Q=; b=Yk/6UWPBjC0nLGSCKIB7T5qQdc
+	EyFvtHYX3KfVIqhsgrwMYNCULXoU2/K6waXHqX1YmmaXhCHfMiDWuD5uUd7W+WCu
+	X/JDOAcFpLgcyn+aK+SvLAFael357fmu2GXAHg8KDW3ctPo1KupTCJv7PJ2htGGJ
+	vxq9kyi4x/9nFXEPD++cQURhu5YrCXbl5N3esjwphfBFVI/JYjTcK61p1wFlGkZ4
+	XmrrMi+r4WQu3zGA/dSp147fJvLH0aqHSkHaH4cVNGWKmC6OjGT4Xxh6BZenzwhK
+	Qebo8A+qUIWojTEXz7kbSw3PFLadJfihBeswgxozqY2Wi7K914zQsVdk9Z8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996562; x=1722082962; bh=/JpQv8thsOkB21aAMPBSpKOCd8lG
-	UZnDzA9s78xioTA=; b=t401Lh4aCrH5SU66iL5hXyoiZYPlNIXhx6d1/LgnUwrz
-	3ikvtLT7nhf5iWTHbZF/8nU99DNFrNqxWPU61g7D5iENsKctTH+Xi2BP8xPTTayy
-	y+RUfATsT7LY5jxmZHDFFeUoFqAkFMue0B6Hkb2tNxOrmq2KWskDsoTCjB9shTU6
-	IPM/fw5g2B8srU3AZFtbkiNTPIspFD80tCd819lBS3Q8WdEE0BxvHTw9x1ev683T
-	ZPlfMqBOSl+p3+KPBSzWCkH1hIvjFH3CjoElVSTxipxlt49E+lHMZFxoH4HExxkT
-	xkG1V1LbF1EC7OXqyDq7o3xC+BCVLJ5rqNqPXu4vEg==
-X-ME-Sender: <xms:EpWjZmNfYGrZLAdEtMXk1jrjPD9_m2LnRNVEPhTf0c_lqM0jX5O-0Q>
-    <xme:EpWjZk-r9fHumApVb8kOZ__mIby3qBBD-vV2af_YbNmMbuQEkh7fKqFECT-yyUdvu
-    9NiVTrWpRsPTYoLKQ>
-X-ME-Received: <xmr:EpWjZtRCtyNrxFTz0QKgpXLli1H6PdllCqo79K4EbXWEcSUjQnlipdFuU5dw4KG-ngw7cgAIK3CGWgteAD0XfXDzk8Vo6zv8TqB2U8D5AkUgae3m>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehvdcutefuodetggdotefrodftvf
+	fm3; t=1721996908; x=1722083308; bh=0wgXTzpP1uJrxEvYMk8LVYTL7aQ2
+	/dPc+adHHvy+c+Q=; b=eVHZZ5+MHPeuvQBj76WCAU2vUx7h52tec/2XHXkNWjXj
+	BP4FIONVntTIHGW72pi4E+C6cFv7WER00k74cCGvqGpKWKoA76t6HqOD6lAvsHB1
+	OtbQp1i7+VDc2BIa9A8fZeKrWWEnm2iqDUVkgvRlVMNW7CH/EBlZvcRxWGNPf6wY
+	oDTnbDWP7FTbqpDXuK4ZRy9JbxJn/rwlMrrT4eZPRZlbOMzLVOfIBMyhZN4STQSR
+	HhC8H197a80er6YunCBpSgOIQ+IykB/6HxeEft6WsLCAASGzRPTAqro1XvcxorEM
+	Y0SRyrRK+JHFAI+0xSNrYQESjuOrMLGIsINHkbZ5Kg==
+X-ME-Sender: <xms:bJajZqH0PGhW-Beo0aK5Bqf1sp5abuDLEK7ektroEuX6_MC9skwWHw>
+    <xme:bJajZrXqHpAHGtXc08pAf5wds531MM1av0MJ4cPB3R7Xr0iXna3j06A-LCvfI0F_H
+    tbWDQbqRHZ9E-I-Jg>
+X-ME-Received: <xmr:bJajZkLlRHCeOuH0QgI0gaudR2nLrsS04RVBHwOS1JIyAPfHS74XjjDJcBFcEtauaqN-1sH3WIQnU3ZOhKoX3EjlIh1_XhbR-9bZ5J-nfHhjbeMM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,26 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehvdcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:EpWjZmtYZZMly6ilm8YaQAWWsoN5m4KrnbynYjD3CRidyvByqodW4w>
-    <xmx:EpWjZueLflgRkF4zHk35vg0sbsZ6-dzBCynpvLlva-HP-zSkordSzw>
-    <xmx:EpWjZq23bSuCQGUPr_3Nwh0Og5BwzYXoT46VzStCsOr86ig_ozmQug>
-    <xmx:EpWjZi801txlZL0FMuaUluDIc535M1saTiwwd-ne8O7pCXj91I7W3A>
-    <xmx:EpWjZt55wpJHrHhPehvBdvrkoNDLit2sW3UC98hVuv5R2ca0SAetZQ_Z>
+X-ME-Proxy: <xmx:bJajZkFVCo1M59yM4Kygs9F_asZi6h88llin57aNfaOf4LQqpVkApA>
+    <xmx:bJajZgV3Loh7pQx7R91XpY6YoHJhYjnsl7zVWVwLBGQ6gmY26rlL6A>
+    <xmx:bJajZnPHOUqDCqUr1nWEC-6U3T1OO2ZDIu8YcCjB9RW0E1QeeWdAQQ>
+    <xmx:bJajZn3PbI4PiYF6aT97C1rYV2w5by8d9PDqckz4gJ8swpb-HwLnFw>
+    <xmx:bJajZuzw5-U8mpZyHRBTuS9XynGPvi_KGhxr8eXfOurkfzM2CBOn_ePb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Jul 2024 08:22:41 -0400 (EDT)
+ 26 Jul 2024 08:28:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 1b47f72d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 26 Jul 2024 12:21:20 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:22:35 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 3c769d5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 26 Jul 2024 12:27:04 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:28:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] ReviewingGuidelines: encourage positive reviews more
-Message-ID: <ZqOVC_F4fdQUognX@tanuki>
-References: <xmqqsevysdaa.fsf@gitster.g>
- <xmqqle1pjwtt.fsf@gitster.g>
+Cc: Alexander Shopov <ash@kambanaria.org>, git@vger.kernel.org,
+	worldhello.net@gmail.com
+Subject: Re: [PATCH  1/1] show-ref: improve short help messages of options
+Message-ID: <ZqOWUrynjUN2A5TM@tanuki>
+References: <20240724111116.91615-1-ash@kambanaria.org>
+ <ZqH7mDh73vkX4bPT@tanuki>
+ <xmqqr0bhldjp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,50 +84,78 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jVCUyjb+dBoyEsBl"
+	protocol="application/pgp-signature"; boundary="16F0NqFvj891JwZO"
 Content-Disposition: inline
-In-Reply-To: <xmqqle1pjwtt.fsf@gitster.g>
+In-Reply-To: <xmqqr0bhldjp.fsf@gitster.g>
 
 
---jVCUyjb+dBoyEsBl
+--16F0NqFvj891JwZO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 25, 2024 at 08:49:34AM -0700, Junio C Hamano wrote:
-> I saw some contributors hesitate to give a positive review on
-> patches by their coworkers.  When written well, a positive review
-> does not have to be a hollow "looks good" that rubber stamps an
-> useless approval on a topic that is not interesting to others.
+On Thu, Jul 25, 2024 at 08:03:06AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> Let's add a few paragraphs to encourage positive reviews, which is a
-> bit harder to give than a review to point out things to improve.
+> > Agreed, I think that this is a sensible change. In practice, this
+> > feature can also be combined with `--head`, so in that spirit we might
+> > even change it to:
+> >
+> >     "only show tags (can be combined with --branches and --head)"
+> >
+> > Not sure though whether this is getting too noisy?
 >=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> It is somewhat an oxymoron that "*only* show X" can be combined with
+> "*only* show Y" in the first place.
 
-This version looks good to me (well, the first version already did).
-Thanks!
+Yeah, this is the root of the problem why those braces are required in
+the first place. But that being said, the option is somewhat funny
+because it indeed limits what we show to only show tags. The fact that
+it can be combined with other options to expand on what it shows doesn't
+change that, so I think "only" is okay-ish even though it certainly is
+not perfect.
+
+> For a reader to accept it without finding it awkward, the reader
+> must understand that
+>=20
+>  (1) the command shows by default everything, but
+>=20
+>  (2) if any of these "only show" options are given, the command
+>      stops showing everything and the user can pick which subset of
+>      "only show" options to give, which work additively.
+>=20
+> But if the reader knows that much already, it is redundant to say
+> "can be combined with", isn't it?
+
+Hum. I personally find the way that this is worded intuitive and think
+that I would find it helpful when reading it as a less-knowledgeable
+user. But naturally, I'm quite biased and may be too unimaginative to
+come up with a better wording.
+
+Meanwhile, I think that the proposed change strictly improves this
+message and thus don't see a reason not to take it. Unless we see
+somebody come up with a less-awkward solution, that is.
 
 Patrick
 
---jVCUyjb+dBoyEsBl
+--16F0NqFvj891JwZO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajlQYACgkQVbJhu7ck
-PpTfzhAArWa/PxjLK4zxK6gvVo+1VCP5Gou06JOXE6JBsqm3oBvVnwWPDTxqr5Of
-DWLnLj3MD0e2VhMvP7ojgYqeWOhbnZRJMuiRL7+yVIACkCRq8vk1no6aQP6DywRi
-5WDdtWdxhbh5wPpt1V2V4DlSwjiPayC7Mp1jK00HTKcR6HDS4zvcRyYi2VHyEBpI
-upsxZRh67ef27iYxiOWBgXTi7xxFUn2ZAlYMM+YRgI6OEPDdGNy5+1p8ehrdlRvh
-Mml6WZRGXmHV54PlmXv+peSTv8XJWGVLJqmOPyTaQfBp0jaWkKaibWNQf9EQ1MKk
-S5nhsc5nKCQHlgRZUMjDWLW5ot1cmIfFvUhaDZffooGs+/m5yYLrDjTsOv4J3p1j
-o22cVWn65LHCIrfS4GIDxb1Kk/aY7P1WUzdnPK1+8Bib50hhdTR/SxaUVwR+GWbp
-kjhgr7dUUioY7yujrexd3F4Wv3XzUFOkZDytp0QydA0qcN7tfFyY8ZskEY9ucjLE
-V/bUb59Jf49AiixP2Bde6548qDOpmt9P/FvfDpQ9SXi/KFjyg14XVgJA2KJixdeQ
-7/QGtyT+UngmF/9iGdIOa6bUbEgY45lVwGIuI+cKPH0lspZo5wR0+ilc8QjL5pr3
-2EodQw02uXvckaD+ap1oVOEEseucPvdVWdWOFc0Sgxm+1NGviQY=
-=xtH/
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajllEACgkQVbJhu7ck
+PpSqfhAAm5C1FH3W6ZS/PEuPR7O0FSixzWsZ23FlLC7iUOvN9Cerh7NQ0hVHVThI
+6XCn1FtLO89LMk7BpDJ8TyuJePlzeNetMhbY6+/pyh+penln3SUNKU7RGlnOlDZS
+QtF4YkmJo1sZ9VMt0wwSzMMZa85xX/C0hpOBIuZ59mavLN01ZPD/zgkZAiTThi2b
+bVHJxx4Wno56DtEurvPZIUTcXQPAXlIbMlw3T3hWK0wWwQv0vlBJmxgEblR7rByY
+uEn+1FmG397SFff3P1frBNA2Zi2HVszPuQMv3J2SmFBfRcslRBXvRNotywiBt8F3
+scky6qHbx8bSiUEPKvhwIaiPPjcUL04opTcGfg3NJSreX9bj9DO/7T/D3UPsQMP6
+zQXmEyfwzo/qBBb8fQ5f4vnVTbioalR623Twa/gilRQGwzqKxThHKECL+eyWsRPo
+YJsZDVfUQFelFIHMYZCL/N7omrhRUBGnRvBrfDfaWnvhoTraxB9Y6y4NzLUjAt5c
+fBdbOHhUVswObLb29DqwENXUcUkmmLhRMK7WcgNpOdFoG76jiOWWq2864Nt+mWpJ
+hUO3d9GbnHDd/JXSQsPys3GrkPPDc9spsysQ7PWKOTT+tP9j6ICFJ+iLolEh8DdW
+zH9IXGaFcRWS8ckqg1J/szLP/r8YTGPUp1/Ps86pDzrrf6WIpC0=
+=SZgi
 -----END PGP SIGNATURE-----
 
---jVCUyjb+dBoyEsBl--
+--16F0NqFvj891JwZO--
