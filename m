@@ -1,81 +1,62 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07092628
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 00:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+Received: from donotpassgo.dyslexicfish.net (donotpassgo.dyslexicfish.net [209.250.224.51])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64D02524F
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 01:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.250.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721954497; cv=none; b=HI4GZeq+1ox+rO/IlmFRjL2qXeEeqGpXksJY/9F0eqf3AIDU2ozcXnQOmHEzZx67lAwKQPbNW+pEkNFkByylKm5ra1b06Ib6tRH6krRqY/M883chHkD2rtz9vWnga2cYxGxaKFM1SVbT0YzVMZwgTlRNcUxi29T0iWMCFdGGAQc=
+	t=1721955954; cv=none; b=u21WsXGDbBmqAv49HP4rQZSfsa7xTF/TPJ20v8ZFJ+Lcgo/yUba+y7dqupWFGfP+yc//N1yQgnT/NscjTUxcdDCHNk937STD+EZ/J6BO+yYrKJ54rM2WZCVluct4TaT7ZbzlLW5NDgLc2Am5GWBHPJoluR+3wgls+HpGAhbZyDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721954497; c=relaxed/simple;
-	bh=PPlyHBbLGvL/M5fnxQMe6HhKeymsB4mzAq/WCcHGHs0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dj/Rpa+NRX0s1Yu9ZWgsww/2NYTuGRhZEYMYW4HB/zuWUA4tFvd0u7yOtNwGMqg+jZ0vBvGTWtPoVlk5m+jJ9vGQt5vS7YIKXyptay8IVBa1exDVru76z2LwbtccfQd+afaiaw1iUP/oV4Dp1jMua6DPBA0MrzyG4ugnNuGJ9Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 14330 invoked by uid 109); 26 Jul 2024 00:41:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Jul 2024 00:41:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28788 invoked by uid 111); 26 Jul 2024 00:41:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jul 2024 20:41:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 25 Jul 2024 20:41:27 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randall S. Becker" <the.n.e.key@gmail.com>, git@vger.kernel.org,
-	"Randall S. Becker" <randall.becker@nexbridge.ca>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v2 1/2] Teach git version --build-options about libcurl
-Message-ID: <20240726004127.GA611651@coredump.intra.peff.net>
-References: <20240621180947.64419-1-randall.becker@nexbridge.ca>
- <20240621180947.64419-2-randall.becker@nexbridge.ca>
- <f44f1e25-41ca-0784-3186-f9e1bdae0d4f@gmx.de>
- <xmqqed8me36c.fsf@gitster.g>
- <20240624235557.GA2727@coredump.intra.peff.net>
- <402c12c2-7ada-4d9e-c3da-1a78827e7496@gmx.de>
- <20240724205541.GA557365@coredump.intra.peff.net>
- <8ef819f0-e80a-74ec-274d-fe10991fe992@gmx.de>
- <20240725065214.GA590196@coredump.intra.peff.net>
- <xmqq7cd9lccl.fsf@gitster.g>
+	s=arc-20240116; t=1721955954; c=relaxed/simple;
+	bh=4QJI3BbW+KnDgdVt0iYCyYufOok/pBJPxQcICSE8mH8=;
+	h=From:Message-Id:Date:To:Cc:Subject:References:In-Reply-To:
+	 MIME-Version:Content-Type; b=ZDo60ZTZCx2h6sltjZL9iaBIe1UUAd20g66Tod6BP/v222lqqAEgtQgf7mgTVMXizzW5QVzXPrsjI13JvRqqvSN6L5TqGj1wTisGMCg2Vr3Rp3XU42jIWw/EHMxK4zZA6wQqsX20nvFQyS6eBYgBg5wjZ5F7S+zCgOJCgcEb+20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=catflap.org; spf=pass smtp.mailfrom=catflap.org; arc=none smtp.client-ip=209.250.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=catflap.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=catflap.org
+X-Catflap-Envelope-From: <jamie@donotpassgo.dyslexicfish.net>
+X-Catflap-Envelope-To: git@vger.kernel.org
+Received: from donotpassgo.dyslexicfish.net (donotpassgo.dyslexicfish.net [209.250.224.51])
+	by donotpassgo.dyslexicfish.net (8.14.5/8.14.5) with ESMTP id 46Q0ctOE083267;
+	Fri, 26 Jul 2024 01:38:56 +0100 (BST)
+	(envelope-from jamie@donotpassgo.dyslexicfish.net)
+Received: (from jamie@localhost)
+	by donotpassgo.dyslexicfish.net (8.14.5/8.14.5/Submit) id 46Q0ctEV083266;
+	Fri, 26 Jul 2024 01:38:55 +0100 (BST)
+	(envelope-from jamie)
+From: Jamie Landeg-Jones <jamie@catflap.org>
+Message-Id: <202407260038.46Q0ctEV083266@donotpassgo.dyslexicfish.net>
+Date: Fri, 26 Jul 2024 01:38:55 +0100
+Organization: Dyslexic Fish
+To: Johannes.Schindelin@gmx.de, gitster@pobox.com
+Cc: msuchanek@suse.de, git@vger.kernel.org, drankinatty@gmail.com
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g> <20240617211513.GM19642@kitsune.suse.cz>
+ <20240625072419.GU19642@kitsune.suse.cz> <xmqqr0cl6lxl.fsf@gitster.g>
+In-Reply-To: <xmqqr0cl6lxl.fsf@gitster.g>
+User-Agent: Heirloom mailx 12.4 7/29/08
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7cd9lccl.fsf@gitster.g>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.2.7 (donotpassgo.dyslexicfish.net [209.250.224.51]); Fri, 26 Jul 2024 01:38:56 +0100 (BST)
 
-On Thu, Jul 25, 2024 at 08:28:58AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> A command with a name along the lines of `git diagnose`, I'd say.
-> >
-> > OK. I don't really care much either way how it is spelled, though my
-> > inclination is that we already have a confusing number of commands and
-> > should avoid adding more.
-> 
-> I think what you are responding to is an oblique reference to a
-> command that already exists, and there is no need to worry about
-> adding more ;-).  If "bugreport" is not farming out the task of
-> collecting the information to it, "bugreport" need to be corrected
-> to do so (while "diagnose" may have to learn to collect more, if
-> "bugreport" collects things that "diagnose" does not (yet)).
+> Dscho, the f4aa8c8b (fetch/clone: detect dubious ownership of local
+> repositories, 2024-04-10) is your brainchild and people seem to be
+> unhappy about having to adjust their settings.  Are there any advice
+> you can offer them?
 
-Oh, sorry, I somehow missed when diagnose was added. Yeah, that seems
-like a perfectly reasonable place to put it, though like bugreport it
-has the same annoyance that I just want to dump the info to stdout, not
-make a zipfile.
+This thread has gone quiet. Is it going to be fixed? The issue isn't that
+settings need to be adjusted, it's that it no longer works whatever
+your settings are.
 
-Curiously, it seems to segfault for me when run outside a repository. :-/
-The issue is a NULL the_repository->objects->odb pointer passed into
-dir_file_stats(). But obviously that bug is orthogonal to the discussion
-here.
+I had to go back to.2.45.0
 
--Peff
+Cheers
+
