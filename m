@@ -1,53 +1,53 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA1C140E34
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE69F1779AB
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996150; cv=none; b=W41L7fY6xVLHVv06RAR3I/ChXs1bCBeODPSsbPhGeBEb4/6i3AIYMC79Yq8iZlCr2ASIBgyoCM7OhqimVio4/yUlQjcMirXzsgunYalUyEK4PbUx3pRHURx4HtajCtmXD8eXVEZUDLhOpZz5e0LoNCcAttESgOLoMbjtUlEdLt0=
+	t=1721996173; cv=none; b=Dg6ajkvAn7i0d1ZhOyg3mo/P8hdqp9r/vyN7bdHXQqur0pafr/mzThEN57LQrzXDeAltxXMZ+B9Hb4cYB5CDAS2Mhsbbr9U1ilZuvJeVNtjI+m9aaiaZj2IIvc5BbD7rnsBipKMykI6R1d7pZh5c8Ckp6I9e8uKP6rI+vbcm/ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996150; c=relaxed/simple;
-	bh=GZnj2b29E/8TXk1PNN4gnPdxaFDeeF132IYSeMuC6rc=;
+	s=arc-20240116; t=1721996173; c=relaxed/simple;
+	bh=ifvIybvW+8+mBUanM2WBANyiE3EyJeL+dDXMFMlHTT4=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I/pD86K5jGJdjED0MnCUnE3sSdHAyHIC9iMMh/nlppLuyPzgtvHfDJo9h7anC+Ii6ShQcWvG+IhllFaGIi7WLwikFcbUQNfXQQt6/Kj3Sqr+tJyI+VaZhRrCYIUL1Skd8Trbo80tm59a99oaJq8yFF5DWpKMKJaqy4yleXErmeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sb653LOm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rU1QdmvM; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=MqD8VdsP99ByAbOdeMVz0t77qDO+IvnlXMXlBvIMP3zHw6ng1ZKaZFSwA7wTgJ39KA/1BIxMqNak2kpBND2RZkOiJMH0vRvj6U6y8V0VGw8Zpjk+R/5G0QvF3abtAkSN65bE6No/ku0IBIM0Cyy9OcqVB4XZIx5vxMvcSanPjg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FhBpQpu/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u9taFOvW; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sb653LOm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rU1QdmvM"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 537EE11401F3
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:47 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 26 Jul 2024 08:15:47 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FhBpQpu/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u9taFOvW"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 1BE90138063E
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:10 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 26 Jul 2024 08:16:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996147; x=1722082547; bh=1LTNsuOJcF
-	KJPqFpRl3qzga4ZdJJ4fZSTseYyUj7wj8=; b=Sb653LOmR388j/ISbcYFTRK5yo
-	uLw6YGLFz4oiFf0IGFuoYv/pwX4jr7vCa0NxLFL176uV8Qa8qkFHgITRs4MSyqKK
-	bzjIiM6/Se7JipNVnmCdper65p7+reoE1SQF/FZ8xxwoEJ7dJyl3Sp6veKN10jVk
-	IPuUF8xJdK21CqKjsr2oIPmAL4W46svobV5g55AlGAKndxq/wFkPZro/tdHZboDM
-	P15TBeDy295M+9Xy5WU4dUG1susLwPOubQxPK4/fY5ChzNsh3PmvKPeQe0XjcTZH
-	dmTKgo1UIeBhcXiScbM3dC9yT59jkRVUO98dXoeY4v7j1p2zHZEqlYam7w9w==
+	:subject:to:to; s=fm3; t=1721996170; x=1722082570; bh=2CDH8UDvpr
+	PAQeHxye1SDi7LHtIhY7wNuJlLKyJX494=; b=FhBpQpu/ySibQOrsqgPfzxeFZd
+	644+PK8GsYkU6wdRpOTfIeHcJQisDJSoP107BM9egsJmTXLRTWHPLZMMO+dYSOdr
+	vlfU/rRGSwSgsjww4OfJeZoy0DRkZ6O4fz+NZaNmnWzBspv9vf1cAfPfzR0w2jO+
+	DSlfJl7+h10/RypBgEk3Na3qs4pjNfW1lhZoDh1iKGLw1c5cf8xsNJWtB3h8Nb+e
+	1JFVZTvRpq1w+pHuleO7WwnxvUMCLO12HIz9d04Nwa75ZU4fKaczorKkcBM3iUE9
+	WWT5iRvbcRzrMOF2wrgfc+CDSbP/hADQnL3POBcOubDrn/kJF1+CXrcURxpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996147; x=1722082547; bh=1LTNsuOJcFKJPqFpRl3qzga4ZdJJ
-	4fZSTseYyUj7wj8=; b=rU1QdmvMuVwDB7V+K04o9dETnADIGWFXLOx6TChnkTyZ
-	w6SWQgI8FEHUVyTSqDU10ynbtyv3g3I7MkrgjYitMFlBAXw7PukmOBN7pqymjEGY
-	D0DNOjWRrDMy7VxDd9MT6HpMggo1DqBMIMgoxfsUzdRHG7IesJGioSNdN7jqvKIN
-	LbNQCsldLXFje5mVbFb1Ar8rwZkzwRVKI2CkeOARxB+08xAhoqSFlUi9kbFFX6Zb
-	ETUxOL84DsTYSE2+XX1ETvTqyoXvIRJb7xvutSFA/GP8F5Kf5LUYKyNaFEF1LZ6b
-	CK6Sl/Zy8IAx2bDKnW/OhFcdU+ENJ8TLRgKX8N/MQA==
-X-ME-Sender: <xms:c5OjZpJR1bi04tkjt7S75VC13RFNqiEoT16jqSyK5WSAZSgdWmqbTQ>
-    <xme:c5OjZlIDq3Am4cls2oWNyoB6vSeuIeDw_Z02M6EXDTyG_Ti5abBNJI5zBiK5pDUkw
-    5dEQ8KLOBGv8aoU8A>
-X-ME-Received: <xmr:c5OjZhtuxMAcyL4FZ4fkMcRJUc7cP7WxA4_gkoBPQrTkqFaKjxGHIXce_oftM8ntkj71BJ0-cF-3pqzaUZP_yiLmEZQtLjW9oyHEjUrwYj5V99CH>
+	fm3; t=1721996170; x=1722082570; bh=2CDH8UDvprPAQeHxye1SDi7LHtIh
+	Y7wNuJlLKyJX494=; b=u9taFOvWEYghLDSiIt1a1TrhmLaaQGQwYHdpWraVqhJu
+	65jhD8N2O0xVC1r7oDUzfqTr87RZEIWSRVPfbUduvOmcLiwR+/Zp5bDx0pqOr2CS
+	W4lLa3ZhabmFrO+wy2W2TC14t7dCDPfPhhshNgFoXsOFigVn65FPs2e13QUDmf03
+	EUOquRud5iWzkNClaV+Qsg4Swryh/EVqoJ+liPRExKzZ9LJO2JNEMl5dpdMYP8Dm
+	KejYKZyhnPZoTd6AOUy+H7cSIbFU31P6seGM2mLxtMsVLkC1wRuKkdkPntdq1/CK
+	84QPpnk7GBKhg1xPu4ryUzNufBwbk6m7IT3iCkshrQ==
+X-ME-Sender: <xms:iZOjZlvQMGSwg4tetI12MAy5v-XoK3ocPMh64WG6R1zyR5_7-h2ZNA>
+    <xme:iZOjZueU1MmLWQH8mG3rwJ1QugjQ8Nxw9FXnOlarcp3gSPcR3reBUusjmXk21JeFz
+    aQlb7Asz70huE1U8g>
+X-ME-Received: <xmr:iZOjZoxIn3uQnTZMDwPaQFW4Hse1_IHRa30r_GhUf9w87aNzSJSMSIrN5-1I47NNA5uiZ3A2XdLXGd-PS_RPRV0qvJq-1kcHCxzYrfqvr6C0cZmr>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -55,23 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
     ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:c5OjZqaPVr4tAP4Xqb3IIVcmQvNd9eo96ytwykhtoQF4kyfZigvgnQ>
-    <xmx:c5OjZgYSNm2bh95kdU_Lnx8Q6ifvZx_NNoFGVrTD4JSyZTJH3EXo8g>
-    <xmx:c5OjZuCspWYrvb1aOG17LtAydXUQY24KA26PXAkE_i7Tf9FnL6dMaQ>
-    <xmx:c5OjZuZs-Z7TGtlGYJLi2hmPrQQFa0ZOnTxOY90P9Ij4wuGS--XRWg>
-    <xmx:c5OjZryptUTs0uLeSTBvGW4PrXBRGrAP9v8XlLbsHsI5-13hP5AKuztH>
+X-ME-Proxy: <xmx:ipOjZsMX80sMnBw8u03vv0SNYx6-RfcvszCZ9KnajIELMoR04W-MSA>
+    <xmx:ipOjZl8U4vtmh2-hsNP7k1YcITuzo7_iztLERY1Lchtem3Hlp3_7-Q>
+    <xmx:ipOjZsWiCgiFVLd1ZPzJL-xQ8p5YnqbH_aJHPMHsdUm0QWih36TH2A>
+    <xmx:ipOjZmfd_VAk3McAaurwerR52Q0TPH1A471PRXvp2GkxHyxc_jg2UQ>
+    <xmx:ipOjZnk4nm3OR8v89Th7FNfz5Cygal0CZY2XfaxJhhIyddftqvSuzM9L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:46 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 26 Jul 2024 08:16:09 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 6a7ce5a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id f2d9530d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 26 Jul 2024 12:14:24 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:15:36 +0200
+	Fri, 26 Jul 2024 12:14:46 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:15:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 09/23] builtin/remote: fix leaking strings in `branch_list`
-Message-ID: <6952fb2ff2cf453de39b63883a716a9f09cab7b7.1721995576.git.ps@pks.im>
+Subject: [PATCH 10/23] builtin/remote: fix various trivial memory leaks
+Message-ID: <8bedcfdad80c19dbb98e1407e4cef985a066c714.1721995576.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,84 +80,236 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Yim/X5RpfiDBlqLf"
+	protocol="application/pgp-signature"; boundary="6J9V1x2ymoMpTVEm"
 Content-Disposition: inline
 In-Reply-To: <cover.1721995576.git.ps@pks.im>
 
 
---Yim/X5RpfiDBlqLf
+--6J9V1x2ymoMpTVEm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `struct string_list branch_list` is declared as `NODUP`, which makes
-it not copy strings inserted into it. This causes memory leaks though,
-as this means it also won't be responsible for _freeing_ inserted
-strings. Thus, every branch we add to this will leak.
-
-Fix this by marking the list as `DUP` instead and free the local copy we
-have of the variable.
+There are multiple trivial memory leaks in git-remote(1). Fix those.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/remote.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ builtin/remote.c          | 39 ++++++++++++++++++++++++++++++++-------
+ t/t5512-ls-remote.sh      |  1 +
+ t/t5514-fetch-multiple.sh |  1 +
+ t/t5520-pull.sh           |  1 +
+ t/t5528-push-default.sh   |  1 +
+ t/t5543-atomic-push.sh    |  1 +
+ t/t5570-git-daemon.sh     |  1 +
+ 7 files changed, 38 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 08292498bd..303da7f73f 100644
+index 303da7f73f..9d54fddf8c 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -258,7 +258,7 @@ struct branch_info {
- 	char *push_remote_name;
- };
-=20
--static struct string_list branch_list =3D STRING_LIST_INIT_NODUP;
-+static struct string_list branch_list =3D STRING_LIST_INIT_DUP;
-=20
- static const char *abbrev_ref(const char *name, const char *prefix)
- {
-@@ -292,8 +292,8 @@ static int config_read_branches(const char *key, const =
-char *value,
- 		type =3D PUSH_REMOTE;
- 	else
+@@ -555,13 +555,16 @@ static int add_branch_for_removal(const char *refname,
+ 	refspec.dst =3D (char *)refname;
+ 	if (remote_find_tracking(branches->remote, &refspec))
  		return 0;
--	name =3D xmemdupz(key, key_len);
++	free(refspec.src);
 =20
-+	name =3D xmemdupz(key, key_len);
- 	item =3D string_list_insert(&branch_list, name);
-=20
- 	if (!item->util)
-@@ -337,6 +337,7 @@ static int config_read_branches(const char *key, const =
-char *value,
- 		BUG("unexpected type=3D%d", type);
+ 	/* don't delete a branch if another remote also uses it */
+ 	for (kr =3D branches->keep->list; kr; kr =3D kr->next) {
+ 		memset(&refspec, 0, sizeof(refspec));
+ 		refspec.dst =3D (char *)refname;
+-		if (!remote_find_tracking(kr->remote, &refspec))
++		if (!remote_find_tracking(kr->remote, &refspec)) {
++			free(refspec.src);
+ 			return 0;
++		}
  	}
 =20
-+	free(name);
+ 	/* don't delete non-remote-tracking refs */
+@@ -668,7 +671,11 @@ static int config_read_push_default(const char *key, c=
+onst char *value,
+ static void handle_push_default(const char* old_name, const char* new_name)
+ {
+ 	struct push_default_info push_default =3D {
+-		old_name, CONFIG_SCOPE_UNKNOWN, STRBUF_INIT, -1 };
++		.old_name =3D old_name,
++		.scope =3D CONFIG_SCOPE_UNKNOWN,
++		.origin =3D STRBUF_INIT,
++		.linenr =3D -1,
++	};
+ 	git_config(config_read_push_default, &push_default);
+ 	if (push_default.scope >=3D CONFIG_SCOPE_COMMAND)
+ 		; /* pass */
+@@ -688,6 +695,8 @@ static void handle_push_default(const char* old_name, c=
+onst char* new_name)
+ 			push_default.origin.buf, push_default.linenr,
+ 			old_name);
+ 	}
++
++	strbuf_release(&push_default.origin);
+ }
+=20
+=20
+@@ -785,7 +794,7 @@ static int mv(int argc, const char **argv, const char *=
+prefix)
+ 	}
+=20
+ 	if (!refspec_updated)
+-		return 0;
++		goto out;
+=20
+ 	/*
+ 	 * First remove symrefs, then rename the rest, finally create
+@@ -851,10 +860,15 @@ static int mv(int argc, const char **argv, const char=
+ *prefix)
+ 		display_progress(progress, ++refs_renamed_nr);
+ 	}
+ 	stop_progress(&progress);
+-	string_list_clear(&remote_branches, 1);
+=20
+ 	handle_push_default(rename.old_name, rename.new_name);
+=20
++out:
++	string_list_clear(&remote_branches, 1);
++	strbuf_release(&old_remote_context);
++	strbuf_release(&buf);
++	strbuf_release(&buf2);
++	strbuf_release(&buf3);
  	return 0;
  }
 =20
+@@ -945,12 +959,21 @@ static int rm(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 	if (!result) {
+ 		strbuf_addf(&buf, "remote.%s", remote->name);
+-		if (git_config_rename_section(buf.buf, NULL) < 1)
+-			return error(_("Could not remove config section '%s'"), buf.buf);
++		if (git_config_rename_section(buf.buf, NULL) < 1) {
++			result =3D error(_("Could not remove config section '%s'"), buf.buf);
++			goto out;
++		}
+=20
+ 		handle_push_default(remote->name, NULL);
+ 	}
+=20
++out:
++	for (struct known_remote *r =3D known_remotes.list; r;) {
++		struct known_remote *next =3D r->next;
++		free(r);
++		r =3D next;
++	}
++	strbuf_release(&buf);
+ 	return result;
+ }
+=20
+@@ -983,8 +1006,10 @@ static int append_ref_to_tracked_list(const char *ref=
+name,
+=20
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst =3D (char *)refname;
+-	if (!remote_find_tracking(states->remote, &refspec))
++	if (!remote_find_tracking(states->remote, &refspec)) {
+ 		string_list_append(&states->tracked, abbrev_branch(refspec.src));
++		free(refspec.src);
++	}
+=20
+ 	return 0;
+ }
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 42e77eb5a9..d687d824d1 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -5,6 +5,7 @@ test_description=3D'git ls-remote'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ generate_references () {
+diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+index 25772c85c5..579872c258 100755
+--- a/t/t5514-fetch-multiple.sh
++++ b/t/t5514-fetch-multiple.sh
+@@ -5,6 +5,7 @@ test_description=3D'fetch --all works correctly'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ setup_repository () {
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 47534f1062..1098cbd0a1 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -5,6 +5,7 @@ test_description=3D'pulling into void'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ modify () {
+diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+index 14f7eced9a..bc2bada34c 100755
+--- a/t/t5528-push-default.sh
++++ b/t/t5528-push-default.sh
+@@ -4,6 +4,7 @@ test_description=3D'check various push.default settings'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup bare remotes' '
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 04b47ad84a..479d103469 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -5,6 +5,7 @@ test_description=3D'pushing to a repository using the atomi=
+c push option'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ mk_repo_pair () {
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index f9a9bf9503..c5f08b6799 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -4,6 +4,7 @@ test_description=3D'test fetching over git protocol'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ . "$TEST_DIRECTORY"/lib-git-daemon.sh
 --=20
 2.46.0.rc1.dirty
 
 
---Yim/X5RpfiDBlqLf
+--6J9V1x2ymoMpTVEm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk2cACgkQVbJhu7ck
-PpQlRQ/9EARNGIAOYyzM9C7ghMzu5KC5P7h0W7cT5KmYcHxDto4P0TAjqE0qYdXT
-TlFhz5OHqTpVNRApFUPg4slQqHc3cFzyN0Fd+5WoMWJe/bXpbS2D1LMi6alwYrV/
-qpVYXvJ3aBTe7Y91ODSeE3FFd1oseBX1xgBvchCFMQ5HATAdkXe/MDMIvqKrOZvk
-On/egyEjX7LI39F8fiBhGi3vvwNv7vkcxKsz48RfKR9Cz3otjQ3FgKiz5Ke4gpDA
-e0GN8z+1Mn5MBiGtKlIj/d8UA1ZaY9YFdgNIJZ+DeKwkdTf1SjaqgcfNun6ZNfFw
-KP2s5SX+XHmLF9smfzg/XVmxtm4sQtqzUqMruMoJ4C+G9LprtIGcEztG9C2bAPxR
-sdhHBAYP34gAGfKJdYTOMRGbGK6A5cQPVtFnDtd8VOiBSuArRvErlfnXkRmVDQh1
-pVR/31folyrdIIIPz7BJ8hQebBOuAcF80fRhapzwSe/VI2QPaWjv9W/autjyTX3I
-nzwEqa/+OIzRl+xfoTuwJHtiqEc0fl/Gp/DqbNZnNYzk/M7leWuUi55fc2VTszov
-tDCu7KZyqv2/i1i8zEJOgbz8ivuvjfICm3Q7ntoEjHmcWZTEUvVO3wBKrohW/6IW
-Yuje38fgqkSdm/RjRdZ4EH/GoJcbkTr3PsEqaDhm7YgBjlzDTfw=
-=2d96
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk3QACgkQVbJhu7ck
+PpRWwA/9FWg6XzqyguPhO9CngFXejkqKyZmnQHk36KOukW3KBcXxlwq6NaLoFB6a
+H11qsw+ZsMKn0coup6So6n+a+0nuA6gxNVqiA2mkzB0FVtm5sApN4v4o3HI0sNio
+j9peUrMOkfMDlhLujJPn5g8ELIrP6qt+Tf0tdOLyL/rwLl4BYASBKukidJwhiihm
+6Jt8ZC4u96C8SUUu8eg7wHDPozMX3IS55Xri+E8MQYecR5g321b3RnpyAbmHLYki
+ifm7x3PVn/b0H88O2nfPm8ZP3NRE/jMX5pwxre0SV6XgFseI3pTQGQl2QzUMQuTD
+fvluUmIB4qGVog0vB9X67MrL1Ea/8kWXLF4jaxzCEScVEE1iat+fsuBBjAgImoNZ
+QpIDog38UKGpGiuDz+w0Gm8M1dY0dmx+jRWqrie2P0sPcfD7X3ydMSLK1MWOg9S/
+b+T1j8ZreB0w/rVaWFcxYm6pScczJK56K6SOC0adTlOqxYbJkxMopZPV3s8UoQ3l
+0uFjHskooAECnTYwI5uWORSJALy8kJlKWaiR3Y8HWAToIvulby9kCrY2omeW18Wf
+54CJdAL3qtv92dOynmAPxxxPLm7uyTkMqGA4P8u61O8GRKmey5f9dHE7AVnOx+2T
+cTR0rwv29sW8M2uaZ/zz4AdI4kMxGi3+nQq10bIcA0ITv0kgwTk=
+=mzUp
 -----END PGP SIGNATURE-----
 
---Yim/X5RpfiDBlqLf--
+--6J9V1x2ymoMpTVEm--
