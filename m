@@ -1,77 +1,77 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABE5A3D
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA1C140E34
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 12:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721996135; cv=none; b=fgvWwuyvJ5ZYndachKss2Es6pYaUVv/WTjX7R3Ou7p4CO5uDifP3lvdFf+TqzLDqKlrFANb5jeF6k8XLe9wJnkw2tAMV3T0kccRe1HY8AQsmBC44UX3KzEXrwC0zZI9GMbnAQ+GF2+yKHopjwP/Uz2FAL7/p4K0eNW34mAAsVSA=
+	t=1721996150; cv=none; b=W41L7fY6xVLHVv06RAR3I/ChXs1bCBeODPSsbPhGeBEb4/6i3AIYMC79Yq8iZlCr2ASIBgyoCM7OhqimVio4/yUlQjcMirXzsgunYalUyEK4PbUx3pRHURx4HtajCtmXD8eXVEZUDLhOpZz5e0LoNCcAttESgOLoMbjtUlEdLt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721996135; c=relaxed/simple;
-	bh=1hdQqrtx6rsU1Gfxt0kfKvJDVWXPRD4GJeNLtvOoMa8=;
+	s=arc-20240116; t=1721996150; c=relaxed/simple;
+	bh=GZnj2b29E/8TXk1PNN4gnPdxaFDeeF132IYSeMuC6rc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SwIDTSf5wFOkKC2GOgwcQcWAPqdrtT/N4Z4qKDWGva6kG36XLDvtYPLGGICv/VRgfCklOnBIylLY7zgiTSXMtWW3o5cSQtPbSfVj7i45vDtKgG3Lda0mqvlw8KHEjvWrzJkS5XtKOMTs7kGzBaOvcbvC9SVomGQ24BDlEO3h2Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZnrU9PTP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HJlwFEdY; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=I/pD86K5jGJdjED0MnCUnE3sSdHAyHIC9iMMh/nlppLuyPzgtvHfDJo9h7anC+Ii6ShQcWvG+IhllFaGIi7WLwikFcbUQNfXQQt6/Kj3Sqr+tJyI+VaZhRrCYIUL1Skd8Trbo80tm59a99oaJq8yFF5DWpKMKJaqy4yleXErmeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sb653LOm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rU1QdmvM; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZnrU9PTP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HJlwFEdY"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id ABDFF138066B
-	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sb653LOm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rU1QdmvM"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 537EE11401F3
+	for <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:47 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Fri, 26 Jul 2024 08:15:32 -0400
+  by compute3.internal (MEProxy); Fri, 26 Jul 2024 08:15:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1721996132; x=1722082532; bh=dTd9b77c7A
-	S6O/4xOhKLZyUx4c6zN8HIApT6K9jumxw=; b=ZnrU9PTPD3p6yLFET1cKd1NtJr
-	OOoQbpPk5567iqBs4/2PYNPDfU11snxuGO49VU2mGWfPvW57PHFa2GlkHmgratud
-	kV/oC5Zo/gVnzSR6+2YfgKMwBxoh0dOnyHTZcMMVzgiVcJLch7p+f5S9h9xk+Ik/
-	0yrqE12t3dFe/x78ZvDwR+xx7u1N0b+dAkvzbR3O2851641ifEW+El7b2p50ViBS
-	iRWvkPnsfclpbWMw4+snhGcDWdOaEzQeT4TjKBRphuwLeVmcoyw9vnD9WXbpkq9b
-	WpX+mlZUk9vm8Wr1Z45u2l+1vQRI3XENWWkaLdOZ157+L/I8g29qi4vzLYGw==
+	:subject:to:to; s=fm3; t=1721996147; x=1722082547; bh=1LTNsuOJcF
+	KJPqFpRl3qzga4ZdJJ4fZSTseYyUj7wj8=; b=Sb653LOmR388j/ISbcYFTRK5yo
+	uLw6YGLFz4oiFf0IGFuoYv/pwX4jr7vCa0NxLFL176uV8Qa8qkFHgITRs4MSyqKK
+	bzjIiM6/Se7JipNVnmCdper65p7+reoE1SQF/FZ8xxwoEJ7dJyl3Sp6veKN10jVk
+	IPuUF8xJdK21CqKjsr2oIPmAL4W46svobV5g55AlGAKndxq/wFkPZro/tdHZboDM
+	P15TBeDy295M+9Xy5WU4dUG1susLwPOubQxPK4/fY5ChzNsh3PmvKPeQe0XjcTZH
+	dmTKgo1UIeBhcXiScbM3dC9yT59jkRVUO98dXoeY4v7j1p2zHZEqlYam7w9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1721996132; x=1722082532; bh=dTd9b77c7AS6O/4xOhKLZyUx4c6z
-	N8HIApT6K9jumxw=; b=HJlwFEdYgnZWbzhTgWqx4hMVPMtBIOL2c05drk1gNYSZ
-	rqUuIJFVDCWuWOzcR++2c5dXD8UQjzRm1SRSrvBmTezaI2+TTSi3CWJdB2EjT2Eu
-	HOmGxb3lbouIYMwhUCoCA9IQKOZY3NJ91ZlI9ybt/wE0pCRdfnDoQj93Jeng9cZt
-	ycEc7MDDFdjnX9Z2PlM37VT223K9eSFalwHTgVEe42NCksI8X0YTzIgk4x3khTay
-	KqISpytRrwzmMTlY0mqUp/REgb2cev34w5WPfy0AyGTQUxmgRlTeAu/r+qUubN1r
-	fTdhFdS0wIByfb09AknMDf4pqVwNsoCPirp31Ig1TA==
-X-ME-Sender: <xms:ZJOjZm-8ZtnqmPxxnLPkbGERcTjrxpAHLqs2GZyTEm1qdAhJseVuuw>
-    <xme:ZJOjZmsRVB6gKz2fWIxuzQ74-AMxOelLcgZEydbTqCiJ9SeyWPDESPvgRNGYdDppw
-    wSl2tyGD_yrfZ_1SA>
-X-ME-Received: <xmr:ZJOjZsDkdUGIkCNsxWYgM_wTfplicUnlQZtObtSlBztj7_K9hi6HyEt7D7C8BH3Ic_M4hTMO1vZ-j-fARLeLD9aBZ0IXA7robNtk-R8CLnL2aVa7>
+	fm3; t=1721996147; x=1722082547; bh=1LTNsuOJcFKJPqFpRl3qzga4ZdJJ
+	4fZSTseYyUj7wj8=; b=rU1QdmvMuVwDB7V+K04o9dETnADIGWFXLOx6TChnkTyZ
+	w6SWQgI8FEHUVyTSqDU10ynbtyv3g3I7MkrgjYitMFlBAXw7PukmOBN7pqymjEGY
+	D0DNOjWRrDMy7VxDd9MT6HpMggo1DqBMIMgoxfsUzdRHG7IesJGioSNdN7jqvKIN
+	LbNQCsldLXFje5mVbFb1Ar8rwZkzwRVKI2CkeOARxB+08xAhoqSFlUi9kbFFX6Zb
+	ETUxOL84DsTYSE2+XX1ETvTqyoXvIRJb7xvutSFA/GP8F5Kf5LUYKyNaFEF1LZ6b
+	CK6Sl/Zy8IAx2bDKnW/OhFcdU+ENJ8TLRgKX8N/MQA==
+X-ME-Sender: <xms:c5OjZpJR1bi04tkjt7S75VC13RFNqiEoT16jqSyK5WSAZSgdWmqbTQ>
+    <xme:c5OjZlIDq3Am4cls2oWNyoB6vSeuIeDw_Z02M6EXDTyG_Ti5abBNJI5zBiK5pDUkw
+    5dEQ8KLOBGv8aoU8A>
+X-ME-Received: <xmr:c5OjZhtuxMAcyL4FZ4fkMcRJUc7cP7WxA4_gkoBPQrTkqFaKjxGHIXce_oftM8ntkj71BJ0-cF-3pqzaUZP_yiLmEZQtLjW9oyHEjUrwYj5V99CH>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrieehgdehudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:ZJOjZudRmnCbDeeRMW11pTj-dSdbbwSoVcqcZgxZu4vFm5_ig_lCBA>
-    <xmx:ZJOjZrMtgqa1eL0jSZIFKMKUTDouW_KNDu2tsTv1z525tYb8x1jnWQ>
-    <xmx:ZJOjZonjZraXM36sO0XRJBHmOQJiOn7kh0nLNmOus4I8EH7Vlkp6kg>
-    <xmx:ZJOjZtuIJR1HOIe-OBXs5Qp6J09qST2422fCZh3PsXKGKotvKbFm3g>
-    <xmx:ZJOjZh0TfccD6-Ynvdf76wnA2Q3gD0KhoIW__jrfrFtQbqddIU_mqTvw>
+X-ME-Proxy: <xmx:c5OjZqaPVr4tAP4Xqb3IIVcmQvNd9eo96ytwykhtoQF4kyfZigvgnQ>
+    <xmx:c5OjZgYSNm2bh95kdU_Lnx8Q6ifvZx_NNoFGVrTD4JSyZTJH3EXo8g>
+    <xmx:c5OjZuCspWYrvb1aOG17LtAydXUQY24KA26PXAkE_i7Tf9FnL6dMaQ>
+    <xmx:c5OjZuZs-Z7TGtlGYJLi2hmPrQQFa0ZOnTxOY90P9Ij4wuGS--XRWg>
+    <xmx:c5OjZryptUTs0uLeSTBvGW4PrXBRGrAP9v8XlLbsHsI5-13hP5AKuztH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:31 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 26 Jul 2024 08:15:46 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 62138296 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 6a7ce5a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 26 Jul 2024 12:14:11 +0000 (UTC)
-Date: Fri, 26 Jul 2024 14:15:24 +0200
+	Fri, 26 Jul 2024 12:14:24 +0000 (UTC)
+Date: Fri, 26 Jul 2024 14:15:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/23] builtin/ls-remote: fix leaking `pattern` strings
-Message-ID: <d42152654bf91e90b8b417316f255746a3a75155.1721995576.git.ps@pks.im>
+Subject: [PATCH 09/23] builtin/remote: fix leaking strings in `branch_list`
+Message-ID: <6952fb2ff2cf453de39b63883a716a9f09cab7b7.1721995576.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,110 +80,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5AohA/eV1QVDNFjq"
+	protocol="application/pgp-signature"; boundary="Yim/X5RpfiDBlqLf"
 Content-Disposition: inline
 In-Reply-To: <cover.1721995576.git.ps@pks.im>
 
 
---5AohA/eV1QVDNFjq
+--Yim/X5RpfiDBlqLf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Users can pass patterns to git-ls-remote(1), which allows them to filter
-the list of printed references. We assemble those patterns into an array
-and prefix them with "*/", but never free either the array nor the
-allocated strings.
+The `struct string_list branch_list` is declared as `NODUP`, which makes
+it not copy strings inserted into it. This causes memory leaks though,
+as this means it also won't be responsible for _freeing_ inserted
+strings. Thus, every branch we add to this will leak.
 
-Fix those leaks.
+Fix this by marking the list as `DUP` instead and free the local copy we
+have of the variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/ls-remote.c          | 11 +++++++----
- t/t5535-fetch-push-symref.sh |  1 +
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ builtin/remote.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index debf2d4f88..500f76fe4c 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -47,7 +47,7 @@ int cmd_ls_remote(int argc, const char **argv, const char=
- *prefix)
- 	int status =3D 0;
- 	int show_symref_target =3D 0;
- 	const char *uploadpack =3D NULL;
--	const char **pattern =3D NULL;
-+	char **pattern =3D NULL;
- 	struct transport_ls_refs_options transport_options =3D
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
- 	int i;
-@@ -96,9 +96,8 @@ int cmd_ls_remote(int argc, const char **argv, const char=
- *prefix)
- 	if (argc > 1) {
- 		int i;
- 		CALLOC_ARRAY(pattern, argc);
--		for (i =3D 1; i < argc; i++) {
-+		for (i =3D 1; i < argc; i++)
- 			pattern[i - 1] =3D xstrfmt("*/%s", argv[i]);
--		}
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 08292498bd..303da7f73f 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -258,7 +258,7 @@ struct branch_info {
+ 	char *push_remote_name;
+ };
+=20
+-static struct string_list branch_list =3D STRING_LIST_INIT_NODUP;
++static struct string_list branch_list =3D STRING_LIST_INIT_DUP;
+=20
+ static const char *abbrev_ref(const char *name, const char *prefix)
+ {
+@@ -292,8 +292,8 @@ static int config_read_branches(const char *key, const =
+char *value,
+ 		type =3D PUSH_REMOTE;
+ 	else
+ 		return 0;
+-	name =3D xmemdupz(key, key_len);
+=20
++	name =3D xmemdupz(key, key_len);
+ 	item =3D string_list_insert(&branch_list, name);
+=20
+ 	if (!item->util)
+@@ -337,6 +337,7 @@ static int config_read_branches(const char *key, const =
+char *value,
+ 		BUG("unexpected type=3D%d", type);
  	}
 =20
- 	if (flags & REF_TAGS)
-@@ -136,7 +135,7 @@ int cmd_ls_remote(int argc, const char **argv, const ch=
-ar *prefix)
- 		struct ref_array_item *item;
- 		if (!check_ref_type(ref, flags))
- 			continue;
--		if (!tail_match(pattern, ref->name))
-+		if (!tail_match((const char **) pattern, ref->name))
- 			continue;
- 		item =3D ref_array_push(&ref_array, ref->name, &ref->old_oid);
- 		item->symref =3D xstrdup_or_null(ref->symref);
-@@ -158,5 +157,9 @@ int cmd_ls_remote(int argc, const char **argv, const ch=
-ar *prefix)
- 	if (transport_disconnect(transport))
- 		status =3D 1;
- 	transport_ls_refs_options_release(&transport_options);
-+
-+	for (i =3D 1; i < argc; i++)
-+		free(pattern[i - 1]);
-+	free(pattern);
- 	return status;
++	free(name);
+ 	return 0;
  }
-diff --git a/t/t5535-fetch-push-symref.sh b/t/t5535-fetch-push-symref.sh
-index e8f6d233ff..7122af7fdb 100755
---- a/t/t5535-fetch-push-symref.sh
-+++ b/t/t5535-fetch-push-symref.sh
-@@ -2,6 +2,7 @@
 =20
- test_description=3D'avoiding conflicting update through symref aliasing'
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- test_expect_success 'setup' '
 --=20
 2.46.0.rc1.dirty
 
 
---5AohA/eV1QVDNFjq
+--Yim/X5RpfiDBlqLf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk1sACgkQVbJhu7ck
-PpR7vQ/+NjFYJ6htNHeXScBJxM/3atw3u/BckmysgNDPT7LT8W15KcBEGQiTHZbx
-vMY5o8YfUxY5F91xcWIfE709F7Q1GiDf2Dnb2b/AJYWhlOMtRm+T8lXRGWJPQE4e
-m57xtb+7z5hDbBJs2/CagI/yUOz/U1QWBkuXUnarx3ZBUz2aXls0o3VGvXbsAlLT
-nRg8na0IJNhCN7Cbokt3B+2ld+v00piibYn2emRuecZmc5CxY8giqQEu6g2/txyq
-4uoFDDfHdkI0EL8ygwYNsA0FTRrhbIA2J7e3Ei9SXmkY8d+4o4yxagWVru+hnzzz
-aO/yCpVjKZuQJ/2/7P2dalWtoJv/0vN9a7K8UzYkreuxXbjHqD+Kn+gA2fSicEGd
-iUpXC3EAaFauanf4Acx/bQkJOlSnv3CP51BYvcvzCippT/AHwceOImKT7OEba2Vj
-mJDqcwNt5SsWh70S3fRl06dWDwgs1n5ZuVvXu3gU5MOL64YQwWN+ol8FAAyCvsvN
-qfYNllx+bAH1uNyDZWrOgPbArDf7bOPW6nKvjpaeICEP6ZyynX6aMO40w3/RR55H
-nTcESFrHxMH2sdXUXBhXSqeQViCAb5OVmpAnKymbzhgeTzviiUyknmbrGKbgLlMi
-/quJK8Tqheoqqt2cvaG86NK92GDUOCk+fE827/t7sKiRH+dH3zg=
-=Xwb5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmajk2cACgkQVbJhu7ck
+PpQlRQ/9EARNGIAOYyzM9C7ghMzu5KC5P7h0W7cT5KmYcHxDto4P0TAjqE0qYdXT
+TlFhz5OHqTpVNRApFUPg4slQqHc3cFzyN0Fd+5WoMWJe/bXpbS2D1LMi6alwYrV/
+qpVYXvJ3aBTe7Y91ODSeE3FFd1oseBX1xgBvchCFMQ5HATAdkXe/MDMIvqKrOZvk
+On/egyEjX7LI39F8fiBhGi3vvwNv7vkcxKsz48RfKR9Cz3otjQ3FgKiz5Ke4gpDA
+e0GN8z+1Mn5MBiGtKlIj/d8UA1ZaY9YFdgNIJZ+DeKwkdTf1SjaqgcfNun6ZNfFw
+KP2s5SX+XHmLF9smfzg/XVmxtm4sQtqzUqMruMoJ4C+G9LprtIGcEztG9C2bAPxR
+sdhHBAYP34gAGfKJdYTOMRGbGK6A5cQPVtFnDtd8VOiBSuArRvErlfnXkRmVDQh1
+pVR/31folyrdIIIPz7BJ8hQebBOuAcF80fRhapzwSe/VI2QPaWjv9W/autjyTX3I
+nzwEqa/+OIzRl+xfoTuwJHtiqEc0fl/Gp/DqbNZnNYzk/M7leWuUi55fc2VTszov
+tDCu7KZyqv2/i1i8zEJOgbz8ivuvjfICm3Q7ntoEjHmcWZTEUvVO3wBKrohW/6IW
+Yuje38fgqkSdm/RjRdZ4EH/GoJcbkTr3PsEqaDhm7YgBjlzDTfw=
+=2d96
 -----END PGP SIGNATURE-----
 
---5AohA/eV1QVDNFjq--
+--Yim/X5RpfiDBlqLf--
