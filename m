@@ -1,103 +1,129 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073581741CC
-	for <git@vger.kernel.org>; Sat, 27 Jul 2024 14:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D24181CFA
+	for <git@vger.kernel.org>; Sat, 27 Jul 2024 15:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722090972; cv=none; b=doMW3Y1Y0xWfOBuzuBdFD6e9eSiDxpcik5iWQhMwwIqijX4018i4wK5caBESDLVxQtWN/6AmQW9Vr2UcZAMOnkDuGzMG3HUmgU2/3ieCnTXWCdg1W3bsgls0eS0GBrfLQjOuwdFAKq2hJFaKw1+Lh2mVV2T7uALqBSAKA3ZyL1o=
+	t=1722095597; cv=none; b=jfAuyoHjkF+fuwxUqbC6W7g7EvasWxVW4NmmllnahlXFJph/DpF03e2mc6ZeOd9u1L+0/qm/5X67cQ7tDZtqmlwNqn+rQvNhXKnmEMWqy8XrJYZ9wMK6NQkZQT3kILz/rs7SUes3VCNXRKmEpGw2COSUQ4FbHz8zjkrGkacthp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722090972; c=relaxed/simple;
-	bh=7B4M5TDq5TjRL9vcflQE+f51pKHc2pn4czgAI1Lielw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oLOfU8sQovCg2HWoWTNTDpruyuTb68bqUxs918iFS4Q6OWGeeg4wPw4Fd4hkZC+w27XHe7v1aa5+88c563Y8JV05ZNG1Dos66oJ+aNjEFYb7Czeto1skSjCIuf9inY0v8VPzpXeZdkILCVmaRUF/CUNwX2UecYFoVnUxLeH3SeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ofCsJXbR; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1722095597; c=relaxed/simple;
+	bh=RIjPQC79thMAJQd8SQ0UDRJkZV7IG7SCUmtd0hDZOCI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pbd533jOGBMncsjvLUoW8Oe6SgiWnQgpk/7pF+8bXpjt0IZNbfPWRGuWWyjQMYDxSTckbl1wasHN25mucHqdTNGvtyeznGbyFfN4q2HEKFqYBx+xWm2d8KA/X4L00YdANp36r2xxz/VkPdcG6wRq4VUvdoqJZoCPod3Cs8BsibU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fx2paNTW; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ofCsJXbR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1722090962;
-	bh=7B4M5TDq5TjRL9vcflQE+f51pKHc2pn4czgAI1Lielw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ofCsJXbRQmN1Re3nlbK53G7ixuzUIG9okrGJnaxVwJwKLdtuRWlC9hxE0BRiOOPNi
-	 xsQKOjx5vYBFaCiF5GKZAMJpOhp4IUQ4CvW3fQNp494Rxv/ftYb/WweKYD0FBcpZq1
-	 /7gbAwpZ6kj3oyFWeEn6cYikacE0dalxX07l7j51ClNL/8LpAriZXwBMmGZUM8q0LK
-	 MW2zVGOfX3y5Ten6Kek6hWfHk2eAWd3+RqJR7+dTZZskb7+JUacfA+BWa9jBFSuf/Z
-	 IVb3qnnzS08/hpeUIFsFfQ46XC7fvE0csunM8h6a/5pTv1EuqSjaLdnz2ab4FWR1i2
-	 8PaG1VBZaQ5cl0obiPKnZ4PsgngKbrYBzr8rvAMr0tVrDjSlRHOWISIgD4veKVPYLt
-	 yknJV/dA0F/mNdYV2PVUws7f0SJX0tVj8z63olP2R7KFxQEU4ugJtIGCbThlD163rE
-	 p4CfOZdz2PZgK9pdfdcGzLYbVj5rxhsQWZ76T+lBl1LKHq4lsOQ
-Received: from tapette.crustytoothpaste.net (unknown [207.96.251.194])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fx2paNTW"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B67282D123;
+	Sat, 27 Jul 2024 11:53:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=RIjPQC79thMAJQd8SQ0UDRJkZV7IG7SCUmtd0h
+	DZOCI=; b=fx2paNTWzQyew6xBhiw4x0ZvJaM/nXeL1ztrfr32pbhR+IRaG5nAtE
+	Zsdy4IImAGbIN+McA18RxY/qyZzqb+G4Mz2MF3STEIKFoJ8B2QZb2Jc4QarUOzAu
+	48/3khcgzcGzK3qBk0FExjv/xE+CINKH/EsKSBmX1VdpZcR/3T5a0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97A562D122;
+	Sat, 27 Jul 2024 11:53:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 91F90209B7;
-	Sat, 27 Jul 2024 14:36:02 +0000 (UTC)
-Date: Sat, 27 Jul 2024 14:36:00 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Tim Abdiukov <tabdiukov@gmail.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D2BA02D11E;
+	Sat, 27 Jul 2024 11:53:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: git@vger.kernel.org
 Subject: Re: Bug with bash and OpenSSL usage on Windows
-Message-ID: <ZqUF0ANz9qX-wWEN@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Tim Abdiukov <tabdiukov@gmail.com>, git@vger.kernel.org
+In-Reply-To: <ZqUF0ANz9qX-wWEN@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Sat, 27 Jul 2024 14:36:00 +0000")
 References: <CAD+08a87xxVRxO1eiWiam-7xvq=AyKUB-MzqG-r=rM_SYbquBQ@mail.gmail.com>
+	<ZqUF0ANz9qX-wWEN@tapette.crustytoothpaste.net>
+Date: Sat, 27 Jul 2024 08:53:06 -0700
+Message-ID: <xmqqttgasufx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7zolsBUS9ClBRSRE"
-Content-Disposition: inline
-In-Reply-To: <CAD+08a87xxVRxO1eiWiam-7xvq=AyKUB-MzqG-r=rM_SYbquBQ@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 515ACB5C-4C30-11EF-8471-BAC1940A682E-77302942!pb-smtp2.pobox.com
+
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> The Git project doesn't ship OpenSSL, or, for that matter, any binaries
+> at all.  All we ship is source versions of Git which various
+> distributors compile, sometimes with other binaries.
+>
+> It looks like you're probably using Git for Windows, which _does_ ship
+> OpenSSL, and so you probably want to contact them using their issue
+> tracker[0] once you've verified that it hasn't already been reported.
+>
+> [0] https://github.com/git-for-windows/git
+
+Thanks for giving a response like the above, tirelessly every time
+something similar pops out.
+
+I've been wondering if we can somehow reduce the occurrence of such
+an issue in the first place.  Elaborating a bit more in the
+"Reporting bugs" section of the documentation landing page is
+probably the 0-th step, and if people agree that it is going in the
+right direction, perhaps we would extend it to include something
+similar to the top of the "git bugreport" template, by futzing with
+the implementation of builtin/bugreport.c:get_bug_template(), and we
+can even encourage customizing it by distribution.
+
+Comments?
+
+Thanks.
 
 
---7zolsBUS9ClBRSRE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ Documentation/git.txt | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-Hey,
-
-On 2024-07-26 at 19:40:48, Tim Abdiukov wrote:
->   What did you do before the bug happened? (Steps to reproduce your issue)
-> Tried to generate a self-signed certificate using git bash.
->=20
-> Using git bash, I ran
-> ```
-> openssl genrsa -aes256 (private key location) 4096
-> ```
-
-The Git project doesn't ship OpenSSL, or, for that matter, any binaries
-at all.  All we ship is source versions of Git which various
-distributors compile, sometimes with other binaries.
-
-It looks like you're probably using Git for Windows, which _does_ ship
-OpenSSL, and so you probably want to contact them using their issue
-tracker[0] once you've verified that it hasn't already been reported.
-
-[0] https://github.com/git-for-windows/git
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---7zolsBUS9ClBRSRE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZqUFzwAKCRB8DEliiIei
-gci2AQDaHd1eA2tlWC/kER0i96Wwnm9Rsd2ANAvg/d28wJLDxQEAqNzQRibXi6zm
-g9nu/KSRjhyLzD94TExcrjp8SQ2G0gw=
-=7xEa
------END PGP SIGNATURE-----
-
---7zolsBUS9ClBRSRE--
+diff --git c/Documentation/git.txt w/Documentation/git.txt
+index 4489e2297a..495467ac1e 100644
+--- c/Documentation/git.txt
++++ w/Documentation/git.txt
+@@ -1149,14 +1149,31 @@ the authors for specific parts of the project.
+ Reporting Bugs
+ --------------
+ 
++First, thanks for noticing that there may be a problem in Git, and
++be willing to share it to help the larger user base.
++
++Issues which are security relevant should be disclosed privately to
++the Git Security mailing list <git-security@googlegroups.com> and
++not on any other public mailing list.
++
+ Report bugs to the Git mailing list <git@vger.kernel.org> where the
+ development and maintenance is primarily done.  You do not have to be
+ subscribed to the list to send a message there.  See the list archive
+ at https://lore.kernel.org/git for previous bug reports and other
+ discussions.
+ 
+-Issues which are security relevant should be disclosed privately to
+-the Git Security mailing list <git-security@googlegroups.com>.
++The Git project does not distribute anything but the source code to
++Git.  Folks like Debian, Ubuntu, and Git for Windows project make
++binary package to install, and may include software other than Git
++(e.g. OpenSSL and Bash) in their packages.  Please report bugs in
++components *other* *than* *Git* *itself* in such a package to the
++respective packagers, not to the Git mailing list.  How to report
++bugs in some sample binary packages are found here:
++
++ Git for Windoes: https://github.com/git-for-windows/git
++ Ubuntu: https://help.ubuntu.com/stable/ubuntu-help/report-ubuntu-bug.html.en
++ Debian: https://www.debian.org/Bugs/Reporting 
++
+ 
+ SEE ALSO
+ --------
