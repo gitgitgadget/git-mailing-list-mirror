@@ -1,100 +1,143 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216C61E49E
-	for <git@vger.kernel.org>; Mon, 29 Jul 2024 04:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F17F13C69A
+	for <git@vger.kernel.org>; Mon, 29 Jul 2024 09:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722227596; cv=none; b=lMKMNHr5PWA3UZ0fZ6ETXHHDLUH33tYSl/SgXuwxGHDh+5liC2POnyGfCREU4UcKtp6RSBCBmHU6i0ec6iYgomgR4+0i45KypObg4EzQcuHfeclVIN5VsaYx4HijBPJeW5KBiRJInnQWNfVFHlpydCZ6b0SSPj79HiCTBBWnZ8A=
+	t=1722246541; cv=none; b=d5+NIIruwUd/PzJvB8tJ2i2OHFZ42suxGhYqUBwQc5IbdPUKy2luf+hqOjjJZbgnjNvukYOre+kOOTR/mTa5ghGBoHZ1TLUQrJn6AmFerY89/mwXVECDlb5WOFchSeiitjgm0U7MbWHgzYS589Iy7Wb4qpSmvZV0IYpJHoh3mXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722227596; c=relaxed/simple;
-	bh=zKgXk/OPzozKCOljz+PDjfZ7pZQTZIVyx0D0A1sA66M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5uOdSrTueiCwzZQhaOnMAAOpHmS3ZTKmTJVzb2Q8SKKlKhmS5RdpODOJx21wTN64OQjJQTuwJI+XBn4R0y6aepkl+J1YqwDQtVVh8n/ptwGj//VgBDVRHHy1QK2NJjuPi8dFePkrhbZlQOCC1abW3l5ZXLSwo20O5IsNLOH45E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D/DroRwG; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722246541; c=relaxed/simple;
+	bh=EYw7fTQki6czK23EuGnGPNveg7puewTGy8TfUhpvl4o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V21WLZeCgV1QG9MqoobK0/oA09LLiTT9EOD2HP133yUCEyIGeoqlqO4VTguMK+zw84h9FxPYT21988ERmfOJ4LKarJGm79j/TaxJutQJmgz0NUoYGlurOn4DLK+zEnN5VEEWw0WZh6COwsfvErCnCzgoEVkEUctjCfwgP1oG+1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PwohITvF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nCU6O7Iz; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D/DroRwG"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1fd78c165eeso22149375ad.2
-        for <git@vger.kernel.org>; Sun, 28 Jul 2024 21:33:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722227594; x=1722832394; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xeC8ivV4jwB9Mle8Dve3/aam/pSOrks7CK3DbMjEArs=;
-        b=D/DroRwGiREOtcjrfcxlTbzaiOedePYF0I4a7uEEO9tjax03lSvgYvBwKgsvXMlUky
-         Oi9x0lM4TOnK9H2I45f1ui5EMh4XHbUZjAoN6teD9Yxh8TadxTOQuemYNibTvVihhwPW
-         L77xed1gEAqnuFDbfqKPPaBLLcSzNRBAwejC5KqZuFVxvFZfj5QRSqKh1LfeX0SxSYxb
-         yz32caioi4y09PHhf4FsQJJwCrxs9aB4UsZm7zYpC8vqYWiCFvhGWPNBmFU3UBpGSNDi
-         uk7S1STUPk0bdO/c5vR+kBqMMZRKXXPgiLC3ROf0urhfboiuCbRLGibmwDASzKAWA6oE
-         Px+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722227594; x=1722832394;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xeC8ivV4jwB9Mle8Dve3/aam/pSOrks7CK3DbMjEArs=;
-        b=jdbgpELlXxMLYQcODcbr12Qs4ersIt8W4OyWh0Za3o3/NP4buQ1Vrev8+RINqVUh83
-         uJJf++E0tBlQzkcuzUu6ycOkJ43fy/KMCKY3+Cn2g1J1Eqa15h4TSRmu4FD5sEbA2I25
-         TtEXRIWR/cXk8Q1cULKaaSkSYpnIe7wihc1L2+3iWyjfgIpDF4Sgl3f6LGFhCDTxidje
-         tmzJmz2Fs/gFPiX+iFKue6hDFQ+CHiQuXl9Nmk2zQolyyI0yXI2tEVmYJCi8zPMLPofj
-         KOYwZbXDYE0bXsZmxETdeEJpiKAkSsVn6GD9j6gTCwEbjxG71zuLIdTuiz6zgfG0rd0H
-         Dcnw==
-X-Gm-Message-State: AOJu0YyAz+oaySR+SnuvsKAOZsRhW2HzIyRMV+HYkPFpK00RkG4zGNCv
-	+A0QDQN+9r2EsEfrSiHOUAO6pLiLPGAKK2PXUyFN4aBCC+uEMMcbNeRuCw==
-X-Google-Smtp-Source: AGHT+IEegT7R6RXF8rgia8Pn8igr4QuMh1NJcBig0wvg/TIZZ6b8u1FevoW5OGJADC1zWbScR+hJrw==
-X-Received: by 2002:a17:903:120b:b0:1fc:369b:c1d1 with SMTP id d9443c01a7336-1ff047dd5f8mr105097965ad.3.1722227593997;
-        Sun, 28 Jul 2024 21:33:13 -0700 (PDT)
-Received: from kousik.local ([2405:201:c006:380f:c446:d83a:d769:20cf])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7c7f62fsm72573135ad.19.2024.07.28.21.33.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jul 2024 21:33:13 -0700 (PDT)
-From: Kousik Sanagavarapu <five231003@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Kousik Sanagavarapu <five231003@gmail.com>
-Subject: [PATCH v2] unit-tests/test-lib: fix typo in check_pointer_eq() description
-Date: Mon, 29 Jul 2024 10:02:48 +0530
-Message-ID: <20240729043303.3486-1-five231003@gmail.com>
-X-Mailer: git-send-email 2.46.0.rc2.1.g1fdd4dfe68
-In-Reply-To: <20240729041435.7618-1-five231003@gmail.com>
-References: <20240729041435.7618-1-five231003@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PwohITvF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nCU6O7Iz"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9AEA01140149;
+	Mon, 29 Jul 2024 05:48:57 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 29 Jul 2024 05:48:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1722246537; x=1722332937; bh=22VIPxR5cm
+	w6fJGNiFsaBG2ATMfSPDm2tzin787Vfho=; b=PwohITvFak2p4R2+PfWL7zzJ4V
+	L/pS08Gnn7o/P1aKmooORV3/d1NnvjtT40VQWTIvbyqxRgDFM6tsrkQ3LmT+xRYK
+	Sy9XVdyZsYrlzsj/A84nKH34hESLmCDJFUf6Ls4SInjw2lETXjobgSZbhu5ttGGB
+	XI4yaN6H36XvSlRI5aQgdSMKj4ZBdtTLbR3/Y7t542NVc43zFxey7UfdUQcoZLHI
+	MfJ2epHPHMURJlXhjTkQzSFX/tgPIQ0GOSK4bsHJN7PI2W5OdDs1ATsVYwyM8ye5
+	XuarMgW/5R/B/j3M+yVxPjYKTkh7ICjMhyeojrPYdUiW8ki6KclAgJbDpyag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1722246537; x=1722332937; bh=22VIPxR5cmw6fJGNiFsaBG2ATMfS
+	PDm2tzin787Vfho=; b=nCU6O7IzK9Rrou52YJYZxPjjbGPvWdHBWYGdWBIqEqJS
+	85mcH9Wy10m8HG03pDHDB5wJY37zLM7Mkekj4zOtnEm8aOvP7DQrP/ytCa7MjWR0
+	hl817abFAjBNRRn2XfyJJRdVWqD0XPhcVss33xWN99p+Y0/yR13RIfqb5SZw6/D2
+	0jzJV1CsQZoE+6kzk2PLjaaXdRF5XcGLTigvuZkpJryX6fAGIVHznhr787jbOok8
+	7SgwOISo3akvJ1BHvqBFLlvSykRjhaQTjcS9HHOAtnV1g2JryHRL0wy4Gpls+EXV
+	l+M+5JaQdhvyDMZe+1D5sfjMfPoxu8na+kjFhiwjGg==
+X-ME-Sender: <xms:iWWnZpVNhe5IZq7accMemGOspwFwdLcjtO-htrwhebdGko1CQjiP4A>
+    <xme:iWWnZpkCyFVlNZ_J8drstDLn8pYpvkh0wsbwZNzjlj-DrUmBTe87chvVa19ori4d8
+    ffYSvIhgXOEtzFD5Q>
+X-ME-Received: <xmr:iWWnZlbp6kKvpK8fyd3fLBds3bD05nlmtil2pIrMwzdvYtG5k6OpkbzQOQ38fzAvwI2hH3b9AqYU9yeBSsLSU_5d3Piej-ENipg1ADJGEFB_cg10_g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjedvgddvtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeljeetffevheeggeetkeetieduieeiieegieegtdffheegkefhjeehfeekhfevleen
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    td
+X-ME-Proxy: <xmx:iWWnZsUJ1H9_yQj4je_L493FPTT7dtp8W-QFqqsq6JeLiYfpfRAujQ>
+    <xmx:iWWnZjnr7gFjrBpmTwp0ZZl-RipKsFIybXA15Rg5Rc6XWFdUfTWjjA>
+    <xmx:iWWnZpf5gUGzkA1L7zlo0X0G4vadYshTe_tU323ghBhChlerPZWzJA>
+    <xmx:iWWnZtGAZibSBKDoku4ncx2t6ycAyA7_5EbS82cH9mhYVQH-VIzHCA>
+    <xmx:iWWnZhZCZU3HmfqvUdxeFRo5x9477IKIEO2tXCgd0CWzeaBSzpxeKUCX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jul 2024 05:48:55 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id f6c9912b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 29 Jul 2024 09:47:28 +0000 (UTC)
+Date: Mon, 29 Jul 2024 11:48:37 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kyle Lippincott <spectral@google.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v3 3/7] unit-tests: add for_test
+Message-ID: <ZqdldZE2MV-Pkuu-@tanuki>
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
+ <73465c3d-1be0-456b-9471-f875e819c566@web.de>
+ <c51025cc-26e5-41e2-be56-94e141a64f5d@web.de>
+ <CAO_smVi2rJd5SDMsbbxzFUj28a_1KTgdHMz4DTKMsii+Wt5H_Q@mail.gmail.com>
+ <xmqqfrrxjw8f.fsf@gitster.g>
+ <CAO_smVhq=MkQV3a6qJtDiFykvR4im7AX4hMfKMNcL5SegnOSLA@mail.gmail.com>
+ <xmqqv80szxgw.fsf@gitster.g>
+ <ZqOc9vxdD4qttkFs@tanuki>
+ <xmqqed7gxhyz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BDqjh1Lh9TPIuBWn"
+Content-Disposition: inline
+In-Reply-To: <xmqqed7gxhyz.fsf@gitster.g>
 
-The comment surrounding check_pointer_eq() should explain about what
-this function does instead of explaining check_int().  Correct this.
 
-Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
----
- t/unit-tests/test-lib.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+--BDqjh1Lh9TPIuBWn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/t/unit-tests/test-lib.h b/t/unit-tests/test-lib.h
-index 2de6d715d5..c59f646fd9 100644
---- a/t/unit-tests/test-lib.h
-+++ b/t/unit-tests/test-lib.h
-@@ -76,8 +76,9 @@ int test_assert(const char *location, const char *check, int ok);
- int check_bool_loc(const char *loc, const char *check, int ok);
- 
- /*
-- * Compare two integers. Prints a message with the two values if the
-- * comparison fails. NB this is not thread safe.
-+ * Compare the equality of two pointers of same type. Prints a message
-+ * with the two values if the equality fails. NB this is not thread
-+ * safe.
-  */
- #define check_pointer_eq(a, b)						\
- 	(test__tmp[0].p = (a), test__tmp[1].p = (b),			\
--- 
-2.46.0.rc2.1.g1fdd4dfe68
+On Fri, Jul 26, 2024 at 08:59:00AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> If there is an existing well-written framework for C unit tests we
+> can apply to our project, it may not have to be so much "magic".  If
+> you think theirs is not so good and worth copying, then let's not.
 
+With "theirs" being the libgit2 one? I always enjoyed using it, and it
+is standalone nowadays and called "clar" [1]. The biggest downside of it
+is that it depends on Python to auto-generate the test "main" function,
+which is not really a good fit for the Git project. So ultimately, we'd
+have to adapt the heart of clar anyway. It's not all that involved, but
+something to keep in mind if we wanted to use it.
+
+Patrick
+
+[1]: https://github.com/clar-test/clar
+
+--BDqjh1Lh9TPIuBWn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmanZXAACgkQVbJhu7ck
+PpQsQxAAlkQyDIMTPX4UxN5QKX9oeh7FEYiKrDH0esJwPEM1ZbM1Gla5S7W1ZCA4
+yCU2Mp4/mCA2jVhkHZJGBXhGCNLYPX8fDVN2MJUSnyXQOk3aBzFw3YCj6LL2j18t
++PEJWNJg2+CQ05yq1fp38LClNSNV4zRIrpuIcdH2a7AAj1/zFRzAL2GMOi2cHB5C
+kNL3FZ34IU0aRYL3MJhMY+8h1H6WUxoPjXZPrzX+VVxUZeoI4ZCuyQDTr2iDkJbo
+Q0jJSyBgHyip5emc7+XS3aRK6+8z5Mn7xjbpUhtOhysHTpji2/VwqIIsM3iZBCsZ
+hZIXZAaHRUHTt7vN2dvPzOZawmICC11yFvQ9NpioOzEvOvwa3QMgRw4u7QcYoTRi
+T3n8RsdkQjmwqKrvfzeyIGmWRu+cLXpUu/JmUggZfIy04JDxLEF8AOg+Cbp2PK41
+LXQSjRyn36eNLEVM57Z25urZR6ASvx9mdfSFsXN0TFy8ZXu1ieuTqcdqYt9fdggz
+UT1CRtmUiUM/dYO7sl4B/jJrjaN4x6xIQ9pf4oBlAudoaQKXSim6hQGsNgY9k8Ys
+nEpB8xMQM9w2bBlyS0qis+WH8Ymm2n+FG2LEKqjxgI3T+x47jATLdFf49qdMzcxh
+zub6GDeYbw2Pj3Z0PkeqLKgclSa8vKZRvXnIhVfVI59faBzB+S8=
+=M66M
+-----END PGP SIGNATURE-----
+
+--BDqjh1Lh9TPIuBWn--
