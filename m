@@ -1,68 +1,99 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE48374CC
-	for <git@vger.kernel.org>; Mon, 29 Jul 2024 19:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C746383CC1
+	for <git@vger.kernel.org>; Mon, 29 Jul 2024 20:03:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722281478; cv=none; b=JpoyxWCr53Wiu+/w14sqjrtcFTh+uIlavXYjhoAiEyC+wKH+op2zlYHK8HUB3CANzSrXIOUZibgzlTbHqQILL5lFTBxCT9uf3HoO772ynSqB/HLkdvc5zRiOu2fSANNua+EuA2ibZlmP3M2e1GObR5i3quxQd9NPtOf6tJIWTUk=
+	t=1722283423; cv=none; b=KjWpvMiV9+04bmqYQchSfb0TyR3Q3GtXI+PNH/HlRbPSbyizx+Lkw0V7FU+LsMFvTj8e78h/i0aCKTGLyC/30GtC3RQJOp6jIHTH925iGNNAWHYkvqGdi7a0Zdxr3DtX+Cko5PfvK9RXgnw+w85eVXLRSGH5VwDlZnDGe09gmeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722281478; c=relaxed/simple;
-	bh=2nMKrVW7ewy9WEWAdPtrm+/uy1S6AH6xFi5VT4R71G4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jS/YEiTEwbzOgeeU/JjO1oKR81q3QoVWdS/gvjaSk3/CqU8pb3I3Knv98z7QG5GcHEie9VQvJTVkbkp+FCkUIKfE/Azig+6435qhH0Q+OqYF8KZCnhfimT60Ty3ihw8N9K0avsXZ8EUBfh+tCqBquRJJHuQf0bTXGlMnSagQ2Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23074 invoked by uid 109); 29 Jul 2024 19:31:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Jul 2024 19:31:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3817 invoked by uid 111); 29 Jul 2024 19:31:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2024 15:31:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 29 Jul 2024 15:31:13 -0400
-From: Jeff King <peff@peff.net>
-To: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+	s=arc-20240116; t=1722283423; c=relaxed/simple;
+	bh=OnYglvENTt/nm4m/wFUH86zsZG0C4TVl+ebBXCnM4tA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AKC55FqjPNnAmvw6dKxVlhB3tLMdyeYUGVxST25BnxbiQhtG4JNy/uoB0VkIS+Gq25O77hle4zf2xLCCru/Z/Qx+7DPd2VB6McOEIheeAD085byicqIgVp2V4gkqYO153fzb2MHmvtUhEvuDNLXWeVgHO0K+EI6wCg/OujU+N1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qBb1WzPy; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qBb1WzPy"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3570838A64;
+	Mon, 29 Jul 2024 16:03:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=OnYglvENTt/nm4m/wFUH86zsZG0C4TVl+ebBXC
+	nM4tA=; b=qBb1WzPyscHWQAXuaTUPFuDgyr29MtzsBOMysEAwNpF7WVX7CEysqX
+	2/+fLuZeFXfkJP7QenUurZY8lMkXMQI9TbbQ/MUUCjRvulstCWPWe3npXmMbzofP
+	8AbfrMLw3Lx5BfXmCZYCRvEPfrzlgs/MrAsjaGjrfUHiw7q4MHBEk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E76638A63;
+	Mon, 29 Jul 2024 16:03:41 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3FF0238A60;
+	Mon, 29 Jul 2024 16:03:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] http: do not ignore proxy path
-Message-ID: <20240729193113.GA23714@coredump.intra.peff.net>
-References: <pull.1767.git.1722009170590.gitgitgadget@gmail.com>
- <20240726211156.GA714986@coredump.intra.peff.net>
- <4f962eaa-d12b-d250-dd93-a1673af850c6@alum.mit.edu>
+Subject: Re: [PATCH 3/5] patch-id: make get_one_patchid() more extensible
+In-Reply-To: <ZqeE2IaIhiWmpVM4@tanuki> (Patrick Steinhardt's message of "Mon,
+	29 Jul 2024 14:02:32 +0200")
+References: <20240621231826.3280338-1-gitster@pobox.com>
+	<20240621231826.3280338-4-gitster@pobox.com> <ZqeE2IaIhiWmpVM4@tanuki>
+Date: Mon, 29 Jul 2024 13:03:35 -0700
+Message-ID: <xmqq34nshso8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4f962eaa-d12b-d250-dd93-a1673af850c6@alum.mit.edu>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A465D5E2-4DE5-11EF-8051-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Fri, Jul 26, 2024 at 06:43:29PM -0400, Ryan Hendrickson wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> > I wonder if we could go back to passing the string straight to curl (as
-> > we did prior to 2016), and keeping the proxy_auth struct purely as a
-> > mechanism for gathering credentials.
-> 
-> Hmm, that would be nice, but I think curl doesn't deal well with the extra
-> case that Git supports of specifying a username but no password. It causes
-> one of the existing tests to fail if I pass the string straight through.
-
-OK, thanks for trying. It would have been nice, but I'm not surprised
-that there's an unusual interaction.
-
-> On top of that, all of those starts_with tests for checking the protocol are
-> written quite loosely, so in practice Git "supports" the protocols
-> "socks://" and "socksonmyfeet://" by mapping them both to SOCKS4, and curl
-> would not like it if it received those strings directly.
+>> No changes in behaviour.  Just a trivial interface change.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ...
+>> +#define GOPID_STABLE   01
+>> +#define GOPID_VERBATIM 02
+>> +
 >
-> So given that Git wants to handle the protocol and the credentials, it makes
-> sense that only the host and the path are passed to curl. I just have to
-> make sure that they are correctly re-encoded.
+> This certainly is a worthwhile change. I have to wonder about code style
+> though:
+>
+>   - Using 01 and 02 as constants feels somewhat weird to me. Don't we
+>     typically use `(1 << 0)` and `(1 << 1)` for such binary flags?
+>
+>   - What is our preferred style nowadays? Do we prefer defines over
+>     enums? I rather had the feeling that enums are the go-to style for
+>     things like this nowadays.
+>
+> It would also be nice to have documentation for the flags.
 
-Makes sense.
+For an internal implementation detail that does not even cross file
+boundaries with descriptive _STABLE and _VERBATIM that corresponds
+to the member names of config structure?  I doubt it.
 
--Peff
+> In any case, all of these are really just smallish nits and I think that
+> this is a strict improvement regardless of whether we massage the style
+> or not.
+> ...
+> I was wondering whether we could use `OPT_BIT()` here to set those as
+> flags directly. I guess that would require a bit more refactoring, but
+> if we also converted `struct patch_id_opts` to have a `flags` field then
+> this might overall be easier to read than the weird massaging of opts
+> that we did before and after your change.
+
+As a longer direction, I envision that most of the implementation we
+see in this file and what diff.c:diff_get_patch_id() does should be
+refactored and one of them should just go.  So until that happens, I
+am inclined to keep the changes to this file to an absolute minimum.
