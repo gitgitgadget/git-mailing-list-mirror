@@ -1,99 +1,86 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C69190042
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 09:34:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F52018A92A
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 10:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722332088; cv=none; b=jUj/Iz0rtJx3iIJTeemtk7+mUotPZQP25rx53hAR0gLlCipT+3metS53eyn0Idrnej9MAWatretTiIHDkLq9BrqUvdtPY++6dPodikdueOfa49wPpu3dJEgRewTlJcPe+yIT4aHJIGSoJ0IDpPdN53ar7fbe038kgMPra7Yl5Yk=
+	t=1722333886; cv=none; b=RUYBkw+5KV8V50rh8j9U2boIvSrSsjjVdU2KV4hsIneUKGae1mZYRSXHQcNpPIMxGpJmBWy7AeOdLKG3fnnzaQzk4XVmKQn1uQgFh1mLC8iJVxEZ0YS6uycmDup3aebMc5LXT1GikERH5ZxmaxYbDkqwYWs+pzq5tzafd5H8cgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722332088; c=relaxed/simple;
-	bh=biXDfDroab2Qd7CC8jmBCa7MPxVkqgyKUjTtJX/m5Cc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=EN/Br6r6WbcRZsWPHmf/WmzV3LxGQ0G9Jy682mn5B4+yuR3cPHETkDevJTu9ZHAfN0FA2wrr6gMBEVVI8Ot0rycFWc+cig7i9qOxLDFqss/HselZv6RHlXu3B+cM0BpFX4a+vICt1kmTaMwGLkGz8ar1XutHkPkWJ/dZ41f9e28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c4RIMC6h; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722333886; c=relaxed/simple;
+	bh=2a3FFYTm/V72hwOQv1jBkgox/OGg4L9VeFH3Fk7ac24=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=ueKviF3npD45BhGhTW8nlT8iVYUGLmArZ7Bcsni1XL2PqEUaQ/E7zirlMpXEp3b+Xrcs11jDP6Pw+W2kQHKEULMwuIgJphCLwg/usy5o7mueMHS17sra7FU4uy3nTsHOHjgmmFC3dl6L4qbGrxFryBUQWDzlyQpit7yLWyX1mpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=informer.com; spf=pass smtp.mailfrom=informer.com; dkim=pass (2048-bit key) header.d=informer-com.20230601.gappssmtp.com header.i=@informer-com.20230601.gappssmtp.com header.b=z7eHw5jO; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=informer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=informer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c4RIMC6h"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-261112c303bso3086530fac.1
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 02:34:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=informer-com.20230601.gappssmtp.com header.i=@informer-com.20230601.gappssmtp.com header.b="z7eHw5jO"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7a1df0a9281so277536785a.1
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 03:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722332086; x=1722936886; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=biXDfDroab2Qd7CC8jmBCa7MPxVkqgyKUjTtJX/m5Cc=;
-        b=c4RIMC6h6qKL+ckxhUyNKtXYKFD2RRDneOFjk2qw7h06mHn2fw/KeSY/0y8YHJJxsz
-         pgTbbnpdCjy9mZKVqfFDEa+HysegPoc413a1TtK3J7sINr1sGiXVCs4O/0lfKAtR8Ql/
-         Gs8yLoiSk1qV5wRKMFx2bqRWjV9KW9Y95l/jm+8QgrQC9jlWGKeuVr7FmM4zRRLMhl5d
-         CjixV3qso1jC2DmRnExmn1L9xWXJtaDAcNEXYo5KRyimGIwgSdAQ2C37fYkvioXaWN8D
-         hvxoakwO/6ZzIfb2UQzkacsyeum+2mD07ONzibpT5U7u9BqrQmCSqqB4yxuZjZwFBMJC
-         W3yg==
+        d=informer-com.20230601.gappssmtp.com; s=20230601; t=1722333883; x=1722938683; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:subject:reply-to
+         :from:to:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2a3FFYTm/V72hwOQv1jBkgox/OGg4L9VeFH3Fk7ac24=;
+        b=z7eHw5jO1iHnh+FtKtmWJqIZ8tWx2aXid2qtcu0KpXOCk6THQldzLmbx9VAxLfbJmK
+         I+TAUbQHGcoJCOGA4j79aR9FH8cHv25OXTfd2Cr7JWr7WdReRgD/WO7jPd6/zvmkQ/1Y
+         dZ2gy11DCZLH7WoUvhWzDCqzOyZNWZ8zv0AaljQzCZYADmSv6MEFCStqyTKA0mbQpyLG
+         2KTXkTUhXwXad2bD1yZd5IJ6th4mfbZgt7jAwIW1tbeO7GTQEvU2XSZi5qX2J1eDYjcZ
+         GT9z98CcuAJcSwK/5JeS07GM6M5rbyCIm+fdSQYd+wGwRuUAQtZtXX3ns0c6RqJXXBl0
+         lGnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722332086; x=1722936886;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=biXDfDroab2Qd7CC8jmBCa7MPxVkqgyKUjTtJX/m5Cc=;
-        b=vYHPfuLXzFS17EF5HKm6lVzTTpK8rS60pXoa38g3ZJQi0yCYII24LqDxMIMtBW12+M
-         IPCLQmKjc0y17aBu8wDD5VJiW62+Lo3WZQd+yOj+qZ2OvbfdyHkP9nN9fQJe9Yc10LlD
-         9/MqGS11PNNpTzx+VRE2VWSlqy76tDIw44jHZBRBK2seKjXTFENysGRhMOBATVMtTW9n
-         q/ZLjENPzNri1fabaRg5yqyXDA8Z8N7XyrdeTC8uGL3dQU713yMqIrh4DDlRiRy4AC00
-         3foEx3zXEKafyvTGrOc0eGCb3mZtG+7dpm6h7h6mRn+3o7/q53Whz4H9QhFDFcX+vBDL
-         k2hw==
-X-Forwarded-Encrypted: i=1; AJvYcCW7UitFPOkP54hE0GNLYWFGorn0d5MJ8EpDlcC9SCUtMoBmt1cuI/khMdLaJrDoXyfOll+UHqd1fbJUPrBfj0i6KnmS
-X-Gm-Message-State: AOJu0YxCInFXHPdu1/nedZUxDspYjtnJltDM5ETwB5xrPfdoA8urQ9e0
-	zBYYfZZXR33vKkjAeckKfGU+lSkJ+vDJbMb48AsX+z9xCO5Br/fbjXe4qwD7zsrVjyINVUU1Dxo
-	byF1R8kTidJqdCx9H1DMQFU0HPobyag==
-X-Google-Smtp-Source: AGHT+IFcLGuLp6dVMjIJuvg3+UZRrU69xHaeAVE+IV3bccjv8bpEwvoTEIvuT/H+N348kU90mA8K61nOCSUbap/9zMo=
-X-Received: by 2002:a05:6870:b52c:b0:261:e19:4587 with SMTP id
- 586e51a60fabf-267d4caf5a9mr12795492fac.6.1722332086078; Tue, 30 Jul 2024
- 02:34:46 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Jul 2024 02:34:45 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <e8d86c01cf1316fabcec7dfacad55e1dc98baa7d.1721995576.git.ps@pks.im>
-References: <cover.1721995576.git.ps@pks.im> <e8d86c01cf1316fabcec7dfacad55e1dc98baa7d.1721995576.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1722333883; x=1722938683;
+        h=content-transfer-encoding:mime-version:message-id:subject:reply-to
+         :from:to:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2a3FFYTm/V72hwOQv1jBkgox/OGg4L9VeFH3Fk7ac24=;
+        b=KrThWJp13WG/oW49YsFm+iQf0srFPnjw38eEE/7k2yjm+jxmAtEwsBPDBfwzF1t6mW
+         C8dcontRyVByIb3ovGGb79RSO4v7yjsfM7/TmyvAVLksyzWuCjTLxTSCUv7xzdx8WPck
+         FnYMJyys6CpxFCQqU2WUibv61hozUFbP6DoJjOA1jY/FQ85CICgnUUeI0MS4QU0PM3e2
+         g97ztoqFb3e6iIZX/4TCeGoZ3+xFoCfAmYlQn3juXShlaFuoUZ4E2fGdqIvhniTfVSNH
+         cQMEHlkvdzgC5i2j6IMx/hwf3IAT1PyBhzTFMNT95u+iDTwd9ffN1EczS6X3yrjzkNzO
+         smXQ==
+X-Gm-Message-State: AOJu0YxcZngyI5E3cSagZ4o9+o7i5I8I77XrmGSNXNU2eDETMNAbpQbT
+	SnLQt3GQXlo8Zums1Stzm1y8QK+Fb432vSknpco5uywwjV7XwHC4VJtaPgHV26rVqcoHGuWQ3aO
+	FuQ==
+X-Google-Smtp-Source: AGHT+IEQZCYEGKY+9CoLJYbcQtJMhX5k3RMn7E3m4qnuIKHLoU9zmpDPbo4jqAA7eXCFdXSD+1tHHw==
+X-Received: by 2002:a05:620a:178f:b0:79e:ffdc:5518 with SMTP id af79cd13be357-7a1e5241758mr1126902285a.25.1722333883024;
+        Tue, 30 Jul 2024 03:04:43 -0700 (PDT)
+Received: from software.informer.com ([208.88.224.100])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a1d73e53desm613845285a.54.2024.07.30.03.04.42
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jul 2024 03:04:42 -0700 (PDT)
+Date: Tue, 30 Jul 2024 06:04:42 -0400
+To: git@vger.kernel.org
+From: Informer Team <partners@informer.com>
+Reply-to: Informer Team <partners@informer.com>
+Subject: GIT by github 2.45.2 is listed on Software Informer
+Message-ID: <739497c1eefa2c4d99e7ee30393a6e21@software.informer.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 30 Jul 2024 02:34:45 -0700
-Message-ID: <CAOLa=ZRJs4USrE2XbPQtqHU4Q7dAWqOkJtJ=OFisMc9Hy3vECw@mail.gmail.com>
-Subject: Re: [PATCH 04/23] builtin/describe: fix leaking array when running diff-index
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000002d387e061e73b0cd"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="iso-8859-1"
 
---0000000000002d387e061e73b0cd
-Content-Type: text/plain; charset="UTF-8"
+Good day!
 
-Patrick Steinhardt <ps@pks.im> writes:
+ would like to inform you that your product GIT by github 2.45.2 is now listed on our web site and your program got "100% Clean Award" https://git.software.informer.com/.
 
-> When running git-describe(1) with `--dirty`, we will set up a `struct
-> rev_info` with arguments for git-diff-index(1). The way we assmble the
+We would be grateful if you place our award with a link to our review on your website. On our part, we can offer featuring your program in our Today's Highlight block. This block is shown in the rotator at the top of the main page and also on every page of our website in the upper left corner.
 
-s/assmble/assemble
+You are welcome to order a free video tutorial for your program as well. Once it's finished, you can add it to your website.
 
-[snip]
+We also offer you to take advantage of our free storage by hosting your installation package on our servers and listing us as one of the mirror downloads for your program. There is a selection of predesigned buttons available to fit the look of your website.
 
---0000000000002d387e061e73b0cd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 58130093bdf51c6_0.1
+Please let me know if you're interested in any of these offers.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hb3M3TVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMUdHQy85VGNscEp0emJEOHdsOXI1bFMyVGdreWZmZgowdy9NbUMzYUZw
-ODFQQ3pWdVFIUTBsd3AvNGVwTnkwc0NCRlZ5cnlwaFRlbkp3dW5LYW5RSnFyTURaTzNZOERwClE0
-R1pxMldpZjVKN3hNZ3d6bWcvY2NZdkxXMGp3WG9leTBZMmMzSHQ5MTc4cVkwdTlyNU5sdVNmenpx
-SmVreWIKQ29YWk1PUVRVY1FoWVQySXJJL1pmUm9Vb2hQNW9tVWpuajdqZjdIWDFkcDVSWi9kMTVO
-d1ZtYmNlTEJOZUlWTAowejcyMFBxVEVnLzJRWXM1VG5SSXRoZW10OEtGM0pqRWdjTVphVyszTll3
-TjlIOUFTdTIwS2JzNkh1SGdERUZKCk1YYXRFV1ppR1Ywc3BmakhIUGNwL1REbzEvQk1XZkwrbTdl
-b1c2QUtzSEh0T2Y3TklVYnZad0sxT0RQYjZzMDUKWllHRCtvcVhoekUwdHk5UEVPbEVtNFVYRjRD
-blZ4bVdHMUVIL2NyUnJWaUpuZmZUOVQ0SVVmeS9hR0d4Si9rMQo5TU5sNHdaSU1jejdsY3ZyNjZ6
-dlk4S0syeUdrK2JzNkZjb3ZFbTgzMXl1YkhmeUw4U1dpRDgvbFFUQlJJd1pXCjM0bGcvZ3ZGV0VB
-YTJWQ2VPeWE1K21MaSsvcnhMekVDcFVieWs1TT0KPVlLUGoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002d387e061e73b0cd--
+We are on the list of the world's 1000 most visited websites, so this could get your program some extra exposure.
+
+Kind regards,
+Informer Team
+
+
