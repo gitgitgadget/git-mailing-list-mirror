@@ -1,113 +1,192 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573EE1552FE
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A021F1A01C9
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722349148; cv=none; b=cVJ8QNMCdr/fE3wrxlWOh4Kwke4KcDmhxD4uounO0F3PNwfp41Izow/rlDBdNY8zEzknLoaO6hkNnV/Z5mH4oRsEH+deq/M+UXxwwBQaOkBabnlKs7erMRPafP16Ip4I7m9uezaocjCUScgx661Jd7xdnjLoKOpAxRB9AniWUUo=
+	t=1722350336; cv=none; b=qEEL2p/hjXSNfcWrHywwxaKVvgiBvIudaMffkAs9c2H87Xrp8pni5NxA/IU8lFEemq5v+eQPW1FU4ZsY0/jMnsvw+qM10r/6lBTAa4PwyAMTz4bNlEgGMpnWRSnQFV35fAE8Za7A6+ZyWleNjZLLuZgZAfvwmt1QcFceeMm4Vwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722349148; c=relaxed/simple;
-	bh=FRWEbTzVjSJR50iAR5eC2XFWdDjjEVdYGW2JQV+XOrA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gvpY3oUB0yWd7fM3f1D9WZmKFtF2DIP7rLqGkLklL1tVEZ3yP/7B6O3EIeULD2JAknHlfhJC7ReeI1/tGfElGM1T/+eHV8z2tSCAQk2umhWI79wo/SG31/B4/P9zhiNMKacyvEeBkvcHp/NEjowiE3fn/sFZCQivlSntYRGCxsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G2VN/hi8; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1722350336; c=relaxed/simple;
+	bh=sXga+c3GdxreaTZQyjhERvjlAXbtI9IMV3+5nXjUpFI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ckK4MwLwdc+9JyHtE7yjzLtc7DloSRS+rzoBP7KGUCvsnscFbWz20So8CuP6tlRZtS2A24kFTJqVYVH86HKFYVWRKEtCJD+LWFnANMA8l6G+3ZnfxK1Z+0ZWaphogM43sHX/PNum5j9Gn1EnCfK/++NqbxXL6l8+LxWKIQEQe/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXIJGqu5; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G2VN/hi8"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-260f863108fso2766407fac.1
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:19:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXIJGqu5"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4500321c357so3241321cf.3
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722349146; x=1722953946; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FRWEbTzVjSJR50iAR5eC2XFWdDjjEVdYGW2JQV+XOrA=;
-        b=G2VN/hi8J2/gB83HwdYSqcUYiQVL4nur+Xt7pRYVTfENRKRMX7Tmzo6lW3OPCdlwts
-         baJSOPiaH88RpUnkcK4R3OUdgPAUop5j4N+DizzOFv62Mze3CgpE69r9qaGWF32lUyfP
-         lMnLXNrmz3e7X1Yn7fCzUvcBTmNvg4x+qEtgyhjifmqpvsSEFX3X0I0HXDAbfqsTkt+K
-         HlTIFi003/skAVVv5XIb3b8gJpp3Y5FRw/RSNnjb/81lWyg+2drplZHpFsJtYPvbKdYI
-         xtkTb9XzrkUbYe/DlHpcYAhnOw0Lx+86/UiL6R7J6dxcLCF7u9tvJVzxF7uuk/4yXb1g
-         Mdyw==
+        d=gmail.com; s=20230601; t=1722350333; x=1722955133; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WFBhfEWBWwA5xDW26MP29yU78DLxR3BdztxMnB0RDng=;
+        b=nXIJGqu5bRqtSlKKSWa4boIntn6HyTY7juekOU+N5J+8p2yosmKIKSaLvCeqeOX/b3
+         f+x0A1ELPz1tAigpueew18ytNnf6zXIkFfddhZrh/KQdVf9h4vwyJ4uh2G6tn6rwJre8
+         Ky16daedofHFglX4kUg3nLpOaK/aMZsOP4lJNREs/1KmJQ28g4kHvq/MGYx7dyUE9oCN
+         pZDIKdpSYtoxRr89n56Dtxzab8W25J7PTcsC/CYRgEQOP+m7t9x6Mz60YfSDb04AXgB4
+         gF98NYuOnVTjYo9G5kAATgpxHuhvQPEHxFnoaEJewZmjQGZ2R8nAnSA3JtWCeCMpBzYV
+         xsLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722349146; x=1722953946;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FRWEbTzVjSJR50iAR5eC2XFWdDjjEVdYGW2JQV+XOrA=;
-        b=v9g+afem54Q/lgiCyr1Dl8VhtUA5CbeGsBKJD126zQ0p8ecCwpGKIyMO/UV6z14BnG
-         I9SdqrQdz4yQwuqtrLEdYkftdwUt7WUFREncuJKeqDbbulPYTVPTjcQloAnYrP/z7g0f
-         l9Ynq8rrbdgThkzgXFdvBg5aeAbalRKVfE1rK0sEvbjc9BjBb6D+HsRO+1kdgj6himfz
-         FtXxzc5HC5GrIVCqO8cYO9mj05b91ik07dGhvtYGvcgXZVDaZy0at5KZD6is1bh2LbP5
-         Mh4kDE/TysYjizowYSw83mGsAiui/1jaNJdkozW3KPpD7OTH7txWeDF6XotW1OPN0xB2
-         fV1w==
-X-Forwarded-Encrypted: i=1; AJvYcCX6ZWcEt+N7MmdmqkHHWoC9Faa11lM8NNl+qwhYXeSlMz2SnZh03Ux+LczyiJGNY7aOcNjJkr6ZaNs8FgoeIWA7k/Vh
-X-Gm-Message-State: AOJu0Yzg5kB/ewnlGFFNo2e3TOTGfDFdcF1P96dhnhSAsIL9CDO/1X/j
-	woVA7DIDUe2VClOP3plQg5OnHaYXlZtLZGeeulC6Aruy19ou3KZVCGL0y11nBdi3czHy0F2qR+Z
-	54bCXwjgZkNk0KPLr2u4nuNFBXS4Jyw==
-X-Google-Smtp-Source: AGHT+IFbZ2ykRMha8IxCdmQBPZ0qhMvNVan8yM1UkVUTp1fFQOino2+84EAc34AApSBWOTG84e9f0nnoQMDwvjf15tA=
-X-Received: by 2002:a05:6870:c14c:b0:25e:24d5:4d6b with SMTP id
- 586e51a60fabf-267d4f3d53dmr12604785fac.50.1722349146337; Tue, 30 Jul 2024
- 07:19:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Jul 2024 10:19:05 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <c33ad700d68b5d8b5940dd803d116ec19bb75c7e.1722323818.git.ps@pks.im>
-References: <cover.1721818488.git.ps@pks.im> <cover.1722323818.git.ps@pks.im> <c33ad700d68b5d8b5940dd803d116ec19bb75c7e.1722323818.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1722350333; x=1722955133;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WFBhfEWBWwA5xDW26MP29yU78DLxR3BdztxMnB0RDng=;
+        b=PH1yyY2I+yDwZaJoeCQDlFE9+2k0abLEzDcOZD+sY5ltBvpF2PsZrPT5s+hsex/4Hl
+         mLaKvnzw6lUnqE0zZIlZeUz0Mm+PnZCkDZieVgM22F/VxmdBR4xMrDoRhcxP9GUCqHRs
+         ebSRtpEYJcEmVIV+Yn8Pga7gPc+w+AmnYbGoQUeFA0eYdW7PFrr/3hdCsOuKw91vblZd
+         GSfR4ISTK/dlt35S2Mnr5LhaMJXPNSrfZKK3zJUA+khjDBx/WYnXoJaJV9g0/I/MlQMl
+         GGukbvVvC10JhLoosswhXMpOCXBQpn46gAGBKClgJbbkQl9aO1xWf6u2g6o8rDfqfRnE
+         xFDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWDRpLMtFLf1whEXIRInbIHTw6hLit+LPuwWG5AFkcmd/SY4BIYlwfcGGD6332S2EBokrYUDyQWUYYaQxXz97TmbMHr
+X-Gm-Message-State: AOJu0YwNw8ZF4FDD10/BiQG1dmSCz5w4ctx9lc+ERfCGj6lcxkwv/lG/
+	HJV/JBKICQiGYEqu35L06BkJwnStepYZCe5/6Z9PbafGhuTcfyLv
+X-Google-Smtp-Source: AGHT+IGlNNMaTsh7tvg3whQey118cFBoCAMuWdJbnjRm18CprZW7AjZjZdtfRzZ4MPUkMvK/cDzyYA==
+X-Received: by 2002:a05:622a:1885:b0:447:e43a:f8f0 with SMTP id d75a77b69052e-44fe5a6e21fmr134288011cf.2.1722350333435;
+        Tue, 30 Jul 2024 07:38:53 -0700 (PDT)
+Received: from [10.37.129.2] (syn-074-072-188-022.res.spectrum.com. [74.72.188.22])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44fe8123b5bsm50664501cf.11.2024.07.30.07.38.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jul 2024 07:38:52 -0700 (PDT)
+From: John Cai <johncai86@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>, Patrick Steinhardt <ps@pks.im>,
+ =?utf-8?q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+Subject: Re: [PATCH 1/4] refs: add referent parameter to
+ refs_resolve_ref_unsafe
+Date: Tue, 30 Jul 2024 10:38:52 -0400
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <45124B2F-BDE0-404A-BA85-54361F5877DF@gmail.com>
+In-Reply-To: <20240611085058.GJ3248245@coredump.intra.peff.net>
+References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
+ <011c10f488610b0a795a843bff66723477783761.1717694801.git.gitgitgadget@gmail.com>
+ <20240611085058.GJ3248245@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 30 Jul 2024 10:19:05 -0400
-Message-ID: <CAOLa=ZRrUMawq_K=_4OUQrV7V67LhCUrBGtk2G4Z5Zq7+h=hAg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] clang-format: fix indentation width for
- preprocessor directives
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000000c1234061e77a96b"
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
---0000000000000c1234061e77a96b
-Content-Type: text/plain; charset="UTF-8"
+Hey Peff,
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 11 Jun 2024, at 4:50, Jeff King wrote:
 
-> In [1], we have improved our clang-format configuration to also specify
-> the style for how to indent preprocessor directives. But while we have
-> settled the question of where to put the indentation, either before or
-> after the hash sign, we didn't specify exactly how to indent.
+> On Thu, Jun 06, 2024 at 05:26:37PM +0000, John Cai via GitGitGadget wro=
+te:
 >
-> With the current configuration, clang-format uses tabs to indent each
-> level of nested preprocessor directives, which is in fact unintentional
-> and never done in our codebase. Instead, we use a mixture of indenting
-> by either one or two spaces, where using a single space is somewhat more
-> common.
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> refs_resolve_ref_unsafe retrieves the referent, the unresolved value o=
+f
+>> a reference. Add a parameter to allow refs_resolve_ref_unsafe to pass =
+up
+>> the value of referent to the caller so it can save this value in ref
+>> iterators for more efficient access.
 >
-> Adapt our clang-format configuration accordingly by specifying an
-> indentation width of one space.
+> This commit message left me with a lot of questions.
 >
-> [1]: <20240708092317.267915-1-karthik.188@gmail.com>
+> For one, it wasn't immediately obvious to me what a "referent" is. ;) I=
+
+> think an example could help. If I understand, you mean that if you have=
+
+> a situation like:
 >
+>   - refs/heads/one is a symref pointing to refs/heads/two
+>   - refs/heads/two is a regular ref
+>
+> and we resolve "one", then "two" is the referent? And the caller might
+> want to know that?
+>
+> But I think we already pass that out as the return value from
+> refs_resolve_ref_unsafe(). That is how something like "rev-parse
+> --symbolic-full-name" works now.
 
-I totally missed this, thanks for fixing it up. The patch looks good.
+Yes, exactly. I think you're right that it'd be preferable to just use th=
+e
+output of refs_resolve_ref_unsafe() to get the value of the referent.
+>
+> But there are some subtleties. In a chain of symbolic refs (say, "two"
+> is a symbolic ref to "three"), we return only the final name ("three").=
 
---0000000000000c1234061e77a96b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e1372994ffebda51_0.1
+> And you might want to know about "two".
+>
+> You can pass RESOLVE_REF_NO_RECURSE to inhibit this, and get back just
+> "two". You can see that now with "git symbolic-ref --no-recurse". The
+> downside is that we never look at the referent at all, so you get only
+> the symref value (and no information about the actual oid, or if the
+> referent even exists). You would still get an oid for any non-symrefs
+> you examine.
+>
+> So reading between the lines, you have a caller in mind which wants to
+> know the immediate referent in addition to the final recursive oid?
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hbzlsY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK1kzREFDa2ZVY2oxbzF0enR5WGlsaWFjVUFZSzlnNQptWU9POWY1azkr
-S3ZkOVpXNDkxamM1bGZDcHZ2d0lsVFduK042SXFoZXhQeEx1MkxFTUtxdVRiRFNrdFZsYzBvCndB
-ejV1aHNLMEFMTUxHUFk5U0k1NzRGdElwVno3NTFjeUtaUzBjMW1Cc3g4NGR5VTZkdHJ2dUFkQk5l
-MDdLY28KNnZHbkhwb3VxenFCaXV3aFNHV1NHYTN6Y01PM3JzdytJWDZCQ2xPeFdSTEc0MFYvQXhn
-Smo4M0VRdWtrWUFDOApNRWtPK3dzNFdkMmx4SzVsN3AwT054YlYzSU9zaGZOQTNBd2VzWjlPZkxn
-OGp2M0RUck1hZHR0MDBGUEJGNmVNCjE5WkZ5YVQ1ZE1BR0twU3JYSy9ZeVp6QzVPSFlIZGFXbHQx
-YWVHMGhyUHkya0dPL1ZMY29sZ3Rzek10d3VvK0MKYWlQVVVoVGlCckdCNTdMTXRabTVpaXNROWZx
-enNOVk9rWDNpY3ZLY0FId1VsUE8yYU5qM2dxdjJpcjI3YkhHNgo1S21KZkZwVytDN0V2S3VLaWNO
-dWZuZzlGSTNWRHdKdzBVMzJuTGFLdEpXQU5nTXB1UmYxV2VsekdwcjR3SXZICjA3ekhaVkt6S3Mx
-N2ZEdXNqRFBwaWdNK2lxZGN0bTd4eklmYlM5Zz0KPTNFSEMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000c1234061e77a96b--
+The goal is to keep track of the value that %(symref) would need in the
+iterator so that a separate call doesn't need to be made.
+
+>
+> Looking at the rest of your series, I guess that caller is the one in
+> loose_fill_ref_dir_regular_file(), so that it can get passed to the
+> for-each-ref callback. But why is it right thing for it to record and
+> pass along the immediate referent there, and not the final one? For tha=
+t
+> matter, would a caller ever want to see the whole chain of
+> one/two/three?
+
+Right, the final referent is the right one to pass down.
+
+>
+>> @@ -1761,6 +1761,7 @@ int refs_read_symbolic_ref(struct ref_store *ref=
+_store, const char *refname,
+>>
+>>  const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+>>  				    const char *refname,
+>> +				    const char *referent,
+>>  				    int resolve_flags,
+>>  				    struct object_id *oid,
+>>  				    int *flags)
+>
+> Unless I am misunderstanding the purpose of your patch completely, this=
+
+> "referent" is meant to be an out-parameter, right? In which case,
+> shouldn't it be "const char **referent"?
+>
+> As the code is now:
+>
+>> @@ -1822,6 +1823,9 @@ const char *refs_resolve_ref_unsafe(struct ref_s=
+tore *refs,
+>>  		}
+>>
+>>  		*flags |=3D read_flags;
+>> +		if (referent && (read_flags & REF_ISSYMREF) &&
+>> +		    sb_refname.len > 0)
+>> +			referent =3D sb_refname.buf;
+>>
+>>  		if (!(read_flags & REF_ISSYMREF)) {
+>>  			if (*flags & REF_BAD_NAME) {
+>
+> ...we'd assign the local "referent" pointer to our refname buf, but
+> the caller would never see that. Plus doing so would not help you
+> anyway, since sb_refname will be used again as we recurse. So at best,
+> you end up with the final name in the chain anyway. Or at worst,
+> sb_refname gets reallocated and "referent" is left as a dangling
+> pointer.
+
+Going to include changes to remove the out-parameter which will simplify =
+things
+quite a bit.
+
+>
+> -Peff
+
+thanks for the review!
+John
+
