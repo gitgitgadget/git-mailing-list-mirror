@@ -1,53 +1,53 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA0F2563
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 06:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B470118F2E7
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 06:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722321675; cv=none; b=NdJpmrrhgIMDPOME64Afb6DH5Fps3E6GDpLI/LhTwvHoFA640pP3oOm7p8b/mZ+YVd0gbCuvgIY7GKTgb3y7LaCro1Smia+fqlPSF8jonryurhiM0D9YxsDZecI1Nac/HhwamgJJQjV3skcL2LvDLZmS0exipT6imDIlqDc7LwQ=
+	t=1722321832; cv=none; b=LZVnggIyffq0kuuDyLV9zSIwvuk5cAWBk0pkT+TsLhn21P7nsvsvWPfdfXA3i1EQ36mgLmkO7JvCyt/xZ3DZwjF2+8WsrO0gPoXgZ4oazS9zvD/aLjTbRa6gzBsVilvyg2Plg3RK2LCbdfo+nEr/8xFd2VwGLn2tD48RvwZjrhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722321675; c=relaxed/simple;
-	bh=j+vaTjOb5ac1+rl8Gw0QDbXxhI1ZsmMEH4AFl/McCGE=;
+	s=arc-20240116; t=1722321832; c=relaxed/simple;
+	bh=Xmp2HvPh8C1/N5KtP8WHV0rRCzEPWeZe0SFXMb6HviI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GJo+iA9EZLmUr8kbL5G5C+fuVQQhwMPLh/LgTowxU992GyQNq1YM7OwctR6MZrUCHfbJD0nZKLDQNZpUymVpXaANc3t464JdijAE4yWcZucnFOq8SX9IHqidOuhHJ0jrSxQrdXmYEwnYrM/ZnXEY2Mf5HrozFZXkpwrYtPmS4fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oWpOJjNm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CPR7brxs; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=siFPDgnLXMcDQUvs8gqxlnn7QmdjxbusrHZlqqBsbTzUqxgH7YbIKJN2BWFcMeqvY10oQ8KsDy5kYDCEEegOSWIMcWRWnuBoLT/c9jQVl5WHK6lT/nQpGuQ16DzXPUATIDnH2XTYiqIIIBFYLI4IW+d3IiecWR/kvbyMFjYuAK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KagLJJ/v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pBEUpu6u; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oWpOJjNm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CPR7brxs"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 198DB11405FF;
-	Tue, 30 Jul 2024 02:41:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KagLJJ/v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pBEUpu6u"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 8317C11405AE;
+	Tue, 30 Jul 2024 02:43:49 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Tue, 30 Jul 2024 02:41:12 -0400
+  by compute1.internal (MEProxy); Tue, 30 Jul 2024 02:43:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722321672; x=1722408072; bh=mLvLJpWnP4
-	dtyy1VIgPtluU7oyWEpI1ng1h5DkSU7wQ=; b=oWpOJjNmVrOo86j1tJJtPo607Y
-	p0ccHsB4J78tlEOeYu+k9xpiAxmSiG0rAsmF2ifi8UdQHeCh6a0u2t2e1O0V6flh
-	ws3oVXIytUoXyUnXUNi+xLS9aeOd/PXtP4GYcgdZAv8E+BAS0ZI/akPh55ae3N+7
-	qkLHjw8w5uY88vwN64cRS6DaX9G2BcDJ8YxT7MujotpknvqW2Wk/BxvMqB0qePTv
-	qu4n7xFreS2VutS7uOqfHwS/Y2w+Y5uCPm+spqIYb3k8fqH9UcdmLHQcnikiBDLI
-	e4p+E0C0QsZwAhOpz+zAFnaSHtz8OhBtyg/9sZflfUuveyBpMZENjbUPjRPA==
+	:subject:to:to; s=fm3; t=1722321829; x=1722408229; bh=7lBrlFQNxD
+	t3OAdMoTRvt4J8ZvKeDSaR5SQmNXF3jqc=; b=KagLJJ/vKSyiqbqGnpMNIsIVv9
+	nnwqMoyMAD7im2pt2zPXILXts0kvO8A4wAn71DeN/GC02+HOEK9LUTKF6MLWTB1w
+	6nYeEAusd3uxrNmwokd3FzCnGDuykX/T3qp/7IHHGKBCZ4UUa0Usx/zlo3wLH9B6
+	SrCzUbzBJMr9dsbm3X1Pf6szMCUYRthuzsgIEwFB2F3uQ02dBtR+1LKBUrwTIuzK
+	xvEJyFdPYrTnGgnd42fWo9qI9Nh2i3+hlYZfYgN9tsDFtifEkejbcayoJOsEZ4Oh
+	sLVdENPlA10zjwpBrKAVZddqMwhyNd0fQ7EvIpKsdmaxSSBszs94L79FObRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722321672; x=1722408072; bh=mLvLJpWnP4dtyy1VIgPtluU7oyWE
-	pI1ng1h5DkSU7wQ=; b=CPR7brxsMBEGNXxMNhTW3CqaJOFYtV6eZOwhUIpnLgZr
-	DHBZj1yeXVj5zaL1dTVTnjZLUtzluNoWMeDAhV8pQzJ49eefnjWMiukdskWpPr+K
-	vFjQTlAz0uK8Se/1VrBzVraB+GdUyQqK97tqjv9KIs98H50XNCnMxamjHY+tG713
-	BFHjIOuMBmcjxQOV8wa2ofAR2ULhJ4Zh4PAflDK5l7ESMRYGDKTu/JbEN4UgsNoJ
-	jP+b0peWf5/b5x1S+Qrd5DBWWbILoLVpgmDmcsVOTJSQzXzDblfwL7T4XaooajSL
-	FlRxPyrAwSO9oGhlKUtFRjmGt0hk1VMJtDGGbbPwGw==
-X-ME-Sender: <xms:B4uoZhgK_6orBYV95KcZfj-YkV6Oy_HcQLPMOoPHiP4mvlYrYHcV2g>
-    <xme:B4uoZmD4vlefzzMHBnbztCyAhi5P0lwv6j39PbLEljqbZ8zIRqeWx4WCkDf3CqVUi
-    GA8rkC6cWXBiDjGbw>
-X-ME-Received: <xmr:B4uoZhFZVh_DSh0eB6KlcExH5lPY4Cduj4LJ3rwS-aY4NIRoAVYe-ANWaGRx2hrqA9RmvgFdAxxmTiT8pTOxKQ9HGsvGxZcHxTf6EgRFa0KcnYQ>
+	fm3; t=1722321829; x=1722408229; bh=7lBrlFQNxDt3OAdMoTRvt4J8ZvKe
+	DSaR5SQmNXF3jqc=; b=pBEUpu6uaSCHgAE9Y8aYVkbclzxRTL/yKx0UQX4/m2xY
+	tqfJC90QweXaiRSchs9QigJ3FqeFqYnluTVu89mcBFDaCSqtJZNhaH3oKW7IoJLQ
+	SbsLaVUbMqNCj/fIiQelnBgAUcnM7vV7RML/8eCgP8s9QRsqEE2d85Nsi/7HWetY
+	SzNHdfgrK0RGngyyhtvW+LXrGy+P/pdT8g5g5dffqglYZ5w96IckT6ie3bu96qGP
+	Ah51JD4FaTj1Tk1yRCIPX3RSB7WioNdcKnSxKW3dUV+s0kVFHpg+frICPfXU/Nai
+	q5enpYEs6TZnefKmOkM5MY9PBTRB23Z1OM95J8BVuA==
+X-ME-Sender: <xms:pYuoZh64COpvPj1kapYMQV7eq6n_bqQu8FQlXjeXNFr3ezt6D55KqA>
+    <xme:pYuoZu50v4L2pGkQPJSb2MfsgcEfJ0tlA01elnGyFqbpD8keO2M4x1j58jXwuKsD7
+    3qHiJyCo-XID34nPg>
+X-ME-Received: <xmr:pYuoZof1WtVutycudFRu2A7LkIhHhijKeCrggkH6jcG-jejm7u_shpMvvm1IQzQBaLAa1llpkOiCH9yafU8_06YaCVTbjFwQo54PVErXHMqywY4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeefgdduudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,27 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeefgdduudegucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:CIuoZmSeWAqQaudH616wxbPvwsU-V9BhVMH2nY_vi_X6iCZdC41oPg>
-    <xmx:CIuoZuwMff4vGxD0bxPY_bKkc_i4gC40of7j1bseHPUw7FzUQoJHmg>
-    <xmx:CIuoZs4kUcfhdaf88QXU_idTT3KqAwT1w1_Pt7yyX3wLxUqE1HT0mg>
-    <xmx:CIuoZjxRI8nFua3J5loJy8WiP4YFdbc7k06fxNHb_v18fdEykUvfiQ>
-    <xmx:CIuoZi8WwEBYtBW4otvFfrOTGRQy2yQj7jFWp69nmbXwo5ddiO4JWfNI>
+X-ME-Proxy: <xmx:pYuoZqJAqT_4amta5e5EdtWljGTIKka2E8RwGZZdlXwK4qcUizDZgA>
+    <xmx:pYuoZlLVvXiQBtLYA_TQ13sNZ_TeeMjDFQcGGj85n7QOIM_21dxKEQ>
+    <xmx:pYuoZjwc-jpnIkm-NbhpealH9sAsgUprLuY6cAV0a3B_-AHspBL3qg>
+    <xmx:pYuoZhJ_yVO5K2JVV1JQCmXf31iXt0A-9XxC_Tr9h9PfWpKf17xhgw>
+    <xmx:pYuoZl1NGzDZOECHVl8zMPc4VSSd-3cAED_u7S5hQReBmSn7xo1B0BYn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jul 2024 02:41:10 -0400 (EDT)
+ 30 Jul 2024 02:43:48 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 17fe346c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jul 2024 06:39:42 +0000 (UTC)
-Date: Tue, 30 Jul 2024 08:41:07 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 5a03eaea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jul 2024 06:42:18 +0000 (UTC)
+Date: Tue, 30 Jul 2024 08:43:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/3] Documentation: document naming schema for
- struct-related functions
-Message-ID: <ZqiLA0bGYZfH1OWD@tanuki>
+Subject: Re: [PATCH 3/3] Documentation: document difference between release
+ and free
+Message-ID: <ZqiLn6JR5BBf9sJU@tanuki>
 References: <cover.1721818488.git.ps@pks.im>
- <7f07bf1f3beee2f74a3572d2b9a8d28b6535053e.1721818488.git.ps@pks.im>
- <xmqqikwuwx7j.fsf@gitster.g>
+ <5e1de3c3159968e897a83c05dae5e8504d37a16c.1721818488.git.ps@pks.im>
+ <xmqqed7iwx4r.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,103 +84,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TmRfXa+gxbdCuWCz"
+	protocol="application/pgp-signature"; boundary="Sd5mBDzZtJCnzzQ3"
 Content-Disposition: inline
-In-Reply-To: <xmqqikwuwx7j.fsf@gitster.g>
+In-Reply-To: <xmqqed7iwx4r.fsf@gitster.g>
 
 
---TmRfXa+gxbdCuWCz
+--Sd5mBDzZtJCnzzQ3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 24, 2024 at 09:50:40AM -0700, Junio C Hamano wrote:
+On Wed, Jul 24, 2024 at 09:52:20AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > + - Functions that operate on a specific structure and which are used by
-> > +   other subsystems shall be named after the structure.
+> > We semi-regularly have discussions around whether a function shall be
+> > named `release()` or `free()`. For most of the part we use these two
+> > terminologies quite consistently though:
+> >
+> >   - `release()` only frees internal state of a structure, whereas the
+> >     structure itself is not free'd.
+> >
+> >   - `free()` frees both internal state and the structure itself.
+> >
+> > Carve out a space where we can add idiomatic names for common functions
+> > in our coding guidelines. This space can get extended in the future when
+> > we feel the need to document more idiomatic names.
 >=20
-> I am not sure if this is a good guideline.  In the case of strbuf_,
-> you could say it is named after the structure, but I would actually
-> think that both structure and the functions are named after the
-> subsystem/API (i.e. we have "strbuf" that other subsystems can use).
+> We have _clear() in some subsystem/API.  Are we sure the listed two
+> are sufficient and _clear() can be replaced with one of them
+> (perhaps _release())?
 
-Well, in most cases I'd expect that the structure is named after the
-subsystem/API, itself. I'm happy to relax this statement though and say
-that functions should be named after the subsystem.
-
-> > + The function
-> > +   name should start with the name of the structure followed by a verb.
-> > +   E.g.
-> > +
-> > +	struct strbuf;
-> > +
-> > +	void strbuf_add(struct strbuf *buf, ...);
-> > +
-> > +	void strbuf_reset(struct strbuf *buf);
-> > +
-> > +    is preferred over:
-> > +
-> > +	struct strbuf;
-> > +
-> > +	void add_string(struct strbuf *buf, ...);
-> > +
-> > +	void reset_strbuf(struct strbuf *buf);
->=20
-> Do we want to rename start_command(), finish_command(),
-> run_command() and pipe_command()?=20
-
-I wouldn't quite go that far for now. We may want to slowly adapt some
-parts of our interfaces over time. But my main goal is rather to make
-the style consistent for _new_ interfaces we add.
-
-> child_process_start() sounds somewhat ungrammatical.
-
-It does, but I would argue that it is no different from `strbuf_reset()`
-and other functions where we have the verb as a trailer. And I have to
-say that I find it a ton easier to reason about code where we have the
-subsystem it belongs to as a prefix as it neatly groups together things
-and immediately sets you into the correct mindset of what to expect.
-That is of course a question of preference, I'm not claiming that my
-preferral is objectively the best.
-
-But again, what I do want to see is consistency. Nobody is helped when
-we mix both styles in my opinion. It makes writing, reading and
-reviewing code harder than it has to be because you always have to
-remember whether it is `string_list_free()`, `free_string_list()`,
-`string_list_clear()` or `clear_string_list()`.
-
-> By the way, some functions that have strbuf_ in their names do not
-> have anything to do with managing strings using the strbuf
-> structure, but they do things that are *not* about strings, but
-> happen to use strbuf as a way to either feed input to them or carry
-> output out of them.  They should be renamed away to lose "strbuf_"
-> in their names (e.g. strbuf_realpath() is about pathnames; it is
-> immaterial that the function happens to use strbuf to hold its
-> output but takes input from "const char *").
-
-Yeah, that's fair indeed.
+I'd think that `clear()` can be replaced by `release()`, yes. But in
+another branch I heard the argument that `clear()` is equivalent to
+`release()` followed by `init()`, which I do like. The only downside is
+that `init()` must not allocate memory in this case, as otherwise the
+`clear()` function would lose the ability to release all resources
+associated with its structure.
 
 Patrick
 
---TmRfXa+gxbdCuWCz
+--Sd5mBDzZtJCnzzQ3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaoiwIACgkQVbJhu7ck
-PpSxTw/5AZjmR4uRWOYb8agr7aZbCVb3vnsK848F8UkdF1wl2bgvyaCbj9AJoagk
-YjZqWbOt7c2k0zIHAy+CQLsPrPLlth/QJmKhnVrUvW76fa9mKKcfeviyOg9oCFtT
-xTq0rZ3wTa6l5AAHHFz0y3BQgv6zoCn4vnR0JeQ6SpjVzNgU+Ymtxw7Edm0fqa5M
-HlGV1ZmdQUqzJNPqPkBN8cDI522DZCS9Isgu74Uch9GN91D7Bm1tcHp0FTzUISMc
-vRMUBhFAoho1eI6LgU3AnOx3B4HExDz8ujF4JLafJmqTV2b5lM8x2bjirsDCRhon
-huBEnbu+I9SGL8s241Mn/8TMF9S4/CZtQmX+i1YY/A4dQPNzLpdFJfqWZv7DCDz+
-UWnQg45JrVhDDPQ3MXPxMg//9Jai31xdqC/XtD1TYcMkeYIr/++0+5YK0idZ+a7a
-0EhRFPxTcX6fj73+9+rVAE1RZpD6LEwGlpao9a916sEjebKGSo6WMslUew4s+qXr
-KlDZBhH5Ccdz6U5oFZem6bs2VinZq54x+SNNGG2znzTF3GP5+ul2Sm453ks2BHSx
-ZbRwJuj9y9p0Fxu/ju7yBt/a9gikv8k2uNbjTyW344H6jbKMRQNomSaqMjl+eQSj
-K/gGLAlXDnr06NjRz1nUQX6mE9YUkfNbDLW2mc1Ok38vu+OCjx8=
-=zzrr
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaoi54ACgkQVbJhu7ck
+PpS3lg/8DOwlc+D3d1tqbTix2oGE7YQyImIb1s/yXRsg0bAj0monE30BmCRCo44g
+UlN+i3YaOxwYvAhrvcTn73qxp/QCngLXrx3pTmJWVO/98SZfCZRX5CtIadlpVdWB
+xxQs6Ohl0+igWNOpSWoHhbhH/S2wJCtw9q1JLehAlxdeK3MtCiJbBkGg1y3asCcx
+lmLf9KXusLUcs8tGKCZtzg8MBwBG1jAsC5XVUZsIpmQ+Ui4/Rw5advrIvJ1KH7vA
+pSf9qaynwQ59XTjffgqUeJNVZeTD4C+qXFzx3WzRwBOPSI1D+RMbZ8kw0jk95x2Y
+y5NgcnNcpMf+jlw9TI9DyHdkL6FCDZCuHrzrK0kbPN5CyEBrL9OWq9XSN1bgujsD
+fUMcVFWMSFxDYd6Xp+BO82K6khg5tHnLILylXDm5Xstfl6C3eXnINGCOfjucPDNL
+eflZ3wNfI75KZ4Ti+99JHZBL5Mt2wbCt25ugJaNcx+A8yFn6Q3CwyuG+rr/n2U7m
+8KK2J4jGqaTG7gFis4l0N2b1KCv4IsIxY6341gaEoucTXTTg8LDbthbl6ZzEu07a
+OiPsq5MqxUUQZzOqY3ZLhd+AAyZRGeK1RZd5d0spFgZOgE988YSv+8s4Q639xLE1
+SLcp9TiIRATp0w27kQayHQwLoDiYSA78i8CO8CpxRuhVw4+gm8g=
+=vydk
 -----END PGP SIGNATURE-----
 
---TmRfXa+gxbdCuWCz--
+--Sd5mBDzZtJCnzzQ3--
