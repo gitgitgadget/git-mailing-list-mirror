@@ -1,111 +1,109 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727791917E5
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F23D19149E
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:28:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722377202; cv=none; b=K5BWH0w92APOhnkLDdN4bRlhrSudMbx0qoozwtRf1eUBOn2BQ8BEcCiulhik2J9jJgORKugaQT9AydHVisoBpYsX/be0zO0rp0ZoN3gLcwNyOn/t6S9QgfeYnvuxiNQY6UlfFCpDM1UMfGeWNOdDOUMWVYO7xSvIhwJ5u/lEPRw=
+	t=1722378503; cv=none; b=doQtwkpMSGqT6NKdmpjubVZ6pY453vwhKh8oeCDvPyKPuQb90AMT665Z8qkoc1Ln7T3STdqhl+NDAy9wBAVCizjPDtVZnq+trABdtoNqQexVl0utNMs4rkp+7E9AlmY1grRXDBAR6tJwHDDOGSEc9HlGRytZaJszRiM6JsIlfLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722377202; c=relaxed/simple;
-	bh=+hSFuVd/nhsRZlOGAQq0kUqZcd170gmV+2irPi1aNcE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QSUQJJLsr1k2XBh+Bwtz8FtOellqvAn7ZFDbiOaW3y063tQXnLWxPjvWL/SmMakN9UMkaOKPDSqnfRfM2pQLIFHQNbpOoYGMVsuTJytaexSAMkg5F5fQ1Xg2jI5JpPamkNb1W6xlqPqDb53wPATDjVhXcUGedvdxYy+geykyC4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TGei85Oo; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722378503; c=relaxed/simple;
+	bh=l87G/zHdJt/1hW1sUCHczxj277B6qe0sNVyHmpHMFsk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JPIjWFQTVvUzVzHcu64dG+Ux/9Ox4FT/9L636/YzyTqzGYdsNkdvikF4W9BJ38MC9FOyXX2+zvkUTaqmJSC+/pGe+r/ULRWc8TLJ7gtFrB1eNBHbMm01U67XIlihkrxfnV4+/dF6aWJFcdH+h4ArxkOsk4lv632AL0ygWwuYkfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=KyDx6CE4; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TGei85Oo"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C82E31A0B;
-	Tue, 30 Jul 2024 18:06:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=+hSFuVd/nhsRZlOGAQq0kUqZcd170gmV+2irPi
-	1aNcE=; b=TGei85OokN0ineS4GF7DV9dZLhIhsfaRV5FPPUQuz+J/K8VVrEz0Ks
-	Hma2ADtI9jvE4JXaNVRsHjSVxb6Q2qKkEwekdoOaox6412GxmKn3+z6FTGuLF5B6
-	NRWl/wQWZupaUJ4Hc5U2IT3uI6+VHiNtKEF6p7WPGT517CS7rAB+8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 22B8231A0A;
-	Tue, 30 Jul 2024 18:06:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KyDx6CE4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1722378492;
+	bh=l87G/zHdJt/1hW1sUCHczxj277B6qe0sNVyHmpHMFsk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=KyDx6CE4R4FgVp85AWrFCWy+oSDFTFOfqzmiq6SlGEo8g56HXKjaTYWzALxCqejXq
+	 BhegJmN/SUIxbpiJgmZBPbusOJ8mmNVJyb3ZfpJLcmOQAp/cp1FgnSHSSJpzqCjDCj
+	 d5oZSK2RnzIk1H2nvhgtmW0QMmga3x2xmX7470MKuOFZtFKMSpiOJTYVSJhBadQQ4K
+	 M4BWZXo+rvb5M3AD5UrIi93JQU9QwY58g5onhVsPSYvUqQqXvgoAlYPlro2KNLjSXR
+	 49CRA66IA5jwmE2KPEJAU0Ezu4Bw+DK+jnMSaBsR2TViCo8KUmvsYEPud8ipSqCVI6
+	 DPDtTXwvqbR5NOCJvZPLaneoiBnQnAHIG6v1TsrLGtR/6i9W8Q00XvEzWamKIY5UzJ
+	 8QXVIX/568M6VGItvSpSaLTBtary9pKQxCpPT81+zH7Q2/gu4461TfdkrgT8k3bQ5W
+	 s6ITWhmv67ZK7wAB9pnYAEsDblTLlCYrOi2pxnNIStv/fpicMOH
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 87DA131A09;
-	Tue, 30 Jul 2024 18:06:38 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,  Justin
- Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v13 10/10] fsck: add ref content check for files
- backend
-In-Reply-To: <ZqeY3Dhj-Fo-bZ2k@ArchLinux> (shejialuo@gmail.com's message of
-	"Mon, 29 Jul 2024 21:27:56 +0800")
-References: <ZqeXrPROpEg_pRS2@ArchLinux> <ZqeY3Dhj-Fo-bZ2k@ArchLinux>
-Date: Tue, 30 Jul 2024 15:06:37 -0700
-Message-ID: <xmqqh6c6a61e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7DC5F209B9;
+	Tue, 30 Jul 2024 22:28:12 +0000 (UTC)
+Date: Tue, 30 Jul 2024 22:28:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: "W. Michael Petullo" <mike@flyn.org>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Git clone reads safe.directory differently?
+Message-ID: <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"W. Michael Petullo" <mike@flyn.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+References: <ZqUc8DJ1uKcHYlcy@imp.flyn.org>
+ <20240727215845.GA1263246@coredump.intra.peff.net>
+ <ZqZjRMqpEV_3WIkD@imp.flyn.org>
+ <20240728224807.GA1299337@coredump.intra.peff.net>
+ <ZqjQi6i2kiY4gcc1@imp.flyn.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- FE681A20-4EBF-11EF-A680-BAC1940A682E-77302942!pb-smtp2.pobox.com
-
-shejialuo <shejialuo@gmail.com> writes:
-
-> +static int files_fsck_refs_content(struct fsck_options *o,
-> +				   const char *gitdir,
-> +				   const char *refs_check_dir,
-> +				   struct dir_iterator *iter)
-> +{
-> + ...
-> +	if (parse_loose_ref_contents(ref_content.buf, &oid,
-> +				     &referent, &type,
-> +				     &failure_errno, &trailing)) {
-
-The function parse_loose_ref_contents() needs to know what the hash
-algorithm is, and it used to implicitly assume that the_repository's
-hash algorithm was an OK thing to use.  Patrick's recent clean-up
-series instead passes "struct ref_store *refs" throughout the call
-chain so that "ref->repo->hash_algo"  can be used.  This needs some
-matching change, which means ...
-
->  	files_fsck_refs_fn fsck_refs_fns[]= {
->  		files_fsck_refs_name,
-> +		files_fsck_refs_content,
->  		NULL
->  	};
-
-... the function signature for files_fsck_refs_fn must change to
-have something that lets you access repo->hash_algo.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rP6QJFE2UQjNv2QD"
+Content-Disposition: inline
+In-Reply-To: <ZqjQi6i2kiY4gcc1@imp.flyn.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
-By the way, unless the most common use of an array is to pass it
-around as a collection of items and operate on the collection, it is
-a better practice to name an array with a singular noun.  Name the
-array as fsck_refs_fn[] not _fns[].  This is so that you can refer
-to a single element in a more grammatical way.  E.g. with
+--rP6QJFE2UQjNv2QD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  struct dog dog[] = { { .breed="shiba" }, { .breed="beagle" } };
+On 2024-07-30 at 11:37:47, W. Michael Petullo wrote:
+> Perhaps a compromise would be to tie safe.directory to the type
+> of source directory given to clone. Would a remote URL be enough to
+> turn off the safe.directory checks on a clone, similar to the effect of
+> a remote URL on --local/--no-local?
 
-you can say "dog[0] has brown fur" instead of "dogs[0] has ...".
+I think if we're using --no-local (that is, if we're using upload-pack
+instead of creating symlinks), then we should not complain about the
+repository ownership.  It's supposed to always be safe to clone or fetch
+=66rom an untrusted repository, and we shouldn't complain about that.
 
-In this case, you do not treat the collection of functions as a one
-thing and do something to the collection.  Instead you'd repeat over
-the functions in a loop and individually call them, perhaps like so:
+Both of these commands should work correctly and do not, and that's a
+bug (assuming tr1 is owned by a different user):
 
-	for (i = 0; fsck_fn[i] != NULL; i++)
-		fsck_fn[i](...);
+  git clone --no-local --no-hardlinks $PWD/tr1 tr2
+  git clone --no-local --no-hardlinks ssh://localhost$PWD/tr1 tr2
 
-so it is very much more appropriate to name the array itself as
-singular to allow you to say "first fsck_fn", "next fsck_fn", etc.
+git-upload-pack should not complain about safe.directory at all. If it's
+not secure to clone or fetch from an untrusted repository with
+git-upload-pack, then we have a bigger security problem that needs to be
+addressed.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
+--rP6QJFE2UQjNv2QD
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZqlo+QAKCRB8DEliiIei
+gV5VAP9wwTaoxE5GsxueIYo+iQ+OrWWO2kGzxuIohaoXX7vhJAD+L7fZqErOo78o
+C6Pv3dHBLNEULGRB4Z5SDgYJ+x88hwE=
+=FMt4
+-----END PGP SIGNATURE-----
+
+--rP6QJFE2UQjNv2QD--
