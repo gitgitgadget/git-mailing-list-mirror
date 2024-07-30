@@ -1,88 +1,68 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D35E13B780
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C001662E8
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722325005; cv=none; b=LlOP4Q+92f9VAUNEvnpcw4dWTuUMdkc/Y2P6MN2FH4XYMNsUr8WEdBFnqzVJrhwmNOqXcPw9nXAesfBcilwus/2+wRGgTID3iRax5Pt49dah91IHSBQt8H2EMbhK6g13haSg5I+9fLZeokd+xO3x/2xNoZ4Zb3NsaWex9qir0UE=
+	t=1722325391; cv=none; b=X9zqqI5DeGQMPEAA8wfsNkgMfnaw9VV2Sj0QYIgNyTvnLis4Q7IOpbPDsRe2/5iD91m8G5C6w+Ub0Og0DHGetGgeBF143J331t+wQAnEZdnysGa3sFkhID/qxLLmAaQjvSlRe1934ZBbpUDhPhgDsVOKMo0C230GH4hESvI74pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722325005; c=relaxed/simple;
-	bh=NVpvYFFSzqHDEMV2VjhiYfgARWxQ8VjzKW60jqrR4MQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dl7OnL95QfRAuxkEC1o4OlN8s3CmZy5zKw1q4kFabxc6INQG92JJDsLuAebXJ/mqfg46CbSycBZs9Yqvt4vDf5zF5AWyc/QU1eqnTCz63SUwl2zj9PZkT/Ty6PIOjpbFB1+fqDY0sl5fWdIM/LFPoPBhEEAoky9bYIA3cO0hfzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6b7a36f26f3so32226796d6.1
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 00:36:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722325002; x=1722929802;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NVpvYFFSzqHDEMV2VjhiYfgARWxQ8VjzKW60jqrR4MQ=;
-        b=fw8PUBH43LGr0qOyAV42J06Q7DzXc6vYEuhKiyADeGZ61/mN6+QrJQPauXr8cq0qNX
-         WQUeASxYiNMaobz9V2v6ocCGxzLOhAl3mSqcCiXddF83ymnFO3OsyGtQAqB4D5PgSBzl
-         Fl8bjSYADXnfG/y+vTfdROH4BxYZK6dWa5g+mrKpfnBlcjowFHbDXW+/S/XQmqx3NREP
-         wbyOhaQjHZeLar3NAGLojDxY+PxEb22Wpygln2z7ihBo8HJhLsosXjkzPmh5E6un7PDD
-         0D4w1YgCKE0c4lyEGWFz0rf/q9o0fF/rX0b/h0NqAqeMu7+sqG/84db0GPjzNZQjSgH3
-         nGgg==
-X-Gm-Message-State: AOJu0Yxk2CTdYUI8jq5to+EBFUYm8D6HD0i41bRLvMTdLHh1id45HwcP
-	HNbWjxnC8qlA6TEPRj7c313xpTmuCKOt7obbny0CZCwX5tvs6X6hXObyS6/b5FbempsYcNS/GtS
-	aday9+cd1XpLL5h7NcMwvjheQzqHF8/Wo
-X-Google-Smtp-Source: AGHT+IFfsAlbfABqQlM4a1cOiw85ZjctRBsT+ppq/sXMBAhyZLDBIMA+W38Q6Z3a6DqfwDLOvbkibZJ2y0I+E7Y3cNk=
-X-Received: by 2002:ad4:5bc1:0:b0:6b5:8d15:d139 with SMTP id
- 6a1803df08f44-6bb7804e4c2mr20368106d6.28.1722325001913; Tue, 30 Jul 2024
- 00:36:41 -0700 (PDT)
+	s=arc-20240116; t=1722325391; c=relaxed/simple;
+	bh=0PpCm6kekQmwVO37vbdOLnr1Wwe2w5gUXcm9efZn8a4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l0bmo/yX4XgX4cesB6pNyG4RxPTjjB4RghrdoLkL/imotgdvCGimTY2ilFlpNOS33MUSsbiGVIYzOzMw26Lvm/Fd9Ek8nFEeDYgMYTeqf3+brOG1r6EugSXlko/ezfyzsgsUe6GC9NbhR2JYw4SPr0pbP2TL4EbnCuLqLZCvyiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 27912 invoked by uid 109); 30 Jul 2024 07:43:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jul 2024 07:43:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8566 invoked by uid 111); 30 Jul 2024 07:43:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2024 03:43:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 30 Jul 2024 03:43:07 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 2/3] safe.directory: normalize the configured path
+Message-ID: <20240730074307.GB562212@coredump.intra.peff.net>
+References: <20240723021900.388020-1-gitster@pobox.com>
+ <20240720220915.2933266-1-gitster@pobox.com>
+ <20240730011004.4030246-1-gitster@pobox.com>
+ <20240730011004.4030246-3-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFGW38fkr+OuhpcyqNFxZNkhNDGPxTbOmCJLVHpCGUmbj05tMg@mail.gmail.com>
-In-Reply-To: <CAFGW38fkr+OuhpcyqNFxZNkhNDGPxTbOmCJLVHpCGUmbj05tMg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 30 Jul 2024 03:36:30 -0400
-Message-ID: <CAPig+cTGhzZom+27WEHFbij-_MdFL+tNQ0uQZ3wskB1v10fHVg@mail.gmail.com>
-Subject: Re: Output of git checkout goes to stderr
-To: Sayooj Surendran <sayooj.surendran@bigbinary.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240730011004.4030246-3-gitster@pobox.com>
 
-On Tue, Jul 30, 2024 at 1:44=E2=80=AFAM Sayooj Surendran
-<sayooj.surendran@bigbinary.com> wrote:
-> Noticed that the output of git checkout command is going to stderr
-> channel. Is this an intended behaviour?
+On Mon, Jul 29, 2024 at 06:10:03PM -0700, Junio C Hamano wrote:
 
-Yes, it is intentional. Git's Documentation/CodingGuidelines has this to sa=
-y:
+> @@ -1236,14 +1236,43 @@ static int safe_directory_cb(const char *key, const char *value,
+>  
+>  		if (!git_config_pathname(&allowed, key, value)) {
+>  			const char *check = allowed ? allowed : value;
+> -			if (ends_with(check, "/*")) {
+> -				size_t len = strlen(check);
+> -				if (!fspathncmp(check, data->path, len - 1))
 
---- >8 ---
-Program Output
+BTW, one oddity I noticed in the existing code:
 
- We make a distinction between a Git command's primary output and
- output which is merely chatty feedback (for instance, status
- messages, running transcript, or progress display), as well as error
- messages. Roughly speaking, a Git command's primary output is that
- which one might want to capture to a file or send down a pipe; its
- chatty output should not interfere with these use-cases.
+Under what circumstances will "allowed" be NULL in that ternary? I think
+if git_config_pathname() returns non-zero, then we called
+interpolate_path(). It can return NULL, but in that case
+git_config_pathname() will die(). We might change that later, but then
+I'd expect it to return non-zero. So I suspect the whole "check"
+variable could just be dropped in favor of using "allowed".
 
- As such, primary output should be sent to the standard output stream
- (stdout), and chatty output should be sent to the standard error
- stream (stderr). Examples of commands which produce primary output
- include `git log`, `git show`, and `git branch --list` which generate
- output on the stdout stream.
+Obviously not new in your patch, but maybe worth fixing while in the
+area? I think it comes from an evil merge in b8bdb2f283 (Merge branch
+'jc/safe-directory-leading-path', 2024-06-12).
 
- Not all Git commands have primary output; this is often true of
- commands whose main function is to perform an action. Some action
- commands are silent, whereas others are chatty. An example of a
- chatty action commands is `git clone` with its "Cloning into
- '<path>'..." and "Checking connectivity..." status messages which it
- sends to the stderr stream.
-
- Error messages from Git commands should always be sent to the stderr
- stream.
---- >8 ---
+-Peff
