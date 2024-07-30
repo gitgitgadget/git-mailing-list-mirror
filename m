@@ -1,96 +1,111 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB36618A6AA
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 21:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727791917E5
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722375010; cv=none; b=A1ZF1e4l67womTfv1upjSEcb9wLu5oDT/aWYEm5TuWWNaDqs2+0Ckg/jH8PnYNahc7OvLGbuVcvNweZdmAXJM9GiL7A4BeXrm5Qngzu077yEWw4WR8TItWAwebAp/bnCCkH5jOtIXGjYiElRxwUKP9nPLFcreEI3MpuInnoA4+s=
+	t=1722377202; cv=none; b=K5BWH0w92APOhnkLDdN4bRlhrSudMbx0qoozwtRf1eUBOn2BQ8BEcCiulhik2J9jJgORKugaQT9AydHVisoBpYsX/be0zO0rp0ZoN3gLcwNyOn/t6S9QgfeYnvuxiNQY6UlfFCpDM1UMfGeWNOdDOUMWVYO7xSvIhwJ5u/lEPRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722375010; c=relaxed/simple;
-	bh=INa8yQE+sjSG6gwN+2oNMtpZcS32209x48eyvH1rdvI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=n84+7bMDfn8aigzGxEBg0Ffa8PIBSLjLjURzyiyXuTAl2KTn0Z2nABADe7G/BCKfp5AgLFYbnGZRtiNayXvaOoYJ5VYinQtNpNGhqbkWsTHdmAl14YH9O8jMGSzVGA9U3K2P3Fuw7Eyvm5dibNgy5xMrxb2mDT+sHgiskhE8bLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6KyuIpi; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722377202; c=relaxed/simple;
+	bh=+hSFuVd/nhsRZlOGAQq0kUqZcd170gmV+2irPi1aNcE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QSUQJJLsr1k2XBh+Bwtz8FtOellqvAn7ZFDbiOaW3y063tQXnLWxPjvWL/SmMakN9UMkaOKPDSqnfRfM2pQLIFHQNbpOoYGMVsuTJytaexSAMkg5F5fQ1Xg2jI5JpPamkNb1W6xlqPqDb53wPATDjVhXcUGedvdxYy+geykyC4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TGei85Oo; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6KyuIpi"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7ad02501c3so628455566b.2
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722375007; x=1722979807; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rp/WsCcZJRoLcDetlaXjgcr3LT+L2rdQiyRkYo9BaX4=;
-        b=U6KyuIpin3rKwX25BoBeKML+wxCqS4FzNJqq/cuPOB5bvnzmfg9VEEX+elcgJVzsPl
-         4ZQ28I7dALXUFku8a4V8O1JYTEFhSgBVf3CZyRkoeekQocrsEVWL/twiSh2RZ6iQzU6w
-         ROVAZDc1SUq61elatDQWwnCQk2Q7+DeGE+iPCzmwZJPeZQFILM2oQr2JAPc+vrpCqENL
-         cUrDbKeY7E6KYbeW67QJ0FXBi4KouNAYBDu2Mv7chKeTpdLHPXRN+96UEJ4ttIVJh5/f
-         CBrp6TyqqqD6r7THcwrNRife2TQfGoY0k1kqxBZJdh1CzkIsQWUmpOkhyEEi1GdJMgqL
-         VaQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722375007; x=1722979807;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rp/WsCcZJRoLcDetlaXjgcr3LT+L2rdQiyRkYo9BaX4=;
-        b=Nq6Vczqaofyi3Jo1zhILwr8ZA9VMrhBjaxbBHUkemEUyfrbAhWEu1QbUw2R1dqiyg5
-         RuRDmWX5mc15oVqd0pZ6kOxaGu4oA2DlSTOm9Ec6dP/LWE0Uwf1iP9iXSVOpwLdPmkpi
-         XEOgojPmeTQm+r0eECp3WACjo1m74v+ZE3CBa5wmY9RF7uu19RGOQE/wBimDtrpst/jL
-         ZYhzswhUSJDdWO22yPMzM2TE+29TS4MDqXy3lugqf059bdVk9uPaYXtq5ptxrFPGZS4C
-         F1Iq6CbYEvgyk8gIj6OlCZV2cMVqzlJ65mOn/8SFpSzMR85tr419hM7l+2YdAEjqoqyo
-         WYsw==
-X-Gm-Message-State: AOJu0YyJMRbIUJRiXychb1os89LgutPPyps1YcyZAAt63KliysbCT9eN
-	XcLbdK0bo0Xz2PVbc1VZuPz9zJWTf5QBGaOQWau+6mx60elM4i2W3nEaEvPXaaPdLCKPachPtoC
-	Rh7HtNa+zncHVVKwLWBWNUP0rutXorqgs
-X-Google-Smtp-Source: AGHT+IE3VfHBIlHPj7TUr4riYXVhSuE3v+U9umqX2h/TkXx2kQBS6upv6LEivUvkWQl+UXf1MVoIc6zEMjrDCFkyqs8=
-X-Received: by 2002:a17:907:728e:b0:a7a:bece:621d with SMTP id
- a640c23a62f3a-a7d3fdb8136mr1055922666b.3.1722375006323; Tue, 30 Jul 2024
- 14:30:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TGei85Oo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C82E31A0B;
+	Tue, 30 Jul 2024 18:06:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+hSFuVd/nhsRZlOGAQq0kUqZcd170gmV+2irPi
+	1aNcE=; b=TGei85OokN0ineS4GF7DV9dZLhIhsfaRV5FPPUQuz+J/K8VVrEz0Ks
+	Hma2ADtI9jvE4JXaNVRsHjSVxb6Q2qKkEwekdoOaox6412GxmKn3+z6FTGuLF5B6
+	NRWl/wQWZupaUJ4Hc5U2IT3uI6+VHiNtKEF6p7WPGT517CS7rAB+8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 22B8231A0A;
+	Tue, 30 Jul 2024 18:06:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 87DA131A09;
+	Tue, 30 Jul 2024 18:06:38 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [GSoC][PATCH v13 10/10] fsck: add ref content check for files
+ backend
+In-Reply-To: <ZqeY3Dhj-Fo-bZ2k@ArchLinux> (shejialuo@gmail.com's message of
+	"Mon, 29 Jul 2024 21:27:56 +0800")
+References: <ZqeXrPROpEg_pRS2@ArchLinux> <ZqeY3Dhj-Fo-bZ2k@ArchLinux>
+Date: Tue, 30 Jul 2024 15:06:37 -0700
+Message-ID: <xmqqh6c6a61e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 30 Jul 2024 23:29:53 +0200
-Message-ID: <CAP8UFD1r8mSNsHbUsxkc3pdAOhM3AddFYoUMaNCMFSgq2y0u7A@mail.gmail.com>
-Subject: Draft of Git Rev News edition 113
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Yuri <yuri@rawbw.com>, Jeff King <peff@peff.net>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>, Chris Torek <chris.torek@gmail.com>, 
-	Gabor Gombas <gombasg@digikabel.hu>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FE681A20-4EBF-11EF-A680-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-Hi everyone,
+shejialuo <shejialuo@gmail.com> writes:
 
-A draft of a new Git Rev News edition is available here:
+> +static int files_fsck_refs_content(struct fsck_options *o,
+> +				   const char *gitdir,
+> +				   const char *refs_check_dir,
+> +				   struct dir_iterator *iter)
+> +{
+> + ...
+> +	if (parse_loose_ref_contents(ref_content.buf, &oid,
+> +				     &referent, &type,
+> +				     &failure_errno, &trailing)) {
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-113.md
+The function parse_loose_ref_contents() needs to know what the hash
+algorithm is, and it used to implicitly assume that the_repository's
+hash algorithm was an OK thing to use.  Patrick's recent clean-up
+series instead passes "struct ref_store *refs" throughout the call
+chain so that "ref->repo->hash_algo"  can be used.  This needs some
+matching change, which means ...
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+>  	files_fsck_refs_fn fsck_refs_fns[]= {
+>  		files_fsck_refs_name,
+> +		files_fsck_refs_content,
+>  		NULL
+>  	};
 
-  https://github.com/git/git.github.io/issues/721
+... the function signature for files_fsck_refs_fn must change to
+have something that lets you access repo->hash_algo.
 
-You can also reply to this email.
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+By the way, unless the most common use of an array is to pass it
+around as a collection of items and operate on the collection, it is
+a better practice to name an array with a singular noun.  Name the
+array as fsck_refs_fn[] not _fns[].  This is so that you can refer
+to a single element in a more grammatical way.  E.g. with
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+  struct dog dog[] = { { .breed="shiba" }, { .breed="beagle" } };
 
-Jakub, Markus, Kaartic and I plan to publish this edition on
-Thursday August 1st, 2024.
+you can say "dog[0] has brown fur" instead of "dogs[0] has ...".
 
-Thanks,
-Christian.
+In this case, you do not treat the collection of functions as a one
+thing and do something to the collection.  Instead you'd repeat over
+the functions in a loop and individually call them, perhaps like so:
+
+	for (i = 0; fsck_fn[i] != NULL; i++)
+		fsck_fn[i](...);
+
+so it is very much more appropriate to name the array itself as
+singular to allow you to say "first fsck_fn", "next fsck_fn", etc.
+
+
