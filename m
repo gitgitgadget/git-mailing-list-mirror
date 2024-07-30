@@ -1,68 +1,68 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670821A0B15
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:08:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E27C1A2553
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722352140; cv=none; b=Ch53NMi4SXuQAu3BnFTz5uPPXIUGZhjp1tVKYsmyTp2PBZQDAGoiXCAJomFbj2gslWLGpW3VZZS297S2qd2565rMeDJYBj00Ic0TU4vuRQWP7uX9ti9m3pQv8n7+PwTXH5tp0d6SViIPA4LmVVDXPF/XRz1p2urEZaqauaNYi18=
+	t=1722352228; cv=none; b=FzQXFgV+owPfblqRjFbfy8M0zNdXdatndbwdnRI1hCpAkUAqg8eHmA+foH7cVPu13NB2fKK0VGVgDcZCZxH+ZmZvSpIuvfBZVUvn7gb22WDdSD+ttxKcypfufGhyLbG0rggn9kDmlmuMqzxKMGkiMykwYshhXKPHRRsW9c7nHhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722352140; c=relaxed/simple;
-	bh=1nSoeHd0HrXQtatmr6fSwANJhvdhjCnN4Q4e6Q8JOcY=;
+	s=arc-20240116; t=1722352228; c=relaxed/simple;
+	bh=uGhkjXD08RfgyTotTcKahoPxr9bGg5udN2yoP7jST0A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bzQ7z6fMTean5jCG5EdCDbamQX7NTdx9iBXwxxEHmoZLI0HWcESuYaF41FEnLpEcYrPWEFoRq8upfRv5GFilw4ZiCIbqrGVNQOeJM+t4t6AGwSaYJECm2Kbkwu5gEcotjYqua2j/wjtyEXhl5HI6jl4Og3I5G8CACHbmUIeoLBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyoCbuD7; arc=none smtp.client-ip=209.85.214.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=kV/qmyajijtiB2yJxy34/27ZU45JcmzbJHm2eUiautjaphN0SEnJO8b5GemLFQY8WtUdRy1mn3xJilzFtkny2c+Q0jtTYpbMQl1BBVkR+nJHkI8vwEZSXGmJQMw9vqRLDhiMf/qRz8ammqTqpFLbp79YTZNnOb7T+hrYahV7qBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+L8krq6; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyoCbuD7"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fd9e6189d5so33560215ad.3
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 08:08:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+L8krq6"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-70d1d818c42so2873528b3a.1
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 08:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722352139; x=1722956939; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722352227; x=1722957027; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IN8PtwDlhlgDzDJwJGKQCYMOBWFZl5S5yIQiiMw45bk=;
-        b=DyoCbuD7AKmuGhWaOlPZrMIMllJCuryivYwDBRrPBnQ/yWt9rRTqCwQvghov5zPdI8
-         Q4got+UDrRwIDvT8IYuJWRH5TGpFr776nqZpzzsjqNQ9A2dhXwd15Nc8o+b40dHn8NvS
-         UiuiXiF8Z/TqwzLRqLQ/N7q7LiNE7QaPBedk5hoUz+PC5Jrc2BBAv0BtcLDdOZPR+lfp
-         MKHSFRcammUjxCeZ0+yL30M0YovCFjbXI2ZfghgM6m8ztAoBRGNeUm5wfKQLaVFVKNoC
-         +ZHX+sqqKTfNR1SRUK0vO3mtdCo+5vMNFYOsbbZbz8+vVazrEhC/QOUnh8gbgrrRAesQ
-         wiPA==
+        bh=yx980Kn5fsiwwMSgI2C81LOuLXbdQ+Lo7vL7nLrdyJ8=;
+        b=g+L8krq6BFLiIkQgtEcdLCdSIqxisi77oxSefl0vaPgMRZlizml1lRkf5DLDPHBZdq
+         Sq2RnkghJluYnfTitT4Pw7fgiSq+KQiYt5bDR3DkG9roaz63z50yf/oZyvbHCLtigdiT
+         P3dDtZPGNBWn9YiTe1mC34jENjS0Hop0a304a0L8+bLcbZldUoH1rUX82wGDKkDwzvVD
+         a8uSpaJAs4L+u0HTkqWVQhkUpR4rpdabGsewzzh3iNt2w4OUTT2Nc1ippL+QjWjU5HeZ
+         MK+vWilSJWr2EZM3EhniZUE81mScGWnJK/Ge/sag2oU1I71KlVl4O5tg8HyavKxLkhi3
+         1nwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722352139; x=1722956939;
+        d=1e100.net; s=20230601; t=1722352227; x=1722957027;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IN8PtwDlhlgDzDJwJGKQCYMOBWFZl5S5yIQiiMw45bk=;
-        b=fXAEMYS2uJpQdsUoqlMEChfP4b0S7YzKhYbb65jogP9GGLVcpp05res9xhmXo4UF+U
-         WN5RHYzaXTviS4vYT0WSjpMGBTcPWk4bdmHqe5KB9F48l72oMBsjR7inY3ujBFl/Lf2l
-         MfBaTopquU1anT8gYCqAi3Yn3xvNmIMhrvLoit03kzdSnU5DJ/nUeUHEtA+NIom1zSLR
-         ReHGAB7mg11wkgO128krZSM22c35rdd/y3qUDyQei5VHZQTm9+3N520WbzTq7NQxrDsR
-         8K2YIewonHjEmr4rjiRR3sBCTVLlxh+DwPh0yM+RkT22Cwqt13/i8/OzUUv2GO5e7DbH
-         HTUQ==
-X-Gm-Message-State: AOJu0YzWQAiJd8aM5Ls1WUO7aglHobyNIaofbr5FNnutC/zbjz/7Gnyu
-	x2DFNftPKKysXbso6y5008cjfpG2vuDh08HN8n2kxkL3IEnbw1QQ
-X-Google-Smtp-Source: AGHT+IFvWUtivJf09J/tmzRNHnh8VDhsfmcMd0RNhEGrPAIJGSJcaw6lUG40ab8ldYmuqtAUPvn7Bw==
-X-Received: by 2002:a17:903:228b:b0:1fc:f65:cd8a with SMTP id d9443c01a7336-1ff04810fe7mr105933095ad.18.1722352138551;
-        Tue, 30 Jul 2024 08:08:58 -0700 (PDT)
+        bh=yx980Kn5fsiwwMSgI2C81LOuLXbdQ+Lo7vL7nLrdyJ8=;
+        b=mT9p82x7/Buu4iQfcufqLeg+muuqIGhiUvFSxAOq8lO23hrGgbTRmFMJ4UVKYTFRSH
+         s/usJX4rYxjfZ7AX6oaxgsKLY8ehmQAwuB6ena3UP3TNt7h3If0VJvZqsMVfWPp1Ijwk
+         TCiyj9tDgFEwj64kIGntE711ZdHlTsGN2CLuj6mDdo9wF5Fn2BEbDCF/inMT5r9qxXkk
+         8YJZYEat68ayGmgMz0VCOXexi+iK7OIkTVtlKYp8TBbXPP5A5MwnR5Ef20vwdK5p6gX7
+         nGNx/xYWsTgajHv6R53FVm0mx6blhDkq/rHJpSoAud/gvJ0Q1tthIQP7ALUCIdqCim7G
+         2g1A==
+X-Gm-Message-State: AOJu0YyT0+9WVE/YSQDYMD5i0kTlnG9IDYRujQ962FtejCmIiaOBIiHd
+	2VSweV5hhuIolYsKFnf9mWQPFTe9dtWnpInlYK2YSql/7pQxhRRK
+X-Google-Smtp-Source: AGHT+IHbm8awIhdjYHiCpIvNBtR7UHc5iUK6Hej6Jp2EcltsKiTkAz1CZPIYtp1EB9Mm5FDAzbedQw==
+X-Received: by 2002:a05:6a00:1954:b0:705:b284:d65b with SMTP id d2e1a72fcca58-70eceda95d2mr11840330b3a.20.1722352224985;
+        Tue, 30 Jul 2024 08:10:24 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7ee3f74sm102952345ad.142.2024.07.30.08.08.57
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70ead6e0f8fsm8589060b3a.38.2024.07.30.08.10.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jul 2024 08:08:58 -0700 (PDT)
-Date: Tue, 30 Jul 2024 23:09:19 +0800
+        Tue, 30 Jul 2024 08:10:24 -0700 (PDT)
+Date: Tue, 30 Jul 2024 23:10:46 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v13 04/10] fsck: add refs-related error report
- function
-Message-ID: <ZqkCH8BEE1mX9zfP@ArchLinux>
+Subject: Re: [GSoC][PATCH v13 05/10] refs: set up ref consistency check
+ infrastructure
+Message-ID: <ZqkCds6C8adxrrIX@ArchLinux>
 References: <ZqeXrPROpEg_pRS2@ArchLinux>
- <ZqeYm2J1LeXn_1-4@ArchLinux>
- <Zqik3kQivsfetIQj@tanuki>
+ <ZqeYptLyOxAfKwDi@ArchLinux>
+ <Zqik5Lwya6bvxxl1@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,86 +71,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zqik3kQivsfetIQj@tanuki>
+In-Reply-To: <Zqik5Lwya6bvxxl1@tanuki>
 
-On Tue, Jul 30, 2024 at 10:31:26AM +0200, Patrick Steinhardt wrote:
-> On Mon, Jul 29, 2024 at 09:26:51PM +0800, shejialuo wrote:
-> > Add refs-related options to the "fsck_options", create refs-specific
-> > "error_func" callback "fsck_refs_error_function".
-> 
-> We should have an explanation _why_ we are adding these functions in the
-> commit message.
-> 
-
-Yes, I will improve this in the next version.
-
-> > "fsck_refs_error_function" will use the "oid" parameter. When the caller
-> > passes the oid, it will use "oid_to_hex" to get the corresponding hex
-> > value to report to the caller.
+On Tue, Jul 30, 2024 at 10:31:32AM +0200, Patrick Steinhardt wrote:
+> On Mon, Jul 29, 2024 at 09:27:02PM +0800, shejialuo wrote:
+> > The interfaces defined in the `ref_storage_be` are carefully structured
+> > in semantic. It's organized as the five parts:
 > > 
-> > Last, add "FSCK_REFS_OPTIONS_DEFAULT" and "FSCK_REFS_OPTIONS_STRICT"
-> > macros to create refs options easily.
-> 
-> It is a bit unclear to me what you mean with "create refs options
-> easily". Do you mean to say that `git refs check` (or whatever this will
-> be called) will have flags like "--strict"?
-> 
-
-Yes, when the user passes `--strict`, all the warn type will be seen as
-the error type. So I create "FSCK_REFS_OPTIONS_STRICT". However, I
-didn't think too much here. I just followed the way the codebase does
-for the objects.
-
-> > Mentored-by: Patrick Steinhardt <ps@pks.im>
-> > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> > Signed-off-by: shejialuo <shejialuo@gmail.com>
-> > ---
-> >  fsck.c | 25 +++++++++++++++++++++++++
-> >  fsck.h | 14 ++++++++++++++
-> >  2 files changed, 39 insertions(+)
+> > 1. The name and the initialization interfaces.
+> > 2. The ref transaction interfaces.
+> > 3. The ref internal interfaces (pack, rename and copy).
+> > 4. The ref filesystem interfaces.
+> > 5. The reflog related interfaces.
 > > 
-> > diff --git a/fsck.c b/fsck.c
-> > index af61fa90ba..56de29b4c0 100644
-> > --- a/fsck.c
-> > +++ b/fsck.c
-> > @@ -1251,6 +1251,31 @@ int fsck_objects_error_function(struct fsck_options *o,
-> >  	return 1;
-> >  }
-> >  
-> > +int fsck_refs_error_function(struct fsck_options *options,
-> > +			     const struct object_id *oid,
-> > +			     enum object_type object_type UNUSED,
-> > +			     const struct fsck_refs_info *refs_info,
-> > +			     enum fsck_msg_type msg_type,
-> > +			     enum fsck_msg_id msg_id UNUSED,
-> > +			     const char *message)
-> > +{
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +	int ret = 0;
-> > +
-> > +	strbuf_addstr(&sb, refs_info->path);
-> > +
-> > +	if (oid)
-> > +		strbuf_addf(&sb, " -> (%s)", oid_to_hex(oid));
+> > To keep consistent with the git-fsck(1), add a new interface named
+> > "fsck_refs_fn" to the end of "ref_storage_be". This semantic cannot be
+> > grouped into any above five categories. Explicitly add blank line to
+> > make it different from others.
+> > 
+> > Last, implement placeholder functions for each ref backends.
 > 
-> Okay, so we do end up printing the object ID indeed. But wouldn't we
-> want to potentially do the same with symbolic refs?
-> 
-> Also, would it make more sense to put the `oid` (and potentially the
-> `referent` when we also handle symbolic refs) into `struct
-> fsck_refs_info`? Like this, the whole state would be self-contained in
-> that structure, which would also make my proposal from a preceding
-> commit more feasible where the subsystem-specific error functions only
-> get a void pointer to this structure. It would require another
-> refactoring on top to move the object type and OID into a `struct
-> fsck_objects_info`, too, but that shouldn't be too involved, I guess.
+> You're carefully explaining what you are doing and where you are placing
+> the new callback functions. But you never explain why you add those
+> functions in the first place, which I would think is much more important
+> than explaining the placement of the new callbacks.
 > 
 
-Yes, I totally agree here. I didn't consider symrefs here, actually we
-should provide "symref -> referent" message if we have providen the
-"regular ref -> oid" message.
+Thanks, I will improve this in the next version.
 
-I think we should do this. And I have commented on "[Patch v13][2/10]",
-it is a necessity we should refactor this part.
-
+> Other than that this patch looks good to me.
+> 
 > Patrick
+
+
