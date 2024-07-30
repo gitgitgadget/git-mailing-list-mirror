@@ -1,51 +1,50 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFE118A92F
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9A585628
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722353824; cv=none; b=i9+poHsf1O0D2cIGvwGkjkppQ6/BcR3vWbxxyMV3aqO8l9wWrnjDvAWyG7mmhOjKPkAmnNRfogV4IEuoa3oaOMtwQHq+7rD9Q4/vWeKzT9tdbWHBWcBsxRKSQ+909a31sSpzj76PsjdLulQZO5JGlEp+ucmLZ/HS4CpEm7nCLyo=
+	t=1722354343; cv=none; b=bViYpVa4r/pPlFQo4KkZ3vojfa8EN1OoAc5BvDZ2gv8jEbvr7xUt5dh5UBZFo1Q3vNgolbFWKBEiMMKvVIs93v0NHzuyvt1P89tfobMXufpzQnC58n3zsSyykZBQrcFnWn20DhIvb1msR+gJzn4noyi3F6+ZTNvNdUCdvr5K+KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722353824; c=relaxed/simple;
-	bh=XaU7LK6WfhuU7MkArb8GYl/bu78FU0RUjzYiYBf92SI=;
+	s=arc-20240116; t=1722354343; c=relaxed/simple;
+	bh=/rw7T0TwnAsURSzzq3xALgWlYsfPqUXuVujlNdGU1cQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fG6ozZoxlX7wgMWzfnChUhfJVKXGchYdcZjG1kq++A8/VNo9Tp1dVGxdmJuAbQdw4chh/h7W6mc7PtVEW6O4GJH7e8faKVfAguuBAeU3i72U/oAaJu/ykX0z4DTlXgZVaRsUurCWTKQ9OCfTX5vLUy0Ek2UMvv5KsjZSCFHM2FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RYKgEdDs; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=k92v4rdLhVGh7ZkuZuGpUuy/+AU5OcLiBxHMOyWPo6nVzamhdRri8ni3o8DuP+76qw5+H/RIPQ57R3e5fWW5lgg5efapsg41TZVKv+BRb0O+cfX80nrHYTrkrnJAUYgbcFCzPu/ThnPqaWf91ZXI38+sLwv/iX4UD3kcWhtBtTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZaQpU2ON; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RYKgEdDs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZaQpU2ON"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 13B90380F6;
-	Tue, 30 Jul 2024 11:37:02 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id F1CA7381BB;
+	Tue, 30 Jul 2024 11:45:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=XaU7LK6WfhuU7MkArb8GYl/bu78FU0RUjzYiYB
-	f92SI=; b=RYKgEdDsuQ11WdAkmgX/8Anay3GDgNiwpQ9q9aidU5V+JqK51eM+vu
-	VA6yK/c+23lxGWSBhK4RcT+drDz7iavDQhEpNPX2nQnZa/wVxawSv32rgaoWHZeE
-	m0Bba1G+aDEcvyDiJyCfi3URpoXnQGaatRVgEU+Qg4uVCiee4LkCs=
+	:content-type; s=sasl; bh=/rw7T0TwnAsURSzzq3xALgWlYsfPqUXuVujlNd
+	GU1cQ=; b=ZaQpU2ONa+LiorhkWfQrxPTehY6OCo9WDo5+YXiDiv0l/xkk7L2rcI
+	rZ1Ai0TtazP7evhL20nXK7vNb9wzCjQg7e0a3kYqH45k57T6LyUuigEIXuWc7Xz/
+	vaiExWLWLnQuYgyD0Ec0HjAeU5Mk1VUApHGL9D8UWacmANlGTI8qI=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B5BC380F5;
-	Tue, 30 Jul 2024 11:37:02 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EA3A5381BA;
+	Tue, 30 Jul 2024 11:45:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9624A380F3;
-	Tue, 30 Jul 2024 11:36:58 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 76DF7381B6;
+	Tue, 30 Jul 2024 11:45:38 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Sayooj Surendran <sayooj.surendran@bigbinary.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/23] builtin/name-rev: fix various trivial memory leaks
-In-Reply-To: <088f730572f0f5aaa8f9640ea35a4687be9094ba.1721995576.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Fri, 26 Jul 2024 14:14:55 +0200")
-References: <cover.1721995576.git.ps@pks.im>
-	<088f730572f0f5aaa8f9640ea35a4687be9094ba.1721995576.git.ps@pks.im>
-Date: Tue, 30 Jul 2024 08:36:57 -0700
-Message-ID: <xmqqikwmgacm.fsf@gitster.g>
+Subject: Re: Output of git checkout goes to stderr
+In-Reply-To: <CAFGW38fkr+OuhpcyqNFxZNkhNDGPxTbOmCJLVHpCGUmbj05tMg@mail.gmail.com>
+	(Sayooj Surendran's message of "Tue, 30 Jul 2024 11:14:18 +0530")
+References: <CAFGW38fkr+OuhpcyqNFxZNkhNDGPxTbOmCJLVHpCGUmbj05tMg@mail.gmail.com>
+Date: Tue, 30 Jul 2024 08:45:36 -0700
+Message-ID: <xmqqed7ag9y7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,47 +54,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8EDFE6FA-4E89-11EF-9F2E-92D9AF168FA5-77302942!pb-smtp20.pobox.com
+ C4BE187C-4E8A-11EF-9BF0-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Sayooj Surendran <sayooj.surendran@bigbinary.com> writes:
 
-> There are several structures that we don't release after
-> `cmd_name_rev()` is done. Plug those leaks.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/name-rev.c                   | 6 ++++--
->  t/t6007-rev-list-cherry-pick-file.sh | 1 +
->  t/t6120-describe.sh                  | 1 +
->  3 files changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index 70e9ec4e47..f62c0a36cb 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -677,7 +677,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  				  always, allow_undefined, data.name_only);
->  	}
->  
-> -	UNLEAK(string_pool);
-> -	UNLEAK(revs);
-> +	string_list_clear(&data.ref_filters, 0);
-> +	string_list_clear(&data.exclude_filters, 0);
-> +	mem_pool_discard(&string_pool, 0);
-> +	object_array_clear(&revs);
->  	return 0;
->  }
+> Noticed that the output of git checkout command is going to stderr
+> channel. Is this an intended behaviour?
 
-You, originally these "we know we are at the very end of the
-process, so _exit() will take care of releasing the resources" was a
-very much deliberate, and in a sense, cmd_describe() calling to this
-function as the last thing to do was still in the same spirit, but
-it was not a hygiene thing to do.
-
-In the longer term, we would want to make a major part of the body
-of this "main" function into a reusable library-ish function, which
-will be called the desribe and name-rev command implementations, and
-when that happens, these fixes would move together to that
-library-ish function.
-
-Looking good.
+Show messages meant for human consumptions (not just errors and
+warnings, but informational messages and eye-candy progress bars) to
+the standard error stream, and using the standard output stream to
+show what informational commands are asked to produce (e.g. running
+"git status" would describe the status of the current working tree
+to the standard output stream), is very much in line with the
+original design we laid out in 2005 when Git was still very young,
+and continues to be "intended" behaviour to this day.
