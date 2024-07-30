@@ -1,157 +1,123 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D4618800D
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 16:14:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95371183CDB
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 16:22:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356045; cv=none; b=QWlRKBZUsulWiKPgc/8Z2x4ED573WqtcoI+I5NCzcYzwGic8F2QiQ6K0DZoLZSoJZj+L1HUNE4X5fSW2CzcCWUl4qXlQaluJNr/eWNITSK7HZ+OwFTb/Ry/SVgu+Xf3mprEDsft9gU2QDv08D1ZF/AMr69cdZOpK4/oJea8Z0FE=
+	t=1722356537; cv=none; b=T191D+zVjOen1jcAvZ2i4oLCQKzjI7Jy6KjZle0NgDx+A9r+XOXdpGV5hf2pJR+JGEQSoOj7iac8H9rQqCwyPYX/shfvotCAxz8g471mAXqwYZw5dVphAlKWHr5dpcWJpyK3EkJCuusb9hVzia+/9wfwEd+QdGnkEF16X0lfF8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356045; c=relaxed/simple;
-	bh=D/1yMzRLDhZpkql2WGNOY9v+T2brQRi5wN8eJzCZL00=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JQX9yu2lv7F72i0JZPEEKOS/oXty/7w6QA9x+hytHH8hif8Isz5Hp+gOZ5esnSN/4mdTxZomcEggcOH9o/5qexDVPu9mjPu+zoo8w1/MDuRRtRQJYwbI3bHiNlPt7NMxI2zEs2qzQnzc72uHEj5yCdy4nUEkTcuINgtUE3I9OIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i1MaOX/+; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722356537; c=relaxed/simple;
+	bh=+WvSQQqBWbPiqt2oE+69etHDTua+3otMlaFvtOIOPUo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ia36xR/wZAuMsDlBdDob3np1MM4GX9dRdwN7vkFQ8334D3/j/OEiVivwvfJd66wDgCihhNEI3cwu+g+L19DG37QR9F7UJm/FtZKEPcrXJ3nq5OyhMk9UQSvquSRgdxQGjeUeQuu4S/BsnQl4pracHHdxbXSIPNMeunIaXEni0kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W64wvrwu; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i1MaOX/+"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70d25b5b6b0so3341446b3a.2
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 09:14:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722356043; x=1722960843; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9GdHhtfvdvlfgf29QwasTBou2uTJ4LyIivXLI0lePkg=;
-        b=i1MaOX/+rOSoO5Eq8x80LFHYcvtRM13DLsWirBcHXmcVoSpiivQsuRSBo/WtPOaYnQ
-         aLZn77+OePBnb9RN5lf50elRLVUqDLnkxvyCzo04uk4kdon9/WHbf/TQeTOGTeY0j4/m
-         03mHg2E2EDQ7oCC0wDp27vA3g4BPmGxrXFfE/XPjJaZWTEHowtEf+NZXofmtyYvnnbFz
-         zAlzjrSgh4wT44RllSRPj/hlUi08OmTO2ielzHWrIW9jchhsgssHXesDlGv9CkqFINCI
-         xtmBUSht8QFxx5bnAYpx9mZaRJvTo9E01VpGlIQBaJs6l6OotvLBS2u+8b7J38oqIck9
-         hwUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722356043; x=1722960843;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9GdHhtfvdvlfgf29QwasTBou2uTJ4LyIivXLI0lePkg=;
-        b=wpis1nO8BUMvmmi4Y8veEbkbPl0bGPpZpy+X220mtDDO7L8FrE2mYaVHrwX9uJP+9r
-         8AOemRDfbkOJmFwRQ+cXid7u2tVfzz/wqAiiY78zvUpkSsphS1MC9cjIDVOTcdUKIyGO
-         J/CvfzaD9k8ME+r+JbUuFPxJYHOCHtFqOirufcJxHYzLAk9U9qBUd7lRzIv1nYy2D/e9
-         7pqM4w3nkzk5U0oiNJ6eswT3QBeUrrquSh2JC81IgKmdMV0Zh6XP7fYpcb577LM5oBt9
-         1h9MFDnt+jpMBh8Vt2i/WA9G6gkB/nwojaj5AObc5xiWGN06zSU8qBPeqIJLoiFQNkHP
-         CtAQ==
-X-Gm-Message-State: AOJu0YweZ23yh7F3tezpdH9ntl/rUYwm4hoo5ZxBWhEoBXA+a0m1B527
-	FJatjr8NnyhxTBvIGpwGxVtVP8M0aNvWtL1/TTm+eeT69fzyHNnG
-X-Google-Smtp-Source: AGHT+IHwuzczgBodfP94/kOZQbr+ABIcwDDJOBLdlxvySmjsmVUW6ylbxjjGfsrinRQINwhIsSFPPg==
-X-Received: by 2002:a05:6a21:7891:b0:1c4:6a86:e40d with SMTP id adf61e73a8af0-1c4a13a33edmr11482313637.38.1722356043297;
-        Tue, 30 Jul 2024 09:14:03 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70ead6e122esm8894087b3a.14.2024.07.30.09.14.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jul 2024 09:14:02 -0700 (PDT)
-Date: Wed, 31 Jul 2024 00:14:24 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v13 09/10] fsck: add ref name check for files
- backend
-Message-ID: <ZqkRYLlqtE9tgyDF@ArchLinux>
-References: <ZqeXrPROpEg_pRS2@ArchLinux>
- <ZqeY0eHNZjKhNvIH@ArchLinux>
- <Zqik9EOKd43WxGXp@tanuki>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W64wvrwu"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D4D83871C;
+	Tue, 30 Jul 2024 12:22:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+WvSQQqBWbPiqt2oE+69etHDTua+3otMlaFvtO
+	IOPUo=; b=W64wvrwu2HO3vqx4lU5bX5103YdtUM7pqwgnKwKMmeGXYoQrndNy8J
+	O83f+tASlqhbqy0zXAgRdSzgSihS6InIV+vcUuHvmJchnA6wnxmlZK7mn9fw5IEv
+	X8fpegqbcayJc2sSdIFZfVsGDpc833RuMClwCX7Qv8DMHukZlgVEs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 267413871B;
+	Tue, 30 Jul 2024 12:22:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A20C43871A;
+	Tue, 30 Jul 2024 12:22:11 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 2/3] safe.directory: normalize the configured path
+In-Reply-To: <20240730074307.GB562212@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 30 Jul 2024 03:43:07 -0400")
+References: <20240723021900.388020-1-gitster@pobox.com>
+	<20240720220915.2933266-1-gitster@pobox.com>
+	<20240730011004.4030246-1-gitster@pobox.com>
+	<20240730011004.4030246-3-gitster@pobox.com>
+	<20240730074307.GB562212@coredump.intra.peff.net>
+Date: Tue, 30 Jul 2024 09:22:09 -0700
+Message-ID: <xmqqv80metou.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zqik9EOKd43WxGXp@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DFFA71BC-4E8F-11EF-A51C-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-> > diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> > new file mode 100755
-> > index 0000000000..b2db58d2c6
-> > --- /dev/null
-> > +++ b/t/t0602-reffiles-fsck.sh
-> > @@ -0,0 +1,101 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='Test reffiles backend consistency check'
-> > +
-> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> > +GIT_TEST_DEFAULT_REF_FORMAT=files
-> > +export GIT_TEST_DEFAULT_REF_FORMAT
-> > +
-> > +. ./test-lib.sh
-> 
-> Is this test suite intentionally not marked with
-> `TEST_PASSES_SANITIZE_LEAK=true`?
-> 
+Jeff King <peff@peff.net> writes:
 
-No, I don't know this. I will add `TEST_PASSES_SANITIZE_LEAK=true` and
-export this environment variable.
+> On Mon, Jul 29, 2024 at 06:10:03PM -0700, Junio C Hamano wrote:
+>
+>> @@ -1236,14 +1236,43 @@ static int safe_directory_cb(const char *key, const char *value,
+>>  
+>>  		if (!git_config_pathname(&allowed, key, value)) {
+>>  			const char *check = allowed ? allowed : value;
+>> -			if (ends_with(check, "/*")) {
+>> -				size_t len = strlen(check);
+>> -				if (!fspathncmp(check, data->path, len - 1))
+>
+> BTW, one oddity I noticed in the existing code:
+>
+> Under what circumstances will "allowed" be NULL in that ternary? I think
+> if git_config_pathname() returns non-zero, then we called
+> interpolate_path(). It can return NULL, but in that case
+> git_config_pathname() will die(). We might change that later, but then
+> I'd expect it to return non-zero. So I suspect the whole "check"
+> variable could just be dropped in favor of using "allowed".
+>
+> Obviously not new in your patch, but maybe worth fixing while in the
+> area? I think it comes from an evil merge in b8bdb2f283 (Merge branch
+> 'jc/safe-directory-leading-path', 2024-06-12).
 
-> > +
-> > +test_expect_success 'ref name should be checked' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	branch_dir_prefix=.git/refs/heads &&
-> > +	tag_dir_prefix=.git/refs/tags &&
-> > +	(
-> > +		cd repo &&
-> > +		git commit --allow-empty -m initial &&
-> > +		git checkout -b branch-1 &&
-> > +		git tag tag-1 &&
-> > +		git commit --allow-empty -m second &&
-> > +		git checkout -b branch-2 &&
-> > +		git tag tag-2 &&
-> > +		git tag multi_hierarchy/tag-2
-> > +	) &&
-> 
-> I don't quite get why you create several subshells only to cd into
-> `repo` in each of them. Isn't a single subshell sufficient for all of
-> those tests? If you want to delimit blocks, then you can simply add an
-> empty newline between them.
-> 
+I think it deserves to be a separate change, probably a preliminary
+clean-up, as it predates that by a few years, and goes back to the
+initial introduction of the safe.directory feature.  The merge you
+found had this bit:
 
-I just want to delimit, I will use newline in the next version.
+diff --cc setup.c
+index e47946d0e7,4c5de0960b..e112545f71
+--- a/setup.c
++++ b/setup.c
+@@@ -1230,13 -1176,21 +1230,20 @@@ static int safe_directory_cb(const cha
+  	} else if (!strcmp(value, "*")) {
+  		data->is_safe = 1;
+  	} else {
+- 		char *interpolated = NULL;
+- 
+- 		if (!git_config_pathname(&interpolated, key, value) &&
+- 		    !fspathcmp(data->path, interpolated ? interpolated : value))
+- 			data->is_safe = 1;
+- 
+- 		free(interpolated);
+ ...
 
-> > +	(
-> > +		cd repo &&
-> > +		cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
-> > +		test_must_fail git fsck 2>err &&
-> > +		cat >expect <<-EOF &&
-> > +		error: refs/heads/.branch-1: badRefName: invalid refname format
-> > +		EOF
-> > +		rm $branch_dir_prefix/.branch-1 &&
-> > +		test_cmp expect err
-> > +	) &&
-> > +	(
-> > +		cd repo &&
-> > +		cp $tag_dir_prefix/tag-1 $tag_dir_prefix/tag-1.lock &&
-> > +		test_must_fail git fsck 2>err &&
-> > +		cat >expect <<-EOF &&
-> > +		error: refs/tags/tag-1.lock: badRefName: invalid refname format
-> > +		EOF
-> > +		rm $tag_dir_prefix/tag-1.lock &&
-> > +		test_cmp expect err
-> > +	) &&
-> 
-> The other cases all make sense, but I don't think that a file ending
-> with ".lock" should be marked as having a "badRefName". It is expected
-> that concurrent writers may have such lock files.
-> 
-> What could make sense is to eventually mark stale lock files older than
-> X amount of time as errors or warnings. But I'd think that this is
-> outside of the scope of this patch series.
-> 
 
-If so, let us just ignore ".lock" situation at the moment.
+Notice that in the original, the code is prepared for the case where
+interpolated is NULL when fspathcmp() needs to use it or value,
+which is when git_config_pathname() returned 0/success.
 
-> Patrick
+It came from 8959555c (setup_git_directory(): add an owner check for
+the top-level directory, 2022-03-02) that introduced the
+safe.directory feature:
+
++		if (!git_config_pathname(&interpolated, key, value) &&
++		    !fspathcmp(data->path, interpolated ? interpolated : value))
++			data->is_safe = 1;
+
+where it shared the same assumption.
