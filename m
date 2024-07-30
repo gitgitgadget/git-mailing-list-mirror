@@ -1,85 +1,149 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975BE18CC1E
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:55:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15A618DF62
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 23:05:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722380144; cv=none; b=nMiYcwi/s6JrdGnFZ6BCD6j4EFEW/p19+Bzbh2jBel9emURnh95dSf7RT2I5RPJKWlSj4vemL92EOpj9WvEXzwd7X2hJZYhdMQt25GOmiPKlTaS0p6JUg7F0boJe/pZNEqmFh/S3P2DjLeuDx3UjlTMHcOhCA1+kClFbQ58GyOs=
+	t=1722380730; cv=none; b=M0eyU8I+/AfHaF389RW4VHtgHY0FsxC9qY+kzYvfWpLiOY373WUxJT/oTLz2tGO96pIsF1SFZ87Jd1g+zsflng0EHB6axbhxCEMurPfDmWmbQxn6C2xFhKpGw3+rt2PJwFWSi0v8BclWECIhSNpU3sO/LsfLPoHV5LCwyrVp7nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722380144; c=relaxed/simple;
-	bh=GzaULOlzwrCADHb8BMzLsw5itkc/xhNPjmkK31CYr1U=;
+	s=arc-20240116; t=1722380730; c=relaxed/simple;
+	bh=mp1IIfxZ6lp7uPJwwFLSuceFNNrM1dn0MqKrdcnYc5w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aXg4jHlZYIC+N9ScvZcq02w0NRxFqo6PVa2T+6ORAuZRPQypKQYQJNRLnDmnGsYZOhPN7MuNnP3BbOPZwc2KEW4FYT2AJq/g80i3k3McnXS/SDI9Dx/cG4nNZ6CNcZA8PMPTrpfxH2em6emVRzZQ+6ZqquxBodD4FWytBxPwwfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d8PbUXdF; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=JWL62JVrEJ+KwLvx74HHnicHzBLzsKubY4Kaoy2P/eWdfdlnxy0PUReuvwTXlOssCpaz9kzauS69E8cvH/JBa6zDEM22OG1f+EUERIOgvwzvJaK1CeaAZ8TzI4PxHGElcnx4hUKPvYZGn7bxyO71iYXCNh76EEBWc6T7PtACto8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Y51VKUBn; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d8PbUXdF"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3dab336717fso3472760b6e.0
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:55:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722380142; x=1722984942; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=amBz1weOKLLA6PuIJD85N+K6+NlonQZVmzCJ00yABKE=;
-        b=d8PbUXdFCONPuBzyrfEB0AGJlYeGHPPwuGN/YTlp8wECKJWnrRrF8JxN2PnH7uupzG
-         clqpzy5UDgRSWZe0BmWRQ1AqebAFeJrtPMfR9Ct1ANGJasORDTw9uhqap8BvjDQMBZTf
-         Ul6kol1Hz313qIiqZCj3dq2NN2e9dpA8FgFvaG2oaXQyBQtgUvY88+IyjQolSKS0ugHG
-         gp1p2LF1jgY4jnuHBZks8sheE/HDQAQfSMwjCPAHa/B2FnLRCn+s1TlgA87A6au624DK
-         1xaHDKC+sLGmK3+FdyKH9iOueFrTKBLTMhi8k3TaxTjyQUIldzWfNUp/X6PbqkBqZ4ex
-         4G4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722380142; x=1722984942;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=amBz1weOKLLA6PuIJD85N+K6+NlonQZVmzCJ00yABKE=;
-        b=vFlrreP1x+vXVMjhCk52XjTLkUvmJqToYKqpPMgYleHaniSKr4cTTl7wwm+vsUnOw0
-         FQPbIsx++UQ5MC6sYFV0ccZXSmMiDSVzvSOgtWVBgh43YWqdkO1itLQdkUcRrModWwEd
-         ruu8qBgz9mtrqRQ7T6Of6QzInVv7vmrAbPcCzSzjuE5qBx/ZnEXmJefRh+XrrL7QFXIj
-         baxzxFCuRS62CZKJsyDyqy19YH+vesHLTn1HekV/ZR4JfGtsdjBUg7F+gGKP24yDuYrJ
-         sCAfXwtBgvR7/7YkEsDSUF2el//o8USFruaUw8w6wVYbd+3lELAvgh1h/pHEs2z9RBen
-         EllA==
-X-Gm-Message-State: AOJu0Yzuu7ZdwRLCCYPKuOvXl1LHsy+g9KE093jSlszxz9Xx+IvBQnX9
-	VieHw07G67tk0OMswY/oJMp3hNfS0N5MFHptjXxd2GWjjbYepSxXWv8SFA==
-X-Google-Smtp-Source: AGHT+IHq2iJhY/e1Bw3Be8d3NNXmhyFB17TsmkkS/PKP2K1sldQRdioIOWbvFQu+LCoqnoL9dAqw+A==
-X-Received: by 2002:a05:6808:1589:b0:3d9:2f59:c0d5 with SMTP id 5614622812f47-3db2389908dmr15825855b6e.19.1722380141560;
-        Tue, 30 Jul 2024 15:55:41 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3db41ff7297sm474103b6e.37.2024.07.30.15.55.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jul 2024 15:55:41 -0700 (PDT)
-Date: Tue, 30 Jul 2024 17:54:59 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] t98xx: mark Perforce tests as memory-leak free
-Message-ID: <rid2hs3dx77k5gkvxmhjyaramar7dces5ml6blxwu2tkqfh3x5@3fttesbincxm>
-References: <cover.1721740612.git.ps@pks.im>
- <d0a80ba403a59d2d3f05b8336f229ff27caaa9d3.1721740612.git.ps@pks.im>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Y51VKUBn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1722380726;
+	bh=mp1IIfxZ6lp7uPJwwFLSuceFNNrM1dn0MqKrdcnYc5w=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Y51VKUBniAiyZ4Nf1ELw+PrYRzg4IS4NOcO9wIcywRlqjqmivEF+ZKuBvzFaeybTV
+	 u8IMXoYFqeVFk1CDr3LJT0CZY1/MiOQGTqza9hOGkLKBMB5TLvoEvyIokT/5kHD2+F
+	 uKdgiwFrmiAtjtC6edI+RQwbCL6UdzzxQ/yNxIQvuxkkJZ8KMb4lvIfuVkoczQRkMe
+	 a4BDBaZsHkQioOHZ+hhMcGUylN+DvkxumPeOS8zpx7L/su6XLQ598/QZN0fTXNs7g/
+	 l7/dW2JvNOZwZSgYXDDl5193PUCfaOrWzBAf3aUFZPJkkpFZp3qJUSEyGkxL9+JqnB
+	 r6oI67DOUJNtTS6k9VN0p5sQnvR35h5kN6S1n+GE7lNHA+IUodN0LbTsOnTuPPffdl
+	 q5h/dilKanu8kNAMn7w8w75nois8Lo/ld+b18o6HQ6uUII9lVvseb/bVHJ/nRsxaq1
+	 P5YOTlw3Aez/uOS6KzFmlR+oo82dFa7jFOz4MbrTJeM7X3EUCQL
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 70153209B9;
+	Tue, 30 Jul 2024 23:05:26 +0000 (UTC)
+Date: Tue, 30 Jul 2024 23:05:24 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "W. Michael Petullo" <mike@flyn.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+Subject: Re: Git clone reads safe.directory differently?
+Message-ID: <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"W. Michael Petullo" <mike@flyn.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+References: <ZqUc8DJ1uKcHYlcy@imp.flyn.org>
+ <20240727215845.GA1263246@coredump.intra.peff.net>
+ <ZqZjRMqpEV_3WIkD@imp.flyn.org>
+ <20240728224807.GA1299337@coredump.intra.peff.net>
+ <ZqjQi6i2kiY4gcc1@imp.flyn.org>
+ <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
+ <xmqqv80m8pha.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pcvbZCCJ8neKCFUK"
 Content-Disposition: inline
-In-Reply-To: <d0a80ba403a59d2d3f05b8336f229ff27caaa9d3.1721740612.git.ps@pks.im>
+In-Reply-To: <xmqqv80m8pha.fsf@gitster.g>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-On 24/07/23 04:05PM, Patrick Steinhardt wrote:
-> All the Perforce tests are free of memory leaks. This went unnoticed
-> because most folks do not have p4 and p4d installed on their computers.
-> Consequently, given that the prerequisites for running those tests
-> aren't fulfilled, `TEST_PASSES_SANITIZE_LEAK=check` won't notice that
-> those tests are indeed memory leak free.
-> 
-> Mark those tests accordingly.
 
-Nice to have more tests marked off the list! To me, it makes sense to go
-ahead and mark these tests as leak free even if we end up getting rid of
-them in the future. Thanks
+--pcvbZCCJ8neKCFUK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+On 2024-07-30 at 22:49:37, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > I think if we're using --no-local (that is, if we're using upload-pack
+> > instead of creating symlinks), then we should not complain about the
+> > repository ownership.  It's supposed to always be safe to clone or fetch
+> > from an untrusted repository, and we shouldn't complain about that.
+>=20
+> The safety is promised by "git fetch" when you fetch from some other
+> machine because the only thing you will be seeing from that
+> untrusted source is a bytestream that is the packfile, plus the tips
+> of their histories---nothing runs as yourself in this exchange other
+> than what you control, i.e. "git fetch", locally defined hooks and
+> filters defined by your configuration..  They cannot affect your
+> configuration file and hooks that may name extra programs that may
+> run as you while fetching or cloning.
+>=20
+> When you are using "--no-local" on the same machine, I do not think
+> there is any guarantee that "upload-pack" side is safe.  And that is
+> where the safe.directory thing needs to kick in.
+>=20
+> Stepping into an untrusted repository and running git operations
+> opens up the user the Git process runs as to attacks by the
+> untrusted repository, i.e. you may invoke hooks on the upload-pack
+> side, defined in the source repository that is controlled by others,
+> and that is where the safe.directory thing kicks in.  You need to
+> declare that you trust that source repository.
+
+I don't believe git-upload-pack invokes hooks.  At least, I don't see
+any documented to do so, and I'm not aware of any from my experience
+hosting repositories.  Certainly git-receive-pack does so, which I can
+understand as a problem, but upload-pack should not.
+
+And the manual page does say this:
+
+  Most Git commands should not be run in an untrusted `.git` directory
+  (see the section `SECURITY` in git(1)). `upload-pack` tries to
+  avoid any dangerous configuration options or hooks from the repository
+  it's serving, making it safe to clone an untrusted directory and run
+  commands on the resulting clone.
+
+The git(1) manual page also says this:
+
+  If you have an untrusted `.git` directory, you should first clone it
+  with `git clone --no-local` to obtain a clean copy. Git does restrict
+  the set of options and hooks that will be run by `upload-pack`, which
+  handles the server side of a clone or fetch, but beware that the
+  surface area for attack against `upload-pack` is large, so this does
+  carry some risk. The safest thing is to serve the repository as an
+  unprivileged user (either via git-daemon(1), ssh, or using
+  other tools to change user ids). See the discussion in the `SECURITY`
+  section of git-upload-pack(1).
+
+I think that has been traditionally the policy that we've had here, and
+given that we document that it is safe to do so, I think it should be
+fine.  This documentation apparently came from Peff, who I think should
+be reasonably well informed on such matters.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--pcvbZCCJ8neKCFUK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZqlxtAAKCRB8DEliiIei
+geCZAP41KUqMAmI91LYupInP/rOaXaHuftr5FFjvGm1Uz7SaIwD/ds06o73Y6C47
+79y9gGE7SQKJ69iNcK4Q6OWrTAYFmQw=
+=FZa3
+-----END PGP SIGNATURE-----
+
+--pcvbZCCJ8neKCFUK--
