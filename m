@@ -1,82 +1,83 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E2116B3B7
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A394190496
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722324277; cv=none; b=jUmsQeX5pkriCvCvqZtm9VvYUwHKkLxDOYNsCvrE8HZImQtEbw7bgtkv3X9CoiM/yJVZWRbONbzsvj4EZshpTWX2dsQlZxg3Ww1cK5EB44ybYE1BWNr6SgQ5zar2rK7bUCx2epMollOXJpD1SQGUwCTFjYUaP3Rt6IMQ0XyMxXQ=
+	t=1722324280; cv=none; b=nKhj1IhkUTWHAAdI6Nn2kPQtW1AzLclxr+ek3NRgQidDntYbkovz6+6K6DqjqSuEkTbJBv7tLAHqaeeuVG+DVH2+fIx7jjQy66c6pdIOw0BftT1Sdik/ByO++evYOM/TpBDWE1g0Pc8tNysnnE1fOcYiPbowz3+4GpWcyl3iEbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722324277; c=relaxed/simple;
-	bh=QcsBtmnzLgugl8V3EWXrFSOZ396uz7zoxaXlCNraEf4=;
+	s=arc-20240116; t=1722324280; c=relaxed/simple;
+	bh=GgLpQoRv7Fx21M1XDEgGZzZUV/9xyDuQmC82RwPD8ws=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QmNSN1J/hENtzOZ6c8Mf0xRILCS8TY4acFFmgUIfgRXPEWoW1IDze+CzmgJo5laeptWLjK+nvACDobSJ5VzQQK2yFPYGkCfEbzDv3Bi//8hi0DSc/vcVPU5JpKkbyGqBno7Hfezxxq40yTePOPY+1DIJlrf+clwTTBQce2KgNeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H3hPiibG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cgjDksNj; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=iG4blkOEDBTJDMtSL7VlHQlgXJQi0M78SciijZEkLymXkTzADLFI5hkJ9stO6dm6EVzWbII+BRyn+dXCF4NBRMLh55nel2UVwaWWzwbZiv7ec5o4aTTLTd9HUQlXbiNDr2aWsNVCeNyh09iVQoiIQXXHzbGlp+VbBu8z1mNFCPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9/whRTR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Plzq7px9; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H3hPiibG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cgjDksNj"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 3C0F1138079D;
-	Tue, 30 Jul 2024 03:24:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9/whRTR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Plzq7px9"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 75DD513807B8;
+	Tue, 30 Jul 2024 03:24:37 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 30 Jul 2024 03:24:34 -0400
+  by compute5.internal (MEProxy); Tue, 30 Jul 2024 03:24:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722324274; x=1722410674; bh=FsMrbLRZ6+
-	P841hZ1xX1eBSz3rhqz198w4DZP2+SJGw=; b=H3hPiibGHRswU1pStSeJwyT00i
-	jWdz7k0gyNULTrtNJ3/gztECxoGE0lGD0fcoUJTAVNIT4SGzwbhoZzzHhw634zmz
-	J/RWXAnB1HFJyupR/vm88iUjLoUvF/Gsft+zcv9sV6F+y29GmTYb1glwaHqFshNp
-	1f0sxpT9N/KyZQPANBz13NFpDKfCIwLCfDtXC+KXJuioXN63hxxI47veeuW3/0Fq
-	VTy1zo8qY7EMUtPQ1xc6EOoc8YgJ5YWk1pCVuPRuZRI7kInSVIY57/b1+tNI6Rti
-	oH7lzOYqD92/EAnGX2j641OTrtVTZ/IB+fplhfytEhHRaw+F5D7H/P/tFSBA==
+	:subject:to:to; s=fm3; t=1722324277; x=1722410677; bh=YhklpRPYhG
+	tG/gtSI4jjNDmA5UEWNtTwK3lJxQGV318=; b=L9/whRTR1jk0p43bmUFhePdRJ5
+	q8nGYCcPqjoxLqXUflFS6+1WzxpOb5rghiW2GPXj8XumjuaXWtx7u6ZMRyGhSCpe
+	9hKE/cPHjmeKsQjF6/burde1nMoxzNPrOIaf2g3nzN0R88/iscG6YHag2fyQQ2AC
+	HQIRm764TRIJWJHuuzelFcGQQJwF62xXsmORA25D+xuazD1tQRPLGJcyYzXWGLcv
+	sM5yRherRdvlX4i2WAEOadAk+CZEoM/cNj6qO4v/VPNf2xOX+nRDH/RbAw/fH6F8
+	yRv1PTH3xLQ3DBqiO0uxUOAYNSUgS1raGeYOjhk3orA9x1r0Ha7ANw0GZykQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722324274; x=1722410674; bh=FsMrbLRZ6+P841hZ1xX1eBSz3rhq
-	z198w4DZP2+SJGw=; b=cgjDksNjlM8VHM2scQ3AuRoCglpFyPfzX+zaCdUFkW7o
-	R53Nv8WeSLASbjVfqtmIFo92Tn9TkekeXW6qTABCXerOP8Bp6YztbrQ15U9yEfTV
-	qYfVsd/tc2JNwarvs2s3VjUbGYgmF1XCfX1rbkKDyQWTZZA7ij8iJ/viMGqk/xqA
-	OvB+x7P1kwiCL9aZ9X2Tvsa18pp/apsKvaljmd84s/Hp1t8qV1vDXUnoH8CwsEtO
-	XAaZWRe6lmMkExdX9yrUJUwsGiJH5Sz6LoWxgnFrHznsP32Wa+49Qp4CrkqroM8Y
-	oKMSukOyTI8npfevZC6fQMnjrd708Kg5zdqXTHt1ZA==
-X-ME-Sender: <xms:MpWoZnGmONumx1v3auxGE4-pHSlGTFlU_dlV4GNvaSvW-8YWqUGcaA>
-    <xme:MpWoZkWAyvIpbkN3GrhW5EaFs1Ylai0R5cUR0-E-50RFc5RKzJc0uJpqXY7j_Ab4v
-    TSnQ6_5SsEFhMkwSA>
-X-ME-Received: <xmr:MpWoZpLzclzMysT3hr03Kbqrw_Td9NNJ6NDVP5jMfnoMAR6CDTynH718es5PjXdKq1g4uTkrEh4LaDr9hIklagjBXGAZoIUSUlhMo-pVem5QLMo>
+	fm3; t=1722324277; x=1722410677; bh=YhklpRPYhGtG/gtSI4jjNDmA5UEW
+	NtTwK3lJxQGV318=; b=Plzq7px93S1qbH/1qvcy3ooBHQZ98P2vsKH9c6rtAaJv
+	ZUepqVVzUCibIq2viXedxN+EsTntg0d5qoAjD5EFpqaZjPI2jZM3kN1cbj9BWY9y
+	vimu5YbieuTH5blb4/PT5gvCrfyGrwNAoNuuo/jL9AXdNLcDyjOAgJ6eRSPYEtjD
+	i1zABI4PmdJsoK3BPhU0eSxTV/uVKYzKruP6L1qp7mn1bprXHzn76AtfsY2st0rD
+	gnsy0/hkUP19RJhCmsFixKnb1x4+JaRa2K63Ohf6ueS1SmorCfIrIh11VQmnRvSi
+	sHKJlTufrQLe/UXcFX315IWGcs0mLb1ILj6xs8VUHQ==
+X-ME-Sender: <xms:NZWoZuPrv77CqzMbocEphAdgdgnbeBbqjSGWkXe881dgvXiQ2MOQ2A>
+    <xme:NZWoZs993zy2zBlNsK13-ZAEtAVt3cF5em3xcXatmm512z8Yl6tDM_skj0ZRczdaJ
+    sp-etS1Eweft4fJOQ>
+X-ME-Received: <xmr:NZWoZlTjZCrxrah6bhJg0UqYE-VwP_z7y6sL8C8vyQudlBg5J6uSPqCc6xhOgjEi6iadaOR7nqmrT5JtiUwRD5bh47-MIMFAu4qu6YqJ4iA5bro>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeefgdduvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
-    pedt
-X-ME-Proxy: <xmx:MpWoZlFNQg8fDz28DiPlhj_OS8ooiKo9ydFDtTMggA4JfBxaNRHfOw>
-    <xmx:MpWoZtV1odHnK90H1qwmnRx6h5IL5HMH1fyGHE8h6UmX5dQaThhFaQ>
-    <xmx:MpWoZgMm3ygkNw66E2ZRRlnqgKuHxBL1Liudl2YCCnhMQfcWKXFHnw>
-    <xmx:MpWoZs1yi_rr325VRnNUuoHD_T0g0-zM8_U8SnuhfAfBE1E4KhOU1w>
-    <xmx:MpWoZjyu2Sd8R_0H97OywDGrZCtkMlAQfTuucckniL_sUtk-NWxT5jTq>
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:NZWoZuuuhV-rF5a7ENrcpnkb5MsYVqQldMILbThTgkuyS6kRTQ0QIQ>
+    <xmx:NZWoZmdg-g3TECNNHSUFjQN8Kh6sd_6M4nJEaW23C3PyRv8nOJkuXw>
+    <xmx:NZWoZi0yEphjV2nVgBM08Qs0estLb7PXMXM7LZ3I4KWh3_3pU6RVmA>
+    <xmx:NZWoZq9c7dKo5DylojcDq5pYag_a4Nx-tSu-RN4TOL4rP8QcqjTdEg>
+    <xmx:NZWoZl4yZghaXEM1K3stdCdEOe0R5KmZUxZ6Eol6in46j-D0gpuoac_m>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jul 2024 03:24:33 -0400 (EDT)
+ 30 Jul 2024 03:24:36 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 2587c0b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jul 2024 07:23:04 +0000 (UTC)
-Date: Tue, 30 Jul 2024 09:24:29 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 7867fbe2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jul 2024 07:23:09 +0000 (UTC)
+Date: Tue, 30 Jul 2024 09:24:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 0/5] Documentation: some coding guideline updates
-Message-ID: <cover.1722323818.git.ps@pks.im>
+Subject: [PATCH v2 1/5] clang-format: fix indentation width for preprocessor
+ directives
+Message-ID: <c33ad700d68b5d8b5940dd803d116ec19bb75c7e.1722323818.git.ps@pks.im>
 References: <cover.1721818488.git.ps@pks.im>
+ <cover.1722323818.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,241 +85,80 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7uFPh7fhbOQmwpnW"
+	protocol="application/pgp-signature"; boundary="PiIqS2Oi0FOyPqb0"
 Content-Disposition: inline
-In-Reply-To: <cover.1721818488.git.ps@pks.im>
+In-Reply-To: <cover.1722323818.git.ps@pks.im>
 
 
---7uFPh7fhbOQmwpnW
+--PiIqS2Oi0FOyPqb0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+In [1], we have improved our clang-format configuration to also specify
+the style for how to indent preprocessor directives. But while we have
+settled the question of where to put the indentation, either before or
+after the hash sign, we didn't specify exactly how to indent.
 
-this is the second version of my patch series that aims to improve our
-coding guidelines such that we arrive at a more consistent coding style.
+With the current configuration, clang-format uses tabs to indent each
+level of nested preprocessor directives, which is in fact unintentional
+and never done in our codebase. Instead, we use a mixture of indenting
+by either one or two spaces, where using a single space is somewhat more
+common.
 
-Changes compared to v1:
+Adapt our clang-format configuration accordingly by specifying an
+indentation width of one space.
 
-  - Fix clang-format to use a single space to indent preprocessor
-    directives instead of using tabs. Thus, this series is now built
-    with kn/ci-clang-format at 1b8f306612 (ci/style-check: add
-    `RemoveBracesLLVM` in CI job, 2024-07-23) merged into v2.46.0.
+[1]: <20240708092317.267915-1-karthik.188@gmail.com>
 
-  - Adapt the coding guidelines accordingly to also only use a single
-    space for indentation of nested preprocessor directives.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ .clang-format | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-  - Adopt a proposal by Junio to more clearly spell out the relationship
-    between a subsystem `S`, `struct S` and its functions `S_<verb>()`.
-
-  - Document `S_clear()`-style functions. I have adopted the proposal by
-    Junio hear, where `clear =3D release + init` with the restriction that
-    `S_init()` must not allocate any resources.
-
-  - Add another patch on top that makes variable initializers consistent
-    in our coding guidelines. Our style is to add spaces between the
-    curly brace and the initializers (`struct foo bar =3D { something };`).
-
-I think I captured everything that came out of the discussion, but
-please let me know in case I misinterpreted or forgot anything.
-
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (5):
-  clang-format: fix indentation width for preprocessor directives
-  Documentation: clarify indentation style for C preprocessor directives
-  Documentation: document naming schema for structs and their functions
-  Documentation: document idiomatic function names
-  Documentation: consistently use spaces inside initializers
-
- .clang-format                  |  6 +++--
- Documentation/CodingGuidelines | 48 +++++++++++++++++++++++++++++++++-
- 2 files changed, 51 insertions(+), 3 deletions(-)
-
-Range-diff against v1:
--:  ---------- > 1:  c33ad700d6 clang-format: fix indentation width for pre=
-processor directives
-1:  64e0b44993 ! 2:  e3baf01234 Documentation: clarify indentation style fo=
-r C preprocessor directives
-    @@ Metadata
-      ## Commit message ##
-         Documentation: clarify indentation style for C preprocessor direct=
-ives
-    =20
-    -    There has recently been some discussion around how C preprocessor
-    -    directives shall be indented [1]. This discussion was settled towa=
-rds
-    -    indenting after the hash by two spaces [2]. Document it as such.
-    -
-    -    [1]: https://lore.kernel.org/all/xmqqwmmm1bw6.fsf@gitster.g/
-    -    [2]: https://lore.kernel.org/all/20240708092317.267915-2-karthik.1=
-88@gmail.com/
-    +    In the preceding commit, we have settled on using a single space p=
-er
-    +    nesting level to indent preprocessor directives. Clarify our coding
-    +    guidelines accordingly.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    @@ Documentation/CodingGuidelines: For C programs:
-       - We use tabs to indent, and interpret tabs as taking up to
-         8 spaces.
-     =20
-    -+ - Nested C preprocessor directives are indented after the hash by two
-    -+   spaces per nesting level.
-    ++ - Nested C preprocessor directives are indented after the hash by one
-    ++   space per nesting level.
-     +
-     +	#if FOO
-    -+	#  include <foo.h>
-    -+	#  if BAR
-    -+	#    include <bar.h>
-    -+	#  endif
-    ++	# include <foo.h>
-    ++	# if BAR
-    ++	#  include <bar.h>
-    ++	# endif
-     +	#endif
-     +
-       - We try to keep to at most 80 characters per line.
-2:  7f07bf1f3b ! 3:  25f73b970d Documentation: document naming schema for s=
-truct-related functions
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## Commit message ##
-    -    Documentation: document naming schema for struct-related functions
-    +    Documentation: document naming schema for structs and their functi=
-ons
-    =20
-         We nowadays have a proper mishmash of struct-related functions tha=
-t are
-         called `<verb>_<struct>` (e.g. `clear_prio_queue()`) versus functi=
-ons
-    @@ Documentation/CodingGuidelines: For C programs:
-         use your own debugger and arguments. Example: `GIT_DEBUGGER=3D"ddd=
- --gdb"
-         ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
-     =20
-    -+ - Functions that operate on a specific structure and which are used =
-by
-    -+   other subsystems shall be named after the structure. The function
-    -+   name should start with the name of the structure followed by a ver=
-b.
-    -+   E.g.
-    ++ - The primary data structure that a subsystem 'S' deals with is call=
-ed
-    ++   `struct S`. Functions that operate on `struct S` are named
-    ++   `S_<verb>()` and should generally receive a pointer to `struct S` =
-as
-    ++   first parameter. E.g.
-     +
-     +	struct strbuf;
-     +
-3:  5e1de3c315 ! 4:  d4ce00303f Documentation: document difference between =
-release and free
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## Commit message ##
-    -    Documentation: document difference between release and free
-    +    Documentation: document idiomatic function names
-    =20
-         We semi-regularly have discussions around whether a function shall=
- be
-    -    named `release()` or `free()`. For most of the part we use these t=
-wo
-    -    terminologies quite consistently though:
-    -
-    -      - `release()` only frees internal state of a structure, whereas =
-the
-    -        structure itself is not free'd.
-    -
-    -      - `free()` frees both internal state and the structure itself.
-    +    named `S_release()`, `S_clear()` or `S_free()`. Indeed, it may not=
- be
-    +    obvious which of these is preferable as we never really defined wh=
-at
-    +    each of these variants means exactly.
-    =20
-         Carve out a space where we can add idiomatic names for common func=
-tions
-    -    in our coding guidelines. This space can get extended in the futur=
-e when
-    -    we feel the need to document more idiomatic names.
-    +    in our coding guidelines and define each of those functions. Like =
-this,
-    +    we can get to a shared understanding of their respective semantics=
- and
-    +    can easily point towards our style guide in future discussions suc=
-h that
-    +    our codebase becomes more consistent over time.
-    +
-    +    Note that the intent is not to rename all functions which violate =
-these
-    +    semantics right away. Rather, the intent is to slowly converge tow=
-ards a
-    +    common style over time.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    @@ Documentation/CodingGuidelines: For C programs:
-      	void reset_strbuf(struct strbuf *buf);
-     =20
-     + - There are several common idiomatic names for functions performing
-    -+   specific tasks on structures:
-    ++   specific tasks on a structure `S`:
-     +
-    -+    - `<struct>_init()` initializes a structure without allocating the
-    ++    - `S_init()` initializes a structure without allocating the
-     +      structure itself.
-     +
-    -+    - `<struct>_release()` releases a structure's contents without
-    -+      freeing the structure.
-    ++    - `S_release()` releases a structure's contents without freeing t=
-he
-    ++      structure.
-    ++
-    ++    - `S_clear()` is equivalent to `S_release()` followed by `S_init(=
-)`
-    ++      such that the structure is directly usable after clearing it. W=
-hen
-    ++      `S_clear()` is provided, `S_init()` shall not allocate resources
-    ++      that need to be released again.
-     +
-    -+    - `<struct>_free()` releases a structure's contents and frees the
-    ++    - `S_free()` releases a structure's contents and frees the
-     +      structure.
-     +
-      For Perl programs:
--:  ---------- > 5:  8789323ac7 Documentation: consistently use spaces insi=
-de initializers
-
+diff --git a/.clang-format b/.clang-format
+index 16fd12253e..0b82f3c776 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -100,11 +100,13 @@ BreakStringLiterals: false
+ # Switch statement body is always indented one level more than case labels.
+ IndentCaseLabels: false
+=20
+-# Indents directives before the hash.
++# Indents directives before the hash. Each level uses a single space for
++# indentation.
+ # #if FOO
+-# #  include <foo>
++# # include <foo>
+ # #endif
+ IndentPPDirectives: AfterHash
++PPIndentWidth: 1
+=20
+ # Don't indent a function definition or declaration if it is wrapped after=
+ the
+ # type
 --=20
 2.46.0.dirty
 
 
---7uFPh7fhbOQmwpnW
+--PiIqS2Oi0FOyPqb0
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaolSwACgkQVbJhu7ck
-PpRnRQ/7BSy2vAUjNK6vX62ylJn0udin0pFwV5XyVkWJRnsVFFsGXlO8OXmLo/qy
-wtGt1n8jBr8HB3w8JXBy0W5dkyACZyjqTW9SM3G6Aky+1+/KSaoukVAlGl5ybX4a
-TEXRnpf+M8Orr+9u372OnGyZiWV+mrlct27vNllW9QQ9lMqfiwJCFDCoSf6XXcZY
-/i6cXOk/LTb5GqK/poXNF3yGNoxyrMr+Fk/Kaw29fyr91gBAK6jv3+Gt7ljZN2d+
-ZMC63Q09/0q2vLfyiuzhWD3cer3G8w+UsLsAoJIS+Jlsq7EzZBW774qOg/80rXF5
-x8snYWYPLOurZTMAPeAZ/B1qVoHry5sz0Ke4RpRaKz8D056hFKmJ7njBrxQOSHfJ
-ljDOaJh7VPiymE9hcGwxBvuvs2wDq3+073wggHGxN1eDL41cFTQGUr+rUw4MRj53
-ZJaMpe7u0WORUAIFsF257pVOguJxDL2gSY+JdfUcLSRJuQAE1XbI0vzVIiN5+PWN
-DLIWNVlhMeqNQ+c7T8wUl7wJPykZPPgab9PuoMLo4VcdRPAvT3lm20egOqtUm5Cm
-Ulsfh2mKhBXhTExDFUSW9w4d2yPeCShFpdSxi0jDFt5yJ8uvDXcQGx4c9TTcSPTV
-4Ph6vLbT0nfpnXYhUnnd/jr9wznGbqqjo2wOOprrHwcclO5crK0=
-=LDnp
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaolTAACgkQVbJhu7ck
+PpQcmg/+NRZX2AXVywQMGwGcuPus0m1/mhAA+YNATkHvbsbey+Od0RgZJYU0bcDq
+UgOlnaXckh1fBhXX3V3qT8t9cg4jxKRX9oNbmZzOWFZzGK2/eyiWfJw8qJU5CODm
+jBEDIRLnnezvJ+mPx2fyoEWY2MaC8QfALF298ScwI15wBX/3Jkt64EwTkHX0Bj5+
+v/H0XsUI8pOjfGVM4LL/c4HjiweNJ1YNZAB+tuUcubBkQL5R0tccueqPXhvgpZAr
+wHesEF7fQVHUsfbu+4ew1/gHalrUaTcoO9+rwVYXiSuidCw7fw/04X2IwV63nmtf
+kh1ZOYTy7N5/to1YhLVqLcRAYyFmiy+3EWONUA30TaMpsUwrH440eL/uef2ed2/L
+ah/5cyqzawSOQpVL8bmqqDNF8Q02JKLcXOUW8q4mwWtaRwGt1gQGbs4CYzBZsruL
+WKWxbj8eJhRVd83Fv6yt/JltaSo6i5zfw/ngSpDxwmJTv6/3rzCMObznPdPkUyOp
+OdtKL6b/J+P1yMH2S96nhv/pKx61er2MQOBVBE/od4I79kGagKRozYJls+meilzt
+K4JPtnQ+O8R2KHjQpjY62cq4EiU+cLFH/8O2F8cTiEqPmcH+zdKtgQBgCNmvJIwN
+WCASDZlOiAskL5EBXi2NcURjl78ij9T6HwHkQ1YqEiVi/6K98Wg=
+=EsGq
 -----END PGP SIGNATURE-----
 
---7uFPh7fhbOQmwpnW--
+--PiIqS2Oi0FOyPqb0--
