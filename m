@@ -1,56 +1,76 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353C2145A11
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E88618FC9A
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722379898; cv=none; b=g9otZ5gy2uqvfl3xD0PxFVZS6vqL1ATIUfUIHPJ7JJzbrTbW2arDEFCgXr9CRCNzy2OZn51HPtDgwfUY9LXOW03k0221JAuAiGcdDQdKQPkHeu5eg4jP4sZv+RLoX2mjDkXcrKoShQaQ7QvOGOSDYKKZkmU+g6879hk2cd6M++g=
+	t=1722380124; cv=none; b=uMhi+xkEPnH5fHB1HE66P3I0Kc4JvW+ufpq678+qUyHkX2jJZ8ErTMslKRI+fF9HpCHaEElC8memmB0hlJJ1MxMKgM9MvhhT2AgCjzAtiIOvuOC35KzmZzQyIbcsFyB0zKWfW8NzMsWZhRscKJf1mcW6iDJuF7E9RRtaKZr6zvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722379898; c=relaxed/simple;
-	bh=5F5cnDUNA5PNvAiuYihnZphJWzqXM6YDjthbq8Yp+zE=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GoNZawTAXkwK9FBFMdvppCX2HEYm3/6V5KU9nrjrBNTHyiqKK/b5gZjb8Y2damjbCiBofd1lD+vc+OkTq8+WaUPPgPVrMjMy2bCuRydqp3wLMmK+S+gRaJ0fLJdy7zV3I6oMpxJqH65pJOueNyZppwY0vWRrdWgC183Ae/SWEIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46UMpWCD3141421
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jul 2024 22:51:32 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Cc: <git-packagers@googlegroups.com>
-References: <xmqqzfq0i0qa.fsf@gitster.g>
-In-Reply-To: <xmqqzfq0i0qa.fsf@gitster.g>
-Subject: RE: [ANNOUNCE] Git v2.46.0
-Date: Tue, 30 Jul 2024 18:51:26 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000101dae2d3$05a3d210$10eb7630$@nexbridge.com>
+	s=arc-20240116; t=1722380124; c=relaxed/simple;
+	bh=OOf5dTaPt9LxPiXXYIRdWVRb8nrU0+uzPTtQPmoxIFc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CccmN0JPgW36IkWpBmizxeAvfsMdgsbYTcJU+VzwCYrhIdUjjsTZhe+FS/qH65xx0ROe8MPG9lb42DVjyCMqkigAuWEiCiMGvJJnQA16Zpz2c0nMEorSTsJx+A3MKoUJ0SWMgD89uV/FTbosXlIVqg/RA0iwfExApEN0vqrLy6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=c+JTeFlT; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c+JTeFlT"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 918721CCD6;
+	Tue, 30 Jul 2024 18:55:22 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=OOf5dTaPt9LxPiXXYIRdWVRb8nrU0+uzPTtQPm
+	oxIFc=; b=c+JTeFlTALCymyNmw2WHHuz44v0lvkvgSZJJQdKNQssqqZG1jizClz
+	sCbXeXbWZjZwBTckeNuPBBklsHARlOtZfe3o3qoAY21J5XHTa69qhBtN50x7xxHw
+	GpVsJm8z9VK+lWXwj6a2MaPIO6bWXNMY0PRmdbxGZLnLTRKnKccY8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A3B01CCD5;
+	Tue, 30 Jul 2024 18:55:22 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 254A11CCD4;
+	Tue, 30 Jul 2024 18:55:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: "W. Michael Petullo" <mike@flyn.org>,  Jeff King <peff@peff.net>,
+  git@vger.kernel.org
+Subject: Re: Git clone reads safe.directory differently?
+In-Reply-To: <xmqqv80m8pha.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	30 Jul 2024 15:49:37 -0700")
+References: <ZqUc8DJ1uKcHYlcy@imp.flyn.org>
+	<20240727215845.GA1263246@coredump.intra.peff.net>
+	<ZqZjRMqpEV_3WIkD@imp.flyn.org>
+	<20240728224807.GA1299337@coredump.intra.peff.net>
+	<ZqjQi6i2kiY4gcc1@imp.flyn.org>
+	<Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
+	<xmqqv80m8pha.fsf@gitster.g>
+Date: Tue, 30 Jul 2024 15:55:17 -0700
+Message-ID: <xmqqr0ba8p7u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQL9v0GWykiED4xx3+20hDe5YqxRmq/KJxEg
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CB379354-4EC6-11EF-8226-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Monday, July 29, 2024 1:10 PM, Junio C Hamano wrote:
->The latest feature release Git v2.46.0 is now available at the
->usual places.  It is comprised of 746 non-merge commits since
->v2.45.0, contributed by 96 people, 31 of which are new faces [*].
+Junio C Hamano <gitster@pobox.com> writes:
 
-v2.46.0 has passed on NonStop and is being packaged for general use.
+> When you are using "--no-local" on the same machine, I do not think
+> there is any guarantee that "upload-pack" side is safe.  And that is
+> where the safe.directory thing needs to kick in.
 
-Thank you to the whole team for your efforts.
-
---Randall
+Ah, I take it back.  packObjectsHook won't run based on what the
+untrusted source repository configures, so at least we have been
+aware of the fact that upload-pack must be more careful than other
+stuff.
 
