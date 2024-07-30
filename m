@@ -1,77 +1,79 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3013119004E
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 05:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFADC19004E
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 05:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722316987; cv=none; b=cQeCRu5z1aZw4J3F7dOHhSeKt0I3NKGeM0wV46VaXlQzuA53U2oqwelVjpkXICSxDR9BFY2L+HyxhjPgrsrkIsWWQC0Mt9K3L8xRQiDJ8qL26aIEFL+UckEC0tPk+qQJ9xSahK6kgqjjUKptxvdxrtPPNt2SlzNRuuDGBPkhC6U=
+	t=1722316991; cv=none; b=cV15pKZQNwW0jG4V/2XUYGWVQp3rc3gjKZ2jcliOgil/J/5QhYHe1AtLH9FYupXvnObIY+rOT7Dbe7kn2zVDNoJq566KIqrDS5+wbHEy+7a4II5Lw7t4hMh4mftlBTP/aD4gjv62DgbGe+X6jnjFJDhgJlmLXLN2mnHPL+eE6u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722316987; c=relaxed/simple;
-	bh=7RnIvN6yNva92PD4iEA1aIr2vjZvr+VW4+rHgDzyMsc=;
+	s=arc-20240116; t=1722316991; c=relaxed/simple;
+	bh=cl4JFjkpTzFrD8Iu7gwZSNtDdbchvCHhy2MFUdtBaOA=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CLUItiKuPHWM9qrK3INykY/r/swK66zaLZ+LyymO2qsy21dbgUwpqg52UPMcQAgEyFR/cchyYmCSLJMow/seVz4IcGQcPo8ypDk1/NHjsrO1UBsh9YXL+c4aD0kKCr35uUM1wEZeJUxtSccve4z8TTIoWUIgOxC8lacm7K3PCzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Prssf/Cg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O3se7qrr; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=CncYqiA04mFy++rWKIm8/3zqPZryXu6510NL2ZWLGKnpqRdIeiJ37lZ9jTYmPnbOGlw84nAg6pxdkw2f/0xcq1TJgqLHtDuzs1Jt6M6G24VnTk9JY70khYIMTyMRKLEstju+XGemYhl1y0WUja9+LpzP7u5sc4CLcy3uJRkllAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Abl7vQZf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QXNaJoHB; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Prssf/Cg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O3se7qrr"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Abl7vQZf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QXNaJoHB"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 48121138072A
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 01:23:04 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1B7AC1140446
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 01:23:09 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 30 Jul 2024 01:23:04 -0400
+  by compute2.internal (MEProxy); Tue, 30 Jul 2024 01:23:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722316984; x=1722403384; bh=cEo2I46n7W
-	XN/U2kk3rjlf4PgqjeD10xph1rpTXNlMk=; b=Prssf/Cg74xgUoIXlZWYu3gU+W
-	Q5i3esu8bZv2ill3C0EIvbg6IsT4+Z4Ghjks7C5ZMBMcvVMYSN2hRpZ5x5FceBR8
-	r5Xb1ytTn2WoMmpCuZj+MYXZU1JngZzmT1asOLIPDtu9kmb9n/SKN5Xe3596q00h
-	GP5m/3msCY8rL5HLoV6Xn45jxJzOh2plphhnmH5hnNnRDXcUYfVEnfV6ekBbO/AG
-	cNzEe3Ub2Q6fgeG+/xRR7VDhu0xyWqDbXzOS5A5BlK1CiCs5drLIHbwHiO/KvT5d
-	zjjJtvsvBzFCeYXgP6Nors8muTNAhrOl7nCVSfCx91506toMsKBI0wNuuO2Q==
+	:subject:to:to; s=fm3; t=1722316989; x=1722403389; bh=d+zddLIBMN
+	zz8W8iJXlCreGDSdwqj8M+yMQrhqQI2tk=; b=Abl7vQZfer3JLOLs2Hg1TwSAmg
+	7nEzpDNmfp3tVlmbZNJje9ED4T19WrFYqz7EgmnVc55Tngg0eV/lME1xDmUo6/TL
+	07l0920vJE/cPj+lNsNtX92HPuvjhsqBrcE6GzZznFP29aVVVhOndBhiuIOK+8cm
+	rC4XqtGyTypNqLLlsdMLl1m/dCeCagd9sZyNiwBqI4A6UueKDyH9y21atAs2TB0r
+	JEBscN+WXZCrefzj93GtIzh1cub+NZhs6iTaLSGMZkktiK3g28sxkkHZ+V4aaFVx
+	0Chu5eC8ysa8M/gDianChnwhkEWh5Wn3FxCd5/eYcAVVo/WXx1dkuxwl7U1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722316984; x=1722403384; bh=cEo2I46n7WXN/U2kk3rjlf4Pgqje
-	D10xph1rpTXNlMk=; b=O3se7qrryhxY3gfRz1UDK1+IFobcY6qIEDMmAaZqKZAE
-	2viUayRyc98rGyoysy8NoVT9Kh366YCCv9Mion9SXOBJj0XV75zAmWeNWP+TRNFT
-	ulWx9QpkulTx/ZFDyfGx2dmssaUzjB5zFuY6jo9xdHydJmK97AIRtE8XkJCjFlE2
-	ph4iCY8tKcgoacSuDzYCMvABf9grpAeXtR5zMbneD9BC6ES3K7sUYwFuHyALKtrz
-	EwnFd0f9scx+z0u7qOQj1OqFdD/JGs/h3uBhd8C9HrvmcowIy3Ify8mN9AulgJLh
-	sb+DCuxfEHhl4vkMqMaOD9vntPiSa6iy1i1zFir4aw==
-X-ME-Sender: <xms:uHioZm_iAm0GxhHnS_6n0oL71G-LgyGv-4GMWL7vwDsJOeYK4iNNtw>
-    <xme:uHioZms_9En8ewov-yyb_j5pF40f0InhDusc78h-jtorvvSWZWjo3wGdEiVvoqcGx
-    5V8ZmNE2ClhxlRu9A>
-X-ME-Received: <xmr:uHioZsB6_SXwC6vvfTpd2W3gVd7dYitHQfdlH_accGP6hkHssm2xUJ0W4e6oKKkkmwPuGyNW_tZLhsdadrKelTcjJc7gGGSNOEK4BIAB8jt-sVw>
+	fm3; t=1722316989; x=1722403389; bh=d+zddLIBMNzz8W8iJXlCreGDSdwq
+	j8M+yMQrhqQI2tk=; b=QXNaJoHBDz8GTwE64lF4e6JtPx64T/1S4i3syQH9MtbP
+	mnvAXiPcwQNi9hisZo+nxR9xufrjV+WxkwwcxI8ksr3YIkVSHqO5CYm9PBUaaoBp
+	xjPPJ2dwnRDoiMCUg2LaHdTAOgwmWdeTAY0FyISvV/VRSeVvZWwvGIcc99DJEvWE
+	2SVy9S7DUTKFTOIMaCz+qkJ2C4ygooP2ZfT6aOgpnIY1i1p5rLT19LSXSMNiPHNe
+	mpBMmOrzk+/FOos/S4scfasidQyQ03h53hkxBLWU5HUr4CuUHUkq5shBSbLAUOup
+	xZxQQeLfoFvvPWfvhc6L8Dk6pau3PLyA3mTZlYtTsg==
+X-ME-Sender: <xms:vHioZs_TkUhVFq9sk7P7MqOicBcBXdFfS6anzMCDQWhrcF2BMW2pPg>
+    <xme:vHioZktFLfeHb9TVexYnSZ6CW4YB8FSUvYLFa-TS9xyzvO9xU1UGuRPZ9zTAMMG-f
+    _uRxkr_-TMCfOl-YA>
+X-ME-Received: <xmr:vHioZiA7DM3Dhv5Ki80PXKFdhA3lyDr8cZJ5Cx1JDkbYqcl_g7pK6BDYnAK3oxNe3EvmvJTpI5ieDvAzeU7yAb84IG20XDQ8hExP1y0XsThpONY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeefgdeljecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:uHioZucvGdfVN2QXromAc-5HQ38Hsppl_4IdEOA0OtUvtTPwyIiuYg>
-    <xmx:uHioZrOz-u1ibGi1tOO9MlXWxSrYrH14YHUcAQnkDQpzSZw0lTWnNA>
-    <xmx:uHioZonxG_WfZpLilt21wskwhAg0-ik1JLsEILwAy8o69Dss1MtdEA>
-    <xmx:uHioZtt-0GIYRGBNSyViP_1GSJqfB9JaLoMOl0wNiGUxtheZX5fVuw>
-    <xmx:uHioZh2xud__xZO3es-b0jntKuWlc0PLu2fokYXIbAeacdkNUofWazot>
+    shdrihhmqeenucggtffrrghtthgvrhhnpeelhffffeethefhteeigfetgeehhffhudduhf
+    eiieehhfevkedthfdugfejhefftdenucffohhmrghinhepuhhpuggrthgvrdhtiidpvhgr
+    lhdvrdhtrghrghgvthdpuhhpuggrthgvrdhnvgifpdhuphgurghtvgdrvghmrghilhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
+    shdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:vXioZsdYt9HatxTFR1w-XzMAppkaVtMCL8c_ahguCVdIRl5isEWKaA>
+    <xmx:vXioZhNbi6oV1RceiYB_NkGHeejv7OeZGroeqyDe54n4gFnpkCsT_Q>
+    <xmx:vXioZml1k8EVwC4-_1jdeT3BpNDENMQoN9WXbYctlT0lQ9ZkHjz5bA>
+    <xmx:vXioZjvlrqRWKIfcZRGdd9KfnGSAyhidXYoK_WEK2VdNQrArsw-5lA>
+    <xmx:vXioZv0V4HFBC3UhiWc6o-1lVCgSGlNOS9nwtCNw0DeBgV-PS9BNYlNP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 30 Jul 2024 01:23:03 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 30 Jul 2024 01:23:08 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ca3f248a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 3885ed2b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 30 Jul 2024 05:21:36 +0000 (UTC)
-Date: Tue, 30 Jul 2024 07:23:01 +0200
+	Tue, 30 Jul 2024 05:21:40 +0000 (UTC)
+Date: Tue, 30 Jul 2024 07:23:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 4/5] refs/packed: stop using `the_repository`
-Message-ID: <d164cd3aa12b67ba98c9b878543497482441ba2c.1722316795.git.ps@pks.im>
+Subject: [PATCH 5/5] refs/reftable: stop using `the_repository`
+Message-ID: <0e440360a83a02afd2d247a5ae9d2a250ff6a10b.1722316795.git.ps@pks.im>
 References: <cover.1722316795.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,110 +82,254 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tASRDnDlIQAVlrXQ"
+	protocol="application/pgp-signature"; boundary="zgHgorSb2XZI5BPP"
 Content-Disposition: inline
 In-Reply-To: <cover.1722316795.git.ps@pks.im>
 
 
---tASRDnDlIQAVlrXQ
+--zgHgorSb2XZI5BPP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Convert the packed ref backend to stop using `the_repository` in favor
+Convert the reftable ref backend to stop using `the_repository` in favor
 of the repo that gets passed in via `struct ref_store`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/packed-backend.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ refs/reftable-backend.c | 51 +++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index a0666407cd..89976aa359 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index fbe74c239d..bf4446afd3 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
 @@ -1,5 +1,3 @@
 -#define USE_THE_REPOSITORY_VARIABLE
 -
  #include "../git-compat-util.h"
- #include "../config.h"
- #include "../dir.h"
-@@ -794,7 +792,7 @@ static int packed_read_raw_ref(struct ref_store *ref_st=
-ore, const char *refname,
- 		return -1;
- 	}
+ #include "../abspath.h"
+ #include "../chdir-notify.h"
+@@ -201,7 +199,8 @@ static void fill_reftable_log_record(struct reftable_lo=
+g_record *log, const stru
+ 	log->value.update.tz_offset =3D sign * atoi(tz_begin);
+ }
 =20
--	if (get_oid_hex(rec, oid))
-+	if (get_oid_hex_algop(rec, oid, ref_store->repo->hash_algo))
- 		die_invalid_line(refs->path, rec, snapshot->eof - rec);
-=20
- 	*type =3D REF_ISPACKED;
-@@ -879,7 +877,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 	p =3D iter->pos;
-=20
- 	if (iter->eof - p < snapshot_hexsz(iter->snapshot) + 2 ||
--	    parse_oid_hex(p, &iter->oid, &p) ||
-+	    parse_oid_hex_algop(p, &iter->oid, &p, iter->repo->hash_algo) ||
- 	    !isspace(*p++))
- 		die_invalid_line(iter->snapshot->refs->path,
- 				 iter->pos, iter->eof - iter->pos);
-@@ -896,7 +894,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 		if (!refname_is_safe(iter->base.refname))
- 			die("packed refname is dangerous: %s",
- 			    iter->base.refname);
--		oidclr(&iter->oid, the_repository->hash_algo);
-+		oidclr(&iter->oid, iter->repo->hash_algo);
- 		iter->base.flags |=3D REF_BAD_NAME | REF_ISBROKEN;
- 	}
- 	if (iter->snapshot->peeled =3D=3D PEELED_FULLY ||
-@@ -909,7 +907,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 	if (iter->pos < iter->eof && *iter->pos =3D=3D '^') {
- 		p =3D iter->pos + 1;
- 		if (iter->eof - p < snapshot_hexsz(iter->snapshot) + 1 ||
--		    parse_oid_hex(p, &iter->peeled, &p) ||
-+		    parse_oid_hex_algop(p, &iter->peeled, &p, iter->repo->hash_algo) ||
- 		    *p++ !=3D '\n')
- 			die_invalid_line(iter->snapshot->refs->path,
- 					 iter->pos, iter->eof - iter->pos);
-@@ -921,13 +919,13 @@ static int next_record(struct packed_ref_iterator *it=
-er)
- 		 * we suppress it if the reference is broken:
- 		 */
- 		if ((iter->base.flags & REF_ISBROKEN)) {
--			oidclr(&iter->peeled, the_repository->hash_algo);
-+			oidclr(&iter->peeled, iter->repo->hash_algo);
- 			iter->base.flags &=3D ~REF_KNOWS_PEELED;
- 		} else {
- 			iter->base.flags |=3D REF_KNOWS_PEELED;
- 		}
+-static int read_ref_without_reload(struct reftable_stack *stack,
++static int read_ref_without_reload(struct reftable_ref_store *refs,
++				   struct reftable_stack *stack,
+ 				   const char *refname,
+ 				   struct object_id *oid,
+ 				   struct strbuf *referent,
+@@ -220,7 +219,7 @@ static int read_ref_without_reload(struct reftable_stac=
+k *stack,
+ 		*type |=3D REF_ISSYMREF;
+ 	} else if (reftable_ref_record_val1(&ref)) {
+ 		oidread(oid, reftable_ref_record_val1(&ref),
+-			the_repository->hash_algo);
++			refs->base.repo->hash_algo);
  	} else {
--		oidclr(&iter->peeled, the_repository->hash_algo);
-+		oidclr(&iter->peeled, iter->repo->hash_algo);
+ 		/* We got a tombstone, which should not happen. */
+ 		BUG("unhandled reference value type %d", ref.value_type);
+@@ -487,16 +486,16 @@ static int reftable_ref_iterator_advance(struct ref_i=
+terator *ref_iterator)
+ 		switch (iter->ref.value_type) {
+ 		case REFTABLE_REF_VAL1:
+ 			oidread(&iter->oid, iter->ref.value.val1,
+-				the_repository->hash_algo);
++				refs->base.repo->hash_algo);
+ 			break;
+ 		case REFTABLE_REF_VAL2:
+ 			oidread(&iter->oid, iter->ref.value.val2.value,
+-				the_repository->hash_algo);
++				refs->base.repo->hash_algo);
+ 			break;
+ 		case REFTABLE_REF_SYMREF:
+ 			if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->ref.refname,
+ 						     RESOLVE_REF_READING, &iter->oid, &flags))
+-				oidclr(&iter->oid, the_repository->hash_algo);
++				oidclr(&iter->oid, refs->base.repo->hash_algo);
+ 			break;
+ 		default:
+ 			BUG("unhandled reference value type %d", iter->ref.value_type);
+@@ -508,7 +507,7 @@ static int reftable_ref_iterator_advance(struct ref_ite=
+rator *ref_iterator)
+ 		if (check_refname_format(iter->ref.refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (!refname_is_safe(iter->ref.refname))
+ 				die(_("refname is dangerous: %s"), iter->ref.refname);
+-			oidclr(&iter->oid, the_repository->hash_algo);
++			oidclr(&iter->oid, refs->base.repo->hash_algo);
+ 			flags |=3D REF_BAD_NAME | REF_ISBROKEN;
+ 		}
+=20
+@@ -551,7 +550,7 @@ static int reftable_ref_iterator_peel(struct ref_iterat=
+or *ref_iterator,
+=20
+ 	if (iter->ref.value_type =3D=3D REFTABLE_REF_VAL2) {
+ 		oidread(peeled, iter->ref.value.val2.target_value,
+-			the_repository->hash_algo);
++			iter->refs->base.repo->hash_algo);
+ 		return 0;
  	}
 =20
- 	return ITER_OK;
+@@ -659,7 +658,7 @@ static int reftable_be_read_raw_ref(struct ref_store *r=
+ef_store,
+ 	if (ret)
+ 		return ret;
+=20
+-	ret =3D read_ref_without_reload(stack, refname, oid, referent, type);
++	ret =3D read_ref_without_reload(refs, stack, refname, oid, referent, type=
+);
+ 	if (ret < 0)
+ 		return ret;
+ 	if (ret > 0) {
+@@ -868,8 +867,8 @@ static int reftable_be_transaction_prepare(struct ref_s=
+tore *ref_store,
+ 		goto done;
+ 	}
+=20
+-	ret =3D read_ref_without_reload(stack_for(refs, "HEAD", NULL), "HEAD", &h=
+ead_oid,
+-				      &head_referent, &head_type);
++	ret =3D read_ref_without_reload(refs, stack_for(refs, "HEAD", NULL), "HEA=
+D",
++				      &head_oid, &head_referent, &head_type);
+ 	if (ret < 0)
+ 		goto done;
+ 	ret =3D 0;
+@@ -936,7 +935,7 @@ static int reftable_be_transaction_prepare(struct ref_s=
+tore *ref_store,
+ 			string_list_insert(&affected_refnames, new_update->refname);
+ 		}
+=20
+-		ret =3D read_ref_without_reload(stack, rewritten_ref,
++		ret =3D read_ref_without_reload(refs, stack, rewritten_ref,
+ 					      &current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+@@ -1500,7 +1499,8 @@ static int write_copy_table(struct reftable_writer *w=
+riter, void *cb_data)
+ 		memcpy(logs[logs_nr].value.update.old_hash, old_ref.value.val1, GIT_MAX_=
+RAWSZ);
+ 		logs_nr++;
+=20
+-		ret =3D read_ref_without_reload(arg->stack, "HEAD", &head_oid, &head_ref=
+erent, &head_type);
++		ret =3D read_ref_without_reload(arg->refs, arg->stack, "HEAD", &head_oid,
++					      &head_referent, &head_type);
+ 		if (ret < 0)
+ 			goto done;
+ 		append_head_reflog =3D (head_type & REF_ISSYMREF) && !strcmp(head_refere=
+nt.buf, arg->oldname);
+@@ -1790,15 +1790,16 @@ static struct ref_iterator *reftable_be_reflog_iter=
+ator_begin(struct ref_store *
+ 					ref_iterator_select, NULL);
+ }
+=20
+-static int yield_log_record(struct reftable_log_record *log,
++static int yield_log_record(struct reftable_ref_store *refs,
++			    struct reftable_log_record *log,
+ 			    each_reflog_ent_fn fn,
+ 			    void *cb_data)
+ {
+ 	struct object_id old_oid, new_oid;
+ 	const char *full_committer;
+=20
+-	oidread(&old_oid, log->value.update.old_hash, the_repository->hash_algo);
+-	oidread(&new_oid, log->value.update.new_hash, the_repository->hash_algo);
++	oidread(&old_oid, log->value.update.old_hash, refs->base.repo->hash_algo);
++	oidread(&new_oid, log->value.update.new_hash, refs->base.repo->hash_algo);
+=20
+ 	/*
+ 	 * When both the old object ID and the new object ID are null
+@@ -1841,7 +1842,7 @@ static int reftable_be_for_each_reflog_ent_reverse(st=
+ruct ref_store *ref_store,
+ 			break;
+ 		}
+=20
+-		ret =3D yield_log_record(&log, fn, cb_data);
++		ret =3D yield_log_record(refs, &log, fn, cb_data);
+ 		if (ret)
+ 			break;
+ 	}
+@@ -1886,7 +1887,7 @@ static int reftable_be_for_each_reflog_ent(struct ref=
+_store *ref_store,
+ 	}
+=20
+ 	for (i =3D logs_nr; i--;) {
+-		ret =3D yield_log_record(&logs[i], fn, cb_data);
++		ret =3D yield_log_record(refs, &logs[i], fn, cb_data);
+ 		if (ret)
+ 			goto done;
+ 	}
+@@ -2200,7 +2201,7 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+ 		goto done;
+ 	if (reftable_ref_record_val1(&ref_record))
+ 		oidread(&oid, reftable_ref_record_val1(&ref_record),
+-			the_repository->hash_algo);
++			ref_store->repo->hash_algo);
+ 	prepare_fn(refname, &oid, policy_cb_data);
+=20
+ 	while (1) {
+@@ -2216,9 +2217,9 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+ 		}
+=20
+ 		oidread(&old_oid, log.value.update.old_hash,
+-			the_repository->hash_algo);
++			ref_store->repo->hash_algo);
+ 		oidread(&new_oid, log.value.update.new_hash,
+-			the_repository->hash_algo);
++			ref_store->repo->hash_algo);
+=20
+ 		/*
+ 		 * Skip over the reflog existence marker. We will add it back
+@@ -2250,9 +2251,9 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+=20
+ 		*dest =3D logs[i];
+ 		oidread(&old_oid, logs[i].value.update.old_hash,
+-			the_repository->hash_algo);
++			ref_store->repo->hash_algo);
+ 		oidread(&new_oid, logs[i].value.update.new_hash,
+-			the_repository->hash_algo);
++			ref_store->repo->hash_algo);
+=20
+ 		if (should_prune_fn(&old_oid, &new_oid, logs[i].value.update.email,
+ 				    (timestamp_t)logs[i].value.update.time,
+@@ -2269,7 +2270,7 @@ static int reftable_be_reflog_expire(struct ref_store=
+ *ref_store,
+=20
+ 	if (flags & EXPIRE_REFLOGS_UPDATE_REF && last_hash &&
+ 	    reftable_ref_record_val1(&ref_record))
+-		oidread(&arg.update_oid, last_hash, the_repository->hash_algo);
++		oidread(&arg.update_oid, last_hash, ref_store->repo->hash_algo);
+=20
+ 	arg.refs =3D refs;
+ 	arg.records =3D rewritten;
 --=20
 2.46.0.rc1.dirty
 
 
---tASRDnDlIQAVlrXQ
+--zgHgorSb2XZI5BPP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaoeLQACgkQVbJhu7ck
-PpT1wg/+N+Op0lNujazghdTEbntVuiUhPsIAMhMm/mCsQuspiVogzAQvBzZRiG3T
-9r4EyHPnlHJuhqzSG5zZ0/KpRZ6nzjtVhEzNnIpsokB31OKvsTwpJfrcIryBHQtI
-5I26RWm8R1j/q/IiJiUElg9Y8ce8mKuqLgeRRk8t5vb8FRhM+JQa/Gp834pnCI9J
-oJKdp+0ywf7zlaAF2grcIn9GBOVwdIuRmBkL5Uu9tjlUUZ0Q2PCiIDXWao57xkcw
-5JY4nCnn0myvgI1f04BO4/P3I4SWxNJ1G5ZMHpBE64lMn9JrJI69BYpJ0IDSPX/U
-ndvc8lDWqWgMAsOoTZuO6Ixi1jEioVA04vaEkB9pasCONR07VQY9l5XP6lUT+2uN
-4fwh8iIHKvn8sOsdEMgZpjePn0qJNlp5qLbVL+F603de8w0ph7XEU4XBvh2FtWvz
-mWkeL6qzOLiqtFstY06h1bhgC7/iZP98Pzs07ripXX2C7vgSFWXlLW2S5HENfsRM
-RjmaDP7kn6Rbg5VGYQeF2YdtZI16aZ6UJ9ueVIlv2/TKnHo0tZuSsOb7SYgrj2nc
-udg744Ksz8xjr9IWFaZKM0yGjDwRCZz7a+BOe2frDvUoAwP6ojg1r1daxpPx/wUt
-+SfPSTCUtysVFQFycYzHeUNu/vulEC7NNs5e0a3080hRGkHa0PM=
-=bINQ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaoeLgACgkQVbJhu7ck
+PpTqjQ//UpirB4mQ4yKnI+npr6H5DE/53fRv/DvnLMA4Y4bjll0MhCmlAD+TPCe7
+j3/mo9LvYSlPjB9rdPgM26rWTOB++7Hu4HGl3H71DoTyUDrsYJetkY7FIq7fvpKl
+ICiC6IhFA5IGJOhSJ1RFZX4AteLv39Aaa3lId232MXGXqu2hs5By0NjeYO0yBP7F
+l5zcxSaVV0UQkZSHx2jcjmf53ElymEV120BGiNTttVlUW5riOCqNGYLLPPmv875s
+pPA3aQoRUDPyQD1OcOEEkRpeH/ywDm5YlbgLUsadWD/ODs37B3LkzTYrNVRhbG0w
+pms9uiav0Fq0tQkTCx72liNQBwsuXzQ0WJ67McGVldx9xG0W7wjrplhJ3lFA23QC
+/NvM6MaJ6G2tTq/rFStqwG2IO6TnYvdpBDO38aXQV4pmzlNF3uz9R25PlpeFskeR
+ierOs8lXaQovqUMdGOaZ/wsrMq8EEFYz6LltI3/hKMGoRctUi3iDb/EwOoGaDnlf
+YUKhHZDfHH6E8Pq+nnFIds4reg/aMYFE70H1bv8EMOuuIKc6OG/nMunYTIA6Sieb
+uo622+vluD/OOXpZymC6w2OSYC6RF+kguyRHDOKlf6VeWu7bj5AfvCXop03r/1iG
+gT88w7vGlSUOH1alTvL2025dHdMZZeB5KWZEyrW/v0cocVZzimo=
+=rIKg
 -----END PGP SIGNATURE-----
 
---tASRDnDlIQAVlrXQ--
+--zgHgorSb2XZI5BPP--
