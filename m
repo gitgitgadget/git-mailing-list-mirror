@@ -1,109 +1,116 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B19013DDAE
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 11:00:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1844018EFE0
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 11:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722337250; cv=none; b=cQ/6kO05f2C33Vbu5FFLtPuSSacF7bLw2B+Cghd2/qs3EddSIAaI6qsnJG8AYnBcWylgUriNq/WoKbnOry9WVkxqKOAvrBzubD5Mwud9JMMRbP4ZuMTNooaOeQySgPW/C7c0Of9zNMIr84S4VAHE1mI2FkT4aC728xUYzdQe3b0=
+	t=1722337800; cv=none; b=LP8K7vmTkQqX/QeGjToJejpdpnmJLqKpENCZ82lrMf0gHioWdEN0faugAZTPG+CKSDRMrhy/kubMtiEJ+mgi8koYl3VcoQ2QmXGqbr3D3TfUggmqYpruMNKD3IniJ2xRj2ekv7tyoZASFXuZw/sX8EG3YfAStou7U5xkyhyShiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722337250; c=relaxed/simple;
-	bh=r9moL2/ZIs67JXSQ78XyyPJ5uqSxp+aGjC8OvBtJ7qA=;
+	s=arc-20240116; t=1722337800; c=relaxed/simple;
+	bh=+2pDoGq1W3blQ82rgGc/75fX4dQWvYIvkRrnV/iGGH0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=rEos0LhnBURsd1MNAMl5MF6UBHtbQokUkvy+okJ/PKm++4pmf/4XwxhZc6x5Ho7G0x1dLkC/9oBtWeAuv+zcSrQYN9dp2II/Z1abgi78ukk/3/fNYVZXvnqag5xveDwaDWKGQ3E9gtrxPvttRY83NCrDu14U9/jgIteCNn0jpak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c25s3UTM; arc=none smtp.client-ip=209.85.160.42
+	 To:Content-Type; b=BVpM5kSpnjPNwlLX/mnxrPKkvIK6/LGWq/aA2Bcs0DqV8yFI/AscArzI0ZlId3EmNzmD1PBT+WHSI3iU7GmNk+YCz/3A5rhhKj+tFj0UxQIbjWZGGSEe5YDkyQif01UgK7JjJTwHq/g3GgQO+9nYG1k5m69ssGGE+8Ec8UBNlb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QQvG4VRS; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c25s3UTM"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-25dfb580d1fso1945054fac.2
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 04:00:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQvG4VRS"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-260e3e295a7so2621916fac.3
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 04:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722337248; x=1722942048; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722337798; x=1722942598; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=r9moL2/ZIs67JXSQ78XyyPJ5uqSxp+aGjC8OvBtJ7qA=;
-        b=c25s3UTMUq0QAk996E8kvD6BZFZg5vG0LQhDLG8XIz9dTn6bx+zuthWq6+RBrqApp/
-         ECTyObhFoIXLHbJUv1i5wUcxYo5JKeHarg77gUfWvnChvDghbA0ShU0KEn5FOdHqTKbw
-         eqP/H5x/f9bd6Az7xtXZH/EvjbmxGmskMrufs29Zd+91QQQrbQmHUnHI+CYCfFvfOcft
-         dXvWwY+cDbSWbsda8YFWA273/jIw77ZPLV+Ds7o7Ueanu27Um6szAOFy7h1OE0Gj1Zvc
-         WjCLBCtyP4jd4DbKPeRfFA24c4rsGUnv4QzdNjZr0c3yLCB7/i7nd2bIug5PxdoIC3aO
-         Ckuw==
+        bh=+2pDoGq1W3blQ82rgGc/75fX4dQWvYIvkRrnV/iGGH0=;
+        b=QQvG4VRSaivUeH1JFCM2l7Jn5hq1YwfNTjps4w42bCeSpCF0A1MocAcirRwpykkmRF
+         4OrwP8ya9jlhJA5y8s/fVV3ulOsPaQ37NeSWVZslxX45XPvHE5PGEw1dun0Iw8AURMjA
+         +jocQwzp5L6a8zpzkiazWNd5qymRewSmnP1cxJk6HsIahleWWqjpdIt7ZVkpbKAZGUUD
+         9wyCRgumrlljvnzgWUW5ph6fxFe4XsyTHT3PV1mUvCVhjSTWzBlDT1Cf7fj97YcGy1qg
+         eJB9MKGUwp1OFfCMsmGpZ3z6Bv4kqpwPtEg6Kcb1P1Ued6nRdFkKvz3vhX87Od5sv6jJ
+         x/bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722337248; x=1722942048;
+        d=1e100.net; s=20230601; t=1722337798; x=1722942598;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9moL2/ZIs67JXSQ78XyyPJ5uqSxp+aGjC8OvBtJ7qA=;
-        b=xKpvoerCfENI4y4Qguur8ZxIgxNKBZXgYWnA1d9kJ1k/NiydE7a+pk/UOxR7pKaLri
-         8LBO4A3+JXt8mrP6Mk9Ed6WCh3P9V/6ga3xE072LyAZUfYBpGYPk1qDjcczUl+8oxmD3
-         wdYVZSzbMyeQzEVf3ywy1KaueFhqX9F9eczuS4LPLNUvsp5UuqRF/MBDMNsIJGZv30ss
-         9y355dmXZjjg47494/xR63qedvO6rHsbxXWqGlkP7qpTL9fm0vAIpbrE2tYaEvu2xhJE
-         Bo6zEf1BRzdxHyXDPvRJEFhkEqWXVwrAy1tKftShr1ReQNxc3L4fHOB36equ8kOM2BfR
-         wDUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoQTjKqyzzmwNgzllklmJvUD4p2n3lECK4meDQvQkW35UK9n62ilHgs785XbHsT5ZaH1/vWMkT93mgNrwtXYUB5UVa
-X-Gm-Message-State: AOJu0YwnOQW9gXcO5FvVm8gRg+i9UxAjkntoc4pmj4jDQs9VR5PzfiL4
-	euv3Gw7jKYT6WjOibAP7XMI1jjspBxQdrBJPvMaTCLrA1EbdPQgodBZ7jWVp4EDrCB87iXnO+Ob
-	n5Y2yrOewS/2fRpLdVSTRSAsejyw=
-X-Google-Smtp-Source: AGHT+IHup6dRxHQG4PwGSMukkTzwH8s6tTyiZcrHb+Ef+8/Y4Muj/8xzlzRVPs13hk1V+bLxouyTVFxjuisT7VSD5Zo=
-X-Received: by 2002:a05:6871:aa06:b0:267:e2b2:ec52 with SMTP id
- 586e51a60fabf-267e2b304ffmr10183564fac.49.1722337248282; Tue, 30 Jul 2024
- 04:00:48 -0700 (PDT)
+        bh=+2pDoGq1W3blQ82rgGc/75fX4dQWvYIvkRrnV/iGGH0=;
+        b=bwUIl/nCsLsdfaaPetrnW0koRqD1U2V7YJyLML/T+aAmMJqcDGb/aY02T42o8IREFZ
+         VLoNpaN6POHlnpNQ5bjNxhRVqclWJozfGjEEpu3AW1p64fal0mrEaVWJ/nZdv9rlT6jm
+         3DNjWeFLIdMQPjUp1Hy19Lmj9RIxJT24wzMi2CmbPoZpnT5ce4S7kSYt8+SYvaFfePqP
+         h3b/rieWnSLyGEMxWRCWkFmrFjq5QwaQ4e1BJqLy440kuSj3CCv6gXTRECeIia68lcWb
+         +2Ieet9zpPzGwsPWIemVZrCWQ/suW7b8ERXLdsAVXHsOkQ04Eff2q4l2rLgVwnlMjs88
+         AdMA==
+X-Forwarded-Encrypted: i=1; AJvYcCVrFYniUN5Tbzm5UUoPDy8DsvXTLYLwnvCLXGjQryTrNj7i6+YGP/vrqIsOYuOzR66viI6WeyktOmnxkekVoYJYS614
+X-Gm-Message-State: AOJu0YwhypF7MrlyQtUCmE7pln3CLTxriPdC6xWKyYOQpqt7NVur2FjD
+	nQuVQe7Ec3qG5KZUs6qeTHx031hzK/xBffpfqlXX5TYmi9b7vJ5EFPrUQ9hKoXvLvcIS6a+h+zK
+	w4eOLQH+SVxhYGay4oo+iWwjQMG2jeA==
+X-Google-Smtp-Source: AGHT+IHYT1lgchPy4hIoidHGLr7l20TL3PeY0+bsNkIkMqZPfc0xcn7pE44eetnqQ72Sb8Z3Z+tU7rid9J5gtSWnzXA=
+X-Received: by 2002:a05:6870:4209:b0:260:e453:5368 with SMTP id
+ 586e51a60fabf-267d4f3b530mr12638759fac.46.1722337797938; Tue, 30 Jul 2024
+ 04:09:57 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Jul 2024 07:00:46 -0400
+ HTTPREST; Tue, 30 Jul 2024 07:09:57 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <e277222bd298560b0d7f10cb9b5d0eee5967ba87.1721995576.git.ps@pks.im>
-References: <cover.1721995576.git.ps@pks.im> <e277222bd298560b0d7f10cb9b5d0eee5967ba87.1721995576.git.ps@pks.im>
+In-Reply-To: <cover.1721995576.git.ps@pks.im>
+References: <cover.1721995576.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 30 Jul 2024 07:00:46 -0400
-Message-ID: <CAOLa=ZQ7t4eo34eQNtLzd_tjknsxkaSVGy6Z11hPUQdkGYBfow@mail.gmail.com>
-Subject: Re: [PATCH 12/23] builtin/rev-parse: fix memory leak with `--parseopt`
+Date: Tue, 30 Jul 2024 07:09:57 -0400
+Message-ID: <CAOLa=ZT==H9VQp_Z_VcQEmXVBUPWWui1CfmRQbLnOyyqMwxjmg@mail.gmail.com>
+Subject: Re: [PATCH 00/23] Memory leak fixes (pt.3)
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000de2b05061e74e340"
+Content-Type: multipart/mixed; boundary="000000000000a142ef061e750472"
 
---000000000000de2b05061e74e340
+--000000000000a142ef061e750472
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The `--parseopt` mode allows shell scripts to have the same option
-> parsing mode as we have in C builtins. It soaks up a set of option
-> descriptions via stdin and massages them into proper `struct option`s
-> that we can then use to parse a set of arguments.
+> Hi,
 >
-> We only partially free those options when done though, creating a memory
-> leak. Interestingly, we only end up free'ing the first option's help,
-> which is of course wrong.
+> I originally wanted to hold off with sending out this series until v2.46
+> was out. But I saw that Junio sent out some patches which are plugging
+> the same leaks as I did, so I dedcided to send it out now to avoid some
+> duplicated work.
 >
-> Fix this by freeing all option's help fields as well as their `argh`
-> fielids to plug this memory leak.
+> There isn't really any structure to this series, I just happened to pick
+> some random test suites that fail with the leak checker enabled and then
+> fixed those. Naturally, I've also got part 4 of this series of patch
+> series in the pipeline already :) As mentioned elsewhere, I hope to get
+> the number of failing test suites to zero this year. Let's see whether
+> this is realistic.
+>
+> Patrick
 >
 
-s/fielids/fields
+This was quite easy to review since there wasn't much to add and it was
+clearly split into small commits. Apart from some nits, the series looks
+great to me.
 
-[snip]
+Thanks,
+Karthik
 
---000000000000de2b05061e74e340
+--000000000000a142ef061e750472
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 764f809733b16cef_0.1
+X-Attachment-Id: 302bb97c3100a4d3_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hb3g5MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMlk2Qy85TWdMOFVQK2ZPY3l4SkdLUHBnQ3JPNDArWApnRmFSL2UvTmhX
-VlhqMnNrQ3R5TldJZnRERk9Lb0I2QXIrR09kOFlINnFjcDA2dlJSU1NnV1oyR0NLZFZVN01HClRy
-ZHNsY1laZ0k1dHlabVdPTEFNSTc0RzRHZ3cwSmJTbXMxaXluamNzdnd0aEhBQ1pJUWU3WGhKcVpD
-S0pDOWsKNE9MVFkyZzk2Vjl1RnU1NlhxK09KcmthRGlpTGpwbDYvemdZUWxqaEo2ZGhNVzZRZklq
-eE1RYXo3YnZXT3VOMwpUaDRaRDVmd0J2ODZROVg2d1pKSElTOG5OSllUT2oyYTRTdkFpNDAxWk52
-ZHZoeThBYWhmSnNUU3dnanpwZFBOCjEwZkpBTmdwMUJLUDNaQXpuaVhrWlM0QWEzajBUck5uOFhp
-L2NSeGF4Vi9xZHFPNENncnhwSmVCaTlQNElwZ2IKTmxuZ1M3dFhaOElNaWVodUdLa0xzTW1hSEcw
-R2s1L3JxSnE3K2VZWVdKSEtUQUUvekVrK3JEWWNyZUxCdlQ1YQo0ZnJHK1Q4cEYyS3Uyd0thUE1j
-cDdiRUNzcnpsUmRIRnpmN1pnZDZ6OHJtK0tVTnNtZXRYNDloOXBiemlFVEQ4ClVHTTcvSW04YUVl
-cS9uQnZqdXNvTmJ2cm5WWm9mTE9WQUVSbllwWT0KPWxYaVQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hb3lnTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meXpqREFDYWZDMXJJOEpFV2d5cVNqdU1JNCs2WUl1aApDQUo3elpNSGxF
+YXhJeFU2NmphZENlL2xkMldWaFZZRGErNnVaa3RwdFNPMEdlakQ3Z083WTcwbGxrNXFBS0FlCmxQ
+OGVENG1RVTFabitYZFdtbFRIM1ZERkpvVFdHUEt1RWVBdGRJSVpqcnpiV3NoZ0Raa1hNMEpmdGFX
+THJ2bmkKdEMxWFZZa3lxd0xWbk1obDl2REZuQ2NBS1ZHemFYN1QyVFlJQmNJM1dZUWZmRzRUVjdw
+TmpCVlpVSHZFSnV5cApwN0JWVTBIeDdEanp2VklBekdlbHZUWUwzQkhDOFdzaG02SVJ0MEZVTWlL
+T2czb1ZoemQ5OHRSckUxRzREWjFFCm1RVjFxZ1NVeU1OQW9mQmFydmNURTZqU2lncG5BS01LSXVu
+MzVHWEJkcHVPNGFhWG54UGQxZ0pNSkQvYXZ6L0sKbW16ZjRodW5xdDF2YzB2SFoybEVuTjlMZUNw
+ZVhqN2RkQldVTW5xU0hXem5XSEUrK0NNOE9Wcmc2cHhXb2RHRApJY3BmUFdSNXNiYzNxSmRnM3Rw
+TWpaSEdCMFNUYWtGYklEZ2tOU1IrRld6amg1YTZTVGx3bk1OdTBmNVc5VWZXCkVzdFg1VE5pMmRG
+YmYvNnVUS1dVWkZjSmc0dVFkKzdDSDhSU2cxMD0KPXlJcTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000de2b05061e74e340--
+--000000000000a142ef061e750472--
