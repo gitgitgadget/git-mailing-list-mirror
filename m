@@ -1,76 +1,85 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E88618FC9A
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975BE18CC1E
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722380124; cv=none; b=uMhi+xkEPnH5fHB1HE66P3I0Kc4JvW+ufpq678+qUyHkX2jJZ8ErTMslKRI+fF9HpCHaEElC8memmB0hlJJ1MxMKgM9MvhhT2AgCjzAtiIOvuOC35KzmZzQyIbcsFyB0zKWfW8NzMsWZhRscKJf1mcW6iDJuF7E9RRtaKZr6zvs=
+	t=1722380144; cv=none; b=nMiYcwi/s6JrdGnFZ6BCD6j4EFEW/p19+Bzbh2jBel9emURnh95dSf7RT2I5RPJKWlSj4vemL92EOpj9WvEXzwd7X2hJZYhdMQt25GOmiPKlTaS0p6JUg7F0boJe/pZNEqmFh/S3P2DjLeuDx3UjlTMHcOhCA1+kClFbQ58GyOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722380124; c=relaxed/simple;
-	bh=OOf5dTaPt9LxPiXXYIRdWVRb8nrU0+uzPTtQPmoxIFc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CccmN0JPgW36IkWpBmizxeAvfsMdgsbYTcJU+VzwCYrhIdUjjsTZhe+FS/qH65xx0ROe8MPG9lb42DVjyCMqkigAuWEiCiMGvJJnQA16Zpz2c0nMEorSTsJx+A3MKoUJ0SWMgD89uV/FTbosXlIVqg/RA0iwfExApEN0vqrLy6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=c+JTeFlT; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722380144; c=relaxed/simple;
+	bh=GzaULOlzwrCADHb8BMzLsw5itkc/xhNPjmkK31CYr1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aXg4jHlZYIC+N9ScvZcq02w0NRxFqo6PVa2T+6ORAuZRPQypKQYQJNRLnDmnGsYZOhPN7MuNnP3BbOPZwc2KEW4FYT2AJq/g80i3k3McnXS/SDI9Dx/cG4nNZ6CNcZA8PMPTrpfxH2em6emVRzZQ+6ZqquxBodD4FWytBxPwwfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d8PbUXdF; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c+JTeFlT"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 918721CCD6;
-	Tue, 30 Jul 2024 18:55:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OOf5dTaPt9LxPiXXYIRdWVRb8nrU0+uzPTtQPm
-	oxIFc=; b=c+JTeFlTALCymyNmw2WHHuz44v0lvkvgSZJJQdKNQssqqZG1jizClz
-	sCbXeXbWZjZwBTckeNuPBBklsHARlOtZfe3o3qoAY21J5XHTa69qhBtN50x7xxHw
-	GpVsJm8z9VK+lWXwj6a2MaPIO6bWXNMY0PRmdbxGZLnLTRKnKccY8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A3B01CCD5;
-	Tue, 30 Jul 2024 18:55:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 254A11CCD4;
-	Tue, 30 Jul 2024 18:55:19 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: "W. Michael Petullo" <mike@flyn.org>,  Jeff King <peff@peff.net>,
-  git@vger.kernel.org
-Subject: Re: Git clone reads safe.directory differently?
-In-Reply-To: <xmqqv80m8pha.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	30 Jul 2024 15:49:37 -0700")
-References: <ZqUc8DJ1uKcHYlcy@imp.flyn.org>
-	<20240727215845.GA1263246@coredump.intra.peff.net>
-	<ZqZjRMqpEV_3WIkD@imp.flyn.org>
-	<20240728224807.GA1299337@coredump.intra.peff.net>
-	<ZqjQi6i2kiY4gcc1@imp.flyn.org>
-	<Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
-	<xmqqv80m8pha.fsf@gitster.g>
-Date: Tue, 30 Jul 2024 15:55:17 -0700
-Message-ID: <xmqqr0ba8p7u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d8PbUXdF"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3dab336717fso3472760b6e.0
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:55:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722380142; x=1722984942; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=amBz1weOKLLA6PuIJD85N+K6+NlonQZVmzCJ00yABKE=;
+        b=d8PbUXdFCONPuBzyrfEB0AGJlYeGHPPwuGN/YTlp8wECKJWnrRrF8JxN2PnH7uupzG
+         clqpzy5UDgRSWZe0BmWRQ1AqebAFeJrtPMfR9Ct1ANGJasORDTw9uhqap8BvjDQMBZTf
+         Ul6kol1Hz313qIiqZCj3dq2NN2e9dpA8FgFvaG2oaXQyBQtgUvY88+IyjQolSKS0ugHG
+         gp1p2LF1jgY4jnuHBZks8sheE/HDQAQfSMwjCPAHa/B2FnLRCn+s1TlgA87A6au624DK
+         1xaHDKC+sLGmK3+FdyKH9iOueFrTKBLTMhi8k3TaxTjyQUIldzWfNUp/X6PbqkBqZ4ex
+         4G4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722380142; x=1722984942;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=amBz1weOKLLA6PuIJD85N+K6+NlonQZVmzCJ00yABKE=;
+        b=vFlrreP1x+vXVMjhCk52XjTLkUvmJqToYKqpPMgYleHaniSKr4cTTl7wwm+vsUnOw0
+         FQPbIsx++UQ5MC6sYFV0ccZXSmMiDSVzvSOgtWVBgh43YWqdkO1itLQdkUcRrModWwEd
+         ruu8qBgz9mtrqRQ7T6Of6QzInVv7vmrAbPcCzSzjuE5qBx/ZnEXmJefRh+XrrL7QFXIj
+         baxzxFCuRS62CZKJsyDyqy19YH+vesHLTn1HekV/ZR4JfGtsdjBUg7F+gGKP24yDuYrJ
+         sCAfXwtBgvR7/7YkEsDSUF2el//o8USFruaUw8w6wVYbd+3lELAvgh1h/pHEs2z9RBen
+         EllA==
+X-Gm-Message-State: AOJu0Yzuu7ZdwRLCCYPKuOvXl1LHsy+g9KE093jSlszxz9Xx+IvBQnX9
+	VieHw07G67tk0OMswY/oJMp3hNfS0N5MFHptjXxd2GWjjbYepSxXWv8SFA==
+X-Google-Smtp-Source: AGHT+IHq2iJhY/e1Bw3Be8d3NNXmhyFB17TsmkkS/PKP2K1sldQRdioIOWbvFQu+LCoqnoL9dAqw+A==
+X-Received: by 2002:a05:6808:1589:b0:3d9:2f59:c0d5 with SMTP id 5614622812f47-3db2389908dmr15825855b6e.19.1722380141560;
+        Tue, 30 Jul 2024 15:55:41 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3db41ff7297sm474103b6e.37.2024.07.30.15.55.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jul 2024 15:55:41 -0700 (PDT)
+Date: Tue, 30 Jul 2024 17:54:59 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] t98xx: mark Perforce tests as memory-leak free
+Message-ID: <rid2hs3dx77k5gkvxmhjyaramar7dces5ml6blxwu2tkqfh3x5@3fttesbincxm>
+References: <cover.1721740612.git.ps@pks.im>
+ <d0a80ba403a59d2d3f05b8336f229ff27caaa9d3.1721740612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CB379354-4EC6-11EF-8226-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d0a80ba403a59d2d3f05b8336f229ff27caaa9d3.1721740612.git.ps@pks.im>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 24/07/23 04:05PM, Patrick Steinhardt wrote:
+> All the Perforce tests are free of memory leaks. This went unnoticed
+> because most folks do not have p4 and p4d installed on their computers.
+> Consequently, given that the prerequisites for running those tests
+> aren't fulfilled, `TEST_PASSES_SANITIZE_LEAK=check` won't notice that
+> those tests are indeed memory leak free.
+> 
+> Mark those tests accordingly.
 
-> When you are using "--no-local" on the same machine, I do not think
-> there is any guarantee that "upload-pack" side is safe.  And that is
-> where the safe.directory thing needs to kick in.
+Nice to have more tests marked off the list! To me, it makes sense to go
+ahead and mark these tests as leak free even if we end up getting rid of
+them in the future. Thanks
 
-Ah, I take it back.  packObjectsHook won't run based on what the
-untrusted source repository configures, so at least we have been
-aware of the fact that upload-pack must be more careful than other
-stuff.
-
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
