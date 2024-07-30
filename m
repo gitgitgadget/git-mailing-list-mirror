@@ -1,68 +1,68 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEF3CA6B
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C67218F2F5
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722351365; cv=none; b=cQyg+Y4367DXfhvrrf3WWmQAb1QcE3JC8URgP1nZ5ITV49BSLv0L3gC9qbVZDus4Y+ZF3OP4dVj9N2H0NtHmVhQqEgbuCRwnziq/8ZL4JaBj62ic2pkX93F72a1S3HRQZtJ1nd3S99uft48RXINo8T/qywLUC2WYbvr9N0t49Xc=
+	t=1722351547; cv=none; b=uz9s3fZdkPB8OO0gfInFozcI1IPWLJ5oPtkAE6au/54GlZnEFIEd5s6qoRljv01ZwqD94VmB9gczVw2/yCxNa8ot85uhDaHcYh4S5JSd9Rl1z7KSRY17hV38QIULr9jQYdCfjaz0qqtZao1fiZQNC2vEUbMX+FgBxDNRh6WAJvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722351365; c=relaxed/simple;
-	bh=XyGudFE43TNIcatqxUCZLIl71Bv3QFyPz8W0zcOJsMg=;
+	s=arc-20240116; t=1722351547; c=relaxed/simple;
+	bh=wlcxg+FqNaafUcau3bgTNjYgqVQdGnA5tPetoH13xS4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c/365bffUXgD6CyWrKQCrMo1EktpqZr+Vk/47LUCFUxzix8lWtwS45qc1dgUwdNYhi7QhCDWFB+6bgEtuS6ND/+uJ4DWF3vEDvPZ0DtP9Lzw4KvH7UfDQP1SkTDqrNOXsZO2HD3KmCszWg0r9iG71/pn+olYSVgrNqNg+wbKn2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MR1e+uHZ; arc=none smtp.client-ip=209.85.210.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=DsWgtXyYHdUqvHOn2gGDCC3+FFvIi8oCePsUyJcvWAoQ9XoCLsUzA5ZFmVjlGVwl2YiUfNbXRiDs4adu6pH8MUBxX/Pd6x8pqew/VAyY4mvhFWCmYsOPM7M/bk3WCYaAIMbfc4uoKzR7y8gG4RVpRSAaIBX8SOlhwGR2xQE5dcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FsTTdRS7; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MR1e+uHZ"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-70d1cbbeeaeso3278566b3a.0
-        for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:56:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FsTTdRS7"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70d18112b60so3304432b3a.1
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 07:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722351363; x=1722956163; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722351545; x=1722956345; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4lYM/qLVzY0YFFbtO6B6KoycnKW3RNtOw/dmSmiyM18=;
-        b=MR1e+uHZ2N5ztaDG0oAs/Y6G64uvrG8VePb+avB2K/dofOH+AvUghTjhW7lRepnLPY
-         WakTHmMxz+jMJuDTWNMmyb0WEhviG2VGBmbAlxCY0RFA8zJUCJPQzxA/Kyqhp998v7Fj
-         nz64m0fYcu6gBz+n9TYLrohZH+bT3oiEYyPlhflFjRx73gZlCB0TDM563B5LrteWQjCm
-         6tUV0LMYw0/IFgoyqATcnXUAP+rPTIiBVTqTxfsrbXJJgU62uG1awaNxoJxkQYVOWp/Y
-         w6qD1MVBGaczjN5W2lc1iuvji6CEHKwGVDJaQ5jcVzWnIpf82hdCHuaI21X2TRKxtlPz
-         Gq4w==
+        bh=jtjIO7E61oIAV9VHKldVr8Q+Uh+Wq5eZGQP5m/i7HsA=;
+        b=FsTTdRS7mSRuUVvyAnvf5espXMxjixx+V9jonIaf0yaMcOse81+TKWIMZee2TtvYjQ
+         +wtTV0sbhb3RrudAU9sVmzvK9Vj2/bkYdRqav8YkB3AiK8ecnq+j3etdq4dUaegmGrVs
+         mSQ8QqXLXxikDCXp96f/DqYchrM+xnOwMRZjaR8w6OYAJWlRMsGFZ/DFUF53wFySAyLF
+         /etNshxFBweVFpIuXS4TJy1nhLYG42VvFqASyjeuyEGalEaj10XTqFNesRlsj+VX4fJx
+         GZXXwfhgOIxcM2OUT3ijVzZuP87cBs7U6zOB0GteiCkk36hTYchfxRrnOFZriBraWWMn
+         YPfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722351363; x=1722956163;
+        d=1e100.net; s=20230601; t=1722351545; x=1722956345;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4lYM/qLVzY0YFFbtO6B6KoycnKW3RNtOw/dmSmiyM18=;
-        b=d8hxmjj3iWTN0gEHinCP9ISKXgmT2h+qRs+0zMXcnkAdqPVbhnmU6DYl/3szN7O+i0
-         8BfJPaXnSs+AwLyuxMzzPikWd3b2jYQQrqAMxp9hGrT/FY6EwXINNeivvMD7+eKA/np2
-         cD1jfSUtTseS3TqLBUMr/adU7e2gL2rjYm9LClO7yC5vlFS/VmBAeKcaXcx1puAvGfVc
-         Cw3DYV+16/HWUgAiMR62Sltpt8XAXNl/90XPY/1NA9xqnBtYip4ckp2DN9eib3PUYZ9+
-         7bR3256T+E8PrKcYnFns2kTu8FUckQh6RUZgROcyGtjOhprHt3Hqbt0FaHKxeQ3/YkWt
-         V20A==
-X-Gm-Message-State: AOJu0YyohivMtydFnLhti26dCOy5H9IS6HZ5PAgPx2Wg98xNOWJAqfnB
-	M9lLbLhlFM5j+Wt1xbNhNCJ/q+eLd1wrbIHWw2+t1QPtO83G9LSF
-X-Google-Smtp-Source: AGHT+IErDjJX9v8WTkbvVKBZRAnxMl5dxh+5xrFFDlnQQF/rX+WUReg+vVrYZaxTvIw0Fr8w0AHDvw==
-X-Received: by 2002:a05:6a20:6a10:b0:1c2:8d33:af69 with SMTP id adf61e73a8af0-1c4a13afd31mr10276024637.41.1722351363005;
-        Tue, 30 Jul 2024 07:56:03 -0700 (PDT)
+        bh=jtjIO7E61oIAV9VHKldVr8Q+Uh+Wq5eZGQP5m/i7HsA=;
+        b=G25KKdTNnpyrVWh2zQo1WkPTPmOOuBQYxCAtO1XTDpgIfrZA2SAU1XPwYSNAWZA4vK
+         Mxyu6pzvg4PnGs4Fz5RHCB4GLe36rAbNW1bC3qCe0eMzdkZMhx8NKvS3KvQ5d66eEPwh
+         PyQKpIaVf7siFfXaClqzMaXuRsws0/LmOlozLEauDZ7NFJVVW89FEhRBWtSSokJSqa24
+         zmA022OLFeU7Wr3eGB4Vri3aUAeXm9+3pfe0xyfwU1Ch4lorqJo+YgR7/1QRjQsYKW2+
+         9HQHC28epwlIyQTocLpW2OphxwxHLo6LDfDkCpxCwMd+D9iPgMJ43AZKAZbPleJ4J0J/
+         JLCg==
+X-Gm-Message-State: AOJu0Yw+7TlVK64/mu1zCpFObVueCLXJQgyIuREIDJAHBPbiGcVNwOzE
+	xSZBPZfzxNS8OpiOeM5+Sonx+6pTeQkWvHLmlvIGr7teyUJ8AJZ1
+X-Google-Smtp-Source: AGHT+IHx2QnkIGCGYz7xHPqtzJGe9vukAgtIqQZb0oWLyZO31sQuGwH/ntd5KS3tl67nK9dJXpXzlw==
+X-Received: by 2002:aa7:9088:0:b0:704:2516:8d17 with SMTP id d2e1a72fcca58-70efe449177mr3464720b3a.8.1722351545019;
+        Tue, 30 Jul 2024 07:59:05 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7f71fc4sm102708255ad.221.2024.07.30.07.56.01
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70ead7133f5sm8469295b3a.54.2024.07.30.07.59.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jul 2024 07:56:02 -0700 (PDT)
-Date: Tue, 30 Jul 2024 22:56:22 +0800
+        Tue, 30 Jul 2024 07:59:04 -0700 (PDT)
+Date: Tue, 30 Jul 2024 22:59:24 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v13 02/10] fsck: add a unified interface for
- reporting fsck messages
-Message-ID: <Zqj_FmazX6SW98Eq@ArchLinux>
+Subject: Re: [GSoC][PATCH v13 03/10] fsck: rename objects-related fsck error
+ functions
+Message-ID: <Zqj_zITuG-gsNM2R@ArchLinux>
 References: <ZqeXrPROpEg_pRS2@ArchLinux>
- <ZqeYhkaArVmMdrnK@ArchLinux>
- <Zqik1JFs-RYCwNnz@tanuki>
+ <ZqeYkP5YiISbMrrN@ArchLinux>
+ <Zqik2RCfA6MAzzXx@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,173 +71,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zqik1JFs-RYCwNnz@tanuki>
+In-Reply-To: <Zqik2RCfA6MAzzXx@tanuki>
 
-On Tue, Jul 30, 2024 at 10:31:16AM +0200, Patrick Steinhardt wrote:
-> On Mon, Jul 29, 2024 at 09:26:30PM +0800, shejialuo wrote:
-> > The static function "report" provided by "fsck.c" aims at checking fsck
-> > error type and calling the callback "error_func" to report the message.
-> > However, "report" function is only related to object database which
-> > cannot be reused for refs.
+On Tue, Jul 30, 2024 at 10:31:21AM +0200, Patrick Steinhardt wrote:
+> On Mon, Jul 29, 2024 at 09:26:40PM +0800, shejialuo wrote:
+> > The names of objects-related fsck error functions are general. It's OK
 > 
-> Nit: it would be nice to mention _why_ it cannot be reused for refs.
-> 
-> > diff --git a/fsck.c b/fsck.c
-> > index 3f32441492..1185e9a8ad 100644
-> > --- a/fsck.c
-> > +++ b/fsck.c
-> > @@ -226,12 +226,18 @@ static int object_on_skiplist(struct fsck_options *opts,
-> >  	return opts && oid && oidset_contains(&opts->skip_oids, oid);
-> >  }
-> >  
-> > -__attribute__((format (printf, 5, 6)))
-> > -static int report(struct fsck_options *options,
-> > -		  const struct object_id *oid, enum object_type object_type,
-> > -		  enum fsck_msg_id msg_id, const char *fmt, ...)
-> > +/*
-> > + * Provide a unified interface for either fscking refs or objects.
-> > + * It will get the current msg error type and call the error_func callback
-> > + * which is registered in the "fsck_options" struct.
-> > + */
-> > +static int fsck_vreport(struct fsck_options *options,
-> > +			const struct object_id *oid,
-> > +			enum object_type object_type,
-> > +			const struct fsck_refs_info *refs_info,
-> > +			enum fsck_msg_id msg_id, const char *fmt, va_list ap)
-> >  {
-> > -	va_list ap;
-> > +	va_list ap_copy;
-> >  	struct strbuf sb = STRBUF_INIT;
-> >  	enum fsck_msg_type msg_type = fsck_msg_type(msg_id, options);
-> >  	int result;
-> 
-> It is a bit weird that this new generic function receives non-generic
-> inputs which are specific to the respective subsystems (objects or refs)
-> that we are checking.
+> s/general/generic, I guess.
 > 
 
-Actually, this is one of the biggest problem when implementing the
-infrastructure. The original function "report" only cares about
-reporting the problem of objects. So the callback "error_func" uses the
-similar prototype.
+I will improve this in the next version.
 
-Problem comes when we want to add ref-related report. In my very former
-implementation, I just created a new function "fsck_refs_report" to just
-copy some codes from "report" and defines refs-related callback.
-
-However, this is a bad way because we make duplication. If we want to
-reuse the "report" function, we should add new parameters into "report"
-and "error_func". This is the idea of this patch. However, as you can
-see, there are so many "report" function calls in the codebase, it's bad
-to change them. So I define a more common function called "fsck_vreport"
-function and wrap "report" to eventually call this function.
-
-> A better design would likely be to make `error_func()` receive a void
-> pointer such that `error_func()` and then have the respective subsystems
-> provide a function that knows to format the message while receiving
-> either a `struct fsck_object_report *` or a `struct fsck_ref_report *`.
-> 
-
-Yes, I agree with this idea. And I think we should use only one function
-called "fsck_reportf" to report any fsck-related messages. We could
-design the following callback "prototype".
-
-  typedef int (*fsck_error)(struct fsck_options *o,
-                            void *info,
-                            enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
-                            const char *message);
-
-Thus, we could make "fsck_reportf" generic. It will handle the common
-"fsck_options" and "enum fsck_msg_id" and then it will call "fsck_error"
-callback. The user could pass either refs information or objects
-information.
-
-> I don't think this is particularly worriesome though as it is still
-> manageable right now. So I'm fine if we want to leave this as-is, and
-> then we can iterate on this in a future patch series as required.
-> 
-
-I strongly suggest that we should use the above design for the following
-reasons:
-
-1. We only expose one interface called "fsck_reportf" which will make
-the code clear. Actually, there is no different between reporting refs
-and reporting objects.
-2. We provide more extensibility here, because we will never change
-"fsck_reportf" and "fsck_error" prototype when we want to add more info
-for either refs or objects.
-
-But do we really need this? Junio, could you please give some advice
-here. How do you think about this design. In my perspective, the only
-overhead here is that there are too many "report" function we should
-refactor.
-
-> > @@ -250,9 +256,9 @@ static int report(struct fsck_options *options,
-> >  	prepare_msg_ids();
-> >  	strbuf_addf(&sb, "%s: ", msg_id_info[msg_id].camelcased);
-> >  
-> > -	va_start(ap, fmt);
-> > -	strbuf_vaddf(&sb, fmt, ap);
-> > -	result = options->error_func(options, oid, object_type,
-> > +	va_copy(ap_copy, ap);
-> > +	strbuf_vaddf(&sb, fmt, ap_copy);
-> > +	result = options->error_func(options, oid, object_type, refs_info,
-> >  				     msg_type, msg_id, sb.buf);
-> >  	strbuf_release(&sb);
-> >  	va_end(ap);
-> > @@ -260,6 +266,35 @@ static int report(struct fsck_options *options,
-> >  	return result;
-> >  }
-> >  
-> > +__attribute__((format (printf, 5, 6)))
-> > +static int report(struct fsck_options *options,
-> > +		  const struct object_id *oid, enum object_type object_type,
-> > +		  enum fsck_msg_id msg_id, const char *fmt, ...)
-> > +{
-> > +	va_list ap;
-> > +	int result;
-> > +
-> > +	va_start(ap, fmt);
-> > +	result = fsck_vreport(options, oid, object_type, NULL, msg_id, fmt, ap);
-> > +	va_end(ap);
-> > +
-> > +	return result;
-> > +}
-> 
-> As far as I can see, `report()` is now specific to reporting errors with
-> objects while `fsck_vreport()` is the generic part. Do we want to rename
-> the function to `fsck_report_object()` to clarify, or would that cause
-> too much churn?
-> 
-> Hm. Seeing that we have 62 callsites of that function it may be too much
-> churn indeed.
-> 
-
-Yes, there are too many references for "report" function. That's why I
-wrap the "report" using "fsck_vreport".
-
-> > +int fsck_refs_report(struct fsck_options *options,
-> > +		     const struct object_id *oid,
-> > +		     const struct fsck_refs_info *refs_info,
-> > +		     enum fsck_msg_id msg_id, const char *fmt, ...)
-> 
-> Would `fsck_report_ref()` be a better name?
-> 
-
-I agree. However, if we use the above design, we will just use
-"fsck_reportf" here both for refs and objects.
-
-> What is the intent of the `oid` field? Would it be set to the object ID
-> that a reference points to? What if the reference is a non-resolving
-> symbolic reference? I wonder whether we can just remove it.
-> 
-
-`oid` is used to be the object ID that a reference points to. If the
-reference is a symbolic link or symref, we do not care about it. The
-caller should just pass `NULL`. Actually, we may not use this field.
-I just suppose that we may provide the user more information. Because
-when using "file-backend.c::parse_loose_ref_contents()" we will
-automatically get the `oid` if the ref is a regular reference. So I just
-provide `oid` here.
-
-> Patrick
