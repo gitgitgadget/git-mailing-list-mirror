@@ -1,221 +1,205 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D7DDDCD
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 01:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722302277; cv=none; b=GZIZbXG1aZpyfy1mlg1C7rSqAmNCZhpQ+ryo6adYB2NoNIRtRGbmY9FWWE7O2KPfirYtiXlUcXoXC45/g6uSqJR1l11+eXaMqRQorfxJ9UWxmeruE19rhIBvK0kInKpeQ//3bhiYsRn8MUWhjo+AbQH6wNgSF6C3LB2fvufJOFs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722302277; c=relaxed/simple;
-	bh=XVGOSQ+UIm/0pOdHM4vpIKXj2vxbUX1IrFWisDUQ6Lo=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVv43YEdAbg0HdkbwfK1Pz9HjVgKK0BROLAixooDkFkOiWFPvG19+kqcMtuQ4IvP40aDMxcYxZ7QmDZCOIhoAbVsN3HdLtkT0x2WKKvBvVABdcFyIR2wlyO002MeZ8Y4mamDQ4CHDp6n1/kfPn3muYHG4ZuwqK+9ycAfMKovy9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CsAwzmXf; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEBB10A1E
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 03:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.158.5
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722310898; cv=fail; b=RXcm6bht3YSAs9hyOxvKzys6wt5jGE3/YqceFqbLiFxwK5D9uEVjTXC3B69rjBuFC1uKKu2QtPy/xHb/TS6Z641Thn2UoMDGUobGhMnC71APagL1caYgEVMaFBiC8BXSyoNWj2aWpe9mwVvGVMIgqfdV/YqIHoc+frGewvIxt+M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722310898; c=relaxed/simple;
+	bh=1AmhBFF+oKyf2IBWC0zKi0NwbKP9VL56I1q9LJyCCgI=;
+	h=From:To:CC:Date:Message-ID:References:In-Reply-To:Content-Type:
+	 MIME-Version:Subject; b=gDKGROqxe2NpyQq8vtsKkIGSaQ3dl1C+3ZYBr/m7LVlh2k9budl5gwO8JLoEetFnVVtN4QOu5Qbl9Y3KjZGrLqCJARDlsUgG24p3ZijsIptBTgwBrTzNl/qi2tkVC6cLx2BXJwpiWM5XbMrReQBRZtWTyK9aO6sE9ZHzLUUGhvA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ibm.com; spf=pass smtp.mailfrom=ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=BaUNVsVs; arc=fail smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CsAwzmXf"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E472A30A50;
-	Mon, 29 Jul 2024 21:17:55 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=XVGOSQ+UIm/0pOdHM4vpIKXj2
-	vxbUX1IrFWisDUQ6Lo=; b=CsAwzmXfD7t2wiUuu+45qw9I/5PLfHdVgPy2v3kWv
-	yAptzE1uFO2/L2uQFx9I0+3MEYcv2XTaHI/2OQegF7Oj942OfgUiG4z+hS/E/z7e
-	DpDNoRgC5K9DyWoiUwvgrYYifcpid7GR/620Hga9ydsZbi5ietR8ZhsNBdyJpcIK
-	FI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id DCF4D30A4F;
-	Mon, 29 Jul 2024 21:17:55 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 67CFE30A4E;
-	Mon, 29 Jul 2024 21:17:52 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2 5/5] patch-id: tighten code to detect the patch header
-Date: Mon, 29 Jul 2024 18:17:38 -0700
-Message-ID: <20240730011738.4032377-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.46.0-71-g1aa693ace8
-In-Reply-To: <20240730011738.4032377-1-gitster@pobox.com>
-References: <20240621231826.3280338-1-gitster@pobox.com>
- <20240730011738.4032377-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="BaUNVsVs"
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46U2xhcU011976;
+	Tue, 30 Jul 2024 03:41:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+	:to:cc:date:message-id:references:in-reply-to:content-type
+	:content-id:content-transfer-encoding:mime-version:subject; s=
+	pp1; bh=1AmhBFF+oKyf2IBWC0zKi0NwbKP9VL56I1q9LJyCCgI=; b=BaUNVsVs
+	ehg1TUy3uzbllPpuXBpwLs9jmiMexFsIMA0gQkvbPdpidpNdyILJh5Jrjqhpwnz8
+	MagnRYvgDte8grYPyCc2vXFfi/Qc4mXpRiLLcpsOyEFo1Y7G4zZgyMurQDOcajGN
+	m3Ca15zzWqqmbibE4xj0A8BR87Ut7vn/HGgXKwepXA2Obyz+DRCt+94hj5kNesmI
+	eEm7vQm+XA3t/mjLJ6vnjvD1YxOMutmGDfSwTZm0k8/n1Z2h0LPF4vwhStf2Se97
+	NFt7L9U3p7l/Ik+kASsGlUzp8d6m5KpQ7AzNnSCXIKNzZrIqrzDBBih1+ySMjcpX
+	j7a6t7WTEJrMGQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40ppyur4uu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jul 2024 03:41:20 +0000 (GMT)
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46U3fKY7016356;
+	Tue, 30 Jul 2024 03:41:20 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2047.outbound.protection.outlook.com [104.47.55.47])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40ppyur4us-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jul 2024 03:41:20 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qIFF7ugBg25yTq1jkkRAwMh693DORZTuXatuOtvhxEO9whKdiz9pNbRO7qaOvaDKi7P/bo1qdDbMOmKTULM8p1qIn1fjs6lEhGIDyxmuMHC0QAIPFtvNeVETSrZR/PjPYeGzc4/X4a/pMVYZk9KlN6RUTOfWfLZGL7pnw2/sJwuVHzoHUYtny2c2zoj/cgYg3iT/GWXAkryYuResB/kYLcNnR70jyG7BL6WDZ7Eo7oA6CuHWuzaRSkzFl7m/foDmJ37hoeQ5KolEX+ojBDz8M28etX4jPo7FisCyS5YGBr1mjTsnWC9gKmBN43OsWKQ6CFh9njiELxnCwxZHv9WfGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1AmhBFF+oKyf2IBWC0zKi0NwbKP9VL56I1q9LJyCCgI=;
+ b=ATnKI72JY+pRSivhgQBR0ngAfh6hwOUOWcMogGqPD15DAolfInJI/Mzrqpma+LhbuW4Arf2utaSzBk0wMpKADn4cNEE002kXnvCSqmjaLs0kLsgpVdIgzctvIDn0BXQ8pGdCP205uBOMXGGtyXSmYwbgZwVZN/dvczpMybDhlRV0VSJrAS/z9kwOhfv5IAIPWh6uqYaqDpIPlV5k3/UiaX+A6FZspaTIRFr60iKAquTuwyGmaUUub6TWyEZ+6RKJk5Sv95/1pwzLj3HQYqlPphJYk9M+LR+HPXP1bxJ/tllP85Zlk/s7EZRjwhfSBmpAuUqIEiCUSmIqPkpl+JuOXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ibm.com; dmarc=pass action=none header.from=ibm.com; dkim=pass
+ header.d=ibm.com; arc=none
+Received: from DS0PR15MB5446.namprd15.prod.outlook.com (2603:10b6:8:ca::7) by
+ MW4PR15MB4459.namprd15.prod.outlook.com (2603:10b6:303:104::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7784.29; Tue, 30 Jul 2024 03:41:17 +0000
+Received: from DS0PR15MB5446.namprd15.prod.outlook.com
+ ([fe80::ec1a:c9b6:44dc:bf52]) by DS0PR15MB5446.namprd15.prod.outlook.com
+ ([fe80::ec1a:c9b6:44dc:bf52%6]) with mapi id 15.20.7807.026; Tue, 30 Jul 2024
+ 03:41:17 +0000
+From: Haritha D <Harithamma.D@ibm.com>
+To: Junio C Hamano <gitster@pobox.com>,
+        Haritha via GitGitGadget
+	<gitgitgadget@gmail.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Thread-Topic: [EXTERNAL] Re: [PATCH v3] Fix to avoid high memory footprint
+Thread-Index: AQHa3244v7NltrrEFUCgyhPjAFL+gbIPAgAA
+Date: Tue, 30 Jul 2024 03:41:17 +0000
+Message-ID: <B292440D-119F-4D87-B308-EC90027EA63D@ibm.com>
+References: <pull.1744.v2.git.git.1721821503173.gitgitgadget@gmail.com>
+ <pull.1744.v3.git.git.1721975234873.gitgitgadget@gmail.com>
+ <xmqqa5i4yypc.fsf@gitster.g>
+In-Reply-To: <xmqqa5i4yypc.fsf@gitster.g>
+Accept-Language: en-IN, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DS0PR15MB5446:EE_|MW4PR15MB4459:EE_
+x-ms-office365-filtering-correlation-id: b44450ce-ce35-4a99-e200-08dcb04977ff
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ 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
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR15MB5446.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?YmxuanUyTU5hSDdyYlBFU1hHclpFREV4VUpqeFRZTEs3R0hkTXc3NHhBbEZV?=
+ =?utf-8?B?L2xtYnFZRDVjWHl4eG5vVy9TMldHNjBld3pGMkVXRlI1OUZOUTZyVGduNkVj?=
+ =?utf-8?B?ZzdLK0pGbFNVbU5zdFJIbHhBVXpJV1lVdjRuWGVYS3J5bGdRL215S3V4Tzgv?=
+ =?utf-8?B?OCt0TkpIN3QyL2NJZEtLR2hvcFJqNG1tdFV2UE9IZHpFOENYbUN2SEorYVRw?=
+ =?utf-8?B?a3RHeENJNUFPQXBoV3Bxc09ES3dXL1M2U3JDYVlkTnoxN0xKb0liZGU5RUsy?=
+ =?utf-8?B?NDB6NDR1cURRSWoxNlJ5RWNIclNpdnFoNU9jZWx5U0k5amx3UFg2WG5sZXFW?=
+ =?utf-8?B?OXRYTXRIL0hLa0M5S2hES0FPQWl1UHY1OVFVWnZPeVdmYkJRY2J5RkhPT3pR?=
+ =?utf-8?B?SWxOVEUyYVAyaFJPNExoWHlHSTIrR3JPUjA1MVR1OGxPdFF4eU5hVnQrNmRH?=
+ =?utf-8?B?Ump5dGUydDdlbTNqTFhSM3Q3V0FHVFczZUxPTVFjS0tNWWpxYVNIZXNjOXZY?=
+ =?utf-8?B?ckNtc3hvelRKeVBXSkIyZm1hRHpwVThLQk1JVTgxaTdSc1ZhMUZaay9wY2Fl?=
+ =?utf-8?B?eHBxeUhUWEVnczRzWW5lVjJMOU9tQkYwSWZvNzRrc3lEY3lnbkNNallnSGRl?=
+ =?utf-8?B?ZUZvRjVSeGhoSU1vSnBJejdrSURBV1ZWQlNoQmVFYXpmc25kdy8vYUprOXlG?=
+ =?utf-8?B?eUFZOXZQN2pHNU0rUWhmMndOcGl4ZmtKQXVKSUxzT3pTSUVaSm1DSFlFS2Zt?=
+ =?utf-8?B?STB1S20rSHZZZHdCdlZaUXJ4dE9TSG1iMVFxOVd2eitBbGUvOFE0NU1LVzJI?=
+ =?utf-8?B?UTczYW96ZEhGK0o1Y2N5alVzNkx1T0h1Nkw0TU1uZGNpUElOU0pFMWF5U0ow?=
+ =?utf-8?B?WXVBN283UFB1OUJLMTNPUjUrMGxjMVlCQXhkMHJ6UWNvRkQ5UEkwbHU3Vk50?=
+ =?utf-8?B?bUp2NUUxaFc5a2lSK1FYMkRtZzVNRUpKajZ4TVFxK1FEQk12dnpndGxOVHM4?=
+ =?utf-8?B?NW1TdWo0TGdPUEtPSUU4aEVxYm5CSWY1S0IzaEpyam44L3dDVVp5YXF6MWQv?=
+ =?utf-8?B?OFE3WEdiWDVMY1pSTGVrVGNiRDlNN1pEQitaS21UKyt0MkF6QWF3Z01Jd0Vl?=
+ =?utf-8?B?Skk3TS9UQ2RtOHZZcHhKQ3ZGVFFwdURDc2ZrRDhjK0JUQ0NhVlc5SEpsM3hj?=
+ =?utf-8?B?UlJSQmNOYkhUdW1CYWhDOERocmpGTy9sbzlYWUFOK1gvak5scktmazM1RmR2?=
+ =?utf-8?B?UmpoeG9OTWJ3OW9uWDB6MjNoRnNPRVVQNGhOOHJtZWkybHlsNGVSdkcyd3FD?=
+ =?utf-8?B?L0pJR3pGemFYZlI2b0pEVWFiTVh6QTJLOStXaUNIMjhuUWNIeFdlOVBjNlQ3?=
+ =?utf-8?B?R3ByckRFOFB4U2tjSC91dTk3dTQxS0ZLaHRDUGltb1VGUDhqNnphTHFVWEVY?=
+ =?utf-8?B?amY1bTJBclBYTkNSSEo1cDQ3NlV3Q3pYVzQwaC9mRUQwRWNlcUwvZ1hFdHh2?=
+ =?utf-8?B?SHdhd3V2N2U2NWlWZ2o2SFE0UURJNkhiZjFRVUlhNDZJaHB1SHY1RUFXY25Q?=
+ =?utf-8?B?TFFBNndOY3VUWkJtZjNYZXdUQmpYNUp2eUNZTGV0WUdPQTNQRzdTQmZBRk41?=
+ =?utf-8?B?UmJBaE1hWkgzOHpDanNGeXUwdVNZZng4M2tjMS82YWNkU3hnVzRQZ3h1SUZ6?=
+ =?utf-8?B?d3lrOHRpWVYwbE5IQjlabkZQOVpVZEVFWEluZVpZMEZGZks1TU11OVQxYzJs?=
+ =?utf-8?B?UUtoMys0RUkxdk9QVGJLS29KWitYbXBCL0dRQmtzcVhGY0NrMXB4ZWZlNkF1?=
+ =?utf-8?B?OEtibm16Zkx3YWR2V2tDcm0yZGRYaHFaNUNzZ3Yrb29LTzMyRkNaTnhtUEd1?=
+ =?utf-8?B?WXRoTTdMQzljR2piZnBVaTJBaXlsMjFsNzk1ekplTXkwNFhWZnBDU25aNjZ0?=
+ =?utf-8?B?aWJuNWdVWG5TYjA3dEoxRTk0cjZaQ3I2aDRsWGFtUDBnWVJ5SE8weTBFajJU?=
+ =?utf-8?B?bCsrS1VKVEp2Wi8zWkV6aU4ydHRPekJWb1FaZVF2eEY4eGhTM0RkUC9rNjhV?=
+ =?utf-8?B?bDcvbHFSZmJkTTQ1ejRUSGFLZHhLdEJSTDcxSHdYa3EvVCtmQUNaeityS1hY?=
+ =?utf-8?B?ck5iNXVKRWtJcGZmcVdHUXo4K29CTFFUa0VUbFRiUXNteW12OXprckdlaGRM?=
+ =?utf-8?Q?tybupVn6f9HW9lRtv1k/so4=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <05826FEAEEDFB14D843680BF788265CE@namprd15.prod.outlook.com>
+X-OriginatorOrg: ibm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR15MB5446.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b44450ce-ce35-4a99-e200-08dcb04977ff
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jul 2024 03:41:17.1598
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: D5XuJYVIZxOywVuOb0qeTxO9CyF1mZ7raDOAZpdiNbxXQjtHqqTDy1ZfTVLpXeVeJM+ys4IB+DTKmgc/xDqSIg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR15MB4459
+X-Proofpoint-GUID: L5hHcowBaBA5tzAs0JZm6MdU8vie4aBQ
+X-Proofpoint-ORIG-GUID: njJ-wxehxqwRnGdsO5br_UqC66GR3htS
+Content-Transfer-Encoding: base64
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 8AF3778C-4E11-11EF-B989-92D9AF168FA5-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Subject: RE: [PATCH v3] Fix to avoid high memory footprint
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-30_03,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=926
+ lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ phishscore=0 clxscore=1011 suspectscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407300024
 
-The get_one_patchid() function unconditionally takes a line that
-matches the patch header (namely, a line that begins with a full
-object name, possibly prefixed by "commit" or "From" plus a space)
-as the beginning of a patch.  Even when it is *not* looking for one
-(namely, when the previous call found the patch header and returned,
-and then we are called again to skip the log message and process the
-patch whose header was found by the previous invocation).
-
-As a consequence, a line in the commit log message that begins with
-one of these patterns can be mistaken to start another patch, with
-current message entirely skipped (because we haven't even reached
-the patch at all).
-
-Allow the caller to tell us if it called us already and saw the
-patch header (in which case we shouldn't be looking for another one,
-until we see the "diff" part of the patch; instead we simply should
-be skipping these lines as part of the commit log message), and skip
-the header processing logic when that is the case.  In the helper
-function, it also needs to flip this "are we looking for a header?"
-bit, once it finished skipping the commit log message and started
-processing the patches, as the patch header of the _next_ message is
-the only clue in the input that the current patch is done.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/patch-id.c  | 49 +++++++++++++++++++++++++++++++++------------
- t/t4204-patch-id.sh | 17 ++++++++++++++++
- 2 files changed, 53 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index a2fdc0505d..f2e8feb6d3 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -60,10 +60,17 @@ static int scan_hunk_header(const char *p, int *p_bef=
-ore, int *p_after)
-=20
- /*
-  * flag bits to control get_one_patchid()'s behaviour.
-+ *
-+ * STABLE/VERBATIM are given from the command line option as
-+ * --stable/--verbatim.  FIND_HEADER conveys the internal state
-+ * maintained by the caller to allow the function to avoid mistaking
-+ * lines of log message before seeing the "diff" part as the beginning
-+ * of the next patch.
-  */
- enum {
- 	GOPID_STABLE =3D (1<<0),		/* --stable */
- 	GOPID_VERBATIM =3D (1<<1),	/* --verbatim */
-+	GOPID_FIND_HEADER =3D (1<<2),	/* stop at the beginning of patch message=
- */
- };
-=20
- static int get_one_patchid(struct object_id *next_oid, struct object_id =
-*result,
-@@ -71,6 +78,7 @@ static int get_one_patchid(struct object_id *next_oid, =
-struct object_id *result,
- {
- 	int stable =3D flags & GOPID_STABLE;
- 	int verbatim =3D flags & GOPID_VERBATIM;
-+	int find_header =3D flags & GOPID_FIND_HEADER;
- 	int patchlen =3D 0, found_next =3D 0;
- 	int before =3D -1, after =3D -1;
- 	int diff_is_binary =3D 0;
-@@ -86,26 +94,39 @@ static int get_one_patchid(struct object_id *next_oid=
-, struct object_id *result,
- 		int len;
-=20
- 		/*
--		 * If we see a line that begins with "<object name>",
--		 * "commit <object name>" or "From <object name>", it is
--		 * the beginning of a patch.  Return to the caller, as
--		 * we are done with the one we have been processing.
-+		 * The caller hasn't seen us find a patch header and
-+		 * return to it, or we have started processing patch
-+		 * and may encounter the beginning of the next patch.
- 		 */
--		if (skip_prefix(line, "commit ", &p))
--			;
--		else if (skip_prefix(line, "From ", &p))
--			;
--		if (!get_oid_hex(p, next_oid)) {
--			if (verbatim)
--				the_hash_algo->update_fn(&ctx, line, strlen(line));
--			found_next =3D 1;
--			break;
-+		if (find_header) {
-+			/*
-+			 * If we see a line that begins with "<object name>",
-+			 * "commit <object name>" or "From <object name>", it is
-+			 * the beginning of a patch.  Return to the caller, as
-+			 * we are done with the one we have been processing.
-+			 */
-+			if (skip_prefix(line, "commit ", &p))
-+				;
-+			else if (skip_prefix(line, "From ", &p))
-+				;
-+			if (!get_oid_hex(p, next_oid)) {
-+				if (verbatim)
-+					the_hash_algo->update_fn(&ctx, line, strlen(line));
-+				found_next =3D 1;
-+				break;
-+			}
- 		}
-=20
- 		/* Ignore commit comments */
- 		if (!patchlen && !starts_with(line, "diff "))
- 			continue;
-=20
-+		/*
-+		 * We are past the commit log message.  Prepare to
-+		 * stop at the beginning of the next patch header.
-+		 */
-+		find_header =3D 1;
-+
- 		/* Parsing diff header?  */
- 		if (before =3D=3D -1) {
- 			if (starts_with(line, "GIT binary patch") ||
-@@ -201,11 +222,13 @@ static void generate_id_list(unsigned flags)
- 	struct strbuf line_buf =3D STRBUF_INIT;
-=20
- 	oidclr(&oid);
-+	flags |=3D GOPID_FIND_HEADER;
- 	while (!feof(stdin)) {
- 		patchlen =3D get_one_patchid(&n, &result, &line_buf, flags);
- 		if (patchlen)
- 			flush_current_id(&oid, &result);
- 		oidcpy(&oid, &n);
-+		flags &=3D ~GOPID_FIND_HEADER;
- 	}
- 	strbuf_release(&line_buf);
- }
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index 1627fdda1b..b1d98d4110 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -137,6 +137,23 @@ test_expect_success 'patch-id computes the same for =
-various formats' '
- 	test_cmp actual expect
- '
-=20
-+hash=3D$(git rev-parse same:)
-+for cruft in "$hash" "commit $hash is bad" "From $hash status"
-+do
-+	test_expect_success "patch-id with <$cruft> in log message" '
-+		git format-patch -1 --stdout same >patch-0 &&
-+		git patch-id <patch-0 >expect &&
-+
-+		{
-+			sed -e "/^$/q" patch-0 &&
-+			printf "random message\n%s\n\n" "$cruft" &&
-+			sed -e "1,/^$/d" patch-0
-+		} >patch-cruft &&
-+		git patch-id <patch-cruft >actual &&
-+		test_cmp actual expect
-+	'
-+done
-+
- test_expect_success 'whitespace is irrelevant in footer' '
- 	get_patch_id main &&
- 	git checkout same &&
---=20
-2.46.0-69-gd0749fd195
-
+SGVsbG8gVGVhbSwNCg0KSSBoYXZlIHJldGFpbmVkIGNvbnZlcnQgYXMgcGVyIFRvcnN0ZW4ncyBj
+b21tZW50LiBSZXN0IGkgaGF2ZSBjaGFuZ2VkIGFzIHBlciBKdW5pbydzIHN1Z2dlc3Rpb24uIA0K
+DQpUaGFuayB5b3UsIGV2ZXJ5b25lLg0KDQrvu79PbiAyNi8wNy8yNCwgODo0MiBQTSwgIkp1bmlv
+IEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5jb20gPG1haWx0bzpnaXRzdGVyQHBvYm94LmNvbT4+
+IHdyb3RlOg0KDQoNCiJIYXJpdGhhIHZpYSBHaXRHaXRHYWRnZXQiIDxnaXRnaXRnYWRnZXRAZ21h
+aWwuY29tIDxtYWlsdG86Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4+IHdyaXRlczoNCg0KDQpBbm90
+aGVyIHRoaW5nLg0KDQoNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2M10gRml4IHRvIGF2b2lkIGhp
+Z2ggbWVtb3J5IGZvb3RwcmludA0KDQoNClRoaXMgZG9lcyBub3QgdGVsbCB1cyBtdWNoIGFib3V0
+IHdoYXQgYXJlYSBoYWQgcHJvYmxlbSB1bmRlciB3aGF0DQpjb25kaXRpb24uICJnaXQgc2hvcnRs
+b2cgLS1uby1tZXJnZXMgLTIwMCBtYXN0ZXIiIG1heSBnaXZlIHVzIGdvb2QNCmV4YW1wbGVzIG9m
+IGhvdyB3ZSB0eXBpY2FsbHkgd3JpdGUgdGhlIHRpdGxlIG9mIG91ciBjb21taXRzLg0KDQoNCklu
+IHRoZSBjYXNlIG9mIHRoaXMgY2hhbmdlLCBpZGVhbGx5IHdlIHNob3VsZCBiZSBhYmxlIHRvIHRl
+bGwgdGhhdA0KdGhpcyBpcyBhYm91dCB0cmFjaW5nIHRoZSBjb252ZXJzaW9uIGNvZGVwYXRoLg0K
+DQoNClN1YmplY3Q6IFtQQVRDSCB2Tl0gZW5jb2Rpbmc6IHJldHVybiBlYXJseSB3aGVuIG5vdCB0
+cmFjaW5nIGNvbnZlcnNpb24NCg0KDQpvciBzb21ldGhpbmcsIHBlcmhhcHM/DQoNCg0KDQo=
