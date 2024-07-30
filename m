@@ -1,47 +1,47 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815571AA3DE
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 18:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6946A1AA3F6
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 18:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722365048; cv=none; b=vB4KU2DZqF2PBX5H3Crnuhr6VWnWvBjNOqXfp5oou8qzZ5AiwgDe7hTWYfVkEq74hgbw8ejwFCjYon3tZ902eE4COC5P7mEE7DzYJe9wl6ZG2HIuHKNqt7LcVZqhLxZ8/deJ4plMqLcsESAe8uZtWsqr1ovCsVlAP037SbnXjdk=
+	t=1722365050; cv=none; b=LByTi5JYOeX2pJuAS2tZ3Xw9sf5CxysdIH4bjlQyJDesiNzqOMwZNU8xm3WpLeOTFCOWtnR0E1xTZ9VwlYGdb3u3Wm4AYgwlUazBwPTAagMXaI2q9skd8T7n1lAh+Z1JFHMqQj0dch4ddyAA5YeZtLKlfIMVrgdkqVGTFM1JjrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722365048; c=relaxed/simple;
-	bh=peNggeRphG34L/UmwcpDr6En10ce6XQJ2ph26t0OO+0=;
+	s=arc-20240116; t=1722365050; c=relaxed/simple;
+	bh=F3oKBO04l6XBcfTHkpxxV+9vd8FrFUFXNIwcJiswUI8=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieoOCE6e3fADsJBkzqhk0Mam/baRN2HNA3GNsTLcrUvhjQ2TigCz0F7nDC7+pPesRepu3C6TCEXKvyLVLEeTun7VNF0pNv3CBKd28GBtiB4obyWyU1Ks+LmV87gin8xyA7i/HHYa92dxco/6yWHp7CTCkN0uBCUhigehQwHoV0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zad2DxQj; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version; b=cUyT20wxa7BGcp91dXYmW7pG69BHrU3xlAYwCsI9q5BSYC/YaEjL+I5JpX7V4RLrhTUPOckUq3xGDvmbFaRpmVp4Jlhu8wscFBhDe9rA4KKLUZUhN1jwXWpOtlqBtnVjhDnCStCvfqNqx8gp9G+pQlvg+/qSIqPbtqMGB72Gv6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LgLWHgHa; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zad2DxQj"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E5ED11ACC2;
-	Tue, 30 Jul 2024 14:44:01 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LgLWHgHa"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A08734F2A;
+	Tue, 30 Jul 2024 14:44:08 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=peNggeRphG34L/UmwcpDr6En1
-	0ce6XQJ2ph26t0OO+0=; b=Zad2DxQj8n/qP8xcOQR8/fJsZNpddGLHtGBhvCrwv
-	2PUYH0sv80iJTVEmstcxZtA9U7ts0PSHUideKntw4nBRWE9I/sGh9Gh3KKRpudwH
-	4DwhgYnxHW1NzaPwkNpnf4B4FWEAjfXvC0lUucf3MD0laPAuUPyPob4Brn7K1dED
-	Xs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id DFCBA1ACC1;
-	Tue, 30 Jul 2024 14:44:01 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=F3oKBO04l6XBcfTHkpxxV+9vd
+	8FrFUFXNIwcJiswUI8=; b=LgLWHgHaee8EfXejIgtz8JQPJoKzt8N9b98jeSmnI
+	Ypd2cZqc3NJ4em0LLvy4/NMA5s+VWt2xmbrl6Vzj4CJj8HjjicA3kyBwXZbMlpLi
+	2UKI3C21uI7dkY5B707ZXRy5zrIYlm8P4GAeO7cwWvAqUtzNOT8cX0WxM0gBHGkd
+	2k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D09234F29;
+	Tue, 30 Jul 2024 14:44:08 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7DF2E1ACBF;
-	Tue, 30 Jul 2024 14:43:58 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D03E34F26;
+	Tue, 30 Jul 2024 14:44:07 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4 1/4] safe.directory: preliminary clean-up
-Date: Tue, 30 Jul 2024 11:43:49 -0700
-Message-ID: <20240730184352.2503276-2-gitster@pobox.com>
+Subject: [PATCH v4 4/4] safe.directory: setting safe.directory="." allows the "current" directory
+Date: Tue, 30 Jul 2024 11:43:52 -0700
+Message-ID: <20240730184352.2503276-5-gitster@pobox.com>
 X-Mailer: git-send-email 2.46.0-77-g633c50689c
 In-Reply-To: <20240730184352.2503276-1-gitster@pobox.com>
 References: <20240730011004.4030246-1-gitster@pobox.com> <20240723021900.388020-1-gitster@pobox.com> <20240720220915.2933266-1-gitster@pobox.com>
@@ -53,72 +53,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- AE74B454-4EA3-11EF-B346-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+ B3C7B9D8-4EA3-11EF-A703-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-The paths given in the safe.directory configuration variable are
-allowed to contain "~user" (which interpolates to user's home
-directory) and "%(prefix)" (which interpolates to the installation
-location in RUNTIME_PREFIX-enabled builds, and a call to the
-git_config_pathname() function is tasked to obtain a copy of the
-path with these constructs interpolated.
+When "git daemon" enters a repository, it chdir's to the requested
+repository and then uses "." (the curent directory) to consult the
+"is this repository considered safe?" when it is not owned by the
+same owner as the process.
 
-The function, when it succeeds, always yields an allocated string in
-the location given as the out-parameter; even when there is nothing
-to interpolate in the original, a literal copy is made.  The code
-path that contains this caller somehow made two contradicting and
-incorrect assumptions of the behaviour when there is no need for
-interpolation, and was written with extra defensiveness against
-two phantom risks that do not exist.
+Make sure this access will be allowed by setting safe.directory to
+".", as that was once advertised on the list as a valid workaround
+to the overly tight safe.directory settings introduced by 2.45.1
+(cf. <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>).
 
-One wrong assumption was that the function might yield NULL when
-there is no interpolation.  This led to the use of an extra "check"
-variable, conditionally holding either the interpolated or the
-original string.  The assumption was with us since 8959555c
-(setup_git_directory(): add an owner check for the top-level
-directory, 2022-03-02) originally introduced the safe.directory
-feature.
-
-Another wrong assumption was that the function might yield the same
-pointer as the input when there is no interpolation.  This led to a
-conditional free'ing of the interpolated copy, that the conditional
-never skipped, as we always received an allocated string.
-
-Simplify the code by removing the extra defensiveness.
+Also add simlar test to show what happens in the same setting if the
+safe.directory is set to "*" instead of "."; in short, "." is a bit
+tighter (as it is custom designed for git-daemon situation) than
+"anything goes" settings given by "*".
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- setup.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ t/t0033-safe-directory.sh | 64 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index d458edcc02..3177d010d1 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1235,17 +1235,15 @@ static int safe_directory_cb(const char *key, con=
-st char *value,
- 		char *allowed =3D NULL;
+diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
+index ea74657255..e97a84764f 100755
+--- a/t/t0033-safe-directory.sh
++++ b/t/t0033-safe-directory.sh
+@@ -233,4 +233,68 @@ test_expect_success SYMLINKS 'configured leading pat=
+hs are normalized' '
+ 	git -C repo/s/.git/ for-each-ref
+ '
 =20
- 		if (!git_config_pathname(&allowed, key, value)) {
--			const char *check =3D allowed ? allowed : value;
--			if (ends_with(check, "/*")) {
--				size_t len =3D strlen(check);
--				if (!fspathncmp(check, data->path, len - 1))
-+			if (ends_with(allowed, "/*")) {
-+				size_t len =3D strlen(allowed);
-+				if (!fspathncmp(allowed, data->path, len - 1))
- 					data->is_safe =3D 1;
--			} else if (!fspathcmp(data->path, check)) {
-+			} else if (!fspathcmp(data->path, allowed)) {
- 				data->is_safe =3D 1;
- 			}
--		}
--		if (allowed !=3D value)
- 			free(allowed);
-+		}
- 	}
-=20
- 	return 0;
++test_expect_success 'safe.directory set to a dot' '
++	test_when_finished "rm -rf repository" &&
++	(
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		git config --global --unset-all safe.directory
++	) &&
++	mkdir -p repository/subdir &&
++	git init repository &&
++	(
++		cd repository &&
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		test_commit sample
++	) &&
++
++	(
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		git config --global safe.directory "."
++	) &&
++	git -C repository for-each-ref &&
++	git -C repository/ for-each-ref &&
++	git -C repository/.git for-each-ref &&
++	git -C repository/.git/ for-each-ref &&
++
++	# What is allowed is repository/subdir but the repository
++	# path is repository.
++	test_must_fail git -C repository/subdir for-each-ref &&
++
++	# Likewise, repository .git/refs is allowed with "." but
++	# repository/.git that is accessed is not allowed.
++	test_must_fail git -C repository/.git/refs for-each-ref
++'
++
++test_expect_success 'safe.directory set to asterisk' '
++	test_when_finished "rm -rf repository" &&
++	(
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		git config --global --unset-all safe.directory
++	) &&
++	mkdir -p repository/subdir &&
++	git init repository &&
++	(
++		cd repository &&
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		test_commit sample
++	) &&
++
++	(
++		sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++		git config --global safe.directory "*"
++	) &&
++	# these are trivial
++	git -C repository for-each-ref &&
++	git -C repository/ for-each-ref &&
++	git -C repository/.git for-each-ref &&
++	git -C repository/.git/ for-each-ref &&
++
++	# With "*", everything is allowed, and the repository is
++	# discovered, which is different behaviour from "." above.
++	git -C repository/subdir for-each-ref &&
++
++	# Likewise.
++	git -C repository/.git/refs for-each-ref
++'
++
+ test_done
 --=20
 2.46.0-77-g633c50689c
 
