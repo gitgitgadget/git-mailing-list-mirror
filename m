@@ -1,125 +1,136 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CE71A76C9
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 17:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE26184547
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 17:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722362169; cv=none; b=Q9ZzL+LPr0+ecLJG3MYSnl4tpdiMJ1RXOgMmOj4LJMhKnrWtQ8oBzxLKKWiKFWhj0l2u8r5BLXJhx6xaeisA+SKww2OPMPb7av4aPmMZkfN9asbCXJ/0OSVlRJanYqxPf2ELUabK98393qtYfk51Dh2MnyWUeXZdvntTo9FqCxw=
+	t=1722362233; cv=none; b=Y1z5E/eaRliyBRAkwxJdxNzlDAg2XVRC7Cd9SS0BdUaI3qJNw+bCb3pAlR49fxXrF9wIoRMf+ta4zXkn0SK4t+CnsUwMUa/lvkepbwbCawWydFf780qafzcUzyFYW1Ok6NHkuIfz8fblk+EzyVb3MGrxqXTE8EehHdqwkf/3WqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722362169; c=relaxed/simple;
-	bh=xiWH9udoVhPPLYYrMi1vNOs2V+/QXb21S0sXVq3FXMI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R2wFAvhcBnAAo+k9dm4/jV5BKy/cu3Ty0hOt+8p4ZY/fFYTfiCU6EqlS9f4EWq/YDX4gdFIbBl3GQnt5fVg979XlwYS1VWNRSwouSF3UZVrL/sfbluizp+9lSvSeN8+/oiu1K7n2V1hB2/gWAOeMRTjFGOtWCFuYutfmerkMV6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NziggpjC; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NziggpjC"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D191334908;
-	Tue, 30 Jul 2024 13:56:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xiWH9udoVhPPLYYrMi1vNOs2V+/QXb21S0sXVq
-	3FXMI=; b=NziggpjCSj+9Hj3XtdyjcdqAheal8hq7zMHSACG2Kqdiy6rutpEF7C
-	GcvJZsosRgBZQxhtu/QdzWclMdpVAt643H9NMF9tHYqq2t95s1EEwTl5TOPuaPzU
-	lNXtWfwxhvAXDmfCTEfCFDNl8p0GIArxv60hd+i4XYf6comCzN/Yc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C890534906;
-	Tue, 30 Jul 2024 13:56:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1215834904;
-	Tue, 30 Jul 2024 13:56:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: safe.directory: preliminary clean-up
-In-Reply-To: <xmqqv80metou.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	30 Jul 2024 09:22:09 -0700")
-References: <20240723021900.388020-1-gitster@pobox.com>
-	<20240720220915.2933266-1-gitster@pobox.com>
-	<20240730011004.4030246-1-gitster@pobox.com>
-	<20240730011004.4030246-3-gitster@pobox.com>
-	<20240730074307.GB562212@coredump.intra.peff.net>
-	<xmqqv80metou.fsf@gitster.g>
-Date: Tue, 30 Jul 2024 10:56:04 -0700
-Message-ID: <xmqq5xsmdarv.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1722362233; c=relaxed/simple;
+	bh=QHCzbGhuose0LVPAyQBD9XnP2nOb/P/hNz3p8dWOBWI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TTcW0bQcDqYK6fYxJPvq/vhBhw0rKQdFongVlJrTPOs4MQBD27/qWwiOoTQ4Lz54Zqku45Mih02weNLzEYu8mAPOwoXqHkZJD973MUZLT3/TUR0xeveEoaWE8r/OZgS1z+/gb6/lTqI+Rv0YMKe+8MOf8JduuWcON/iSE+srKVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6b7acf213a3so25543586d6.1
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 10:57:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722362230; x=1722967030;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qTQ9HkgXmWDkDk1qSeAMDxeKJwojMdaaRkR/DPSc6BI=;
+        b=UKEMlEcSq/9snhG5OusZtP6oArRKHeaj4b6Oy3o6AIEKO3x996axfbJZV3e+ozG2Cj
+         28k8t7kpg6tJYlYELLG/UuzEgFATjXTh3JUpTFoz5fLCuo+6cwW4lVPFT7SaYixJ9LvU
+         O14uCU7eTtwchX2aYLsNClQYyUIWNW1wgZPJA+JlEAOArSFgO0OIrziJt00NQXRWXeYv
+         +7R5+DS1iqouKUqlnC8AAMJaOF+tpnJqylcpaUA3A7JiGBONyorhzM713zx9ISxl6+CQ
+         wM4RcO5fkx1ccbLRQGzr/JwVScu+fc5c/NHcZz8cS+JHDGZ+rorwcxsM+3+OP1Hwr7Mu
+         PKVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWW2HtHp/vpPyHVJ67gI5f4CCoS/k5pjc/mIH1kOpseY+IvitX4U58TRXRmUm4rIRdX6XYpCudUqhT2QtEBg5UWkUlB
+X-Gm-Message-State: AOJu0YwfoadRhSuAZKossVkgi32/wW75fLupvbc8q7G4e3xSYUANoTtl
+	mJvJQzswXEDWhD49li3V+KfKABzLYL7u4kMOTVfP7u3TOFD2+rKeYew9eoMsziGuTdAiXSLrWpw
+	Vyh2DQv59kXdVapKzUhEGLSPxRkk=
+X-Google-Smtp-Source: AGHT+IHe55JwqMFrOXB7UE69NDTGsLJm4SI853xteHi8xYjLX6J4qpr4R2rOQC0fvu/iim83/LfHLzanR1YKq6eiCTk=
+X-Received: by 2002:ad4:5ba4:0:b0:6b5:7ee:1d79 with SMTP id
+ 6a1803df08f44-6bb55a751a9mr136094646d6.26.1722362229767; Tue, 30 Jul 2024
+ 10:57:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- FE5A8E64-4E9C-11EF-8530-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+References: <ZqeXrPROpEg_pRS2@ArchLinux> <ZqeYsNtl90N1fVDy@ArchLinux>
+ <Zqik6cgm_6HYVUKy@tanuki> <ZqkN4wNK0PIRyNky@ArchLinux>
+In-Reply-To: <ZqkN4wNK0PIRyNky@ArchLinux>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 30 Jul 2024 13:56:58 -0400
+Message-ID: <CAPig+cRD3F-QHneC+0bEUcWt4ep8hXgjg4OT_MvfLjQKNE54iA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v13 06/10] git refs: add verify subcommand
+To: shejialuo <shejialuo@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The paths given in the safe.directory configuration variable are
-allowed to contain "~user" (which interpolates to user's home
-directory) and "%(prefix)" (which interpolates to the installation
-location in RUNTIME_PREFIX-enabled builds, and a call to the
-git_config_pathname() function is tasked to obtain a copy of the
-path with these constructs interpolated.
+On Tue, Jul 30, 2024 at 11:59=E2=80=AFAM shejialuo <shejialuo@gmail.com> wr=
+ote:
+> On Tue, Jul 30, 2024 at 10:31:37AM +0200, Patrick Steinhardt wrote:
+> > On Mon, Jul 29, 2024 at 09:27:12PM +0800, shejialuo wrote:
+> > > +   /*
+> > > +    * Explicitly free the allocated array and "skip_oids" set
+> > > +    */
+> > > +   free(fsck_refs_options.msg_type);
+> > > +   oidset_clear(&fsck_refs_options.skip_oids);
+> >
+> > Should we provide a `fsck_options_clear()` function that does this for
+> > us? Otherwise we'll have to adapt callsites of `refs_fsck` whenever
+> > internal implementation details of the subsystem add newly allocated
+> > members.
+> [...]
+> But how does "fsck.c" free "skip_oids", actually "fsck.c" never frees
+> "skip_oids". This is because "git-fsck(1)" defines the following:
+>
+>   static struct fsck_options fsck_walk_options =3D FSCK_OPTIONS_DEFAULT;
+>   static struct fsck_options fsck_obj_options =3D FSCK_OPTIONS_DEFAULT;
+>
+> Because these two options are "static", so there is no memory leak. We
+> leave it to the operating system. So maybe a more simple way is just to
+> add "static" identifier in "cmd_refs_verify" which means:
+>
+>   - struct fsck_options fsck_refs_options =3D FSCK_REFS_OPTIONS_DEFAULT;
+>   + static struct fsck_options fsck_refs_options =3D FSCK_REFS_OPTIONS_DE=
+FAULT;
+>
+> But I don't think we should use `static`, because Eric has told me that
+> making a variable "static" will make the code harder to "libfy". So
+> let's use "fsck_options_clear" function instead.
 
-The function, when it succeeds, always yields an allocated string in
-the location given as the out-parameter; even when there is nothing
-to interpolate in the original, a literal copy is made.  The code
-path that contains this caller somehow made two contradicting and
-incorrect assumptions of the behaviour when there is no need for
-interpolation, and was written with extra defensiveness against
-two phantom risks that do not exist.
+I haven't been following this topic closely and I'm not familiar with
+this code (and don't have much time now to dig into it), but I suspect
+the context here is rather different from the one[*] in which I was
+highly skeptical of the use of `static`. The `static` in that earlier
+case was suspicious/questionable for two reasons. First, it was a case
+of premature optimization (which, by definition, is frowned upon).
+Second, it was in a "library" function (namely, top-level
+fsck.c:fsck_refs_error_function()) which may someday become a linkable
+library which other programs (aside from `git` itself) may utilize.
+Having a static strbuf in the library function makes the function
+non-reentrant and takes memory management out of the hands of the
+client.
 
-One wrong assumption was that the function might yield NULL when
-there is no interpolation.  This led to the use of an extra "check"
-variable, conditionally holding either the interpolated or the
-original string.  The assumption was with us since 8959555c
-(setup_git_directory(): add an owner check for the top-level
-directory, 2022-03-02) originally introduced the safe.directory
-feature.
+In the case under discussion here (namely `builtin/fsck.c`), it is a
+Git-specific command, not library code. As such, "libification" is
+much less of an issue since Git-specific command code is less likely
+to be reused by some other project. (However, that's not to say that
+we shouldn't worry about unnecessary use of `static` even in builtin
+commands; code from those commands does periodically migrate from
+`builtin/*.c` to top-level library oriented `*.c`.)
 
-Another wrong assumption was that the function might yield the same
-pointer as the input when there is no interpolation.  This led to a
-conditional free'ing of the interpolated copy, that the conditional
-never skipped, as we always received an allocated string.
+So, considering that the variable under discussion:
 
-Simplify the code by removing the extra defensiveness.
+    struct fsck_options fsck_refs_options =3D FSCK_REFS_OPTIONS_DEFAULT;
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- setup.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+is part of a builtin command rather than library code, we don't have
+to worry about "libification" so much, thus making it `static` would
+be a workable approach. However, doing so merely to avoid complaint by
+the leak-checker does not seem like good justification. Hence, keeping
+this variable non-static and freeing it explicitly seems a better idea
+(which is what this code does presently).
 
-diff --git c/setup.c w/setup.c
-index d458edcc02..3177d010d1 100644
---- c/setup.c
-+++ w/setup.c
-@@ -1235,17 +1235,15 @@ static int safe_directory_cb(const char *key, const char *value,
- 		char *allowed = NULL;
- 
- 		if (!git_config_pathname(&allowed, key, value)) {
--			const char *check = allowed ? allowed : value;
--			if (ends_with(check, "/*")) {
--				size_t len = strlen(check);
--				if (!fspathncmp(check, data->path, len - 1))
-+			if (ends_with(allowed, "/*")) {
-+				size_t len = strlen(allowed);
-+				if (!fspathncmp(allowed, data->path, len - 1))
- 					data->is_safe = 1;
--			} else if (!fspathcmp(data->path, check)) {
-+			} else if (!fspathcmp(data->path, allowed)) {
- 				data->is_safe = 1;
- 			}
--		}
--		if (allowed != value)
- 			free(allowed);
-+		}
- 	}
- 
- 	return 0;
+I do agree with Patrick that adding fsck_options_clear() to top-level
+`fsck.h` would be sensible since it frees callers from having to know
+implementation details of `fsck_options`.
+
+By the way, regarding the static `fsck_walk_options` and
+`fsck_obj_options` those are probably global static for convenience
+rather than out of necessity. It might very well be possible to make
+those local variables in builtin/fsck.c:cmd_fsck() and then plumb them
+through to called functions so that they don't have to be static, and
+then they would be freed manually by cmd_fsck(), as well. However,
+that sort of change is well outside the scope of this topic.
+
+[*] https://lore.kernel.org/git/CAPig+cR=3DRgMeaAy1PRGgHu6_Ak+7=3D_-5tGvBZR=
+ekKRxi7GtdHw@mail.gmail.com/
