@@ -1,149 +1,183 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4AD18DF9D
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0032518DF9D
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 22:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722379209; cv=none; b=R8mK+WcarXZ38x1rFZ3uiB3swZkNL87AV9vUSBu+VOMFu7z4Hy1u9pOsupQwlriAHc3AvKBSAW8nO0beyXZlVSFicqGlzanJX50vdf0gZs/psih8UaYziv42P8v93RTwtLIZ6NRfaz4SXMC3CjK2s8CqCnd64EiShJASHQ1XIYI=
+	t=1722379262; cv=none; b=bM2XMx4BV5b3p4griSdvYXjhMWFZhjmVQrHlXnLyHyf8pquDiyq0JhJ/135uGks3ydyla9dcy9IBb3wepk2JsDOAFvRygJMIspe2K6vVjM1vfiN6jkXYILhuzNkrF44QwduWo+DyaJj1jMQPQRjB71Pc+OR4nIxYfwFjm8R3qR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722379209; c=relaxed/simple;
-	bh=RIbYabPCXDpUDhMDfnovDiNNdAfxfQDF94JfadUu9MQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o6h9gKREqPojIZGnTum2GLkCU4D/M4ItVg3vRYvML8bz/TU0/KHVG/U+7L4V5IIrp8lZFwZQuly0uvpZSWIhJrkO+h4AWx3T7ZoTDcS/R3OGq6vWYLhIjR6zCtsFNE+kGyoCcPnXAG0hiiowVEYHJok6AGERWKoAtesE41WTZ2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bukTF46b; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bukTF46b"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1722379205;
-	bh=RIbYabPCXDpUDhMDfnovDiNNdAfxfQDF94JfadUu9MQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=bukTF46bW8+R3NT/Xf3E2xPxseOmFeLHWsjau/lYeJ9hnou707oDv34Lr52clA6gP
-	 BC2GtMI+kBlhUbBJZCWu6i2rWq+xoQJxW5HtqsKdivcxNkZExZBcCOSoI5FxKLR8om
-	 lOmTtmqmvyWnFyNKIKSzo4b3fuMOXh1N5UqG4KC3oiwiSALgrE3bngYhYr0F9C89Sb
-	 jQ2RuuzpS7JYB22Zg4CCdxXaUaNeWQ6upoQfPZkSBlSt3kNiVbnrMzAtoLqJ9Jt2/r
-	 7xVdvsTvMsXwkWdK7DUhXCAYGT9+rz5ia/rZixXQr/cF+y3n0xAAIrOAH8O/Kr/hr+
-	 rXQyxdh1UIZvTYMuOXNQuOSkNhhpXQylf9klFPnHs0iahfu8EBCFft5prLdAbQ73wI
-	 g2+o45BqOzxjJJPBumc/rUfut8Z82ES4KHt5PIdYIJbiaAMuec6AVMkCvYOb+MTjKs
-	 ZvcDCr9NCggl/SjoTlrKTqWZkFd1zq20CpA6+H5tx1BHTt75Seh
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 63301209B9;
-	Tue, 30 Jul 2024 22:40:05 +0000 (UTC)
-Date: Tue, 30 Jul 2024 22:40:04 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Nathan Teodosio <nathan.teodosio@canonical.com>
-Cc: git@vger.kernel.org
-Subject: Re: Tracked file cannot be added, mentions to sparse checkout that I
- don't have.
-Message-ID: <ZqlrxFrzuC2lGyTU@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Nathan Teodosio <nathan.teodosio@canonical.com>,
-	git@vger.kernel.org
-References: <20240730122926.638a9263@canonical>
+	s=arc-20240116; t=1722379262; c=relaxed/simple;
+	bh=BTHTjEEeVtzHyiBPs0FROq8AMpwbZIjNmkMZAXDFAOg=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SUe43innLgRuEnstuo4MevDIOt4DfECy9brcqA2auvP7/o0WS2ekrgnL4Ahq0TXcS+uJhkm68jMLIVg9cPy2bOMAaRnbQhXJNwvmMmRZk/SU9qvWlWLP5O26I1HkYyLQrdoV2ZGflbp5NARvFZfq60dPcJXY1DV7GvnAIs8lwCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46UMemY43139919
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jul 2024 22:40:48 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Emily Shaffer'" <nasamuffin@google.com>
+Cc: <git@vger.kernel.org>, "'Taylor Blau'" <me@ttaylorr.com>,
+        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" <avarab@gmail.com>
+References: <20240730175448.1727373-1-emilyshaffer@google.com>	<xmqq7cd2bs0q.fsf@gitster.g>	<CAJoAoZn57LMCz9dmU3u+2HS1urOcoY1HQA6axh0cWoGchS_KFA@mail.gmail.com> <xmqqttg6a7zj.fsf@gitster.g>
+In-Reply-To: <xmqqttg6a7zj.fsf@gitster.g>
+Subject: RE: [PATCH v4] Documentation: add platform support policy
+Date: Tue, 30 Jul 2024 18:40:42 -0400
+Organization: Nexbridge Inc.
+Message-ID: <000001dae2d1$85ce8f40$916badc0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eEsMZiy7YnVw5maw"
-Content-Disposition: inline
-In-Reply-To: <20240730122926.638a9263@canonical>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---eEsMZiy7YnVw5maw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQI5Js9r9iVOCp5l2xZx/NcDi+YSZAMJj/R0ASQc/PcB/BckgrEh/xhQ
+Content-Language: en-ca
 
-On 2024-07-30 at 10:29:26, Nathan Teodosio wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
->=20
-> I modified a tracked file.
->=20
-> What did you expect to happen? (Expected behavior)
->=20
-> The file is listed as modified in git status and added with git add etc.,
-> i.e. the usual commit routine.
->=20
-> What happened instead? (Actual behavior)
->=20
-> I cannot add or commit the changes done to that file.
->=20
-> --->
-> % echo 1 >> snapcraft.yaml
-> % tail -n1 snapcraft.yaml
-> 1
-> # I expected snapcraft.yaml to show here:
-> % git status -s
-> ?? git-bugreport-2024-07-30-1212.txt
-> # I expected snapcraft.yaml to be added here:
-> % git add snapcraft.yaml
-> The following paths and/or pathspecs matched paths that exist
-> outside of your sparse-checkout definition, so will not be
-> updated in the index:
-> snapcraft.yaml
-> hint: If you intend to update such entries, try one of the following:
-> hint: * Use the --sparse option.
-> hint: * Disable or modify the sparsity rules.
-> hint: Disable this message with "git config advice.updateSparsePath false"
-> <---
+On Tuesday, July 30, 2024 5:25 PM, Junio C Hamano wrote:
+>Emily Shaffer <nasamuffin@google.com> writes:
+>
+>>> > +Note that this document is about maintaining existing support for
+>>> > +a platform that has generally worked in the past; for adding
+>>> > +support to a platform which doesn't generally work with Git, the
+>>> > +stakeholders for that platform are expected to do the bulk of =
+that
+>>> > +work themselves. We will consider such patches if they don't make
+>>> > +life harder for other supported platforms, and you may well find =
+a
+>>> > +contributor interested in working on that support, but the Git =
+community as a
+>whole doesn't feel an obligation to perform such work.
+>>>
+>>> The part after "... and you may well find" reads a bit muddy.  I
+>>> couldn't tell if it is talking about the initial port, or continued
+>>> support, or both.
+>>> ...
+>> I like that message, but what I was trying to say with that sentence
+>> was "if you get lucky, some volunteer might want to help you with the
+>> initial port".
+>
+>FWIW, I do not quite like that message; I agree that it would be good =
+to tell them
+>that they may not entirely be on their own, if they ask nicely, but no =
+promises ;-).
+>
+>> It seems worth at least pointing out that that would be the =
+exception,
+>> not the rule, but I probably already do that well enough with the
+>> previous sentence ("the platform stakeholders are expected to do the
+>> bulk of the work"). Let me reword the last sentence, then:
+>>
+>> "We will consider patches that port a new platform if they don't make
+>> life harder for other support platforms or for Git contributors. Some
+>> Git contributors may volunteer to help with the initial or continued
+>> support, but that is not a given. Support work which is too intrusive
+>> or difficult for the project to maintain may still not be accepted."
+>
+>OK, at least that clarifies the point I was puzzled about.
 
-Have you perhaps done `git update-index --skip-worktree snapcraft.yaml`?
-Here's how you can find out:
+Pulling in a paragraph from earlier on:
 
-  % git ls-files -t | grep snapcraft.yaml
-  S snapcraft.yaml
+> >This is hard to understand and I wonder if we can clarify.  I get =
+what you want to
+> >say: suppose we rely on library X that is getting regular feature and =
+security updates
+> >in reasonable cadence, say every 6 months there is an upstream =
+release of library X,
+> >but a niche platform has ported the library only once long time ago, =
+and hasn't
+> >updated it ever since.  Now the Git project may consider helping a =
+port to such a
+> >platform if the initial port of library X was 8 years ago, but will =
+not if it was 12 years
+> >ago.
 
-That "S" means it's skip-worktree.  Otherwise, we'd normally expect to
-see an "H" or maybe another letter there.
+This is a tough one. If a library is actively maintained and subject to =
+security fixes, OS providers
+like the NonStop team will, as a general practice, provide security =
+fixes. It might not be as frequent
+as I would personally like, but a 12 year old library with security =
+holes would not really survive
+to be a problem. Others, where stability is well established, let's say =
+iconv (a bad example, I
+know), will not get the attention to have it fixed until there is a =
+customer reported issue (or
+me stomping up and down a lot). I think that the 8 vs. 12 year =
+difference is fairly arbitrary
+and might not be appropriate.
 
-If so, that might be because you've received some information
-(unfortunately erroneous) that `git update-index --skip-worktree` or
-`git update-index --assume-unchanged` are good ways to ignore changes to
-a tracked file.  The Git FAQ[0] is pretty clear that Git doesn't allow
-ignoring tracked files and explains why.  The skip-worktree bit is
-designed to implement sparse checkout, so that's why you typically get
-that message if that bit is set and you try to add the file.
+In some situations, if functionality is provided by an existing library, =
+and is augmented, the
+platform maintainer could provide another compatibility component to =
+supply the capabilities.
+It would be a strain, and in some cases impractical, but might be =
+possible.
 
-You can unset that bit with `git update-index --no-skip-worktree
-snapcraft.yaml`, which should fix the problem.  As for ignoring files,
-the Git FAQ outlines an alternative which we recommend instead:
+I think a bigger issue is where there are dependencies introduced that =
+are either not
+generally portable or depend on infrastructure that is also not =
+portable. There is a long list
+of projects that are all interrelated and specific to the Linux space - =
+all of which scare me
+as adding any of those would exclude git from platforms where those are =
+not possible to
+port. Rust and GO, which have difficult-to-port code generators are two =
+(Rust itself is
+problematic as one needs consent from the Rust maintainers to even add a =
+platform, if you
+read deeply enough into the "porting" documentation). Products that must =
+use gcc or
+clang with unavoidable syntax features that are not supported by ANSI C =
+compilers and
+libraries are also things that keep me up at night because there really =
+is no way to work
+around those. In some cases, some JSON and YAML libraries ended up =
+having to be forked
+and are now (not happily but) maintained by my team - not a git issue.
 
-  If your goal is to modify a configuration file, it can often be
-  helpful to have a file checked into the repository which is a template
-  or set of defaults which can then be copied alongside and modified as
-  appropriate. This second, modified file is usually ignored to prevent
-  accidentally committing it.
+Ultimately, my goal as a platform maintainer is to be able to sleep at =
+night without
+worrying that git support will be completely turned off by a feature =
+that uses some
+incompatible library as part of the git core. Git LFS has had to be put =
+aside because of
+the GO dependency, but because LFS is not core git, it is survivable. I =
+think that if such
+incompatibilities are introduced, there should be a mechanism to isolate =
+them, and
+exclude them from the git core.
 
-Hopefully that's helpful.  If I'm incorrect and that bit hasn't been set
-in the index, please do let us know, because that would be unexpected.
+Please remember that git is now a central component to a vast number of =
+organizations
+that depend on it for serving features to customers. To be blunt, it is =
+not 2007 anymore,
+and git exists almost everywhere of significance. That point needs to be =
+stressed. The
+pervasiveness of git has dramatically increased over the past 5 years, =
+more than I think
+most people realized. On NonStop, 5 years ago, there was perhaps <10% =
+participation.
+If you look now, the number has gone up, probably to somewhere around =
+60-70%. We
+cannot ignore that - I sincerely hope not anyway. There are even =
+companies that will
+look at your GitHub footprint exclusively as your definitive resume for =
+hiring purposes - I
+actually think that is really interesting and do not want to put that at =
+risk either (although
+admittedly entirely beside the point of this thread).
 
-[0] https://git-scm.com/docs/gitfaq#ignore-tracked-files
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+With Respect,
+Randall
 
---eEsMZiy7YnVw5maw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZqlrwwAKCRB8DEliiIei
-gRSFAQCE/zYJUuCZ9svDt+Gm/VBQtTkjya/MEhunpDuAABOVvgD/XIZlvsUqF1JJ
-q/a1ou1thNI6MvO1YVGFk2MgQnxQbg0=
-=Z2Gd
------END PGP SIGNATURE-----
-
---eEsMZiy7YnVw5maw--
