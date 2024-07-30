@@ -1,98 +1,96 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1EE1AA3FF
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 21:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB36618A6AA
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 21:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722374679; cv=none; b=FvdV5FlefVn+EKenPeunSQIkca5EN4n5yuJUiZ9A1jZd0khUICX0FgkUdw2M4LSdHjw6Fvc4iuQxNmP2pe1iMtKNqRwAIJS62SCAWKKkmev0G1pQMtFlexUOcgloCfgGxsT2Vu/0OXqtlIYpQC0RaTFhmYyiY4j+s4a5JkCIkfw=
+	t=1722375010; cv=none; b=A1ZF1e4l67womTfv1upjSEcb9wLu5oDT/aWYEm5TuWWNaDqs2+0Ckg/jH8PnYNahc7OvLGbuVcvNweZdmAXJM9GiL7A4BeXrm5Qngzu077yEWw4WR8TItWAwebAp/bnCCkH5jOtIXGjYiElRxwUKP9nPLFcreEI3MpuInnoA4+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722374679; c=relaxed/simple;
-	bh=Ws26fgUGx4I4Zehu1eod133VvUUC1a05JlekYJLX1TQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ozdi+x6rFtqsiLiYhaldyNFucY1RtWk1jB9owG6bgKEWFRTn0OdBLDh9Qh3b+kBRXLJOTIFGlShsuSv42fmaOk2SW+1Zcw2om/bbnX4tOiPniaGqFueyJI+UaDM1K5kXMvwSE6BL3LdQlNW9wg03cbLXzWxHYx14WXT2L1LQdTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cvfHdviL; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722375010; c=relaxed/simple;
+	bh=INa8yQE+sjSG6gwN+2oNMtpZcS32209x48eyvH1rdvI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=n84+7bMDfn8aigzGxEBg0Ffa8PIBSLjLjURzyiyXuTAl2KTn0Z2nABADe7G/BCKfp5AgLFYbnGZRtiNayXvaOoYJ5VYinQtNpNGhqbkWsTHdmAl14YH9O8jMGSzVGA9U3K2P3Fuw7Eyvm5dibNgy5xMrxb2mDT+sHgiskhE8bLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6KyuIpi; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cvfHdviL"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B1B301C14A;
-	Tue, 30 Jul 2024 17:24:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ws26fgUGx4I4Zehu1eod133VvUUC1a05JlekYJ
-	LX1TQ=; b=cvfHdviLnD+unXYo+z9spfq+O8hb2J0F+zI4eVxQpgF7Lsa6xdAUWG
-	43ffWczrZWYYx3wPs/QA9bEZas1jHHU2lY21bdLgWm0xLjx2P91Aad8ZJDExd8as
-	mBmk8T7KTNFm6Mw8879w6wdhV46iXuLoxUlSLeVbMGTwplU+1AktE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AA6791C149;
-	Tue, 30 Jul 2024 17:24:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BEE7D1C148;
-	Tue, 30 Jul 2024 17:24:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: git@vger.kernel.org,  "Randall S. Becker" <rsbecker@nexbridge.com>,
-  Taylor Blau <me@ttaylorr.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH v4] Documentation: add platform support policy
-In-Reply-To: <CAJoAoZn57LMCz9dmU3u+2HS1urOcoY1HQA6axh0cWoGchS_KFA@mail.gmail.com>
-	(Emily Shaffer's message of "Tue, 30 Jul 2024 13:41:30 -0700")
-References: <20240730175448.1727373-1-emilyshaffer@google.com>
-	<xmqq7cd2bs0q.fsf@gitster.g>
-	<CAJoAoZn57LMCz9dmU3u+2HS1urOcoY1HQA6axh0cWoGchS_KFA@mail.gmail.com>
-Date: Tue, 30 Jul 2024 14:24:32 -0700
-Message-ID: <xmqqttg6a7zj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6KyuIpi"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7ad02501c3so628455566b.2
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722375007; x=1722979807; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rp/WsCcZJRoLcDetlaXjgcr3LT+L2rdQiyRkYo9BaX4=;
+        b=U6KyuIpin3rKwX25BoBeKML+wxCqS4FzNJqq/cuPOB5bvnzmfg9VEEX+elcgJVzsPl
+         4ZQ28I7dALXUFku8a4V8O1JYTEFhSgBVf3CZyRkoeekQocrsEVWL/twiSh2RZ6iQzU6w
+         ROVAZDc1SUq61elatDQWwnCQk2Q7+DeGE+iPCzmwZJPeZQFILM2oQr2JAPc+vrpCqENL
+         cUrDbKeY7E6KYbeW67QJ0FXBi4KouNAYBDu2Mv7chKeTpdLHPXRN+96UEJ4ttIVJh5/f
+         CBrp6TyqqqD6r7THcwrNRife2TQfGoY0k1kqxBZJdh1CzkIsQWUmpOkhyEEi1GdJMgqL
+         VaQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722375007; x=1722979807;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rp/WsCcZJRoLcDetlaXjgcr3LT+L2rdQiyRkYo9BaX4=;
+        b=Nq6Vczqaofyi3Jo1zhILwr8ZA9VMrhBjaxbBHUkemEUyfrbAhWEu1QbUw2R1dqiyg5
+         RuRDmWX5mc15oVqd0pZ6kOxaGu4oA2DlSTOm9Ec6dP/LWE0Uwf1iP9iXSVOpwLdPmkpi
+         XEOgojPmeTQm+r0eECp3WACjo1m74v+ZE3CBa5wmY9RF7uu19RGOQE/wBimDtrpst/jL
+         ZYhzswhUSJDdWO22yPMzM2TE+29TS4MDqXy3lugqf059bdVk9uPaYXtq5ptxrFPGZS4C
+         F1Iq6CbYEvgyk8gIj6OlCZV2cMVqzlJ65mOn/8SFpSzMR85tr419hM7l+2YdAEjqoqyo
+         WYsw==
+X-Gm-Message-State: AOJu0YyJMRbIUJRiXychb1os89LgutPPyps1YcyZAAt63KliysbCT9eN
+	XcLbdK0bo0Xz2PVbc1VZuPz9zJWTf5QBGaOQWau+6mx60elM4i2W3nEaEvPXaaPdLCKPachPtoC
+	Rh7HtNa+zncHVVKwLWBWNUP0rutXorqgs
+X-Google-Smtp-Source: AGHT+IE3VfHBIlHPj7TUr4riYXVhSuE3v+U9umqX2h/TkXx2kQBS6upv6LEivUvkWQl+UXf1MVoIc6zEMjrDCFkyqs8=
+X-Received: by 2002:a17:907:728e:b0:a7a:bece:621d with SMTP id
+ a640c23a62f3a-a7d3fdb8136mr1055922666b.3.1722375006323; Tue, 30 Jul 2024
+ 14:30:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1D85F43C-4EBA-11EF-8A3B-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 30 Jul 2024 23:29:53 +0200
+Message-ID: <CAP8UFD1r8mSNsHbUsxkc3pdAOhM3AddFYoUMaNCMFSgq2y0u7A@mail.gmail.com>
+Subject: Draft of Git Rev News edition 113
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Yuri <yuri@rawbw.com>, Jeff King <peff@peff.net>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Chris Torek <chris.torek@gmail.com>, 
+	Gabor Gombas <gombasg@digikabel.hu>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Emily Shaffer <nasamuffin@google.com> writes:
+Hi everyone,
 
->> > +Note that this document is about maintaining existing support for a platform
->> > +that has generally worked in the past; for adding support to a platform which
->> > +doesn't generally work with Git, the stakeholders for that platform are expected
->> > +to do the bulk of that work themselves. We will consider such patches if they
->> > +don't make life harder for other supported platforms, and you may well find a
->> > +contributor interested in working on that support, but the Git community as a
->> > +whole doesn't feel an obligation to perform such work.
->>
->> The part after "... and you may well find" reads a bit muddy.  I
->> couldn't tell if it is talking about the initial port, or continued
->> support, or both.
->> ...
-> I like that message, but what I was trying to say with that sentence
-> was "if you get lucky, some volunteer might want to help you with the
-> initial port".
+A draft of a new Git Rev News edition is available here:
 
-FWIW, I do not quite like that message; I agree that it would be
-good to tell them that they may not entirely be on their own, if
-they ask nicely, but no promises ;-).
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-113.md
 
-> It seems worth at least pointing out that that would be
-> the exception, not the rule, but I probably already do that well
-> enough with the previous sentence ("the platform stakeholders are
-> expected to do the bulk of the work"). Let me reword the last
-> sentence, then:
->
-> "We will consider patches that port a new platform if they don't make
-> life harder for other support platforms or for Git contributors. Some
-> Git contributors may volunteer to help with the initial or continued
-> support, but that is not a given. Support work which is too intrusive
-> or difficult for the project to maintain may still not be accepted."
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-OK, at least that clarifies the point I was puzzled about.
+  https://github.com/git/git.github.io/issues/721
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on
+Thursday August 1st, 2024.
+
+Thanks,
+Christian.
