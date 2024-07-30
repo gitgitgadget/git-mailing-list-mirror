@@ -1,105 +1,86 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177DC16C440
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695B318A92F
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 15:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722353288; cv=none; b=lEguMqObgbpBPmyvaClezAMnzbDbC+4GaAi71Aoq3M060DqtuORDm89aQXqmWsvyth1MdDPnNDfh6PmjSK6Qh5QN1jHFooJbuFXTbDDJFqpAfjirJKGCVVGWBTyFCxM7NtpHZlI49500VhLYQbAKPAZTxxAli2ueuBsYQw3Sb4k=
+	t=1722353611; cv=none; b=rWKIpohdYwy238a8MdQnRSZy4ivsd2ivP8eG9XiujFQHEjVda8i+KJ/vk5v5I3na6BKKFltVfwsUcaDdty6j0gTsQlhhUquJ0ZIEWkgIwwqptSXz0PgafThBLZyoQTyhN11bCygLuptxzH+4LvgVvfWOIVft0aGrKyx9PsfcrZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722353288; c=relaxed/simple;
-	bh=cRIwEsnKJajz+sipAoGUZ/6S5j/Gjfi5fG0ZGxXL6fg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=knaFkseWwYF/dEjAZcd+mnGig8rxC9jjYfACrURwzUHI9T2b8EcRZTvTA9DQo5wkiIX/BY8LUUrle3OZ90ZnAQV4CRZLpgzYuohCHCaZncqPL9mCv5gkKScxg1WsXtMBJBuZSPXlvwchy6AulI8bnG2tOE1BmH8fZAOdIMb2YIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=afy8IAKm; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722353611; c=relaxed/simple;
+	bh=A3NmIT8zLj77M3KwYzjz6PUzYqo/aA4ByH+E+LuzHEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=fWcCK8+yBoxd2zNcHIITHoyCmpokupoNcYerCJzyUppL+TeeouY7OJpn/7Q6TrZFGvU7VcG9jOV29awfve8kz1iKo3H8uRNuLc9Pd0NU01c4EXSyiLVkc7ARRwfLIiHxaxSW0aMMGt0NXBGiqsS7ibKCJAeykYQu7M3yWDZpLMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kcl12pDh; arc=none smtp.client-ip=209.85.219.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="afy8IAKm"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 43E3537EAC;
-	Tue, 30 Jul 2024 11:28:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=cRIwEsnKJajz+sipAoGUZ/6S5j/Gjfi5fG0ZGx
-	XL6fg=; b=afy8IAKmGh7vWiGUr8aZD352ZaTpf/J9GxqlteDlejwXWFfFMoW7Cw
-	wTT7u+0WCTtSIzmyp++HA05hNa4UC4GbQc6X8LfTYQGqCdsA9fnYNhpousHnl3gD
-	Ayqv9QGx8sLAN5kd51xIRmfg92E7qCGmkjcNjj9LacsOWwv2Q1SC8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D35337EAB;
-	Tue, 30 Jul 2024 11:28:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1363C37EA9;
-	Tue, 30 Jul 2024 11:28:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/23] builtin/describe: fix memory leak with `--contains=`
-In-Reply-To: <08a12be13c2fed247d6086967e7a3f03fa6519e1.1721995576.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Fri, 26 Jul 2024 14:14:18 +0200")
-References: <cover.1721995576.git.ps@pks.im>
-	<08a12be13c2fed247d6086967e7a3f03fa6519e1.1721995576.git.ps@pks.im>
-Date: Tue, 30 Jul 2024 08:27:59 -0700
-Message-ID: <xmqqr0bagark.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kcl12pDh"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e0875778facso3145110276.3
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 08:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722353608; x=1722958408; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N8nLMMo6k7b8uSKeVhx3XX86CFAdpNiwHVJK9D4Cy44=;
+        b=kcl12pDhNUW15rq2pr04U0jqWkeTCp9OPQSJ5DtwVb8o+8ytDHgaMY5PlMKPYdZXtZ
+         7Pwx5ua4MpG1ze6LrY+ziyRI5HCViXmMeSvwaHbyuWJNMa4QmEOo1QXTA+UCYfrGaVP0
+         M6DGtjyIabrrEVRSqMZkZ5PiB6MNtG0l7XEdRNMaWAR05iqyQwur2DefKlmfOAdI6RJg
+         P2IIAtDH9iYewk+ddoxi+VaJbftPvAwKv+aKC2OydsapgkFMpQt60og0YZ2CCcnGz4iP
+         ror4eSHhF6833u+wrR5D/Sr6HZ+GtfnsVPMROwWaV4CRxKEVqIhBe6CWlHCq2vKL4no4
+         ER4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722353608; x=1722958408;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N8nLMMo6k7b8uSKeVhx3XX86CFAdpNiwHVJK9D4Cy44=;
+        b=LsfLejP0CYjonEZldHNlaRsvNEIHBOoILRNqADOmZgQNZBzTELquUQHM7pjIPDCgHx
+         UB2MLeBcbjXIjKZillx3vnQVU3jg6KIj8T1PKHHP8zRLsrNE73tTuZK2AOMTIITShpXg
+         rWiM+Kg/ndFF/wWJ4qXC2a+Tlzmx6QSZy+pe+k/+rhQz7SIDps8SNSuOxVBAYAjikRtY
+         6AgbUhxlZiW7QyS1o0QZ/5EBbA75+13sCzA4K7a+uXBfljCOhIJqnHtQIK2EutdSvyWt
+         /9//KIq6joxW7CXe2ZxYjd8i/mLmORHdKo/ZPEe/4VPJpTDhFHeUgLj1q1DPfVvpOPbu
+         MaIw==
+X-Gm-Message-State: AOJu0Yyvlir+d9mqzf+WGW31wrjTw0jFGgvnnM82SjOZpcAiRpY4AU/i
+	RzaGHDstiKE3BGfxjpNnokJlzBpra4qUHfDahSk3QqDpjhTJ6qTVy72AjbIB12i/OvVHZsuQBz+
+	P
+X-Google-Smtp-Source: AGHT+IE+XSoTlxvHjdNRLHkbrMLjy5yV/To8QP6DvcSsXf/urZFJobsnglhoJrogWzqWpDgEKGvv9w==
+X-Received: by 2002:a0d:f8c3:0:b0:631:43e1:6b99 with SMTP id 00721157ae682-67a06727c1emr137461987b3.12.1722353608035;
+        Tue, 30 Jul 2024 08:33:28 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-67566dd90dcsm26052907b3.1.2024.07.30.08.33.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jul 2024 08:33:27 -0700 (PDT)
+Date: Tue, 30 Jul 2024 11:33:26 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Scott Chacon <schacon@gmail.com>
+Subject: [ANNOUNCE] Git Merge 2024 CFP deadline extended
+Message-ID: <ZqkHxvDx7dlh0RX6@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4E7A402A-4E88-11EF-A725-92D9AF168FA5-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Patrick Steinhardt <ps@pks.im> writes:
+I wanted to share an update that the Git Merge 2024 CFP deadline has
+been extended by a week from August 1 to August 8. You can apply by
+visiting the main Git Merge website here:
 
-> When calling `git describe --contains=`, we end up invoking
-> `cmd_name_rev()` with some munged argv array. This array may contain
-> allocated strings and furthermore will likely be modified by the called
-> function. This results in two memory leaks:
->
->   - First, we leak the array that we use to assemble the arguments.
->
->   - Second, we leak the allocated strings that we may have put into the
->     array.
->
-> Fix those leaks by creating a separate copy of the array that we can
-> hand over to `cmd_name_rev()`. This allows us to free all strings
-> contained in the `strvec`, as the original vector will not be modified
-> anymore.
+  https://git-merge.com/
 
-OK, the separate copy has to be a shallow copy, as its purpose is
-not to lose pointers to the contained strings.
+, or see more details from the original announcement[1].
 
-> Furthermore, free both the `strvec` and the copied array to fix the
-> first memory leak.
-> ...
-> +		strvec_clear(&args);
-> +		free(argv_copy);
+We've already received a number of great submissions. If you have a
+great idea that you have yet to submit, hopefully you have a few extra
+days to do so!
 
-So, calling cmd_name_rev() may shuffle the argv_copy[] array but at
-least it will not free any element in it (as expected---it is
-typically the (argc, argv[]) the process receives from getting
-exec'ed) [*].  Freeing the argv_copy shell itself is sufficient to
-discard what we used to call cmd_name_rev().  And we discard args
-both its content strings and the array.  OK.
+See you in Berlin!
 
-> +		return ret;
->  	}
->  
->  	hashmap_init(&names, commit_name_neq, NULL, 0);
+Thanks,
+Scott Chacon (GitButler)
+Taylor Blau (GitHub)
 
-
-[Footnote]
-
- * The fact that cmd_foo() is called is not a hygiene thing to do in
-   the first place, and in the longer term #leftoverbits we may need
-   to refactor the thing further, into a proper library-ish reusable
-   helper function that can be used to compute name_rev() any number
-   of times, plus cmd_name_rev() and this caller that call it.
+[1]: https://lore.kernel.org/git/ZpU0WwsrXCF8BC1f@nand.local/
