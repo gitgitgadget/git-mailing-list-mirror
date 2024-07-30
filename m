@@ -1,41 +1,39 @@
 Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5F9198A15
-	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D2B1A08B5
+	for <git@vger.kernel.org>; Tue, 30 Jul 2024 14:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722348030; cv=none; b=gcgPYkCE/qyHmIk06FSlpglEmxuSGbO2NqAJ15yxwC1DCtFO2tq8Id8xg7Ku9CoeucYfbhhXDbwKswRvc1vEdeCRR/7zOXeeOXg4ern4pdmqVtYYHYLMU6H6tVlWLVjId1yC1qvq4CgiPy50UdW/ILPuenshn8AS8Kie6aZNMo0=
+	t=1722348032; cv=none; b=h6wsszFkRcohuBSZINp/PMXihq+OSi1Eeohfq1UnsS51aRwECIOyogMpNJN9BMu9LR+Q50gkMJW+kOHy/fKMRADnnTL7nPTpbskoqNGGAS9bfO4YJwveWv28QlrqVbR+zgD762OAlEml3ToJLETvt/SUb1UBFHG/PQB7GY/9ap0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722348030; c=relaxed/simple;
-	bh=jCXWK2dIhwYG0Nrp/+G0uDv8AfditgV4jdubMWoDA48=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kMyYlNH2pqa3PsFoeiGy9+Rq1FYxnku6+z8mYMZsdp3jqESJgTPtNs2zazWAOiQANpGHPKKSyVyHS6xrmWwwMnee39SPL/uVRjS+jrmuL/tvEssMPyhNDsbOjR2zF/z73VrKdiz5MaUqQV3f1T5486qtFbetZpK5PSI3q3suoJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EfkfvVTW; arc=none smtp.client-ip=212.227.17.12
+	s=arc-20240116; t=1722348032; c=relaxed/simple;
+	bh=qp6fNknR1RL7lcr3+F5aiPSZ2pVtsTKcMRxGsJ2/Elk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=HPmv86gVhEqjqU4R4jtFTYEnYXuXeLeEfGXf4H5qLg7LlqYxMk/pTjWENxGTiFxOthxmWCUxJvYQVZuY4VzLXQIfOHiz0rxlKnE2ooeh5tCKkbxOh/00j+EWEks6PC1KZcszBrVxsPm4VsVDXis1OX2XOK8xlNgzXRjOyjrgSXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=MdSQG6e8; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EfkfvVTW"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="MdSQG6e8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1722348008; x=1722952808; i=l.s.r@web.de;
-	bh=rZRPQsJPacSco+RKdUFg9OAUeqjO5Jr85yKelaENPBA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=EfkfvVTWGg8jQo7GD0I7VrPrmfu29UFy11slMUuxNtGm6ADl2V8mkl6e77iKYpoS
-	 90sPVgn9pTX4YU92GCU6+Kqzqn3U4gCHNvGVybe3tFTmr1CZiJEWgVdLg678Jjd7c
-	 +jnFHSnfFfwvvitagNp153prlALgI6Z6/WoYvyL7o9+scJfbCO58iHkAIKi3H8aev
-	 iRBavxobSWgF+5VpeagkeamQxBMOKrLBKgRwlFQJ1HAige6eneAgX+Yd2QZfFlqIS
-	 iFbWhHkW7n0aQlf6V9F9jXwlDny47zjviMo4aATYzrI/Zj3iYgz9T597VkKzGEdYG
-	 k26WiNce2lrIZOBNhA==
+	s=s29768273; t=1722348021; x=1722952821; i=l.s.r@web.de;
+	bh=SHHOFpleuDt6ILgdpeHiyxhHyqBjbpNM4EPuS/slrVI=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=MdSQG6e8iKqNkvfgQ464Ap10UMxJCI03QBirCo1y4oZ8oCjQSO1UO4Uer4j/b7bl
+	 gKUP7MVELNZlk4ST/4Wp7sQ9ai/2KvvC6nK33aT4Pjoqbmk+ucnLq9mTWJ3O8SqgF
+	 dqie3NthTX5XXJ3VWJxUMEnDw2cAiikAvCwCk7PxYJ9KyRgpqUlBnGksvjEPsHu0/
+	 TTJ+bBh7DKAo0MGkRRMtDXRUD0ANrqRoSz30NqEet8BTSBgh1LgkLOHUQGeN+bOfR
+	 I1O/rBnhhBSRusvzbQVy5yTmPyIgybdmXQg6nekWNWkgb801Vby75lze+pWHhMoh0
+	 HDdphEteyzQyCRw/xA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.153.221]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MaHSp-1snFi1141l-00XrqI; Tue, 30
- Jul 2024 16:00:08 +0200
-Message-ID: <53c1eaeb-6106-492c-9c44-13a7cd1bd0d0@web.de>
-Date: Tue, 30 Jul 2024 16:00:07 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgzaR-1s31se09d7-00edAm; Tue, 30
+ Jul 2024 16:00:21 +0200
+Message-ID: <5c838884-b606-465a-8f7e-ab760ddadef8@web.de>
+Date: Tue, 30 Jul 2024 16:00:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,79 +41,158 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] unit-tests: add for_test
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: Kyle Lippincott <spectral@google.com>, Git List <git@vger.kernel.org>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Josh Steadmon <steadmon@google.com>
-References: <73465c3d-1be0-456b-9471-f875e819c566@web.de>
- <c51025cc-26e5-41e2-be56-94e141a64f5d@web.de>
- <CAO_smVi2rJd5SDMsbbxzFUj28a_1KTgdHMz4DTKMsii+Wt5H_Q@mail.gmail.com>
- <xmqqfrrxjw8f.fsf@gitster.g>
- <CAO_smVhq=MkQV3a6qJtDiFykvR4im7AX4hMfKMNcL5SegnOSLA@mail.gmail.com>
- <xmqqv80szxgw.fsf@gitster.g> <ZqOc9vxdD4qttkFs@tanuki>
- <xmqqed7gxhyz.fsf@gitster.g> <ZqdldZE2MV-Pkuu-@tanuki>
- <xmqq8qxkhvt3.fsf@gitster.g> <Zqhwwudf-yjvJ_By@tanuki>
 Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <Zqhwwudf-yjvJ_By@tanuki>
+Subject: [PATCH] t-example-decorate: remove test messages
+To: Git List <git@vger.kernel.org>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oWSrwcfcdBoj54B4xy4WQMs3sNzxB43G59rOWW7eRmmYnxS6klD
- 03cicTWw6GxBCM+ofwoY9oLczbG0s69o8q6IiK6+fs0KAmxogaCa7R4FAIF5l6Jc2IBq5RZ
- pTgaFTJsuodbxupCr13M/LYqikaWJ6NBr+sekTQT/SWCGMBwq+eszqLgSf5uuKSm5EIIzsd
- hB263lTHORxu/AJwSIPCw==
+X-Provags-ID: V03:K1:T8j9GHCEAoL3OoaY+aIspRvSQDqAoWPauPzZCNMRnlN5gI1fZBp
+ 0340C9vSNkZ9PctgckF5EykJePCrY/kWtL51fwN2ZtIfh6EZGfuskVQDyOTHn0LWOnMruGK
+ GIslscgGXp+hYK41qyrxyQpswh7bnlDfxy/NIL01xNT/S8Uw26kfEypDwIBA12IDEvQt8yX
+ Ld0dRsUIFpz8+vuPyKifA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:awGkrXzCIjg=;4QNQXb1bvIjIYWyeXECQQ9pvzkA
- /IZCD7QhHATeIEIZRxwvqF1wcHwjtjsWhK7lZvEV2aFJ2NpTHF7Or9YhVk68xJQeBmtnGcl4W
- i7WhCTH/c9aTthCJldPLy20jzplrxV4zZxkglW25bHDfeU1j3p3DxMZPxHPmH4Nf0Q30m/OMi
- /M+GjIvHfn48h81xa4FBpGEfPfRrd+9EEnj5iFXZ1eMRQrPFvIx1p5lzBGIctqKOQgB+T3sLN
- 4NfupydOLNQuNnb8sB7e8ddB2/oQ5jiR6zm+TY2xryP3yHecgWox0X13RQSqBoWTv3w2WKgGa
- 3ec8RU9nSfS6tU5izHUpmSq7RGyC4oyFunyMvJResszM5WKBVz1/mKQ00xvxnMDvXOoXwh6M7
- Q3NtAmYTzFe7JchakNg6aU9826nSA/NyOqNBTmKywtrz4szWpfYxoD7ElojRicQc3/WT+omKN
- nHHcXKXfh3mJ3qNQE0XdZZdHkPIClzCB0/JbL1yacGilQmk8PW3NXxlkKTEZP1V4EGQP5lH9X
- rE46kciK4zIwK0Pp6AO1X6MP6bt523XVbVlW1agHn+dgmBZUkGy9MXQlNaecbSbboeo/HEqYw
- FOjvgWjaeyNq+VBWuPn7WVCj6D5UShSbkjI98yGBf+dBjC12myMmSTJ9oKy1uOvVxH4Oqi7DD
- 86V4hKGAQJr8VI6zPEmOFErCmxjyrcEHMiHUvyc8EXqGjsj2mo/SynBcJWraZkCZ+9pjguI84
- fmowv7gGTt9vA4W6MGsxoxBXR4u+ym+SYhVKlFhkFJ2gbS01vzYBt6p8LDHpAbzpXLTloM7ad
- 9goCf4X9DIibgpCQk/hRLsig==
+UI-OutboundReport: notjunk:1;M01:P0:99hdruRnXXc=;6IG9sk5xrBRbRhxNuAghRy9UoVI
+ MtB8Miy01DVhbJOh7y9daRf6Wp2ZDyPPuf4uO+WvzcBGmv8/1L8SgmQo0B/V+hB4QVj7pu2KC
+ 3KxSZzDE94JE34WNvzzZXrPJELCpG7A/R5uFvlWHTNZ3LtVt1nbhv4SkQqir5dQ71CiKvj8os
+ sj9VNUE0cwYsnRmEe4HDW4ruHgkQu2WS0LH0poKRZkLlRVHoLXUvlz7Xju0It78/W5U6SlSJ8
+ S+myLfpv8heArVS+VxTix/a2hIiflBQ5q/GTHYhX2aLJcJhdhdDtGLAkbvHmQETo00rgF5xb8
+ +QHebOlZLwsZkr5BBG8CtoBbpFwV1SnhKtkb3jNKFr9KfPYmN11sgqkrNO1M7p6E2l8YRLe6M
+ Zr/trpTMHyXFqaf0kFelyGjcM4GZHiauVnRfBMjxHZeTCcymzK4GXT3+Uz16n0GXB7yp0TSd+
+ Ttu9jH9SfgUrwqHThlIb1p7PsR06rOoFAutbmI4STcTKE2WfXlUmaywWoqAcPEOO2D2BjpVS9
+ L7RvmxmX2T3Y54dlnwQ/j+57pFfdTvEqthNAHQ5t3jPbCdaI/rrb24vWxTzX+PAyqRh5lMrp8
+ 5HMD/y3jFL1qFU1bZghLRfOzKGmg/fvC/0bH/QmYGvBF3hkBdErXv9XJkIk6xMUkYYrv7AqJE
+ rORrt2VJM3VHt/tnykFvsihEHD0s/q879n28bs9Lz4yqdptb3clYyvnpo01JyxcgRVsICfXBz
+ KiVrClEos6+HboyZoTA5RhNEtyRkgO1/8v1fPQGk4p9+QNL0bKFBq+y9KLOHCl1rUK4sN/3xU
+ 2HsRcyReaJKVWVZVi/3RGppw==
 
-Am 30.07.24 um 06:49 schrieb Patrick Steinhardt:
-> On Mon, Jul 29, 2024 at 11:55:52AM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>> is standalone nowadays and called "clar" [1]. The biggest downside of =
-it
->>> is that it depends on Python to auto-generate the test "main" function=
-,
->>> which is not really a good fit for the Git project.
->>
->> Is that because Python is optional (like, we only use it for
->> optional Perforce thing and import-zip in contrib), or are there
->> other concerns?
->>
->> Unlike these components, unit tests are not even for the end-user
->> consumers, so if it is Python that you find it a blocker, I do not
->> see a reason to reject it.  The thing looked like a simple script
->> that does not use any tricky language construct or modules.
->
-> No concerns other than adding another mandatory dependency for devs. We
-> already depend on Perl and Shell, so adding Python to the stack feels
-> suboptimal to me.
->
-> As you say though, the script isn't all that involved. So it would also
-> be possible to port it to Perl if we want to do that, I guess.
+The test_msg() calls only repeat information already present in test
+descriptions and check definitions, which are shown automatically if
+the checks fail.  Remove the redundant messages to simplify the tests
+and their output.  Here it is with all of them failing before:
 
-=46rom the point of view of a "minimal C unit testing framework" surely
-the implementation language with the best dependency story would be C.
-Perhaps it could then also test itself.  On the other hand, writing a
-string handling program in 2024 in C is probably not the smartest idea.
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:18
+ # when adding a brand-new object, NULL should be returned
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:21
+ # when adding a brand-new object, NULL should be returned
+ not ok 1 - Add 2 objects, one with a non-NULL decoration and one with a N=
+ULL decoration.
+ # check "ret =3D=3D &vars->decoration_a" failed at t/unit-tests/t-example=
+-decorate.c:29
+ # when readding an already existing object, existing decoration should be=
+ returned
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:32
+ # when readding an already existing object, existing decoration should be=
+ returned
+ not ok 2 - When re-adding an already existing object, the old decoration =
+is returned.
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:40
+ # lookup should return added declaration
+ # check "ret =3D=3D &vars->decoration_b" failed at t/unit-tests/t-example=
+-decorate.c:43
+ # lookup should return added declaration
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:46
+ # lookup for unknown object should return NULL
+ not ok 3 - Lookup returns the added declarations, or NULL if the object w=
+as never added.
+ # check "objects_noticed =3D=3D 2" failed at t/unit-tests/t-example-decor=
+ate.c:58
+ #    left: 1
+ #   right: 2
+ # should have 2 objects
+ not ok 4 - The user can also loop through all entries.
+ 1..4
 
-Then again, generate.py uses a non-greedy regex to remove single-line
-comments, which seems wrong, and doesn't seem to support preprocessor
-directives like #if and #ifdef, so whole tests can't be disabled this
-way.  And it uses pickle to cache results; does that mean it would be
-slow without it?  Anyway, point being that parsing C isn't so easy
-using Python either.
+... and here with the patch applied:
 
-Ren=C3=A9
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:18
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:20
+ not ok 1 - Add 2 objects, one with a non-NULL decoration and one with a N=
+ULL decoration.
+ # check "ret =3D=3D &vars->decoration_a" failed at t/unit-tests/t-example=
+-decorate.c:27
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:29
+ not ok 2 - When re-adding an already existing object, the old decoration =
+is returned.
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:36
+ # check "ret =3D=3D &vars->decoration_b" failed at t/unit-tests/t-example=
+-decorate.c:38
+ # check "ret =3D=3D NULL" failed at t/unit-tests/t-example-decorate.c:40
+ not ok 3 - Lookup returns the added declarations, or NULL if the object w=
+as never added.
+ # check "objects_noticed =3D=3D 2" failed at t/unit-tests/t-example-decor=
+ate.c:51
+ #    left: 1
+ #   right: 2
+ not ok 4 - The user can also loop through all entries.
+ 1..4
+
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/unit-tests/t-example-decorate.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
+
+diff --git a/t/unit-tests/t-example-decorate.c b/t/unit-tests/t-example-de=
+corate.c
+index a4a75db735..8bf0709c41 100644
+=2D-- a/t/unit-tests/t-example-decorate.c
++++ b/t/unit-tests/t-example-decorate.c
+@@ -15,36 +15,29 @@ static void t_add(struct test_vars *vars)
+ {
+ 	void *ret =3D add_decoration(&vars->n, vars->one, &vars->decoration_a);
+
+-	if (!check(ret =3D=3D NULL))
+-		test_msg("when adding a brand-new object, NULL should be returned");
++	check(ret =3D=3D NULL);
+ 	ret =3D add_decoration(&vars->n, vars->two, NULL);
+-	if (!check(ret =3D=3D NULL))
+-		test_msg("when adding a brand-new object, NULL should be returned");
++	check(ret =3D=3D NULL);
+ }
+
+ static void t_readd(struct test_vars *vars)
+ {
+ 	void *ret =3D add_decoration(&vars->n, vars->one, NULL);
+
+-	if (!check(ret =3D=3D &vars->decoration_a))
+-		test_msg("when readding an already existing object, existing decoration=
+ should be returned");
++	check(ret =3D=3D &vars->decoration_a);
+ 	ret =3D add_decoration(&vars->n, vars->two, &vars->decoration_b);
+-	if (!check(ret =3D=3D NULL))
+-		test_msg("when readding an already existing object, existing decoration=
+ should be returned");
++	check(ret =3D=3D NULL);
+ }
+
+ static void t_lookup(struct test_vars *vars)
+ {
+ 	void *ret =3D lookup_decoration(&vars->n, vars->one);
+
+-	if (!check(ret =3D=3D NULL))
+-		test_msg("lookup should return added declaration");
++	check(ret =3D=3D NULL);
+ 	ret =3D lookup_decoration(&vars->n, vars->two);
+-	if (!check(ret =3D=3D &vars->decoration_b))
+-		test_msg("lookup should return added declaration");
++	check(ret =3D=3D &vars->decoration_b);
+ 	ret =3D lookup_decoration(&vars->n, vars->three);
+-	if (!check(ret =3D=3D NULL))
+-		test_msg("lookup for unknown object should return NULL");
++	check(ret =3D=3D NULL);
+ }
+
+ static void t_loop(struct test_vars *vars)
+@@ -55,8 +48,7 @@ static void t_loop(struct test_vars *vars)
+ 		if (vars->n.entries[i].base)
+ 			objects_noticed++;
+ 	}
+-	if (!check_int(objects_noticed, =3D=3D, 2))
+-		test_msg("should have 2 objects");
++	check_int(objects_noticed, =3D=3D, 2);
+ }
+
+ int cmd_main(int argc UNUSED, const char **argv UNUSED)
+=2D-
+2.46.0
