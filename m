@@ -1,131 +1,91 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372101CF93
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 09:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBA31AB53C
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 09:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722417164; cv=none; b=tLqpLJlChh7CXWamuXD6sIUGCp5oSEamPMe1icgkLuessl/izikLBGtLUouiTX7c16hXxsLDQlfRsLdT/CGhd6gaV9XCDqBb6IIauTc85Dr6S85SVo3LODrNi6xvn+BaOI6cqdxHfm3x+uCHiK3O4/bwPWJNPgVQgNt2X/gyEss=
+	t=1722417684; cv=none; b=JvGM4/uHq16EZ7fHyPEKwT6O48hiMiSXMIrxpueRmZSfBR1F3YDsOVXahiLX7wmejPNdUmaVJZMmmI2JpyunL1qA0VB+hzdHF2sgrCu0A3RKdQJsvOrXgh7gYVHncltM9RiUiomb0/qS5B8e8e3lCFHs3Mnr3fDw/xpwF337Ii8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722417164; c=relaxed/simple;
-	bh=ytf9v00xn06MDWXcXwiG9ejhO6VdhGIIblLHTGA6q+U=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UnDzzhSTy1wzJ8Tqsn80M/YziOX3U3zwiyC9kWFeEMj9KSl2jrwbN101W3hgmiQ2N2qLFadwNYTtyGvpA12Nr3vi5Pe2+xtRfcYadW8VUl1gvWJsbVMs78FjSPsH9dwlItvWrftll83rt3vZgn8fC71LYzO3zCENMVm/XaKS67I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVWtl7xM; arc=none smtp.client-ip=209.85.160.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722417684; c=relaxed/simple;
+	bh=TDXeQI2DXEq6iI1SoyWqXPLryA40qTMRsS7t0Grceuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=JdSZ/cnEANfzKJmM/lOwZToiWqHao1C8QM5l56vmzb2qy0VCP0LNWDyKrHk5Z/Szof1gl5PaAfRmYlGvKPm2iAwz/LBTWpsChpCn+Ow50wagimZ3MJm9RgGjslCZnVblZq//oqDqL8aw6GKDfMtnFcM4QARD+DOQW1LfPWjNsH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Uc9eOnwD; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVWtl7xM"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-260fed6c380so3437488fac.1
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 02:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722417162; x=1723021962; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D6D3lFYx3l8/wu7h3srxqjsyG9XopQbNysBcdzLQZko=;
-        b=VVWtl7xM2Z+Lj0iqPLpw3sNJXQ08zWdVvq8YzsGaxHDZ2Ws2Vl3dE6PgYZV9wngBlb
-         9p1223uGsFOwh/jDWmxZNezHVrRjFS0qshA5whxvoWb+6LVMz82LGDZiLUDSI91A1lYu
-         YkWOhspdz+AL/51HQuVwoKqhLwDY6Da5F4mP3zi+HClnIb0KOTunR4BsVllOi4Y4HnCn
-         rtxPqlCmeoe6xZWt3OqyrHEZIR1AHnObVT9+63bgCRcA3buWtOq/nkHv5P8hKLjqEYyF
-         hNEoLcAx/2rLqSXRnzDGe4b0uuky85x5xvHrnVT6x1w/T63NYliK8MCvnBphJ6UjOxPf
-         rPZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722417162; x=1723021962;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D6D3lFYx3l8/wu7h3srxqjsyG9XopQbNysBcdzLQZko=;
-        b=n2IpO2zuhZr19rJl/mTG1IXt4xZNfj04tzilJsmbWSSMDc4tc3FGp7eqMjS7IDAsOW
-         Mw+RllhauTtbqWH+Eb4mJoLe9divtWeZMFavRMyjghL6YuK+9HaFAWV3rSXkwlwgvd41
-         8qYBKCHa8nBVvSt12AsRbkX8uemYgu7ouhR0xBJZbGOKk3G64FgLFlNMRsEB8FPPyUhW
-         CDBpqeLxFkaY7M7a+sZzyExPJH58BLh9o2HRylpH4PVZgudvOz87nFyWHSxS3jvrqg98
-         fDRmRxkhs+sttt4G0h20fuXafsblOsGvjQLCanKmCWoLPtpNaVwQ6IDIYa1jC99WwqBl
-         iAVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUsFErzd8UGqnsQhrFLuTO+k3zPQ+JJVZ0kMzBwmnmmOeyohMlggplVWdujZai0MbufxaerDtODPsuvIXbgi2eCrlNo
-X-Gm-Message-State: AOJu0YzXen6e6BcozdJHWTzaybKy/ElJhko1I2P+RRTaAbLProiQ3nzZ
-	j7oN6poAOzGk+D+xp1fNnlFAbiUu97UABrs5Wjz6ThcfI2pLVREfBYitUtHDHpJXgrfXeuLUUPK
-	dn/mqcVU83HIrgMdsnPC/qiFdVBM=
-X-Google-Smtp-Source: AGHT+IH+YlWDrqo4IqPIPqlu/DEIam5b3ktyifAGsO0ePDxQOojhCxuz89/ii3+C/uarQE67K+pX1maUJbSdZqg7as4=
-X-Received: by 2002:a05:6870:e391:b0:260:f50e:9242 with SMTP id
- 586e51a60fabf-267d4f5806amr18725048fac.41.1722417162066; Wed, 31 Jul 2024
- 02:12:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 31 Jul 2024 05:12:41 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1722323818.git.ps@pks.im>
-References: <cover.1721818488.git.ps@pks.im> <cover.1722323818.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Uc9eOnwD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1722417679; x=1723022479; i=l.s.r@web.de;
+	bh=6CofaKl3vJKSTvU3QAlK7H7yHdfn0NKnVTMg7S9tiJE=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Uc9eOnwDB8hladY/NtzgytBPKi/FBQqENxl6ssoW5XViLlxJFEy2W24UYwfQ5CoK
+	 OEay/BVqPkpxHv5rMG6jkNAIboWWTeulxgFFmMrJtm5o2iaftpxItabkfdMIIPw3J
+	 wRr3rUjE9jLhYUCcxxYB99uLsFKImkZLuif++p27tGnGw3P3CiwzCywYgyUqXbOV5
+	 +y2v9Yy9AGj04zUow9Rxg8IGQJIOBJwMCDtHpkb0mqlzrnGWffIZr7Wwotr/Cw009
+	 PpOBMKZJwV4G+o9G/A0MnVWK0rihAG5X78ErcnhkNg6JMs5Ljy3u/HqnJsrVe383b
+	 mLwDtfSgovXntyImFw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.157.126]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mmymp-1rs5jk0Yjv-00oGWj; Wed, 31
+ Jul 2024 11:21:19 +0200
+Message-ID: <333d0d04-5fe6-4fca-8cce-1bb557740a70@web.de>
+Date: Wed, 31 Jul 2024 11:21:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 31 Jul 2024 05:12:41 -0400
-Message-ID: <CAOLa=ZS1JS5YyguYhyeAeWuv7Sb2tB0ze_5=GyQgRmhmVDNWyw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Documentation: some coding guideline updates
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000019bbd7061e877ff2"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] t-example-decorate: remove test messages
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+ Git List <git@vger.kernel.org>
+References: <5c838884-b606-465a-8f7e-ab760ddadef8@web.de>
+ <D33CBWZJZSRS.1V3U16NM91BOA@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <D33CBWZJZSRS.1V3U16NM91BOA@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:RKIi3fdW5gJfTsxod/vSnk6e9nMhcdHpBO8tX+CCHPCI+F+d7ZY
+ /NgahatVe+SzRL14eSvbaPz10J21f9Pi6wrc8Bm9hkH2e8qNllyC/9cIlBPD3F3opiQQUYd
+ euKwvcQRVECQxhWDfIPr3ACjkIt/+bJ3SgqGOzVfE9uCeQ2Gbtrpb35z8NonocFWVW9/bAS
+ HqHI1DDsBcyU0/+QiTHfA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:xfOKn2OikyE=;oKsgChxBwBUXeMM/R9OmKAsZDcY
+ BBQ7o4BNj3f+hJA8F/IMzNYSD+UQ1G/3cAUy654Avn0CHWA4FSYxq7eGNhsfEljRb/Ktke1Mb
+ SVFD8OyvJtnbtxxGRWsx52qICo8MZL0Qz4O6VZhaO2i6IWDKy65J35J+yb3jwSoc/CNyPD70U
+ sTIjryhcLsF/9E/Lv+KSmBKdcjH1UE6aFp7VVPwSDYrqWKRgzbhYr86SYClp/BMNuRB59YiXN
+ +8UNUGXG4aMvYXZDlGld+LUAmlVnsITpDeRycm++qJTqt89do5M5msz54X3REw0apz9kgmVvn
+ mSnhte52Ww6Hv12FlakrrcIbC/ZKlhJWjw2BDL8RHL2jsYT8HIVIW4YOwZftAHwy8rLMZ1Zsg
+ uYpTUkrdsn12wP5NVPIL46ATekyhE91eE495em5jqDS7Om86kKUGKFAdsWdhIQTr8nLQl67We
+ EImI/RKHW8RwIougxNk+V8MktXUYvMkjUJ8l7FM2LbvLX+uto6XjzbCMim7J/8Hbrhi4IT1Gn
+ 2WrpwNyM2aEZ7BHNTwG0KhvhmpmrzLKsUCSEw57Swv7T90GuucWYJA5Q5lOs37Ua81FJAVfay
+ l6xY28WsmxMV8l5nT2S9eqHF0SHo54j+OthtYvdPviI9Dm9ZfrtKUFWrVS9wTftx3v8Z7nqLe
+ BrkuF9DyjPG2m2aJ7xh48MZHlLemh3gMgrgDJ0q6L8B9XMg8OpStETgOTEo/m43qezILk+LLQ
+ 09Ef/orhLbJW/yTDo5YopNuwY2kmQ5ez/6oM51icpVpA9Fb8YfDJ7zLpRMyES9G1Q2skT+FuR
+ AOXNvtCt39Jkpe3CncBdStUQ==
 
---00000000000019bbd7061e877ff2
-Content-Type: text/plain; charset="UTF-8"
+Am 31.07.24 um 03:41 schrieb Ghanshyam Thakkar:
+>
+> If we want to further simplify, I don't see any need for having 'ret'
+> either and to just call the methods in check():
+>
+>     check(add_decoration(&vars->n, vars->two, NULL), =3D=3D, NULL);
+>
+> which would also provide more context in the stdout rather than printing
+> 'check(ret =3D=3D NULL)'. But, I believe you would have already consider=
+ed
+> that but kept 'ret' in favor of code readability, so I am also fine with
+> it. Thanks for patch.
 
-Patrick Steinhardt <ps@pks.im> writes:
+Good idea!  Worth a separate patch, though.
 
-> Hi,
->
-> this is the second version of my patch series that aims to improve our
-> coding guidelines such that we arrive at a more consistent coding style.
->
-> Changes compared to v1:
->
->   - Fix clang-format to use a single space to indent preprocessor
->     directives instead of using tabs. Thus, this series is now built
->     with kn/ci-clang-format at 1b8f306612 (ci/style-check: add
->     `RemoveBracesLLVM` in CI job, 2024-07-23) merged into v2.46.0.
->
->   - Adapt the coding guidelines accordingly to also only use a single
->     space for indentation of nested preprocessor directives.
->
->   - Adopt a proposal by Junio to more clearly spell out the relationship
->     between a subsystem `S`, `struct S` and its functions `S_<verb>()`.
->
->   - Document `S_clear()`-style functions. I have adopted the proposal by
->     Junio hear, where `clear = release + init` with the restriction that
->     `S_init()` must not allocate any resources.
->
->   - Add another patch on top that makes variable initializers consistent
->     in our coding guidelines. Our style is to add spaces between the
->     curly brace and the initializers (`struct foo bar = { something };`).
->
-> I think I captured everything that came out of the discussion, but
-> please let me know in case I misinterpreted or forgot anything.
->
-> Thanks!
->
+Ren=C3=A9
 
-This series seems good. I did a read-through and have no changes to
-suggest! I'm really happy with these fixes which slowly improve the
-quality of the codebase.
-
-Thanks!
-
---00000000000019bbd7061e877ff2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3f994903ad2b257a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hcUFBVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOVVDQy93TVRaVWZWSGpTNGFRdFk3U0dZclBqQ3Z6dAp6N1ZiMU1FQVMv
-VU9ER0NNSHNLVE4zeTBRQUhXckswem83NHhPSk93a2RyVStqUDlhMmt2Nzg0VEpIZHZ1ZmtqCjM4
-Mzd5aU9EZ0l6RXM0LzBENXZocmJGZjdUbStDM01IandRRC8xZ1dDUEh2MzdWMTFRc1B0aURrbys3
-d2lQT0UKMFJqL01OT1JRTnUwMENmcisvcHdKMWlsSU5SRVhzSFd4cXE1d0hEK3FJS0ZZSFdhWGtT
-ZnBaZnJjZDdpejRZQgpVUSt6NWNicDZ3Q3Z0anl4OElRNGx2d09OUTJ3Q0dlVTB4N1VXSkgrM0Ro
-RFZzMGM4QkgrZEJleDVyQVJKYU9ECkpnN3IyRTRUeVNRNDBZVE5zMnlYOHN1bWRtQXIyUlk1YzRa
-Z3ArNmtRL3BpZnlqZWZJQzZodEs0bVJ2Y0Uxd1gKVzd2RUVOcDkxVWxGWXFDVVlRT2ZXZXFnZ2Rt
-Ly9kMzViZWpRSjhJbnU0Y2grSEswV0ltbitlRmRzdkVtektPOApCUzdmanVEc2lMT3pQcitScFlX
-aThhM2x0dkZNellpcFJCcjV0ZDlneEJXd2tUWjR4cTQ2S2t4S3NnR0YzNndaCmhKZkhIczNvdFcx
-d1Q2NnFIWFR6NXdDRUJ1MVlubDRsNnpJbXozTT0KPThZNnAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000019bbd7061e877ff2--
