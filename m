@@ -1,42 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93711A71E7
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 07:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AD245005
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 07:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722410916; cv=none; b=t0MLjPdxuVqO5WpFNltYU3nFWoPmBPmi5JkcRYQunFmhgYgLzPeK765rQvHoDdleEl5fynf3F/fzkYeEHodRhUtJv4ZqeIRKZLyC5kU284GgMTXgrhfkqFH14lpNqS9CrQbJClhEiaFHY8+TyQ9gPwE1WjDLfJAfX2xI0Pb6uss=
+	t=1722411757; cv=none; b=L07a+EJ+xreUMG1HFAh6BD/Mbbk0lQN+tb+UPQ0gSyxvtFkgdUG7H2Hp0hVPbKtoxoPnLA0p6ARNDI6kzeqx4cTkgNC0j9VpxmrU8ClrCE8sueKEx/4iAbZ5dHnYISjm5mLQY7IOT5KoW9TOVcB8iECScLYutQO6UDW1rgO5S9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722410916; c=relaxed/simple;
-	bh=yS5QtcQClcgmUwQwMj8NNe3lVC+2oAHoEuWgoBNDYDg=;
+	s=arc-20240116; t=1722411757; c=relaxed/simple;
+	bh=A3d7EP5GnKw5S2tZSsmtKCJEZRgowiqka38J/S2gjzU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oVJHOkXy04rCB0dcjNCnDk48sPyr15e72ivx+pSEzT5pZy9qQmzl+X50ggQ5j5H+0vqSoYz4DgNfASMfQIcBgkJkmUyqw8kB/HNfzgZN3ouBvofA1sTfrdyJtEegkTZRzYNQ9IWaxCE7PQnkTmReYQNKsHFkVt02TpS9aVX+XIg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=BxvgHfjWGQV/+Xy1y8VZQNYXrw8wEcMVax0xDWw/sx++hd/4P73xtEaquOhG4DUTUYCFRKYNC9xVjKGRJtG2H7pgjXbnZJEMHJPtCkeB5Xt/Kbe2oXWcQCBC+9C7iwnddOQIJFPmt6Q1MfHSO9nj3p8wJEVWMOzJ53tQZy1HDyw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4841 invoked by uid 109); 31 Jul 2024 07:28:33 -0000
+Received: (qmail 4878 invoked by uid 109); 31 Jul 2024 07:42:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 31 Jul 2024 07:28:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 31 Jul 2024 07:42:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18279 invoked by uid 111); 31 Jul 2024 07:28:37 -0000
+Received: (qmail 18359 invoked by uid 111); 31 Jul 2024 07:42:33 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2024 03:28:37 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2024 03:42:33 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 31 Jul 2024 03:28:32 -0400
+Date: Wed, 31 Jul 2024 03:42:28 -0400
 From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"W. Michael Petullo" <mike@flyn.org>, git@vger.kernel.org
-Subject: Re: Git clone reads safe.directory differently?
-Message-ID: <20240731072832.GB595974@coredump.intra.peff.net>
-References: <ZqUc8DJ1uKcHYlcy@imp.flyn.org>
- <20240727215845.GA1263246@coredump.intra.peff.net>
- <ZqZjRMqpEV_3WIkD@imp.flyn.org>
- <20240728224807.GA1299337@coredump.intra.peff.net>
- <ZqjQi6i2kiY4gcc1@imp.flyn.org>
- <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
- <xmqqv80m8pha.fsf@gitster.g>
- <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
+To: Hong Jiang <ilford@gmail.com>
+Cc: Bo Anderson <mail@boanderson.me>, git@vger.kernel.org
+Subject: Re: [patch] credential-osxkeychain: Clear username_buffer before
+ getting the converted C string.
+Message-ID: <20240731074228.GC595974@coredump.intra.peff.net>
+References: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,49 +38,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
 
-On Tue, Jul 30, 2024 at 11:05:24PM +0000, brian m. carlson wrote:
+On Wed, Jul 31, 2024 at 11:41:23AM +0800, Hong Jiang wrote:
 
-> The git(1) manual page also says this:
+> So it looks like that git_credential_out has invalid UTF-8 byte
+> sequence. I print it after the system_command "git":
 > 
->   If you have an untrusted `.git` directory, you should first clone it
->   with `git clone --no-local` to obtain a clean copy. Git does restrict
->   the set of options and hooks that will be run by `upload-pack`, which
->   handles the server side of a clone or fetch, but beware that the
->   surface area for attack against `upload-pack` is large, so this does
->   carry some risk. The safest thing is to serve the repository as an
->   unprivileged user (either via git-daemon(1), ssh, or using
->   other tools to change user ids). See the discussion in the `SECURITY`
->   section of git-upload-pack(1).
+> password=gho_SHADOWED
+> username=jdp1024��`
+> F�
+> capability[]=state
+> state[]=osxkeychain:seen=1
 > 
-> I think that has been traditionally the policy that we've had here, and
-> given that we document that it is safe to do so, I think it should be
-> fine.  This documentation apparently came from Peff, who I think should
-> be reasonably well informed on such matters.
+> and
+> 
+> echo "protocol=https\nhost=github.com\n" | git credential-osxkeychain get
+> 
+> reproduced the problem.
 
-Right, that was added in v2.45, but I think was just explaining the
-long-standing approach.
+Hmm. That does look like it could be uninitialized memory (assuming you
+don't have those garbage characters in the keychain storage).
 
-My understanding of the recent expansion of the ownership checks was
-that they were a defense-in-depth. It _should_ be safe to run
-upload-pack against an untrusted repository, but it would be easy for us
-to accidentally violate that.
+> So I made the patch, which zeros the username_buf before retrieving
+> the converted C string.
 
-But I admit I did not carefully follow all of the discussion around
-crossing filesystem boundaries (e.g., symbolic and hard links pointing
-outside docker containers that are bind-mounted, or something like
-that). I did not find those cases all that compelling from a security
-perspective, but again, I didn't look into them that closely.
+If that helps, then that implies that the string we are getting is not
+NUL-terminated. But...
 
-It could be that "clone" should try to avoid a "--local" clone from a
-repo with different ownership, if the local hardlink path is more
-dangerous. But that distinction is not something upload-pack even knows
-about, so the code would have to go into clone. And then upload-pack
-could be free to drop the ownership check. Certainly a lot of people
-have complained about it (I had actually thought we reverted it in
-v2.45.2, but that was just the extra hooks defense-in-depth; so again, I
-may be getting confused about the extra value of the enter_repo()
-ownership check that came at the same time).
+> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> index 6ce22a28ed..89cd575bd5 100644
+> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> @@ -137,6 +137,7 @@ static void find_username_in_item(CFDictionaryRef item)
+>   buffer_len = CFStringGetMaximumSizeForEncoding(
+>   CFStringGetLength(account_ref), ENCODING) + 1;
+>   username_buf = xmalloc(buffer_len);
+> + memset(username_buf, 0, buffer_len);
+>   if (CFStringGetCString(account_ref,
+>   username_buf,
+>   buffer_len,
+
+...we are getting it by calling CFStringGetCString(). I don't know
+anything about the OS API here, and I don't have a system to test on.
+But according to the documentation at:
+
+  https://developer.apple.com/documentation/corefoundation/1542721-cfstringgetcstring
+
+it should return a NUL-terminated string.
+
+Hrm. Just looking at the code, here's a wild hypothesis: the problem
+could be not that the buffer is not NUL-terminated, but that after the
+NUL it contains junk, and we print that junk. That is, the code looks
+like this:
+
+          /* If we can't get a CString pointer then
+           * we need to allocate our own buffer */
+          buffer_len = CFStringGetMaximumSizeForEncoding(
+                          CFStringGetLength(account_ref), ENCODING) + 1;
+          username_buf = xmalloc(buffer_len);
+          if (CFStringGetCString(account_ref,
+                                  username_buf,
+                                  buffer_len,
+                                  ENCODING)) {
+                  write_item("username", username_buf, buffer_len - 1);
+          }
+
+So we asked the system for the _maximum_ size that the string could be
+(and added one for the NUL). Then we got the string, and we printed out
+the _whole_ buffer, not just the string up to the NUL. And your fix
+"works" because NULs end up getting ignored on the read side (or at
+least cause ruby not to complain about bogus utf8).
+
+If that hypothesis is true, then the fix is more like:
+
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 6ce22a28ed..1c8310d7fe 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -141,7 +141,7 @@ static void find_username_in_item(CFDictionaryRef item)
+ 				username_buf,
+ 				buffer_len,
+ 				ENCODING)) {
+-		write_item("username", username_buf, buffer_len - 1);
++		write_item("username", username_buf, strlen(username_buf));
+ 	}
+ 	free(username_buf);
+ }
+
+But somebody with a functioning macOS system would need to check whether
+any of what I just said is true. This code comes from 9abe31f5f1
+(osxkeychain: replace deprecated SecKeychain API, 2024-02-17). Adding
+the author to the CC.
 
 -Peff
