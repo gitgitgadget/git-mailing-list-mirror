@@ -1,101 +1,90 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9F15A10B
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 15:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E7F17BBF
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 15:44:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722440444; cv=none; b=qUvLQgEzn9zRrnlCKMQHJScJjmrIp3QaO/O6t0ycuHh9WV7FMyA39mtAclKNOkX3n8LGBij7JbeoU17JA6HsCJCqQyJf5EocAK696IiuVmxp+FEDXhEk0RYYMMZYQpLsgHuSXgHqRypyd7M6Kq8HMpJWCddI+VG/vQ97mRHvJUE=
+	t=1722440694; cv=none; b=FZ8x+B5PEQWo+8wi7WdfALfuC9tC1vGsENiirNdcAmBgwz8uTR2cwKZM2nS3gvuJV1c0A3oU8GJ67dMtRRvFGwATId2CvU8SWDSAgUDBpikUcb6AEBq5qv8QJv+TMKFyyV1e6NaPnF7v7x2RecdVKrsBQm6L+N59NZMguAPrbas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722440444; c=relaxed/simple;
-	bh=BIUalIsMRnmNb0XSBqi3nlammQyoMzI4l1D7qNmj2SA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MvwgOP8xV64DBjcryUUN19QiA6mqTed6ixbS3cXuSQWX67thtJhJO9OchTbuTf8YLClqZWPu8XBplLEJ8Q+POHiis6opVRYPvDv8uUhY/pSLcst0GZWJ7IvGZ9E8hY7pq3YnWdfrwbztHPoTVphbtf9/QuXdeSFPXurjSXJD6KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ejHJj8C6; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1722440694; c=relaxed/simple;
+	bh=nDPcIwwaWdTkKSe0WxjqAjbIYpBkB3IuIvz03RawKI4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EyDrxVYKzqSRoVai9ke0xRFXFIYTX4LmynwsBEU4sFZ/tGGjUMlbGk+uo/SU7SwkT2e/Z+i7zZC+D4HYTT+KQZ7aqblO9WrgreBN/ICzOBrLX+l/QE6oGGoSPSxof6Th9+yUdlNjRLarLaEVLY/HDU3Tv6h4yf9HUId1gv2LXNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QRd/KwPV; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ejHJj8C6"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a1d81dc0beso381477485a.2
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 08:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722440441; x=1723045241; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BIUalIsMRnmNb0XSBqi3nlammQyoMzI4l1D7qNmj2SA=;
-        b=ejHJj8C6P5QqeETomfPce90rtwELg1GgVDDWhc1ZQLo67NWr8LTpqEL8V5UK2Kza6E
-         HL2H6jYodiJU9KUJYWR5QwTWZ7A5kqVdqyCbPirbMgeTuPPVrGEpE47rQVTXcMdYGYo3
-         1PCtWOIgz90o3gFQZ2CkV1NDUZritUOANXqDxuvA3ljTzfyoHsYvlAqSQ+OMs/Lqo7Tn
-         BdTlfUD8G35SZAWXNmPPCjVFrdvbdxDXES1tQLJep2O6Haj15MzU22S+MuUiW1CsPr49
-         dtyRd212/P9ll+YB2HmEyq7vi/9TSK6aDWbs+sy9Wf7l3xT5Q9trOsHsJSzg83aquM7Y
-         EGMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722440441; x=1723045241;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BIUalIsMRnmNb0XSBqi3nlammQyoMzI4l1D7qNmj2SA=;
-        b=flAZknZctDGOhUfNupwMRV8AQ12EQbPw8uV5RqOFozY4xEe1o0avAQdviqx1sw1cS4
-         3q91QcM/vgSEp0rV1q3X6KYeXXmvICAuygOcgH+/SkjULCuiTfwqBdY4mozByDMA6+D+
-         EnGymhyslIySIsZsvTYb1EbN0evS3Sa0NztdEBCbkD93zEoksLa/FpMUpmQdEx3lbomo
-         CdTeHClhOM4rQpspBG+qa890xK5MSPT4R6PkwOMKSsEl7JnlYa3SwLcTxu2dFq67NAxt
-         skg/rHFs51Eu5CSMkpSbZyu7RSMooWIkdWCtGYm9LTOK4elQHDZlK4dkvAHFErkEMvMq
-         OTAQ==
-X-Gm-Message-State: AOJu0YwHmAgcx+S8oFHaGcdtB+K38sPo/GlzKriP89Vz7frEnXla0+Yb
-	OBNVs7f8y70qp3UGthGtVeDJi+uaYXXYg0D2r6LbC9oFQCWauGfYorzx4Q5GdzE=
-X-Google-Smtp-Source: AGHT+IFFFXPuIiTNWMO6LWzKCX7gXSl4Zx8rpJyg1r70aUPVrMfmMAZ9HLbNz1iQY1DID80x23iOOw==
-X-Received: by 2002:a05:620a:2447:b0:79f:17da:6444 with SMTP id af79cd13be357-7a1e52c734fmr2001447085a.47.1722440441478;
-        Wed, 31 Jul 2024 08:40:41 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a1d73955ccsm758850385a.11.2024.07.31.08.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 08:40:40 -0700 (PDT)
-Date: Wed, 31 Jul 2024 11:40:35 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	John Cai <johncai86@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/4] Add 'promisor-remote' capability to protocol v2
-Message-ID: <Zqpa8/aLpgtzoBH2@nand.local>
-References: <20240731134014.2299361-1-christian.couder@gmail.com>
- <20240731134014.2299361-4-christian.couder@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QRd/KwPV"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 77F202436A;
+	Wed, 31 Jul 2024 11:44:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=nDPcIwwaWdTkKSe0WxjqAjbIYpBkB3IuIvz03R
+	awKI4=; b=QRd/KwPV2z6OpMr53Bi4gFmE1I1SsCqdRLNqdnPhwTzvejD0u1Y3/A
+	gu4fi4EZfzzJlxk7CAyAYh30lW9V4xMCd78rNehOlWYl4b4WG6q2B86xidwjUn5k
+	FAsMTbByOGdjRH02PDwcPBSgUvfDMdCVZ+PzmSV+rk4XGWhQBnqds=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7096F24369;
+	Wed, 31 Jul 2024 11:44:52 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8975D24367;
+	Wed, 31 Jul 2024 11:44:48 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: KwonHyun Kim <kwonhyun.kim@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Possible bug or error in document?
+In-Reply-To: <CADLV-7+mQ0K6_-L_Pws9yOYfQ++b4NyH5+FXwbyHuXBiOALeYA@mail.gmail.com>
+	(KwonHyun Kim's message of "Wed, 31 Jul 2024 15:08:50 +0900")
+References: <CADLV-7+mQ0K6_-L_Pws9yOYfQ++b4NyH5+FXwbyHuXBiOALeYA@mail.gmail.com>
+Date: Wed, 31 Jul 2024 08:44:46 -0700
+Message-ID: <xmqqh6c58t1t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240731134014.2299361-4-christian.couder@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D16607A0-4F53-11EF-AA0D-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Wed, Jul 31, 2024 at 03:40:13PM +0200, Christian Couder wrote:
-> By default, or if "promisor.advertise" is set to 'false', a server S will
-> advertise only the "promisor-remote" capability without passing any
-> argument through this capability. This means that S supports the new
-> capability but doesn't wish any client C to directly access any promisor
-> remote X S might use.
+KwonHyun Kim <kwonhyun.kim@gmail.com> writes:
 
-Even if the server supports this new capability, is there a reason to
-advertise it to the client if the server knows ahead of time that it has
-no promisor remotes to advertise?
+> --ignore-errors
+>            If some files could not be added because of errors indexing
+> them, do not abort the operation, but continue adding the others. The
+> command shall still exit with non-zero
+>            status. The configuration variable add.ignoreErrors can be
+> set to true to make this the default behaviour.
 
-I am not sure what action the client would take if it knows the server
-supports this capability, but does not actually have any promisor
-remotes to advertise. I would suggest that setting promisor.advertise to
-false indeed prevents advertising it as a capability in the first place.
+I think "--ignore-errors" is meant to ignore errors only about
+"adding" a discovered path (i.e. the exact path that user wants to
+add) to the index.  Perhaps the file exists, but an I/O error
+prevents Git from reading it fully, causing it to fail computing the
+blob object name.  Such an error is ignored and other paths that got
+successfully computed their hashes are added to the index.
 
-Selfishly, it prevents some issues that I have when rolling out new Git
-versions within GitHub's infrastructure, since our push proxy layer
-picks a single replica to replay the capabilities from, but obviously
-replays the client's response to all replicas. So if only some replicas
-understand the new 'promisor-remote' capability, we can run into issues.
+On the other hand, errors while discovering what exact paths the
+user wants to add are not ignored.  So "git add --ignore-errors --
+no-such-file" would still error out in order to notify you that you
+asked for no-such-file that does not exist, and "--pathspec-from"
+does not change the story.
 
-I'm not sure if the client even bothers to send back promisor-remote if
-the server did not send any such remotes to begin with, but between that
-and what I wrote in the second paragraph here, I don't see a reason to
-advertise the capability when promisor.advertise is false.
+What is missing from "git add" might be the "--ignore-unmatch"
+option that "git rm" has.  There are other commands that supports a
+similarly named "--ignore-missing" option, and we may #leftoverbits
+want to unify them over time (i.e. decide which one to use in the
+longer term, say "--ignore-missing", teach "git rm" that
+"--ignore-missing" is a new synonym for "--ignore-unmatch", add
+"--ignore-missing" to "git add" and probably other commands that
+would benefit from having it, and then in a far enough future,
+retire "--ignore-unmatch" from "git rm").
 
-Thanks,
-Taylor
