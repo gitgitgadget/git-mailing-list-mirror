@@ -1,238 +1,162 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F0160860
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 21:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7556016D304
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 21:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722462752; cv=none; b=ZZVyShja7O/Y0p9PlPZnDfwJW+aw0wroTKEH7Eh1LItfPMS3qvT7Q3nwI1W9PuPORJynrQFN14WbZsWrMdBqe5knNXr6JIhjjvjKaepsjXsDVgurfHCL+qLXMTv9Gn3zNiQV0Bl57bT5VAfAvYz9I/XIneKXvBZREgW8pev1k4o=
+	t=1722463073; cv=none; b=Psa4w1szqgBaPY0JWu16ACza96rwqEWas86Xa1b0LPk6JCvXK1gJ1LkpDNoJBwm3Ns+vbl8/PaKl2wcNJiB3hYUCMn9Fn1mTXZzvVSfuiw+cLupKM2bL+r66NFTyoWvtVguE+V9t3IhkI+BbiGxzDLJBv2Ob5Tw8i12qr3xrNG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722462752; c=relaxed/simple;
-	bh=aX1hfDfeXbx1lK3HtWFLM89V7mNRSSk8MFVbHEiLGkk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ty/T9UYoTogc8jc5MRkG4vKRclMfzTy4dUwo9OXRNfp0X2crTrAhEhbkBwHDHhvHaRDToJMz5ru86PB7y9/1i9+HysqPODmvUG9JMvWBuvqKjsISMdJHo5A6Bdpwjqsx1VRkX0KAq4d+P0l/W4hcufA36Zzk1BsuyA6M8SrO1wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k7LU5wB5; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1722463073; c=relaxed/simple;
+	bh=XZMtLE0pOrvSlJ0inaUwMtgKIzWkPXM1aA/EZ170ars=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nx2QbyqhNB78RDnXmBRLwOcwd4HH/UaqKMLP5wNoPJ41GyiwtUVfNs+r+4heQcil32rup8Vnp+K5v9KtOlq+56/YWVMEQweR/ayKFiZaxWMBi3mZEqRbUMYj89tqZN1Pg68fWlZmeBmZ1bC5JW88vwsT0zxwuPAKq+dCDVku0U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PbJAjDse; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k7LU5wB5"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-428243f928fso26844885e9.0
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:52:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbJAjDse"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5d59e491fefso2778028eaf.1
+        for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722462748; x=1723067548; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bLWibALzAw9cOAsZfWHvpv4+9qQ3h7y9+x1xBNBFWbs=;
-        b=k7LU5wB5iGa9bIU4yVtDLJdL2faimvGrXrDgjf76M4holVJScB0qQqz908Bh81wnTx
-         QiNJRLBz7oMlCD1Udm2zeBKNLB9rUZIWmZHuOBLNPjoMETnvaJyJDegTu2BuT3qhglcO
-         sC5xF1KWxKa/xA4WsI81Zh7eCp79g7NU4nFPJazda/aOZgJT6/2qF85Gq1UXHjq7iwbI
-         zXPJWH8J7F3oxPWrm4EMj/QHLhq3zLRzM4WjxmW7c0EJuB19otD7joHB1YqYn/JmJTA/
-         C6+BSnCP70Prwss71fw4k2aoWJeTGJZ44lVgJzMdcYFsHkdaM7v21Yu/nlND6ljDTuc7
-         qOAw==
+        d=gmail.com; s=20230601; t=1722463070; x=1723067870; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wWQl38r0Ot+MWSz2bDt4qNS/xj1n54xSfwp1/fuyO7E=;
+        b=PbJAjDse9ePs2YlUDojg7b/fyFcpL92uYLOsIDre5oU3jyIVV4MSTKh4F2M8jbVnQk
+         V5GuJ4YHDcmv/tFAQr6qF1HVisAJnCGUxnY8x6ALI4054uWAjf9YD84qaQNyces30MGE
+         oP2Icoue01j/Tef07kOLYCxLpoonoOlxGP7DilrXyO7+7C97U6M0lyDg6ot1B31gwz7r
+         k2qp+7WUrx7HEGJzQGmSiO6ifxFtSwF0XQviRkdnwealvtkGhaFudFrluMZmONkLDiPf
+         VW0VJhan6JUfyqNVkVL4vgr3DPHHuDISM8yZFqpeAYfhWn9FyDRodLgEGWtYQxqW1rLQ
+         FoEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722462748; x=1723067548;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bLWibALzAw9cOAsZfWHvpv4+9qQ3h7y9+x1xBNBFWbs=;
-        b=uwhmGgG6rSF3ntwwDDEJOywA9+RqB6dc1QmlXeJbw+G3HDrebPyW5IQGVkVyrr/Adb
-         9MJwxpRKKks1yE9fRHymx5zM0v6Gl4TbGl6om2ck5HgY0TGDcWjkMYEGBRifPm9JIUgr
-         ppSgiwFUdKDgZHIUSIifp44tAIpNzXl7HbuPovThLzZB8ravTR7CBvtasQwya/WbMcPZ
-         2Gy/7wz2tXAV6ey+biyK0sALre8QJ4neTmmSq4BcOSC17c3LtNBR/AZJ98A+gTmfmdU4
-         Ls3/yOxufqvAgkOBJAAkByr/Pc0+Y9H5LmjMfvi3BfAfZfIbU1ca4qP3XrSo0QUffEh9
-         o96Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUJp8LM2v0c6/1eFiV0+ZjvtbmGI9Gl6rT25D6fb6v1U5PJvLFVzN3lLOguiFLYDckPbQuE9xChzwjfqHCewyiO8m8v
-X-Gm-Message-State: AOJu0YzCBI1sfXSkEilYIeqUK0Lq1yGyb2RfLzTJFNpZ6o29mrvDwe0/
-	Jt9mGUaYYMfQWwOUFAOw9ZPXFDhLUONhD7GOlZU6j7Kl7n7AcUvGKiucRA==
-X-Google-Smtp-Source: AGHT+IFwC3hXwp6F7llPRw0cc+bOUD41xvwsMbmCT2/EOpDkyQM+479IC7g+YFvxiWNdWMcwqlxqKg==
-X-Received: by 2002:a05:600c:4750:b0:426:5c81:2538 with SMTP id 5b1f17b1804b1-428a9bdb92bmr7492905e9.14.1722462748055;
-        Wed, 31 Jul 2024 14:52:28 -0700 (PDT)
-Received: from gmail.com (160.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.160])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282bab9f7esm33741165e9.21.2024.07.31.14.52.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Jul 2024 14:52:27 -0700 (PDT)
-Message-ID: <82f4bef1-57d9-4427-8316-5e63b573931d@gmail.com>
-Date: Wed, 31 Jul 2024 23:52:26 +0200
+        d=1e100.net; s=20230601; t=1722463070; x=1723067870;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wWQl38r0Ot+MWSz2bDt4qNS/xj1n54xSfwp1/fuyO7E=;
+        b=qCUkEze1ciiuVdr/8hOcOkZN2IouDLv8/lGwRjsqeHzpd9oPiIATqTTQhYp3Q5lnl5
+         PJoFRnnDrZ211PGO6hJ7TKQFqtd5BsEvWlxV+wtMVvfO5slW5oM0crYmS9N8IqBVsNot
+         lx3jDtIFinkTcDr2F9+kbZusbPvYHVWzWXWprmCCaHr0MTMVR5BaRQQe/Gbgfc1VhRIt
+         1epxlZW80BtBR54ZixlJR5Hr9gnHKLmqczp8y0Z54UHpljZS+HT5RMXqa1PZ9v5spUxh
+         YL+9VUFRolD3mSiAsxTJNDJSW7xd6jDzkT/B65plDUPP7JBQ4S3mL7VusMIxu46DuUUC
+         HelQ==
+X-Gm-Message-State: AOJu0YwxUd+vd9ITFFx9/FNQyRtRWxTQh9O461+gFmCcy/Xcyfgunid6
+	cPiHNK8AiSyD+emPZbNt5/U3usQu+PvhwCtSooKnaZXLjgi37BdR
+X-Google-Smtp-Source: AGHT+IF1NMHRFLEXiR910+jXbaYKo8vnmN7Zmo1+FSgvj68aSvVVQno9I0R3piMAspiDbPCMe/90fg==
+X-Received: by 2002:a05:6820:1b91:b0:5d6:c77:fb8f with SMTP id 006d021491bc7-5d61e3e2b67mr1180662eaf.0.1722463070308;
+        Wed, 31 Jul 2024 14:57:50 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5d5b3677e4bsm1539550eaf.34.2024.07.31.14.57.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jul 2024 14:57:50 -0700 (PDT)
+Date: Wed, 31 Jul 2024 16:57:05 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/8] reftable/stack: simplify tracking of table locks
+Message-ID: <xypzh23sibadweiyhkbg5tsij3k6zs5u5pwqouiah3aez25gqm@rnmfa2ir6jzb>
+References: <cover.1722435214.git.ps@pks.im>
+ <40d9f75cf20d4b76adb1683709e054e264d4e06f.1722435214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/23] builtin/submodule--helper: fix various trivial
- memory leaks
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1721995576.git.ps@pks.im>
- <5220c91bda7bc766368c2925499e5d244a03697b.1721995576.git.ps@pks.im>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <5220c91bda7bc766368c2925499e5d244a03697b.1721995576.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40d9f75cf20d4b76adb1683709e054e264d4e06f.1722435214.git.ps@pks.im>
 
-On Fri, Jul 26, 2024 at 02:15:09PM +0200, Patrick Steinhardt wrote:
-
-> There are multiple trivial memory leaks in the submodule helper. Fix
-> those.
+On 24/07/31 04:15PM, Patrick Steinhardt wrote:
+> When compacting tables, we store the locks of all tables we are about to
+> compact in the `table_locks` array. As we currently only ever compact
+> all tables in the user-provided range or none, we simply track those
+> locks via the indices of the respective tables in the merged stack.
+> 
+> This is about to change though, as we will introduce a mode where auto
+> compaction gracefully handles the case of already-locked files. In this
+> case, it may happen that we only compact a subset of the user-supplied
+> range of tables. In this case, the indices will not necessarily match
+> the lock indices anymore.
+> 
+> Refactor the code such that we track the number of locks via a separate
+> variable. The resulting code is expected to perform the same, but will
+> make it easier to perform the described change.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-
-Hi Patrick,
-
-While working on another series, I fixed some leaks.  But, I haven't
-sent any patches.
-
-The series this message belongs to fixes all the leaks that my unsent
-series addresses.  So, I won't bother sending my patches.
-
-However, I think we can do better for the second leak solved in this
-patch.  I leave my patch at the end of this message in case you want
-to take a look.
-
-In any case, thanks for working on this.  I have the habit of having
-"SANITIZE=leak" in my config.mak, so this series will make me have
-fewer distractions :)
-
 > ---
->  builtin/submodule--helper.c | 13 ++++++++++---
->  t/t7400-submodule-basic.sh  |  1 +
->  2 files changed, 11 insertions(+), 3 deletions(-)
+>  reftable/stack.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f1218a1995..5ae06c3e0b 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2269,6 +2269,7 @@ static int is_tip_reachable(const char *path, const struct object_id *oid)
->  	struct child_process cp = CHILD_PROCESS_INIT;
->  	struct strbuf rev = STRBUF_INIT;
->  	char *hex = oid_to_hex(oid);
-> +	int reachable;
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index e5959d2c76..07e7ffc6b9 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -1016,7 +1016,7 @@ static int stack_compact_range(struct reftable_stack *st,
+>  	struct lock_file *table_locks = NULL;
+>  	struct tempfile *new_table = NULL;
+>  	int is_empty_table = 0, err = 0;
+> -	size_t i;
+> +	size_t i, nlocks = 0;
 >  
->  	cp.git_cmd = 1;
->  	cp.dir = path;
-> @@ -2278,9 +2279,12 @@ static int is_tip_reachable(const char *path, const struct object_id *oid)
->  	prepare_submodule_repo_env(&cp.env);
+>  	if (first > last || (!expiry && first == last)) {
+>  		err = 0;
+> @@ -1051,7 +1051,7 @@ static int stack_compact_range(struct reftable_stack *st,
+>  	for (i = first; i <= last; i++) {
+>  		stack_filename(&table_name, st, reader_name(st->readers[i]));
 >  
->  	if (capture_command(&cp, &rev, GIT_MAX_HEXSZ + 1) || rev.len)
-> -		return 0;
-> +		reachable = 0;
-> +	else
-> +		reachable = 1;
+> -		err = hold_lock_file_for_update(&table_locks[i - first],
+> +		err = hold_lock_file_for_update(&table_locks[nlocks],
+
+Tables in the list are locked in reverse order. Previously, the locks
+were also added to `table_locks` in reverse order. This could leave some
+elements empty at the beginning if only a subset of tables are locked.
+Now each table lock is added starting from index 0. This means the
+contents of `table_locks` are now in a reversed order.
+
+Ultimately, this makes no difference though because all the usages also
+have updated `table_locks` accesses meaning the same order is maintained
+in practice.
+
+So far makes sense :)
+
+>  						table_name.buf, LOCK_NO_DEREF);
+>  		if (err < 0) {
+>  			if (errno == EEXIST)
+> @@ -1066,7 +1066,7 @@ static int stack_compact_range(struct reftable_stack *st,
+>  		 * run into file descriptor exhaustion when we compress a lot
+>  		 * of tables.
+>  		 */
+> -		err = close_lock_file_gently(&table_locks[i - first]);
+> +		err = close_lock_file_gently(&table_locks[nlocks++]);
+>  		if (err < 0) {
+>  			err = REFTABLE_IO_ERROR;
+>  			goto done;
+> @@ -1183,8 +1183,8 @@ static int stack_compact_range(struct reftable_stack *st,
+>  	 * Delete the old tables. They may still be in use by concurrent
+>  	 * readers, so it is expected that unlinking tables may fail.
+>  	 */
+> -	for (i = first; i <= last; i++) {
+> -		struct lock_file *table_lock = &table_locks[i - first];
+> +	for (i = 0; i < nlocks; i++) {
+> +		struct lock_file *table_lock = &table_locks[i];
+>  		char *table_path = get_locked_file_path(table_lock);
+>  		unlink(table_path);
+>  		free(table_path);
+> @@ -1192,8 +1192,8 @@ static int stack_compact_range(struct reftable_stack *st,
 >  
-> -	return 1;
-> +	strbuf_release(&rev);
-> +	return reachable;
->  }
+>  done:
+>  	rollback_lock_file(&tables_list_lock);
+> -	for (i = first; table_locks && i <= last; i++)
+> -		rollback_lock_file(&table_locks[i - first]);
+> +	for (i = 0; table_locks && i < nlocks; i++)
+> +		rollback_lock_file(&table_locks[i]);
+>  	reftable_free(table_locks);
 >  
->  static int fetch_in_submodule(const char *module_path, int depth, int quiet,
-> @@ -3135,6 +3139,7 @@ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
->  static int add_submodule(const struct add_data *add_data)
->  {
->  	char *submod_gitdir_path;
-> +	char *depth_to_free = NULL;
->  	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
->  	struct string_list reference = STRING_LIST_INIT_NODUP;
->  	int ret = -1;
-> @@ -3200,7 +3205,7 @@ static int add_submodule(const struct add_data *add_data)
->  		}
->  		clone_data.dissociate = add_data->dissociate;
->  		if (add_data->depth >= 0)
-> -			clone_data.depth = xstrfmt("%d", add_data->depth);
-> +			clone_data.depth = depth_to_free = xstrfmt("%d", add_data->depth);
->  
->  		if (clone_submodule(&clone_data, &reference))
->  			goto cleanup;
-> @@ -3223,7 +3228,9 @@ static int add_submodule(const struct add_data *add_data)
->  			die(_("unable to checkout submodule '%s'"), add_data->sm_path);
->  	}
->  	ret = 0;
-> +
->  cleanup:
-> +	free(depth_to_free);
->  	string_list_clear(&reference, 1);
->  	return ret;
->  }
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 981488885f..098d8833b6 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -12,6 +12,7 @@ subcommands of git submodule.
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
-> +TEST_PASSES_SANITIZE_LEAK=true
->  . ./test-lib.sh
->  
->  test_expect_success 'setup - enable local submodules' '
+>  	delete_tempfile(&new_table);
 > -- 
-> 2.46.0.rc1.dirty
+> 2.46.0.dirty
 > 
 
------ >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] submodule--helper: depth clone parameter
 
-The `clone` subcommand has an OPT_STRING parameter: `--depth`, that
-eventually is used when invoking `git-clone`.
-
-As `git-clone` only support positive integer values for `--depth`
-since 5594bcad21 (clone,fetch: catch non positive `--depth` option
-value, 2013-12-05), seems safe to change the `--depth` parameter to
-OPT_INTEGER in `module_clone`.
-
-Doing so we avoid a leak in `add_submodule`.
-
-Do it.
-
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/submodule--helper.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f1218a1995..e7d52f38d9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1530,7 +1530,7 @@ struct module_clone_data {
- 	const char *path;
- 	const char *name;
- 	const char *url;
--	const char *depth;
-+	int depth;
- 	struct list_objects_filter_options *filter_options;
- 	unsigned int quiet: 1;
- 	unsigned int progress: 1;
-@@ -1729,8 +1729,8 @@ static int clone_submodule(const struct module_clone_data *clone_data,
- 			strvec_push(&cp.args, "--quiet");
- 		if (clone_data->progress)
- 			strvec_push(&cp.args, "--progress");
--		if (clone_data->depth && *(clone_data->depth))
--			strvec_pushl(&cp.args, "--depth", clone_data->depth, NULL);
-+		if (clone_data->depth > 0)
-+			strvec_pushf(&cp.args, "--depth=%d", clone_data->depth);
- 		if (reference->nr) {
- 			struct string_list_item *item;
- 
-@@ -1851,8 +1851,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &dissociate,
- 			   N_("use --reference only while cloning")),
--		OPT_STRING(0, "depth", &clone_data.depth,
--			   N_("string"),
-+		OPT_INTEGER(0, "depth", &clone_data.depth,
- 			   N_("depth for shallow clones")),
- 		OPT__QUIET(&quiet, "suppress output for cloning a submodule"),
- 		OPT_BOOL(0, "progress", &progress,
-@@ -3199,8 +3198,7 @@ static int add_submodule(const struct add_data *add_data)
- 			string_list_append(&reference, p)->util = p;
- 		}
- 		clone_data.dissociate = add_data->dissociate;
--		if (add_data->depth >= 0)
--			clone_data.depth = xstrfmt("%d", add_data->depth);
-+		clone_data.depth = add_data->depth;
- 
- 		if (clone_submodule(&clone_data, &reference))
- 			goto cleanup;
--- 
-2.45.1
