@@ -1,169 +1,170 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423BE1BC40
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 21:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E831BC4E
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 21:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722459839; cv=none; b=sQnkcGGOfLFTGDg/vLmuYvimztHi4e5b4jAHo9PCvN8FKqdP4Ay6S2Fmp8l2uFPylX1DeiLU7k3pdbjrv4b9fa3/Ziifxv4TtVwj8B7Gf9TlpJf05IxkucQxYkMXe4/sC8R+AD0OmBF50qQw++c7+pnFUzvvyW58wNNQMRjUS5s=
+	t=1722461815; cv=none; b=WQY77dtWncYquYvFXc+CYlKe32VIw06f08rHTMBXRTJ8F9uNPVPync3zICYYUVXurT470mOYnJANNjOiVpb3Vimyad9CqXeTXX9iMV3xFhovKoK4j/k0b0tG+/smjN3XW8QIMkPAWWFhC7yubjrsT+sQpuBZLTc1tE5L3oGR4uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722459839; c=relaxed/simple;
-	bh=tIefSMNWQcbRUAsYZDK5jlLEdpgw8dn+7w4tOsj/Qkc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bm8Zgx0l9sZKBbTIJFnt/O9FLH5uRKumT0WV15Gti12X49n0aYN4IVBpxqM/fPeHQWysvhBgGiwZ5fV7WUPaW8mRqUYhmLCw/68fs41E5UBtIax79XBJvhTgyfHSFincQGvYhn0P/T3IdJ8rdrVukLxE9/gwl1ySfexVtcy3hRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=08qtSide; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1722461815; c=relaxed/simple;
+	bh=ZpcOCpAF4BdG9az4z+PO+dBw34zS8GrX5xxikT2a0yQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=txF5HMdWk3w1/hwStLMEtHB7mUnfr9v0xOIpR61+GrwDkI3PrZ89BSI1H+uRfGDXmDoyOUyKOL0CLQnuUwdBE8SEX03tPioRL8G3x6btIJPspaZ7KlnWfRKlHkiXgyr01IJUl3EFNqAiovaNH0u48splBSp2DlHQyuR1J8ZieH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=fvlAYKhb; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="08qtSide"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5c667b28c82so775139eaf.1
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:03:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fvlAYKhb"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6bb687c3cceso19669406d6.0
+        for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722459837; x=1723064637; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BLtji4iXhRtDsHeUeIHqFy27igwdF+3dz1/Q/8wRX6c=;
-        b=08qtSide+IGNyZbw789UPyswLo36mCqMyE/cMkIPd3u9YKxrJ4XCqMQ9++Bpc2k0s2
-         GlAWS9TwDurCYZjm2IdYqftKbF+Rwoc8q+XUS4MNptA2dB6Tnxc+gn8OANBJ9+WAUsBA
-         Wwm/Osn4BC5M+V+4sBORxgyfI2rHmN/Mdt/UYkfX87zC20JRBdpChBe4BICG7a/71Lfd
-         E948VLEppj/ISbcrk6ZeifTqeFmZbpEMPkG/kzXyc8AF6VSCmxvBy94Ac7rgAa59Bi5w
-         c6lcXiQDBWcET3yWi03vUmFGO2zLMBaKUj6LK6MUacB35CSErZQYuTyfrSQ+YNv8Kp3C
-         pipg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722461812; x=1723066612; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aGa33sdtCfK8c5JvJYfs2YzLb6L2L2beLX6rx/9bzmQ=;
+        b=fvlAYKhbadBPQ6qDuKjJl572WOVht0SkvsRjNpRRLrP6TzEkvhV7DW8iSrPtXkWdaL
+         S8YBVv7xlnorSPuLKDXJnsLdJOVUABT3twp2curIEeCe4QMNfNo/CvCqMa/fweDh5Fhq
+         BB7gOnaCf9HwjvkXj3gsI1ixJw2EnpwKKWLiJJfiqOLKadRj6Cwh9cx2NOejITCgDpFJ
+         kLBV8xWOI1/yL5/aAUnlejr+xpVp3G9QL7vTK+UbTbLjgJ93bWhha/HsMnN0ECdDbmLt
+         EaBrRVtg9sMo1C00kBsPxxlYiw4FYSmzZ3/s9tnnCyO1/b766Mi7GyI9RsFR+BKTJoXD
+         ofKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722459837; x=1723064637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BLtji4iXhRtDsHeUeIHqFy27igwdF+3dz1/Q/8wRX6c=;
-        b=nfT71EgT+o6KjJagARuMpA/MQBD/ivlhDFBTT2Qf8v5rVU1rNWSXZrmF+0x/MYjIxu
-         1gEW2Vv4+/cBX4+Vr83nmYQ+yHFf+6ccl0m6koC8lwQI7tYz2E2gb6p69vDldfD6AjvP
-         SwEIEN3QfSQihwMR2y5rCs4B8ZjkpTE8YVokisUXPDqn1xrflVRWiKLqU6hBa+SDfk5m
-         wV7ouXpaZc/Npa1sNjfep+/BVKPrZP1I7AstRFzZK9Vnyqrd6p5+Vyu/PehP/wARXTVl
-         yTfEjuvlV7Yuc5+/n5713ImwHhUz50vYqoTFDX/sKdU8BvaDe+wFm2LmDGJ9ilPcbTcP
-         w4/w==
-X-Gm-Message-State: AOJu0YzTuT1Wv1LYMEuQj798VAgeGa3LAU1FnTORPeFYo4RvF8S1AVRq
-	m7GEbYFIk3GQmoCj6xUbN0CxdQLMTA73ApRBjjsMedHBNKMArEmQlfzodgNie1tPYX4GwPnaxQZ
-	rqlg8sJNNPc3lodp2Q6hklve0QK8WJJa733EIMK/dnxMXwHfj7g==
-X-Google-Smtp-Source: AGHT+IF1f2feAjnm85F4s8gxKonvqnnE7lCGUFl3FElfeMcg8avU1+zbMceN1wficPmpwPpLunHwWc1M1BcNOAr6kEU=
-X-Received: by 2002:a05:6820:614:b0:5ce:3ccb:2118 with SMTP id
- 006d021491bc7-5d61f593156mr165755eaf.3.1722459837002; Wed, 31 Jul 2024
- 14:03:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1722461812; x=1723066612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aGa33sdtCfK8c5JvJYfs2YzLb6L2L2beLX6rx/9bzmQ=;
+        b=fcSAXFHf9Nu+jONAT5n6Ki1ZgdH0NOf1E+b76Eox/pGJXRmGEdQ6ITYhparNaysDON
+         r9NCvHHnXICRUzz486QokkMswumugtjaKcW8ud7mz70O0KOOurv3AXpkwFrVdHJCdb4m
+         9xfZxhVe/Zk7OW3Qu6DNnWnK8yQUIo9JHPdiA436dVv8d8bkFRppaEO67hGiV/Fv8mP/
+         F+Wtvyd99a43UEYBA9TeluH5x8+c5kOeLeGMxABWSkA3/ETgFeaU1ljMKjOCFJeoVFyr
+         GJ9v3/IYvlYB5GtBPtnF5QT89utKc5fCRcxY3qtGM0+n1xRepyc4nnciN92meEAzKxwj
+         TNsw==
+X-Gm-Message-State: AOJu0Yx4s99/3FW7vFF+h9EqNj3NL+oUErkxAQ4LZqfGAaz3szezUhem
+	qGcP/mbS04Xj1mxK/FmyhuCqkf+WgIdyiBaDIFCm9ed0ybr4EQyBRnPtuzdHjSw=
+X-Google-Smtp-Source: AGHT+IEL9I49o8LzLNNt1+rIUzPUk/qiRg4e8EkUKvPjHS9OW7T8BIlWXL6dcEgLl1fshN5viyJtMw==
+X-Received: by 2002:a05:6214:440f:b0:6b7:4712:c878 with SMTP id 6a1803df08f44-6bb8d786428mr6327376d6.41.1722461812171;
+        Wed, 31 Jul 2024 14:36:52 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb3fa94a16sm78900466d6.86.2024.07.31.14.36.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jul 2024 14:36:51 -0700 (PDT)
+Date: Wed, 31 Jul 2024 17:36:50 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Han Jiang <jhcarl0814@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: git config set --file, key-value pair without '= value', gives
+ Segmentation fault
+Message-ID: <ZqqucpNgqSgZDPtA@nand.local>
+References: <CANrWfmTek1xErBLrnoyhHN+gWU+rw14y6SQ+abZyzGoaBjmiKA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de> <077a178e-eb30-45ff-b653-a514bfd33077@web.de>
- <4b27cee7-98eb-41ac-a68b-44f42e15a5d2@web.de>
-In-Reply-To: <4b27cee7-98eb-41ac-a68b-44f42e15a5d2@web.de>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 31 Jul 2024 14:03:31 -0700
-Message-ID: <CAO_smVgs1+os+Mh+c_tEoD_W6m+oJG-w1QQZ8YSuzHGeWkmfcQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/6] unit-tests: show location of checks outside of tests
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANrWfmTek1xErBLrnoyhHN+gWU+rw14y6SQ+abZyzGoaBjmiKA@mail.gmail.com>
 
-On Tue, Jul 30, 2024 at 7:07=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
->
-> Checks outside of tests are caught at runtime and reported like this:
->
->  Assertion failed: (ctx.running), function test_assert, file test-lib.c, =
-line 267.
->
-> The assert() call aborts the unit test and doesn't reveal the location
-> or even the type of the offending check, as test_assert() is called by
-> all of them.
->
-> Handle it like the opposite case, a test without any checks: Don't
-> abort, but report the location of the actual check, along with a message
-> explaining the situation.  The output for example above becomes:
->
->  # BUG: check outside of test at t/helper/test-example-tap.c:75
->
-> ... and the unit test program continues and indicates the error in its
-> exit code at the end.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  t/helper/test-example-tap.c | 2 ++
->  t/t0080-unit-test-output.sh | 5 +++--
->  t/unit-tests/test-lib.c     | 7 ++++++-
->  3 files changed, 11 insertions(+), 3 deletions(-)
->
-> diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
-> index d072ad559f..79c12b01cd 100644
-> --- a/t/helper/test-example-tap.c
-> +++ b/t/helper/test-example-tap.c
-> @@ -72,6 +72,8 @@ static void t_empty(void)
->
->  int cmd__example_tap(int argc, const char **argv)
->  {
-> +       check(1);
+On Wed, Jul 31, 2024 at 11:55:06PM +1200, Han Jiang wrote:
+> Thank you for filling out a Git bug report!
 
-Let's include a comment that describes why we have this outside of the
-TEST() macros so that people don't try to "fix" it, and so that people
-realize it's not meant to be a _good_ example :)
+Thanks for the bugreport.
 
-> +
->         test_res =3D TEST(check_res =3D check_int(1, =3D=3D, 1), "passing=
- test");
->         TEST(t_res(1), "passing test and assertion return 1");
->         test_res =3D TEST(check_res =3D check_int(1, =3D=3D, 2), "failing=
- test");
-> diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
-> index 9ec47b7360..fe221f3bdb 100755
-> --- a/t/t0080-unit-test-output.sh
-> +++ b/t/t0080-unit-test-output.sh
-> @@ -7,9 +7,10 @@ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> What did you do before the bug happened? (Steps to reproduce your issue)
 >
->  test_expect_success 'TAP output from unit tests' - <<\EOT
->         cat >expect <<-EOF &&
-> +       # BUG: check outside of test at t/helper/test-example-tap.c:75
->         ok 1 - passing test
->         ok 2 - passing test and assertion return 1
-> -       # check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:77
-> +       # check "1 =3D=3D 2" failed at t/helper/test-example-tap.c:79
->         #    left: 1
->         #   right: 2
->         not ok 3 - failing test
-> @@ -46,7 +47,7 @@ test_expect_success 'TAP output from unit tests' - <<\E=
-OT
->         #    left: '\\\\'
->         #   right: '\\''
->         not ok 17 - messages from failing string and char comparison
-> -       # BUG: test has no checks at t/helper/test-example-tap.c:92
-> +       # BUG: test has no checks at t/helper/test-example-tap.c:94
->         not ok 18 - test with no checks
->         ok 19 - test with no checks returns 0
->         1..19
-> diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-> index 3c513ce59a..989dc758e6 100644
-> --- a/t/unit-tests/test-lib.c
-> +++ b/t/unit-tests/test-lib.c
-> @@ -264,7 +264,12 @@ static void test_todo(void)
->
->  int test_assert(const char *location, const char *check, int ok)
->  {
-> -       assert(ctx.running);
-> +       if (!ctx.running) {
-> +               test_msg("BUG: check outside of test at %s",
-> +                        make_relative(location));
+> input:
+> cd '/'; cd '/'; rm --force --recursive -- './test_git'; mkdir "$_"; cd "$_";
+> cat >'./config.txt' <<'EOF'
+> [section]
+> key
+> #key =
+> key = value1
+> key = value2
+> key = value3
+> key = value4
+> EOF
+> git config set --file './config.txt' --value='[2]' --fixed-value
+> 'section.key' 'value6'
 
-Below, `test_msg` emits a message like `skipping check '1 =3D=3D 2' at
-<loc>`. Should we include 'check' as part of the message here, or is
-it not possible or not useful for some reason?
+I was able to trim reproduction script slightly to the following:
 
-> +               ctx.failed =3D 1;
-> +               return 0;
-> +       }
->
->         if (ctx.result =3D=3D RESULT_SKIP) {
->                 test_msg("skipping check '%s' at %s", check,
-> --
-> 2.46.0
+--- 8< ---
+set -x
+
+rm -f config.txt*
+
+cat >'./config.txt' <<EOF
+[section]
+key
+EOF
+
+git.compile config set --file ./config.txt --value='[2]' --fixed-value section.key value6
+--- >8 ---
+
+, which just relies on having --value, --fixed-value, and a key without
+an explicit value.
+
+The script you provided bisects to 00bbdde141 (builtin/config: introduce
+"set" subcommand, 2024-05-06), which is the commit which introduced the
+new 'git config set' invocation.
+
+But that appears to be a red herring, since the segfault happens in
+config.c::matches() here:
+
+    (gdb) up
+    #1  0x000055b3e8b06022 in matches (key=0x55b3ea894360 "section.key", value=0x0,
+        store=0x7ffe99076eb0) at config.c:2884
+    2884			return !strcmp(store->fixed_value, value);
+
+where we are trying to compare the `--fixed-value` argument to `value`,
+which is NULL.
+
+So I think that the behavior dates back to c90702a1f6 (config: plumb
+--fixed-value into config API, 2020-11-25). I think that the fix looks
+something like:
+
+--- 8< ---
+diff --git a/config.c b/config.c
+index 6421894614..05f369ec0d 100644
+--- a/config.c
++++ b/config.c
+@@ -2914,7 +2914,7 @@ static int matches(const char *key, const char *value,
+ {
+ 	if (strcmp(key, store->key))
+ 		return 0; /* not ours */
+-	if (store->fixed_value)
++	if (store->fixed_value && value)
+ 		return !strcmp(store->fixed_value, value);
+ 	if (!store->value_pattern)
+ 		return 1; /* always matches */
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 9de2d95f06..f13277c8f3 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2704,6 +2704,15 @@ test_expect_success '--get and --get-all with --fixed-value' '
+ 	test_must_fail git config --file=config --get-regexp --fixed-value fixed+ non-existent
+ '
+
++test_expect_success '--fixed-value with value-less configuration' '
++	test_when_finished rm -f config &&
++	cat >config <<-\EOF &&
++	[section]
++		key
++	EOF
++	git config --file=config --fixed-value section.key value pattern
++'
++
+ test_expect_success 'includeIf.hasconfig:remote.*.url' '
+ 	git init hasremoteurlTest &&
+ 	test_when_finished "rm -rf hasremoteurlTest" &&
+--- >8 ---
+
+I'd like to hear from Stolee (CC'd), who is the author of c90702a1f6
+before submitting this as a standalone patch.
+
+Thanks,
+Taylor
