@@ -1,95 +1,135 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7A528E7
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 02:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314B18030
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 03:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722393767; cv=none; b=f17fNsiWaTLGrvHF6Hv3CSdgs5SMouqyNFCUs/WfyMPLV73jAcx0XEdwFZw0JNYl49RbP466mx+n8kOTAyYEiTSt/jO7h3dtyQLWRcQLOovIp+vhc38LdaJUkGlPLaxbkHQRfsziyrW2KKNTdmpWggY+V6podAzJd2LBHZO35Ys=
+	t=1722397298; cv=none; b=Xpq+enzEKtBVfVmK5A0EmxxnpwTQUTMawH/j9lw5gDgcj+4pATPHnQ6qoNtH0ebxONXS8PPl0L0a8j9Vk+AFI0PPCWx9uyGRyJ5jDLB76JOJJwvagziMd5+xk68n72rIrl44neldjvX3DgCrtT+eR1XhfQuQydI7cbSu2QzpZh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722393767; c=relaxed/simple;
-	bh=IxhQYuCeKEFTKguCBboSg9WzKt5rDaW1SS0weBchTAc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C5H1OvpZEqbQqag1fAxJQh6lekSyMOwk9475zFo74l/wSU+rcu9N9SgnBqPPJKDx6KT7XhCPzo5cOK6Xm2wanifCBDAwDjzaLksuzQoMbjq+qdYFZA3dNywsWEjIC7v2njrzID9llZhKj1FqQRjALO0ZOYdQWTft0kdtOMyZQgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y01+kNk/; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722397298; c=relaxed/simple;
+	bh=NnJcXSJdL99fJ+lh3h3lUwNqML4RbgXsVJtL/5xtjEg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FMeP4js/DlLbt9psJBc6GzWaHKg+FMU66sILniByApwJoeq8UdNwE5Reqig0umBExApBqlJPvkvWVPeVdPs5XXPq6bXh9ydvvso71lrxO8iBrCpqKCUAj87qUCyE5BUpIf+Ax96xD1uUqZBDzE8I4aKg6nQCBQ7a8Rjasfxp0Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Or9aEvuk; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y01+kNk/"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8480B1E9B2;
-	Tue, 30 Jul 2024 22:42:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=IxhQYuCeKEFTKguCBboSg9WzKt5rDaW1SS0weB
-	chTAc=; b=Y01+kNk/ggYSkeSTu0GDZ5FblwdTzU0MumyrInu/CMTEhSstxhrSKl
-	WVd+p0sFZBalUEUsyyXVkJzWvAsWenG5yunOcJBY2KylPDgSfPhzXMDhLSW8EWFH
-	CBhq16XFQAuD5U4F1F09e5GU4SOqm4ahwzH3XknLnDeUmtcq2Yt18=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D1521E9B1;
-	Tue, 30 Jul 2024 22:42:45 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 15DA71E9B0;
-	Tue, 30 Jul 2024 22:42:42 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Haritha via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen?=
- <tboegi@web.de>,  Haritha <harithamma.d@ibm.com>
-Subject: Re: [PATCH v5] convert: return early when not tracing
-In-Reply-To: <pull.1744.v5.git.git.1722310937061.gitgitgadget@gmail.com>
-	(Haritha via GitGitGadget's message of "Tue, 30 Jul 2024 03:42:16
-	+0000")
-References: <pull.1744.v4.git.git.1722002432630.gitgitgadget@gmail.com>
-	<pull.1744.v5.git.git.1722310937061.gitgitgadget@gmail.com>
-Date: Tue, 30 Jul 2024 19:42:40 -0700
-Message-ID: <xmqqle1i8eov.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Or9aEvuk"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-428243f928cso11878885e9.3
+        for <git@vger.kernel.org>; Tue, 30 Jul 2024 20:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722397295; x=1723002095; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=diZ4Cw1OG1wSLvrRW/K90Wsd3DrK6WuvSyo8yMw1bfk=;
+        b=Or9aEvukPYHSsMjT9nzbCkxaOwDoP4ak5lSSLMMqT5ZgB9DFmPMfMJbEfuNzcqfYXf
+         6kEmC+LoM8h7KyPhG4zyAKqLkOTkWuVo7yoiVf5QDVdobP+jSOK0Ug5kRvbjipgkhYYA
+         fD4cYDWHSwrcflFfoF6+pgoT8XzSvM77MMqtPWhKAzT3RyFhu5T8kd9YcPJ+73SXuW8h
+         6IxcKjh2e8mX+o63/Kf8ezG5bqo/vg5av4DCYfRLVU5/tOrktGqayzUeA4m+/QT5vll0
+         SawSQPoFIGARC8yL2cKvAR/YAjatLVgAa4h/531Hs9or5Fe7brPmye+yIA30ma0kyVUi
+         bAQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722397295; x=1723002095;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=diZ4Cw1OG1wSLvrRW/K90Wsd3DrK6WuvSyo8yMw1bfk=;
+        b=XPuNa+QapOb1Z4EhRehAbar7zNdrMXFCQuXhcWdOILYdsH4WbimpOxw2MZLXybrCNo
+         87d5X41dpYoe+BSs80UgCcGpkrU5ztok2sVOstzi1OYJ+YUkpGqja6cArVO7i2gJR/wQ
+         BMptx3gdiW13tBq1MVuRg+UJj+4tFjXtV9SgDRC+2zxPgbWT8R6+tGUE/efme2kXK/FW
+         VkoQyC+GrxrE+uTDcKsUxdxSlzRqazb9NaLGsQE68q7acQYXdh7olCxmfZnsNYOwxh9a
+         Hbtd0e6olZWZtBZwlKg+3hn143q4XNVS9qlTYm39140MzlpKYYmescHWnM1pNldL6Vbu
+         8RSw==
+X-Gm-Message-State: AOJu0YwWmMIPk6OPBUiIGMfahIMrpNzKspSlAcYw2s7EiPfA+GPwa39w
+	3K5fGs6k7Z/LCqBZqACBYhJg0SAFVshdiofjHpxZ1JwKJFPthqm33NCBHQee4YDeQlWfTvhG7XH
+	WGouEB4f2yBusVHXC6GXO/fiFIoECOeGxYK4=
+X-Google-Smtp-Source: AGHT+IHfaoKSUxMNSZoel826qbGUBL1giNutKp5/DKAWZz3HZjZHW2ZoqHI59lncuCgpje5GKB4FCdExxfqDBH9ReHM=
+X-Received: by 2002:a05:600c:4847:b0:426:8ee5:5d24 with SMTP id
+ 5b1f17b1804b1-42811da0967mr91697715e9.20.1722397294571; Tue, 30 Jul 2024
+ 20:41:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8F0A8DEE-4EE6-11EF-89D6-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+From: Hong Jiang <ilford@gmail.com>
+Date: Wed, 31 Jul 2024 11:41:23 +0800
+Message-ID: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
+Subject: [patch] credential-osxkeychain: Clear username_buffer before getting
+ the converted C string.
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Haritha  via GitGitGadget" <gitgitgadget@gmail.com> writes:
+I encountered this problem with homebrew after I upgraded to macOS
+12.7.5, but I am not sure the OS upgrade is the only reason.
 
-> From: D Harithamma <harithamma.d@ibm.com>
->
-> When Git adds a file requiring encoding conversion and tracing of encoding
-> conversion is not requested via the GIT_TRACE_WORKING_TREE_ENCODING
-> environment variable, the `trace_encoding()` function still allocates &
-> prepares "human readable" copies of the file contents before and after
-> conversion to show in the trace. This results in a high memory footprint
-> and increased runtime without providing any user-visible benefit.
->
-> This fix introduces an early exit from the `trace_encoding()` function
-> when tracing is not requested, preventing unnecessary memory allocation
-> and processing.
->
-> Signed-off-by: Harithamma D <harithamma.d@ibm.com>
-> ---
+After `brew upgrade`, I received the following message:
 
-It seems that you forgot to adjust to
+Error: invalid byte sequence in UTF-8
+/usr/local/Homebrew/Library/Homebrew/utils/github/api.rb:182:in `[]'
+/usr/local/Homebrew/Library/Homebrew/utils/github/api.rb:182:in `block
+in keychain_username_password'
 
- https://lore.kernel.org/git/xmqqed7gyyyd.fsf@gitster.g/
+The related lines in api.rb are:
 
-where I asked you to be consistent in the authorship name and sign
-off.
+        git_credential_out, _, result =3D system_command "git",
+                                                       args:
+["credential-osxkeychain", "get"],
+                                                       input:
+["protocol=3Dhttps\n", "host=3Dgithub.com\n"],
+                                                       env:          {
+"HOME" =3D> uid_home }.compact,
+                                                       print_stderr: false
+        return unless result.success?
 
-For now, as I like to allow "git shortlog --author=..." to group
-contributions by a single author to a single bucket, I'll rewrite
-both to the same name as used in d254e650 (build: support z/OS
-(OS/390)., 2024-03-06), but will not merge it down to 'next' before
-I hear what your response is.
+        github_username =3D git_credential_out[/username=3D(.+)/, 1]
+        github_password =3D git_credential_out[/password=3D(.+)/, 1]
+        return unless github_username
 
-Thanks.
+So it looks like that git_credential_out has invalid UTF-8 byte
+sequence. I print it after the system_command "git":
 
+password=3Dgho_SHADOWED
+username=3Djdp1024=EF=BF=BD=EF=BF=BD`
+F=EF=BF=BD
+capability[]=3Dstate
+state[]=3Dosxkeychain:seen=3D1
+
+and
+
+echo "protocol=3Dhttps\nhost=3Dgithub.com\n" | git credential-osxkeychain g=
+et
+
+reproduced the problem.
+
+So I made the patch, which zeros the username_buf before retrieving
+the converted C string.
+
+From: Jiang Hong <ilford@gmail.com>
+Date: Wed, 31 Jul 2024 11:05:44 +0800
+Subject: [PATCH] Zeroing username_buffer before retrieving the
+converted C string.
+
+In macOS 12.7.5 and 12.7.6, the uninitialized username_buffer receives
+a non-NULL-terminated C string.
+---
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 6ce22a28ed..89cd575bd5 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -137,6 +137,7 @@ static void find_username_in_item(CFDictionaryRef item)
+  buffer_len =3D CFStringGetMaximumSizeForEncoding(
+  CFStringGetLength(account_ref), ENCODING) + 1;
+  username_buf =3D xmalloc(buffer_len);
++ memset(username_buf, 0, buffer_len);
+  if (CFStringGetCString(account_ref,
+  username_buf,
+  buffer_len,
+--=20
+2.37.1 (Apple Git-137.1)
