@@ -1,217 +1,96 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B734B33CFC
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 18:34:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBB333CFC
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 18:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722450843; cv=none; b=pGr3kTsKYLmbVmITm/o735aAI1ZN7ZFWgI0am2cdw9mTmnG1T7MjaVL/fiDjhZrGP7IwCOyUVzij0dzLXS63dGe7IscjKC8Sv+rh5DyERBa5F38H1Wy+MWhvvCShbsTGm3FciHHNoRY3iES34gf1mC9eBVyi2R0BxxuYREkB56I=
+	t=1722450910; cv=none; b=lvrJmqLhcccUFjKej+xQ06iwLgMdYQlVi2AkCwM7lhaHVs+sPZijercyR5oAOKyC/bFoUh9v0R8y9UHwIzbkHT3HE5v2Mgm1mCfNoV6/io7Qp0hsNaHa/fOMVss9ix/rlNDYCRrKleOF7LuMxvRsE7mg2Sfom3hWUg+hPypeMqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722450843; c=relaxed/simple;
-	bh=R++wBEa3s93YjdoWU6WKVbB5KD8jEGoh/bsNrKSvyok=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o5EGQXQesEMENuTqLiwlRVQk5AxhAwm4xDNDSAhuG2R1deWnX4ySoDVJ1+qXR0bCr7vL35xHC8s+7VOKa5UelVHX35giLcmLJoJVVPZxbaogg7h7fc/O7tsKIrPaUpfz7p5XBv2ftSN5Ph4VX+qDLUlcR8gcn1tgnMWnlh1KAfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HBZNwaH5; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1722450910; c=relaxed/simple;
+	bh=ilfigXDiqIASp1l6kCaWK7Zpo7yIPKb90oRhSLVYKhw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T+aoyzv3Cz7FXKR+J2PTzeQ0EcfdbnqyXB47q9N9gsHjBRFdLrF4+MiqoaIS1NtIXgK4hvxTNl2jNO8ZmyeQqBQ26lZfc3LeaINMG0Gfm6WtffiN+umKuFNtIXGVuPEs7W8NFWCgYxagQBRZLGeblWTuBoSYaX7wC4mjHgLyGr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kB+G589W; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HBZNwaH5"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc60c3ead4so42885075ad.0
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 11:34:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722450841; x=1723055641; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/e4M47aiIDJ5YRf8dnqnxwFO2b14tq6jX1MoXi2Y2mc=;
-        b=HBZNwaH5dmm2DaYOWntUrRN09TLuNS+8RVFY171IjXcs0aNNa9QDr+iMDbXo5Ft1Mg
-         1Y/SpQlwcmtcd+PIQsv/4boSv1DYkoiCPT8wM4soq7HJ1VZ+QtPyqkdSqK6r0owrr+12
-         H7Wzx4PM4x2zSk7LOgCNTh1OQGoiyIpxkRWi0a/1GvfYkkhoBWSW+COsG79H6/vTIT0G
-         l+NSnih7VJQrvnH1YZIWtUxZ2AGVwk/7HY5Hta5txd/3pDIkJ5xXW+JpSFtT/QH2FKF4
-         1iZ8Guf22lLwFhaTQLCYI0P7ewPXk8caJ6lfGEZ9BD9vgxSMzvs5BGrhpSNB/jiHJrV7
-         qqRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722450841; x=1723055641;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/e4M47aiIDJ5YRf8dnqnxwFO2b14tq6jX1MoXi2Y2mc=;
-        b=Ry1I+vKtARjlwTGo99SVghB5Iwc1yL8QHxpspnvrhp0yuyRSntcQou57yfWYu1gDlx
-         5LTImEc0NztDKZXen0htUni+JfzUbAim5YkfLJ98JDryTHJ4T5JVviuLMvCzbNrXmUpz
-         t7Aq3b5BZE4QIpbEG8uf5hXEAEP6hIPhqhO8eZJQE5WztmC2CJ+bXtH5C0P0JUae1vOQ
-         dapkQu1C4K07EfS6uUvaZSP8qpIhCe9a3nL+3WwCmlDc55GwhgCca4r8/Dbyxi2I4nr+
-         LBUBdA/qSPcm565td0yptMWL0+S5A5fRILMdM7PAVlr/oq8VxeC+kbmsfnmjr6lGhNqI
-         iqfQ==
-X-Gm-Message-State: AOJu0YyJATqI5/JR6lj1HTx2a6JyTi/JK4ij0qg2dzY50iIn93Xnh4Js
-	06zJlGVgfMx9ZK5WbUKt22dQHc5PeiYBaCWv54m21JLix8hew1sbN/fpwPJqPA==
-X-Google-Smtp-Source: AGHT+IEnia/wqH9doi3O35njEZRLsnlm74Nw+4k8Dyi/+6gWlXve5AzZdNuzHqSUIxoll0T+0qeFIw==
-X-Received: by 2002:a17:902:d50b:b0:1fd:ae10:722b with SMTP id d9443c01a7336-1ff4d27a725mr2048925ad.63.1722450840556;
-        Wed, 31 Jul 2024 11:34:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:ec46:755c:60f:a94d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7ff622asm123606935ad.301.2024.07.31.11.33.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 11:34:00 -0700 (PDT)
-Date: Wed, 31 Jul 2024 11:33:55 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, 
-	Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [RFC PATCH 0/3] Introduce clar testing framework
-Message-ID: <avbtyqklmtwmz63vbpevkz4xyv3dboyghwhkodxjlb3ur6zt36@afi5ptrsvpz2>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, 
-	Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <cover.1722415748.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kB+G589W"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8902E3AC38;
+	Wed, 31 Jul 2024 14:35:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ilfigXDiqIASp1l6kCaWK7Zpo7yIPKb90oRhSL
+	VYKhw=; b=kB+G589WtUx7U1y4kQVBNHS5TmG4PrBABNCRTE0DQvv+jBkn06SUpf
+	OjuXIl6f3RhhQ0BoonAsVz/8GnY8R0RmSyUWXx41RAOglK2IAkQ7kT0RMq4q3u9J
+	IGzr309kqZ9rOZ4e5ihUiUcCV5VZMISvZqgGLrfqfeBz2TDUGOVBo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F2913AC36;
+	Wed, 31 Jul 2024 14:35:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F4DE3AC35;
+	Wed, 31 Jul 2024 14:35:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 4/4] promisor-remote: check advertised name or URL
+In-Reply-To: <20240731134014.2299361-5-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 31 Jul 2024 15:40:14 +0200")
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+	<20240731134014.2299361-5-christian.couder@gmail.com>
+Date: Wed, 31 Jul 2024 11:35:03 -0700
+Message-ID: <xmqqbk2d2yw8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1722415748.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9B036050-4F6B-11EF-B6BD-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-On 2024.07.31 11:04, Patrick Steinhardt wrote:
-> Hi,
-> 
-> there's been some discussion around extending our unit testing framework
-> to avoid duplication when declaring test functions. Right now, a testing
-> function has to be declared and then wired up via the test's main
-> function, which can be a bit annoying. In the thread, René proposes an
-> alternative that gets rid of this duplication by using macros. And while
-> that does solve the issue, there were some concerns about things being
-> too much "magic" while at the same time not being flexible enough.
-> 
-> Part of the discussion revolved around whether we maybe want to have a
-> proper unit testing framework in our codebase instead of reinventing the
-> wheel. As I quite liked the "clar" [2] testing framework from back when
-> I was still developing libgit2 I proposed it as a possible alternative.
-> This patch series wires up the clar framework as a proof of concept and
-> converts the strvec test suite to use it.
-> 
-> The magic to avoid the above code duplication is quite self-contained in
-> a "generate.py" file. This script extracts function declarations from
-> all unit test suites and then writes those into a "clar.suite" header
-> file. All that one needs to do is thus to declare a function with a
-> specific name "test_<suite>__<name>" and then everything else gets wired
-> up automatically.
-> 
-> Whether this is better than the solution proposed by René is probably a
-> matter of taste. While I'm not a huge fan of the macro-based solution,
-> I don't want to veto it either (not that I'd have that power anyway). So
-> please, you should rather read this as a proof of concept to see how
-> alternatives could look like such that we have a better picture of where
-> we want to end up.
-> 
-> Some random thoughts:
-> 
->   - The mandated Python dependency is suboptimal in my opinion.
->     Rewriting the script in e.g. Perl should be easy enough though, it's
->     no rocket science.
-> 
->   - I prefer that the proposed solution results in a single binary as
->     compared to one binary per test system.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Does clar allow running test functions in parallel? With multiple
-binaries, we can at least run independent tests in parallel (although
-right now the unit tests are fewer and so much faster than the shell
-tests that it's hardly noticeable).
+> A previous commit introduced a "promisor.acceptFromServer" configuration
+> variable with only "None" or "All" as valid values.
+>
+> Let's introduce "KnownName" and "KnownUrl" as valid values for this
+> configuration option to give more choice to a client about which
+> promisor remotes it might accept among those that the server advertised.
 
->   - The clar gives us the ability to pick which tests to run via command
->     line parameters, which I personally like more than picking the
->     specific binary to run.
+A malicous server can swich name and url correspondence.  The URLs
+this repository uses to lazily fetch missing objects from are the
+only thing that matters, and it does not matter what name the server
+calls these URLs as, I am not sure what value, if any, KnownName has,
+other than adding a potential security hole.
 
-Yes this is a nice improvement.
+> In case of "KnownUrl", the client will accept promisor remotes which
+> have both the same name and the same URL configured on the client as the
+> name and URL advertised by the server.
 
->   - The clar replaces some test assertions that we already have. They
->     feel a bit more mature, but overall there aren't all that many
->     assertions available. If we wanted to pick it up, then we'd likely
->     have to add some more wrappers.
-> 
->   - The clar uses longjmp instead of manually having to `return` from
->     functions in case there was an assertion failure. This is easier to
->     work with in my opinion.
-> 
-> Also, note that I only tested this on my Linux machine. I have no clue
-> whether this works as-is on Windows, but I do know that libgit2 tests
-> run on Linux, macOS and Windows. So it should work in theory, it's just
-> a matter of polishing this series.
-> 
-> I'm happy to hear your thoughts on this, even if it ultimately ends up
-> being shot down.
+This makes sense, especially if we had updates to documents I
+suggested in my review of [3/4].  If the side effect of "accepting"
+a suggested promisor remote were to only use it as a promisor remote
+on this side, there is no reason to "accept" the same thing again,
+but because the main effect at the protocol level of "accepting" is
+to affect the behaviour of the server in such a way that it is now
+allowed to omit objects that are requested but would be available
+lazily from the promisor remotes in the response, we _do_ need to
+be able to respond with the promisor remotes we are willing to and
+have been using.
 
-As part of the original unit-test series, I wrote a comparison between
-different frameworks: Documentation/technical/unit-tests.txt, poorly
-rendered at [1]. Could you add a row to the table evaluating clar on the
-individual points there?
+This iteration does not seem to have the true server side support to
+slim its response by omitting objects that are available elsewhere,
+but I agree that it is a good approach to get the protocol support
+right.
 
-[1] https://git-scm.com/docs/unit-tests#framework-selection
-
-> Patrick
-> 
-> [1]: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de>
-> [2]: https://github.com/clar-test/clar
-> 
-> Patrick Steinhardt (3):
->   t: import the clar unit testing framework
->   Makefile: wire up the clar unit testing framework
->   t/unit-tests: convert strvec tests to use clar
-> 
->  .gitignore                                 |   1 +
->  Makefile                                   |  36 +-
->  t/Makefile                                 |   1 +
->  t/unit-tests/.gitignore                    |   3 +
->  t/unit-tests/clar/.github/workflows/ci.yml |  23 +
->  t/unit-tests/clar/COPYING                  |  15 +
->  t/unit-tests/clar/README.md                | 329 ++++++++
->  t/unit-tests/clar/clar.c                   | 842 +++++++++++++++++++++
->  t/unit-tests/clar/clar.h                   | 173 +++++
->  t/unit-tests/clar/clar/fixtures.h          |  50 ++
->  t/unit-tests/clar/clar/fs.h                | 522 +++++++++++++
->  t/unit-tests/clar/clar/print.h             | 211 ++++++
->  t/unit-tests/clar/clar/sandbox.h           | 154 ++++
->  t/unit-tests/clar/clar/summary.h           | 143 ++++
->  t/unit-tests/clar/generate.py              | 267 +++++++
->  t/unit-tests/clar/test/.gitignore          |   5 +
->  t/unit-tests/clar/test/Makefile            |  39 +
->  t/unit-tests/clar/test/clar_test.h         |  16 +
->  t/unit-tests/clar/test/main.c              |  40 +
->  t/unit-tests/clar/test/main.c.sample       |  27 +
->  t/unit-tests/clar/test/resources/test/file |   1 +
->  t/unit-tests/clar/test/sample.c            |  84 ++
->  t/unit-tests/{t-strvec.c => strvec.c}      | 124 ++-
->  t/unit-tests/unit-test.c                   |  16 +
->  t/unit-tests/unit-test.h                   |   3 +
->  25 files changed, 3041 insertions(+), 84 deletions(-)
->  create mode 100644 t/unit-tests/clar/.github/workflows/ci.yml
->  create mode 100644 t/unit-tests/clar/COPYING
->  create mode 100644 t/unit-tests/clar/README.md
->  create mode 100644 t/unit-tests/clar/clar.c
->  create mode 100644 t/unit-tests/clar/clar.h
->  create mode 100644 t/unit-tests/clar/clar/fixtures.h
->  create mode 100644 t/unit-tests/clar/clar/fs.h
->  create mode 100644 t/unit-tests/clar/clar/print.h
->  create mode 100644 t/unit-tests/clar/clar/sandbox.h
->  create mode 100644 t/unit-tests/clar/clar/summary.h
->  create mode 100755 t/unit-tests/clar/generate.py
->  create mode 100644 t/unit-tests/clar/test/.gitignore
->  create mode 100644 t/unit-tests/clar/test/Makefile
->  create mode 100644 t/unit-tests/clar/test/clar_test.h
->  create mode 100644 t/unit-tests/clar/test/main.c
->  create mode 100644 t/unit-tests/clar/test/main.c.sample
->  create mode 100644 t/unit-tests/clar/test/resources/test/file
->  create mode 100644 t/unit-tests/clar/test/sample.c
->  rename t/unit-tests/{t-strvec.c => strvec.c} (54%)
->  create mode 100644 t/unit-tests/unit-test.c
->  create mode 100644 t/unit-tests/unit-test.h
-> 
-> -- 
-> 2.46.0.dirty
-> 
-
-
+Thanks.
