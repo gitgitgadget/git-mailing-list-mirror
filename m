@@ -1,304 +1,167 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372281B372C
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 13:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F5611E
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722433246; cv=none; b=VOgTFX+oHQ/rZTsiMkHuabok6NyTXNy/iPiq98U7ZPX1cn1XYlRgkGWL0N2HUuA2MNvcXYSJt/l0HmseYNJ+UGcBaU/j8syon30p6j7QrqsBDXZVbUUhpJC7ONnaE5HvLLoXsZ+UbEL+Eq++uRbuF2bQa+8jXY/5ka5pUCOXYUA=
+	t=1722435297; cv=none; b=XBeOXfJzdpbXZGTNQEIiXw6ecWKU9s6esq209TPP4EGtFiryG0gVI7rMp6Vyjp/LA3yRPxCFf042HqwwV5josYEW7cpmzFkoLyDRWs9bzqKRVgkVCsjA5QFgBkG0SNlPbWxmtH5oBkkwFdRydM3Oa39+N8ezp8bvaCrrmJpjduI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722433246; c=relaxed/simple;
-	bh=IV3LyB3H+qRJhDo6yYig/Uh/ITF+82iHxAK4K7d40es=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWTlWPaw2E7MITJ8lFOXexnD+m4+6gqjd4ou82ndp5Nm06wMEiBDuwbSC54vG0Exj2wfsb0ONUO9Na7EP+qETxmCPw8/9q4Dpqwt6uRTdA3GdCM1LOuDL9Bqat6taDA0uFCe8VLCIG7FcPpmPDLeh8LG+zv9jn6Qcwl1NVg072k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iti2xsKE; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722435297; c=relaxed/simple;
+	bh=L1Vx+dlTPqhDzPAJTc95qIPi7w4KC8aM5oaa4wY1cq8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ZocObSoxFWtq/ZWAlgbmxV96o3Ssh429c3jtS/42VdbG2WyY3tYujfwBhrXaVbpQ3ZnJ5ivap6OZtunvc6buoQ6BvXHy6u9IKjx3EfUKmw593SU05PTa++qMh9gAJ+lcg2gIz41WyDEYtALmLAurmz0Ao3TTKqzpOUFfvDjr+NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p5UNCRUC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lSJYTKu+; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iti2xsKE"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-530ad969360so1789610e87.0
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 06:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722433242; x=1723038042; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X4ZthYY/Jj9GwL8xZn+HzFCMcpMgA7bNZxBgJ22wksA=;
-        b=Iti2xsKEFHE8WR2l7kjKvlviFSSJcacGS6o3IBTkcLiSnSfb9vHMhG2jw7MLeeyS6R
-         12+MW3ioYXqEMCIPjBcM6K6m6PWpGaHnz/caPS7Inqvr/fcOrVhEQSjFSaWT0s1s9YGN
-         rrkB3UBwivXOHF4+yOplBFsQ2YYiHxwrkJqI6V0bpW4J75aLfNSZRSoYe9bLjf1vBp/i
-         NvpKDVo8SFabF4ggyqAFIqvgeZaxceAT94+uzuEqQEJvRejb+BcP6GZYWXtIw6tylWsy
-         rVycnH1DQnDEt9cUap8cBktqYkstM8XJSPv1DPMqxdcOTH/sYG3xrwuXye1fzMlHbr+f
-         hyzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722433242; x=1723038042;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X4ZthYY/Jj9GwL8xZn+HzFCMcpMgA7bNZxBgJ22wksA=;
-        b=d9actuLGJvR59W3kTqFYaEaCYOsH6vcW3g9D0qUm3LMZuEgNMCot8LIR5rg9xMtpA0
-         RmBP+VOrzATMNUTlJTQzI1jBZ6NXOTVZBMijiNZdiDqcOBkRn6mFv1yHKqtrWYs5NUOL
-         HyMfq4hSWy7xkeVN4kIgSLYt7UBXXu325GlNV8JMHQhAwKXUinCnQ5l4hDUfhMohyjbX
-         3zJlxh1ZHD+3SFX3En1t66xB01UA3NlXWIrL/N6bNoIwm/rw+PGI/EDx3i4r1BhNg3OB
-         fW3HdUTUCE093G8u5zIBBFUK1Sw5GROIFM+ldn3gijm5h6lWHNwFcFyrY+/RVKTCUprv
-         Qxhw==
-X-Gm-Message-State: AOJu0YwInE0r7BTAyq1jita4Q1Bpi8pnh3VK3sxe/UdI6kxrQTp+HJM7
-	cfvSmNxPFnpvO0arrOoxo4z5rZwmI9xvMa1uluf/B3ZAxGGkPGMFdmklmg==
-X-Google-Smtp-Source: AGHT+IG8rcLwW6mTVQcJx3ET7HES/xeXT79dqvGZFjf7BksL+zvG0+qmuumQDprqwPQtNDg3Z6rp6A==
-X-Received: by 2002:ac2:4d9c:0:b0:52c:86d7:fa62 with SMTP id 2adb3069b0e04-5309b272327mr8940670e87.23.1722433241164;
-        Wed, 31 Jul 2024 06:40:41 -0700 (PDT)
-Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ac63c50fdesm8669641a12.56.2024.07.31.06.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 06:40:40 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p5UNCRUC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lSJYTKu+"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6D9061381D30
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 10:14:53 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 31 Jul 2024 10:14:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1722435293; x=1722521693; bh=4ezKN75OnFUy9+gCaEmA/o0Zo6+gaBiw
+	/DsQLl5+lcw=; b=p5UNCRUCFSItnSljaxuEnnRPujiuK4SE5hZlz9cDrqNNm+UX
+	ZIyb2o3yXNTfRpJeiqr2YaT6H1NsdnvChiZJElABHbXyNlTkA5ef0YWLoeFvmTgS
+	imr34TZYBEi6PxbobZOkxt7A+SqgqEhEEF0BDR5daVpOFheSAYmP/8xm+2L0Wai+
+	bk5MuUkp4dkaNOOlZ0qeNZTEtUmi6u9AH6ZXr/tOYHh0jaEI6jKe24DfqIK3crgk
+	ovc2G8tFsyiudCxMEs1ec7Df/XQhFqr6T1U9Lbzrp3WFEq0OKVrS4v5uHAqxJ2Sw
+	1/tWzs6t12Ax/lreZE9Ps9Twf0zjQhxOjsvzig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1722435293; x=1722521693; bh=4ezKN75OnFUy9+gCaEmA/o0Zo6+gaBiw/Ds
+	QLl5+lcw=; b=lSJYTKu+CcWci6DwfGt/Hlf6WIOHpY2y55ch9H5iuEiANfT2eWj
+	pUZRoq7nnov8iGyDOuuMoHCw7UyuhLXK/fnMVsM+RX0qQOuNbMZH6VLyXhPbXoeR
+	WfIOClIkVcLQzLgOm/uRzwy30kYHfz7I/JtNrJf7LFPJ+3vyZqWtcRsvB2N3UtDU
+	njRgxEbX9bxAFWZPT6+NyLfFd5RbxXFXO7+BfU+7RDaeMOBn9xj2SfWs+Kkw8Y9f
+	5SiRUJbkDowCgaArbZCIlBz1RkiCDzVEU8/Ze7q6gCVexqiMKnu33timoXFdJud0
+	5HndVrZpFyEGsa84KGDXQ9RQshmDri+a6ow==
+X-ME-Sender: <xms:3UaqZpt2MT8k4BunU_SM-qeokvC63LMn4pYafv_3meE82kfFNiW7BQ>
+    <xme:3UaqZifeeGGekHd59jV4Bm2Si8kxfAsOiz1uyiJpCMWqrnFMnv0FTIMFtCcdRVncb
+    Zm2kn-TcheStXy1Mw>
+X-ME-Received: <xmr:3UaqZsz4Ya36JAfquglpwXAJ1VMU7yiDnCKX6hi2C2G-FEKW3Bh1SZoWrTS-qZaXXXNgkB0JFUy58XndAcFjuo26liMgjbdoyq4GA-KWOfcFKlrN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeeigdejhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderredttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgfdvvd
+    efudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:3UaqZgOjMWEviArX6cKcCyQGt7IWtlbQwqZ_Fiies12lRlS8g8gkfg>
+    <xmx:3UaqZp_enhdOxXjXU26h5Whwq_qGgGtyI5P043xQWpPqgds1M236GQ>
+    <xmx:3UaqZgVAImjPLUYAeuNUHCIYCuDyUdtTCOVPTt21cRR2RLWZ_cJneg>
+    <xmx:3UaqZqdRU-n-WOpt4t_jjJz4PfrI0T0_wdH62-m1c9FCwDn2WbxPOQ>
+    <xmx:3UaqZrnrauMDYIqGMIAPa1NhzWAfuPcrEIBm3HZ1HQL5MnhbaQ7Yrp7q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 31 Jul 2024 10:14:52 -0400 (EDT)
+Received: 
+	by localhost (OpenSMTPD) with ESMTPSA id 5171f91e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 31 Jul 2024 14:13:20 +0000 (UTC)
+Date: Wed, 31 Jul 2024 16:14:48 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Cai <johncai86@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/4] promisor-remote: check advertised name or URL
-Date: Wed, 31 Jul 2024 15:40:14 +0200
-Message-ID: <20240731134014.2299361-5-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.46.0.4.gbcb884ee16
-In-Reply-To: <20240731134014.2299361-1-christian.couder@gmail.com>
-References: <20240731134014.2299361-1-christian.couder@gmail.com>
+Subject: [PATCH 0/8] reftable: improvements and fixes for compaction
+Message-ID: <cover.1722435214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0uqdsMD2zfetx6Da"
+Content-Disposition: inline
 
-A previous commit introduced a "promisor.acceptFromServer" configuration
-variable with only "None" or "All" as valid values.
 
-Let's introduce "KnownName" and "KnownUrl" as valid values for this
-configuration option to give more choice to a client about which
-promisor remotes it might accept among those that the server advertised.
+--0uqdsMD2zfetx6Da
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In case of "KnownName", the client will accept promisor remotes which
-are already configured on the client and have the same name as those
-advertised by the client.
+Hi,
 
-In case of "KnownUrl", the client will accept promisor remotes which
-have both the same name and the same URL configured on the client as the
-name and URL advertised by the server.
+this patch series addresses a couple of issues with compaction of the
+reftable stack. The original intent was to make compaction handle the
+case gracefully where a subset of the tables it wants to compact has
+been locked already. While working on that I found an issue where
+compaction may race with a concurrent writer that modified the
+"tables.list" file while compacting it.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/config/promisor.txt     | 11 +++--
- promisor-remote.c                     | 54 +++++++++++++++++++--
- t/t5710-promisor-remote-capability.sh | 68 +++++++++++++++++++++++++++
- 3 files changed, 126 insertions(+), 7 deletions(-)
+In theory, this situation should work alright and has been accounted for
+in the design: the compacting process locks "tables.list", then locks
+all of the tables it wants to compact, unlocks "tables.list", compacts
+the data and re-locks "tables.list" to update the stack. No concurrent
+process would thus be able to compact the same tables, and thus we know
+that the tables we have just compacted must still exist.
 
-diff --git a/Documentation/config/promisor.txt b/Documentation/config/promisor.txt
-index e3939d83a9..fadf593621 100644
---- a/Documentation/config/promisor.txt
-+++ b/Documentation/config/promisor.txt
-@@ -11,6 +11,11 @@ promisor.advertise::
- promisor.acceptFromServer::
- 	If set to "all", a client will accept all the promisor remotes
- 	a server might advertise using the "promisor-remote"
--	capability, see linkgit:gitprotocol-v2[5]. Default is "none",
--	which means no promisor remote advertised by a server will be
--	accepted.
-+	capability, see linkgit:gitprotocol-v2[5]. If set to
-+	"knownName" the client will accept promisor remotes which are
-+	already configured on the client and have the same name as
-+	those advertised by the client. If set to "knownUrl", the
-+	client will accept promisor remotes which have both the same
-+	name and the same URL configured on the client as the name and
-+	URL advertised by the server. Default is "none", which means
-+	no promisor remote advertised by a server will be accepted.
-diff --git a/promisor-remote.c b/promisor-remote.c
-index d347f4d9b5..0ff26b835e 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -362,19 +362,54 @@ void promisor_remote_info(struct repository *repo, struct strbuf *buf)
- 	strvec_clear(&urls);
- }
- 
-+/*
-+ * Find first index of 'vec' where there is 'val'. 'val' is compared
-+ * case insensively to the strings in 'vec'. If not found 'vec->nr' is
-+ * returned.
-+ */
-+static size_t strvec_find_index(struct strvec *vec, const char *val)
-+{
-+	for (size_t i = 0; i < vec->nr; i++)
-+		if (!strcasecmp(vec->v[i], val))
-+			return i;
-+	return vec->nr;
-+}
-+
- enum accept_promisor {
- 	ACCEPT_NONE = 0,
-+	ACCEPT_KNOWN_URL,
-+	ACCEPT_KNOWN_NAME,
- 	ACCEPT_ALL
- };
- 
- static int should_accept_remote(enum accept_promisor accept,
--				const char *remote_name UNUSED,
--				const char *remote_url UNUSED)
-+				const char *remote_name, const char *remote_url,
-+				struct strvec *names, struct strvec *urls)
- {
-+	size_t i;
-+
- 	if (accept == ACCEPT_ALL)
- 		return 1;
- 
--	BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
-+	i = strvec_find_index(names, remote_name);
-+
-+	if (i >= names->nr)
-+		/* We don't know about that remote */
-+		return 0;
-+
-+	if (accept == ACCEPT_KNOWN_NAME)
-+		return 1;
-+
-+	if (accept != ACCEPT_KNOWN_URL)
-+		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
-+
-+	if (!strcasecmp(urls->v[i], remote_url))
-+		return 1;
-+
-+	warning(_("known remote named '%s' but with url '%s' instead of '%s'"),
-+		remote_name, urls->v[i], remote_url);
-+
-+	return 0;
- }
- 
- static void filter_promisor_remote(struct repository *repo,
-@@ -384,10 +419,16 @@ static void filter_promisor_remote(struct repository *repo,
- 	struct strbuf **remotes;
- 	char *accept_str;
- 	enum accept_promisor accept = ACCEPT_NONE;
-+	struct strvec names = STRVEC_INIT;
-+	struct strvec urls = STRVEC_INIT;
- 
- 	if (!git_config_get_string("promisor.acceptfromserver", &accept_str)) {
- 		if (!accept_str || !*accept_str || !strcasecmp("None", accept_str))
- 			accept = ACCEPT_NONE;
-+		else if (!strcasecmp("KnownUrl", accept_str))
-+			accept = ACCEPT_KNOWN_URL;
-+		else if (!strcasecmp("KnownName", accept_str))
-+			accept = ACCEPT_KNOWN_NAME;
- 		else if (!strcasecmp("All", accept_str))
- 			accept = ACCEPT_ALL;
- 		else
-@@ -398,6 +439,9 @@ static void filter_promisor_remote(struct repository *repo,
- 	if (accept == ACCEPT_NONE)
- 		return;
- 
-+	if (accept != ACCEPT_ALL)
-+		promisor_info_vecs(repo, &names, &urls);
-+
- 	/* Parse remote info received */
- 
- 	remotes = strbuf_split_str(info, ';', 0);
-@@ -423,7 +467,7 @@ static void filter_promisor_remote(struct repository *repo,
- 
- 		decoded_url = url_decode(remote_url);
- 
--		if (should_accept_remote(accept, remote_name, decoded_url))
-+		if (should_accept_remote(accept, remote_name, decoded_url, &names, &urls))
- 			strvec_push(accepted, remote_name);
- 
- 		strbuf_list_free(elems);
-@@ -431,6 +475,8 @@ static void filter_promisor_remote(struct repository *repo,
- 	}
- 
- 	free(accept_str);
-+	strvec_clear(&names);
-+	strvec_clear(&urls);
- 	strbuf_list_free(remotes);
- }
- 
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index 7e44ad15ce..c2c83a5914 100755
---- a/t/t5710-promisor-remote-capability.sh
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -117,6 +117,74 @@ test_expect_success "fetch with promisor.acceptfromserver set to 'None'" '
- 		--no-local --filter="blob:limit=5k" server client &&
- 	test_when_finished "rm -rf client" &&
- 
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
-+
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server
-+'
-+
-+test_expect_success "fetch with promisor.acceptfromserver set to 'KnownName'" '
-+	git -C server config promisor.advertise true &&
-+
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=KnownName \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
-+test_expect_success "fetch with 'KnownName' and different remote names" '
-+	git -C server config promisor.advertise true &&
-+
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.serverTwo.promisor=true \
-+		-c remote.serverTwo.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.serverTwo.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=KnownName \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
-+
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
-+
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server
-+'
-+
-+test_expect_success "fetch with promisor.acceptfromserver set to 'KnownUrl'" '
-+	git -C server config promisor.advertise true &&
-+
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=KnownUrl \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
-+test_expect_success "fetch with 'KnownUrl' and different remote urls" '
-+	ln -s server2 serverTwo &&
-+
-+	git -C server config promisor.advertise true &&
-+
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/serverTwo" \
-+		-c promisor.acceptfromserver=KnownUrl \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
-+
- 	# Check that the largest object is not missing on the server
- 	check_missing_objects server 0 ""
- '
--- 
-2.46.0.4.gbcb884ee16
+What the code didn't do though is to reload the stack before writing the
+updated tables to "tables.list". This could either lead to us dropping
+new tables appended to the stack while we were compacting, or it could
+lead to us writing references to concurrently-compacted tables which
+have been removed meanwhile, leading to data loss.
 
+The fix itself is rather straight-forward. What I'm missing though is a
+way to test for this given that the logic only triggers when racing with
+another thread. I didn't have any idea how to do this, so if anybody
+else has an idea: please, share it! Otherwise, I'm not sure I feel
+comfortable with untested medium-complexity code. The alternative would
+be to just bail out when we see that the stack has been compacted, which
+is less ideal when we have just done a bunch of working compacting large
+tables.
+
+Thanks!
+
+Patrick
+
+Patrick Steinhardt (8):
+  reftable/stack: refactor function to gather table sizes
+  reftable/stack: test compaction with already-locked tables
+  reftable/stack: update stats on failed full compaction
+  reftable/stack: simplify tracking of table locks
+  reftable/stack: do not die when fsyncing lock file files
+  reftable/stack: use lock_file when adding table to "tables.list"
+  reftable/stack: fix corruption on concurrent compaction
+  reftable/stack: handle locked tables during auto-compaction
+
+ reftable/stack.c           | 228 +++++++++++++++++++++++++++++--------
+ reftable/stack_test.c      | 104 +++++++++++++++++
+ t/t0610-reftable-basics.sh |  21 ++--
+ 3 files changed, 300 insertions(+), 53 deletions(-)
+
+
+base-commit: 39bf06adf96da25b87c9aa7d35a32ef3683eb4a4
+--=20
+2.46.0.dirty
+
+
+--0uqdsMD2zfetx6Da
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaqRtcACgkQVbJhu7ck
+PpTy9Q//YiP80yWS0fEiE5nrSt/jtDd353NDD3e9qYF9UPxLiDDAQAQeudNhD4VC
+5tbBMSKOTL3u2WgsiQL6vMA72Q7nVL8PnQPzIgtfdmDMSJFtKmKjoVQZQudSXfcy
+IiENpcGERWzbs/iLcr8ufHv3Ktv8jxyen1rbhhBoVaygVQnRl/20AecKE1JLwUNK
+bB3oPTF+aS6csnkpQo4cubU5xEp6jn4qH8Fi34AMfhsFSnHuMI2gUxdtQVjPjERo
+r+zQ7bqfg97MUgWZehtBx0K02iNMwU02JL6DtkKJvydRafltIfDu/4FET3CVbYHA
+xeVni7e3+dxEBDDdnHSpPIT8NT5bFUvgLD4mRDQsMQeXtt57UO6J1oMnIw0oP6Xc
+G0Ngzyc/SAN4nPpDQmqtsRa7sxV9yV/IOXnW/j5xrt5aK4hW2AkwxHrkKdkxbx3Q
+iQljA8gw0P9876XVu1/XLs9/a4YM4YI046bMCgWqJFWWICqqdpO4ElpJLZ0jsGDN
+TRknCIMLftMUm1KU8hAnpYnTjNd+XD7ZMepbl71nw/Qz0HBmYjlkDvCD+tSfSYEt
+Px71hHILenc1jDMPc+/Zlj1wOMpuBBUg/MS1iuR7RC+79Lag+gD/AmzOdWQM/hku
+B5FgP7XZR33qN6JNVcp7DaQEUlDMjoZ75GN46JZrM9RN6PxKlSs=
+=48Oj
+-----END PGP SIGNATURE-----
+
+--0uqdsMD2zfetx6Da--
