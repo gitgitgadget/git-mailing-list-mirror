@@ -1,53 +1,55 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F36E1401B
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 19:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C336238DEC
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 19:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722454500; cv=none; b=tDpnZWomT8V/kUc56NCzdas8grz5ze9Cyllsg5p+BZqF8/LclZkZRE2OZ5ryBLNDueldWZd/ineyLbWPmitgF16f1o4k6KqU53turwECYJ9gGd0DI4P7Kz79sXVXWA/GmCPXyQXPuhVky6EwOGpIuNZZkH2F6ZBdi1eT4Vm8IiU=
+	t=1722454616; cv=none; b=NLUGL72+Kqf8bETUBti4dv/otH/hnKPbJlgXWsXofLca7tQgGYxlYHBT8d1EfwJjRQkRawlLx2gMT2TP1qqPGao5g0icexuzrKxl8lCiR3/ka3ZRjbRZy/ux+mqGA63+A84kJhJLbf12ep9p6V+naijGUX2KuTrsQs202HSp0cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722454500; c=relaxed/simple;
-	bh=1yBQ2Jxb/t6/I100bjUxJYXPufk7yXYutoVmzENiLfs=;
+	s=arc-20240116; t=1722454616; c=relaxed/simple;
+	bh=q8AlTG7LJY28WvGRxsBn9lzrzdzcMHdAu5HsDuQmhBQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Gq+8b3LTUrW2JLTPtj8dBucyiR2kjxIvCloDAzLtYK8QCRqPCzgmin5I0D6s71u4dCFM9kmv1qvnFJGuzGjM8DJy2ghNEK8U6BjdMOFuxTm5MdA/eq2pbdCL0yrDVxpOUmWcBKVzh4pl/hOKl3enGVpI9GarPYkVRw+nUXSpLZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZfjyVsqa; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=FYpySmkTHhgh7+eYIu23gZU8Kw6NNV/4G9gjPZ4uCDcDAQmgwNVd3+bEPk2MqE6noWowiP0s22uHsDmE/gdrrmoAwmSOAyLwwXmiX86k/Z+3WmEXG9NCNcEUM5y5fneG9S2oGU6JNc3gT9doU2kQJb/3OdF1daSeOv0fMuDsgqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JEfvI8Sr; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZfjyVsqa"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JEfvI8Sr"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A8953B23F;
-	Wed, 31 Jul 2024 15:34:52 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 90F243B291;
+	Wed, 31 Jul 2024 15:36:53 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1yBQ2Jxb/t6/I100bjUxJYXPufk7yXYutoVmzE
-	NiLfs=; b=ZfjyVsqaLUogNE/1DsxAfsH31uBdtaxDZmlYCRNVQ6UyFkBrktrmQ1
-	bK9NBK5tmZHE2jk8Y4wKz0IUn0fCqYcMAff+GqeC73XVSyzaZn87lv1b9q/L6RKx
-	dfXn19roRUay5cZHE16jD2PotviwUDSjK7KtdMIHwMHh+qYnNFsVg=
+	:content-type; s=sasl; bh=q8AlTG7LJY28WvGRxsBn9lzrzdzcMHdAu5HsDu
+	QmhBQ=; b=JEfvI8SruGW0GUDpjpEQPYCPI+/oPhXrqeLXEXEm/ytCoR5nqq6/HR
+	sZ7AS2San8yfok7575sAGEwtIqaUtM6kdWaMTYFcf66k0lzmLUe1IfSXXqVLGLYe
+	N4L6446OOglfLSnpYSyqTFAbGFEcjiO5Nwv/zWY+qEvKirYGYVizc=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30E863B23E;
-	Wed, 31 Jul 2024 15:34:52 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 88B173B290;
+	Wed, 31 Jul 2024 15:36:53 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 924F03B23D;
-	Wed, 31 Jul 2024 15:34:51 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F3AF83B288;
+	Wed, 31 Jul 2024 15:36:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/4] Add 'promisor-remote' capability to protocol v2
-In-Reply-To: <xmqqikwl2zca.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	31 Jul 2024 11:25:25 -0700")
-References: <20240731134014.2299361-1-christian.couder@gmail.com>
-	<20240731134014.2299361-4-christian.couder@gmail.com>
-	<xmqqikwl2zca.fsf@gitster.g>
-Date: Wed, 31 Jul 2024 12:34:50 -0700
-Message-ID: <xmqqzfpx1hk5.fsf@gitster.g>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  =?utf-8?Q?Ren?=
+ =?utf-8?Q?=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Kyle Lippincott <spectral@google.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH 1/3] t: import the clar unit testing framework
+In-Reply-To: <463oz7j4btei57brq42zlnsydguu74n2n22rhdq7iwjk4y2bei@6r32nghurrmr>
+	(Josh Steadmon's message of "Wed, 31 Jul 2024 11:27:13 -0700")
+References: <cover.1722415748.git.ps@pks.im>
+	<b3db953e88ece99b441993c9248223cc0ecc6be8.1722415748.git.ps@pks.im>
+	<463oz7j4btei57brq42zlnsydguu74n2n22rhdq7iwjk4y2bei@6r32nghurrmr>
+Date: Wed, 31 Jul 2024 12:36:51 -0700
+Message-ID: <xmqqv80l1hgs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,34 +59,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F4A6763A-4F73-11EF-BD43-BAC1940A682E-77302942!pb-smtp2.pobox.com
+ 3D031E1A-4F74-11EF-88F4-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Christian Couder <christian.couder@gmail.com> writes:
+> On 2024.07.31 11:04, Patrick Steinhardt wrote:
+>> Import the clar unit testing framework at commit faa8419 (Merge pull
+>> request #93 from clar-test/ethomson/fixtures, 2023-12-14). The framework
+>> will be wired up in subsequent commits.
 >
->> When a server repository S borrows some objects from a promisor remote X,
->> then a client repository C which would like to clone or fetch from S might,
->> or might not, want to also borrow objects from X. Also S might, or might
->> not, want to advertise X as a good way for C to directly get objects from,
->> instead of C getting everything through S.
->
-> If S is a clone that is keeping up to date with X, even if it does
-> not borrow anything from X, as long as X is known to be much better
-> connected to the world (e.g., it is in a $LARGEINTERNETCOMPANY
-> datacenter with petabit/s backbone connections) than S is (e.g., it
-> is my deskside box on a cable modem), it may be beneficial if S can
-> omit objects from its "git fetch" response to C, if C is willing to
-> fill the gap using X.
->
-> So it is of dubious value to limit the feature only to cases where S
-> "borrows" from X, is it?
+> Rather than forking our own copy of clar, could we just add it as a
+> submodule instead?
 
-An even better example is if S on my deskside box is the source of
-truth, and X in $LARGEINTERNETCOMPANY datacenter that is much better
-connected is a publishing repository I use to push from S to X.
+I doubt that forking was Patrick's intention to begin with.
+Convenience is.
 
-Even if you originally cloned from S and use S as your promisor
-remote, as the operator of S, I would like you to always consult X
-first to reduce the load on S when lazily fetching objects that you
-are missing.
+It certainly is a possibility to bind it as a submodule, but it
+would be easier for everybody to futz with and experiment, at least
+while it is in its RFC phase.
+
+Thanks.
