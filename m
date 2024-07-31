@@ -1,85 +1,79 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8D01B3725
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 17:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACC3186E4F
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 17:01:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722445272; cv=none; b=QxQWG3G3RROWEW4A+ol4FAvIKWBO0EV+LBzgl7R12Pc41Bg7P8fAE/lFJ1kJxp2Duen0PaKmD9Cjm0Y4tL/J6plSJ2nqVWpQQ3UiboYGWKXWZOhA4GLnJn21MYEZiXv8J9yYHSd314TMPnl0ngYtTJQNo9w2QD5R2fGt+5O2ea8=
+	t=1722445308; cv=none; b=HW8SoduNeDzgHMVFAZJzXpqZ+KGhPXqp0gYCnBX/BwnsIr0XGy/RqgMoIlfUXHP4G+cLWtliKViuGgFPU+2J099bzAeuFYR4zo1jHwnJQ/0DwyIIJOo0/c0Y4rz7y9SHaNdh1pcHWiYaMZ+AoMxNK8WsHgaQvt/R1iDxhNWSxQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722445272; c=relaxed/simple;
-	bh=QL58rpEGdFm1Fg+WT1C9+OSQOzfBEWl+LeGAcOGO7UQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WHb5R/z/xOP3Uc5mGcf4qktAX+hNAMuozcxKMtTRQdd60WhEgbOAF6KObDbzLWDLt5c16usKKDCfaWkr5iB1vt9FiMgQMFUWKgr/C6SrebEnddWygHqRhxQJJuRoRCu3gTwSwuU88kQ7/ZepgAr2iJt/k0t0ESmKxVpEH6hC+wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MqvXqHAk; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1722445308; c=relaxed/simple;
+	bh=L8z3e0prSr19DsrEPkWk40LwSwbkgQeZvSpaB9VXvSI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BVcKNnaYyMQFc2zS5kiD1vAE4xy4Hmsyy0iWPeQyfmuEwQJBiPoOAOy0KCnmS065YN8TRCjhFc09L/ADEJ9VOdOAb/TJZ7++5whyuNpeywiZizrAoARCU+uTT6JAxeU82FLnOVJqKFCdQ19pjJ3ZVSgOSW7o0qM/O9bwysQ5fvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vwvcTHkf; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MqvXqHAk"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6b797a2384cso31169676d6.0
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 10:01:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722445270; x=1723050070; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vAlV9bpEvvi5R6Z2azECN0QyOnwtq7byOxo7eRFH8HA=;
-        b=MqvXqHAkK9jQZoEpdJu1P/PsEABcPScc/lj+Rc3QA/J9IJ0epmlBx0dUh8gulITJQC
-         Cy9sxnlFh+bH0HjkX7jSaSOvLaEg4d8dDznZBRJNnT8D2OT5I4L1q4+gIrarJ0420pd6
-         nGVXxjZhKzRcC1IrPM7psAHF7ErrOu7AKbDz8patf9xvKjY0uuyTTlufEkRBeHNEU5Zq
-         naM4PowCpkLdFCaWwvbLAO/Ru9tM1AaTHlEEbh7SDNSZusdm0+5WqiQqyh1btSpU+T7o
-         8HfzXjExZ6PRfpFVoDM/qzmi4kR+r9mK2//nIdVR/K4ovffX3vN2HUQ11zESTZlbvG1D
-         XBNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722445270; x=1723050070;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vAlV9bpEvvi5R6Z2azECN0QyOnwtq7byOxo7eRFH8HA=;
-        b=ttuxEDGxfwV6KR0kJskrkv3Ta9x6cdmUOanyRVnLRDRP+SiyBeXIHUYD58AHYvV6hV
-         dPhRc6pTQXPW+kUoMgY2wmJQ9mfkFyXiNKiy+GubPCIWBZZNDSFCp2dHpsGGac9XnPco
-         jYiUvTWZ0nDajSmWtTxjA8xgDNz8Fsw1Vi4Ecolqte9fC+FjBQWNqVLay6KqxM9BDDPE
-         4FA3FFnbiwgdrdvT4LRCksA+Xdd1Ooh/khY3igfSo9WCpzipKcmf83iF08Rb8lR8f0p8
-         aG3KIhlmXVBGyp0QGGNCE34+bmJj/0dXCMZbu3r7S96wWkNRspa3JFg3jiMtdfniXtss
-         jNrQ==
-X-Gm-Message-State: AOJu0YwtTrM9O/XiklGdji5CI9ANUhGz4jRkPTY0uK+96uK/+mBbPJiu
-	+Uqv2Dhkrqi6Sr4RqeUoI9m0vIl+nHnqZAqtTQ8VdcYKGplrn3iBiPJgD9qH8kg=
-X-Google-Smtp-Source: AGHT+IEC/pzgkuKMxgEMht1BavatqxWaNbSEMy1s4ud3zd7w3OIZVSW5ARMzkwzRwA2KmcOAczpszQ==
-X-Received: by 2002:a05:6214:27ef:b0:6b5:752e:a33a with SMTP id 6a1803df08f44-6bb55acfeccmr135240446d6.57.1722445269613;
-        Wed, 31 Jul 2024 10:01:09 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb3fa94e63sm76129796d6.76.2024.07.31.10.01.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 10:01:09 -0700 (PDT)
-Date: Wed, 31 Jul 2024 13:01:07 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vwvcTHkf"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 155911D013;
+	Wed, 31 Jul 2024 13:01:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=L8z3e0prSr19DsrEPkWk40LwSwbkgQeZvSpaB9
+	VXvSI=; b=vwvcTHkfFfXZQ07rUUE/GjWj0JdfSWPs/4Q2++wjb+bZ3ulyn8WSks
+	vlt/wlNOgrzVsx49/G6EDbudjg013dNnDUcBz4vV4e+4A6zrIaSlNRwffAfkFt9A
+	jJTFjJ+lIYrmONMDWA+yjyRiLZxr1O0nEcTYVvZMdnTWgUtV6JnAA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C7D61D012;
+	Wed, 31 Jul 2024 13:01:46 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.139.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4745B1D00F;
+	Wed, 31 Jul 2024 13:01:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/23] Memory leak fixes (pt.3)
-Message-ID: <Zqpt0/6zBOpYh4aj@nand.local>
-References: <cover.1721995576.git.ps@pks.im>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  Kyle Lippincott
+ <spectral@google.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Josh
+ Steadmon <steadmon@google.com>
+Subject: Re: [RFC PATCH 2/3] Makefile: wire up the clar unit testing framework
+In-Reply-To: <5195d084d3c1bee76e7e424afec2c09bff8f5dde.1722415748.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 31 Jul 2024 11:04:21 +0200")
+References: <cover.1722415748.git.ps@pks.im>
+	<5195d084d3c1bee76e7e424afec2c09bff8f5dde.1722415748.git.ps@pks.im>
+Date: Wed, 31 Jul 2024 10:01:38 -0700
+Message-ID: <xmqqbk2d7ax9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1721995576.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8E344748-4F5E-11EF-A20B-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-On Fri, Jul 26, 2024 at 02:13:43PM +0200, Patrick Steinhardt wrote:
->  57 files changed, 251 insertions(+), 73 deletions(-)
+A trivial fix-up to be squashed into this step.
 
-I took a careful read through these patches, and found most of them easy
-to review. I was admittedly a little lost with the "fix various leak"
-patches, and having slightly more context in the commit descriptions
-there would have been helpful.
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-I think most of these patches look all good to me, but there is one
-where I think using a strvec would be a better fit than allocating our
-own array.
-
-Otherwise, these are looking in good shape. Thanks for working on this!
-
-Thanks,
-Taylor
+diff --git c/Makefile w/Makefile
+index 8ebcbdc95a..d561789582 100644
+--- c/Makefile
++++ w/Makefile
+@@ -3735,6 +3735,7 @@ ifndef NO_TCLTK
+ 	$(MAKE) -C git-gui clean
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
++	$(RM) GIT-TEST-SUITES $(UNIT_TEST_DIR)/clar-decls.h
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+ 	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
+ ifdef MSVC
