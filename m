@@ -1,126 +1,143 @@
-Received: from sender4-of-o55.zoho.com (sender4-of-o55.zoho.com [136.143.188.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159551AD9F6
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 13:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722431279; cv=pass; b=asQ+AnYQGg3V/v5IkdgMjOGy6Ds9dqqkeFkyuH7t/UIIKMVlVIg6MHTyYSdrXQ9NDu2xjDS5ow4Ec28DVYLMkqE9pRk1Iy4ds91J/fcENxGBBy9g6WUqtBB4F9vJcYysnZz8TpumcHLl9yRlB4xcEb5BbHgQ+f9ezUv8/6KXlSA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722431279; c=relaxed/simple;
-	bh=hjs+wSqgfIOswzXvF3Meq3wafiMjl9a7Y42QHw109bo=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ivakXqK5g3A9DxSItu0r/Sw9+dT3aG+zSrxKBR4XH78Qst5RvbSsnNWYWXTZaxBN3SC1BUOjrh4irXS2UujdYOOvOxLvh5YvOGLucoPq87rWPb8A2RGmqy5sBVIQt42ZcltiiWZtG6eCxwbRtOJvOKwkDS5BLvYFpzYaQrcJ3II=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=doN6Ot4o; arc=pass smtp.client-ip=136.143.188.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3471B29A9
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 13:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722432844; cv=none; b=WoOhSXNBnRFEy0BGOCzHs+4ulUiWPEDxhBNBx4oZAB1PGD/f3I3TQNorQG56Y97Vh9Ttd/h0g5RRvh6Me/i61CHCIFB+qGMvYbbx7uxXN46x5UVlIMODrlJLE/CnAGqPfbxeSmCwmPVtctoIR8Nj6bORLqIVNsqwhnYKObwIod0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722432844; c=relaxed/simple;
+	bh=ZWM5FcuEWtj8gHhGrLuG/G/8KE3rjm4I09IjEQ7/Ank=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=gj+3PqmN1TY1mICanzJL6Gk9W82yS8Vuajghal3fh5bcbZcMV7AB9imoINdlaKWxkvwrsJ+EoFOjucJzoDORyG5+TZt6mFI0DM4MhK4XSPeW13kkm4A6XUHoXliTHsbIYDS3uzT4FJnCD1ogbuWiuPDDjGM9PBsGjzh7lFsRVrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVq2/76D; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="doN6Ot4o"
-ARC-Seal: i=1; a=rsa-sha256; t=1722431269; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=cDAypWDZUpH/o8QB/WQyO5scOof3J9apjzThVDh75A7vjsRgkpXo4KV5AXuF3Oy3flXhHNxTA8lbkNalfytCR7h0AQqdJcZg5m1JdDi+UmzKRZCQSMAZiByYms7+xnbLtywLMEtCgeTRBx00hrVrkLSLT+fCYapCCvi9KvFT0z0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1722431269; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=EcndRTqWKBOsaNISPkRn8sKna0IInP7tAJ3R4zm4rXI=; 
-	b=KYSr18Eumr+4hgRyo8jwI/mlbvpwOwZfzDlD6D0i+SG8NGODFkSU2j0NcI5aKRe9pgDLrezDomm+ovXX/7ZJmrV0HfPfpGo4gsX0jQzgzo0b3vGPhMQhtcCFcuXj8foEvktvCgtsSFL4uR+iwPUYqJhlKsX2RlPmize/zKJ+YKA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=boanderson.me;
-	spf=pass  smtp.mailfrom=mail@boanderson.me;
-	dmarc=pass header.from=<mail@boanderson.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1722431269;
-	s=zoho; d=boanderson.me; i=mail@boanderson.me;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=EcndRTqWKBOsaNISPkRn8sKna0IInP7tAJ3R4zm4rXI=;
-	b=doN6Ot4oaTwEa27UuUi6lJDIzZid/4h0STsmovLzQ45+h0t9NWudLjorg1nySK74
-	pqYhVdF36TbxYHhARdYjN1aoUE0prtizkPb4EAe/Uj1+n2dh3f1h9eZdSbaLbeKwjrs
-	N/u9+T7JGnYg0GQy77+zQywDbxmnO2KO98F/A30A=
-Received: by mx.zohomail.com with SMTPS id 1722431265884861.4821840265395;
-	Wed, 31 Jul 2024 06:07:45 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVq2/76D"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4281f00e70cso25554095e9.1
+        for <git@vger.kernel.org>; Wed, 31 Jul 2024 06:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722432841; x=1723037641; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7LRBZtu7GsQi3EF9vf8IIuJVSLgHPioA3gFOdXK9ZUE=;
+        b=EVq2/76DM7JlE86L11SqSCLh77Z+iQkBxUH2CwI1DYvx2znhPgcdbNKKpTw7XMTx/1
+         ++1mcgQ2PEI9pxHr+7IHa2Tm6lVxAPv5m9s2BxnUhIE2CXj7RI8jAyseQkZdJJXNEhsU
+         Jd/vyuxq9S3BDU/3mdGrfht2UddZfjBv5tqfL/dTLgWwwJUSFBzYIVmZgF4sMG7faH0X
+         GUqhabGBJtpROJlrTuuqEJEztT7k6OE0nZQNLxY0mwUXZRg6SBH/ONs6sGRuNz3Djphf
+         gDtiYOecsGEWnFI0BKkBTqxLgb/o08WTdpOTy/fndtHGwyuPDWvuBk9fgKSddvzTSis/
+         iKow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722432841; x=1723037641;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7LRBZtu7GsQi3EF9vf8IIuJVSLgHPioA3gFOdXK9ZUE=;
+        b=KUuVTHLTrlMeI8gE6YmIXrbrrk+DssuXBLpYMKquF7JeQRYiaEetZOBv58zOtVGzqI
+         Rfe7u7ipLG0OzRTe+daBoVlHwqwHc/BAZYnVZ09JHZ7yrkaWdOBROxCUqdNRM/y2xB4P
+         jVZB6jL0j+mmN7kLCbw+yFLWwetSVXZ6vMNDP9RqIFJZKXaAoDlc/EywtmqT7qVlC2U/
+         tMafsFs9OGpTqYMEDb5KCQk3FwUvcvAOrZYgUJPEPzQnq6ps7XQ6gnee9yT6oNlBlj+c
+         tVXabJi17c4JCf7EqMY97me8jPFip8Qj3jp5R/BqMbPs0HbQBiWn47zPrAqXZ5jQKv0h
+         LFUw==
+X-Gm-Message-State: AOJu0YxyvlCqbhpdrb9LuLTTFM3eNIS9cvFG/6KrgS1IF6RSoEfhFFt6
+	y2ZxDJ/T0V+gkK5oux85bTnPqzfNz4aOeGZdutxBh3Nz7o9qWwzw4asNLQ==
+X-Google-Smtp-Source: AGHT+IG7TCFtbJlMVww7z8MkqD6TnWVEW6oBTcHn/vPnschKHG7+4cfjL2PdYnk1jBh9iTS1wUT8Mw==
+X-Received: by 2002:a05:600c:a03:b0:427:9db3:46ad with SMTP id 5b1f17b1804b1-42811dd1a29mr88560725e9.23.1722432840889;
+        Wed, 31 Jul 2024 06:34:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282bac5ff2sm21541985e9.25.2024.07.31.06.34.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jul 2024 06:34:00 -0700 (PDT)
+Message-Id: <pull.1744.v6.git.git.1722432839473.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1744.v5.git.git.1722310937061.gitgitgadget@gmail.com>
+References: <pull.1744.v5.git.git.1722310937061.gitgitgadget@gmail.com>
+From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 31 Jul 2024 13:33:59 +0000
+Subject: [PATCH v6] convert: return early when not tracing
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: [patch] credential-osxkeychain: Clear username_buffer before
- getting the converted C string.
-From: Bo Anderson <mail@boanderson.me>
-In-Reply-To: <20240731074228.GC595974@coredump.intra.peff.net>
-Date: Wed, 31 Jul 2024 14:07:32 +0100
-Cc: Hong Jiang <ilford@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9AA59434-916C-4978-B3A1-33FD70619BFC@boanderson.me>
-References: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
- <20240731074228.GC595974@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-X-ZohoMailClient: External
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+    Haritha D <Harithamma.D@ibm.com>,
+    Haritha  <harithamma.d@ibm.com>,
+    D Harithamma <harithamma.d@ibm.com>
+
+From: D Harithamma <harithamma.d@ibm.com>
+
+When Git adds a file requiring encoding conversion and tracing of encoding
+conversion is not requested via the GIT_TRACE_WORKING_TREE_ENCODING
+environment variable, the `trace_encoding()` function still allocates &
+prepares "human readable" copies of the file contents before and after
+conversion to show in the trace. This results in a high memory footprint
+and increased runtime without providing any user-visible benefit.
+
+This fix introduces an early exit from the `trace_encoding()` function
+when tracing is not requested, preventing unnecessary memory allocation
+and processing.
+
+Signed-off-by: D Harithamma <harithamma.d@ibm.com>
+---
+    Fix to avoid high memory footprint
+    
+    This fix avoids high memory footprint when adding files that require
+    conversion
+    
+    Git has a trace_encoding routine that prints trace output when
+    GIT_TRACE_WORKING_TREE_ENCODING=1 is set. This environment variable is
+    used to debug the encoding contents. When a 40MB file is added, it
+    requests close to 1.8GB of storage from xrealloc which can lead to out
+    of memory errors. However, the check for GIT_TRACE_WORKING_TREE_ENCODING
+    is done after the string is allocated. This resolves high memory
+    footprints even when GIT_TRACE_WORKING_TREE_ENCODING is not active. This
+    fix adds an early exit to avoid the unnecessary memory allocation.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1744%2FHarithaIBM%2FmemFootprintFix-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1744/HarithaIBM/memFootprintFix-v6
+Pull-Request: https://github.com/git/git/pull/1744
+
+Range-diff vs v5:
+
+ 1:  e2518b28f1c ! 1:  7b68aa9de1d convert: return early when not tracing
+     @@ Commit message
+          when tracing is not requested, preventing unnecessary memory allocation
+          and processing.
+      
+     -    Signed-off-by: Harithamma D <harithamma.d@ibm.com>
+     +    Signed-off-by: D Harithamma <harithamma.d@ibm.com>
+      
+       ## convert.c ##
+      @@ convert.c: static void trace_encoding(const char *context, const char *path,
 
 
-> On 31 Jul 2024, at 08:42, Jeff King <peff@peff.net> wrote:
->=20
-> Hrm. Just looking at the code, here's a wild hypothesis: the problem
-> could be not that the buffer is not NUL-terminated, but that after the
-> NUL it contains junk, and we print that junk. That is, the code looks
-> like this:
->=20
->          /* If we can't get a CString pointer then
->           * we need to allocate our own buffer */
->          buffer_len =3D CFStringGetMaximumSizeForEncoding(
->                          CFStringGetLength(account_ref), ENCODING) + =
-1;
->          username_buf =3D xmalloc(buffer_len);
->          if (CFStringGetCString(account_ref,
->                                  username_buf,
->                                  buffer_len,
->                                  ENCODING)) {
->                  write_item("username", username_buf, buffer_len - 1);
->          }
->=20
-> So we asked the system for the _maximum_ size that the string could be
-> (and added one for the NUL). Then we got the string, and we printed =
-out
-> the _whole_ buffer, not just the string up to the NUL. And your fix
-> "works" because NULs end up getting ignored on the read side (or at
-> least cause ruby not to complain about bogus utf8).
->=20
-> If that hypothesis is true, then the fix is more like:
->=20
-> diff --git =
-a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
-b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> index 6ce22a28ed..1c8310d7fe 100644
-> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> @@ -141,7 +141,7 @@ static void find_username_in_item(CFDictionaryRef =
-item)
-> 				username_buf,
-> 				buffer_len,
-> 				ENCODING)) {
-> -		write_item("username", username_buf, buffer_len - 1);
-> +		write_item("username", username_buf, =
-strlen(username_buf));
-> 	}
-> 	free(username_buf);
-> }
+ convert.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This is correct.
+diff --git a/convert.c b/convert.c
+index d8737fe0f2d..c4ddc4de81b 100644
+--- a/convert.c
++++ b/convert.c
+@@ -324,6 +324,9 @@ static void trace_encoding(const char *context, const char *path,
+ 	struct strbuf trace = STRBUF_INIT;
+ 	int i;
+ 
++	if (!trace_want(&coe))
++		return;
++
+ 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
+ 	for (i = 0; i < len && buf; ++i) {
+ 		strbuf_addf(
 
-The reason I couldn=E2=80=99t reproduce the problem and how few will =
-have noticed up to
-now is that for most users the CFStringGetCStringPtr call, which =
-correctly uses
-strlen, does what is necessary and we return early. I don't entirely =
-know the
-precise criteria where the fallback is used but I imagine it depends on =
-certain
-system encodings/locales.
-
-The patch changing this to strlen looks good to me to apply to master & =
-maint.
-
-Bo
-
+base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
+-- 
+gitgitgadget
