@@ -1,56 +1,56 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71CD1B0136
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 13:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8591B29AF
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 13:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722433241; cv=none; b=QhIEu07Yb7mT3wrLqPD1eF9EC56JOoDshl2hTjJkkoQEseXqXeCbx1jBlmBVrwoNpO18eKqnKY3llB51HfUgYEwsu3RBu0Z+5CdWIMp6HXDs5o114czzfOCTFGvz6OigjL1ttxtK3qlXMTnKtjXTLpMUOZ5lf+R19foB1ifjZC0=
+	t=1722433243; cv=none; b=uvBsFWs/njPulwiUtgwnL4S2sWsKdVZWuAJ/QrdNX8w72c/iJqJxPXtMyWm+ceUpn1DzaCb0pUNWg0QD7EIka57aug7KaZkcx2arkiv6mG3mRjESelvZK4KkJ2H6q8TaekoPScFVK7cLJ5IAar8opzFOHH2ht4NVrud2T2OxK9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722433241; c=relaxed/simple;
-	bh=inQhiDsZ0H9gi97ogwBjxug7M3qeW2t+atYHE4WdQ6g=;
+	s=arc-20240116; t=1722433243; c=relaxed/simple;
+	bh=Gng4k46f2LffGGnECwQtmZwK7f3IGq4hSi1EkConw+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ck/sMI54H0br/XSSgXKw9YmKWPutTgFexA/IJkdiGHk6xJUTrpLWbgFLAvAAtrVNi1qhZiQt4QUVk/cg3KXVywrQVP8yIb3PfhJHYw/U7/QGo/3k17q33EamFw7KfUIt6h+qhFhfHKpEKMjsejWUN1cOaxWDHOwVSd3i0UuE7b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evp2jB+Q; arc=none smtp.client-ip=209.85.167.50
+	 MIME-Version; b=uyDhbA+GzoB48JtUhxyGj8d0FWg/zIh6+4TtC0Ukwi2wJQM9emf2HQBOK2Wv9eeNDNFYLfxJjynW1mfT9LHlBwMuvMp+FHfIW1M/Ue11tV1P/Co7rgrLx9TL1OEJX1pm7EMjG00f1ogqnQB94Yeokr6zVn1vwTWfs3KQnT0fKx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bzsmii4q; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evp2jB+Q"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52efc60a6e6so9163173e87.1
-        for <git@vger.kernel.org>; Wed, 31 Jul 2024 06:40:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzsmii4q"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5a15692b6f6so8957135a12.0
+        for <git@vger.kernel.org>; Wed, 31 Jul 2024 06:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722433237; x=1723038037; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722433240; x=1723038040; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WuF3fmx0tQS7Jo2Nthk5t8HYgW9Wp3lOo6Sg4ynamPU=;
-        b=evp2jB+Q2tVw700tB65qJN3asnoc5fYvTyK1TFhdxhBm4R861Asi7wkR0oaUPQwbVs
-         +BzrQP8L36gc5JfJYNtAL82A7AeZ+y10uIS2jG7aJWFmd/3HT4o61yVPW3ak5DjHcOY4
-         pSU1/og5hwb9Gvgehcl+zwkwVRVSXjVN8VnHyqWQYjYi0nKsJjruzSHZRMA/woOQNJbc
-         jYaGXv1f/Z9H1HXRwKD4ykEc/ENJZrP7jpKywMu9N1cT2bd+GtU+SAKy6LA/pvuMYY0I
-         +gAEMxPuao1C/XDuIUu/icef9zFBOKtPC0F/oBVjn3ujarPZHMdBKHy6E/XRPiIOZmSW
-         33Kg==
+        bh=vUtbEsMeijDKXZNMoKbWZEmXR9Kf9ouXo3brZom4o4g=;
+        b=bzsmii4qn7n8HYgaH1MGuEu5iVxtiPlldEwwr0LIGLwVq1UEQcq/hgtr7NAmy170V2
+         Jh5hGgzkZrmUOvrzLwC4CzrNu7O3Eq2a0wPf9Wk2uVVOwRrt5sfkgZfi3RbUXNPU9kMu
+         1s+blkzZqmWSsda8ygiyZ+prMQlObNNMO7SoU90D3n2u+GlXT1aa3ofNPAK/s+alaHfp
+         ntxe41MyQrhhoUQfRxOi9iEfEUHX4UW6IFBso0iL8irvM6+GQSXrPMg9w7E4jYMlm1/b
+         pZV2iTmKyG/5n0iRddu7nYbmnZPyyIKVyrTD2X3jWrP0nPQndCC1HjwbQ5Aucc3Vt183
+         ulKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722433237; x=1723038037;
+        d=1e100.net; s=20230601; t=1722433240; x=1723038040;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WuF3fmx0tQS7Jo2Nthk5t8HYgW9Wp3lOo6Sg4ynamPU=;
-        b=tqh02EnEaajtm2vo+Ha2TkfOe2rQvhgbq0PO+2+O7O0IeYITfWH08wMfev8eCInnIL
-         7yKVyrpMb0LDC6fMr3XhsRDZ1OE0h5ty41dk5pz3jItlYRusDQ9p2ebtdWuSXlD4Rk1B
-         3uGUPA3kpQutoPyD6ahRU2zH4m9pQvjo1fAYJViR4xJgGEn6zWLI11j5ydn+uMbdVH9s
-         iZ6p4tJ1nSLaItww0tTL5I+EfTCYilTTQtBw1qA17Z9BzwudGjUYy1l3ECg73Mz0AvmZ
-         ktQuqYpWGQ04YbA56M7sad6s73gDvqDa+z1NhgN7wQEnAq1N+5Z7cD9lBn8/yOI8a8/G
-         DMZw==
-X-Gm-Message-State: AOJu0Yz+l4O8d5x5kxevEeksV7/Faomq9WkMxC7r+d+oD2wu7ZPs3iM0
-	pOHLJ1nEgEL2yIROmgGebmcoDpEVvB23wpUH0Vd+FjsFCdn5U1pUX0zHJg==
-X-Google-Smtp-Source: AGHT+IF3r9TBZ6CXJwhKGbhPFVxF8uQu7OqFd53euzLw6nsekgVu3q68pySyZbbHkr6djoh4JyUcng==
-X-Received: by 2002:a05:6512:3e08:b0:52e:bdfc:1d09 with SMTP id 2adb3069b0e04-5309b26c090mr9814816e87.18.1722433236959;
-        Wed, 31 Jul 2024 06:40:36 -0700 (PDT)
+        bh=vUtbEsMeijDKXZNMoKbWZEmXR9Kf9ouXo3brZom4o4g=;
+        b=mhcYIJP5Dooa5XzpljKZvVgMne9Y/SKEUb5l5jz46GB4WiLZpakqQSL1pqKKqUfDrg
+         s1Ds3YBChEoCjF4wIYSFf4aaMnnqfY8J1wMWDV7oeS7nnTI5Tcy6tILHM2Y73rooWx3h
+         mR3ngLFQnWCZoqzSMKa+/imdDx5GdfIdmCF5HnSxB5V8SUYt/QKoG/RPq95IdNt/+CZv
+         WtBj0AFH9jrQ+D2myoaB2Mpg47pOxC1edcQ1SjFosxvPZmWCkAy7MnxgUahXLvr6dwie
+         xmAKGUtyV4qrRz7BD3m/sQwqs5T/EDa81NGfoooq5eI33y8mp0QeLt7RCMr7kB8yxcXb
+         dq6A==
+X-Gm-Message-State: AOJu0YzgjnYTIjF8wEPi2/OqFh0HqZQrY021GUg0iO7SmdQJO7MQDGWg
+	FmeYCUAX0eQyoM4+Zy4kSlvdo++vupNUnK0yhX1kcU7jIvw2dRIWFmsn1g==
+X-Google-Smtp-Source: AGHT+IFK+sLmudskAI0LnSCxBfvKzv5VXpdvDAz+a/lqE9OghuBvzF2xxqQQfT7DUjSDUpu7XBBW3A==
+X-Received: by 2002:a50:baa9:0:b0:57c:7471:a0dd with SMTP id 4fb4d7f45d1cf-5b0206ce157mr8848631a12.12.1722433239082;
+        Wed, 31 Jul 2024 06:40:39 -0700 (PDT)
 Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ac63c50fdesm8669641a12.56.2024.07.31.06.40.36
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ac63c50fdesm8669641a12.56.2024.07.31.06.40.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 06:40:36 -0700 (PDT)
+        Wed, 31 Jul 2024 06:40:37 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -58,9 +58,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/4] version: refactor strbuf_sanitize()
-Date: Wed, 31 Jul 2024 15:40:11 +0200
-Message-ID: <20240731134014.2299361-2-christian.couder@gmail.com>
+Subject: [PATCH 2/4] strbuf: refactor strbuf_trim_trailing_ch()
+Date: Wed, 31 Jul 2024 15:40:12 +0200
+Message-ID: <20240731134014.2299361-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.46.0.4.gbcb884ee16
 In-Reply-To: <20240731134014.2299361-1-christian.couder@gmail.com>
 References: <20240731134014.2299361-1-christian.couder@gmail.com>
@@ -72,84 +72,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The git_user_agent_sanitized() function performs some sanitizing to
-avoid special characters being sent over the line and possibly messing
-up with the protocol or with the parsing on the other side.
+We often have to split strings at some specified terminator character.
+The strbuf_split*() functions, that we can use for this purpose,
+return substrings that include the terminator character, so we often
+need to remove that character.
 
-Let's extract this sanitizing into a new strbuf_sanitize() function, as
-we will want to reuse it in a following patch, and let's put it into
-strbuf.{c,h}.
+When it is a whitespace, newline or directory separator, the
+terminator character can easily be removed using an existing triming
+function like strbuf_rtrim(), strbuf_trim_trailing_newline() or
+strbuf_trim_trailing_dir_sep(). There is no function to remove that
+character when it's not one of those characters though.
 
-While at it, let's also make a few small improvements:
-  - use 'size_t' for 'i' instead of 'int',
-  - move the declaration of 'i' inside the 'for ( ... )',
-  - use strbuf_detach() to explicitely detach the string contained by
-    the 'sb' strbuf.
+Let's introduce a new strbuf_trim_trailing_ch() function that can be
+used to remove any trailing character, and let's refactor existing code
+that manually removed trailing characters using this new function.
+
+We are also going to use this new function in a following commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- strbuf.c  | 9 +++++++++
- strbuf.h  | 7 +++++++
- version.c | 9 ++-------
- 3 files changed, 18 insertions(+), 7 deletions(-)
+ strbuf.c         |  7 +++++++
+ strbuf.h         |  3 +++
+ trace2/tr2_cfg.c | 10 ++--------
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/strbuf.c b/strbuf.c
-index 3d2189a7f6..cccfdec0e3 100644
+index cccfdec0e3..c986ec28f4 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -1082,3 +1082,12 @@ void strbuf_strip_file_from_path(struct strbuf *sb)
- 	char *path_sep = find_last_dir_sep(sb->buf);
- 	strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
+@@ -134,6 +134,13 @@ void strbuf_trim_trailing_dir_sep(struct strbuf *sb)
+ 	sb->buf[sb->len] = '\0';
  }
-+
-+void strbuf_sanitize(struct strbuf *sb)
+ 
++void strbuf_trim_trailing_ch(struct strbuf *sb, int c)
 +{
-+	strbuf_trim(sb);
-+	for (size_t i = 0; i < sb->len; i++) {
-+		if (sb->buf[i] <= 32 || sb->buf[i] >= 127)
-+			sb->buf[i] = '.';
-+	}
++	while (sb->len > 0 && sb->buf[sb->len - 1] == c)
++		sb->len--;
++	sb->buf[sb->len] = '\0';
 +}
++
+ void strbuf_trim_trailing_newline(struct strbuf *sb)
+ {
+ 	if (sb->len > 0 && sb->buf[sb->len - 1] == '\n') {
 diff --git a/strbuf.h b/strbuf.h
-index 003f880ff7..884157873e 100644
+index 884157873e..5e389ab065 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -664,6 +664,13 @@ typedef int (*char_predicate)(char ch);
- void strbuf_addstr_urlencode(struct strbuf *sb, const char *name,
- 			     char_predicate allow_unencoded_fn);
+@@ -197,6 +197,9 @@ void strbuf_trim_trailing_dir_sep(struct strbuf *sb);
+ /* Strip trailing LF or CR/LF */
+ void strbuf_trim_trailing_newline(struct strbuf *sb);
  
-+/*
-+ * Trim and replace each character with ascii code below 32 or above
-+ * 127 (included) using a dot '.' character. Useful for sending
-+ * capabilities.
-+ */
-+void strbuf_sanitize(struct strbuf *sb);
++/* Strip trailing character c */
++void strbuf_trim_trailing_ch(struct strbuf *sb, int c);
 +
- __attribute__((format (printf,1,2)))
- int printf_ln(const char *fmt, ...);
- __attribute__((format (printf,2,3)))
-diff --git a/version.c b/version.c
-index 41b718c29e..951e6dca74 100644
---- a/version.c
-+++ b/version.c
-@@ -24,15 +24,10 @@ const char *git_user_agent_sanitized(void)
+ /**
+  * Replace the contents of the strbuf with a reencoded form.  Returns -1
+  * on error, 0 on success.
+diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
+index d96d908bb9..356fcd38f4 100644
+--- a/trace2/tr2_cfg.c
++++ b/trace2/tr2_cfg.c
+@@ -33,10 +33,7 @@ static int tr2_cfg_load_patterns(void)
  
- 	if (!agent) {
- 		struct strbuf buf = STRBUF_INIT;
--		int i;
- 
- 		strbuf_addstr(&buf, git_user_agent());
--		strbuf_trim(&buf);
--		for (i = 0; i < buf.len; i++) {
--			if (buf.buf[i] <= 32 || buf.buf[i] >= 127)
--				buf.buf[i] = '.';
--		}
--		agent = buf.buf;
-+		strbuf_sanitize(&buf);
-+		agent = strbuf_detach(&buf, NULL);
+ 	tr2_cfg_patterns = strbuf_split_buf(envvar, strlen(envvar), ',', -1);
+ 	for (s = tr2_cfg_patterns; *s; s++) {
+-		struct strbuf *buf = *s;
+-
+-		if (buf->len && buf->buf[buf->len - 1] == ',')
+-			strbuf_setlen(buf, buf->len - 1);
++		strbuf_trim_trailing_ch(*s, ',');
+ 		strbuf_trim_trailing_newline(*s);
+ 		strbuf_trim(*s);
  	}
+@@ -72,10 +69,7 @@ static int tr2_load_env_vars(void)
  
- 	return agent;
+ 	tr2_cfg_env_vars = strbuf_split_buf(varlist, strlen(varlist), ',', -1);
+ 	for (s = tr2_cfg_env_vars; *s; s++) {
+-		struct strbuf *buf = *s;
+-
+-		if (buf->len && buf->buf[buf->len - 1] == ',')
+-			strbuf_setlen(buf, buf->len - 1);
++		strbuf_trim_trailing_ch(*s, ',');
+ 		strbuf_trim_trailing_newline(*s);
+ 		strbuf_trim(*s);
+ 	}
 -- 
 2.46.0.4.gbcb884ee16
 
