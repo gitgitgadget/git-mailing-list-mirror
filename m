@@ -1,39 +1,39 @@
 Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D73219E1
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 20:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F481182D8
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 20:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722456289; cv=none; b=nf/c7duslcuc2WAuwBGnm2bq4ipps0r/nw0shbSKjOrWcIWEtp/69QWuJPR4SUxE/sjlj+G++rUyN/Ls8X23O9HZ9G1MIrveLoQ6BGgGxDXUrl3U0L43xIbAa3hCTTKgmytp3Mr2McrbPF3P2aZuXnGCGHviHr5fpOpC7rQ1dZE=
+	t=1722457536; cv=none; b=Y6RbKN6PwgXJn0vkvxLiCqjr/j3ISiZHrAmmjg8JQE+zqczRgUWfXDrTY0rvYmFmMAj1KbOpJTSON4rqhLoieQMm1rZf7ozHdjmImymidwWaip78oXlYfRfpEZsqtHiJW9Mg+bxUY7Fmm24zqFyeDDoC/J1TeMeThl8OtRkE8Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722456289; c=relaxed/simple;
-	bh=rh7RHKgKrKBsrfD9NqUfc/IYUVQD3XUshq2wRm+0dpI=;
+	s=arc-20240116; t=1722457536; c=relaxed/simple;
+	bh=87d0Ob1t4lbKAwqEu/49A3u1h0HpE6qOz7uFf7voArI=;
 	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JKlRAD+KUVzLPkUynZ+7Sy3wf9uTdK5kNQH2RsIXL5ZT4cZeC4uB7fQopgXYmfpve4WVCVCKmXnodJzYaDa+UTC35/+AG3IIKdsd0YB4KKaF1n+amH/Qr+7Z00V1pZJ9xlHIKifNWZOZwHVRq5eoIM8grOE6VuEjXwLcidfDjsU=
+	 MIME-Version:Content-Type; b=k20OlgijSNmrKaUTxVtNyf4LESlQbHp6sfTJumu2eUQTgFf9392nDvPFHCQP0upuaWtMrfjYv/kSFa+ibqKtNtDmErZvjS0AoyThIO/tvsWB8vQXiAlTErMXXdPQDUZeExPvZYfjVj61e+28OrzwgQBEYg2j5JH/OY5oGjwVQcY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
 X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
 Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
 	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46VK4Zrw3310537
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 46VKPOBu3313797
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 20:04:35 GMT
+	Wed, 31 Jul 2024 20:25:24 GMT
 Reply-To: <rsbecker@nexbridge.com>
 From: <rsbecker@nexbridge.com>
-To: "'Josh Steadmon'" <steadmon@google.com>,
-        "'Patrick Steinhardt'" <ps@pks.im>
-Cc: <git@vger.kernel.org>, "=?iso-8859-1?Q?'Ren=E9_Scharfe'?=" <l.s.r@web.de>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'Patrick Steinhardt'" <ps@pks.im>, <git@vger.kernel.org>,
+        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
         "'Kyle Lippincott'" <spectral@google.com>,
-        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>
-References: <cover.1722415748.git.ps@pks.im> <b3db953e88ece99b441993c9248223cc0ecc6be8.1722415748.git.ps@pks.im> <463oz7j4btei57brq42zlnsydguu74n2n22rhdq7iwjk4y2bei@6r32nghurrmr>
-In-Reply-To: <463oz7j4btei57brq42zlnsydguu74n2n22rhdq7iwjk4y2bei@6r32nghurrmr>
-Subject: RE: [RFC PATCH 1/3] t: import the clar unit testing framework
-Date: Wed, 31 Jul 2024 16:04:29 -0400
+        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>,
+        "'Josh Steadmon'" <steadmon@google.com>
+References: <cover.1722415748.git.ps@pks.im> <xmqq7cd18srf.fsf@gitster.g>	<008901dae362$386ae280$a940a780$@nexbridge.com> <xmqqfrrp7bbu.fsf@gitster.g>
+In-Reply-To: <xmqqfrrp7bbu.fsf@gitster.g>
+Subject: RE: [RFC PATCH 0/3] Introduce clar testing framework
+Date: Wed, 31 Jul 2024 16:25:18 -0400
 Organization: Nexbridge Inc.
-Message-ID: <00a801dae384$de2780d0$9a768270$@nexbridge.com>
+Message-ID: <00a901dae387$c68f6f70$53ae4e50$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,21 +41,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: AQE2Q9x0fuag13GoRDOLG7kBaq5wcQE8qfSQAlNXoAuzPgHRYA==
+Thread-Index: AQE2Q9x0fuag13GoRDOLG7kBaq5wcQG2RBBYApODSOMCbGq0BbMk1bAQ
 
-On Wednesday, July 31, 2024 2:27 PM, Josh Steadmon wrote:
->On 2024.07.31 11:04, Patrick Steinhardt wrote:
->> Import the clar unit testing framework at commit faa8419 (Merge pull
->> request #93 from clar-test/ethomson/fixtures, 2023-12-14). The
->> framework will be wired up in subsequent commits.
+On Wednesday, July 31, 2024 12:53 PM, Junio C Hamano wrote:
+><rsbecker@nexbridge.com> writes:
 >
->Rather than forking our own copy of clar, could we just add it as a
-submodule
->instead?
+>> I'm sorry for being so behind the curve... what is clar and where =
+does it run?
+>
+>We have t/unit-test/test-lib.[ch] that are our home-grown unit test =
+framework.  A
+>handful of tests have been written to use it, when you say "make test", =
+or "(cd t &&
+>make)", unit tests binaries linked with the home-grown unit test =
+framework run.
+>
+>clar is a _potential_ replacement for our home-grown framework, =
+suggested here
+>because it would be nicer if we can use off-the-shelf component instead =
+of having
+>to enhance and maintain our own.
+>
+>Where and how it runs does not change even after clar turns out to be =
+good enough
+>for our purpose and we commit to replace our home-grown unit test =
+framework
+>with it.
 
-What are the requirements to build/use this?
+Well... I would like to be able to see whether this can be built/used on =
+NonStop just
+so I can stay ahead of the curve or be far enough in advance of it to =
+request any
+required fixes to make it work on platform.
+
 
