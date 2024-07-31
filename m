@@ -1,78 +1,77 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9591B1512
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B241B4C29
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 14:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722435322; cv=none; b=V0dbu6Y4oQ1wNroOL0fTCuCgpboc7q7vptZnDhtkbIP9mtaOUy4rnJ1K88xuwhPd/GO0WB3oU9EnGWlDJQjgocLngy41v/U8WvRzF94rPSjVtHKCmdkIitu1WB+ENrv0RLX0ENgOWpT7fW6+Hnhm8mEaE3oaPPvyKl0QVaHhzzc=
+	t=1722435325; cv=none; b=l56TQyqoYicM9nuCca0y2WUIcbRjwdRxcNSLoQnCZD+J/BPp7jmWWgHu6alnmTsXeMp/yyN/vjNSjSiOQWEls362INIvI6jRPwxKNsS62KTZlMJkDWuitaaw4vuh0DfmbJaOIfRoO+W9oCtto/BnpbRy/y3vVX7UDwynIbEUW6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722435322; c=relaxed/simple;
-	bh=+x4xHX5edfHpQX+vj2n6XFJJRzH9zhxGX4ho8aKMwEA=;
+	s=arc-20240116; t=1722435325; c=relaxed/simple;
+	bh=O34PZl8uT/u6hMqOdbe/xJNk5sgOyMqz+2BpMxGI3iQ=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qH7v30AtoK0EkwX47swWu8Es07rl3wFtOXigzYXjz3V/CnzKGjMix4qwAxE30zjLjttxODtr2iWDLcz6Ist7QNaCEyk39hQbmkBDrqSEfU2KUotQIEQ+lttFnYeDGuYi1dF5ZaKsE0MFQWBzoISq1IGB1cb6pp1iqQZWTnYAhYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UKhllHAv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t/lbT6mg; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=ptYIUOodQC7q06Lantdhxho/vPk35Xa0HW3x4UN4EIHSYLl4vogDIJCqhblUaUgKuMI7llhEHsKY/3foLAarV74HfdWkECJTfqd8RGzQaIhBvKOtTsd8EEN4UHt70ORMS4LxJJCVUcEY87hMaJdsalO9HFxS59GDEpRQHVSTvQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gxzQUyR7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kcqd19QW; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UKhllHAv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t/lbT6mg"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5E714138215B
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 10:15:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gxzQUyR7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kcqd19QW"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 37D471382135
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 10:15:23 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 31 Jul 2024 10:15:19 -0400
+  by compute4.internal (MEProxy); Wed, 31 Jul 2024 10:15:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722435319; x=1722521719; bh=tRTLmq+AjB
-	oBCztpJO2rvaf7ZsfDOIGoj0+C0AXkxII=; b=UKhllHAvkbGhXGxpstTOCY7Mfo
-	OfbP1c6JFxViTwNxlnimQIApTO1+SKVpMoGgybzlAPIHm8Tw93JWN/Mu7phtz8Pk
-	o/Mg5NEDd9bi0y7LTzzyvzR3uVY+vqitzkb0eXx+qoCTM5b+Wygy76Nz8JMLlmcY
-	0HNa95x5veB8uM5ISqeLR1JyUDqHzSQ6ti1eik2uYauX/Te11LPy3IyJkr3+7hSs
-	rdwcnscuMuGwRLOb6WbyAGVrxJeppHXPdTqKc9FEUASGcKChaNh/Gv9qbZa/TBoc
-	mCHC78NUOytlwXMpJWJGnXGZN4M6b5WhSnhOPNfQaO5DWNrvl39goyDGnpog==
+	:subject:to:to; s=fm3; t=1722435323; x=1722521723; bh=Ffn48IIzr9
+	k/H28o6JaqtHKAHOFvpbIFWked0Dplr+Y=; b=gxzQUyR7ObNhR+HN5vV6eH27H4
+	VC9uBc7qybvuiptCvO49Up4apT20UyKbJ3wcsjUHb18c3mP1vWxGIXpr5rXOSU6a
+	PAiwLmJzDfPbzcnUP1CUs9r9UCcDR6ERIFxJJ4gjpz/Hy+ljMqyGyrH737C8gQmU
+	82eywwIPIzn16KMxAVmwf2I7zYxUoFGooaUEbTMeF3kVmX44CUmWKc8iJ/RGu0W2
+	KGRyPaF9c255nJEKt6x8OBo46G/R1QeeDqvJNr1iQ0XaNVCRVFkG42HNv7zi1pGa
+	mRGNEwvhRiGmpttA++5FSAsdclKl5JGlh0okZYAm0l/JqLOxoaBv4r8XfEkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722435319; x=1722521719; bh=tRTLmq+AjBoBCztpJO2rvaf7ZsfD
-	OIGoj0+C0AXkxII=; b=t/lbT6mgIh8YtrU/JAilc62d/W2YtoN+lJUAYC/WIoyw
-	h4IBQ3uvK5nIOLeXwl1OSxOXZyEh/CddK0pIjf2GGYoBET+TRy/4V9KSDejWUhdz
-	P5TTudP9AqoT6cty56Mn6CKNcKKdU4F3IsZCy1ecag9ET6PjHTrgMI8aCHsfAImh
-	TaFUzkFi3fnsLAUBKoBVqFHdVnoR8VID+eKzJq1Ht4mFZVUTuVAfEzlMfqz5PPJv
-	U2YbRIKTdURDaXsLhXMIdqpCFAjgp1pGz5M1ht20+1XZRR6p+Cq3oguidabj9k82
-	T1nCpnuWz2RVQSQ1Mf1CciqItVnJJfmw+7IoNaKVeg==
-X-ME-Sender: <xms:90aqZtqO-jFyA29oEQruNvnqchYjVWwI_lGXLUEK6y_97DAZHXbJ0g>
-    <xme:90aqZvrK9Gjvlt0kJRA5he54sJdhyQq9Ge14IL9LIW9FQQTZEB6otQ_try1T8KPde
-    YSYIXeX4A9c6Z_cEw>
-X-ME-Received: <xmr:90aqZqNgb4B6rWeydX-Dk-5toS7XKf04okHny9mg1mb4g1LW_ciSV9LbZNUXy9HJ6ITKd10KYrbzM4F77A5Vq1K5W8W2HWK9KS-VT97pmL_bO8bB>
+	fm3; t=1722435323; x=1722521723; bh=Ffn48IIzr9k/H28o6JaqtHKAHOFv
+	pbIFWked0Dplr+Y=; b=Kcqd19QWjZs7UUEFsDZ+Nrc5nS3nkpF3cWpRmySgXV+i
+	Haob1NYBdOPCVcZmF0RUxkujMj4BU+TMW+0xPOjM1WLVPp1wn3bqBRjXN91ebBgj
+	wpnyCfQiKxkBsIP8rPf8Jb1QVw5tJHZSitqe9R+rdSxS0NaONTBg0TkqauiSaxl5
+	vg+0boJZR9EbUMfKbjUm6S3ZGasCvD0wJHXYGugADQpED0U3T4Z8sZJJcUVPN+37
+	1k4eBsy41wzj3lyuXhDMSRZlfsHiwjLT6L6vYuc1ZLVy3RjedLR7/GSVbl46rdaC
+	J73F/s3/t0K+d541NKKNiYDSdWLRwd9vkXGSnP9aCg==
+X-ME-Sender: <xms:-0aqZr13i-D4ltLLNslK32wN7u5IIZzjn9O9I6CmSfxGH-iR34kV9Q>
+    <xme:-0aqZqHlJ3nCdKjPnpisF4-2xDd1lsZJM0ZQc2F8-u4ZOxh1aFlQnSf2A0geGahgN
+    NU8nRjKmbreQ3yVRw>
+X-ME-Received: <xmr:-0aqZr7DF7Q4VEfU6C-3BBLHow5xecOYYZP_ZgPm0Oe-s_5ECwxpdJBCIxnfWXhHeB4fa8v-nuaY3AIwIATik5hyVBHrcQpR99y8sqZCuQSXx1gm>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeeigdejhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:90aqZo4DZnVyjJaguQh8s79MwU-y5k6kBEbimVLMze_4iWBYweJuaw>
-    <xmx:90aqZs7bzEr0pBy9W2wB8PXwRMBkHdXoel4O-SmEhnkQSl4MWkjmbg>
-    <xmx:90aqZghHg62XpkxhtkSW2oA8ifiuZrStMySHU4NpE408VJKmH1_S2A>
-    <xmx:90aqZu7_s7CMbQE2HmTT0fmRsaiX8jd6bqti-WshHOYs-QWfoGa-FA>
-    <xmx:90aqZqSyOE_JL_lEdaN7iC51GjLtc9Yhav0RKg6r1BOILcvSe2ItpiV9>
+X-ME-Proxy: <xmx:-0aqZg14BoTr17IVOC-nLfqLjaQUgeFNK9ZU8AHu_qc3z7uJaMyHaA>
+    <xmx:-0aqZuGP3DRIVmrbxO87CvWmQEry9KrASdb1OFG8NMkqGgCC-RhZnw>
+    <xmx:-0aqZh8FgO1-WVMX9WBDG39CtBN-rE3grzZKHha8AOh2KWBAJXg6Vw>
+    <xmx:-0aqZrmZTTHBFlZ4ka7BbWkCOCHRiugncDQUxrfgYXuMGOS2FX6Yyg>
+    <xmx:-0aqZgOYnZFpOg26QmQgEFc3UY_zNz732gAg0C6ihoYwStXKt4_l6C5c>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 31 Jul 2024 10:15:18 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 31 Jul 2024 10:15:22 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 70f74262 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by localhost (OpenSMTPD) with ESMTPSA id 507202cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 31 Jul 2024 14:13:48 +0000 (UTC)
-Date: Wed, 31 Jul 2024 16:15:15 +0200
+	Wed, 31 Jul 2024 14:13:52 +0000 (UTC)
+Date: Wed, 31 Jul 2024 16:15:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 6/8] reftable/stack: use lock_file when adding table to
- "tables.list"
-Message-ID: <9703246156152e1c8c92b4237c8dc3a9ef59901a.1722435214.git.ps@pks.im>
+Subject: [PATCH 7/8] reftable/stack: fix corruption on concurrent compaction
+Message-ID: <b746565bf0ff80fff60821bdeb79867ad646c142.1722435214.git.ps@pks.im>
 References: <cover.1722435214.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,136 +80,236 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9iAr7Sn4n8geRxzz"
+	protocol="application/pgp-signature"; boundary="MfoBN966/TrHkSBl"
 Content-Disposition: inline
 In-Reply-To: <cover.1722435214.git.ps@pks.im>
 
 
---9iAr7Sn4n8geRxzz
+--MfoBN966/TrHkSBl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When modifying "tables.list", we need to lock the list before updating
-it to ensure that no concurrent writers modify the list at the same
-point in time. While we do this via the `lock_file` subsystem when
-compacting the stack, we manually handle the lock when adding a new
-table to it. While not wrong, it is at least inconsistent.
+The locking employed by compaction uses the following schema:
 
-Refactor the code to consistenly lock "tables.list" via the `lock_file`
-subsytem.
+  1. Lock "tables.list" and verify that it matches the version we have
+     loaded in core.
+
+  2. Lock each of the tables in the user-supplied range of tables that
+     we are supposed to compact. These locks prohibit any concurrent
+     process to compact those tables while we are doing that.
+
+  3. Unlock "tables.list". This enables concurrent processes to add new
+     tables to the stack, but also allows them to compact tables outside
+     of the range of tables that we have locked.
+
+  4. Perform the compaction.
+
+  5. Lock "tables.list" again.
+
+  6. Move the compacted table into place.
+
+  7. Write the new order of tables, including the compacted table, into
+     the lockfile.
+
+  8. Commit the lockfile into place.
+
+Letting concurrent processes modify the "tables.list" file while we are
+doing the compaction is very much part of the design and thus expected.
+After all, it may take some time to compact tables in the case where we
+are compacting a lot or very large tables.
+
+But there is a bug in the code. Suppose we have two processes which are
+compacting two slices of the table. Given that we lock each of the
+tables before compacting them, we know that the slices must be disjunct
+=66rom each other. But regardless of that, compaction performed by one
+process will always impact what the other process needs to write to the
+"tables.list" file.
+
+Right now , we do not check whether the "tables.list" has been
+changed after we have locked it for the second time in (5). This has the
+consequence that we will always commit the old, cached in-core tables to
+disk without paying to respect what the other process has written. This
+scenario would then lead to data loss and corruption.
+
+This can even happen in the simpler case of one compacting process and
+one writing process. The newly-appended table by the writing process
+would get discarded by the compacting process because it never sees the
+new table.
+
+Fix this bug by re-checking whether our stack is still up to date after
+locking for the second time. If it isn't, then we adjust the indices of
+tables to replace in the updated stack.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ reftable/stack.c | 101 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 96 insertions(+), 5 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 9ca549294f..9cc91a262c 100644
+index 9cc91a262c..2b1ac58120 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -567,7 +567,7 @@ static void format_name(struct strbuf *dest, uint64_t m=
-in, uint64_t max)
- }
+@@ -1021,7 +1021,9 @@ static int stack_compact_range(struct reftable_stack =
+*st,
+ 	struct lock_file *table_locks =3D NULL;
+ 	struct tempfile *new_table =3D NULL;
+ 	int is_empty_table =3D 0, err =3D 0;
++	size_t first_to_replace, last_to_replace;
+ 	size_t i, nlocks =3D 0;
++	char **names =3D NULL;
 =20
- struct reftable_addition {
--	struct tempfile *lock_file;
-+	struct lock_file tables_list_lock;
- 	struct reftable_stack *stack;
-=20
- 	char **new_tables;
-@@ -581,13 +581,13 @@ static int reftable_stack_init_addition(struct reftab=
-le_addition *add,
- 					struct reftable_stack *st)
- {
- 	struct strbuf lock_file_name =3D STRBUF_INIT;
--	int err =3D 0;
--	add->stack =3D st;
-+	int err;
-=20
--	strbuf_addf(&lock_file_name, "%s.lock", st->list_file);
-+	add->stack =3D st;
-=20
--	add->lock_file =3D create_tempfile(lock_file_name.buf);
--	if (!add->lock_file) {
-+	err =3D hold_lock_file_for_update(&add->tables_list_lock, st->list_file,
-+					LOCK_NO_DEREF);
-+	if (err < 0) {
- 		if (errno =3D=3D EEXIST) {
- 			err =3D REFTABLE_LOCK_ERROR;
- 		} else {
-@@ -596,7 +596,8 @@ static int reftable_stack_init_addition(struct reftable=
-_addition *add,
- 		goto done;
- 	}
- 	if (st->opts.default_permissions) {
--		if (chmod(add->lock_file->filename.buf, st->opts.default_permissions) < =
-0) {
-+		if (chmod(get_lock_file_path(&add->tables_list_lock),
-+			  st->opts.default_permissions) < 0) {
- 			err =3D REFTABLE_IO_ERROR;
- 			goto done;
+ 	if (first > last || (!expiry && first =3D=3D last)) {
+ 		err =3D 0;
+@@ -1124,6 +1126,94 @@ static int stack_compact_range(struct reftable_stack=
+ *st,
  		}
-@@ -635,7 +636,7 @@ static void reftable_addition_close(struct reftable_add=
-ition *add)
- 	add->new_tables_len =3D 0;
- 	add->new_tables_cap =3D 0;
+ 	}
 =20
--	delete_tempfile(&add->lock_file);
-+	rollback_lock_file(&add->tables_list_lock);
- 	strbuf_release(&nm);
++	/*
++	 * As we have unlocked the stack while compacting our slice of tables
++	 * it may have happened that a concurrently running process has updated
++	 * the stack while we were compacting. In that case, we need to check
++	 * whether the tables that we have just compacted still exist in the
++	 * stack in the exact same order as we have compacted them.
++	 *
++	 * If they do exist, then it is fine to continue and replace those
++	 * tables with our compacted version. If they don't, then we need to
++	 * abort.
++	 */
++	err =3D stack_uptodate(st);
++	if (err < 0)
++		goto done;
++	if (err > 0) {
++		ssize_t new_offset =3D -1;
++		int fd;
++
++		fd =3D open(st->list_file, O_RDONLY);
++		if (fd < 0) {
++			err =3D REFTABLE_IO_ERROR;
++			goto done;
++		}
++
++		err =3D fd_read_lines(fd, &names);
++		close(fd);
++		if (err < 0)
++			goto done;
++
++		/*
++		 * Search for the offset of the first table that we have
++		 * compacted in the updated "tables.list" file.
++		 */
++		for (size_t i =3D 0; names[i]; i++) {
++			if (strcmp(names[i], st->readers[first]->name))
++				continue;
++
++			/*
++			 * We have found the first entry. Verify that all the
++			 * subsequent tables we have compacted still exist in
++			 * the modified stack in the exact same order as we
++			 * have compacted them.
++			 */
++			for (size_t j =3D 1; j < last - first + 1; j++) {
++				const char *old =3D first + j < st->merged->stack_len ?
++					st->readers[first + j]->name : NULL;
++				const char *new =3D names[i + j];
++
++				/*
++				 * If some entries are missing or in case the tables
++				 * have changed then we need to bail out. Again, this
++				 * shouldn't ever happen because we have locked the
++				 * tables we are compacting.
++				 */
++				if (!old || !new || strcmp(old, new)) {
++					err =3D REFTABLE_OUTDATED_ERROR;
++					goto done;
++				}
++			}
++
++			new_offset =3D i;
++			break;
++		}
++
++		/*
++		 * In case we didn't find our compacted tables in the stack we
++		 * need to bail out. In theory, this should have never happened
++		 * because we locked the tables we are compacting.
++		 */
++		if (new_offset < 0) {
++			err =3D REFTABLE_OUTDATED_ERROR;
++			goto done;
++		}
++
++		/*
++		 * We have found the new range that we want to replace, so
++		 * let's update the range of tables that we want to replace.
++		 */
++		last_to_replace =3D last + (new_offset - first);
++		first_to_replace =3D new_offset;
++	} else {
++		REFTABLE_CALLOC_ARRAY(names, st->merged->stack_len + 1);
++		for (size_t i =3D 0; i < st->merged->stack_len; i++)
++			names[i] =3D xstrdup(st->readers[i]->name);
++		last_to_replace =3D last;
++		first_to_replace =3D first;
++	}
++
+ 	/*
+ 	 * If the resulting compacted table is not empty, then we need to move
+ 	 * it into place now.
+@@ -1146,12 +1236,12 @@ static int stack_compact_range(struct reftable_stac=
+k *st,
+ 	 * have just written. In case the compacted table became empty we
+ 	 * simply skip writing it.
+ 	 */
+-	for (i =3D 0; i < first; i++)
+-		strbuf_addf(&tables_list_buf, "%s\n", st->readers[i]->name);
++	for (i =3D 0; i < first_to_replace; i++)
++		strbuf_addf(&tables_list_buf, "%s\n", names[i]);
+ 	if (!is_empty_table)
+ 		strbuf_addf(&tables_list_buf, "%s\n", new_table_name.buf);
+-	for (i =3D last + 1; i < st->merged->stack_len; i++)
+-		strbuf_addf(&tables_list_buf, "%s\n", st->readers[i]->name);
++	for (i =3D last_to_replace + 1; names[i]; i++)
++		strbuf_addf(&tables_list_buf, "%s\n", names[i]);
+=20
+ 	err =3D write_in_full(get_lock_file_fd(&tables_list_lock),
+ 			    tables_list_buf.buf, tables_list_buf.len);
+@@ -1204,9 +1294,10 @@ static int stack_compact_range(struct reftable_stack=
+ *st,
+ 	delete_tempfile(&new_table);
+ 	strbuf_release(&new_table_name);
+ 	strbuf_release(&new_table_path);
+-
+ 	strbuf_release(&tables_list_buf);
+ 	strbuf_release(&table_name);
++	free_names(names);
++
+ 	return err;
  }
 =20
-@@ -651,7 +652,7 @@ void reftable_addition_destroy(struct reftable_addition=
- *add)
- int reftable_addition_commit(struct reftable_addition *add)
- {
- 	struct strbuf table_list =3D STRBUF_INIT;
--	int lock_file_fd =3D get_tempfile_fd(add->lock_file);
-+	int lock_file_fd =3D get_lock_file_fd(&add->tables_list_lock);
- 	int err =3D 0;
- 	size_t i;
-=20
-@@ -674,13 +675,14 @@ int reftable_addition_commit(struct reftable_addition=
- *add)
- 		goto done;
- 	}
-=20
--	err =3D fsync_component(FSYNC_COMPONENT_REFERENCE, lock_file_fd);
-+	err =3D fsync_component(FSYNC_COMPONENT_REFERENCE,
-+			      get_lock_file_fd(&add->tables_list_lock));
- 	if (err < 0) {
- 		err =3D REFTABLE_IO_ERROR;
- 		goto done;
- 	}
-=20
--	err =3D rename_tempfile(&add->lock_file, add->stack->list_file);
-+	err =3D commit_lock_file(&add->tables_list_lock);
- 	if (err < 0) {
- 		err =3D REFTABLE_IO_ERROR;
- 		goto done;
 --=20
 2.46.0.dirty
 
 
---9iAr7Sn4n8geRxzz
+--MfoBN966/TrHkSBl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaqRvMACgkQVbJhu7ck
-PpTXwA/+P7YFXwZ69M0KPV7jsOOitXrBCUGad9h1vHn2NwsgF/THQeGTAu1TMAZX
-adskfv940MK9+LbExO66MoZTIEq67atzO8hzl5Zr0vupfNvlaZGnEKZbh5HlTE4H
-yDPdf1gNSd9fOcPx2UfwrbrF7j4wS25bmyJdydDFoQexjqOnXxL2lOddzH+QK7Ax
-7tK0fDKOsiNYANqs3Qxt5tKrcWjVLvpNUl/GnFqHKBfLh3+FKh/19NRGdHtKLdmd
-uKsAiAO55Hi8/1KnulabLIylgltsjJp7E1PYNv30aNuudlCBlRWrSC/mDVBXjBgd
-3c43frFy5sYGFBdWfCSAmCs2Xt5VxsZgBplonDrPDaLC8vYXeN4sD2kRXq43nkT/
-5HXdx+EojKVK0v6Vo6gnDg7DR2rR37Kx7Tyxjk5Jsu0LK7eqNi9LZoqhM9X/Svjd
-30iiEpc3YoCBJ/jVqNHhs+JqcuLDpPDysv7VfOd0r0R7obAxlOkV9R0QOlnHczId
-s8JF+remuqpwN/d8B5TVriaXzjcN9BY3gO7OZZZ+G+8q2h5hGsNC4WS59z0a8Kdz
-HHaSDoZ8sSXU+xV91woi610r41mtYG5HIxrly2XmO0oGeKUsG+mHxYGJKVU6fMKl
-oLOUMtJZUpq6qNRxyzyRvllhW7YnF+ARFSIIBYEkKpiIYsMD+JU=
-=JI42
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaqRvcACgkQVbJhu7ck
+PpRxdQ/9Ev0sRjvFRXBcJdnzxM2cHoauuUQFT9mSRWABYKRBW+ua5h848hHHzbYz
+3+8zPKK9+AIi3SZrb4rkccDRMsTkbigoHfUQsIhustE9LFjkILh9kN1cVKV4rfYR
+ZnhoCowBE9pApsxq1w09ZaH/JAekAEM0GheF/KSeQqOAGGL+WNnl9zmugCIVasBG
+Y2Ndk9EToDKr7MU3XKqmNqdZp5jDgvl4+epxxeQcBbMyXgV2HwzCGcPrMPSxduIW
+Yt4vt+7Kf1WtJyF3s3/2nS0UiuswBct1vsbCFwy34jV8jVyzjYLD9DrguUWWbsZ7
+OqmAqFo2EF1eocbiC5n/Sdl81OAZXDZjoqhcoXNJXFqWdFMCloBQhCJbExr3k90s
+coOOWX/iE2xiuyQnnXSjDq0q3+d3SFmGZfScf3Ld09Sftg6CTRfqMfE6nEY+al3n
+Ducz5T2yQpF+5HmN7VcxwE1z4hb1SrWbBHi7kxV+mya748WGVmkhU58xhRssqT04
+4a3uWEqL5uueadcGsM8WAMpcQr3AyvNrp3tUvm5QwH3A0lCxQtWQH/uTL2tixJb+
+oOttsvnIEARo8Fh5thbw4+5+JQZ8ESLOBEMMTE5nWO0iyUB3xlKI6Hg2T9Hxc1vb
+gQD/ZXSO7Ypfy6M4b/i2TVATCcZEgXE4U4DVCWVnP4UoWwwm8Yg=
+=MlJ3
 -----END PGP SIGNATURE-----
 
---9iAr7Sn4n8geRxzz--
+--MfoBN966/TrHkSBl--
