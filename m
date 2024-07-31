@@ -1,53 +1,53 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A8E1AB502
-	for <git@vger.kernel.org>; Wed, 31 Jul 2024 09:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CD31A8C1D
+	for <git@vger.kernel.org>; Wed, 31 Jul 2024 09:04:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722416668; cv=none; b=h00DxZ5jNYqw2p7Aqto3aJPIYYPz/a/dk96FAXIgQacKCiEFrCvJ+cAJ57dBRIMmhCofT4SBMlzZdNUnmJF4TDHHWTcuQHRatyD/O7mbXL/yh+R0zSJwFrn3E6KRB8NH3Qc6lwFvrqq9FI7dz8mD9AHcVCuS/E+AsITwysNZXuU=
+	t=1722416673; cv=none; b=DrxZcx+4GzGRTjxcPuQKiKaVnFb9s/XHGfvuhtXfVFMZM5tb8L4JUvqLzsLLD+hRkCgrkPH1LIVIZN8v9kfn4KGxoUdT4wM7K0r7f6sKn4gv6Hefqho/RWsk42ehguhe7JXwQ9FjrUSzsoD4N0aEW14cwDttzAxvFc0IY9krYXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722416668; c=relaxed/simple;
-	bh=2AdryNz2M9AAfK5avLB20FCOUEiOgQjRgK82fWMGm0k=;
+	s=arc-20240116; t=1722416673; c=relaxed/simple;
+	bh=JNv1kCO6kWb75WNGr7hnyGLfneh8dm6uNxYYYzD7mbw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=THcyCX35GK4rst3FH/Ih5xV7kNBVy/UPe7SFv4FIc2FBuzILsBbdie8ifTdStAdXf2Tpo3KDxBdK/G+Uuw6W62Rd6euUbdb6i4sOaoe2YLCIkirMU7Kf0iNeyh0o9Rv7rwoxcc8A8GJ9R/BbF4Pgc3oW7I0HQoatvKYuCeieHOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i25m2mjx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YzzaLl2+; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvUBHCDCn2eEEbTQP95QhVQ14sz7TjY0sauuvxmYJ7R6bkSJWa49+bii1S0ZPWnui0l3c2x4lnLdDZzv7MrPf45OKCHXC2niDDkf+g/3zNzdwED6QbAnHFIE5KwvPtHwGZn2Rcxw83VUoqgddGvWimn0TwIgEtV1D/9U1LmyOOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CdicWRl1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=abwVc9DP; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i25m2mjx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YzzaLl2+"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4FB6C1146DB7;
-	Wed, 31 Jul 2024 05:04:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CdicWRl1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="abwVc9DP"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C947313821F9;
+	Wed, 31 Jul 2024 05:04:29 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 31 Jul 2024 05:04:24 -0400
+  by compute4.internal (MEProxy); Wed, 31 Jul 2024 05:04:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722416664; x=1722503064; bh=y8OqF2LHwu
-	lpm+eaQXTkUJnbYjgMSbwWzLNA16va8Gk=; b=i25m2mjx9gnZatKM8262yHVXdQ
-	0Ed2jyTlW2sYokQN8Gs+e4opKBe/vJ1dt7oMbElS4B6fSjj8qWSQUD7aN6Z9ovdD
-	fmjvp1aAEv9K7AfiGyaWO/BH35lTclD5NU50QZsGq8eKoSxvS4KxngJiZXu+XmZs
-	AIetrBW/nfxdU7yCLXyd0H1zPtr3DAWIdc1PpyiRa0un9dKWZizyQNhdE7pkz4jg
-	vqLWwZsLTB1DqYxyF0yhLsFHciTkQYepXMZaywdgZXk2zsEZ4L4z1AjgEsxGC5px
-	YFJLpovbGWoClNQDEMAeXUBsIyTMLLv6Nmps3dGdroeX6T00cQv0yvolg4/g==
+	:subject:to:to; s=fm3; t=1722416669; x=1722503069; bh=k7CJiVlLN8
+	FSk8kZ/6NpKanAKHJ28+YFGGg5fY85hsg=; b=CdicWRl1veqm4BgeCiVcfDfit8
+	uTfxfUuHqHjaBWcxAbwFC4z9g/07U/ma6547J6Wk6Pik0iiZJGNRW06MGedHjDuX
+	3FeWMUVIzGr35FCVDFC7zkWenVSF/LSIdn9sB/u3Vp/eT65Lwz2DKUCLvyGE01/z
+	/wKf2AckgH7hREw+gt8juF/xWiAX3WWU05A6O8MsDPVbg1ExDMdyD5Zwha99DeGy
+	OlsllgTWi3BgcctgYaePUEMls2jzU5p8EoZ1Yit4QbU/C/RgBdzPF44O5Qi0Jvi3
+	ceGUKqlvlq9BsrfvHHJxwSywR01uAYYfcS3UmfpG86psmQy/WQWexWbN0tBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722416664; x=1722503064; bh=y8OqF2LHwulpm+eaQXTkUJnbYjgM
-	SbwWzLNA16va8Gk=; b=YzzaLl2+XQ5/yHn6OkocrE64Ax97sS7ZZxlYmXKyDf6e
-	YLXsB93jaN5cZlIqbKvr1nD6wyB2VS82ATVElFop//RlsQoS2kHx0U0akmwWScFh
-	sV5g/L877NSTAwDNWSS6Z8QFMSEZnvxvKFxHDj3flS0vz0H5h6/p+2qYMgKxFSxr
-	IQi0aJ40nbVYGkPO2KvbQWa103gZpfFVQZx3CM+eZFkmP2gJMpfTA1B7LPC9lCU8
-	DWBjg+qHchjotrsfW2RHlig8OnCIlHUY94vbAWJ7WAz9W4SANasAV9Wh6lz6onN1
-	rzvxPQI1O7jNyZR3WJmE26c9F0OeFb6yN42isGzbZg==
-X-ME-Sender: <xms:GP6pZo25dDBsqgD4OTvrZ5FrtLE_0U_eBZp5AgqARtqu7JVsh_8NXg>
-    <xme:GP6pZjHLWRy8nTLo2w0ozneRqnx5JId9urfhdqqu78e-4bHWUWh24Y1ArKNHHnqDD
-    TLJlYTRYIIz9voH6A>
-X-ME-Received: <xmr:GP6pZg7iVYWhjndhivP1B6HOqTumzLhLviUXV-GJFblMD3EMAzxpPvFtI8Bqts997j0eTJm4jQ6LXpI92bvyhLeJvx22yeWoNY97gb6I2yIgZ0GS>
+	fm3; t=1722416669; x=1722503069; bh=k7CJiVlLN8FSk8kZ/6NpKanAKHJ2
+	8+YFGGg5fY85hsg=; b=abwVc9DPOks1eWsO1TjxlvB/+Cj4lUI3Oh+fD+P8g8cJ
+	DosmmMOISCoGYB9QOdA4m12wH2us6ZDbJDcdvbHknUhlFwMyIz0z22Ok2ytLSILN
+	Gql1rQCASLZFer3BQHBf9SbgUMpbYP95SoVTHCVo2ohxwOisLiKU+ca2kgfoWwtP
+	4qwIq4fsNqsV9O5PPRmfKhYs3mOak5COoKeMFuHEY0q1j++Tu4J/ZjRa6CUletYO
+	z9hHg6Jsfue5jgjYH2w4bM88BstHzy+RVIFkZ+1MdqRncgP7c4X6Chl1WJYt2K+F
+	vt1MSfPnjjXT4EjAoaznRZvJFJs+nJiPUXNQfHAFaw==
+X-ME-Sender: <xms:Hf6pZlGAr_Uzz1IuyZpDfKNilORoNNHlaCYlihRhXiSUcHTW2t8S-w>
+    <xme:Hf6pZqWEpBmpD7QpaWgNRxsJz39shAKBJMNn9o617p81nm2ESMoaScoCT25C7iixy
+    lfKQ4ol0VV-6ofhOQ>
+X-ME-Received: <xmr:Hf6pZnIQtQ_Vlxr8QAUJrHvMihAEsODMZyRSiN6k475i8KlpGmZcb4ip-hNTsyF2l0yefmo0Zpbl8oEvWfnbj8rekvcUpexloc59QU-NWXAql9UX>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeeigdduvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,18 +56,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeeigdduvdcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:GP6pZh1Adbyo6Sr3vaqoyGKgiZB7o8Hw0QqgYHoIBFafy47p9wPKSA>
-    <xmx:GP6pZrEehhKoEYC1OFQUIg1PVdkVDDhqutRRKM-csHOiavCSQVdLzw>
-    <xmx:GP6pZq-zwKwXNRoC2qPyHOfnlyqA453wzK1jOgomaK8YDErwMIPW4Q>
-    <xmx:GP6pZglNbYmTfttxAib30sX6KWJHWmO78_-OopJQAHe2dGUJFshNkw>
-    <xmx:GP6pZg6cZ9bdSFdjtPZicj3Qvj_nrgG4A55k4mF2hdKGBoaUXSorurOH>
+X-ME-Proxy: <xmx:Hf6pZrHY2aaAhnLDpxJY55Jji_QmL4XqN2ul_4cgEA2nskV4riyOWQ>
+    <xmx:Hf6pZrUN4EDx2cicFFHIHu0BiGRTysO4gKrkqBCkwngVcWSK-blVqA>
+    <xmx:Hf6pZmMQeQW24lv5sYego9n8t5lCTdu_1eos5FNqQ5g-4e66gp6RPA>
+    <xmx:Hf6pZq19JoE53RL2VUhSpw7S8SilxM4WKpZe2tD6ffpkb5rN4FBCzg>
+    <xmx:Hf6pZtKbsfBsumsBwn7aPggggiCKff6yFUbao2lv73EZlrCPiHwq4atp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Jul 2024 05:04:22 -0400 (EDT)
+ 31 Jul 2024 05:04:28 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 92e31047 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 31 Jul 2024 09:02:53 +0000 (UTC)
-Date: Wed, 31 Jul 2024 11:04:21 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 7a47230c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 31 Jul 2024 09:02:58 +0000 (UTC)
+Date: Wed, 31 Jul 2024 11:04:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -75,8 +75,8 @@ Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Kyle Lippincott <spectral@google.com>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Josh Steadmon <steadmon@google.com>
-Subject: [RFC PATCH 2/3] Makefile: wire up the clar unit testing framework
-Message-ID: <5195d084d3c1bee76e7e424afec2c09bff8f5dde.1722415748.git.ps@pks.im>
+Subject: [RFC PATCH 3/3] t/unit-tests: convert strvec tests to use clar
+Message-ID: <faacf2a8467fbcc4c0fa0b508384e383486decb3.1722415748.git.ps@pks.im>
 References: <cover.1722415748.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,232 +85,431 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4RiojoL5UZdmZ/7G"
+	protocol="application/pgp-signature"; boundary="EKSq//cZ9afayZn6"
 Content-Disposition: inline
 In-Reply-To: <cover.1722415748.git.ps@pks.im>
 
 
---4RiojoL5UZdmZ/7G
+--EKSq//cZ9afayZn6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Wire up the clar unit testing framework by introducing a new
-"unit-tests" executable. In contrast to the existing framework, this
-will result in a single executable for all test suites. The ability to
-pick specific tests to execute is retained via functionality built into
-the clar itself.
+Convert the strvec tests to use the new clar unit testing framework.
+This is a first test balloon that demonstrates how the testing infra for
+clar-based tests looks like.
 
-Note that we need to be a bit careful about how we need to invalidate
-our Makefile rules. While we obviously have to regenerate the clar suite
-when our test suites change, we also have to invalidate it in case any
-of the test suites gets removed. We do so by using our typical pattern
-of creating a `GIT-TEST-SUITES` file that gets updated whenever the set
-of test suites changes, so that we can easily depend on that file.
+The tests are part of the "t/unit-tests/bin/unit-tests" binary. When
+running that binary, it generates TAP output:
 
-Another specialty is that we generate a "clar-decls.h" file. The test
-functions are neither static, nor do they have external declarations.
-This is because they are getting parsed via "generate.py", which then
-creates the external generations that get populated into an array. These
-declarations are only seen by the main function though.
+    # ./t/unit-tests/bin/unit-tests
+    TAP version 13
+    # start of suite 1: strvec
+    ok 1 - strvec::init
+    ok 2 - strvec::dynamic_init
+    ok 3 - strvec::clear
+    ok 4 - strvec::push
+    ok 5 - strvec::pushft_pushf
+    ok 6 - strvec::pushl
+    ok 7 - strvec::pushv
+    ok 8 - strvec::replace_at_head
+    ok 9 - strvec::replace_at_tail
+    ok 10 - strvec::replace_in_between
+    ok 11 - strvec::replace_with_substring
+    ok 12 - strvec::remove_at_head
+    ok 13 - strvec::remove_at_tail
+    ok 14 - strvec::remove_in_between
+    ok 15 - strvec::pop_empty_array
+    ok 16 - strvec::pop_non_empty_array
+    ok 17 - strvec::split_empty_string
+    ok 18 - strvec::split_single_item
+    ok 19 - strvec::split_multiple_items
+    ok 20 - strvec::split_whitespace_only
+    ok 21 - strvec::split_multiple_consecutive_whitespaces
+    ok 22 - strvec::detach
+    1..22
 
-The consequence is that we will get a bunch of "missing prototypes"
-errors from our compiler for each of these test functions. To fix those
-errors, we extract the `extern` declarations from "clar.suite" and put
-them into a standalone header that then gets included by each of our
-unit tests. This gets rid of compiler warnings for every function which
-has been extracted by "generate.py". More importantly though, it does
-_not_ get rid of warnings in case a function really isn't being used by
-anything. Thus, it would cause a compiler error if a function name was
-mistyped and thus not picked up by "generate.py".
+The binary also supports some parameters that allow us to run only a
+subset of unit tests or alter the output:
+
+    $ ./t/unit-tests/bin/unit-tests -h
+    Usage: ./t/unit-tests/bin/unit-tests [options]
+
+    Options:
+      -sname        Run only the suite with `name` (can go to individual te=
+st name)
+      -iname        Include the suite with `name`
+      -xname        Exclude the suite with `name`
+      -v            Increase verbosity (show suite names)
+      -q            Only report tests that had an error
+      -Q            Quit as soon as a test fails
+      -t            Display results in tap format
+      -l            Print suite names
+      -r[filename]  Write summary file (to the optional filename)
+
+Furthermore, running `make unit-tests` runs the binary along with all
+the other unit tests we have.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .gitignore               |  1 +
- Makefile                 | 34 ++++++++++++++++++++++++++++++----
- t/Makefile               |  1 +
- t/unit-tests/.gitignore  |  3 +++
- t/unit-tests/unit-test.c | 16 ++++++++++++++++
- t/unit-tests/unit-test.h |  3 +++
- 6 files changed, 54 insertions(+), 4 deletions(-)
- create mode 100644 t/unit-tests/unit-test.c
- create mode 100644 t/unit-tests/unit-test.h
+ Makefile                              |   2 +-
+ t/unit-tests/{t-strvec.c =3D> strvec.c} | 124 ++++++++++----------------
+ 2 files changed, 46 insertions(+), 80 deletions(-)
+ rename t/unit-tests/{t-strvec.c =3D> strvec.c} (54%)
 
-diff --git a/.gitignore b/.gitignore
-index 8caf3700c2..6687bd6db4 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -9,6 +9,7 @@
- /GIT-PYTHON-VARS
- /GIT-SCRIPT-DEFINES
- /GIT-SPATCH-DEFINES
-+/GIT-TEST-SUITES
- /GIT-USER-AGENT
- /GIT-VERSION-FILE
- /bin-wrappers/
 diff --git a/Makefile b/Makefile
-index d6479092a0..658acb4d48 100644
+index 658acb4d48..8ebcbdc95a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1332,6 +1332,11 @@ THIRD_PARTY_SOURCES +=3D compat/regex/%
+@@ -1332,6 +1332,7 @@ THIRD_PARTY_SOURCES +=3D compat/regex/%
  THIRD_PARTY_SOURCES +=3D sha1collisiondetection/%
  THIRD_PARTY_SOURCES +=3D sha1dc/%
 =20
-+UNIT_TESTS_PROG =3D $(UNIT_TEST_BIN)/unit-tests$(X)
-+UNIT_TESTS_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TESTS_SUITES))
-+UNIT_TESTS_OBJS +=3D $(UNIT_TEST_DIR)/clar/clar.o
-+UNIT_TESTS_OBJS +=3D $(UNIT_TEST_DIR)/unit-test.o
-+
- UNIT_TEST_PROGRAMS +=3D t-ctype
- UNIT_TEST_PROGRAMS +=3D t-example-decorate
- UNIT_TEST_PROGRAMS +=3D t-hash
-@@ -2711,6 +2716,7 @@ OBJECTS +=3D $(XDIFF_OBJS)
- OBJECTS +=3D $(FUZZ_OBJS)
- OBJECTS +=3D $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
- OBJECTS +=3D $(UNIT_TEST_OBJS)
-+OBJECTS +=3D $(UNIT_TESTS_OBJS)
-=20
- ifndef NO_CURL
- 	OBJECTS +=3D http.o http-walker.o remote-curl.o
-@@ -3213,7 +3219,7 @@ endif
-=20
- test_bindir_programs :=3D $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NE=
-ED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-=20
--all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS)
-+all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(UNIT_T=
-ESTS_PROG)
-=20
- bin-wrappers/%: wrap-for-bin.sh
- 	$(call mkdir_p_parent_template)
-@@ -3644,7 +3650,7 @@ endif
-=20
- artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS)=
- \
- 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
--		$(UNIT_TEST_PROGS) $(MOFILES)
-+		$(UNIT_TEST_PROGS) $(UNIT_TESTS_PROG) $(MOFILES)
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
- 		SHELL_PATH=3D'$(SHELL_PATH_SQ)' PERL_PATH=3D'$(PERL_PATH_SQ)'
- 	test -n "$(ARTIFACTS_DIRECTORY)"
-@@ -3700,6 +3706,7 @@ cocciclean:
-=20
- clean: profile-clean coverage-clean cocciclean
- 	$(RM) -r .build $(UNIT_TEST_BIN)
-+	$(RM) $(UNIT_TEST_DIR)/clar.suite $(UNIT_TEST_DIR)/.clarcache
- 	$(RM) po/git.pot po/git-core.pot
- 	$(RM) git.res
- 	$(RM) $(OBJECTS)
-@@ -3859,7 +3866,26 @@ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TES=
-T_DIR)/%.o \
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
-=20
-+GIT-TEST-SUITES: FORCE
-+	@FLAGS=3D'$(UNIT_TESTS_SUITES)'; \
-+	    if test x"$$FLAGS" !=3D x"`cat GIT-TEST-SUITES 2>/dev/null`" ; then \
-+		echo >&2 "    * new test suites"; \
-+		echo "$$FLAGS" >GIT-TEST-SUITES; \
-+		rm -f $(UNIT_TESTS_DIR)/.clarcache; \
-+            fi
-+
-+$(UNIT_TEST_DIR)/clar.suite: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(UNIT_TEST=
-S_SUITES)) GIT-TEST-SUITES
-+	$(QUIET_GEN)$(UNIT_TEST_DIR)/clar/generate.py $(UNIT_TEST_DIR) >/dev/null
-+	@touch $@
-+$(UNIT_TEST_DIR)/clar-decls.h: $(UNIT_TEST_DIR)/clar.suite
-+	$(QUIET_GEN)grep '^extern void' $^ >$@
-+$(UNIT_TESTS_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
-+$(UNIT_TESTS_OBJS): EXTRA_CPPFLAGS =3D -I$(UNIT_TEST_DIR) -I$(UNIT_TEST_DI=
-R)/clar
-+$(UNIT_TESTS_PROG): $(UNIT_TEST_DIR)/clar.suite $(UNIT_TESTS_OBJS) $(GITLI=
-BS) GIT-LDFLAGS
-+	$(call mkdir_p_parent_template)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(=
-LIBS)
-+
- .PHONY: build-unit-tests unit-tests
--build-unit-tests: $(UNIT_TEST_PROGS)
--unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
-+build-unit-tests: $(UNIT_TEST_PROGS) $(UNIT_TESTS_PROG)
-+unit-tests: $(UNIT_TEST_PROGS) $(UNIT_TESTS_PROG) t/helper/test-tool$X
- 	$(MAKE) -C t/ unit-tests
-diff --git a/t/Makefile b/t/Makefile
-index 4c30e7c06f..55f740ae29 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -48,6 +48,7 @@ CHAINLINTTESTS =3D $(sort $(patsubst chainlint/%.test,%,$=
-(wildcard chainlint/*.tes
- CHAINLINT =3D '$(PERL_PATH_SQ)' chainlint.pl
- UNIT_TEST_SOURCES =3D $(wildcard unit-tests/t-*.c)
- UNIT_TEST_PROGRAMS =3D $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UN=
-IT_TEST_SOURCES))
-+UNIT_TEST_PROGRAMS +=3D unit-tests/bin/unit-tests$(X)
- UNIT_TESTS =3D $(sort $(UNIT_TEST_PROGRAMS))
- UNIT_TESTS_NO_DIR =3D $(notdir $(UNIT_TESTS))
-=20
-diff --git a/t/unit-tests/.gitignore b/t/unit-tests/.gitignore
-index 5e56e040ec..b8d46f7bb1 100644
---- a/t/unit-tests/.gitignore
-+++ b/t/unit-tests/.gitignore
-@@ -1 +1,4 @@
- /bin
-+/.clarcache
-+/clar.suite
-+/clar-decls.h
-diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
-new file mode 100644
-index 0000000000..d7eecc384c
---- /dev/null
-+++ b/t/unit-tests/unit-test.c
-@@ -0,0 +1,16 @@
++UNIT_TESTS_SUITES +=3D strvec
+ UNIT_TESTS_PROG =3D $(UNIT_TEST_BIN)/unit-tests$(X)
+ UNIT_TESTS_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TESTS_SUITES))
+ UNIT_TESTS_OBJS +=3D $(UNIT_TEST_DIR)/clar/clar.o
+@@ -1348,7 +1349,6 @@ UNIT_TEST_PROGRAMS +=3D t-reftable-basics
+ UNIT_TEST_PROGRAMS +=3D t-reftable-record
+ UNIT_TEST_PROGRAMS +=3D t-strbuf
+ UNIT_TEST_PROGRAMS +=3D t-strcmp-offset
+-UNIT_TEST_PROGRAMS +=3D t-strvec
+ UNIT_TEST_PROGRAMS +=3D t-trailer
+ UNIT_TEST_PROGS =3D $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS=
+))
+ UNIT_TEST_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+diff --git a/t/unit-tests/t-strvec.c b/t/unit-tests/strvec.c
+similarity index 54%
+rename from t/unit-tests/t-strvec.c
+rename to t/unit-tests/strvec.c
+index d4615ab06d..5edb1ae326 100644
+--- a/t/unit-tests/t-strvec.c
++++ b/t/unit-tests/strvec.c
+@@ -1,11 +1,11 @@
+-#include "test-lib.h"
 +#include "unit-test.h"
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	const char **args;
-+	int ret;
-+
-+	/* Append the "-t" flag such that the tests generate TAP output. */
-+	DUP_ARRAY(args, argv, argc + 1);
-+	args[argc++] =3D "-t";
-+
-+	ret =3D clar_test(argc, (char **) args);
-+
-+	free(args);
-+	return ret;
-+}
-diff --git a/t/unit-tests/unit-test.h b/t/unit-tests/unit-test.h
-new file mode 100644
-index 0000000000..99d59df1b0
---- /dev/null
-+++ b/t/unit-tests/unit-test.h
-@@ -0,0 +1,3 @@
-+#include "git-compat-util.h"
-+#include "clar.h"
-+#include "clar-decls.h"
+ #include "strbuf.h"
+ #include "strvec.h"
+=20
+ #define check_strvec(vec, ...) \
+-	check_strvec_loc(TEST_LOCATION(), vec, __VA_ARGS__)
++	check_strvec_loc(__FILE__, __func__, __LINE__, vec, __VA_ARGS__)
+ LAST_ARG_MUST_BE_NULL
+-static void check_strvec_loc(const char *loc, struct strvec *vec, ...)
++static void check_strvec_loc(const char *file, const char *func, size_t li=
+ne, struct strvec *vec, ...)
+ {
+ 	va_list ap;
+ 	size_t nr =3D 0;
+@@ -16,54 +16,47 @@ static void check_strvec_loc(const char *loc, struct st=
+rvec *vec, ...)
+ 		if (!str)
+ 			break;
+=20
+-		if (!check_uint(vec->nr, >, nr) ||
+-		    !check_uint(vec->alloc, >, nr) ||
+-		    !check_str(vec->v[nr], str)) {
+-			struct strbuf msg =3D STRBUF_INIT;
+-			strbuf_addf(&msg, "strvec index %"PRIuMAX, (uintmax_t) nr);
+-			test_assert(loc, msg.buf, 0);
+-			strbuf_release(&msg);
+-			va_end(ap);
+-			return;
+-		}
++		clar__assert(vec->nr > nr, file, func, line, "Vector size too small", NU=
+LL, 1);
++		clar__assert(vec->alloc > nr, file, func, line, "Vector allocation too s=
+mall", NULL, 1);
++		cl_assert_equal_s(vec->v[nr], str);
+=20
+ 		nr++;
+ 	}
+ 	va_end(ap);
+=20
+-	check_uint(vec->nr, =3D=3D, nr);
+-	check_uint(vec->alloc, >=3D, nr);
+-	check_pointer_eq(vec->v[nr], NULL);
++	cl_assert(vec->nr =3D=3D nr);
++	cl_assert(vec->alloc >=3D nr);
++	cl_assert_equal_p(vec->v[nr], NULL);
+ }
+=20
+-static void t_static_init(void)
++void test_strvec__init(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+-	check_pointer_eq(vec.v, empty_strvec);
+-	check_uint(vec.nr, =3D=3D, 0);
+-	check_uint(vec.alloc, =3D=3D, 0);
++	cl_assert_equal_p(vec.v, empty_strvec);
++	cl_assert(vec.nr =3D=3D 0);
++	cl_assert(vec.alloc =3D=3D 0);
+ }
+=20
+-static void t_dynamic_init(void)
++void test_strvec__dynamic_init(void)
+ {
+ 	struct strvec vec;
+ 	strvec_init(&vec);
+-	check_pointer_eq(vec.v, empty_strvec);
+-	check_uint(vec.nr, =3D=3D, 0);
+-	check_uint(vec.alloc, =3D=3D, 0);
++	cl_assert_equal_p(vec.v, empty_strvec);
++	cl_assert(vec.nr =3D=3D 0);
++	cl_assert(vec.alloc =3D=3D 0);
+ }
+=20
+-static void t_clear(void)
++void test_strvec__clear(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_push(&vec, "foo");
+ 	strvec_clear(&vec);
+-	check_pointer_eq(vec.v, empty_strvec);
+-	check_uint(vec.nr, =3D=3D, 0);
+-	check_uint(vec.alloc, =3D=3D, 0);
++	cl_assert_equal_p(vec.v, empty_strvec);
++	cl_assert(vec.nr =3D=3D 0);
++	cl_assert(vec.alloc =3D=3D 0);
+ }
+=20
+-static void t_push(void)
++void test_strvec__push(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+=20
+@@ -76,7 +69,7 @@ static void t_push(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_pushf(void)
++void test_strvec__pushft_pushf(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushf(&vec, "foo: %d", 1);
+@@ -84,7 +77,7 @@ static void t_pushf(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_pushl(void)
++void test_strvec__pushl(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -92,7 +85,7 @@ static void t_pushl(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_pushv(void)
++void test_strvec__pushv(void)
+ {
+ 	const char *strings[] =3D {
+ 		"foo", "bar", "baz", NULL,
+@@ -105,7 +98,7 @@ static void t_pushv(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_replace_at_head(void)
++void test_strvec__replace_at_head(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -114,7 +107,7 @@ static void t_replace_at_head(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_replace_at_tail(void)
++void test_strvec__replace_at_tail(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -123,7 +116,7 @@ static void t_replace_at_tail(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_replace_in_between(void)
++void test_strvec__replace_in_between(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -132,7 +125,7 @@ static void t_replace_in_between(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_replace_with_substring(void)
++void test_strvec__replace_with_substring(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", NULL);
+@@ -141,7 +134,7 @@ static void t_replace_with_substring(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_remove_at_head(void)
++void test_strvec__remove_at_head(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -150,7 +143,7 @@ static void t_remove_at_head(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_remove_at_tail(void)
++void test_strvec__remove_at_tail(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -159,7 +152,7 @@ static void t_remove_at_tail(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_remove_in_between(void)
++void test_strvec__remove_in_between(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -168,7 +161,7 @@ static void t_remove_in_between(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_pop_empty_array(void)
++void test_strvec__pop_empty_array(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pop(&vec);
+@@ -176,7 +169,7 @@ static void t_pop_empty_array(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_pop_non_empty_array(void)
++void test_strvec__pop_non_empty_array(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+@@ -185,7 +178,7 @@ static void t_pop_non_empty_array(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_split_empty_string(void)
++void test_strvec__split_empty_string(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_split(&vec, "");
+@@ -193,7 +186,7 @@ static void t_split_empty_string(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_split_single_item(void)
++void test_strvec__split_single_item(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_split(&vec, "foo");
+@@ -201,7 +194,7 @@ static void t_split_single_item(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_split_multiple_items(void)
++void test_strvec__split_multiple_items(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_split(&vec, "foo bar baz");
+@@ -209,7 +202,7 @@ static void t_split_multiple_items(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_split_whitespace_only(void)
++void test_strvec__split_whitespace_only(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_split(&vec, " \t\n");
+@@ -217,7 +210,7 @@ static void t_split_whitespace_only(void)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_split_multiple_consecutive_whitespaces(void)
++void test_strvec__split_multiple_consecutive_whitespaces(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	strvec_split(&vec, "foo\n\t bar");
+@@ -225,7 +218,7 @@ static void t_split_multiple_consecutive_whitespaces(vo=
+id)
+ 	strvec_clear(&vec);
+ }
+=20
+-static void t_detach(void)
++void test_strvec__detach(void)
+ {
+ 	struct strvec vec =3D STRVEC_INIT;
+ 	const char **detached;
+@@ -233,40 +226,13 @@ static void t_detach(void)
+ 	strvec_push(&vec, "foo");
+=20
+ 	detached =3D strvec_detach(&vec);
+-	check_str(detached[0], "foo");
+-	check_pointer_eq(detached[1], NULL);
++	cl_assert_equal_s(detached[0], "foo");
++	cl_assert_equal_p(detached[1], NULL);
+=20
+-	check_pointer_eq(vec.v, empty_strvec);
+-	check_uint(vec.nr, =3D=3D, 0);
+-	check_uint(vec.alloc, =3D=3D, 0);
++	cl_assert_equal_p(vec.v, empty_strvec);
++	cl_assert(vec.nr =3D=3D 0);
++	cl_assert(vec.alloc =3D=3D 0);
+=20
+ 	free((char *) detached[0]);
+ 	free(detached);
+ }
+-
+-int cmd_main(int argc, const char **argv)
+-{
+-	TEST(t_static_init(), "static initialization");
+-	TEST(t_dynamic_init(), "dynamic initialization");
+-	TEST(t_clear(), "clear");
+-	TEST(t_push(), "push");
+-	TEST(t_pushf(), "pushf");
+-	TEST(t_pushl(), "pushl");
+-	TEST(t_pushv(), "pushv");
+-	TEST(t_replace_at_head(), "replace at head");
+-	TEST(t_replace_in_between(), "replace in between");
+-	TEST(t_replace_at_tail(), "replace at tail");
+-	TEST(t_replace_with_substring(), "replace with substring");
+-	TEST(t_remove_at_head(), "remove at head");
+-	TEST(t_remove_in_between(), "remove in between");
+-	TEST(t_remove_at_tail(), "remove at tail");
+-	TEST(t_pop_empty_array(), "pop with empty array");
+-	TEST(t_pop_non_empty_array(), "pop with non-empty array");
+-	TEST(t_split_empty_string(), "split empty string");
+-	TEST(t_split_single_item(), "split single item");
+-	TEST(t_split_multiple_items(), "split multiple items");
+-	TEST(t_split_whitespace_only(), "split whitespace only");
+-	TEST(t_split_multiple_consecutive_whitespaces(), "split multiple consecut=
+ive whitespaces");
+-	TEST(t_detach(), "detach");
+-	return test_done();
+-}
 --=20
 2.46.0.dirty
 
 
---4RiojoL5UZdmZ/7G
+--EKSq//cZ9afayZn6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmap/hQACgkQVbJhu7ck
-PpS1Vw//UFPoOK15LVps5LywUNLz+URl9Eyh883mvsLvOiXakKGhvZ5wsg6B9msf
-Ufm4lygIrvEChULb2LPKxp/34UXq1/1FXUXoLu6FZFuapGSu3dudoyVh0WR5DOcV
-L/lcPEpnztp03v9Kf1W8xupJNK4lRmmGnmuQ3CXoghQDKL7c4oAwxGEBCPfqM3o3
-kXWobYpumu+qM06XNWBTL0u5WGnfL+oPLepFmovPW3pqeJZmBifBIteQfb8zSUCP
-6CXVdi9brdb/UB91Czc8iThjrGtQrbv5GK1MJdw7OWhrZezsH9Old8TgbxGdyqn8
-vREP6QAARFvFDyDvG1MG1BF+Wz4t5kDuHZ2fp+HFFDHp7XyW/UD01njKUNzdQy/3
-A7ooHNy25+qIY4VF7Xw9xycAENyIbY2EaEObQK5x65DPJifdV/i6FQokvflJtNAC
-mWszE/RLF9jiATPBHqhu59h4TChmhzXEJSPe9nWhtQAIlFhHMmABahv2tQiF339E
-lPzJ5ZZtdNpCB41tOazTQJ9uqiq7bz60SpYt2Y4zO202uEXWWEULj9KAhEhD6BHU
-Dx7vWLNXIFH03mAIx68dw628oKRVmwxx4zQcczkWM1zGSCIGUNTkzIK1hK8ojmsK
-F3FDgvSx0xpmnHGQWSL1LfUY+aNfAzz6HuDE2exq0nIMmT99XNY=
-=GclD
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmap/hgACgkQVbJhu7ck
+PpRq2A//YQO2y6kD66noDRdDpfllD2ZX0TLW0xfG4XjR+99xYqk9kBAvbhqYlVHF
+UGK40xjtJNVQgZOVdU21RvUChNHpJm5gCt1u42SoHa81x/cU8RY/KaI7AOGmNER5
+rrgdK5h9xscLNMFvTVWjhViIGtNVMov5PS2jyBJ8xpyPIxiVF8CiOF3rxxBP0fqV
+KocXTNTRue3irMzkprtZm2arL9ESudswR/fpELwxsBHSMtGuBH1V6bX+UqQEBA2c
+cZqEM5h58uYVvS3p23TI+dKO3GboXzCI7Ud2gnNagq5c6P36hgS2/v6ZdKUKzJo3
+GAIRsDHctjoXmp1tcKFYzsGMFPNtcTLOmQrHLXIxx1Mtr5NkHRDUEiPcGi1rZMj1
+zjV+AdD6AEj3msbAM8XNYIY/IgoDK8JepXQ1Am981ehRoA/Hd358SHYse3V93DBs
+pJvjJdqK8jpM4EL/u0c2Uz1eW0OlYS2XXmfHVZ51DboIkitbQfPYaHJZPGcgYR4i
+M4YTKif6KXjqbfY5jTrlLXmPpg/4v3gWW/65CWNpYYeE9PQVF1tRv/IW49tEsJY4
+rgEhLjO/6BGLqEHb4QtHphhP7GucxTWs396Gg6HIP2mJa2TDowaGTMZtXcJfBZ/Z
+hd40clAuAHJKE6U3A5Lk0K8SeibLitX1Ub3Kj86UI8rP+YB7CjQ=
+=Bsoi
 -----END PGP SIGNATURE-----
 
---4RiojoL5UZdmZ/7G--
+--EKSq//cZ9afayZn6--
