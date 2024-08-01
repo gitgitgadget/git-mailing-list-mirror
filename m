@@ -1,179 +1,133 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA97861FD7
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 11:05:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F6816DC03
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 11:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722510344; cv=none; b=rLw0pn/dDqDkt8QzU0xsFAEFMakf1cda0WagTQ9prSK8kXiXMjM+bg08lo/AvBxv7aoXx2g4M6CW6IPzy5dYYzndzZOX50lFp4BRGA3bbDJktINBGhJuiTi7C1EjMibgyUpgFgTbYERVjysWLYik8CXGUzhwTVNmpEOwvTxc7kk=
+	t=1722510446; cv=none; b=H4syUR5hjuNDc5bSQG6cZVhGuZJEPm3DF9MtwS1icDuF+z4prBHK8Xn3OHgFpuCJSyRi6/dEoiI81+9EPfP6XToBSaR+D6vIwu9TtK0KGErkyLWbajGMccUcXRfJxlunB3rmeLPNyQhMek1TvfV6p1VCqbxuaW6ct7LX4huahhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722510344; c=relaxed/simple;
-	bh=5/4H8T14qF00xhOPgedV8y88tKFC4uefNxD2j1/X0fM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/EvsaWVRzBvtNLM8ubYnckXkSLJZGEWamugAWSeJq5dE9PTxfbT8mRbnv/u0TGFqZXG3Bnr2QxyS21kbA0SDltmfdRUPk6UT8jygMxYHB4MgID3D1SeoPq8XHhj5uMYfHSP7Pd5azIh2DjaQVbmHJ+TqTrgdeQpWy+82P6cKJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uk2aKgPb; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uk2aKgPb"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc611a0f8cso50175025ad.2
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 04:05:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722510342; x=1723115142; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k0CXY29J8zlZlC6l5RNBhTYRF6wdOz523B8Qj+iJiKc=;
-        b=Uk2aKgPbsUhs33ot/N/kDpfMc4ryQbrdh8v4oXnkI1cyRznrAOtpirdIGEbUe5rryR
-         9HLFhdVvgc9ClfByoLR9REKAETqUcdyHNJKv243XiqFa0ScxmwwucW/p97kgPjyknC00
-         1/8bxnlNGkMAH25QfEMbSoUoBAJX9oN/wXo7uXdq06c9AvTi2Kg41jQs4t6wGx3BAfnB
-         /ZFXoNgMxd8i8HEe5QzqvO33Ow0AwOaP61iEO+8jK27gFvP2p6OzZxT1VX3jDMCvr5BA
-         pCAHXhRtL5uH90VaOM5sqFcxOkTQ7HJGAS/pZb1s5u/Oql/alSkjDtxKnpZ1qUv9kqBO
-         gLBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722510342; x=1723115142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k0CXY29J8zlZlC6l5RNBhTYRF6wdOz523B8Qj+iJiKc=;
-        b=fTeR8HrgEXxlUbXaFlJc1fxYpyll1w/sxp3fW7DhfFeejd1XmgwGdhO/94tm+b4VM8
-         +eElDcy9J0QqMykFAN50iBxXQiKOZjQQilHt6N0MwLxm2CzuaoVko9OJhSwS7faBk2xa
-         Ff00+t+vQwJ3KXB0jGiHnAuaoTKY5OXnAgQgu5We0XFGN/ov9i1KuUXzURPx8orn3T0c
-         +NXXB+j7JAcq+eX5bYFQAWDyKAvtIbKmM2xe36wdEGPSHRzUu3HGO55ZSC/RV4QL7rcC
-         AfcVaOcjCsfODMUpbZPqVtLsAXPkBn3FA6Gi5DbIfvBl33X50U1+iuSMgfG5x1TSUp1+
-         2U6Q==
-X-Gm-Message-State: AOJu0YybX26d4GqZ39564XQfOYl9ItJwbtIx0pCBfpZ6zu2P3rugoN4Z
-	ZtH+ZbyL+OpkT9NahZGgeDiBpDTNPAzGKm3h2NKbkhj6Ci3mUkikP7I1Rg==
-X-Google-Smtp-Source: AGHT+IFpIPipJPTYURs7rHvhEDTvbw/EMSHQYrRUH4aS1CX0Rv03fS+fZ1jzPwaImltFrx8y6954pQ==
-X-Received: by 2002:a17:903:32d1:b0:1fd:aa8d:ace5 with SMTP id d9443c01a7336-1ff4ce8b6f1mr27099305ad.23.1722510341638;
-        Thu, 01 Aug 2024 04:05:41 -0700 (PDT)
-Received: from Ubuntu.. ([106.194.76.199])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fed7edd90dsm136663985ad.161.2024.08.01.04.05.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 04:05:41 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 7/7] t-reftable-pq: add tests for merged_iter_pqueue_top()
-Date: Thu,  1 Aug 2024 16:29:48 +0530
-Message-ID: <20240801110453.5087-8-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240801110453.5087-1-chandrapratap3519@gmail.com>
-References: <20240725093855.4201-1-chandrapratap3519@gmail.com>
- <20240801110453.5087-1-chandrapratap3519@gmail.com>
+	s=arc-20240116; t=1722510446; c=relaxed/simple;
+	bh=gLikl4kAKocWT0r5w2rlnmfXxODDcs9dtPFVcdmM+Yg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rKjXA38DWw+Q0xi02/gNLex7q7uyfF/5RKwSqHM2ISbiBli5W9bPERjtNVYMJ0maspfwW0Hp6FniZaaSlVadJh5AGOStVnqc4Ww4cRvgqUJNevT6V9Ko2QDl8Z18Yna6DvL8XCg+5PoMu0LMn7uppcjUrzFD7RnWuCx1D0PivkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19796 invoked by uid 109); 1 Aug 2024 11:07:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Aug 2024 11:07:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31239 invoked by uid 111); 1 Aug 2024 11:07:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Aug 2024 07:07:22 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 1 Aug 2024 07:07:22 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 19/19] midx: implement support for writing incremental
+ MIDX chains
+Message-ID: <20240801110722.GR1159276@coredump.intra.peff.net>
+References: <cover.1717715060.git.me@ttaylorr.com>
+ <cover.1721250704.git.me@ttaylorr.com>
+ <e2b5961b4556122e594b657efe2f1d3337368cdd.1721250704.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e2b5961b4556122e594b657efe2f1d3337368cdd.1721250704.git.me@ttaylorr.com>
 
-merged_iter_pqueue_top() as defined by reftable/pq.{c, h} returns
-the element at the top of a priority-queue's heap without removing
-it. Since there are no tests for this function in the existing
-setup, add tests for the same.
+On Wed, Jul 17, 2024 at 05:12:53PM -0400, Taylor Blau wrote:
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-pq.c | 49 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+> The implementation for doing so is relatively straightforward, and boils
+> down to a handful of different kinds of changes implemented in this
+> patch:
+> 
+>   - The `compute_sorted_entries()` function is taught to reject objects
+>     which appear in any existing MIDX layer.
 
-diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index 70ff89507d..039bd0f1f9 100644
---- a/t/unit-tests/t-reftable-pq.c
-+++ b/t/unit-tests/t-reftable-pq.c
-@@ -18,6 +18,11 @@ static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
- 	}
- }
- 
-+static int pq_entry_equal(struct pq_entry *a, struct pq_entry *b)
-+{
-+	return !reftable_record_cmp(a->rec, b->rec) && (a->index == b->index);
-+}
-+
- static void t_pq_record(void)
- {
- 	struct merged_iter_pqueue pq = { 0 };
-@@ -42,9 +47,11 @@ static void t_pq_record(void)
- 	} while (i != 1);
- 
- 	while (!merged_iter_pqueue_is_empty(pq)) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		if (last)
- 			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
-@@ -81,9 +88,11 @@ static void t_pq_index(void)
- 	} while (i != 1);
- 
- 	for (i = N - 1; i > 0; i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
- 		merged_iter_pqueue_check(&pq);
- 
-+		check(pq_entry_equal(&top, &e));
- 		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
- 		check_int(e.index, ==, i);
- 		if (last)
-@@ -94,10 +103,50 @@ static void t_pq_index(void)
- 	merged_iter_pqueue_release(&pq);
- }
- 
-+static void t_merged_iter_pqueue_top(void)
-+{
-+	struct merged_iter_pqueue pq = { 0 };
-+	struct reftable_record recs[13];
-+	size_t N = ARRAY_SIZE(recs), i;
-+
-+	for (i = 0; i < N; i++) {
-+		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
-+		recs[i].u.ref.refname = (char *) "refs/heads/master";
-+	}
-+
-+	i = 1;
-+	do {
-+		struct pq_entry e = {
-+			.rec = &recs[i],
-+			.index = i,
-+		};
-+
-+		merged_iter_pqueue_add(&pq, &e);
-+		merged_iter_pqueue_check(&pq);
-+		i = (i * 7) % N;
-+	} while (i != 1);
-+
-+	for (i = N - 1; i > 0; i--) {
-+		struct pq_entry top = merged_iter_pqueue_top(pq);
-+		struct pq_entry e = merged_iter_pqueue_remove(&pq);
-+
-+		merged_iter_pqueue_check(&pq);
-+		check(pq_entry_equal(&top, &e));
-+		check(reftable_record_equal(top.rec, &recs[i], GIT_SHA1_RAWSZ));
-+		for (size_t j = 0; i < pq.len; j++) {
-+			check(pq_less(&top, &pq.heap[j]));
-+			check_int(top.index, >, j);
-+		}
-+	}
-+
-+	merged_iter_pqueue_release(&pq);
-+}
-+
- int cmd_main(int argc, const char *argv[])
- {
- 	TEST(t_pq_record(), "pq works with record-based comparison");
- 	TEST(t_pq_index(), "pq works with index-based comparison");
-+	TEST(t_merged_iter_pqueue_top(), "merged_iter_pqueue_top works");
- 
- 	return test_done();
- }
--- 
-2.45.GIT
+OK, I think this is one part I was looking for earlier but didn't see.
+The implementation looks pretty easy (we can always ask about just the
+earlier layers by feeding the base_midx pointer to midx_has_oid(), etc).
 
+>   - Functions like `write_midx_revindex()` are adjusted to write
+>     pack_order values which are offset by the number of objects in the
+>     base MIDX layer.
+> 
+>   - The end of `write_midx_internal()` is adjusted to move
+>     non-incremental MIDX files when necessary (i.e. when creating an
+>     incremental chain with an existing non-incremental MIDX in the
+>     repository).
+> 
+> There are a handful of other changes that are introduced, like new
+> functions to clear incremental MIDX files that are unrelated to the
+> current chain (using the same "keep_hash" mechanism as in the
+> non-incremental case).
+
+That all makes sense. I wondered a bit about selection of packs, size of
+incremental, etc. We'd probably want a geometric-ish progression, just
+like with packs, to balance cost of generation versus cost of lookups.
+But I guess we get that for free to some degree with "repack
+--geometric", assuming that our incremental midx is just covering the
+new packfiles.
+
+> The tests explicitly exercising the new incremental MIDX feature are
+> relatively limited for two reasons:
+> 
+>   1. Most of the "interesting" behavior is already thoroughly covered in
+>      t5319-multi-pack-index.sh, which handles the core logic of reading
+>      objects through a MIDX.
+> 
+>      The new tests in t5334-incremental-multi-pack-index.sh are mostly
+>      focused on creating and destroying incremental MIDXs, as well as
+>      stitching their results together across layers.
+
+Do you mean here that t5319 will get coverage when
+GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL is set? In the long run, I
+wonder if we should pull t5319's tests into lib-midx.sh and run them in
+incremental and non-incremental modes.
+
+>   2. A new GIT_TEST environment variable is added called
+>      "GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL", which modifies the
+>      entire test suite to write incremental MIDXs after repacking when
+>      combined with the "GIT_TEST_MULTI_PACK_INDEX" variable.
+> 
+>      This exercises the long tail of other interesting behavior that is
+>      defined implicitly throughout the rest of the CI suite. It is
+>      likewise added to the linux-TEST-vars job.
+
+Makes sense.
+
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 8f34f05087..be1188e736 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -7,6 +7,9 @@ test_description='git repack works correctly'
+>  . "${TEST_DIRECTORY}/lib-midx.sh"
+>  . "${TEST_DIRECTORY}/lib-terminal.sh"
+>  
+> +GIT_TEST_MULTI_PACK_INDEX=0
+> +GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
+> [...]
+> -		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Adl --write-bitmap-index 2>err &&
+> +		git repack -Adl --write-bitmap-index 2>err &&
+
+This pulls the GIT_TEST_MULTI_PACK_INDEX=0 out of the individual tests
+and sets it for the whole file. Are we losing some coverage for the
+other tests? I doubt it's that big a deal either way (and I can
+certainly see the argument that t7700, which is concerned with the
+details of repacking, should be in control of the details of midx
+generation). But I wonder if just setting WRITE_INCREMENTAL=0 would be
+enough?
+
+The rest of the changes all looked pretty reasonable, though again, it's
+easy to review code you wrote and say "that looks good" but not realize
+any gotchas that both of us missed.
+
+-Peff
