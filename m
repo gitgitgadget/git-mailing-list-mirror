@@ -1,66 +1,67 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EE7140E5F
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 19:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1474E14A0A8
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 20:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722542082; cv=none; b=D04M3iysBMhu8Uaot4JINm8bb6UYFnH1bSN1YUnBMjaidTrgbTXmnvA6SSSx6cNkpHweUsVywfDovSn1L/n6OSRO11mjLFFiTsCsbxLF7tWAFfbIQtiJ6K8Z3q2vu+/Hh6txuAUmr7Dnqmgv3CMpNGNyiPv3hRz6vE5OKTPYKlE=
+	t=1722542466; cv=none; b=BqS8/AH3YRZfF9LYnej0J0lZZzMdebFzwA/mtOnO70pGiO4GtwQle43yaaiCNGY+93nFsXr94TIDe2FvXNo6yQs3Ste9McYv5gC3OGVt58QgI+BPYtSQbbvtR0W/DMQ2CmMAWQtDHliqVpA/D9pWDgVOfFaNI/+Mz0BPk+5LmH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722542082; c=relaxed/simple;
-	bh=FV6U4F5YVwQbBKgzm6PHH5AWhe4XkYAQnsyDk3epM3A=;
+	s=arc-20240116; t=1722542466; c=relaxed/simple;
+	bh=dLh5X/J8Prl6MuFrxFRKcjJkrZO2NUJdWbrMyax6UrQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ECnKlaaLDoFYKr6D2PJ+u14Am0h17JG0QTv7RXgbHSoz3hdY12W8b9AA4c+U3VTXfgXacxLoz7ZtC7xkKZtMm8qKo4JKBgtN0Latu8iGtbx6t96jcNeeWg0T1xy52gTJqsKXiEPx4CmAehmikZxbsBXwW88inBxOvNQ8bCAABsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Sg04TKME; arc=none smtp.client-ip=209.85.128.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=lYNhQJckt3F8GQA1uqVO/rjc/t8vvcMr046Z5s9PGC5FkmG4l2QKrqpbLnwLdtysOOVuwscNSTpCKnxuQh8pyybotFGAiTkIvp5V6Wla1ZlSs+dCOfIX2SNX2RwCAhZgDmwZR9VLiRD4P/Hi3GeU80iqGO3j23FvtLn1+hXAewk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=qWp7B7Tx; arc=none smtp.client-ip=209.85.160.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Sg04TKME"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6694b50a937so71509757b3.0
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 12:54:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="qWp7B7Tx"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-44fe28eb1bfso40649261cf.0
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 13:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722542080; x=1723146880; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722542463; x=1723147263; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JcnYZ1Z0TOQ/Ml6G0Bx1/NfOe7Y6xGiTzhii0CFPpZY=;
-        b=Sg04TKMEdrel/B+CD06brzPekinTW0hz58Tt7/2jOZysIkbGR1rqkGXl31n7fz36Ec
-         8puW/8Zo+0MErmyDdNTye3k0+O3jOsFgh8eGOIcVAazyjfaHL2JRvflmn03cmRYVQDnY
-         HNqieIqR0VIGaJEUcbUHTjni6Fyn321Jx76eO2Hy83nK6lVq9wirG0GM3+XDb3ITruln
-         oKBsYlbVEB292iPS1EOaD9sVXBE/sy+ALLf2PEf/ykgub3hoUHiAMwSYX/9rcqHH+HeN
-         PlDRZOjkGYOED2oL2IgMnM2pynlj/Ni+m+uCAKwF9M5LIZj9m6hVMq+g5z1zV3yB1Le6
-         IDsA==
+        bh=vMnUY7dP/R83FAog27Ym2lLl6BbzuwWVdehc1vSN+V0=;
+        b=qWp7B7Tx9LxaOdbPKfDpX3AuR2Ui9gSiy+sGby1Nag069tlZ+b4ZrmmS3vX/96LgrP
+         l0BWkyJxNzQcQpTnfjbq2tEnecNWtpR17cCqEGOhj3C7rT5CwXi3CB+YpsaeDB5nWI9g
+         gCICJmlDRHMarCPOKyA7BSjRuPpqXz4Dqt6Tiz1puW2/OU2TEPcXg6f7hKkfnzi55Qba
+         6aQNJQBrs+i8KxIjbHgiw0iOeLmpVba0DXa8I9pCXbCsjg941UdDxLkepe4sP21XGL1E
+         4R8NBqhWI6HIfHHl2fy8wwSBlER4x43nRbACGQbntHuwQP55tqMEojKnDQzFT1jZ0TxG
+         3RpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722542080; x=1723146880;
+        d=1e100.net; s=20230601; t=1722542463; x=1723147263;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JcnYZ1Z0TOQ/Ml6G0Bx1/NfOe7Y6xGiTzhii0CFPpZY=;
-        b=nYEEkAZV2Tbx7n4WbPT6NTb9X7l45jIqytAlxu1raEVilc2etSBhNrUyd6vX4laqYS
-         ARXXXc3YcgzZwYZxRm8GmOcWmbib2Q6rnmWokj2MVEhA/TJMsailx6JJrfcouqF6eVTj
-         ABFGN6mVobDqpVqGKZBp0Z/2F7UNxta/nfT4p+DIg9TGqVBKmaJOLSkMfqfXAVv58Zul
-         6g9sQ07e06EsRZBj5B9qLmaSoH29V8A2bPZKYCYFXnJywMJMA5yuM3gwJxZxCRUTwBof
-         CpOXiVN45rKBO06IQlXX/ZF3mDm9v5EJ6/sDt/KmwpHAJvL/e1varr85I0q0km8uV2/V
-         K+9A==
-X-Gm-Message-State: AOJu0Yz7VeahyJjfHwdcVskp+BRVr8XLJTMo7bpcR7ZNvY8FDBrF3CT9
-	Tc2m1vCO3sskBFS5ye/l4u1CrPBnCK5KmGmTALH7xO5/V5vtWiaIE3nUs+9mAWI=
-X-Google-Smtp-Source: AGHT+IE38fHm3LORJ13dE4GtKju8G9tzqDbkJI+gDgMaEcR26M+3swvIvTRbiQgJ9VR8y2g8QJR1mg==
-X-Received: by 2002:a81:8ac7:0:b0:63b:aaf1:b8c1 with SMTP id 00721157ae682-68964392785mr13861747b3.37.1722542079877;
-        Thu, 01 Aug 2024 12:54:39 -0700 (PDT)
+        bh=vMnUY7dP/R83FAog27Ym2lLl6BbzuwWVdehc1vSN+V0=;
+        b=MT9ZXoJiCE20nZg95v4fxAgIe8jncbXSS1udqiOKmTfKSOv2c6lvBcQ62qhbUBVQow
+         H3+geZJsY6zkJ9qQhUHsdPn7wu9g09xfBuDStrfxS3sTKMVDX3AwLo4p6lUPAKYmvlqK
+         VgDZfd5GtzhtxQL+hg46jbWxKwbPuOe22llBHh47K0SwK+tSKH39jLanR1JwUAMunTOh
+         WxgPwUGPwcar0y83Msi2kj415grQyxhHbtHweqMax4lezD0gIwgkvEOr3n+RxAB88IE3
+         29/5P/5HcRq/u+PJ/UEUSQnJ8w5NxR+pE/S+yZJgq95qBmaropzuZrdxdreL8favun6s
+         Kdxw==
+X-Gm-Message-State: AOJu0YxIJ0R63SL9cNROu5l53AoWISze23I3L5AU817x77rBUs5edlS7
+	Qmg3upCgNn2sUkOryfwQr/+KE9zqZETtzoHWyD/O1le9u9BhcV2H1+5sJMoo1tk=
+X-Google-Smtp-Source: AGHT+IHwJ3NxHO9egaE+XcIpkF8MTPTmx94/9sBlUcdIuqXr4D6kN57e8QjIGm4J/OibyAMMFxUy2w==
+X-Received: by 2002:a05:622a:648:b0:446:4c01:1f7a with SMTP id d75a77b69052e-451892857cfmr16185971cf.33.1722542462828;
+        Thu, 01 Aug 2024 13:01:02 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-689b45954c1sm605507b3.135.2024.08.01.12.54.39
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4518a6e6980sm1895211cf.48.2024.08.01.13.01.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 12:54:39 -0700 (PDT)
-Date: Thu, 1 Aug 2024 15:54:34 -0400
+        Thu, 01 Aug 2024 13:01:02 -0700 (PDT)
+Date: Thu, 1 Aug 2024 16:01:01 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 07/19] midx: introduce `bsearch_one_midx()`
-Message-ID: <Zqvn+qGz5hireM5X@nand.local>
+Subject: Re: [PATCH v2 10/19] midx: teach `fill_midx_entry()` about
+ incremental MIDXs
+Message-ID: <ZqvpfRJC7+rCMwWV@nand.local>
 References: <cover.1717715060.git.me@ttaylorr.com>
  <cover.1721250704.git.me@ttaylorr.com>
- <bfd1dadbf15cf735392ca15b52834f104cbd6538.1721250704.git.me@ttaylorr.com>
- <20240801100635.GG1159276@coredump.intra.peff.net>
+ <2b335c45ae7832b886ef9adccc2530e4ca53d267.1721250704.git.me@ttaylorr.com>
+ <20240801101215.GJ1159276@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,58 +70,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240801100635.GG1159276@coredump.intra.peff.net>
+In-Reply-To: <20240801101215.GJ1159276@coredump.intra.peff.net>
 
-On Thu, Aug 01, 2024 at 06:06:35AM -0400, Jeff King wrote:
-> One thing that confused me, though, is setting "num". From the "-w"
-> diff:
+On Thu, Aug 01, 2024 at 06:12:15AM -0400, Jeff King wrote:
+> On Wed, Jul 17, 2024 at 05:12:25PM -0400, Taylor Blau wrote:
 >
->   -       num = m->num_objects;
->   +
->   +               num = m->num_objects + m->num_objects_in_base;
+> > After that point, we only need to make two special considerations within
+> > this function:
+> >
+> >   - First, the pack_int_id returned to us by `nth_midxed_pack_int_id()`
+> >     is a position in the concatenated lexical order of packs, so we must
+> >     ensure that we subtract `m->num_packs_in_base` before accessing the
+> >     MIDX-local `packs` array.
+> >
+> >   - Second, we must avoid translating the `pos` back to a MIDX-local
+> >     index, since we use it as an argument to `nth_midxed_offset()` which
+> >     expects a position relative to the concatenated lexical order of
+> >     objects.
 >
->                   if (!num)
->   -               return;
->   +                       continue;
->
-> Before we only had one midx, so that was our limit. But now we are
-> looking at "num" as a limit in the global size of the chained midx.
-> Which feels weird, since we're just considering a single layer here. We
-> seem to use "num" in two ways:
->
->   - we return if it's 0 (or now continue to the next layer). But
->     wouldn't we want to do that per-layer? I don't think it will produce
->     wrong answers, but we're less likely to kick in this early return
->     (though it's not clear to me when it would ever kick in really; a
->     zero-length midx?).
+> OK. I think this is correct, but this would be another place where we
+> could use an nth_midxed_offset_one() function if we had one.
 
-This is definitely a bug. We should certainly do something like:
+Yeah.
 
-    for (; m; m = m->base_midx) {
-            uint32_t num;
-            if (!m->num_objects)
-                    continue;
+> My thinking was that we'd avoid walking back over the midx chain again.
+> But I guess we don't actually do that, because our midx_for_object()
+> will have overwritten our "m" variable, as well. So inside
+> nth_midxed_offset_one() we'll immediately realize that the global
+> position is inside the midx we passed in. A little extra arithmetic, but
+> there's no pointer chasing.
 
-            num = m->num_objects + m->num_objects_in_base;
-            /* ... */
-    }
-
-I'll go ahead and fix this one up locally, which is easy enough to do.
-
->     So I think it's correct, though it feels like bsearch_one_midx()
->     should still return the position within that midx (and then
->     bsearch_midx() could add back m->num_objects_in_base to get a global
->     position). And then I guess likewise there would need to be a
->     midx-local version of nth_midxed_object_oid().
-
-Like many of the other changes in this series, it's really a matter of
-where you put the complexity: either it's in the callers or in the
-function itself.
-
-I think here I prefer having bsearch_one_midx() return the global
-position, since it is directly usable in other top-level functions
-within the MIDX API, like being able to pass it directly to
-nth_midxed_object_oid() and etc. below.
+Yup, exactly.
 
 Thanks,
 Taylor
