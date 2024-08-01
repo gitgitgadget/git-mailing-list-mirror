@@ -1,104 +1,144 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295EA1B3736
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 17:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733B23A1DA
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 17:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722531882; cv=none; b=JyNM29aq743EQCpgcxis6H46A+LhczLLM4UTxo4grFnzeNnQckkgN6oUYmtVNiU5WI6v17eXa43kssmdEAU7ThJwAZvnRrkaILNs9jemHVlM/oFBQ1YoEkOLPStYuyKQAes3OSFwmD5gmyC7N5d/vvPRLmdLC+Coueo6zlCa03I=
+	t=1722532019; cv=none; b=IrEPp3TaBJaq/R04rNvIcjdwrrxVLSoCJSAjMEMN/ZC8KWB8UOlcY13yHEs/jayQyYh13PFKQO8XEeQaWJqkNAWJnvfaUIwWqgjoUzrA8Dw76p0sAH+mS4aDs8NkLLVC+Hi+iMNfsEA00o2ymyAhtHc7SGXpu4byo8O8CO6Nx1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722531882; c=relaxed/simple;
-	bh=1dX7O9hB2A59WkKkzIM4abKOHlPa9q62+qWXPId0bEs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HymzucMDnHASw08DzmCEdBHWYwuXgyyd736/hDjM7aWQ66U0H8QDdmI2NwF1Qzms2nc3/hVrGVxNZIzDBYyEqtje/qF1qJ8E/YQMEKTwOugJbk5bOtil2fqoHXejuPNZkJHiVzazLbfsQ7DTbMlLWqU4jiWtE92EatinMYEHTNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NL0EKzc5; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722532019; c=relaxed/simple;
+	bh=DCy+hRt/9dE9go/BdQo/4LLaHnPzq320wyoUxFXZ/so=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=AfLaHKCpwG/57ZOCSRD4IdyPIXabKc2T2BpeTG0Qk30Zu4SEZ4FZr3/J8Bfj7Ra95sfR8RYc8UiFrh/aDFGjKbAo6f9cXxAERj6gMvVkTLU3LDejBdjHJp7aBhl/Bk3MvdEBqClmwTpHkh9+bDXvORDrQ+ZGyNgvccNkfo7LEdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=bwSXHw2D; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NL0EKzc5"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BA0E2ABD9;
-	Thu,  1 Aug 2024 13:04:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1dX7O9hB2A59WkKkzIM4abKOHlPa9q62+qWXPI
-	d0bEs=; b=NL0EKzc5VHL9voP3G+grsDG6Kj48DxsQNOAdsu5kw2PVzF40BBdjlc
-	q5CXOOoMoRgZ8Gj13An91HiqT/J77jMUDC92jMqEe+/SgIL6SyEaSO9hEBiAdOEo
-	d8ACfAj11DJopRAYKUIYtJs1IO6oID8TeSJPMP7EkjePBkCghByIw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 133AE2ABD8;
-	Thu,  1 Aug 2024 13:04:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 727C72ABD7;
-	Thu,  1 Aug 2024 13:04:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Ryan Hendrickson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
-Subject: Re: [PATCH v4] http: do not ignore proxy path
-In-Reply-To: <20240801060418.GB621899@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 1 Aug 2024 02:04:18 -0400")
-References: <pull.1767.v3.git.1722441675945.gitgitgadget@gmail.com>
-	<pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com>
-	<20240801060418.GB621899@coredump.intra.peff.net>
-Date: Thu, 01 Aug 2024 10:04:38 -0700
-Message-ID: <xmqqo76cuqc9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bwSXHw2D"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-70943713472so2423045a34.2
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 10:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722532016; x=1723136816; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oD2BoUTJp+LLszTusJQM2tKPAPkgfLTEoomHkTFHkto=;
+        b=bwSXHw2DarGapxYWqoEEueu/8+5Q7sAaeMmU41+Kaq/+5sAm7kz4J5Dn1UctuF75Rg
+         KXKGFfSlmEYZzf3ggu3lpAfVku35D2KYF2DvMzWbkV+nskKOycz9D6DKTwQjmHwPX+EU
+         LWy7eEEBs6wKlA3ANFErw4v+rPI+TqjQgSgHGvVKuCIoxjJBCzx8I7myt08vcodPr6I2
+         vZ9Rt/Ls0VuTeA8cBQtWIIt+jyHjkj+U9Xw7NW1xgPcb1qLgr3e6Trpcyry4tBJwgIBQ
+         4uldwIh8qaXmPONKqr5HpFY4In2qOZ4sHqifmAN1ics8vDYC375r1qwgUtfwCrcLOUTx
+         yCQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722532016; x=1723136816;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oD2BoUTJp+LLszTusJQM2tKPAPkgfLTEoomHkTFHkto=;
+        b=eJ4/e6V4W2DLTXHWe4QGU7bxhyZkiZUcsGl0hqG7HwkF24ShL07IIlQx+LCADg/hIP
+         oEM/Yyd0c3Shp+JeLGKgxr+YIQ6TAwSNocIjOa4ev0yGZlinoi/5I9zlsGcjFFiyarVE
+         CwzMigIFKCoueV8UMIOKeq9IAtmjem1yAbpfqKdRKMuVZ2LRZM3DxYMjKN9jbFNgAHhj
+         1bqlm4neqVpZTcU47fvxiGBvsxmegG9uCiM8SI2pt5u7e3+YBSY11zfhQUglKl34fC9h
+         3EfyEbMzAMKEIS3Z+2PlRfsGMWjTgYhh7Z6q25wbvvqULE4BEP7/VhH91GbiRoLft2NZ
+         4kQw==
+X-Gm-Message-State: AOJu0YycKh0HYTzp4/AwWxEqV06Emu2pZvSe6hIMeN/cC5z6YDo4FCYM
+	evYu+siab14N5FqSk+wWRt7UIB7klBCoZr1TY6ES9M20P5khzah7Fr4ZUClmMNPX9vT5E+ehMAR
+	d
+X-Google-Smtp-Source: AGHT+IHpWFfQgfblzG0Q7lnLs4oTDhdPWTndNVfHN6+vmpSmO73imtQrl//tivF9GWs3xGf0Ykyitw==
+X-Received: by 2002:a05:6830:3805:b0:708:d84d:f62a with SMTP id 46e09a7af769-709b9964022mr992354a34.22.1722532016166;
+        Thu, 01 Aug 2024 10:06:56 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-689b3ddba97sm96277b3.124.2024.08.01.10.06.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Aug 2024 10:06:55 -0700 (PDT)
+Date: Thu, 1 Aug 2024 13:06:54 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Han Jiang <jhcarl0814@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] config.c: avoid segfault with --fixed-value and valueless
+ config
+Message-ID: <c78bacfa8fb274fbb48f259b13f4f30253932f69.1722532013.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 236A6E4A-5028-11EF-B8EC-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Jeff King <peff@peff.net> writes:
+When using `--fixed-value` with a key whose value is left empty (implied
+as being "true"), 'git config' may crash when invoked like either of:
 
-> On Thu, Aug 01, 2024 at 05:22:56AM +0000, Ryan Hendrickson via GitGitGadget wrote:
->
->> From: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
->> 
->> The documentation for `http.proxy` describes that option, and the
->> environment variables it overrides, as supporting "the syntax understood
->> by curl". curl allows SOCKS proxies to use a path to a Unix domain
->> socket, like `socks5h://localhost/path/to/socket.sock`. Git should
->> therefore include, if present, the path part of the proxy URL in what it
->> passes to libcurl.
->> 
->> Co-authored-by: Jeff King <peff@peff.net>
->> Signed-off-by: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
->
-> Thanks for crediting me. I'll add my:
->
->  Signed-off-by: Jeff King <peff@peff.net>
->
-> to be explicit that the proxy script is under the DCO.
+    $ git config set --file=config --value=value --fixed-value \
+        section.key pattern
+    $ git config --file=config --fixed-value section.key value pattern
 
-OK, I'll amend it while queuing this v4.
+The original bugreport[1] bisects to 00bbdde141 (builtin/config:
+introduce "set" subcommand, 2024-05-06), which is a red-herring, since
+the original bugreport uses the new 'git config set' invocation.
 
-Thanks.
+The behavior likely bisects back to c90702a1f6 (config: plumb
+--fixed-value into config API, 2020-11-25), which introduces the new
+--fixed-value option in the first place.
 
->> +# The %30 tests that the correct amount of percent-encoding is applied to the
->> +# proxy string passed to curl.
->> +test_lazy_prereq SOCKS_PROXY 'test_have_prereq PERL && start_socks "$TRASH_DIRECTORY/%30.sock"'
->
-> OK, I see you figured out that the lazy prereq requires giving the full
-> path to the socket. :) I had forgotten that we also run the prereq in a
-> subshell to avoid side effects, but you caught that, as well.
+Looking at the relevant frame from a failed process's coredump, the
+crash appears in config.c::matches() like so:
 
-;-)
+    (gdb) up
+    #1  0x000055b3e8b06022 in matches (key=0x55b3ea894360 "section.key", value=0x0,
+        store=0x7ffe99076eb0) at config.c:2884
+    2884			return !strcmp(store->fixed_value, value);
 
-> All of this to me is good evidence that the non-lazy version you had
-> originally is a better approach. But I don't think it's worth spending
-> time fighting over, so I'm OK either way.
+where we are trying to compare the `--fixed-value` argument to `value`,
+which is NULL.
 
-I'd be OK either way, too.
+Avoid attempting to match `--fixed-value` for configuration keys with no
+explicit value. A future patch could consider the empty value to mean
+"true", "yes", "on", etc. when invoked with `--type=bool`, but let's
+punt on that for now in the name of avoiding the segfault.
 
-Thanks, both.
+[1]: https://lore.kernel.org/git/CANrWfmTek1xErBLrnoyhHN+gWU+rw14y6SQ+abZyzGoaBjmiKA@mail.gmail.com/
+
+Reported-by: Han Jiang <jhcarl0814@gmail.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ config.c          | 2 +-
+ t/t1300-config.sh | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/config.c b/config.c
+index 6421894614..05f369ec0d 100644
+--- a/config.c
++++ b/config.c
+@@ -2914,7 +2914,7 @@ static int matches(const char *key, const char *value,
+ {
+ 	if (strcmp(key, store->key))
+ 		return 0; /* not ours */
+-	if (store->fixed_value)
++	if (store->fixed_value && value)
+ 		return !strcmp(store->fixed_value, value);
+ 	if (!store->value_pattern)
+ 		return 1; /* always matches */
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 9de2d95f06..f13277c8f3 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2704,6 +2704,15 @@ test_expect_success '--get and --get-all with --fixed-value' '
+ 	test_must_fail git config --file=config --get-regexp --fixed-value fixed+ non-existent
+ '
+ 
++test_expect_success '--fixed-value with value-less configuration' '
++	test_when_finished rm -f config &&
++	cat >config <<-\EOF &&
++	[section]
++		key
++	EOF
++	git config --file=config --fixed-value section.key value pattern
++'
++
+ test_expect_success 'includeIf.hasconfig:remote.*.url' '
+ 	git init hasremoteurlTest &&
+ 	test_when_finished "rm -rf hasremoteurlTest" &&
+-- 
+2.46.0.dirty
