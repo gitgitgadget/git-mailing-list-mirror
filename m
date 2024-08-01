@@ -1,152 +1,164 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175518452B
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 10:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E5A18453A
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 11:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722509870; cv=none; b=CoFUK4U+/HOIqArVLQgfJvyW4V9uvasjrf1Fb0645/musbOxQCk7mQS7gYjQESV872Wy1xNEbah/J/GX5k/0HFe8HnUQQ/AIrEZTct5Ma0iInA2cz43TBBjogE+6BXgLhCyUfp7ZOFX1XO7HwOLsvuaKXxxhPBb3dwu+FO7RKRU=
+	t=1722510322; cv=none; b=OeM/Kd3OXZBdOaQq4uXE+oD2Q0FANEIMOXFtuXqik/MAXBnkzeekUTAS1c89FtJFHVY77m9a+SrTmOAZg5IX8Zmi0XnfLWxojyGvWmoLnruJOx/BlLnWm5R3sm4llfaETzxrRxVgOmzdD9DDwS9Vd+K08/9g9wxrkYNg6/BybuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722509870; c=relaxed/simple;
-	bh=SzY62Bd01Wt156bxdTplLKqMSVXfB2qoo4AhDeWg0Iw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=swOeuiAJ8DKE8IBOQTVXRI/ssoZLGe6EQukhVBA/+M68gSydElDrO+hZT7XpxtyQbOob1qwvGQot/xegji3+8seaG3ArvlAzhucht6/ALwr4P6X1bKiOEBzkH8Vig+6JZDUrcs7yi32w/XeRjfMTY9On9MiNhk3nTpDfXqwWB9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S3sfmCio; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1722510322; c=relaxed/simple;
+	bh=02Hx4KEDbyMSRB05guQawdc6XMKthm/YQiNGTKLjk2U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uJutZ/f2KDYqmnXgruUGfxtoiVVVqpzwJYM9z2OBJZfne4jeZcYVk6wnWeDLkKPeZivo6bY07XMcdAFGM7aR6vtE00c8X741EOZhsNewBxMdAcq9r4hYLhiCB6WF1STJShrPTCsafl1QDk5TrpcRuV0w1PKCwRosEDR8NgxrCrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MWR12I1E; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S3sfmCio"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-367963ea053so4335331f8f.2
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 03:57:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MWR12I1E"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fdd6d81812so57385395ad.1
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 04:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722509867; x=1723114667; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1722510320; x=1723115120; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TGHtRiql8bEk5ouKfSNbWGydlfpREoH4WmFXTM0qLVA=;
-        b=S3sfmCio8yp2tk31ghXk/5GFfu6jO4EeDvAcu8zyohx9oMStntHxUkFOl6t8Bxhm/T
-         PvRH6RTjym5D+pfO5FPYDY8CSdNubZ0LYs9PxVrfq/HQGKloR1p+ntUrUPJhDt7PWoa1
-         cp+4dna4jLBZ4TjgC6v4D6J7vmoMZALlD79sun2DVp5l71k66+vvd8RLBPjaOw1rpQFA
-         2fhqJfWyr4MXWuMB7uEAVFquZvrplyRBnPiCOUXv7/NayPhPJFSZAD1SWY+nmKyltnmW
-         5uwxaRvGbfjVAzxUoDRVgI/DG/pDBS5SIw1fBjo3ryEntv3vQPwtIsEOMYHm90zhRwg6
-         5G8Q==
+        bh=pBjyQK4c9GNedWyDC9DEQEm8s3p3fKJOlisM4m/NMug=;
+        b=MWR12I1Ej011PSWmVxVUnCFgN/Lb5h6Y4ISLecLVI2+RRJIti1rdwLRN3m+Jm/9pwn
+         KDzDYDY/+bvgvUlwRd1EIhhpFtWIR8mJ5jg6voor2xAzMi2wNyV5crGxgm8jgKw85vHJ
+         KYf888DnQOhlyfaJzDTTwugHOfS07skN5k/JqdN+6wIc4uUlKl8YeGP2cmsTwfilxk9+
+         1YbX7uc7benqsTo0JJasF+UeFUkYaHCHgUc7W5od7e4RDpQOWpNTDRsZgqXgf2yipuS/
+         vV8Oc6jh59VE1e5WM8eFhhd9sns10rh620q+vC9G5M5OYSZXOFhniEVxrGVK32QwR5yX
+         ps8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722509867; x=1723114667;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1722510320; x=1723115120;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TGHtRiql8bEk5ouKfSNbWGydlfpREoH4WmFXTM0qLVA=;
-        b=iH+m5atmwQN7EfyCaOyWHyz0IaiabB8R9HnEMCQos4nKtjhwHuTjSYiqLtZFELTbmq
-         GNa/4GrRIgW16WTz4q33NV5IcF2zKRMQDmlktOh0hl0yXydiMPYRoZmUTq2DESllA2SI
-         +y+jAef6487ngc5QF7Jy89RKKasiA7tB6msy1a4vTmIasx9ub9mnea64lsksJEVf07Rw
-         Sutm+KuQmuXyWIEaTponc1XkCIVVZrTpZlw74KDvcUPE5/VFxbt1RKRpJIowZiHmsC+F
-         N1z+kWnN7ry7WwLhYp0INid6f2SMVu5VcJm5ts1Dvbd02rH6AM2zDH66umlp413vjO12
-         9sAg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBq3I2cckxCrna7SAKqUBlBbhY8m0tTE5sMKao5bHNnMeKgnJDEORW9XWPtYaMP5b8nM6NNBFoPJKVg6E4FybgGUyq
-X-Gm-Message-State: AOJu0Yx2IGfSXNGdFc3ERmqjqHpBZGMXzX88FStNx2RIw9kQazsT4D1i
-	kxNkCqKMlzFcLrVyUXIo4wcLX7u/ff5Gur9yYsveMRtIGOavUOOrG7Kf2S+nvKDqj8cDK6azyt2
-	7dzVBnAX3nrVZbyE8AWnPVayWaEJUyf30
-X-Google-Smtp-Source: AGHT+IFJ7TpUWBsdN2ex9EBwZKLIzvq1CLSYJoNkRpZQOAFUvycVVXOtgzYOBF7YOMYjlzd/M6J/yhc5gxQTiRWfzr0=
-X-Received: by 2002:a5d:4649:0:b0:366:f50a:2061 with SMTP id
- ffacd0b85a97d-36baaf769ccmr2211915f8f.50.1722509866645; Thu, 01 Aug 2024
- 03:57:46 -0700 (PDT)
+        bh=pBjyQK4c9GNedWyDC9DEQEm8s3p3fKJOlisM4m/NMug=;
+        b=cfhn4EdvGkTpcAD/oVB+JB09zRsQ0yEg9eZ74GEEU52yTfqEpk75cNYZ6IvasSN9y/
+         1RnFDi4U7djaKI+9WZlMZOiRt8jB4E8y/NQufurHK+p1tV/Y7U9ypVIoXGxKMkIehLjO
+         BExsWC2ukJTCfQ9OkK87M/DlUR427yB9I4UE3qG2N6xILH6dPyH4ImTy8q2h5XFKA85F
+         ccHrcK/MG1yKHSG7odgxC01151gxCCaFCIRmBI+Uw6oLLNlw6eAjxUBIlg54nb84hBz+
+         oatl5NpMoZNqzE+/1mStcc/UeCZoG2b9XCeM7Jv12aOV+Sn+hiTgd2wk6DYFvSeFfgJ1
+         5ytw==
+X-Gm-Message-State: AOJu0YwPyvJQeQcraNtXKAHb4sQAr3gEShxNZFkUvDJpeK2BhyuW5bh5
+	Ki2xEsReJSILGVHqXDChIxI0reUaGtqEwECqek2FWW2fX4Uv/qmNgLpnOA==
+X-Google-Smtp-Source: AGHT+IHFovGH0m4FtryfA+Ogt7GGbJCYbffZpXIukmH112r3BKOxZY9IBFYTJrFaGoJnIhtYVmdtRA==
+X-Received: by 2002:a17:902:cf12:b0:1fd:d73a:7cd1 with SMTP id d9443c01a7336-1ff4d25d400mr22803095ad.56.1722510319961;
+        Thu, 01 Aug 2024 04:05:19 -0700 (PDT)
+Received: from Ubuntu.. ([106.194.76.199])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fed7edd90dsm136663985ad.161.2024.08.01.04.05.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Aug 2024 04:05:19 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH v7 0/7] t: port reftable/pq_test.c to the unit testing framework
+Date: Thu,  1 Aug 2024 16:29:41 +0530
+Message-ID: <20240801110453.5087-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.GIT
+In-Reply-To: <20240725093855.4201-1-chandrapratap3519@gmail.com>
+References: <20240725093855.4201-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
- <20240731074228.GC595974@coredump.intra.peff.net> <9AA59434-916C-4978-B3A1-33FD70619BFC@boanderson.me>
- <20240801082556.GA640360@coredump.intra.peff.net>
-In-Reply-To: <20240801082556.GA640360@coredump.intra.peff.net>
-From: Hong Jiang <ilford@gmail.com>
-Date: Thu, 1 Aug 2024 18:57:31 +0800
-Message-ID: <CAEcKSiyf7JPypM93XLFJLjC1T-k9h6kushM7GqTyCBe8rico=g@mail.gmail.com>
-Subject: Re: [PATCH] credential/osxkeychain: respect NUL terminator in username
-To: Jeff King <peff@peff.net>
-Cc: Bo Anderson <mail@boanderson.me>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-I confirm the patch works on my system.
+The reftable library comes with self tests, which are exercised
+as part of the usual end-to-end tests and are designed to
+observe the end-user visible effects of Git commands. What it
+exercises, however, is a better match for the unit-testing
+framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
+2023-12-09), which is designed to observe how low level
+implementation details, at the level of sequences of individual
+function calls, behave.
 
-On Thu, Aug 1, 2024 at 4:25=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Jul 31, 2024 at 02:07:32PM +0100, Bo Anderson wrote:
->
-> > This is correct.
-> >
-> > The reason I couldn=E2=80=99t reproduce the problem and how few will ha=
-ve noticed up to
-> > now is that for most users the CFStringGetCStringPtr call, which correc=
-tly uses
-> > strlen, does what is necessary and we return early. I don't entirely kn=
-ow the
-> > precise criteria where the fallback is used but I imagine it depends on=
- certain
-> > system encodings/locales.
-> >
-> > The patch changing this to strlen looks good to me to apply to master &=
- maint.
->
-> Thanks. Here it is with a commit message. Hopefully Hong Jiang can
-> confirm that this fixes the problem, and we can added a "Tested-by"
-> trailer.
->
-> -- >8 --
-> Subject: [PATCH] credential/osxkeychain: respect NUL terminator in userna=
-me
->
-> This patch fixes a case where git-credential-osxkeychain might output
-> uninitialized bytes to stdout.
->
-> We need to get the username string from a system API using
-> CFStringGetCString(). To do that, we get the max size for the string
-> from CFStringGetMaximumSizeForEncoding(), allocate a buffer based on
-> that, and then read into it. But then we print the entire buffer to
-> stdout, including the trailing NUL and any extra bytes which were not
-> needed. Instead, we should stop at the NUL.
->
-> This code comes from 9abe31f5f1 (osxkeychain: replace deprecated
-> SecKeychain API, 2024-02-17). The bug was probably overlooked back then
-> because this code is only used as a fallback when we can't get the
-> string via CFStringGetCStringPtr(). According to Apple's documentation:
->
->   Whether or not this function returns a valid pointer or NULL depends
->   on many factors, all of which depend on how the string was created and
->   its properties.
->
-> So it's not clear how we could make a test for this, and we'll have to
-> rely on manually testing on a system that triggered the bug in the first
-> place.
->
-> Reported-by: Hong Jiang <ilford@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is not even compile tested by me! It looks like an obvious enough
-> fix, and I wanted to make sure we don't forget about it. But anybody who
-> can reproduce or test would be greatly appreciated.
->
->  contrib/credential/osxkeychain/git-credential-osxkeychain.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
-b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> index 6ce22a28ed..1c8310d7fe 100644
-> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> @@ -141,7 +141,7 @@ static void find_username_in_item(CFDictionaryRef ite=
-m)
->                                 username_buf,
->                                 buffer_len,
->                                 ENCODING)) {
-> -               write_item("username", username_buf, buffer_len - 1);
-> +               write_item("username", username_buf, strlen(username_buf)=
-);
->         }
->         free(username_buf);
->  }
-> --
-> 2.46.0.452.g3bd18f5164
->
+Hence, port reftable/pq_test.c to the unit testing framework and
+improve upon the ported test. The first two patches in the series
+are preparatory cleanup, the third patch moves the test to the unit
+testing framework, and the rest of the patches improve upon the
+ported test.
+
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+
+---
+Changes in v7:
+- Fix a typo in patch 1
+- Fix do-while style error in patch 6 and 7
+
+CI/PR for v7: https://github.com/gitgitgadget/git/pull/1745
+
+Chandra Pratap(7):
+reftable: remove unncessary curly braces in reftable/pq.c
+reftable: change the type of array indices to 'size_t' in reftable/pq.c
+t: move reftable/pq_test.c to the unit testing framework
+t-reftable-pq: make merged_iter_pqueue_check() static
+t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+t-reftable-pq: add test for index based comparison
+t-reftable-pq: add tests for merged_iter_pqueue_top()
+
+Makefile                     |   2 +-
+reftable/pq.c                |  29 +++-----
+reftable/pq.h                |   1 -
+reftable/pq_test.c           |  74 ---------------------
+reftable/reftable-tests.h    |   1 -
+t/helper/test-reftable.c     |   1 -
+t/unit-tests/t-reftable-pq.c | 152 +++++++++++++++++++++++++++++++++++++++++++
+7 files changed, 163 insertions(+), 97 deletions(-)
+
+Range-diff against v6:
+
+1:  acd9d26aaf ! 1:  91719cc47f reftable: remove unncessary curly braces in reftable/pq.c
+    @@ Metadata
+     Author: Chandra Pratap <chandrapratap3519@gmail.com>
+
+      ## Commit message ##
+    -    reftable: remove unncessary curly braces in reftable/pq.c
+    +    reftable: remove unnecessary curly braces in reftable/pq.c
+
+         According to Documentation/CodingGuidelines, control-flow statements
+         with a single line as their body must omit curly braces. Make
+2:  2e0986207b = 2:  2e5e72d5c5 reftable: change the type of array indices to 'size_t' in reftable/pq.c
+3:  df06b6d604 = 3:  5db9e92f20 t: move reftable/pq_test.c to the unit testing framework
+4:  40745ab18e = 4:  9334b1fe9e t-reftable-pq: make merged_iter_pqueue_check() static
+5:  ee8432ac4a = 5:  9d8c33d1fc t-reftable-pq: make merged_iter_pqueue_check() callable by reference
+6:  f5c30187e1 ! 6:  7a67861652 t-reftable-pq: add test for index based comparison
+    @@ t/unit-tests/t-reftable-pq.c: static void t_pq(void)
+     +		merged_iter_pqueue_add(&pq, &e);
+     +		merged_iter_pqueue_check(&pq);
+     +		i = (i * 7) % N;
+    -+	}
+    -+	while (i != 1);
+    ++	} while (i != 1);
+     +
+     +	for (i = N - 1; i > 0; i--) {
+     +		struct pq_entry e = merged_iter_pqueue_remove(&pq);
+7:  394540a789 ! 7:  5ac60563e4 t-reftable-pq: add tests for merged_iter_pqueue_top()
+    @@ t/unit-tests/t-reftable-pq.c: static void t_pq_record(void)
+      		if (last)
+      			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
+     @@ t/unit-tests/t-reftable-pq.c: static void t_pq_index(void)
+    - 	while (i != 1);
+    + 	} while (i != 1);
+
+      	for (i = N - 1; i > 0; i--) {
+     +		struct pq_entry top = merged_iter_pqueue_top(pq);
+    @@ t/unit-tests/t-reftable-pq.c: static void t_pq_index(void)
+     +		merged_iter_pqueue_add(&pq, &e);
+     +		merged_iter_pqueue_check(&pq);
+     +		i = (i * 7) % N;
+    -+	}
+    -+	while (i != 1);
+    ++	} while (i != 1);
+     +
+     +	for (i = N - 1; i > 0; i--) {
+     +		struct pq_entry top = merged_iter_pqueue_top(pq);
+
