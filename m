@@ -1,80 +1,123 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7C51EB4B1
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 17:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0841B32D9
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 17:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722532650; cv=none; b=YZHiFL9MAD/hSmTKqTFFM2dAtx34N1wkKRH5iL7Yd2/rXtJeURlkpdl3TG24Y1CF3PYGawWj7aF3S06MRwEt0Z91Tr/9cb+Gn0IQj47W27J56UoEt5JUlpK/6T1Q7WJD1F7o/EOcT2THdXlVxTGXmwnM7lKvtgrAK+pO4LM6D1A=
+	t=1722534248; cv=none; b=dQ4tufWc4BuqCDc71nfiRYCtqhGDZXTkdqiAc6azDoElpNE7NJFd88aHCP8qvy1zyZp6Vqgld/dm4I2IYonPJDhsF9HXfFR0IzXpCjDpqfhvWxPDzUcHaxaksjpLQSSrWguW9Nq+EW932ZGgZPp7Wq70gEcUuYlPmZGWN6D50bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722532650; c=relaxed/simple;
-	bh=kjYSHSB8WkZXswWHFnKU5kS7TEKjU6q3kkNExhdqhy8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ce6VNkJ4IJnQBDml7CBdv2sL3JeslRaQUuFONUbJdKF7xiBRRLO7hddZGjKu3wLWbZ16bXNSCR4q8JAO5CO738U+PFq9pyARDPT8pBdZlQGuD0gLjyLJzdGLiIiLsO5DZxy2j+/lBTVwZ6jWgsEh/2r6Q37dTg7RYrASl991qN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QoW5E5xs; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QoW5E5xs"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-66599ca3470so59877607b3.2
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 10:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722532648; x=1723137448; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kjYSHSB8WkZXswWHFnKU5kS7TEKjU6q3kkNExhdqhy8=;
-        b=QoW5E5xsYpnWjs2wyjdmPRoySnWvmwGt7VT+Rmh4ts5Wv9uHA/Lehddg2iyzflmF8S
-         iVmopm+ka0qYL5CkaWF3K2dGWFjPcPuQw9lx12yIbrjUSaVKydCiqT2FTCLnvFCK3gDE
-         pN9tkt73C/BoBwL5Zuq4gOyd2shvu1YEV/JM/5vENDL4rUwodx+u2r6j8qVKpnWnm60m
-         zxYeGo2CimDo5P/pmYJOJq65oaXGSa7yz9HFAaEvWEpSTKUXc05HvON4KxJ/qQcgQwrA
-         KLvDavzrFTvSDoeTsZHx2/0sqWwSSE9FXt17N51lH8dYjry+eiUbLAOKuqZZ7TysTu/7
-         OTzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722532648; x=1723137448;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kjYSHSB8WkZXswWHFnKU5kS7TEKjU6q3kkNExhdqhy8=;
-        b=Jwze5frKVgns6cGM7e7wHaiG0KCZDNx+PWC7kvdeKd61XX8fLE9DXymzfBsdWWgC1a
-         gVA/utdoBeLN+FodUqi4erBMnjSlIb4IKsxjVl/te73EjzrtJ85NtmWCQbAo+VamUQDg
-         ZEaS3ceTkgplhaHSkRO3svY/kVH//PHADSooVW26X8AMvCLcw6rdqwcejWHm78gcen/9
-         StiwG9R3egzH6mMU5Bgb7cKD2YD+VbGNzdWAuds5ZfvaI+F/6ZXU6oKbulmDqFAW4Zta
-         9vjG6w+DqDZUbGZJS8x3alix1/iRJkbT3UdVwv1lnPzfhlCH7Q5L7rd2yhZaxhCxiNdw
-         Q9tg==
-X-Gm-Message-State: AOJu0Yy+iZrp/53MPUwSJD1+3XDeC6xUdZ0AkqoQoVDblnyimfO0IEYj
-	m8/T4BC+SvVhRwIfjaKYh8UWGBiYWJGurzdd+flwebRdQS5Qkj2COoR7WiswO3Y=
-X-Google-Smtp-Source: AGHT+IFZIuRonqAGbbK0c1u7EJ0gluQAaACiXdjKfelsU/DrYys6rX32PQgbvMf0yXtIlE1a5k58kw==
-X-Received: by 2002:a0d:e087:0:b0:65b:a403:9eba with SMTP id 00721157ae682-6895ffbd37dmr8224417b3.11.1722532648211;
-        Thu, 01 Aug 2024 10:17:28 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-689af65b19fsm161907b3.10.2024.08.01.10.17.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 10:17:27 -0700 (PDT)
-Date: Thu, 1 Aug 2024 13:17:26 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: Re: [PATCH v2 00/24] Memory leak fixes (pt.3)
-Message-ID: <ZqvDJpNxMkvd3hSZ@nand.local>
-References: <cover.1721995576.git.ps@pks.im>
- <cover.1722499961.git.ps@pks.im>
+	s=arc-20240116; t=1722534248; c=relaxed/simple;
+	bh=7GUv24lXg/7sD60dhPcI3OqfVGGW/xWVJL6yu+9XtDc=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rTHGtWMiuikZPk8MM42pdL4LJQLIUPdeJDCtcibgGLKreZjmOBT2TNP3SI+ERjEH4sWbpDm1BC8Z7HkCH0gvUVE5HoHTwL2KLUy49cjskWUncahRBAOdI6GX9hytALiXJamkLDSJ1H2floi6Svftz7SQriBjWpovyqkbJ/Zti70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 471Hhtwe3493758
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 1 Aug 2024 17:43:55 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Patrick Steinhardt'" <ps@pks.im>
+Cc: "'Josh Steadmon'" <steadmon@google.com>, <git@vger.kernel.org>,
+        "=?iso-8859-1?Q?'Ren=E9_Scharfe'?=" <l.s.r@web.de>,
+        "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Kyle Lippincott'" <spectral@google.com>,
+        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>
+References: <00a801dae384$de2780d0$9a768270$@nexbridge.com> <ZqtWDtqkXzjz2A8u@tanuki> <01c201dae40c$821ab5e0$865021a0$@nexbridge.com> <024601dae411$faab2cb0$f0018610$@nexbridge.com> <ZquPfiAWgYjIPGRB@tanuki> <025f01dae419$636bb790$2a4326b0$@nexbridge.com> <ZquSkkR_aw2IUdX2@ncase> <027301dae41a$41ea7ce0$c5bf76a0$@nexbridge.com> <ZquT0B-UXy73x6QI@ncase> <028501dae41b$c277ec20$4767c460$@nexbridge.com> <ZqufLYWnj75VeDXB@ncase>
+In-Reply-To: <ZqufLYWnj75VeDXB@ncase>
+Subject: RE: [RFC PATCH 1/3] t: import the clar unit testing framework (better one)
+Date: Thu, 1 Aug 2024 13:43:49 -0400
+Organization: Nexbridge Inc.
+Message-ID: <02cf01dae43a$61e95a50$25bc0ef0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1722499961.git.ps@pks.im>
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdrkOYNMY1/q+OiFS2CZA6YMj4/MDg==
 
-On Thu, Aug 01, 2024 at 12:38:06PM +0200, Patrick Steinhardt wrote:
-> Range-diff against v1:
+On Thursday, August 1, 2024 10:44 AM, Patrick Steinhardt wrote:
+>On Thu, Aug 01, 2024 at 10:04:37AM -0400, rsbecker@nexbridge.com wrote:
+>> On Thursday, August 1, 2024 9:55 AM, Patrick Steinhardt wrote:
+>> >On Thu, Aug 01, 2024 at 09:53:52AM -0400, rsbecker@nexbridge.com wrote:
+>> >> On Thursday, August 1, 2024 9:50 AM, Patrick Steinhardt wrote:
+>> >> >On Thu, Aug 01, 2024 at 09:47:38AM -0400, rsbecker@nexbridge.com
+>wrote:
+>> >> >> On Thursday, August 1, 2024 9:37 AM, Patrick Steinhardt wrote:
+>> >> >> >As mentioned in another mail, we do not use its Makefile at all.
+>> >> >> >Did you
+>> >> >> check
+>> >> >> >whether the version I have proposed here works when running
+>> >> >> >`make
+>> test`?
+>> >> >>
+>> >> >> That is the commit I have been trying to use. make test in clar
+>> >> >> or
+>> git?
+>> >> >
+>> >> >In Git itself. `make test` builds and runs our unit tests, and
+>> >> >that now
+>> >> also includes
+>> >> >unit tests based on clar with this patch series. The clar Makefile
+>> >> >exists
+>> >> only because I
+>> >> >did a 1:1 import of the upstream dependency. We could just as well
+>> >> >remove
+>> >> it
+>> >> >altogether, including other bits that we don't end up using.
+>> >>
+>> >> I see. Well, the 2.46.0 test passes. I ran 'seen' 5 days ago and
+>> >> 'next' is going now. Would that catch it?
+>> >
+>> >No, as the patches in this thread are only up for discussion right
+>> >now and
+>> have not
+>> >been merged to any of the branches. You'd have to apply them on top
+>> >of
+>> v2.46.0
+>> >first :)
+>>
+>> Do you happen to have a public fork?
+>
+>You can pull the branch pks-clar-unit-tests from
+https://gitlab.com/gitlab-org/git.
 
-All looks reasonable to me. Thanks for incorporating mine and others'
-suggestions, and again for working on this!
+This fix is better (and actually works unlike the previous):
 
-Thanks,
-Taylor
+diff --git a/t/unit-tests/clar/clar/sandbox.h
+b/t/unit-tests/clar/clar/sandbox.h
+index 0ba1479620..1b14dbfd76 100644
+--- a/t/unit-tests/clar/clar/sandbox.h
++++ b/t/unit-tests/clar/clar/sandbox.h
+@@ -120,6 +120,12 @@ static int build_sandbox_path(void)
+        if (_mktemp(_clar_path) == NULL)
+                return -1;
+
++       if (mkdir(_clar_path, 0700) != 0)
++               return -1;
++#elif defined(__TANDEM)
++       if (mktemp(_clar_path) == NULL)
++               return -1;
++
+        if (mkdir(_clar_path, 0700) != 0)
+                return -1;
+ #elif defined(_WIN32)
+
+This is based on the above repo/branch. Basically a separate block for
+__TANDEM for temp directories. Build is done. I'm running the full test now
+and may report more or success.
+Regards,
+Randall
+
+
