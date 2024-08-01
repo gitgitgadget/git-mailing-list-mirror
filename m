@@ -1,57 +1,53 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6854113C9A3
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 16:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295EA1B3736
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 17:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722531296; cv=none; b=ZF8g4Ll1ccZ226Sf5BtDcEPNpGlIaH1V+9h3doRqTp1I0RGw4S1OL5gx4+X3b6tKGfgImYh1xGn9FciJVNaaWssqvUBHDyqL1mG1p7gLcHRjwxWTZ+u7TPZCjVlCDCTyfzYPpr2kNTzZJt89hQedzbXgW+juokZnPI82jrQK+Ow=
+	t=1722531882; cv=none; b=JyNM29aq743EQCpgcxis6H46A+LhczLLM4UTxo4grFnzeNnQckkgN6oUYmtVNiU5WI6v17eXa43kssmdEAU7ThJwAZvnRrkaILNs9jemHVlM/oFBQ1YoEkOLPStYuyKQAes3OSFwmD5gmyC7N5d/vvPRLmdLC+Coueo6zlCa03I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722531296; c=relaxed/simple;
-	bh=xo4byogv5Vq9ri4qn7QUaLttZ3F7did1OUgzHo2ZHgI=;
+	s=arc-20240116; t=1722531882; c=relaxed/simple;
+	bh=1dX7O9hB2A59WkKkzIM4abKOHlPa9q62+qWXPId0bEs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c7iE9E812SMICduLDB1R1KHhwFZi44CDEeJC7f8zkNm1spLQZLKh2kdcgefcDr5SGdPyFDgEanLYUAOidbkB5vFN1HVtLdkkC830os3tPsd+m703oqH6EhomQsSscCGDDL5ama+dnSZjR9ujYQBo0Jkj8gaqmhvMOJYRecEEgXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=P0PmdL2Y; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=HymzucMDnHASw08DzmCEdBHWYwuXgyyd736/hDjM7aWQ66U0H8QDdmI2NwF1Qzms2nc3/hVrGVxNZIzDBYyEqtje/qF1qJ8E/YQMEKTwOugJbk5bOtil2fqoHXejuPNZkJHiVzazLbfsQ7DTbMlLWqU4jiWtE92EatinMYEHTNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NL0EKzc5; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P0PmdL2Y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NL0EKzc5"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 527B52AAD2;
-	Thu,  1 Aug 2024 12:54:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BA0E2ABD9;
+	Thu,  1 Aug 2024 13:04:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xo4byogv5Vq9ri4qn7QUaLttZ3F7did1OUgzHo
-	2ZHgI=; b=P0PmdL2YYvGTG893For4CVt/SnAzY+UhkHnNORT4fzkxhz6I1KVDSo
-	Zpbq2KWiwAGGU+VFGbzk5LNY9G5xKrY7QXlI2vp309QTSRDM153evEOoAW5RafYd
-	DW60bV6p/C5lVzUXhBZcV9S7tELJ6zyYZDvsDwTEERpmnm/AAig40=
+	:content-type; s=sasl; bh=1dX7O9hB2A59WkKkzIM4abKOHlPa9q62+qWXPI
+	d0bEs=; b=NL0EKzc5VHL9voP3G+grsDG6Kj48DxsQNOAdsu5kw2PVzF40BBdjlc
+	q5CXOOoMoRgZ8Gj13An91HiqT/J77jMUDC92jMqEe+/SgIL6SyEaSO9hEBiAdOEo
+	d8ACfAj11DJopRAYKUIYtJs1IO6oID8TeSJPMP7EkjePBkCghByIw=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A46A2AAD1;
-	Thu,  1 Aug 2024 12:54:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 133AE2ABD8;
+	Thu,  1 Aug 2024 13:04:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.139.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB6BF2AAD0;
-	Thu,  1 Aug 2024 12:54:53 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 727C72ABD7;
+	Thu,  1 Aug 2024 13:04:39 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff King <peff@peff.net>,
-  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <avila.jn@gmail.com>,
-  Linus Arver <linusarver@gmail.com>,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 3/3] ref-filter: populate symref from iterator
-In-Reply-To: <xmqqwml0uqxi.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	01 Aug 2024 09:51:53 -0700")
-References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
-	<pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
-	<3e147e7d850773f44b48d1b86e89aef1415a0ccd.1722524334.git.gitgitgadget@gmail.com>
-	<xmqqwml0uqxi.fsf@gitster.g>
-Date: Thu, 01 Aug 2024 09:54:52 -0700
-Message-ID: <xmqqsevouqsj.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Ryan Hendrickson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+Subject: Re: [PATCH v4] http: do not ignore proxy path
+In-Reply-To: <20240801060418.GB621899@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 1 Aug 2024 02:04:18 -0400")
+References: <pull.1767.v3.git.1722441675945.gitgitgadget@gmail.com>
+	<pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com>
+	<20240801060418.GB621899@coredump.intra.peff.net>
+Date: Thu, 01 Aug 2024 10:04:38 -0700
+Message-ID: <xmqqo76cuqc9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,44 +57,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C6460A04-5026-11EF-AAAB-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+ 236A6E4A-5028-11EF-B8EC-34EEED2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> @@ -2852,6 +2852,8 @@ static struct ref_array_item *apply_ref_filter(const char *refname, const struct
->>  	ref->commit = commit;
->>  	ref->flag = flag;
->>  	ref->kind = kind;
->> +	if (flag & REF_ISSYMREF)
->> +		ref->symref = xstrdup_or_null(referent);
->>  
->>  	return ref;
->>  }
+> On Thu, Aug 01, 2024 at 05:22:56AM +0000, Ryan Hendrickson via GitGitGadget wrote:
 >
-> What is curious is that we do not lose any code from
-> populate_value() with this change.
+>> From: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+>> 
+>> The documentation for `http.proxy` describes that option, and the
+>> environment variables it overrides, as supporting "the syntax understood
+>> by curl". curl allows SOCKS proxies to use a path to a Unix domain
+>> socket, like `socks5h://localhost/path/to/socket.sock`. Git should
+>> therefore include, if present, the path part of the proxy URL in what it
+>> passes to libcurl.
+>> 
+>> Co-authored-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
 >
-> Is that because of this piece of code near the beginning of it?
+> Thanks for crediting me. I'll add my:
 >
-> 	CALLOC_ARRAY(ref->value, used_atom_cnt);
+>  Signed-off-by: Jeff King <peff@peff.net>
 >
-> 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
-> 		ref->symref = refs_resolve_refdup(get_main_ref_store(the_repository),
-> 						  ref->refname,
-> 						  RESOLVE_REF_READING,
-> 						  NULL, NULL);
-> 		if (!ref->symref)
-> 			ref->symref = xstrdup("");
-> 	}
->
-> That is, if we somehow know the value of ref->symref for a ref that
-> is known to be a symbolic ref (and when we know we need symref
-> information in the output), we do not bother calling refs_resolve
-> here to obtain the value.
+> to be explicit that the proxy script is under the DCO.
 
-I forgot to ask the real question.  With your change in place, does
-this "lazily fill ref->symref if it hasn't been discovered yet" code
-still trigger?  Under what condition?  Or is this now a dead code?
+OK, I'll amend it while queuing this v4.
 
 Thanks.
 
+>> +# The %30 tests that the correct amount of percent-encoding is applied to the
+>> +# proxy string passed to curl.
+>> +test_lazy_prereq SOCKS_PROXY 'test_have_prereq PERL && start_socks "$TRASH_DIRECTORY/%30.sock"'
+>
+> OK, I see you figured out that the lazy prereq requires giving the full
+> path to the socket. :) I had forgotten that we also run the prereq in a
+> subshell to avoid side effects, but you caught that, as well.
+
+;-)
+
+> All of this to me is good evidence that the non-lazy version you had
+> originally is a better approach. But I don't think it's worth spending
+> time fighting over, so I'm OK either way.
+
+I'd be OK either way, too.
+
+Thanks, both.
