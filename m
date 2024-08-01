@@ -1,142 +1,112 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED60381C2
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 08:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC96913BC25
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 08:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722500408; cv=none; b=N+XfdGHHhPenLFaBAp4oeKAbJMobxZNiRSf7Dxro7EFATsO0yEiBJylNBSZrRyjBBSQHQQJFhY7gBHON7A8jdZKp2AD4xFM3BaJfEbJOrjr0J5m1r/l8vN3FyljoMm4xjeGHF7yGANPJPDwnijmisDRBGEERHkYRBjlD4r6h1TE=
+	t=1722500766; cv=none; b=hdKDWRGR9PAfE/XO6cTpZb/AyVPS9UxCNFcS/DK+roYVn0jbFT8ELi1I6GHkCUiJt+ixS2vp/HGIXX8RNN5eHdV8lxR2vMxjtKm6w4j+hJ8ijSzlVA5yJHlzpWsTGtGTgw5i/VGQtQAX/5p2suTjb794Bcy5qR7F4w44P6A3Ldg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722500408; c=relaxed/simple;
-	bh=U4C0iGUiUEXWdTvfzeS2th07TUEaFblv7z40cPTD5Mk=;
+	s=arc-20240116; t=1722500766; c=relaxed/simple;
+	bh=kaLwKny1gYzh9Mc21OjV0JSFl2i9aiF7UcJScZ65ZhA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jPX2jI13AXjRqMdSKMGdOkiOuwpy3hAWLJ+CbYnCtdzYiNfMrSYaWj6IuibMABnq67Wr+CKe9qbDXXvxCp9hVNljmAmCDQlpMoVtKet62MbSfV3+zQ3XIkKSQE6AXqAVDXT9pmWkFdBWMPgnsFaWVoXvMuKVFZLr0PkXRekHUbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jgy0rqCt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EWI1w3Zi; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jgy0rqCt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EWI1w3Zi"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 64DF5114AB9C;
-	Thu,  1 Aug 2024 04:20:05 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Thu, 01 Aug 2024 04:20:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722500405; x=1722586805; bh=H7muKU6xPx
-	iiC574MVyXY2tW6nwEw1V6twVarQakp4U=; b=jgy0rqCta6J+7gED8KqLhc6Cwl
-	3x8wgGTLzhYYTEz+3JXleSr0WMTkmEECSR2u8yx0ab3/PDlQlFCaWyjefNy1npfs
-	UgPJQamyjCIXImrkPFGyqUnjskkufHPJKOPv3J0JnzXjhO+sIppFOwWp7XX60WON
-	VC4Wpe0+MHiNYNRjajdVv3GrYkgQVZToxJ7McY7oYC7V5dv/kzVbYZq+pYzYxL66
-	62wYW4ALVdiZDiA2tEw+X4270IPC9r5r1PrJa6dZ3YwkeDBbo3AiMI6VutL/p7iB
-	AV9e4txgdMrFpdXQOgMJT3P9afMYYDFSszuqqy/ZkkJMjld9xzsXseOXdLVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722500405; x=1722586805; bh=H7muKU6xPxiiC574MVyXY2tW6nwE
-	w1V6twVarQakp4U=; b=EWI1w3Zin93d/pE13EKYqaAXDVZ9rU0Azylf93gs0JOI
-	+DjDUWQ+GjNtumSzju+vCD8w+4X6vxw0x5r2WftGX6f10Y2slEFC2EYdcf5gBDLW
-	UGJKnNXnMR/YFCgH0Qq1GYu3MOKDofa7ZNr0AxdUMWkqgqMMnANFv7ZZ82r30dja
-	BlSM8SxzbUHwGuwP7FpFKjmSyK6b7ISazYEEi/fgwn4wQ7cuYzp5ckbYhcMUFc1L
-	JgwWAA7c37eBKoINmHglFf8zr8WM7mmxgb47Phb9N+eidSW9E6MAQLnWNUPclSJA
-	NveUoR+DaB/REqixtO2C2cFIbKWJHqb/ceIRSVMozg==
-X-ME-Sender: <xms:NUWrZjRY_YQ8YHJYvVBhPeDpVok19lZ74UepEPxk2th4eel73wEXVw>
-    <xme:NUWrZkxiA-0rQmYeyD-o6xP70f8RdeFZDCbasM1RD8yQqRoUypSEKcasN3pHgrxGF
-    K88CXK-sHGUUFewqQ>
-X-ME-Received: <xmr:NUWrZo16MXLBbH77P1A6rO8EgiV4am-474i-zwCIQlPbOdvbJ9OWG3WddPFcPsS9qqOfQu870XCKOWER2QaDy-aCO-tfvSHKWnEeUGtBiZBOMIo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeekgddtvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:NUWrZjBIC5hQDLmG0aKz_iuFZg_KJGK4WxWn50CmEhuJnNpWOMH8tw>
-    <xmx:NUWrZsigLEhbYezmQrflhJ9i-g4eOoCg-zC_sZjEI2_XSVu01IPDhw>
-    <xmx:NUWrZnrBuvw1MsSdxodvTqMcvMXxrspHArKekXyXppGxxUuPoVWJvg>
-    <xmx:NUWrZniObQC1uhAmW8tgTQxsZQWSTzApebB5n9q2StJvy_KbmyVzBQ>
-    <xmx:NUWrZvv-TzeknhdJREioaO0cFeRqLpJEdcq0h9qfiVK64J-zAXqgwX0p>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Aug 2024 04:20:04 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ca11dfd2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Aug 2024 08:18:32 +0000 (UTC)
-Date: Thu, 1 Aug 2024 10:20:01 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/23] builtin/submodule--helper: fix various trivial
- memory leaks
-Message-ID: <ZqtFMYEGuKRu1amZ@tanuki>
-References: <cover.1721995576.git.ps@pks.im>
- <5220c91bda7bc766368c2925499e5d244a03697b.1721995576.git.ps@pks.im>
- <82f4bef1-57d9-4427-8316-5e63b573931d@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=uQDaezeH9uXWeMntTtiraJ9vB2Wjfy5oO8t7mfmx0TYUUUUoHOkU3ufGlJ09toe025yZw5fCTJm114ALrQlFL9yUArXqGFATk3KpaUpkJJ+9KbaQ6aiipHHxA9lud6MR6+iIPnZBvY4AMZQc+NdLpFFiEor+K0y/jRR6lt4AwCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 17052 invoked by uid 109); 1 Aug 2024 08:25:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Aug 2024 08:25:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29448 invoked by uid 111); 1 Aug 2024 08:26:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Aug 2024 04:26:01 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 1 Aug 2024 04:25:56 -0400
+From: Jeff King <peff@peff.net>
+To: Bo Anderson <mail@boanderson.me>
+Cc: Hong Jiang <ilford@gmail.com>, git@vger.kernel.org
+Subject: [PATCH] credential/osxkeychain: respect NUL terminator in username
+Message-ID: <20240801082556.GA640360@coredump.intra.peff.net>
+References: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
+ <20240731074228.GC595974@coredump.intra.peff.net>
+ <9AA59434-916C-4978-B3A1-33FD70619BFC@boanderson.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vmNML8P3q3qnHSWU"
-Content-Disposition: inline
-In-Reply-To: <82f4bef1-57d9-4427-8316-5e63b573931d@gmail.com>
-
-
---vmNML8P3q3qnHSWU
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9AA59434-916C-4978-B3A1-33FD70619BFC@boanderson.me>
 
-On Wed, Jul 31, 2024 at 11:52:26PM +0200, Rub=C3=A9n Justo wrote:
-> On Fri, Jul 26, 2024 at 02:15:09PM +0200, Patrick Steinhardt wrote:
->=20
-> > There are multiple trivial memory leaks in the submodule helper. Fix
-> > those.
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
->=20
-> Hi Patrick,
->=20
-> While working on another series, I fixed some leaks.  But, I haven't
-> sent any patches.
->=20
-> The series this message belongs to fixes all the leaks that my unsent
-> series addresses.  So, I won't bother sending my patches.
->=20
-> However, I think we can do better for the second leak solved in this
-> patch.  I leave my patch at the end of this message in case you want
-> to take a look.
+On Wed, Jul 31, 2024 at 02:07:32PM +0100, Bo Anderson wrote:
 
-Agreed, your patch looks way neater. I'll massage the patch a bit and
-then add it to the series with an "Original-patch-by" trailer.
+> This is correct.
+> 
+> The reason I couldn’t reproduce the problem and how few will have noticed up to
+> now is that for most users the CFStringGetCStringPtr call, which correctly uses
+> strlen, does what is necessary and we return early. I don't entirely know the
+> precise criteria where the fallback is used but I imagine it depends on certain
+> system encodings/locales.
+> 
+> The patch changing this to strlen looks good to me to apply to master & maint.
 
-Patrick
+Thanks. Here it is with a commit message. Hopefully Hong Jiang can
+confirm that this fixes the problem, and we can added a "Tested-by"
+trailer.
 
---vmNML8P3q3qnHSWU
-Content-Type: application/pgp-signature; name="signature.asc"
+-- >8 --
+Subject: [PATCH] credential/osxkeychain: respect NUL terminator in username
 
------BEGIN PGP SIGNATURE-----
+This patch fixes a case where git-credential-osxkeychain might output
+uninitialized bytes to stdout.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarRTAACgkQVbJhu7ck
-PpQMXQ/5AWLV47RqUGwrW1+bsBqa/XL6h6S9V/oWATN7DG6swPqdS9PNA3OukQdZ
-xgBxLaFQyrxi3Dmqq+WivaoRD1pC9vWW2uMgfUea38F0CcZuUVn3sDZziqp0piuO
-jQX2O1tW3TD/70ToTw1sHP75EiLMSn+xM/oHpv5FFcd0/WT9yjrWbZGTqg+jrcjf
-lM84qkr6JMpHr+UUOpzq1I6SLk/caalryYWZKxaBWBx2+Mu7HpzxAe0BhlG9bYYw
-MlZwiPFBIqU18AmVJXFJgGsqmO2iVHoBJ+lc12j1TXV/m+GsSLfyaEq9n5zZp8cI
-BfGwS32ldVSEhNZV7B5K0ZSBwBnq6k3q11CKffqio+SZQzLX+JkdHcPI6ghpAqNM
-zGYtd121nHztsd6R3SAXF2aSV964zbyZWcntIq+jepf+P5f7N8kiQoDCYxLhlUxg
-MwC+G4HIJoRrQCZBVgBq8H+77h+NROyjasUHeDmKjGvZbY0PbYmqt+I+T4a9goYa
-Axihq6n3idqkX28SuLP+uQFY5JTVyBqNp5I5CV0iKjRzyTZwL+5irzKWhRmb4eOA
-mjrra8OMa5DMQw/NdIwdg9cwy6hI9ukBvl408p4YddInaiJjclMUGM1t5eg95iW2
-i1JPKsGSErC2CGC+K/aNUtA2MHb25LAt4n8uLyQz+ublf8I9ws8=
-=OVk2
------END PGP SIGNATURE-----
+We need to get the username string from a system API using
+CFStringGetCString(). To do that, we get the max size for the string
+from CFStringGetMaximumSizeForEncoding(), allocate a buffer based on
+that, and then read into it. But then we print the entire buffer to
+stdout, including the trailing NUL and any extra bytes which were not
+needed. Instead, we should stop at the NUL.
 
---vmNML8P3q3qnHSWU--
+This code comes from 9abe31f5f1 (osxkeychain: replace deprecated
+SecKeychain API, 2024-02-17). The bug was probably overlooked back then
+because this code is only used as a fallback when we can't get the
+string via CFStringGetCStringPtr(). According to Apple's documentation:
+
+  Whether or not this function returns a valid pointer or NULL depends
+  on many factors, all of which depend on how the string was created and
+  its properties.
+
+So it's not clear how we could make a test for this, and we'll have to
+rely on manually testing on a system that triggered the bug in the first
+place.
+
+Reported-by: Hong Jiang <ilford@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is not even compile tested by me! It looks like an obvious enough
+fix, and I wanted to make sure we don't forget about it. But anybody who
+can reproduce or test would be greatly appreciated.
+
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 6ce22a28ed..1c8310d7fe 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -141,7 +141,7 @@ static void find_username_in_item(CFDictionaryRef item)
+ 				username_buf,
+ 				buffer_len,
+ 				ENCODING)) {
+-		write_item("username", username_buf, buffer_len - 1);
++		write_item("username", username_buf, strlen(username_buf));
+ 	}
+ 	free(username_buf);
+ }
+-- 
+2.46.0.452.g3bd18f5164
+
