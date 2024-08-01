@@ -1,64 +1,64 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91C918950A
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 11:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7657187FE5
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 11:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722510329; cv=none; b=px7jV5uZ07GV5LoVwLsBZ3whj4tFS5OYuhx4NXa9KT7yuQZdmPdrcLNbUpXxLgi04Se3bipIiJ4X/AJ0EQ9uaxDwkdH3mq+UkGNvuIQ1HfXW3lPMZ+wFtKmWNkXbCjfvTHBoCdZsDQnT78wMTLM84AxUfgoiZalqyeWxDlhvqOQ=
+	t=1722510332; cv=none; b=lL+Ys8P0/u8S3IU9GnbtKk6Kiw9nUTMVo/jGqjuWtbvV+dAtldOanZQcp6/9s90XYYytqjOhA1Cyzpc8Yth9neRxr9NCAty3be5E9TvUO3TfMlbSs8itxVntF0U8RQdqmIZSuU23e3kfc2JD4eZyu6m1fJp/zS0BdhGaoH4B+5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722510329; c=relaxed/simple;
-	bh=7fe8b1Q8Pk/pmk9PSJwbpwxLZnOxvrkFTJnvVqloIGo=;
+	s=arc-20240116; t=1722510332; c=relaxed/simple;
+	bh=3maJGZLQFy6uzTGwfimpdYlYH7mPuIRSv6/kGJ2VmP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fu0/pQKe8VDkmwmBn+QAgAMEaWiVaIOMrhfy/T/Nr9ACNjrT9sC1XdABA0QCMiBh3aV+sfyJVZqTJ6yIF9FIbUkrx0/SiaehOz5sezSkRhIjS7sscd76r0ZTJfmSXZdZDw0DFVm31ruCMd244pRL9kmMNKjtnuQHAJc07R8G5MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9SohPGR; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version; b=tyIb4clDWsfsE8vJZa9pmzFZkx03n/i7X7I3jSyo/lqtHHxDLrFj937CIUEgc7j5IBh7EWj6Ync9d93pSyodIGh2IPD7nP99WwedCn/lTSZpHD5byZF/k0/e61JhSTzNZiyhwg24HgvaYNByY3bHSK7HOsHBhyGWwTs0jsL1rxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Phne8xWz; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9SohPGR"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1fc49c0aaffso51052195ad.3
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 04:05:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Phne8xWz"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc4fcbb131so60184655ad.3
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 04:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722510326; x=1723115126; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722510329; x=1723115129; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ylQ+xgFjJ2e2nKDrWOjwE4C50vKRhEy7qTSwCzeQ9JE=;
-        b=I9SohPGRea/7BQM4x8X+TlcP2+NX6AWd3JXOwqhJH9xGpdOSol2OYqVO8afyFlfptL
-         DN0DBpbAEB4/4RKXIrJI7T7scinWLzbKt5/bVgb6uDgoiwCvQYZEHQL9F+aMtRez5j9g
-         jJtvImngrFvPLl/PEQJGXhDWsx6cwEs0OnX8HW9ftzo3L50KVoZRxFcaFRqxbYGjAars
-         caWapeeXMkspA9zWVgtyaK1b5Iskiq35mhFY67K7TdUrFlnSE75Ya4np5ihtCSuby9EC
-         xj/QYGDzsgKp65+2JLxXOozBRI0iAwmdYCIv0x7iZINMfowQFnInSaA1NtR9YwUsaSDy
-         k/Kg==
+        bh=gWFYUT0nNbkUmcoynWmQbbaLqTcO6uJXhtAvh7Z3QKs=;
+        b=Phne8xWzzEpsyad2/qWOVLl7VcUvK6vAVBBECG34HnTWYOug/ZJsGTtIc399jdl5NN
+         lSzHt1qf3OBH6IZ3ZzHaiI80tquLhH0QfLf7ZbKoqlXd4blzo4yvvNd26Oocr4JCHyVA
+         9lpUFKB0fjJJtu7+ubAWFqwAqZ4UhRLOO7S56w6LAQ1h3ayChZay4vxKOHgaLGFSxPRi
+         Vhjn1XjHScolFmXMzGMA1H+nm5uxIjJYi28/PivnhGENtKhlM7F1ztP6t14wbM940IkM
+         PAFQkamYODQul0uIWAFSazdZVe4qsQQsX5fGr2s+1uCtQk6/A8dqY1XJeYgLFktCgpGM
+         k92g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722510326; x=1723115126;
+        d=1e100.net; s=20230601; t=1722510329; x=1723115129;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ylQ+xgFjJ2e2nKDrWOjwE4C50vKRhEy7qTSwCzeQ9JE=;
-        b=aISmSnsVh6Pd8PMLgxOiyegHa5TzwHF/LOWBKrsDEWz7dE0Fc/UiMimm2oBp6R+8K8
-         +pLTImZJQCoNxeImP0jbNIe8FvuZ5abBqj8p+0CdLeSxOTLhePeZlx0J/kcp5GH0eiTW
-         cxoSnqzQ/kouZaEIo+hDNSkZtzBonhHlraIz4X4OWXFywld8TCWNHYldOP2tCAB0/u8p
-         GFHcEGUL7FFAxV0duJJOweYsFen6GqoXHRhKOdRQvAwTNzkgE5I55gb/jprHNr2nrDer
-         sCPnr81Fb1L3Brj+pavim+6WrWkrXdle1IKQIhIk7+ZTeL9WlUT89i/p5b3Be36j+oql
-         MWHg==
-X-Gm-Message-State: AOJu0Yyt0RSBSX1Co8jHYla8J1xrpYch/ZeL6YchiRAiuMHs1ymgMnAy
-	FRyG9tPC52CnV9xhmbbguWa2o6AzBweORb0etTQ1/ug7EFWnY+H+mWVhWA==
-X-Google-Smtp-Source: AGHT+IHCBWD1wn3Nu+Xw7glsT3oMmTLVuaTzk4h2VxC+V8xkJFVDVk5hyjpc9ROcxHSrz7zedztNpg==
-X-Received: by 2002:a17:902:d487:b0:1fd:67c2:f97f with SMTP id d9443c01a7336-1ff4cea5d79mr236995ad.28.1722510325973;
-        Thu, 01 Aug 2024 04:05:25 -0700 (PDT)
+        bh=gWFYUT0nNbkUmcoynWmQbbaLqTcO6uJXhtAvh7Z3QKs=;
+        b=GWCX6PvPkj3+7scRv5PJkFPC6izhkNIj0sZYh/nFyygK1GYVMZJNJj+CvC7h3mlF1S
+         0jFqrdlacYyldi7Ueo0PvNNXTTMiOFqLGcGNuI/oE4kaggpORjQu6Bvl6f//79j1/M+d
+         Jmhrypy4bk02oqzwXvxzCpSP8mYYi1Fxl+P9QHPReHvn1wonVpbVRYQk3iACjQofU+f9
+         Dc65JL2tXW7ToUe5x8T8sepEMp328jpHMnRPJzZ5aeos/TNIZ5tj6IXd+Am/a7W/84qZ
+         x+Zmxu6kzHEbrle96smgEvg8ObWvkEy6mUAlH4y3UdKuh2xfnkoxn2kPLlMLnozm8XsZ
+         G99w==
+X-Gm-Message-State: AOJu0Yw5qarC0r0uZzB1QI4q/Hc3XS/eCvjrG7twTqDF5gSStMhxDDfL
+	B6xSFDuoIPVRciIVdynUEBOXzbSGvIFfdkRYb+8LQ4244jDdURvomzkgiQ==
+X-Google-Smtp-Source: AGHT+IGmI1sZunKvQ4YJc3vZYOqIsoVGz16xnT7DrjpZ52uGqUX0rkyJGdNnbeZvF+KWFNAqm/PULg==
+X-Received: by 2002:a17:902:e748:b0:1fb:62e8:ae98 with SMTP id d9443c01a7336-1ff4ce51dcbmr2285505ad.3.1722510329158;
+        Thu, 01 Aug 2024 04:05:29 -0700 (PDT)
 Received: from Ubuntu.. ([106.194.76.199])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fed7edd90dsm136663985ad.161.2024.08.01.04.05.23
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fed7edd90dsm136663985ad.161.2024.08.01.04.05.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 04:05:25 -0700 (PDT)
+        Thu, 01 Aug 2024 04:05:28 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 2/7] reftable: change the type of array indices to 'size_t' in reftable/pq.c
-Date: Thu,  1 Aug 2024 16:29:43 +0530
-Message-ID: <20240801110453.5087-3-chandrapratap3519@gmail.com>
+Subject: [PATCH v7 3/7] t: move reftable/pq_test.c to the unit testing framework
+Date: Thu,  1 Aug 2024 16:29:44 +0530
+Message-ID: <20240801110453.5087-4-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240801110453.5087-1-chandrapratap3519@gmail.com>
 References: <20240725093855.4201-1-chandrapratap3519@gmail.com>
@@ -71,60 +71,153 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The variables 'i', 'j', 'k' and 'min' are used as indices for
-'pq->heap', which is an array. Additionally, 'pq->len' is of
-type 'size_t' and is often used to assign values to these
-variables. Hence, change the type of these variables from 'int'
-to 'size_t'.
+reftable/pq_test.c exercises a priority queue defined by
+reftable/pq.{c, h}. Migrate reftable/pq_test.c to the unit testing
+framework. Migration involves refactoring the tests to use the unit
+testing framework instead of reftable's test framework, and
+renaming the tests to align with unit-tests' standards.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- reftable/pq.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Makefile                                      |  2 +-
+ reftable/reftable-tests.h                     |  1 -
+ t/helper/test-reftable.c                      |  1 -
+ .../pq_test.c => t/unit-tests/t-reftable-pq.c | 39 ++++++++-----------
+ 4 files changed, 17 insertions(+), 26 deletions(-)
+ rename reftable/pq_test.c => t/unit-tests/t-reftable-pq.c (61%)
 
-diff --git a/reftable/pq.c b/reftable/pq.c
-index 1a180c5fa6..2b5b7d1c0e 100644
---- a/reftable/pq.c
-+++ b/reftable/pq.c
-@@ -22,15 +22,15 @@ int pq_less(struct pq_entry *a, struct pq_entry *b)
+diff --git a/Makefile b/Makefile
+index d6479092a0..1ee83e98dc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1340,6 +1340,7 @@ UNIT_TEST_PROGRAMS += t-oidmap
+ UNIT_TEST_PROGRAMS += t-oidtree
+ UNIT_TEST_PROGRAMS += t-prio-queue
+ UNIT_TEST_PROGRAMS += t-reftable-basics
++UNIT_TEST_PROGRAMS += t-reftable-pq
+ UNIT_TEST_PROGRAMS += t-reftable-record
+ UNIT_TEST_PROGRAMS += t-strbuf
+ UNIT_TEST_PROGRAMS += t-strcmp-offset
+@@ -2681,7 +2682,6 @@ REFTABLE_OBJS += reftable/writer.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/dump.o
+ REFTABLE_TEST_OBJS += reftable/merged_test.o
+-REFTABLE_TEST_OBJS += reftable/pq_test.o
+ REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+ REFTABLE_TEST_OBJS += reftable/stack_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
+index 114cc3d053..67283faf06 100644
+--- a/reftable/reftable-tests.h
++++ b/reftable/reftable-tests.h
+@@ -12,7 +12,6 @@ license that can be found in the LICENSE file or at
+ int basics_test_main(int argc, const char **argv);
+ int block_test_main(int argc, const char **argv);
+ int merged_test_main(int argc, const char **argv);
+-int pq_test_main(int argc, const char **argv);
+ int record_test_main(int argc, const char **argv);
+ int readwrite_test_main(int argc, const char **argv);
+ int stack_test_main(int argc, const char **argv);
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index aa6538a8da..b808ad3e12 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -7,7 +7,6 @@ int cmd__reftable(int argc, const char **argv)
+ 	/* test from simple to complex. */
+ 	block_test_main(argc, argv);
+ 	tree_test_main(argc, argv);
+-	pq_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
+ 	merged_test_main(argc, argv);
+ 	stack_test_main(argc, argv);
+diff --git a/reftable/pq_test.c b/t/unit-tests/t-reftable-pq.c
+similarity index 61%
+rename from reftable/pq_test.c
+rename to t/unit-tests/t-reftable-pq.c
+index b7d3c80cc7..a78aba9e71 100644
+--- a/reftable/pq_test.c
++++ b/t/unit-tests/t-reftable-pq.c
+@@ -6,35 +6,28 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
  
- struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
+-#include "system.h"
+-
+-#include "basics.h"
+-#include "constants.h"
+-#include "pq.h"
+-#include "record.h"
+-#include "reftable-tests.h"
+-#include "test_framework.h"
++#include "test-lib.h"
++#include "reftable/constants.h"
++#include "reftable/pq.h"
+ 
+ void merged_iter_pqueue_check(struct merged_iter_pqueue pq)
  {
--	int i = 0;
-+	size_t i = 0;
- 	struct pq_entry e = pq->heap[0];
- 	pq->heap[0] = pq->heap[pq->len - 1];
- 	pq->len--;
+-	int i;
+-	for (i = 1; i < pq.len; i++) {
+-		int parent = (i - 1) / 2;
+-
+-		EXPECT(pq_less(&pq.heap[parent], &pq.heap[i]));
++	for (size_t i = 1; i < pq.len; i++) {
++		size_t parent = (i - 1) / 2;
++		check(pq_less(&pq.heap[parent], &pq.heap[i]));
+ 	}
+ }
  
- 	while (i < pq->len) {
--		int min = i;
--		int j = 2 * i + 1;
--		int k = 2 * i + 2;
-+		size_t min = i;
-+		size_t j = 2 * i + 1;
-+		size_t k = 2 * i + 2;
- 		if (j < pq->len && pq_less(&pq->heap[j], &pq->heap[i]))
- 			min = j;
- 		if (k < pq->len && pq_less(&pq->heap[k], &pq->heap[min]))
-@@ -46,14 +46,14 @@ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
- 
- void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
+-static void test_pq(void)
++static void t_pq(void)
  {
--	int i = 0;
-+	size_t i = 0;
+-	struct merged_iter_pqueue pq = { NULL };
++	struct merged_iter_pqueue pq = { 0 };
+ 	struct reftable_record recs[54];
+-	int N = ARRAY_SIZE(recs) - 1, i;
++	size_t N = ARRAY_SIZE(recs) - 1, i;
+ 	char *last = NULL;
  
- 	REFTABLE_ALLOC_GROW(pq->heap, pq->len + 1, pq->cap);
- 	pq->heap[pq->len++] = *e;
+ 	for (i = 0; i < N; i++) {
+ 		struct strbuf refname = STRBUF_INIT;
+-		strbuf_addf(&refname, "%02d", i);
++		strbuf_addf(&refname, "%02"PRIuMAX, (uintmax_t)i);
  
- 	i = pq->len - 1;
- 	while (i > 0) {
--		int j = (i - 1) / 2;
-+		size_t j = (i - 1) / 2;
- 		if (pq_less(&pq->heap[j], &pq->heap[i]))
- 			break;
- 		SWAP(pq->heap[j], pq->heap[i]);
+ 		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
+ 		recs[i].u.ref.refname = strbuf_detach(&refname, NULL);
+@@ -48,7 +41,6 @@ static void test_pq(void)
+ 
+ 		merged_iter_pqueue_add(&pq, &e);
+ 		merged_iter_pqueue_check(pq);
+-
+ 		i = (i * 7) % N;
+ 	} while (i != 1);
+ 
+@@ -56,9 +48,9 @@ static void test_pq(void)
+ 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
+ 		merged_iter_pqueue_check(pq);
+ 
+-		EXPECT(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
++		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
+ 		if (last)
+-			EXPECT(strcmp(last, e.rec->u.ref.refname) < 0);
++			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
+ 		last = e.rec->u.ref.refname;
+ 	}
+ 
+@@ -67,8 +59,9 @@ static void test_pq(void)
+ 	merged_iter_pqueue_release(&pq);
+ }
+ 
+-int pq_test_main(int argc, const char *argv[])
++int cmd_main(int argc, const char *argv[])
+ {
+-	RUN_TEST(test_pq);
+-	return 0;
++	TEST(t_pq(), "pq works");
++
++	return test_done();
+ }
 -- 
 2.45.GIT
 
