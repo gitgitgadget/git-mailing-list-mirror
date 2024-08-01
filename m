@@ -1,38 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C0CEEB3
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 09:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4213C13D53A
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 09:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722504953; cv=none; b=g9+Lmd+DMEthkYcCfxg/CaUGpFZN8KzDOvEIJh5bg/Vq8fxj/2lhhTQJYQ5aIB/E4ExE/MoLrcC88o9U6kC0bv6NCr19DRvToC9Si/nM2m2RPI3zAeAd7nxBE9kS5F2kcT9c3BtJm6ztmyh+W2T+ucOJ+m7QnxWAQRlPbcVAxJo=
+	t=1722505089; cv=none; b=Y5c/y26IfwsJo0twdoW5aFM5N4O0zGoYe1P3t/tOK7cXCPjg5H7gEBzHI0FHBUaA1e2R151CHsbBWlUq5PE3QJ79Z04cIw0Y8p2+dRnP2dz3yMnoDWA359G8ghb9nKgQKgjAR3dKUbyGlB56Bqe8otoWa8Z7ly1Wj6VBIqsqXx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722504953; c=relaxed/simple;
-	bh=wNg5oCgOUhtoAibYjIZ2ZA1ekaxCZgtdWRDuI2sDNW0=;
+	s=arc-20240116; t=1722505089; c=relaxed/simple;
+	bh=S5KQLIuGrhYXJWTqm/OM3tHzAccfz2ZcUFMesq8Q1es=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TqSIgfj4MvhnZrZLtXDDIiuBiYmCpJWsscYbcd35FrzBvN0oTW+9TgEaTFx0Rh2CaKQazBhCY4RDEYQAGRnGZWGPxRVaJJ7L/niBGhfB05jQUf07I1/Ro+NycEOf80guixunbeeFtasWdSDfB+emp7cS4mrxl60TpEAoUI92V+U=
+	 Content-Type:Content-Disposition:In-Reply-To; b=t5+4nhZcECT9dFkWbKkgyek1V8Al3p4+2YHgDAVfoUPh97eRYP0ckYDEN4OEtFmctb9t+90XgakdwTDhiYS8Upsvc5DPKTjmwlLaULKiPp13YcMlTfEodEj7dNPf5LC664VLQmk7XQt21ZeeEXm1sZw0CHe932iZkB5xKOfnHi8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 18562 invoked by uid 109); 1 Aug 2024 09:35:51 -0000
+Received: (qmail 18757 invoked by uid 109); 1 Aug 2024 09:38:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Aug 2024 09:35:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Aug 2024 09:38:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30181 invoked by uid 111); 1 Aug 2024 09:35:55 -0000
+Received: (qmail 30190 invoked by uid 111); 1 Aug 2024 09:38:10 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Aug 2024 05:35:55 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Aug 2024 05:38:10 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 1 Aug 2024 05:35:50 -0400
+Date: Thu, 1 Aug 2024 05:38:05 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/19] midx: teach `prepare_midx_pack()` about
+Subject: Re: [PATCH v2 05/19] midx: teach `nth_midxed_object_oid()` about
  incremental MIDXs
-Message-ID: <20240801093550.GD1159276@coredump.intra.peff.net>
+Message-ID: <20240801093805.GE1159276@coredump.intra.peff.net>
 References: <cover.1717715060.git.me@ttaylorr.com>
  <cover.1721250704.git.me@ttaylorr.com>
- <f88569c819292a824c78cdffd4e1fbc329f07f8e.1721250704.git.me@ttaylorr.com>
+ <ec57ff434900f2b95e31fbdf854b5ebbf46b5c78.1721250704.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,78 +41,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f88569c819292a824c78cdffd4e1fbc329f07f8e.1721250704.git.me@ttaylorr.com>
+In-Reply-To: <ec57ff434900f2b95e31fbdf854b5ebbf46b5c78.1721250704.git.me@ttaylorr.com>
 
-On Wed, Jul 17, 2024 at 05:12:07PM -0400, Taylor Blau wrote:
+On Wed, Jul 17, 2024 at 05:12:10PM -0400, Taylor Blau wrote:
 
-> The function `prepare_midx_pack()` is part of the midx.h API and
-> loads the pack identified by the MIDX-local 'pack_int_id'. This patch
-> prepares that function to be aware of an incremental MIDX world.
+> The function `nth_midxed_object_oid()` returns the object ID for a given
+> object position in the MIDX lexicographic order.
 > 
-> To do this, introduce the second of the two general purpose helpers
-> mentioned in the previous commit. This commit introduces
-> `midx_for_pack()`, which is the pack-specific analog of
-> `midx_for_object()`, and works in the same fashion.
+> Teach this function to instead operate over the concatenated
+> lexicographic order defined in an earlier step so that it is able to be
+> used with incremental MIDXs.
 > 
-> Like `midx_for_object()`, this function chases down the '->base_midx'
-> field until it finds the MIDX layer within the chain that contains the
-> given pack.
-> 
-> Use this function within `prepare_midx_pack()` so that the `pack_int_id`
-> it expects is now relative to the entire MIDX chain, and that it
-> prepares the given pack in the appropriate MIDX.
+> To do this, we need to both (a) adjust the bounds check for the given
+> 'n', as well as record the MIDX-local position after chasing the
+> `->base_midx` pointer to find the MIDX which contains that object.
 
-OK, I'm adequately prepared for more global/local confusion. :)
+Yep, this makes sense. The hard thing about reviewing this, I think, is
+that each individual step like this is going to make sense, but I'll
+have very little clue what spots (if any) were missed.
 
-> -int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id)
-> +static uint32_t midx_for_pack(struct multi_pack_index **_m,
-> +			      uint32_t pack_int_id)
->  {
-> -	struct strbuf pack_name = STRBUF_INIT;
-> -	struct packed_git *p;
-> +	struct multi_pack_index *m = *_m;
-> +	while (m && pack_int_id < m->num_packs_in_base)
-> +		m = m->base_midx;
-
-OK, so we chase down the pack id as before...
-
-> +	if (!m)
-> +		BUG("NULL multi-pack-index for pack ID: %"PRIu32, pack_int_id);
-> +
-> +	if (pack_int_id >= m->num_packs + m->num_packs_in_base)
->  		die(_("bad pack-int-id: %u (%u total packs)"),
-> -		    pack_int_id, m->num_packs);
-> +		    pack_int_id, m->num_packs + m->num_packs_in_base);
-
-...with the same sanity checks...
-
-> +	*_m = m;
-> +
-> +	return pack_int_id - m->num_packs_in_base;
-
-...and the same global to local offset conversion. Looks good so far.
-
-> +int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
-> +		      uint32_t pack_int_id)
-> +{
-> +	struct strbuf pack_name = STRBUF_INIT;
-> +	struct packed_git *p;
-> +	uint32_t local_pack_int_id = midx_for_pack(&m, pack_int_id);
-
-This one uses a separate variable with the word "local" in it. Helpful. :)
-
-> +	if (m->packs[local_pack_int_id])
->  		return 0;
->  
->  	strbuf_addf(&pack_name, "%s/pack/%s", m->object_dir,
-> -		    m->pack_names[pack_int_id]);
-> +		    m->pack_names[local_pack_int_id]);
-
-OK, and then this is just existing lazy-load of the pack struct. Good.
-
-I guess if you just reused pack_int_id for the local id, the diff would
-be much smaller (this part would remain exactly the same). I dunno which
-is better, but it was a little curious that the two patches differed in
-approach. Probably not worth caring too much about, though.
+To some degree I think the proof will be in the pudding. If you missed
+any helpers, then the end result is going to crash and burn quite badly
+when used with a chained midx, and we'd see it in the test suite. And
+the nice thing is that most of this is abstracted inside these helpers,
+so we know the set of tricky places is generally limited to the helpers,
+and not arbitrary bits of midx code.
 
 -Peff
