@@ -1,752 +1,87 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC4F38DD6
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 22:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DC814A4DE
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 22:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722551869; cv=none; b=Vp1HXx0sY1fHodQeTVJj+WL4wPfVWkDkNrDWlFBdQU2JNzvh1IuqAp7kFwdG+mzWVi/UW63xPRm1obj63t50acwIIFVF9J+GQ6etoZOp78BdSAJtRWkfhjS+/5yPCTtZ3kxoArTgNql/k6N6yMU8vWpxqJoRLclETXCFhTMM6/A=
+	t=1722553024; cv=none; b=K7udmw+chVoEQchKasOgsNOhTbkg6V2vRoANmimVsM8L9ezpnynjXUlhM5WJHirXO9qhTEHXYEVLJNnyp4pUpU+G/9RMwu6kwHPYFpoGpjKXaajvvRNMdJE0V3jgoponQkwdRA0s6kmMgRQlIDWTl+shU/V46EDF5HiTD1eiWqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722551869; c=relaxed/simple;
-	bh=wyxUR1G0yFKWQUh6LavqcFrE31Myym9jVxWotlQhodQ=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=g+ujgnPrr/DyuMDHUawBPWm/woYIIU3MJiWbj85Sv5q2y4azQsKUjdnooDJNOA7OkqKOaET1Lx03ji1ooKvnDXXafEvXL8vpdTBKCHG1b97JK2XYt+MhcY+Y5zxOCxkOwY+sdZIKUl/xGGq4BAzK2lOBP0JgWkP/EuS3/wPlvV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rEFgvrde; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722553024; c=relaxed/simple;
+	bh=scqa7cJBxWXzXK0QbH7pWwe6XDyopHVUvxBcKKthMLQ=;
+	h=Date:From:To:Subject:Message-Id:Mime-Version:Content-Type; b=MnVth6E2bp/F2DOnt7PVGiYFuXMacm47Bzpt8onxulhiI1L2cbbdmLk8+dqtmdU0whFkPNaabzQ/XOXMkerb2tERRHy10yKrIFfxHFpfGDQoNZT53V1Yd7cbtTsc2SVi0DnASWYS49VO1t0hemeu0B1T2jeQmR+oknn3SV+L584=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Ik2CVrif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rEFgvrde"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0786932C88;
-	Thu,  1 Aug 2024 18:37:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=w
-	yxUR1G0yFKWQUh6LavqcFrE31Myym9jVxWotlQhodQ=; b=rEFgvrdeYg0wbxbk1
-	/KJZNUWAOEpdqRmD//2X7IvZsSFAjr1sUqBtnwbSbP+d2brihx9TzqnZGkeDQl4N
-	O5zbkn4jhN7CZacmE4ffa/70FHltjIEnKEVL44EuGeyz66ws5L1IlEha4n77VLFK
-	04RjKNUege+poMaY/WdvRN+I7o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id F3E2232C87;
-	Thu,  1 Aug 2024 18:37:39 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 041FD32C84;
-	Thu,  1 Aug 2024 18:37:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Ik2CVrif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB13C32786
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 22:57:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1722553023;
+	bh=scqa7cJBxWXzXK0QbH7pWwe6XDyopHVUvxBcKKthMLQ=;
+	h=Date:From:To:Subject:From;
+	b=Ik2CVrifAFvD8mJ5oaPzo0STQPA7bibAx2umpBrxDGl5RwwgrKlPQIoC4vTLjf/rh
+	 fbuN7JxlUeYNH5Rt+7Zpx0wN7GIK6FpRuMrlCCZeaV1uB9iCL7pBYG8JEhKaDOvtaB
+	 9WFoZ8ZTh7gmAhRMdaOFy5wD/kNdEB+QcCUmSJxY=
+Date: Thu, 1 Aug 2024 15:57:02 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
 To: git@vger.kernel.org
-Subject: What's cooking in git.git (Aug 2024, #01; Thu, 1)
-X-master-at: 406f326d271e0bacecdb00425422c5fa3f314930
-X-next-at: e559c4bf1a306cf5814418d318cc0fea070da3c7
-Date: Thu, 01 Aug 2024 15:37:32 -0700
-Message-ID: <xmqqsevnhntf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: quiltimport mode detection oddity
+Message-Id: <20240801155702.70242c31d476c46c84ee11a3@linux-foundation.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A52C675C-5056-11EF-9176-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
 
-The first two batches of topics have graduated to 'master' and
-'next' has been rewound on top of 'master'.
+Hi all.
 
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
+hp2:/usr/src/mm> git --version
+git version 2.43.0
 
-With maint, master, next, seen, todo:
 
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
+I'm getting an odd warning from quiltimport:
 
-With all the integration branches and topics broken out:
+hp2:/usr/src/mm> ls -l tools/testing/radix-tree/generated/autoconf.h
+-rw-rw-r-- 1 akpm akpm 54 Aug  1 15:43 tools/testing/radix-tree/generated/autoconf.h
 
-	https://github.com/gitster/git/
+hp2:/usr/src/mm> git quiltimport --series series
+tools-separate-out-shared-radix-tree-components.patch
+warning: tools/testing/radix-tree/generated/autoconf.h has type 100644, expected 100664
 
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
 
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
 
-Release tarballs are available at:
 
-	https://www.kernel.org/pub/software/scm/git/
+That patch has
 
---------------------------------------------------
-[Graduated to 'master']
+diff --git a/tools/testing/radix-tree/generated/autoconf.h a/tools/testing/radix-tree/generated/autoconf.h
+deleted file mode 100664
+--- a/tools/testing/radix-tree/generated/autoconf.h
++++ /dev/null
+@@ -1,2 +0,0 @@
+-#include "bit-length.h"
+-#define CONFIG_XARRAY_MULTI 1
 
-* ad/merge-with-diff-algorithm (2024-07-13) 1 commit
-  (merged to 'next' on 2024-07-16 at 90fe5aff4d)
- + merge-recursive: honor diff.algorithm
 
- Many Porcelain commands that internally use the merge machinery
- were taught to consistently honor the diff.algorithm configuration.
- source: <pull.1743.v3.git.git.1720889507066.gitgitgadget@gmail.com>
 
 
-* as/show-ref-option-help-update (2024-07-25) 1 commit
-  (merged to 'next' on 2024-07-26 at bbdc971c38)
- + show-ref: improve short help messages of options
+after quiltimport:
 
- A few descriptions in "git show-ref -h" have been clarified.
- source: <20240724111116.91615-1-ash@kambanaria.org>
+hp2:/usr/src/mm> ls -l tools/testing/radix-tree/generated/autoconf.h
+ls: cannot access 'tools/testing/radix-tree/generated/autoconf.h': No such file or directory
 
 
-* cp/unit-test-reftable-merged (2024-07-12) 7 commits
-  (merged to 'next' on 2024-07-23 at 88d2a9ee28)
- + t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
- + t-reftable-merged: use reftable_ref_record_equal to compare ref records
- + t-reftable-merged: add tests for reftable_merged_table_max_update_index
- + t-reftable-merged: improve the const-correctness of helper functions
- + t-reftable-merged: improve the test t_merged_single_record()
- + t: harmonize t-reftable-merged.c with coding guidelines
- + t: move reftable/merged_test.c to the unit testing framework
 
- Another reftable test has been ported to use the unit test framework.
- source: <20240712055041.6476-1-chandrapratap3519@gmail.com>
+I can't figure what I've done to make quiltimport (git-apply?) think that the file
+had 100644 permissions.  Maybe the lack of an index line tripped it up.
 
 
-* jc/checkout-no-op-switch-errors (2024-07-02) 1 commit
-  (merged to 'next' on 2024-07-22 at 9573259db9)
- + checkout: special case error messages during noop switching
+(btw, "has type" should be "has permissions" in that message, no?)
 
- "git checkout --ours" (no other arguments) complained that the
- option is incompatible with branch switching, which is technically
- correct, but found confusing by some users.  It now says that the
- user needs to give pathspec to specify what paths to checkout.
- source: <xmqqikxnqzz4.fsf@gitster.g>
 
+Thanks.
 
-* jc/doc-one-shot-export-with-shell-func (2024-07-23) 1 commit
-  (merged to 'next' on 2024-07-23 at 621c29e4f6)
- + CodingGuidelines: document a shell that "fails" "VAR=VAL shell_func"
-
- It has been documented that we avoid "VAR=VAL shell_func" and why.
- source: <xmqqwmld55y1.fsf@gitster.g>
-
-
-* jc/doc-rebase-fuzz-vs-offset-fix (2024-07-25) 1 commit
-  (merged to 'next' on 2024-07-26 at 6f784b0c1c)
- + doc: difference in location to apply is "offset", not "fuzz"
-
- "git rebase --help" referred to "offset" (the difference between
- the location a change was taken from and the change gets replaced)
- incorrectly and called it "fuzz", which has been corrected.
- source: <xmqqplr1fkla.fsf@gitster.g>
-
-
-* jc/doc-reviewing-guidelines-positive-reviews (2024-07-25) 1 commit
-  (merged to 'next' on 2024-07-26 at 8f878efb0d)
- + ReviewingGuidelines: encourage positive reviews more
-
- The reviewing guidelines document now explicitly encourages people
- to give positive reviews and how.
- source: <xmqqle1pjwtt.fsf@gitster.g>
-
-
-* jc/how-to-maintain-updates (2024-07-19) 2 commits
-  (merged to 'next' on 2024-07-26 at c950efa46d)
- + howto-maintain: update daily tasks
- + howto-maintain: cover a whole development cycle
-
- Doc update.
- source: <xmqq1q3phzpi.fsf@gitster.g>
-
-
-* jt/doc-post-receive-hook-update (2024-07-15) 1 commit
-  (merged to 'next' on 2024-07-17 at 624ac4ebe2)
- + doc: clarify post-receive hook behavior
-
- Doc update.
- source: <20240715183739.7808-1-jltobler@gmail.com>
-
-
-* kn/ci-clang-format (2024-07-23) 6 commits
-  (merged to 'next' on 2024-07-23 at 3aca45d08a)
- + ci/style-check: add `RemoveBracesLLVM` in CI job
- + check-whitespace: detect if no base_commit is provided
- + ci: run style check on GitHub and GitLab
- + clang-format: formalize some of the spacing rules
- + clang-format: avoid spacing around bitfield colon
- + clang-format: indent preprocessor directives after hash
- (this branch is used by ps/doc-more-c-coding-guidelines.)
-
- A CI job that use clang-format to check coding style issues in new
- code has been added.
- source: <20240723082111.874382-1-karthik.188@gmail.com>
-
-
-* pw/add-patch-with-suppress-blank-empty (2024-07-20) 2 commits
-  (merged to 'next' on 2024-07-22 at 5437b7dee3)
- + add-patch: use normalize_marker() when recounting edited hunk
- + add-patch: handle splitting hunks with diff.suppressBlankEmpty
-
- "git add -p" by users with diff.suppressBlankEmpty set to true
- failed to parse the patch that represents an unmodified empty line
- with an empty line (not a line with a single space on it), which
- has been corrected.
- source: <pull.1763.v2.git.1721491320.gitgitgadget@gmail.com>
-
-
-* rj/make-cleanup (2024-07-18) 2 commits
-  (merged to 'next' on 2024-07-22 at bf3991f70f)
- + config.mak.uname: remove unused uname_P variable
- + Makefile: drop -Wno-universal-initializer from SP_EXTRA_FLAGS
-
- A build tweak knob has been simplified by not setting the value
- that is already the default; another unused one has been removed.
- source: <0d132370-3e07-4332-bcfb-c4450100d736@ramsayjones.plus.com>
-
-
-* rs/t-strvec-use-test-msg (2024-07-16) 3 commits
-  (merged to 'next' on 2024-07-16 at 3e860b3f12)
- + t-strvec: fix type mismatch in check_strvec
-  (merged to 'next' on 2024-07-15 at f26e434515)
- + t-strvec: improve check_strvec() output
-  (merged to 'next' on 2024-07-08 at c28c2553de)
- + t-strvec: use test_msg()
-
- Unit test clean-up.
- source: <35b0ba6b-d485-44f2-a19f-3ce816f8b435@web.de>
- source: <983be396-f47c-4573-8c33-af8367f8ddbe@web.de>
- source: <1521ed89-989e-452b-b7fc-9e73672e0764@web.de>
-
-
-* tn/doc-commit-fix (2024-07-22) 1 commit
-  (merged to 'next' on 2024-07-23 at eb73e04ee4)
- + doc: remove dangling closing parenthesis
-
- Docfix.
- source: <20240722225302.124356-1-tomasn@posteo.net>
-
---------------------------------------------------
-[New Topics]
-
-* dd/notes-empty-no-edit-by-default (2024-07-29) 1 commit
-  (merged to 'next' on 2024-08-01 at fe75c53260)
- + notes: do not trigger editor when adding an empty note
-
- "git notes add -m '' --allow-empty" and friends that take prepared
- data to create notes should not invoke an editor, but it started
- doing so since Git 2.42, which has been corrected.
-
- Will merge to 'master'.
- source: <20240729151639.19192-2-ddiss@suse.de>
-
-
-* ks/unit-test-comment-typofix (2024-07-29) 1 commit
-  (merged to 'next' on 2024-08-01 at 35c44187b1)
- + unit-tests/test-lib: fix typo in check_pointer_eq() description
-
- Typofix.
-
- Will merge to 'master'.
- source: <20240729043303.3486-1-five231003@gmail.com>
-
-
-* dh/encoding-trace-optim (2024-07-31) 1 commit
-  (merged to 'next' on 2024-08-01 at c5e023eeaf)
- + convert: return early when not tracing
-
- An expensive operation to prepare tracing was done in re-encoding
- code path even when the tracing was not requested, which has been
- corrected.
-
- Will merge to 'master'.
- source: <pull.1744.v6.git.git.1722432839473.gitgitgadget@gmail.com>
-
-
-* ps/refs-wo-the-repository (2024-07-30) 5 commits
- - refs/reftable: stop using `the_repository`
- - refs/packed: stop using `the_repository`
- - refs/files: stop using `the_repository`
- - refs/files: stop using `the_repository` in `parse_loose_ref_contents()`
- - refs: stop using `the_repository`
-
- In the refs subsystem, implicit reliance of the_repository has been
- eliminated; the repository associated with the ref store object is
- used instead.
-
- Will merge to 'next'?
- cf. <ZqnEuz9uFgUwWKkc@tanuki>
- source: <cover.1722316795.git.ps@pks.im>
-
-
-* rs/grep-omit-blank-lines-after-function-at-eof (2024-07-30) 1 commit
-  (merged to 'next' on 2024-08-01 at 0c6e2b21f9)
- + grep: -W: skip trailing empty lines at EOF, too
-
- "git grep -W" omits blank lines that follow the found function at
- the end of the file, just like it omits blank lines before the next
- function.
-
- Will merge to 'master'.
- source: <8b90e0ec-251f-46b3-8777-96efd58e227b@web.de>
-
-
-* rs/t-example-simplify (2024-07-30) 1 commit
- - t-example-decorate: remove test messages
-
- Unit test simplification.
-
- Will merge to 'next'?
- source: <5c838884-b606-465a-8f7e-ab760ddadef8@web.de>
-
-
-* cc/promisor-remote-capability (2024-07-31) 4 commits
- - promisor-remote: check advertised name or URL
- - Add 'promisor-remote' capability to protocol v2
- - strbuf: refactor strbuf_trim_trailing_ch()
- - version: refactor strbuf_sanitize()
-
- The v2 protocol learned to allow the server to advertise possible
- promisor remotes, and the client to respond with what promissor
- remotes it uses, so that the server side can omit objects that the
- client can lazily obtain from these other promissor remotes.
-
- Inviting further discussion.
- source: <20240731134014.2299361-1-christian.couder@gmail.com>
-
-
-* ps/reftable-stack-compaction (2024-07-31) 8 commits
- - reftable/stack: handle locked tables during auto-compaction
- - reftable/stack: fix corruption on concurrent compaction
- - reftable/stack: use lock_file when adding table to "tables.list"
- - reftable/stack: do not die when fsyncing lock file files
- - reftable/stack: simplify tracking of table locks
- - reftable/stack: update stats on failed full compaction
- - reftable/stack: test compaction with already-locked tables
- - reftable/stack: refactor function to gather table sizes
-
- The code paths to compact multiple reftable files have been updated
- to correctly deal with multiple compaction triggering at the same
- time.
-
- Needs review.
- source: <cover.1722435214.git.ps@pks.im>
-
-
-* rh/http-proxy-path (2024-08-01) 1 commit
- - http: do not ignore proxy path
-
- The value of http.proxy can have "path" at the end for a socks
- proxy that listens to a unix-domain socket, but we started to
- discard it when we taught proxy auth code path to use the
- credential helpers, which has been corrected.
-
- Will merge to 'next'.
- source: <pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com>
-
-
-* jc/refs-symref-referent (2024-08-01) 4 commits
- - SQUASH???
- - ref-filter: populate symref from iterator
- - refs: add referent to each_ref_fn
- - refs: keep track of unresolved reference value in iterators
-
- The refs API has been taught to give symref target information to
- the users of ref iterators, allowing for-each-ref and friends to
- avoid an extra ref_resolve_* API call per a symbolic ref.
-
- Inviting further discussion.
- source: <pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
-
-
-* jk/osxkeychain-username-is-nul-terminated (2024-08-01) 1 commit
- - credential/osxkeychain: respect NUL terminator in username
-
- The credential helper to talk to OSX keychain sometimes sent
- garbage bytes after the username, which has been corrected.
-
- Will merge to 'next'.
- source: <20240801082556.GA640360@coredump.intra.peff.net>
-
-
-* tb/config-fixed-value-with-valueless-true (2024-08-01) 1 commit
- - config.c: avoid segfault with --fixed-value and valueless config
-
- "git config --value=foo --fixed-value section.key newvalue" barfed
- when the existing value in the configuration file used the
- valueless true syntax, which has been corrected.
-
- Will merge to 'next'.
- source: <c78bacfa8fb274fbb48f259b13f4f30253932f69.1722532013.git.me@ttaylorr.com>
-
-
-* jc/jl-git-no-advice-fix (2024-08-01) 1 commit
- - t0018: remove leftover debugging cruft
-
- Remove leftover debugging cruft from a test script.
-
- Will merge to 'next'.
- source: <xmqq7cd0ulen.fsf_-_@gitster.g>
-
---------------------------------------------------
-[Stalled]
-
-* sj/ref-fsck (2024-07-30) 10 commits
- . fsck: add ref content check for files backend
- . fsck: add ref name check for files backend
- . files-backend: add unified interface for refs scanning
- . builtin/fsck: add `git-refs verify` child process
- . git refs: add verify subcommand
- . refs: set up ref consistency check infrastructure
- . fsck: add refs-related error report function
- . fsck: rename objects-related fsck error functions
- . fsck: add a unified interface for reporting fsck messages
- . fsck: rename "skiplist" to "skip_oids"
-
- "git fsck" infrastructure has been taught to also check the sanity
- of the ref database, in addition to the object database.
-
- Needs update.
- Contradicts with Patrick's the_repository elimination series.
- source: <ZqeXrPROpEg_pRS2@ArchLinux>
-
-
-* pp/add-parse-range-unit-test (2024-05-27) 1 commit
- - apply: add unit tests for parse_range
-
- A unit test for code that parses the hunk offset and length from a
- patch fragment header as been added.
-
- Expecting a reroll.
- cf. <b7eca313-9ea8-4132-ba1d-ed9236e07095@gmail.com>
- source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
-
-
-* cw/git-std-lib (2024-02-28) 4 commits
- . SQUASH??? get rid of apparent debugging crufts
- . test-stdlib: show that git-std-lib is independent
- . git-std-lib: introduce Git Standard Library
- . pager: include stdint.h because uintmax_t is used
-
- Split libgit.a out to a separate git-std-lib tor easier reuse.
-
- Expecting a reroll.
- source: <cover.1696021277.git.jonathantanmy@google.com>
-
---------------------------------------------------
-[Cooking]
-
-* cp/unit-test-reftable-pq (2024-08-01) 7 commits
- - t-reftable-pq: add tests for merged_iter_pqueue_top()
- - t-reftable-pq: add test for index based comparison
- - t-reftable-pq: make merged_iter_pqueue_check() callable by reference
- - t-reftable-pq: make merged_iter_pqueue_check() static
- - t: move reftable/pq_test.c to the unit testing framework
- - reftable: change the type of array indices to 'size_t' in reftable/pq.c
- - reftable: remove unnecessary curly braces in reftable/pq.c
-
- The tests for "pq" part of reftable library got rewritten to use
- the unit test framework.
-
- Will merge to 'next'.
- cf. <Zqt02XmevPRB3idt@tanuki>
- source: <20240801110453.5087-1-chandrapratap3519@gmail.com>
-
-
-* tb/incremental-midx-part-1 (2024-07-17) 19 commits
- - midx: implement support for writing incremental MIDX chains
- - t/t5313-pack-bounds-checks.sh: prepare for sub-directories
- - t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
- - midx: implement verification support for incremental MIDXs
- - midx: support reading incremental MIDX chains
- - midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
- - midx: teach `midx_preferred_pack()` about incremental MIDXs
- - midx: teach `midx_contains_pack()` about incremental MIDXs
- - midx: remove unused `midx_locate_pack()`
- - midx: teach `fill_midx_entry()` about incremental MIDXs
- - midx: teach `nth_midxed_offset()` about incremental MIDXs
- - midx: teach `bsearch_midx()` about incremental MIDXs
- - midx: introduce `bsearch_one_midx()`
- - midx: teach `nth_bitmapped_pack()` about incremental MIDXs
- - midx: teach `nth_midxed_object_oid()` about incremental MIDXs
- - midx: teach `prepare_midx_pack()` about incremental MIDXs
- - midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
- - midx: add new fields for incremental MIDX chains
- - Documentation: describe incremental MIDX format
-
- Incremental updates of multi-pack index files.
-
- Expecting a reroll.
- cf. <ZqvZeWDGDAeZNZjW@nand.local>
- source: <cover.1721250704.git.me@ttaylorr.com>
-
-
-* ja/doc-synopsis-markup (2024-07-24) 3 commits
- - doc: apply synopsis simplification on git-clone and git-init
- - doc: update the guidelines to reflect the current formatting rules
- - doc: introduce a synopsis custom paragraph attribute
-
- The way AsciiDoc is used for SYNOPSIS part of the manual pages has
- been revamped.  The sources, at least for the simple cases, got
- vastly pleasant to work with.
-
- Inviting further discussion.
- source: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
-
-
-* ps/doc-more-c-coding-guidelines (2024-07-30) 6 commits
-  (merged to 'next' on 2024-08-01 at 8f8ac5d6ca)
- + Documentation: consistently use spaces inside initializers
- + Documentation: document idiomatic function names
- + Documentation: document naming schema for structs and their functions
- + Documentation: clarify indentation style for C preprocessor directives
- + clang-format: fix indentation width for preprocessor directives
- + Merge branch 'kn/ci-clang-format' into ps/doc-more-c-coding-guidelines
-
- Some project conventions have been added to CodingGuidelines.
-
- Will merge to 'master'.
- source: <cover.1722323818.git.ps@pks.im>
-
-
-* tc/fetch-bundle-uri (2024-07-24) 3 commits
- - fetch: use bundle URIs when having creationToken heuristic
- - transport: introduce transport_has_remote_bundle_uri()
- - clone: remove double bundle list clear code
-
- Allow "git fetch" take advantage of bundleURI feature.
-
- Needs review.
- source: <20240724144957.3033840-1-toon@iotcl.com>
-
-
-* jc/leakfix-hashfile (2024-07-26) 1 commit
- - csum-file: introduce discard_hashfile()
-
- source: <xmqqle1p1367.fsf@gitster.g>
-
-
-* jc/leakfix-mailmap (2024-07-26) 1 commit
- - mailmap: plug memory leak in read_mailmap_blob()
-
- source: <xmqqcyn112xi.fsf@gitster.g>
-
-
-* jr/ls-files-expand-literal-doc (2024-07-26) 1 commit
- - doc: fix hex code escapes in git-ls-files
-
- source: <CACStHN-Gs2Sxej+md6zWr3V1dFo+pp=B4yEPm9=uPambDR2NaQ@mail.gmail.com>
-
-
-* ps/leakfixes-part-3 (2024-08-01) 24 commits
- - commit-reach: fix trivial memory leak when computing reachability
- - convert: fix leaking config strings
- - entry: fix leaking pathnames during delayed checkout
- - object-name: fix leaking commit list items
- - t/test-repository: fix leaking repository
- - builtin/credential-cache: fix trivial leaks
- - builtin/worktree: fix leaking derived branch names
- - builtin/shortlog: fix various trivial memory leaks
- - builtin/rerere: fix various trivial memory leaks
- - builtin/credential-store: fix leaking credential
- - builtin/show-branch: fix several memory leaks
- - builtin/rev-parse: fix memory leak with `--parseopt`
- - builtin/stash: fix various trivial memory leaks
- - builtin/remote: fix various trivial memory leaks
- - builtin/remote: fix leaking strings in `branch_list`
- - builtin/ls-remote: fix leaking `pattern` strings
- - builtin/submodule--helper: fix leaking buffer in `is_tip_reachable`
- - builtin/submodule--helper: fix leaking clone depth parameter
- - builtin/name-rev: fix various trivial memory leaks
- - builtin/describe: fix trivial memory leak when describing blob
- - builtin/describe: fix leaking array when running diff-index
- - builtin/describe: fix memory leak with `--contains=`
- - builtin/log: fix leaking branch name when creating cover letters
- - builtin/replay: plug leaking `advance_name` variable
-
- More leakfixes.
-
- Will merge to 'next'.
- cf. <ZqvDJpNxMkvd3hSZ@nand.local>
- source: <cover.1722499961.git.ps@pks.im>
-
-
-* ps/p4-tests-updates (2024-07-31) 3 commits
-  (merged to 'next' on 2024-08-01 at e559c4bf1a)
- + t98xx: mark Perforce tests as memory-leak free
- + ci: update Perforce version to r23.2
- + t98xx: fix Perforce tests with p4d r23 and newer
-
- Perforce tests have been updated.
-
- Will merge to 'master'.
- cf. <na5mwletzpnacietbc7pzqcgb622mvrwgrkjgjosysz3gvjcso@gzxxi7d7icr7>
- source: <cover.1722421911.git.ps@pks.im>
-
-
-* ag/git-svn-global-ignores (2024-07-18) 2 commits
- - git-svn: use `svn:global-ignores` to create .gitignore
- - git-svn: add public property `svn:global-ignores`
-
- "git svn" has been taught about svn:global-ignores property
- recent versions of Subversion has.
-
- Will merge to 'next'?
- source: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
-
-
-* es/shell-check-updates (2024-07-26) 5 commits
-  (merged to 'next' on 2024-08-01 at cf06aced6d)
- + check-non-portable-shell: improve `VAR=val shell-func` detection
- + check-non-portable-shell: suggest alternative for `VAR=val shell-func`
- + check-non-portable-shell: loosen one-shot assignment error message
- + t4034: fix use of one-shot variable assignment with shell function
- + t3430: drop unnecessary one-shot "VAR=val shell-func" invocation
-
- Test script linter has been updated to catch an attempt to use
- one-shot export construct "VAR=VAL func" for shell functions (which
- does not work for some shells) better.
-
- Will merge to 'master'.
- source: <20240727053509.34339-1-ericsunshine@charter.net>
-
-
-* jc/safe-directory (2024-07-30) 4 commits
- - safe.directory: setting safe.directory="." allows the "current" directory
- - safe.directory: normalize the configured path
- - safe.directory: normalize the checked path
- - safe.directory: preliminary clean-up
-
- Follow-up on 2.45.1 regression fix.
-
- Will merge to 'next'.
- source: <20240730184352.2503276-1-gitster@pobox.com>
-
-
-* cp/unit-test-reftable-tree (2024-07-22) 5 commits
- - t-reftable-tree: improve the test for infix_walk()
- - t-reftable-tree: add test for non-existent key
- - t-reftable-tree: split test_tree() into two sub-test functions
- - t: move reftable/tree_test.c to the unit testing framework
- - reftable: remove unnecessary curly braces in reftable/tree.c
-
- A test in reftable library has been rewritten using the unit test
- framework.
-
- Needs review.
- source: <20240722061836.4176-1-chandrapratap3519@gmail.com>
-
-
-* ew/cat-file-optim (2024-07-15) 10 commits
- - cat-file: use writev(2) if available
- - cat-file: batch_write: use size_t for length
- - cat-file: batch-command uses content_limit
- - object_info: content_limit only applies to blobs
- - packfile: packed_object_info avoids packed_to_object_type
- - cat-file: use delta_base_cache entries directly
- - packfile: inline cache_or_unpack_entry
- - packfile: fix off-by-one in content_limit comparison
- - packfile: allow content-limit for cat-file
- - packfile: move sizep computation
-
- "git cat-file --batch" has been optimized.
-
- Needs review.
- source: <20240715003519.2671385-1-e@80x24.org>
-
-
-* jc/document-use-of-local (2024-07-15) 1 commit
- - doc: note that AT&T ksh does not work with our test suite
-
- Doc update.
-
- Needs review.
- source: <xmqq1q3u8zmr.fsf@gitster.g>
-
-
-* jc/reflog-expire-lookup-commit-fix (2024-07-16) 1 commit
- - Revert "reflog expire: don't use lookup_commit_reference_gently()"
-
- "git reflog expire" failed to honor annotated tags when computing
- reachable commits.
-
- Needs review.
- source: <xmqqv8156rh2.fsf@gitster.g>
-
-
-* es/doc-platform-support-policy (2024-07-30) 1 commit
- - Documentation: add platform support policy
-
- A policy document that describes platform support levels and
- expectation on platform stakeholders has been introduced.
-
- Inviding further discussion.
- source: <20240730175448.1727373-1-emilyshaffer@google.com>
-
-
-* rj/add-p-pager (2024-07-25) 4 commits
-  (merged to 'next' on 2024-08-01 at 6f66ace52d)
- + add-patch: render hunks through the pager
- + pager: introduce wait_for_pager
- + pager: do not close fd 2 unnecessarily
- + add-patch: test for 'p' command
-
- A 'P' command to "git add -p" that passes the patch hunk to the
- pager has been added.
-
- Will merge to 'master'.
- source: <76936fb1-446d-455f-b4e7-6e24dda3c17d@gmail.com>
-
-
-* gt/unit-test-hashmap (2024-07-30) 1 commit
- - t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
-
- An existing test of hashmap API has been rewritten with the
- unit-test framework.
-
- What's the doneness of this one?
- source: <20240730115101.188100-1-author@example.com>
-
-
-* rs/unit-tests-test-run (2024-07-30) 6 commits
- - t-strvec: use if_test
- - t-reftable-basics: use if_test
- - t-ctype: use if_test
- - unit-tests: add if_test
- - unit-tests: show location of checks outside of tests
- - t0080: use here-doc test body
-
- Unit-test framework clean-up.
-
- Still under discussion.
- source: <077a178e-eb30-45ff-b653-a514bfd33077@web.de>
-
-
-* jc/patch-id (2024-07-29) 5 commits
- - patch-id: tighten code to detect the patch header
- - patch-id: rewrite code that detects the beginning of a patch
- - patch-id: make get_one_patchid() more extensible
- - patch-id: call flush_current_id() only when needed
- - t4204: patch-id supports various input format
-
- The patch parser in "git patch-id" has been tightened to avoid
- getting confused by lines that look like a patch header in the log
- message.
-
- Inviding further discussion.
- source: <20240730011738.4032377-1-gitster@pobox.com>
