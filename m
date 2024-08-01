@@ -1,53 +1,53 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1FA170A37
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 10:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C352183CA1
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 10:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722508697; cv=none; b=QjyGk+xl6HHt32gNoH6jl1NGpFjPo95LE1lQj6zBcQjrLeiKgXPqOZdnRQnv4bmwemvRigqnTQ+FQn95vAjC4IHhLAmY8blzgGxeDtuW6howA0iefL7adI2nnmWBwVXdRoRMeJVNVRa7cb470dW60pnPlz98hFjXz+v/We67cUY=
+	t=1722508702; cv=none; b=Y/C++mdBzS7tuDqbLM/k1n/V5ZW1WqcC8EFOq93gd50anfxi11C4zf7icNqYrH4wZaKT0XpI41MpyNpdsEnc4labspzn9jzj670dyjAM446K8WWcjQrxbz6rGTR9ZhDE0Fen4+opQ4UAzh9RI9yGfAPbt8NdnTaEpB/W0sOvlz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722508697; c=relaxed/simple;
-	bh=XMo+CPb4WyYUIbe7xV9U1wLE/QNLl+SmBsjwyPTenXg=;
+	s=arc-20240116; t=1722508702; c=relaxed/simple;
+	bh=yHS9K62Nug1YbfKBYBS4yeyS8Yo8q+FJcoQJ4xeyV3M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YygeVgRYVs+yZhBql3hpjzLp/BBgTLQf/z7KM1E/67t4c4SDFNHRFRHIT63boODppia2MdDxh/rkyK+9wbBSbWMEIpoaqVxV8RAPMkPutF/TNu0vCZj77uUvOFIlJ92CF+OnJKhjurRZAsUD99D3EiyUr7rztsD1dPrFEYCszlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VvAchu1p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kZNcD4Fq; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=fz1tBQB5kHcdBJqMjDITAovDxE9r8aTNFqqWz6RThjf6dmmxgp8lN8Qc7+h82ouUlJBUjSm7HM09W7t+MVq3KwoDY42P5M2A8oaaRlyJGemjEIP5SGQvZqOX32LpHXfQuspf01UR/RMsFHWmleCKQ3zYT0YvtyuY2DP2Km4cW/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f8Fecv8M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XqqNp4kv; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VvAchu1p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kZNcD4Fq"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id DACE31387A85;
-	Thu,  1 Aug 2024 06:38:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f8Fecv8M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XqqNp4kv"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 48555114AAF5;
+	Thu,  1 Aug 2024 06:38:20 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 01 Aug 2024 06:38:14 -0400
+  by compute2.internal (MEProxy); Thu, 01 Aug 2024 06:38:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722508694; x=1722595094; bh=VOnmKJ4VYp
-	O7niPKNJn9ogghV1pawQJ7Kgxw6JlaSI8=; b=VvAchu1pdQrPoAZw7ZeK8+2X+M
-	9twythE2AftqaBBhZoqQvyWtZgR4APK7dPwBryTVIeHwO4y94CIZUtE3J5e3r7dI
-	tWQrzVEvAahrOWIJkpBzWeYT2NM5urmvWVyKxP/qAkyHTuo0rBJKuGGyMJiVCKBD
-	kIDGG2YYo8jy2duvjXVwYTqRco7R+vKYbrcRtfgLU66vQNZ4BiWAX3rPKsKM9pah
-	ZWVPmPYBEYgaBOW4WMn0ZFt0t0iJXcVmo0MNwtKUE5hUg/lmu92D+G47BzVBkCZ+
-	pYmVB8FRuKgVQTWUf0EhwchrRpxT3Xm3Weep6Ecj8UmHZSLhSi43V1VmNYSw==
+	:subject:to:to; s=fm3; t=1722508700; x=1722595100; bh=WRRGVyXesf
+	+M5j2PC7ycoWJkg5Y7DN9FbUpWcjEr5vM=; b=f8Fecv8M0kZHvBECMb0AwraErY
+	QEsm3j6yTG5gwnC1MigducqqOUAyCXVyUwR5pSEZqdgbOk/Cah4rplFrxbDDf33n
+	H1zSGpBYaAOdPm0W0W/4Jru8fQ+IPWRuJSCegaaZtNaZnjnX9ZsPjS4xoE2+Maml
+	6NZeXRd8Bqavhd0FMDcV2WcmDLoFU7lTq2SQXEkGCPYBNOv3lYD5ATcOskSnPNV1
+	05dUZ3Oazf/8fq364rAPA+8fPx+ovSDcXiwmRmWWY1cvX5Qp+L8Q1gHrYKgFcDfJ
+	OjDcMPGbsYfYkSyUB4KLsDyaMiR8Su52zkInR6p0jbaDHO29rGv6dYKkBtnw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722508694; x=1722595094; bh=VOnmKJ4VYpO7niPKNJn9ogghV1pa
-	wQJ7Kgxw6JlaSI8=; b=kZNcD4Fq7stLzNAnpR84azVySUUuUaYD/5cfZrzYbeZZ
-	N1hAfmOirjiNphShvV68XjoWsU4veQPQJFC8G/oAXgQYkXWYr5e7p5JJq1gA4t3M
-	ceZ2gcLwZKpu80Tl+32TxsMBUjoqLR8/oDU9uXPqCvsXzRyGMxJACmyB5OrW7iGc
-	VIcA0LW6CJ7wfVswvayAiGC3MPFpgbXOvSpyGfSqAZI0dArqqMxTK5ptlJ4J93Yw
-	bWiZdg28N9kDjoRyNEzYRr0EjVWGZrvw3EEbh5NF+yA5JUP5QLAIeKZbSnWCjkeE
-	+mBcsDuryh22HaQXNl81To/a8i1hlsCJija4i140yQ==
-X-ME-Sender: <xms:lmWrZp8PS6yCuMRA6ptxcBYoBXcLsq1apJi7-ygq9p8CqU40g7OjNA>
-    <xme:lmWrZtuciFwkmz2lEVIjeW0oblB5-hnWonMiHgTu7v5P8qyxVKDEFLVbIirJJnMcC
-    Ryh_e-jH3dY8s2LbQ>
-X-ME-Received: <xmr:lmWrZnDjW57jm3uBUrtBhRrBx61Oe8HSxRe2cU9cGvjxz0-SO0CrJJoccMcnLEFqBFXKlM8v0mxiN6mbJCSeXk1wuOknD8vyiD5OSNm0-c5oz-A>
+	fm3; t=1722508700; x=1722595100; bh=WRRGVyXesf+M5j2PC7ycoWJkg5Y7
+	DN9FbUpWcjEr5vM=; b=XqqNp4kv5tOlhjcpN+/vXo0bT1usmy+ow9onwH/zncRA
+	inkpfzAf6ZtMeOVU2NvyyyTxmhXUPKiZGPCbKpbYclEkRi/eHmnE3CgzaPiazwvx
+	JrAyzwY+AgwvjeEmd5/MMy14tlQCRxyIRKkVFPvNcW/qZPFlop8xS2VDtd0WGFFh
+	YyQ4SCTrpbnVyK5Xb+JXkn0MpJE3AEM8eyPvSPkak8e0jy6rOxUZyVJFJfWC4wYB
+	eKs4fBe7HBV07nfAoMsMU4vXkHHZW9SIwxZMiavxOofwyZT+eqFu+Zbv/Nz4sihL
+	utGWukoj97R9GZKCyQcxGw8ez9RsTuGSEbOelqkJ0A==
+X-ME-Sender: <xms:nGWrZivJyRL73b1wsPF8PRfqFKDgXkfHKo5Y770rDFmFwV3DWiKqzw>
+    <xme:nGWrZndlQVBGl7oRGHr0JxNqAr315jNB0UgwBKxlnOLk5wOUUT17CiBKHlVJFA9EJ
+    hKWFaa5E2He0NcFwA>
+X-ME-Received: <xmr:nGWrZtx1FaCuKaTA2759Pytt75OiPLkWB6_pOSnagw0LBJLQEwHrkAg_J4zptDuw8CD2LWlQJD044sl6EAwrKDUzSeYI9wjfzcvPByx9sLqik8Y>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeekgdeftdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,25 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeekgdeftdcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:lmWrZtfimQt7OwjAY_twb68nJdfaTGJWY13aPVXw-ThvP37UKwprpQ>
-    <xmx:lmWrZuODyv6pqQhXRSil5Ou9GQJcFgKZItbRoQatWzVH95ucKrHJfg>
-    <xmx:lmWrZvm14l6HhL9tBbeacWxy8gWld_G3DlGKyDPCg75FE8i3yAEjww>
-    <xmx:lmWrZovCLjjrfl_mruN79BWVtl1X34Yzc2itP9nhIde6RGVk6moW0A>
-    <xmx:lmWrZl2MYuEbDOSEsrPD4hyyr98s1A-Wh9kb7_7Zp9dTgk8oc2E9sVyX>
+X-ME-Proxy: <xmx:nGWrZtNCuiTWOdrrnrP5LiwGPESgCt4lEEuVlwSArZfTBr3UlZe8-w>
+    <xmx:nGWrZi_KH8xY79cDqawT3jw8JZz6bQ2d5GqtaH6rhYS3HYy2fK6wwA>
+    <xmx:nGWrZlXsaR_YD8P8_7EeQcv41MPZ-6NjzLYK08fm-olzXzRzsoltuA>
+    <xmx:nGWrZrePZ5EOaJlXN0lO9zKcuWT22iuFDOVMfI1GYqTJVlt55_Hnfw>
+    <xmx:nGWrZpmrsR1v7JwdTkZ14OyNQWrEE2w-7nnbV3c4OZC9_KcmqqpYR7Rg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Aug 2024 06:38:13 -0400 (EDT)
+ 1 Aug 2024 06:38:19 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 46ddb5fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Aug 2024 10:36:42 +0000 (UTC)
-Date: Thu, 1 Aug 2024 12:38:11 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 3ab3f222 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Aug 2024 10:36:46 +0000 (UTC)
+Date: Thu, 1 Aug 2024 12:38:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: [PATCH v2 01/24] builtin/replay: plug leaking `advance_name` variable
-Message-ID: <b5c8a9495ae81ba0757c92df634117e836e89699.1722499961.git.ps@pks.im>
+Subject: [PATCH v2 02/24] builtin/log: fix leaking branch name when creating
+ cover letters
+Message-ID: <73a16fff43ee36f497f3ea7377a68babd3b9d392.1722499961.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
  <cover.1722499961.git.ps@pks.im>
 Precedence: bulk
@@ -84,161 +85,93 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SGiPy9ARpyx9xdLZ"
+	protocol="application/pgp-signature"; boundary="2WIgbpXe0z8Y0YRd"
 Content-Disposition: inline
 In-Reply-To: <cover.1722499961.git.ps@pks.im>
 
 
---SGiPy9ARpyx9xdLZ
+--2WIgbpXe0z8Y0YRd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `advance_name` variable can either contain a static string when
-parsed via the `--advance` command line option or it may be an allocated
-string when set via `determine_replay_mode()`. Because we cannot be sure
-whether it is allocated or not we just didn't free it at all, resulting
-in a memory leak.
-
-Split up the variables such that we can track the static and allocated
-strings separately and then free the allocated one to fix the memory
-leak.
+When calling `make_cover_letter()` without a branch name, we try to
+derive the branch name by calling `find_branch_name()`. But while this
+function returns an allocated string, we never free the result and thus
+have a memory leak. Fix this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/replay.c         | 20 ++++++++++++++------
- t/t3650-replay-basics.sh |  1 +
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ builtin/log.c         | 4 +++-
+ t/t3206-range-diff.sh | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 0448326636..27b40eda98 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -151,7 +151,7 @@ static void get_ref_information(struct rev_cmdline_info=
- *cmd_info,
+diff --git a/builtin/log.c b/builtin/log.c
+index 4d4b60caa7..a73a767606 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1434,6 +1434,7 @@ static void make_cover_letter(struct rev_info *rev, i=
+nt use_separate_file,
+ 	int need_8bit_cte =3D 0;
+ 	struct pretty_print_context pp =3D {0};
+ 	struct commit *head =3D list[0];
++	char *to_free =3D NULL;
 =20
- static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
- 				  const char *onto_name,
--				  const char **advance_name,
-+				  char **advance_name,
- 				  struct commit **onto,
- 				  struct strset **update_refs)
- {
-@@ -174,6 +174,7 @@ static void determine_replay_mode(struct rev_cmdline_in=
-fo *cmd_info,
- 		*onto =3D peel_committish(*advance_name);
- 		if (repo_dwim_ref(the_repository, *advance_name, strlen(*advance_name),
- 			     &oid, &fullname, 0) =3D=3D 1) {
-+			free(*advance_name);
- 			*advance_name =3D fullname;
- 		} else {
- 			die(_("argument to --advance must be a reference"));
-@@ -197,6 +198,7 @@ static void determine_replay_mode(struct rev_cmdline_in=
-fo *cmd_info,
- 		if (negative_refs_complete) {
- 			struct hashmap_iter iter;
- 			struct strmap_entry *entry;
-+			const char *last_key =3D NULL;
-=20
- 			if (rinfo.negative_refexprs =3D=3D 0)
- 				die(_("all positive revisions given must be references"));
-@@ -208,8 +210,11 @@ static void determine_replay_mode(struct rev_cmdline_i=
-nfo *cmd_info,
- 			/* Only one entry, but we have to loop to get it */
- 			strset_for_each_entry(&rinfo.negative_refs,
- 					      &iter, entry) {
--				*advance_name =3D entry->key;
-+				last_key =3D entry->key;
- 			}
-+
-+			free(*advance_name);
-+			*advance_name =3D xstrdup_or_null(last_key);
- 		} else { /* positive_refs_complete */
- 			if (rinfo.negative_refexprs > 1)
- 				die(_("cannot implicitly determine correct base for --onto"));
-@@ -271,7 +276,8 @@ static struct commit *pick_regular_commit(struct commit=
- *pickme,
-=20
- int cmd_replay(int argc, const char **argv, const char *prefix)
- {
--	const char *advance_name =3D NULL;
-+	const char *advance_name_opt =3D NULL;
-+	char *advance_name =3D NULL;
- 	struct commit *onto =3D NULL;
- 	const char *onto_name =3D NULL;
- 	int contained =3D 0;
-@@ -292,7 +298,7 @@ int cmd_replay(int argc, const char **argv, const char =
-*prefix)
- 		NULL
- 	};
- 	struct option replay_options[] =3D {
--		OPT_STRING(0, "advance", &advance_name,
-+		OPT_STRING(0, "advance", &advance_name_opt,
- 			   N_("branch"),
- 			   N_("make replay advance given branch")),
- 		OPT_STRING(0, "onto", &onto_name,
-@@ -306,14 +312,15 @@ int cmd_replay(int argc, const char **argv, const cha=
-r *prefix)
- 	argc =3D parse_options(argc, argv, prefix, replay_options, replay_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
-=20
--	if (!onto_name && !advance_name) {
-+	if (!onto_name && !advance_name_opt) {
- 		error(_("option --onto or --advance is mandatory"));
- 		usage_with_options(replay_usage, replay_options);
+ 	if (!cmit_fmt_is_mail(rev->commit_format))
+ 		die(_("cover letter needs email format"));
+@@ -1455,7 +1456,7 @@ static void make_cover_letter(struct rev_info *rev, i=
+nt use_separate_file,
  	}
 =20
--	if (advance_name && contained)
-+	if (advance_name_opt && contained)
- 		die(_("options '%s' and '%s' cannot be used together"),
- 		    "--advance", "--contained");
-+	advance_name =3D xstrdup_or_null(advance_name_opt);
+ 	if (!branch_name)
+-		branch_name =3D find_branch_name(rev);
++		branch_name =3D to_free =3D find_branch_name(rev);
 =20
- 	repo_init_revisions(the_repository, &revs, prefix);
+ 	pp.fmt =3D CMIT_FMT_EMAIL;
+ 	pp.date_mode.type =3D DATE_RFC2822;
+@@ -1466,6 +1467,7 @@ static void make_cover_letter(struct rev_info *rev, i=
+nt use_separate_file,
+ 			   encoding, need_8bit_cte, cfg);
+ 	fprintf(rev->diffopt.file, "%s\n", sb.buf);
 =20
-@@ -441,6 +448,7 @@ int cmd_replay(int argc, const char **argv, const char =
-*prefix)
++	free(to_free);
+ 	free(pp.after_subject);
+ 	strbuf_release(&sb);
 =20
- cleanup:
- 	release_revisions(&revs);
-+	free(advance_name);
-=20
- 	/* Return */
- 	if (ret < 0)
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 389670262e..12bd3db4cb 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -5,6 +5,7 @@ test_description=3D'basic git replay tests'
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index a767c3520e..973e20254b 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -5,6 +5,7 @@ test_description=3D'range-diff tests'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- GIT_AUTHOR_NAME=3Dauthor@name
+ # Note that because of the range-diff's heuristics, test_commit does more
 --=20
 2.46.0.dirty
 
 
---SGiPy9ARpyx9xdLZ
+--2WIgbpXe0z8Y0YRd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarZZIACgkQVbJhu7ck
-PpS00w/6Agidth7rgCBne88F4bNCtc5sgHjcHXtZpmNLsXHOtIdQKTVdO1A4bcFb
-iEYWEjkGDjbFBZMZv/uIoEjxoVdkpPsjIuULWk6UxNZTJ/As31T3LYGTUbL67LFK
-1V+YTXlohYt8FoZfkp5ic3/b8FGKEbFWSQsOTyDMK2HB0qumTNtC+9L2CVcClhiQ
-LVltVO//DpGsTF/yJxtnQhP9vg8LU5p3mUtvqt4RTiNJq1ze5Oz32K1tg3vYOsP/
-0ZGv7EkDszucjOYbYSzlCcLLTv4nY/vdqzPIcQUbd57nh4pLzQ96yseGvdaEOuSe
-np0ryH1t3s91z/GwUTMvbXDdC5QmdA/kMPH1FDndQb9/JOWQ7qoPA8EWE2rMtqng
-t88cc5Lj2ELFRePi3tZxx4eOFFLP+TalRRGbzOfvF7x+HM45xDmU+V4WKlH5nUZo
-fHpMOlqqmLvCcAxeJ2C3oOT6CWVt3cHJBef1QelgrQL2V8aHLSrZRqgQX5/xtNQO
-mgBeCaLgJmXZ+yZkKQbdbnydhZ/i6q6vOTccDIvxc8KyNJqPDoxCCFpSLiXwR1h8
-IYNXEKBo2QEnbBopbyxyRmmOc/XJiiwPuaPWBYec6NlaY/ThzoswE72LoUPW27rA
-oAO+j1fhvcq1QJNYjImHQ1i2QAPV6ZCWjyPtjaIUWkhevWApGbM=
-=NgcI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarZZcACgkQVbJhu7ck
+PpTThw/9ETyeP90wF2QWCv56DKBdH2VKD2RCs/T9dgH9wpgXI5U2m/Topdl2Zc9i
+6u20vyGeYNnyxSvRzpWKPr2aOF2kDoLJNU75YjoDyDYZAc2KjfNdzHHGg5griWo7
+bxWnaY59ybZsYjoDkOoldXt8BgaYUtkEM4znZ+FSaFNy9aiKbNrB4LQNZHg84vSY
+oRN5aT083CpnMl33jL/HgQKmFd/Ca+5nVM/bGIpM9oRpflh703ja/1dlf/H9RiGF
+lBKYoMXwRwIAgdK7KjQGePOF7voplNLLXu7xSzi/1wcR+PSzQdfpuVPJ/GZ9k1Sx
+IS0Ipz9iIykspO5T2R8Blj2AHiQqJwH6Hg9t88/3R4fJ4kzkzH/V3U9s+oKbY8YW
+bxKTH3eln5dj7Uu0NwHLl1xyQlA0O0C1kNmsfKLpBeypL6TEi+f3Cw6SA8FtAZXW
+6jqkaS0Vjnhw8kuUkAdOXrDRm81AHxWEsbhv6c+fcCs2vNVMJYffTDxxUNvNRe/v
+nDERyUnuoOM6Qnsx95M9bPiHvfLyFZOEJlSawH4SGuaod+9Y5OtMNiM9vRNN+NbR
+gyZ3N+FafI+2JWr7TfNvUmv+ccMU3M0IwQzJmzrIES0+yJN1GW9cSNAqvvq7l92F
+SWQmCpzqa2c+ec1clZz5lXwP1l49/7PU7U+cmCkb6EttFZA54mc=
+=8Z1K
 -----END PGP SIGNATURE-----
 
---SGiPy9ARpyx9xdLZ--
+--2WIgbpXe0z8Y0YRd--
