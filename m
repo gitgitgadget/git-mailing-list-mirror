@@ -1,80 +1,81 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC95A170A3D
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 10:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0179F170A33
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 10:38:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722508707; cv=none; b=i0moePNeFGjYFxlBoGE/rSqlO5bh4sWhKsqNINew/Pk4LEuM/m19kWu/BtxXNwHXYiZK2wgjVt8J1o3DLyq5r18AK4gXpkBIF76f9p/tcJgjWLSgQCQoOyRYI9HWRuidUsxbpIs4guVffnpKELiYkyiWyrSxwgSpMglwBLhNYvg=
+	t=1722508711; cv=none; b=n82FqHw2JI2ohygnycn5Y/MKLO3KeYN4yLwGf0ESpyTuGxsCbItT8UXhwfsPTRJFoJKmYzYPyz/KVi+3fFuBa7TVgttuVrSqNyISFad54NZ/2jYyBIABtQys08T2xuOI340I5BXisky30C1HCY4wwJ94iIGrFig8jsGARJstYnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722508707; c=relaxed/simple;
-	bh=bfD5beWF8lH3TatkkMaFk2bj6mX5WPHFLwfSg+PhD6k=;
+	s=arc-20240116; t=1722508711; c=relaxed/simple;
+	bh=bFjPQb5B4ie9X601R9uGDxXWD16t4NJ+VHrnTJK0n3A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jCic3sB/hYq/IawCiIPinwszSGzUG/7sDa8mrlpVcjqoCgcP0WQGo8L98gwplrvSKAAxc2tMl1CqhxkHlE9mXvWNt7VgElnkdDmKbyPANQGh2K7iT775pWH7oCC54Fa3qhcnDm0UzVU+6Xcb1JYxTWJghmJBEDNY+038icZGZlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R9HoebvB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U99yLaZ3; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=GfT61M0eb46v9ZysjOPDqqziru0dEO6lOVVUhvHgz/SPEAw0yBcolx6vNzj+JeNkXUMlvu2xq7pK/+6C5RRlsM76qCzlwlRbprLyB1iakYCZrNRXxJY87bJVQvq9yb/SiOnfn1OuWklndOPrhhVABg2ckW/hUDVhBoy0m/dDsoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J7XVQ72l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FQn2io8b; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R9HoebvB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U99yLaZ3"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id AF0721388042;
-	Thu,  1 Aug 2024 06:38:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J7XVQ72l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FQn2io8b"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2351611482FD;
+	Thu,  1 Aug 2024 06:38:29 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 01 Aug 2024 06:38:24 -0400
+  by compute5.internal (MEProxy); Thu, 01 Aug 2024 06:38:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722508704; x=1722595104; bh=igtUrbvTjX
-	GG1aBNIproiBQPQsv779VhxdAQjYTIRLI=; b=R9HoebvBzVWqXweCSIkyLtPLAf
-	jS6fUca6iUD1yWfC4Tdnmwd2QueHLgh2YcZTvqXHZCC1Mr22rINbXPVZhYRaCjyG
-	L9Ka5hjz6zsK4vWmMEenDwveyabKE0v/y9X390vcXABvBoSaTgARQo9ncujwerxw
-	zgoLXn0oFfUdQKBXa34aUp9ZvqhbH3wsjwAxc/UY9CLkuypQcFhdVWKwzquqLfcD
-	w/B9uvxtYv74ZwNEUX8v3dD+Xob9DlZQ97SwuRp/24oIfQDZBSsy5AiX9QPW6WJF
-	DjRTVHOerVl/9MxXnqhOwQ8zTm9N4E0kk2XKP0SgIaEl+btSPcMc90Mdz5Hg==
+	:subject:to:to; s=fm3; t=1722508709; x=1722595109; bh=tq8yMYQ/rf
+	++b37g2JHXI/O2bOCGTG7BU+c/qmtPHnU=; b=J7XVQ72lkQkJu8oktGTy97O60H
+	h86805fhgMgnLMXBPblAUflXpWgNytu3bnJ3QMuzkffDHc9lbWj4S/X5TmwdEzks
+	ggGjzESdQLrWt99EXWFsWCrDCvqDyZJWfiYyzIeRvMLXymjSiJGFL2yv94oIjB1U
+	Vm6/XhPYgZlFQ57CtclzKVorJl1eh/LaMMvvZca1F0b/6NXHigAFBKVqAf5koov2
+	tcQaSB/X0kgYT3EtkLZiEU1ixNLqivJBfDaTK8jCqKyzu9fFNUMZiztwms3oMTib
+	Zz+GKa1OXXPcsXm5LD8yYoaCkJ4hTGdC3bBkl1ndLnj+0sD1PrMRLKeouUzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722508704; x=1722595104; bh=igtUrbvTjXGG1aBNIproiBQPQsv7
-	79VhxdAQjYTIRLI=; b=U99yLaZ3eR9P4OpD+qGLTISGSI8y8N4ncm6e79Gf4QTu
-	aM7Hvb++fd6yxh8ngAblG/VpOzaE5Wz4ZNKpKAUMHqDhOQxKmldolwTzpGHUvfwh
-	UxqIA5WYI2Y7RLhVPE3RjWqD7a1Ds6H7jynN2PQIX9MHV6U/sy05rYQXHl4hAOPr
-	lLdI1pLT1GNeVmOkXqdBKwrnYeJGFe+YZUXOlPl6gQoAMuX2TbVmdRNZ3mQeOv+0
-	9OxrXWOKIn2h7ZUBva1GMINQt/g3+Y5pOGbYjRr2EVL1lC7wcA/S3srkI3JC4ib5
-	1YtooJqjdF3NJC0UTTusEUi3rbdQ7mkN7TV+Tbq2xA==
-X-ME-Sender: <xms:oGWrZlgB6OQ7uS_U99vJzEA5QIW4Iz-WUaDf3cTRiENGOEWWIYaqsQ>
-    <xme:oGWrZqC-E73SK3maO5Ckjho-iifHoCi5V6YGDHq8Sdn599Z5JjZKbAfn7qzkCH9PN
-    TBXp5nFh9zmmUcoKg>
-X-ME-Received: <xmr:oGWrZlFCjLEcxvxfRILrjuTO012-Qyjkfhy-EbetRJhTcIErojJEXkXEdGI78tWQ8zV00hZ0oR_rWpHkZ_RM7SNKXx0cmYp__74LgZb2Ovua49o>
+	fm3; t=1722508709; x=1722595109; bh=tq8yMYQ/rf++b37g2JHXI/O2bOCG
+	TG7BU+c/qmtPHnU=; b=FQn2io8bpOn8KPqo+nnuoouGNsAqoqGLYi+jIaJrWlhc
+	NETv9V/Xn+kUTZ3GxBbYNCkbUVdeEeNZw+UgyB3KRXewXf3ixp2L+dcNqXboFoXY
+	ZXVwKFm1Ijqj+E9BXZNeNGnajPb2KQDYziRFq1ztqgZ7u2RWBfSWciRFR57PE5dR
+	vseTiySoOZlUhSYeUWfQGRmhaHqng7oh/XXjs+kXhI364YmwHmbBPbaMQs1O8bXC
+	nOqbW+b8NzIQoa7eBl2pgS+qI3KPOZzy3LbnGfv87qkJiVqau+0bIk9BZSFVSNfs
+	2X2WApWUH75pMG8VWs2UqLDAcF4m1ZL042O7RN6UIA==
+X-ME-Sender: <xms:pWWrZuZQE4_3od1EfA3wA3aebfSfR3zuUvf4pFtt5A5HgIr-3tcDEQ>
+    <xme:pWWrZhYy5pWpmuxMQxOoJnauITtTeSTqBWR__LIM-ytkBRAJrS34rG_FGOR0e-SoZ
+    w82j9a9yOBniXqeFQ>
+X-ME-Received: <xmr:pWWrZo9vq9uXLG01iHwUxNeF7nTe4GsPCYC_61mBiaU8ULsfwiBFrpCm2GnpPoK29ho3BX4bpavMh6DqSTnNLQSCHig1BS3heVvg9UD5OaZThtw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeekgdeftdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:oGWrZqRu3EFWeuZRCV81MfIzfOXVVM6QLdJiz4sL4VxLeVmX6f33ww>
-    <xmx:oGWrZiw4tonM6IEMtpAvo8tTdfTE4Pc-m2wnQKT7RyuULkjk76R8bA>
-    <xmx:oGWrZg4PhMorilJEmZJsXOA-e4Nj_NVzF4IpgXUjOuBUa9XRLZP-Iw>
-    <xmx:oGWrZnyORld_ccTwoXD05YH6L4NTsnYljznUZFsA8SD3oyCdQEp_Pw>
-    <xmx:oGWrZprejcJPGPoaE2qvmY0vUDGpJe8n9A8-Z8zObDopuJSwFmkCceps>
+X-ME-Proxy: <xmx:pWWrZgpm8KzTe5KbdPHNmw1QTUHb6FqE0w-u5wKwnOVtqTlcwMUZsw>
+    <xmx:pWWrZpoyhJdJcLjuBg6NunlExAclwvQ0dblCHReUaKkeM5qE1j1Z7w>
+    <xmx:pWWrZuSDnvsDK5hiF39O_qnl7Bea9_hUNRruELxj0UpQ2yVgLls07Q>
+    <xmx:pWWrZpqRyk2sdyNLwasP2dqnQGVJyrxskuqHW1MsgWg84typTXA_rQ>
+    <xmx:pWWrZiAZs-jReYFstrSIXpZGoZ8MILeM7yXq32bjYvlDQPRM7RvfYes_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Aug 2024 06:38:23 -0400 (EDT)
+ 1 Aug 2024 06:38:27 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id ef2fe2c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Aug 2024 10:36:51 +0000 (UTC)
-Date: Thu, 1 Aug 2024 12:38:20 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id bec5e3b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Aug 2024 10:36:56 +0000 (UTC)
+Date: Thu, 1 Aug 2024 12:38:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: [PATCH v2 03/24] builtin/describe: fix memory leak with `--contains=`
-Message-ID: <65027d13b75a684d60112b12019871342939f2d7.1722499961.git.ps@pks.im>
+Subject: [PATCH v2 04/24] builtin/describe: fix leaking array when running
+ diff-index
+Message-ID: <19ca97e33a352b540a27feae5302c2311b707f9c.1722499961.git.ps@pks.im>
 References: <cover.1721995576.git.ps@pks.im>
  <cover.1722499961.git.ps@pks.im>
 Precedence: bulk
@@ -84,99 +85,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hhbBKOVI5MxjwkrM"
+	protocol="application/pgp-signature"; boundary="4a7OQFbO9mcFZDao"
 Content-Disposition: inline
 In-Reply-To: <cover.1722499961.git.ps@pks.im>
 
 
---hhbBKOVI5MxjwkrM
+--4a7OQFbO9mcFZDao
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When calling `git describe --contains=3D`, we end up invoking
-`cmd_name_rev()` with some munged argv array. This array may contain
-allocated strings and furthermore will likely be modified by the called
-function. This results in two memory leaks:
+When running git-describe(1) with `--dirty`, we will set up a `struct
+rev_info` with arguments for git-diff-index(1). The way we assemble the
+arguments it causes two memory leaks though:
 
-  - First, we leak the array that we use to assemble the arguments.
+  - We never release the `struct strvec`.
 
-  - Second, we leak the allocated strings that we may have put into the
-    array.
+  - `setup_revisions()` may end up removing some entries from the
+    `strvec`, which we wouldn't free even if we released the struct.
 
-Fix those leaks by creating a separate copy of the array that we can
-hand over to `cmd_name_rev()`. This allows us to free all strings
-contained in the `strvec`, as the original vector will not be modified
-anymore.
-
-Furthermore, free both the `strvec` and the copied array to fix the
-first memory leak.
+While we could plug those leaks, this is ultimately unnecessary as the
+arguments we pass are part of a static array anyway. So instead,
+refactor the code to drop the `struct strvec` and just pass this static
+array directly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/describe.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ builtin/describe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/describe.c b/builtin/describe.c
-index cf8edc4222..739878db85 100644
+index 739878db85..2957ff7031 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -619,6 +619,8 @@ int cmd_describe(int argc, const char **argv, const cha=
+@@ -695,7 +695,6 @@ int cmd_describe(int argc, const char **argv, const cha=
 r *prefix)
- 	if (contains) {
- 		struct string_list_item *item;
- 		struct strvec args;
-+		const char **argv_copy;
-+		int ret;
+ 		} else if (dirty) {
+ 			struct lock_file index_lock =3D LOCK_INIT;
+ 			struct rev_info revs;
+-			struct strvec args =3D STRVEC_INIT;
+ 			int fd;
 =20
- 		strvec_init(&args);
- 		strvec_pushl(&args, "name-rev",
-@@ -637,7 +639,21 @@ int cmd_describe(int argc, const char **argv, const ch=
-ar *prefix)
- 			strvec_pushv(&args, argv);
- 		else
- 			strvec_push(&args, "HEAD");
--		return cmd_name_rev(args.nr, args.v, prefix);
-+
-+		/*
-+		 * `cmd_name_rev()` modifies the array, so we'd leak its
-+		 * contained strings if we didn't do a copy here.
-+		 */
-+		ALLOC_ARRAY(argv_copy, args.nr + 1);
-+		for (size_t i =3D 0; i < args.nr; i++)
-+			argv_copy[i] =3D args.v[i];
-+		argv_copy[args.nr] =3D NULL;
-+
-+		ret =3D cmd_name_rev(args.nr, argv_copy, prefix);
-+
-+		strvec_clear(&args);
-+		free(argv_copy);
-+		return ret;
- 	}
+ 			setup_work_tree();
+@@ -710,8 +709,9 @@ int cmd_describe(int argc, const char **argv, const cha=
+r *prefix)
+ 				repo_update_index_if_able(the_repository, &index_lock);
 =20
- 	hashmap_init(&names, commit_name_neq, NULL, 0);
+ 			repo_init_revisions(the_repository, &revs, prefix);
+-			strvec_pushv(&args, diff_index_args);
+-			if (setup_revisions(args.nr, args.v, &revs, NULL) !=3D 1)
++
++			if (setup_revisions(ARRAY_SIZE(diff_index_args) - 1,
++					    diff_index_args, &revs, NULL) !=3D 1)
+ 				BUG("malformed internal diff-index command line");
+ 			run_diff_index(&revs, 0);
+=20
 --=20
 2.46.0.dirty
 
 
---hhbBKOVI5MxjwkrM
+--4a7OQFbO9mcFZDao
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarZZsACgkQVbJhu7ck
-PpT74g/+Pi5e0yU4tFMJ7p+xtADvHuVvWJY5WzYPD9f3jS8EOY+q/cLcJ4Z/zUBg
-OtTM98fP7+rVX1ZPg8RXBwmYPuZqEKahKbQIL9C+nLxHNmplvAYfs8oETFVqj7Rb
-wyfvZHZXYL5QnNhFrX70EUVIVerVWfoCIW24mlqKdfp0Q66La3CTP0besD8xbOho
-ShZ2LOh6oqMmkS9Tbp4B+NIIMKag12O8kxVIt3Zx1FLhKAtjGSNGFL5BxqHM82CK
-qnYu/lr3sbozd+JHz9EeEs07iX6M+g4wpl3W42T6DGH1HJSlN5G8N9UFMJmj11n9
-nkk6wGdqJf5sMko0zBSOoHPaVtDYHN32YcT4HUCeTB3Fx+TaktT9epkE6Q8bc79v
-QS0GinvVrt7z7vtlw4VA/dwDYQIbKO/c3Mz/y2rNwo9d6XUWpDY2gmJFc4lQsWOW
-3u9Y+OIuaBHo3X/Apc+Ms3CGD/SUvVmJE0VBTC5gJ5njcktzLkW99taRwaSrh8EC
-TFWdB1WHYsmvDXeQm2HPLs5NT1sfVg0u8+Y0qkI2pDaW0RFXdmWdc5SbbzWR53Az
-qkcvzhfYVE/PfkgXP4hG/etOxeI9iMfZPqRgu3vMlVfm11AebDsj4qoeLvvhrXXE
-ZOlWn5/w3dADHBYG/HFuXDqwfWaNFmHklPeCgFDa4GyItatO964=
-=6LhE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarZaAACgkQVbJhu7ck
+PpR+ZhAAlLhQxst0KHV5QFI20SoV6ccUKFJ80LiXCIW+s7CM3VCvQMHk4emkD0Q0
+NE2EO5PGKisT/dE8G9MOjyZCGD5GaIraHhc8Gy8PnRtzRbyyDySdUcfnmlkMsJaW
+0z83eo4ZsCiqnAubfurYNSdXwseajZALZCC2IcJ6nMkviosjDCMFvHpZ3DOVlZEy
+DvS7eaXiH7W2kPlq2FPJGA1G3cznbyMgDmIw6ERk0vOFOPOdp5uj1cKY3Q401Mpk
+Ko9ZONkemOXB4xseB3dYMezsg773BwWza8pzAASD9j/446mkRGsTChbjJCLb7jd/
+5F9WMbjB6MbBqxBtWeqpTnuLFs0Lc9ULrERlKCoiqPQy61Fa55x7orFZVCiptWnK
+F/mrNqdJScmCwxvN2aRG4m0OY6MEA1YeQlc+3XBzCB4wy7wsaWtgQYwO/SqkaFd6
+mm5EKWCvq97wpdJIKg+B59DcSUovBNp16ZaBI7JeOot+7KFRxrVxr5Ne3yEXThQT
+2bP9nHxc+1TXXL4jGkYmt1VMOT7Wx9PLjZQl0xFj0JlPp8u0/Huj6Ikby+7mW3YD
+5hWTQWfYwVWo1eULXM4Vf1nPVxfFdyy460ZnhyW9Ekv786AEkdHUtnn6bIZBrpeP
+E/VEXgdPtiN+gvZEs/3IgRI8waBFCGp0ZEjPMVPfKr5wPuEQjTo=
+=0TMI
 -----END PGP SIGNATURE-----
 
---hhbBKOVI5MxjwkrM--
+--4a7OQFbO9mcFZDao--
