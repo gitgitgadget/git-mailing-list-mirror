@@ -1,89 +1,109 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AF3143883
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 18:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B97143897
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 18:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722538276; cv=none; b=aYzO31xrWeoND7GTxM2ZWZhSe1ZF+y8TJKG4gGYUJcOQDDfkLDBw4GPeMFA7/uZWXcCKn3qR9aNDgJEOLupUOvCZHwKn5ANxq30CGdU791a3lOkXseybtzFF4gFfyLQz0Lnt5RoZYNVy6JRnTBe/HuqlGsZPFxaUyAWsdI9pBDQ=
+	t=1722538291; cv=none; b=QJcHSKI8aRWj2Uv2tqkfesTBlMk4DmTYvT1xt/6GbMBfDNP5JkhAV2SfX5ycXy+MtGQgDykb+0tBes3C2DPS6NvPO6dYJqHYQKl+B8DMPjUSc5BdYh2KzXbAhRUOjxxkeFCOERUtWa9xZb5iqX0n+8ow09ce+3CuosSEWrWrm8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722538276; c=relaxed/simple;
-	bh=parfmYAd7UooAnuk4XGb8azyJ+6XWO/bP40qWPfbxgk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M6/YaHgsfnTTKYt2MmtfdxwXBMdSJCWhQoRqHtz06xqTkD2wt/SMrx7qdTFV6mr5JtgyolthRQTg6zLScvFqJu8gQtVV/tHiZ4gN1yPnZap9p7y3uB2UUlapIbg7DMCRKoPej6+MQJXIeq5JRU4k9M2AF23h+5ZotdcZUGNgijM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=M0Xwl5Mq; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M0Xwl5Mq"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0FE02BAA1;
-	Thu,  1 Aug 2024 14:51:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=parfmYAd7UooAnuk4XGb8azyJ+6XWO/bP40qWP
-	fbxgk=; b=M0Xwl5Mq/JmzWbsO6Nxk7j5DwDAaJzIPXXh9pcq6uwIe/AegJZKJiQ
-	84Xc0E7cQoh/gRK2V7QRZKMETH93FVAgM6aQkQCEXcso4iOLcFkoVFXUUN07oM/7
-	mvfCZzybjaqKAz2cjyLzYrd8L1dDQAPi2XP1wPqb9iNMq8Xsn7nPY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA46F2BAA0;
-	Thu,  1 Aug 2024 14:51:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F3132BA9F;
-	Thu,  1 Aug 2024 14:51:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-Cc: <rsbecker@nexbridge.com>
-Subject: [PATCH] t0018: remove leftover debugging cruft
-In-Reply-To: <xmqqbk2cum5o.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	01 Aug 2024 11:34:59 -0700")
-References: <02d401dae43e$c076b000$41641000$@nexbridge.com>
-	<xmqqbk2cum5o.fsf@gitster.g>
-Date: Thu, 01 Aug 2024 11:51:12 -0700
-Message-ID: <xmqq7cd0ulen.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1722538291; c=relaxed/simple;
+	bh=hHQ1MnYPaF6DOpJmMrQN+m5s/I/bIqynEDH1gOmKzCc=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LX1/d2j9h9MaHeWdfgljJKnvuj9wAgscq4FPyEyrTGqQFhTLGFek/Ld8hT102k/d7OEHPx32BIzRnDx3byZmi32nwNtofmFxrhp4Tlx2fMjhqrRo+ZiSG/EV1RvFtv1RQHlUkvDhdK6smHh0a2zOYmMDHOS+6IAk3kTwoANg/Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 471IpQeh3506143
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 1 Aug 2024 18:51:26 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+References: <02d401dae43e$c076b000$41641000$@nexbridge.com> <xmqqbk2cum5o.fsf@gitster.g>
+In-Reply-To: <xmqqbk2cum5o.fsf@gitster.g>
+Subject: RE: [Bug] Temp file use in t0018.6
+Date: Thu, 1 Aug 2024 14:51:17 -0400
+Organization: Nexbridge Inc.
+Message-ID: <02e101dae443$d01575a0$704060e0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0668D4B2-5037-11EF-8365-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGnznpkW75Rul6Kx/55mvNhpy8eIgI+lrsvsmbzywA=
 
-The actual file is copied out to /tmp, presumably so that the tester
-can inspect it after the test is done, which may have been a useful
-debugging aid.
+On Thursday, August 1, 2024 2:35 PM, Junio C Hamano wrote:
+><rsbecker@nexbridge.com> writes:
+>
+>> In the 2.46.0 test suite on NonStop I'm getting the following surprise
+>> error:
+>>
+>> expecting success of 0018.6 'advice should be printed when GIT_ADVICE
+>> is set to true':
+>>         q_to_tab >expect <<-\EOF &&
+>>         On branch trunk
+>>
+>>         No commits yet
+>>
+>>         Untracked files:
+>>           (use "git add <file>..." to include in what will be committed)
+>>         QREADME
+>>
+>>         nothing added to commit but untracked files present (use "git
+add"
+>> to track)
+>>         EOF
+>>
+>>         test_when_finished "rm -fr advice-test" &&
+>>         git init advice-test &&
+>>         (
+>>                 cd advice-test &&
+>>                 >README &&
+>>                 GIT_ADVICE=true git status
+>>         ) >actual &&
+>>         cat actual > /tmp/actual &&
+>>         test_cmp expect actual
+>
+>Sheesh.
+>
+>We should *not* be assuming what is in /tmp.  Our TMPDIR may not even be
+set to
+>point at /tmp.  Anybody can create directory 'actual'
+>there and break this test.
+>
+>I thought this was a left-over debugging copy while reviewing the patch,
+and I
+>thought I had pointed it out to the author and/or I removed it while
+queuing it.  The
+>copy to /tmp/actual with cat should be removed.
+>
+>Thanks for noticing.  Are there other reference to /tmp in our test suite I
+have to
+>wonder...
 
-But in the final shape of the test suite, such a code should not
-exist.  We cannot even assume that we are allowed to write into /tmp
-(our TMPDIR may not even be pointing at it) or read from it for that
-matter.
+Other than t0018...
+* t0060 references /tmp but only for a synthetic repo path
+* t1300 extensively uses /tmp with hard-coded file names for cookies.
+* t7400 appears to work with submodules in /tmp but that may only be a
+reference
+* t9902 hard-codes a reference to the user home directory ~/tmp, which might
+be fine
+   but prevents parallel tests
+The clar infrastructure assumes tests are done in /tmp (in find_tmp_path)
+except
+   for Windows, so that should be resolved also.
 
-Noticed-by: Randall S. Becker <rsbecker@nexbridge.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0018-advice.sh | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-index b02448ea16..040a08be07 100755
---- a/t/t0018-advice.sh
-+++ b/t/t0018-advice.sh
-@@ -93,7 +93,6 @@ EOF
- 		>README &&
- 		GIT_ADVICE=true git status
- 	) >actual &&
--	cat actual > /tmp/actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.46.0-179-g92bab5172e
+Regards,
+Randall
 
