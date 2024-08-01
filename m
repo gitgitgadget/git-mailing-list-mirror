@@ -1,67 +1,67 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5714A4ED
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 20:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABCA4087C
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 20:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722544611; cv=none; b=ZKbO2kBLQrobzQwV7z7Ro9JZdGluKx27VgKSMO+OWuOXrfLKzzBCrJQPR2Y5V2JyzdCXfNntPM4k08aue3cRSdsrOr0u20MATjQRGCCLeQQ7QPDLR1w6HY8BmiCZws0BmkYA28VcwzCrQZyDCAykwp13zqyRNI6Jl4Cd9n6JOXg=
+	t=1722544753; cv=none; b=Tqh1NpLe15BeoGW6z6UkyRoteiavolHjg+jaB0aJe8DlAueYr5jFa5EMz5ZD1xl+r0GorLNrHD4RusuQDDgDrwrea+Mj+h7jDOS7i4lPyHc2puCzZTLwATES2Vm8cMDuIdeb3lghLfkzgXXH8VK3fducTgDsCQ5HQhQIMiQLykQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722544611; c=relaxed/simple;
-	bh=kN0nognpTpq1p+MIAXMcqsF1gqSQRdHR750/j4/tbPk=;
+	s=arc-20240116; t=1722544753; c=relaxed/simple;
+	bh=66kg3jo6WQXdACAMm/0tSn88y02NgGIL8IKBHpHtGKc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VsOWIe7Ikow08v4ImtFEAjMDwSiPWx0bFJo6D3cRvJmSBl9yD2xWYEYtyxjrKNFWAeYVs653O0ATUhYCOSS639fMcAihrqq0cY7CrZZYeu6GvnYJ8ckX1erfCLq59bYY3zZoHtRjPfui6DqyE58Oj/dONqZ79V3MmSCnWm/J4c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=mTd9YwUA; arc=none smtp.client-ip=209.85.219.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=cl7P46WIuzQtN38S4E5GQPVsxXQNTSsNvg022iNCBhYY6+UR86UZ2rJVK+bR02KiHJFP6p1TWGCztPPxO42ekd0yiI5vas5FNA0aYFEokK1ymctlfJrXzgp80T0eAGOBOcuVh3se3e2UQvo0MU2hj6rM+UFxatFCUu2jqg7U3D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AMhHa3jq; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="mTd9YwUA"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6b79293a858so36677706d6.3
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 13:36:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AMhHa3jq"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-70942ebcc29so4490224a34.0
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 13:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722544609; x=1723149409; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722544751; x=1723149551; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kN0nognpTpq1p+MIAXMcqsF1gqSQRdHR750/j4/tbPk=;
-        b=mTd9YwUARqZs9fab1nPphkIx/wxkhwP5OHkR5YlbVWXQT/65R44JWd4vKox5MI5RAj
-         H4jv9wzmybTtlbn6CRJzB5uFribqMxAQtWSIXomJOIuEofxh+3eSJU+dlIRiv9sxiXgE
-         HSslZ4J0KjJ4+a+yARVfkMGMq7L4F/1JhKHZsVnXA6hWKKySSFtKuC73jjG3VIgOoaph
-         KZJ1+gb0YpMCltfDV8hAUrv64jTA314FnRmxPJPQwq/uBlIBRIJ4KMw3LdJe58xAbcD5
-         VtOvggDruWizxJbz89FC3Kevxa88UMU6J1CItAenshFHEDn5sZ7qilJvNMtxRftrIR89
-         VmhA==
+        bh=B1HyHu78uv9tKC/MjneaaX2ssF0OCPkbKKPXedfabYc=;
+        b=AMhHa3jq4xwwcQ+BM9kCWOPd3seGhDn6fnQMSSBvACr7TFB4etFJGgMSWDDGbbemmM
+         VqywdWFw9AldmUmK8EeMIpfxWecYSU2ddx2cjMiLLlIBOP0iqIkhAakSHF8l9nw09DWM
+         O6J2vbcCCStci+xB9YjhK73i4W/xatScLb4Jy9SVxjYWHvr3aB1P23tmbpsX+8NALWJs
+         LVfFdohwnaSc/Rmc+R68lsTc48NyC9hxHeBRR1hXdLL0Rq1rVr903lHYXgpE8iVNc2PG
+         BEDtyt25SBIxTswJSecaKQyscXC92ZCRCD9OLg8RQB/hDqzpRZ+tTZ+I5RU1ueWcsXfg
+         ROAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722544609; x=1723149409;
+        d=1e100.net; s=20230601; t=1722544751; x=1723149551;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kN0nognpTpq1p+MIAXMcqsF1gqSQRdHR750/j4/tbPk=;
-        b=h6dfniqECSyB5ATXaaiqmgF70UWveJljI5rvFmhB5SCkNAPZi7VmXGL4sU5lRKMwdd
-         aajl3BpsrwgUpphhF3+67Q+i4pz9aDF1+065ZVip4rqjku4YK4ZoHQcPQTavpUgnm6it
-         0gJQzeZx//JKd8TItJjBLjFtmOGYxv7+f8Q6yecX3rXUI+uPmOH14bOK63F0ho+Bu5R9
-         Rpozjr55uVKHlhhGr5fXfbP0gjxjZTnu2I/FqlZU4RstYApcaObsYbfODHMtxXy7hdKW
-         af1Q+QbNpSx9knR27jRmXe4wW4knFd9eu/pLxQ/UyNv4gKpQQXkG0Nwg/ji813rXJcPu
-         oISQ==
-X-Gm-Message-State: AOJu0Yx5qD1ICbldPi8KSy/XKa05br/JTNFSCZ12RA10EpmIt0hj8lpK
-	qDrJgHP3HIxoBXzqEsh6VZ92b1PcpxchR6Yxs170MhaQ+mrGaL2vx/lvRrh/MQg=
-X-Google-Smtp-Source: AGHT+IFiUnITBGHQX/1Oi6SOINECZz6z/3k9P08YdA8P88Y/Ack9IIKAjNTc1KLT5aojDhRi2kxsCA==
-X-Received: by 2002:a05:6214:419c:b0:6b0:63ab:b7ba with SMTP id 6a1803df08f44-6bb983d0149mr14994316d6.15.1722544608719;
-        Thu, 01 Aug 2024 13:36:48 -0700 (PDT)
+        bh=B1HyHu78uv9tKC/MjneaaX2ssF0OCPkbKKPXedfabYc=;
+        b=OUWmntvNRtBjorofDh7De7/0dq84FcXGyPxru864EqGuxTCSgp8p7E8jizQ8vlYP7h
+         s0QQq2tIsPWO3Xt3swhvyQx6aktGg65RKLuuMjsp8lAyRE67T9ACQrt8Z9UH/xHCTsVq
+         aqwDuVZAzE3QiR4BB7qxEe5hkC5HKv8Y2hGZmHGv03jZ7pqNabDnSz8CtmaBcOsyo2ct
+         Hbm+o9kKR3iHDS3QAVR7AGWBe6z9FSzH6J5C/SEl/PL47k/2ZLz7zAbMQES7/wUVF66c
+         LqgDvIQPMyAM+oB6avOjCyR5r5Kc8lu0E9pJnYvPZuGy82CsbqRoEpB54u5iw0Ve606G
+         h6MA==
+X-Gm-Message-State: AOJu0YwtJ4nIxsCAccz8EW2vodRd0VrEfArsMdv5KKZWHRJi8ia6PmOp
+	jIiMS0jVoJl92EgY96FjBNnCNXVCSiI/qJFKxHOLzNYm0EO/Lkm3xBvOlMzDmUY=
+X-Google-Smtp-Source: AGHT+IHBe6KxSm8OTJEhXzZ+kepqzhXv2nBcvSsrkhd/pA4ho8xWCe4wC0m0JK+dPefWGlDLRokMjw==
+X-Received: by 2002:a05:6358:c117:b0:1ad:d2a:75ea with SMTP id e5c5f4694b2df-1af3bad7725mr101311455d.14.1722544751566;
+        Thu, 01 Aug 2024 13:39:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c88421dsm265886d6.139.2024.08.01.13.36.48
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c76b88esm417076d6.5.2024.08.01.13.39.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 13:36:48 -0700 (PDT)
-Date: Thu, 1 Aug 2024 16:36:47 -0400
+        Thu, 01 Aug 2024 13:39:11 -0700 (PDT)
+Date: Thu, 1 Aug 2024 16:39:10 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 17/19] t: retire
- 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
-Message-ID: <Zqvx32vv8u4WDTKg@nand.local>
+Subject: Re: [PATCH v2 19/19] midx: implement support for writing incremental
+ MIDX chains
+Message-ID: <ZqvybqlvW/wcKV5g@nand.local>
 References: <cover.1717715060.git.me@ttaylorr.com>
  <cover.1721250704.git.me@ttaylorr.com>
- <23912425bf7c0106ed388f7712e7bb822572fe5d.1721250704.git.me@ttaylorr.com>
- <20240801104647.GQ1159276@coredump.intra.peff.net>
+ <e2b5961b4556122e594b657efe2f1d3337368cdd.1721250704.git.me@ttaylorr.com>
+ <20240801110722.GR1159276@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,21 +70,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240801104647.GQ1159276@coredump.intra.peff.net>
+In-Reply-To: <20240801110722.GR1159276@coredump.intra.peff.net>
 
-On Thu, Aug 01, 2024 at 06:46:47AM -0400, Jeff King wrote:
-> ...if it is one or the other, I think it is better to test the new code.
+On Thu, Aug 01, 2024 at 07:07:22AM -0400, Jeff King wrote:
+> > The tests explicitly exercising the new incremental MIDX feature are
+> > relatively limited for two reasons:
+> >
+> >   1. Most of the "interesting" behavior is already thoroughly covered in
+> >      t5319-multi-pack-index.sh, which handles the core logic of reading
+> >      objects through a MIDX.
+> >
+> >      The new tests in t5334-incremental-multi-pack-index.sh are mostly
+> >      focused on creating and destroying incremental MIDXs, as well as
+> >      stitching their results together across layers.
 >
-> And I do think that midx bitmap code is less likely to be exercised in
-> interesting ways by random parts of the test suite (versus something
-> like GIT_TEST_DEFAULT_HASH, whose effects are pervasive). So I think
-> this is a good tradeoff.
+> Do you mean here that t5319 will get coverage when
+> GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL is set? In the long run, I
+> wonder if we should pull t5319's tests into lib-midx.sh and run them in
+> incremental and non-incremental modes.
 
-Thanks, I appreciate your careful reasoning here.
-
-> Patch looks good.
-
-Thanks also for the review :-).
+I don't know. Part of me thinks that that would be a good idea, but part
+of me also thinks that it would be (a) painful (since many of those
+tests assume that exactly one MIDX exists in the repository
+before/during/after each test), and (b) not particularly useful (since
+much of the interesting behavior occurs when multiple MIDXs contain
+packs with overlapping objects, see (a)).
 
 Thanks,
 Taylor
