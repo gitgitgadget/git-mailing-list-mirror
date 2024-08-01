@@ -1,84 +1,83 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9C1183CA5
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 09:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3FE183CA5
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 09:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722504709; cv=none; b=eL5cqAHlal0gwBafk2Hy4OJuf+v5LwpyBZ13FhNHEORM7x9a1h3GGGAuQ+z4nUaqE/7Ng394XPmw+J/dSFhv4ny0x2YBDtUu2ASp29UELMfk0UP/FQyWQiqFlWgaORMAySxIXChn7zw55fl2vzdieTZQX1Y+b02ByzmwLJEmMM0=
+	t=1722504713; cv=none; b=WZPX+ISsAmLeV3YJoV8bc0LB89RxumFtrqTetBzie3C+rm1IbG+/kBh0SYtN2bmJvPWOmCfPFLqoY8+wRMDJazOMZv5wJ5YdH6rLnrcE7RMtOCl74HrqBfpfUrQhfgMCzWcKLtOyoRb78K5iVjXci5ekSG12MovU14tx6O7iuao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722504709; c=relaxed/simple;
-	bh=qOnrX6Ls910Vo6kt9BSH/dH/AAihIs04lUYHJE0HCxU=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F0DTooM3whjnZ33cECBejrJuqeTg6zk5oUBsuYZubUQV4iZ4I9MKXvET0NtjpIUbB4ejBWMkTWSPCzKPRgEf1Fw0yu/t7sAA93/IWwPY9DgoiBYeoR+RBdJfwWul6G3ArKfRR8lDtoCGdPtXwbaAD+J2/B9Bmgdl7tXSib/bTs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qLsUU56W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sCUyLByF; arc=none smtp.client-ip=103.168.172.152
+	s=arc-20240116; t=1722504713; c=relaxed/simple;
+	bh=54vHaakJvy4hpbroVerEgRQpdt0uIwP+L7ixkiim58A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ixI73/wT5m+Os2tS66oFHAhIIZ3aW33iYTuDCUY1SFN88wO/ixCoMOHu0UTggcMVZH1ZKqoPuD+fPgGC/1zw1cIOq6hwmwb0b9B/vKP0G2f8O/19UmWRtKvcldZneCvfy2nYGR1BO9aqyt9LEO3kOPIngT9K+By1+Wdit36hl+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nCqLd5RD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WRYDsk8S; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qLsUU56W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sCUyLByF"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CC350114AB86;
-	Thu,  1 Aug 2024 05:31:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nCqLd5RD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WRYDsk8S"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4EA031386991;
+	Thu,  1 Aug 2024 05:31:50 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 01 Aug 2024 05:31:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+  by compute3.internal (MEProxy); Thu, 01 Aug 2024 05:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722504705; x=1722591105; bh=uPHlir1mLf
-	Cwo2AqZv+HzHIdjbryzkSJSZBYoJRku7o=; b=qLsUU56WqqS5uwyH9JiTivlmcM
-	qgqmZhtb96e5HILqsp9HrGvvXtIv81/K5U9/nSFIpczBXI/BTdlv4BqFBdmy0VD8
-	nik+KY2lMKQr1kBw5u4ByUUVCDRzDE5JF9YcT42LuYQLARWGsgXxOir1UtrnBQU0
-	MS5nqouoH7TYmrn2z+Em9OzNJ41++2ZO11OXvo1USWO467GB/x3ZjL3KSTC5gCKK
-	WKb8t1L3tnNumZwwPn7zv03f9JDPN9hv3NrJcyn3IuoJ3QViMbLVbW0IE6YexazP
-	/JYVUZYsx+RH70F17carKr5KiQXDHQPTzcCVWC9NGLtbkwTPBTT/99Q6N/1g==
+	:subject:to:to; s=fm3; t=1722504710; x=1722591110; bh=qQ7+u6b+4l
+	SaQeKT1sheuj8/2zyyXJ+mjnzDBL/Dnt8=; b=nCqLd5RD+yj27qRtnIrPN1Koew
+	xuOoRgAiSP30FkVVlDA5aCZ6L96Wq4XXH3GWGZQ4udqOlEJP8oOzFH1UA9VADKza
+	sF/XxgCtPBLs1ekvPucAwgXU4MCkYhdO6eyIgLjVuGAvJJzFQ4B529gDS+HZLAXG
+	J7vbrzZAnYjU2mcwk0Kl77/QoUtf/Bh3eElWa02VgYGTVnI4mxXtfgdKuGcuviDp
+	avSbpUu5QzhuVYqLN+DCMlxbdeK32gVdWU19HTE1SAEInIGBjevOV4BnDTKYSPDC
+	E7eaDAaZfcZJEeS5vtXHQJrteV7yefPONWMYOgfogbsG4xc5VxRfU/rld+wA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722504705; x=1722591105; bh=uPHlir1mLfCwo2AqZv+HzHIdjbry
-	zkSJSZBYoJRku7o=; b=sCUyLByFGHTQmP2WvjlvsRD4XPcY9xdDIQRDP/HKb5M1
-	1uY9Yn1I6S/+8Rg/LOxfDmcMjbsK2yrGbCqhAt9Z1TOo3/wDsrdxOYlCRGmBtmCn
-	GJqMFqon3FpIiZMSpUO6il/xzNa3CXUSMPUrC1jFhOJ2jZMwJP/5S9JgbZoi030K
-	o8BTazy5+G7dHi42mBp9VAfRaOp7qmUsknkBr5IpAWju2MHnBNfRG1Q35Rj2QjEw
-	a6wjihN+dYq9D7g9YdPFKUIe9yLRX3z+nIyV2QTQLh7FOsfX4OqIdisD9iqQbal/
-	jPuc89uDvVRSwqa1L1Wg5aH9UYExLll1yUYuPBiorg==
-X-ME-Sender: <xms:AVarZtmZMBq_tMQ8ahO_uANFD4LhXP_LzNYQHx6XdmrQc_bxj1TKNA>
-    <xme:AVarZo2T7BqIEc9he_L3RVTyU0-csD-QfN_IZtD9PF1nfN11fg-yIMJDP4KlAlVPN
-    TpGNHz7dPjUvu3WOQ>
-X-ME-Received: <xmr:AVarZjrZp0YECmKMJ0cC9ideYeToNV1YIkT_a1wrVotIs3UYmn1M4XTJHtLmiiJQuFa66RpV7hjFNmAWECElX9yt8sqvZ37v-GERMzfwwBNtGO4>
+	fm3; t=1722504710; x=1722591110; bh=qQ7+u6b+4lSaQeKT1sheuj8/2zyy
+	XJ+mjnzDBL/Dnt8=; b=WRYDsk8SCPW4pgSE/UYa6s+sIT6kEamQqox1ForiFhkL
+	wcZiWp5MbE/7GNF63AH7UOwlshpk+RcMhOYy+npTAiw4uw0izYES+nvM0yFR91VD
+	BP54BNVMhKN2Yj4+iROAFipLkrStugliFpQf4eHGLUM3WvlQbwU36oafdGnkJC+t
+	H/49Wbv/VvvFKCWtJziLRz47j1ExQ9juBCnGG6pcdzW2sFYp/IXN4Tg2BruIz5cR
+	ecOAnqoLa7jS7/7vxYasV34rohoTM9EofPIKEZKiz1I8C5gx9EQTYesYWdKeUpj6
+	uXBQ5B+89Jr95zPGQFkXsl3kAm3vzDnjG+E1BveRgg==
+X-ME-Sender: <xms:BlarZqWY_vaj_usGkX-m8ez-Oy5XM7jyDFnKya6CUq7zMj_H6h6q_g>
+    <xme:BlarZmlYnf1AiFTQw8DTp4bPUfd4LUU34NXNnECe6eS54u_WaXg2TNcGB95bPYoHn
+    mE7_RXlrti-qNjWHQ>
+X-ME-Received: <xmr:BlarZuZSmd8ygrj9A_PDSbtC33ro_VJTDzhEjkTA2BT2dZ6Ao2wJuhAxWo0yrc5KvdNZIQF1RpW4t0LYeFBDprXVR0jsQ7bAHGLShiTJ7Xu1MgI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeekgddujecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epgefffedvudehjeekledvffekfefftdefudehtdegffejvdelfeevfffhffekveefnecu
-    ffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    td
-X-ME-Proxy: <xmx:AVarZtkF_bQ7BLQ3JtKRWZvJ5CLa5rrTt-9P4etMBIU1cGJA__bCnA>
-    <xmx:AVarZr03TDFGU8j9JRr6TIqEY4-COoNJVggyYRz_X1O9riMKR1AsPQ>
-    <xmx:AVarZsslqkD1SDaTpjWlCilIfUmLnRoylZmqWllw4vY_dBuBXLogLg>
-    <xmx:AVarZvUKKLr8aO_weQEw6217uJdfqt0MN3aZ3oyDat6F1f_ivn1T8g>
-    <xmx:AVarZlonTMl-vMH38qch13_W8HKTimww_OcOgjRVnBEqs_SZUy-1Je8I>
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:BlarZhVcrhk6hfvmNbq9fmJ_BGNld3VeI651jtzrkHS8WW8vS9Aopw>
+    <xmx:BlarZknXl-tVJVVcT1NS6Ra1GrquQGQZ00TmeHsHJAsAcOiu5vdbcQ>
+    <xmx:BlarZmfcRAGWgq5ZQO4tlUm6WCGE9F9BFLZTZhD8C_fSf9sV1DqyFQ>
+    <xmx:BlarZmHz51tfHeC6wkMd2SaxDrxi03Q_uq_Dr_EvdHROT7FVJB6wFQ>
+    <xmx:BlarZiZxB2otsuec7h63E40dYSzdu7ARL6oFUQFEidaZGu3vHlHnyAwi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Aug 2024 05:31:43 -0400 (EDT)
+ 1 Aug 2024 05:31:48 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 848fb4a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Aug 2024 09:30:10 +0000 (UTC)
-Date: Thu, 1 Aug 2024 11:31:40 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 761c563c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Aug 2024 09:30:17 +0000 (UTC)
+Date: Thu, 1 Aug 2024 11:31:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Kyle Lippincott <spectral@google.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Josh Steadmon <steadmon@google.com>
 Subject: Re: [RFC PATCH 0/3] Introduce clar testing framework
-Message-ID: <ZqtV_G3ZNNFR5dDf@tanuki>
+Message-ID: <ZqtWAvbX9jwYBnWH@tanuki>
 References: <cover.1722415748.git.ps@pks.im>
- <avbtyqklmtwmz63vbpevkz4xyv3dboyghwhkodxjlb3ur6zt36@afi5ptrsvpz2>
+ <xmqq7cd18srf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,65 +85,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GzVJu5ELyuAZwt/G"
+	protocol="application/pgp-signature"; boundary="tVIbbiUXPcXq4SAJ"
 Content-Disposition: inline
-In-Reply-To: <avbtyqklmtwmz63vbpevkz4xyv3dboyghwhkodxjlb3ur6zt36@afi5ptrsvpz2>
+In-Reply-To: <xmqq7cd18srf.fsf@gitster.g>
 
 
---GzVJu5ELyuAZwt/G
+--tVIbbiUXPcXq4SAJ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 31, 2024 at 11:33:55AM -0700, Josh Steadmon wrote:
-> On 2024.07.31 11:04, Patrick Steinhardt wrote:
-> >   - I prefer that the proposed solution results in a single binary as
-> >     compared to one binary per test system.
+On Wed, Jul 31, 2024 at 08:51:00AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> Does clar allow running test functions in parallel? With multiple
-> binaries, we can at least run independent tests in parallel (although
-> right now the unit tests are fewer and so much faster than the shell
-> tests that it's hardly noticeable).
-
-Ah, that's something I didn't think of. clar does not support running
-tests in parallel.
-
-As you say, I guess for now that is fine and I'd claim that it likely is
-faster to just run all tests sequentially with a single binary if you
-also include build times. If that claim isn't true, or if we eventually
-grow a huge body of tests, then we should likely revert to having
-separate binaries.
-
-> As part of the original unit-test series, I wrote a comparison between
-> different frameworks: Documentation/technical/unit-tests.txt, poorly
-> rendered at [1]. Could you add a row to the table evaluating clar on the
-> individual points there?
+> >   - The clar gives us the ability to pick which tests to run via command
+> >     line parameters, which I personally like more than picking the
+> >     specific binary to run.
 >=20
-> [1] https://git-scm.com/docs/unit-tests#framework-selection
+> One thing I am very unhappy about the current t/unit-tests/ is that
+> the GIT_SKIP_TESTS mechanism is not effective at all.  If we can
+> wrap clar's test selection syntax inside t/Makefile to work with
+> GIT_SKIP_TESTS (or its superset equivalent), that would be a great
+> plus.
 
-Ah, I wasn't aware of this document. I can update it depending on how
-the discussion goes overall :)
+Yeah, I guess that shouldn't be too hard.
+
+> >   - The clar replaces some test assertions that we already have. They
+> >     feel a bit more mature, but overall there aren't all that many
+> >     assertions available. If we wanted to pick it up, then we'd likely
+> >     have to add some more wrappers.
+>=20
+> That is a slight bummer, as importing an externally developed one is
+> with the hope that we won't have to enhance or maintain it, but
+> we'll see how much burden it will be.
+
+The clar exposes generic helpers like `cl_assert`, but also comparison
+functions like `cl_assert_equal_$t` for pointers, integers and strings.
+If anything is missing, it also exposes the building blocks to add
+project-specific assertions so that it would be easy to add for example
+`cl_assert_equal_oid`.
+
+One thing I have been missing is non-equality comparisons like
+`cl_assert_lt_i`/`cl_assert_gt_i`. But adding that to the clar itself
+and upstreaming it should be easy enough, also because we know the
+people maintaining it.
+
+Other than that I think it's mostly fine and should serve as a good
+baseline.
 
 Patrick
 
---GzVJu5ELyuAZwt/G
+--tVIbbiUXPcXq4SAJ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarVfsACgkQVbJhu7ck
-PpRUzA//ceb3hMJ1Y1/Lf3r16MiSNk96C8FBjcFmdgMAl6IMXTU24DpiHipe9Nn1
-Jx0WinJGEV+mwltZg/MlvejURfxNXHocNLgkQP0ftgov8uon5OM96nCI98t2jdUR
-n/RXUU5+tE4d15q4aCXb5Dz03buJGEEj7iK3kUhlIQoBXRxnVYMn+c15AZ0dAFbi
-/xuufl2coCoSJR75jhm+Oxb7K26HgSCgfKnZgvCfM/b7mAZEc3Z2UrefEahegHvt
-7M0kbiNFroAUqKfrMEBEHHET56B7zSlaSMvdcsJF8c9IzaIjhmRDss6Ny5Hk6bLQ
-Ub5oi6tJ/BhNQAKhNLJ3pTqhn96SG34NY7amcjOdlcubnCQIMDvzijCP3u1LBO5+
-HR+uVbWSsFiwycOolTBi+wqYTYbiDYaHMdYbFsfueNb4EsjffGzmFtwll/GOP338
-jxZpEotPSYjkK3zE0dOs5arkbcrGUsWt2hCidDT+0cuUBzYak/sONfjYUoEmZFNW
-bVydMIJ6+DjU8dxlWHac3mGU2nJxUS/70oay7gh56xmF3Kas3oMHVkcPTXt5dd75
-m0R5icKn/5W6kyPoOVq6Iya7OIcbbRD8/fSYq5zV0gSzj2O7sgOP+65L1L0sMYOX
-PhYV+OpCUKtnpUhs8gW8/FRcCHd3HIRbD6EC6rYGAxLyyUhMihE=
-=XPJe
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmarVgEACgkQVbJhu7ck
+PpT9WA/+Nk8V9MCkGUv/p6unGaVuePfF1Y9gS2uFdr4uvi9aztR5frPRhdN67B8d
+ce2GOHawJ5TdYP5ujptNEjVAB4qBy/U0G3U6tVWJgoRLKwOJqtlEw8Kb7G2KCrdG
+/8dqmjQKL6sJfc97zQMujs+MLfPM7cqd4eus2fUqvy9RnXOzz9ryOOxtmu80asIu
+v6YCs7syBaQDkmPWx6NPObWKCYjdeg/2Ms4ORoAk4CAnut6+aK7RixLQd7upjNTF
+chPJy0FR0mrKzdSP2A/dNpqkfBIXRjpVj4nZ4R3mycgvgBWgjxvRiy2NeWUlna8I
+6VFX26z09fKumbydvfl/TANqkSIso79wAxhxQXXGBSiriy7YqZnLqscTvcgUNxYg
+U2xXjDYDOYeEwFEbcANiEov5zFgIZPCQO94C38MOqn/PognTkdcTlFb56ghgWrh5
+NC1xnzj4FQkwpv8p/uHKQAX8Bu8GH7NX33jP0Vvj+26q5RqWdMBb6FUMQ6T8jNPo
+iM7H3UPaXehuExi2kcB7D1OeUTSsWjrCFKjvIjO9AQE7CS062mHgKZ4nOEgPxG5m
+1oMBjS+3mYyUlU5CkyCWqSRG/mqLy85qNvhwM3eZRDY1mHbeJDDvwb+OiHcveY63
+yUw52UPF+N5eBrQJKsBi5kVKHCGWrmDO40NsLUL6GCta5xh3hf0=
+=ki4t
 -----END PGP SIGNATURE-----
 
---GzVJu5ELyuAZwt/G--
+--tVIbbiUXPcXq4SAJ--
