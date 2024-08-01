@@ -1,63 +1,66 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B398814388E
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 19:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EE7140E5F
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 19:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722540190; cv=none; b=Y2uBmX5Z7uiBu57PAhzHaZ1KFqTPUrSN6joRLdFPEwo20NqWAtkh8eOd1TekQ1QeFzYAqRuuasxlydm4x9IGPuqcYxvzsUmWU7KtwZ3RCOafI7LgMhEXwCdgflgJJ/20Pz/5sbg3QFjvbOm3uu74d2mKTDSqtXaZ4hOXcl/cuWI=
+	t=1722542082; cv=none; b=D04M3iysBMhu8Uaot4JINm8bb6UYFnH1bSN1YUnBMjaidTrgbTXmnvA6SSSx6cNkpHweUsVywfDovSn1L/n6OSRO11mjLFFiTsCsbxLF7tWAFfbIQtiJ6K8Z3q2vu+/Hh6txuAUmr7Dnqmgv3CMpNGNyiPv3hRz6vE5OKTPYKlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722540190; c=relaxed/simple;
-	bh=A5UbGFBQKcayI1aeKMQBcnpxuXdlspol7fnlOcdHc+g=;
+	s=arc-20240116; t=1722542082; c=relaxed/simple;
+	bh=FV6U4F5YVwQbBKgzm6PHH5AWhe4XkYAQnsyDk3epM3A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fE+0cSrq1kpfp7tw+zhSSyd3Q+BAUck6JRUu5tDr6krv24mUElaQ8uWPcBeUycZ52Av/4I8vuVXgihZF4ldL0gL8Jpn6xHVpZtaRad5vVg0ZzzK2j2ZIqoHuG6G2N8IQWUp690KwgltbCTqHh4d07NJP02fbvfUwTTsP93oY9gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=YlZBAhp0; arc=none smtp.client-ip=209.85.128.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=ECnKlaaLDoFYKr6D2PJ+u14Am0h17JG0QTv7RXgbHSoz3hdY12W8b9AA4c+U3VTXfgXacxLoz7ZtC7xkKZtMm8qKo4JKBgtN0Latu8iGtbx6t96jcNeeWg0T1xy52gTJqsKXiEPx4CmAehmikZxbsBXwW88inBxOvNQ8bCAABsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Sg04TKME; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="YlZBAhp0"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-65fdfd7b3deso59823787b3.0
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 12:23:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Sg04TKME"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6694b50a937so71509757b3.0
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 12:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722540187; x=1723144987; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722542080; x=1723146880; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A5UbGFBQKcayI1aeKMQBcnpxuXdlspol7fnlOcdHc+g=;
-        b=YlZBAhp0udnML2CuC7NwOyDvu7Oobg7cU9IGhq3CN5TiA2sAPVq3AkDFfQk3SC5oLO
-         /xv2j4DeENHJpjNqdDh4ISUi5FAeveRQ+ccSgVnDpZE6iq/SzwynEBo3oFefG1OibPFj
-         E5o2PS+3NzeQikJQP9oHcKxKoHEXBcxiLo/8dn8x28XmrDwHrNGHAvB6rrNtwa81PGJs
-         FKwUF5oJaQbPzOJS+Ot2j9pwvpkssAb5bHXEY1ODAWfm285FozENYHOqgE+7OFC0WDgA
-         uYWXshOolbHrcVa8I2pQ9yexKxgAVN35cruI4J5FgnQ8NAmDQR8BfQ4My11OK5Mwbue9
-         p6/w==
+        bh=JcnYZ1Z0TOQ/Ml6G0Bx1/NfOe7Y6xGiTzhii0CFPpZY=;
+        b=Sg04TKMEdrel/B+CD06brzPekinTW0hz58Tt7/2jOZysIkbGR1rqkGXl31n7fz36Ec
+         8puW/8Zo+0MErmyDdNTye3k0+O3jOsFgh8eGOIcVAazyjfaHL2JRvflmn03cmRYVQDnY
+         HNqieIqR0VIGaJEUcbUHTjni6Fyn321Jx76eO2Hy83nK6lVq9wirG0GM3+XDb3ITruln
+         oKBsYlbVEB292iPS1EOaD9sVXBE/sy+ALLf2PEf/ykgub3hoUHiAMwSYX/9rcqHH+HeN
+         PlDRZOjkGYOED2oL2IgMnM2pynlj/Ni+m+uCAKwF9M5LIZj9m6hVMq+g5z1zV3yB1Le6
+         IDsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722540187; x=1723144987;
+        d=1e100.net; s=20230601; t=1722542080; x=1723146880;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A5UbGFBQKcayI1aeKMQBcnpxuXdlspol7fnlOcdHc+g=;
-        b=p57+Yra6IxQxb2tLBj9IuiFwb6BdNWSUjSURGjsFSzALLuKIq3JeG544saqkHseLm9
-         Dw9yX0pjjm//6XBAtTLNtgWMIaEKcrnAQzBGED7z4qnN3wZtb09W2ns4lJbhQC4l/Np1
-         1eT82ZOlZsPiDtm+sINFha36jL2oJ+UjMTKRM92lX79U/6KAcyAuMzpN1A9QRUDrHGJW
-         vBC5RZsx0ImDxXpOyfTPS1q7qqHKNIUs+Jbc+U0gOc8EkpXYn2Ix5asugz3rlOqpZ+vz
-         FkY+O4mz7NIqeIc0KgrSo+eokTuczsBIV1hFdVV3D1AKPzoYgJUULRvrSr3TwLZkrOci
-         NW6Q==
-X-Gm-Message-State: AOJu0YwkZyQFaejFP3/ci+LCueE7LHKq9FPKd0weKjxgEOwH8QIDutHN
-	C6qhk81OpYlPIIRgQDWxe/iI7Nv3jYLEDLn4VYk6sxxULIIHLMYCFYhs6INWpRt4QNSuxz/Y7x9
-	T
-X-Google-Smtp-Source: AGHT+IFuMmoSpQp49uflqqbBx+4LiqQxFI9lutbJZ6uEqRTV9OrzhRP4hF+BR0+XJEqHVhn/prfvfg==
-X-Received: by 2002:a81:8642:0:b0:664:b1b6:25a2 with SMTP id 00721157ae682-68962981e0bmr11174197b3.30.1722540187622;
-        Thu, 01 Aug 2024 12:23:07 -0700 (PDT)
+        bh=JcnYZ1Z0TOQ/Ml6G0Bx1/NfOe7Y6xGiTzhii0CFPpZY=;
+        b=nYEEkAZV2Tbx7n4WbPT6NTb9X7l45jIqytAlxu1raEVilc2etSBhNrUyd6vX4laqYS
+         ARXXXc3YcgzZwYZxRm8GmOcWmbib2Q6rnmWokj2MVEhA/TJMsailx6JJrfcouqF6eVTj
+         ABFGN6mVobDqpVqGKZBp0Z/2F7UNxta/nfT4p+DIg9TGqVBKmaJOLSkMfqfXAVv58Zul
+         6g9sQ07e06EsRZBj5B9qLmaSoH29V8A2bPZKYCYFXnJywMJMA5yuM3gwJxZxCRUTwBof
+         CpOXiVN45rKBO06IQlXX/ZF3mDm9v5EJ6/sDt/KmwpHAJvL/e1varr85I0q0km8uV2/V
+         K+9A==
+X-Gm-Message-State: AOJu0Yz7VeahyJjfHwdcVskp+BRVr8XLJTMo7bpcR7ZNvY8FDBrF3CT9
+	Tc2m1vCO3sskBFS5ye/l4u1CrPBnCK5KmGmTALH7xO5/V5vtWiaIE3nUs+9mAWI=
+X-Google-Smtp-Source: AGHT+IE38fHm3LORJ13dE4GtKju8G9tzqDbkJI+gDgMaEcR26M+3swvIvTRbiQgJ9VR8y2g8QJR1mg==
+X-Received: by 2002:a81:8ac7:0:b0:63b:aaf1:b8c1 with SMTP id 00721157ae682-68964392785mr13861747b3.37.1722542079877;
+        Thu, 01 Aug 2024 12:54:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-689af844870sm540207b3.2.2024.08.01.12.23.07
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-689b45954c1sm605507b3.135.2024.08.01.12.54.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 12:23:07 -0700 (PDT)
-Date: Thu, 1 Aug 2024 15:23:05 -0400
+        Thu, 01 Aug 2024 12:54:39 -0700 (PDT)
+Date: Thu, 1 Aug 2024 15:54:34 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] 2.46.0 t7701.09 fails on NonStop ia64
-Message-ID: <ZqvgmYl8BTYvsSa0@nand.local>
-References: <02d301dae43d$2202fc90$6608f5b0$@nexbridge.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/19] midx: introduce `bsearch_one_midx()`
+Message-ID: <Zqvn+qGz5hireM5X@nand.local>
+References: <cover.1717715060.git.me@ttaylorr.com>
+ <cover.1721250704.git.me@ttaylorr.com>
+ <bfd1dadbf15cf735392ca15b52834f104cbd6538.1721250704.git.me@ttaylorr.com>
+ <20240801100635.GG1159276@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,39 +69,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <02d301dae43d$2202fc90$6608f5b0$@nexbridge.com>
+In-Reply-To: <20240801100635.GG1159276@coredump.intra.peff.net>
 
-On Thu, Aug 01, 2024 at 02:03:31PM -0400, rsbecker@nexbridge.com wrote:
-> Hi Team,
+On Thu, Aug 01, 2024 at 06:06:35AM -0400, Jeff King wrote:
+> One thing that confused me, though, is setting "num". From the "-w"
+> diff:
 >
-> I think this is low priority but would like to understand the situation. It
-> only happens on NonStop ia64 (consistently), not x86.
+>   -       num = m->num_objects;
+>   +
+>   +               num = m->num_objects + m->num_objects_in_base;
 >
-> The t7701.09 subtest fails missing files:
-
-Hmm. Script t7701 only has 8 sub-tests, but I think you're referring to
-t7704.9
+>                   if (!num)
+>   -               return;
+>   +                       continue;
 >
-> Total 3 (delta 0), reused 3 (delta 0), pack-reused 0 (from 0)
-> ls: cannot access '.git/objects/pack/pack-*.mtimes': No such file or
-> directory
-> test_line_count: line count for cruft.after != 2
-> not ok 9 - --max-cruft-size with pruning
+> Before we only had one midx, so that was our limit. But now we are
+> looking at "num" as a limit in the global size of the chained midx.
+> Which feels weird, since we're just considering a single layer here. We
+> seem to use "num" in two ways:
 >
-> The test directory contains:
-> ./.git/objects/pack
-> ./.git/objects/pack/pack-68c6c8c8538900694c32380ac1484201c8b60d8d.idx
-> ./.git/objects/pack/pack-68c6c8c8538900694c32380ac1484201c8b60d8d.pack
-> ./.git/objects/pack/pack-68c6c8c8538900694c32380ac1484201c8b60d8d.rev
+>   - we return if it's 0 (or now continue to the next layer). But
+>     wouldn't we want to do that per-layer? I don't think it will produce
+>     wrong answers, but we're less likely to kick in this early return
+>     (though it's not clear to me when it would ever kick in really; a
+>     zero-length midx?).
 
-Interesting. Can you attach the full -vx output of this test, as well as
-a ls -la from $GIT_DIR/objects/pack?
+This is definitely a bug. We should certainly do something like:
 
-I suspect that this is a mtime resolution issue in whatever filesystem
-is in use in your ia64 environment, but the full logs will help us
-confirm that, or at least point is in a better direction.
+    for (; m; m = m->base_midx) {
+            uint32_t num;
+            if (!m->num_objects)
+                    continue;
 
-Thanks in advance.
+            num = m->num_objects + m->num_objects_in_base;
+            /* ... */
+    }
+
+I'll go ahead and fix this one up locally, which is easy enough to do.
+
+>     So I think it's correct, though it feels like bsearch_one_midx()
+>     should still return the position within that midx (and then
+>     bsearch_midx() could add back m->num_objects_in_base to get a global
+>     position). And then I guess likewise there would need to be a
+>     midx-local version of nth_midxed_object_oid().
+
+Like many of the other changes in this series, it's really a matter of
+where you put the complexity: either it's in the callers or in the
+function itself.
+
+I think here I prefer having bsearch_one_midx() return the global
+position, since it is directly usable in other top-level functions
+within the MIDX API, like being able to pass it directly to
+nth_midxed_object_oid() and etc. below.
 
 Thanks,
 Taylor
