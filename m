@@ -1,87 +1,106 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8C61FF2
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 14:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760871A2C2B
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 14:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722521095; cv=none; b=U0osp9IIJOTRaH9MG1StB7oig+q/jTGDryRf5bWw/sUfELUFu5C6zYnSXfUUW1YBgZJ5DlrOnu566AuokLfapaEbFrz7DigupEwk1zXMDoGjD1v/ngP/pit6aIAJO/EdyrCmALXfLDiv7cnALsqsgIebjh7SO6LLss5ZfSsyxhw=
+	t=1722522366; cv=none; b=gta5prwfts5ma0OWnF9e+m+1KcfS0ugsNC6r9XaxJAnq8vS5ple6YDIvUzcADZZOrV7BlAE1x/oRQ1BAXd8vEG3yh42/+oZgOVfLp3+MgXY6UVF5R4Pb8rPCARs25Q6gDnnivNlFbvDKUILPi18G/pR6pKd+qugf0H9Wi57tA5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722521095; c=relaxed/simple;
-	bh=fUE0rFDvsLfVbiEL3dpRcIai0UuevK8YCCrNIUjqqd0=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hE3gIkf00b/PpNbvMN10HGze0ONqbhjLMIIT4Da9DxEvXK6jrUXJClyrRFZWQ9Cskq4f5/GPXIHvKRJDgWFqRmN8HA6fcaYgy5sS5WcvSJkQmu2saSyZkBPiSyFhK10nzKDrlAhH5/SgCfIVT3YssH6rZHPBfBhKkj1M6KM48p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 471E4guY3448201
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Aug 2024 14:04:43 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Patrick Steinhardt'" <ps@pks.im>
-Cc: "'Josh Steadmon'" <steadmon@google.com>, <git@vger.kernel.org>,
-        "=?iso-8859-1?Q?'Ren=E9_Scharfe'?=" <l.s.r@web.de>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Kyle Lippincott'" <spectral@google.com>,
-        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>
-References: <b3db953e88ece99b441993c9248223cc0ecc6be8.1722415748.git.ps@pks.im> <463oz7j4btei57brq42zlnsydguu74n2n22rhdq7iwjk4y2bei@6r32nghurrmr> <00a801dae384$de2780d0$9a768270$@nexbridge.com> <ZqtWDtqkXzjz2A8u@tanuki> <01c201dae40c$821ab5e0$865021a0$@nexbridge.com> <024601dae411$faab2cb0$f0018610$@nexbridge.com> <ZquPfiAWgYjIPGRB@tanuki> <025f01dae419$636bb790$2a4326b0$@nexbridge.com> <ZquSkkR_aw2IUdX2@ncase> <027301dae41a$41ea7ce0$c5bf76a0$@nexbridge.com> <ZquT0B-UXy73x6QI@ncase>
-In-Reply-To: <ZquT0B-UXy73x6QI@ncase>
-Subject: RE: [RFC PATCH 1/3] t: import the clar unit testing framework
-Date: Thu, 1 Aug 2024 10:04:37 -0400
-Organization: Nexbridge Inc.
-Message-ID: <028501dae41b$c277ec20$4767c460$@nexbridge.com>
+	s=arc-20240116; t=1722522366; c=relaxed/simple;
+	bh=fRQLZ2PrnnbdJmChcK60D0M8idA4vEBy9lCP5lrUGQE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gWp9aJipW4a5Fc2EZ7O88Ib+JEWTj7EuIIADlO7SgWhSylDTMJ0GIR7jF7/fUHiMQOMR2ga3vleRijkYcUSrBeo++gsLJP+13/FcZNDUfZl+XtWZ3DO4DNNtLlsxjxmR6T/ioYXVnJ23LFeySWBfiFxtBUA0ZN9O7TynTgVgjGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cyl5nCRl; arc=none smtp.client-ip=209.85.128.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cyl5nCRl"
+Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-66ca536621cso55709837b3.3
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 07:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722522364; x=1723127164; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fRQLZ2PrnnbdJmChcK60D0M8idA4vEBy9lCP5lrUGQE=;
+        b=cyl5nCRlCHaGs6AfQyJ4JJuhUAAzYLLwUL/533k8X0wdhQ6PV+jS2fWUFoX8noltWM
+         G+5T6TazcVvQx3Ouz6cO68GPHkxJ+oQYYE6asDSJwEgLtm8NS2bhpJe3bSyysiEfunOe
+         rDdfH+VG/w6NIOwUVyQacbIBdKCYVP3IIbS7/4RgMHuL8/M9fxiES3FomQ3Sp1tG8rlP
+         uQEyTpdVo4bBEGW1hyTeyXGf1ouanJo4mM0A12+qtpSrY6QTQgb46I+XGNCl923wY9Xe
+         ZeLyp8qPIIGrFEEK2/1HeH1V4x32OPWsDsFTX3LzkVK4hy0thZpFGbq0VXtxjuWkudo6
+         Pzkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722522364; x=1723127164;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fRQLZ2PrnnbdJmChcK60D0M8idA4vEBy9lCP5lrUGQE=;
+        b=BqBr9rHiAcAkc407lLFY70P56LGxoAFtR+XGFVPaKkdmUAieZwvz76LUMbnhxOBezv
+         4q14xBR/htL3VhrjyYYhezGr+rqKdfUDnNX/7zDHYq3aHWkartRHNlzzVsU8MpozUu1r
+         XsdQcBhjSA17Zfdt8W1Ba3OGGAthrAxIjNdyfBck/bNM14YcygJCULMoz5Cq4nGu4FVn
+         69szvQvjkwGO0hee5K+3MnvOaaOgztJ7Pc4rn3Nq1ERa5X+JNr20GWyMFjEI/ruQacAs
+         rur1WTlJivgP2epMakEZe/b3EPFbaIKUnM34eCwIY1a4OJj6ACWbCd6JS3RKmKE+/O5K
+         bIgg==
+X-Gm-Message-State: AOJu0Yzi4GXf0zm3+WZA7X84yMb+exE5ZpOScRi2Hxx8sG0KXgiWejGD
+	J90AD0bHvh8L1YT7zPKGj/3End9/Su/S9YStOZPTtx6vUgxE/2HZQVVxGDtIDR/lywKmnGQUNIG
+	Na7o9n8JW6WVfSFaxE6Aj30P1eGc1ddPGOBw0h18=
+X-Google-Smtp-Source: AGHT+IEFwpc8aFU6g6UHvpPsbKZ4/eILZlWqn5/BROseqywRWw9y+JOVwYK+8tklulK22U8vdEjQG0P/sd0EmZ5hN7E=
+X-Received: by 2002:a81:9c44:0:b0:64a:d5fd:f19e with SMTP id
+ 00721157ae682-6895fbd77bamr1979077b3.3.1722522364421; Thu, 01 Aug 2024
+ 07:26:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQE8qfSQEsvy7NtGQBhHu5xmF2sogwJTV6ALAc4++UMC5Jk+CgFcGUxlAdvmhEoC14FJ1gGACBcdAf7OY6EBgcHASgEQLlLbsrWvq4A=
+From: Steinar Sturlaugsson <costeinar@gmail.com>
+Date: Thu, 1 Aug 2024 16:25:54 +0200
+Message-ID: <CAAWdfG6yprY_uFOQq5wK20EgwNrUcnmVpnBz3ejfBXcs-i_aZg@mail.gmail.com>
+Subject: Feature request: Stats in git log
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thursday, August 1, 2024 9:55 AM, Patrick Steinhardt wrote:
->On Thu, Aug 01, 2024 at 09:53:52AM -0400, rsbecker@nexbridge.com wrote:
->> On Thursday, August 1, 2024 9:50 AM, Patrick Steinhardt wrote:
->> >On Thu, Aug 01, 2024 at 09:47:38AM -0400, rsbecker@nexbridge.com wrote:
->> >> On Thursday, August 1, 2024 9:37 AM, Patrick Steinhardt wrote:
->> >> >As mentioned in another mail, we do not use its Makefile at all.
->> >> >Did you
->> >> check
->> >> >whether the version I have proposed here works when running `make
-test`?
->> >>
->> >> That is the commit I have been trying to use. make test in clar or
-git?
->> >
->> >In Git itself. `make test` builds and runs our unit tests, and that
->> >now
->> also includes
->> >unit tests based on clar with this patch series. The clar Makefile
->> >exists
->> only because I
->> >did a 1:1 import of the upstream dependency. We could just as well
->> >remove
->> it
->> >altogether, including other bits that we don't end up using.
->>
->> I see. Well, the 2.46.0 test passes. I ran 'seen' 5 days ago and
->> 'next' is going now. Would that catch it?
->
->No, as the patches in this thread are only up for discussion right now and
-have not
->been merged to any of the branches. You'd have to apply them on top of
-v2.46.0
->first :)
+Hi,
 
-Do you happen to have a public fork?
-Regards,
-Randall
+Long time lurker sending my first mail to the list. I hope I'm doing this right.
 
+I'm interested in getting the stats that are shown with `git log
+--shortstat` based on the format string provided with the `--pretty`
+flag.
+
+Example:
+
+```
+git log --oneline --pretty=format:%ad,%H --date=iso --shortstat
+```
+
+This returns something like:
+
+```
+2021-01-07 09:56:48 +0100,<SHA>
+ 58 files changed, 21 insertions(+), 50 deletions(-)
+```
+
+I will now have to parse the input for my purposes of reporting it in
+a CSV file.
+
+I wonder if (A) it's possible to specify this already with e.g.
+
+```
+git log --oneline
+--pretty=format:%ad,%H,<changedflag>,<insertedflag>,<deletedflag>
+--date=iso
+```
+
+where the result for the same commit would become:
+
+```
+2021-01-07 09:56:48 +0100,<SHA>,58,21,50
+```
+
+I'm aware that commits sometimes don't have stats. In that case, I
+would expect e.g. `NaN` or `null` instead of a number.
+
+(B) If this is not available, is there any interest in a PR providing it?
+
+Best,
+Steinar
