@@ -1,79 +1,88 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1A716C695
-	for <git@vger.kernel.org>; Thu,  1 Aug 2024 15:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E933131BAF
+	for <git@vger.kernel.org>; Thu,  1 Aug 2024 16:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722527679; cv=none; b=ueI409Jty/dtDLWklg4elsF2ZY1T9RvQamBUIjKsZHdTphSoVEA2z8C283F1bRRCRTE0Jq1phDycxgKkwOUmrjctLtHZYZp6PLaeuGkJoa1f6efu498Rv+CVUme9URjdmSqXn6WVryY6oUzzmmhmfD+M1gFhVg9Gm+6742KcinA=
+	t=1722528029; cv=none; b=D17y9AXocJUnWT+m+3EjH7VY0k6ZKbCNQpJLa3BfNVsENlpSNVCZJl9Z4nswDHp6v+KnAuUmQ0dC+DeLBj+L74N+SW3lc2OTuvXpjtlHgkoiJiQlOsZeWZdMpTuE+UkIVE/HmjzCg2dP4jbRH5fvozx/tcjl/S5fw1OV+tb0lCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722527679; c=relaxed/simple;
-	bh=To9tgdxzK4Bv5H36P1v0B1oFB7AMlsu6iXX0QduSUsc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QALt4ttYn4qNeh6BC76/Y7Xp0HpUyBSWuOk1vV2pwGc8/kYe2LTspZnpPDlsLdanqCQC8//4a7U9J1Wyqbe5cB9QVLyp8ea/kZzEW7qXewwbTdz6ovLX5MJ3JY7Zf6Hss4rghIVM12Lla2GOywRmCksOoVBMAPlO7KXQt/EARYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dDydQTo0; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722528029; c=relaxed/simple;
+	bh=qh74b5Lbvr+GoG6g0dkG+foZ3QyPq2HEY8DLsrXQyVQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Drhhnlsfj2Iu1MCm7y4MwNEVChZMwINn0JQYH3yXdn+KUTfwiCc+YDBIFJkmSBCwe2fnpvAUoW1E63HI7Sh1ks14HKaZe9dF/ZN2JyGY3hjqlMQVN6OFLu+YvPw7bvPZsE+bCkcmRqk9MYfNKDZIcQX3P9BfKocbc+E5BqecF2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kWIg/zuo; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dDydQTo0"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CC5862FAD3;
-	Thu,  1 Aug 2024 11:54:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=To9tgdxzK4Bv
-	5H36P1v0B1oFB7AMlsu6iXX0QduSUsc=; b=dDydQTo0i1IC77ZZpOETxvmLJcrk
-	KVm4fm12Ec1B7DFbNX/zVvpgQ3FlzJc7GN+fK7spGC/QNakTPJxJvqofoIVdDDHP
-	dsSWwXQdYgjyOrq2u+xCDH6dLIyA/sMCeZz0s0PsSsjLPSc4Pj+wxWhBbphQd9N4
-	rh9rlPVXLJmIWrI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C47CA2FAD2;
-	Thu,  1 Aug 2024 11:54:37 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.139.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A4BFE2FAD1;
-	Thu,  1 Aug 2024 11:54:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Hong Jiang <ilford@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Bo Anderson <mail@boanderson.me>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] credential/osxkeychain: respect NUL terminator in username
-In-Reply-To: <CAEcKSiyf7JPypM93XLFJLjC1T-k9h6kushM7GqTyCBe8rico=g@mail.gmail.com>
-	(Hong Jiang's message of "Thu, 1 Aug 2024 18:57:31 +0800")
-References: <CAEcKSiyo3dyNpGkE_FWE-Y710RV0H3EytM2psC=+by=4wP5qpg@mail.gmail.com>
-	<20240731074228.GC595974@coredump.intra.peff.net>
-	<9AA59434-916C-4978-B3A1-33FD70619BFC@boanderson.me>
-	<20240801082556.GA640360@coredump.intra.peff.net>
-	<CAEcKSiyf7JPypM93XLFJLjC1T-k9h6kushM7GqTyCBe8rico=g@mail.gmail.com>
-Date: Thu, 01 Aug 2024 08:54:31 -0700
-Message-ID: <xmqq7cd0xmq0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kWIg/zuo"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-59f9f59b827so10531523a12.1
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 09:00:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722528026; x=1723132826; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iiSD1Kz+W72a0gnNEBMSQ8TeRYm2/qAOUP/x/1Pl5wc=;
+        b=kWIg/zuoNHZnu9S3B0vwmuPc6yiYYafw4c/h8SXE/f6cuoz/b2+xOivs+nKzprlZYA
+         4Io3cvDf/kCaT1ON80IRzkZL/eD2xMcjBTVztw6MrdvxSH+5dkbBxvK8PCni3LtmkwwA
+         FudwQgVtXWlYSHLwEtGUwZ+knMdB5rh2trc4nMCJKGoUxp1IgpNFGR52g5+1yQ+S5GRN
+         djDti97ov3ZhBXAxjd4iA2tT5O2b1ndJALMCCqn1iFvF/i0CaQiMOTK5VPPogmUWtp1E
+         Cz++bRrNC05xvJzdYgZ2tBLP8JEfLC+eXr8W3fykQlIo22hO6U/yyrHLtudpMwwVYs95
+         FImQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722528026; x=1723132826;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iiSD1Kz+W72a0gnNEBMSQ8TeRYm2/qAOUP/x/1Pl5wc=;
+        b=YYt4kxrLil0cG3OmncYe2D6lK2RFDCtEHsVVYKYWYv9JD81MyNYOwa4zips2AW8GZL
+         4jpDpH7tatcqU7FgJo9Zq4khvG9649lpOwspHb8xOv9dn948Gp2Zw+ArEQRSPX768Owi
+         Ewxa1MhK5/ciMIgkaUhkxlQ4B3sJ0rViHoHvDGyKpDnTvxceeoquW1+fPE5sBGnJ8k3R
+         B0ydTEnlhb4yJiMVju3NB32aQE8p2tpcpGoxMVZqevucNDz8kmTLrphyEHqNJE8qar72
+         SM/0Asv7pXeF/q3/9psFd/ZN4ybsj+mY+Cz20QlXJjX7eUSeNiIrcxfmq83pT/H8THE2
+         IW0Q==
+X-Gm-Message-State: AOJu0Yy4nGN/3w44rqLa3RRLAs06o6eEuRZDx/0KHyYLJwN/hk8GP668
+	OvJuXGzUGElkr5nJouxjzRr354ByzmQnyz5j5fZHGTZXVxlr6wFqJ1vqTSTs9skA884nJvpfaZM
+	Zolov0fTpuhqHUnuyiXrGbE/cNaFcMO6o
+X-Google-Smtp-Source: AGHT+IGDc0yeNBVtp7UdkW1pqTf3YqtzhiU5ZFhbh6zqCmVI/Jebo8nTynXTM8es4+AIwTpfQFrKQrKdQaka/69MWcU=
+X-Received: by 2002:a17:906:bc22:b0:a7a:9a78:4b5a with SMTP id
+ a640c23a62f3a-a7dc5107977mr52008566b.52.1722528025369; Thu, 01 Aug 2024
+ 09:00:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 5890D4F6-501E-11EF-9543-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 1 Aug 2024 18:00:13 +0200
+Message-ID: <CAP8UFD1w05CX-Z20cGC=yhEzhMfWU6vOegymKBLVYNxnQANvVQ@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 113
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Yuri <yuri@rawbw.com>, Jeff King <peff@peff.net>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Chris Torek <chris.torek@gmail.com>, 
+	Gabor Gombas <gombasg@digikabel.hu>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
+	lwn@lwn.net, Scott Chacon <schacon@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hong Jiang <ilford@gmail.com> writes:
+Hi everyone,
 
-> On Thu, Aug 1, 2024 at 4:25=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> ...
->> ---
->> This is not even compile tested by me! It looks like an obvious enough
->> fix, and I wanted to make sure we don't forget about it. But anybody w=
-ho
->> can reproduce or test would be greatly appreciated.
+The 113th edition of Git Rev News is now published:
 
-> I confirm the patch works on my system.
+  https://git.github.io/rev_news/2024/07/31/edition-113/
 
-Thanks, both.  Will queue.
+Thanks a lot to Rub=C3=A9n Justo and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who h=
+elped this month!
 
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/724
