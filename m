@@ -1,85 +1,190 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B10578C88
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 21:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5B81ABEB6
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 22:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722635663; cv=none; b=Jvra34qkJX9HPIYtFH0edBy4QSCBdHWWS8KO2W3FVk21wXTyDFY4xSZBEpcjYkgY7r0YrVJ65dK0GYxWRj8xdu156C+1M8PIV8QLtSOEYw9HgXwUgQpolGa326UIbv8RDZYX+tZSI7/Sw7d71WkBscJKWF0JXYbAFSp0UhNllZE=
+	t=1722636486; cv=none; b=K+A8L2gWcVgKab5b8yIaj2k4/2HwhVYle20AUue6hLBRv7RmYi7YYOPNJxhSYUwUJLb08+tch95GUOnRqujzMYkDHQcZLL+U0SaRRPMLsL9rUO3Ao83jb0KW+/aP7SAX6WxljWexAuIzeNKZm4UL2I3hmBkafC+KwvTPtG6mxaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722635663; c=relaxed/simple;
-	bh=IVzPPA6DatLP4MQytJlatgkcu3wMOtaONLjhg5J7Fhw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dJCG9FNpV6q5jSZspQjc+oWnaaF/0Y5zwr8YBOeUnptm7d1MJik+WebQ5vtmOXdXOja4EfO11TPQBA8D9EI0ElAVmf9iJCs309S2lWqcgZNQ1fQUqbOQ1/8LO02YzeO7RSuzRm2Zio9mIYDlu6Lr9eWgvsEzYQFphYck2z70e+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6bb96ef0e96so10650346d6.2
-        for <git@vger.kernel.org>; Fri, 02 Aug 2024 14:54:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722635660; x=1723240460;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0pSQJdHakwoGiTjRRXppFPfM/Ta7vkKGQ2GKrtagZHM=;
-        b=bklrTcNMpZDX0tCOF5DBpTnc0siE7HGJ7HJdiWcZjra8LpdryR/f2dlzLiIL6we2Yo
-         dRmmHW2KEHiExz18YJ9JE7UC2yfY6rQEEQSsPDYkXjxxaX/U3k8lM9jEdbPqOakFbq+o
-         1pnIfYd0AuHbjIKG/+cfmF+lDjnhdZXIjs4B9Y42EWlIqxKnk9PF+5Ns+Y4jrz+IWpyT
-         UoQOzBIzh0kQQi91ogsQfV2fGkrVdAQtKTXDdJewvKTcmpe/7S8a/b77ysEedwbY7KpI
-         UFQs64m7SA3Nkj/aErIKXz1/NuSe2rMIDlIz/omA7vBkFsBmCorFK6F6hFXIPjekT33K
-         VJFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWjc35LcEwpAtutVN/OcbskhVjIdS9ILt842yXhRic9W2eF5WcSA5cjimwys2M/yjeJbeTe3BuuH3F7KkJ5Wr5a/CoG
-X-Gm-Message-State: AOJu0Ywhovg19w9EovKKA4fu85ayrlPdBaqJ7cP15d23lYHhEUBuIEwz
-	AXcqBsRPgTSY8ez9hEBfYJIXa93CnmB542c3T0arUeLV15VZ3D8tdZqFJsZtSI5mFRgn1/9hU5I
-	keNaoBFPjN1eQhu1Ydc9Ga4tb6Yk=
-X-Google-Smtp-Source: AGHT+IFO18g+VyZ6H+wu9u4Qg6+dgGlKULW8Pp17GMoA8XcpE33BwWh38UARhxGfb2SA320liBhZgB5cTNqOqMTClpk=
-X-Received: by 2002:a05:6214:43c2:b0:6b5:525f:3cb5 with SMTP id
- 6a1803df08f44-6bb98372788mr63884466d6.19.1722635660138; Fri, 02 Aug 2024
- 14:54:20 -0700 (PDT)
+	s=arc-20240116; t=1722636486; c=relaxed/simple;
+	bh=35+dGvXFjXg9MXA7OLvvmBihI3CMfQEnkz6UeVCJ0TY=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IM+9fisaXiaR4PgpCG3ZpyA9/QI1Ozal9JWkkwD3Lcia+07gwF8Ty55HmmE2Gn0hoze7FnwvHLqurWy6/2fj7ZTpIIuQ462socJtY0gKu3v8T3zTRr6wBQn0sHdtOsi8AmnlXaORqiZDrYacjk+xjYpAdCbI39pgdLUYFrrIFl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 472M80qR3730823
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Aug 2024 22:08:01 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Taylor Blau'" <me@ttaylorr.com>
+Cc: <git@vger.kernel.org>
+References: <02d301dae43d$2202fc90$6608f5b0$@nexbridge.com> <ZqvgmYl8BTYvsSa0@nand.local> <032201dae461$c7bcc9d0$57365d70$@nexbridge.com> <ZqwvQUAqVozGHG/t@nand.local>
+In-Reply-To: <ZqwvQUAqVozGHG/t@nand.local>
+Subject: RE: [BUG] 2.46.0 t7701.09 fails on NonStop ia64
+Date: Fri, 2 Aug 2024 18:07:55 -0400
+Organization: Nexbridge Inc.
+Message-ID: <040801dae528$70966d10$51c34730$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
- <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com> <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
- <xmqqv80ia9wf.fsf@gitster.g>
-In-Reply-To: <xmqqv80ia9wf.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 2 Aug 2024 17:54:08 -0400
-Message-ID: <CAPig+cTmzk7AN2x8-WCK_T5-_G7Wd-akB2++_4HFEbT67Rnc8A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Kyle Lippincott <spectral@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIp93LlMAXo5OzQ9HEGtsfRK+e3MwGmTwJBAbmv8+0Ce5iwkLFHexWw
 
-On Fri, Aug 2, 2024 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > [...]
-> > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfully.
-> > This matches the behavior in functions like `run_transaction_hook`
-> > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
+On Thursday, August 1, 2024 8:59 PM, Taylor Blau wrote:
+>On Thu, Aug 01, 2024 at 06:25:51PM -0400, rsbecker@nexbridge.com wrote:
+>> ls output with second resolution is here - the file system does not =
+have
+>nanosecond resolution despite showing zeros:
+>>
+>> /home/ituglib/randall/git/t/trash
+>> directory.t7704-repack-cruft/max-cruft-size-prune/.git/objects/pack:
+>> ls -la --full-time total 11 drwxrwxrwx 1 ITUGLIB.RANDALL ITUGLIB 4096 =
+2024-08-
+>01 16:18:55.000000000 -0600 .
+>> drwxrwxrwx 1 ITUGLIB.RANDALL ITUGLIB 4096 2024-08-01
+>16:18:48.000000000 -0600 ..
+>> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB 1156 2024-08-01
+>> 16:18:52.000000000 -0600
+>> pack-68c6c8c8538900694c32380ac1484201c8b60d8d.idx
+>> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB  217 2024-08-01 =
+16:18:52.000000000 -
+>0600 pack-68c6c8c8538900694c32380ac1484201c8b60d8d.pack
+>> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB   64 2024-08-01 =
+16:18:52.000000000 -
+>0600 pack-68c6c8c8538900694c32380ac1484201c8b60d8d.rev
 >
-> I am still uneasy to see this unconditional clearing, which looks
-> more like spreading the bad practice from two places you identified
-> than following good behaviour modelled after these two places.
+>Ah, I suspect that this is even less interesting than imprecise mtime =
+resolution. The
+>test expects that the packs are larger than 1M so that we can exercise =
+writing
+>multiple cruft packs as part of the setup.
 >
-> But I'll let it pass.
+>But that pack is only 217 bytes, which wouldn't trigger the split. I'm =
+suspicious that
+>it's even packing the cruft objects at all, so I'm curious if you can =
+find $foo, $bar,
+>and $baz in the cruft pack's .idx file(s, if multiple) after the first =
+'git repack -d --cruft'.
 >
-> As long as our programmers understand that across strbuf_getcwd(),
-> errno will *not* be preserved, even if the function returns success,
-> it would be OK.  As the usual convention around errno is that a
-> successful call would leave errno intact, not clear it to 0, it
-> would make it a bit harder to learn our API for newcomers, though.
+>Assuming they are there, it's possible that setting repack.cruftWindow =
+in the test
+>repository would do the trick.
+>
+>But I'm suspicious that that's even what's going on since =
+generate_random_blob()'s
+>first argument is a seed, and all three objects have different seeds, =
+so I don't think
+>they would even be considered good delta candidates for one another. =
+But it's also
+>possible that your
+>generate_random_blob() behaves differently from my own.
 
-For what it's worth, I share your misgivings about this change and
-consider the suggestion[*] to make it save/restore `errno` upon
-success more sensible. It would also be a welcome change to see the
-function documentation in strbuf.h updated to mention that it follows
-the usual convention of leaving `errno` untouched upon success and
-clobbered upon error.
+The entire final .idx file is:
+0000000 377   t   O   c  \0  \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0
+0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0001500  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 002
+0001520  \0  \0  \0 002  \0  \0  \0 002  \0  \0  \0 002  \0  \0  \0 002
+*
+0001600  \0  \0  \0 002  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003
+0001620  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003
+*
+0002000  \0  \0  \0 003  \0  \0  \0 003 316   a   1 002   ,   :   H 241
+0002020   _   K   z   h 257 266 354 363 263 274 260 315 321 377 034 222
+0002040   $ 256   ^   X 247   e   o 271 354 311   X   e 324   . 327 036
+0002060 337 226   { 226 245   y 344   Z 030 270   % 027   2 321   h 004
+0002100 262 345   j   U 003 302 375 225   d 335   =3D 272 207 227   ) =
+265
+0002120  \0  \0  \0 212  \0  \0  \0  \f  \0  \0  \0 267   h 306 310 310
+0002140   S 211  \0   i   L   2   8  \n 301   H   B 001 310 266  \r 215
+0002160 273   y 312 253 265   V 225 350 246 212   h   Z   d   ? 313   f
+0002200 372   Z 336   3
+0002204
 
-[*]: https://lore.kernel.org/git/xmqqv80jeza5.fsf@gitster.g/
+After the first repack, I have the following idx files. No foo/bar/baz =
+inside.
+The generate_random_blob() does generate the proper amount of bytes.
+I tried changing 0xff to 0x00ff at the putchar just in case we had bad
+sign extension - that wasn't it.
+
+pack-68c6c8c8538900694c32380ac1484201c8b60d8d.idx:
+0000000 377   t   O   c  \0  \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0
+0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0001500  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 002
+0001520  \0  \0  \0 002  \0  \0  \0 002  \0  \0  \0 002  \0  \0  \0 002
+*
+0001600  \0  \0  \0 002  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003
+0001620  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003  \0  \0  \0 003
+*
+0002000  \0  \0  \0 003  \0  \0  \0 003 316   a   1 002   ,   :   H 241
+0002020   _   K   z   h 257 266 354 363 263 274 260 315 321 377 034 222
+0002040   $ 256   ^   X 247   e   o 271 354 311   X   e 324   . 327 036
+0002060 337 226   { 226 245   y 344   Z 030 270   % 027   2 321   h 004
+0002100 262 345   j   U 003 302 375 225   d 335   =3D 272 207 227   ) =
+265
+0002120  \0  \0  \0 212  \0  \0  \0  \f  \0  \0  \0 267   h 306 310 310
+0002140   S 211  \0   i   L   2   8  \n 301   H   B 001 310 266  \r 215
+0002160 273   y 312 253 265   V 225 350 246 212   h   Z   d   ? 313   f
+0002200 372   Z 336   3
+0002204
+
+pack-8f53f837597ebbdfc6f8ed173349e5cecbcfb97e.idx:
+0000000 377   t   O   c  \0  \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0
+0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0001260  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0 001
+0001300  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001
+*
+0002000  \0  \0  \0 001  \0  \0  \0 001 255 026 276 325   L 306 034 360
+0002020   6  \a   X   y 336 357 371   Z 351   w   Q   K   # 236 346 377
+0002040  \0  \0  \0  \f 217   S 370   7   Y   ~ 273 337 306 370 355 027
+0002060   3   I 345 316 313 317 271   ~   9 033   9 316 363 306   G   -
+0002100 207   f 224 323   1 372 021   W 037 335 206 372
+0002114
+
+pack-b8dc9aadaadc12c82b0053fdee0039ae1025a8f8.idx:
+0000000 377   t   O   c  \0  \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0
+0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0000500  \0  \0  \0  \0  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001
+0000520  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001
+*
+0002000  \0  \0  \0 001  \0  \0  \0 001   O   3   o   =3D 363 020   T =
+352
+0002020 274 005 254 005 371 213 300   $ 310 340   T   #   $ 274   l 342
+0002040  \0  \0  \0  \f 270 334 232 255 252 334 022 310   +  \0   S 375
+0002060 356  \0   9 256 020   % 250 370 204 242   7 033   =3D   0 375 =
+207
+0002100 343 352 257 374 265 021   j 214   5 026 355 243
+0002114
+
+pack-c2357b2b204fda52bc1f5515de94227e1db012af.idx:
+0000000 377   t   O   c  \0  \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0
+0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0001360  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0 001
+0001400  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001  \0  \0  \0 001
+*
+0002000  \0  \0  \0 001  \0  \0  \0 001 275   D 330 252   -   " 353   G
+0002020 377   p 316 364 260 273   E 321   T 236 344 234 302 311   8   h
+0002040  \0  \0  \0  \f 302   5   {   +       O 332   R 274 037   U 025
+0002060 336 224   "   ~ 035 260 022 257 373   U   )   - 204   " 315   v
+0002100   /   E 272   e   7 342 261 037   6 255   < 306
+0002114
+
+--Randall
+
