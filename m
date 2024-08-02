@@ -1,103 +1,72 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6441E10F4
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 00:58:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9664C9D
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 01:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722560326; cv=none; b=d/7SLhRW25JDU80F/xgM3IA/ofhXc0dz1M+zqFD7DAIqYgDm5CjC7YLd6vN2MHhUGMXX2k6++SN+rRv5Y5IFh6PMfeBPQI8Vz5ngi0C7a7g5cC6aoHSEKEZzv1ti+CSrkhURnhoCnzAplHlj0+lIy6NcUD4w9gLWmHVOnsuO51I=
+	t=1722560842; cv=none; b=D3Z4tWtzZfAkecOojd5IVqyTWDgTbVbwW9TQaPsZHRbYEHr/BlQ2W58UNC2XJkUsVMojAHUFCYImNFHSZwcNJTckIPQkI+hbRvAu/ZP0fu0DJjuHmBaxCMdJFiW0Ol9NPuDqaOBZbxh3Z15wBKaZ71VINaIMzs4oA2uWP6eKEkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722560326; c=relaxed/simple;
-	bh=SZrtoxE1orzMzIN/pJIR8MJmfoZHIzbsFTTX3upmmq8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tGkZ0WutvYOSbZISUYm3+5xnIkueUeFi3wLNb7zJ1R7ECcWOZ6smhgTe32uKaMCcylbBhwFI835zMoRLV3112c8agJPK6d6ZHF7jH7L8aR6J7GCZrxpE0pSkg1rWuwe9ETafZ9tLPizXyaV9royvlsuaDcVNRopFimFwZRMkg10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=nXmIrgbh; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1722560842; c=relaxed/simple;
+	bh=Iipn7aP/7morR2j6/we349eTn9SQdNrAA4GWrMFRhKQ=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=eLv8QIbnP/MxBbaGh+gx1KDSxI9oEdX0hwAhPAwdtkgVXS3FVPLjDdSeG3Vr9sUjFi0fDa/aD9teOE2G4pcqHwC3+5IaS54nJgYMPoVFJRAR+H6XSsbGzZmd73zO3BzeXYBDumkMbeVsw6zPe9dQ0wSJfFOGerjS5UiU+tomdHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=qna6LZlG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="nXmIrgbh"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e0b7efa1c1bso5289707276.3
-        for <git@vger.kernel.org>; Thu, 01 Aug 2024 17:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722560323; x=1723165123; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZJ9BeOIOeBHT/IS4zlB9zkDOy2abXQ1s4caEm13X2Kw=;
-        b=nXmIrgbhdxvsfpccNL+GiCH9Tu4Zhkl3zPCh/gPnrVssI05VppfqdrvLEH/FaaW9qr
-         d4A0o/EwzYZOoHsxwwHKrt8AuuebcJtrgzzdCVHlYkqCFdnOniAyGHw5qnwoVTTC3ZJ8
-         YMPPuWyIC6qUQI1657R+dcl/7jza3D2MMco8+FwQ4D2FqZ/McpTv/D8zn273usFByjVM
-         +1AVCR1zUrFx6v6dl5O0m5Dx+G/XXnPd+JjNrUr3Ngt1sG+YP4rkF+g5w/QhElsG/zgW
-         jj/ZLXTkJoBYxWIYNtYz2i2lOXIMlGtpoY4oelwUthXNgb8b0VFrAt1DKCxjSuvFuFpT
-         MmAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722560323; x=1723165123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZJ9BeOIOeBHT/IS4zlB9zkDOy2abXQ1s4caEm13X2Kw=;
-        b=jKIfnYiHAOkNtpnA82LflTMtD4GYgrgRy8hruHGdNM5QzJL2F6cTmiMHL5yVYzi+TP
-         JSlG58ehnaLqlPFFBVMrWQLDyN/HVZDKegKLHdEsP03pK0as7TZ3/tIZlOndcIyOkKP4
-         UYu4Pt0O9HFdKHGzCRyBvy0b+g9UfyWHoIiomnxWaLgItQj9L3C505XSC65q1qzwT+u0
-         InvISDXTMet5PoIxvidkBBV1ziO5KuuAAFprSP+dWAfKD0k1SfSoMoRzdLWwtIePj33S
-         nBSu3Oj6aq6AWnyaGBuVo4yr9j4Iez45nk6TpkdhMI6ZZlQBdjU96kiuDhvFFbX1k5e9
-         w9Yw==
-X-Gm-Message-State: AOJu0YxebKKEVNu04tL/RJEEuA4G7W4cLWY+Q+XPyzchks3XOT9c8hjv
-	V2fdxC+8QpuWoY/lyYixUsPt9bXQ8oe7gnz/nSAHL+S5A8N6gh9uebPi3CMolPhofSqOGmeMAug
-	N
-X-Google-Smtp-Source: AGHT+IE2XCGK28KOUIbVusQqpct97eJKU3isglHIHpTr0UvPteaheuSXV/sc6pYqigeZYshxs3ubXA==
-X-Received: by 2002:a05:6902:1028:b0:e0b:c402:b04f with SMTP id 3f1490d57ef6-e0bde33e978mr2262205276.16.1722560323187;
-        Thu, 01 Aug 2024 17:58:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e0be534e670sm75533276.19.2024.08.01.17.58.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Aug 2024 17:58:42 -0700 (PDT)
-Date: Thu, 1 Aug 2024 20:58:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: rsbecker@nexbridge.com
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="qna6LZlG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25700C32786;
+	Fri,  2 Aug 2024 01:07:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1722560842;
+	bh=Iipn7aP/7morR2j6/we349eTn9SQdNrAA4GWrMFRhKQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=qna6LZlGr5OBcZu5UO4S071O2l8gh6TLCKFUu3qEGWgIwIG/QHnGuMwhmbVDAbji2
+	 KtM59L+umHcvQ+/WtY4IWgDJ3u6sWsDqQQHwg/HV75nN/q0PASsrstNUPi81cR9k8K
+	 d9m0BXz9wDU+w3HX7+LykrKAtiqu5GWBQfT17cQc=
+Date: Thu, 1 Aug 2024 18:07:06 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [BUG] 2.46.0 t7701.09 fails on NonStop ia64
-Message-ID: <ZqwvQUAqVozGHG/t@nand.local>
-References: <02d301dae43d$2202fc90$6608f5b0$@nexbridge.com>
- <ZqvgmYl8BTYvsSa0@nand.local>
- <032201dae461$c7bcc9d0$57365d70$@nexbridge.com>
+Subject: Re: quiltimport mode detection oddity
+Message-Id: <20240801180706.933d797b0ae5744fdcdf47d2@linux-foundation.org>
+In-Reply-To: <xmqqed77hifn.fsf@gitster.g>
+References: <20240801155702.70242c31d476c46c84ee11a3@linux-foundation.org>
+	<xmqqed77hifn.fsf@gitster.g>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <032201dae461$c7bcc9d0$57365d70$@nexbridge.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 01, 2024 at 06:25:51PM -0400, rsbecker@nexbridge.com wrote:
-> ls output with second resolution is here - the file system does not have nanosecond resolution despite showing zeros:
->
-> /home/ituglib/randall/git/t/trash directory.t7704-repack-cruft/max-cruft-size-prune/.git/objects/pack: ls -la --full-time
-> total 11
-> drwxrwxrwx 1 ITUGLIB.RANDALL ITUGLIB 4096 2024-08-01 16:18:55.000000000 -0600 .
-> drwxrwxrwx 1 ITUGLIB.RANDALL ITUGLIB 4096 2024-08-01 16:18:48.000000000 -0600 ..
-> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB 1156 2024-08-01 16:18:52.000000000 -0600 pack-68c6c8c8538900694c32380ac1484201c8b60d8d.idx
-> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB  217 2024-08-01 16:18:52.000000000 -0600 pack-68c6c8c8538900694c32380ac1484201c8b60d8d.pack
-> -r--r--r-- 1 ITUGLIB.RANDALL ITUGLIB   64 2024-08-01 16:18:52.000000000 -0600 pack-68c6c8c8538900694c32380ac1484201c8b60d8d.rev
+On Thu, 01 Aug 2024 17:33:48 -0700 Junio C Hamano <gitster@pobox.com> wrote:
 
-Ah, I suspect that this is even less interesting than imprecise mtime
-resolution. The test expects that the packs are larger than 1M so that
-we can exercise writing multiple cruft packs as part of the setup.
+> > hp2:/usr/src/mm> git quiltimport --series series
+> > tools-separate-out-shared-radix-tree-components.patch
+> > warning: tools/testing/radix-tree/generated/autoconf.h has type 100644, expected 100664
+> >
+> >
+> >
+> >
+> > That patch has
+> >
+> > diff --git a/tools/testing/radix-tree/generated/autoconf.h a/tools/testing/radix-tree/generated/autoconf.h
+> > deleted file mode 100664
+> > --- a/tools/testing/radix-tree/generated/autoconf.h
+> > +++ /dev/null
+> > @@ -1,2 +0,0 @@
+> > -#include "bit-length.h"
+> > -#define CONFIG_XARRAY_MULTI 1
+> 
+> So, the patch removes autoconf.h file from that directory.  The
+> "extended header" part between "diff --git" and "--- a/..." has
+> "deleted file mode 100664" and that is where the warning comes.
 
-But that pack is only 217 bytes, which wouldn't trigger the split. I'm
-suspicious that it's even packing the cruft objects at all, so I'm
-curious if you can find $foo, $bar, and $baz in the cruft pack's .idx
-file(s, if multiple) after the first 'git repack -d --cruft'.
+yup yup.  The patch says "remove this file which has mode 100664".
 
-Assuming they are there, it's possible that setting repack.cruftWindow
-in the test repository would do the trick.
+The file has mode 100664.
 
-But I'm suspicious that that's even what's going on since
-generate_random_blob()'s first argument is a seed, and all three objects
-have different seeds, so I don't think they would even be considered
-good delta candidates for one another. But it's also possible that your
-generate_random_blob() behaves differently from my own.
-
-Thanks,
-Taylor
+quiltimport says it had mode 100644.  Incorrectly, I suggest.
