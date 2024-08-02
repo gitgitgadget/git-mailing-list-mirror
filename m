@@ -1,62 +1,63 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646B44CE05
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF61B4D8D1
 	for <git@vger.kernel.org>; Fri,  2 Aug 2024 20:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722632293; cv=none; b=qjGcq+/bJmJCLSvGo0kODm5X++3hiwzEagclopi7jpDXuWIcc6dp9vNmKrjkyjLYZNL2CCTXqiYoLQnecDuAn03OdSNYr0HSb5X3AFBfm+NTCjzhJ3EZdErKL02Qds2O4LNggrcy0hwdV8H7jU+AbGONG3J8d/X27WeO0dSmtEE=
+	t=1722632293; cv=none; b=lRDBrqRr7X8ScgcFApEO+Rrn9TevZxta9jJgn/MOTFbmNafC9ZDZkkqBIYGScagYHxozjIyc6g0l+KC2VwFcqGt49qN8yBi6mHn70NsDLyvQMv/ZJ45JlR+9YE4ZX3d20NriAWtCAmra14Rg982UtA2hBDmGqLcbQNgLoPzHtpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722632293; c=relaxed/simple;
-	bh=xvGOhozipAw8HLqyM/Mzub/A9gtjCJdT/a+DBazOxwY=;
+	bh=R9C9JOqxtsAXJmX1E1KNE9t9idwSw8TxOfDQjFbVCy0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aHd3Nu+8CcPdwhesREWY/JchrxB34WUE98373mCOmzZtVgZrHdcTHP8qpmuzHB3S1Xd99jJAMNHOSJnNlnW0OmT+x9zzHSqLAahbTgxQtGvm+6Z30q+V7vI9iLz1tihCmjwEkDeQuUBf6jmMPG9FfHXFLhkEq49ol2KX2aCkdXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NQCq87BW; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=mg6FQ903SkgG2vKKgli1aOC/Xm0tpbkVxXYBnU3o2cyn3Vtc7A0Ot3qDYSY6hlnd5aa8N6b5+EiRT++BlciDGP+wr8CP46LbmfMSsqG22bV9LMArsuRQOLxmledknnF1WoeqvYKucGuznlUx5RL+Qf7WHB2DOEeTTH2coy70LiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yd9df2Xp; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NQCq87BW"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42803bbf842so76450845e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yd9df2Xp"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-368663d7f80so4314990f8f.3
         for <git@vger.kernel.org>; Fri, 02 Aug 2024 13:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722632289; x=1723237089; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722632290; x=1723237090; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I20ziSAJ7Q6Rb69mUzQN6s+GHd0go8g3/Sh7SJVa+2c=;
-        b=NQCq87BWL3IPQCk5apVHUesmBykwlOsXdZ7uk2QVVdOCrY+QF9OlhbMxzd+Y36l2Z7
-         1yDnkap3im2/7riaZTwxa8KTb/AubdTxpN9fdE3U//Wh5Bz7SfyVMROa+C1iBHoOOp6W
-         4LS/GgszQL2vi2u7juGA1fZ+hDJfeYCdGyLhlix0VYlwW9N9mn9S9v79WwLTE4fZzCcA
-         JVNESAZlIvW+45v44/hsHIpeRlpet5TWSSEY1GSFpTWDIs83csLqhbbkGvZnU+n7Yc6a
-         VkD+h/G12J3nLa/dJPI2amSdC0lp48VGkUjGgi70H4JS/ycDk/PrxX3PqL5jlCPtP1F0
-         Xkjw==
+        bh=frlPs7B5IIEUAoWJSbJI83ThdVbBlcNMBDICca+av6w=;
+        b=Yd9df2XpON7csbD4TBXo/Uuifes6C6GDBIuFKXLRR7FEKwbnFEyDrUadLMwsa/wg1M
+         v31GESXpG46Meg+Ai+w1rzzqVLtquLx92IZJamFbJ65w6OgQjTKo3ZbTuLakpM4fPt6B
+         Dx/BbOwljJGBCOByw4jyXeBzyyt/hj+6RdalgS38mgzZMu58lUycOKQntLUv9N0ILLOE
+         dqP2PSJkMqASeGs4PBuP02FDBFo2DBu1Hgs5JFMe3I7Ag1omwRFsNWorGRKJj5YNCBJM
+         i2c9PHr+7Xg9IaiEFA0ochYx7uBHaBVRlEHXxLsvHUl1YhmkKusPp8HAC8q3gP/NtTSB
+         08Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722632289; x=1723237089;
+        d=1e100.net; s=20230601; t=1722632290; x=1723237090;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=I20ziSAJ7Q6Rb69mUzQN6s+GHd0go8g3/Sh7SJVa+2c=;
-        b=c1qC2c+rsNhde+1+iGALa2WfCoKYD+XSyiCqybweyUJRLKH12zwBxLuS6aPjG76Fzh
-         pBw8SzCRjj3voQEdjhCUE8CPtDJamKwNYQ8hDsI0WkWBKDRmY12wYYEWqpqMXzXk2HMO
-         y9LWsTYNmtiHmHKv3Y/mZ6DpublTs3jk5Lp7mqeaWwdEaUqTOC4wf6L6/mmoX5oFHBJU
-         675q9mQOGhzj6xTiIOQkvvf9TpvK0mhrCOr/oYH9mEdXUk/Eo8lKpumOUvFwzzLp1rA0
-         ZMef2MQp93V//cCcRRKaWaD/od3CBPArv7G38Eu5/x+A4vP9rFbpZUlP8NbBmvXUzDR4
-         VzBQ==
-X-Gm-Message-State: AOJu0YyoD83SKdcXDoVBNx60FHq+9PVDwL79lYBaqTmq+U8PCODd0kl4
-	RFdF4hSsVzI0n+5rkb3a5QULxaoLrHOE7PuEdo8Pd4/wAfAxVVfvl1e36Q==
-X-Google-Smtp-Source: AGHT+IGWOfZV9YQh+7m2nx21Co38NMfehahxIWLorzDEHj+VIA8877lb1ESVuASjepJbLn39RgcrYA==
-X-Received: by 2002:a05:600c:4f55:b0:426:5e1c:1ac2 with SMTP id 5b1f17b1804b1-428e6af268bmr44559785e9.8.1722632288868;
-        Fri, 02 Aug 2024 13:58:08 -0700 (PDT)
+        bh=frlPs7B5IIEUAoWJSbJI83ThdVbBlcNMBDICca+av6w=;
+        b=slXxmL48YlBPQrPSExpC3CcVW6HMbTlgwrGecb0aLwt/Q0bzRNz+tBjj+PmRpi4d85
+         l0CXp1oEN+MMyThWg4O5qnayGk3EjbjnNhaTpG/fV8QhsFDOzAar0jyrlHVIMWBQYtGH
+         gUz9yih/xU+DMb8JSisAK7SHU9LH56sS3LpvFMcpYUuBuUw8Pa75Mlic4hoDwE7sg32U
+         JeFtRC1QTkpqRYt6GdRw+22ISk6wtY5d7SYqJeGkhPndP0B8+fsDDGZ8DC+aovMzHLjv
+         uXNjRtXYXfwlYebfww4Y4XpM7LRP4/Vbw3O3Zp0ZQNhqt7xvobBrn2hKe2sQmwqQmE8G
+         PrPg==
+X-Gm-Message-State: AOJu0Yx+5Hqhzpg0zJUkLqDIWRO4Tn3DqW5RN8q0t1o4cnC97aBOZrh2
+	P80QKrIVLKTGeWn4DR3/88vcJHXAVe9AsdsHvRVPKbsd7JGOiFDlaEQYVw==
+X-Google-Smtp-Source: AGHT+IGKPpfC+DVjWtzF+dPu0HNGP2cTo+7X8SFy6PlIKaOESXPm1lHgdhYkeYhriBxlp7EwHmU3FA==
+X-Received: by 2002:a05:6000:1e97:b0:368:74c0:6721 with SMTP id ffacd0b85a97d-36bbc14a6edmr3037470f8f.38.1722632289785;
+        Fri, 02 Aug 2024 13:58:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6e7cbd2sm45009095e9.38.2024.08.02.13.58.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd06d03fsm2744406f8f.91.2024.08.02.13.58.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 13:58:08 -0700 (PDT)
-Message-Id: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+        Fri, 02 Aug 2024 13:58:09 -0700 (PDT)
+Message-Id: <4dbd0bec40a0f9fd715e07a56bc6f12c4b29a83c.1722632287.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
 References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+	<pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
 From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 Aug 2024 20:58:04 +0000
-Subject: [PATCH v2 0/3] Small fixes for issues detected during internal CI runs
+Date: Fri, 02 Aug 2024 20:58:05 +0000
+Subject: [PATCH v2 1/3] set errno=0 before strtoX calls
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,93 +69,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Kyle Lippincott <spectral@google.com>,
     Kyle Lippincott <spectral@google.com>
 
-I'm attempting to get the git test suite running automatically during our
-weekly import. I have this mostly working, including with Address Sanitizer
-and Memory Sanitizer, but ran into a few issues:
+From: Kyle Lippincott <spectral@google.com>
 
- * several tests were failing due to strbuf_getcwd not clearing errno on
-   success after it internally looped due to the path being >128 bytes. This
-   is resolved in depth; though either one of the commits alone would
-   resolve our issues:
-   * modify locations that call strtoX and check for ERANGE to set errno =
-     0; prior to calling the conversion function. This is the typical way
-     that these functions are invoked, and may indicate that we want
-     compatibility helpers in git-compat-util.h to ensure that this happens
-     correctly (and add these functions to the banned list).
-   * have strbuf_getcwd set errno = 0; prior to a successful exit. This
-     isn't very common for most functions in the codebase, but some other
-     examples of this were found.
- * t6421-merge-partial-clone.sh had >10% flakiness. This is due to our build
-   system using paths that contain a 64-hex-char hash, which had a 12.5%
-   chance of containing the substring d0.
+To detect conversion failure after calls to functions like `strtod`, one
+can check `errno == ERANGE`. These functions are not guaranteed to set
+`errno` to `0` on successful conversion, however. Manual manipulation of
+`errno` can likely be avoided by checking that the output pointer
+differs from the input pointer, but that's not how other locations, such
+as parse.c:139, handle this issue; they set errno to 0 prior to
+executing the function.
 
-Kyle Lippincott (3):
-  set errno=0 before strtoX calls
-  strbuf: set errno to 0 after strbuf_getcwd
-  t6421: fix test to work when repo dir contains d0
+For every place I could find a strtoX function with an ERANGE check
+following it, set `errno = 0;` prior to executing the conversion
+function.
 
- builtin/get-tar-commit-id.c    |  1 +
- ref-filter.c                   |  1 +
- strbuf.c                       |  1 +
- t/helper/test-json-writer.c    |  2 ++
- t/helper/test-trace2.c         |  1 +
- t/t6421-merge-partial-clone.sh | 15 +++++++++------
- 6 files changed, 15 insertions(+), 6 deletions(-)
+Signed-off-by: Kyle Lippincott <spectral@google.com>
+---
+ builtin/get-tar-commit-id.c | 1 +
+ ref-filter.c                | 1 +
+ t/helper/test-json-writer.c | 2 ++
+ t/helper/test-trace2.c      | 1 +
+ 4 files changed, 5 insertions(+)
 
-
-base-commit: e559c4bf1a306cf5814418d318cc0fea070da3c7
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1756%2Fspectral54%2Fstrbuf_getcwd-clear-errno-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1756/spectral54/strbuf_getcwd-clear-errno-v2
-Pull-Request: https://github.com/git/git/pull/1756
-
-Range-diff vs v1:
-
- 1:  4dbd0bec40a = 1:  4dbd0bec40a set errno=0 before strtoX calls
- 2:  0ed09e9abb8 = 2:  0ed09e9abb8 strbuf: set errno to 0 after strbuf_getcwd
- 3:  6c08b8ceb2b ! 3:  818dc9e6b3e t6421: fix test to work when repo dir contains d0
-     @@ Commit message
-      
-       ## t/t6421-merge-partial-clone.sh ##
-      @@ t/t6421-merge-partial-clone.sh: test_expect_merge_algorithm failure success 'Objects downloaded for single relev
-     + 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
-       		test_cmp expect actual &&
-       
-     - 		# Check the number of fetch commands exec-ed
-     +-		# Check the number of fetch commands exec-ed
-      -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-     ++		# Check the number of fetch commands exec-ed by filtering trace to
-     ++		# child_start events by the top-level program (2nd field == d0)
-      +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
-       		test_line_count = 2 fetches &&
-       
-       		git rev-list --objects --all --missing=print |
-      @@ t/t6421-merge-partial-clone.sh: test_expect_merge_algorithm failure success 'Objects downloaded when a directory
-     + 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
-       		test_cmp expect actual &&
-       
-     - 		# Check the number of fetch commands exec-ed
-     +-		# Check the number of fetch commands exec-ed
-      -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-     ++		# Check the number of fetch commands exec-ed by filtering trace to
-     ++		# child_start events by the top-level program (2nd field == d0)
-      +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
-       		test_line_count = 1 fetches &&
-       
-       		git rev-list --objects --all --missing=print |
-      @@ t/t6421-merge-partial-clone.sh: test_expect_merge_algorithm failure success 'Objects downloaded with lots of ren
-     + 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
-       		test_cmp expect actual &&
-       
-     - 		# Check the number of fetch commands exec-ed
-     +-		# Check the number of fetch commands exec-ed
-      -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-     ++		# Check the number of fetch commands exec-ed by filtering trace to
-     ++		# child_start events by the top-level program (2nd field == d0)
-      +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
-       		test_line_count = 4 fetches &&
-       
-
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index 66a7389f9f4..7195a072edc 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -35,6 +35,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv UNUSED, const char *prefix
+ 	if (header->typeflag[0] != TYPEFLAG_GLOBAL_HEADER)
+ 		return 1;
+ 
++	errno = 0;
+ 	len = strtol(content, &end, 10);
+ 	if (errno == ERANGE || end == content || len < 0)
+ 		return 1;
+diff --git a/ref-filter.c b/ref-filter.c
+index 8c5e673fc0a..54880a2497a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1628,6 +1628,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	timestamp = parse_timestamp(eoemail + 2, &zone, 10);
+ 	if (timestamp == TIME_MAX)
+ 		goto bad;
++	errno = 0;
+ 	tz = strtol(zone, NULL, 10);
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
+index ed52eb76bfc..a288069b04c 100644
+--- a/t/helper/test-json-writer.c
++++ b/t/helper/test-json-writer.c
+@@ -415,6 +415,7 @@ static void get_i(struct line *line, intmax_t *s_in)
+ 
+ 	get_s(line, &s);
+ 
++	errno = 0;
+ 	*s_in = strtol(s, &endptr, 10);
+ 	if (*endptr || errno == ERANGE)
+ 		die("line[%d]: invalid integer value", line->nr);
+@@ -427,6 +428,7 @@ static void get_d(struct line *line, double *s_in)
+ 
+ 	get_s(line, &s);
+ 
++	errno = 0;
+ 	*s_in = strtod(s, &endptr);
+ 	if (*endptr || errno == ERANGE)
+ 		die("line[%d]: invalid float value", line->nr);
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index cd955ec63e9..c588c273ce7 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -26,6 +26,7 @@ static int get_i(int *p_value, const char *data)
+ 	if (!data || !*data)
+ 		return MyError;
+ 
++	errno = 0;
+ 	*p_value = strtol(data, &endptr, 10);
+ 	if (*endptr || errno == ERANGE)
+ 		return MyError;
 -- 
 gitgitgadget
+
