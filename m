@@ -1,159 +1,154 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2111.outbound.protection.outlook.com [40.107.93.111])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0981AE021
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 17:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722621394; cv=none; b=FUoHHgCjkWVVg41ls7WB7cdq40oHHD5NvOEXVkiwWNlDnqn2dbmXLl/tN7yynrYONy33kcI9eu/BGxlfPax3MwGEk6KDwhpcvCI2AxC/Yszp2U4qPO21MWpC/4wniuT1Iqixyr5xeb5npSRrNkj31S02rpR8d3kebnnGdSj/o/A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722621394; c=relaxed/simple;
-	bh=O6+n+ocqPhqd0pFalmPkC8sXYhzAu9MndXgIm1j4bug=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oO2uyqg3y3rrbaetvBjNRzzAviwYNXdts+4SY5C6dC0OUH7eNMVYNSUYC7YfKZ7cAe3XSu0oo2yILDBmhBTa1XQzt2ZsqQIYKqDKtV4SRJBwg91KK5ZDmeBtyZZAgugdK50kO3onNu4apcLlYtk9enUDjzpIsceykrE/O86Yvyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Aq4suKj0; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5645E136331
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 18:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.111
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722621795; cv=fail; b=JdycIQ2komH07MudRcloM4bzDjn2ySuewxDz1rXvI2AKSt3H4t/h7v3lSQdpL6z3bE5BnR3voaNVdaEeDiUV/5JayEN09UXpmaqBb1Vpn0BYaAxD6k+pyhsCT1kKZulFYRgNLv39fN2vkKej+++kxOzLqEPNsqkg+nlifBcwyO4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722621795; c=relaxed/simple;
+	bh=pM2Q8XKF6GcbTZocvOdkgPhONXEPPPLC1YiiXisgrBw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=D6EbpR1B/xio+660yqX3nMTgCDEtWw9LjOPbpdKhNFemG1N8y8ONwjZ3W+KVKfyRVW1HnvMNUxs70I7mTT8Fz87KPM1fPCl9uzC2Rj4nmnJ4LJYe35NfaEmup3KTDiN2qA023sRCmWnL2Kiz/UqjmsNlB4D/D/qkZ1oEG/06tmU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alum.mit.edu; spf=pass smtp.mailfrom=alum.mit.edu; dkim=pass (1024-bit key) header.d=alum.mit.edu header.i=@alum.mit.edu header.b=LiDp3SJw; arc=fail smtp.client-ip=40.107.93.111
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alum.mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alum.mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Aq4suKj0"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5b8c2a6135dso1023598a12.1
-        for <git@vger.kernel.org>; Fri, 02 Aug 2024 10:56:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722621391; x=1723226191; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KSma+jjlz5IB7BwQ1qyWnZXbEyjbCGf8xPoggTPDlfI=;
-        b=Aq4suKj0v84EaF/xWlC/hYlRMzgm5jxaIoa2/8MSl5ZTLHZwrfM9aeDeOWRuTmqtg3
-         rzYVIUjAs0vWGLXXt+0hES6KIJrdT9jecGvElonN+nVfZzvqHFqlG4OycHmtvyGmkqpK
-         FV6VoekKSguvipV2wyVqCDySFhEBj5X2hSi9E0lS84EIspY/q23Mav8sle3Q5HElwDcy
-         X+SL0ibyo5uqWvfPt36v+VQDj06EnoKpc5w7WnkGMoxbkGGFRCQ9aYA0nZksavYK+A7Y
-         zJm6JVaZMhfX+QO5/RAWBt0DYUU5f+1JWi1oducCMPALcsO0WkNGvQWger0Bhmj8aiSE
-         zJ/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722621391; x=1723226191;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KSma+jjlz5IB7BwQ1qyWnZXbEyjbCGf8xPoggTPDlfI=;
-        b=JlADyyov7DdgS78bmP7mwRXDUM46JKcBBkveEmRYceSp4j96hMDpBWAWuljUIuURZl
-         8zbycGS8u3V5bNK6yGYkeO/udmTl7PcyQ3gjeBYu124iRe+3PP0q1uo645trIFL2SduS
-         Y5iNQ/mceCeU5yVbarMRIF6aUGbWrg666GiQdpmkYP2kqEhPuJvFgg0dnyMyvVZUtOTk
-         mNyrQEZF+wVZGaeEV9k11zq/FT8vcXTuCh6pLGiUbdJBDdGZU0OPN8KcOd6x2o475JPB
-         i91k76qn4f11KDGd2DsqLlhrVecKbhi4TMSE7Yb0Yi0ceXF4caDejl/n528le9DQ1zhk
-         kaXg==
-X-Forwarded-Encrypted: i=1; AJvYcCUVCckf3I3+dF3Wqoz4gr4bw7QAEHNw7MMs2Cpq3fWorSho+Dg155zt7CsU/0an6nBpplN6oKPBIrSLb7dCbyShnBnu
-X-Gm-Message-State: AOJu0Ywv+je+xX9S5im2UfHkLrp2OHcLy+ehvXiPhgkzpLn8Trr5tWXa
-	c2nz1XN2nKvx69TLMp+MQMIcraAUwLw7OEImEsIJRRKG/04WNaD7kkndOc5eOWNzEXWROBAg9YW
-	bW7gVJpyr91Pnmi2Re6fbTCU4UbB//+rwowexBLPBLa+hH7I/s8xD
-X-Google-Smtp-Source: AGHT+IGxpm12OQutRRTF495Jc3tl12diH6uO+EisJXYtoW/4EpvMqL2XiwVMCiVKX0ITPZ4+8XQAuMnJtPIitox5nh0=
-X-Received: by 2002:a17:906:fe0e:b0:a7a:8d73:c2c6 with SMTP id
- a640c23a62f3a-a7dc4e5277emr314017066b.18.1722621390688; Fri, 02 Aug 2024
- 10:56:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=alum.mit.edu header.i=@alum.mit.edu header.b="LiDp3SJw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=avsTdWebwPL7d0HkoiuZCJbE87n4BC24V85zpKW9TfLoeUCc4Pvva3suMSCtRqKeLw1amWoJfOisjHINsiKrGC0Y8kSmOBE5HhKP/uP6EI8GNWtp3EQvxZUPq0rIzg2NhR9ZONqanAreyYrQUHZ5Lk0JxDxu8w7DxRU3Ej76rrExBB+9rtq5S75na3b9/ac+m6tJ9iBPOUSqDS8mW0kbE79rgg7K7rQUC0yy4CyqpsYrZQVIvnKcadumO19rtyUAoTaRWjpLtPxoe0xKmZR10wfaJzFN4egryTFWesPmUha6ZGWT7GtSMnIAENcLXFL3YJbE0CudfyuNN4Q7QZIl/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2L2tEYBrChe9dQWoXoz37ytTw6zfHh387u2ZBYASxEA=;
+ b=kLKTeXIdvc8Gv9+uYlRI8LP2Z/+9VqnfdVjYrI3emEPcHruXd4NAyY/sD+dkfuw3DmaF6ezyn4y04bBUhyFPO93/+RpfnpJlAkPjc5twh2aHxje5nkJTdIxWW8wL2WIQBLeRYwVlsZolCuWDVJmZC7gEYf10imeCRko3kC7VN9xYjjits8ioVk0Ta8fOLOsCKiZqYVTNr0pk/YAZxubNeps0N0NCG3SpN3slx3CibTATheZZx32H0jhmYs/wbYDkYk/K5s/LwUp9HEY4HokxMR1r4MmjqVNfxOIgTjTEXn3dWbrK2frlPpIxFbYONdFK4BGwHahcyNIPpOO2frY/2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 18.7.68.33) smtp.rcpttodomain=peff.net smtp.mailfrom=alum.mit.edu; dmarc=pass
+ (p=none sp=none pct=100) action=none header.from=alum.mit.edu; dkim=none
+ (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alum.mit.edu;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2L2tEYBrChe9dQWoXoz37ytTw6zfHh387u2ZBYASxEA=;
+ b=LiDp3SJwBAg8JehTh4Js+X+ycIeGB97EMPZ9ygIAFE/ovtx7htPK7R6F9h88d7H5ea+FXoBIw7G7DjRA5eNDuKdczpGJ9rs0SsqpmVkQqDg3TAJrZ6npGwQSpJ9rvH0rlHyqvwhbuhI45Wy8l4V+pAnGw36ZfhJo7WnNnp4Rl5k=
+Received: from SA9PR10CA0018.namprd10.prod.outlook.com (2603:10b6:806:a7::23)
+ by MW3PR12MB4393.namprd12.prod.outlook.com (2603:10b6:303:2c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.23; Fri, 2 Aug
+ 2024 18:03:11 +0000
+Received: from SN1PEPF0002BA4E.namprd03.prod.outlook.com
+ (2603:10b6:806:a7:cafe::bd) by SA9PR10CA0018.outlook.office365.com
+ (2603:10b6:806:a7::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.23 via Frontend
+ Transport; Fri, 2 Aug 2024 18:03:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 18.7.68.33)
+ smtp.mailfrom=alum.mit.edu; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=alum.mit.edu;
+Received-SPF: Pass (protection.outlook.com: domain of alum.mit.edu designates
+ 18.7.68.33 as permitted sender) receiver=protection.outlook.com;
+ client-ip=18.7.68.33; helo=outgoing-alum.mit.edu; pr=C
+Received: from outgoing-alum.mit.edu (18.7.68.33) by
+ SN1PEPF0002BA4E.mail.protection.outlook.com (10.167.242.71) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7828.19 via Frontend Transport; Fri, 2 Aug 2024 18:03:10 +0000
+Received: from charles (c-24-218-5-141.hsd1.ct.comcast.net [24.218.5.141])
+	(authenticated bits=0)
+        (User authenticated as ryan.hendrickson@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.14.7/8.12.4) with ESMTP id 472I382n030626
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Aug 2024 14:03:09 -0400
+Date: Fri, 2 Aug 2024 14:03:08 -0400 (EDT)
+From: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5] http: do not ignore proxy path
+In-Reply-To: <xmqqv80idf52.fsf@gitster.g>
+Message-ID: <a0b916a4-8941-4c06-263d-0ae92dcaf29e@alum.mit.edu>
+References: <pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com> <pull.1767.v5.git.1722576007398.gitgitgadget@gmail.com> <xmqq7ccygbx6.fsf@gitster.g> <2ba77de5-f103-c2f0-c009-71700c8a020d@alum.mit.edu> <xmqqv80idf52.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
- <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722571853.git.gitgitgadget@gmail.com>
- <xmqqv80jeza5.fsf@gitster.g>
-In-Reply-To: <xmqqv80jeza5.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Fri, 2 Aug 2024 10:56:17 -0700
-Message-ID: <CAO_smVh-16cfWDOq_XwNHpov7coufu-m-buexz86+MBYnFb3YA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] strbuf: set errno to 0 after strbuf_getcwd
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA4E:EE_|MW3PR12MB4393:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f480a7e-0a41-4d9e-079b-08dcb31d5efb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|376014|82310400026|1800799024|41320700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?kCUCf7JSUHizdNUGrBOCCuyaXWCtZDeUabpZmcmAqSJkMyRnyKZg92xP4tcB?=
+ =?us-ascii?Q?4saEoCTd/qUDZUmjOkhknkrV38b1xo8JNmvXCvgV7rUyj9oueLtxb6t+UB6V?=
+ =?us-ascii?Q?emARYhtjTNy0DK6OYHqF63TED8m0g5ArEThOcO2j22QGyOQK4QuLyWvBL6xO?=
+ =?us-ascii?Q?twZdscA+HE8dDKtB6fwGNFV0HNp9+YYE4VjxMAV0jPtclD6mVgCRTihnA/R7?=
+ =?us-ascii?Q?Tmj3xohAI95TAPf067eAWJ7uJ7Te6vb2BLZK0CvPultx9Jzjt5zFM4a4pvmE?=
+ =?us-ascii?Q?OeQEGtL7MinjysVC1HmKbBGS9FWJXvyatGcgTuziUNUGQLRJbO4kvy9kemuw?=
+ =?us-ascii?Q?koyz5IdWxQLpkORqhF58ehMZIIJXNciGqLlp8bTbkfBtOs21JQtCXQtIBJys?=
+ =?us-ascii?Q?yjqWcsWoopNZ/RcA4GYaIr1/k+equYnEtP6Q8ryuzNPbGpJjWZ/JK9fKPMql?=
+ =?us-ascii?Q?Q2y7mV33gDdWsttz5yTmGpHntfj/kDvwAmS6vqSfKfm/G4uSoTel+vPXQsCo?=
+ =?us-ascii?Q?iTN2XsASu2NFftsqL4gNeGKEmEZZkd50neDzQb8eTiKpfd4ihTRKxdNcIdNq?=
+ =?us-ascii?Q?JGidDxOrsepTYNL9iIakBYbxAfD1CTEyBfT7zl5xQKyz0lHxMSuz9JMYHI+c?=
+ =?us-ascii?Q?aj5GVlgooFol+RwY7i+0GwITPvNF1q0lP23EVAOAU4fmZk5d/MhQvas+ARLq?=
+ =?us-ascii?Q?gijEAKLaIzvFjtSdDsEAEUytzvPpRCU5gW2F0ck3KTCY4u/E0x081J9FsKBQ?=
+ =?us-ascii?Q?ARBhRvBn6sOK5G9MHGd50f3AbyeYscDutJNDTwOrRtY5eLl4cLuzpHidGEPG?=
+ =?us-ascii?Q?Xv8g9xqM3B0t3eDnLUW3FZjiBnfznvxklY4lrQz+NkuOo84XIiiO5bbMgkVQ?=
+ =?us-ascii?Q?HI8xA8fNU67TicbPik6GRKWllrK8boPB9eYIms9oJrmDwDUWongPHNekGUac?=
+ =?us-ascii?Q?KpHYoLY8r9Kh6WHF8JUE7W4d9itDPsNezYKowqiChH8nV8w2oSGWTvmJX6j7?=
+ =?us-ascii?Q?LV6sMR/HOgTodwn44hpwgffWU+AJ4WmdQmhuxUY0aehxkDK9qV8aA5n2/Dct?=
+ =?us-ascii?Q?M94vrmEU4Cv2rPjxUFt1DLhijhgeNPOotdgB/KOdnlONTVqaXbqjWXSXixrk?=
+ =?us-ascii?Q?aySjb+3/DjqzKZPGacFJheiJRGyI+OkMTJc9BoA3UMrblhQ4uBou7ShxVzqK?=
+ =?us-ascii?Q?2MRiEyj8fmW/kpZ9mSJ6KyiBk6KND7vlMlsF3n5ecTU6rubeCGfzv130Yrh9?=
+ =?us-ascii?Q?dRwazaazpjwJOUg62QQXw1PLmNp37caE6KdNWDilQ5a2mDsG1F+GsGvcNfAe?=
+ =?us-ascii?Q?+aHT5LjuiKlHYerZhke8UqkNC9VDonwp28KXeTPMo6g0lo8+DcolxMT7Gfpg?=
+ =?us-ascii?Q?vfZzgdnKY8SuIfoteqhZCzJ8ReCc65okrOiARWCnroPbmS9cjNIc21U3qmR5?=
+ =?us-ascii?Q?PENgZH63mKkW6/UDSttVlNIhJtBNRG0Me7kjWsF7I64s4+lr9Susmw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:18.7.68.33;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:outgoing-alum.mit.edu;PTR:outgoing-alum.mit.edu;CAT:NONE;SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024)(41320700013);DIR:OUT;SFP:1102;
+X-OriginatorOrg: alum.mit.edu
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2024 18:03:10.5263
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f480a7e-0a41-4d9e-079b-08dcb31d5efb
+X-MS-Exchange-CrossTenant-Id: 3326b102-c043-408b-a990-b89e477d582f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3326b102-c043-408b-a990-b89e477d582f;Ip=[18.7.68.33];Helo=[outgoing-alum.mit.edu]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002BA4E.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4393
 
-On Fri, Aug 2, 2024 at 8:10=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfully.
-> > This matches the behavior in functions like `run_transaction_hook`
-> > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
->
-> This deep in the call chain, there is nothing that assures us that
-> the caller of this function does not care about the error before
-> entering this function, so I feel a bit uneasy about the approach,
-> and my initial reaction was "wouldn't it be safer to do the usual
->
->         int saved_errno =3D errno;
->
->         for (guessed_len =3D 128;; guessed_len *=3D 2) {
->                 ... do things ...
->                 if (...) {
->                         ... happy ...
->                         errno =3D saved_errno;
->                         return 0;
->                 }
->         }
->
-> pattern.
->
-> Who calls this function, and inspects errno when this function
-> returns 0?
+At 2024-08-02 10:10-0700, Junio C Hamano <gitster@pobox.com> sent:
 
-That's a difficult question to answer if you want to be wholistic for
-the whole program :) For immediate callers:
-- unix_sockaddr_init: doesn't inspect or adjust errno itself if
-strbuf_getcwd returns 0. Continues on to call other functions that may
-set errno.
-- strbuf_realpath_1: same
-- chdir_notify: same
-- discover_git_directory_reason: same
-- setup_git_directory_gently: same
-- setup_enlistment_directory (in scalar.c): dies immediately if
-strbuf_getcwd returns < 0, otherwise same
-- xgetcwd: also doesn't inspect/adjust errno if strbuf_getcwd returns
-0. Doesn't call any other functions afterward (besides strbuf
-functions).
-- main: stores the value if strbuf_getcwd returns 0, but doesn't inspect er=
-rno.
-
->  I do not mind adding the "save and restore" fix to this
-> function, but if there is a caller that looks at errno from a call
-> that returns success, that caller may also have to be looked at and
-> fixed if necessary.
-
-There aren't any that I could find, this patch is mostly a
-defense-in-depth solution to the strtoX functions that were fixed in
-patch 1. This function _may_ set errno even on success. That errno
-value ends up retained indefinitely as long as things continue
-succeeding, and then we call a function like `strtod` which has a
-suboptimal interface. If this patch doesn't land, the codebase is
-still correct; the main reason to want to land this is that without
-this patch, any user that has paths longer than 128 bytes becomes de
-facto responsible for finding and reporting/fixing issues that arise
-from this errno value being persisted, and I was hoping I wouldn't be
-signing the people maintaining CI at $JOB up for that :) It's not an
-obvious failure, either. For example, t0211's failure, prior to
-setting errno to 0 just before calling strtoX is just: `fatal: expect
-<exit_code>`. That's not easy to trace back to "strbuf_getcwd sets
-ERANGE in errno in our environment, so this is a misuse of a strtoX or
-parse_timestamp function".
-
+> Ryan Hendrickson <ryan.hendrickson@alum.mit.edu> writes:
 >
-> Thanks.
+>> Hmm. I'd be inclined to take the preliminary clean-up approach, but
+>> some of the existing strings (there are also two "Unsupported
+>> ..."/"Supported ..." strings near the "Could not set..."s) are going
+>> through gettext, and I'm reluctant to interfere with the l10n process.
 >
-> > Signed-off-by: Kyle Lippincott <spectral@google.com>
-> > ---
-> >  strbuf.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/strbuf.c b/strbuf.c
-> > index 3d2189a7f64..b94ef040ab0 100644
-> > --- a/strbuf.c
-> > +++ b/strbuf.c
-> > @@ -601,6 +601,7 @@ int strbuf_getcwd(struct strbuf *sb)
-> >               strbuf_grow(sb, guessed_len);
-> >               if (getcwd(sb->buf, sb->alloc)) {
-> >                       strbuf_setlen(sb, strlen(sb->buf));
-> > +                     errno =3D 0;
-> >                       return 0;
-> >               }
+> I do not see what you mean by interfering with the localization.
+>
+> If we are updating text to be translated anyway, giving translators
+> the strings that need to be translated _earlier_ rather than later
+> would be more helpful to them, no?
+
+Probably true, but as a new contributor I don't know whether changing 
+msgids means more people need to review the patch, more files need to be 
+changed, a translation team needs to be notified, the change needs to be 
+pushed a different branch... whatever your process is. Localized strings 
+are generally more of a headache for drive-by contributors, in my 
+experience across different projects.
+
+>> Is this blocking feedback? This strikes me as speculative
+>> over-engineering
+>
+> No, it is loosening a pattern that is overly tight and as a side
+> effect shortening the line to more readable length ;-).
+
+Blocking or not?
+
+R
