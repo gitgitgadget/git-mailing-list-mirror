@@ -1,52 +1,52 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0292139D4
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 15:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ED41E4841
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 15:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722611430; cv=none; b=k7B4fGQVPdrBYyjEG4mSKOmx2zJv3nzGNkjNVLDvn6J1+iSxcrUTHvxfI8lPtmFdfxLiJAZ0gWpdlgko1ytWx5Oj8J/q4xqb7cgT6FwGsZ6Ukh0giB5OoOUE+8jeE8WhGAlRSy8ltmBRsQyTsqyeZFFr05o+/m0rsXbjhssZcBU=
+	t=1722611622; cv=none; b=ft/n3qZEiUpRNn1ISRQ+t7YEfvx3ykWv0OC3XH8G5PMKHanwefA/2KEH0SXdxaHfiTpFeFvVk+ixSzMIB4Trmu8sOAxugFkCToI+a+Hkuu09+2LWxi6fZuc+2iIEeYiBWuAs8Ckg0Q9OrfuUdXHCjI0GBL+PFq9/g8Rs7SYFPLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722611430; c=relaxed/simple;
-	bh=ENW4uNMoyTmvrvruW0xlmFaXqjK0MF4CnUQKXUxMcv0=;
+	s=arc-20240116; t=1722611622; c=relaxed/simple;
+	bh=7xwy/GanYSpWQApjmx74XATvkUHipFUenojp2/yhFrg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HZgt3tl4AwHmdlXqcYXsemAxWzlRiLQ/+j4is8cagPEJ5GBHsdg9VC2bSDn77S7fBuumkaKE2nthBbCEzjwOvk5naxugyY9PmHL/vtuPhq/kDyCOBfpo8ACyhr7n9U+1OLWrKoYb6iJGTvuaJ0ZQmDHSkB+ekBDSCk408FBJ8uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mSZQfrde; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=ihHz8oCOu4N6nGD1OIjqS9hbDmkQnBGg/rP0a0x64CcPx0+s5GCxdbK6t2nSMExx0ka3NVy3UPljndbVH7/ZAkoT3bAP+Vd/aOJ3mx5pTyMW0T9mpNuChdegs6YQdsJWtWu193DNdLL1S5pCtmsU1fwsiPty3yTni76/uKmh8mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZQ2/+SyI; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mSZQfrde"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZQ2/+SyI"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A38F26560;
-	Fri,  2 Aug 2024 11:10:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BACE26576;
+	Fri,  2 Aug 2024 11:13:39 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ENW4uNMoyTmvrvruW0xlmFaXqjK0MF4CnUQKXU
-	xMcv0=; b=mSZQfrdeGQiUWQKWw2OMhmFbTUVPftWz5VNyXQIgYUvl9Bt2QFUBWJ
-	kbsaslo5y8fn++KvvxbZcaew051Xc8z+fZl20+ykCzIzEMHi2EhV5Ob/2LK65Lja
-	0Wt4lP1re7Jgt0GIRhDHln/7qbGVKAQ2P/kp7q6FqpgwwdmBeeUmo=
+	:content-type; s=sasl; bh=7xwy/GanYSpWQApjmx74XATvkUHipFUenojp2/
+	yhFrg=; b=ZQ2/+SyIF7wRpc2paTzAqOouwNUsFrmn/HXfTYDLiQLdpkld/fd4tU
+	iKHj9hbdxFf9t74cu/iE71a8ZY1txuEj2nYJYHCKpCWwhzte/irq0NfePlYtvi6t
+	Kvihmt1eMN946vPKLp1M82kyB+0IuVAzHxY5DPEOXNUy0PAav2gXM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 129032655F;
-	Fri,  2 Aug 2024 11:10:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 848B426575;
+	Fri,  2 Aug 2024 11:13:39 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 751F92655E;
-	Fri,  2 Aug 2024 11:10:27 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E8B9226574;
+	Fri,  2 Aug 2024 11:13:38 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH 2/3] strbuf: set errno to 0 after strbuf_getcwd
-In-Reply-To: <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722571853.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 3/3] t6421: fix test to work when repo dir contains d0
+In-Reply-To: <6c08b8ceb2b87671a3e57c09e4e45170eaac37fc.1722571853.git.gitgitgadget@gmail.com>
 	(Kyle Lippincott via GitGitGadget's message of "Fri, 02 Aug 2024
-	04:10:52 +0000")
+	04:10:53 +0000")
 References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
-	<0ed09e9abb85e73a80d044c1ddaed303517752ac.1722571853.git.gitgitgadget@gmail.com>
-Date: Fri, 02 Aug 2024 08:10:26 -0700
-Message-ID: <xmqqv80jeza5.fsf@gitster.g>
+	<6c08b8ceb2b87671a3e57c09e4e45170eaac37fc.1722571853.git.gitgitgadget@gmail.com>
+Date: Fri, 02 Aug 2024 08:13:37 -0700
+Message-ID: <xmqqplqrez4u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,53 +56,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 59B9F13C-50E1-11EF-9F30-BAC1940A682E-77302942!pb-smtp2.pobox.com
+ CBD9CB02-50E1-11EF-A453-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
 "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Set `errno = 0;` prior to exiting from `strbuf_getcwd` successfully.
-> This matches the behavior in functions like `run_transaction_hook`
-> (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
+> From: Kyle Lippincott <spectral@google.com>
+>
+> The `grep` statement in this test looks for `d0.*<string>`, attempting
+> to filter to only show lines that had tabular output where the 2nd
+> column had `d0` and the final column had a substring of
+> [`git -c `]`fetch.negotiationAlgorithm`. These lines also have
+> `child_start` in the 4th column, but this isn't part of the condition.
+>
+> A subsequent line will have `d1` in the 2nd column, `start` in the 4th
+> column, and `/path/to/git/git -c fetch.negotiationAlgorihm` in the final
+> column. If `/path/to/git/git` contains the substring `d0`, then this
+> line is included by `grep` as well as the desired line, leading to an
+> effective doubling of the number of lines, and test failures.
+>
+> Tighten the grep expression to require `d0` to be surrounded by spaces,
+> and to have the `child_start` label.
 
-This deep in the call chain, there is nothing that assures us that
-the caller of this function does not care about the error before
-entering this function, so I feel a bit uneasy about the approach,
-and my initial reaction was "wouldn't it be safer to do the usual
+Makes sense.
 
-	int saved_errno = errno;
-
-	for (guessed_len = 128;; guessed_len *= 2) {
-		... do things ...
-		if (...) {
-			... happy ...
-			errno = saved_errno;
-			return 0;
-		}
-	}
-
-pattern.
-
-Who calls this function, and inspects errno when this function
-returns 0?  I do not mind adding the "save and restore" fix to this
-function, but if there is a caller that looks at errno from a call
-that returns success, that caller may also have to be looked at and
-fixed if necessary.
+Updating the comment with expected shape of the output might make it
+even less likely that we'd break these fixes again by mistake.
 
 Thanks.
 
 > Signed-off-by: Kyle Lippincott <spectral@google.com>
 > ---
->  strbuf.c | 1 +
->  1 file changed, 1 insertion(+)
+>  t/t6421-merge-partial-clone.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> diff --git a/strbuf.c b/strbuf.c
-> index 3d2189a7f64..b94ef040ab0 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -601,6 +601,7 @@ int strbuf_getcwd(struct strbuf *sb)
->  		strbuf_grow(sb, guessed_len);
->  		if (getcwd(sb->buf, sb->alloc)) {
->  			strbuf_setlen(sb, strlen(sb->buf));
-> +			errno = 0;
->  			return 0;
->  		}
+> diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
+> index 711b709e755..0f312ac93dc 100755
+> --- a/t/t6421-merge-partial-clone.sh
+> +++ b/t/t6421-merge-partial-clone.sh
+> @@ -231,7 +231,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded for single relev
+>  		test_cmp expect actual &&
+>  
+>  		# Check the number of fetch commands exec-ed
+> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
+> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
+>  		test_line_count = 2 fetches &&
+>  
+>  		git rev-list --objects --all --missing=print |
+> @@ -319,7 +319,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded when a directory
+>  		test_cmp expect actual &&
+>  
+>  		# Check the number of fetch commands exec-ed
+> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
+> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
+>  		test_line_count = 1 fetches &&
+>  
+>  		git rev-list --objects --all --missing=print |
+> @@ -423,7 +423,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded with lots of ren
+>  		test_cmp expect actual &&
+>  
+>  		# Check the number of fetch commands exec-ed
+> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
+> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
+>  		test_line_count = 4 fetches &&
+>  
+>  		git rev-list --objects --all --missing=print |
