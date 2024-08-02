@@ -1,54 +1,54 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEED256D
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 04:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F37D1C2BD
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 05:12:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722573860; cv=none; b=rbGQMFwQbIA4T9kQr7zF34ocDH1bnqOmERRyBmk7SQ+D+slE03/BAY/0DAJ+lPxhyUOg9Vgvr/jG34boPrY1/6p4KKG7DYmNwk6v+wiYKdQ2kPAMvrs6sCh7nCMoVhoDfxAOUFfNFtvTcOVwWxQRZ/yFOEr0lj8EhPlJkfVUS2I=
+	t=1722575548; cv=none; b=oHE/Y/Oee8mRzS/WlCUrpAIR6gFFPWxSDG3moAimtsapve8LXAQMyl2unHY485FZz7dPmu0B8UtJT+g8CvSucEZtY9jRQG3WfngJq0Y4azEkHXIKstxKoBDspiB2BhjWoBc6wUE87J4UA/DOFIA3SoYf+33k5V5SS50+qtfXfYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722573860; c=relaxed/simple;
-	bh=jJck9f8G3xhCQyK6YKVVlY5twrpd/X7sMznLemIF0vA=;
+	s=arc-20240116; t=1722575548; c=relaxed/simple;
+	bh=vGc6CLumbYsU5Mvhpgy8YySkw5WhvNap6DbUjgjZK+Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WHsS963l8bBjULvbED1PoeuK2z94Cgcp4iqs4yyeVgmfHEmSrnf5AGu7te7idFf8YjK0isQLDVCiSlkuyqRJ6j4lG3udh9+yovxGZYNCZWIcELSlxTEd/wV0ym+KeWBY8WljlXfP1kF4dCOPFfHSF3B4VKEO9PNmb2VOZIU1Zmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DzVmj/KN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oklssq4v; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wd52Ql0vVaBjWTep2wMWqspXfCXqpYlqI7Wp6b2eb9mvzOaoNXt4o7bBKrXyDR9r99+LNo6Y0u/y9vhjpqhNRp3N/P3KzEeQyNChG1HnIzDqLJ4Li19tuAlHC0mkmdyxMPijuIU/iy4br9a/hgZfeapLEFwZ/RHyEGzGF7VFWHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ial1DvaO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rqY2wFVJ; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DzVmj/KN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oklssq4v"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E295E1151B55;
-	Fri,  2 Aug 2024 00:44:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 02 Aug 2024 00:44:16 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ial1DvaO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rqY2wFVJ"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A8281138FD18;
+	Fri,  2 Aug 2024 01:12:24 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 02 Aug 2024 01:12:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722573856; x=1722660256; bh=DF/yOd6G7P
-	zot1DatKXNgR/jvZBLd6Iq7K4AxMJBvKU=; b=DzVmj/KNLi9eCKdtY/8lfDz/6s
-	I9MSx01cH6ZnpafSR2kAHMEzZj+e9z7P238uYqiN5nyiq6McmMLobgoxaaMSWHn9
-	DNCJFiUb9Qzlkq+iqYw85UB/lZXSh1KD6RBuCGPMX/YWSZPCV09+o8YfQoIPcTJ0
-	HBQpuA/3nc65d9MpJH5Ip/9O3XHWsh5JUA5a1mXm8ziLy2lj2aN2IxN6xmdPsqot
-	XFxATVU6oFLzXUQFKtl3x4ND0ufEiVA0mJFJDWfs1QLCoCv/FFmLG6y0096jB35I
-	EU1mW0bPtxXvJvXZXj4sQZEEGjrmQbPZ+3xUJOuERKAPK91nKqV4ofMSM7xg==
+	:subject:to:to; s=fm3; t=1722575544; x=1722661944; bh=vGc6CLumbY
+	sU5Mvhpgy8YySkw5WhvNap6DbUjgjZK+Y=; b=ial1DvaOEu/y3JBibzceeWmSdO
+	WsGx87UdvTLwcts2lasrFbbWh92GCIIvrIXPqRtpZYlXm4yR/NZ8KO8/H6czeeOq
+	R8t5WGAf0ilyqrjLVJMdJVTnG/mJWsQq+ujX2UYfLZW/0M44Fmo1q3pdYjB92tpQ
+	Rq6KfBifHBtnjtutSIGbIHRouGZTQSdXGiAvwabg7QnKMraSgs+aJPVVccFp0trL
+	RvFyBr9+SrfRuKRfiNQnO0iWNH7RdYl2qcnxgkJs8qr6NboCIgob7lkzDla/+KLF
+	JsTnOpQBubcwA8wANefQI1NzA5b+RQW/g6d7LbNel1TFpmNBCj9x4V+g0qwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722573856; x=1722660256; bh=DF/yOd6G7Pzot1DatKXNgR/jvZBL
-	d6Iq7K4AxMJBvKU=; b=Oklssq4vR3p5cITZjW+dWtRjYKxx54Gm+qeCPgGyqNaZ
-	o3olyz2BrkPGJerJwWh90edBLpDsnLICQJHmlC8VXzw2AulpqmbvIqdnbcNjudl0
-	nCl/VUz8lQLEt5qpYI0MhGcFXfBpu6QigHgsWG3ZG0S45o2qL1UdhVCzEhGOFrNc
-	Z/0uJDkikC8+EEOGFWDxecHaAMA915RBEzBWUqYIsq4QU0ph4NtfJv3MWFlYSJJb
-	1XJ3lpWrS2MUiGR6X+cwXhamzRpgTWCIVU1mOyVhIhjRauqYFr9cXJSOAeBnR8Ih
-	2C9iS4Kcs0RHro99srysiIR/VpeAbuiG1JrTJJbQlw==
-X-ME-Sender: <xms:IGSsZu2Kz4ZvfSL0c8U79SC4GlIAT1lzre9ooDXrSpwwJK3hnbXu7A>
-    <xme:IGSsZhExob2PQY2ICKz-ndj1MV7TZ-JkxlJVQX2Wx2PY-9xfhQeiMA77HKnZnoKgc
-    jzzrbCiDRCmbWh_Tw>
-X-ME-Received: <xmr:IGSsZm6Cw4C9Pz2cojFjjoAmxX5dpUDIczkyMIXVhJYT_-kB9VweBbh3AthegMEsGhla348abWdCW39mZ0vcMeNeP0jfInBs0zYzYNIvsJWUSZtw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeelgdeklecutefuodetggdotefrodftvf
+	fm3; t=1722575544; x=1722661944; bh=vGc6CLumbYsU5Mvhpgy8YySkw5Wh
+	vNap6DbUjgjZK+Y=; b=rqY2wFVJpqx1dmJNbL2KpZKuD2A8bcF79WXcaYpVZWqW
+	gvuwW9D5g/dn7qRiG1zbRmaQ0Y2By6+wRsTTamYpZ3ObOWtu66xVXjAx63FQdqtf
+	OkQem7seZChdu3TpMw66H49ZIdgOb4MLRvbIvDfUWcoWjf+/G+oS6ONzo2P6rHGt
+	V6PApUyM+OSSib9/ct1KIrGYzlRfcq/eZptFfjDPrqjtLqQFomlo3DBPCiPC32T1
+	9ysgj+K14hzGKBwaNcTqbx1zXpQIjU2otG+cYR+VstEVfDPLSLraEvikccDN7x1+
+	GxCVaPIF75mdea2XLlp02VXUFdQa4By8DoChTNqYEg==
+X-ME-Sender: <xms:uGqsZlYYE-z6CiAsCAXSL_1_UhylmyRglMFPqVrIaAV4BXVBGT7Ewg>
+    <xme:uGqsZsa8PPfk3DAIAdizan83kxWs3CfiImdb37d8jY2_XQjiKX4dkIxGQuRsZbtvH
+    QOgqOoM6VNDkNPuSQ>
+X-ME-Received: <xmr:uGqsZn-cXohuIdZ1MQ28B--8ccpsMCp3Au50IZCJ-pYDtiZRMIai6hJd14AMhqw-HurWhDoNqEZ6KV1jSRh-Xl5ullZdfVmW_DedfNMpHs1LfUrm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeelgdelgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,24 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeelgdeklecutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:IGSsZv3IuGDIOXBbvuuiEajZOrjb_XvyLZEPH9lSixXMwSy5McttdQ>
-    <xmx:IGSsZhGmwB5c5joOdUwsjCYuZqfZ1dhFkIhxRd5jTGv2uKo1yHFF-w>
-    <xmx:IGSsZo-XzIMHYxk1Ad0q3XT9REzJxwFZM98xVoQ14gM6FL9Q58C9xw>
-    <xmx:IGSsZmmTuBrgXz43DSCT6viVA4oikSUzzFAjqL1v-10-avfvOUT9Mg>
-    <xmx:IGSsZhDA1K1t3XVEeGxf-nk-Wf5xbs6Y-cBQQZmwGLEtQvuqNfdijm2U>
+X-ME-Proxy: <xmx:uGqsZjoo2rylAMUorcDdbWS4KSoNWF45gbVrk2asVhAka1botMIX2A>
+    <xmx:uGqsZgoBwwawaGjG7YTcthVkYx3NUKMUWR-H3aZ8PXUg58KDvlTGJw>
+    <xmx:uGqsZpQJFTb5KLdNr0gQFC7q_-wAz-uYZzo6xAKIiwuhf30PXqnowg>
+    <xmx:uGqsZoqdnYyaNFuZuS32H6uVKwgetyVcDS5G4mwzXuEHo42qM5MR5A>
+    <xmx:uGqsZrWNtT0Lo8f9_A4CIAPAeKOWBRKeKWYpS7e3N57tT4JVgnEikN4B>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Aug 2024 00:44:15 -0400 (EDT)
+ 2 Aug 2024 01:12:23 -0400 (EDT)
 Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 109966f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 2 Aug 2024 04:42:40 +0000 (UTC)
-Date: Fri, 2 Aug 2024 06:44:11 +0200
+	by localhost (OpenSMTPD) with ESMTPSA id 35c54ba9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Aug 2024 05:10:48 +0000 (UTC)
+Date: Fri, 2 Aug 2024 07:12:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin/ls-remote: fall back to SHA1 outside of a repo
-Message-ID: <c52112d3946b2fd8d030580cd7acb809fa54012a.1722573777.git.ps@pks.im>
-References: <20240727191917.p64ul4jybpm2a7hm@glandium.org>
+To: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH 1/3] set errno=0 before strtoX calls
+Message-ID: <ZqxqtIJi4-xBL9Sj@tanuki>
+References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+ <4dbd0bec40a0f9fd715e07a56bc6f12c4b29a83c.1722571853.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,126 +82,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AGBtVSU8S4DGd6YM"
+	protocol="application/pgp-signature"; boundary="8OdtMhl+qrgBR9Dy"
 Content-Disposition: inline
-In-Reply-To: <20240727191917.p64ul4jybpm2a7hm@glandium.org>
+In-Reply-To: <4dbd0bec40a0f9fd715e07a56bc6f12c4b29a83c.1722571853.git.gitgitgadget@gmail.com>
 
 
---AGBtVSU8S4DGd6YM
+--8OdtMhl+qrgBR9Dy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In c8aed5e8da (repository: stop setting SHA1 as the default object hash,
-2024-05-07), we have stopped setting the default hash algorithm for
-`the_repository`. Consequently, code that relies on `the_hash_algo` will
-now crash when it hasn't explicitly been initialized, which may be the
-case when running outside of a Git repository.
+On Fri, Aug 02, 2024 at 04:10:51AM +0000, Kyle Lippincott via GitGitGadget =
+wrote:
+> From: Kyle Lippincott <spectral@google.com>
+>=20
+> To detect conversion failure after calls to functions like `strtod`, one
+> can check `errno =3D=3D ERANGE`. These functions are not guaranteed to set
+> `errno` to `0` on successful conversion, however. Manual manipulation of
+> `errno` can likely be avoided by checking that the output pointer
+> differs from the input pointer, but that's not how other locations, such
+> as parse.c:139, handle this issue; they set errno to 0 prior to
+> executing the function.
+>=20
+> For every place I could find a strtoX function with an ERANGE check
+> following it, set `errno =3D 0;` prior to executing the conversion
+> function.
 
-It was reported that git-ls-remote(1) may crash in such a way when using
-a remote helper that advertises refspecs. This is because the refspec
-announced by the helper will get parsed during capability negotiation.
-At that point we haven't yet figured out what object format the remote
-uses though, so when run outside of a repository then we will fail.
+Makes sense. I've also gone through callsites and couldn't spot any
+additional ones that are broken.
 
-The course of action is somewhat dubious in the first place. Ideally, we
-should only parse object IDs once we have asked the remote helper for
-the object format. And if the helper didn't announce the "object-format"
-capability, then we should always assume SHA256. But instead, we used to
-take either SHA1 if there was no repository, or we used the hash of the
-local repository, which is wrong.
+Generally speaking, the interfaces provided by the `strtod()` family of
+functions is just plain awful, and ideally we wouldn't be using them in
+the Git codebase at all without a wrapper. We already do have wrappers
+for a subset of those functions, e.g. `strtol_i()`, which use an out
+pointer to store the result and indicate success via the return value
+instead of via `errno`.
 
-Arguably though, crashing hard may not be in the best interest of our
-users, either. So while the old behaviour was buggy, let's restore it
-for now as a short-term fix. We should eventually revisit, potentially
-by deferring the point in time when we parse the refspec until after we
-have figured out the remote's object hash.
+It would be great if we could extend those wrappers to cover all of the
+integer types, convert our code base to use them, and then extend our
+"banned.h" banner. I'm of course not asking you to do that in this patch
+series.
 
-Reported-by: Mike Hommey <mh@glandium.org>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-
-I didn't spot this in the "What's cooking" report. I guess that's my own
-fault for not sending it as a proper patch, so let me fix that now :)
+Out of curiosity, why do you hit those errors in your test setup? Do you
+use a special libc that behaves differently than the most common ones?
 
 Patrick
 
- builtin/ls-remote.c  | 15 +++++++++++++++
- t/t5512-ls-remote.sh | 13 +++++++++++++
- 2 files changed, 28 insertions(+)
-
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index debf2d4f88..6da63a67f5 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -91,6 +91,21 @@ int cmd_ls_remote(int argc, const char **argv, const cha=
-r *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	dest =3D argv[0];
-=20
-+	/*
-+	 * TODO: This is buggy, but required for transport helpers. When a
-+	 * transport helper advertises a "refspec", then we'd add that to a
-+	 * list of refspecs via `refspec_append()`, which transitively depends
-+	 * on `the_hash_algo`. Thus, when the hash algorithm isn't properly set
-+	 * up, this would lead to a segfault.
-+	 *
-+	 * We really should fix this in the transport helper logic such that we
-+	 * lazily parse refspec capabilities _after_ we have learned about the
-+	 * remote's object format. Otherwise, we may end up misparsing refspecs
-+	 * depending on what object hash the remote uses.
-+	 */
-+	if (!the_repository->hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	packet_trace_identity("ls-remote");
-=20
- 	if (argc > 1) {
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 42e77eb5a9..bc442ec221 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -402,4 +402,17 @@ test_expect_success 'v0 clients can handle multiple sy=
-mrefs' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'helper with refspec capability fails gracefully' '
-+	mkdir test-bin &&
-+	write_script test-bin/git-remote-foo <<-EOF &&
-+	echo import
-+	echo refspec ${SQ}*:*${SQ}
-+	EOF
-+	(
-+		PATH=3D"$PWD/test-bin:$PATH" &&
-+		export PATH &&
-+		test_must_fail nongit git ls-remote foo::bar
-+	)
-+'
-+
- test_done
---=20
-2.46.0.dirty
-
-
---AGBtVSU8S4DGd6YM
+--8OdtMhl+qrgBR9Dy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmasZBUACgkQVbJhu7ck
-PpSQDw//Y5i+S20IRgVEk1+xGuUjBLKREkEv4Qxm3APDmk+fijjXOu+6CUjr+Ior
-0x55Fo0hVQMEP52Qedl7r5yRZlSra/j6j8VqbjfKoSnRpDlz20Q6gkmdAPV1cjQB
-5Osz+c4HLH3SIU1DdFhd5Jqxx2psT0wq++3QLO3AvS2k3XdkHgUOp0M+r/9oRBb3
-SinNVMFbPyJM0gW2S+ispxZEuk8+5Hv7ySdsngVXROxR21j/WtBkZi5c5SWlSE3Q
-yHlZ7CrrBU8R0ZEeZDiZL7wC+Yxjj0CfmCdhnJ4YVteFQg+XFBaEmrAgSZuz+xev
-FF7qbsrp8pse3RKg5LOrKqXTzmq1dlh4eQSiazXfKaWi74TYC8TabhIyN/OiLF4V
-YG5Od/VKWNAa9P1XdSLwnM3clBx3AWp+bwp46VlxlevcqGu8myTzRLAx486xWxlJ
-4qqoCRnfZ4vm5Xo9kvy2hH5rKEs8OrQn6yg0FhMLeVlYghNhx50eVJnMerLXX6iH
-R25Qqev2Jmerez+EgMWMT0Ml2TVuiLizlMpp6NrEHOk8WAK/G3JTiVbukpPTMP/W
-ETLj8nTXJX0aiys72CAJpcZ61geYea1Px3YIMsd9MbNbtks/xwDIsBi0SVH2D/y3
-H003nLA1S9D8lGHXRKxH2JbfwFKVWZHNodGeOd2Y1w6zH/bUyUY=
-=CJen
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmasarMACgkQVbJhu7ck
+PpQBhQ/9FkVJiAFBPVvmfWzcNglegGjy4Thgl4fMFOx1maUDsvU9RZU+Xis+eagD
+8BQE268c0ob4meDBGJDcwnH/FM/LR0p39gScSsaDhbHdn+MGJk7j1t7hvOh0z5XH
+MyZHR0KCN5YKQecZPIwPWAsRGSAeFJImHG11Dj1CPvt299M9NiIB0EQg5dFsBKJ6
+sZ0Ptv+i/SsCYFE6VRj3lPrD5tvjADCYBg9FoiaOo7qRCow0XV0Rx+TcJAPDgw9z
+H67DUBFfKo4afDEiBrST80QzkZtGyxSJZgE4X9JU0/gRmVcOIPaqCJgSf/N8GGM3
+lzFo0whUSRPayNNcGefbKweqcVLKfME4ciaC0xAd+GSZRarFcn8YzYnKyx9N8Ghw
+GjCduGh4NG+JvunnNETyuE5Nqkm48LXpsxzef/IDtxjfjg84X7rmlMjYL3cTWx9I
+0t0jy7W2AuvNmHR83Jt90S6ql3OMAqwIHFoy85IE6r2UO3+/RvkIH8RYu0K3lKow
+jQRCtvkqIsD3FKW0INvCgfYfOjiuirhnX4RnxmTcQ5XLU8v8JHUdQmEj17aRFd4F
+kqaplFw3Dx0cw1NUzW9YUqg7L1h1b+qplN+TzKXKRzanMkWRPxePvO3nWMGeH3FD
+HEfVS1zuIbHB4rnqqhZQUdY2N5qHJ7YrtYnStt/vVh7ALjtEwks=
+=bdPo
 -----END PGP SIGNATURE-----
 
---AGBtVSU8S4DGd6YM--
+--8OdtMhl+qrgBR9Dy--
