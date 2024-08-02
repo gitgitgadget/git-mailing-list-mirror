@@ -1,70 +1,98 @@
-Received: from smtp-out-b2-9.tor.pathcom.com (smtp-out-b2-135.tor.pathcom.com [207.188.95.135])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07A61E522
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 18:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.188.95.135
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E1A25632
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 19:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722624623; cv=none; b=Oclt55qt7ZcP1HIln3LBPXt6zAyf9f6gNdZqfOLWJyAYKtExBsytLEwMIExHWwsjWXnpWp6e8KKwJoD3CTFQ7w3s8eLPb504h9GrUbYkwne4goFOb9AgZe1KMvpCv8qVpxfSf3RA8tORfv9cPJtOnRLqdm54DHEGo0x11Ajgfkc=
+	t=1722626946; cv=none; b=FcUg2YjQPrJPZDF7xxZCriD9qwgZToIA0xSDQoDnZ8xAMwNLVa8COuxv6f9/1CHJ0bYyQJw13F5kK//dYLjEqnFhcsoxi57MB5cZWmfTOzxQArz7/h7QG53Ac0FrIlKcxa6RZbjqSyctBOWU1I55JDXm4hjf7aY4CjH8LSFz7r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722624623; c=relaxed/simple;
-	bh=jU70uVUirDVYbXupDtP5cxnadpRp9vObxOMz5tPGh6A=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=u04ZeDVWtTJirUunRZHrTHy5jyC2dn3S968a8AtN8ap4Tjymi238+QGK2tIYy03sGcLUrZ5YTnMy/obZ/T1rnqSdiUaaD2ueaBcDPQlEH2DuNZx5YxWSSqsnKLpNd10zw07grESzs75GlNiNWnlvb/crDf2l2iHml56Kp5qLego=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pathcom.com; spf=pass smtp.mailfrom=pathcom.com; dkim=pass (1024-bit key) header.d=pathcom.com header.i=@pathcom.com header.b=OUh6spp8; arc=none smtp.client-ip=207.188.95.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pathcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pathcom.com
+	s=arc-20240116; t=1722626946; c=relaxed/simple;
+	bh=TX+fU3EjfYroYkkdihKAesYsfaPaSTDeGid2cXfkl+s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=S9M/IzkQsm5BsfIVD74VWECxAmzE/TGbLE5r8f1uK2a0u/yWzqXuzjNDF7xd+6X43BtIS2JiMMYnWgQWCfkXscsrysKXOOUWqDSgssGqNuFUOoUV4VMStDrI7GdpA7OoCm9gZA9JFdDXYZanTs5YPdpeGp5Hparf3R1535UZgk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=p1F0pApv; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pathcom.com header.i=@pathcom.com header.b="OUh6spp8"
-Received: from smtp-auth08.tor.pathcom.com (localhost [127.0.0.1])
-	by smtp-auth08.tor.pathcom.com (Postfix) with ESMTP id 36D26540C64
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 14:38:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pathcom.com;
-	s=default; t=1722623912;
-	bh=jU70uVUirDVYbXupDtP5cxnadpRp9vObxOMz5tPGh6A=;
-	h=Date:To:From:Subject;
-	b=OUh6spp8mcYlZMDIaiRP8rPTYH+D5i08dV55x+18SAFhTO761AwdNVnMzyhUK5JbV
-	 rZMsAiL4c/AaMjfss57rkcCuZkgQxSn3lPIOJ1BT1D/3Rg8EiCCDGBZ7hgU3wEen55
-	 Gfk17AbaEED6dvyF2YcNvZAP//RKYsSgQeZQxQQ4=
-X-Spam-Level: 
-Received: from [192.168.10.2] (rdsl-0145.tor.pathcom.com [207.188.64.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p1F0pApv"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C7142363C7;
+	Fri,  2 Aug 2024 15:29:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TX+fU3EjfYroYkkdihKAesYsfaPaSTDeGid2cX
+	fkl+s=; b=p1F0pApvkfXlBuWgt6Ieiu4f4f9ZioO3gEK5Vacdp9GyrTDPFDmw4Q
+	3Vxhf4feXffDbYIXqbcFOEaii/4T84aWmZ6Qe0Fq127k0N/s8wINehZkTTDqk0PX
+	gQBTefCv646WNeImBEgJX9CyIdEEhnLq7kfhm7pz55gyCpC02nN9c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AB5B6363C6;
+	Fri,  2 Aug 2024 15:29:04 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: mjsalman@pathcom.com)
-	by smtp-auth08.tor.pathcom.com (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 14:38:32 -0400 (EDT)
-Message-ID: <3db395fe-8d32-4a33-8f16-7df95f3ff194@pathcom.com>
-Date: Fri, 2 Aug 2024 14:41:48 -0400
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A360363B8;
+	Fri,  2 Aug 2024 15:29:00 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5] http: do not ignore proxy path
+In-Reply-To: <a0b916a4-8941-4c06-263d-0ae92dcaf29e@alum.mit.edu> (Ryan
+	Hendrickson's message of "Fri, 2 Aug 2024 14:03:08 -0400 (EDT)")
+References: <pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com>
+	<pull.1767.v5.git.1722576007398.gitgitgadget@gmail.com>
+	<xmqq7ccygbx6.fsf@gitster.g>
+	<2ba77de5-f103-c2f0-c009-71700c8a020d@alum.mit.edu>
+	<xmqqv80idf52.fsf@gitster.g>
+	<a0b916a4-8941-4c06-263d-0ae92dcaf29e@alum.mit.edu>
+Date: Fri, 02 Aug 2024 12:28:58 -0700
+Message-ID: <xmqqh6c2d8qt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-From: Michael Salman <mjsalman@pathcom.com>
-Subject: Merging problem
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 784860F6-5105-11EF-B937-92D9AF168FA5-77302942!pb-smtp20.pobox.com
 
-I am new to using git and I encountered the following problem
+Ryan Hendrickson <ryan.hendrickson@alum.mit.edu> writes:
 
-1) Created a repository using Notepad added a file (FileA.txt). Put one 
-line of text in the file. Did a git commit -a. so far so good.
+> At 2024-08-02 10:10-0700, Junio C Hamano <gitster@pobox.com> sent:
+>
+>> Ryan Hendrickson <ryan.hendrickson@alum.mit.edu> writes:
+>>
+>>> Hmm. I'd be inclined to take the preliminary clean-up approach, but
+>>> some of the existing strings (there are also two "Unsupported
+>>> ..."/"Supported ..." strings near the "Could not set..."s) are going
+>>> through gettext, and I'm reluctant to interfere with the l10n process.
+>>
+>> I do not see what you mean by interfering with the localization.
+>>
+>> If we are updating text to be translated anyway, giving translators
+>> the strings that need to be translated _earlier_ rather than later
+>> would be more helpful to them, no?
+>
+> Probably true, but as a new contributor I don't know whether changing
+> msgids means more people need to review the patch, more files need to
+> be changed, a translation team needs to be notified, the change needs
+> to be pushed a different branch... whatever your process is. Localized
+> strings are generally more of a headache for drive-by contributors, in
+> my experience across different projects.
+>
+>>> Is this blocking feedback? This strikes me as speculative
+>>> over-engineering
+>>
+>> No, it is loosening a pattern that is overly tight and as a side
+>> effect shortening the line to more readable length ;-).
+>
+> Blocking or not?
 
-2) I created a branch (my-branch), did a git checkout my-branch
-
-3) Using notepad loaded FileA and changed the first line of text to 
-something else. Gave command git commit -a no problems
-
-4) Git checkout master looked at FileA nothing changed
-
-5) Did a git merge my-branch. No conflict reported
-
-6) Loaded FileA in master the text of the first line had changed to what 
-is in FileA from the branch
-
-Your help with this problem would be appreciated. I hope this is not due 
-to my lack of understanding
-
-Mike
+If we are updating anyway, that question is irrelevant, no?  This
+version may hit 'seen' but until the next version comes it will not
+advance to 'next'.
