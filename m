@@ -1,52 +1,51 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ED41E4841
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 15:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DFC1F61C
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 15:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722611622; cv=none; b=ft/n3qZEiUpRNn1ISRQ+t7YEfvx3ykWv0OC3XH8G5PMKHanwefA/2KEH0SXdxaHfiTpFeFvVk+ixSzMIB4Trmu8sOAxugFkCToI+a+Hkuu09+2LWxi6fZuc+2iIEeYiBWuAs8Ckg0Q9OrfuUdXHCjI0GBL+PFq9/g8Rs7SYFPLc=
+	t=1722612410; cv=none; b=EsDgXBJvr5TRJToIIi2eT6lqnJiAGiHi5zWHIVXFY8h/lRNUrEVn1cggirySL0TYmaHbh9UCTxokLpkO1BMlstrQTscqaMJ/5igAN03/6mhAI0A5jDdQb4KSSBMIsA3u0T5+oJdwJKbx+DJcsTU2+i91Nj/jqek/yY973subZBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722611622; c=relaxed/simple;
-	bh=7xwy/GanYSpWQApjmx74XATvkUHipFUenojp2/yhFrg=;
+	s=arc-20240116; t=1722612410; c=relaxed/simple;
+	bh=vQV86ufhgFIXHL6o9XqWR7K+ixzMXz4I/TQkELF5y8c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ihHz8oCOu4N6nGD1OIjqS9hbDmkQnBGg/rP0a0x64CcPx0+s5GCxdbK6t2nSMExx0ka3NVy3UPljndbVH7/ZAkoT3bAP+Vd/aOJ3mx5pTyMW0T9mpNuChdegs6YQdsJWtWu193DNdLL1S5pCtmsU1fwsiPty3yTni76/uKmh8mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZQ2/+SyI; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=o2uJs14PExCJ4WmokYIGWN7L9QjVfDgn7+2oNW1j2N0LgKEr+ju9+qZH6UFGkctmhEDHYGJP2dPI4jOunCFAbJYDKNF4PkzybG/8kYkAaawJTH2IkFg6tZhZRQiL8123xy0XkKQtgCACBU5la+8nRkKS4NL3tWxA/P/tBF+v+Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JnLGLeCF; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZQ2/+SyI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JnLGLeCF"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BACE26576;
-	Fri,  2 Aug 2024 11:13:39 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D2CB4267AE;
+	Fri,  2 Aug 2024 11:26:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7xwy/GanYSpWQApjmx74XATvkUHipFUenojp2/
-	yhFrg=; b=ZQ2/+SyIF7wRpc2paTzAqOouwNUsFrmn/HXfTYDLiQLdpkld/fd4tU
-	iKHj9hbdxFf9t74cu/iE71a8ZY1txuEj2nYJYHCKpCWwhzte/irq0NfePlYtvi6t
-	Kvihmt1eMN946vPKLp1M82kyB+0IuVAzHxY5DPEOXNUy0PAav2gXM=
+	:content-type; s=sasl; bh=vQV86ufhgFIXHL6o9XqWR7K+ixzMXz4I/TQkEL
+	F5y8c=; b=JnLGLeCFtUWQ/dQooAN+80WVVJxOBSNVnW3oz75pc605MiWgjN8jIH
+	P7Xbk7il2Xb9hGoqcZptM9vIQA9C9YdGGcy00lJlXfREYCq+/6pl8hfTtcdgYtiG
+	ppUjSsidiL2aQut8zckk2gSz1SOOxjt+bqhUCHytz2pNHOFVU80SI=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 848B426575;
-	Fri,  2 Aug 2024 11:13:39 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C95C8267AD;
+	Fri,  2 Aug 2024 11:26:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E8B9226574;
-	Fri,  2 Aug 2024 11:13:38 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33875267AC;
+	Fri,  2 Aug 2024 11:26:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH 3/3] t6421: fix test to work when repo dir contains d0
-In-Reply-To: <6c08b8ceb2b87671a3e57c09e4e45170eaac37fc.1722571853.git.gitgitgadget@gmail.com>
-	(Kyle Lippincott via GitGitGadget's message of "Fri, 02 Aug 2024
-	04:10:53 +0000")
-References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
-	<6c08b8ceb2b87671a3e57c09e4e45170eaac37fc.1722571853.git.gitgitgadget@gmail.com>
-Date: Fri, 02 Aug 2024 08:13:37 -0700
-Message-ID: <xmqqplqrez4u.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] builtin/ls-remote: fall back to SHA1 outside of a repo
+In-Reply-To: <c52112d3946b2fd8d030580cd7acb809fa54012a.1722573777.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 2 Aug 2024 06:44:11 +0200")
+References: <20240727191917.p64ul4jybpm2a7hm@glandium.org>
+	<c52112d3946b2fd8d030580cd7acb809fa54012a.1722573777.git.ps@pks.im>
+Date: Fri, 02 Aug 2024 08:26:45 -0700
+Message-ID: <xmqqle1feyiy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,67 +55,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CBD9CB02-50E1-11EF-A453-BAC1940A682E-77302942!pb-smtp2.pobox.com
+ A1B12198-50E3-11EF-90AB-BAC1940A682E-77302942!pb-smtp2.pobox.com
 
-"Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: Kyle Lippincott <spectral@google.com>
->
-> The `grep` statement in this test looks for `d0.*<string>`, attempting
-> to filter to only show lines that had tabular output where the 2nd
-> column had `d0` and the final column had a substring of
-> [`git -c `]`fetch.negotiationAlgorithm`. These lines also have
-> `child_start` in the 4th column, but this isn't part of the condition.
->
-> A subsequent line will have `d1` in the 2nd column, `start` in the 4th
-> column, and `/path/to/git/git -c fetch.negotiationAlgorihm` in the final
-> column. If `/path/to/git/git` contains the substring `d0`, then this
-> line is included by `grep` as well as the desired line, leading to an
-> effective doubling of the number of lines, and test failures.
->
-> Tighten the grep expression to require `d0` to be surrounded by spaces,
-> and to have the `child_start` label.
+> I didn't spot this in the "What's cooking" report. I guess that's my own
+> fault for not sending it as a proper patch, so let me fix that now :)
 
-Makes sense.
+Yeah, I had a fix already when I gave my response to the initial
+problem report, but felt that it was too premature to commit to the
+approach before listening to others (you included) for potentially
+better alternative approaches, and then forgot about it.
 
-Updating the comment with expected shape of the output might make it
-even less likely that we'd break these fixes again by mistake.
-
-Thanks.
-
-> Signed-off-by: Kyle Lippincott <spectral@google.com>
-> ---
->  t/t6421-merge-partial-clone.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
-> index 711b709e755..0f312ac93dc 100755
-> --- a/t/t6421-merge-partial-clone.sh
-> +++ b/t/t6421-merge-partial-clone.sh
-> @@ -231,7 +231,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded for single relev
->  		test_cmp expect actual &&
->  
->  		# Check the number of fetch commands exec-ed
-> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
->  		test_line_count = 2 fetches &&
->  
->  		git rev-list --objects --all --missing=print |
-> @@ -319,7 +319,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded when a directory
->  		test_cmp expect actual &&
->  
->  		# Check the number of fetch commands exec-ed
-> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
->  		test_line_count = 1 fetches &&
->  
->  		git rev-list --objects --all --missing=print |
-> @@ -423,7 +423,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded with lots of ren
->  		test_cmp expect actual &&
->  
->  		# Check the number of fetch commands exec-ed
-> -		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-> +		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
->  		test_line_count = 4 fetches &&
->  
->  		git rev-list --objects --all --missing=print |
+The fix here is in line with my thoughts, after seeing how other
+parts of the transport work.  Thanks for tying the loose ends.
