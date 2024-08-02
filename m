@@ -1,113 +1,155 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6818F48
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 00:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BD5E57D
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 00:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722558833; cv=none; b=pCL/oRkIzQ1fZdTtwINDyvdKFDdOdnDVc4SAz980ID0KbdJTkJIQVD646BLCkRUdmwdMil8EAE5AlTM2fT4tG17B1d7xoMZhiXe2tbywe6V3PwLkQ45YQ5+PqK9d3PWOjGfJ/+2sXV3uJZ5vdt5jrz3Eo5oHd6C/Qi17sPrVMGU=
+	t=1722559750; cv=none; b=CIiKAUBma1k0bz6QQd+RWxgQQSwiAD8nA0esUKFYT6qPRUd7kYmHkQjxZ4d4WrKfwbaNxxMbrRQfDP4EQKi1uHyymuAK7rZJnSmJti+vBqvDyIEgOymgI0LLMeUHZntwFkxYNFot9VUHsQsaWiR4KhRtAJVDtr+nmdJwp122Fy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722558833; c=relaxed/simple;
-	bh=i4OXf1+ToWdpXBw00N+8XIi/habwPpmsK6WTrRUBtGQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nmXua4DqCIQIBaT13nm+Bo6xCDCW1p6V+OEUyZ58KdIufdaHZI2M1nYYrA1gILkPyT4RABq7RNSFGyipRkVk6VqWcwd9V4tqM0Nz0EJHGcu7V7NVp8NVkTiG+V78I70ANUY5cqRhtpLZ7oTxwGJALbPrgHbHP8rOCHFQlnGFGHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=a6wfFioi; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722559750; c=relaxed/simple;
+	bh=Ce8AwsEV7K7eZpjeQPHI8nNzp0smOLOnWo4BRE5CRZ4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rEg1RoX9zAqQ5MwDDH9KAUP0iMrG8d/NyyQDH7Rjcx1E2JCyJDbhIBi6xTYfiqeO/Rixa5YvbwtkFuZWeOwUFMwnCPOpjWiiw9ZR2YjBsT4UeoHxEPlEyKrpZs8fjGBhwpjb0BdjQGzdB8XByf+wEBGGFJ67SkFESsqMC0iK4Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QN+a2qk6; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a6wfFioi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 87E9E2E86F;
-	Thu,  1 Aug 2024 20:33:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=i4OXf1+ToWdpXBw00N+8XIi/habwPpmsK6WTrR
-	UBtGQ=; b=a6wfFioiXYEX3MRR3DtoVeGonfX2vSUkJ4sPYvmxp19bPxr2Q6LtX9
-	7QMc0Bqf2E7hc0E41T220Op7kgLE56wsUFAUQzZnUXNFQwxROcGTB6SQEzysDx58
-	kP9uDPN0QG9+IxZ4FlnhZ0B/eEGIsPzZbfUkLD1v/DuR8LdozFc3c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DB722E86E;
-	Thu,  1 Aug 2024 20:33:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA4352E86C;
-	Thu,  1 Aug 2024 20:33:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: git@vger.kernel.org
-Subject: Re: quiltimport mode detection oddity
-In-Reply-To: <20240801155702.70242c31d476c46c84ee11a3@linux-foundation.org>
-	(Andrew Morton's message of "Thu, 1 Aug 2024 15:57:02 -0700")
-References: <20240801155702.70242c31d476c46c84ee11a3@linux-foundation.org>
-Date: Thu, 01 Aug 2024 17:33:48 -0700
-Message-ID: <xmqqed77hifn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QN+a2qk6"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52efc60a6e6so11804954e87.1
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 17:49:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722559747; x=1723164547; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6boaAZK96wQJExqhznQLyW1qetJ7xl5uU+NC93Vy5sY=;
+        b=QN+a2qk6hY0fdrGYm1wL/Q3IDqI8o6vawGShgAQHnFUjPDzEMmsmMTR1fDnCS3PeBv
+         1cM0fjF3F3q7WNRupX5vRXyYHl8QR3z2uPGqnPjfLGXCfqWvC9UxiCscFFcAXaEByKJ4
+         51GuSjUBFOdkXCFSkJbJ2JWma8Bpp4d3QBlj34JXDw2DJR9UUYoN3w+WYZo7vy0t/wtD
+         4e/7ZhZeUVvVaAQFTGmS90nrGb6pi1ii5Iflt8kyT7anZI+ABYUeO8LtTpYQPorFRYgC
+         HKLgABbDqAhA2yCfpKpmpyjtFWI3tExyhQJkYZg8wULpcny8MwlGKJPgY8FB3I30n4Ri
+         WxaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722559747; x=1723164547;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6boaAZK96wQJExqhznQLyW1qetJ7xl5uU+NC93Vy5sY=;
+        b=UDITfTBA5Uz3Pgjro47Wt7WQbfM6A30k3vfJ1cSspxWEL2pRKV62smGpqcFYl3jjSn
+         x/PqZlBZ/S/e7Vnb1WHCxUguzSbRkEGH13u1LNwhQxEpdR8337MkCeCOGYCt+17Wg+Bm
+         EqV2PIQBC1lkym8+vyMF44ZrfE0nYZrO/7/AUMwHb1xLjiOrn9uMxwlEJhfZIJIYiWu9
+         oYPQ3bwfi34VkcG9Zbg9uHzB+umBeS+qpPqxBLrK/kQ1hzPHe4BCMfOuA32ELAwoZvRg
+         6dsc9R17QdBAxcg7nqMLRmOHUVg7PTr2KPdUhZdBMMh5PKJXT5kgv86DBJk5CtRTHtWp
+         RBsQ==
+X-Gm-Message-State: AOJu0YwRNfikleimMcD5QSXF6N2Qr1E3BQtT7Mf03NuX3+qi38b+W7gI
+	9Ilu4TOIyQAClvI8aIlFoq9Ob7F0jH6cULm6f8WEXdQVZ+GnUY+9c/O3A5w2e3QDtzVnEBeBI9D
+	fm9LwGwNTMVVtcJ6VoETYZP4SZCYORM3ABTqitYR4rryZk2sA46mS
+X-Google-Smtp-Source: AGHT+IHuV+Bggmy167S2YlmE/taQvUmpDIhG8rcXNPEDwSCLVGKTBunBzXhwwRcd/+LoukFgtInxqfkSemCIos1oI5I=
+X-Received: by 2002:a05:6512:3d10:b0:52e:7448:e137 with SMTP id
+ 2adb3069b0e04-530bb366526mr1070739e87.6.1722559746331; Thu, 01 Aug 2024
+ 17:49:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E31E6BCC-5066-11EF-B122-34EEED2EC81B-77302942!pb-smtp1.pobox.com
+References: <85b6b8a9-ee5f-42ab-bcbc-49976b30ef33@web.de> <077a178e-eb30-45ff-b653-a514bfd33077@web.de>
+ <da902de9-288e-4783-8b4b-a2a968d1e1f8@web.de> <CAO_smVh_2FEbTAqJDMZAKMsfTKrB=NH36G6jNmMTaEOtRaP2Pg@mail.gmail.com>
+ <51ec32ed-f2f1-4993-92e5-1acfcdbb7c79@web.de>
+In-Reply-To: <51ec32ed-f2f1-4993-92e5-1acfcdbb7c79@web.de>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 1 Aug 2024 17:48:50 -0700
+Message-ID: <CAO_smVi6hxYLYWPXautyHyYKV2eZitm3j0EFuSo7qbBAoGZvAw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] unit-tests: add if_test
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Andrew Morton <akpm@linux-foundation.org> writes:
-
-> hp2:/usr/src/mm> git quiltimport --series series
-> tools-separate-out-shared-radix-tree-components.patch
-> warning: tools/testing/radix-tree/generated/autoconf.h has type 100644, expected 100664
+On Thu, Aug 1, 2024 at 12:32=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
 >
+> Am 01.08.24 um 00:04 schrieb Kyle Lippincott:
+> >
+> > I'm still not wild about the name, and I'm still not convinced of the
+> > readability improvements. I still want to read `if_test(...)` as
+> > having a condition in the parenthesis. Tests "skipping everything"
+> > seems like an internal implementation detail that there's disagreement
+> > on whether to expose to the test author/reader or not; maybe we should
+> > redesign if we don't migrate to clar or some other test framework. Do
+> > we get significant benefits from a test function continuing to execute
+> > after the "skip everything" flag has been set?
 >
->
->
-> That patch has
->
-> diff --git a/tools/testing/radix-tree/generated/autoconf.h a/tools/testing/radix-tree/generated/autoconf.h
-> deleted file mode 100664
-> --- a/tools/testing/radix-tree/generated/autoconf.h
-> +++ /dev/null
-> @@ -1,2 +0,0 @@
-> -#include "bit-length.h"
-> -#define CONFIG_XARRAY_MULTI 1
+> The idea is that the unit test framework may allow to skip individual
+> tests in the future; see
+> https://lore.kernel.org/git/c2de7f4e-e5dc-4324-8238-1d06795a2107@gmail.co=
+m/
 
-So, the patch removes autoconf.h file from that directory.  The
-"extended header" part between "diff --git" and "--- a/..." has
-"deleted file mode 100664" and that is where the warning comes.
+I see. This functionality isn't currently available, but we may want
+it in the future. If that future ever happens, then we may be able to
+avoid some cleanup if we keep the setup the way it is, where
+`test__run_start` returns whether or not the test actually started.
+This future `--run` flag for the unit tests would be based on either
+(a) position in the file, like the integration tests, or (b) some
+substring of the description. Since the tests don't have a name,
+there's no ability for `--run` to operate based on that. Ok.
 
-I do not quite recall at which point "git quiltimport" calls "git
-apply", but the "has type 100644, expected 100664" does ring a bell.
+I still don't like the name, but I might be in the minority on this.
+Yes, there's a control structure in use to make this work with the
+syntax you desire, but unlike with `for_test`, there's many fewer edge
+cases added because of it: `break` and `continue` won't do anything
+with `if_test`. I suppose that we would still need to be concerned
+about the possibility of someone writing this:
 
-> after quiltimport:
->
-> hp2:/usr/src/mm> ls -l tools/testing/radix-tree/generated/autoconf.h
-> ls: cannot access 'tools/testing/radix-tree/generated/autoconf.h': No such file or directory
+if (condition)
+    if_test("...")
+        check_int(1, =3D=3D, 1);
+else
+    ...
 
-That is to be expected, if that patch was successfully applied, no?
-After all, the patch you quoted above seems to be a removal of
-autoconf.h from that path.
+I'm also still not personally sold on the value here.
+Single-expression tests can be written with `TEST(check_int(1, =3D=3D, 1),
+"equality")`, and having a single large function with all
+multi-statement tests in it is harder to follow, in my opinion, than
+the alternative where the tests are in a separate function. I can only
+really think of the case where the tests have inter-dependencies (ex:
+test 2 sets some state that test 5 relies on) for wanting them all in
+the same function, because then that dependency becomes a bit more
+obvious. However, getting that inter-test dependency to _not_ happen
+actually seems like a worthwhile goal (except for cases like strbuf,
+where if strbuf is inherently broken, we need to check that first and
+bail out). There's increased risk that someone will write a test like
+this (purely hypothetical example of some state being carried from one
+test to another; yes, you can accomplish the same terribleness with
+global variables, but more people have immediate negative reactions
+about globals):
 
-> I can't figure what I've done to make quiltimport (git-apply?) think that the file
-> had 100644 permissions.  Maybe the lack of an index line tripped it up.
+int cmd_main(int argc UNUSED, const char **argv UNUSED)
+{
+    char tmp_path[PATH_MAX];
+    if_test("alpha") {
+        /* perform basic functionality checks, like strbuf does */
+    }
+    if_test("beta") {
+        /* or some other "expensive" initialization we don't want to
+do if everything is broken */
+        sprintf("/tmp/tmp.%d", rand());
+        do_something(tmp_path, ...);
+    }
+    if_test("gamma") {
+        /*
+         * if beta didn't run, or if tests get reordered such that
+gamma executes before beta,
+         * things are going to go very poorly here
+        */
+        do_something_else(tmp_path, ...);
+    }
+    return tests_done();
+}
 
-You said "That patch has", and I take it to mean that the input
-material before "git quiltimport" touched it already had the
-extended header that records the removal of a file whose mode is
-100664?  
-
-And lack of the index line is probably a red herring.  EVen if there
-were an index line, it would just have recorded the two object names
-(the blob object name of the original contents before removal,
-followed by a double-dot "..", followed by all-0 to signal removal).
-We do not read mode bits out of that line.
-
-> (btw, "has type" should be "has permissions" in that message, no?)
-
-If leading prefix 100 did not exist, yes, permissions would be more
-appropriate, but if the prefix changed from 100644 to say 120000,
-that would be a type change from plain blob to a symlink.  So "type"
-is not quite wrong, either.
+That said, I'm still not opposed enough to the idea to veto (plus I
+don't have anywhere near that kind of power, and shouldn't :)). I just
+don't think I'd ever use it.
