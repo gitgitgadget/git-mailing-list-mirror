@@ -1,63 +1,63 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF61B4D8D1
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 20:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234C449634
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 20:58:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722632293; cv=none; b=lRDBrqRr7X8ScgcFApEO+Rrn9TevZxta9jJgn/MOTFbmNafC9ZDZkkqBIYGScagYHxozjIyc6g0l+KC2VwFcqGt49qN8yBi6mHn70NsDLyvQMv/ZJ45JlR+9YE4ZX3d20NriAWtCAmra14Rg982UtA2hBDmGqLcbQNgLoPzHtpM=
+	t=1722632294; cv=none; b=a8BIXiGU2Sj3xB3xv5wkGMlVANGWT3RT6+9hxPbbAk7WbZwTfLlwFvKfIlo3dy56qwYu9FUqjGTloDKxHVGgx3MdLXSIHL4OlSc/GvgB6ODTbCXITT8k1QQYhTeniTMDOuW9ppN1v4MAlJayRuCxulUzOE2kuaBiE4aeNIyBu24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722632293; c=relaxed/simple;
-	bh=R9C9JOqxtsAXJmX1E1KNE9t9idwSw8TxOfDQjFbVCy0=;
+	s=arc-20240116; t=1722632294; c=relaxed/simple;
+	bh=LCQfj3yvljHS4ZQEAU/Dd+Azf/aRhLAvu6JOZ0jt9GI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mg6FQ903SkgG2vKKgli1aOC/Xm0tpbkVxXYBnU3o2cyn3Vtc7A0Ot3qDYSY6hlnd5aa8N6b5+EiRT++BlciDGP+wr8CP46LbmfMSsqG22bV9LMArsuRQOLxmledknnF1WoeqvYKucGuznlUx5RL+Qf7WHB2DOEeTTH2coy70LiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yd9df2Xp; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version:To:Cc; b=h7b2inPTtYFWcVxqLWlCOSj8cZbtCCXjN1M5sDFhQUQU/xBn7mjle262mDVOlgn79cM7LCdtSz3diVHYm8CWUf7oqkfUwBnKUhPJ7yNaZBdmXHT1mDRDUNRbi84aFH+13kU0kigbzu2ckXR+j3JRGl2a9f3EQuJHog4TH46oCec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W8pMHjSC; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yd9df2Xp"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-368663d7f80so4314990f8f.3
-        for <git@vger.kernel.org>; Fri, 02 Aug 2024 13:58:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8pMHjSC"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-368313809a4so2124605f8f.0
+        for <git@vger.kernel.org>; Fri, 02 Aug 2024 13:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722632290; x=1723237090; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722632291; x=1723237091; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=frlPs7B5IIEUAoWJSbJI83ThdVbBlcNMBDICca+av6w=;
-        b=Yd9df2XpON7csbD4TBXo/Uuifes6C6GDBIuFKXLRR7FEKwbnFEyDrUadLMwsa/wg1M
-         v31GESXpG46Meg+Ai+w1rzzqVLtquLx92IZJamFbJ65w6OgQjTKo3ZbTuLakpM4fPt6B
-         Dx/BbOwljJGBCOByw4jyXeBzyyt/hj+6RdalgS38mgzZMu58lUycOKQntLUv9N0ILLOE
-         dqP2PSJkMqASeGs4PBuP02FDBFo2DBu1Hgs5JFMe3I7Ag1omwRFsNWorGRKJj5YNCBJM
-         i2c9PHr+7Xg9IaiEFA0ochYx7uBHaBVRlEHXxLsvHUl1YhmkKusPp8HAC8q3gP/NtTSB
-         08Fw==
+        bh=6q9jWaEEVSHSpUVon8iuemQjMxj0VGUTacBAHshjoh0=;
+        b=W8pMHjSCxanWFjpXji1RuohV+JMFIv6lf9GaONnn4dIy8QhfUlW+NasSMXu2jbJi49
+         IjSk1qxhWnZELS2KOYu0hLFFeUtaV5ZELEghgdc34Bf0zlZdbTxib4OJUgfzJNIaS7Sx
+         iKdVhJMn0M0YeHLiGY3mvOe8Ys9wgCjZbXwOzsNpttSUV5OfzFOCegWYvoifzQNX9Gsb
+         c7vUJ25tOlgxtcdZbqoSaHD+CK6Ealp3DLV3nHCcVZC4NYt/ienMZFADhcRkHq8HZJF2
+         twFmB72uBHaQENd5BmyE5wzBUkpH3aKzLt4WW4RimfbtWnvQ1IDg+Zf7CmEnXF78/UfG
+         xeuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722632290; x=1723237090;
+        d=1e100.net; s=20230601; t=1722632291; x=1723237091;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=frlPs7B5IIEUAoWJSbJI83ThdVbBlcNMBDICca+av6w=;
-        b=slXxmL48YlBPQrPSExpC3CcVW6HMbTlgwrGecb0aLwt/Q0bzRNz+tBjj+PmRpi4d85
-         l0CXp1oEN+MMyThWg4O5qnayGk3EjbjnNhaTpG/fV8QhsFDOzAar0jyrlHVIMWBQYtGH
-         gUz9yih/xU+DMb8JSisAK7SHU9LH56sS3LpvFMcpYUuBuUw8Pa75Mlic4hoDwE7sg32U
-         JeFtRC1QTkpqRYt6GdRw+22ISk6wtY5d7SYqJeGkhPndP0B8+fsDDGZ8DC+aovMzHLjv
-         uXNjRtXYXfwlYebfww4Y4XpM7LRP4/Vbw3O3Zp0ZQNhqt7xvobBrn2hKe2sQmwqQmE8G
-         PrPg==
-X-Gm-Message-State: AOJu0Yx+5Hqhzpg0zJUkLqDIWRO4Tn3DqW5RN8q0t1o4cnC97aBOZrh2
-	P80QKrIVLKTGeWn4DR3/88vcJHXAVe9AsdsHvRVPKbsd7JGOiFDlaEQYVw==
-X-Google-Smtp-Source: AGHT+IGKPpfC+DVjWtzF+dPu0HNGP2cTo+7X8SFy6PlIKaOESXPm1lHgdhYkeYhriBxlp7EwHmU3FA==
-X-Received: by 2002:a05:6000:1e97:b0:368:74c0:6721 with SMTP id ffacd0b85a97d-36bbc14a6edmr3037470f8f.38.1722632289785;
-        Fri, 02 Aug 2024 13:58:09 -0700 (PDT)
+        bh=6q9jWaEEVSHSpUVon8iuemQjMxj0VGUTacBAHshjoh0=;
+        b=XVvW/N6aSz2g4ndMEm/rgvI1z+i/A6ukXTZLC8DhZpR3sciYthd5db7wuBM+F313uD
+         v8Rht1bg4RaHqC9cWB0N3Zlbi7JqoFZ5J4923irWur7b0dX0oX1s7TRzcFNlF13eOY3c
+         ucGG/YNs3RTbYJM/3/oTUIQI5eL26gkoMqTA6B/nwnUytPawW7DD4R+dT/HA8+PJaaZ2
+         nUKL7Uw1bz++ShUYx2gI5isGO5M0Bthv6Z9Kv2nqIm+wyxx8pM43Hhpl4AmU19SCZeKE
+         yNJPCJYYY+S3YkGKXzVfSwQsOKVF/xPbjgXtIU0LM/10pGjXuGyKLtIo85iNl0hbK4xO
+         NtvQ==
+X-Gm-Message-State: AOJu0YyvItliTA6ICyLi4jhA8LsROy9Y5BK6100tWsn4I27oNmTJ0y51
+	XGoGZ3LRXeCDb/jALJBf2R/QdsKMO/bWQUQ47cSXruC2mHGM7/Erupq1GA==
+X-Google-Smtp-Source: AGHT+IE7B0zk1DewGroAOOOcqIZOFbEGXS+3ASahFjsVbNDfSEQke++IYDwR56nQfhB2GDF2dGTplQ==
+X-Received: by 2002:a5d:64ab:0:b0:366:ea4a:17ec with SMTP id ffacd0b85a97d-36bb358466fmr5882385f8f.2.1722632291095;
+        Fri, 02 Aug 2024 13:58:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd06d03fsm2744406f8f.91.2024.08.02.13.58.09
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6e329b6sm44193225e9.20.2024.08.02.13.58.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 13:58:09 -0700 (PDT)
-Message-Id: <4dbd0bec40a0f9fd715e07a56bc6f12c4b29a83c.1722632287.git.gitgitgadget@gmail.com>
+        Fri, 02 Aug 2024 13:58:10 -0700 (PDT)
+Message-Id: <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
 References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
 	<pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
 From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 Aug 2024 20:58:05 +0000
-Subject: [PATCH v2 1/3] set errno=0 before strtoX calls
+Date: Fri, 02 Aug 2024 20:58:06 +0000
+Subject: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,82 +74,36 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Kyle Lippincott <spectral@google.com>
 
-To detect conversion failure after calls to functions like `strtod`, one
-can check `errno == ERANGE`. These functions are not guaranteed to set
-`errno` to `0` on successful conversion, however. Manual manipulation of
-`errno` can likely be avoided by checking that the output pointer
-differs from the input pointer, but that's not how other locations, such
-as parse.c:139, handle this issue; they set errno to 0 prior to
-executing the function.
+If the loop executes more than once due to cwd being longer than 128
+bytes, then `errno = ERANGE` might persist outside of this function.
+This technically shouldn't be a problem, as all locations where the
+value in `errno` is tested should either (a) call a function that's
+guaranteed to set `errno` to 0 on success, or (b) set `errno` to 0 prior
+to calling the function that only conditionally sets errno, such as the
+`strtod` function. In the case of functions in category (b), it's easy
+to forget to do that.
 
-For every place I could find a strtoX function with an ERANGE check
-following it, set `errno = 0;` prior to executing the conversion
-function.
+Set `errno = 0;` prior to exiting from `strbuf_getcwd` successfully.
+This matches the behavior in functions like `run_transaction_hook`
+(refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
 
 Signed-off-by: Kyle Lippincott <spectral@google.com>
 ---
- builtin/get-tar-commit-id.c | 1 +
- ref-filter.c                | 1 +
- t/helper/test-json-writer.c | 2 ++
- t/helper/test-trace2.c      | 1 +
- 4 files changed, 5 insertions(+)
+ strbuf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
-index 66a7389f9f4..7195a072edc 100644
---- a/builtin/get-tar-commit-id.c
-+++ b/builtin/get-tar-commit-id.c
-@@ -35,6 +35,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv UNUSED, const char *prefix
- 	if (header->typeflag[0] != TYPEFLAG_GLOBAL_HEADER)
- 		return 1;
+diff --git a/strbuf.c b/strbuf.c
+index 3d2189a7f64..b94ef040ab0 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -601,6 +601,7 @@ int strbuf_getcwd(struct strbuf *sb)
+ 		strbuf_grow(sb, guessed_len);
+ 		if (getcwd(sb->buf, sb->alloc)) {
+ 			strbuf_setlen(sb, strlen(sb->buf));
++			errno = 0;
+ 			return 0;
+ 		}
  
-+	errno = 0;
- 	len = strtol(content, &end, 10);
- 	if (errno == ERANGE || end == content || len < 0)
- 		return 1;
-diff --git a/ref-filter.c b/ref-filter.c
-index 8c5e673fc0a..54880a2497a 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1628,6 +1628,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
- 	timestamp = parse_timestamp(eoemail + 2, &zone, 10);
- 	if (timestamp == TIME_MAX)
- 		goto bad;
-+	errno = 0;
- 	tz = strtol(zone, NULL, 10);
- 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
- 		goto bad;
-diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
-index ed52eb76bfc..a288069b04c 100644
---- a/t/helper/test-json-writer.c
-+++ b/t/helper/test-json-writer.c
-@@ -415,6 +415,7 @@ static void get_i(struct line *line, intmax_t *s_in)
- 
- 	get_s(line, &s);
- 
-+	errno = 0;
- 	*s_in = strtol(s, &endptr, 10);
- 	if (*endptr || errno == ERANGE)
- 		die("line[%d]: invalid integer value", line->nr);
-@@ -427,6 +428,7 @@ static void get_d(struct line *line, double *s_in)
- 
- 	get_s(line, &s);
- 
-+	errno = 0;
- 	*s_in = strtod(s, &endptr);
- 	if (*endptr || errno == ERANGE)
- 		die("line[%d]: invalid float value", line->nr);
-diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-index cd955ec63e9..c588c273ce7 100644
---- a/t/helper/test-trace2.c
-+++ b/t/helper/test-trace2.c
-@@ -26,6 +26,7 @@ static int get_i(int *p_value, const char *data)
- 	if (!data || !*data)
- 		return MyError;
- 
-+	errno = 0;
- 	*p_value = strtol(data, &endptr, 10);
- 	if (*endptr || errno == ERANGE)
- 		return MyError;
 -- 
 gitgitgadget
 
