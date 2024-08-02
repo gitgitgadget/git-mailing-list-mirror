@@ -1,52 +1,58 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C16E1ABEB9
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 21:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA3F1ABEB9
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 21:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722632751; cv=none; b=Yt0xrFuMCco1a+Pi4FCTO5gK3sXqMziejnwteJ5ffJQBlyeUEc2pu6WpNTlZdC3jcBqaozZDxp/XZh2GxBFgf7gRulWoMIAxA0Dorr7Zt7e2njkPUP6ea+dcu8LVFkhO2R+a6VhCHaBLYIr/cSelENXI+6XwHVkIY8dLrgJq8sA=
+	t=1722633228; cv=none; b=XRjbcpe+PGTSs7UgZOEJ29ZCTiMxzlt2hTnSuIN5CVk9JIVJ1FjZv5uH6+w89pUKPafSHuIIxu/CGwi53MQ5zAIQbUg6Jz3fl5fEUdKpDYaQO/7H1U6Z3FqOYEpezJYqTk2rekl/R+4KHkiPBe7xdYv9WrUevj4V5iMB2m/5Pec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722632751; c=relaxed/simple;
-	bh=Y7UV8f+keHq/tZzc3z+/0Ul3ljBtTby+a4W68EFf6n4=;
+	s=arc-20240116; t=1722633228; c=relaxed/simple;
+	bh=tdygIN23cciKKVv0OgFCE/cHY5rH0SEGmZ528TsQ+g0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LcUZHHIhdm5Avcim+HfzBc3DYx3gfTHzGjD0PJGKpFrsDCJub3zAEOcOB1umR8SShw80lH5lNJnUlMAWj/U2c1qS0FVBxzXjX3Geph5yc7Y6c7JzLehtid5OFCa0FrH3Oxj0JssfjsEno1giwscQWiRQR0h5Gm/UDoPrg1zLrBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gALhleRb; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=uXdvqw64zW5/hP4q2LIStiLcYhZn+LJyE5E1US62TPO8u0vjX99NUav3gHwr1dZ4JwK7+nThmra0clyybJ5+L4dxw3AOlsAMwl0fnXXSuv2nZt1NJO21p4zfGyoyfDMSJDkS4RKPXk12sChofM5I+R7T8ERCMe8yKB7X6x17RbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZWEgSBkV; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gALhleRb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZWEgSBkV"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id ACCFD1C771;
-	Fri,  2 Aug 2024 17:05:49 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E13B1C954;
+	Fri,  2 Aug 2024 17:13:46 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Y7UV8f+keHq/tZzc3z+/0Ul3ljBtTby+a4W68E
-	Ff6n4=; b=gALhleRbfLP57CjIbqVbvGjAG5xGMgZai4pnQFBjrNCtcNZ2dv2bNx
-	Vyv+jB1oTpiJaYUHL1xwtPr2JpWMWSNkLr7uDWIW/MaE3bO7R0IoIG5UlSu8G3u4
-	4NGYiqUbECMo1y7W3+9N0hcucxeZrifqqFVzsDBmif9rRKJsiGhCA=
+	:content-type:content-transfer-encoding; s=sasl; bh=tdygIN23cciK
+	KVv0OgFCE/cHY5rH0SEGmZ528TsQ+g0=; b=ZWEgSBkVMH3KBTfB3UaqFhc+9SR+
+	cYiO/lvEPoO/DHOGImxJBuoPuYw9KZE8n3SWFHQSijMOxr7lEvOpEIHiX7ludQxa
+	0aBDWFt1ucFjg7QS3kyjf1brcGChsqq7ZafE60iTk/5N205mIm20HW54hocYWKNj
+	DdSqIXgzdDXQOyA=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A5D401C770;
-	Fri,  2 Aug 2024 17:05:49 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 768EF1C953;
+	Fri,  2 Aug 2024 17:13:46 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 99F6E1C76F;
-	Fri,  2 Aug 2024 17:05:45 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C0151C952;
+	Fri,  2 Aug 2024 17:13:42 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] reftable/stack: test compaction with already-locked
- tables
-In-Reply-To: <123fb9d80eecbd3690280991e0415cbb718b7202.1722435214.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 31 Jul 2024 16:14:57 +0200")
-References: <cover.1722435214.git.ps@pks.im>
-	<123fb9d80eecbd3690280991e0415cbb718b7202.1722435214.git.ps@pks.im>
-Date: Fri, 02 Aug 2024 14:05:43 -0700
-Message-ID: <xmqqle1ebpp4.fsf@gitster.g>
+To: Ryan Hendrickson <ryan.hendrickson@alum.mit.edu>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5] http: do not ignore proxy path
+In-Reply-To: <30733887-33d8-4049-7dc9-8bc9d0b106da@alum.mit.edu> (Ryan
+	Hendrickson's message of "Fri, 2 Aug 2024 15:39:48 -0400 (EDT)")
+References: <pull.1767.v4.git.1722489776279.gitgitgadget@gmail.com>
+	<pull.1767.v5.git.1722576007398.gitgitgadget@gmail.com>
+	<xmqq7ccygbx6.fsf@gitster.g>
+	<2ba77de5-f103-c2f0-c009-71700c8a020d@alum.mit.edu>
+	<xmqqv80idf52.fsf@gitster.g>
+	<a0b916a4-8941-4c06-263d-0ae92dcaf29e@alum.mit.edu>
+	<xmqqh6c2d8qt.fsf@gitster.g>
+	<30733887-33d8-4049-7dc9-8bc9d0b106da@alum.mit.edu>
+Date: Fri, 02 Aug 2024 14:13:40 -0700
+Message-ID: <xmqqfrrmbpbv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,90 +60,38 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- FC5502B6-5112-11EF-B3AB-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+ 1892C0A2-5114-11EF-801F-9625FCCAB05B-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Ryan Hendrickson <ryan.hendrickson@alum.mit.edu> writes:
 
-> +static void test_reftable_stack_auto_compaction_with_locked_tables(void)
-> +{
-> +	struct reftable_write_options opts = {
-> +		.disable_auto_compact = 1,
-> +	};
-> +	struct reftable_stack *st = NULL;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	char *dir = get_tmp_dir(__LINE__);
-> +	int err;
-> +
-> +	err = reftable_new_stack(&st, dir, &opts);
-> +	EXPECT_ERR(err);
-> +
-> +	for (size_t i = 0; i < 5; i++) {
-> +		struct reftable_ref_record ref = {
-> +			.update_index = reftable_stack_next_update_index(st),
-> +			.value_type = REFTABLE_REF_VAL1,
-> +			.value.val1 = { i },
-> +		};
+> At 2024-08-02 12:28-0700, Junio C Hamano <gitster@pobox.com> sent:
+>
+>>>>> Is this blocking feedback? This strikes me as speculative
+>>>>> over-engineering
+>>>>
+>>>> No, it is loosening a pattern that is overly tight and as a side
+>>>> effect shortening the line to more readable length ;-).
+>>>
+>>> Blocking or not?
+>>
+>> If we are updating anyway, that question is irrelevant, no?  This
+>> version may hit 'seen' but until the next version comes it will not
+>> advance to 'next'.
+>
+> I can't figure out what you mean by this so I am going to proceed as
+> if you had simply said =E2=80=98non-blocking=E2=80=99.
 
-As val1 is an array of unsigned char, i cannot reasonably go beyond
-255, but that is perfectly fine.  We are preparing 5 original tables
-to compact, and that might grow to 17 tables over time, but 255 ought
-to be more than enough.
+It does not make much sense to ask if a suggestion is "blocking" or
+"non-blocking".  If you respond with a reasonable explanation why
+you do not want to take a suggestion, I may (or may not) say that
+your reasoning makes sense.  IOW, making me say "it is blocking"
+means you want to me to say that I won't listen to you no matter
+what you say.  That is rarely be the case.
 
-> +
-> +		strbuf_reset(&buf);
-> +		strbuf_addf(&buf, "refs/heads/branch-%04" PRIuMAX, (uintmax_t) i);
+In this case, I do not think it makes sense to insist with -Fx that
+the error message has the exact message.  And I do not think your
+"strikes me as" qualifies as a "reasonable explanation".
 
-Yet we are prepared to handle i that is beyond any usual integer ;-)
-
-I am tempted to suggest using the bog-standard int for everything
-for the sake of consistency within this loop, but it does not matter
-all that much in a standalone test program ;-)
-
-> +		ref.refname = buf.buf;
-> +
-> +		err = reftable_stack_add(st, &write_test_ref, &ref);
-> +		EXPECT_ERR(err);
-> +	}
-> +	EXPECT(st->merged->stack_len == 5);
-> +
-> +	/*
-> +	 * Given that all tables we have written should be roughly the same
-> +	 * size, we expect that auto-compaction will want to compact all of the
-> +	 * tables. Locking any of the tables will keep it from doing so.
-> +	 */
-> +	strbuf_reset(&buf);
-> +	strbuf_addf(&buf, "%s/%s.lock", dir, st->readers[2]->name);
-> +	write_file_buf(buf.buf, "", 0);
-
-OK.  [2] is just a random number pulled out of 0..5?
-
-> +static void test_reftable_stack_compaction_with_locked_tables(void)
-> +{
-> +	struct reftable_write_options opts = {
-> +		.disable_auto_compact = 1,
-> +	};
-> +	struct reftable_stack *st = NULL;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	char *dir = get_tmp_dir(__LINE__);
-> +	int err;
-> +
-> +	err = reftable_new_stack(&st, dir, &opts);
-> +	EXPECT_ERR(err);
-> +
-> +	for (size_t i = 0; i < 3; i++) {
-> +...
-> +	}
-> +	EXPECT(st->merged->stack_len == 3);
-
-Hmph, this somehow looks familiar.  The only difference is how many
-tables are compacted with which one locked, and whether it is
-compact_all() or auto_compact() that triggers the compaction
-behaviour, right?
-
-I wonder if we want to factor out the commonality into a shared
-function, or it is too much trouble only for two duplicates and we
-can worry about it when we were about to add the third one?
-
-Thanks.
