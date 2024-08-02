@@ -1,190 +1,128 @@
-Received: from mr85p00im-hyfv06011401.me.com (mr85p00im-hyfv06011401.me.com [17.58.23.191])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3997256D
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 09:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.23.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD351DC47C
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 11:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722592005; cv=none; b=f9gVlgXF7AYdGxjlO8GL/vfyLLmb2LgEmJ4Y8jbq3UxtkywbgkHm7YzrUwMhsPe+DR0rXuut33bdFdjNJWxtr7/MpOEzN0jM2tymu1zBMK01r9mCBEa1IIVW3PXHXgMV25UJheDzHxuXSyWRh58gbpy45eXVMsnVbp3R7EpukyM=
+	t=1722598219; cv=none; b=Qpy/i2lo4aLlbi/8VfjbA/OVpk9KMw+b8K4wNLpr7rRWs81pVejA7Aj1HJmT2iMD3mtrWcYqMZXt/gI61WCJO+9xUrDk4b4xrlvkGbhg4fIOnD0yuUXdRf463EeQvaCcKwCPeBbRx+ygSZihKvsI/01dZdulUaEJr6XvebP0YAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722592005; c=relaxed/simple;
-	bh=tWV5FakjZN3QH4XXRfOd+JcI1b5FrCdIB5MPwtXzXO0=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=G4zqC6hawbx8tgBdQiyXigyEVOAI5DCiTyO44+wv7SchmprckpGw9eFTwbJFmGQT7/PA33k/O9mjw/w1MFslcHuwV08fqWB6QwXRWGpx4y1hgCQScQXfGVt7B1Fr/lMxLriU1yY7CS5N9uTTbiIk4yZKqPPNvVI4RcyQMHmBByU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com; spf=pass smtp.mailfrom=mac.com; dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b=Fqk0IdBe; arc=none smtp.client-ip=17.58.23.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mac.com
+	s=arc-20240116; t=1722598219; c=relaxed/simple;
+	bh=NvDMqULdHon7dCrQtf4EhfHDM6KQy3K+cYbnleoeVUM=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=W/S9uQQheieJPWN7jLi9Gn8cVWl+2njxBq8cxVujfFr41nSNrVXTNVGdWII9bIRgfRolkTzaTsOUwaa14lyVGWwTlNRi+e8ZqhcCX7kvq4dUuwiVkU+wQ5DAUpAt6WfJiK8plqHYWMxHP0D2dTOKzp+hCdEsVY/iEPizjY5PF0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mouldwarp.com; spf=pass smtp.mailfrom=mouldwarp.com; dkim=pass (2048-bit key) header.d=mouldwarp-com.20230601.gappssmtp.com header.i=@mouldwarp-com.20230601.gappssmtp.com header.b=TUQKfSIE; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mouldwarp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mouldwarp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b="Fqk0IdBe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
-	t=1722592003; bh=y9tiN7t7wgbVzsYpWhsjQuP2GpKBKuA6KPiYs7ks9VE=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
-	b=Fqk0IdBeUQrWsSorEbQzyLUsWHHiehgogaX8YFaUqKptoB1XpBRUdLcv2EBTJN91P
-	 zagRY2mcCRGHSEgGjv3xBeMwZg7JBX/hmphis/jwWwGMkE76wXQ3eUY8L0aigqrC0l
-	 DKh5nKEBN99HzFd/6+LnfgTul2kAHr/KMfJ/91moUiWKpz44wowUzwx/MSc1cUusTs
-	 MUQVpYdTFN8um9gBrn/m4cmS8fruk2t0QnkFRh1NFNf0JoQuQBBTDCYXoPB/RQwL4o
-	 b4v1zzBLfhFm7EziWJrv4buiLVMAJUghKqIubU/7rfdo9whH+6+1Hh7IYOuQ/2o8Vo
-	 fk4dLtPe01qjA==
-Received: from smtpclient.apple (mr38p00im-dlb-asmtp-mailmevip.me.com [17.57.152.18])
-	by mr85p00im-hyfv06011401.me.com (Postfix) with ESMTPSA id 9C23A357AE1C
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 09:46:42 +0000 (UTC)
-From: the.tester@mac.com
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
+	dkim=pass (2048-bit key) header.d=mouldwarp-com.20230601.gappssmtp.com header.i=@mouldwarp-com.20230601.gappssmtp.com header.b="TUQKfSIE"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-368313809a4so1814882f8f.0
+        for <git@vger.kernel.org>; Fri, 02 Aug 2024 04:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mouldwarp-com.20230601.gappssmtp.com; s=20230601; t=1722598215; x=1723203015; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NvDMqULdHon7dCrQtf4EhfHDM6KQy3K+cYbnleoeVUM=;
+        b=TUQKfSIEitPDc2e/731cG7r8JIuta41RFkhfesELw6L5i9I/qG/Ai4Pc0vQL+xWhYi
+         C74+UkqCJMMa/tk99sGbqkOgLOZboPZtJN5MkkOOShEzaE020kfwhFtyYiWwt8eFQCud
+         vgCcXtH3CijG5wjDRyK89/FmGf3GBE0GOnwAsnUjcI31b3R9gPeBDRL2AJeG6wGfx3OD
+         yGZfMEoFMUMf2NJANi5oQZYZmJWAe7lstseJSv5qwfdwW/dpnqwKw649yeAl8KhO3WlB
+         jYCxaVzR2WrTNavDkvURn8cNo/pOx787ybuVy0QTPWJ1yezaf0cN6l1ldn0t6U5/2h4t
+         Rx6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722598215; x=1723203015;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NvDMqULdHon7dCrQtf4EhfHDM6KQy3K+cYbnleoeVUM=;
+        b=qD7cVq/8y9eQCbgu4LRrAt5ABm93Oyjc3W8wXwPwv9t/n35cM0qWRqHP8rjCeFBriW
+         AgBfcA4FVUEUu3ND3ri1rMbSOY2HTayc43QTkK0Y3t/hZ9E5RPuTiPjBHvFNQkvgtdmU
+         SL9P4LNkE/JHuLwagy38kPgC5FkvK0tSSDeChKLtKkhu7yuWmUEjRLQHgFF9zFNheU8D
+         2uc+vT87IFQ5H40Y3kr3i6l0JK699kjeYVdpv4+YAJlI29eUEscrc8ZsmRAOlHosht1Q
+         0lH3TBSI0nUjM9o2KNXm6JD3UPnaX3H6BrJtm5W6WC9LNO+v/VSDR07GsSmlYzLsTIzz
+         +TOg==
+X-Gm-Message-State: AOJu0YwPDQEzx0+hOLhDGO5f3AneIEC65Pry+jInyQQEAHqoNimNH27A
+	ewYPFtmc5snFhSsH2PI99+Ba9SJNceS5i4bFQlLQbKIU3Fncz0nVStDFSpls2zBRe4wuxZaF+Z8
+	=
+X-Google-Smtp-Source: AGHT+IGaizxm/JjwKA+gX+vsPd8Y9XPAO5UeD2qL4Xr+L+F2Rnnq5jOE9M7y6dTqTgYJvYbFzewwvA==
+X-Received: by 2002:a5d:4844:0:b0:36b:b08f:64b3 with SMTP id ffacd0b85a97d-36bb35d2828mr3481897f8f.20.1722598214591;
+        Fri, 02 Aug 2024 04:30:14 -0700 (PDT)
+Received: from smtpclient.apple ([2a0d:6fc2:5f40:be00:588c:c93d:e795:99f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282bb6405csm91480115e9.34.2024.08.02.04.30.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Aug 2024 04:30:13 -0700 (PDT)
+From: Costa Shapiro <costa@mouldwarp.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Date and time processing issue
-Message-Id: <B896574C-A150-45AE-A636-ADA9ADF3255A@mac.com>
-Date: Fri, 2 Aug 2024 11:46:30 +0200
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.8\))
+Subject: git "security" overengineering (reaction to safe.directory)
+Message-Id: <DDA0EFF6-64F3-48A4-A99F-F0148FC0BCCE@mouldwarp.com>
+Date: Fri, 2 Aug 2024 14:30:12 +0300
 To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3776.700.51)
-X-Proofpoint-ORIG-GUID: Jl4y2TCblbxojfhNXwVPg7fCmBl86UPq
-X-Proofpoint-GUID: Jl4y2TCblbxojfhNXwVPg7fCmBl86UPq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-02_06,2024-08-01_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 phishscore=0 spamscore=0
- mlxscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 clxscore=1011
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2408020065
+X-Mailer: Apple Mail (2.3696.120.41.1.8)
 
+I think the breaking feature of `safe.directory` config -- within the =
+basic CLI
+is a dubious development decision.
 
---Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+The thing is, `git` is fine as it's been for the last few years, and it =
+doesn't
+really need any features, especially breaking ones.
+This is, of course, boring for its current maintainers, dealing with =
+just
+the bugs and optimisations, I can totally relate to that, and I'm =
+forever
+grateful for their selfless work, still, sometimes, enhancement is not
+the answer -- but instead, modularisation is.
 
-Hi all,
+So, I think this *breaking* "security" feature is a bit too much now =
+that I've
+stumbled upon it for the second time recently -- this time, within a =
+"ruby-git"
+Ruby gem suddenly failing on me (as I'm sure there are many =
+`git`-CLI-based
+component's users being confused and unhappy as I write this) -- =
+following years
+of being a happy user (and an actual promoter of healthy git-based dev =
+processes,
+see https://medium.com/@costa/git-decentralized-a25f00fd2955 for =
+instance)
+and I have to speak up.
 
-Context:=20
+I know a thing or two about security, and one of those things that I =
+know is that
+you cannot improve security for ignorant people, unless you
+either (a) really restrict their actions, or (b) properly educate them.
 
-I=E2=80=99m preparing an example repo to be used as an example and for =
-exercises for a tutorial I=E2=80=99m preparing set in time travel story, =
-which should explain why I=E2=80=99m doing what I=E2=80=99m doing).
+The reasoning I've seen for this feature that I've seen talks about =
+users being
+too smart about their shell prompts and being too stupid about going =
+into some
+maliciously crafted git repos' working directories. Well, this looks =
+like a very
+specific (even exotic) case to me -- for bringing a whole new aspect =
+into
+the core git functionality -- especially if you consider the vast (and I =
+mean
+*vast*) majority of git usages. But even if we take this very seriously,
+and decide that this should go into the very basic git functionality
+-- instead of, you know, easily wrapping `git` within an interface =
+component,
+CLI or not -- with this aspect taken care of; even so, we won't help
+the ignorant users, who would just google the "dubious ownership" error, =
+arrive
+at the common advice of `git config --global --add safe.directory '*'` =
+-- from
+the search results page, not even going into the source info web page -- =
+and go
+back to their "insecure" comfort zone.
 
-For this I am using the environement variable 'GIT_COMMITTER_DATE' and =
-the '=E2=80=94date=E2=80=99 option to set these time stamps.
-
-
-Observartion:=20
-
-When attempting to commit changes in some cases the following error is =
-reported:
-
-
-> GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Begs =
-sharable holistic policy" --date "10 Apr 02:42:06 1970 +0100"
-
-fatal: invalid date format: 31 Dec 23:59:60 1969 +0100
-
-
-
-A second later, thigs work as I expect:
-
- > GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Begs =
-sharable holistic policy" --date "10 Apr 02:42:06 1970 +0100"
-
-[main 4fc6ea0] Begs sharable holistic policy
-
-
-How to reproduce:
-
-$ mkdir tmp
-$ cd tmp
-$ git init
-Initialized empty Git repository in =E2=80=A6/tmp/.git/
-$ echo "Some content" > non-empty-file.txt
-$ git add .
-$ GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Demo =
-commit" --date "12 Dec 23:59:60 1969 +0100"
-fatal: invalid date format: 31 Dec 23:59:60 1969 +0100
-$ GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Demo =
-commit" --date "01 Jan 00:00:00 1970 +0100"
-[main (root-commit) a5c7d72] Demo commit
- Date: Thu Jan 1 00:00:00 1970 +0000
- 1 file changed, 1 insertion(+)
- create mode 100644 non-empty-file.txt
-
-The same lines from a short shell script:
-
-$ cat reproduction_sctipt.sh
-mkdir tmp
-cd tmp
-git init
-echo "Some content" > non-empty-file.txt
-git add .
-GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Demo =
-commit" --date "12 Dec 23:59:60 1969 +0100"
-GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Demo =
-commit" --date "01 Jan 00:00:00 1970 +0100"
-
-
-System & version info:
-
-Git version: 2.45.2
-OS: macOS Sonoma 14.6 x86_64
-Shell: zsh 5.9
-
-
-(My) Interpretation:
-
-To me, the error message is at least misleading.=20
-It also seem to be hidin the underlying issue that git (commit) =
-doesn=E2=80=99t accept time stamps before the epoch.
-
-Given that 1970-01-01 00:00:00 seems to be the lower boundary, I =
-expected some time in 2038-01-19 to be the corresponding upper boundary.
-However the same error message is given when the date is >=3D 2100-01-01 =
-00:00:00.
-
-Personally, I think that at least the error message is misleading. =
-(I=E2=80=99d say it=E2=80=99s a bug, if one that=E2=80=99s not =
-particularly likely to run into).
-I expect the error message to point to the real problem, which is not a =
-wrong date format, but the value the timestamp represents.
-
-I=E2=80=99d also expect that correctly formatted time stamps containing =
-valid date & time information should be processed correctly.=20
-(at least for dates after Friday 15 October 1582 (as the day before was =
-Thursday 4 October 1582)
-
-
-Am I doing it wrong? Is it a bug? Am I expecting too much?
-Can I do anything to make a wider date range available?
-
-Best regards
-
-Stephan
-
-
---Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEImVTW2kalIKnTbGpN5OCOCEvsmQFAmasqvYACgkQN5OCOCEv
-smQE8BAAuOH8brXJkVWiusfO/jkFG7OFAbEFY9N7sxaBf+/3NpiCCh9Gb0+nzENB
-oEyypJMj6VbnW8K9+7SPSPqNyRVmFpxIjA4wsk9X2cHmY5haA4Sen7e1OigQR2+S
-4hVMzeH3NXmltyL7CFhVtqfvPvuhFQB2iYKlVAw/7h+C4+D0MccpZwSUSQ1+Sszs
-3TN/ad97OBSCOzWVpagY0BEXdwu+nlKj1eLxg0nEarVzr06HJIVr1iJXiYaLL7Hj
-N/RHR6k/VTInmU/RZdJHcGTl7uTYDmy8SeTK+1e2nPY0955tw2huKhvF1EZmsTdy
-cbGLLbIQTfRu9/2m3MQBFNpbCdBIAIoTOhDZjY71E+CiW+SrC+s8X6AZKg9v++Kx
-uFyhMZQn+l+TW+oNNIAkKtpXcnf6i6JX7ws6ZLUxHgh742IU3qivJWwc/Sa06QZX
-1nwgmuGasejqbaQfZJN2GL58hk3npfWYVjtaRo/jjEQTQ9vsChcIXpF1wlQVcO1l
-Qxv/Pk5z0AbQsOkRgGEyuL6DCLu28kZL9Jq1Ly2Xtm6fvH65YvlA4CYCdBNo6qBE
-bFDQE0Ob750/RrkP33rVZBVfNSRwEg2dnhFTw+HgTlbfy8iVu01K+wyC3kbvfm7y
-d4JR+rIZNCWUFP9hvVpMKXhDgxTkrUUM/ANRDaWlCVnayXbtYcA=
-=O8CJ
------END PGP SIGNATURE-----
-
---Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82--
+To summarise, I think that this "extra" functionality (and actually =
+complex
+security aspect in general) should be removed from the basic git CLI.
+And again, kudos to the maintainers who are mostly just the best.
