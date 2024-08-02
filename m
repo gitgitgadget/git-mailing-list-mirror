@@ -1,166 +1,96 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBFFD272
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 20:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7799133DF
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 20:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722629064; cv=none; b=o7/jp1z4YSLdJ6VuSTwvwYitH5A81vA/KjunQamd1UvBgj8HkxdymX5xH5PUJNkrSjpjgHcMHI8i4VDtOvuUGLChZgrxNtPfRQYDXXBbAVZi2s0ZdxlAREGSCaHbGzdm6FtcBSlzKnxHj+sEzIb39pwQueChihwXYYN3af0ukEw=
+	t=1722630384; cv=none; b=X8c3aDOK7BhhxIErTM/VRUcsz2r98u90aa0uXNWrJ2bszxLpFnBwaXcKuYQhrRSzvhXXKz9ojU4TnBKbZQwqviIoF92qImK7tXhNnheW/vc7g4atY2RNowFC1L6SOhNnRIBY9Ztw5RsmKtQi642/ffvlx0Hy/XNAU/gYB2EhTys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722629064; c=relaxed/simple;
-	bh=sDTQDgMciX5uE0sUO8H7IyJ3dKAz3vi+zl55XhiEQzA=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VnnhtrOmeql9ZLQFAjfg2nDxwiCUITzs4Tdq4ODHrZzaP3tnoqTTGQWeB54xTy/5+zc+vfipC25er5Brv7w4crADExIJTgOabx/cP6hwag1FlcGX9lVcSeVcKBPE6Myy5idAOtgqu6k5xvOjELuRD8qTEkGJZ13+BdfZyqjmhu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 472K49hP3716136
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Aug 2024 20:04:09 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Michael Salman'" <mjsalman@pathcom.com>
-Cc: <git@vger.kernel.org>
-References: <3db395fe-8d32-4a33-8f16-7df95f3ff194@pathcom.com> <Zq0684YmxLqqsSRk@tapette.crustytoothpaste.net>
-In-Reply-To: <Zq0684YmxLqqsSRk@tapette.crustytoothpaste.net>
-Subject: RE: Merging problem
-Date: Fri, 2 Aug 2024 16:04:03 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03ed01dae517$22f7bac0$68e73040$@nexbridge.com>
+	s=arc-20240116; t=1722630384; c=relaxed/simple;
+	bh=sJmN767Y4xL9ixrZ1QNle3kHHPLbce4CoLIDM0FMfPc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AhLs+XF+GKlNxyBXt2rTYgcKvOc2t0UMyIGmbCD92iZxwa+1Yvb3yfAQ4XATtya06SoYyCzqijvWO3KqmFd2b1vKEzKFf37IzLyAOz19wJIdCq739QVZPIVWjOAGrDTeJ6dBsElUyzcrYfTICiIvztrNEXfrfi6X5mk1294ya2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FmzoZOZ/; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FmzoZOZ/"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CBF8A1C325;
+	Fri,  2 Aug 2024 16:26:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=sJmN767Y4xL9ixrZ1QNle3kHHPLbce4CoLIDM0
+	FMfPc=; b=FmzoZOZ/9aHMb1K5LKS5kj3UBSNrcZBDqauZe0n1rjHuT7Ym0p6QYF
+	l3ELltjWB+iwFR+79QfH47zWuPOznlsPaWZvKidH253DsW2L+kqJAKdHqZoI8ZUK
+	qLnqONkCzkMpwE57c1iv1MTOCr7y3Y3KFH+TLy+hfZCAnH9XTM1rM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C5DE41C324;
+	Fri,  2 Aug 2024 16:26:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A8F5D1C323;
+	Fri,  2 Aug 2024 16:26:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] reftable/stack: refactor function to gather table
+ sizes
+In-Reply-To: <5d99191f5c30927f01f9281dcccfa51a120fc698.1722435214.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 31 Jul 2024 16:14:52 +0200")
+References: <cover.1722435214.git.ps@pks.im>
+	<5d99191f5c30927f01f9281dcccfa51a120fc698.1722435214.git.ps@pks.im>
+Date: Fri, 02 Aug 2024 13:26:14 -0700
+Message-ID: <xmqq5xsid63d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHYPOSmlVvo8fvUOkeonsGNOWHXegHm1fJ9sgp9NsA=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 78559C64-510D-11EF-8661-9625FCCAB05B-77302942!pb-smtp21.pobox.com
 
-On Friday, August 2, 2024 4:01 PM, brian m. carlson wrote:
->On 2024-08-02 at 18:41:48, Michael Salman wrote:
->> I am new to using git and I encountered the following problem
->>
->> 1) Created a repository using Notepad added a file (FileA.txt). Put
->> one line of text in the file. Did a git commit -a. so far so good.
->>
->> 2) I created a branch (my-branch), did a git checkout my-branch
->>
->> 3) Using notepad loaded FileA and changed the first line of text to
->> something else. Gave command git commit -a no problems
->>
->> 4) Git checkout master looked at FileA nothing changed
->>
->> 5) Did a git merge my-branch. No conflict reported
->>
->> 6) Loaded FileA in master the text of the first line had changed to
->> what is in FileA from the branch
->>
->> Your help with this problem would be appreciated. I hope this is not
->> due to my lack of understanding
->
->Let me provide a small shell script that reproduces your report so we =
-can make sure
->we're on the same page.  Here it is:
->
->----
->#!/bin/sh -e
->
->dir=3D"$(mktemp -d)"
->trap 'rm -fr "$dir"' EXIT
->
->cd "$dir"
->git init -b master
->echo "step 1" >FileA.txt
->git add .
->git commit -m 'step 1'
->git checkout -b my-branch
->echo "step 2" >FileA.txt
->git add .
->git commit -m 'step 2'
->git checkout master
->git merge my-branch
->----
->
->Now, let's look at what happens if we add `git log --graph --all =
---decorate` to the end
->of the script:
->
->----
->* commit 4dd858b4e2b96ec24055d3a19d87e2080c4f1393 (HEAD -> master, my-
->branch)
->| Author: brian m. carlson <sandals@crustytoothpaste.net>
->| Date:   Fri Aug 2 19:51:42 2024 +0000
->|
->|     step 2
->|
->* commit a1bf54082762cdcffec185d4cf6eef2c753af535
->  Author: brian m. carlson <sandals@crustytoothpaste.net>
->  Date:   Fri Aug 2 19:51:42 2024 +0000
->
->      step 1
->----
->
->What's happened here is that the commits on `my-branch` are a strict =
-superset of
->the commits on `master`.  That is, `master` is an ancestor, and there =
-are only new
->commits in `my-branch`.  When that happens, Git does what's called a =
-fast-forward
->by default, and simply updates `master` to `my-branch` without even =
-invoking the
->merge algorithm.
->That's why the contents of the branch are those of `my-branch`.
->
->The reason that Git does that is that it's much more efficient and =
-produces the same
->results as actually doing a merge.  When Git does a three-way merge =
-(which is the
->default behaviour), it only really considers three points in the merge: =
-the two heads
->(in this case, `master` and `my-branch`), and the _merge base_, which =
-is usually the
->most recent common ancestor.
->
->When it does a merge, Git determines if there is a change in a =
-particular file between
->the merge base and each of the heads (not considering intermediate =
-commits).  If
->one side has a change and the other does not, Git adopts that change, =
-regardless of
->what happened in in between.  For this reason, you can see that the =
-merge base is
->the old version of `master`, and that's also one of the heads, while =
-the other one is
->`my-branch`.  So one side never has any changes because its the same =
-commit, and
->the other side may have changes or not, so it's safe to just update the =
-branch
->pointer to the new commit.
->
->Note that you can merge with `git merge --no-ff my-branch`, which will =
-do a merge,
->create a merge commit, and avoid the fast forward, but the result is =
-the same, as
->mentioned above.
->
->So I think this is working as intended.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Another option, from my own bag of tricks, is to use git merge --squash =
-for this activity.
-This collapses your branch into a single commit and applies it to =
-master. This is done
-for simplification of history. It may not be appropriate for everyone (I =
-have a list of
-reasons why not, if interested).
+> Refactor the function that gathers table sizes to be more idiomatic. For
+> one, use `REFTABLE_CALLOC_ARRAY()` instead of `reftable_calloc()`.
+> Second, avoid using an integer to iterate through the tables in the
+> reftable stack given that `stack_len` itself is using a `size_t`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/stack.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 737591125e..ba8234b486 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -1305,14 +1305,15 @@ struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
+>  
+>  static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack *st)
+>  {
+> -	uint64_t *sizes =
+> -		reftable_calloc(st->merged->stack_len, sizeof(*sizes));
+>  	int version = (st->opts.hash_id == GIT_SHA1_FORMAT_ID) ? 1 : 2;
+>  	int overhead = header_size(version) - 1;
+> -	int i = 0;
+> -	for (i = 0; i < st->merged->stack_len; i++) {
+> +	uint64_t *sizes;
+> +
+> +	REFTABLE_CALLOC_ARRAY(sizes, st->merged->stack_len);
+> +
+> +	for (size_t i = 0; i < st->merged->stack_len; i++)
+>  		sizes[i] = st->readers[i]->size - overhead;
+> -	}
+> +
 
-Regards,
-Randall
-
+OK.
