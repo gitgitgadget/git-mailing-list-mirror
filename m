@@ -1,370 +1,121 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D0122615
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 05:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E151429A
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 06:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722577108; cv=none; b=fxqDgMtxiEBtqfvWysQjVO0+yTMP/PkL9J9UiWe5wVJFygY1SXfk333k7aPaYtoMzKa0ymrtLuXqTSk3Ccp5WG3jC79xnBFTvtbSTZNT7fs9tCxizDulfmXiUuKudnOZN4iSubiW9Lb7K7/AoUjkJtBR8Es8Pk99e/LhufKSkAM=
+	t=1722579364; cv=none; b=uc9R6TWJ6AgfNA+i+z4T28KT6uP7gGOuQlZUlhrxTSCewxd9+Pwy+pM0hN4C1GYGzyt/2LMnG/i+igpDw0U0zBsvn8M08EkAcNKN2bs5Ey6jz4u89xlLWEvFYIOprDQ6OuibSS/dlMeZ0rJrR9eTjHqZpieVDjDet3QmuFWrPdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722577108; c=relaxed/simple;
-	bh=YyuxTjI+8fLZZZOx+TgWEZZqzCnksNdjDZVqXuFSjDs=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=kPdq4TKJQwGZTNvp/wKd4lLKISIjmldaokEpWHwZfR/iAntY1fQxYwuxYviWkPJQPIL4SBSLTmPEY/Hj83zGrHHfZJBWxc59tPN8uLtuUbWJeQptcR38K3e9t9wKjS8EbvXDigKtSCIr++9IJ+o5iUHA9hsF9nPVNqrId7OCi/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iY+ibn3+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kxJoZLZG; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1722579364; c=relaxed/simple;
+	bh=Q5/3urCRIQKJLTZu4mmgDWBnExCxO72PYDP8qRk4n4M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dyMSel++uBENYCekb3mPWuAacbGHZE90s28n+dgC6ULsJajwfc9Qd/Rw/4dn/QYVVFtYJTPdl5YgeD3bhtkG3iSQOm/1JFS/ndVIvt16Fa5u1vJGjQYmAw0BMyPphel7RRtU+3iGmosgqJTs+0VXHN9BXrXk2bfpEu/bEJhwdgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Kzq+2e34; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iY+ibn3+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kxJoZLZG"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CF9C01151AC5
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 01:38:23 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 02 Aug 2024 01:38:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1722577103; x=1722663503; bh=rudoq8oLuD9/tEAkH1yGZaxopVX4IBvx
-	VRMWF9E7nmo=; b=iY+ibn3+Lq9vyeKvxCu9G7lPP0DKPRMel38axevycW6rbS9O
-	6apcFIefsauG+4fyVpL6YBx/w7Bd7WWWgmRgiPEvnGIOM86qfZYSyhW3IObJgXgi
-	3ya1RUALYxaLAVSGxbpKQ/3R9xfDTYNdxAdLJtwyE2Ga9hzIV/PebuNhg92dJ3rE
-	8KN8zNBbeQEwSIIqVz0OK+niCUK6LH1+BI2vIjG6RNnUJ2OZdY+EvT4cajQy7Jfb
-	xH7binKyqu3q8yEwJEfMHAC8ZtTcuXymqOE14hgamH0OrNJMaUA52RoT/e3numG6
-	ZJlvYJflvRvV7SglWqlaiKyHGk3iiIIJwoN34w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1722577103; x=1722663503; bh=rudoq8oLuD9/tEAkH1yGZaxopVX4IBvxVRM
-	WF9E7nmo=; b=kxJoZLZGRPBoS3c1h28ZcVBi02yA/qO4UzdDhgt5fbGWiqXUaah
-	cLsvmdw1W0u+1aVELxkkqCZ5T3IaGdOUazd8zry+fskx/MBPekoYfM4cPVf2HfNq
-	lJgk1YoZkAu7F1WXjGlrzo9h23iRbhzuX3Mtpc4kheapXu8XQtfjZVuHTJCaEohZ
-	Pyw9N+e5Usz7j9VMTHitJeYE27/asE7bXr73L6WpeiE9RdcaQRyg+05ieicu+KBX
-	imtf8cS9alMp+AQzdlqWca+zugB610SNqMPaGSB1SWmG7h1Bx6PK/ThLc8N23iUz
-	itvX9yWsdldD9Mtse1AAH+zqEwDbXf3YxDg==
-X-ME-Sender: <xms:z3CsZgcCmDe64H4KcltsjoDc7ZXnvXel34YrDSwInDDNH7qhBiS6Tg>
-    <xme:z3CsZiND9XULK8jAIoYXyJE3PJvFP9sYBJOeV3L2oV7P9otRfHpzZS97z5RtmWN_Q
-    I-v2-qM1mWPJiHX-w>
-X-ME-Received: <xmr:z3CsZhhgY8kZ7HAMPs6ICV0hS0XQ_OH0p4xVAGuarNo6Acmr3piE6jHEkTKXPwZ2AUt8meuFhn8KU4wfEychj3hjwE9M6jvULDa6ssfp5RN0SXxu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeelgdellecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderredttd
-    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
-    ihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgfdvvd
-    efudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:z3CsZl_mqLKhSHDV9LOfVkVjSM0WledxkzQdJhW_4nfsKUQAmhT5wA>
-    <xmx:z3CsZss0u85yXN5RKmpuCI_EWI1QrAlpsAKxTHcoiskLRfRgdMOY-w>
-    <xmx:z3CsZsF4Lm2lILtJIw0dZpEMMc3ebFeW7HicBW3dHz4wCggdHuPrXg>
-    <xmx:z3CsZrNh0F-CiG6oT3lI6i3mIj9n1e03UnNqijvD4ZrgcetzLm7TQg>
-    <xmx:z3CsZpW-7FZtE8vtPS_RvTS555jG0tJ98tAlgY6eLRnlkLRXRqy3tStv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 2 Aug 2024 01:38:23 -0400 (EDT)
-Received: 
-	by localhost (OpenSMTPD) with ESMTPSA id 09d9670c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 2 Aug 2024 05:36:48 +0000 (UTC)
-Date: Fri, 2 Aug 2024 07:38:19 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH] refs: drop `ref_store`-less functions
-Message-ID: <1d9add71065dabb3d7bf81529d04afbcf91e3a69.1722577074.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Kzq+2e34"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5b8c2a611adso153253a12.1
+        for <git@vger.kernel.org>; Thu, 01 Aug 2024 23:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722579361; x=1723184161; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q5/3urCRIQKJLTZu4mmgDWBnExCxO72PYDP8qRk4n4M=;
+        b=Kzq+2e34YPxDtSsCe7TxeWhwXXhkH5gRcL9GT9Y/8IYI2/Adzd06464CVrMl3BWxDi
+         1OiDjD73+lh1WI2zaO3i8Wo7voU0w3ootXiFhnen/x0le3BLYj0Ju4US2sO+DIp/NXMM
+         eby3g9Jo4T4OVvgffXSAwwkGPQlZFb4VZEwttdOdBecrAuvr+AwCMOY7oK7najxdwT3A
+         6+lpG8/Nkr1HCyFTi4qHITlBB9thDN7fzCi2em/TQLPRAEy0oaGuQRjD5tf27hUcqEm4
+         K/xRkQ/nFKXWHgAAZ3a26p/B6qZUWRNv5gpV76oFP+c5mW7hdZtVsakdi5K02e57cQW5
+         nQhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722579361; x=1723184161;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q5/3urCRIQKJLTZu4mmgDWBnExCxO72PYDP8qRk4n4M=;
+        b=AvMynZrkgcYAX6vnev8sQqUHEisuqpQGoa9gF6HtxwYZlUfjR8G461KJgM0ICP27tf
+         jP80alTuDCSEg492326EgdOxg2HwlNhxapfCrDd1QUZtpk9b0V0by9rnDOR75rsHw33E
+         unZW9JXLDh6lHyfuxZsrY8h5r2E/Prq33JSE5ubzAsk8dOeyNDmyG8Najn9xZMaDwXQh
+         Fip7v3c+E4d1hVhJsM51/UBvR2TT1B7OvfNFE9570JfUHIPMo5+MWlh1HPRmsOF92WAB
+         hRXumGYQSvHkZoKf5CcWVyagpeBA5Pzqzs4Rmdh2YKdnXncRmRUvPD3J8sXCIQKwY/Wn
+         W+KQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUFckHKlqfBjtv/wF7JGsBVsJNvclk0Wh1WS3voTfGyGbE2mqhdGxRwLL5eTUyOOZJ1ocXkQXtVOWVILZwp+23nfKOe
+X-Gm-Message-State: AOJu0YybVo1q1So8NZH1IwxRTbwzCUrJTaWIsdjltuIgkM6flW7nis5w
+	3Hjw7nFYNjaCWuH9dAxrD3/fb8Kht86ZLKpoSzQ0EyARMi9phWQxhdj5kevQDz2EX11wZIJ+zl8
+	X/ptpSN4SycK7fvcx3ZRpx1Fwcwwql/gfzGt7
+X-Google-Smtp-Source: AGHT+IGq6sc8I1AFnK+sgRUXp5kEOB24TGETiVgQ1qTdmnLZGSt5tfWAq9A0xxHl/4j2VgGOV7QIr13Uwu9JKwGMIo8=
+X-Received: by 2002:a17:907:7f21:b0:a7a:9144:e254 with SMTP id
+ a640c23a62f3a-a7dc4d94affmr180044966b.10.1722579360983; Thu, 01 Aug 2024
+ 23:16:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WbRm8YS67izrCbr/"
-Content-Disposition: inline
-
-
---WbRm8YS67izrCbr/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+ <4dbd0bec40a0f9fd715e07a56bc6f12c4b29a83c.1722571853.git.gitgitgadget@gmail.com>
+ <ZqxqtIJi4-xBL9Sj@tanuki>
+In-Reply-To: <ZqxqtIJi4-xBL9Sj@tanuki>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 1 Aug 2024 23:15:44 -0700
+Message-ID: <CAO_smViSG27KrtE7hgq1GAzUYSoKFgrQymRYg-aKJqm4UW9DUg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] set errno=0 before strtoX calls
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-In c8f815c208 (refs: remove functions without ref store, 2024-05-07), we
-have removed functions of the refs subsystem that do not take a ref
-store as input parameter. In order to make it easier for folks to figure
-out how to replace calls to such functions in in-flight patch series, we
-kept their definitions around in an ifdeffed block.
+On Thu, Aug 1, 2024 at 10:12=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Fri, Aug 02, 2024 at 04:10:51AM +0000, Kyle Lippincott via GitGitGadge=
+t wrote:
+> > From: Kyle Lippincott <spectral@google.com>
+> >
+> > To detect conversion failure after calls to functions like `strtod`, on=
+e
+> > can check `errno =3D=3D ERANGE`. These functions are not guaranteed to =
+set
+> > `errno` to `0` on successful conversion, however. Manual manipulation o=
+f
+> > `errno` can likely be avoided by checking that the output pointer
+> > differs from the input pointer, but that's not how other locations, suc=
+h
+> > as parse.c:139, handle this issue; they set errno to 0 prior to
+> > executing the function.
+> >
+> > For every place I could find a strtoX function with an ERANGE check
+> > following it, set `errno =3D 0;` prior to executing the conversion
+> > function.
+>
+> Makes sense. I've also gone through callsites and couldn't spot any
+> additional ones that are broken.
+>
+> Generally speaking, the interfaces provided by the `strtod()` family of
+> functions is just plain awful, and ideally we wouldn't be using them in
+> the Git codebase at all without a wrapper. We already do have wrappers
+> for a subset of those functions, e.g. `strtol_i()`, which use an out
+> pointer to store the result and indicate success via the return value
+> instead of via `errno`.
+>
+> It would be great if we could extend those wrappers to cover all of the
+> integer types, convert our code base to use them, and then extend our
+> "banned.h" banner. I'm of course not asking you to do that in this patch
+> series.
+>
+> Out of curiosity, why do you hit those errors in your test setup? Do you
+> use a special libc that behaves differently than the most common ones?
 
-Now that Git v2.46 is out, it is rather unlikely that anybody still has
-references to these old functions in their unreleased patches. Let's
-thus drop them.
+The second patch in this series fixes the original reason I noticed
+the issues in three of the files: our remote test execution service
+uses paths that are >128 bytes long, so the getcwd call in
+strbuf_getcwd was returning ERANGE once, and then it remained set
+since getcwd didn't clear it on success. ref-filter.c was found via
+searching, I think that was during the search for `ERANGE`.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs.h | 207 ---------------------------------------------------------
- 1 file changed, 207 deletions(-)
-
-diff --git a/refs.h b/refs.h
-index b3e39bc257..9fbd2cdb2c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1086,211 +1086,4 @@ int repo_migrate_ref_storage_format(struct reposito=
-ry *repo,
- 				    unsigned int flags,
- 				    struct strbuf *err);
-=20
--/*
-- * The following functions have been removed in Git v2.46 in favor of func=
-tions
-- * that receive a `ref_store` as parameter. The intent of this section is
-- * merely to help patch authors of in-flight series to have a reference wh=
-at
-- * they should be migrating to. The section will be removed in Git v2.47.
-- */
--#if 0
--static char *resolve_refdup(const char *refname, int resolve_flags,
--			    struct object_id *oid, int *flags)
--{
--	return refs_resolve_refdup(get_main_ref_store(the_repository),
--				   refname, resolve_flags,
--				   oid, flags);
--}
--
--static int read_ref_full(const char *refname, int resolve_flags,
--			 struct object_id *oid, int *flags)
--{
--	return refs_read_ref_full(get_main_ref_store(the_repository), refname,
--				  resolve_flags, oid, flags);
--}
--
--static int read_ref(const char *refname, struct object_id *oid)
--{
--	return refs_read_ref(get_main_ref_store(the_repository), refname, oid);
--}
--
--static int ref_exists(const char *refname)
--{
--	return refs_ref_exists(get_main_ref_store(the_repository), refname);
--}
--
--static int for_each_tag_ref(each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_tag_ref(get_main_ref_store(the_repository), fn, cb_d=
-ata);
--}
--
--static int for_each_branch_ref(each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_branch_ref(get_main_ref_store(the_repository), fn, c=
-b_data);
--}
--
--static int for_each_remote_ref(each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_remote_ref(get_main_ref_store(the_repository), fn, c=
-b_data);
--}
--
--static int head_ref_namespaced(each_ref_fn fn, void *cb_data)
--{
--	return refs_head_ref_namespaced(get_main_ref_store(the_repository),
--					fn, cb_data);
--}
--
--static int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
--				const char *prefix, void *cb_data)
--{
--	return refs_for_each_glob_ref_in(get_main_ref_store(the_repository),
--					 fn, pattern, prefix, cb_data);
--}
--
--static int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb=
-_data)
--{
--	return refs_for_each_glob_ref(get_main_ref_store(the_repository),
--				      fn, pattern, cb_data);
--}
--
--static int delete_ref(const char *msg, const char *refname,
--		      const struct object_id *old_oid, unsigned int flags)
--{
--	return refs_delete_ref(get_main_ref_store(the_repository), msg, refname,
--			       old_oid, flags);
--}
--
--static struct ref_transaction *ref_transaction_begin(struct strbuf *err)
--{
--	return ref_store_transaction_begin(get_main_ref_store(the_repository), er=
-r);
--}
--
--static int update_ref(const char *msg, const char *refname,
--		      const struct object_id *new_oid,
--		      const struct object_id *old_oid,
--		      unsigned int flags, enum action_on_err onerr)
--{
--	return refs_update_ref(get_main_ref_store(the_repository), msg, refname, =
-new_oid,
--			       old_oid, flags, onerr);
--}
--
--static char *shorten_unambiguous_ref(const char *refname, int strict)
--{
--	return refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
--					    refname, strict);
--}
--
--static int head_ref(each_ref_fn fn, void *cb_data)
--{
--	return refs_head_ref(get_main_ref_store(the_repository), fn, cb_data);
--}
--
--static int for_each_ref(each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_ref(get_main_ref_store(the_repository), fn, cb_data);
--}
--
--static int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_da=
-ta)
--{
--	return refs_for_each_ref_in(get_main_ref_store(the_repository), prefix, f=
-n, cb_data);
--}
--
--static int for_each_fullref_in(const char *prefix,
--			       const char **exclude_patterns,
--			       each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_fullref_in(get_main_ref_store(the_repository),
--					prefix, exclude_patterns, fn, cb_data);
--}
--
--static int for_each_namespaced_ref(const char **exclude_patterns,
--				   each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_namespaced_ref(get_main_ref_store(the_repository),
--					    exclude_patterns, fn, cb_data);
--}
--
--static int for_each_rawref(each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_rawref(get_main_ref_store(the_repository), fn, cb_da=
-ta);
--}
--
--static const char *resolve_ref_unsafe(const char *refname, int resolve_fla=
-gs,
--				      struct object_id *oid, int *flags)
--{
--	return refs_resolve_ref_unsafe(get_main_ref_store(the_repository), refnam=
-e,
--				       resolve_flags, oid, flags);
--}
--
--static int create_symref(const char *ref_target, const char *refs_heads_ma=
-ster,
--			 const char *logmsg)
--{
--	return refs_create_symref(get_main_ref_store(the_repository), ref_target,
--				  refs_heads_master, logmsg);
--}
--
--static int for_each_reflog(each_reflog_fn fn, void *cb_data)
--{
--	return refs_for_each_reflog(get_main_ref_store(the_repository), fn, cb_da=
-ta);
--}
--
--static int for_each_reflog_ent_reverse(const char *refname, each_reflog_en=
-t_fn fn,
--				       void *cb_data)
--{
--	return refs_for_each_reflog_ent_reverse(get_main_ref_store(the_repository=
-),
--						refname, fn, cb_data);
--}
--
--static int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
--			       void *cb_data)
--{
--	return refs_for_each_reflog_ent(get_main_ref_store(the_repository), refna=
-me,
--					fn, cb_data);
--}
--
--static int reflog_exists(const char *refname)
--{
--	return refs_reflog_exists(get_main_ref_store(the_repository), refname);
--}
--
--static int safe_create_reflog(const char *refname, struct strbuf *err)
--{
--	return refs_create_reflog(get_main_ref_store(the_repository), refname,
--				  err);
--}
--
--static int delete_reflog(const char *refname)
--{
--	return refs_delete_reflog(get_main_ref_store(the_repository), refname);
--}
--
--static int reflog_expire(const char *refname,
--			 unsigned int flags,
--			 reflog_expiry_prepare_fn prepare_fn,
--			 reflog_expiry_should_prune_fn should_prune_fn,
--			 reflog_expiry_cleanup_fn cleanup_fn,
--			 void *policy_cb_data)
--{
--	return refs_reflog_expire(get_main_ref_store(the_repository),
--				  refname, flags,
--				  prepare_fn, should_prune_fn,
--				  cleanup_fn, policy_cb_data);
--}
--
--static int delete_refs(const char *msg, struct string_list *refnames,
--		       unsigned int flags)
--{
--	return refs_delete_refs(get_main_ref_store(the_repository), msg, refnames=
-, flags);
--}
--
--static int rename_ref(const char *oldref, const char *newref, const char *=
-logmsg)
--{
--	return refs_rename_ref(get_main_ref_store(the_repository), oldref, newref=
-, logmsg);
--}
--
--static int copy_existing_ref(const char *oldref, const char *newref, const=
- char *logmsg)
--{
--	return refs_copy_existing_ref(get_main_ref_store(the_repository), oldref,=
- newref, logmsg);
--}
--#endif
--
- #endif /* REFS_H */
---=20
-2.46.0.dirty
-
-
---WbRm8YS67izrCbr/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmascMoACgkQVbJhu7ck
-PpSk6A//draSxx+yzGmNiqBTRLGOUX8cqUYgxK/A4pa4C9fu8H815UVXIGSJdAh6
-Jp4WtNmkzN/vIL/DiLj5mPrVNh8xLns949Bu0htACVVul5E9QnQTTFCaOgsgaSwt
-G0XnR8qHabFPjx7WTGNKtTPR58bx+zyzg97MxojRjlOlNMXtkiqtI11uZ6Lrw/zn
-ZAjuFgzvOr2DQbYJhE8wdbezpCCoM2gZAsdhHT7jsHcM08vQVOU9LHyjmEPoPntz
-vKSg9tpwPt0NPGjk0bvtu4XQ+8A/Zx9zNLaD3JcKPXsovBIUrDeiAHbdcajaKz+p
-H7Fcs6PxgKgvOuVerVHhPacFJy3j6ZzGEqkxrl337QeOwFIljCzgD4CkS0JYfoZU
-y59RV9mRLN8AdDOXH/3siof0Mr13HZAL6cIHQnudgtdXkfluO4ggavfAuhOlYgb2
-T6c3McAPBvYrP7FKVTvVjQggMhbNBSqq9Qw8Zc1sZ0yacXmaiDQ7pfH3pkLDcM9e
-S3ihLWKJqRVQ5wIdeJ+dgz80+EzDdaUEgoB9HLqfslQZTb0UdtKgMcKyNlGn1yj8
-WjzvqLgV3ALx50cPCTYIGOqemvGuEWDk01sWEXJmC9sbKGxON3uRX5GKoqJAE5/I
-evkDLD+qNZfoSsd+F0DW46yq7+dfFGHd0pp6aA1LwuwLrCGlKj0=
-=1adD
------END PGP SIGNATURE-----
-
---WbRm8YS67izrCbr/--
+>
+> Patrick
