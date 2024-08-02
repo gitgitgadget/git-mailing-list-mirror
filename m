@@ -1,152 +1,190 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mr85p00im-hyfv06011401.me.com (mr85p00im-hyfv06011401.me.com [17.58.23.191])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16371BF31C
-	for <git@vger.kernel.org>; Fri,  2 Aug 2024 07:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3997256D
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 09:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.23.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722583924; cv=none; b=L5ny3q4S4xDOL+hyzQ5Qz0kZbZRoC3ZaQOSABK3DDmW5Qs7ZmmLE1V3HuM2vy7MtLLznB9QdSbdk682C99MEIoYVsezj5OwK2KZpOAx048EdLEeV6d/HcmSvWFY1N8NEE6EiKwuc6zMqa91cWz3HeUhipPhc1u/3qwWTfmTkYy0=
+	t=1722592005; cv=none; b=f9gVlgXF7AYdGxjlO8GL/vfyLLmb2LgEmJ4Y8jbq3UxtkywbgkHm7YzrUwMhsPe+DR0rXuut33bdFdjNJWxtr7/MpOEzN0jM2tymu1zBMK01r9mCBEa1IIVW3PXHXgMV25UJheDzHxuXSyWRh58gbpy45eXVMsnVbp3R7EpukyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722583924; c=relaxed/simple;
-	bh=TjSN7yTcwVnhg/UltJvfFsZtAVP6pazxVdH2J0Z3Ewc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhRslZKZOebMEI2hxbtt+DCkF7ImfjR2Re8ynNCtAOwE+i+cqeNItQbnlAAeHwnt/XDsfzQNNvTgWYdasloURB6P8lHDC7fOCFoiROgQI7PD/C/2L9RLolhUpY0dGBsCtEGnBqDXD+5uokD6Gejj0PIURE56l+WJTAXEsToLz3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=TVKQMpwN; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1722592005; c=relaxed/simple;
+	bh=tWV5FakjZN3QH4XXRfOd+JcI1b5FrCdIB5MPwtXzXO0=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=G4zqC6hawbx8tgBdQiyXigyEVOAI5DCiTyO44+wv7SchmprckpGw9eFTwbJFmGQT7/PA33k/O9mjw/w1MFslcHuwV08fqWB6QwXRWGpx4y1hgCQScQXfGVt7B1Fr/lMxLriU1yY7CS5N9uTTbiIk4yZKqPPNvVI4RcyQMHmBByU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com; spf=pass smtp.mailfrom=mac.com; dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b=Fqk0IdBe; arc=none smtp.client-ip=17.58.23.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mac.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="TVKQMpwN"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7b0c9bbddb4so3221234a12.3
-        for <git@vger.kernel.org>; Fri, 02 Aug 2024 00:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1722583922; x=1723188722; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a5WW247HvliBN1OPdIEqEvhUQIe570PBOqHpe+L/N9Y=;
-        b=TVKQMpwNc4oS+qGKtJcVHzS13LrKNf23YZ+oI6INetE28EGQJRoUuMseA//XAew8Mo
-         CrQqpqFjGM3wP2Ja2v24u6cltQURGq4ikNKw2TA6uAkzvTAgC13nKUoMJPREtX8bvvB+
-         k454nRA8aqM7eOgCrXRcWk5yjSqaV1RQqp01U10PQG/IgS0MN31eOlxwVQQRfSmhsJSv
-         TIprjxz+ZFPJVHsWKL9iPzj8wq64G86lVOQ/a/TaLNiFCmq8AwB6+e+E9qXOdlrvKGJm
-         GV50R/y2ASj5nECW6k8TH1QgRCC2PfLpDldB4o2xcoObDxh63iJKiBjEj5zd39duyMdS
-         nyiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722583922; x=1723188722;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a5WW247HvliBN1OPdIEqEvhUQIe570PBOqHpe+L/N9Y=;
-        b=OiUHujRA58YnFXeBf7z43y/bEtrIV5+mN0W0mgeqiBsivk8fqncd2xEzho9f42JrHS
-         ziwrrFssx9FPD8pKuTd5q4dRNCgJbpLx2We7EvZsIlJwZrsafwmddMWD+omU6Fy46pn8
-         4bY/Gu0uIY73UrIQEGVW7ynhMn5u11NZMnd+rn8DH6qcgihOshWlauz6YlIX9DniQ0Ni
-         4gRnj18eY2eEBX2y9px/980AxJc82Gl/hIqCyA5KICPtuU3PKMAi/USG0YuvDuW6gKKO
-         NgFwVzoaZvDY0YC9gua5WfyOx4Sf9XHybQEB8wirs/B0ZuBWnBMtAnWcsi3QjZaHA9DL
-         CaKA==
-X-Gm-Message-State: AOJu0YzbDeFDHPEGvUyo7nQRXmnGzuRZjmpaQIKi9+d8DDwBBOIs3wwy
-	I89WgwJdb5kWbsFdv9/QBDNCp54TCYe1AxaecI52VoWz+mb/fuLOUV7tVXWTXNYJ4rItgmrCN/O
-	u
-X-Google-Smtp-Source: AGHT+IHn6/qE64jId9AqKf4LcK66+00U0hTOSudIel7S8lcJ14gN+sUVCKWUh6BmtYekv8J/i+h2bA==
-X-Received: by 2002:a05:6a21:3392:b0:1c0:e629:3926 with SMTP id adf61e73a8af0-1c6995805e4mr3738448637.16.1722583921340;
-        Fri, 02 Aug 2024 00:32:01 -0700 (PDT)
-Received: from localhost.localdomain ([203.208.167.150])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7106ec01cbesm887410b3a.12.2024.08.02.00.31.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 00:32:00 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>,
-	C O Xing Xin <xingxin.xx@bytedance.com>
-Subject: [PATCH 1/1] revision: don't set parents as uninteresting if exclude promisor objects
-Date: Fri,  2 Aug 2024 15:31:43 +0800
-Message-ID: <20240802073143.56731-2-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+	dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b="Fqk0IdBe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
+	t=1722592003; bh=y9tiN7t7wgbVzsYpWhsjQuP2GpKBKuA6KPiYs7ks9VE=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+	b=Fqk0IdBeUQrWsSorEbQzyLUsWHHiehgogaX8YFaUqKptoB1XpBRUdLcv2EBTJN91P
+	 zagRY2mcCRGHSEgGjv3xBeMwZg7JBX/hmphis/jwWwGMkE76wXQ3eUY8L0aigqrC0l
+	 DKh5nKEBN99HzFd/6+LnfgTul2kAHr/KMfJ/91moUiWKpz44wowUzwx/MSc1cUusTs
+	 MUQVpYdTFN8um9gBrn/m4cmS8fruk2t0QnkFRh1NFNf0JoQuQBBTDCYXoPB/RQwL4o
+	 b4v1zzBLfhFm7EziWJrv4buiLVMAJUghKqIubU/7rfdo9whH+6+1Hh7IYOuQ/2o8Vo
+	 fk4dLtPe01qjA==
+Received: from smtpclient.apple (mr38p00im-dlb-asmtp-mailmevip.me.com [17.57.152.18])
+	by mr85p00im-hyfv06011401.me.com (Postfix) with ESMTPSA id 9C23A357AE1C
+	for <git@vger.kernel.org>; Fri,  2 Aug 2024 09:46:42 +0000 (UTC)
+From: the.tester@mac.com
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha256
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Date and time processing issue
+Message-Id: <B896574C-A150-45AE-A636-ADA9ADF3255A@mac.com>
+Date: Fri, 2 Aug 2024 11:46:30 +0200
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51)
+X-Proofpoint-ORIG-GUID: Jl4y2TCblbxojfhNXwVPg7fCmBl86UPq
+X-Proofpoint-GUID: Jl4y2TCblbxojfhNXwVPg7fCmBl86UPq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-02_06,2024-08-01_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 phishscore=0 spamscore=0
+ mlxscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2408020065
 
-In revision.c, `process_parents()` recursively marks commit parents 
-as UNINTERESTING if the commit itself is UNINTERESTING.
-`--exclude-promisor-objects` is implemented as 
-"iterate all objects in promisor packfiles, mark them as UNINTERESTING".
-So when we find a commit object in a promisor packfile, we also set its ancestors 
-as UNINTERESTING, whether the ancestor is a promisor object or not.
-This causes normal objects to be falsely marked as promisor objects 
-and removed by `git repack`.
 
-Stop setting the parents of uninteresting commits' to UNINTERESTING 
-when we exclude promisor objects, and add a test to prevent regression.
+--Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Note that this change would cause rev-list to report incorrect results if 
-`--exclude-promisor-objects` is used with other revision walk filters. But 
-`--exclude-promisor-objects` is for internal use only, so we don't have to worry
-about users using other filters with `--exclude-promisor-objects`.
+Hi all,
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
-Helped-by: C O Xing Xin <xingxin.xx@bytedance.com>
----
- revision.c               |  2 +-
- t/t0410-partial-clone.sh | 22 +++++++++++++++++++++-
- 2 files changed, 22 insertions(+), 2 deletions(-)
+Context:=20
 
-diff --git a/revision.c b/revision.c
-index 1c0192f522..eacb0c909d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1164,7 +1164,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 	 * wasn't uninteresting), in which case we need
- 	 * to mark its parents recursively too..
- 	 */
--	if (commit->object.flags & UNINTERESTING) {
-+	if (!revs->exclude_promisor_objects && commit->object.flags & UNINTERESTING) {
- 		while (parent) {
- 			struct commit *p = parent->item;
- 			parent = parent->next;
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 2c30c86e7b..4ee3437685 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -22,6 +22,17 @@ pack_as_from_promisor () {
- 	echo $HASH
- }
- 
-+pack_commit() {
-+	HASH=$(echo $1 | git -C repo pack-objects .git/objects/pack/pack --missing=allow-any) &&
-+	delete_object repo $1 &&
-+	echo $HASH
-+}
-+
-+pack_commit_as_promisor() {
-+	HASH=$(pack_commit $1) &&
-+	>repo/.git/objects/pack/pack-$HASH.promisor
-+}
-+
- promise_and_delete () {
- 	HASH=$(git -C repo rev-parse "$1") &&
- 	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
-@@ -369,7 +380,16 @@ test_expect_success 'missing tree objects with --missing=allow-promisor and --ex
- 	git -C repo rev-list --exclude-promisor-objects --objects HEAD >objs 2>rev_list_err &&
- 	test_must_be_empty rev_list_err &&
- 	# 3 commits, no blobs or trees
--	test_line_count = 3 objs
-+	test_line_count = 3 objs &&
-+
-+	# Pack all three commits into individual packs, and mark the last commit pack as promisor
-+	pack_commit_as_promisor $(git -C repo rev-parse baz) &&
-+	pack_commit $(git -C repo rev-parse bar) &&
-+	pack_commit $(git -C repo rev-parse foo) &&
-+	git -C repo rev-list --exclude-promisor-objects --objects HEAD >objs 2>rev_list_err &&
-+	test_must_be_empty rev_list_err &&
-+	# commits foo and bar should remain
-+	test_line_count = 2 objs
- '
- 
- test_expect_success 'missing non-root tree object and rev-list' '
--- 
-2.46.0.rc0.107.gae139121ac.dirty
+I=E2=80=99m preparing an example repo to be used as an example and for =
+exercises for a tutorial I=E2=80=99m preparing set in time travel story, =
+which should explain why I=E2=80=99m doing what I=E2=80=99m doing).
 
+For this I am using the environement variable 'GIT_COMMITTER_DATE' and =
+the '=E2=80=94date=E2=80=99 option to set these time stamps.
+
+
+Observartion:=20
+
+When attempting to commit changes in some cases the following error is =
+reported:
+
+
+> GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Begs =
+sharable holistic policy" --date "10 Apr 02:42:06 1970 +0100"
+
+fatal: invalid date format: 31 Dec 23:59:60 1969 +0100
+
+
+
+A second later, thigs work as I expect:
+
+ > GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Begs =
+sharable holistic policy" --date "10 Apr 02:42:06 1970 +0100"
+
+[main 4fc6ea0] Begs sharable holistic policy
+
+
+How to reproduce:
+
+$ mkdir tmp
+$ cd tmp
+$ git init
+Initialized empty Git repository in =E2=80=A6/tmp/.git/
+$ echo "Some content" > non-empty-file.txt
+$ git add .
+$ GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Demo =
+commit" --date "12 Dec 23:59:60 1969 +0100"
+fatal: invalid date format: 31 Dec 23:59:60 1969 +0100
+$ GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Demo =
+commit" --date "01 Jan 00:00:00 1970 +0100"
+[main (root-commit) a5c7d72] Demo commit
+ Date: Thu Jan 1 00:00:00 1970 +0000
+ 1 file changed, 1 insertion(+)
+ create mode 100644 non-empty-file.txt
+
+The same lines from a short shell script:
+
+$ cat reproduction_sctipt.sh
+mkdir tmp
+cd tmp
+git init
+echo "Some content" > non-empty-file.txt
+git add .
+GIT_COMMITTER_DATE=3D"31 Dec 23:59:60 1969 +0100" git commit -m "Demo =
+commit" --date "12 Dec 23:59:60 1969 +0100"
+GIT_COMMITTER_DATE=3D"01 Jan 00:00:00 1970 +0100" git commit -m "Demo =
+commit" --date "01 Jan 00:00:00 1970 +0100"
+
+
+System & version info:
+
+Git version: 2.45.2
+OS: macOS Sonoma 14.6 x86_64
+Shell: zsh 5.9
+
+
+(My) Interpretation:
+
+To me, the error message is at least misleading.=20
+It also seem to be hidin the underlying issue that git (commit) =
+doesn=E2=80=99t accept time stamps before the epoch.
+
+Given that 1970-01-01 00:00:00 seems to be the lower boundary, I =
+expected some time in 2038-01-19 to be the corresponding upper boundary.
+However the same error message is given when the date is >=3D 2100-01-01 =
+00:00:00.
+
+Personally, I think that at least the error message is misleading. =
+(I=E2=80=99d say it=E2=80=99s a bug, if one that=E2=80=99s not =
+particularly likely to run into).
+I expect the error message to point to the real problem, which is not a =
+wrong date format, but the value the timestamp represents.
+
+I=E2=80=99d also expect that correctly formatted time stamps containing =
+valid date & time information should be processed correctly.=20
+(at least for dates after Friday 15 October 1582 (as the day before was =
+Thursday 4 October 1582)
+
+
+Am I doing it wrong? Is it a bug? Am I expecting too much?
+Can I do anything to make a wider date range available?
+
+Best regards
+
+Stephan
+
+
+--Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEImVTW2kalIKnTbGpN5OCOCEvsmQFAmasqvYACgkQN5OCOCEv
+smQE8BAAuOH8brXJkVWiusfO/jkFG7OFAbEFY9N7sxaBf+/3NpiCCh9Gb0+nzENB
+oEyypJMj6VbnW8K9+7SPSPqNyRVmFpxIjA4wsk9X2cHmY5haA4Sen7e1OigQR2+S
+4hVMzeH3NXmltyL7CFhVtqfvPvuhFQB2iYKlVAw/7h+C4+D0MccpZwSUSQ1+Sszs
+3TN/ad97OBSCOzWVpagY0BEXdwu+nlKj1eLxg0nEarVzr06HJIVr1iJXiYaLL7Hj
+N/RHR6k/VTInmU/RZdJHcGTl7uTYDmy8SeTK+1e2nPY0955tw2huKhvF1EZmsTdy
+cbGLLbIQTfRu9/2m3MQBFNpbCdBIAIoTOhDZjY71E+CiW+SrC+s8X6AZKg9v++Kx
+uFyhMZQn+l+TW+oNNIAkKtpXcnf6i6JX7ws6ZLUxHgh742IU3qivJWwc/Sa06QZX
+1nwgmuGasejqbaQfZJN2GL58hk3npfWYVjtaRo/jjEQTQ9vsChcIXpF1wlQVcO1l
+Qxv/Pk5z0AbQsOkRgGEyuL6DCLu28kZL9Jq1Ly2Xtm6fvH65YvlA4CYCdBNo6qBE
+bFDQE0Ob750/RrkP33rVZBVfNSRwEg2dnhFTw+HgTlbfy8iVu01K+wyC3kbvfm7y
+d4JR+rIZNCWUFP9hvVpMKXhDgxTkrUUM/ANRDaWlCVnayXbtYcA=
+=O8CJ
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_A99F71C5-CC8D-4BB2-AD40-C53F76A75D82--
