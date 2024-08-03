@@ -1,97 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D551E505
-	for <git@vger.kernel.org>; Sat,  3 Aug 2024 16:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EF014D6F9
+	for <git@vger.kernel.org>; Sat,  3 Aug 2024 16:29:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722700835; cv=none; b=pFP4dbNtCpM4Mdh/a5VUmOH/n4S43JoBO1nQer4GBu9dsUxXpPaTS49O5NtRCH7cPu12LAPX74V/yOL2qgqsiQ9srJzGAVC3r09+Wzm1zDoyy8pmDpvYO5m3VNGbN+s9DtX57Ausa7/x8rKKP2aaBnEBC6jWtiW7zOta0nnrp+k=
+	t=1722702589; cv=none; b=LBrIOWeg78FsUqgkYVHV7iyMCBKabyZUR5mFRGTqcUl3GznzoUR8VbXlEPyfHtF/eyFSZCyMgJqbutCdCR7SZuAfZ/pxXzeF73CQStPCxIQoMUYQMG0lcUlNnTcCRUiSCFGVsL8zVZgKNnSwwP8YrCyAjBG5+v2vMuWDa9/Db+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722700835; c=relaxed/simple;
-	bh=I2Udpg5ak8ImvdO4MqQoViu1YA7Q/TOof79k1R3tAuw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RUQ296tbTSvwuReewz6mTFly08OV9w1MT3YwcSoP+F3vHiDA7S6DojiP0sEw0fOg/BJ4YB+16TNOxX9o/naXa46S5DzNXyHQxDjXxmLCJH+E/HXvT2I6MASg+6HmRVoxpgQ/F4MyFVJLQdPkUe8a4oPtXPr+BOQG+fGcWcoQHcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Xv86Rzkk; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1722702589; c=relaxed/simple;
+	bh=sUXTDO6J4QKTzhrSC5PwHTsDEOKmZp4rE16lmntuWBY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uUmgKF28k0Sq38sZGqJrvz3SkgEDGDBsyjf1O+iZ6pO8apWmNwgSa0kNuZE1YOkJLwBTekkHPKnCcke1ZUoXwu5V9jgMpGIpXXVmDdjpPCilLbcuLySS6UH8etYqFzsdIFdDgXz5l6qxqe4hObWg9tUIO6LEFatYyPCvOvpSsUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AK02f+Qw; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xv86Rzkk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1722700823;
-	bh=I2Udpg5ak8ImvdO4MqQoViu1YA7Q/TOof79k1R3tAuw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Xv86RzkkYnPUXBAQjl43+wYRn5qSy8JtAbt13csLelcy5xQ5sQbRYjmQnza4rM6Jq
-	 cemHUDSJOYMhvKETTEObAO0+n+Dhibjdw/UQuPOQUaLbRt5H5sICBt5Hw6UpPn95kD
-	 43rvlEYKsrGMsYlcimLly8lmK1KzVLn8i/7AjXfCmSQGidt95TCMjgyg2gv+cMqm3y
-	 Zy5L8FCCK8gzR+jX39e3ydT1xPRV4e0oPCGa3lsqJavdaD3TQzZtzv+6Tslx6/qz9F
-	 Xu8YSCszZ41Nptp1QoSRsFPxnwLN7y5Vw8i/TVFeAzkhOgpQr1O15CnN1RSYDYWTtQ
-	 GDkx4YyOa3O7G19qsyxru8AuBAEEEzuLiDBp28z5MXZiLhULxDMnEC9jgNWyIjXZGx
-	 FoD6KZRbJE9q9P7dl36xodyYmRYnV49rqtxp9o4rgs7LHKl2zez1G91ixzNRb8VuuM
-	 QBpqCk+Xi1K+Olgchr4XM98/SvOkA/eKN8PeMaUmicqEbSWAr+1
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AK02f+Qw"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 848E1245F0;
+	Sat,  3 Aug 2024 12:29:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=sUXTDO6J4QKTzhrSC5PwHTsDEOKmZp4rE16lmn
+	tuWBY=; b=AK02f+QwALQuruJn5dMKlXNslypvJT0FiPHdrJghWToZCm9bOiJmzJ
+	dnmeU4JDydIepcM6/0P6NfMCUTtMb7gURqhBB1r06ajSR8SBM+RlHfv8uiPtWDce
+	xXqMfdJ4i9olyOBPt5na0a6+bF9el/1Nm+Njg7rlx3zyoVBLEx2Zc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E23A245EF;
+	Sat,  3 Aug 2024 12:29:47 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A0F5B209BD;
-	Sat,  3 Aug 2024 16:00:23 +0000 (UTC)
-Date: Sat, 3 Aug 2024 16:00:21 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kim Scarborough <kim@scarborough.kim>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5782A245EE;
+	Sat,  3 Aug 2024 12:29:42 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: AbdAlRahman Gad <abdobngad@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: Git and gettext
-Message-ID: <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kim Scarborough <kim@scarborough.kim>, git@vger.kernel.org
-References: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
+Subject: Re: [PATCH][Newcomer] t7004-tag: modernize the test script
+In-Reply-To: <dcded6a3-e284-4d52-b36f-dacc056bbc5b@gmail.com> (AbdAlRahman
+	Gad's message of "Sat, 3 Aug 2024 17:34:46 +0300")
+References: <20240802064719.513498-1-abdobngad@gmail.com>
+	<xmqqttg2ewqm.fsf@gitster.g>
+	<dcded6a3-e284-4d52-b36f-dacc056bbc5b@gmail.com>
+Date: Sat, 03 Aug 2024 09:29:40 -0700
+Message-ID: <xmqqmslt7eob.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oK2gpwVsg4QYD9R4"
-Content-Disposition: inline
-In-Reply-To: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 96439B60-51B5-11EF-BCBA-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
+AbdAlRahman Gad <abdobngad@gmail.com> writes:
 
---oK2gpwVsg4QYD9R4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> It is a good start.  There are other modernization opportunities in
+>> this file, though.
+>>   - Output from "test-tool ref-store" piped to "sed" means the exit
+>>     status from an abnormal exit of "test-tool" is hidden.  They
+>>     should be split into two commands.
+>>   - Expected output file prepared outside test_expect_success that
+>>     uses it.
+>>   - Here-doc that does not interpolate leaving the EOF marker
+>>     unquoted.
+>
+> Thanks for the review. I've just sent a follow-up v2 patch fixing the
+> things you mentioned. I also found other issues like:
+>
+> some test_expect_success are seperated from its name like:
+>
+>    test_expect_success \
+>    	'trying to delete tags without params should succeed and do nothing' '
+>
+> but I preferred to send the patch first as it was getting very long
+> and I also wanted to make sure that I am on the right path and not
+> just fixing unrelated things.
 
-On 2024-08-03 at 07:58:55, Kim Scarborough wrote:
-> Hi folks,
->=20
-> Was wondering why I need gettext to compile git, even if I tell it I don't
-> need NLS. I've not needed it to compile anything else. Is this really
-> necessary to run git?
+To deal with "is this getting too long?" you can split this into a
+series of multiple patches, e.g.
 
-I believe you can use NO_GETTEXT=3D1 and NO_MSGFMT=3D1 (both must be set) to
-remove the need for gettext and msgfmt.  The latter can be omitted if
-you're not building git-gui.  You can see other configuration options at
-the top of the Makefile.
+    [PATCH 0/n] t7004: modernize the style
+      cover letter that gives an overview of the series
 
-I will note that both of these commands are required as of POSIX
-1003.1-2024, though.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+    [PATCH 1/n] t7004: description on the same line as test_expect_success
+      the one you pointed out above
 
---oK2gpwVsg4QYD9R4
-Content-Type: application/pgp-signature; name="signature.asc"
+    [PATCH 2/n] t7004: redirection operator
+      the patch you sent earlier
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+    [PATCH 3/n] t7004: do not lose exit status to pipe
+      split "test-tool ... | sed" pipeline into two commands
+      to avoid losing exit status from test-tool
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZq5UFQAKCRB8DEliiIei
-gYGfAQDl0NaXxwMQMHzRV1j2U87YLspicA9DbEZSz2BEbonhQwEAjXwb7/4mwDqp
-c2kPFPaFYxm2gLVZka/1e+PYo+OIigI=
-=RLQt
------END PGP SIGNATURE-----
+    [PATCH 4/n] t7004: one command per line
+      fix lines like these:
+	git tag -l >actual && test_cmp expect actual &&
+      to
+	git tag -l >actual &&
+	test_cmp expect actual &&
 
---oK2gpwVsg4QYD9R4--
+    [PATCH 5/n] t7004: here-doc modernization
+      use <<-EOF or <<-\EOF to indent here-doc
+      use \EOF not EOF when not interpolating
+
+    [PATCH 6/n] t7004: do not do things outside test_expect_success
+      do not prepare expect and other things outside test_expect_success
+
+would make a thorough series, while keeping each step still
+reasonably short, I suspect.
