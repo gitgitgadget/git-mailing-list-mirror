@@ -1,326 +1,97 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D7614E2FC
-	for <git@vger.kernel.org>; Sat,  3 Aug 2024 14:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D551E505
+	for <git@vger.kernel.org>; Sat,  3 Aug 2024 16:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722695692; cv=none; b=NyGAnhvg/n1f8J3x7jm9FlxRxY1wqwYjwkH5fkEf/7ZU0FY423X63j4IL4qUebkpf1ax+p5dNzXexYEs/FP9JgcZ1l3Qp8iwmRdQRPEQzn04EUWia6zDRWXLNCiYG2Nm13RKbIDhBIq/qp+R5CcqevgO//igyhKy3jbCJKp+dAI=
+	t=1722700835; cv=none; b=pFP4dbNtCpM4Mdh/a5VUmOH/n4S43JoBO1nQer4GBu9dsUxXpPaTS49O5NtRCH7cPu12LAPX74V/yOL2qgqsiQ9srJzGAVC3r09+Wzm1zDoyy8pmDpvYO5m3VNGbN+s9DtX57Ausa7/x8rKKP2aaBnEBC6jWtiW7zOta0nnrp+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722695692; c=relaxed/simple;
-	bh=yrTlhFGbFbKIXHFTvkv8rIMKGprCQYTJRdhA7t8RvkI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OBBhYJFVUOvrrLhmhU6j1T7uBANJMxTNcadVUz+bypg9ly+NjNPh98oyl47gOls3d/w9f/HFrcI9IYezgTwTWJjoidic7EQSLd6uXnFl0BtGByp/+5mXIWPZWyKviwGl6DHjeRsD4FF4yRKcft+l9NmL6hNWexK75ef28LQGvxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZMfi2dPj; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722700835; c=relaxed/simple;
+	bh=I2Udpg5ak8ImvdO4MqQoViu1YA7Q/TOof79k1R3tAuw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RUQ296tbTSvwuReewz6mTFly08OV9w1MT3YwcSoP+F3vHiDA7S6DojiP0sEw0fOg/BJ4YB+16TNOxX9o/naXa46S5DzNXyHQxDjXxmLCJH+E/HXvT2I6MASg+6HmRVoxpgQ/F4MyFVJLQdPkUe8a4oPtXPr+BOQG+fGcWcoQHcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Xv86Rzkk; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZMfi2dPj"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36868fcb919so4702739f8f.2
-        for <git@vger.kernel.org>; Sat, 03 Aug 2024 07:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722695688; x=1723300488; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cNXPPWsy/CfvsdCZINc/b8gxAh/mjX53N8Z3NWLRgOA=;
-        b=ZMfi2dPjku1frJ/os/MTaOljGe2vvJmlkRj/DpLppbPeLS0DNuu/P5OYc9irc+hJYX
-         QMM1ciDcxinHWDCoS+bRcd34w0TSR9T3MXpZQz/0SBa2BNFgu2DWCluXyIP0SBcDNWlt
-         tiDpUpaPWi0ILcA/KKPhj0S0jGB39nrKANzfwlWZJkdOO5GXLD2vnkGXYiBhdMoLkcmy
-         KVmlFKunn0nF/K0H8B0ourIY2I0u+P2l1pnhZ8QedyXSPF5MIlBD9Ob156jy5/GBK+cU
-         Mb7DrbpZIqn2mVG0rxksDXy06CLkmjMSnhTLjUgHIlSCoEOf47/fNPpRfU9fauJB70BX
-         Jf1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722695688; x=1723300488;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cNXPPWsy/CfvsdCZINc/b8gxAh/mjX53N8Z3NWLRgOA=;
-        b=a8V8ZzuKxn/szMlvMK9mTHKMw6JQOkSokDHIr1CULg+sSzKc3gfbifPgUUNGQ5hb96
-         IL/OGXPdLh4gMaXOIkSqoZ0Z3ovJR2eeaslAE4bU9M0hGnmHXRq00jb9i3bAzoztUI8W
-         LAgY7m8olxsjQIRKoHrQ7q7KpGIgHN587OgG+O6GkN3Jari9uGt+QTtl4C2IwDr9XgbH
-         WszKte5M85hBJaZbMqtFS/R9Ex+JLokH4XYE/S9j2SquUa/ffO61A8vvuDQfq05uuU2p
-         e//LC8q4qaJJ+ANy2WcWFt5LIbi5sNY/QHjBphJ40zM6HXdQRwy2JveH0flBCf9OTs0X
-         oSGQ==
-X-Gm-Message-State: AOJu0YzZOkL9PcTFOe2VXr45Jy0244+r0ClEX827ynv9+hrSL15WS+uG
-	KDN5pBc6MtVLcfRVpQ0LYXQy8+Uj0aCxdKwHnn8PCPs8ZwvAQGDPQP0Nj46Y26E=
-X-Google-Smtp-Source: AGHT+IFROeNN+ld8ebFrnEdW0E+V3MHVXg164hPG5GjuXtTxL89IwN+QeK5/Lw1ECQ5Qa0/C+wftOw==
-X-Received: by 2002:a5d:5e12:0:b0:36b:bd38:c724 with SMTP id ffacd0b85a97d-36bbd38c869mr4174189f8f.47.1722695688081;
-        Sat, 03 Aug 2024 07:34:48 -0700 (PDT)
-Received: from [192.168.1.6] ([197.40.96.43])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bc5a6fa1csm3491625f8f.78.2024.08.03.07.34.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Aug 2024 07:34:47 -0700 (PDT)
-Message-ID: <dcded6a3-e284-4d52-b36f-dacc056bbc5b@gmail.com>
-Date: Sat, 3 Aug 2024 17:34:46 +0300
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xv86Rzkk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1722700823;
+	bh=I2Udpg5ak8ImvdO4MqQoViu1YA7Q/TOof79k1R3tAuw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Xv86RzkkYnPUXBAQjl43+wYRn5qSy8JtAbt13csLelcy5xQ5sQbRYjmQnza4rM6Jq
+	 cemHUDSJOYMhvKETTEObAO0+n+Dhibjdw/UQuPOQUaLbRt5H5sICBt5Hw6UpPn95kD
+	 43rvlEYKsrGMsYlcimLly8lmK1KzVLn8i/7AjXfCmSQGidt95TCMjgyg2gv+cMqm3y
+	 Zy5L8FCCK8gzR+jX39e3ydT1xPRV4e0oPCGa3lsqJavdaD3TQzZtzv+6Tslx6/qz9F
+	 Xu8YSCszZ41Nptp1QoSRsFPxnwLN7y5Vw8i/TVFeAzkhOgpQr1O15CnN1RSYDYWTtQ
+	 GDkx4YyOa3O7G19qsyxru8AuBAEEEzuLiDBp28z5MXZiLhULxDMnEC9jgNWyIjXZGx
+	 FoD6KZRbJE9q9P7dl36xodyYmRYnV49rqtxp9o4rgs7LHKl2zez1G91ixzNRb8VuuM
+	 QBpqCk+Xi1K+Olgchr4XM98/SvOkA/eKN8PeMaUmicqEbSWAr+1
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A0F5B209BD;
+	Sat,  3 Aug 2024 16:00:23 +0000 (UTC)
+Date: Sat, 3 Aug 2024 16:00:21 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kim Scarborough <kim@scarborough.kim>
+Cc: git@vger.kernel.org
+Subject: Re: Git and gettext
+Message-ID: <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kim Scarborough <kim@scarborough.kim>, git@vger.kernel.org
+References: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][Newcomer] t7004-tag: modernize the test script
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240802064719.513498-1-abdobngad@gmail.com>
- <xmqqttg2ewqm.fsf@gitster.g>
-Content-Language: en-US
-From: AbdAlRahman Gad <abdobngad@gmail.com>
-In-Reply-To: <xmqqttg2ewqm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oK2gpwVsg4QYD9R4"
+Content-Disposition: inline
+In-Reply-To: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
+--oK2gpwVsg4QYD9R4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/2/24 19:05, Junio C Hamano wrote:
-> AbdAlRahman Gad <abdobngad@gmail.com> writes:
-> 
->> Modernaize 't7004-tag.sh' by removing whitespace
->> after the redirect operators.
-> 
-> It is a good start.  There are other modernization opportunities in
-> this file, though.
-> 
->   - Output from "test-tool ref-store" piped to "sed" means the exit
->     status from an abnormal exit of "test-tool" is hidden.  They
->     should be split into two commands.
-> 
->   - Expected output file prepared outside test_expect_success that
->     uses it.
-> 
->   - Here-doc that does not interpolate leaving the EOF marker
->     unquoted.
+On 2024-08-03 at 07:58:55, Kim Scarborough wrote:
+> Hi folks,
+>=20
+> Was wondering why I need gettext to compile git, even if I tell it I don't
+> need NLS. I've not needed it to compile anything else. Is this really
+> necessary to run git?
 
-Thanks for the review. I've just sent a follow-up v2 patch fixing the 
-things you mentioned. I also found other issues like:
+I believe you can use NO_GETTEXT=3D1 and NO_MSGFMT=3D1 (both must be set) to
+remove the need for gettext and msgfmt.  The latter can be omitted if
+you're not building git-gui.  You can see other configuration options at
+the top of the Makefile.
 
-some test_expect_success are seperated from its name like:
+I will note that both of these commands are required as of POSIX
+1003.1-2024, though.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-    test_expect_success \
-    	'trying to delete tags without params should succeed and do nothing' '
+--oK2gpwVsg4QYD9R4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-but I preferred to send the patch first as it was getting very long and 
-I also wanted to make sure that I am on the right path and not just 
-fixing unrelated things.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
->> Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
->> ---
->>   t/t7004-tag.sh | 50 +++++++++++++++++++++++++-------------------------
->>   1 file changed, 25 insertions(+), 25 deletions(-)
->>
->> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
->> index fa6336edf9..3100a4c219 100755
->> --- a/t/t7004-tag.sh
->> +++ b/t/t7004-tag.sh
->> @@ -213,9 +213,9 @@ mytag
->>   EOF
->>   test_expect_success \
->>   	'trying to delete tags without params should succeed and do nothing' '
->> -	git tag -l > actual && test_cmp expect actual &&
->> +	git tag -l >actual && test_cmp expect actual &&
->>   	git tag -d &&
->> -	git tag -l > actual && test_cmp expect actual
->> +	git tag -l >actual && test_cmp expect actual
->>   '
->>   
->>   test_expect_success \
->> @@ -269,9 +269,9 @@ test_expect_success 'listing all tags should print them ordered' '
->>   	git tag a1 &&
->>   	git tag v1.0 &&
->>   	git tag t210 &&
->> -	git tag -l > actual &&
->> +	git tag -l >actual &&
->>   	test_cmp expect actual &&
->> -	git tag > actual &&
->> +	git tag >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -283,7 +283,7 @@ EOF
->>   test_expect_success \
->>   	'listing tags with substring as pattern must print those matching' '
->>   	rm *a* &&
->> -	git tag -l "*a*" > current &&
->> +	git tag -l "*a*" >current &&
->>   	test_cmp expect current
->>   '
->>   
->> @@ -293,7 +293,7 @@ v1.0.1
->>   EOF
->>   test_expect_success \
->>   	'listing tags with a suffix as pattern must print those matching' '
->> -	git tag -l "*.1" > actual &&
->> +	git tag -l "*.1" >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -303,7 +303,7 @@ t211
->>   EOF
->>   test_expect_success \
->>   	'listing tags with a prefix as pattern must print those matching' '
->> -	git tag -l "t21*" > actual &&
->> +	git tag -l "t21*" >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -312,7 +312,7 @@ a1
->>   EOF
->>   test_expect_success \
->>   	'listing tags using a name as pattern must print that one matching' '
->> -	git tag -l a1 > actual &&
->> +	git tag -l a1 >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -321,7 +321,7 @@ v1.0
->>   EOF
->>   test_expect_success \
->>   	'listing tags using a name as pattern must print that one matching' '
->> -	git tag -l v1.0 > actual &&
->> +	git tag -l v1.0 >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -331,13 +331,13 @@ v1.1.3
->>   EOF
->>   test_expect_success \
->>   	'listing tags with ? in the pattern should print those matching' '
->> -	git tag -l "v1.?.?" > actual &&
->> +	git tag -l "v1.?.?" >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->>   test_expect_success \
->>   	'listing tags using v.* should print nothing because none have v.' '
->> -	git tag -l "v.*" > actual &&
->> +	git tag -l "v.*" >actual &&
->>   	test_must_be_empty actual
->>   '
->>   
->> @@ -349,7 +349,7 @@ v1.1.3
->>   EOF
->>   test_expect_success \
->>   	'listing tags using v* should print only those having v' '
->> -	git tag -l "v*" > actual &&
->> +	git tag -l "v*" >actual &&
->>   	test_cmp expect actual
->>   '
->>   
->> @@ -1171,7 +1171,7 @@ test_expect_success GPG \
->>   	git tag -v emptyfile-signed-tag
->>   '
->>   
->> -printf '\n\n  \n\t\nLeading blank lines\n' > sigblanksfile
->> +printf '\n\n  \n\t\nLeading blank lines\n' >sigblanksfile
->>   printf '\n\t \t  \nRepeated blank lines\n' >>sigblanksfile
->>   printf '\n\n\nTrailing spaces      \t  \n' >>sigblanksfile
->>   printf '\nTrailing blank lines\n\n\t \n\n' >>sigblanksfile
->> @@ -1569,7 +1569,7 @@ test_expect_success \
->>   
->>   test_expect_success \
->>   	'message in editor has initial comment' '
->> -	! (GIT_EDITOR=cat git tag -a initial-comment > actual)
->> +	! (GIT_EDITOR=cat git tag -a initial-comment >actual)
->>   '
->>   
->>   test_expect_success 'message in editor has initial comment: first line' '
->> @@ -1587,7 +1587,7 @@ test_expect_success \
->>   '
->>   
->>   get_tag_header reuse $commit commit $time >expect
->> -echo "An annotation to be reused" >> expect
->> +echo "An annotation to be reused" >>expect
->>   test_expect_success \
->>   	'overwriting an annotated tag should use its previous body' '
->>   	git tag -a -m "An annotation to be reused" reuse &&
->> @@ -1639,7 +1639,7 @@ hash3=$(git rev-parse HEAD)
->>   
->>   # simple linear checks of --continue
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
->> @@ -1679,7 +1679,7 @@ test_expect_success 'checking that first commit is in all tags (relative)' "
->>   	test_must_be_empty actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v2.0
->>   EOF
->>   
->> @@ -1688,7 +1688,7 @@ test_expect_success 'checking that second commit only has one tag' "
->>   	test_cmp expected actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
->> @@ -1705,7 +1705,7 @@ test_expect_success 'checking that third commit has no tags' "
->>   	test_must_be_empty actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
->> @@ -1723,14 +1723,14 @@ test_expect_success 'conversely --no-contains on the third commit lists all tags
->>   test_expect_success 'creating simple branch' '
->>   	git branch stable v2.0 &&
->>           git checkout stable &&
->> -	echo foo-3.0 > foo &&
->> +	echo foo-3.0 >foo &&
->>   	git commit foo -m fourth &&
->>   	git tag v3.0
->>   '
->>   
->>   hash4=$(git rev-parse HEAD)
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v3.0
->>   EOF
->>   
->> @@ -1739,7 +1739,7 @@ test_expect_success 'checking that branch head only has one tag' "
->>   	test_cmp expected actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
->> @@ -1757,7 +1757,7 @@ test_expect_success 'merging original branch into this branch' '
->>           git tag v4.0
->>   '
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v4.0
->>   EOF
->>   
->> @@ -1766,7 +1766,7 @@ test_expect_success 'checking that original branch head has one tag now' "
->>   	test_cmp expected actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
->> @@ -1780,7 +1780,7 @@ test_expect_success 'checking that original branch head with --no-contains lists
->>   	test_cmp expected actual
->>   "
->>   
->> -cat > expected <<EOF
->> +cat >expected <<EOF
->>   v0.2.1
->>   v1.0
->>   v1.0.1
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZq5UFQAKCRB8DEliiIei
+gYGfAQDl0NaXxwMQMHzRV1j2U87YLspicA9DbEZSz2BEbonhQwEAjXwb7/4mwDqp
+c2kPFPaFYxm2gLVZka/1e+PYo+OIigI=
+=RLQt
+-----END PGP SIGNATURE-----
 
+--oK2gpwVsg4QYD9R4--
