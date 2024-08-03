@@ -1,116 +1,65 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from smtp.rcn.com (mail.rcn.syn-alias.com [129.213.13.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EF014D6F9
-	for <git@vger.kernel.org>; Sat,  3 Aug 2024 16:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92464F9F5
+	for <git@vger.kernel.org>; Sat,  3 Aug 2024 17:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=129.213.13.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722702589; cv=none; b=LBrIOWeg78FsUqgkYVHV7iyMCBKabyZUR5mFRGTqcUl3GznzoUR8VbXlEPyfHtF/eyFSZCyMgJqbutCdCR7SZuAfZ/pxXzeF73CQStPCxIQoMUYQMG0lcUlNnTcCRUiSCFGVsL8zVZgKNnSwwP8YrCyAjBG5+v2vMuWDa9/Db+E=
+	t=1722705887; cv=none; b=CTihd1WBPrpxre2d326pIHsY68p45nCMlfqVk1PIs0UyPlhz3y5i+/7Ycnq+S/MO1M57QYemlg5Dxx/RS6ZU0U2KbB8eYTYob9zfKTNt+UaG9p0zOrg3DvmFtOCFjze8ew5y8Axy0ygndib64DCs8jdIl0a1Nh/g7nmRdfSu7ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722702589; c=relaxed/simple;
-	bh=sUXTDO6J4QKTzhrSC5PwHTsDEOKmZp4rE16lmntuWBY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uUmgKF28k0Sq38sZGqJrvz3SkgEDGDBsyjf1O+iZ6pO8apWmNwgSa0kNuZE1YOkJLwBTekkHPKnCcke1ZUoXwu5V9jgMpGIpXXVmDdjpPCilLbcuLySS6UH8etYqFzsdIFdDgXz5l6qxqe4hObWg9tUIO6LEFatYyPCvOvpSsUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AK02f+Qw; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AK02f+Qw"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 848E1245F0;
-	Sat,  3 Aug 2024 12:29:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sUXTDO6J4QKTzhrSC5PwHTsDEOKmZp4rE16lmn
-	tuWBY=; b=AK02f+QwALQuruJn5dMKlXNslypvJT0FiPHdrJghWToZCm9bOiJmzJ
-	dnmeU4JDydIepcM6/0P6NfMCUTtMb7gURqhBB1r06ajSR8SBM+RlHfv8uiPtWDce
-	xXqMfdJ4i9olyOBPt5na0a6+bF9el/1Nm+Njg7rlx3zyoVBLEx2Zc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E23A245EF;
-	Sat,  3 Aug 2024 12:29:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5782A245EE;
-	Sat,  3 Aug 2024 12:29:42 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: AbdAlRahman Gad <abdobngad@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH][Newcomer] t7004-tag: modernize the test script
-In-Reply-To: <dcded6a3-e284-4d52-b36f-dacc056bbc5b@gmail.com> (AbdAlRahman
-	Gad's message of "Sat, 3 Aug 2024 17:34:46 +0300")
-References: <20240802064719.513498-1-abdobngad@gmail.com>
-	<xmqqttg2ewqm.fsf@gitster.g>
-	<dcded6a3-e284-4d52-b36f-dacc056bbc5b@gmail.com>
-Date: Sat, 03 Aug 2024 09:29:40 -0700
-Message-ID: <xmqqmslt7eob.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1722705887; c=relaxed/simple;
+	bh=EtpG7BAml7Yt3LGNUaoPtTzyIwndpnqYHiwhdSv0674=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dr7R4LcY1ruCl6Xzcw36lVGeSGu02oCUQ0IkJverfpSKywzH5E9N+x6+VlYwDut1gQRM9TXkp4TafxFcOAXkTmQJMlQwyqFPHv7ghV9euKzkrsyNzbQxedvLniOKiSjpgDh0Mkbsv1yj3lrpcbbVUGIvOhVaiM9fY1CaVCzggl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scarborough.kim; spf=pass smtp.mailfrom=scarborough.kim; arc=none smtp.client-ip=129.213.13.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scarborough.kim
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scarborough.kim
+X-Authed-Username: Y2hvd2Jva0ByY24uY29t
+Authentication-Results:  smtp01.rcn.email-ash1.sync.lan smtp.user=<hidden>; auth=pass (PLAIN)
+Received: from [24.148.58.81] ([24.148.58.81:58928] helo=[172.22.22.107])
+	by smtp.rcn.com (envelope-from <kim@scarborough.kim>)
+	(ecelerity 4.4.1.20033 r(msys-ecelerity:tags/4.4.1.0^0)) with ESMTPSA (cipher=AES128-GCM-SHA256) 
+	id D9/34-20757-CD76EA66; Sat, 03 Aug 2024 13:24:44 -0400
+Message-ID: <7d507ea2-08e1-4597-bff8-8a2b40a01747@scarborough.kim>
+Date: Sat, 3 Aug 2024 12:24:43 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 96439B60-51B5-11EF-BCBA-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git and gettext
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+References: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
+ <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
+Content-Language: en-US
+From: Kim Scarborough <kim@scarborough.kim>
+In-Reply-To: <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Vade-Verdict: clean
+X-Vade-Analysis-1: gggruggvucftvghtrhhoucdtuddrgeeftddrkedvgdduuddtucetufdoteggodetrfdotffvucfrrhho
+X-Vade-Analysis-2: fhhilhgvmecuufgjpfetvefqtfdptfevpfdpgffpggdqtfevpfdpqfgfvfenuceurghilhhouhhtmecu
+X-Vade-Analysis-3: fedtudenucenucfjughrpefkffggfgfuvfhfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpefmihhm
+X-Vade-Analysis-4: ucfutggrrhgsohhrohhughhhuceokhhimhesshgtrghrsghorhhouhhghhdrkhhimheqnecuggftrfgr
+X-Vade-Analysis-5: thhtvghrnhepiedukefftdeuvdegjeduteehhfetffdvleehudehgeejteegudefhfejveevledtnecu
+X-Vade-Analysis-6: kfhppedvgedrudegkedrheekrdekudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhn
+X-Vade-Analysis-7: vghtpedvgedrudegkedrheekrdekuddphhgvlhhopegludejvddrvddvrddvvddruddtjegnpdhmrghi
+X-Vade-Analysis-8: lhhfrhhomhepkhhimhesshgtrghrsghorhhouhhghhdrkhhimhdprhgtphhtthhopehsrghnuggrlhhs
+X-Vade-Analysis-9: segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+X-Vade-Analysis-10: rhhnvghlrdhorhhgpdhmthgrhhhoshhtpehsmhhtphdtuddrrhgtnhdrvghmrghilhdqrghshhdurdhs
+X-Vade-Analysis-11: hihntgdrlhgrnhdpnhgspghrtghpthhtohepvddpihhspghnrgepthhruhgvpdgruhhthhgpuhhsvghr
+X-Vade-Analysis-12: pegthhhofigsohhk
+X-Vade-Client: RCN
 
-AbdAlRahman Gad <abdobngad@gmail.com> writes:
+> I believe you can use NO_GETTEXT=1 and NO_MSGFMT=1 (both must be set) to
+> remove the need for gettext and msgfmt.  The latter can be omitted if
+> you're not building git-gui.  You can see other configuration options at
+> the top of the Makefile.
 
->> It is a good start.  There are other modernization opportunities in
->> this file, though.
->>   - Output from "test-tool ref-store" piped to "sed" means the exit
->>     status from an abnormal exit of "test-tool" is hidden.  They
->>     should be split into two commands.
->>   - Expected output file prepared outside test_expect_success that
->>     uses it.
->>   - Here-doc that does not interpolate leaving the EOF marker
->>     unquoted.
->
-> Thanks for the review. I've just sent a follow-up v2 patch fixing the
-> things you mentioned. I also found other issues like:
->
-> some test_expect_success are seperated from its name like:
->
->    test_expect_success \
->    	'trying to delete tags without params should succeed and do nothing' '
->
-> but I preferred to send the patch first as it was getting very long
-> and I also wanted to make sure that I am on the right path and not
-> just fixing unrelated things.
+I tried setting both but it still errors out. A little later in the 
+build, though.
 
-To deal with "is this getting too long?" you can split this into a
-series of multiple patches, e.g.
-
-    [PATCH 0/n] t7004: modernize the style
-      cover letter that gives an overview of the series
-
-    [PATCH 1/n] t7004: description on the same line as test_expect_success
-      the one you pointed out above
-
-    [PATCH 2/n] t7004: redirection operator
-      the patch you sent earlier
-
-    [PATCH 3/n] t7004: do not lose exit status to pipe
-      split "test-tool ... | sed" pipeline into two commands
-      to avoid losing exit status from test-tool
-
-    [PATCH 4/n] t7004: one command per line
-      fix lines like these:
-	git tag -l >actual && test_cmp expect actual &&
-      to
-	git tag -l >actual &&
-	test_cmp expect actual &&
-
-    [PATCH 5/n] t7004: here-doc modernization
-      use <<-EOF or <<-\EOF to indent here-doc
-      use \EOF not EOF when not interpolating
-
-    [PATCH 6/n] t7004: do not do things outside test_expect_success
-      do not prepare expect and other things outside test_expect_success
-
-would make a thorough series, while keeping each step still
-reasonably short, I suspect.
+-- 
+Kim Scarborough
