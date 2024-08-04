@@ -1,64 +1,64 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9442558BB
-	for <git@vger.kernel.org>; Sun,  4 Aug 2024 14:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9478056766
+	for <git@vger.kernel.org>; Sun,  4 Aug 2024 14:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722780701; cv=none; b=JmW1tBOzlEW0gdv9hQo7h0HgczaOU4IYQ5bljHITeoi3/vIPno+SOgqzYzdsWq+XTWFIya1ljJVSoHC71Myn/NPs7cTKSZIAiKOla8NU5P+cgcF4KTwIiV6RPH9Px04uJr9Lw0C+h3j2SsJFxC32Sn5r2AHuS1Y++b9DmWMC0X4=
+	t=1722780704; cv=none; b=HIjTEhZ1enscC35evLV3WAvqV+gCGyUqje5mosjNDwZK1NxyqzBukur8d7rbIRX9TQZr+HnONl7s9VAaCFrp+NYtDPQdHbMSQ6GSrW3QvvnQyqVZyx+rROna7Swwk8M216zH73ag455COu9Ll6l+rqy0BF8ZxbQgdqR3WZsRrhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722780701; c=relaxed/simple;
-	bh=wosj2RHFDPsXy1Q8qWoeEFWWoOhjsuXkN7V/tE4ajnY=;
+	s=arc-20240116; t=1722780704; c=relaxed/simple;
+	bh=fEql4UDf4O+NGVTCY/xpS8UYxGIbT6Me4V5hNvMDVIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koSfQlAVungAQjnbKvknCBWa8H4lcqoF2fIxc5TrlRTbZ52kTR0oTGxbRkmBWGpLTdstFYxDK5iP6DkSVKad0SAW84GkUXpo06b7neq9JHZyV3RK81Vz8cgcqmPwbxRKyP8pQz1H6/AG+4aHBnsq6+onCKDBG0evfgpeZHNUBwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0qhfZEK; arc=none smtp.client-ip=209.85.160.45
+	 MIME-Version; b=sD7IXSWldeFC49MIr/xV06IJRn8Ezw21/OjGGehS+If8ntH6tyscCK5xabhmYtyYyM4gwpS9i+KRZ7KM5swHK/N3bmYNqRTRJFvtNK7aRmZgJFu0mUogtMwvlslPF2UMIEJrZ2aN+GDyJnX+XvgZ9jf5fHExcEuoC25r4DSzO7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z5bEFfE8; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0qhfZEK"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-260f057aa9bso6183593fac.2
-        for <git@vger.kernel.org>; Sun, 04 Aug 2024 07:11:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z5bEFfE8"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70cec4aa1e4so6532860b3a.1
+        for <git@vger.kernel.org>; Sun, 04 Aug 2024 07:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722780698; x=1723385498; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722780701; x=1723385501; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bihLSuYEJeRgrOWRMwTi9dCSTkdxCLdCjmW2QHlGvFs=;
-        b=V0qhfZEKu8SyjJvD7ToVGgh8JQHySCfhonykq9LmDqTVS3JZIo44kMDGgAjQwSpt4N
-         BoKVV5EH/gBC2vP5veDDMHetiLduDcy8kJqRLHQlAWFLed3TnaUEM+qUH5CAhs9QbZZy
-         6or/pAkpqi199w0bslgarKOU4h8lqod8DQyJjunvp1VjadTTQr1XvPgYR3MPbkXwKTGS
-         NcqFZHnBNRPW+QZabN/O2v/Dv1nU9qwIy+qq+uRy96q85T6ZmxpdRuS3qy1qUOsSKus1
-         7+DArmH4VhfSEzsQSy+nsW8cEGc8Pw2ezxpEorrRhNilrm4QCaIHBuIgoTgNWLpQdyiQ
-         n5gQ==
+        bh=e6LdhOVS1MV0pBmGNCTIpy/RdXSBas1kpEK/p/JLXE0=;
+        b=Z5bEFfE84VYYcITaTY61HiAt8HN6pUPjkMqMZkXenc2yWPuyHs1Q2MXxAReEeF13XT
+         H8KEGlOUkzY9och12UA9J9B+QCBWNMy3aO4E/JXhUZ/yQfdKo6b4mW00T+CvP5cp/De7
+         ot1TcH1fibSxw5PrUh/dna6+V05yF8p9xaCTadhkTmtklMzivWrmZ0zT0Qq+BizkCUFz
+         E3SFWNQOgPmCn8RsVXFPlUvyB6h3b9rXCv0L50HJgZjnSTZfxnrkCeKdwan45rrGX2RP
+         gTBj2+o9vdmoFOiVrqI/QYQf16fcL6psnbAylMsDquLH/wXWZlSHGXn+pv/+4+T4Xabd
+         lzXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722780698; x=1723385498;
+        d=1e100.net; s=20230601; t=1722780701; x=1723385501;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bihLSuYEJeRgrOWRMwTi9dCSTkdxCLdCjmW2QHlGvFs=;
-        b=csT9Sswcl3x0m28hbO9k0My5yBiPT4+g5Th0XJ3QKVzxOqdR8hDYc4xEN181df7PNT
-         Mq38O33jsxSoIsEpw6716T3UxB2esGIqnzqEqA7Ag67K/cPX5FDukBTd8sxqGOuX79Kv
-         y1DsM4/LvwQbdLZa1UdzYd7In9x42DgdC+TzEyWBc7SUVFZRjBaMaUuzS0OM2Erggzgd
-         o6F3ptao0ysqncfIEZj296IJeCpF/qow3/PaNkIPNtkV5mVQ4zH5b/TqIzS1DwsdDCAt
-         NDxPYBYpQtB4Z5riu6cXzJ+IbEwk4h11ByEHAO+1+pGN27pbL0K1H/9kJKTlNVZIyVIi
-         BPug==
-X-Gm-Message-State: AOJu0YxAOpQ6T/7hZxV9XgQ3VsqxC+UdJqccn+CpnI0MpUxBnugKJCvt
-	NEnq4eD2jNGVDAhFb/U/jfSjgLunGdSEW6nquJLifs8fJMPEU+4oKOjuZLc0
-X-Google-Smtp-Source: AGHT+IGoe0T4atYeoJfCdFmCRCD13lapD2mzePJ/Z/eT0DGvNVzeVOwqT3ZzscB458twkVgx5Iv2bA==
-X-Received: by 2002:a05:6870:3c07:b0:260:fdda:5068 with SMTP id 586e51a60fabf-26891ab181cmr10675271fac.4.1722780698203;
-        Sun, 04 Aug 2024 07:11:38 -0700 (PDT)
+        bh=e6LdhOVS1MV0pBmGNCTIpy/RdXSBas1kpEK/p/JLXE0=;
+        b=kU5jtjIJMGvTPsQubcfnsiQBVeRW74ku4PqZr0239nwywe8oaod6F9oymyf77K7cmw
+         /+Mo54WufJ89Lc6F66Yb35tqFhDSK7cRAyfBKyn8IyDTy6FmOaPlH/gcR7Y7v26HS6mn
+         hLaHQu8rj0hsyho29BQ3uPjJKW4kvMb7qTrkLsKC/iswz6JhB3nu39hFNJnpZ2TE8yQL
+         Ppl7vcFwzbEp4x/uwDVw2/8DLgnaxQtpYf1Lu3ZP2+h6j9U2HdnLuO1fMWrp5+Wim/Hu
+         /3Vi+W0HAXSNTP5bcaqcgXlsBmYHidwAThctjR5ylfirtCuSTc42iLtRvk+VjajYNexm
+         EUFQ==
+X-Gm-Message-State: AOJu0YwiUJViN76l2OU5EdJF1DsjbRT5WOmCzcfI3AEHzJc/4LUCbz5E
+	HF+c0DNF/aK26CFc1LpMpqbMNN3+kiOxY0mYcKlAJNzvMTY7ECVAN/esznyO
+X-Google-Smtp-Source: AGHT+IGmxJPql5O5oI/LOLqkPoEjf343Vfd+/7kyXzskQpahPCkLg1BiGl2It71h34joY84MywA4JQ==
+X-Received: by 2002:a05:6a00:66e7:b0:70b:260:3e2c with SMTP id d2e1a72fcca58-7106d046079mr11189377b3a.28.1722780701319;
+        Sun, 04 Aug 2024 07:11:41 -0700 (PDT)
 Received: from Ubuntu.. ([27.59.94.183])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-7106ec269d2sm4125047b3a.17.2024.08.04.07.11.35
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-7106ec269d2sm4125047b3a.17.2024.08.04.07.11.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Aug 2024 07:11:37 -0700 (PDT)
+        Sun, 04 Aug 2024 07:11:40 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 3/5] t-reftable-tree: split test_tree() into two sub-test functions
-Date: Sun,  4 Aug 2024 19:36:47 +0530
-Message-ID: <20240804141105.4268-4-chandrapratap3519@gmail.com>
+Subject: [PATCH v7 4/5] t-reftable-tree: add test for non-existent key
+Date: Sun,  4 Aug 2024 19:36:48 +0530
+Message-ID: <20240804141105.4268-5-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240804141105.4268-1-chandrapratap3519@gmail.com>
 References: <20240802121318.4583-1-chandrapratap3519@gmail.com>
@@ -71,78 +71,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the current testing setup, tests for both tree_search() and
-infix_walk() defined by reftable/tree.{c, h} are performed by
-a single test function, test_tree(). Split tree_test() into
-test_tree_search() and test_infix_walk() responsible for
-independently testing tree_search() and infix_walk() respectively.
-This improves the overall readability of the test file as well as
-simplifies debugging.
-
-Note that the last parameter in the tree_search() functiom is
-'int insert' which when set, inserts the key if it is not found
-in the tree. Otherwise, the function returns NULL for such cases.
-
-While at it, use 'func' to pass function pointers and not '&func'.
+In the current testing setup for tree_search(), the case for
+non-existent key is not exercised. Improve this by adding a
+test-case for the same.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-tree.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ t/unit-tests/t-reftable-tree.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tree.c
-index 8b1f9a66a0..7cc52a1925 100644
+index 7cc52a1925..2220414a18 100644
 --- a/t/unit-tests/t-reftable-tree.c
 +++ b/t/unit-tests/t-reftable-tree.c
-@@ -26,13 +26,12 @@ static void check_increasing(void *arg, void *key)
- 	c->last = key;
- }
- 
--static void t_tree(void)
-+static void t_tree_search(void)
- {
- 	struct tree_node *root = NULL;
- 	void *values[11] = { 0 };
- 	struct tree_node *nodes[11] = { 0 };
- 	size_t i = 1;
--	struct curry c = { 0 };
- 
- 	/*
- 	 * Pseudo-randomly insert the pointers for elements between
-@@ -48,13 +47,29 @@ static void t_tree(void)
+@@ -47,6 +47,7 @@ static void t_tree_search(void)
  		check_pointer_eq(nodes[i], tree_search(&values[i], &root, &t_compare, 0));
  	}
  
--	infix_walk(root, check_increasing, &c);
-+	tree_free(root);
-+}
-+
-+static void t_infix_walk(void)
-+{
-+	struct tree_node *root = NULL;
-+	void *values[11] = { 0 };
-+	struct curry c = { 0 };
-+	size_t i = 1;
-+
-+	do {
-+		tree_search(&values[i], &root, t_compare, 1);
-+		i = (i * 7) % 11;
-+	} while (i != 1);
-+
-+	infix_walk(root, &check_increasing, &c);
++	check(!tree_search(values, &root, t_compare, 0));
  	tree_free(root);
  }
  
- int cmd_main(int argc, const char *argv[])
- {
--	TEST(t_tree(), "tree_search and infix_walk work");
-+	TEST(t_tree_search(), "tree_search works");
-+	TEST(t_infix_walk(), "infix_walk works");
- 
- 	return test_done();
- }
 -- 
 2.45.GIT
 
