@@ -1,135 +1,91 @@
-Received: from st43p00im-zteg10063501.me.com (st43p00im-zteg10063501.me.com [17.58.63.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F581CA9F
-	for <git@vger.kernel.org>; Sun,  4 Aug 2024 14:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.63.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03CC8485
+	for <git@vger.kernel.org>; Sun,  4 Aug 2024 16:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722780975; cv=none; b=itXxE4ZMLLiuSvuSc9FdD+s5VslAKBUaS8aAJUrQD/0iQxBcueM1e8SQwBrhfioJIWdBB+0skj5i1jar4kmYLzIxNQ13U01yhtfhjU0aS12lU8ywVcH/Q8cAbM4iG2KBAHEJrbO37c9spwqhkzPQ61bHSvMQ8zZgbxk6vuBpMS0=
+	t=1722787356; cv=none; b=Hh83VxjCH0jO2dS4/crJ8027KBG0QmP20jAIMM5tB/bYgTB1U07Z2MdnAxsAbuTPa5ZPdtx+9Fj8Swq0kDUQGzFEY7bOdV39fFoz+9Yk+hotoMaRfBWe7+46b0lpelFtwHLDYdBBv+7BZwOtKsnZQEVmoWJHzxMPxoTmdvJCtQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722780975; c=relaxed/simple;
-	bh=jBbKKiV9RpAOc3AGcTb4nP9MmNNrU1IImWBe/rnunnE=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=aV4XgqxSJE3apZdfBQ+WpCHqUR9hfvJ5inAmqgga/vPpFGCVoniFTKUz/STYKz5rg8aepWMci0zk18u+0+3jc0PPTHJO/OagV0EFwz+sALG5unV//+ljl5G2Z74ilVrZ3zHPtbqdMBadc1yFrVbA9LZROc7ZBmm93/bSklvH9bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com; spf=pass smtp.mailfrom=mac.com; dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b=ByuL2yTp; arc=none smtp.client-ip=17.58.63.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mac.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mac.com
+	s=arc-20240116; t=1722787356; c=relaxed/simple;
+	bh=WJDsLEzSt8f7u7Kr81beYc5+gZ6dTyal3EJvP6RGrTo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=goR+wBe4swwzruZFiYuvCqP9wpv+SNIunMSEF9GiqE35cVzSdsbcr8wsBHsUDbcgMGTyGZp+xEn4PqU9iNS+DqUD2Qpr6o1corSPyetLGbJNQ7LB31BkXPPLsp5rUw7MroT2Yx/Y64Og/7r88DGU7LgkmfuuiOXSbjsaHU7p4SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pCBIa2F2; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mac.com header.i=@mac.com header.b="ByuL2yTp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
-	t=1722780973; bh=HBCRJPxjyBrZr5yI2IMI86r7qOjeFoo9jTpXGnCz8NY=;
-	h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
-	b=ByuL2yTp8nu/ifNC0oyZhgNSiyk1nd5yw4UztJMatyGcj7itjTgrz87d/ZoAkkYO7
-	 ktCZuksIwJtlM47UYrlVUuelvUbWFwt09m9QkGmdRKmOYDZYN4TeNMK/7cGWB6qeUh
-	 JFNFlDNKiexasbvmPcH0aCsLXztc6ShCzs2u5kpHuN64zV06xvLUQGH0vCwXnjIZNE
-	 si597Bkn9kR73b9PNCJdTC30FPx6F1G6gkTbfiiBvEAv1HVMAJzKi1mrVbFeoJOW21
-	 L7IdKqYd+22MzgNn5S85nWtI8qlI8pOnvcaAC+Ec7eCFvvfoPoVLwX5x0r35s+R32H
-	 xiKmK71mMc0Vg==
-Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-	by st43p00im-zteg10063501.me.com (Postfix) with ESMTPSA id 986F7980169;
-	Sun,  4 Aug 2024 14:16:10 +0000 (UTC)
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_FCF134BB-94E9-4318-A5BA-1B11BFE3BBFD";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pCBIa2F2"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-685cc5415e8so45849597b3.3
+        for <git@vger.kernel.org>; Sun, 04 Aug 2024 09:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1722787354; x=1723392154; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WJDsLEzSt8f7u7Kr81beYc5+gZ6dTyal3EJvP6RGrTo=;
+        b=pCBIa2F2K6d0a+6V2SrNynzST7R176ktgTiW5eQkoFRhtXCMDI6XMLx2Q/1Cc+H664
+         piR2D9EEVN6vHqccJJ6BmrubLvdsuFOVQaJXgFjVgIRFFS38R/jZSfJqTr5ghU+9ArpA
+         PkfH6+7cbsJhWiTItzl/gjeIjW7Zg9e41E+JoHOY/qL01jjU1yyCyInMdu+K55/Fl5kR
+         USx6LwedrZIsX5F0cGeXk/GYYvySSv+cXwH8d+B9Z9+dxAtVNGUK7SjcIXfcTR9AZz7T
+         /E7I3oYTYR1oD68G52EGmjOZRvQhDFdzkzaNs+zB1tYAGDb2VcdyEPfD+MjmCI8KBJLe
+         jgRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722787354; x=1723392154;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WJDsLEzSt8f7u7Kr81beYc5+gZ6dTyal3EJvP6RGrTo=;
+        b=bszpaZR0FL8ABULKIHZ5UZkOxnrxGj6ONEkWsEDEnIjNxvBu8Ku7z8g8XqbM1C+WsW
+         a2vOD4gT9GjDbwgJu+fs17TU9s3p8BiCA0oXa+h8uH3hPR3ZZbx6eVmXUZx1gFS2HJhg
+         Wf9M5MFJBo+IjUncvroh/4ueyxUw3ltNjMWxGuzLvRMalWU81AUAign8ctwd/yf7wbMQ
+         ZFszN7jhh0hs8UY8oQWJnawFGu+itAPvDp0QBa5Wd8ceDT2YhCNrBYfvi/K3C2YOz+BZ
+         uvqgJAvAqnuLBvrqECYScaxej4w0tGSz9P89Wswc4aLzxUPrj26K0YfrhRGmY9a+25u+
+         NqHw==
+X-Gm-Message-State: AOJu0Yz6QbeffwIG2q1/EleryFiW8z/7j2Xf2a6u+VcL6bhbqsXHyjtn
+	UwFLW4Dh37AMDm0KiVP1CWx4Bpo3oVUlaVYolkyXMkhvZENYF9VoQpQpy5m5IlPpaWUfXQdLeyo
+	2
+X-Google-Smtp-Source: AGHT+IGoxtIkBFDlxThSh4N8JL3uMuBxX4k5qgIFZn5aVjc2VtkOAzFDEN0EhE7E3LU3Al5DN0LGfg==
+X-Received: by 2002:a81:9e14:0:b0:65f:8218:8b2f with SMTP id 00721157ae682-68964584a38mr89431557b3.43.1722787353895;
+        Sun, 04 Aug 2024 09:02:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-68fcd1727f3sm3865017b3.90.2024.08.04.09.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Aug 2024 09:02:33 -0700 (PDT)
+Date: Sun, 4 Aug 2024 12:02:31 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] 2.46.0 t7701.09 fails on NonStop ia64
+Message-ID: <Zq+mF2fyL5hux+3k@nand.local>
+References: <02d301dae43d$2202fc90$6608f5b0$@nexbridge.com>
+ <ZqvgmYl8BTYvsSa0@nand.local>
+ <032201dae461$c7bcc9d0$57365d70$@nexbridge.com>
+ <ZqwvQUAqVozGHG/t@nand.local>
+ <040801dae528$70966d10$51c34730$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: Date and time processing issue
-From: the.tester@mac.com
-In-Reply-To: <xmqqplqqew38.fsf@gitster.g>
-Date: Sun, 4 Aug 2024 16:15:57 +0200
-Cc: git@vger.kernel.org
-Message-Id: <E76CDCA3-A788-4B96-8C84-4175C4CE5F0E@mac.com>
-References: <B896574C-A150-45AE-A636-ADA9ADF3255A@mac.com>
- <xmqqplqqew38.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3776.700.51)
-X-Proofpoint-GUID: rtRlZ3n9lznlQp_Me3syNTncXBxy43VY
-X-Proofpoint-ORIG-GUID: rtRlZ3n9lznlQp_Me3syNTncXBxy43VY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-04_10,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 phishscore=0 adultscore=0 mlxscore=0
- clxscore=1011 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2308100000 definitions=main-2408040104
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <040801dae528$70966d10$51c34730$@nexbridge.com>
 
+On Fri, Aug 02, 2024 at 06:07:55PM -0400, rsbecker@nexbridge.com wrote:
+> After the first repack, I have the following idx files. No foo/bar/baz inside.
+> The generate_random_blob() does generate the proper amount of bytes.
+> I tried changing 0xff to 0x00ff at the putchar just in case we had bad
+> sign extension - that wasn't it.
 
---Apple-Mail=_FCF134BB-94E9-4318-A5BA-1B11BFE3BBFD
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Hmm. What is in these index files if not the three randomly generated
+objects? Can you run show-index instead and share the results of that on
+the pack(s) in your repository after the first repack, and share the
+results with the list?
 
+I think those would be more readable than a hexdump, especially if your
+machine random source is different than mine (in which case I can't
+guess the values of $foo, $bar, and $baz).
 
-
-> On 2. Aug 2024, at 18:19, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> the.tester@mac.com writes:
->=20
->> To me, the error message is at least misleading.
->=20
-> Correct.  The error message is prepared for the most common case
-> where people ask for an invalid format, but does not pay attention
-> to the fact that some timestamps are not out of range in the Git
-> timescale and such an out of range timestamp can be fed to the
-> program.
->=20
-> Something along the following line may be a good first step to fix
-> it.
->=20
-> builtin/commit.c | 2 +-
-> ident.c          | 3 ++-
-> 2 files changed, 3 insertions(+), 2 deletions(-)
->=20
-> diff --git c/builtin/commit.c w/builtin/commit.c
-> index 66427ba82d..24de55ae86 100644
-> --- c/builtin/commit.c
-> +++ w/builtin/commit.c
-> =E2=80=A6=E2=80=A6=E2=80=A6
-> or date out of range: %s"),
-> +    date_str);
-> }
-> else
-> strbuf_addstr(ident, ident_default_date());
->=20
-
-
-Yes, that would improve the error message.
-Would it make sense to create a pull request for this? =E2=80=93 If so, =
-should I do it? Or you?, Neither or us?
-
-(That said, I wished I were familiar enough with C, to allow Git =
-processing of a wider range of dates, but I=E2=80=99m not.)
-
-
-
---Apple-Mail=_FCF134BB-94E9-4318-A5BA-1B11BFE3BBFD
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEImVTW2kalIKnTbGpN5OCOCEvsmQFAmavjR0ACgkQN5OCOCEv
-smTeqA/9Ex2cH9NexepWsgi90j3w4qOEgbwj3U72QIFTt13F+K4R7SK1b+E1Nu2L
-Vcqpg/jBLW687DKTheKBK0mqOQkCoph+/UsJ5dTqp6R/j03maZTzGjI8uGywbCsw
-jBERcGk8R19LGlNwe6+PAeTls5n1TvQ8j03WLB4J12Sgb3IFRxkEJzB1X/VAF7N2
-gMGmqph8hXvizzyziZb2XNuFezn5z5bF+CR9j/2a1tiMaY9Ojnqoy7exrM9q+M2z
-ztK5vBH7VYx79sYQk+j2I5wNzWViD4c56/wju4LV2VFWRoqb+NiOcPuQJd0ALuvg
-Hn+M47mxa+11aDzzVmLPTYAMUGuFv49lwH7aCUc8kwCL6LKpcS0323GH/hqnFLVq
-OlnbI9qVJt9aOw7WmwxTT11qlKidBZT6PUHXGRsB/QjNbAcfRCW9VN+Op6fPFvX0
-5BuyYYScdRrlGl1SWhQUXV86MJZSxp+wyNFsYghcgNC/e+N0jY7HMDjaLPTLsjCI
-hjExLwKPiHhAqBKdR70orFhxdRHU/t0TbgoS67U3k6Je8c7hgjjMEk1o7LCWDvf0
-1XudXythChnUX32hO6SbS7EhYeFTWArhIY3kKxC+jddYkVat/4Uc41/bD1k0whRf
-NOwXdIWv4H6RqzPxv3qnUx6sM1aYTrfMzEpmPDpzT+C3TBlOA2E=
-=3Hr/
------END PGP SIGNATURE-----
-
---Apple-Mail=_FCF134BB-94E9-4318-A5BA-1B11BFE3BBFD--
+Thanks,
+Taylor
