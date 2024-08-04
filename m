@@ -1,108 +1,101 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F6710A11
-	for <git@vger.kernel.org>; Sat,  3 Aug 2024 17:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0503BE47
+	for <git@vger.kernel.org>; Sun,  4 Aug 2024 07:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722706493; cv=none; b=nLZyjBKfGzTxRhNloj2SBzUNkmq7KftnZkdUZY1Q8xS/l+E7P477MsgzFe7OcVhmkOaOPdiaS7K7Jq13+VQV9mzk00hZB/OaglYFDyH5LgxnFd6v3DyEe//m9Z64P69ZKdKdajD+okom5OQEXKvI4D3hOKSM1l9/HfPf8S8b9Fw=
+	t=1722755546; cv=none; b=oGZm0tQFWP8afQ50tn5F/9xgLfP+7tecA/c/n9MrRpJ1XOZgI5lQbm11gA+5Zs/cFHEtq9fQ2Qw5UuM8sTHPXb9nc0aL1a6TPmBchoCJnpISktG7HBaqWRqEswr+eupWM041/DNkXm2eHQz8qsoYLXwXy7o5VGUvb0LkwFSpxVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722706493; c=relaxed/simple;
-	bh=1ndvqN5tjQLcwpS5U6Gh42IfczWTadWHu/IF9TWGNV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y3JTAgu3qsq4p3iq9dMSi+whhE8h81WLbOBBQbvBrUOdcjxGnG9HcykX2OtnFDIdF7N+4FRMrvfpeG7P39FAIo4WRfI2gKM7wFHukCHA56CoxwSe2BHHFeYisLgu8i1KEtqeVwV+Rzdo6VJ15CSM5CRyvdmu7TBFLCUmrBSaUP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hbERbypU; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1722755546; c=relaxed/simple;
+	bh=gnSGU+WWZzIuvUjKCRtllXXqbGvQGhoQwiwGB4zcFYc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=t421zgV0jKslwo8yrvanK4L4KFyAujEW99wa/axjBFGZFYv5ae/Z+FaTh9qqqKfa7IadkKMrnixh9OsKQwWjoSsQs9z1WZ5mnrKK8pAyq961YhyERikWerHvtfXR0XiVn2BqJFu7LQiS1HCcOIeFab5Smq7tgT94/vYcWrIeIu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kld0TST+; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hbERbypU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1722706489;
-	bh=1ndvqN5tjQLcwpS5U6Gh42IfczWTadWHu/IF9TWGNV4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hbERbypUi2tP7ONsbbcDAWEbkzjzKwi7jLTzWRmMo1SK9fgCo43K2Zrhq3D8G4QEy
-	 U4yQIM2TEyQzb/gkBzCj2m4LWCWgmQsLRGunokM4HjMaSsGbo87PF6wt3VVPZpf8V8
-	 HgFVHpKia6795gDlKgpkYQyUKVDvyq+jQknq7OrZgPCBZ30x+tIZj7s38uTzLAtXYi
-	 rnXHqZQ+kYd1ZtuZOpClVTM53+3fO8t//MzAxkOw0bF9cBbu7i0pvERblZCVIJx6rf
-	 ljoNYSmYwUFlWSetvq7mogniXeHXr5X1VqRfAOquDRIhWNXYlI4O0B0Wj1DOsarf1/
-	 fWwPD8gngpXB4H/oiMgXB+hah9Ao1HW9J5ZEC52neZRpn17z6qpfXAHGVUWZchJlIG
-	 uJh6ZrJmDT8J4XfMQAzBiFZYMop3tpFwA0V25dm/rXrycRcrz/0hV0GffNLSHe3p02
-	 3c3YoGoucRcvHr1x0x8nc2Az2FO01KJyuWGJI9gBXuh6SmVLkDM
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2091A209BD;
-	Sat,  3 Aug 2024 17:34:49 +0000 (UTC)
-Date: Sat, 3 Aug 2024 17:34:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kim Scarborough <kim@scarborough.kim>
-Cc: git@vger.kernel.org
-Subject: Re: Git and gettext
-Message-ID: <Zq5qNwmTpL1H5LH0@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kim Scarborough <kim@scarborough.kim>, git@vger.kernel.org
-References: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
- <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
- <7d507ea2-08e1-4597-bff8-8a2b40a01747@scarborough.kim>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kld0TST+"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-428243f928fso59097205e9.0
+        for <git@vger.kernel.org>; Sun, 04 Aug 2024 00:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722755543; x=1723360343; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d48DUSgpn19adYHxGvX9g7c/kdkVW1q0AmIGtYhICN0=;
+        b=kld0TST+HRqICXKEymEgFnyb/RTPzg9WiL1oBQc0KfRtMIxSgR8S/SnfE1K50PmNs9
+         +jJc70Ccep08ll6FR3CgobQM+B5+rLCx0VZBOahYLunGHS7UG2ILf+pYcTAtYWTCqth0
+         6Wj6prTacHhImbz403P0FwYAJHoT9xAPmRgCqNU4YC34hczih66adIuk6cyn9sClglYm
+         aeA1XIlC8gOMMH8ln/88p5PeoEbSU23lGzwNBu71WyNVVnMJFy2mDgEH37FQIzuNlcgQ
+         ZFFgEaI9VIprLYZ9lKWi2m54W29xmUl55DM3+THcfR5mviD1GnkqdPIhtKeVL15qmvlf
+         AxuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722755543; x=1723360343;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d48DUSgpn19adYHxGvX9g7c/kdkVW1q0AmIGtYhICN0=;
+        b=rOSt1Ml32KEvPDLFQgm1tM448KUSmvHOB4Zj9OtxD+Nzf5c5hwCcq2XJGSmk3N0b0K
+         XMS4f5Qz46R8o/RaEb1SObt4aCtH5VzlOP7msM2Z8vXk7ACG5k2S5KmJIHm4HMHsdl4m
+         7SYhAiWpPiNXvwVYTxhiW0iCduIB7SmtNcMYMlzfuniRBv+HX8Pd8LShM9Z49qi1fEjA
+         ZyfxVmkWeGWikSwjby8v3BEy1/sf2F01of72HM7vOBs3DLC9kxC1RMJkWmMMTANWKTln
+         iFI7Dn5+MeI9hC3DergcFyejWL0T/7RLvC0oGxKAwSw+S0viIFtSQyEsREpEUwvn4//6
+         HS2w==
+X-Gm-Message-State: AOJu0Yw1MqT+KZeTlF4TYLRBR7ndkbaP/jX8gIZczxvIDUaPc4pdzDAC
+	uP5pxZcX14XJSiTXbUFsrLvk8hZbyjkRszVa3zmk7p/V+WPwCbtCWeUavEV3+8g=
+X-Google-Smtp-Source: AGHT+IFB7819PgDQhHaCDNeg0MXcuERmduoompzNdwZ9kL4LiA5huT8Cd3meA8uKvCw1JuHv/EpXkA==
+X-Received: by 2002:a05:600c:5489:b0:426:6b14:1839 with SMTP id 5b1f17b1804b1-428e6a5f361mr79637435e9.0.1722755542552;
+        Sun, 04 Aug 2024 00:12:22 -0700 (PDT)
+Received: from abdobngad.. ([197.40.96.43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6e3c0b7sm88477595e9.23.2024.08.04.00.12.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Aug 2024 00:12:22 -0700 (PDT)
+From: AbdAlRahman Gad <abdobngad@gmail.com>
+To: git@vger.kernel.org
+Cc: AbdAlRahman Gad <abdobngad@gmail.com>
+Subject: [PATCH v3 0/6] [Newcomer] t7004: modernize the style
+Date: Sun,  4 Aug 2024 10:11:31 +0300
+Message-ID: <20240804071137.30326-1-abdobngad@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="S+pfQlGMQLjiaJ94"
-Content-Disposition: inline
-In-Reply-To: <7d507ea2-08e1-4597-bff8-8a2b40a01747@scarborough.kim>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Transfer-Encoding: 8bit
+
+- remove whitespace after the redirect operators.
+
+- move number of expect files prepared outside of
+  test_expect_success to be inside the tests that use it.
+
+- split some lines that have two commands into two lines
+  one command each.
+
+- turn some "<<\EOF" into "<<-\EOF" and indent their body.
+
+- avoid using pipes in the output from "test-tool ref-store"
+  and write the output to a file.
+
+- change test_expect_success that are seperated from its name
+  to be on the same line.
 
 
---S+pfQlGMQLjiaJ94
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+AbdAlRahman Gad (6):
+  [Newcomer] t7004-tag: redirection operator
+  [Newcomer] t7004-tag: do not lose exit status to pipe
+  [Newcomer] t7004-tag: one command per line
+  [Newcomer] t7004-tag: do not prepare except outside
+    test_expect_success
+  [Newcomer] t7004-tag: here-doc modernization
+  [Newcomer] t7004-tag: description on the same line as
+    test_expect_success
 
-On 2024-08-03 at 17:24:43, Kim Scarborough wrote:
-> > I believe you can use NO_GETTEXT=3D1 and NO_MSGFMT=3D1 (both must be se=
-t) to
-> > remove the need for gettext and msgfmt.  The latter can be omitted if
-> > you're not building git-gui.  You can see other configuration options at
-> > the top of the Makefile.
->=20
-> I tried setting both but it still errors out. A little later in the build,
-> though.
+ t/t7004-tag.sh | 584 +++++++++++++++++++++++--------------------------
+ 1 file changed, 274 insertions(+), 310 deletions(-)
 
-Hmm, I can't remove msgfmt from my system, but if I put a `msgfmt`
-script in `$TMP/path` that contains just a shebang and `exit 1` and do
-this, the build succeeds:
 
----
-PATH=3D"$TMP/path:$PATH" make -j12 NO_GETTEXT=3D1 NO_MSGFMT=3D1
----
+base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
+-- 
+2.43.0
 
-Note that `config.mak` is not read by git-gui, so you do really have
-to set `NO_MSGFMT=3D1` on the command line.
-
-Can you show exactly the commands you're running and exactly the output
-you're getting?  Also, what OS and version are you running this on?
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---S+pfQlGMQLjiaJ94
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZq5qNwAKCRB8DEliiIei
-gZsFAP4uWoETwDXUNqN55f0TfmR/UA0vol6IgMyrc6CgoxLprQD6A318IXw1YyYZ
-6bJ+Kb8XVQfXxfxqw+QjldgNg38BfwA=
-=qoh7
------END PGP SIGNATURE-----
-
---S+pfQlGMQLjiaJ94--
