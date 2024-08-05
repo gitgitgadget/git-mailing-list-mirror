@@ -1,80 +1,81 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F87913D882
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 08:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2011DFE8
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 09:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722846990; cv=none; b=q5n/bHjH26bMIPFLaRVUuj9I2dvwhCGBqKwVC+LyzimeH0AXJdAxDXR7KsIwz84f2if4F1RJoC1dwjRE4QE13oJRDXu+yLqgVhV+ErDKUqmFTMMwyZP5AZgYdaW/i2N8k5eYvk/flmf9BT2D3tyJE42voCNNY0M0uZQRn4iGxJ0=
+	t=1722849074; cv=none; b=nisbcBUF059b/RI6HjU1pWnCZfznfLM1iI7wkBa1PZ9Ns6uJKaYvnMlk0wi+OAGYU60mkjou/19+ItswpTkMqZjnVLNx3KEirxBNKyZMkPUrMYHEv+9Vkl/FuEkE6fR1ioq0RETdkRvZA5iGTcktt+/sbzEa52Fe1zHZWshOBTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722846990; c=relaxed/simple;
-	bh=zcmtTV5EsM0jdmU49LZEh0HJNeX7MLbxLKxasNoCJ6M=;
+	s=arc-20240116; t=1722849074; c=relaxed/simple;
+	bh=jMK3Z7Y9Zp+8/AKj/cUzoPtItt5VjD3olX7zVcB/4JY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SNhU+cj3hBR3zSIHkc21cSH/RcGc1VXQl9jl1b5UfV19m8oUfUCfWvbC0K1BVaJ3qQiZbFSCqWBfNIRlncQ7i7mkU8za2azTR4A8P6nv9mcFsmbaVj73LpPLAeeB0oGFV+Mz9MoP0Wg9u0DQL959H3XDLEvzKaPjx/hx+XVfF0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=elPxW6XT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lIAD9kSl; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=RkjQCpht+rl98vJKDyH3wYzb2FZGSziR9PIhQlzgxnyUV9dnUtzN3Wbgpp3E4sFl3nq0EQD5+Eb9i0lQ2wFjpfIjVsEFM4Kb6adBHJjO8qhSI9WWHGMnbnojDMCdZEuAcLY52ET8QgLN3E5eUFkdKyxjx6PX92exg2Th53AUNeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cEKijwmC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Waglvv9e; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="elPxW6XT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lIAD9kSl"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cEKijwmC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Waglvv9e"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D73D5138FDF5;
-	Mon,  5 Aug 2024 04:36:26 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id AF8421151CAC;
+	Mon,  5 Aug 2024 05:11:11 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 05 Aug 2024 04:36:26 -0400
+  by compute2.internal (MEProxy); Mon, 05 Aug 2024 05:11:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722846986; x=1722933386; bh=DJLT92+R1K
-	wVY3INotyc1xkxvQ8PP2+rr5Y/UXKfYLU=; b=elPxW6XTw7AfvTIwMoUBbO5yP9
-	tzFF+VLXVRIFevKedmf12n5ynvTygQtE/RYj2ADFaDgA/pSc0yQrHZoYPji5oaX6
-	iNLPZamDjvJp/6giNSp/Yt/QjonZNpZENh7T6agT+ogo6tArJjJY4e0wAAAl1Aei
-	HZlC21y6kTUWycZ38Cq9qFcapoL4zN57xzjClGwn3I3mBWoY7h/CIRtlTe5zal7X
-	aebTJfUV6fHNlittK1S4MrIqFzH8cQsBu3CLEpqnejk71adeZ+gqAyCRo/jAEKuR
-	zMLz0miit0HG9tAshTnOzjyMiCbdXuFJTc5dSZVtljqsK6wQbmL4II3DvI+Q==
+	:subject:to:to; s=fm3; t=1722849071; x=1722935471; bh=EJjW9QlPk8
+	lOWizyeGaP8Bunm4aCansVCFdazyCzyY0=; b=cEKijwmCDrFHu1ea+LcOjcbJh6
+	2A7x6YtbryXf2siClxvV7gRMdXLyJRZwk2xY3Qc0Qlu+2HhVutaVON3dETppyYDe
+	zff8dy3aGHtJYAU7cuKsoKfDGerpYL9sGEhggeFJXYZM3JPm71V1cApcJIeJkfcv
+	Zb/1PQEBFQKiE7i+bM5fIMMh79CbFqwjtKlolHFC7mgGCvYQo8B0tk/UL+NuOOtd
+	DBXOR1yq++h1jMX3ZLr2SoZHn9104lCOijw1rTbEv09FqQNkuq4gH8QWcKL4T77V
+	02MhBFFf7NHIThUAfkTwj8vMgBR6QWRboOEn/VcnBjfNUZlnclI38RsVBM/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722846986; x=1722933386; bh=DJLT92+R1KwVY3INotyc1xkxvQ8P
-	P2+rr5Y/UXKfYLU=; b=lIAD9kSl8Eme8wLHSnJb4MhZDVKsHjlJ1Dne38+0ba5m
-	+2UxP0ZhOQIUthEP4888Sp1Zr61f7IfWcubyKruNgxBal6WnVLQ4UzJz4cxEOvKc
-	e1J7Qa7DNnm46iIbL9phDdU3Dpyf7wO86U3GnsXMrZ0KE15Akr7TiI25QvX00Eia
-	9zFXt2NV0guOWFTGVjwFXXkwev7hHaJJy1KRWgoyWLRyu8T/GgEt9Ycq+KZQUYgd
-	p08bMWgrPJg9etUA03sH0ovh/Q39H6DXN2PYkJGYZsrq5cog109lSBcCJa65TeBk
-	PDKKnl/EiWDff5GYQGit3FEwVDx9bgKAZ0SnZlOpiQ==
-X-ME-Sender: <xms:Co-wZtL80BqjqeQXFnfZr0V4e0CLoaiQbSWgwvsMug_57KzvBm4NTA>
-    <xme:Co-wZpJtrqOoJ-skPY5Zp4tXhPy7wymfg9gikXdKWFsLQjLyW8nfABBwGIcewV0RR
-    X1s6fi_Hdw-Y_iCmQ>
-X-ME-Received: <xmr:Co-wZlsrrv0J7FKQP1v96hSb1UpRjrREEz1nZBMVrEQ1WVZtursxY48UkREAbwGe7AJcf7qqITSK6Sx-UGMLDHwbFkYOvzA-siBn4_dyyTowi1NSMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigddtiecutefuodetggdotefrodftvf
+	fm3; t=1722849071; x=1722935471; bh=EJjW9QlPk8lOWizyeGaP8Bunm4aC
+	ansVCFdazyCzyY0=; b=Waglvv9ezB6MzgRgP7U9u3nydYw6ESc3fUgsmZ/KXKeo
+	Ye8mKLhcCF31xBw8sZqdUfAS5m6m8Xhk5++26owUHkHkvr3X0LhdJtbKeDpogogz
+	Nh1TppWcRMr6e+NTCKVePzhvyohkWtRowowGkTdGKKNLlTjTUuKq6P+xtNZLwpVA
+	kgyps4jLWBlI4ezRMIiT2uippZ3Ho8XSQS4vdaTYDgjcxXfFuFRbN+BdIcUOQc6L
+	OjsFyRNW4CL7Mx5md4k+NKhVlGdQFnbXYVx7nK0DvjyPHiCBWD2swSB2KZKjug0E
+	h6Tyki445q/VWTwVp1ERU+dLm0sLBYiVRf2sk8BZVA==
+X-ME-Sender: <xms:L5ewZu9QdoUAn55Ve_blAwSQEGP1mOIeArAjTRVNou4tB9HJIS1c8A>
+    <xme:L5ewZutLYUYdWLb4gGGJZ01sRUuOerg-BK-5mL2Xnb9rIXkLkUME1op8zgfMBdiUq
+    8BGHaglg_-tyFZCww>
+X-ME-Received: <xmr:L5ewZkDNph8zmz9Dn2sbijwbTJjVFpXwx_WUbCFWiGol-d6ja93VvU7v9pZ4pElceh4zVxzPI8pONoIrNF6kgq7UUI0Ksu2F59izWHxqqAX9TzQmrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigddufecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:Co-wZuaj46T2SfYWhC5HWnaJXgVHPZEBFqBzE9iWO695cYKPVPL9og>
-    <xmx:Co-wZkYxeYKfQVe0lhfqxutIvBzpUism76QzX43FWAUyC6yUjggk6A>
-    <xmx:Co-wZiB7TRE4TH5mQ0DYMx03zR6Hfu68z0ACEZOCfaOSLy5ew6KjQw>
-    <xmx:Co-wZia-ua6lsrbdwgQJU9NR28_a0gnu_fPJ1LoTnacxkIu9ckOyWA>
-    <xmx:Co-wZsEkvuuLQMrGs2OTzuxowvEbhVrhjxR7gQmIUv_ouxgOgWd60brq>
+X-ME-Proxy: <xmx:L5ewZmdQUFJFE60misY-YV3U4NGAYjr_Sgww5K3yb0qZcd6WDkgKvA>
+    <xmx:L5ewZjOKpuHld8hsFTnJXRQQjsFYUwynGd-tupzIIF26BgDKbCgqYQ>
+    <xmx:L5ewZglG_dVxPcxyfAkh7SWWUyxquYVHn2Hnfpz-AUDyJGT5iREg7A>
+    <xmx:L5ewZlt5rHrxyF6qlxRZZ61dWjkiR2F1_Z25QBFa_9GXTkWikBsR2w>
+    <xmx:L5ewZsoDG4DEHbxB10X85Ru89NEgy-OYvcBE-Uds-2lAYLHbGr9ZkdA5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Aug 2024 04:36:25 -0400 (EDT)
+ 5 Aug 2024 05:11:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 44e44ce4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 5 Aug 2024 08:36:23 +0000 (UTC)
-Date: Mon, 5 Aug 2024 10:36:21 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id a8403b37 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Aug 2024 09:11:09 +0000 (UTC)
+Date: Mon, 5 Aug 2024 11:11:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Sven Strickroth via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Sven Strickroth <email@cs-ware.de>
-Subject: Re: [PATCH] refs/files: prevent memory leak by freeing
- packed_ref_store
-Message-ID: <ZrCPBXql7ySbEeXG@tanuki>
-References: <pull.1757.git.git.1722681471550.gitgitgadget@gmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH 1/5] doc: git-diff: apply new documentation guidelines
+Message-ID: <ZrCXK8AmGSFwyqI4@tanuki>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <515ddbf1dceacc0c186e3d31c13e76a5afc6c45f.1722801936.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,73 +83,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MNCBtYKwMY8/n49R"
+	protocol="application/pgp-signature"; boundary="1BbH31vsjCxCx8hy"
 Content-Disposition: inline
-In-Reply-To: <pull.1757.git.git.1722681471550.gitgitgadget@gmail.com>
+In-Reply-To: <515ddbf1dceacc0c186e3d31c13e76a5afc6c45f.1722801936.git.gitgitgadget@gmail.com>
 
 
---MNCBtYKwMY8/n49R
-Content-Type: text/plain; charset=us-ascii
+--1BbH31vsjCxCx8hy
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 03, 2024 at 10:37:51AM +0000, Sven Strickroth via GitGitGadget =
-wrote:
-> From: Sven Strickroth <email@cs-ware.de>
+On Sun, Aug 04, 2024 at 08:05:32PM +0000, Jean-No=C3=ABl Avila via GitGitGa=
+dget wrote:
+> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
 >=20
-> This complements "refs: implement removal of ref storages" (64a6dd8ffc2f).
 
-The format of references should match `git log --format=3Dreference`,
-which would be:
+Nit: please provide a summary of what adaptations you made. It would
+certainly help the reviewer to learn about the recently-introduced
+`[synopsis]` style and why/since when we use backticks and underscores
+for formatting.
 
-    64a6dd8ffc (refs: implement removal of ref storages, 2024-06-06)
+The same also applies to subsequent commits, providing some pointers
+would certainly help an unknowing reviewer such as myself.
 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index aa52d9be7c7..11551de8f84 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -157,6 +157,7 @@ static void files_ref_store_release(struct ref_store =
-*ref_store)
->  	free_ref_cache(refs->loose);
->  	free(refs->gitcommondir);
->  	ref_store_release(refs->packed_ref_store);
-> +	free(refs->packed_ref_store);
->  }
+> @@ -225,11 +225,12 @@ CONFIGURATION
+> =20
+>  include::includes/cmd-config-section-all.txt[]
+> =20
+> +:git-diff: 1
+>  include::config/diff.txt[]
+> =20
+>  SEE ALSO
+>  --------
+> -diff(1),
+> +`diff`(1),
 
-Makes sense. `packed_ref_store_init()` returns a newly-allocated ref
-store, and `ref_store_release()` only releases the store contents.
-Consequently, we have to manually free the store here.
-
-That does highlight that `packed_ref_store_init()` is misnamed and
-really should be called `packed_ref_store_new()`, as it also allocates
-the structure itself. But that's a #leftoverbit for another day, I'd
-say.
-
-Out of curiosity, did you hit this memory leak in some of our tests, or
-did you just happen to stumble over it by chance?
-
-Thanks!
+This one looks curious to me. Why is this item formatted differently
+than the next three? I would have expected it to be formatted as
+something like linkgit:git-diff[1] instead of `diff`(1)`.
 
 Patrick
 
---MNCBtYKwMY8/n49R
+>  linkgit:git-difftool[1],
+>  linkgit:git-log[1],
+>  linkgit:gitdiffcore[7],
+> --=20
+> gitgitgadget
+>=20
+>=20
+
+--1BbH31vsjCxCx8hy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmawjwAACgkQVbJhu7ck
-PpSJ7Q//ZOYa5kE2MgV5L4rWAXMzpn7HNau97VkIqLq5Po9xoPxTUWpc/vgkwkQi
-+z2XwWJZD7EA4cc4OS6pweBXV9ABN657mh5KmQ3PabkV1kz8FoJRDb5kbOM3NAyo
-o1OHrLCsW8JlH1A/GTxTU8+3+Odh0ei0avqzk+VDN4ObMF7bV8hImJGOTPZLamRa
-S0QUt0/UyKQfY+FHyuteZDfVs7CR8aXyRgeoT3z/5Kj5aetI8cseSiukoCbQSIcK
-+Y9iu0qxLUEMC9CQuLFnP7sghMpo+PSplOBUR7i6KtxiJ2M1D2twLN5kTif6YFZi
-JzLOEcNK3uzv9h1qFkXCVk3l1x/Q6XvbIgJEbDOIDeNFD3+13zH8XwX5b02KqWTX
-vCI2bAKV5ZWdVMCadEsnbb7JiE80gDQq4QBN32c0B5CAwdX6MOwmxTswvPDrrGW4
-IO6ezcotJimABcNYbXq2zx+VOQTZb3pbkE/hXZV5MeiKslNXDi+vdqSk8hTlWF8m
-42bAOACdcTHuOqQTnfHMwMYlLJuKEUzRjAwEGqEj9pSS/XiLmH+0HvhI/L2agoXM
-s+9IR2jwrNba2nhnhSP9Sk59eK8AT5K9ZaZS7LXC7R6q/38IsAxOS9xLBOLTGCle
-if2jRwbbCdf99ORqE+qYCvQx8nEpwWAUu3+xYHaJ1Ig57m+N7N0=
-=maoO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmawlyoACgkQVbJhu7ck
+PpSlxhAAl1uFry8MrdSkrD3JTrye0BhLEhdPALBzfgCna6kxlKlw90gDHd/VcpOP
+erKGJKmUPsHWS7eYc0C3ovYn6n0kONz9JCCq9otE6GUxus3FSRoHd/2F25NElntc
+06JD+tNcr/j1UXUEXZWkiSQnQsiEfW5ZpZyDDQxgtxgf9YQY5W0vLar+DUIWOwc/
+p0cZT9eYikjt39KW0YkCOwjiZLykVWtYnpj1Wd7RhAYYKFxJZioABHTIBtKxjfip
+hauBlHXHH629MMv2/xbwbiFCgX/cOoW4d1RqAJqQbUPtdrDCdONIJmkny/iVI+1E
+GMHOKJenoF2IbThTfXVdJvAqqyTojMbAoLwSISD/5TAjVhrdeF7j+Mei9ramBuE+
+WVkMUM8joWP7/MdBapXZrOm1gW09iUvNZpptbBbwsjWfe+4nV9bZVhFc0ZI6xFtg
+L80bUR8qnQJkUCob3DkNjUclYYC1QxaXgJICbMsH3OjeW/3a40R8ck+B2VCrQR0x
+iX8ti2AVaMs5S27ru4vkTKktEITdRZenWh9Yr1gv9L1lofEig1lM2uFn+S6XHYTg
+3RtuD6JPikVOi4CLUvmk/9/2isua1NNBf/WnngcHSg0aU5Ssrj4TJcJv70BjqfX1
+8xOFsDSqRm/XtVEzIrrI/J1CvVkHCU5Z6oYWonpYYu0OvmHyLp4=
+=0LY7
 -----END PGP SIGNATURE-----
 
---MNCBtYKwMY8/n49R--
+--1BbH31vsjCxCx8hy--
