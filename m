@@ -1,64 +1,65 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90EF15EFAF
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 16:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66D115F418
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 16:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722876350; cv=none; b=uOOwRTMRYkN5TolXIoYYQr18FkKolxblWqFi1EqyhyQnzn9q3OR4yzuxbaB3KvevzE3ddHnqOZ8vwVHg7TGAKSRtblEd2HxlLd+nfQXvf6WPl0cMvH1w678nZEZ13IP4Tyn0a/ljGX8vyWoppC2nrTJHBEvCuB9InCBhbkQ9kRI=
+	t=1722876359; cv=none; b=ZhT8ExSrm0Qa0jRmzlgBC9hktxkRF3w6lFK/QQw75TbuVdELvBdvvIMBKYcIp3bqPQMPpwaSkPE4Nk9fhJ8W+cfGwoG17DqRnzw6F+mOg8agyPC96OcfOEMKTXXoJoe0mGfy/e7SZe0gcj7Jenars9W64gJyfpYsluQgmpYr4ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722876350; c=relaxed/simple;
-	bh=v+Rq14jH54S3uAhHiT7P0b+alMdK5ypEQGdtNA2VIUE=;
+	s=arc-20240116; t=1722876359; c=relaxed/simple;
+	bh=KRF/lgkg4nJlvvPhfL5akAM4TFBDzTFv3OEGaP46ij8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jtrbDe+lpmWbOaarxNYyhs0knoi3cnvRjx49+z1DFe++jrJZgRw1N1/93UNbc0WiRAQF5eB3WGXrn+In1s0DenrExoDkVVQjjKoW5WWhmhtxG0tEkZ6KfZ180wkYb70/Q3rJ9U46Op6bEjyQo7LxG5OLTCz2zA5vwetrRpmg310=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/qXeWFk; arc=none smtp.client-ip=209.85.215.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=WdT3xGf3MXmP1dkEIQzjiWldvidzfzMivWf1aNe7jaDRktLKphzQr8HDV/jPfDaiWbYrQtHyyhcQdoKiOLFKAkffTxwgATudasdFQRymRIidhMU0t5ip2yKyR1aCnyUTQhU7QwMYW5kIJMOCyTuxiX9+O+Eipn6pDbJwmBSbx90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFIFzXdw; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/qXeWFk"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-71871d5e087so8165641a12.1
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 09:45:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFIFzXdw"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc4fcbb131so92250755ad.3
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 09:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722876347; x=1723481147; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722876356; x=1723481156; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rn6Jl93ozareS6sNo9PKC2R8rRYCzYW2VxDK0LtyPOQ=;
-        b=J/qXeWFkGiVQ6YgaUcJTIDQSjZmTPQqP9IxqoQAbHFQab7D5uluKU2zgmI6r1Qx8uD
-         hImEu9UtzpfBWZ7YnJ/VmD/c2nJVYBrExFH7/9Wgi3Mf4r30DdzkSHm2vBCgqeSBby1i
-         siePOx2CIJ5u670seZ9sh7BEUaaRoKZqHuv1z5N6VatxvKIIjWZwvqC5RJ/tViQ5YGYr
-         OhwLWzz71I/aE492Z2QJ0GEG/1VVBd8HbTcr8Bi4YWuLZtmdXoSKWr5Q1Z6ZWjqj7XxO
-         IhIcIcx2IeQoRmaXlTG5NF/xwkWl0gytDP7vTkOKtWcwaEy5SHlYrHx0L/1Ha96ZrqqQ
-         aZew==
+        bh=blnd6GJmx2eh97pHBI5nYwJsboRd771jhYfXZMmtlQ0=;
+        b=eFIFzXdwngU37vIXl2q5sEhBu5E/2QFX0niUZTnuFxWxzNyDGQ6pKWr2le1k0L1HiR
+         OXCKZZDg16Tz6k+JjZb9KevrRjNRZ9spG6C9gh9imSOc8j5PkchIN/LQXwOikDwrZJA9
+         Sp8gsjcB5cx3l5Ti6JHmN5N+2E+2Bjp21EtXG0LCNhcW62j1xqKguReyMzShtx62qN17
+         TfjYkmWE/yI2bcEGPPWgfW9Nk+Y/NhRbJDe65HxyThKyvKqDejH5bCxgH7rzlH+QTLkN
+         IUqeMalTyfX+f8LFnHZ/o4y8SSZS1d8E9DyrHQ0A4cAaimwZpINdokYB1GZVo5/WdAXl
+         MMvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722876347; x=1723481147;
+        d=1e100.net; s=20230601; t=1722876356; x=1723481156;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rn6Jl93ozareS6sNo9PKC2R8rRYCzYW2VxDK0LtyPOQ=;
-        b=YJn4ILa97bDmE+nB88snbT4oA1CuYcnh71bAua4zRtNea/cu+APbDlFj73k/S2bx33
-         eTjfBkPaCfrURoDJGe76jDF7pTH/Q7PlRTrGIBLOcqaFhHfP3z+/hHKeDa/LuPOtXsi+
-         HuHRQQ6RXg6NZb5oxJlmlUsYaLI+VF8lLPEZpx76q8K1I7zX7eRE1YHBJf4C+FPoqbaK
-         aMNIGuXU6LsCrXjcnQFPDMuakDOxB5j4SqznL2jG8qqi5Hy0n/ZPad/tQnHsE24E7qYz
-         utpEr5uL+K6Udpf2BMRWzxTSFeVb2CHub1ThqWy1P7vDDRVtyXq6lksxX07BwXYVmB8A
-         Qpuw==
-X-Gm-Message-State: AOJu0Yw7Vg9PKFCZZR2ogcQihyN5V51It9tMyu+/t3V+YS3JVo/Zy2e9
-	wt9xYyopj6HbyH5f6LWNKTImI/M2wCcHNExcRst4Sfh/uq3qaUUooa7OCw==
-X-Google-Smtp-Source: AGHT+IEU/N4uXgtSSj6fnJBcNc9DIraT5Q6dDHAQd3cSc5tkYfiVNSeqYHzUHguJBjOI1H4m96Jdhg==
-X-Received: by 2002:a05:6a20:1581:b0:1c4:919f:3677 with SMTP id adf61e73a8af0-1c6996592bdmr17495049637.42.1722876347476;
-        Mon, 05 Aug 2024 09:45:47 -0700 (PDT)
+        bh=blnd6GJmx2eh97pHBI5nYwJsboRd771jhYfXZMmtlQ0=;
+        b=OfGse8t8X3oc4HpvJU48a0DKgh9unNktMttpjePFzjQERv8ldFeTRNg+mg/7r2WAFW
+         lOS6GeBkQI/cjTlPVUhyQVU8n5SPqYbufWvlwAzIfV6puW3tU/shpe6KW9NaIKXlR0Ui
+         rq5xOUKvz79oIlQniRmYmkMVAM93ygm3fJarSHtaNPRylJ16OBHKOdokBQ4s9YLhncKY
+         hqlZkVzURDSoI+HlstvodXxP9gQgXDcS3gnnkYrl2G5a+xh+tE83s7SH9u0syI2CLNTb
+         fvBvbGK/T9FHfCN4QtbvvGEhgzZSOqMDJJ5DGeBjrJdRyGAk8mnpBJxGI0n9jjqJ9NVH
+         Y0hg==
+X-Gm-Message-State: AOJu0Yy5B1TkEsWifSgpkVUbuT0i1d27TJoOxvbL6aSjggU1fIlHZpyS
+	KF+SHyXNddvZ7UV3nLq+Ql1dhcCAm4RyLaZ6/gcv/1M4MHZ8ydZbOuQxGQ==
+X-Google-Smtp-Source: AGHT+IGRjDxmuGcysYJWEkbtLIIld8jsois4nGAU0SA8rtqjH4QKPnTpDfubCCIq2WBymw6Nfo5CZg==
+X-Received: by 2002:a17:902:ea02:b0:1fd:5fa0:e98f with SMTP id d9443c01a7336-1ff5737d3famr149632605ad.44.1722876356375;
+        Mon, 05 Aug 2024 09:45:56 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7106ed17c76sm5595957b3a.180.2024.08.05.09.45.46
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905b43csm70224875ad.146.2024.08.05.09.45.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Aug 2024 09:45:47 -0700 (PDT)
-Date: Tue, 6 Aug 2024 00:46:15 +0800
+        Mon, 05 Aug 2024 09:45:55 -0700 (PDT)
+Date: Tue, 6 Aug 2024 00:46:24 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [GSoC][PATCH v15 7/9] builtin/refs: add verify subcommand
-Message-ID: <ZrEB16WGGc28dxu2@ArchLinux>
+Subject: [GSoC][PATCH v15 8/9] files-backend: add unified interface for refs
+ scanning
+Message-ID: <ZrEB4PjNPM6SZspS@ArchLinux>
 References: <ZrEBKjzbyxtMdCCx@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,185 +71,144 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZrEBKjzbyxtMdCCx@ArchLinux>
 
-Introduce a new subcommand "verify" in git-refs(1) to allow the user to
-check the reference database consistency and also this subcommand will
-be used as the entry point of checking refs for "git-fsck(1)".
-
-Add "verbose" field into "fsck_options" to indicate whether we should
-print verbose messages when checking refs and objects consistency.
-
-Remove bit-field for "strict" field, this is because we cannot take
-address of a bit-field which makes it unhandy to set member variables
-when parsing the command line options.
-
-The "git-fsck(1)" declares "fsck_options" variable with "static"
-identifier which avoids complaint by the leak-checker. However, in
-"git-refs verify", we need to do memory clean manually. Thus add
-"fsck_options_clear" function in "fsck.c" to provide memory clean
-operation.
+For refs and reflogs, we need to scan its corresponding directories to
+check every regular file or symbolic link which shares the same pattern.
+Introduce a unified interface for scanning directories for
+files-backend.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/git-refs.txt | 13 +++++++++++++
- builtin/refs.c             | 34 ++++++++++++++++++++++++++++++++++
- fsck.c                     | 11 +++++++++++
- fsck.h                     |  8 +++++++-
- 4 files changed, 65 insertions(+), 1 deletion(-)
+ Documentation/fsck-msgids.txt |  3 ++
+ fsck.h                        |  1 +
+ refs/files-backend.c          | 74 ++++++++++++++++++++++++++++++++++-
+ 3 files changed, 77 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-refs.txt b/Documentation/git-refs.txt
-index 5b99e04385..ce31f93061 100644
---- a/Documentation/git-refs.txt
-+++ b/Documentation/git-refs.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git refs migrate' --ref-format=<format> [--dry-run]
-+'git refs verify' [--strict] [--verbose]
+diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
+index f643585a34..7c809fddf1 100644
+--- a/Documentation/fsck-msgids.txt
++++ b/Documentation/fsck-msgids.txt
+@@ -19,6 +19,9 @@
+ `badParentSha1`::
+ 	(ERROR) A commit object has a bad parent sha1.
  
- DESCRIPTION
- -----------
-@@ -22,6 +23,9 @@ COMMANDS
- migrate::
- 	Migrate ref store between different formats.
++`badRefFiletype`::
++	(ERROR) A ref has a bad file type.
++
+ `badTagName`::
+ 	(INFO) A tag has an invalid format.
  
-+verify::
-+	Verify reference database consistency.
-+
- OPTIONS
- -------
- 
-@@ -39,6 +43,15 @@ include::ref-storage-format.txt[]
- 	can be used to double check that the migration works as expected before
- 	performing the actual migration.
- 
-+The following options are specific to 'git refs verify':
-+
-+--strict::
-+	Enable stricter error checking. This will cause warnings to be
-+	reported as errors. See linkgit:git-fsck[1].
-+
-+--verbose::
-+	When verifying the reference database consistency, be chatty.
-+
- KNOWN LIMITATIONS
- -----------------
- 
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 46dcd150d4..131f98be98 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -1,4 +1,6 @@
- #include "builtin.h"
-+#include "config.h"
-+#include "fsck.h"
- #include "parse-options.h"
- #include "refs.h"
- #include "repository.h"
-@@ -7,6 +9,9 @@
- #define REFS_MIGRATE_USAGE \
- 	N_("git refs migrate --ref-format=<format> [--dry-run]")
- 
-+#define REFS_VERIFY_USAGE \
-+	N_("git refs verify [--strict] [--verbose]")
-+
- static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
- {
- 	const char * const migrate_usage[] = {
-@@ -58,15 +63,44 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
- 	return err;
- }
- 
-+static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
-+{
-+	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
-+	const char * const verify_usage[] = {
-+		REFS_VERIFY_USAGE,
-+		NULL,
-+	};
-+	struct option options[] = {
-+		OPT_BOOL(0, "verbose", &fsck_refs_options.verbose, N_("be verbose")),
-+		OPT_BOOL(0, "strict", &fsck_refs_options.strict, N_("enable strict checking")),
-+		OPT_END(),
-+	};
-+	int ret;
-+
-+	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
-+	if (argc)
-+		usage(_("'git refs verify' takes no arguments"));
-+
-+	git_config(git_fsck_config, &fsck_refs_options);
-+	prepare_repo_settings(the_repository);
-+
-+	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-+
-+	fsck_options_clear(&fsck_refs_options);
-+	return ret;
-+}
-+
- int cmd_refs(int argc, const char **argv, const char *prefix)
- {
- 	const char * const refs_usage[] = {
- 		REFS_MIGRATE_USAGE,
-+		REFS_VERIFY_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option opts[] = {
- 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
-+		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
- 		OPT_END(),
- 	};
- 
-diff --git a/fsck.c b/fsck.c
-index 38554b626e..7eb5cdefdd 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1333,6 +1333,17 @@ int fsck_finish(struct fsck_options *options)
+diff --git a/fsck.h b/fsck.h
+index d551a9fe86..af02174973 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -31,6 +31,7 @@ enum fsck_msg_type {
+ 	FUNC(BAD_NAME, ERROR) \
+ 	FUNC(BAD_OBJECT_SHA1, ERROR) \
+ 	FUNC(BAD_PARENT_SHA1, ERROR) \
++	FUNC(BAD_REF_FILETYPE, ERROR) \
+ 	FUNC(BAD_TIMEZONE, ERROR) \
+ 	FUNC(BAD_TREE, ERROR) \
+ 	FUNC(BAD_TREE_SHA1, ERROR) \
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4630eb1f80..f337356860 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -6,6 +6,7 @@
+ #include "../gettext.h"
+ #include "../hash.h"
+ #include "../hex.h"
++#include "../fsck.h"
+ #include "../refs.h"
+ #include "refs-internal.h"
+ #include "ref-cache.h"
+@@ -3408,13 +3409,84 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
  	return ret;
  }
  
-+void fsck_options_clear(struct fsck_options *options)
++/*
++ * For refs and reflogs, they share a unified interface when scanning
++ * the whole directory. This function is used as the callback for each
++ * regular file or symlink in the directory.
++ */
++typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
++				  struct fsck_options *o,
++				  const char *refs_check_dir,
++				  struct dir_iterator *iter);
++
++static int files_fsck_refs_dir(struct ref_store *ref_store,
++			       struct fsck_options *o,
++			       const char *refs_check_dir,
++			       files_fsck_refs_fn *fsck_refs_fn)
 +{
-+	free(options->msg_type);
-+	oidset_clear(&options->skip_oids);
-+	oidset_clear(&options->gitmodules_found);
-+	oidset_clear(&options->gitmodules_done);
-+	oidset_clear(&options->gitattributes_found);
-+	oidset_clear(&options->gitattributes_done);
-+	kh_clear_oid_map(options->object_names);
++	struct strbuf sb = STRBUF_INIT;
++	struct dir_iterator *iter;
++	int iter_status;
++	int ret = 0;
++
++	strbuf_addf(&sb, "%s/%s", ref_store->gitdir, refs_check_dir);
++
++	iter = dir_iterator_begin(sb.buf, 0);
++	if (!iter) {
++		ret = error_errno(_("cannot open directory %s"), sb.buf);
++		goto out;
++	}
++
++	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
++		if (S_ISDIR(iter->st.st_mode)) {
++			continue;
++		} else if (S_ISREG(iter->st.st_mode) ||
++			   S_ISLNK(iter->st.st_mode)) {
++			if (o->verbose)
++				fprintf_ln(stderr, "Checking %s/%s",
++					   refs_check_dir, iter->relative_path);
++			for (size_t i = 0; fsck_refs_fn[i]; i++) {
++				if (fsck_refs_fn[i](ref_store, o, refs_check_dir, iter))
++					ret = -1;
++			}
++		} else {
++			struct fsck_ref_report report = { .path = iter->basename };
++			if (fsck_report_ref(o, &report,
++					    FSCK_MSG_BAD_REF_FILETYPE,
++					    "unexpected file type"))
++				ret = -1;
++		}
++	}
++
++	if (iter_status != ITER_DONE)
++		ret = error(_("failed to iterate over '%s'"), sb.buf);
++
++out:
++	strbuf_release(&sb);
++	return ret;
 +}
 +
- int git_fsck_config(const char *var, const char *value,
- 		    const struct config_context *ctx, void *cb)
- {
-diff --git a/fsck.h b/fsck.h
-index 2002590f60..d551a9fe86 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -153,7 +153,8 @@ struct fsck_ref_report {
- struct fsck_options {
- 	fsck_walk_func walk;
- 	fsck_error error_func;
--	unsigned strict:1;
-+	unsigned strict;
-+	unsigned verbose;
- 	enum fsck_msg_type *msg_type;
- 	struct oidset skip_oids;
- 	struct oidset gitmodules_found;
-@@ -231,6 +232,11 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-  */
- int fsck_finish(struct fsck_options *options);
- 
-+/*
-+ * Clear the fsck_options struct, freeing any allocated memory.
-+ */
-+void fsck_options_clear(struct fsck_options *options);
++static int files_fsck_refs(struct ref_store *ref_store,
++			   struct fsck_options *o)
++{
++	files_fsck_refs_fn fsck_refs_fn[]= {
++		NULL,
++	};
 +
- /*
-  * Report an error or warning for refs.
-  */
++	if (o->verbose)
++		fprintf_ln(stderr, _("Checking references consistency"));
++	return files_fsck_refs_dir(ref_store, o,  "refs", fsck_refs_fn);
++
++}
++
+ static int files_fsck(struct ref_store *ref_store,
+ 		      struct fsck_options *o)
+ {
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_READ, "fsck");
+ 
+-	return refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
++	return files_fsck_refs(ref_store, o) |
++	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
+ }
+ 
+ struct ref_storage_be refs_be_files = {
 -- 
 2.46.0
 
