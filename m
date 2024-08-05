@@ -1,133 +1,107 @@
-Received: from out.smtp-auth.no-ip.com (smtp-auth.no-ip.com [8.23.224.60])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D353611E
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=8.23.224.60
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4B5158DCC
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722872105; cv=none; b=ZO8wzQRHDAjsB05sZ9QA58BNxiGz/S2wiXNgSv6/PR11F+bsa2143d7DVf5mjvNyCnxmoR65wSUMblc4DwxcxdSeupG4nUGhOq+MhDkyii1MEzywX4lupDByrkXw3FcuXGWmSl+NgyvhFQdsnLZaA7U9F3LEBEEv/iz6bwvTmjo=
+	t=1722872420; cv=none; b=eHOF5SJ8S0/Vm03EMU/FddlBNbnr9JT2Kk3c9Zr0/aRjh+E9+8sIOXUx/Rp9xjoolifgDdqrA9CY9lVGTkgmDzTL7Gz56wZfvQ9MTSwS+kPPI+zdZ8XV75sJbH8jPBlMawU14hCbd/Qy4n43UchmWNfRMUt4hy8cQ2hL+ufhZ0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722872105; c=relaxed/simple;
-	bh=IqA414Z8spCq8b8MtrO+9v08GPGHW8cC42b8eB+hP3A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HD0D1BFOHeumgrXI9PlTijYfkA9SX35w9lp57nJOnlF+FBwd+4eD8EeGnwntxgkcQvKSafL6/AG4OtK/+RNq7uoWRN1AsL7BhM9DD/5EHK5ikt4fj1tQiQpoXjgoYTcHcZhjKY4hak/PPh6Oit7zRasnv+VEe/xesBjsMumGIxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=flyn.org; spf=pass smtp.mailfrom=flyn.org; dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b=OTo7nrxr; dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b=nj/BMq3b; arc=none smtp.client-ip=8.23.224.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=flyn.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flyn.org
+	s=arc-20240116; t=1722872420; c=relaxed/simple;
+	bh=yD1gkWxEalZGZMcR2Va7trdLThH8Cq+raMFJbwjlArQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XSs0oUyw3Y6kBHAVgR0tzc+zqBhLPzpr7AuyrQKZPu7x4ES+h6AYQpZgOvOAj8snYlPyZkvHJo0p2Mhdycxn6HNmDyebZ+jqsGtZz8As4CdJpLJNJDF6g0WIdCo5GQjUxUXvpUwyaufyyNg4YCL2RMCo6uSwdcumhyITCvUXx8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mkz54jbe; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b="OTo7nrxr";
-	dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b="nj/BMq3b"
-X-No-IP: flyn.org@noip-smtp
-X-Report-Spam-To: abuse@no-ip.com
-Received: from www.flyn.org (unknown [137.26.240.243])
-	(Authenticated sender: flyn.org@noip-smtp)
-	by smtp-auth.no-ip.com (Postfix) with ESMTPA id 4Wd0qf1WJ0z7rtF
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:34:54 +0000 (UTC)
-Received: by www.flyn.org (Postfix, from userid 1001)
-	id 321E01EE0029; Mon,  5 Aug 2024 10:34:53 -0500 (CDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flyn.org; s=mail;
-	t=1722872093; bh=9DC6NnbhTZra+TQBav1uRvo9pfhwjAOjASewWENTIks=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OTo7nrxr9rCXDa7Uq5/LQcEZI27osL2Bkx307GAkLR4jafFMczzoPGimT//vxxBz6
-	 UWHu3IWnLfr3yxERCcpXO3pn1LFfggm0dE18YXVUoftc9aMjT+gbN0EXb08O4A08Yk
-	 M2wRTFYtZT3iMaM6xLojvGNyodSPV9M58AvLI3fKwd0DSz8zjLhu6HUKRz9QE7dcwI
-	 yVIgKGMbTjxvg3AAB/SFrNWccMmXNIOi4DSQXb+jHGY7bG9sV5W7AzzcA24lPTNUJy
-	 IsYpjZOye/pQ7igZXdgMSjvcG9jr/Kt9SkINJzVICx0lQVGFd/areWQQlK1JFSAtUN
-	 9Y9uR4eo4w4ZjnTar/ohS11hhzxUhTWT0SQ8rSfv+egtbOEgt2V+11VX3BpfI1vxIz
-	 1Ra1ItANFEcGhe685bFybErZ/kKDTV7J9b5Wi9D5bL9JF620b02XJYbeYkEHxpOPXP
-	 BoslPBNk0PSRmPrLeoAKjtnIRWYMoCLHr/Wqi2DTedn3pm9CetW
-Received: from imp.flyn.org (guardian.flyn.org [137.26.240.242])
-	by www.flyn.org (Postfix) with ESMTPSA id EA7471EE0029;
-	Mon,  5 Aug 2024 10:34:52 -0500 (CDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flyn.org; s=mail;
-	t=1722872092; bh=9DC6NnbhTZra+TQBav1uRvo9pfhwjAOjASewWENTIks=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nj/BMq3bB+K4rMYLxk9Ik1ag/s383vRjed49PoA1LpDCxc9W4C/8tLurPHftD45+Z
-	 Kr5QYDSrt7vfMxHORjWuKP7otjxBmcmEeMV6XMKFhTsEeEA/jFKKfvqyOZ418JyvbK
-	 VF2hCkXt6DHd1p4ABsAzuqvk79InyCG3ZWTrUf1fkpnvkzfCe6SHb3cLmnoQy4hhtM
-	 cl2ARDOkSACAhuT+vyg600dzF3lNUZya2o7a+BQtAP5UMCclaai0HO/z8cwOOUYkEt
-	 SA4ADsIEKznwqq4TjYmDDnjZvtmomWLslFqs7lgtlj61alPq0SpfhoznsIx41gf04T
-	 HbsQZs2M14b8dbQjpLXZIMkFz9DL0kVKHOfgaF85vIGkEvwmn8BjTdOOb3DzA77ekK
-	 PAKzhdgp2TXOorHTAQi9TU+cCRGyA7naH4yyTIY7upZkYgOlFdXggGhp2m8fhJpaww
-	 AcpTPB7pnu1+7uHcKmyFOQVOQ5WyJ7zoGPaXcjLJP+fxpns3XL1
-Received: by imp.flyn.org (Postfix, from userid 1101)
-	id CD02D2D8DDCE; Mon,  5 Aug 2024 10:34:52 -0500 (CDT)
-Date: Mon, 5 Aug 2024 10:34:52 -0500
-From: "W. Michael Petullo" <mike@flyn.org>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Subject: Re: Git clone reads safe.directory differently?
-Message-ID: <ZrDxHPh-daYPxzT2@imp.flyn.org>
-References: <ZqjQi6i2kiY4gcc1@imp.flyn.org>
- <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
- <xmqqv80m8pha.fsf@gitster.g>
- <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
- <20240731072832.GB595974@coredump.intra.peff.net>
- <xmqqo76d7coa.fsf@gitster.g>
- <xmqq1q391afc.fsf@gitster.g>
- <20240801061417.GD621899@coredump.intra.peff.net>
- <Zqv9b_B5wKGp331o@tapette.crustytoothpaste.net>
- <20240805094709.GA632664@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mkz54jbe"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 323C82E626;
+	Mon,  5 Aug 2024 11:40:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=yD1gkWxEalZGZMcR2Va7trdLThH8Cq+raMFJbw
+	jlArQ=; b=mkz54jbeEZq+sE5oes7AzMZfvwdiEg9422fsmLoTAxcPstoW+EvZX8
+	G0ebdLxSJbWojLcUzBchKRdM6U4JVnfv0zmhJRybB3jIOJbnuC3vYP8XWudjkd5H
+	bP3Fc0eiq9MwfEYa0L9WiXUVAxVwmda2gJ+vXO9Iu9Rttleamo3uo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2AB852E625;
+	Mon,  5 Aug 2024 11:40:12 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2EB602E624;
+	Mon,  5 Aug 2024 11:40:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff King <peff@peff.net>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>,  Linus Arver
+ <linusarver@gmail.com>,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/3] refs: keep track of unresolved reference value
+ in iterators
+In-Reply-To: <ZrCwqqLKcwdOYclN@tanuki> (Patrick Steinhardt's message of "Mon,
+	5 Aug 2024 12:59:54 +0200")
+References: <pull.1712.git.git.1717694800.gitgitgadget@gmail.com>
+	<pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
+	<ac0957c9e6abdc2597900573703461833e9c9d69.1722524334.git.gitgitgadget@gmail.com>
+	<xmqqa5hww600.fsf@gitster.g> <ZrCwqqLKcwdOYclN@tanuki>
+Date: Mon, 05 Aug 2024 08:40:06 -0700
+Message-ID: <xmqqh6bz567d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240805094709.GA632664@coredump.intra.peff.net>
-X-Bogosity: Unsure, tests=bogofilter, spamicity=0.520000, version=1.2.5
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FE59B766-5340-11EF-BBBC-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-Thank you---from a somewhat sophisticated Git user, but not a Git
-developer---for all of the discussion that followed my initial inquiry.
-I thought I would follow up with some comments that follow from my reading
-of the responses and the SECURITY sections of various man pages.
+Patrick Steinhardt <ps@pks.im> writes:
 
-> [From Jeff:] So there's an open question on the degree to which
-> running upload-pack is actually dangerous. It's not _supposed_ to be,
-> but the ownership check is a defense-in-depth approach to safety.
-
-The discussion here is partially an attempt to better understand some
-of the internal workings and guarantees to determine whether or not the
-protections applied in some cases are spurious, right?
-
-> [From Brian:] Both of these commands should work correctly and do not,
-> and that's a bug (assuming tr1 is owned by a different user):
+> On Thu, Aug 01, 2024 at 09:41:03AM -0700, Junio C Hamano wrote:
+>> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> > @@ -886,6 +889,9 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+>> >  		iter->base.refname = iter->iter0->refname;
+>> >  		iter->base.oid = iter->iter0->oid;
+>> >  		iter->base.flags = iter->iter0->flags;
+>> > +		if (iter->iter0->flags & REF_ISSYMREF)
+>> > +			iter->base.referent = iter->iter0->referent;
+>> 
+>> Presumably base.referent is initialized to NULL so this "if"
+>> statement does not need an else clause?
 >
->   git clone --no-local --no-hardlinks $PWD/tr1 tr2
->   git clone --no-local --no-hardlinks ssh://localhost$PWD/tr1 tr2
+> This function typically ends up being called in a loop though. So
+> without the else clause, wouldn't we potentially leak the value of a
+> preceding ref into subsequent iterations like this?
 
-The remarks above closely resemble the use cases that prompted my
-initial inquiry. It would help a great deal if these worked, and also if
-"--no-local --no-hardlinks" remains the default for the SSH variant.
-Is it fair to conclude that these not working represent a bug?
+OK, so this does need to clear it when we tell the caller we have
+non SYMREF, as we do want to show NULL as base.referent to the
+caller in such a case.  Thanks.
 
-> [From Brian:] The git(1) manual page also says this:
->   [...] but beware that the surface area for attack against
->   `upload-pack` is large
+It does reinforce my larger point, which was:
 
-Does the use of attack surface here mean the general idea of "the volume
-of lines of code in upload-pack is large and thus upload-pack likely
-contains bugs that might represent vulnerabilities", or is there
-something specific about upload-pack that should raise concern?
+>> Makes me wonder if we should follow the same "ignore what the flag
+>> says when filling the .referent member; if the ref is not a symref,
+>> the referent variable is NULL, and if it is, referent is never NULL"
+>> pattern?  Then ref->u.value.referent is _always_ defined---the
+>> current code says "the u.value.referent member is undefined for ref
+>> that is not a symref", but with the suggested change, it will be
+>> "the u.value.referent member is NULL for ref that is not a symref,
+>> and for a symref, it is the value of the symref".
+>
+> Yeah, I think that would be preferable indeed.
 
-I do have a related question on the SSH/push side. Let us imagine a host
-that has user accounts bearing git-shell as their shell. Thus these users
-can only interact with the host (and the repositories therein) using Git.
-Further imagine a trusted agent on the host creates these repositories and
-any hooks therein. Can a special account, with permission to access all
-of the repositories, safely clone and push other users' repositories? Or,
-could a user introduce a dangerous hook or configuration option to their
-remote repository using only Git by way of git-shell?
+In other words, with .referent member introduced, checking for
+(.flags & REF_ISSYMREF) becomes a redundant&duplicated bit of
+information, as the bit should exactly match the non-NULL ness of
+the .referent member.
 
-Thank you again, especially Jeff, who provided me with some practical
-workarounds early in this thread.
-
--- 
-Mike
-
-:wq
+Thanks.
