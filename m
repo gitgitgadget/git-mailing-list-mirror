@@ -1,62 +1,62 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0306616D9DD
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 23:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA07816F8EF
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 23:59:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722902388; cv=none; b=u8Gu4kixrT5N916ccz0AP8AvS4IZyiLD1LaIyXTPadogCpz+sfrLqh0SXH3jSANKpv+Ad8qoil50aBuQK63p5qNulZ4n/x7jxyjsWDKirSvDDZUydrrt5z794vdqRr1ndLMLJZaHyMybJfN6lg//OK9zGSRoM1zcCnYHkC0ZkSY=
+	t=1722902390; cv=none; b=eMqJFYwOyKvDqhL7HSsn50BM1ubCmfcUXk7y4/xC9KR7+aCYVHnFfN6fo9KLQZbULpiIm0MfuqTMISaP/8buQqlBerRunNZg6hzRK+qpWA3STrNncdJyz+sAbXfkmLESiO7FovvgA6qqxi3+pEE8FfSyX6aVsCiV5qteuWttG/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722902388; c=relaxed/simple;
-	bh=TVH9tsf8U9VGeArgAWptqZEG3yBI/ZSs5XJiJi7AZQI=;
+	s=arc-20240116; t=1722902390; c=relaxed/simple;
+	bh=dwHrW0VJ4fOb0V5dxqhfW1W96t2oxa5vzeT+WL6OEq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2CkWeR+PfyjPK5/bRDimR8S7f/FJPOVZLgmrWfjNDzGzcO7JTrfWqx45Q6AWqvG8grHHiUN2ST2yH03n6/tkB+MESZ/XdPHTN+FoRQSR2cMJkC4kATWAfUJEMbYNjSrQsx1C9Ms3SKmMHNJxG+mnBvElu0CFzdycCgBrxwZxoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCAcwH1j; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version; b=cAVNkYpZfF/eelIWqA0ChJGVokJiWFqx6nQ56RTsJzYnux5r1W7TqmjNKPdBq6e5V6cyAVG20g4i3O/ZbMxIWAMktbPI6kjvBHIIoZljzZneUW9dJqirMkVce9ssqmY7UD5LXSlUlPdN6hW0gj9bB9JJUeGf5dUOTQHEhMaHB50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IG7ZNfbh; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCAcwH1j"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42803bbf842so691445e9.1
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 16:59:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IG7ZNfbh"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-428178fc07eso431375e9.3
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 16:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722902385; x=1723507185; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722902387; x=1723507187; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IRBPW2Bt/qQDLaxwdCcA7mM7s02N0BchEb9o1xhNhWQ=;
-        b=dCAcwH1jr77kPJ7nM5P2b7dkORvRHjN4xDo7QhPCq16yJMtJc/o6A7CJq/DieS8qnk
-         LEsceN+BMWELl184iMbeCgNQnb6yEEAbCWdbWKK6mU2ee1Zs5/dfhZ3DXp+9W+LNYvas
-         CZF1QRQGkphu+0EOLqPni4oEqZc/iYbk+5hRONB1EKRbF9AWFm3kWQUMZQYoLg05+jPq
-         iZ40Mtp8vOUe7RjXJswO8H/6JWVih5XW67C+X3/3wQjipSQjh9MhIyc4LbKODL3mMi0m
-         +I47Y2f6ZysFCQrIPzA7AFW10Ihzj1cEotUNML0eFcLEBkpfcXK1LaeUr9Yeg4VcUxZU
-         qPrQ==
+        bh=baODQEVSKZkR4NxouhvlfP98A5JLPpRcJyRXkHbxD+s=;
+        b=IG7ZNfbhpJeYJOvIeZkEYe9FLOAx/t3Pmi54VvhEpcGR0+YU4HPlePR0hqs1/rga2i
+         69lecA4TqpBsKfJvmLZPNPJTwSiC/ZR1Sr5CWIzKbtTRejGfFtBeu5HsdgXByxhC0fS3
+         j1ktJISmFAd6BiB4PaOdxlh6P/thLoMhaoTQiPJGbKJkd+xgu/olLkqlF+9NVir1ia5P
+         R40pkOYW+LM/m+Z3lUplpyhJm3ijwrO3Tg1rnBS0+vTS1oF09Ov7sTtX0HG5PG0eiGYH
+         nN0ZAPPP1eBjiDhbZ7nJSoFKi0JELO8jENRZtJzr6c8Aj3zJuhw50D9tb5cVJb7fT7uF
+         nenw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722902385; x=1723507185;
+        d=1e100.net; s=20230601; t=1722902387; x=1723507187;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IRBPW2Bt/qQDLaxwdCcA7mM7s02N0BchEb9o1xhNhWQ=;
-        b=jaaesPhsqMTPUPaOjq/2Yc5mEzM9dw18SC0nTVKAM1dZNikJyvnnnZg1mbNpU8maUa
-         juSeHM8dLBqvl50VFc7OLMehmRZjt9c0X49Eh9tHmmDhBF4ki19NnTkxlZw/YFcKW3WO
-         xVIY8cFspUSbzzAnwxrNxuGGGX2C8KF+vL2rZ5dEjcyuWG3Gzg7gXG+gsTi4ZnE4G1w4
-         DsA7vP/ofD0MMkLhRx6gWfNpLlQBjrTSI39Nr7x26R5VFyu0HeInZ0yyIo4TiZMyz8jM
-         8u3eO3YxVV+6URrvzuoCaX2IsN8Uc73LdHkPDm/5cscWwi72MT/IKYCpYLAG7byFFNmc
-         dy5w==
-X-Gm-Message-State: AOJu0YzhEY0JzqDkDbTNs7hQeeRvgbf8lvcNKHFlAlV5zoNn5uhCypn3
-	sZWkaGlvHJiapkcNWqZa1t1JGxbRpy2l1L0oaMuPvx+kUdOzx/7VWXGuoa7g
-X-Google-Smtp-Source: AGHT+IFZl3sPyUU1RgNpdqhQDHZyNrjmgr6lUP6eVsetCZu1+Z9kwfrEI9Xdxv9Hu3un3YPpiddKPA==
-X-Received: by 2002:a05:600c:3504:b0:427:f196:c549 with SMTP id 5b1f17b1804b1-428e6b7e954mr125156225e9.23.1722902385013;
-        Mon, 05 Aug 2024 16:59:45 -0700 (PDT)
+        bh=baODQEVSKZkR4NxouhvlfP98A5JLPpRcJyRXkHbxD+s=;
+        b=LQDqPGgPyKC+mm1REy02y77EDN4a6HfFazq3uh49SL6gUik3nCi13AowE5hoj6JcCO
+         +4Uo5GhXqnAqoYsTxJyetih62pJj1e3NofwoMRxCp0jM0twQuJ1g4AcyA1ie5rBSpJj/
+         nHb7Ka/mS3tn65z9je1Yu1LYDewWE9cXJkGZL5M4WyLdZo2xyNgtasiiJKrfzgN9RfKb
+         C3cVtCUFkriygp0uEVQlfNYKcr4smUoadMF29lrepWffa5tfPB4E1Ts7lM+BW3Dgh9Ac
+         ejbs1IAP/6t03dahiTZHUtIfp83dER79sIIQY8XttrCbXiuyrvEd76qT31YQ8OjNgdt+
+         BBKA==
+X-Gm-Message-State: AOJu0Yw4iQFLh7d7Cwh64GJvF4mrlHsGuKAAbo4XT9c0TTyLqNKN844P
+	XNQ1D5FGFKgTfUCdOtRDM7OJkCfSBDf0lX68U8/ciuzuHLXlMHOWRx4x19UO
+X-Google-Smtp-Source: AGHT+IEPII4k9S9MfbxXTUdKPtdRUY8VO+2/fHEFHZ3OaIc1SNbi2kWHDmTFcqFV3hlpbYZcoT/eqg==
+X-Received: by 2002:a05:600c:1f95:b0:426:59ad:bbb3 with SMTP id 5b1f17b1804b1-428e6b95c3fmr104009725e9.32.1722902386789;
+        Mon, 05 Aug 2024 16:59:46 -0700 (PDT)
 Received: from abdobngad.. ([197.40.47.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd074583sm11219065f8f.108.2024.08.05.16.59.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd074583sm11219065f8f.108.2024.08.05.16.59.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Aug 2024 16:59:44 -0700 (PDT)
+        Mon, 05 Aug 2024 16:59:46 -0700 (PDT)
 From: AbdAlRahman Gad <abdobngad@gmail.com>
 To: git@vger.kernel.org
 Cc: AbdAlRahman Gad <abdobngad@gmail.com>
-Subject: [PATCH v4 2/8] [Newcomer] t7004: Do not lose exit status to pipe
-Date: Tue,  6 Aug 2024 02:59:11 +0300
-Message-ID: <20240805235917.190699-3-abdobngad@gmail.com>
+Subject: [PATCH v4 3/8] [Newcomer] t7004: One command per line
+Date: Tue,  6 Aug 2024 02:59:12 +0300
+Message-ID: <20240805235917.190699-4-abdobngad@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240805235917.190699-1-abdobngad@gmail.com>
 References: <20240805235917.190699-1-abdobngad@gmail.com>
@@ -68,8 +68,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Split "test-tool ... | sed" pipeline into two commands to avoid losing
-exit status from test-tool.
+One of the tests in t7004 has multiple commands on a single line,
+which is discouraged. Adapt these by splitting up these into one
+line per command.
 
 Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
 ---
@@ -77,29 +78,23 @@ Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 3100a4c219..1e31f39646 100755
+index 1e31f39646..cfe7653317 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -97,7 +97,8 @@ test_expect_success 'creating a tag with --create-reflog should create reflog' '
- 	test_when_finished "git tag -d tag_with_reflog1" &&
- 	git tag --create-reflog tag_with_reflog1 &&
- 	git reflog exists refs/tags/tag_with_reflog1 &&
--	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog1 | sed -e "s/^.*	//" >actual &&
-+	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog1 >actual.body &&
-+	sed -e "s/^.*	//" actual.body >actual &&
- 	test_cmp expected actual
+@@ -215,9 +215,11 @@ mytag
+ EOF
+ test_expect_success \
+ 	'trying to delete tags without params should succeed and do nothing' '
+-	git tag -l >actual && test_cmp expect actual &&
++	git tag -l >actual &&
++	test_cmp expect actual &&
+ 	git tag -d &&
+-	git tag -l >actual && test_cmp expect actual
++	git tag -l >actual &&
++	test_cmp expect actual
  '
  
-@@ -108,7 +109,8 @@ test_expect_success 'annotated tag with --create-reflog has correct message' '
- 	test_when_finished "git tag -d tag_with_reflog2" &&
- 	git tag -m "annotated tag" --create-reflog tag_with_reflog2 &&
- 	git reflog exists refs/tags/tag_with_reflog2 &&
--	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog2 | sed -e "s/^.*	//" >actual &&
-+	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog2 >actual.body &&
-+	sed -e "s/^.*	//" actual.body >actual &&
- 	test_cmp expected actual
- '
- 
+ test_expect_success \
 -- 
 2.43.0
 
