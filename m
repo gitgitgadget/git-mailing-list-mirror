@@ -1,139 +1,207 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF9015EFAA
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 17:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46329155351
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 17:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722877814; cv=none; b=mBxPnxBeI+Wz9K6nICnVQ48v1F6dQhNwLGXbjrqKCf8C61lZMscYWdB3hZkXccJww7If5RPHjinCZNCzGI6+1GBewkuo4D8UYUPQb6Vt3PvJDXp4LviNrEfju0QcALPuVVu63v+zQ5RXQoaNY/25+f/0dWd85CWJ4ph8jdilKiE=
+	t=1722877954; cv=none; b=EPxjrxIba3zazmGmDqvgopqS5zcDqDjJSDlvGhz2Wxg0ZPbwWqr/128TshKwjWW+wylS2oiDve4Fc4qfDNxHGftAOS53qxar+3918JOwIQdFaHfILDafUbXoyFWDyuXIyM9jE56djvXqrmqddBRtSfPj3JK7+biNDJ64rABR4qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722877814; c=relaxed/simple;
-	bh=cpHQERrBy/e+QlEOrk1xWanbWtQ6/SnI7s2Iub2Ue+Y=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=IrBOKX5DSYs6enO9XMZHKrnEtqjU6BlWkaY06Ib3rqLL5b7eB3wCk5viF/Rvh3Ni9iqskjmuob4jpwwhm3cMpvwnP01Cr0kHuBZl2fbsxRj75zIaStFEFyvcCYNe3jG/SlDzbvjYL2bEZroQ6a41g4VpK4q3da8OUEh49ottBPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iAB1GWGC; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722877954; c=relaxed/simple;
+	bh=Vb7mlP5QixngKEngn2c9rkTveXIbPErqJMZmxICj89A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nagf9Jr5eQ17iAP1XEPho0iaSynQdXYEJGcgb/d3jyobaHCTgqNMNfgp8oRHZwWl2mTfscr53zNUn8bI0onPtR55e/yTHxGPQpj/NUpnp9DZW6RS92O20cgyW9qBp28lhlTzAl5bcTcSV57Tb6gx89FUHLhqFW74hfLWpEHgQDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M3uyMyMv; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iAB1GWGC"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3685b9c8998so5205724f8f.0
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 10:10:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M3uyMyMv"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5d829d41a89so446799eaf.3
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 10:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722877811; x=1723482611; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1722877951; x=1723482751; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/HQe48C7retWVgU11VG8KpaLIFiEtdB+eb7jfq+1CxM=;
-        b=iAB1GWGCzpmO+z+IIPtaMS2H4+vVOeqcMuHX6UZgcZCNrxoJu7KrMtWrT9XxhMuit1
-         VadfRxgWKCdwKLs2XM76INxiSOwG1uFggjvr4/nb9dcpBUcynsF3bgmXnXhF0/o1Gi7c
-         8PTAGdnT47eAsu+e7UjAOyz+0uLo6sf9chjGNEshk+IqtJ+nfcKHCXAOkli9nHqeU0/J
-         Acmn0wVtkko/4MX/BZU9va+d3BCGyPzkO9Y+Qy18oHwnooTuZGOrSjq5EmDG+aGpOr2t
-         qol1UQMpMrc4tJ+a9Hdcm/rugYTdGjUiWEFm8uQyOE5DxekHQKAJYWGKkjiRRk4IXisO
-         d6Iw==
+        bh=/3B4VmTJNsizadoXUs1QWG8nvCSfIMLiZuoakQmDDPI=;
+        b=M3uyMyMvEBKj55rvJbIDTq6A+aio0VnLQ3YuAq14T7EglPcDazMt0/qvVTYFSj2d8a
+         Y/odt7wD1lS1Zhln382r3DQNNtxaSHGD94AdOYIEjcIw0289dJuaSXO3Y0uyl6tMcyo+
+         +cWTdL6I9seyuIEvdbx/Hd0hYESUk0fiJzbgNVZBPLUHHsYkh25EHd+Ak+wpITo/Cp4e
+         FY6UexupqRqRYBlEaLGN5vwITJCpBPKZSRwnrguT9wRGxo5cmsIugewId22qX8f8pyD9
+         ZWGm9EZHAHs7Tcv+rbyov3vMthC9s9pcS+rgF8kdXis7ya0dDwbqWFTEqjhWxtZu4VB/
+         M0DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722877811; x=1723482611;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1722877951; x=1723482751;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/HQe48C7retWVgU11VG8KpaLIFiEtdB+eb7jfq+1CxM=;
-        b=Y+zB1A1hy8pzMtYoaB4e6y1AxC1h7Vnpt2Eg4TKAMq9PEixi6dZ7scsCW4m7W/DaT/
-         w2S4/sAcPzDYsrzvv+VwaihnxVfruz5d1YwuaTvQ/3sw7ripFn449C5VCm+dLrhWH69R
-         wQKBVVuWylodo26CBF+b6oO5nVzI2ZJx4ZEYMUqcqCeAu2wxROUXpxFgplz3+fdB5Mqv
-         NRfV5vbPCaB8HfDUK+KDb1oV5wtmFoW4uCjQGMUcrXlBHqgWNa+fLmGKMFNGOb7+hsFE
-         exz05j99DfpUCwS6LDihtJnUlZru7IiV7E7E+u6H+ygzp+JDjFsiveE6U2i0gnTkidtj
-         7WPg==
-X-Gm-Message-State: AOJu0YwYt5DDdpeHGYPn+zaIrhXkm+6LXBwdG7cvBquXfxO9+/p2cmyA
-	EA2GqLvmN3ixpmVpZqfo2rQH2svNYpowA2ngF+gWnam1leO5o5r83DBC1A==
-X-Google-Smtp-Source: AGHT+IEVu76mYzZXK5/WoYVuAGbEZDz4HAvS+EmbGVS6EivjVAqYoyJrAdBbuOi8AZ0Pi6N6TvG5VA==
-X-Received: by 2002:a05:6000:8:b0:368:747c:5a04 with SMTP id ffacd0b85a97d-36bbc10f6c5mr6599813f8f.25.1722877810716;
-        Mon, 05 Aug 2024 10:10:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd0269ffsm10522412f8f.58.2024.08.05.10.10.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Aug 2024 10:10:10 -0700 (PDT)
-Message-Id: <96984c4a15e3b587cf8d590f5311a1abe1f63e28.1722877808.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1756.v3.git.git.1722877808.gitgitgadget@gmail.com>
-References: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
-	<pull.1756.v3.git.git.1722877808.gitgitgadget@gmail.com>
-From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 05 Aug 2024 17:10:08 +0000
-Subject: [PATCH v3 2/2] t6421: fix test to work when repo dir contains d0
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=/3B4VmTJNsizadoXUs1QWG8nvCSfIMLiZuoakQmDDPI=;
+        b=dxhtyRfLaCbxrKpAstaEfEPo4I9maY/gA8j4ExmiZp6InWLBej3CJS85p3GY6g9JkP
+         a07atwY0yjIY8OEXB1siKcYER/cUQipdCU4eWF3TmwTwFJbAyf3MhK6Gscw1+FbhIO3+
+         ECDXMPFt3AgIuVk85rkS7f95UDGqqryusbHhxyFmaIyfs5SDED6rtnLwHQ9Ux0kSVKyu
+         +dV5x1PxyJRkBTD/ECyvDUFEVNeibXpr0sh39aZ57x6OOM1ZcHMEIGOLkabDT1nr4wrp
+         hS4NB7CpIueE+nBimNELA8DDFtinFvhQtcCscHVHzRK+LRAzITLTsp3KLcH9r3UBK+6p
+         7y/g==
+X-Forwarded-Encrypted: i=1; AJvYcCU6X2Uh5gD7j/snxkCvryoxF89lfLY+RNlJrzHP2rRkWo4ECsQ7lAZmAh+mUUXG8sa7uQP3XC2Eu+HKFxDPNQOdyWXR
+X-Gm-Message-State: AOJu0YzGpt94pD4B6LGHqK3vaIL5wDaGwuuvmJ2FZLwIxraKNxsJ2mut
+	pSoxRYu+scQa07imD87wdWzOHYxNGkeeGt7sjEk2SFuESjr1/TqWzttl+OCtnmtAiqThG7mEg6+
+	Fp2IABJLoL3wwIQ6IRA/y1xU1URXo7GkUbmQ2
+X-Google-Smtp-Source: AGHT+IGFL3mgE4IqGlQuqurFtGbyqoQ0BR9WULBI84Nqjky/ikQF89Oueur7UsCQ7/N1AwVDIO2lHftQ+MXCZdQONSc=
+X-Received: by 2002:a05:6820:612:b0:5ce:f75b:1755 with SMTP id
+ 006d021491bc7-5d6636d2be4mr14728725eaf.4.1722877951157; Mon, 05 Aug 2024
+ 10:12:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Kyle Lippincott <spectral@google.com>,
-    Kyle Lippincott <spectral@google.com>
-
+References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+ <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com> <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
+ <xmqqv80ia9wf.fsf@gitster.g> <CAO_smVjYYaE3UZd0M28j+=uYMLdDPRAN08X1Yb_=5+nU4GrkSA@mail.gmail.com>
+In-Reply-To: <CAO_smVjYYaE3UZd0M28j+=uYMLdDPRAN08X1Yb_=5+nU4GrkSA@mail.gmail.com>
 From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 5 Aug 2024 10:12:09 -0700
+Message-ID: <CAO_smVhr0YVXCDiaUcdov+o40=znSVSHsZiJegLOZezFjzWGfA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `grep` statement in this test looks for `d0.*<string>`, attempting
-to filter to only show lines that had tabular output where the 2nd
-column had `d0` and the final column had a substring of
-[`git -c `]`fetch.negotiationAlgorithm`. These lines also have
-`child_start` in the 4th column, but this isn't part of the condition.
+On Fri, Aug 2, 2024 at 4:51=E2=80=AFPM Kyle Lippincott <spectral@google.com=
+> wrote:
+>
+> On Fri, Aug 2, 2024 at 2:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> >
+> > "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > From: Kyle Lippincott <spectral@google.com>
+> > >
+> > > If the loop executes more than once due to cwd being longer than 128
+> > > bytes, then `errno =3D ERANGE` might persist outside of this function=
+.
+> > > This technically shouldn't be a problem, as all locations where the
+> > > value in `errno` is tested should either (a) call a function that's
+> > > guaranteed to set `errno` to 0 on success, or (b) set `errno` to 0 pr=
+ior
+> > > to calling the function that only conditionally sets errno, such as t=
+he
+> > > `strtod` function. In the case of functions in category (b), it's eas=
+y
+> > > to forget to do that.
+> > >
+> > > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfully=
+.
+> > > This matches the behavior in functions like `run_transaction_hook`
+> > > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
+> >
+> > I am still uneasy to see this unconditional clearing, which looks
+> > more like spreading the bad practice from two places you identified
+> > than following good behaviour modelled after these two places.
+> >
+> > But I'll let it pass.
+> >
+> > As long as our programmers understand that across strbuf_getcwd(),
+> > errno will *not* be preserved, even if the function returns success,
+> > it would be OK.  As the usual convention around errno is that a
+> > successful call would leave errno intact, not clear it to 0, it
+> > would make it a bit harder to learn our API for newcomers, though.
+>
+> I'm sympathetic to that argument. If you'd prefer to not have this
+> patch, I'm fine with it not landing, and instead at some future date I
+> may try to work on those #leftoverbits from the previous patch (to
+> make a safer wrapper around strtoX, and ban the use of the unwrapped
+> versions), or someone else can if they beat me to it.
+>
+> Since this is wrapping a posix function, and posix has things to say
+> about this (see below), I agree that it shouldn't set it to 0, and
+> withdraw this patch.
 
-A subsequent line will have `d1` in the 2nd column, `start` in the 4th
-column, and `/path/to/git/git -c fetch.negotiationAlgorihm` in the final
-column. If `/path/to/git/git` contains the substring `d0`, then this
-line is included by `grep` as well as the desired line, leading to an
-effective doubling of the number of lines, and test failures.
+Dropped this patch in the reroll that (I think) I just sent.
 
-Tighten the grep expression to require `d0` to be surrounded by spaces,
-and to have the `child_start` label.
-
-Signed-off-by: Kyle Lippincott <spectral@google.com>
----
- t/t6421-merge-partial-clone.sh | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
-index 711b709e755..b99f29ef9ba 100755
---- a/t/t6421-merge-partial-clone.sh
-+++ b/t/t6421-merge-partial-clone.sh
-@@ -230,8 +230,9 @@ test_expect_merge_algorithm failure success 'Objects downloaded for single relev
- 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
- 		test_cmp expect actual &&
- 
--		# Check the number of fetch commands exec-ed
--		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-+		# Check the number of fetch commands exec-ed by filtering trace to
-+		# child_start events by the top-level program (2nd field == d0)
-+		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
- 		test_line_count = 2 fetches &&
- 
- 		git rev-list --objects --all --missing=print |
-@@ -318,8 +319,9 @@ test_expect_merge_algorithm failure success 'Objects downloaded when a directory
- 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
- 		test_cmp expect actual &&
- 
--		# Check the number of fetch commands exec-ed
--		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-+		# Check the number of fetch commands exec-ed by filtering trace to
-+		# child_start events by the top-level program (2nd field == d0)
-+		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
- 		test_line_count = 1 fetches &&
- 
- 		git rev-list --objects --all --missing=print |
-@@ -422,8 +424,9 @@ test_expect_merge_algorithm failure success 'Objects downloaded with lots of ren
- 		grep fetch_count trace.output | cut -d "|" -f 9 | tr -d " ." >actual &&
- 		test_cmp expect actual &&
- 
--		# Check the number of fetch commands exec-ed
--		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
-+		# Check the number of fetch commands exec-ed by filtering trace to
-+		# child_start events by the top-level program (2nd field == d0)
-+		grep " d0 .* child_start .*fetch.negotiationAlgorithm" trace.output >fetches &&
- 		test_line_count = 4 fetches &&
- 
- 		git rev-list --objects --all --missing=print |
--- 
-gitgitgadget
+>
+> I'm including my references below mostly because with the information
+> I just acquired, I think that any attempt to _preserve_ errno is also
+> folly. No function we write, unless we explicitly state that it _will_
+> preserve errno, should feel obligated to do so. The number of cases
+> where errno _could_ be modified according to the various
+> specifications (C99 and posix) are just too numerous.
+>
+> ---
+>
+> Perhaps because I'm not all that experienced with C, but when I did C
+> a couple decades ago, I operated in a mode where basically every
+> function was actively hostile. If I wanted errno preserved across a
+> function call, then it's up to me (the caller) to do so, regardless of
+> what the current implementation of that function says will happen,
+> because that can change at any point. Unless the function is
+> documented as errno-preserving, I'm going to treat it as
+> errno-hostile. In practice, this didn't really matter much, as I've
+> never found `if (some_func()) { if (!some_other_func()) { /* use errno
+> from `some_func` */ } }` logic to happen often, but maybe it does in
+> "real" programs, I was just a hobbyist self-teaching at the time.
+>
+> The C standard has a very precise definition of how the library
+> functions defined in the C specification will act. It guarantees:
+> - the library functions defined in the specification will never set errno=
+ to 0.
+> - the library functions defined in the specification may set the value
+> to non-zero whether an error occurs or not, "provided the use of errno
+> is not documented in the description of the function in this
+> International Standard". What this means is that (a) if the function
+> as defined in the C standard mentions errno, it can only set the
+> values as specified there, and (b) if the function as defined in the C
+> standard does _not_ mention errno, such as `fopen` or `strstr`, it can
+> do _whatever it wants_ to errno, even on success, _except_ set it to
+> 0.
+>
+> POSIX has similar language
+> (https://pubs.opengroup.org/onlinepubs/009695399/functions/errno.html),
+> with some key differences:
+> - The value of errno should only be examined when it is indicated to
+> be valid by a function's return value.
+> - The setting of errno after a successful call to a function is
+> unspecified unless the description of that function specifies that
+> errno shall not be modified.
+>
+> This means that unlike the C specification, which says that if a
+> function doesn't describe its use of errno it can do anything it wants
+> to errno [except set it to 0], in POSIX, a function can do anything it
+> wants to errno [except set it to 0] at any time.
+>
+> What this means in practice is that errno should never be assumed to
+> be preserved across calls to posix functions (like getcwd). Also,
+> strbuf_getcwd calls free, malloc, and realloc, none of which mention
+> errno in the C specification, so they can do whatever they want to it
+> [except set it to 0]. That I was able to find one single function that
+> was causing problems is luck, and not guaranteed by any specification.
+>
+> Kind of makes me want to try writing an actively hostile C99 and POSIX
+> environment, and see how many things break with it. :) C99 spec
+> doesn't say anything about malloc setting errno? Ok! malloc now sets
+> errno to ENOENT on tuesdays [in GMT because I'm not a monster], but
+> only on success. On any other day, it'll set it to ERANGE, regardless
+> of success or failure.
+>
+> >
+> > Thanks.
+> >
+> > > Signed-off-by: Kyle Lippincott <spectral@google.com>
+> > > ---
+> > >  strbuf.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/strbuf.c b/strbuf.c
+> > > index 3d2189a7f64..b94ef040ab0 100644
+> > > --- a/strbuf.c
+> > > +++ b/strbuf.c
+> > > @@ -601,6 +601,7 @@ int strbuf_getcwd(struct strbuf *sb)
+> > >               strbuf_grow(sb, guessed_len);
+> > >               if (getcwd(sb->buf, sb->alloc)) {
+> > >                       strbuf_setlen(sb, strlen(sb->buf));
+> > > +                     errno =3D 0;
+> > >                       return 0;
+> > >               }
