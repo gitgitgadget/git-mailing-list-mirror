@@ -1,68 +1,76 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out.smtp-auth.no-ip.com (smtp-auth.no-ip.com [8.23.224.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528BA4D8BA
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D353611E
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=8.23.224.60
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722871099; cv=none; b=Xp2cPSPbJsdTSA2Yh3mT8mONXQyHXMzeTlHKC8iYAYxXNPrkJ6kHehy26VIB+8hJKR7HeYJ5v3+Z2qFUstuZumCrIH8AEZ3jMIYE5aqeFnNEHjagjfedWJ/+MkDGWXF3NUBlYnc4hFnZ/iu55BgKUXbkNjE/0lFNU2slsQBuwGg=
+	t=1722872105; cv=none; b=ZO8wzQRHDAjsB05sZ9QA58BNxiGz/S2wiXNgSv6/PR11F+bsa2143d7DVf5mjvNyCnxmoR65wSUMblc4DwxcxdSeupG4nUGhOq+MhDkyii1MEzywX4lupDByrkXw3FcuXGWmSl+NgyvhFQdsnLZaA7U9F3LEBEEv/iz6bwvTmjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722871099; c=relaxed/simple;
-	bh=5a7w6V+td4Ce+xN3LDw8KmQ0T/B/xALU4O10JR5Y8Cc=;
+	s=arc-20240116; t=1722872105; c=relaxed/simple;
+	bh=IqA414Z8spCq8b8MtrO+9v08GPGHW8cC42b8eB+hP3A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N2RcBEI1wIS4sg4o4IzXuqiAy45An4GrsvWeOlhDwIqzuwQ+Pn1RknXsuKBbidAQiIh5z9BLNk3FaZ4/0eKQmeKDXW9bgpOtCE9LplH6JSeySFpz9TOMPdFAG/6ZuN/Lqyp0pdoCtHUTeeIz+53Vj9aCBNaDQ2863ryTYsz7p/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LhJvJXrm; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=HD0D1BFOHeumgrXI9PlTijYfkA9SX35w9lp57nJOnlF+FBwd+4eD8EeGnwntxgkcQvKSafL6/AG4OtK/+RNq7uoWRN1AsL7BhM9DD/5EHK5ikt4fj1tQiQpoXjgoYTcHcZhjKY4hak/PPh6Oit7zRasnv+VEe/xesBjsMumGIxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=flyn.org; spf=pass smtp.mailfrom=flyn.org; dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b=OTo7nrxr; dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b=nj/BMq3b; arc=none smtp.client-ip=8.23.224.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=flyn.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flyn.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LhJvJXrm"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-70d333d57cdso7517880b3a.3
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 08:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722871097; x=1723475897; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NgD6ZIpdd1lefNYd5oLJSAYbFGhU2Lh0H8ixftNnTE0=;
-        b=LhJvJXrmBQzYIEfgCMjfVMglY5FZLrEoHV+inizA+89+ZN9Hk4HOL2Ev1Jp/O2wYmF
-         ksEXjdAsMBrh3Dqr8rkcaL8ssJbu+rWbwQdEmK9ISMaIoEd/f4CogS8nxFsDNSO9y9iE
-         UUFKmPdO+D+KOFyRdB+SoY9sU4iT1KbHiikZXou2PdkhBtZFlxai9S7pkE+JMjmD/lWS
-         mmN8HjvZUWtgm4JRRfIey+qqVs9H62NzLkJYtvMiidZVt/J6YmhZN+39J0Yk/OK15W+J
-         PWy6A+t1tg+WhnTwbj0WGGv1gXEdvdUhZw/S/jdJPKEDjXA2YFGQh1ICsIy1UF43z7Ao
-         Lq+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722871097; x=1723475897;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NgD6ZIpdd1lefNYd5oLJSAYbFGhU2Lh0H8ixftNnTE0=;
-        b=ApXKCpECCAe/IP/HWJxBlFOTEFrXZTVFNTK8mCbJlB4y0tPCmgrm6zJcMjIRVmNg/T
-         Tsanv6xuYkLAAYq+IUQ4t68AdWurnYD5IWEjT4E/dkegcO1blD5xOX8VgLH2tD5Dljfu
-         0QTEnfsJduVw22fGLMclhGreCI8gHorRzzV6mtY6xI3aKZ6Yo8PEbPpVuAuUGQnyrrSD
-         eEanzO3jwmoONCFHztGOAq2pDXt2kbn/Y5m1Es72dx19zwCcNJleOVC60Bv6lTQqTQGr
-         d2XekspIrOetYJTXa0oOAWfOE0QlnzxBPgkkywDsuatAkx7Yxx5sP8KCTG7TuyeTS3wJ
-         WZOw==
-X-Gm-Message-State: AOJu0Yw/dfb/CrQRffN7YVK2L7PI7zUQBr+4KRirFOsi6MJOhw3YJ7J1
-	IH+nrwtzBzJVrIL+L8K6+251l/0clgNoBRdq2MAo0/+BF2A4dbJh
-X-Google-Smtp-Source: AGHT+IGs/mkVa/ui8602NjTk2UAzGngZug1KQO0JvI+8Vw2uUPGH2KEpfOJsdWRkxWRosyeGkFVF3Q==
-X-Received: by 2002:a05:6a20:db0a:b0:1c2:8949:5ba1 with SMTP id adf61e73a8af0-1c69966b82bmr9401557637.53.1722871097486;
-        Mon, 05 Aug 2024 08:18:17 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7106ecfd1d4sm5522114b3a.163.2024.08.05.08.18.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Aug 2024 08:18:16 -0700 (PDT)
-Date: Mon, 5 Aug 2024 23:18:44 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b="OTo7nrxr";
+	dkim=pass (3072-bit key) header.d=flyn.org header.i=@flyn.org header.b="nj/BMq3b"
+X-No-IP: flyn.org@noip-smtp
+X-Report-Spam-To: abuse@no-ip.com
+Received: from www.flyn.org (unknown [137.26.240.243])
+	(Authenticated sender: flyn.org@noip-smtp)
+	by smtp-auth.no-ip.com (Postfix) with ESMTPA id 4Wd0qf1WJ0z7rtF
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 15:34:54 +0000 (UTC)
+Received: by www.flyn.org (Postfix, from userid 1001)
+	id 321E01EE0029; Mon,  5 Aug 2024 10:34:53 -0500 (CDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flyn.org; s=mail;
+	t=1722872093; bh=9DC6NnbhTZra+TQBav1uRvo9pfhwjAOjASewWENTIks=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OTo7nrxr9rCXDa7Uq5/LQcEZI27osL2Bkx307GAkLR4jafFMczzoPGimT//vxxBz6
+	 UWHu3IWnLfr3yxERCcpXO3pn1LFfggm0dE18YXVUoftc9aMjT+gbN0EXb08O4A08Yk
+	 M2wRTFYtZT3iMaM6xLojvGNyodSPV9M58AvLI3fKwd0DSz8zjLhu6HUKRz9QE7dcwI
+	 yVIgKGMbTjxvg3AAB/SFrNWccMmXNIOi4DSQXb+jHGY7bG9sV5W7AzzcA24lPTNUJy
+	 IsYpjZOye/pQ7igZXdgMSjvcG9jr/Kt9SkINJzVICx0lQVGFd/areWQQlK1JFSAtUN
+	 9Y9uR4eo4w4ZjnTar/ohS11hhzxUhTWT0SQ8rSfv+egtbOEgt2V+11VX3BpfI1vxIz
+	 1Ra1ItANFEcGhe685bFybErZ/kKDTV7J9b5Wi9D5bL9JF620b02XJYbeYkEHxpOPXP
+	 BoslPBNk0PSRmPrLeoAKjtnIRWYMoCLHr/Wqi2DTedn3pm9CetW
+Received: from imp.flyn.org (guardian.flyn.org [137.26.240.242])
+	by www.flyn.org (Postfix) with ESMTPSA id EA7471EE0029;
+	Mon,  5 Aug 2024 10:34:52 -0500 (CDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flyn.org; s=mail;
+	t=1722872092; bh=9DC6NnbhTZra+TQBav1uRvo9pfhwjAOjASewWENTIks=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nj/BMq3bB+K4rMYLxk9Ik1ag/s383vRjed49PoA1LpDCxc9W4C/8tLurPHftD45+Z
+	 Kr5QYDSrt7vfMxHORjWuKP7otjxBmcmEeMV6XMKFhTsEeEA/jFKKfvqyOZ418JyvbK
+	 VF2hCkXt6DHd1p4ABsAzuqvk79InyCG3ZWTrUf1fkpnvkzfCe6SHb3cLmnoQy4hhtM
+	 cl2ARDOkSACAhuT+vyg600dzF3lNUZya2o7a+BQtAP5UMCclaai0HO/z8cwOOUYkEt
+	 SA4ADsIEKznwqq4TjYmDDnjZvtmomWLslFqs7lgtlj61alPq0SpfhoznsIx41gf04T
+	 HbsQZs2M14b8dbQjpLXZIMkFz9DL0kVKHOfgaF85vIGkEvwmn8BjTdOOb3DzA77ekK
+	 PAKzhdgp2TXOorHTAQi9TU+cCRGyA7naH4yyTIY7upZkYgOlFdXggGhp2m8fhJpaww
+	 AcpTPB7pnu1+7uHcKmyFOQVOQ5WyJ7zoGPaXcjLJP+fxpns3XL1
+Received: by imp.flyn.org (Postfix, from userid 1101)
+	id CD02D2D8DDCE; Mon,  5 Aug 2024 10:34:52 -0500 (CDT)
+Date: Mon, 5 Aug 2024 10:34:52 -0500
+From: "W. Michael Petullo" <mike@flyn.org>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v14 09/11] builtin/fsck: add `git-refs verify`
- child process
-Message-ID: <ZrDtVJYoJJZDesB4@ArchLinux>
-References: <ZqulmWVBaeyP4blf@ArchLinux>
- <ZqumdJz3-0mqh6Rc@ArchLinux>
- <ZrDMdEJR6DV5HyLD@tanuki>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: Git clone reads safe.directory differently?
+Message-ID: <ZrDxHPh-daYPxzT2@imp.flyn.org>
+References: <ZqjQi6i2kiY4gcc1@imp.flyn.org>
+ <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
+ <xmqqv80m8pha.fsf@gitster.g>
+ <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
+ <20240731072832.GB595974@coredump.intra.peff.net>
+ <xmqqo76d7coa.fsf@gitster.g>
+ <xmqq1q391afc.fsf@gitster.g>
+ <20240801061417.GD621899@coredump.intra.peff.net>
+ <Zqv9b_B5wKGp331o@tapette.crustytoothpaste.net>
+ <20240805094709.GA632664@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,47 +79,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZrDMdEJR6DV5HyLD@tanuki>
+In-Reply-To: <20240805094709.GA632664@coredump.intra.peff.net>
+X-Bogosity: Unsure, tests=bogofilter, spamicity=0.520000, version=1.2.5
 
-> > +static void fsck_refs(void)
-> > +{
-> > +	struct child_process refs_verify = CHILD_PROCESS_INIT;
-> > +	child_process_init(&refs_verify);
-> > +	refs_verify.git_cmd = 1;
-> > +	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-> > +	if (verbose)
-> > +		strvec_push(&refs_verify.args, "--verbose");
-> > +	if (check_strict)
-> > +		strvec_push(&refs_verify.args, "--strict");
-> > +
-> > +	if (run_command(&refs_verify))
-> > +		errors_found |= ERROR_REFS;
-> > +}
-> 
-> Okay. I think that it's sensible to execute this as part of git-fsck(1).
-> But do we want to provide an option to disable this new check, as well?
-> 
-> It does feel a bit like opening a can of worms, though. None of the
-> other checks have trivial ways to disable them, and git-fsck(1) is
-> gaining more and more checks. So if we can disable ref checks, we may
-> also want to have options to disable checks for objects, connectivity,
-> reverse indices, indices, commit graphs and whatnot. In other words, in
-> my opinion we need to think a bit bigger and design a proper UI around
-> this.
-> 
-> But I don't think that should happen as part of this commit series, as
-> it is already big enough. So either we just accept this patch as-is. Or
-> we evict it from this series and handle it in the future together with
-> all the other taks that one may potentially want to disable.
-> 
-> I'd rather pick option two.
-> 
+Thank you---from a somewhat sophisticated Git user, but not a Git
+developer---for all of the discussion that followed my initial inquiry.
+I thought I would follow up with some comments that follow from my reading
+of the responses and the SECURITY sections of various man pages.
 
-After talking with Patrick offline, we decide to drop this patch. At
-current, we should put this change slowly for the user. Because many
-people use "git-fsck(1)", currently we don't have a way to disable ref
-checks by default. It's a little beyond this series.
+> [From Jeff:] So there's an open question on the degree to which
+> running upload-pack is actually dangerous. It's not _supposed_ to be,
+> but the ownership check is a defense-in-depth approach to safety.
 
-We may consider later.
+The discussion here is partially an attempt to better understand some
+of the internal workings and guarantees to determine whether or not the
+protections applied in some cases are spurious, right?
 
-> Patrick
+> [From Brian:] Both of these commands should work correctly and do not,
+> and that's a bug (assuming tr1 is owned by a different user):
+>
+>   git clone --no-local --no-hardlinks $PWD/tr1 tr2
+>   git clone --no-local --no-hardlinks ssh://localhost$PWD/tr1 tr2
+
+The remarks above closely resemble the use cases that prompted my
+initial inquiry. It would help a great deal if these worked, and also if
+"--no-local --no-hardlinks" remains the default for the SSH variant.
+Is it fair to conclude that these not working represent a bug?
+
+> [From Brian:] The git(1) manual page also says this:
+>   [...] but beware that the surface area for attack against
+>   `upload-pack` is large
+
+Does the use of attack surface here mean the general idea of "the volume
+of lines of code in upload-pack is large and thus upload-pack likely
+contains bugs that might represent vulnerabilities", or is there
+something specific about upload-pack that should raise concern?
+
+I do have a related question on the SSH/push side. Let us imagine a host
+that has user accounts bearing git-shell as their shell. Thus these users
+can only interact with the host (and the repositories therein) using Git.
+Further imagine a trusted agent on the host creates these repositories and
+any hooks therein. Can a special account, with permission to access all
+of the repositories, safely clone and push other users' repositories? Or,
+could a user introduce a dangerous hook or configuration option to their
+remote repository using only Git by way of git-shell?
+
+Thank you again, especially Jeff, who provided me with some practical
+workarounds early in this thread.
+
+-- 
+Mike
+
+:wq
