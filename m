@@ -1,81 +1,79 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2011DFE8
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 09:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE40154C11
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 09:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722849074; cv=none; b=nisbcBUF059b/RI6HjU1pWnCZfznfLM1iI7wkBa1PZ9Ns6uJKaYvnMlk0wi+OAGYU60mkjou/19+ItswpTkMqZjnVLNx3KEirxBNKyZMkPUrMYHEv+9Vkl/FuEkE6fR1ioq0RETdkRvZA5iGTcktt+/sbzEa52Fe1zHZWshOBTQ=
+	t=1722850579; cv=none; b=ntzAT95Ir3DRWjdZYRmY9WBxfJX8h9Qj7F1Vw2gwX/T0oeMuG3JFm39aWlpTBh4WQBEOOiPGQGQaT46pt+VYezI7f9Y7aQqVl1Im8NgcSEPAW6QT93VgYqnxejI2GCIs2ojDw2hkGl5x5bqEdrv8p1un4fy17ca9R0NbFiwUXXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722849074; c=relaxed/simple;
-	bh=jMK3Z7Y9Zp+8/AKj/cUzoPtItt5VjD3olX7zVcB/4JY=;
+	s=arc-20240116; t=1722850579; c=relaxed/simple;
+	bh=xREATDu8b3FclnInvFkwSK8EqPCd5QDgIMJpVcoLY7Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RkjQCpht+rl98vJKDyH3wYzb2FZGSziR9PIhQlzgxnyUV9dnUtzN3Wbgpp3E4sFl3nq0EQD5+Eb9i0lQ2wFjpfIjVsEFM4Kb6adBHJjO8qhSI9WWHGMnbnojDMCdZEuAcLY52ET8QgLN3E5eUFkdKyxjx6PX92exg2Th53AUNeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cEKijwmC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Waglvv9e; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=hLqRY1N/ksTRfSjy/pMu/E8kBpsDP1nhuN8jU28GltGopaBEaULzCzcg0EebL+fMowyZAvQMvU7VDsab9B+IqB2bP/XKS84hFX0WOksQMUZqMXVv3DSbOI+ynW/78XaDbHsoj2/SETWWqmBYSLl7Vv6oVOQNtNpYY/DacrziKoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M1qCiypr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JhJykvIy; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cEKijwmC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Waglvv9e"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M1qCiypr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JhJykvIy"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id AF8421151CAC;
-	Mon,  5 Aug 2024 05:11:11 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 05 Aug 2024 05:11:11 -0400
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id AEDAD1151CAB;
+	Mon,  5 Aug 2024 05:36:16 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 05 Aug 2024 05:36:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722849071; x=1722935471; bh=EJjW9QlPk8
-	lOWizyeGaP8Bunm4aCansVCFdazyCzyY0=; b=cEKijwmCDrFHu1ea+LcOjcbJh6
-	2A7x6YtbryXf2siClxvV7gRMdXLyJRZwk2xY3Qc0Qlu+2HhVutaVON3dETppyYDe
-	zff8dy3aGHtJYAU7cuKsoKfDGerpYL9sGEhggeFJXYZM3JPm71V1cApcJIeJkfcv
-	Zb/1PQEBFQKiE7i+bM5fIMMh79CbFqwjtKlolHFC7mgGCvYQo8B0tk/UL+NuOOtd
-	DBXOR1yq++h1jMX3ZLr2SoZHn9104lCOijw1rTbEv09FqQNkuq4gH8QWcKL4T77V
-	02MhBFFf7NHIThUAfkTwj8vMgBR6QWRboOEn/VcnBjfNUZlnclI38RsVBM/w==
+	:subject:to:to; s=fm3; t=1722850576; x=1722936976; bh=RY6FVsJDrd
+	MLHgnReZjCnO8lzVZPsSpfpVbvpoI2qdE=; b=M1qCiyprrdNAnI5c4BKdh45KzZ
+	A4+COO6djUVle1vCvT10k5WsD4Z3zFPpPZc2aVBybqolwfJAuC1YMjfVHJx24+Uo
+	FWwt7Z4BXhXrZCZRCZcwIENbjVQ6QvpaLDRiyxcB2hm6yEZR7+8ApJyQjO+eRzBq
+	0TRxIXbEMoDUh4U/muK4YvghYT2UtxhRskqqVcH2jbPpNcSC72NHMZXVNkZm4ytf
+	KVgxqUJrQ3miSKW5WAGDeW1DhutsUPxhGfGF7gf5Es5BA6KzMKJBegOcAG3UVn1j
+	aAh6ZuSUcTyv3I6AQ0X398Wi5E+Vj1iweNfhSiUiKrV08OCOj1UMLakw8FIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722849071; x=1722935471; bh=EJjW9QlPk8lOWizyeGaP8Bunm4aC
-	ansVCFdazyCzyY0=; b=Waglvv9ezB6MzgRgP7U9u3nydYw6ESc3fUgsmZ/KXKeo
-	Ye8mKLhcCF31xBw8sZqdUfAS5m6m8Xhk5++26owUHkHkvr3X0LhdJtbKeDpogogz
-	Nh1TppWcRMr6e+NTCKVePzhvyohkWtRowowGkTdGKKNLlTjTUuKq6P+xtNZLwpVA
-	kgyps4jLWBlI4ezRMIiT2uippZ3Ho8XSQS4vdaTYDgjcxXfFuFRbN+BdIcUOQc6L
-	OjsFyRNW4CL7Mx5md4k+NKhVlGdQFnbXYVx7nK0DvjyPHiCBWD2swSB2KZKjug0E
-	h6Tyki445q/VWTwVp1ERU+dLm0sLBYiVRf2sk8BZVA==
-X-ME-Sender: <xms:L5ewZu9QdoUAn55Ve_blAwSQEGP1mOIeArAjTRVNou4tB9HJIS1c8A>
-    <xme:L5ewZutLYUYdWLb4gGGJZ01sRUuOerg-BK-5mL2Xnb9rIXkLkUME1op8zgfMBdiUq
-    8BGHaglg_-tyFZCww>
-X-ME-Received: <xmr:L5ewZkDNph8zmz9Dn2sbijwbTJjVFpXwx_WUbCFWiGol-d6ja93VvU7v9pZ4pElceh4zVxzPI8pONoIrNF6kgq7UUI0Ksu2F59izWHxqqAX9TzQmrA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigddufecutefuodetggdotefrodftvf
+	fm3; t=1722850576; x=1722936976; bh=RY6FVsJDrdMLHgnReZjCnO8lzVZP
+	sSpfpVbvpoI2qdE=; b=JhJykvIyajPVCsi0xpVW+vbrPHOlh5E9+5mxFgYpKOuh
+	b+1JvgkORqBZxsY4ESTRrgKiHYJxq1MKRFn+5wCtlybvvkDkXGVkWyUry2nC86A6
+	lppGuSjl4+uoP0puh9mhBfOkVnTs31qCg3EbrZrZUjtRPB8U0zb0oo3q77vb3p1S
+	zQ0p0oZmMgyv0nTQ8IRVkoOHC4RfVp8ySYsYEsCjYp4V51BYfVrFDPz9pUIYegJP
+	nwta3ktqgxYv2kYg6qYw2kmoosOIcf5HNHbFKx++vTMYTabflvyGO5M7/c1FLXPq
+	QwbeD+d4ivlMz9RYQ/No72aAs7vjJioZJPkU/HUFYw==
+X-ME-Sender: <xms:EJ2wZhgs9AUKwIV0_rKINTwspL1d7nrAABTzOLBvEajNwrSUNv25aA>
+    <xme:EJ2wZmByqqbea4X1LaPei_7DE3hmXJ_MiGsk0hit5VdRaoHJfeGO0_M6W71_avdGd
+    A4zWpvRabGjDps9VQ>
+X-ME-Received: <xmr:EJ2wZhFLNcENBolwToqlWW31B6YgUzGFjObnrmDPB6zj1Emb3ABpiYXSE4VxnjZOOQbxN8yCCyPKnEjs09c_49V5tOk9HArtv4v5o5DrcLKZJxNUyg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigddukecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:L5ewZmdQUFJFE60misY-YV3U4NGAYjr_Sgww5K3yb0qZcd6WDkgKvA>
-    <xmx:L5ewZjOKpuHld8hsFTnJXRQQjsFYUwynGd-tupzIIF26BgDKbCgqYQ>
-    <xmx:L5ewZglG_dVxPcxyfAkh7SWWUyxquYVHn2Hnfpz-AUDyJGT5iREg7A>
-    <xmx:L5ewZlt5rHrxyF6qlxRZZ61dWjkiR2F1_Z25QBFa_9GXTkWikBsR2w>
-    <xmx:L5ewZsoDG4DEHbxB10X85Ru89NEgy-OYvcBE-Uds-2lAYLHbGr9ZkdA5>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:EJ2wZmSosVsdIW9klDkZfR2J-it6m8r1ia3eB4DzVLFtL0ghwzMzMQ>
+    <xmx:EJ2wZuxOYthD2aei-CRgQPkdPZZsU1aKhIU9jYPEmA6KITRKHK0EXA>
+    <xmx:EJ2wZs4-Ol-CFb0lGGAPkqwlffJmfLqNn9-UW9xL9I9EoPPM-iCTTA>
+    <xmx:EJ2wZjxjv9xBpEK0VZ1wlsXTNvvs9TswccQ8_cd1BKgK22DbNq340Q>
+    <xmx:EJ2wZp_Nl6yryiUNMZ1-o2z1gri4ewfV3FofTgrLrZSRD_xwxycQyKIc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Aug 2024 05:11:10 -0400 (EDT)
+ 5 Aug 2024 05:36:15 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a8403b37 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 5 Aug 2024 09:11:09 +0000 (UTC)
-Date: Mon, 5 Aug 2024 11:11:07 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d19c42f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Aug 2024 09:36:14 +0000 (UTC)
+Date: Mon, 5 Aug 2024 11:36:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH 1/5] doc: git-diff: apply new documentation guidelines
-Message-ID: <ZrCXK8AmGSFwyqI4@tanuki>
-References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
- <515ddbf1dceacc0c186e3d31c13e76a5afc6c45f.1722801936.git.gitgitgadget@gmail.com>
+To: AbdAlRahman Gad <abdobngad@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] [Newcomer] t7004-tag: redirection operator
+Message-ID: <ZrCdDHqKfwWbr_Zn@tanuki>
+References: <20240804071137.30326-1-abdobngad@gmail.com>
+ <20240804071137.30326-2-abdobngad@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,73 +81,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1BbH31vsjCxCx8hy"
+	protocol="application/pgp-signature"; boundary="VowwCrHTVB7zyE8h"
 Content-Disposition: inline
-In-Reply-To: <515ddbf1dceacc0c186e3d31c13e76a5afc6c45f.1722801936.git.gitgitgadget@gmail.com>
+In-Reply-To: <20240804071137.30326-2-abdobngad@gmail.com>
 
 
---1BbH31vsjCxCx8hy
-Content-Type: text/plain; charset=utf-8
+--VowwCrHTVB7zyE8h
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Aug 04, 2024 at 08:05:32PM +0000, Jean-No=C3=ABl Avila via GitGitGa=
-dget wrote:
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
->=20
+On Sun, Aug 04, 2024 at 10:11:32AM +0300, AbdAlRahman Gad wrote:
+> Modernaize 't7004-tag.sh' by removing whitespace
 
-Nit: please provide a summary of what adaptations you made. It would
-certainly help the reviewer to learn about the recently-introduced
-`[synopsis]` style and why/since when we use backticks and underscores
-for formatting.
+s/Modernaize/Modernize.=20
 
-The same also applies to subsequent commits, providing some pointers
-would certainly help an unknowing reviewer such as myself.
+> after the redirect operators.
 
-> @@ -225,11 +225,12 @@ CONFIGURATION
-> =20
->  include::includes/cmd-config-section-all.txt[]
-> =20
-> +:git-diff: 1
->  include::config/diff.txt[]
-> =20
->  SEE ALSO
->  --------
-> -diff(1),
-> +`diff`(1),
+Also, please note that we typically wrap commit messages after 72
+characters.
 
-This one looks curious to me. Why is this item formatted differently
-than the next three? I would have expected it to be formatted as
-something like linkgit:git-diff[1] instead of `diff`(1)`.
+It would also be helpful to make the commit subject a bit more
+informative. Right now you only say "redirection operation", which
+doesn't really give the reader much of a clue what the commit does to
+those. Better would be something like
+
+    t7004: remove space after redirect operator
+
+This gives the reader a much better signal of what the patch does.
 
 Patrick
 
->  linkgit:git-difftool[1],
->  linkgit:git-log[1],
->  linkgit:gitdiffcore[7],
-> --=20
-> gitgitgadget
->=20
->=20
-
---1BbH31vsjCxCx8hy
+--VowwCrHTVB7zyE8h
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmawlyoACgkQVbJhu7ck
-PpSlxhAAl1uFry8MrdSkrD3JTrye0BhLEhdPALBzfgCna6kxlKlw90gDHd/VcpOP
-erKGJKmUPsHWS7eYc0C3ovYn6n0kONz9JCCq9otE6GUxus3FSRoHd/2F25NElntc
-06JD+tNcr/j1UXUEXZWkiSQnQsiEfW5ZpZyDDQxgtxgf9YQY5W0vLar+DUIWOwc/
-p0cZT9eYikjt39KW0YkCOwjiZLykVWtYnpj1Wd7RhAYYKFxJZioABHTIBtKxjfip
-hauBlHXHH629MMv2/xbwbiFCgX/cOoW4d1RqAJqQbUPtdrDCdONIJmkny/iVI+1E
-GMHOKJenoF2IbThTfXVdJvAqqyTojMbAoLwSISD/5TAjVhrdeF7j+Mei9ramBuE+
-WVkMUM8joWP7/MdBapXZrOm1gW09iUvNZpptbBbwsjWfe+4nV9bZVhFc0ZI6xFtg
-L80bUR8qnQJkUCob3DkNjUclYYC1QxaXgJICbMsH3OjeW/3a40R8ck+B2VCrQR0x
-iX8ti2AVaMs5S27ru4vkTKktEITdRZenWh9Yr1gv9L1lofEig1lM2uFn+S6XHYTg
-3RtuD6JPikVOi4CLUvmk/9/2isua1NNBf/WnngcHSg0aU5Ssrj4TJcJv70BjqfX1
-8xOFsDSqRm/XtVEzIrrI/J1CvVkHCU5Z6oYWonpYYu0OvmHyLp4=
-=0LY7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmawnQsACgkQVbJhu7ck
+PpSjww//RMp4pWYYV6+J8d1NEh0aD81y3SqBMybnczgHVWd4SLqKK3ivTl2LQGD8
+DGpK1DDpzh2w7RWXDw7DDzMugRH2TNJV9RArboLewc0BYEV92ryapvMDxY6hYByc
+8fPM78LfvYwkcktu0XDM8Obc3kukA0V0cZC4FK9C0sZtBDt3LPyjXfqXrRLLAr3t
+PMZhih2+h2Q2U8bsPhlnNxtzHcny6PNWkTolW6lsZmG5gA4VpX4OnQ8SszPtUxcF
+E2ukT0UfDKB7/vNti4pkXfeTUXWOn5hHcS2fCOp2SiF/Ilc6A/UpJTEhOip9efVk
+L/i5I3oc4mpl5YKkNRjX89SDpQdO4PmGbCYtDWkOt9U2x/2gzO77FKv0vfrCQtn0
+p43oM5rE7tTZBJYvOOER7SpNwM9In6WbFQjvanILG1JmQgTT1GvAiS92Sh/t/PTS
+olDPYO6aTmuhFTtRf/s5Hu4GIhGIzaaFjRS28Gu6GUbTrkaZtzcv4IMg1m6O3x27
+UWzBIcHEru948fcW6pmG6kKWnjv4Pn0KgXPgmfSzbLrrLg3PStmReMuWQx+akWSB
+uWg2p4hlExyJRaIY8KFdVRnXeaPvP36PH5EuZA947UP451hHGxyMU21ZgnKC4G0q
+E9vZOTpwtwefqEJe0/oArAJM9ekxobU6dl4gyvlg69WrmpZ66J8=
+=woQW
 -----END PGP SIGNATURE-----
 
---1BbH31vsjCxCx8hy--
+--VowwCrHTVB7zyE8h--
