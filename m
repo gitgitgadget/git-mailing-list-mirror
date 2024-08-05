@@ -1,156 +1,118 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350FA15B57B
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 16:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A585015ECEC
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 17:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722877168; cv=none; b=B4BoFWjMnjgQAnjhVKBAA+GKGuPrMx1Qs6pBEe1JGMoJeJ5dAUxs5VL0TMFPgBSGxFD5CzuowbCIG8IV7ywORh2RzxF+qqY812+/aOHAiqq137jDuxaQiAa+ZAirlgO9WzFM5JQFFHqsFIYARpP67jCgimYgdTtBELsHYwBnhew=
+	t=1722877813; cv=none; b=phv6/mQLbdTsN2qrtEaKPZ8QMNoXJtD8E7L3sA5IDiXh01m+jpEPcAt2kM8cVeRI0t9CVlKTFEvDN+Crk7Dw2f2yWuFWvDnjwGmtc/TxsDknu1MvzkqnHa0z4ikdWKmsAVfkGWxS3PX8X5i7s1ZwBVnDnCZCnmL4aVQVTSK98uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722877168; c=relaxed/simple;
-	bh=eIfGAPjBbaEQVNDeGbZRlPHGD+cxbGKsAnMSNNtNSCw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rPK4uObbrrh0xjkke4FfX7pPeajNRc+klrz54O/R+LDPMEPo0g/5u9qA1H2u7lOhDQdDx2KfMOyyxRnh6T8WfMFIEq5ru2nnTCOsKkuHrmv4M0foO4D1sZG8Y3FO9mWX4IjNIszT7Ge4aqE+jAkIVslMmrGIOm7OZucrxS+TkPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fiSasnSf; arc=none smtp.client-ip=209.85.217.48
+	s=arc-20240116; t=1722877813; c=relaxed/simple;
+	bh=zWWFcK8RFOUbRbsIOzM2iyn5nAfHHhXhTTSR+zh3ELw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=da7nLWjlfQkyLqu0iR9zD99RhF9k1Tq9/vN9yGVVD738NtKsztRv2tty5R2W9POUCBqt8AiVTk4G31OWSYGk52zbGw44aWtb3X4kWs5tOqpB2nkrYq3Wsi8kD6BA+xQ3j/c/zhTgKxhnN+MzQyo0AOm0v5zidfTyyaj0khdK4NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V+uAk4RH; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiSasnSf"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-49299adf8adso3279683137.2
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 09:59:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+uAk4RH"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-428101fa30aso73456415e9.3
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 10:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722877166; x=1723481966; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1722877810; x=1723482610; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BOzYfKCA/UJQw3uWXRhrjI/1PVp+N2CDwUPWRAXq7jA=;
-        b=fiSasnSfS0s96yPfZ2mjccwZQ2/elnXi6YBg6lxFa3Z6bEClBXYKyMy+b3XpSX2Wve
-         40DFJPTZG/ObFJg2r4/UByKzvtlsJ/iqtnYbBrqq3xfK1eQPHAHYwRmx3juysgLKVh1j
-         JT9upRXVMT/aypmfHwuMdBWeLS5cnREbVO3386aD6x8O3S7EBj5/0LhdggLjKRBLICSS
-         FvgAnaTplWbHtE2/z0MLPXL7/3vf5jFMgZGQz4X7ECj4zd33qmUWW6AdOJ2uKS5UgcWV
-         bJHFOhzn+LQ+ipYfgptd4KOurGMYnCHIcJhPH8Xy+s5tXoeWzWGDPVh2v/32B23Owpkp
-         pozw==
+        bh=g3Vm7RTkI+DIMvTV9SZKv9h44j1LiwZRgcrWeULEdC4=;
+        b=V+uAk4RHPBOzh8pm2cpJyecP3GjfZ/GQssqOr0yuY5g2g457e1HpmCjstqwLCzZePY
+         jDF+Up8jZQWCsBBEnsIX43+LAhW1MWPaZnhm5oWPPNIJNxSx2QP+cM3OaW75qCEbElgo
+         GNPITWbvI1c4ZEHXeieTUqAfWbJBGkKGzpzWQ/s2Rr5YcaEa64xFzmc61FUWVCd2fYbU
+         BLLli23FalUh4y7HmGN9oZHpUJsL2ADInVdIhT0DiD5f+23ye1JG3X+8LaM2rAMyj9HT
+         6QYUTACbs1Z0Odmhg0reUYkT6caWAVz4hT0httu35ywF93rTMSJmlWhNcPow2Sg/xMUw
+         To8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722877166; x=1723481966;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1722877810; x=1723482610;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BOzYfKCA/UJQw3uWXRhrjI/1PVp+N2CDwUPWRAXq7jA=;
-        b=fbUqGI0LqxdzdJoWluoZXhHu55mFVA1SXP9SuieTOTcUkg6Q4HuOaW07kop9Prni32
-         IjuGBHRPNEIp3lg21hDGrgWmP1ZWg0TlGXNOL6Qt4ipHa17m059t9imKsSng/K/vjPOY
-         47xEcVvg2VZsgShk8dWNGYl0wlTVbXUjHpAB5+BnWRDJlCzC4CRPEPX2bYqgYKnQdcLi
-         xUcHq5w0tbYBYaexT+wmcQ1l88anpGO4NT5JczP+DjWiREub4B1pOoGv/Ra46xaHq4Xi
-         zX+0MBVczcfPylzR/H581km+tzqzrkzQxtLS6L8/uJw/AAe1bGk8KSuvUgs0kI+0c1Pe
-         gmGg==
-X-Gm-Message-State: AOJu0YzxaXHZFrUpJh3a1wHi+3FdE5rBfGHi2642WElqmtiU0i27/I3H
-	d1+kvS5G7vJtQ1Qp8rHHJCUhyTfs/wSKVuM1VzQqLTbBeQnukapg4eoqxXFRbKsaLAXsvz2JnrB
-	T/AgC2DfulyjSp3cBeyGgskUMekFHBunP
-X-Google-Smtp-Source: AGHT+IENnz3fZg3WjMAojIBIVfQgeXLnIwf96YIBxSnR5EJjkDslvl5Ua7WvbCYuZ17myF5TShtL2uFvrXWgjLuMX88=
-X-Received: by 2002:a05:6102:54a9:b0:493:c3b2:b5ba with SMTP id
- ada2fe7eead31-4945bdb9f08mr16977887137.6.1722877165932; Mon, 05 Aug 2024
- 09:59:25 -0700 (PDT)
+        bh=g3Vm7RTkI+DIMvTV9SZKv9h44j1LiwZRgcrWeULEdC4=;
+        b=TDYmUqzGPdSutTnZG1BANFn+kDUZJN0D9Vn+ltVnNYHmYciPu3B76mWXaW31M/fl/Y
+         UtvMES1nCyJ/u3yOK2nP1Us/sZoidMzxrAjbmLFCbqsxs3+i+ULw5y9JoTrrhKoaU3B1
+         bKh2doOJXWUQJQJ9MLxQtMkeX3uyhmPVVbVVpgeoBkt48MYiOVUfjbugMrlnfb0MGngK
+         KoKJHkc5Wsve35axbf/chcJCGVs3JN1wjawx5eUiSQZCjiEC3NXvoaVxIv++pQONW31K
+         yRCmv6c9cTkTwyMHJxhZWoGs8bCarzhJUSXPw3Q03kHyLtk13eDVgkknylnD4zWVMjFo
+         tKUA==
+X-Gm-Message-State: AOJu0YwWCFEUwaD/uD8F2UFZKZuS8Lh7zzXBBgKz+zZOe0pB5eqqX3LC
+	EckTsPo8GjSamPUXGb9yTNZTbvcKXskJhx36A05Se4qvlsFmzI42Ybjulg==
+X-Google-Smtp-Source: AGHT+IFfvhGLODrIHzmieYOCrMOwA8/33ifeXfz7B6yzDU4c4uxgmlAfqQKeottWDbAYanOgAbeBoQ==
+X-Received: by 2002:a05:600c:3b0d:b0:428:387:79ac with SMTP id 5b1f17b1804b1-428e6aea8femr88647655e9.6.1722877809204;
+        Mon, 05 Aug 2024 10:10:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6d6b935sm144962265e9.6.2024.08.05.10.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Aug 2024 10:10:08 -0700 (PDT)
+Message-Id: <pull.1756.v3.git.git.1722877808.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
+References: <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
+From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 05 Aug 2024 17:10:06 +0000
+Subject: [PATCH v3 0/2] Small fixes for issues detected during internal CI runs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFb48S8LDz4kiWsKSCBn8J=AHyQ5SVPFH4GY=z+8=DntT=PyAw@mail.gmail.com>
- <xmqqy15b2aiz.fsf@gitster.g>
-In-Reply-To: <xmqqy15b2aiz.fsf@gitster.g>
-From: Matt Thompson <fortran@gmail.com>
-Date: Mon, 5 Aug 2024 12:58:57 -0400
-Message-ID: <CAFb48S8+X0=Zqi8oisB0fAgx7HoyQrahF-RGQdagXTX3RdfSNQ@mail.gmail.com>
-Subject: Re: Bug: Git sees branch as valid commit ref and works; should fail
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Kyle Lippincott <spectral@google.com>
 
-Well, I tried the "for-each-ref" command and:
+I'm attempting to get the git test suite running automatically during our
+weekly import. I have this mostly working, including with Address Sanitizer
+and Memory Sanitizer, but ran into a few issues:
 
-$ git for-each-ref | grep /bugfix/mathomp4/trivial-ci-commit-gcc14
-$ echo $?
-1
+ * several tests were failing due to strbuf_getcwd not clearing errno on
+   success after it internally looped due to the path being >128 bytes. This
+   is resolved in depth; though either one of the commits alone would
+   resolve our issues:
+   * modify locations that call strtoX and check for ERANGE to set errno =
+     0; prior to calling the conversion function. This is the typical way
+     that these functions are invoked, and may indicate that we want
+     compatibility helpers in git-compat-util.h to ensure that this happens
+     correctly (and add these functions to the banned list).
+   * have strbuf_getcwd set errno = 0; prior to a successful exit. This
+     isn't very common for most functions in the codebase, but some other
+     examples of this were found.
+ * t6421-merge-partial-clone.sh had >10% flakiness. This is due to our build
+   system using paths that contain a 64-hex-char hash, which had a 12.5%
+   chance of containing the substring d0.
 
-Indeed, if I try a few other greps, there are no "trivial" or "gcc14":
+Kyle Lippincott (2):
+  set errno=0 before strtoX calls
+  t6421: fix test to work when repo dir contains d0
 
-$ git for-each-ref | grep -i gcc14
-$ echo $?
-1
-$ git for-each-ref | grep -i trivial
-$ echo $?
-1
-
-But, I did some experimenting and I found that "ci-gcc14" does
-trigger...something:
-
-$ git for-each-ref | grep -i ci-gcc14
-mathomp4@gslwl2023080107 ~/GitBugReport/fvdycore geos/main
-$ echo $?
-0
-
-But I'm confused as to how the grep returned a status of 0 but didn't
-print anything? So it said "Yes I see this string" but it actually
-didn't? And it can switch to it:
-
-$ git switch ci-gcc14
-fatal: a branch is expected, got commit 'ci-gcc14'
-hint: If you want to detach HEAD at the commit, try again with the
---detach option.
-mathomp4@gslwl2023080107 ~/GitBugReport/fvdycore geos/main
-$ git switch --detach ci-gcc14
-HEAD is now at cc14d30 removed an unused module use in fv_sg
+ builtin/get-tar-commit-id.c    |  1 +
+ ref-filter.c                   |  1 +
+ t/helper/test-json-writer.c    |  2 ++
+ t/helper/test-trace2.c         |  1 +
+ t/t6421-merge-partial-clone.sh | 15 +++++++++------
+ 5 files changed, 14 insertions(+), 6 deletions(-)
 
 
-On Mon, Aug 5, 2024 at 12:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Matt Thompson <fortran@gmail.com> writes:
->
-> > Thank you for filling out a Git bug report!
-> > Please answer the following questions to help us understand your issue.
-> >
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> >
-> > $ git clone https://github.com/GEOS-ESM/GFDL_atmos_cubed_sphere.git fvd=
-ycore
-> > $ cd fvdycore
-> > $ git checkout bugfix/mathomp4/trivial-ci-commit-gcc14
-> >
-> > What did you expect to happen? (Expected behavior)
-> >
-> > I expected a failure as there is no branch named
-> > 'bugfix/mathomp4/trivial-ci-commit-gcc14' in the repository.
->
-> If you run
->
->   $ git for-each-ref | grep /bugfix/mathomp4/trivial-ci-commit-gcc14
->
-> I suspect you have a remote-tracking branch that matches the
-> pattern.  In such a case, "bugfix/mathomp4/trivial-ci-commit-gcc14"
-> is a very valid way to refer to a commit to any Git command.  It is
-> handy to say "git show bugfix/mathomp4/trivial-ci-commit-gcc14", for
-> example.
->
-> And when "git checkout" is given a commit that is not a local
-> branch, what it did below (by the way, thanks for giving a very
-> accurate "Actual behavior" description in your report) is very much
-> expected behaviour, including the part that it gave a message to
-> advise how to work on a detached HEAD.
->
-> > What happened instead? (Actual behavior)
-> >
-> > $ git checkout bugfix/mathomp4/trivial-ci-commit-gcc14
-> > Note: switching to 'bugfix/mathomp4/trivial-ci-commit-gcc14'.
-> > ...
->
+base-commit: e559c4bf1a306cf5814418d318cc0fea070da3c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1756%2Fspectral54%2Fstrbuf_getcwd-clear-errno-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1756/spectral54/strbuf_getcwd-clear-errno-v3
+Pull-Request: https://github.com/git/git/pull/1756
 
+Range-diff vs v2:
 
---=20
-Matt Thompson
-   =E2=80=9CThe fact is, this is about us identifying what we do best and
-   finding more ways of doing less of it better=E2=80=9D -- Director of Bet=
-ter
-Anna Rampton
+ 1:  4dbd0bec40a = 1:  4dbd0bec40a set errno=0 before strtoX calls
+ 2:  0ed09e9abb8 < -:  ----------- strbuf: set errno to 0 after strbuf_getcwd
+ 3:  818dc9e6b3e = 2:  96984c4a15e t6421: fix test to work when repo dir contains d0
+
+-- 
+gitgitgadget
