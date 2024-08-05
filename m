@@ -1,127 +1,106 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49EA14F104
-	for <git@vger.kernel.org>; Mon,  5 Aug 2024 09:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C420D10953
+	for <git@vger.kernel.org>; Mon,  5 Aug 2024 09:47:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722850932; cv=none; b=tK+OhCK9EqsYFL2VhenOoeEw1Zd9RYkbETaiSkGpBkB6F8UgdftUL/Z7hdNP+q1BjcnUpBLPA0Pmjva7M74MAIEarjpkUixFrCSdPVa22VeGtBt590jLs1EkT1IFTUYTc4I9rTqlPmJwBNhOukt089BhzpLBkuh+jJnfQxz3jIg=
+	t=1722851236; cv=none; b=rbMewcdCgYds4z2R2m65WVa1WxcLABLHgzLxoAwyX/I+Y1GVfls1GcDG9xNyKwM0RJprN49YZducvzt2ojg+yTtRtf69h/xim8H3Giotn29i/1fUloa3MM0NUi4yqjWkAZzNek2pigIxK8Rxarix4YZp7FmlvX802TD478sD3mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722850932; c=relaxed/simple;
-	bh=zstIPFRJuOks1Lo/EYiyxvnImuMGiF18KNHBeBq51go=;
+	s=arc-20240116; t=1722851236; c=relaxed/simple;
+	bh=TIwQzgGmDY9ZnrllUf5i9V5CU/sCApBYdPf46qkGE18=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ujBHPmB3qDH+kU0kmGv8N+/vd8HhfloHRJJ6yzhWmde+1WyqFByflMomHQtGuF+51SunTDHyMMWFjF787uBedcDxn7nfg28eMcHl68sDl1s5PNbLVj/IHpStd3wtklfZtBex6oyMWMFf+w48L0sq1KpS1AKsa74qhX9IA/5XWos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RFvONuRT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n6+R40zt; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RFvONuRT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6+R40zt"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EFB551151B08;
-	Mon,  5 Aug 2024 05:42:09 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 05 Aug 2024 05:42:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722850929; x=1722937329; bh=+oXtGlP6m3
-	BYixvKXE7LqMoxQ5S8s4PsEU+smG4ioWE=; b=RFvONuRTfBcSTGhBKoAAb9HqLg
-	cxbbuaGO9sAdai9fBu5Z0kUqb6qcczjg7idk2Sb9Vm0pMfOM9iunywxVJGxMF6vx
-	iwv+R2t/AruGvIO2atbWku1bHB9KsBxqRFKqCSwIegEEpcq0k/6TU4nDkkoiU1tI
-	gCoDJkhJeKgJm4w+5R4JmgPcbwyMMNXex4XveVsdTN4Jl0L9q1TlPsONx+EmZ4hb
-	uOY6jmV7Mm65W7q601oiO/qlIS2Z2k3pTrnJm8EA90/lIqqgVqaiL3tBy3wpMR7H
-	BCWu/f1azr7ItmaPcBTevYJiGeQfqIAjkwFNtFbKYyejPEjs6Vkss+sXEd9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722850929; x=1722937329; bh=+oXtGlP6m3BYixvKXE7LqMoxQ5S8
-	s4PsEU+smG4ioWE=; b=n6+R40ztdkuTg7Jhcvf9r8QkJ9TUXbkNR2Y8DIe2F7mH
-	M4X6GLvzrL1nvRqOLhR/rcy0+sLy7W9Vzb62WIySYBXfFCNXihZQlg18IQzzECA+
-	ia/ZHZG579q+P1HU+WIbb71UZMpilvfAXYpx8TOJT4tJwWXpzAmnzQrfYW0TPsh9
-	49Yi/zfhPlBM0CURKBiAS9DFtujthBHAUOEumKboL8W3Ub6bwmDfNHylL+an1+XV
-	E0eTzm9aSWZVRASFv2ov3O75B/ImgQ49t5uPYBwKRx6cJ197Y4zaQK/pOI8ms2R7
-	/14ClC0AI3/izEusTJZvLLabjJ9tOUoGVlbs4tmBYQ==
-X-ME-Sender: <xms:cZ6wZhP7ct0zqtnDpDJredPObEC3F_Rxy6IqRmyq7BN2WIY5ND2YTA>
-    <xme:cZ6wZj8VAs-ixck3B3X7tALhWU-ek1p91aV4aUvMBc7Yx44foe9tB0mL04fMEPM9s
-    AosT-7tEgOqCqPfDg>
-X-ME-Received: <xmr:cZ6wZgT-bTJ3oJ-ZzQQiPSHmKSxop6OUF16kpJVmn4ZlLUtO_Vwb0PY4HHpLaxflORegIuY48C03dr_N811wIRdZl3SjJn2Xd2Z6lnOdh54I0GfwZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
-    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:cZ6wZtsroDMPI0OLHVkS_PhDhRs0Xk6J7j1WOxtRn4OMrMRR6Fuv4g>
-    <xmx:cZ6wZpcywXaT3QZ0nCMIy1kb5TPdxPk6MuG2dIriX75ccIL6YbMfxQ>
-    <xmx:cZ6wZp3Q0DnJA4ohS0iuxcdA8EZm51oLyzWYha_Y7zj5Y2vyLrsrcg>
-    <xmx:cZ6wZl9yryKd_2rWbZUQjKa0f0gdEqVwN6R3xk9K_sBgkxE5e0iiVQ>
-    <xmx:cZ6wZqpb8SKSfNuVbMmVm1Xcft3ksbDiqZDUJXjKfrmMp-fILI7MOAQW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Aug 2024 05:42:09 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7c9e60c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 5 Aug 2024 09:42:08 +0000 (UTC)
-Date: Mon, 5 Aug 2024 11:42:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: AbdAlRahman Gad <abdobngad@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] [Newcomer] t7004-tag: description on the same
- line as test_expect_success
-Message-ID: <ZrCebm52L16N2Agu@tanuki>
-References: <20240804071137.30326-1-abdobngad@gmail.com>
- <20240804071137.30326-7-abdobngad@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=VLxOQyJop+7osPf2s3DmvkJ5JGOHnLWsRQ6hVRafe4Yo9aUZysPxMEAzh7T0aEpJh4jIH4yeLeCQZg+DEEADkO2XOYwEnubS2jfUZUmmhXmN0zaSDT08yctkfGYvLO1ieU0eH4+GQbK01qsGRMQu8/F9jP2nLYd3njGg91rcJ0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 26559 invoked by uid 109); 5 Aug 2024 09:47:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Aug 2024 09:47:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9727 invoked by uid 111); 5 Aug 2024 09:47:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Aug 2024 05:47:15 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 5 Aug 2024 05:47:09 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "W. Michael Petullo" <mike@flyn.org>
+Subject: Re: Git clone reads safe.directory differently?
+Message-ID: <20240805094709.GA632664@coredump.intra.peff.net>
+References: <20240728224807.GA1299337@coredump.intra.peff.net>
+ <ZqjQi6i2kiY4gcc1@imp.flyn.org>
+ <Zqlo-i8uCb1Yr4Jm@tapette.crustytoothpaste.net>
+ <xmqqv80m8pha.fsf@gitster.g>
+ <ZqlxtGIyz0G9jlJr@tapette.crustytoothpaste.net>
+ <20240731072832.GB595974@coredump.intra.peff.net>
+ <xmqqo76d7coa.fsf@gitster.g>
+ <xmqq1q391afc.fsf@gitster.g>
+ <20240801061417.GD621899@coredump.intra.peff.net>
+ <Zqv9b_B5wKGp331o@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2o4PnUiK70TqsjKa"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240804071137.30326-7-abdobngad@gmail.com>
+In-Reply-To: <Zqv9b_B5wKGp331o@tapette.crustytoothpaste.net>
 
+On Thu, Aug 01, 2024 at 09:26:07PM +0000, brian m. carlson wrote:
 
---2o4PnUiK70TqsjKa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On 2024-08-01 at 06:14:17, Jeff King wrote:
+> > ...this is doing that loosening for upload-pack by default. I'm not sure
+> > if that is OK or not. My mental model has remained "it is OK to run
+> > upload-pack on an untrusted repository", but it would make sense to get
+> > input from folks who looked at this in the past, like Dscho, and/or to
+> > reassess the threat model from scratch.
+> > 
+> > In particular I did not follow all of the potential issues with linked
+> > local files. Are we good now after other fixes (in which case this patch
+> > is OK)? Are we good only for non-local clones (so this patch is OK only
+> > combined with a fix for clone to check ownership for --local mode)? Or
+> > are there still problems if an attacker controls the repo paths, in
+> > which case upload-pack should remain conservative?
+> 
+> I think we already have such a patch.  In clone, clone_local either has
+> option_shared (in which case we simply refer to the other repository via
+> an alternates file and don't touch it in any way), or it calls
+> copy_or_link_directory, which in turn calls die_upon_dubious_ownership.
 
-On Sun, Aug 04, 2024 at 10:11:37AM +0300, AbdAlRahman Gad wrote:
-> changed test_expect_success that are seperated from its name like:
+Ah, thanks, I didn't realize that. Looks like it comes from 1204e1a824
+(builtin/clone: refuse local clones of unsafe repositories, 2024-04-15).
+I'm not sure if this is redundant currently; we still run
+git-upload-pack even in the --local case, to get the list of refs. So
+presumably it would fail on the same ownership check before even getting
+to the local copy code.
 
-We do not say "changed something to something", but rather use
-imperative wording as if we were instructing the code itself to change.
-So maybe something like the following:
+But regardless, it would not be redundant if we loosen upload-pack. And
+it means that my first two questions have the same answer.
 
-    There are several tests in t7004 where the test description that
-    follows `test_expect_success` is on a separate line, violating our
-    coding style. Adapt these to be on the same line.
+The third one (does upload-pack have race problems with an attacker who
+owns the repo?) I'm still not sure of.
 
-Patrick
+> One related topic that is potentially interesting as well is whether
+> `git bundle create` also offers the same security guarantees as `git
+> upload-pack` in that it can be safely run on an untrusted repository.
+> Either way, we may want to document that.
 
---2o4PnUiK70TqsjKa
-Content-Type: application/pgp-signature; name="signature.asc"
+I suspect it could be made to give similar guarantees, but I don't think
+anybody has ever made a conscious effort. At the very least this isn't
+great:
 
------BEGIN PGP SIGNATURE-----
+  $ git config pager.bundle 'echo yikes'
+  $ git bundle create foo.bundle --all
+  yikes
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmawnm0ACgkQVbJhu7ck
-PpRTvQ/6A3rYKVrFlYV0Z4d3tIDZ96XTZlQvX0Cz3BfDFEbjk+Z97UbNXIco4+oS
-kYwVCSr9l8AW9Qv0qLZERcZonFGWJbZELY0N/s/2yrOZKAEOftGMmB8+jDKwtwDX
-/DW/t2iobZPxy12G/pzhtBPufwWigEWzmB53ZO7FxLZEMnQSkFXDyFIhbPEjUMrd
-1x1MDaYcB5s3dbcjXJ+834IaN0v0SJzkVgZvBplRWilkhC4nRqIcgUqWpQxUmVx+
-l/SbMqje+ZwcTpYTu0zgKiAjoakZefyJKQO+Z+pDXiyWFRqXMWTRpQacWOP2jCmB
-TnRrC1Rv8j00ZtolwPGamGTDUnm+TW1UAlY0y0VR2SWKtbsB6G2826hclBPIINF2
-8BPfjMjD5pqM3z1nmKURMMe9KcnnmBwfggbHXImQNYnIc1Jn0m5/XB+/jldZ5W+h
-+tYKPl2FuCObDkFBaMA979Oec2qGYz1X1FhxjOP9KCwfq3JH3JHdkZVG96hLMQBd
-JpyJAvQOZyHybkQ8oPzdgYeYWpZupRDxCE7/pUGeaMmU4Kv/9C95yRdXdUCI0/Fl
-zvzf7hKbFm8I8htQ9QLVmqXpzWEa8XeAazaqpAXFSEoJN5xKkHSUOEZe2OHFg+2g
-oTF1pA4RQQkENRnDfkxvbCO1LDaIecux34s3jBxkXV6+cfPYaLU=
-=MWMo
------END PGP SIGNATURE-----
+upload-pack doesn't trigger this because the pager setup is tied to
+the builtin RUN_SETUP option (arguably it should be made more explicit,
+though). I think pack-objects actually exhibits the same problem, but
+the pager is only triggered if isatty(1), and that would never be the
+case when upload-pack runs it.
 
---2o4PnUiK70TqsjKa--
+-Peff
