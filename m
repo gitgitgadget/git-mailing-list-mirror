@@ -1,53 +1,53 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55918EB0
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 16:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA818EB0
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 16:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722963011; cv=none; b=hSwOmhJIdoKNn6uSVCAqEEpzssUmLIz8xPxaJ/HXHHYbl5GTCsS/MCBExf5q3hesZ/gj4rfU2LjV6l9UNiRQ5C7HcJbSariTFjKFbF0fh7Rn42jQxqoODhld8SzoNowkIlSW/7PnfnUpevZp+cn7JM7HGqbYH856hYG0h8aJaP4=
+	t=1722963183; cv=none; b=AbmG/L0D4aHi69ZAWrKpWMJIlwqgc3Ot7c7a1WFD+evIf3GhsRaZxbzJLe+dBiL+9AoHk5tmxahluQnJGdowAbw/+2VzTKETuU+lOz+B9LHZWYCKRq5WP0R3wzukM15Nvthiy4xts6EHcHj6mImGOH/WXVDaq2u/ipJInoGan/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722963011; c=relaxed/simple;
-	bh=qtnQAYpB52xGDt9fMPGvmk4DjxZQ34qIknkvALB4Nds=;
+	s=arc-20240116; t=1722963183; c=relaxed/simple;
+	bh=PMnnO9lMl7xpjIzeWWRQy+bKiKoBST87iLEQaV9wnRs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dhPCOlBfNbGs8OL04b9lpr5d4QUKsbs14cyQn1EmH8nqq2g4sRhNdrPEtzmHh6GxBiKbBpnPF3vL8HcOrTzigTpRzhP+magamjOOAEMhxR7IStve023GY0nJWshg16T0N1K9i6UtnBqSsraBPz2EA+oBZ2xFX93gQ2k5leyChG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C2hj2gY7; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=ADtGBiKiAnF04eUl61NYmM5XpY8bSjKlIL7UYsf9tNPc/39Lh5gzjhP6Cc+GC7CgN7e6xRlBSe/yGjldZlscu9nBDRUUIRznJL66DO0lHINuqF33eZPsS76YPSyyIZGpRhiKCXaZrELnfOGxnUsnmEq7CQ1iEy2P+CqYnI00qQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=c8Cc/FOt; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C2hj2gY7"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CA73230AF;
-	Tue,  6 Aug 2024 12:50:09 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c8Cc/FOt"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DEA013636D;
+	Tue,  6 Aug 2024 12:53:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qtnQAYpB52xG
-	Dt9fMPGvmk4DjxZQ34qIknkvALB4Nds=; b=C2hj2gY7q0hy6Ux7tFUvEZAtZZtd
-	+2qqbiBk250Axmq9Ik0qbSyRScYRfLjsPEWvyW3lW+W5dpU1wvVLzA7rmI465Pbc
-	Zx127LtU2tz5i5V34FaDTA0KUXBUse6Yr+1jKWhJ2kpxWUg8DIlZ0g6GVyj4WXPN
-	oRkzN+k/YbqMpJE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 35912230AE;
-	Tue,  6 Aug 2024 12:50:09 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=PMnnO9lMl7xp
+	jIzeWWRQy+bKiKoBST87iLEQaV9wnRs=; b=c8Cc/FOtNUjF3N+Uc0KmvaqFwQoT
+	OaOlxDwGtZxZbTJbW0evtrgzEdgxXesszhH8pfKBtQelgtiDWL02hUDMO2jK/4X7
+	aLxgdeJdUT+gNGfLBWm/ZlL1EzO/YPkwM6TVHjF2VW3NsAecqe2XgLc7GU4eAGsx
+	qY4t8D8vIuKOLIc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D842F3636C;
+	Tue,  6 Aug 2024 12:53:01 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DA87F230AD;
-	Tue,  6 Aug 2024 12:50:04 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C33263636A;
+	Tue,  6 Aug 2024 12:52:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v1 4/4] miscellaneous: avoid "too many arguments"
-In-Reply-To: <CAPig+cQ563EVtWEYxZDaQ4awrOcemc4a9a6OSmGN2wVFeMidwA@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 5 Aug 2024 22:31:37 -0400")
-References: <20240806003539.3292562-1-gitster@pobox.com>
-	<20240806003539.3292562-5-gitster@pobox.com>
-	<CAPig+cQ563EVtWEYxZDaQ4awrOcemc4a9a6OSmGN2wVFeMidwA@mail.gmail.com>
-Date: Tue, 06 Aug 2024 09:50:03 -0700
-Message-ID: <xmqqa5hpvbno.fsf@gitster.g>
+Subject: Re: [PATCH] t3206: test_when_finished before dirtying operations,
+ not after
+In-Reply-To: <CAPig+cRO=BqR1WFcni6CSxqyqvt1Ksmsyr0odmqTDKX4JdbDaA@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 5 Aug 2024 22:21:59 -0400")
+References: <xmqqttfyzd01.fsf@gitster.g>
+	<CAPig+cRO=BqR1WFcni6CSxqyqvt1Ksmsyr0odmqTDKX4JdbDaA@mail.gmail.com>
+Date: Tue, 06 Aug 2024 09:52:56 -0700
+Message-ID: <xmqq4j7xvbiv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,49 +57,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- EE314DF8-5413-11EF-9C57-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+ 554082E8-5414-11EF-91E6-BF444491E1BC-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Mon, Aug 5, 2024 at 8:36=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+> On Mon, Aug 5, 2024 at 8:55=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
 m> wrote:
->> Imagine seeing your command failing with "too many arguments" when
->> you run "git cmd foo bar baz".  Can you tell it will work if you
->> said "git cmd foo bar"?  Or is that trimming your command line too
->> much?  Too little?
+>> Many existing tests in this script perform operation(s) and then use
+>> test_when_finished to define how to undo the effect of the
+>> operation(s).
 >>
->> Instead, if the command reports "unknown argument: 'bar'", you'd know
->> that "bar" and everything after it is unwanted.
->>
->> Let's make it so for a few remaining commands.
+>> This is backwards.  When your operation(s) fail before you manage to
+>> successfully call test_when_finished (remember, that these commands
+>> must be all &&-chained, so a failure of an earlier operation mean
+>> your test_when_finished may not be executed at all).  You must
+>> establish how to clean up your mess with test_when_finished before
+>> you create the mess to be cleaned up.
 >>
 >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >> ---
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> @@ -2503,7 +2503,8 @@ int cmd_receive_pack(int argc, const char **argv=
-, const char *prefix)
->>         if (argc > 1)
->> -               usage_msg_opt(_("too many arguments"), receive_pack_us=
-age, options);
->> +               usage_msg_optf(_("unknown argument: '%s'"),
->> +                              receive_pack_usage, options, argv[0]);
+>>  t/t3206-range-diff.sh | 52 +++++++++++++++++++++---------------------=
+-
+>> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+>> @@ -533,9 +533,9 @@ test_expect_success 'dual-coloring' '
+>>  for prev in topic main..topic
+>>  do
+>>         test_expect_success "format-patch --range-diff=3D$prev" '
+>> +               test_when_finished "rm 000?-*" &&
+>>                 git format-patch --cover-letter --range-diff=3D$prev \
+>>                         main..unmodified >actual &&
+>> -               test_when_finished "rm 000?-*" &&
 >
-> Is this supposed to be referencing `argv[1]` rather than `argv[0]`...
+> Do we care whether the action invoked by `test_when_finished` itself
+> succeeds or fails? In particular, should this be using `rm -f` rather
+> than `rm`?
 
-You are right.  To the command, the first argument is acceptable,
-and the unexpected ones are the second and later ones, so argv[1] is
-what it should have said.
+Thanks for good eyes.  The original avoids that issue by making sure
+it only installs the clean-up after the operation to create crufts
+successfully completes ;-)  Of course, if it fails in the middle,
+then the crufts are left behind X-<.
 
+>> @@ -606,9 +606,9 @@ test_expect_success 'basic with modified format.pr=
+etty without "commit "' '
+>>  test_expect_success 'range-diff compares notes by default' '
+>> +       test_when_finished git notes remove topic unmodified &&
+>>         git notes add -m "topic note" topic &&
+>>         git notes add -m "unmodified note" unmodified &&
+>> -       test_when_finished git notes remove topic unmodified &&
 >
->> diff --git a/builtin/tag.c b/builtin/tag.c
->> @@ -641,7 +641,7 @@ int cmd_tag(int argc, const char **argv, const cha=
-r *prefix)
->>         if (argc > 2)
->> -               die(_("too many arguments"));
->> +               die(_("unknown argument: '%s'"), argv[2]);
->
-> ...similar to how this references `argv[2]` when the condition is `argc=
- > 2`?
+> Similarly, should this be using `|| :`?
 
-Yes.
+Ah, I forgot that "notes remove" would barf when there is no note to
+remove, instead of being idempotent no-op.  Yes, you'd need ||: there.
+
+>     test_when_finished "git notes remove topic unmodified || :" &&
