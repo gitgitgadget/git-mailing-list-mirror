@@ -1,87 +1,83 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E941BC06E
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 06:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36DB33F6
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 06:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722925583; cv=none; b=WhJB8GkD1NZtCWy3SnYj8xa8QkkUrxEOrcI5qiggLU+QgINT/xRJFXav/q0b7W0XeK084hPwLwzmCe2+OxyR88oxKl7K1yPw6L6RYkWiHVxM7ia6tHDAKtuRBBQ2DrzZZaNc6ICBmG00jzSN0MGph6AhheK+HHhR7IMVKhcYlOg=
+	t=1722925660; cv=none; b=rd4lHf/JFcx0D+CqXYNBcmbEBFCRnKfUjt/L4aSIozeRW/kvgmH0ekZ0VfPy86htzS7JovNhcpLz+E3HQwOGF6O83fJz9xXNRgMDk/36KFoyXvHZmWhkctNPQ47naLEA2XN/T/Lz9CpQb+DMUJRDad7VDCeNhMEn2kjD9i4GpxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722925583; c=relaxed/simple;
-	bh=TPVujQ5ZQF5jqIGjsaKt/FnKJKgJb8ujUJFKkYPBZm0=;
+	s=arc-20240116; t=1722925660; c=relaxed/simple;
+	bh=aDm34fb6h6icaFnOySL93byQma3hSqlHGTRyhFyqQbQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YYJkInJlQKGGEP0vukGze1sy6fgrCBz70YiSzdNckuHHHNYRjG05iu6Ne7YiKquzROsVR8o00qyjITvDqyojNMEzEHRKIIRa6zV6pAq6aLF3OizgIq1BQIRjk4zO48C2aq8b8rFdAp8Tkjma89vsPKkFZdOW3Q8pB1HUpY9Hb+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=npBrNub3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jpdSgPyy; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=kRiiJDturOklgYbkG94njULbUVi1+gw8Put8F2U8ApXG7PvaHctIeNSI1qCiEEP+LeuQfInkYjiF4JzOYdTq3S7FKtp5p6vNzNelu5qierb0NUqNxNo26gIFXtg7WwZ5t9Kjelf4uZVqLjjuyTSljKxxF/hZoQwcXpNhTUJmp1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CT05aJ2L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=co1Qi9+F; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="npBrNub3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jpdSgPyy"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id D98281151AA0;
-	Tue,  6 Aug 2024 02:26:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 06 Aug 2024 02:26:20 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CT05aJ2L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="co1Qi9+F"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id DFCBB1151AC6;
+	Tue,  6 Aug 2024 02:27:37 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Tue, 06 Aug 2024 02:27:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722925580; x=1723011980; bh=qmDP7YHmdV
-	9gFZ1BbolA1nrOf2mSlCtBQoLl5HB3J1s=; b=npBrNub3PMlpSSdxtbRbGSYthB
-	LK7BwR/+3yjCGgUw63dmc7PmBwmI9Ais/nr7Ks0L81N0Mqvd58Ez6F6xb8R3Pa7V
-	bMwAUMj00cc8WBbqtj6FVDoxSLc+3etpwbaTDIaex0VVIi5Tl/90EmS5Wj3xznuD
-	+2Sb0xCtXcR0gpZF0Sh0AWl/sHwpbxY86AMP1/mVQB6z4w7lqxUCJV4yrqS2ZHKV
-	3I6SQlOf5A4oX8632ddtF0YzWswYbNJfod/YYRYxMzIc5VNWROvh8RkafppHY7tf
-	F5kGsh3uCw5XgLcsgLVVudO6tk1Foka+MavrUTWDiZfiYH3UBRHgDn35byGA==
+	:subject:to:to; s=fm3; t=1722925657; x=1723012057; bh=7btEyl1Kd9
+	Hl9dbNilti85oNcpSZfTtQ3BKDaWfFa5Y=; b=CT05aJ2Lui3UJySjTERruXT6nr
+	SsqDvpYVzII6y3K0e7ITBcxycIQVW1MfVm9wFN3vXpi8z6HoVUVYn+N4f5ug+VND
+	Af5l9wJONDPlTc20JnqABaHtDW+V36JTIVNtwlk+NBoeKsIDdbpVdSUt7idCKRk9
+	QaIackKPvWXKQ6DF/cd8wDlNdNIxZ/Ti3QJ+h9pf3ajaqSMN4G896u7IGCu/Tvmm
+	wpocgeMBqOIx68dklS62VWB0pN2D9OOuq0xosmMRpioIGSU+aCrTjy2dE5gvjZBz
+	kpp+YzwJcZbnowEiqYg76LLCCpgcA2iQ4O9nObVq4Z8axUDNeutNO4Puz7ww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722925580; x=1723011980; bh=qmDP7YHmdV9gFZ1BbolA1nrOf2mS
-	lCtBQoLl5HB3J1s=; b=jpdSgPyyb9KUXAe7cBSe+4/CtI2l5R9VOVojApYGbA+k
-	ZlsuZbWg5ch5WabQbxyHQYpT3rqUPJ6i/xZEUuk6ar0YTcGdpor+GBtA/Cq/tFy0
-	uQbDqs+B1UwrlxqSA2bORaaAa1PDVZFgL549hNr7LqK1Ju4tMfpLQf4CNmEHlZlr
-	/92fp+PiUG8DUkz5i46I8dmOsN/8iQIUgxGnSW3IgjnsZl0EVzhCxjVKCzojLaAF
-	eQDdMBfVZsi3sUJsv0QmYsHBNYChn42nRLn0KNXO8jvtx1ec0vv/XQolG96HFAS8
-	r4h67lwAwR22eukr/iAHVOTA5ZgCWA1hsR9T6kn0NA==
-X-ME-Sender: <xms:DMKxZve33O8Iamp20Do4hQynZuxxo2-Hy7LDLvE4__wZTdQsAQxq0w>
-    <xme:DMKxZlNa7H9Kx9j1XpbsnPooHNwcaNJmtcv0g509JEhgx_Z_fpWOlPcAsf_NARsve
-    -x-A0wWL-8chXQZqg>
-X-ME-Received: <xmr:DMKxZohfrQabH019BCobqI3-Fhbgl7iwGYIXwmfcnWRQrlHKr2JvlH8NIctPZdi1OclN_h2hwq9hXN52SJbtLSvuliawIG1lE-KOuCgIF8N->
+	fm3; t=1722925657; x=1723012057; bh=7btEyl1Kd9Hl9dbNilti85oNcpSZ
+	fTtQ3BKDaWfFa5Y=; b=co1Qi9+FDinMqW4lwTbm7LlfVODnujtlr28XnBpP7CFv
+	9MoPfoKzefeoN8TQmsMU3eVPQshFw710wLcWW6Y+LQYjKZqX9OD5daTyUzI7W5NR
+	R5TTUnrnd83PIGwFsQYzShnfN5QpqWszIcrLqQuaYTYZtQEcblR8pVmN4LTGXw5H
+	2gpOA/4JmX5eRa4d6mVC8JFl/vuvZVPQqb+CoxW/evE9Vq9fRunAyItuhtKzlUwL
+	2/s5spaA9q1pyU7d5ROH6DCa4y7kV/BLUFfnlFVIK236Ev5K1Liaq0MmFgB6u4oR
+	OIVcxDs/UOIvmX2PnYB6z4vTmcg775aNFdXLOXaTIg==
+X-ME-Sender: <xms:WcKxZouUQc6-XH-2qWY-X9akPGe_t3tQsn9GIW56rnb05R8oQ79a2g>
+    <xme:WcKxZlc9e39s9ZTI-uzxnpq4EwpMjJAY7oPQ5BD_oqB1xbf5UXFEw8n8vW4snUMmP
+    LqBLJej1d6fQma1Zg>
+X-ME-Received: <xmr:WcKxZjygKfae69Cbi0N7yAMIss535SmXRxIMjamCYPGgGfRfpLC7vZMchuxOMrYwwJxomT1y05f-unkX-HKaX7hBUgnJeQs9Ir5Fp-iREyzP>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgddutdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtjeenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepvdeuteeukefgvdfhvddtudejiefhffeggeeiffdtudfhleeijeelkeffhedtheeu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
-    pedt
-X-ME-Proxy: <xmx:DMKxZg9J6eEMnu8rduvYbwxerwpkE1um3XWxVfNClM-hOK6o16xJJQ>
-    <xmx:DMKxZrtZD2D0pqmQ7ciq4VtkmY4dcnGVc4JnwYm0APG6oU9LN6PlIQ>
-    <xmx:DMKxZvHScRQApj2EqfMi-GfOr6SoO-GG3oFWvaSCxAEXZr4RDOEMkQ>
-    <xmx:DMKxZiPoxN6_E4VU9dvyIFZAV41K7claRXbb3sQZnR3509QioSmz3w>
-    <xmx:DMKxZhWd4gV2msYFImXrRooTE_EfW1W8i3RH8zBER2zHyahJL_mOVYJH>
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:WcKxZrON4jnL5OkPM09aBV-nV69O1Q6_Q-rCLtxBLJbgJbh7rB-t5w>
+    <xmx:WcKxZo_rDEjDwnvuHUnHipIsHsSVuHAOotZga-Gn1hbwxr1oifyH3A>
+    <xmx:WcKxZjVi3fPNJgnnki5SK5MZpAfIcfmcrAHto8L7MEbX9iYuoEHGqQ>
+    <xmx:WcKxZhcA-KyDpi33PY3vxjAzAMABC_iWB_Xa6DvR5LArzTbhbkhfQQ>
+    <xmx:WcKxZnb52fH2Zq3wyJdnHSVfVyrH8SK6_F-_9T2S-pENRY5k3qvzQVBi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Aug 2024 02:26:19 -0400 (EDT)
+ 6 Aug 2024 02:27:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5d5a36bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Aug 2024 06:26:16 +0000 (UTC)
-Date: Tue, 6 Aug 2024 08:26:16 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id adf9c98d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Aug 2024 06:27:34 +0000 (UTC)
+Date: Tue, 6 Aug 2024 08:27:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
-Message-ID: <ZrHCCBXXWZPzAcQb@tanuki>
-References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
- <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
- <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
- <xmqqv80ia9wf.fsf@gitster.g>
- <CAPig+cTmzk7AN2x8-WCK_T5-_G7Wd-akB2++_4HFEbT67Rnc8A@mail.gmail.com>
- <xmqqv80f3r3d.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 1/5] doc: git-diff: apply new documentation guidelines
+Message-ID: <ZrHCVmQvVH9MzpJ0@tanuki>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <515ddbf1dceacc0c186e3d31c13e76a5afc6c45f.1722801936.git.gitgitgadget@gmail.com>
+ <ZrCXK8AmGSFwyqI4@tanuki>
+ <5803739.DvuYhMxLoT@cayenne>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,90 +85,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m2xlZhODW+ecSZx5"
+	protocol="application/pgp-signature"; boundary="3gPtAGxuf01TEwma"
 Content-Disposition: inline
-In-Reply-To: <xmqqv80f3r3d.fsf@gitster.g>
+In-Reply-To: <5803739.DvuYhMxLoT@cayenne>
 
 
---m2xlZhODW+ecSZx5
+--3gPtAGxuf01TEwma
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 05, 2024 at 08:51:50AM -0700, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Aug 05, 2024 at 08:51:21PM +0200, Jean-No=C3=ABl AVILA wrote:
+> On Monday, 5 August 2024 11:11:07 CEST Patrick Steinhardt wrote:
+> > On Sun, Aug 04, 2024 at 08:05:32PM +0000, Jean-No=C3=ABl Avila via GitG=
+itGadget=20
+> wrote:
+> > > @@ -225,11 +225,12 @@ CONFIGURATION
+> > > =20
+> > >  include::includes/cmd-config-section-all.txt[]
+> > > =20
+> > > +:git-diff: 1
+> > >  include::config/diff.txt[]
+> > > =20
+> > >  SEE ALSO
+> > >  --------
+> > > -diff(1),
+> > > +`diff`(1),
+> >=20
+> > This one looks curious to me. Why is this item formatted differently
+> > than the next three? I would have expected it to be formatted as
+> > something like linkgit:git-diff[1] instead of `diff`(1)`.
+> >=20
 >=20
-> > On Fri, Aug 2, 2024 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m> wrote:
-> >> > [...]
-> >> > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfull=
-y.
-> >> > This matches the behavior in functions like `run_transaction_hook`
-> >> > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
-> >>
-> >> I am still uneasy to see this unconditional clearing, which looks
-> >> more like spreading the bad practice from two places you identified
-> >> than following good behaviour modelled after these two places.
-> >>
-> >> But I'll let it pass.
-> >>
-> >> As long as our programmers understand that across strbuf_getcwd(),
-> >> errno will *not* be preserved, even if the function returns success,
-> >> it would be OK.  As the usual convention around errno is that a
-> >> successful call would leave errno intact, not clear it to 0, it
-> >> would make it a bit harder to learn our API for newcomers, though.
-> >
-> > For what it's worth, I share your misgivings about this change and
-> > consider the suggestion[*] to make it save/restore `errno` upon
-> > success more sensible. It would also be a welcome change to see the
-> > function documentation in strbuf.h updated to mention that it follows
-> > the usual convention of leaving `errno` untouched upon success and
-> > clobbered upon error.
-> >
-> > [*]: https://lore.kernel.org/git/xmqqv80jeza5.fsf@gitster.g/
+> Here we are referring to the 'diff' command, not git-diff. That is why we=
+ don't=20
+> use the linkgit macro (which is used to generate cross links for html out=
+put).
 >=20
-> Yup, of course save/restore would be safer, and probably easier to
-> reason about for many people.
+> Still, the general format of a reference to a man-page is to put the comm=
+and=20
+> name in bold, which our filters get by backquoting.=20
 
-Is it really all that reasonable? We're essentially partitioning our set
-of APIs into two sets, where one set knows to keep `errno` intact
-whereas another set doesn't. In such a world, you have to be very
-careful about which APIs you are calling in a function that wants to
-keep `errno` intact, which to me sounds like a maintenance headache.
-
-I'd claim that most callers never care about `errno` at all. For the
-callers that do, I feel it is way more fragile to rely on whether or not
-a called function leaves `errno` intact or not. For one, it's fragile
-because that may easily change due to a bug. Second, it is fragile
-because the dependency on `errno` is not explicitly documented via code,
-but rather an implicit dependency.
-
-So isn't it more reasonable to rather make the few callers that do
-require `errno` to be left intact to save it? It makes the dependency
-explicit, avoids splitting our functions into two sets and allows us to
-just ignore this issue for the majority of functions that couldn't care
-less about `errno`.
+Oh, that makes sense of course. I totally forgot that there's a world
+outside of Git. Thanks for the clarification!
 
 Patrick
 
---m2xlZhODW+ecSZx5
+--3gPtAGxuf01TEwma
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaxwgcACgkQVbJhu7ck
-PpQMTRAAkIMCvCvHGn37G1PnC1R6iJE/VBED+ctnieN91m7i1VIgO2SJVIBkHOSR
-x6j7u2ViMu87GG1OpIRFmH6sfhVPiz4bKVY2j8JQw7660FRFcTFd9rRrJgS/Cpu8
-Xv7mo80Rfi51rEDAPEfIzZ2LEOtGW6B88TyoTQi1m5R+Py0skCrpK5ppP8pWtyVz
-257meMRCocw6zt0n2oTgnmsZfA1QCw9XkRI/ZD98g3D9u9uMJB3TZUKdM0tRxCAE
-pwF2lcAt2W65moAjbFLci6sMlNqtWDleL0/peW3eMbA2boqB71vGEt7jMfxRZLD1
-4ZePrkNwsfhc+ZuqfF7qCwUqvJSvuM7mbjavWibzlkJGd/ZPi7dfHRNGDTnSluen
-pfoitoAlaSOw5kXgdEsEpuIDno2h10q2DbjVCuPSUgClWKEzh9jOnNjh85MnoRZr
-EsbKcLc53bHvlB8K9z4RwkDHFzzNZ3laIEH0AMC0dmfR1RVqo2S+8zghnuc3kv7y
-Qj1qrnOQJHoUlDRVXdkupyrABh64gY4zf1KLFCKdsSvI5sy3VtPalKkSgpxOAkkT
-OHSmtYdDXHjqBn15OCwib1DM6Xd+Rbdd9FPgyGdW0gQTsu/2fSoSpJQvLKQyXi+j
-ZUoguQZwX2RGjuv1lJ86vl1kVs+fG0kcJvF/XDUD9mD+DPEZiDo=
-=jlro
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaxwlUACgkQVbJhu7ck
+PpQIWhAAriW31mABc6HkUwH1ME7qxE300O7YN/6E/BpVlPXn6B5cdzaPJfm9Ckgy
+aRp76Nb1mhe8X5guedJHlu8fmpXFEOPR0fUEBgjvF3ycb15zsNgmOfSIJOud8F3f
+zAHlC5HfyLlhsJleHOSvEDtQ5BZXgXC2FVXVRaEGbyIUDNigf8CEpQ9+h1IEtCPj
+RFLJa3sOtlvaEj46IdUovfSZ/DAN2SIDUFEtiJs4L9/ES/hM91/+mgiGnuKMztCc
+XAqp7Y8hAYjpdpnLU8YmWCFJTSMrLjH+jcyw/Iu9psAQnv8M6Ooc6ludhP6urUZd
+TFYoQu5p/6OfVYyTFZw0QVKAxb1OPfTRxb//dp9AAoiSxQgi7VZ/Mlcm3t9iuLpf
+6x4GRwaq3lbWeXIDwUBX+UGGD/m7uo9uRVgNcwBh1sdZsu28tfs4LW4i7zPX2OZv
+MVL5UPzD44DEpQe4FgXtN/zSK9Ij1PpoSkHFjKyax2Qcn3T7lfs7KruFC1mqefs3
+Zdw4EHYN3+RvQ0L8AnA/VxksVxBeIf4woaB5hyaSVARGOq6oAIPgcuXvQ03WPNUe
+1JJLSMzdB47349IAM8IWQc79+vPJ7nffmJyXw+vS1BuCtaUpUVzXkRbOvx/sPF3M
+sjFuqKrDSs5k9Wi2LeYTJc/9nYBzaORfA4fnlL+uE9A7IWaLjcM=
+=9AiX
 -----END PGP SIGNATURE-----
 
---m2xlZhODW+ecSZx5--
+--3gPtAGxuf01TEwma--
