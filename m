@@ -1,167 +1,175 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B56B663
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2B3F4FA
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:32:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722927890; cv=none; b=bVuRqnQI+Jay5MnilFmqO4FXvDCNgbM2tuyZq+MLKrLKvFZ7/WQhXUKm5mZmd5XVwJTed3TadB9F4kpSzzFgUe2l9sgWNxg2/icvewW0mmyOB4dzwSkuqOhRSDJUv/2IUobXEnEHL9Rds+2ljW92QhURiExMlxRAqzI6JkdBCK8=
+	t=1722929571; cv=none; b=ATP1VrPfFucMJRRjeG9qQ8L0zS9mSHaVdP86OoCb/YcsjogVIBBN9dYldXMoPIRrMoAGUOpj028KKqBW7wwl05v4zM3/5yy+E0icDYmIoZkkJAy5CGn2EzCrYKejCSrgY/8gpveN8G1lSJXOqIw2GNgZvgqlHGr4fWLCLYi1Zp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722927890; c=relaxed/simple;
-	bh=6L2/NSDDIaqxnDL3lvJoXABJEZHoXEerfC+rj5xcpb0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uEs2L3iqLSam64+7V+bYfi0mDXN6Fxjav4VmVBJnAAUxuo4e3AqWG2ww/XuifAORXT4iiQQc94FgvSzIb9Y62It5XMS1+jyffhvI1PQ33CTKsgAT3fHRXWXyn8Oqu+CviUdKNn9T5/pEA5s+AUuIDJAOEJ2Airg5WmhSNCgl9iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OtCXGHlJ; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1722929571; c=relaxed/simple;
+	bh=CHMhmjdtQ9I6Gn6uTfQoLu4fTQ3IvsotyxB3sU+/MfM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QDMZU1ETXMBeUMiILxUBZpej/fK1qBhSOV7h90KyCocsV4GANFewiJsYposSo3zkgJojEFJfFlA+6Oen/47ZBrSYctNODEZkqxg2QChirKxsddVK67T+jmFsa8kH9oY7T67HF+xR5qgIIl7899pA265fH9hS0gTuuxmz8o6WL0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NaD9WIIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rJroPItK; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OtCXGHlJ"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a7a94478a4eso1056469566b.1
-        for <git@vger.kernel.org>; Tue, 06 Aug 2024 00:04:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722927887; x=1723532687; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T9P6dfdqAa6yaKHhjafubVd1g2r1bDG6tO6xYTZo2IE=;
-        b=OtCXGHlJOw+LltGDi4pGktM0tBG0Ps25b2vTJAqHvQX5yaUSN3bIs1bZF3LRZAQtcB
-         fsm/ZUHBzZ+mS19Kz/3TIRBKSVrAiDUGO52RphZJoiARL4hknC5c5+S0eaweqSe42auR
-         P05Sr/zqpoQ7XjN9fbm3Zc4blvz+goab37tbYBcq32q7sXIU8pV8GO0NG79Pui364ZKa
-         hy1gBFtwn8iU7dq3JFQ6Zb8XTjn3kSrC1xwhc5OiA/yllZpBoABPqZ5M8oO9ezXXNcUj
-         kq6qSuQYGQP/QkFfDShePEqxo+AK5NKuKyEds7ANRTZZGG/sHGdCwYziLJHDqHpXn5ms
-         TQrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722927887; x=1723532687;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T9P6dfdqAa6yaKHhjafubVd1g2r1bDG6tO6xYTZo2IE=;
-        b=kciEXUWXdCxN2byd0RG5dNQOIK2hsVkQyy2XZRzkKIGYIkZqEMC/4TUk8An9mpGCA8
-         RIXro0SCtWjKitw1M5NURwyZI/2mvJg4BGSS2bFUd7DJZUSVkIVE1BBOKbtkxKcLYfnE
-         1rq3d0lejQZvF9BbYye6DqT1IVnbjTf+dR1CSdjfjzcUH5ioCvKUKFKGNOJcImV83/I0
-         DqNEpmsjpVWrA9n3nFBRpFpeue0zzHF/9fvlOPj35n6b2/+GThXLhXTTtKt1q6TP2zuH
-         4KXz6s3PggyN1roLnIwViQkgHRScUunYi4pXyBHtNe8Hn8beKjbgbkmnNv2iOf2+YEKA
-         Odiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXT3AX8fd/Ml1zOj8spSztwE/LdNFXqFWGNQQq1q8zK++9NYI7kxIC7wbVISWzeTXD/Q+2fiCmnzVQqSCLksssQF24S
-X-Gm-Message-State: AOJu0YxUq6EvrXbNXQD6+ge0q+RQV4n+wruSprzBJH3+5j1KZKK1NoOy
-	buYISyGsN8FCICBjIAqLWD4B8+G7cCb9X16l27VvijFOVUGCF4ygFqV6VxsrdKkj+WHudFKDkJd
-	PFpeGgtRrDnkO/wyCYLze8AOEenIztUKO2QgF
-X-Google-Smtp-Source: AGHT+IEwBeEKWV6B7syuzgSmefqHbjFOiGBtSv9rsRjiQLRUL7dnoIP7UNVZpstToWiKGPClSTsPBpKqBqJinqNFoeI=
-X-Received: by 2002:a17:906:7956:b0:a7d:2772:6d5f with SMTP id
- a640c23a62f3a-a7dc6245f89mr1179523566b.23.1722927886673; Tue, 06 Aug 2024
- 00:04:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NaD9WIIE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rJroPItK"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 74E31138FC1D;
+	Tue,  6 Aug 2024 03:32:48 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 06 Aug 2024 03:32:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1722929568; x=1723015968; bh=75BrE4C3Zv
+	aCNpaIr28SDD5cWSjemo7werTwrp4wCUY=; b=NaD9WIIEc3kYOC4mzSgBhkywlK
+	8DrHnBD75wZs7u22fNj/TZiwFUN0eYCfRM7jZcllzOPH4/uoG1+okHvXJI7vclcf
+	zniXvE6TH8T1XLXtwESVZz5VMl/kd17Rm7QSH+lzQnby+wA0K42M/6JE3melKXKg
+	F4VnuFk29Ons7qpeWkyAzPFVDVxun44P7T0VB0C98qr9OjaBs4M53Y0BQkuLovtJ
+	zhxxR5why44c1u1kPRMHKsD1vKvCrEiJaM7TjN4THFwT/bAw0MVnujFmxPBAjqXk
+	9mVHqmf9JDZHKUzVxMswKecqAzTWW59TkF44+EUH1APJaxbElMLdortabrZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1722929568; x=1723015968; bh=75BrE4C3ZvaCNpaIr28SDD5cWSje
+	mo7werTwrp4wCUY=; b=rJroPItKgmo7ZskBszza8KmfLa2JkrMhqTCH/jHT48MA
+	9/fYBLRtR6I+BFxHQu92239N/sR8FZ2Csf9mmkE5Spi2L7KJnJFX+GX3PL6+fvhU
+	690qV1xdQmmsrsUL5J2KIuHyM4oICRNSxi/FXmRkEXCRW8THOqiWnSq+3EBklRkQ
+	6L6wer6SGfHgapluaNWOJ+5blbEZBla2yIbOzLG+xxBFFPK9SUUxjNIPiWqa6MwD
+	ahFu3we5iiJ22ZiN/BN3mKxxiKIqTJRzKOuSAoF3MbiG392OUqAXQq9KD1fLxbHp
+	pA5iKTIfZbQp7uZoj1q6QTc54+ke+pQjWqCWGfSrYg==
+X-ME-Sender: <xms:oNGxZtzmnOOT-h9_w-GRD4KglecaPpAdeBJkA-LmE-uQCBr-5mOlOQ>
+    <xme:oNGxZtQP_sMoHxkf0wAjRqx0mU5IfDrKMNteJC1weZuoiL7Juz9Y0eARIye-tdYtP
+    qGxi681okGQiL0sCA>
+X-ME-Received: <xmr:oNGxZnWNNRw06FRsoAxBYCdb244hPaR7c4Yh57OTkNpROM4Re1V4qhDXNGPvnNJMcVCG4RZEMTMAFCi1PcziXRYrHmQMEQ1JFZuEJIwmePNB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgdduvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:oNGxZvjEo0LPO6OOSsOGg19jKHjn-mL6Jg-P4kDkhjvz4nOyMBuavA>
+    <xmx:oNGxZvBxlWP0XB22IGoyewyZBDIEZXKa1fn6K51Wu_uteV5Rd9h1qQ>
+    <xmx:oNGxZoK_JVXRVvPsLgyiq6ImeG5zUbsyN50uIPz4M5WARaNC2fypAw>
+    <xmx:oNGxZuDnluW3PBo1oFA_JjBzeH60911jofeu98vqY8fUBYt2A0oeOA>
+    <xmx:oNGxZh27wcurGD1Bt6au3vtGcXf7oD9iYnJ79hiWo7lpae7TM5i_eAK_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Aug 2024 03:32:47 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a21e59d9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Aug 2024 07:32:43 +0000 (UTC)
+Date: Tue, 6 Aug 2024 09:32:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [GSoC][PATCH v15 0/9] ref consistency check infra setup
+Message-ID: <ZrHRm-qaZu6BKPoZ@tanuki>
+References: <ZqulmWVBaeyP4blf@ArchLinux>
+ <ZrEBKjzbyxtMdCCx@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
- <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com> <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
- <xmqqv80ia9wf.fsf@gitster.g> <CAPig+cTmzk7AN2x8-WCK_T5-_G7Wd-akB2++_4HFEbT67Rnc8A@mail.gmail.com>
- <xmqqv80f3r3d.fsf@gitster.g> <ZrHCCBXXWZPzAcQb@tanuki>
-In-Reply-To: <ZrHCCBXXWZPzAcQb@tanuki>
-From: Kyle Lippincott <spectral@google.com>
-Date: Tue, 6 Aug 2024 00:04:30 -0700
-Message-ID: <CAO_smVj7kN1ywAMVagTb_ALwqb-aycUy4tSaJ47ocC1ZRBHcqQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="76UC4M+OFYEfupUt"
+Content-Disposition: inline
+In-Reply-To: <ZrEBKjzbyxtMdCCx@ArchLinux>
+
+
+--76UC4M+OFYEfupUt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 5, 2024 at 11:26=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Mon, Aug 05, 2024 at 08:51:50AM -0700, Junio C Hamano wrote:
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> >
-> > > On Fri, Aug 2, 2024 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> > >> > [...]
-> > >> > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfu=
-lly.
-> > >> > This matches the behavior in functions like `run_transaction_hook`
-> > >> > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
-> > >>
-> > >> I am still uneasy to see this unconditional clearing, which looks
-> > >> more like spreading the bad practice from two places you identified
-> > >> than following good behaviour modelled after these two places.
-> > >>
-> > >> But I'll let it pass.
-> > >>
-> > >> As long as our programmers understand that across strbuf_getcwd(),
-> > >> errno will *not* be preserved, even if the function returns success,
-> > >> it would be OK.  As the usual convention around errno is that a
-> > >> successful call would leave errno intact, not clear it to 0, it
-> > >> would make it a bit harder to learn our API for newcomers, though.
-> > >
-> > > For what it's worth, I share your misgivings about this change and
-> > > consider the suggestion[*] to make it save/restore `errno` upon
-> > > success more sensible. It would also be a welcome change to see the
-> > > function documentation in strbuf.h updated to mention that it follows
-> > > the usual convention of leaving `errno` untouched upon success and
-> > > clobbered upon error.
-> > >
-> > > [*]: https://lore.kernel.org/git/xmqqv80jeza5.fsf@gitster.g/
-> >
-> > Yup, of course save/restore would be safer, and probably easier to
-> > reason about for many people.
->
-> Is it really all that reasonable? We're essentially partitioning our set
-> of APIs into two sets, where one set knows to keep `errno` intact
-> whereas another set doesn't. In such a world, you have to be very
-> careful about which APIs you are calling in a function that wants to
-> keep `errno` intact, which to me sounds like a maintenance headache.
->
-> I'd claim that most callers never care about `errno` at all. For the
-> callers that do, I feel it is way more fragile to rely on whether or not
-> a called function leaves `errno` intact or not. For one, it's fragile
-> because that may easily change due to a bug. Second, it is fragile
-> because the dependency on `errno` is not explicitly documented via code,
-> but rather an implicit dependency.
->
-> So isn't it more reasonable to rather make the few callers that do
-> require `errno` to be left intact to save it? It makes the dependency
-> explicit, avoids splitting our functions into two sets and allows us to
-> just ignore this issue for the majority of functions that couldn't care
-> less about `errno`.
+On Tue, Aug 06, 2024 at 12:43:22AM +0800, shejialuo wrote:
+> Hi All:
+>=20
+> This version handles the following problems:
+>=20
+> 1. Patrick advices that I should not use `va_copy` in the changed
+> `report` function. Actually this is a mistake, this version avoids
+> redundant `ap` copy.
+> 2. Patrick advices I should rebase [v14 05/11] into [v14 04/11]. I
+> follow this advice in this version.
+> 3. Patrick advices that we should put [v14 06/11] before we introduce
+> ref-related operations. This version reorders the commit sequence. It's
+> a minor change.
+> 4. Patrick suggests at current we should not add `git refs verify`
+> command into "git-fsck(1)". This is because we should disable this new
+> check by default for the users. Many users use "git-fsck(1)" in their dai=
+ly
+> workflow. We should not be aggressive. However, if we provide this
+> mechanism in this series, we will again make more complexity. So this
+> version drop patch [v14 09/11]. Also because of dropping, change the
+> test file to use "git refs verify" command instead of "git fsck"
+> command.
+> 5. Patrick suggests that we should use `ends_with` instead of
+> `strip_suffix`, fix.
+>=20
+> There is another important problem this patch solves:
+>=20
+> At v13, Junio has suggested that the `files_fsck_refs_fn` should be
+> adapted to Patrick's change. Actually, I made a bad design before. I
+> should always pass the `ref_store` structure. So I change it to
+>=20
+>   -typedef int (*files_fsck_refs_fn)(struct fsck_options *o,
+>   -				  const char *gitdir,
+>   +typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
+>   +				  struct fsck_options *o,
+>             const char *refs_check_dir,
+>             struct dir_iterator *iter);
+>=20
+> `gitdir` could be got by using `ref_store` parameter. By using
+> `ref_store` parameter, we provide extensibility here. If something else
+> change, we merely need to change "files_fsck_refs_fn" prototype.
+>=20
+> Because I drop one patch and rebase one patch. I provide the `interdiff`
+> for reviewers to make the life easier.
+>=20
+> Due to the deadline of the GSoC, I will speed up the review feedback
+> process.
 
-100% agreed. The C language specification says you can't rely on errno
-persisting across function calls, and that the caller must preserve it
-if it needs that behavior for some reason. The POSIX specification
-says you can't either except in very rare circumstances where it
-guarantees errno will not change. The Linux man page for errno says
-you can't rely on errno not changing, even for printf:
-https://man7.org/linux/man-pages/man3/errno.3.html
+I've got another small set of nits, almost not worth addressing. I was a
+bit torn whether to send them or not as the series is in a good shape
+already, in my opinion. But let's maybe wait one or two more days for
+additional feedback, and then (hopefully) reroll this a final time.
 
-       A common mistake is to do
+Thanks for all your work!
 
-           if (somecall() =3D=3D -1) {
-               printf("somecall() failed\n");
-               if (errno =3D=3D ...) { ... }
-           }
+Patrick
 
-       where errno no longer needs to have the value it had upon return
-       from somecall() (i.e., it may have been changed by the
-       printf(3)).  If the value of errno should be preserved across a
-       library call, it must be saved:
+--76UC4M+OFYEfupUt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-           if (somecall() =3D=3D -1) {
-               int errsv =3D errno;
-               printf("somecall() failed\n");
-               if (errsv =3D=3D ...) { ... }
-           }
+-----BEGIN PGP SIGNATURE-----
 
-Basically: errno is _extremely_ volatile. One should assume that
-_every_ function call is going to change it, even if they return
-successfully. The only thing that can't happen is that the functions
-defined in the C and POSIX standards set errno to 0, which is why I
-withdrew the patch (since it's a wrapper around a function defined in
-POSIX). But in general, I don't see any reason for any of the
-functions we write to be errno preserving, especially since any call
-to malloc, printf, trace functionality, etc. may modify errno.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax0ZoACgkQVbJhu7ck
+PpQNZA/+KnBj3iwYUIaxBLvU0cFvJXfC68LYEqxMNexvXrX2Obvkah4VeigSwHi7
+Tj0gtN+q1oTnvNcuGu67rnYb/BDJDdsuXwkdu3clTW7YuqvCA3+7R4i6x3BG0tFO
+HzQwukA8MZtQV09L+Gg88F4J8Uw/qMTg0lH1/+zo7wprzwPUEBhtBEdymk+zAcmK
+eB/hP5/gWjx5GGxu7/q8TPMdIanXgb7/VVElm8AmoCf7gcz90Ay6C2zkt+HNb6za
+nB3W276v/Mw1cLCV+yfnaaLo6fnbDEq26K6bzjrOctVf1v65CTsKqjRHu9VEt4GQ
+CDbCE6iz5vvBJF4PEWNeWlNtxI71WzxIeLsS6EfVzi6me/mc5m2vdXpe+Ed85MFc
+exUj0OBeMaShGeNUmZQot/X+l3UZIC/USXFt9LouirbKGXx7e+PZLoWGhCUj/rxq
+D2VjD7Ni3Y/MavzUdiu+c+Wk7Yx7E5vm3h8ImN9k6q8+7WC0+5+JCMUfL2d4nugn
+uRTU8ke3s9EYCjOEFMlqD6ybnFtNFvFk/3lXscAeca09LItepbDPuhnvEYU7juU8
+w/t15aNUQF5f4Ni4fhbQf50pP5d868B1bt4GMCvV0pB6jONr2cwr0g/Z9A6WzWgz
+ut8ybjzo5+V1ZIhSwDePm7w9sVBhhjuRH5zZ3JyzAeKrLh2WKoM=
+=w4/H
+-----END PGP SIGNATURE-----
 
->
-> Patrick
+--76UC4M+OFYEfupUt--
