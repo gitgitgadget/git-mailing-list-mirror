@@ -1,53 +1,53 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2B3F4FA
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DF3166F1D
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722929571; cv=none; b=ATP1VrPfFucMJRRjeG9qQ8L0zS9mSHaVdP86OoCb/YcsjogVIBBN9dYldXMoPIRrMoAGUOpj028KKqBW7wwl05v4zM3/5yy+E0icDYmIoZkkJAy5CGn2EzCrYKejCSrgY/8gpveN8G1lSJXOqIw2GNgZvgqlHGr4fWLCLYi1Zp8=
+	t=1722929574; cv=none; b=Lln3T8wZ20at/xjkZcg1sJrIK/wFnLQmV2YWbmpsVBxqir20GaJsb/lvHPkg9jZFzNsuio1fvQkgcCxMBL5kUiZH1pTLuSvwFi0HzcKJQSCi3N5xvXnC8h9Bts0/4Q9ICgvFDA2Z/8mV4/aaGzh8BBbgwiIjnLbw5h+ndw5VRD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722929571; c=relaxed/simple;
-	bh=CHMhmjdtQ9I6Gn6uTfQoLu4fTQ3IvsotyxB3sU+/MfM=;
+	s=arc-20240116; t=1722929574; c=relaxed/simple;
+	bh=WBJ+LiGTu091A2mBSih23aVRc5Kk2oUpLsgG0oSGD3E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QDMZU1ETXMBeUMiILxUBZpej/fK1qBhSOV7h90KyCocsV4GANFewiJsYposSo3zkgJojEFJfFlA+6Oen/47ZBrSYctNODEZkqxg2QChirKxsddVK67T+jmFsa8kH9oY7T67HF+xR5qgIIl7899pA265fH9hS0gTuuxmz8o6WL0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NaD9WIIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rJroPItK; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=ewPG6pD6GL8Q0rIA/Bg4R61iyR+oUMXLMRA2V1tsYs3AEFqQsigZKpeg4VXaqxccU3RBg6xB/NUECvYl6vkQeony192+i2AMP0m7pp4WD+QsfxNe8ZR9NbWS3DpIRF6VqwmAkjDRnlvjOesf0s7ZbyThFnSxrvKiZWaCNR25wtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wp8eXZy1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZX3msXjN; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NaD9WIIE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rJroPItK"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 74E31138FC1D;
-	Tue,  6 Aug 2024 03:32:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wp8eXZy1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZX3msXjN"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0FE6C138FC3A;
+	Tue,  6 Aug 2024 03:32:52 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 06 Aug 2024 03:32:48 -0400
+  by compute3.internal (MEProxy); Tue, 06 Aug 2024 03:32:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722929568; x=1723015968; bh=75BrE4C3Zv
-	aCNpaIr28SDD5cWSjemo7werTwrp4wCUY=; b=NaD9WIIEc3kYOC4mzSgBhkywlK
-	8DrHnBD75wZs7u22fNj/TZiwFUN0eYCfRM7jZcllzOPH4/uoG1+okHvXJI7vclcf
-	zniXvE6TH8T1XLXtwESVZz5VMl/kd17Rm7QSH+lzQnby+wA0K42M/6JE3melKXKg
-	F4VnuFk29Ons7qpeWkyAzPFVDVxun44P7T0VB0C98qr9OjaBs4M53Y0BQkuLovtJ
-	zhxxR5why44c1u1kPRMHKsD1vKvCrEiJaM7TjN4THFwT/bAw0MVnujFmxPBAjqXk
-	9mVHqmf9JDZHKUzVxMswKecqAzTWW59TkF44+EUH1APJaxbElMLdortabrZw==
+	:subject:to:to; s=fm3; t=1722929572; x=1723015972; bh=Uxm0xP3cpC
+	NCnMtjznpCfr3nQpY3EwxHkNOfbCa/xE0=; b=Wp8eXZy1kKLidKi4fEthR3oGiF
+	R1QktIvs2tQ4v5XNqFgaDcgyVPLzAJ/Jf4iwRoV3Ys2iejb3Uu96kQVNx1f28wS3
+	HN6kogdfHMyypQfmz08Ux81e1Yl340S/Ni9UUzFobKmq4zTTxObwPWl2m0bVMjE0
+	OAUwIPLULeni8gu/VX/W+njY/Uqlvj1m2JRbFCZM0Z/vfd4PK/2pwagGndg/XSdF
+	REnzDDg5mlRo55B5KDa+68N5pRGfOfXvhOh6vPhEIcmHYR9sCGmSTIsMlr7FfkBB
+	/3mx9asaSnvErRKrTMmwR0n3Xs+VPxZe7gvwXjSaUshku49+3HCHNv/fv3+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722929568; x=1723015968; bh=75BrE4C3ZvaCNpaIr28SDD5cWSje
-	mo7werTwrp4wCUY=; b=rJroPItKgmo7ZskBszza8KmfLa2JkrMhqTCH/jHT48MA
-	9/fYBLRtR6I+BFxHQu92239N/sR8FZ2Csf9mmkE5Spi2L7KJnJFX+GX3PL6+fvhU
-	690qV1xdQmmsrsUL5J2KIuHyM4oICRNSxi/FXmRkEXCRW8THOqiWnSq+3EBklRkQ
-	6L6wer6SGfHgapluaNWOJ+5blbEZBla2yIbOzLG+xxBFFPK9SUUxjNIPiWqa6MwD
-	ahFu3we5iiJ22ZiN/BN3mKxxiKIqTJRzKOuSAoF3MbiG392OUqAXQq9KD1fLxbHp
-	pA5iKTIfZbQp7uZoj1q6QTc54+ke+pQjWqCWGfSrYg==
-X-ME-Sender: <xms:oNGxZtzmnOOT-h9_w-GRD4KglecaPpAdeBJkA-LmE-uQCBr-5mOlOQ>
-    <xme:oNGxZtQP_sMoHxkf0wAjRqx0mU5IfDrKMNteJC1weZuoiL7Juz9Y0eARIye-tdYtP
-    qGxi681okGQiL0sCA>
-X-ME-Received: <xmr:oNGxZnWNNRw06FRsoAxBYCdb244hPaR7c4Yh57OTkNpROM4Re1V4qhDXNGPvnNJMcVCG4RZEMTMAFCi1PcziXRYrHmQMEQ1JFZuEJIwmePNB>
+	fm3; t=1722929572; x=1723015972; bh=Uxm0xP3cpCNCnMtjznpCfr3nQpY3
+	EwxHkNOfbCa/xE0=; b=ZX3msXjNRaDRjg1Dgnw1UV/qBUZ3V3jCvyFmy6K493rV
+	Nc1/0Gp17liJCE8eKJ89ZJQHuqfItQoGryFN+k24zD0JjzmEqEupkzspepwnPYLJ
+	mZm+2jVFVSWygsYFn7zbg7DYlYoGRDnfXCDjigS/ED8rJlIsdksNzq080imqlrSE
+	QX8PdRnSuXW2V7SYtXSa7/c6MRcE89ZbGhYS47fciIMf/ZNfRRFCOkI3sZ3JqxdZ
+	p356VAypkt0puiQqhKPYittTtdR0XhGyZ/1mT6KFctQDcQj6JGqsxYvC77oun/Sw
+	MxjTD8QxWbTpPBVGb13AJaueZTS+d/CE6Y4Uwyq7hw==
+X-ME-Sender: <xms:o9GxZmNlldcC7BwSnZ8X8eeCbu5M6oG21qwwB2vkUsvugscFLftuBw>
+    <xme:o9GxZk857ZwhLiqOFm91J1_0Nwdtck98NrG8jRJLZTmMVxTeBBo7ZtTjqLvswN7ie
+    SsnrjMKkF15WSDRUw>
+X-ME-Received: <xmr:o9GxZtS4skBy7eQ4ZRziFFpMQd3_M0---yHPoDWKVxWdAZQUf7caWslSHKZtGfR3hCIJN-LR_tiPdIhZDZPEbkZIrVfy9lZHMLPB-WMjN0sv>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgdduvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgdduvddvucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:oNGxZvjEo0LPO6OOSsOGg19jKHjn-mL6Jg-P4kDkhjvz4nOyMBuavA>
-    <xmx:oNGxZvBxlWP0XB22IGoyewyZBDIEZXKa1fn6K51Wu_uteV5Rd9h1qQ>
-    <xmx:oNGxZoK_JVXRVvPsLgyiq6ImeG5zUbsyN50uIPz4M5WARaNC2fypAw>
-    <xmx:oNGxZuDnluW3PBo1oFA_JjBzeH60911jofeu98vqY8fUBYt2A0oeOA>
-    <xmx:oNGxZh27wcurGD1Bt6au3vtGcXf7oD9iYnJ79hiWo7lpae7TM5i_eAK_>
+X-ME-Proxy: <xmx:o9GxZmuWep4OpKdlUQhPK44WNXStjaAvPQDYlqf2mketeOqoqT295Q>
+    <xmx:o9GxZufxPU5R9odpzGA1WGKp7k8tcikKsg4bj2TjDH_9CAhpDfxX6Q>
+    <xmx:o9GxZq0lkMvqWr5IassVtOWTxKy-j34QmWzlHS3LNViJ9amia5bzDw>
+    <xmx:o9GxZi8KU2KAXAbnn8RnxgKA6JZ4JWRC7HC_p0BgV0bGWX4jwFjxcg>
+    <xmx:pNGxZmTpAqQn15JZJ5bysQ-frTc5sqWidHWx-kqwufv9v_ggtk5JAXY6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Aug 2024 03:32:47 -0400 (EDT)
+ 6 Aug 2024 03:32:50 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a21e59d9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Aug 2024 07:32:43 +0000 (UTC)
-Date: Tue, 6 Aug 2024 09:32:43 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 859b9e48 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Aug 2024 07:32:48 +0000 (UTC)
+Date: Tue, 6 Aug 2024 09:32:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v15 0/9] ref consistency check infra setup
-Message-ID: <ZrHRm-qaZu6BKPoZ@tanuki>
-References: <ZqulmWVBaeyP4blf@ArchLinux>
- <ZrEBKjzbyxtMdCCx@ArchLinux>
+Subject: Re: [GSoC][PATCH v15 5/9] fsck: add refs report function
+Message-ID: <ZrHRoCka8yCAwxzz@tanuki>
+References: <ZrEBKjzbyxtMdCCx@ArchLinux>
+ <ZrEBxYagfzAfZKVJ@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,91 +85,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="76UC4M+OFYEfupUt"
+	protocol="application/pgp-signature"; boundary="03B1zUrIaJbeGFPF"
 Content-Disposition: inline
-In-Reply-To: <ZrEBKjzbyxtMdCCx@ArchLinux>
+In-Reply-To: <ZrEBxYagfzAfZKVJ@ArchLinux>
 
 
---76UC4M+OFYEfupUt
+--03B1zUrIaJbeGFPF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 06, 2024 at 12:43:22AM +0800, shejialuo wrote:
-> Hi All:
->=20
-> This version handles the following problems:
->=20
-> 1. Patrick advices that I should not use `va_copy` in the changed
-> `report` function. Actually this is a mistake, this version avoids
-> redundant `ap` copy.
-> 2. Patrick advices I should rebase [v14 05/11] into [v14 04/11]. I
-> follow this advice in this version.
-> 3. Patrick advices that we should put [v14 06/11] before we introduce
-> ref-related operations. This version reorders the commit sequence. It's
-> a minor change.
-> 4. Patrick suggests at current we should not add `git refs verify`
-> command into "git-fsck(1)". This is because we should disable this new
-> check by default for the users. Many users use "git-fsck(1)" in their dai=
-ly
-> workflow. We should not be aggressive. However, if we provide this
-> mechanism in this series, we will again make more complexity. So this
-> version drop patch [v14 09/11]. Also because of dropping, change the
-> test file to use "git refs verify" command instead of "git fsck"
-> command.
-> 5. Patrick suggests that we should use `ends_with` instead of
-> `strip_suffix`, fix.
->=20
-> There is another important problem this patch solves:
->=20
-> At v13, Junio has suggested that the `files_fsck_refs_fn` should be
-> adapted to Patrick's change. Actually, I made a bad design before. I
-> should always pass the `ref_store` structure. So I change it to
->=20
->   -typedef int (*files_fsck_refs_fn)(struct fsck_options *o,
->   -				  const char *gitdir,
->   +typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
->   +				  struct fsck_options *o,
->             const char *refs_check_dir,
->             struct dir_iterator *iter);
->=20
-> `gitdir` could be got by using `ref_store` parameter. By using
-> `ref_store` parameter, we provide extensibility here. If something else
-> change, we merely need to change "files_fsck_refs_fn" prototype.
->=20
-> Because I drop one patch and rebase one patch. I provide the `interdiff`
-> for reviewers to make the life easier.
->=20
-> Due to the deadline of the GSoC, I will speed up the review feedback
-> process.
+On Tue, Aug 06, 2024 at 12:45:57AM +0800, shejialuo wrote:
+> @@ -1237,6 +1250,34 @@ int fsck_objects_error_function(struct fsck_option=
+s *o,
+>  	return 1;
+>  }
+> =20
+> +int fsck_refs_error_function(struct fsck_options *options UNUSED,
+> +			     void *fsck_report,
+> +			     enum fsck_msg_type msg_type,
+> +			     enum fsck_msg_id msg_id UNUSED,
+> +			     const char *message)
+> +{
+> +	struct fsck_ref_report *report =3D fsck_report;
+> +
 
-I've got another small set of nits, almost not worth addressing. I was a
-bit torn whether to send them or not as the series is in a good shape
-already, in my opinion. But let's maybe wait one or two more days for
-additional feedback, and then (hopefully) reroll this a final time.
+Nit: there's an unneeded empty newline here.
 
-Thanks for all your work!
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	int ret =3D 0;
+> +
+> +	strbuf_addstr(&sb, report->path);
+> +
+> +	if (report->oid)
+> +		strbuf_addf(&sb, " -> (%s)", oid_to_hex(report->oid));
+> +	else if (report->referent)
+> +		strbuf_addf(&sb, " -> (%s)", report->referent);
+> +
+> +	if (msg_type =3D=3D FSCK_WARN)
+> +		warning("%s: %s", sb.buf, message);
+> +	else
+> +		ret =3D error("%s: %s", sb.buf, message);
+> +
+> +	strbuf_release(&sb);
+> +	return ret;
+> +
+
+Here, as well.
 
 Patrick
 
---76UC4M+OFYEfupUt
+--03B1zUrIaJbeGFPF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax0ZoACgkQVbJhu7ck
-PpQNZA/+KnBj3iwYUIaxBLvU0cFvJXfC68LYEqxMNexvXrX2Obvkah4VeigSwHi7
-Tj0gtN+q1oTnvNcuGu67rnYb/BDJDdsuXwkdu3clTW7YuqvCA3+7R4i6x3BG0tFO
-HzQwukA8MZtQV09L+Gg88F4J8Uw/qMTg0lH1/+zo7wprzwPUEBhtBEdymk+zAcmK
-eB/hP5/gWjx5GGxu7/q8TPMdIanXgb7/VVElm8AmoCf7gcz90Ay6C2zkt+HNb6za
-nB3W276v/Mw1cLCV+yfnaaLo6fnbDEq26K6bzjrOctVf1v65CTsKqjRHu9VEt4GQ
-CDbCE6iz5vvBJF4PEWNeWlNtxI71WzxIeLsS6EfVzi6me/mc5m2vdXpe+Ed85MFc
-exUj0OBeMaShGeNUmZQot/X+l3UZIC/USXFt9LouirbKGXx7e+PZLoWGhCUj/rxq
-D2VjD7Ni3Y/MavzUdiu+c+Wk7Yx7E5vm3h8ImN9k6q8+7WC0+5+JCMUfL2d4nugn
-uRTU8ke3s9EYCjOEFMlqD6ybnFtNFvFk/3lXscAeca09LItepbDPuhnvEYU7juU8
-w/t15aNUQF5f4Ni4fhbQf50pP5d868B1bt4GMCvV0pB6jONr2cwr0g/Z9A6WzWgz
-ut8ybjzo5+V1ZIhSwDePm7w9sVBhhjuRH5zZ3JyzAeKrLh2WKoM=
-=w4/H
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax0Z8ACgkQVbJhu7ck
+PpQiVA/9GNPN+RhHLQuSuA7aLwTSGCqtSLVYtONjf/mQZyfCX6xTXDf8eaZC2caM
+UrsVUvNFOvyVtsVT28a5dMvMrNDvgBw602upVlqqE2SRl5USvY3GoP10egjlHQ0L
+0MI4ZcuFNDkGe5QhCv9E61K0tCyUl1x5qK6N5zabMeZVXBU9wpsUja8SXpJXYz+Q
+fCGtz9gEGUGPsqiIT2RPqFBljf62B+OL+f2HpEoKlXYstWRr07b32zyrFwVbVb0K
+aJPbzLSMi4WGvrgn64di5rOToyNBg01KIzUD3HB89XFZADI55ovowLl/FQQ/GRsb
+j0nJY05MVz3tzLSIoPwz0Ysxw/OzZZxeg7XQ9QUhK+Au9sv65/zy/2mkQO73ofYi
+4q4kP4nuZtinnDQWIXiNjLqk4oWTKHfbg/D80e/p6WqdHUOpYx856vEZ/d+Zd2mZ
+DlR2sPI4a4ZS573B2GHmFYkSFEtjP7/Q1dAL3lytFLIgoXnNO16rwHlk12h8+Vi/
+D3YPhuZb+YAkJiplx7L/A2bJY4/4J6nQSO589RT4LiiLytTrNhOPbicuctZjem09
+ZgSxSup10KDgIg5hsAxh8MH0uHKBKjEmd17pibko6RL0cHob2Gq2vCVKR/EL41SA
+lGiKnSNBXLPJYfG6sVfgtG+M/66ptxkPXhmEB6yz1eTgA6FKjF4=
+=airC
 -----END PGP SIGNATURE-----
 
---76UC4M+OFYEfupUt--
+--03B1zUrIaJbeGFPF--
