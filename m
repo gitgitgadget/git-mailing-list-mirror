@@ -1,157 +1,86 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D201C32
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 06:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DF516078B
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722925838; cv=none; b=VmeBHwhk+3CHyddqIyTITVvVChC9GUjDonUkyLFcZ7lD9BaAiBqVE16cpq3/qpE0QYervvXlb9sZjClcSE55zdIaw0SpnO9j0jV9tB7hkTOaRmfWUkb4/mJ6IAkp5Tt1thacHSsf77QK5KLQbE9GDokdZ1M7vKCyzuCewY562vA=
+	t=1722927781; cv=none; b=oa31suuiRwuWTXLaNgKYhjQNrf/8pUGJV0s+tAexHajfN78B8FNDzbvBs/neLKuitQJdn+ZIKjZPPclHkJdKnWJFThkhZRa0nf8eaWI6tLw3uYa45o2+OLAZ3dC9X7cUltL61N0IGICpkw1wks2ycUjwEIhs5l2gCt3i0l6s67g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722925838; c=relaxed/simple;
-	bh=sZIx/ydOAk1rkEmcSUsIN24+RRa3rhzORz7QJtjeFrk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k95lPNbz8l//BeHX12TqwaaU2hFkILHylOtr6G4a0WmjuIxaArMh6m/SP4qQ42fgirjyIR45o1mrzr7PcMx5gVTV11OPoiw0sNbfS++oqFRiEDPVLeb5D0VD07lIaki0GfEkJa2EiipXxeezzUdigTHRVbXSg30JqUZuSEaBbro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MNWHT1EE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TBnFVl/j; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1722927781; c=relaxed/simple;
+	bh=v8nFtJo0o0ppRq/iCp/fWI6vgrwxEa7vZ5AGr6cHNgc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=kDAtNYdDMVPNMKLVxiDraUldWzL3w8c6v5QsvTMREsGo14JPCMUsTQwxwp47muDDf25kr3fdyiWgJyvsLk/tWOJJXqYA9WfTxEmC8O2esroHigWdo8/rBNTQko2+bweaAbo6Pb6AhTBOR6tu6n8+8XGNEFXBpxsCha+sMxebD/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NkbZb8B0; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MNWHT1EE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TBnFVl/j"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3A0FC1151AEE;
-	Tue,  6 Aug 2024 02:30:36 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 06 Aug 2024 02:30:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722925836; x=1723012236; bh=sZIx/ydOAk
-	1rkEmcSUsIN24+RRa3rhzORz7QJtjeFrk=; b=MNWHT1EEj2Pm6ZeCcl2JxZfVFi
-	O54vjPWfDVZa9uGeXTl9uj0/9mSD69recs4ATJgFRgrYGCthIqi48NxTSRY2mlg2
-	9/1s17BSm+Js5B5pi1RKos0WM+++kd/JSflZw9u5GN03pSYlY6nmFXQ/LAwl7GgN
-	hL5sRrmHhBcE7jdCwzgpYIxLSW3PIBX3UBWJ3qqY1LX+Gi0CCGRahff2qXobxOBy
-	2rj89SPRpEBFLx0+TiHYW99NkFAd6m/RAmHB4q6iXdnTleOebCNw+9eSPcwf7OrF
-	nPHL+juIDTDSB5R2N1+ctINVW/YitoaqBt7izBeEazi6lCkj8uv3Q67t0YzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722925836; x=1723012236; bh=sZIx/ydOAk1rkEmcSUsIN24+RRa3
-	rhzORz7QJtjeFrk=; b=TBnFVl/jmAJAjdOcUgUsGYd0r6SoClAx24nE+aC4JLIK
-	B0LbCGM4gdlm9V5wVkM4wfkPmKAbh0tmIWHqo7h5Vnn2C/r8NgyKTL6I90dre6yR
-	g8B2RURQv1+W9M/aiTE7rFV2segikVGTbipw8kwHaNraQo4GZ9Hg5j8l2uucz+a9
-	Ff0HS1BbKKFaZv8TMXUM3/rnV1S0V9dQG3G3lDMo7YwzH7OO6vMkAZcoFnl+5NH6
-	hzgL13Hgo00iJiu1DDUM3TErafTMBeQtCFtw4k1+TaVODI6o2QdDJPsAuFX06LE2
-	emN12sXW94ZLkZK2Fl/k2y2f9LxUXmK2iwkGPjRrhQ==
-X-ME-Sender: <xms:C8OxZq4-BHhOv-HBe1Xaqxlh9P7nDK5a7K9l76vaog9QsanJfG6jOw>
-    <xme:C8OxZj4gfd7UBIxWe2f-WXAeqfsAQzUV8aVP3AEi_3WE4Dmd3_hSdNUQtymWyYmvu
-    vhx9bjBq_TypBMsZA>
-X-ME-Received: <xmr:C8OxZpfGxpoM5hW6LRw-stAdJlAYfPkAP_s3w1GR_Xf2X3LxmSspQ600iCrRJZuo0zzFa4pyULEsQNS-pIzhy0dCFhW-yW3N-uprKvPNsYvH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgdduuddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:C8OxZnKkJcfFOE4ihwVnNrdEunbremzd1zRT8GyJIYtCLM6_rW_KUg>
-    <xmx:C8OxZuI0IU7Qxx-EnIlbSwEXgSL7dCf0iDGIErmSViIaJ2twm1xepw>
-    <xmx:C8OxZows5VaDn1AUeOxM9xsA_s4HP0iG2P1e6gQlrcvfbY2n-Y44gg>
-    <xmx:C8OxZiJRR9FSzvbb9wyuaXzL4wwVR6lrUO-Qmb6S1CXY8IUX1XaIXQ>
-    <xmx:DMOxZjEicXKTOCrIj7n1eicI3AvAEC7crQh6h68MOvsQjiila_KYN_0D>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Aug 2024 02:30:34 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5e990dae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Aug 2024 06:30:31 +0000 (UTC)
-Date: Tue, 6 Aug 2024 08:30:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [GSoC][PATCH v7 0/5] t: port reftable/tree_test.c to the unit
- testing framework
-Message-ID: <ZrHDB1-yTv_gD1Mx@tanuki>
-References: <20240802121318.4583-1-chandrapratap3519@gmail.com>
- <20240804141105.4268-1-chandrapratap3519@gmail.com>
- <ZrCx0NWRbFOOReki@tanuki>
- <xmqqr0b33r16.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NkbZb8B0"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fc5549788eso2366905ad.1
+        for <git@vger.kernel.org>; Tue, 06 Aug 2024 00:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722927779; x=1723532579; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v8nFtJo0o0ppRq/iCp/fWI6vgrwxEa7vZ5AGr6cHNgc=;
+        b=NkbZb8B0AV4A1vvuZ9zCfUuH2ONNVizsC7kK/yBatvwMPTPAoglxATvPKqT2LvYqHO
+         64fOQFNYltEq6KLOcYZYTRtzlYKChscS/BUGMF1NxLgr26jCv+fLXXs1G5MmYtkZ5Loi
+         sxd8qGiAbt5exyWwIbYCvKw7rSQ4m55xBqbYdaBMzOG5QonLMc0tCgvlVh9iDpwh7fxl
+         mn9hvBF91O1c9AJUYZtvYhlNMaayHV2g6p4+vaobbqgVZOtcxe62MFige9djqI8/THsZ
+         To6UuUqFP0gXEUhYL8D/xC1+EmIo8BhZ6UMU6FWeQcDa5HhKtEFvVddFSPtqMI1kZbyD
+         Ia2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722927779; x=1723532579;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=v8nFtJo0o0ppRq/iCp/fWI6vgrwxEa7vZ5AGr6cHNgc=;
+        b=peQjPCq6o4r8Dt5HnZTHwBOKsgSs0RkUS6EdkzG4VTvKa+6+DI5I0ZbZ/MCa8sS+02
+         nezV+AGrLgfS1PSNBA2cvZk7Tv3t9CUkFfWeFGQ/sBbW7ocztGXKFhd/otIRQ4D5ORIG
+         LWSnhC4GKGbJWsF5Ci7w7vn9ZMc+kRdB3WUtuUC7SaHV4Sw7ty4YpdBDILNYf2zeFWm+
+         orDyhiuf4I3zDtjnL06uTlq+yygV516Y+/7XvYKZ5noIMN81Bb+WaaQ/52wVuWXH9Jc8
+         AgTLnZpHOcS9H/wvapBFbHPexDfxdTxll5+T6pbsg2Zfv6Y5E13qVSAVAgNHY27nMNXR
+         OW0w==
+X-Forwarded-Encrypted: i=1; AJvYcCVXbC2ujzwEFaTDEzPdqXCUKVjMnl5+nt477AHt0bTnLlc+nmoUd+5drTYdtyHC9bgB/bErgxcHPUuI01DaptIEJB6r
+X-Gm-Message-State: AOJu0YyUZi2GKTo5X66zMGvT0FkXnnKMv2cCS4WO4A09YBUhpEcfFJvh
+	VyBU+irplg2ne7cSpPc6Px8xf+FRlPMAsf5xkkcyRqdbBemgKaF+
+X-Google-Smtp-Source: AGHT+IE+G1PZp9Nba0CC2IzTSyz19ocZS3GKMbKpQ1Hsb4yRa+VqD5BZoiLCkQVvU0RFi5sRV8NXMA==
+X-Received: by 2002:a17:903:2447:b0:1fd:9420:1073 with SMTP id d9443c01a7336-1ff573cc3e7mr198124255ad.43.1722927778894;
+        Tue, 06 Aug 2024 00:02:58 -0700 (PDT)
+Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905f9b9sm79727175ad.130.2024.08.06.00.02.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Aug 2024 00:02:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yGPtpBonUzPCY0Qk"
-Content-Disposition: inline
-In-Reply-To: <xmqqr0b33r16.fsf@gitster.g>
-
-
---yGPtpBonUzPCY0Qk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 06 Aug 2024 12:32:54 +0530
+Message-Id: <D38MX909F2L8.1ABKXL7WOPRQT@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2024, #02; Mon, 5)
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <xmqqfrri1scr.fsf@gitster.g>
+In-Reply-To: <xmqqfrri1scr.fsf@gitster.g>
 
-On Mon, Aug 05, 2024 at 08:53:09AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > On Sun, Aug 04, 2024 at 07:36:44PM +0530, Chandra Pratap wrote:
-> >> The reftable library comes with self tests, which are exercised
-> >> as part of the usual end-to-end tests and are designed to
-> >> observe the end-user visible effects of Git commands. What it
-> >> exercises, however, is a better match for the unit-testing
-> >> framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
-> >> 2023-12-09), which is designed to observe how low level
-> >> implementation details, at the level of sequences of individual
-> >> function calls, behave.
-> >>=20
-> >> Hence, port reftable/tree_test.c to the unit testing framework and
-> >> improve upon the ported test. The first patch in the series is
-> >> preparatory cleanup, the second patch moves the test to the unit
-> >> testing framework, and the rest of the patches improve upon the
-> >> ported test.
-> >>=20
-> >> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> >> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> >> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> >
-> > Only a single change compared to v6, addressing the only feedback on
-> > that version. So this looks good to me, thanks!
->=20
-> FWIW, I didn't have other feedback not because I found the rest
-> perfect, but because I didn't read the series myself carefully,
-> hoping others are sharing the burden.
+Junio C Hamano <gitster@pobox.com> wrote:
+> * gt/unit-test-hashmap (2024-07-30) 1 commit
+> - t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
+>
+> An existing test of hashmap API has been rewritten with the
+> unit-test framework.
+>
+> What's the doneness of this one?
+> source: <20240730115101.188100-1-author@example.com>
 
-Oh, yes. I didn't mean to say that I relied on your feedback being
-addressed exclusively. I already reviewed v5/v6 of this patch series and
-found it to be good, and given that there was only a single change
-proposed by you that I'm happy with it translates into me being in favor
-of v7, as well.
+I sent a new version of this at:
+https://lore.kernel.org/git/20240803133517.73308-2-shyamthakkar001@gmail.co=
+m/
+which addresses Christian's comments on the previous version.
 
-Patrick
-
---yGPtpBonUzPCY0Qk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaxwwYACgkQVbJhu7ck
-PpRjWw//TeFlR5rkG/ooR47zz2sdGTRAEIxzIn/ep/IgWiU4viuc8bznYagNcP39
-o9nBiZYKD6xvKkH2aXJjv4QWJCtZhPywt0A246/KeMCR9k/iOslhqef0X8oHYj31
-GfXFafy79FgPr+XxIAiIvrPkzokOgfzW4RDACZMZfo8rcHnUUnTR+7SWOJobqYrs
-qSNwBdnhmsfPDBRmdFFCnjh+G9BWqMBOFl27d12EMPAZCat7illRlR2KhvPaTDTs
-kReUDulKwjOgwueubYEytnw9o8mZZ/i+XKDBOMRbCn+Q6cSt0ipOvYwaOyG4yL/u
-WzMJCXnM3A3QIO5eswzAsnRNTh4uBChMStQbn4dlmqFNsf3Z000ISbKqMoOVKonP
-+Gpz9msvXrSWi/tqb1weY8yIBmAbsFZqSChO4EwgFtgN0cunhjd/UbGYhclMEv5t
-vQC9TlCD+dEtX5rRY1mUwiDJPYs17VlH+9Ed9+IefDTy6rF4jvcX1F3FFPl8bQsH
-IW2GW7uEUwBLPBmIx7HreGh1Tjxo14ppQOdY4kULkGLduLApVeVXllo38TyQhSLN
-+NKiD3cGU41sacw5QNR334Dusd7dH23TcfB8sbcsL38p4NHijA5OFnkI9GJIM5gt
-iZ7jIKbHU2P9WQXYsJX22JYxPnhej40CdvlBsaWQpXC0WY1MWMA=
-=h08/
------END PGP SIGNATURE-----
-
---yGPtpBonUzPCY0Qk--
+Thanks.
