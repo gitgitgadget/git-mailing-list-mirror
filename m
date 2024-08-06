@@ -1,126 +1,138 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FDE63D5
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 00:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CDC6FBF
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 00:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722904563; cv=none; b=bjTbtigcGPveHB/cUOHmp6Y15X3z8eMXSgHF2DeBCxf9wpLGtoPdaDc3y7kWyUXzdNitigPukEBvPYg9xOey6CkbxSyQQI+eSdBZU2kqZ9py6qklh/p+4B/wsp4p8ANwuvn1p4tfxJ70JEoRJ/EbO0etZXi9T6woC5SwKtUhjwg=
+	t=1722904918; cv=none; b=rB0IVh0kMSRC949ADBeIZw0fJ/U1sCSp4XIgiA0AhpAGjbJiE5yH2YSAl5bXKKBswYjm925aKSuSYNvrdHZGhrAC5HkMv192SEZHUHdxJ2j7hnf2mra7c2tTSjIICz3+QhANEeBZB6lVCx+nBzIkuTCNEHVKfxr3JyECfguQzD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722904563; c=relaxed/simple;
-	bh=M9KcmDY+UAXiWqoa1XGndAnqA65uw/fofXprqgMuT5M=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSdy2cpyQfpraYPWAUA7Feo65cAzj2DlV+8SfuBXB6mHtk7bNsbPx9DmTPqwObRt5XIxXCdUtwqmTQVxiljrpR8uhhZkY1OguF/TA3yPlZQC6idSHVeAGSqEwFMwacWNMavQOlYIhu/y1rKY/sRgSntBukwUpajxZsGuktQS5r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LAFcVpn4; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1722904918; c=relaxed/simple;
+	bh=S1tGwrbeE6Kn2g8YOxES9i4uduzj/iZfP1E1rA6GlpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DoixDGqrLnEFm49OkWk8YDGjrI2tdm5w3UR6/R8MZXHgqSKkNpqtSI1I0szvMi9YuXFw3HcyB8eph2OnAFrpj7UVhH3u4e3TYur8Tg1HLdxEogKo2ZsS3TCgd10UArLr+PprM8fyvprvkrZcfxAg097R8ujD/K94MGKM4LZpg/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIFUmsFz; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LAFcVpn4"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 972EF39FFD;
-	Mon,  5 Aug 2024 20:35:54 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=M9KcmDY+UAXiWqoa1XGndAnqA
-	65uw/fofXprqgMuT5M=; b=LAFcVpn4raChPcihemlIx9Itpmlm4ZNiJ4Gi6viWd
-	SnWAoqzgo8JBvQHxrKPK32H8SWw0/JtvuScb8M1tWfhKfT7tR5x7/Hhgho5tQ4De
-	n3wyybTl/eVk4oseu948heKNo8nhLeGq4gZDC8opzEUOO+5VqMLUOMIL8RSC+pa0
-	/Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EAE239FFC;
-	Mon,  5 Aug 2024 20:35:54 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F10CA39FFB;
-	Mon,  5 Aug 2024 20:35:53 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v1 4/4] miscellaneous: avoid "too many arguments"
-Date: Mon,  5 Aug 2024 17:35:39 -0700
-Message-ID: <20240806003539.3292562-5-gitster@pobox.com>
-X-Mailer: git-send-email 2.46.0-235-g968ce1ce0e
-In-Reply-To: <20240806003539.3292562-1-gitster@pobox.com>
-References: <20240806003539.3292562-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIFUmsFz"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1fdd6d81812so307505ad.1
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 17:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722904916; x=1723509716; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hHC4GDxVxN0xkKS8nSwW+RwgyJviLjAEVk6OswMWsd4=;
+        b=lIFUmsFz6glbw2xd89O3T6C6Yn58TiX4gCkybKqsTyn/VEWGdPOXy90i0KeR4ktp8l
+         /IlkeM/RmNMNq95WS9F1zfDg2urlARlrWQRm2GQtLSTa44MCV0wzwHZNQ8Rj6V9wx59y
+         6tYMkWYnfpGz1aQZ9pru7eUCEEL7yZNiVIMJfmHQ7qjAPURxyOb6OTUzFxyT9NR5JErB
+         eIUIbQ5uVar6D3aEcwi+yNNHKHzDcuBwISH1UFDZE2td7XjY54InJftDwTpT9dYKcPib
+         NZSHZ5H/8h2fbwe1WpkUs1rcSdhBR0odu6v5NznEvAgT1cC5xe3Tmq3CnlAgxZuKWIPp
+         GRTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722904916; x=1723509716;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hHC4GDxVxN0xkKS8nSwW+RwgyJviLjAEVk6OswMWsd4=;
+        b=q85zNgznl9myqarWYVhSK2Ye9iLqaVVJrU4IIsbSKcrNC03XAgabzpsE6Z9N7oxPbb
+         ly/5lMafVtSZOSSHolVJghUtdTJRFpgIhpPLLcwHe54+6+uevpUuySsU85rckF4HIt0V
+         obJjpIJFB0nw9ULZXutXsQVdhbx3ZOrH3HeM8y202Exv2J/hXpJ+61QSZnvG1iZoTuOR
+         t1Tmjn/vLb2FMWDyNwdR3EfJIMJidb6szR2E5dt+KwUMAkZERdDfASdH2o6kLHbmq/i1
+         yLtGhhNLS2Uv3c99QPGpYBePOrNxJlUR8WwmyjS6ksdNOMsFuCZ6QqJs2chofdmB6csh
+         KuuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVl3OHRISn+8SrvqHg6sNd3lygXa5Ei6fB2OJ0g5WXMWmqJUtIepx+Cs12+ymwPyyPqmOFtK2zBMecFM3tgMoXzz9xy
+X-Gm-Message-State: AOJu0Yy8UX7Wxchugh5wONGYvIKMU/iNZ1zreJKRWcOhFOsMFDZ/EhVd
+	z45RUFyOhjSaTJVSge5liSWSLf1d/KI9dQ8NtbMCFF61Y0Po4h6P
+X-Google-Smtp-Source: AGHT+IEnARwGP8t4JS9FJ5uEoFChm1wupiSTj5SlY204sYrbrNYihu6+4uuu+4Q2a0qgU0GHPwhUmA==
+X-Received: by 2002:a17:902:d4c4:b0:1fc:3daa:52 with SMTP id d9443c01a7336-1ff5722d9c5mr188947365ad.11.1722904916108;
+        Mon, 05 Aug 2024 17:41:56 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff592ac8f4sm74688335ad.274.2024.08.05.17.41.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Aug 2024 17:41:55 -0700 (PDT)
+Date: Tue, 6 Aug 2024 08:42:23 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [GSoC][PATCH v14 09/11] builtin/fsck: add `git-refs verify`
+ child process
+Message-ID: <ZrFxb1FNRCzu-NuW@ArchLinux>
+References: <ZqulmWVBaeyP4blf@ArchLinux>
+ <ZqumdJz3-0mqh6Rc@ArchLinux>
+ <ZrDMdEJR6DV5HyLD@tanuki>
+ <ZrDtVJYoJJZDesB4@ArchLinux>
+ <xmqq4j7y3kmt.fsf@gitster.g>
+ <ZrEbllB6WjLfWqNZ@ArchLinux>
+ <xmqqsevi220s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- D6BC83F0-538B-11EF-B40C-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsevi220s.fsf@gitster.g>
 
-Imagine seeing your command failing with "too many arguments" when
-you run "git cmd foo bar baz".  Can you tell it will work if you
-said "git cmd foo bar"?  Or is that trimming your command line too
-much?  Too little?
+On Mon, Aug 05, 2024 at 12:38:43PM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > I agree with you that it would be strange if we do not expose any
+> > interfaces for user who are adventurous. Actually we may simply add an
+> > option "--refs-experimental" or simply "--refs" to allow the users check
+> > ref consistency by using "git-fsck(1)".
+> >
+> > I guess the concern that Patrick cares about is that we ONLY make refs
+> > optional here, but do not provide options for other checks. It will be
+> > strange from this perspective.
+> 
+> I do not care about strange all that much.  I however care about new
+> complexity in the code, complexity that is not taken advantage of
+> and is not exercised.  
+> 
+> You said
+> 
+> > From the development of this series, we can know the main problem is
+> > that fsck error message is highly coupled with the object checks.
+> 
+> and even if it is true and we have problem in fsck code paths, we
+> cannot see if _your_ solution to that problem is a good one without
+> having the code that exercises your additional code.
+> 
+> But if "git refs verify" does exercise all the new code paths (and
+> the refactored code that existed before this series, sitting now in
+> different places), then I do not have to worry about it.  My question
+> was primarily to extract "even though we do not wire this up to fsck,
+> we already have another code paths that uses all these changes" out
+> of you.
+> 
 
-Instead, if the command reports "unknown argument: 'bar'", you'd know
-that "bar" and everything after it is unwanted.
+I understand what you mean here. I can say that "git refs verify" only
+exercises a part of the new code paths. The main reason why this series
+changes a lot of "fsck.[ch]" is that I want to expose the
+"fsck_report_ref" interface to report refs-related errors. So I guess
+this part should be covered.
 
-Let's make it so for a few remaining commands.
+At the current implementation, we change the "fsck.[ch]" for the
+following three things:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/prune-packed.c | 6 +++---
- builtin/receive-pack.c | 3 ++-
- builtin/tag.c          | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+1. Refactor "report" to use "fsck_vreport"
+2. Create "fsck_report_ref" for refs check.
+3. Do some simple renames to distinguish between refs and objects.
 
-diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
-index ca3578e158..46989e12f9 100644
---- a/builtin/prune-packed.c
-+++ b/builtin/prune-packed.c
-@@ -23,9 +23,9 @@ int cmd_prune_packed(int argc, const char **argv, const=
- char *prefix)
- 			     prune_packed_usage, 0);
-=20
- 	if (argc > 0)
--		usage_msg_opt(_("too many arguments"),
--			      prune_packed_usage,
--			      prune_packed_options);
-+		usage_msg_optf(_("unknown argument: '%s'"),
-+			       prune_packed_usage, prune_packed_options,
-+			       argv[0]);
-=20
- 	prune_packed_objects(opts);
- 	return 0;
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 339524ae2a..e49f4ea4dd 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2503,7 +2503,8 @@ int cmd_receive_pack(int argc, const char **argv, c=
-onst char *prefix)
- 	argc =3D parse_options(argc, argv, prefix, options, receive_pack_usage,=
- 0);
-=20
- 	if (argc > 1)
--		usage_msg_opt(_("too many arguments"), receive_pack_usage, options);
-+		usage_msg_optf(_("unknown argument: '%s'"),
-+			       receive_pack_usage, options, argv[0]);
- 	if (argc =3D=3D 0)
- 		usage_msg_opt(_("you must specify a directory"), receive_pack_usage, o=
-ptions);
-=20
-diff --git a/builtin/tag.c b/builtin/tag.c
-index a1fb218512..274bd0e6ce 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -641,7 +641,7 @@ int cmd_tag(int argc, const char **argv, const char *=
-prefix)
-=20
- 	object_ref =3D argc =3D=3D 2 ? argv[1] : "HEAD";
- 	if (argc > 2)
--		die(_("too many arguments"));
-+		die(_("unknown argument: '%s'"), argv[2]);
-=20
- 	if (repo_get_oid(the_repository, object_ref, &object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
---=20
-2.46.0-235-g968ce1ce0e
+We do cover the second case in "git refs verify". But sadly, the first
+case and third case are covered in "git-fsck(1)". So, "git refs verify"
+does not exercise the refactored code.
 
+However, I am a little confused. Actually, in the implementation, refs
+check and objects check are independent.
+
+I think we should wire up "git refs verify" to "git-fsck(1)". Because we
+have no way to exercise the above case 1 and 3. If we do not, we will
+bring a lot of complexity here.
+
+> Thanks.
