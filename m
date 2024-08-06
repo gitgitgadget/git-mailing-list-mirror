@@ -1,97 +1,88 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0B7383A5
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 02:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED19A5F
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 02:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722910933; cv=none; b=bLMMRWUT9dxdw6bpNbQS5ONVFRNX0j03xuk8GoasjbgVagfyl+9ksOvC8y/BcaqaoWQdKdUTMer5Y8vRjeb/PE/vPtOeDWS3GMHpSGvWr2NEoO+5AsWd4jsGHiV3KWnZLPahUu1ToHEgIrnsqV7ueBZIa98zUVBZdk6N/7ZCD40=
+	t=1722911511; cv=none; b=Hsp/9wdTv+8f7DxQwLXOlrrSt9jziQ7DDvB9HFnY7kUMkWgqi/cVX7LF9Fa15IEK4VbsWdc7B5DpBD6o1PqWvuXNMoEAuABc1GwM5b8sBEx5bB645mziLv6I6qniJxsQt/kuK3or1CDuL6kCqO+il0bUP3umljGo0KroCTTV8z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722910933; c=relaxed/simple;
-	bh=MNpy+ypChagyomLRsdi+npJq3Ep7Bjo8GZI2KUyH9nU=;
+	s=arc-20240116; t=1722911511; c=relaxed/simple;
+	bh=mRr229+VVmC9dX0zE5Fulcli8TBFbbB7Yc0yJpxzP7Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UiQ7w84FxNRUYPbIAETVOctPJ0AHv216W+0f8+EPhW6TaoRlHrdC4i5XtxZXcvXlbxdSw2E+gmiafcWCPdgiQaxV51GoOKC8QRvfHhitoQMc0bGqPCkA9PR4bebfCGDlBhNb3rs6dugBVLlEt1BBjrb1/sk0cIguxnPsOiTHrzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
+	 To:Cc:Content-Type; b=mYsXz+VdfR8OzcHxGII+GYTZB5xBIFmb4blANBqDgtypQ5KekaVkztBIUj+WZe+XpZGPyDLdspucG+F903VL4L/CPotBhsu68WsbAgTDHnpgn6aOWeUVen2RJBZTwh9nlLEuFNI1l7PoyuR0vSJfrk6ccHVzKy1VQFpyHbDtb+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6b797a2384cso1237366d6.0
-        for <git@vger.kernel.org>; Mon, 05 Aug 2024 19:22:11 -0700 (PDT)
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7093705c708so297595a34.1
+        for <git@vger.kernel.org>; Mon, 05 Aug 2024 19:31:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722910930; x=1723515730;
+        d=1e100.net; s=20230601; t=1722911509; x=1723516309;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ncm/sdYszURaqAVMzwhenE9X3OpgwlmxRavUyl+v29c=;
-        b=f1SjQ5JTm5FtJ3XoRjP1CczmRke2zbUVNHr24AfN8m4MUoGonG/xxr7b6aW4Auj87S
-         cWDi71YzA85oAQQMjrQg15kdNORKT3F8Nym5Xagr3nlpOA2htiT9jwAq++m8eFLqvvtl
-         DN7H3yCLdX1sdYdrnNO5MPb7/6c8okK4GskikBBORY4ok3jD9Px3wCL8w0kr2Xfe1bDV
-         uTrsg5kfRk06MjMHAmYXLkFTnhDGsQ2Z3ZDUJD93v1S3HW36ZzyLIePPfsp2zy5Q+3NR
-         o+bP1ubYf8bz3/NElrN9lWqCp9A20tEeANM7g8CY0YAbv1HFOXObc3SB7B0QJA0DT/RV
-         jPOA==
-X-Gm-Message-State: AOJu0YwBvp8gx5Gmlu9RES82vP70jukgAP4L1PHPuE8fEkoKeLqCG+1W
-	ZKcsiyqQK9pbjcNyKTWm/cdtU3wpBxvwOQP5YDo3YYmPGBmNO3zkEfHTEXzGFQaiEbk/pgUlD+A
-	EzIj4DiVIqqKTJa/2+8bOfhJIu9k=
-X-Google-Smtp-Source: AGHT+IEHYqX+c1i3kakA+d/uRTMta6cmxFhXonaQ/xr36/hNuu2VQ/8PySlibVIvqPtvssa3XVXtx9ET2nFTgBoD+Vo=
-X-Received: by 2002:a05:6214:c4d:b0:6bb:9b66:f262 with SMTP id
- 6a1803df08f44-6bb9b66f6f1mr178107266d6.41.1722910930571; Mon, 05 Aug 2024
- 19:22:10 -0700 (PDT)
+        bh=swiDNaQAJDE47X4RKzcYGHJO4weLEPK4OuM8kXY7sZg=;
+        b=vqFCIgFaP2TTFiyn6xiwA0UaG/nwfx6aPjIYQFrTA7jqBn3JzJGpTDaKv4aHVbHrkI
+         bJr5EITQJ7unZeNFRekUBz5mEEFoWBcWXBdGm9EfdSP6JNQPQLrolP3aff4xidfLmx64
+         VE6YYkf3hAJiwxucMO9hUyqRxaMPd4UNwi7U6oEhYQohwKNiPA9elrH9W0pfpn/sp/Yj
+         pHXW1UT0li+6GUP3NTpmypwvMbEIT3Iq2/LWMRy3qi9Sq9vzzUcyjgs8UVIXWaaZ6eAi
+         68lPE6g9iEOUGX+5czKwg5O9Ttqcl/9QgoWFnYbx69C3JSLUbli9E1SiuzMXO+5kk2VJ
+         aXUw==
+X-Gm-Message-State: AOJu0YyZGwKs8R4Mzshoa/xhiyOTouA3Xi7TmMvjrj4GglpyAnlrgGUU
+	Q9lV3vis2BFKNwqAZBubahy0X6b5ux4YnAVgXH6nY7Io62Oxi7RQdzWcBucudEjOyc0MToMkP60
+	mq8qPM2JkISBvywn0HHmtv8WJ+I5gsA==
+X-Google-Smtp-Source: AGHT+IGhhuqzTmkAcKA3TlnSZPnft6CPiV4W5q0NwKOMzWN204JlwM34ULYTFd/MPJGMPT52SwD1C0EYfB+QrucRb98=
+X-Received: by 2002:a05:6358:9147:b0:1a6:84aa:13f with SMTP id
+ e5c5f4694b2df-1af3baa129dmr1622136655d.24.1722911508638; Mon, 05 Aug 2024
+ 19:31:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqttfyzd01.fsf@gitster.g>
-In-Reply-To: <xmqqttfyzd01.fsf@gitster.g>
+References: <20240806003539.3292562-1-gitster@pobox.com> <20240806003539.3292562-5-gitster@pobox.com>
+In-Reply-To: <20240806003539.3292562-5-gitster@pobox.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 5 Aug 2024 22:21:59 -0400
-Message-ID: <CAPig+cRO=BqR1WFcni6CSxqyqvt1Ksmsyr0odmqTDKX4JdbDaA@mail.gmail.com>
-Subject: Re: [PATCH] t3206: test_when_finished before dirtying operations, not after
+Date: Mon, 5 Aug 2024 22:31:37 -0400
+Message-ID: <CAPig+cQ563EVtWEYxZDaQ4awrOcemc4a9a6OSmGN2wVFeMidwA@mail.gmail.com>
+Subject: Re: [PATCH v1 4/4] miscellaneous: avoid "too many arguments"
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 5, 2024 at 8:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+On Mon, Aug 5, 2024 at 8:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
-> Many existing tests in this script perform operation(s) and then use
-> test_when_finished to define how to undo the effect of the
-> operation(s).
+> Imagine seeing your command failing with "too many arguments" when
+> you run "git cmd foo bar baz".  Can you tell it will work if you
+> said "git cmd foo bar"?  Or is that trimming your command line too
+> much?  Too little?
 >
-> This is backwards.  When your operation(s) fail before you manage to
-> successfully call test_when_finished (remember, that these commands
-> must be all &&-chained, so a failure of an earlier operation mean
-> your test_when_finished may not be executed at all).  You must
-> establish how to clean up your mess with test_when_finished before
-> you create the mess to be cleaned up.
+> Instead, if the command reports "unknown argument: 'bar'", you'd know
+> that "bar" and everything after it is unwanted.
+>
+> Let's make it so for a few remaining commands.
 >
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  t/t3206-range-diff.sh | 52 +++++++++++++++++++++----------------------
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> @@ -533,9 +533,9 @@ test_expect_success 'dual-coloring' '
->  for prev in topic main..topic
->  do
->         test_expect_success "format-patch --range-diff=3D$prev" '
-> +               test_when_finished "rm 000?-*" &&
->                 git format-patch --cover-letter --range-diff=3D$prev \
->                         main..unmodified >actual &&
-> -               test_when_finished "rm 000?-*" &&
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> @@ -2503,7 +2503,8 @@ int cmd_receive_pack(int argc, const char **argv, c=
+onst char *prefix)
+>         if (argc > 1)
+> -               usage_msg_opt(_("too many arguments"), receive_pack_usage=
+, options);
+> +               usage_msg_optf(_("unknown argument: '%s'"),
+> +                              receive_pack_usage, options, argv[0]);
 
-Do we care whether the action invoked by `test_when_finished` itself
-succeeds or fails? In particular, should this be using `rm -f` rather
-than `rm`?
+Is this supposed to be referencing `argv[1]` rather than `argv[0]`...
 
-    test_when_finished "rm -f 000?-*" &&
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> @@ -641,7 +641,7 @@ int cmd_tag(int argc, const char **argv, const char *=
+prefix)
+>         if (argc > 2)
+> -               die(_("too many arguments"));
+> +               die(_("unknown argument: '%s'"), argv[2]);
 
-> @@ -606,9 +606,9 @@ test_expect_success 'basic with modified format.prett=
-y without "commit "' '
->  test_expect_success 'range-diff compares notes by default' '
-> +       test_when_finished git notes remove topic unmodified &&
->         git notes add -m "topic note" topic &&
->         git notes add -m "unmodified note" unmodified &&
-> -       test_when_finished git notes remove topic unmodified &&
-
-Similarly, should this be using `|| :`?
-
-    test_when_finished "git notes remove topic unmodified || :" &&
+...similar to how this references `argv[2]` when the condition is `argc > 2=
+`?
