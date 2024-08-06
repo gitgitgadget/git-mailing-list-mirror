@@ -1,77 +1,77 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAB01BE23B
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 09:00:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01A91BE23B
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 09:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722934817; cv=none; b=FhMgA6HuhsDp7jrbPesf996xV0K+p2X16Gb+GLDqd5XbcnKMe+1cWjdpg1kTkfeNhlWQmGtB+XGpE+w0JvRjh5ZosG+CRFicnffggPu+vBuQBXVtl+NCYCByAaRrbL7AGXTmsaflYqbUOFjuWin0tejy04A26xNkYJpefyw7XnY=
+	t=1722934821; cv=none; b=cdoPFsQSV7HPA5okaop9m1kTGQ6vD86gf0brX8V0kTpnEpadECuSFWoRd/3TVtaolJU7Bq02iQGDntl4m+DgCXP1jvPY0J3I6LgkdauLoT6Da9Aud8NrJnlxEx91HbWjGH4jb3DLRDWdTem00MtTk0qrDbQ8FCVeLLqtDHAx/LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722934817; c=relaxed/simple;
-	bh=/CuDm0fMBKESj2WVUy7D76pFY++WmdGLl8waC+8ZWu8=;
+	s=arc-20240116; t=1722934821; c=relaxed/simple;
+	bh=RQRXrqpERnAif0kCcipd8LxXZj1eE1n1uzNB7UK5Eq8=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UTcIqzuQ2RSnT1g+UCXrbheKMxX1KlRJTPlwW0azH8JfZbJI5J5zeE2oW/zJpsJQsjDq3/zQdNtqxLC2S8MoIZpKtAz45YlY8uCTQ2xowfjGiXC83XPTTbv5+8e9Xwnr2lgsVdN7ex2f9FW8HBOP8lK/n9ns3Fjkkmb8aB6c67A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SOJyKR+L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xq7VgQYw; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=E4pQFhYyUvSRh5Uro9E96Tsw0U/puwjOmPUp7IwbtNaBkJ7rCAlSq+QZQ1z5ehW/kIzbVxQq9NxmDMUUqyKstToGTvtlPX+Xy86yNodx2QU06GTOLj3afC+x7wzikwuB3P1iRKbw7NM9qq1fKVeJsQUc4+jHUQ7RObOmosBRpD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ae0t0ZIo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ml466H41; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SOJyKR+L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xq7VgQYw"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 27609138FCEC
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 05:00:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ae0t0ZIo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ml466H41"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id E71141151B2B
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 05:00:18 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Tue, 06 Aug 2024 05:00:15 -0400
+  by compute7.internal (MEProxy); Tue, 06 Aug 2024 05:00:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722934815; x=1723021215; bh=Jomw26Nr94
-	dVQjv0iuGByUVNSGpCfoQLGevmSXxHQkQ=; b=SOJyKR+Ltje9CmydTY2hgymKez
-	/taSaFCAbjXRer06SRGhwxalCFF14OIBPShBWLeszYJtR17Pdwf9O5WhHqiVwV5q
-	97p4KYn69le1KYNA5LBHscQoeq3tj5EYVv5G4/kWRedLks6AMdvsH/GelWBMCbyF
-	fFCfrqcD5KdFeDzNzOXuTATKmu6/L5f5ipkkZV9OV5ybsu0KTgvbc5gUog30by+o
-	60jvTh7ih03652q1zr38W5i3tuPQm8YOQf2WY18KOgcL1T9e3OtQwmxIikz9G4m8
-	BGEDHDov3PVXu64zp9bTXfcg833tqEiSIPsTb3TpUmHukY12cH5AMFpvAPYw==
+	:subject:to:to; s=fm3; t=1722934818; x=1723021218; bh=/PJWPFn/g6
+	nEx0KDyCPtpwNhTmFlt4rK976wqaN6fd4=; b=Ae0t0ZIo4UKcye2mWsJYDY2SwU
+	sZgANoZ98+AoOo5QTQ1+Vg9sS2J7n3KmyyKxKJwlezVQsTAU3xJdQ+SHYeOjTYzq
+	E1QsnYeVpuhS+HlZEDjadUSzwkK0rpwzM9tm9ImIPXKgGDfSjhWTpqEhwXrkH2GA
+	wAOY37OvK444brBjeaND0vX+NvpU3qwsvjb5AxDJeYCHI4j8Oq6qsyoFMSUZPfUu
+	VRI0j3Bj1NMTT/7Ld+CbEK/M9hrS/ddZzkSgPqBB7Ar1ibAAVOTV5kvrB7By/cnr
+	DoKZ3URxECOjCUFCPM6SQf47jNrx1JhzZlTWMv3Lg0b6KRbgCVCg8ewEeWIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722934815; x=1723021215; bh=Jomw26Nr94dVQjv0iuGByUVNSGpC
-	foQLGevmSXxHQkQ=; b=Xq7VgQYw4wt7l8e1slk3hiBZNa9TysTfRqdh/hDnPLrQ
-	8313jIwkuUZ+KUk2hhoHI6eeJY+8MLsTj6tHhPFhUeU838SHradgmzjRoktAmPAl
-	BqFJqhF9jMHtbfAR/6/IQ6QbjOG7kOwEB4sA6lmR2lIuK0H4bBNdw0Ayg9NNPwIT
-	hKIVQj7lqlzBmKrFqwWsjpSMn8V8aszPqKXmpCa8Gqbo3njcSkN4QBHxr5rTKP0G
-	a5tBQs+Zuy2b0pPmtdawuFyZ1t96U2wi9vWldM8XCmGd77Zxy0MH/o2pjnSyHDpo
-	S6J5ybUdhpPIy/mxKe+Y5COcdAdDenA9+/L8LrxUOQ==
-X-ME-Sender: <xms:HuaxZqAAp49YJs3ruIYm-h42eRFi1y9zeNMdjoIZTiCunPf_kgkhNg>
-    <xme:HuaxZkggIdCHZUMNqisYCugnMT8doGDHsvVTueARuJ8HlhX8Qnb6_rXHyLu8A7Jci
-    jGlb3m9ALx3AcpzHw>
-X-ME-Received: <xmr:HuaxZtnG24rvaPcbhbtIL6DZteIrC6bPlySrwYITX66ltZ9P10rmtmRAAkhRsO52Yhv8M6P809nFv9VKA3VSDeI0YRGscbMQWhmtlwNKHaHE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgddtkecutefuodetggdotefrodftvf
+	fm3; t=1722934818; x=1723021218; bh=/PJWPFn/g6nEx0KDyCPtpwNhTmFl
+	t4rK976wqaN6fd4=; b=ml466H41Iiye1w6dZwnHQC+3Vcky0xXeOsE5wd/vP+tO
+	T8pu9To8kONrEWvATKIQDtp7cP5r8bY8ehNqXiMKsfjQugxREvLlmqC8n32ddM5O
+	Bs/8dfW5qE//tl45qM6TLuXgxOS5yRuUoIwCgFi6YxMN73+JetImfOecL5Tgu+fy
+	9fxZ7QaY8Yzh/vcTxynt5c3IjCXzZszOQaQokc21GQuLVJn51ChbhZbMAqhjjpdo
+	DNMhhLaaJ9xoHA/h81fy633JMOrJj2bYbWfRmNJiH3tIu3CTw2RpeHW7OoCETThM
+	0Kj9BoOwsNF2Bk4QC5b6kmyW8/VXyGBjWouGsSTyAg==
+X-ME-Sender: <xms:IuaxZvv71W_uBGtrTyeb202I8H3YS005CaLyHBw7yIw3MHExZd2GuQ>
+    <xme:IuaxZgfo2Ruwm4hmw1qRoYXEjUIeztRrVkocCaVT3i4di_yIIdMbN12FI7JLeWOxS
+    jm_MTprsBMSr1UBng>
+X-ME-Received: <xmr:IuaxZixtEpKOsDcxgpHi7Xetc1DNHdRX1cf31TnsR4fP1MJmJ9WLeVz6BqAKb0fGTqbc10D8_l3KAA-fM3nnY08NSPBrD14YyoBJmkR-aww8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgddtlecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
     ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:H-axZowMKlcziU_mYMpI_Ig69oUuOozBUWeNthHWd1oQ_TXjT-Dkfw>
-    <xmx:H-axZvTjgBmvP1wN5LDoAroiPYteazOaMceaEXLlc5WvyfOrB9s0_Q>
-    <xmx:H-axZjbjhOYV3oCudCRmyL_IBEkRTS28gTdR1DxrgC8TbdfyKadZUQ>
-    <xmx:H-axZoTTHEc_zbOfAjrkRX36NpNAM8XJVm_DIoNOOHv3KmSUJ77C4g>
-    <xmx:H-axZmKdyTkGyU3ouBi-CXa4G2B61ivFdkUw2PhrnRshEoXHZ-GmljD->
+X-ME-Proxy: <xmx:IuaxZuNvYdFf1RA2lJrz_ZWtsXWh_CVOBfGcbqBSV4iGyUH-pMoYnQ>
+    <xmx:IuaxZv9ZiuzJcuYOKvvpt-A48vLV1JIMuJu39UkrOjWq7X27cpBfYA>
+    <xmx:IuaxZuUHvp1kr6uWI265Urt01lCrOJWYxj1Xfhwy8dYsftxDTiRikw>
+    <xmx:IuaxZgesujQBnpdsqFOfpa-CeyUinauHPNDj75Gy47iptGTA5RwxRA>
+    <xmx:IuaxZpl0M8ZWfpFfwDqf50g6MkUyyClNsMQ5zbx52WuQl-SatILrrimH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 Aug 2024 05:00:14 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 Aug 2024 05:00:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a4930ed7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f7cb2d13 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 Aug 2024 09:00:11 +0000 (UTC)
-Date: Tue, 6 Aug 2024 11:00:11 +0200
+	Tue, 6 Aug 2024 09:00:16 +0000 (UTC)
+Date: Tue, 6 Aug 2024 11:00:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/22] config: fix leaking comment character config
-Message-ID: <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
+Subject: [PATCH 09/22] builtin/rebase: fix leaking `commit.gpgsign` value
+Message-ID: <05290fc1f14cae8229c42f2d0aafe6619c069e3a.1722933642.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,99 +80,127 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MREhpF7zN7RASWst"
+	protocol="application/pgp-signature"; boundary="w/uZWw/nKb4Q+/VR"
 Content-Disposition: inline
 In-Reply-To: <cover.1722933642.git.ps@pks.im>
 
 
---MREhpF7zN7RASWst
+--w/uZWw/nKb4Q+/VR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When the comment line character has been specified multiple times in the
-configuration, then `git_default_core_config()` will cause a memory leak
-because it unconditionally copies the string into `comment_line_str`
-without free'ing the previous value. In fact, it can't easily free the
-value in the first place because it may contain a string constant.
+In `get_replay_opts()`, we unconditionally override the `gpg_sign` field
+that already got populated by `sequencer_init_config()` in case the user
+has "commit.gpgsign" set in their config. It is kind of dubious whether
+this is the correct thing to do or a bug. What is clear though is that
+this creates a memory leak.
 
-Refactor the code so that we initialize the value with another array.
-This allows us to free the value in case the string is not pointing to
-that constant array anymore.
-
-This memory leak is being hit in t3404. As there are still other memory
-leaks in that file we cannot yet mark it as passing with leak checking
-enabled.
+Let's mark this assignment with a TODO comment to figure out whether
+this needs to be fixed or not. Meanwhile though, let's plug the memory
+leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- config.c      | 2 ++
- environment.c | 3 ++-
- environment.h | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ builtin/rebase.c              | 8 ++++++++
+ sequencer.c                   | 1 +
+ t/t3404-rebase-interactive.sh | 1 +
+ t/t3435-rebase-gpg-sign.sh    | 1 +
+ t/t7030-verify-tag.sh         | 1 +
+ 5 files changed, 12 insertions(+)
 
-diff --git a/config.c b/config.c
-index 6421894614..63e0211c7d 100644
---- a/config.c
-+++ b/config.c
-@@ -1596,6 +1596,8 @@ static int git_default_core_config(const char *var, c=
-onst char *value,
- 		else if (value[0]) {
- 			if (strchr(value, '\n'))
- 				return error(_("%s cannot contain newline"), var);
-+			if (comment_line_str !=3D comment_line_str_default)
-+				free((char *) comment_line_str);
- 			comment_line_str =3D xstrdup(value);
- 			auto_comment_line_char =3D 0;
- 		} else
-diff --git a/environment.c b/environment.c
-index 5cea2c9f54..8297c6e37b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -113,7 +113,8 @@ int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
-  * The character that begins a commented line in user-editable file
-  * that is subject to stripspace.
-  */
--const char *comment_line_str =3D "#";
-+const char comment_line_str_default[] =3D "#";
-+const char *comment_line_str =3D comment_line_str_default;
- int auto_comment_line_char;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index e3a8e74cfc..f65316a023 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -186,7 +186,15 @@ static struct replay_opts get_replay_opts(const struct=
+ rebase_options *opts)
+ 	replay.committer_date_is_author_date =3D
+ 					opts->committer_date_is_author_date;
+ 	replay.ignore_date =3D opts->ignore_date;
++
++	/*
++	 * TODO: Is it really intentional that we unconditionally override
++	 * `replay.gpg_sign` even if it has already been initialized via the
++	 * configuration?
++	 */
++	free(replay.gpg_sign);
+ 	replay.gpg_sign =3D xstrdup_or_null(opts->gpg_sign_opt);
++
+ 	replay.reflog_action =3D xstrdup(opts->reflog_action);
+ 	if (opts->strategy)
+ 		replay.strategy =3D xstrdup_or_null(opts->strategy);
+diff --git a/sequencer.c b/sequencer.c
+index 0291920f0b..cade9b0ca8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -303,6 +303,7 @@ static int git_sequencer_config(const char *k, const ch=
+ar *v,
+ 	}
 =20
- /* Parallel index stat data preload? */
-diff --git a/environment.h b/environment.h
-index e9f01d4d11..5e5d9a8045 100644
---- a/environment.h
-+++ b/environment.h
-@@ -8,6 +8,7 @@ struct strvec;
-  * The character that begins a commented line in user-editable file
-  * that is subject to stripspace.
-  */
-+extern const char comment_line_str_default[];
- extern const char *comment_line_str;
- extern int auto_comment_line_char;
+ 	if (!strcmp(k, "commit.gpgsign")) {
++		free(opts->gpg_sign);
+ 		opts->gpg_sign =3D git_config_bool(k, v) ? xstrdup("") : NULL;
+ 		return 0;
+ 	}
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f92baad138..f171af3061 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -26,6 +26,7 @@ Initial setup:
+  touch file "conflict".
+ '
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
+index 6aa2aeb628..6e329fea7c 100755
+--- a/t/t3435-rebase-gpg-sign.sh
++++ b/t/t3435-rebase-gpg-sign.sh
+@@ -8,6 +8,7 @@ test_description=3D'test rebase --[no-]gpg-sign'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-rebase.sh"
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 6f526c37c2..effa826744 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -4,6 +4,7 @@ test_description=3D'signed tag tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
 =20
 --=20
 2.46.0.dirty
 
 
---MREhpF7zN7RASWst
+--w/uZWw/nKb4Q+/VR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5hoACgkQVbJhu7ck
-PpROMw//ZuL4dKULbttYZ0XskEmPdkXye3zKka8Prrcp1aaLx2qndPOD7QBAckJB
-tipenUv8K1g7S1AlgeCY79z2qf5UVIaKS+0BgetWGl3TGGqY/NU04hl+SPHFwpUt
-YkYTW8GnUOpTgl3F9O0AcWVZGwq4wKX+iRZcOjNMbTnlvYJOIHkOgMJU6D4kdpaq
-inp/wxQo13CzjI3PF9zRc/EgBGOQENiFTZZQxJLoWWPoJjf1NnV/xpbntL9dkxWb
-Axb2lz7VwWAPmC+8vjUnIpZQyudUO0Ehp0fMIZUNMC6DAlUUX1D7Ng6EhoxMdMgd
-wTessrkrEnodVd+wu7YP6kE+c0HPdr3u8tcJIPrPhbkEEpIgctKmNWWT2RPiH2An
-S6lhrA2WV+kK2M8g0eljVCHyBOjkuevkloxvBYnLV53nfyyp9st8uK/RGjHOyY/h
-CU1yn0Atbi8DSfNu2zLvSaX2Sg1cI5zIpjtbB+/GdVOK8BEC7BUpRlnUGuux6qpl
-VaARnxTYzZeD92YlsNgUkPDrCWs/uuOP4xIi53LSuMWpcgwjkxVSZZ+ydmbCGcbQ
-WXFRrR6MqX10kZ6iWZKB49N9JQCrvdNe+hbFDQ8MYs15ABHWkCpGq+GqbBmg6Z7R
-aFTCp5gv96jz0/TChEZDkxsq8fp24DzjYrCP6ErhOUugY9au9O4=
-=bH5h
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5h8ACgkQVbJhu7ck
+PpRgPg/+I+XqN7el+a20iwYh2qrp/dRbeFX2/x37np5Ml/64LO0qk/hK0CXFxET9
+RD3zeOiNb/TJWlevIlGIg6nsRtpx3Rv0AqWWk3VcA/BMjM5V6uIWcde5iYI9nZDX
+w+E8W4E4hmXTWrvENeM0zkpjmapjuuYMF2qucYnzCMqKA1jeh2HPXRc/xnSF9evb
+GoE6Qto9e4pPjrrWbN17KiWjBwpDEW0JmF8zP87Y8ZzhbsAN3KcvweVoyvMvjUU7
+b31EHe8pBcrF2eP/ksI8SZBUfa77O7SGgqtPrQthyuSo9moXzOU+HFyYa1LsoFPf
+Via2l8Xa4pVZIgeTOKCgJaE3K0LHXXlpW/KQxFW18PniUbto38j6xFx6532wxaDf
+vS88vLVmKvVPgztiupVVZbJAEvSYSdM7swSDjGPeiGmRWeg9De6cqYEoBmbB5VVv
+Q+entVImu+5/MbVMuMsabi8fLM7yl2QlPBeazbmE0PUKc1qteXzM4/XUg3pqFtCM
+LUIrNI+NQrrFjDwKFe1l9jmO6INRV5DKTPKPfhboGpGHLixax79W9zB4qbnwKLPZ
+C53+XnoLOqlfcSwHzA3cPsuFLaaKj3VtfI/l1q5xz+uDj5quo6HKyJYVW5LhJT7C
+cEKgAttKh9lDjLkE+ss6Tsz2kpXM38wmvcjrxoi/WXmKH5oSnrs=
+=jR7w
 -----END PGP SIGNATURE-----
 
---MREhpF7zN7RASWst--
+--w/uZWw/nKb4Q+/VR--
