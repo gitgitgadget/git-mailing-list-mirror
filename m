@@ -1,82 +1,87 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B91C1779AB
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 06:20:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E941BC06E
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 06:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722925251; cv=none; b=NmsYF+QBTlIRgpZD1mQkvRtVEEs9SHJ937BnfrxkZDeAAjahQ9vICsaI6QwKPG9/S5P89H2pg0cEeSQfNoGgjZwZpTOvAP9eyfP6Yua/sg4GpBtdRIkP9k5AU19bieCL1VfOBmfpRiyjm7AYBSiE19xJEWFzw5Afm42rAcpiQWw=
+	t=1722925583; cv=none; b=WhJB8GkD1NZtCWy3SnYj8xa8QkkUrxEOrcI5qiggLU+QgINT/xRJFXav/q0b7W0XeK084hPwLwzmCe2+OxyR88oxKl7K1yPw6L6RYkWiHVxM7ia6tHDAKtuRBBQ2DrzZZaNc6ICBmG00jzSN0MGph6AhheK+HHhR7IMVKhcYlOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722925251; c=relaxed/simple;
-	bh=CyazuUuoEyYfnkAa7zYSNDIbskfFxpMSsoPyFUmB8WE=;
+	s=arc-20240116; t=1722925583; c=relaxed/simple;
+	bh=TPVujQ5ZQF5jqIGjsaKt/FnKJKgJb8ujUJFKkYPBZm0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kaQne4tg5JlKXQjq22GzTbxXMni0ADSc826PiGUIqbjaYjYW9YjFdIuQNqAZHnmBD8E62hkdPN9dKvzn+St1l5WKZbLKK9JIcQLLa/UeVcB7jlo3pvqHjaD+qKajwcTTzGxxtNXidQIGiKH1wTz2EDsrO/mJD4+ZFLQr2rJTSCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LiDd82RK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BLSOfKhy; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=YYJkInJlQKGGEP0vukGze1sy6fgrCBz70YiSzdNckuHHHNYRjG05iu6Ne7YiKquzROsVR8o00qyjITvDqyojNMEzEHRKIIRa6zV6pAq6aLF3OizgIq1BQIRjk4zO48C2aq8b8rFdAp8Tkjma89vsPKkFZdOW3Q8pB1HUpY9Hb+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=npBrNub3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jpdSgPyy; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LiDd82RK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BLSOfKhy"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 72B81138FC56;
-	Tue,  6 Aug 2024 02:20:48 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 06 Aug 2024 02:20:48 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="npBrNub3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jpdSgPyy"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D98281151AA0;
+	Tue,  6 Aug 2024 02:26:20 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 06 Aug 2024 02:26:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722925248; x=1723011648; bh=OmT1kGfAiV
-	ZzfqTxdw3Ev57G5IZciDJbfi5zschQIm4=; b=LiDd82RKqA/zU+UN4LRcTK4/mR
-	kQmo1vIOGJf+ut4jktkspE82BxNoLkEZsss9Ud064Su5YR8wsD4UDsEkFQXdrHcl
-	whSeTOifjnBkFp8Aagut97hWPx/fI/fcAdgucKMbRhhL1NWkrM3gYtsJZ5JyBEGg
-	UhSVMnxRTQCoHiZlEfcb1+VqFuh9NUw0qJMN8ufCb25A5mqUt/M1N2tQOs2aExN9
-	0qaRKkSUFeo+TThsbIQTd7bObNK9MO1gYYwXgksS0Lw9yOaR4uF361yG8MaO504e
-	i38AHQtuN7M2e4Ox74dow7p05l/xDnMp33ByACCeHdzshpZ+pQUNKHy2V0fQ==
+	:subject:to:to; s=fm3; t=1722925580; x=1723011980; bh=qmDP7YHmdV
+	9gFZ1BbolA1nrOf2mSlCtBQoLl5HB3J1s=; b=npBrNub3PMlpSSdxtbRbGSYthB
+	LK7BwR/+3yjCGgUw63dmc7PmBwmI9Ais/nr7Ks0L81N0Mqvd58Ez6F6xb8R3Pa7V
+	bMwAUMj00cc8WBbqtj6FVDoxSLc+3etpwbaTDIaex0VVIi5Tl/90EmS5Wj3xznuD
+	+2Sb0xCtXcR0gpZF0Sh0AWl/sHwpbxY86AMP1/mVQB6z4w7lqxUCJV4yrqS2ZHKV
+	3I6SQlOf5A4oX8632ddtF0YzWswYbNJfod/YYRYxMzIc5VNWROvh8RkafppHY7tf
+	F5kGsh3uCw5XgLcsgLVVudO6tk1Foka+MavrUTWDiZfiYH3UBRHgDn35byGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722925248; x=1723011648; bh=OmT1kGfAiVZzfqTxdw3Ev57G5IZc
-	iDJbfi5zschQIm4=; b=BLSOfKhy1VfgZMFR27TsifR/EVvI+Ybp6qn6376Z5Z56
-	ooaXKL9ScMDNCzhjAqHbOxcp+f0CtoNVM+HUiioMahDCFOyJfYRrdzHkYl/XuFz+
-	ovCr5ibdM14Bphyr7I/R2Q9v8mMwFLagkHuLm/IrGrm8XKyxm1/VHBMkhVqOgy5M
-	viAZrhhlEeSN/WfW8w2wodbf9sl1Kn4AYyL0/FNcBRP1lE23G4Z3dcnFTfm4cwwI
-	If+6YHs/Uv8RAwCg2Azq4Ijr4os39S2bp8xHReVFGIP5Suu7ccPnx/mWTrSXn4fc
-	Zp7pbRFGx8x/uBYGMZQLhWJfqnenoXBbSCeKjzEjXw==
-X-ME-Sender: <xms:wMCxZiipi8CNhQNLi2nLssdqnO9fpPLuf6CkXqvOl0-B0uCrOkkuUA>
-    <xme:wMCxZjASR17IkYcOJhs0GcgAGKfVVkUBr1acRhBAk33RxppdpG4zYlgdl4txY9saY
-    _5TdojaRyNhXAkSJg>
-X-ME-Received: <xmr:wMCxZqE2Olox4q-k0oZqRoQX8P2oqQR21MK_x6DBOxZTiXV5VIoVy2xOP0xOPmUyAilzBFgCD0uctyXgDPeJ0tOmKQxqWfNxWosRfg1LcmlT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgddutdekucetufdoteggodetrfdotf
+	fm3; t=1722925580; x=1723011980; bh=qmDP7YHmdV9gFZ1BbolA1nrOf2mS
+	lCtBQoLl5HB3J1s=; b=jpdSgPyyb9KUXAe7cBSe+4/CtI2l5R9VOVojApYGbA+k
+	ZlsuZbWg5ch5WabQbxyHQYpT3rqUPJ6i/xZEUuk6ar0YTcGdpor+GBtA/Cq/tFy0
+	uQbDqs+B1UwrlxqSA2bORaaAa1PDVZFgL549hNr7LqK1Ju4tMfpLQf4CNmEHlZlr
+	/92fp+PiUG8DUkz5i46I8dmOsN/8iQIUgxGnSW3IgjnsZl0EVzhCxjVKCzojLaAF
+	eQDdMBfVZsi3sUJsv0QmYsHBNYChn42nRLn0KNXO8jvtx1ec0vv/XQolG96HFAS8
+	r4h67lwAwR22eukr/iAHVOTA5ZgCWA1hsR9T6kn0NA==
+X-ME-Sender: <xms:DMKxZve33O8Iamp20Do4hQynZuxxo2-Hy7LDLvE4__wZTdQsAQxq0w>
+    <xme:DMKxZlNa7H9Kx9j1XpbsnPooHNwcaNJmtcv0g509JEhgx_Z_fpWOlPcAsf_NARsve
+    -x-A0wWL-8chXQZqg>
+X-ME-Received: <xmr:DMKxZohfrQabH019BCobqI3-Fhbgl7iwGYIXwmfcnWRQrlHKr2JvlH8NIctPZdi1OclN_h2hwq9hXN52SJbtLSvuliawIG1lE-KOuCgIF8N->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgddutdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtjeenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:wMCxZrRULfcjKzeCtHSLYiz_eRcjpU1R_BsiWrsYaQZ8s2-MwFtsLA>
-    <xmx:wMCxZvyMmmL_F8ARAZ-ZMRz-dmCgLtC6H1J538UA00wzHD9elm-LCg>
-    <xmx:wMCxZp4Lr9cvCP3Dopewm5d5BLFPF98wd35vccu42aW-UHEMvtm4cg>
-    <xmx:wMCxZsx3PUZT4LqGDgXY8mrsFsbSz8nbZgKtq7Jjd8yrkEZHBjNsEw>
-    <xmx:wMCxZhu0wZR8jEUvoVGkU1Z4diFJ-2IWcT9hdWAmwc1yac4WGkNE5iFx>
+    hrnhepvdeuteeukefgvdfhvddtudejiefhffeggeeiffdtudfhleeijeelkeffhedtheeu
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    pedt
+X-ME-Proxy: <xmx:DMKxZg9J6eEMnu8rduvYbwxerwpkE1um3XWxVfNClM-hOK6o16xJJQ>
+    <xmx:DMKxZrtZD2D0pqmQ7ciq4VtkmY4dcnGVc4JnwYm0APG6oU9LN6PlIQ>
+    <xmx:DMKxZvHScRQApj2EqfMi-GfOr6SoO-GG3oFWvaSCxAEXZr4RDOEMkQ>
+    <xmx:DMKxZiPoxN6_E4VU9dvyIFZAV41K7claRXbb3sQZnR3509QioSmz3w>
+    <xmx:DMKxZhWd4gV2msYFImXrRooTE_EfW1W8i3RH8zBER2zHyahJL_mOVYJH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Aug 2024 02:20:47 -0400 (EDT)
+ 6 Aug 2024 02:26:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d41aad5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Aug 2024 06:20:43 +0000 (UTC)
-Date: Tue, 6 Aug 2024 08:20:43 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5d5a36bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Aug 2024 06:26:16 +0000 (UTC)
+Date: Tue, 6 Aug 2024 08:26:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Sven Strickroth via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Sven Strickroth <email@cs-ware.de>
-Subject: Re: [PATCH] repository: prevent memory leak when releasing ref stores
-Message-ID: <ZrHAu0wfipR6CShS@tanuki>
-References: <pull.1758.git.git.1722855364436.gitgitgadget@gmail.com>
- <xmqq34nj3pez.fsf@gitster.g>
- <xmqqed723mth.fsf@gitster.g>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH v2 2/3] strbuf: set errno to 0 after strbuf_getcwd
+Message-ID: <ZrHCCBXXWZPzAcQb@tanuki>
+References: <pull.1756.git.git.1722571853.gitgitgadget@gmail.com>
+ <pull.1756.v2.git.git.1722632287.gitgitgadget@gmail.com>
+ <0ed09e9abb85e73a80d044c1ddaed303517752ac.1722632287.git.gitgitgadget@gmail.com>
+ <xmqqv80ia9wf.fsf@gitster.g>
+ <CAPig+cTmzk7AN2x8-WCK_T5-_G7Wd-akB2++_4HFEbT67Rnc8A@mail.gmail.com>
+ <xmqqv80f3r3d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,91 +89,90 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AhqJOuvI9YaMoiGX"
+	protocol="application/pgp-signature"; boundary="m2xlZhODW+ecSZx5"
 Content-Disposition: inline
-In-Reply-To: <xmqqed723mth.fsf@gitster.g>
+In-Reply-To: <xmqqv80f3r3d.fsf@gitster.g>
 
 
---AhqJOuvI9YaMoiGX
-Content-Type: text/plain; charset=us-ascii
+--m2xlZhODW+ecSZx5
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 05, 2024 at 10:24:10AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 05, 2024 at 08:51:50AM -0700, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >=20
-> > However, I am fuzzy on the existing uses in the backend
-> > implementation.  For example:
+> > On Fri, Aug 2, 2024 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >> > [...]
+> >> > Set `errno =3D 0;` prior to exiting from `strbuf_getcwd` successfull=
+y.
+> >> > This matches the behavior in functions like `run_transaction_hook`
+> >> > (refs.c:2176) and `read_ref_internal` (refs/files-backend.c:564).
+> >>
+> >> I am still uneasy to see this unconditional clearing, which looks
+> >> more like spreading the bad practice from two places you identified
+> >> than following good behaviour modelled after these two places.
+> >>
+> >> But I'll let it pass.
+> >>
+> >> As long as our programmers understand that across strbuf_getcwd(),
+> >> errno will *not* be preserved, even if the function returns success,
+> >> it would be OK.  As the usual convention around errno is that a
+> >> successful call would leave errno intact, not clear it to 0, it
+> >> would make it a bit harder to learn our API for newcomers, though.
 > >
-> >         static void files_ref_store_release(struct ref_store *ref_store)
-> >         {
-> >                 struct files_ref_store *refs =3D files_downcast(ref_sto=
-re, 0, "release");
-> >                 free_ref_cache(refs->loose);
-> >                 free(refs->gitcommondir);
-> >                 ref_store_release(refs->packed_ref_store);
-> >         }
+> > For what it's worth, I share your misgivings about this change and
+> > consider the suggestion[*] to make it save/restore `errno` upon
+> > success more sensible. It would also be a welcome change to see the
+> > function documentation in strbuf.h updated to mention that it follows
+> > the usual convention of leaving `errno` untouched upon success and
+> > clobbered upon error.
 > >
-> > The packed-ref-store is "released" here, as part of "releasing" the
-> > files-ref-store that uses it as a fallback backend.  The caller of
-> > files_ref_store_release() is refs.c:ref_store_release()
-> >
-> >         void ref_store_release(struct ref_store *ref_store)
-> >         {
-> >                 ref_store->be->release(ref_store);
-> >                 free(ref_store->gitdir);
-> >         }
-> >
-> > So if you have a files based ref store, when you are done you'd be
-> > calling ref_store_release() on it, releasing the resources held by
-> > the files_ref_store structure, but I do not know who frees the
-> > packed_ref_store allocated by files_ref_store_init().  Perhaps it is
-> > already leaking?  If that is the case then an API update like I
-> > suggested above would make even more sense to make it less likely
-> > for such a leak to be added to the system in the future, I suspect.
+> > [*]: https://lore.kernel.org/git/xmqqv80jeza5.fsf@gitster.g/
 >=20
-> Ahh, that was the leak that you plugged in a separate patch.
->=20
-> So it does point us in the other direction to redefine _release with
-> a different behaviour that releases the resource held by the
-> structure, and frees the structure itself.
->=20
-> Something along the following line (caution: totally untested) that
-> allows your two patches to become empty, and also allows a few
-> callers to lose their existing explicit free()s immediately after
-> they call _release(), perhaps?
+> Yup, of course save/restore would be safer, and probably easier to
+> reason about for many people.
 
-I don't really know whether it's worth the churn, but if somebody wants
-to pull through with this I'm game :) But: if we are going to do this,
-we should rename the function to be called `ref_store_free()` instead of
-`ref_store_release()` according to our recent coding style update :)
+Is it really all that reasonable? We're essentially partitioning our set
+of APIs into two sets, where one set knows to keep `errno` intact
+whereas another set doesn't. In such a world, you have to be very
+careful about which APIs you are calling in a function that wants to
+keep `errno` intact, which to me sounds like a maintenance headache.
 
-> If this were to become a real patch, I think debug backend should
-> learn to use the same _downcast() to become more like the real ones
-> before it happens in a preliminary clean-up patch.
+I'd claim that most callers never care about `errno` at all. For the
+callers that do, I feel it is way more fragile to rely on whether or not
+a called function leaves `errno` intact or not. For one, it's fragile
+because that may easily change due to a bug. Second, it is fragile
+because the dependency on `errno` is not explicitly documented via code,
+but rather an implicit dependency.
 
-That certainly wouldn't hurt, yeah.
+So isn't it more reasonable to rather make the few callers that do
+require `errno` to be left intact to save it? It makes the dependency
+explicit, avoids splitting our functions into two sets and allows us to
+just ignore this issue for the majority of functions that couldn't care
+less about `errno`.
 
 Patrick
 
---AhqJOuvI9YaMoiGX
+--m2xlZhODW+ecSZx5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaxwLoACgkQVbJhu7ck
-PpQMXA/9GoFfgGCFKyIeOciAsh+tnhw4CKwkCSgeSWcJmRC6Q4IqVuU8c4ykV/TG
-kDCxs6tV67W+ublxodPD8+oNwMnj+PpfYdym/F9Lo3m18UF+UdTMkJc2Ew2lzKdf
-JEDJasvxO+K2aqfoVeb2vv1Ifyqx0v5sToKvktBL0JCzoh6OXE6AvS09hf21aqbm
-k6I8mGx2POspc/BQZSS/JZbH0SOhbXswq24tXlclhLqg2CknmSVLowSGZDxhTsqZ
-AyMGEKfZCg6gMirNeM6UL4NhsbY4Sk7k8ewJ6plZmX2t9YlcJXDOSlGnc0LIbIiv
-d80oQVxAMoTwo0ypL1mzfpyo5vDxjlor7BIY/us3y9AjBz7hTc4bY0CrrLz7v8yc
-AXU9yMkEcGDjkDztijBgIqKrhhTK3cQGLlsHoRRuCIeEUUq2cQi3vm8RIKfFoWri
-dbYkbdTwr/AzD9B0JwxfuWOjDDbdp09glfCrVOYwqejRRlSjGw31BZreidnui6+Q
-Xf2YFSOPqaNKNzRVr2DviLx4LcV+M4495tZuGssqqAsJ73PR4YIjyPUoET7AgKFT
-FHQq4KzaQwT7xqzbnn1UqUUrz7rXXPZCKRylDqIQkopbdhLPGzf6E56dLBXfETNk
-obZJH/75BquPSpcpMEQtZ32uOnQU2wSfTXm6Sqkz5k7eN9xx6Ho=
-=uMtN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmaxwgcACgkQVbJhu7ck
+PpQMTRAAkIMCvCvHGn37G1PnC1R6iJE/VBED+ctnieN91m7i1VIgO2SJVIBkHOSR
+x6j7u2ViMu87GG1OpIRFmH6sfhVPiz4bKVY2j8JQw7660FRFcTFd9rRrJgS/Cpu8
+Xv7mo80Rfi51rEDAPEfIzZ2LEOtGW6B88TyoTQi1m5R+Py0skCrpK5ppP8pWtyVz
+257meMRCocw6zt0n2oTgnmsZfA1QCw9XkRI/ZD98g3D9u9uMJB3TZUKdM0tRxCAE
+pwF2lcAt2W65moAjbFLci6sMlNqtWDleL0/peW3eMbA2boqB71vGEt7jMfxRZLD1
+4ZePrkNwsfhc+ZuqfF7qCwUqvJSvuM7mbjavWibzlkJGd/ZPi7dfHRNGDTnSluen
+pfoitoAlaSOw5kXgdEsEpuIDno2h10q2DbjVCuPSUgClWKEzh9jOnNjh85MnoRZr
+EsbKcLc53bHvlB8K9z4RwkDHFzzNZ3laIEH0AMC0dmfR1RVqo2S+8zghnuc3kv7y
+Qj1qrnOQJHoUlDRVXdkupyrABh64gY4zf1KLFCKdsSvI5sy3VtPalKkSgpxOAkkT
+OHSmtYdDXHjqBn15OCwib1DM6Xd+Rbdd9FPgyGdW0gQTsu/2fSoSpJQvLKQyXi+j
+ZUoguQZwX2RGjuv1lJ86vl1kVs+fG0kcJvF/XDUD9mD+DPEZiDo=
+=jlro
 -----END PGP SIGNATURE-----
 
---AhqJOuvI9YaMoiGX--
+--m2xlZhODW+ecSZx5--
