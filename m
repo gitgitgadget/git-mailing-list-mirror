@@ -1,77 +1,78 @@
 Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE9B1BE22F
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 08:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2123B1BF329
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 08:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722934780; cv=none; b=JBEIT0OyxArJgp72z/057jEbcoJSdAByETO8i9F2aI3B1LZxeh2L3aazGfk/MdvUubY+CmKxCYTgWXmcroqTcEdlJEQ3gaVqE7Is84Zt4p0/G/egBV2b+YPuqLE4ncmp41uWGEqMXOqqCuIHSSMZxQP84skNKFDPJYDwysQXi8E=
+	t=1722934782; cv=none; b=Bgkr3mZ5CbUP+tGusEDXZB+ApmUeXbuvB2iU/lXX8dxUV8XEvO1ZZn/7OmzqrkvV+XAEuSBwkJWeF4MDGnjdBAcS0wugNCyYQ46dD3LXJcTeLvucqOkJkKESJtf/uGmRcHnhspYh0YqN2R3q85IiW5JsTV+jYKBbcxyEV5MzuR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722934780; c=relaxed/simple;
-	bh=kYR0YT3r80GV7fSh53jtLOqUcKoENlVL+XlkZDkpytk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ccH6Bx9UHEXQzpa1VcB1nxF40H47WcsOePjNjh4aCkg1aZDDgdnN0fuAKhCeuP7Pv1nwFozz+hpHqkLNQnVhEjWqFs4XfB4v3afYi76RGj7Qq8hBnMuUfO5S1Bzw9E54WnCiNWGjG7nPUw1pQYL2DSIj95mfwRRdCBCf8/NGhrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mCoPLna/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u3x175ch; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1722934782; c=relaxed/simple;
+	bh=naIFcnC3+pjdnXxowjpdQ2CDohadq0vhycJQxO5EnAk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EFuGWaXS+1vPzgbbARXqQWNgejyWCKFZTPsPsnC3VwFi6vvDy6OlwtOBBHsLKE/sIEYpUw58tYwfgaUOlr93XsmX6Pf4MSBVjrF2pZw38QNjX7sAZ94LGRhps0l6c/pMIo2tPGxfRueQ8IMBqJqDL8i0Fj5nTcDeHiSgdgsTMHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QlAaE5Df; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jBOCTjFS; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mCoPLna/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u3x175ch"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QlAaE5Df";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jBOCTjFS"
 Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 6F7F1138FCB8
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 04:59:37 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 41DF9138FC93
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 04:59:40 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Tue, 06 Aug 2024 04:59:37 -0400
+  by compute8.internal (MEProxy); Tue, 06 Aug 2024 04:59:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1722934777; x=1723021177; bh=BMF/3+C9yrystrb88ACdOlKyHynHRBUy
-	j8Rwt9hDWyc=; b=mCoPLna/aEcUFiWQd/KiWrdiGQj/jINnp879RKT6h+EiSJPz
-	uOxL8HYJEZOdTvDW3lN0b14GHyjINXWLJrXNuduk4Uk0YKI2t89Zezo8ysMh9u/h
-	Jlo+lYs/+mlmTIH31PdxA/f9d4MuTLEeeFsAMqOjIGUXevETQofuRewQS/B3CUOB
-	dz8oN3BbCdetSmmq7nwWKLOqYBddNeKchdsSmHF5o/GepDTn0O2xcfjGx/yK9UOF
-	ad7EmA/Ll2ezhnV/PZhuWEzM53Ga8kAxthCPseXDuqmJr0RVfGhU0nCiD1tcxYun
-	aDp/K5HG6iDGd0ftleUpIEUgmM6a4w2nBJ+1Sg==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1722934780; x=1723021180; bh=GLYSI9/9kn
+	NsdzTwXIoh00+VYFUlWuDRBUhHDuCRvbg=; b=QlAaE5DfKsp90yWrx/4PnJGYeY
+	gzoM+eCqFKLcQKy3BfhyhIzakVrk96B46Y29+aSSIE1rX3Kx6/tzz2opnGPqHkeG
+	blHit2PlLZcR9GtZEzDFS38XhzO3NZZ7KN+TjujJAnZZRF3DIXPql2Gm8AisVI/N
+	p4a/QUeUSeqtZLia4DEm6RSDFpjJwfly/4SHzmEB2Nff5eAXJt/XrTutLPZSsKvI
+	eSFKlGNEyYboAVPqILYGEH/ZHT6NARjdByHc0LHE2ja1CK+uETUVvyMnMoCHUUdu
+	lDC5tWYCohbO3oMkuqFv0GOs/cs52iXiuYyB/9fTUzXqIzpIi+85eWs6IIEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1722934777; x=1723021177; bh=BMF/3+C9yrystrb88ACdOlKyHynHRBUyj8R
-	wt9hDWyc=; b=u3x175chYPofO59LWwtpjKUQpsskpo5HlPPfVJZym7J1xT0HhCJ
-	XwD0BJslCswG+kPdnXTWFQMr0qDmSlhTWrgEbr4bHjWyUDr4M837wEu6rwU7c7fe
-	WpDUHC3Gxx0dPYdWL3Chw28IY79ncIkLatA2zxOUh88ZCtxdzhAe/oi90qKclY06
-	3jJfDTJqg9bZlM/WKnKWOHFuPBi0O3jFjXSomUsG5qyHh+SuVoe+o4e4hlU7bx77
-	Z2cTvmhrURQh3EpsIaLLgXMCeHmZiqQLkv/6m/FB4G3GppGShRQ9BIwBIdYUtAPQ
-	KP3hx+sq0NywEG9qnyWRMqv4WIFaJoDeQTA==
-X-ME-Sender: <xms:-eWxZpcQG1SrAQTJcZKp7trxq94kZUyvF70rmsZJcdHDDm90UFbBpw>
-    <xme:-eWxZnPWl6UdPr9316p_2CJvUV3jWdBjVsED0XfSm_qDZ26hUrpzPukxKzH0wvuWk
-    LlnvdzAvu9xzvmBvw>
-X-ME-Received: <xmr:-eWxZij5tU-OlI1XeW9tHrZzyH5OCpTrZVDG5JU4T4bipqGnXcArUHqWv4HspA4v_8i2qNgW6k6vJ4dyOipIHMyJnuUsIMQjelKWuVQOP4Ws>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1722934780; x=1723021180; bh=GLYSI9/9knNsdzTwXIoh00+VYFUl
+	WuDRBUhHDuCRvbg=; b=jBOCTjFS3/1SfrpwmbAgY9Vizv0/gu41ZpTceBOZY6rE
+	6Pk+KwZC4ftkQrEOrEVuH8MqMhRJ8cIUo0uhBtChpHbmHS1fYZ3jC9GssHndGAu5
+	sGsMo0O+RmYnI6xYisWx6F3Sip7ry+G2FXNVnFOrcN0bj3L0XMAq/Lt9WzLxmt6p
+	Dqm80yjODT+OUV3rQhp1RwTrR5pqxp+alih5MpLbNlqjqp/Rjd1rJPHjx0jO0Yy3
+	s1w+uqgLVhZs6z2uZSQJMDwmyx74Rer/ZKrCMA9adBf078xHxfbcn3x6NH6Noopx
+	xfDTasA6KtE0Sy+1GOoDsdbxUw1v2aP7nNv7lqm/yQ==
+X-ME-Sender: <xms:_OWxZhkaYvt1LpJ8bR_Lgr6sNbalWh0l60o_h3qQ3ABaVvlFeIc98A>
+    <xme:_OWxZs2uOTGAjmQub4-k2yDEGGhUFgkR_Fj4SPwTisIyHbNUkKm3lUlx4VqBCFQf3
+    8HCTarniK7ejQHA4w>
+X-ME-Received: <xmr:_OWxZnrz96rzEj7EIuD8jq4V_rU0enRO4JbB5HWBKqs5QDlDGY6rASrFXXSFNwQBQIYikap6rRwfwHZSVloxFCzi42RZDu09ZF5EeRQyYGJU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderredttd
-    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
-    ihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgfdvvd
-    efudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:-eWxZi9yGBToI1mJ6ot3mcQ1NvF0LMvqav5c8B08jhziLr-X_QNQ0w>
-    <xmx:-eWxZluclsb8g7OkT3NDO_BhkhTi-5o97UZ1SPqQBHk82kHnSPFGLA>
-    <xmx:-eWxZhHxZG2RqeEcdfx3QBf91gszb6jgmvLep7iddEvCxgYKSoqPQg>
-    <xmx:-eWxZsN72bAZlQ5ZQ3ojTiDf3W0Op7tWTl94k9kP4qN910zvCUVGvg>
-    <xmx:-eWxZmX0M5PACNNGjBSl0bRS6lRrB9RfY2RpcybVlWBybA0NZ2TAP1-J>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:_OWxZhmzrRWsxaa1WwFF8F3bfr15w0eK9Dp2s69L2HT91DpYRXoMfQ>
+    <xmx:_OWxZv17LU9zkVOrH1oqFHJOnPwj71Lu_0AQ2V10A1EUX16E6oBLZQ>
+    <xmx:_OWxZgu15ccJliT2BwxCF1ahi_6fm203bW07cySSbqhKb8IsieKEjA>
+    <xmx:_OWxZjWJN2B-xZ37hz2GX3K9A36VkD0Q81qITDACpp0k9SA0b8RhdA>
+    <xmx:_OWxZo-olDJmOPZYLrUB2v8Il36sIPu092KCzWu3dEglm9jTmT66VhmT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 Aug 2024 04:59:36 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 Aug 2024 04:59:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 52138a7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3d82ed45 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 Aug 2024 08:59:32 +0000 (UTC)
-Date: Tue, 6 Aug 2024 10:59:32 +0200
+	Tue, 6 Aug 2024 08:59:37 +0000 (UTC)
+Date: Tue, 6 Aug 2024 10:59:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 00/22] Memory leak fixes (pt.4)
-Message-ID: <cover.1722933642.git.ps@pks.im>
+Subject: [PATCH 01/22] remote: plug memory leak when aliasing URLs
+Message-ID: <6e2fcd85c7032a8f6ee0969ee230f3e319872e09.1722933642.git.ps@pks.im>
+References: <cover.1722933642.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,136 +80,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YGH5ZIUPJMd9LUn2"
+	protocol="application/pgp-signature"; boundary="joK2SKttrmJKe6Sx"
 Content-Disposition: inline
+In-Reply-To: <cover.1722933642.git.ps@pks.im>
 
 
---YGH5ZIUPJMd9LUn2
+--joK2SKttrmJKe6Sx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+When we have a `url.*.insteadOf` configuration, then we end up aliasing
+URLs when populating remotes. One place where this happens is in
+`alias_all_urls()`, where we loop through all remotes and then alias
+each of their URLs. The actual aliasing logic is then contained in
+`alias_url()`, which returns an allocated string that contains the new
+URL. This URL replaces the old URL that we have in the strvec that
+contanis all remote URLs.
 
-the third set of memory leak fixes was merged to `next`, so this is the
-next part of more or less random memory leak fixes all over the place.
-With this series, we're at ~155 leaking test suites. Naturally, I've
-already got v5 in the pipeline, which brings us down to ~120.
+We replace the remote URLs via `strvec_replace()`, which does not hand
+over ownership of the new string to the vector. Still, we didn't free
+the aliased URL and thus have a memory leak here. Fix it by freeing the
+aliased string.
 
-The series is built on top of 406f326d27 (The second batch, 2024-08-01)
-with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
-leak when computing reachability, 2024-08-01) merged into it.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ remote.c                 | 2 ++
+ t/t0210-trace2-normal.sh | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (22):
-  remote: plug memory leak when aliasing URLs
-  git: fix leaking system paths
-  object-file: fix memory leak when reading corrupted headers
-  object-name: fix leaking symlink paths in object context
-  bulk-checkin: fix leaking state TODO
-  read-cache: fix leaking hashfile when writing index fails
-  submodule-config: fix leaking name enrty when traversing submodules
-  config: fix leaking comment character config
-  builtin/rebase: fix leaking `commit.gpgsign` value
-  builtin/notes: fix leaking `struct notes_tree` when merging notes
-  builtin/fast-import: plug trivial memory leaks
-  builtin/fast-export: fix leaking diff options
-  builtin/fast-export: plug leaking tag names
-  merge-ort: unconditionally release attributes index
-  sequencer: release todo list on error paths
-  unpack-trees: clear index when not propagating it
-  diff: fix leak when parsing invalid ignore regex option
-  builtin/format-patch: fix various trivial memory leaks
-  userdiff: fix leaking memory for configured diff drivers
-  builtin/log: fix leak when showing converted blob contents
-  diff: free state populated via options
-  builtin/diff: free symmetric diff members
-
- builtin/diff.c                        | 10 ++-
- builtin/fast-export.c                 | 19 ++++--
- builtin/fast-import.c                 |  8 ++-
- builtin/log.c                         | 13 +++-
- builtin/notes.c                       |  9 ++-
- builtin/rebase.c                      |  8 +++
- bulk-checkin.c                        |  2 +
- config.c                              |  2 +
- csum-file.c                           |  2 +-
- csum-file.h                           | 10 +++
- diff.c                                | 16 ++++-
- environment.c                         |  3 +-
- environment.h                         |  1 +
- git.c                                 | 12 +++-
- merge-ort.c                           |  3 +-
- object-file.c                         |  1 +
- object-name.c                         |  1 +
- range-diff.c                          |  6 +-
- read-cache.c                          | 97 ++++++++++++++++-----------
- remote.c                              |  2 +
- sequencer.c                           | 65 +++++++++++++-----
- submodule-config.c                    | 18 +++--
- t/t0210-trace2-normal.sh              |  2 +-
- t/t1006-cat-file.sh                   |  1 +
- t/t1050-large.sh                      |  1 +
- t/t1450-fsck.sh                       |  1 +
- t/t1601-index-bogus.sh                |  2 +
- t/t2107-update-index-basic.sh         |  1 +
- t/t3310-notes-merge-manual-resolve.sh |  1 +
- t/t3311-notes-merge-fanout.sh         |  1 +
- t/t3404-rebase-interactive.sh         |  1 +
- t/t3435-rebase-gpg-sign.sh            |  1 +
- t/t3507-cherry-pick-conflict.sh       |  1 +
- t/t3510-cherry-pick-sequence.sh       |  1 +
- t/t3705-add-sparse-checkout.sh        |  1 +
- t/t4013-diff-various.sh               |  1 +
- t/t4014-format-patch.sh               |  1 +
- t/t4018-diff-funcname.sh              |  1 +
- t/t4030-diff-textconv.sh              |  2 +
- t/t4042-diff-textconv-caching.sh      |  2 +
- t/t4048-diff-combined-binary.sh       |  1 +
- t/t4064-diff-oidfind.sh               |  2 +
- t/t4065-diff-anchored.sh              |  1 +
- t/t4068-diff-symmetric-merge-base.sh  |  1 +
- t/t4069-remerge-diff.sh               |  1 +
- t/t4108-apply-threeway.sh             |  1 +
- t/t4209-log-pickaxe.sh                |  2 +
- t/t6421-merge-partial-clone.sh        |  1 +
- t/t6428-merge-conflicts-sparse.sh     |  1 +
- t/t7008-filter-branch-null-sha1.sh    |  1 +
- t/t7030-verify-tag.sh                 |  1 +
- t/t7817-grep-sparse-checkout.sh       |  1 +
- t/t9300-fast-import.sh                |  1 +
- t/t9304-fast-import-marks.sh          |  2 +
- t/t9351-fast-export-anonymize.sh      |  1 +
- unpack-trees.c                        |  2 +
- userdiff.c                            | 38 ++++++++---
- userdiff.h                            |  4 ++
- 58 files changed, 289 insertions(+), 103 deletions(-)
-
+diff --git a/remote.c b/remote.c
+index f43cf5e7a4..3b898edd23 100644
+--- a/remote.c
++++ b/remote.c
+@@ -499,6 +499,7 @@ static void alias_all_urls(struct remote_state *remote_=
+state)
+ 			if (alias)
+ 				strvec_replace(&remote_state->remotes[i]->pushurl,
+ 					       j, alias);
++			free(alias);
+ 		}
+ 		add_pushurl_aliases =3D remote_state->remotes[i]->pushurl.nr =3D=3D 0;
+ 		for (j =3D 0; j < remote_state->remotes[i]->url.nr; j++) {
+@@ -512,6 +513,7 @@ static void alias_all_urls(struct remote_state *remote_=
+state)
+ 			if (alias)
+ 				strvec_replace(&remote_state->remotes[i]->url,
+ 					       j, alias);
++			free(alias);
+ 		}
+ 	}
+ }
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index c312657a12..b9adc94aab 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -2,7 +2,7 @@
+=20
+ test_description=3D'test trace2 facility (normal target)'
+=20
+-TEST_PASSES_SANITIZE_LEAK=3Dfalse
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ # Turn off any inherited trace2 settings for this test.
 --=20
 2.46.0.dirty
 
 
---YGH5ZIUPJMd9LUn2
+--joK2SKttrmJKe6Sx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5fMACgkQVbJhu7ck
-PpQw4g/+KTaolv8rD0Gy4z2UlEFncA/HjtJQMVfaxL+SNVUhEtnAFq5f/sGn0jDj
-AQhfPQors/2QAeTqwa8RzfNFI9RZVqnak/dyD/G6LQI6xUVExa02Zpjt8FazuQtZ
-YRgYZoS2OwntKubzudP8yR0/BtrPwu8G5Dq5P3YRkE/BBNZsbA1cP6uTTeM3TGbv
-gsTsp0hCeydwfJq1Um3uxertaRaRrITjPoHaXL8L9s6nm/CxXLq20bUJplRfdeIV
-trCW52Tj2tddGnRq7l7sC51ME349aJIYWNRdkN6OEu9hxyqhMXFcGs4KN5H/RHRc
-2mL/TMyj353dJhU+Azt/1ASW5TAb6eCFpflwxxSYOhB4ponjreZsa/1Hy1k6ag8n
-KIOZVyIOtZAUppXVnnZfcRvKT6SSD3hkKF5tkBaqV8acm+Q+Y+VmGkzIzq4Lvbvf
-zpcbzzwWRjsEjbwNYaP7QG7uElgyYgH2MO0ZrP47qOrSS/2OuyojPVHmhiB7zzQe
-YppfruHuWrBjsLrGa+yJnC4UO3fXsLjqYjTqWk2mHJ4oxb/9/BYDZHgLEX0J/4YO
-6pEklNNjnFB9QYXHFOK2SeS5XU7Vabz/Kjrr58cc3v5YAPrSHH29TYqnyjYMf0pc
-8FfT8VeeUsEI8i4fzBlLejP5x9O4z/EMc+3iIkaGAmRX2qUBEV4=
-=h6L4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5fgACgkQVbJhu7ck
+PpQGkxAAq/lfr4Hixn6YW7TrravVIr3IPoLtcDoYMMEAkM+mXnnzSkeMsEbZ9ejb
+74NjQxxHZKEoVmJRmOle1GSCGtOXquYwywhIpENxOOTSg5m+e9a9+x2LuZuJi8r2
+HpPj7piYraOZYDuYOh0XVgLBEMuzv+XLKJBfe8jiaB0rjofq49eEsehfQTx9fhW0
+G1sX0orSYLTmppabcuA0Wer+T8w5aClaVVXjm1ynbEAUSaQ8XeGNjP868f8kqjIV
+DHoKwsY6B1/5/YX2lWz9NvLSJNx5gD4RNt2XbydlkRj36c5mWXleVvE0tgncWBGW
+WOlmB0dsQkocGQo0z5uNqtYtHio/MFuwFrxcsk/Ak5Pz8pIJPnGqwfX++inLlpyv
+9r0fTw1DX5vVDX7BVJdMikr8ZfaiaM6UmGVi/LKAJMIr5YnU918xrtcFkFN7YDVD
+9D37bJtUoggXtVABXUpYJVcnO4ouHXR4SmlHaFMOA1zAlsZ+Na5qNtmmbSvMWlfR
+Ghv6NHBwQ2BwuVtivf/BjUlsnsYdVQqJlpmWDZ92z2FLB1m0c2FVj7KnHbqlV9PM
+ERg9os5HPRIIJ6HqT7tT4Utop4cYehJ7pWhMBUXQ4txTLl+BvRgHUmh/9daud230
+izdf4WGZxL0AJ7ZP/ktQW/cuFwyjS7hWmUDW+dfjneLtevsEuy8=
+=ByGk
 -----END PGP SIGNATURE-----
 
---YGH5ZIUPJMd9LUn2--
+--joK2SKttrmJKe6Sx--
