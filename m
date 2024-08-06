@@ -1,90 +1,102 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCA246450
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 17:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB8B29CE5
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 17:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722964911; cv=none; b=cT5S7wXilVDYHH07Tt84NoZLSnb4YkwdP9LmhhG82ke3qLIefunjswWCqtqSR52AO9zvlANfaSgLA01hkPW1Fvz8N1kEjalDXOc6yZm428U0YPPBtOjEzUZwlmOWXSICjhC4HRbPpxaVg+Xv5VIAUYVvTOQKqdJTgLXH1v8ITtg=
+	t=1722965900; cv=none; b=lu2v+r89YCaciayOrc8QT+ZeEPNAUp2Z1iF9kP0p4RGStoOYMz1hdr8WIY/sDsm9mcpgMQDdAIGcE7Q+AZZeI7qBQcgRVuAMrGyhIyerE3svOTDEmETNhst9jhVBALg2i48c3QqqSVMOIn0ALqK1AVIT22V+juYcM5xLlmlfbdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722964911; c=relaxed/simple;
-	bh=FPv2JxnFlUEDBs4Uq7zBdIwq/P7NdDezwmGGMNmNKbo=;
+	s=arc-20240116; t=1722965900; c=relaxed/simple;
+	bh=jubdG/44wk3A5SMDqYYoKN0IQGzly+BKcaZ/S1d/B4U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nGWdWv/Lek8GAHTJRdVLVvGVO6iPnUKOutk7FlBonHptHOmIbDbjQHbMc1jAeduRxbNeYWGeycW4WyCKitkUEen+x4Z10VM+KbpQP34Ut+3gJowQd2rKtEkknz67wPNNvZpJKud8GuCLcCtKAZNPKNK8usFKazd03Xr9OIC68iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.46
+	 To:Cc:Content-Type; b=TtdmHmHbwqJdubfYawfMojJpz6fVIG0148kGzvHLNdYiTa8Ek2a9YLNfmF1yZ4vEoHNzPswv42i585+bKBs5emwdlqDtYyldgglcFmhiRhR5S0QX/ZcbJcS3JT/b1r3tH5fl9r2Fmm0cGXbv03Pf5y+HXXg0ZwquuGtxxlFUSOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5d5cbe88f70so480213eaf.0
-        for <git@vger.kernel.org>; Tue, 06 Aug 2024 10:21:49 -0700 (PDT)
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5d5b1e33fa8so539201eaf.3
+        for <git@vger.kernel.org>; Tue, 06 Aug 2024 10:38:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722964908; x=1723569708;
+        d=1e100.net; s=20230601; t=1722965898; x=1723570698;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3eoQ0M5an7EI+6DELtKekTJqaOV0yIWXOWq6bqbpKls=;
-        b=I0cZaqNM0fYwolSdDbr+0CtgyzQ1E6owVlMC48bStjWsfdm31HaK1JxqUaqHr/UTth
-         876lpZczYBmfpfMNqGikhfEJnk8a5H0IjyVKubFwfQ6dXnbylywUwwkgttukZgt8/fMr
-         Sq1kLZQaaNSIi0Gm5mMOTjVun/mbqttle8Vl4WQbggIfApxAjvKEe2pzcaIt6QMfNpo0
-         Ag2kxP2UqNB+q/arsGw93qRz2hJTDrI5cGtMKfu5b8XxHXbOzS6YpomxBG7jhiMO4pp1
-         0EZkayLnx0FELxUTvZqRHkwohZrK2RoC7bmFWpj7Hnm4KQv2HXvhB9fXG/ipR22Z2jnF
-         kN5A==
-X-Gm-Message-State: AOJu0YzW8/z621wGF6pzEh2/L29I9MclHht227A/wN0Elb5t0+FYPs46
-	6pTcjZmWUOHqJDUmcLvEHTKRCWvJdikyLfJFbKKBqMCccy4/tezG76tq1bkYNoyXVIm8fTrNoN2
-	LrYCao9CNhnUoffOfKFUO0JGcTtM6kQ==
-X-Google-Smtp-Source: AGHT+IHHViiYgj9rM6c1OJ1LGpZsdGCjRsajWc0I7z1ab2ffBhGq6M7yKAyPWOvYAn1vSloT2I7LKm4aRnN75KYoxeM=
-X-Received: by 2002:a05:6358:51d7:b0:1ab:9820:857f with SMTP id
- e5c5f4694b2df-1af3ba6249fmr1222894255d.18.1722964908498; Tue, 06 Aug 2024
- 10:21:48 -0700 (PDT)
+        bh=MQQgRwlzhl9vHNSYJ2BywKJ/MjynP3bz8nKvzhQJz/Y=;
+        b=BjZnaTjsppuVVmnD+6nR1rEyhL0t3Qjp4kQOAyORJIuo1xLdz9S4L0RyZgbzml3/Mn
+         TnB9kS7ck3TLxRrM0oAyzayzErYvfXfYRJyanymw/QkOg4eJ3NfFHoWA0zDI0YQbi6pc
+         rH7AhH8XHkZWFdeQke8f/TBMJ7WcbnpOfoVVd0+QOO38oLT0RcuMWl8KHEKjQGOWY4AS
+         hLH1qytJsnYkR8Iedcp5pcHwXmjKoVf1AT29+L3R5wAh/+xKNXjlq1fnfscZASiEX/b2
+         WBbJOYEB2h1+ZdU13HqgX81Gv42qczRF5FRBm1QGqeMEep32mHk41fP40HGoMdlygnd6
+         gjmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGGT9+EyD7I81QZZp8uIKXYPOA6AW3SH6PVlMKBR77862Thq2kTTya7m30WF6iT8y+2b54jpNVv0qmrzcwLOi2UpTj
+X-Gm-Message-State: AOJu0YwwgTvU/756EDIfhnOLnu0+WSapmQAeZJ3Tw+q9PK2yaNMpWGbt
+	VE719mmucARD3zPWBacMfrimXg6EwGBMWxMcyQ064T856vqlaWB8HG4ZIaax8XbuIA8RpzNIOvd
+	T/BHrliiBzF42ZU+Bl7Dk4cq6muE=
+X-Google-Smtp-Source: AGHT+IECub67OWoJX/h6MX4JPrfnClKVxcDhwhWQBqpHH6SodFD1Plquvz1MgDxxwoGms4evetk3uNFe6I7FM/BwGrE=
+X-Received: by 2002:a05:6359:4c03:b0:1ac:671c:d424 with SMTP id
+ e5c5f4694b2df-1af3ba1e842mr1713174455d.8.1722965897749; Tue, 06 Aug 2024
+ 10:38:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240805235917.190699-1-abdobngad@gmail.com> <20240805235917.190699-9-abdobngad@gmail.com>
- <CAPig+cSzq+6bua=T7w0M-+7+2zbzfD6ihXLkWfondZ8NbqUG4A@mail.gmail.com> <207c4f3c-c444-4405-bed7-34186efa1144@gmail.com>
-In-Reply-To: <207c4f3c-c444-4405-bed7-34186efa1144@gmail.com>
+References: <20240806003539.3292562-1-gitster@pobox.com> <20240806003539.3292562-2-gitster@pobox.com>
+ <ZrG_A3UQk56aYJ_m@tanuki> <xmqqed71vbps.fsf@gitster.g> <xmqqmslptw3u.fsf_-_@gitster.g>
+In-Reply-To: <xmqqmslptw3u.fsf_-_@gitster.g>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 6 Aug 2024 13:21:37 -0400
-Message-ID: <CAPig+cQPXh-wmNYGSEX_3-C3ydF-O7k22tAx8hB_N55ZYo-aDQ@mail.gmail.com>
-Subject: Re: [PATCH v4 8/8] [Newcomer] t7004: Use single quotes instead of
- double quotes
-To: AbdAlRahman Gad <abdobngad@gmail.com>
-Cc: git@vger.kernel.org
+Date: Tue, 6 Aug 2024 13:38:06 -0400
+Message-ID: <CAPig+cSobEaKf3G4OQ7wHYMXTB23mHdwk2sJi5t9+X3ZX_xcLA@mail.gmail.com>
+Subject: Re: [RFC] usage_msg_opt() and _optf() must die
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 6, 2024 at 6:10=E2=80=AFAM AbdAlRahman Gad <abdobngad@gmail.com=
-> wrote:
-> On 8/6/24 06:02, Eric Sunshine wrote:
-> > We need to exercise a bit of caution when making this sort of change
-> > because a "..." string differs from a '...' string in shell. [...]
-> > [...]
-> > Having said all that, in this case, you seem to have lucked out and
-> > nothing broke by changing the double-quotes to single-quotes around
-> > the test bodies.
-> >
-> > However...
-> > ... changing the double-quotes to single-quotes for the test _titles_
-> > in these instances is actively wrong. In this case, we _want_
-> > interpolation of `$option` to happen in the title string so that the
-> > output looks like this:
-> >      ok 167 - mixing incompatible modes with --contains is forbidden
-> >
-> > By changing the title to use single-quotes, you suppress interpolation
-> > of `$option`, with the result that the displayed titles become rather
-> > useless:
-> >      ok 167 - mixing incompatible modes with $option is forbidden
->
-> Thanks for the through explanation! Should I not include this patch in
-> v5 as the test body is error-prune or should I revert changing the
-> double-quotes to single-quotes for test description and keep the changes
-> to the test body and send the patch with v5?
+On Tue, Aug 6, 2024 at 1:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >> I always have to wonder how helpful it really is to print the usage
+> >> information in such a context. I feel that it is too distracting becau=
+se
+> >> in many cases, we end up printing dozens of lines of options that drow=
+n
+> >> out the single line of information that the user actually cares for,
+> >> namely why the command has failed.
 
-Overall, the changes made by this patch are valuable since it brings
-the script more in line with modern practice and because single-quotes
-around the test body make it easier for readers to reason about test
-behavior. Coupled with the fact that none of the tests broke by
-changing the bodies from double- to single-quote, it's a good idea to
-keep this patch in v5 but omit the parts which break the test
-descriptions.
+Thank you, Patrick, for voicing this concern; I nearly did so myself
+upon reading this series. I always find it very user-hostile when the
+program dumps the entire usage text, thus forcing the user to sift
+through a bunch of noise, when it should instead just be printing a
+simple explanation of the problem to help the user correct the
+invocation. (It's even more frustrating when a program dumps the usage
+text but doesn't even bother explaining the problem[*], as if the user
+will somehow be able to intuit what went wrong.)
+
+[*]: https://lore.kernel.org/git/CAPig+cSK+wLPUDuGf1d41J_F5jQS+J=3Da=3D7kHQ=
+LV07-ZKZW9GsA@mail.gmail.com/
+
+> Yes.  I do not think I found it useful to give the single-line
+> message, blank line, followed by the full usage text even a single
+> time myself.
+>
+> I am very much tempted to suggest us do this.
+>
+>  void NORETURN usage_msg_opt(const char *msg,
+> -                  const char * const *usagestr,
+> -                  const struct option *options)
+> +                  const char * const *usagestr UNUSED,
+> +                  const struct option *options UNUSED)
+>  {
+> -       die_message("%s\n", msg); /* The extra \n is intentional */
+> -       usage_with_options(usagestr, options);
+> +       die("%s", msg);
+>  }
+
+As a minimal "fix" to eliminate the user-hostile behavior, I would be
+very much in favor of this change.
+
+(Retiring `usage_msg_opt` altogether would be even better, but is much
+more invasive.)
