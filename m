@@ -1,78 +1,78 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3461BD50E
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 09:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA331BD50E
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 09:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722934865; cv=none; b=rlCP4hZBwxspRSZDNSxY/4WuUoUyD+1LyOOduZ+mHJXPv7Urcz3ag915TVxQ7yIoS3YT3fUYuWdRVa5YnyuIjORpa6U2Ga8IYMEKVjoccTND+XmUd/NtkhKyvmtSc7qqjLr1Y23/gxGqEyy5aZ+j3Xqd9M9i0wqP3oD6YBLAu10=
+	t=1722934869; cv=none; b=P+wJbW5FGXPg7YqOvc5pEIA4X5fRFsMP40bPj4K6PSwIXxEHoC4lCYg/Dwl0OLnTCTgEVI9Lw8CcZu7h1dfyO7VWAg5pq76HWyutrUKqnDJWZJUUERefUop6Y2LaQX9fDN6zD1VaUvAUph2C3QTDh71EVz4TlAo/iVMdK1Qw1ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722934865; c=relaxed/simple;
-	bh=LsXwKNb/SkPL9zjesth63lH7u1ReIYAqi3Y0jL4C9jc=;
+	s=arc-20240116; t=1722934869; c=relaxed/simple;
+	bh=2HM5uoZE+hYzHA2LYT563SlfBbfBlo9NtasIElQmNTw=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ecx4LK8QdSSWAkN+8ClJfrl+JYk07jDa7HLumLYCnqNU0ZapA2iMt+DzzGhXVdiAsX0a77tsLnbxaqvNM/q3/I0BNnr3qJnQ+mKhltt/boo8UfpY4G6mhFwnAqoyeIRt6C2jfl4g5SbfEXaGX7CcACe1vqN73p4QpDoI0ftbvQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hHnAn6/J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kBQo+7Ur; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=hNdF3zDwWHUey7lLAkrqKqrLaJay4+585Jdscdp9zEyIaoDhFVWSxlPuXWfEV0FQxhphL8KLhNY8lG9Pl/HEUt7gU6QWtH+Ge2cUjm73JGVSBw2M7o3IH5W4ucGs0s2zPQ688Tmtt0vfKz9GMYaIn1QrEPXyk87X8U+AAohJUuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GjcVXf60; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VhulsTNu; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hHnAn6/J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kBQo+7Ur"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A26E51151B53
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 05:01:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GjcVXf60";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VhulsTNu"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 75B0B138FCE2
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 05:01:06 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Tue, 06 Aug 2024 05:01:02 -0400
+  by compute4.internal (MEProxy); Tue, 06 Aug 2024 05:01:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722934862; x=1723021262; bh=/Ep0ODalja
-	yQuNxbjEheYxjWLMvAW8HsJVL2FPltV10=; b=hHnAn6/JiTTYMp9emu6Ra0/RIu
-	F9E23IR2WDRxZJm4UqF1sJx3rsJ4ktmiBmWSwt9BWDJRmhQXB5AXKvJaRLm6HsKm
-	eH+ZLvP08v7QOW+ZNGPrKZ/1xU1HEt77o2YIFTbtZ9swM11jfPX04ukZY6anqT2S
-	AhGJU8R8lvKkE46JQpQOzS2nU+qYVxe/9LkzBKepqwYlYn+1XPGNWyDBlldxCrAW
-	yL0bBAIreOyPH7U4GlCC8HnNIeiIgT2nAZVY4ZWHkZq1qZR+ojnQsqYKeWBAf4WT
-	DNTAE6ifkn5saVv7NbmAf0gMnCB78C4AuC2thV7nnAEIijVlj8Bbp8eLl59A==
+	:subject:to:to; s=fm3; t=1722934866; x=1723021266; bh=0U4X7CCiWf
+	+2XtXjj9VrO0P3GYgUMFVDtHoPPOoMviw=; b=GjcVXf607JrpKX5NvHlRaVzNj2
+	sjDz9QWLS/deXunvjbwQKp6JGb0xmm7MfMbf5mO5Mumi2JuCMnjJC8WI3/wg/d2C
+	HAje+Y6Si8RkaylsAfYHU068+VlZ9G2HPWyM4IepedJb1WBODpaIUinGsyWHrjRV
+	tY8k5NCaiGf8ijlfF96MQVMYqfAXn+lTHQISG4iLv47go8oVZN2obcKGDPfi+xtU
+	CA/sNI+fOLsRZUxGjAw1tPZaBYyQPskVHoYm2ih55ZKQV8PBfBFQ/wQQNVE5J0ZC
+	759YMSu85CRd2rvrsUhVxtp2IyleUpnTwf4S1/mMPtFiqiMtJKSdf/HEfDFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722934862; x=1723021262; bh=/Ep0ODaljayQuNxbjEheYxjWLMvA
-	W8HsJVL2FPltV10=; b=kBQo+7UrtAjaVm41NF/Vd7RQA/IhgpNxETZQX3/bm9XK
-	ub2F4BqIBp04rDX12PxfipBS/L+QTxh5Xajzar/wtYtPODeT9tJcdYeqkATJR8Ou
-	vDP+wTg7hJMXxUrja2PGcdo6AUGjdzlYyab3VJqAKxA1t/EGVIAw4auNctgmsTNn
-	EVAF3SYvG+h2Dbv7F8C/bIQLuzNK8v2ai97i5MRKh7Gj7cL4CmbkBVJgwpn6b6US
-	zc5Oix755lJy1hnfrLTBdowElDDZE51QQbYwoxS5lmrRxGHD5nSpV8SbMsO8iraq
-	fGuOo2HI6xStosCs8bJyxOaaF9Is3vK33p+Kj3L0vA==
-X-ME-Sender: <xms:TuaxZqUVueU6MpyeH952eOfrDDmiihPL_OQg4XsMBX8cUXTvtiPoVw>
-    <xme:TuaxZmmRUmupVI9pDdH_1pgnoEHJqApdkeVCBRZaT8VmW8XC83osaevJY4vPhQYN6
-    z_R7-Qm-TNUDMUYPg>
-X-ME-Received: <xmr:TuaxZuaX-PJq4NA5hK8iABVsLTbciBz5mFGBrz2lyoo9Isq8ymCT1C_8dVXM-rM3hf6DFS2LkjQr2eEUr2onudfoh5mi-e9Gd_fucJfWZhhq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgddtkecutefuodetggdotefrodftvf
+	fm3; t=1722934866; x=1723021266; bh=0U4X7CCiWf+2XtXjj9VrO0P3GYgU
+	MFVDtHoPPOoMviw=; b=VhulsTNuQ4yWBVThhvS/3OFsfbyuRsnwFzbYFyBh46zk
+	+vmMfgTlRyuObkBxaeyyRwFRPvGblU+TgL4lCZlgrqXQipl0DFKcQVMptkC45daI
+	7qvvCOPcJiEjoZuD5Wwjm9MLqrSZCpy0it/yRFpum777/YA4lra1OMX+Vy3PgKkJ
+	NExV/qBzMjhUM22KiEYQW4sBE4KIEB0KiWV8IAOln2w5w8h/h45RKglLmDj297os
+	DWBsWBAD/pcpLXQmLIRcTGCYbkqYQDDQG/eqfoeiA3AOLLf/vsMq1xCWFEjDS6O1
+	/g7e2N4Linieri9zzXZ9uX2eN4cqm9SsEjzMomuQwA==
+X-ME-Sender: <xms:UuaxZkE5H1OB1M7J5FHkmtK_Q9_Rd6TNRnHbe886Qk0WkkN1neT2PA>
+    <xme:UuaxZtXind98ZeMW3KqY5ZICmWCv44ujnPPgLpl8NLVjcb_7ZkE7ItvBBSfFvFJVr
+    ApZV7ucqtV47fLvUQ>
+X-ME-Received: <xmr:UuaxZuJKwdlonYJFy6bI-D5jfWgo0K0qcrIbyklXtJNz3_mPlIs4opq5ImrHP80O9bGw-b1fiMLq8H_uI2FoRtW0f9F6XxL67_5-tyMP0FjA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeekgddtlecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeeiiefhtedukefhieeukeejueeivdekudfhfe
-    elhedvfeetgedtfeevgfeutdetfeenucffohhmrghinhepughifhhfohhpthdrnhhonecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:TuaxZhW9PI203vbiazLDg7-N5Gc4Rm7u9BVo0guiM18jG_JO_-ihKg>
-    <xmx:TuaxZkkkXXYQ2BiSIDbrdd4RGlEms2yXs3Co8wzteT0lkQT_nJqXiw>
-    <xmx:TuaxZmeldFa3wZ4hld_2xWONWXB01d6C0jNXe55hdJN_VRWl31m9nw>
-    <xmx:TuaxZmGI1tuHyI0Ok1hiTX52ayGN7uj0sPIbqKw-5Gd9JZWE5I-shA>
-    <xmx:TuaxZgt2pGiQm8VEi0GQR5jJsiesLmuEm3H7OXNxjJp9Ezc0N1S4Cox4>
+    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:UuaxZmFaz6lnhLHnG4Xob_QxbaYRgKnmFltCI-3DxyBPDug26VvV6w>
+    <xmx:UuaxZqVlLESuZpw_akimx8LNiynbHdKgBvYXVXPAiCKAGcw5aBQxVA>
+    <xmx:UuaxZpMhPDUHUkZpm90-vTtIISbMSZ6WDx2T12dKywzCYxJT3tLYtg>
+    <xmx:UuaxZh3v5ZB9LrHU6BVZ9v_rK_fXtMQs4h027xC0a3krcsqlSlhUwA>
+    <xmx:UuaxZtfwOBcEkiGRu9LWg6Os3UfY5pcfidujn37f49XMsy4QquLTbho3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 Aug 2024 05:01:01 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 Aug 2024 05:01:05 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 483e40bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5b85175f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 Aug 2024 09:00:59 +0000 (UTC)
-Date: Tue, 6 Aug 2024 11:00:59 +0200
+	Tue, 6 Aug 2024 09:01:03 +0000 (UTC)
+Date: Tue, 6 Aug 2024 11:01:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 18/22] builtin/format-patch: fix various trivial memory leaks
-Message-ID: <bf818a8a79385af739345e22c74550acd5f31a0b.1722933643.git.ps@pks.im>
+Subject: [PATCH 19/22] userdiff: fix leaking memory for configured diff
+ drivers
+Message-ID: <ef780aa36039560fd069ec97ce87665eb0775200.1722933643.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,125 +81,223 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GdixcVZ0ev1XkFap"
+	protocol="application/pgp-signature"; boundary="ckioDxoFjiVxPLD+"
 Content-Disposition: inline
 In-Reply-To: <cover.1722933642.git.ps@pks.im>
 
 
---GdixcVZ0ev1XkFap
+--ckioDxoFjiVxPLD+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are various memory leaks hit by git-format-patch(1). Basically all
-of them are trivial, except that un-setting `diffopt.no_free` requires
-us to unset the `diffopt.file` because we manually close it already.
+The userdiff structures may be initialized either statically on the
+stack or dynamically via configuration keys. In the latter case we end
+up leaking memory because we didn't have any infrastructure to discern
+those strings which have been allocated statically and those which have
+been allocated dynamically.
+
+Refactor the code such that we have two pointers for each of these
+strings: one that holds the value as accessed by other subsystems, and
+one that points to the same string in case it has been allocated. Like
+this, we can safely free the second pointer and thus plug those memory
+leaks.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/log.c           | 12 +++++++++---
- t/t4014-format-patch.sh |  1 +
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ range-diff.c                     |  6 +++--
+ t/t4018-diff-funcname.sh         |  1 +
+ t/t4042-diff-textconv-caching.sh |  2 ++
+ t/t4048-diff-combined-binary.sh  |  1 +
+ t/t4209-log-pickaxe.sh           |  2 ++
+ userdiff.c                       | 38 ++++++++++++++++++++++++--------
+ userdiff.h                       |  4 ++++
+ 7 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index a73a767606..ff997a0d0e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1833,6 +1833,7 @@ static struct commit *get_base_commit(const struct fo=
-rmat_config *cfg,
- 			}
+diff --git a/range-diff.c b/range-diff.c
+index 5f01605550..bbb0952264 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -450,8 +450,10 @@ static void output_pair_header(struct diff_options *di=
+ffopt,
+ }
 =20
- 			rev[i] =3D merge_base->item;
-+			free_commit_list(merge_base);
- 		}
+ static struct userdiff_driver section_headers =3D {
+-	.funcname =3D { "^ ## (.*) ##$\n"
+-		      "^.?@@ (.*)$", REG_EXTENDED }
++	.funcname =3D {
++		.pattern =3D "^ ## (.*) ##$\n^.?@@ (.*)$",
++		.cflags =3D REG_EXTENDED,
++	},
+ };
 =20
- 		if (rev_nr % 2)
-@@ -2023,6 +2024,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
- 	const char *rfc =3D NULL;
- 	int creation_factor =3D -1;
- 	const char *signature =3D git_version_string;
-+	char *signature_to_free =3D NULL;
- 	char *signature_file_arg =3D NULL;
- 	struct keep_callback_data keep_callback_data =3D {
- 		.cfg =3D &cfg,
-@@ -2443,7 +2445,7 @@ int cmd_format_patch(int argc, const char **argv, con=
-st char *prefix)
+ static struct diff_filespec *get_filespec(const char *name, const char *p)
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index e026fac1f4..8128c30e7f 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -5,6 +5,7 @@
 =20
- 		if (strbuf_read_file(&buf, signature_file, 128) < 0)
- 			die_errno(_("unable to read signature file '%s'"), signature_file);
--		signature =3D strbuf_detach(&buf, NULL);
-+		signature =3D signature_to_free =3D strbuf_detach(&buf, NULL);
- 	} else if (cfg.signature) {
- 		signature =3D cfg.signature;
- 	}
-@@ -2548,12 +2550,13 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			else
- 				print_signature(signature, rev.diffopt.file);
- 		}
--		if (output_directory)
-+		if (output_directory) {
- 			fclose(rev.diffopt.file);
-+			rev.diffopt.file =3D NULL;
-+		}
- 	}
- 	stop_progress(&progress);
- 	free(list);
--	free(branch_name);
- 	if (ignore_if_in_upstream)
- 		free_patch_ids(&ids);
+ test_description=3D'Test custom diff function name patterns'
 =20
-@@ -2565,11 +2568,14 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 	strbuf_release(&rdiff_title);
- 	free(description_file);
- 	free(signature_file_arg);
-+	free(signature_to_free);
-+	free(branch_name);
- 	free(to_free);
- 	free(rev.message_id);
- 	if (rev.ref_message_ids)
- 		string_list_clear(rev.ref_message_ids, 0);
- 	free(rev.ref_message_ids);
-+	rev.diffopt.no_free =3D 0;
- 	release_revisions(&rev);
- 	format_config_release(&cfg);
- 	return 0;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 884f83fb8a..1c46e963e4 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -8,6 +8,7 @@ test_description=3D'various format-patch tests'
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup' '
+diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-cachi=
+ng.sh
+index 8ebfa3c1be..a179205394 100755
+--- a/t/t4042-diff-textconv-caching.sh
++++ b/t/t4042-diff-textconv-caching.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+=20
+ test_description=3D'test textconv caching'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ cat >helper <<'EOF'
+diff --git a/t/t4048-diff-combined-binary.sh b/t/t4048-diff-combined-binary=
+=2Esh
+index 0260cf64f5..f399484bce 100755
+--- a/t/t4048-diff-combined-binary.sh
++++ b/t/t4048-diff-combined-binary.sh
+@@ -4,6 +4,7 @@ test_description=3D'combined and merge diff handle binary f=
+iles and textconv'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
 =20
+ test_expect_success 'setup binary merge conflict' '
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index 64e1623733..b42fdc54fc 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+=20
+ test_description=3D'log --grep/--author/--regexp-ignore-case/-S/-G'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_log () {
+diff --git a/userdiff.c b/userdiff.c
+index c4ebb9ff73..989629149f 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -399,8 +399,11 @@ static struct userdiff_driver *userdiff_find_by_namele=
+n(const char *name, size_t
+ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+ 		const char *v, int cflags)
+ {
+-	if (git_config_string((char **) &f->pattern, k, v) < 0)
++	f->pattern =3D NULL;
++	FREE_AND_NULL(f->pattern_owned);
++	if (git_config_string(&f->pattern_owned, k, v) < 0)
+ 		return -1;
++	f->pattern =3D f->pattern_owned;
+ 	f->cflags =3D cflags;
+ 	return 0;
+ }
+@@ -444,20 +447,37 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+ 	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+-	if (!strcmp(type, "command"))
+-		return git_config_string((char **) &drv->external.cmd, k, v);
++	if (!strcmp(type, "command")) {
++		FREE_AND_NULL(drv->external.cmd);
++		return git_config_string(&drv->external.cmd, k, v);
++	}
+ 	if (!strcmp(type, "trustexitcode")) {
+ 		drv->external.trust_exit_code =3D git_config_bool(k, v);
+ 		return 0;
+ 	}
+-	if (!strcmp(type, "textconv"))
+-		return git_config_string((char **) &drv->textconv, k, v);
++	if (!strcmp(type, "textconv")) {
++		int ret;
++		FREE_AND_NULL(drv->textconv_owned);
++		ret =3D git_config_string(&drv->textconv_owned, k, v);
++		drv->textconv =3D drv->textconv_owned;
++		return ret;
++	}
+ 	if (!strcmp(type, "cachetextconv"))
+ 		return parse_bool(&drv->textconv_want_cache, k, v);
+-	if (!strcmp(type, "wordregex"))
+-		return git_config_string((char **) &drv->word_regex, k, v);
+-	if (!strcmp(type, "algorithm"))
+-		return git_config_string((char **) &drv->algorithm, k, v);
++	if (!strcmp(type, "wordregex")) {
++		int ret;
++		FREE_AND_NULL(drv->word_regex_owned);
++		ret =3D git_config_string(&drv->word_regex_owned, k, v);
++		drv->word_regex =3D drv->word_regex_owned;
++		return ret;
++	}
++	if (!strcmp(type, "algorithm")) {
++		int ret;
++		FREE_AND_NULL(drv->algorithm_owned);
++		ret =3D git_config_string(&drv->algorithm_owned, k, v);
++		drv->algorithm =3D drv->algorithm_owned;
++		return ret;
++	}
+=20
+ 	return 0;
+ }
+diff --git a/userdiff.h b/userdiff.h
+index 7565930337..827361b0bc 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -8,6 +8,7 @@ struct repository;
+=20
+ struct userdiff_funcname {
+ 	const char *pattern;
++	char *pattern_owned;
+ 	int cflags;
+ };
+=20
+@@ -20,11 +21,14 @@ struct userdiff_driver {
+ 	const char *name;
+ 	struct external_diff external;
+ 	const char *algorithm;
++	char *algorithm_owned;
+ 	int binary;
+ 	struct userdiff_funcname funcname;
+ 	const char *word_regex;
++	char *word_regex_owned;
+ 	const char *word_regex_multi_byte;
+ 	const char *textconv;
++	char *textconv_owned;
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
+ };
 --=20
 2.46.0.dirty
 
 
---GdixcVZ0ev1XkFap
+--ckioDxoFjiVxPLD+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5koACgkQVbJhu7ck
-PpTE9A/6Al0Puz8789n0ArKPYT5gUv5JpnhmI/24zfBnKPkGicoA0zrAMFQiwsB4
-zDkfruylCGgdeMSbi0Bk6CNH/qxOGTAJOECsDLnGLlrrXsJZnXSIEczUKGW1JCmX
-McRm7IJNMgm5j4zRPdBZrkOQvRO5zhr+pLLkICBwBL/4FcVQorITrCMckfgp3IGV
-yBoQfFH9DJxpEmGbjpeq33DtfrSEfhFryZ1qzQzh3eMuAtlLXgOPQUn2v2tG7gb9
-L2a5ZE1ZnUrvzYg8UgPvVWDFoQgkSaw3VEYQ1ABxPwxWd1l7UYCuA7Z90sFAKCv3
-HfbmlTUfR7Ivm/rFLFMg9k/B6ZPEm39DNLGoQo/adCeb4lQ9IV3cklhIPMhxwh26
-AEc8wLyMz57r+TvrkY+HeUzqtB/cnyrVeOcrVgw08SrhpW9qtClTK70klHJ7p7hF
-xg2WCNFD5wG61GvUaXBcATBy1sGL4lzmTxDsLUU5pCvc7qAKGt8PjSu2wuCryaOn
-oVOoSdEMStq4dYiFHefw39j8QrcUYja6ueStkU368MAiQQv6I6ckkolcV5KAkN6i
-20cQLWa/X3NhkvIlL1RnkpYJP9rJrwptGzApqqweMdZ5HMfme1q2YkNXGspXE2v5
-UKc4FYN+i4AD1sosbuSXkYoqQT/TjcActbLNzfjp6L2ZCJ9I8FY=
-=ecgd
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax5k4ACgkQVbJhu7ck
+PpQpSxAAlscTVgDqFhLQ1D5mkchBeBHr8tadx/qaPUhGFZUYuxW9OXyDy3xY4a/n
+dWjNc/wyEu5XC8S8Adaw8UX4zD5ooLnKGmvRjGD/omQ5cyz/DyX7YF6r0TSwRV4A
+jbniTTiJlUtHOtG1+aJigWfBBCpjD0TR78OLMJotJ8vkNlU31TGpTqhZuhC4Jd45
+IZ0uQYShQFTdllGv4JBH2AFpcbxXcOK6txdhPcrgEZ/Fp8AvRPa6h0pr8q+xRWnR
+TlUg0Rss4kB5IHMFb6UWRkd7DcVBYxznUk5VPXDgjz7fVYeixdnAeY/32aeOVHLL
+ZM03NTsoDNMmZmlSLFhXCwjwut+sO4IMGXbz7mVcagofWmNMHBxZ7kFAjKhjMKmj
+mG/b2mfAAzb9XOUlo/8/6VFPXd6dJ61L8U+yruBwJmKLvzZ9EcR/NCvTNkjHLNbc
+JPNtAOE9G622vyaHP1+W6/DJtquTIpwxwSgbLNBq21rJ307T7mg8O7aA+gZf1o40
+RV0Bxq2hPuWSYiOj9ZzTmyhObs4HLOKh9aWDf4AxsqXdlNI6y5BkjtvFjBhxTyit
+lQWqDMkeuCRoZskeZOGv4MpwzTooiu3dW1lPCOQaOGzflETVUiB73nXsrhcg6ruX
+49N1Yg+jViZXqxIMX6QOhbn2IjgFeqt15xAQTarBaBFaVIjNgJM=
+=xcgi
 -----END PGP SIGNATURE-----
 
---GdixcVZ0ev1XkFap--
+--ckioDxoFjiVxPLD+--
