@@ -1,138 +1,112 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C28F4FA
-	for <git@vger.kernel.org>; Tue,  6 Aug 2024 07:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1211BD4EE
+	for <git@vger.kernel.org>; Tue,  6 Aug 2024 08:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722929586; cv=none; b=j6MdJOLM1HaDv9sQJ8txm/ADz+NbTt0MzcL2lF0o+CXpkvkoJTMYgxApPG2EYQuH7lOEjpuHe97c1UxUM2LOZGMeuU9OLcOWa2p1Lpqb2Z6zgTb8UxFLYrOJo/nCe1mqHCdYmL9CNeWajXH+hQTlB+W4WQdK0HYzR9hgyQgIVH4=
+	t=1722933520; cv=none; b=hUj/FqYutuppFYMWMhg/k28PUlyZUzoAaVneylWO5med6XR1vcL2uiHuTELZjiZy9x7C+CGYV+B+FuT2lab733Tk5/bkBbaAoQjE/RRJEJ3404cNqJ/nxgv5OA5GkHG24DkwwJs7VipfkTD5ZythSrlRJeeomZiQo/VZWnXp/YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722929586; c=relaxed/simple;
-	bh=ftnET7EQvCg6uyGMGQ+gOZChrDlQYQQF1xvxlvArCm4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JcCQJriZ6a8+zbdZL22mcwfNGMbbeJ4y5rlityB+wQxGvbgFECgZ+VbZsP1SWBPqh11rzoYvsX38a9ZIVIvhI0GOq/AoC813RpsnmNn3C6RTTg6dV0p/OVc3A/+I80mgDZiLGgMpoNh0ZdTBWJoR9OV1Kin8JSTbGCwXOA3NTvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pCLxTcr6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fjr6ciKK; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1722933520; c=relaxed/simple;
+	bh=v64rAACmOhxobXFLbUoNopGGh8kOWJM0nWAuGNfVZ0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tI2AT5FV+r6KvyPDuPmTeMlw2MJGwTUNNmVZbZsVKbrJsuDdM6xtKRSBogJxTCsNUAQxS/PrgDxgwuCULEtSC4Wxg8/AqZQalbr3szAHme2qv/uEzMfITjeNQm+fm8pXimFc1J4gWhMSmDpHOUzQzoEP+3k5Y3Q/j+65hWbbe2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9GH5vSs; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pCLxTcr6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fjr6ciKK"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 3141C138FC38;
-	Tue,  6 Aug 2024 03:33:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 06 Aug 2024 03:33:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1722929584; x=1723015984; bh=WyGSQj0ESK
-	e99bjdrFb64uizrZ4m047DRJ1biKfdsFY=; b=pCLxTcr6ep9gLODc60uz0T5LNR
-	8anv8vpQRao/2qqSbNbxC0FPOBAdWamp/nx2rTzNFxrVhLCPKNQoKuGhdwD3hHMQ
-	943rhyeVyUo89fNMRquYm2dtMmGnWM88Iaw3ZOcT6YNEu6d1sLOz5Mnvtw6sGK4Y
-	e2ypzFR0ap3AQ3yHrydE1ohKDBVRcc8qXruP7FCsxHzzykbCZiGYB1FDcWDNYdrm
-	EAvZsLjyG55rD846dY5ckNdTHoFmlq3blAJwRVJkFlhPqWRdiNvhzmYVPAbA6vrW
-	/QTIvnTt/xH8nxzMgAFlWFWnQtbNXoBEdijqK2FoZAT7Uet4Sn19WDr8mYlg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1722929584; x=1723015984; bh=WyGSQj0ESKe99bjdrFb64uizrZ4m
-	047DRJ1biKfdsFY=; b=fjr6ciKKha8A9oyvb/3wQAD85t64y+NVkvd/Lle+RQTh
-	VjS7sgH3TUZDvh8XGPmIdZZPF7zK0AutniX3zE2BsQc/wKWJ4IP38G43bPZbfowE
-	24IANd8PlmTvblFAX2H/Wdc8SUH+rDvk7EA7XO1lmu29A7ztlAYH7uYQ8OckiUYK
-	W4abv+wr/8kuQFmBDZrgoYMroNPxigYRC57F/hh75OEhL+bUZNmWtZnz3XtyHJ8o
-	uxknVk7xggkXXctsdS9VvmJ4LxsFxxHo0fR6E1uxl/HMsPzbPuRxv06VXkxGqL92
-	fADhx4P9dm8bbCx7h8De/A7ciAavgCF+Qcz/eUOCGA==
-X-ME-Sender: <xms:sNGxZkmvBJKUuTkzUVBJcpXvFIGf5oo6zklDz72TG3GWy2vvjPgEXA>
-    <xme:sNGxZj1UvI6Cfvtfj5VbcVGsmjxJLKUcrh93JLF6U10ZGeLZp4voPr9si_YTpNs5Z
-    nP4RP28GdXHVGJrDw>
-X-ME-Received: <xmr:sNGxZioEe3_osR8Zwc2groiGELhRd3eUUxMJkzhBwv1dNjU3NNuDblkPUuVy0ukrKn7PwN-A31-yaqoWl-4fEs21Aljz-34ljiGJ7-48qbqa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeejgdduvddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:sNGxZgnuuVR4zyorfI3pnPDClvdO2pIQc1cPGPESad-J5CcGenszWw>
-    <xmx:sNGxZi00lpnx3yPwcDmZ1pjd4bM3fxeYE8-zqVP0z9JIm-K2b1jFJQ>
-    <xmx:sNGxZntBN_iwk9iQmUG1LlI8em0Mn-3AHyaeQSIoBTivzTpHrVU0Zg>
-    <xmx:sNGxZuX0XM70iGU3gA1zH0BflubqBPiGmdvDBzssPLeAJfTdd0ORlw>
-    <xmx:sNGxZsp4EJV5D2LVyRPy6R4Dr0YRRIsEOYGPO0dagL46HAzrZSH8gU-f>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Aug 2024 03:33:02 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0a018877 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Aug 2024 07:33:00 +0000 (UTC)
-Date: Tue, 6 Aug 2024 09:33:00 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [GSoC][PATCH v15 8/9] files-backend: add unified interface for
- refs scanning
-Message-ID: <ZrHRrEJmCdyL8l1i@tanuki>
-References: <ZrEBKjzbyxtMdCCx@ArchLinux>
- <ZrEB4PjNPM6SZspS@ArchLinux>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9GH5vSs"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a20b8fa6dcso27563485a.3
+        for <git@vger.kernel.org>; Tue, 06 Aug 2024 01:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722933517; x=1723538317; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BUzjvLNCSCgcrwFKM3TG9RSSu2iprcNSsvt1agSEVRw=;
+        b=P9GH5vSsuNzB/8wDm9Nmy2w1CMorFWZuY3crLUBMGUeGPlUq/rizF7Fkes76issEDH
+         lv2VxRMrXI8O9BtVRok1h/0FlCIvmvQ0h9L0aI9b+F7lEJy4zv34ILgVanwQRXeJpyZq
+         M2OnIhhngq35xWuxYTNQMwOUOGeLDk5XG5hIizoLXmzP5yAnOCobhnXrgwuMUIPNeYIC
+         7/MdY4l22moOjOgc/Fe4lbYkqRDI2CwatMSvlZc5/jrM0sZ7yaX76yrTbOd/KRkENjhu
+         bLZQbWGCTWzS2GzeU9wggegKarXCogcQToAqBq/QfmaAHfVPXIFbsMY6juRFMwr2n4xV
+         O37A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722933517; x=1723538317;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BUzjvLNCSCgcrwFKM3TG9RSSu2iprcNSsvt1agSEVRw=;
+        b=MEOcNM4SHqXfphMa/aa/fRrkmPSmjTWuTr5SitxThHnOTeybBFSaLxaIzAa0IBfuBh
+         UbV1xQEI+kS5K1Fgy3dZBXnjp0D4R468MWAnnF0b5uffXHz6POO6cjNu+zVCKI+xxtW9
+         B9wy0PR/hxxWyqYvsbrFrRfgpuTaRDndKaUtQeox3OdyMzYE0D1XM9yT9/Z47FQZEuHm
+         UbjjgNIYl6ytY0GUOr3x3Bq86Wjp/c4sroBe7hsr8ZCbL7yXTtbaF18N/2FSs7ikxBfc
+         6bazU3WFGTm1nT20VdY3itDodjyAKDMmYNJ947oKxc2OgCf9X5Asr1+zwYDdTozauy5W
+         Sj0w==
+X-Gm-Message-State: AOJu0YxmMCj7ejr8K8ohS0QMLhnBZPYUzKijyzjwXYc/pP7vVysjRjF3
+	Ie0xGJj4Xz5Knx/HkKjClaAWe9afRrJeztTYM7SgXbfb1zwEKNmI2VEjo0Vd
+X-Google-Smtp-Source: AGHT+IELYJvS41jxGwt/jfdAPMj1rFk2xCagJEEsRZu/9f0PTTiGpNm9b7L0GBDbYdBJsFAJeB89JQ==
+X-Received: by 2002:a05:620a:408f:b0:7a1:e214:34df with SMTP id af79cd13be357-7a34efdda59mr1669341685a.65.1722933517263;
+        Tue, 06 Aug 2024 01:38:37 -0700 (PDT)
+Received: from [192.168.1.6] ([197.40.163.172])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a34f6d7ed8sm428638585a.17.2024.08.06.01.38.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Aug 2024 01:38:36 -0700 (PDT)
+Message-ID: <3cba795c-631b-4e86-a1f2-ddefe76ef0f4@gmail.com>
+Date: Tue, 6 Aug 2024 11:38:33 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2HX1ZFmBBTpj0aYw"
-Content-Disposition: inline
-In-Reply-To: <ZrEB4PjNPM6SZspS@ArchLinux>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/8] [Newcomer] t7004: Do not lose exit status to pipe
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+References: <20240805235917.190699-1-abdobngad@gmail.com>
+ <20240805235917.190699-3-abdobngad@gmail.com>
+ <CAPig+cS6-gqZbJSz3wBcummyycJVudKybVZW=D33WHk-Fa9ytQ@mail.gmail.com>
+Content-Language: en-US
+From: AbdAlRahman Gad <abdobngad@gmail.com>
+In-Reply-To: <CAPig+cS6-gqZbJSz3wBcummyycJVudKybVZW=D33WHk-Fa9ytQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
---2HX1ZFmBBTpj0aYw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, Aug 06, 2024 at 12:46:24AM +0800, shejialuo wrote:
-[snip]
-> +static int files_fsck_refs(struct ref_store *ref_store,
-> +			   struct fsck_options *o)
-> +{
-> +	files_fsck_refs_fn fsck_refs_fn[]= {
-> +		NULL,
-> +	};
-> +
-> +	if (o->verbose)
-> +		fprintf_ln(stderr, _("Checking references consistency"));
-> +	return files_fsck_refs_dir(ref_store, o,  "refs", fsck_refs_fn);
-> +
+On 8/6/24 06:13, Eric Sunshine wrote:
+> On Mon, Aug 5, 2024 at 8:00 PM AbdAlRahman Gad <abdobngad@gmail.com> wrote:
+>> Split "test-tool ... | sed" pipeline into two commands to avoid losing
+>> exit status from test-tool.
+>>
+>> Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
+>> ---
+>> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+>> @@ -97,7 +97,8 @@ test_expect_success 'creating a tag with --create-reflog should create reflog' '
+>> -       test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog1 | sed -e "s/^.* //" >actual &&
+>> +       test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog1 >actual.body &&
+>> +       sed -e "s/^.*   //" actual.body >actual &&
+> 
+> It's not just `test_tool` we care about; we also (importantly) don't
+> want to see `git` itself upstream of a pipe, and there are many such
+> instances remaining in this script. Here are some common examples:
+> 
+>      test $(git tag -l | wc -l) -eq 0 &&
+>      git cat-file tag "$1" | sed -e "/BEGIN PGP/q"
+>      git tag -l | grep "^tag-one-line" >actual &&
+>      forged=$(git cat-file tag ... | sed -e ... | git mktag) &&
+>      git tag -l --no-sort "foo*" | sort >actual &&
+> 
+> By the way, these days, rather than:
+> 
+>      test $(git tag -l | wc -l) -eq 0 &&
+> 
+> we would say:
+> 
+>      test_stdout_line_count = 0 git tag -l &&
+> 
+> which nicely avoids placing `git` upstream of a pipe.
 
-Nit: another empty newline.
-> +}
-> +
-
-Patrick
-
---2HX1ZFmBBTpj0aYw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmax0asACgkQVbJhu7ck
-PpQZjQ/+MY40uuULXmEd9mCC5R4yi/iaQ+5onmer8f0vaHEMdkst/kwfODshWcub
-XFW8bPeo19qhFhF8Aq9X0yE/8q5kb8/9NzvoXE5F8NlPaKIsrFlaE0qMSv/OoUGu
-u4+qWP8hR6RxdhX1H6nkgEiVS5avuijYVXBri/ioxjBnjKojX078D6JOere2pD6Z
-cYtc7996eTlTsIa0Ze8xlFjFByKbzStHLSg7aaDkMjpl9I1JE134FcA/01x8S7vB
-rMCb+0hczz3Ld6RMVR7xjsni3u0uFZYwgZzWiE4yzHiTIzIrngNm00ZnBShe1mMm
-mGhUNw7DENPUCDlAjb5n3tb0Zg1g6R9Xs22BsTLX2bNi0XmMfUtjnN7XfufwaPBV
-Ie9OxJwDiXRYjn5ygNy01CERngZc8/BEF4L8DYVA43TUI++cW+1FmGOHoqXiz0VG
-N4utgrSLd+ube9W9yUQNj+/cURdQ/DsLbfaJOiHO47kDbSl4uDfLYRuC4eIpFn+v
-npLp0Uiz7tV/lpqvMKyLibpiH0Sg3f0nrZscpTx3tyrFHBqPLQaAOd8i2t45ldoj
-NcwTuFiDpuitmgZDD/MQruGnkoo2O9NcEx1tx/QYYPSfIqC0pCQrf8LMxf5h6bsJ
-26/DeFDNZCKEgg4LejFdBTIg3JJvZlkC8SjEmh0nYgkhuUn0fTY=
-=U6w+
------END PGP SIGNATURE-----
-
---2HX1ZFmBBTpj0aYw--
+Thanks for the review. Could this be done in a separate patch series? As 
+modifying a patch in the beginning of a patch series requires lots of 
+time to adapt the rest of the series to the change.
