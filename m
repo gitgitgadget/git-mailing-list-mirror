@@ -1,103 +1,142 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C68B13A3F6
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 16:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D938113C801
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 17:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723049984; cv=none; b=NYAp8s5Vt3YK0KhJmcRV6Xbl8nlcvn8wxjS30944gJouqxCnOlz5POQwI7VMCT22vvXAKIpzNb1ig3p5Q/u8UL/0ZdoS5OdF2h1WcI7jpvrLBMkqSto+KhK8bb3vo74Zo9s1DVYSGiNVBm1jiLSAswaFmxgDpHxQjsKQgZebtJY=
+	t=1723050201; cv=none; b=TPu7EkjeHvDnYiRFMCJ7jjqM2eG7iPZYSCSxF6Uyb50kPfa3kAo0QK8i5w40Eon/SvvHS5WQ9d9rgt1x2Fd7Iipqr8IU83zSxYv+wnENtz9I18EpH8sOJ/YDA54ooFjDNrBXgFtY7dI1yWUoHM5NsZBHoRG4NAatn5yh8aK1EHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723049984; c=relaxed/simple;
-	bh=NfEORSqcXcIjnYCUtOuJNhnGU7ovzIlwfmLAN3Ft9r0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IpbYm4viDC8VrpZBSMga7Se71e02c5g9D/mbOOn/R8bdzQo963T72z+rSlIo0Zh01TMiCO9SZ6u30som3zfU4wOo/xFC8VJWywCmTvH2UdOugMSdgRZvMC8+AkGBiEKDBFwBPjNJg5SM+sR081FV5BOpWI0XYVwcEYnGmj2pep4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ihP3u6vH; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723050201; c=relaxed/simple;
+	bh=I1sfnzcf1z0dlOjUfYR52r9g8XLTdTCPiwCZlWaqdqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pDOYRgzYpjLW65ELKhYzOPQ3Dc4Vlvzh8hRMe0wp1A6idDRmoyybq3NA7/slmAC7q/hby//b+l8U1md174mPf2Z/LsB2KgSuG0RD6sZ91rX7gJKXYWz4Iybo8uGxIV5tre082fLNz/ikgcHY8uthORSy50szipUGI1BBMX6+NU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I8A4yhgi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kKCL34t4; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ihP3u6vH"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AC9218EB9;
-	Wed,  7 Aug 2024 12:59:41 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=NfEORSqcXcIjnYCUtOuJNhnGU7ovzIlwfmLAN3
-	Ft9r0=; b=ihP3u6vH7q3TqLfbIRGn6odAcCKS0oQAAsAzh5cUaxL09LzIYosIbg
-	J0ISG2eWhzvKSJphMZPjJRZMeecrjR/SDKr36Na2pvCEMEUjzyfqJ+yjG5RHquiX
-	iKkrbEHJnp9sSPW0muF20RZPB5ie9q4+0Vh97PIbR5dJDjuimCV2g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2385618EB8;
-	Wed,  7 Aug 2024 12:59:41 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80C5B18EB5;
-	Wed,  7 Aug 2024 12:59:40 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I8A4yhgi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kKCL34t4"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id EE697138CC97;
+	Wed,  7 Aug 2024 13:03:17 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Wed, 07 Aug 2024 13:03:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723050197; x=1723136597; bh=/Cc5Sm9c4T
+	hH2hq+kehaP0gXztiusVBLkMB5ezQ7h3I=; b=I8A4yhgiXni+DHLrPxSGiZa+wz
+	mM4RLIeifLuGoalonIpBTp546BWVL9+TiKV0q886RQDW1zrvVtNj3TpoNocF/PrS
+	B4ZBsWF9NWh7si41nfOaPXpT36D0s4F6K3DrbT6khXL2n64lmMlD0vVaarv2kLKn
+	jBA4LgJ0NdT0V0x9q7s5w1Xv1O0vQ3JNpKXThP8X/CtAWwvYozTQcItRrzlCla/v
+	me9JtypzU/pnZFE2SXEKy++mKO5Gw2+x8D+ZWXmexY2k2GbmpqU58jc0LJHQG++D
+	KM6gHCTuo7Y0InmmNc1RrCEAjxJVKyIoOMA+8kHnTdoEkMZA8EBNF8TbEQEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723050197; x=1723136597; bh=/Cc5Sm9c4ThH2hq+kehaP0gXztiu
+	sVBLkMB5ezQ7h3I=; b=kKCL34t43ahNDQefdIi0rop9ntoXbPuRTIly6wMN1VNk
+	ajTKMSLH6O8Vdr4KochXACVbrUzFaJQpq2Cl0t61qyfhym0y100ev2fMzg1NjwTK
+	zH9OLHy+AK7iMZFUZFq4ANgx88FF4nQS2zPZPZzN2Qff3y+BjZehp3VDX4jryghB
+	k58bJRyg2PykPdsnsiQ5U4oY/xa8yBxMDvNwXbybL19TIyzcOPHOIZYUhnrYqWOj
+	AhDBYMWiY414p5echQd7SR9fs34t98QhGUY+1FjhUYz2JWbU+N7dsLrQTD+qzTKM
+	ITnrY3ZXXjwthxXAQuBrsxRG/YaoyiF9bMElJhJ1hA==
+X-ME-Sender: <xms:1aizZmjZTZoJ5OpydJd8cNHzK8mMc3XkTXO8q1jvv8A-k9z7DNQErA>
+    <xme:1aizZnAdT4jbY7joss5XWO-cTP6sd_UFlgJihr8L_0uscaOXh-bFmaq9kdfHHUyPX
+    r4QIkpeEhpr15ojZQ>
+X-ME-Received: <xmr:1aizZuGAwlhXs6H9K06LHUCX1iX0qjCR1R6xEkY9VrE72oGr_wQ7tPvYdFihp0bgCXetvaB6T-OP0k-JWgo-9-CBt9hgJ8vaAWcPtqTALmyWAFRG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgddutdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedvgfevueffffeghfeuvdegteekgeffte
+    fgtefghedutedvvddvueeifeellefffeenucffohhmrghinhepghhithhhuhgsrdgtohhm
+    pdhgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:1aizZvRx6rxZJqIxqgNCK7UZbNAi7sMyk-j2SwflqUr2zQrlGKWTZQ>
+    <xmx:1aizZjyBZ_MLrvC4X7wJOEDoNqBCic0H_97zcyQEFtLAIvc5IiZ5NA>
+    <xmx:1aizZt6KZE3QLDazFRxbWqM4WFPgZHJMw-8nb-BWYXDu3H5waQkoCg>
+    <xmx:1aizZgwm2EODCpEjgMMJ7iGmJBjt_lFORKuu4HwMC4gXQICTttfVHQ>
+    <xmx:1aizZu_5EliOo2ZSdTn4Z3ScgccwXwdzMELBqwJBxKjZB0i7p1-CrWz7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Aug 2024 13:03:17 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 99465a92 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Aug 2024 17:03:09 +0000 (UTC)
+Date: Wed, 7 Aug 2024 19:03:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
-In-Reply-To: <cover.1722933642.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Tue, 6 Aug 2024 10:59:32 +0200")
+Message-ID: <ZrOo0DuiPeSp9E0b@ncase>
 References: <cover.1722933642.git.ps@pks.im>
-Date: Wed, 07 Aug 2024 09:59:39 -0700
-Message-ID: <xmqqy158nu9w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <xmqqy158nu9w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6FB5A6EC-54DE-11EF-A694-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6pLTVtOI11PsCqhE"
+Content-Disposition: inline
+In-Reply-To: <xmqqy158nu9w.fsf@gitster.g>
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> The series is built on top of 406f326d27 (The second batch, 2024-08-01)
-> with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
-> leak when computing reachability, 2024-08-01) merged into it.
+--6pLTVtOI11PsCqhE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A quick question.  Is it on your radar that transport_get() leaks
-the helper name when "foo::bar" is given as a remote?
+On Wed, Aug 07, 2024 at 09:59:39AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > The series is built on top of 406f326d27 (The second batch, 2024-08-01)
+> > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
+> > leak when computing reachability, 2024-08-01) merged into it.
+>=20
+> A quick question.  Is it on your radar that transport_get() leaks
+> the helper name when "foo::bar" is given as a remote?
+>=20
+>   https://github.com/git/git/actions/runs/10274435719/job/28431161208#ste=
+p:5:893
+>=20
+> If not, I'll handle it separately, whose fix should look something
+> like the attached.
+>=20
+> Thanks.
 
-  https://github.com/git/git/actions/runs/10274435719/job/28431161208#step:5:893
+Yeah, it's in part 5 [1], 97613b9cb9 (transport-helper: fix leaking
+helper name, 2024-05-27). Feel free to handle it separately though, I'll
+wait for part 4 to land first anyway, which likely takes a couple of
+days.
 
-If not, I'll handle it separately, whose fix should look something
-like the attached.
+Patrick
 
-Thanks.
+[1]: https://gitlab.com/gitlab-org/git/-/tree/pks-leak-fixes-pt5
 
- transport.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+--6pLTVtOI11PsCqhE
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git c/transport.c w/transport.c
-index 12cc5b4d96..13bf8183b7 100644
---- c/transport.c
-+++ w/transport.c
-@@ -1115,6 +1115,7 @@ static struct transport_vtable builtin_smart_vtable = {
- struct transport *transport_get(struct remote *remote, const char *url)
- {
- 	const char *helper;
-+	char *helper_to_free = NULL;
- 	const char *p;
- 	struct transport *ret = xcalloc(1, sizeof(*ret));
- 
-@@ -1139,10 +1140,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 	while (is_urlschemechar(p == url, *p))
- 		p++;
- 	if (starts_with(p, "::"))
--		helper = xstrndup(url, p - url);
-+		helper_to_free = helper = xstrndup(url, p - url);
- 
- 	if (helper) {
- 		transport_helper_init(ret, helper);
-+		free(helper_to_free);
- 	} else if (starts_with(url, "rsync:")) {
- 		die(_("git-over-rsync is no longer supported"));
- 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazqMsACgkQVbJhu7ck
+PpRxtg/+OL93rFeQJ9oP0uA5yYs3Q7vU2qNK55HBqU6k8Wug9t6mB2XzcYG6kopV
+BvZG6L6vIOn/ykYN0S5zggiBY3+DWAUHvL4RQG8xU5voTT+SHLupQ/pP9lMCQOSt
+qL4TE8OfclorSKun3GaYK0BeU6XQ4QNjS7h5SkUqYz74e8JbWDQnblVGHINsAGYf
+InizY/TIwY3v3MbZdTgUg0JUtSG8A54nO104bQ8lyJ/MtffKCy7UPEwlRzpxQxdc
+gUyjx4wH47raa3Ll7ErmBdQBTjYBrJP87BZR93L6njieigwPAvSZASxHSESd1HGz
+EAW9Vz/9ecG5cQbijew4IpHdtWiYcKaKIqmfePpofbiTIr8Fra61ysq0XfU7Jwbr
++qofCExTRC3iVwhVLIFiOuPFdls+bNZwiMMw/J/KmyuYER8dXvzMFe8yfR0yEhhE
+E7lwGb4PxL2uANOVxB/vofzvH5F3ddSqVUp/ZJAhwasQjwMq4apAAPQuLDFIsI8W
+tahpnL4tkJM5k1xNs7eePHjRg6g/bef0z2jAmNhMvH44LjtlLYn/FhpXj5NODHF9
+AJuivUB9Fh8QX2TfFtCjmigvTmaoKkcfzfZtM/gNOVV0DhZ2RYwd0Pu0ZGBtPCQx
+aysa55lnAYiUiszVHy42NgrySBD5bAcuUpsZeHHhrm8F9LSxX/Y=
+=ekcE
+-----END PGP SIGNATURE-----
+
+--6pLTVtOI11PsCqhE--
