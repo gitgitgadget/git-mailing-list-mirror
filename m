@@ -1,124 +1,136 @@
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB5415B10D
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 01:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821DA372
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 04:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722994509; cv=none; b=l0ei4LF3Fl5EEZOKxAz65Zlph2acercOEKDiu30fxcWoXvwkqk7ysE+2A9e3GWaYdD0f1mvzHxVZNRKZb76h0wSpKgqA981yOYxTuS0PcWt6PNtV35/bbFlSSQY+YdISBxZxC/hQl3FTcsqBMSx5Djhm/0wn+XKi3z4Mmb3fFlQ=
+	t=1723003332; cv=none; b=LA6q65gfalLLPGhpISGpbm6XKcjdNoE1LZ1cb9C+QIfK4Oo2KMXtXKzb9+Z4GUz8X+z8rVcFZliBHgBeY5R4S8ie+uNPBxZtwgAV2b17r85+pATUfaeKn6qs1X1hYNhAuW7Z0j0OMWH8Fs8nQ6bUmiSAbBMKlFZzRvU4NtHqylU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722994509; c=relaxed/simple;
-	bh=eTQjJUwad2H4rSRLHtIdTO9VXgHmqrwVfZ+5w/wTE9w=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=aFY0ddrJicZs0lurV/v7Cv5PNA0jgiqbD8G/aUcBUwx8uST6eZWLIG/xG7ROo3E3uybgaY1KicPO2qIoki7gHO3kIDFLp/h0ttOCq+pd+4bMP1apVVENJhZqESiDjQJwTPHckqZyyyqE/ZpQ+l5XLdsSO7M/JHYEzRO+9lsAFNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=V0lfvbbv; arc=none smtp.client-ip=185.70.43.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1723003332; c=relaxed/simple;
+	bh=Ho89BMEhxpdZfk7tRrCDIv8ujLrWVhiHS/CYoizSIUU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=hiejuV8BiOhnyPP20RpzVfx4/aZFJk+74UH6BuBuNySylY9p5vIW1KMrEhLWMN8+KI2oHeRaD885fpWW4u5oWcYLnEnDSXOmBxP4Yu5edGbC+JxKcuqjxcrHPYKiEcjnUz65CrluyPctpoiywBMeZd/6cFMjKEAZXf0b7BYfKTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=d4Gsopx9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QWaIFvKQ; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="V0lfvbbv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1722994500; x=1723253700;
-	bh=kkT+Fe5jSLzHjO7bczqklUqcBB08BJWkLhYVLTyZ/bE=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=V0lfvbbvFhezvm6BJZcCrTTnpGvyN1Gsu4TCKcUygdZ9zoMRjG5eKjoWFwkyvZZok
-	 C3Jv4K2jVIoKR+SGwGYR53KHoZnPeKtAtJCLl54UyZr3nPwpBj1VVU4lG+ziQLf7Ft
-	 U8aJl5mvK6h/IO7JRjBHUBmnQnIc7jOQ03mLVyHcZJB8qp6EkPxbeurhstw4e2EXg4
-	 KBuvT3wsoGyXH5it3fsOPs942E0yg2RYd48HgRaK5/V+Hq54Viq1LLsehSIkvRLYMr
-	 7mZKLh6dnKG2fBGuyb64jC613NZ3OT+whReb9AKll+KdrXRIaX2fG9UUiu/xrtYRiU
-	 M9qYjPE0z2qNQ==
-Date: Wed, 07 Aug 2024 01:34:56 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Avid Seeker <avidseeker7@protonmail.com>
-Subject: [Question] git-commit: --template from cmd output
-Message-ID: <exd_wMoR3eM-2oo-XbhCudo6nHa1cgm9cBIpSNvj5EFHBPeqveBW-44rILPLINIB5fxxrBLCpApjFYI55ckzEYNZr9qibkFcHnMI8FLQOj8=@protonmail.com>
-Feedback-ID: 42841990:user:proton
-X-Pm-Message-ID: b233239a4f220372d47cd80b71cabeb3e8f8d656
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="d4Gsopx9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWaIFvKQ"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8EA9C138FD10;
+	Wed,  7 Aug 2024 00:02:09 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 07 Aug 2024 00:02:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723003329;
+	 x=1723089729; bh=NF50fKFSN4KvihZ/yQ+slT6MaiB+kzF85yLisrbcm3A=; b=
+	d4Gsopx9zVHCKYb8lvw6iRu4sqTBMO1fEqG3S1okHd3hGYznSrb4uxbTQUS+RfUQ
+	EHrSexiCQ+MTBN/Jk4EDh8/q6NfXSlRejYMwvXHZlkAka/xZZ0CMx6k4hQlfxbP5
+	Tcfey2ni2kRlIltWMus6R+rkHK6R+muWD6tfh2V2lCNiUo1oePh1aTIICAktLAot
+	9lulfRYD5c8LDyMa0UKHYqapW0wZEctwlENIh2GRpA6ro3wCRWMroDAOCkWQDeoF
+	DzfbQcvZ17X3sRFRbGx3qIzp8RBet+crPOFsREvX5BgumON8pAAEilJk/6a4YUoc
+	0FlbMTUNUFnhDm3hEb+k0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723003329; x=
+	1723089729; bh=NF50fKFSN4KvihZ/yQ+slT6MaiB+kzF85yLisrbcm3A=; b=Q
+	WaIFvKQ95xRnPpC6//a2h3s5naKVWpMO0MZrkmTvD49RcOt3qyRaIJ7TB1OSi+Ry
+	IlYxr3tEjBl9JoV+mGGgo+mpKg9texw07QAJbBrE96UgXw0lluDp4WWU9+CuaPil
+	/Cgkc95kV+EW4KUdL/0nI0c3MJgOH19xLtKuuSn/8eHjdxRVrH7W4pILbAWrYYze
+	eRAXuUkGfH1TrOv0acctYj7wkhAay82Nl69l0+IcQ66C1h2tHFR4Wk1MPzscj4Gh
+	k8x4VBYG/lFYsOpQLwVybwEKG5nYlvDE3AyuRuu319o1Y6jErbviVyTimjx+chOv
+	RmHGgacTzKFa/rBUkD2Vw==
+X-ME-Sender: <xms:wfGyZtujPv2rQ98V1NRCLfPqYe_AX8OcGNedrkQ2vYNPmAYG_-_NYQ>
+    <xme:wfGyZmeivFqqjbXo_h4nIXYL4hb9WhAlSjQY6RusRsvlMh8DbP04y1n9oAG7KesDn
+    0FJpstyr-4eohUCzQ>
+X-ME-Received: <xmr:wfGyZgwIjhwikZf911piD74rZq8szl4zX_iLTG9mr2RUGMt-c-5kuO3d3NKs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdektdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpegggfgtfffkuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgrmhgv
+    shcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrthhtvg
+    hrnhephfetueehudeltedtjeekudelueeihfevheeugfehhedvieektedtvdevgeeileet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmh
+    gvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:wfGyZkOhp9uPWdNVbnDYXXLus1Edr5TpPHpoHHNa4AgIR5bSbLw6rQ>
+    <xmx:wfGyZt-fSSEqbqAVpHpcT3KED7TPUuOadhfFv7U9mAu1U_fahPeYNA>
+    <xmx:wfGyZkUIdpbUJf4zsbMM6wM1lHW24ZQtoJMS9faBSXuBG-Wn9XaLRw>
+    <xmx:wfGyZucU6QORKR0eyrzZxi17joPIW6WIX4NJREFfCwSpoX9sOGth-w>
+    <xmx:wfGyZvIpz13Upih0RE6yRFYDC5yNgi_rJm7h2MOohFoCIWEtoxJoNJkm>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Aug 2024 00:02:08 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e
-Content-Type: multipart/mixed;boundary=---------------------ef789f235e5489f3c98e496f664b9d8a
-
------------------------ef789f235e5489f3c98e496f664b9d8a
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 07 Aug 2024 14:02:06 +1000
+Message-Id: <D39DPCW06C28.2EYBPWPBSQ5G6@jamesliu.io>
+Subject: Re: [PATCH 02/22] git: fix leaking system paths
+From: "James Liu" <james@jamesliu.io>
+To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
+X-Mailer: aerc 0.18.0
+References: <cover.1722933642.git.ps@pks.im>
+ <D39DO1E1ESC8.1CBYB3MBFD60V@pks.im>
+In-Reply-To: <9574995a246d96b90f03827bf0ba591593d6c4d9.1722933642.git.ps@pks.im>
 
-I'm trying to customize the commit message instructions showing up in text
-editor after `git commit`. Checking the docs, I found these flags of inter=
-est:
+On Tue Aug 6, 2024 at 6:59 PM AEST, Patrick Steinhardt wrote:
+> Git has some flags to make it output system paths as they have been
+> compiled into Git. This is done by calling `system_path()`, which
+> returns an allocated string. This string isn't ever free'd though,
+> creating a memory leak.
+>
+> Plug those leaks. While they are surfaced by t0211, there are more
+> memory leaks looming exposed by that test suite and it thus does not yet
+> pass with the memory leak checker enabled.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  git.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/git.c b/git.c
+> index e35af9b0e5..5eab88b472 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -173,15 +173,21 @@ static int handle_options(const char ***argv, int *=
+argc, int *envchanged)
+>  				exit(0);
+>  			}
+>  		} else if (!strcmp(cmd, "--html-path")) {
+> -			puts(system_path(GIT_HTML_PATH));
+> +			char *path =3D system_path(GIT_HTML_PATH);
+> +			puts(path);
+> +			free(path);
+>  			trace2_cmd_name("_query_");
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "--man-path")) {
+> -			puts(system_path(GIT_MAN_PATH));
+> +			char *path =3D system_path(GIT_MAN_PATH);
+> +			puts(path);
+> +			free(path);
+>  			trace2_cmd_name("_query_");
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "--info-path")) {
+> -			puts(system_path(GIT_INFO_PATH));
+> +			char *path =3D system_path(GIT_INFO_PATH);
+> +			puts(path);
+> +			free(path);
+>  			trace2_cmd_name("_query_");
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
 
-- commit.verbose: useful flag to see the diff of changes done.
-- commit.status: for toggling whether to show status or not.
-- commit.template: this is what I was looking for, but when I checked the =
-doc,
-  it turned out to be a useless.
-
-IMO, all of these flags are redundant and should be combined in one flag d=
-one in
-the Unix way of doing one thing and doing it well, which is displaying com=
-mit
-message comments within the editor.
-
-The way to do it is by having commit.template as a script:
-
-commit.template =3D "echo $COMMENTED_INSTRUCTIONS; git diff" # commit --ve=
-rbose
-commit.template =3D "echo $COMMENTED_INSTRUCTIONS; git status" # commit --=
-status
-commit.template =3D "" # commit --no-status
-commit.template =3D "cat path/to/commit-msg-template" # original commit --=
-template
-
-Where COMMENTED_INSTRUCTIONS are the lorem ipsum printed every time git co=
-mmit is issued:
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-
-Of course, to maintain compatibility, these options would stay, but my
-suggestion is to have a way for commit.template to read from command outpu=
-t
-instead of a file.
-
--- Avid Seeker
------------------------ef789f235e5489f3c98e496f664b9d8a
-Content-Type: application/pgp-keys; filename="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"; name="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"; name="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWWUrZFFCWUpLd1lCQkFI
-YVJ3OEJBUWRBNG83QVlXUVFHdzRTeFM3dVFJRzJhN0dBU1RjN0dLdlkKKzdEWmZ5UCtINDdOTjJG
-MmFXUnpaV1ZyWlhJM1FIQnliM1J2Ym0xaGFXd3VZMjl0SUR4aGRtbGtjMlZsCmEyVnlOMEJ3Y205
-MGIyNXRZV2xzTG1OdmJUN0Nqd1FRRmdvQUlBVUNZZStkUUFZTENRY0lBd0lFRlFnSwpBZ1FXQWdF
-QUFoa0JBaHNEQWg0QkFDRUpFRVRXMk4zc0VEWnhGaUVFZnV6b1hKVEdSQU1ob2NKalJOYlkKM2V3
-UU5uR3JaUUQvUXdXWVJMU1pPY0piS0JkWFhMNUdjZkRqS0pZRGcxRkUxVExhcFJIZk1rTUEvMis5
-ClVOQ1hQTlNxWjl4dFBKK0RvaERFNnNZVlV3RnJOMjZSTmhqazRZOE56amdFWWUrZFFCSUtLd1lC
-QkFHWApWUUVGQVFFSFFQbXV3Z0FDVit1UWwrT3pob2xiRDc5L1ZpUWNUTzVYeGtxbFo5UW0zVVV2
-QXdFSUI4SjQKQkJnV0NBQUpCUUpoNzUxQUFoc01BQ0VKRUVUVzJOM3NFRFp4RmlFRWZ1em9YSlRH
-UkFNaG9jSmpSTmJZCjNld1FObkhkNndFQS9haXAvYnFyeGRyOWIvTDBnM1dibGh5UmFMU3BYOFdG
-alQxU0RxNmY2em9CQU9RawpaRHVRMThvV1FtdkRaRmE0czRrSVJsaGlDQThpK1NLUHN0bk5VK0VK
-Cj1qLzZtCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
------------------------ef789f235e5489f3c98e496f664b9d8a--
-
---------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wnUEARYKACcFgmayzzIJkETW2N3sEDZxFiEEfuzoXJTGRAMhocJjRNbY3ewQ
-NnEAAO+pAPsG1aI6G3BYH6F8IrBPdFeCkyRZAKfhKLDDGHVrWaAq5gD/UWPB
-6xUe0IjZrfwoOGV0EERlcLFEqzv2tjq/4dJygg8=
-=Oliv
------END PGP SIGNATURE-----
-
-
---------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e--
+Oh interesting. These don't immediately stand out as leaky due to the
+absence of intermediate variables, but nevertheless an allocation took
+place that we need to free.
 
