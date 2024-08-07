@@ -1,73 +1,124 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37438848E
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 01:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB5415B10D
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 01:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722992750; cv=none; b=Z7uQHqGnKDIQdBiuU1LwWR8AIzO8r6r6Lryt0SBKwv8oxY3lotCGr+BdJQA8pcqlLcNFFcOTsk3pCu/Ycok0w0KUbSlbyAcU66rZwxgfMqhzV7goXSGQ0IpzNSAyBEFXdXEpF3ZFTAZS+jx0npRs8mQVIjh8md3jn4/EIfj9h7E=
+	t=1722994509; cv=none; b=l0ei4LF3Fl5EEZOKxAz65Zlph2acercOEKDiu30fxcWoXvwkqk7ysE+2A9e3GWaYdD0f1mvzHxVZNRKZb76h0wSpKgqA981yOYxTuS0PcWt6PNtV35/bbFlSSQY+YdISBxZxC/hQl3FTcsqBMSx5Djhm/0wn+XKi3z4Mmb3fFlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722992750; c=relaxed/simple;
-	bh=PuJVn/0oGb7DUb26eWfnKs1DtmifBQlQGyor6aI9lUE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SRI/OfVRFKp/wkwBbr+EeOqPv7csI1cha+eNWPf1sgkEEX5Px06WkD/l+/fb9UjoHzNC5NSq+8qGaASyznOTE3ha2eRwVHHhb7iFFJUs7SDKD9chVIsWktPKPZwIT63zPTAI5nRqO+M3/P2ckN2yv3644IVNcwWpZpeO38ncyfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=memryx.com; spf=pass smtp.mailfrom=memryx.com; dkim=pass (2048-bit key) header.d=memryx-com.20230601.gappssmtp.com header.i=@memryx-com.20230601.gappssmtp.com header.b=obRucKYM; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=memryx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=memryx.com
+	s=arc-20240116; t=1722994509; c=relaxed/simple;
+	bh=eTQjJUwad2H4rSRLHtIdTO9VXgHmqrwVfZ+5w/wTE9w=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=aFY0ddrJicZs0lurV/v7Cv5PNA0jgiqbD8G/aUcBUwx8uST6eZWLIG/xG7ROo3E3uybgaY1KicPO2qIoki7gHO3kIDFLp/h0ttOCq+pd+4bMP1apVVENJhZqESiDjQJwTPHckqZyyyqE/ZpQ+l5XLdsSO7M/JHYEzRO+9lsAFNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=V0lfvbbv; arc=none smtp.client-ip=185.70.43.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=memryx-com.20230601.gappssmtp.com header.i=@memryx-com.20230601.gappssmtp.com header.b="obRucKYM"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2cfd1b25aaaso904661a91.0
-        for <git@vger.kernel.org>; Tue, 06 Aug 2024 18:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=memryx-com.20230601.gappssmtp.com; s=20230601; t=1722992748; x=1723597548; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1DvpH+mWW5sgAx2Z+WT0EDE/H09ujlsXlKo8RupKqnI=;
-        b=obRucKYMkoDqt4xYyGKdiEC06sKsCyT+g6qsihwzKWIIvcU6ifMyY12JOUDj0N0abL
-         oQCpr3tL7n0aHmYA3nsYDePlFTCJtotlQv5EVpyaHFRDzR6NGG23A8QTvBle5q8e7Itx
-         hAiGMCBmGhkkyIsaDDJIo6zdhsSez2yJVHAJlZs7iCqz6cFPrb07O7KCfXc4HMj/5qt1
-         DFqpyNgs/lxvKkK4loAubwhkX5UJIux+HXxBN8l61ozrRaoKEaiKMnomJ/fv6fr8E3RU
-         LUr4dN92pciyjHk3kWVp6ZOluv5L1qNUhPRq3OLvhrfCc0xHNGqMFrztlphpkD3oiNM/
-         CyYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722992748; x=1723597548;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1DvpH+mWW5sgAx2Z+WT0EDE/H09ujlsXlKo8RupKqnI=;
-        b=Uy8dDzTsIC99yVIPlcno3VomOM1YUCMQdOdkUVbxOAOWIGkeTJ9bjE45Be2swThLZi
-         uDl0YPx0R7vse6caZfx7rMAb0mPtRpYlJbi5pMy8sFiH97ECTvsX2TOhIrXmTFYdXlQy
-         DwsAWR/k/Pgoa7gE4yjcpa6t8JIiIDmVU8V23syeb0UJSp2mNnA/skzi0baQ4KvPkGiV
-         NuUiKOu/B9x6SL8kXa5/LjyXCpmzCCKQ3L7ceyNLgnXQY+hSbQtV8Zaq0zUokwgjKehq
-         hEFdfOvN4PdacX33EjAlUP9i1bsoayG9XHEdq8VIg5VQWXB48FDoOGapeJxr/Xg1/jrn
-         UU5w==
-X-Gm-Message-State: AOJu0YyxSatkUQE8gkFixecN65xn6XiwAqoJlImdrNXhnj27i4VBpxmm
-	KX5+oHy3iFvG+npW9c4Q3SiFUy5YMmljUNSRrG098K9WE5BzKiw1f8XBzDSjIXemPvDUug+DaF9
-	NnXYdtO1wi/mhJPFBcaKjeYXW5pR2LCbFYedL2tQOud8qFQ7RXms=
-X-Google-Smtp-Source: AGHT+IHoUBjczV/NK+cpwr6tlTvIrwI4uA8zF1wTti84qI6enct7ibtM2/yQhgdRGYYuze96B1OGYHW9+lVY3avC5ck=
-X-Received: by 2002:a17:90b:19d0:b0:2c5:1a3:6170 with SMTP id
- 98e67ed59e1d1-2cff9544afamr16415347a91.38.1722992748181; Tue, 06 Aug 2024
- 18:05:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="V0lfvbbv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1722994500; x=1723253700;
+	bh=kkT+Fe5jSLzHjO7bczqklUqcBB08BJWkLhYVLTyZ/bE=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=V0lfvbbvFhezvm6BJZcCrTTnpGvyN1Gsu4TCKcUygdZ9zoMRjG5eKjoWFwkyvZZok
+	 C3Jv4K2jVIoKR+SGwGYR53KHoZnPeKtAtJCLl54UyZr3nPwpBj1VVU4lG+ziQLf7Ft
+	 U8aJl5mvK6h/IO7JRjBHUBmnQnIc7jOQ03mLVyHcZJB8qp6EkPxbeurhstw4e2EXg4
+	 KBuvT3wsoGyXH5it3fsOPs942E0yg2RYd48HgRaK5/V+Hq54Viq1LLsehSIkvRLYMr
+	 7mZKLh6dnKG2fBGuyb64jC613NZ3OT+whReb9AKll+KdrXRIaX2fG9UUiu/xrtYRiU
+	 M9qYjPE0z2qNQ==
+Date: Wed, 07 Aug 2024 01:34:56 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Avid Seeker <avidseeker7@protonmail.com>
+Subject: [Question] git-commit: --template from cmd output
+Message-ID: <exd_wMoR3eM-2oo-XbhCudo6nHa1cgm9cBIpSNvj5EFHBPeqveBW-44rILPLINIB5fxxrBLCpApjFYI55ckzEYNZr9qibkFcHnMI8FLQOj8=@protonmail.com>
+Feedback-ID: 42841990:user:proton
+X-Pm-Message-ID: b233239a4f220372d47cd80b71cabeb3e8f8d656
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Gene Rice <gene.rice@memryx.com>
-Date: Tue, 6 Aug 2024 18:05:37 -0700
-Message-ID: <CALS9TMOFmev0LzbZgxMtfkWXkvEJjAEKT8qf-vFt9yN8-o4nKw@mail.gmail.com>
-Subject: %complete indicator needed on git submodule command
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e"; charset=utf-8
 
-git clone has a very helpful %complete indicator that lets me know my
-system has not locked up.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e
+Content-Type: multipart/mixed;boundary=---------------------ef789f235e5489f3c98e496f664b9d8a
 
-Unfortunately, the git submodule command has no %complete indicator.
-My team has a repository that takes 5-10 minutes to complete the git
-submodule command.  They warned me to just let it run, and they were
-right.  I would have killed and restarted it if they didn't tell me.
+-----------------------ef789f235e5489f3c98e496f664b9d8a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Please add a %complete indicator to the git submodule command.
+I'm trying to customize the commit message instructions showing up in text
+editor after `git commit`. Checking the docs, I found these flags of inter=
+est:
 
-Thanks,
-Gene
+- commit.verbose: useful flag to see the diff of changes done.
+- commit.status: for toggling whether to show status or not.
+- commit.template: this is what I was looking for, but when I checked the =
+doc,
+  it turned out to be a useless.
+
+IMO, all of these flags are redundant and should be combined in one flag d=
+one in
+the Unix way of doing one thing and doing it well, which is displaying com=
+mit
+message comments within the editor.
+
+The way to do it is by having commit.template as a script:
+
+commit.template =3D "echo $COMMENTED_INSTRUCTIONS; git diff" # commit --ve=
+rbose
+commit.template =3D "echo $COMMENTED_INSTRUCTIONS; git status" # commit --=
+status
+commit.template =3D "" # commit --no-status
+commit.template =3D "cat path/to/commit-msg-template" # original commit --=
+template
+
+Where COMMENTED_INSTRUCTIONS are the lorem ipsum printed every time git co=
+mmit is issued:
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+
+Of course, to maintain compatibility, these options would stay, but my
+suggestion is to have a way for commit.template to read from command outpu=
+t
+instead of a file.
+
+-- Avid Seeker
+-----------------------ef789f235e5489f3c98e496f664b9d8a
+Content-Type: application/pgp-keys; filename="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"; name="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"; name="publickey - avidseeker7@protonmail.com - 0x7EECE85C.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWWUrZFFCWUpLd1lCQkFI
+YVJ3OEJBUWRBNG83QVlXUVFHdzRTeFM3dVFJRzJhN0dBU1RjN0dLdlkKKzdEWmZ5UCtINDdOTjJG
+MmFXUnpaV1ZyWlhJM1FIQnliM1J2Ym0xaGFXd3VZMjl0SUR4aGRtbGtjMlZsCmEyVnlOMEJ3Y205
+MGIyNXRZV2xzTG1OdmJUN0Nqd1FRRmdvQUlBVUNZZStkUUFZTENRY0lBd0lFRlFnSwpBZ1FXQWdF
+QUFoa0JBaHNEQWg0QkFDRUpFRVRXMk4zc0VEWnhGaUVFZnV6b1hKVEdSQU1ob2NKalJOYlkKM2V3
+UU5uR3JaUUQvUXdXWVJMU1pPY0piS0JkWFhMNUdjZkRqS0pZRGcxRkUxVExhcFJIZk1rTUEvMis5
+ClVOQ1hQTlNxWjl4dFBKK0RvaERFNnNZVlV3RnJOMjZSTmhqazRZOE56amdFWWUrZFFCSUtLd1lC
+QkFHWApWUUVGQVFFSFFQbXV3Z0FDVit1UWwrT3pob2xiRDc5L1ZpUWNUTzVYeGtxbFo5UW0zVVV2
+QXdFSUI4SjQKQkJnV0NBQUpCUUpoNzUxQUFoc01BQ0VKRUVUVzJOM3NFRFp4RmlFRWZ1em9YSlRH
+UkFNaG9jSmpSTmJZCjNld1FObkhkNndFQS9haXAvYnFyeGRyOWIvTDBnM1dibGh5UmFMU3BYOFdG
+alQxU0RxNmY2em9CQU9RawpaRHVRMThvV1FtdkRaRmE0czRrSVJsaGlDQThpK1NLUHN0bk5VK0VK
+Cj1qLzZtCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
+-----------------------ef789f235e5489f3c98e496f664b9d8a--
+
+--------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmayzzIJkETW2N3sEDZxFiEEfuzoXJTGRAMhocJjRNbY3ewQ
+NnEAAO+pAPsG1aI6G3BYH6F8IrBPdFeCkyRZAKfhKLDDGHVrWaAq5gD/UWPB
+6xUe0IjZrfwoOGV0EERlcLFEqzv2tjq/4dJygg8=
+=Oliv
+-----END PGP SIGNATURE-----
+
+
+--------f61888d073fc25c43f260f50b35dfab37670d2c0d7df4b6ecb14f2c13642502e--
+
