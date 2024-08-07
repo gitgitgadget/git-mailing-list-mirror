@@ -1,100 +1,145 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E61144D39
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 20:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3581459F6
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 21:21:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723063884; cv=none; b=ChPZZj33TXOh1dtdQoBsJNn8dBGdPW2SHwukyYeMkiwX/R+2tr5FO99vaLhs553HYKcuy6/fAzdHy6B43ehRIJu/fvlRL6x5/wTDhnTQM1g9CPBAD+Diqa5pi4EMEi8TrEb55vUwWJgr6/i6ZG8o2qJ+rbJ+uYbTP6tfLu4NWEw=
+	t=1723065677; cv=none; b=pdzPWD1074E8BTSWAYGLTHvLbaKmLti7GdVo/1nO7IzBtgZomR0nzBIH5x3upiT1Y8T6HgeJirdKJJSUxh11IRQHzL+D9NEqxZTDNHMZ19Lm7eGBUluZecnPshUqYgHSOYUhPJcew5TOG93qpWB4Q7xGVD6+xGc1nn83LuGU450=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723063884; c=relaxed/simple;
-	bh=A6Nc4oQIN1zbhseWYzUNWLAdVA2SBIQO/qZrvpQ4NsM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bl+os14BoOPaiFcW17qk7TH5h/Ty5d09BSE7Da1H36h6UEhBAk/s0NeE2svmm/hZMbMDY8ZF5DaI4ghXOK7/yLCMtICN0qWZGO7jJAlVP/DWhwNIvDMX8xoxCkYu9b9PGuQrvEhvbQutDXp/ntFZt/NmUqR6s6Hb9ghHyaHE2Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=fcpDpw6O; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1723065677; c=relaxed/simple;
+	bh=SRx98VzXsN2mxXoZgWE6jOREp56SyPbC60SwosNnpVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dK0MquOnzIU6k6/uFtDvNR4yXQ+c4MgpVryaOUJ+b6gwjSS+VHsMQrVXaHYxDPofzIh4XnMUVRRvHBP4HboHuaLzowrTvT6qeBmqYB2LfPtu5Ive4BegElq274exnK0jMfDi7BDF9GTP/a2o3JmckWW1ifHW8z2iqWD42doeAsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YUjoPuur; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="fcpDpw6O"
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 1448BDF8F72
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 22:43:45 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:ccf1:ff0:5d9a:763a])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 8B62E2003C6;
-	Wed,  7 Aug 2024 22:43:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1723063416;
-	bh=A6Nc4oQIN1zbhseWYzUNWLAdVA2SBIQO/qZrvpQ4NsM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcpDpw6Oe+2qKaaKzYeL68jZDXmH417txAt2p3ePBADueoFVlVdLecaZo4QcrgXwT
-	 7a8TgeFAnivdhgLGvcVJ0jkXE3z1pm5xF7QFBLbYABrK8xx0esk+ClB8B39HjNT0zQ
-	 Rl+oIRTA17ct7yD+25joR3y0yhgP6GowUzVUoOzdEQGs52PWX6CLtKyf7p1MN4AZSh
-	 YEQaijXbQHuEk4JSCG5Bq5iWQoKgmiicGhvrJphaYoEpSs/NTcM8EvCI0GnLMAo4aZ
-	 wjIY+Q5IhSmo9LYV3mZh0fWB1saqFXcRct5RNbWun1hC8UJyxS6XB0tTbdv6sQMXMU
-	 nEB7aJIxUa+xw==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
-Cc:
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC] formatting macro
-Date: Wed, 07 Aug 2024 22:43:28 +0200
-Message-ID: <4617471.LvFx2qVVIh@cayenne>
-In-Reply-To: <xmqqcymn3qc8.fsf@gitster.g>
-References:
- <pull.1769.git.1722801936.gitgitgadget@gmail.com>
- <5ef4a7bd-3b9f-4e71-9a22-e22012f815ce@kdbg.org> <xmqqcymn3qc8.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YUjoPuur"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1723065667;
+	bh=SRx98VzXsN2mxXoZgWE6jOREp56SyPbC60SwosNnpVU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=YUjoPuurjLWuxxg8LmxZi03J1UxIsxEGFGnobFyH8dIyV7y0mm3Bptc9MH+gxrhHr
+	 FtiPUYIbKv3w9VKSHagcVzqj1sL2ID6Q/IxctKXSK7QtTWPt8CjtrbtWTVjI484+N1
+	 hPYKFLGe3aLVvJqHuWNpiesJEZMrEYkcr6ZGqRdwGDCLtSrXyXdFv7bLjDK5VnmG4I
+	 E/FwnaRKhPlgGoldKfHhgcMIGUATVbHjaFADgn3JbYARi3KQfweD2qxJ7erwx9jBHM
+	 /xhyX7/kyGNkZjzfnjb3NUKQwtCe/ysm4VrSszF0k10lTwmEgg1HO11Edw4OWGeFEJ
+	 IAzeJFjD6bLWtMGZ37+Y06zx/jR6me2Ze101IoapCvNZdiWBZII4SJyPXGk9UvIMZ0
+	 xmYzQo9nonjntlPTXGklOX3XqpCISiKVdRNxYg5A9TmvpVr522QiDnaNbwzI6cETUn
+	 Tw3hcicJ02dZapDhuVCkqSfNG2+nhuCM6YxHZ5oMqv1ZtVXspUs
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 35DD8209BD;
+	Wed,  7 Aug 2024 21:21:07 +0000 (UTC)
+Date: Wed, 7 Aug 2024 21:21:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com,
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
+	emrass@google.com, rsbecker@nexbridge.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-
-On Monday, 5 August 2024 18:08:07 CEST Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > I've a strong aversion to the formatting that this series applies,
-> > because it introduces many (IMHO) unnecessary punctuation that
-> > vandalizes the perfectly readable plain text. And this hunk now shows
-> > where it goes too far. These lines under the new [synopsis] header just
-> > aren't syopsis; they are comamnd output. The updated version abuses a
-> > semantic token to achieve syntactic highlighting.
-> >
-> > To me this series looks too much like "we must adapt to the tool" when
-> > the correct stance should be "the tool must adapt to us". If the tool
-> > (one of asciidoc and asciidoctor, I presume) does not cooperate well
-> > with out documents, then it is the tool that must be changed, not our
-> > documents.
-> >
-> > I understand that some compromises are needed, but with this extent of
-> > changes we give in to a sub-par tool too far.
-> 
-> Thanks for placing this into words a lot better than how I could
-> have done.  I share the same feeling.
-> 
-
-I'm working on a form of macro that would work almost the same way as the 
-synopsis paragraph. You would have some markup, but it would be surrounding 
-the text to typeset: 
-
-s:["--ignore-matching-lines=<regex>"]
-
-In this snippet the macro part (which is recognized by a regex) is  s:[ ]
-The inside part is managed the same. If you need additional markup, it is 
-possible:
-
-s:["<commit1>`...`<commit2>"] to have the three dots rendered as <code>, 
-because they are part of the tokens.
-
-Square brackets are possible inside the double-quotes:
-s:["--ignore-submodules[=<when>]"]
-
-Is this something that wouldn't repel you?
-
-Best regards,
-
-JN
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="waHZb/hlUzcSHUrW"
+Content-Disposition: inline
+In-Reply-To: <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--waHZb/hlUzcSHUrW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
+> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to call
+> functions in libgit.a. This initial patch defines build rules and an
+> interface that exposes user agent string getter functions as a proof of
+> concept. A proof-of-concept library consumer is provided in
+> contrib/cgit-rs/src/main.rs. This executable can be run with `cargo run`
+>=20
+> Symbols in cgit can collide with symbols from other libraries such as
+> libgit2. We avoid this by first exposing library symbols in
+> public_symbol_export.[ch]. These symbols are prepended with "libgit_" to
+> avoid collisions and set to visible using a visibility pragma. In
+> build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also contains
+> libgit.a and other dependent libraries, with -fvisibility=3Dhidden to hide
+> all symbols within those libraries that haven't been exposed with a
+> visibility pragma.
+
+I think this is a good idea.  It's optional and it allows us to add
+functionality as we go along.  Platforms that don't have Rust can just
+omit building it.
+
+> +[dependencies]
+> +libc =3D "0.2.155"
+
+I don't love that we're using libc here.  It would be better to use
+rustix because that provides safe APIs that are compatible with POSIX,
+but I think for now we need this because rustix doesn't offer memory
+management like free(3).  I'd really prefer that we didn't have to do
+memory management in Rust, but maybe that can come in with a future
+series.
+
+libc also comes with the downside that it calls the actual libc
+functions, so you have to write things like stat64 on Linux if you want
+a 64-bit stat, but that doesn't exist on some of the BSDs, so you have
+to write something else and compile it conditionally, and all of that
+makes the portability of it worse than with C.
+
+In any event, I have the intention to send a patch to replace libc with
+rustix in the future if this series lands.
+
+> diff --git a/contrib/cgit-rs/public_symbol_export.c b/contrib/cgit-rs/pub=
+lic_symbol_export.c
+> new file mode 100644
+> index 0000000000..3d1cd6cc4f
+> --- /dev/null
+> +++ b/contrib/cgit-rs/public_symbol_export.c
+> @@ -0,0 +1,20 @@
+> +// Shim to publicly export Git symbols. These must be renamed so that the
+> +// original symbols can be hidden. Renaming these with a "libgit_" prefi=
+x also
+> +// avoid conflicts with other libraries such as libgit2.
+> +
+> +#include "contrib/cgit-rs/public_symbol_export.h"
+> +#include "version.h"
+> +
+> +#pragma GCC visibility push(default)
+
+I assume this also works in clang?
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--waHZb/hlUzcSHUrW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZrPlQQAKCRB8DEliiIei
+gamrAQCfRR3G0/buFhslcLtFoECNa3BYI4gc4YtBCIK7RcJlpgD/bspn6T7zQX6s
+cUcU6Pp7xm9sPR1LWgjTMmAbXE7RXgw=
+=U9kf
+-----END PGP SIGNATURE-----
+
+--waHZb/hlUzcSHUrW--
