@@ -1,110 +1,101 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD53018FC9B
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 08:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235A41C9DF2
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 08:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723017943; cv=none; b=lL2TZYLq6+U+7AW3+/9gixBHVTAhVF0LDKMHPuRnGpZkEaQskN7VvrH7+ZgsbFXXFFM9oU0sDcIE3bOG3U/gWVKOCCp9wQL6xBU5K4+HIDUnTjjkWHIxotyjLWAiMaU5M53xFhMDQ7EHf/aKEce3zR+O/urSHGBpja3AeEwENQM=
+	t=1723019500; cv=none; b=TKs7crfcg+wfBZc9llLMIk7hNInPEVj6PyVe5WivPg042Jym9YPHAPBzKzBPTV91xJdswWnUC2N02MZL9rlzpiCjTEYtwbc+ilqhC1du/rh28fDPzZsIi+UMaUTuCOMSZF5tTlYjrwSREUhDyYUKPdp1FZgI36kulBujn2HbxCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723017943; c=relaxed/simple;
-	bh=M0YdClZ+zOhv5W33YFXPdNWPAKRFKRllVvQScXVowAg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sDWsnoGkVvYqxQZoPr7dMAkjyYDQRf88wxBEIHSr7ryrxabTIBGIL0FIGXUB6ZQubxogECQOef+AzTadXZO7sff1FmIJ2h06V3bAqxozyLiTBb1DfyEVCpG5zw9vHYIiYAi2e3QPMj9PXatORKGqY5GTF+HkZsTrghVjh7VW5d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WfocEOc4; arc=none smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723019500; c=relaxed/simple;
+	bh=0x/GjSLIWquBBXTih18dvcUoaIqLkhZAoVusiho07yU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=XAVJA76iYOXFEIG2bn9jJvmdj5w6IkVceD+c815JxbP+/+w0SNjSQ+1cN7J0Ehu34sH+ppJZvchsRkLeVchQtUxUtY7Zhw+v0rvG8PaY+2PRikRLOBb9nZuRrhvw3jHzM3jF3P2NAV9uMXJ75I9NMVCgL1Aup1nx7PfazU1FtNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=qnkQeHrv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G5tlIXTq; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WfocEOc4"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5d5b22f97b7so992393eaf.2
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 01:05:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723017940; x=1723622740; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=M0YdClZ+zOhv5W33YFXPdNWPAKRFKRllVvQScXVowAg=;
-        b=WfocEOc4ma+70EzOlYpK0MiJcsqCJcPI6/5LuS+EsadoedRIUuHTY8A4oaxsT4Ex8l
-         ug+OecE1frz6oKJIQpTN0NODcCsDECqPdYAkRAxWik1SKc/ue9A6h9K8EmumoadY36ux
-         O24xc89KF3e6HTghGmgaBvg8JkQjtpVcTyxrEDThUCP85hk59xvGQAvKnhYRt2Rs26/c
-         3FP1Jq0HPhuLKIYCorQEhK1rnKdtYRWsyq62/L5APPvMTBHRHfuGzqTur1aConFxCFeP
-         LeRCaEEj8E3c1/zZV3uCA8qWxgazgi/OzsvTlbBUikeFzEpZ4AuuLTobWaqvfXM514sT
-         DqMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723017940; x=1723622740;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M0YdClZ+zOhv5W33YFXPdNWPAKRFKRllVvQScXVowAg=;
-        b=Ay0lvz4sU9i5fEyPbL5kqgMrSb9PdK+MH+IcVvZfrcHuWeVoxCKvILIr6XIO1ekZW3
-         kkjadxhNCr/uMryIZbRwYPcm14PzcawJ2hGnAFMwxw+rxYGVFFdIYTaZgwlLiw0fjYf4
-         Hy9C67VO3fLn4kItHFe+LyU1qYH46g7o6PVHZtxJJHZSVCZ/3d7GjxYqN0W7v3E9vwHD
-         gwcO5LVdY5stzBzcWolAqmyhR0BU43oJvdKlVCiLXFlK26UTprel4z8qk18/1BwdB2zS
-         NQo0iF9VpAHZ0N3nRN+baWUtZ3VtMaBYlzYuBYcb++bfTssG77LA9lVigaN605BMphvr
-         yLNg==
-X-Forwarded-Encrypted: i=1; AJvYcCWcpm1eQr+o84laBeSQCWzSJ1V36BNrY7fD33AAJcUgGw4DT9zvTVEIF2JkoMPWR0LEKE8BsZUo04nr1gQ8z2NK8kQZ
-X-Gm-Message-State: AOJu0YypZmqFEs6HigQkFIr4jStZz4nVKBtOZ4Zevk7SMl2pXY1hVDBj
-	9ZG6hFoHja96oHks3lo8vZDjd81jabaq+gCR+qlYZ4yRH/mPLLddMjdZcXRVpqSt7D7d51D16Ab
-	knFOfMOFlbbrzZ/DtXjyFL7g7CiZyAw==
-X-Google-Smtp-Source: AGHT+IH6tC7c+XTRjQJTYiqxnJK6lvzBZe/xwT6aeIxaY++d5k0A67AKrWnHDMFUCW2hUMd5gBX15c1ZXVVEi3+uaoU=
-X-Received: by 2002:a05:6870:d29c:b0:259:88b4:976 with SMTP id
- 586e51a60fabf-26891f0a9e1mr20089605fac.43.1723017940614; Wed, 07 Aug 2024
- 01:05:40 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 7 Aug 2024 03:05:39 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZrEBvB9Urj8mG4i-@ArchLinux>
-References: <ZrEBKjzbyxtMdCCx@ArchLinux> <ZrEBvB9Urj8mG4i-@ArchLinux>
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="qnkQeHrv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G5tlIXTq"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 00836138FCB5;
+	Wed,  7 Aug 2024 04:31:36 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 07 Aug 2024 04:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723019496;
+	 x=1723105896; bh=0x/GjSLIWquBBXTih18dvcUoaIqLkhZAoVusiho07yU=; b=
+	qnkQeHrvn9RIwGwMh4b+BdtvJs6wKlfOMG1qZ0QKMMfOKr6rfF0O9CYk8iBuwWzr
+	xCSIDgo5hRIL5wC4KD1umh+aHrHTUQLlGOOom2yaJh9SntkyFq2+1lt92xnQBwiq
+	/o7414MCnGNnOSgS0y9A1ujg0uWPg3khHzHEozX0x3JdkBaHhVgKt/SXFy86l9HV
+	O0bzaoNAnGMpTW/kPpymDZGzofxOqfropVjmhvxfkr7C5Q0AkOhCH/wwRl4s7qU0
+	his/GWrt9fDQGwSKe3lZTDmw/OiZc0KXEiJEwhFdiIi8hXemIAmhdfaEfs0q2cnU
+	UY9osHQFxZcx45DttQij2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723019496; x=
+	1723105896; bh=0x/GjSLIWquBBXTih18dvcUoaIqLkhZAoVusiho07yU=; b=G
+	5tlIXTqc99XjFGrFW2dwy05YAbLaRtDV5BobKgbm2CidL6uQ73DUMuqcJisR4GBN
+	RfM9ivav9bKS3AiXz6rx4YZkmGWR7yJA/IDVC9LPEXfJrOdHTaFFb8QZpyOT3HUC
+	+WA052x5aWYYpQYdY5OwdWFSMjA1SvbswhM63044jGMaEByRMsxnmeBtDVhtun5M
+	pV9oEK6bFCx+3lHXQUFwKaxbfUciwgCXqYsJ74z/ojp2KY1rV9btpMcpnMr6A1Ss
+	8rur3VrBt5XakQ1ynK6J8iKpJM1O+PteMYBwp2OPZqXWCb8fBW+hUtza8TQc740b
+	3HTcU5HLYY8o0x4GAlg9g==
+X-ME-Sender: <xms:6DCzZl4k9UhNm2Fi45Lkha3Xzns5GgF5pY1N03GEAUQ37vGdMlvOGA>
+    <xme:6DCzZi4Mq6GJpTV8Yi0gl8RBjCZUCTgZGWGPGMux6k-WFJVryMiD3OPBG2G8aAz6q
+    3yAs40LMmx8jC0wZA>
+X-ME-Received: <xmr:6DCzZsfbjZhVKQPnR5Mk_0wQHGt_R0NnBZbcyrOx87s7eJQ6dvXrQnPxhcOL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgddthecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpegggfgtfffkuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgrmhgv
+    shcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurdhioheqnecuggftrfgrthhtvg
+    hrnhephfetueehudeltedtjeekudelueeihfevheeugfehhedvieektedtvdevgeeileet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmh
+    gvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:6DCzZuLJMtrTB71mRq9TDBHBwWNA8LIpi8HPNPS2YFUaPIuPqOH2cA>
+    <xmx:6DCzZpLFnN215_w5p72O7Jxh66fFuK59V72J2SEEoNvMmTPd6ABjDg>
+    <xmx:6DCzZnznv3SM-d_495pz8M4YyLk5_IbWqLbmSgIsbMwqAyOocyAwZw>
+    <xmx:6DCzZlKJnICOZao5EsfrNydQqxa1BGES-ipgVsqMTETpkJV6ixsQIA>
+    <xmx:6DCzZgUz0Oiu0-1gAkcgPr4hu1eqCeUyVVWdzUOn0ysnaFhXYp6U3Mow>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Aug 2024 04:31:35 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Wed, 7 Aug 2024 03:05:39 -0500
-Message-ID: <CAOLa=ZQdmC+EQvxpqSjkXUo_PB2apkU2NteC49v6mvyxsByk8Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v15 4/9] fsck: add a unified interface for reporting
- fsck messages
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000004ae363061f1360d8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 07 Aug 2024 18:31:33 +1000
+Message-Id: <D39JFO40F1FC.2Q22EY440N67N@jamesliu.io>
+Subject: Re: [PATCH 13/22] builtin/fast-export: plug leaking tag names
+From: "James Liu" <james@jamesliu.io>
+To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
+X-Mailer: aerc 0.18.0
+References: <cover.1722933642.git.ps@pks.im>
+ <64366155dee25209ab9c434016c5918d47d7e1d5.1722933642.git.ps@pks.im>
+In-Reply-To: <64366155dee25209ab9c434016c5918d47d7e1d5.1722933642.git.ps@pks.im>
 
---0000000000004ae363061f1360d8
-Content-Type: text/plain; charset="UTF-8"
-
-shejialuo <shejialuo@gmail.com> writes:
-
-> The static function "report" provided by "fsck.c" aims at checking error
-> type and calling the callback "error_func" to report the message. Both
-> refs and objects need to check the error type of the current fsck
-> message. In order to extract this common behavior, create a new function
-> "fsck_vreport". Instead of using "...", provide "va_list" to allow more
-> flexibility.
+On Tue Aug 6, 2024 at 7:00 PM AEST, Patrick Steinhardt wrote:
+> Refactor the code to make the lists we put those names into duplicate
+> the memory. This allows us to properly free the string as required and
+> thus plugs the memory leak.
 >
-> Instead of changing "report" prototype to be algin with the
+> While this requires us to allocate more data overall, it shouldn't be
+> all that bad given that the number of allocations corresponds with the
+> number of command line parameters, which typically aren't all that many.
 
-Nit: s/be algin/align/
+Ahh so using the `STRING_LIST_INIT_DUP` initialiser means that every
+time we call `string_list_append()` on the list, we retain ownership of
+the string and the list gets its own copy.
 
-Rest of the patch looks great!
+That means we're able to free our own copy later on.
 
-[snip]
-
---0000000000004ae363061f1360d8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f0a11116efec3fbd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hekt0RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUJFQy80aDVCZkM2eWpvRVE5dDZUM3YwNGtCM2lLVApONWJoTXRLSHps
-aVhRTzdnajBJYkNnUUhTT1dzNVIvRndqMnRucitYVkw1d2lBS1FyTzZ2bWxUK1k3dzlOSmdoCkVH
-aVJsTGp1dHlVVFRCam9aN29ndlM1cmk0S2MxQWJUcjJGaUw5SElmVDZGd28rd0o4cWNiWkNzMUpZ
-ZjdyZGsKQ2hMcjhBQzZmVHJiS3FLSUtlRUdjdGpMNTVjNUMyL0swdWV1Z25QdG4wWitKbGxpMDg0
-OHBXUmZoT2d4T2RxeQpXZStQRkg3cDd1dW9ZOEl5eEdoTDNEKzVKdlhXUmFpQWsyMlR2R1p1RHU5
-T3VtcExUL0I2SG5oeFFyN3U2WmRHCnFJd0c3azdrMldSb3hZYWE3TEZMT1NTaDVaSXVCV1U2MGNs
-TDc4T1piYXlKRm1Nam8xcU12di83N2p1dGsvNHgKbWE3VWFOL1lHRTlLaXl0UlNWK2pjUkpMK1cw
-WjRTbVFQbG5Lb0NCeGQyeEVvSE8yUFplTFZBRE42V2V1d3JHTQpZamxya1Y4SDFJYWZUaXcyU0k3
-ekhOTTlRaXFKSDNVMjBiVG85MkhUUG0zZXlhOWc3OGNYQUZraFhMNzRmektFCnY1R3hjbnBJS0lI
-MXlGUFhoSWVuQkgweWJUS2NnRkxLWnlpS2FBcz0KPUtmalUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004ae363061f1360d8--
