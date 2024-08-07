@@ -1,142 +1,155 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D938113C801
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 17:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A3B18EBF
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 18:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723050201; cv=none; b=TPu7EkjeHvDnYiRFMCJ7jjqM2eG7iPZYSCSxF6Uyb50kPfa3kAo0QK8i5w40Eon/SvvHS5WQ9d9rgt1x2Fd7Iipqr8IU83zSxYv+wnENtz9I18EpH8sOJ/YDA54ooFjDNrBXgFtY7dI1yWUoHM5NsZBHoRG4NAatn5yh8aK1EHQ=
+	t=1723054781; cv=none; b=gb9594SR7YMKNtB22PaZwJBDGOCVYDo8mr+gPAjo4/oxH+i2TdG2jHdbpEUaPpT/GXX0m8Rguygm6mgVXvleVyzCqcsQ6v691AUi0XldYSSLV6TxR90J6PsTOEqMS1j8dX8rQzX4mDDjDRuUf/xvtyd9OMBtxMgfFi9v59zU71U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723050201; c=relaxed/simple;
-	bh=I1sfnzcf1z0dlOjUfYR52r9g8XLTdTCPiwCZlWaqdqg=;
+	s=arc-20240116; t=1723054781; c=relaxed/simple;
+	bh=82x541HpMPO8JBTDtwTcVN2brXqDBg0CsPNXqSdZgV8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pDOYRgzYpjLW65ELKhYzOPQ3Dc4Vlvzh8hRMe0wp1A6idDRmoyybq3NA7/slmAC7q/hby//b+l8U1md174mPf2Z/LsB2KgSuG0RD6sZ91rX7gJKXYWz4Iybo8uGxIV5tre082fLNz/ikgcHY8uthORSy50szipUGI1BBMX6+NU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I8A4yhgi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kKCL34t4; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yep75lPLp6XeZE5fftpdJyiGTMkL7mLuYS8ZQhDzZ5IhSV9D7095KOAjxjKfo78y3VhxkYFXYl2T0PgwKEnCOitR3k7Q6ToXoJIGLli1L2U1jvbVz1c3iJ+84JHm2+JGV5cmbzUMopGcoK1D8SXKmsmHqqFfVm6QN2RCGPEnVbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=W+jCoHh7; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I8A4yhgi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kKCL34t4"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EE697138CC97;
-	Wed,  7 Aug 2024 13:03:17 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Wed, 07 Aug 2024 13:03:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723050197; x=1723136597; bh=/Cc5Sm9c4T
-	hH2hq+kehaP0gXztiusVBLkMB5ezQ7h3I=; b=I8A4yhgiXni+DHLrPxSGiZa+wz
-	mM4RLIeifLuGoalonIpBTp546BWVL9+TiKV0q886RQDW1zrvVtNj3TpoNocF/PrS
-	B4ZBsWF9NWh7si41nfOaPXpT36D0s4F6K3DrbT6khXL2n64lmMlD0vVaarv2kLKn
-	jBA4LgJ0NdT0V0x9q7s5w1Xv1O0vQ3JNpKXThP8X/CtAWwvYozTQcItRrzlCla/v
-	me9JtypzU/pnZFE2SXEKy++mKO5Gw2+x8D+ZWXmexY2k2GbmpqU58jc0LJHQG++D
-	KM6gHCTuo7Y0InmmNc1RrCEAjxJVKyIoOMA+8kHnTdoEkMZA8EBNF8TbEQEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723050197; x=1723136597; bh=/Cc5Sm9c4ThH2hq+kehaP0gXztiu
-	sVBLkMB5ezQ7h3I=; b=kKCL34t43ahNDQefdIi0rop9ntoXbPuRTIly6wMN1VNk
-	ajTKMSLH6O8Vdr4KochXACVbrUzFaJQpq2Cl0t61qyfhym0y100ev2fMzg1NjwTK
-	zH9OLHy+AK7iMZFUZFq4ANgx88FF4nQS2zPZPZzN2Qff3y+BjZehp3VDX4jryghB
-	k58bJRyg2PykPdsnsiQ5U4oY/xa8yBxMDvNwXbybL19TIyzcOPHOIZYUhnrYqWOj
-	AhDBYMWiY414p5echQd7SR9fs34t98QhGUY+1FjhUYz2JWbU+N7dsLrQTD+qzTKM
-	ITnrY3ZXXjwthxXAQuBrsxRG/YaoyiF9bMElJhJ1hA==
-X-ME-Sender: <xms:1aizZmjZTZoJ5OpydJd8cNHzK8mMc3XkTXO8q1jvv8A-k9z7DNQErA>
-    <xme:1aizZnAdT4jbY7joss5XWO-cTP6sd_UFlgJihr8L_0uscaOXh-bFmaq9kdfHHUyPX
-    r4QIkpeEhpr15ojZQ>
-X-ME-Received: <xmr:1aizZuGAwlhXs6H9K06LHUCX1iX0qjCR1R6xEkY9VrE72oGr_wQ7tPvYdFihp0bgCXetvaB6T-OP0k-JWgo-9-CBt9hgJ8vaAWcPtqTALmyWAFRG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgddutdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedvgfevueffffeghfeuvdegteekgeffte
-    fgtefghedutedvvddvueeifeellefffeenucffohhmrghinhepghhithhhuhgsrdgtohhm
-    pdhgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:1aizZvRx6rxZJqIxqgNCK7UZbNAi7sMyk-j2SwflqUr2zQrlGKWTZQ>
-    <xmx:1aizZjyBZ_MLrvC4X7wJOEDoNqBCic0H_97zcyQEFtLAIvc5IiZ5NA>
-    <xmx:1aizZt6KZE3QLDazFRxbWqM4WFPgZHJMw-8nb-BWYXDu3H5waQkoCg>
-    <xmx:1aizZgwm2EODCpEjgMMJ7iGmJBjt_lFORKuu4HwMC4gXQICTttfVHQ>
-    <xmx:1aizZu_5EliOo2ZSdTn4Z3ScgccwXwdzMELBqwJBxKjZB0i7p1-CrWz7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 13:03:17 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 99465a92 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Aug 2024 17:03:09 +0000 (UTC)
-Date: Wed, 7 Aug 2024 19:03:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
-Message-ID: <ZrOo0DuiPeSp9E0b@ncase>
-References: <cover.1722933642.git.ps@pks.im>
- <xmqqy158nu9w.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="W+jCoHh7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1723054773; x=1723659573;
+	i=oswald.buddenhagen@gmx.de;
+	bh=BQa4azcWO7M/+HJz4HaeGOljDyNe9GFJVbI1wLqzDnI=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=W+jCoHh7gcndvIXXBj56j6ukr2kPGuY9NonHg1kTyWBP4xHI+WACOhrdNhO2SSl7
+	 t5bu/F71WiDmpRRsMNIZ2SZg4rnAGliqrHRHGvyH5lEfcV7rFoVPauvjC104nV/HM
+	 SVsR5mSvSkQhmD4bo7HJr6eF5MCk7/7HwcS9duWjXm5xALWlgmyv8pxF7Gm2857WJ
+	 2OmcM6dkrKXnKWQyjvgJaAgQw0ykkhFQIz/y8uKR+RJKjvJBUhkFG/Caa87v8iYgq
+	 PT0O6nKkrODHoCmgZfWUWrZ4MnqdzrF+Hd6XXH1JsLYHcdDlCQmZX2vdIGXUXt6wC
+	 FZ8nkLwskVRE64/POg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.110]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MnJhU-1ruhCC3sai-00mKSW; Wed, 07
+ Aug 2024 20:19:32 +0200
+Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
+	id 1sblG0-hm5-00; Wed, 07 Aug 2024 20:19:32 +0200
+Date: Wed, 7 Aug 2024 20:19:32 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Brian Lyles <brianmlyles@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Sean Allred <allred.sean@gmail.com>
+Subject: Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
+Message-ID: <ZrO6tM0fZLly1bPA@ugly>
+References: <17df67804ef7a3c8.df629cdadcf4ea15.524a056283063601@EPIC94403>
+ <CAPig+cRQPrtGBTxM49nUeHvsVr0qEOnKZ5W_4by=A9mXEsR3DA@mail.gmail.com>
+ <m034onpng4.fsf@epic96565.epic.com>
+ <CAPig+cS2r-b22ikZZ6QHpzfneQ07n6s=E40Sb+QYmCnezVFAww@mail.gmail.com>
+ <752d41f9-6ce3-4c31-a0a2-4960c7dc1b2b@kdbg.org>
+ <xmqqtth2petz.fsf@gitster.g>
+ <028ae5d6-b587-4ffe-b837-38f2c13992ae@kdbg.org>
+ <CAHPHrSfVLLn_djR1eo06fr5OPaz2RAChv8dBJ8eJKB6b6snWnA@mail.gmail.com>
+ <ab9824ee-65e1-4e4b-b739-205f2c5d24fe@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6pLTVtOI11PsCqhE"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <xmqqy158nu9w.fsf@gitster.g>
-
-
---6pLTVtOI11PsCqhE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+In-Reply-To: <ab9824ee-65e1-4e4b-b739-205f2c5d24fe@kdbg.org>
+X-Provags-ID: V03:K1:HITxZWehIdFzv/QeKH3NpHp9PDelQyyjBAbFmdd9haDqKm1hqKr
+ Mhx78Ot9Q63qZi3AYK0sm2Yv0qjKDcdbOHC+gd+F4yHTPjpQ0AwMZfvjc/GsvlEQSSqyZSZ
+ Ze8cdku7pqn2WzcKdeaMz6hxg7T2lDToRRgm4VuJh6XLE/MYd4Ffe8fxlQYq0ysB+I4e4Ih
+ nFf2dflV8m9hiN5ZN2zBg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:m6NApR+u+YA=;Vaw231YOpyYqWT5AT6M8r3u2iOc
+ BX1sxcZL5DBx31dPYnmr9+oiuc2jHPjtC9JhtHOLHgoBqUJgeF1Tm7uZPwX/GNyHZX67/29tD
+ RhwNgtlwUP755vXpp7RA8IaWTn6+9rBUqhgkBG5ggjiIQ5u7bEZcgF6tf9UFCRUEAMxkcvU01
+ 4RfkMO955zDDXqgZl+uvn3lMwjcAMSp7Mz1xwJjWVziFU3BbtN/EYq00DZjRcJHcNQ9fcuYxB
+ mC3AvyvSfiRbkskM+wEB+4fBzOk5S9X786T7/ItNRZQB3P0RKfuWAyUBzwelwZaPV245mhYOL
+ ULXh7dxSEsBa7WPHODOgHL5sLpFgz2nd8h/wIxmP1UTyLXVLdCv6oH8hkcceV+g4hhqA16fwd
+ EHqZxXFmgR97B0tJpoAotEidWi9plwIynFSRtVd0DzL5+/M9IphuBsY5CkVi3HjD82Xg/w1oW
+ PpDqlLjQhMqBpW7LRvQilMg4++p0Tgj3d8sPxFP2Xn2R0sJTSlvQhWTf7u35s+ktjOFUjee10
+ GXdKys8zjNIldJn671UI+z0SC4AFqPGIW/MI1t69xYLFqyRxeNAOXIFPCjiAE8EtJie/TwxIT
+ 7v/ATiH++g75UWXnJ+yezZiKJA4or/migAIJiLwUf8JnN5A/9mCFC8oAZQdhk73OqQ80fpj4S
+ gD1jBjXO96xTjCP5Z4f1ZJk68GywxKJDS5l3Hs8TjHmi/weM/3SQ+l9rROnq+dARyBg1QIm1m
+ BeFt/GsOYZbNpssS71QOSKiu0NrVjPvCzOY5uzwoiYxtr8hn4Atg1ux7gGG1RQEzSzRmfG1pG
+ GGp9WsxnLa36bKo5vfxY4Vew==
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 07, 2024 at 09:59:39AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > The series is built on top of 406f326d27 (The second batch, 2024-08-01)
-> > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
-> > leak when computing reachability, 2024-08-01) merged into it.
->=20
-> A quick question.  Is it on your radar that transport_get() leaks
-> the helper name when "foo::bar" is given as a remote?
->=20
->   https://github.com/git/git/actions/runs/10274435719/job/28431161208#ste=
-p:5:893
->=20
-> If not, I'll handle it separately, whose fix should look something
-> like the attached.
->=20
-> Thanks.
+On Mon, Jul 08, 2024 at 10:40:19PM +0200, Johannes Sixt wrote:
+>Am 08.07.24 um 21:29 schrieb Brian Lyles:
+>> Could you elaborate on why git-gui's commit message edit box should
+>> behave differently than any other commit message editor? Why is there n=
+o
+>> concept as "comment lines" in git-gui?
+>
+>First of all, Git GUI is not a commit message editor, not even in its
+>git citool incarnation. You cannot instruct git commit to use it as
+>message editor.
+>
+nobody suggested that.
 
-Yeah, it's in part 5 [1], 97613b9cb9 (transport-helper: fix leaking
-helper name, 2024-05-27). Feel free to handle it separately though, I'll
-wait for part 4 to land first anyway, which likely takes a couple of
-days.
+>Consider the commit message that git commit presents in the editor. It
+>contains the message text, instructions about how to use the tool, a
+>list of files, and sometimes even patch text.
+>
+>Git GUI does that, too: There is the part where the message is entered,
+>there is a list or two of files, and there is patch text. (OK, there are
+>no instructions.) What the user writes into the part for the message
+>text must go into the commit. Except that the git commit's message
+>editor has a limitation: it can't tell the subsequent post processing
+>with absolute certainty which text is message text due to the possible
+>comment lines.
+>
+>Git GUI can offer this certainty because its
+>corresponding section is a dedicated text edit box.
+>
+no, it can't, as others already pointed out. the attempt to structure
+the info is woefully incomplete, pretty much inherently. the text-based
+workflow is just "too core" to have interactive frontends deviate from
+it. not presenting and interpreting the text as "real" git would will
+always be a source of problems, regardless of how many workarounds are
+added.
 
-Patrick
+i'll note that the qt creator ide as an example of a git frontend does
+strip the message.
 
-[1]: https://gitlab.com/gitlab-org/git/-/tree/pks-leak-fixes-pt5
+>> I think that whatever path forward is taken, it needs to be predictable
+>> and consistent with normal `git commit` behaviors. I think that's the
+>> root problem here in my mind: From the perspective of the
+>> prepare-commit-msg hook, it's impossible to do the right thing because
+>> git-gui is invoking the hook consistent with normal `git commit`
+>> behaviors, but then creating the commit with `git commit -F` behaviors.
+>> This is an inconsistency with git-gui specifically.
+>
+>Good that you point that out. Git GUI does the wrong thing here. It
+>should really request the form corresponding to git commit -F. The
+>second option that you suggest looks correct to me:
+>
+firstly, there is no parameter which would actually tell it whether the
+message will be stripped. the 'message' token is unreliable for this
+purpose, as -F merely imposes a default on [-no]-edit and thereby
+=2D-cleanup.
 
---6pLTVtOI11PsCqhE
-Content-Type: application/pgp-signature; name="signature.asc"
+secondly, it seems a bit optimistic to expect that the hook would
+actually implement different output modes.
 
------BEGIN PGP SIGNATURE-----
+>> So it still seems like we have two real options:
+>>
+>> - Start washing the message, allowing the prepare-commit-msg hook to
+>>   provide template-like guidance to the user regardless of if they are
+>>   using git-gui or some other editor, or
+>> - Pass the "message" argument along to the prepare-commit-msg hook so
+>>   that it can at least avoid adding template-like content (but of cours=
+e
+>>   then lose the value added by that template).
+>
+i'm strongly in favor of the first option.
+it also seems to be the much easier one to implement.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazqMsACgkQVbJhu7ck
-PpRxtg/+OL93rFeQJ9oP0uA5yYs3Q7vU2qNK55HBqU6k8Wug9t6mB2XzcYG6kopV
-BvZG6L6vIOn/ykYN0S5zggiBY3+DWAUHvL4RQG8xU5voTT+SHLupQ/pP9lMCQOSt
-qL4TE8OfclorSKun3GaYK0BeU6XQ4QNjS7h5SkUqYz74e8JbWDQnblVGHINsAGYf
-InizY/TIwY3v3MbZdTgUg0JUtSG8A54nO104bQ8lyJ/MtffKCy7UPEwlRzpxQxdc
-gUyjx4wH47raa3Ll7ErmBdQBTjYBrJP87BZR93L6njieigwPAvSZASxHSESd1HGz
-EAW9Vz/9ecG5cQbijew4IpHdtWiYcKaKIqmfePpofbiTIr8Fra61ysq0XfU7Jwbr
-+qofCExTRC3iVwhVLIFiOuPFdls+bNZwiMMw/J/KmyuYER8dXvzMFe8yfR0yEhhE
-E7lwGb4PxL2uANOVxB/vofzvH5F3ddSqVUp/ZJAhwasQjwMq4apAAPQuLDFIsI8W
-tahpnL4tkJM5k1xNs7eePHjRg6g/bef0z2jAmNhMvH44LjtlLYn/FhpXj5NODHF9
-AJuivUB9Fh8QX2TfFtCjmigvTmaoKkcfzfZtM/gNOVV0DhZ2RYwd0Pu0ZGBtPCQx
-aysa55lnAYiUiszVHy42NgrySBD5bAcuUpsZeHHhrm8F9LSxX/Y=
-=ekcE
------END PGP SIGNATURE-----
-
---6pLTVtOI11PsCqhE--
