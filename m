@@ -1,54 +1,54 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE2E25622
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 05:24:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6B32AD16
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 05:31:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723008243; cv=none; b=jSOjcqKkc0rt2WPSOJTyVcGPaogFvaTVEuwRAjFnPHmJxI6gi6/BudkxYTjxoyBs+2fjZ4K44SNGZva7nZQfOitMZ4th8G6/iTEV3uLyb66wtoASeRGxqQWYwJjiS47yHova+Yl/GDoBs+v/IAeGuf5zFD1G2XGgcejPcl+RXxc=
+	t=1723008719; cv=none; b=LpIsYGAhKyNIUj7L3nMikq6Pfkfj6pihPDmiR6qDdEA1JmmLOqYtnGp5rqnyOyEYfgbot94mfqPnTWwZSo9OdlEL8ljGsqSHD2xFTUzwZOBU5Hn6wz5ARNQSnuXiTQGBxMaadjP7Dof162TcYN7ME93veQD8UvFWfp501qEDtu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723008243; c=relaxed/simple;
-	bh=/kR8uKPmq1l1ei8on13snekeZLsZKPgXk2OclU9gLbE=;
+	s=arc-20240116; t=1723008719; c=relaxed/simple;
+	bh=gBLnoykdy3XCE8GrWVSuY4kFmpAsMOpqoa6h6pepGU0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R6xqZLHvmUqNUGqi7lYArM+9dni+VjmatidVdybz4uD0g54j2s5+b3TBiLg26njFf0UybQxOBIFwqrg5cxOWkQMjnmxcpw0lY5GN0BY67PzaN3Q6ZT06SHajl7EpAJr+THlbzPzhoxc+CX5vUXpa0FMk/FEoAY7sM0PEbWzTmpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nvaa2I4L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C09k4i/l; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=mWZz5bG4DMBjer2r05wFdaa3P1PiOYz8IDngaPUc7i/unteZRP0DcNQBN8yCGrGmWYiR5upaV8HVoyRO4z45cGZt/9Ga7yPPtGVz4B3irFToJG6JYlSM0WGP/tishINvYUj5M0+ZPd/iMFY7OT5dHygZiWxpssN9eDSRZ4+i6h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CS8u4k96; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R7/Ps/cT; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nvaa2I4L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C09k4i/l"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 99781115100A;
-	Wed,  7 Aug 2024 01:24:00 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 07 Aug 2024 01:24:00 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CS8u4k96";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R7/Ps/cT"
+Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4D8C8138FC43;
+	Wed,  7 Aug 2024 01:31:57 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute8.internal (MEProxy); Wed, 07 Aug 2024 01:31:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723008240; x=1723094640; bh=GIWu4oh52O
-	uqulEYmrXf/QizmckvGQ0DYCcBDthriK4=; b=nvaa2I4LLIevbTvlCcBaE7/LZ4
-	KdoOwpCvm+5XQxz1bj9XIZtEpoiIhEE8PtckTKCxkYb8GFDxR77M+67eo7GS6DJO
-	K/73VBFj/AcRjmjEjIqQO5g/5aTrno0gahwV7FjFLTQBNIIjf0uJ//nVIVINY/kf
-	00H1iNlhpMKZQOtIIKAisHWejXkUXNQqNoqUGAZmlcRQYBA8g4jdOzrN+0lsWbQO
-	4WGyKEeGQbbti9zMhLZZnDS0MQxHloYy8DnFMmz2OoDovaMrYt9csZSKrP0qtdlF
-	zzoAxXvpdquLxH5yY/ZJQxM9OceyAJq8yUDtbW1oqvkJlH0h8x+QLrN+iV7w==
+	:subject:to:to; s=fm3; t=1723008717; x=1723095117; bh=o3fmZdZ644
+	M1Ay/rOQVVgW/Ripe80t2DoNX1dgXgaqA=; b=CS8u4k96w2xfsTkLbfTi1luKms
+	BJG/TGAWA44+HMc0mM7s6ZwTTCe3vwOvhaL8xhKeHmM0U14gPKnIuLwnYN6L5oLv
+	fbeI5y+fGKVm+bHbUJBOWowpEqswyHJhQaV4+JP7hiI87FPHG9YlZJpYiAnu3Njr
+	yf/tgLLpuA1o9HMd9IknvvRaPIbbrJxLENvG0FMWuzYEeXLxEE84fXP7PDf1Vmif
+	I6imjAMxrnV7N8iAnQHSQYjj55HVV4OMBdml85FxiwwrbCcN4c2D11kR6yiwzWPV
+	D7qNgGCVPEdjuhQimGXcJM2o1B/9J8+kn8UJGR4XjJx35gy8/G/SlKWkpQDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723008240; x=1723094640; bh=GIWu4oh52OuqulEYmrXf/Qizmckv
-	GQ0DYCcBDthriK4=; b=C09k4i/lbtSIdZXUJaS/HgFZ1c7cPvrTyFhqvlmrDZGv
-	HdGTkMPTuB3mvQrH9HahcEuY/1ggyL+xAmgZJz6Zp/mwPs0uBW0Ia0sBwELaqNRe
-	u6l/qDoDe1vwD2P3ep+eMHooOiVcx+KpPXfn8oRl/hNEBowKTRMTZOwc/1idC6Va
-	icbTOpANELSN1XorbEmNi8F1E1sHCzy4yw+qmNk91CkPSuybnOMSzKc0eZrQSusc
-	NZXdyWeuMZ3Yzuz1Pyk6wD+KAzjoTxnHmy308svIFzA2awacupG/JhdSUkVuj7x0
-	ve2WfZLrp9PZwhbmbZVPkHJiB0np3FbscIduBzJtJA==
-X-ME-Sender: <xms:8ASzZl3mqQ4iamJe-06e-Ah9c91M7c9aLAjBK_-kmegWSS1L--Krjg>
-    <xme:8ASzZsG_AC9YqlHhBGQfLBIzhKpor6-Sncl3qn5CNfiQZ-AQ-Qo6tR2QBlfUNnVF3
-    BBrPs7y54Rpf-fMqg>
-X-ME-Received: <xmr:8ASzZl5j5cqTjPTRqrQUpBi-nI2PURkZe8H6YpdjZycbVGOh2lq1HUAe1LITb4AC-X2MzfPPBOnOWEjYh2cj3gj_PiGnMcG_wdpEOFwi8KeKwIs2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdeljecutefuodetggdotefrodftvf
+	fm3; t=1723008717; x=1723095117; bh=o3fmZdZ644M1Ay/rOQVVgW/Ripe8
+	0t2DoNX1dgXgaqA=; b=R7/Ps/cTj4Ay/qRqcs47lg8cWPguLjTrHy59h11q7asT
+	wqLnTHNsuL06QxvY+XhA8p/7mexB/MI2QuvoNR7oVzVcNtxRp1iHqvzxOLk7/P5J
+	Q+rv1KO9FhVI9+Q9zaDnSLROFz3kKPzn6PILnxOafJh81uAa82vb2h7mCI/VWNqd
+	c/HHTqtLV9KwJQyOx34ryZuHqqZQsUF9Go+/+fAh5ht4hcztz7lZaglOn+ovIfzL
+	oWc3peXzS3lOpNLyQj4zmd7yowX/HdBEo9DUXbwmLuD0o/xb3SmqCghlOKmksRsh
+	VZksS+fR2O1YkmjjGu9GZ2l0+Vah/9qkG/OnTZ2kRQ==
+X-ME-Sender: <xms:zQazZvgsefcRnV8v489_Z82cwhBP8NqQerLCWDY3FeXOcmBOXG3lPA>
+    <xme:zQazZsARlQkpzoZ9trPWBbPFu-7y717v5aQoEUhm2nuvPQERbC-tvBH-01UYvzQ32
+    lPmHcdWHDt9JxhmSQ>
+X-ME-Received: <xmr:zQazZvFmy9ZpoC9k5395-2kC5eFaHtdERMilKksKDqaZYvABV0_YhQjOjDnhPwNmWqZkYugHUwEi_pCwySwPdrACEH4tL75TsmEIygAzcqCc5Eq0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdellecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,25 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdeljecutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:8ASzZi0vfd48tfqSyXLL6gCGrTIzVKRpzQ0cZ1iQ3PRAQfdvfJEJ-g>
-    <xmx:8ASzZoFIb_MJxt_s7vWfKk_7xXKzwpCbVhrV0_nsTtVBn7mdcLQuDw>
-    <xmx:8ASzZj9hWNe_QAyc2Op7ukKLKrw2lYdNyjnm8kBzjaRmAtkk5se0dg>
-    <xmx:8ASzZlmTsdJO9pmnpx9bUub3jhJ4hO8DCoWnxknZrqnWb6RjYpHvUA>
-    <xmx:8ASzZsAPjrtHaeS0FFx8GV1FDLxP-JUuuEuTZ_J7ZF6Bybex0hc9D1PP>
+X-ME-Proxy: <xmx:zQazZsTGJlzI_JbxVQPn5oSaHck4w2Wm1SA_Y5IFxyAmCpj0AJlN8w>
+    <xmx:zQazZsx9CoTQerEKAFQ85GtB_Z_Qc2TBpMqecj_Rm-pj0kYEVkHxjA>
+    <xmx:zQazZi50cwa2BwFeobuSVkAHiftdRb3wNUuM3xjV8KpCc0I_JqinHA>
+    <xmx:zQazZhxdj-od_I4EQWQLFD1WQl6WVi7j7tUxizi03p9qsOgQwjmGTA>
+    <xmx:zQazZo_xWMyExK77HGUd8KNOBKjSTOkzIXZ19-NqnJcfdmuaoVj7rPG5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 01:23:59 -0400 (EDT)
+ 7 Aug 2024 01:31:56 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cab3a881 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Aug 2024 05:23:55 +0000 (UTC)
-Date: Wed, 7 Aug 2024 07:23:57 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f18fe500 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Aug 2024 05:31:50 +0000 (UTC)
+Date: Wed, 7 Aug 2024 07:31:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 6/6] t-reftable-stack: add test for stack iterators
-Message-ID: <ZrME7SDUslFm4FqS@tanuki>
-References: <20240806142020.4615-1-chandrapratap3519@gmail.com>
- <20240806142020.4615-7-chandrapratap3519@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 9/9] reftable/stack: handle locked tables during
+ auto-compaction
+Message-ID: <ZrMGyMTm3jXLSLtI@tanuki>
+References: <cover.1722435214.git.ps@pks.im>
+ <cover.1722862822.git.ps@pks.im>
+ <1ef560feb1906c160ad7c81a30e9bd4fc92d2eca.1722862822.git.ps@pks.im>
+ <sct3bl7ztqwyym3wqh3jvz7vefr5gk4mf6dhsaasdihszcnnlf@s23uyyiwwbu3>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,71 +85,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2Tntcd6fTBSohzUY"
+	protocol="application/pgp-signature"; boundary="U1jmc/eu3pPhvBar"
 Content-Disposition: inline
-In-Reply-To: <20240806142020.4615-7-chandrapratap3519@gmail.com>
+In-Reply-To: <sct3bl7ztqwyym3wqh3jvz7vefr5gk4mf6dhsaasdihszcnnlf@s23uyyiwwbu3>
 
 
---2Tntcd6fTBSohzUY
+--U1jmc/eu3pPhvBar
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 06, 2024 at 07:43:42PM +0530, Chandra Pratap wrote:
-> reftable_stack_init_ref_iterator and reftable_stack_init_log_iterator
-> as defined by reftable/stack.{c, h} initialize a stack iterator to
+On Tue, Aug 06, 2024 at 01:46:35PM -0500, Justin Tobler wrote:
+> On 24/08/05 03:08PM, Patrick Steinhardt wrote:
+> >  	REFTABLE_CALLOC_ARRAY(table_locks, last - first + 1);
+> > -	for (i =3D first; i <=3D last; i++) {
+> > -		stack_filename(&table_name, st, reader_name(st->readers[i]));
+> > +	for (i =3D last + 1; i > first; i--) {
+> > +		stack_filename(&table_name, st, reader_name(st->readers[i - 1]));
+>=20
+> I might be missing something, but why not set `i =3D last` and `i >=3D
+> first`? It looks like everywhere we reference `i` we subtract one
+> anyways. Since `last` is already at the starting index, it seems it
+> would be a bit more straightforward.
 
-Same remark here that Junio posted on a preceding catch, please drop the
-space in `stack.{c,h}`.
+You are missing the case where `first =3D=3D 0`. With `first =3D 0`, `i >=3D
+first` would be truish when `i =3D=3D 0` and thus we would continue to loop.
+We then execute `i--`, wrap around, and still have `i >=3D first`.
 
-> @@ -521,6 +521,87 @@ static void t_reftable_stack_add(void)
->  	clear_dir(dir);
->  }
-> =20
-> +static void t_reftable_stack_iterator(void)
-> +{
-> +	struct reftable_write_options opts =3D { 0 };
-> +	struct reftable_stack *st =3D NULL;
-> +	char *dir =3D get_tmp_dir(__LINE__);
-> +	struct reftable_ref_record refs[10] =3D { { 0 } };
-> +	struct reftable_log_record logs[10] =3D { { 0 } };
-
-Again, these should be initialized with `=3D { 0 }`.
-
-> +	struct reftable_iterator it =3D { 0 };
-> +	size_t N =3D ARRAY_SIZE(refs), i;
-> +	int err;
-> +
-> +	err =3D reftable_new_stack(&st, dir, &opts);
-> +	check(!err);
-> +
-> +	for (i =3D 0; i < N; i++) {
-> +		char buf[20];
-> +		xsnprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
-> +		refs[i].refname =3D xstrdup(buf);
-
-This can be simplified to a single call to `xstrfmt()`.
+Thus, an endless loop is born :)
 
 Patrick
 
---2Tntcd6fTBSohzUY
+--U1jmc/eu3pPhvBar
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazBOwACgkQVbJhu7ck
-PpR6/Q//R3XCaxjeCyzN7F0lsZMLcoH/LKgth5n1j1ASVkjB04XnTosUqrPCjGhd
-CX68pZGHH8Phdr6uXCCaz6q8o3/So5MZ+yFf0DRr2CMpqWs4PqA8TvPS+t+mSzLB
-8TUEeN77tl0WoCU9ArKoVA6TWICjaucAZSLbHgUlTHKMWrKdLyo/5u0oQ1u7OdxU
-0TsTYfqBRbPU22vdQEg9JO/93WosFGdfeArXeeQcYkyx7Inv6FQu5TDe1WrV664/
-sDAGmy4lmWZjMEE22+r/mfalVK2SXHxzyg/35AjAfp5ZMXmJeL2nl3DCF9G9Ynyq
-XPi9cuQFoeg8t8PGB7qAOjuUtCl4O4u2X133FfqH6k7FLzuLqO54P9tomQzXjaVx
-pLN23jjgDuYAUe1xM7bo2Y+Xo6/MmAJh3RWMcPx8LLC8vOm50H28mryUiZqoBNNJ
-vy6hR3XpxZXoDr6HZsrhjOb9Ec5BhXaAnwXWMpMYjB6bO8OpH63ZET6lRWK7TgC2
-MLAJP0P/JOoQj0dGd2IUjNr/YtSNKEnBDilYHwGIQDe64W5HnLq6PfbDudoFLbsJ
-diqpf5KxlQnte/bxna3/46FEKdKEje7LIXtwzIGsBvVtDDdaWfPnlndfwZ7B0/rY
-gJWAir7OjxxFwofQ2MKVxvrEwFmebyITI4CvxCwV7PoVVb/ul7Q=
-=gDLM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazBscACgkQVbJhu7ck
+PpRM2BAAlLZUlSJRlXCa4iHjXV6VyuFYGwHbmxtlrmxVVlMegJjxNSXjxtv5fCaL
+clFxE+zm3CGnfCQslW3jFpTVW4GLe1Mdll/sPllDskQd96Y9QMPSudxUpO3NpzXr
+WuZ5uP9zzYOQMOZf0gH/zNPMOW4/jo94lrbXxgSWE58e6f7PvBFenEmkmxHFGaTQ
+pORg3OhhNnyJ3SQVBjnbr8e3AeulroW5EDwiR0McEA7y6k6NJgU705ngjXimO429
++5uhy6rlPn+piCY5RfXZZVDpMRR+mk7+cqP3v5UKVvJB7Wo/MV3VWb7kFoaT1jSO
+6A0UJS4NcVzIbms9qFEiR7FypBD9eH6IQM62thR5BUDmIVSSAsblLY9Q7OyJimmi
+/BIf1ZPf7gqLMk4JKDG1PjsbgVnEPlV2Ovecys9sTMduIfwvR8uwajY90H2jAGCF
+sg1bHU4d5W54YTDtrHuvkDgek3S2ghqqKLkh8bSNWfg70MlhpqdzkYRLhYqfHGsL
+bC0Kvof2HIzjxzTwhykNU67NvWSAQZDy0mIU8KTzRdLsUNEis25Xj4BX0eCfCjOf
+SulnxYx/FoPhibxrCmIOSpbyyfaNlgtHNU6JgcR7D5J54dL3qSndSbY6+RwI63El
+yxWA2szsirPaohOdZQai/k/jcw/8hpMr4fHm4fIVO/c1ALRjRjo=
+=qn60
 -----END PGP SIGNATURE-----
 
---2Tntcd6fTBSohzUY--
+--U1jmc/eu3pPhvBar--
