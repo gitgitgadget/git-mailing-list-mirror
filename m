@@ -1,79 +1,79 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D211E6733
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 12:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0481E6744
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 12:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723034644; cv=none; b=OhE3NXrxiOV0Z0ILeBzwTOcTFS7PY0u8CsLW9aKgfSUn9LyG7UonkOm9TdHZ+ko/mgaeApREVzuVzzXsn6TZJuEQmsWHkE3Rc3JK61PtLgse2HdlqyPD5kNg+FZEO8KspgjBCLIuXOwHc1wgaChJdAudVFSZCCKuosUc08NxfFI=
+	t=1723034649; cv=none; b=Uewt2QRlPxr/xOMyChsC75+8NorWOWAcKMsWCxcN6AzoX3mpIdmFu1cNDUQLh77YUhWG8GLszYB9ZS7vwQBt2Kpmr3PYKdPLUVuwXKrrBCaCFqPkiud9+eR9lTGUNf/d4k+RuaOfbTsYrCa985R7ysu0tlMlK3SjYldvhGAbnRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723034644; c=relaxed/simple;
-	bh=quIH67V2kLMxx/cRqh/5P7CROVHKf4oYvsqDtc0iVqE=;
+	s=arc-20240116; t=1723034649; c=relaxed/simple;
+	bh=cSjsvq54kHdKX98EhYGQyRpXvjtcUEM+9WFMuWBdZeA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ePwdAzI/KhtYCt3Hf3gjBmZbkP323RDi7Q7Aiz3FtFZi++omAs2UKVejvAbLM7H7wVtBcSdm4eJULiYUoCb7GoBSsioKwJW3yEUvXrvW1mGc/3ogUtrnQoSTLHqIex/fgGokiqIcbKLOzBqnuYAHH2zS1oNEKNpgKlnRBl9lqcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bpvzBM4v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kzmkh/rC; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=aL7f4lvTun96bolFe0Og/cWC5zD+k0fNJGbAhMaCgq19u5mOvADvEvKpDC8lp5kBLxW2KkZjcXH0Ugez16GlsVgptMlYSvnPKZib3ho+yUsTxjE1GumVChFWEpvLr/aEZ+keyg+de2TmeL25wkydwOAMp273Ff3ElyvS6VGcr+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qoCpkYwq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kixGpZcB; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bpvzBM4v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kzmkh/rC"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 07ED011509B2;
-	Wed,  7 Aug 2024 08:44:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qoCpkYwq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kixGpZcB"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2CFAA11508E7;
+	Wed,  7 Aug 2024 08:44:06 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 07 Aug 2024 08:44:02 -0400
+  by compute5.internal (MEProxy); Wed, 07 Aug 2024 08:44:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723034642; x=1723121042; bh=vaMQfGSUuy
-	2czQjfk6+UAcxU12brGGmWkqv1dWJ9IVw=; b=bpvzBM4vvoG0Bn7NlUQHOIyS13
-	uv9FZcdr/nriYscmcOFWeQ9kYKa5C96tP0Pghlxa7a0dQKr22/+LSGSFfg0oPSwq
-	9OLy6xBrX4v76GBj8w/ZzvR6SOrsNXKA+WneP5kdOUrkTr0C3EusDSWrds/2Mrt0
-	EYtG8j4RQjz6UVaGO6kMtSWLR5679bx2ztkiu5DiwzwNqRziuc4fOpQtEbexkKtQ
-	kys2DwZm1tBql18Gvq0dS44c8xu5Vm3We0AA+VbjuI+B2EAdfJFu9HvFXsp+KaVJ
-	MqElmjOp2rEgbAysOC7EtxMU+bTEd6IhUVnfgouK6+SuN5heE9kVQBUWgi2Q==
+	:subject:to:to; s=fm3; t=1723034646; x=1723121046; bh=1NS8aK/DNG
+	ieuabCVBfZL4neZzfyFwW3rGOmHUtmYLA=; b=qoCpkYwquUrH7G+FM2Ixff5EQE
+	jcbjO3x0h7Lc5ELz1qfuM8srVZUSdfrsP7p5kZUAZIwjFq4XC85t/D1hOyBX+4NM
+	WXWSQqI9eSfk44Zso5pSkItQFxgj/oBbb3kOgr+0GXXj3Tgw5YYWemwwlAX8NKM3
+	ZklhZnICPXhUol8G8zoP4pxCCa88pSk1VcHJy2rwVn1iPlbC219h82fLA0d2uc3q
+	swOx0wJzh7VACl0tZIx5ysdTfwXOdFvy2bA1UZq7PH3f1wFS6XJBjhqSIm71/ADg
+	BDEijA6D7N7YeVo4CzDDFpwGYlR7VM5cxzVXTdeGVCe9awRgb4xhCTsQ6D4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723034642; x=1723121042; bh=vaMQfGSUuy2czQjfk6+UAcxU12br
-	GGmWkqv1dWJ9IVw=; b=Kzmkh/rCv9dIURD0QGJblv6afdV/ULZHeHTHEtA5Ghx8
-	gCYHFillxoP1EkB2mzN02QF68SpdQJwnYXmIXGNqdxUx3KAluVyFqNHotuVwIt46
-	SRqvSMKZw8UDbzXNq4pMMGGBbQsr8iiCxQPANJcuRK+w10PINQ6gxpqM0owDUFtF
-	XcDEZO4eGiB3xWFD7eKKUuih3NDWxj8vH1zJIKGUABlX9dgkLBwiiX7zJxiPFIS4
-	ayR521+0FtfI+BfdBHnyj7o1uWcO062sCAhFYNXNUEGk9WhRo058a1VKYqKLgskh
-	N2tzW3WHwLvB8Zx04A/9RSOGjV/qdn1LoChOx0ioLQ==
-X-ME-Sender: <xms:EWyzZvNqpt7pmIxQT74eSky6aDPOgLhi7nqecDlFcEQORXwk0Bo_aw>
-    <xme:EWyzZp_36-qvwuG88CyASwaqEH1JfBqYWyBiXmXBw3LxccXLa8APkHMawa1HrHkpv
-    7M7MMkxuZjmonXc5Q>
-X-ME-Received: <xmr:EWyzZuSg5SYrQmF2m6CONuQ-PefooFRiCOwBOu9u4glk01ejTqDa5ur_UsP2O0LtxEfixy3VHBQqPKKCtJ1W_fn_I7A98U4lGlh4V25gcyvsQ0Au>
+	fm3; t=1723034646; x=1723121046; bh=1NS8aK/DNGieuabCVBfZL4neZzfy
+	FwW3rGOmHUtmYLA=; b=kixGpZcBjWJnxG30ki0TD/W99ZJ3jPyNWJFSas9V5u4B
+	RxE1wBbQU92prToajUMFWrF76n5yeI/yEOt0Jw9sqP+RCRZJnh33Qeq7F7j3PWJJ
+	90v92H9Cq762Zhk5+4eB6uLC5EqKtXeseGUNNwMw76+trAR3TghCb5N9fEJ5FBpO
+	hZtYDk1GLAWxYZ9D8D17RnghkYxMMBx/lCIbSINzaoIQdQ2RIgwj9pOrCQ1xHMKS
+	6LZ+EuXjqAquLVj8fxKNIHIX1PbdJPG7f7W4IFJTv7ZrNWBYEniHYKQ/NsslDYme
+	p2XF3i0m4WsL19dyfgKENQlCeBpThUQYvJPaeCz9hg==
+X-ME-Sender: <xms:FmyzZgeIqMw6DXgb2Vn_8BT4F6mE2xnJ-6CX42Nfbob_KkxHs0bdwQ>
+    <xme:FmyzZiNRYk50E5H83PydGC-uNvHsBcKpUkARvcqeYwg9iB4ZKXqoa8QM-3h7hE9EH
+    wijZuK7ergZt7sVNg>
+X-ME-Received: <xmr:FmyzZhhWZtJfHv3pQl6Z1D_OlHmGiJdKMMXZGXO6tt9KQBvlk64jbIyEUu-kE88hnJwYmp39xphpJQorUqvfqESl_YI9WlOEKRoOqcfEXLn_QM1k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgdehhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:EWyzZjvFZS0GrrL-x3Ua00BFBLkcoXLYRly-fzaLhUl3BX6CHmjKHg>
-    <xmx:EWyzZnfAL_zX_cOf6Sauyf1sjiwG2jWv2B2L4y_VYK7n5F2BcAG1Jw>
-    <xmx:EWyzZv142mf-VbajNqKAN9rC29iA6G-NQpG2VlrA00b8PuJo1RP2bw>
-    <xmx:EWyzZj9jkuJj20TnVebULIDloVpwDOBneNNZ3XRNPsY-vK0bmS2giA>
-    <xmx:EWyzZj4hiJlsqKeGzUwE2qfCInEagJUzjKCwwYm4MlEIyChumMYh_z0y>
+X-ME-Proxy: <xmx:FmyzZl-k7_ml6aWKjh4SWxgzcOC8vNCW1jpaBJ8uisCONVLDnsOvAw>
+    <xmx:FmyzZssajt4INONUHIqNLuT1vaEyHCKwdSjQoj0DWbPxSdWvRPfdsw>
+    <xmx:FmyzZsFmnqygkunHNwuZZaof7cyha999A1-2qzpUmsjEfGgH6g3epw>
+    <xmx:FmyzZrO3TFoY8x35tHDGiGEqz5pkHQWIULhLdDdUYqUmTuzjAsCIQg>
+    <xmx:FmyzZoKDykB0i3KBhR-SZfq87XNcRcJi3ibMqW0Jbkzizxxa5GCEbbWP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 08:44:01 -0400 (EDT)
+ 7 Aug 2024 08:44:05 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6746a51d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 7 Aug 2024 12:43:55 +0000 (UTC)
-Date: Wed, 7 Aug 2024 14:43:58 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2cd8c1c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 7 Aug 2024 12:44:00 +0000 (UTC)
+Date: Wed, 7 Aug 2024 14:44:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeppe =?utf-8?B?w5hsYW5k?= <joland@gmail.com>
-Subject: [PATCH 3/6] refs: fix ref storage format for submodule ref stores
-Message-ID: <aaff9134ed849bcad08382168424d4aa92b153c8.1723032100.git.ps@pks.im>
+Subject: [PATCH 4/6] submodule: fix leaking fetch tasks
+Message-ID: <8f8371c18a5f0a0f9b1412605199a21db334e90d.1723032100.git.ps@pks.im>
 References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
  <cover.1723032100.git.ps@pks.im>
 Precedence: bulk
@@ -83,155 +83,130 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hT9PCcCZIIlUU6Za"
+	protocol="application/pgp-signature"; boundary="7/fMbom6PWgj41Fm"
 Content-Disposition: inline
 In-Reply-To: <cover.1723032100.git.ps@pks.im>
 
 
---hT9PCcCZIIlUU6Za
-Content-Type: text/plain; charset=utf-8
+--7/fMbom6PWgj41Fm
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When opening a submodule ref storage we accidentally use the ref storage
-format of the owning repository, not of the submodule repository. As
-submodules may have a different storage format than their parent repo
-this can lead to bugs when trying to access the submodule ref storage
-=66rom the parent repository.
+When done with a fetch task used for parallel fetches of submodules, we
+need to both call `fetch_task_release()` to release the task's contents
+and `free()` to release the task itself. Most sites do this already, but
+some only call `fetch_task_release()` and thus leak memory.
 
-One such bug was reported when performing a recursive pull with mixed
-ref stores, which fails with:
+While we could trivially fix this by adding the two missing calls to
+free(3P), the result would be that we always call both functions. Let's
+thus refactor the code such that `fetch_task_release()` also frees the
+structure itself. Rename it to `fetch_task_free()` accordingly.
 
-    $ git pull --recursive
-    fatal: Unable to find current revision in submodule path 'path/to/sub'
-
-Fix the bug by using the submodule repository's ref storage format
-instead.
-
-Note that only the second added test fails without this fix. The other
-one is included regardless as it exercises other parts where we might
-end up accessing submodule ref stores.
-
-Reported-by: Jeppe =C3=98land <joland@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                                 |  2 +-
- t/t7424-submodule-mixed-ref-formats.sh | 57 +++++++++++++++++++++++++-
- 2 files changed, 57 insertions(+), 2 deletions(-)
+ submodule.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 915aeb4d1d..e4b1f4f8b1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2011,7 +2011,7 @@ struct ref_store *repo_get_submodule_ref_store(struct=
- repository *repo,
- 		free(subrepo);
- 		goto done;
+diff --git a/submodule.c b/submodule.c
+index ab99a30253..f027a6455e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1496,7 +1496,7 @@ static const struct submodule *get_non_gitmodules_sub=
+module(const char *path)
+ 	return (const struct submodule *) ret;
+ }
+=20
+-static void fetch_task_release(struct fetch_task *p)
++static void fetch_task_free(struct fetch_task *p)
+ {
+ 	if (p->free_sub)
+ 		free((void*)p->sub);
+@@ -1508,6 +1508,7 @@ static void fetch_task_release(struct fetch_task *p)
+ 	FREE_AND_NULL(p->repo);
+=20
+ 	strvec_clear(&p->git_args);
++	free(p);
+ }
+=20
+ static struct repository *get_submodule_repo_for(struct repository *r,
+@@ -1576,8 +1577,7 @@ static struct fetch_task *fetch_task_create(struct su=
+bmodule_parallel_fetch *spf
+ 	return task;
+=20
+  cleanup:
+-	fetch_task_release(task);
+-	free(task);
++	fetch_task_free(task);
+ 	return NULL;
+ }
+=20
+@@ -1607,8 +1607,7 @@ get_fetch_task_from_index(struct submodule_parallel_f=
+etch *spf,
+ 		} else {
+ 			struct strbuf empty_submodule_path =3D STRBUF_INIT;
+=20
+-			fetch_task_release(task);
+-			free(task);
++			fetch_task_free(task);
+=20
+ 			/*
+ 			 * An empty directory is normal,
+@@ -1654,8 +1653,7 @@ get_fetch_task_from_changed(struct submodule_parallel=
+_fetch *spf,
+ 				    cs_data->path,
+ 				    repo_find_unique_abbrev(the_repository, cs_data->super_oid, DEFAUL=
+T_ABBREV));
+=20
+-			fetch_task_release(task);
+-			free(task);
++			fetch_task_free(task);
+ 			continue;
+ 		}
+=20
+@@ -1763,7 +1761,7 @@ static int fetch_start_failure(struct strbuf *err UNU=
+SED,
+=20
+ 	spf->result =3D 1;
+=20
+-	fetch_task_release(task);
++	fetch_task_free(task);
+ 	return 0;
+ }
+=20
+@@ -1828,8 +1826,7 @@ static int fetch_finish(int retvalue, struct strbuf *=
+err UNUSED,
  	}
--	refs =3D ref_store_init(subrepo, the_repository->ref_storage_format,
-+	refs =3D ref_store_init(subrepo, subrepo->ref_storage_format,
- 			      submodule_sb.buf,
- 			      REF_STORE_READ | REF_STORE_ODB);
- 	register_ref_store_map(&repo->submodule_ref_stores, "submodule",
-diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mix=
-ed-ref-formats.sh
-index 4e4991d04c..998a5d82e9 100755
---- a/t/t7424-submodule-mixed-ref-formats.sh
-+++ b/t/t7424-submodule-mixed-ref-formats.sh
-@@ -18,7 +18,10 @@ do
- 	fi
 =20
- test_expect_success 'setup' '
--	git config set --global protocol.file.allow always
-+	git config set --global protocol.file.allow always &&
-+	# Some tests migrate the ref storage format, which does not work with
-+	# reflogs at the time of writing these tests.
-+	git config set --global core.logAllRefUpdates false
- '
+ out:
+-	fetch_task_release(task);
+-
++	fetch_task_free(task);
+ 	return 0;
+ }
 =20
- test_expect_success 'recursive clone propagates ref storage format' '
-@@ -59,6 +62,58 @@ test_expect_success 'clone submodules with different ref=
- storage format' '
- 	test_ref_format downstream/submodule "$OTHER_FORMAT"
- '
-=20
-+test_expect_success 'status with mixed submodule ref storages' '
-+	test_when_finished "rm -rf submodule main" &&
-+
-+	git init submodule &&
-+	test_commit -C submodule submodule-initial &&
-+	git init main &&
-+	git -C main submodule add "file://$(pwd)/submodule" &&
-+	git -C main commit -m "add submodule" &&
-+	git -C main/submodule refs migrate --ref-format=3D$OTHER_FORMAT &&
-+
-+	# The main repository should use the default ref format now, whereas
-+	# the submodule should use the other format.
-+	test_ref_format main "$GIT_DEFAULT_REF_FORMAT" &&
-+	test_ref_format main/submodule "$OTHER_FORMAT" &&
-+
-+	cat >expect <<-EOF &&
-+	 $(git -C main/submodule rev-parse HEAD) submodule (submodule-initial)
-+	EOF
-+	git -C main submodule status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'recursive pull with mixed formats' '
-+	test_when_finished "rm -rf submodule upstream downstream" &&
-+
-+	# Set up the initial structure with an upstream repository that has a
-+	# submodule, as well as a downstream clone of the upstream repository.
-+	git init submodule &&
-+	test_commit -C submodule submodule-initial &&
-+	git init upstream &&
-+	git -C upstream submodule add "file://$(pwd)/submodule" &&
-+	git -C upstream commit -m "upstream submodule" &&
-+
-+	# Clone the upstream repository such that the main repo and its
-+	# submodules have different formats.
-+	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
-+	git -C downstream submodule update --init --ref-format=3D$OTHER_FORMAT &&
-+	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
-+	test_ref_format downstream/submodule "$OTHER_FORMAT" &&
-+
-+	# Update the upstream submodule as well as the owning repository such
-+	# that we can do a recursive pull.
-+	test_commit -C submodule submodule-update &&
-+	git -C upstream/submodule pull &&
-+	git -C upstream commit -am "update the submodule" &&
-+
-+	git -C downstream pull --recurse-submodules &&
-+	git -C upstream/submodule rev-parse HEAD >expect &&
-+	git -C downstream/submodule rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- done
-=20
- test_done
 --=20
 2.46.0.dirty
 
 
---hT9PCcCZIIlUU6Za
+--7/fMbom6PWgj41Fm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazbA0ACgkQVbJhu7ck
-PpSsVxAAq2HoliAL76gwkSrGgeLdVq03WHDktssanQyJETZHVRbVGhdNJ+jbFRaC
-8tTCxemtSTTQQOAVVR4FlhI31GcqwrP61Kmhld/SuPqHRVpzq4Xmi5j2E/Wd/kDI
-u5ihew1PESm/lQwZ9ASy5aR+2JrN0EQYgdgW5cw+b7pdKNO0KEFdQQOLo6hN7lLv
-iZ8WDCyogHBm03CUJaaBD0qy0Yd3IhEPS/dbzkODq5LdOvtNCO6sVjnD8/JAwpie
-Emoy6KCNe0YwdvjPuSEPMzeCFs9K5UiQAc56fcZvpi7xgXlWZHcFDusvcQXiqe+b
-WijZ6iM+k977HsJ979Hc3HLw4RjxJ3oCukGwGlcNE8jr8ImBCN8ip99jT7/gR/sy
-m5FxJLTDlZ9YhUhjjozNS4etFjjqjMND2B2EbGEQxCQQdMZUxv3pMTCYpDV9J2iC
-Nn18TaHPaOWqAb032+oej5kCU9fF+wyuZUinZdoXiEHiDA//SWUHUL6Zl2iFP/tS
-GQgg/nvsXapLhovopDjxumOF7N7OQvWr4iDnQoxMc8jDktIL47hvmyvsv4P8shcr
-CMsdsQWGulgEVhLj1gbR9oAX0tUZTGY1MnS535Tzz/09ehj3mM0a7QLRsuYjTTtj
-z1l7/eucPqAsZpTHYLZ1l9QZqdhNtD7/5Ld7BUUd+kf/CkMKrnE=
-=WzCp
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazbBIACgkQVbJhu7ck
+PpT5hA//dhJGmbJoIEA4SnG5PBLTyLtgx7tI6JE0vcNcCLHzD564w9TlxDX6e66i
+FJ7hjffj1LX90MuSnZsaAHimdotojiW3LyEV6be2nB1frfTP79J6TkCNZux7BOat
+Fe9rMFqUoo2wV8E8BLttVcL/fueSHWPCWCt6mh/nUD6aAwvQBgYGSe8imt2YRKpN
+ehAgzol2X7aYmlMQLZSyh4JvOEIDs6sUKQ6U9kScgFur8mPdq9ENsgwb5BGS6eNq
+OQEu4MrmLJGr2WctcL3BsdC3XU5BYaN8wr2tLJgPzbw9zt8IjBY1beZYP1KR6LmM
+tN2Sj1Hml2M8HEr31IEahMDvAoai9emlUmjFXzSb0NV1F2oPC+LqFRSMQdWQzn+6
+o9wKNRd2B8OcjpML2RaLueNkgUOIGL9UJ7pWCJei5jLfnAXCWzA1B6kybMULE/js
+E/ouoHHufPptl3KP8UxDyj8+efgGO9vEdSyTgpG/1HeGczKfdH+ANgqbAjj+0hMh
+34/DmAz8zN/wz2mMOudvkz3zO70mvFCod8cDluj2miFxJ7GZeQI0J+CBqxUGWOZY
+n1+bRpcRoakCCYwNSsPw41BEUTsyw0J047uL/O+DdD7aqNc0egdD1aSPf1UK+dmD
+WJF4xWvQDhTSyKykcm7oMvDDEoFaXKjgo3vf58DaM76Oo/p/ngI=
+=HDfv
 -----END PGP SIGNATURE-----
 
---hT9PCcCZIIlUU6Za--
+--7/fMbom6PWgj41Fm--
