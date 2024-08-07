@@ -1,98 +1,111 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A72F155C83
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 13:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B47155C83
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 13:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723035735; cv=none; b=S1CwRvIdDq2tOSW5u6859qfu5ax00hcegg1xcKIbwXStPkKfg3ydmIEO7HwVdu/fWJnpecj0sWQAKd/fB4D4sk9p2XgmGwk/lvFjL2p5Its9knVe9P194XAExJckAc9nYxE8GTV1B+uYdtv6tg+NGlWA872vrJocxwmKHXVrIU4=
+	t=1723035811; cv=none; b=XtT2hjyTiaGAD1/jroEY6jxW09XlUuEQzi8E8bc5D/CScJ6dVO6y0QfAxkKPecqClU0gW8wVUO19GuJCLH5DZipFZSuu69OcGnf3NWZRA9e5V6A2qC6F0J04GAnHZKxt134Pwtqch+dPeFdDqbTUoi9ca59DkHWRY4koCV3SaaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723035735; c=relaxed/simple;
-	bh=Rp5VdntqtE8O6Ux1HQ7TNm3j3pFb+0t7WCSwDfIDNYg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X0qlJrruzf/DzBoGtxTqNZR0AI1EvD6tkpxDR/rvKTwKMMiZIYxRiPDy+ZcL4fkv5ZTcdf1NCLxANwG51PQagH5oTYJ0ETFwc9csofg2m4S7PCmyRy6hzk0crWZiOwxkslap+zJkrjKOh8LYVdwoHeYlkcgL6YwhC56R8Cx2E48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ReU6uYef; arc=none smtp.client-ip=209.85.208.177
+	s=arc-20240116; t=1723035811; c=relaxed/simple;
+	bh=ASHhSp3AXLRRcdD/+TEUU3Rq76LjXlrft/gGdO6P4cU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xmiu/icKhMs10y+/YBvLC8kyV7xqJCkUyirSMI3TiHFc+SIdBq+RQKBUwgOV8Wnto6gMERmIv8KkyPtENNaXR71SgptsESLPQ2XKhXWO02/hLrSPQ3CUWGdrY0XwFtetQKDnZ2BtMZBn6vzzoB4id5Jrf2mM5yDuWuzaOeL4N5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NwZ0xzwD; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ReU6uYef"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2f029e9c9cfso26528621fa.2
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 06:02:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NwZ0xzwD"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4281ca54fd3so12125315e9.2
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 06:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723035732; x=1723640532; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=di6vk/WqVcB5PN1VC06V4dk+W6bNhv0qnOlICBtltw4=;
-        b=ReU6uYefpNAnAI7yvsa21bIdxahfTF57OQsezPo9eyn+XFV1wx/OyVZAKrCfRD0dnQ
-         VhgKsI8Ydp2HOgpNl745crptfUUz6LpyB8jgW7uS+Dn5kK8iHPp5d5bvq9/cVy1He6uj
-         sz7x2IYv2WcNwY7U2dxPgxz4ZNnIiQJZC4fXbsElkbtQGIP7FQ4MP6XxGmIp1w+7TRyF
-         JTwCCFqyEeBVh2jDRiog9ZOwnkjxSz2ZJNU5T8QHpZotuCZt0A9YdMHE504cdX2fB5jy
-         v2qdhmoG/Wg7a0JBjJ6n5a0jQ3CuEUcl3qkaoSwcmiJmn6TfTTDA6S0c3BH+TFUAh0GZ
-         o7ZQ==
+        d=gmail.com; s=20230601; t=1723035808; x=1723640608; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/TdcKqqid0ymDfAkJnfFcM5xNyQRJygwbvTnhG2Uds=;
+        b=NwZ0xzwDK6czIUOixWkassCConFjLXKyEDI0PLHRUuV+RznSLeVSWLY6//TfqsEcyY
+         9Wf1NlPxIVLlqX++UTBKVrjhq65Mh9KrCeIyhqJ/9+h+R645NC+j3n3A2rVtIGY3rOkk
+         H58u1p0Ozzb9Zsb026gpKl2K2zikOPsTtjkmleGAJaxKHrG/qdOlzwlM79gkwjIgY6A4
+         53Lp3o7OGndM8c41ryldx2ZtOEkTSG9YGeoq/gVDRf+3FPDHp1owBgpIdGoOq23RSXk1
+         /cqFFBvLSD+ZI9qBzbvdQARZZLjyju+p8lDyefKAAWMVeXMdHeVFaiOa1WbGW/Y2CjJx
+         17eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723035732; x=1723640532;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1723035808; x=1723640608;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=di6vk/WqVcB5PN1VC06V4dk+W6bNhv0qnOlICBtltw4=;
-        b=tabK821Fbh3jQjdZdsjdPf42BUietXmMgwL/kXFEqCf44ncM7DtOss8B8e2nS4ZOtv
-         YRRrhTcNkMu5rllAoU0dzHI/Dl37UjzDR2W3fQ5VIgiAqcYPzSMXvfKYL4rhNCZ9kpVm
-         UZbTyPK2BcfQIpYgSPGrwHBM31eQZZEEBl/e97UJg0neGss+H5w0CBpFjxKBPgGjt+bA
-         azTTxIs/kdJrOS/hpILZ+oM5uOzdAPEr57hZ5fyHonhac1uonRx2Cs9DU4SUfQN4AByy
-         Yl212EWhWolOW/j2XMVYqGRfXepyTV/9yAu37svVMM9483x8BMBVNfVf9wRDbfwrRR62
-         nwQw==
-X-Gm-Message-State: AOJu0YwS8XXN0XIS3tyizA+gsiv3qcEr1ljHqL+s/ks+Fb9Bc733YsZ/
-	Q+YYP89SrLtl9tHBgmZvz4pIUgAh8zbcfSP6LNHOT4RESM/UgnnJo5b1PW5EJip7BQ6bPQIrnw6
-	gvaXN7RD+TFSk2E0VpMV2fo4fhKs=
-X-Google-Smtp-Source: AGHT+IE3uLmmBK+3gZwp79OtLAN5++Cst6qG4rt3Ny1Kaa+v1iPdH437UGYAesf4pVyAs0Mc0V88FJlCLExBvppCXcc=
-X-Received: by 2002:a2e:9a85:0:b0:2f1:924b:851e with SMTP id
- 38308e7fff4ca-2f1924b86bemr26006341fa.40.1723035731987; Wed, 07 Aug 2024
- 06:02:11 -0700 (PDT)
+        bh=Z/TdcKqqid0ymDfAkJnfFcM5xNyQRJygwbvTnhG2Uds=;
+        b=IdXsds/d57eYCWKb19zsTHx2UUlk40FEOdJfUK78WlsD1N6IeUfN9aNjxVzKKofofI
+         dUdCaWPRGRAaj8Yy/tRrglOH1OW/XPJXDLuqGN/Lf+FYs0zNYXXDRLvT2asDhBKyGzRt
+         zwZlV5QROihNduuaFzPVENQT7G+TxwfP+qS9re7awJ6UVXFD3E5TRDUjFEX7FjAtmMoa
+         GeAEFWz3wyfSCJIFpRIRxQn50r228EiSW+c7BfjBKBpRO0TBwP5nIpuGIACQ4SYaJV3j
+         J2fLoAQ7g2URrBBuL+tEvS4cVpZ/uD4cqLSnzztzN9rN3NtISYp4zC0uaGaDILtXK8EK
+         ju1Q==
+X-Gm-Message-State: AOJu0YxQgkuIJBa5p8PwdBXfyUOlWjt8XeDWUBH9NfWtN9i5pt3GAfkm
+	Bq13UDrxnIRPN0OL4Y0fkt9KAUaqzvGi0VUFaYRS6nbLboOSH8o01/28Unz3
+X-Google-Smtp-Source: AGHT+IHdqCkEYXY/v+inrESEKGVKBfs0nW133PyVVh8KCr6TJt23oFvBu3qbZ1JzjA/eOrSGQ1DMgQ==
+X-Received: by 2002:a05:600c:3ba9:b0:426:554a:e0bf with SMTP id 5b1f17b1804b1-428e6b037fcmr119351385e9.16.1723035807581;
+        Wed, 07 Aug 2024 06:03:27 -0700 (PDT)
+Received: from abdobngad.. ([154.182.238.58])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429057968d8sm29196825e9.9.2024.08.07.06.03.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 06:03:27 -0700 (PDT)
+From: AbdAlRahman Gad <abdobngad@gmail.com>
+To: git@vger.kernel.org
+Cc: AbdAlRahman Gad <abdobngad@gmail.com>
+Subject: [PATCH v5 0/8] [Newcomer] t7004: modernize the style
+Date: Wed,  7 Aug 2024 15:58:36 +0300
+Message-ID: <20240807130259.28381-1-abdobngad@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240806142020.4615-1-chandrapratap3519@gmail.com> <xmqqed71s7yf.fsf@gitster.g>
-In-Reply-To: <xmqqed71s7yf.fsf@gitster.g>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 7 Aug 2024 18:31:41 +0530
-Message-ID: <CA+J6zkTr1m7WSpE3-GSCkhQhaTsG3Kvzuh-z5SPnK8qXvsg3qA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 0/6] t: port reftable/stack_test.c to the unit
- testing framework
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 7 Aug 2024 at 02:08, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->
-> > The reftable library comes with self tests, which are exercised
-> > as part of the usual end-to-end tests and are designed to
-> > observe the end-user visible effects of Git commands. What it
-> > exercises, however, is a better match for the unit-testing
-> > framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
-> > 2023-12-09), which is designed to observe how low level
-> > implementation details, at the level of sequences of individual
-> > function calls, behave.
-> >
-> > Hence, port reftable/stack_test.c to the unit testing framework and
-> > improve upon the ported test. The first patch in the series moves
-> > the test to the unit testing framework, and the rest of the patches
-> > improve upon the ported test.
->
-> However, reftable/stack_test.c currently is a moving target because
-> there is an in-flight topic that improves the table compaction and
-> that topic wants to add more tests there.  So let's wait until the
-> dust from the other topic settles before doing the first step of
-> this topic to move the file to t/unit-tests/ hiearchy.
->
-> Thanks.
->
+- Remove whitespace after the redirect operators.
 
-Oh okay, I will focus on the other tests in the meantime.
+- Move number of expect files prepared outside of
+  test_expect_success to be inside the tests that use it.
 
---snip--
+- Split some lines that have two commands into two lines
+  one command each.
+
+- Turn some "<<\EOF" into "<<-\EOF" and indent their body.
+
+- Avoid using pipes in the output from "test-tool ref-store"
+  and write the output to a file.
+
+- Change test_expect_success that are seperated from its name
+  to be on the same line.
+
+- Avoid separating test Description and test body with backslash
+
+- Use single quotes instead of double quotes for test description and
+  body.
+
+- Use write_script which takes care of emitting the `#!/bin/sh` line
+  and the `chmod +x`.
+
+There are still tests that could lose exit status to pipe. This needs
+to be modernized too, I will fix them in another patch series.
+
+AbdAlRahman Gad (8):
+  t7004: remove space after redirect operators
+  t7004: one command per line
+  t7004: do not prepare things outside test_expect_success
+  t7004: use indented here-doc
+  t7004: description on the same line as test_expect_success
+  t7004: test Description and test body seperated with backslash
+  t7004: use single quotes instead of double quotes
+  t7004: make use of write_script
+
+ t/t7004-tag.sh | 1144 +++++++++++++++++++++++-------------------------
+ 1 file changed, 549 insertions(+), 595 deletions(-)
+
+
+base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
+-- 
+2.43.0
+
