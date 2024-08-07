@@ -1,62 +1,62 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976E71E6758
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696604AEE5
 	for <git@vger.kernel.org>; Wed,  7 Aug 2024 13:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723035815; cv=none; b=RaR+ARCGQ0jaw5bc1PQVGRYGacF8nI4GDWk2jlFFNEUxzLK0Bhelu08a7AO2sOcBXQ6ZYs7ieCzoklXOgOTMGrlLd467K2BKH1vzupDMDUQVONn0R6DdIazqukXAwpZJOo24SR8znNca0gee0XthVTfSnuyZzgwHw6TY+WjcK/M=
+	t=1723035816; cv=none; b=tZTGKYAbNj1K7l8xgDOIdSiLvdNL8vjj440KJALr5555OtXp01gcQLSjEi2MB/5rQlxcx1LScyBFA1vXxxu7fiU0qe/PcaiIsNrTi0mzAVIP/hSvWwJttr79wBIWyVIUWfidljZ8+ZH3emvQVHp58uN+9AAMw569pXoNvfRl4OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723035815; c=relaxed/simple;
-	bh=oFYS2aOLX0gtC4AdpzGUage+IULhVMWpeCmmgC2RoFk=;
+	s=arc-20240116; t=1723035816; c=relaxed/simple;
+	bh=DAjvUpj5YKpzDjFcoAH6KbTNIdIoG+X3FfUwG5Gxtks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOLT6E0CG+NJ3lGZCl7Lrjc+PgXZQ6Qft8vmZJQOf6Mok3Y+ediOh33yNFiplGktpjtrR1bI/s/r6uzNjJNdXsLywZ7NWuARBh5jXrx/ob8qhdUjXPLi/ErzxTq/M64tXend2GJBipyBvmhA+HtI5+p4vHnJJitXAYEbsTepAgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HScZOAN2; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=J7BDHy40jctv4BBawF9RoFh3/TRSZV3YzNs3LJAEwfaSwe27g8LQmijwYmK8EQmY/2bKDj+ehWoDwFJV+PjFDqNCi8jsDJpQ0fBhkXhcLNvXcGvDBox0nl1svku2yjOO6XVfiNOM+RFClI2lggE67VXRmGJ7B9nDwf/nhZKHVbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RKQct92F; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HScZOAN2"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4280b3a7efaso11918445e9.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RKQct92F"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2eeb1ba0468so25833351fa.0
         for <git@vger.kernel.org>; Wed, 07 Aug 2024 06:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723035812; x=1723640612; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723035811; x=1723640611; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YsP+fpx6wh7dK6VZ6gajPM0W75dy7xU0B9edgo9xG4Y=;
-        b=HScZOAN2+rrN8RYbxJNRnFZT7KPcyoNaC3GXRSzo2cFEo8Y3ejQOByjIj3raEEIfMu
-         1WdfapJAX1OL/ZJjAmtlh/mU1dqXV3U3D7XNi/TZM7TIQ7jEYB881EyoWcNuT++EZEot
-         RIU8Y+GKzR8Wv2fXtSelyTWYZWNlv2HlfO1MxedAu5UJYxuOAOojIhRclvhWwez+nMBH
-         alb3OL29ZoJRpYT17lnkAQEo47YmBVLiGOnyE7yA/Np0n/P+PDxpN0lC063nbGJGtben
-         0aJ5Lcot00IZZ/Tkb63ngFYVbXAnGrzAQxla+ZGMxPJTJilyaBAVvBt9+AmOsJSWIhwc
-         sz+w==
+        bh=Q/1V447xjaQbmyKIvu33fiFlG/zMC+KXGSPiRyJ8wag=;
+        b=RKQct92FR8nR/1m/CNRhHx9WH3AhJlfAFxvmeNrQt5NiswOg5ecd3ejl5zusUnjLTf
+         s9KQc7WW+QfhrgUQNzWyKJkv/nYdO9ieXBf0sHA2oLaIWwydflkZmeAztk9215pachMe
+         xLEO90uynUhvsveKMrO3PnsQqYWfm5vlTLbw0NjzEkGOB9OCdlGYy36NtM9y25YF8DyV
+         u2q8N5wrfFz/rXb8yYf2HG81/Jnwb0D2su9aHnzNzHtIIBO2Q1TCjpC+fAVDA33duiYs
+         Q2g+/srSbVWkaixrd6Q/LPQ7hgbsq4AG0uQPtdQTfT4wJbqxLgX42GvFzsqLSibpDk77
+         XVmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723035812; x=1723640612;
+        d=1e100.net; s=20230601; t=1723035811; x=1723640611;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YsP+fpx6wh7dK6VZ6gajPM0W75dy7xU0B9edgo9xG4Y=;
-        b=xHkKbSRuzxgOJNckAJm9E5ES0gKNBLyc51BlObvrutq0fVFi3fYfeRr1LBwpW6cWPq
-         rlFaxBA0ZtaZN6JDWgeaOXwgq5GCrj1vOjTD3n4fly52iRZm04+oobDJ+2Wbs3loXH9S
-         jIP4NqvVly1Jj1RnYpwQvHpC+US2ePEqIMPUIXrMufpO/CabxqmdHGzYb9UUds1CPA/3
-         vCX7r8IXuzZ4gaq7Z/MjcrWSzSu7IpJa4Qo3eE03pcFWrsjql3urd/7MfeIwLCR2Nvo+
-         HJqB4HVfcDEGWEiTKi/Du8JIjtvydFU0oioyS68CGF37oApJTexgR0UukGOskF60N9sC
-         d7vw==
-X-Gm-Message-State: AOJu0YyjACONUdbLlMeQN7g5fnve1Iu23B4XXd3i8tM4oTQBo1oHNysm
-	ex4VFCEigmkE1m09TZLKbNYX0Im7SjOEV5d/9o4lrwKgD8t9VRWSJ1YtJlMf
-X-Google-Smtp-Source: AGHT+IHVjrlLSQK+YqVwpbXnSmxBvunJMGTi9K8WNwmkrg+/4gqwWnYOYm2JDUeaOIdOPobwrev6gA==
-X-Received: by 2002:a05:600c:1393:b0:426:65bf:5cc2 with SMTP id 5b1f17b1804b1-428e6af1af1mr129201455e9.1.1723035811469;
-        Wed, 07 Aug 2024 06:03:31 -0700 (PDT)
+        bh=Q/1V447xjaQbmyKIvu33fiFlG/zMC+KXGSPiRyJ8wag=;
+        b=oXLNHMQ68pz7c/GJEf2erHf2JzdL/Unxn4oy6dRp7JBrstPU8s4dgHSZlAnLs0wgMM
+         lIyWwRDcUQ7bk7jfo4KdR5Gx5BHCnQNpEwYubnUH9itfT/O+CXh97LMEIau7Ua5qlBmc
+         6GMzaIsbjdJN9tG8sI1osPTfwQmde49T8xxTOZK/+qHMNTNRs2B6+1ghgEC40H42kNca
+         eWah8r8NStSylJC6Yq6DTgu+BjUHFIGE/4D4JHRXgx7MO7/Ptm9QyS+QLsH1frZCtf/V
+         k2bqry1UpY+9hjxrZdNvfrvQYUapUJitn1sgdOYE460G6alcqmnErTDSml6TEZ5wo3IA
+         86KA==
+X-Gm-Message-State: AOJu0YxH3DYP8lsu+Kg7vAHA+mHKpFW1VVIGx/Hvt3Cu9DmtmhBZ0KC4
+	dLgBJSzPPHMhxQIy4IK4x2Jr27MPH28T7ry0Ie8zLfcUcKDKdmb6iJ4LvujH
+X-Google-Smtp-Source: AGHT+IF6F799KFr85zezVczUUjtygpB8PVwjwd9CWpY34DF210BMkKnl/eZL3DSZmpNWD+3qQ/bWIw==
+X-Received: by 2002:a2e:8609:0:b0:2ec:55b5:ed45 with SMTP id 38308e7fff4ca-2f15aac36d2mr120125681fa.24.1723035810655;
+        Wed, 07 Aug 2024 06:03:30 -0700 (PDT)
 Received: from abdobngad.. ([154.182.238.58])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429057968d8sm29196825e9.9.2024.08.07.06.03.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429057968d8sm29196825e9.9.2024.08.07.06.03.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Aug 2024 06:03:31 -0700 (PDT)
+        Wed, 07 Aug 2024 06:03:30 -0700 (PDT)
 From: AbdAlRahman Gad <abdobngad@gmail.com>
 To: git@vger.kernel.org
 Cc: AbdAlRahman Gad <abdobngad@gmail.com>
-Subject: [PATCH v5 4/8] t7004: use indented here-doc
-Date: Wed,  7 Aug 2024 15:58:40 +0300
-Message-ID: <20240807130259.28381-5-abdobngad@gmail.com>
+Subject: [PATCH v5 3/8] t7004: do not prepare things outside test_expect_success
+Date: Wed,  7 Aug 2024 15:58:39 +0300
+Message-ID: <20240807130259.28381-4-abdobngad@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240807130259.28381-1-abdobngad@gmail.com>
 References: <20240807130259.28381-1-abdobngad@gmail.com>
@@ -68,77 +68,1276 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use <<-\EOF instead of <<\EOF where the latter allows us to indent
-the body of the here-doc.
+Do not prepare expect and other things outside test_expect_success.
+If such code fails for some reason, we won't necessarily hear about
+it in a timely fashion (or perhaps at all). By placing all code inside
+`test_expect_success` it ensures that we know immediately if it fails.
+
+Also add '\' before EOF to avoid shell interpolation and '-' to allow
+indentation of the body.
 
 Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
 ---
- t/t7004-tag.sh | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ t/t7004-tag.sh | 698 +++++++++++++++++++++++++------------------------
+ 1 file changed, 360 insertions(+), 338 deletions(-)
 
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index a755d3be00..996020fd7c 100755
+index 09ce287559..a755d3be00 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -387,10 +387,10 @@ test_expect_success 'tag -l <pattern> -l <pattern> works, as our buggy documenta
- 
- test_expect_success 'listing tags in column' '
- 	COLUMNS=41 git tag -l --column=row >actual &&
--	cat >expected <<\EOF &&
--a1      aa1     cba     t210    t211
--v0.2.1  v1.0    v1.0.1  v1.1.3
--EOF
-+	cat >expected <<-\EOF &&
-+	a1      aa1     cba     t210    t211
-+	v0.2.1  v1.0    v1.0.1  v1.1.3
-+	EOF
- 	test_cmp expected actual
+@@ -129,10 +129,10 @@ test_expect_success 'listing all tags if one exists should succeed' '
+ 	git tag
  '
  
-@@ -398,10 +398,10 @@ test_expect_success 'listing tags in column with column.*' '
- 	test_config column.tag row &&
- 	test_config column.ui dense &&
- 	COLUMNS=40 git tag -l >actual &&
--	cat >expected <<\EOF &&
--a1      aa1   cba     t210    t211
--v0.2.1  v1.0  v1.0.1  v1.1.3
+-cat >expect <<EOF
+-mytag
 -EOF
-+	cat >expected <<-\EOF &&
-+	a1      aa1   cba     t210    t211
-+	v0.2.1  v1.0  v1.0.1  v1.1.3
+ test_expect_success 'Multiple -l or --list options are equivalent to one -l option' '
++	cat >expect <<-\EOF &&
++	mytag
 +	EOF
- 	test_cmp expected actual
+ 	git tag -l -l >actual &&
+ 	test_cmp expect actual &&
+ 	git tag --list --list >actual &&
+@@ -207,12 +207,12 @@ test_expect_success 'trying to delete an unknown tag should fail' '
+ 	test_must_fail git tag -d unknown-tag
  '
  
-@@ -412,17 +412,17 @@ test_expect_success 'listing tag with -n --column should fail' '
- test_expect_success 'listing tags -n in column with column.ui ignored' '
- 	test_config column.ui "row dense" &&
- 	COLUMNS=40 git tag -l -n >actual &&
--	cat >expected <<\EOF &&
--a1              Foo
--aa1             Foo
--cba             Foo
--t210            Foo
--t211            Foo
--v0.2.1          Foo
--v1.0            Foo
--v1.0.1          Foo
--v1.1.3          Foo
+-cat >expect <<EOF
+-myhead
+-mytag
 -EOF
-+	cat >expected <<-\EOF &&
-+	a1              Foo
-+	aa1             Foo
-+	cba             Foo
-+	t210            Foo
-+	t211            Foo
-+	v0.2.1          Foo
-+	v1.0            Foo
-+	v1.0.1          Foo
-+	v1.1.3          Foo
+ test_expect_success \
+ 	'trying to delete tags without params should succeed and do nothing' '
++	cat >expect <<-\EOF &&
++	myhead
++	mytag
 +	EOF
- 	test_cmp expected actual
+ 	git tag -l >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -d &&
+@@ -250,18 +250,18 @@ test_expect_success 'trying to delete an already deleted tag should fail' \
+ 
+ # listing various tags with pattern matching:
+ 
+-cat >expect <<EOF
+-a1
+-aa1
+-cba
+-t210
+-t211
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-EOF
+ test_expect_success 'listing all tags should print them ordered' '
++	cat >expect <<-\EOF &&
++	a1
++	aa1
++	cba
++	t210
++	t211
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag v1.0.1 &&
+ 	git tag t211 &&
+ 	git tag aa1 &&
+@@ -277,62 +277,62 @@ test_expect_success 'listing all tags should print them ordered' '
+ 	test_cmp expect actual
  '
  
+-cat >expect <<EOF
+-a1
+-aa1
+-cba
+-EOF
+ test_expect_success \
+ 	'listing tags with substring as pattern must print those matching' '
++	cat >expect <<-\EOF &&
++	a1
++	aa1
++	cba
++	EOF
+ 	rm *a* &&
+ 	git tag -l "*a*" >current &&
+ 	test_cmp expect current
+ '
+ 
+-cat >expect <<EOF
+-v0.2.1
+-v1.0.1
+-EOF
+ test_expect_success \
+ 	'listing tags with a suffix as pattern must print those matching' '
++	cat >expect <<-\EOF &&
++	v0.2.1
++	v1.0.1
++	EOF
+ 	git tag -l "*.1" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<EOF
+-t210
+-t211
+-EOF
+ test_expect_success \
+ 	'listing tags with a prefix as pattern must print those matching' '
++	cat >expect <<-\EOF &&
++	t210
++	t211
++	EOF
+ 	git tag -l "t21*" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<EOF
+-a1
+-EOF
+ test_expect_success \
+ 	'listing tags using a name as pattern must print that one matching' '
++	cat >expect <<-\EOF &&
++	a1
++	EOF
+ 	git tag -l a1 >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<EOF
+-v1.0
+-EOF
+ test_expect_success \
+ 	'listing tags using a name as pattern must print that one matching' '
++	cat >expect <<-\EOF &&
++	v1.0
++	EOF
+ 	git tag -l v1.0 >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >expect <<EOF
+-v1.0.1
+-v1.1.3
+-EOF
+ test_expect_success \
+ 	'listing tags with ? in the pattern should print those matching' '
++	cat >expect <<-\EOF &&
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag -l "v1.?.?" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -343,19 +343,25 @@ test_expect_success \
+ 	test_must_be_empty actual
+ '
+ 
+-cat >expect <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-EOF
+ test_expect_success \
+ 	'listing tags using v* should print only those having v' '
++	cat >expect <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag -l "v*" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'tag -l can accept multiple patterns' '
++	cat >expect <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag -l "v1*" "v0*" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -369,6 +375,12 @@ test_expect_success 'tag -l can accept multiple patterns' '
+ # out if we're going to break this long-documented form of taking
+ # multiple patterns.
+ test_expect_success 'tag -l <pattern> -l <pattern> works, as our buggy documentation previously suggested' '
++	cat >expect <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag -l "v1*" -l "v0*" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -451,68 +463,69 @@ tagger C O Mitter <committer@example.com> $4 -0700
+ EOF
+ }
+ 
+-commit=$(git rev-parse HEAD)
+-time=$test_tick
+-
+-get_tag_header annotated-tag $commit commit $time >expect
+-echo "A message" >>expect
+ test_expect_success \
+ 	'creating an annotated tag with -m message should succeed' '
++	commit=$(git rev-parse HEAD) &&
++	time=$test_tick &&
++	get_tag_header annotated-tag $commit commit $time >expect &&
++	echo "A message" >>expect &&
+ 	git tag -m "A message" annotated-tag &&
+ 	get_tag_msg annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header annotated-tag-edit $commit commit $time >expect
+-echo "An edited message" >>expect
+ test_expect_success 'set up editor' '
+ 	write_script fakeeditor <<-\EOF
+ 	sed -e "s/A message/An edited message/g" <"$1" >"$1-"
+ 	mv "$1-" "$1"
+ 	EOF
+ '
++
+ test_expect_success \
+ 	'creating an annotated tag with -m message --edit should succeed' '
++	get_tag_header annotated-tag-edit $commit commit $time >expect &&
++	echo "An edited message" >>expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -m "A message" --edit annotated-tag-edit &&
+ 	get_tag_msg annotated-tag-edit >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >msgfile <<EOF
+-Another message
+-in a file.
+-EOF
+-get_tag_header file-annotated-tag $commit commit $time >expect
+-cat msgfile >>expect
+ test_expect_success \
+ 	'creating an annotated tag with -F messagefile should succeed' '
++	cat >msgfile <<-\EOF &&
++	Another message
++	in a file.
++	EOF
++	get_tag_header file-annotated-tag $commit commit $time >expect &&
++	cat msgfile >>expect &&
+ 	git tag -F msgfile file-annotated-tag &&
+ 	get_tag_msg file-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header file-annotated-tag-edit $commit commit $time >expect
+-sed -e "s/Another message/Another edited message/g" msgfile >>expect
+ test_expect_success 'set up editor' '
+ 	write_script fakeeditor <<-\EOF
+ 	sed -e "s/Another message/Another edited message/g" <"$1" >"$1-"
+ 	mv "$1-" "$1"
+ 	EOF
+ '
++
+ test_expect_success \
+ 	'creating an annotated tag with -F messagefile --edit should succeed' '
++	get_tag_header file-annotated-tag-edit $commit commit $time >expect &&
++	sed -e "s/Another message/Another edited message/g" msgfile >>expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -F msgfile --edit file-annotated-tag-edit &&
+ 	get_tag_msg file-annotated-tag-edit >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >inputmsg <<EOF
+-A message from the
+-standard input
+-EOF
+-get_tag_header stdin-annotated-tag $commit commit $time >expect
+-cat inputmsg >>expect
+ test_expect_success 'creating an annotated tag with -F - should succeed' '
++	cat >inputmsg <<-\EOF &&
++	A message from the
++	standard input
++	EOF
++	get_tag_header stdin-annotated-tag $commit commit $time >expect &&
++	cat inputmsg >>expect &&
+ 	git tag -F - stdin-annotated-tag <inputmsg &&
+ 	get_tag_msg stdin-annotated-tag >actual &&
+ 	test_cmp expect actual
+@@ -541,67 +554,67 @@ test_expect_success \
+ 
+ # blank and empty messages:
+ 
+-get_tag_header empty-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with an empty -m message should succeed' '
++	get_tag_header empty-annotated-tag $commit commit $time >expect &&
+ 	git tag -m "" empty-annotated-tag &&
+ 	get_tag_msg empty-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+->emptyfile
+-get_tag_header emptyfile-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with an empty -F messagefile should succeed' '
++	>emptyfile &&
++	get_tag_header emptyfile-annotated-tag $commit commit $time >expect &&
+ 	git tag -F emptyfile emptyfile-annotated-tag &&
+ 	get_tag_msg emptyfile-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-printf '\n\n  \n\t\nLeading blank lines\n' >blanksfile
+-printf '\n\t \t  \nRepeated blank lines\n' >>blanksfile
+-printf '\n\n\nTrailing spaces      \t  \n' >>blanksfile
+-printf '\nTrailing blank lines\n\n\t \n\n' >>blanksfile
+-get_tag_header blanks-annotated-tag $commit commit $time >expect
+-cat >>expect <<EOF
+-Leading blank lines
++test_expect_success \
++	'extra blanks in the message for an annotated tag should be removed' '
++	printf "\n\n  \n\t\nLeading blank lines\n" >blanksfile &&
++	printf "\n\t \t  \nRepeated blank lines\n" >>blanksfile &&
++	printf "\n\n\nTrailing spaces      \t  \n" >>blanksfile &&
++	printf "\nTrailing blank lines\n\n\t \n\n" >>blanksfile &&
++	get_tag_header blanks-annotated-tag $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	Leading blank lines
+ 
+-Repeated blank lines
++	Repeated blank lines
+ 
+-Trailing spaces
++	Trailing spaces
+ 
+-Trailing blank lines
+-EOF
+-test_expect_success \
+-	'extra blanks in the message for an annotated tag should be removed' '
++	Trailing blank lines
++	EOF
+ 	git tag -F blanksfile blanks-annotated-tag &&
+ 	get_tag_msg blanks-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header blank-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with blank -m message with spaces should succeed' '
++	get_tag_header blank-annotated-tag $commit commit $time >expect &&
+ 	git tag -m "     " blank-annotated-tag &&
+ 	get_tag_msg blank-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-echo '     ' >blankfile
+-echo ''      >>blankfile
+-echo '  '    >>blankfile
+-get_tag_header blankfile-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with blank -F messagefile with spaces should succeed' '
++	echo "     " >blankfile &&
++	echo ""      >>blankfile &&
++	echo "  "    >>blankfile &&
++	get_tag_header blankfile-annotated-tag $commit commit $time >expect &&
+ 	git tag -F blankfile blankfile-annotated-tag &&
+ 	get_tag_msg blankfile-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-printf '      ' >blanknonlfile
+-get_tag_header blanknonlfile-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with -F file of spaces and no newline should succeed' '
++	printf "      " >blanknonlfile &&
++	get_tag_header blanknonlfile-annotated-tag $commit commit $time >expect &&
+ 	git tag -F blanknonlfile blanknonlfile-annotated-tag &&
+ 	get_tag_msg blanknonlfile-annotated-tag >actual &&
+ 	test_cmp expect actual
+@@ -609,62 +622,62 @@ test_expect_success \
+ 
+ # messages with commented lines:
+ 
+-cat >commentsfile <<EOF
+-# A comment
++test_expect_success \
++	'creating a tag using a -F messagefile with #comments should succeed' '
++	cat >commentsfile <<-\EOF &&
++	# A comment
+ 
+-############
+-The message.
+-############
+-One line.
++	############
++	The message.
++	############
++	One line.
+ 
+ 
+-# commented lines
+-# commented lines
++	# commented lines
++	# commented lines
+ 
+-Another line.
+-# comments
++	Another line.
++	# comments
+ 
+-Last line.
+-EOF
+-get_tag_header comments-annotated-tag $commit commit $time >expect
+-cat >>expect <<EOF
+-The message.
+-One line.
++	Last line.
++	EOF
++	get_tag_header comments-annotated-tag $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	The message.
++	One line.
+ 
+-Another line.
++	Another line.
+ 
+-Last line.
+-EOF
+-test_expect_success \
+-	'creating a tag using a -F messagefile with #comments should succeed' '
++	Last line.
++	EOF
+ 	git tag -F commentsfile comments-annotated-tag &&
+ 	get_tag_msg comments-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header comment-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with a #comment in the -m message should succeed' '
++	get_tag_header comment-annotated-tag $commit commit $time >expect &&
+ 	git tag -m "#comment" comment-annotated-tag &&
+ 	get_tag_msg comment-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-echo '#comment' >commentfile
+-echo ''         >>commentfile
+-echo '####'     >>commentfile
+-get_tag_header commentfile-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with #comments in the -F messagefile should succeed' '
++	echo "#comment" >commentfile &&
++	echo ""         >>commentfile &&
++	echo "####"     >>commentfile &&
++	get_tag_header commentfile-annotated-tag $commit commit $time >expect &&
+ 	git tag -F commentfile commentfile-annotated-tag &&
+ 	get_tag_msg commentfile-annotated-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-printf '#comment' >commentnonlfile
+-get_tag_header commentnonlfile-annotated-tag $commit commit $time >expect
+ test_expect_success \
+ 	'creating a tag with a file of #comment and no newline should succeed' '
++	printf "#comment" >commentnonlfile &&
++	get_tag_header commentnonlfile-annotated-tag $commit commit $time >expect &&
+ 	git tag -F commentnonlfile commentnonlfile-annotated-tag &&
+ 	get_tag_msg commentnonlfile-annotated-tag >actual &&
+ 	test_cmp expect actual
+@@ -846,11 +859,11 @@ test_expect_success \
+ 	test_cmp expect actual
+ '
+ 
+-echo 'tag line one' >annotagmsg
+-echo 'tag line two' >>annotagmsg
+-echo 'tag line three' >>annotagmsg
+ test_expect_success \
+ 	'listing many message lines of a non-signed tag should succeed' '
++	echo "tag line one" >annotagmsg &&
++	echo "tag line two" >>annotagmsg &&
++	echo "tag line three" >>annotagmsg  &&
+ 	git tag -F annotagmsg tag-lines &&
+ 
+ 	echo "tag-lines" >expect &&
+@@ -958,20 +971,20 @@ test_expect_success GPG \
+ 
+ # creating and verifying signed tags:
+ 
+-get_tag_header signed-tag $commit commit $time >expect
+-echo 'A signed tag message' >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG 'creating a signed tag with -m message should succeed' '
++	get_tag_header signed-tag $commit commit $time >expect &&
++	echo "A signed tag message" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "A signed tag message" signed-tag &&
+ 	get_tag_msg signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header u-signed-tag $commit commit $time >expect
+-echo 'Another message' >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG 'sign with a given key id' '
+ 
++	get_tag_header u-signed-tag $commit commit $time >expect &&
++	echo "Another message" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -u committer@example.com -m "Another message" u-signed-tag &&
+ 	get_tag_msg u-signed-tag >actual &&
+ 	test_cmp expect actual
+@@ -991,65 +1004,65 @@ test_expect_success GPG 'sign with an unknown id (2)' '
+ 
+ '
+ 
+-cat >fakeeditor <<'EOF'
+-#!/bin/sh
+-test -n "$1" && exec >"$1"
+-echo A signed tag message
+-echo from a fake editor.
+-EOF
+-chmod +x fakeeditor
+-
+-get_tag_header implied-sign $commit commit $time >expect
+-./fakeeditor >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG '-u implies signed tag' '
++	cat >fakeeditor <<-\EOF &&
++	#!/bin/sh
++	test -n "$1" && exec >"$1"
++	echo A signed tag message
++	echo from a fake editor.
++	EOF
++	chmod +x fakeeditor &&
++
++	get_tag_header implied-sign $commit commit $time >expect &&
++	./fakeeditor >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -u CDDE430D implied-sign &&
+ 	get_tag_msg implied-sign >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >sigmsgfile <<EOF
+-Another signed tag
+-message in a file.
+-EOF
+-get_tag_header file-signed-tag $commit commit $time >expect
+-cat sigmsgfile >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with -F messagefile should succeed' '
++	cat >sigmsgfile <<-\EOF &&
++	Another signed tag
++	message in a file.
++	EOF
++	get_tag_header file-signed-tag $commit commit $time >expect &&
++	cat sigmsgfile >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigmsgfile file-signed-tag &&
+ 	get_tag_msg file-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >siginputmsg <<EOF
+-A signed tag message from
+-the standard input
+-EOF
+-get_tag_header stdin-signed-tag $commit commit $time >expect
+-cat siginputmsg >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG 'creating a signed tag with -F - should succeed' '
++	cat >siginputmsg <<-\EOF &&
++	A signed tag message from
++	the standard input
++	EOF
++	get_tag_header stdin-signed-tag $commit commit $time >expect &&
++	cat siginputmsg >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F - stdin-signed-tag <siginputmsg &&
+ 	get_tag_msg stdin-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header implied-annotate $commit commit $time >expect
+-./fakeeditor >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG '-s implies annotated tag' '
++	get_tag_header implied-annotate $commit commit $time >expect &&
++	./fakeeditor >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -s implied-annotate &&
+ 	get_tag_msg implied-annotate >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header forcesignannotated-implied-sign $commit commit $time >expect
+-echo "A message" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'git tag -s implied if configured with tag.forcesignannotated' \
+-	'test_config tag.forcesignannotated true &&
++	'get_tag_header forcesignannotated-implied-sign $commit commit $time >expect &&
++	echo "A message" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
++	test_config tag.forcesignannotated true &&
+ 	git tag -m "A message" forcesignannotated-implied-sign &&
+ 	get_tag_msg forcesignannotated-implied-sign >actual &&
+ 	test_cmp expect actual
+@@ -1063,44 +1076,44 @@ test_expect_success GPG \
+ 	test_must_fail git tag -v forcesignannotated-no-message
+ '
+ 
+-get_tag_header forcesignannotated-annotate $commit commit $time >expect
+-echo "A message" >>expect
+ test_expect_success GPG \
+ 	'git tag -a disable configured tag.forcesignannotated' \
+-	'test_config tag.forcesignannotated true &&
++	'get_tag_header forcesignannotated-annotate $commit commit $time >expect &&
++	echo "A message" >>expect &&
++	test_config tag.forcesignannotated true &&
+ 	git tag -a -m "A message" forcesignannotated-annotate &&
+ 	get_tag_msg forcesignannotated-annotate >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git tag -v forcesignannotated-annotate
+ '
+ 
+-get_tag_header forcesignannotated-disabled $commit commit $time >expect
+-echo "A message" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'git tag --sign enable GPG sign' \
+-	'test_config tag.forcesignannotated false &&
++	'get_tag_header forcesignannotated-disabled $commit commit $time >expect &&
++	echo "A message" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
++	test_config tag.forcesignannotated false &&
+ 	git tag --sign -m "A message" forcesignannotated-disabled &&
+ 	get_tag_msg forcesignannotated-disabled >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header gpgsign-enabled $commit commit $time >expect
+-echo "A message" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'git tag configured tag.gpgsign enables GPG sign' \
+-	'test_config tag.gpgsign true &&
++	'get_tag_header gpgsign-enabled $commit commit $time >expect &&
++	echo "A message" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
++	test_config tag.gpgsign true &&
+ 	git tag -m "A message" gpgsign-enabled &&
+ 	get_tag_msg gpgsign-enabled>actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header no-sign $commit commit $time >expect
+-echo "A message" >>expect
+ test_expect_success GPG \
+ 	'git tag --no-sign configured tag.gpgsign skip GPG sign' \
+-	'test_config tag.gpgsign true &&
++	'get_tag_header no-sign $commit commit $time >expect &&
++	echo "A message" >>expect &&
++	test_config tag.gpgsign true &&
+ 	git tag -a --no-sign -m "A message" no-sign &&
+ 	get_tag_msg no-sign>actual &&
+ 	test_cmp expect actual
+@@ -1152,78 +1165,78 @@ test_expect_success GPG 'verifying a forged tag with --format should fail silent
+ 
+ # blank and empty messages for signed tags:
+ 
+-get_tag_header empty-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with an empty -m message should succeed' '
++	get_tag_header empty-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "" empty-signed-tag &&
+ 	get_tag_msg empty-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v empty-signed-tag
+ '
+ 
+->sigemptyfile
+-get_tag_header emptyfile-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with an empty -F messagefile should succeed' '
++	>sigemptyfile &&
++	get_tag_header emptyfile-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigemptyfile emptyfile-signed-tag &&
+ 	get_tag_msg emptyfile-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v emptyfile-signed-tag
+ '
+ 
+-printf '\n\n  \n\t\nLeading blank lines\n' >sigblanksfile
+-printf '\n\t \t  \nRepeated blank lines\n' >>sigblanksfile
+-printf '\n\n\nTrailing spaces      \t  \n' >>sigblanksfile
+-printf '\nTrailing blank lines\n\n\t \n\n' >>sigblanksfile
+-get_tag_header blanks-signed-tag $commit commit $time >expect
+-cat >>expect <<EOF
+-Leading blank lines
++test_expect_success GPG \
++	'extra blanks in the message for a signed tag should be removed' '
++	printf "\n\n  \n\t\nLeading blank lines\n" >sigblanksfile &&
++	printf "\n\t \t  \nRepeated blank lines\n" >>sigblanksfile &&
++	printf "\n\n\nTrailing spaces      \t  \n" >>sigblanksfile &&
++	printf "\nTrailing blank lines\n\n\t \n\n" >>sigblanksfile &&
++	get_tag_header blanks-signed-tag $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	Leading blank lines
+ 
+-Repeated blank lines
++	Repeated blank lines
+ 
+-Trailing spaces
++	Trailing spaces
+ 
+-Trailing blank lines
+-EOF
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+-test_expect_success GPG \
+-	'extra blanks in the message for a signed tag should be removed' '
++	Trailing blank lines
++	EOF
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigblanksfile blanks-signed-tag &&
+ 	get_tag_msg blanks-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v blanks-signed-tag
+ '
+ 
+-get_tag_header blank-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with a blank -m message should succeed' '
++	get_tag_header blank-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "     " blank-signed-tag &&
+ 	get_tag_msg blank-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v blank-signed-tag
+ '
+ 
+-echo '     ' >sigblankfile
+-echo ''      >>sigblankfile
+-echo '  '    >>sigblankfile
+-get_tag_header blankfile-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with blank -F file with spaces should succeed' '
++	echo "     " >sigblankfile &&
++	echo ""      >>sigblankfile &&
++	echo "  "    >>sigblankfile &&
++	get_tag_header blankfile-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigblankfile blankfile-signed-tag &&
+ 	get_tag_msg blankfile-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v blankfile-signed-tag
+ '
+ 
+-printf '      ' >sigblanknonlfile
+-get_tag_header blanknonlfile-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with spaces and no newline should succeed' '
++	printf "      " >sigblanknonlfile &&
++	get_tag_header blanknonlfile-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigblanknonlfile blanknonlfile-signed-tag &&
+ 	get_tag_msg blanknonlfile-signed-tag >actual &&
+ 	test_cmp expect actual &&
+@@ -1243,69 +1256,69 @@ test_expect_success GPG 'signed tag with embedded PGP message' '
+ 
+ # messages with commented lines for signed tags:
+ 
+-cat >sigcommentsfile <<EOF
+-# A comment
++test_expect_success GPG \
++	'creating a signed tag with a -F file with #comments should succeed' '
++	cat >sigcommentsfile <<-\EOF &&
++	# A comment
+ 
+-############
+-The message.
+-############
+-One line.
++	############
++	The message.
++	############
++	One line.
+ 
+ 
+-# commented lines
+-# commented lines
++	# commented lines
++	# commented lines
+ 
+-Another line.
+-# comments
++	Another line.
++	# comments
+ 
+-Last line.
+-EOF
+-get_tag_header comments-signed-tag $commit commit $time >expect
+-cat >>expect <<EOF
+-The message.
+-One line.
++	Last line.
++	EOF
++	get_tag_header comments-signed-tag $commit commit $time >expect &&
++	cat >>expect <<-\EOF &&
++	The message.
++	One line.
+ 
+-Another line.
++	Another line.
+ 
+-Last line.
+-EOF
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+-test_expect_success GPG \
+-	'creating a signed tag with a -F file with #comments should succeed' '
++	Last line.
++	EOF
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigcommentsfile comments-signed-tag &&
+ 	get_tag_msg comments-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v comments-signed-tag
+ '
+ 
+-get_tag_header comment-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with #commented -m message should succeed' '
++	get_tag_header comment-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "#comment" comment-signed-tag &&
+ 	get_tag_msg comment-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v comment-signed-tag
+ '
+ 
+-echo '#comment' >sigcommentfile
+-echo ''         >>sigcommentfile
+-echo '####'     >>sigcommentfile
+-get_tag_header commentfile-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with #commented -F messagefile should succeed' '
++	echo "#comment" >sigcommentfile &&
++	echo ""         >>sigcommentfile &&
++	echo "####"     >>sigcommentfile &&
++	get_tag_header commentfile-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigcommentfile commentfile-signed-tag &&
+ 	get_tag_msg commentfile-signed-tag >actual &&
+ 	test_cmp expect actual &&
+ 	git tag -v commentfile-signed-tag
+ '
+ 
+-printf '#comment' >sigcommentnonlfile
+-get_tag_header commentnonlfile-signed-tag $commit commit $time >expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag with a #comment and no newline should succeed' '
++	printf "#comment" >sigcommentnonlfile &&
++	get_tag_header commentnonlfile-signed-tag $commit commit $time >expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -F sigcommentnonlfile commentnonlfile-signed-tag &&
+ 	get_tag_msg commentnonlfile-signed-tag >actual &&
+ 	test_cmp expect actual &&
+@@ -1364,11 +1377,11 @@ test_expect_success GPG \
+ 	test_cmp expect actual
+ '
+ 
+-echo 'stag line one' >sigtagmsg
+-echo 'stag line two' >>sigtagmsg
+-echo 'stag line three' >>sigtagmsg
+ test_expect_success GPG \
+ 	'listing many message lines of a signed tag should succeed' '
++	echo "stag line one" >sigtagmsg &&
++	echo "stag line two" >>sigtagmsg &&
++	echo "stag line three" >>sigtagmsg &&
+ 	git tag -s -F sigtagmsg stag-lines &&
+ 
+ 	echo "stag-lines" >expect &&
+@@ -1410,60 +1423,59 @@ test_expect_success GPG \
+ 
+ # tags pointing to objects different from commits:
+ 
+-tree=$(git rev-parse HEAD^{tree})
+-blob=$(git rev-parse HEAD:foo)
+-tag=$(git rev-parse signed-tag 2>/dev/null)
+-
+-get_tag_header tree-signed-tag $tree tree $time >expect
+-echo "A message for a tree" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag pointing to a tree should succeed' '
++	tree=$(git rev-parse HEAD^{tree}) &&
++	get_tag_header tree-signed-tag $tree tree $time >expect &&
++	echo "A message for a tree" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "A message for a tree" tree-signed-tag HEAD^{tree} &&
+ 	get_tag_msg tree-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header blob-signed-tag $blob blob $time >expect
+-echo "A message for a blob" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag pointing to a blob should succeed' '
++	blob=$(git rev-parse HEAD:foo) &&
++	get_tag_header blob-signed-tag $blob blob $time >expect &&
++	echo "A message for a blob" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "A message for a blob" blob-signed-tag HEAD:foo &&
+ 	get_tag_msg blob-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-get_tag_header tag-signed-tag $tag tag $time >expect
+-echo "A message for another tag" >>expect
+-echo '-----BEGIN PGP SIGNATURE-----' >>expect
+ test_expect_success GPG \
+ 	'creating a signed tag pointing to another tag should succeed' '
++	tag=$(git rev-parse signed-tag 2>/dev/null) &&
++	get_tag_header tag-signed-tag $tag tag $time >expect &&
++	echo "A message for another tag" >>expect &&
++	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
+ 	git tag -s -m "A message for another tag" tag-signed-tag signed-tag &&
+ 	get_tag_msg tag-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ # usage with rfc1991 signatures
+-get_tag_header rfc1991-signed-tag $commit commit $time >expect
+-echo "RFC1991 signed tag" >>expect
+-echo '-----BEGIN PGP MESSAGE-----' >>expect
++
+ test_expect_success GPG,RFC1991 \
+ 	'creating a signed tag with rfc1991' '
++	get_tag_header rfc1991-signed-tag $commit commit $time >expect &&
++	echo "RFC1991 signed tag" >>expect &&
++	echo "-----BEGIN PGP MESSAGE-----" >>expect &&
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	git tag -s -m "RFC1991 signed tag" rfc1991-signed-tag $commit &&
+ 	get_tag_msg rfc1991-signed-tag >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-cat >fakeeditor <<'EOF'
+-#!/bin/sh
+-cp "$1" actual
+-EOF
+-chmod +x fakeeditor
+-
+ test_expect_success GPG,RFC1991 \
+ 	'reediting a signed tag body omits signature' '
++	cat >fakeeditor <<-\EOF &&
++	#!/bin/sh
++	cp "$1" actual
++	EOF
++	chmod +x fakeeditor &&
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	echo "RFC1991 signed tag" >expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
+@@ -1488,10 +1500,9 @@ test_expect_success GPG,RFC1991 \
+ 	test_cmp expect actual
+ '
+ 
+-rm -f gpghome/gpg.conf
+-
+ test_expect_success GPG,RFC1991 \
+ 	'verifying rfc1991 signature without --rfc1991' '
++	rm -f gpghome/gpg.conf &&
+ 	git tag -v rfc1991-signed-tag
+ '
+ 
+@@ -1559,10 +1570,11 @@ test_expect_success GPGSM \
+ 
+ # try to verify without gpg:
+ 
+-rm -rf gpghome
+ test_expect_success GPG \
+ 	'verify signed tag fails when public key is not present' \
+-	'test_must_fail git tag -v signed-tag'
++	'rm -rf gpghome &&
++	test_must_fail git tag -v signed-tag
++'
+ 
+ test_expect_success \
+ 	'git tag -a fails if tag annotation is empty' '
+@@ -1588,10 +1600,10 @@ test_expect_success \
+ 	test_must_be_empty rest.actual
+ '
+ 
+-get_tag_header reuse $commit commit $time >expect
+-echo "An annotation to be reused" >>expect
+ test_expect_success \
+ 	'overwriting an annotated tag should use its previous body' '
++	get_tag_header reuse $commit commit $time >expect &&
++	echo "An annotation to be reused" >>expect &&
+ 	git tag -a -m "An annotation to be reused" reuse &&
+ 	GIT_EDITOR=true git tag -f -a reuse &&
+ 	get_tag_msg reuse >actual &&
+@@ -1620,47 +1632,57 @@ test_expect_success 'filename for the message is relative to cwd' '
+ 
+ # create a few more commits to test --contains
+ 
+-hash1=$(git rev-parse HEAD)
+-
+ test_expect_success 'creating second commit and tag' '
++	hash1=$(git rev-parse HEAD) &&
+ 	echo foo-2.0 >foo &&
+ 	git add foo &&
+ 	git commit -m second &&
+ 	git tag v2.0
+ '
+ 
+-hash2=$(git rev-parse HEAD)
+-
+ test_expect_success 'creating third commit without tag' '
++	hash2=$(git rev-parse HEAD) &&
+ 	echo foo-dev >foo &&
+ 	git add foo &&
+ 	git commit -m third
+ '
+ 
+-hash3=$(git rev-parse HEAD)
+-
+ # simple linear checks of --continue
+ 
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-v2.0
+-EOF
+-
+ test_expect_success 'checking that first commit is in all tags (hash)' "
++	hash3=$(git rev-parse HEAD) &&
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	EOF
+ 	git tag -l --contains $hash1 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+ # other ways of specifying the commit
+ test_expect_success 'checking that first commit is in all tags (tag)' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	EOF
+ 	git tag -l --contains v1.0 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+ test_expect_success 'checking that first commit is in all tags (relative)' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	EOF
+ 	git tag -l --contains HEAD~2 v* >actual &&
+ 	test_cmp expected actual
+ "
+@@ -1681,23 +1703,21 @@ test_expect_success 'checking that first commit is in all tags (relative)' "
+ 	test_must_be_empty actual
+ "
+ 
+-cat >expected <<EOF
+-v2.0
+-EOF
+-
+ test_expect_success 'checking that second commit only has one tag' "
++	cat >expected <<-\EOF &&
++	v2.0
++	EOF
+ 	git tag -l --contains $hash2 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-EOF
+-
+ test_expect_success 'inverse of the last test, with --no-contains' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	EOF
+ 	git tag -l --no-contains $hash2 v* >actual &&
+ 	test_cmp expected actual
+ "
+@@ -1707,15 +1727,14 @@ test_expect_success 'checking that third commit has no tags' "
+ 	test_must_be_empty actual
+ "
+ 
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-v2.0
+-EOF
+-
+ test_expect_success 'conversely --no-contains on the third commit lists all tags' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	EOF
+ 	git tag -l --no-contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+ "
+@@ -1730,26 +1749,23 @@ test_expect_success 'creating simple branch' '
+ 	git tag v3.0
+ '
+ 
+-hash4=$(git rev-parse HEAD)
+-
+-cat >expected <<EOF
+-v3.0
+-EOF
+-
+-test_expect_success 'checking that branch head only has one tag' "
++test_expect_success 'checking that branch head only has one tag' '
++	hash4=$(git rev-parse HEAD) &&
++	cat >expected <<-\EOF &&
++	v3.0
++	EOF
+ 	git tag -l --contains $hash4 v* >actual &&
+ 	test_cmp expected actual
+-"
+-
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-v2.0
+-EOF
++'
+ 
+ test_expect_success 'checking that branch head with --no-contains lists all but one tag' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	EOF
+ 	git tag -l --no-contains $hash4 v* >actual &&
+ 	test_cmp expected actual
+ "
+@@ -1759,45 +1775,51 @@ test_expect_success 'merging original branch into this branch' '
+         git tag v4.0
+ '
+ 
+-cat >expected <<EOF
+-v4.0
+-EOF
+-
+ test_expect_success 'checking that original branch head has one tag now' "
++	cat >expected <<-\EOF &&
++	v4.0
++	EOF
+ 	git tag -l --contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-v2.0
+-v3.0
+-EOF
+-
+ test_expect_success 'checking that original branch head with --no-contains lists all but one tag now' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	v3.0
++	EOF
+ 	git tag -l --no-contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+-cat >expected <<EOF
+-v0.2.1
+-v1.0
+-v1.0.1
+-v1.1.3
+-v2.0
+-v3.0
+-v4.0
+-EOF
+-
+ test_expect_success 'checking that initial commit is in all tags' "
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	v3.0
++	v4.0
++	EOF
+ 	git tag -l --contains $hash1 v* >actual &&
+ 	test_cmp expected actual
+ "
+ 
+ test_expect_success 'checking that --contains can be used in non-list mode' '
++	cat >expected <<-\EOF &&
++	v0.2.1
++	v1.0
++	v1.0.1
++	v1.1.3
++	v2.0
++	v3.0
++	v4.0
++	EOF
+ 	git tag --contains $hash1 v* >actual &&
+ 	test_cmp expected actual
+ '
 -- 
 2.43.0
 
