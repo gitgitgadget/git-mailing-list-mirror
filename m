@@ -1,89 +1,88 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112334653A
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 22:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D61B15534D
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 23:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723071362; cv=none; b=G26exa5E6PJZpi4bZ51aEzFXf2uVuAdjNyJ3cb5S5fQahCFK6oYLTZpzavjLSDuWXJao7cKhFzzQOisq93RVtMjN7vcJY0LSaGTE74/YbNVrdMi7dlhPSMwtDS1DwwXf6eKQj4z2y0yWAyJY1OYBfsh7LQWKJL3IAzXDt59Wcc0=
+	t=1723071673; cv=none; b=uX++GBEnPFMoM4SGCUezou8MpzECKN8xKqG2o8y9Y8gHX7JzrZeqj9gc2GI3vesFCRZ2NDTwjqbKfpm1Xc1Ckb5qnGoZiW8jr1PvQU2NgB9TLto5Z4P9tpJ76XqB3NISdJLsYherwwr5RAxmsmbiBmUqv4V4UkI+4selp6WVMNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723071362; c=relaxed/simple;
-	bh=F73ukredD1pmWdD6W6k8D7YCweGoJBWBUeYR/nh2sHM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NnbKW8lWIjREJrv8tKqJfsI+4o8pgk6Pipz5DJlV5vpZiNs3tTdN1R27+s47IDmhiJbFWjh5E8rkqxNUOKFuXMYBl2d3Rf+ISNoM/aAaGGnuc+Dbg1beyaxRfYVRHdnRh4sQrapTo4fjbFjR/QRYFMCn7kFmCHig5y4g77hCHoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q6MHzbuN; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q6MHzbuN"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B423F1B7EA;
-	Wed,  7 Aug 2024 18:55:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=F73ukredD1pmWdD6W6k8D7YCweGoJBWBUeYR/n
-	h2sHM=; b=Q6MHzbuNxWroo9VIk8y9i0Bcqoi9aL0nQqtpT108dBfPiGFnjFOc6y
-	GRjlvXtLwqy0ynsufrrWYl1yYPNqPUsUc9BJCJ504MLzIiL22o8PGYJr4Lv+WFgB
-	Kx5gNNmGN66Dna1T32SeUjesUV4ZFzbG7rOSpAJwpk+UQK65M1kgM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AC2301B7E8;
-	Wed,  7 Aug 2024 18:55:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1C7621B7E7;
-	Wed,  7 Aug 2024 18:55:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Jeppe
- =?utf-8?Q?=C3=98land?= <joland@gmail.com>
-Subject: Re: [PATCH 1/6] builtin/submodule: allow cloning with different ref
- storage format
-In-Reply-To: <a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 7 Aug 2024 14:43:48 +0200")
-References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
-	<cover.1723032100.git.ps@pks.im>
-	<a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im>
-Date: Wed, 07 Aug 2024 15:55:57 -0700
-Message-ID: <xmqqwmkslz7m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1723071673; c=relaxed/simple;
+	bh=8d1qqf5bc4q0W4sk9/kh3IIm7L+ITXiMVqt2E0PJ7cs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cRv9sXq8ami+dtXTa6PL/TsHAS2SMopEVr3v948pIvpB9X3qhKpsGFkJfBs/qqo4G3PKFNRdZ/h6qlvWJn655RqUEXD5QiYu+jVIqq1OW6HFr27EWuhi/2R2a+Nhg11nuwlzx7MDto1F+0f4CiYo6pXyAxiPBO6STQaeiZO9bwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from p3976092-ipxg00k01tokaisakaetozai.aichi.ocn.ne.jp ([221.188.33.92] helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1sbpRs-009M6Q-2S;
+	Wed, 07 Aug 2024 22:48:05 +0000
+Received: from glandium by goemon.lan with local (Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1sbpRk-005Pqd-2J;
+	Thu, 08 Aug 2024 07:47:56 +0900
+Date: Thu, 8 Aug 2024 07:47:56 +0900
+From: Mike Hommey <mh@glandium.org>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com,
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <20240807224756.2zq5hkfq5j43b7jk@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <cover.1723054623.git.steadmon@google.com>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 36578CE4-5510-11EF-AC47-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Aug 07, 2024 at 11:21:28AM -0700, Josh Steadmon wrote:
+> +contrib/cgit-rs/hidden_symbol_export.o: contrib/cgit-rs/partial_symbol_export.o
+> +	$(OBJCOPY) --localize-hidden $^ $@
 
-> -update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter-spec>] [--] [<path>...]::
-> +update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter <filter-spec>] [--] [<path>...]::
->  +
->  --
->  Update the registered submodules to match what the superproject
-> @@ -185,6 +185,9 @@ submodule with the `--init` option.
->  If `--recursive` is specified, this command will recurse into the
->  registered submodules, and update any nested submodules within.
->  
-> +If `--ref-format <format>`  is specified, the ref storage format of newly
-> +cloned submodules will be set accordingly.
-> +
->  If `--filter <filter-spec>` is specified, the given partial clone filter will be
->  applied to the submodule. See linkgit:git-rev-list[1] for details on filter
->  specifications.
+This is ELF-specific and won't work on Mac or Windows.
 
-Presumably, if the named submodule has already been initialized, we
-are not converting its ref backend with --ref-format=<format> option
-when "git submodule update --ref-format=<format>" is run.  Would it
-make sense to say it is an error to give it without "--init", I
-wonder.  If so, we probably would need to see if other existing
-options like "--filter" also need a similar sanity check, if not
-already done.
+> +    let make_output = std::process::Command::new("make")
+> +        .env_remove("PROFILE")
+> +        .current_dir(git_root.clone())
+> +        .args(&[
+> +            "CC=clang",
 
-Thanks.
+You should probably not set CC at all here.
+
+> +            "CFLAGS=-fvisibility=hidden",
+
+This won't work for Windows targets.
+
+> +            "contrib/cgit-rs/libcgit.a"
+> +        ])
+> +        .output()
+> +        .expect("Make failed to run");
+> +    if !make_output.status.success() {
+> +        panic!(
+> +                "Make failed:\n  stdout = {}\n  stderr = {}\n",
+> +                String::from_utf8(make_output.stdout).unwrap(),
+> +                String::from_utf8(make_output.stderr).unwrap()
+> +        );
+> +    }
+> +    std::fs::copy(crate_root.join("libcgit.a"), dst.join("libcgit.a"))?;
+> +    println!("cargo::rustc-link-search=native={}", dst.into_os_string().into_string().unwrap());
+
+You might as well use `dst.display()`.
+
+> +    println!("cargo::rustc-link-lib=cgit");
+> +    println!("cargo::rustc-link-lib=z");
+> +    println!("cargo::rerun-if-changed={}", git_root.into_os_string().into_string().unwrap());
+
+Likewise.
+
+Mike
