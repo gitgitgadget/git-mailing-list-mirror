@@ -1,56 +1,56 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49211C7B73
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 07:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633DA5464E
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 07:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723014694; cv=none; b=pp+pSagOIcqxAiNkOOJLkc28d+VUUqPyw0syvVbNCF87eKJiKGsLt7n0FGwIOlbE8o2WwAr8Bn8hQmEE4P6dEfdzm4Lqj/E0OQSfucvtp2fyiiXtVtjTWp8y3cNU3KcVxMwnAefs/HZxGaTuvIYhQs4cutz/EIbKtJPBK3x98ZY=
+	t=1723015951; cv=none; b=odNhMJKjfswHtkxpZVIsvGGxQ1ODkodo7vf3l+fv3LNi04ocuj9CwuLlbcIDGm7Slfu/mizIqtWAXBlDDpgeJQlAMJZ+ls6lCbnZeKEWG9Ciq7pFEnxBQ+q98+WTfSmHvfdx9Q5NlTuq13LfBDhvQg2dTurH8uqzcQgGgf5Ov40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723014694; c=relaxed/simple;
-	bh=lNdb8mQmy0KIyNBPAJuugt6UjCInqBndtk9OTYa+c3g=;
+	s=arc-20240116; t=1723015951; c=relaxed/simple;
+	bh=0pTKOaM8IIYh5CXJd+eWIXRjnRhuygt6/EcLgpQhQys=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=KYxMmzdBZAlkkgOoIhPJZA9xy7epQN/vdL0qzS79Px8hPjLgfNTf90Nm8MLZ1Zs58Iozoba89BLrDHGW+6kKyD31RwjjjeItB7HmLQo9A3uZiXtrp9qi1KwCqn8E4dU00Ud16PKUfv8Y7KiN+kKqMwQ2ODeGDRlpmuIuLaV7XIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=Ny/FsDbG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=USFCofp1; arc=none smtp.client-ip=103.168.172.147
+	 References:In-Reply-To; b=YBNs2cvjgPZBv+UnZdqPcxOezLQtclHJ6ALcCjModhcAIOCYFWKALXA6ikDT1R0yh/gjMxV8DGblb5vtYafAIqjq9gSPRwo+PmdRM/1y9qCXl9jxhHEb7Hf7gP2nTgoJnsaJfVpLKjLt+NftevOmQ/iw1aq3kkDtkIzkktlyjKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=FoddDDcP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fMpjKx1J; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="Ny/FsDbG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="USFCofp1"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5AB361388073;
-	Wed,  7 Aug 2024 03:11:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="FoddDDcP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fMpjKx1J"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8401E138FC6C;
+	Wed,  7 Aug 2024 03:32:28 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 07 Aug 2024 03:11:31 -0400
+  by compute4.internal (MEProxy); Wed, 07 Aug 2024 03:32:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
 	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1723014691;
-	 x=1723101091; bh=SrE1DPc/PSDPiAmhdmWTEpOMPIWJpmtS9BDmBh8fiXY=; b=
-	Ny/FsDbGvFGqi8Dqk98Fu1XRW9+m+tuqHMghc9kMRd27AYRmYl0XlEmfZrqv6S+c
-	aUYcDwXaxyYLLsK2O1ZsyE9+YtPSiU73hLlqP2cD7S1Mnb9QfCFPamcx7zxXFw0j
-	iPZpjl9aQeDSAUkZ0eEEOPdF85ZOc5IQ0bdxVeSZTaoBltDWcpb9hmBAcxG1fQp2
-	yC8H8Gmgz/jhTLjQXHT3Jwnos+/HQ0JbYHaIGWyPqUOvj892hZIkZNN2xvfTcX2T
-	gzrO18pnmK9qjq9XXxhtkJ8MP0EKDIHutnR9o8Za3CI3XILzCw7Ld3T3blx8mZcl
-	JFN736K19XrGDIxB0MqmmQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723015948;
+	 x=1723102348; bh=I6YA4LgNp89xc0Lrsh+b8jd9kZnt3YRN3kdAFUnc67o=; b=
+	FoddDDcP014OVdsOlKQoCE9XU1tVm0+5vrxskOoawcUhOxBjzdchYkF7ElnUntMc
+	J1eWk1vEHKZs+EXQMksElb8txKiQRFu+SruRnDGO9ccken3VkvPkTL8fpCDMWe5l
+	NmJiwZr6HWveOgXU8mICt7Gg6tSe0GooFnBnL3bvAIL8yOzzSf76guw67GN0FUtw
+	qmcKC/bCzK7ZIdOBUbxqWorYtcGYZAZONrhetmOLfdcaanfSzBxukcbO34RpqO8I
+	uAP31ZdsbWO8Mr8D5P8hsi0OKSukbkpmUuCpFtp06BioQamd/JkdZe1AHMdApOwc
+	YOuYeX18w7jRAEC42bu2yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723014691; x=
-	1723101091; bh=SrE1DPc/PSDPiAmhdmWTEpOMPIWJpmtS9BDmBh8fiXY=; b=U
-	SFCofp1Q0Xyr34wuwv7r+pc9OiM5qwsGJpojOSIz6CkoT5gQRjEv0WqNFa+C/a7+
-	VhS4crOeiDwOgahCJyZN4sUTp8l9zazZ3DllAPtOySJ3Asg8sx6fBeeLX5szPzJ2
-	kgThd+ambJGksdPki5aWHoWBB9ONYaqXCnPzW5/wOA8YmoYlkVIeb9Q+OpwWbWgE
-	hzQPrHjoxeQt4A0b9B66hgtucw3vB+4I1WIbvuFJRuHJXqjrgRADdXIyqIu4ncYc
-	HjOnf45riCmTTaJiwHtkCy1cTvzge554az46mciRdDkve93t3wuJeYoP2ZYtgY8E
-	V57mmaFpGTfWcpnI/ao1g==
-X-ME-Sender: <xms:Ix6zZh8B8alRpEfiP2ifDJ29iClYKxRE7hTEaaTMoCsSRkYu1uGToA>
-    <xme:Ix6zZltwKRVwexOBRMqab5XQGgy2NEVFe9NFsQuQJpkFzhHJnECcnXIQnLpbIVlFP
-    J4Fu5KreiS_msx-_w>
-X-ME-Received: <xmr:Ix6zZvDw2rLBIDTAxuGnv95ZAo8HSEbu0mYEZAtVAocKT1oCCz8-Al6362ML>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduvddtucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723015948; x=
+	1723102348; bh=I6YA4LgNp89xc0Lrsh+b8jd9kZnt3YRN3kdAFUnc67o=; b=f
+	MpjKx1JeUMaodtHzrviMLKM1xuV9OxIrmSaGFqlEo3FAMo8IyPdSnQMbwMhpPtKy
+	28LhyNTu8AP+23RXlbrjWFJr2V3PPbzjyyaNPiLeR5ZfI9s+kQcPksw1i6I+4IDP
+	xJYWea41AqCmAdZyipM6d6sRtaBf9D2n5Q61cyUQWmA87zhHXaOx0FTHEck2HUWx
+	pRNPW4u4+lbU91CSfwC8HEkhm1WbdV/WPfUqw5AizzbYny8ldNmU9sB9bYo9Ut1B
+	5WawhP4pmUR9XICLH36d3lYYui1+1FU1311f5dzMA0PBVvV9UoNOu6Uf47LNAera
+	n6Vs9dIHLYe9vFjWCgjig==
+X-ME-Sender: <xms:DCOzZgwWwJ6N0GR2vDK7aheZwRsX-QxsFHbYFoUfpMeAjmG_tHD7EA>
+    <xme:DCOzZkRHni4l8b_54SM9l482Or3Bt4njiuBiyMWlrG_N8udYKrsi9bNmtlWyVmFRZ
+    A53bzBfkgDuydVSBg>
+X-ME-Received: <xmr:DCOzZiXIe6-sHfNhq7qOq5fKkhAl95od7-ZKQ6tsJE_LrHkgz_iB6yaKWwwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduvdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepggfgtgffkffuhffvofhfjgesthhqredtredtjeenucfhrhhomhepfdflrghm
@@ -58,14 +58,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduvddtucetufdoteggod
     gvrhhnpefhteeuheduleettdejkeduleeuiefhveehuefgheehvdeikeettddvveegieel
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjrg
     hmvghssehjrghmvghslhhiuhdrihhopdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:Ix6zZlei010TOQX3M0Wwu-PdkAnQCHzxGrqwYdx1GOTQc78SEXS-cA>
-    <xmx:Ix6zZmMNbm2ThUjVaSgikaSQgtbLLyebF7x8q02Ux_wSwV-PakpTag>
-    <xmx:Ix6zZnlBDSqbkRAlzntHztmPhwFRVQOkIh2mUwUquTvxN9hHvAWWPg>
-    <xmx:Ix6zZgsooYwCo2pbS4uRv5qPpNDaLY-OOxke2MGMCdzvYuZtAYTX9g>
-    <xmx:Ix6zZvZDmp4_CpCGk1T8FShSrrSzY5NjaNmLceYRI8VCKJ_hvjK9WA2r>
+X-ME-Proxy: <xmx:DCOzZujhhMrGQWuXqMipb7tsAO4RUgI7JGa6dkgrMctDBfbAbTQY7w>
+    <xmx:DCOzZiBkrksp5BqOHfxjF1I5zGsYz40eu7WLwZKpEJJWlJcPLCaIhA>
+    <xmx:DCOzZvL9m3V-G-Gs2yWvp8BF5WxlK6YeEEHi1p7N4Qaqfird_FdlmA>
+    <xmx:DCOzZpAdSKP7P7rzJSMqm1va9OJAAWg1er1G2J5ZAZNO03hX2kzOYQ>
+    <xmx:DCOzZlPVFSewU522LcF-7uFIOBg71bw3_lHS6myq83vNOKzBYAS1Mj73>
 Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 03:11:30 -0400 (EDT)
+ 7 Aug 2024 03:32:27 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,37 +74,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 07 Aug 2024 17:11:28 +1000
-Message-Id: <D39HQCFQ2DCW.1KFGPLVU1EVQD@jamesliu.io>
-Subject: Re: [PATCH 08/22] config: fix leaking comment character config
+Date: Wed, 07 Aug 2024 17:32:25 +1000
+Message-Id: <D39I6DZWV40G.T5O4SNGH9OIX@jamesliu.io>
+Subject: Re: [PATCH 09/22] builtin/rebase: fix leaking `commit.gpgsign`
+ value
 From: "James Liu" <james@jamesliu.io>
 To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
 X-Mailer: aerc 0.18.0
 References: <cover.1722933642.git.ps@pks.im>
- <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
-In-Reply-To: <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
+ <05290fc1f14cae8229c42f2d0aafe6619c069e3a.1722933642.git.ps@pks.im>
+In-Reply-To: <05290fc1f14cae8229c42f2d0aafe6619c069e3a.1722933642.git.ps@pks.im>
 
 On Tue Aug 6, 2024 at 7:00 PM AEST, Patrick Steinhardt wrote:
-> Refactor the code so that we initialize the value with another array.
-> This allows us to free the value in case the string is not pointing to
-> that constant array anymore.
+> In `get_replay_opts()`, we unconditionally override the `gpg_sign` field
+> that already got populated by `sequencer_init_config()` in case the user
+> has "commit.gpgsign" set in their config. It is kind of dubious whether
+> this is the correct thing to do or a bug. What is clear though is that
+> this creates a memory leak.
 >
-> diff --git a/environment.c b/environment.c
-> index 5cea2c9f54..8297c6e37b 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -113,7 +113,8 @@ int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
->   * The character that begins a commented line in user-editable file
->   * that is subject to stripspace.
->   */
-> -const char *comment_line_str =3D "#";
-> +const char comment_line_str_default[] =3D "#";
-> +const char *comment_line_str =3D comment_line_str_default;
->  int auto_comment_line_char;
+> Let's mark this assignment with a TODO comment to figure out whether
+> this needs to be fixed or not. Meanwhile though, let's plug the memory
+> leak.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/rebase.c              | 8 ++++++++
+>  sequencer.c                   | 1 +
+>  t/t3404-rebase-interactive.sh | 1 +
+>  t/t3435-rebase-gpg-sign.sh    | 1 +
+>  t/t7030-verify-tag.sh         | 1 +
+>  5 files changed, 12 insertions(+)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index e3a8e74cfc..f65316a023 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -186,7 +186,15 @@ static struct replay_opts get_replay_opts(const stru=
+ct rebase_options *opts)
+>  	replay.committer_date_is_author_date =3D
+>  					opts->committer_date_is_author_date;
+>  	replay.ignore_date =3D opts->ignore_date;
+> +
+> +	/*
+> +	 * TODO: Is it really intentional that we unconditionally override
+> +	 * `replay.gpg_sign` even if it has already been initialized via the
+> +	 * configuration?
+> +	 */
+> +	free(replay.gpg_sign);
+>  	replay.gpg_sign =3D xstrdup_or_null(opts->gpg_sign_opt);
+> +
+>  	replay.reflog_action =3D xstrdup(opts->reflog_action);
+>  	if (opts->strategy)
+>  		replay.strategy =3D xstrdup_or_null(opts->strategy);
+> diff --git a/sequencer.c b/sequencer.c
+> index 0291920f0b..cade9b0ca8 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -303,6 +303,7 @@ static int git_sequencer_config(const char *k, const =
+char *v,
+>  	}
 > =20
->  /* Parallel index stat data preload? */
+>  	if (!strcmp(k, "commit.gpgsign")) {
+> +		free(opts->gpg_sign);
+>  		opts->gpg_sign =3D git_config_bool(k, v) ? xstrdup("") : NULL;
+>  		return 0;
+>  	}
 
-Is my understanding correct that `comment_line_str` is now just a
-pointer to the `comment_line_str_default` array, and thus can be freed
-once we're done with it?
+It looks like this free'ing would be managed by the caller by invoking
+`replay_opts_release()`, but it's not being done consistently.
+
+For example, `do_interactive_rebase()` invokes `replay_opts_release()`,
+but `run_sequencer_rebase()` does not. Would it be better to address the
+leak here?
 
