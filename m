@@ -1,55 +1,55 @@
 Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C431D0DC0
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 09:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A730B6D1B4
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 09:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723022757; cv=none; b=KSKoyna24tWdaqeWn/9kjEkl7bvOYyLI/dU6a9vs+Q4ITml/d5pjQ7lZn4pQpAC3qWSkcgZ67ejaB2bTngqd2qgGbL+TA6MEw4HMzPuy1nBqDXEtm46Ppy2q8z0K0u7wmLjtj3a9MNoNo7KT6SQedTPFgx7X1YXvEFdRX92vK+8=
+	t=1723022858; cv=none; b=NpgTSo6DKxOaVnnZSYwchKnWKakWcWB2TYZH2SVA004v5ee/vFFLYy8G4mjNZxzvwfO9+KPUabxmD1XOa2T2j2c0ikopyPNzkoZceQhkoNzaN/q7IbjgqAVaK7q/AzFpoL/zaf89VVLX8Va/z7Bq9faPel/6dI1X/DCxZiMzSVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723022757; c=relaxed/simple;
-	bh=ZnMuvtmKH8PU9eW7+FpAM9+lelGSKqmjnLvAb6k2EOw=;
+	s=arc-20240116; t=1723022858; c=relaxed/simple;
+	bh=P14yamL8djbKObnBrVQeEdz3aOcS+L44LHnRBBFCjdE=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=XqmtAj+55j2PU2mk7X59CUurVGBUwiDR+uWfoaNFVq5EWY2u9DKMC5TfG8mmszxjr30ZVe7MC6wmzGM7Qi9Er/xY0/wCGaUH8Mh7xWKEgGpyh/PZcQgxGS9YiWGxeYH1cm9V48WBfhgqdTMJUOxvlMsaFej4XG2AwEquEv5MSRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=XtUAiY5C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dd+MS8bj; arc=none smtp.client-ip=103.168.172.154
+	 References:In-Reply-To; b=p+d79iNgRlB4eJsPR2qK5j0Oy1BNnTwk3/Mq8ntSbXvtb98k+EB/2vohYk+h6pCbyz7+0nD6R9PRFRblXLAvOhIBokEUwOqeZ5tImuD2b26fe79TzPVhPqHgBBGINv9d02agp41CJJRnGH2hTIhGkmZJgqzb0ERm8tnu84A1mGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=T4X0XFHB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a/4JCOdn; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="XtUAiY5C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dd+MS8bj"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 8F1DA1151ADB;
-	Wed,  7 Aug 2024 05:25:54 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 07 Aug 2024 05:25:54 -0400
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="T4X0XFHB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a/4JCOdn"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id BB78E1151AF1;
+	Wed,  7 Aug 2024 05:27:35 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 07 Aug 2024 05:27:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
 	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1723022754;
-	 x=1723109154; bh=8BLZdb3tzmSVM8FnXDxIjP64rv4RIMSbY+DvyzZth+0=; b=
-	XtUAiY5CxXy1fP+ASgYMeWiE1wPbzFeu+/RRpQsdFaZWuZZGMgulR531oNd0JT71
-	epMkkIHeWhET9lK9o64Av4d8cNa2RsIg1tUyJs0Zg32e9ayTgJ9mpsc7iYqMUeFQ
-	Yg7l0jYsoqYsOW2sBtyHwUYLdjEhr+xThp4FMH+BNx5QP0ch+JAmD2quswq/9XeC
-	1nCcgOOz7Ri0TYEuMWhcbyymk8/JCbC3OdIN9VoemywlwWqpnvv4N4tYVjo7aUVs
-	pp7LNwIdhuTbItJ32YT6l3msD2UvRebL6xt9WWqxtj9X2yoFq/Of3tFbBJGqL7DV
-	WHmqpzZThEo7gEKPYh0lhg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723022855;
+	 x=1723109255; bh=P14yamL8djbKObnBrVQeEdz3aOcS+L44LHnRBBFCjdE=; b=
+	T4X0XFHB3TE5ikhsY4CrHSScojEfCGtJ/msTbOIlmRlm4Lm9YtcCMXb+8cWxo2zN
+	9WSMWW4sZ4+ce2/ThfNdr/E1XFjy6YtkDUsbzx/k35BfWQtsw2bYYriSGRcixNmY
+	9AzTmIyjkOZpZKH9LbniA6h/0MHAtYnsbEfV4X9LCcl+xerwrfMNto8n4rCg/TN3
+	SLEdFzyPl3p9DVGnzimNxvfh/f36gNdzi+mKgxtxp6zGYXQFG08LAq1whcvRCa3Y
+	UJarqHNWgxgMaDRrv6be4Cz1uqMimThx2kIhXLG1nByziETv9iAqhxPCOcXmA4kN
+	Al+umK/13Aaa7d2mS9Yz9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723022754; x=
-	1723109154; bh=8BLZdb3tzmSVM8FnXDxIjP64rv4RIMSbY+DvyzZth+0=; b=d
-	d+MS8bj+C8stF3hLd4OrnyCfapZHtkzwagPLP1/7ZDdYR9/vuPQ2n9KFonTMuf7e
-	LHDFeuJ17RL9OVVhIOyf1j+xuvUhUk7GDQ1DyFPI14dy0fdI1hRiTUz8b4eh3zjH
-	IK6dzf+Mj2af9rUc3G933sgg7Cy+1EX9Mw26adEm3fDQKdyGzG9/RSMP2oKWGx7b
-	Q4W+zcesVoIXJAyBcElRLLuOeeUcd9B5DUgx115SJ7C1boM5BIZF+qsnqVQLX2/M
-	p2mVHTsVossO62gMZABEPs1ZkkWpyCiuOD0Qmq2ZTVb2aRwgoriqyV9LUUDsoqzm
-	ZxZEoDX2GjBjD44b7tQPg==
-X-ME-Sender: <xms:oj2zZoLvrwR3jyrB8pYtEsmgLuIbJQ0W3iZdcxBR0mZI4wSPcRfF-Q>
-    <xme:oj2zZoLi5d-ZIQDcFYX_1ZtPfogQfbv9gKJcSs5hqu_JnmlEmV9K5eaUQMQL8fLh2
-    dT-HRiicmljSU6lbg>
-X-ME-Received: <xmr:oj2zZouVmmEpDETjPxhIheGQ_-HIi894Ag-LNJdfdU0S35OIEZmfjkCVcNgU>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723022855; x=
+	1723109255; bh=P14yamL8djbKObnBrVQeEdz3aOcS+L44LHnRBBFCjdE=; b=a
+	/4JCOdnPiGgqw9T8cD2zkIOoiBIwG70/x3mittLFYjSESWOo5lAIMkfklZleFCRe
+	B5Axy6h+8myhfKkdQHyy/Jpe9XVDCqHWFE7q5O/ur4hOpGvu8RVAx/gb51r5zWW0
+	KiMx6Gd41GYscCoF6CbXOiMjTaly5U0qxCs9D3mkFBwQJ6EccX8CRm6wOax0FvKG
+	He45AxVHNPiV20BB/tevGj8vG7d1BoMUu7ySE4jtJjH1zRQwEPprNfpOZ9XNBhgY
+	e5vu5OMcNwjSsxGJ35tCGK87lVD2fte2AcA4dc9O+C131rJZEruG3lwLoGJXZk23
+	N2veOLVNoJiQE+ZtVipBg==
+X-ME-Sender: <xms:Bz6zZtMeRQGOavO3dZtKFBoGGjAXEXpt0hiCogH9Q9Qd3DMSV9MnNw>
+    <xme:Bz6zZv_NmVDIevw6gpnFxJG9SGzoq8FvPPtPhD0zmVv7TbuDYPvTbW0lTN1ArZqXq
+    CsoHg-fYO8mQ4oiPg>
+X-ME-Received: <xmr:Bz6zZsQnBIFGGaFZucK7ZxStWsyaBrYRr4sq22KAVkpqxXVnRiOSrBrvf16t>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgdduiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -58,14 +58,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledtgdduiecutefuodetggdote
     hrnhephfetueehudeltedtjeekudelueeihfevheeugfehhedvieektedtvdevgeeileet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhgrmh
     gvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:oj2zZlb6Mxz_ryK3NCAMwvYItRb-efkxeKiUy2A69gA7XZ8tepacmA>
-    <xmx:oj2zZvaelkxsTr0vJgcry2D_g0XA1lDo5YspymAmhX2GmJh--tI-5w>
-    <xmx:oj2zZhBPoU6Pg1YrFjEGulkZVIae47YyeDBybp4HG6Dp7oK6kwNSwQ>
-    <xmx:oj2zZlabFJ3svjKs5WLdYnjnNaMqwZhwa-dXWY5vVIqYL-In3iRAmA>
-    <xmx:oj2zZulUfuxCVwHkUSjxUOKeUTcvID3dMrDAnStcdWOcS2biTKyo1qsG>
+X-ME-Proxy: <xmx:Bz6zZptyEpD0brIYvqERPEv1eSe0fqH81_E74df-01pt63EL7QRYmw>
+    <xmx:Bz6zZlfS-Te6594LXnjn9fZyxSab3DwDstgAh7FOi3hbWcWMjI6LCQ>
+    <xmx:Bz6zZl1VcyNg1Wz8YtLD-1RrETzS-W7Jf8eh1QyTg0DkgaYsYmOlOw>
+    <xmx:Bz6zZh94JoEdtxNPwiQHZ1q9tEYx9kFKD3r7vL5nLAqp1XJM6mKI5w>
+    <xmx:Bz6zZmozNo3MGfDIjTKQCiwRm_1rQofXBdvFGB_68Nqu6T6Eibm4pr9Y>
 Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 05:25:53 -0400 (EDT)
+ 7 Aug 2024 05:27:34 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,47 +74,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 07 Aug 2024 19:25:51 +1000
-Message-Id: <D39KL8N6S0HC.HFB9VRAVWYOX@jamesliu.io>
-Subject: Re: [PATCH 19/22] userdiff: fix leaking memory for configured diff
- drivers
+Date: Wed, 07 Aug 2024 19:27:32 +1000
+Message-Id: <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io>
+Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
 From: "James Liu" <james@jamesliu.io>
 To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
 X-Mailer: aerc 0.18.0
 References: <cover.1722933642.git.ps@pks.im>
- <ef780aa36039560fd069ec97ce87665eb0775200.1722933643.git.ps@pks.im>
-In-Reply-To: <ef780aa36039560fd069ec97ce87665eb0775200.1722933643.git.ps@pks.im>
+In-Reply-To: <cover.1722933642.git.ps@pks.im>
 
-> Refactor the code such that we have two pointers for each of these
-> strings: one that holds the value as accessed by other subsystems, and
-> one that points to the same string in case it has been allocated. Like
-> this, we can safely free the second pointer and thus plug those memory
-> leaks.
+On Tue Aug 6, 2024 at 6:59 PM AEST, Patrick Steinhardt wrote:
+> Hi,
 >
-> diff --git a/userdiff.c b/userdiff.c
-> index c4ebb9ff73..989629149f 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -399,8 +399,11 @@ static struct userdiff_driver *userdiff_find_by_name=
-len(const char *name, size_t
->  static int parse_funcname(struct userdiff_funcname *f, const char *k,
->  		const char *v, int cflags)
->  {
-> -	if (git_config_string((char **) &f->pattern, k, v) < 0)
-> +	f->pattern =3D NULL;
-> +	FREE_AND_NULL(f->pattern_owned);
-> +	if (git_config_string(&f->pattern_owned, k, v) < 0)
->  		return -1;
-> +	f->pattern =3D f->pattern_owned;
->  	f->cflags =3D cflags;
->  	return 0;
->  }
+> the third set of memory leak fixes was merged to `next`, so this is the
+> next part of more or less random memory leak fixes all over the place.
+> With this series, we're at ~155 leaking test suites. Naturally, I've
+> already got v5 in the pipeline, which brings us down to ~120.
+>
+> The series is built on top of 406f326d27 (The second batch, 2024-08-01)
+> with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
+> leak when computing reachability, 2024-08-01) merged into it.
+>
+> Thanks!
+>
+> Patrick
 
-I'm not sure if I understand this change completely. We don't seem to be
-using `pattern_owned` (and the other *_owned) fields differently from
-their regular counterparts.
+Thanks Patrick, most of these fixes make sense to me! I appreciate that
+even the minor changes are accompanied by context.
 
-Is it because we can't do the following?
-
-        FREE_AND_NULL((char **)f->pattern);
-
+Cheers,
+James
