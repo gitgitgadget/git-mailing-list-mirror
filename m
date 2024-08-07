@@ -1,56 +1,56 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A17C6D4
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 07:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49211C7B73
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 07:11:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723014083; cv=none; b=ZaqomWxnYMAq8sbK3T/l/2N0QntBO6GW5NeKjrfGpOIppJGDAUGbd/9C3ycKYtm0qLtDb6kla1crzgKJNWvhyv1r9qmWZJC0Ip6tHmTKtjxjl6smg1GhqYVdWaV6c+aA+p1dDfi3GZ38aXEnab44XKpIWXqn2dTKozweOGzBS6c=
+	t=1723014694; cv=none; b=pp+pSagOIcqxAiNkOOJLkc28d+VUUqPyw0syvVbNCF87eKJiKGsLt7n0FGwIOlbE8o2WwAr8Bn8hQmEE4P6dEfdzm4Lqj/E0OQSfucvtp2fyiiXtVtjTWp8y3cNU3KcVxMwnAefs/HZxGaTuvIYhQs4cutz/EIbKtJPBK3x98ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723014083; c=relaxed/simple;
-	bh=zkJ2ObIsWm9TTcVo6Z4xIvxtLFCzrGGnC46IOdV97e4=;
+	s=arc-20240116; t=1723014694; c=relaxed/simple;
+	bh=lNdb8mQmy0KIyNBPAJuugt6UjCInqBndtk9OTYa+c3g=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=E5U/JJnU06lXB2GctFN91EwEoSSJun8lf5LsVIKlCUdjYv4PHUhvkzTyclaE7cX53UOsxHbBTT4W0vM7Vs9DXt2Oj6Sl98c2cEcqsVt1E55s+6F+a5Gso8rE/P/nV0p7Oylae7MtXWEb6VdK6W60b2KGH7dOFUWvcLS73PwjERk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=LdcljthC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FVBI8Txj; arc=none smtp.client-ip=103.168.172.152
+	 References:In-Reply-To; b=KYxMmzdBZAlkkgOoIhPJZA9xy7epQN/vdL0qzS79Px8hPjLgfNTf90Nm8MLZ1Zs58Iozoba89BLrDHGW+6kKyD31RwjjjeItB7HmLQo9A3uZiXtrp9qi1KwCqn8E4dU00Ud16PKUfv8Y7KiN+kKqMwQ2ODeGDRlpmuIuLaV7XIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=Ny/FsDbG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=USFCofp1; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="LdcljthC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FVBI8Txj"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 312251151AEF;
-	Wed,  7 Aug 2024 03:01:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="Ny/FsDbG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="USFCofp1"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 5AB361388073;
+	Wed,  7 Aug 2024 03:11:31 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 07 Aug 2024 03:01:20 -0400
+  by compute2.internal (MEProxy); Wed, 07 Aug 2024 03:11:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
 	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1723014080;
-	 x=1723100480; bh=WewvhbZRiu98mzmbpBvr2/DAaLcPOR3FXNBZUdmuN6s=; b=
-	LdcljthC2c5tksJgb+NjmEwunGOO8Cm1ietHL9sCiLR8bSO/X87qOMlxieItrb3h
-	SmyP54Vu0nHafXZ9EAbdAeygavArTsNSu3pnN3w1UOIPTwvUD56jHCiMtHB+hgcP
-	3kpaDM+qjN3nPWiM/mZj2DT4Bx7ReWy5qBNJz7lECu7VBOZB9DMQ1AQXqpJqcbUL
-	3PBWw5pHFBgLBqXKRTaRQs1Ylm9jddVVC0ueVHJD2TivOhnXR75BDYjH/suI8rgz
-	MifYw6NJYnUFPHy+i8jZ62iekY11K3qS0FcyIGvahIuxcRx96CeQF+14NGsuf93O
-	sTfU3Bo+fZtM0leEukHZAA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723014691;
+	 x=1723101091; bh=SrE1DPc/PSDPiAmhdmWTEpOMPIWJpmtS9BDmBh8fiXY=; b=
+	Ny/FsDbGvFGqi8Dqk98Fu1XRW9+m+tuqHMghc9kMRd27AYRmYl0XlEmfZrqv6S+c
+	aUYcDwXaxyYLLsK2O1ZsyE9+YtPSiU73hLlqP2cD7S1Mnb9QfCFPamcx7zxXFw0j
+	iPZpjl9aQeDSAUkZ0eEEOPdF85ZOc5IQ0bdxVeSZTaoBltDWcpb9hmBAcxG1fQp2
+	yC8H8Gmgz/jhTLjQXHT3Jwnos+/HQ0JbYHaIGWyPqUOvj892hZIkZNN2xvfTcX2T
+	gzrO18pnmK9qjq9XXxhtkJ8MP0EKDIHutnR9o8Za3CI3XILzCw7Ld3T3blx8mZcl
+	JFN736K19XrGDIxB0MqmmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723014080; x=
-	1723100480; bh=WewvhbZRiu98mzmbpBvr2/DAaLcPOR3FXNBZUdmuN6s=; b=F
-	VBI8TxjmX3eK/pX3BDfuQIZXvj4HiX2Zxhe6j1efV19936hQNMvhN0N33DaZdds5
-	wWkXYphVeq40RVengbHt4Ta3W1Dl4NAA5oZ40HEgOv78VYwD6E+8anEFdujU8ruz
-	7C0dKfOMKpFMgy3y1ql78ps01od2UabtjPMpTATK0wSHbPM5YeeO/AMDHeOF0H3S
-	ePl1RlRI66pxDXn1Pg33mqzAIj0EwfxF+f1rMDyz8ErFKWai0dWtmf5stuhGWQXH
-	rzsfbW1z+BVBOUFe68SQsmcaJ4lBqPMuwaGYlOMjzo4AgoCD+d/fvf3aYKHNxif6
-	Zla0Wd3R+HTy77KMQ/U0g==
-X-ME-Sender: <xms:wBuzZg2CO0JUuctGXa40wU_5_DRcxcHZPtFhZUXXJ8Y0PlVlSm4iEQ>
-    <xme:wBuzZrEpIBzXSSQy17LnPxEmeCYz99nGEQsLsKWN44wJFqZvAW9F9qqv8GSMCZf6K
-    hYg3k8QqufJIZ3h4g>
-X-ME-Received: <xmr:wBuzZo4es8MhURTXXMMTZ7RnXwRCXjKeNKyTeDPM2jxO52tR9hZ9x71GqpK9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudekucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723014691; x=
+	1723101091; bh=SrE1DPc/PSDPiAmhdmWTEpOMPIWJpmtS9BDmBh8fiXY=; b=U
+	SFCofp1Q0Xyr34wuwv7r+pc9OiM5qwsGJpojOSIz6CkoT5gQRjEv0WqNFa+C/a7+
+	VhS4crOeiDwOgahCJyZN4sUTp8l9zazZ3DllAPtOySJ3Asg8sx6fBeeLX5szPzJ2
+	kgThd+ambJGksdPki5aWHoWBB9ONYaqXCnPzW5/wOA8YmoYlkVIeb9Q+OpwWbWgE
+	hzQPrHjoxeQt4A0b9B66hgtucw3vB+4I1WIbvuFJRuHJXqjrgRADdXIyqIu4ncYc
+	HjOnf45riCmTTaJiwHtkCy1cTvzge554az46mciRdDkve93t3wuJeYoP2ZYtgY8E
+	V57mmaFpGTfWcpnI/ao1g==
+X-ME-Sender: <xms:Ix6zZh8B8alRpEfiP2ifDJ29iClYKxRE7hTEaaTMoCsSRkYu1uGToA>
+    <xme:Ix6zZltwKRVwexOBRMqab5XQGgy2NEVFe9NFsQuQJpkFzhHJnECcnXIQnLpbIVlFP
+    J4Fu5KreiS_msx-_w>
+X-ME-Received: <xmr:Ix6zZvDw2rLBIDTAxuGnv95ZAo8HSEbu0mYEZAtVAocKT1oCCz8-Al6362ML>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepggfgtgffkffuhffvofhfjgesthhqredtredtjeenucfhrhhomhepfdflrghm
@@ -58,14 +58,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudekucetufdoteggod
     gvrhhnpefhteeuheduleettdejkeduleeuiefhveehuefgheehvdeikeettddvveegieel
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjrg
     hmvghssehjrghmvghslhhiuhdrihhopdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:wBuzZp0Cg9SvZuwhBN-07S1jKe4COspx66Ya3exHBUeWU5lf8btXMw>
-    <xmx:wBuzZjHvIPthnmqmcko8xDA4nJmuBk9rmexBFemKUZiQCIJUpmK0gQ>
-    <xmx:wBuzZi96_gM5VXjGL-P4u8SyRgWxmPFRR5ZZ4QYcNnGbGAv6nf6OVA>
-    <xmx:wBuzZonRES0o1s_PssJ9Ds5H2qwId7i8b8XbPwgKbfKnt9o0OTwWyg>
-    <xmx:wBuzZoRRrpH1sU0R20mO3BkLsCwzefQlbzbqK2MWozS6oezqPruZG3WM>
+X-ME-Proxy: <xmx:Ix6zZlei010TOQX3M0Wwu-PdkAnQCHzxGrqwYdx1GOTQc78SEXS-cA>
+    <xmx:Ix6zZmMNbm2ThUjVaSgikaSQgtbLLyebF7x8q02Ux_wSwV-PakpTag>
+    <xmx:Ix6zZnlBDSqbkRAlzntHztmPhwFRVQOkIh2mUwUquTvxN9hHvAWWPg>
+    <xmx:Ix6zZgsooYwCo2pbS4uRv5qPpNDaLY-OOxke2MGMCdzvYuZtAYTX9g>
+    <xmx:Ix6zZvZDmp4_CpCGk1T8FShSrrSzY5NjaNmLceYRI8VCKJ_hvjK9WA2r>
 Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Aug 2024 03:01:18 -0400 (EDT)
+ 7 Aug 2024 03:11:30 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,41 +74,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 07 Aug 2024 17:01:17 +1000
-Message-Id: <D39HIJOL7UTK.29BEN5ZXSH4KF@jamesliu.io>
-Subject: Re: [PATCH 06/22] read-cache: fix leaking hashfile when writing
- index fails
+Date: Wed, 07 Aug 2024 17:11:28 +1000
+Message-Id: <D39HQCFQ2DCW.1KFGPLVU1EVQD@jamesliu.io>
+Subject: Re: [PATCH 08/22] config: fix leaking comment character config
 From: "James Liu" <james@jamesliu.io>
 To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
 X-Mailer: aerc 0.18.0
 References: <cover.1722933642.git.ps@pks.im>
- <2810cada0af14c3331674a807b20d18e6c9af022.1722933642.git.ps@pks.im>
-In-Reply-To: <2810cada0af14c3331674a807b20d18e6c9af022.1722933642.git.ps@pks.im>
+ <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
+In-Reply-To: <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
 
 On Tue Aug 6, 2024 at 7:00 PM AEST, Patrick Steinhardt wrote:
-> Refactor the code to have a common exit path where we can free this and
-> other allocated memory. While at it, refactor our use of `strbuf`s such
-> that we reuse the same buffer to avoid some unneeded allocations.
+> Refactor the code so that we initialize the value with another array.
+> This allows us to free the value in case the string is not pointing to
+> that constant array anymore.
 >
-> @@ -3105,7 +3117,14 @@ static int do_write_index(struct index_state *ista=
-te, struct tempfile *tempfile,
->  	trace2_data_intmax("index", the_repository, "write/cache_nr",
->  			   istate->cache_nr);
+> diff --git a/environment.c b/environment.c
+> index 5cea2c9f54..8297c6e37b 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -113,7 +113,8 @@ int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
+>   * The character that begins a commented line in user-editable file
+>   * that is subject to stripspace.
+>   */
+> -const char *comment_line_str =3D "#";
+> +const char comment_line_str_default[] =3D "#";
+> +const char *comment_line_str =3D comment_line_str_default;
+>  int auto_comment_line_char;
 > =20
-> -	return 0;
-> +	ret =3D 0;
-> +
-> +out:
-> +	if (f)
-> +		free_hashfile(f);
-> +	strbuf_release(&sb);
-> +	free(ieot);
-> +	return ret;
->  }
+>  /* Parallel index stat data preload? */
 
-Is it generally a pattern in Git to use `goto <label>` instead of
-returns when there are multiple return points in a function? We're also
-performing cleanup duties here and in most of those scenarios but there
-are some cases like `reftable_be_pack_refs()` where the goto simply
-collapses multiple return points into a single path.
+Is my understanding correct that `comment_line_str` is now just a
+pointer to the `comment_line_str_default` array, and thus can be freed
+once we're done with it?
 
