@@ -1,77 +1,126 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA9D78C93
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 14:45:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AF38289E
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 15:55:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723041931; cv=none; b=byIcNr6F8THDLAg2jF2YjFCyTND03caXKGTfUdZRL+i/0qGJf62kh+P/9O9yIU8bk73yGaDLaxxudw9lyJDonEf/IXUPRD5WDqPoyvCA3C/ZWqcnESBkCnLdABHA/WGPGVVYcjCJiEbgDXduwnHGt5asmY18u82536AJHauQsIc=
+	t=1723046131; cv=none; b=S9Xzxe1zG19Dwp3dpXhbzQLq6lA+M2Hj1/rHhan/97XRdMBh+DH7DEoqe6b6O880Rw1y+IPD1Z3n2hcZy/EMJNHbTtEi+NieEc/0wEt2NXThhmZHWoxHJZIFA217Q8/pKdIy08c1RplRba9Zv8BDPIAQC9mwhEkEOLakP6C6kTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723041931; c=relaxed/simple;
-	bh=KxnTRyJxzpVymL1mVp4LXqvVcb96tSibzdB/z2n6MoE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kyomgyW717L/Sq9A9n0v+qixcJuepOLGSdqWvZKdpq+9GKp6uWkqSBM3dv4awV2PilcM4qLlsjEHB+a/1gpTKSAfLdYlfI7KJAfdFnAqmN7h9eFUJ+2rq/3/n4ySLmjEBPZoQ46j1aRa59S4LOBW4s+SxWvoY7llCpSX7ImNtNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DA7LlXhk; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723046131; c=relaxed/simple;
+	bh=ad/G5T6ux5ZdT1xSnprhQG1c4SYmLbxZKJ5q0TY28d8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RfVwGow5wiBpSBSTTZV2cdk8FpEmR6I9AB9D0LXDpM/KohDQqt85MDn+H88qGA1h6iyFyLWHqHxtoeWUyutk+Hiv8YprZU5nMvBxYyaE8BqwZGNXjBGCLXHVDZIJpGtl/z4NF9did5txGoWslA4G2WJ5yg+OHs+oOZ33Yhw+0l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i4AL9FU0; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DA7LlXhk"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a7a8e73b29cso195945566b.3
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 07:45:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723041928; x=1723646728; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KxnTRyJxzpVymL1mVp4LXqvVcb96tSibzdB/z2n6MoE=;
-        b=DA7LlXhkm+46SDrts0P7kS5ifVCdqYWtIQq/S8sU38zXi33S7eGjvshtr6SGT3781H
-         TiA/ZVec5gAQWtA2yQXTdHgsJ+U0Yh1JpK//3veDSb9+tWDIohS3vEuoo8im/BqKPb/x
-         i3wJG9BGcmra2C3E7KkbN39f6o2ykbLxtZqb45WncpHsqw8Cz2tmlhj2fiZjfVHSWyFI
-         vSaY+GOH/aPRCKrMTrLwJNsyDE8HD/VfxmJlOEuL67BECNZrREXBox4QUPoBldB9DrlI
-         5EDUQvW6RA7e/v/MlHlASwqtbAY1FWEhbQXZWyATHAM/SZvBNFs8oIPfEkLfkBus5NJc
-         KHEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723041928; x=1723646728;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KxnTRyJxzpVymL1mVp4LXqvVcb96tSibzdB/z2n6MoE=;
-        b=XxTl7Ogn5DMhYk0o0bI2s6T5WC2e2JQ1O3nBK3tZt5aIlbfupDYCvosVaofiEf39AY
-         EOcmk0q+w/2MnxxGzlOvWg41huxisM+q3xme9M8OAG/R1YFkmyEltLlNvSVgbD9z4R1W
-         D0lGLygMv3NkXX0urZpnm+LzV7NaTW6v33fyqjgrDKu8+sqfp0eG3/fnTSINF2uEtRMR
-         Xg4gJd5g82lS8jc2O17nBM/GRxCvQNs8oxuImOab6ADJx3H3R8+6Z7UaHNnpqAG0f9M7
-         w+/sNOCI5ezlIVQvozjxNmO9bcIUmviybMp0UhNGsD71aQkAfUHt5RVRombxawle5dd+
-         NYHA==
-X-Gm-Message-State: AOJu0YzIgQE5PLalxNHXqIFPVHtf50lsyhR67KszgjOam0IqKeoS/+v+
-	Zl/FyAUEJcGxMV8hZPE5FCg3+c5SJ7JLN612BdbwmpqwNhA8JxH1c1K5QKSbsD3x2Xddvj/8+cf
-	7FH/BdD6EWrb0YbmnLj+nF4CcAnyTzKq3Vow=
-X-Google-Smtp-Source: AGHT+IEjg2XKqyCCUzQxIyQRm6mH8EGxhxuEe33mRgfdfRQbxU1btTuFJuYnqu64Wzzzh0V5i4+QdTG7g0qza1BBM3w=
-X-Received: by 2002:a17:907:da6:b0:a7a:83f8:cfd5 with SMTP id
- a640c23a62f3a-a7dc4e57b2cmr1268946666b.18.1723041927442; Wed, 07 Aug 2024
- 07:45:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i4AL9FU0"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 77E2518793;
+	Wed,  7 Aug 2024 11:55:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ad/G5T6ux5ZdT1xSnprhQG1c4SYmLbxZKJ5q0T
+	Y28d8=; b=i4AL9FU05ZIBYY2+TdpzIjdPteJ3qeU7pzzip8zA90cx8jYXuvCRit
+	gIiTJWgp/8yFaIuFj2r0dIzeH38ow4tkHpnoKfatODoDm/wH1dpswm76Kf9R52gN
+	R/F0EFj9UmrU5dEC4ZJuY0J1WrqDPlJtE/YYD2FQtjytO4caXCz18=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D3D518792;
+	Wed,  7 Aug 2024 11:55:23 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C20BF18791;
+	Wed,  7 Aug 2024 11:55:22 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [GSoC][PATCH v15 7/9] builtin/refs: add verify subcommand
+In-Reply-To: <ZrMMaubE_V7wUZ3H@tanuki> (Patrick Steinhardt's message of "Wed,
+	7 Aug 2024 07:55:54 +0200")
+References: <ZrEBKjzbyxtMdCCx@ArchLinux> <ZrEB16WGGc28dxu2@ArchLinux>
+	<ZrHRpnpGkH19godh@tanuki> <xmqqsevhy6e7.fsf@gitster.g>
+	<ZrMMaubE_V7wUZ3H@tanuki>
+Date: Wed, 07 Aug 2024 08:55:21 -0700
+Message-ID: <xmqqjzgspbti.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
- <cover.1723032100.git.ps@pks.im> <a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im>
-In-Reply-To: <a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im>
-From: =?UTF-8?B?SmVwcGUgw5hsYW5k?= <joland@gmail.com>
-Date: Wed, 7 Aug 2024 16:45:16 +0200
-Message-ID: <CA+osTZWES2eU7xwfd6fSNdprg_iJyaqRaA18ft+vynXgf40FXQ@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Improvements for ref storage formats with submodules
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 745369CC-54D5-11EF-A539-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-> Just got a shower thought that this isn't quite there yet. Most
-> importantly, I think we should default to the ref storage format of the
-> parent submodule both when adding submodules and when cloning a
-> submodule into a preexisting repository.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yep, I was going to suggest exactly the same!
-Thanks for the quick response.
+> On Tue, Aug 06, 2024 at 09:15:28AM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> >> +	if (argc)
+>> >> +		usage(_("'git refs verify' takes no arguments"));
+>> > 
+>> > Junio has posted a patch series [1] where he wants to get rid of
+>> > messages that simply say "no arguments" or "too many arguments".
+>> > ...
+>> > So I'd propose to make this:
+>> >
+>> >     argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
+>> >     if (argc)
+>> >             usage(_("unknown argument: '%s'", argv[0]));
+>> 
+>> I probably should have said that I am fully behind the intent
+>> against "too many arguments", but I am not 100% behind the
+>> particular messaging used in the patch series I sent out.
+>> 
+>> One potential complaint I expected to hear, for example, was that "a
+>> is unknown" given when you said "git cmd a a a a a" is not all that
+>> clear ;-).  To alleviate, you would have to say "git cmd takes only
+>> 2 arguments" if 'a' you are complaining about is the third one.
+>> 
+>> Also, many people would consider that "unexpected argument" is
+>> better than "unknown argument".
+>> 
+>> I personally think the message above is absolutely clear and good.
+>> 
+>> You say that 'git refs verify' takes no arguments, and for somebody
+>> who said "git refs verify a b c d e", there is no doubt that all of
+>> these a b c d e are unwanted.  And there is no room to misinterpret
+>> the message as "'git refs' is ok but 'git refs verify' is already
+>> unwelcome with extra argument", either [*].
+>> 
+>> In short, I think the message in the patch here is good, and it is
+>> the other "war on 'too many arguments'" series whose messages need
+>> to be thought further.
+>
+> Just to clarify: with "the patch" you probably refer to the current
+> version that Jialuo has, right? In other words, keep the current version
+> that he has and adapt the message in the future, when we have decided
+> what to do about those "too many arguments" messages?
 
-Regards
--Jeppe
+I meant that I think (1) that "'git refs verify' takes no arguments"
+is a good message, and (2) that there is no further change needed to
+the patch that started this review thread, regardless of how we want
+to deal with "too many arguments" messages.
+
+> If so, then the only two I had were some spurious newlines. I'm not sure
+> whether these really would be worth rerolling the whole patch series.
+
+Yup, those blank lines were annoying while scanning the patches, but
+they alone would not be something that makes a reroll _required_.  A
+reroll that clearly shows that the incremental change since the last
+round is only these blank line changes is not too much to process,
+so "not worth the reviewer time" is not a huge reason to avoid it,
+either.  I'd see that it is up to how perfectionist the patch
+submitter wants to be ;-)
+
+Thanks.
+
