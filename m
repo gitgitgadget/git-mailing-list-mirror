@@ -1,42 +1,70 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0604F145B38
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 23:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0541145B38
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 23:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723073366; cv=none; b=P+OEquLQFSvy6O6+mxK4dFYihhg3+p+zEJzLyBLoaYxEI/qxsSDANsTYX7CbRmYJdHqUKQE6U8ksVPVxf29uVw/ktrdLCEWL7ujRQ3rLDE5sCVN+FXHAZJYTsX4S+Ub/S1Bu3VCh4aD52JnND0PI/zftQkQmPB08mgjG6XnZ7Ss=
+	t=1723073402; cv=none; b=bFM3OJiPyW/gDwhjeU9u5sT/wXLMIt/6EwbpQizRHaRPNPFsoIU2vvnl7ZIQly6hr5sgUZ0Ufs8JOZWIO8J8myqU2NuZ4D9IHNJ6BVRTiZ8KNfpMc/JpV3OOyWtZJHI/+SOZJ/337s71srVrGZ/CRNSalj7KEZiQVm6GyrP+R2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723073366; c=relaxed/simple;
-	bh=CPJOVQbd/991aTJhosuCYKbjC4dUTjYetIuuqufhWyo=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pSQlHzHk4ET+QDsoNOWCRc/QcUZdrFUjWTg9WtuoZTn9jnc4VvpGlsQy3q2W6TfKxDfXwhtGXeOqqxhWl3rTGN4GmpmMWG7sdWN8GTlVTEAnb4jDDf/6L22Np/yJxuIR7P9g2HOMDEeEr7ifNjFNxW7l8V148D6C8HWFuaWC3YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3976092-ipxg00k01tokaisakaetozai.aichi.ocn.ne.jp ([221.188.33.92] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sbq5o-00A7I2-2s;
-	Wed, 07 Aug 2024 23:29:21 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sbq5k-005Uai-0L;
-	Thu, 08 Aug 2024 08:29:16 +0900
-Date: Thu, 8 Aug 2024 08:29:16 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 2/6] repository: add initialize_repo wrapper without
- pointer
-Message-ID: <20240807232916.as2jaivlbvk6pa3r@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+	s=arc-20240116; t=1723073402; c=relaxed/simple;
+	bh=adU+NFFZPUkMR7LtdZuvryhSHWh5TRtWpW9qaEEWNik=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qFS5ZQ1tS4HmVg7f1p6gD3MY4/H17oVSQF0CWEIaywkcn/FoMlrWr+L0+hlx29WUsKtlSbtxlUb6QC+ragqD5TNWko0qVp/fkmOLQjEShWcgBMKWeY/dH4BGQJsC3ALV5TR+S3X7r7a20Pjd6jvUdrkcxkZx0FPK4jy9dyARBQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zSuYtlrT; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zSuYtlrT"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5d5c324267aso219034eaf.0
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 16:30:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723073400; x=1723678200; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J1HZzU/91Gt0q5eqoXV3hY1lBDdTOCyF1ae5EuXsJVs=;
+        b=zSuYtlrTgC59YUF86110ottpAHxrkgvgoSSqQ43RdL228zNah5XopKysjOaOOUXLmD
+         7AnD1B127GnQMDAM5dDGU+mTP2WLCWJGP1j1IxSTTxfidJxo4ZqCLWTjPMFxim48fve9
+         D8aofowhGlTOUJrGa88k/TTTg7r+NUIU72UhCllw0eKjSDXuRs0sCDupGfUamkXBuIv5
+         rYN64YZ0xCDjElr6s9Q0RvIIUIkvA31Sdlgw9goeLSCKoeQ0UnK6+hMrpbVLBOAY88pS
+         hIilmvCRmmzkHeOZui1GGUapMUG/60KvWtnl8knEBhh57QSsp9awBpOrS4dwAyUL0Uh9
+         uI9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723073400; x=1723678200;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=J1HZzU/91Gt0q5eqoXV3hY1lBDdTOCyF1ae5EuXsJVs=;
+        b=Jdfl70mDgbShgxQLopDE4Gb8sV/b5G+vK5scMMb38YE1ZbeUs/WX4++qfQ3wv+UcdB
+         a8bkp8ysASxRNQQL8KyvWq2Zq3Wl0kWSBVHSAtF8UxwAxI3qsVK22Zcw8l4fxADTGhMs
+         4Z0te5GfKqbqAvj2JItn2i5jQffJttkUMK4n8VI1gHhmpv47Vc5SzfjzGZ7xa/yajma1
+         Sz+7nVdfgWCD7WZTdMr6lfiagEU35aab9s9m3knf+B1ND9f0WM4YtutLdXCL9yc3yeVH
+         xocLIQAE9xe5g8HYiUzzQqLpgwk+5iTDrBeaCFz/2524SeukHd+LCr5VONgbe47V6akX
+         Vr4g==
+X-Gm-Message-State: AOJu0YyMsgm7AmI2DivwXVha5684s5zSb8MMrz6TWmeRDXakdkTy9Xjb
+	kM5T30mAJMQYk/Kvq2ScPTtQ5MKgPdmXDU2DGlWC+vWc/ankx2Lfq/gjiKlHfg==
+X-Google-Smtp-Source: AGHT+IGnuTJUhtq3PjcSmRyEbWXuRqKgpbz/ed4gK9H0TKvwQHDTywfX44nAKAcoHBO2bfuNkcHHsg==
+X-Received: by 2002:a05:6358:12a6:b0:1a5:7844:2068 with SMTP id e5c5f4694b2df-1b15cf56660mr40430055d.5.1723073399562;
+        Wed, 07 Aug 2024 16:29:59 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:c023:b8:a8df:17c3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7c24996989fsm212376a12.59.2024.08.07.16.29.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 16:29:59 -0700 (PDT)
+Date: Wed, 7 Aug 2024 16:29:54 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <njekhcypd7x7vdxmkzbdbeblwm4bwiiz74saxdmzqeod6zz547@qkkwkmpjvwkd>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
 References: <cover.1723054623.git.steadmon@google.com>
- <5f2e816cf6359725f2a86ce1d08e5e272fba4dac.1723054623.git.steadmon@google.com>
- <20240807225246.7jhqioyqh4e2ibza@glandium.org>
- <5miqrfkepbzi4qzu65invte3tk7weshq2fcnkyufnoih3ou6rp@siodpag6csmy>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
+ <20240807224756.2zq5hkfq5j43b7jk@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,50 +73,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5miqrfkepbzi4qzu65invte3tk7weshq2fcnkyufnoih3ou6rp@siodpag6csmy>
+In-Reply-To: <20240807224756.2zq5hkfq5j43b7jk@glandium.org>
 
-On Wed, Aug 07, 2024 at 04:23:05PM -0700, Josh Steadmon wrote:
-> On 2024.08.08 07:52, Mike Hommey wrote:
-> > On Wed, Aug 07, 2024 at 11:21:27AM -0700, Josh Steadmon wrote:
-> > > Non-C external consumers of libgit.a have to redefine the `repository`
-> > > object in their own language if they want to call
-> > > initialize_repository() to ensure memory for the object is allocated
-> > > correctly. This is not ideal for external consumers that have no need
-> > > for the entire `the_repository` object but need to call other functions
-> > > from an initialized repository. Therefore, add a friendly
-> > > initialize_repository() wrapper without a `the_repository` pointer.
-> > 
-> > Technically speaking, you don't really need this.
-> > 
-> > You can define `repository` as an opaque type in Rust:
-> > ```
-> > #[allow(non_camel_case_types)]
-> > #[repr(C)]
-> > pub struct repository([u8; 0]);
-> > ```
-> > 
-> > And define `the_repository` as an extern symbol:
-> > ```
-> > extern "C" {
-> >     pub static mut the_repository: *mut repository;
-> > }
-> > ```
-> > 
-> > Mike
+On 2024.08.08 07:47, Mike Hommey wrote:
+> On Wed, Aug 07, 2024 at 11:21:28AM -0700, Josh Steadmon wrote:
+> > +contrib/cgit-rs/hidden_symbol_export.o: contrib/cgit-rs/partial_symbol_export.o
+> > +	$(OBJCOPY) --localize-hidden $^ $@
 > 
-> I've actually already done a refactor for V2 that will avoid using this
-> patch entirely, but thank you for the pointer. We do something similar
-> to opaquely wrap configset pointers in a later patch (we use an empty
-> enum there, I'm not sure whether that approach or a zero-size array is
-> preferred).
+> This is ELF-specific and won't work on Mac or Windows.
+> 
+> > +    let make_output = std::process::Command::new("make")
+> > +        .env_remove("PROFILE")
+> > +        .current_dir(git_root.clone())
+> > +        .args(&[
+> > +            "CC=clang",
+> 
+> You should probably not set CC at all here.
 
-An empty enum is a never type, I wouldn't recommend using it as an opaque
-wrapper. It will likely lead to the compiler doing bad things.
-https://rust-lang.github.io/never-type-initiative/RFC.html
+Ack, fixed in V2.
 
-`#[repr(C)]` and `[u8; 0]` are recommended by the nomicon.
-https://doc.rust-lang.org/nomicon/ffi.html#representing-opaque-structs
+> > +            "CFLAGS=-fvisibility=hidden",
+> 
+> This won't work for Windows targets.
 
-(the PhantomPinned wasn't there last time I saw that page)
+Understood. I'll have to do some studying on the symbol visibility
+options.
 
-Mike
+
+> > +            "contrib/cgit-rs/libcgit.a"
+> > +        ])
+> > +        .output()
+> > +        .expect("Make failed to run");
+> > +    if !make_output.status.success() {
+> > +        panic!(
+> > +                "Make failed:\n  stdout = {}\n  stderr = {}\n",
+> > +                String::from_utf8(make_output.stdout).unwrap(),
+> > +                String::from_utf8(make_output.stderr).unwrap()
+> > +        );
+> > +    }
+> > +    std::fs::copy(crate_root.join("libcgit.a"), dst.join("libcgit.a"))?;
+> > +    println!("cargo::rustc-link-search=native={}", dst.into_os_string().into_string().unwrap());
+> 
+> You might as well use `dst.display()`.
+
+Wouldn't that fail silently in the event that the path is non-UTF-8? I
+think I'd prefer to explicitly fail in that case, even if it seems
+unlikely.
+
+> > +    println!("cargo::rustc-link-lib=cgit");
+> > +    println!("cargo::rustc-link-lib=z");
+> > +    println!("cargo::rerun-if-changed={}", git_root.into_os_string().into_string().unwrap());
+> 
+> Likewise.
+> 
+> Mike
