@@ -1,55 +1,55 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F3B13D52E
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 18:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E274A1422DD
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 18:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723054903; cv=none; b=bylGrl/0Xftj4wEdxVe3zPdUSdFlzB64gPsY13aAeTvjtVu+W1GA9h8sF8EadzECZvRsWfkiN8mYxVTQJEMWTxBMm8xbB5L3Umkk2RCReDBpaEZX7LrWTBBkGywXlpuk8+ca7KVIsYmcYhuvjz3JIWOcCozA2dTAP2Ed5JojfPE=
+	t=1723054905; cv=none; b=PulKViEZxqiOU+s3/WECZ0ohGEBl6ng2bGEr1aG8XzWHkU0ht8aUBMzpvGb7s/l3jLk3DSIOYsWb9EuI6Pawz2N0jPxcAL0Ak3k0uZB7jEgBCjhMNyt+wQ48uomyyZhoKuAy6JueFWGQMHoW2CgF4FhLzU/EWMkWmeP4/6Ez7OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723054903; c=relaxed/simple;
-	bh=Y17aJ8/R4RPf1LavwtDwcdDRFr3vPzUlnJ3i2ltEGFo=;
+	s=arc-20240116; t=1723054905; c=relaxed/simple;
+	bh=WuJUOZ+NIkaWJQOqSKaDaQ/zwm1Q8BFdBjlhth6OAyA=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rfi6fJH4oe4qXaVEsdx6qeSEXqhNhotEl2L3u6twYQ0suRYj8mxG+XCaeInbnn1qfOH3LObwdesNtZsJ7Wd/gYfJpMHTWzCsTMmP/1LB8kV4ZgEPXknY0ltXY4uUNTE/SdtUZncC+ztBv0OwrzhQpA2n50/af/RrwxjaxXis5W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WR4qwM/T; arc=none smtp.client-ip=209.85.219.201
+	 To:Cc:Content-Type; b=hV7Io1GpG72D5TeMUzIAmVnCgRsYYnMagmVb694MX3h3cAztCMboq7uHRkwuxMYnfltHS0+ZPqAA5o+N6X0Yah743eoAxHGNYBsDXi8B2Dyzkxea0kdbQPv4ROTb0fyrSnb2+cSiWoX9VR/rE67zFcBwwDBZ2taJrrdrgnoq3Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cZ7Yi336; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WR4qwM/T"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e02b5792baaso162902276.2
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 11:21:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cZ7Yi336"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-66628e9ec89so2641947b3.1
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 11:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723054900; x=1723659700; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1723054903; x=1723659703; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3+BLo8+jhLu6o6opISMFG79Syv4fDQp+Eph2WfIbqEQ=;
-        b=WR4qwM/TZlEtMDeydQQ2zlu8JEsbc5pJf0UncPu2VF2Kh4v50pnYayq8Pph6x1DZQ5
-         M7sqlE+L3FQmQjte7/aUYz3FS0uMGF8F8G7h8fNEuaI+AQcuwokyRxPDtxXEKByyIaYI
-         7kT2CmhKMMxKa0adJ63k9dAvjRKyFxO9+gfeN4RU+RbBF2if1lfZhubjtwnTUUUl01nd
-         sP/vz+QKVFpNhZG0MhAzdYVSofyTqitKBvWA+a21OmP4ZEcmSgGhcAGiYUnlDpU40h0d
-         Oo31g01iik2CWXf+KDf1ZUibijd3jaP7J2Ab24Dkfjx+ortfybKlgjh0R+moGdtS9ymy
-         hKXA==
+        bh=rk1iovIPdivophnoqxUPwNRc4SYTsh44XZockca6a/w=;
+        b=cZ7Yi336rvoMYh1QlHPTuexGX36EN0Jctm55df1/2rgx6459B+8zRiKTeHYr4pwf3d
+         NOE+A5P26waJnQ5xKlgzAUUwyyzDWNWZUgc/EOy3GQXml9JrrX+fs4ZGy4qmM0zMSmHW
+         VthAvX+G53C99ovdx3jqLKyvqUziYjgvhZ7aQuIhYwAjC1uQjpc4TJVKK/FXyXiqe+Rr
+         Hk1V3rXTNkcvsxrjcpZ6OLGbrfi9NN6EjF5xc50YjGqfwGnPvAx15c3JFQCzbWq0y6Jp
+         +6/ScXitcep5E2RCnR/L1vLkKOpTbdkDLBKinb4QAr5sD8DrQ+pHqNU1Ov4OyqDNLjEY
+         37iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723054900; x=1723659700;
+        d=1e100.net; s=20230601; t=1723054903; x=1723659703;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3+BLo8+jhLu6o6opISMFG79Syv4fDQp+Eph2WfIbqEQ=;
-        b=cp7l8izApW0uNj29FmnfvV6I/pbs4qd66JjfRyLpqieRx20ndaLX4QTNHdfP1k+L4i
-         coIki/u8x/wWmrYnZHjThJomYZZp1drVM58WLLbvKIaIjzP0x+7adA/ZcpC8UnKaTJbM
-         Ev/wtR2YCmKJYR+hpvan6IPdhdPZAkF5u8u6lToIdygSPV3NJ44UrIez2AJ4tzojfQW7
-         uvdf8FRoEqjK96MUOUPoaY33HyF+BPcJQQOEyetohk1yAyjRxCD5lQlqmsh0IdUc+Hzd
-         ByiIxKdY1bvCq8X4dGgGXPptTQh1v0lz9cEDLRQUlMnRBU+y/rd8aZ5jIcTblAiRErok
-         BCKA==
-X-Gm-Message-State: AOJu0YwT06ILuYTb4HFkRQfGfSE3QeWWwX6RnpWzHbb2I5DINw0R3g+f
-	nkEbynsDa0uMsSIE/QqaP89+qgfPHvaUJd04FgXa1T2ZpQp7rIgZAnkLuiQbDa3w+pdYSJBd0zf
-	CPbxCyDWBZZvYiEHdDNVBVF+MCnmAtrQ/9mRlnUlJhrRforQfI/n3XWQ7ZIeoOIr2JvCPQWg3Il
-	g9TDSsClkxyYcw4aA7ZUCyMh8MzYePzKJ7B+SI3xE=
-X-Google-Smtp-Source: AGHT+IHk7o2BG194lfcsF4KYdNwJUYDSGK6OYLthSwLsYH0wK85WT5UPFvMz16KUkVUKdSxvhKwpxQ+9U+w5Og==
+        bh=rk1iovIPdivophnoqxUPwNRc4SYTsh44XZockca6a/w=;
+        b=q/mQjpuNfnCony2+YA26agHev3cn0UUAqrQYuCmTOWTjbyQNzxlTbzppJWrQveib0R
+         PE3xRscAW8LZtvLov3dD6X5HtocZt7/RQtBjbzZSYQ8jbOoRH+6hJv6k12N9T3r9uJze
+         H49STij7FG4/Qcydol0j5xot6pBcsMVfBnf5C/Oto0H5FeGTaaCoAUVTov7MSAFRnq1H
+         2K3gZJUF48dB+Hsz1exw4A1UhLxKw+Z2IfTQ/TMA80bWmzUSsKq0dteHcRyTWUQlOe1C
+         zNwLfL7A4BNv2N2cIr8KuF8n3VNJlgn/fl+hFpSj2u5KwvuK5D1SfNenmJlxyYYEgXaP
+         vz1Q==
+X-Gm-Message-State: AOJu0Yzo1RMW6Lo7mIJeM3XDBjCtrGrH3GCsri7p18ZRNQ5Zmy9L+3qF
+	UNpYyr1UjhqQ/JxSDRJUcJkXs2TdBqR7ilB2mT2Hx8kUrOQ9a+HXgRxghG46dAjJHgCa9nc3ONS
+	qVpkIRdCv4VdYwW/BUNYAyKTFcpNXxoHBuUWMEhkRZEL3txKk4z+tuapyfZl2oFsKzjrZFkDp72
+	ixk43pHclpLJy8JdDMh5KPTJBaLhaLBhD2oQXoxAI=
+X-Google-Smtp-Source: AGHT+IEsbTVJFB0r55ZwkDhdLx8oV9o/DGx6Kiw8+3R/BngdNQUluCZhx+hfBv2QgekvbnJqAFbAZCiq3BfLOA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:c023:b8:a8df:17c3])
- (user=steadmon job=sendgmr) by 2002:a05:6902:c0e:b0:e03:2257:98b8 with SMTP
- id 3f1490d57ef6-e0bde1eacfcmr259177276.1.1723054900376; Wed, 07 Aug 2024
- 11:21:40 -0700 (PDT)
-Date: Wed,  7 Aug 2024 11:21:28 -0700
+ (user=steadmon job=sendgmr) by 2002:a25:8601:0:b0:e05:f1ad:a139 with SMTP id
+ 3f1490d57ef6-e0bde435653mr29377276.11.1723054902377; Wed, 07 Aug 2024
+ 11:21:42 -0700 (PDT)
+Date: Wed,  7 Aug 2024 11:21:29 -0700
 In-Reply-To: <cover.1723054623.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,280 +59,152 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1723054623.git.steadmon@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
-Subject: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for libgit.a
+Message-ID: <b84a8210a05c2358dc29f24a56adcbeaa90c8654.1723054623.git.steadmon@google.com>
+Subject: [RFC PATCH 4/6] contrib/cgit-rs: add repo initialization and config access
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
 	emrass@google.com, rsbecker@nexbridge.com
 Content-Type: text/plain; charset="UTF-8"
 
-Introduce cgit-rs, a Rust wrapper crate that allows Rust code to call
-functions in libgit.a. This initial patch defines build rules and an
-interface that exposes user agent string getter functions as a proof of
-concept. A proof-of-concept library consumer is provided in
-contrib/cgit-rs/src/main.rs. This executable can be run with `cargo run`
+From: Calvin Wan <calvinwan@google.com>
 
-Symbols in cgit can collide with symbols from other libraries such as
-libgit2. We avoid this by first exposing library symbols in
-public_symbol_export.[ch]. These symbols are prepended with "libgit_" to
-avoid collisions and set to visible using a visibility pragma. In
-build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also contains
-libgit.a and other dependent libraries, with -fvisibility=hidden to hide
-all symbols within those libraries that haven't been exposed with a
-visibility pragma.
-
-Co-authored-by: Kyle Lippincott <spectral@google.com>
-Co-authored-by: Calvin Wan <calvinwan@google.com>
 Co-authored-by: Josh Steadmon <steadmon@google.com>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Kyle Lippincott <spectral@google.com>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- .gitignore                             |  1 +
- Makefile                               | 13 ++++++++++
- contrib/cgit-rs/Cargo.lock             | 16 +++++++++++++
- contrib/cgit-rs/Cargo.toml             | 16 +++++++++++++
- contrib/cgit-rs/README.md              | 15 ++++++++++++
- contrib/cgit-rs/build.rs               | 33 ++++++++++++++++++++++++++
- contrib/cgit-rs/public_symbol_export.c | 20 ++++++++++++++++
- contrib/cgit-rs/public_symbol_export.h |  8 +++++++
- contrib/cgit-rs/src/lib.rs             |  7 ++++++
- contrib/cgit-rs/src/main.rs            | 10 ++++++++
- 10 files changed, 139 insertions(+)
- create mode 100644 contrib/cgit-rs/Cargo.lock
- create mode 100644 contrib/cgit-rs/Cargo.toml
- create mode 100644 contrib/cgit-rs/README.md
- create mode 100644 contrib/cgit-rs/build.rs
- create mode 100644 contrib/cgit-rs/public_symbol_export.c
- create mode 100644 contrib/cgit-rs/public_symbol_export.h
- create mode 100644 contrib/cgit-rs/src/lib.rs
- create mode 100644 contrib/cgit-rs/src/main.rs
+ contrib/cgit-rs/public_symbol_export.c | 27 ++++++++++++++++++++++++++
+ contrib/cgit-rs/public_symbol_export.h |  8 ++++++++
+ contrib/cgit-rs/src/lib.rs             | 13 ++++++++++++-
+ contrib/cgit-rs/src/main.rs            | 23 +++++++++++++++++++++-
+ 4 files changed, 69 insertions(+), 2 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 8caf3700c2..7031012330 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -248,3 +248,4 @@ Release/
- /git.VC.db
- *.dSYM
- /contrib/buildsystems/out
-+/contrib/cgit-rs/target
-diff --git a/Makefile b/Makefile
-index 1cac51a4f7..fcd06af123 100644
---- a/Makefile
-+++ b/Makefile
-@@ -653,6 +653,8 @@ CURL_CONFIG = curl-config
- GCOV = gcov
- STRIP = strip
- SPATCH = spatch
-+LD = ld
-+OBJCOPY = objcopy
- 
- export TCL_PATH TCLTK_PATH
- 
-@@ -2712,6 +2714,7 @@ OBJECTS += $(XDIFF_OBJS)
- OBJECTS += $(FUZZ_OBJS)
- OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
- OBJECTS += $(UNIT_TEST_OBJS)
-+OBJECTS += contrib/cgit-rs/public_symbol_export.o
- 
- ifndef NO_CURL
- 	OBJECTS += http.o http-walker.o remote-curl.o
-@@ -3719,6 +3722,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
- 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
-+	$(RM) -r contrib/cgit-rs/target
- ifndef NO_PERL
- 	$(RM) -r perl/build/
- endif
-@@ -3864,3 +3868,12 @@ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o \
- build-unit-tests: $(UNIT_TEST_PROGS)
- unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
- 	$(MAKE) -C t/ unit-tests
-+
-+contrib/cgit-rs/partial_symbol_export.o: contrib/cgit-rs/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-+	$(LD) -r $^ -o $@
-+
-+contrib/cgit-rs/hidden_symbol_export.o: contrib/cgit-rs/partial_symbol_export.o
-+	$(OBJCOPY) --localize-hidden $^ $@
-+
-+contrib/cgit-rs/libcgit.a: contrib/cgit-rs/hidden_symbol_export.o
-+	$(AR) $(ARFLAGS) $@ $^
-diff --git a/contrib/cgit-rs/Cargo.lock b/contrib/cgit-rs/Cargo.lock
-new file mode 100644
-index 0000000000..f50c593995
---- /dev/null
-+++ b/contrib/cgit-rs/Cargo.lock
-@@ -0,0 +1,16 @@
-+# This file is automatically @generated by Cargo.
-+# It is not intended for manual editing.
-+version = 3
-+
-+[[package]]
-+name = "cgit"
-+version = "0.1.0"
-+dependencies = [
-+ "libc",
-+]
-+
-+[[package]]
-+name = "libc"
-+version = "0.2.155"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f24761847c"
-diff --git a/contrib/cgit-rs/Cargo.toml b/contrib/cgit-rs/Cargo.toml
-new file mode 100644
-index 0000000000..7b55e6f3e1
---- /dev/null
-+++ b/contrib/cgit-rs/Cargo.toml
-@@ -0,0 +1,16 @@
-+[package]
-+name = "cgit"
-+version = "0.1.0"
-+edition = "2021"
-+build = "build.rs"
-+links = "git"
-+
-+[[bin]]
-+name = "cgit-test"
-+path = "src/main.rs"
-+
-+[lib]
-+path = "src/lib.rs"
-+
-+[dependencies]
-+libc = "0.2.155"
-diff --git a/contrib/cgit-rs/README.md b/contrib/cgit-rs/README.md
-new file mode 100644
-index 0000000000..7a59602c30
---- /dev/null
-+++ b/contrib/cgit-rs/README.md
-@@ -0,0 +1,15 @@
-+# cgit-info
-+
-+A small hacky proof-of-concept showing how to provide a Rust FFI for the Git
-+library.
-+
-+## Building
-+
-+`cargo build` automatically builds and picks up on changes made to both
-+the Rust wrapper and git.git code so there is no need to run `make`
-+beforehand.
-+
-+## Running
-+
-+Assuming you don't make any changes to the Git source, you can just work from
-+`contrib/cgit-rs` and use `cargo build` or `cargo run` as usual.
-diff --git a/contrib/cgit-rs/build.rs b/contrib/cgit-rs/build.rs
-new file mode 100644
-index 0000000000..0c1ec06737
---- /dev/null
-+++ b/contrib/cgit-rs/build.rs
-@@ -0,0 +1,33 @@
-+use std::env;
-+use std::path::PathBuf;
-+
-+pub fn main() -> std::io::Result<()> {
-+    let crate_root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
-+    let git_root = crate_root.join("../..");
-+    let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
-+
-+    let make_output = std::process::Command::new("make")
-+        .env_remove("PROFILE")
-+        .current_dir(git_root.clone())
-+        .args(&[
-+            "CC=clang",
-+            "CFLAGS=-fvisibility=hidden",
-+            "contrib/cgit-rs/libcgit.a"
-+        ])
-+        .output()
-+        .expect("Make failed to run");
-+    if !make_output.status.success() {
-+        panic!(
-+                "Make failed:\n  stdout = {}\n  stderr = {}\n",
-+                String::from_utf8(make_output.stdout).unwrap(),
-+                String::from_utf8(make_output.stderr).unwrap()
-+        );
-+    }
-+    std::fs::copy(crate_root.join("libcgit.a"), dst.join("libcgit.a"))?;
-+    println!("cargo::rustc-link-search=native={}", dst.into_os_string().into_string().unwrap());
-+    println!("cargo::rustc-link-lib=cgit");
-+    println!("cargo::rustc-link-lib=z");
-+    println!("cargo::rerun-if-changed={}", git_root.into_os_string().into_string().unwrap());
-+
-+    Ok(())
-+}
 diff --git a/contrib/cgit-rs/public_symbol_export.c b/contrib/cgit-rs/public_symbol_export.c
-new file mode 100644
-index 0000000000..3d1cd6cc4f
---- /dev/null
+index 3d1cd6cc4f..ab3401ac40 100644
+--- a/contrib/cgit-rs/public_symbol_export.c
 +++ b/contrib/cgit-rs/public_symbol_export.c
-@@ -0,0 +1,20 @@
-+// Shim to publicly export Git symbols. These must be renamed so that the
-+// original symbols can be hidden. Renaming these with a "libgit_" prefix also
-+// avoid conflicts with other libraries such as libgit2.
-+
-+#include "contrib/cgit-rs/public_symbol_export.h"
-+#include "version.h"
-+
-+#pragma GCC visibility push(default)
-+
-+const char *libgit_user_agent(void)
+@@ -2,11 +2,35 @@
+ // original symbols can be hidden. Renaming these with a "libgit_" prefix also
+ // avoid conflicts with other libraries such as libgit2.
+ 
++#include "git-compat-util.h"
+ #include "contrib/cgit-rs/public_symbol_export.h"
++#include "attr.h"
++#include "config.h"
++#include "setup.h"
+ #include "version.h"
+ 
+ #pragma GCC visibility push(default)
+ 
++const char *libgit_setup_git_directory(void)
 +{
-+	return git_user_agent();
++	return setup_git_directory();
 +}
 +
-+const char *libgit_user_agent_sanitized(void)
++int libgit_config_get_int(const char *key, int *dest)
 +{
-+	return git_user_agent_sanitized();
++	return git_config_get_int(key, dest);
 +}
 +
-+#pragma GCC visibility pop
++void libgit_initialize_the_repository(void)
++{
++	initialize_the_repository();
++}
++
++int libgit_parse_maybe_bool(const char *val)
++{
++	return git_parse_maybe_bool(val);
++}
++
+ const char *libgit_user_agent(void)
+ {
+ 	return git_user_agent();
+@@ -17,4 +41,7 @@ const char *libgit_user_agent_sanitized(void)
+ 	return git_user_agent_sanitized();
+ }
+ 
++const char *libgit_attr__true = git_attr__true;
++const char *libgit_attr__false = git_attr__false;
++
+ #pragma GCC visibility pop
 diff --git a/contrib/cgit-rs/public_symbol_export.h b/contrib/cgit-rs/public_symbol_export.h
-new file mode 100644
-index 0000000000..a3372f93fa
---- /dev/null
+index a3372f93fa..97e8e871ba 100644
+--- a/contrib/cgit-rs/public_symbol_export.h
 +++ b/contrib/cgit-rs/public_symbol_export.h
-@@ -0,0 +1,8 @@
-+#ifndef PUBLIC_SYMBOL_EXPORT_H
-+#define PUBLIC_SYMBOL_EXPORT_H
+@@ -1,6 +1,14 @@
+ #ifndef PUBLIC_SYMBOL_EXPORT_H
+ #define PUBLIC_SYMBOL_EXPORT_H
+ 
++const char *libgit_setup_git_directory(void);
 +
-+const char *libgit_user_agent(void);
++int libgit_config_get_int(const char *key, int *dest);
 +
-+const char *libgit_user_agent_sanitized(void);
++void libgit_initialize_the_repository(void);
 +
-+#endif /* PUBLIC_SYMBOL_EXPORT_H */
++int libgit_parse_maybe_bool(const char *val);
++
+ const char *libgit_user_agent(void);
+ 
+ const char *libgit_user_agent_sanitized(void);
 diff --git a/contrib/cgit-rs/src/lib.rs b/contrib/cgit-rs/src/lib.rs
-new file mode 100644
-index 0000000000..dc46e7ff42
---- /dev/null
+index dc46e7ff42..df350e758f 100644
+--- a/contrib/cgit-rs/src/lib.rs
 +++ b/contrib/cgit-rs/src/lib.rs
-@@ -0,0 +1,7 @@
-+use libc::c_char;
+@@ -1,6 +1,17 @@
+-use libc::c_char;
++use libc::{c_char, c_int};
+ 
+ extern "C" {
++    pub fn libgit_setup_git_directory() -> *const c_char;
 +
-+extern "C" {
-+    // From version.c
-+    pub fn libgit_user_agent() -> *const c_char;
-+    pub fn libgit_user_agent_sanitized() -> *const c_char;
-+}
++    // From config.c
++    pub fn libgit_config_get_int(key: *const c_char, dest: *mut c_int) ->c_int;
++
++    // From repository.c
++    pub fn libgit_initialize_the_repository();
++
++    // From parse.c
++    pub fn libgit_parse_maybe_bool(val: *const c_char) -> c_int;
++
+     // From version.c
+     pub fn libgit_user_agent() -> *const c_char;
+     pub fn libgit_user_agent_sanitized() -> *const c_char;
 diff --git a/contrib/cgit-rs/src/main.rs b/contrib/cgit-rs/src/main.rs
-new file mode 100644
-index 0000000000..1794e3f43e
---- /dev/null
+index 1794e3f43e..c5f8644fca 100644
+--- a/contrib/cgit-rs/src/main.rs
 +++ b/contrib/cgit-rs/src/main.rs
-@@ -0,0 +1,10 @@
-+use std::ffi::CStr;
+@@ -1,4 +1,4 @@
+-use std::ffi::CStr;
++use std::ffi::{CStr, CString};
+ 
+ fn main() {
+     println!("Let's print some strings provided by Git");
+@@ -7,4 +7,25 @@ fn main() {
+     println!("git_user_agent() = {:?}", c_str);
+     println!("git_user_agent_sanitized() = {:?}",
+         unsafe { CStr::from_ptr(cgit::libgit_user_agent_sanitized()) });
 +
-+fn main() {
-+    println!("Let's print some strings provided by Git");
-+    let c_buf = unsafe { cgit::libgit_user_agent() };
-+    let c_str = unsafe { CStr::from_ptr(c_buf) };
-+    println!("git_user_agent() = {:?}", c_str);
-+    println!("git_user_agent_sanitized() = {:?}",
-+        unsafe { CStr::from_ptr(cgit::libgit_user_agent_sanitized()) });
-+}
++    println!("\nNow try passing args");
++    let test_arg = CString::new("test_arg").unwrap();
++    println!("git_parse_maybe_bool(...) = {:?}",
++        unsafe { cgit::libgit_parse_maybe_bool(test_arg.as_ptr()) });
++
++    println!("\nCan we get an int out of our config??");
++    unsafe {
++        cgit::libgit_initialize_the_repository();
++        cgit::libgit_setup_git_directory();
++        let mut val: libc::c_int = 0;
++        let key = CString::new("trace2.eventNesting").unwrap();
++        cgit::libgit_config_get_int(
++            key.as_ptr(),
++            &mut val as *mut i32
++        );
++        println!(
++            "git_config_get_int(\"trace2.eventNesting\") -> {:?}",
++            val
++        );
++    };
+ }
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
