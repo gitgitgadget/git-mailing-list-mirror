@@ -1,205 +1,175 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D6B13F428
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 18:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A610613D52E
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 18:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723054898; cv=none; b=PVUWZsyUrdTvskB/bjcki5zBY38GJZuQsCIABCje6LlkLeg2O4FsyhGyrxjDykTJ3IPJGY3ICwg4mxH+1WU+LT1e6jCLKR6x5Pkqzp22ixVVj2qp+Kh1VgS1SdcUnk7eMNX+TtytcJsqGKHlKrB47yBnvWx7i2mcTpdzIVDYb1I=
+	t=1723054899; cv=none; b=Cb5EzFXAl1zPQj2sszLCzg/udNQ8PV/odRqvOVychXwOvFxjOhVeW00WroA0aG1qayVR1HovgI8gZFyOow1xQAkx9MUK9IaOvlZuQO448hdvCcXDq+iQ/T2n0eGjfCAH3GH/AS11FFq1aDYGEQVTCoSgU1Ezf+XJin23ddw1mkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723054898; c=relaxed/simple;
-	bh=QQiV9FxHZrG3lPt6CNZLNyyNUd9Xr1cQOkdPRyCMoMw=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=tUtzwr6H871SsAZYGhj9CV5xhGWRe4GOlulu0rddmNlNHaZTGlMEvlpKtkItucGfCWzhGFBJet0Kdzq9I2AuKHVjl4/odlhsvFz/p5LTQ/l97VJpkCFeW6GwZraDjiT/vuaLUvaayuQAwD7rV4L7FGHqJkSLNSuCrJopp09OS+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CKq8LVRI; arc=none smtp.client-ip=209.85.128.201
+	s=arc-20240116; t=1723054899; c=relaxed/simple;
+	bh=L2NGPccQsJrinTXCD2PyyjIfOhtnoBY6BN16lfCK1io=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=pyhgJBgsUh5LOR1jWB7DcQTjU3f4Vq7FgnXMLYGkMHidMvnlLZIn3+6WAnBvjiIdjVZLPBsEtADGrJNVw82YTHHkNmCrUqAWaIRYFt7fZv30MqSVzeMbg1jepTp7OKAEhT/gveVlvIO4FKD31j9FkMjmKx6TJ1F3dP9JwU1gmnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Lah8rSb4; arc=none smtp.client-ip=209.85.219.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CKq8LVRI"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-664b7a67ad4so2598597b3.2
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 11:21:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Lah8rSb4"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e0be2fa8f68so155837276.3
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 11:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723054895; x=1723659695; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pwxh12KBGqxD+9BL9EEEZpx24f4b2KvayvuNqrlkwBA=;
-        b=CKq8LVRIvwjH1Cneq/GQJhKezkr73pgzH1GruYnSBakN25mvfKvXNbBxI+MZ7CBsC/
-         AeQJOx4IzGrjrDKNlmN1UwnDOe6bWoKY4erMChNJlxgm5idiYYOWD1rSwVCIfF/yeRAw
-         dPjiHUVuTqPFm8BleN4uv1JH6eP4OcG3oHF1X5fX8hw0W6WvSCCUzkyd6vyxVjxMFReS
-         yRLnvtvt73iqT36K9ydeygcnQ9a/JSosKVG1groFZDFWi44jS6FJzsw8tuYVe8ZSQlkN
-         oxXOfqzwFFYXcTYYRp+ZbSjtVuZYUQxFaYl80ZOlNcM5OGKvKe3e8/iW5WXLUo0WPRZp
-         PgLQ==
+        d=google.com; s=20230601; t=1723054896; x=1723659696; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=s9T0kI73iAVt04U6LFo3WC7rUOTJgxGB+Vr/cOIlEGs=;
+        b=Lah8rSb45QENTx1E3M+Y/DBNSKHS2O0sSAMi0fMvdDjsNUoJdGa0UiuhtdELWdMKP7
+         kI1R2kk0dz5qjjPHXgGMbXUN0WXa7bzLQlK9P+E05/8uePWostfkVh2g01yIaRIRWpAX
+         rRlbU/FhUVsV/0msY73hxp3afimfoOdMUa+sTjs+bI1KUdrA1FAVTdsnsagoVolQh9qf
+         nffi3BoujvroriCw9h4BlNmF8MBBIth8jd7rfzgzcJASlM77MlNanlY52eKZaem631ql
+         GtGOtgpfHzUS8t0eOpAaGBusZkWjmPz3hvNP4WBYppr4Lk2PheFXxZSkJqL8I6CUoXs/
+         6jyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723054895; x=1723659695;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pwxh12KBGqxD+9BL9EEEZpx24f4b2KvayvuNqrlkwBA=;
-        b=C79e2RQx+FIsDGQclGdoC8cLO+jEcPJYbzfGXzVHPFanxnQMhU3FN9ln5NaJ9nFbe9
-         tGyYpqCZBwuJm6ZzPJuvY8/NbPb6KIQAyyGPWcTzi1DdnWRCu9bCaVEm2tfSRTsnwI1V
-         FYZUpKpwW5kiLUK039k9b8JsJtxp8QeeyxMGaaowg2EB+/lPlbJ9eUjTC8emqHInzfAq
-         d4MFaqOra0JqUoaA0EjzVp5LnNjAf57RSWj6GAv8Lgr+lUIZFWJezjakMQgcjgXEHzNA
-         NT1qr3sxv98AbOCLoOzgE0SHGoap81GzXDkbUkWKyPn4ufVQ7yRbqHBTXlKfwNkyIpXU
-         ejRA==
-X-Gm-Message-State: AOJu0YzLC0KDVL7pR7cegQ7xr84kkFwYKBe7JXniD8te0KHL3pFFVr/r
-	o6O++Tg0Ciltpbi0lteUnk/kFH8bUPHGpElfyX8vBKtje5mIoFPbywNi2WLRV0a78LoR51Kzkxf
-	ABQ84vDUo5bkEIHX8Dflm/rFOj4ptXvDNuFMcH4yscuQH97LNSrrs0DpcXUrdEPFvr/FIOwIz3k
-	LQsR0jUPhiteTrTRhpOkza492WHBiRM1bb+FOD95Y=
-X-Google-Smtp-Source: AGHT+IGB1UXSbrcx/Po+NSoSWvfyaISEQB+BrJ+eb2fZtcMVT2GtPjpdJyUje8kvVmyNwOF36o2MNHYdF2wlcg==
+        d=1e100.net; s=20230601; t=1723054896; x=1723659696;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s9T0kI73iAVt04U6LFo3WC7rUOTJgxGB+Vr/cOIlEGs=;
+        b=MUHCx+J0Rk1lyAMREx7+1XNlbkCRNqGkpfAMxGfrSs4kHSswX6trCghH7+THL1m7kZ
+         dLasqtILMhNZfEooFsNKl1NdSxMeQkyiQCMICZUNA4iIOMA51TI7go/quH/NhXrAAuu8
+         Z9X8mKYjkP+sRfbsucm8XMnXasM6rqS83JCzuP2An1l2PJqqY1VBlliwbstIP88wWYPc
+         1mCQJACig4ejV8YdOdP2QJ9T0ihaRptU2a/7HY9zmQEgkSe4Fkt8WFrPrLNSmKgAV1/P
+         oH9xGZxeeRcihG4FjMo0a9W7d7Smu7bRM/9QiQ0rmqUvhYebTZxHFWXilH+mio8wq3CC
+         bSjw==
+X-Gm-Message-State: AOJu0YxSY/PnOeanbgGR4EuUiyjZCE4WK/FQXGHPLPMy4r3o4PAHi5cg
+	fj13OUrGYIqdVLZCDWO/yKlye7YrcZFDGRVZcKbG8iqnNqidQP2CTbTzVauqS/zxao5cl0nH5Nl
+	vnJS3wixsneVSJ8adQUmM8kpLjNQKRcAZR5BetR2h8JCQxZK6Oicnp8j17p7hAXey8VSKD0d07b
+	G6Neq2owYZrfKqkvoKvMC6nynJJbQObw4vAre3IQQ=
+X-Google-Smtp-Source: AGHT+IFyLJiAafgi8YZErSEZ0D/cN/dI8z28Nvngd7frvAdfC37XQpwFLr0OzEe8RHpJ+QoJmoRNgZJPM6RWQA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:c023:b8:a8df:17c3])
- (user=steadmon job=sendgmr) by 2002:a05:690c:dd2:b0:62f:1f63:ae4f with SMTP
- id 00721157ae682-6895f60e18dmr2813227b3.1.1723054894765; Wed, 07 Aug 2024
- 11:21:34 -0700 (PDT)
-Date: Wed,  7 Aug 2024 11:21:25 -0700
+ (user=steadmon job=sendgmr) by 2002:a05:6902:2b90:b0:e05:eccb:95dc with SMTP
+ id 3f1490d57ef6-e0bde283222mr161918276.6.1723054896473; Wed, 07 Aug 2024
+ 11:21:36 -0700 (PDT)
+Date: Wed,  7 Aug 2024 11:21:26 -0700
+In-Reply-To: <cover.1723054623.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
+References: <cover.1723054623.git.steadmon@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <cover.1723054623.git.steadmon@google.com>
-Subject: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around libgit.a
+Message-ID: <78c2aa2ef9351d977f31dbbb16b148baf254ad59.1723054623.git.steadmon@google.com>
+Subject: [RFC PATCH 1/6] common-main: split common_exit() into a new file
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
 	emrass@google.com, rsbecker@nexbridge.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-When we, the Git team at Google, first embarked on the libification
-journey, we didn=E2=80=99t have a specific consumer to build a library for =
-but
-instead were interested in the various potential benefits of
-libification for many use cases such as VFSes and submodules. Without a
-specific consumer, it has been difficult to evaluate the scope of what
-is necessary or not even for the first library, git-std-lib. Attempting
-to solve problems such as error handling, symbol collisions, and
-internal/external interfaces, in addition to separating out a library
-turns out to be both too complex of a task to both develop and review
-all at once. While we strive to eventually build an ideal library, we
-have also realized in order to make meaningful and consistent progress,
-we have to solve these problems iteratively in smaller pieces. That is
-why over the last month, we have been working with the jj project [1] to
-understand their current usage of libgit2-rs [2] and gitoxide [3] and
-future library functionality they would be interested in. In doing so,
-we have built cgit-rs, a Rust wrapper around libgit.a that allows Rust
-code to call various basic Git functions.
+Currently, object files in libgit.a reference common_exit(), which is
+contained in common-main.o. However, common-main.o also includes main(),
+which references cmd_main() in git.o, which in turn depends on all the
+builtin/*.o objects.
 
-[1] https://github.com/martinvonz/jj
-[2] https://github.com/rust-lang/git2-rs
-[3] https://github.com/Byron/gitoxide
+We would like to allow external users to link libgit.a without needing
+to include so many extra objects. Enable this by splitting common_exit()
+and check_bug_if_BUG() into a new file common-exit.c, and add
+common-exit.o to LIB_OBJS so that these are included in libgit.a.
 
-This series provides a small Rust wrapper library around parts of
-libgit.a, and a proof-of-concept Rust executable that uses the library
-to interface with Git. Additionally, we have tested building JJ with our
-library and used it to replace some of the libgit2-rs uses.
+This split has previously been proposed ([1], [2]) to support fuzz tests
+and unit tests by avoiding conflicting definitions for main(). However,
+both of those issues were resolved by other methods of avoiding symbol
+conflicts. Now we are trying to make libgit.a more self-contained, so
+hopefully we can revisit this approach.
 
-This exercise has clarified a lot of things for us, and we believe that
-developing this wrapper further provides benefits both for downstream
-consumers and the Git project itself:
-* cgit-rs provides wrappers for Rust consumers of libraries (eg. jj)
-* cgit-rs suggests focus areas for libification
-  * shows us what potential challenges we face with library consumers
-* Git libification improves git interfaces
-* Libification improves cgit-rs FFI.
+[1] https://lore.kernel.org/git/Yp+wjCPhqieTku3X@google.com/
+[2] https://lore.kernel.org/git/20230517-unit-tests-v2-v2-1-21b5b60f4b32@google.com/
 
-We are putting error handling on hold for now since it is too complex
-and we intend other CLIs to be our first customers, in which case
-printing out errors is not the worst.
-
-While the wrapper itself lives in contrib/, there are a couple of
-patches that touch git.git code. These patches are necessary for the
-wrapper, but not for git.git itself, which may seem unnecessary to
-merge. However, I would argue that other languages (not just limited to
-Rust) have issues calling functions that require a pointer to
-non-generic objects and essentially require a redefinition in their own
-language.
-
-We're sending this series as RFC because there is remaining work
-we'd like to do, but we'd like to get early feedback on this approach,
-and particularly to ask for advice on a few topics:
-
-* alternative methods of exposing only a subset of symbols in our
-  library
-
-* bikeshedding on the name (yes, really). There is an active, unrelated
-  CGit project [4] that we only recently became aware of. We originally
-  took the name "cgit" because at $DAYJOB we sometimes refer to git.git
-  as "cgit" to distinguish it from jgit [5].
-
-* gauging the level of interest in calling Git code from Rust
-
-[4] https://git.zx2c4.com/cgit
-[5] https://www.eclipse.org/jgit
-
-Remaining work includes:
-
-* finding a better solution to the common-main split. We should probably
-  have a separate initialization function including all of main() up to
-  the call to cmd_main(), which can then be exposed in cgit-rs.
-
-* adding unit and integration tests
-
-* Makefile cleanup, particularly adding config.mak options that
-  developers can set to run Rust builds and tests by default
-
-* automating the process of exporting additional functions via cgit-rs
-  (possibly with a wrapper script around bindgen [6])
-
-[6] https://github.com/rust-lang/rust-bindgen
-
-Finally, a quick discussion about symbol collisions: if functions are
-not prepended with =E2=80=9Clibgit_=E2=80=9D or something similar, it leave=
-s us open to
-collision issues in the future =E2=80=93 so this probably would=E2=80=99ve =
-happened with
-libification in general to begin with. Therefore it seems necessary to
-have to wrap all the symbols we are looking to expose. While this seem
-non-ideal, we couldn=E2=80=99t come up with a better method. Our next best
-alternative is to simply expose all symbols by default, but this leads
-to symbol collisions when library users link both cgit-rs and
-libgit2-rs.
-
-
-Calvin Wan (2):
-  contrib/cgit-rs: add repo initialization and config access
-  contrib/cgit-rs: add a subset of configset wrappers
-
-Josh Steadmon (4):
-  common-main: split common_exit() into a new file
-  repository: add initialize_repo wrapper without pointer
-  contrib/cgit-rs: introduce Rust wrapper for libgit.a
-  config: add git_configset_alloc
-
- .gitignore                             |  1 +
- Makefile                               | 14 ++++
- common-exit.c                          | 26 +++++++
- common-main.c                          | 24 -------
- config.c                               |  5 ++
- config.h                               |  5 ++
- contrib/cgit-rs/Cargo.lock             | 99 ++++++++++++++++++++++++++
- contrib/cgit-rs/Cargo.toml             | 17 +++++
- contrib/cgit-rs/README.md              | 15 ++++
- contrib/cgit-rs/build.rs               | 33 +++++++++
- contrib/cgit-rs/public_symbol_export.c | 72 +++++++++++++++++++
- contrib/cgit-rs/public_symbol_export.h | 26 +++++++
- contrib/cgit-rs/src/lib.rs             | 81 +++++++++++++++++++++
- contrib/cgit-rs/src/main.rs            | 44 ++++++++++++
- repository.c                           |  9 +++
- repository.h                           |  1 +
- 16 files changed, 448 insertions(+), 24 deletions(-)
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ Makefile      |  1 +
+ common-exit.c | 26 ++++++++++++++++++++++++++
+ common-main.c | 24 ------------------------
+ 3 files changed, 27 insertions(+), 24 deletions(-)
  create mode 100644 common-exit.c
- create mode 100644 contrib/cgit-rs/Cargo.lock
- create mode 100644 contrib/cgit-rs/Cargo.toml
- create mode 100644 contrib/cgit-rs/README.md
- create mode 100644 contrib/cgit-rs/build.rs
- create mode 100644 contrib/cgit-rs/public_symbol_export.c
- create mode 100644 contrib/cgit-rs/public_symbol_export.h
- create mode 100644 contrib/cgit-rs/src/lib.rs
- create mode 100644 contrib/cgit-rs/src/main.rs
 
-
-base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
---=20
+diff --git a/Makefile b/Makefile
+index 3eab701b10..1cac51a4f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -979,6 +979,7 @@ LIB_OBJS += combine-diff.o
+ LIB_OBJS += commit-graph.o
+ LIB_OBJS += commit-reach.o
+ LIB_OBJS += commit.o
++LIB_OBJS += common-exit.o
+ LIB_OBJS += compat/nonblock.o
+ LIB_OBJS += compat/obstack.o
+ LIB_OBJS += compat/terminal.o
+diff --git a/common-exit.c b/common-exit.c
+new file mode 100644
+index 0000000000..1aaa538be3
+--- /dev/null
++++ b/common-exit.c
+@@ -0,0 +1,26 @@
++#include "git-compat-util.h"
++#include "trace2.h"
++
++static void check_bug_if_BUG(void)
++{
++	if (!bug_called_must_BUG)
++		return;
++	BUG("on exit(): had bug() call(s) in this process without explicit BUG_if_bug()");
++}
++
++/* We wrap exit() to call common_exit() in git-compat-util.h */
++int common_exit(const char *file, int line, int code)
++{
++	/*
++	 * For non-POSIX systems: Take the lowest 8 bits of the "code"
++	 * to e.g. turn -1 into 255. On a POSIX system this is
++	 * redundant, see exit(3) and wait(2), but as it doesn't harm
++	 * anything there we don't need to guard this with an "ifdef".
++	 */
++	code &= 0xff;
++
++	check_bug_if_BUG();
++	trace2_cmd_exit_fl(file, line, code);
++
++	return code;
++}
+diff --git a/common-main.c b/common-main.c
+index 8e68ac9e42..af4dea049e 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -66,27 +66,3 @@ int main(int argc, const char **argv)
+ 	/* Not exit(3), but a wrapper calling our common_exit() */
+ 	exit(result);
+ }
+-
+-static void check_bug_if_BUG(void)
+-{
+-	if (!bug_called_must_BUG)
+-		return;
+-	BUG("on exit(): had bug() call(s) in this process without explicit BUG_if_bug()");
+-}
+-
+-/* We wrap exit() to call common_exit() in git-compat-util.h */
+-int common_exit(const char *file, int line, int code)
+-{
+-	/*
+-	 * For non-POSIX systems: Take the lowest 8 bits of the "code"
+-	 * to e.g. turn -1 into 255. On a POSIX system this is
+-	 * redundant, see exit(3) and wait(2), but as it doesn't harm
+-	 * anything there we don't need to guard this with an "ifdef".
+-	 */
+-	code &= 0xff;
+-
+-	check_bug_if_BUG();
+-	trace2_cmd_exit_fl(file, line, code);
+-
+-	return code;
+-}
+-- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
