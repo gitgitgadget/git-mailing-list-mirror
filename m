@@ -1,56 +1,50 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DBB5BAF0
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 16:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C68B13A3F6
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 16:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723047633; cv=none; b=Jq8mQZrpeTbEGgeAJ4uRuTzMNlC4I0fQmUUtROZVbs5GSGNQwuAav0H0omp0Z+WB7gaBTnsiK04w3F8H6AmClN29LTI7ajv4fMyIf4/FtbhVHDJLXRhMv09leCgABmg30ZxsL6puZEvBXoX6XbTmzgcmwhG3roWCs6yHeKv9QfM=
+	t=1723049984; cv=none; b=NYAp8s5Vt3YK0KhJmcRV6Xbl8nlcvn8wxjS30944gJouqxCnOlz5POQwI7VMCT22vvXAKIpzNb1ig3p5Q/u8UL/0ZdoS5OdF2h1WcI7jpvrLBMkqSto+KhK8bb3vo74Zo9s1DVYSGiNVBm1jiLSAswaFmxgDpHxQjsKQgZebtJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723047633; c=relaxed/simple;
-	bh=LnyggBeWV5i4Nrj0j2SNP8D4F2S2PTlDnG5LJ58b1RE=;
+	s=arc-20240116; t=1723049984; c=relaxed/simple;
+	bh=NfEORSqcXcIjnYCUtOuJNhnGU7ovzIlwfmLAN3Ft9r0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s9cCAyAPwFggBE/IuAP8T/CR7sOwcruLA8U3koDeN84BsMwD44vOzbvWXReU3gAtymxyxdaEJqam68nW1Lhx8cpAdLBUt8b7kLaFn23wP4M1QuGON6HT/uRMP1vkE1/QtoaUoiIJ6apCUjheUa2ZsuBu3bdBff7cDaPto8oNqbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pSuxrT04; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=IpbYm4viDC8VrpZBSMga7Se71e02c5g9D/mbOOn/R8bdzQo963T72z+rSlIo0Zh01TMiCO9SZ6u30som3zfU4wOo/xFC8VJWywCmTvH2UdOugMSdgRZvMC8+AkGBiEKDBFwBPjNJg5SM+sR081FV5BOpWI0XYVwcEYnGmj2pep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ihP3u6vH; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pSuxrT04"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ihP3u6vH"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74E5518A94;
-	Wed,  7 Aug 2024 12:20:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AC9218EB9;
+	Wed,  7 Aug 2024 12:59:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LnyggBeWV5i4Nrj0j2SNP8D4F2S2PTlDnG5LJ5
-	8b1RE=; b=pSuxrT04MM7c/WUPuNPgSal2tGjEPDceoyg2Ekd34Z/OD4qFrNaMRd
-	CdxNmKnuPZ9Qm1wZJaFeKjuUQEmpnZmZHiBvHvXB00Bnsw0ojCM8JY903czmdtko
-	Uf0GOGN8BP/0zvrmir/q7d+HixhgMdmcRRNofOI+We0xLqALpCcHY=
+	:content-type; s=sasl; bh=NfEORSqcXcIjnYCUtOuJNhnGU7ovzIlwfmLAN3
+	Ft9r0=; b=ihP3u6vH7q3TqLfbIRGn6odAcCKS0oQAAsAzh5cUaxL09LzIYosIbg
+	J0ISG2eWhzvKSJphMZPjJRZMeecrjR/SDKr36Na2pvCEMEUjzyfqJ+yjG5RHquiX
+	iKkrbEHJnp9sSPW0muF20RZPB5ie9q4+0Vh97PIbR5dJDjuimCV2g=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CF7618A93;
-	Wed,  7 Aug 2024 12:20:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2385618EB8;
+	Wed,  7 Aug 2024 12:59:41 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D3D3E18A92;
-	Wed,  7 Aug 2024 12:20:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80C5B18EB5;
+	Wed,  7 Aug 2024 12:59:40 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  git@vger.kernel.org,
-  Christian Couder <chriscool@tuxfamily.org>,  Kaartic Sivaraam
- <kaartic.sivaraam@gmail.com>,  Josh Steadmon <steadmon@google.com>,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [GSoC][PATCH v5] t: port helper/test-hashmap.c to
- unit-tests/t-hashmap.c
-In-Reply-To: <CAP8UFD3VwiAbGvzgi14EcEQLX6Gs7pNy+dvZcXkPOueKpJS7HA@mail.gmail.com>
-	(Christian Couder's message of "Wed, 7 Aug 2024 16:33:43 +0200")
-References: <20240730115101.188100-1-author@example.com>
-	<20240803133517.73308-2-shyamthakkar001@gmail.com>
-	<CAP8UFD3VwiAbGvzgi14EcEQLX6Gs7pNy+dvZcXkPOueKpJS7HA@mail.gmail.com>
-Date: Wed, 07 Aug 2024 09:20:28 -0700
-Message-ID: <xmqq34ngpann.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
+In-Reply-To: <cover.1722933642.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Tue, 6 Aug 2024 10:59:32 +0200")
+References: <cover.1722933642.git.ps@pks.im>
+Date: Wed, 07 Aug 2024 09:59:39 -0700
+Message-ID: <xmqqy158nu9w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,16 +54,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F69B854C-54D8-11EF-BBF5-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ 6FB5A6EC-54DE-11EF-A694-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Range-diff against v4:
->
-> Nit (not worth a reroll): the range-diff usually goes before the
-> actual patch in the section starting with a line containing only 3
-> dashes
+> The series is built on top of 406f326d27 (The second batch, 2024-08-01)
+> with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
+> leak when computing reachability, 2024-08-01) merged into it.
 
-This comes from https://lore.kernel.org/git/Zk7UsJjhY_FV2z8C@tanuki/
-that eventually became 2fa04ceb (format-patch: move range/inter diff
-at the end of a single patch output, 2024-05-24).
+A quick question.  Is it on your radar that transport_get() leaks
+the helper name when "foo::bar" is given as a remote?
+
+  https://github.com/git/git/actions/runs/10274435719/job/28431161208#step:5:893
+
+If not, I'll handle it separately, whose fix should look something
+like the attached.
+
+Thanks.
+
+ transport.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git c/transport.c w/transport.c
+index 12cc5b4d96..13bf8183b7 100644
+--- c/transport.c
++++ w/transport.c
+@@ -1115,6 +1115,7 @@ static struct transport_vtable builtin_smart_vtable = {
+ struct transport *transport_get(struct remote *remote, const char *url)
+ {
+ 	const char *helper;
++	char *helper_to_free = NULL;
+ 	const char *p;
+ 	struct transport *ret = xcalloc(1, sizeof(*ret));
+ 
+@@ -1139,10 +1140,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	while (is_urlschemechar(p == url, *p))
+ 		p++;
+ 	if (starts_with(p, "::"))
+-		helper = xstrndup(url, p - url);
++		helper_to_free = helper = xstrndup(url, p - url);
+ 
+ 	if (helper) {
+ 		transport_helper_init(ret, helper);
++		free(helper_to_free);
+ 	} else if (starts_with(url, "rsync:")) {
+ 		die(_("git-over-rsync is no longer supported"));
+ 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
+
