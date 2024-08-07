@@ -1,53 +1,53 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23DF1B1428
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 06:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543D01B4C55
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 06:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723013818; cv=none; b=j8IyXtgqZ0XoMCBBIF8il/mCpgCTo08jXn0Zw/Q7OQathbPVadacsrY7alL0SZeQ8k+/TDlDHkxOvJTD13XhDM4guSnwIz8tUdgP4+wG5n9fcSEPBML+UgfYDV9UorhQNvUcvpIIv/fCA/rHl8AodLqVvMPajpb2TClgaazj710=
+	t=1723013823; cv=none; b=SOKw5MYZA6P8RXjhVVCc5L8onvIRqeimJqx7xc8kwJYQQIWH//pPAbC4oD78qj7J1yD3SY3k0DkyYkHjQShMqAwTFMrakwWoP8nnbZ1hFCEs/S8IbM0gtUy0qoNlfiFcMP+4eIZ/CgUtBNGDp56Ggp685Za366p1ny8onzHDIuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723013818; c=relaxed/simple;
-	bh=DJ/o3ltrq2xqIgs3blzbhAqeUBGVtq+AEBg8Yxy1uDU=;
+	s=arc-20240116; t=1723013823; c=relaxed/simple;
+	bh=qXihFKikmPcuhBDJ+VXw4bq1vhfYIEq8tpHauXwIeV8=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p7csWX6JLdgzLNE4Zc6dpM8RS3aOBeTqDpb9G9bp8Gcbder7gFjFe9DTW3IuBEVttyLpwwvbBBTFt2srvVTZCLEs7n/bbd1AdSqx49bd6z72d6Qh07wSs7GotBbKNHMkULOFDOYbNGW5GZnBhfzpAsAXHqIYMWCVW9mXEPp/Mac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=otGtEv92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LwJsCFqa; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=e1Pxd4lRsLmOZrfbHZmEuxHPEl9HFTSzJnt8186J+9YuQHlQ6Uo2uzvpKZv6YZH9FTivqur2aBqBcfuQLMy1pzqngUpWtpbrap3OGIdbJMK0yJSTbx3Uj646AAo+VX357yidvIE2B4rKkH4I7px3VJeaEGgR6J3VCtqBBVWLcOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lIMovo0y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O/22L1FE; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="otGtEv92";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LwJsCFqa"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 28AF3138FC5F
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 02:56:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lIMovo0y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O/22L1FE"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id F198A138CDF7
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 02:56:59 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 07 Aug 2024 02:56:55 -0400
+  by compute4.internal (MEProxy); Wed, 07 Aug 2024 02:56:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723013815; x=1723100215; bh=UQz2rZMzI/
-	FunerOge2k+jn1V4DadtL9PoGE/sysOro=; b=otGtEv923KJAY7kPa5v1dy4uVb
-	vIQ3jDYWl2gm5r/UD6LpHmVtshDh5R9W+V5kLHMcuA0FN65k4l5MlngwQLRtr/YK
-	aY3215+jmSDVlNu43XspBkAmB3waE4vA7LKhGQ3V4yhPw+mZUi7pD9NgO8g66bHj
-	KNBUGeRM59qJMPTmkiyWDUg7NlHX5MAFba4gsA6OzQ73zh52+eH+6wdWYAclrPwZ
-	skrrapUDTJU8HXPrDj0Q8Ph1MU5WJN5y5MFiLSahIuLsMTjo8Dj0Q3BQzXD1aUut
-	kdHjCJE9nlylolNg1sBt57W3MQOSqsPp07NI95laUhR3oio0bq3Z+lDnG1oQ==
+	:subject:to:to; s=fm3; t=1723013819; x=1723100219; bh=+z8Ihh81hU
+	+VHetWpubaMX8D8+1/vAOSGbBZ8kTKMzM=; b=lIMovo0y+z07m0tun115nfP2eV
+	+lLKoknB6TptPDdjXU8fYLhmSoA7MwAsR9QdrM2g8isYiHY1j+HHi2TczvaBQYUn
+	sH/zptoyvhZVRhE7n1mm1yuXj4eL8SLLGANrLq0uUZGHRYw51hzj0i3EhmA0YwBV
+	6prwEs1thdrWSSDh3h/DPByAoPii6prSZXUFUJSJntmNFMvAC6Wj1LqJZ6Z1RybF
+	Y2jwwN9beDa76e44fp+bxiKlkLbFQtOdh6I2gI4HaE8kfew3o/raoN7iR98RthPW
+	d2WGxUXV4QnmgQdlsw4kpI69TkSApCxBer0Ttagex2VtO4keTnp5GUT1QIsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723013815; x=1723100215; bh=UQz2rZMzI/FunerOge2k+jn1V4Da
-	dtL9PoGE/sysOro=; b=LwJsCFqazv1LOcatAIitvLiAfAMVvNviYNX5hNCC87VR
-	5eLNIEplnr5Ri/AL7gnsojfywgSS+F7UhsqCcG4szAJn3pxyd+NCtH0Wyl2A+vig
-	kjH2TTL5xohKZa2bNm1Ah0kJpmRTVjfE6cT10gxF5TG7m9euWmhxEgWN+FqV9KsK
-	IVImhEPUFt9MRD4SVGtsvZ3B7Jy+mjlcHKFxkqJB+4dZEa91nBemsd5AL6Crx3cJ
-	G5vvp+v8Iq0uaowoSWJU+9R62mVzuJav+sVlY5g0cR8M1lNBSTZHfnq0K9kxNtBq
-	k17LwnK0P/e2AA8BkCiKNoa98IyPmV+Hm1WXSqBkZg==
-X-ME-Sender: <xms:txqzZmPyk7RICKMn9e7ahNsXCJol1olX6jOKc8vVlOCAuwm91BNocA>
-    <xme:txqzZk9C_WP5o5455hMi6TY4Il67eSnG6wHQeTnPN9CYrGZxV-Vlvx3Y-943ziWTQ
-    lRG9kPn6mXrELv9VA>
-X-ME-Received: <xmr:txqzZtSNnLZk0filP3V6uwZQYn_F7FQnVoDnjC_d2qLFHaZQX9Q2je15hPZ_6EJNF0o_OF4JvdbE3h9DSYrwLG82AjqtlDXZL86cfDKNBjv0-Kgc>
+	fm3; t=1723013819; x=1723100219; bh=+z8Ihh81hU+VHetWpubaMX8D8+1/
+	vAOSGbBZ8kTKMzM=; b=O/22L1FEl+MF/WgQ+DhimwluPVYDmo3iUf5lvYqJwMRw
+	6mdyUXdsMoohDv0FoRclUoyApgyaBoVJ0qoE7nNnPs6ySIJLDd/5nOSdKTmo9piq
+	vzLNP4nS0ofR9pWBgu9Xfhl2lk5PYZ51OZgeLgwn5xEjBTAmqln0NQw9/6+1S59w
+	92hDi+9k33UwmbTt6kvrksX8We419M7xRm3usYHyNxRe2WWl5IzDHbVW/Q9urCB9
+	xIBZwOqp32L7N0jrYY8Vbl+2uRqvsA9F+p8g6RjoQKg8tVHML6+xgTHrSeJ+V1K3
+	xTF3jiTHF9HLTcHOD5GF1rUCzUECK4WBe3HDy6+SwA==
+X-ME-Sender: <xms:uxqzZtfgPG8fUu6i335II-m5a41TOgF3-rhHojM4VmkeKgPlFy_-CQ>
+    <xme:uxqzZrMBFw9KNy3Z8SSKT-I55KWVt6w21Fm30Md9nC2A9JamMXH4L7bfVFE2XRYdy
+    tZ4q1pw1xiYE5pTfw>
+X-ME-Received: <xmr:uxqzZmjjttr5RfUDEprV3UKRfiD_6vvNVE7rzKz2AR8zs0vbHj4AEVoRljsNiIMZ4tKgGNDp1cs3sQOycTaqfuWzdVwiz1BcHW0UDerHcqhqqxLA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -55,24 +55,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudejucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:txqzZmtHaEQ222MlDCdUXWMU9tma0Ql-sRst78gNXB_IyPnLxfFuOA>
-    <xmx:txqzZudOeK1qJWWhJNgs0EQlGCLg2sX_yW5uY6Fkn3GkU7VqhWkCcw>
-    <xmx:txqzZq2-94LalEiRsq02AR1N0IJ5HYG3onatDzeQ828oX2vLlQ2RxQ>
-    <xmx:txqzZi8v5ZjbrYOf76KGUapEvl6e8NLUvNpJsUbJ4WnUV6w2vyi4Tw>
-    <xmx:txqzZiG1mnjPlPLWVal6tUr-ApQqgO4zdwIfHUPkUrZ1f6ciVV3IYoko>
+X-ME-Proxy: <xmx:uxqzZm-v8Yg7tXkcQZiRu_TIhprNrU3S0NKLSU061yuXdo5zGtyDUQ>
+    <xmx:uxqzZpswHavSEzKhtRpDtLpHTxHdqm7ipbtl6OaJBXfB0UA1PvOi7Q>
+    <xmx:uxqzZlGQ484iuOGg2t326ZPcTU_tX40s52-LkqxbPgHUx9hki7N44g>
+    <xmx:uxqzZgPK1kVlmQOQvZEa6moXI1hoGbxZPG1j0kW0b55cJQeyE_di-w>
+    <xmx:uxqzZqWZfyrxShXFB3Dx94COte8pDD64BVnl8ALadPAjNqPUPRB--EYX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 7 Aug 2024 02:56:54 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 7 Aug 2024 02:56:59 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id deb84a5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5fa178e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 7 Aug 2024 06:56:50 +0000 (UTC)
-Date: Wed, 7 Aug 2024 08:56:52 +0200
+	Wed, 7 Aug 2024 06:56:54 +0000 (UTC)
+Date: Wed, 7 Aug 2024 08:56:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 02/20] path: expose `do_git_common_path()` as
- `strbuf_git_common_pathv()`
-Message-ID: <e7a143c30dd95d8192eacc35c876e7926cb7c6a4.1723013714.git.ps@pks.im>
+Subject: [PATCH 03/20] editor: do not rely on `the_repository` for
+ interactive edits
+Message-ID: <c2556fff9e25aabab237c5902aff64f65b0a953f.1723013714.git.ps@pks.im>
 References: <cover.1723013714.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,120 +81,120 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0iqojMFE3ieV30eP"
+	protocol="application/pgp-signature"; boundary="MnTTkIvIeTm1r9ss"
 Content-Disposition: inline
 In-Reply-To: <cover.1723013714.git.ps@pks.im>
 
 
---0iqojMFE3ieV30eP
+--MnTTkIvIeTm1r9ss
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-With the same reasoning as the preceding commit, expose the function
-`do_git_common_path()` as `strbuf_git_common_pathv()`.
+We implicitly rely on `the_repository` when editing a file interactively
+because we call `git_path()`. Adapt the function to instead take a
+`sturct repository` as parameter so that we can remove this hidden
+dependency.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- path.c | 22 +++++++++++-----------
- path.h |  5 ++++-
- 2 files changed, 15 insertions(+), 12 deletions(-)
+ add-patch.c |  3 ++-
+ editor.c    | 12 +++++++-----
+ editor.h    |  3 ++-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/path.c b/path.c
-index 71f1cb4dfb..bff98b255e 100644
---- a/path.c
-+++ b/path.c
-@@ -617,16 +617,16 @@ int strbuf_git_path_submodule(struct strbuf *buf, con=
-st char *path,
- 	return err;
+diff --git a/add-patch.c b/add-patch.c
+index 46f6bddfe5..4e3aa02ed8 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1140,7 +1140,8 @@ static int edit_hunk_manually(struct add_p_state *s, =
+struct hunk *hunk)
+ 				"removed, then the edit is\n"
+ 				"aborted and the hunk is left unchanged.\n"));
+=20
+-	if (strbuf_edit_interactively(&s->buf, "addp-hunk-edit.diff", NULL) < 0)
++	if (strbuf_edit_interactively(&s->buf, "addp-hunk-edit.diff", NULL,
++				      the_repository) < 0)
+ 		return -1;
+=20
+ 	/* strip out commented lines */
+diff --git a/editor.c b/editor.c
+index d1ba2d7c34..6c461dd253 100644
+--- a/editor.c
++++ b/editor.c
+@@ -134,13 +134,15 @@ int launch_sequence_editor(const char *path, struct s=
+trbuf *buffer,
  }
 =20
--static void do_git_common_path(const struct repository *repo,
--			       struct strbuf *buf,
--			       const char *fmt,
--			       va_list args)
-+void strbuf_git_common_pathv(struct strbuf *sb,
-+			     const struct repository *repo,
-+			     const char *fmt,
-+			     va_list args)
+ int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
+-			      const char *const *env)
++			      const char *const *env, struct repository *r)
  {
--	strbuf_addstr(buf, repo->commondir);
--	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
--		strbuf_addch(buf, '/');
--	strbuf_vaddf(buf, fmt, args);
--	strbuf_cleanup_path(buf);
-+	strbuf_addstr(sb, repo->commondir);
-+	if (sb->len && !is_dir_sep(sb->buf[sb->len - 1]))
-+		strbuf_addch(sb, '/');
-+	strbuf_vaddf(sb, fmt, args);
-+	strbuf_cleanup_path(sb);
+-	char *path2 =3D NULL;
++	struct strbuf sb =3D STRBUF_INIT;
+ 	int fd, res =3D 0;
+=20
+-	if (!is_absolute_path(path))
+-		path =3D path2 =3D xstrdup(git_path("%s", path));
++	if (!is_absolute_path(path)) {
++		strbuf_repo_git_path(&sb, r, "%s", path);
++		path =3D sb.buf;
++	}
+=20
+ 	fd =3D open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+ 	if (fd < 0)
+@@ -157,6 +159,6 @@ int strbuf_edit_interactively(struct strbuf *buffer, co=
+nst char *path,
+ 		unlink(path);
+ 	}
+=20
+-	free(path2);
++	strbuf_release(&sb);
+ 	return res;
  }
+diff --git a/editor.h b/editor.h
+index 8016bb5e00..d4c4d216ac 100644
+--- a/editor.h
++++ b/editor.h
+@@ -1,6 +1,7 @@
+ #ifndef EDITOR_H
+ #define EDITOR_H
 =20
- const char *git_common_path(const char *fmt, ...)
-@@ -634,7 +634,7 @@ const char *git_common_path(const char *fmt, ...)
- 	struct strbuf *pathname =3D get_pathname();
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_common_path(the_repository, pathname, fmt, args);
-+	strbuf_git_common_pathv(pathname, the_repository, fmt, args);
- 	va_end(args);
- 	return pathname->buf;
- }
-@@ -645,7 +645,7 @@ void strbuf_git_common_path(struct strbuf *sb,
- {
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_common_path(repo, sb, fmt, args);
-+	strbuf_git_common_pathv(sb, repo, fmt, args);
- 	va_end(args);
- }
++struct repository;
+ struct strbuf;
 =20
-diff --git a/path.h b/path.h
-index 94e7030f0b..77eb0e6543 100644
---- a/path.h
-+++ b/path.h
-@@ -37,6 +37,10 @@ void strbuf_git_common_path(struct strbuf *sb,
- 			    const struct repository *repo,
- 			    const char *fmt, ...)
- 	__attribute__((format (printf, 3, 4)));
-+void strbuf_git_common_pathv(struct strbuf *sb,
-+			     const struct repository *repo,
-+			     const char *fmt,
-+			     va_list args);
+ const char *git_editor(void);
+@@ -29,6 +30,6 @@ int launch_sequence_editor(const char *path, struct strbu=
+f *buffer,
+  * If `path` is relative, it refers to a file in the `.git` directory.
+  */
+ int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
+-			      const char *const *env);
++			      const char *const *env, struct repository *r);
 =20
- /*
-  * Return a statically allocated path into the main repository's
-@@ -45,7 +49,6 @@ void strbuf_git_common_path(struct strbuf *sb,
- const char *git_common_path(const char *fmt, ...)
- 	__attribute__((format (printf, 1, 2)));
-=20
--
- /*
-  * The `git_path` family of functions will construct a path into a reposit=
-ory's
-  * git directory.
+ #endif
 --=20
 2.46.0.dirty
 
 
---0iqojMFE3ieV30eP
+--MnTTkIvIeTm1r9ss
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazGrMACgkQVbJhu7ck
-PpQYpQ/+MIe8b5HbUv5e02rbc0nzMVuy4eJSco2fR/s54lkp4b2l3yg6q9pLrlhW
-BPhkQdmm+J+4muZZi7ZOSoTWoEA8JeO0Ejlg31eMK+MxzYN5TEtWL8wj+fS8FJ3m
-q+q8SL3YS61K0j23rjUd1vQO2QgopzS0Efi6z+6rJM+5r1kOSmj6MsUdPfdA878l
-s9IT/4n6Jpumko2zzonv0vu7l8Gcjk/C++M37syre2BxtIil1y9NgeHwKD423203
-0T9A1Ppfh69GvmNSlwu6AlQM3xVaNr8XaiX+F2IH3CeizJTejASgj+e1UDkn52+K
-UH9zRI4KzfkrceyiSkI7RvgATqwUCwL2Ylbnn+26/buu5Tiu8gG599N9eXXI+152
-ePuTD150L9b/lIKEjKS+fR9zLP9df19cDMy9wglFzqpuoZMvFMgP6Wq8zUSNzg4t
-n9ze5uIijUDfpvKZIZ2Ga5reEPXd2PGq/6+RhtLfcnXoqA94yeWfEXxHfk5Hca+K
-8s/ei3Q3Ug/oJEN7agIal7rZxl2BBFB/75fYtbrohHgTA+MMn4/AJsz6MsKxQ4Sf
-uim1HqN3JPoj7sh6GxyTx7Gh7rrexf+U6SMeH9V86sdzdREayur65hkuMtzzWhmn
-Uoc8MhjGHkxdsBctrX0PLJxfz0dAov5P7cLsPgnRSZm551oQB6Q=
-=gRgy
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazGrgACgkQVbJhu7ck
+PpQm6A/+MXN5cMr54uVqU+ErmNph5ifId3jg4Wl3L7HZkJTpW77t4mWfd0zkqWYh
+S7NZPjKP6Voe51S55EAO3eMngmiFrPnRyyyMdQJwdr9vnQBbXZF2gUXGyhMAcAjH
++KMwOPnb0+HEmSjmqkSVT+U5fgYBVIhgq1IMhmQBayfsQFlmNfGv01IX7bx44lbr
+tVdB8/9HaFSIqoOQJ6xWaNB4nuOvoL3DEukkf2L2bE+xsuIO2JIYPUHscSokBjM3
+35yHKwqd5RKLN2mxnisErLElRaY11QCgKmRs5nkDXiWjxdupQTu0OEnkF2/fsehf
+9/3M0VLTTfKEK/8Nl+tlxSdIzjtpT1Ol72fq+NGlzrpWAoE7wVmODxvY1FGact6f
+L7JMBiQUd8+ImNQLyyQbbUo6p9u0TO9rxuIXMdnxdMg5v6vxxb/Hkh6cHdTKZSxf
+qgkwDFGT3y6GvioLQADtqyMTdb+/qYYA6kRd8ICB+KMOJUhtOy4lB0V7mM2OAsuK
+PJ5cp+cPerOi6e9sb2mxhu7NKvNOnjmT3HxHNxyy/KI50wSJteJMzHQZsLkEQ8na
+ap1Q6GP0ECMg8TT1MHv/FJMuX7H5gjZCvLhXVvoWjum6D43bjy6eTVmurwbmVKai
+YugjA1U4zt1nLE9VuPNmjFAk0fxuqVECtA+O7CHr5CKwPy+Gbd0=
+=HJ9W
 -----END PGP SIGNATURE-----
 
---0iqojMFE3ieV30eP--
+--MnTTkIvIeTm1r9ss--
