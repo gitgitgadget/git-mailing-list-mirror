@@ -1,77 +1,78 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B31198A32
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 06:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315C51B1428
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 06:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723013811; cv=none; b=kdB4Pi88aDeRNAWi5vlVm/+WXKKI6fQogbnhlRDqEG96/0rrAC5UTH9YSZly1jTMIp845Rk3OBnZ3KifuF7toJBfzr9H4zgtc5kq0xcqb2iyIRWo6a/kDl+fsFG4s758xFi2R6b5F7jXqgiHSnNoYe0slj2UVWZJSm+5m0loOT0=
+	t=1723013814; cv=none; b=LPEKLEhJaQcS3NkxHQ5sgoOZ8zZuIURYOBzXHFbyiK8vsiCFk/omJ2SvI5yb85ceXrspApAuDlBwPhcR6EJnlHH2rrFSX525z4xE/yzjS42aqPvo1MtAYzOvjprIyDWiE9cDSjszrbW8zsyJlbLnbb+Aga16CbF3UNRt2RtJX80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723013811; c=relaxed/simple;
-	bh=1lvzzgyAmiGn9+Vd/xLokbyY/UVV/yMyhzzBDcycrYU=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=kjhkhKjyLu9bliReRMFxewC9qm4vbuKQVCX3H16ElfNWf3pknOpc3TrvqRTU9ur/AaE1LqQpPhJ8G4LqOpn0EWCtM0Ax06JjEQJUR4KoTG8HjGjg9S8MBmZ5AD4d82d63oLMJhbr5xdc7WQJ/RECiwiEpH/oWd9KSLxXe/2WaDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q729hhNr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GU+UcGhc; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1723013814; c=relaxed/simple;
+	bh=6/Bgkaw3uX2Ss4jv7TTwF9FcXlbSDxm6y/wS7SJU+N4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CBF2kc6ciVpKHxqTVH+mgTl2jFY0MlV1yWQOx60JcCVl8ofWOcnoSoPQO5/7eI7m8+oyw77ho3+KC7+HETIexT50SZFrLC5t2qjNniDZCf+dvTc9wEzCcPnHg/7ddFoyS189nINY7+HLrj/UUbME3u0sWuoLIjM8DM6p5bJy7u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=An34ptuu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SJ8RByK0; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q729hhNr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GU+UcGhc"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 85560138CDF7
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 02:56:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="An34ptuu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SJ8RByK0"
+Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 583A5138FCA2
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 02:56:50 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 07 Aug 2024 02:56:47 -0400
+  by compute8.internal (MEProxy); Wed, 07 Aug 2024 02:56:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1723013807; x=1723100207; bh=+gryIF20qWjwLvm6mqOPgQ1BteRQ+ls7
-	hBlJUXyxeiE=; b=Q729hhNrSYLnyGUYyIKKSxMF/sCnS7bZwup2lIxz27mAq/Gu
-	oZkeBKTBh+ApZtUKRsqEjVrMLyQiETh9IadwJ55TMCtf9CrmiHHs36Z/pw4epJ5b
-	36cPfvoLSy9ykMk30uzkFhaeL7AMdNYm6MaGV23gZ/OiUFP7O6PA9JR0b/lC9zXy
-	zwdqJxSsORlmBHpF5g8aLUxb4gab3Aouu1gP3cEtQohJomR0Bipv8EMUW690SWse
-	ezdGNUeNEzvIaqk43ObVarOQWFRJGsX0B9ZUgQ0Kd/NyZOilJ8U2YTbL7IfnIFSV
-	yqJoADliUTfLGfCV4yMuq2yT5S2W3C7KKfMXYw==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723013810; x=1723100210; bh=8XBHBS+mo0
+	W076TOuHzeZULu/9gMd3gkQ/LDPEnioW4=; b=An34ptuuX6C1fByNjYNQ/1D/mm
+	xBZxsWwWM8OaqlzEKtfXauzcvtKMnsAxk5xPKYI2ro+ree9U5fibrOI6tGMM5E5j
+	4KAjQaTeJMslk/jELhtBbOYtsXImBfiQvSoZ1pynXECmjqB5yRTSlWn+hGYgR2/Q
+	fKEY75nsf6231Xnwp1TAkHI12IDQjKAOhp0THoT95fmPs6NG/b7GbMox0cYHdAot
+	cKcfTEPTL6EHBXQ3/pFXJmDBAG+7Evr6s6PELhduNtiMzsxAXUGUa3LsTjgOvGLz
+	TvW3jipBPgziSfzl/Yk0DJxcdHrzCG6hZysqCD3eBs9VX6r4LLy6nBXiTZ1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1723013807; x=1723100207; bh=+gryIF20qWjwLvm6mqOPgQ1BteRQ+ls7hBl
-	JUXyxeiE=; b=GU+UcGhcHSQRuc5KEa6EpGJrvBNFTsMhBV6IEVMEr1PfNSNF7M7
-	CRklkRJDANX8Z4zbI/aWXHJZr5C4ghsKnPdLEK8s7CKYIIZHwfrBz5Yh2i+vk0h2
-	DkVzCMHWFaBf7wyQI2+XVE3z04xA7m0zEtmmqFgkz3+gHR01I1RS4NA8SPyoXH7N
-	oojKTynDoWVcnwkzxlg6llnrd32BLcRZVRjTZGfZbm6oG75twhfWhYRyh1UMrYui
-	FNqhULdHxbzXvqGHV8xFJ5bs82ubeEVsGO7n6M3GBuqw4zXT9MR8jwq/OSzjp7s8
-	Rx9hgzXNlgGGTQyF5dUOxauX1lJ/o69EBsA==
-X-ME-Sender: <xms:rxqzZvinv2ezjkNqrtWL1MFRhPPQlSvCnpvKbGc5eSyVe7hnkKIi3A>
-    <xme:rxqzZsBwGY5Qt1E6Jun4ceBY_OlV4g1hKAMIaxqfrZgWFpw7Rvag9o2-P0SQqM0Z-
-    E4epVbtAIHN824T1g>
-X-ME-Received: <xmr:rxqzZvHZgcRiyu3ijTg9RUUF7VGiT-Gkf2mmYiF2KrTPkLn6jO73LVYR1uHAe36eeGLA9_2Qew_cRWzmSlPZdbFlkgvwXWwvMONelmzuGOXBbmLM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudejucetufdoteggodetrfdotf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723013810; x=1723100210; bh=8XBHBS+mo0W076TOuHzeZULu/9gM
+	d3gkQ/LDPEnioW4=; b=SJ8RByK0NeqoD8e+VYSdL1f6Y2VraOkxQQuDKMy0uJ3q
+	WxTTqgH61OupbLBv0OpGw+EgN4F3trenM3uvnUrZIrFrm94qMKmtY7hJzTdsoLKI
+	tiBXnatZr/AOsJ4tJQJ0Rxl7Oe0sWpNhKpKHDII9A47B/+Mjk3S4cCDsyEmtH2/g
+	6hiHTJquYzkpMfBAYMAEGTholJTaIacotTv2qi2Egx3KOqmgJ1WTfz0XuTJxtIdO
+	D0/Ftig0g6QTGLCgLj5HxZuNL1IyPyE4L8iNfZCt8q8DUoJKd/+wg4cYipBqUxln
+	V4oqfPABBqYwmfGA3h1w6De7CI1UyThADDxjjGXBPw==
+X-ME-Sender: <xms:shqzZjkYmICE_e8YEB0bE0K6WHv3qMV9eOaXzAi68gpdXDHbsXyjKw>
+    <xme:shqzZm2iB3HYkmW9rzoN9yDk1qsPFU9imO6BCY4YANR6e0V5zATh3EHr4wWFsz8Nv
+    y-H9ox7OdgJ-DGRRw>
+X-ME-Received: <xmr:shqzZppuCjZZA34Cf7r2JEXHtcp9ZjpjhjChaGwEylxUpbpNbrqv3XpCh5Ow2leEMnyZqwtDb7puOKMMTDLAlZFANEyztLHzhYZjmpbhCt_K6o0Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeelgdduudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:rxqzZsS9J4JKXqGKMGCepsUG5hZq-v3ShBOBrZ3tCn-KyTKttDj_0w>
-    <xmx:rxqzZsyoXUTwUG3-blq2EMw7xOvT-kin1eq8-vqY-Q1DSSqYg0ByFw>
-    <xmx:rxqzZi7DfkYdC8oFM6YUTEfeQEWpLk11gCytzTDYRQZGQGYG_saCmA>
-    <xmx:rxqzZhwAWixMO5DTTVX7UZGnMVQASohFJbh2vx4M19DZ8ksoCO-1NA>
-    <xmx:rxqzZpo9p7oNfd6h2fayUdGQYwG4gUPsktKFBkfEesTtsX75DMGOG0F5>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:shqzZrnfqijsNRi8kBu2e5U7crfZQwCOu3njgCAB9FnaGlSOV7mGJg>
+    <xmx:shqzZh08kb7wDWZpOXQkbFJoc7bas9QLWLmO0X3cEDvA-dMGk1mQpQ>
+    <xmx:shqzZqtCe7F-VFZoEXDhJAHUu3WlHWGpoLsLPMcwAXU5fzpOj7MGRA>
+    <xmx:shqzZlWWooGySrofOj9QUETY136ANhZmVhHQAienc34TBmlOExNWfA>
+    <xmx:shqzZi_JDrfcAB58F6OOy-MxHwEOyJ4XC1_lRVVvyh6ErrD13cMJMcO->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 7 Aug 2024 02:56:46 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 7 Aug 2024 02:56:49 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 542a595c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b82e511c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 7 Aug 2024 06:56:40 +0000 (UTC)
-Date: Wed, 7 Aug 2024 08:56:43 +0200
+	Wed, 7 Aug 2024 06:56:45 +0000 (UTC)
+Date: Wed, 7 Aug 2024 08:56:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 00/20] Stop using `the_repository` in "config.c"
-Message-ID: <cover.1723013714.git.ps@pks.im>
+Subject: [PATCH 01/20] path: expose `do_git_path()` as `repo_git_pathv()`
+Message-ID: <7ce3278f649ce70453242e5458d28c5fd54576ba.1723013714.git.ps@pks.im>
+References: <cover.1723013714.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,157 +80,154 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Kcn+gO5LGPwA7tJh"
+	protocol="application/pgp-signature"; boundary="pjXSi7nkt9hdfFnZ"
 Content-Disposition: inline
+In-Reply-To: <cover.1723013714.git.ps@pks.im>
 
 
---Kcn+gO5LGPwA7tJh
+--pjXSi7nkt9hdfFnZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+We're about to move functions of the "path" subsytem that do not use a
+`struct repository` into "path.h" as static inlined functions. This will
+require us to call `do_git_path()`, which is internal to "path.c".
 
-I found that there had been a bunch of callsites in code
-not marked with `USE_THE_REPOSITORY_VARIABLE` that still implicitly
-relied on `the_repository` due to calling interfaces of "config.c".
-This patch series has the goal of fixing that and making the dependency
-implicit. This is done by making "config.c" stop using `the_repository`
-while moving its interfaces that do use it into "config.h", guarded by
-the `USE_THE_REPOSITORY_VARIABLE` macro.
+Expose the function as `repo_git_pathv()` to prepare for the change.
 
-The series is structured as follows:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ path.c | 20 ++++++++++----------
+ path.h |  8 ++++++++
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
-  - Patches 1 to 7 adapt "path.{c,h}" to become `the_repository`-clean.
-    This is required because "config.c" relies on the "path" subsystem
-    quite a lot.
-
-  - Patches 8 and 9 introduce functions that take a `struct repository`
-    where we didn't yet equivalents for the repo-less variants.
-
-  - Patches 10 to 16 adapt various functions to take a `struct
-    repository` as input.
-
-  - Patches 17 and 18 fix up some functions that take a `struct
-    repository`, but still rely on `the_repository`.
-
-  - Patches 19 and 20 then hide config functions that rely on
-    `the_repository` behind `USE_THE_REPOSITORY_VARIABLE`.
-
-The series is built on top of `master` at 406f326d27 (The second batch,
-2024-08-01) with ps/refs-wo-the-repository at 9d36dbd1ff (refs/reftable:
-stop using `the_repository`, 2024-07-30) merged into it.
-
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (20):
-  path: expose `do_git_path()` as `repo_git_pathv()`
-  path: expose `do_git_common_path()` as `strbuf_git_common_pathv()`
-  editor: do not rely on `the_repository` for interactive edits
-  hooks: remove implicit dependency on `the_repository`
-  path: stop relying on `the_repository` when reporting garbage
-  path: stop relying on `the_repository` in `worktree_git_path()`
-  path: hide functions using `the_repository` by default
-  config: introduce missing setters that take repo as parameter
-  config: expose `repo_config_clear()`
-  config: pass repo to `git_config_get_index_threads()`
-  config: pass repo to `git_config_get_split_index()`
-  config: pass repo to `git_config_get_max_percent_split_change()`
-  config: pass repo to `git_config_get_expiry()`
-  config: pass repo to `git_config_get_expiry_in_days()`
-  config: pass repo to `git_die_config()`
-  config: pass repo to functions that rename or copy sections
-  config: don't have setters depend on `the_repository`
-  config: don't depend on `the_repository` with branch conditions
-  global: prepare for hiding away repo-less config functions
-  config: hide functions using `the_repository` by default
-
- add-patch.c                       |   3 +-
- builtin/am.c                      |   9 +-
- builtin/branch.c                  |   7 +-
- builtin/bugreport.c               |   2 +-
- builtin/checkout.c                |   2 +-
- builtin/clone.c                   |   2 +-
- builtin/config.c                  |  16 +-
- builtin/count-objects.c           |   2 +-
- builtin/fast-import.c             |   4 +-
- builtin/fsck.c                    |   2 +-
- builtin/gc.c                      |   8 +-
- builtin/hook.c                    |   2 +-
- builtin/merge.c                   |   2 +-
- builtin/notes.c                   |   2 +-
- builtin/rebase.c                  |   2 +-
- builtin/receive-pack.c            |  10 +-
- builtin/remote.c                  |   4 +-
- builtin/submodule--helper.c       |   2 +-
- builtin/update-index.c            |   4 +-
- builtin/worktree.c                |   6 +-
- commit.c                          |   2 +-
- compat/fsmonitor/fsm-ipc-darwin.c |   2 +
- compat/precompose_utf8.c          |   1 +
- config.c                          | 225 ++++++++---------------
- config.h                          | 285 +++++++++++++++++++++---------
- connect.c                         |   2 +
- credential.c                      |   2 +
- daemon.c                          |   2 +
- editor.c                          |  14 +-
- editor.h                          |   3 +-
- fsmonitor.c                       |   2 +
- gpg-interface.c                   |   2 +
- graph.c                           |   2 +
- hook.c                            |  21 +--
- hook.h                            |  13 +-
- imap-send.c                       |   2 +
- mailinfo.c                        |   2 +
- merge-ll.c                        |   2 +
- parallel-checkout.c               |   2 +
- path.c                            |  97 +++-------
- path.h                            | 167 +++++++++++------
- protocol.c                        |   2 +
- read-cache.c                      |  22 +--
- refs.c                            |   4 +-
- refs/packed-backend.c             |   2 +
- refs/reftable-backend.c           |   2 +
- rerere.c                          |   4 +-
- reset.c                           |   2 +-
- revision.c                        |   2 +-
- sequencer.c                       |   6 +-
- sideband.c                        |   2 +
- submodule.c                       |   2 +-
- t/helper/test-advise.c            |   2 +
- t/helper/test-config.c            |   2 +
- t/helper/test-userdiff.c          |   2 +
- trailer.c                         |   2 +
- transport.c                       |   2 +-
- versioncmp.c                      |   2 +
- worktree.c                        |   2 +-
- wt-status.c                       |  14 +-
- 60 files changed, 564 insertions(+), 455 deletions(-)
-
+diff --git a/path.c b/path.c
+index 19f7684f38..71f1cb4dfb 100644
+--- a/path.c
++++ b/path.c
+@@ -417,9 +417,9 @@ static void strbuf_worktree_gitdir(struct strbuf *buf,
+ 		strbuf_git_common_path(buf, repo, "worktrees/%s", wt->id);
+ }
+=20
+-static void do_git_path(const struct repository *repo,
+-			const struct worktree *wt, struct strbuf *buf,
+-			const char *fmt, va_list args)
++void repo_git_pathv(const struct repository *repo,
++		    const struct worktree *wt, struct strbuf *buf,
++		    const char *fmt, va_list args)
+ {
+ 	int gitdir_len;
+ 	strbuf_worktree_gitdir(buf, repo, wt);
+@@ -438,7 +438,7 @@ char *repo_git_path(const struct repository *repo,
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(repo, NULL, &path, fmt, args);
++	repo_git_pathv(repo, NULL, &path, fmt, args);
+ 	va_end(args);
+ 	return strbuf_detach(&path, NULL);
+ }
+@@ -449,7 +449,7 @@ void strbuf_repo_git_path(struct strbuf *sb,
+ {
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(repo, NULL, sb, fmt, args);
++	repo_git_pathv(repo, NULL, sb, fmt, args);
+ 	va_end(args);
+ }
+=20
+@@ -458,7 +458,7 @@ char *git_path_buf(struct strbuf *buf, const char *fmt,=
+ ...)
+ 	va_list args;
+ 	strbuf_reset(buf);
+ 	va_start(args, fmt);
+-	do_git_path(the_repository, NULL, buf, fmt, args);
++	repo_git_pathv(the_repository, NULL, buf, fmt, args);
+ 	va_end(args);
+ 	return buf->buf;
+ }
+@@ -467,7 +467,7 @@ void strbuf_git_path(struct strbuf *sb, const char *fmt=
+, ...)
+ {
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(the_repository, NULL, sb, fmt, args);
++	repo_git_pathv(the_repository, NULL, sb, fmt, args);
+ 	va_end(args);
+ }
+=20
+@@ -476,7 +476,7 @@ const char *git_path(const char *fmt, ...)
+ 	struct strbuf *pathname =3D get_pathname();
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(the_repository, NULL, pathname, fmt, args);
++	repo_git_pathv(the_repository, NULL, pathname, fmt, args);
+ 	va_end(args);
+ 	return pathname->buf;
+ }
+@@ -486,7 +486,7 @@ char *git_pathdup(const char *fmt, ...)
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(the_repository, NULL, &path, fmt, args);
++	repo_git_pathv(the_repository, NULL, &path, fmt, args);
+ 	va_end(args);
+ 	return strbuf_detach(&path, NULL);
+ }
+@@ -517,7 +517,7 @@ const char *worktree_git_path(const struct worktree *wt=
+, const char *fmt, ...)
+ 	struct strbuf *pathname =3D get_pathname();
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(the_repository, wt, pathname, fmt, args);
++	repo_git_pathv(the_repository, wt, pathname, fmt, args);
+ 	va_end(args);
+ 	return pathname->buf;
+ }
+diff --git a/path.h b/path.h
+index a6f0b70692..94e7030f0b 100644
+--- a/path.h
++++ b/path.h
+@@ -66,6 +66,14 @@ char *repo_git_path(const struct repository *repo,
+ 		    const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+=20
++/*
++ * Print a path into the git directory of repository `repo` into the provi=
+ded
++ * buffer.
++ */
++void repo_git_pathv(const struct repository *repo,
++		    const struct worktree *wt, struct strbuf *buf,
++		    const char *fmt, va_list args);
++
+ /*
+  * Construct a path into the git directory of repository `repo` and append=
+ it
+  * to the provided buffer `sb`.
 --=20
 2.46.0.dirty
 
 
---Kcn+gO5LGPwA7tJh
+--pjXSi7nkt9hdfFnZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazGqoACgkQVbJhu7ck
-PpQnUg//UpUDHPTC+Xd9tZWUncTN1/17Se3ra4OSKLmGEak6zaN9bZI8oL5BKu9F
-mJRh7hQV16O+zDYx0JnRZJ3yx8QdKRbSCJpGqT46UwCGWI0Upo4M/eqbhcxmsfGz
-BWc9niOoYKaXUroWl+IFietSMOi9RZ1t7i46LnymoBmu0Auba0XH+HynTYhHRX4h
-x/sJiTD9oZCI+TrO6QsFC+el8QSz4WzF5Nl991FPKTg6ZAVsmhP6zhpT5PCDvJim
-xwYmD7vA/W14Gprs+eRSHlDjSYvOb6fdDYKqqR5bxbXwknQp6cg+0cleRfSy4Fc+
-SGfXbs4pbVI6v3dgtlMUIB6BYMi2Ht1nAGkAgGhUyxycCgi5MUXtiRGzyCEZpgo3
-i+pH+Gx8IiafVSEn+j94K4h7zxfbBto8qYVXcU8s3JamQEvUdK/slOZXDO+XjizK
-wKaBJMUYN8BhgWuaFLuV9hEcYmv/CvP4fHqR66hUZ0x6Xkxy7Fe9CS/t/bJu2pSQ
-Qmh+Tfd7TLaQRauwQKmDbMMD/Lu4DpvfL0NegAQsGTh3ohMR/Rihd/8hvWDgV+zd
-n90/4MQIs4zXHam6uQgeRcl761+DJJSBkkgoQADH1Vm1YeCQ4KwQZ3LcjjMG0AaJ
-npHozzmhBSQuXD62bp6YOz60izpXSZlMkf0GUxKf/gUv1kyi3Ls=
-=gOpl
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmazGq4ACgkQVbJhu7ck
+PpTRng/6Axs0Jm6pAas8GhAasCXLK7NIA6FI5CpwQY9s9gs96BJ0f87ZINMYj+i2
+UJepLJD0N7+N2DudU988O4XYmEVE6G4NaKvAs3nxf2imASog/GbQZZeNoUc/Wewr
+DIck0oT8+kx+sYr8ULM1m8ZoI5JZWl0kbllaZmVD0uxCY/3SV5RrWmeMCPPZty2D
+4dhTNJjM4XUJIBX6eD98V5w9VCKFv62HTwVEcs5Y2Mc5CxvEJC2BoH5801vuS+Y+
+Kz2A38G7mP2EQ8apOVTzAaU1OaGt9cQx4jjQNKbSrZUdE57RthZmn06tGy5RHDoC
+Hz5TmA5Z4OK/64VbgATN6tKhaC+EOh+AXZBGdR80DXEsEQGJnkykAeboQkNGmOXs
+afUfOAisTLTAK10zVOwBy1IYlpmvW3ShgQVkfM+j6a9yt4EGUMPVXhpZ9H77yYQ8
+/eaAKUz756y1YlHqbJb5Bbi/QzNJdZIyWipkpfctepQ9mi/fQwHAFvjMSiHaJlJv
+DxuKP4lb/7kc3CmDruzCjpfhC3zNGIS9AAmNbZdxn46oSQVx3ivuA5L+odcVvV+R
+u12nO8Nf/XXq6NuTqUeTT72FuYARQWDPegzb9C1J3M7NVevaiVrdTTZblbOfQORR
+bWLt3+05byvo1lBKffNphzpDjn0ZkcEdfNkrE+H/ojov7lqp7EI=
+=KoDv
 -----END PGP SIGNATURE-----
 
---Kcn+gO5LGPwA7tJh--
+--pjXSi7nkt9hdfFnZ--
