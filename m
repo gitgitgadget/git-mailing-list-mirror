@@ -1,62 +1,64 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A6563CB
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 19:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713011422A8
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 19:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723059775; cv=none; b=eYVHB/IRUcv9/HXPdl2gBdYx1vBO45scSpnK2XamPq/TDKvF3TXPgnT2RMFVvsyvqZrnxlZRuIUTMN6FCabWp8qYn2c9MysZnb/xhGiQWJSmDeYw3Y1pPd812EN+4iF9IAXkhHBAgTkPl1yoi7h4Ehn2GMcwY8WWg5DHvqbnNSc=
+	t=1723059776; cv=none; b=TMUggyYz0zHaMSTnut/9f8CeMdP1OPffwNpaE82KjnjeeuILSr/W+dmsNwxn2iIkl75mB6RX2jNoem8YaXvqXyrvLDvF7QmC0dgub9EKCYYbbV8X2BlaW7JxVyxk9hp7ZjO3sUwG7iJWz7hctsoZzhY9gX/lUvhPs3C02u/r3Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723059775; c=relaxed/simple;
-	bh=UvpFLmW17Pt7Dt90tRDoOVhmIL9IZcsxJ6jzR4Ei6jU=;
+	s=arc-20240116; t=1723059776; c=relaxed/simple;
+	bh=WJlPtzPbyGRUiRk2VKEF5VWKxq/Bl5YL7h2cyFuclIg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uhntaGuvWP3bZFjZbJRFvGEYJAEouSRDw5VqSOszaGh3VsR3SW94HNrRJ+a56lfAwshJxAfM0564g5VKN4xlOu5Fsc9RBjKLU/n2BDLU0uyvyU6sYClncAyaS5Pu0WWHoErbF25/3qf9hKgZiVs3UgwyToVWAHjGJ8aNrQjO8bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XzJmfZQb; arc=none smtp.client-ip=209.85.208.181
+	 MIME-Version:To:Cc; b=Tlz0mzNwKXfGIdGr2IK5Q9ldQP+IJHLatsJh6EyTmdQWAnPsHBrw+jMp/E9Qsg209Cj6Xxh8LWlqOUA0FUt2DkrCtKzh6zEtKcQgA8Mr+w1lSxe6Fqo+7y3igmVQorwHg3iWJqzhwKh83b6jNKOspGfa109XLRv/t7z3uFoNthA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eVAPlKua; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XzJmfZQb"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ef23d04541so1604601fa.2
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 12:42:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eVAPlKua"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3683f56b9bdso130923f8f.1
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 12:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723059771; x=1723664571; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723059772; x=1723664572; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ewVqucQobgQxv9YOqEkqqFQn9n4kG398GF9+lC8osR0=;
-        b=XzJmfZQbCP8+/oSj5yJcTmzJdUNG/z9VcTMe0OWxmrko3WrNZy8VNoFKyCNBf3mj71
-         Qqijv0FyC/MjG74r0OJvPTVJKIb6jDpfbe/0L780yM8fU+dAzLX8xmyGZfSfD77tLGC2
-         xo6MT4kqQjZ1noQ5TikVywYD/w7PscDAF00GNXU0QK4qb/7trUlNj0IPC59/hvW+jA5k
-         +0aj5eUuvkC/P/93EMcw3RK5MTnilzwsN+7FADe37rY5Opu+/67K+180GKNs/RR656FG
-         sec7xswqQOyOtIgT2X/l7zsjzxQZhcKUMy9A4Uep0M75RuRMDbPK+AXU7a2SrC7vLUVD
-         YCaQ==
+        bh=Ywtp7VXJ7Qvw0b/q62/oMo10qCWj5XqIty0WPIsMV2E=;
+        b=eVAPlKuaNgx4RzM0IygmoI5obfPFNUz8ZQNHAqYZwTp1RRQPwJOsU9bYBY4RmLT+J5
+         JHtLhi5Wbzpcjgwe8lKVMh2jPQOldFgbnNJGDl4z9PNXhGKsdBUjWqK06Xnof+LrqekU
+         Vc0evgPm6rSZk4XzfqTT7jOMNo/SQ/D/Bmu0F+w/razA8Ni3kAFdOD30NEtS5+Z/iE5I
+         QbaBZSRCW+MmJNK6H+RuJsxF852+dDeJUst/UkU7Ds7h/9e49NTYi/Xs8uXarN0NNFHR
+         vvWJLjTXo73/vSveK3mDQYmsgiXPBwyUTX9rJAOCbNxAwPMuAj+LxUwyOKbR7+RElwFo
+         IBUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723059771; x=1723664571;
+        d=1e100.net; s=20230601; t=1723059772; x=1723664572;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ewVqucQobgQxv9YOqEkqqFQn9n4kG398GF9+lC8osR0=;
-        b=oA2fKNDl6rv98d6qy0nS2m5baAvEib5mwSG5WpFbbdWGneD/O0o0cy2f7Vx8evXFgK
-         juv7pKKqWjX37xD5YweLRDbmnQVsrHOd4FWuVqFY87PscHJuGFctoZimT76+lcwzsVqO
-         nn0AQpqrGDyJhrMZDp+bB7ayngq6VvHZRpybdOntt42S3Gapltuv4sip/3FF7h+hHwTy
-         ycVYr8KxpuOQ6bROysE6A6K8VldIPEbNBIQFM+LcCIJASwRcc6SsCzIqDZdrcrrNq8pR
-         zkRaPc7F5gWuKxke23PW1fSUy3lQPEQC9JjQkFC5pMOp4EWwTAThrOVSdmvVvN2AJ3s4
-         iPng==
-X-Gm-Message-State: AOJu0YwR3yVHjp/RPRVAdfQ7WJHhnwRlu7YCo3EH+kRGc+v6wyByMfVA
-	QnUc9qIKcFrG4ixs5HLq/1VxlJSq4ZZl6OWtniyAs+tS/ONtl9+xHNWa8Q==
-X-Google-Smtp-Source: AGHT+IEKCpqVL2h2xH5hxWwo4BE9HMRRYJ2+230xDSPnnveuK4iDlDqvQo4LlF87p8On9tIxevUXyw==
-X-Received: by 2002:a2e:8718:0:b0:2ef:2f17:9ede with SMTP id 38308e7fff4ca-2f15ab6a35fmr128482701fa.49.1723059771082;
+        bh=Ywtp7VXJ7Qvw0b/q62/oMo10qCWj5XqIty0WPIsMV2E=;
+        b=RESvjEaZIoeL7eevsEbaxU6YATPLRTMaaXwNdTswSqTa5MZRba/+SAQKDDEb0SEYHQ
+         5ELGGSFnTVY8BvvwPZl8CCEzosNayUIhOF/V2F7WjZkU0LFX1Zz01HOud4uCo59CGpJK
+         8h05eWEB09KDujWXMYnjpJEKfzaeLj7e2M3TyyEkH5cpxcigbBLry6qt4wUADSGPZ7WO
+         XZa6QicQdyg2J6yTkd/4Qh2HycqqeWmP9VZ2zp7YLpN/y0O9MRGircpBa35o7xLkCO6m
+         N/Lv9p0PCOQQM9uMBoC+UHJthN37u/FoExnnoO/FTybeTXGY6J4pGQzKHi1htZ6donPz
+         uuug==
+X-Gm-Message-State: AOJu0Yy23jMiRnAYugZyxvdJbPXUN+OU0TU2UJpnIRZ5i9J0vz6oeeQD
+	G+Q7eq7l+gXZs26k5xygZ5ADLocEdrC6sMBk1EobgvvfXLbZOJJeIYG4eA==
+X-Google-Smtp-Source: AGHT+IHTrMGlNLMGVO9y2nb7RIhlC60ZBn2n1jyp7+YZMxcaGFdIDvjQkTWXw4d99r+rEorRbBgxkw==
+X-Received: by 2002:a5d:6d49:0:b0:368:557a:c64d with SMTP id ffacd0b85a97d-36bbc0cda74mr12859620f8f.9.1723059771903;
         Wed, 07 Aug 2024 12:42:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429057a92c8sm43381005e9.23.2024.08.07.12.42.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd06dfa9sm16894436f8f.102.2024.08.07.12.42.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Aug 2024 12:42:50 -0700 (PDT)
-Message-Id: <pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
+        Wed, 07 Aug 2024 12:42:51 -0700 (PDT)
+Message-Id: <fc3defd9c47e32bb23ba0fcb5c885274f3706b23.1723059769.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
 References: <pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
+	<pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 07 Aug 2024 19:42:45 +0000
-Subject: [PATCH v3 0/3] keep track of unresolved value of symbolic-ref in ref iterators
+Date: Wed, 07 Aug 2024 19:42:46 +0000
+Subject: [PATCH v3 1/3] refs: keep track of unresolved reference value in
+ iterators
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,242 +75,205 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
     Patrick Steinhardt <ps@pks.im>,
     =?UTF-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>,
     Linus Arver <linusarver@gmail.com>,
+    John Cai <johncai86@gmail.com>,
     John Cai <johncai86@gmail.com>
 
-For reftable development, it's useful to be able to print out the direct
-value of a symbolic reference before resolution. This is currently possible
-with git-for-each-ref, but since the iterators do not keep track of the
-value of the symbolic ref, a separate call needs to be made each time making
-it inefficient.
+From: John Cai <johncai86@gmail.com>
 
-Address this inefficiency by keeping track of the value of the symbolic
-reference in the ref iterator. This patch series also ends with a commit to
-use this value in the iterator through callbacks in ref-filter.c.
+Since ref iterators do not hold onto the direct value of a reference
+without resolving it, the only way to get ahold of a direct value of a
+symbolic ref is to make a separate call to refs_read_symbolic_ref.
 
-This series started with [1] but I decided to send a separate patch series
-since it is substantially different.
+To make accessing the direct value of a symbolic ref more efficient,
+let's save the direct value of the ref in the iterators for both the
+files backend and the reftable backend.
 
-Benchmarking shows that with these changes, we experience a speedup in
-git-for-each-ref(1) on a repository with many symbolic refs:
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+ refs/files-backend.c    | 19 +++++++++++++++----
+ refs/iterator.c         |  2 ++
+ refs/ref-cache.c        |  6 ++++++
+ refs/ref-cache.h        |  2 ++
+ refs/refs-internal.h    |  1 +
+ refs/reftable-backend.c | 10 ++++++++--
+ 6 files changed, 34 insertions(+), 6 deletions(-)
 
-$ hyperfine --warmup 5 "git for-each-ref --format='%(refname) %(objectname)
-%(symref)'" "~/Projects/git/git for-each-ref --format='%(refname)
-%(objectname) %(symref)'" Benchmark 1: git for-each-ref --format='%(refname)
-%(objectname) %(symref)' Time (mean ± σ): 905.1 ms ± 13.2 ms [User: 56.3 ms,
-System: 628.6 ms] Range (min … max): 893.4 ms … 936.9 ms 10 runs
-
-Benchmark 2: ~/Projects/git/git for-each-ref --format='%(refname)
-%(objectname) %(symref)' Time (mean ± σ): 482.2 ms ± 26.4 ms [User: 34.7 ms,
-System: 410.6 ms] Range (min … max): 459.4 ms … 541.8 ms 10 runs
-
-Summary ~/Projects/git/git for-each-ref --format='%(refname) %(objectname)
-%(symref)' ran 1.88 ± 0.11 times faster than git for-each-ref
---format='%(refname) %(objectname) %(symref)'
-
-Changes since V2:
-
- * Style tweaks
- * Added a NEEDSWORK comment around fallback code
- * Stay consistent in the meaning of a non-NULL referent member in the
-   iterator
-
-Changes since V1
-
- * Use the return value from refs_resolve_ref_unsafe instead of using an out
-   parameter
-
- 1. https://lore.kernel.org/git/pull.1684.git.git.1709592718743.gitgitgadget@gmail.com/
-
-John Cai (3):
-  refs: keep track of unresolved reference value in iterators
-  refs: add referent to each_ref_fn
-  ref-filter: populate symref from iterator
-
- bisect.c                    |  3 ++-
- builtin/bisect.c            |  4 +++-
- builtin/checkout.c          |  2 +-
- builtin/describe.c          |  2 +-
- builtin/fetch.c             |  3 ++-
- builtin/fsck.c              |  4 ++--
- builtin/gc.c                |  1 +
- builtin/name-rev.c          |  2 +-
- builtin/pack-objects.c      |  5 +++--
- builtin/receive-pack.c      |  2 +-
- builtin/remote.c            |  4 +++-
- builtin/repack.c            |  1 +
- builtin/replace.c           |  1 +
- builtin/rev-parse.c         |  4 ++--
- builtin/show-branch.c       |  8 ++++----
- builtin/show-ref.c          |  3 ++-
- builtin/submodule--helper.c |  1 +
- builtin/worktree.c          |  1 +
- commit-graph.c              |  1 +
- delta-islands.c             |  2 +-
- fetch-pack.c                |  2 ++
- help.c                      |  2 +-
- http-backend.c              |  4 ++--
- log-tree.c                  |  2 +-
- ls-refs.c                   |  4 ++--
- midx-write.c                |  2 +-
- negotiator/default.c        |  2 +-
- negotiator/skipping.c       |  2 +-
- notes.c                     |  2 +-
- object-name.c               |  2 +-
- pseudo-merge.c              |  1 +
- reachable.c                 |  2 +-
- ref-filter.c                | 17 ++++++++++++-----
- reflog.c                    |  1 +
- refs.c                      | 14 +++++++-------
- refs.h                      |  2 +-
- refs/files-backend.c        | 21 ++++++++++++++++-----
- refs/iterator.c             |  4 +++-
- refs/ref-cache.c            |  6 ++++++
- refs/ref-cache.h            |  2 ++
- refs/refs-internal.h        |  1 +
- refs/reftable-backend.c     | 10 ++++++++--
- remote.c                    |  4 ++--
- replace-object.c            |  1 +
- revision.c                  |  2 +-
- server-info.c               |  2 +-
- shallow.c                   |  2 ++
- submodule.c                 |  2 ++
- t/helper/test-ref-store.c   |  2 +-
- upload-pack.c               |  8 ++++----
- walker.c                    |  1 +
- worktree.c                  |  2 +-
- 52 files changed, 122 insertions(+), 63 deletions(-)
-
-
-base-commit: 557ae147e6cdc9db121269b058c757ac5092f9c9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1712%2Fjohn-cai%2Fjc%2Fsymbolic-ref-in-iterator-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1712/john-cai/jc/symbolic-ref-in-iterator-v3
-Pull-Request: https://github.com/git/git/pull/1712
-
-Range-diff vs v2:
-
- 1:  ac0957c9e6a ! 1:  fc3defd9c47 refs: keep track of unresolved reference value in iterators
-     @@ refs/files-backend.c: static void loose_fill_ref_dir_regular_file(struct files_r
-      -
-      -	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READING,
-      -				     &oid, &flag)) {
-     -+	const char* referent = refs_resolve_ref_unsafe(&refs->base,
-     ++	const char *referent = refs_resolve_ref_unsafe(&refs->base,
-      +						       refname,
-      +						       RESOLVE_REF_READING,
-      +						       &oid, &flag);
-     @@ refs/files-backend.c: static void loose_fill_ref_dir_regular_file(struct files_r
-       	}
-      -	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
-      +
-     ++	if (!(flag & REF_ISSYMREF))
-     ++		referent = NULL;
-     ++
-      +	add_entry_to_dir(dir, create_ref_entry(refname, referent, &oid, flag));
-       }
-       
-     @@ refs/files-backend.c: static int files_ref_iterator_advance(struct ref_iterator
-       		iter->base.flags = iter->iter0->flags;
-      +		if (iter->iter0->flags & REF_ISSYMREF)
-      +			iter->base.referent = iter->iter0->referent;
-     ++		else
-     ++			iter->base.referent = NULL;
-      +
-       		return ITER_OK;
-       	}
-       
-      
-       ## refs/iterator.c ##
-     -@@
-     - #include "refs.h"
-     - #include "refs/refs-internal.h"
-     - #include "iterator.h"
-     -+#include "strbuf.h"
-     - 
-     - int ref_iterator_advance(struct ref_iterator *ref_iterator)
-     - {
-      @@ refs/iterator.c: void base_ref_iterator_init(struct ref_iterator *iter,
-       {
-       	iter->vtable = vtable;
-     @@ refs/ref-cache.c: struct ref_entry *create_ref_entry(const char *refname,
-       	FLEX_ALLOC_STR(ref, name, refname);
-       	oidcpy(&ref->u.value.oid, oid);
-       	ref->flag = flag;
-     -+
-     -+	if (flag & REF_ISSYMREF)
-     -+		ref->u.value.referent = xstrdup_or_null(referent);
-     ++	ref->u.value.referent = xstrdup_or_null(referent);
-      +
-       	return ref;
-       }
-     @@ refs/refs-internal.h: enum do_for_each_ref_flags {
-       };
-      
-       ## refs/reftable-backend.c ##
-     +@@ refs/reftable-backend.c: static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
-     + 	struct reftable_ref_iterator *iter =
-     + 		(struct reftable_ref_iterator *)ref_iterator;
-     + 	struct reftable_ref_store *refs = iter->refs;
-     ++	const char *referent = NULL;
-     + 
-     + 	while (!iter->err) {
-     + 		int flags = 0;
-      @@ refs/reftable-backend.c: static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
-       				the_repository->hash_algo);
-       			break;
-       		case REFTABLE_REF_SYMREF:
-      -			if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->ref.refname,
-      -						     RESOLVE_REF_READING, &iter->oid, &flags))
-     -+			iter->base.referent = refs_resolve_ref_unsafe(&iter->refs->base,
-     ++			referent = refs_resolve_ref_unsafe(&iter->refs->base,
-      +								      iter->ref.refname,
-      +								      RESOLVE_REF_READING,
-      +								      &iter->oid,
-      +								      &flags);
-     -+			if (!iter->base.referent)
-     ++			if (!referent)
-       				oidclr(&iter->oid, the_repository->hash_algo);
-       			break;
-       		default:
-     +@@ refs/reftable-backend.c: static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
-     + 				continue;
-     + 
-     + 		iter->base.refname = iter->ref.refname;
-     ++		iter->base.referent = referent;
-     + 		iter->base.oid = &iter->oid;
-     + 		iter->base.flags = flags;
-     + 
- 2:  1f3a604fae7 = 2:  0b6e732ad7e refs: add referent to each_ref_fn
- 3:  3e147e7d850 ! 3:  83b70ab8287 ref-filter: populate symref from iterator
-     @@ Commit message
-          Signed-off-by: John Cai <johncai86@gmail.com>
-      
-       ## ref-filter.c ##
-     +@@ ref-filter.c: static int populate_value(struct ref_array_item *ref, struct strbuf *err)
-     + 
-     + 	CALLOC_ARRAY(ref->value, used_atom_cnt);
-     + 
-     ++	/**
-     ++	 * NEEDSWORK: The following code might be unncessary if all codepaths
-     ++	 * that call populate_value() populates the symref member of ref_array_item
-     ++	 * like in apply_ref_filter(). Currently pretty_print_ref() is the only codepath
-     ++	 * that calls populate_value() without first populating symref.
-     ++	 */
-     + 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
-     + 		ref->symref = refs_resolve_refdup(get_main_ref_store(the_repository),
-     + 						  ref->refname,
-      @@ ref-filter.c: static int filter_ref_kind(struct ref_filter *filter, const char *refname)
-       	return ref_kind_from_refname(refname);
-       }
-     @@ ref-filter.c: static struct ref_array_item *apply_ref_filter(const char *refname
-       	ref->commit = commit;
-       	ref->flag = flag;
-       	ref->kind = kind;
-     -+	if (flag & REF_ISSYMREF)
-     -+		ref->symref = xstrdup_or_null(referent);
-     ++	ref->symref = xstrdup_or_null(referent);
-       
-       	return ref;
-       }
-
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index aa52d9be7c7..5ed69c23f74 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -245,9 +245,11 @@ static void loose_fill_ref_dir_regular_file(struct files_ref_store *refs,
+ {
+ 	struct object_id oid;
+ 	int flag;
+-
+-	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READING,
+-				     &oid, &flag)) {
++	const char *referent = refs_resolve_ref_unsafe(&refs->base,
++						       refname,
++						       RESOLVE_REF_READING,
++						       &oid, &flag);
++	if (!referent) {
+ 		oidclr(&oid, the_repository->hash_algo);
+ 		flag |= REF_ISBROKEN;
+ 	} else if (is_null_oid(&oid)) {
+@@ -268,7 +270,11 @@ static void loose_fill_ref_dir_regular_file(struct files_ref_store *refs,
+ 		oidclr(&oid, the_repository->hash_algo);
+ 		flag |= REF_BAD_NAME | REF_ISBROKEN;
+ 	}
+-	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
++
++	if (!(flag & REF_ISSYMREF))
++		referent = NULL;
++
++	add_entry_to_dir(dir, create_ref_entry(refname, referent, &oid, flag));
+ }
+ 
+ /*
+@@ -886,6 +892,11 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		iter->base.refname = iter->iter0->refname;
+ 		iter->base.oid = iter->iter0->oid;
+ 		iter->base.flags = iter->iter0->flags;
++		if (iter->iter0->flags & REF_ISSYMREF)
++			iter->base.referent = iter->iter0->referent;
++		else
++			iter->base.referent = NULL;
++
+ 		return ITER_OK;
+ 	}
+ 
+diff --git a/refs/iterator.c b/refs/iterator.c
+index d355ebf0d59..75fbe5d72ab 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -29,6 +29,7 @@ void base_ref_iterator_init(struct ref_iterator *iter,
+ {
+ 	iter->vtable = vtable;
+ 	iter->refname = NULL;
++	iter->referent = NULL;
+ 	iter->oid = NULL;
+ 	iter->flags = 0;
+ }
+@@ -199,6 +200,7 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		}
+ 
+ 		if (selection & ITER_YIELD_CURRENT) {
++			iter->base.referent = (*iter->current)->referent;
+ 			iter->base.refname = (*iter->current)->refname;
+ 			iter->base.oid = (*iter->current)->oid;
+ 			iter->base.flags = (*iter->current)->flags;
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 4ce519bbc85..bf80a62af17 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -5,6 +5,7 @@
+ #include "refs-internal.h"
+ #include "ref-cache.h"
+ #include "../iterator.h"
++#include "../strbuf.h"
+ 
+ void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry)
+ {
+@@ -34,6 +35,7 @@ struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ }
+ 
+ struct ref_entry *create_ref_entry(const char *refname,
++				   const char *referent,
+ 				   const struct object_id *oid, int flag)
+ {
+ 	struct ref_entry *ref;
+@@ -41,6 +43,8 @@ struct ref_entry *create_ref_entry(const char *refname,
+ 	FLEX_ALLOC_STR(ref, name, refname);
+ 	oidcpy(&ref->u.value.oid, oid);
+ 	ref->flag = flag;
++	ref->u.value.referent = xstrdup_or_null(referent);
++
+ 	return ref;
+ }
+ 
+@@ -66,6 +70,7 @@ static void free_ref_entry(struct ref_entry *entry)
+ 		 */
+ 		clear_ref_dir(&entry->u.subdir);
+ 	}
++	free(entry->u.value.referent);
+ 	free(entry);
+ }
+ 
+@@ -431,6 +436,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			level->index = -1;
+ 		} else {
+ 			iter->base.refname = entry->name;
++			iter->base.referent = entry->u.value.referent;
+ 			iter->base.oid = &entry->u.value.oid;
+ 			iter->base.flags = entry->flag;
+ 			return ITER_OK;
+diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+index 31ebe24f6cf..5f04e518c37 100644
+--- a/refs/ref-cache.h
++++ b/refs/ref-cache.h
+@@ -42,6 +42,7 @@ struct ref_value {
+ 	 * referred to by the last reference in the symlink chain.
+ 	 */
+ 	struct object_id oid;
++	char *referent;
+ };
+ 
+ /*
+@@ -173,6 +174,7 @@ struct ref_entry *create_dir_entry(struct ref_cache *cache,
+ 				   const char *dirname, size_t len);
+ 
+ struct ref_entry *create_ref_entry(const char *refname,
++				   const char *referent,
+ 				   const struct object_id *oid, int flag);
+ 
+ /*
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index fa975d69aaa..117ec233848 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -299,6 +299,7 @@ enum do_for_each_ref_flags {
+ struct ref_iterator {
+ 	struct ref_iterator_vtable *vtable;
+ 	const char *refname;
++	const char *referent;
+ 	const struct object_id *oid;
+ 	unsigned int flags;
+ };
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index fbe74c239d3..50a072b97b0 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -455,6 +455,7 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	struct reftable_ref_iterator *iter =
+ 		(struct reftable_ref_iterator *)ref_iterator;
+ 	struct reftable_ref_store *refs = iter->refs;
++	const char *referent = NULL;
+ 
+ 	while (!iter->err) {
+ 		int flags = 0;
+@@ -494,8 +495,12 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 				the_repository->hash_algo);
+ 			break;
+ 		case REFTABLE_REF_SYMREF:
+-			if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->ref.refname,
+-						     RESOLVE_REF_READING, &iter->oid, &flags))
++			referent = refs_resolve_ref_unsafe(&iter->refs->base,
++								      iter->ref.refname,
++								      RESOLVE_REF_READING,
++								      &iter->oid,
++								      &flags);
++			if (!referent)
+ 				oidclr(&iter->oid, the_repository->hash_algo);
+ 			break;
+ 		default:
+@@ -523,6 +528,7 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 				continue;
+ 
+ 		iter->base.refname = iter->ref.refname;
++		iter->base.referent = referent;
+ 		iter->base.oid = &iter->oid;
+ 		iter->base.flags = flags;
+ 
 -- 
 gitgitgadget
+
