@@ -1,113 +1,94 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A511922C9
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEA0154C17
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723134847; cv=none; b=se6lFA3Gbl+pBrAp6ZX+MlQQARQirfKv1OQBZPybGjN84tPzSVFbBn4syOtXXHyhuF93A8PmlGBqfVzZiI5HetgHK0ASphrShYBw7L8I2k8LvPeKxYTOTbNpdW3eDf1znnk2DUNhNii1U+Hw3qtJfZw1i88krdffzOicpe0IpSQ=
+	t=1723134961; cv=none; b=By/8TrO4y+zBM9JDgocp9DhXZGfE9uRkCfFM5sk9GYFORwBJQAleHW7EgJzRJG+tR3lQqvZJn8UIMrKaIUVNxSKEKeDuan9kNdy1boOTs+/39OVsEqq4g8+lbAttFlV39e4+bJq/c/t9WVCfIVn4ghU4+tmP8mrKBWzgfZ/ToNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723134847; c=relaxed/simple;
-	bh=82LBgI+r1uoEbXpHhpXqwtsjlfx4Tj7PQr2ZiAaFQLc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5VNFyWAKrs+tA5BC16l4dvn3JrJOw2SxjxiOh/SR5ewBw4NT2Sp8IPnFLH1mFK2rHIv4x+q+fQxq7apNtk4CF1dTAzctHOYuvynn82++QNWO1h+FQLlbpBCHkjPcTllhqh2Ps9yA8HEp2hfoo+q82SkKXE28+V8DvDMwCQ4kpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A3t53JXP; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723134961; c=relaxed/simple;
+	bh=vQ0S10bTmthUvUAwZvU43iDYCVo1YlDzrXF6M5pKPSU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dVk6aGVoCewKsg/LEBBxOZpGJDV27MPS3w8l9tThQJAE+aF4NxJOUdGZ3NuwWzx4NPTXwwyousGM1CoDl/YNQjXtyj3/ARDyLAQVIQebnsH1XvoE1QSkNAkTYKoMvwNkTSh8ZPKwdci0dxSaHVIneB5YAGWUo3wJ+X300L+K9RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jQrf1rgr; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A3t53JXP"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-367940c57ddso612806f8f.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723134844; x=1723739644; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uMSNiupLF5UrDzBeRLBNNFi69PIu7pbmJ9KBAk2lI2c=;
-        b=A3t53JXPWC6xlAVGocI3xFH8xLAiMzZxyIeT5gVgDg9Qky9MsNENbyANhNBPh0G1tw
-         IwvBC9lm38JUeGaVZSZK6AfnNzH+jRjhhuBqm4B04R6wWuc/Pft1sslgHNb0ShjsjSL7
-         yIwKHZZ0/jYl/bnLHtpl6UxBMJy05uYs7BZAefyuDQgTtle6Oe0NRsvOGWR3uT8J4YbX
-         S7TAtI8JWB+geywSx7jVTowvpGaRaBvTa9KFNAd5ymD7Nhru5fL9eaNjK99xHokZhgyr
-         zTiqVVUi9q+k19mbOZRIXP4hlgQ4T0+e3xnaQUy9Tqh49telfNvwQw8EaCKwGwZmpN45
-         6P5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723134844; x=1723739644;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uMSNiupLF5UrDzBeRLBNNFi69PIu7pbmJ9KBAk2lI2c=;
-        b=w8rQUNkKkMgrCVqlThNQu2iZGGfTSSqdRvc8mrx5sf9USKKoueITyBBFQ93Z5hwTy3
-         ICC8ORGKhL3l3X+Ovs8TkaZtUC7Jxm6Nnh7z71fTeBAHM2kOU/QmL0VXnDhxF+kvwbTV
-         KSGip5zn2arnQ1+Ct3VXfnyjKP0irN0dvcyUAYqWiWHym+OfQs73TbxRZ3kmWWLfe6l5
-         zuky7PFKsbIwrdC8kwL2fXICU9bW4rrjzqOvPFnEwcOoQDCCVnoFb8cASImL6GyLXcnx
-         AHb1euSLCk1jv07c3R021xOb1hJllEvmwK3azUGuTKJPimyQO5Zf6JiiX8ctkxc2y9eO
-         Zzjw==
-X-Gm-Message-State: AOJu0YyDRhfWjfJRSU2eqgFOP9G/RKxDOSYf2rDmpr3H7F4j1I/WspBu
-	Z5LjTlWxtyYa5JfPVSwSNCERZjKM1pENzfnol4MYa0fl0wf6FLf3o4KhEJFpRfM=
-X-Google-Smtp-Source: AGHT+IFGP07ibp4+frePFpl0lpCLGi+pN7ubqUIdMEv/DzQyOgn0eEsqrHqqBdp90n60U/qEvqcMUA==
-X-Received: by 2002:a05:6000:184e:b0:368:6ab:ba69 with SMTP id ffacd0b85a97d-36d274ef602mr1934803f8f.28.1723134844085;
-        Thu, 08 Aug 2024 09:34:04 -0700 (PDT)
-Received: from abdobngad.. ([154.182.250.245])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36d27229689sm2415765f8f.95.2024.08.08.09.34.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 09:34:03 -0700 (PDT)
-From: AbdAlRahman Gad <abdobngad@gmail.com>
-To: git@vger.kernel.org
-Cc: AbdAlRahman Gad <abdobngad@gmail.com>
-Subject: [PATCH v6 8/8] t7004: make use of write_script
-Date: Thu,  8 Aug 2024 19:32:07 +0300
-Message-ID: <20240808163302.17521-9-abdobngad@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240808163302.17521-1-abdobngad@gmail.com>
-References: <20240808163302.17521-1-abdobngad@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jQrf1rgr"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BF9F22B16;
+	Thu,  8 Aug 2024 12:35:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vQ0S10bTmthU
+	vUAwZvU43iDYCVo1YlDzrXF6M5pKPSU=; b=jQrf1rgrgYWrb8Li2x6ofqSOOWd+
+	9yaWaSZFcMWFz4kEtcOEJlYN1rwQ7oBRFjxwcWFyy9lka8ZGnjdWmcOErluk1mQJ
+	QqxzOKVdhGVYXsmai6o384Os2cepHKaE8rXn79ggqk9V7MeSeTc4bqXsbOdSmdYe
+	gUK/J8nWatZp8mo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 92FB022B15;
+	Thu,  8 Aug 2024 12:35:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6DF922B14;
+	Thu,  8 Aug 2024 12:35:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phil Sainty <phil@catalyst.net.nz>
+Cc: pclouds@gmail.com,  git@vger.kernel.org, hvoigt@hvoigt.net,
+ me@ikke.info, rafa.almas@gmail.com
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+In-Reply-To: <s5wr0azfeh9.fsf@catalyst.net.nz> (Phil Sainty's message of "Thu,
+	08 Aug 2024 23:20:18 +1200")
+References: <s5wr0azfeh9.fsf@catalyst.net.nz>
+Date: Thu, 08 Aug 2024 09:35:55 -0700
+Message-ID: <xmqqed6zht04.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 499AF0EA-55A4-11EF-A9E2-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Use write_script which takes care of emitting the `#!/bin/sh` line
-and the `chmod +x`.
+Phil Sainty <phil@catalyst.net.nz> writes:
 
-Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
----
- t/t7004-tag.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+>> On Wed, Jun 20, 2018 at 1:55 PM Rafael Ascens=C3=A3o <rafa.almas@gmail=
+.com> wrote:
+>> > On Wed, Jun 20, 2018 at 5:39 AM Kevin Daudt <me@ikke.info> wrote:
+>> > > What this is about that when doing `git add path/` (with trailing =
+/),
+>> >
+>> > This is what I was referring to. If you search for 'Fake Submodules'=
+,
+>> > you'll see that some people were/are intentionally using this instea=
+d of
+>> > subtrees or submodules. Unfortunately the original article [1] seems=
+ to
+>> > be dead, but searching url in the mailing list archives leads to som=
+e
+>> > additional discussion on the subject [2,3].
+>>
+>> Abusing a long standing bug does not make it a feature. I'm not
+>> opposed to having a new option to keep that behavior, but it should
+>> not be the default. If you use it that way, you're on your own.
+>
+> Was such an option ever worked on?
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 046a5bd9bc..b1316e62f4 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -974,13 +974,11 @@ test_expect_success GPG 'sign with an unknown id (2)' '
- '
- 
- test_expect_success GPG '-u implies signed tag' '
--	cat >fakeeditor <<-\EOF &&
--	#!/bin/sh
-+	write_script fakeeditor <<-\EOF &&
- 	test -n "$1" && exec >"$1"
- 	echo A signed tag message
- 	echo from a fake editor.
- 	EOF
--	chmod +x fakeeditor &&
- 
- 	get_tag_header implied-sign $commit commit $time >expect &&
- 	./fakeeditor >>expect &&
-@@ -1415,11 +1413,9 @@ test_expect_success GPG,RFC1991 'creating a signed tag with rfc1991' '
- '
- 
- test_expect_success GPG,RFC1991 'reediting a signed tag body omits signature' '
--	cat >fakeeditor <<-\EOF &&
--	#!/bin/sh
-+	write_script fakeeditor <<-\EOF &&
- 	cp "$1" actual
- 	EOF
--	chmod +x fakeeditor &&
- 	echo "rfc1991" >gpghome/gpg.conf &&
- 	echo "RFC1991 signed tag" >expect &&
- 	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
--- 
-2.43.0
+No. =20
 
+I do not recall hearing anybody who have been active in the
+development community saying anything good about such an option.
+For the past 6 or so years, nobody who actively works on git thought
+it was an interesting and/or useful thing to work on.
+
+I cannot quite say that they thought that it is actively a bad idea
+to offer such an option, though.
