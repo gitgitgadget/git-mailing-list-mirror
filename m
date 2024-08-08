@@ -1,65 +1,64 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1799D18D651
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 11:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BABB15534B
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 11:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723116664; cv=none; b=GYwXARq5mTWyaPJGMDWcUh10g7hb6hGT2GEIKnWLX6EvEmXkqVXvwsRQRJJmwe3N2CZkJpgSWLVWjm49jhUvPGKzIi3nkUQI1OWi4qneQhHtxqI7XcKB/MDASBhGdTe2PtjDX3FjgXw2l3EwxVxeUq5IwhQ6+fwbqePQrM4O7Mk=
+	t=1723116675; cv=none; b=bkebMe6IKrzmPYmeraLG8kcqBky8xQIv5o08//yNfNl4V5BbShEm9pGCdlN1L96St95DCAMvCOLvh38wnzRGS0O4riWdiEAoKE6gezvPzuag/PucO9DXiLtyHfuiaJgJvCksVH62srj5q/Yb0Xan1DeilfHidt9DWWRDzClg5mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723116664; c=relaxed/simple;
-	bh=L5WKcyQYBehw7x/KDP8984hDmycKh7np7STXOvudpSU=;
+	s=arc-20240116; t=1723116675; c=relaxed/simple;
+	bh=3tMP4uEjzZzahc+GKDcyD1gdBG8K5wRKhA5/9LSTuWg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nlNxKBU94/q8Dfwsp8F04de+NIOaVe8DtMVtZFc2OHznYblITNtCto6NzPw+BVl+CcOV0pxZrz4/D4nQmn4PZDgSUcf4chc01h4fbl1d1agS9cFuDjIY9qV8UlmeAx5g9/01chchjHQFxqCupc4qFeUvSZyjdUEEvImE1xK0GtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HxENq1d1; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=RQZ0B+O8YbHG3e8+UwMW7hc+Otwnz0C8iw0OL0n9JlXFf2T97g6YRXDHKRt9GyQHdP8ipu7PaCBsfapxV0YmC+D9R//nw5F/yqmzOfjGREg/ZLNjT4MMLc7uFchuXrxFSH7IvnWz/lWaR1P5OpSbviWU0Z6tC4cC3iNJm0POvvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dLlVljbk; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HxENq1d1"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc5296e214so8948435ad.0
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 04:31:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dLlVljbk"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-7ae3d7222d4so611822a12.3
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 04:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723116662; x=1723721462; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723116673; x=1723721473; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OilDfyeBDokH26Ok/xTnZCoz9iA942Q7BuRSTwjR2Gs=;
-        b=HxENq1d1/mn0xD3R4BrUOsn10Lke/qYWrGfl0wfmlt9IYm9/n499FO81rGTfaZr2Bi
-         ObbOS9OKRK84iFt8uHS6F/d6CXa8+TAZZ1Ru/CgopPrR9LVsPiBfrvxd8vFJEBgn4fUU
-         ddHfMzN1GqRbUoIQccBy/6cYZpZrmdvQE2tP+ZImZweCojzEARS4vJbiJLp3UnHHsAOk
-         /wjmV0XhYzLTe0TjdMgBUpYGK3jZQa3GOEzlvGdJwL5rkR+ysCiLvfXQiMSUizbQo8Lu
-         RbcE/HFVW/K+RAq7ST0DiIUSukmRdQSrHHzZGCfIl9YQ9nl8m5/cCpxntzG3+T5Y46LS
-         E4yg==
+        bh=kxs3Rp1Bn4gj9+ZhnLJZqEXXntL8QK31pnSW5jvtwF4=;
+        b=dLlVljbk+4vpEkaEeaUnsY0MEJGuGCLR0VbimcmaUwKrSGKKv1HjTkIGxCuYjlDW+J
+         2DjeysiWuIquaTmkuPe/ND8jxwX5beFPCZbIZb3T9971j62ugT6tfb2pPqtbN8/sKlnQ
+         dxT/1GlwgI7ba4l1hFYFQn3W96cErBROnuKXIQWEd6pMNY7kL0yF2ucunIvwaVw4+WUz
+         tg9ByGLnNijhW+vkOqCp3c+kNC0xi9Wuet8laQk4Apy4If+ta6LFoi1nbriHOnGPPZZh
+         2rTIcO7PXcBYSjC+nzSO44dAsyuHN7nqsAOf1FCumu/36XMDHTBZ+pCcoy/l2/hPafr2
+         dJIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723116662; x=1723721462;
+        d=1e100.net; s=20230601; t=1723116673; x=1723721473;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OilDfyeBDokH26Ok/xTnZCoz9iA942Q7BuRSTwjR2Gs=;
-        b=eVMq4VORLkm+LcrYsTxlt46qpCPx+T3D24rL+LaAh9/l9hOUFg7AXc18kov/UK59PF
-         L5kcDqdsWLImjCUZoRTRNGh9/bcqxHfuzJR6P6H8DLG/sn+V8lm9DBBAyZ/BfG5pknI9
-         KsdFmWrdAGZLNZ0edUPqGVYdPyVJanq13flMy9EUc5gvb96dOakmpvYbFm1n96Wo8ztj
-         +/J2imXOI1c9R8K0TkggeDqdHXm0lWBiouMuwzaVbc4mFoKKR/N+2pbf7V+gYHedC40I
-         ImC0y0y//pQurNB+doa1Cvzvqf8X5w0V3WhzWygSv15XkRfpLH/4BnXrzA6hGB3+W7nt
-         ring==
-X-Gm-Message-State: AOJu0Yy6BX/CsqwSyGbYktX+GZUV6zHJ+bjAWIBB2/ZTZRXQd8DHgIKL
-	kIUkp+0/jsQ3BgZrthgpnVs534bdMiFTP/UPgWOxe1HvJGnV1a+KhkMbEuN7A/Y=
-X-Google-Smtp-Source: AGHT+IFkqAGy6vArrLWCP52cEw/nSl0dO5vTw+/AZc1XvoPC8D8M4cZ/PyUJXS0CMMFK3TGI33LP7g==
-X-Received: by 2002:a17:902:e743:b0:1fc:58fc:caf7 with SMTP id d9443c01a7336-200952495fbmr18892735ad.14.1723116661781;
-        Thu, 08 Aug 2024 04:31:01 -0700 (PDT)
+        bh=kxs3Rp1Bn4gj9+ZhnLJZqEXXntL8QK31pnSW5jvtwF4=;
+        b=Pa/Jp8oc+svUQElt8b+M4mpOIa/em96hGg4adN2esxM/4Hc4D3aA6BP4uHs6n6qo22
+         7OU/U5uof4GJs6uWlP5os2bgi2RxJ+l45N04/n47puZN6tEcoab5kd1mG/mkNaCCSITg
+         Ya5xCdfTIFIoBs/bOwIsiJ0B+49+jf/4Okc1QH9Ggs/dnHq0zU5OSwFRIPLSx9xkv0dR
+         ZRxblHxjL4tQ6+V66AkS0f4mX+BYiKaCPc0b5HnNJ8RipWsy4d5kyKgbkSLSy22IHNXr
+         ACqgQ3HGelptjzSBqfSrCmQAQ6IhvFzdPAssJ5nnSH9u6gPyW2KLf0OVGtv1b1mPrASF
+         HeXg==
+X-Gm-Message-State: AOJu0YxZ4EVpZSqCux5xZZHzyCvUl2OuikZ3TwWpzdLyB/Ujqc/y0qz+
+	dAFv7pbr+x5dHFozojp7HifY6Pwyme9RoJQe8XZayK+L20UUKE1BUIkWgWJArFk=
+X-Google-Smtp-Source: AGHT+IFpuaE36ol3pv2gvAelMG+eEfX3Qgvk04Amawbw3WSQ+bn5VlkKFvMi/MtlmT2UWJD3a0kHZQ==
+X-Received: by 2002:a05:6a20:9189:b0:1c6:b099:6f89 with SMTP id adf61e73a8af0-1c6fce779c0mr1897478637.4.1723116673047;
+        Thu, 08 Aug 2024 04:31:13 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff592ac89fsm122245215ad.276.2024.08.08.04.31.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710cb22a455sm961077b3a.71.2024.08.08.04.31.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 04:31:01 -0700 (PDT)
-Date: Thu, 8 Aug 2024 19:31:31 +0800
+        Thu, 08 Aug 2024 04:31:12 -0700 (PDT)
+Date: Thu, 8 Aug 2024 19:31:42 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [GSoC][PATCH v16 8/9] files-backend: add unified interface for refs
- scanning
-Message-ID: <ZrSsk27zqOqSXTpH@ArchLinux>
+Subject: [GSoC][PATCH v16 9/9] fsck: add ref name check for files backend
+Message-ID: <ZrSsngBqfyTPDg7g@ArchLinux>
 References: <ZrSqMmD-quQ18a9F@ArchLinux.localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,10 +70,17 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZrSqMmD-quQ18a9F@ArchLinux.localdomain>
 
-For refs and reflogs, we need to scan its corresponding directories to
-check every regular file or symbolic link which shares the same pattern.
-Introduce a unified interface for scanning directories for
-files-backend.
+The git-fsck(1) only implicitly checks the reference, it does not fully
+check refs with bad format name such as standalone "@".
+
+However, a file ending with ".lock" should not be marked as having a bad
+ref name. It is expected that concurrent writers may have such lock files.
+We currently ignore this situation. But for bare ".lock" file, we will
+report it as error.
+
+In order to provide such checks, add a new fsck message id "badRefName"
+with default ERROR type. Use existing "check_refname_format" to explicit
+check the ref name. And add a new unit test to verify the functionality.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
@@ -82,132 +88,184 @@ Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
  Documentation/fsck-msgids.txt |  3 ++
  fsck.h                        |  1 +
- refs/files-backend.c          | 73 ++++++++++++++++++++++++++++++++++-
- 3 files changed, 76 insertions(+), 1 deletion(-)
+ refs/files-backend.c          | 31 ++++++++++++
+ t/t0602-reffiles-fsck.sh      | 92 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 127 insertions(+)
+ create mode 100755 t/t0602-reffiles-fsck.sh
 
 diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index f643585a34..7c809fddf1 100644
+index 7c809fddf1..68a2801f15 100644
 --- a/Documentation/fsck-msgids.txt
 +++ b/Documentation/fsck-msgids.txt
-@@ -19,6 +19,9 @@
- `badParentSha1`::
- 	(ERROR) A commit object has a bad parent sha1.
+@@ -22,6 +22,9 @@
+ `badRefFiletype`::
+ 	(ERROR) A ref has a bad file type.
  
-+`badRefFiletype`::
-+	(ERROR) A ref has a bad file type.
++`badRefName`::
++	(ERROR) A ref has an invalid format.
 +
  `badTagName`::
  	(INFO) A tag has an invalid format.
  
 diff --git a/fsck.h b/fsck.h
-index d551a9fe86..af02174973 100644
+index af02174973..500b4c04d2 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -31,6 +31,7 @@ enum fsck_msg_type {
- 	FUNC(BAD_NAME, ERROR) \
+@@ -32,6 +32,7 @@ enum fsck_msg_type {
  	FUNC(BAD_OBJECT_SHA1, ERROR) \
  	FUNC(BAD_PARENT_SHA1, ERROR) \
-+	FUNC(BAD_REF_FILETYPE, ERROR) \
+ 	FUNC(BAD_REF_FILETYPE, ERROR) \
++	FUNC(BAD_REF_NAME, ERROR) \
  	FUNC(BAD_TIMEZONE, ERROR) \
  	FUNC(BAD_TREE, ERROR) \
  	FUNC(BAD_TREE_SHA1, ERROR) \
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4630eb1f80..e511e1dcce 100644
+index e511e1dcce..7f6eefa960 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -6,6 +6,7 @@
- #include "../gettext.h"
- #include "../hash.h"
- #include "../hex.h"
-+#include "../fsck.h"
- #include "../refs.h"
- #include "refs-internal.h"
- #include "ref-cache.h"
-@@ -3408,13 +3409,83 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
- 	return ret;
- }
+@@ -3419,6 +3419,36 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
+ 				  const char *refs_check_dir,
+ 				  struct dir_iterator *iter);
  
-+/*
-+ * For refs and reflogs, they share a unified interface when scanning
-+ * the whole directory. This function is used as the callback for each
-+ * regular file or symlink in the directory.
-+ */
-+typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
-+				  struct fsck_options *o,
-+				  const char *refs_check_dir,
-+				  struct dir_iterator *iter);
-+
-+static int files_fsck_refs_dir(struct ref_store *ref_store,
-+			       struct fsck_options *o,
-+			       const char *refs_check_dir,
-+			       files_fsck_refs_fn *fsck_refs_fn)
++static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
++				struct fsck_options *o,
++				const char *refs_check_dir,
++				struct dir_iterator *iter)
 +{
 +	struct strbuf sb = STRBUF_INIT;
-+	struct dir_iterator *iter;
-+	int iter_status;
 +	int ret = 0;
 +
-+	strbuf_addf(&sb, "%s/%s", ref_store->gitdir, refs_check_dir);
++	/*
++	 * Ignore the files ending with ".lock" as they may be lock files
++	 * However, do not allow bare ".lock" files.
++	 */
++	if (iter->basename[0] != '.' && ends_with(iter->basename, ".lock"))
++		goto cleanup;
 +
-+	iter = dir_iterator_begin(sb.buf, 0);
-+	if (!iter) {
-+		ret = error_errno(_("cannot open directory %s"), sb.buf);
-+		goto out;
++	if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
++		struct fsck_ref_report report = { .path = NULL };
++
++		strbuf_addf(&sb, "%s/%s", refs_check_dir, iter->relative_path);
++		report.path = sb.buf;
++		ret = fsck_report_ref(o, &report,
++				      FSCK_MSG_BAD_REF_NAME,
++				      "invalid refname format");
 +	}
 +
-+	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
-+		if (S_ISDIR(iter->st.st_mode)) {
-+			continue;
-+		} else if (S_ISREG(iter->st.st_mode) ||
-+			   S_ISLNK(iter->st.st_mode)) {
-+			if (o->verbose)
-+				fprintf_ln(stderr, "Checking %s/%s",
-+					   refs_check_dir, iter->relative_path);
-+			for (size_t i = 0; fsck_refs_fn[i]; i++) {
-+				if (fsck_refs_fn[i](ref_store, o, refs_check_dir, iter))
-+					ret = -1;
-+			}
-+		} else {
-+			struct fsck_ref_report report = { .path = iter->basename };
-+			if (fsck_report_ref(o, &report,
-+					    FSCK_MSG_BAD_REF_FILETYPE,
-+					    "unexpected file type"))
-+				ret = -1;
-+		}
-+	}
-+
-+	if (iter_status != ITER_DONE)
-+		ret = error(_("failed to iterate over '%s'"), sb.buf);
-+
-+out:
++cleanup:
 +	strbuf_release(&sb);
 +	return ret;
 +}
 +
-+static int files_fsck_refs(struct ref_store *ref_store,
-+			   struct fsck_options *o)
-+{
-+	files_fsck_refs_fn fsck_refs_fn[]= {
-+		NULL,
-+	};
-+
-+	if (o->verbose)
-+		fprintf_ln(stderr, _("Checking references consistency"));
-+	return files_fsck_refs_dir(ref_store, o,  "refs", fsck_refs_fn);
-+}
-+
- static int files_fsck(struct ref_store *ref_store,
- 		      struct fsck_options *o)
+ static int files_fsck_refs_dir(struct ref_store *ref_store,
+ 			       struct fsck_options *o,
+ 			       const char *refs_check_dir,
+@@ -3470,6 +3500,7 @@ static int files_fsck_refs(struct ref_store *ref_store,
+ 			   struct fsck_options *o)
  {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_READ, "fsck");
+ 	files_fsck_refs_fn fsck_refs_fn[]= {
++		files_fsck_refs_name,
+ 		NULL,
+ 	};
  
--	return refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
-+	return files_fsck_refs(ref_store, o) |
-+	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
- }
- 
- struct ref_storage_be refs_be_files = {
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+new file mode 100755
+index 0000000000..71a4d1a5ae
+--- /dev/null
++++ b/t/t0602-reffiles-fsck.sh
+@@ -0,0 +1,92 @@
++#!/bin/sh
++
++test_description='Test reffiles backend consistency check'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++GIT_TEST_DEFAULT_REF_FORMAT=files
++export GIT_TEST_DEFAULT_REF_FORMAT
++TEST_PASSES_SANITIZE_LEAK=true
++
++. ./test-lib.sh
++
++test_expect_success 'ref name should be checked' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	branch_dir_prefix=.git/refs/heads &&
++	tag_dir_prefix=.git/refs/tags &&
++	cd repo &&
++
++	git commit --allow-empty -m initial &&
++	git checkout -b branch-1 &&
++	git tag tag-1 &&
++	git commit --allow-empty -m second &&
++	git checkout -b branch-2 &&
++	git tag tag-2 &&
++	git tag multi_hierarchy/tag-2 &&
++
++	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/heads/.branch-1: badRefName: invalid refname format
++	EOF
++	rm $branch_dir_prefix/.branch-1 &&
++	test_cmp expect err &&
++
++	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/@ &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/heads/@: badRefName: invalid refname format
++	EOF
++	rm $branch_dir_prefix/@ &&
++	test_cmp expect err &&
++
++	cp $tag_dir_prefix/multi_hierarchy/tag-2 $tag_dir_prefix/multi_hierarchy/@ &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/tags/multi_hierarchy/@: badRefName: invalid refname format
++	EOF
++	rm $tag_dir_prefix/multi_hierarchy/@ &&
++	test_cmp expect err &&
++
++	cp $tag_dir_prefix/tag-1 $tag_dir_prefix/tag-1.lock &&
++	git refs verify 2>err &&
++	rm $tag_dir_prefix/tag-1.lock &&
++	test_must_be_empty err &&
++
++	cp $tag_dir_prefix/tag-1 $tag_dir_prefix/.lock &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/tags/.lock: badRefName: invalid refname format
++	EOF
++	rm $tag_dir_prefix/.lock &&
++	test_cmp expect err
++'
++
++test_expect_success 'ref name check should be adapted into fsck messages' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	branch_dir_prefix=.git/refs/heads &&
++	tag_dir_prefix=.git/refs/tags &&
++	cd repo &&
++	git commit --allow-empty -m initial &&
++	git checkout -b branch-1 &&
++	git tag tag-1 &&
++	git commit --allow-empty -m second &&
++	git checkout -b branch-2 &&
++	git tag tag-2 &&
++
++	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
++	git -c fsck.badRefName=warn refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/.branch-1: badRefName: invalid refname format
++	EOF
++	rm $branch_dir_prefix/.branch-1 &&
++	test_cmp expect err &&
++
++	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/@ &&
++	git -c fsck.badRefName=ignore refs verify 2>err &&
++	test_must_be_empty err
++'
++
++test_done
 -- 
 2.46.0
 
