@@ -1,113 +1,100 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500E7146A72
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 20:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBC513D8A2
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 20:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723148322; cv=none; b=U2VHZFJ6gbANCB+iW6yNbGxs+QPsgbB1nF9CC8FfUvXSuQgXDlRA61cl7emLQcHMoOc0PYhulDvFITIEWmtIyjIt7rkltqAu1BqZdRO325EsjTB/174hEyWXB2YyL5nL4QBLYdoV6LrJYzxzYl34MWZYz7awapSq6LD5t8QtOuw=
+	t=1723148761; cv=none; b=pVlxBUq9iRXDB7Y9k6RjGsh94xSpuNS8TuIXLXffRIMmQM7ZnxNlfcBpKbFLpXP5f0TSPIEBgWOtpLvpDjbl+Nu/6By/tCW5osX/kZz+8DYlxuUyyM7zBdFRtcZybuBDSXT5KcDvjt2fJ5r42VqSIP0G3lunVy2vfv8E+QDJ3s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723148322; c=relaxed/simple;
-	bh=6twdFvwoq0Sp6+v0b4oThowQhwIR8zH+Lz58ChLtjtQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=lhjpTPhlONAmQzVLIboqchbjr1tKKEAWizTWQ3X4wB9MJBgKzyjudFFaG8ODRqwVAEgQs68c79ZSpwFq1IPN9xKVlA1rRuOX8DUsiWJgD/Szv2fljNc5SpXKEa4MQDVuXccb2tcuo59AFVtgqKO77UK5sdNNHAjXPQKsPBbDIdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PtuYmgVr; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1723148761; c=relaxed/simple;
+	bh=zQjzJ7FQq96D90falWefyC33bSn7ImTrR03UDTqxs1g=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=t0PNy6G3gtzQzhUajRmMhmTZt9YQIPeEqBLJkaxKbEUC7W80n/Xo/YJOgIPzW8Qdk4vWge/5+q6oqypFHqnE3BlCdRnueYvxG2Btb44pv3of6sgUx01bjXptu5FvU702KYwaM1Pa4FEw6FqlGo48aI+i4bT4dYwelJ/50qn7SYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qXGqpbRB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K6I2dhdI; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PtuYmgVr"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-530ae4ef29dso2424252e87.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 13:18:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723148318; x=1723753118; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m4bUYdn3+MeFA9/b99ZZFK2KJM9DQRFRLbM5AICiF2k=;
-        b=PtuYmgVr06CPvDI2iRsir9zqeAAHEHL7rEC3gYJ5neSVYwnVzUrbzgw7xpSg1DpnB9
-         bA/yzXBt1UEu2deDDM5982fqYcZlqy10gNpL/bxkEBlWZ7jjSn1iKvQaDyR2ROXhoR4J
-         tcF0aZP0LFtpkeUqt7o+DV0fmZW/9CFZ+X9lSrhCq1FFUPOeXu/nqbe+pVE6ZG2F13r9
-         HhS18/0m0GiOrVOAWyFUJGoFHz8Wnpz3a8/Gta8O84JqT+Ly90EwBTGTsPdhzoMM2zTb
-         FbVz7vKc/UnBzlYwPmo4335tcflarsHnZp3uhFJxGXIHfTH42LcJcy5dDNdfNvBdXxAH
-         fNpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723148318; x=1723753118;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m4bUYdn3+MeFA9/b99ZZFK2KJM9DQRFRLbM5AICiF2k=;
-        b=ZwgOp4pYOKBpP4bTdLLo1DJkMEJNhnBn52m79sB139tvrr2eXodQFhd6Dm/qlg2uqu
-         uX2uC8THqDpZgyfyD1nTrpDPEtVipzjhA4UWKh9cj/2fe13Siem7JTeIKalSGlansp6z
-         TfHmehloDuckWgGchqF+i69Jd39k1CXTntMM7ZNbzTSf4OnWR1lHYLugGGJQYeTgQy3V
-         Vvq9gGR8QIYsXkByVr4tpwQwCb+624MeORY8A5N/g+b8g+1pBMTEOkLOTkdQI2tpZ6PX
-         cGdb8j/hUTnYK3cmvyqgtEJbxC9Kzf6M7k6So7gey/BvlvpJ6jGN+gvAi7UoNw0Y9sJM
-         7xTA==
-X-Forwarded-Encrypted: i=1; AJvYcCUapND2ISurgA4YdMQg3P0wmVW43PIs5Tmtn5XFjb3IIx4Vhuq5YF5aRfO6f6ZP0b+Kn4ZS4vhRvn1IJwF1s/0LIwu9
-X-Gm-Message-State: AOJu0Yw3SS2s6nI25brciHmMiv20SeC4C1QA5e/P2qKq9oQvg2iIIu0m
-	JR54YhiGoemyfrO6kp410N0dhTHLjyN2udgZlkq/Oph9dpt85o610odeYRM9KnueSLdX4wO2sbt
-	D+zxsmJDziAc25b78MUMOUXyzoeBqvi+PgWI4
-X-Google-Smtp-Source: AGHT+IFJ7s0YOXEMMaJ5250OzYRekaUo8hm1fmdAXvzXcv+pBUra7S2qgEr91lmrSogWf6eqnY/zxkVnpAFzE8vJGtA=
-X-Received: by 2002:a05:6512:3e1d:b0:52c:deb9:904b with SMTP id
- 2adb3069b0e04-530e58769c5mr3048562e87.38.1723148317983; Thu, 08 Aug 2024
- 13:18:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qXGqpbRB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K6I2dhdI"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id ED66611482EF;
+	Thu,  8 Aug 2024 16:25:58 -0400 (EDT)
+Received: from wimap26 ([10.202.2.86])
+  by compute4.internal (MEProxy); Thu, 08 Aug 2024 16:25:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723148758;
+	 x=1723235158; bh=d6dvZkgF3MPpdBJLaA3jl2+uaj8g7YGxFycWgDdlEAc=; b=
+	qXGqpbRBBzWi/Yyq/DmcdtnHDj2NwmJoy6NalKnK0gP30K+TSinHjIK/ZDmkFBoW
+	69qBXb7fEaV+ztXIcX/HHbT2tqv92hRAU2sAUgSnWmbb0nhksilTcy6gDiH3oX0a
+	mnoV98wjOG4C9jc47AmLprd5tnEMwbHjo9/5kfbUzT9OBM8/N7j2L+mdxsY1a60V
+	/bZjO92E2XoX2dOsqM2dTXplQNJX984LS1MIU7hso49baw6ytefzGYwG+4ibWAoo
+	TX6D0JcNnY9Uykm9o8Cixbr9AhKE7rtYXFZUANVTYXVSJeeP5s9CnBypvruV2Piv
+	gihuwUTvy9w9HzsWyVSk7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723148758; x=
+	1723235158; bh=d6dvZkgF3MPpdBJLaA3jl2+uaj8g7YGxFycWgDdlEAc=; b=K
+	6I2dhdI/BMynx7w4karZBiAiwsDPr8EfiQ3lwF2VgnKgZnaUfSU5nKUoWYznYO3B
+	JPzXv3HKL/ytL3d7U43klltMwc+Eje/KPiousuLYLDdTYQ/qabWvGcfIgxtjwG7t
+	xiBFbngqOxoAXrWjodqnHUn+bdpJ4qWo2KKBnMZYXsQL58cvgncD4MrpvzXnQ82c
+	Yz+xHx0NOe/1SEOx9lNd6rX3JOl9ZRmgAKYLEs+2p1K3DkNiUI8qHBRiqfMTjqqS
+	ffUF8NE3dX229iNXgsf04jo/FueiTMquV9BmVa2SiDKOYq1oRZW18P7y/nRthjbM
+	aGOExE58BhdizbY/porYQ==
+X-ME-Sender: <xms:1im1Zn2HlJcm2qhY4fBj0dNmxZfV_t7HT2f8auLF0GKh1aBQrnh0Kw>
+    <xme:1im1ZmEaKpGedpGzTrLZ_2uT8NuGrqFZG9_766MdRkGfIv4KVy1tvTkzS9h4NDsZL
+    HShQWxVhNUj-fLinKA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgddugeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepphhunhhkrdhlihhonhdtledt
+    ieesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepffeiieejueeigfejue
+    efvddvuedtveffjeehieelhfdvieduleehudelfeevfffhnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhunhhkrdhlihhonhdtledtieesfh
+    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:1im1Zn65bAmaJjUcD1ECwtNkKV_a0hEi4X6UmP3hOe08OVSkuYQExA>
+    <xmx:1im1Zs2a_TrDe7YdIXaEYfGZApDAAxX42jhxZDbcz4jJDku0iySpvA>
+    <xmx:1im1ZqHbTq4yTVurdurP9vQSnZDPMsm_P9dVQJI2dhDCczzDBmnJTw>
+    <xmx:1im1Zt_FOKg7iBuesp_pMl5dSg_28-zc-eTM4MDasFswUVKLSEpKGQ>
+    <xmx:1im1ZsNSzuuZPIOr1Lnb7RKYyNrDj7UJ8QlslK3v_ZzOMiK_Iq00J6vf>
+Feedback-ID: i35d941ae:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id BB8DB19C0079; Thu,  8 Aug 2024 16:25:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1723054623.git.steadmon@google.com> <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
- <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net> <b5epjlsptw3punygmx2abmfnrkki6n6ta4fk3yse7iodlabr63@zss4z3575r7v>
- <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net> <htakxe76kl7ll3q7trjj6cjnsrg4tnue2k46zo25bnf3zre7t7@r74vgvebdhsx>
-In-Reply-To: <htakxe76kl7ll3q7trjj6cjnsrg4tnue2k46zo25bnf3zre7t7@r74vgvebdhsx>
-From: Kyle Lippincott <spectral@google.com>
-Date: Thu, 8 Aug 2024 13:18:26 -0700
-Message-ID: <CAO_smVjEU4QH6JsLxt2v3ZYPEKwyd9gyJ4OjNgf1+mPVS6xoGg@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for libgit.a
-To: Josh Steadmon <steadmon@google.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Thu, 08 Aug 2024 13:25:37 -0700
+From: punk.lion0906@fastmail.com
+To: "Kyle Lippincott" <spectral@google.com>
+Cc: git@vger.kernel.org
+Message-Id: <9c46732a-eea5-4849-91d8-aa4cc3dc92f1@app.fastmail.com>
+In-Reply-To: 
+ <CAO_smVg=1gFBudrd70V2_AXSPOUTFz=j7QqBpbkvR7P_KqnBtQ@mail.gmail.com>
+References: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+ <CAO_smVg=1gFBudrd70V2_AXSPOUTFz=j7QqBpbkvR7P_KqnBtQ@mail.gmail.com>
+Subject: Re: Documentation bug (?) when describing `zdiff3` merge format
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 8, 2024 at 11:22=E2=80=AFAM Josh Steadmon <steadmon@google.com>=
- wrote:
->
-> On 2024.08.07 23:55, brian m. carlson wrote:
-> > On 2024-08-07 at 23:05:00, Josh Steadmon wrote:
-> > > Yeah, needing to free() is the only thing we striclty need from libc
-> > > right now. Please correct me if I'm wrong, but IIUC then any memory t=
-hat
-> > > is allocated on the C side and then passed to Rust needs one of:
-> > > 1) freed by libc::free() on the Rust side,
-> > > 2) passed back to the C side to be freed there, or
-> > > 3) leaked
-> > >
-> > > Am I correct in assuming that your opinion is that writing additional
-> > > *_free() functions on the C side is worth it to avoid libc? If so, th=
-en
-> > > I'm fine with including that in V2.
-> >
-> > I think if we're going to be writing a general purpose API for
-> > libification, we probably should provide free functions.  Normally, tha=
-t
-> > will be a call to free(3)
->
-> [snip]
->
-> So in this case, does that mean we'd replace our call to `libc::free()`
-> with just `free()`, and then add a declaration for `free` in our
-> `extern "C"` section of cgit-sys? It seems to work on my machine, but is
-> that actually the more portable option compared to using libc::free? Or
-> have I misunderstood something?
+> This line _still changed_, even though there were conflicts around it,
 
-I think both having a generic 'free' function, or requiring your API
-consumer to have a compatible 'free' function is undesirable. If the
-API hands you something that you must return/free, there should be a
-function for that specifically. So I would expect if the API has a
-`libgit_foo_get(foo** f)` function, there'd be a paired
-`libgit_foo_release(foo* f)` (ignoring whatever squabbles we want to
-have about the names). Requiring `libgit_foo_get(foo** f)` to be
-paired with `libc::free(f)` limits us to always using libc malloc;
-pairing it with `libgit_free((void*)f)` means we can't refcount it /
-ignore it if it's a part of a parent object, etc.
+Ah, thanks for pointing this out, I absolutely missed that. My mind parsed
+"... identically" and "... the same way" in the same way.
+
+Now the situation makes a bit more sense, I'm getting a sense of *what* `zdiff3` is doing, even though I still don't quite follow the why.
+
+In any case, in my mind this is now a documentation bug where `zdiff3` is not explained as well as it could be. I don't understand the situation enough to provide the fix, though.
+
+Thank you, everyone, for the help!
+               Ilya.
