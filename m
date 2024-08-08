@@ -1,84 +1,85 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2028188CB8
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE9C144306
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723102548; cv=none; b=Yg27qxjHEuiX4HbwpKVERO7ZPHw4xDzxSxlnGb/JlHn8/kVYTc2JYPv2TbaLt6gRPCtoYvUnT8NtlvGsEc3ZUjnvzwIMg+Gk78Xk1rx6UOf/l91SsqXA68LSjkbuc+1R6k9gqkl41ee21XDRmjOHAW4m2HMIflMs/OtzfGcNAek=
+	t=1723102552; cv=none; b=j4YuFGub1AcquN5Rkd00py5kIo3KL9q/POCTV3dPujkbwbjDQCYw27AisU3bBf0Etxzt+Alee+AqDbOtXOGt+JGooK9eRWgtu6MNiCTdZImAigWfmtNYxtuPrHh+giapYJ3oLl0S8uSspPB481CHDAMtJW+nzdWwun7aXQps3iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723102548; c=relaxed/simple;
-	bh=rC3LhTJTmHX8qHAt3yx7I6mADhSYGOKRR71UscxdRC0=;
+	s=arc-20240116; t=1723102552; c=relaxed/simple;
+	bh=NK2xje7aGwQ8SXUPlRMQkjqvafEyLVMD8oOejojieZU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sktQhp2Zbsc/dJdH8Tk+ScbscbUrpTBqiObqUyzuo+PrAvwtlK58u/aA1cTTdKGStXc+yIitRY/RLtAe4TG1W++3mwJu6MHi4Vy3Q3K6XBr1GhTKTvInBvtjzwhbK1LI+j7XQjRHlZTa52nB1iZ11HThw6dLfaMGwYF00ok7Gmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JCSKnUUR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n5tCBR8F; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qm49PebkASymYGqdHTIXB7hTof5mCTSCpBNMDhep6rfbqrkxR6PCTgx/MzpTnP9VzpTGd5gChIxhe92xWkgBSxu+gYdKhMA1aOkqoHXK+5S34VLovCiuT+GiPfEv9aYZvEYV3Y4/z8uAx0m0nkHwEbMv7MudTBOme/X8QCeZhDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qQAYxp2u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W7YPH+IU; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JCSKnUUR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n5tCBR8F"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 12C9B138FD86;
-	Thu,  8 Aug 2024 03:35:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qQAYxp2u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W7YPH+IU"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 84881138FE23;
+	Thu,  8 Aug 2024 03:35:50 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 08 Aug 2024 03:35:46 -0400
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 03:35:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723102546; x=1723188946; bh=R7v3Vm+YWm
-	xNLP0sku5H6xKucmhttEmV4oF6cpxssfI=; b=JCSKnUURcnM2nYdhoYc8YYtJSJ
-	rTaXpWSYpJ/jPLExnIwWDtP6f/o8RAxBPGexygwjTR2nnS+Fh5ZjMwsBq/atox8s
-	aYp5wvQrGqvT/WlnQTOvOU+U42h/bDrRIkPMYird4uYa+oWeaDrPW2i+Hl5BKzKr
-	frIy0sZNAXIV4QIhXN7XDpaiqf6ghKYwkOL3yr/0m1abe3XVAXUAoImYUQzP4BW7
-	iVnu6T+5d7U+/WuZt7DiXvA09LQ50Gu2O3yMX8QNdubJnF9YloDl/2NtkgTT14AY
-	I5E+BlyLvxL5+zm34JHlf8ymQOW7L93jlmku7f0TXHNJJJ3hcBjy3gPnOPjg==
+	:subject:to:to; s=fm3; t=1723102550; x=1723188950; bh=KxlkCDQu/F
+	dkwNJEw7LaXbmWERXmzorW8xyIiI26aWM=; b=qQAYxp2uJjSv3vy08llqpvUMQn
+	2ABwcgw2T/uSUXDaypDUpJy1OzBI3j0bAZ/Ga6f4xEEXpKZWFa0bEmL1rvfqOZmh
+	s++dVdyHofAERjqZ+qCbR0GBqbu4pfXt30HaRFmnkf0Uwseu3zdrYYumKm1AFdFD
+	tEJcd1qFvX5HV7Wcteiu9pfDlo4xA57QIlBbjhZswq10DSEIXiHPzROYLzw48SNK
+	aMFLPGNm7moX5PUekw/Gbhc6KlTYlkW016hvaTRJ7STnDfPdhi5ANohcAcUJNoJz
+	4Qa6rqZg4p99FNP8Uv2lZBi5npqH+AJzQO+k6lNSyDwtcFxG/7tZq+5uo/+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723102546; x=1723188946; bh=R7v3Vm+YWmxNLP0sku5H6xKucmht
-	tEmV4oF6cpxssfI=; b=n5tCBR8FEVihQwPtMyR2E7UJ2UdmEfvEBxFFBu4uFzB5
-	S/9q5oeSh0Pr0x6hTcI60h//cKzocXsG+pU3a7lsvis0B+diKsh2OCzv0a/TXAwu
-	asAqrttutPvV1YRl8pBCj6Wfm37ozJ7LO5pwkHxgK5T+2Ajxy/CLu8MJ0Y7aB5G6
-	3vZPs9DqDbKb+KnMtdq9+Y7d8sCsBnJ/vPk6BvSpMRukzqmM3eIlGOui5Z+iZ6gB
-	hGiIvRjY964MmrJsjzbgb0G5dDPUiIcuxFgpUA6jp00B64graja2ORmcKnWjPccn
-	lfqf2wo2ZGdBZFkFKzefsaMV9xIDlS/Epcm+gkMHFg==
-X-ME-Sender: <xms:UXW0ZpO7BjF5Qu5Orx7mqr4QyxxKuVVqzk1P9oRrkd_e5Wq7bvBd4Q>
-    <xme:UXW0Zr8L3pkkzm_upO4fiSgIX6aMJoB-SXp0oSlZgcwVizMlpfIG-ZJtms8tn_QCV
-    Oa8Yjpny0zCJC7CSQ>
-X-ME-Received: <xmr:UXW0ZoTyjG8LFmUpVOX8_nAbf_Uw4dM0Ni_0D0IBBQHoK-el24R16HxSBANkrjwsDjrBxQ4ISkar2yLnTLa8gv0dftivLWRdQReig_42lNFINh3O>
+	fm3; t=1723102550; x=1723188950; bh=KxlkCDQu/FdkwNJEw7LaXbmWERXm
+	zorW8xyIiI26aWM=; b=W7YPH+IUOzR9XCGdZRJjkBQrqbqvG6ZbErXAD4p4JCXv
+	yds5NN4shFKqoHm91p9owsaPJmfnr423zY/HCtva0TdDlVygJnXeNsecd/mFpZ08
+	KSRvbSAaCYi83XynBh4oPtWOk7o+T4FZX7SSvRLhhxBIF84g7TTanPqCN5kKyDJ0
+	0yi9gBWPpUQqTLF1VxnfFdya7EPhWxqDrx8vrgneORqCaAgw5FxmSVL4xABlwtWs
+	g1+yzEi+jv0tvo6qR2XvSzkWPiW92yxRoJwZvlaPBmxMAiAhruBC13z2GhZlcDm6
+	mRlmmrZyGFL2jH8sFyQj2wE4jr7GxvV71/qbAhH4ZA==
+X-ME-Sender: <xms:VnW0ZvGE-I6XTECDt4V12r9L0UazKHUmxwvyzgD23ZJzBA-nMDtILw>
+    <xme:VnW0ZsU8Y_sPM3aI_9YbFpEadhZ9kxLrDYeT985AIq1iUBFUA9tbsGFnKwcf-xOzp
+    VI-b1Yjfb1N9JYzSw>
+X-ME-Received: <xmr:VnW0ZhI21gQYHBzE18lRDecf6UJTRNrN-WItrFBj3joqJUiyAFsNXmBb1B8Dg1L4FofazoWjMc8Mng1f1fTkKCiNJ2AoR_AOQl3CdwYB60aj97Jr>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveej
-    jedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    eqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeg
+    hefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepjhholhgrnhgusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhh
-    ihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:UXW0ZltGeW9rdpjZXHv_1IFbwhfpJGV56k3n9Yf4Nxdq9m3PRE6fgw>
-    <xmx:UXW0Zhd7AG4KFApIjeyFOVb_ESV2_mxbGv1zMeNGg9mka2qtVFdbfw>
-    <xmx:UXW0Zh2v5TBSka7yop_Zj20rtyHzl0Lwu93tkvlGlFxjshLoWOO_nA>
-    <xmx:UXW0Zt8ueTRzUb3Xd9UwztgwuimWR3I-OaoXL-gLz8Xf3YI4LvJIUw>
-    <xmx:UnW0Zo4a6KMQ4U0gF4BqM9sBU6uKu3LbgGTKoAFf_ynXzoFCHFQ6YniB>
+    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomh
+X-ME-Proxy: <xmx:VnW0ZtGdRD3FbVIxpujJr5MbmgsVR2o8et-x9fDvsn7-NFRR1UVhyw>
+    <xmx:VnW0ZlW88LIB4wQWDov4EE96OOsAvg9SM39mkHm5PBgbL3d_rQu3gw>
+    <xmx:VnW0ZoMq904Sj6G8m3c4sii3kSYp9FZVTCnP7PNpLWpwXNFWVoVA8w>
+    <xmx:VnW0Zk1d0OzP6RlIlXdIQYW_bjbxPq7pveFQxhUTX4xRb6lTYtc6og>
+    <xmx:VnW0Zrxo4ZTA8utn05JhEP9y46rkHHko4BISCXxM-JPX4nUvcQ0yKfFT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 03:35:44 -0400 (EDT)
+ 8 Aug 2024 03:35:49 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a21b1fa0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 07:35:37 +0000 (UTC)
-Date: Thu, 8 Aug 2024 09:35:42 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id a4ed108d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 07:35:42 +0000 (UTC)
+Date: Thu, 8 Aug 2024 09:35:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeppe =?utf-8?B?w5hsYW5k?= <joland@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/8] refs: fix ref storage format for submodule ref stores
-Message-ID: <f13356581ef984fa986f704343c895c4a57a0e4b.1723102259.git.ps@pks.im>
+Subject: [PATCH v2 5/8] builtin/submodule: allow "add" to use different ref
+ storage format
+Message-ID: <4ce17e44a16335adf9423a227047d3810608aae4.1723102259.git.ps@pks.im>
 References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
  <cover.1723102259.git.ps@pks.im>
 Precedence: bulk
@@ -88,170 +89,197 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jm+RumnNHjkeeaWi"
+	protocol="application/pgp-signature"; boundary="7uA5rIA1UAcwYeHM"
 Content-Disposition: inline
 In-Reply-To: <cover.1723102259.git.ps@pks.im>
 
 
---jm+RumnNHjkeeaWi
-Content-Type: text/plain; charset=utf-8
+--7uA5rIA1UAcwYeHM
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When opening a submodule ref storage we accidentally use the ref storage
-format of the owning repository, not of the submodule repository. As
-submodules may have a different storage format than their parent repo
-this can lead to bugs when trying to access the submodule ref storage
-=66rom the parent repository.
+Same as with "clone", users may want to add a submodule to a repository
+with a non-default ref storage format. Wire up a new `--ref-format=3D`
+option that works the same as for `git submodule clone`.
 
-One such bug was reported when performing a recursive pull with mixed
-ref stores, which fails with:
-
-    $ git pull --recursive
-    fatal: Unable to find current revision in submodule path 'path/to/sub'
-
-The same issue occurs when adding a repository contained in the working
-tree with a different ref storage format via `git submodule add`.
-
-Fix the bug by using the submodule repository's ref storage format
-instead and add some tests. Note that the test for `git submodule
-status` was included as a precaution, only. The command worked alright
-even without the bugfix.
-
-Reported-by: Jeppe =C3=98land <joland@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                                 |  2 +-
- t/t7424-submodule-mixed-ref-formats.sh | 70 +++++++++++++++++++++++++-
- 2 files changed, 70 insertions(+), 2 deletions(-)
+ Documentation/git-submodule.txt        |  5 ++++-
+ builtin/submodule--helper.c            | 16 +++++++++++++++-
+ git-submodule.sh                       |  9 +++++++++
+ t/t7424-submodule-mixed-ref-formats.sh | 11 +++++++++++
+ 4 files changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 915aeb4d1d..e4b1f4f8b1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2011,7 +2011,7 @@ struct ref_store *repo_get_submodule_ref_store(struct=
- repository *repo,
- 		free(subrepo);
- 		goto done;
- 	}
--	refs =3D ref_store_init(subrepo, the_repository->ref_storage_format,
-+	refs =3D ref_store_init(subrepo, subrepo->ref_storage_format,
- 			      submodule_sb.buf,
- 			      REF_STORE_READ | REF_STORE_ODB);
- 	register_ref_store_map(&repo->submodule_ref_stores, "submodule",
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.=
+txt
+index 73ef8b9696..87d8e0f0c5 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -34,7 +34,7 @@ COMMANDS
+ With no arguments, shows the status of existing submodules.  Several
+ subcommands are available to perform operations on the submodules.
+=20
+-add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] =
+[--depth <depth>] [--] <repository> [<path>]::
++add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] =
+[--ref-format <format>] [--depth <depth>] [--] <repository> [<path>]::
+ 	Add the given repository as a submodule at the given path
+ 	to the changeset to be committed next to the current
+ 	project: the current project is termed the "superproject".
+@@ -71,6 +71,9 @@ submodule repositories will be kept together in the same =
+relative
+ location, and only the superproject's URL needs to be provided.
+ git-submodule will correctly locate the submodule using the relative
+ URL in `.gitmodules`.
+++
++If `--ref-format <format>`  is specified, the ref storage format of newly
++cloned submodules will be set accordingly.
+=20
+ status [--cached] [--recursive] [--] [<path>...]::
+ 	Show the status of the submodules. This will print the SHA-1 of the
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 42a36bc2f7..48f4577b53 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -3128,13 +3128,17 @@ struct add_data {
+ 	const char *sm_name;
+ 	const char *repo;
+ 	const char *realrepo;
++	enum ref_storage_format ref_storage_format;
+ 	int depth;
+ 	unsigned int force: 1;
+ 	unsigned int quiet: 1;
+ 	unsigned int progress: 1;
+ 	unsigned int dissociate: 1;
+ };
+-#define ADD_DATA_INIT { .depth =3D -1 }
++#define ADD_DATA_INIT { \
++	.depth =3D -1, \
++	.ref_storage_format =3D REF_STORAGE_FORMAT_UNKNOWN, \
++}
+=20
+ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_p=
+ath)
+ {
+@@ -3228,6 +3232,7 @@ static int add_submodule(const struct add_data *add_d=
+ata)
+=20
+ 			string_list_append(&reference, p)->util =3D p;
+ 		}
++		clone_data.ref_storage_format =3D add_data->ref_storage_format;
+ 		clone_data.dissociate =3D add_data->dissociate;
+ 		if (add_data->depth >=3D 0)
+ 			clone_data.depth =3D xstrfmt("%d", add_data->depth);
+@@ -3392,6 +3397,7 @@ static int module_add(int argc, const char **argv, co=
+nst char *prefix)
+ {
+ 	int force =3D 0, quiet =3D 0, progress =3D 0, dissociate =3D 0;
+ 	struct add_data add_data =3D ADD_DATA_INIT;
++	const char *ref_storage_format =3D NULL;
+ 	char *to_free =3D NULL;
+ 	struct option options[] =3D {
+ 		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
+@@ -3402,6 +3408,8 @@ static int module_add(int argc, const char **argv, co=
+nst char *prefix)
+ 		OPT_BOOL(0, "progress", &progress, N_("force cloning progress")),
+ 		OPT_STRING(0, "reference", &add_data.reference_path, N_("repository"),
+ 			   N_("reference repository")),
++		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
++			   N_("specify the reference format to use")),
+ 		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from refer=
+ence repositories")),
+ 		OPT_STRING(0, "name", &add_data.sm_name, N_("name"),
+ 			   N_("sets the submodule's name to the given string "
+@@ -3428,6 +3436,12 @@ static int module_add(int argc, const char **argv, c=
+onst char *prefix)
+ 	if (argc =3D=3D 0 || argc > 2)
+ 		usage_with_options(usage, options);
+=20
++	if (ref_storage_format) {
++		add_data.ref_storage_format =3D ref_storage_format_by_name(ref_storage_f=
+ormat);
++		if (add_data.ref_storage_format =3D=3D REF_STORAGE_FORMAT_UNKNOWN)
++			die(_("unknown ref storage format '%s'"), ref_storage_format);
++	}
++
+ 	add_data.repo =3D argv[0];
+ 	if (argc =3D=3D 1)
+ 		add_data.sm_path =3D git_url_basename(add_data.repo, 0, 0);
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 448d58b18b..03c5a220a2 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -94,6 +94,14 @@ cmd_add()
+ 		--reference=3D*)
+ 			reference_path=3D"${1#--reference=3D}"
+ 			;;
++		--ref-format)
++			case "$2" in '') usage ;; esac
++			ref_format=3D"--ref-format=3D$2"
++			shift
++			;;
++		--ref-format=3D*)
++			ref_format=3D"$1"
++			;;
+ 		--dissociate)
+ 			dissociate=3D1
+ 			;;
+@@ -135,6 +143,7 @@ cmd_add()
+ 		${progress:+"--progress"} \
+ 		${branch:+--branch "$branch"} \
+ 		${reference_path:+--reference "$reference_path"} \
++		${ref_format:+"$ref_format"} \
+ 		${dissociate:+--dissociate} \
+ 		${custom_name:+--name "$custom_name"} \
+ 		${depth:+"$depth"} \
 diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mix=
 ed-ref-formats.sh
-index 4e4991d04c..d4e184970a 100755
+index d4e184970a..559713b607 100755
 --- a/t/t7424-submodule-mixed-ref-formats.sh
 +++ b/t/t7424-submodule-mixed-ref-formats.sh
-@@ -18,7 +18,23 @@ do
- 	fi
-=20
- test_expect_success 'setup' '
--	git config set --global protocol.file.allow always
-+	git config set --global protocol.file.allow always &&
-+	# Some tests migrate the ref storage format, which does not work with
-+	# reflogs at the time of writing these tests.
-+	git config set --global core.logAllRefUpdates false
-+'
-+
-+test_expect_success 'add existing repository with different ref storage fo=
-rmat' '
-+	test_when_finished "rm -rf parent" &&
-+
-+	git init parent &&
-+	(
-+		cd parent &&
-+		test_commit parent &&
-+		git init --ref-format=3D$OTHER_FORMAT submodule &&
-+		test_commit -C submodule submodule &&
-+		git submodule add ./submodule
-+	)
+@@ -37,6 +37,17 @@ test_expect_success 'add existing repository with differ=
+ent ref storage format'
+ 	)
  '
 =20
- test_expect_success 'recursive clone propagates ref storage format' '
-@@ -59,6 +75,58 @@ test_expect_success 'clone submodules with different ref=
- storage format' '
- 	test_ref_format downstream/submodule "$OTHER_FORMAT"
- '
-=20
-+test_expect_success 'status with mixed submodule ref storages' '
-+	test_when_finished "rm -rf submodule main" &&
++test_expect_success 'add submodules with different ref storage format' '
++	test_when_finished "rm -rf submodule upstream" &&
 +
-+	git init submodule &&
-+	test_commit -C submodule submodule-initial &&
-+	git init main &&
-+	git -C main submodule add "file://$(pwd)/submodule" &&
-+	git -C main commit -m "add submodule" &&
-+	git -C main/submodule refs migrate --ref-format=3D$OTHER_FORMAT &&
-+
-+	# The main repository should use the default ref format now, whereas
-+	# the submodule should use the other format.
-+	test_ref_format main "$GIT_DEFAULT_REF_FORMAT" &&
-+	test_ref_format main/submodule "$OTHER_FORMAT" &&
-+
-+	cat >expect <<-EOF &&
-+	 $(git -C main/submodule rev-parse HEAD) submodule (submodule-initial)
-+	EOF
-+	git -C main submodule status >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'recursive pull with mixed formats' '
-+	test_when_finished "rm -rf submodule upstream downstream" &&
-+
-+	# Set up the initial structure with an upstream repository that has a
-+	# submodule, as well as a downstream clone of the upstream repository.
 +	git init submodule &&
 +	test_commit -C submodule submodule-initial &&
 +	git init upstream &&
-+	git -C upstream submodule add "file://$(pwd)/submodule" &&
-+	git -C upstream commit -m "upstream submodule" &&
-+
-+	# Clone the upstream repository such that the main repo and its
-+	# submodules have different formats.
-+	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
-+	git -C downstream submodule update --init --ref-format=3D$OTHER_FORMAT &&
-+	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
-+	test_ref_format downstream/submodule "$OTHER_FORMAT" &&
-+
-+	# Update the upstream submodule as well as the owning repository such
-+	# that we can do a recursive pull.
-+	test_commit -C submodule submodule-update &&
-+	git -C upstream/submodule pull &&
-+	git -C upstream commit -am "update the submodule" &&
-+
-+	git -C downstream pull --recurse-submodules &&
-+	git -C upstream/submodule rev-parse HEAD >expect &&
-+	git -C downstream/submodule rev-parse HEAD >actual &&
-+	test_cmp expect actual
++	test_ref_format upstream "$GIT_DEFAULT_REF_FORMAT" &&
++	git -C upstream submodule add --ref-format=3D"$OTHER_FORMAT" "file://$(pw=
+d)/submodule" &&
++	test_ref_format upstream/submodule "$OTHER_FORMAT"
 +'
 +
- done
+ test_expect_success 'recursive clone propagates ref storage format' '
+ 	test_when_finished "rm -rf submodule upstream downstream" &&
 =20
- test_done
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---jm+RumnNHjkeeaWi
+--7uA5rIA1UAcwYeHM
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dU0ACgkQVbJhu7ck
-PpTIDhAAmov8hv26AEbVPecGsVv2w7peaWppPFMs56vCf1xuSA4EPlo3ZylJqiOx
-/PirtLkAl1+buciOqkkS285gQA7PYfCQj8saM0aWvtIcT1CILeXFOl3AvNjjmXsi
-3+rgYjdgsddVRSoG5T7ygE5OnGKqGERhgOnJGIQDebDhjYurCsdTvSEA4KQcNfF5
-lDA2AqvZYFDJDM3BSInf+23Wy5ntQ2MWL/niKCxjJPbqdxZAWrTF4nHM+mKpmeFn
-uXwSYvIZ0BbAra9dJzEH8uCBHHPgwJdTIylk/ofzLrV4RSsirKGcFMMwfT4RPlm7
-6w9rXGLUG0EcCCDY2J7rTJJF6hg3uWiRfUThNHa0ke8RAJsKeecU3Rd2+qFbTH4x
-9NrB8dT8NF1IokN7ZIcTxGE5TuHsJC8orQVZZgJkHcu/k3C3u9FHa/JV9SC85Mli
-Xqa6dIP9s2nqdsGowXHBgdmt9uIrQgVJlNrUkzu50ErG0hq5bwyVCSGb97EUzU1C
-a3hsL/Otm8OtYT4mrFntaT+osHiDFylKjldJNRmvkehsaiBbyhfDRRzpjy/Cksel
-fky8VsBFONoK0WXn/8RV0iiqwqmgczQhrJVbG2BmgzC3/A3WnvvT/IzDvIwwdMS5
-2ws1t273bpW43g82dTKoHhjJ7CcN2M4dmE899tA0TvMgQUDnkWA=
-=Wiqj
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dVIACgkQVbJhu7ck
+PpSo2RAAqDPIa2Id5QSfNwGC7PU7ZHXVZYdYMC23ExM/2p+yAD9iQeUeVfSRpxTz
+d56jglGINEHm5HU0tQ/aikUi9RltCUGtQdJMw2Tz+69xy88/itClz3mawaxORwha
+1XAV4lCYDoZQJwRw8zu+/GuTm4As9n8FaHR2LKMBZIq0yUBEom6KrS3KsTi50GWu
+7ilasRYZBxNxPiHW2dtEHxgAsxjac7BHROcYLVMYx5PmfnUo6PEj+Qx00387ipUv
+bgwCOVFk1PA8MoT3fkxIKbI39l9FaTgetIa9VQ0o3n5fkfYyAf9RmNAzUjuHiMU1
+Bx9z07bFenfaO0T+OftCXIbkOJjO7MCv0XZym7kMGAfanhaG0MNx5mp+7D5HSJbe
+MmvKB7W+FaX8sjKCt6qI/NqGCvAbb0mHD22TX44VGTlCo5JhQrA9KfbMHL9v9Zxj
+me4MbLLRkvQlp50N3fVkFrl8I/xbi1oK3LV3NE8WdFPWzseG1lFU48/a/6Xan0Yi
+XzvcloHlqb7ULFX2+kPlZV90f6VN4RCdEBqz+ynCSgSK6R+5nkYPqeHnY/CPCaz6
+MiSS7u0voWamgsybFubZurWUknoqs0sUQMkNg9YJmmEwMbREYqCQAur8Op9cPXa7
+UF6yRfZloIife/bTH0gA7PIw5/a9F7PdZEBUHXRbo9kCwzcMHK0=
+=kWib
 -----END PGP SIGNATURE-----
 
---jm+RumnNHjkeeaWi--
+--7uA5rIA1UAcwYeHM--
