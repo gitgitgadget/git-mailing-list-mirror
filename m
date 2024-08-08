@@ -1,165 +1,104 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5195055769
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 18:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB49813BACE
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 18:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723140586; cv=none; b=A7+W/+KAaT8aZ/1Rzbzq+FWid2Fn2CZO9p9VZznQkEeYoOXBd6WFqcAouclvbVcrFetWU2fqJyI9f+T08zXr2mDemC4gLciuc5cD3IoAyN5wfZ2qwFDNm3zwzstaJtyJExBa2h5jm8XrwRzEabznbXKFggdZQ/+u/fdoeqIEcxE=
+	t=1723141343; cv=none; b=n4J1bPstCALSzrhh6eUBBr9apnS6fYzQpTW/NN/OqRnc8pQXOJlHGy8qzGLvOEJdgupeeVwmh+TE5EdfCMJpOoJ2PwdEogdiVOfvk5SbyrQ1fsdxRebCcuIGuECoOxsd2ihxCrG26S6+duE3pfvAozEBp+DOdCRRg4aYdRR7W5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723140586; c=relaxed/simple;
-	bh=5hqu+1xmXiqrzAw2o6zfIEndaSWxvCCi5GI1EeNyJnQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=skte+yEkNrM9KdFfcAdxvaHQ5yvdWZTiv5bf47T+4d11juI47TbMvPn55bbtd0FX7hI+OJQDJnAMQLArb6/mVRSsX4vtY1CbWmHTv76pxnfYJLlenocmS1qGiiG81GUvqIcSkqpBkula3MYunTL+pKwryeVLJ8lS+NSjU+MZnf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8F6m1MK; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723141343; c=relaxed/simple;
+	bh=amMWZakEVmXwLbXtkKiJUR7JoKSfw+Zv5RrjXMPX8hY=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jvKUZl7spDrCz3DYehdYODM5bFj268h27R9lVW4hUKAaTTbbPqEXc/o/spXhyQkKPcykBMLNM58aYTzZo2eOKo2wA6BFfpndPdqVra2UGCjXgRoaPuw3GrbC0XBcXfSORIE9TH87VS0VZvVssQ2NCDXpVmepzP4EvBHYDoGiVAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=j+sagPKc; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8F6m1MK"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7093b8ffe01so32092a34.2
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 11:09:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="j+sagPKc"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2cb81c0ecb4so1719702a91.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 11:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723140584; x=1723745384; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f7hBHlRIGXQmx92Txp9kv7cfply7z27pFbHtayECEcw=;
-        b=O8F6m1MKDzp74nzofu4Jw6oOGv+RYEPiCLgkTWyysEYyqmePbm4Nm9rx5ijiNJ4qwJ
-         A40VBXsqwqPfBVuT0wjcaJspXagid7mG7PbC/My4SevvbvtS6R0NXHatGEioFOvohAVu
-         DVzLzwqzNBegFq0Apn1OtbxpeQkUxHh1oVEpHlVIHH7AFurCpQik5fVwPy+s5BPoYHSy
-         gut0RySlIMpUHDYRSYVpDfKqAdUVyf/SSH4RCmdvhd0YZSvkrn1aofwl5VD69AiD9vAl
-         mH6+WY2q+cpetjrsow9fW3Rb/IusRhrKHQ9Ul2+ryk6SyclaNcCUKKYNSx5840eHBr5O
-         1Cpw==
+        d=google.com; s=20230601; t=1723141341; x=1723746141; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GUTYEVWRC2zdCkjaUWM3O66X/BOcGC+v9OWRHJJjDpU=;
+        b=j+sagPKcR8rUccPWSS1x2nyYN9Hs4JpjDosvuNyIm+U/gnAntEBWQcbAygOnF+2hpX
+         UsVNWykfBoGqyXa97GTXYMJmtm/D2hy09dDNYof6o2v6ZqUPWtiG+yVWMdcGHCHqHTc1
+         dcl7WbGVsSFlmbOCNm1xDqQMjyEL9rJn7DnWq9CS4hn5yPXakOHDJHo/QhiM2eSu8nh5
+         Oc1mdOA7o17iCnt+bHPGVwtfcD3ROpht3imKAjcCnMVHyhPpieGkk7k6Tpz43MCtjU4L
+         anVMuMBFLSVDcQSSfSajBtKCz/2+9s03zrxNdmZy8Gj+zZDptTSVznoRMQKFP0cmvVA+
+         9r2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723140584; x=1723745384;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f7hBHlRIGXQmx92Txp9kv7cfply7z27pFbHtayECEcw=;
-        b=K4jdlHigpMyVIzOgBxoe0PNMAufC2G91Wr028GDniUF0IctkLLNSdZaKCNYOdAXWY2
-         U1VhFBCBECsOSJ6b15+SkNoBMLxEUrOTsoiRAjua4880VHcWaEzwbqEcbQsPvk33n+ps
-         ZlRYz8+uCqUwhblH4DUiIDdikV9BKIGG0MK9KoDOQ8a4QmknJRDxNxmqi00kuj1N82wa
-         WJelPsxGc+k/pKBBMmHdVY2i1nun1rYx99j6GL7qtv1rRRLHGW8OUXAJy/BTTku9HKAn
-         e7en4oBbONPR1uGrtQdDBFj0l5hTc0vhO5eXDPd6mdtVS2yz+64UjHiMf7ECFp++Lik1
-         3CBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVB1YeyyP34U2ZWyTJea2W3uFPn4C9bLdKK0Hugsf+6YfPYKS1P3D2HWh3qMrbFg6ixBbM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt/nS7fCaaaWxmfQLg1c3imlWGdOD98X4BoXrBdebGWvP8RLJ3
-	iOpofJ+l7jKEYsWt5LvNvn6B/zu7BF/x1Jb3pmnVanhC+5H5fSPY
-X-Google-Smtp-Source: AGHT+IF4NVUZvNKHactuIIb3zLTb3rlCPFOwtz8tKAwWi/kyehaBfdJArYJkSiXOJr7vxtqvwTJVpw==
-X-Received: by 2002:a05:6830:6309:b0:703:77c0:cedb with SMTP id 46e09a7af769-70b550d9804mr285881a34.1.1723140584142;
-        Thu, 08 Aug 2024 11:09:44 -0700 (PDT)
-Received: from [10.37.129.2] (pool-96-240-20-160.nwrknj.fios.verizon.net. [96.240.20.160])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c864c87sm69112326d6.115.2024.08.08.11.09.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2024 11:09:43 -0700 (PDT)
-From: John Cai <johncai86@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Phillip Wood <phillip.wood123@gmail.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>, Jeff King <peff@peff.net>,
- Patrick Steinhardt <ps@pks.im>,
- =?utf-8?q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>,
- Linus Arver <linusarver@gmail.com>
-Subject: Re: [PATCH v3 1/3] refs: keep track of unresolved reference value in
- iterators
-Date: Thu, 08 Aug 2024 14:09:43 -0400
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <7935D449-F5AB-42CA-951A-E2A07053CC07@gmail.com>
-In-Reply-To: <xmqqbk24nhad.fsf@gitster.g>
-References: <pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
- <pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
- <fc3defd9c47e32bb23ba0fcb5c885274f3706b23.1723059769.git.gitgitgadget@gmail.com>
- <xmqqbk24nhad.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1723141341; x=1723746141;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GUTYEVWRC2zdCkjaUWM3O66X/BOcGC+v9OWRHJJjDpU=;
+        b=Ok2NuYE1/O5sCrnTfzqRvBNNqZvBq9fLez+2YQ3r0nx8L/mktWoSj5n0SfyvbJeMr8
+         7WBuM5VqK1Dtw7ih4Dwnr+9FvPPU8cRu+M8afSjbGf3l1Wa6ncMy1uJEVxNZ6ZH4BHWT
+         6uX462JMkpA2RLWW5RWhQEAS4OC9xuKabVupPsBWkdzcBY3IfnU3+NqaGjiEAaPooTbp
+         NOZ7haXak47ss538tNw1DGapgfsoVjFRLcgFjuDFES21NOWVAuIor7lkIA+iTpA5pBgh
+         MhSxyBx3Tnsmlxaq2TObixYak9yg+5wrLZa5P0Di9kRVAUAA3RJLKCtQfAqtkvRlFIBo
+         OE9w==
+X-Forwarded-Encrypted: i=1; AJvYcCV/ai5hvZEzoLEItrFjdTV3fiExMR8RsWvnS7H4qRvPBZBvpA6kcLP5OF+Wk7QvepZX3vHJFTrKrIsSkEhvMYNR3i8D
+X-Gm-Message-State: AOJu0YyS0M8xwtP/LBRYP01GM4ug12yoWo3cwUWZptrLoHASnQ6JVD3v
+	bFUDRnqAtKdHO/k3XmjOMv/o7tQ0eZdzA2kcoCzetWVdVYpkkBFGBJJAU4Nhfw==
+X-Google-Smtp-Source: AGHT+IG9lAtK9TJg8iHVaIua2mpc8Ft0tlsQr3Yeje3totfmvb8NWxL7bDO/KkBCQXeXDC34D3icmA==
+X-Received: by 2002:a17:90b:3b4a:b0:2c7:49b4:7e3a with SMTP id 98e67ed59e1d1-2d1c4b9bf1bmr3921572a91.7.1723141340584;
+        Thu, 08 Aug 2024 11:22:20 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:fa12:a76d:ac7c:e104])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7b8a7453e92sm6944014a12.41.2024.08.08.11.22.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Aug 2024 11:22:19 -0700 (PDT)
+Date: Thu, 8 Aug 2024 11:22:15 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <htakxe76kl7ll3q7trjj6cjnsrg4tnue2k46zo25bnf3zre7t7@r74vgvebdhsx>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
+ <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net>
+ <b5epjlsptw3punygmx2abmfnrkki6n6ta4fk3yse7iodlabr63@zss4z3575r7v>
+ <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net>
 
-Hi Junio,
+On 2024.08.07 23:55, brian m. carlson wrote:
+> On 2024-08-07 at 23:05:00, Josh Steadmon wrote:
+> > Yeah, needing to free() is the only thing we striclty need from libc
+> > right now. Please correct me if I'm wrong, but IIUC then any memory that
+> > is allocated on the C side and then passed to Rust needs one of:
+> > 1) freed by libc::free() on the Rust side,
+> > 2) passed back to the C side to be freed there, or
+> > 3) leaked
+> > 
+> > Am I correct in assuming that your opinion is that writing additional
+> > *_free() functions on the C side is worth it to avoid libc? If so, then
+> > I'm fine with including that in V2.
+> 
+> I think if we're going to be writing a general purpose API for
+> libification, we probably should provide free functions.  Normally, that
+> will be a call to free(3)
 
-On 7 Aug 2024, at 17:40, Junio C Hamano wrote:
+[snip]
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index aa52d9be7c7..5ed69c23f74 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -245,9 +245,11 @@ static void loose_fill_ref_dir_regular_file(struc=
-t files_ref_store *refs,
->>  {
->>  	struct object_id oid;
->>  	int flag;
->> -
->> -	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READI=
-NG,
->
-> Here, we had a nice blank line that separated the decls and the
-> first statement.
->
->> -				     &oid, &flag)) {
->> +	const char *referent =3D refs_resolve_ref_unsafe(&refs->base,
->> +						       refname,
->> +						       RESOLVE_REF_READING,
->> +						       &oid, &flag);
->> +	if (!referent) {
->
-> We lost it here, though.
-
-Ah will restore the blank line.
-
->
->>  		oidclr(&oid, the_repository->hash_algo);
->>  		flag |=3D REF_ISBROKEN;
->>  	} else if (is_null_oid(&oid)) {
->> @@ -268,7 +270,11 @@ static void loose_fill_ref_dir_regular_file(struc=
-t files_ref_store *refs,
->>  		oidclr(&oid, the_repository->hash_algo);
->>  		flag |=3D REF_BAD_NAME | REF_ISBROKEN;
->>  	}
->> -	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
->> +
->> +	if (!(flag & REF_ISSYMREF))
->> +		referent =3D NULL;
->
-> OK, this is new in this round.  The idea is that everybody else can
-> rely on the invariant that the referent being NULL is equivalent to
-> REF_ISSYMREF bit in flag word being off from here on.
->
->> +	add_entry_to_dir(dir, create_ref_entry(refname, referent, &oid, flag=
-));
->>  }
->>
->>  /*
->> @@ -886,6 +892,11 @@ static int files_ref_iterator_advance(struct ref_=
-iterator *ref_iterator)
->>  		iter->base.refname =3D iter->iter0->refname;
->>  		iter->base.oid =3D iter->iter0->oid;
->>  		iter->base.flags =3D iter->iter0->flags;
->> +		if (iter->iter0->flags & REF_ISSYMREF)
->> +			iter->base.referent =3D iter->iter0->referent;
->> +		else
->> +			iter->base.referent =3D NULL;
->>  		return ITER_OK;
->>  	}
->
-> Hmph, why not an unconditional
->
-> 		iter->base.referent =3D iter->iter0->referent;
->
-> instead?  This code is making sure (iter->base.flags & REF_ISSYMREF)
-> is directly linked to non-NULL-ness or iter->base.referent, and we
-> want to make everybody take it as invariant.  Shouldn't this code
-> also rely on the same invariant?  If iter-iter0->referent is NULL,
-> iter->iter0->flag has REF_ISSYMREF bit off, and vice versa.
-
-That's a good point. Even though this code will be used in a loop, if we =
-just
-set it every time unconditionally then we won't end up with leftover valu=
-es. Wil
-l adjust in the next version.
-
+So in this case, does that mean we'd replace our call to `libc::free()`
+with just `free()`, and then add a declaration for `free` in our
+`extern "C"` section of cgit-sys? It seems to work on my machine, but is
+that actually the more portable option compared to using libc::free? Or
+have I misunderstood something?
