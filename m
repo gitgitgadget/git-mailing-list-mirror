@@ -1,82 +1,83 @@
 Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B02718C333
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2743B18C333
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723122355; cv=none; b=dW9/iujzscTSoui6vBe3exZ/HUY+7DifoBt+vWSrDgT3UTyUpjUW8RZCfTaYOtnozMKGQzErMawVkLfucYd+QyX6Rc30AfJPmhK7EO7pe3As7MdWfH7joVn/ekzRpo96cEoGQiT0k0EtLs+awIe9dNTr299aYLq41zfXqxwNWn4=
+	t=1723122360; cv=none; b=a5wRKZPON98nw+vSIhsb/huZxna2s3O4/sY2kvhgsBKc+bbAfh96TJKr3djExEPqBEJeKNj0NGrtRfY+kkzxKZ2yVfoeM41sHXnYq5/92Ze8E13GmDXzz8g5t3swRJGpQI96UR5MJxhwSQURhsni0juA2MacWFkY9uDEHGALA6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723122355; c=relaxed/simple;
-	bh=h66vPxNJLDUjULagXIM2P6YAg244y+cFx47hZ/bYtQ4=;
+	s=arc-20240116; t=1723122360; c=relaxed/simple;
+	bh=C8HQKjGu/Wwze7Lp+IrkWZz2KZ1pzkYDi8CTT0Y8tmI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohRsf9Q8jtPadIoQRJK036AIAFYiqZYsZgbqZSXu51e+za08IK0R9u73DES+njjHHn4lqHEAOWoUK8O7pQ62nPbN+IyXeyNwcd+QfenSWdO+Qpar0wYxsj0a7BeHBJtzaWFdHc5wKM6szeGZZNDpcrhGRc3cgOjaBtogTdJFQiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hMwZxXH0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eR2adLTm; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=WGMaS5ci5NHVlBmJZYT0WvYZxhchdA7YYovaAY+soSP99ZRZB8KL87pH3Wu8noQUwvRxz+rqhB67KApQFGChZACFWZoGX2d88rVPN4RVIL/A3+bqvu6kx47jwqr4nq2Z1tnJZ4XTNz5UuwzPW9+7n46RHiR+4Ak/P7uNsiyW7gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bt4/JGO5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=up0aWjDi; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hMwZxXH0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eR2adLTm"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5A6741151AC9;
-	Thu,  8 Aug 2024 09:05:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bt4/JGO5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="up0aWjDi"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 7BBF11151AD8;
+	Thu,  8 Aug 2024 09:05:58 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute8.internal (MEProxy); Thu, 08 Aug 2024 09:05:53 -0400
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 09:05:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723122353; x=1723208753; bh=5bU/hHktVI
-	D3YUUZBxWmZSC1cDj7jCtG/YGcVhnvzms=; b=hMwZxXH0mA3vVBKZrCUb1sZt6x
-	S1FFxaxy2SPa1hIWkvidh+yh/XgQ0ae/QDTNlu7ND5fEV2Rw1hMDt2Ctsg4gd5Zr
-	ffKnyxVGlZpB93n0mkjDR04EcFvGV/Ib7erCWjGxQ21WsxnIe2otoMVI0cLO8wTp
-	0DYnlKLLzQ3h5O9Dzi5wpwL32aoN6q6r+yzzrg0Ngm1GQU/rPivoxeDd7HQKDiFT
-	baYDCUuLVcUV90eapU9ku5B1qru76W10sh9400rhdFEpoXANtsyBovISXT7sHN5k
-	Td3RXLk2owta3/zpmugI27Qr8HLCBuZVZL52S1iN+glsjr3Uwm+VnoYQ1V5w==
+	:subject:to:to; s=fm3; t=1723122358; x=1723208758; bh=FXlAYSkoXQ
+	1x0B8hXh3SeaBGA+U1CdVN5noNTlVxTuQ=; b=Bt4/JGO5yflnfIk95tOniy0fTu
+	DRqO5D/ok3GceA+zCpptV11ftBf4Oa0Nb/QDjT0Zg40FuQTSq0JJCLbcwQ7CoFH4
+	i1QpvkG/U8sdEHM7hI1Sb+MuYGkLFEw159w1Yk/u7Q9PVT+p1yt1TqOsxYhVdDIQ
+	woBGJh2VtyjYtqRErcCuMA0nqJyd+O/yUAK7YSAyLGO03ib5pzDIsZkJCbtq0i2a
+	6SkeBe7iFpbcWy1P8rEvl2tizZiBYVz4qcFpglnzgQ9l13p/r1chjZnrHIH9+6M2
+	W1njI9MKAVHijU4NlobQCyyYSH/v42TPCI9D0uHka+xzTr0xckXUA1gmNH5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723122353; x=1723208753; bh=5bU/hHktVID3YUUZBxWmZSC1cDj7
-	jCtG/YGcVhnvzms=; b=eR2adLTmI+VfWoZGiCR97RHSbE+8ZfORzeVnHFzlsXBh
-	84DlagIRmO7g06BpsX+2VOL4GQcCTwTcOg8LhYfnAaZEfuqeatWBUg2LumVzn/am
-	b3ecQUz5PXJI//ObLl6LUfcKA0dvz5uzf5AZ/hkrhcMatUhKeOyIwilhVNwkHx71
-	6pCVhTzxnKx3sKRqPLapgkX5ghUuBPsibv+EBANMinY+929WHry1I94ouaFc/Ln4
-	qhGf+xM4+45iB7g0r3WT88PYnBDGdadZ6bSN/mO6K5tk6KZCU2gx8oABtwjHS7Yt
-	kIfF1SVn7V5lGe4rBOjvZxrUpuZNAYxGU2OWM6RRxw==
-X-ME-Sender: <xms:scK0ZlH58eMdFn8IpekWdpiQiWRmoCefIdt9xAHMA5Z3SQvS_jZUpg>
-    <xme:scK0ZqUJqNA7Bn0417Pl4e8OA-ZiyZf8Rt0OPz2TVMZRBjyYsLS0-tT4wYLVqeRNa
-    -trE3D8S724vONTMA>
-X-ME-Received: <xmr:scK0ZnKxssGH45xN_0yZZS_xxFRhoKg1cfo5M_-VQVMt8Tv1AxOz7WZS9BvQXibxfa5qCiZg241dWj6Ti088gyIl80y7qDHwy6mnZWNuBgtfRBOU>
+	fm3; t=1723122358; x=1723208758; bh=FXlAYSkoXQ1x0B8hXh3SeaBGA+U1
+	CdVN5noNTlVxTuQ=; b=up0aWjDi7H1bI1/mwbuGwb29SnaApSI/sZTOT5iBd7u/
+	gA8uSw1efrHZhokO2Xg9oT5+i4EHEKufenYSrxH23zm1R1kTKQfybY8nxAA+62hL
+	iMpCPSKzzfr7quyft3a4YfDTyZ3Z40o/gOisXkUynMQKY4honi8wUzLPKaeP1oUe
+	5yRAxli+C8R58j0SXWFcR06/03BwMHzsJeKCTG+7D09GLUfI7tJWU5E118j0mFKb
+	A1untAIDsFVbsZc8CzFiUNrWZLlTnYXEFGyJ6kStmgd8qQ1ZFicHhLi1l1mogBNt
+	P8yQKcGYa8rlzPGYA5T1GEH+04YENu8T9JBl1/LnRQ==
+X-ME-Sender: <xms:tsK0Zlpe9M08rV_SL1DNBKuuUVS03rRvbXUjeiHA06wNLq_X57gFRg>
+    <xme:tsK0Znokv4wC3dLSMySiDnz1lY0aAMAa5Ml_PcsN-Rm7yFys4BAqepawHkP36St0q
+    rAA56NtO9EzUXeA7Q>
+X-ME-Received: <xmr:tsK0ZiN8AAxxXO4L8oIT0xvkg8_7tA9gdB52jfqT0I64zJHjhQ0nrwn_WnTRGkrOGvZ11ViT3slTADyxhD-PmJb1z4MQufNaN4fG1T4-LNftAiW4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdeitdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:scK0ZrFlfbp7yea5mJFzxfqaDxI4Mkne4uC4RwujUrloqXpdvwxKpg>
-    <xmx:scK0ZrUWMYpFUoz9XYWy0Cfze7qO4QikFgrhSWGjKLG1Ocfj1hPq_w>
-    <xmx:scK0ZmPlD1e0aE0iGBTyqzNiULNv0uJfeqHXd727A73mfuPLbB3kFA>
-    <xmx:scK0Zq0uvR37GChPT9ryrT10dLAswh-yrsjyciw0qVzXFDye6RzNgw>
-    <xmx:scK0ZmR0fKL7xAxNb1mKg097pwem1m8unGQGoq_MFuI2PZ6gW08G5MSU>
+    enucggtffrrghtthgvrhhnpeegieffjeekteeluefhteetheegueethfetuefgtdeuffdt
+    hfekueekkeeuvdeileenucffohhmrghinhepughifhhfohhpthdrnhhonecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrmh
+    gvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomh
+X-ME-Proxy: <xmx:tsK0Zg6545o8sVsCAoCq_6UcVzM_w4JFw5Mhdy1NwXP_34bj41Gk2g>
+    <xmx:tsK0Zk4jZIRr8CpZw5K2FyWUG3bcTut5G5nBAHatqSVu8KdngFSoLA>
+    <xmx:tsK0Zoi4KQedwHDn6_knXIM-KQkzDdH0Iw8a4imaGE4e70pWMU2_OA>
+    <xmx:tsK0Zm5TiwjI9g1skFiHrC3YgFaawq0KBTcxIEZeF-cpGNxifwt1Dw>
+    <xmx:tsK0ZimnTd8O66SBODoOOClkCvjpSnKGe-be7rSk9VznlL6lv8u2-gnq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 09:05:52 -0400 (EDT)
+ 8 Aug 2024 09:05:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3b0283d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 13:05:45 +0000 (UTC)
-Date: Thu, 8 Aug 2024 15:05:49 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id ab90a3e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 13:05:50 +0000 (UTC)
+Date: Thu, 8 Aug 2024 15:05:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 17/22] diff: fix leak when parsing invalid ignore regex
- option
-Message-ID: <edf6f148cd2f7bb140c878198a054ae7d9f708c2.1723121979.git.ps@pks.im>
+Subject: [PATCH v2 18/22] builtin/format-patch: fix various trivial memory
+ leaks
+Message-ID: <343e3bd4dffcde04d42ef005c715cada724bba91.1723121979.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723121979.git.ps@pks.im>
 Precedence: bulk
@@ -86,79 +87,125 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OSg6u49fRoKb1fZx"
+	protocol="application/pgp-signature"; boundary="9g8Cp4MpIgPCWLgX"
 Content-Disposition: inline
 In-Reply-To: <cover.1723121979.git.ps@pks.im>
 
 
---OSg6u49fRoKb1fZx
+--9g8Cp4MpIgPCWLgX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When parsing invalid ignore regexes passed via the `-I` option we don't
-free already-allocated memory, leading to a memory leak. Fix this.
+There are various memory leaks hit by git-format-patch(1). Basically all
+of them are trivial, except that un-setting `diffopt.no_free` requires
+us to unset the `diffopt.file` because we manually close it already.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- diff.c                  | 6 +++++-
- t/t4013-diff-various.sh | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ builtin/log.c           | 12 +++++++++---
+ t/t4014-format-patch.sh |  1 +
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index ebb7538e04..9251c47b72 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5464,9 +5464,13 @@ static int diff_opt_ignore_regex(const struct option=
- *opt,
- 	regex_t *regex;
+diff --git a/builtin/log.c b/builtin/log.c
+index a73a767606..ff997a0d0e 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1833,6 +1833,7 @@ static struct commit *get_base_commit(const struct fo=
+rmat_config *cfg,
+ 			}
 =20
- 	BUG_ON_OPT_NEG(unset);
-+
- 	regex =3D xmalloc(sizeof(*regex));
--	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
-+	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE)) {
-+		free(regex);
- 		return error(_("invalid regex given to -I: '%s'"), arg);
-+	}
-+
- 	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
- 		   options->ignore_regex_alloc);
- 	options->ignore_regex[options->ignore_regex_nr++] =3D regex;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 3855d68dbc..87d248d034 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -8,6 +8,7 @@ test_description=3D'Various diff formatting options'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmaster
+ 			rev[i] =3D merge_base->item;
++			free_commit_list(merge_base);
+ 		}
+=20
+ 		if (rev_nr % 2)
+@@ -2023,6 +2024,7 @@ int cmd_format_patch(int argc, const char **argv, con=
+st char *prefix)
+ 	const char *rfc =3D NULL;
+ 	int creation_factor =3D -1;
+ 	const char *signature =3D git_version_string;
++	char *signature_to_free =3D NULL;
+ 	char *signature_file_arg =3D NULL;
+ 	struct keep_callback_data keep_callback_data =3D {
+ 		.cfg =3D &cfg,
+@@ -2443,7 +2445,7 @@ int cmd_format_patch(int argc, const char **argv, con=
+st char *prefix)
+=20
+ 		if (strbuf_read_file(&buf, signature_file, 128) < 0)
+ 			die_errno(_("unable to read signature file '%s'"), signature_file);
+-		signature =3D strbuf_detach(&buf, NULL);
++		signature =3D signature_to_free =3D strbuf_detach(&buf, NULL);
+ 	} else if (cfg.signature) {
+ 		signature =3D cfg.signature;
+ 	}
+@@ -2548,12 +2550,13 @@ int cmd_format_patch(int argc, const char **argv, c=
+onst char *prefix)
+ 			else
+ 				print_signature(signature, rev.diffopt.file);
+ 		}
+-		if (output_directory)
++		if (output_directory) {
+ 			fclose(rev.diffopt.file);
++			rev.diffopt.file =3D NULL;
++		}
+ 	}
+ 	stop_progress(&progress);
+ 	free(list);
+-	free(branch_name);
+ 	if (ignore_if_in_upstream)
+ 		free_patch_ids(&ids);
+=20
+@@ -2565,11 +2568,14 @@ int cmd_format_patch(int argc, const char **argv, c=
+onst char *prefix)
+ 	strbuf_release(&rdiff_title);
+ 	free(description_file);
+ 	free(signature_file_arg);
++	free(signature_to_free);
++	free(branch_name);
+ 	free(to_free);
+ 	free(rev.message_id);
+ 	if (rev.ref_message_ids)
+ 		string_list_clear(rev.ref_message_ids, 0);
+ 	free(rev.ref_message_ids);
++	rev.diffopt.no_free =3D 0;
+ 	release_revisions(&rev);
+ 	format_config_release(&cfg);
+ 	return 0;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 884f83fb8a..1c46e963e4 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -8,6 +8,7 @@ test_description=3D'various format-patch tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
 =20
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---OSg6u49fRoKb1fZx
+--9g8Cp4MpIgPCWLgX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wq0ACgkQVbJhu7ck
-PpTHYg//YcnVFUGHiSs/B+KiEm32PhEegp0xLcuGwTHONdbjhQGNlEemp516/yeZ
-H4219PUlFyQ5zaYtsiA9LSbKKjPnEwC4VsJtRftmUf98uCnCpJwlTAzZY3Gc7Hyi
-DdJRP2fesmFgsHj/xNw8qtYobcCXzZED9lIzvl7PmyqFuMIN25jwgXpJJ//UPVoY
-oBKI7TekMcB5dPC4BNDC09572MPclWGk7bavEVPigio7NSfgwtca7pUUHl62Xe7b
-AdQQP8rdGK1iKVmyRtKOzOI9dP7SCSS7iyDQNyj9tIY2BEZzN55+RbKZyp7O9xU7
-BK80JA6ngcmnxe3no+7PJIwldJ3D9sXvk0AiFH/3l4x9ofm0ZxlG+GEUGHI4eNy0
-CrerFGVQSBQaJEllOlUdfUyr0LAylFJPCSXgNtSQKAJakoD0Y2HFm7u+r3AtQl4I
-Sf3+6m7RQ+cBbuf6w118nTXxfoeVjmb9xOGTPQy57vazJrD5DRtd+1UjAVRwfCdM
-7+wzxnATKSTxs6VBzhhP4bvIZWn2ZFAxnrl7auY1O8GkvA23V7n/HxVD0bB1NtTy
-ap+Z5JtpA/0MXTrMrGZHxDEKgInyRoiFbRvGMEfFS/ALzwkNEdsncBKag5ddVQ/g
-wzMaYDFE2xjq3dUuooIOuGH2ioqm2agGvhjHCqb5FxxofnS0gLI=
-=4Ksp
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wrIACgkQVbJhu7ck
+PpRCpg/+MVr8EHHmH3qQtxe+K0PWBTkPxkTQbPcrbPQW/nn3FVaRqr4vxOmmUrjs
+M7ZLc9W0FPUdEld20kuGYDojpOzgHsg9tBPfrC41tuQ7saBpoXoty1wRPGelOgnK
+r3ShoiXuT57ZRfDH5F3wFFszLHaxe3YCheDTz12rElcQZ/PI1og6pMoorefcr+Re
+Klg5NuIMBT1h+FiOxIIlXl4kZ4qSSZ1m+JKMgw7sj86lOmlTTkbuOD/wnjok5s9W
+Po1xh7KbwI4RYu1ABs6P51zH7Q4bJUoide+Zz5kLY8FoEtb4VRkqPj+M+hD1DAZo
+sbOUQFw9mQmwCKS4p7USlDbmsjpdo9gs9QKWfJYv0/+8Wc5Eqf+MEJ+KMoT4Xdge
+UbQil1iagbOewOcCedqFrUSa25aCWTuszt6JnSWSh+dAvB9QvgQpwqa6KMpRwFFW
+36z7Icihyc/e5XPt8uwKU3CqSKWz2eab6PxSdhykdzD2ZVL3G/RhwKqVWshs51AY
+BI9yIJqVzDfCDYEZoe9LcKpAOQ39Q49lt2F1D4cK823UjHribEnUYA6+IWS5RsPc
+HtxuxCT0nV6Y1iGVEjB++5acpilL9ABo02IQpsNWu9PuI2S3NS/M5ytgBk3GC/wB
+SltUdTJzYJ+DkEoWQbVIq6CaI2F8N0Uu2xW4ssPChCo2lD/hyh8=
+=KNHD
 -----END PGP SIGNATURE-----
 
---OSg6u49fRoKb1fZx--
+--9g8Cp4MpIgPCWLgX--
