@@ -1,139 +1,159 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61BE1119A
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 10:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700DE10F9
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 11:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723114005; cv=none; b=POZmaFb4x27oNdUV+STunAxllCB9opkchUL4V8y3guDmKKwXtk9LSJqeehWYUtCfHJfEhigP073T3k2WVNKOUY1yI1i+RopSlie13oxA7c2ABaFO3qVHzYGwGfb84KkVtsheJMTacK7jigWRdpFNLrV8SEpTxNXhvYkLYhPin8w=
+	t=1723116056; cv=none; b=PWY3wb3kFCCa2pY+UY4IUZWbe8DDw6Ppu1Cbnuuv2aW3yHcfmD+BIO9GfVodp3cJi4yM7P5NNj9l3LAxq+y/iUL1JuUx0f6HxbE0qQkgt+FxKOnoEZDsszRYpvgqe0BHLH0XSD9bsKT3rqmUcYc92CTxP0rAu9A2VWY2SpBuKIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723114005; c=relaxed/simple;
-	bh=LxCPqGYZiaJWqidUkwZuDkU7RAE/pvNtlrPcQma3/FQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dt7ZCf0SrMrXRzGdXa3IqOfjiPwDK0w1PmtpfOYoOj5pAN9NMh6B+WEuAtt/yYp0uAz/JpwW1L5dX5eKRE5NtD3JM3DdT0ob+o4VaRthiaWOoLixyyjxPS7HxBETQXNzNmZux3CUSxIjqf3lN/NuNA+T4m5Uj2Ay85PhZZwKPrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TyKmfqdc; arc=none smtp.client-ip=209.85.161.53
+	s=arc-20240116; t=1723116056; c=relaxed/simple;
+	bh=YduXBB/yohrhrTfGHLoP9j1b5LF/59GFqREd9sem11c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qb/Z70kJmfPFx80EaSq1oEsAIqUlGO2BbXN8MZ5z74bwWvRZha/7Ea1CgmR/nRhjCimbWq+cTHDimZJzgUfjkdBDa6HXESL2T6v1l6mk/QvXHQGjXPOtopomYfS+a0t5jyTIf2vD9fAIWIB8eyZ9UA0ahODxhzcUU6ERw80X1Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RqnDtpaV; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TyKmfqdc"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5d5e97b84fbso393837eaf.1
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 03:46:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RqnDtpaV"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70d19d768c2so636318b3a.3
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 04:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723114003; x=1723718803; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qy38vghzgLo+kyloLBwwdle/d0Kg3/rn1c2PBB+jnKs=;
-        b=TyKmfqdcgOQ1HbNoqg1cW5DWbZH15j2S7KXbEMMmIRf7ANEW9wRMbQxHgISOi8Ou0X
-         a5p3u3xOZoW7cXWvkIQ3ncxmUfSOUoJK9cn9fVzjEv/ln+ixXk4nE4x4td+64WoLRJMZ
-         NlTL5KkgMYEpvOJuUmEyFm/vdd6D6tcECs9aemmbgCM+zVIjwySWiyI9gVHBpqHbwMyg
-         EJPEoycVpTJFQXLCSCRFfMv/vtv6wF9og9v8nBEDnh6ntXjWhibNCqBXCDr+D6CUMLJi
-         U2bkTxYahCLJNvSuYEy/ipLU1yHH7MSs2UZj0dacdGbWpfZ5Fk9AF1/WQ2IxpSxpTROM
-         FryQ==
+        d=gmail.com; s=20230601; t=1723116054; x=1723720854; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dybC2ucSFiYdHOJPK7/XCl3ifqd9hD99ObWULiWBiAk=;
+        b=RqnDtpaVCM/ZpackqibhXxqzWKXWO7hkp6LR186GNstptqZOGeQCGP7D8VA0phm8gg
+         0CUH4b3ylnn+T9gral7Re+fgFat6u74WASB/X1UfQgjxwjeFkqqTDRtg9Uqiq9DF62Gm
+         1CqtVTdRwLzjE5Mkd/mHuNJ/3sqFHYfODA20O9eAtoBL+x+avern/o4LB4GpTwiPhdYW
+         MRkGBdV2XqJD8f9bLs+xx+xEW+F87YNUBc+4saWS+lKA90+JQfDo55VocR2wBY98sNAc
+         2CsxzQUpP0JftBxGj92uw3pg8J/gqUDlVyZvt/Zmw1jiIjvy0Kvrlc2m9m0rKPXWAqDs
+         ZQ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723114003; x=1723718803;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qy38vghzgLo+kyloLBwwdle/d0Kg3/rn1c2PBB+jnKs=;
-        b=Q1XSlUfDcoD+doU6zthZwjt0Uq2287YSKZeDSRYTGY71uXU8cT+Y4i6mKPWKEmkVmZ
-         POmdJYPUou6seFJk4Kzo9jHJ/edd30CTTZRQdpkrA6qrVwWkw7twBg0199QgHT2H3OGW
-         VwiHsBdpIleV2VZakoM5/cCzFm1Md0T9fq4G/gqDONrWZMHPRJj1QNL49X44KDHFJSJK
-         U0iPE2xmspTQFDI0lTMMk70NVPMbYa3L6qPdK939htkts8ugvphVV0OoNsIZIZfiQVpo
-         WRi42+uAehDYXRJd0He25i3h99YaGb3FApLXEWgRAPZXMN+pNF8r9fSUlE1Y69VvXzUc
-         RYaw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhh6CN+IswzmKMTBTO6eatyKUJyfhY7wbqETWZC6/MHNxO1njcnve43tpV3HNp+ucOEhtN8b4lgSiUfmfEIqX3YukN
-X-Gm-Message-State: AOJu0Yz7MHXnhENQiE/tLyn5wQQ9rbZfxMAxt/uCHWh3Mukfu7ecQolB
-	cijsiJG3AIS9MPfVzbya0RBZ2s4o1hMBvTxXYXsIGGYkeCZ6xCWk8S6xTrKFaD1FkAewp7Sx6sL
-	spDl08MzSfNAtXU3i4SJTTPXdGDs=
-X-Google-Smtp-Source: AGHT+IEgrKZe4m1lMgddEsE3CTXr500ad/fMr/50LfEMnjlOwXfFq8XZ/1ZtLXFtT+rT3RvQzEqEdzW3nWC72eDOX5w=
-X-Received: by 2002:a05:6820:270d:b0:5c6:9293:ed8a with SMTP id
- 006d021491bc7-5d855c8111bmr1162520eaf.6.1723114002887; Thu, 08 Aug 2024
- 03:46:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Aug 2024 03:46:41 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <63e64c8d82783b5d3fc8db189a29d69c844f5465.1722862822.git.ps@pks.im>
-References: <cover.1722435214.git.ps@pks.im> <cover.1722862822.git.ps@pks.im> <63e64c8d82783b5d3fc8db189a29d69c844f5465.1722862822.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1723116054; x=1723720854;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dybC2ucSFiYdHOJPK7/XCl3ifqd9hD99ObWULiWBiAk=;
+        b=IaTspH5wr/vPfX7R8hTWqx1kWT7RfSOKdtfXg4aWPi548fZ8favW8iuSbz45Oc0Ybq
+         xaMNz4faKCzhTvm+eGZ7/kaQQ6AIbfUCTT4x9epgrbt04acvI+cMzQ/sJW+qToxxkG5j
+         6ThKK0OOfCkFX0Fq4Zj31tKHWBT9K63SlDivoSHIdmsHf0OehtLvZAcNRrknti8HIcaL
+         u3QZFAzE2m1APg0zx7M+Y9LRH7iX2V+0yReHNWMj7cDmrgOAVLJoN//6OIm/UFS2b0u7
+         RmMNhEaubcPe7DNeYIomaT/8L/gseA5ja1XjxfDvH1/uW073EUqaZgf6x8zjhZlcpzrt
+         wtrQ==
+X-Gm-Message-State: AOJu0Yw2tDKVSn6kQqegdwTEjC6GlIWjx4krkiayj2LmvrgE5nJr6YuY
+	GwBVaqVWzEqIVaJkd0npPWrLORUYEMDU9WYjWSG2xveVNT/vXQmZatACIwy46ko=
+X-Google-Smtp-Source: AGHT+IH1iSBfuZm+ZKaqcVDKDUC151LuvqcCbhU4Dm7CDrDwNfimSLHmFR+cTFpXLRKQeMqI+g52iQ==
+X-Received: by 2002:a05:6a00:22c2:b0:70b:1d77:730a with SMTP id d2e1a72fcca58-710cae75777mr2056681b3a.28.1723116054042;
+        Thu, 08 Aug 2024 04:20:54 -0700 (PDT)
+Received: from localhost ([103.74.125.162])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710cb25e117sm973705b3a.94.2024.08.08.04.20.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Aug 2024 04:20:53 -0700 (PDT)
+Date: Thu, 8 Aug 2024 19:21:22 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [GSoC][PATCH v16 0/9] ref consistency check infra setup
+Message-ID: <ZrSqMmD-quQ18a9F@ArchLinux.localdomain>
+References: <ZrEBKjzbyxtMdCCx@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 8 Aug 2024 03:46:41 -0700
-Message-ID: <CAOLa=ZQJVTspAsjxrQa-WVxX4tnhAd0NfwL2e-MXHvyq5+cwfg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/9] reftable/stack: test compaction with
- already-locked tables
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000000cd5dd061f29be94"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZrEBKjzbyxtMdCCx@ArchLinux>
 
---0000000000000cd5dd061f29be94
-Content-Type: text/plain; charset="UTF-8"
+Hi All, this version handles some minor changes:
 
-Patrick Steinhardt <ps@pks.im> writes:
+1. Remove redundant newlines.
+2. Fix typo in commit message.
 
-> We're lacking test coverage for compacting tables when some of the
-> tables that we are about to compact are locked. Add two tests that
-> exercise this, one for auto-compaction and one for full compaction.
->
+At last, I wanna thank every reviewer. As we can see, this series starts
+from 5.27, it's a very long journey. I have learned a lot.
 
-So this patch prepares for the upcoming fixes by adding tests which fail
-compaction. Makes sense.
+Thanks
+Jialuo
 
-[snip]
+shejialuo (9):
+  fsck: rename "skiplist" to "skip_oids"
+  fsck: rename objects-related fsck error functions
+  fsck: make "fsck_error" callback generic
+  fsck: add a unified interface for reporting fsck messages
+  fsck: add refs report function
+  refs: set up ref consistency check infrastructure
+  builtin/refs: add verify subcommand
+  files-backend: add unified interface for refs scanning
+  fsck: add ref name check for files backend
 
-> +static void test_reftable_stack_compaction_with_locked_tables(void)
-> +{
-> +	struct reftable_write_options opts = {
-> +		.disable_auto_compact = 1,
-> +	};
-> +	struct reftable_stack *st = NULL;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	char *dir = get_tmp_dir(__LINE__);
-> +	int err;
-> +
-> +	err = reftable_new_stack(&st, dir, &opts);
-> +	EXPECT_ERR(err);
-> +
-> +	write_n_ref_tables(st, &opts, 3);
-> +	EXPECT(st->merged->stack_len == 3);
-> +
-> +	/* Lock one of the tables that we're about to compact. */
-> +	strbuf_reset(&buf);
-> +	strbuf_addf(&buf, "%s/%s.lock", dir, st->readers[1]->name);
-> +	write_file_buf(buf.buf, "", 0);
-> +
-> +	/*
-> +	 * Compaction is expected to fail given that we were not able to
-> +	 * compact all tables.
-> +	 */
-> +	err = reftable_stack_compact_all(st, NULL);
-> +	EXPECT(err == REFTABLE_LOCK_ERROR);
-> +	/* TODO: this is wrong, we should get notified about the failure. */
-> +	EXPECT(st->stats.failures == 0);
+ Documentation/fsck-msgids.txt |   6 ++
+ Documentation/git-refs.txt    |  13 ++++
+ builtin/fsck.c                |  17 +++--
+ builtin/mktag.c               |   3 +-
+ builtin/refs.c                |  34 +++++++++
+ fsck.c                        | 125 +++++++++++++++++++++++++++-------
+ fsck.h                        |  76 ++++++++++++++++-----
+ object-file.c                 |   9 ++-
+ refs.c                        |   5 ++
+ refs.h                        |   8 +++
+ refs/debug.c                  |  11 +++
+ refs/files-backend.c          | 115 ++++++++++++++++++++++++++++++-
+ refs/packed-backend.c         |   8 +++
+ refs/refs-internal.h          |   6 ++
+ refs/reftable-backend.c       |   8 +++
+ t/t0602-reffiles-fsck.sh      |  92 +++++++++++++++++++++++++
+ 16 files changed, 477 insertions(+), 59 deletions(-)
+ create mode 100755 t/t0602-reffiles-fsck.sh
 
-This is a good catch. The autocompaction code has a wrapper
-`stack_compact_range_stats` which handles this exact scenario.
+Range-diff against v15:
+ 1:  9aeaa3211c =  1:  9aeaa3211c fsck: rename "skiplist" to "skip_oids"
+ 2:  7511340a21 =  2:  7511340a21 fsck: rename objects-related fsck error functions
+ 3:  ee971d17f4 =  3:  ee971d17f4 fsck: make "fsck_error" callback generic
+ 4:  59ccdab54d !  4:  f80fa00538 fsck: add a unified interface for reporting fsck messages
+    @@ Commit message
+         "fsck_vreport". Instead of using "...", provide "va_list" to allow more
+         flexibility.
+     
+    -    Instead of changing "report" prototype to be algin with the
+    +    Instead of changing "report" prototype to be align with the
+         "fsck_vreport" function, we leave the "report" prototype unchanged due
+         to the reason that there are nearly 62 references about "report"
+         function. Simply change "report" function to use "fsck_vreport" to
+ 5:  b5607ac61c !  5:  8c0376cfd5 fsck: add refs report function
+    @@ fsck.c: int fsck_objects_error_function(struct fsck_options *o,
+     +			     const char *message)
+     +{
+     +	struct fsck_ref_report *report = fsck_report;
+    -+
+     +	struct strbuf sb = STRBUF_INIT;
+     +	int ret = 0;
+     +
+    @@ fsck.c: int fsck_objects_error_function(struct fsck_options *o,
+     +
+     +	strbuf_release(&sb);
+     +	return ret;
+    -+
+     +}
+     +
+      static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
+ 6:  5819406b40 =  6:  552fe62ff4 refs: set up ref consistency check infrastructure
+ 7:  6a9c194a05 =  7:  3b357fa89e builtin/refs: add verify subcommand
+ 8:  76406b1303 !  8:  8d2c7b3aa5 files-backend: add unified interface for refs scanning
+    @@ refs/files-backend.c: static int files_ref_store_remove_on_disk(struct ref_store
+     +	if (o->verbose)
+     +		fprintf_ln(stderr, _("Checking references consistency"));
+     +	return files_fsck_refs_dir(ref_store, o,  "refs", fsck_refs_fn);
+    -+
+     +}
+     +
+      static int files_fsck(struct ref_store *ref_store,
+ 9:  ed02380516 =  9:  b39533ae56 fsck: add ref name check for files backend
+-- 
+2.46.0
 
-[snip]
-
---0000000000000cd5dd061f29be94
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 33c7744b446a6fc8_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hMG9oQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmNHQy85ZUJCNWNwcTIwdS9nRlgvc1dQaUxUN0NIWgp3eUMzNWNCcXQy
-UUFxN0NhdVlOZW1oTmw2NWQ5dmU5VGNsQTVVRGdwaHdzaTBnYXVhZVZTeUNyOVllV0NQK21DCkNu
-N3lrL3VzeGU4QnNGZXRQTDR3eHVRcmlIN0ZranZidG9pODd4SFo5MTd4V0VleWxOb2lQdDE0b3dK
-bE5CRnoKd0Vua0YvSG1ta1pqSWlnUTU0RXVjRjVzeXpndDJYOFczalNKajVENUEvSTJBM3ladDFO
-TlJnckluVmdFOGpsUQpyWFRlYzRmUDFDRW43MncrRjVURlVyV05aRy94eHFuOS9WT242YWlQVHhz
-MVd0L1lwV2Y5TmxOWmh5a1ZudjRaCi8rVVhDRjRYSFd3bERjbVJ2T01wbVFPZ1V0TlllQkFwNzJq
-b2FVcko0RmtDR2QydXFVV2xXZWlmUzRUNUhEekIKem5aUXpWOVhpRHU3d1J5V0RQVGZ4TzQ5Z1dz
-MUh1cWhtUk0veEh0VFcwNHg3cXlCYmpYc1hqZElQSjlXZWFhRQozSnFuWitKMS93QkllSW4zSFR6
-cUV2TnRMdU1iY1NKemk3azFCQmNjOUhCMTJ4REg2UDVwcTYzV2N4RUdOc0ZZCnlVVCtPaFVQd3ZT
-REhOUGhLWEh5cEtxT3pMTHF3NDRZZjk5Y2Fybz0KPWhwZkIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000cd5dd061f29be94--
