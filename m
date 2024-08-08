@@ -1,121 +1,155 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A772218E02E
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 12:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A65E18C93B
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 12:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723120007; cv=none; b=iBhL4kzC+KGSicXEPU5FG+1I2Si0y+XDoKT6bIw26t2D8xNl3PJlYU6G5Lbsxd8A/1gRHC2J+OnYTLFK4kWtAOgZNY4qbgmwZ3W/Bjv3GE6CA8qnfYY5nbNS83DOT5fiZWDYbee4sGQnuIHpxO8Pia7E3Xg7iYNi38PZwj6TCOY=
+	t=1723121932; cv=none; b=PEcJlre6aazKcuGDPZmxy/Mq7h1CVldRWu3+7hFpThBiZahKlez9CpTNEHe39jde0ftnFnG/WnkGjO7+ohbwQkPaXIow8WH8PCn1UXg36ObLFWLVYPGANgV/ng5hBj7nwsWlP6TxPu+FNw/bbjyQsfdY+FBzKr/TGPnY0GfXulM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723120007; c=relaxed/simple;
-	bh=kQHqJoLlt7Cj0v3m8zJly7Mh34/0YYaw0kx33WTjbpM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ltQSPgPJFWEcza77gcC9QGbUmzHBiwc4xR44eRYMEROdlHQY8ghYlDZuZZLNQqgW/WwLqUJtc7vejApaII/eO+RcqF34ogYADL8X4xPT70mv7PFIs+DLDhxkd73M7roL4FS5/OYjAA3ZfhDl+MKCusCM7SnldC9/1tlFDge044M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1bqnmvl; arc=none smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723121932; c=relaxed/simple;
+	bh=88an2VUOY5IrC5cYpw+AVV3NKo/hK9dezu4YWYYTrTc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XTd1YVDK1fTpR3tlVq1Ow/ioJG1HMTJVbCKZ2sAcO8wuA6FaGBct8Awf8Q6YEI/Ed7dyAk2CKI/Rwh4+eeziLV+x8gC24R3WsRcx2HfZiCyKD7pKKT2wpTuBWUP+JC1BFjTQ+gaOAu0Jm+xvwisLP0ByWwX5UtDf/VTeThzAQOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mnFmAg9G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lm0dUvzv; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1bqnmvl"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5d5eec95a74so490390eaf.1
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 05:26:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723120004; x=1723724804; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MxPxPm72b/c66Cy0rLiCQgTap7/ZTS0k7JiaWUCclzo=;
-        b=K1bqnmvlemfVVs96ilQwEZWAKuOY9y6T96s4Z+Oyc9pxrurFFI87CKrVVXVD4W/dVr
-         TCPRnpCzzc532Wnxpard27zZC+CmF1VsWr0DOXU+8VxqYLP3+3/eTOwwycB9M4+FLbpB
-         +aSx21DRvqD+RecwDzw/5m5UCqBcGv1NRSaR54axYqjUXoF/OLCYqxmsT2drdw5DsGrH
-         jXAK0wXSBlRmwrTQ8hMq2jzj1LM+h0PhYpvO+9Br394srGMrTzuM/UkxpIVJiVdEHWLU
-         OGhGVQCw+yuIlxB7+CFKjtelRErHjqGElpkclkqtTFfTYkGWhkxmMICgk+wY56kjIOn+
-         qYOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723120004; x=1723724804;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MxPxPm72b/c66Cy0rLiCQgTap7/ZTS0k7JiaWUCclzo=;
-        b=nb5rI+8RU8C4GjkeB34QEv6MpfUgimLInG9Q8EIjEYEerkAWbjJ27qHeNvqzg7bnGn
-         guDTmAP08fJSCA9fEEF32g2tzV/tfWXzeoTE4k8GePFjBmuHqhPxcrQZgac2UuNIwdTm
-         CV5i/ymPqE1aNKfDKKoY1fApNgGlUS0saySWtkNPtQsAKSrceWX+dOyet1N7BpclTGXM
-         IFZ3PebImrl1hmOEPCEEf8VfVaCmz/MCLv61pqukBif7GxLr1WOoOokN20SKr0+6ruph
-         jbRYliMMLBWk3PDEwDX3WcmpKkuOz+MkmPxuMjVzNYeuSNpI1WJTI++Un8C9z2zOqwyM
-         ecvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWtkhQvXHAJD74AwIVOcNmmKlXktd8OWWDTfcIbAEGMy9u6wavAkIjTQoPpZFTeIIY1glxnCT6m5RGUhrmtwW1Dra9M
-X-Gm-Message-State: AOJu0YxfoQxT0Ykq0tD79idqJaFCTRE2RlPAvqam650BPuNW2JrZ/1tH
-	IIfGJXvAhjsfP8sfjGmihfcpKZdwjO6VmkNO3q31f7BLOconoWEgkrTMhcmOd776PUSRVQs/zHZ
-	mjuQ2+N0G+I/c2vC+kPMfiYV1Mdosfw==
-X-Google-Smtp-Source: AGHT+IHtFXZxTzRHbAMoRPs/ZWMEK2v/k3VoT7UjcE+TutXWUFGtyj1M9xRF3xTJLRJuPTxkS0hF0Bct2qMo017YLAQ=
-X-Received: by 2002:a4a:edcb:0:b0:5c6:7519:9b58 with SMTP id
- 006d021491bc7-5d855b5da66mr2284170eaf.4.1723120004696; Thu, 08 Aug 2024
- 05:26:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Aug 2024 07:26:44 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1722862822.git.ps@pks.im>
-References: <cover.1722435214.git.ps@pks.im> <cover.1722862822.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mnFmAg9G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lm0dUvzv"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8E48C138FCA3;
+	Thu,  8 Aug 2024 08:58:49 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 08:58:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723121929; x=1723208329; bh=cfwwF13aqK
+	/F4i/XC6l2LLmBz5DI0efm4CGViDOSaJU=; b=mnFmAg9GXdBslqpUrVGtCWkr+q
+	mr7ke7OSShe/YwdDpuMXDyF5WDHpEdd6pWNxBf67uq14+X3eAD+XkxI4EPuK1po5
+	hhundFK5fMffkJnCYyPFme1asgDj56IyA0a92Pn08VcthBJUp5SOe/GA4oqdyFKu
+	BvkqtuR08jRR0lYT16OdN5AdZg2jx1oss/9ABVF77o0Bg0fW0Fv6BEbnF28w0tUj
+	BfOHNxQ+aS/Xy+wtzzF1ZgF9+hopuFlzZSO9KwObytTbWrXxSd2xSmGOnOt75BKE
+	ASi7gUt5WjKB6YKgTJWzx3+ROcVaegQqCAp0oJsOkZy8WB2zKFXnfhMFmV7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723121929; x=1723208329; bh=cfwwF13aqK/F4i/XC6l2LLmBz5DI
+	0efm4CGViDOSaJU=; b=lm0dUvzvnaZunhVogK6bWeqFb4NGRl/ih/59mtr3Ogk5
+	q34VSo1+gGiuGMC1bSO3elDo5fh0fGZ8vvntgrcH6Dq2W9M3MbQHQco8Ra+Xx9i7
+	rvCyIyFDxt7PYHeBaXdeRhW0z+rfnWEPa1tvrdNTPVXPJCXo9uiujjAr1lMkP4rQ
+	kmlXTWP1k+954peWRcrJqAf2JXFQzpASMD3e/rEnPmPe2sqfzeSG7TSkEXVhtQj6
+	7SNOyEYKcwFhRDqJzYk7EAWKLR9/+ShbpTyuzw9+8Lhf7gajyWQ4XK3beNtcCAym
+	iJ1d1yyj73iIm3V2TEmPz3TndokSoGmoK4gEq3AHTQ==
+X-ME-Sender: <xms:CcG0ZnCqSSsZt4cNA9XPIPIkNXfWqJVPDKAFKMgivzRNJd4rOyxWcw>
+    <xme:CcG0ZthNtCT68HUiEMQuGwawCXuftBdLbveLjf65CWdP3G14ONClTHUKDTDtgL3a6
+    6KMXR14zwj2yuTweQ>
+X-ME-Received: <xmr:CcG0ZimNNal6WdWKfHDFvlso6Pk6Ia74v61u3ZioeitcHEU09j4kj2amZcdrExZshI3QbWsWr9aa317Pp9orKj5waBd1Sgf9spP_MBIZzN_HQIQw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdehlecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:CcG0ZpxcTx3vpoxd5K_aJ4B2Z47H9BXXWhFvR1Ifg3f379ufgf1S1g>
+    <xmx:CcG0ZsRaEqw0wApMxSXQDtt7lY-V09fTzwBX0-7e9u9xEUBgQpMPuQ>
+    <xmx:CcG0ZsZZ8-buJhw0Pq-C7kjcq7cPzjrhXE0yYUzyrRpLC_rYnoA2mg>
+    <xmx:CcG0ZtSuauFTQVkmNh-ZA3J0Tw6YMxOhcuUyk2V38QQF1PZSyb_VDg>
+    <xmx:CcG0ZifyZsNhS6iDV2rgVo8mvE3oyd_c4Td6TG-xy_YxN8O440LVDv9z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Aug 2024 08:58:48 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e8521b9a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 12:58:39 +0000 (UTC)
+Date: Thu, 8 Aug 2024 14:58:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>
+Subject: Re: [PATCH 09/22] builtin/rebase: fix leaking `commit.gpgsign` value
+Message-ID: <ZrTBBJAr4XoIJENz@tanuki>
+References: <cover.1722933642.git.ps@pks.im>
+ <05290fc1f14cae8229c42f2d0aafe6619c069e3a.1722933642.git.ps@pks.im>
+ <b5abb3f5-c74c-444d-8006-22bdde2e9cd8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 8 Aug 2024 07:26:43 -0500
-Message-ID: <CAOLa=ZR8D7LufbLnGiZC34UXdYtZgD1YPc6Mt4tvG4=t6OsLjQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] reftable: improvements and fixes for compaction
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000c924b6061f2b2322"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6zoUkHg9y0qkhz5f"
+Content-Disposition: inline
+In-Reply-To: <b5abb3f5-c74c-444d-8006-22bdde2e9cd8@gmail.com>
 
---000000000000c924b6061f2b2322
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--6zoUkHg9y0qkhz5f
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hi,
->
-> this is the second version of my patch series that aims to improve the
-> way reftable stack perform compaction.
->
-> Changes compared to v1:
->
->   - Extract a test helper function that sets up a stack with N tables
->     containing refs.
->
->   - Reuse file descriptor that we have already stored in a local
->     variable instead of calling `lock_file_fd()` a second time.
->
->   - Remove a no-op change in the last patch.
->
->   - Add a comment explaining why we have to allocate N+1 many table
->     names.
->
->   - Some typo fixes.
->
-> Thanks!
+On Thu, Aug 08, 2024 at 11:07:53AM +0100, Phillip Wood wrote:
+> Hi Patrick
+>=20
+> On 06/08/2024 10:00, Patrick Steinhardt wrote:
+> > @@ -186,7 +186,15 @@ static struct replay_opts get_replay_opts(const st=
+ruct rebase_options *opts)
+> >   	replay.committer_date_is_author_date =3D
+> >   					opts->committer_date_is_author_date;
+> >   	replay.ignore_date =3D opts->ignore_date;
+> > +
+> > +	/*
+> > +	 * TODO: Is it really intentional that we unconditionally override
+> > +	 * `replay.gpg_sign` even if it has already been initialized via the
+> > +	 * configuration?
+> > +	 */
+> > +	free(replay.gpg_sign);
+> >   	replay.gpg_sign =3D xstrdup_or_null(opts->gpg_sign_opt);
+> > +
+>=20
+> The code that handles "-S" could certainly be clearer. The value returned
+> from the config is either "" or NULL, not a key name. In cmd_main()
+> options.gpg_sign_opt is initialized by rebase_config(), we set gpg_sign to
+> "" if options.gpg_sign_opt is non-NULL, free options.gpg_sign_opt and then
+> copy gpg_sign back into options.gpg_sign_opt after parsing the command li=
+ne
+> so we're not losing anything by unconditionally copying it here. The code
+> changes look good, though I'm not sure we need to add the blank lines. It=
+'s
+> always nice to see more tests marked as leak-free especially a big file l=
+ike
+> t3404.
 
-I haven't reviewed v1, but did skim through it. I left some comments,
-(maybe they were already asked/answered) overall the series looks great
-to me.
+Okay. In that case I'll just drop the comment. Thanks!
 
-[snip]
+Patrick
 
---000000000000c924b6061f2b2322
+--6zoUkHg9y0qkhz5f
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8fd9dd1231ac27ac_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hMHVZSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMW1NQy85VjNFMkNkV1dLYXYwaklvdjRJUkNsazhKVQpOclM4OVlIaUJn
-SmVULzlKVW5BeXdUMjVwZlljc2E2S1hQRG1MNUdEdGw5V01mUGloblZMcWEvQlZpK1UxaGpwClpX
-RzJCVUZvOXY1NDhjYndjNENOSnBmdk5hR3dNaHJvbGdLZmdlK2FnbTBpakVkMU4vM2drYnFVOXdL
-d3IyZEYKK0loSDRKelR6aG1pWEduVk1ia1R1elRsM08yK3hpdFAzcUtqOUFXL0lhd1p6cjNSK09X
-NWQ5aWtXMzIydXI3aApnYnY3dGVMUTgxOWNzMnp4TVdVOHlNM2NLdGorM3VlNldKR05Ha3lQUGlY
-aUFReWs5TWxLVllVNWVYSFpjT0gyCkFVeE1HV0E5cWltcW5IM1Y4RUpZREF3Q0dRRC9FajU1M1hK
-MndsNzNCZ1NDSlV2KzdhRnpjUXRsTy8zcmZoRTEKZk8zazRoRjFVVktKMXN4OHF3QTJ0Mm9ucGNz
-a2pyUnhocG9XUVdOK3Y4MHQyYkZJdm9taGJuUjJ3RU9kbzJTUwo1VUpzMTExK2ZFOUNSeUlidHdR
-d0o2Q1FwTGw5ZCtpTDg4RzA5ZStpcU1kQWM3MmhyQXQ2cEs2VUxUNWZ0SDFLClFxRFp0a2Z0aGV6
-NDB3UE1wMDJVMlpyZi9JeWlWKzU5dGdHQXZWND0KPTFXOG4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c924b6061f2b2322--
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wQMACgkQVbJhu7ck
+PpSqXxAApg9i1RT6I9Vi2uYGVfS0WGWyKG1jVLcUaxw8ehefjaOFAo47kk9cvTV+
+zs3opegFMvE8DmGDskVdNiD/mw+OgLxxl0d/+v9rNA27DinePHMcMKa8P4qzIcS+
+kp6I9hmTsntJ/1OzDmhSvjizo9aNYyK+W0P/lLxZnLUnA75w9eZSMGV4VM0/hhtr
+Zr6tj9SgNgyrdaRDb9QNKueuUTtt46EOo9Xi25Yfl/lDQJbyr0ZlAku0LPgBXh66
+JIkSyZ6WQBRw3TEFLOxKnpFxqCirJlyAqER9HIwmrLmy4DLq/Xxm4jjwAofgcfYv
+evT/hFoAQLBabnxJj9NM8aa7Vjm4yXu7AM1tTaqjsnVhdZiewe9ngUsVGyunilO+
++BsopdHB6Za0nlnRdz2VmQZqjRS7qLFNM3R1fVpQNjI8Ep5P0wy4MMbrx5PkJklH
+K3jwSdFsO5qHY2ioE8ESsietFz7K0cPED3ceiQsWUhV4cf3MIzBfHKH3Oy00rGfk
+aWhjpa89P7XCJ1A4SNQlbvWYKZf0QFUvZyUO2GKiCtY34y1CTTmELpTyIQ5ccYqU
+2EQkSiLOoQr+9uCmosiTJZ7lHPAcptxYbMhRSJZB40g7pSDX5t9GUWDdymi6Obwg
+xe0sOm9MBYrfk2P4n8/IHUouTnCVXMvZb1tVAmWGDKGXQVtKMKE=
+=rxtZ
+-----END PGP SIGNATURE-----
+
+--6zoUkHg9y0qkhz5f--
