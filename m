@@ -1,215 +1,234 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4E9126F1E
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 12:00:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730A218A956
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 12:14:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723118452; cv=none; b=gmy9xfuJyOmwE55Bms0S8cX34H3jZKmRZcch0KeIMEkxyuzycCMLKq+eE9NpXXkK7jbUcEapW19V+cULpcC8sx1G1Nx8kn+YFc9w1C8xT3qBUOrWHXordNEdlAse1yMj/67reV3+rzxc3HDmqXjnNDuy6cRAr1gYXU9UB9dmRIc=
+	t=1723119259; cv=none; b=ZKOmtMl7LN5kHs5V6hLH2HJrYQFuQ50X2J6qe49WNBfPq2dMbunLz4Huh56uO8WGevxXG8Ex1q6PiJnvFpwSzHJ02Z/iysxV5maa6UxQ48VrBA9Nx6zcwUBQ/wA0CidiKswtkAfokZsSMcs+irrkqnm5fmNtSachhFUPhVmk+pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723118452; c=relaxed/simple;
-	bh=H2AJVfzU54n2z31Z9lud8+LNy21M2bTbEYGGLwIzWJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OJVNdfCQM4AFeTJjGMCPPMF3AkNuZhMbeGf5zdmIY4BA776N1l0S/6WuteMNAmqFd1e54lpUyDRGTeZnpWV1p6NUkU3Ilz6aZoi1nJZxKxd0j8ag0BWgQX7qOr7FKS93LnEJSYCGeTjudouLYjlgmw0OYF1nmD7aOQw/kdD8AFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NWASE1fa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jy0aC0WW; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723119259; c=relaxed/simple;
+	bh=laFXlzDr5yU4EO42TjmRtxv+Xdds8iV/L0VQJCkF+98=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lIkNI1ei5ecL/e1rcmy0hJ7mAsbYEUa2/aCzmxZJth5GGgEBTpjtBghyF4YU+9LG3nd9eocP+0sHL7lwgCM0t/4aU6n1bvr5lHqqEDhMdrrp97UF4vFiIX8clXzluZ1hd6ooKi8iWjdMKu1nWjmfOEKp6MDulXWEhou3o0kqF8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lYFEzwHU; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NWASE1fa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jy0aC0WW"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5FECC1151B20;
-	Thu,  8 Aug 2024 08:00:49 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 08:00:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723118449; x=1723204849; bh=vwB8ifvtAL
-	za1wthNILJ2AE8ZwZFBAmKNh7cHAiiqBg=; b=NWASE1fa0x+H4k8utGse3HLEcI
-	GYK00kfi/sYsZvTWOPYQSBTf/3ZxHoc+yGwAXntRy7cvHu29oUkP7P3qIVnAeBC9
-	YSL92L1jizRbXg/eLcGqYkd6LbpEPjvO5PJhV7CrQ0ZvTCOKuX50e6C6F0BIsOBW
-	3GP0iB+ae2VX1u9xpx9HPhYF9PvbUBQ63n81vSZXAGRMu7UkTkwcYjLSsS9nB6Ud
-	ilOrelUcf1bL7Msmei/rKvTDpgJ+UtdUXliB4/9h3jZCdMKiLT3ujNPoe/PglIhw
-	Rxcajru+CDVvwUxK0iyaVDqSoAKxl/B5xD/wG/EPBPAj1BCmAbo0KQnW9vHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723118449; x=1723204849; bh=vwB8ifvtALza1wthNILJ2AE8ZwZF
-	BAmKNh7cHAiiqBg=; b=Jy0aC0WWGq1GvSpmd6QmtHh8Qv+oE2Zl81Em60SEOfH2
-	QEVK+62iGSuOB4LUwElJEJtsj33MsR8DBRsHO7ADtZYu/yG/ctMha3Vsg5B0/m5X
-	Pd25djzRtZoXrK3ZIcXKrDm/9itmIf4ShIj0Y0foRFiOTi43l2WWXC0V4oFYkfDR
-	FBExHKiXkuZvOHm3rYjCOzbqUKmmdZQk1IosOvtLuh7BFGfqCc+21IJ1fDOU5+MD
-	f5EXB8bC+08SP8BbzXLfVwX1xACRIXg6RcF0lZp3anqwTlNOVIXEI8hAHBRq78oM
-	US1JgaRzik1YsAnvk1H7jc0PhP3gY4kkRG0W56x4/g==
-X-ME-Sender: <xms:cbO0Zl2Y-9ICyGRg5QUhWiKwzMpXRrQX8-dqLA5DfPWdIGr2FLHQsw>
-    <xme:cbO0ZsGJtUOg13RP8vY8T9yHI2UbBgNR1vdHirvt4icBQKFvMLUoYeKmFhc66ndxw
-    SHDQG6GDxzCfncVzQ>
-X-ME-Received: <xmr:cbO0Zl5lW0GNYOyjdecSmvh65ZvwA3EU6MV3I_d5n3n1cZ4s0cIZnhAsgGqNsaC1r1QIENlW7UtA0JO7UZTnot6HzNnk1hNqPU2HaN6vd0slSc-0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdegjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevieeuteeljeefheffjefgkeelieejieelhfehffejteef
-    leehjefgkeeljeekudenucffohhmrghinhepuhhpuggrthgvrdhnvgifpdhuphgurghtvg
-    drnhgrmhgvpdhuphgurghtvgdrvghmrghilhenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhope
-    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:cbO0Zi0JiCxOQf8FNpXORt3RpzNSjRhahyynb5PljBJGTw5aSxiVRQ>
-    <xmx:cbO0ZoEa6uXurN2h6o5S0qaTvKslL520IxPnOIwKRSwtu7-hUrAwoQ>
-    <xmx:cbO0Zj_LTwY4PWjZPKjndEYRNfqsU7O7aiCGDsFnQWEM7mulj8FcgQ>
-    <xmx:cbO0Zlm1RdObLsudKVpgOmXY84Lk75yKkvvjtNBKHoXSE8UHhZ4I_w>
-    <xmx:cbO0ZsC5SMYmDGNRCZCRwQjJh84KrG-o5o5WbbSJvX7gHppmTwYeYiXg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 08:00:48 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 71cc1012 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 12:00:40 +0000 (UTC)
-Date: Thu, 8 Aug 2024 14:00:45 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 5/5] t-reftable-readwrite: add tests for print functions
-Message-ID: <ZrSzbdNkCS2LOXaL@tanuki>
-References: <20240807141608.4524-1-chandrapratap3519@gmail.com>
- <20240807141608.4524-6-chandrapratap3519@gmail.com>
- <ZrR91dR3G06L9dy7@tanuki>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lYFEzwHU"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5d5c7f23f22so460308eaf.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 05:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723119256; x=1723724056; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KdX+CzrbNAoCE+Om4qS+XuWzOc+Tq3TlUo+xe5Cabms=;
+        b=lYFEzwHUSYQZvWnImkDhvJAnfzZv3N0Dio9LmquA+Q+LoPfL/tHLo+YzF++9mBKUbm
+         SxsWRMJ4n67Q5Vg5XH/sDteWpUtiNQxkvY6YvjOoUJ7zJRUw5nv1CQaO1E3kDbsY9pPb
+         apQd5xx9bwcwJvdL/uBhWFaL7GtIqQpDs3i2gecizzSrbx+tpaxBmb2Rbv5/zBUTR4ey
+         9nj041wgiI7+ucYe0O0AQitwza1qyEIsc25x0STbWvj8SoTU4/7oY5tGaPGplNP1SbG1
+         y+t1B6YS2rDt6iIMOlDg83x+h4BEkTI8sKY96eri9B5hacOzyTmn76W7smetQlIV9VFZ
+         LA3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723119256; x=1723724056;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KdX+CzrbNAoCE+Om4qS+XuWzOc+Tq3TlUo+xe5Cabms=;
+        b=pKy6isjg6wBzV+4wlZO1p94DV/ApLCOsLk5rNA3tP58E+aseGJfj71BSDM11Z3syQM
+         fnH++x8kIFzEvffwPlSOuSezO/qatVm3vZncnAfc5YwS1hulvog12jIWSDKza4eTPIBC
+         8GdwLtf1KxaLk/XlajlBY0nPCpWSkFCg0VQcRw2bGAMngXnoKRJrLyCoBQDi5OytaQ/z
+         p1clZlnhPtPcav4QGbSt1G2ZQb/Id3Pd/h1Lf1JRmyc6o3FAL682bzyvdsOsaqv4Xx0X
+         IpGcZVEURY2LPio5ActV67+tBC6vXQPncJV+JTJ8N2q0hF0e4Xg4uev3BKzalHYf5g7V
+         QE5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXE09j7ps6CBA9e7XnlhTty+fX3B474LJuKfQSTi488Ncs35vmPHxYsGfnyi30HZk1b9YE21H4xcPWhBZtmvxxNcZLD
+X-Gm-Message-State: AOJu0Yxe7s866kmQIvxPLnRgiRMaerGP2g/VSfoBV9N5hDM/CM6o7S6m
+	ZLOXtIdemjyv12ZoTmO5jv7Kl1LcLosckBl/CM3xXE/emmF1AlpXaRo5E0XdkA8q8R7N6/ViylY
+	Rwes74JaK+1SRHBIgvwYp/HKxFWM=
+X-Google-Smtp-Source: AGHT+IEXKoFTG8keBXjYBxJdF93CF8YUyJ4vcVtzhhZVkibpbi5FoSIlq6OfSWh7OWkk1zK+KzYi/D6zbu2z8fWLWSQ=
+X-Received: by 2002:a05:6820:270a:b0:5d6:10e1:9523 with SMTP id
+ 006d021491bc7-5d855bc9b6emr1524944eaf.3.1723119256200; Thu, 08 Aug 2024
+ 05:14:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 8 Aug 2024 07:14:15 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ff17414d261065d9eff01335040f5aca3a048059.1722862822.git.ps@pks.im>
+References: <cover.1722435214.git.ps@pks.im> <cover.1722862822.git.ps@pks.im> <ff17414d261065d9eff01335040f5aca3a048059.1722862822.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IcPu3a0+6SGUyA/L"
-Content-Disposition: inline
-In-Reply-To: <ZrR91dR3G06L9dy7@tanuki>
+Date: Thu, 8 Aug 2024 07:14:15 -0500
+Message-ID: <CAOLa=ZSF_8axZ2EP6q5ac6oQiYzcQTuscLfQj=p82k=9KuyTgg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] reftable/stack: fix corruption on concurrent compaction
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000002c0bc6061f2af716"
 
+--0000000000002c0bc6061f2af716
+Content-Type: text/plain; charset="UTF-8"
 
---IcPu3a0+6SGUyA/L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Thu, Aug 08, 2024 at 10:12:07AM +0200, Patrick Steinhardt wrote:
-> On Wed, Aug 07, 2024 at 07:42:01PM +0530, Chandra Pratap wrote:
-> > +static void t_table_print(void)
-> > +{
-> > +	char name[100];
-> > +	struct reftable_write_options opts =3D {
-> > +		.block_size =3D 512,
-> > +		.hash_id =3D GIT_SHA1_FORMAT_ID,
-> > +	};
-> > +	struct reftable_ref_record ref =3D { 0 };
-> > +	struct reftable_log_record log =3D { 0 };
-> > +	struct reftable_writer *w =3D NULL;
-> > +	struct tempfile *tmp =3D NULL;
-> > +	size_t i, N =3D 3;
-> > +	int n, fd;
-> > +
-> > +	xsnprintf(name, sizeof(name), "t-reftable-readwrite-%d-XXXXXX", __LIN=
-E__);
->=20
-> Is it really required to include the line number in this file? This
-> feels unnecessarily defensive to me as `mks_tempfile_t()` should already
-> make sure that we get a unique filename. So if we drop that, we could
-> skip this call to `xsnprintf()`.
->=20
-> > +	tmp =3D mks_tempfile_t(name);
-> > +	fd =3D get_tempfile_fd(tmp);
-> > +	w =3D reftable_new_writer(&fd_write, &fd_flush, &fd, &opts);
-> > +	reftable_writer_set_limits(w, 0, update_index);
-> > +
-> > +	for (i =3D 0; i < N; i++) {
-> > +		xsnprintf(name, sizeof(name), "refs/heads/branch%02"PRIuMAX, (uintma=
-x_t)i);
-> > +		ref.refname =3D name;
-> > +		ref.update_index =3D i;
-> > +		ref.value_type =3D REFTABLE_REF_VAL1;
-> > +		set_test_hash(ref.value.val1, i);
-> > +
-> > +		n =3D reftable_writer_add_ref(w, &ref);
-> > +		check_int(n, =3D=3D, 0);
-> > +	}
-> > +
-> > +	for (i =3D 0; i < N; i++) {
-> > +		xsnprintf(name, sizeof(name), "refs/heads/branch%02"PRIuMAX, (uintma=
-x_t)i);
-> > +		log.refname =3D name;
-> > +		log.update_index =3D i;
-> > +		log.value_type =3D REFTABLE_LOG_UPDATE;
-> > +		set_test_hash(log.value.update.new_hash, i);
-> > +		log.value.update.name =3D (char *) "John Doe";
-> > +		log.value.update.email =3D (char *) "johndoe@anon.org";
-> > +		log.value.update.time =3D 0x6673e5b9;
-> > +		log.value.update.message =3D (char *) "message";
-> > +
-> > +		n =3D reftable_writer_add_log(w, &log);
-> > +		check_int(n, =3D=3D, 0);
-> > +	}
-> > +
-> > +	n =3D reftable_writer_close(w);
-> > +	check_int(n, =3D=3D, 0);
-> > +
-> > +	test_msg("testing printing functionality:");
->=20
-> Is it intentionally that this line still exists? If so, I think it
-> really only causes unnecessary noise and should rather be dropped.
->=20
-> > +	n =3D reftable_reader_print_file(tmp->filename.buf);
-> > +	check_int(n, =3D=3D, 0);
->=20
-> Wait, doesn't this print to stdout? I don't think it is a good idea to
-> exercise the function as-is. For one, it would pollute stdout with data
-> that we shouldn't care about. Second, it doesn't verify that the result
-> is actually what we expect.
->=20
-> I can see two options:
->=20
->   1. Refactor these interfaces such that they take a file descriptor as
->      input that they are writing to. This would allow us to exercise
->      that the output is correct.
->=20
->   2. Rip out this function. I don't think this functionality should be
->      part of the library in the first place, and it really only exists
->      because of "reftable/dump.c".
->=20
-> I think the latter is the better option. The functionality exists to
-> drive `cmd__dump_reftable()` in our reftable test helper. We should
-> likely make the whole implementation of this an internal implementation
-> detail and not expose it.
+> The locking employed by compaction uses the following schema:
+>
+>   1. Lock "tables.list" and verify that it matches the version we have
+>      loaded in core.
+>
+>   2. Lock each of the tables in the user-supplied range of tables that
+>      we are supposed to compact. These locks prohibit any concurrent
+>      process to compact those tables while we are doing that.
+>
+>   3. Unlock "tables.list". This enables concurrent processes to add new
+>      tables to the stack, but also allows them to compact tables outside
+>      of the range of tables that we have locked.
+>
+>   4. Perform the compaction.
+>
+>   5. Lock "tables.list" again.
+>
+>   6. Move the compacted table into place.
+>
+>   7. Write the new order of tables, including the compacted table, into
+>      the lockfile.
+>
+>   8. Commit the lockfile into place.
+>
 
-For the record: I've got a bigger patch series in development that drops
-the generic reftable interfaces. As part of this, I'll also rip out the
-functionality provided by "reftabel/dump.c".
+This summary helps a lot, thanks!
 
-Patrick
+[snip]
 
---IcPu3a0+6SGUyA/L
+> @@ -1123,6 +1125,100 @@ static int stack_compact_range(struct reftable_stack *st,
+>  		}
+>  	}
+>
+> +	/*
+> +	 * As we have unlocked the stack while compacting our slice of tables
+> +	 * it may have happened that a concurrently running process has updated
+> +	 * the stack while we were compacting. In that case, we need to check
+> +	 * whether the tables that we have just compacted still exist in the
+> +	 * stack in the exact same order as we have compacted them.
+> +	 *
+
+But as per the current implementation, the tables we compacted would
+always exist in tables.list, since we've obtained a lock on them.
+
+Looking at the code below, wouldn't it be more ideal to talk about how
+there are two scenarios we need to handle?
+1. Stack is upto date, there we simply overwrite the stack with our
+modified version.
+2. Stack is not upto date, in this scenario, we need to amend the stack
+without loosing out information. An extra check here is that we also see
+that the tables we compact are still existing. (I don't really get, why
+they wouldn't be though).
+
+> +	 * If they do exist, then it is fine to continue and replace those
+> +	 * tables with our compacted version. If they don't, then we need to
+> +	 * abort.
+> +	 */
+> +	err = stack_uptodate(st);
+> +	if (err < 0)
+> +		goto done;
+> +	if (err > 0) {
+
+So this is the scenario where the stack is no longer upto date.
+
+> +		ssize_t new_offset = -1;
+> +		int fd;
+> +
+> +		fd = open(st->list_file, O_RDONLY);
+> +		if (fd < 0) {
+> +			err = REFTABLE_IO_ERROR;
+> +			goto done;
+> +		}
+> +
+> +		err = fd_read_lines(fd, &names);
+> +		close(fd);
+> +		if (err < 0)
+> +			goto done;
+> +
+> +		/*
+> +		 * Search for the offset of the first table that we have
+> +		 * compacted in the updated "tables.list" file.
+> +		 */
+> +		for (size_t i = 0; names[i]; i++) {
+> +			if (strcmp(names[i], st->readers[first]->name))
+> +				continue;
+> +
+> +			/*
+> +			 * We have found the first entry. Verify that all the
+> +			 * subsequent tables we have compacted still exist in
+> +			 * the modified stack in the exact same order as we
+> +			 * have compacted them.
+> +			 */
+> +			for (size_t j = 1; j < last - first + 1; j++) {
+> +				const char *old = first + j < st->merged->stack_len ?
+> +					st->readers[first + j]->name : NULL;
+> +				const char *new = names[i + j];
+> +
+> +				/*
+> +				 * If some entries are missing or in case the tables
+> +				 * have changed then we need to bail out. Again, this
+> +				 * shouldn't ever happen because we have locked the
+> +				 * tables we are compacting.
+> +				 */
+
+Okay, this is exactly what I was saying above. It still does makes sense
+to keep this check to ensure future versions don't break it.
+
+> +				if (!old || !new || strcmp(old, new)) {
+> +					err = REFTABLE_OUTDATED_ERROR;
+> +					goto done;
+> +				}
+> +			}
+> +
+> +			new_offset = i;
+> +			break;
+> +		}
+> +
+> +		/*
+> +		 * In case we didn't find our compacted tables in the stack we
+> +		 * need to bail out. In theory, this should have never happened
+> +		 * because we locked the tables we are compacting.
+> +		 */
+> +		if (new_offset < 0) {
+> +			err = REFTABLE_OUTDATED_ERROR;
+> +			goto done;
+> +		}
+> +
+> +		/*
+> +		 * We have found the new range that we want to replace, so
+> +		 * let's update the range of tables that we want to replace.
+> +		 */
+> +		last_to_replace = last + (new_offset - first);
+> +		first_to_replace = new_offset;
+
+Nit: might be easier to read as
+
+  first_to_replace = new_offset;
+  last_to_replace = first_to_replace + (last - first);
+
+[snip]
+
+--0000000000002c0bc6061f2af716
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9088dd18bc62a3f7_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0s2wACgkQVbJhu7ck
-PpStGA//XX/DGxlcgoHeCRL0NTLJguG8KvGuN2sEWlzG65oI8fxtYtBioa5MGJn+
-LttyfHKCxhioLidJL41YOPAeUely41kUSzXFad5KFsKzzbgKWVuZtJ7CdkknL8cb
-hJ78EzEPif/TvJhCRlgG97hmHTjEJaGzHldAulGIna8hxfbMtBqakJLj6OmKwCiH
-NFm3rSmeazQFHfGsiMMuQMm4KSHP8JSwy+WnpRmxzYrUINMCcQbnssq8YY6max5c
-qA9B6vHyvpspeVNL40LA+uqJu47dN/4mAnVFNkULICbNg7M0GM0QYrUetHZ/9ux6
-RMxQbXyZRfZo2cRQpuBWlMJI/nBV18YGIXZQhUNXE+Yi8h3NZyq6aFj1wWE/GFsq
-qdhKktlSH/OoHvGgmQ4muxD9KZC3uVZkZGVtzAmNiemQE90mS1D0VxzvhcWphTNX
-3n92Dt+dk5T96UoSj1+dTYZQjmmPtxsAnFeHsJEaVnkzNahPf0IuaOZ4DZh7t/ot
-xfzKbq+iEvFbeJjzOgQOILOQ3z1b7Q4ampfiqMJB/SHM4Kjq/zdwNxaiKPrxcXLo
-d+/IRCOgwxfH4ZbF84M03VmJTz+mFZ1PUV2+UPJy0uR6PsZTyg161DiEJcpTSS/s
-s7lLxrNYy1SyvUS77oGftr1ODClwFYvZAN4otmjwR49/pritzF8=
-=Ozsn
------END PGP SIGNATURE-----
-
---IcPu3a0+6SGUyA/L--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hMHRwVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md1JUREFDT1hYTVlEUlJNNENWaVljNmhDTWNHaUNMcwo2OWFpM205MWRR
+SmdhaEFhZHp6R3U0VTVoWlhsbDM5dFkwaUxhei9FZFdTQisyUFhiQVl1elp0UWg3Ym9vRVVtCllF
+TGxRbUVxdUF2V01QSDVveEE0SHFNQi94SzRkSHRkVzJTdy9ZTlR2NGxQRHllVS8wT2FobGdCcjhC
+ZzB1ZkYKSEhVL2hGYzFJdGRVb1l5UHlGUysrclBuUXg1eHMzUjJ2cHErdlIwdkdLRFJLaUl0TzZy
+VDB5SGJGbDU4MG4zRwp3Q0duSVRENzJQVXFFVFdGaHpiV3BBQUZ5S1FodW85eldFYkJFNFVyK3kw
+cnVWdFJudFgrVVN5c2Q3V2NuYnRFCitJKzZpdHN6MzJ2dWp6Ymw4UW5uZ3lJbWtNZzhFMTB5L0lO
+L3M4RithSStjK0Jsb0VQU2pVVDMyaVErOFB2YVAKTlNIYVUrUkZhRE5nVkpIb1F1M1ZIa3dZZ2Y5
+VlFscHZCWVpLbkttTXBKSGJRVFJsSWV1YVRmTkNkOE5UUHNwNgpPS0RKU3lHcUVyQXJyZjhrWXo5
+ZmpNZ3BDbFlYN0g3a2gyK1B6cTlZeS92cXBwVCt3eGdMR2g2SHZhcU5hQkhpCm1sOFRJNmFaVzJs
+UzJZc2Zzb25nc0lRemtCaytFbGd3ZldJdmFiOD0KPXlpMmUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000002c0bc6061f2af716--
