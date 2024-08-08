@@ -1,124 +1,114 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3EB3D6B
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 01:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4FE1C32
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 01:33:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723080170; cv=none; b=PHDqWf74wfQPhQ+d415A520+olIKtN+2NjL0NWzd1GPUJBk3vzW4l9es5+QUC84wTCrtJkXy0zmmXEvl6pBwXNZDEConNLTIUVO6a+KLxc4mUOdMvQKbyG80MPvmi5NcumDCLE77GfWshAnUN7K3e459+y7gQgFECofK1WM1p5I=
+	t=1723080808; cv=none; b=DACFUeQVKox1iatj8G2AhkHCBdGamMbdjSY9aUgc1vTjF7K0gY4HZPbtRG1NLoUdoBShkFg7wnXf+CEo/hWK3lhlAJYg4UPedg4Rs5lJwuiE41JIdggXRQ48q3mDCxsfbEyh0jC1QvZ+UUt+hOD2e1nk0GnCNfDPSt9KZya7uPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723080170; c=relaxed/simple;
-	bh=OI6B0Kw7Rh+5bMR0XnVcZSxwhuiWPZE0GRbaHnhZsGA=;
-	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=PzECM21vlGQEg8DUZfU5fKiz/oeHRKlLywVWFlTtIor2KNtVNv2yABq6+jll2o0GNikJ/WluYS8FT/dPV+EWV97KLbY56+g/BDm/tgia/81GtdYfbDXAg/rLSAX3LMnP66VOWNO8k4Uti3h5Z5ftnZV+HhwI0smZoYEjPnDYreQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cVZv5dYA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BTbszM6g; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1723080808; c=relaxed/simple;
+	bh=6XWki/GZOGBfJnYQ8ek5sW3lfMwraTtGUMhnY/0CQZo=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YF4kRoBaHHwOzZFIr9qflA8OqP+q9a7QvrmiWlwktl+OnbkKedbq5deyJmn5Ro/qBGM7U4cUAKHSmlwUT0/71e0QWIGZ1D2jfm+GHGclNwi9rBeQ56GsCZy7ngA16lkxB4BXX0SnSohg9EYIB8KovyklbW+UQFMiUIm0NvOXxlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xVISLTqi; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cVZv5dYA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BTbszM6g"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 40CFA1151C08
-	for <git@vger.kernel.org>; Wed,  7 Aug 2024 21:22:47 -0400 (EDT)
-Received: from wimap26 ([10.202.2.86])
-  by compute4.internal (MEProxy); Wed, 07 Aug 2024 21:22:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1723080167; x=1723166567; bh=SBVqCpRmeb
-	aYYGTHjlZsJ28OlR3IEvv4oUshDKLrGl8=; b=cVZv5dYAc8d45hF/xJSneO5yhi
-	Uwl7+NtSDwIfCObpR+5OHUHY0ZlcH4ZfbPy8Mb7IZTm8VJvpXy+uoweFTu0spT5k
-	Q/BaKbTRtwUJaMLiH2HPXRlyfMAfUm5DjP6pIwv2XruE/bgJXYq1lj2d2dOoihkc
-	ybOSAk0qHhJxYNaf3PTO+GpydslSAPNqkn4vUnhiTY44eFRNAuZEDTp12Wnqdeil
-	MLWwg1zXDdeUMJtWYnqxg7ZR9J8NWLCEvdyilm+pwjv2MxWQECS4tgL+jzJ2rArp
-	O3Hw9Cjr/ywz71WoaNo9dZqPovQbowBjIDWugYVR20bCr7DaYA5mL8KLrYUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723080167; x=1723166567; bh=SBVqCpRmebaYYGTHjlZsJ28OlR3I
-	Evv4oUshDKLrGl8=; b=BTbszM6gPU8Vp3qQEg3A03qsEbHvE43amKffm7ngpO+9
-	0wnLefQGehKgmdFjCBvPozrial4DCcd+ebwyoBN0+iDXoefy3iYiLzY+iPrkzqk4
-	PGxvCSMHjoSphUbUx7FW2XW5TMQZelqnIh50lcSSZD1RuhCSVFbJTAuRs8M5uSFo
-	118EwXIi3N4H/oX9q1qHSBidcBJzmbVcfxlUCC70QKilO5TzuFjQkbAHTA9z2c/E
-	fzxPsIWaiyC+lg41fCSvq13X1slZUorxTXAhFRR+26Ie1ttjETwGqChQ9Xm4tH2L
-	PsSc3J20dSCmKn9ye0dlS1I5WaYBIFb8OFEXi98/zQ==
-X-ME-Sender: <xms:5x20Zl-6BIF3UTsbC1S-zfurxxf-_nyvx5LSmUJwxbspmgyEnddgFg>
-    <xme:5x20ZpvQ_qcbmGBNszdkuxxr2FiZwShmUUvKvInp9DEXt55LsGPjOquiAH0y6Q6jg
-    hlK28t2oyU7cKDrR2M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdeghecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkufgtgfesthejredtre
-    dttdenucfhrhhomhepphhunhhkrdhlihhonhdtledtieesfhgrshhtmhgrihhlrdgtohhm
-    necuggftrfgrthhtvghrnhepuefhhefggfffiefhuddttdfgtefhkeeljedtkeeggeekie
-    egvefghfehhfdtueefnecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhunhhkrdhlihhonh
-    dtledtieesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedt
-X-ME-Proxy: <xmx:5x20ZjBsLieh1QwNVTqb9kgoN2vqKFnvQgYgQToGrP-L7cbXI2TwXQ>
-    <xmx:5x20ZpecGgUP6M5LEOa2mcC7simipob-vcOsrGGoiXpgZidVRFDuAQ>
-    <xmx:5x20ZqMafJ50IqpcH7-gfEk8EGUeB1-apfwX-HYdSHU7z_t9X10xJw>
-    <xmx:5x20Zrll8GP6TOU8jlmkmy1ypduCmkE32fk6idHAXOah3z4qx2FUcA>
-    <xmx:5x20ZkXfan1MdOUCWqHLbT9DxgbkM_E_Di9FCuspqH6j8hAzNkkYNRpG>
-Feedback-ID: i35d941ae:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 1392519C0079; Wed,  7 Aug 2024 21:22:47 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xVISLTqi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1723080804;
+	bh=6XWki/GZOGBfJnYQ8ek5sW3lfMwraTtGUMhnY/0CQZo=;
+	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=xVISLTqiBNSHpuK4s872abP9rpvLtP2pF3QxsIAKSlY98sozhhlTyrfo/OdgX+rnJ
+	 Jmcgvu8PCWzIdUOnPv5WvCvWb4zVWd5gl5+zUkMXqBjyagbd7wi2pcGlmMvjmtBsuj
+	 xMOKFpQbrMwvhpQ3XvV+u5zwhf1kkZpkePXg4Q+9GfqWxkVL27QDtNSrTR2IdsfCQt
+	 YcEg2G0diH4cAyg+L157zijJ4WwFXtisuitYLF8QR2D/EDxD41S7Udz2BCiE+zmri9
+	 5uFojD+ifNwhw3dhVUyN9OrlmasJIpMSP02Pg7XxcooNqCc6U/gL48Qkun8OfCqGeT
+	 zxJCW9DjcNJsJAn3W+omRiNFP3DUzTcVvfCjJjNvx/8GUHD4F5LKIxwMEqBPgQoDsh
+	 NJh/nM2jP4VND+SGpofDzdTjYyvA8GalHFW6f+HsZYesbVyXRoyfceS33ZkrYf4Z1W
+	 /WtTv+qMjjPM2l5CTmgpgRlvYoucNMSEg3MqnpRVWRBVbHnDozV
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AE70C209C0;
+	Thu,  8 Aug 2024 01:33:24 +0000 (UTC)
+Date: Thu, 8 Aug 2024 01:33:23 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
+	emrass@google.com, rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
+ libgit.a
+Message-ID: <ZrQgY1pehCH5O78w@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
+	emrass@google.com, rsbecker@nexbridge.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <ZrPvSWoUOEaUIjWq@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 07 Aug 2024 18:22:26 -0700
-From: punk.lion0906@fastmail.com
-To: git@vger.kernel.org
-Message-Id: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
-Subject: Documentation bug (?) when describing `zdiff3` merge format
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NOVQ9FmxZSLmnd4U"
+Content-Disposition: inline
+In-Reply-To: <ZrPvSWoUOEaUIjWq@tapette.crustytoothpaste.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-The docs at https://git-scm.com/docs/git-merge#_how_conflicts_are_presented describe the following snippets in `diff3` and `zdiff3` style as equivalent. They do not seem equivalent to me, so either this is a mistake or the `zdiff3` style is counterintuitive needs a better explanation.
 
-diff3 style:
+--NOVQ9FmxZSLmnd4U
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-```
-Here are lines that are either unchanged from the common
-ancestor, or cleanly resolved because only one side changed,
-<<<<<<< yours:sample.txt
-or cleanly resolved because both sides changed the same way.
-Conflict resolution is hard;
-let's go shopping.
-||||||| base:sample.txt
-or cleanly resolved because both sides changed identically.
-Conflict resolution is hard.
-=======
-or cleanly resolved because both sides changed the same way.
-Git makes conflict resolution easy.
->>>>>>> theirs:sample.txt
-And here is another line that is cleanly resolved or unmodified.
-```
+On 2024-08-07 at 22:03:53, brian m. carlson wrote:
+> I left some comments in the series.  I think this is a nice first step
+> as a proof of concept, and I'm very pleased to see it.
 
-zdiff3 style:
+I noticed a couple of other things.  First, the code has not been run
+through rustfmt.  I think it would be helpful for us to do that since it
+makes it easier to not argue about style and it can be easily enforced
+in CI.  It will also reduce diff noise, which I expect Junio will
+appreciate.
 
-```
-Here are lines that are either unchanged from the common
-ancestor, or cleanly resolved because only one side changed,
-or cleanly resolved because both sides changed the same way.
-<<<<<<< yours:sample.txt
-Conflict resolution is hard;
-let's go shopping.
-||||||| base:sample.txt
-or cleanly resolved because both sides changed identically.
-Conflict resolution is hard.
-=======
-Git makes conflict resolution easy.
->>>>>>> theirs:sample.txt
-And here is another line that is cleanly resolved or unmodified.
-```
+Second, cargo clippy complains about some of the code.  It's again
+helpful if we can fix those warnings or, if they're not appropriate, to
+disable them with an appropriate `allow` pragma.  (In this case, I think
+they're both spot on, but I have seen some cases where I've disabled a
+warning.)  This is something we may also want to test in CI in the
+future, and downstream users of our crate will appreciate not getting
+warnings when using clippy themselves, so we should be kind to them.
 
-The problem is that, I believe, the "or cleanly resolved because both sides changed identically." sentence should not be part of the **base** in the latter example, since that whole line was moved outside the conflict.
+I noticed these because my editor complains about the latter and I have
+now intuited enough of rustfmt's output that I can tell sometimes when
+things aren't formatted with it.
 
-I'd appreciate knowing which it is.
+For those members of the list who are less familiar with Rust, rustfmt
+is the standard code formatter (and formatting verifier) and clippy is a
+lint tool recommending best practices.  Both are shipped with Rust and
+using both is customary for Rust projects.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-        Thanks,
-             Ilya
+--NOVQ9FmxZSLmnd4U
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZrQgYgAKCRB8DEliiIei
+gQUBAQDPYE/Kqh1yG/PYBrd7HiUHNzgDjp0LjjB/X0zf00TmWQD8CiBfvu8g87qK
+by+UcyuriZNSHHXX1GTmhXZIRlr4hgw=
+=XioJ
+-----END PGP SIGNATURE-----
+
+--NOVQ9FmxZSLmnd4U--
