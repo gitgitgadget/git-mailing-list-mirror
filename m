@@ -1,84 +1,84 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EE188CD7
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8EA188CAE
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723102557; cv=none; b=Nrs0vqR4FfREgIGbsCxJChIsgeBK/gU41f/XtC75EEYJymeogFNnOATEwU5dxz45B1cnp7s9iYCpz0TjUlP4SmshcX5cRxlkEhFu+X7oHFjliQBpMy0FZZengooztgmxFUHHtYwkzmt5ypFFfwJ+Iq0orI97TyL7CvMfnK6WYRc=
+	t=1723102561; cv=none; b=Ap4iX8jfsTu7XZJMraIEaS61M3T39wzWzvgUJ5/P6jk+i++OC5zNcgolJv5wzwAcDaJtprm/0sadbHv54yFp33rYSBfi8lsiJZ2TjcGYCRkh0/3vu+Bu0ppg1wLLuCo07YzWd/+fmBoOwvqS0f9MmbXyxdTmFq840BpArgr+ZiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723102557; c=relaxed/simple;
-	bh=/CxbifL3mtx9yVwBeniXWGaFTP7QDrvCeer9Y52Nsc4=;
+	s=arc-20240116; t=1723102561; c=relaxed/simple;
+	bh=LGMkl10FM+0W9xFnf9XcL5J6xATPimqHtR/5EGh/NwQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KxFgGjhoMzADsVhqIDUJ4bk636pKYxGZDxgfwHN/L8uiWWbUs8FgWD4RsCSaiyk+wlFZCpwHxPm9B6u+xP7RLHBX6W1MXALVLHCsVceYdRuemAnJ6vaZvyNeTXbFcZFfpNsloKNfvhZZhVV/elqCMa+OxqbzBgFQtz4gcEscDWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UUTSTNRF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MM+Lxfw/; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gjcxru+oqWrOaCWCuyWNbKWzgS+Id0lTLuzuMw8Tt4LRoUzMDVlFqYssr3ulqmX/8iCIohg1cYhY7o/iiXxBeQoNPzgdLCuoY/7mC/toeaR0VHfN3a2HhvAkrAo+NTm3qeOAPyqURlr/of+BVThWvVN0xIwLQfdhuuwiqVamNsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KtJkIKV+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=llYQNG4L; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UUTSTNRF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MM+Lxfw/"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id B638B1151C3B;
-	Thu,  8 Aug 2024 03:35:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KtJkIKV+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="llYQNG4L"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id EDA191151B80;
+	Thu,  8 Aug 2024 03:35:58 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 03:35:54 -0400
+  by compute4.internal (MEProxy); Thu, 08 Aug 2024 03:35:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723102554; x=1723188954; bh=rPIKWxe1g/
-	n96DafRJhm9L6URSYkbDWkBQ/J9bq0kfA=; b=UUTSTNRFjf/yMhDDFndW1wMV7Y
-	qKI6OcYmLPNJFaHKcxTVGSZW+XUteU4tRTAmahC9k4VufVJYc7hRMFkCC9mekofC
-	iqXscP23cVj/lUqSPM93PJPW5Eqtaq15/Rr5iYPpjT9/+Lxye7kTBEQnJ7W6vHkc
-	Vl/NPu9QWWgIMJAHWzZD9vXdR3rG2fFMIvfy2wJO6iQ+VykIClveRJZASsftC9sF
-	RNwRsLgHsE2Ic2CmPfL+f0XY73PQYI8xCzbgfnkz7n9EOPAQSoYdCxL5lTZjkycY
-	7q7vfkJkuJNEZaXvSKu/tG2WCS7htr2RS9Xk7fW5slLy7EGspowkKpvDg0kQ==
+	:subject:to:to; s=fm3; t=1723102558; x=1723188958; bh=hv1CIfxmPF
+	7BptPBkx+G6Dyrawma91txl0UC4/NUnzw=; b=KtJkIKV+uadlqyyGk0UYUsUJR1
+	QJj5l44C6Sh2yVOu9E6Bajd2u/HJ9rWWiqhmUvyqDGTSh6rsnRAlzAFZlCNOa8v0
+	Ap6YAEZkR7Epm8rvfuzuRAi+a7coUX4Zgu0GuC+OJPXZnSaF3B2vtnl23eCsqidv
+	kM+OTvBpC9IwkUSjs5Tjfff+dSYs+ITNlT9VDAeSTuAp7ZGzom0tVxIztU/iad45
+	0KnHLwfdEXpubauX9I7/Vz2TDSG4n75Ed2Jx4r5VrEplaQn7nctZwr+qBREn8gpF
+	nw2Y7cZQ+d8xLTggJsYwczG2CmL+fIohkAeszdaOuVZGct9ufU4hkoQ9PIWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723102554; x=1723188954; bh=rPIKWxe1g/n96DafRJhm9L6URSYk
-	bDWkBQ/J9bq0kfA=; b=MM+Lxfw/p0N2fIcQkCdx0RCZ0KK7X0A9ItqJjKj1S5r6
-	IQhk3iBGFVh2NorLiTQng6hRARHw0X7QEsZl4Pb0+JAPWGOxSeWDlytaAPuiVZQ4
-	S4Uny9fqSXIEZWvO+n5ccgyrQc6PawT0y5xDt+jLdEm3ueIY+O74yiJTjR0anm2p
-	nbaW9uj9ILWpSAHQK/RFnM3VOX1AnYMIjeJW7KQMmzcKZ/GUrm7C/6uRAus9vr4G
-	1gzUavv/4pLrgaBEhBCjmgj5YfCimwbabfqzFwVyGonjsRYCYztpE0Cmvluhan8q
-	29z8qu+6zNMGlFsbrspLGYlW5imRywQHqLvjSbnOtQ==
-X-ME-Sender: <xms:WnW0ZmpcG7_GgZqN7HviPniqUormYJfrTrWYSZhkZX6m13zYlUheqQ>
-    <xme:WnW0ZkqxW1ny_J6SjiYbQhUXrQHaIoY0_1x32JVho1Fm5vOzblT4j8FUzGP5DD7wQ
-    TTiPlzB0PS8UTU5LQ>
-X-ME-Received: <xmr:WnW0ZrNQ6wB-LF70CwKYr1d_OGjtbP7Zf0mSF_02rImCoosqNN7qp9BiuUZ9TZXc0qufWyOJfOOQEKNYA1KhGX4s-0fmpnCGJPkCNZHEw33VlgkU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvddvucetufdoteggodetrfdotf
+	fm3; t=1723102558; x=1723188958; bh=hv1CIfxmPF7BptPBkx+G6Dyrawma
+	91txl0UC4/NUnzw=; b=llYQNG4LSzZlLz6ISKILWH+g2aFeimHnjrDgEUVKs/B7
+	XnGtH443v3v/HuaSE+n7rzKgrtuMLLrf5NozF4swG7cX8oAmHk0z3TFtsrt+Tkk/
+	boVlg6RH1MtLTNyOIlfXQFNbCLDu5ZM6zGBevmLy5ZtHtVy4LdDoXvU0tdGSnets
+	pH9VdvkBclQsPoAUSrX8xnv0tuC+EbCp9XAsVjD1HuePEMCWBVTDzkHlyGjq6aCR
+	l+7q+1qCTsKfs41n5I0+1qCL8P7I+KBCn59cZGZofjIvk05D4vkeZrIBsKJ/QGpz
+	BUVGsQA+dFzbhrPjzv7H+nzQAcQPE5yAWtWHPekqMg==
+X-ME-Sender: <xms:XnW0ZnYWFbhhp6Wv-JIv6QdkeL1SVzYG4z5Qc1dKO7Lgld85qSL2Uw>
+    <xme:XnW0Zmaw5qNq0_aVmZbE3CdhAanaaR-NXbQMm4q5CXypGbs9gG1y48xOfLFpQJb8J
+    g3imFuHxhT5BRkkvA>
+X-ME-Received: <xmr:XnW0Zp8XHRXxS45kvgFejtXeSnYyfgjA3hAmenAEUa5aW-Jswp27pEz0RIlAZr0OL2EZLQTSXbGVAfACrHZI4PSlkTgVSKLOn3DHgxU06BLHms8m>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeg
-    hefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
+    hefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhs
     hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehjohhlrghnugesgh
     hmrghilhdrtghomh
-X-ME-Proxy: <xmx:WnW0Zl6ambLL5CDfI-Yvt2vzGjca89jCpSDS6RCN5aEF7RTznMoPHQ>
-    <xmx:WnW0Zl7yAhuLWOg0CDYGJhY6DkkFmKIvgykEEuK1a8DiymLodMG6hw>
-    <xmx:WnW0ZlhCkJl9w8Al41bsto-0tmwAZ9PP_Er_SLJJkfrHbX9JiFpKXw>
-    <xmx:WnW0Zv7gxOlHgjmcIfwGSTRxfBhA90ISNK23cdDfNKyJgblv7MxwPw>
-    <xmx:WnW0Zo1RxgU20eKQvIyraD7FqpJy7Mr4WvkjXme1f87xyL0lLD1q5fEF>
+X-ME-Proxy: <xmx:XnW0ZtpUEw7eWTyzkE7UifG3TZBPT__-dtemfZ-8VG8lQVRjEW3gkA>
+    <xmx:XnW0ZirBst0jQ7WCWogXaX3S2tlEvghw017MCEcu-B8EyBaAXbmOJQ>
+    <xmx:XnW0ZjSXRv7ZmLhHDSThJTXBe10O8vcNcXwKLgNOOxZ5xbceZih5UQ>
+    <xmx:XnW0ZqqqdJ6vvYki1ZjpF1YR12JOTpq0kp-eJfnzFV5uuQCBrBeylA>
+    <xmx:XnW0ZrkkjXhRW8vcBpiXYeqbtUVlx4mkPMdNI9wZi51VnSE6dVxIpOpi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 03:35:53 -0400 (EDT)
+ 8 Aug 2024 03:35:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b7a4ec17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 07:35:47 +0000 (UTC)
-Date: Thu, 8 Aug 2024 09:35:51 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e562387d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 07:35:51 +0000 (UTC)
+Date: Thu, 8 Aug 2024 09:35:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeppe =?utf-8?B?w5hsYW5k?= <joland@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 6/8] submodule: fix leaking fetch tasks
-Message-ID: <d92770290f6fa3f1296f1ff9bdf8046543b6c34f.1723102259.git.ps@pks.im>
+Subject: [PATCH v2 7/8] submodule: fix leaking seen submodule names
+Message-ID: <e9421189ca0886e81511e191ace1af6e65c0e292.1723102259.git.ps@pks.im>
 References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
  <cover.1723102259.git.ps@pks.im>
 Precedence: bulk
@@ -88,130 +88,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dJsSu1bYoesNW7dR"
+	protocol="application/pgp-signature"; boundary="J1N2HVGjkzHTG+NI"
 Content-Disposition: inline
 In-Reply-To: <cover.1723102259.git.ps@pks.im>
 
 
---dJsSu1bYoesNW7dR
+--J1N2HVGjkzHTG+NI
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When done with a fetch task used for parallel fetches of submodules, we
-need to both call `fetch_task_release()` to release the task's contents
-and `free()` to release the task itself. Most sites do this already, but
-some only call `fetch_task_release()` and thus leak memory.
+We keep track of submodules we have already seen via a string map such
+that we don't process the same submodule twice. We never free that map
+though, causing a memory leak.
 
-While we could trivially fix this by adding the two missing calls to
-free(3P), the result would be that we always call both functions. Let's
-thus refactor the code such that `fetch_task_release()` also frees the
-structure itself. Rename it to `fetch_task_free()` accordingly.
+Fix this leak by clearing the map.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- submodule.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ submodule.c                            | 1 +
+ t/t5572-pull-submodule.sh              | 1 +
+ t/t7418-submodule-sparse-gitmodules.sh | 1 +
+ 3 files changed, 3 insertions(+)
 
 diff --git a/submodule.c b/submodule.c
-index ab99a30253..f027a6455e 100644
+index f027a6455e..13b8f8c19c 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1496,7 +1496,7 @@ static const struct submodule *get_non_gitmodules_sub=
-module(const char *path)
- 	return (const struct submodule *) ret;
- }
-=20
--static void fetch_task_release(struct fetch_task *p)
-+static void fetch_task_free(struct fetch_task *p)
- {
- 	if (p->free_sub)
- 		free((void*)p->sub);
-@@ -1508,6 +1508,7 @@ static void fetch_task_release(struct fetch_task *p)
- 	FREE_AND_NULL(p->repo);
-=20
- 	strvec_clear(&p->git_args);
-+	free(p);
- }
-=20
- static struct repository *get_submodule_repo_for(struct repository *r,
-@@ -1576,8 +1577,7 @@ static struct fetch_task *fetch_task_create(struct su=
-bmodule_parallel_fetch *spf
- 	return task;
-=20
-  cleanup:
--	fetch_task_release(task);
--	free(task);
-+	fetch_task_free(task);
- 	return NULL;
- }
-=20
-@@ -1607,8 +1607,7 @@ get_fetch_task_from_index(struct submodule_parallel_f=
-etch *spf,
- 		} else {
- 			struct strbuf empty_submodule_path =3D STRBUF_INIT;
-=20
--			fetch_task_release(task);
--			free(task);
-+			fetch_task_free(task);
-=20
- 			/*
- 			 * An empty directory is normal,
-@@ -1654,8 +1653,7 @@ get_fetch_task_from_changed(struct submodule_parallel=
-_fetch *spf,
- 				    cs_data->path,
- 				    repo_find_unique_abbrev(the_repository, cs_data->super_oid, DEFAUL=
-T_ABBREV));
-=20
--			fetch_task_release(task);
--			free(task);
-+			fetch_task_free(task);
- 			continue;
- 		}
-=20
-@@ -1763,7 +1761,7 @@ static int fetch_start_failure(struct strbuf *err UNU=
-SED,
-=20
- 	spf->result =3D 1;
-=20
--	fetch_task_release(task);
-+	fetch_task_free(task);
- 	return 0;
- }
-=20
-@@ -1828,8 +1826,7 @@ static int fetch_finish(int retvalue, struct strbuf *=
-err UNUSED,
- 	}
-=20
+@@ -1880,6 +1880,7 @@ int fetch_submodules(struct repository *r,
+ 	strvec_clear(&spf.args);
  out:
--	fetch_task_release(task);
--
-+	fetch_task_free(task);
- 	return 0;
+ 	free_submodules_data(&spf.changed_submodule_names);
++	string_list_clear(&spf.seen_submodule_names, 0);
+ 	return spf.result;
  }
 =20
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 51744521f7..916e58c166 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -5,6 +5,7 @@ test_description=3D'pull can handle submodules'
+ GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=3D1
+ export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+=20
+diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-spa=
+rse-gitmodules.sh
+index dde11ecce8..e1d9bf2ee3 100755
+--- a/t/t7418-submodule-sparse-gitmodules.sh
++++ b/t/t7418-submodule-sparse-gitmodules.sh
+@@ -15,6 +15,7 @@ also by committing .gitmodules and then just removing it =
+=66rom the filesystem.
+ GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=3D1
+ export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup' '
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---dJsSu1bYoesNW7dR
+--J1N2HVGjkzHTG+NI
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dVYACgkQVbJhu7ck
-PpSUKQ/7Bj1Zz4tYJE5dflTHHy9N9eiHVRF9Jb8HAAoo6CVz6Y7zZfwPw0ctH19H
-k9qS/UfBUco4F2CmejfLZEBjB2wFv5mN8KJK1bVFTSBxl9Dn/gQghtgKmmlg1epE
-5U7t5KQ8LXFXw3vLbVf2O8DeUFHQIJ/5rSwmlQpXYlX2UD9OyESoJe/EaiQr0E0S
-4BzboCE49uMqm8Sww6+TvpAlWdaKJImNBG7FiJaAgRvpIA1j7hyPwwFSJrKTO27s
-mQK68SVTo9ea5UjOuMV5nnfjvtzjOPAna6sJsTztCiUV/Fn3/e80QrFI6Lv1JdX4
-bWIPduiTtz4EV+lGyACRALIsaHkySomU1zUQ+VT5s7tjfWF7wQwMwBqisUDEVwa8
-MqngQwi+mqPSdOK6IAt0zjDJG92N9KStty1i/yV1cC7feMiescVF3hZ83jlxVVkr
-C7XSMAM4O/MQiO+8GfCKaPdr6fHotKdBi9uCUDq+EgWyHsFviDolb6oDs58VTlcl
-4vw2eSEPePlO1w07kP3arJPBH59m0rTNkdlcMpX1xmGqluq47xJu/umntZmOCoKK
-b6Hlj+/u62AJVnbWzEMv8Jn89QiM8+qc3DARaaMwwZ6MHDQDb/JLSMcRgPxzJgO2
-vmdLeEsV2in+sUfjpIcnT83N+7m5oihuVJqKhS7zIA5xVPk7A+0=
-=ftz2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dVsACgkQVbJhu7ck
+PpSYiQ/9E/S8ZcmT5YvjIt7qwL+jQzr2NgAyll3tQCN1xq1nnwD1Gv/96Tl6Pgir
+dcPYZRoLA7WVksSsc5VELofUJ3ARx1Hmh3g4bITSJ8WLfrk+7Q4gqdZMoPpOs2IP
+blIcfDGVI34mPjK+5piai2U7mGNKNT0G6+mhzg02AQuvJTGQ/PCWOsWWFLWpSVmy
+irTjEkf40jpxtq5V0TJrby+Lmv9SDGFgtVxr8qhxFoZCT0GBLN2OFO5HqV/rHIlg
+RzYdjcWl4o75moPSQs7et67QudtH9tJ0EmEPjAx5FepSZCzsVia2s5/AgXACpD+C
+fbpYfME0n/ikczxxuXm+ayyyVZivzjhK6xiPqmthShT5Ug2lbSJqx5jOOSk5FC3/
+2MiButD4rG1W6ckqNZEqUu1khUuPPgAOlFZdWEa1JXWf53jiQh+oftJYS7ptwCYK
+8raecOvcJB1Mbgo41kEjq+0msrf95h/l4M1mThPE0usqiRmhl3oNwqNv6/YLKyrT
+roiidsvGyFKyFPnoMt+lmUSyA0C+nN/iOjUkfjjIUKx+moq3NHhjjtSqqISnsehT
+8qjhZBgRM6dUtuO8mV/7m166CLj7Rk/9oUwYuyyU/TWsLBLtSWonLQNIrXvp9B0P
+itof5LMheus9ptWkJHQeTGtF0hGZ8UjmhJ4tZofMPm7mcSPaEW8=
+=9dEO
 -----END PGP SIGNATURE-----
 
---dJsSu1bYoesNW7dR--
+--J1N2HVGjkzHTG+NI--
