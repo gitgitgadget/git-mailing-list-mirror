@@ -1,85 +1,133 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECECE190676
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604082C7E
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:13:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723137154; cv=none; b=a0vv3a4TsKij38/MvEsrZLz/oxp7CsPXz0eHjlGZWa7v4DwcsNJ/YSW6nV4fCarop9UjzZby4bSkLetje97o+69Z2s08A4s8gMwmdIC26dkOVkCbcblBhFLeVOCYS3+Ne3XRaR/FezS3Y4iAVWgYEoAeEO2pg3ni2qhEP3Ow/b8=
+	t=1723137200; cv=none; b=I0crmtGA2cC4grqTdEHzwdkFo0aeNwxoo5NZJFKDOAc/mjquaDAHFvv38bgq2w8Wn0FPM1HFFLbuv1juHwFBRbVU7kYAYt7hpLy5BgOtbrsU2B7vlp24+BRIx9u8odet/0rfdUB35ZWBpkhv484Wz+oVdRzSFZWTqkCZXEmFZ3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723137154; c=relaxed/simple;
-	bh=+mcFhTAsAHRbChlWNH2+FOUVcWxuh/Lsd60mmT5bujE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JyWyibSpVMAK9BDBl3499SuB+NP/tGsgEytazbGvS7Ln+usycJATVexSLAG+n8lFnEeZXTeFgw094YncS9inwWSEucyYNHQj+6kgG+jn8yFwOu1j1lZsuAZU+tXG3WSb2VguoamsE1mmVvDa5fbVvCx+EiZEKcCuAvqJZf0Y9Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DQVuJ88R; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723137200; c=relaxed/simple;
+	bh=6VnvkqXLIPsXQR7oi5yIj6tZLaInnDb0MjQ2z2dV+CU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TPUaas07gPHE8ko56AzEOf+feGNo4vYOboHhhin58eHBwID+IDR3XA+Mtvm/qe3Pj/3m2tN9yrp+P4W2yC6p/zg9hqqK6hr7eIUWriFjIdHlGqq2q/W9hNCxllG587wk+2cUiI2p2RH7PA2tTfKfIDd1IthyzxkxITVIYuKX+zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Okb+SASM; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DQVuJ88R"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7454923A50;
-	Thu,  8 Aug 2024 13:12:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=+mcFhTAsAHRbChlWNH2+FOUVcWxuh/Lsd60mmT
-	5bujE=; b=DQVuJ88R/IWlgH0f28jGXaxIuoNlwWby6C83HdOrVm1lzbXHHbsCps
-	wT3vaZUuJ1wLo2d8flZLwTvPneaImxIVncVnH1WhCnME5jEXnxz7SuHoAhTSS9fu
-	5qsLhZWZZJQfGem2GeXNJgyaIk6F6vuhZMBl9PSb6FWEP02dY0LVg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C21523A4F;
-	Thu,  8 Aug 2024 13:12:32 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 866EA23A4E;
-	Thu,  8 Aug 2024 13:12:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  James Liu <james@jamesliu.io>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 08/22] config: fix leaking comment character config
-In-Reply-To: <8fbd72a1002d1a285847c62b5524041927a7b4d4.1723121979.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 8 Aug 2024 15:05:07 +0200")
-References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im>
-	<8fbd72a1002d1a285847c62b5524041927a7b4d4.1723121979.git.ps@pks.im>
-Date: Thu, 08 Aug 2024 10:12:26 -0700
-Message-ID: <xmqq34nfhrb9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Okb+SASM"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-710bdddb95cso847292b3a.3
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:13:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723137198; x=1723741998; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SpJdLGG1thxrQWYFe6qElGhYdaufJf2kaFNJ4xMkHis=;
+        b=Okb+SASMeEzUidB0X5Ys5W51MN1DpVtT154XeaFp6hMl9Vex4J/4Z3b4Vg1QYuyt1A
+         EZ//azmZWBinuCxxN/rHSQ6Khu3WINZJ1SSEw04i1/N9DlTtHFV1fMTY16ZJLAVw18us
+         rRe6S/XaHXiOrHqdBxxdJIcWIx6hirbFPYaSWDk7uaLbfrlqPXtKzx3rrd7bemtu9Xg+
+         tiph+EYzcYVXPWNx2yCntDeqEt51dCAq0gsuyp/809b9AipRUF05TQzmhMHyPk9KkBnQ
+         bruZpp1tcmjG/lhJcGL/Wv24fpNqnc0COG7tT8MXkWtLZBw25GO6OueFPMjl0epv0XAM
+         l/gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723137198; x=1723741998;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SpJdLGG1thxrQWYFe6qElGhYdaufJf2kaFNJ4xMkHis=;
+        b=EEmgXRQdHU1yU+xL7XMa/d8LlfZXokxG/bFbtooY51d5+kjXbb5YE1CE4FFZgIHrdG
+         yJqWiNcMz2ca+M2VR/WHzRMMtmNJAkV+M0PDN4Ll9/jH6KcY1WzBBZKbtq/ScoSMQaca
+         W2EG3XtRe+3XHGPeGSbPEPhhSwGtikhD8POE/ESIE/IZMoXGIjJW+qqmBC9Jw0Lr7Dys
+         yfvaikNnCDWx5SHabax2sJoXoEvCMsKWGFOTa7UjyCkEXHK8ie+04nBhOAz4biMtc+HF
+         f34zzqgK1N3cEoB0orxRUHn5o90YFL2/dbLmA8fMCMmqBOtiXMYjtBrBZ3q8eR2wWHWq
+         NckA==
+X-Forwarded-Encrypted: i=1; AJvYcCUIfIhcYz9jREj5n7gHIrph70gdtY53E4ckTWH/p+YmGyL9S9nwyQIzTL9HB2JnEM9C6kEPom5VD6IVxbBbDE+omdIF
+X-Gm-Message-State: AOJu0YxY0hq02P3DXAHAGdEjGv7eYkptnk0suWMo7CbL7+4y5PATeJ35
+	b7mqzA34T/PjWFh9qc2BkxePNIpMNCB/XJVL8SqjChGJcyz5Di9oBMLyTlbuVg==
+X-Google-Smtp-Source: AGHT+IFE8HUK8t3NSqftgr3NKxoMsVPEd4vh231oUADJ8NjnC3p5hinbC2BC9tQ+7GlTmlqZuO8iRw==
+X-Received: by 2002:a05:6a20:a11b:b0:1c6:a825:8bc1 with SMTP id adf61e73a8af0-1c6fcf623e8mr3069834637.29.1723137197350;
+        Thu, 08 Aug 2024 10:13:17 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:c023:b8:a8df:17c3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710cb2cc95dsm1383707b3a.98.2024.08.08.10.13.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Aug 2024 10:13:16 -0700 (PDT)
+Date: Thu, 8 Aug 2024 10:13:12 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: rsbecker@nexbridge.com
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, 
+	git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <bs36iyp3yzb5l52t6yw5364odvugrt22jfeypqohtzdwp22ecj@kurf4p62qibu>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	rsbecker@nexbridge.com, "'brian m. carlson'" <sandals@crustytoothpaste.net>, 
+	git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
+ <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net>
+ <0a4601dae912$68d8e920$3a8abb60$@nexbridge.com>
+ <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
+ <0a8401dae924$c9e8e9b0$5dbabd10$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 63E6A96C-55A9-11EF-ACAC-BF444491E1BC-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0a8401dae924$c9e8e9b0$5dbabd10$@nexbridge.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 2024.08.07 19:51, rsbecker@nexbridge.com wrote:
+> On Wednesday, August 7, 2024 7:08 PM, Josh Steadmon wrote:
+> >On 2024.08.07 17:40, rsbecker@nexbridge.com wrote:
+> >> On Wednesday, August 7, 2024 5:21 PM, brian m. carlson wrote:
+> >> >On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
+> >> >> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to
+> >> >> call functions in libgit.a. This initial patch defines build rules
+> >> >> and an interface that exposes user agent string getter functions as
+> >> >> a proof of concept. A proof-of-concept library consumer is provided
+> >> >> in contrib/cgit-rs/src/main.rs. This executable can be run with
+> >> >> `cargo run`
+> >> >>
+> >> >> Symbols in cgit can collide with symbols from other libraries such
+> >> >> as libgit2. We avoid this by first exposing library symbols in
+> >> >> public_symbol_export.[ch]. These symbols are prepended with "libgit_"
+> >> >> to avoid collisions and set to visible using a visibility pragma.
+> >> >> In build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also
+> >> >> contains libgit.a and other dependent libraries, with
+> >> >> -fvisibility=hidden to hide all symbols within those libraries that
+> >> >> haven't been exposed with a visibility pragma.
+> >> >
+> >> >I think this is a good idea.  It's optional and it allows us to add
+> >> >functionality as we go along.  Platforms that don't have Rust can just
+> omit
+> >building it.
+> >> >
+> >> >> +[dependencies]
+> >> >> +libc = "0.2.155"
+> >> >
+> >> >I don't love that we're using libc here.  It would be better to use
+> >> >rustix because that provides safe APIs that are compatible with
+> >> >POSIX, but I think for now we need this because rustix doesn't offer
+> >> >memory management like free(3).  I'd really prefer that we didn't
+> >> >have to do memory management in Rust, but maybe that can come in with a
+> >future series.
+> >>
+> >> This is a good point. Libc is not portable, but because I can't build
+> >> with RUST anyway, I hope that libc is restricted to this facility if
+> >> used. It should not be included in the git C build. It is probably
+> >> moot for me anyway for this series, but I have to mention it in case
+> anyone else
+> >gets the idea to include it as a dependency for git C.
+> >
+> >I know you don't have access to Rust, but would you be able to test the
+> symbol
+> >visibility steps with `make contrib/cgit-rs/libcgit.a`?
+> 
+> Of course. Branch? URI?
 
-> diff --git a/config.c b/config.c
-> index 6421894614..cb78b652ee 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1596,7 +1596,9 @@ static int git_default_core_config(const char *var, const char *value,
->  		else if (value[0]) {
->  			if (strchr(value, '\n'))
->  				return error(_("%s cannot contain newline"), var);
-> -			comment_line_str = xstrdup(value);
-> +			free(comment_line_str_allocated);
-> +			comment_line_str = comment_line_str_allocated =
-> +				xstrdup(value);
-
-If you are to follow the _to_free pattern, you do not have to
-allocate here, no?  We borrow the value in the configset and point
-at it via comment_line_str, and clear comment_line_str_to_free
-because there is nothing to free now.  I.e.
-
-			comment_line_str = value;
-			FREE_AND_NULL(comment_line_str_allocated);
-
-I still think the approach taken by the previous iteration was
-simpler and much less error prone, though.
+https://github.com/steadmon/git/tree/cgit-dev
