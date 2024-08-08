@@ -1,196 +1,108 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE698189F27
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 10:08:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A2213AA31
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 10:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723111707; cv=none; b=ogxd7bPOHzBz9WhLgqd+JFSdB1smTr+yyz9jE7xlHQxsm7MX76P2C0WudjAG3yWypKBIbrgGeowQEwswTO9LWSDGPpF4xFbzIeK2aLDnsj0FX6/lQDRB8Z93awqid69ECwnU34qlzU5Ij1Mu6qhZBL93rBh60JocUpQkIR3SGeU=
+	t=1723112526; cv=none; b=N4bcaVdx6hdYQwyX26j1P21rR5hT26VgT3oTEw9Jutea/nnR3KKZn5Ckoc6xHT59r/alvZ2H+M76EGbaKGOcBgYUcZzBVXXrxBU33lfcmzgp34nyZu0TM3tCUaT9cn2e9LNKVSVt1ZKWgteiINM7yoeUoXMuf8FSedNH4ajt+JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723111707; c=relaxed/simple;
-	bh=LkIiTTLfbkt8L7xfLK83WNxipypDbYZNe2G1fllE/Yw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Y2AyUujtj/V7w9c8GsPRC5VdyY5WQmBTN8BOoqoQRextVPTq8c48KXwVzd1GxWBqOWCHWuT0xQRvB3tevFUhl0PIziWcX28eL8y5t38pDqapARDjztTPiS7eXZXhBqQQawzJz0YKABhli2FARAt8mtyroOPBCwlHASxiRXniGHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iQ1uAS3u; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1723112526; c=relaxed/simple;
+	bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KOZLpVqBrAVP/7i9oxeKuiMYG2KJmnqMyVnAZtEV6PHv7NTkfDWW62/jF4OxIxcoJLFJtIjYzZMDdHBuhHx6euQR73nqsqoL5b+n25ozhqqM147/9l8+D/OUvxm8hgO1fO47Okh/nW4s4SduHk4zX5HGU50zW5Wy78No0xgItPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHsY7e8z; arc=none smtp.client-ip=209.85.161.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iQ1uAS3u"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so7898785e9.2
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 03:08:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHsY7e8z"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5c661e75ff6so491509eaf.2
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 03:22:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723111704; x=1723716504; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JnMThn2YbdbiYq87IO8Q/2FLlhbtpFx0zjFaA7HvZgs=;
-        b=iQ1uAS3uTWufjrkLgRlkQxKcD+r8EKPzHvKQvPatKbpE2RmuZRMKdnioBDSA1VSJ6l
-         MYI2gYaRNTeFgde7sdqKWscnM2sO35ER4t8kQmaBZp00/eWDhDk383YiSoyALfKN0C41
-         wolfHWf/wUbogb3fS3SeoZaauSYimAzgmNnDYkLYlfMDGLKEh29UtFRelT9Giss1Z6UD
-         ln/pykWxAhrfsoIHMbcpw+mBxx2joVFzC/FXXvT8wZv9w618EFYXvneJHNaKKnhHMeWU
-         SRAXWJ/qX1vnPrQaXyrmCDJf5yxRcm8NT7AW5Wr+lSxDd6u0Am20nFMV+VHHq4VYa1q5
-         v9gg==
+        d=gmail.com; s=20230601; t=1723112524; x=1723717324; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
+        b=hHsY7e8z0ybuBUE2ko77bmpQWJp/VLGYS5VaNoYBph5x4w9LqgEsgs7f3liHzeAVQz
+         roRjxwaT0vUmuVP2p1IyrXDG8xievHq2N6t2rLWAxTnV1cfKI3mujubWbx4ykQWKycxv
+         OiitGnJQ/uP9dveAyLyccTQ76UFyIaP1I9C6DzxZblb6R8325QJn9xC2RKkiaTsUuBwi
+         3l39NJxe3HAB3L786+SpYpXQqmvbNR3LT4iQPma9my/Sdrv3eYDTkmsQTQlOdndpBk4k
+         FEZFDYnZA/hIv3MMgN3w2Vnn14PVnt/fhalHTi+ywk2B/TncdzYNEGJPHc4JH/mPVJlm
+         170w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723111704; x=1723716504;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JnMThn2YbdbiYq87IO8Q/2FLlhbtpFx0zjFaA7HvZgs=;
-        b=rfnK4gEe1wN8rMDjcHxN4g0D7A50Tq7/QHWn8PJt4KyCJ9NiPXis4gLzSgaFOOTlr6
-         9bN5IMMvEnDzLC7Tx3nOLGFEP8b1iZ7M7ytOwvPEu3QK/xAyJ57vEUvltUj0plUw5cG7
-         rIFF4V+7PrU1/VZBh6M78kyfhmUrC2psgdYfrIOVPWy0rmDJr6SfW39TtyKAMmXlX5E7
-         nh99PjYnGE6UUUbfliVfdu3jmPG/fKMK0rU+7f5DaXl/7c/Q8riNP5Ri+OflFblvx4l1
-         zu853XJ8+pwhxyhZK4i8UlTK5EsMUsbQQqpqKMpveb5TAz2ptrJiGLl1pYgKt7t4IG+e
-         sH3A==
-X-Forwarded-Encrypted: i=1; AJvYcCV3IzYbbnPCEe3NPydzfDIANBexummEJLgeJ3afh0o0fyVRXBt3PEuJTzAP5u8z0iBBu/9ddSSDufsN84OMKKYOLP+V
-X-Gm-Message-State: AOJu0YwQ75WdX5jDtLDOogASJxAhEnbI1ADsth8LTtLSyIXNDHMRcNNv
-	hyZc0DXYe+JTlzxo3X813FIqpbcMIzJr62w7Aj3t23jpw7tIPRyk3jyEzQ==
-X-Google-Smtp-Source: AGHT+IGjXEHjPDkvkOfSkimNL3ytlXH1GmcVll/o/UOBZNoAgph4K0f0r1D1PT3wLwCZABt/GkTtow==
-X-Received: by 2002:a05:600c:524b:b0:426:6e9a:7a1e with SMTP id 5b1f17b1804b1-4290af4d238mr14232675e9.35.1723111703749;
-        Thu, 08 Aug 2024 03:08:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d7:1301:c687:6ca8:8709:4b85? ([2a0a:ef40:6d7:1301:c687:6ca8:8709:4b85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36d2716f333sm1378228f8f.43.2024.08.08.03.08.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Aug 2024 03:08:23 -0700 (PDT)
-Message-ID: <e0685657-369f-4211-8518-cc41aa28dcb9@gmail.com>
-Date: Thu, 8 Aug 2024 11:08:23 +0100
+        d=1e100.net; s=20230601; t=1723112524; x=1723717324;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
+        b=E0ZWO0yf8i3KiPT4g8AXTay27YoAUj8j7OGair3bfcdEIVh0Nbm8bMtK9znW5CuoTr
+         onJ0a/1qrjCWv185ZmeaT+ZrSo9TG0lpwabXTsY5oPp8CkzXs9jTTq9RcIqYlvliUL2J
+         B8b+uCnlSkPcOfPcoeD49h/bN1ZwyZ6L6+q7UdklwFAsVGmEW+7lZxA9bBGaOmhuo2LW
+         5RHNA5oLCFJhEG1O1e5ps4GMipxW1BN+C6U8KU+acaszpL3RILoq9aW4mXJOXOlSDudu
+         BQHgPziJeDDD1zwBmDfZLqdV5ddTNt8FfwsG7n2L0EcRiNiQ0IaoGAINSzFvmcufgsVF
+         18og==
+X-Forwarded-Encrypted: i=1; AJvYcCX8v5OYZkPBhPtstvnxeqfkTw1z/tRhKgoss0WyIZWtUCeS9luc4bRv8A6rUmu1LUzXQp0MjPrmpId0LtRJ62sTofoG
+X-Gm-Message-State: AOJu0Yz6cGGnlXVTYIpkRnEp/ZjaV7aFfTgKVimYht1aZ4oHVoa9/REz
+	tuM/sF1tQBbfoGl/f8gGwhGpxc566/J213VGgcszhY3+BNxKkFfkhYz3vP1yajEej7zeXa2jkdA
+	5PNCPu/Uto9fKet8TG9t0JZYx3Quuwg==
+X-Google-Smtp-Source: AGHT+IGLz13RUmMNXBdr7WXyIjIKnI61ayj0LUd39Ng2jmUuAjn6EyXsMEXwUU4TA5pAdLJGC6bKXsnMVrYE9mIUJXU=
+X-Received: by 2002:a05:6820:310a:b0:5d8:ebe:23fb with SMTP id
+ 006d021491bc7-5d855c0c285mr1520976eaf.7.1723112523962; Thu, 08 Aug 2024
+ 03:22:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 8 Aug 2024 06:22:02 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZrNtjeV5_gyZXBgB@ArchLinux.localdomain>
+References: <ZrEBKjzbyxtMdCCx@ArchLinux> <ZrEB16WGGc28dxu2@ArchLinux>
+ <ZrHRpnpGkH19godh@tanuki> <xmqqsevhy6e7.fsf@gitster.g> <ZrMMaubE_V7wUZ3H@tanuki>
+ <ZrNtjeV5_gyZXBgB@ArchLinux.localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 15/22] sequencer: release todo list on error paths
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1722933642.git.ps@pks.im>
- <df4c21b49f86d6e1e9d2b28375ab6465ffa4339a.1722933642.git.ps@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <df4c21b49f86d6e1e9d2b28375ab6465ffa4339a.1722933642.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Thu, 8 Aug 2024 06:22:02 -0400
+Message-ID: <CAOLa=ZTjVgVk_OodC+L+MC014vHbh6jztKNHyQjcXwKzmkqhbg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v15 7/9] builtin/refs: add verify subcommand
+To: shejialuo <shejialuo@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000e63788061f2965d0"
 
-Hi Patrick
+--000000000000e63788061f2965d0
+Content-Type: text/plain; charset="UTF-8"
 
-On 06/08/2024 10:00, Patrick Steinhardt wrote:
-> We're not releasing the `todo_list` in `sequencer_pick_revisions()` when
-> hitting an error path. Restructure the function to have a common exit
-> path such that we can easily clean up the list and thus plug this memory
-> leak.
+shejialuo <shejialuo@gmail.com> writes:
 
-This looks good, I've left a couple of small formatting comments below 
-if you do end up re-rolling.
+>> If so, then the only two I had were some spurious newlines. I'm not sure
+>> whether these really would be worth rerolling the whole patch series.
+>>
+>
+> Karthik has given some reviews. I guess I need to reroll because there
+> is one typo error in commit message. It's important to make this fixed.
+>
+>> Patrick
 
-> @@ -5506,11 +5508,14 @@ int sequencer_pick_revisions(struct repository *r,
->   				enum object_type type = oid_object_info(r,
->   									&oid,
->   									NULL);
-> -				return error(_("%s: can't cherry-pick a %s"),
-> +				res = error(_("%s: can't cherry-pick a %s"),
->   					name, type_name(type));
+I would say, my nits by themselves don't require a re-roll, but if
+you're re-rolling, it'd be nice to resolve them too :)
 
-This line needs re-indenting to match the changes above.
+--000000000000e63788061f2965d0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 3935b8f2359be98d_0.1
 
-> +				goto out;
->   			}
-> -		} else
-> -			return error(_("%s: bad revision"), name);
-> +		} else {
-> +			res = error(_("%s: bad revision"), name);
-> +			goto out;
-> +		}
->   	}
->   
->   	/*
-> @@ -5525,14 +5530,23 @@ int sequencer_pick_revisions(struct repository *r,
->   	    opts->revs->no_walk &&
->   	    !opts->revs->cmdline.rev->flags) {
->   		struct commit *cmit;
-> -		if (prepare_revision_walk(opts->revs))
-> -			return error(_("revision walk setup failed"));
-> +
-
-This whitespace change is good as it means we now have an empty line 
-between the variable declarations and the code, the others I'm not 
-fussed about either way.
-
-Best Wishes
-
-Phillip
-
-> +		if (prepare_revision_walk(opts->revs)) {
-> +			res = error(_("revision walk setup failed"));
-> +			goto out;
-> +		}
-> +
->   		cmit = get_revision(opts->revs);
-> -		if (!cmit)
-> -			return error(_("empty commit set passed"));
-> +		if (!cmit) {
-> +			res = error(_("empty commit set passed"));
-> +			goto out;
-> +		}
-> +
->   		if (get_revision(opts->revs))
->   			BUG("unexpected extra commit from walk");
-> -		return single_pick(r, cmit, opts);
-> +
-> +		res = single_pick(r, cmit, opts);
-> +		goto out;
->   	}
->   
->   	/*
-> @@ -5542,16 +5556,30 @@ int sequencer_pick_revisions(struct repository *r,
->   	 */
->   
->   	if (walk_revs_populate_todo(&todo_list, opts) ||
-> -			create_seq_dir(r) < 0)
-> -		return -1;
-> -	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT))
-> -		return error(_("can't revert as initial commit"));
-> -	if (save_head(oid_to_hex(&oid)))
-> -		return -1;
-> -	if (save_opts(opts))
-> -		return -1;
-> +			create_seq_dir(r) < 0) {
-> +		res = -1;
-> +		goto out;
-> +	}
-> +
-> +	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT)) {
-> +		res = error(_("can't revert as initial commit"));
-> +		goto out;
-> +	}
-> +
-> +	if (save_head(oid_to_hex(&oid))) {
-> +		res = -1;
-> +		goto out;
-> +	}
-> +
-> +	if (save_opts(opts)) {
-> +		res = -1;
-> +		goto out;
-> +	}
-> +
->   	update_abort_safety_file();
->   	res = pick_commits(r, &todo_list, opts);
-> +
-> +out:
->   	todo_list_release(&todo_list);
->   	return res;
->   }
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index 7eb52b12ed..93c725bac3 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -12,6 +12,7 @@ test_description='Test cherry-pick continuation features
->   
->   '
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   # Repeat first match 10 times
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hMG5Fa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meXZoREFDVTVzWlpKVEVVWjNQUFBHMXlkVFo3ZmRVWgpYZGl6N1ZTb0R0
+RHVyTlEya0lZRVhSK0tFMElkbWRyUm1ZV0JuSXAwK3ZleS9hNERwWHk4TG1mUzMvUHZpbHNHCnBm
+U2FWT3BEVkNGRCttcXFQaUhRRkJEUUU0QlFWWXNQeHdhVXNoU08yWUhodVU4bEkyMHhLa0hSSHpB
+djJINkQKREFoWmZqNGFucVVtWnJ1WlJHN1NVaGZNako4R3ZueU16bTVsd3FiUm5tMEFKN0JZYWdL
+dkt2RVhJVmlaYlI3TQpTa1ZCejg5Nm1RMzRxaVd5OXJMRUtqMzJJdnRkUXNUdUtITUFBZlkxUG8y
+eCtOQ0FobFNoQlB4Z25BUnhPYnEwCnhVbS9raCtiM0U0bUoySzNmUGo4ZU9Iblh3WWNsQ0JXTThD
+VjRHQnU1QXpXT0tDZ2Q3ZzBXN3hnbzh0ck5naEgKcWlvR25uQ29jRUMvYXB0ZTVTcm8wSGV3N2xD
+Uy9BemVrcVc2ZHVFMXFJUjc4SzNYd2tCV2dtKzZPRVhZLyt0YQpPT1o4RFpTQU1oWThtVy91MHc5
+ZVVkVGE0N1c1MjRJUFNJbmtDZjJIajJyL0tybEtoQVgvcE5uVWIvVTIxZGhuCi9maE9iM0pyNUs1
+MHg1ekxTb0tRYTA4NHV1SFYydTdGRDlmL3QzWT0KPWZhZjgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e63788061f2965d0--
