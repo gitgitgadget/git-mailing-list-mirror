@@ -1,159 +1,135 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77AE148310
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 14:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6206BB674
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 15:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723127165; cv=none; b=hhtDtokhGKsqSaiKCNUMj9tZgeWa0WTDW5vWHx0iYPplUvSL5ogMRyxFDPw3m8DE/qS/KOs5cRKNwUc/f+FxcMPnJiHBlNOVcReYKZ36KnTCtP2JphEZe9FTAxTNKgdaL0pYl/5dgz9kcvfeW/URPzfcU5ImpSrccp1kuWrUaoM=
+	t=1723131366; cv=none; b=iGHXG+UWyHu/T01nUJJ1V0xxa2ZblxW1+54ykYC4so3vT2V9AADk/ud7BW8gRah7qFAy1I4nczIeM7zHfCgBzey+WTdWNpNqjlCB5Ac3dN+DENqRhczRvLlV2cOc/bXU2wi5FtEirSni1+dCik72k1H+f4Q5cPpEBxTu0utR4iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723127165; c=relaxed/simple;
-	bh=XFCdSy1OKkE6qMaICMV96D6PI+KDTZJYaXuy3XwzjAY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D0ekOjnLulggodygHRc9Nkq96qPjx01XANXcnnsTUQBZb0bRRu/ppY2iTZrjHcEBaBNc42ARH1yKbtwiZpmDJLbJln0J9Ut+J+ONOb8WZgzAQDHA0aG5mLhgtqlImA7rJCGAIZm6VloWJOFwQT7b1cQOtUk8fVsQNGGx0iWpeBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7rLImkT; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723131366; c=relaxed/simple;
+	bh=NPqs/1CXwrxBLmKzQFF2vnNKQZADnozegz6xs6VZ+H0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=duNX6bR/D+iga7tjkPNkHJ8TynVRbCzsv5YobUdpQSGdojK3mjhu8pE7dPLX9yM5AhvSnSczxjIfvI5VfGhuqmdoazKYLFiQkUvW2m5WhnhG5OFh7HRoIJ2NFq/KVX8o5tFqiL1mq+RMdY4SHzvCterjGxq+6jbNWmMuScYHnz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UFj/dt74; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7rLImkT"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f16d2f2b68so14209671fa.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 07:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723127162; x=1723731962; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HqQBAd02uCJ3LOE1JueGR9/tIr3SPdspxUK4Rof3vcU=;
-        b=Y7rLImkTiOfiLMeri+rn8fse7g40KNCAH22PwZeYfvKY396PML+jY68keR65lZ3Q9q
-         TzdhwJDKHdxIZyumhD63MzB18qcrAVNOi7eDb5H/ruqL5hK+BwKzxdRIWBk6uo7hvoLN
-         IRaY0UOJM+ELUfU6Hfu7iWSRx+27A/L5JvK2k/y+cZEtWlc6K1jAr7nFmysadK9V4iNo
-         Q/dXAdndxYkOy0PL1iT4Npkz3HiZXLYkB33023dCRNM47W7d5yfY1Mn1t2C9uKaAEozc
-         0c4A8iZe2PLUs9qTT2N1hC1gg96gkRMXpLW2YjuDgl70Bv0z3zoGYLyM1BKnMP80eRgE
-         7wKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723127162; x=1723731962;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HqQBAd02uCJ3LOE1JueGR9/tIr3SPdspxUK4Rof3vcU=;
-        b=eXqj8rp4M/IkEJJTGS3G5R2El6lXS2E6OjtZIrQtk77zSlLbwXjTxZjq2MQwruVisW
-         7n8ZZ4X+0oLA8pt5dkVXl3G/F7luraCGPSg8RoImpNgHs0eNsd3V5hLC86JnvKbHRVMs
-         VxKEtqaD4IJVEWwBKKUIJeNdhvkixkSv5KK5jG0c8NoggylKykq/JUos7mfkK6kSvuvr
-         wYgC6Qh/BYP/ozNwPe/cl743pt0yNOUqcHLIiQ4Z7wY4m2/jGpsLfdgl19iIAgZHKCs1
-         rt4tqEBLW+yVwehMvK4+CB9bMrdYV7xTZ8Oa2JmE+DwksRRlrpAcvElNEG0/kb+f1dXR
-         FuPg==
-X-Gm-Message-State: AOJu0Yw9CqbPMF2e8siTtDAY/vjt+dpU1yCcdi4huC7SkefVMeembxun
-	K9L/AZNqUof1Nc8y3bAGF/FsAd31r/XQLZppJyrFjjtKctq2Hp9yrhXlUZiNOtPD/9cgJqtZNE+
-	ZkzOJ/x2NsXujKtIrplNa9Pa8Sx4=
-X-Google-Smtp-Source: AGHT+IFb0PcOSHxa9ETcy5U+O8Kv/sPZ0rdx703C6afKbFXJxYP+Jz+FfET4KWos5jVA7CM3Z2X2kBXb4P5DsVwH5iQ=
-X-Received: by 2002:a05:651c:1549:b0:2ef:20ae:d117 with SMTP id
- 38308e7fff4ca-2f19de1afacmr19008881fa.10.1723127161183; Thu, 08 Aug 2024
- 07:26:01 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UFj/dt74"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E298C22337;
+	Thu,  8 Aug 2024 11:36:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=NPqs/1CXwrxBLmKzQFF2vnNKQZADnozegz6xs6
+	VZ+H0=; b=UFj/dt747klAf3nU8ZlYiD+skjA+ceo3OSgi/Wp3uDsCXsBaYV8q83
+	HrQIwuNaTWrU3xSpEonbP4QufYKRQi4VEvVs5bkkkFsDx8OS3nI4mu9dsDXfe82k
+	RoW7JCxvGYtrq2RaiZEf2YghJMMeWokcWT0E0MQ6/Qq1HeVIwQR9g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DB08822336;
+	Thu,  8 Aug 2024 11:36:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 425CC22335;
+	Thu,  8 Aug 2024 11:36:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: AbdAlRahman Gad <abdobngad@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v5 7/8] t7004: use single quotes instead of double quotes
+In-Reply-To: <20240807130259.28381-8-abdobngad@gmail.com> (AbdAlRahman Gad's
+	message of "Wed, 7 Aug 2024 15:58:43 +0300")
+References: <20240807130259.28381-1-abdobngad@gmail.com>
+	<20240807130259.28381-8-abdobngad@gmail.com>
+Date: Thu, 08 Aug 2024 08:36:00 -0700
+Message-ID: <xmqqed6zkowv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240807141608.4524-1-chandrapratap3519@gmail.com>
- <20240807141608.4524-6-chandrapratap3519@gmail.com> <ZrR91dR3G06L9dy7@tanuki> <ZrSzbdNkCS2LOXaL@tanuki>
-In-Reply-To: <ZrSzbdNkCS2LOXaL@tanuki>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Thu, 8 Aug 2024 19:55:35 +0530
-Message-ID: <CA+J6zkRszqfPP=_gbzzyDCOoUsLQUd0ke-XbMbFYu30Vhtocng@mail.gmail.com>
-Subject: Re: [PATCH 5/5] t-reftable-readwrite: add tests for print functions
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EB02C65A-559B-11EF-9132-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On Thu, 8 Aug 2024 at 17:36, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Thu, Aug 08, 2024 at 10:12:07AM +0200, Patrick Steinhardt wrote:
-> > On Wed, Aug 07, 2024 at 07:42:01PM +0530, Chandra Pratap wrote:
-> > > +static void t_table_print(void)
-> > > +{
-> > > +   char name[100];
-> > > +   struct reftable_write_options opts = {
-> > > +           .block_size = 512,
-> > > +           .hash_id = GIT_SHA1_FORMAT_ID,
-> > > +   };
-> > > +   struct reftable_ref_record ref = { 0 };
-> > > +   struct reftable_log_record log = { 0 };
-> > > +   struct reftable_writer *w = NULL;
-> > > +   struct tempfile *tmp = NULL;
-> > > +   size_t i, N = 3;
-> > > +   int n, fd;
-> > > +
-> > > +   xsnprintf(name, sizeof(name), "t-reftable-readwrite-%d-XXXXXX", __LINE__);
-> >
-> > Is it really required to include the line number in this file? This
-> > feels unnecessarily defensive to me as `mks_tempfile_t()` should already
-> > make sure that we get a unique filename. So if we drop that, we could
-> > skip this call to `xsnprintf()`.
-> >
-> > > +   tmp = mks_tempfile_t(name);
-> > > +   fd = get_tempfile_fd(tmp);
-> > > +   w = reftable_new_writer(&fd_write, &fd_flush, &fd, &opts);
-> > > +   reftable_writer_set_limits(w, 0, update_index);
-> > > +
-> > > +   for (i = 0; i < N; i++) {
-> > > +           xsnprintf(name, sizeof(name), "refs/heads/branch%02"PRIuMAX, (uintmax_t)i);
-> > > +           ref.refname = name;
-> > > +           ref.update_index = i;
-> > > +           ref.value_type = REFTABLE_REF_VAL1;
-> > > +           set_test_hash(ref.value.val1, i);
-> > > +
-> > > +           n = reftable_writer_add_ref(w, &ref);
-> > > +           check_int(n, ==, 0);
-> > > +   }
-> > > +
-> > > +   for (i = 0; i < N; i++) {
-> > > +           xsnprintf(name, sizeof(name), "refs/heads/branch%02"PRIuMAX, (uintmax_t)i);
-> > > +           log.refname = name;
-> > > +           log.update_index = i;
-> > > +           log.value_type = REFTABLE_LOG_UPDATE;
-> > > +           set_test_hash(log.value.update.new_hash, i);
-> > > +           log.value.update.name = (char *) "John Doe";
-> > > +           log.value.update.email = (char *) "johndoe@anon.org";
-> > > +           log.value.update.time = 0x6673e5b9;
-> > > +           log.value.update.message = (char *) "message";
-> > > +
-> > > +           n = reftable_writer_add_log(w, &log);
-> > > +           check_int(n, ==, 0);
-> > > +   }
-> > > +
-> > > +   n = reftable_writer_close(w);
-> > > +   check_int(n, ==, 0);
-> > > +
-> > > +   test_msg("testing printing functionality:");
-> >
-> > Is it intentionally that this line still exists? If so, I think it
-> > really only causes unnecessary noise and should rather be dropped.
-> >
-> > > +   n = reftable_reader_print_file(tmp->filename.buf);
-> > > +   check_int(n, ==, 0);
-> >
-> > Wait, doesn't this print to stdout? I don't think it is a good idea to
-> > exercise the function as-is. For one, it would pollute stdout with data
-> > that we shouldn't care about. Second, it doesn't verify that the result
-> > is actually what we expect.
-> >
-> > I can see two options:
-> >
-> >   1. Refactor these interfaces such that they take a file descriptor as
-> >      input that they are writing to. This would allow us to exercise
-> >      that the output is correct.
-> >
-> >   2. Rip out this function. I don't think this functionality should be
-> >      part of the library in the first place, and it really only exists
-> >      because of "reftable/dump.c".
-> >
-> > I think the latter is the better option. The functionality exists to
-> > drive `cmd__dump_reftable()` in our reftable test helper. We should
-> > likely make the whole implementation of this an internal implementation
-> > detail and not expose it.
->
-> For the record: I've got a bigger patch series in development that drops
-> the generic reftable interfaces. As part of this, I'll also rip out the
-> functionality provided by "reftabel/dump.c".
+AbdAlRahman Gad <abdobngad@gmail.com> writes:
 
-Cool, I'll just drop this patch from the series then.
+> Some test bodies and test description are surrounded with double
+> quotes instead of single quotes, violating our coding style.
+>
+> Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
+> ---
+>  t/t7004-tag.sh | 70 +++++++++++++++++++++++++-------------------------
+>  1 file changed, 35 insertions(+), 35 deletions(-)
+
+The conversion in this step can cause unintended breakage and needs
+to be carefully done, so I checked with "git show -W" (I probably
+should have done -U999 instead of just -W).
+
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 2b15ede1f3..046a5bd9bc 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1583,7 +1583,7 @@ test_expect_success 'creating third commit without tag' '
+>  
+>  # simple linear checks of --continue
+>  
+> -test_expect_success 'checking that first commit is in all tags (hash)' "
+> +test_expect_success 'checking that first commit is in all tags (hash)' '
+>  	hash3=$(git rev-parse HEAD) &&
+
+The original used to resolve "HEAD" while formulating the command
+line of test_expect_success.  Now we resolve "HEAD" as the first
+thing the body given to test_expect_success is run.  As HEAD does
+not move between these two points in time, hash3 would get the same
+value either way.
+
+
+>  	cat >expected <<-\EOF &&
+>  	v0.2.1
+> @@ -1594,10 +1594,10 @@ test_expect_success 'checking that first commit is in all tags (hash)' "
+>  	EOF
+>  	git tag -l --contains $hash1 v* >actual &&
+>  	test_cmp expected actual
+> -"
+> +'
+
+The argument to the "--contains" option was interpolated while the
+command line of test_expect_success was formulated.  If the body of
+this test_expect_success modified the value of $hash1, this conversion
+would have changed what the tested command did, but because nobody
+assigns to $hash1 after it gets assigned (and this is true for other
+$hash[0-9] variables), this conversion is OK.
+
+>  for option in --contains --with --no-contains --without --merged --no-merged --points-at
+>  do
+> -	test_expect_success "mixing incompatible modes with $option is forbidden" "
+> +	test_expect_success "mixing incompatible modes with $option is forbidden" '
+>  		test_must_fail git tag -d $option HEAD &&
+>  		test_must_fail git tag -d $option HEAD some-tag &&
+>  		test_must_fail git tag -v $option HEAD
+> -	"
+> -	test_expect_success "Doing 'git tag --list-like $option <commit> <pattern> is permitted" "
+> +	'
+> +	test_expect_success "Doing 'git tag --list-like $option <commit> <pattern> is permitted" '
+>  		git tag -n $option HEAD HEAD &&
+>  		git tag $option HEAD HEAD &&
+>  		git tag $option
+> -	"
+> +	'
+
+Likewise.
+
+The value of $option of course changes for each iteration of the
+loop, and the original interpolated it into the tested scripts while
+test_expect_success command lines were formulated in the original.
+Now the variable $option is used just like any other variable while
+the body is run, and the tested scripts behave identically either
+way.
+
+Looks good.  Thanks.
