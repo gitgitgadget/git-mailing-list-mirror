@@ -1,83 +1,83 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECF82F50
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8486E2F50
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723093500; cv=none; b=sWNEvUFoYfcB0UXA6plDGInX7C/pkU4DfmYONpvgL78TMsS02eSKe5IjeRwtj+6qNUSx/vqhkIpmvCviXd4ZfZdDoJYyoSY0XTBBn5c/RM34iKAzrKoMSxChTM30WzZr5mhMrUcsqSiqtKjmUyzHzZbPiWTg57QbTzOl2BLheaY=
+	t=1723093507; cv=none; b=q45/BSHL3tkkqSIQL4gID/Q+TpA1+eViYgcjrfrLXWCLMKvevuZUzYoZAXxv1bO0qmqfq6BRSYyxlOmOTgEv05gmK+E5Gmw1/V7Y1w1I+xSgmEPl+BIV630qcf8KfRpxsrCY7oPhNQxXi7JV2EBfx3trXig0a6L2oE5WlGGWZwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723093500; c=relaxed/simple;
-	bh=0Te6Xb0nxkQr1RYnv6KhIWuNZfN3mY4W+ea69pfNxkA=;
+	s=arc-20240116; t=1723093507; c=relaxed/simple;
+	bh=4cCuXvltlEdSkf4ThRs7+v4igW2GQVRDBsZya/lSgEE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QmM+Yws5aMgdmzJhQ+BMUsEcb/H9BYieP2ZjHzMHSdlqrUFvj9H6HYsJd++W0OXyXfzoQSjhq9ee+M4S/bl5OgT5tK6hoKgZrBeISAFMpvfZroiEVcQ37mH3Xi+s2TVU8XxnxUZxSpW2FyeNRypRbNGpffdI3Fv/WlHJFMG9je0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RK7+AUP0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n9Jy06jF; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zl3//yvTisCAxNx9Wo3ZIlLQKC6aQquSjyvqjYFZzSVSgIGEcTXMKzI1nYYwvQxJzxxmjZTFpFx3Sj8cE+02bNo5QSAhewYdmJLZtPBW/CvotLHNzNmHiK2aySuvXQ5QyiKMJDVpsHqN5oPCWbv4J03s96tfcJgSh4UP0Zq+/zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EmKiE8GX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L4PlxGmb; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RK7+AUP0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n9Jy06jF"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EmKiE8GX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L4PlxGmb"
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7AA3C138FD8A;
-	Thu,  8 Aug 2024 01:04:57 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 89CB5138FD8B;
+	Thu,  8 Aug 2024 01:05:04 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 01:04:57 -0400
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 01:05:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723093497; x=1723179897; bh=MN92Q2UKJf
-	LLsiXZ4GJ7kmR2xQFrQvawv/Hhrto4h0w=; b=RK7+AUP0IknsHzUsLNsJuy91qX
-	RaJdazPMOw8UwWivDqOrasKFyHXJHKaea/X1QpLJwPvGp8XNalUkyPorvfoVPpzv
-	6vrXxjeRpodPMRWfoB1tENy5yGII2tmJzk5/p0HAq1uLAM6ocNAMHjH6OIHsTuZP
-	oNGosxhdQD502+TBm8AZP1y+K+iq/zXRPtkOsnpi5g9w133UHpwRDKsbSG++cyQr
-	7lGbQtNJGSSfRe7pPHYbKsxycW/66OArnkT6YT2+i6aD8m385E0NaHZ9mSg8bvoD
-	PovDV9QL54RdiHXbN3KUgh5ZtwdR4ZXpX5/00bITY85F4JviVfgYJYqKdF6A==
+	:subject:to:to; s=fm3; t=1723093504; x=1723179904; bh=lTxCJy29DX
+	hhQ67GTqFtB6GAOu7COF7NjdR1J4Im3Ng=; b=EmKiE8GXolcmAPDSp9+fJRDeZv
+	1zkWxEDEiIZ7UF95S3d820tMcbNmSBvYAf0An+Aq+3AAXbHidyYcMWAYsONEaGso
+	P/E2PybKQN2JH5Ump90iRg/NriR9hQ+hxgKA6W6NTzCN6qkrrmqm53njhL8fKxut
+	aC2fBok6IBSCZwJ4LuQVXBe6Q45rWmEr2nQmm+uhwbeUJN+BA+YtiDLn7MdQLylt
+	VaQ0//CC3ynRQHfF2n8olEeNTXLsz55TgnQc6IfIMY8mvqStqJw+seU2XfIPkJtw
+	l+8AcpRhgwktsAE37trkVPg8PBEYInMQYrIBf/dn99AWIhsY/0I0HvABj6bQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723093497; x=1723179897; bh=MN92Q2UKJfLLsiXZ4GJ7kmR2xQFr
-	Qvawv/Hhrto4h0w=; b=n9Jy06jFGsYzWjiVjrv6c9ptHYxdyJSMr8ugiuqXGQYu
-	V4x5xlbqQncfLuUM99/huQZAEquX6vsy7oBvgrrVOSm2UImA/699UazbHUl64/1k
-	M3KPl6PdsK5TDsrt8M0PWhQEtzIak4GZrlb8vGrNzL4heJEHOgp5l+plFsFmL/Rt
-	mgCRJ0po76dvSBsPyZwNR0q59M0KWg40UjSz0ZAOpWmLGMWreTTEnPPVGrK6gmsI
-	LNcEtULgwptjVdt15+5O3mnhlsmTqj3v6ALi5Mm0N9kAL7XcKhV++PEFb9NXtAAP
-	48uXTyzXd2fULi9S2trQYAWjkquWxhDojY+ph1ihXw==
-X-ME-Sender: <xms:-VG0ZsXXrL7rPO-PxzcIy5_t2xSEVld7uCLx-7NBFUJOeki4yTEaSg>
-    <xme:-VG0Zgn5BIFCg4WfqNldAole0zsPO6sCQu1sJD5EMYxCVei7u05XKMPCWrmB7G-Z5
-    G5Q32AdPEaogYR1Ig>
-X-ME-Received: <xmr:-VG0ZgZ3iMDZX9RAcFlp-0f4Rff2f-Ue4KjMa0SAg17ny6sYakSHQu0q6Qh_nQfrmxszkX4bWuB3DIWDbOxCUO3UlOFJzXN_e6-aJcn6hJoTtzWi>
+	fm3; t=1723093504; x=1723179904; bh=lTxCJy29DXhhQ67GTqFtB6GAOu7C
+	OF7NjdR1J4Im3Ng=; b=L4PlxGmbcmgNOYxVoWC4Bty/d+g6olyj9S3KmwGKKYv2
+	8pOWHyEcXDjB1qPjfpdG6eLPBOdojZgggmE4/2XsOamlnbbJDpovfQC0V07jqof0
+	PkA3odJoRhT+7Wr1XKzD8/gp8iwmOhBAUUfJm04kjB26lDIFClGGG6MEMm5TRRny
+	Q+AGY/5EFl04wSf4AsmIdOcNJUzfYISoRQ7CUKGC9fHJlFx4rbHij7awNFJdsJi7
+	JOBzGdWPYsJCZ8HEEPdPBZVpDVPCtVvHkeDaxK741tb7n5xidLjw53BBL+R4aFHN
+	iuTAgtXJEvuRfE4j2CQYAWEn2HZ/sXPK8c/lO3G2CA==
+X-ME-Sender: <xms:AFK0ZlOKnW3fQjr5sIIO8ukEYcD7pdL7DwiXPhbd5ZFyZ6GQ-kfeEg>
+    <xme:AFK0Zn-T1PwNXMZyF2pXbngwJx908qa8AzkmzHtWLAYSg9JVFkK9neCM4_mezmUYv
+    6H1qOEWrDVJiVmjKg>
+X-ME-Received: <xmr:AFK0ZkQ_e7X66HrNc8MMeCiWSy_7QUkUYBowIkA-IeiYLmRHmjhJJrJBtEjlCgVRm7gYwrJc9AzwKTwqHUQFACfkqGKMplnQ3bOxcXcmO3IjGbZ3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdeludcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
     hpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:-VG0ZrV9dceyFVE2cf3Pl4Z_IP0rKGrGKc7WNVCCRNwTLNEoZ74Slg>
-    <xmx:-VG0ZmnoFpGPTOEXFUmGcng3v-AfTXQlE1iJbdRgw0eSv_03x5AmMg>
-    <xmx:-VG0ZgfnQSvwlkMcHUSBoKabb5ny2OvDLWysFopkwjjXi9f_Pdgu9g>
-    <xmx:-VG0ZoE5sR-C0SkUzeXbevyWp01g0OdIUXhzI1ybO1ElJqGTD9FtKg>
-    <xmx:-VG0Zrw5RXncNE-nwOUOjdt3dO1f-HsdNdyVx8PGJ6AZMVaN-AJEvW56>
+X-ME-Proxy: <xmx:AFK0Zht05I-eLrCLVdTMLDk_p2W1R2RnaIOh8QoASdXBJQrckWlXOw>
+    <xmx:AFK0Ztd1vTM7EYssoPyFFywfLfKrzwsyduHZyGpaCCEPg5ZelFZznQ>
+    <xmx:AFK0Zt3ypNRQeV9hz-vwI268S8QcaXEpzbzoQnZffmx3-Xss5BRLbg>
+    <xmx:AFK0Zp-Hx7giiHJKTNOnK-vLk4GPFZ69lqsMkbOzBuOOIgn1QP_rxw>
+    <xmx:AFK0ZurGeqU60qKkNuPxhHqMyWhrRXrPhA1vVqGwJXnCNhv4MFDlfZ93>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 01:04:56 -0400 (EDT)
+ 8 Aug 2024 01:05:03 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 45745eda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 05:04:50 +0000 (UTC)
-Date: Thu, 8 Aug 2024 07:04:54 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e7cd661f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 05:04:56 +0000 (UTC)
+Date: Thu, 8 Aug 2024 07:05:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: James Liu <james@jamesliu.io>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/22] config: fix leaking comment character config
-Message-ID: <ZrRR9mwyQQrw4Dg5@tanuki>
+Subject: Re: [PATCH 09/22] builtin/rebase: fix leaking `commit.gpgsign` value
+Message-ID: <ZrRR_EU_Ptz0hrDi@tanuki>
 References: <cover.1722933642.git.ps@pks.im>
- <a34c90a5527cb45ec89a0ad44dbca1d61705a0ea.1722933642.git.ps@pks.im>
- <D39HQCFQ2DCW.1KFGPLVU1EVQD@jamesliu.io>
+ <05290fc1f14cae8229c42f2d0aafe6619c069e3a.1722933642.git.ps@pks.im>
+ <D39I6DZWV40G.T5O4SNGH9OIX@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,77 +85,108 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HrOCby444CTZTg/r"
+	protocol="application/pgp-signature"; boundary="LoXaCmOFQpm/ZPcs"
 Content-Disposition: inline
-In-Reply-To: <D39HQCFQ2DCW.1KFGPLVU1EVQD@jamesliu.io>
+In-Reply-To: <D39I6DZWV40G.T5O4SNGH9OIX@jamesliu.io>
 
 
---HrOCby444CTZTg/r
+--LoXaCmOFQpm/ZPcs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 07, 2024 at 05:11:28PM +1000, James Liu wrote:
+On Wed, Aug 07, 2024 at 05:32:25PM +1000, James Liu wrote:
 > On Tue Aug 6, 2024 at 7:00 PM AEST, Patrick Steinhardt wrote:
-> > Refactor the code so that we initialize the value with another array.
-> > This allows us to free the value in case the string is not pointing to
-> > that constant array anymore.
+> > In `get_replay_opts()`, we unconditionally override the `gpg_sign` field
+> > that already got populated by `sequencer_init_config()` in case the user
+> > has "commit.gpgsign" set in their config. It is kind of dubious whether
+> > this is the correct thing to do or a bug. What is clear though is that
+> > this creates a memory leak.
 > >
-> > diff --git a/environment.c b/environment.c
-> > index 5cea2c9f54..8297c6e37b 100644
-> > --- a/environment.c
-> > +++ b/environment.c
-> > @@ -113,7 +113,8 @@ int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
-> >   * The character that begins a commented line in user-editable file
-> >   * that is subject to stripspace.
-> >   */
-> > -const char *comment_line_str =3D "#";
-> > +const char comment_line_str_default[] =3D "#";
-> > +const char *comment_line_str =3D comment_line_str_default;
-> >  int auto_comment_line_char;
+> > Let's mark this assignment with a TODO comment to figure out whether
+> > this needs to be fixed or not. Meanwhile though, let's plug the memory
+> > leak.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  builtin/rebase.c              | 8 ++++++++
+> >  sequencer.c                   | 1 +
+> >  t/t3404-rebase-interactive.sh | 1 +
+> >  t/t3435-rebase-gpg-sign.sh    | 1 +
+> >  t/t7030-verify-tag.sh         | 1 +
+> >  5 files changed, 12 insertions(+)
+> >
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index e3a8e74cfc..f65316a023 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -186,7 +186,15 @@ static struct replay_opts get_replay_opts(const st=
+ruct rebase_options *opts)
+> >  	replay.committer_date_is_author_date =3D
+> >  					opts->committer_date_is_author_date;
+> >  	replay.ignore_date =3D opts->ignore_date;
+> > +
+> > +	/*
+> > +	 * TODO: Is it really intentional that we unconditionally override
+> > +	 * `replay.gpg_sign` even if it has already been initialized via the
+> > +	 * configuration?
+> > +	 */
+> > +	free(replay.gpg_sign);
+> >  	replay.gpg_sign =3D xstrdup_or_null(opts->gpg_sign_opt);
+> > +
+> >  	replay.reflog_action =3D xstrdup(opts->reflog_action);
+> >  	if (opts->strategy)
+> >  		replay.strategy =3D xstrdup_or_null(opts->strategy);
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 0291920f0b..cade9b0ca8 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -303,6 +303,7 @@ static int git_sequencer_config(const char *k, cons=
+t char *v,
+> >  	}
 > > =20
-> >  /* Parallel index stat data preload? */
+> >  	if (!strcmp(k, "commit.gpgsign")) {
+> > +		free(opts->gpg_sign);
+> >  		opts->gpg_sign =3D git_config_bool(k, v) ? xstrdup("") : NULL;
+> >  		return 0;
+> >  	}
 >=20
-> Is my understanding correct that `comment_line_str` is now just a
-> pointer to the `comment_line_str_default` array, and thus can be freed
-> once we're done with it?
+> It looks like this free'ing would be managed by the caller by invoking
+> `replay_opts_release()`, but it's not being done consistently.
+>=20
+> For example, `do_interactive_rebase()` invokes `replay_opts_release()`,
+> but `run_sequencer_rebase()` does not. Would it be better to address the
+> leak here?
 
-Not quite. By default, `comment_line_str` also points to
-comment_line_str_default`, which is a string constant and thus neither
-of these variables can be free'd. But what this split allows us to do is
-to check whether `comment_line_str` has changed from the default, and
-thus we can conditionall free it when it does not point to the default
-value anymore.
+The problem here isn't that `replay_opts_release()` doesn't free the
+values, or that the function isn't called consistently. The problem
+rather is that we assign `opts->gpg_sign` even though it may already be
+assigned an allocated string. Consequently, `replay_opts_release()`
+doesn't even have a chance to free the old value because it cannot see
+it anymore.
 
-Now that I revisit this commit I'm not quite happy with it anymore. We
-still need to have the cast, which is somewhat awkward. I think the
-better solution is to instead have a `comment_line_str_allocated`
-variable that is non-constant. I'll adapt the code accordingly.
-
-An even better solution would be to have `struct strbuf` provide an
-initializer that populates it with a string constant. But that feels
-like a larger undertaking, so I'll leave that for the future.
+I'll massage the commit message a bit to clarify this.
 
 Patrick
 
---HrOCby444CTZTg/r
+--LoXaCmOFQpm/ZPcs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0UfUACgkQVbJhu7ck
-PpSiURAAmbNtbUnEg1s2ElyBcPu8q2UWVnjhbP/GmQE2LnFXTF2bxZM2YCVOFwTz
-u4Y/O7r3RBdBbJ24HJKwIZlwkUaeHeaN75LnCdYhl57olhuByyoVW6VDD0P++0Jn
-18xx3C4Y/4BNjxtxryWZnkifJXbsBl/+2asbk7WrQSLL0k/BPrNuXAGTwVo0Vwz1
-8ymjeQJLo5Nv4oyMXOj6AWKfXFQ5jK7CNhC7CWpLlGx5SQsnzNP7EZGxGo8TPlt+
-lHXNeB70gyzwa+4jsp4h+BkqoIadBVA1QHZHz+3su3Gbn2TMjB6lIL2nDicp2aCd
-yL1Ib5Jf4t06db4pPoft2y7nssRCAxu0GQAKilFYVGPJ2GwjzWMxLJQ8o9fWbqpM
-/o7y8MZ5DEBWJMzLlFe90QWr5ImtAbBparBWU2/dELlNNg1Q3jLGmRUgcUYdq7UW
-Ho4tqNByhnp7BKKCRmPR38CifJhPgGSIgYd4gqyhhIxl3F3exF5FGZiBCD2AOrNW
-nEFS2azMF6HLQhJYaX5iFiaMGqj9T7kchjXrFBkMDdCo2w2xJvIow/YjPAF9ja0V
-SDsmVW1CEzuWrKGTo9i031g7fLzt43PvDOWJobTo+ibhCkU0hJrwEvKEI//2IxQ5
-eepjZFqy4e5ccEq+YsCbO62XaGAuDyS4GtK/Ec9uCUjndZ5zpsc=
-=Xdy6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0UfsACgkQVbJhu7ck
+PpRV8w/+OW25/e1DuILAKeZrKafsiaufyk5aKPSOg7rSzVES0hts49ZZyqzgLv+B
+pX9WBCzBu05DOJ5BshKYBt3JUg25zuD5IDezDIosrqakcTn4X8+AFc+VxQdy6SVO
+2j5qiVeJX8gZQ2/V1ZiQOh353MxAIdRGgTy6UPuILeGGc/rq1zQEtAUuvR7MGDc4
+1nSMj/wDE2bG+4EtI2P0hKaAqV1kpJRbrgldR5fz6ikf6uYPoaa00abFHkBIguFo
+kkD7hIfU0NXW8d+aN2pDM4iOXCU9MW21YSu0JEI2MbKAJ2BmdlQ+H5mI8mkqlh0n
+5xT4IAvIR6bFKVN6wk2EvtgYCGDze1MoVHG2/S47G0DjutzoUEtpI3yTBr8K7mra
+0PPitcyVE4fWn2RLtwWm4HXtH6SLMEdyLhf6X9AtkXCNjwpIHmfBUH0LuQjZt+j6
+jX6ZEHThTyN5Sye5JL9G+mm6enz6xSWpWME2zjD1bpJckYMPtJleqbxlMTD9W3P4
+EsRQcfJQCWUwezALo144isqugJeqpWGuMjdG9ugXYJp0ZgkrKIOIeCt7HpkFrnQg
+fHsTmxVCk9EXltyJjddB7GsExnchX407NfweCFmjIKf3I8vZdxXouqkHDcEHdHjE
+kB86C8lDixsWBGCgx1glQDZvNkz4JZnQfnFr7vy86MfSMLcFw0Y=
+=enTK
 -----END PGP SIGNATURE-----
 
---HrOCby444CTZTg/r--
+--LoXaCmOFQpm/ZPcs--
