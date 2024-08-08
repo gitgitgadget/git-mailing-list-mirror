@@ -1,78 +1,143 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472512AD17
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0552A8CD
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723133700; cv=none; b=UK9sqmkbUMqXds8Ay3p+KRtYhyfEnGglDGzWbuDgG+o5afjJJWb4EPXK5EGeQ7LV6hJu8eO4B4734NG3ntIz91+jQJpjuxo6eylbSy0nMYVUmtpMEOhAd6xC1i1yEiRBtix2N/K4fmxklUXiL4U9rJ4ggaxzB2RP7qrHR6/yu+s=
+	t=1723133931; cv=none; b=t86ZEBzelitVg5WS3pque0sfxe0SW0P4lPYY72OCsUXWTYqRTQwkhT3rmnBpaP+7tUOv9PYoaxJx+0vx/l3F7GUrQijYSGcoOuZq59jV0/As1ez/7D1OQiPf5Pd/w6FFLKbrEjoK8lBHhefQMMotLi+2xWRb8SeUPmI1jmYEhJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723133700; c=relaxed/simple;
-	bh=AUsp5nRFQK5rLyzBR9iEDyAT0gM92t8UyBr169yRhw4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jVI49FadHA12tIo2zTf6lfoPyElL1mFfFn/bqv2ziYbJerr0DkF1bhKXAcoin2o3/s00NvBFeTjmc+F298Us4xWtvF8rZtlvvVMcR3gJX5MisdY/rFEOf5SK1Ot0dgYlLdV3VAcQz3XeoC8Dj70GseFR/uuZr2L0b7HwFFn7VOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HoU57qrh; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723133931; c=relaxed/simple;
+	bh=xbSEL84mAsE4EET+Q7zDKfKiZD4mzqo4bW3+ZOj9kBQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=av8x/MOnnSHa0AWCTk+hR14y9JfVRt2DLUs7AaDZ/j43i146LtBx7jlfOgLFaX05UWcTij7BLanSxBYaylT18sG+0NR54V8ai2pkG/QfIwyLCMXrVTLcBRbA8mcu4GEyFGLtHvaqrM0QQW86tK+MuHkAuZXz+c5O9BY+4xJ+ej4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If1eIG7I; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HoU57qrh"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BF2EA23582;
-	Thu,  8 Aug 2024 12:14:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=AUsp5nRFQK5rLyzBR9iEDyAT0gM92t8UyBr169
-	yRhw4=; b=HoU57qrh+YvESkNwu8qxpwys34acc48DFrOpIEgX71dpjGF9zIJa2d
-	rtPJ0gKpc1gRBmxPhGQWOQMkzuMH9ybLEZ4yIST+SApV+BO+KPmr0RR8DsEFQIWl
-	GD/P76bEI6L+85DjbcsE8tPdcnS7SV8KEzmG5fjds6A3MYRWQCrfs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B82DE23581;
-	Thu,  8 Aug 2024 12:14:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 77A7E23580;
-	Thu,  8 Aug 2024 12:14:53 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] transport: fix leak with transport helper URLs
-In-Reply-To: <ZrRV_HrUArsvRgn8@tanuki> (Patrick Steinhardt's message of "Thu,
-	8 Aug 2024 07:22:04 +0200")
-References: <xmqq34nfn7ip.fsf@gitster.g> <ZrRPD0ggZapZym7E@tanuki>
-	<ZrRV_HrUArsvRgn8@tanuki>
-Date: Thu, 08 Aug 2024 09:14:51 -0700
-Message-ID: <xmqqo763j8jo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If1eIG7I"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42809d6e719so8649695e9.3
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723133928; x=1723738728; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gu3SluJm77l8rusi//N2VJj6WrPyVMgTXnoA9+DaRDg=;
+        b=If1eIG7IDXGm9xXNtQz6ko2V8l6+3elaka/yHQWUw7NfzXV/HqpfeCW4QCpIvoGtez
+         cLpPkVOW3FON71HMJISQUV/ZfZRjEor5WKO3HvTFz2obHFjfwCRa6SgNRBcXwio5dAnJ
+         77av921MXgr9OeOYBgUs446PQeQhvw45BwmQ21HLg41ORvrwBNdNxcf10HjQ4UbQpd04
+         431DpZ8sZBNpLlHP0qGqnUY1K4WG2gwRBDEcV+K4MPz3zewmuxSZQPJqOkUlDcomVGoo
+         6AsjzqV6G28kfuapLJQCBAEB0J4ikxk4b+m3irC9VSY0XmtWhML5BW8ICtMmg4LJMLWc
+         I1yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723133928; x=1723738728;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gu3SluJm77l8rusi//N2VJj6WrPyVMgTXnoA9+DaRDg=;
+        b=arFx+YuxJyeE8YETCh+KL38EW+xg+RrJ9h56EKFORGdbZGQnKNItjG2kkDx7c8bQ1t
+         Uc25htLdmc552dUHMwSWBnIXjxjQu3eI20WH/nEJmxT9lojdNoqQ8N/fTHz8S3A1yu8H
+         kTjoXU9YIH6aJT74kNyH3Z0VngE0+3TgRKhRrGPz2eew2o+k6ZL915ekeRPHd4k0Surk
+         m+oEUJFGXUS/BcPIoCipHp1LFHyqHgpl6dUm6TkEhtQNVJ7jHawBmZrl+sE4kCyiAFaB
+         Xa3FgKjqY/D+a6BiPHjFjZ3r1+0jRJZv3LXIB/v9ClHy/3A6iuhchd2MpNAo0Ix4Hv3t
+         89JA==
+X-Gm-Message-State: AOJu0Yzm/8D5vvn2zryljmAF1Wge5WjN/87gh2RAHgBham6rLFzN180g
+	XV/7AdODqJ5qLzHH7yxVB4pMZOukulKVp0oG0Ya8JwGy222QqMirBnwznckNP9I=
+X-Google-Smtp-Source: AGHT+IFB7x7LN9KaJrO+5lu0/D0zX9+OlfhyB6RKpcEzlILlcfCGSzbZnbAErDVNaJHVinR84LveYA==
+X-Received: by 2002:a05:600c:3111:b0:426:6696:9e50 with SMTP id 5b1f17b1804b1-4290aeae226mr17353625e9.14.1723133927589;
+        Thu, 08 Aug 2024 09:18:47 -0700 (PDT)
+Received: from [192.168.1.6] ([154.182.250.245])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c77f078sm31932295e9.37.2024.08.08.09.18.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Aug 2024 09:18:47 -0700 (PDT)
+Message-ID: <485c3474-992f-41f3-aaaf-0ad1d43464c4@gmail.com>
+Date: Thu, 8 Aug 2024 19:18:43 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5886391E-55A1-11EF-B9AE-BF444491E1BC-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] [Newcomer] t7004: modernize the style
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20240807130259.28381-1-abdobngad@gmail.com>
+ <xmqq5xsbkolo.fsf@gitster.g>
+Content-Language: en-US
+From: AbdAlRahman Gad <abdobngad@gmail.com>
+In-Reply-To: <xmqq5xsbkolo.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
 
->> I saw that you've merged this to `next` already, but: this looks good to
->> me, thanks!
->> 
->> Patrick
->
-> I just noticed that this also makes a couple of test suites pass with
-> leak checking enabled. So below diff should likely be applied on top.
 
-I'll think about it.  I do not want to see too many "ok, we have now
-marked this as leak-free" plus "ouch, we have unrelated fix and its
-test now triggers leaks from another subsystem we happen to use",
-especially when our primary business is not leak-plugging (e.g., the
-"ls-remote outside a repo" use case was a real regression fix even
-though it sort of falls into "if it hurts, don't do it" category).
+On 8/8/24 18:42, Junio C Hamano wrote:
+> AbdAlRahman Gad <abdobngad@gmail.com> writes:
+> 
+>> - Remove whitespace after the redirect operators.
+>>
+>> - Move number of expect files prepared outside of
+>>    test_expect_success to be inside the tests that use it.
+>>
+>> - Split some lines that have two commands into two lines
+>>    one command each.
+>>
+>> - Turn some "<<\EOF" into "<<-\EOF" and indent their body.
+>>
+>> - Avoid using pipes in the output from "test-tool ref-store"
+>>    and write the output to a file.
+>>
+>> - Change test_expect_success that are seperated from its name
+>>    to be on the same line.
+>>
+>> - Avoid separating test Description and test body with backslash
+>>
+>> - Use single quotes instead of double quotes for test description and
+>>    body.
+>>
+>> - Use write_script which takes care of emitting the `#!/bin/sh` line
+>>    and the `chmod +x`.
+> 
+> I gave another look and they all looked fine.  Except the title of
+> one step that said
+> 
+>      t7004: test Description and test body seperated with backslash
+> 
+> was a "Huh?  what does it even mean?".
+> 
+>      t7004: begin the test body on the same line as test_expect_success
+> 
+> or something?  I dunno.
+> 
 
-Thanks.
+Thanks! I'll send a v6 right away.
+
+>> There are still tests that could lose exit status to pipe. This needs
+>> to be modernized too, I will fix them in another patch series.
+> 
+> ;-)
+> 
+> Another one that I noticed is that we have quite a lot of
+> 
+> 	cat >expect <<-EOF &&
+> 	v1.1.3
+> 	v2.0
+> 	v3.0
+> 	EOF
+> 
+> that can be shortend to
+> 
+> 	test_write_lines >expect v1.1.3 v2.0 v3.0 &&
+> 
+> To use without extra quoting, test_write_lines is more limited, but
+> the majority of here-doc used for expect files in this test are
+> enumeration of tag names that we can write without any extra frills,
+> and test_write_lines may be a very good fit for these use cases.
+> 
+> Thanks.
+
+I'll work on them the next patch series.
+
 
