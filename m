@@ -1,143 +1,143 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0552A8CD
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062EF148307
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723133931; cv=none; b=t86ZEBzelitVg5WS3pque0sfxe0SW0P4lPYY72OCsUXWTYqRTQwkhT3rmnBpaP+7tUOv9PYoaxJx+0vx/l3F7GUrQijYSGcoOuZq59jV0/As1ez/7D1OQiPf5Pd/w6FFLKbrEjoK8lBHhefQMMotLi+2xWRb8SeUPmI1jmYEhJE=
+	t=1723133953; cv=none; b=gs1/rB0AGyshWGW4fNvk/vdZb5h9E1Y1xIQLlH7yRQCx4ZG3p0VwdqMgEyTbK/qc6XVkLDQrcqNmFFWL4GcIv613lMNQeq+Jd0GFJUv8QKn5dZKmeWMjBhp/Wfu6X5aa87/dyllsuu8oKMNz+Us0h5IZpFJGcI5aaayHIFY7zvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723133931; c=relaxed/simple;
-	bh=xbSEL84mAsE4EET+Q7zDKfKiZD4mzqo4bW3+ZOj9kBQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=av8x/MOnnSHa0AWCTk+hR14y9JfVRt2DLUs7AaDZ/j43i146LtBx7jlfOgLFaX05UWcTij7BLanSxBYaylT18sG+0NR54V8ai2pkG/QfIwyLCMXrVTLcBRbA8mcu4GEyFGLtHvaqrM0QQW86tK+MuHkAuZXz+c5O9BY+4xJ+ej4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If1eIG7I; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723133953; c=relaxed/simple;
+	bh=YvDVL5Xsn9iKFRAgfcBNQM2IHu69Yv5R5eS7UYK7E3Q=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=gbFGOsjDwiTumP4fTul1iaM2oD7vB9Ey5GWXArUnhdlXK7wRNx/69pJNfAE2VgAlU5WTzF+Xui5xIjikLyXuWeC6MECh3uv8oOOvS0/SoMhAD4lxplzcRVI8TaMCdnhaXClMai39BuVurYIXj9G6WLmt20glpHF57HOnYOv2sG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mCxWzWpq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R/ssRrEg; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If1eIG7I"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42809d6e719so8649695e9.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723133928; x=1723738728; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gu3SluJm77l8rusi//N2VJj6WrPyVMgTXnoA9+DaRDg=;
-        b=If1eIG7IDXGm9xXNtQz6ko2V8l6+3elaka/yHQWUw7NfzXV/HqpfeCW4QCpIvoGtez
-         cLpPkVOW3FON71HMJISQUV/ZfZRjEor5WKO3HvTFz2obHFjfwCRa6SgNRBcXwio5dAnJ
-         77av921MXgr9OeOYBgUs446PQeQhvw45BwmQ21HLg41ORvrwBNdNxcf10HjQ4UbQpd04
-         431DpZ8sZBNpLlHP0qGqnUY1K4WG2gwRBDEcV+K4MPz3zewmuxSZQPJqOkUlDcomVGoo
-         6AsjzqV6G28kfuapLJQCBAEB0J4ikxk4b+m3irC9VSY0XmtWhML5BW8ICtMmg4LJMLWc
-         I1yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723133928; x=1723738728;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gu3SluJm77l8rusi//N2VJj6WrPyVMgTXnoA9+DaRDg=;
-        b=arFx+YuxJyeE8YETCh+KL38EW+xg+RrJ9h56EKFORGdbZGQnKNItjG2kkDx7c8bQ1t
-         Uc25htLdmc552dUHMwSWBnIXjxjQu3eI20WH/nEJmxT9lojdNoqQ8N/fTHz8S3A1yu8H
-         kTjoXU9YIH6aJT74kNyH3Z0VngE0+3TgRKhRrGPz2eew2o+k6ZL915ekeRPHd4k0Surk
-         m+oEUJFGXUS/BcPIoCipHp1LFHyqHgpl6dUm6TkEhtQNVJ7jHawBmZrl+sE4kCyiAFaB
-         Xa3FgKjqY/D+a6BiPHjFjZ3r1+0jRJZv3LXIB/v9ClHy/3A6iuhchd2MpNAo0Ix4Hv3t
-         89JA==
-X-Gm-Message-State: AOJu0Yzm/8D5vvn2zryljmAF1Wge5WjN/87gh2RAHgBham6rLFzN180g
-	XV/7AdODqJ5qLzHH7yxVB4pMZOukulKVp0oG0Ya8JwGy222QqMirBnwznckNP9I=
-X-Google-Smtp-Source: AGHT+IFB7x7LN9KaJrO+5lu0/D0zX9+OlfhyB6RKpcEzlILlcfCGSzbZnbAErDVNaJHVinR84LveYA==
-X-Received: by 2002:a05:600c:3111:b0:426:6696:9e50 with SMTP id 5b1f17b1804b1-4290aeae226mr17353625e9.14.1723133927589;
-        Thu, 08 Aug 2024 09:18:47 -0700 (PDT)
-Received: from [192.168.1.6] ([154.182.250.245])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c77f078sm31932295e9.37.2024.08.08.09.18.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Aug 2024 09:18:47 -0700 (PDT)
-Message-ID: <485c3474-992f-41f3-aaaf-0ad1d43464c4@gmail.com>
-Date: Thu, 8 Aug 2024 19:18:43 +0300
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mCxWzWpq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R/ssRrEg"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id CC704138FC13;
+	Thu,  8 Aug 2024 12:19:08 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 12:19:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723133948;
+	 x=1723220348; bh=F/PKljtpQBsuVoukp2/yd4dgMceP+hMbT2TSxK97Hj0=; b=
+	mCxWzWpq8CNu+U/dPFjYPqxJagKjo5ky4+tJcoh+/3jwpvu6GrXHkIoL+WFZKxH/
+	wsy/73hg5VYm+c7hhwucO9LTZcrPzwtu1pVRRsHR3SYdg++cVsaqv4wncrLcx/n+
+	UFLyhxWY4gRlkLPAB1EMwSHKWx+K+JvgHwDtG4/XDCM+1hZdfsVxMNYPflDPvKcn
+	JCZbIecYla1xdV54i3TjG/lr2tcAQmT3gfQBU3lTKa+HMeL9jfx7CuFzkCs+t+YU
+	Osv2phwFX9KUN/feWgwHd68CZfd36oAiUILB0/fsyjPQdNEDDv8S3syERVqP9hW1
+	2t3N7uJQwvQRSAts7q6gRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723133948; x=
+	1723220348; bh=F/PKljtpQBsuVoukp2/yd4dgMceP+hMbT2TSxK97Hj0=; b=R
+	/ssRrEgttGLgMpMa7RdnnF0O/27l4V5YkTn9YmDDSkrWR41xBP3PFWh/bTKYAHME
+	w6h+I3V9RpHRq3zKl7XrL1wVoNYNQoyhbL5NyUEXg5nVLr3jSHDi0/WMrA0cE0qv
+	UukszLGfyKUAljJ2mCRZpsg+DiE5YHuqLt41hYdOVbDtDgzhEr3LdDAY/n4DFga6
+	GZo8UMrVKB7/ROXm5FdpAQ6eqZQYygTw/PZ141U8FS1V9ktfC4AjGWEw32lK3wXb
+	OmO/xKH79aT0B4yN9XhKnj1XuyjlbbYcC/AEZOqxKF+qiSltFCUgT7yW41AwA3Ac
+	7vlaGuZrYoCJ92pBmbP8Q==
+X-ME-Sender: <xms:_O-0ZlfH2Id5rOWHJxars1Ekqc6LIosh7vO_AdchX1OaLDt8gf43DA>
+    <xme:_O-0ZjMmjxgEHXwV5DKLZK11vAsYU5Wg1Uzzl1ld3JRwRjctMLgk3aKo_mEtwGMe0
+    inXDSxEeHVucDnDcA>
+X-ME-Received: <xmr:_O-0ZuhtqXlMhqSZDptaxX7pUvTFaEiZhOGtxEZcr5CgERv9v1x9R-7_4U9evHkc-zZBXm1YcRtYOUM6XRDED7JtI3M1xnRZHmFebXQZlw8zxd8i>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdellecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefujghfkfggtgfgsehtqhhmtddttdejnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeektdegtdeuhfeuuddtfedtffdtleffffffvdfhvdejhfej
+    kefgtdffveetfeevueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhholhgrnhgusehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:_O-0Zu-npcwEo9FF8tsQl2mx_p2bYyT7s-7gKJgQAZ3v9TsPI-qFPg>
+    <xmx:_O-0Zhv_AEY6p2zPKkCJEItv6cg05dWG2LcGh7P2WblejHeH7an-0w>
+    <xmx:_O-0ZtF8acuJfZGVuI7U3xsWEHvxiebXqdAQ-05Q0r5nuRAYZgF-VQ>
+    <xmx:_O-0ZoN8VyP6z_NgluF5Nxd_zTOb9VUQs09Hs59V5005I2mSsQgKzg>
+    <xmx:_O-0ZrL4fJXJGiVlDKrO8KnmY3D3ueQymi6cIfQKJcaY3SCwIgJ5Xuzg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Aug 2024 12:19:07 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 64df5825 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 16:18:57 +0000 (UTC)
+Date: Thu, 08 Aug 2024 18:19:01 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+CC: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ =?ISO-8859-1?Q?Jeppe_=D8land?= <joland@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/6=5D_builtin/submodule=3A_allow_?=
+ =?US-ASCII?Q?cloning_with_different_ref_storage_format?=
+In-Reply-To: <xmqqsevfj8v2.fsf@gitster.g>
+References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com> <cover.1723032100.git.ps@pks.im> <a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im> <xmqqwmkslz7m.fsf@gitster.g> <ZrRtB46vu9rC000y@tanuki> <xmqqsevfj8v2.fsf@gitster.g>
+Message-ID: <E664DE72-49F5-4AFC-ACDB-0BB60A6C34C2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/8] [Newcomer] t7004: modernize the style
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240807130259.28381-1-abdobngad@gmail.com>
- <xmqq5xsbkolo.fsf@gitster.g>
-Content-Language: en-US
-From: AbdAlRahman Gad <abdobngad@gmail.com>
-In-Reply-To: <xmqq5xsbkolo.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On August 8, 2024 6:08:01 PM GMT+02:00, Junio C Hamano <gitster@pobox=2Ecom=
+> wrote:
+>Patrick Steinhardt <ps@pks=2Eim> writes:
+>
+>>> Presumably, if the named submodule has already been initialized, we
+>>> are not converting its ref backend with --ref-format=3D<format> option
+>>> when "git submodule update --ref-format=3D<format>" is run=2E  Would i=
+t
+>>> make sense to say it is an error to give it without "--init", I
+>>> wonder=2E  If so, we probably would need to see if other existing
+>>> options like "--filter" also need a similar sanity check, if not
+>>> already done=2E
+>>
+>> Well, even when "--init" was given it is not sure whether the ref
+>> storage format will actually end up being used, because that option onl=
+y
+>> tells us to initialize uninitialized submodules=2E So if the submodule =
+was
+>> initialized already, then the ref storage format won't be used=2E
+>>
+>> We probably could add such a sanity check=2E But as you say, other opti=
+ons
+>> like "--filter", "--depth", "--reference" and "--recommend-shallow"
+>> don't have that check, either, so it would feel a bit like opening a ca=
+n
+>> of worms=2E So personally, I'd rather defer this to another day where w=
+e
+>> then implement the check for all of these options=2E
+>
+>I am perfectly fine if we stopped by clearly documenting that these
+>options can be no-op when the submodule repository already exists=2E
+>Failing the operation in the name of "sanity check" at this point,
+>especially for existing options, does not sound like a sensible
+>change=2E
+>
+>Thanks=2E
 
+The documentation already points this out, as we explicitly say that it
+only has an impact on newly cloned submodules:
 
-On 8/8/24 18:42, Junio C Hamano wrote:
-> AbdAlRahman Gad <abdobngad@gmail.com> writes:
-> 
->> - Remove whitespace after the redirect operators.
->>
->> - Move number of expect files prepared outside of
->>    test_expect_success to be inside the tests that use it.
->>
->> - Split some lines that have two commands into two lines
->>    one command each.
->>
->> - Turn some "<<\EOF" into "<<-\EOF" and indent their body.
->>
->> - Avoid using pipes in the output from "test-tool ref-store"
->>    and write the output to a file.
->>
->> - Change test_expect_success that are seperated from its name
->>    to be on the same line.
->>
->> - Avoid separating test Description and test body with backslash
->>
->> - Use single quotes instead of double quotes for test description and
->>    body.
->>
->> - Use write_script which takes care of emitting the `#!/bin/sh` line
->>    and the `chmod +x`.
-> 
-> I gave another look and they all looked fine.  Except the title of
-> one step that said
-> 
->      t7004: test Description and test body seperated with backslash
-> 
-> was a "Huh?  what does it even mean?".
-> 
->      t7004: begin the test body on the same line as test_expect_success
-> 
-> or something?  I dunno.
-> 
+> If `--ref-format <format>`  is specified, the ref storage format of newl=
+y
+cloned submodules will be set accordingly=2E
 
-Thanks! I'll send a v6 right away.
+I'm happy to make this more explicit though, in case you don't think
+this is sufficient=2E
 
->> There are still tests that could lose exit status to pipe. This needs
->> to be modernized too, I will fix them in another patch series.
-> 
-> ;-)
-> 
-> Another one that I noticed is that we have quite a lot of
-> 
-> 	cat >expect <<-EOF &&
-> 	v1.1.3
-> 	v2.0
-> 	v3.0
-> 	EOF
-> 
-> that can be shortend to
-> 
-> 	test_write_lines >expect v1.1.3 v2.0 v3.0 &&
-> 
-> To use without extra quoting, test_write_lines is more limited, but
-> the majority of here-doc used for expect files in this test are
-> enumeration of tag names that we can write without any extra frills,
-> and test_write_lines may be a very good fit for these use cases.
-> 
-> Thanks.
-
-I'll work on them the next patch series.
-
-
+Patrick 
