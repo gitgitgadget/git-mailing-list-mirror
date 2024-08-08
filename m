@@ -1,76 +1,76 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604082C7E
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3534137776
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723137200; cv=none; b=I0crmtGA2cC4grqTdEHzwdkFo0aeNwxoo5NZJFKDOAc/mjquaDAHFvv38bgq2w8Wn0FPM1HFFLbuv1juHwFBRbVU7kYAYt7hpLy5BgOtbrsU2B7vlp24+BRIx9u8odet/0rfdUB35ZWBpkhv484Wz+oVdRzSFZWTqkCZXEmFZ3E=
+	t=1723137365; cv=none; b=IrRFMAicSIatv8BcS8SFx/W/k0Kc53qIgG1Spw0Ko0hkxHUAVBY0glpTC2IUhx143NHEwVUNBaEAAK7EO6Vq0j321KZnLot4ugra6/HuuUcjHYCM0d0ogKh3ouZsEXfmEb07RqeG3CpeXM5nzGrwoOSZJ3/ucWiZaUcJWKjxV6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723137200; c=relaxed/simple;
-	bh=6VnvkqXLIPsXQR7oi5yIj6tZLaInnDb0MjQ2z2dV+CU=;
+	s=arc-20240116; t=1723137365; c=relaxed/simple;
+	bh=6GN2WhdzHLN/crYvgaEmFtclEQLEqtmyHBuAlM7CIXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TPUaas07gPHE8ko56AzEOf+feGNo4vYOboHhhin58eHBwID+IDR3XA+Mtvm/qe3Pj/3m2tN9yrp+P4W2yC6p/zg9hqqK6hr7eIUWriFjIdHlGqq2q/W9hNCxllG587wk+2cUiI2p2RH7PA2tTfKfIDd1IthyzxkxITVIYuKX+zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Okb+SASM; arc=none smtp.client-ip=209.85.210.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=gnmEj8m4C9a6Vdp9Q+r7kmuqsYvj3cKCA+a96n2Ejsr1FVTg+5nDq0Sbz89Mn/0wSY/mEyH1sR2TvglB9gpyr/FlmGKpIjF8O/GAdZOC+RPY2TOk8SJamoLLMGsm/9bC4O6gKO1Si7qCns3YtrIuBMbKXIOrPZS0ERY2YsKRQ8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cQu6X0XB; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Okb+SASM"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-710bdddb95cso847292b3a.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:13:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cQu6X0XB"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1fc47abc040so10032555ad.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723137198; x=1723741998; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1723137363; x=1723742163; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SpJdLGG1thxrQWYFe6qElGhYdaufJf2kaFNJ4xMkHis=;
-        b=Okb+SASMeEzUidB0X5Ys5W51MN1DpVtT154XeaFp6hMl9Vex4J/4Z3b4Vg1QYuyt1A
-         EZ//azmZWBinuCxxN/rHSQ6Khu3WINZJ1SSEw04i1/N9DlTtHFV1fMTY16ZJLAVw18us
-         rRe6S/XaHXiOrHqdBxxdJIcWIx6hirbFPYaSWDk7uaLbfrlqPXtKzx3rrd7bemtu9Xg+
-         tiph+EYzcYVXPWNx2yCntDeqEt51dCAq0gsuyp/809b9AipRUF05TQzmhMHyPk9KkBnQ
-         bruZpp1tcmjG/lhJcGL/Wv24fpNqnc0COG7tT8MXkWtLZBw25GO6OueFPMjl0epv0XAM
-         l/gA==
+        bh=nNtlY1Cgv/UmaCv1neSykJ2ZvjcwoxiyxLhZXHna4+s=;
+        b=cQu6X0XBMN1Zl5X98rQ5Hn0+PkEuWYLOFr81Qu3BB2qhkeR0Fu/YrDDes60vMFuq/V
+         yX9+YELDrhJBRMCzidQzCHZIgHzYd/19NzIHRvamVPwFJ2QMuOVfDAo1aF4I7TipJZ65
+         55diUboInlxsxq+x5p9Iy1rWqC2pBz3J+QI+pL7ZmHi0uc59HcsBGXfQxxcN3j4188w5
+         /DJT/5v46vMRI9RWhArkLhMmHV1MR+hOVk3WRsRRm9hG5D1j57Hmsus+0RIuyi5K3Dae
+         lidCcK56FFNV8/N4kV+DIXPRZ9W7DnONGE1aRbVivImEaw+Mp6JXmNc60Z8feubreWd8
+         LWlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723137198; x=1723741998;
+        d=1e100.net; s=20230601; t=1723137363; x=1723742163;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SpJdLGG1thxrQWYFe6qElGhYdaufJf2kaFNJ4xMkHis=;
-        b=EEmgXRQdHU1yU+xL7XMa/d8LlfZXokxG/bFbtooY51d5+kjXbb5YE1CE4FFZgIHrdG
-         yJqWiNcMz2ca+M2VR/WHzRMMtmNJAkV+M0PDN4Ll9/jH6KcY1WzBBZKbtq/ScoSMQaca
-         W2EG3XtRe+3XHGPeGSbPEPhhSwGtikhD8POE/ESIE/IZMoXGIjJW+qqmBC9Jw0Lr7Dys
-         yfvaikNnCDWx5SHabax2sJoXoEvCMsKWGFOTa7UjyCkEXHK8ie+04nBhOAz4biMtc+HF
-         f34zzqgK1N3cEoB0orxRUHn5o90YFL2/dbLmA8fMCMmqBOtiXMYjtBrBZ3q8eR2wWHWq
-         NckA==
-X-Forwarded-Encrypted: i=1; AJvYcCUIfIhcYz9jREj5n7gHIrph70gdtY53E4ckTWH/p+YmGyL9S9nwyQIzTL9HB2JnEM9C6kEPom5VD6IVxbBbDE+omdIF
-X-Gm-Message-State: AOJu0YxY0hq02P3DXAHAGdEjGv7eYkptnk0suWMo7CbL7+4y5PATeJ35
-	b7mqzA34T/PjWFh9qc2BkxePNIpMNCB/XJVL8SqjChGJcyz5Di9oBMLyTlbuVg==
-X-Google-Smtp-Source: AGHT+IFE8HUK8t3NSqftgr3NKxoMsVPEd4vh231oUADJ8NjnC3p5hinbC2BC9tQ+7GlTmlqZuO8iRw==
-X-Received: by 2002:a05:6a20:a11b:b0:1c6:a825:8bc1 with SMTP id adf61e73a8af0-1c6fcf623e8mr3069834637.29.1723137197350;
-        Thu, 08 Aug 2024 10:13:17 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:c023:b8:a8df:17c3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710cb2cc95dsm1383707b3a.98.2024.08.08.10.13.16
+        bh=nNtlY1Cgv/UmaCv1neSykJ2ZvjcwoxiyxLhZXHna4+s=;
+        b=Js6SQx0JfGTd02TBicu8kp0yqEwMO2iJFWhx0FmF0XJZjN0EPq8nktGy2iVWRuFXIs
+         4ito3/nr/UY2mXDZPXP/fWrcpyHdeLHlAyxs5nSBixztVZ8N5rFAOTCVaRR3JqO+4jTd
+         zbl1xbFlkaYRpzcGR2ve5iRsjDMWuEMVzSiqRDbriR4rVd7Tm0Q79auHp9t5IPCrPojS
+         dLVUs4q3EckYX/tLxIMI4qT3OdeGxyzYbcovNkp6//71SYHDpmTtEH1w6DxUpkf7np0x
+         2eyRJ1RoP5SzD90B9KE3jPgx9ygL9rlcTQpe68AUuFsBdQ3NtVKejdM851qwjpKaiCwj
+         +oWA==
+X-Forwarded-Encrypted: i=1; AJvYcCUj2qNaRRloilJrCfr4C6V1Ou2sKwaBwnZiXcwIeR+yBpfA6yDj1u/6Me2R5vwqW0+IA9ZGNaYQEgrBd1rtohqnz6uT
+X-Gm-Message-State: AOJu0YxL3+YibzowMlyi8B+BBoQbwka13RxfhrRhDaMihDVl9imQPfi8
+	oj1onKEc0RBC7Df6/feKO7zyPBHIwEwnngfZ+ZTtVutL9dUiofqhf6ZCu8mzIQ==
+X-Google-Smtp-Source: AGHT+IFotwY9T0dmYTw0HqLbJcHbVYHPRU+giFPt4Yy3immlzx5hJdmE7fAxjY+LCQ2MKY6yxjAgFQ==
+X-Received: by 2002:a17:902:db09:b0:1ff:4a1e:865c with SMTP id d9443c01a7336-200952d1bfdmr32568155ad.29.1723137362642;
+        Thu, 08 Aug 2024 10:16:02 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:fa12:a76d:ac7c:e104])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905f9b9sm126337875ad.130.2024.08.08.10.16.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 10:13:16 -0700 (PDT)
-Date: Thu, 8 Aug 2024 10:13:12 -0700
+        Thu, 08 Aug 2024 10:16:02 -0700 (PDT)
+Date: Thu, 8 Aug 2024 10:15:57 -0700
 From: Josh Steadmon <steadmon@google.com>
-To: rsbecker@nexbridge.com
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, 
-	git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com
 Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
  libgit.a
-Message-ID: <bs36iyp3yzb5l52t6yw5364odvugrt22jfeypqohtzdwp22ecj@kurf4p62qibu>
+Message-ID: <em2spwpn4c3uzi2v2bnwn5y34vnmjkkajlmhkqmyjf547q7xgy@m2d4y2z4yypl>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	rsbecker@nexbridge.com, "'brian m. carlson'" <sandals@crustytoothpaste.net>, 
+	Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
 References: <cover.1723054623.git.steadmon@google.com>
  <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
  <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net>
- <0a4601dae912$68d8e920$3a8abb60$@nexbridge.com>
- <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
- <0a8401dae924$c9e8e9b0$5dbabd10$@nexbridge.com>
+ <b5epjlsptw3punygmx2abmfnrkki6n6ta4fk3yse7iodlabr63@zss4z3575r7v>
+ <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net>
+ <xmqqo763lppr.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,55 +79,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0a8401dae924$c9e8e9b0$5dbabd10$@nexbridge.com>
+In-Reply-To: <xmqqo763lppr.fsf@gitster.g>
 
-On 2024.08.07 19:51, rsbecker@nexbridge.com wrote:
-> On Wednesday, August 7, 2024 7:08 PM, Josh Steadmon wrote:
-> >On 2024.08.07 17:40, rsbecker@nexbridge.com wrote:
-> >> On Wednesday, August 7, 2024 5:21 PM, brian m. carlson wrote:
-> >> >On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
-> >> >> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to
-> >> >> call functions in libgit.a. This initial patch defines build rules
-> >> >> and an interface that exposes user agent string getter functions as
-> >> >> a proof of concept. A proof-of-concept library consumer is provided
-> >> >> in contrib/cgit-rs/src/main.rs. This executable can be run with
-> >> >> `cargo run`
-> >> >>
-> >> >> Symbols in cgit can collide with symbols from other libraries such
-> >> >> as libgit2. We avoid this by first exposing library symbols in
-> >> >> public_symbol_export.[ch]. These symbols are prepended with "libgit_"
-> >> >> to avoid collisions and set to visible using a visibility pragma.
-> >> >> In build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also
-> >> >> contains libgit.a and other dependent libraries, with
-> >> >> -fvisibility=hidden to hide all symbols within those libraries that
-> >> >> haven't been exposed with a visibility pragma.
-> >> >
-> >> >I think this is a good idea.  It's optional and it allows us to add
-> >> >functionality as we go along.  Platforms that don't have Rust can just
-> omit
-> >building it.
-> >> >
-> >> >> +[dependencies]
-> >> >> +libc = "0.2.155"
-> >> >
-> >> >I don't love that we're using libc here.  It would be better to use
-> >> >rustix because that provides safe APIs that are compatible with
-> >> >POSIX, but I think for now we need this because rustix doesn't offer
-> >> >memory management like free(3).  I'd really prefer that we didn't
-> >> >have to do memory management in Rust, but maybe that can come in with a
-> >future series.
-> >>
-> >> This is a good point. Libc is not portable, but because I can't build
-> >> with RUST anyway, I hope that libc is restricted to this facility if
-> >> used. It should not be included in the git C build. It is probably
-> >> moot for me anyway for this series, but I have to mention it in case
-> anyone else
-> >gets the idea to include it as a dependency for git C.
-> >
-> >I know you don't have access to Rust, but would you be able to test the
-> symbol
-> >visibility steps with `make contrib/cgit-rs/libcgit.a`?
+On 2024.08.07 19:21, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 > 
-> Of course. Branch? URI?
+> > I think if we're going to be writing a general purpose API for
+> > libification, we probably should provide free functions.  Normally, that
+> > will be a call to free(3), but in some cases we may need more complex
+> > logic, and by providing those, we're making the API more consistent and
+> > easy to use.
+> 
+> Do you mean that we should have variants of free() that are specific
+> to each data structure?  E.g., Patrick taught fetch_task_release()
+> to release the task structure itself, in addition to the resources
+> it holds, while renaming fetch_task_release() to fetch_task_free(),
+> with ff25992c (submodule: fix leaking fetch tasks, 2024-08-07), so
+> if cgit-sys wants to expose fetch_task object to the outside world,
+> the consumers would call fetch_task_free() on it?
 
-https://github.com/steadmon/git/tree/cgit-dev
+Yes, although hopefully the higher-level API we build on top of cgit-sys
+will be able to hide this from the Rust consumers.
