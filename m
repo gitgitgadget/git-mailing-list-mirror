@@ -1,84 +1,84 @@
 Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57CC148307
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14097148307
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 14:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723126010; cv=none; b=ILjfmYsXkmWsNqRDi7MPk/HkyXRx16f6757oH8Cn1yzKl5lPPiL+M5vHCwWT/FNOwI9XB6WYAZNl56XYSj1eP3QcaHGkB+nS1LTSMVCrNhjQflovYYelcMlezHFR84IHyMIjNpYzEscZEqSmUM8JwC/Hvv/M4z4W4w69ZdhM2IE=
+	t=1723126014; cv=none; b=X60rcroge+r82OxGUIAG2ucyymJ9e5Z9NZwpEol6f9wsygr3h0Sj2iinry0rRfrRm0NDRY0VZJjX87tf87D4Ivr84XFhm1DGCPD4zrVg0j8LanJqouIY0H6wF+nalKl0rEBGwSEZ3eJzFrjZwmB/Djaq+7xF2Uy3FxviyZQh3Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723126010; c=relaxed/simple;
-	bh=hhmvRLsvNZdvLn+8yJThx4CuP5laQ024gXI7O6AvciA=;
+	s=arc-20240116; t=1723126014; c=relaxed/simple;
+	bh=t4yAJCX+7IgPbw8zA5TXYoyHUrkDDHWQYBoBpEAHyKE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VSVIBtg1wishuuV2ZP2CcFqchiPpPmb0E2etMMPoX0OZfQn7j9tBkbkmti4nO9CgRyNf4kfRzkNVkshvH/VIxZ/zoTMi3w0N8Nv/HqOOvngwNzfhVjGNVuNJCdezEMd30UZz1jyPu4l0H1KqblvhcXoCVO/cZhQ3EZjsTlTnjmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iBVBlytg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o7DgSdt9; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=kvJtG/xBIO+OcM0IvvxRfROWFLO8JX5U28Eay7pzZTpTSSxoY89CTIhMbkEAdXeT6pqO66uUfBzZPJPzosxq2WlvmozBwTnExvAx9K53vE6pmcr5ffmGpLlgouYGkC2ZZYlKlw5CYuY8hdGE3pFPnk4jWzDYY5hLMzhYKrpLR5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DnTPIh5y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rp+HHL3z; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iBVBlytg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o7DgSdt9"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DnTPIh5y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rp+HHL3z"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id DAFBD115184B;
-	Thu,  8 Aug 2024 10:06:47 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2E65411516C8;
+	Thu,  8 Aug 2024 10:06:52 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 08 Aug 2024 10:06:47 -0400
+  by compute4.internal (MEProxy); Thu, 08 Aug 2024 10:06:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723126007; x=1723212407; bh=jgT4oE975B
-	Byomd8SmQaN2zgz7UwtLH89YKkFjHDpK4=; b=iBVBlytgsNIMt82Z4QcnQ2k19i
-	MXLrMSrbOsg9ZNZBMJMkTa8OIHRxdlxdZe7MRHyCRU6jB3L5pQS+sw8RkTB/P3Sn
-	ij8jmVUiwImp3IWeENlH0gRB23LU+YcAYKfjCUMe/kkrj0lGMz5nQBb5rjceWCar
-	VjEWm3jt4BnsOEWDY1GKGpWBqDY2IRGtb3Fzfybv3J+/CKHjXA10PYD2laAJeA8G
-	W06lJ2SR34PliNs02LdCab8/kjsoxX0SgqAIOap71kBtq1gnEw90556HLIoiuIKx
-	IdSNt5ix8rHjZspjwBwgqp0SO4if2v6eWkctvg6PSFyLf0fwV0PxXbcPdrmQ==
+	:subject:to:to; s=fm3; t=1723126012; x=1723212412; bh=/VNKo+zVFR
+	BiaLdr9WUcsmyqqfXbhZljSe8XhVaIKG4=; b=DnTPIh5yqMah9hC/IlsdWACEOg
+	AP3h/HFwp63gb+dFJjZiFfuJCH1kgUjeRMKYEALN2hMkK8AkMAZDl2GiKRYO8kAQ
+	1mpl6+pufcarWaYuQstrQ1kd8Yi9WovkMCjJrXFD2Aq4bUvBmbY9AMusmmZ/4a6s
+	Ny5itFqdAxrcvzrVQ1C3FB9k9Ju9xXAKwvTh2JiIEkeq/qCwOkt+1ObtIWP1GPsL
+	wUorKzD7hWuh8r4QnJpc8X8a46aECkneNg39q5lS43LqEcU5kkIhYLoAF5fzhYAI
+	dF/lqP0E5uVmlmWHXOvA48cfXOFXYJusHLcsY0n2FI8iN4D7dbtvI2n+JrNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723126007; x=1723212407; bh=jgT4oE975BByomd8SmQaN2zgz7Uw
-	tLH89YKkFjHDpK4=; b=o7DgSdt9XXTmUTXSoDvLNpIk5xR2yGU7gu3PqRlH22oB
-	dJsuWgnU2DbZU8/N0L39pG7ZvQJA0Bei6Q9UVRc8e7Ve3aJyqm6CnOrxJ/o8A1sh
-	ygsCI0NyYDionoLdmD7GjZGjvTYBUBE6wWMEIjflvUPbHVnAltu+W5pwG/XsWbQu
-	vZ9mOcN2JVZbnR1X9aJStjxhGGlMTy3wg7ps7N3ZS0dMSUh6sf0vo/Cnj+n+oC/N
-	8ddZ4S0lFVTcdq9sz7hzmdKcE+RP4Ii1g4XwNjbYKNr4Hf5xvKL4LR/BxmIpTm6h
-	wNpvRXpzqfMP/4KPwVktMmCteXW/V/7T8udA1QmbLA==
-X-ME-Sender: <xms:99C0ZpyM-YOq4YnBoYAsAGBG_Ex1dP793DKLbQ3D0bGhvJ2YYkBsXg>
-    <xme:99C0ZpQiW5WI41jm2Ilh5IRkyY-J84tg3tu_RmhoqUxC3HpPu1KK2hqfo_mUD4tLq
-    omElqw79W3Ok2004A>
-X-ME-Received: <xmr:99C0ZjUJr6gGj3H3H2xBICVuUY0zxfKKafIUYuqX-nNETydfu9M6iTBneuSlhyrahWgLXAuCvRFDifzVRzgfsxK_W-sx-B-cqvr_6ntwgUQUDU0i>
+	fm3; t=1723126012; x=1723212412; bh=/VNKo+zVFRBiaLdr9WUcsmyqqfXb
+	hZljSe8XhVaIKG4=; b=rp+HHL3zc8SEgZ5YvMk7zgZb+H4C28qkCTRHSBalLdkv
+	00Vodte1qEH9xoHAT3wALyY3DT4R3Pbgr8dgM+aExWOQyb8QZXJZHjdF/y2GBwn2
+	ko+E/dCpUnf3J18yImSW61xCT7ejo9AHYY7bX+y8cwGeQguke24TRvCOd4sZqzle
+	IULLRS92sUUV1ukal1PgWkbTFewMTnUSNnNac4f7ObRm6roJWAJLHl6CE1McvxgL
+	VzgvEUAGXwGvIms5Jv/hv+QstgvHCocFjVP4ZoblPdJGvFu/YYE/pNlmiwoR4L1I
+	FWiQl2YT9U2jB0i60KS4mSWQCeGG9B4i13GN8KzW9A==
+X-ME-Sender: <xms:-9C0ZmUmhyNbJ31BJJRnFLq-uxe36sjVtRLHnysXQCOFAAm509OThA>
+    <xme:-9C0ZikzHNDKNQvEN-b0sNotU98jGjKsJNMMybxQatAY3XQlN1Ld0BSG8rGjfTy4K
+    JlxxVwFjz_5qngqkQ>
+X-ME-Received: <xmr:-9C0Zqb2JKGsiT3xGPLA9dG7O-1hT8jlSaVglylgXk6Wo-4iFQr4z5GLdvBDr95biejq1qNB2ICG06B4Zjt4-pf0oWbwqBLA9VEorUYE1i3dpVRJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrih
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhm
-X-ME-Proxy: <xmx:99C0Zrj1i8z4mWYpqMlM2pQRJs7wQ9niUzibFenhp0j6ozUSOukAjA>
-    <xmx:99C0ZrCzPihbEPqv91qnTQkHwUyKfH1dvCLkRbdaSncLrkeZPfxLyA>
-    <xmx:99C0ZkI-ST_T-fqP_CxKGrKID8qEvBJcBmGNfb0XbdOnFV4k5sDKLQ>
-    <xmx:99C0ZqBflNPdQkSMZLyugITD-DoeBqrxPtKTYLkeIYc3TwnFQRK6cA>
-    <xmx:99C0Zm9ClvRDPO5rrSaYtIq1Z4KZHqUk1OsgW1PJj8Fgd0RE06OGwkOC>
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhht
+    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:_NC0ZtWUQWza72V_1s307E8FyX4eKJxXnQdmvtj3a3FB9r8uQtADXA>
+    <xmx:_NC0ZgmBQyps-qQE26bFo9cDRcN4BI615YVlTk6o4g-CSqGsf3Ldxg>
+    <xmx:_NC0Ziej3udo0NjLmRaefbHx3Jy4Q1yZL-fzUBpNbU_MMLCi65i0SA>
+    <xmx:_NC0ZiET8mwiZDxMjLjXCoB4Pys8MJGyBv6PXTPMreUbdgAZx0vVag>
+    <xmx:_NC0ZhCFzPyYXo5KGyI8vC9C6V1JimowL4i54xmdN-5pRjMRrgryX9LP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 10:06:46 -0400 (EDT)
+ 8 Aug 2024 10:06:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7e628f56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 14:06:39 +0000 (UTC)
-Date: Thu, 8 Aug 2024 16:06:44 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c7076626 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 14:06:44 +0000 (UTC)
+Date: Thu, 8 Aug 2024 16:06:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 6/9] reftable/stack: do not die when fsyncing lock file
- files
-Message-ID: <d7d34e725396423426601c8d07f85e8d8ecb3ebd.1723123606.git.ps@pks.im>
+Subject: [PATCH v3 7/9] reftable/stack: use lock_file when adding table to
+ "tables.list"
+Message-ID: <37a757649a621ec193e27ef2939f1d79aaba818d.1723123606.git.ps@pks.im>
 References: <cover.1722435214.git.ps@pks.im>
  <cover.1723123606.git.ps@pks.im>
 Precedence: bulk
@@ -88,69 +88,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="S1NB4sKG53XUpeyo"
+	protocol="application/pgp-signature"; boundary="Y93Fk1sA6B0cTGgR"
 Content-Disposition: inline
 In-Reply-To: <cover.1723123606.git.ps@pks.im>
 
 
---S1NB4sKG53XUpeyo
+--Y93Fk1sA6B0cTGgR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We use `fsync_component_or_die()` when committing an addition to the
-"tables.list" lock file, which unsurprisingly dies in case the fsync
-fails. Given that this is part of the reftable library, we should never
-die and instead let callers handle the error.
+When modifying "tables.list", we need to lock the list before updating
+it to ensure that no concurrent writers modify the list at the same
+point in time. While we do this via the `lock_file` subsystem when
+compacting the stack, we manually handle the lock when adding a new
+table to it. While not wrong, it is at least inconsistent.
 
-Adapt accordingly and use `fsync_component()` instead.
+Refactor the code to consistently lock "tables.list" via the `lock_file`
+subsytem.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ reftable/stack.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 07e7ffc6b9..9ca549294f 100644
+index 9ca549294f..54982e0f7d 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -674,8 +674,11 @@ int reftable_addition_commit(struct reftable_addition =
-*add)
+@@ -567,7 +567,7 @@ static void format_name(struct strbuf *dest, uint64_t m=
+in, uint64_t max)
+ }
+=20
+ struct reftable_addition {
+-	struct tempfile *lock_file;
++	struct lock_file tables_list_lock;
+ 	struct reftable_stack *stack;
+=20
+ 	char **new_tables;
+@@ -581,13 +581,13 @@ static int reftable_stack_init_addition(struct reftab=
+le_addition *add,
+ 					struct reftable_stack *st)
+ {
+ 	struct strbuf lock_file_name =3D STRBUF_INIT;
+-	int err =3D 0;
+-	add->stack =3D st;
++	int err;
+=20
+-	strbuf_addf(&lock_file_name, "%s.lock", st->list_file);
++	add->stack =3D st;
+=20
+-	add->lock_file =3D create_tempfile(lock_file_name.buf);
+-	if (!add->lock_file) {
++	err =3D hold_lock_file_for_update(&add->tables_list_lock, st->list_file,
++					LOCK_NO_DEREF);
++	if (err < 0) {
+ 		if (errno =3D=3D EEXIST) {
+ 			err =3D REFTABLE_LOCK_ERROR;
+ 		} else {
+@@ -596,7 +596,8 @@ static int reftable_stack_init_addition(struct reftable=
+_addition *add,
+ 		goto done;
+ 	}
+ 	if (st->opts.default_permissions) {
+-		if (chmod(add->lock_file->filename.buf, st->opts.default_permissions) < =
+0) {
++		if (chmod(get_lock_file_path(&add->tables_list_lock),
++			  st->opts.default_permissions) < 0) {
+ 			err =3D REFTABLE_IO_ERROR;
+ 			goto done;
+ 		}
+@@ -635,7 +636,7 @@ static void reftable_addition_close(struct reftable_add=
+ition *add)
+ 	add->new_tables_len =3D 0;
+ 	add->new_tables_cap =3D 0;
+=20
+-	delete_tempfile(&add->lock_file);
++	rollback_lock_file(&add->tables_list_lock);
+ 	strbuf_release(&nm);
+ }
+=20
+@@ -651,7 +652,7 @@ void reftable_addition_destroy(struct reftable_addition=
+ *add)
+ int reftable_addition_commit(struct reftable_addition *add)
+ {
+ 	struct strbuf table_list =3D STRBUF_INIT;
+-	int lock_file_fd =3D get_tempfile_fd(add->lock_file);
++	int lock_file_fd =3D get_lock_file_fd(&add->tables_list_lock);
+ 	int err =3D 0;
+ 	size_t i;
+=20
+@@ -680,7 +681,7 @@ int reftable_addition_commit(struct reftable_addition *=
+add)
  		goto done;
  	}
 =20
--	fsync_component_or_die(FSYNC_COMPONENT_REFERENCE, lock_file_fd,
--			       get_tempfile_path(add->lock_file));
-+	err =3D fsync_component(FSYNC_COMPONENT_REFERENCE, lock_file_fd);
-+	if (err < 0) {
-+		err =3D REFTABLE_IO_ERROR;
-+		goto done;
-+	}
-=20
- 	err =3D rename_tempfile(&add->lock_file, add->stack->list_file);
+-	err =3D rename_tempfile(&add->lock_file, add->stack->list_file);
++	err =3D commit_lock_file(&add->tables_list_lock);
  	if (err < 0) {
+ 		err =3D REFTABLE_IO_ERROR;
+ 		goto done;
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---S1NB4sKG53XUpeyo
+--Y93Fk1sA6B0cTGgR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma00PMACgkQVbJhu7ck
-PpRwHw/+KKEKbCZjP0S2IZUBcHF+5c3XusN4nSwHGfh3IZYu1uo9SukCSRspYdXj
-HjBJCQ5B7tKmVcyuC7PcGRYpXBbu3HSjveqlRCkLr83EmCOrWHolSq3A51iimwU4
-eJLE/uz3bENgi6VvviYQW6PDJCgBvWT3pgzOjrklUdKnVxqXFOp+GgqVB+06Wsxy
-vNa9BxAxd4L7NoEX1MWwSwg2GiQjlbPr/TO0aKJwQ6ozi6Rx+oWPrtwtYZPpHcZ6
-cCL/L/bKT18s1pLzgXmQvAcsRmruT8rJnlGkKL13TcJrymjsTQMioFFCUaXdzxEw
-FkLFeCsca1tcVCoCuCp5U2ZQr7asMEgqeFVq66q5wiFn1BF8mcZ0lslk0b1ToB++
-e7PjCorohQYbYVUGUczdOl+wQZ8IDSy1p+AWrdIjUVuYiQS3szlLtA5v+L+lXSBL
-jRof0tjRO33QKaoXSOgnzKFvKftnPSl8FL4TCuDiyx10MgPZxJH77BfVTIGbVxHZ
-rabBqnyU+7VfcZZLrBtG3wUQDrYbO7uVxRN/eAHdtOYr2MWGKPm1P5+7uRTLXt4r
-AOTNQqNt79mwok3bJxm7PPSoefPtFA2IsdDhTiX0TBQH/23Zc7q6Q55mSZWUaT7z
-Feq2Ung5jFUAOfAEdGcuLauM1dIX8jKjvCc2UD9i7tMUo8DG9iI=
-=Dukm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma00PgACgkQVbJhu7ck
+PpS/lw//VT18E3nytevDPzX7M5+llTbaIgZB7mayxH71RIRYyQVgzC0XkiMoDtF3
+ovkdMDCmhD3SGkIVc/EJ3Mr+PLIxzwbH+aBwFc76pplkQOBVIJwdO/YxaiNQMj/6
+Y+cdqXkLyak3cFABQw1Tv6hSeaqJomxG6b/txcut3eRscacWmZirNdJ4rPVfsfor
+8gL0PXkSnKC26IoVbla3K1o9S1du26NrYNjApoU0z49EEVms/T5gcSOZ6mLgPhqr
+bye2Z4jEOVTDSKeH+yQkFGc3fEuSQJXACbSTpEvwIO4/J+bFURx/MaFXQkoBdoUZ
+hJuplEIhyl+uUueN5uQ5Bskh4WfQbqeGLphgg3TU9cOQP7/9dGXjYa9m9TIzdyqJ
+Nq5/M3g/qe2ZpTSg7rYz93JbvsMvUUFhFmbz40kXhWYRPUfqfb27H53KQ3832KQ6
+LTOmOJZcQEApcb8BezWR7jazyrvoHUVnz2YzozKEZulL0aJwIMg+69C6lVhCg+5t
+siHsqeoIeyjjd/yk28moSY6en5PNBrJKAqlYBfHWqET5OOqecAsMlEljJK9pBUPe
+Ds6FOIpw/GPCgMN+fes2/Zwz/EmGemU2il/LNmw85C4p4ux75GbbW0SinIh6kYXo
+ydxWAWdkILTf9+/coQY1k3xa4K0B+05ip7Moh3WeeTk5EH9o6iI=
+=dhYo
 -----END PGP SIGNATURE-----
 
---S1NB4sKG53XUpeyo--
+--Y93Fk1sA6B0cTGgR--
