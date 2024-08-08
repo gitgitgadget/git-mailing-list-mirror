@@ -1,65 +1,84 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B22D6FB0
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 00:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A622D39B
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 00:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723076278; cv=none; b=eYsabrZUjjGFPkb5rLIWQLAYkfrvIgujEjuKTTGrTElG6P8Hi1wnvhHRmfAJjHHeBHX1wU67KHK7cMmJL/FQ6foQ6QjmxkwE+PE7VKICr90wvIaTDdXiQHbk5EWdKBoQPI7STCKSLpF/hSF69XumE9ncuMkfV70tqU9pGX6o0jU=
+	t=1723077158; cv=none; b=bfnPDB7cgJ1FRWxPPmIatkcOaRfeJ4CH6XWBjybOxptlf9sdnAWSoidc98qGgDA4COWHVAPijKk53CNRRHNiS/DIHc7d+eSX2axFY3V71jBabmn8JALlHhIATiH1bNT+DMiYI1AaihN1qFWeUD7sCnn51Hwr4uyTa+8tjQA3N+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723076278; c=relaxed/simple;
-	bh=ZrShM/afjOP3sxmJIN3FKf70sfIqm8mQFI+IyvWYXQ8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZriLd9359UgVIgzmrKVOvC/pZhqYTzKdUzBip8gQHGBVy0HRgWbJHp8X0U35qIFHEP2NAvCYvRN7qJcrq9SnOTyj/eL4dUKzEGWFGPSFWGVsLVO3S1qnkXy4vnzJEXMw0A4aJxzfVaAVcs/6KkuBCGvtPisFVt1uIRy4tVBD9P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3976092-ipxg00k01tokaisakaetozai.aichi.ocn.ne.jp ([221.188.33.92] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sbqqj-00B4WQ-1H;
-	Thu, 08 Aug 2024 00:17:52 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1sbqqd-005YpS-28;
-	Thu, 08 Aug 2024 09:17:43 +0900
-Date: Thu, 8 Aug 2024 09:17:43 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
- libgit.a
-Message-ID: <20240808001743.4sx32gbjtypq3rje@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <cover.1723054623.git.steadmon@google.com>
- <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
- <20240807224756.2zq5hkfq5j43b7jk@glandium.org>
- <njekhcypd7x7vdxmkzbdbeblwm4bwiiz74saxdmzqeod6zz547@qkkwkmpjvwkd>
+	s=arc-20240116; t=1723077158; c=relaxed/simple;
+	bh=2kkYTQBHTV+zkhi7ezoVx9KA+eyvJw8SeWfctdfGSFU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qFM/8f3irM6htMss0lkUW86HH30l2l6AOUDRz0sKLc6kZZuwMLR1m4tnRh2PL3A9nzJnqaiY8opr6VO4umYi6a5CL14JaP7+AiIKJbgmkTRGfCIh3hcRe9fr43/UzH4Tmp/dbjGERDDJmqEWArHQ3vQP2XOgDTNFOyHNxGYEg9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=diTZ3wpo; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="diTZ3wpo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 62B9E1C26F;
+	Wed,  7 Aug 2024 20:32:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=2kkYTQBHTV+zkhi7ezoVx9KA+eyvJw8SeWfctd
+	fGSFU=; b=diTZ3wpojbAZQ3qdbGGn7hNzQIjX+kOZv6mL5Z3Aibgq3w8VyaWfCi
+	kp+evAv36IeuRDIZstMmmPgRV9dLLnt278qRHHclCKTcqEn74dPxl2oVtH2Eanza
+	n0XkfsQTdYKVhVdnYWR4UlcXdd3IB0odZO5FnFt6bFH8GJgaPKNB0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B4B91C26E;
+	Wed,  7 Aug 2024 20:32:35 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEF3A1C268;
+	Wed,  7 Aug 2024 20:32:34 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
+In-Reply-To: <ZrOo0DuiPeSp9E0b@ncase> (Patrick Steinhardt's message of "Wed, 7
+	Aug 2024 19:03:12 +0200")
+References: <cover.1722933642.git.ps@pks.im> <xmqqy158nu9w.fsf@gitster.g>
+	<ZrOo0DuiPeSp9E0b@ncase>
+Date: Wed, 07 Aug 2024 17:32:33 -0700
+Message-ID: <xmqqo763n9b2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <njekhcypd7x7vdxmkzbdbeblwm4bwiiz74saxdmzqeod6zz547@qkkwkmpjvwkd>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B4D40194-551D-11EF-854D-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Aug 07, 2024 at 04:29:54PM -0700, Josh Steadmon wrote:
-> > You might as well use `dst.display()`.
-> 
-> Wouldn't that fail silently in the event that the path is non-UTF-8? I
-> think I'd prefer to explicitly fail in that case, even if it seems
-> unlikely.
+Patrick Steinhardt <ps@pks.im> writes:
 
-That's the theory, unfortunately, reality is that even the most central
-Rust crates don't care:
-https://github.com/rust-lang/cc-rs/blob/main/src/lib.rs#L1357-L1360
+> On Wed, Aug 07, 2024 at 09:59:39AM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> > The series is built on top of 406f326d27 (The second batch, 2024-08-01)
+>> > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
+>> > leak when computing reachability, 2024-08-01) merged into it.
+>> 
+>> A quick question.  Is it on your radar that transport_get() leaks
+>> the helper name when "foo::bar" is given as a remote?
+>> 
+>>   https://github.com/git/git/actions/runs/10274435719/job/28431161208#step:5:893
+>> 
+>> If not, I'll handle it separately, whose fix should look something
+>> like the attached.
+>> 
+>> Thanks.
+>
+> Yeah, it's in part 5 [1], 97613b9cb9 (transport-helper: fix leaking
+> helper name, 2024-05-27). Feel free to handle it separately though, I'll
+> wait for part 4 to land first anyway, which likely takes a couple of
+> days.
 
-Even better, last time I tried, cargo or rustc (I don't remember which
-one it was) would blatantly fail to work if the path is not UTF-8 in the
-first place.
-
-Mike
+OK, will do, as this seems to break CI.
