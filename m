@@ -1,123 +1,109 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EAF18D625
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 06:00:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253A4A1E
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 06:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723096841; cv=none; b=SYF+PdqK3ZiLGAEzt9QXwIL6EWusGQorBUi9Eh/dvu7vvy8iMHzmxZkVeQUGXoC7Zc/kTWQvXVG0SQGlK92fBJDOi7cD3otvYvZV7P5ZUtGpgJbfvMZxPZjvnO3oxnUzW/dSo2QIrkFC6Tzwrbiez4nZBEgNrIOGlfz4IfwSjDA=
+	t=1723098094; cv=none; b=L7+LFzYlnpJuLRViV5RJY7tKGBHj4lPpt5ZzoW0N3VsX5xl6Lbtl09W0Sggiyw9UOwVkjmU445xWQVCoGtpd0RlYrXgBt0n4JWw2aKs0eAZo9urbhuSharf061hW4M1HDk/8Qdnvn1HaBG41ZZuw/mENpYWF5HqGS3SXB0Prcys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723096841; c=relaxed/simple;
-	bh=NDkz0yTJ+zW/RNCgsRIG2fE64XkJTB4QegsAUKBh96Y=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=KUJV44GJE5FfrbcxTc97ixdGWQJzg5Za7/irP5xakDqM6tJUqCGdK+jRvYIzInMUW6toae1zLysmM9MqWMTr7JtGRnwwYCtYcLJk5aiU6jk1qP43jDGnCm6tNzqQ8pKtwugxqdTxrWjID0iHKYNznOQPbQSqwxzccuIP6V4CFaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=qI9FObHI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bROtcuBF; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
+	s=arc-20240116; t=1723098094; c=relaxed/simple;
+	bh=R3gaY5CH34p0gEU/aSh5uLKJJxBNtXnVzHkcpZjfErM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CdZYILx4sZsrsnsjBZV0FtBYixaz3TnrFqr569O7YfY+Y6+VBe3xtXdyMvvTsOxzU6nGGvGWcUR6NN1apqIs9vPovN7GbF1q8Nf/oic3VnJvw+tUdy9RyR1tCReSKpmShCPucSICe5yqp/8cpgFSOeW9gb+Iu+0JLn1UBvBG6Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=LrYb7R7F; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="qI9FObHI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bROtcuBF"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 553421151C99;
-	Thu,  8 Aug 2024 02:00:38 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 08 Aug 2024 02:00:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1723096838;
-	 x=1723183238; bh=NDkz0yTJ+zW/RNCgsRIG2fE64XkJTB4QegsAUKBh96Y=; b=
-	qI9FObHIp1+7woFvHKVGCr/edXpOWECucJJZJKXUkW/38wC0mMji6YFUCuceFHPl
-	v6OmDnBkhd0f9FZ8/ezcnHtvV2PZ1eWddqPlqpiVh0CKkk69RP9pygNqSMHQ5CbI
-	kKyHeXL//9xv7XEA0xodXEafqzixRdzJlIMeVhl67JvLZirM0ivl0moyJJmXiVEP
-	07GTvOwgq5PskcB1cOAIweFtHC71KGPaCxqzbu1KnqWquJsYjwanQERJvomqRFAb
-	hE54AtLd1LA5aE5O3yr3vwAA4imN2ZU6vG/a91/vKBWPnaUhEWXLUz/G+e+qOkVA
-	VZ5fpL1Y505zZ2RiqXy7AA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723096838; x=
-	1723183238; bh=NDkz0yTJ+zW/RNCgsRIG2fE64XkJTB4QegsAUKBh96Y=; b=b
-	ROtcuBFMN7bllQzm6Vef4NAzH4IaanLlFgl0SQLwND2hX14RVLSQq/fKCWGGl9uH
-	Z0oqelr0LrTB/ZLSoRFzVu9B7a3rVUbinb/t7C/hxKC7uYnj59W8/FcKMoi9kpfg
-	QZCGbMnL9Cdf/XwXCLMB13hRRknd2UeJOloBxUwjxufdoUgeMgEKO7M0hT7Ilukd
-	TADw0C37RI23umD1lIoa8q8qOxEnI3Hpnc0gBI880UZg4dDtsHajSlOYmmra/SMg
-	ReaAce+yQOYDu8uNJIsOj9f9MZizzEDkS4NpwGYkwlsv1EI3kEkDZ5V87PWLfPa2
-	kUdHaJESiCTojSYhISrRg==
-X-ME-Sender: <xms:Bl-0ZpQdO5ZessIYfnB9MIKhj7e39A2ngjQ8ekyyMcnnk9Uk8bYcBw>
-    <xme:Bl-0ZiysJPhcWuovuTtSh0cdWz3hseL6J7gsD2O7CiUSiNNzTdn29ZAomBt4vxbC_
-    n0SUlr5L3vMJXfv3w>
-X-ME-Received: <xmr:Bl-0Zu0uPXLTEZEz3_8zrCNxhR0IAQcH70IKfvpcVIZ-doT24_sJbZHzHKDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugddutdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdej
-    necuhfhrohhmpedflfgrmhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurd
-    hioheqnecuggftrfgrthhtvghrnhepffeukedtiefgjefhhefhgeelieeguddvveeujeej
-    hfegtddviefhjeetudekjeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthht
-    ohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Bl-0ZhBVlan2EVHU74EUoV7Xpyb_wSvGWh3GMvtsM-coNlq1vvei6g>
-    <xmx:Bl-0ZihcBeYUk8KcXntjrAJ1U8HS1Kl75-10Rcqj71v2w0x_oWlpDw>
-    <xmx:Bl-0ZlrJ2ub2I0x-SwqiCjS72HOPGKzqRojyeuxE_Ymq8RkTeOHqpw>
-    <xmx:Bl-0ZtgopPlpADOmoyzDX60JK8FcL6EBAYF6A3aNpkZIpU5dGSt29A>
-    <xmx:Bl-0ZlvGgOETGlF9VuoQJQBQGgrewBwVjCAqA2mC34c9njxVFvUnK6rB>
-Feedback-ID: i93f149ec:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 02:00:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="LrYb7R7F"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fc491f9b55so5929825ad.3
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 23:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1723098092; x=1723702892; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sVgpjbbpo1kWK65KIucb3DtehG3wf/e/A1tvL9vOPbs=;
+        b=LrYb7R7FtQdC2hQCf1l16H40aKdj3QaQsgMc1DHBlq0rWcHxJ1VdwdUdDt9gQxUMrt
+         ds6zfYv3rSJYK+W3IrIcxdfgKCwB6GoYAT3Da9AiImC9A91ulUwRa7cZtv5MtT/rWbfJ
+         TAIxyNJWZsIa5Wx8xV0dcbuWc9NfH1pKtxnjrQL7hPwEZK7XfhV/fVy2N1oNcHsxJOyZ
+         TFrRy9/qNKK6YwhGXU62ZnwK+B4KMUGlYCSH7W08redhXBUavlG5WcJS9RwEdaHYhCmH
+         wxGFn7Ksvmkso82L3a7nII/iz/ncMcEJA7Sy0NOULBohMg42fvpmvXy2ebCJ5wSxhkWa
+         BfRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723098092; x=1723702892;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sVgpjbbpo1kWK65KIucb3DtehG3wf/e/A1tvL9vOPbs=;
+        b=DM5PLzJiXbuQH5OfZI2J+B99nzuLSN/nO5eByhvcy5ICN0FPbLqQDRBWHqViWCvwgn
+         WTVXoi0rwNh+dhxw8LFJD6uCvh+N84NjRf/CkETymOEbu4gMqK6nFzWtt6TiB2t/+dEj
+         rqev3ytRGO50/vbU0MfgsxTd0eZBvD7BRdWpI9ooWIAH2mqTiQb9RKXZ4VF+Yx/XYACn
+         1OcUiCDF23RU2y7LtPbTny6uFXy2Qu+XOSjct9Bc7K1YwdhJxTx/6M5U+jAYe8LX9FFH
+         lwloD+2Wmg56lAhQJCKIZ5ELJN0p3Os61a+PdLmPtRdKruwVXUiMDy1Xl961wP2v1wJm
+         ENEA==
+X-Gm-Message-State: AOJu0YyFK6+rR0zBovFHgLuCoIwyQpw+5jQY7qqIeadp2/TNLEXS2/uH
+	3h0MEh1F1q0bBpktYe07oVCbJmm/+z9v6k0XHKGH98WZ1u7FSSGAQoGK5M7qWx1s7EuFbCDYp3s
+	O
+X-Google-Smtp-Source: AGHT+IHrHxOBOgKjg6SOm1cXU6zt8IPF6YeARPEqNRzMTdtrGrh6NIEymKstsL1Sh1sqt+a1UQ9X5Q==
+X-Received: by 2002:a17:902:d508:b0:1fb:d335:b0bf with SMTP id d9443c01a7336-20095252f2emr10539195ad.25.1723098091615;
+        Wed, 07 Aug 2024 23:21:31 -0700 (PDT)
+Received: from localhost.localdomain ([203.208.167.148])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff58f29d37sm117054175ad.48.2024.08.07.23.21.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 23:21:30 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH] doc: pack-objects: clarify --missing option
+Date: Thu,  8 Aug 2024 14:21:20 +0800
+Message-ID: <20240808062120.34629-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 08 Aug 2024 16:00:35 +1000
-Message-Id: <D3AAUM8AFHO8.1BF5590ZO4RIN@jamesliu.io>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
-From: "James Liu" <james@jamesliu.io>
-To: "Patrick Steinhardt" <ps@pks.im>
-X-Mailer: aerc 0.18.0
-References: <cover.1722933642.git.ps@pks.im>
- <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io> <ZrRSE0etqno-yFiE@tanuki>
-In-Reply-To: <ZrRSE0etqno-yFiE@tanuki>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu Aug 8, 2024 at 3:05 PM AEST, Patrick Steinhardt wrote:
-> On Wed, Aug 07, 2024 at 07:27:32PM +1000, James Liu wrote:
-> > On Tue Aug 6, 2024 at 6:59 PM AEST, Patrick Steinhardt wrote:
-> > > Hi,
-> > >
-> > > the third set of memory leak fixes was merged to `next`, so this is t=
-he
-> > > next part of more or less random memory leak fixes all over the place=
-.
-> > > With this series, we're at ~155 leaking test suites. Naturally, I've
-> > > already got v5 in the pipeline, which brings us down to ~120.
-> > >
-> > > The series is built on top of 406f326d27 (The second batch, 2024-08-0=
-1)
-> > > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial mem=
-ory
-> > > leak when computing reachability, 2024-08-01) merged into it.
-> > >
-> > > Thanks!
-> > >
-> > > Patrick
-> >=20
-> > Thanks Patrick, most of these fixes make sense to me! I appreciate that
-> > even the minor changes are accompanied by context.
->
-> Thanks for your review!
->
-> Patrick
+Since ee47243d76 (pack-objects: no fetch when allow-{any,promisor},
+2020-08-05), we mention that --missing=allow-any and --missing=allow-promisor
+do not fetch missing objects. But this is only true for missing objects
+that are discovered during object traversal. We will still fetch
+missing objects read from stdin.
 
-Thanks for responding to my questions! I don't have anything further to
-add.
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+---
+objects read from stdin ignore --missing option, if the repo has
+promisor remote, we will try to fetch missing objects. Even if
+the missing objects is not "EXPECTED promisor missing objects".
+"--missing=allow-promisor" will not raise an error on such cases.
 
-Cheers,
-James
+ Documentation/git-pack-objects.txt | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index e32404c6aa..0c1f86dabe 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -313,13 +313,14 @@ attempt to fetch missing objects will be made before declaring them missing.
+ This is the default action.
+ +
+ The form '--missing=allow-any' will allow object traversal to continue
+-if a missing object is encountered.  No fetch of a missing object will occur.
+-Missing objects will silently be omitted from the results.
++if a missing object is encountered.  No fetch of a missing object will occur
++during object traversal. Missing objects will silently be omitted from the
++results.
+ +
+ The form '--missing=allow-promisor' is like 'allow-any', but will only
+ allow object traversal to continue for EXPECTED promisor missing objects.
+-No fetch of a missing object will occur.  An unexpected missing object will
+-raise an error.
++No fetch of a missing object will occur during object traversal.
++An unexpected missing object will raise an error.
+ 
+ --exclude-promisor-objects::
+ 	Omit objects that are known to be in the promisor remote.  (This
+-- 
+2.45.2
+
