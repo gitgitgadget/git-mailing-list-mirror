@@ -1,104 +1,112 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB49813BACE
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 18:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D4C145A11
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 18:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723141343; cv=none; b=n4J1bPstCALSzrhh6eUBBr9apnS6fYzQpTW/NN/OqRnc8pQXOJlHGy8qzGLvOEJdgupeeVwmh+TE5EdfCMJpOoJ2PwdEogdiVOfvk5SbyrQ1fsdxRebCcuIGuECoOxsd2ihxCrG26S6+duE3pfvAozEBp+DOdCRRg4aYdRR7W5o=
+	t=1723142620; cv=none; b=KiZy3ib01V8PsC3G4dQ22A4ZaAKN9Mg3iIi8n3F0mQwiE9YjgLUCXbU2eBgL60RMT2n+UkG5ZAZfHmbbUCmhmLyzzqaNdkgf8ytJWdPfVtgmc7T+wTO9ZyGf7dpeptHjKU8/4DSszf3wug/IREfbzTtr5jcVb44JqHEhUsC7AQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723141343; c=relaxed/simple;
-	bh=amMWZakEVmXwLbXtkKiJUR7JoKSfw+Zv5RrjXMPX8hY=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jvKUZl7spDrCz3DYehdYODM5bFj268h27R9lVW4hUKAaTTbbPqEXc/o/spXhyQkKPcykBMLNM58aYTzZo2eOKo2wA6BFfpndPdqVra2UGCjXgRoaPuw3GrbC0XBcXfSORIE9TH87VS0VZvVssQ2NCDXpVmepzP4EvBHYDoGiVAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=j+sagPKc; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="j+sagPKc"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2cb81c0ecb4so1719702a91.0
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 11:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723141341; x=1723746141; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GUTYEVWRC2zdCkjaUWM3O66X/BOcGC+v9OWRHJJjDpU=;
-        b=j+sagPKcR8rUccPWSS1x2nyYN9Hs4JpjDosvuNyIm+U/gnAntEBWQcbAygOnF+2hpX
-         UsVNWykfBoGqyXa97GTXYMJmtm/D2hy09dDNYof6o2v6ZqUPWtiG+yVWMdcGHCHqHTc1
-         dcl7WbGVsSFlmbOCNm1xDqQMjyEL9rJn7DnWq9CS4hn5yPXakOHDJHo/QhiM2eSu8nh5
-         Oc1mdOA7o17iCnt+bHPGVwtfcD3ROpht3imKAjcCnMVHyhPpieGkk7k6Tpz43MCtjU4L
-         anVMuMBFLSVDcQSSfSajBtKCz/2+9s03zrxNdmZy8Gj+zZDptTSVznoRMQKFP0cmvVA+
-         9r2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723141341; x=1723746141;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GUTYEVWRC2zdCkjaUWM3O66X/BOcGC+v9OWRHJJjDpU=;
-        b=Ok2NuYE1/O5sCrnTfzqRvBNNqZvBq9fLez+2YQ3r0nx8L/mktWoSj5n0SfyvbJeMr8
-         7WBuM5VqK1Dtw7ih4Dwnr+9FvPPU8cRu+M8afSjbGf3l1Wa6ncMy1uJEVxNZ6ZH4BHWT
-         6uX462JMkpA2RLWW5RWhQEAS4OC9xuKabVupPsBWkdzcBY3IfnU3+NqaGjiEAaPooTbp
-         NOZ7haXak47ss538tNw1DGapgfsoVjFRLcgFjuDFES21NOWVAuIor7lkIA+iTpA5pBgh
-         MhSxyBx3Tnsmlxaq2TObixYak9yg+5wrLZa5P0Di9kRVAUAA3RJLKCtQfAqtkvRlFIBo
-         OE9w==
-X-Forwarded-Encrypted: i=1; AJvYcCV/ai5hvZEzoLEItrFjdTV3fiExMR8RsWvnS7H4qRvPBZBvpA6kcLP5OF+Wk7QvepZX3vHJFTrKrIsSkEhvMYNR3i8D
-X-Gm-Message-State: AOJu0YyS0M8xwtP/LBRYP01GM4ug12yoWo3cwUWZptrLoHASnQ6JVD3v
-	bFUDRnqAtKdHO/k3XmjOMv/o7tQ0eZdzA2kcoCzetWVdVYpkkBFGBJJAU4Nhfw==
-X-Google-Smtp-Source: AGHT+IG9lAtK9TJg8iHVaIua2mpc8Ft0tlsQr3Yeje3totfmvb8NWxL7bDO/KkBCQXeXDC34D3icmA==
-X-Received: by 2002:a17:90b:3b4a:b0:2c7:49b4:7e3a with SMTP id 98e67ed59e1d1-2d1c4b9bf1bmr3921572a91.7.1723141340584;
-        Thu, 08 Aug 2024 11:22:20 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:fa12:a76d:ac7c:e104])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7b8a7453e92sm6944014a12.41.2024.08.08.11.22.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 11:22:19 -0700 (PDT)
-Date: Thu, 8 Aug 2024 11:22:15 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
- libgit.a
-Message-ID: <htakxe76kl7ll3q7trjj6cjnsrg4tnue2k46zo25bnf3zre7t7@r74vgvebdhsx>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-References: <cover.1723054623.git.steadmon@google.com>
- <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
- <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net>
- <b5epjlsptw3punygmx2abmfnrkki6n6ta4fk3yse7iodlabr63@zss4z3575r7v>
- <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net>
+	s=arc-20240116; t=1723142620; c=relaxed/simple;
+	bh=AUeePISR6uqeqIhj7hgTOfnLU6S2+zYhjfF18FBscJI=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VuwzfgifmDsyI/6HzkQS54uep4xCpVD3zVufTbKPXilBDdtg6NQnDISLP0bMI6/OYwnSjLXcGVDHaVGKqh6WR6vpBUBZaLqkI8l5OHyqgaatdTG/qVRu3LLbANjaII80xfrBUms8zlMPb1YjYZwIWhhJG6Ng/3/5yo9JUUHe6V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 478IhSFn723356
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 Aug 2024 18:43:29 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Josh Steadmon'" <steadmon@google.com>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>,
+        <calvinwan@google.com>, <spectral@google.com>,
+        <emilyshaffer@google.com>, <emrass@google.com>
+References: <cover.1723054623.git.steadmon@google.com> <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com> <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net> <0a4601dae912$68d8e920$3a8abb60$@nexbridge.com> <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3> <0a8401dae924$c9e8e9b0$5dbabd10$@nexbridge.com> <bs36iyp3yzb5l52t6yw5364odvugrt22jfeypqohtzdwp22ecj@kurf4p62qibu>
+In-Reply-To: <bs36iyp3yzb5l52t6yw5364odvugrt22jfeypqohtzdwp22ecj@kurf4p62qibu>
+Subject: RE: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for libgit.a
+Date: Thu, 8 Aug 2024 14:43:23 -0400
+Organization: Nexbridge Inc.
+Message-ID: <00d901dae9c2$dc9c29c0$95d47d40$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZrQJe32sYNOTSJGf@tapette.crustytoothpaste.net>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFCbSOmiEaObceWJ7X+ogZKpSpqSAGPn9K4AelD3ekBSZ9iqwHkOcN8AlLsGwwBugQaPLL5Da7Q
+Content-Language: en-ca
 
-On 2024.08.07 23:55, brian m. carlson wrote:
-> On 2024-08-07 at 23:05:00, Josh Steadmon wrote:
-> > Yeah, needing to free() is the only thing we striclty need from libc
-> > right now. Please correct me if I'm wrong, but IIUC then any memory that
-> > is allocated on the C side and then passed to Rust needs one of:
-> > 1) freed by libc::free() on the Rust side,
-> > 2) passed back to the C side to be freed there, or
-> > 3) leaked
-> > 
-> > Am I correct in assuming that your opinion is that writing additional
-> > *_free() functions on the C side is worth it to avoid libc? If so, then
-> > I'm fine with including that in V2.
-> 
-> I think if we're going to be writing a general purpose API for
-> libification, we probably should provide free functions.  Normally, that
-> will be a call to free(3)
+On Thursday, August 8, 2024 1:13 PM, Josh Steadmon wrote:
+>On 2024.08.07 19:51, rsbecker@nexbridge.com wrote:
+>> On Wednesday, August 7, 2024 7:08 PM, Josh Steadmon wrote:
+>> >On 2024.08.07 17:40, rsbecker@nexbridge.com wrote:
+>> >> On Wednesday, August 7, 2024 5:21 PM, brian m. carlson wrote:
+>> >> >On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
+>> >> >> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to
+>> >> >> call functions in libgit.a. This initial patch defines build
+>> >> >> rules and an interface that exposes user agent string getter
+>> >> >> functions as a proof of concept. A proof-of-concept library
+>> >> >> consumer is provided in contrib/cgit-rs/src/main.rs. This
+>> >> >> executable can be run with `cargo run`
+>> >> >>
+>> >> >> Symbols in cgit can collide with symbols from other libraries
+>> >> >> such as libgit2. We avoid this by first exposing library symbols
+>> >> >> in public_symbol_export.[ch]. These symbols are prepended with
+"libgit_"
+>> >> >> to avoid collisions and set to visible using a visibility pragma.
+>> >> >> In build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also
+>> >> >> contains libgit.a and other dependent libraries, with
+>> >> >> -fvisibility=hidden to hide all symbols within those libraries
+>> >> >> that haven't been exposed with a visibility pragma.
+>> >> >
+>> >> >I think this is a good idea.  It's optional and it allows us to
+>> >> >add functionality as we go along.  Platforms that don't have Rust
+>> >> >can just
+>> omit
+>> >building it.
+>> >> >
+>> >> >> +[dependencies]
+>> >> >> +libc = "0.2.155"
+>> >> >
+>> >> >I don't love that we're using libc here.  It would be better to
+>> >> >use rustix because that provides safe APIs that are compatible
+>> >> >with POSIX, but I think for now we need this because rustix
+>> >> >doesn't offer memory management like free(3).  I'd really prefer
+>> >> >that we didn't have to do memory management in Rust, but maybe
+>> >> >that can come in with a
+>> >future series.
+>> >>
+>> >> This is a good point. Libc is not portable, but because I can't
+>> >> build with RUST anyway, I hope that libc is restricted to this
+>> >> facility if used. It should not be included in the git C build. It
+>> >> is probably moot for me anyway for this series, but I have to
+>> >> mention it in case
+>> anyone else
+>> >gets the idea to include it as a dependency for git C.
+>> >
+>> >I know you don't have access to Rust, but would you be able to test
+>> >the
+>> symbol
+>> >visibility steps with `make contrib/cgit-rs/libcgit.a`?
+>>
+>> Of course. Branch? URI?
+>
+>https://github.com/steadmon/git/tree/cgit-dev
 
-[snip]
+I got to:
 
-So in this case, does that mean we'd replace our call to `libc::free()`
-with just `free()`, and then add a declaration for `free` in our
-`extern "C"` section of cgit-sys? It seems to work on my machine, but is
-that actually the more portable option compared to using libc::free? Or
-have I misunderstood something?
+ld -r contrib/cgit-rs/public_symbol_export.o libgit.a reftable/libreftable.a
+xdiff/lib.a -o contrib/cgit-rs/partial_symbol_export.o
+/usr/bin/c89: illegal option -- r
+
+The -r option is not supported on NonStop. I think we had discussed this.
+
