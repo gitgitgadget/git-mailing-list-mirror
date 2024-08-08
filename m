@@ -1,100 +1,124 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76064A1E
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 01:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3EB3D6B
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 01:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723079474; cv=none; b=fnpkFsBmL1a1tm9Joh87MWXdPob0mdSBnCocNj1qU3YIYmj3w0kzKAHaQbFtC2ecRHJo4kciAx5y+9NrbPYAHfKq1rouMzJdjUuU31wUmGDnX8eK8kZb7slBAGsJdvyPlWilM8pMOl/jPxsYgmaU4sPPTmv8V63u58lx0b3cJvE=
+	t=1723080170; cv=none; b=PHDqWf74wfQPhQ+d415A520+olIKtN+2NjL0NWzd1GPUJBk3vzW4l9es5+QUC84wTCrtJkXy0zmmXEvl6pBwXNZDEConNLTIUVO6a+KLxc4mUOdMvQKbyG80MPvmi5NcumDCLE77GfWshAnUN7K3e459+y7gQgFECofK1WM1p5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723079474; c=relaxed/simple;
-	bh=WyhqmrN/oXg3Kkqh78ambt8x5Nb5Newm1cIufBcs14A=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=S4peVLflbxP5LOxz7+pWXs4JUV/WiYpqLcAY4iszbe9RIjrwSuiva7VUQ2DYwp5Bj6UsMtwDMnikxsz3/OuUPme5SWnzW4xYv9pF6vgyEildz6zBt6kwg8G4yh6EAXEpMoNVzqpvxXp2YS8yNwBhZ9jmPHxYbhiMgSirpA/GaQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PoADecOA; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723080170; c=relaxed/simple;
+	bh=OI6B0Kw7Rh+5bMR0XnVcZSxwhuiWPZE0GRbaHnhZsGA=;
+	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=PzECM21vlGQEg8DUZfU5fKiz/oeHRKlLywVWFlTtIor2KNtVNv2yABq6+jll2o0GNikJ/WluYS8FT/dPV+EWV97KLbY56+g/BDm/tgia/81GtdYfbDXAg/rLSAX3LMnP66VOWNO8k4Uti3h5Z5ftnZV+HhwI0smZoYEjPnDYreQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cVZv5dYA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BTbszM6g; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PoADecOA"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F0B4729083;
-	Wed,  7 Aug 2024 21:11:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=W
-	yhqmrN/oXg3Kkqh78ambt8x5Nb5Newm1cIufBcs14A=; b=PoADecOAPj5empGSz
-	HQ+p+qza2vSqpBSyxj1tzM800TKDALIgn29ikYxYfSkQOj9S3HYte/ok/cJLS4Xn
-	x5/diNXpTMbNgg5Ei8p6Ne1tkvntJ+71dkWDYa7zH3CwKFtMmzJAHPY5y2lIHryR
-	1xN3YlIkz0FeBlGi/Uw77/xVrc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E96F629082;
-	Wed,  7 Aug 2024 21:11:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C5C329081;
-	Wed,  7 Aug 2024 21:11:11 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] transport: fix leak with transport helper URLs
-Date: Wed, 07 Aug 2024 18:11:10 -0700
-Message-ID: <xmqq34nfn7ip.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cVZv5dYA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BTbszM6g"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 40CFA1151C08
+	for <git@vger.kernel.org>; Wed,  7 Aug 2024 21:22:47 -0400 (EDT)
+Received: from wimap26 ([10.202.2.86])
+  by compute4.internal (MEProxy); Wed, 07 Aug 2024 21:22:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1723080167; x=1723166567; bh=SBVqCpRmeb
+	aYYGTHjlZsJ28OlR3IEvv4oUshDKLrGl8=; b=cVZv5dYAc8d45hF/xJSneO5yhi
+	Uwl7+NtSDwIfCObpR+5OHUHY0ZlcH4ZfbPy8Mb7IZTm8VJvpXy+uoweFTu0spT5k
+	Q/BaKbTRtwUJaMLiH2HPXRlyfMAfUm5DjP6pIwv2XruE/bgJXYq1lj2d2dOoihkc
+	ybOSAk0qHhJxYNaf3PTO+GpydslSAPNqkn4vUnhiTY44eFRNAuZEDTp12Wnqdeil
+	MLWwg1zXDdeUMJtWYnqxg7ZR9J8NWLCEvdyilm+pwjv2MxWQECS4tgL+jzJ2rArp
+	O3Hw9Cjr/ywz71WoaNo9dZqPovQbowBjIDWugYVR20bCr7DaYA5mL8KLrYUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723080167; x=1723166567; bh=SBVqCpRmebaYYGTHjlZsJ28OlR3I
+	Evv4oUshDKLrGl8=; b=BTbszM6gPU8Vp3qQEg3A03qsEbHvE43amKffm7ngpO+9
+	0wnLefQGehKgmdFjCBvPozrial4DCcd+ebwyoBN0+iDXoefy3iYiLzY+iPrkzqk4
+	PGxvCSMHjoSphUbUx7FW2XW5TMQZelqnIh50lcSSZD1RuhCSVFbJTAuRs8M5uSFo
+	118EwXIi3N4H/oX9q1qHSBidcBJzmbVcfxlUCC70QKilO5TzuFjQkbAHTA9z2c/E
+	fzxPsIWaiyC+lg41fCSvq13X1slZUorxTXAhFRR+26Ie1ttjETwGqChQ9Xm4tH2L
+	PsSc3J20dSCmKn9ye0dlS1I5WaYBIFb8OFEXi98/zQ==
+X-ME-Sender: <xms:5x20Zl-6BIF3UTsbC1S-zfurxxf-_nyvx5LSmUJwxbspmgyEnddgFg>
+    <xme:5x20ZpvQ_qcbmGBNszdkuxxr2FiZwShmUUvKvInp9DEXt55LsGPjOquiAH0y6Q6jg
+    hlK28t2oyU7cKDrR2M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdeghecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkufgtgfesthejredtre
+    dttdenucfhrhhomhepphhunhhkrdhlihhonhdtledtieesfhgrshhtmhgrihhlrdgtohhm
+    necuggftrfgrthhtvghrnhepuefhhefggfffiefhuddttdfgtefhkeeljedtkeeggeekie
+    egvefghfehhfdtueefnecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhunhhkrdhlihhonh
+    dtledtieesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedt
+X-ME-Proxy: <xmx:5x20ZjBsLieh1QwNVTqb9kgoN2vqKFnvQgYgQToGrP-L7cbXI2TwXQ>
+    <xmx:5x20ZpecGgUP6M5LEOa2mcC7simipob-vcOsrGGoiXpgZidVRFDuAQ>
+    <xmx:5x20ZqMafJ50IqpcH7-gfEk8EGUeB1-apfwX-HYdSHU7z_t9X10xJw>
+    <xmx:5x20Zrll8GP6TOU8jlmkmy1ypduCmkE32fk6idHAXOah3z4qx2FUcA>
+    <xmx:5x20ZkXfan1MdOUCWqHLbT9DxgbkM_E_Di9FCuspqH6j8hAzNkkYNRpG>
+Feedback-ID: i35d941ae:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 1392519C0079; Wed,  7 Aug 2024 21:22:47 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Wed, 07 Aug 2024 18:22:26 -0700
+From: punk.lion0906@fastmail.com
+To: git@vger.kernel.org
+Message-Id: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+Subject: Documentation bug (?) when describing `zdiff3` merge format
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1982555A-5523-11EF-AC27-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 7bit
 
-Transport URLs can be prefixed with "foo::", which would tell us that
-the transport uses a remote helper called "foo". We extract the helper
-name by `xstrndup()`ing the prefix before the double-colons, but never
-free that string.
+The docs at https://git-scm.com/docs/git-merge#_how_conflicts_are_presented describe the following snippets in `diff3` and `zdiff3` style as equivalent. They do not seem equivalent to me, so either this is a mistake or the `zdiff3` style is counterintuitive needs a better explanation.
 
-Fix this leak by assigning the result to a separate local variable that
-we can then free upon returning.
+diff3 style:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * It turns out that Patrick planned to have an almost identical
-   patch, I am queuing this "independently invented" one now,
-   because a recent update to ls-remote and its tests started
-   breaking the CI.
+```
+Here are lines that are either unchanged from the common
+ancestor, or cleanly resolved because only one side changed,
+<<<<<<< yours:sample.txt
+or cleanly resolved because both sides changed the same way.
+Conflict resolution is hard;
+let's go shopping.
+||||||| base:sample.txt
+or cleanly resolved because both sides changed identically.
+Conflict resolution is hard.
+=======
+or cleanly resolved because both sides changed the same way.
+Git makes conflict resolution easy.
+>>>>>>> theirs:sample.txt
+And here is another line that is cleanly resolved or unmodified.
+```
 
- transport.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+zdiff3 style:
 
-diff --git a/transport.c b/transport.c
-index 12cc5b4d96..7c4af9f56f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1115,6 +1115,7 @@ static struct transport_vtable builtin_smart_vtable = {
- struct transport *transport_get(struct remote *remote, const char *url)
- {
- 	const char *helper;
-+	char *helper_to_free = NULL;
- 	const char *p;
- 	struct transport *ret = xcalloc(1, sizeof(*ret));
- 
-@@ -1139,10 +1140,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 	while (is_urlschemechar(p == url, *p))
- 		p++;
- 	if (starts_with(p, "::"))
--		helper = xstrndup(url, p - url);
-+		helper = helper_to_free = xstrndup(url, p - url);
- 
- 	if (helper) {
- 		transport_helper_init(ret, helper);
-+		free(helper_to_free);
- 	} else if (starts_with(url, "rsync:")) {
- 		die(_("git-over-rsync is no longer supported"));
- 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
--- 
-2.46.0-313-g2d45963c97
+```
+Here are lines that are either unchanged from the common
+ancestor, or cleanly resolved because only one side changed,
+or cleanly resolved because both sides changed the same way.
+<<<<<<< yours:sample.txt
+Conflict resolution is hard;
+let's go shopping.
+||||||| base:sample.txt
+or cleanly resolved because both sides changed identically.
+Conflict resolution is hard.
+=======
+Git makes conflict resolution easy.
+>>>>>>> theirs:sample.txt
+And here is another line that is cleanly resolved or unmodified.
+```
 
+The problem is that, I believe, the "or cleanly resolved because both sides changed identically." sentence should not be part of the **base** in the latter example, since that whole line was moved outside the conflict.
+
+I'd appreciate knowing which it is.
+
+        Thanks,
+             Ilya
