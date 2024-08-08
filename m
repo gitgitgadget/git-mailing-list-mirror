@@ -1,134 +1,98 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3E189B8D
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:22:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC7E19005E
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:23:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723137754; cv=none; b=bBwDq2GGGwE7lNDnDG39Md9XoFsEgY9eHZqzWzwsV48QKKT3+AB2fIlyigafqxImX2aSbqV3zDQFY07wtnpmL3A3+5+fMlgn1fOdjV8Omo1Iug+3d46+k6sA6xEj0/ly86utWgQ/ezyFF77g+IwlYOjXRjib2C2cPYquQsrf6lc=
+	t=1723137814; cv=none; b=c4pTAZBhvYQJEJvx7RZ66uK3tjSneE3Ln/zSNsjI5aL/ngR3nJHzMvZeKCHacG/wgLL3BlkuWzQ0I9ScvD7G+bI89hmgjxPjyWgV6u77A8g9ygB6wBfTqO3FIJNc68s7SzHVj6jpijGhjz14O55xIdSTopdttE47Hnq/POLU2Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723137754; c=relaxed/simple;
-	bh=UIyahgWBlNDfo41E2ozfCQyarvo5rk9VVVt8SS/FBIk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NvDaTb1RsUqj2+wEDHE/TVaV5vGiJXDZdAgGvPsIl37WrYyPdh3NB+/pJf2kU1HNNYaglxwgEPgwBRDQsTt7KLcF590Sz0BkQLd4yP3kzJq44Xh2jESyCk38Xisuq+rXEB7GFTbxyNuwGip0+/QhikPS3YhjWh71mhXwjpHvvrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sRmtXjKN; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1723137814; c=relaxed/simple;
+	bh=kGryneWIk/qymAFZnbqABbstDid+F5EEEUsWDrdNwRU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SY+wVn0O1bpD2SG5t0qRLX4nbVy2bi8UbSm/vuXOSdqyjHSX5r47pVxbgYrfS6rv+d9SDWOmzhiN09iZoQWWTDmHO903k56PoQ7Qu/B6mZ9PrxjutyNW2ZGeyS/9gt4R0VQ8+PpmhhZ25bLP0bBmsDaJKjLkR62Ac3Pu2J/NGno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mASuiYFL; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sRmtXjKN"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7abe5aa9d5so160605666b.1
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:22:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mASuiYFL"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fc569440e1so11533125ad.3
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723137749; x=1723742549; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RwA1IJkdzfMkXaLsjvE5DMN/Wa/JwPk4CRudv/tFEyI=;
-        b=sRmtXjKNN8oPn7GvAqBPDjf+6uOYPsyZrKtpnkaFgELqWRCeePRfta6RuXNgs242to
-         EI+iMvB5jzgTWeEtmUbJPqUJniRHMnIcJ0LzzIJtv2OzxLEivptSM1idCLDlos457SdR
-         JjYfoL0CwmNY6vULplZv7DaIa0In32m7zZGV1E5jfLGITugpPfo0X+YCD7IfEhBV0tBN
-         RNmWtYx5HEucohrmzZ5fhTkq/Ra2fLXvz7pn5YIVkDDXrqgzO/5CtBOc0XF91MmAl78z
-         MH85DxLI8d8kgpUn0F7IJg7y2tTRNcnYBqv2fO/9rR1axVeAR/5e8hKPeW0qoJYqNw1+
-         lTaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723137749; x=1723742549;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=google.com; s=20230601; t=1723137813; x=1723742613; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RwA1IJkdzfMkXaLsjvE5DMN/Wa/JwPk4CRudv/tFEyI=;
-        b=XdeQo8taTmwiukjB0GtQIl4kYobwVUFcw+10ACUFtLZUXmve+hr4Mjle3YB5tjiCvL
-         FT1HTXJqJV678T+hKYNtT8tLhzpTUjxIsguJSDam1aJ3sHGz0lRG+5gvwUfl7Sl8ZY1k
-         0UYFEspBE11v4f6lmepAcgKfzbyyqaH2J4COyZWizQk9eqUCHc6K9T+sz2IjFigkgcgv
-         9o7eIdIVagDz+raPEBfKPl78dIr60J8wJcvhu4gzjqWhYY/NVg3uyyR3TQL0alRtx7rI
-         HCIg1iUB5OjbakQWJ7paBz3gp1xrUlyxRK1ASz/oVREm2EmsjCOpAExzpZofY4ohZcT0
-         LJzA==
-X-Gm-Message-State: AOJu0YzW5ByLY2WU35s39eRfSQ444LO1y3AOWaMNQ5uiXoPH/AyzlR6j
-	q0SdVfbHezpWkhWb//pukUUgTzp8kaSC96dNcVoSHtqhnti+qtsdjupCCKi+2HuVfbcfXsSZkHe
-	IWiMZ4fwqVWFjCTXKQxmWdmA8PYZjXVU7RWh7
-X-Google-Smtp-Source: AGHT+IGLUsDOqOkTaNl0NYfzpZCoAibVhBImTmj1xfsKqXBWPO/gsnikYLZm3LTIzEJcnocEVFDfM77QPPhRS+sFsQo=
-X-Received: by 2002:a17:907:3e1a:b0:a7d:2612:33d6 with SMTP id
- a640c23a62f3a-a8090e9f92fmr224881166b.53.1723137748918; Thu, 08 Aug 2024
- 10:22:28 -0700 (PDT)
+        bh=5lNbbPnw6E4WH79/oFeeGo52Qpdu1o6owsIz01EHBlo=;
+        b=mASuiYFLtTQaUWizQ+BulZ7QWWK1iMzQstWoV4WxTVVj38WDdDfjp7A7n4z7GJqPk7
+         WGyXgFQMoU+Owd1nK6ZSvKDor714PSaTnCGRZFKlvESN4Otf3rY8zL9JWh4tIfk76w08
+         r65YdyFcq60tdAxG26ev++kAUiQkAyuDuQm4qrhqyJDXbh7cXoU2YItKSFgtiPMEWI+n
+         p6kQjUyBGDGHP9mktDyEI7ubtGMmgRA0Ek+5owq1Htz5jkUh1Ls/WM5uNuoP4exl0PDG
+         fRZq0G2leJKiYMorvZivKByAsFZ9vJAHNrzeDNH+YQBUuZ3UOJStmH77EjqrYjCn+gZU
+         rMPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723137813; x=1723742613;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5lNbbPnw6E4WH79/oFeeGo52Qpdu1o6owsIz01EHBlo=;
+        b=SXgXGNHHc+slg1+ViKmmB4hFaHCHsDtBZChYJBPpXujN83kWiLHh4zFj6/5lZP+LO6
+         dFgDFR+mWQuON8tKdoeWI8SAOlJVRlb+7PcMqKA2MSsGxTNKJW4UiCEXcso/7lg/NFlY
+         ltaKI2jKmK0cQvyahyZQxIale8hmTWgEnnOOfJobKpMA/j6j6utvDnWtjRRBOdLOgJLM
+         OwTFsOc0BmjmYY/hX6nKjDekwofTyR40DnmO/YsCVuLZgHT+TleQ3gkQLuq5zRe6Z5Df
+         szKruCGZs7v5sb113BKJE5JnudyaN9Tv3Pb3iahSAR9nklR0rPUvCrM0scYYqU60MJIo
+         i+Sw==
+X-Gm-Message-State: AOJu0YwLEv/GpkfU8R20kPTBPSpZRpwUsPkozaWItlGPAnc2ITW41EEX
+	fjg91b5AR2EOieAVchayVmViWdeUOgttoeU3rYA/b76n8gokDRb4Rh3/EvAbPg==
+X-Google-Smtp-Source: AGHT+IFNVUWuhfxxOQZLEUHgFjwzCeHep6uyVbGCgarTJBmWsqy/CizCIJSwx5NRzqHlF7e28a4VoQ==
+X-Received: by 2002:a17:902:e84f:b0:1fb:44e1:b5d6 with SMTP id d9443c01a7336-2009526c238mr38402345ad.23.1723137812239;
+        Thu, 08 Aug 2024 10:23:32 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:fa12:a76d:ac7c:e104])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff592b8a38sm126870115ad.307.2024.08.08.10.23.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Aug 2024 10:23:31 -0700 (PDT)
+Date: Thu, 8 Aug 2024 10:23:27 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for
+ libgit.a
+Message-ID: <33jdrobowiv25qk3cfjctozeemtyox4ywlj33dqnhcjnua6n36@alzbo7hjbbll>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com>
+ <20240807224756.2zq5hkfq5j43b7jk@glandium.org>
+ <njekhcypd7x7vdxmkzbdbeblwm4bwiiz74saxdmzqeod6zz547@qkkwkmpjvwkd>
+ <20240808001743.4sx32gbjtypq3rje@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
-In-Reply-To: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Thu, 8 Aug 2024 10:22:11 -0700
-Message-ID: <CAO_smVg=1gFBudrd70V2_AXSPOUTFz=j7QqBpbkvR7P_KqnBtQ@mail.gmail.com>
-Subject: Re: Documentation bug (?) when describing `zdiff3` merge format
-To: punk.lion0906@fastmail.com
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240808001743.4sx32gbjtypq3rje@glandium.org>
 
-On Wed, Aug 7, 2024 at 6:22=E2=80=AFPM <punk.lion0906@fastmail.com> wrote:
->
-> The docs at https://git-scm.com/docs/git-merge#_how_conflicts_are_present=
-ed describe the following snippets in `diff3` and `zdiff3` style as equival=
-ent. They do not seem equivalent to me, so either this is a mistake or the =
-`zdiff3` style is counterintuitive needs a better explanation.
->
-> diff3 style:
->
-> ```
-> Here are lines that are either unchanged from the common
-> ancestor, or cleanly resolved because only one side changed,
-> <<<<<<< yours:sample.txt
-> or cleanly resolved because both sides changed the same way.
-> Conflict resolution is hard;
-> let's go shopping.
-> ||||||| base:sample.txt
-> or cleanly resolved because both sides changed identically.
-> Conflict resolution is hard.
-> =3D=3D=3D=3D=3D=3D=3D
-> or cleanly resolved because both sides changed the same way.
-> Git makes conflict resolution easy.
-> >>>>>>> theirs:sample.txt
-> And here is another line that is cleanly resolved or unmodified.
-> ```
->
-> zdiff3 style:
->
-> ```
-> Here are lines that are either unchanged from the common
-> ancestor, or cleanly resolved because only one side changed,
-> or cleanly resolved because both sides changed the same way.
-> <<<<<<< yours:sample.txt
-> Conflict resolution is hard;
-> let's go shopping.
-> ||||||| base:sample.txt
-> or cleanly resolved because both sides changed identically.
-> Conflict resolution is hard.
-> =3D=3D=3D=3D=3D=3D=3D
-> Git makes conflict resolution easy.
-> >>>>>>> theirs:sample.txt
-> And here is another line that is cleanly resolved or unmodified.
-> ```
->
-> The problem is that, I believe, the "or cleanly resolved because both sid=
-es changed identically." sentence should not be part of the **base** in the=
- latter example, since that whole line was moved outside the conflict.
+On 2024.08.08 09:17, Mike Hommey wrote:
+> On Wed, Aug 07, 2024 at 04:29:54PM -0700, Josh Steadmon wrote:
+> > > You might as well use `dst.display()`.
+> > 
+> > Wouldn't that fail silently in the event that the path is non-UTF-8? I
+> > think I'd prefer to explicitly fail in that case, even if it seems
+> > unlikely.
+> 
+> That's the theory, unfortunately, reality is that even the most central
+> Rust crates don't care:
+> https://github.com/rust-lang/cc-rs/blob/main/src/lib.rs#L1357-L1360
+> 
+> Even better, last time I tried, cargo or rustc (I don't remember which
+> one it was) would blatantly fail to work if the path is not UTF-8 in the
+> first place.
+> 
+> Mike
 
-This line _still changed_, even though there were conflicts around it,
-meaning that if we didn't have the "... identically" line in base, we
-wouldn't see that this line was removed anywhere in the diff. I agree
-with the other responders that this is awkward, as it means you can't
-reconstruct the original 'base' version from these diff markers; if
-you tried, you'd get a base version that has "or cleanly ... the same
-way" followed by "or cleanly ... identically". For manual conflict
-resolution where you generally won't ever keep 'base' or attempt to
-reconstruct it, however, it seems fine to me if you're aware of it
-happening.
-
->
->
-> I'd appreciate knowing which it is.
->
->         Thanks,
->              Ilya
->
+Thanks for the pointers. Fixed in V2.
