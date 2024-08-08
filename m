@@ -1,201 +1,194 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EBE18CBF9
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743214A33
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723122382; cv=none; b=JALvNimGrOr5vpd0vD1xO6q1S90oK2vRmQ5/rNEsJDwJq20VEqMcEOpOEdaM6orbrHbhsVlmUvPpEHja9J9XlW3Vu4U2sPnr4R5X2oyGSaS87FSlFEQsmBBPgnnVQHbXvAgTRoQc8QOwDz1wzZIeHldTuuUOsJ9OBGLaO1MPzAA=
+	t=1723123256; cv=none; b=byLRQuOSFAAtIRU5HPP9pvUVroERYbwzZjvDebFkyJsTtk4PrIUvGZ334IMVaocXLHBOxBdL22PhYnr4VRo+6rq4zL8/Urq31CRr79KgG//RIaDppkMufSn0KjhGmhS8GL+RTLCO8B05aPuCd0Qo0fApeT+4bQmxpbHC9QoxsRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723122382; c=relaxed/simple;
-	bh=sByQKiqMXwbOhLp5TBIp6n09fxJvHvchZOtBqqmHxLc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aECPlXBUOqa5Xu6ZOUg28Edq/rGeAtM1vZS8CQ+8VM5vEIxFhQppyycC4BZQro6cjt0gKg1S8zYAA8CyCLs8gKtfw6fOr5ajkk0eVL+LYkS21Q8IbeJMgNRUmXwYbIHoLGcBo/MJBrlJ8dZbeuknLtfBZSEDxmE0164NPL70wZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DiEYx6b8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TemR8VXN; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723123256; c=relaxed/simple;
+	bh=Eb6QDCzeojSEixRwPngBGjnpg+A4uEG2JsHCtUzGnNg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=p/YIGEFaank8ckQk4NlYQ4DWcrro71dZgFMQMJuBn25iB7HulENpIpuH+L9JczUiLKlNIl5aZJULfDMoqmgp9YtKEeQbNiMMG9GipkAuGKJwsmPE1JJTm49SU4QrpI6/ht2C0Ltip7jUnevOKlg4xhKD22Coitz4wsKex57apC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fuoKSzmS; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DiEYx6b8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TemR8VXN"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1F2151151AB9;
-	Thu,  8 Aug 2024 09:06:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 09:06:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723122380; x=1723208780; bh=U9wiXEcjQY
-	UnPW3Dk3F3BRl+Z38bS3RBcyTVb4cWE10=; b=DiEYx6b8Opam/72hDGy6yH917W
-	pB9fRbk2ilrAaFhRxodUV4/VsqLer0Yro+S79VMEMooHEMJgOk58zta5B1UtpjDy
-	tT5VCJcrNnURWBw3CJP/8L/+Tv3UZXli7eFq4bZBjVxn6n307+4OXJ514QydUkN3
-	p2xbyV4E2/7734MGOm6OKCXnrShQRIHicAI3fLmR/odF+jMeLTGnTsgfGyGhrr8E
-	OwlyjADRq+Af++Su20cJnsjY0Q2kiVnoyWBXpZM+3tmGjr2lriuqxzzXedefe8yl
-	PUuQ+og2lZH8lhUtnZqz/NsL8W/vJAvJ3cmXwPBlyzURu1tKtHs1tmM5NmnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723122380; x=1723208780; bh=U9wiXEcjQYUnPW3Dk3F3BRl+Z38b
-	S3RBcyTVb4cWE10=; b=TemR8VXNHfpOb4QfD2CJI6tif5xn0GY5hduwj/atqHyk
-	cXKdV0mEpynBglsq1gFQmaELJbS7MavtRQPkFpjKkHRKVvvE2sZ2uWSahgmtoztl
-	FqvQuSVl4VNHwZdSeAnhx+1u2eiTb+pbwNM4nNfVllnnt2A2LjMHb7zS98sxzOC8
-	+CX/G1tBKhCp7X2ezXtq62AAgZJ/v0ZOiR5x9BF4M8HW9TptGh6K3MNF+ZYmqvpn
-	Q1Kl2uZnApmrwSrpuVxtWzeWxMW7VJKFG/VFSRHOzjCvI82i+gxSeBS+dHg3WdFR
-	s8K6yVczQPZ1L8Hj2MAhNjdyOGzPkkrQvjlwa7XxFQ==
-X-ME-Sender: <xms:y8K0Zo02_cb6XLkKZQavJ-62rmyHOXs0qoYd7veZETXA3MnNhH77Ug>
-    <xme:y8K0ZjEExRBEFd7PSSmb3wd9mXHAjFU149IQTqZaxZPUoNuX9NWYnsigpthxg0fib
-    63RIB8MaGgUygbMXQ>
-X-ME-Received: <xmr:y8K0Zg4nM3h7Al0QL6UpGOzLBbnnEHw-ipjVNaEYo0ev6HFvvgIJyUbJfxJ3II7lLRq_Q4Ml_1Tt9n6Hbn5uZXndWim_rMt8NrfVg1fI_o4-QG1y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdeitdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeduudenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:y8K0Zh2hqYxMCNgDFIaO-kF1zE6_glqXneOm1h8zOvxO6luubhhz4Q>
-    <xmx:zMK0ZrFr-TM903c7Nj6bQUsxFze1hCvFe_mJIRSYBE6fRMwbkmhYSQ>
-    <xmx:zMK0Zq98Bn6o-dxsuYF9RfTcvDR6KIiB-VrQHoh7jrHG7cw6OtyOqQ>
-    <xmx:zMK0ZgniuaInh6JEfElg8XwNWNHZltFoVWWfezCC0czhkpwvGbLwBA>
-    <xmx:zMK0ZjApOuLS8-VJ3g9e6sc0Kb2LHzg4pIc9bUl5_GGumUkHzxXO5hwy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 09:06:19 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id eaa67808 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 13:06:11 +0000 (UTC)
-Date: Thu, 8 Aug 2024 15:06:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 22/22] builtin/diff: free symmetric diff members
-Message-ID: <343ddcd17b3e13dc7b8ab89f9c9c427bb2ed101c.1723121979.git.ps@pks.im>
-References: <cover.1722933642.git.ps@pks.im>
- <cover.1723121979.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fuoKSzmS"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428e1915e18so6372145e9.1
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 06:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723123252; x=1723728052; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3fYYip6fNI6FyHUaHz6eunHe/oSKXbdltumUiJxw9Sc=;
+        b=fuoKSzmSBgeINTwoGvbz/wPuEykcddr2KPnvUsgTiugg9BF7RdfEg9VB7dFad6B4Mk
+         i1hs+BalmqYJaMw1G2Psw/df2ITdvegRh6DAPv1Q1P0YJZ2At4fJo3aBsb3HapNUHLrU
+         KLUDObSoKbu9a/ST9wCM53Un99RrvVG+x07S+AJNVDcsJSHpom/clSfm6deqS+WnGwoF
+         /x6tiaYwczpmiRa1T1tCd2qfJo6EABoHE4ejeWuzftOqY1RCbIl99JivwaGKoqrnGHAb
+         wYeyyBgMonXe/8TcO6/giBma52a1PpgSCD/JJGxeIaTooKcEQJt/tBzWOfJYnFB6VyqN
+         5iow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723123252; x=1723728052;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3fYYip6fNI6FyHUaHz6eunHe/oSKXbdltumUiJxw9Sc=;
+        b=MmZTTYHZojb1Ju2loNhS/bc6qY4dCzdZjdu1AJXapWaPaflSjWYpYnrv371TZcirsj
+         xtDtS0/NDaelGSpJVp+K2iEfOGhiorbOnmUKD5rQjaiom3r6a3X7h0QWZanlJnb4VL9h
+         xFTCHxXoaXHZBRP1GvoOnRuek1l9V3vRGfA5uWqu8H2cCpdjWJBp3Jfv/gSxA+WxRFEa
+         tTiSc8JSZpmIdfddYbf6esp5ilD84rt22HnahdXil2dEy5IReX4764dvDwu7mIRlT4Pt
+         plxrxkCT3NRTHWIBT9sX3i645eQtR74N9N46Gijgi0/nwpIIm46kThACGDUZ9i+HeT3z
+         3a4Q==
+X-Gm-Message-State: AOJu0YyNKfykqRBtANMGZQz/5pwK//ixNu2f9rN266dOaRHTEn9V02oj
+	tNU9kVnJ4MPpHrH5/S13k4Y4yTO9TR+xSX4V/7MZ0YOE6Kh6g42hon/UBw==
+X-Google-Smtp-Source: AGHT+IE254ZAE+zGuVcERXC+Qg7TEIrd5mVcfQhW2cUt8ryvA5Bk5L5gQBM1hRX4A00LmLdFzBi6Eg==
+X-Received: by 2002:a05:600c:358e:b0:428:f650:6a4e with SMTP id 5b1f17b1804b1-4290af3b617mr16962195e9.23.1723123252030;
+        Thu, 08 Aug 2024 06:20:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429059a8912sm77266225e9.38.2024.08.08.06.20.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Aug 2024 06:20:51 -0700 (PDT)
+Message-Id: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 08 Aug 2024 13:20:50 +0000
+Subject: [PATCH] diff-tree: fix crash when used with --remerge-diff
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k6lqcfqwmLK5rd40"
-Content-Disposition: inline
-In-Reply-To: <cover.1723121979.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    blanet <bupt_xingxin@163.com>,
+    Xing Xin <xingxin.xx@bytedance.com>
 
+From: Xing Xin <xingxin.xx@bytedance.com>
 
---k6lqcfqwmLK5rd40
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When using "git-diff-tree" to get the tree diff for merge commits with
+the diff format set to `remerge`, a bug is triggered as shown below:
 
-We populate a `struct symdiff` in case the user has requested a
-symmetric diff. Part of this is to populate a `skip` bitmap that
-indicates whihc commits shall be ignored in the diff. But while this
-bitmap is dynamically allocated, we never free it.
+    $ git diff-tree -r --remerge-diff 363337e6eb
+    363337e6eb812d0c0d785ed4261544f35559ff8b
+    BUG: log-tree.c:1006: did a remerge diff without remerge_objdir?!?
 
-Fix this by introducing and calling a new `symdiff_release()` function
-that does this for us.
+This bug is reported by `log-tree.c:do_remerge_diff`, where a bug check
+added in commit 7b90ab467a (log: clean unneeded objects during log
+--remerge-diff, 2022-02-02) detects the absence of `remerge_objdir` when
+attempting to clean up temporary objects generated during the remerge
+process.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+After some further digging, I find that the remerge-related diff options
+were introduced in db757e8b8d (show, log: provide a --remerge-diff
+capability, 2022-02-02), which also affect the setup of `rev_info` for
+"git-diff-tree", but were not accounted for in the original
+implementation (inferred from the commit message).
+
+This commit fixes the bug by adding initialization logic for
+`remerge_objdir` in `builtin/diff-tree.c`, mirroring the logic in
+`builtin/log.c:cmd_log_walk_no_free`. A final cleanup for
+`remerge_objdir` is also included.
+
+Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
 ---
- builtin/diff.c                       | 10 +++++++++-
- t/t4068-diff-symmetric-merge-base.sh |  1 +
- t/t4108-apply-threeway.sh            |  1 +
- 3 files changed, 11 insertions(+), 1 deletion(-)
+    diff-tree: fix crash when used with --remerge-diff
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 9b6cdabe15..f87f68a5bc 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -388,6 +388,13 @@ static void symdiff_prepare(struct rev_info *rev, stru=
-ct symdiff *sym)
- 	sym->skip =3D map;
- }
-=20
-+static void symdiff_release(struct symdiff *sdiff)
-+{
-+	if (!sdiff)
-+		return;
-+	bitmap_free(sdiff->skip);
-+}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1771%2Fblanet%2Fxx%2Ffix-diff-tree-crash-on-remerge-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1771/blanet/xx/fix-diff-tree-crash-on-remerge-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1771
+
+ builtin/diff-tree.c     | 13 +++++++++++++
+ t/t4069-remerge-diff.sh | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 0d3c611aac0..813be486dad 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -9,6 +9,7 @@
+ #include "repository.h"
+ #include "revision.h"
+ #include "tree.h"
++#include "tmp-objdir.h"
+ 
+ static struct rev_info log_tree_opt;
+ 
+@@ -166,6 +167,13 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 
+ 	opt->diffopt.rotate_to_strict = 1;
+ 
++	if (opt->remerge_diff) {
++		opt->remerge_objdir = tmp_objdir_create("remerge-diff");
++		if (!opt->remerge_objdir)
++			die(_("unable to create temporary object directory"));
++		tmp_objdir_replace_primary_odb(opt->remerge_objdir, 1);
++	}
 +
- int cmd_diff(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -398,7 +405,7 @@ int cmd_diff(int argc, const char **argv, const char *p=
-refix)
- 	struct object_array_entry *blob[2];
- 	int nongit =3D 0, no_index =3D 0;
- 	int result;
--	struct symdiff sdiff;
-+	struct symdiff sdiff =3D {0};
-=20
  	/*
- 	 * We could get N tree-ish in the rev.pending_objects list.
-@@ -619,6 +626,7 @@ int cmd_diff(int argc, const char **argv, const char *p=
-refix)
- 		refresh_index_quietly();
- 	release_revisions(&rev);
- 	object_array_clear(&ent);
-+	symdiff_release(&sdiff);
- 	UNLEAK(blob);
- 	return result;
+ 	 * NOTE!  We expect "a..b" to expand to "^a b" but it is
+ 	 * perfectly valid for revision range parser to yield "b ^a",
+@@ -230,5 +238,10 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 		diff_free(&opt->diffopt);
+ 	}
+ 
++	if (opt->remerge_diff) {
++		tmp_objdir_destroy(opt->remerge_objdir);
++		opt->remerge_objdir = NULL;
++	}
++
+ 	return diff_result_code(&opt->diffopt);
  }
-diff --git a/t/t4068-diff-symmetric-merge-base.sh b/t/t4068-diff-symmetric-=
-merge-base.sh
-index eff63c16b0..4d6565e728 100755
---- a/t/t4068-diff-symmetric-merge-base.sh
-+++ b/t/t4068-diff-symmetric-merge-base.sh
-@@ -5,6 +5,7 @@ test_description=3D'behavior of diff with symmetric-diff se=
-tups and --merge-base'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- # build these situations:
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index c558282bc0..3211e1e65f 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -5,6 +5,7 @@ test_description=3D'git apply --3way'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-=20
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
- print_sanitized_conflicted_diff () {
---=20
-2.46.0.46.g406f326d27.dirty
+diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
+index 07323ebafe0..ca8f999caba 100755
+--- a/t/t4069-remerge-diff.sh
++++ b/t/t4069-remerge-diff.sh
+@@ -110,6 +110,41 @@ test_expect_success 'can filter out additional headers with pickaxe' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'remerge-diff also works for git-diff-tree' '
++	# With a clean merge
++	git diff-tree -r -p --remerge-diff --no-commit-id bc_resolution >actual &&
++	test_must_be_empty actual &&
++
++	# With both a resolved conflict and an unrelated change
++	cat <<-EOF >tmp &&
++	diff --git a/numbers b/numbers
++	remerge CONFLICT (content): Merge conflict in numbers
++	index a1fb731..6875544 100644
++	--- a/numbers
++	+++ b/numbers
++	@@ -1,13 +1,9 @@
++	 1
++	 2
++	-<<<<<<< b0ed5cb (change_a)
++	-three
++	-=======
++	-tres
++	->>>>>>> 6cd3f82 (change_b)
++	+drei
++	 4
++	 5
++	 6
++	 7
++	-eight
++	+acht
++	 9
++	EOF
++	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
++	git diff-tree -r -p --remerge-diff --no-commit-id ab_resolution >tmp &&
++	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup non-content conflicts' '
+ 	git switch --orphan base &&
+ 
 
-
---k6lqcfqwmLK5rd40
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wscACgkQVbJhu7ck
-PpT6PxAAlj3W/OQE4zFdo0uvOSF//BKpegQDZHatxoQCIdXt7lBFTgxhhqnQUT8k
-GKu16TTYQoWBS6uM0/m10fRohMUwQPAzMEXqZNdot6yO9x99TFGfZq1iP08R1y1H
-FgXWwLTKff4HGWoRRNDjJsy08MFVJj/kkByyXiyIXljTupz4nro1MFlKLf0EwYf1
-2pMIx7+NBRIG8uYzQHuXFQSOK4Ni62H/BMrs9gBLXmRZrJIsc46MWgR1iB7zOSpt
-LstocH8l30Sr7yi9/mNoNPbQlPh4CLPuic1dLx0LMwGILuju0ilccdVHkx9bCl6I
-UUZXj4NSLTUWHizpm2x97UaZ6VgvjvPjfu9vEaddMV/qvXly5JavgzCCgvlqEZwG
-8T9FDOKZLP8hnijP6yqAobrod0MDYAYzqS6tZhNUWyefyLMKIZmdnV4VqWnCm2Jf
-jGvgWeydLYqOLC7KXicvdguNajne/zk87oRXEuw88Kj8vYvoj2evlNKR/1d5waRk
-scHskchjAEEfQ+6Ik4EVfWGoZcjf6TSqXhBCDKmFd7gYiTx9ZjAhVay8VXhYIFto
-BM4fZwOj4K0UcNOi6mtyAebMQht+GOmG3m6tjlNNVKWVQNMn4iDMF4ZyGt0MREtb
-zR8BXdVkBHlGzrCEqU9/EvtZR7J5X5mVnjAiNJMPzgzRdRlGSuw=
-=D543
------END PGP SIGNATURE-----
-
---k6lqcfqwmLK5rd40--
+base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
+-- 
+gitgitgadget
