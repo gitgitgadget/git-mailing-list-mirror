@@ -1,291 +1,102 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A86515A851
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 21:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2FC1D554
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 21:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723151410; cv=none; b=qYPg4ISS2KCKw+RFnYKEQajeMOd76LevA0ExnUwiCrzh3MbWC0xHmHIeIBZVWHwutvfgTHhdkRjKDzCPDKrgerRG7QsPk5MgNM0etqmyLijKEtMMgXIkdFIKGB1P6YFqOwWbKJbLVy6knwDo484xBenBQ6WGJcqqMtsv5CrO/s0=
+	t=1723151973; cv=none; b=XyDa4H6QCwXC10Xc/uxiHasIwqI4a6NbHsdF05uKVWrvRHIOv3S4MPglWtz9YlfluJWF0OH2GIuAc/daMa4U7cISlgiO8CCUS8eOs21B683d+Occu/fDYyHl/1IJMgRrEHNr5zomj86LplKgywgy/XFpSS00jq4eP1AXnxeZ91o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723151410; c=relaxed/simple;
-	bh=siP5iokUTyPzsnXB8orDpXLz4GYX4vS2b4ePT2cW7N4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Wp/D6f9F/XWAP3qFpbCxV+sXb8lneX8WyxS9HQh5OBTPxBqOZ3Jl0eSk028lw7iPAe9v8rf+uNZURkzsAWfRCBIWEJWUuSeyDSTX0kOchI4ZqEhW6Jp0rsG4HvV8YMEmF/F9J9W1P4aTKFYpJU9164SqcCAi6eUZznR/l0Duock=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KgGyeUIW; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1723151973; c=relaxed/simple;
+	bh=4d2RruJVL5rHCg72thBvQNXvp7qCGxXJ4S+GWttb8Cg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=H1vAPqx3cGpHCtZKcksYrUVQwu11NpwT/Ppma5tSolq0C6GPgNm2WZeihAwjtHG/69zvMey5w9wtU4rE4CypcTjSLc+OYx/s6VX3s2aUAbIxraY7rknMPoZe74izkFq3ufdxxAqXW+bLU+C8pfWaNZwtYqQK4wxYxQumfjic9Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rlkwV8Rf; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KgGyeUIW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723151408; x=1754687408;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=siP5iokUTyPzsnXB8orDpXLz4GYX4vS2b4ePT2cW7N4=;
-  b=KgGyeUIWLkptuCOVChGAdN1w9th7AR78rZW4M+SXRbHrOKoACBl87Zqr
-   /JkfTHpanp+lMfSSWxPPNFla9YnwSQftbinuIZGAIZtbXGUIuWimaign3
-   ytssGuap803bOfCHj100FP8PkHy5VBxqa/nbJyDFTVufoUVNinr5Kn1wL
-   HRr0MQxgb3r+f/lYWAB05OumCXC9sH4eKQVxz+g+rSMcB8Unf62zhyKoS
-   DagPbg3BzJAMxfumx1UohrN1jmkoNl9hm7CTspYCmImYN8lHIvCJCBSAY
-   MRQ91R6Wv8a7Th5FKPIgrOjpAR9QCYrDouRt5wp9/ro1ClX5PdCZmV2PV
-   Q==;
-X-CSE-ConnectionGUID: BNDKdfuPRCqel1PYgnBAZA==
-X-CSE-MsgGUID: ZZKXJ4MqS3+/TGMwUNkUsQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="46712898"
-X-IronPort-AV: E=Sophos;i="6.09,274,1716274800"; 
-   d="scan'208";a="46712898"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 14:10:04 -0700
-X-CSE-ConnectionGUID: qIYt7JzESDu7y9A+i1pvFA==
-X-CSE-MsgGUID: 8zMh4NnBQemA89ms893FSA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,274,1716274800"; 
-   d="scan'208";a="61991234"
-Received: from jekeller-desk.amr.corp.intel.com (HELO localhost.localdomain) ([10.166.241.1])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 14:10:04 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Thu, 08 Aug 2024 14:10:00 -0700
-Subject: [PATCH 3/3] send-email: teach git send-email option to translate
- aliases
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rlkwV8Rf"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A72E735F49;
+	Thu,  8 Aug 2024 17:19:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
+	d2RruJVL5rHCg72thBvQNXvp7qCGxXJ4S+GWttb8Cg=; b=rlkwV8RfGpbL2uiwo
+	E2duiEByVKS3TGLJ6j9VKTrCRDfPZEJh1zIB+Ja/AQAhuou2oPdMY9Uaxu8C0XP/
+	X0lPfpWrMucM3kKfSFlyJRLx8mPD5LleE6MZYpvxoKyhW4KDPLbfeF7HiJBt6Le1
+	nY6SI5hfHFjWuvKQE8zjWoaBUs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A11AF35F48;
+	Thu,  8 Aug 2024 17:19:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C18AE35F47;
+	Thu,  8 Aug 2024 17:19:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] tests: drop use of 'tee' that hides exit status
+Date: Thu, 08 Aug 2024 14:19:25 -0700
+Message-ID: <xmqq4j7uhfvm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240808-jk-translate-alias-send-email-v1-3-10a03b3d6b06@gmail.com>
-References: <20240808-jk-translate-alias-send-email-v1-0-10a03b3d6b06@gmail.com>
-In-Reply-To: <20240808-jk-translate-alias-send-email-v1-0-10a03b3d6b06@gmail.com>
-To: git@vger.kernel.org
-Cc: Jacob Keller <jacob.keller@gmail.com>, 
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-X-Mailer: b4 0.14.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E442701A-55CB-11EF-B659-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-From: Jacob Keller <jacob.keller@gmail.com>
+A few tests have "| tee output" downstream of a git command, and
+then inspect the contents of the file.  The net effect is that we
+use an extra process, and hide the exit status from the upstream git
+command.
 
-Add a new "--translate-aliases" option to git send-email which allows
-other programs to convert email aliases according to the configured
-alias file. This is intended to allow b4 send the ability to use the
-same aliases as git send-email.
+In none of these tests, I do not see a reason why we want to hide a
+possible failure from these git commands.  Replace the use of tee
+with a plain simple redirection.
 
-There is one tricky part of handling the new option, since
---translate-aliases wants to consume the rest of @ARGV. Currently, the
-pass_through option is set for perl's Getopt::Long::Configure, which
-causes unknown options to get passed through to other option parsers.
-
-This is required in order to handle passing format-patch options, and is
-tricky to work around. --dump-aliases handles this by testing @ARGV
-before calling the full option parser. We can't do this with
---translate-aliases because it wants to consume the arguments.
-
-Instead, skip calling GetOptions a second time of --translate-aliases is
-set. This has the effect that known options will instead be translated
-as aliases instead of producing a warning, but this seems like the best
-trade off of the available options.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-send-email.txt |  7 ++++
- git-send-email.perl              | 17 +++++++-
- t/t9001-send-email.sh            | 89 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 112 insertions(+), 1 deletion(-)
+ t/t1001-read-tree-m-2way.sh | 2 +-
+ t/t5523-push-upstream.sh    | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index c5d664f4519b..6964c9914a9c 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git send-email' [<options>] (<file>|<directory>)...
- 'git send-email' [<options>] <format-patch-options>
- 'git send-email' --dump-aliases
-+'git send-email' --translate-aliases (<alias>)...
+diff --git c/t/t1001-read-tree-m-2way.sh w/t/t1001-read-tree-m-2way.sh
+index 88c524f655..48a1550371 100755
+--- c/t/t1001-read-tree-m-2way.sh
++++ w/t/t1001-read-tree-m-2way.sh
+@@ -397,7 +397,7 @@ test_expect_success 'a/b vs a, plus c/d case setup.' '
  
- 
- DESCRIPTION
-@@ -475,6 +476,12 @@ Information
- 	that this only includes the alias name and not its expanded email addresses.
- 	See 'sendemail.aliasesFile' for more information about aliases.
- 
-+--translate-aliases::
-+	Instead of the normal operation, interpret all command line
-+	arguments as shorthand alias names using the configured alias
-+	file(s). Output each translated email address, one per line, in the
-+	order the aliases appear. See 'sendemail.aliasFile' for more
-+	information about aliases.
- 
- CONFIGURATION
- -------------
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 72044e5ef3a8..2ae6cc0d7a36 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -31,6 +31,7 @@ sub usage {
- git send-email [<options>] <file|directory>
- git send-email [<options>] <format-patch options>
- git send-email --dump-aliases
-+git send-email --translate-aliases <alias>
- 
-   Composing:
-     --from                  <str>  * Email From:
-@@ -99,6 +100,11 @@ sub usage {
- 
-   Information:
-     --dump-aliases                 * Dump configured aliases and exit.
-+    --translate-aliases            * Interpret all other command line arguments
-+                                     as email aliases. Translate them
-+                                     according to the configured alias file,
-+                                     outputing each address one per line, then
-+                                     exit.
- 
- EOT
- 	exit(1);
-@@ -212,6 +218,7 @@ sub format_2822_time {
- my $compose_filename;
- my $force = 0;
- my $dump_aliases = 0;
-+my $translate_aliases = 0;
- 
- # Variables to prevent short format-patch options from being captured
- # as abbreviated send-email options
-@@ -476,11 +483,14 @@ sub config_regexp {
- my %dump_aliases_options = (
- 	"h" => \$help,
- 	"dump-aliases" => \$dump_aliases,
-+	"translate-aliases" => \$translate_aliases,
- );
- $rc = GetOptions(%dump_aliases_options);
- usage() unless $rc;
- die __("--dump-aliases incompatible with other options\n")
-     if !$help and $dump_aliases and @ARGV;
-+die __("--dump-aliases and --translate-aliases are mutually exclusive\n")
-+    if !$help and $dump_aliases and $translate_aliases;
- my %options = (
- 		    "sender|from=s" => \$sender,
- 		    "in-reply-to=s" => \$initial_in_reply_to,
-@@ -534,7 +544,7 @@ sub config_regexp {
- 		    "git-completion-helper" => \$git_completion_helper,
- 		    "v=s" => \$reroll_count,
- );
--$rc = GetOptions(%options);
-+($rc = GetOptions(%options)) unless $translate_aliases;
- 
- # Munge any "either config or getopt, not both" variables
- my @initial_to = @getopt_to ? @getopt_to : ($no_to ? () : @config_to);
-@@ -724,6 +734,11 @@ sub parse_sendmail_aliases {
-     exit(0);
- }
- 
-+if ($translate_aliases) {
-+	print "$_\n" for (process_address_list(@ARGV));
-+	exit(0);
-+}
-+
- # is_format_patch_arg($f) returns 0 if $f names a patch, or 1 if
- # $f is a revision list specification to be passed to format-patch.
- sub is_format_patch_arg {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index c96d6955b9f2..78c451918145 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2120,6 +2120,95 @@ test_expect_success '--dump-aliases must be used alone' '
- 	test_must_fail git send-email --dump-aliases --to=janice@example.com -1 refs/heads/accounting
+ test_expect_success 'a/b vs a, plus c/d case test.' '
+ 	read_tree_u_must_succeed -u -m "$treeH" "$treeM" &&
+-	git ls-files --stage | tee >treeMcheck.out &&
++	git ls-files --stage >treeMcheck.out &&
+ 	test_cmp treeM.out treeMcheck.out
  '
  
-+test_translate_aliases () {
-+	msg="$1" && shift &&
-+	filetype="$1" && shift &&
-+	aliases="$1" && shift &&
-+	printf '%s\n' "$@" >expect &&
-+	cat >.tmp-email-aliases &&
-+
-+	test_expect_success $PREREQ "$msg" '
-+		clean_fake_sendmail && rm -fr outdir &&
-+		git config --replace-all sendemail.aliasesfile \
-+			"$(pwd)/.tmp-email-aliases" &&
-+		git config sendemail.aliasfiletype "$filetype" &&
-+		git send-email --translate-aliases $aliases 2>errors >actual &&
-+		test_cmp expect actual
-+	'
-+}
-+
-+test_translate_aliases '--translate-aliases sendmail format' \
-+	'sendmail' \
-+	'alice bcgrp' \
-+	'Alice W Land <awol@example.com>' \
-+	'Robert Bobbyton <bob@example.com>' \
-+	'chloe@example.com' \
-+	'Other <o@example.com>' <<-\EOF
-+	alice: Alice W Land <awol@example.com>
-+	bob: Robert Bobbyton <bob@example.com>
-+	chloe: chloe@example.com
-+	abgroup: alice, bob
-+	bcgrp: bob, chloe, Other <o@example.com>
-+	EOF
-+
-+test_translate_aliases '--translate-aliases mutt format' \
-+	'mutt' \
-+	'donald bob' \
-+	'Donald C Carlton <donc@example.com>' \
-+	'Robert Bobbyton <bob@example.com>' <<-\EOF
-+	alias alice Alice W Land <awol@example.com>
-+	alias donald Donald C Carlton <donc@example.com>
-+	alias bob Robert Bobbyton <bob@example.com>
-+	alias chloe chloe@example.com
-+	EOF
-+
-+test_translate_aliases '--translate-aliases mailrc format' \
-+	'mailrc' \
-+	'chloe eve alice' \
-+	'chloe@example.com' \
-+	'Eve <eve@example.com>' \
-+	'Alice W Land <awol@example.com>' <<-\EOF
-+	alias alice   "Alice W Land <awol@example.com>"
-+	alias eve     "Eve <eve@example.com>"
-+	alias bob     "Robert Bobbyton <bob@example.com>"
-+	alias chloe   chloe@example.com
-+	EOF
-+
-+test_translate_aliases '--translate-aliases pine format' \
-+	'pine' \
-+	'eve bob bcgrp' \
-+	'eve@example.com' \
-+	'bob@example.com' \
-+	'bob@example.com' \
-+	'chloe@example.com' \
-+	'Other <o@example.com>' <<-\EOF
-+	alice	Alice W Land	awol@example.com		Friend
-+	eve	Eve	eve@example.com
-+	bob	Robert Bobbyton	bob@example.com
-+	chloe		chloe@example.com
-+	bcgrp		(bob, chloe, Other <o@example.com>)
-+	EOF
-+
-+test_translate_aliases '--translate-aliases gnus format' \
-+	'gnus' \
-+	'alice chloe eve' \
-+	'awol@example.com' \
-+	'chloe@example.com' \
-+	'eve@example.com' <<-\EOF
-+	(define-mail-alias "alice" "awol@example.com")
-+	(define-mail-alias "eve" "eve@example.com")
-+	(define-mail-alias "bob" "bob@example.com")
-+	(define-mail-alias "chloe" "chloe@example.com")
-+	EOF
-+
-+test_expect_success '--translate-aliases passes unknown aliases through' '
-+	cat >expect <<-\EOF &&
-+	Other <o@example.com>
-+	EOF
-+	git send-email --translate-aliases "Other <o@example.com>" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success $PREREQ 'aliases and sendemail.identity' '
- 	test_must_fail git \
- 		-c sendemail.identity=cloud \
-
--- 
-2.46.0.124.g2dc1a81c8933
-
+diff --git c/t/t5523-push-upstream.sh w/t/t5523-push-upstream.sh
+index 1f859ade16..4ad36a31e1 100755
+--- c/t/t5523-push-upstream.sh
++++ w/t/t5523-push-upstream.sh
+@@ -124,14 +124,14 @@ test_expect_success TTY 'push --no-progress suppresses progress' '
+ test_expect_success TTY 'quiet push' '
+ 	ensure_fresh_upstream &&
+ 
+-	test_terminal git push --quiet --no-progress upstream main 2>&1 | tee output &&
++	test_terminal git push --quiet --no-progress upstream main >output 2>&1 &&
+ 	test_must_be_empty output
+ '
+ 
+ test_expect_success TTY 'quiet push -u' '
+ 	ensure_fresh_upstream &&
+ 
+-	test_terminal git push --quiet -u --no-progress upstream main 2>&1 | tee output &&
++	test_terminal git push --quiet -u --no-progress upstream main >output 2>&1 &&
+ 	test_must_be_empty output
+ '
+ 
