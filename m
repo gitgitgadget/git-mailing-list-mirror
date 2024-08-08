@@ -1,85 +1,86 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D967F7464
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E14145A05
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723102530; cv=none; b=JouGtr62AaZVM1F8AZnIo21VxE5Hlx43G/a0LVnW9gf4Vy054UPWA4NZ1NRN6oHOvPsT93XjDukrJg3OgnAd23//K4LEzd9lwxqEcyHMzK/0AYu1lHFjJMJNgy28J8BXj21wm7O+NNZOZZ7UuFD0TK479R3120Cpytf6Op/N/2I=
+	t=1723102534; cv=none; b=mH3c7UIGikd/eHHZ7cZCVBYiFyiNgAu8flTopFdMNy8BQfZ/HQgJ5YUlts+k5RW2DueSfV2N97k7Z6JtFZxicBJk0b0FYk+CuxY0Rjd9R1eHt3EZHsKoMcPSHHPn/NlNiVSc4LR5E0nt4ke0iLEzabMcIJWvibgvu6qprgqVJE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723102530; c=relaxed/simple;
-	bh=HfHLwuAEZWPKqpak2WKZ6Y132n2WzT1WomPdsK+U2/U=;
+	s=arc-20240116; t=1723102534; c=relaxed/simple;
+	bh=4V9T7K0FBuMjUEWo3mby++Uer+2U+vCPWhcPvPX31CY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BFpxEzFRP2R0xCDSBiHQwYjy7uLwXLU0GedxpQqOn6tNxZgPjJ+ap0MuHQOhKmKLkBrcnNxUwZyjBSSB2JBIori8AQwjmz5djZM2qLa3aMQTPuacp8STWbwh3r3RIfZSXNCjfwy4amR8vBGSvxThq+klnwH5HZLe+QcYG0KcsKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VYVd2skH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DW7WcRUF; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3kqFyTYMmUUY4oo8XUNBa0p9VKrR+RjqwdRXIQ8bnfOTddvvXPuLEDKBlZ4SXwqOimE0FNFd7M+bE5d+nl391ETkq2H6bHuX9A1BY8ynHTajVrGtBU+kDw0BbVdXwA7+7e6kyc6rtTwdU6mYvvBZy2tRYDScLnG59vdVaFYo2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V5LbdtD9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpV5DqJ+; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VYVd2skH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DW7WcRUF"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 149861151BAE;
-	Thu,  8 Aug 2024 03:35:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V5LbdtD9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpV5DqJ+"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 47207138FD36;
+	Thu,  8 Aug 2024 03:35:31 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 08 Aug 2024 03:35:28 -0400
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 03:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723102528; x=1723188928; bh=XKCrQ9PHad
-	DSKtewgataac+qot8twtv+f8tln45QNHc=; b=VYVd2skHUBPbNhZeClX0G8/TM+
-	ZuqEpldlSUXnUW6isrncGIDdnHKkhhpUgUbPSZlnQgYbyPl/DjcMwuKHlowYoW2D
-	qkNPIeKshirl4MJepqqNhuQP5OlU/DS5rRnyaPiwMTPIrgtjcDDFNmHKMrVqukYR
-	hw0nShD5La9WOdi+UrdUKoTxQ5bWGy+7ykWiT4MG16du/HRUjjUKWMBrPRa/UFfv
-	AHi6KDDVqfI6kWsjn9Uo4nStTvk3GLW+ImIHGLSap8y4fW5BNVsC+xm0v3gpFG52
-	v5Awwvx43gvSzVFbouC15J6t4TKVmn9I6964fC0SaYx9aYyIo8SfX6lXe4Aw==
+	:subject:to:to; s=fm3; t=1723102531; x=1723188931; bh=glvkNn8FMX
+	Ynih0kSifQiLh8ZWcztl+ng1GKSCW8iZM=; b=V5LbdtD9EDcSnSghaRCXIzE7BP
+	MwB8gRf8u6IC/oVUUQYFKftn4Bls30Os48X0g4uWe4vzZoYUqbgpDS35r8B2mAWv
+	NHqvK+ehQudrjfKFp6gewN+625vEC4QPz+kXh8G0PoUqlzAQM90DJbsFSo5BMxeR
+	//U/yZ0EKIFGIIJOdfR1KrOfX9Y1J4vwTVmY834M97UP1zcCRi9vJrjd9CTK15Ck
+	GfyB87oZozBIyvzISXl90TwpSS+m042I/KdJza+qhg5l9r4yWVgTe9lhQbdranRW
+	Prk5yni8ZYamNCRCTB9pDHYssUcw6w/N0TNXcKbCuW1EETcJt9hIuR5E3r8Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723102528; x=1723188928; bh=XKCrQ9PHadDSKtewgataac+qot8t
-	wtv+f8tln45QNHc=; b=DW7WcRUF587rz/TdTPIeC0qYhVkPWRTh/L6AOsnHMQhC
-	L3xETWZQqSuC4Ftzkr/N8gLRcnCesI3UdJc1dj+NMAw7xFSGAn1HfqxZ1IVQfEX1
-	X2m0tEIMUpGpJxPmkjoiBEOyvfjCT1Q9zfx03scb094w0OiwJSwdWxJFyqQLHAmX
-	Qwk1oyih7UWExCCa8NjVuxrgGkflb2f3yUmJFLlS1YfzXXdho+HE/coBt2DkzNQw
-	r2uJ016krFZCNjvtSBpN0PR1jLe1+OEBQ5BPXMxuaAlpJsa2sIxn3RELdk2LLKGv
-	Duf4oicXYfcyvUeg/GJeVLfAXQrW2vreAW2VLG7xag==
-X-ME-Sender: <xms:P3W0Zgmw6uZvzwqxC54amIR_w7gpdAFPgvJIYRy2GRqc9bPgYjCf0g>
-    <xme:P3W0Zv0lV4q-cZykKqN9j00cFUyyH8EnMjDSYTM3Z3GsIG6QNwi69yW8z0rnbvFGx
-    adbqhAgkqSsAnZMGg>
-X-ME-Received: <xmr:P3W0ZurS2JWIrUwYdcNqOlpG5KJs2qH-pdCSzIWo-TxV0Sde4eNjyW5qouBJ-8VRATPL6mliM4yySs57yLrm6B7lMnw_agxcmK6ZDJN7framlvKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvdduucetufdoteggodetrfdotf
+	fm3; t=1723102531; x=1723188931; bh=glvkNn8FMXYnih0kSifQiLh8ZWcz
+	tl+ng1GKSCW8iZM=; b=NpV5DqJ+yHUJIhtp8YMFDQRofZfFXrZ7cR1ECcaR+pXe
+	wAYHuFgCjBGpEq2+lvmofNtb12zt5miVJQC9VmQSah03nMabbZYajJ+FNvM9pSV2
+	V2Z4XwI6cSd+yic6l6MGe/aP/u9XprhhOdIKfOQ4kezfpHNw48y95PDYiMFyfmsP
+	bnOPwifCVGcEEYCNhKN4T3pGpwmFgMQvMVXDlhOPKnbN2WdI82xUxAQ5bk7/5CBC
+	7ilfrxs2F4fVDkj/YrCxBBrxnTFlCf/crM5dmbSy+207VnO2Np6ubdFi30QWboRv
+	f5ehGazAEA6AhHb0XpUeEq3Ww2QV9qUFXHgoif/pfg==
+X-ME-Sender: <xms:Q3W0ZlVVmJePDqxqDOmW1xvi6R-hhzEO8xc9KG16QMT63XJtRBqTDg>
+    <xme:Q3W0ZlnP2BAdMtrybXBjYY79mpyULIWMy6SkwMTMlC9LpuEsIHDtxDmEOYKuaY5Mc
+    Poe_gAB9mCjJmA2KQ>
+X-ME-Received: <xmr:Q3W0ZhaXBkIkVS6LzxPHSPvmnnLwbP4mQn9vkpKJk-595oAC6cLFW2mUx5IPa_E_e9tbqAxls4I2bKcAKxMKzPaxmVLVFN8_ZVWQvf9riOjGzUdb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveej
-    jedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    eqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeg
+    hefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthht
-    ohepjhholhgrnhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:P3W0Zsl1azvUV9BU3gocNzlPzGDKE4Q1-kqEkh-mAqwNpaaKk74NlA>
-    <xmx:P3W0Zu2AI_g6zPjn5jnNA9zaoSmQUl3uGD6BC0KGTlhaUr9Co1ZRjQ>
-    <xmx:P3W0ZjtvVW5Rj9F_hbVBs2-lTOVx6CDe83YvES4YM3umHru9PLzYbA>
-    <xmx:P3W0ZqXvUOMmtVgS6awM2O28pm8vFwfuWb_DeNFQnEqCLMBYFr92KA>
-    <xmx:QHW0ZhTuEAUHRVxvSJPU4Jj4YIYU-gL20g_XNsT5p8jWId-YQLHw554Q>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehjohhlrghnugesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhn
+    vgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Q3W0ZoWEt6lGMGXlD_V9OFtE3dPicj7ogIU-xqHzuLlqX_Hq5-sdLw>
+    <xmx:Q3W0ZvmuEuEgoxHxyw92-7LRuJWGxpdMD1p-UQdrBdQeCN_KPvTlcA>
+    <xmx:Q3W0ZlfSmlqozkMQlSBvQ_kCnQD-3N059w6yUg7UCkMD4qHGX-HjdQ>
+    <xmx:Q3W0ZpFKt3mYmwQT4-zasNTFxeF1X4xGO0Fz6-ksKRo1F9YjfTL1mg>
+    <xmx:Q3W0ZoA617J4QWZmv4czlbbjwXwSoCNjR3AqJFBZI0jnoSLDsxxtoxJf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 03:35:26 -0400 (EDT)
+ 8 Aug 2024 03:35:30 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e90a98ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 07:35:18 +0000 (UTC)
-Date: Thu, 8 Aug 2024 09:35:21 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id df73f779 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 07:35:23 +0000 (UTC)
+Date: Thu, 8 Aug 2024 09:35:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeppe =?utf-8?B?w5hsYW5k?= <joland@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/8] Improvements for ref storage formats with submodules
-Message-ID: <cover.1723102259.git.ps@pks.im>
+Subject: [PATCH v2 1/8] git-submodule.sh: break overly long command lines
+Message-ID: <6513c6b17d261ed5900aa904a438c8770ae026cd.1723102259.git.ps@pks.im>
 References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
+ <cover.1723102259.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,145 +88,195 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YBXpaiVE1xBVHtS9"
+	protocol="application/pgp-signature"; boundary="ciBO7c4ZMC845m+Y"
 Content-Disposition: inline
-In-Reply-To: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
+In-Reply-To: <cover.1723102259.git.ps@pks.im>
 
 
---YBXpaiVE1xBVHtS9
-Content-Type: text/plain; charset=utf-8
+--ciBO7c4ZMC845m+Y
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+For most of the subcommands of git-submodule(1), we end up passing a
+bunch of arguments to the submodule helper. This quickly leads to overly
+long lines, where it becomes hard to spot what has changed when one
+needs to modify them.
 
-this is the second version of my patch series that aims to improve
-interaction of ref storage formats with submodules.
+Break up these lines into one argument per line, similarly to how it is
+done for the "clone" subcommand already.
 
-Changes compared to v1:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ git-submodule.sh | 64 +++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 9 deletions(-)
 
-  - I noticed that `git submodule add` also used to fail when used with
-    a preexisting repository that uses a different ref format.
-
-  - Add a preparatory refactoring that wraps overly long command lines
-    in "git-submodule.sh".
-
-  - Wire up support for `--ref-format=3D` in `git submodule add`.
-
-Notably not included is a change to make `git submodule add/clone` honor
-the ref storage format of the parent repository. I think it is somewhat
-orthogonal to the changes I do in this series, and it is not entirely
-obvious whether it is a good idea or not. We can still do this in a
-future patch series, if we ever hear good arguments for it.
-
-Thanks!
-
-Patrick Steinhardt (8):
-  git-submodule.sh: break overly long command lines
-  builtin/submodule: allow cloning with different ref storage format
-  builtin/clone: propagate ref storage format to submodules
-  refs: fix ref storage format for submodule ref stores
-  builtin/submodule: allow "add" to use different ref storage format
-  submodule: fix leaking fetch tasks
-  submodule: fix leaking seen submodule names
-  object: fix leaking packfiles when closing object store
-
- Documentation/git-submodule.txt        |  10 +-
- builtin/clone.c                        |  10 +-
- builtin/submodule--helper.c            |  46 +++++++-
- git-submodule.sh                       |  82 ++++++++++++--
- object.c                               |   9 ++
- refs.c                                 |   2 +-
- submodule.c                            |  18 ++--
- t/t5572-pull-submodule.sh              |   1 +
- t/t7418-submodule-sparse-gitmodules.sh |   1 +
- t/t7424-submodule-mixed-ref-formats.sh | 144 +++++++++++++++++++++++++
- 10 files changed, 298 insertions(+), 25 deletions(-)
- create mode 100755 t/t7424-submodule-mixed-ref-formats.sh
-
-Range-diff against v1:
--:  ---------- > 1:  6513c6b17d git-submodule.sh: break overly long command=
- lines
-1:  a450759bd1 =3D 2:  e6cda43878 builtin/submodule: allow cloning with dif=
-ferent ref storage format
-2:  e5923c0b33 =3D 3:  ed314f5333 builtin/clone: propagate ref storage form=
-at to submodules
-3:  aaff9134ed ! 4:  f13356581e refs: fix ref storage format for submodule =
-ref stores
-    @@ Commit message
-             $ git pull --recursive
-             fatal: Unable to find current revision in submodule path 'path=
-/to/sub'
-    =20
-    -    Fix the bug by using the submodule repository's ref storage format
-    -    instead.
-    +    The same issue occurs when adding a repository contained in the wo=
-rking
-    +    tree with a different ref storage format via `git submodule add`.
-    =20
-    -    Note that only the second added test fails without this fix. The o=
-ther
-    -    one is included regardless as it exercises other parts where we mi=
-ght
-    -    end up accessing submodule ref stores.
-    +    Fix the bug by using the submodule repository's ref storage format
-    +    instead and add some tests. Note that the test for `git submodule
-    +    status` was included as a precaution, only. The command worked alr=
-ight
-    +    even without the bugfix.
-    =20
-         Reported-by: Jeppe =C3=98land <joland@gmail.com>
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    @@ t/t7424-submodule-mixed-ref-formats.sh: do
-     +	# Some tests migrate the ref storage format, which does not work with
-     +	# reflogs at the time of writing these tests.
-     +	git config set --global core.logAllRefUpdates false
-    ++'
-    ++
-    ++test_expect_success 'add existing repository with different ref stora=
-ge format' '
-    ++	test_when_finished "rm -rf parent" &&
-    ++
-    ++	git init parent &&
-    ++	(
-    ++		cd parent &&
-    ++		test_commit parent &&
-    ++		git init --ref-format=3D$OTHER_FORMAT submodule &&
-    ++		test_commit -C submodule submodule &&
-    ++		git submodule add ./submodule
-    ++	)
-      '
-     =20
-      test_expect_success 'recursive clone propagates ref storage format' '
--:  ---------- > 5:  4ce17e44a1 builtin/submodule: allow "add" to use diffe=
-rent ref storage format
-4:  8f8371c18a =3D 6:  d92770290f submodule: fix leaking fetch tasks
-5:  732142aaa6 =3D 7:  e9421189ca submodule: fix leaking seen submodule nam=
-es
-6:  8dc7cc76d5 =3D 8:  d05737c75f object: fix leaking packfiles when closin=
-g object store
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7f9582d923..fd588b1864 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -129,7 +129,17 @@ cmd_add()
+ 		usage
+ 	fi
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${quiet:+--quiet}=
+ ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} =
+${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate=
+} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add \
++		${quiet:+--quiet} \
++		${force:+--force} \
++		${progress:+"--progress"} \
++		${branch:+--branch "$branch"} \
++		${reference_path:+--reference "$reference_path"} \
++		${dissociate:+--dissociate} \
++		${custom_name:+--name "$custom_name"} \
++		${depth:+"$depth"} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -160,7 +170,11 @@ cmd_foreach()
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--qu=
+iet} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach \
++		${quiet:+--quiet} \
++		${recursive:+--recursive} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -191,7 +205,10 @@ cmd_init()
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${quiet:+--quiet=
+} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init \
++		${quiet:+--quiet} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -227,7 +244,12 @@ cmd_deinit()
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${quiet:+--qui=
+et} ${force:+--force} ${deinit_all:+--all} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit \
++		${quiet:+--quiet} \
++		${force:+--force} \
++		${deinit_all:+--all} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -399,7 +421,12 @@ cmd_set_branch() {
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${quiet:+-=
+-quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch \
++		${quiet:+--quiet} \
++		${branch:+--branch "$branch"} \
++		${default:+--default} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -428,7 +455,10 @@ cmd_set_url() {
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${quiet:+--qu=
+iet} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url \
++		${quiet:+--quiet} \
++		-- \
++		"$@"
+ }
+=20
+ #
+@@ -480,7 +510,13 @@ cmd_summary() {
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${files:+--fi=
+les} ${cached:+--cached} ${for_status:+--for-status} ${summary_limit:+-n $s=
+ummary_limit} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary \
++		${files:+--files} \
++		${cached:+--cached} \
++		${for_status:+--for-status} \
++		${summary_limit:+-n $summary_limit} \
++		-- \
++		"$@"
+ }
+ #
+ # List all submodules, prefixed with:
+@@ -521,8 +557,14 @@ cmd_status()
+ 		shift
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--qui=
+et} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status \
++		${quiet:+--quiet} \
++		${cached:+--cached} \
++		${recursive:+--recursive} \
++		-- \
++		"$@"
+ }
++
+ #
+ # Sync remote urls for submodules
+ # This makes the value for remote.$remote.url match the value
+@@ -554,7 +596,11 @@ cmd_sync()
+ 		esac
+ 	done
+=20
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${quiet:+--quiet=
+} ${recursive:+--recursive} -- "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync \
++		${quiet:+--quiet} \
++		${recursive:+--recursive} \
++		-- \
++		"$@"
+ }
+=20
+ cmd_absorbgitdirs()
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---YBXpaiVE1xBVHtS9
+--ciBO7c4ZMC845m+Y
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dTgACgkQVbJhu7ck
-PpS5TQ//ZhHnaOsEeAVd2zsGdoRk2EoYcjJvKyPsC3STIWRbP/VP2yCvJg/PxgsK
-EGI8Gyv32BaC1uEjEn4wbXSrjANEUiO684/A3BSo3iYc7muj8AjNszo1wcztAd9f
-xf86zE+ZH2NT57cmGCBzAvLXczAExb/15vC5dtXsuPgkwKPfbQ5t3scmNXjhQFjj
-8b2KvsOdyp4CpCepZlk16B8PTPwF8rqyOvP6cAA6ge1LeDDmvp/VpF23OBfILqIT
-8zpz0Q8UPFNL8UVnzrTa/+nalrv95SrlHTV8NwkoIk5lHs7W47KRA0WYm1SvRoml
-xb0HZigOx2rv6MvRKfYGUnzfHqUuq9SgyvUnyGzXIiekvO+xaf4z2i6dm2Pf4gtX
-gIzl2+kyRAJTtyQAC8QKSjqLQmio+WPwFEp+hw5mZ+Tb40n/Rn7TX8uM8p/Clrdb
-VCbib9eg6A4e0I8kIK60jrtuxc3QkFGYpkRMyoiM9D13v3X+yECU3s9Ioq5/3cl+
-53m4p/NkcLrVybSwlp/Hf+HaT1b0dH2wa6uQ5h0jG6MZhpSUQoxqnIaj4aIqjDmE
-JlOri31rPqaljQ9iOjvtrD8bKpX6b3SaTKcHzVZV+/HeV6t08f4NTdLJeH/cIP3w
-RtFuWCWBySETOgvAlGds/D3Mrom1jxUIBzc/3eowVjp6suNE//A=
-=3a4L
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0dT4ACgkQVbJhu7ck
+PpTcMRAApsNzABr5epldgfm77OUOVhrC/dPexTu1NqbQ/mDz9ns34GhyeoXmZle6
+eR+lVPqUaJ8NE+HYREd3j609NelcHaW6AHbQS257YnBTpEgTbY3fkUuV0tODF2uS
+pYZW03q3Z+rAavLUoaEGFNt34VtbeR7y5QMiiAYednpWOmR/8C1trmz0ifOkhcAA
+FUUb8f2EYtVt58zEBNDDsG0suZy8KQW1wCq4yYPND2euPao1bpSN8prR7LnduzLC
+xYEycdVR1D7aG2m7FX2/imCh9n9Q6VWEtLGkdp3VwUqh3lELT/bymNx3hha0NfT3
+IdZYfX5pD8YfGQspBVz49M3ax2Rx49HWkmFpid/QlRV25gg0mpmP6q9Auvu4wRHh
+7qubVdhyozt8sRweN/Ks+fpX6fio2dvNDDqLEyKQgiJMfIaAxHvA1kCoc0ODccUk
+iRB31vRwIx+6Qi6WZouGbKviwt9BX1CpQbkg2/1czjkOdgMn5PCufpkQIwgaKhCZ
+F890AnNYW7LGl7tqTNY++6cP3V5s2Xy1O32yCST4bTHWgoaHGpMDPAELb2x917zS
+L7TVI+rzGbLtIsLRzvaon5HeWiPCjwctacVk96mciX139F2f1wxJiYoh+59Z3XaC
+zD7wVMdUHlMMHLfRiBQvtd+uHZFeDkssAozsJp5RetdC3BYNge4=
+=9UCS
 -----END PGP SIGNATURE-----
 
---YBXpaiVE1xBVHtS9--
+--ciBO7c4ZMC845m+Y--
