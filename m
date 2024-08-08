@@ -1,52 +1,57 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4181C1917C5
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8B81F19A
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723137848; cv=none; b=kiUhWGPY9JjqnYWjVlilSPuvpboTUzJ+caFk/m1srhIUWxZxEIiEdkJbQ624Xj5Ka2V2i24PWmPrp1APBpVJLzodlXwx3LLwO9QjHDwiMsQJN+trjUN+OiPSxUf/8FgIsk/UsGtCsvW0BYQleacL2ljCTJ8027ufwwBOvtuQvFM=
+	t=1723137981; cv=none; b=D3tLUuB8zXf3blEvgt3gJiSdjxsFWeBxrp/Rz5ZZTsOQfZU7kKIew010tShHoNKRu1YmVkgTIQmF65rjsTqDziL/JAqCUpHRp3AUq8nqwGmKBiJvYezlpR5r19zwKTnKmTxnr+qIm+dCkWGaKY66suWc9ovBtaGilV81qpXloy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723137848; c=relaxed/simple;
-	bh=6LdHVZoTTPyDkIX3ysDgPwytWHFeClqvIyMGwGHm6qc=;
+	s=arc-20240116; t=1723137981; c=relaxed/simple;
+	bh=eNkq/TpuI9iUoHIHYG/1wZ8Awt8iCq78ZyfJiglX1T0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ObeSPcDd9We3A7LAtiJBn9EP7laO2ccxL0fIXtKdiscUHYkTRjsCngFtr9eZSJ2JLFundFcjqg6fC5Nh0XWCbdgzp/9lkzVBYupjmEqv0pX+URdrDB1BcXCeFipIZXjgDX6vWDCeRe+uZjJs1fQNWxxh6PZMoEjMItcXSrE27xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CmnMOL0o; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=FuB2LvBVNmx7MYSXON5dlhWnTukPCsLkVSiQ4xG/NafEacX8gX/shEkLb8CAqEgyOJX1CpRK4WgSWNFqRpYTtWamHpEAvYoG6rwxj7ZLxAHaRqcGAUvhLP+MN6W1qmGnQruY9C1m5CDRGnjecY4WPnMtm2/1NHFhplhAuN/HWtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CPwd2Au6; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CmnMOL0o"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CPwd2Au6"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B2C8523B06;
-	Thu,  8 Aug 2024 13:24:06 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E4FB823B33;
+	Thu,  8 Aug 2024 13:26:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=6LdHVZoTTPyDkIX3ysDgPwytWHFeClqvIyMGwG
-	Hm6qc=; b=CmnMOL0omM1D7EpVy9Tbsz25oYXPuySHTMi0y1P8w6Qlj59qumvGDZ
-	HImEZIvflZLu2s3wqO8WOzZmNrpw7eHzY66mvn7m720n9X18FOAHSFCHYnNaGJBy
-	pTGmnfSkeruB6txL2dt4drJOF/Nr9qRfCDq1lTy7nLbZjBEakEuZw=
+	:content-type; s=sasl; bh=eNkq/TpuI9iUoHIHYG/1wZ8Awt8iCq78ZyfJig
+	lX1T0=; b=CPwd2Au69QJPnOxxHca4z5tYSW2NK+DEvOQ9RPC078XJkLZ3VvX/N5
+	duimkGLNYOYIOWqM1hZ/dQc7Ut058PAbA/gZoqviewP2aRypLFB9i52PyZSvOQuy
+	hI7VK05TDz8Pd82bxhyexDBUeUvfmNPXnmbep5qLgq0gmH1gba7N8=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AB79A23B05;
-	Thu,  8 Aug 2024 13:24:06 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DCDF923B32;
+	Thu,  8 Aug 2024 13:26:18 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C3E8C23B03;
-	Thu,  8 Aug 2024 13:24:02 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E5E7823B31;
+	Thu,  8 Aug 2024 13:26:14 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: blanet via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  blanet <bupt_xingxin@163.com>,  Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH] diff-tree: fix crash when used with --remerge-diff
-In-Reply-To: <CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 8 Aug 2024 09:03:53 -0700")
-References: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
-	<CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
-Date: Thu, 08 Aug 2024 10:24:00 -0700
-Message-ID: <xmqqr0azgc7j.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Jeppe
+ =?utf-8?Q?=C3=98land?= <joland@gmail.com>
+Subject: Re: [PATCH 1/6] builtin/submodule: allow cloning with different ref
+ storage format
+In-Reply-To: <E664DE72-49F5-4AFC-ACDB-0BB60A6C34C2@pks.im> (Patrick
+	Steinhardt's message of "Thu, 08 Aug 2024 18:19:01 +0200")
+References: <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
+	<cover.1723032100.git.ps@pks.im>
+	<a450759bd1e0d84192fd8b278b660fc8527369ca.1723032100.git.ps@pks.im>
+	<xmqqwmkslz7m.fsf@gitster.g> <ZrRtB46vu9rC000y@tanuki>
+	<xmqqsevfj8v2.fsf@gitster.g>
+	<E664DE72-49F5-4AFC-ACDB-0BB60A6C34C2@pks.im>
+Date: Thu, 08 Aug 2024 10:26:13 -0700
+Message-ID: <xmqqmslngc3u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,19 +61,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 01B4CB14-55AB-11EF-986E-BF444491E1BC-77302942!pb-smtp20.pobox.com
+ 5077E4C0-55AB-11EF-A599-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-Elijah Newren <newren@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The commit message from my patch also included an explanation for why
-> diff-tree was the only caller that was missing the necessary logic
-> (see the last paragraph, which kind of references the one before it as
-> well).
+> The documentation already points this out, as we explicitly say that it
+> only has an impact on newly cloned submodules:
 
-... which we may want to resurrect.
-
-> Test looks good too.
->
-> I'll be happy to add my Reviewed-by if you fix the header include order.
-
-Thanks for a review.
+Perfect.  Thanks.
