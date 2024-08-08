@@ -1,85 +1,134 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D86D189B8D
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3E189B8D
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723137637; cv=none; b=A+s6zrebVB+3IU35C/dJnyLOmAeJifLPA3RVT9d1QvUjS5g5meOoP2y1lSXf6yB7jvdEy1I0AgYXSBTs98v2ICwLPNePp8lHOIc2BS9gQ+MSPp56nrlzkPLIBUmO4+aP385ExnHTqw+COdPyKEjVLowAExBvBBM/+VhmmnGkBgk=
+	t=1723137754; cv=none; b=bBwDq2GGGwE7lNDnDG39Md9XoFsEgY9eHZqzWzwsV48QKKT3+AB2fIlyigafqxImX2aSbqV3zDQFY07wtnpmL3A3+5+fMlgn1fOdjV8Omo1Iug+3d46+k6sA6xEj0/ly86utWgQ/ezyFF77g+IwlYOjXRjib2C2cPYquQsrf6lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723137637; c=relaxed/simple;
-	bh=GJTAoByfu1abi6UXPf8oIqmQNYiGRKdvVquZxY5f9DY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vy/emaymeZccnGtoq7No0q1wwKYIPE+gtW8O7ejPGKbVhjvlmOtjrxSVRWQchCWLLsUtptAVJXjuSK93nr84DnUyZJnqp7ZCujks1Cv5rkTDNcTVJYiMWzgWCGoKij+YKgqzUJwwwMQcBvo9Vr41D0Wh+x8u+QNJrYLv5lQ7szg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jGmQBrBJ; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723137754; c=relaxed/simple;
+	bh=UIyahgWBlNDfo41E2ozfCQyarvo5rk9VVVt8SS/FBIk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NvDaTb1RsUqj2+wEDHE/TVaV5vGiJXDZdAgGvPsIl37WrYyPdh3NB+/pJf2kU1HNNYaglxwgEPgwBRDQsTt7KLcF590Sz0BkQLd4yP3kzJq44Xh2jESyCk38Xisuq+rXEB7GFTbxyNuwGip0+/QhikPS3YhjWh71mhXwjpHvvrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sRmtXjKN; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jGmQBrBJ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F83623ADA;
-	Thu,  8 Aug 2024 13:20:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GJTAoByfu1abi6UXPf8oIqmQNYiGRKdvVquZxY
-	5f9DY=; b=jGmQBrBJbJ1pwd+LoxNsyg2OOeseoT11Xz0cm+qXYIy1IdoN35mUHA
-	hO5iOt8y+ph6NJbPl/hgWF6dNZ1c7cgLNO52+FyNCylr5/hvUgrGnFIaNXWTkQak
-	ozUu1rqiEk1afXG5Ql7pTuivAPrs1pckBAcw/izeAsg9d//mQ2g5w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5B2F723AD9;
-	Thu,  8 Aug 2024 13:20:35 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 54D3723AD8;
-	Thu,  8 Aug 2024 13:20:31 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,
-  calvinwan@google.com,  spectral@google.com,  emilyshaffer@google.com,
-  emrass@google.com,  rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
- libgit.a
-In-Reply-To: <ZrSxLU-7rmlvdTHC@zx2c4.com> (Jason A. Donenfeld's message of
-	"Thu, 8 Aug 2024 20:51:09 +0900")
-References: <cover.1723054623.git.steadmon@google.com>
-	<ZrSxLU-7rmlvdTHC@zx2c4.com>
-Date: Thu, 08 Aug 2024 10:20:29 -0700
-Message-ID: <xmqqv80bgcde.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sRmtXjKN"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7abe5aa9d5so160605666b.1
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723137749; x=1723742549; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RwA1IJkdzfMkXaLsjvE5DMN/Wa/JwPk4CRudv/tFEyI=;
+        b=sRmtXjKNN8oPn7GvAqBPDjf+6uOYPsyZrKtpnkaFgELqWRCeePRfta6RuXNgs242to
+         EI+iMvB5jzgTWeEtmUbJPqUJniRHMnIcJ0LzzIJtv2OzxLEivptSM1idCLDlos457SdR
+         JjYfoL0CwmNY6vULplZv7DaIa0In32m7zZGV1E5jfLGITugpPfo0X+YCD7IfEhBV0tBN
+         RNmWtYx5HEucohrmzZ5fhTkq/Ra2fLXvz7pn5YIVkDDXrqgzO/5CtBOc0XF91MmAl78z
+         MH85DxLI8d8kgpUn0F7IJg7y2tTRNcnYBqv2fO/9rR1axVeAR/5e8hKPeW0qoJYqNw1+
+         lTaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723137749; x=1723742549;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RwA1IJkdzfMkXaLsjvE5DMN/Wa/JwPk4CRudv/tFEyI=;
+        b=XdeQo8taTmwiukjB0GtQIl4kYobwVUFcw+10ACUFtLZUXmve+hr4Mjle3YB5tjiCvL
+         FT1HTXJqJV678T+hKYNtT8tLhzpTUjxIsguJSDam1aJ3sHGz0lRG+5gvwUfl7Sl8ZY1k
+         0UYFEspBE11v4f6lmepAcgKfzbyyqaH2J4COyZWizQk9eqUCHc6K9T+sz2IjFigkgcgv
+         9o7eIdIVagDz+raPEBfKPl78dIr60J8wJcvhu4gzjqWhYY/NVg3uyyR3TQL0alRtx7rI
+         HCIg1iUB5OjbakQWJ7paBz3gp1xrUlyxRK1ASz/oVREm2EmsjCOpAExzpZofY4ohZcT0
+         LJzA==
+X-Gm-Message-State: AOJu0YzW5ByLY2WU35s39eRfSQ444LO1y3AOWaMNQ5uiXoPH/AyzlR6j
+	q0SdVfbHezpWkhWb//pukUUgTzp8kaSC96dNcVoSHtqhnti+qtsdjupCCKi+2HuVfbcfXsSZkHe
+	IWiMZ4fwqVWFjCTXKQxmWdmA8PYZjXVU7RWh7
+X-Google-Smtp-Source: AGHT+IGLUsDOqOkTaNl0NYfzpZCoAibVhBImTmj1xfsKqXBWPO/gsnikYLZm3LTIzEJcnocEVFDfM77QPPhRS+sFsQo=
+X-Received: by 2002:a17:907:3e1a:b0:a7d:2612:33d6 with SMTP id
+ a640c23a62f3a-a8090e9f92fmr224881166b.53.1723137748918; Thu, 08 Aug 2024
+ 10:22:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 83AB9F86-55AA-11EF-9147-BF444491E1BC-77302942!pb-smtp20.pobox.com
+References: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+In-Reply-To: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 8 Aug 2024 10:22:11 -0700
+Message-ID: <CAO_smVg=1gFBudrd70V2_AXSPOUTFz=j7QqBpbkvR7P_KqnBtQ@mail.gmail.com>
+Subject: Re: Documentation bug (?) when describing `zdiff3` merge format
+To: punk.lion0906@fastmail.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
-
-> Cgit maintainer here...
+On Wed, Aug 7, 2024 at 6:22=E2=80=AFPM <punk.lion0906@fastmail.com> wrote:
 >
-> On Wed, Aug 07, 2024 at 11:21:25AM -0700, Josh Steadmon wrote:
->> * bikeshedding on the name (yes, really). There is an active, unrelated
->>   CGit project [4] that we only recently became aware of. We originally
->>   took the name "cgit" because at $DAYJOB we sometimes refer to git.git
->>   as "cgit" to distinguish it from jgit [5].
+> The docs at https://git-scm.com/docs/git-merge#_how_conflicts_are_present=
+ed describe the following snippets in `diff3` and `zdiff3` style as equival=
+ent. They do not seem equivalent to me, so either this is a mistake or the =
+`zdiff3` style is counterintuitive needs a better explanation.
 >
-> Indeed, please find something else. Cgit is a real project, used by
-> many, such as git.kernel.org, and it'll turn into a real hassle for both
-> of us if there's ambiguity and confusion.
+> diff3 style:
 >
-> What about libgit-rs? Or even libgit3, where the rustness of it is
-> simply an implementation detail, so the name won't feel dated 15 years
-> from now when everything is written in Rust anyway and -rs is so 2020s?
+> ```
+> Here are lines that are either unchanged from the common
+> ancestor, or cleanly resolved because only one side changed,
+> <<<<<<< yours:sample.txt
+> or cleanly resolved because both sides changed the same way.
+> Conflict resolution is hard;
+> let's go shopping.
+> ||||||| base:sample.txt
+> or cleanly resolved because both sides changed identically.
+> Conflict resolution is hard.
+> =3D=3D=3D=3D=3D=3D=3D
+> or cleanly resolved because both sides changed the same way.
+> Git makes conflict resolution easy.
+> >>>>>>> theirs:sample.txt
+> And here is another line that is cleanly resolved or unmodified.
+> ```
+>
+> zdiff3 style:
+>
+> ```
+> Here are lines that are either unchanged from the common
+> ancestor, or cleanly resolved because only one side changed,
+> or cleanly resolved because both sides changed the same way.
+> <<<<<<< yours:sample.txt
+> Conflict resolution is hard;
+> let's go shopping.
+> ||||||| base:sample.txt
+> or cleanly resolved because both sides changed identically.
+> Conflict resolution is hard.
+> =3D=3D=3D=3D=3D=3D=3D
+> Git makes conflict resolution easy.
+> >>>>>>> theirs:sample.txt
+> And here is another line that is cleanly resolved or unmodified.
+> ```
+>
+> The problem is that, I believe, the "or cleanly resolved because both sid=
+es changed identically." sentence should not be part of the **base** in the=
+ latter example, since that whole line was moved outside the conflict.
 
-libgit-rs sounds like a descriptive and good name.
+This line _still changed_, even though there were conflicts around it,
+meaning that if we didn't have the "... identically" line in base, we
+wouldn't see that this line was removed anywhere in the diff. I agree
+with the other responders that this is awkward, as it means you can't
+reconstruct the original 'base' version from these diff markers; if
+you tried, you'd get a base version that has "or cleanly ... the same
+way" followed by "or cleanly ... identically". For manual conflict
+resolution where you generally won't ever keep 'base' or attempt to
+reconstruct it, however, it seems fine to me if you're aware of it
+happening.
 
-I am not sure about the wisdom of _not_ saying anything about Rust.
-In 2035 maybe nobody is writing in Rust but in not-yet-invented
-alternative that is even better.
+>
+>
+> I'd appreciate knowing which it is.
+>
+>         Thanks,
+>              Ilya
+>
