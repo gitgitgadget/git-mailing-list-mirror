@@ -1,114 +1,93 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4FE1C32
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 01:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0238F6E
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 02:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723080808; cv=none; b=DACFUeQVKox1iatj8G2AhkHCBdGamMbdjSY9aUgc1vTjF7K0gY4HZPbtRG1NLoUdoBShkFg7wnXf+CEo/hWK3lhlAJYg4UPedg4Rs5lJwuiE41JIdggXRQ48q3mDCxsfbEyh0jC1QvZ+UUt+hOD2e1nk0GnCNfDPSt9KZya7uPg=
+	t=1723082853; cv=none; b=g/mG3wyg8AKLwN36FR5BEdQKPC1p7IBfJakTjIgo0TkxA5yM5Q7Ftq5dyDrgbrBN+WaYVO5Zn5PN9vVIaklLQA3vj3GKSdCD2w2yqNDyo3sPACdf3dNr3ZL54Utzd8Iveusb2U4gna+znkm1JmRzurX+iBlAcDdc4tKHji04wLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723080808; c=relaxed/simple;
-	bh=6XWki/GZOGBfJnYQ8ek5sW3lfMwraTtGUMhnY/0CQZo=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YF4kRoBaHHwOzZFIr9qflA8OqP+q9a7QvrmiWlwktl+OnbkKedbq5deyJmn5Ro/qBGM7U4cUAKHSmlwUT0/71e0QWIGZ1D2jfm+GHGclNwi9rBeQ56GsCZy7ngA16lkxB4BXX0SnSohg9EYIB8KovyklbW+UQFMiUIm0NvOXxlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xVISLTqi; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1723082853; c=relaxed/simple;
+	bh=3mUgvHfR/gpeg2bE4iOVV3FUt7xNVKSOafD1oyqGAJA=;
+	h=MIME-Version:From:To:Cc:Subject:Message-ID:Date:Content-Type; b=ADdEKXAwD6sf6xKMGFa6qT5WNjurjwrj221F2KI548TznqtkigjuVyRmbwEvBSK2XRZb3xdsiZFF0HEqnLXY18n/AWPnIgydHKwHaT/w275cl32rggVFbg6Hh3KC49f5ci5KxmBzZycaG/hvpGJCvPlUxbgu7KfmHOHp1fVc4aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cD9NQ5pr; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xVISLTqi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1723080804;
-	bh=6XWki/GZOGBfJnYQ8ek5sW3lfMwraTtGUMhnY/0CQZo=;
-	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=xVISLTqiBNSHpuK4s872abP9rpvLtP2pF3QxsIAKSlY98sozhhlTyrfo/OdgX+rnJ
-	 Jmcgvu8PCWzIdUOnPv5WvCvWb4zVWd5gl5+zUkMXqBjyagbd7wi2pcGlmMvjmtBsuj
-	 xMOKFpQbrMwvhpQ3XvV+u5zwhf1kkZpkePXg4Q+9GfqWxkVL27QDtNSrTR2IdsfCQt
-	 YcEg2G0diH4cAyg+L157zijJ4WwFXtisuitYLF8QR2D/EDxD41S7Udz2BCiE+zmri9
-	 5uFojD+ifNwhw3dhVUyN9OrlmasJIpMSP02Pg7XxcooNqCc6U/gL48Qkun8OfCqGeT
-	 zxJCW9DjcNJsJAn3W+omRiNFP3DUzTcVvfCjJjNvx/8GUHD4F5LKIxwMEqBPgQoDsh
-	 NJh/nM2jP4VND+SGpofDzdTjYyvA8GalHFW6f+HsZYesbVyXRoyfceS33ZkrYf4Z1W
-	 /WtTv+qMjjPM2l5CTmgpgRlvYoucNMSEg3MqnpRVWRBVbHnDozV
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AE70C209C0;
-	Thu,  8 Aug 2024 01:33:24 +0000 (UTC)
-Date: Thu, 8 Aug 2024 01:33:23 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
- libgit.a
-Message-ID: <ZrQgY1pehCH5O78w@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com
-References: <cover.1723054623.git.steadmon@google.com>
- <ZrPvSWoUOEaUIjWq@tapette.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cD9NQ5pr"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-39b3f65b387so2181515ab.1
+        for <git@vger.kernel.org>; Wed, 07 Aug 2024 19:07:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723082851; x=1723687651; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:to:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0EGLQgqfgnm1QeiwA1IRrbaq2tI4Qqy6aSN+SM+USyc=;
+        b=cD9NQ5prmHfLoYQirklDzeaEWgucNOu0uVQ8viatupUZLftBApbWsA/JO9voFSIQnX
+         1Bdo7HBq04Y3AOpHPfAGnyta5xLJ3vgggwxsdSd+tQqql22i9uYNGfL/MGVKMxrXBA/m
+         NBrhAgbkvpOlh/ibbqHCOFElZTYJRASjX5FrjrVepJbk2zj35qiHRpipd4uLm/o48rs5
+         nHzFzZV5TaY100LS9i9piJ1CYlHlvIBiU+lT4WdS/lE6Q7pZqntT2namXDnGqyH9fF/H
+         k1FSMWZYgUqZtBiY2j+hSCFrV89OkRLNLJXBu76Fj6TSK+msRvQGv8Bxt/5ygOJDRKH7
+         o+Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723082851; x=1723687651;
+        h=content-transfer-encoding:date:message-id:subject:cc:to:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0EGLQgqfgnm1QeiwA1IRrbaq2tI4Qqy6aSN+SM+USyc=;
+        b=vMrxFeeZMKBHJXRzI9bB/QifoxOBricR1vsA0Yp2WCI3X1odSNt+zk2cCP6m+pZOSv
+         u0y14jV6cxFRRwQblY9G7NiuCgrhEh+jxVJ2tPNgzzC0RDFwUFIR/Q4Z2OZOcjQHypiL
+         H9dPDvpvUX9HiJbryRS/2jqdNm14xRYLUAZXHskI5iUOmrCdZjlTpY8JmCzzQMmgzbq8
+         IQD81ypr/MgFwDz52O4uTxkCRo+f+WPTHOm1hTC218lSeGq87qfW3H2Yv9BMeh3qxtQR
+         06heHXj+LI6Oki1SAweXsdLDOpTTQ37+Gs9mnkktc8CpPAhVbweUXScyqInMFA6Zdeu4
+         EX0g==
+X-Gm-Message-State: AOJu0YzIY35h746FbyNdi36of4cJ6KWhKV+ixi6YqbCdJfkN5KUOZB70
+	Irb4NpmTCe7jmlhbZRJFWmdqIelobCfZT4MS5BEYTkhdL24y1sf3tlZ3ng==
+X-Google-Smtp-Source: AGHT+IGtnDrZ/2hUMn5ox6FkMhr8b5Qv+xYqhmP+1pA20A4UxpZ4o03X1DmHB4+fhtYKB7kObag19A==
+X-Received: by 2002:a05:6e02:2144:b0:39a:e9ec:9470 with SMTP id e9e14a558f8ab-39b5ed2193bmr5456355ab.17.1723082850907;
+        Wed, 07 Aug 2024 19:07:30 -0700 (PDT)
+Received: from zivdesk (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-39b20ab4f7esm50416015ab.38.2024.08.07.19.07.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 19:07:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NOVQ9FmxZSLmnd4U"
-Content-Disposition: inline
-In-Reply-To: <ZrPvSWoUOEaUIjWq@tapette.crustytoothpaste.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---NOVQ9FmxZSLmnd4U
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: <git@vger.kernel.org>
+Cc: "Derrick Stolee" <stolee@gmail.com>
+Subject: [BUG REPORT] sparseIndexExpanded hint always shows on sparse worktree
+	 move
+Message-ID: <17e99eb90d57089d.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Thu, 8 Aug 2024 02:07:30 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-08-07 at 22:03:53, brian m. carlson wrote:
-> I left some comments in the series.  I think this is a nice first step
-> as a proof of concept, and I'm very pleased to see it.
+After updating to v2.46.0, the "sparse index is expanding to a full
+index" hint added in 9479a31d60 (advice: warn when sparse index expands,
+2024-07-08) seems to show any time a worktree using a sparse index is
+moved. This is easily reproduced with the following script:
 
-I noticed a couple of other things.  First, the code has not been run
-through rustfmt.  I think it would be helpful for us to do that since it
-makes it easier to not argue about style and it can be easily enforced
-in CI.  It will also reduce diff noise, which I expect Junio will
-appreciate.
+    git init --initial-branch=3Dmain main-worktree
+    mkdir main-worktree/A main-worktree/B
+    touch main-worktree/A/a.txt main-worktree/B/b.txt
+    git -C main-worktree add .
+    git -C main-worktree commit -m "initial commit"
+    git -C main-worktree worktree add --no-checkout ../other-worktree -b oth=
+er main
+    git -C other-worktree sparse-checkout set A --sparse-index
+    git -C other-worktree checkout
+    git -C main-worktree worktree move ../other-worktree ../other-worktree-m=
+oved
 
-Second, cargo clippy complains about some of the code.  It's again
-helpful if we can fix those warnings or, if they're not appropriate, to
-disable them with an appropriate `allow` pragma.  (In this case, I think
-they're both spot on, but I have seen some cases where I've disabled a
-warning.)  This is something we may also want to test in CI in the
-future, and downstream users of our crate will appreciate not getting
-warnings when using clippy themselves, so we should be kind to them.
+It does not appear that the index is ever actually touched. Testing in a
+real repository shows that the index size does not change, nor does its
+last modified timestamp.
 
-I noticed these because my editor complains about the latter and I have
-now intuited enough of rustfmt's output that I can tell sometimes when
-things aren't formatted with it.
+I've reproduced this on Windows, MacOS, and Gentoo Linux.
 
-For those members of the list who are less familiar with Rust, rustfmt
-is the standard code formatter (and formatting verifier) and clippy is a
-lint tool recommending best practices.  Both are shipped with Rust and
-using both is customary for Rust projects.
 --=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---NOVQ9FmxZSLmnd4U
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZrQgYgAKCRB8DEliiIei
-gQUBAQDPYE/Kqh1yG/PYBrd7HiUHNzgDjp0LjjB/X0zf00TmWQD8CiBfvu8g87qK
-by+UcyuriZNSHHXX1GTmhXZIRlr4hgw=
-=XioJ
------END PGP SIGNATURE-----
-
---NOVQ9FmxZSLmnd4U--
+Thank you,
+Brian Lyles
