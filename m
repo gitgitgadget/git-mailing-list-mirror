@@ -1,127 +1,165 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DF8433A8
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5195055769
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 18:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723139440; cv=none; b=QqjtgpKVvpXwtt26XLilSrtQ5+x5CuartJHS257KTMCxrKT8luU4YOffyTUntWEvGKDL0mb1Mk3Tg3tUVUpLsJYUy3jTMYQ3u9hXpH/zRTgDUUrBk1RRoJjrHL6GbpqhtW9cNTY97oZtfc4yCQwivxyb1NFdNF/6Ymy6EPBcWMg=
+	t=1723140586; cv=none; b=A7+W/+KAaT8aZ/1Rzbzq+FWid2Fn2CZO9p9VZznQkEeYoOXBd6WFqcAouclvbVcrFetWU2fqJyI9f+T08zXr2mDemC4gLciuc5cD3IoAyN5wfZ2qwFDNm3zwzstaJtyJExBa2h5jm8XrwRzEabznbXKFggdZQ/+u/fdoeqIEcxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723139440; c=relaxed/simple;
-	bh=6aGRtUufmZ5r3VhPbsU6jo/7if5+5IGQZRFXhAx+Z3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M7wuj0JX6Fo2pc6S0r79uz0/O/ZfsiTZTC9VNgdq33y3edCoSUkTRBJoZQejAV33gMwMTgE1PSNIHDucqVCn7BJypxQTfyQVxCzIC3j0twSHd3bdT6phCXYnuImXO2zPA+lDwmc+tIzteR2N3EMDqQCUOQwd+QOVKoxweuRSugo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4Ig9DoGM; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1723140586; c=relaxed/simple;
+	bh=5hqu+1xmXiqrzAw2o6zfIEndaSWxvCCi5GI1EeNyJnQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=skte+yEkNrM9KdFfcAdxvaHQ5yvdWZTiv5bf47T+4d11juI47TbMvPn55bbtd0FX7hI+OJQDJnAMQLArb6/mVRSsX4vtY1CbWmHTv76pxnfYJLlenocmS1qGiiG81GUvqIcSkqpBkula3MYunTL+pKwryeVLJ8lS+NSjU+MZnf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8F6m1MK; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4Ig9DoGM"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1fd69e44596so9149235ad.1
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 10:50:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8F6m1MK"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7093b8ffe01so32092a34.2
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 11:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723139438; x=1723744238; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VQTU0QchptSjkWA5+W4/YivvzYiWGvEn4mW4YSJa5gg=;
-        b=4Ig9DoGMAsouyMmiPjUZDSPu8m5A1MNJPRiLAGKwEBjps20Fbkeg4wXs27JcZiQTjK
-         9ktqIck9o2/JJJ3PEqqk8ZRYiylQzZARJBH01VhkI7OpQhmR1K0mmEgsYjA1MXGZkzjt
-         8dKziPck6qwWVcI63RKDwGbpkNvJnVZXdk/sGnZ/vdclIFeQ0CjNup81cSTBkN9u6Cdb
-         0f+787c+T1U97ig+9yYdG09MZBV2yvze6+/bkoKkl/XRco+AH7UHGfIBZznbWOJ2sror
-         twc6TP/nX1uMKd5tWyLOVgcBimW+uHAF3MfkF84FvUw0VMKoBcpCxmXY+qij3cSKcgM3
-         MXCQ==
+        d=gmail.com; s=20230601; t=1723140584; x=1723745384; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f7hBHlRIGXQmx92Txp9kv7cfply7z27pFbHtayECEcw=;
+        b=O8F6m1MKDzp74nzofu4Jw6oOGv+RYEPiCLgkTWyysEYyqmePbm4Nm9rx5ijiNJ4qwJ
+         A40VBXsqwqPfBVuT0wjcaJspXagid7mG7PbC/My4SevvbvtS6R0NXHatGEioFOvohAVu
+         DVzLzwqzNBegFq0Apn1OtbxpeQkUxHh1oVEpHlVIHH7AFurCpQik5fVwPy+s5BPoYHSy
+         gut0RySlIMpUHDYRSYVpDfKqAdUVyf/SSH4RCmdvhd0YZSvkrn1aofwl5VD69AiD9vAl
+         mH6+WY2q+cpetjrsow9fW3Rb/IusRhrKHQ9Ul2+ryk6SyclaNcCUKKYNSx5840eHBr5O
+         1Cpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723139438; x=1723744238;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VQTU0QchptSjkWA5+W4/YivvzYiWGvEn4mW4YSJa5gg=;
-        b=STzKyHQmPQo9OlRdizQyVnebgDI80rbFRAb6wnIjuAWDTSc7HMmdpGHJ2Vtxtu78mS
-         NiZ8h2iV571NarImZdy4ZmJz6a5GmiNVkH+Bq9Ukmz7PER0c8tDa6//d5s+L4zCG+sUk
-         7pPjxLN82MU3otHds47cmuCyP3BYXDEO2bSOxvGu6ZgFL2a4/e5tCNB3B2qvrM0qHFQ7
-         OYGcSZDUS6vfYU93yVXLLfZBV6hxNIfusSpweIJdyMoFL22ZkCmu2FrI8fhPXE8HYljz
-         vqxeV+WXcyJXLm/6kRIKsuCIAxUT2UzCcEy1GFM/6Ski4As1vNVyoUkrsO/eXrcqgoRd
-         7skw==
-X-Gm-Message-State: AOJu0YymHdje2j01yfo9+zo5QsqvR3oGJo3cdMm2V/m2f2ZW4MNm7Gwm
-	ND86eusiD+BHPd79IVuNw4kiRYC1jeLdR1+gvrZ3jjh7cCqztjWvWAzdmeN6EQ==
-X-Google-Smtp-Source: AGHT+IE3ryM/EIR6hKDSbJFM0IjjSsW6bzcHPLaWzM0upqOezdaStfBDrHF2js78GHuRiElyzhdR6w==
-X-Received: by 2002:a17:903:2342:b0:1fc:4acb:3670 with SMTP id d9443c01a7336-20096cf426emr41688805ad.12.1723139437947;
-        Thu, 08 Aug 2024 10:50:37 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:fa12:a76d:ac7c:e104])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905b43csm127373745ad.146.2024.08.08.10.50.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 10:50:37 -0700 (PDT)
-Date: Thu, 8 Aug 2024 10:50:32 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Mike Hommey <mh@glandium.org>
-Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 2/6] repository: add initialize_repo wrapper without
- pointer
-Message-ID: <om763zxrkc63svsxp2dzyzwgcglbq743xcsgijf7trzb2i5e6z@3vtm6dzws7i5>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-References: <cover.1723054623.git.steadmon@google.com>
- <5f2e816cf6359725f2a86ce1d08e5e272fba4dac.1723054623.git.steadmon@google.com>
- <20240807225246.7jhqioyqh4e2ibza@glandium.org>
- <5miqrfkepbzi4qzu65invte3tk7weshq2fcnkyufnoih3ou6rp@siodpag6csmy>
- <20240807232916.as2jaivlbvk6pa3r@glandium.org>
+        d=1e100.net; s=20230601; t=1723140584; x=1723745384;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f7hBHlRIGXQmx92Txp9kv7cfply7z27pFbHtayECEcw=;
+        b=K4jdlHigpMyVIzOgBxoe0PNMAufC2G91Wr028GDniUF0IctkLLNSdZaKCNYOdAXWY2
+         U1VhFBCBECsOSJ6b15+SkNoBMLxEUrOTsoiRAjua4880VHcWaEzwbqEcbQsPvk33n+ps
+         ZlRYz8+uCqUwhblH4DUiIDdikV9BKIGG0MK9KoDOQ8a4QmknJRDxNxmqi00kuj1N82wa
+         WJelPsxGc+k/pKBBMmHdVY2i1nun1rYx99j6GL7qtv1rRRLHGW8OUXAJy/BTTku9HKAn
+         e7en4oBbONPR1uGrtQdDBFj0l5hTc0vhO5eXDPd6mdtVS2yz+64UjHiMf7ECFp++Lik1
+         3CBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVB1YeyyP34U2ZWyTJea2W3uFPn4C9bLdKK0Hugsf+6YfPYKS1P3D2HWh3qMrbFg6ixBbM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt/nS7fCaaaWxmfQLg1c3imlWGdOD98X4BoXrBdebGWvP8RLJ3
+	iOpofJ+l7jKEYsWt5LvNvn6B/zu7BF/x1Jb3pmnVanhC+5H5fSPY
+X-Google-Smtp-Source: AGHT+IF4NVUZvNKHactuIIb3zLTb3rlCPFOwtz8tKAwWi/kyehaBfdJArYJkSiXOJr7vxtqvwTJVpw==
+X-Received: by 2002:a05:6830:6309:b0:703:77c0:cedb with SMTP id 46e09a7af769-70b550d9804mr285881a34.1.1723140584142;
+        Thu, 08 Aug 2024 11:09:44 -0700 (PDT)
+Received: from [10.37.129.2] (pool-96-240-20-160.nwrknj.fios.verizon.net. [96.240.20.160])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c864c87sm69112326d6.115.2024.08.08.11.09.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2024 11:09:43 -0700 (PDT)
+From: John Cai <johncai86@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>, Jeff King <peff@peff.net>,
+ Patrick Steinhardt <ps@pks.im>,
+ =?utf-8?q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>,
+ Linus Arver <linusarver@gmail.com>
+Subject: Re: [PATCH v3 1/3] refs: keep track of unresolved reference value in
+ iterators
+Date: Thu, 08 Aug 2024 14:09:43 -0400
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <7935D449-F5AB-42CA-951A-E2A07053CC07@gmail.com>
+In-Reply-To: <xmqqbk24nhad.fsf@gitster.g>
+References: <pull.1712.v2.git.git.1722524334.gitgitgadget@gmail.com>
+ <pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
+ <fc3defd9c47e32bb23ba0fcb5c885274f3706b23.1723059769.git.gitgitgadget@gmail.com>
+ <xmqqbk24nhad.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240807232916.as2jaivlbvk6pa3r@glandium.org>
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On 2024.08.08 08:29, Mike Hommey wrote:
-> On Wed, Aug 07, 2024 at 04:23:05PM -0700, Josh Steadmon wrote:
-> > On 2024.08.08 07:52, Mike Hommey wrote:
-> > > On Wed, Aug 07, 2024 at 11:21:27AM -0700, Josh Steadmon wrote:
-> > > > Non-C external consumers of libgit.a have to redefine the `repository`
-> > > > object in their own language if they want to call
-> > > > initialize_repository() to ensure memory for the object is allocated
-> > > > correctly. This is not ideal for external consumers that have no need
-> > > > for the entire `the_repository` object but need to call other functions
-> > > > from an initialized repository. Therefore, add a friendly
-> > > > initialize_repository() wrapper without a `the_repository` pointer.
-> > > 
-> > > Technically speaking, you don't really need this.
-> > > 
-> > > You can define `repository` as an opaque type in Rust:
-> > > ```
-> > > #[allow(non_camel_case_types)]
-> > > #[repr(C)]
-> > > pub struct repository([u8; 0]);
-> > > ```
-> > > 
-> > > And define `the_repository` as an extern symbol:
-> > > ```
-> > > extern "C" {
-> > >     pub static mut the_repository: *mut repository;
-> > > }
-> > > ```
-> > > 
-> > > Mike
-> > 
-> > I've actually already done a refactor for V2 that will avoid using this
-> > patch entirely, but thank you for the pointer. We do something similar
-> > to opaquely wrap configset pointers in a later patch (we use an empty
-> > enum there, I'm not sure whether that approach or a zero-size array is
-> > preferred).
-> 
-> An empty enum is a never type, I wouldn't recommend using it as an opaque
-> wrapper. It will likely lead to the compiler doing bad things.
-> https://rust-lang.github.io/never-type-initiative/RFC.html
-> 
-> `#[repr(C)]` and `[u8; 0]` are recommended by the nomicon.
-> https://doc.rust-lang.org/nomicon/ffi.html#representing-opaque-structs
-> 
-> (the PhantomPinned wasn't there last time I saw that page)
-> 
-> Mike
+Hi Junio,
 
-Fixed in V2 (for ConfigSet). Thanks!
+On 7 Aug 2024, at 17:40, Junio C Hamano wrote:
+
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index aa52d9be7c7..5ed69c23f74 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -245,9 +245,11 @@ static void loose_fill_ref_dir_regular_file(struc=
+t files_ref_store *refs,
+>>  {
+>>  	struct object_id oid;
+>>  	int flag;
+>> -
+>> -	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READI=
+NG,
+>
+> Here, we had a nice blank line that separated the decls and the
+> first statement.
+>
+>> -				     &oid, &flag)) {
+>> +	const char *referent =3D refs_resolve_ref_unsafe(&refs->base,
+>> +						       refname,
+>> +						       RESOLVE_REF_READING,
+>> +						       &oid, &flag);
+>> +	if (!referent) {
+>
+> We lost it here, though.
+
+Ah will restore the blank line.
+
+>
+>>  		oidclr(&oid, the_repository->hash_algo);
+>>  		flag |=3D REF_ISBROKEN;
+>>  	} else if (is_null_oid(&oid)) {
+>> @@ -268,7 +270,11 @@ static void loose_fill_ref_dir_regular_file(struc=
+t files_ref_store *refs,
+>>  		oidclr(&oid, the_repository->hash_algo);
+>>  		flag |=3D REF_BAD_NAME | REF_ISBROKEN;
+>>  	}
+>> -	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
+>> +
+>> +	if (!(flag & REF_ISSYMREF))
+>> +		referent =3D NULL;
+>
+> OK, this is new in this round.  The idea is that everybody else can
+> rely on the invariant that the referent being NULL is equivalent to
+> REF_ISSYMREF bit in flag word being off from here on.
+>
+>> +	add_entry_to_dir(dir, create_ref_entry(refname, referent, &oid, flag=
+));
+>>  }
+>>
+>>  /*
+>> @@ -886,6 +892,11 @@ static int files_ref_iterator_advance(struct ref_=
+iterator *ref_iterator)
+>>  		iter->base.refname =3D iter->iter0->refname;
+>>  		iter->base.oid =3D iter->iter0->oid;
+>>  		iter->base.flags =3D iter->iter0->flags;
+>> +		if (iter->iter0->flags & REF_ISSYMREF)
+>> +			iter->base.referent =3D iter->iter0->referent;
+>> +		else
+>> +			iter->base.referent =3D NULL;
+>>  		return ITER_OK;
+>>  	}
+>
+> Hmph, why not an unconditional
+>
+> 		iter->base.referent =3D iter->iter0->referent;
+>
+> instead?  This code is making sure (iter->base.flags & REF_ISSYMREF)
+> is directly linked to non-NULL-ness or iter->base.referent, and we
+> want to make everybody take it as invariant.  Shouldn't this code
+> also rely on the same invariant?  If iter-iter0->referent is NULL,
+> iter->iter0->flag has REF_ISSYMREF bit off, and vice versa.
+
+That's a good point. Even though this code will be used in a loop, if we =
+just
+set it every time unconditionally then we won't end up with leftover valu=
+es. Wil
+l adjust in the next version.
+
