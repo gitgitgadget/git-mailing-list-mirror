@@ -1,82 +1,82 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C98A2F50
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5541213C814
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723093528; cv=none; b=ITKTSdQvpx02gUUcXNHfwryYnUrTFP5MzPj/7DNhSetgCVErnzpgzwlazVzODXwDgKfV4gqeXCAXYtYkSeCGIhBSPgS8vLZiubt4J06K/1w2GqZomIkIBeo3x+69kkY/P/RZXhdb4SNSRJMbdjwGMgC+7pD4yA3I36a19cuTSCk=
+	t=1723094532; cv=none; b=ml4I9igp6NB3a7xIf0tt9C6D9ner/0cvf10fY+/XhlNBhsD5fcSDAAkPdpnTuK0b5l05ndn8tBgvmKpfgaFja203yVrX7e79pt5CyG6XKR9fXCCNLhZpOSzAI31CJQyQcDrehkC663LRFQztcy16xnT0IKI+d5W5iJCYwcH0nH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723093528; c=relaxed/simple;
-	bh=r9fKhFxVc9wASN+q+kEEEJpWEV886Sf6CtnZXUX+CBo=;
+	s=arc-20240116; t=1723094532; c=relaxed/simple;
+	bh=Go3/LBH0/fFVJYNp7BzcIO58n80hGn4Vxsf1hMR6dtg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aU2PQxXzez5GWhaM82+G8mbtpUbuJ/x+1m9Q/FREOCoUlaiseg6dYiMEfy17depGR/tIJcU5W25hZJsT+J0adNEynkahqWH+9Xz/p0tnTAzgDbLyA1tkoKXFxCYCSO0n2gDkB56C8PDPQ0z8FsnSbrQHg/3dAIMHo+oN1S13rcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NKBNQ0V0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gbzRNX25; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dn+2qAKOWZAvrZqKFAo3Fux24ZUa8F7B7jU5ZhdM99Vc3PPoq58SYgarfmbpxyQQM3bUMIZkvl+CoB00N36OGcFz8k0um7af3f2LZMHmm+4mshA20r1jtZHmD/cAsoOll2CvGO/98CIQG2F9/dLuJMRvL7J1rhe/07qXFzzAOnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CzqqGkG4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TG3RRMPd; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NKBNQ0V0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gbzRNX25"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 8495F138FD8B;
-	Thu,  8 Aug 2024 01:05:26 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 01:05:26 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CzqqGkG4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TG3RRMPd"
+Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 81749138FDE4;
+	Thu,  8 Aug 2024 01:22:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute8.internal (MEProxy); Thu, 08 Aug 2024 01:22:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723093526; x=1723179926; bh=r9fKhFxVc9
-	wASN+q+kEEEJpWEV886Sf6CtnZXUX+CBo=; b=NKBNQ0V0j76dnct0HHAV27kTYG
-	JuTBElfWuJH3PuHPO+AGjMMjGpdko01sYX+q9vr2zX4AqYl6mXF5vGZcndGZV2ke
-	hKSLBX0WzfDDhw05f7mV652t/QFHOp4OILNhZEn5xiraD5trjfawaeSjpA0C2Ac+
-	1cUvNGEbwoklf0kzTTXpipwqbF6OBzb01Haj8Fk5BsrqxBz7kfz+FJy4taTJ3z62
-	8srCYus5SQ5wrb2tSuuLzTkj68dDu3OEP0VukUBFFvZT7dIHgXGHciBNljT/zRpt
-	7DtMOAZoOJNFuoDGUwi+IVhyyMFrjlnTwAMBjXZB6GwKlgTvvKol28lb0mQQ==
+	:subject:to:to; s=fm3; t=1723094529; x=1723180929; bh=Go3/LBH0/f
+	FVJYNp7BzcIO58n80hGn4Vxsf1hMR6dtg=; b=CzqqGkG4tniBxP9XHCneVdO5MO
+	mIcKPV7JxdFZDbLku6c3e7EC0ewrFRH32Q6ahWb27bWhWUc2hGRGK3lqFpcLXoGH
+	AZ0xUUkX3RwlICj2lu1TZHRz5JEYI7kDAVH0IurFhG7Ozgk2xvjc9031CseTvw7Y
+	RlHhpZqNgd7U3YhnF6dqs7BanbvZWdXBQie/5BTSppHJmQ473zDSJkU85MR2CXb2
+	0NhQ3CU/MWSWyP29nrIT6PIWCyz1S3mNeUQaMkE/kApV+wtmuIRNMMIVuE4qPgP9
+	FszyLr9vZx+3qui71oigG7HWqKEJSkM3/lb4+8LrBILuu9c2qsx+KRydZvGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723093526; x=1723179926; bh=r9fKhFxVc9wASN+q+kEEEJpWEV88
-	6Sf6CtnZXUX+CBo=; b=gbzRNX253IoGUTPknJDxxmo/+urMG8K+V9v96eGG/AGW
-	h6abs6iYX7H7LK1ujsg0S9i9jHYJ0BwSFT9wWZWmDfaFSVBJt2GUHxpQa6SfSVK8
-	CvFWZV71iVRBiXdrDCI6u6NcVC+w39mxNtPQWTt3aKVV6V759wU5KS044w42OrdG
-	MIJWjzCqK6TcC4yWB/VFoxhnY7O4J3b5ivi4GxWHQREXC4pMmAlaDHaCNO41EoYi
-	3zH2t5ZRkq19d+L341rTe+dVG4G0dERlGI3OSb4BdGyfYPensR9JTbBEGBq0Cj6s
-	0IJWLB691/HuG0Al/O04ORkoZyz5RDokJLf9sYxyfw==
-X-ME-Sender: <xms:FlK0ZiWDUwpFWZkXn1Zos0WI1P1AX8JD9MzejlVIYY330ynDuIGVhQ>
-    <xme:FlK0ZukwdLEe9pZhNBv5ix9OOOIs4JfgWTayAVrwJE029_izydc4CDhE8O8b53doJ
-    MmoZOnGjpir9ay7lw>
-X-ME-Received: <xmr:FlK0ZmaBlg51L7l1fpfKalHge6iDGzG89WvqR0nCYPAl6mL-vxFOby8GE8iHic-icIhbiLEy9MyRylvx-1u5Wk9tJ87D8OlXeheDZPZpoKSkDJTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdeludcutefuodetggdotefrodftvf
+	fm3; t=1723094529; x=1723180929; bh=Go3/LBH0/fFVJYNp7BzcIO58n80h
+	Gn4Vxsf1hMR6dtg=; b=TG3RRMPdo5HWeR+vJSvO6f9bw48U5Liy7ysMUY/dy+3i
+	mAXc9U7k2/CGMiMbFeJFE8qXLh0xB2bA0B+awO4fRt7TKQTsx4MSGeLV5AQqu1dk
+	zMguKeSffTaMWAv79GlHQNTpdlYmxtoZVovn0GV5I1w9zOrPKZGP8xDTlEUrK2zC
+	psmjz2fUVPWz3Sw58lyJtZf8BAexbFvWzN9GLTWBHiMfSBCnPLyX7dt4qLj9XuVP
+	2bqjhzHJT2lAE4/sH76CqKpMvtGTM+qxYvVb6FK2r0Q21zkupY9oGFIS+6CPRWrb
+	LHtA0/sDCiMguYnrUg2IT0gdr4ljq3t20jqG1D10EA==
+X-ME-Sender: <xms:AVa0Ztwlx_-WQw5nDNiBILoy18gAicjUx_H9zII39Mpz3WfmCz3lbQ>
+    <xme:AVa0ZtTilMrmmaetFKRKiN0I68ii5oZmZ9xKEqZ36V1oms18BSSWg72qSlaRv-OWF
+    qIjhXBSCP7jGapQlw>
+X-ME-Received: <xmr:AVa0ZnVk_-9cpsWBBtWWLyTu6VvjSq3plsQHgOyMx2Mte1s3XY2J6qNxHfJ7kCuzH2ouk0wLAKBk7ZvRfX3ZuBnCHPPvwLv3KRNy2OaytcBbuEYc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdelgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:FlK0ZpUoQnERiRgkzunpDakBkguD08NdvaV_lRr2FywMiy_5tDQU0w>
-    <xmx:FlK0ZsnpQIXsoLlNb39O4rBv6GAVRwBmA6zQgaj2BOyWiED77cjbQA>
-    <xmx:FlK0Zue84GIwxbC28K6O9Zr4MEh6Y-uURS7ZvMChj1k4X_rEOaCzxQ>
-    <xmx:FlK0ZuGJ-ex9CsfzZ57WTxtNrU3zELNJwvNfD-IYE65kNyYwpW4toA>
-    <xmx:FlK0ZhwHatxuQICYObL3Rh7PItQiy7yXo7tA8VsAzgf14jLq_oxul6fu>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
+    fkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffve
+    eljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:AVa0ZvhPvvp5zriK0yUVW1orWeAT6VKH9pd8Sk20xLkuLAgWIP7xbA>
+    <xmx:AVa0ZvCgxMP-x0tiF8-0F-SJ30MBde7qe2N3RlTVv7rgzXmk-9735Q>
+    <xmx:AVa0ZoLCdgEQUhcJXSoExF2ASsRrx6MifveHNHXVFfqUeebGcqangA>
+    <xmx:AVa0ZuAux9CVooq1CTQVGqBm86mMqym0J7QlCXWdFXNP1yzLO0Oa5g>
+    <xmx:AVa0ZiPcyGvW9YJ2LgMMYldMLALc0T1VkxToqSSASDI4WUFWj79Mkf9k>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 01:05:25 -0400 (EDT)
+ 8 Aug 2024 01:22:08 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c8ae0c5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 05:05:19 +0000 (UTC)
-Date: Thu, 8 Aug 2024 07:05:23 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 43ceab23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 05:22:00 +0000 (UTC)
+Date: Thu, 8 Aug 2024 07:22:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: James Liu <james@jamesliu.io>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
-Message-ID: <ZrRSE0etqno-yFiE@tanuki>
-References: <cover.1722933642.git.ps@pks.im>
- <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io>
+Subject: Re: [PATCH] transport: fix leak with transport helper URLs
+Message-ID: <ZrRV_HrUArsvRgn8@tanuki>
+References: <xmqq34nfn7ip.fsf@gitster.g>
+ <ZrRPD0ggZapZym7E@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,58 +84,109 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IS/YwfUo1tKVbxLF"
+	protocol="application/pgp-signature"; boundary="Z6OvB9iCXR1Top00"
 Content-Disposition: inline
-In-Reply-To: <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io>
+In-Reply-To: <ZrRPD0ggZapZym7E@tanuki>
 
 
---IS/YwfUo1tKVbxLF
+--Z6OvB9iCXR1Top00
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 07, 2024 at 07:27:32PM +1000, James Liu wrote:
-> On Tue Aug 6, 2024 at 6:59 PM AEST, Patrick Steinhardt wrote:
-> > Hi,
-> >
-> > the third set of memory leak fixes was merged to `next`, so this is the
-> > next part of more or less random memory leak fixes all over the place.
-> > With this series, we're at ~155 leaking test suites. Naturally, I've
-> > already got v5 in the pipeline, which brings us down to ~120.
-> >
-> > The series is built on top of 406f326d27 (The second batch, 2024-08-01)
-> > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
-> > leak when computing reachability, 2024-08-01) merged into it.
-> >
-> > Thanks!
-> >
-> > Patrick
+On Thu, Aug 08, 2024 at 06:52:31AM +0200, Patrick Steinhardt wrote:
+> On Wed, Aug 07, 2024 at 06:11:10PM -0700, Junio C Hamano wrote:
+> > Transport URLs can be prefixed with "foo::", which would tell us that
+> > the transport uses a remote helper called "foo". We extract the helper
+> > name by `xstrndup()`ing the prefix before the double-colons, but never
+> > free that string.
+> >=20
+> > Fix this leak by assigning the result to a separate local variable that
+> > we can then free upon returning.
+> >=20
+> > Helped-by: Patrick Steinhardt <ps@pks.im>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >=20
-> Thanks Patrick, most of these fixes make sense to me! I appreciate that
-> even the minor changes are accompanied by context.
+> I saw that you've merged this to `next` already, but: this looks good to
+> me, thanks!
+>=20
+> Patrick
 
-Thanks for your review!
+I just noticed that this also makes a couple of test suites pass with
+leak checking enabled. So below diff should likely be applied on top.
 
 Patrick
 
---IS/YwfUo1tKVbxLF
+diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespac=
+es.sh
+index 31553b48df..05090feaf9 100755
+--- a/t/t5509-fetch-push-namespaces.sh
++++ b/t/t5509-fetch-push-namespaces.sh
+@@ -4,6 +4,7 @@ test_description=3D'fetch/push involving ref namespaces'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+
+ test_expect_success setup '
+diff --git a/t/t5802-connect-helper.sh b/t/t5802-connect-helper.sh
+index c6c2661878..dd3e6235cd 100755
+--- a/t/t5802-connect-helper.sh
++++ b/t/t5802-connect-helper.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+
+ test_description=3D'ext::cmd remote "connect" helper'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+
+ test_expect_success setup '
+diff --git a/t/t5814-proto-disable-ext.sh b/t/t5814-proto-disable-ext.sh
+index 9d6f7dfa2c..6fe1a98b2a 100755
+--- a/t/t5814-proto-disable-ext.sh
++++ b/t/t5814-proto-disable-ext.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+
+ test_description=3D'test disabling of remote-helper paths in clone/fetch'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-proto-disable.sh"
+
+diff --git a/t/t5815-submodule-protos.sh b/t/t5815-submodule-protos.sh
+index 4d5956cc18..fe899ee82d 100755
+--- a/t/t5815-submodule-protos.sh
++++ b/t/t5815-submodule-protos.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+
+ test_description=3D'test protocol filtering with submodules'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-proto-disable.sh
+
+--Z6OvB9iCXR1Top00
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0UhIACgkQVbJhu7ck
-PpSPPRAAgsE3LsyyxUNUSlgvWox+3P5fmneuG9kofT0upvSeeY109Je1SKTRSKRz
-qmR2jgoCw2fSPUzG1HJzxqps/dwQdePZounJmZGmMjxc4SExVHX9Ln1vUrAx7cmp
-sm15rkdYzJL6OjrvC3fNB+RNHwSXeL8kFtobWn5+4gOrc/B3FkAA2jy6AOnNMHGk
-zFB9XAelxRa7LKwby2pGiOX0cNul9K/tSL35O8AIZvlD+OZaZKgaZyOGACtRRRz7
-9nGUfArFeit2LcW80vAuw28hcQsHM9FmutKKjJR655IEQfIu+uxif5spWlu7gbyW
-Rc5jijvAeOFxzHjtD+OszOzrgs3VfeKkGgFDQMjVsWDpHktTK+EQ7v1r6ARBJkIh
-xWLo6vgMuUKVYLP7WISGfd9sWpjOTfrrn/+K4enCE+kKMnF+2CwNEYOOSdWNtXmw
-gxQMYE0PQksTRZ7MoXaLWNcci8nZq/1i0CEGOvdu7k826EoIiyJGOBonXd0cykAs
-bv6KvC8Iq0kSEnECUWoV1C+i8WLTeCs+WiLpP24qciJuIiEYVQug35sfRGVSKPm5
-QS2jcfcbR9711S7ayeX9I26w95eiemCScnPnqb1+eGwNgXQKid2MsTl7Gmx0KjWX
-FyWwAMyL1CF6StgE/DvM7WLLPQYR0SmPL9C01dO6CGW3tgiO9HM=
-=iHjP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0VfsACgkQVbJhu7ck
+PpSrIQ//U/ItD/KxSJnynU9UbDLYvx0Euyj3mR0AwF6skfnbCpciFMoeq41AyD/o
+n517jIx3LDxIARhdhqjd6s0/4a8iJcB9fGWM2WGbjSWSIa40YOFxuOLw8NFbSMMU
+fEv5G4WFwrFxX/vF+NWARKmgt/6DlV+Q5IbNxeKk1QfjvzwRPdoTUOPWUYSPenG/
+F2FraR/fmIVapaIRUUoiSFcjzcQd/YB5BG/Su/tuN/+NtWQ2Xw1goDtf9tE54kRA
+SrZd1DH6dGr9511mgE+wRG6+R77YIMI7uf7mvfuGtoumYXCuH3FYh++XvwP1zGCu
+eeW2gwk4VeByNeMKuyKKDOe6rmyVzIFjmT/zJFU96f7nqOvNsTAT58G9/WZsSxMG
+ttI6MXXRUowxRI8p/97kRZwI+9y+Tu8BM4lfupVkasFayY7d297Kj95zwXCDoXO8
+xunK1BeycyYmKqa6cY7PIpjX+PwH7GrhEWtAqDORb3Nakd77iMo5KgRTxBKbrJ2S
+k3dW3/1o9Ib5kN2Ui9lmLiRaaxpahnBIrLeE/IX78CqpnQTv2QbiDtfWJDCZmBZB
+DgnGqyRtf+/9aQTMYG4AEc1JCBNGkYUzsid1p1pcSaVxFdEjsYrSMORe6giGSpOF
+AuBDMrD4BtYCTmvWwTefIr+KBxDvSmLpE8RBkUEO/gOKbDmrnGQ=
+=Do7y
 -----END PGP SIGNATURE-----
 
---IS/YwfUo1tKVbxLF--
+--Z6OvB9iCXR1Top00--
