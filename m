@@ -1,108 +1,139 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A2213AA31
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 10:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61BE1119A
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 10:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723112526; cv=none; b=N4bcaVdx6hdYQwyX26j1P21rR5hT26VgT3oTEw9Jutea/nnR3KKZn5Ckoc6xHT59r/alvZ2H+M76EGbaKGOcBgYUcZzBVXXrxBU33lfcmzgp34nyZu0TM3tCUaT9cn2e9LNKVSVt1ZKWgteiINM7yoeUoXMuf8FSedNH4ajt+JA=
+	t=1723114005; cv=none; b=POZmaFb4x27oNdUV+STunAxllCB9opkchUL4V8y3guDmKKwXtk9LSJqeehWYUtCfHJfEhigP073T3k2WVNKOUY1yI1i+RopSlie13oxA7c2ABaFO3qVHzYGwGfb84KkVtsheJMTacK7jigWRdpFNLrV8SEpTxNXhvYkLYhPin8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723112526; c=relaxed/simple;
-	bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
+	s=arc-20240116; t=1723114005; c=relaxed/simple;
+	bh=LxCPqGYZiaJWqidUkwZuDkU7RAE/pvNtlrPcQma3/FQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KOZLpVqBrAVP/7i9oxeKuiMYG2KJmnqMyVnAZtEV6PHv7NTkfDWW62/jF4OxIxcoJLFJtIjYzZMDdHBuhHx6euQR73nqsqoL5b+n25ozhqqM147/9l8+D/OUvxm8hgO1fO47Okh/nW4s4SduHk4zX5HGU50zW5Wy78No0xgItPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHsY7e8z; arc=none smtp.client-ip=209.85.161.48
+	 To:Cc:Content-Type; b=Dt7ZCf0SrMrXRzGdXa3IqOfjiPwDK0w1PmtpfOYoOj5pAN9NMh6B+WEuAtt/yYp0uAz/JpwW1L5dX5eKRE5NtD3JM3DdT0ob+o4VaRthiaWOoLixyyjxPS7HxBETQXNzNmZux3CUSxIjqf3lN/NuNA+T4m5Uj2Ay85PhZZwKPrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TyKmfqdc; arc=none smtp.client-ip=209.85.161.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHsY7e8z"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5c661e75ff6so491509eaf.2
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 03:22:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TyKmfqdc"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5d5e97b84fbso393837eaf.1
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 03:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723112524; x=1723717324; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723114003; x=1723718803; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
-        b=hHsY7e8z0ybuBUE2ko77bmpQWJp/VLGYS5VaNoYBph5x4w9LqgEsgs7f3liHzeAVQz
-         roRjxwaT0vUmuVP2p1IyrXDG8xievHq2N6t2rLWAxTnV1cfKI3mujubWbx4ykQWKycxv
-         OiitGnJQ/uP9dveAyLyccTQ76UFyIaP1I9C6DzxZblb6R8325QJn9xC2RKkiaTsUuBwi
-         3l39NJxe3HAB3L786+SpYpXQqmvbNR3LT4iQPma9my/Sdrv3eYDTkmsQTQlOdndpBk4k
-         FEZFDYnZA/hIv3MMgN3w2Vnn14PVnt/fhalHTi+ywk2B/TncdzYNEGJPHc4JH/mPVJlm
-         170w==
+        bh=Qy38vghzgLo+kyloLBwwdle/d0Kg3/rn1c2PBB+jnKs=;
+        b=TyKmfqdcgOQ1HbNoqg1cW5DWbZH15j2S7KXbEMMmIRf7ANEW9wRMbQxHgISOi8Ou0X
+         a5p3u3xOZoW7cXWvkIQ3ncxmUfSOUoJK9cn9fVzjEv/ln+ixXk4nE4x4td+64WoLRJMZ
+         NlTL5KkgMYEpvOJuUmEyFm/vdd6D6tcECs9aemmbgCM+zVIjwySWiyI9gVHBpqHbwMyg
+         EJPEoycVpTJFQXLCSCRFfMv/vtv6wF9og9v8nBEDnh6ntXjWhibNCqBXCDr+D6CUMLJi
+         U2bkTxYahCLJNvSuYEy/ipLU1yHH7MSs2UZj0dacdGbWpfZ5Fk9AF1/WQ2IxpSxpTROM
+         FryQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723112524; x=1723717324;
+        d=1e100.net; s=20230601; t=1723114003; x=1723718803;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W/G3BUP+YOciQXD1GXmJPUvX44eIFXBjFWQcb0ZkvU8=;
-        b=E0ZWO0yf8i3KiPT4g8AXTay27YoAUj8j7OGair3bfcdEIVh0Nbm8bMtK9znW5CuoTr
-         onJ0a/1qrjCWv185ZmeaT+ZrSo9TG0lpwabXTsY5oPp8CkzXs9jTTq9RcIqYlvliUL2J
-         B8b+uCnlSkPcOfPcoeD49h/bN1ZwyZ6L6+q7UdklwFAsVGmEW+7lZxA9bBGaOmhuo2LW
-         5RHNA5oLCFJhEG1O1e5ps4GMipxW1BN+C6U8KU+acaszpL3RILoq9aW4mXJOXOlSDudu
-         BQHgPziJeDDD1zwBmDfZLqdV5ddTNt8FfwsG7n2L0EcRiNiQ0IaoGAINSzFvmcufgsVF
-         18og==
-X-Forwarded-Encrypted: i=1; AJvYcCX8v5OYZkPBhPtstvnxeqfkTw1z/tRhKgoss0WyIZWtUCeS9luc4bRv8A6rUmu1LUzXQp0MjPrmpId0LtRJ62sTofoG
-X-Gm-Message-State: AOJu0Yz6cGGnlXVTYIpkRnEp/ZjaV7aFfTgKVimYht1aZ4oHVoa9/REz
-	tuM/sF1tQBbfoGl/f8gGwhGpxc566/J213VGgcszhY3+BNxKkFfkhYz3vP1yajEej7zeXa2jkdA
-	5PNCPu/Uto9fKet8TG9t0JZYx3Quuwg==
-X-Google-Smtp-Source: AGHT+IGLz13RUmMNXBdr7WXyIjIKnI61ayj0LUd39Ng2jmUuAjn6EyXsMEXwUU4TA5pAdLJGC6bKXsnMVrYE9mIUJXU=
-X-Received: by 2002:a05:6820:310a:b0:5d8:ebe:23fb with SMTP id
- 006d021491bc7-5d855c0c285mr1520976eaf.7.1723112523962; Thu, 08 Aug 2024
- 03:22:03 -0700 (PDT)
+        bh=Qy38vghzgLo+kyloLBwwdle/d0Kg3/rn1c2PBB+jnKs=;
+        b=Q1XSlUfDcoD+doU6zthZwjt0Uq2287YSKZeDSRYTGY71uXU8cT+Y4i6mKPWKEmkVmZ
+         POmdJYPUou6seFJk4Kzo9jHJ/edd30CTTZRQdpkrA6qrVwWkw7twBg0199QgHT2H3OGW
+         VwiHsBdpIleV2VZakoM5/cCzFm1Md0T9fq4G/gqDONrWZMHPRJj1QNL49X44KDHFJSJK
+         U0iPE2xmspTQFDI0lTMMk70NVPMbYa3L6qPdK939htkts8ugvphVV0OoNsIZIZfiQVpo
+         WRi42+uAehDYXRJd0He25i3h99YaGb3FApLXEWgRAPZXMN+pNF8r9fSUlE1Y69VvXzUc
+         RYaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUhh6CN+IswzmKMTBTO6eatyKUJyfhY7wbqETWZC6/MHNxO1njcnve43tpV3HNp+ucOEhtN8b4lgSiUfmfEIqX3YukN
+X-Gm-Message-State: AOJu0Yz7MHXnhENQiE/tLyn5wQQ9rbZfxMAxt/uCHWh3Mukfu7ecQolB
+	cijsiJG3AIS9MPfVzbya0RBZ2s4o1hMBvTxXYXsIGGYkeCZ6xCWk8S6xTrKFaD1FkAewp7Sx6sL
+	spDl08MzSfNAtXU3i4SJTTPXdGDs=
+X-Google-Smtp-Source: AGHT+IEgrKZe4m1lMgddEsE3CTXr500ad/fMr/50LfEMnjlOwXfFq8XZ/1ZtLXFtT+rT3RvQzEqEdzW3nWC72eDOX5w=
+X-Received: by 2002:a05:6820:270d:b0:5c6:9293:ed8a with SMTP id
+ 006d021491bc7-5d855c8111bmr1162520eaf.6.1723114002887; Thu, 08 Aug 2024
+ 03:46:42 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Aug 2024 06:22:02 -0400
+ HTTPREST; Thu, 8 Aug 2024 03:46:41 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZrNtjeV5_gyZXBgB@ArchLinux.localdomain>
-References: <ZrEBKjzbyxtMdCCx@ArchLinux> <ZrEB16WGGc28dxu2@ArchLinux>
- <ZrHRpnpGkH19godh@tanuki> <xmqqsevhy6e7.fsf@gitster.g> <ZrMMaubE_V7wUZ3H@tanuki>
- <ZrNtjeV5_gyZXBgB@ArchLinux.localdomain>
+In-Reply-To: <63e64c8d82783b5d3fc8db189a29d69c844f5465.1722862822.git.ps@pks.im>
+References: <cover.1722435214.git.ps@pks.im> <cover.1722862822.git.ps@pks.im> <63e64c8d82783b5d3fc8db189a29d69c844f5465.1722862822.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 8 Aug 2024 06:22:02 -0400
-Message-ID: <CAOLa=ZTjVgVk_OodC+L+MC014vHbh6jztKNHyQjcXwKzmkqhbg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v15 7/9] builtin/refs: add verify subcommand
-To: shejialuo <shejialuo@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Eric Sunshine <sunshine@sunshineco.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000e63788061f2965d0"
+Date: Thu, 8 Aug 2024 03:46:41 -0700
+Message-ID: <CAOLa=ZQJVTspAsjxrQa-WVxX4tnhAd0NfwL2e-MXHvyq5+cwfg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] reftable/stack: test compaction with
+ already-locked tables
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000000cd5dd061f29be94"
 
---000000000000e63788061f2965d0
+--0000000000000cd5dd061f29be94
 Content-Type: text/plain; charset="UTF-8"
 
-shejialuo <shejialuo@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> If so, then the only two I had were some spurious newlines. I'm not sure
->> whether these really would be worth rerolling the whole patch series.
->>
+> We're lacking test coverage for compacting tables when some of the
+> tables that we are about to compact are locked. Add two tests that
+> exercise this, one for auto-compaction and one for full compaction.
 >
-> Karthik has given some reviews. I guess I need to reroll because there
-> is one typo error in commit message. It's important to make this fixed.
->
->> Patrick
 
-I would say, my nits by themselves don't require a re-roll, but if
-you're re-rolling, it'd be nice to resolve them too :)
+So this patch prepares for the upcoming fixes by adding tests which fail
+compaction. Makes sense.
 
---000000000000e63788061f2965d0
+[snip]
+
+> +static void test_reftable_stack_compaction_with_locked_tables(void)
+> +{
+> +	struct reftable_write_options opts = {
+> +		.disable_auto_compact = 1,
+> +	};
+> +	struct reftable_stack *st = NULL;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	char *dir = get_tmp_dir(__LINE__);
+> +	int err;
+> +
+> +	err = reftable_new_stack(&st, dir, &opts);
+> +	EXPECT_ERR(err);
+> +
+> +	write_n_ref_tables(st, &opts, 3);
+> +	EXPECT(st->merged->stack_len == 3);
+> +
+> +	/* Lock one of the tables that we're about to compact. */
+> +	strbuf_reset(&buf);
+> +	strbuf_addf(&buf, "%s/%s.lock", dir, st->readers[1]->name);
+> +	write_file_buf(buf.buf, "", 0);
+> +
+> +	/*
+> +	 * Compaction is expected to fail given that we were not able to
+> +	 * compact all tables.
+> +	 */
+> +	err = reftable_stack_compact_all(st, NULL);
+> +	EXPECT(err == REFTABLE_LOCK_ERROR);
+> +	/* TODO: this is wrong, we should get notified about the failure. */
+> +	EXPECT(st->stats.failures == 0);
+
+This is a good catch. The autocompaction code has a wrapper
+`stack_compact_range_stats` which handles this exact scenario.
+
+[snip]
+
+--0000000000000cd5dd061f29be94
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 3935b8f2359be98d_0.1
+X-Attachment-Id: 33c7744b446a6fc8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hMG5Fa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meXZoREFDVTVzWlpKVEVVWjNQUFBHMXlkVFo3ZmRVWgpYZGl6N1ZTb0R0
-RHVyTlEya0lZRVhSK0tFMElkbWRyUm1ZV0JuSXAwK3ZleS9hNERwWHk4TG1mUzMvUHZpbHNHCnBm
-U2FWT3BEVkNGRCttcXFQaUhRRkJEUUU0QlFWWXNQeHdhVXNoU08yWUhodVU4bEkyMHhLa0hSSHpB
-djJINkQKREFoWmZqNGFucVVtWnJ1WlJHN1NVaGZNako4R3ZueU16bTVsd3FiUm5tMEFKN0JZYWdL
-dkt2RVhJVmlaYlI3TQpTa1ZCejg5Nm1RMzRxaVd5OXJMRUtqMzJJdnRkUXNUdUtITUFBZlkxUG8y
-eCtOQ0FobFNoQlB4Z25BUnhPYnEwCnhVbS9raCtiM0U0bUoySzNmUGo4ZU9Iblh3WWNsQ0JXTThD
-VjRHQnU1QXpXT0tDZ2Q3ZzBXN3hnbzh0ck5naEgKcWlvR25uQ29jRUMvYXB0ZTVTcm8wSGV3N2xD
-Uy9BemVrcVc2ZHVFMXFJUjc4SzNYd2tCV2dtKzZPRVhZLyt0YQpPT1o4RFpTQU1oWThtVy91MHc5
-ZVVkVGE0N1c1MjRJUFNJbmtDZjJIajJyL0tybEtoQVgvcE5uVWIvVTIxZGhuCi9maE9iM0pyNUs1
-MHg1ekxTb0tRYTA4NHV1SFYydTdGRDlmL3QzWT0KPWZhZjgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hMG9oQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMmNHQy85ZUJCNWNwcTIwdS9nRlgvc1dQaUxUN0NIWgp3eUMzNWNCcXQy
+UUFxN0NhdVlOZW1oTmw2NWQ5dmU5VGNsQTVVRGdwaHdzaTBnYXVhZVZTeUNyOVllV0NQK21DCkNu
+N3lrL3VzeGU4QnNGZXRQTDR3eHVRcmlIN0ZranZidG9pODd4SFo5MTd4V0VleWxOb2lQdDE0b3dK
+bE5CRnoKd0Vua0YvSG1ta1pqSWlnUTU0RXVjRjVzeXpndDJYOFczalNKajVENUEvSTJBM3ladDFO
+TlJnckluVmdFOGpsUQpyWFRlYzRmUDFDRW43MncrRjVURlVyV05aRy94eHFuOS9WT242YWlQVHhz
+MVd0L1lwV2Y5TmxOWmh5a1ZudjRaCi8rVVhDRjRYSFd3bERjbVJ2T01wbVFPZ1V0TlllQkFwNzJq
+b2FVcko0RmtDR2QydXFVV2xXZWlmUzRUNUhEekIKem5aUXpWOVhpRHU3d1J5V0RQVGZ4TzQ5Z1dz
+MUh1cWhtUk0veEh0VFcwNHg3cXlCYmpYc1hqZElQSjlXZWFhRQozSnFuWitKMS93QkllSW4zSFR6
+cUV2TnRMdU1iY1NKemk3azFCQmNjOUhCMTJ4REg2UDVwcTYzV2N4RUdOc0ZZCnlVVCtPaFVQd3ZT
+REhOUGhLWEh5cEtxT3pMTHF3NDRZZjk5Y2Fybz0KPWhwZkIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e63788061f2965d0--
+--0000000000000cd5dd061f29be94--
