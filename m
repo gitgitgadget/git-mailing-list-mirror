@@ -1,84 +1,82 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646FE2F50
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C98A2F50
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 05:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723093522; cv=none; b=UzSNaNhln7MlsDZ8pdgdn7pRodWJrSBY06/NaK3MKTAUmBJs/bfAjOtkqaINeTfY/YvE+c3GPEmjYhoHM5FBMMmZ+sv/ajJSjxhP9JketWQdvmjoYQQwqj10HykM3mygMLyxlp19TCHKgAJtNv/9saVDI22LK3NkuoyQhDuzpvM=
+	t=1723093528; cv=none; b=ITKTSdQvpx02gUUcXNHfwryYnUrTFP5MzPj/7DNhSetgCVErnzpgzwlazVzODXwDgKfV4gqeXCAXYtYkSeCGIhBSPgS8vLZiubt4J06K/1w2GqZomIkIBeo3x+69kkY/P/RZXhdb4SNSRJMbdjwGMgC+7pD4yA3I36a19cuTSCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723093522; c=relaxed/simple;
-	bh=SyxAl7C5Vlm3MpneEEIpHGQrvXHQ21R8pkV9HQhc7vU=;
+	s=arc-20240116; t=1723093528; c=relaxed/simple;
+	bh=r9fKhFxVc9wASN+q+kEEEJpWEV886Sf6CtnZXUX+CBo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PWHKhflJQqlF86Yzrb8ES9stSzRN6IE586t9U/0uGbIAKMeaV3rUoCXUJCT648rW3HAKXkUT2VZ5NJ6eGuqpxlYtOmlhfDycu7BduE7XMZTQjLP7g33ELoerkz72yO+/YD/GqWfXChsVerhW7VG6rKpswbvw4w3LBVHMgOtUClQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OwaqIctz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HV7Ok/X2; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=aU2PQxXzez5GWhaM82+G8mbtpUbuJ/x+1m9Q/FREOCoUlaiseg6dYiMEfy17depGR/tIJcU5W25hZJsT+J0adNEynkahqWH+9Xz/p0tnTAzgDbLyA1tkoKXFxCYCSO0n2gDkB56C8PDPQ0z8FsnSbrQHg/3dAIMHo+oN1S13rcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NKBNQ0V0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gbzRNX25; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OwaqIctz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HV7Ok/X2"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 89EFB138FD8B;
-	Thu,  8 Aug 2024 01:05:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NKBNQ0V0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gbzRNX25"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8495F138FD8B;
+	Thu,  8 Aug 2024 01:05:26 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 08 Aug 2024 01:05:20 -0400
+  by compute3.internal (MEProxy); Thu, 08 Aug 2024 01:05:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723093520; x=1723179920; bh=lzyhl0LDSR
-	oyb5ze12olqveeX1v9kfUTun6noz/sVjw=; b=OwaqIctzKudskPQMv+HCj56aRc
-	rtG9qMInOMLA+PyRaBa28VFNAfy9g/mEvrrcPdsS/KW4bIQbWnX47XyCIoOqGULx
-	srnCZGgp5tBxdFBsin4qXGKCSv4nihoPRD8LhUu20/gtqKxP5BjnkMnbfoEbVaaT
-	wRTtg8hh9If7iI0K8LsJIDZBYMZ6ig+ocy2zoRJspl9jGCJsO7EIGrbZBd45eEaV
-	Ncj/vJfgIsfPgVfMhtMbZiEWRIXv0OCpij4w2/yN5tIaRkpVRVwj/j8/W1BSUZ6n
-	Sq8T5aZ5KgVTdaKL/h/qP2X7xla6L0mV/TRoRiN5ZIwRacE5CRTmkmdyw4yQ==
+	:subject:to:to; s=fm3; t=1723093526; x=1723179926; bh=r9fKhFxVc9
+	wASN+q+kEEEJpWEV886Sf6CtnZXUX+CBo=; b=NKBNQ0V0j76dnct0HHAV27kTYG
+	JuTBElfWuJH3PuHPO+AGjMMjGpdko01sYX+q9vr2zX4AqYl6mXF5vGZcndGZV2ke
+	hKSLBX0WzfDDhw05f7mV652t/QFHOp4OILNhZEn5xiraD5trjfawaeSjpA0C2Ac+
+	1cUvNGEbwoklf0kzTTXpipwqbF6OBzb01Haj8Fk5BsrqxBz7kfz+FJy4taTJ3z62
+	8srCYus5SQ5wrb2tSuuLzTkj68dDu3OEP0VukUBFFvZT7dIHgXGHciBNljT/zRpt
+	7DtMOAZoOJNFuoDGUwi+IVhyyMFrjlnTwAMBjXZB6GwKlgTvvKol28lb0mQQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723093520; x=1723179920; bh=lzyhl0LDSRoyb5ze12olqveeX1v9
-	kfUTun6noz/sVjw=; b=HV7Ok/X2YQEoLdYqi2svdUbiaZO38AT2Ky0pjqSWAD4M
-	YHOf7uDjeuAufpoxKDE8um7j87Ua4CM9tU3SayLLUJLAGzfh/p4o8jB45zv/kVY6
-	2oi3ly4r5tHVepXeA+mEjMJiZKgMsU8e9EPY4EipTejQfqtydMqEZYpCEr9KMsxT
-	vySWCFNpRYFMmV7MnUTbEp5kn+aaBeNTTgFAY5OI2PwGa2bfJzL6pb19vYqxrzk7
-	YD3+KlkEFuLkaSRKsY2bdREsn4l+8HOqwbtMwP154p52Q5qFrrbuTDaSPWZkS+34
-	ln7l4OtjDtKT8HXk5Gg8bcQEFoqvbPO55oTCycIxcg==
-X-ME-Sender: <xms:EFK0ZsCxnBZJDqOoa6UDty0ScjjlYwHu1DbtpNQmfXWgiAgCyllneg>
-    <xme:EFK0ZuhKYA0_rcoZxBbptj9-35TNrl86bATHnVHcjUasBZuUlquiEnccBQvnYBsCJ
-    7I6Tr85a1APHgX27g>
-X-ME-Received: <xmr:EFK0ZvmsjGqkqHWO0iuJBiX_n2zIItrU5BSAV-RAeS92Kb9sTJsfnQLZycNHGUFZv03kN-WCilwdjk6bjIRp9bpRRbAf61QyGi5E99el9X2u6pEo>
+	fm3; t=1723093526; x=1723179926; bh=r9fKhFxVc9wASN+q+kEEEJpWEV88
+	6Sf6CtnZXUX+CBo=; b=gbzRNX253IoGUTPknJDxxmo/+urMG8K+V9v96eGG/AGW
+	h6abs6iYX7H7LK1ujsg0S9i9jHYJ0BwSFT9wWZWmDfaFSVBJt2GUHxpQa6SfSVK8
+	CvFWZV71iVRBiXdrDCI6u6NcVC+w39mxNtPQWTt3aKVV6V759wU5KS044w42OrdG
+	MIJWjzCqK6TcC4yWB/VFoxhnY7O4J3b5ivi4GxWHQREXC4pMmAlaDHaCNO41EoYi
+	3zH2t5ZRkq19d+L341rTe+dVG4G0dERlGI3OSb4BdGyfYPensR9JTbBEGBq0Cj6s
+	0IJWLB691/HuG0Al/O04ORkoZyz5RDokJLf9sYxyfw==
+X-ME-Sender: <xms:FlK0ZiWDUwpFWZkXn1Zos0WI1P1AX8JD9MzejlVIYY330ynDuIGVhQ>
+    <xme:FlK0ZukwdLEe9pZhNBv5ix9OOOIs4JfgWTayAVrwJE029_izydc4CDhE8O8b53doJ
+    MmoZOnGjpir9ay7lw>
+X-ME-Received: <xmr:FlK0ZmaBlg51L7l1fpfKalHge6iDGzG89WvqR0nCYPAl6mL-vxFOby8GE8iHic-icIhbiLEy9MyRylvx-1u5Wk9tJ87D8OlXeheDZPZpoKSkDJTg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdeludcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpth
     htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:EFK0ZizIvGk5J89JZ83HjbRg8ByYopVUqJTemUXjaN3UdHhVZ-3XHQ>
-    <xmx:EFK0ZhSHDI49_kOHMas2bMLHJZjSHLNFyyTj5LMVG2IatUWY2z0maw>
-    <xmx:EFK0ZtYXCBxLYS8WPjI2ff7mwHIWJFrY4OjG_dcLYsYyLKjTUq5nyw>
-    <xmx:EFK0ZqT7wTRfX5KSM6V8r3pN9aAkX_Ald8_0bbFn3ISs0mjCjsQTGQ>
-    <xmx:EFK0ZsfiMcZ-cpzQ4FjV0kbmOTcNeDB8Vg2TnWTqDaWDnMmf45GSkRgy>
+X-ME-Proxy: <xmx:FlK0ZpUoQnERiRgkzunpDakBkguD08NdvaV_lRr2FywMiy_5tDQU0w>
+    <xmx:FlK0ZsnpQIXsoLlNb39O4rBv6GAVRwBmA6zQgaj2BOyWiED77cjbQA>
+    <xmx:FlK0Zue84GIwxbC28K6O9Zr4MEh6Y-uURS7ZvMChj1k4X_rEOaCzxQ>
+    <xmx:FlK0ZuGJ-ex9CsfzZ57WTxtNrU3zELNJwvNfD-IYE65kNyYwpW4toA>
+    <xmx:FlK0ZhwHatxuQICYObL3Rh7PItQiy7yXo7tA8VsAzgf14jLq_oxul6fu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 01:05:19 -0400 (EDT)
+ 8 Aug 2024 01:05:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c0936b75 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 05:05:13 +0000 (UTC)
-Date: Thu, 8 Aug 2024 07:05:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8ae0c5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 05:05:19 +0000 (UTC)
+Date: Thu, 8 Aug 2024 07:05:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: James Liu <james@jamesliu.io>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 19/22] userdiff: fix leaking memory for configured diff
- drivers
-Message-ID: <ZrRSDaCClfh9dMZK@tanuki>
+Subject: Re: [PATCH 00/22] Memory leak fixes (pt.4)
+Message-ID: <ZrRSE0etqno-yFiE@tanuki>
 References: <cover.1722933642.git.ps@pks.im>
- <ef780aa36039560fd069ec97ce87665eb0775200.1722933643.git.ps@pks.im>
- <D39KL8N6S0HC.HFB9VRAVWYOX@jamesliu.io>
+ <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,75 +84,58 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lpqU87L+NJbYKzwG"
+	protocol="application/pgp-signature"; boundary="IS/YwfUo1tKVbxLF"
 Content-Disposition: inline
-In-Reply-To: <D39KL8N6S0HC.HFB9VRAVWYOX@jamesliu.io>
+In-Reply-To: <D39KMJ3FXBZC.7S74VUTPEQHY@jamesliu.io>
 
 
---lpqU87L+NJbYKzwG
+--IS/YwfUo1tKVbxLF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 07, 2024 at 07:25:51PM +1000, James Liu wrote:
-> > Refactor the code such that we have two pointers for each of these
-> > strings: one that holds the value as accessed by other subsystems, and
-> > one that points to the same string in case it has been allocated. Like
-> > this, we can safely free the second pointer and thus plug those memory
-> > leaks.
+On Wed, Aug 07, 2024 at 07:27:32PM +1000, James Liu wrote:
+> On Tue Aug 6, 2024 at 6:59 PM AEST, Patrick Steinhardt wrote:
+> > Hi,
 > >
-> > diff --git a/userdiff.c b/userdiff.c
-> > index c4ebb9ff73..989629149f 100644
-> > --- a/userdiff.c
-> > +++ b/userdiff.c
-> > @@ -399,8 +399,11 @@ static struct userdiff_driver *userdiff_find_by_na=
-melen(const char *name, size_t
-> >  static int parse_funcname(struct userdiff_funcname *f, const char *k,
-> >  		const char *v, int cflags)
-> >  {
-> > -	if (git_config_string((char **) &f->pattern, k, v) < 0)
-> > +	f->pattern =3D NULL;
-> > +	FREE_AND_NULL(f->pattern_owned);
-> > +	if (git_config_string(&f->pattern_owned, k, v) < 0)
-> >  		return -1;
-> > +	f->pattern =3D f->pattern_owned;
-> >  	f->cflags =3D cflags;
-> >  	return 0;
-> >  }
+> > the third set of memory leak fixes was merged to `next`, so this is the
+> > next part of more or less random memory leak fixes all over the place.
+> > With this series, we're at ~155 leaking test suites. Naturally, I've
+> > already got v5 in the pipeline, which brings us down to ~120.
+> >
+> > The series is built on top of 406f326d27 (The second batch, 2024-08-01)
+> > with ps/leakfixes-part-3 at f30bfafcd4 (commit-reach: fix trivial memory
+> > leak when computing reachability, 2024-08-01) merged into it.
+> >
+> > Thanks!
+> >
+> > Patrick
 >=20
-> I'm not sure if I understand this change completely. We don't seem to be
-> using `pattern_owned` (and the other *_owned) fields differently from
-> their regular counterparts.
->=20
-> Is it because we can't do the following?
->=20
->         FREE_AND_NULL((char **)f->pattern);
+> Thanks Patrick, most of these fixes make sense to me! I appreciate that
+> even the minor changes are accompanied by context.
 
-Yup. We have a bunch of statically defined userdiff drivers, all of
-which use string constants as patterns. We thus cannot reliably free
-those and instead have to track the allocated strings in a separate
-variable.
+Thanks for your review!
 
 Patrick
 
---lpqU87L+NJbYKzwG
+--IS/YwfUo1tKVbxLF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0UgwACgkQVbJhu7ck
-PpT/XQ/7B7ssM3Y39m55Brvf0WYWx/VVdUrgn/VvTzK+7tE+2kt4PP0Ich2kIggv
-UVpAxGXp221Agll1tGAs/Pg8dV9+nsGTNQfbWXa2mCfoOtSa00d7wmciW9fmCijb
-urhGHKDRRqVkIHexsl8SOoU4MN6fFxXNI2N1X0AWFcjOKTDvjLCGK6z8/rHqvfVd
-EmjDAqhcJtH3nR/gAMYJgRIJJifBEWAvm7qjD7RbbzJS1hOff78/rxCy2CX2sX3a
-HMR6QwXAaUqEE6AUPkH7cEL1IqqmRkubGsQBzVETo+CG3XmL8BZ8Qmuh94G9sm+d
-zCmJf/QK0J9qVwuwp8uR2OUhqDv56ROlZMuRuhxOeHEAOIlz2REUfWXYsPenEjLB
-k1Nk0TpH1q3/eleZNN4tDzjWTpOX86FYyYb8qDZnS19UIBK3dxCcAT5bB1oN4sJi
-clNI36f+qClX9q661kpyaU2LtwsMp84TeHKXR6qEBidSd3RkgRPmpIC5NTIR5D2S
-5Q8unpRGBXwJ5kuQ6H4+NfxoFaLLf+6FzH1rJOHYCvGKuAcuMv1Ehs9EK5W8Wg97
-dCSEW8e93BXVT1Q+umov1KTUg3BlD6UTm9kiCuud824RaTIh3OkSnsO2xozQfH9f
-Yvjaxcizc6zlEturr4m9quIvqXYkErFru5gaydGGsIj80K2y4y8=
-=gK3x
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0UhIACgkQVbJhu7ck
+PpSPPRAAgsE3LsyyxUNUSlgvWox+3P5fmneuG9kofT0upvSeeY109Je1SKTRSKRz
+qmR2jgoCw2fSPUzG1HJzxqps/dwQdePZounJmZGmMjxc4SExVHX9Ln1vUrAx7cmp
+sm15rkdYzJL6OjrvC3fNB+RNHwSXeL8kFtobWn5+4gOrc/B3FkAA2jy6AOnNMHGk
+zFB9XAelxRa7LKwby2pGiOX0cNul9K/tSL35O8AIZvlD+OZaZKgaZyOGACtRRRz7
+9nGUfArFeit2LcW80vAuw28hcQsHM9FmutKKjJR655IEQfIu+uxif5spWlu7gbyW
+Rc5jijvAeOFxzHjtD+OszOzrgs3VfeKkGgFDQMjVsWDpHktTK+EQ7v1r6ARBJkIh
+xWLo6vgMuUKVYLP7WISGfd9sWpjOTfrrn/+K4enCE+kKMnF+2CwNEYOOSdWNtXmw
+gxQMYE0PQksTRZ7MoXaLWNcci8nZq/1i0CEGOvdu7k826EoIiyJGOBonXd0cykAs
+bv6KvC8Iq0kSEnECUWoV1C+i8WLTeCs+WiLpP24qciJuIiEYVQug35sfRGVSKPm5
+QS2jcfcbR9711S7ayeX9I26w95eiemCScnPnqb1+eGwNgXQKid2MsTl7Gmx0KjWX
+FyWwAMyL1CF6StgE/DvM7WLLPQYR0SmPL9C01dO6CGW3tgiO9HM=
+=iHjP
 -----END PGP SIGNATURE-----
 
---lpqU87L+NJbYKzwG--
+--IS/YwfUo1tKVbxLF--
