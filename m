@@ -1,129 +1,108 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0AF3399B
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 07:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CF513CA8A
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 08:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723103329; cv=none; b=uG1TtRjebRZ3GiagpYgHvT91FR/5L4XQCJenEaLQiL/6ou2i0KuKaEGCfQIrRsdjxYVse5g0RyUEgaH2PBUXWZ2uXO1TKN/QCLlZo/GyJsNi9ewGNrLPXviOP5oybfgH1n0nZzHDVOOL++4cK/XtUbh01yDIgSiCTFvYKR7edP4=
+	t=1723104434; cv=none; b=dtybPIDTGerH8XhJOaGhQIW2aGVVOnj7CKQgYZ891nhMS6vai9GQzLqeqg3F/S1KSvsoAV1/iu6hDyZPXpax6Zq9VX1WOH2/uPQanapNyvyApnr6SIKZxpVy53djPp69UAprHZiWeEFhFu9J+XgRK6wUmm7kLDGGyR+7HdBUA3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723103329; c=relaxed/simple;
-	bh=OjG4L15rVuTw1A57B5tTdC8HDkXqGl0Y4WvslQULmXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qF7RG+sORGXURb9LdDrhdKVsQpshs7rqLJTK+MocgsoYJ9aOuW+OwZaeLpGlvpJpOna5iCI3JJTfE//ADoPnE3WDMA7GgPkbaWWSl1/aOol4uOVDRU7Lrv01nYaIpyJ5Krmv9YV1l57Jk/KmUsvrVzloJfEp9vWeIuFkKhfZjoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iI82/LPe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uHysb/mF; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723104434; c=relaxed/simple;
+	bh=dGyrp5I/5AbROPdl857InrG4/kKhdByw0KJ+SzWUgB8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=FkGlybAXcw84KNR/4iScFyxvLFfT2XRoV2qjdtViJGsLGdmva2ryU198A0Wk4nl8ZkRndwk55DqkZjUGxk0PFRZZYpcxg4G98WMIf9WgX5e5R9CBTLaTynFdF10e/mr0m5d7Sym6CtMEcaPq/7NPo/JwFf7gdPBeE+EQ3iGYTdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=bX4ojmuh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pNP0+HMB; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iI82/LPe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uHysb/mF"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="bX4ojmuh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pNP0+HMB"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CE66C1151BC6;
-	Thu,  8 Aug 2024 03:48:46 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 08 Aug 2024 03:48:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723103326; x=1723189726; bh=OjG4L15rVu
-	Tw1A57B5tTdC8HDkXqGl0Y4WvslQULmXM=; b=iI82/LPe/L/f1q4ZebwI8OAJD/
-	0LwOS/w4pwr9GQwUdZ98xRXLHViJpwe1rEuywdRQvmMycH/RxyK6R9TjksPufKIK
-	/r7oe8g+TeKlV49lfDJvGtFfCn7IqzZZcIkSOglP4eFgfGQlDnsJbDfXHBz6tuJD
-	IV/c/Y8PK7bkx7BMxIKn4sFwjALOKdaiAJEhnYOHP6+a5boGih0zXF+/A+zXHQ0+
-	6zNY36waWN2iKwJ60RrcQWAuTaYF/9Zy1p9quZjrWFs3eAPVQr3RpV52Cno79Ng6
-	9uEU8OpJ/Hmk2NPZDro/PCtQGLnetm9TbCfK89rnC9czL5DVDwdBg8r8JMOQ==
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 436481151B27;
+	Thu,  8 Aug 2024 04:07:11 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute4.internal (MEProxy); Thu, 08 Aug 2024 04:07:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1723104431; x=1723190831; bh=dGyrp5I/5AbROPdl857InrG4/kKhdByw
+	0KJ+SzWUgB8=; b=bX4ojmuht74fbvIuksLJwXc32BfUIPuMniWg+9wgFTu4F6Ga
+	a4wdsiXlsUm7RNybSCdfB8ioTMt1IiN0zNwHE7TyXYL3ovDrycgcevllcwOst8uz
+	wUuy1/vpsYUaYEZKwDvGsh30P2EEjC6yMHYo2e7fZOskFZZHIJQ/XHEYrs+Sdp5P
+	3N0J9PxZjH/Iqfhcno70nGEAyv8wdVzM/XpYIzUGNLWjse7gf5HDk6eCN5QJ+TbE
+	AAeRCYHpKP9Bv+ve48D2WBj9iErsuYsDCCFvIVzC9JPMbXSSFx2abQcjKoWypiJD
+	6hu/Klc39wdZnD3xaU5P5gI0Ydu8tq7XjqFmKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723103326; x=1723189726; bh=OjG4L15rVuTw1A57B5tTdC8HDkXq
-	Gl0Y4WvslQULmXM=; b=uHysb/mFlLdS8b0lLYFQXVfWup3o76VYpybEAD9hjkAm
-	DQf0RmZzHrqW7Bf/kvz4/i3rsWB1G4y+c37p12O1xMFow7tYl3aCp8NgSXoRhElD
-	vaaoZdLDcqA71gwuFFvaNItA25fexIupxWrWWHyPhdNLeFMGwaXohrGiUge3tDh+
-	pqXXQxY3XRv+/c5hlF/CT5Bbcc84S2+JWR6XjGhogiWfp8F9Qv8FJq138Xlm9kR/
-	NPR6SqniXe3T2qS6TsR5wcwD6QX8FqAek8W4b56UamIqOEaZ1mIgbAIpZV7Ai69D
-	dijdHcfyzYNJqhI0TteL6I6ZuH4qZHZusnBhqMswgQ==
-X-ME-Sender: <xms:Xni0ZsJXUEuoWFcrNvUNaURy-MOZwl-6tTqek_cDLYKa69Xz_yoGiA>
-    <xme:Xni0ZsLF26o7nN_oFlmAX_1_TFRfBB5BoCrb1GXFiaXSuaCwzTQI2IeQgC0RlfdK1
-    MEqmfzzgUlFq8YniQ>
-X-ME-Received: <xmr:Xni0ZsvXd7XHmKP8DyzxOLxlGKVQiXAl2elIAHbc9rqCmKGmRIvOlizJCvYngcXZhKJui1NgRtzFC1VnwBB0aa9H9eH3TggjTfrFsnar-7Hrn-Hn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledugdduvdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtff
-    evleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgrnhihrghnghdrthhonhihse
-    gshihtvggurghntggvrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihf
-    rghmihhlhidrohhrgh
-X-ME-Proxy: <xmx:Xni0Zpav7i2yYk7Ngi0PI1yo9btzAYiM8YawToS6g30Fpmmq5CAehA>
-    <xmx:Xni0ZjZL7S5YsZ3wcYxyF4PnhQ3nFP2fxz4v1a2GHnXkkQM-WI5Iuw>
-    <xmx:Xni0ZlAmStfyl1bZHsk3DrzmYdMMUp8CYhHfQS2cW5KQdyuJpLbDKQ>
-    <xmx:Xni0ZpbBW23ze0wZitsfeOYQKxhtpH5OcbreMoyWZEcYwC6816zaRA>
-    <xmx:Xni0ZvEFk-1-UbVKPwU0uX5-g-6epYiqlpqvz7_LvAc20z4Hj5UsEg_C>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 03:48:45 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3c20982d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 07:48:37 +0000 (UTC)
-Date: Thu, 8 Aug 2024 09:48:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] doc: pack-objects: clarify --missing option
-Message-ID: <ZrR4WVtSs5deJCPu@tanuki>
-References: <20240808062120.34629-1-hanyang.tony@bytedance.com>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723104431; x=
+	1723190831; bh=dGyrp5I/5AbROPdl857InrG4/kKhdByw0KJ+SzWUgB8=; b=p
+	NP0+HMBdSia4I70A9vG9QGJppTTPl/qBro3lFXteVnRHfDU7Mxq0TFPIdFZ+CLXr
+	2aOCP9lgYG/ao1h52yLU7++HgrNSSb5G6AykmNTNZfWsExXSKUTwM2CvLn3Zc740
+	NriXmh84Y1QapwSNUEOpLq7wxwK+fCnHeiSEySl3M3A7QLerROZpyyb+dSMtkMly
+	VqY79ESWmmW2GtY2ipvWP8sGvs6lwh6EGxRp2Mx+np9EmfsnbX0qylHvr6KmirAp
+	KQMa15/L4XBruIN1hqW8WQHBw368qqFi3zGQLj3PFVA9fff/PDLNDsUJ2Id2sOhX
+	YvmUJEkf5MPbRsOmk4JWg==
+X-ME-Sender: <xms:r3y0ZoQ50BQ3T5ViiF1kTggvl3iCacJqcEDsb8GjBuZnP5wgk4vXCwc>
+    <xme:r3y0Zlwx-7Xtx9J7oMG6j285FMEMq4a6EgJRyrP1AfCwrKuW-Hs7SQjv2lLQGPUkx
+    Z0KoF-YQU7qCal8jA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfurfetoffk
+    rfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculd
+    dquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhr
+    ohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeefveelgedu
+    vdekteehieevffdujeelgfduffffjeelffffledukeejnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdr
+    nhgrmhgvpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehjohhlrghnugesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuh
+    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:r3y0Zl0EfWpYjcQtcUjAIzT3m1ALt1zuAfu82BFB9TVyqFhuIYgT1Q>
+    <xmx:r3y0ZsDVxZkMQEfmebOU5b4FXOLvRPIiODQ96p6mkHOZLCtqlcKRVg>
+    <xmx:r3y0ZhhHigDrcutdlIoUHcu33xWgMBm0TnUu8jL6bLiNA6AQqjNWyQ>
+    <xmx:r3y0ZopxxlFCgEpy7S7guvh56g0VRI294gb0dEgqJ_3QwJyovD0bUA>
+    <xmx:r3y0ZhfV0xlwV_hPW0zwDZW6y9QeOc8sLj5-6Y1Z2y_JMjeVOXNe_8ai>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 14D3115A0092; Thu,  8 Aug 2024 04:07:11 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Wx9rC2ybs7SeAN4i"
-Content-Disposition: inline
-In-Reply-To: <20240808062120.34629-1-hanyang.tony@bytedance.com>
+Date: Thu, 08 Aug 2024 10:03:57 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: "Eric Sunshine" <sunshine@sunshineco.com>,
+ =?UTF-8?Q?Jeppe_=C3=98land?= <joland@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <24dad55d-584f-4a38-b6c0-dbedf91fdfc6@app.fastmail.com>
+In-Reply-To: 
+ <ed314f533355dc38bf8acbf7a69651e47eb8f0f7.1723102259.git.ps@pks.im>
+References: 
+ <CA+osTZVApTAMogBDMaPDEVViJHrFT=BOer=Py4fjTvpsifzfKA@mail.gmail.com>
+ <cover.1723102259.git.ps@pks.im>
+ <ed314f533355dc38bf8acbf7a69651e47eb8f0f7.1723102259.git.ps@pks.im>
+Subject: Re: [PATCH v2 3/8] builtin/clone: propagate ref storage format to submodules
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+Morning
 
---Wx9rC2ybs7SeAN4i
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Thu, Aug 8, 2024, at 09:35, Patrick Steinhardt wrote:
+> When recursively cloning a repository with a non-default ref storage
+> format, e.g. by passing the `--ref-format=3D` option, then only the
+> top-level repository will end up will end up
 
-On Thu, Aug 08, 2024 at 02:21:20PM +0800, Han Young wrote:
-> Since ee47243d76 (pack-objects: no fetch when allow-{any,promisor},
-> 2020-08-05), we mention that --missing=allow-any and --missing=allow-promisor
-> do not fetch missing objects. But this is only true for missing objects
-> that are discovered during object traversal. We will still fetch
-> missing objects read from stdin.
+Double =E2=80=9Cwill end up=E2=80=9D.
 
-I have to wonder whether this is intentional or a bug. It rather feels
-like the latter to me. Let me Cc Chris, who has written most of the
-infra of this feature.
+--=20
+Kristoffer Haugsbakk
 
-Patrick
-
---Wx9rC2ybs7SeAN4i
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0eFkACgkQVbJhu7ck
-PpS5pQ//XmdRBcD9tHPTxh/A+Xu4LiG//qaWvm3aqT7Fnmtus0Lu+1MhaKdHSGX+
-fm+1xUQv0KnEXwKcxnoS4p1Z/tXj/JNtwCxTDdVwkxDA4Luq9prM6CERfILWU7+w
-nGR8OD1a1+P2ccv6hJ4wE6G2o++H/IRgb3VJh7gAjrPfnFAmaT+x2QJumFshZLiV
-ZEbjqtETSTWNZxtTB4fwUPdisAm7DrlQqrspaxPuAbysBJhnYuBr7ktiGhaH3Og3
-oez8RQLJ8h6r6XbJbSk0Fb8GVpZJ+YFIeA7X9lD50K74WMbqGnmf76le4hGmE2/A
-SoVp9JLEdEaaVAPlVRvOBWblgr+6XTxwVqe63qE7Sp9jRcfD6lpKFUnT8AA+LZEh
-7V2sS9J+VHo4okgkUTp4p9BexDHwyQnRiGoEIkJ8zaZ69D7uoB4SuX/POOi8eaAS
-fINGeCwLwgoDkmZXKHGGeJ6GokvtZFVQsDxmork0zhm+K9qxg0jsFh5NIPP5epa9
-DE9chGB6y3JUS7Zt43y+v4mdQMy6uFK4UmKi/b/XGPqh6E3wN9NjqzAy56CdplC0
-8Q0ovsJmwLQomFc9XD/yB1V34BPTvxAyfTrRkjo+ISffX9ryv7gobJ6EqXbAa3we
-xrn2341iVcbmuQh5tRRADNLQiVyxzaa/Wj8dATVeu6cCPuwFCXA=
-=xZXY
------END PGP SIGNATURE-----
-
---Wx9rC2ybs7SeAN4i--
