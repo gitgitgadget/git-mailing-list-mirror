@@ -1,84 +1,84 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB563D
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 14:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B6418E74B
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 14:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723126019; cv=none; b=MVuCveGzNNcj+yUA65VvVL1d5X6tWsNG6BNLQsqhQrDPJ+Mcnv3OgDMdzpzb0FC0vH3erDlvC8PW9QMD9tf0o+oLMbeKmRqvsEc7zMoPCObmUqIaWzrHV4huYodO/hHudVsIs/Fsj8l5HkN7UsYF1ULJ3IzhmoprP6hWH3/mXMQ=
+	t=1723126025; cv=none; b=pGuZRvaRdY5LoI7fih00ksCumxXHA5eki1bIBNX0E6fY/5BgQzlyQQT7RAOBr6Hy0MA7akx0y+psTNTV0dsXm3zyX+Wl0AdntKZSNCI8yLgTPp0uMal5Pj6padHYLQcMyUx58CL48sJCmzskUVYlNA0gV5EYsaNKvCPCWWO0VlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723126019; c=relaxed/simple;
-	bh=QyMxiqeVkL3q0K+VCAhGV6KCiUitrwaHLBp2mDrt/zU=;
+	s=arc-20240116; t=1723126025; c=relaxed/simple;
+	bh=y19g2xY97qY+X+R6tOwBd01wKKoRnEE0eqdCS4e7OSI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DDC5uxalXxfh1uQLILSq+c4AqL6JX5AClmmEqKXbRdClH7hnwfT5PkWK/xfRSjv2eSdrUoh6D/PLXZB1cxczsw5bhbXOtFZ/6Vd2gxVuQOqQhWDsM+6RyFfXkvCTaO4nYLYhLsiozdH9DDObSB5Q4iLzJFbfV0C9nMdZ0Xvts74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I8aq9JUH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vBaaVwB8; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wxz55EveXEDM6BsbVUzD1TZl37uScPlhDJhWodlML+bo15iZ91ECSD1GYlV2mH3n/MS0xuQdTECBOYc3y9CsagT0iSAxgaVYEit8svr179OuRh2nZmghcjcQ98RctwA0iJsD4ozUaH3PnZiXTkE/I0sPa2dWySxQRhzqNW/3xBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j2bLVG/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gzuj0KJI; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I8aq9JUH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vBaaVwB8"
-Received: from compute8.internal (compute8.nyi.internal [10.202.2.227])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 64186138FC9F;
-	Thu,  8 Aug 2024 10:06:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j2bLVG/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gzuj0KJI"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9BB771151025;
+	Thu,  8 Aug 2024 10:07:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute8.internal (MEProxy); Thu, 08 Aug 2024 10:06:57 -0400
+  by compute4.internal (MEProxy); Thu, 08 Aug 2024 10:07:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723126017; x=1723212417; bh=uovY81k2C6
-	fziKb3NoOv8QMwyxmAElagFGPCtHAZ0n0=; b=I8aq9JUH3zvnlcmgpIZ/udNBFt
-	t29y9aFvmMucRqyufo9Rj2Nt3O7LJpVDh1/f073w2ortCwcNso0cSyNpf55eTm0w
-	mwVMiQqDj5/lFBJQPh1SFE6WmCWVS0Ns2CQLPRBaPr4dYYVbmJuDzIHGZVGK29hc
-	fEz2d4hEDZAhPaL8U7B7suwFPb6C8crwqfQUo2id06+ExVDZZwScQchwUnosnqOG
-	o4NExTaah/tVkpY0+0/WOf+ymECPfSlKbqBs3PM0n41CpHqmNVRFijCxFpxsKTnx
-	iGtTDkAXhynhLUTbaSpM/kRfQdtNJoLVC68veiG/cB7zi63u8exhJ7IxXD3w==
+	:subject:to:to; s=fm3; t=1723126022; x=1723212422; bh=c2emqa9Ij4
+	q4ZqD5TP0N4Jbwh2OQavWjZHO6P8JcUP4=; b=j2bLVG/XQMmw/wr1pNII+OUm7Y
+	zsEJWCgKKvLnUMkNfUnQbOhClw2dqGDr+Da2iJlx085F+bpH00r1EKaq5kR4rgq/
+	CHRdv2JxZ0XG8OOVtUmsu9849+OgzS/G0eLfzYrDplZt4AxhB36ti+SWngffauYj
+	BTzEj/gP3dOa4Z3TzyuqU8VgUoGS567StTMJQZAPoympzTkjZT0yb5Tx4GpsHIo9
+	/nydrDKhh4u81SE/92YPR7igE/p77mTCjKC7fnBQikpLaWNGioltl4MPSV68aikj
+	Mj63dLq/9L9NIZwUlONhDbdObxg3Aa9f60E58WwCUFxdzSjgd2miokYjNAPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723126017; x=1723212417; bh=uovY81k2C6fziKb3NoOv8QMwyxmA
-	ElagFGPCtHAZ0n0=; b=vBaaVwB81pzYwTC5WxzW/zYwiinZjyJ+0f5+o5RKmtN9
-	BVePMkL1Ov9ZqvAaoS2vqgVLgnLX/pZERoOWY4pfkE/LmQD2X76kiFcjI0X748Y0
-	BTPWCfp6FqnzHjToSXobou53Y669Doqc8pxspJTY0CsyR0Vi4GHjCns2kYokUVRD
-	z2rmSpo4AnFcsBClmAHKesd3/Wgt6Qa8bRNPhgxuuVeEu/000rbJvhAZYiOFZEnq
-	Zyrg+Vj+eaz+I+pGFX0yw/O2ZtXtFXrFK9IBoVlloOQqx9Z23m8EPv+ZUK5jcLRN
-	L0Otjijj1523npkbqTulXDGKElHAmXL9yHjuSHL2vw==
-X-ME-Sender: <xms:AdG0ZkasyGjo6HvHEOKql3ZWjWycJlymm2dllxJDMasYWJIJRi8P2g>
-    <xme:AdG0ZvZZtrTfZDrSoo0lVr1F7BdqysOdYDOckRaYYBaOCnfXgoB7Wo0WtEo4RmFB3
-    PvuCbRNK4CwM2dEcQ>
-X-ME-Received: <xmr:AdG0Zu-pnwBeKIGlKhMgSpvTGf86MZAzo4eSTJdqnYs3lKvlrJv5oPQtlwu1ir9s-iC8R3_o6twDBBOLWyLPpMJtYwPY-BM2dMHVOzEEb0NPxtBj>
+	fm3; t=1723126022; x=1723212422; bh=c2emqa9Ij4q4ZqD5TP0N4Jbwh2OQ
+	avWjZHO6P8JcUP4=; b=Gzuj0KJIae6aSNu/S9lB1j0WtoAqI8K5cda4+tM1qh2O
+	T6YP5ERVlNI4yi3/nFpwTEHLVMX43iEG47TfE3v1EFnopm3xpfOlfOn1Tf9bSWhZ
+	i9VxlivONPERmVlvFU2ih9GYVPLye7B0ExXudk+YaXiiTNz/XszcBc92+CmU36kR
+	M1/v2yyHCukDUvMBrRmP9vc2fYf8BSBzFkYuZKPz7D9vSqHQit8tlxaqr1pgcj6v
+	yCQpNg6yBA6QSZtmGUWhD4Ll00yztbS0TQHpBh1RA7MV0CjCFI8KZOsrh2Rj+fnO
+	ESk/Ip1rKRkXEiTUEDfTczJ3EeE1VV0II50AXC9h3w==
+X-ME-Sender: <xms:BtG0ZrJQBjHxGpH5cXR46nov6tvgqJ14lqAm3pNcCf1FL3Mi3eNU2A>
+    <xme:BtG0ZvJjPpSq9G36VztW3wF-qtG65xkqTtDrl0Hwp2Wous3DTKDT1ySpbzCv2oQUv
+    lQ6ab2JfQbs0p9AGw>
+X-ME-Received: <xmr:BtG0ZjtS1CLc3vU_eEdvJ-6CmUfD1kdQZdMwbIRSwU4Z2_5ZqfwI8pxBzdlHN1gStdN1PphTfmVYB4nY_RhCV6x2Spi6Rzvx8VxhFkYmfaJkZwSz>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhg
-X-ME-Proxy: <xmx:AdG0ZuqA3-U-U4b9SpmREMBa_DOmjuhWVLQCtdA1qb-WYRm-r3RSGg>
-    <xmx:AdG0Zvrj962QmhgXl2bOppCM5d6F8WH-H3Ksd4IcYYwXarKbGlHT2A>
-    <xmx:AdG0ZsRJvUC-ntNVbRygmWkveccHlzRBq9xD1SPL47QMFeXMIxkA0Q>
-    <xmx:AdG0ZvoRLAwLBVZwDHZzKKblsfwGJLqa75caCJ-kAEXye-isDgEdjQ>
-    <xmx:AdG0Zgkm7CSQUkEa1dg5WvTyCyjV21rYDb82D2fTY_NpT16Fz2VzIWbQ>
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhht
+    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:BtG0ZkZxj9MgvsNRgHhhcmoquTWPxTUTTfnZrTwNuJs8_kneMvvOag>
+    <xmx:BtG0Zibjo1AX3bBUdaeSGVboaqlt8aSrSqt7jYjwZr1M16JrBhooXw>
+    <xmx:BtG0ZoB3ym8oYSjBi1Ypo4uZpyc6XSF9gqUTUbL0krhmINYGpdgx0w>
+    <xmx:BtG0ZgZzLx1tBBtx-d7C-xUjvaLlgW9rVp5QMTSPNcW_TneSOr_1vw>
+    <xmx:BtG0ZpUcXupHUH-yIYlFoTzja2ZlXi3frjUJXHCoSG0TibYN3PkngDUQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 10:06:56 -0400 (EDT)
+ 8 Aug 2024 10:07:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 608fbc7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 14:06:49 +0000 (UTC)
-Date: Thu, 8 Aug 2024 16:06:53 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f343e1df (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 14:06:53 +0000 (UTC)
+Date: Thu, 8 Aug 2024 16:06:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 8/9] reftable/stack: fix corruption on concurrent
- compaction
-Message-ID: <b27cb325fc59796a2cfdd8caac2132f982681257.1723123606.git.ps@pks.im>
+Subject: [PATCH v3 9/9] reftable/stack: handle locked tables during
+ auto-compaction
+Message-ID: <dc2fea145dba4b9e6c5aef2a57d18d5b8640aef1.1723123606.git.ps@pks.im>
 References: <cover.1722435214.git.ps@pks.im>
  <cover.1723123606.git.ps@pks.im>
 Precedence: bulk
@@ -88,242 +88,261 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0JNHdDT8IbbteD+E"
+	protocol="application/pgp-signature"; boundary="E/RGt+/HRHV05mPy"
 Content-Disposition: inline
 In-Reply-To: <cover.1723123606.git.ps@pks.im>
 
 
---0JNHdDT8IbbteD+E
+--E/RGt+/HRHV05mPy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The locking employed by compaction uses the following schema:
+When compacting tables, it may happen that we want to compact a set of
+tables which are already locked by a concurrent process that compacts
+them. In the case where we wanted to perform a full compaction of all
+tables it is sensible to bail out in this case, as we cannot fulfill the
+requested action.
 
-  1. Lock "tables.list" and verify that it matches the version we have
-     loaded in core.
+But when performing auto-compaction it isn't necessarily in our best
+interest of us to abort the whole operation. For example, due to the
+geometric compacting schema that we use, it may be that process A takes
+a lot of time to compact the bulk of all tables whereas process B
+appends a bunch of new tables to the stack. B would in this case also
+notice that it has to compact the tables that process A is compacting
+already and thus also try to compact the same range, probably including
+the new tables it has appended. But because those tables are locked
+already, it will fail and thus abort the complete auto-compaction. The
+consequence is that the stack will grow longer and longer while A isn't
+yet done with compaction, which will lead to a growing performance
+impact.
 
-  2. Lock each of the tables in the user-supplied range of tables that
-     we are supposed to compact. These locks prohibit any concurrent
-     process to compact those tables while we are doing that.
+Instead of aborting auto-compaction altogether, let's gracefully handle
+this situation by instead compacting tables which aren't locked. To do
+so, instead of locking from the beginning of the slice-to-be-compacted,
+we start locking tables from the end of the slice. Once we hit the first
+table that is locked already, we abort. If we succeeded to lock two or
+more tables, then we simply reduce the slice of tables that we're about
+to compact to those which we managed to lock.
 
-  3. Unlock "tables.list". This enables concurrent processes to add new
-     tables to the stack, but also allows them to compact tables outside
-     of the range of tables that we have locked.
-
-  4. Perform the compaction.
-
-  5. Lock "tables.list" again.
-
-  6. Move the compacted table into place.
-
-  7. Write the new order of tables, including the compacted table, into
-     the lockfile.
-
-  8. Commit the lockfile into place.
-
-Letting concurrent processes modify the "tables.list" file while we are
-doing the compaction is very much part of the design and thus expected.
-After all, it may take some time to compact tables in the case where we
-are compacting a lot of very large tables.
-
-But there is a bug in the code. Suppose we have two processes which are
-compacting two slices of the table. Given that we lock each of the
-tables before compacting them, we know that the slices must be disjunct
-=66rom each other. But regardless of that, compaction performed by one
-process will always impact what the other process needs to write to the
-"tables.list" file.
-
-Right now, we do not check whether the "tables.list" has been changed
-after we have locked it for the second time in (5). This has the
-consequence that we will always commit the old, cached in-core tables to
-disk without paying to respect what the other process has written. This
-scenario would then lead to data loss and corruption.
-
-This can even happen in the simpler case of one compacting process and
-one writing process. The newly-appended table by the writing process
-would get discarded by the compacting process because it never sees the
-new table.
-
-Fix this bug by re-checking whether our stack is still up to date after
-locking for the second time. If it isn't, then we adjust the indices of
-tables to replace in the updated stack.
+This ensures that we can at least make some progress for compaction in
+said scenario. It also helps in other scenarios, like for example when a
+process died and left a stale lockfile behind. In such a case we can at
+least ensure some compaction on a best-effort basis.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 107 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 102 insertions(+), 5 deletions(-)
+ reftable/stack.c           | 59 +++++++++++++++++++++++++++++++-------
+ reftable/stack_test.c      | 12 ++++----
+ t/t0610-reftable-basics.sh | 21 +++++++++-----
+ 3 files changed, 70 insertions(+), 22 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 54982e0f7d..3f13c3eb34 100644
+index 3f13c3eb34..2071e428a8 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -1020,7 +1020,9 @@ static int stack_compact_range(struct reftable_stack =
-*st,
- 	struct lock_file *table_locks =3D NULL;
- 	struct tempfile *new_table =3D NULL;
- 	int is_empty_table =3D 0, err =3D 0;
-+	size_t first_to_replace, last_to_replace;
- 	size_t i, nlocks =3D 0;
-+	char **names =3D NULL;
-=20
- 	if (first > last || (!expiry && first =3D=3D last)) {
- 		err =3D 0;
-@@ -1123,6 +1125,100 @@ static int stack_compact_range(struct reftable_stac=
-k *st,
- 		}
- 	}
-=20
-+	/*
-+	 * As we have unlocked the stack while compacting our slice of tables
-+	 * it may have happened that a concurrently running process has updated
-+	 * the stack while we were compacting. In that case, we need to check
-+	 * whether the tables that we have just compacted still exist in the
-+	 * stack in the exact same order as we have compacted them.
-+	 *
-+	 * If they do exist, then it is fine to continue and replace those
-+	 * tables with our compacted version. If they don't, then we need to
-+	 * abort.
-+	 */
-+	err =3D stack_uptodate(st);
-+	if (err < 0)
-+		goto done;
-+	if (err > 0) {
-+		ssize_t new_offset =3D -1;
-+		int fd;
-+
-+		fd =3D open(st->list_file, O_RDONLY);
-+		if (fd < 0) {
-+			err =3D REFTABLE_IO_ERROR;
-+			goto done;
-+		}
-+
-+		err =3D fd_read_lines(fd, &names);
-+		close(fd);
-+		if (err < 0)
-+			goto done;
-+
-+		/*
-+		 * Search for the offset of the first table that we have
-+		 * compacted in the updated "tables.list" file.
-+		 */
-+		for (size_t i =3D 0; names[i]; i++) {
-+			if (strcmp(names[i], st->readers[first]->name))
-+				continue;
-+
-+			/*
-+			 * We have found the first entry. Verify that all the
-+			 * subsequent tables we have compacted still exist in
-+			 * the modified stack in the exact same order as we
-+			 * have compacted them.
-+			 */
-+			for (size_t j =3D 1; j < last - first + 1; j++) {
-+				const char *old =3D first + j < st->merged->stack_len ?
-+					st->readers[first + j]->name : NULL;
-+				const char *new =3D names[i + j];
-+
-+				/*
-+				 * If some entries are missing or in case the tables
-+				 * have changed then we need to bail out. Again, this
-+				 * shouldn't ever happen because we have locked the
-+				 * tables we are compacting.
-+				 */
-+				if (!old || !new || strcmp(old, new)) {
-+					err =3D REFTABLE_OUTDATED_ERROR;
-+					goto done;
-+				}
-+			}
-+
-+			new_offset =3D i;
-+			break;
-+		}
-+
-+		/*
-+		 * In case we didn't find our compacted tables in the stack we
-+		 * need to bail out. In theory, this should have never happened
-+		 * because we locked the tables we are compacting.
-+		 */
-+		if (new_offset < 0) {
-+			err =3D REFTABLE_OUTDATED_ERROR;
-+			goto done;
-+		}
-+
-+		/*
-+		 * We have found the new range that we want to replace, so
-+		 * let's update the range of tables that we want to replace.
-+		 */
-+		first_to_replace =3D new_offset;
-+		last_to_replace =3D last + (new_offset - first);
-+	} else {
-+		/*
-+		 * `fd_read_lines()` uses a `NULL` sentinel to indicate that
-+		 * the array is at its end. As we use `free_names()` to free
-+		 * the array, we need to include this sentinel value here and
-+		 * thus have to allocate `stack_len + 1` many entries.
-+		 */
-+		REFTABLE_CALLOC_ARRAY(names, st->merged->stack_len + 1);
-+		for (size_t i =3D 0; i < st->merged->stack_len; i++)
-+			names[i] =3D xstrdup(st->readers[i]->name);
-+		first_to_replace =3D first;
-+		last_to_replace =3D last;
-+	}
-+
- 	/*
- 	 * If the resulting compacted table is not empty, then we need to move
- 	 * it into place now.
-@@ -1145,12 +1241,12 @@ static int stack_compact_range(struct reftable_stac=
-k *st,
- 	 * have just written. In case the compacted table became empty we
- 	 * simply skip writing it.
- 	 */
--	for (i =3D 0; i < first; i++)
--		strbuf_addf(&tables_list_buf, "%s\n", st->readers[i]->name);
-+	for (i =3D 0; i < first_to_replace; i++)
-+		strbuf_addf(&tables_list_buf, "%s\n", names[i]);
- 	if (!is_empty_table)
- 		strbuf_addf(&tables_list_buf, "%s\n", new_table_name.buf);
--	for (i =3D last + 1; i < st->merged->stack_len; i++)
--		strbuf_addf(&tables_list_buf, "%s\n", st->readers[i]->name);
-+	for (i =3D last_to_replace + 1; names[i]; i++)
-+		strbuf_addf(&tables_list_buf, "%s\n", names[i]);
-=20
- 	err =3D write_in_full(get_lock_file_fd(&tables_list_lock),
- 			    tables_list_buf.buf, tables_list_buf.len);
-@@ -1203,9 +1299,10 @@ static int stack_compact_range(struct reftable_stack=
- *st,
- 	delete_tempfile(&new_table);
- 	strbuf_release(&new_table_name);
- 	strbuf_release(&new_table_path);
--
- 	strbuf_release(&tables_list_buf);
- 	strbuf_release(&table_name);
-+	free_names(names);
-+
+@@ -999,6 +999,15 @@ static int stack_write_compact(struct reftable_stack *=
+st,
  	return err;
  }
 =20
++enum stack_compact_range_flags {
++	/*
++	 * Perform a best-effort compaction. That is, even if we cannot lock
++	 * all tables in the specified range, we will try to compact the
++	 * remaining slice.
++	 */
++	STACK_COMPACT_RANGE_BEST_EFFORT =3D (1 << 0),
++};
++
+ /*
+  * Compact all tables in the range `[first, last)` into a single new table.
+  *
+@@ -1010,7 +1019,8 @@ static int stack_write_compact(struct reftable_stack =
+*st,
+  */
+ static int stack_compact_range(struct reftable_stack *st,
+ 			       size_t first, size_t last,
+-			       struct reftable_log_expiry_config *expiry)
++			       struct reftable_log_expiry_config *expiry,
++			       unsigned int flags)
+ {
+ 	struct strbuf tables_list_buf =3D STRBUF_INIT;
+ 	struct strbuf new_table_name =3D STRBUF_INIT;
+@@ -1052,19 +1062,47 @@ static int stack_compact_range(struct reftable_stac=
+k *st,
+ 	/*
+ 	 * Lock all tables in the user-provided range. This is the slice of our
+ 	 * stack which we'll compact.
++	 *
++	 * Note that we lock tables in reverse order from last to first. The
++	 * intent behind this is to allow a newer process to perform best
++	 * effort compaction of tables that it has added in the case where an
++	 * older process is still busy compacting tables which are preexisting
++	 * from the point of view of the newer process.
+ 	 */
+ 	REFTABLE_CALLOC_ARRAY(table_locks, last - first + 1);
+-	for (i =3D first; i <=3D last; i++) {
+-		stack_filename(&table_name, st, reader_name(st->readers[i]));
++	for (i =3D last + 1; i > first; i--) {
++		stack_filename(&table_name, st, reader_name(st->readers[i - 1]));
+=20
+ 		err =3D hold_lock_file_for_update(&table_locks[nlocks],
+ 						table_name.buf, LOCK_NO_DEREF);
+ 		if (err < 0) {
+-			if (errno =3D=3D EEXIST)
++			/*
++			 * When the table is locked already we may do a
++			 * best-effort compaction and compact only the tables
++			 * that we have managed to lock so far. This of course
++			 * requires that we have been able to lock at least two
++			 * tables, otherwise there would be nothing to compact.
++			 * In that case, we return a lock error to our caller.
++			 */
++			if (errno =3D=3D EEXIST && last - (i - 1) >=3D 2 &&
++			    flags & STACK_COMPACT_RANGE_BEST_EFFORT) {
++				err =3D 0;
++				/*
++				 * The subtraction is to offset the index, the
++				 * addition is to only compact up to the table
++				 * of the preceding iteration. They obviously
++				 * cancel each other out, but that may be
++				 * non-obvious when it was omitted.
++				 */
++				first =3D (i - 1) + 1;
++				break;
++			} else if (errno =3D=3D EEXIST) {
+ 				err =3D REFTABLE_LOCK_ERROR;
+-			else
++				goto done;
++			} else {
+ 				err =3D REFTABLE_IO_ERROR;
+-			goto done;
++				goto done;
++			}
+ 		}
+=20
+ 		/*
+@@ -1308,9 +1346,10 @@ static int stack_compact_range(struct reftable_stack=
+ *st,
+=20
+ static int stack_compact_range_stats(struct reftable_stack *st,
+ 				     size_t first, size_t last,
+-				     struct reftable_log_expiry_config *config)
++				     struct reftable_log_expiry_config *config,
++				     unsigned int flags)
+ {
+-	int err =3D stack_compact_range(st, first, last, config);
++	int err =3D stack_compact_range(st, first, last, config, flags);
+ 	if (err =3D=3D REFTABLE_LOCK_ERROR)
+ 		st->stats.failures++;
+ 	return err;
+@@ -1320,7 +1359,7 @@ int reftable_stack_compact_all(struct reftable_stack =
+*st,
+ 			       struct reftable_log_expiry_config *config)
+ {
+ 	size_t last =3D st->merged->stack_len ? st->merged->stack_len - 1 : 0;
+-	return stack_compact_range_stats(st, 0, last, config);
++	return stack_compact_range_stats(st, 0, last, config, 0);
+ }
+=20
+ static int segment_size(struct segment *s)
+@@ -1427,7 +1466,7 @@ int reftable_stack_auto_compact(struct reftable_stack=
+ *st)
+ 	reftable_free(sizes);
+ 	if (segment_size(&seg) > 0)
+ 		return stack_compact_range_stats(st, seg.start, seg.end - 1,
+-						 NULL);
++						 NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
+=20
+ 	return 0;
+ }
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 3ed8e44924..8c36590ff0 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -917,13 +917,15 @@ static void test_reftable_stack_auto_compaction_with_=
+locked_tables(void)
+ 	write_file_buf(buf.buf, "", 0);
+=20
+ 	/*
+-	 * Ideally, we'd handle the situation where any of the tables is locked
+-	 * gracefully. We don't (yet) do this though and thus fail.
++	 * When parts of the stack are locked, then auto-compaction does a best
++	 * effort compaction of those tables which aren't locked. So while this
++	 * would in theory compact all tables, due to the preexisting lock we
++	 * only compact the newest two tables.
+ 	 */
+ 	err =3D reftable_stack_auto_compact(st);
+-	EXPECT(err =3D=3D REFTABLE_LOCK_ERROR);
+-	EXPECT(st->stats.failures =3D=3D 1);
+-	EXPECT(st->merged->stack_len =3D=3D 5);
++	EXPECT_ERR(err);
++	EXPECT(st->stats.failures =3D=3D 0);
++	EXPECT(st->merged->stack_len =3D=3D 4);
+=20
+ 	reftable_stack_destroy(st);
+ 	strbuf_release(&buf);
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index b06c46999d..37510c2b2a 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -478,19 +478,26 @@ test_expect_success "$command: auto compaction" '
+=20
+ 		test_oid blob17_2 | git hash-object -w --stdin &&
+=20
+-		# Lock all tables write some refs. Auto-compaction will be
+-		# unable to compact tables and thus fails gracefully, leaving
+-		# the stack in a sub-optimal state.
+-		ls .git/reftable/*.ref |
++		# Lock all tables, write some refs. Auto-compaction will be
++		# unable to compact tables and thus fails gracefully,
++		# compacting only those tables which are not locked.
++		ls .git/reftable/*.ref | sort |
+ 		while read table
+ 		do
+-			touch "$table.lock" || exit 1
++			touch "$table.lock" &&
++			basename "$table" >>tables.expect || exit 1
+ 		done &&
++		test_line_count =3D 2 .git/reftable/tables.list &&
+ 		git branch B &&
+ 		git branch C &&
+-		rm .git/reftable/*.lock &&
+-		test_line_count =3D 4 .git/reftable/tables.list &&
+=20
++		# The new tables are auto-compacted, but the locked tables are
++		# left intact.
++		test_line_count =3D 3 .git/reftable/tables.list &&
++		head -n 2 .git/reftable/tables.list >tables.head &&
++		test_cmp tables.expect tables.head &&
++
++		rm .git/reftable/*.lock &&
+ 		git $command --auto &&
+ 		test_line_count =3D 1 .git/reftable/tables.list
+ 	)
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---0JNHdDT8IbbteD+E
+--E/RGt+/HRHV05mPy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma00P0ACgkQVbJhu7ck
-PpTADBAAhJLyiC1ZjSF1CP1GxSvbgx0yaeO0S2WfO2Y3OULf39PTfUDQXcpKgJrB
-8QQxWAc8ApuYwf52fzxJsmsJ/8GHlKg8+0EpT4a+uMOL/AyYaGmxKWtxvn2DEjRQ
-c+W6W4S29byJtQHHHRCDPhAAlC57rBqqwQdJNHHqEnuBMJ/8RFGVMO5acHcWfj3i
-cXsEfyi4TRZxK4aC89zE5hc+9batXQ2qKnc0pYN7XIZrw/noezH7zaVQ/Gr6tVLu
-titPkAuQtgqR5beEZ3V1SfplgX/JhQ9LbcYhKabUeZV8aJzlWCW9iivLhiYhLcEd
-RByCFsI+rmWs45Uk/QfR/y/wOcQjmwRrGrGFblEljnbRXmP3vE/7jpoM4NFd5d14
-+ri9nXlgEQof0zyXRLeuMVjku7mZcVWb4uNLn+d+ldJmS3cueGojS5ew6pzslcxX
-HM7nnBOTaDjLIkjF+ui9W3zJrNf1LimmFI6NBtCi/uQEjbPUxdTN6s4Btu0Rb3yo
-aJkONQDOehQfwXGasuPRxw9qQld6ppMmjKwXDC6j4KHPMaCMZ+e3ahNFrVdRNIOq
-5RPxjMu5VlxHor0SbrZ3VBQzpZAoRBlJ1RdFxEVf+fQURQshq0siwS3VgelQApN3
-k0QmcdUgGTJYF26TTR2FKe0hozRvQfsOAEUnC5WCrAa5Q50XqQ4=
-=lFMs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma00QEACgkQVbJhu7ck
+PpS22Q/+M3UyQXSPo4XJP/rviYb+oPfT/kqZwFLKEDTw/Q+WgvNR9BmLZb5hw+ap
+Hqi2NiwOnN3q5n5wrxyvWjCOm6QIL+VHOgoFVPNukLBNdOVA8mLKehVVA6UHjz+X
+KuapdL/WYjFZi9mJTlYEVGAPWb2+VC4L2j7Ux/fNY1V2KG5UR4eDWDkJ3L5mYRuH
+af21slW05154kaIrwJaMupS+2IKiBcaNqP7xpNyc/0qFidSrsGBHxgbPPmf+9Kf6
+3tdKxKcGMtJ6KjxwFfw/ZSpxWuaFqSIMdpdlEDl6pbV6fmDk1LcyhBgTgiSGRrAf
+DigxY/VMCg/VJpJFZ8A0LFW8zVauNVviJf5NCg1Rzf+NS7yZaRfJS236utm6nrc2
+RJOAlDwflddWGqebHg6/xenCX9/ldcS5Dc9O1wlyBntOsihK9d4ZBAlN7EMCTCyd
+9+Qn1W3fmX5hv+k6WDOJ2iALOJfqylB1W0Qf7xBI4qv4dAq7v/PA3xB1dg/a08vf
+EPL7AUx2NqiqrPoxjfHd7x/ADokYCTcSTWsm1wcTWqy5tKfhB268ZeQKBKJ38zfc
+JSumaSqmHFPiVcUoxtnqojlSIRpjjlXjSfq3Rkoj2XEFTlbU8VIHtLhw3mHRQEEc
+8YpgKzrCF+p98mSLCsKIztD1gaKLW7DQ9CObc1SbRSUy+5gbFTM=
+=CZC7
 -----END PGP SIGNATURE-----
 
---0JNHdDT8IbbteD+E--
+--E/RGt+/HRHV05mPy--
