@@ -1,81 +1,82 @@
 Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5264B18A6B3
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F86A18A6B3
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 13:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723122298; cv=none; b=uZ/t2lABVNaEBiT67Y7vGrshLdkEjzNw4ZFog8zfr8mSjP6t07zHzk/m5GfamQQX9/WYtCc9t6HwA4UWLjCei+KSjrTXJdvgR6M/9jkcNeBCLd4EqPXT26YKMHXM67eCJo4hFxwLsMnlx8BW4+qarCMKk+xwL2hAclEYITagmeY=
+	t=1723122304; cv=none; b=kB5jKCvwDtOAHtZqPm5SnVSG7lZRp9TRQPADPAbANJBZ6X7zmMyvRRYIqxsg8sUT4nvRcLPaROLZSJWTqrvOy2WR56blArfgmo2YiNVjLJryNpdneWZFeQq9MieQKGDwSMMp7YlZ5Sk66cHcVevIlZOXfUjSkaiq+1oz+cjXaDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723122298; c=relaxed/simple;
-	bh=yp1ZPpMPF1yeULBu/xlmGHp6Va6lHWm6BK29k8JtWw4=;
+	s=arc-20240116; t=1723122304; c=relaxed/simple;
+	bh=iXqj58fsFC1ve3ODz1PaJg6QS4Ws+Hq1mTRfn2sxL6U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HfzLa/MUVbq+AziYTz2y+BGAujEmEFpwhFlopteYUviRKWGa7vfGrXbRZxZqOfrreUCgJwkRiRmnMABKY8oLlZZ+KNAwwxzKnuC7qbQ8iUTIoNXr0JtKrIMD7eOA9uK7fUFOTG+3bPbwijeScQ366qQ6oifebbf6/GYGIjm93ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k+uqrOaI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TWz70G2U; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=bzRQuVdMk3zwZVVS2cSYmmlq0AXBTpNp7d2+Fbdru6Ck/AsHy381QEFt4XuGd6rEK0GOeSENX2X37iJrd1rdj92jHcCLdRUij2lGaZodLpFw3XLjnCHNCCYELn2+uAkexF0qtGKHhqvJ9q7b02d+qE054KgIii3t6YM866FHhdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=of9raoDy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ibc6x7xL; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k+uqrOaI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TWz70G2U"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 6E3DC138FC65;
-	Thu,  8 Aug 2024 09:04:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="of9raoDy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ibc6x7xL"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 93CED138FC71;
+	Thu,  8 Aug 2024 09:05:01 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 08 Aug 2024 09:04:56 -0400
+  by compute5.internal (MEProxy); Thu, 08 Aug 2024 09:05:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723122296; x=1723208696; bh=ihvA0cZgu/
-	ZmG9F3up+dU6Ozg2T/EtM1clmJPbKKljc=; b=k+uqrOaIwqg9tLRXdGidnbcz6i
-	K9pJKiJ++coxWhpgfH26fCcIc4weTKAEgzzs6yS1rpBJ6pP+zorkEYDTX2UsU1AI
-	U/kONjooqGRM5SglVTG2tmkuF+/AeIzxO1/rEkL0bTPhj7q6sTDILUuQRYJtUO8L
-	UbyQ0jc/mDfAK0mFgJWsWZWYvZkOSFbjsxjuWnI4pvDAHNVsucLelEQ6uR5zcptc
-	5W9El6tX3syf9oBnAI3vRpvX/RSvC8pEOKww88CePcsTwo5kK0GGs1KKxpxJQP6J
-	YDmYys62slc1epW3YvuOCGJMKIC2NLtl7SIQE/Xi62Xa6uVHjeQImrTNwmpQ==
+	:subject:to:to; s=fm3; t=1723122301; x=1723208701; bh=4FvdSQWPjY
+	IemZ0Du2zyCYBl60k8zWgwI/IrCQXUi6s=; b=of9raoDyyk/O1wdsqFeLKV299w
+	JH+qxu9gkDIhPnTJBQoiX3nY7trh5ACcuaQwzhuMcaLMDPAchnd/QoHYOXFv4dm6
+	eSRbSWMmRp1lsF4/g7JvMBpcqR/Hiyvj3jwZnt23YhoG+HWgTU64fC+mdP1GfWYp
+	l9vCcjYusYEsxcyCVRld1lKStlYqmsKNNyY3HkViqAOJNHflsO2GUns6WxiEMpEY
+	it7iVUadE/gKgfj9ZO5fCTpR5+f/iHeg2tx0cQUfTFTQrAwLKP6uAonJAOJf2SSV
+	gPY2xjdocqp9cvMbkyx3QtXeSZyzjsAK1B5hzEOnG2oZwHPOA5vbHrcwce/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723122296; x=1723208696; bh=ihvA0cZgu/ZmG9F3up+dU6Ozg2T/
-	EtM1clmJPbKKljc=; b=TWz70G2ULDbA5kaQnAET4ZFRHIjcJsoTXzpNNh/jQTQE
-	Qex9KLCYIzamco5pdETb68OazURtlM6fm0+U+4CIOGAwmaSzwYig9RjmT4W8X8Cy
-	jVR4TJ2xCly0SDP/y4XF8Zkx4Qa9OyNI7kvvaWUv6dLWmNwrj/WMlMcXDwM46V1g
-	3ccDWI2EiV3wuzbTkZt10QUB5rZYTAWTHY/LwRmcmvqM4EsAYR6vNw9O9vSRWhxa
-	DHCkYGHec8P/PNykpYm5H95VRMtllarNCSc2UCYZm611MhBhm/dPdUZ1w7r9akrc
-	JfiUna7hNlKMKLwHNwOb54iUUsIt6WQw/hRMBdomzA==
-X-ME-Sender: <xms:eMK0Zj4b-LVoDVX0xhcQzCDxB6FJBTrZoJLWcGoAEKCY4zUVsVI9_Q>
-    <xme:eMK0Zo5pO4zVEpVaexiNbjJzY72dfBU2KxZM0a19evS8iM7kB7snHYQXQKz4u2ekt
-    m0rxuzyrLGFi8yhuQ>
-X-ME-Received: <xmr:eMK0ZqfdaYAscJQ75AYSbI0_RwZKOqZ2_6V0b5dWGTv-q5fndmGq13PNFl_GuTNLjmdFSAXbyNfFQHW23-MAilLzzjAnxKlJ3d4pIR8qljfnrlIQ>
+	fm3; t=1723122301; x=1723208701; bh=4FvdSQWPjYIemZ0Du2zyCYBl60k8
+	zWgwI/IrCQXUi6s=; b=ibc6x7xLeG5eiPlH9fmqjZZCzFEND1JtOPxKAbpETv0R
+	hCqwVKjgaCHkEVk0/bGue54q7SkX2KY6eYcy2bhvQKmbAhccgJ38I+m3W1rHb3P4
+	VmroMtuioDRMxeDADCqDdINZCyn/dR7YPX/c3yHql1EaGj8x/4+tRjuA6RK5C0UR
+	AuCYwTGntGUVFELneUh5/WRDwsAoQhaBxo6E7fHv9Jt4UIOhItcO92jzH92MRBhA
+	WC+1VvTGFcvzPjiyKk56QwV4F3CctNdw5PPRlm6c5uaiKJbc3ockHa3PuAPksVVQ
+	6R7+kVIfy7ulGLlObGzrooFUFrKQrl1Dxx/RRr1aVQ==
+X-ME-Sender: <xms:fcK0ZlkZ_x4wYecXJSKqnTW9fEIkD7tEemhdVF0-owdRL-_BZTJ12w>
+    <xme:fcK0Zg3dZTcf2hjbUSvuOjdOiNq-Dh7AZVBK6DtmU-VpRHlySm0V62RXFMbbxJkKp
+    kOM99xLCruMp2-HHw>
+X-ME-Received: <xmr:fcK0ZrokVSBWo9qweIJuuVPrPmTic8J8dw1cPa79wbVFkuuFmx8Ftrn5QW77NUNE2TND_Z3Kr3UWNYFLxG-97z22Q29_LXBsBiq0k38srHsAL8ck>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrledvgdeitdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeeh
-    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrih
+    gfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphht
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
     thhopehjrghmvghssehjrghmvghslhhiuhdrihho
-X-ME-Proxy: <xmx:eMK0ZkLWDjfe9PDRj8KhVokKxJttnUTz35aCUWYHW2ZoOimN7MAPyw>
-    <xmx:eMK0ZnJK7MJ4vVmT-dYFOasPaAWePq7WyZ0_iPVwdLYS18KFa-AgBg>
-    <xmx:eMK0Zty6fEd-ElJxae_dU-pjKJnOfMbVc7sG9Fl-5OLmpvPjsG7lGQ>
-    <xmx:eMK0ZjLJav3cqNLHn7Kvt9dhBm7NXbgb6BQz3Iibmx9IG7dXdFoGMg>
-    <xmx:eMK0Zv0flzqSANdGBMY3O6YzJwtLBGhiY90TWirbrS52BOf-aoKFuJHJ>
+X-ME-Proxy: <xmx:fcK0Zlkrm68rLxF7rR7xMJfvA3eloMrRvd0d3gubixwqTZBK6sBT7A>
+    <xmx:fcK0Zj0vU46FUvgzo1oo0bYsp-BxvQaEGktB1dgEhLZcAHrGyzu72w>
+    <xmx:fcK0ZkuH_khwH9ruMn0PNaNIS6_ScIck40a6vLRit36IQ1aXRzBbMA>
+    <xmx:fcK0ZnWOrvctnaSqDvF625OrszmxtHHnHizmfUNL3MtFunpUb8rkxA>
+    <xmx:fcK0ZkxrVocMTcIZHQ-_fqZxX2m6j42GcCpEQ4vIlo0_6e4y7UkCM4P0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Aug 2024 09:04:55 -0400 (EDT)
+ 8 Aug 2024 09:05:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2d4e96db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Aug 2024 13:04:48 +0000 (UTC)
-Date: Thu, 8 Aug 2024 15:04:53 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c0e91a42 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Aug 2024 13:04:53 +0000 (UTC)
+Date: Thu, 8 Aug 2024 15:04:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 05/22] bulk-checkin: fix leaking state TODO
-Message-ID: <454139e7a4b0272ec8c304bc2a84dad35187de78.1723121979.git.ps@pks.im>
+Subject: [PATCH v2 06/22] read-cache: fix leaking hashfile when writing index
+ fails
+Message-ID: <f8b7195796610d81fe03b52eb990ef8301d5679b.1723121979.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723121979.git.ps@pks.im>
 Precedence: bulk
@@ -85,130 +86,303 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xYk0YOjpRNY9CZEd"
+	protocol="application/pgp-signature"; boundary="GIWweXi0jQnk6/H2"
 Content-Disposition: inline
 In-Reply-To: <cover.1723121979.git.ps@pks.im>
 
 
---xYk0YOjpRNY9CZEd
+--GIWweXi0jQnk6/H2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When flushing a bulk-checking to disk we also reset the `struct
-bulk_checkin_packfile` state. But while we free some of its members,
-others aren't being free'd, leading to memory leaks:
+In `do_write_index()`, we use a `struct hashfile` to write the index
+with a trailer hash. In case the write fails though, we never clean up
+the allocated `hashfile` state and thus leak memory.
 
-  - The temporary packfile name is not getting freed.
-
-  - The `struct hashfile` only gets freed in case we end up calling
-    `finalize_hashfile()`. There are code paths though where that is not
-    the case, namely when nothing has been written. For this, we need to
-    make `free_hashfile()` public.
-
-Fix those leaks.
+Refactor the code to have a common exit path where we can free this and
+other allocated memory. While at it, refactor our use of `strbuf`s such
+that we reuse the same buffer to avoid some unneeded allocations.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bulk-checkin.c   |  2 ++
- csum-file.c      |  2 +-
- csum-file.h      | 10 ++++++++++
- t/t1050-large.sh |  1 +
- 4 files changed, 14 insertions(+), 1 deletion(-)
+ read-cache.c                       | 97 ++++++++++++++++++------------
+ t/t1601-index-bogus.sh             |  2 +
+ t/t2107-update-index-basic.sh      |  1 +
+ t/t7008-filter-branch-null-sha1.sh |  1 +
+ 4 files changed, 62 insertions(+), 39 deletions(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index da8673199b..9089c214fa 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -61,6 +61,7 @@ static void flush_bulk_checkin_packfile(struct bulk_check=
-in_packfile *state)
+diff --git a/read-cache.c b/read-cache.c
+index 48bf24f87c..36821fe5b5 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2840,8 +2840,9 @@ static int do_write_index(struct index_state *istate,=
+ struct tempfile *tempfile,
+ 	int csum_fsync_flag;
+ 	int ieot_entries =3D 1;
+ 	struct index_entry_offset_table *ieot =3D NULL;
+-	int nr, nr_threads;
+ 	struct repository *r =3D istate->repo;
++	struct strbuf sb =3D STRBUF_INIT;
++	int nr, nr_threads, ret;
 =20
- 	if (state->nr_written =3D=3D 0) {
- 		close(state->f->fd);
-+		free_hashfile(state->f);
- 		unlink(state->pack_tmp_name);
- 		goto clear_exit;
- 	} else if (state->nr_written =3D=3D 1) {
-@@ -83,6 +84,7 @@ static void flush_bulk_checkin_packfile(struct bulk_check=
-in_packfile *state)
- 		free(state->written[i]);
+ 	f =3D hashfd(tempfile->fd, tempfile->filename.buf);
 =20
- clear_exit:
-+	free(state->pack_tmp_name);
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
+@@ -2962,8 +2963,8 @@ static int do_write_index(struct index_state *istate,=
+ struct tempfile *tempfile,
+ 	strbuf_release(&previous_name_buf);
 =20
-diff --git a/csum-file.c b/csum-file.c
-index 8abbf01325..7e0ece1305 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -56,7 +56,7 @@ void hashflush(struct hashfile *f)
+ 	if (err) {
+-		free(ieot);
+-		return err;
++		ret =3D err;
++		goto out;
  	}
+=20
+ 	offset =3D hashfile_total(f);
+@@ -2985,20 +2986,20 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+ 	 * index.
+ 	 */
+ 	if (ieot) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		write_ieot_extension(&sb, ieot);
+ 		err =3D write_index_ext_header(f, eoie_c, CACHE_EXT_INDEXENTRYOFFSETTABL=
+E, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		free(ieot);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+=20
+ 	if (write_extensions & WRITE_SPLIT_INDEX_EXTENSION &&
+ 	    istate->split_index) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		if (istate->sparse_index)
+ 			die(_("cannot write split index for a sparse index"));
+@@ -3007,59 +3008,66 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+ 			write_index_ext_header(f, eoie_c, CACHE_EXT_LINK,
+ 					       sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_CACHE_TREE_EXTENSION &&
+ 	    !drop_cache_tree && istate->cache_tree) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		cache_tree_write(&sb, istate->cache_tree);
+ 		err =3D write_index_ext_header(f, eoie_c, CACHE_EXT_TREE, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_RESOLVE_UNDO_EXTENSION &&
+ 	    istate->resolve_undo) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		resolve_undo_write(&sb, istate->resolve_undo);
+ 		err =3D write_index_ext_header(f, eoie_c, CACHE_EXT_RESOLVE_UNDO,
+ 					     sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_UNTRACKED_CACHE_EXTENSION &&
+ 	    istate->untracked) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		write_untracked_extension(&sb, istate->untracked);
+ 		err =3D write_index_ext_header(f, eoie_c, CACHE_EXT_UNTRACKED,
+ 					     sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_FSMONITOR_EXTENSION &&
+ 	    istate->fsmonitor_last_update) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		write_fsmonitor_extension(&sb, istate);
+ 		err =3D write_index_ext_header(f, eoie_c, CACHE_EXT_FSMONITOR, sb.len) <=
+ 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+ 	if (istate->sparse_index) {
+-		if (write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0) <=
+ 0)
+-			return -1;
++		if (write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0) <=
+ 0) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+=20
+ 	/*
+@@ -3069,14 +3077,15 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+ 	 * when loading the shared index.
+ 	 */
+ 	if (eoie_c) {
+-		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_reset(&sb);
+=20
+ 		write_eoie_extension(&sb, eoie_c, offset);
+ 		err =3D write_index_ext_header(f, NULL, CACHE_EXT_ENDOFINDEXENTRIES, sb.=
+len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret =3D -1;
++			goto out;
++		}
+ 	}
+=20
+ 	csum_fsync_flag =3D 0;
+@@ -3085,13 +3094,16 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+=20
+ 	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_INDEX,
+ 			  CSUM_HASH_IN_STREAM | csum_fsync_flag);
++	f =3D NULL;
+=20
+ 	if (close_tempfile_gently(tempfile)) {
+-		error(_("could not close '%s'"), get_tempfile_path(tempfile));
+-		return -1;
++		ret =3D error(_("could not close '%s'"), get_tempfile_path(tempfile));
++		goto out;
++	}
++	if (stat(get_tempfile_path(tempfile), &st)) {
++		ret =3D -1;
++		goto out;
+ 	}
+-	if (stat(get_tempfile_path(tempfile), &st))
+-		return -1;
+ 	istate->timestamp.sec =3D (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
+ 	trace_performance_since(start, "write index, changed mask =3D %x", istate=
+->cache_changed);
+@@ -3105,7 +3117,14 @@ static int do_write_index(struct index_state *istate=
+, struct tempfile *tempfile,
+ 	trace2_data_intmax("index", the_repository, "write/cache_nr",
+ 			   istate->cache_nr);
+=20
+-	return 0;
++	ret =3D 0;
++
++out:
++	if (f)
++		free_hashfile(f);
++	strbuf_release(&sb);
++	free(ieot);
++	return ret;
  }
 =20
--static void free_hashfile(struct hashfile *f)
-+void free_hashfile(struct hashfile *f)
- {
- 	free(f->buffer);
- 	free(f->check_buffer);
-diff --git a/csum-file.h b/csum-file.h
-index 566e05cbd2..ca553eba17 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -46,6 +46,16 @@ int hashfile_truncate(struct hashfile *, struct hashfile=
-_checkpoint *);
- struct hashfile *hashfd(int fd, const char *name);
- struct hashfile *hashfd_check(const char *name);
- struct hashfile *hashfd_throughput(int fd, const char *name, struct progre=
-ss *tp);
-+
-+/*
-+ * Free the hashfile without flushing its contents to disk. This only
-+ * needs to be called when not calling `finalize_hashfile()`.
-+ */
-+void free_hashfile(struct hashfile *f);
-+
-+/*
-+ * Finalize the hashfile by flushing data to disk and free'ing it.
-+ */
- int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_compo=
-nent, unsigned int);
- void hashwrite(struct hashfile *, const void *, unsigned int);
- void hashflush(struct hashfile *f);
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index c71932b024..ed638f6644 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -3,6 +3,7 @@
+ void set_alternate_index_output(const char *name)
+diff --git a/t/t1601-index-bogus.sh b/t/t1601-index-bogus.sh
+index 4171f1e141..5dcc101882 100755
+--- a/t/t1601-index-bogus.sh
++++ b/t/t1601-index-bogus.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
 =20
- test_description=3D'adding and checking out large blobs'
+ test_description=3D'test handling of bogus index entries'
++
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'create tree with null sha1' '
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index cc72ead79f..f0eab13f96 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -5,6 +5,7 @@ test_description=3D'basic update-index tests
+ Tests for command-line parsing and basic operation.
+ '
 =20
 +TEST_PASSES_SANITIZE_LEAK=3Dtrue
  . ./test-lib.sh
 =20
- test_expect_success 'core.bigFileThreshold must be non-negative' '
+ test_expect_success 'update-index --nonsense fails' '
+diff --git a/t/t7008-filter-branch-null-sha1.sh b/t/t7008-filter-branch-nul=
+l-sha1.sh
+index 93fbc92b8d..0ce8fd2c89 100755
+--- a/t/t7008-filter-branch-null-sha1.sh
++++ b/t/t7008-filter-branch-null-sha1.sh
+@@ -2,6 +2,7 @@
+=20
+ test_description=3D'filter-branch removal of trees with null sha1'
+=20
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup: base commits' '
 --=20
 2.46.0.46.g406f326d27.dirty
 
 
---xYk0YOjpRNY9CZEd
+--GIWweXi0jQnk6/H2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wnQACgkQVbJhu7ck
-PpRVOxAAq1YZRl5MlM8QfcdSJ6itwIZjs7XglQHvw7zzwK08W2ruNExlMW3Xlaup
-EjlRofcrMXYMapQfxvSqOMQp1W3nX9j5gC7vLEeEv2VgXcr78f8V6vGbKFwpti8+
-fUwwXiy+ajV5dTEeF1w0CDSCzJDBPCdcbNqyBorXBKZ0T2YTJOiWK3j8dUOkMZ9R
-x41UYa/iz4D/XPTF9TKogJc1wVGs1gqRHA/P2to+VB31gnitrlo9beWGIcXrCOmD
-uI/pZifkn6NT/H+uTLFrhJ6FrtUjm9dYfZKHN7TbJDaqbCXQy0lrEZwyYIXagVVw
-KyldQLmCAm5p8b0fJQ9DOWiuShHomV6UVJxVfdoof17+9jMtAG0p3UsRSZVS4kKZ
-Pp9k/uGf5B3+U+uKCDqsGFDEiGGY4WfVD7e53BsL/+rd9tUfg6uYbZTQmASgVins
-B6TGPx2y11Jdr3tmmwtIE/8Ocs82B18CJ21aUU+/ld9O830KumxFzk8SIRxzQ8Me
-NZM9/L6Yjg3MpgDLalUhMtcon7Vrc2Rcs2kTNp+0vVRsANNJ0kaCNDQlcXcCCmhx
-RcEOJlURHOaxTvX8vaxPTL0RI3050fC+b8ikB2YofBTA2G6BrAVyo1e4OTE3sUMp
-XDpMXmkhXzdPDw7OzgEeaU51s397hN/W63fnZ1PNL0aTsp2l+Tc=
-=go0l
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAma0wnkACgkQVbJhu7ck
+PpQlNhAAi90FEWNK27pIdBJCmrtgBz/pXn0tfMYj/2Kkkhgh+1A2CUWbQ2coUJYM
+5msDfHC3Og5ECqNm9Bp4Hcl/apa6YUwFP5P1ptCD+xTTrtJ9e5SgN92h8p3coXAd
+I5vQvP0N2M2THAU0zCRECqblu/+zLhyVJnZRHa0vx1fy4DiVn4I+uziansXNKi/I
+1z0rhERNehdOSr3+w/K8Hwl8/pWcvMnmsiKQLGDdik+rKHU9qtATI3EtJZ1ke7AI
+qUcq/ggdzut8po+9Ds9qCD4DC8UkCvo5RHa34elB2Dh+fQ+jNlyukEsRcn+76bvn
+JAvR/0QtXlNP9ksNq4SNtL+6nR45cNCyjm4EmN7fpfa80uvXN0vNFuRq+bJVqYlI
+sl2oSjV9xKGF1lv1sV5tWOy5k2VRSr6qE+kcbr9Ib3KdPSyQ+/zKwwgbao4YlG8R
+3q8qRgJvnO4bPFu9JSRA8VnNUyoFY6S916Z8fJ1vRBQc1qAND5sJ2RDjvfkVrXF7
+WE62g7zCvtXhAaWq8kG4j92RdzIQiPthj32lyiyOfhm1LupunUf/3lFk3QBt4S+N
+P5mckMij9KP9cpMIbc6jXKZ/5x+fYp83/aD+CKWV2RhjgRudXAlgvHbFz6NHuARo
+vFRW4a9rMfW+OvAl5H8XVkMKP596ibqM+nBuSEnVSBjQKyUJ5TI=
+=TtdO
 -----END PGP SIGNATURE-----
 
---xYk0YOjpRNY9CZEd--
+--GIWweXi0jQnk6/H2--
