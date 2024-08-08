@@ -1,109 +1,83 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253A4A1E
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 06:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB7181339
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 06:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723098094; cv=none; b=L7+LFzYlnpJuLRViV5RJY7tKGBHj4lPpt5ZzoW0N3VsX5xl6Lbtl09W0Sggiyw9UOwVkjmU445xWQVCoGtpd0RlYrXgBt0n4JWw2aKs0eAZo9urbhuSharf061hW4M1HDk/8Qdnvn1HaBG41ZZuw/mENpYWF5HqGS3SXB0Prcys=
+	t=1723099795; cv=none; b=PhUqOutNcJ8FUqec+g3vZEyYPMEIWNKSwoyLA2JryNrAwh0utfMqvu7ka9hlFOML2W+7ScRgbNRjBtL87DBpCveVzLzwAuuLKFh8AUw8fh9sJAiOrNcLj0GrBqEKTLqVdv/GROui8WIJycPw0kg736Fxt+5I85QbyyDtYtcD7so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723098094; c=relaxed/simple;
-	bh=R3gaY5CH34p0gEU/aSh5uLKJJxBNtXnVzHkcpZjfErM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CdZYILx4sZsrsnsjBZV0FtBYixaz3TnrFqr569O7YfY+Y6+VBe3xtXdyMvvTsOxzU6nGGvGWcUR6NN1apqIs9vPovN7GbF1q8Nf/oic3VnJvw+tUdy9RyR1tCReSKpmShCPucSICe5yqp/8cpgFSOeW9gb+Iu+0JLn1UBvBG6Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=LrYb7R7F; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="LrYb7R7F"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fc491f9b55so5929825ad.3
-        for <git@vger.kernel.org>; Wed, 07 Aug 2024 23:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1723098092; x=1723702892; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sVgpjbbpo1kWK65KIucb3DtehG3wf/e/A1tvL9vOPbs=;
-        b=LrYb7R7FtQdC2hQCf1l16H40aKdj3QaQsgMc1DHBlq0rWcHxJ1VdwdUdDt9gQxUMrt
-         ds6zfYv3rSJYK+W3IrIcxdfgKCwB6GoYAT3Da9AiImC9A91ulUwRa7cZtv5MtT/rWbfJ
-         TAIxyNJWZsIa5Wx8xV0dcbuWc9NfH1pKtxnjrQL7hPwEZK7XfhV/fVy2N1oNcHsxJOyZ
-         TFrRy9/qNKK6YwhGXU62ZnwK+B4KMUGlYCSH7W08redhXBUavlG5WcJS9RwEdaHYhCmH
-         wxGFn7Ksvmkso82L3a7nII/iz/ncMcEJA7Sy0NOULBohMg42fvpmvXy2ebCJ5wSxhkWa
-         BfRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723098092; x=1723702892;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sVgpjbbpo1kWK65KIucb3DtehG3wf/e/A1tvL9vOPbs=;
-        b=DM5PLzJiXbuQH5OfZI2J+B99nzuLSN/nO5eByhvcy5ICN0FPbLqQDRBWHqViWCvwgn
-         WTVXoi0rwNh+dhxw8LFJD6uCvh+N84NjRf/CkETymOEbu4gMqK6nFzWtt6TiB2t/+dEj
-         rqev3ytRGO50/vbU0MfgsxTd0eZBvD7BRdWpI9ooWIAH2mqTiQb9RKXZ4VF+Yx/XYACn
-         1OcUiCDF23RU2y7LtPbTny6uFXy2Qu+XOSjct9Bc7K1YwdhJxTx/6M5U+jAYe8LX9FFH
-         lwloD+2Wmg56lAhQJCKIZ5ELJN0p3Os61a+PdLmPtRdKruwVXUiMDy1Xl961wP2v1wJm
-         ENEA==
-X-Gm-Message-State: AOJu0YyFK6+rR0zBovFHgLuCoIwyQpw+5jQY7qqIeadp2/TNLEXS2/uH
-	3h0MEh1F1q0bBpktYe07oVCbJmm/+z9v6k0XHKGH98WZ1u7FSSGAQoGK5M7qWx1s7EuFbCDYp3s
-	O
-X-Google-Smtp-Source: AGHT+IHrHxOBOgKjg6SOm1cXU6zt8IPF6YeARPEqNRzMTdtrGrh6NIEymKstsL1Sh1sqt+a1UQ9X5Q==
-X-Received: by 2002:a17:902:d508:b0:1fb:d335:b0bf with SMTP id d9443c01a7336-20095252f2emr10539195ad.25.1723098091615;
-        Wed, 07 Aug 2024 23:21:31 -0700 (PDT)
-Received: from localhost.localdomain ([203.208.167.148])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff58f29d37sm117054175ad.48.2024.08.07.23.21.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Aug 2024 23:21:30 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH] doc: pack-objects: clarify --missing option
-Date: Thu,  8 Aug 2024 14:21:20 +0800
-Message-ID: <20240808062120.34629-1-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1723099795; c=relaxed/simple;
+	bh=8qA/Q1hO/sPOsG6bd0GR9FJL2oucK7IwxiHrUiYXX5E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=sfqUCnWKk8aJTFPz9FOW0eh/YCwoXlsxmCAPI91m5oJEkp8xseeq3n7UxCyRMHSq4pyDyVhaILv/u9AzbFWgmRQEdwf59Qzx9lyNxKUN8zwKIZBGiAsjUkECIOtX6wizzkMmtdumFoH4Mrj8Orkjs/wiAQiV70E4aPL1OzhCl1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Wfd2J6RHqz5tv8
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 08:49:44 +0200 (CEST)
+Received: from [192.168.1.102] (213-147-164-183.nat.highway.webapn.at [213.147.164.183])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Wfd290qJhzRnmP;
+	Thu,  8 Aug 2024 08:49:36 +0200 (CEST)
+Message-ID: <a8bc907a-de6f-4b99-a72c-41dd885fde55@kdbg.org>
+Date: Thu, 8 Aug 2024 08:49:35 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Documentation bug (?) when describing `zdiff3` merge format
+Content-Language: en-US
+To: punk.lion0906@fastmail.com
+References: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <ab0fcc2e-936f-4d76-8059-fb2bc8a4f661@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Since ee47243d76 (pack-objects: no fetch when allow-{any,promisor},
-2020-08-05), we mention that --missing=allow-any and --missing=allow-promisor
-do not fetch missing objects. But this is only true for missing objects
-that are discovered during object traversal. We will still fetch
-missing objects read from stdin.
+Am 08.08.24 um 03:22 schrieb punk.lion0906@fastmail.com:
+> The docs at
+> https://git-scm.com/docs/git-merge#_how_conflicts_are_presented
+> describe the following snippets in `diff3` and `zdiff3` style as
+> equivalent. They do not seem equivalent to me, so either this is a
+> mistake or the `zdiff3` style is counterintuitive needs a better
+> explanation.
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
----
-objects read from stdin ignore --missing option, if the repo has
-promisor remote, we will try to fetch missing objects. Even if
-the missing objects is not "EXPECTED promisor missing objects".
-"--missing=allow-promisor" will not raise an error on such cases.
+I don't think that the documentation wants to claim any equivalence. I
+can only see it says that "diff3 shows the conflict like this", and
+"zdiff3 shows the conflict like that".
 
- Documentation/git-pack-objects.txt | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+> zdiff3 style:
+> 
+> ```
+> Here are lines that are either unchanged from the common
+> ancestor, or cleanly resolved because only one side changed,
+> or cleanly resolved because both sides changed the same way.
+> <<<<<<< yours:sample.txt
+> Conflict resolution is hard;
+> let's go shopping.
+> ||||||| base:sample.txt
+> or cleanly resolved because both sides changed identically.
+> Conflict resolution is hard.
+> =======
+> Git makes conflict resolution easy.
+>>>>>>>> theirs:sample.txt
+> And here is another line that is cleanly resolved or unmodified.
+> ```
+> 
+> The problem is that, I believe, the "or cleanly resolved because both
+> sides changed identically." sentence should not be part of the
+> **base** in the latter example, since that whole line was moved
+> outside the conflict.
+This is exactly the problem that zdiff3 has: There is no way to indicate
+that some line in the common ancester was resolved identically and is
+now outside the conflict markers. Do not use zdiff3 if you cannot live
+with this deficiency. This is in fact not made explicit in the
+documentation.
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index e32404c6aa..0c1f86dabe 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -313,13 +313,14 @@ attempt to fetch missing objects will be made before declaring them missing.
- This is the default action.
- +
- The form '--missing=allow-any' will allow object traversal to continue
--if a missing object is encountered.  No fetch of a missing object will occur.
--Missing objects will silently be omitted from the results.
-+if a missing object is encountered.  No fetch of a missing object will occur
-+during object traversal. Missing objects will silently be omitted from the
-+results.
- +
- The form '--missing=allow-promisor' is like 'allow-any', but will only
- allow object traversal to continue for EXPECTED promisor missing objects.
--No fetch of a missing object will occur.  An unexpected missing object will
--raise an error.
-+No fetch of a missing object will occur during object traversal.
-+An unexpected missing object will raise an error.
- 
- --exclude-promisor-objects::
- 	Omit objects that are known to be in the promisor remote.  (This
--- 
-2.45.2
+-- Hannes
 
