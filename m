@@ -1,119 +1,85 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006BA18EFD6
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECECE190676
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 17:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723135935; cv=none; b=CMkMp8Wex+fx18rj9jBBsqbohHrH8DLUaiqqkotFNVAdJdQJe/rBGgEe35BlRSahRb0SNM31tsjJ0Kph/FQmCxpW4FCou3T4BcQTvUfd5qLRL5IbPO0GFVtIEOwQCVEyrrABVUGzRJVBCWfVjpFYrNXyGOsBN0M09L6O0efy57A=
+	t=1723137154; cv=none; b=a0vv3a4TsKij38/MvEsrZLz/oxp7CsPXz0eHjlGZWa7v4DwcsNJ/YSW6nV4fCarop9UjzZby4bSkLetje97o+69Z2s08A4s8gMwmdIC26dkOVkCbcblBhFLeVOCYS3+Ne3XRaR/FezS3Y4iAVWgYEoAeEO2pg3ni2qhEP3Ow/b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723135935; c=relaxed/simple;
-	bh=pMgFCdGHHOTK/ENSsdUsw58GQeS7+ZBNsPAugBTKsGM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aSZSuuoNQ+WrOrc8TuqkaxU2gTYaBTW4Smijl1LSX6RXvcx7y3UCZAosVQWMuydXUDpxB/FCHBybp6Ubber57BWHp/r7K9r6Z1ONACdo672fYsCiiq0jd0AYQtZd39Q5DYq9g4wLUNN7eQsI+776MVxOv7Kxmb37Z7Ty4CL0/9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bUlRKVmT; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723137154; c=relaxed/simple;
+	bh=+mcFhTAsAHRbChlWNH2+FOUVcWxuh/Lsd60mmT5bujE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JyWyibSpVMAK9BDBl3499SuB+NP/tGsgEytazbGvS7Ln+usycJATVexSLAG+n8lFnEeZXTeFgw094YncS9inwWSEucyYNHQj+6kgG+jn8yFwOu1j1lZsuAZU+tXG3WSb2VguoamsE1mmVvDa5fbVvCx+EiZEKcCuAvqJZf0Y9Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DQVuJ88R; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bUlRKVmT"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5d5c7f24372so681964eaf.0
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:52:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723135933; x=1723740733; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NItU0TRSVPBA8U1CmF/Tic2oFJEq7ipLs0bBbxNpyG8=;
-        b=bUlRKVmThMZBo0s+FqJgZ6OFJitwie+ZT8MqNmukpXG4/Zu0cUpXFQPyAHOnG2Dmk/
-         3xD0W/Ro3LMsFEVLLB7xceZ0CXYkMor7C9Xc7FV5ELuMuOziBPmy444anAyv97b7pW/k
-         m+T2bVZ0qY8LvIj6AeSTz8DoLYCCl5uVbs5h0a9PQUO1tK3wotWL6Y9o1eZhn8oitrGz
-         1dDNpWF7LVFx0pWTR36bxw7P8cHYRBb62aR6Qj3ehIM+u7PU28bEPHewILpTnqr3pXGl
-         PXqobtppd+hwSSJBCJaN62A3bF+zOA6eka48g7ifoOEaE+ivBxyiN80D8OK7nIwOSKJf
-         902w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723135933; x=1723740733;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NItU0TRSVPBA8U1CmF/Tic2oFJEq7ipLs0bBbxNpyG8=;
-        b=wjDKuO5IH0WH8QiE8uJP4w/hXrBlq66bBCj0hnBEFW8MaboinZpbP77giP8Expvvj6
-         rMW4bfZ3Mwf6ED+JLxKHScGGcFWB9JTgW1mZojXxG40k7pDSLQO1qjRBLnjStShgTpZO
-         9MJzlVuSzOPXag5WZ4p2KMRDhoe0q9o8cm7CKgADf8pQKYjZd7k4LnwDSYSMbgKJ7ul3
-         KBGCfPZElGS8aX8beo0Z27TpS4KiCtPPGwHyEMboUJl8L5ikLdWDe3B2SNxqOziqnBPG
-         0rn3pcvO9DMWS0Bx7XzRj4ILRCea22vYcuUs3peKXByXNrofgX9U+XlfW8fsrVq0+AGE
-         /MSg==
-X-Forwarded-Encrypted: i=1; AJvYcCUwj2CInFvJ84Ncyvr6Zln5rAKTDU4Q8mrVSIZxx+U/6/lsu3rP7S+TLyw+4TmizlNiKLnRN9kciCmgOXGZob3AJuLk
-X-Gm-Message-State: AOJu0YyCyQT50Asb8Iw7+0L+OlN+ItnH0t6du7fWoEC2LLqLysz6iVGQ
-	KWbgP1960ngUfnQgT7PkkX5foIH85CEFxYa5uj2AtydM8ucPIZt/m3dZXTPYA4a3u6yG5FTVF1/
-	ICFXBnVwiEKNasgcsydjFDKM2izk=
-X-Google-Smtp-Source: AGHT+IF8poT9sW3rCN5GCsnywZZacek9NG599TXUqLeQCugLJwvywOBmFhN3qRm3NhexFU9d+mK7MoLTJ5/Wtq4puqI=
-X-Received: by 2002:a05:6820:1515:b0:5d8:d4a:9509 with SMTP id
- 006d021491bc7-5d855c1c20dmr3635047eaf.4.1723135932750; Thu, 08 Aug 2024
- 09:52:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Aug 2024 11:52:11 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1723123606.git.ps@pks.im>
-References: <cover.1722435214.git.ps@pks.im> <cover.1723123606.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DQVuJ88R"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7454923A50;
+	Thu,  8 Aug 2024 13:12:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+mcFhTAsAHRbChlWNH2+FOUVcWxuh/Lsd60mmT
+	5bujE=; b=DQVuJ88R/IWlgH0f28jGXaxIuoNlwWby6C83HdOrVm1lzbXHHbsCps
+	wT3vaZUuJ1wLo2d8flZLwTvPneaImxIVncVnH1WhCnME5jEXnxz7SuHoAhTSS9fu
+	5qsLhZWZZJQfGem2GeXNJgyaIk6F6vuhZMBl9PSb6FWEP02dY0LVg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C21523A4F;
+	Thu,  8 Aug 2024 13:12:32 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 866EA23A4E;
+	Thu,  8 Aug 2024 13:12:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  James Liu <james@jamesliu.io>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 08/22] config: fix leaking comment character config
+In-Reply-To: <8fbd72a1002d1a285847c62b5524041927a7b4d4.1723121979.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Thu, 8 Aug 2024 15:05:07 +0200")
+References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im>
+	<8fbd72a1002d1a285847c62b5524041927a7b4d4.1723121979.git.ps@pks.im>
+Date: Thu, 08 Aug 2024 10:12:26 -0700
+Message-ID: <xmqq34nfhrb9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 8 Aug 2024 11:52:11 -0500
-Message-ID: <CAOLa=ZQ1hYtj65ra+s2Tdmmvs4xiy-4tL+KRU_f_7Z9NaUknYA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] reftable: improvements and fixes for compaction
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000002bff14061f2ed964"
-
---0000000000002bff14061f2ed964
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 63E6A96C-55A9-11EF-ACAC-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
->
-> this is the second version of my patch series that aims to improve the
-> way reftable stack perform compaction.
->
-> Changes compared to v2:
->
->   - Drop the unused `reftable_write_options` structure in
->     `write_n_ref_tables()`.
->
->   - Fix a commit message typo.
->
->   - Reorder some variable assignments to feel more natural.
->
-> Thanks!
->
-> Patrick
->
+> diff --git a/config.c b/config.c
+> index 6421894614..cb78b652ee 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1596,7 +1596,9 @@ static int git_default_core_config(const char *var, const char *value,
+>  		else if (value[0]) {
+>  			if (strchr(value, '\n'))
+>  				return error(_("%s cannot contain newline"), var);
+> -			comment_line_str = xstrdup(value);
+> +			free(comment_line_str_allocated);
+> +			comment_line_str = comment_line_str_allocated =
+> +				xstrdup(value);
 
-This version includes all the suggestions I made on the previous
-version. Looks good to me now!
+If you are to follow the _to_free pattern, you do not have to
+allocate here, no?  We borrow the value in the configset and point
+at it via comment_line_str, and clear comment_line_str_to_free
+because there is nothing to free now.  I.e.
 
-Thanks
+			comment_line_str = value;
+			FREE_AND_NULL(comment_line_str_allocated);
 
-[snip]
-
---0000000000002bff14061f2ed964
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a1f92a7d835794d_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hMDk3a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK3VVQy93TUk2ZWNDMkl3eXJJVm50UERXRkxYN1dlZgpqRUhaY1dtZTkw
-QkZSVDlEa1FoOGJkc1N1QTNpYzZ2Ry9LdWp1TXgyUEE1bHRsVStuUUJFbXlMczBPSmtFdHlZCmJz
-bGJEN2JmUDl6SS9VZE1yai9qeWNpK3M5ZXVzdjE0UGFLMVZGZ1d3eWtYSkpsVEU0amR0RTE2U3Fu
-d0pHSTkKSWdmM1d5QjA5bXFmU0hhL2ZmUzk5aTJKZm9oODdGZ2RUT0tYa1RrcmpqOGx1SnFTMTNM
-N0dnWFEvUlJETm5WdQp2Qnh3Y1p2dWtaa2FOTmxiWE5rU2ErTWJJNTR0VmMybGpCNWM2Z3hXazVK
-SGJQYzZ2aU14MXYwdDdZZGhIMXN0Cll2UG5pcitKRDBMbkRtQ3RYSWFPOXZweFpwZnEyOVRRdmpy
-MnFJbWpiOFhFdFExc2sySllNZG5HT1oxWlBlMzUKS1V5SUdraFloeVJQMnRZdnNCOE1WelZ2SXMz
-V1V6YU5LZ1hUYlNJTnRFMXljMkdIQnBFcUloRUhHdXVKQ0JTLwpZTEo5YldiREUvUG8yYmkrSW9t
-U1Ara2RvK1ludjdDSU9BcURCV2ZMblgzbkxLcHRtclMramtWclpiNkpkbmJCCnBVWDhnQzlJRlI2
-VzluM2NjaEJvRmdSbHFvK1dTZHk0TUpLL2NUZz0KPVVPQk0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002bff14061f2ed964--
+I still think the approach taken by the previous iteration was
+simpler and much less error prone, though.
