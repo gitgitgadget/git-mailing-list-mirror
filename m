@@ -1,62 +1,62 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549201917CE
-	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:34:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226F7191F61
+	for <git@vger.kernel.org>; Thu,  8 Aug 2024 16:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723134844; cv=none; b=hehNId05P7o0bLHcJsj3KKGtbzsVsa8JBb18yiTxAGohs4s1UFYgLHyAQSO370Az1rIx4aKhS6f1rQ232V8JQYSoSwGdO1cGyg6YwISyfZ59ZECEkkCYtWb0pmcdw2NG43NeS1bPZfbzE6t+UzJO6R2BUNSnjq9SiltY7bXRE2Q=
+	t=1723134846; cv=none; b=FiQEgHCD0tS4rKPZUPLzRe/6yq0CgJ6VyBGm/LleUv8F9xchvoQbY5PJwBoGD/GknQXE0Y7kFfmzcPj6DksanJtrAf6+YB7rr18Xpj/8ZByUfKvfAuyf98gDDcj99vudYYWlCCKV8FDQL13z6dRm8hyAuvk3CC+W174SvLzy9y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723134844; c=relaxed/simple;
-	bh=TqxR93We0Jzw3S+HgfcmOstzB9/095t878nhZEiDQEA=;
+	s=arc-20240116; t=1723134846; c=relaxed/simple;
+	bh=BoQ0IAUos8x1kUByUP+3xBErycbQy5BCQM9YfcvaZBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHrM9bXIriRQSJEyRaTR33weSfSKP3Hl2hNpYjCZs1IwAvaxyVz+j3hTKJhBjkMifHTXzsjlr/LXJTkWV/hxfxOgeyqOehVrgmWVMeqVE61p1UH6LAZ83lCpluzdOOGBrAe2PNk1UihTDkO78vT1EXPo7soR9zv2jOsdDxNvZqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EmwbJlP4; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version; b=q9b6NKHFhQ9D0X+REZ1UnqCqO9kONF2hpY7lM0PsAp32+gvUimQRl9iYT7iSVUV02dmGbovhxymWq1/gR1aMSvjgk/pAZPu+0sLbBcqRGX0yFuI8CmFkuujznNUSHircl7AHL2Gig/Eg4VjJRNZcTZHTrAd+JU7dZsLmDceTZpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/R914K2; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EmwbJlP4"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42809d6e719so8759745e9.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:34:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/R914K2"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36868fcb919so721104f8f.2
+        for <git@vger.kernel.org>; Thu, 08 Aug 2024 09:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723134840; x=1723739640; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723134842; x=1723739642; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b8h7I8Bsuk9bxkpPbSf4fcRiRr8dxq6vFqTK5db6Qo0=;
-        b=EmwbJlP4TcCEKgh7SMa/Jix+AjDZoOQLi1eruWyn8eK+KQmM1ZjXC8NmyY1qF1Rx3u
-         AZ/xqBdx8PjG3GdgDe3Zdcc+++kehBhNk6NDJeuvcnpHqLq7M1BE/PLRPkeFLaZ1AIj2
-         vthF2ILql2dL9YSVM+JHpAhD5jgulG2Q6krV/MqCCSVkTM3KF/RuGdnmisIzD0q+IxGL
-         EzSmK9D5H/xMeFzv947bQcgDBphHXzAWN7/hjf9t4vPR4lyroPgAiw7udxtI9pEiliog
-         Y/cSCzPbkz4hG4LSX1kIZCGZnbvFA2xzu35oPK3OUPWxzHRIbzza07ex9oOc0ejaFySY
-         H+8g==
+        bh=Tmz1h4+VcqBpkCDYpWTREoovppaJQx36IZs7F77BpEo=;
+        b=V/R914K2k25I+JDsZ0xikD1BehJQi36veAxoUDnyt7pK83aBKgyDU0LUTUSzvQCQx7
+         /vP+QLpeic3o754VUDrmI0l5virux5BbnjVknyW6t6HXrj6Ednggrdk5z64RGTU4xFQh
+         eue2C3wf9EuVEDZIp7on779zXYN0b4an17Mpx2gjJfglrfCi7w3nqxC4mEVVBhRXra1a
+         rv5ta/iqFwgEvL4YHQ9LA1paqqQB2VvkTj7regCWgNTCp1POy69FXGSA2oghMjLeQoxB
+         L0W8Slr3EwM1rp9RFVY404wReB3ketgzl5HWt5HwNYy8QrtxDFN4xotJ0pq4KXqbdvnd
+         aI3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723134840; x=1723739640;
+        d=1e100.net; s=20230601; t=1723134842; x=1723739642;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=b8h7I8Bsuk9bxkpPbSf4fcRiRr8dxq6vFqTK5db6Qo0=;
-        b=N0h0eUSp4cRDmr9DgOyPhkS+D0PHtPgKv3ohJ409SNK0edpfCxwvVyU6iNCgYoI6np
-         NxjD7xz2xtybofSz0B4kUM2MbZomEGK9QE0ySxnSoZfQEQGE0bPK1EDacrijimO/M/EA
-         vbC52UWGc+CKh/2WUiFuN3C2/4KqrwuPqQyuez3ZMui6NGaNY0JvPy67iYfzKr1iHbJw
-         cp0itObPNobw0uW/BoHmMYKA0x646xIxHU42yKkPc2zRFX0FRumbx1JpQ+TtBar40Huq
-         Lvb+QjuF6tGUJwePOKAQ4awDvGyfpMXzpOgn1bhJUMJsrNzvGQ+bDCs66FrK6ROMYGKu
-         iVSg==
-X-Gm-Message-State: AOJu0YwmIVwiFMdHZWV8Ioyr4mxt2y8dcRRALf1j8uV6FwxqJZcZIRMp
-	z6c1ccUCQEg6wnPOa9OurBlYjB44Qa93UljOWTYjwQ3gDSl0FhRnWseAsPorq8k=
-X-Google-Smtp-Source: AGHT+IFKaGiCMPvGZKtqnV5ydKY5wBHcVHVG1wih/COxPPxAJ9zXqS3iN6EhTa4edPVezr7B5K106A==
-X-Received: by 2002:adf:b357:0:b0:368:4e28:47f7 with SMTP id ffacd0b85a97d-36d27525489mr1954710f8f.6.1723134840225;
-        Thu, 08 Aug 2024 09:34:00 -0700 (PDT)
+        bh=Tmz1h4+VcqBpkCDYpWTREoovppaJQx36IZs7F77BpEo=;
+        b=lo78v0HfGhTkPA9l3paxT56+mFfPTXd0b4M55UdPHxjfkpwlDMxqs/sE4k3O4TxkG/
+         /F1EaA716S9PfW9QPpjobQHNs19Y2wWHwIyq446sitoCWK/bhmfgrUFbreZOkI56FHbR
+         etGCGsZt6H7sulCm0TalPuobOlJBFpU5B7gZVUENU0MbhVg5OKkG1SSdMw5/N4dewPMl
+         08JsMFnaMxufCCK4HcKcji2CzqpTX0b5krqr3iGI6tMpUweGbdgqxG/Zj7iG92OULNBO
+         toiw23xNHohUJu7iKHnudWUBhPb9zvWdMTZyX4QJ3hlR5jXLF9a1qv+sc9SSx7zCr2vT
+         iXaQ==
+X-Gm-Message-State: AOJu0YxKzg6bRzc3wpn4AYP8Qrl0puj8oKhOuzMd1BMkz+MAHUol+6GF
+	ggTKPfdOTfkEIv3/xhWAkInWzrwNbpydqZ/ywBUMHqyYZq1qdSSQsI+DCmkki8s=
+X-Google-Smtp-Source: AGHT+IH6jMGWwOCaWTJU1U+b91wmDIRQtdka8tOFiMxwNo73FPIon3Xn5ZoaLY5YPmbO9JGGRf+z1Q==
+X-Received: by 2002:a5d:6c6b:0:b0:367:4dbb:ed51 with SMTP id ffacd0b85a97d-36d27276865mr2142610f8f.0.1723134842054;
+        Thu, 08 Aug 2024 09:34:02 -0700 (PDT)
 Received: from abdobngad.. ([154.182.250.245])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36d27229689sm2415765f8f.95.2024.08.08.09.33.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36d27229689sm2415765f8f.95.2024.08.08.09.34.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 09:34:00 -0700 (PDT)
+        Thu, 08 Aug 2024 09:34:01 -0700 (PDT)
 From: AbdAlRahman Gad <abdobngad@gmail.com>
 To: git@vger.kernel.org
 Cc: AbdAlRahman Gad <abdobngad@gmail.com>
-Subject: [PATCH v6 6/8] t7004: begin the test body on the same line as test_expect_success
-Date: Thu,  8 Aug 2024 19:32:05 +0300
-Message-ID: <20240808163302.17521-7-abdobngad@gmail.com>
+Subject: [PATCH v6 7/8] t7004: use single quotes instead of double quotes
+Date: Thu,  8 Aug 2024 19:32:06 +0300
+Message-ID: <20240808163302.17521-8-abdobngad@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240808163302.17521-1-abdobngad@gmail.com>
 References: <20240808163302.17521-1-abdobngad@gmail.com>
@@ -68,249 +68,224 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Test body should begin with a single quote right after the test
-description instead of backslash followed by new line.
+Some test bodies and test description are surrounded with double
+quotes instead of single quotes, violating our coding style.
 
 Signed-off-by: AbdAlRahman Gad <abdobngad@gmail.com>
 ---
- t/t7004-tag.sh | 125 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 71 insertions(+), 54 deletions(-)
+ t/t7004-tag.sh | 70 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 5cbb13a603..2b15ede1f3 100755
+index 2b15ede1f3..046a5bd9bc 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -61,8 +61,9 @@ test_expect_success 'sort tags, ignore case' '
- 	)
+@@ -1583,7 +1583,7 @@ test_expect_success 'creating third commit without tag' '
+ 
+ # simple linear checks of --continue
+ 
+-test_expect_success 'checking that first commit is in all tags (hash)' "
++test_expect_success 'checking that first commit is in all tags (hash)' '
+ 	hash3=$(git rev-parse HEAD) &&
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+@@ -1594,10 +1594,10 @@ test_expect_success 'checking that first commit is in all tags (hash)' "
+ 	EOF
+ 	git tag -l --contains $hash1 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+ # other ways of specifying the commit
+-test_expect_success 'checking that first commit is in all tags (tag)' "
++test_expect_success 'checking that first commit is in all tags (tag)' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1607,9 +1607,9 @@ test_expect_success 'checking that first commit is in all tags (tag)' "
+ 	EOF
+ 	git tag -l --contains v1.0 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+-test_expect_success 'checking that first commit is in all tags (relative)' "
++test_expect_success 'checking that first commit is in all tags (relative)' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1619,33 +1619,33 @@ test_expect_success 'checking that first commit is in all tags (relative)' "
+ 	EOF
+ 	git tag -l --contains HEAD~2 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+ # All the --contains tests above, but with --no-contains
+-test_expect_success 'checking that first commit is not listed in any tag with --no-contains  (hash)' "
++test_expect_success 'checking that first commit is not listed in any tag with --no-contains  (hash)' '
+ 	git tag -l --no-contains $hash1 v* >actual &&
+ 	test_must_be_empty actual
+-"
++'
+ 
+-test_expect_success 'checking that first commit is in all tags (tag)' "
++test_expect_success 'checking that first commit is in all tags (tag)' '
+ 	git tag -l --no-contains v1.0 v* >actual &&
+ 	test_must_be_empty actual
+-"
++'
+ 
+-test_expect_success 'checking that first commit is in all tags (relative)' "
++test_expect_success 'checking that first commit is in all tags (relative)' '
+ 	git tag -l --no-contains HEAD~2 v* >actual &&
+ 	test_must_be_empty actual
+-"
++'
+ 
+-test_expect_success 'checking that second commit only has one tag' "
++test_expect_success 'checking that second commit only has one tag' '
+ 	cat >expected <<-\EOF &&
+ 	v2.0
+ 	EOF
+ 	git tag -l --contains $hash2 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+-test_expect_success 'inverse of the last test, with --no-contains' "
++test_expect_success 'inverse of the last test, with --no-contains' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1654,14 +1654,14 @@ test_expect_success 'inverse of the last test, with --no-contains' "
+ 	EOF
+ 	git tag -l --no-contains $hash2 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+-test_expect_success 'checking that third commit has no tags' "
++test_expect_success 'checking that third commit has no tags' '
+ 	git tag -l --contains $hash3 v* >actual &&
+ 	test_must_be_empty actual
+-"
++'
+ 
+-test_expect_success 'conversely --no-contains on the third commit lists all tags' "
++test_expect_success 'conversely --no-contains on the third commit lists all tags' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1671,7 +1671,7 @@ test_expect_success 'conversely --no-contains on the third commit lists all tags
+ 	EOF
+ 	git tag -l --no-contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+-"
++'
+ 
+ # how about a simple merge?
+ 
+@@ -1692,7 +1692,7 @@ test_expect_success 'checking that branch head only has one tag' '
+ 	test_cmp expected actual
  '
  
--test_expect_success 'looking for a tag in an empty tree should fail' \
--	'! (tag_exists mytag)'
-+test_expect_success 'looking for a tag in an empty tree should fail' '
-+	! (tag_exists mytag)
+-test_expect_success 'checking that branch head with --no-contains lists all but one tag' "
++test_expect_success 'checking that branch head with --no-contains lists all but one tag' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1702,22 +1702,22 @@ test_expect_success 'checking that branch head with --no-contains lists all but
+ 	EOF
+ 	git tag -l --no-contains $hash4 v* >actual &&
+ 	test_cmp expected actual
+-"
 +'
  
- test_expect_success 'creating a tag in an empty tree should fail' '
- 	test_must_fail git tag mynotag &&
-@@ -148,25 +149,31 @@ test_expect_success 'listing all tags if one exists should output that tag' '
- 
- # pattern matching:
- 
--test_expect_success 'listing a tag using a matching pattern should succeed' \
--	'git tag -l mytag'
-+test_expect_success 'listing a tag using a matching pattern should succeed' '
-+	git tag -l mytag
-+'
- 
--test_expect_success 'listing a tag with --ignore-case' \
--	'test $(git tag -l --ignore-case MYTAG) = mytag'
-+test_expect_success 'listing a tag with --ignore-case' '
-+	test $(git tag -l --ignore-case MYTAG) = mytag
-+'
- 
--test_expect_success 'listing a tag using a matching pattern should output that tag' \
--	'test $(git tag -l mytag) = mytag'
-+test_expect_success 'listing a tag using a matching pattern should output that tag' '
-+	test $(git tag -l mytag) = mytag
-+'
- 
--test_expect_success 'listing tags using a non-matching pattern should succeed' \
--	'git tag -l xxx'
-+test_expect_success 'listing tags using a non-matching pattern should succeed' '
-+	git tag -l xxx
-+'
- 
--test_expect_success 'listing tags using a non-matching pattern should output nothing' \
--	'test $(git tag -l xxx | wc -l) -eq 0'
-+test_expect_success 'listing tags using a non-matching pattern should output nothing' '
-+	test $(git tag -l xxx | wc -l) -eq 0
-+'
- 
- # special cases for creating tags:
- 
--test_expect_success 'trying to create a tag with the name of one existing should fail' \
--	'test_must_fail git tag mytag'
-+test_expect_success 'trying to create a tag with the name of one existing should fail' '
-+	test_must_fail git tag mytag
-+'
- 
- test_expect_success 'trying to create a tag with a non-valid name should fail' '
- 	test $(git tag -l | wc -l) -eq 1 &&
-@@ -236,8 +243,9 @@ test_expect_success 'trying to delete two tags, existing and not, should fail in
- 	! tag_exists nonexistingtag
+ test_expect_success 'merging original branch into this branch' '
+ 	git merge --strategy=ours main &&
+         git tag v4.0
  '
  
--test_expect_success 'trying to delete an already deleted tag should fail' \
--	'test_must_fail git tag -d mytag'
-+test_expect_success 'trying to delete an already deleted tag should fail' '
-+	test_must_fail git tag -d mytag
+-test_expect_success 'checking that original branch head has one tag now' "
++test_expect_success 'checking that original branch head has one tag now' '
+ 	cat >expected <<-\EOF &&
+ 	v4.0
+ 	EOF
+ 	git tag -l --contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+-"
 +'
  
- # listing various tags with pattern matching:
- 
-@@ -417,14 +425,17 @@ test_expect_success 'a non-annotated tag created without parameters should point
- 	test $(git rev-parse non-annotated-tag) = $(git rev-parse HEAD)
- '
- 
--test_expect_success 'trying to verify an unknown tag should fail' \
--	'test_must_fail git tag -v unknown-tag'
-+test_expect_success 'trying to verify an unknown tag should fail' '
-+	test_must_fail git tag -v unknown-tag
+-test_expect_success 'checking that original branch head with --no-contains lists all but one tag now' "
++test_expect_success 'checking that original branch head with --no-contains lists all but one tag now' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1728,9 +1728,9 @@ test_expect_success 'checking that original branch head with --no-contains lists
+ 	EOF
+ 	git tag -l --no-contains $hash3 v* >actual &&
+ 	test_cmp expected actual
+-"
 +'
  
--test_expect_success 'trying to verify a non-annotated and non-signed tag should fail' \
--	'test_must_fail git tag -v non-annotated-tag'
-+test_expect_success 'trying to verify a non-annotated and non-signed tag should fail' '
-+	test_must_fail git tag -v non-annotated-tag
+-test_expect_success 'checking that initial commit is in all tags' "
++test_expect_success 'checking that initial commit is in all tags' '
+ 	cat >expected <<-\EOF &&
+ 	v0.2.1
+ 	v1.0
+@@ -1742,7 +1742,7 @@ test_expect_success 'checking that initial commit is in all tags' "
+ 	EOF
+ 	git tag -l --contains $hash1 v* >actual &&
+ 	test_cmp expected actual
+-"
 +'
  
--test_expect_success 'trying to verify many non-annotated or unknown tags, should fail' \
--	'test_must_fail git tag -v unknown-tag1 non-annotated-tag unknown-tag2'
-+test_expect_success 'trying to verify many non-annotated or unknown tags, should fail' '
-+	test_must_fail git tag -v unknown-tag1 non-annotated-tag unknown-tag2
+ test_expect_success 'checking that --contains can be used in non-list mode' '
+ 	cat >expected <<-\EOF &&
+@@ -1758,10 +1758,10 @@ test_expect_success 'checking that --contains can be used in non-list mode' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'checking that initial commit is in all tags with --no-contains' "
++test_expect_success 'checking that initial commit is in all tags with --no-contains' '
+ 	git tag -l --no-contains $hash1 v* >actual &&
+ 	test_must_be_empty actual
+-"
 +'
  
- # creating annotated tags:
+ # mixing modes and options:
  
-@@ -1014,8 +1025,8 @@ test_expect_success GPG '-s implies annotated tag' '
- 	test_cmp expect actual
+@@ -1798,16 +1798,16 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
+ 
+ for option in --contains --with --no-contains --without --merged --no-merged --points-at
+ do
+-	test_expect_success "mixing incompatible modes with $option is forbidden" "
++	test_expect_success "mixing incompatible modes with $option is forbidden" '
+ 		test_must_fail git tag -d $option HEAD &&
+ 		test_must_fail git tag -d $option HEAD some-tag &&
+ 		test_must_fail git tag -v $option HEAD
+-	"
+-	test_expect_success "Doing 'git tag --list-like $option <commit> <pattern> is permitted" "
++	'
++	test_expect_success "Doing 'git tag --list-like $option <commit> <pattern> is permitted" '
+ 		git tag -n $option HEAD HEAD &&
+ 		git tag $option HEAD HEAD &&
+ 		git tag $option
+-	"
++	'
+ done
+ 
+ # check points-at
+@@ -2183,7 +2183,7 @@ test_expect_success 'git tag -l with --format="%(rest)" must fail' '
+ 	test_must_fail git tag -l --format="%(rest)" "v1*"
  '
  
--test_expect_success GPG 'git tag -s implied if configured with tag.forcesignannotated' \
--	'get_tag_header forcesignannotated-implied-sign $commit commit $time >expect &&
-+test_expect_success GPG 'git tag -s implied if configured with tag.forcesignannotated' '
-+	get_tag_header forcesignannotated-implied-sign $commit commit $time >expect &&
- 	echo "A message" >>expect &&
- 	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
- 	test_config tag.forcesignannotated true &&
-@@ -1024,15 +1035,15 @@ test_expect_success GPG 'git tag -s implied if configured with tag.forcesignanno
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'lightweight with no message when configured with tag.forcesignannotated' \
--	'test_config tag.forcesignannotated true &&
-+test_expect_success GPG 'lightweight with no message when configured with tag.forcesignannotated' '
-+	test_config tag.forcesignannotated true &&
- 	git tag forcesignannotated-lightweight &&
- 	tag_exists forcesignannotated-lightweight &&
- 	test_must_fail git tag -v forcesignannotated-no-message
- '
- 
--test_expect_success GPG 'git tag -a disable configured tag.forcesignannotated' \
--	'get_tag_header forcesignannotated-annotate $commit commit $time >expect &&
-+test_expect_success GPG 'git tag -a disable configured tag.forcesignannotated' '
-+	get_tag_header forcesignannotated-annotate $commit commit $time >expect &&
- 	echo "A message" >>expect &&
- 	test_config tag.forcesignannotated true &&
- 	git tag -a -m "A message" forcesignannotated-annotate &&
-@@ -1041,8 +1052,8 @@ test_expect_success GPG 'git tag -a disable configured tag.forcesignannotated' \
- 	test_must_fail git tag -v forcesignannotated-annotate
- '
- 
--test_expect_success GPG 'git tag --sign enable GPG sign' \
--	'get_tag_header forcesignannotated-disabled $commit commit $time >expect &&
-+test_expect_success GPG 'git tag --sign enable GPG sign' '
-+	get_tag_header forcesignannotated-disabled $commit commit $time >expect &&
- 	echo "A message" >>expect &&
- 	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
- 	test_config tag.forcesignannotated false &&
-@@ -1051,8 +1062,8 @@ test_expect_success GPG 'git tag --sign enable GPG sign' \
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'git tag configured tag.gpgsign enables GPG sign' \
--	'get_tag_header gpgsign-enabled $commit commit $time >expect &&
-+test_expect_success GPG 'git tag configured tag.gpgsign enables GPG sign' '
-+	get_tag_header gpgsign-enabled $commit commit $time >expect &&
- 	echo "A message" >>expect &&
- 	echo "-----BEGIN PGP SIGNATURE-----" >>expect &&
- 	test_config tag.gpgsign true &&
-@@ -1061,8 +1072,8 @@ test_expect_success GPG 'git tag configured tag.gpgsign enables GPG sign' \
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'git tag --no-sign configured tag.gpgsign skip GPG sign' \
--	'get_tag_header no-sign $commit commit $time >expect &&
-+test_expect_success GPG 'git tag --no-sign configured tag.gpgsign skip GPG sign' '
-+	get_tag_header no-sign $commit commit $time >expect &&
- 	echo "A message" >>expect &&
- 	test_config tag.gpgsign true &&
- 	git tag -a --no-sign -m "A message" no-sign &&
-@@ -1077,11 +1088,13 @@ test_expect_success GPG 'trying to create a signed tag with non-existing -F file
- 	! tag_exists nosigtag
- '
- 
--test_expect_success GPG 'verifying a signed tag should succeed' \
--	'git tag -v signed-tag'
-+test_expect_success GPG 'verifying a signed tag should succeed' '
-+	git tag -v signed-tag
-+'
- 
--test_expect_success GPG 'verifying two signed tags in one command should succeed' \
--	'git tag -v signed-tag file-signed-tag'
-+test_expect_success GPG 'verifying two signed tags in one command should succeed' '
-+	git tag -v signed-tag file-signed-tag
-+'
- 
- test_expect_success GPG 'verifying many signed and non-signed tags should fail' '
- 	test_must_fail git tag -v signed-tag annotated-tag &&
-@@ -1451,14 +1464,16 @@ test_expect_success GPG,RFC1991 'reediting a signed tag body omits signature' '
- '
- 
- # try to sign with bad user.signingkey
--test_expect_success GPG 'git tag -s fails if gpg is misconfigured (bad key)' \
--	'test_config user.signingkey BobTheMouse &&
--	test_must_fail git tag -s -m tail tag-gpg-failure'
-+test_expect_success GPG 'git tag -s fails if gpg is misconfigured (bad key)' '
-+	test_config user.signingkey BobTheMouse &&
-+	test_must_fail git tag -s -m tail tag-gpg-failure
-+'
- 
- # try to produce invalid signature
--test_expect_success GPG 'git tag -s fails if gpg is misconfigured (bad signature format)' \
--	'test_config gpg.program echo &&
--	 test_must_fail git tag -s -m tail tag-gpg-failure'
-+test_expect_success GPG 'git tag -s fails if gpg is misconfigured (bad signature format)' '
-+	test_config gpg.program echo &&
-+	test_must_fail git tag -s -m tail tag-gpg-failure
-+'
- 
- # try to produce invalid signature
- test_expect_success GPG 'git verifies tag is valid with double signature' '
-@@ -1479,21 +1494,23 @@ test_expect_success GPG 'git verifies tag is valid with double signature' '
- '
- 
- # try to sign with bad user.signingkey
--test_expect_success GPGSM 'git tag -s fails if gpgsm is misconfigured (bad key)' \
--	'test_config user.signingkey BobTheMouse &&
--	 test_config gpg.format x509 &&
--	 test_must_fail git tag -s -m tail tag-gpg-failure'
-+test_expect_success GPGSM 'git tag -s fails if gpgsm is misconfigured (bad key)' '
-+	test_config user.signingkey BobTheMouse &&
-+	test_config gpg.format x509 &&
-+	test_must_fail git tag -s -m tail tag-gpg-failure
-+'
- 
- # try to produce invalid signature
--test_expect_success GPGSM 'git tag -s fails if gpgsm is misconfigured (bad signature format)' \
--	'test_config gpg.x509.program echo &&
--	 test_config gpg.format x509 &&
--	 test_must_fail git tag -s -m tail tag-gpg-failure'
-+test_expect_success GPGSM 'git tag -s fails if gpgsm is misconfigured (bad signature format)' '
-+	test_config gpg.x509.program echo &&
-+	test_config gpg.format x509 &&
-+	test_must_fail git tag -s -m tail tag-gpg-failure
-+'
- 
- # try to verify without gpg:
- 
--test_expect_success GPG 'verify signed tag fails when public key is not present' \
--	'rm -rf gpghome &&
-+test_expect_success GPG 'verify signed tag fails when public key is not present' '
-+	rm -rf gpghome &&
- 	test_must_fail git tag -v signed-tag
- '
- 
+-test_expect_success "set up color tests" '
++test_expect_success 'set up color tests' '
+ 	echo "<RED>v1.0<RESET>" >expect.color &&
+ 	echo "v1.0" >expect.bare &&
+ 	color_args="--format=%(color:red)%(refname:short) --list v1.0"
 -- 
 2.43.0
 
