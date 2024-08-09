@@ -1,121 +1,100 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD1615AD90
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 19:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B213815921B
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 19:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723231074; cv=none; b=apWZ1bxClOP/3S8gi+GC6hCro/wD9dF6qP1Jd66gZ6Ykf6dF331SOUg472RSW260uoPKs9GJiZnmUqfNDGDJsye0IOiSPOYDriO6OtvGoGREIsBZcgObSy93uGjdiSaAvqkm2AnJXXkz2TWOY/80oXq/O7WSuw6IDSaT8fVJzks=
+	t=1723231353; cv=none; b=Jma8zyR1n3VF6YT7OZhfaIp/zSv0ldLFnml3wpHh0HojCUyPtsNOUt+YsslnhgCIeK36ui9vL+kCiQW4EkvaMYY5fvph2YW398bS9JYoQ9PE/JsXd9cPbOKfiJZeWSJuOcQ7JmHifU5vQTqk2aowSegSh4fQ3rKsiyFLd/FcZY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723231074; c=relaxed/simple;
-	bh=QMNrRygeBQ68nKyw6pyYUvTxBMSgN7XOAQqoH8E3I1o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jm+UF5iyBCsMtrGt9y2ejc/p/CcZDm4uUCsjfLVTh4aPEVsbSqrCnAvJosKax552qWTgKlsKbY5niLvsn63Bade3aijxEelOxxfMfSNdjYToxS+0wioJZxVSqy4lk+fJ6YwgGi70S/d2x69eaq8ig6//0lntW5UKw+eEQcWUiYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=W7dwxWPd; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1723231353; c=relaxed/simple;
+	bh=BsjyvdqV4Dqw7s/hbSWgG7sGKUJVlsmKnaD7e75X/Dw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kB6e/Dq4cumLAOC206p8rVVjc38quDTShj/9ntIK1B0LoMQ/m8pPJoPUtH0yWXj2JOsjfUyn0JKBm+YBMEzrplxBA6VK7Clf3nLbBxnAKdV+HwyUbCzB6bbBpMLx1hWw8KBzn4oM4k8qwnVra5HyWUlSV/hDHw4JXRlThSNIx40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VXZXqFM8; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="W7dwxWPd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1723231063;
-	bh=QMNrRygeBQ68nKyw6pyYUvTxBMSgN7XOAQqoH8E3I1o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=W7dwxWPdmq+bV3mMkigUTy9Ae2JGUObai1jj2y2siTBYtWfwlitFo1FgydUEo1+BD
-	 FlIGXDc1EZbEPTqKRmZg5oqK7C45KQy84IFzpQEmLzhHlu15q+91Sc5TRlZvAjZSCw
-	 eEZCh0SpiwqW2b8TDoGplbPT4aDc6f/sqa8ObCtNWwjtyQHHKhmiTVra4cG5ssF5EC
-	 HKJ7ZXE0lmV2aaOvJWWbDVEprAvpt7e1cTGau8LYTQ5UmysrKqwqvds+ihRi2dkqdj
-	 QuJ8Uvkwn+MbKP4mJe3AMITRBVNwYTgwqV56ncNEBgjr85/2fU24v/FYjloCHnY6P0
-	 jUqK3uUJ0FTRzxV5/iaqRlb54+GZy0HBZPDxa83KKinufEfVRqHJBkA/Q+As1GKWQn
-	 NS6Dbwlc1Mgd1XsAo+J+y1YFsx/Yzo7xKxm59K9jNtDfgtX520FULjIF1TlyubP4Wz
-	 Q77cz2h6SDMNvNA9CBjwmrrXW36pOCBSEQuNi3p7GvWTpe2eXMK
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VXZXqFM8"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 926961CE15;
+	Fri,  9 Aug 2024 15:22:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=BsjyvdqV4Dqw7s/hbSWgG7sGKUJVlsmKnaD7e7
+	5X/Dw=; b=VXZXqFM89ECjAUdSuSzdaxV2aHOsnL6KRoYgA1w+2owwcqhSr2pALC
+	/bM6zhKTTyp6gSj4R4yuZeBHsOWwzk0CClOXJgpFb0Fn5imrISuK85iS3mdrmA/P
+	PpBrd87ZTho8eJIICHZbXEQKBTtsyhasdd/BFLuB3FquHBIsa1G7I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 87ECF1CE14;
+	Fri,  9 Aug 2024 15:22:30 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E9819209C0;
-	Fri,  9 Aug 2024 19:17:43 +0000 (UTC)
-Date: Fri, 9 Aug 2024 19:17:42 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: =?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>
-Cc: git@vger.kernel.org
-Subject: Re: git send-email with =?utf-8?Q?ancient_?=
- =?utf-8?B?U01UUCBzZXJ2ZXIg4oCm?= dh key too smalll
-Message-ID: <ZrZrVpYdSPb731_p@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>, git@vger.kernel.org
-References: <D3BAXOA4NL74.29XYKS0IO8UFC@cepl.eu>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE5EC1CE13;
+	Fri,  9 Aug 2024 15:22:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  spectral@google.com,
+  emilyshaffer@google.com,  emrass@google.com,  rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
+ libgit.a
+In-Reply-To: <cover.1723054623.git.steadmon@google.com> (Josh Steadmon's
+	message of "Wed, 7 Aug 2024 11:21:25 -0700")
+References: <cover.1723054623.git.steadmon@google.com>
+Date: Fri, 09 Aug 2024 12:22:28 -0700
+Message-ID: <xmqqbk21cxhn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZWsHA/5QPjOSR5rw"
-Content-Disposition: inline
-In-Reply-To: <D3BAXOA4NL74.29XYKS0IO8UFC@cepl.eu>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B854B2E2-5684-11EF-942B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
+Josh Steadmon <steadmon@google.com> writes:
 
---ZWsHA/5QPjOSR5rw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We're sending this series as RFC because there is remaining work
+> we'd like to do, but we'd like to get early feedback on this approach,
+> and particularly to ask for advice on a few topics:
 
-On 2024-08-09 at 10:17:14, Mat=C4=9Bj Cepl wrote:
-> When using git send-email sending to very ancient SMTP server
-> (postfix 2.6.6 on CentOS 6), I get this error:
->=20
-> STARTTLS failed! SSL connect attempt failed error:0A00018A:SSL routines::=
-dh key too small at /usr/libexec/git/git-send-email line 1638.
+I am not sure how much this is reusable, after seeing comments that
+"cgit-rs" may not be the best name for this thing and pathnames may
+have to change, but I needed the following merge-fix to get this
+into "seen" and have the result pass "make", due to interactions
+with the ps/config-wo-the-repository topic.
 
-This probably means that the DH key is insecure, so sending mail to this
-server with TLS probably won't provide sufficient security.  You may
-want to reconsider using this mail server, especially since it hasn't
-had security updates for well over 3.5 years.
+ contrib/cgit-rs/public_symbol_export.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-If you're using level 2, then the requirement is the equivalent of 112
-bits of security, which is still inadequate by today's standards (which
-suggest 128 bits of security, or level 3).  Level 1 is 80 bits, which is
-probably attackable by government agencies.
+diff --git a/contrib/cgit-rs/public_symbol_export.c b/contrib/cgit-rs/public_symbol_export.c
+index 9641afca89..2732f5898e 100644
+--- a/contrib/cgit-rs/public_symbol_export.c
++++ b/contrib/cgit-rs/public_symbol_export.c
+@@ -9,6 +9,8 @@
+ #include "setup.h"
+ #include "version.h"
+ 
++extern struct repository *the_repository;
++
+ #pragma GCC visibility push(default)
+ 
+ const char *libgit_setup_git_directory(void)
+@@ -18,7 +20,7 @@ const char *libgit_setup_git_directory(void)
+ 
+ int libgit_config_get_int(const char *key, int *dest)
+ {
+-	return git_config_get_int(key, dest);
++	return repo_config_get_int(the_repository, key, dest);
+ }
+ 
+ void libgit_initialize_the_repository(void)
+-- 
+2.46.0-326-g1e046905fc
 
-> When looking what seems like a similar error at
-> https://github.com/symfony/symfony/issues/44393 it seems I need
-> to set `security_level` (whatever it is) to 1. Is it possible
-> to do it just with configuration of git or do I need to patch
-> something somewhere?
-
-What you're looking for is an OpenSSL configuration on your system.  On
-my Debian system, the configuration file is in `/etc/ssl/openssl.cnf`.
-The steps for what you need to set are available at several different
-places online.
-https://askubuntu.com/questions/1233186/ubuntu-20-04-how-to-set-lower-ssl-s=
-ecurity-level
-is an example you can use.
-
-I don't believe that Git provides a set of TLS configuration options for
-`git send-email`, but if it did, you could control the configuration by
-specifying cipher suites as `DEFAULT@SECLEVEL=3D1`.  You might, but
-probably would not, need to configure the minimum protocol to something
-lower as well.  I believe CentOS 6 does support TLS 1.2, so that should
-be a fine default and shouldn't need to be modified.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---ZWsHA/5QPjOSR5rw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZrZrVQAKCRB8DEliiIei
-gYNuAQCU4Ol7sEjD+cj1Rkla/7nlCVl/Sqy44nwv8+iDMjHx7wD/dYYHMuM0X+u/
-Pk5n/q6StDJF/KVmX9EZuAGKthL93A8=
-=5EQ+
------END PGP SIGNATURE-----
-
---ZWsHA/5QPjOSR5rw--
