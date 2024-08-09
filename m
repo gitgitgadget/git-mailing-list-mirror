@@ -1,72 +1,117 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0600415FCE5
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 19:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFDE15EFD0
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 19:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723231649; cv=none; b=TfjP1oldBl3CoBEdCwrml5TD0aXDW+Gst01i95rTK4QSVyym0BeO8nEZXO/H4Sy8kpkns407v66COj3mudZGmvkw4t9RXUFv/7a6++cXZR+rznkyBhktKCPMmlmeRRXEUHrH0MSqoyo4uXDom+wF4/QOowaReeF9hdNVAjAocTw=
+	t=1723231757; cv=none; b=IIIvApLSR4j28uUdPQdTIONoN+hrQmEyUOj3ycvZ1/lkhgwe/GOUO4++0/TA9R2UtMVpwI77unNEv6rRlB/UNrFig2U//8tek8U2xQkBJPvgenkX98s6b7fxRDiZ4Df786AfCGLm/CDNaFHJ5sNL20K7atUQdUo3gpqeEQrLmiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723231649; c=relaxed/simple;
-	bh=pnj7Xykjiehxxms5OULjbhNp583r0fLusEb8jQoyu2w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lwsmPZ8eaOOcH1UwUKVMaIUj8F9Oqpz6n0RO63r3/VuEWGAykAone7+JZx3dshFb2nahixRsJLmhA4Iz2uX16Bp9L2NKYuCjQkMoiHSgZnvTh/Sa94/CdJRYe6ufLSucVP45nQd+QQufIKNGkNxUxOX7Nix3S0yfoPPZ4mUwrEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rCVQ5tVg; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723231757; c=relaxed/simple;
+	bh=EDq0dsW+TpYDAqQ3saXhJE8ru90VDD9cDg4QEre0WNQ=;
+	h=MIME-Version:From:To:Subject:Message-ID:Date:Content-Type; b=hHFyLn4UQTdfR8QhXt4f7kJuaZaOcQLwI9v4gPLMpyu8/Nvahk0B85vpdrGU3ZpAPOnYdO6sDR6eyy/0o0N3kjfUaZNArUhHVajmfx2eiagvgyi7ec/eXjrSQ5GhT43cpg9RwBuod+vSFofhs9RebAi7BcrGMGCC3+Etx+y61uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CoIDHaLx; arc=none smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rCVQ5tVg"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DDAEF1CE7A;
-	Fri,  9 Aug 2024 15:27:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=pnj7Xykjiehxxms5OULjbhNp583r0fLusEb8jQ
-	oyu2w=; b=rCVQ5tVgVVJortpXY4w+W+fLfALfasOniYA/6hGN5XYSWn/G8wVne6
-	Y/RYrxPwwl2xV2JgjwPHqrWKX3sdd0QMreikvXc5R6lMzhEjVIaBpiZcVvyV842v
-	ondLsJwjfyJtbtQou1vp2sgMbR9ze1H+dJCykmxOHlZpa9C6DuiLQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D52511CE79;
-	Fri,  9 Aug 2024 15:27:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C4281CE78;
-	Fri,  9 Aug 2024 15:27:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>,
-  "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH 3/3] send-email: teach git send-email option to
- translate aliases
-In-Reply-To: <328fb497-d16e-4af1-a816-7b4aeb531504@intel.com> (Jacob Keller's
-	message of "Fri, 9 Aug 2024 12:12:34 -0700")
-References: <20240808-jk-translate-alias-send-email-v1-0-10a03b3d6b06@gmail.com>
-	<20240808-jk-translate-alias-send-email-v1-3-10a03b3d6b06@gmail.com>
-	<xmqqttfufzkj.fsf@gitster.g>
-	<328fb497-d16e-4af1-a816-7b4aeb531504@intel.com>
-Date: Fri, 09 Aug 2024 12:27:25 -0700
-Message-ID: <xmqq7ccpcx9e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CoIDHaLx"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-70943713472so1037224a34.2
+        for <git@vger.kernel.org>; Fri, 09 Aug 2024 12:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723231754; x=1723836554; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:to:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PoGx6x2M9y3i5XZNz1y5NsRV7iAKPPjLn+M8+M6Q3Wo=;
+        b=CoIDHaLxPpQ8vud2nLdZeerdk0YR6ajbanuFZ8I2vhNyoSAVIa5ULScF2/bl9Z2bQ8
+         wRghleO2u+BEmYrQ8yHwWcpw9KKQv1vMA9SVSGmhAH+/JPHYQNWZ3yzeynvNWIvb6T8Z
+         O7dvMLe34WDaLrYMpZyEcWCdsKdx8PgFBjbMr18IBM0NOZTRFPHs6oimeSE3jibkvQpj
+         JPjXgwEvFYT5xtUw1XB6jznxvlRpVNLNifvlaipIfNgCV+GvbH1Ut+WXTYWF+cpeHj/y
+         8TOPwRj5gbA+cTibxsUH6dspvBt7kOxxPteyWjNncz1Br0oioU2M+C0JIsROf/KvB/mZ
+         TcFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723231754; x=1723836554;
+        h=content-transfer-encoding:date:message-id:subject:to:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PoGx6x2M9y3i5XZNz1y5NsRV7iAKPPjLn+M8+M6Q3Wo=;
+        b=k2sgThX9ou+IXF+lNJ8zK/TG7acPjfmOJqpv6ywWZHgYlWmHUTdJ+rEgqqjmfD4HWc
+         nZKRhCVO6vBZSn7QBOO5UJzW79WM5DqOr/kw2VLMRvPm2wrx4nhqXwjwMu+IVsLNgFfw
+         LSreqfFpZgtD/oc8FS3FVkKikOJEUqR3PeBbbt4K40Mg2rqhmqKEloIMYpuBkph+oGKS
+         ItUK60vYUgJgXi5NJjziB+mbErQ7XotPytsKh6Av2YsvarZ+sfrRLL3roxwqwRr8aLpS
+         OL0B4cQBeGuNIm12IYzvZ7uv3YtWznrwwghE02R5Vr4YmPJRHzrtJfcvTJJ2JnBkl0kB
+         I39A==
+X-Gm-Message-State: AOJu0YyvACHmD1wmyqfSZta2gdCegqsddpJxvVQ93zCmpXpbs/R7uWsw
+	lVSyT4Ft7NdGmNXVVkBoTpw777tQ35Y8DTqdUJhRp2iox0EPuw7/hzac5w==
+X-Google-Smtp-Source: AGHT+IGzAL+ec/cB8kWBNfmBSsflbka31IRPiXmhV6jYSughU0Kf+Ow2ADkwWRxVBSVXKT/tCHzG6A==
+X-Received: by 2002:a05:6830:3685:b0:70a:9876:b781 with SMTP id 46e09a7af769-70b7c482597mr2955132a34.34.1723231754287;
+        Fri, 09 Aug 2024 12:29:14 -0700 (PDT)
+Received: from zivdesk (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4ca76a01fd9sm89246173.97.2024.08.09.12.29.13
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Aug 2024 12:29:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 68D6BB88-5685-11EF-A57F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: <git@vger.kernel.org>
+Subject: [BUG REPORT] `--autostash` rebase + pre-rebase error ends in corrupt
+	 state
+Message-ID: <17ea26263cf57664.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Fri, 9 Aug 2024 19:29:13 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+If you perform a rebase using `--autostash`, and the pre-rebase hook
+exits with a non-zero exit code, your worktree is left in some sort of
+invalid state. This is reproducible with the following script:
 
-> Dump aliases handled this by checking @ARGV and immediately bailing if
-> there were anything remaining after the call to parsing its inner
-> options. This works but does not work for --translate-aliases because it
-> needs to treat all the remaining arguments as aliases.
+    git init --initial-branch main
+    echo -e '#!/bin/sh\nexit 1' > .git/hooks/pre-rebase
+    chmod +x .git/hooks/pre-rebase
+   =20
+    git commit --allow-empty -m "initial commit"
+   =20
+    git switch -c feature1 main
+   =20
+    touch a.txt
+    git add a.txt
+    git commit -m "add a"
+   =20
+    git switch -c feature2 main
+   =20
+    touch b.txt
+    git add b.txt
+    git commit -m "add b"
+   =20
+    echo "content" > b.txt
+    git rebase --autostash feature1
 
-When GetOptions returns, shouldn't these "remaining arguments" be
-visible in @ARGV and you can iterate over them yourself, perhaps?
+At this point, `git status` indicates that you are rebasing and
+`__git_ps1` also shows simply `(|REBASE)`. However, attempting to `git
+rebase --abort` or `git rebase --continue` gives "warning: could not
+read '.git/rebase-merge/head-name': No such file or directory", and does
+not appear to change the worktree state.
+
+You're able to recover from this by using `git rebase --quit` and then
+resetting to the commit you were on before attempting the rebase.
+
+This issue only occurs if there is actually some modification to stash;
+the presence of `--autostash` by itself does not trigger it.
+
+If the above script is adjusted to make no uncommitted modifications,
+and rebase without using `--autostash`, then the rebase is simply
+aborted as expected when the pre-rebase hook fails.
+
+I've reproduced this in the following OS/git version combinations:
+
+- Gentoo Linux, git v2.46.0
+- MacOS Sonoma 14.5, git v2.46.0
+- Windows 11, git 2.44.0.windows.1
+
+--=20
+Thank you,
+Brian Lyles
