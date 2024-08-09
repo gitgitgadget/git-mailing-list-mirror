@@ -1,98 +1,82 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142A32940D
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 16:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D18639851
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 17:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723222762; cv=none; b=GtBA8at95IjDq5jAYaw3FEghE5XmgvWuUgGsjE2N60P7DN23VRTBIOqiBIMuN1ujgZ6th0C5GTIymnU6ZBuGWt4fDc8VKlaVyFuidIWvkgGfJtIbL/Tqcwdn0OUyGoupXYjGOVsscT8cRRzyqmwY4KIGdDQeXUQOYFpq/5PYVes=
+	t=1723223633; cv=none; b=pl0WjsDdKJRpNHVtbZ4vFy9kWP51DTPDee7j8kSuTrI9eFE4sQ21SetFlGdmFHTYhs1hjYZ6q/RHFQzjQovXMjx0XNtHeOEFx0h9SrLd7HYatfoTrYWUvU6lveO0XcIe9DpNrAbCTj1d/iC7wdpYLFcWSw04KuWkLbPB5x8rPg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723222762; c=relaxed/simple;
-	bh=evGLA2qmf0195qHo4J/MOQOjWldaqXdoUwN0fHmMoFo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VmZ31edrCyRXzTpNY4gybWv0LlnyW5zDFrhtisqO21k5leNCyibr84shyfwiRxhHWO1PRCSQ+oDImOQTzguqTimMELEUbsUlzNOjcUHMCWvXLGSonX8ham86EkGf9uBGzLW83AYwhuzlWXTCU9n7/W0NpB6eSCJ7ia9gc+s9iEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S6PA+5Qu; arc=none smtp.client-ip=209.85.160.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723223633; c=relaxed/simple;
+	bh=mH6HgE4rETkx0np2sgWlTP5k8wFk2R52vdmPYn0zyGM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qa+U+OA818j7qjpjDM+zF71SoHucXCgD4t6FSIHpmzwAv+m90nMMTwnRg7ShWE70i6SYz86gL3mdg7r2dK9ywnCNAxBBwRPRmpSXecjTmBrEuL8PXqSZjX3sISUchQ1EmYBbHBQWntLtxKm4uZXONFzKBbQqG8dD+3aa+iT1wqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jAiPT6pO; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S6PA+5Qu"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-260f1664fdfso1418436fac.1
-        for <git@vger.kernel.org>; Fri, 09 Aug 2024 09:59:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723222760; x=1723827560; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WMlku6qXbMWG3aUY9NFYRKQ3waUlIq5fZMFyo3qRa2I=;
-        b=S6PA+5QuuIGRE0sOsqXiIulx19Y4WfKPK4myEVyJAIz4bKQx7yKJvJkcEVfIKRP1UM
-         iDF4XuQjH1am16A2nUXoBn5ivqkk2OoOEShe719G9ZQPRWgXL7B5CEO1NvLhkq4xRfzJ
-         88V0MES5HtuDXsJAvrftuuUcCaEx4tOkjL740gOYx1IfVAyee2W1cvg3P9D2XXDEwjvL
-         Dg3U8/QIiMxfKvaWZMhfgiwXfnmvGAAtsVhYu2IzwwRO1sLK/bfKnboLlOtqU/uItEWH
-         PH2dEs3pzXbIaDCkQ9Uceac1x3hMjBh5Ay5f66i01996MDR+C+2M1LRLymu2jL4nCu04
-         Wk/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723222760; x=1723827560;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WMlku6qXbMWG3aUY9NFYRKQ3waUlIq5fZMFyo3qRa2I=;
-        b=cmbrYwh3W8DyEcsHlVsEtbD4Qwo07/lItkuxTf77K9NNKz5NsQoBLaGk9c4gD/1Q67
-         nVhEyw5GHL59Kj617JRUBSkNBGFOMy8h3e1cK5x8SmQZoXWDDe4sjtl+dhbWCSCeSehj
-         wnGOM2Gj6JG/aDgC6DZlF4AhqDwQLyUtDRF86oYWREqp3ozRjPq3IGFAXEuZ8HEifTP5
-         SdjSRmy3SIVbsfDECdfOVOytijA8FZuwio6yqEWyxfILQx9HhKrJMR01NZq4/R/tmF2T
-         KoPtedcCfT7BJdz4lsZz4FKUh1wWVQZCC6oCEfY2UQc+062fSCuhJeu35qN9kEZAdGJi
-         pjPg==
-X-Gm-Message-State: AOJu0YwZjqzm+zhuzCV84bVBPx/PgpoO4oJCqOml49LIpO67ZXaE06+F
-	FJin/b/tR4stEX8srSrwdQF2vKGTPxR5BSB2AZaDPw0q4wwv7PH1YQam1g==
-X-Google-Smtp-Source: AGHT+IHy9RD99Dkr4aYOgouXTHO86+s62SnbynGkH5TMQmqfrJUC34J2wG1qJUKf9r9VMP9jPKQIQQ==
-X-Received: by 2002:a05:6870:46a8:b0:25d:fc34:ba6a with SMTP id 586e51a60fabf-26c62cbe04amr2595660fac.26.1723222759745;
-        Fri, 09 Aug 2024 09:59:19 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-26c723040f9sm5763fac.54.2024.08.09.09.59.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Aug 2024 09:59:19 -0700 (PDT)
-Date: Fri, 9 Aug 2024 11:58:31 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/20] path: expose `do_git_path()` as `repo_git_pathv()`
-Message-ID: <xl37sjpibmamkxdmpvfy44sijseuk5doizdlbnuodnbd6pdhxj@dws5e4wdu5lg>
-References: <cover.1723013714.git.ps@pks.im>
- <7ce3278f649ce70453242e5458d28c5fd54576ba.1723013714.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jAiPT6pO"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1DFE02D19A;
+	Fri,  9 Aug 2024 13:13:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=m
+	H6HgE4rETkx0np2sgWlTP5k8wFk2R52vdmPYn0zyGM=; b=jAiPT6pO4Ir+TaHOx
+	3TXLsPP4qw4jobXCA5TAGbSUb6+0hnnUCaCW3FM48hF95sAybfk5ga7JnaiLPRzM
+	LMc8ola6mjYQNNaS0JtraQrAX6T/XS0jmxCT5vpK9wl57tkh17JnIoc08hDPO0rt
+	O+UiSG1A7wRuu/tlmbxLA8g9Q4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 16D572D199;
+	Fri,  9 Aug 2024 13:13:51 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C8D92D198;
+	Fri,  9 Aug 2024 13:13:50 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: furkanakkurt9285@gmail.com
+Subject: [PATCH] tutorial: grammofix
+Date: Fri, 09 Aug 2024 10:13:49 -0700
+Message-ID: <xmqqjzgpei0i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7ce3278f649ce70453242e5458d28c5fd54576ba.1723013714.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BF2A4EAE-5672-11EF-A0F5-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 24/08/07 08:56AM, Patrick Steinhardt wrote:
-> We're about to move functions of the "path" subsytem that do not use a
+We say "these", so "range notations" must be plural.
 
-s/subsytem/subsystem/
+Reported-by: Furkan Akkurt
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> `struct repository` into "path.h" as static inlined functions. This will
-> require us to call `do_git_path()`, which is internal to "path.c".
+ * Resurrected from a pull request to a preformatted manual pages
+   repository at https://github.com/gitster/git-manpages
 
-So in other words, functions leveraging `the_repository` in "path.c" are
-going to be moved to "path.h". Since these functions depend on
-`do_git_path()`, we need to expose it. Makes sense so far.
+ Documentation/gittutorial.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Expose the function as `repo_git_pathv()` to prepare for the change.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-[snip]
-> +/*
-> + * Print a path into the git directory of repository `repo` into the provided
-> + * buffer.
-> + */
-> +void repo_git_pathv(const struct repository *repo,
-> +		    const struct worktree *wt, struct strbuf *buf,
-> +		    const char *fmt, va_list args);
-> +
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index 0e0b863105..8b5b15ce05 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -361,7 +361,7 @@ $ gitk HEAD...FETCH_HEAD
+ This means "show everything that is reachable from either one, but
+ exclude anything that is reachable from both of them".
+ 
+-Please note that these range notation can be used with both gitk
++Please note that these range notations can be used with both gitk
+ and "git log".
+ 
+ After inspecting what Bob did, if there is nothing urgent, Alice may
+-- 
+2.46.0-316-ga5b7e061b1
 
-Out of curiousity, do we have a preferred convention for how functions
-accepting `va_list` are named? Searching through the codebase, I don't
-see a ton of consistency, but I have noticed examples prefixed with "v".
