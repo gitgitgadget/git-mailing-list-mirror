@@ -1,54 +1,54 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA5B1465A2
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C48A17557
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 18:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723227138; cv=none; b=DPMtkXYMag/Mjs2pX5TslwTf0rtKpNz9sLj4gcFiaiC5IFScOhyi9u48b9U+WPJA55rVxR9PvV5E41NV5ndmyDI59+G5REbICIsD42a3ITH5DuvcRE6aWx8FQpG9zGHs2MWnu65nP5ZaZS/Ld8bsNPA7HfX7OnHUffYbkWdDNrA=
+	t=1723229876; cv=none; b=cnsTEuUUq4OH8rWlLZ6IZ1T/Jkn3WiivDT8VibDAgaF3Ywn2UyGcbxOuzkJr7ifShAxC5Sb/9/t4zxg4qf6YaAePs7TEGuJI9557tWWxYVNIgFvRHzzxKqUPoGIGLwbafpO5T49HBtRckQ0ocWpiQ5WX1dcfGJLoR7wMg1nVOCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723227138; c=relaxed/simple;
-	bh=McbwVLOq82XSS/hGmKCiuySYjRfnOpFiH2AvvXlqFhY=;
+	s=arc-20240116; t=1723229876; c=relaxed/simple;
+	bh=r1TGShFVt2Z7YXMqGpyZqGVlkiQRPm8lakDIvfsakVM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NWH3fyX13ToUNuGuJuWnT0FN5CrsaTF4NKiDZR4X/fzAb85C+q9O8radQs6uzLKFa/DxwLzpFoAHirf4CZZaX3QvTviGib/YShhCIq7db9kPCkMK94zHHUX94i6Ui2kQCkLmkVVmAjKgG2QsB5tKt+90FQueIb+MskUun9Lqo40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yVcdj90I; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=J36Qm6EafNksh+cRSYQaceAIbYME6mGoNlydSZFrzyz0kcQPJs9Nn4ZhdZCnMHCRQGTQEkJKoavfCdc+a8oxs6NBrUjcuAEbbN3GKOelTJKqLAplQIEM/pAupVwxzyz3vYYt91io26vHFMWI97RCP0ImyB5vhwMRJHz2HlUN4lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=clJYl2VP; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yVcdj90I"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="clJYl2VP"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A0292E8FB;
-	Fri,  9 Aug 2024 14:12:16 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D95FD2EE7A;
+	Fri,  9 Aug 2024 14:57:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=McbwVLOq82XSS/hGmKCiuySYjRfnOpFiH2AvvX
-	lqFhY=; b=yVcdj90Ivy9KPWdvQqC5NcaH7Kms0zfJb+0o/jD/Z00qbavZgBRx1Y
-	seBgLYVkurIORblWpxgO2hHaUeCHSxCOW2jke9SzFUSMvjRJkBYQhhum7LrZtYVz
-	HMD7s6hgSFU6j34VkUOdQA0O39dS7csQ/bcGRsD8JHfmDeFrFI91k=
+	:content-type; s=sasl; bh=r1TGShFVt2Z7YXMqGpyZqGVlkiQRPm8lakDIvf
+	sakVM=; b=clJYl2VPOcih8TZ7EMcQcA0D0zn3YMtxAYRotHlez1mTsP9D4QInNI
+	Sgl0idAyO1XDfhjfrv6c2T2hjsz2+Q1CYEbtS917bHc4Y5YK9SPVXFaXLzhekU5n
+	sxdmjecoNtPsuBHbd0Y+/YnRYsTjmojFn02hXVRy9E6s4AfI/pQnA=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9110F2E8FA;
-	Fri,  9 Aug 2024 14:12:16 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D19642EE79;
+	Fri,  9 Aug 2024 14:57:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 846F72E8F6;
-	Fri,  9 Aug 2024 14:12:13 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D485D2EE78;
+	Fri,  9 Aug 2024 14:57:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Chandra Pratap <chandrapratap3519@gmail.com>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
  <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 1/4] t: move reftable/readwrite_test.c to the unit
- testing framework
-In-Reply-To: <20240809111312.4401-2-chandrapratap3519@gmail.com> (Chandra
-	Pratap's message of "Fri, 9 Aug 2024 16:35:41 +0530")
+Subject: Re: [PATCH v2 2/4] t-reftable-readwrite: use free_names() instead
+ of a for loop
+In-Reply-To: <20240809111312.4401-3-chandrapratap3519@gmail.com> (Chandra
+	Pratap's message of "Fri, 9 Aug 2024 16:35:42 +0530")
 References: <20240807141608.4524-1-chandrapratap3519@gmail.com>
 	<20240809111312.4401-1-chandrapratap3519@gmail.com>
-	<20240809111312.4401-2-chandrapratap3519@gmail.com>
-Date: Fri, 09 Aug 2024 11:12:11 -0700
-Message-ID: <xmqqwmkpd0qs.fsf@gitster.g>
+	<20240809111312.4401-3-chandrapratap3519@gmail.com>
+Date: Fri, 09 Aug 2024 11:57:49 -0700
+Message-ID: <xmqqjzgpcymq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,46 +58,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E722D720-567A-11EF-85F8-BF444491E1BC-77302942!pb-smtp20.pobox.com
+ 474E1550-5681-11EF-A1ED-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
 Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-> reftable/readwrite_test.c exercises the functions defined in
-> reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
-> reftable/readwrite_test.c to the unit testing framework. Migration
-> involves refactoring the tests to use the unit testing framework
-> instead of reftable's test framework and renaming the tests to
-> align with unit-tests' naming conventions.
->
-> Since some tests in reftable/readwrite_test.c use the functions
-> set_test_hash(), noop_flush() and strbuf_add_void() defined in
-> reftable/test_framework.{c,h} but these files are not #included
-> in the ported unit test, copy these functions in the new test file.
->
-> While at it, ensure structs are 0-initialized with '= { 0 }'
-> instead of '= { NULL }'.
+> free_names() as defined by reftable/basics.{c,h} frees a NULL
+> terminated array of malloced strings along with the array itself.
+> Use this function instead of a for loop to free such an array.
 
-OK.
+Going back to [1/4], the headers included in this test looked like this:
 
-> -		EXPECT(buf->buf[off] == 'r');
-> +		if (!off)
-> +			off = header_size((hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
-> +		check(buf->buf[off] == 'r');
+    -#include "system.h"
+    -
+    -#include "basics.h"
+    -#include "block.h"
+    -#include "blocksource.h"
+    -#include "reader.h"
+    -#include "record.h"
+    -#include "test_framework.h"
+    -#include "reftable-tests.h"
+    -#include "reftable-writer.h"
+    +#include "test-lib.h"
+    +#include "reftable/reader.h"
+    +#include "reftable/blocksource.h"
+    +#include "reftable/reftable-error.h"
+    +#include "reftable/reftable-writer.h"
 
-Why not "check_char(buf->buf[off], ==, 'r')"?
+I found this part a bit curious, perhaps because I was not involved
+in either reftable/ or unit-tests/ development.  So I may be asking
+a stupid question, but is it intended that some headers like
+"block.h" and "record.h" are no longer included?
 
->  	}
->  
-> -	EXPECT(stats->log_stats.blocks > 0);
-> +	check(stats->log_stats.blocks > 0);
+It is understandable that inclusion of "test-lib.h" is new (and
+needs to be there to work as part of t/unit-tests/), and the leading
+directory name "reftable/" added to header files are also justified,
+of course.  But if you depend on "basics.h" and do not include it,
+that does not sound like the most hygenic thing to do, at least to
+me.
 
-Why not "check_int(stats->log_stats.blocks, >, 0)", which you used
-in the t_log_write_read() function?
-
-While reading this step, I looked for use of check() that is not
-rewriting EXPECT_ERR(x) to check(!x) as suspicious.  The above two
-(and a !memcmp() that is OK) were the only three such uses of
-check(), I think.
+The code changes themselves look good; I can see that the
+implementation of free_names() in reftable/basics.c safely replaces
+these loops.  There is a slight behaviour difference that names[]
+that was fed to reftable_iterator_seek_ref() earlier goes away
+before the iterator is destroyed, but _seek_ref() does not retain
+the names[0] argument in the iterator object, so that is OK.
 
 Thanks.
-
