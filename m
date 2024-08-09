@@ -1,96 +1,73 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A07C8D1
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 22:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D4013AA38
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 22:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723242739; cv=none; b=T7AdI6mWAKRl31X1CPzAWzWyWBYMXihjFMHaasn0rrj72TL47s7uGVWPmeKl3HrNQsyUxKSlOs/YPUKHmMYvTZxrq/kUlQicuSa2F4DeaYMobjTuX/IB+IeylShHGos7Wfx+CPTfToo3pm207fhUfdHRqhinIOTf/nSuGHez93A=
+	t=1723243088; cv=none; b=oByWXsL4jJHhKjQsADvH9YqzthtDH6HGHibPuda2F1gBH9K3Bdsihh3pwbU/2QqNpsdisQ5rOmupy9f7r+8HZQFtjQMKmQFFbNg5HnVuUsuE7asV3uuqoRx+KG4VvqtrVwlUvdhp1EX+Bem3ZQdG4GVhfL/c1Bxk51gPIxB7Rps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723242739; c=relaxed/simple;
-	bh=OKhWK7lxlnKzPlasSECRD5fcKal2pNDYm42q+os8+10=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JGMm1xdfVwjAmk5K0+gkxdpGki/ZJ719AGiyLLBWFXdGXWquNmztTt3P7uDhYNFKVnpTZF3gVcSQhh365b1HwmBEKR565jNpPZG5MG2RI6fArPW3NQTvpjmyD2yzy8bQAV65Le2YgPrlgx1tGJNuUTINwHcNJryuEj8knVYyPT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k839WoZz; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k839WoZz"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 952EC307A7;
-	Fri,  9 Aug 2024 18:32:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OKhWK7lxlnKzPlasSECRD5fcKal2pNDYm42q+o
-	s8+10=; b=k839WoZzlITMyf4STkuP7Y6X1XPbU9GZijzB24RXcviNCdEX+h5ulW
-	EjUwuANeo5wCmaF4yY8JWg2+J7DXowEhNIP4oaciKx0AMrITjLuK3xbcZ8ybBf8n
-	uKhgSwR7RcklHtl11iFF3TSrqaw94s4mZgpnfZGYQemwwkTvGtKoc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D669307A6;
-	Fri,  9 Aug 2024 18:32:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9346C307A4;
-	Fri,  9 Aug 2024 18:32:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  spectral@google.com,
-  emilyshaffer@google.com,  emrass@google.com,  rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
- libgit.a
-In-Reply-To: <jennrdjgi76ev4npmklozfpwfijmxttulwsp2h2pwqfuysyjvb@2gw3qyyt3su4>
-	(Josh Steadmon's message of "Fri, 9 Aug 2024 15:28:40 -0700")
-References: <cover.1723054623.git.steadmon@google.com>
-	<xmqqbk21cxhn.fsf@gitster.g> <xmqqv809beoe.fsf@gitster.g>
-	<jennrdjgi76ev4npmklozfpwfijmxttulwsp2h2pwqfuysyjvb@2gw3qyyt3su4>
-Date: Fri, 09 Aug 2024 15:32:13 -0700
-Message-ID: <xmqqmsll9vki.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1723243088; c=relaxed/simple;
+	bh=gfE1DFGt2OoRBLXvZUc0k7LYhwwFG2t8NXulyIT+1L0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CsFDjHJeNNbo+Ei6WF/2wqmWiicZWFHW4YkSL06bAaQe8LgRavp+O7bpJzuAuhDlNMLHrVQyOnVASo0JH0zECUWt0s37Ga68siRzx0LF0A2vpzNa31X5GIE8TITSJhWxc+2JyTwirIZbzM0QyzvhZz3w7F9MyD7/2RHB1BdEMJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6b7a0ef0e75so15133596d6.1
+        for <git@vger.kernel.org>; Fri, 09 Aug 2024 15:38:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723243085; x=1723847885;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=veTlnKgibPlQfoVl7a3XxXGU8Wkwr1E4zzrF/Y7JEgI=;
+        b=OYSIdNUnPnrVeUWRlJTJbkpHVCNV2w08VdI5niewUdqnge8Wxbd4pPRIhcA49HShjA
+         nPNvrafkkDYzW8JBcGSvQfOpfKBJCWlTsa6GWtAZuyZwOHwRrGPK2rwBpNODpiKYT7M2
+         g+9GmxAXI+zG/uWqVQbDOBRdunT6hDtPRtdb5BnBLMdwhY+g8KYL89f5Ws8rDPRhIQhh
+         pwDU+5mbb44AmBfTC4G/zTRUJqaqjj9LhwxFg5ybZN1rQcjST7SHFtebfthnSkOJKkCD
+         Uj1BvPlWKhpkFNBC95fII8kSY+NTI/1Avs0jRrVGtgVek3G/Jjj+TSyWIvBC6/TRohzL
+         rC/w==
+X-Gm-Message-State: AOJu0YwH7qvd281kz6CJPfSGNgTV6347c34wZyqIgc8Uw870qtXWbpWr
+	xqqDLbvmozxrLxXmiUPLt5GIfsdZbYWcc13UPJ/bxVgpsVIbCi+gy4dwuKbo7c8VKzuVlSMn5zT
+	3V8KelwBa6Ecs4xMX6eg1p/VgM8Q=
+X-Google-Smtp-Source: AGHT+IHeo2eFRVDPLyTUMj1C1RCH5kha6fEXj7L22P2UXlBqSz8PZRrp4czpz9v7jOO0g65FW3OSm7tmiXe6wvwJeZ4=
+X-Received: by 2002:a05:6214:5b02:b0:6b9:299b:94ba with SMTP id
+ 6a1803df08f44-6bd78efbaa9mr39034886d6.46.1723243084796; Fri, 09 Aug 2024
+ 15:38:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3A182B96-569F-11EF-BDF6-BF444491E1BC-77302942!pb-smtp20.pobox.com
+References: <xmqqv8099vms.fsf@gitster.g>
+In-Reply-To: <xmqqv8099vms.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 9 Aug 2024 18:37:52 -0400
+Message-ID: <CAPig+cRYOe7dQg7qwHmHZW9WfVGJ68wWSQHikz-v+_ZhhTkG3Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] remerge-diff: lazily prpare temporary objdir on demand
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, blanet <bupt_xingxin@163.com>, 
+	Xing Xin <xingxin.xx@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Josh Steadmon <steadmon@google.com> writes:
+On Fri, Aug 9, 2024 at 6:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> remerge-diff: lazily prpare temporary objdir on demand
 
-> On 2024.08.09 13:54, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > Josh Steadmon <steadmon@google.com> writes:
->> >
->> >> We're sending this series as RFC because there is remaining work
->> >> we'd like to do, but we'd like to get early feedback on this approach,
->> >> and particularly to ask for advice on a few topics:
->> >
->> > I am not sure how much this is reusable, after seeing comments that
->> > "cgit-rs" may not be the best name for this thing and pathnames may
->> > have to change, but I needed the following merge-fix to get this
->> > into "seen" and have the result pass "make", due to interactions
->> > with the ps/config-wo-the-repository topic.
->> >
->> >  contrib/cgit-rs/public_symbol_export.c | 4 +++-
->> >  1 file changed, 3 insertions(+), 1 deletion(-)
->> 
->> There is another thing.
->> 
->> Listing this file in $(OBJECTS) means that you should be able to
->> pass "make sparse" to build contrib/cgit-rs/public_symbol_export.sp
->> but it seems to fail rather miserably.  I am tempted to suggest in
->> the meantime to futz with $(SP_OBJ) to filter it out in the top
->> level Makefile.
+s/prpare/prepare/
+
+> It is error prone for each caller that sets revs.remerge_diff bit
+> to be responsible for preparing a temporary object directory and
+> rotate it into the list of alternate object stores, making it the
+> primary object store.
 >
-> I believe that I fixed `make sparse` (at least in GitHub CI, it fails
-> for seemingly unrelated reasons on my desktop) by removing some
-> unnecessarily exposed symbols in public_symbol_export.c. If it still
-> fails for you in V2, please let me know.
-
-Thanks.  Please let me know when you send v2 out ;-)
+> Instead, remove the code to set up and arrange the temporary object
+> directory from the current callers and implement it in the code that
+> runs remerge-diff logic.  The code to undo the futzing of the list
+> of alternate object store is still spread across the callers, but we
+> will deal with it in future steps.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
