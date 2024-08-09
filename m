@@ -1,80 +1,110 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0854160860
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 21:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9995C1667CD
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 22:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723238057; cv=none; b=N7ypybz7BXaKSsnDEHv0TKainnhG4zuQeZt7ybu4qesu+7RhvwMdD8qo4BWAxDi/71QQjmQNpEnGmZoldqXLkpTnVUsAaTnQtgQ1cFGimv2cxsvzCkzILpvQjoiirRipIRnLpw6VxFVOYAA5nWt95oM42+11AN2BAKHmCfPqEgY=
+	t=1723241774; cv=none; b=qR9jzFibrUugYhR7arzfuCjug4L5PguqaFQjzWKoFH/t7t9qLtE6lwoSqCCNUk1GXFiBxoitjrrvUqkD2krRJXMQkX97/qZQzggf2AVUwwcwzt0sQLu7FAOUzIiGLTssb+FP3wJytUjWhWHtZxXyw8aJaZmoCr3EwGuZzhBJefM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723238057; c=relaxed/simple;
-	bh=IKbaLtQkpww+nO9uKdBd21gXehIvG0U8/6HQ23NiCqo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pgA5H1eIVClj3yGehI6u/cvlGyPSU6DPznGnr7pld0j7YIRIhqi5X03RCXZkW/MpyoB3w3J+0yha24lZfbo7J3SrjLA/9psfnIALgrtzbsnTcbOHccnrrC2+lgRp/OlaFBwSFD4Dh37KfUZfLG/I3s8eUZcGeJkuiTI31aDwwlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=U6WHIujB; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723241774; c=relaxed/simple;
+	bh=ePYjwCGR2ljyM5ZPCensg9KM20Ke969EuH2xOv0oLAU=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IEm1OeT+mJnp5sH0oiE3wHICC3eg4Ma1l/A/aLPDBEc5RIjbViplUl5GsgJwF2C2rHOKl3RHMkxHuI8zI54/UzLBTu09VL9eD/1kNytekWpSlYXFDs0GLQgfsQggAzbvlhXUqO5oR6lclu43SAkj3S0JXoV3N6M3Ooz4V/YxUR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jZgp663n; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U6WHIujB"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76E991DD02;
-	Fri,  9 Aug 2024 17:14:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=IKbaLtQkpww+nO9uKdBd21gXehIvG0U8/6HQ23
-	NiCqo=; b=U6WHIujB9L9evkIDxY+8+nuZ8Q+2oyP867T42lojMK2SDTxAdd1/wG
-	mss0BfkfFG8ojkl+zBTNqwEAp4MDeI7/UG4puTrsk8gwzG/iL/b/lTVpbPw6m/TS
-	eBrBYzCifKI1XtSESKJjWxt9Rv9T2CZfjaFBni6maG19zd2ow3wfo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6ED7D1DD01;
-	Fri,  9 Aug 2024 17:14:14 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8A8A1DD00;
-	Fri,  9 Aug 2024 17:14:13 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 14/20] config: pass repo to
- `git_config_get_expiry_in_days()`
-In-Reply-To: <qo26pmkrctepcob4vjfimvxlgoic7gqjxasnz2hqmv4hpgc37t@jh5wo2fjqyoo>
-	(Justin Tobler's message of "Fri, 9 Aug 2024 15:21:18 -0500")
-References: <cover.1723013714.git.ps@pks.im>
-	<cf7942479f75d95dcd8606b0947a8897ae60da60.1723013714.git.ps@pks.im>
-	<qo26pmkrctepcob4vjfimvxlgoic7gqjxasnz2hqmv4hpgc37t@jh5wo2fjqyoo>
-Date: Fri, 09 Aug 2024 14:14:12 -0700
-Message-ID: <xmqqh6btbdqz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jZgp663n"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-710d1de6e79so1475552b3a.0
+        for <git@vger.kernel.org>; Fri, 09 Aug 2024 15:16:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723241772; x=1723846572; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZK70FsX2cUwzV/Y61aAtiIiJqqCN2+H331fj47X9pyg=;
+        b=jZgp663nUXouowemX3VoKihA1KU30livoz1KQ0oF7eOgzug3JZ5Ju+mlLcCVQVdKRE
+         AY1CxHKnmsnJxLoQMy1LdorAAhtj3H/odLF9ZR5cYo3rWkQnQTCBmRtRHLv7fpEdtz63
+         gQbKWQMIUu5xEwx1+mG8yaXAG+8Co4YnTrzsTZnBI5jn/Cz/IlkzywC4z4qQKNYuIwci
+         vxtIx9PmFeCIti9Geroe7XxkWYkhF4jY2Fu1lG6Djltdvf7lIQ4WGlCXGM5ylf8KpJkx
+         1YrshQt4PcBSzAGP9bWf7gDke4qCn04yAqQTx2eGzYCpNrs7sHhMk0zr2+HbzHsEEQHa
+         stnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723241772; x=1723846572;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZK70FsX2cUwzV/Y61aAtiIiJqqCN2+H331fj47X9pyg=;
+        b=pfCzYbDGpWgbaRwJJ070WCSkkpj3cdwOpW7uCGToS3K42t0yzqpYb8g/57jJi7czrx
+         kY5iRJqlyS4ekqQxuqMbRi/lyUASuVuF8iKLTpzYvpdplXwCz7TrsS4BcvS6y61l0o7A
+         CHyPtQgvHWUU/NMj4+w+mP2MH/iAFLWbXiXpKsvA8lobVwbGcV/AY6oLnzx2tQa3s1Fh
+         oT38X2hgaHy+4jumkSoXy4ixOHQCY7Eqc4sNmHR1oqV6VAzzaV4dtFj5Ym71gJaZZrJY
+         lwo/XNqavkXxPUK6L9b1IuiFGwOmir6WplrDyRGTMyLe1Ii09X5fokZyu4Q3JK3c3SEW
+         GzCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJi1frdhZiM40NFnT5rZRAd+uP7uXmpZTR7AcqXNX7DNNYdQbQk7vvjTW06D3sWE0AA5Za30/JMol3l7FeX+dHEMVD
+X-Gm-Message-State: AOJu0YyoEzEWSbyJIEVzzBuLZQ2lQ+ZczxreCxlWbOtmBPGl5pPV9wig
+	6Eiav6m9ssFkIS3ApuWxWWzUsi3aRpY66WPA61YKj+v+MWt6dWLnYhG7gxdMpw==
+X-Google-Smtp-Source: AGHT+IF97cU0Gjz6t7Dxc7Yqo5WjTeSxFPTQtfFj7uT1tm5gaj7iOYeyQ2k0OzsOhh5nRP9SaLyzyw==
+X-Received: by 2002:a05:6a00:2e91:b0:70e:8f30:23e5 with SMTP id d2e1a72fcca58-710dc6c3374mr3335808b3a.1.1723241771425;
+        Fri, 09 Aug 2024 15:16:11 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:6126:cc38:1b9:851f])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710e58ade4fsm234643b3a.51.2024.08.09.15.16.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Aug 2024 15:16:10 -0700 (PDT)
+Date: Fri, 9 Aug 2024 15:16:05 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 0/6] [RFC] Introduce cgit-rs, a Rust wrapper around
+ libgit.a
+Message-ID: <mhwbjer3ti7psyuves7defo4grpdb4gaiz3axq6523pjglbkzh@cw2vfdyccgxf>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <ZrPvSWoUOEaUIjWq@tapette.crustytoothpaste.net>
+ <ZrQgY1pehCH5O78w@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5420E7E0-5694-11EF-AD4F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZrQgY1pehCH5O78w@tapette.crustytoothpaste.net>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On 2024.08.08 01:33, brian m. carlson wrote:
+> On 2024-08-07 at 22:03:53, brian m. carlson wrote:
+> > I left some comments in the series.  I think this is a nice first step
+> > as a proof of concept, and I'm very pleased to see it.
+> 
+> I noticed a couple of other things.  First, the code has not been run
+> through rustfmt.  I think it would be helpful for us to do that since it
+> makes it easier to not argue about style and it can be easily enforced
+> in CI.  It will also reduce diff noise, which I expect Junio will
+> appreciate.
+> 
+> Second, cargo clippy complains about some of the code.  It's again
+> helpful if we can fix those warnings or, if they're not appropriate, to
+> disable them with an appropriate `allow` pragma.  (In this case, I think
+> they're both spot on, but I have seen some cases where I've disabled a
+> warning.)  This is something we may also want to test in CI in the
+> future, and downstream users of our crate will appreciate not getting
+> warnings when using clippy themselves, so we should be kind to them.
+> 
+> I noticed these because my editor complains about the latter and I have
+> now intuited enough of rustfmt's output that I can tell sometimes when
+> things aren't formatted with it.
+> 
+> For those members of the list who are less familiar with Rust, rustfmt
+> is the standard code formatter (and formatting verifier) and clippy is a
+> lint tool recommending best practices.  Both are shipped with Rust and
+> using both is customary for Rust projects.
+> -- 
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
 
-> On 24/08/07 08:57AM, Patrick Steinhardt wrote:
->> Refactor `git_config_get_expiry_in_days()` to accept a `struct
->> repository` such that we can get rid of the implicit dependency on
->> `the_repository`. Rename the function accordingly.
->> 
->> Signed-off-by: Patrick Steinhardt <ps@pks.im>
->> ---
-> [snip]
->> -	git_config_get_expiry_in_days("gc.rerereresolved", &cutoff_resolve, now);
->> -	git_config_get_expiry_in_days("gc.rerereunresolved", &cutoff_noresolve, now);
->> +	repo_config_get_expiry_in_days(the_repository, "gc.rerereresolved", &cutoff_resolve, now);
->> +	repo_config_get_expiry_in_days(the_repository, "gc.rerereunresolved", &cutoff_noresolve, now);
->
-> non-blocking: Do we want to fold these lines?
-
-Yes, if we are going to see another iteration for other reasons.
-
+Applied Clippy and rustfmt fixes throughout V2, thanks for the catch.
