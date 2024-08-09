@@ -1,132 +1,158 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAB0017BA2
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 07:25:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+Received: from redcrew.org (redcrew.org [37.157.195.192])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561EB41C6E
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 10:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723188343; cv=none; b=rwUZ2soaKcZWbjivD+OzfrCkP3/vdRJ49GX+Ntps4i3Zh7XwXt2cXqZ8efuNHWupzJ/briMX7ZAkpRqYhUwfWJqg13xdITcnJLv6tt6SrizMp7baufDQJT2aXh4Tw5+bd3vruPgb4fWaywge3aEr/SLcd92yHmDA2wAQSD24XRg=
+	t=1723198985; cv=none; b=HvvFVCK3Q5FKKxkB5jL2TJIjTzqjIMO96hVxL39jgTLsZThKI90p5ZD8WGJyLnNoyXHYw7FdCOgHIl4dGHptaw+bj7rGIgMPtIDBtIIxeAhGyOiOl2JZSDaXopDT8FxYpY2UDP/y2jkpVGLk0DOHlHJkZIUR4eTocLeOwepCyXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723188343; c=relaxed/simple;
-	bh=wDBMZYbAjJLaKgsKlIbjw5jPo6tkjvWv6atxAA7MWqM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=DhTcSZZah9q5Zg3q31bRwd24Vi7qfFwJJPiB73X7BeIH4iIldcy1lNzcFm4KtkIC2zCzoJTU2TGEsWYGF7/XNK3ld3ebYFtH3SE/WR1bHvYNOZLQJ/QHZfSR+0YrKYmxy+0g190wGiNDqKYM3iBCU0vQ9DEjc17gH7Brg1AHrAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=RijAGO0k reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1723198985; c=relaxed/simple;
+	bh=YNzJ0YKRDa6FzcMUGhR1mbbos49V0+hmpohM5dqyQBU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=jkvwNUfRKJbb4ZF6OB5GHa+7aecgyWikTkh3OA6wR6gtPJYXHYYvqy+vsHdmQsasY5mle5KrwUvOOSLZGDjy7z/fK/f16WrTur5BnC4IMB6/rojY39VwOvsl4QZBGftctzEED5VgcP2RhRTEhTP7Tpkz8YURFtGfI0JydkYzD0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=XLVAJ7g9; arc=none smtp.client-ip=37.157.195.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="RijAGO0k"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=G+pBGAIxj/9nZoNT6r5+aiSdOJvzHdmXoG+RfTWMHLI=; b=R
-	ijAGO0kuzbzwmTeNcJNCjEssXpa1VY24CEqjcKlm0WDshM+TqjVv2sgBZ+GdgSRb
-	J8+sXCLVsDEKG4K6TZ+L3qSCoOtBg+8T0+f7IfvG92UQiE1rmalmCKGbsbnq/vNr
-	o95RYf4Q95R6bGW5SoKGqXw9e1zjjvAb210EUm/ZdY=
-Received: from bupt_xingxin$163.com ( [124.160.201.191] ) by
- ajax-webmail-wmsvr-40-109 (Coremail) ; Fri, 9 Aug 2024 15:25:29 +0800 (CST)
-Date: Fri, 9 Aug 2024 15:25:29 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Elijah Newren" <newren@gmail.com>
-Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH] diff-tree: fix crash when used with --remerge-diff
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
-References: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
- <CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
-X-NTES-SC: AL_Qu2ZAf2Tt0sp7yWebOkXn0oVhe85UMW2ufsg3YReP500uyTg/hwYUE9kIl/44u+BFQGBgCiIWh9s9t9/Za1ic4cOzR0Af2eolqrAavihbZ0J
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="XLVAJ7g9"
+Received: from localhost (unknown [185.22.237.37])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by redcrew.org (Postfix) with ESMTPSA id EC5ACB8D7
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 12:17:14 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org EC5ACB8D7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
+	t=1723198635; bh=CoiTGUCtKat7Gd2HSj9DtGsXUTuUp6XcxNWyfsKSHzQ=;
+	h=Date:Subject:From:To:From;
+	b=XLVAJ7g9ydKcM6zsRx+eEIQyaouTU/TxflptoYBFW+SgI3kLiOeZf4ADu4WCvpvX8
+	 5xL4rtUXpNQkDsdpI+2GDZaZsn+D9/EGDdfE1xdVoPmCZVwmXWpCE08zunSoLF+Ig6
+	 lVkRjejUqrceyLzQnnUaMmQ1xTUh7Dd73EfyGQ8U=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Message-ID: <4bc36fb9.5f47.19136073c64.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wDXP4tpxLVmSjAKAA--.12492W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLws2bWVOFhsIewABsr
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=d37c0ebca6841bb38d80dc4196c459430e8396454558b9c77160e97af218;
+ micalg=pgp-sha1; protocol="application/pgp-signature"
+Date: Fri, 09 Aug 2024 12:17:14 +0200
+Message-Id: <D3BAXOA4NL74.29XYKS0IO8UFC@cepl.eu>
+Subject: =?utf-8?q?git_send-email_with_ancient_SMTP_server_=E2=80=A6_dh_key_too_sm?= =?utf-8?q?all?=
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
 
-QXQgMjAyNC0wOC0wOSAwMDowMzo1MywgIkVsaWphaCBOZXdyZW4iIDxuZXdyZW5AZ21haWwuY29t
-PiB3cm90ZToKPk9uIFRodSwgQXVnIDgsIDIwMjQgYXQgNjoyMOKAr0FNIGJsYW5ldCB2aWEgR2l0
-R2l0R2FkZ2V0Cj48Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4gd3JvdGU6Cj4+Cj4+IEZyb206IFhp
-bmcgWGluIDx4aW5neGluLnh4QGJ5dGVkYW5jZS5jb20+Cj4+Cj4+IFdoZW4gdXNpbmcgImdpdC1k
-aWZmLXRyZWUiIHRvIGdldCB0aGUgdHJlZSBkaWZmIGZvciBtZXJnZSBjb21taXRzIHdpdGgKPj4g
-dGhlIGRpZmYgZm9ybWF0IHNldCB0byBgcmVtZXJnZWAsIGEgYnVnIGlzIHRyaWdnZXJlZCBhcyBz
-aG93biBiZWxvdzoKPj4KPj4gICAgICQgZ2l0IGRpZmYtdHJlZSAtciAtLXJlbWVyZ2UtZGlmZiAz
-NjMzMzdlNmViCj4+ICAgICAzNjMzMzdlNmViODEyZDBjMGQ3ODVlZDQyNjE1NDRmMzU1NTlmZjhi
-Cj4+ICAgICBCVUc6IGxvZy10cmVlLmM6MTAwNjogZGlkIGEgcmVtZXJnZSBkaWZmIHdpdGhvdXQg
-cmVtZXJnZV9vYmpkaXI/IT8KPgo+V293LCB0aGlzIGJ1ZyBpcyBhcm91bmQgZm9yIDIuNSB5ZWFy
-cywgYW5kIHRoZW4gd2UgYm90aCBpbmRlcGVuZGVudGx5Cj5ub3RpY2UgYW5kIGZpeCBpdCB3aXRo
-aW4gMyB3ZWVrcyBvZiBlYWNoIG90aGVyOgo+aHR0cHM6Ly9naXRodWIuY29tL2dpdC9naXQvY29t
-bWl0L2U1ODkwNjY3Yzc1OThlODEzZWRlZTBhYzRlNzZkNmUzY2RkNTI1ZWMKPgo+TXkgcGF0Y2gg
-aXMgaW5jb21wbGV0ZSBhcyBpdCdzIG1pc3NpbmcgYSB0ZXN0Y2FzZSwgYW5kIHlvdSBzdWJtaXR0
-ZWQKPmZpcnN0LCBzbyBsZXQncyBzdGljayB3aXRoIHlvdXIgZml4LCB0aG91Z2guCgpXb3csIHN1
-Y2ggYW4gaW50ZXJlc3RpbmcgY29pbmNpZGVuY2UhIEFuZCB0aGFua3MgZm9yIHlvdXIgcXVpY2sg
-cmVwbHkhCgo+PiBUaGlzIGJ1ZyBpcyByZXBvcnRlZCBieSBgbG9nLXRyZWUuYzpkb19yZW1lcmdl
-X2RpZmZgLCB3aGVyZSBhIGJ1ZyBjaGVjawo+PiBhZGRlZCBpbiBjb21taXQgN2I5MGFiNDY3YSAo
-bG9nOiBjbGVhbiB1bm5lZWRlZCBvYmplY3RzIGR1cmluZyBsb2cKPj4gLS1yZW1lcmdlLWRpZmYs
-IDIwMjItMDItMDIpIGRldGVjdHMgdGhlIGFic2VuY2Ugb2YgYHJlbWVyZ2Vfb2JqZGlyYCB3aGVu
-Cj4+IGF0dGVtcHRpbmcgdG8gY2xlYW4gdXAgdGVtcG9yYXJ5IG9iamVjdHMgZ2VuZXJhdGVkIGR1
-cmluZyB0aGUgcmVtZXJnZQo+PiBwcm9jZXNzLgo+Pgo+PiBBZnRlciBzb21lIGZ1cnRoZXIgZGln
-Z2luZywgSSBmaW5kIHRoYXQgdGhlIHJlbWVyZ2UtcmVsYXRlZCBkaWZmIG9wdGlvbnMKPj4gd2Vy
-ZSBpbnRyb2R1Y2VkIGluIGRiNzU3ZThiOGQgKHNob3csIGxvZzogcHJvdmlkZSBhIC0tcmVtZXJn
-ZS1kaWZmCj4+IGNhcGFiaWxpdHksIDIwMjItMDItMDIpLCB3aGljaCBhbHNvIGFmZmVjdCB0aGUg
-c2V0dXAgb2YgYHJldl9pbmZvYCBmb3IKPj4gImdpdC1kaWZmLXRyZWUiLCBidXQgd2VyZSBub3Qg
-YWNjb3VudGVkIGZvciBpbiB0aGUgb3JpZ2luYWwKPj4gaW1wbGVtZW50YXRpb24gKGluZmVycmVk
-IGZyb20gdGhlIGNvbW1pdCBtZXNzYWdlKS4KPj4KPj4gVGhpcyBjb21taXQgZml4ZXMgdGhlIGJ1
-ZyBieSBhZGRpbmcgaW5pdGlhbGl6YXRpb24gbG9naWMgZm9yCj4+IGByZW1lcmdlX29iamRpcmAg
-aW4gYGJ1aWx0aW4vZGlmZi10cmVlLmNgLCBtaXJyb3JpbmcgdGhlIGxvZ2ljIGluCj4+IGBidWls
-dGluL2xvZy5jOmNtZF9sb2dfd2Fsa19ub19mcmVlYC4gQSBmaW5hbCBjbGVhbnVwIGZvcgo+PiBg
-cmVtZXJnZV9vYmpkaXJgIGlzIGFsc28gaW5jbHVkZWQuCj4KPlRoZSBjb21taXQgbWVzc2FnZSBm
-cm9tIG15IHBhdGNoIGFsc28gaW5jbHVkZWQgYW4gZXhwbGFuYXRpb24gZm9yIHdoeQo+ZGlmZi10
-cmVlIHdhcyB0aGUgb25seSBjYWxsZXIgdGhhdCB3YXMgbWlzc2luZyB0aGUgbmVjZXNzYXJ5IGxv
-Z2ljCj4oc2VlIHRoZSBsYXN0IHBhcmFncmFwaCwgd2hpY2gga2luZCBvZiByZWZlcmVuY2VzIHRo
-ZSBvbmUgYmVmb3JlIGl0IGFzCj53ZWxsKS4KCllvdXIgZXhwbGFuYXRpb25zIGJldHRlciBpbGx1
-c3RyYXRlIHRoZSBpbXBhY3Qgb2YgdGhpcyBidWcsICBJJ3ZlIHF1b3RlZCB0aGVtCmluIHRoZSBu
-ZXcgcGF0Y2ggY29tbWl0IG1lc3NhZ2UuCgpbc25pcF0KCj4+IGRpZmYgLS1naXQgYS9idWlsdGlu
-L2RpZmYtdHJlZS5jIGIvYnVpbHRpbi9kaWZmLXRyZWUuYwo+PiBpbmRleCAwZDNjNjExYWFjMC4u
-ODEzYmU0ODZkYWQgMTAwNjQ0Cj4+IC0tLSBhL2J1aWx0aW4vZGlmZi10cmVlLmMKPj4gKysrIGIv
-YnVpbHRpbi9kaWZmLXRyZWUuYwo+PiBAQCAtOSw2ICs5LDcgQEAKPj4gICNpbmNsdWRlICJyZXBv
-c2l0b3J5LmgiCj4+ICAjaW5jbHVkZSAicmV2aXNpb24uaCIKPj4gICNpbmNsdWRlICJ0cmVlLmgi
-Cj4+ICsjaW5jbHVkZSAidG1wLW9iamRpci5oIgo+Cj5UaGUgaW5jbHVkZXMgb3RoZXIgdGhhbiB0
-aGlzIG9uZSBhcmUgaW4gYWxwaGFiZXRpY2FsIG9yZGVyOyBjYW4geW91Cj5tb3ZlIHRoaXMgYSBs
-aW5lIGJlZm9yZT8KPgo+QWxzbywgYXMgYW4gYXNpZGUsIGZvbGtzIGluIHRoaXMgcHJvamVjdCBv
-ZnRlbiBqdXN0IHB1dCBpbmNsdWRlcyBhdAo+dGhlIGVuZCwgYnV0IEkgdGhpbmsgaXQncyBhIGJh
-ZCBwcmFjdGljZS4gIFdoZW5ldmVyIHNvbWVvbmUgbmVlZHMgdG8KPmJhY2twb3J0IGZpeGVzIG9y
-IG1lcmdlIHNlcGFyYXRlIHBhdGNoIHRvcGljcyBpbnRvIHNlZW4vbmV4dC9ldGMuIG9yCj5ldmVu
-IG1lcmdlIG5vdC15ZXQtdXBzdHJlYW0gdG9waWNzIHdpdGggbmV3ZXIgdXBzdHJlYW0gdmVyc2lv
-bnMsIHRoaXMKPnByYWN0aWNlIGluY3JlYXNlcyB0aGUgb2RkcyBvZiB1bm5lY2Vzc2FyeSBjb25m
-bGljdHMuICBBbmQgaXQgbWFrZXMgaXQKPmhhcmRlciBmb3IgdGhlIG5leHQgcGVyc29uIHdobyBj
-b21lcyBhbG9uZyB0byBzcG90IHdoZXRoZXIgYSBoZWFkZXIgaXMKPmFscmVhZHkgaW5jbHVkZWQg
-KGFuZCBzb21ldGltZXMgbGVhdmVzIHVzIGluY2x1ZGluZyBoZWFkZXJzIHR3aWNlKS4KPldoaWxl
-IGVhY2ggY2FzZSBpcyBhIHNtYWxsIGFtb3VudCBvZiB0b2lsIHNvIHdlIHRlbmQgdG8gb3Zlcmxv
-b2sgaXQsCj5pdCdzIHRvdGFsbHkgdW5uZWNlc3NhcnkgdG9pbCBpbiBtYW55IGNhc2VzLiAgUHV0
-dGluZyBpbmNsdWRlcyBpbgo+YWxwaGFiZXRpY2FsIG9yZGVyIChvdGhlciB0aGFuIHRoZSBvbmUg
-aW5jbHVkZSByZXF1aXJlZCB0byBiZSBmaXJzdCwKPmdpdC1jb21wYXQtdXRpbC5oIG9yIGl0cyBk
-b2N1bWVudGVkIHN0YW5kLWlucykgY2FuIG9mdGVuIHJlbW92ZSB0aGlzCj51bm5lY2Vzc2FyeSB0
-b2lsLiAgQW55d2F5LCB0aGFua3MgZm9yIGxldHRpbmcgbWUgdmVudC4gIDotKQoKTm90ZWQuIEkn
-bGwgbW92ZSB0aGUgbmV3IGluY2x1ZGUgdG8gdGhlIGNvcnJlY3QgcG9zaXRpb24uIFRoYW5rcyBm
-b3IgdGhlCmd1aWRhbmNlIQoKPj4gIHN0YXRpYyBzdHJ1Y3QgcmV2X2luZm8gbG9nX3RyZWVfb3B0
-Owo+Pgo+PiBAQCAtMTY2LDYgKzE2NywxMyBAQCBpbnQgY21kX2RpZmZfdHJlZShpbnQgYXJnYywg
-Y29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKPj4KPj4gICAgICAgICBvcHQt
-PmRpZmZvcHQucm90YXRlX3RvX3N0cmljdCA9IDE7Cj4+Cj4+ICsgICAgICAgaWYgKG9wdC0+cmVt
-ZXJnZV9kaWZmKSB7Cj4+ICsgICAgICAgICAgICAgICBvcHQtPnJlbWVyZ2Vfb2JqZGlyID0gdG1w
-X29iamRpcl9jcmVhdGUoInJlbWVyZ2UtZGlmZiIpOwo+PiArICAgICAgICAgICAgICAgaWYgKCFv
-cHQtPnJlbWVyZ2Vfb2JqZGlyKQo+PiArICAgICAgICAgICAgICAgICAgICAgICBkaWUoXygidW5h
-YmxlIHRvIGNyZWF0ZSB0ZW1wb3Jhcnkgb2JqZWN0IGRpcmVjdG9yeSIpKTsKPj4gKyAgICAgICAg
-ICAgICAgIHRtcF9vYmpkaXJfcmVwbGFjZV9wcmltYXJ5X29kYihvcHQtPnJlbWVyZ2Vfb2JqZGly
-LCAxKTsKPj4gKyAgICAgICB9Cj4+ICsKPj4gICAgICAgICAvKgo+PiAgICAgICAgICAqIE5PVEUh
-ICBXZSBleHBlY3QgImEuLmIiIHRvIGV4cGFuZCB0byAiXmEgYiIgYnV0IGl0IGlzCj4+ICAgICAg
-ICAgICogcGVyZmVjdGx5IHZhbGlkIGZvciByZXZpc2lvbiByYW5nZSBwYXJzZXIgdG8geWllbGQg
-ImIgXmEiLAo+PiBAQCAtMjMwLDUgKzIzOCwxMCBAQCBpbnQgY21kX2RpZmZfdHJlZShpbnQgYXJn
-YywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKPj4gICAgICAgICAgICAg
-ICAgIGRpZmZfZnJlZSgmb3B0LT5kaWZmb3B0KTsKPj4gICAgICAgICB9Cj4+Cj4+ICsgICAgICAg
-aWYgKG9wdC0+cmVtZXJnZV9kaWZmKSB7Cj4+ICsgICAgICAgICAgICAgICB0bXBfb2JqZGlyX2Rl
-c3Ryb3kob3B0LT5yZW1lcmdlX29iamRpcik7Cj4+ICsgICAgICAgICAgICAgICBvcHQtPnJlbWVy
-Z2Vfb2JqZGlyID0gTlVMTDsKPj4gKyAgICAgICB9Cj4+ICsKPj4gICAgICAgICByZXR1cm4gZGlm
-Zl9yZXN1bHRfY29kZSgmb3B0LT5kaWZmb3B0KTsKPj4gIH0KPgo+WW91ciBmaXggZXhhY3RseSBt
-YXRjaGVzIG1pbmUsIG90aGVyIHRoYW4gdGhlIGhlYWRlciBpbmNsdWRlIGxvY2F0aW9uLgoKSGln
-aCBmaXZlISA6LSkKCltzbmlwXQoKWGluZyBYaW4K
+--d37c0ebca6841bb38d80dc4196c459430e8396454558b9c77160e97af218
+Content-Type: multipart/mixed;
+ boundary=9a755af4693ee497fa247a9a2601a698b82fc0624f34c4c6dd60fc22a914
+
+--9a755af4693ee497fa247a9a2601a698b82fc0624f34c4c6dd60fc22a914
+Content-Type: multipart/alternative;
+ boundary=e4d87700306ef47146c272b4d5020dc997445f9ffec6a29385df0e44ca81
+
+--e4d87700306ef47146c272b4d5020dc997445f9ffec6a29385df0e44ca81
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
+
+When using git send-email sending to very ancient SMTP server
+(postfix 2.6.6 on CentOS 6), I get this error:
+
+STARTTLS failed! SSL connect attempt failed error:0A00018A:SSL routines::dh=
+ key too small at /usr/libexec/git/git-send-email line 1638.
+
+When looking what seems like a similar error at
+https://github.com/symfony/symfony/issues/44393 it seems I need
+to set `security_level` (whatever it is) to 1. Is it possible
+to do it just with configuration of git or do I need to patch
+something somewhere?
+
+Thank you for any reply,
+
+Mat=C4=9Bj Cepl
+
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@floss.social
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+Opportunity is missed by most people because it is dressed in
+overalls and looks like work.
+  -- Thomas A. Edison
+
+--e4d87700306ef47146c272b4d5020dc997445f9ffec6a29385df0e44ca81--
+
+--9a755af4693ee497fa247a9a2601a698b82fc0624f34c4c6dd60fc22a914
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
+Content-Type: application/pgp-keys; charset=UTF-8
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
+LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
+NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
+emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
+alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
+VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
+TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
+bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
+MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
+TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
+c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
+YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
+UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
+N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
+Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
+d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
+em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
+WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
+Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
+N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
+TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
+b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
+RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
+dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
+ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
+b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
+Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
+SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
+cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
+K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
+a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
+QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
+d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
+YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
+RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
+Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
+CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
+RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
+Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
+ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
+UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
+RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
+RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
+TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
+SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
+aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
+S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
+ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
+U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
+RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
+SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
+YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
+Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
+YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
+UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
+--9a755af4693ee497fa247a9a2601a698b82fc0624f34c4c6dd60fc22a914--
+
+--d37c0ebca6841bb38d80dc4196c459430e8396454558b9c77160e97af218
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZrXsqg4cbWNlcGxAY2Vw
+bC5ldQAKCRDgn+8l2WSErBUUAJ0QkjTvIMRVUR472sY6uJdo8BS2MwCfXpQjhdy2
+q2aNeGqYE1UwKYFbVEw=
+=5Nda
+-----END PGP SIGNATURE-----
+
+--d37c0ebca6841bb38d80dc4196c459430e8396454558b9c77160e97af218--
