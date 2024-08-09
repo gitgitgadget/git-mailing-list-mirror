@@ -1,265 +1,132 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1C7179203
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 07:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAB0017BA2
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 07:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723188298; cv=none; b=huXuXE3/Mq7L9ci0GEDiy/jg1hdsTxeoBeC4uY/gbHtmdWGNHPX/M1sWecwN3mjVE/5FIzydLJ89uG3WCwDNcC6NkRG7dz/Y9niQAXOr15/5QjVkxVob9YD6D7fJ0J7CmZnl6VMT+C2a4tfaESbu3drFcjQi1bb0hSqGY+TXQsk=
+	t=1723188343; cv=none; b=rwUZ2soaKcZWbjivD+OzfrCkP3/vdRJ49GX+Ntps4i3Zh7XwXt2cXqZ8efuNHWupzJ/briMX7ZAkpRqYhUwfWJqg13xdITcnJLv6tt6SrizMp7baufDQJT2aXh4Tw5+bd3vruPgb4fWaywge3aEr/SLcd92yHmDA2wAQSD24XRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723188298; c=relaxed/simple;
-	bh=fNXK61M9UXorvfJV3vl/CDVcLlzlPaGSNPIvrjb93Uw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LAhR9RNnfrcxZm/i+BBAYmFERdmNRYmOgNS04MIHutd5IzfHjPvp0y+WQvKXs2MluafZAZxrQZL6X0pNqgAXgRNUoGHZTK08LLvC2/x6MS5b7ldeAggz3Gk7dq9y8ttMIW3xEuHUlg4PJ94pPR4ZBnl3v4jYV43mc4/Yze/KM88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Un2NaGJ9; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723188343; c=relaxed/simple;
+	bh=wDBMZYbAjJLaKgsKlIbjw5jPo6tkjvWv6atxAA7MWqM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=DhTcSZZah9q5Zg3q31bRwd24Vi7qfFwJJPiB73X7BeIH4iIldcy1lNzcFm4KtkIC2zCzoJTU2TGEsWYGF7/XNK3ld3ebYFtH3SE/WR1bHvYNOZLQJ/QHZfSR+0YrKYmxy+0g190wGiNDqKYM3iBCU0vQ9DEjc17gH7Brg1AHrAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=RijAGO0k reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Un2NaGJ9"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2eeb1ba0481so22594051fa.2
-        for <git@vger.kernel.org>; Fri, 09 Aug 2024 00:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723188294; x=1723793094; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xXBwKbr85svcBfzFpRvxqLd67h/nfYJ1X3D9XtTozJs=;
-        b=Un2NaGJ9Z3jf2qz1iqLD7tiI7fwS2QdV+For1Jpk3ZXmQ1S+dY35CpkyoiCngmex/S
-         uYRNKK4a+/KuZPzVtjhk1VHbw4rPai+kOs5v0F2NWp7VPWzW6PoFZUfJU6aGH6VQv8Ee
-         vVKibA2EJ0JuNwP0iRkmJWUMoYx8sVwEM1reJfNUOKMPGfjWDaNGrwfct3VhaT0fC/lW
-         NLeQFbYFDYCU4NcYPyWtdBQ8k3HRzNzzLHFXJItnimK71//npiS7bKuUaHXP+pI65XGl
-         /zlYq1gGWuJ5dnzLn+cILMyrhpeLwf8tIm/f9xGJuVcjnRWJ+KBhYoMz13NKssYML7Fx
-         grsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723188294; x=1723793094;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xXBwKbr85svcBfzFpRvxqLd67h/nfYJ1X3D9XtTozJs=;
-        b=D+0Uv7Ir2fmP+1hHxaQY6PI6wn1DjueQV8/3QNmuXZ6hNQzSI8lHWifmi8rzEsasXa
-         LSkZUcCTVulSCn9D1+L8+12AnOfID2AFwklL6hTNqlM+KXuN2OOPo/Y7JqI6A5ed39D2
-         SQj4BP/f/CHuYHym+0x/o+FWDL1kjHiKyc61+2C4gTbu7tDXQy2X+i7grnwyZ5k34558
-         djQkFBDjlCOMa7UjC9n4CaQ804xng0xgJld6BrlHbC2gSSXwxU/QLOvtP5qH/TYX+WxK
-         Bcrk8bqW1KQm53dCYTCT2x98UMVZCGEnFn1A7NxGhELh4KmLsbM/tGr8E168AvbD/iek
-         ymsg==
-X-Gm-Message-State: AOJu0YzwORlfXiSiVGCxq3U3EAEZrCGJSm7EMWZcdclOtfGNc5ls8o+I
-	F1XpL557Yi3k7Ae4Gn6i/YHdJanmSMBJXxB8T2+prPWTAHcTNIh6f/ei4w==
-X-Google-Smtp-Source: AGHT+IFrKG1EhcvSrcJ7Kv4Y4Y3DywZMXF4VkQIUHH01o5wNgkcwwmrBUUIIf3uL4U23x8KRDc6JKQ==
-X-Received: by 2002:a2e:a541:0:b0:2f0:25dc:1894 with SMTP id 38308e7fff4ca-2f1a6c4c99cmr6906021fa.2.1723188294062;
-        Fri, 09 Aug 2024 00:24:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c74a96bsm61827925e9.24.2024.08.09.00.24.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Aug 2024 00:24:53 -0700 (PDT)
-Message-Id: <pull.1771.v2.git.1723188292498.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="RijAGO0k"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=G+pBGAIxj/9nZoNT6r5+aiSdOJvzHdmXoG+RfTWMHLI=; b=R
+	ijAGO0kuzbzwmTeNcJNCjEssXpa1VY24CEqjcKlm0WDshM+TqjVv2sgBZ+GdgSRb
+	J8+sXCLVsDEKG4K6TZ+L3qSCoOtBg+8T0+f7IfvG92UQiE1rmalmCKGbsbnq/vNr
+	o95RYf4Q95R6bGW5SoKGqXw9e1zjjvAb210EUm/ZdY=
+Received: from bupt_xingxin$163.com ( [124.160.201.191] ) by
+ ajax-webmail-wmsvr-40-109 (Coremail) ; Fri, 9 Aug 2024 15:25:29 +0800 (CST)
+Date: Fri, 9 Aug 2024 15:25:29 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Elijah Newren" <newren@gmail.com>
+Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: [PATCH] diff-tree: fix crash when used with --remerge-diff
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
 References: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
-From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 Aug 2024 07:24:52 +0000
-Subject: [PATCH v2] diff-tree: fix crash when used with --remerge-diff
-Fcc: Sent
+ <CABPp-BGo7-P+3w=Y2Mifox4xztzMhgLKBtnrrF9R1XM9ZDPqqw@mail.gmail.com>
+X-NTES-SC: AL_Qu2ZAf2Tt0sp7yWebOkXn0oVhe85UMW2ufsg3YReP500uyTg/hwYUE9kIl/44u+BFQGBgCiIWh9s9t9/Za1ic4cOzR0Af2eolqrAavihbZ0J
+Content-Transfer-Encoding: base64
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    blanet <bupt_xingxin@163.com>,
-    Xing Xin <xingxin.xx@bytedance.com>
+Message-ID: <4bc36fb9.5f47.19136073c64.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wDXP4tpxLVmSjAKAA--.12492W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLws2bWVOFhsIewABsr
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-From: Xing Xin <xingxin.xx@bytedance.com>
-
-When using "git-diff-tree" to get the tree diff for merge commits with
-the diff format set to `remerge`, a bug is triggered as shown below:
-
-  $ git diff-tree -r --remerge-diff 363337e6eb
-  363337e6eb812d0c0d785ed4261544f35559ff8b
-  BUG: log-tree.c:1006: did a remerge diff without remerge_objdir?!?
-
-This bug is reported by `log-tree.c:do_remerge_diff`, where a bug check
-added in commit 7b90ab467a (log: clean unneeded objects during log
---remerge-diff, 2022-02-02) detects the absence of `remerge_objdir` when
-attempting to clean up temporary objects generated during the remerge
-process.
-
-After some further digging, I find that the remerge-related diff options
-were introduced in db757e8b8d (show, log: provide a --remerge-diff
-capability, 2022-02-02), which also affect the setup of `rev_info` for
-"git-diff-tree", but were not accounted for in the original
-implementation (inferred from the commit message).
-
-Elijah Newren, the author of the remerge diff feature, notes that other
-callers of `log-tree.c:log_tree_commit` (the only caller of
-`log-tree.c:do_remerge_diff`) also exist, but:
-
-  `builtin/am.c`: manually sets all flags; remerge_diff is not among them
-  `sequencer.c`: manually sets all flags; remerge_diff is not among them
-
-so `builtin/diff-tree.c` really is the only caller that was overlooked
-when remerge-diff functionality was added.
-
-This commit resolves the crash by adding `remerge_objdir` setup logic to
-`builtin/diff-tree.c`, mirroring `builtin/log.c:cmd_log_walk_no_free`.
-It also includes the necessary cleanup for `remerge_objdir`.
-
-Reviewed-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
----
-    diff-tree: fix crash when used with --remerge-diff
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1771%2Fblanet%2Fxx%2Ffix-diff-tree-crash-on-remerge-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1771/blanet/xx/fix-diff-tree-crash-on-remerge-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1771
-
-Range-diff vs v1:
-
- 1:  f0b86faa275 ! 1:  57f0b1247d8 diff-tree: fix crash when used with --remerge-diff
-     @@ Commit message
-          When using "git-diff-tree" to get the tree diff for merge commits with
-          the diff format set to `remerge`, a bug is triggered as shown below:
-      
-     -        $ git diff-tree -r --remerge-diff 363337e6eb
-     -        363337e6eb812d0c0d785ed4261544f35559ff8b
-     -        BUG: log-tree.c:1006: did a remerge diff without remerge_objdir?!?
-     +      $ git diff-tree -r --remerge-diff 363337e6eb
-     +      363337e6eb812d0c0d785ed4261544f35559ff8b
-     +      BUG: log-tree.c:1006: did a remerge diff without remerge_objdir?!?
-      
-          This bug is reported by `log-tree.c:do_remerge_diff`, where a bug check
-          added in commit 7b90ab467a (log: clean unneeded objects during log
-     @@ Commit message
-          "git-diff-tree", but were not accounted for in the original
-          implementation (inferred from the commit message).
-      
-     -    This commit fixes the bug by adding initialization logic for
-     -    `remerge_objdir` in `builtin/diff-tree.c`, mirroring the logic in
-     -    `builtin/log.c:cmd_log_walk_no_free`. A final cleanup for
-     -    `remerge_objdir` is also included.
-     +    Elijah Newren, the author of the remerge diff feature, notes that other
-     +    callers of `log-tree.c:log_tree_commit` (the only caller of
-     +    `log-tree.c:do_remerge_diff`) also exist, but:
-      
-     +      `builtin/am.c`: manually sets all flags; remerge_diff is not among them
-     +      `sequencer.c`: manually sets all flags; remerge_diff is not among them
-     +
-     +    so `builtin/diff-tree.c` really is the only caller that was overlooked
-     +    when remerge-diff functionality was added.
-     +
-     +    This commit resolves the crash by adding `remerge_objdir` setup logic to
-     +    `builtin/diff-tree.c`, mirroring `builtin/log.c:cmd_log_walk_no_free`.
-     +    It also includes the necessary cleanup for `remerge_objdir`.
-     +
-     +    Reviewed-by: Elijah Newren <newren@gmail.com>
-          Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
-      
-       ## builtin/diff-tree.c ##
-      @@
-     + #include "read-cache-ll.h"
-       #include "repository.h"
-       #include "revision.h"
-     - #include "tree.h"
-      +#include "tmp-objdir.h"
-     + #include "tree.h"
-       
-       static struct rev_info log_tree_opt;
-     - 
-      @@ builtin/diff-tree.c: int cmd_diff_tree(int argc, const char **argv, const char *prefix)
-       
-       	opt->diffopt.rotate_to_strict = 1;
-
-
- builtin/diff-tree.c     | 13 +++++++++++++
- t/t4069-remerge-diff.sh | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
-
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 0d3c611aac0..b8df1d4b79b 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -8,6 +8,7 @@
- #include "read-cache-ll.h"
- #include "repository.h"
- #include "revision.h"
-+#include "tmp-objdir.h"
- #include "tree.h"
- 
- static struct rev_info log_tree_opt;
-@@ -166,6 +167,13 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 
- 	opt->diffopt.rotate_to_strict = 1;
- 
-+	if (opt->remerge_diff) {
-+		opt->remerge_objdir = tmp_objdir_create("remerge-diff");
-+		if (!opt->remerge_objdir)
-+			die(_("unable to create temporary object directory"));
-+		tmp_objdir_replace_primary_odb(opt->remerge_objdir, 1);
-+	}
-+
- 	/*
- 	 * NOTE!  We expect "a..b" to expand to "^a b" but it is
- 	 * perfectly valid for revision range parser to yield "b ^a",
-@@ -230,5 +238,10 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 		diff_free(&opt->diffopt);
- 	}
- 
-+	if (opt->remerge_diff) {
-+		tmp_objdir_destroy(opt->remerge_objdir);
-+		opt->remerge_objdir = NULL;
-+	}
-+
- 	return diff_result_code(&opt->diffopt);
- }
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index 07323ebafe0..ca8f999caba 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -110,6 +110,41 @@ test_expect_success 'can filter out additional headers with pickaxe' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'remerge-diff also works for git-diff-tree' '
-+	# With a clean merge
-+	git diff-tree -r -p --remerge-diff --no-commit-id bc_resolution >actual &&
-+	test_must_be_empty actual &&
-+
-+	# With both a resolved conflict and an unrelated change
-+	cat <<-EOF >tmp &&
-+	diff --git a/numbers b/numbers
-+	remerge CONFLICT (content): Merge conflict in numbers
-+	index a1fb731..6875544 100644
-+	--- a/numbers
-+	+++ b/numbers
-+	@@ -1,13 +1,9 @@
-+	 1
-+	 2
-+	-<<<<<<< b0ed5cb (change_a)
-+	-three
-+	-=======
-+	-tres
-+	->>>>>>> 6cd3f82 (change_b)
-+	+drei
-+	 4
-+	 5
-+	 6
-+	 7
-+	-eight
-+	+acht
-+	 9
-+	EOF
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-+	git diff-tree -r -p --remerge-diff --no-commit-id ab_resolution >tmp &&
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup non-content conflicts' '
- 	git switch --orphan base &&
- 
-
-base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
--- 
-gitgitgadget
+QXQgMjAyNC0wOC0wOSAwMDowMzo1MywgIkVsaWphaCBOZXdyZW4iIDxuZXdyZW5AZ21haWwuY29t
+PiB3cm90ZToKPk9uIFRodSwgQXVnIDgsIDIwMjQgYXQgNjoyMOKAr0FNIGJsYW5ldCB2aWEgR2l0
+R2l0R2FkZ2V0Cj48Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4gd3JvdGU6Cj4+Cj4+IEZyb206IFhp
+bmcgWGluIDx4aW5neGluLnh4QGJ5dGVkYW5jZS5jb20+Cj4+Cj4+IFdoZW4gdXNpbmcgImdpdC1k
+aWZmLXRyZWUiIHRvIGdldCB0aGUgdHJlZSBkaWZmIGZvciBtZXJnZSBjb21taXRzIHdpdGgKPj4g
+dGhlIGRpZmYgZm9ybWF0IHNldCB0byBgcmVtZXJnZWAsIGEgYnVnIGlzIHRyaWdnZXJlZCBhcyBz
+aG93biBiZWxvdzoKPj4KPj4gICAgICQgZ2l0IGRpZmYtdHJlZSAtciAtLXJlbWVyZ2UtZGlmZiAz
+NjMzMzdlNmViCj4+ICAgICAzNjMzMzdlNmViODEyZDBjMGQ3ODVlZDQyNjE1NDRmMzU1NTlmZjhi
+Cj4+ICAgICBCVUc6IGxvZy10cmVlLmM6MTAwNjogZGlkIGEgcmVtZXJnZSBkaWZmIHdpdGhvdXQg
+cmVtZXJnZV9vYmpkaXI/IT8KPgo+V293LCB0aGlzIGJ1ZyBpcyBhcm91bmQgZm9yIDIuNSB5ZWFy
+cywgYW5kIHRoZW4gd2UgYm90aCBpbmRlcGVuZGVudGx5Cj5ub3RpY2UgYW5kIGZpeCBpdCB3aXRo
+aW4gMyB3ZWVrcyBvZiBlYWNoIG90aGVyOgo+aHR0cHM6Ly9naXRodWIuY29tL2dpdC9naXQvY29t
+bWl0L2U1ODkwNjY3Yzc1OThlODEzZWRlZTBhYzRlNzZkNmUzY2RkNTI1ZWMKPgo+TXkgcGF0Y2gg
+aXMgaW5jb21wbGV0ZSBhcyBpdCdzIG1pc3NpbmcgYSB0ZXN0Y2FzZSwgYW5kIHlvdSBzdWJtaXR0
+ZWQKPmZpcnN0LCBzbyBsZXQncyBzdGljayB3aXRoIHlvdXIgZml4LCB0aG91Z2guCgpXb3csIHN1
+Y2ggYW4gaW50ZXJlc3RpbmcgY29pbmNpZGVuY2UhIEFuZCB0aGFua3MgZm9yIHlvdXIgcXVpY2sg
+cmVwbHkhCgo+PiBUaGlzIGJ1ZyBpcyByZXBvcnRlZCBieSBgbG9nLXRyZWUuYzpkb19yZW1lcmdl
+X2RpZmZgLCB3aGVyZSBhIGJ1ZyBjaGVjawo+PiBhZGRlZCBpbiBjb21taXQgN2I5MGFiNDY3YSAo
+bG9nOiBjbGVhbiB1bm5lZWRlZCBvYmplY3RzIGR1cmluZyBsb2cKPj4gLS1yZW1lcmdlLWRpZmYs
+IDIwMjItMDItMDIpIGRldGVjdHMgdGhlIGFic2VuY2Ugb2YgYHJlbWVyZ2Vfb2JqZGlyYCB3aGVu
+Cj4+IGF0dGVtcHRpbmcgdG8gY2xlYW4gdXAgdGVtcG9yYXJ5IG9iamVjdHMgZ2VuZXJhdGVkIGR1
+cmluZyB0aGUgcmVtZXJnZQo+PiBwcm9jZXNzLgo+Pgo+PiBBZnRlciBzb21lIGZ1cnRoZXIgZGln
+Z2luZywgSSBmaW5kIHRoYXQgdGhlIHJlbWVyZ2UtcmVsYXRlZCBkaWZmIG9wdGlvbnMKPj4gd2Vy
+ZSBpbnRyb2R1Y2VkIGluIGRiNzU3ZThiOGQgKHNob3csIGxvZzogcHJvdmlkZSBhIC0tcmVtZXJn
+ZS1kaWZmCj4+IGNhcGFiaWxpdHksIDIwMjItMDItMDIpLCB3aGljaCBhbHNvIGFmZmVjdCB0aGUg
+c2V0dXAgb2YgYHJldl9pbmZvYCBmb3IKPj4gImdpdC1kaWZmLXRyZWUiLCBidXQgd2VyZSBub3Qg
+YWNjb3VudGVkIGZvciBpbiB0aGUgb3JpZ2luYWwKPj4gaW1wbGVtZW50YXRpb24gKGluZmVycmVk
+IGZyb20gdGhlIGNvbW1pdCBtZXNzYWdlKS4KPj4KPj4gVGhpcyBjb21taXQgZml4ZXMgdGhlIGJ1
+ZyBieSBhZGRpbmcgaW5pdGlhbGl6YXRpb24gbG9naWMgZm9yCj4+IGByZW1lcmdlX29iamRpcmAg
+aW4gYGJ1aWx0aW4vZGlmZi10cmVlLmNgLCBtaXJyb3JpbmcgdGhlIGxvZ2ljIGluCj4+IGBidWls
+dGluL2xvZy5jOmNtZF9sb2dfd2Fsa19ub19mcmVlYC4gQSBmaW5hbCBjbGVhbnVwIGZvcgo+PiBg
+cmVtZXJnZV9vYmpkaXJgIGlzIGFsc28gaW5jbHVkZWQuCj4KPlRoZSBjb21taXQgbWVzc2FnZSBm
+cm9tIG15IHBhdGNoIGFsc28gaW5jbHVkZWQgYW4gZXhwbGFuYXRpb24gZm9yIHdoeQo+ZGlmZi10
+cmVlIHdhcyB0aGUgb25seSBjYWxsZXIgdGhhdCB3YXMgbWlzc2luZyB0aGUgbmVjZXNzYXJ5IGxv
+Z2ljCj4oc2VlIHRoZSBsYXN0IHBhcmFncmFwaCwgd2hpY2gga2luZCBvZiByZWZlcmVuY2VzIHRo
+ZSBvbmUgYmVmb3JlIGl0IGFzCj53ZWxsKS4KCllvdXIgZXhwbGFuYXRpb25zIGJldHRlciBpbGx1
+c3RyYXRlIHRoZSBpbXBhY3Qgb2YgdGhpcyBidWcsICBJJ3ZlIHF1b3RlZCB0aGVtCmluIHRoZSBu
+ZXcgcGF0Y2ggY29tbWl0IG1lc3NhZ2UuCgpbc25pcF0KCj4+IGRpZmYgLS1naXQgYS9idWlsdGlu
+L2RpZmYtdHJlZS5jIGIvYnVpbHRpbi9kaWZmLXRyZWUuYwo+PiBpbmRleCAwZDNjNjExYWFjMC4u
+ODEzYmU0ODZkYWQgMTAwNjQ0Cj4+IC0tLSBhL2J1aWx0aW4vZGlmZi10cmVlLmMKPj4gKysrIGIv
+YnVpbHRpbi9kaWZmLXRyZWUuYwo+PiBAQCAtOSw2ICs5LDcgQEAKPj4gICNpbmNsdWRlICJyZXBv
+c2l0b3J5LmgiCj4+ICAjaW5jbHVkZSAicmV2aXNpb24uaCIKPj4gICNpbmNsdWRlICJ0cmVlLmgi
+Cj4+ICsjaW5jbHVkZSAidG1wLW9iamRpci5oIgo+Cj5UaGUgaW5jbHVkZXMgb3RoZXIgdGhhbiB0
+aGlzIG9uZSBhcmUgaW4gYWxwaGFiZXRpY2FsIG9yZGVyOyBjYW4geW91Cj5tb3ZlIHRoaXMgYSBs
+aW5lIGJlZm9yZT8KPgo+QWxzbywgYXMgYW4gYXNpZGUsIGZvbGtzIGluIHRoaXMgcHJvamVjdCBv
+ZnRlbiBqdXN0IHB1dCBpbmNsdWRlcyBhdAo+dGhlIGVuZCwgYnV0IEkgdGhpbmsgaXQncyBhIGJh
+ZCBwcmFjdGljZS4gIFdoZW5ldmVyIHNvbWVvbmUgbmVlZHMgdG8KPmJhY2twb3J0IGZpeGVzIG9y
+IG1lcmdlIHNlcGFyYXRlIHBhdGNoIHRvcGljcyBpbnRvIHNlZW4vbmV4dC9ldGMuIG9yCj5ldmVu
+IG1lcmdlIG5vdC15ZXQtdXBzdHJlYW0gdG9waWNzIHdpdGggbmV3ZXIgdXBzdHJlYW0gdmVyc2lv
+bnMsIHRoaXMKPnByYWN0aWNlIGluY3JlYXNlcyB0aGUgb2RkcyBvZiB1bm5lY2Vzc2FyeSBjb25m
+bGljdHMuICBBbmQgaXQgbWFrZXMgaXQKPmhhcmRlciBmb3IgdGhlIG5leHQgcGVyc29uIHdobyBj
+b21lcyBhbG9uZyB0byBzcG90IHdoZXRoZXIgYSBoZWFkZXIgaXMKPmFscmVhZHkgaW5jbHVkZWQg
+KGFuZCBzb21ldGltZXMgbGVhdmVzIHVzIGluY2x1ZGluZyBoZWFkZXJzIHR3aWNlKS4KPldoaWxl
+IGVhY2ggY2FzZSBpcyBhIHNtYWxsIGFtb3VudCBvZiB0b2lsIHNvIHdlIHRlbmQgdG8gb3Zlcmxv
+b2sgaXQsCj5pdCdzIHRvdGFsbHkgdW5uZWNlc3NhcnkgdG9pbCBpbiBtYW55IGNhc2VzLiAgUHV0
+dGluZyBpbmNsdWRlcyBpbgo+YWxwaGFiZXRpY2FsIG9yZGVyIChvdGhlciB0aGFuIHRoZSBvbmUg
+aW5jbHVkZSByZXF1aXJlZCB0byBiZSBmaXJzdCwKPmdpdC1jb21wYXQtdXRpbC5oIG9yIGl0cyBk
+b2N1bWVudGVkIHN0YW5kLWlucykgY2FuIG9mdGVuIHJlbW92ZSB0aGlzCj51bm5lY2Vzc2FyeSB0
+b2lsLiAgQW55d2F5LCB0aGFua3MgZm9yIGxldHRpbmcgbWUgdmVudC4gIDotKQoKTm90ZWQuIEkn
+bGwgbW92ZSB0aGUgbmV3IGluY2x1ZGUgdG8gdGhlIGNvcnJlY3QgcG9zaXRpb24uIFRoYW5rcyBm
+b3IgdGhlCmd1aWRhbmNlIQoKPj4gIHN0YXRpYyBzdHJ1Y3QgcmV2X2luZm8gbG9nX3RyZWVfb3B0
+Owo+Pgo+PiBAQCAtMTY2LDYgKzE2NywxMyBAQCBpbnQgY21kX2RpZmZfdHJlZShpbnQgYXJnYywg
+Y29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKPj4KPj4gICAgICAgICBvcHQt
+PmRpZmZvcHQucm90YXRlX3RvX3N0cmljdCA9IDE7Cj4+Cj4+ICsgICAgICAgaWYgKG9wdC0+cmVt
+ZXJnZV9kaWZmKSB7Cj4+ICsgICAgICAgICAgICAgICBvcHQtPnJlbWVyZ2Vfb2JqZGlyID0gdG1w
+X29iamRpcl9jcmVhdGUoInJlbWVyZ2UtZGlmZiIpOwo+PiArICAgICAgICAgICAgICAgaWYgKCFv
+cHQtPnJlbWVyZ2Vfb2JqZGlyKQo+PiArICAgICAgICAgICAgICAgICAgICAgICBkaWUoXygidW5h
+YmxlIHRvIGNyZWF0ZSB0ZW1wb3Jhcnkgb2JqZWN0IGRpcmVjdG9yeSIpKTsKPj4gKyAgICAgICAg
+ICAgICAgIHRtcF9vYmpkaXJfcmVwbGFjZV9wcmltYXJ5X29kYihvcHQtPnJlbWVyZ2Vfb2JqZGly
+LCAxKTsKPj4gKyAgICAgICB9Cj4+ICsKPj4gICAgICAgICAvKgo+PiAgICAgICAgICAqIE5PVEUh
+ICBXZSBleHBlY3QgImEuLmIiIHRvIGV4cGFuZCB0byAiXmEgYiIgYnV0IGl0IGlzCj4+ICAgICAg
+ICAgICogcGVyZmVjdGx5IHZhbGlkIGZvciByZXZpc2lvbiByYW5nZSBwYXJzZXIgdG8geWllbGQg
+ImIgXmEiLAo+PiBAQCAtMjMwLDUgKzIzOCwxMCBAQCBpbnQgY21kX2RpZmZfdHJlZShpbnQgYXJn
+YywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKPj4gICAgICAgICAgICAg
+ICAgIGRpZmZfZnJlZSgmb3B0LT5kaWZmb3B0KTsKPj4gICAgICAgICB9Cj4+Cj4+ICsgICAgICAg
+aWYgKG9wdC0+cmVtZXJnZV9kaWZmKSB7Cj4+ICsgICAgICAgICAgICAgICB0bXBfb2JqZGlyX2Rl
+c3Ryb3kob3B0LT5yZW1lcmdlX29iamRpcik7Cj4+ICsgICAgICAgICAgICAgICBvcHQtPnJlbWVy
+Z2Vfb2JqZGlyID0gTlVMTDsKPj4gKyAgICAgICB9Cj4+ICsKPj4gICAgICAgICByZXR1cm4gZGlm
+Zl9yZXN1bHRfY29kZSgmb3B0LT5kaWZmb3B0KTsKPj4gIH0KPgo+WW91ciBmaXggZXhhY3RseSBt
+YXRjaGVzIG1pbmUsIG90aGVyIHRoYW4gdGhlIGhlYWRlciBpbmNsdWRlIGxvY2F0aW9uLgoKSGln
+aCBmaXZlISA6LSkKCltzbmlwXQoKWGluZyBYaW4K
