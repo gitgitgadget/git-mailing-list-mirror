@@ -1,64 +1,64 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D325A1D551
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 20:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090FD33D1
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 20:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723234108; cv=none; b=mLa7yjr411Cv3SheIynUkIS6tio1SM2lbZwrfb8bBb3gc9tF+/roLiAI5UKW2r717p/F+tbW9bVIZPx55deX4W6Lfx01+m9ueLuimWVSn57cC28vA0VOoVxBim5o5cAYd9u1J9vbyCxxSl2J8M+SWQUKs7QFYvmaJkmtblrVuKw=
+	t=1723234928; cv=none; b=uPGwQxNLqaum2yWuGFaBqe5S1XDcEYRFmjB2VwONeRfF/u0qx/DPG0XSWSyC06dy3VVIvRFX6BsVrfE5NMxyblH4+kenVgL/hCkfCED+OUa0ERBSmIgnfqYEtjlNmyspcUhV5TZPrnFVTh5Yw5y3AsSXNnTn7c4GXbRhAcsiwPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723234108; c=relaxed/simple;
-	bh=mOfNH3mOSbEKhPRo2maksnI01qrXY0MubtL9HU/KVjk=;
+	s=arc-20240116; t=1723234928; c=relaxed/simple;
+	bh=hr3rbDxPaMGwEPGJk9769XuR7e3Sko36jFRWlk4in7Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MK4kh93bhJghHf0YVWU9xYvOnkbJ4dWjiiys/y/WqXw0P66Poo6141lMa2MD0ojNLheIVWIDq6U3DGSYhqAztBWukt47UZ8k8bQJx4wnq+ojLDZu0ez0DdVS4Qa2LTxAku4KRboMpUoFaRbFhTOgdpaseJcsOcr0Bg50IpSNYLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaKoynjB; arc=none smtp.client-ip=209.85.210.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=V8sgnGyPAB0pYHWvaIMweGyRKqD9Yym1IHrDidrc1KXwS+b7hoylYc/d6SWtEL/5p+wHsY0g3gOAj6NKtBk6Lu9bEmQB0yOufmFlgpBeOWIckdS5h9XbTbRld4scl+kZncJZrITuE1mCW2nw4U6El28igttOfVPX5uRQGw8kQxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNxshMYH; arc=none smtp.client-ip=209.85.167.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaKoynjB"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-70940c9657dso1230698a34.1
-        for <git@vger.kernel.org>; Fri, 09 Aug 2024 13:08:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNxshMYH"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3db2315d7ceso1478711b6e.1
+        for <git@vger.kernel.org>; Fri, 09 Aug 2024 13:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723234106; x=1723838906; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723234926; x=1723839726; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1H22qZghwo72E2log/qM4w3YD//MBalUN2TKqmHQkEY=;
-        b=XaKoynjB1dRy63DeK8O42yT+pO+XEODJxD1sFdIlhEupNwyebLmOrQqm40/2111a20
-         bgbs5/RjBe+kZeRCEkC8LEbSEekLnBCaRNXedMsI027/EIyyLl54iK0PUrbjwPiCLWFn
-         JRDVaFAT6D2chpb5ew/UG2BrkZg5sIE6aI0RLgj7Q/9/FNk7XSxKfZ7TELz5RLRO+Iz3
-         U5lHGuUqZCFlTjpM/KJafcnPy5ds6EmY1g2L1Fin9xx8iN7BQvdsHUy5ARW8OygbGlDQ
-         FMm8IGeWk3awfbNXz/ytcsM49idxgoHelzJWBubgSXZu5WTchg+XXLp90AhzAI7j71i2
-         XQkw==
+        bh=Rc2YVYtkxciMOiw4IhqIS9PV9t4wnGouaaTobI4IfAU=;
+        b=NNxshMYHvJ7TAAyUY6qXyPZYN1LflhNKraGr7ygAyYphy5TJcESwHaerHrUy+1hUgr
+         grMS40IL2AHdB7vN7Qnhw0KcOu4V5+6xepH6Rbql5WaSc7gWlrphI21aoioEjQpmdFq/
+         m8igsZeRr4pz8j6RMnODEbXwfF9sh6DJLyoOF+DafFZexrZJK/jcVrAZwKw5uELzl4vg
+         Z23gDYpkry1It/eRu8n76y8gz6c1bh3+oozSTuCP4HN3YKbO0wwHWuHKnkrUozO94/Ed
+         I7bRGilaYMxVXJtSqH0/7GVvnXl7iJBGMtRIMvBuOeP71wiWISA00XM1RiN6JUrZ/3fg
+         5MaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723234106; x=1723838906;
+        d=1e100.net; s=20230601; t=1723234926; x=1723839726;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1H22qZghwo72E2log/qM4w3YD//MBalUN2TKqmHQkEY=;
-        b=dGx5P0gIdwu3NEQlkp4hby680fIZY2u16v7qPoPFxrecdvkmnVHowQBRqZWtRkEvFo
-         1PGpQLf+whQNeEU0jrkUFD2qR+mTN31yE5c+wwl7FTaatn2PQf3s7YNjeR2SJWEqL5gD
-         x/OYQT1NDclUmKuehGMTxy1lPO54XisHQ4IEORda9rYUz1NQccBhxfQaygG6fQj9DFj2
-         l3mnXfRlnty+vSY7yPiSBmBMI3kVNXP9oflPykFJ8J9gw9KxGiWkLnxvgPJbx2BTmxfj
-         Z9+BVeJbyE3hVlr3AHYO/G97RR4VxBUGuXmnFCHG8BphybMHBe9yOWCrEQ7ovlTK//qB
-         j6hw==
-X-Gm-Message-State: AOJu0YwTXjSkP/RQ7oFx08c3zV7edqBOr3qaUirE4PK2EPqW3PPSUi/Y
-	JNz4YyhtjaqVmj+0NRDjxYpDhFG0tjMWhZuOfqx0v06cU93HWbc87V8o3A==
-X-Google-Smtp-Source: AGHT+IGoXIuV5ZMPGhGA10HpWsQXravR4NKSAjnaw+Q83agI5fMQiwzU5jsimdrxapMtxaGNgrCgMQ==
-X-Received: by 2002:a05:6830:2b25:b0:708:b3c0:1442 with SMTP id 46e09a7af769-70b6b2fcef6mr3300623a34.1.1723234105738;
-        Fri, 09 Aug 2024 13:08:25 -0700 (PDT)
+        bh=Rc2YVYtkxciMOiw4IhqIS9PV9t4wnGouaaTobI4IfAU=;
+        b=BlB/2gTdoTXhTlytmw+zE9V9WRZWRu8oORboDHWscE5DgafnUKVcsUcMvQ5C9Bbpei
+         VB3MrZpxOkhTRl21kZg+FpCTITtm+yfVNKIaJlYAjBSc4rxhkyufyZCunooYcA7LtdM2
+         SFCvZ4+PbTPMAhzBcEiCcsudFNXYzcKDt8btujRr6iCUMbt8j51tGOmL0P6+CQSvgXud
+         h40b2jgdBtZcKZSUNa9HnVPynkG1zf2OaSabZ0KyBmBBgrihGAs03GUiSG0WyKP5a8H9
+         MJZrFMrzP8kK5ovmyjhV7TSA4gehil5rwAmzCpsalnE/mEAcodfVYYn5oRUqtrOr+cki
+         w6Kg==
+X-Gm-Message-State: AOJu0YzUSOnwjikLedqkTm7Um6YmKdEin3iFYZnAAI17jRasWUkDDaT5
+	uf4RGrVqwHGiBqZ66P4RAdnZW2/QP1wf+FpxxME4rhLW1TmK3FgwNWwK3g==
+X-Google-Smtp-Source: AGHT+IHZc5nWTSh1aO2Mm6E7d+dY8odGK0xDaPuapaWDRt1vP+Iy23bVmkTu28njVrx490G0Uz43Yg==
+X-Received: by 2002:a05:6808:2dc5:b0:3db:1f8a:2aec with SMTP id 5614622812f47-3dc416803a9mr3181128b6e.19.1723234926135;
+        Fri, 09 Aug 2024 13:22:06 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70c7b80d451sm121795a34.4.2024.08.09.13.08.25
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3dd06078749sm52260b6e.19.2024.08.09.13.22.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Aug 2024 13:08:25 -0700 (PDT)
-Date: Fri, 9 Aug 2024 15:07:37 -0500
+        Fri, 09 Aug 2024 13:22:05 -0700 (PDT)
+Date: Fri, 9 Aug 2024 15:21:18 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/20] config: introduce missing setters that take repo
- as parameter
-Message-ID: <rg5j5ehur5a2qvpt65ezfub5dmmqrbn7if5f2r7ibweuupsnm2@qeciml3qvdvy>
+Subject: Re: [PATCH 14/20] config: pass repo to
+ `git_config_get_expiry_in_days()`
+Message-ID: <qo26pmkrctepcob4vjfimvxlgoic7gqjxasnz2hqmv4hpgc37t@jh5wo2fjqyoo>
 References: <cover.1723013714.git.ps@pks.im>
- <feae2ad31ac91baae75c46c22c5c3ef3b58c1897.1723013714.git.ps@pks.im>
+ <cf7942479f75d95dcd8606b0947a8897ae60da60.1723013714.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,96 +67,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <feae2ad31ac91baae75c46c22c5c3ef3b58c1897.1723013714.git.ps@pks.im>
+In-Reply-To: <cf7942479f75d95dcd8606b0947a8897ae60da60.1723013714.git.ps@pks.im>
 
 On 24/08/07 08:57AM, Patrick Steinhardt wrote:
-> While we already provide some of the config-setting interfaces with a
-> `struct repository` as parameter, others only have a variant that
-> implicitly depend on `the_repository`. Fill in those gaps such that we
-
-s/depend/depends/
-
-> can start to deprecate the repo-less variants.
+> Refactor `git_config_get_expiry_in_days()` to accept a `struct
+> repository` such that we can get rid of the implicit dependency on
+> `the_repository`. Rename the function accordingly.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  config.c | 93 ++++++++++++++++++++++++++++++++++++++++++++------------
->  config.h | 15 ++++++++-
->  2 files changed, 87 insertions(+), 21 deletions(-)
-> 
-> diff --git a/config.c b/config.c
-> index 6421894614..ac89b708e7 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -3178,21 +3178,39 @@ static void maybe_remove_section(struct config_store_data *store,
->  		*end_offset = store->parsed[store->parsed_nr - 1].end;
->  }
->  
-> +int repo_config_set_in_file_gently(struct repository *r, const char *config_filename,
-> +				   const char *key, const char *comment, const char *value)
-
-Instead of prefixing with `repo_`, should we instead use the `config_`
-prefix? Maybe `config_repo_`? It might be nice for names to align with
-the config subsystem here.
-
 [snip]
-> diff --git a/config.h b/config.h
-> index 54b47dec9e..b13e1bfb8d 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -298,14 +298,18 @@ int git_config_pathname(char **, const char *, const char *);
->  int git_config_expiry_date(timestamp_t *, const char *, const char *);
->  int git_config_color(char *, const char *, const char *);
->  int git_config_set_in_file_gently(const char *, const char *, const char *, const char *);
-> +int repo_config_set_in_file_gently(struct repository *r, const char *config_filename,
-> +				   const char *key, const char *comment, const char *value);
->  
->  /**
->   * write config values to a specific config file, takes a key/value pair as
->   * parameter.
->   */
->  void git_config_set_in_file(const char *, const char *, const char *);
-> +void repo_config_set_in_file(struct repository *, const char *, const char *, const char *);
->  
->  int git_config_set_gently(const char *, const char *);
-> +int repo_config_set_gently(struct repository *r, const char *, const char *);
->  
->  /**
->   * Write a config value that should apply to the current worktree. If
-> @@ -318,6 +322,7 @@ int repo_config_set_worktree_gently(struct repository *, const char *, const cha
->   * write config values to `.git/config`, takes a key/value pair as parameter.
->   */
->  void git_config_set(const char *, const char *);
-> +void repo_config_set(struct repository *, const char *, const char *);
->  
->  int git_config_parse_key(const char *, char **, size_t *);
->  
-> @@ -341,9 +346,11 @@ int git_config_parse_key(const char *, char **, size_t *);
->  #define CONFIG_FLAGS_FIXED_VALUE (1 << 1)
->  
->  int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
-> -void git_config_set_multivar(const char *, const char *, const char *, unsigned);
->  int repo_config_set_multivar_gently(struct repository *, const char *, const char *, const char *, unsigned);
-> +void git_config_set_multivar(const char *, const char *, const char *, unsigned);
-> +void repo_config_set_multivar(struct repository *r, const char *, const char *, const char *, unsigned);
->  int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, const char *, unsigned);
-> +int repo_config_set_multivar_in_file_gently(struct repository *, const char *, const char *, const char *, const char *, const char *, unsigned);
->  
->  char *git_config_prepare_comment_string(const char *);
->  
-> @@ -372,6 +379,12 @@ void git_config_set_multivar_in_file(const char *config_filename,
->  				     const char *value,
->  				     const char *value_pattern,
->  				     unsigned flags);
-> +void repo_config_set_multivar_in_file(struct repository *r,
-> +				      const char *config_filename,
-> +				      const char *key,
-> +				      const char *value,
-> +				      const char *value_pattern,
-> +				      unsigned flags);
->  
->  /**
->   * rename or remove sections in the config file
+> -	git_config_get_expiry_in_days("gc.rerereresolved", &cutoff_resolve, now);
+> -	git_config_get_expiry_in_days("gc.rerereunresolved", &cutoff_noresolve, now);
+> +	repo_config_get_expiry_in_days(the_repository, "gc.rerereresolved", &cutoff_resolve, now);
+> +	repo_config_get_expiry_in_days(the_repository, "gc.rerereunresolved", &cutoff_noresolve, now);
 
-The rest of this patch is simply implementing variations of existing
-functions that explicitly inject a repository and looks good to me.
+non-blocking: Do we want to fold these lines?
+
+>  	git_config(git_default_config, NULL);
+>  	dir = opendir(git_path("rr-cache"));
+>  	if (!dir)
