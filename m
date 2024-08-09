@@ -1,89 +1,103 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F0F17BBF
-	for <git@vger.kernel.org>; Fri,  9 Aug 2024 12:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4837A168DC
+	for <git@vger.kernel.org>; Fri,  9 Aug 2024 15:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723207258; cv=none; b=NS2DopD2I1Ng89MAT4GSqJXiML1ivzULuJLcevi4+lFJNYnv87ZVsgMysPf4DSvlsrxzJ0AhUit6+G6iyQNqHLnLEcDPEkYez73PMBMMI2+7poW9jtGWjLzHMkrho6bz52X8XSeo0px7A8Ofr5avIgWRH/fUhARHtFwg0VEO8q8=
+	t=1723217551; cv=none; b=mcJ2bYDZHdk6BgxVEWub3AJSnU7y0hqgcgfxK/MjV1gKIyHo7xYQ0OF5OVCev2kGycjzH55CM0TqyV0sHQibNzHB+NYT/oCRT5ewsg4BUphiHj+AXEWNJupZYH8JZiVl0GOhHq19jOVhP7P42zBfD0US17btzbIdYDjhL2d0cR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723207258; c=relaxed/simple;
-	bh=HTJroQkitVnU5qy1xhT5tcII9/Ty6PK3lKo/lKr4P9s=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=qLxV29o+XJFS5Wrjs8SM84HScj/CACI0kTtqIxUjrVDKxOotOfuGs0X/RL/ItapCOQmFP3NspTAK6FCdBvz20uW5goqCRMhNGt1uu8n/Cp3Mg8leBi8/k8+0orChdfOMc8/Wgz6CC7dYdKEuFEfAthUQhmYhMBNiK5h6ZuRRiDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UYgX0x39; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723217551; c=relaxed/simple;
+	bh=slmigF85lsFA9jvv1kvRnoDGnrwhLXqeoBbtsz6GcYo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OzNUMYHbqyjdXUbjdgt0NJf++PsZT1NbyiKWEyIlrbjLrIxPu4sPZ8yZGpHwJqOwmokYqNWUdlIIHc3sxxj1skinXDy7Dm1BO0Oi3LkSTU0jc1BrwUQiB9pdwWzsRlhRdXtUPfuweNptldvsXne5e9FaFMXDOZxq6EbdiKWfY20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OJvU/hSZ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYgX0x39"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3db18102406so1341021b6e.1
-        for <git@vger.kernel.org>; Fri, 09 Aug 2024 05:40:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723207256; x=1723812056; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HTJroQkitVnU5qy1xhT5tcII9/Ty6PK3lKo/lKr4P9s=;
-        b=UYgX0x39Kt//k0tO89YIPHNnsfHWdp+1Tv52cFSodGReU7nquCaAgtz2daYVtAWDYn
-         oEn38572CXfHWNOpNOALHQ6gllR0JxvO2SItcaDVZveDcb1UqUf6pLNizk9+MGWf7y5h
-         1CiPXr4UiIHzinLgX7ZaixOG85uSPCqAPfz/0itu/9dFh+cwIAuOrWFLMaBfJKFYh3AS
-         Fe6Ky8h7SX9GajqtAnwveMw0nJTp6CScp1x//BgQnP8ERM7WqZjmu9TAmSoDIGN4JkT2
-         DGgRlq0SQusRhDQ2I2kCRR1CVN2/Znikbg6niwx9hCRpl/hCz/J5PI0V4bMAOCx7iVv5
-         ZStA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723207256; x=1723812056;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HTJroQkitVnU5qy1xhT5tcII9/Ty6PK3lKo/lKr4P9s=;
-        b=atVy+dwFLxbUC3c869S8cYUo8yydyZ+Od5VNceTYG5x9kKa0u6/NleOpH+ziDkvHeH
-         I1a3pTcCIbn4PiJmBGG2orz92Qz+N+oNPh7pVUxemt0235yAfWdNHavTesYWQSgGR0a5
-         1c/MspGJ6yGomHbvqNHyfyHb0FiGvhPUt9CXBgWaCaPuq6UsAw7o9tbeQu/phqaHWch9
-         fWjnHausDsCIBB9Ws65QF2mEHksQDIgzER6cxp7nRv1MggOL03hOhRE6zFFRQVSJt425
-         EQFRYkJqgVwrK5R/FQT9hWB/dBwmJho90RLSGE/EOg9aMFb3sMS7hwaXdMzDGaGui+PV
-         lP1g==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ0oGo6xNhZSMWsUS56yqtOfeBMQrZ3lzvNbi+E+oAk6BV69hFtx7sPJBP/3mrdCAyuqN/VvNszly3AGgiXd17XSwd
-X-Gm-Message-State: AOJu0YxxK91WhQWNWh1masFxmvQz+eXitwd5eyYYjJdMK0YuSg/Q1MNt
-	wBwIxZmp4elJrdptQtbcH9cRW3xDBVsaPEgcFJk2CW+gJJT+Qyem
-X-Google-Smtp-Source: AGHT+IGHsjFZRCpvo8a4qaEu1fu6YpbFNM1YJC3awPOwipI0hEQAUHFBDi0SvBgPgogZBJW0wmKRfg==
-X-Received: by 2002:a05:6871:79aa:b0:25e:1382:864d with SMTP id 586e51a60fabf-26c62d10769mr1710141fac.30.1723207255904;
-        Fri, 09 Aug 2024 05:40:55 -0700 (PDT)
-Received: from localhost ([2402:a00:401:a99b:b1ca:de8:cd9e:bf98])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710cb2e57e9sm2529701b3a.154.2024.08.09.05.40.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Aug 2024 05:40:55 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OJvU/hSZ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CBC42C470;
+	Fri,  9 Aug 2024 11:32:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=slmigF85lsFA9jvv1kvRnoDGnrwhLXqeoBbtsz
+	6GcYo=; b=OJvU/hSZwfT39ZiDg1VRIFdqfqHJ+yAqdBSPPLLOKLdzAHQnx0hkYW
+	8S0z0yRH7VZfteerlaIUOiKT7y5XGLTwjchkgePXRcBwDKojUUaPcwqV6Cegl9mR
+	pJCFrHakKmn5nGkP33etPbzlRrWVOXx7cDudCVAJbn9zY0JQJIFIo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 232C12C46F;
+	Fri,  9 Aug 2024 11:32:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 882EB2C46E;
+	Fri,  9 Aug 2024 11:32:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  blanet
+ <bupt_xingxin@163.com>,  Xing Xin <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH v2] diff-tree: fix crash when used with --remerge-diff
+In-Reply-To: <pull.1771.v2.git.1723188292498.gitgitgadget@gmail.com> (blanet
+	via GitGitGadget's message of "Fri, 09 Aug 2024 07:24:52 +0000")
+References: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
+	<pull.1771.v2.git.1723188292498.gitgitgadget@gmail.com>
+Date: Fri, 09 Aug 2024 08:32:27 -0700
+Message-ID: <xmqq5xs9g19w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 09 Aug 2024 18:10:52 +0530
-Message-Id: <D3BDZN0TAM06.23KXC017WCLD4@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2024, #03; Thu, 8)
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqo762frkz.fsf@gitster.g>
-In-Reply-To: <xmqqo762frkz.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 960AC020-5664-11EF-9046-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> * gt/unit-test-hashmap (2024-08-06) 1 commit
-> - t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
+"blanet via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> Elijah Newren, the author of the remerge diff feature, notes that other
+> callers of `log-tree.c:log_tree_commit` (the only caller of
+> `log-tree.c:do_remerge_diff`) also exist, but:
 >
-> An existing test of hashmap API has been rewritten with the
-> unit-test framework.
+>   `builtin/am.c`: manually sets all flags; remerge_diff is not among them
+>   `sequencer.c`: manually sets all flags; remerge_diff is not among them
 >
-> Getting there?
-> cf. <CAP8UFD04uQbWhY0QDp+nC8VyBvpUs=3DtBDm=3Dw4CzKK2GcwFZdGQ@mail.gmail.c=
-om>
-> source: <20240803133517.73308-2-shyamthakkar001@gmail.com>
+> so `builtin/diff-tree.c` really is the only caller that was overlooked
+> when remerge-diff functionality was added.
 
-All the suggestions from previous versions have been taken into
-account, so this should be good to go.
+That is more than OK as a band-aid, and I'll take the patch as-is,
+but I have to wonder if we do even better in a future follow-up
+patch.
 
-Ack from Christian: https://lore.kernel.org/git/CAP8UFD3VwiAbGvzgi14EcEQLX6=
-Gs7pNy+dvZcXkPOueKpJS7HA@mail.gmail.com/
+Any time do_remerge_diff() is entered, we know that either the end
+user (from the command line) or the hard-coded caller (like
+am/sequencer cited above) wants us to do the remerge-diff, which in
+turn requires us to have the temporary object directory rotated into
+the status of the primary object store.  And there is nothing in
+that object directory rotation code that requires caller-specific
+customization---it is the same "create remerge-diff directory as
+tmp-objdir, rotate it into the alt object store chain as the
+primary" regardless of the actual caller).
 
-Thanks.
+So wouldn't it work well if we
+
+ (1) at the beginning of do_remerge_diff(), only once for a rev_info
+     structure:
+   (1-a) lazily do the "object directory rotation"
+   (1-b) set up an atexit handler to clear the temporary object
+         store
+ (2) remove all the "ah, we need to prepare and tear down the
+     temporary object store for _this_ operation" we have sprinkled
+     in different code paths (including the one added by the fix we
+     are looking at).
+
+That way, we won't have to worry about adding future remerge_diff
+users, including existing hard-coded callers.
+
+ANyway, thanks for the fix.  It is very pleasing to see contributors
+working well together.
