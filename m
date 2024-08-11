@@ -1,76 +1,87 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D752158529
-	for <git@vger.kernel.org>; Sun, 11 Aug 2024 23:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310811757E
+	for <git@vger.kernel.org>; Sun, 11 Aug 2024 23:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723418633; cv=none; b=DVOpKPM8IipRFh7gV888z9Yf/eeJebxG2TWIv97kVUe5TjRQurbgfxp7Ra/7eHj15w60l+SsOCxzCWbU7h7bOAOTOH5exOgr7I5kjJ8BUyFgbMOnd7fAfsqbxRT8P/O984WNZZt6JsAr0xUTdNVH0azGyMz/xeLNspk3aqd5ZmA=
+	t=1723419225; cv=none; b=sWJqjJpBSzjVo6+GIAVbyh7kCBPCZYF1QmhgKE+L2d2CDc+CjVejJoCzl44MwHDNrEzTtOcEqHSQUwU4JKNRzib3E3Fcjtf0+k0nlVA18Y1GCNBLuR/ZCdg6oqIqhrRhtp+irrh/htZ0s/PchPGz3BEO2pdOyFTCHwn1y55Zkh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723418633; c=relaxed/simple;
-	bh=On2I4fO6fxHV8xoNa9cTCaluvOxFCdDur9a0tX+2Xik=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=fJqK768T01KIwtLpolsvCSfRL0xWszvxf6Q2g7WO+bKaV6x0Vbu7mC0TWujdFSRkAGQyMSpLi4Ty9tY0SGiEPBaHyBiyQDI8KnbMfc9zrBld824bDbdL6BB7zPKqU5s61P1fcgcjbrcQguunIYrFBFaj3vIvFmjwkRsgVO5WLvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=x7m/uSXZ; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="x7m/uSXZ"
+	s=arc-20240116; t=1723419225; c=relaxed/simple;
+	bh=TIDayK4ZqPQn3cFZSifhIdt4MA4JWlT6vIGw6kptkno=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a64/MkO5XHNfCobt8LQuUwtos72VPUyu5peJ7ivUCrHgYy7UM0twnStx8cvgTzQwGLzA1iUHrf3rzJIY/QBfaUIAHZ/9IVtU5tljHg/NeyRGqTrAosUmCuKNpmg9bkXshKp6DBJFXFm5q8Uoqx3NwtgBB4dkJsvocwK1aKJPs5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6b79c969329so21313296d6.0
+        for <git@vger.kernel.org>; Sun, 11 Aug 2024 16:33:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723419222; x=1724024022;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1YYWM3ltPFAtDXQLLwqdzkY83AQWq5NdwiAkzxGyh5s=;
+        b=vMc+4zV9dVEkNWX+unwm49SNuPWPTmzWa3eQF/a/NppQ/pxTquUR6bfsmAK716/UUW
+         oFpR3XP064643riHoAzDqYsyNBirphpE6aVHaFIvOlOMhN741xEaqvKlLuGOc7xgLNCQ
+         sr+bbMqFUTRkf+jmpoTtjZS/LQ3JrOlPMqLVZe347kKFWVS0PJf6K2hgVp7DeZAqNzE8
+         LtJCinmr95voRZKzbX3T9rvyRe6S+JmQtaoDACY3SuSL6rmIJ11EJRj1vd17gHS8jxY1
+         /2zCMYm1E5pk9j5mEtUNqiK6pUfoHuzr1JbvYuKYrKUeY26p9gn4b3/fOW+PVkdQByEf
+         vLbg==
+X-Forwarded-Encrypted: i=1; AJvYcCWCrlRPOUjfp5bzSXw03RbtGBz9pTpbCkUxdvzsPfoKsWLnxgfjijFWJBnEqZdxJEJIzu0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyzlIg5WYERNkrnkXipvflNmh6AP2zCnPmwEN+7i+KtimFS470g
+	GZmyWiRnOIGgXi971hec2xjaHqZVNdzwf5HUUnnYazo6NDOadeVQiIy2LLhQETme5vpr4h0QhO2
+	1DTgD01UcxI6qsZSggiEBy8Nv8vY=
+X-Google-Smtp-Source: AGHT+IEwFDR5KqHnawuUqa3PO3Z4KMzIHsvCujLAkJyMq/+X/6fGEDFq8y1eeYEZ5QWtLj92k85q9OYX8FjYLQ8JEIw=
+X-Received: by 2002:a05:6214:3990:b0:6b7:b197:c825 with SMTP id
+ 6a1803df08f44-6bd78d3be11mr93452226d6.14.1723419222028; Sun, 11 Aug 2024
+ 16:33:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1723418628;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dgpsCoJ1XXB/Jjdaq0wqCEokHSEZAAYqxl+lZGmhGPM=;
-	b=x7m/uSXZ/UYuZEEQfPzElug4RoTrtgSFNj9gWm2CEKP9+3KCifF8bLH6eQfsmCi/f0qkh0
-	iWaUyLE90mqHiTkkA0Ymqw3bMVm1MRM10i9hcknDnqSGa87WjjCxzHduTRz2Hla5l8ky7B
-	kinuCjCwi4HJjnnctkHNMXGOz4VNQuQ47j072a85OhnCkHP1QBQ2hxcGxhmdgCcikOZTgt
-	+B0u3JhnXkF8sYUIPPPsDUYHelVloCoz1LInRXMO07dRwu1aW+r//BCDb/752lat7HS79K
-	NzayBqVsqY/K4r9FFXVvoaLGdCEygihPtqNFNT3I5Vn1Egej/ULYhiIS0qb/3Q==
-Date: Mon, 12 Aug 2024 01:23:47 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Josh Steadmon
- <steadmon@google.com>, git@vger.kernel.org, calvinwan@google.com,
- spectral@google.com, emilyshaffer@google.com, emrass@google.com,
- rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org,
- sandals@crustytoothpaste.net
+References: <cover.1723054623.git.steadmon@google.com> <cover.1723242556.git.steadmon@google.com>
+ <Zrdn6QcnfmZhyEqJ@zx2c4.com> <6398d60387a6607398e4b8731363572e@manjaro.org>
+ <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com> <ee460e193b567b73e789ee77579f41c4@manjaro.org>
+In-Reply-To: <ee460e193b567b73e789ee77579f41c4@manjaro.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 11 Aug 2024 19:33:30 -0400
+Message-ID: <CAPig+cQnLkXdfokGBFdkkrZ3_nWrYGj3XyMRJ+0h5zrC5Kw0bw@mail.gmail.com>
 Subject: Re: [PATCH v2 0/5] Introduce cgit-rs, a Rust wrapper around libgit.a
-In-Reply-To: <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com>
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1723242556.git.steadmon@google.com> <Zrdn6QcnfmZhyEqJ@zx2c4.com>
- <6398d60387a6607398e4b8731363572e@manjaro.org>
- <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com>
-Message-ID: <ee460e193b567b73e789ee77579f41c4@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
+	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, 
+	sandals@crustytoothpaste.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-08-12 01:03, Eric Sunshine wrote:
-> On Sun, Aug 11, 2024 at 1:27 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> On 2024-08-10 15:15, Jason A. Donenfeld wrote:
->> > Still the same name for v2? Cmon.
->> 
->> Yeah, I was also surprised to see that.  This _isn't_ cgit.
-> 
-> Josh addressed this point in the v2 cover letter by saying:
-> 
->     Known NEEDSWORK:
->     ...
->     * Bikeshed on the name
+On Sun, Aug 11, 2024 at 7:23=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
+rote:
+> On 2024-08-12 01:03, Eric Sunshine wrote:
+> > Josh addressed this point in the v2 cover letter by saying:
+> >
+> >     Known NEEDSWORK:
+> >     ...
+> >     * Bikeshed on the name
+>
+> But didn't Junio already say that the v2 of this series will be merged
+> as-is? [1]  That's what actually made me surprised and confused.
+>
+> [1] https://lore.kernel.org/git/xmqqfrrd9slb.fsf@gitster.g/
 
-But didn't Junio already say that the v2 of this series will be merged
-as-is? [1]  That's what actually made me surprised and confused.
+That only means that Junio placed the topic in his "seen" branch,
+however, no promises about ultimate acceptance are attached to topics
+in that branch. Quoting from Junio's "What's Cooking" emails (such as
+[*]):
 
-[1] https://lore.kernel.org/git/xmqqfrrd9slb.fsf@gitster.g/
+    Commits prefixed with '-' are only in 'seen', and aren't
+    considered "accepted" at all and may be annotated with an URL to a
+    message that raises issues but they are no means exhaustive.  A
+    topic without enough support may be discarded after a long period
+    of no activity (of course they can be resubmit when new interests
+    arise).
+
+[*]: https://lore.kernel.org/git/xmqqo762frkz.fsf@gitster.g/
