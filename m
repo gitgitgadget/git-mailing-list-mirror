@@ -1,144 +1,85 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA50C1537C8
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 21:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763AB74BE1
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 22:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723499751; cv=none; b=hvmSHsovEi7JJx0e6gWN+z7S2pU/MHB2XsgJtZaSU38GiXA67jVSp5K2nit1HqIlyTWsY2r9Zk83X6XGAZsSU9ttbUJ8oTwirBcb2li8T8iIrHrV8dzKsQvDD7KLMaWfBj0X/mvm4yDT/5pMywSW4ewBXo7vfoTYEn1L4TxQsqU=
+	t=1723500132; cv=none; b=sUhxhLCRAnzR82vUsbshDDi6mi3W7dqWJV7SYoHaxVjwUkj7mr0x3rxLqugRoq95Xi/uXWrI6vNVCeFzZL8RWSbpijL/wqmm23+ZSFZPERa5QO+o13JqsxHDwXa/BEmGI+daHcMSuKcVFKGcy1kkKUGxLj+B3dbwNP1k42yu98U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723499751; c=relaxed/simple;
-	bh=LfOaIz5vOVXzvOmmhbq0GyFupjSHgqKbV7KpEGewCYA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=grqocU37XEU8koe9AJDC/BNAn4cbX7tQ2LWQY7XVAIR4r8uJYRNZsJzowdV0eRnNxP8jwVXODU7aCg7ySRv2p7VzAHZxzm4HQ+aImMJFfSjNZaI9fCREG7OkzXy/quFoe6Ig8x+uy942csezLo8MQ3ulT9JAS1ocRsuQ1oBhttc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hp0QKQRE; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1723500132; c=relaxed/simple;
+	bh=LlDns7mwqzrACuWzkWuvc7us9FwOUCg8EzbNJarWBT0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eBgyTinfqXAXg7MHUIcU9zU+zb/OQq5W8LI5XJIK+3/phWQB2e9fn7X5VvRMKw/IMK8BIBPKJFWxGFxvflUQqbhHBTaGEBXsxMa9yyGPjI5Tx1ziVbLf5lVZiPRRM2Fl98/hd04QIAB1mlnOr+NlSvlPHr2mpwMwk//06rv4tYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XvckJVD9; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hp0QKQRE"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-530c2e5f4feso4933814e87.0
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 14:55:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723499748; x=1724104548; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hSclLofCQHxw/exkVY2mrmoaZlEJTNudaGL1jsWFiNU=;
-        b=hp0QKQREJKqbdSenBjMGONmKhCef0TjBhuYOOFFwOxoymQ16l3OhM3sO1ygsEHc6OO
-         NQo5CiSKEn6/ME0n8uY5extv/4FE3bk41Ja20Nur5BF6WxG6pKh+bkgUcUwa0vAnyE6N
-         uLtAA4s1TptMmRmuAi5ZwsQGiq0SXhuAKJMtJyuMxA7jpINN5XHIa3L5a9+9J1RPJEgN
-         u9I7Tqa0XvJKsRKCKb7FKy05lsvjP3dpR8TpNFXLj2N2LS2szu2FLeUBa8ql22dchAxf
-         yxu6oijUMnNvtl51usj5aKd42yfPz0wtBDypExt6ZHgqxngwnIcio3b88X1HOWhro1Wu
-         x1/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723499748; x=1724104548;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hSclLofCQHxw/exkVY2mrmoaZlEJTNudaGL1jsWFiNU=;
-        b=s1yIcj3suGyWFEWCWB8fJNlOBTmHzTDGFaklsBsdyf3gbh3MYDBaZ2f6VJevYp87Ef
-         bIJZ4S3A/CeWc6eroXiy1zXZVFtUukYN8RnZG5HjuK+y0yFjbFgs7pvMcFpP48pm+g9N
-         nNm0SuBBADT2i3dUBpfl8KnxV4LIGEk3c8H6sWu6rid2/9Hxn/xSzNrtXFiaqNqBt2Oa
-         vTeDHpf/xJdR//VV/xarW4zqbNaAaMtFIuzm54ycuzUlZGJhOkDCdy+qooakfyvypwqC
-         M1dt37bMq5/NxraGBA96ptDidp9QoKh4TTgq7oaYa3rhOotH8TPRNvp8HlBfklw9APtH
-         +4FQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5IQEZvepD9d/ZqJEWtPM3azgHQc8yTpCYzkwHgoLmgmuUgSkWCG2VnTKYspBEIoNIDHU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytJG9JWgnvocvC7/53oVmb1r8EKZemQ2TNLjqSvwe9agVtxPLg
-	t1T1aHZlefp/vcOLzS8CqSOkgMGgwdDzwOmFcTLtUBffVFxGwjUkk1I77gileHBvTo8Pf1dRWSg
-	bQ8AMHgFMCyAdONYdFuMUdBMPa0GdmwGEkk8h
-X-Google-Smtp-Source: AGHT+IEVUe+m9bcxOphd3v+0TvzW158poMAcVuxf551d8J7pm9lqxFt+A6+KL6BjVdhv8ZeLoS0EVPfQfqUcxs4k1rA=
-X-Received: by 2002:a05:6512:1249:b0:52d:582e:8093 with SMTP id
- 2adb3069b0e04-53213658542mr986579e87.23.1723499747592; Mon, 12 Aug 2024
- 14:55:47 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XvckJVD9"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E7BDF3F23C;
+	Mon, 12 Aug 2024 18:02:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=LlDns7mwqzrACuWzkWuvc7us9FwOUCg8EzbNJa
+	rWBT0=; b=XvckJVD9pzq6mfl7RUrSd4zRFoqyoepTpRwGL6gXOsTGjt6yuQ5jWm
+	Ey+NR3JaVYqvT3KYF6EfRr3KTLJh2CCfqp1rA67u6cJQnrSBhM4o/88LUjH0siqn
+	q/tFZ4WUBrXPJXlG+Rgz7oYRLc0pgFOEtXjU/QaJfIz24FgsNeqis=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DF42A3F23B;
+	Mon, 12 Aug 2024 18:02:10 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 52D3B3F23A;
+	Mon, 12 Aug 2024 18:02:07 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  Dragan Simic
+ <dsimic@manjaro.org>,  "Jason A. Donenfeld" <Jason@zx2c4.com>,
+  git@vger.kernel.org,  calvinwan@google.com,  spectral@google.com,
+  emilyshaffer@google.com,  emrass@google.com,  rsbecker@nexbridge.com,
+  mh@glandium.org,  sandals@crustytoothpaste.net
+Subject: Re: [PATCH v2 0/5] Introduce cgit-rs, a Rust wrapper around libgit.a
+In-Reply-To: <rt4ruismrzhtkbry4kuube5fwf2zprajjen7wagl5nyyjivhvz@xuxq6paidcmr>
+	(Josh Steadmon's message of "Mon, 12 Aug 2024 14:24:03 -0700")
+References: <cover.1723054623.git.steadmon@google.com>
+	<cover.1723242556.git.steadmon@google.com>
+	<Zrdn6QcnfmZhyEqJ@zx2c4.com>
+	<6398d60387a6607398e4b8731363572e@manjaro.org>
+	<CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com>
+	<xmqq5xs688cz.fsf@gitster.g>
+	<rt4ruismrzhtkbry4kuube5fwf2zprajjen7wagl5nyyjivhvz@xuxq6paidcmr>
+Date: Mon, 12 Aug 2024 15:02:05 -0700
+Message-ID: <xmqqy1519z8i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1723054623.git.steadmon@google.com> <cover.1723242556.git.steadmon@google.com>
- <908ad0b82fa084fc4e56d7f6dff49e4f255af6ec.1723242556.git.steadmon@google.com>
- <47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com> <bifcs4ijz4gsnrfjs3naqclo7nj7ajhek6eppgaj6a27ixp372@6oariraac4rz>
-In-Reply-To: <bifcs4ijz4gsnrfjs3naqclo7nj7ajhek6eppgaj6a27ixp372@6oariraac4rz>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 12 Aug 2024 14:55:33 -0700
-Message-ID: <CAO_smViBnmc4r3MizV5kE406_TvXiwCWtC0jyDb-FT-zp9H9bg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] config: add git_configset_alloc() and git_configset_clear_and_free()
-To: Josh Steadmon <steadmon@google.com>, phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
-	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, 
-	sandals@crustytoothpaste.net, Jason@zx2c4.com, dsimic@manjaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 841ED682-58F6-11EF-893A-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-On Mon, Aug 12, 2024 at 2:39=E2=80=AFPM Josh Steadmon <steadmon@google.com>=
- wrote:
+Josh Steadmon <steadmon@google.com> writes:
+
+>> But just a dismissing "Bikeshed on the name", as if they do not care
+>> to be mistaken as saying "those who complain about the name are only
+>> bikeshedding and not worth listening to"?
+>> 
+>> We should do better than that.
 >
-> On 2024.08.12 10:10, Phillip Wood wrote:
-> > Hi Josh
-> >
-> > On 09/08/2024 23:41, Josh Steadmon wrote:
-> > > Add git_configset_alloc() and git_configset_clear_and_free() function=
-s
-> > > so that callers can manage config_set structs on the heap. This also
-> > > allows non-C external consumers to treat config_sets as opaque struct=
-s.
-> >
-> > Do we really need to add this code to config.c rather than handling it =
-in
-> > the wrapper layer in the next patch?
-> >
-> > Looking ahead I wonder how useful it is to users of the library to sepa=
-rate
-> > out allocation from initialization. A function that allocates and
-> > initializes a configset would be more convenient and harder to misuse.
-> > Calling release functions *_free() rather than *_clear_and_free() would=
- be
-> > more convenient as well. I also noticed that the data types are not
-> > namespaced when they are exported. So perhaps we could drop this patch =
-and
-> > add the following to the next patch.
-> >
-> > /*
-> >  * Namespace data types as well as functions and ensure consistent
-> >  * naming of data types and the functions that operate on them.
-> >  */
-> > struct libgit_configset {
-> >       struct config_set set;
-> > };
-> >
-> > struct libgit_configset *libgit_configset_new() {
-> >       struct libgit_configset *set =3D xmalloc(sizeof(*set));
-> >
-> >       git_configset_init(&set->set);
-> >       return set;
-> > }
-> >
-> > void libgit_configset_free(struct libgit_configset *set) {
-> >       git_configset_clear(&set->set);
-> >       free(set);
-> > }
-> >
-> > Best Wishes
-> >
-> > Phillip
->
-> Hmmm I see your point, but I am also hoping to keep the symbol export
-> shim as small as possible, so that we can try to autogenerate it rather
-> than add entries by hand. However, if people feel strongly that we don't
-> want to add helper functions like *_alloc() or *_free() for types that do=
-n't
-> already have them upstream, perhaps we can just put them in a separate
-> rust-helpers.c file or something.
+> I am quite surprised that people felt this was dismissive. So to be
+> clear: yes, we need a new name before this lands in next. I thought that
+> leaving that as a known needs-work item was sufficient to call that out,
+> but I guess I was wrong.
 
-I'm thinking of this patch series as two closely related but
-technically separable things: the creation of a .a/.so that can be
-used outside of git, and the rust wrapper around that library. I think
-these functions would be needed by all users of the library,
-regardless of what language they're implemented in. i.e. they
-shouldn't be thought of as 'rust helpers' and instead just the way
-that the library is designed. _All_ functions that allocate memory
-should have a paired "free" method, and that should be used
-exclusively, regardless of host language.
-
-So nit: I wouldn't call it rust-helpers.c ;)
+Yes, I had a similar initial reaction, but I guess that comes
+primarily from the fact that we both misjudged how "cgit" is already
+deeply established name that refers to something other than this
+project.
