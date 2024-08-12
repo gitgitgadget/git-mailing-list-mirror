@@ -1,146 +1,108 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314B1802AB
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 21:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AED1802AB
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 21:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723496749; cv=none; b=Ao5JxkStB/QqzTGV5Pg+Vx51MzVZ7/xqMmwhP2HLkc4vhBhgmSvJdaWFtxsT8Pb2ELANiDvVnjqQB/iFJBk0HHNRnamoJFz33rd0czu0Apz2T8LqqCys/1nmKIsbVt1O3AaxW7C8P2xtDpHpHXXZDetqoSy/8hWpYWmcKTBCNcU=
+	t=1723496753; cv=none; b=aHAtcP+q9+2H6XcC/K+mbW0hOjd7YKpoIXgSE63weHgbrKBm6OH7R78dTWCbagYLRNXCi6rGbLe1rK224xLZ5u2+5x2aS5CWrHyL5xvjcr3WMqZP6+idDyxSxMWfhDy85/3cHrq/GiQs8lTejYz1y7XtkrZkpeDLy7xDp8Q5fbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723496749; c=relaxed/simple;
-	bh=r+HBnVeIlgiEcqv5/kzEX71alfiFwW0QNCyMlkKpnfo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EB3lYIU13zybv4Y+m4aH6wyCcz1B8c7pbI6EfihDBT6GCWQTznafXuLJ6FBnsgDyRAj4vWyb/VFSi1ApzlhvEiAJxKHBcAhSkoxi6jQa0XnNyf2o23ZWfoGbFm7glX2R2LLkcwDS+Rk9Eo0kDIHuMRyp8Yn+9lvHl6MkgEvu5Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QJkBpoGk; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723496753; c=relaxed/simple;
+	bh=gj8a2LC9Paa1cXGn5ExtoGVyhM6XUMkiy75HYhnw3qE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ORJkntnLl3jd4J+Bfr8BAiKYmV0l1cU3BswHz0xAOdu7DVkFzFZLwIZyFkbWtoo4//9xnKLbWNTyrxw75YHYcIdp1CAnk4NyB4D3xBkn+AGfc/A3lZxuxCy8wqLzxOFHxR3bERyXQOx6gI7QMH2LBsLBn7HXZFO71PuoOJ2YS3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NdTXvW1Q; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QJkBpoGk"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B2F63EB8D;
-	Mon, 12 Aug 2024 17:05:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=r+HBnVeIlgiEcqv5/kzEX71alfiFwW0QNCyMlk
-	Kpnfo=; b=QJkBpoGkmCHGW6l5vl44oiKuYg83vXIKB9D6usQ6vB379+ADACiT55
-	Ped7rv+/IbCAUUdvaJyh+sYukbjYd10WhrIJ4b7jOqU7WLknW5PGZUa18UihND23
-	3psU5CAySZbQYo8bSrv6pe3El8T5wOrGljI1hVJ97BQEp3NERewFQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 24FCC3EB8C;
-	Mon, 12 Aug 2024 17:05:47 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NdTXvW1Q"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1723496744;
+	bh=gj8a2LC9Paa1cXGn5ExtoGVyhM6XUMkiy75HYhnw3qE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=NdTXvW1Q8lRfjp96k13j3uJ9fLne6V8+5Jr1qbqPrwhErCHtZObMJtB1SQc/wOZKa
+	 4VDbmpDSrRGsnmKO7EYLd1w2J5bS7FO2ONI3UhNMvzoePWY7oGi5QYNLKAQ7KcCkZt
+	 dzBzs9EjlmUHsaR/PsPlgs1YudcnkS1UjxR8EHZLx5cm3lNeaX0+c2/TdYMsC1zjA9
+	 m7u8Nzl2/05jdOucqIrniInSrOkPBozT2JQI1JiLbaqtYDf1BTxpAv4jdASfGBAwk/
+	 lZiO36bhYjjBV7FtyrcUU5OIDa1eynmCwKqG86+nbGDQogii9I0fObZiP6FlBLIx9E
+	 o5ppysTkONqSCKZAo1cTV9Bqe1OaqPncy6LmvSWMM+qY8a4LTpFuOLNXomQwA0ngP4
+	 rJQ7QvH5zhwXbJHXaY+JXsKwHp8VH6PWfWjLcOfrWF8788Q+zHKNpFtFZMTGay5Yo6
+	 bKtL7Ew9UBE7yU9i11KnHyMpkOu0PWfiH84F67gkKKAaiAhIVNL
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 00C6B3EB8B;
-	Mon, 12 Aug 2024 17:05:42 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  vdye@github.com,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 2/3] for-each-ref: add 'is-base' token
-In-Reply-To: <13341e7e51241e077a85ea83eb76d4e48d04be7b.1723397687.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Sun, 11 Aug 2024
-	17:34:46 +0000")
-References: <pull.1768.git.1722550226.gitgitgadget@gmail.com>
-	<pull.1768.v2.git.1723397687.gitgitgadget@gmail.com>
-	<13341e7e51241e077a85ea83eb76d4e48d04be7b.1723397687.git.gitgitgadget@gmail.com>
-Date: Mon, 12 Aug 2024 14:05:40 -0700
-Message-ID: <xmqqsev9zc2j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 486B4209C4;
+	Mon, 12 Aug 2024 21:05:44 +0000 (UTC)
+Date: Mon, 12 Aug 2024 21:05:42 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: ArcticLampyrid <ArcticLampyrid@outlook.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: SIGSEGV Error Occurs When Attempting to Unbundle Without
+ Initializing Git Repository.
+Message-ID: <Zrp5JnsVHbqs4TyN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>,
+	ArcticLampyrid <ArcticLampyrid@outlook.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <TYWP301MB0563973ECA440E7DAF0F7E89C4852@TYWP301MB0563.JPNP301.PROD.OUTLOOK.COM>
+ <20240812114733.GA3732689@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A2E56E4E-58EE-11EF-982F-E92ED1CD468F-77302942!pb-smtp21.pobox.com
-
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> +is-base:<committish>::
-> +	In at most one row, `(<committish>)` will appear to indicate the ref
-> +	that is most likely the ref used as a starting point for the branch
-> +	that produced `<committish>`. This choice is made using a heuristic:
-> +	choose the ref that minimizes the number of commits in the
-> +	first-parent history of `<committish>` and not in the first-parent
-> +	history of the ref.
-
-Very nicely described.  
-
-Giving the end-user oriented "purpose/meaning" first makes it easier
-to understand for readers when they want to use it, and giving the
-heuristics to compute the result (and the example) next allows them
-to verify that the feature matches what they are looking for.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="P1SafgcKYX4UyXGl"
+Content-Disposition: inline
+In-Reply-To: <20240812114733.GA3732689@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> @@ -2475,6 +2495,16 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  				v->s = xstrdup("");
->  			}
->  			continue;
-> +		} else if (atom_type == ATOM_ISBASE) {
-> +			if (ref->is_base && ref->is_base[is_base_atoms]) {
-> +				v->s = xstrfmt("(%s)", ref->is_base[is_base_atoms]);
-> +				free(ref->is_base[is_base_atoms]);
-> +			} else {
-> +				/* Not a commit. */
+--P1SafgcKYX4UyXGl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is unexpected.  I thought that most of the branches except at
-most one that gets annotated with "Yeah, this is forked from branch
-B" would take the "else" side.  They are still commits, no?
+On 2024-08-12 at 11:47:33, Jeff King wrote:
+> So one option is to just do that check earlier. But that leaves other
+> sub-commands of "git bundle":
+>=20
+>   - "create" likewise requires a repo, and seems OK. That makes sense
+>     since we're not reading anything.
+>=20
+>   - "verify" requires a repo, which I wouldn't have expected, but I
+>     guess it's because we probably unbundle under the hood to walk.
+>     Anyway, it gets the ordering right here and checks the repo before
+>     opening the bundle.
+>=20
+>   - list-heads doesn't require a repo, and segfaults. So it really does
+>     need some kind of detection or default to know which hash to use.
 
-> +				v->s = xstrdup("");
-> +			}
-> +			is_base_atoms++;
-> +			continue;
->  		} else
->  			continue;
->  
-> @@ -2876,6 +2906,7 @@ static void free_array_item(struct ref_array_item *item)
->  		free(item->value);
->  	}
->  	free(item->counts);
-> +	free(item->is_base);
->  	free(item);
->  }
->  
-> @@ -3040,6 +3071,49 @@ void filter_ahead_behind(struct repository *r,
->  	free(commits);
->  }
->  
-> +void filter_is_base(struct repository *r,
-> +		    struct ref_format *format,
-> +		    struct ref_array *array)
-> +{
-> +	struct commit **bases;
-> +	size_t bases_nr = 0;
-> +	struct ref_array_item **back_index;
-> +
-> +	if (!format->is_base_tips.nr || !array->nr)
-> +		return;
-> +
-> +	CALLOC_ARRAY(back_index, array->nr);
-> +	CALLOC_ARRAY(bases, array->nr);
-> +
-> +	for (size_t i = 0; i < array->nr; i++) {
-> +		const char *name = array->items[i]->refname;
-> +		struct commit *c = lookup_commit_reference_by_name(name);
-> +
-> +		CALLOC_ARRAY(array->items[i]->is_base, format->is_base_tips.nr);
-> +
-> +		if (!c)
-> +			continue;
+If the bundle is v2, it's SHA-1.  If the bundle is v3, then it should
+have a an @object-format=3D header, which is sufficient to set the hash
+algorithm.  The default for v3 is still SHA-1, but we have never emitted
+a v3 bundle without an object-format header (except for maybe a commit
+or two somewhere in the history).
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Hmph, wouldn't we want to leave array->items[i]->is_base NULL if
-"name" looked up to "c" happens to be non-commit (i.e. NULL)?
+--P1SafgcKYX4UyXGl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +		back_index[bases_nr] = array->items[i];
-> +		bases[bases_nr] = c;
-> +		bases_nr++;
-> +	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZrp5JQAKCRB8DEliiIei
+gaDJAQDtfdw6DS235Gb4jU5aS2r0jPl0q1yajAGtdSNt2PCDAwD/XZQy+F0DUOuy
+ce/0uQsewFn1nchI7NNyg3mcBiKFngk=
+=6TUL
+-----END PGP SIGNATURE-----
 
-Thanks.
+--P1SafgcKYX4UyXGl--
