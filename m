@@ -1,77 +1,95 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981491757E
-	for <git@vger.kernel.org>; Sun, 11 Aug 2024 23:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356683FD4
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:00:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723420595; cv=none; b=Crt+oqOMSdUecZGTCWFaXQWMn4zcXxYU03KkMWOuzjqeJn7dx7UFaHbcIBjkcD0vKS5m5wEG4Kg+taTCIqrkQV0WY9RQwpxZAIrhq0IxVp5TcgEYGY3HRHg2UltmalTzAfbqYdptgvyAmQmYEQpNHkjK9nGXEleTSsNKQ8C8bo4=
+	t=1723428026; cv=none; b=tzFOByuxaX8i34kIIaX9Gfl3Mlw9ECQqJNgDI9X0yBi23JY6L7FdGKHyzLPRhql6upeK4TT6jmv/BCs1QmtvIYfcs3UamqEJgAYigPVj8RgJs++5OL1iFW2N0jo8/faeO69n/uWMOSzEfUTf5Tzncq21gZfC8EAb547Oj163Tmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723420595; c=relaxed/simple;
-	bh=yKEwf1OMN8CG9mE931gNv9BTGLRluaoMuuTBTgZSKUw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IHpyXc59fFZCoDMTusVP9g+IT1sfWfEGrTxLCU6QIjbmrF99YnVh7/chPMtGekChomsTnXrAzy0RbgeCUx6PlFTvAWV1H1hkCTLAHzrgc+PiHgDhTw5HLdxFI43qxfVVummy//K6ruVqkTrSiKxn5NzHYTFfLe6QqG5T0lq7ddo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-822eb80f6e4so1273066241.2
-        for <git@vger.kernel.org>; Sun, 11 Aug 2024 16:56:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723420592; x=1724025392;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c1IA6I+9ZT8/KrjWhizjPqoN+bmdLEOimFLQj/SXR/Y=;
-        b=eCuFBgN6aB/UHofA7nXLh9YVCuJACtFW4ZFaBbj0iDVKDGCROsUMmWd+D/5l6/8pqD
-         ReUxCCmAnv6nAlIPiRrS7SMAMNobQhIiQkq5xOkqnpsBOu7YmbarJ2wyPNyeGs8mt6qr
-         Dh4WPYuuRgjIBVZcrzCzSbEKGxpZL/7k5VnOOqMq/Ro46NUJBCg5/2TOl+itCV6zJUFs
-         eI/zeqjYk2QKfhmrJjYCsZOwK9K4aCsfUXtXkD7bH5E2t0Offp4gF8JhZPY7AxkN5/wU
-         KDpgJCZl4lxqkLxrlxThRZD79KUmrDVIbJSJcXwCXysx9gXu5yVvlf7QJ8cGBrXOX4h5
-         HL7Q==
-X-Gm-Message-State: AOJu0YyP9IW26tX5sK5HmuqKCAPsKLMcyQX/odRubXjF9XrG6a2YScGj
-	1rogK9kJNGS/T41Imdtt/bhXc/HLr3kIJ06Rq1jgwFkRLqhIMGo0wekDYEeM3bovI9+pHdMpxyP
-	VQ/ZMcoGvGAOdgqFV3Gviq3RkOHnhCg==
-X-Google-Smtp-Source: AGHT+IHRYi64I5Gzf7ZmoUL0l5nPdcKMHWveDXfpnDg/wOJz3qcGTSPDkt41zLeUtyXkIkWnTkt5mz/FlEBR84BHSSY=
-X-Received: by 2002:a05:6102:54a6:b0:492:9e3a:9f48 with SMTP id
- ada2fe7eead31-495d83cd655mr7905370137.2.1723420592388; Sun, 11 Aug 2024
- 16:56:32 -0700 (PDT)
+	s=arc-20240116; t=1723428026; c=relaxed/simple;
+	bh=lecQgEl6ptoU5799oV6Jkgmz6zOMAlWNixYo6SCbd/k=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SGLjRFBL+A5hu7eNxh9iMYsOFaJurysSE3DfCLLfgZiQId6WNKhoID0+OeZspYwO3h+/AwPSoK0gqJzICbz87fMXAlw9LxT3KkeRVqGPY2ZHRelny1AY3SY1NqoLnqOeGilfUpbga2eyXS7vJfe+fZ1Nl/HhMnmNs3sTV+3hj6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 47C208bk1350016
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 02:00:09 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Josh Steadmon'" <steadmon@google.com>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>,
+        <calvinwan@google.com>, <spectral@google.com>,
+        <emilyshaffer@google.com>, <emrass@google.com>
+References: <cover.1723054623.git.steadmon@google.com> <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com> <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net> <0a4601dae912$68d8e920$3a8abb60$@nexbridge.com> <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
+In-Reply-To: <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
+Subject: RE: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for libgit.a
+Date: Sun, 11 Aug 2024 22:00:03 -0400
+Organization: Nexbridge Inc.
+Message-ID: <02a101daec5b$5c76ce80$15646b80$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
- <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com> <92f3121cf4e719d1bd6f85e3af454a3ea7547930.1723389612.git.gitgitgadget@gmail.com>
-In-Reply-To: <92f3121cf4e719d1bd6f85e3af454a3ea7547930.1723389612.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 11 Aug 2024 19:56:21 -0400
-Message-ID: <CAPig+cSGeExca0d=o0jewFERTx30+EgR5HccTO_gOsKtnXxuwA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] doc: update the guidelines to reflect the current
- formatting rules
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFCbSOmiEaObceWJ7X+ogZKpSpqSAGPn9K4AelD3ekBSZ9iqwHkOcN8sx6mWiA=
+Content-Language: en-ca
 
-On Sun, Aug 11, 2024 at 11:20=E2=80=AFAM Jean-No=C3=ABl Avila via GitGitGad=
-get
-<gitgitgadget@gmail.com> wrote:
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> ---
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
-nes
-> @@ -746,70 +746,72 @@ Markup:
->   When literal and placeholders are mixed, each markup is applied for
-> + each sub-entity. If the formatting is becoming too hairy, you can use t=
-he
-> + s:["foo"] formatting macro and let it format the groups for you.
-> +   `--jobs` _<n>_ or s:["--jobs <n>"]
-> +   s:["--sort=3D<key>
-> +   s:["<directory>/.git"]
-> +   s:["remote.<name>.mirror"]
-> +   s:["ssh://[<user>@]<host>[:<port>]/<path-to-git-repo>"]
-> +
-> +Note that the double-quotes are required by the macro.
+On Wednesday, August 7, 2024 7:08 PM, Josh Steadmon wrote:
+>On 2024.08.07 17:40, rsbecker@nexbridge.com wrote:
+>> On Wednesday, August 7, 2024 5:21 PM, brian m. carlson wrote:
+>> >On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
+>> >> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to
+>> >> call functions in libgit.a. This initial patch defines build rules
+>> >> and an interface that exposes user agent string getter functions as
+>> >> a proof of concept. A proof-of-concept library consumer is provided
+>> >> in contrib/cgit-rs/src/main.rs. This executable can be run with
+>> >> `cargo run`
+>> >>
+>> >> Symbols in cgit can collide with symbols from other libraries such
+>> >> as libgit2. We avoid this by first exposing library symbols in
+>> >> public_symbol_export.[ch]. These symbols are prepended with "libgit_"
+>> >> to avoid collisions and set to visible using a visibility pragma.
+>> >> In build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also
+>> >> contains libgit.a and other dependent libraries, with
+>> >> -fvisibility=hidden to hide all symbols within those libraries that
+>> >> haven't been exposed with a visibility pragma.
+>> >
+>> >I think this is a good idea.  It's optional and it allows us to add
+>> >functionality as we go along.  Platforms that don't have Rust can just
+omit
+>building it.
+>> >
+>> >> +[dependencies]
+>> >> +libc = "0.2.155"
+>> >
+>> >I don't love that we're using libc here.  It would be better to use
+>> >rustix because that provides safe APIs that are compatible with
+>> >POSIX, but I think for now we need this because rustix doesn't offer
+>> >memory management like free(3).  I'd really prefer that we didn't
+>> >have to do memory management in Rust, but maybe that can come in with a
+>future series.
+>>
+>> This is a good point. Libc is not portable, but because I can't build
+>> with RUST anyway, I hope that libc is restricted to this facility if
+>> used. It should not be included in the git C build. It is probably
+>> moot for me anyway for this series, but I have to mention it in case
+anyone else
+>gets the idea to include it as a dependency for git C.
+>
+>I know you don't have access to Rust, but would you be able to test the
+symbol
+>visibility steps with `make contrib/cgit-rs/libcgit.a`?
 
-The closing `"]` is missing from the --sort example. Is that intentional?
+This target is no longer valid. Is there another target I can try?
+
