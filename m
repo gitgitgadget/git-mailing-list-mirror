@@ -1,95 +1,88 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356683FD4
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:00:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4964D8CE
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 05:17:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723428026; cv=none; b=tzFOByuxaX8i34kIIaX9Gfl3Mlw9ECQqJNgDI9X0yBi23JY6L7FdGKHyzLPRhql6upeK4TT6jmv/BCs1QmtvIYfcs3UamqEJgAYigPVj8RgJs++5OL1iFW2N0jo8/faeO69n/uWMOSzEfUTf5Tzncq21gZfC8EAb547Oj163Tmc=
+	t=1723439856; cv=none; b=gWj7IfOY3bMZF+5KKB2RLvZNFMWLwFaga+cFscJpqnmXkc5n/bxFYphL3Eiu2y70krWlWQt5avbEZxzjz02MCxogPEgBkGwllAtiKt9KqHKshPT8B2MiIsFmZWdS7MCZwPNWpd3UVw9RY47X9GCarKAN/RHUlhtlqoyfvoq7t9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723428026; c=relaxed/simple;
-	bh=lecQgEl6ptoU5799oV6Jkgmz6zOMAlWNixYo6SCbd/k=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SGLjRFBL+A5hu7eNxh9iMYsOFaJurysSE3DfCLLfgZiQId6WNKhoID0+OeZspYwO3h+/AwPSoK0gqJzICbz87fMXAlw9LxT3KkeRVqGPY2ZHRelny1AY3SY1NqoLnqOeGilfUpbga2eyXS7vJfe+fZ1Nl/HhMnmNs3sTV+3hj6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 47C208bk1350016
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Aug 2024 02:00:09 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Josh Steadmon'" <steadmon@google.com>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>,
-        <calvinwan@google.com>, <spectral@google.com>,
-        <emilyshaffer@google.com>, <emrass@google.com>
-References: <cover.1723054623.git.steadmon@google.com> <9a846c17c891e17566a9907b3627210a6a08ea76.1723054623.git.steadmon@google.com> <ZrPlQRAGQDMnVGjo@tapette.crustytoothpaste.net> <0a4601dae912$68d8e920$3a8abb60$@nexbridge.com> <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
-In-Reply-To: <zrbylipleb7fd7jrlnsampufeiuyiw2suwvd3tuxqoukhz6h52@dnjr7urrwzn3>
-Subject: RE: [RFC PATCH 3/6] contrib/cgit-rs: introduce Rust wrapper for libgit.a
-Date: Sun, 11 Aug 2024 22:00:03 -0400
-Organization: Nexbridge Inc.
-Message-ID: <02a101daec5b$5c76ce80$15646b80$@nexbridge.com>
+	s=arc-20240116; t=1723439856; c=relaxed/simple;
+	bh=hYRp1dbShvko8tePm9Zv8hoWxFZBDrmn06c4so9/CAE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LhDYyXmmPCebCRjVTVe6aEKfhKPKLkd99GHJQNBsL3Z7m4xl4Rq00/0GZ3NMsFYd7SVR0dmj+yR5pceAtCfskynbOyQR6XUuuV811LGZF1HTCJhFD4Wlz1kICsau7Esl/H2zHzButprAyS0dtLCQ1/x3Xf4qrXsRGrJjE4jzCwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ag26YaM1; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ag26YaM1"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EED0372A7;
+	Mon, 12 Aug 2024 01:17:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=hYRp1dbShvko8tePm9Zv8hoWxFZBDrmn06c4so
+	9/CAE=; b=Ag26YaM1PPJL1uDuKdIDcRLeL/ua1l1+FF8mk66zE2TZGjtLPo6mdk
+	qKeEqquvPGPZYmrd/m7KvpHJd+sQBbm4Cb/IlXF3dQcWWFobzPN0LtZBRmPj0fJZ
+	TfdXHyRepZmyjcG4KFk7IYX+hhGalcnroHDjNQc79prJztkHI8wHI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 05747372A6;
+	Mon, 12 Aug 2024 01:17:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F303372A5;
+	Mon, 12 Aug 2024 01:17:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,  blanet <bupt_xingxin@163.com>,  Xing
+ Xin <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH 2/2] remerge-diff: clean up temporary objdir at a
+ central place
+In-Reply-To: <xmqqr0ax9vlk.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	09 Aug 2024 15:31:35 -0700")
+References: <xmqqv8099vms.fsf@gitster.g> <xmqqr0ax9vlk.fsf@gitster.g>
+Date: Sun, 11 Aug 2024 22:17:26 -0700
+Message-ID: <xmqqbk1y8gm1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFCbSOmiEaObceWJ7X+ogZKpSpqSAGPn9K4AelD3ekBSZ9iqwHkOcN8sx6mWiA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2A77DF7A-586A-11EF-BDC8-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wednesday, August 7, 2024 7:08 PM, Josh Steadmon wrote:
->On 2024.08.07 17:40, rsbecker@nexbridge.com wrote:
->> On Wednesday, August 7, 2024 5:21 PM, brian m. carlson wrote:
->> >On 2024-08-07 at 18:21:28, Josh Steadmon wrote:
->> >> Introduce cgit-rs, a Rust wrapper crate that allows Rust code to
->> >> call functions in libgit.a. This initial patch defines build rules
->> >> and an interface that exposes user agent string getter functions as
->> >> a proof of concept. A proof-of-concept library consumer is provided
->> >> in contrib/cgit-rs/src/main.rs. This executable can be run with
->> >> `cargo run`
->> >>
->> >> Symbols in cgit can collide with symbols from other libraries such
->> >> as libgit2. We avoid this by first exposing library symbols in
->> >> public_symbol_export.[ch]. These symbols are prepended with "libgit_"
->> >> to avoid collisions and set to visible using a visibility pragma.
->> >> In build.rs, Rust builds contrib/cgit-rs/libcgit.a, which also
->> >> contains libgit.a and other dependent libraries, with
->> >> -fvisibility=hidden to hide all symbols within those libraries that
->> >> haven't been exposed with a visibility pragma.
->> >
->> >I think this is a good idea.  It's optional and it allows us to add
->> >functionality as we go along.  Platforms that don't have Rust can just
-omit
->building it.
->> >
->> >> +[dependencies]
->> >> +libc = "0.2.155"
->> >
->> >I don't love that we're using libc here.  It would be better to use
->> >rustix because that provides safe APIs that are compatible with
->> >POSIX, but I think for now we need this because rustix doesn't offer
->> >memory management like free(3).  I'd really prefer that we didn't
->> >have to do memory management in Rust, but maybe that can come in with a
->future series.
->>
->> This is a good point. Libc is not portable, but because I can't build
->> with RUST anyway, I hope that libc is restricted to this facility if
->> used. It should not be included in the git C build. It is probably
->> moot for me anyway for this series, but I have to mention it in case
-anyone else
->gets the idea to include it as a dependency for git C.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> After running a diff between two things, or a series of diffs while
+> walking the history, the diff computation is concluded by a call to
+> diff_result_code() to extract the exit status of the diff machinery.
 >
->I know you don't have access to Rust, but would you be able to test the
-symbol
->visibility steps with `make contrib/cgit-rs/libcgit.a`?
+> The function can work on "struct diffopt", but all the callers
+> historically and currently pass "struct diffopt" that is embedded in
+> the "struct rev_info" that is used to hold the remerge_diff bit and
+> the remerge_objdir variable that points at the temporary object
+> directory in use.
+>
+> Redefine diff_result_code() to take the whole "struct rev_info" to
+> give it an access to these members related to remerge-diff, so that
+> it can get rid of the temporary object directory for any and all
+> callers that used the feature.  We can lose the equivalent code to
+> do so from the code paths for individual commands, diff-tree, diff,
+> and log.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-This target is no longer valid. Is there another target I can try?
-
+I forgot to add that I am not happy with this "centralized tear
+down" step, even though I am reasonably happy with the "lazy set-up"
+step.  I wonder why the remerge-diff related members have to exist
+in the rev_info structure in the first place, instead of being in
+the diffopt structure?  Moving them to diffopt may make the end
+result much more pleasant to read.
