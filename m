@@ -1,105 +1,102 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3648183CD4
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 16:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A3B187840
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 16:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478963; cv=none; b=VhIF5zsRtWW6XV6QVXjxBNsueeKLEYP2CUN6QAivVyz5K153ZP1O9M0cSrd/mpOOiYoJHdqLzqfIDJ0abYZl/TRE+5cqfB8drUX8mWvEr/m1lbRESWyfjuQkMnp8chEwieoEKNoYwzqgJFmU2IG2nBD1VbHb1/oRUrYlYLl/e7Y=
+	t=1723481914; cv=none; b=n9UUCohBkIrjtvBycha5tzTaq6MQa4rG0GDukcn+yI7LWqoHEh4x1v0U97giV+ceyP8CwUpX/oGNvHGZllBQDrYFHONOGQe0mwAM2lxmhTL86dxq3tB/7XPsZclFPcCG1TE8o6qvgR4BXPJRw2F9Ub+F7/sozy3b7/mmp4HBSfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478963; c=relaxed/simple;
-	bh=1LMuuJLl9zW7nxI/iqWSiESC9rDw2Tdg3vAllPWpwmA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B7Vwz9nHlSAhb/18x02P/KP6LZOxGMiWh1SVG2KfGeHtnAB94GFGSJl3qjR+Hzvi/WxmoSEsH4oQv+0hFrFYuJtc2wzOZS6wkiy5IA9nT8vjL1ASfFiMfoDlUQbCJX8/Jh28TnobNJ4mtCT6MSfQmeINUWQMua99F92O9SXTKkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=i4Pvvz/l; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723481914; c=relaxed/simple;
+	bh=7d1BU0VSGwykTS462FYTf76TfKy7EIYTwNVtCzCoiSY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=i1oJyrv1iLVD9rJluwd3EHxdnc9PewzwdZtxuwtwWhXtUU+4xFQevvTI+7JOGdT61jWnab9n8mufigCODsjHlMn1cc/tt3b/MBLpAuia+wUecoE4tlwq+Tq3cfT+QCqosdiCdug4E8X4WFJZ2JmIrpeJukKRgIwz/kgi/yThbDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UbfjTBCF; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i4Pvvz/l"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FB782B654;
-	Mon, 12 Aug 2024 12:09:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1LMuuJLl9zW7
-	nxI/iqWSiESC9rDw2Tdg3vAllPWpwmA=; b=i4Pvvz/lbIvAytOZei99bEIYsm45
-	Me3rOaV1x1jMEefXDkjKLUkMWNbDamRl4I/Z7knHSfMTJoR4BR3eOuL0xI9woWE0
-	eRYUiZq5brxq/YlSBCVGlBeOZXynFjeyfr2UZRcCqPR798p/b7JPiJ2xGUPYqCFj
-	s1U+3XyphF45EVg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 63F6C2B653;
-	Mon, 12 Aug 2024 12:09:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CCB1B2B652;
-	Mon, 12 Aug 2024 12:09:17 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Tan <jonathantanmy@google.com>,  =?utf-8?B?6Z+p5Luw?=
- <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [External] Re: [PATCH 1/1] revision: don't set parents as
- uninteresting if exclude promisor objects
-In-Reply-To: <CAG1j3zEQh3xujrU3tGOftwvCZ+d9RjvMHw8v4W3dqd3DsiGCUQ@mail.gmail.com>
-	(=?utf-8?B?IumfqeS7sCIncw==?= message of "Mon, 12 Aug 2024 20:34:27 +0800")
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-	<20240802073143.56731-2-hanyang.tony@bytedance.com>
-	<xmqq4j82euvr.fsf@gitster.g>
-	<CAG1j3zEQh3xujrU3tGOftwvCZ+d9RjvMHw8v4W3dqd3DsiGCUQ@mail.gmail.com>
-Date: Mon, 12 Aug 2024 09:09:16 -0700
-Message-ID: <xmqqo75x67v7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UbfjTBCF"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5320d8155b4so1462114e87.3
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723481910; x=1724086710; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UVXQr2LzxTXIaQHVxsdr6zPMrImZTMZcgrnEqtZIIjY=;
+        b=UbfjTBCFK3VkhXVh5YHOnyy2k0pcFcClBH5A1Vn47SQzKaG/w2i6qXDCdDRrfN/yS1
+         gaYg+cve6V3LenqCOqu2klxL2GQ0Ql2ayF7oZFKqSuZUxNn6UbNii6pO4xJ43dGeGYZj
+         sU47Jej716Pc5fqPM0T92z2KVhlzWXi/xxDxHqiuFT4xEVki7mRzihimqi6zBQpu4Kwk
+         HHbuS9UIMXujYD6nT/2/QmYE6mQF6ak5huIoO5y/7gHsMkeOW6Kb7f26HhhsRtXlqlNJ
+         uZ2/34Wojl/+IhChUyV3MmeGCb2NpBiu0hNGjVUmyo4Onhjlw7dFW2p2x9EChHcj5IW+
+         CqrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723481910; x=1724086710;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UVXQr2LzxTXIaQHVxsdr6zPMrImZTMZcgrnEqtZIIjY=;
+        b=U6EjMnuGrhpFkQNW6cClt5a1VGs/IZuD1CHlUXMTLf38ghWbcMI952GNOISFDfoaZI
+         PHDBsCLuT8CtiUitYu/9TCVzx+Or7EGSU4oIRjmKPRjDZtY2Ala7e4PJkslXr8lyr/gL
+         eHOsPCExPwFuds0DsR2C5NvWSRy5RVD5nN2wXO21c55pQC7//FRwNt3/CNjlS7UVBp2R
+         ZpsMKPqVl+utp5fbN7hARyrU8HwXSXQ+xtuDYHy/0dVmCBe2w4Wd8rlagXqjWd7t96uK
+         P38kGWamtQqjl4lyrUo8Powj6L3Lhj1VLE+XGk712AkAHpuhqmacnV+lcu5w9wzetcSL
+         B3hw==
+X-Gm-Message-State: AOJu0Yz8clCNvZzCux/cR7Ucq7aQBJAMc22uyYEnmWqh7hAyXAbUpW1U
+	ldrTYm09X2YknTnBjfy8vJVsc/qmA5Inu3TotLV10N2rBs78Wfdqjc4+Sw==
+X-Google-Smtp-Source: AGHT+IFCRGOsmn7Hg+79kOPZMiPp4nXC9LaOwLo9NsmyPcFZKtaOMlzltJNZc/d1F5A39oKbgNrIsw==
+X-Received: by 2002:a05:6512:1316:b0:52e:9f76:53dc with SMTP id 2adb3069b0e04-532135acecemr659594e87.0.1723481910100;
+        Mon, 12 Aug 2024 09:58:30 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53200f428b3sm806058e87.288.2024.08.12.09.58.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Aug 2024 09:58:29 -0700 (PDT)
+Message-Id: <pull.1747.v3.git.git.1723481908.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
+References: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
+From: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Aug 2024 16:58:25 +0000
+Subject: [PATCH v3 0/3] git-svn: use svn:global-ignores when creating .gitignores
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 3A1CC4BC-58C5-11EF-915A-BF444491E1BC-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Alex Galvin <agalvin@comqi.com>
 
-=E9=9F=A9=E4=BB=B0 <hanyang.tony@bytedance.com> writes:
+Git-SVN does not currently use the svn:global-ignores property added in
+Subversion 1.8 when showing or creating .gitignore files. This causes
+Git-SVN to track files that are ignored by this directive in Subversion.
 
-> Thanks, I agree process_parents() isn't the right place to fix the issu=
-e.
->
->> It apepars to me that its approach to exclude the objects that
->> appear in the promisor packs may be sound, but the design and
->> implementation of it is dubious.  Shouldn't it be getting the list
->> of objects with get_object_list() WITHOUT paying any attention to
->> --exclude-promisor-objects flag, and then filtering objects that
->> appear in the promisor packs out of that list, without mucking with
->> the object and commit traversal in revision.c at all?
->
-> The problem is --exclude-promisor-objects is an option in revision.c,
-> and this option is used by pack-objects, prune, midx-write and rev-list=
-.
-> I see there are two ways to fix this issue, one is to remove the
-> --exclude-promisor-objects from revision.c, and filter objects in show_=
-commit
-> or show_objects functions. The other place to filter objects is probabl=
-y
-> in revision walk, maybe in traverse_commit_list?
+The following patches add svn:global-ignores to the list of public svn
+properties, and update git svn show-ignore and git svn create-ignore to use
+this attribute (as well as svn:ignore).
 
-Perhaps another simpler approach may be to use is_promisor_object()
-function and get rid of this initial marking of these objects in
-prepare_revision_walk() with the for_each_packed_object() loop,
-which abuses the UNINTERESTING bit.  The feature wants to exclude
-objects contained in these packs, but does not want to exclude
-objects that are referred to and outside of these packs, so
-UNINTERESTING bit whose natural behaviour is to propagate down the
-history is a very bad fit for it.  We may be able to lose a lot of
-existing code paths that say "if exclude_promisor_objects then do
-this", and filter objects out with "is_promisor_object()" at the
-output phase near get_revision().
+Alex Galvin (3):
+  git-svn: add public property `svn:global-ignores`
+  git-svn: use `svn:global-ignores` to create .gitignore
+  git-svn: mention `svn:globalignores` in help
 
-Jonathan, if I am not mistaken, this is almost all your code.  Any
-insights to lend us, even though you may not be very active around
-here lately?
+ git-svn.perl    | 49 +++++++++++++++++++++++++++++++++----------------
+ perl/Git/SVN.pm |  2 +-
+ 2 files changed, 34 insertions(+), 17 deletions(-)
 
-Thanks.
+
+base-commit: c2b3f2b3cdbf5ad9feb978dd367d77561a1271f7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1747%2Fav-gal%2Fgit-svn-global-ignores-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1747/av-gal/git-svn-global-ignores-v3
+Pull-Request: https://github.com/git/git/pull/1747
+
+Range-diff vs v2:
+
+ 1:  002750ea47a = 1:  002750ea47a git-svn: add public property `svn:global-ignores`
+ 2:  7735afb32af = 2:  7735afb32af git-svn: use `svn:global-ignores` to create .gitignore
+ -:  ----------- > 3:  18dffbe992e git-svn: mention `svn:globalignores` in help
+
+-- 
+gitgitgadget
