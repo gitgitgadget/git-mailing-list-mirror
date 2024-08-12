@@ -1,122 +1,78 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E030C53370
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 14:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7A5186E5C
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 14:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723474255; cv=none; b=G0SCR8C5VN4G9AF5BCzf8UDnQVY7yxFRknedWKX1aoDvleuxAN0RUBEfVpu0se1XeRQo9jo5OTo0pnQFs9g4Q+iY16mY7mPWwi/ZFweL+ny2XP9HDdRTHzaHUZV/AVp1zqPK2wBkETAp0nokJFslx/3JaHdiAzlqpTLCnoH9gfs=
+	t=1723474757; cv=none; b=h0jzX+fvEEiGXRul5LiVZoVXGiOKsBM5aU1cc9eadHheNRuUbvnaZ+jNJqyuFOL445uoRwoHV9J/1voLJTJBtU0xqV/UPUpZzXvrUO6m3M8kslcfY7ldzVMFTW5XyrvgtgYiDkO6+880yiZFa2z0DREOeenKb+pRMaywxGD+liU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723474255; c=relaxed/simple;
-	bh=l5h8hSodUv9HK3gw3MaOJt4HsrnNJWmu05Qi/zDKrgI=;
+	s=arc-20240116; t=1723474757; c=relaxed/simple;
+	bh=fSwWdfqPiagHlA5WjqSZY+MLUFV/P3X/qX0JNoEpFFs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RPC0h58tx8xzBLkt/Eb7H5MTr4/4++PMd0ixVkBwVe4dvcyDoDI8H+qrovz2goCeS7RePpLMpBr4z2/m7ntuK81BExiXydCp+7wEPfIIV8R7BEzSY9uZ+oUDPUc2jUbDEPb6Rx8ZOqd/p1wh4N1oMXl6n0AkXFtbVvvfdC/LrO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLryiAyj; arc=none smtp.client-ip=209.85.218.43
+	 To:Cc:Content-Type; b=t9/tBvrJv8PAT+KM7teibTSLeE1FFj5IMpEg6E/0rAoZvn5q9NSVq1mvwEHhH3G8ql5G3gpR7Hmjq7UKIZK5IxuGKqPWc7DlGq63byeUokgo9GDs3oul3f6KdCiGAsSPLgWlOouSruPaPQckB/JyamLs8AfLkzTIzl9UGYkEs6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOYYZ5qk; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLryiAyj"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7d2a9a23d9so484039866b.3
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 07:50:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOYYZ5qk"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a7aa4bf4d1eso532514966b.0
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 07:59:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723474252; x=1724079052; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723474754; x=1724079554; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZhNuXOsaZXhFDADw38+xrjX4Eia5FNcaNpPHQ3A9ykY=;
-        b=KLryiAyj1kDlWiVOD1WghK268PjgenavoM3U2LnekhYjGGtUkclx1eFIJUo4hGET56
-         AXbg10ZodSOGENn/SI8ZTNqQw5Z7tfTsbwraU28WRWGx4rUucd7Ek8DqMG6Po2oRdNXV
-         QUlm7wsEfJS/Z+NQe7HCpOTHzULmth1xYCcJKeRRAQQnpQzeEVP91/ITahzshoGtlpT4
-         MkqM9Nx+domyUc1kI5a/vWbvMgCWGuWBTuGe5qNvEdtapX6Vl7uIHGpu8vsHPtlE2DM6
-         7mz5K7T9fMHaqEfn2j8Ch/TN4UOS4AU1qUA48j6XNKb5y0uJFUe7Woh1TJoKzxuNS9/j
-         uaKg==
+        bh=fSwWdfqPiagHlA5WjqSZY+MLUFV/P3X/qX0JNoEpFFs=;
+        b=HOYYZ5qkcRaEP0cJqwCfm2D6DemsQ90S6ru1Sfup3TKJdFNzEDNA0vjntikcO0vujx
+         +m+5bRpAZut47oijosle3gima35ZoMl6piyJDk4bNtNeUS0sxPCWNTrTyCyp5QVkCvci
+         +6kQJowi78iwjqnfXhmZ3zvm+VwyvX2QpZB8dPbMa+jq1f+cxA5qzFm8hWj8qjoiAZb2
+         IKT8mYe3RptnLFx4KMST85URXcEvL3jS+YC3NL+Xkxw8W51A4Bn8uSYYDP4KOvMVnR0z
+         K/JJEpJ128ECg+Ymcy8hZ1vgEBwtyenu8dizbnMB6XhSDfjxuVmkcw+YFG0DR6LF8VO4
+         m0vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723474252; x=1724079052;
+        d=1e100.net; s=20230601; t=1723474754; x=1724079554;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZhNuXOsaZXhFDADw38+xrjX4Eia5FNcaNpPHQ3A9ykY=;
-        b=Ib9JDFN+g5t/efX7s+umA1etmEBC9zfPC8WW5D3+16sFsjqmggIfQrFlJE3Bbe2eb3
-         cIr+9bcukKQ2KQTYODYBQrOwZYiHaYiY2FfaJ0pN1fszWC4LkaJSqtmuai7439Rsz0B/
-         uKv24uBb4QUy6r2ms1/CxJa5LXy5rDsXhY4mY2Nc+Kzfpjj1c5t/tq2vHwRd6mcfXwPV
-         i7h/VljeNeLa/6/kASt3xu7GGP4ACZpVWIkHgAN4j/7ub9MUSlTD1AEprRGBd54lSzPT
-         WSzs+9wjFSlUXKARzV6s6apxBzQAaWjs2lZgNZ6uB1928pdGVKMeCN228BKXIpqyxm81
-         K9Aw==
-X-Gm-Message-State: AOJu0YzFibMy4ricxOwOy3tgGGjZiXbQLivAmPAx5XepDXrnwinFvgT6
-	uNYM7erB/RVdJw1bv+rRE22IzDJVyBc9cUQAdzUq7gdSeV1RatMcpRH68dv65aCKWO3eobt9czN
-	LeHcT4dkzIC8+DlYoZyoUy35knwE=
-X-Google-Smtp-Source: AGHT+IEu2NrP9Rfl00qf5LtctZrWr0xQ86MCwzdqDvGOp0z/uYsj4GXdWLrqBtpzfw+deyephUj0JP3lcIukAn7B/34=
-X-Received: by 2002:a17:907:1b05:b0:a7a:abd8:77a6 with SMTP id
- a640c23a62f3a-a80ecf8db89mr52511666b.0.1723474251915; Mon, 12 Aug 2024
- 07:50:51 -0700 (PDT)
+        bh=fSwWdfqPiagHlA5WjqSZY+MLUFV/P3X/qX0JNoEpFFs=;
+        b=GMtSxruj0WaHcpKZSZPFw510GJkj7HkJKAm4skU2LeRcoE6xDb1ypwD1vz5669xM4e
+         b2KqCt29/aoscTp/KUghJEAxKCcARUg/72WK2d+hSjeQ4Yd6zJj/rQT4SLO69kQLWWUW
+         FNtIeWunoq5TuAyev4qKmHw7xFBX1NSSaObgRDwCNifusn6qtSY3fJfLN8/KeiF2UINi
+         oC+mDDDd8mEFTpu/nT4uWpl+s6PqDPTbfkjG3wRRNZ6mawDyGcCEDNLMlmuzO07U1O3l
+         /Vv5xaOM2JsmGQevKKnyh+Q2NMJbQDjR7ZN6zMZQHfrjmc1B0Lr6JxxwI9xHQ5o4xfKY
+         j3qg==
+X-Gm-Message-State: AOJu0YzlP3tad5xto9+thrGSmHYtbpE936NtU8neSZbmOYw9x2RBQCy3
+	o1yS4K6WnvoSc6ufKzfUsko3pvdNovxSCEPgmIfVHc6rffQ8RT0WYgksHW46+D++TsqV2L6+k/C
+	XAWW+F5t+fuJC1e6LqdLo0myZh8TZ7A==
+X-Google-Smtp-Source: AGHT+IGhZPOaiPtVmZWxoptK1Db3J5UzEQ09xRgzd1+bsJGXYO3j8RhalmfrnWhuUedrLKcR3wlyBLgSqZ/H1HeA1RA=
+X-Received: by 2002:a17:907:9724:b0:a80:7193:bd93 with SMTP id
+ a640c23a62f3a-a80ed24bc1fmr38912066b.25.1723474753820; Mon, 12 Aug 2024
+ 07:59:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240807141608.4524-1-chandrapratap3519@gmail.com>
- <20240809111312.4401-1-chandrapratap3519@gmail.com> <20240809111312.4401-2-chandrapratap3519@gmail.com>
- <xmqqwmkpd0qs.fsf@gitster.g>
-In-Reply-To: <xmqqwmkpd0qs.fsf@gitster.g>
+References: <CA+J6zkRxnvnybM3vnPXX2YwpW1k-as03+A8kxiJoA8GrA4FSMg@mail.gmail.com>
+ <CA+J6zkQaV9o7eUaD2bshH7zEmF115BbYv_uCFctySQNMgGQc+g@mail.gmail.com>
+ <CA+J6zkRzM33MbMr4-U56M1SFLykx029+SzEeo8vBicBd9Xs8RQ@mail.gmail.com>
+ <CA+J6zkSFCUYLRTRE0Gwug4-fF9f9-YbfRz_atArmMLLCtQDr1g@mail.gmail.com>
+ <CA+J6zkSxcogPXdAdr7VL0B3MnQxQNYwOT5Kw2iK_YfPLW7CMcg@mail.gmail.com>
+ <CA+J6zkTyVDJcOoZC-thRAOYNudVWB1wgye0Ezj3o1AO_5HOS6A@mail.gmail.com>
+ <CA+J6zkQ7W=3+aqAHwzXzVM4-mZ9XpCkAfmP-GZ7T4i+i2Gi9aQ@mail.gmail.com>
+ <CA+J6zkRxpnQ0E-KK8-rRDfDJar=9TwmG18ZkiA+zcxaavwPoqA@mail.gmail.com> <CA+J6zkTQQoWq6MSuYArwOx7iVT0qFhFd+QOP0vvO1NVczcvEJw@mail.gmail.com>
+In-Reply-To: <CA+J6zkTQQoWq6MSuYArwOx7iVT0qFhFd+QOP0vvO1NVczcvEJw@mail.gmail.com>
 From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Mon, 12 Aug 2024 20:20:26 +0530
-Message-ID: <CA+J6zkRTRQ9o=CDgsFbJx5csjDxLfQC_E+dw+Csz3hp=_c8Ueg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] t: move reftable/readwrite_test.c to the unit
- testing framework
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
+Date: Mon, 12 Aug 2024 20:28:48 +0530
+Message-ID: <CA+J6zkS5VE7ogELJVso6AvuYR=6-jwnap=oPPEL2y1kd+1JpKQ@mail.gmail.com>
+Subject: Re: [GSoC] Blog: move and improve reftable tests in the unit testing framework
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 9 Aug 2024 at 23:42, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->
-> > reftable/readwrite_test.c exercises the functions defined in
-> > reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
-> > reftable/readwrite_test.c to the unit testing framework. Migration
-> > involves refactoring the tests to use the unit testing framework
-> > instead of reftable's test framework and renaming the tests to
-> > align with unit-tests' naming conventions.
-> >
-> > Since some tests in reftable/readwrite_test.c use the functions
-> > set_test_hash(), noop_flush() and strbuf_add_void() defined in
-> > reftable/test_framework.{c,h} but these files are not #included
-> > in the ported unit test, copy these functions in the new test file.
-> >
-> > While at it, ensure structs are 0-initialized with '= { 0 }'
-> > instead of '= { NULL }'.
->
-> OK.
->
-> > -             EXPECT(buf->buf[off] == 'r');
-> > +             if (!off)
-> > +                     off = header_size((hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
-> > +             check(buf->buf[off] == 'r');
->
-> Why not "check_char(buf->buf[off], ==, 'r')"?
-
-I wrote this series quite some time ago when this functionality
-was not yet introduced to the unit testing framework. I'll commit
-this change in the next reroll.
-
-> >       }
-> >
-> > -     EXPECT(stats->log_stats.blocks > 0);
-> > +     check(stats->log_stats.blocks > 0);
->
-> Why not "check_int(stats->log_stats.blocks, >, 0)", which you used
-> in the t_log_write_read() function?
-
-Looks like a case of too-mechanical-a-translation to me. I'll fix this
-in the next version.
-
-> While reading this step, I looked for use of check() that is not
-> rewriting EXPECT_ERR(x) to check(!x) as suspicious.  The above two
-> (and a !memcmp() that is OK) were the only three such uses of
-> check(), I think.
-
-I went through this series again and I agree on not encountering
-any other subpar translations of EXPECT() to its counterparts in
-the unit testing framework. I'll reroll the series with only these
-changes until someone else finds any other corrections.
+Hello everyone, here is my blog post for the eleventh week of
+GSoC's official Coding period:
+https://chand-ra.github.io/2024/08/11/Coding-Period-Week-11.html
+Please let me know if you have any sort of feedback.
+Posts for the rest of the weeks can be found here: https://chand-ra.github.io/
