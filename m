@@ -1,107 +1,117 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C4816D9AD
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A0714C5A4
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723453954; cv=none; b=dz41KAkPGZJTR9jiBDGHQy5TbIL3aqTyzXAbt7PQYTHDqHG5dhKFFOnC4I+7r6MOLu3UpwEcx8ebrdxVqP2flXNg/gnpBNIBghbQSwo6qbIEvOd21UzGySBgWbv+5RnO+Cgv2LP6rLjf79GOUurJd54cQ/GVZ6BeMgsNa8KIFLU=
+	t=1723454030; cv=none; b=B/37uOEdX72m6IhbzoLiBzGuPoi6nqelSNy6/IPm+TjY/BbZwwDofWqpmixVD7Ex3tDVsWX8i8y/lgb4QUuwNEvs9ugVHQG92z4oCRZIQriESMZypnbClJESfObZw4EN40N60seu48Ds2xHIgFhlqtbCLMOmsVluQ8qUvz10ryQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723453954; c=relaxed/simple;
-	bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
+	s=arc-20240116; t=1723454030; c=relaxed/simple;
+	bh=kJtJ+xYXPSk7EqiWnlG0IzoXwp7sBTbIjpoE65OJdrY=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dKo7xTDrVRj811YN+Uc/fgWS9AfUB9/jSYLswIi+Ya1xUvqwzMFe3L9FE4YGdE+XNomoAq0GDDhXY0PBz6hHpI3ZNtOa42McRy2l1af2gPIM7FmMfMURybFJokOsYzP7EDdVB2BIFAz4EnCl4MdbyGGT4l/CCdwWHpUgoEqXNXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVqIeH8V; arc=none smtp.client-ip=209.85.161.45
+	 To:Cc:Content-Type; b=UOfsE9k2l6tLpLMGhejZHaUMp6L6uTgujhv73Xdj3PyWnRQ/vnE4XqqtAnIjZy8CkLSt11pWjRf/Bz009oe6pdx2bUW9G0mXbRNpJ9XSDxHAfKQDBJNXaikZFRO8iFQD4PxGhqTz0dO+4NdeeZbrKy6+Yc9c4MWOo3G61BPuTRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AbjdrNHC; arc=none smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVqIeH8V"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5d5b1e33fa8so2394727eaf.3
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:12:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AbjdrNHC"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5da440d059eso1161237eaf.2
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723453951; x=1724058751; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723454028; x=1724058828; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
-        b=HVqIeH8VJxOBh3Gh+kTmVyTVHZ/5r4Ft705juIOcS79+01RJQbJZbBSHEwOiEyejZ7
-         Yc9oQobuMarVde8WEDe6uWpJFvdnIomP73xoWNvmQ/rkvmfH1xKIsVONwjO7MtqSmC5f
-         IJZfhIT8C9fFJOIDSfl5BLtXat6P7+wDnl+wR5887MSgk/CNPqnwmTfJiNRvBtdJncPQ
-         ceOppLU4hhxIkhJIEh51CWuTWbhlfPWekRWYhkrlZq0tdaO40eSjBckEn6RvoAbgzW85
-         MCs9MqNXW4kPlw0BylAhoVgMMYP1szMzhXYJmKDX5xSgPkfaWJjGPYwgeyL6fg5w9lsU
-         BnVw==
+        bh=BHmJgS/k4qUQ52Ia8GZsLP+7KJQs4HKUW+R+aMyonV4=;
+        b=AbjdrNHCK3Nt92VO9md1CbsfjaSp6PZrZMqmrrafaETwXQaWiGw3iHZTn0KMj1r3wU
+         4A94eUy3BKvIUhMrRDE++VcFOFAfJ1Y5E2Vjmg+tDhybid3hVy1pC3j8xrqbDuNsEfGV
+         GrY2kJ9c/1kbYv6bsceSwIQF3QsW5o72l89tcyG+L/Rsknp40lWygwK+pmCURe90Dt3y
+         suMZClF9p/cHfVzptLFoTYxoh9LFcyTvf3NaWH5UN9FJE99388Jd5/m6Ddtnn8uhi7qH
+         3O30bSJ3djtrCWLPLapxm0fboN9nvEE+Xe+7fVDBp3bp+MOVXrUaCfB/7JMwV1RtpFYn
+         J9Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723453951; x=1724058751;
+        d=1e100.net; s=20230601; t=1723454028; x=1724058828;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
-        b=NJ6IxBeWaOVcN5f9tp1T4lqB4phvAWXBdWUqGChw5/zYq/fN9Oct/IeWFxelo/PeOB
-         HLOBfRkj8oQWpFNrXYp4cNSng0JPRvYgKcc2P0lNE5c9nWwlOj3Wnzw2Yqj0qkpj+8j9
-         tR2LN0wJB1fgjtKDViKasAUHt8jKlCHFrDtXiAaTS2EgXBC3Po9Wg6mAMchDRLTWLghp
-         azM+3vBlJA/pZ0Aldzqu95yAi6cx/v1/YHZUMl2ipojXKQjVZvn8ZBUiEjhR+mXP4isy
-         l9t05Jme2ZHmnbS8rS3fcBCGKEemrtk5qRh8ODH+8Xn5P9OGKgtZt56lPHcaw3H3gzic
-         6Atw==
-X-Forwarded-Encrypted: i=1; AJvYcCVeH/cEV+VYmgZG5KJU0AF6u4hFSNLd+C3rRbDejMd5kPjicbJFTY5y422fA47wtKOFKn11bKy4VcwjWNSeTUAT8rJK
-X-Gm-Message-State: AOJu0YzEGqEC/wWvOeQqkDeCoGWBojh1vIy780fAl62VjIoOaII9nMA5
-	vkSdIYLFIYpvsptRUJxKx3zLi8c/diNF53t/2oEC0fKjqwXjPHtEatP56YkDViipjGj4f7R+zvH
-	Dusiiys9JLzbUO2lEgsW+nKJVQ8yytQ==
-X-Google-Smtp-Source: AGHT+IGu43NtAW+QpvIu4j4jqvrKfduHKs8mG30GDu1x7MoMylbrAgKJAUzdfKMBtQMOHgPMh+buL4S1bW6gkh+TR/0=
-X-Received: by 2002:a05:6820:16aa:b0:5d6:1082:4f4d with SMTP id
- 006d021491bc7-5d86d97d613mr10571325eaf.4.1723453951067; Mon, 12 Aug 2024
- 02:12:31 -0700 (PDT)
+        bh=BHmJgS/k4qUQ52Ia8GZsLP+7KJQs4HKUW+R+aMyonV4=;
+        b=DipN/CoqwoyVgksbdRI7DdPwE6rC7MQC1ICCqC6m0qlOSOHB5SqkuDUVJGoC/fcnIs
+         lJeiBDQbbNMtMnbzhpWzflxu9/FnpQO2J+IAZQbPt0Im2cxDPJEcXPKyp72byFpCCpTK
+         Ga1ZJ95jW93KyGwk7nm9xvrklK4VUR+BanZDuoIqlQN5YOLGmYM/mUBCG/4WH3aocrbS
+         yqd1kfQIgp68VFBRj0KqbXncpSOcZe0fFEmusjAa8xL6yLjw+B0KGHMvR5s4d2lmbTWR
+         Q5891oMjnxLUakSiDlGW72lgCXZkWh6Gssh9xaob2OiqtMjk+Jk8Z6Y/hbebwLcxl2+h
+         Ac+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXpYSo6HLPXklqQOgbE+C+mlWrNvKuu/VtbHbqNJ7lh7Q2bCTzpYZwORMv53Y8nQKA4Szn1pPL73ffq7cHRUs0Z8gdN
+X-Gm-Message-State: AOJu0Yyfaz8nUpSVpmY0B6qc2RJSEu9/Xyy4pghFqCUcMbxF58KF5iDF
+	xjr8N2SPf2Jvo98N9PN+Q0WISwikJetd6Ua7GiK6OAQZsdSEWgkB5lLDx1k6GMbIkUDozxTfbwZ
+	sDUH+uV5pwuiPjn4RN8Ib5qTos1g=
+X-Google-Smtp-Source: AGHT+IFtYNH00q6hgXBxH6ipqBi0pQ+k+XCaiSGfvZHz7eMp4F16Idl1nf+8nptcVP/1Cw5vWMgnWlj0yjoAROUk7Pg=
+X-Received: by 2002:a05:6820:162c:b0:5ce:3ebb:468d with SMTP id
+ 006d021491bc7-5d86f8220a2mr9145738eaf.7.1723454028668; Mon, 12 Aug 2024
+ 02:13:48 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Aug 2024 04:12:30 -0500
+ HTTPREST; Mon, 12 Aug 2024 04:13:47 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <343ddcd17b3e13dc7b8ab89f9c9c427bb2ed101c.1723121979.git.ps@pks.im>
-References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im> <343ddcd17b3e13dc7b8ab89f9c9c427bb2ed101c.1723121979.git.ps@pks.im>
+In-Reply-To: <cover.1723121979.git.ps@pks.im>
+References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 12 Aug 2024 04:12:30 -0500
-Message-ID: <CAOLa=ZSjBxVxmr7xiOFk0+2N4sTuxq9pFZt4ytK=L9kyw=Zvig@mail.gmail.com>
-Subject: Re: [PATCH v2 22/22] builtin/diff: free symmetric diff members
+Date: Mon, 12 Aug 2024 04:13:47 -0500
+Message-ID: <CAOLa=ZSCLZU=eeBqx9cpHkUJ+SOHXToVwMKjmCKLc+54MfxdRQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/22] Memory leak fixes (pt.4)
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008a7b2b061f78e423"
+Content-Type: multipart/mixed; boundary="0000000000002a8d7a061f78e97f"
 
---0000000000008a7b2b061f78e423
+--0000000000002a8d7a061f78e97f
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> We populate a `struct symdiff` in case the user has requested a
-> symmetric diff. Part of this is to populate a `skip` bitmap that
-> indicates whihc commits shall be ignored in the diff. But while this
-
-s/whihc/which
-
-> bitmap is dynamically allocated, we never free it.
+> Hi,
 >
-> Fix this by introducing and calling a new `symdiff_release()` function
-> that does this for us.
+> this is the second version of my fourth batch of patches that fix
+> various memory leaks.
 >
+> Changes compared to v1:
+>
+>   - Adapt the memory leak fix for command characters to instead use a
+>     `comment_line_str_allocated` variable.
+>
+>   - Clarify some commit messages.
+>
+>   - Drop the TODO comment about `rebase.gpgsign`. Turns out that this is
+>     working as intended, as explained by Phillip.
+>
+> Thanks!
+>
+
+I went through the series and apart from some typos, everything looked
+great. I don't expect a reroll for those typos though, since they're
+minor.
 
 [snip]
 
---0000000000008a7b2b061f78e423
+--0000000000002a8d7a061f78e97f
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 7f5aba701957829c_0.1
+X-Attachment-Id: fa6a0fe96ff196a4_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hNTBmd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mODIxQy93SWFWK0REZU8zemFnSXdyVDRsVVBpS3NYTworc05taHQ3YVpr
-RTFrSFJFU0RPZFhhUWxnRVVBamQ0UFpNR25EZXB1Wi9CSmhGMklOZDRlOXhJd3lqYi9Fbk9HCnJ2
-WFl3VEk2TzFZL3laRkwxdWprUkxiazZ6NDVUd0U4dGgreDc5OVFsSjdZWFp3VVFWbUFNT3NOWE1m
-RkFzZnYKd1VkeWxCNFFDZ3EzaGV3SXQzZVprU0hsUDBadFMvTWVLZkRPUU9XV015dlJ0RjRaU3Va
-S0NJaHV4cytybmdPYwpVdUxUcG42QzBjRjFOMHhVYkJZTTBTd0p1cVdPcUVsaEJ6RjZ4WC9CTXRx
-SUE0ZFR4LzFraXFsaGtET2phZjhqCmEvdDAzNEw5c2w5bmlKTXdJMEExZEc3TUZrdDRGVDBvSk90
-NW5laWMxanl3V29vSUZFU1YySWs2UjlQUThyOEcKb0hQOGgrMTQ0MmR2SlBILzNocGxmYldBMi9z
-N0EzU0lKbHlKaDBId1cwK2JldC8xS1lSbEttWUhBZDUvRzh0WQp1NXpjOEVJTkFwQjFPaWk0SUZE
-VzBTa3BDWGxDUmZOaE5qQUQ1aDlVRnZVZWVtT1M0MXZpZllVTWYzbFVKeFJRCnI4bE5hUEdHMkEz
-alUyYUtQajFhdFBHWW5US1pscElxR3hnai83UT0KPVhCaVQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hNTBrb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNkNaREFDWXhtWEtVS2JFci9TWjFBalpCVktzSE5ydgpzRFduQ2tOdUtW
+UkcyUUphNmU1TlBxWktEYVk3QVp5a1dMNjlzT3lHNjV5bDJXRVcxcVc4NUhWZXd6Y2JZQktFCm82
+YlFjQnVKWnVSYWNUckRTb0xjdFRCOTM3YVpqcXk3Z0c1Z0c5ckhuck1EZGhYblVSMncvQnBRdGt0
+ZzhLZlMKM0pCVWFLYUs1dWpBQjNkS2x5OHdQb1pYTzBtczI2bmdMR2lUa0pZcnMvMnFhdnpZMUor
+bTdxMUk4c3hsUkI2YgpHbEl4L0tmTmUwNTUzQng5NFRSMCt2WnYzcXpFSnlLcmVTeE9BWXZnNW5r
+dnliUjA2WUxGK0JpMEovSXBOM2gwCmx2Um44dytKTUh0OHVtUkJPTTdaZStjSlEySXBiRjVYY1Fh
+eC9IRFBqRVIxZWpYTHFMU01LVUhPMU5KOWhXbFMKZWg1cmR6MWk4KzBTU2prWStPdkMzNmQ5ZDBU
+UDVXYlIvVHNLVG5COFlYUC9RM3JHTVY5Z0d5OXlqd0Q3UmtPNQoxZ2IvMVFPblNacHRFWVRiYTAv
+RzVoWUNNU3pkRkEzMkRHeWFaUndnd2FkMGF0WE01UTFBNnpKdWtQNDBkS00yCmwrNW00MFlCVVg2
+MGRXVlpFbmMyellUbTJubGE2MG8yNCtRd0xMWT0KPXpoeFgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000008a7b2b061f78e423--
+--0000000000002a8d7a061f78e97f--
