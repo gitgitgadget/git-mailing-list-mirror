@@ -1,187 +1,107 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE716C852
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C4816D9AD
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723453853; cv=none; b=kgP7Tlzacqz+NGKwHO9KwilgD/6aB0QWfIXD76TNERMIyUenFSzoNFA0RbFmSAOAUNMahs6pKoZ69CzlDghsC7e5Z3BFhqRDLT9DmLNxQ0hfmIwunFFs3TTMpwqLRcITqJy4DBQkc+nnoOdozhKeBKzocTMPlhKQMVZLHqIv/iE=
+	t=1723453954; cv=none; b=dz41KAkPGZJTR9jiBDGHQy5TbIL3aqTyzXAbt7PQYTHDqHG5dhKFFOnC4I+7r6MOLu3UpwEcx8ebrdxVqP2flXNg/gnpBNIBghbQSwo6qbIEvOd21UzGySBgWbv+5RnO+Cgv2LP6rLjf79GOUurJd54cQ/GVZ6BeMgsNa8KIFLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723453853; c=relaxed/simple;
-	bh=Gv6EfT/IFVkaGaLwwxDOFqWVlLBJ6ncN735bEBdMeGw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=omRYgyNy8D3+oBCEI61bua3r8f0t3Ih3k064RSq5pqSJzxzAj+VCqkEEuPlcLvRyIbRDnALNOLRXUm3MJykygejIqSBSXezHly7yhPkDYO/o17bKqKpl7NWnK63dKDgjKM1KUjc+/m45OsD2PbPjus7I6heHOo9WwC8AmrDfeJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UbTBIBiU; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1723453954; c=relaxed/simple;
+	bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dKo7xTDrVRj811YN+Uc/fgWS9AfUB9/jSYLswIi+Ya1xUvqwzMFe3L9FE4YGdE+XNomoAq0GDDhXY0PBz6hHpI3ZNtOa42McRy2l1af2gPIM7FmMfMURybFJokOsYzP7EDdVB2BIFAz4EnCl4MdbyGGT4l/CCdwWHpUgoEqXNXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVqIeH8V; arc=none smtp.client-ip=209.85.161.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UbTBIBiU"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-369c609d0c7so2949794f8f.3
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:10:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVqIeH8V"
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5d5b1e33fa8so2394727eaf.3
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723453850; x=1724058650; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kf1fC87TbZp1A/KvB5Qlc819ggNJsEI65UcoRHW+S/E=;
-        b=UbTBIBiUjYy4pQlXfpZlfu+L7s25YJJrnE/ozEs8jnwhheSQQoyoh4UQDiboxve8dr
-         3vVFChPhOINr6gx2rVE/BFAwDnY3R2gZIeQL6l9+O01nfHq8xyH/mD2PLiW0V3DkfG36
-         z/rBxDe5qgPqQyFUCo9OecKwYtSaTxmKJYoXRwd0jnDFnmnbswV2bj8T3A4mrZEWvrO7
-         8iZEjL5SzHmgwocNuxTZulL6R7cPKnAA/8b5zAWjpCPvdwoVkaJ7E9Eb5zfBtSjemNzc
-         T0w/zcfko8pq/2/88OxA3z4+lUAXtQ95FRAzWQZmJaCA5vnB2hPzycx01Fqoxgjya0wC
-         MLHg==
+        d=gmail.com; s=20230601; t=1723453951; x=1724058751; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
+        b=HVqIeH8VJxOBh3Gh+kTmVyTVHZ/5r4Ft705juIOcS79+01RJQbJZbBSHEwOiEyejZ7
+         Yc9oQobuMarVde8WEDe6uWpJFvdnIomP73xoWNvmQ/rkvmfH1xKIsVONwjO7MtqSmC5f
+         IJZfhIT8C9fFJOIDSfl5BLtXat6P7+wDnl+wR5887MSgk/CNPqnwmTfJiNRvBtdJncPQ
+         ceOppLU4hhxIkhJIEh51CWuTWbhlfPWekRWYhkrlZq0tdaO40eSjBckEn6RvoAbgzW85
+         MCs9MqNXW4kPlw0BylAhoVgMMYP1szMzhXYJmKDX5xSgPkfaWJjGPYwgeyL6fg5w9lsU
+         BnVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723453850; x=1724058650;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kf1fC87TbZp1A/KvB5Qlc819ggNJsEI65UcoRHW+S/E=;
-        b=K8OTeeogAV1eoUWur12pqwtADO64M1Kmpg1afXXxIHHmBjEv9NX3iVeqfqhNNgEbPP
-         qCvglKMZWDotEnlsHBb7Rr7NBk2s5ShmCrHSzZKfmlN7rAhoqKITOCRoZVhpDze9CMX5
-         eQYeka2oxv0e+o8dSHxCh6dfgU4/CHzvfxXNGsXF/9rTytF5ex81OJE5gzwICwbafd0a
-         yfx1FNNkqL5tZ0IzZ4JkkCtgmuiwnDNnpMVH3t5iY40fDDNsBk30AwhOb7YAWmcyVHA9
-         6IYPKmcvi9Z9llhi7LwMxBmwmRHuJxIsRqX7dg8fElMBD7eV/R7LJgFB7lEil3gtiVVv
-         YpoA==
-X-Forwarded-Encrypted: i=1; AJvYcCWx0G7bglzBRphuu+iZhHsbPm3YABuq2vTrI5Ad546MNzPjI344pLLeC+o+cgB3AbPhgeb1DDT99TXB4zdvytK5tn5A
-X-Gm-Message-State: AOJu0YzoK/bfM02SaemIBuWrNXed2M69TghBtE9SVvGJhHJ4Vmq5TTQy
-	uD3A24nAN+vK3YJR4P73q6jJTNlwYM9G60Vqd/LenQU1P2Lg9WUO
-X-Google-Smtp-Source: AGHT+IE/KV7WFk5ClG72/sxn7hUDbVKFe9ky1k5HjxRF18Zp403phFlmtE4EbacK07Y/YLPB1Fx17A==
-X-Received: by 2002:adf:e792:0:b0:368:5b38:14ee with SMTP id ffacd0b85a97d-36d5e1d35acmr6564843f8f.23.1723453849620;
-        Mon, 12 Aug 2024 02:10:49 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4c36ba72sm6964751f8f.16.2024.08.12.02.10.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Aug 2024 02:10:49 -0700 (PDT)
-Message-ID: <47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com>
-Date: Mon, 12 Aug 2024 10:10:48 +0100
+        d=1e100.net; s=20230601; t=1723453951; x=1724058751;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pbazfU38MWhB6KIBcYasKuX9GUTwvKtPXxTX8Noa+NE=;
+        b=NJ6IxBeWaOVcN5f9tp1T4lqB4phvAWXBdWUqGChw5/zYq/fN9Oct/IeWFxelo/PeOB
+         HLOBfRkj8oQWpFNrXYp4cNSng0JPRvYgKcc2P0lNE5c9nWwlOj3Wnzw2Yqj0qkpj+8j9
+         tR2LN0wJB1fgjtKDViKasAUHt8jKlCHFrDtXiAaTS2EgXBC3Po9Wg6mAMchDRLTWLghp
+         azM+3vBlJA/pZ0Aldzqu95yAi6cx/v1/YHZUMl2ipojXKQjVZvn8ZBUiEjhR+mXP4isy
+         l9t05Jme2ZHmnbS8rS3fcBCGKEemrtk5qRh8ODH+8Xn5P9OGKgtZt56lPHcaw3H3gzic
+         6Atw==
+X-Forwarded-Encrypted: i=1; AJvYcCVeH/cEV+VYmgZG5KJU0AF6u4hFSNLd+C3rRbDejMd5kPjicbJFTY5y422fA47wtKOFKn11bKy4VcwjWNSeTUAT8rJK
+X-Gm-Message-State: AOJu0YzEGqEC/wWvOeQqkDeCoGWBojh1vIy780fAl62VjIoOaII9nMA5
+	vkSdIYLFIYpvsptRUJxKx3zLi8c/diNF53t/2oEC0fKjqwXjPHtEatP56YkDViipjGj4f7R+zvH
+	Dusiiys9JLzbUO2lEgsW+nKJVQ8yytQ==
+X-Google-Smtp-Source: AGHT+IGu43NtAW+QpvIu4j4jqvrKfduHKs8mG30GDu1x7MoMylbrAgKJAUzdfKMBtQMOHgPMh+buL4S1bW6gkh+TR/0=
+X-Received: by 2002:a05:6820:16aa:b0:5d6:1082:4f4d with SMTP id
+ 006d021491bc7-5d86d97d613mr10571325eaf.4.1723453951067; Mon, 12 Aug 2024
+ 02:12:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 Aug 2024 04:12:30 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <343ddcd17b3e13dc7b8ab89f9c9c427bb2ed101c.1723121979.git.ps@pks.im>
+References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im> <343ddcd17b3e13dc7b8ab89f9c9c427bb2ed101c.1723121979.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 4/5] config: add git_configset_alloc() and
- git_configset_clear_and_free()
-Reply-To: phillip.wood@dunelm.org.uk
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Cc: calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
- emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com,
- mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com,
- dsimic@manjaro.org
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1723242556.git.steadmon@google.com>
- <908ad0b82fa084fc4e56d7f6dff49e4f255af6ec.1723242556.git.steadmon@google.com>
-Content-Language: en-US
-In-Reply-To: <908ad0b82fa084fc4e56d7f6dff49e4f255af6ec.1723242556.git.steadmon@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 12 Aug 2024 04:12:30 -0500
+Message-ID: <CAOLa=ZSjBxVxmr7xiOFk0+2N4sTuxq9pFZt4ytK=L9kyw=Zvig@mail.gmail.com>
+Subject: Re: [PATCH v2 22/22] builtin/diff: free symmetric diff members
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000008a7b2b061f78e423"
 
-Hi Josh
+--0000000000008a7b2b061f78e423
+Content-Type: text/plain; charset="UTF-8"
 
-On 09/08/2024 23:41, Josh Steadmon wrote:
-> Add git_configset_alloc() and git_configset_clear_and_free() functions
-> so that callers can manage config_set structs on the heap. This also
-> allows non-C external consumers to treat config_sets as opaque structs.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Do we really need to add this code to config.c rather than handling it 
-in the wrapper layer in the next patch?
+> We populate a `struct symdiff` in case the user has requested a
+> symmetric diff. Part of this is to populate a `skip` bitmap that
+> indicates whihc commits shall be ignored in the diff. But while this
 
-Looking ahead I wonder how useful it is to users of the library to 
-separate out allocation from initialization. A function that allocates 
-and initializes a configset would be more convenient and harder to 
-misuse. Calling release functions *_free() rather than 
-*_clear_and_free() would be more convenient as well. I also noticed that 
-the data types are not namespaced when they are exported. So perhaps we 
-could drop this patch and add the following to the next patch.
+s/whihc/which
 
-/*
-  * Namespace data types as well as functions and ensure consistent
-  * naming of data types and the functions that operate on them.
-  */
-struct libgit_configset {
-	struct config_set set;
-};
+> bitmap is dynamically allocated, we never free it.
+>
+> Fix this by introducing and calling a new `symdiff_release()` function
+> that does this for us.
+>
 
-struct libgit_configset *libgit_configset_new() {
-	struct libgit_configset *set = xmalloc(sizeof(*set));
+[snip]
 
-	git_configset_init(&set->set);
-	return set;
-}
+--0000000000008a7b2b061f78e423
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7f5aba701957829c_0.1
 
-void libgit_configset_free(struct libgit_configset *set) {
-	git_configset_clear(&set->set);
-	free(set);
-}
-
-Best Wishes
-
-Phillip
-
-> Co-authored-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->   config.c | 11 +++++++++++
->   config.h | 10 ++++++++++
->   2 files changed, 21 insertions(+)
-> 
-> diff --git a/config.c b/config.c
-> index 6421894614..444db8de79 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2324,6 +2324,11 @@ static int config_set_element_cmp(const void *cmp_data UNUSED,
->   	return strcmp(e1->key, e2->key);
->   }
->   
-> +struct config_set *git_configset_alloc(void)
-> +{
-> +	return xmalloc(sizeof(struct config_set));
-> +}
-> +
->   void git_configset_init(struct config_set *set)
->   {
->   	hashmap_init(&set->config_hash, config_set_element_cmp, NULL, 0);
-> @@ -2353,6 +2358,12 @@ void git_configset_clear(struct config_set *set)
->   	set->list.items = NULL;
->   }
->   
-> +void git_configset_clear_and_free(struct config_set *set)
-> +{
-> +	git_configset_clear(set);
-> +	free(set);
-> +}
-> +
->   static int config_set_callback(const char *key, const char *value,
->   			       const struct config_context *ctx,
->   			       void *cb)
-> diff --git a/config.h b/config.h
-> index 54b47dec9e..074c85a788 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -472,6 +472,11 @@ struct config_set {
->   	struct configset_list list;
->   };
->   
-> +/**
-> + * Alloc a config_set
-> + */
-> +struct config_set *git_configset_alloc(void);
-> +
->   /**
->    * Initializes the config_set `cs`.
->    */
-> @@ -520,6 +525,11 @@ int git_configset_get_string_multi(struct config_set *cs, const char *key,
->    */
->   void git_configset_clear(struct config_set *cs);
->   
-> +/**
-> + * Clears and frees a heap-allocated `config_set` structure.
-> + */
-> +void git_configset_clear_and_free(struct config_set *cs);
-> +
->   /*
->    * These functions return 1 if not found, and 0 if found, leaving the found
->    * value in the 'dest' pointer.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hNTBmd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mODIxQy93SWFWK0REZU8zemFnSXdyVDRsVVBpS3NYTworc05taHQ3YVpr
+RTFrSFJFU0RPZFhhUWxnRVVBamQ0UFpNR25EZXB1Wi9CSmhGMklOZDRlOXhJd3lqYi9Fbk9HCnJ2
+WFl3VEk2TzFZL3laRkwxdWprUkxiazZ6NDVUd0U4dGgreDc5OVFsSjdZWFp3VVFWbUFNT3NOWE1m
+RkFzZnYKd1VkeWxCNFFDZ3EzaGV3SXQzZVprU0hsUDBadFMvTWVLZkRPUU9XV015dlJ0RjRaU3Va
+S0NJaHV4cytybmdPYwpVdUxUcG42QzBjRjFOMHhVYkJZTTBTd0p1cVdPcUVsaEJ6RjZ4WC9CTXRx
+SUE0ZFR4LzFraXFsaGtET2phZjhqCmEvdDAzNEw5c2w5bmlKTXdJMEExZEc3TUZrdDRGVDBvSk90
+NW5laWMxanl3V29vSUZFU1YySWs2UjlQUThyOEcKb0hQOGgrMTQ0MmR2SlBILzNocGxmYldBMi9z
+N0EzU0lKbHlKaDBId1cwK2JldC8xS1lSbEttWUhBZDUvRzh0WQp1NXpjOEVJTkFwQjFPaWk0SUZE
+VzBTa3BDWGxDUmZOaE5qQUQ1aDlVRnZVZWVtT1M0MXZpZllVTWYzbFVKeFJRCnI4bE5hUEdHMkEz
+alUyYUtQajFhdFBHWW5US1pscElxR3hnai83UT0KPVhCaVQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008a7b2b061f78e423--
