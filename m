@@ -1,110 +1,107 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBA616B39A
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 08:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337562E3F7
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723452206; cv=none; b=LOuI+WwUjsf0a/WFMYBFKkeHJNg/f//W8zXq4VFmckXirmyieG337XCkW6pXR/lRKg5Znlavpk6Ktjz4O0cio74X5TkAkvNXjGj3/nJ/2ld9TicK9FQNVyaq0j3x9LueTv/7ngYfIjvj4gMqfwN1n6INWNE1xLf4rdOG1gUvfPo=
+	t=1723453454; cv=none; b=Q9lp5x+FYxYEvBnYgJMTtFJQ6rYqdUZAcQIt/9VbKDF9+EDyquflIoifC0er+t6P+vsX3ShCbk0rXQxnsskAtnWTJW9o0ZM+09aYCfXVa1wqIEJtwVT+4gg5cr6DRoa/rmIxxWEVi9/KBjX+iqKit09F2WZsKYMqkg1q556C4Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723452206; c=relaxed/simple;
-	bh=TP1SVfXUkg5jYof0OV3mAXe/sKXLfK/HX8PiiksgxqU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IS7E6YJfxFaltfFT4rAE+9BZT6+ZkQHsCYh2yEl+GhIe+6r/jzpDfMWLxygdca6QjIbba589/W2+CHOcgDfp9PuaX0l97Z0BoPaXb+Bq6q4I2wzin6xgd2iPSJytkr1KZuTgwCSxKg4LEyG2Lk9AGGq7PfFIkZFTfjibwvAlw1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bZy+W6jn; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1723453454; c=relaxed/simple;
+	bh=rc/xait9sWO1NSGLAiIsa77QOXTqebclkCuNtzoBn50=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CCUklNCZbpcH4NPkj/urmBJNcTVaFlO5IefW/1Zf7iil9Qb/D+6ZXA9gyiAryi4/4SB0V/3sLG+tvMAGSiDeUWime+qRa6SX0gwqMYRLCD1e5vU2U5RGIerTVDgwwOEZmGTeflQK766UEAq7IN7fdL6BRuHrUkszm/DEY8RanEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bZy+W6jn"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5d5f9d68805so2331928eaf.3
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 01:43:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723452203; x=1724057003; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TP1SVfXUkg5jYof0OV3mAXe/sKXLfK/HX8PiiksgxqU=;
-        b=bZy+W6jnjDOfCa7TcPK0ckOcc7GekdJTRoOAhcsiOoj83LUkGzoTL4f+O1YzH2Yrim
-         uco5sQfaGF/o4gaESm6iIgzYMmsd6ldSRcq2qYWyqBbZJnDW0hOipjOLpyQqaGGSXbbE
-         iU9SySxc3IfH2yaUIGnPDbpr+u8A+vqCIvCa5+yXHxUa52lrRJM7rP2GKZUyyP+ZWyaQ
-         k7ErAQyMXmYNMLPRAP2oH96e4pDIPwDL1uJR09sngvQSiQzfjpJzyNUXi4FVKxRJtc8t
-         EoYiBmGFaIfsbk4YmOBF8NPZ6qSVb34c6YA6aB0pUzlPnyFZYpqVed5erk88ZQ4uoZ2y
-         TR+Q==
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6bba6ced3d4so20727726d6.2
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 02:04:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723452203; x=1724057003;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TP1SVfXUkg5jYof0OV3mAXe/sKXLfK/HX8PiiksgxqU=;
-        b=dB9W7KP+hXHyGb4Lpkhpu8AKlk8kPGvJfLR+OJVArFbNxXjRIT6L9VgZw4SHg1/YQs
-         ea/7NBY1P0pm92p+h3nbBP1ZQBBtWZhwv5U0OzWb+bRA4RUoDIJcBAuMGg97Oge59VWt
-         DXctARf98oyXLBPoPZk4xxGWcQ39H1sCztxLvuPczousQW+YZgmEj/AuB6tyyc/XPpMO
-         /TGcSVdrR+8bCLZBL8WlcpW0Fuw2YXTQZTwe9UXVrSZdoDn9Wv34aPqcIM8mDSROPy+V
-         BbnW5orthB5Uo7d6MbkAlIo4rR825JiGjSA31jrQ/NdgcbbWh8f6HMrNKVnVKWT8VWZj
-         6Fwg==
-X-Forwarded-Encrypted: i=1; AJvYcCXRFtUqRdTtUxImftwE+NeKF2uHW4hnxEyiO0igLU2Ig8Xl3Jjlk50saNyMXTtIP8hYxvll81Rj9uAv63L85W49Uz3w
-X-Gm-Message-State: AOJu0YxWJqKLXfxJZOXTiF5vCWpkvcCaPuYAA9XF6wyGC1SSf2adOIxV
-	GIO8dxDnuVDmwkAmpxlEPM2D6t2UoxxUwecwKa+IGySvl9B4PAMgXMgM9tUptFRa4DvmSiNf34o
-	UPalzrCyGQhnmR4eZBgw4adNfgLw=
-X-Google-Smtp-Source: AGHT+IGn644FBpAWTDHtRbgtR40b0x3v5nybcN/oHw4gOZCj0+SauUubHJKAgEoRpUTE6UbpOWFl0gQNl52AdoUUESc=
-X-Received: by 2002:a05:6820:1b94:b0:5d6:10e1:9523 with SMTP id
- 006d021491bc7-5d867dc089emr8747885eaf.3.1723452203476; Mon, 12 Aug 2024
- 01:43:23 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Aug 2024 03:43:22 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <43a38a2281f25db837dc9b5a59ecbe12214ac7bf.1723121979.git.ps@pks.im>
-References: <cover.1722933642.git.ps@pks.im> <cover.1723121979.git.ps@pks.im> <43a38a2281f25db837dc9b5a59ecbe12214ac7bf.1723121979.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1723453451; x=1724058251;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fv3qdHeIXw7wSj7C1mLrZjjTlos8XtNwyjo5ldt4TTo=;
+        b=C2wZozFVripVz3UDcC+TbiljOJh89cWw3MDRzGNCGwUXtaRNHPPzl5VA4lKjuPYZ1T
+         juHnCshVd04fLJcfgG1bayIxTPbm55KMwlZQ1oX00W5PypninxB2Tly60+ukoXrtl5HI
+         na5EltuZWK3GnOpvLpYl+JvIE6btEw/vU4JhOZSC3OhndM2TXbt778vnUvC+4I+pnde7
+         +u6rJjJLCMIPUETX5P+iP7TPeD4XyZ6Mg0k0m+V5RoyviUKb7FMJoN2hEKKaM7WhqbR7
+         of00fgRDwnktxvhVJXj6oFWL+TY3fA90gK7GvRRaB+LXnGqvPFIVw2doRXNhCN3vQpdC
+         c9zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXRgSuVSB91Q/M/WI1BcTgiErSEJ/RQ6pXWDNhYu56dXa53WLgwIM3oCFRmKg4zA3k5jRQJ59j5WQbN6lPG8XlcGPHG
+X-Gm-Message-State: AOJu0YyyDxLDkI+5gdotIDp4xLCdAWdl3pOsweIG0cDYyy/fcvBHP6aW
+	c4eRvHQ5gRXn+q7cGtuymwzBeXEvRBQXojfOrB5Ypb6V0XkzvrQpYQEHThDmt2mvC8/BE/L4lAt
+	ynDUL1aM2mwRXsPTbtwYhSv7nJk8=
+X-Google-Smtp-Source: AGHT+IGWVYQQw9MsISxyoPCabEDCyw/ZNymX2zjZOzkdO8M3UbNXgGZ2YEUdH3rLRfqXSephnzu2RdHVcQ0q1caxpyE=
+X-Received: by 2002:a0c:f303:0:b0:6bd:9622:4972 with SMTP id
+ 6a1803df08f44-6bd96227231mr20617036d6.14.1723453450969; Mon, 12 Aug 2024
+ 02:04:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 12 Aug 2024 03:43:22 -0500
-Message-ID: <CAOLa=ZRFYL6mWABumWM9pra+749tz7kOg3y9x5Pj9EdQxjC6eA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/22] object-file: fix memory leak when reading
- corrupted headers
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: James Liu <james@jamesliu.io>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000006055a6061f787cfa"
-
---0000000000006055a6061f787cfa
+References: <cover.1723054623.git.steadmon@google.com> <cover.1723242556.git.steadmon@google.com>
+ <Zrdn6QcnfmZhyEqJ@zx2c4.com> <6398d60387a6607398e4b8731363572e@manjaro.org>
+ <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com> <xmqq5xs688cz.fsf@gitster.g>
+In-Reply-To: <xmqq5xs688cz.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 12 Aug 2024 05:03:57 -0400
+Message-ID: <CAPig+cSVNqBPjV3_41f6Ag2X4+-q4HidEo0D=1UaMG-Kv7pa5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Introduce cgit-rs, a Rust wrapper around libgit.a
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Dragan Simic <dsimic@manjaro.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, calvinwan@google.com, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> When reading corrupt object headers in `read_loose_object()`, then we
-
-s/then//
-
-> bail out immediately. This causes a memory leak though because we would
-> have already initialized the zstream in `unpack_loose_header()`, and it
-> is the callers responsibility to finish the zstream even on error. While
-> this feels weird, other callsites do it correctly already.
+On Mon, Aug 12, 2024 at 4:15=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> The original iteration had this:
 >
-> Fix this leak by ending the zstream even on errors. We may want to
-> revisit this interface in the future such that the callee handles this
-> for us already when there was an error.
->
+>     * bikeshedding on the name (yes, really). There is an active, unrelat=
+ed
+>       CGit project [4] that we only recently became aware of. We original=
+ly
+>       took the name "cgit" because at $DAYJOB we sometimes refer to git.g=
+it
+>       as "cgit" to distinguish it from jgit [5].
 
-[snip]
+A tangent: Speaking of external/other projects, I don't think we've
+seen an explanation yet as to why this Rust wrapper is proposed as a
+`contrib/` item of Git itself, as opposed to being a separate project.
 
---0000000000006055a6061f787cfa
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 4319cc23fc6843b6_0.1
+I can only think of two possible reasons why they might want it in the
+Git project itself...
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hNXl5a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN003Qy8wY1o3UDQ3Wk50VTRlZG0vdStaeExtZXY3Mwp4YlhUUG9nZVlQ
-dk1zeHEvM1BiOUdBMmZabFdaRlhYOU54U1lhWCtwTGJySEs2UzVyWHlicXQyQVY5WDlUb2RpCkM5
-VDFuT3NRcjhmZGFiR1VuWEFobHhvR21Cak51WWQza01tVVphSFppQXNjT1VMME9BTER2OFNmTzhv
-WmVTSVgKYzlJWEMvaE5HVkc3M3Evcit2V3BmTCtib0dJQThnbENoQTFPaGVQak9QK0ducGFHVUdV
-bXdWZVR0K21iU3NvdgpRN1V5WFo3ZW83YmlzUkJCUFRrUU55UTJVbkxCdkRicktTUitsUDBkVU01
-d0h3bit1Sll1c1JRSU5hbzZWSUdiClhtdUoxdGJ6dHpETjFuTVRRcGVSckRtMDh2MjFScmtnTlAr
-MU51eEVQVzJ0L2R3UkR0N3dzQmlESjBQNXp4WmoKZGtxNTFZWXh1VFFZcU03bHJEdFFhbEsyblcw
-V1NBVytTaithazdIUzZCT1M5OFJrMmsrOGpTSk9TL2syUUtNawppcXFkNlFsL084am4zdzc3aFVC
-aVR5YkJWNW5NRmlkelQ4cVJ5WWs4NDlwRnJPNzVTODFDK2tBK1FQZlpDaDBOCmdreFZpM1oyVDVF
-K3dYVVBOa0loQXQrdDJ4d2hHUFJOZFdWUkM0UT0KPXlwdGwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000006055a6061f787cfa--
+(1) Easier access to the library portions of Git ("libgit") since that
+portion of the code is not otherwise published as a standalone
+library. However, a workable alternative would be for the Rust wrapper
+to carry its own "vendored"[1] copy of Git. This would also ensure
+more reliable builds since they wouldn't have to worry about the
+"libgit" API changing from under them, and can adjust for "libgit" API
+changes when they manually pull in a new vendored copy. Hence, I'm not
+convinced that this is a valid reason to carry the Rust wrapper in
+Git.
+
+(2) Perhaps the intention is that this Rust wrapper work will allow
+Rust to be used within Git itself[3]? If that's the case, then
+`contrib/` seems the wrong resting place for this code.
+
+On the other hand, as a standalone project, a big benefit is that the
+Rust wrapper could have its own release cadence distinct from Git,
+which would likely be very beneficial since it is such a young
+(indeed, nascent) library; it is likely that the maintainers will want
+to release early and often at this stage.
+
+[1]: Other Rust projects carry vendored copies of projects upon which
+they rely. For instance, the "native_tls" crate has a vendored copy of
+OpenSSL[2].
+
+[2]: https://docs.rs/native-tls/latest/native_tls/#cargo-features
+
+[3]: https://lore.kernel.org/git/CABPp-BFWsWCGogqQ=3DhaMsS4OhOdSwc3frcAxa6s=
+oQR5ORTceOA@mail.gmail.com/
