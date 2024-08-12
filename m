@@ -1,115 +1,159 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A39517A5A3
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 12:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAFA17C7B2
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 13:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723466081; cv=none; b=LFiwgUEAwbCKzhZAnnmLyye7/M/t4hqUSG9GI0q/a/JXMuWjTiGJggjycM0n15S5OAB7vqtO70EdWI9tbVla7VmMNIY6Ga1mWzRDWbdfeadxWj8+4OWtOF3l9bCvNPNXG4ahoWpQ2XO9MgeWZMxZn+MHdqj4d2RQdgx1gvoj55w=
+	t=1723470095; cv=none; b=kYRkP2aqdhO4Zvl4wlbs8hubN10ljHm0MbxUix8TrbOMMUbfTACl5Ef2it/niVyMFwi4GIqIEXjfjC3mrTPU8XlT0bW6t+P9oeEND43a0+fUzx4nNfmYpNDXdITvd4YNB+i2rcbQIZ+YdFvs/yqEy97pNVAjmiTCx2PO/SXLEGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723466081; c=relaxed/simple;
-	bh=e/Y+hIU+aYxRGBIXbv9DmfM5RQylKpC9ION+uI0BSGQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f1HWepht9TaqRBOlslmwrG6gO79mDDvaVHnrdnCqx9JDMDHfSDtqWlegZruPrqTD1un4wGl2zK+6rlhEx4aJ1UaagIJjCuhni86m06DuBTL7BoJIWrO30/5VvX6ubhVJg3Paeq1shmyUkBbY0UnATeC1Biq8W1O2Wp6aJHbIO+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=bXl+qxrw; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1723470095; c=relaxed/simple;
+	bh=L0xnSNGpg7PjdSjXtdUB9YLV4jwGAkaMKHRZOOvIChI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ic+rtg1H5jJcRGF6WFCvit7o6oaPc5EDeVqkr5RjSpEJW+gsaCwij3pUOF5ncvEPTdzosT1HgvIsjh+6ZL1lUd/yIFZ+lAjp/C3iYR+OXk7+4+DDNFjFpDwwJ8BVHlf0wApH/ZY+8MoHWUchCIeiFWtg7G+EiOR/dDUHgxQBNt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nqwCiQKN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DRdubEyb; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="bXl+qxrw"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc5549788eso38860855ad.1
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 05:34:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1723466079; x=1724070879; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FbfYCuGW4Qk3IbZoAzZpMzC3F1iMgnnkcmXZNrhSNXw=;
-        b=bXl+qxrwo07Ml2U+5UFRMcWpeHRBmhWQdPBXPkgRznL/fYUIzkhX/pVwfmc5nzzMcJ
-         XqURVzOGNes++i/u9Uz9eiMKCpcvBCxO0tWm8vtogkpiAEh4uuAW0tuDaXY2C5+52aMA
-         21XNr4l3TH14nQUrwwJws62h57+7Ox1jbYvZ6QMjYE0ujehKmM9j83zguqonDZbrlGWl
-         j3StkCQcEM0fRMbE88zXnhRToYHKABDtxGDAmeMRbK5KK76nnlwVKTjOnGeTbuWuiwPn
-         NJcVQy3RF/jqvwgcxK4arNxUuXfUc0ACcGGrOBM5kw3aDYvxbnpIbM8yIe6VKm12zTgA
-         qeWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723466079; x=1724070879;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FbfYCuGW4Qk3IbZoAzZpMzC3F1iMgnnkcmXZNrhSNXw=;
-        b=ggk95JxI0J0Ney4DmPOPlnY1o09soc8lT8n0bnybIuj9bkmTzJp+ORz211vOdK7vRu
-         5hyIN/2ixo5inIGE/M8HbpZb4uQwjPyIww6JvDBMAJsfytvGC3JR3NXm4GvttO3PJrKi
-         2eXfxT/kkP8nc+A69mCUYkiJvxyvtmRISnhxgvuWGb9FZ4KIiN/xWzXE/HzVFlyvli5Y
-         cW8Q8AFkdqqjkxpBZ2B0HEQQBClmmLu/htF9oTVevl3IbdB/VlnTGCBPSQgnRvdUfdKd
-         A+W1W17AFYzWlrct/+06H+soEmQZPA9G121xFPKB2mN2XSFoL94hG6ZJ3/LzTUIwQkHd
-         fdtA==
-X-Gm-Message-State: AOJu0YyK5L0WwI+wNLz+2zmK39ScxHLNR8kmXXXNePCf3ebl/vSKyr88
-	xhH7ir/dMeblz6DpUrKdcnZBu/brwKJPPlKJZmLodK6QI9w3AfIro/9GXmKcJNcK6C+C86TKQf2
-	H1EhPDhSyih2D+TIno35KDkwMexnkBikYakjbmg==
-X-Google-Smtp-Source: AGHT+IFO6V9h+3ikrqcD3xNsibC20UNzjMG7Kq/wP20BPw00UOok1JUIbaj32eBSLdNwwVmtF3lurFuPctV3P5F0Lj0=
-X-Received: by 2002:a17:902:ce8e:b0:1fc:5fc9:84bc with SMTP id
- d9443c01a7336-201ca241755mr1217865ad.62.1723466079186; Mon, 12 Aug 2024
- 05:34:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nqwCiQKN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DRdubEyb"
+Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 67807114AB62;
+	Mon, 12 Aug 2024 09:41:31 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 12 Aug 2024 09:41:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1723470091;
+	 x=1723556491; bh=JgawX+qjusRMsShcKkrTMQr6u1nVUEvSHHSJAGlBpwg=; b=
+	nqwCiQKN07sWmeh90hwrx4qESf3FHV99UOmItmqVp1IUDKVfwn/KT3xTlIZhBf/Y
+	MV9Nw4FcGZoot6GZdG4b094xxIG+qdOUfZ/vdKdQnkynkvMcp/SXGdzXHLYF3JFS
+	ouBHwgo9ulKbVb6Llpv7k8OPoTyHQAKpHpDD03sD4wTJd6CyJIDOTnzAxFdNM/TH
+	IKi9sZfX+yt79POpmqrOhS1it/rz74/1PLxuq9wgktkBPJm2hc4lMXLMffIsjykV
+	VKwpdQP7tgC5JQcNgR+K8h0jzVE1Iye/XcTUJQInhkKie7QF6an9nGutLQnsRboe
+	Ucd7m+gTLjIzyZhsbn1i8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723470091; x=
+	1723556491; bh=JgawX+qjusRMsShcKkrTMQr6u1nVUEvSHHSJAGlBpwg=; b=D
+	RdubEybTD2mj9uZkvOnbSFVTmqOe9u1ONCu+D8yZb+6qgWl55mf4elDnCcL3jN5H
+	eKJgMw8uILwL2iwXXpMoB2Tb54mqnGWJ8er7sAP7238qkzNqR95yax/o6y3aY9yz
+	AE5FamDD0fWE61N7qsNsE6jQMD4xM8aINEFQ0XKbPRBPgOO1E4yaEEm5Qjo8p66I
+	Wv3zVH+Boa0/c3oRfO9PcQ3vJfDC3qOAEZaSPtRtBgIEJDUOu/oXale9WHQpNTuS
+	Y1O38h/iWDJ23D6X4PFC6+ZeDE8dYyFGklWJkpBTMM0qiEfcOo4bWL5mI8lNKM+D
+	5syriBB+SvahrDdyHtt8g==
+X-ME-Sender: <xms:CxG6ZqJxHlx_VkjNWApW9Nc9i2gFjyNPGoOAKKs4yv4X_BonRY1tvg>
+    <xme:CxG6ZiIKXBhdv9uqsysYltmBrlb6d7VBMRS8vwnytr5qLuXQ_qJ3Oyo6Tox1KI0x-
+    cIZ52HiIxbfNnmHMg>
+X-ME-Received: <xmr:CxG6Zqs0A9sBDm3UE2YMvcC1FqHq4DFns7RiA5dKXe8cznIdPgfJFRz-hUQdOF82fiJGu5j03W4SKEnOywQtGnKzgbOmSs3HAREBZLIoDbwNkAE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddttddgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
+    etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhht
+    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegrsgguohgsnhhgrgguse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:CxG6ZvZ6Nj6RpERR98ct3PF-a3SbN8bWN27QUeTz69rmjtbqoPzMmA>
+    <xmx:CxG6ZhYjt1rsi-fnyqZkwoMK6Dds-F2M_XvPmwADr8TGauoPWESE_w>
+    <xmx:CxG6ZrBQrhYu7uXYnLzSNDRKDUE5UN-SQdfyNiKLpa5x3LDaXYDBEQ>
+    <xmx:CxG6ZnYMlLmsZdWx7JSwPJPe0C7UsaHV9L1Fr6KmEUs2gqGhTuYDAw>
+    <xmx:CxG6ZlEcrg_0JffiZtDPTkBlrdUbpinbVF-uxii2d43w79TwjhW3Tnyc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Aug 2024 09:41:30 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id dc55d695 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Aug 2024 13:41:13 +0000 (UTC)
+Date: Mon, 12 Aug 2024 15:41:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: AbdAlRahman Gad <abdobngad@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [Newcomer] Introducing =?utf-8?Q?mysel?=
+ =?utf-8?Q?f_and_expressing_interest_in_`Implement_support_for_reftables_?=
+ =?utf-8?B?aW4g4oCcZHVtYuKAnQ==?= HTTP transport` project
+Message-ID: <ZroQ8-7SUmli2SOC@tanuki>
+References: <31efb040-57cd-46a7-80f1-62a9ce9efb52@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
- <20240802073143.56731-2-hanyang.tony@bytedance.com> <xmqq4j82euvr.fsf@gitster.g>
-In-Reply-To: <xmqq4j82euvr.fsf@gitster.g>
-From: =?UTF-8?B?6Z+p5Luw?= <hanyang.tony@bytedance.com>
-Date: Mon, 12 Aug 2024 20:34:27 +0800
-Message-ID: <CAG1j3zEQh3xujrU3tGOftwvCZ+d9RjvMHw8v4W3dqd3DsiGCUQ@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH 1/1] revision: don't set parents as
- uninteresting if exclude promisor objects
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>, 
-	Jeff Hostetler <jeffhostetler@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <31efb040-57cd-46a7-80f1-62a9ce9efb52@gmail.com>
 
-On Sat, Aug 3, 2024 at 12:45=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> > diff --git a/revision.c b/revision.c
-> > index 1c0192f522..eacb0c909d 100644
-> > --- a/revision.c
-> > +++ b/revision.c
-> > @@ -1164,7 +1164,7 @@ static int process_parents(struct rev_info *revs,=
- struct commit *commit,
-> >        * wasn't uninteresting), in which case we need
-> >        * to mark its parents recursively too..
-> >        */
-> > -     if (commit->object.flags & UNINTERESTING) {
-> > +     if (!revs->exclude_promisor_objects && commit->object.flags & UNI=
-NTERESTING) {
-> >               while (parent) {
-> >                       struct commit *p =3D parent->item;
-> >                       parent =3D parent->next;
->
-> But if the iteration is over all objects in certain packfiles to
-> mark them all uninteresting, shouldn't the caller avoid the call to
-> process_parents() in the first place?  Letting process_parents() to
-> do other things and only refrain from doing the "this commit is
-> marked uninteresting" part does not quite match what you are trying
-> to do, at least to me.
+On Sat, Aug 10, 2024 at 11:11:30PM +0300, AbdAlRahman Gad wrote:
+> Hi,
+> 
+> My name is AbdAlRahman, I'm a senior computer science student.
+> I'm interested in working on the `Implement support for reftables in “dumb”
+> HTTP transport` project with the help of a mentor, I'm aware that the
+> project is not being worked on in GSOC but I was wondering if the project is
+> still not taken in general, and whether I can work on it outside of GSOC?
 
-Thanks, I agree process_parents() isn't the right place to fix the issue.
+The project wasn't picked up by any of the students, so it certainly is
+fair game to be implemented for any interested party. But...
 
-> It apepars to me that its approach to exclude the objects that
-> appear in the promisor packs may be sound, but the design and
-> implementation of it is dubious.  Shouldn't it be getting the list
-> of objects with get_object_list() WITHOUT paying any attention to
-> --exclude-promisor-objects flag, and then filtering objects that
-> appear in the promisor packs out of that list, without mucking with
-> the object and commit traversal in revision.c at all?
+> If the project is not taken, what should I do next?
+> 
+> I'm also aware that the mentors are busy with GSOC and might not have time
+> now.
+> I'm OK with starting whenever mentors are available, but hopefully, guide me
+> on what to do until then.
 
-The problem is --exclude-promisor-objects is an option in revision.c,
-and this option is used by pack-objects, prune, midx-write and rev-list.
-I see there are two ways to fix this issue, one is to remove the
---exclude-promisor-objects from revision.c, and filter objects in show_comm=
-it
-or show_objects functions. The other place to filter objects is probably
-in revision walk, maybe in traverse_commit_list?
+... that being said, I probably do not have the capacity to mentor you
+on it until the next GSoC. So you would ultimately have to figure out
+most of the parts yourself, unless you are willing to wait until next
+year's GSoC (or somebody else wants to mentor).
 
-Thanks.
+Of course, you are free to send specific questions to the Git mailing
+list, and we try to do our best to answer such questions and help folks
+get their work landed. But the interaction would likely be way more
+limited compared to how mentoring looks like during the GSoC.
+
+> Steps I've taken so far:
+> 
+> For git:
+> 
+> I worked on one of the micro-projects, modernizing a test script, The patch
+> series is now merged in the `next` branch, there are still a few
+> modernizations left in the file which I will work on after the first series
+> is merged.
+> 
+> This taught me git contribution workflow and to expect to do multiple
+> iterations of the patch.
+
+This is a good first step indeed.
+
+> For the project:
+> 
+> I've read the resources provided in the project description for GSOC [1] in
+> addition to a video [2] and an article [3] by one of the possible mentors.
+> 
+> This gave me a high-level overview of the ref-table backend.
+
+I'd point you into the direction of git-update-server-info(1). It
+updates auxiliary info for the dumb transport helper for the object
+and ref databases such that plain HTTP clients can figure out which
+files they need to fetch.
+
+The realization to have is that this is not required for the reftable
+backend anymore because the information is already encoded as part of
+the "tables.list" file. You will have to think about how to figure out
+the ref storage format of a remote and then fetch the correct set of
+files.
+
+So understanding that code as well as how the dumb HTTP transport is
+working will be the most important first steps.
+
+Patrick
