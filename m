@@ -1,69 +1,108 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFE014D435
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 06:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE6B2599
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 06:35:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723443575; cv=none; b=LBzFWTzE0L9TYuD/7iZ1ZAlBkOsd+RfPUKTu3Vj0p/030em7k3ye2BNTBA65mZ8X0pDTCSP5MPIpECltJwfqaqoq8iJW5hdnarg1rn+luD1TdiaMwnO+5CWDkX/w2ucuK53gsvhg6Zn6USbFPj7wafYp9ZYWQ1iWS+/MqFK1lHQ=
+	t=1723444558; cv=none; b=IrbBXtgRl+xpaoaUAUE/AMf6sxqayKzMIwAxBCUIsmYrAb8zlYTSiJ4SLcQcyIOZF0xORHKe5jXwTlU07sDKoY703apqs7Y91Gou7/MQq79Ujk4HMoo/TaR8BbjbWxwuxSYsLKT7O4Q2IQaSsAvzaugCTqBHsNFbN517oYtTU9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723443575; c=relaxed/simple;
-	bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FVSzGaEtX85HoebMzzFwYJN5j7cgKRPcoYMNQE04hr3+psZEjPvLRYgjgZbxXzOP9VavuLf0HDBsZMcWiTl4KcjW0PUgiO9ks0PIh7j38g+dN7pFWvs/w+CEBgRcd9OYpi0NAtGFKGO70UhS0PjvYcjetxnQAcvupQSGPloU7WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwkVl85i; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwkVl85i"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6bbc1cee9b7so24651246d6.3
-        for <git@vger.kernel.org>; Sun, 11 Aug 2024 23:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723443572; x=1724048372; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
-        b=AwkVl85iCBMGFGl+l5VEAs8zuRpSJiB2NDPIHk+ngtrm5PPHDG181as8ii7OLs0kYh
-         AcOtSblPJa8OSoJg9zQ+gIP1ufJ6Pfq5iMKtdcDwe1FkSSVtUVuhOzx9emca6fiIdeq6
-         8RTmd8f9u7fYMq1eTcDQq8/ZcpzoHlhlPHasYoTT0S8IpHucA0HAUkmWAEWtbmEzw4CQ
-         +Y4qvtnFBRaaiZyYIZIGVdqcg6ADwcTURQw71yQAD9DRX+Y9POxlUDDaW/nO31LlMXRb
-         On0xjruihrM9Aq7aJZKXWHq8CBNdPFXgmlj47pHooXs7JYKKstVdNDc50JHzJi2Z/ePd
-         iWrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723443572; x=1724048372;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
-        b=GKVqOfI93yA82UTc/I1xzjYL8DWSYmBIjFoz6qu2hJlv8xgOEKorNC9bsaM1/Nyd0F
-         1Cc8xgVc361lhT4k+3915J94G3/a21kKbPmX02K6DgEuCk2ya6mjN2ph+66HipI8er1b
-         e1JTiHyH9NePDC4B/Y2eEroVC+LlLIdMQnCGzb2owpBHBi/lP4+ufgbTKRaOeVDIEyFq
-         MG7r4Q1+R/DybVO1fS+13Soq5tefbeCSkwSWbBxrGXrA74gksaax/v+Lldt8lrKOhNRh
-         aqCvDgDFbHO5B0LulouEdyynfdhmu2szDQDlcww8zwqzB3s/UdU/DjWsjxGQEz2x3ced
-         cSfQ==
-X-Gm-Message-State: AOJu0YwqpGa/FQB+amK2WX2ifjsK+niCHj+SCdMWJb12qqhacNwGfx7x
-	3cVVeO7rg5blS5e2fazv8Bj5XrLLzMZjXTMc8eTVzuWnpl5MHJXms5QFvV90pdDzyE0dZJO9oDa
-	k1mFOaepx+vncg/iww5KTYpytDztKawY=
-X-Google-Smtp-Source: AGHT+IEbPcnjwNc8VmvHox3QA2SCCnbEL1Er1w3FV3hV2nhcikEh8iSRb6gejwbl4JpLMGxclUCmpxDPFlpBtJXBKAU=
-X-Received: by 2002:a05:6214:2b99:b0:6b7:b3ee:5d74 with SMTP id
- 6a1803df08f44-6bd78f33a56mr78937066d6.50.1723443572459; Sun, 11 Aug 2024
- 23:19:32 -0700 (PDT)
+	s=arc-20240116; t=1723444558; c=relaxed/simple;
+	bh=Y5cORqUjPs6l3DqLAyDYxZpYzG5ti3hfsidI7418keI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GtehYDnAdOYKPqZqE95wK89T2fOSLp4MvJwSa8ux1A5COGjok4SWSAPeP+iaHsnoBnvkZJzoCgoMjhWtKlhN2zbmeNArArA+9uQLoEOfTLsbrBwPdVV4MxMXoIg0GRquDyLAnn92JvhcxDkzYtvvZhKsby/8IJ9AlxNaNTgS+Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Wj4XP3psgz5vLL
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 08:35:49 +0200 (CEST)
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Wj4XC5DbBzRnmN;
+	Mon, 12 Aug 2024 08:35:39 +0200 (CEST)
+Message-ID: <f44c253d-9b37-451d-902d-486adb8e3d72@kdbg.org>
+Date: Mon, 12 Aug 2024 08:35:39 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Junk Junk <shealenjunk@gmail.com>
-Date: Sun, 11 Aug 2024 23:19:21 -0700
-Message-ID: <CAAyo-VCL9tsuOaZrngciiBmbAKuwLtHxtDwaU17g1NfPEbwgBw@mail.gmail.com>
-Subject: Feature request: `git rm -c` shortcut
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [RFC] formatting macro
+To: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <5ef4a7bd-3b9f-4e71-9a22-e22012f815ce@kdbg.org> <xmqqcymn3qc8.fsf@gitster.g>
+ <4617471.LvFx2qVVIh@cayenne>
+Content-Language: en-US
+In-Reply-To: <4617471.LvFx2qVVIh@cayenne>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-## Request
+Am 07.08.24 um 22:43 schrieb Jean-Noël AVILA:
+> On Monday, 5 August 2024 18:08:07 CEST Junio C Hamano wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>>
+>>> I've a strong aversion to the formatting that this series applies,
+>>> because it introduces many (IMHO) unnecessary punctuation that
+>>> vandalizes the perfectly readable plain text. And this hunk now shows
+>>> where it goes too far. These lines under the new [synopsis] header just
+>>> aren't syopsis; they are comamnd output. The updated version abuses a
+>>> semantic token to achieve syntactic highlighting.
+>>>
+>>> To me this series looks too much like "we must adapt to the tool" when
+>>> the correct stance should be "the tool must adapt to us". If the tool
+>>> (one of asciidoc and asciidoctor, I presume) does not cooperate well
+>>> with out documents, then it is the tool that must be changed, not our
+>>> documents.
+>>>
+>>> I understand that some compromises are needed, but with this extent of
+>>> changes we give in to a sub-par tool too far.
+>>
+>> Thanks for placing this into words a lot better than how I could
+>> have done.  I share the same feeling.
+>>
+> 
+> I'm working on a form of macro that would work almost the same way as the 
+> synopsis paragraph. You would have some markup, but it would be surrounding 
+> the text to typeset: 
+> 
+> s:["--ignore-matching-lines=<regex>"]
+> 
+> In this snippet the macro part (which is recognized by a regex) is  s:[ ]
+> The inside part is managed the same. If you need additional markup, it is 
+> possible:
+> 
+> s:["<commit1>`...`<commit2>"] to have the three dots rendered as <code>, 
+> because they are part of the tokens.
+> 
+> Square brackets are possible inside the double-quotes:
+> s:["--ignore-submodules[=<when>]"]
+> 
+> Is this something that wouldn't repel you?
 
-The omission seems conspicuous enough to be potentially intentional,
-but I would like to recommend adding the flag `-c` as a shortcut for
-`--[no-]cached` in `git rm`.
+You argued elsewhere in this thread:
 
-This might conflict with `git -c`, but git seems smart enough as it
-responds "unknown switch `c'" to `git rm -c`.
+>  * The fact that the source of the pages should be "perfectly readable" is a 
+> moot argument. Fair enough, it is not the objective to make it impossible to 
+> understand, but in the end, this is not what is consumed: these pages are 
+> compiled into other formats where the markup has been translated into styling. 
+
+I buy this argument, in particular, since not even I read the plain text
+files, but use the rendered version.
+
+I would like tone down my harsh opposition to mild opposition. IMO, it
+should still be easy to *write* the documentation. It should not be
+necessary that authors remember to use macros all over the place.
+
+And I still think that we should not introduce macros just to please all
+renderers. Let's just pick the one renderer that can do the job best. If
+it means that some distribution cannot render the documentation
+perfectly themselves (Debian? I don't know), they can always use the
+pre-rendered version that Junio kindly produces.
+
+-- Hannes
