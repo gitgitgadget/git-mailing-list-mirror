@@ -1,88 +1,69 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4964D8CE
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 05:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFE014D435
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 06:19:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723439856; cv=none; b=gWj7IfOY3bMZF+5KKB2RLvZNFMWLwFaga+cFscJpqnmXkc5n/bxFYphL3Eiu2y70krWlWQt5avbEZxzjz02MCxogPEgBkGwllAtiKt9KqHKshPT8B2MiIsFmZWdS7MCZwPNWpd3UVw9RY47X9GCarKAN/RHUlhtlqoyfvoq7t9I=
+	t=1723443575; cv=none; b=LBzFWTzE0L9TYuD/7iZ1ZAlBkOsd+RfPUKTu3Vj0p/030em7k3ye2BNTBA65mZ8X0pDTCSP5MPIpECltJwfqaqoq8iJW5hdnarg1rn+luD1TdiaMwnO+5CWDkX/w2ucuK53gsvhg6Zn6USbFPj7wafYp9ZYWQ1iWS+/MqFK1lHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723439856; c=relaxed/simple;
-	bh=hYRp1dbShvko8tePm9Zv8hoWxFZBDrmn06c4so9/CAE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LhDYyXmmPCebCRjVTVe6aEKfhKPKLkd99GHJQNBsL3Z7m4xl4Rq00/0GZ3NMsFYd7SVR0dmj+yR5pceAtCfskynbOyQR6XUuuV811LGZF1HTCJhFD4Wlz1kICsau7Esl/H2zHzButprAyS0dtLCQ1/x3Xf4qrXsRGrJjE4jzCwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ag26YaM1; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723443575; c=relaxed/simple;
+	bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FVSzGaEtX85HoebMzzFwYJN5j7cgKRPcoYMNQE04hr3+psZEjPvLRYgjgZbxXzOP9VavuLf0HDBsZMcWiTl4KcjW0PUgiO9ks0PIh7j38g+dN7pFWvs/w+CEBgRcd9OYpi0NAtGFKGO70UhS0PjvYcjetxnQAcvupQSGPloU7WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwkVl85i; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ag26YaM1"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EED0372A7;
-	Mon, 12 Aug 2024 01:17:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hYRp1dbShvko8tePm9Zv8hoWxFZBDrmn06c4so
-	9/CAE=; b=Ag26YaM1PPJL1uDuKdIDcRLeL/ua1l1+FF8mk66zE2TZGjtLPo6mdk
-	qKeEqquvPGPZYmrd/m7KvpHJd+sQBbm4Cb/IlXF3dQcWWFobzPN0LtZBRmPj0fJZ
-	TfdXHyRepZmyjcG4KFk7IYX+hhGalcnroHDjNQc79prJztkHI8wHI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 05747372A6;
-	Mon, 12 Aug 2024 01:17:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F303372A5;
-	Mon, 12 Aug 2024 01:17:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,  blanet <bupt_xingxin@163.com>,  Xing
- Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH 2/2] remerge-diff: clean up temporary objdir at a
- central place
-In-Reply-To: <xmqqr0ax9vlk.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	09 Aug 2024 15:31:35 -0700")
-References: <xmqqv8099vms.fsf@gitster.g> <xmqqr0ax9vlk.fsf@gitster.g>
-Date: Sun, 11 Aug 2024 22:17:26 -0700
-Message-ID: <xmqqbk1y8gm1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwkVl85i"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6bbc1cee9b7so24651246d6.3
+        for <git@vger.kernel.org>; Sun, 11 Aug 2024 23:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723443572; x=1724048372; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
+        b=AwkVl85iCBMGFGl+l5VEAs8zuRpSJiB2NDPIHk+ngtrm5PPHDG181as8ii7OLs0kYh
+         AcOtSblPJa8OSoJg9zQ+gIP1ufJ6Pfq5iMKtdcDwe1FkSSVtUVuhOzx9emca6fiIdeq6
+         8RTmd8f9u7fYMq1eTcDQq8/ZcpzoHlhlPHasYoTT0S8IpHucA0HAUkmWAEWtbmEzw4CQ
+         +Y4qvtnFBRaaiZyYIZIGVdqcg6ADwcTURQw71yQAD9DRX+Y9POxlUDDaW/nO31LlMXRb
+         On0xjruihrM9Aq7aJZKXWHq8CBNdPFXgmlj47pHooXs7JYKKstVdNDc50JHzJi2Z/ePd
+         iWrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723443572; x=1724048372;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lOCrZ9aQiI7wytX7Gp80o7K17JB15J+qCMDBveR2mPc=;
+        b=GKVqOfI93yA82UTc/I1xzjYL8DWSYmBIjFoz6qu2hJlv8xgOEKorNC9bsaM1/Nyd0F
+         1Cc8xgVc361lhT4k+3915J94G3/a21kKbPmX02K6DgEuCk2ya6mjN2ph+66HipI8er1b
+         e1JTiHyH9NePDC4B/Y2eEroVC+LlLIdMQnCGzb2owpBHBi/lP4+ufgbTKRaOeVDIEyFq
+         MG7r4Q1+R/DybVO1fS+13Soq5tefbeCSkwSWbBxrGXrA74gksaax/v+Lldt8lrKOhNRh
+         aqCvDgDFbHO5B0LulouEdyynfdhmu2szDQDlcww8zwqzB3s/UdU/DjWsjxGQEz2x3ced
+         cSfQ==
+X-Gm-Message-State: AOJu0YwqpGa/FQB+amK2WX2ifjsK+niCHj+SCdMWJb12qqhacNwGfx7x
+	3cVVeO7rg5blS5e2fazv8Bj5XrLLzMZjXTMc8eTVzuWnpl5MHJXms5QFvV90pdDzyE0dZJO9oDa
+	k1mFOaepx+vncg/iww5KTYpytDztKawY=
+X-Google-Smtp-Source: AGHT+IEbPcnjwNc8VmvHox3QA2SCCnbEL1Er1w3FV3hV2nhcikEh8iSRb6gejwbl4JpLMGxclUCmpxDPFlpBtJXBKAU=
+X-Received: by 2002:a05:6214:2b99:b0:6b7:b3ee:5d74 with SMTP id
+ 6a1803df08f44-6bd78f33a56mr78937066d6.50.1723443572459; Sun, 11 Aug 2024
+ 23:19:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2A77DF7A-586A-11EF-BDC8-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+From: Junk Junk <shealenjunk@gmail.com>
+Date: Sun, 11 Aug 2024 23:19:21 -0700
+Message-ID: <CAAyo-VCL9tsuOaZrngciiBmbAKuwLtHxtDwaU17g1NfPEbwgBw@mail.gmail.com>
+Subject: Feature request: `git rm -c` shortcut
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+## Request
 
-> After running a diff between two things, or a series of diffs while
-> walking the history, the diff computation is concluded by a call to
-> diff_result_code() to extract the exit status of the diff machinery.
->
-> The function can work on "struct diffopt", but all the callers
-> historically and currently pass "struct diffopt" that is embedded in
-> the "struct rev_info" that is used to hold the remerge_diff bit and
-> the remerge_objdir variable that points at the temporary object
-> directory in use.
->
-> Redefine diff_result_code() to take the whole "struct rev_info" to
-> give it an access to these members related to remerge-diff, so that
-> it can get rid of the temporary object directory for any and all
-> callers that used the feature.  We can lose the equivalent code to
-> do so from the code paths for individual commands, diff-tree, diff,
-> and log.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+The omission seems conspicuous enough to be potentially intentional,
+but I would like to recommend adding the flag `-c` as a shortcut for
+`--[no-]cached` in `git rm`.
 
-I forgot to add that I am not happy with this "centralized tear
-down" step, even though I am reasonably happy with the "lazy set-up"
-step.  I wonder why the remerge-diff related members have to exist
-in the rev_info structure in the first place, instead of being in
-the diffopt structure?  Moving them to diffopt may make the end
-result much more pleasant to read.
+This might conflict with `git -c`, but git seems smart enough as it
+responds "unknown switch `c'" to `git rm -c`.
