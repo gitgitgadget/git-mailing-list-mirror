@@ -1,53 +1,55 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8361922CF
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 20:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C5A1946C7
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 20:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723495189; cv=none; b=kOo8ZImdBosEq4QRoKRW65DbFdBu2bDrFt/EYXFxJK60WT8pFN+dQofR14TONPLsamq9V2rgdf9EBk4RxHmeJ/pSIwxVZdk5K6T9yHKXREJjvndlgR/2eHcUPE467t/1W2je/JWwlDUguJh6271nCrYhnHloX6L1U6AI1kW12FU=
+	t=1723495815; cv=none; b=jsc5RPmIHh/BT3DYlq9EDkmoeNJGvF39HjCRBq0HH1GO4wJND53TuuIJWipDvlDRvH/jI3ukyqQVzvRsTDP60tV0DUY0tIFkd0i7d5tt9OS8DCCAScntuGfFiVT7B+ytWkVKPx8M0T1n7NNkH+1UpqVjUmF8FQK6VOJuNMJJdiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723495189; c=relaxed/simple;
-	bh=nmY6YneMN7L/0lGJdMPWNBJmer0N8vlBRssZsxp1Rog=;
+	s=arc-20240116; t=1723495815; c=relaxed/simple;
+	bh=vJgwv8QDnbde+wkoGHf/UoQlV/NkZSkmMnwzXerrgmk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lfApzkJ6HZeT4Vnj51GRqL5Xirsavl6KOovhB39/NQYkJT4G1Eqbt3jveqpZ9K7NcBR0V/c/U0S23JLRdwNRfbTHKFr9/71wCY+o9mf0fmNw9NdaUJwF57oTbwBFOifpM9aILhhnI3L5zH0nP08O5zr8JtY53gcP9ubbTbCoa6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mbDMd+m/; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=fJoNdXoyf9/DDuEHl2+lsvXDZkSSnq/gX/xMWxJxtWJSv/qVIp+B92tNqmqqVYNl6GwhDa9j9uxusp/bX43dLJ7PdsoMYgzBENdP0A1Pwd+UdXZ7u1/Tw8Rz3cuOVUtd6YQy6rcCFxeyEGRu5sgrxlLk6os4PhNW8ST4O/zSQaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nB6BQsuu; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mbDMd+m/"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 878FF3E86B;
-	Mon, 12 Aug 2024 16:39:47 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nB6BQsuu"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E7FF1E6D8;
+	Mon, 12 Aug 2024 16:50:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=nmY6YneMN7L/0lGJdMPWNBJmer0N8vlBRssZsx
-	p1Rog=; b=mbDMd+m/IDzUi1ey1XbYK1SBy3jtreNH9f5ZsKBmBvt+w9WJFj5GZx
-	5uXrn5giwqRonbX2XHSDyUGzFFVofeBWG5yOv2nC/y4xh0eOWFRSYE77giToB+Tg
-	afanZLH10Ut3ZE6ILFrJ28o7SsY6TLjIkfzyk8V5n2Lt5Je7H6gDk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 818833E86A;
-	Mon, 12 Aug 2024 16:39:47 -0400 (EDT)
+	:content-type; s=sasl; bh=vJgwv8QDnbde+wkoGHf/UoQlV/NkZSkmMnwzXe
+	rrgmk=; b=nB6BQsuuoPWE4ewIsITQCE/3gHVL9OI1ivxlnv3mlb6CDBBS/L3mrk
+	A6on+7qTtmNdt7RPKtWMbpVE/W55Z9Yv5Y0Euoc/7t0Q6cD76dq50USw81BBW4GQ
+	Oou9ChJOGo/WnJNy0PSQpgxbkc/fehmtkfFB4HzUvq1Ada6CWa2AY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 043011E6D6;
+	Mon, 12 Aug 2024 16:50:13 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 510E43E869;
-	Mon, 12 Aug 2024 16:39:42 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4ACAA1E6D5;
+	Mon, 12 Aug 2024 16:50:12 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Alex Galvin <agalvin@comqi.com>
-Subject: Re: [PATCH v3 0/3] git-svn: use svn:global-ignores when creating
- .gitignores
-In-Reply-To: <pull.1747.v3.git.git.1723481908.gitgitgadget@gmail.com> (Alex
-	Galvin via GitGitGadget's message of "Mon, 12 Aug 2024 16:58:25
-	+0000")
-References: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
-	<pull.1747.v3.git.git.1723481908.gitgitgadget@gmail.com>
-Date: Mon, 12 Aug 2024 13:39:40 -0700
-Message-ID: <xmqq7ccl1nn7.fsf@gitster.g>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  =?utf-8?Q?Ren?=
+ =?utf-8?Q?=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Kyle Lippincott <spectral@google.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  rsbecker@nexbridge.com,  Edward Thomson
+ <ethomson@edwardthomson.com>
+Subject: Re: [RFC PATCH v3 0/7] Introduce clar testing framework
+In-Reply-To: <k6uar46lu7ffbnboguca65afwegpcpfrivzfm7gspcorfefxnw@csqkd7wsoggk>
+	(Josh Steadmon's message of "Mon, 12 Aug 2024 11:10:46 -0700")
+References: <cover.1722415748.git.ps@pks.im> <cover.1723095269.git.ps@pks.im>
+	<k6uar46lu7ffbnboguca65afwegpcpfrivzfm7gspcorfefxnw@csqkd7wsoggk>
+Date: Mon, 12 Aug 2024 13:50:11 -0700
+Message-ID: <xmqqy151zcsc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,16 +59,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 00A9EA90-58EB-11EF-B3CD-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+ 7828B6FE-58EC-11EF-95D3-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Git-SVN does not currently use the svn:global-ignores property added in
-> Subversion 1.8 when showing or creating .gitignore files. This causes
-> Git-SVN to track files that are ignored by this directive in Subversion.
+> I'm generally in favor of this change, but I'm still unsure what our
+> plan is for importing this from upstream clar. Are we going to vendor
+> our own copy here and (hopefully) someone will pay attention to upstream
+> fixes and apply them to our copy? Or will we replace this with a
+> submodule?
 
-THe v2 iteration of the topic has already been merged to 'next' last
-week, and I was hoping we were done.  Can you make it an incremental 
-update on top of d7969a5127, which was the previous round?
+As long as we do not have to make any changes to the "vendored" code
+ourselves, that would not matter.  We will not randomly update the
+gitlink that specifies "we want to use _this_ version and not other
+version of upstream clar" without good reasons if you are using it
+as a submodule, and we would need to justify why we are updating the
+hierarchy if we import the hierarchy as vendored source.  So the hassle
+of "updating from upstream" is pretty much the same.
+
+For something as small as "clar", I think it is fine to start with
+the currently proposed layout and see what happens.  If we can keep
+going without touching the imported part of the sources at all, and
+the system proves to be useful and stable, that is a good time to
+suggest moving it out and binding the selected version of the
+upstream as a submodule.
 
 Thanks.
+
