@@ -1,104 +1,115 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAC4187842
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 16:58:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C4A189518
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 18:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723481916; cv=none; b=j0W19ikoWvv53gytOll33RGqbdtB3YK6ttEL9zOccjwFnwIDQ7RP3WN6wqxY1mMGYpDiXOWQ4xayHeZC7sN0OBDsdAGa0fieN3G5O1Rh11T6I6nsZVco7QXifjmrAYcHI9tVurjNL7/AjLxyPDJ0DlWhjjSEcjvkVdR8Kg6nQAg=
+	t=1723486122; cv=none; b=OVbFWO724Vzol02s80QocwGhfpO4NiPE34s+c3G84R5xZDuNnlqjZNLqxhRhQOnCMYy00CVuuXB1OrnWTfuZ0FybF2Z/yFx2J3lsydEhxX5vpHNbuh6mrUPBxZMVonK51MK18mTSqFpupnSvH1mFBOZU+YJWQ4Vn+amN6J5mjJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723481916; c=relaxed/simple;
-	bh=RnIPL0Vwwfu5FDbxcPLf1KiRnZ3swnjXo8NhMKFVvT4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FUWaUb0SBhOvbj674xQMn159Tl6p+7euSgbWTWO0UkZXuqwTlKRs84eA/2v6gQgEXyTZQWLu4YiSzUrHwoly14MfuG1HNg5fBp0qWUhk+u7vQbHngqzQ6oRaJYFn7SKLqcgCyPtNYA88J80jLMqtJ1JEBNWyle5XxG/NfnDJHIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EMsA9jZ9; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723486122; c=relaxed/simple;
+	bh=1Semz3EU+Bm1GGvGnEqBMT2JPpcnSvJvhST4JLxNFX4=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=NibHgt+JnRV42DYjmbqJBatLXg8WH2AUH1L8SzuaWNK+iqhC88rSmIuMc3NyVZHCAHBCqRsUCxu160aKMJl3cmQVLpn1mw7crHrI/KyjqM1zAGEDZkXgG9T80czTI515sDKcBZlW4TyuK3MFUzZlY+FAavm0hikMDs4Jgqz7sOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=H7WWpvNM; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EMsA9jZ9"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5a1c49632deso5077420a12.2
-        for <git@vger.kernel.org>; Mon, 12 Aug 2024 09:58:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723481913; x=1724086713; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dKAd2VpYAN5pgPyva1FgFManUItg4ctPO/9vknl1sLc=;
-        b=EMsA9jZ9qjrR28HKc+TKvpiBp8YRh/WjschAn92xF2rFyERKMhRTsz3G4uqHggNKTI
-         cDI6Hdmc0qLtIst3RVz9ZgwQ5rbeY4BOIPE+Rs6B9MvFVTnIh3MxFdcqR++pjbow1SY6
-         1uWgxbvZA0O/4ewBVmnOLi72cbSIlGsVhv5PkjPD9nInUpP79UysNqS6Q+M+os0akmit
-         APVxCvDfgGQwSq/5xlqFEzNdwcC+o1NkbuBKSxmEAE4kjPwuBJ9jijRjcjMXFddu9D5X
-         8Y7v5qIYF7F9vg0p5cqjjmZ1oLEH5zshABGhlE+Vy6ndetSaTo84LTxxrNePRYq7q+4p
-         lPzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723481913; x=1724086713;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dKAd2VpYAN5pgPyva1FgFManUItg4ctPO/9vknl1sLc=;
-        b=qMOl20vHOsQHgilqB/fudAfel+uZP4unmHGhhJD24bMjomGckkRRHGJy/BXf9BMHwc
-         0McvBUo0Ngwey09g1Fu3MakMPZjhYMumcqRqvbgcRcu5HplXAyl8Xd/3q9wyvq4tbVTU
-         Fz0JykU2CpXuCHae5TF3p/1287v+tUawoMRMtpB/5Z5C6zslBkE+zKr6ArfTh3gPfwuc
-         /do1rl61g88Pm6gIJMDNxKNhvafWI4COBrKhUCssR0TXUv43nOgFm7mhkF9Azzi3wBie
-         M3IiCtJsegwuVFoL9aTk6WbpLl+9ERsKRaUo2+cpV/h1XKSXdmi/HXNJ1Td82yPUBWj5
-         XC3A==
-X-Gm-Message-State: AOJu0Yz2L7X4nNVlUCQSveB/fQho9ZYVczRxd+K5WJSwsRfEA0oEEoMa
-	C55zAzX82+eeObpehptzf0Ihd6JOoHnJOWi+nIrluyW9EleT4DTRvUCVxA==
-X-Google-Smtp-Source: AGHT+IEbAiajSZgKXW/BxerHGlWiWRdQblIHhirV8o3ZmRzk77eVSeMHaMrk9Bb03knNXIl1/y6J7A==
-X-Received: by 2002:a17:906:fe43:b0:a77:d63e:d8fd with SMTP id a640c23a62f3a-a80ed1b4ecfmr84392166b.12.1723481912474;
-        Mon, 12 Aug 2024 09:58:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a80bb119cc7sm244349466b.94.2024.08.12.09.58.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Aug 2024 09:58:32 -0700 (PDT)
-Message-Id: <18dffbe992e07cc6c9ce81f53977e256c3bb1ad8.1723481908.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1747.v3.git.git.1723481908.gitgitgadget@gmail.com>
-References: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
-	<pull.1747.v3.git.git.1723481908.gitgitgadget@gmail.com>
-From: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 12 Aug 2024 16:58:28 +0000
-Subject: [PATCH v3 3/3] git-svn: mention `svn:globalignores` in help
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="H7WWpvNM"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alex Galvin <agalvin@comqi.com>,
-    Alex Galvin <alex.v.galvin@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1723486110;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/+DwRRh3ZQrziw/P20DBL/9YQhjB5yf0OxTUQnxRHM8=;
+	b=H7WWpvNMPEuRsuCw6y0m3XF6L3tlmmK3or2sVZDPJoq8Irbqcb5UYkya8zMQMIKPGJQ7oG
+	wBnID0spfNHhKbJaqsDYTRiIsOg6GIgea6uUNAU666KHGdtSVu0fwNqP7rIFZ7/zjDXZxo
+	tKz0K+V6btrSERjHOifJem54ZUXm00ybhw8YP7TCGacVg98Smj2xv/kvKkeG+VF5sytz/w
+	7tMWhcQFSN3M2noAwa5TUX4fnUL6aC7uRV0btEimLNDvOf8G4FqsLyC9mHmbIRjq75aw2S
+	B4+Tm/if4zu2ZTf2mxr1mw/H+DD14Ze8LI3rqno6zNLKRGaHJxkOWw82eb8IFw==
+Date: Mon, 12 Aug 2024 20:08:28 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, "Jason A. Donenfeld"
+ <Jason@zx2c4.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+ calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
+ emrass@google.com, rsbecker@nexbridge.com, mh@glandium.org,
+ sandals@crustytoothpaste.net
+Subject: Re: [PATCH v2 0/5] Introduce cgit-rs, a Rust wrapper around libgit.a
+In-Reply-To: <xmqq5xs688cz.fsf@gitster.g>
+References: <cover.1723054623.git.steadmon@google.com>
+ <cover.1723242556.git.steadmon@google.com> <Zrdn6QcnfmZhyEqJ@zx2c4.com>
+ <6398d60387a6607398e4b8731363572e@manjaro.org>
+ <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com>
+ <xmqq5xs688cz.fsf@gitster.g>
+Message-ID: <3df4270de4e37121084aafcbce1c7450@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-From: Alex Galvin <alex.v.galvin@gmail.com>
+On 2024-08-12 10:15, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> On Sun, Aug 11, 2024 at 1:27 PM Dragan Simic <dsimic@manjaro.org> 
+>> wrote:
+>>> On 2024-08-10 15:15, Jason A. Donenfeld wrote:
+>>> > Still the same name for v2? Cmon.
+>>> 
+>>> Yeah, I was also surprised to see that.  This _isn't_ cgit.
+>> 
+>> Josh addressed this point in the v2 cover letter by saying:
+>> 
+>>     Known NEEDSWORK:
+>>     ...
+>>     * Bikeshed on the name
+> 
+> I do not quite consider it as as "addressed this point" to just slap
+> a NEEDSWORK label and doing nothing else, though.
+> 
+> The original iteration had this:
+> 
+>     * bikeshedding on the name (yes, really). There is an active, 
+> unrelated
+>       CGit project [4] that we only recently became aware of. We 
+> originally
+>       took the name "cgit" because at $DAYJOB we sometimes refer to 
+> git.git
+>       as "cgit" to distinguish it from jgit [5].
+> 
+> and then now they as well as reviewers all have seen the tentative
+> cgit name, saw the reaction it caused, and now know that not just
+> potentially confusing other project _exists_, but it does matter.
+> 
+> Reviewers already have spent some time on suggesting that "git" part
+> should not be "c"git, as well as "rs" part may better be "sys",
+> etc.?.  There should be _some_ response, even if it does not yet
+> propose a new name.
+> 
+> If it acknowledged that the time and knowledge reviewers gave the
+> topic were appreciated, e.g., "The proposers of this topic saw THIS
+> point and THAT point as a input that we WILL need to consider when
+> we decide on the name.  We acknowledge that the name "cgit-rs" is
+> not ideal and needs to be changed.  But we haven't reached any
+> concrete alternative name yet, so this round still uses the same
+> name", I'd call that "addressed this point", though.
+> 
+> But just a dismissing "Bikeshed on the name", as if they do not care
+> to be mistaken as saying "those who complain about the name are only
+> bikeshedding and not worth listening to"?
+> 
+> We should do better than that.
 
-Signed-off-by: Alex Galvin <alex.v.galvin@gmail.com>
----
- git-svn.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index a2a46608c9b..b824011154b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -219,7 +219,7 @@ my %cmd = (
- 	                "Set an SVN repository to a git tree-ish",
- 			{ 'stdin' => \$_stdin, %cmt_opts, %fc_opts, } ],
- 	'create-ignore' => [ \&cmd_create_ignore,
--			     'Create a .gitignore per svn:ignore',
-+			     'Create a .gitignore per svn:ignore and svn:globalignores',
- 			     { 'revision|r=i' => \$_revision
- 			     } ],
- 	'mkdirs' => [ \&cmd_mkdirs ,
-@@ -234,7 +234,7 @@ my %cmd = (
-         'proplist' => [ \&cmd_proplist,
- 		       'List all properties of a file or directory',
- 		       { 'revision|r=i' => \$_revision } ],
--	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
-+	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore and svn:globalignores listings",
- 			{ 'revision|r=i' => \$_revision
- 			} ],
- 	'show-externals' => [ \&cmd_show_externals, "Show svn:externals listings",
--- 
-gitgitgadget
+I really appreciate and support your response, Junio.  Brushing it off
+originally as "bikeshedding" did leave a sour taste, because it 
+presented
+the conflicting naming as a non-issue.
