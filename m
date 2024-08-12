@@ -1,102 +1,149 @@
-Received: from 2.mo560.mail-out.ovh.net (2.mo560.mail-out.ovh.net [188.165.53.149])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B51E14F138
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 07:34:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.53.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1816713E40F
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 07:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723448052; cv=none; b=tm/YHngEnrWg5s3tegwAHYX1OTX74Hm8kKHpZoQhdcB2N39AjRllqKCE25zaYk0GUiaPcHtJJxEvrzQXRdBAH5juupiYjXU5JD9/9+DcLCuQag4NOJj+pvj1yMJ+BCbs3+rEyEmKp4tQMAHpD1n3GuNauWHmGPBzBekqqA+b3Zw=
+	t=1723448748; cv=none; b=CVyR3H0qsQHDqPjr5thjhg10MBgghKlTOln09NQnSB4mxYS3oky0XELZ03074zFxhZ+0Mvz592UKZ3X3w1Oiy7mJFysHtuLivUcmkX/B6MM8QrnrN32tx/MeWBel7LkUE4zmYUMfrghgM8NZD+BbMbwGOaqitJLB1oQWk/2mv8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723448052; c=relaxed/simple;
-	bh=EyjjmdPPV9RTqavhpJQEC7NY4IeZeWbXT80LJiyS+ys=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=FQRfJyq2i2yB7QeJ2QrtwyXnjsjXN00egE/GCzqyXHd02RevRzdl18qH/C1QXJJqpRzxhnBc/omI74wcOMlJ+3NjVozLn00URspX1TjVy2pOEl4yz8sUiZqr2rbPFPCE5Q/iAKA9ufSddSk60liq229+wtD1RvRFKBghUOJHyIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=scantech.com; spf=pass smtp.mailfrom=scantech.com; arc=none smtp.client-ip=188.165.53.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=scantech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scantech.com
-Received: from director3.ghost.mail-out.ovh.net (unknown [10.109.140.63])
-	by mo560.mail-out.ovh.net (Postfix) with ESMTP id 4Wj48Q0FkFz1Tg2
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 06:18:30 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-vnnm9 (unknown [10.110.118.84])
-	by director3.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 884211FE6E;
-	Mon, 12 Aug 2024 06:18:29 +0000 (UTC)
-Received: from scantech.com ([37.59.142.98])
-	by ghost-submission-6684bf9d7b-vnnm9 with ESMTPSA
-	id 8WyfHDWpuWbUEwAA5VxwUA
-	(envelope-from <jean-noel.avila@scantech.com>); Mon, 12 Aug 2024 06:18:29 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-98R002f024f8e3-32e4-4785-923c-2d9b5c3dd8a6,
-                    8E27908D858DFB8506F65EF87B9B1D6D6AE107E6) smtp.auth=jean-noel.avila@scantech.com
-X-OVh-ClientIp:92.173.128.58
-Content-Type: multipart/mixed; boundary="------------yZYIuLMp4HOwcxfPMDAhLbTC"
-Message-ID: <71b427c1-55a3-4f61-bfcb-65f7fe1a02cd@scantech.com>
-Date: Mon, 12 Aug 2024 08:18:28 +0200
+	s=arc-20240116; t=1723448748; c=relaxed/simple;
+	bh=7jVrWvckkAdue90irfiECZl5mOCMx961f6wFdTqGLrg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JDq/P6gSFXLVJn3dIvIl1Tetq6OabpUJGvRMgwETElcU5XEJsHbTKOX9fvzqhpnUM58Hbmgv8h+Ua0JZj14t2sESqG0gN96IAghVPBJI12BNLawIWDrFFZIPsIcHVFpvuoZ9c6ITtKm+LyHMzQNrEW8foZz5Dhmor1USRWkFZ2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R0ULAl9B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGzmlqON; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R0ULAl9B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGzmlqON"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id EC89411471F2;
+	Mon, 12 Aug 2024 03:45:44 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 12 Aug 2024 03:45:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723448744; x=1723535144; bh=s6IZg6+fd9
+	m/WfG9IucHKE6+ben3HvQGh1quKWZ1R2c=; b=R0ULAl9BMaXghoEYQNXj0muU1D
+	utn8TzuisIHQi5ICiOv91aIIGlMSQgMoNwF42rynK1TZwruht+TH2MnY3cWpkyjk
+	NOgFXqukO97zYfJ/jyE8XnG5E0Q+JczQl1XgqiBDVV5qPv8n4moLAjl4JcmuMzsk
+	qg1BwshA3545PFo6L8Hgs2PSfw2eCWJpF4ZHwuOqaVp2rpBnoSq5ZYKJg9Mmxw+F
+	DT0/fRpLaCiUd7KOQZQe/sel+xxCqOVEDb0IxlY/bkqQUnDdjx7E6/0QwfP1SLCd
+	RYoUACEFSNKhZ0uMIByHMCfnpqC8/mFlRRmPEfRAghL9Hcwvl75vSSdxaXBg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723448744; x=1723535144; bh=s6IZg6+fd9m/WfG9IucHKE6+ben3
+	HvQGh1quKWZ1R2c=; b=HGzmlqONsK/zINs0hax30YNHF7mVyprp1MazLAjOeBGa
+	drY6gv8a4cwfYBKJXxyfnfm6ZDWC+rJ3F42ulEY+9o0For01HEf8HQn+LFFs5kNU
+	p6qnRQZiAkKyEkKCNK/FKu4ljbQIAMpkXD1FG1cTHZFOqP+pwhOP/sxzshi9TfFu
+	GRnZsRN0gH9Vs/SEyI2LkZYG/n/xF1i3/CA2OyL1YKHe4eHYxfETlkzInR6SGgW+
+	Dz8JUk8b8cewbC78MCoGPl/GRrVJpb7MwtrL6sti6oX1n1iHR7aWahauJno8WDtz
+	FvRyFtU6j5nch/g+33M39kxfi5r7GWPVP2yTMagGMw==
+X-ME-Sender: <xms:qL25Zq7aIA8A_BeIetunMVZxzppn2uDQEgkQPn1PKzYNzQfGO5j4KQ>
+    <xme:qL25Zj6M07kfMIHkQAGKY-2_3PGrpIgAwnWeUGKQWHKgMPOjoCGDmF8McSEM7gH4X
+    IDBFvhluI1MzAbCUQ>
+X-ME-Received: <xmr:qL25ZpfCmjOtW2Kc0E2lHY83pgnI9B2Pf6svnpPHME2A_p76OSfe90IyFxlQH8bH_sHh86wkLGThy4h1g_GRHBVuQchPTIaMDlSwL7a9ZeAK5j4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrleelgdduvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qL25ZnLwz50k8bsSTu6Utzsr_qFGPFEQzNypKsk2V1Raiac48Of7lQ>
+    <xmx:qL25ZuKQ68RtzQNZGmFfiRppFo_tKWY649YbDyJQijtDqCu7uLUHLw>
+    <xmx:qL25ZoxYtonKiLCNbTEwfpVw0j3vKvK5aSyGeFip1jE-y6ZYXrG9yQ>
+    <xmx:qL25ZiIN3_G-iKg1gtTM5S6g-Vjle7SzfF1hXOT74OFPgLmuCSBkAA>
+    <xmx:qL25ZjFexA-MhaBjWjuEJCWqDUUeyAO59Mz15cgdd0bHAJzWeksCHFHL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Aug 2024 03:45:43 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1e2d1973 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Aug 2024 07:45:27 +0000 (UTC)
+Date: Mon, 12 Aug 2024 09:45:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 08/22] config: fix leaking comment character config
+Message-ID: <Zrm9ix5aN_g76Qxq@tanuki>
+References: <cover.1722933642.git.ps@pks.im>
+ <cover.1723121979.git.ps@pks.im>
+ <8fbd72a1002d1a285847c62b5524041927a7b4d4.1723121979.git.ps@pks.im>
+ <xmqq34nfhrb9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] doc: update the guidelines to reflect the current
- formatting rules
-To: Eric Sunshine <sunshine@sunshineco.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
- <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
- <92f3121cf4e719d1bd6f85e3af454a3ea7547930.1723389612.git.gitgitgadget@gmail.com>
- <CAPig+cSGeExca0d=o0jewFERTx30+EgR5HccTO_gOsKtnXxuwA@mail.gmail.com>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jean-noel.avila@scantech.com>
-Content-Language: fr
-In-Reply-To: <CAPig+cSGeExca0d=o0jewFERTx30+EgR5HccTO_gOsKtnXxuwA@mail.gmail.com>
-X-Ovh-Tracer-Id: 12192651568032571131
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeftddrleelgddutdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurheptgfkffggfgfuvfevfhfhjgesmhdtreertddvjeenucfhrhhomheplfgvrghnqdfpohotlhcutehvihhlrgcuoehjvggrnhdqnhhovghlrdgrvhhilhgrsehstggrnhhtvggthhdrtghomheqnecuggftrfgrthhtvghrnhepkedvueefvdeitedvfefgieekueeukedvkeffgedvhfegveekvedvudeuteduhfetnecukfhppeduvdejrddtrddtrddupdelvddrudejfedruddvkedrheekpdefjedrheelrddugedvrdelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhgvrghnqdhnohgvlhdrrghvihhlrgesshgtrghnthgvtghhrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheeitddpmhhouggvpehsmhhtphhouhht
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq34nfhrb9.fsf@gitster.g>
 
-This is a multi-part message in MIME format.
---------------yZYIuLMp4HOwcxfPMDAhLbTC
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Le 12/08/2024 à 01:56, Eric Sunshine a écrit :
-> On Sun, Aug 11, 2024 at 11:20 AM Jean-Noël Avila via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
->> ---
->> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->> @@ -746,70 +746,72 @@ Markup:
->>   When literal and placeholders are mixed, each markup is applied for
->> + each sub-entity. If the formatting is becoming too hairy, you can use the
->> + s:["foo"] formatting macro and let it format the groups for you.
->> +   `--jobs` _<n>_ or s:["--jobs <n>"]
->> +   s:["--sort=<key>
->> +   s:["<directory>/.git"]
->> +   s:["remote.<name>.mirror"]
->> +   s:["ssh://[<user>@]<host>[:<port>]/<path-to-git-repo>"]
->> +
->> +Note that the double-quotes are required by the macro.
+On Thu, Aug 08, 2024 at 10:12:26AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> The closing `"]` is missing from the --sort example. Is that intentional?
+> > diff --git a/config.c b/config.c
+> > index 6421894614..cb78b652ee 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -1596,7 +1596,9 @@ static int git_default_core_config(const char *var, const char *value,
+> >  		else if (value[0]) {
+> >  			if (strchr(value, '\n'))
+> >  				return error(_("%s cannot contain newline"), var);
+> > -			comment_line_str = xstrdup(value);
+> > +			free(comment_line_str_allocated);
+> > +			comment_line_str = comment_line_str_allocated =
+> > +				xstrdup(value);
+> 
+> If you are to follow the _to_free pattern, you do not have to
+> allocate here, no?  We borrow the value in the configset and point
+> at it via comment_line_str, and clear comment_line_str_to_free
+> because there is nothing to free now.  I.e.
+> 
+> 			comment_line_str = value;
+> 			FREE_AND_NULL(comment_line_str_allocated);
 
-Not at all. Will fix it.
+Only if it is guaranteed that the configuration will never be re-read,
+which would end up discarding memory owned by the old string. Which
+should be the case already, but to the best of my knowledge we do not
+document the expected lifetime of config strings anywhere.
 
-Thanks
+> I still think the approach taken by the previous iteration was
+> simpler and much less error prone, though.
 
+I personally prefer this iteration. I feel that it is way more
+discoverable to have an explicit indicator that something needs to be
+freed, which the `_allocated` suffix brings us. With the old version,
+the caller needs to become aware that the constant string may sometimes
+need to be freed, and that sometimes is figured out by comparing to a
+magic variable, which feels worse to me.
 
---------------yZYIuLMp4HOwcxfPMDAhLbTC
-Content-Type: text/vcard; charset=UTF-8; name="jean-noel_avila.vcf"
-Content-Disposition: attachment; filename="jean-noel_avila.vcf"
-Content-Transfer-Encoding: base64
+Ultimately, both solutions are okay-ish, but I don't consider either of
+them to be great. As mentioned elsewhere, I think the best solution
+would be to adapt the `struct strbuf` interface to have an initializer
+like `STRBUF_INIT_CONST("foobar")` that allows us to initialize it with
+a string constant. There wouldn't be any need to have two variables
+anymore, and the `strbuf` API would handle the lifecycle of its contents
+for us. In any case, I'd say this is a #leftoverbit and is better done
+in a subsequent patch series.
 
-YmVnaW46dmNhcmQNCmZuO3F1b3RlZC1wcmludGFibGU6SmVhbi1Obz1DMz1BQmwgQXZpbGEN
-Cm47cXVvdGVkLXByaW50YWJsZTpBdmlsYTtKZWFuLU5vPUMzPUFCbA0Kb3JnOlNjYW50ZWNo
-IFMuQS4NCmFkcjtxdW90ZWQtcHJpbnRhYmxlOlNhdm9pZSBUZWNobm9sYWMgQlAgMjQ0OztC
-PUMzPUEydGltZW50IEFuZHJvbT1DMz1BOGRlIC0gMTA4IEF2ZW51ZSBkdSBMYWMgTD1DMz1B
-OW1hbiA7IExBIE1PVFRFIFNFUlZPTEVYOzs3MzI5MDtGcmFuY2UNCmVtYWlsO2ludGVybmV0
-OmplYW4tbm9lbC5hdmlsYUBzY2FudGVjaC5jb20NCnRpdGxlOkVtYmVkZGVkIHN5c3RlbXMg
-bWFuYWdlcg0KdGVsO3dvcms6KzMzIDQ3OSAyNSA1NCA1MA0KdGVsO2NlbGw6KzMzIDYzMyAw
-NCA2NCAxOA0KeC1tb3ppbGxhLWh0bWw6RkFMU0UNCnVybDpodHRwOi8vd3d3LnNjYW50ZWNo
-LmNvbQ0KdmVyc2lvbjoyLjENCmVuZDp2Y2FyZA0KDQo=
+I don't really think it makes sense to reroll this version to swap out
+the patch for the first version again, but am happy to adapt if you
+prefer that.
 
---------------yZYIuLMp4HOwcxfPMDAhLbTC--
+Thanks!
+
+Patrick
