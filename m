@@ -1,81 +1,122 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC8B183CC8
-	for <git@vger.kernel.org>; Mon, 12 Aug 2024 14:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E030C53370
+	for <git@vger.kernel.org>; Mon, 12 Aug 2024 14:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723474090; cv=none; b=eTFrIX5dQTzwwwwap6OttA/GGAh2ORRuKOc85nHFm3iQreBFoyDXv0agUOB7HhLO+nvQgqe6LQThtVOXb63UyDw3gvPioWjicl/NnnlkclL2Xs2MM/ZEScSxndYBzl2Avy4geioWSNhDkcEni397zlYQMLSc1JwaKylyjF/pGPA=
+	t=1723474255; cv=none; b=G0SCR8C5VN4G9AF5BCzf8UDnQVY7yxFRknedWKX1aoDvleuxAN0RUBEfVpu0se1XeRQo9jo5OTo0pnQFs9g4Q+iY16mY7mPWwi/ZFweL+ny2XP9HDdRTHzaHUZV/AVp1zqPK2wBkETAp0nokJFslx/3JaHdiAzlqpTLCnoH9gfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723474090; c=relaxed/simple;
-	bh=OCvw1Cj32jFbCsmgt/pKiavTaY4guYEKxzxDrydA7iU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AD/NwkCoHQj9KHfIHUJsJoF0a86Ep0h3hph4Ks6wLHy5RMl0ueuFLe4FDpKwrVPAEQusbApyAga4x3KX1cQkNwiRq2zaMS/49zc19jlNPrRcEhJnjuO5kktsivHL2XiGdqjT0w1u4fQd+qvZ+5L2co7pJmNXct/Avq8U3myYUFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 29468 invoked by uid 109); 12 Aug 2024 14:48:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Aug 2024 14:48:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30064 invoked by uid 111); 12 Aug 2024 14:48:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Aug 2024 10:48:07 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 12 Aug 2024 10:48:06 -0400
-From: Jeff King <peff@peff.net>
-To: Kim Scarborough <kim@scarborough.kim>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: Git and gettext
-Message-ID: <20240812144806.GB3800004@coredump.intra.peff.net>
-References: <bf5a7771-f616-47d9-a014-f9d3e0afaa08@scarborough.kim>
- <Zq5UFYnWL1jdgDaH@tapette.crustytoothpaste.net>
- <7d507ea2-08e1-4597-bff8-8a2b40a01747@scarborough.kim>
- <Zq5qNwmTpL1H5LH0@tapette.crustytoothpaste.net>
- <1d6e0fef-9b9a-4239-aced-d20cd5c3434c@scarborough.kim>
- <20240805005311.GA66003@coredump.intra.peff.net>
- <97f1ca52-85b1-443d-a52c-67fce2e25f98@scarborough.kim>
+	s=arc-20240116; t=1723474255; c=relaxed/simple;
+	bh=l5h8hSodUv9HK3gw3MaOJt4HsrnNJWmu05Qi/zDKrgI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RPC0h58tx8xzBLkt/Eb7H5MTr4/4++PMd0ixVkBwVe4dvcyDoDI8H+qrovz2goCeS7RePpLMpBr4z2/m7ntuK81BExiXydCp+7wEPfIIV8R7BEzSY9uZ+oUDPUc2jUbDEPb6Rx8ZOqd/p1wh4N1oMXl6n0AkXFtbVvvfdC/LrO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLryiAyj; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLryiAyj"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7d2a9a23d9so484039866b.3
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 07:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723474252; x=1724079052; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZhNuXOsaZXhFDADw38+xrjX4Eia5FNcaNpPHQ3A9ykY=;
+        b=KLryiAyj1kDlWiVOD1WghK268PjgenavoM3U2LnekhYjGGtUkclx1eFIJUo4hGET56
+         AXbg10ZodSOGENn/SI8ZTNqQw5Z7tfTsbwraU28WRWGx4rUucd7Ek8DqMG6Po2oRdNXV
+         QUlm7wsEfJS/Z+NQe7HCpOTHzULmth1xYCcJKeRRAQQnpQzeEVP91/ITahzshoGtlpT4
+         MkqM9Nx+domyUc1kI5a/vWbvMgCWGuWBTuGe5qNvEdtapX6Vl7uIHGpu8vsHPtlE2DM6
+         7mz5K7T9fMHaqEfn2j8Ch/TN4UOS4AU1qUA48j6XNKb5y0uJFUe7Woh1TJoKzxuNS9/j
+         uaKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723474252; x=1724079052;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZhNuXOsaZXhFDADw38+xrjX4Eia5FNcaNpPHQ3A9ykY=;
+        b=Ib9JDFN+g5t/efX7s+umA1etmEBC9zfPC8WW5D3+16sFsjqmggIfQrFlJE3Bbe2eb3
+         cIr+9bcukKQ2KQTYODYBQrOwZYiHaYiY2FfaJ0pN1fszWC4LkaJSqtmuai7439Rsz0B/
+         uKv24uBb4QUy6r2ms1/CxJa5LXy5rDsXhY4mY2Nc+Kzfpjj1c5t/tq2vHwRd6mcfXwPV
+         i7h/VljeNeLa/6/kASt3xu7GGP4ACZpVWIkHgAN4j/7ub9MUSlTD1AEprRGBd54lSzPT
+         WSzs+9wjFSlUXKARzV6s6apxBzQAaWjs2lZgNZ6uB1928pdGVKMeCN228BKXIpqyxm81
+         K9Aw==
+X-Gm-Message-State: AOJu0YzFibMy4ricxOwOy3tgGGjZiXbQLivAmPAx5XepDXrnwinFvgT6
+	uNYM7erB/RVdJw1bv+rRE22IzDJVyBc9cUQAdzUq7gdSeV1RatMcpRH68dv65aCKWO3eobt9czN
+	LeHcT4dkzIC8+DlYoZyoUy35knwE=
+X-Google-Smtp-Source: AGHT+IEu2NrP9Rfl00qf5LtctZrWr0xQ86MCwzdqDvGOp0z/uYsj4GXdWLrqBtpzfw+deyephUj0JP3lcIukAn7B/34=
+X-Received: by 2002:a17:907:1b05:b0:a7a:abd8:77a6 with SMTP id
+ a640c23a62f3a-a80ecf8db89mr52511666b.0.1723474251915; Mon, 12 Aug 2024
+ 07:50:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <97f1ca52-85b1-443d-a52c-67fce2e25f98@scarborough.kim>
+References: <20240807141608.4524-1-chandrapratap3519@gmail.com>
+ <20240809111312.4401-1-chandrapratap3519@gmail.com> <20240809111312.4401-2-chandrapratap3519@gmail.com>
+ <xmqqwmkpd0qs.fsf@gitster.g>
+In-Reply-To: <xmqqwmkpd0qs.fsf@gitster.g>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Mon, 12 Aug 2024 20:20:26 +0530
+Message-ID: <CA+J6zkRTRQ9o=CDgsFbJx5csjDxLfQC_E+dw+Csz3hp=_c8Ueg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] t: move reftable/readwrite_test.c to the unit
+ testing framework
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Aug 06, 2024 at 04:52:39AM -0500, Kim Scarborough wrote:
+On Fri, 9 Aug 2024 at 23:42, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Chandra Pratap <chandrapratap3519@gmail.com> writes:
+>
+> > reftable/readwrite_test.c exercises the functions defined in
+> > reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
+> > reftable/readwrite_test.c to the unit testing framework. Migration
+> > involves refactoring the tests to use the unit testing framework
+> > instead of reftable's test framework and renaming the tests to
+> > align with unit-tests' naming conventions.
+> >
+> > Since some tests in reftable/readwrite_test.c use the functions
+> > set_test_hash(), noop_flush() and strbuf_add_void() defined in
+> > reftable/test_framework.{c,h} but these files are not #included
+> > in the ported unit test, copy these functions in the new test file.
+> >
+> > While at it, ensure structs are 0-initialized with '= { 0 }'
+> > instead of '= { NULL }'.
+>
+> OK.
+>
+> > -             EXPECT(buf->buf[off] == 'r');
+> > +             if (!off)
+> > +                     off = header_size((hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
+> > +             check(buf->buf[off] == 'r');
+>
+> Why not "check_char(buf->buf[off], ==, 'r')"?
 
-> On 8/4/24 7:53 PM, Jeff King wrote:
-> > If we don't have msgfmt, I think git-gui invokes a custom script via
-> > tclsh. If you also don't have that, it will fail. Running with "make
-> > V=1" makes this more obvious, since it shows the fallback command name
-> > instead of "MSGFMT".
-> > 
-> > If you don't need git-gui at all, the simplest thing is to just run
-> > "make NO_GETTEXT=1 NO_TCLTK=1". That's what I do, and I have neither
-> > msgfmt nor gettext on my system.
-> 
-> That did it. Thanks!
-> 
-> Would it be possible to modify the configure script so that it checks for
-> this stuff?
+I wrote this series quite some time ago when this functionality
+was not yet introduced to the unit testing framework. I'll commit
+this change in the next reroll.
 
-Probably. It looks like the configure script knows about both gettext
-and tcl paths, but running "autoconf && ./configure" on my machine
-doesn't disable either.
+> >       }
+> >
+> > -     EXPECT(stats->log_stats.blocks > 0);
+> > +     check(stats->log_stats.blocks > 0);
+>
+> Why not "check_int(stats->log_stats.blocks, >, 0)", which you used
+> in the t_log_write_read() function?
 
-Looks like the NO_GETTEXT test is checking to compile against libintl.
-Which I do have (it comes with glibc), but I don't have the other tools.
+Looks like a case of too-mechanical-a-translation to me. I'll fix this
+in the next version.
 
-For tcl, you can say "--without-tcltk" manually. But if you don't, it
-just assumes "wish" is present without checking.
+> While reading this step, I looked for use of check() that is not
+> rewriting EXPECT_ERR(x) to check(!x) as suspicious.  The above two
+> (and a !memcmp() that is OK) were the only three such uses of
+> check(), I think.
 
-So I'd imagine that both tests could be made more robust. I don't use
-autoconf myself (in the Git project, it is an optional layer that sits
-on top of the Makefile knobs), so I'll leave that to somebody more
-motivated (and hopefully more familiar with the usual autoconf solutions
-to these kinds of things).
-
--Peff
+I went through this series again and I agree on not encountering
+any other subpar translations of EXPECT() to its counterparts in
+the unit testing framework. I'll reroll the series with only these
+changes until someone else finds any other corrections.
