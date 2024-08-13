@@ -1,97 +1,121 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FEC13635D
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 22:33:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CCF13635D
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 22:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723588393; cv=none; b=VbjOXrthcaLC9laCHDYWuTRx78NsjjB8rmIFoi/QQsESezODqHPd40+VxT3MhvxnEsplqvWJnjeauPVb+zgoejBk22xqvvwhK+K7eIpnOOx1s5U6iD+v7UN9QKpH//VVgLbWo8mcEhnewXVBhrBb/Rb5wdZSptsY+2SfRXHmGdc=
+	t=1723588405; cv=none; b=kgVuqi/9Hgw9+8W4MB51R1CdXIzs1EvkSnYwqyQMogMUgsGIe2vSHLuFKA4zf3peWnYHuDAjjOkxSKPHFVxknzMXcVYWYnhogNBLeyh+L7aER8yAWnYSYTu6Dt8gGAsyUqtpBWW4Q+QHuVdsRJCbKkXPlXf1PIwr0Qk8vSjEbMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723588393; c=relaxed/simple;
-	bh=GQg9f6tKW6K+V9xpztO7Nr5VIvcJpCA3hsS8PDZTew8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IDTEJ+pKx95ufj1vAqU0uMvtzniiH9paCxhkpv0beFURYYMwh2kKydlJ//auvVTZ0lgQp/venre9ifIZnUlpLQw56q0QfjFun9wAWVdtD3SnLxUkOuU5gDXNkf0gwNgG8cR19aukEkERNxAe0cumiB7McXsF0tWQ9useyxaoo/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=q9rhekMl; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1723588405; c=relaxed/simple;
+	bh=Zx8NcAnWX7gNSKTGBii6GkA0y8BpEctOpRG/tE0QyE4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oKvfWlJO1ZvjneDccGUD3e3DmjHTEURtrX5qazrtuVZ94riAuApfwaRBPrKZTFbzVuveof/9QnFobTHDwj9maHlJTk8iczwqJAfYxN5MDh8KRnQXtzIE2Fw2TNgkMJJ0j9EHqFLrSTz3qRTzlKKALpwtb+zYKHhhSOxAAuw6Vh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WsK26cI0; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="q9rhekMl"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1fc66fc35f2so2544335ad.0
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 15:33:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723588391; x=1724193191; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oZJmNM9yXqj9ni/ykLBHgS2d/OqBGbQeQwlZl3Jv+G8=;
-        b=q9rhekMltAxJTZBrsbC2dMxDp/BR+fttyIYbPtoP930DQCjno0y2wfUFosF+IFZ/7w
-         GbgIRUBYpN5fu/FzA2w8MLJIaJewTXFAdYU9HS5zKL6O58frJ6RuX04N3Z/na4b3y9Qv
-         Ci5EREyT3ulEst8ha7WXUV16Y1GsxsaRaCHde3jR21pTaCTTQuaQlHZMfjkXZEiNKsJE
-         9CzK6dHXdTgzvidN0jxpnRtOylgM9SlDvkpGOSm+hoFL8SiM1oIcPqEHqwjYPwUZBBEF
-         IG4ZWkLyaJoeGPn6KuQeGHxMs+4ZKNu0sDIOd0N+XSuX2pR14RPKIuAaaM7xsEsd3S7+
-         xvOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723588391; x=1724193191;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oZJmNM9yXqj9ni/ykLBHgS2d/OqBGbQeQwlZl3Jv+G8=;
-        b=pixyb7LQf9UchWi7dIjaIxzzHv3IWWntGE3Z1E3UHjeNbsxh48FQWTUJ2L2AUinjt7
-         7VHJBzMT8wDCj+0+5LBkefisSKP48RYGREh4brxpWHH8qNDwaQBrmKh7m5rgkDFHRFSx
-         mAyCzVat4dIM29mKAK9Pdat1daWWOneRTr7RxJ+lkbqyAmGOXylXgQa8qSThJoq3v3pJ
-         OemUBJ89R2CnNePEtEzjp7BHqUGOD9Vr5cHaVa4Bgct/sFcdxoOGLxupEIkEUIpQPdEl
-         GPVxUrUTgOdaBcfUSGhRffn9eJGoXZSf9Zao8HWVzTnx7pSJ7bvm8WlT4gPSPSqsNrlD
-         2yeA==
-X-Gm-Message-State: AOJu0Yz3Yvwz9pH7rv/syI/GcrC6o8Ui+/eA3r+L1RrULKivJRdXtL8p
-	bKq5EczwOBgNzKK4gWPdbZFBMZaf0iyx+BvEuRkyALaECBq12AeEKJIuHQCAAg==
-X-Google-Smtp-Source: AGHT+IFhwPm2ooUQjOsDQJPRJhuPqCV83hl5IOt6zKclg6153KOQG46MIQIcWQ0ApITAk86IYEyqog==
-X-Received: by 2002:a17:902:ce8c:b0:1fc:54c4:61a7 with SMTP id d9443c01a7336-201cbc615c7mr68349195ad.23.1723588390561;
-        Tue, 13 Aug 2024 15:33:10 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:3e87:d579:d973:3685])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201cd12f6d1sm18457405ad.13.2024.08.13.15.33.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Aug 2024 15:33:09 -0700 (PDT)
-Date: Tue, 13 Aug 2024 15:33:04 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 1/4] t: move reftable/readwrite_test.c to the unit
- testing framework
-Message-ID: <2rxxfpzijfmvo65xournnmx4oawzqlhgipje4cxzxvo5aqzt6u@xppoikj262cp>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
- <20240813144440.4602-1-chandrapratap3519@gmail.com>
- <20240813144440.4602-2-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WsK26cI0"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E156821AD9;
+	Tue, 13 Aug 2024 18:33:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Zx8NcAnWX7gNSKTGBii6GkA0y8BpEctOpRG/tE
+	0QyE4=; b=WsK26cI0c+jMyxkdc/px/koha/rKoQt52pD9BS9+XBblFhaxQCm4k9
+	6eJpSPIJkTdijxy7pjlRPL9dVySsPTJ1OEjcKRkS9P5/tVOqD/wT4LI2zfprrQlS
+	fRA8Ovf5e7ejVCZyvsr3lE8uSxOyG13SSNAzi/1lVlk9TUO0qn34o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D2BBE21AD8;
+	Tue, 13 Aug 2024 18:33:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4FB0521AD7;
+	Tue, 13 Aug 2024 18:33:20 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Alex Galvin <agalvin@comqi.com>,  Alex Galvin
+ <alex.v.galvin@gmail.com>
+Subject: Re: [PATCH v2] git-svn: mention `svn:global-ignores` in help+docs
+In-Reply-To: <pull.1766.v2.git.git.1723578946962.gitgitgadget@gmail.com> (Alex
+	Galvin via GitGitGadget's message of "Tue, 13 Aug 2024 19:55:46
+	+0000")
+References: <pull.1766.git.git.1723500383989.gitgitgadget@gmail.com>
+	<pull.1766.v2.git.git.1723578946962.gitgitgadget@gmail.com>
+Date: Tue, 13 Aug 2024 15:33:18 -0700
+Message-ID: <xmqqzfpg2gup.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240813144440.4602-2-chandrapratap3519@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0AEA7E46-59C4-11EF-BC86-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-On 2024.08.13 20:04, Chandra Pratap wrote:
-> reftable/readwrite_test.c exercises the functions defined in
-> reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
-> reftable/readwrite_test.c to the unit testing framework. Migration
-> involves refactoring the tests to use the unit testing framework
-> instead of reftable's test framework and renaming the tests to
-> align with unit-tests' naming conventions.
-> 
-> Since some tests in reftable/readwrite_test.c use the functions
-> set_test_hash(), noop_flush() and strbuf_add_void() defined in
-> reftable/test_framework.{c,h} but these files are not #included
-> in the ported unit test, copy these functions in the new test file.
+"Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'm assuming that eventually, reftable/test_framework (and all the rest
-of reftable/libreftable_test.a) will be removed after all the tests are
-converted to the unit test framework, is that correct? Will other tests
-need these test_framework functions? If so, I'd rather not end up with
-duplicates in each test file, even if these are small functions. Is
-there a reason why we can't link the reftable/test_framework object (or
-the whole reftable/libreftable_test.a library)?
+> From: Alex Galvin <alex.v.galvin@gmail.com>
+>
+> Git-SVN was previously taught to use the svn:global-ignores attribute
+
+I think the noun they use is not "attribute" but "property".
+
+> as well as svn:ignore when creating or showing .gitignore files from a
+> Subversion repository. However, the documentation and help message
+> still only mentioned svn:ignore. This commit updates Git-SVN's
+
+"This commit updates" -> "Update".
+
+> diff --git a/git-svn.perl b/git-svn.perl
+> index a2a46608c9b..d8dc485e50d 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -219,11 +219,11 @@ my %cmd = (
+>  	                "Set an SVN repository to a git tree-ish",
+>  			{ 'stdin' => \$_stdin, %cmt_opts, %fc_opts, } ],
+>  	'create-ignore' => [ \&cmd_create_ignore,
+> -			     'Create a .gitignore per svn:ignore',
+> +			     "Create a .gitignore per directory with an SVN ignore property",
+
+Hmph.  Is it intentional that this "create" side uses a single
+property while ...
+
+>  			     { 'revision|r=i' => \$_revision
+>  			     } ],
+>  	'mkdirs' => [ \&cmd_mkdirs ,
+> -	              "recreate empty directories after a checkout",
+> +	              "Recreate empty directories after a checkout",
+
+Given that all other messages begin with capitalized verb, this is a
+good change for consistency, but it was not advertised in the
+proposed log message (just saying "While at it, capitalize the help
+message for 'mkdirs' command. for consistency" would be sufficient).
+
+>  	              { 'revision|r=i' => \$_revision } ],
+>          'propget' => [ \&cmd_propget,
+>  		       'Print the value of a property on a file or directory',
+> @@ -234,7 +234,7 @@ my %cmd = (
+>          'proplist' => [ \&cmd_proplist,
+>  		       'List all properties of a file or directory',
+>  		       { 'revision|r=i' => \$_revision } ],
+> -	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
+> +	'show-ignore' => [ \&cmd_show_ignore, "Show .gitignore patterns from SVN ignore properties",
+
+... the other "show" side talks about "ignore properties" (plural),
+implying that both svn:ignore and svn:global-ignores may get
+involved?
+
+>  			{ 'revision|r=i' => \$_revision
+>  			} ],
+>  	'show-externals' => [ \&cmd_show_externals, "Show svn:externals listings",
+>
+> base-commit: cabe67c0d1819fd1e33079e92615c6c7a3dc560d
+
+Thanks.
