@@ -1,253 +1,119 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B2B4C8C
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 11:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF69194A6B
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 11:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723548594; cv=none; b=QXw6dabo5D4tCI4klp8k7MqfrGU75M9zBywNgby1dQ0IAQXy3AqfzoJBsMDqziTNefWFEMhONNZvA8H71jWmrLbiRdLi5EaQfnFB05y4Gyj0Yg9/+0nFZzq2tdOSDrHdZvHtLE4dp7EDZn3efQVa0uqrwlt6vJH2r2vN+A28FgE=
+	t=1723550048; cv=none; b=U8YbqZ3BbnMlKKwZtENWxPGo+mkw1DafJQTcG3pg9ar0IVRf+5rjp2hXfMxdkzDG5Sw2eWzwJuJF/kxEfmN1YBNFtA3YJtT222UrZiIy52gRuQp91l1ofEvfU7MSBJaBmC9OwcEmFdEci9rFTRzQPU9jBiLAP5+gcQbnZW66OOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723548594; c=relaxed/simple;
-	bh=+9AszpvAV1Ueon/6/FDAsv/M9wdLQFknMHZMd2PReSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CN9XTTiQB+fRH9eB4wC75qPOMPEOpYo/rOgqzlOC5UsjdLTBW5gGHxQeyrWjdlw0z+SQc/elBDaCdZTdgnF5cn3qv0yn1Px8IAKwhfOL6ppr7JYEEzZi8S9EhXTUsgGOTlI2fngb//ZKBywybothiuxnjoUZFeXwvfXxuo+DeYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BtH+P9np; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BtH+P9np"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42803bbf842so53157345e9.1
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 04:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723548591; x=1724153391; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6CdLFpAupTxb/5WvvUzGzWzUIwbEqDmNqfoQWI+4EI=;
-        b=BtH+P9npDTQsO50d/Sf6z+TwWjCreZmplmpOZx/0CfL/sOHgHs8T40NRW9wIGzYhnW
-         2tu7GLqbWclFp88TLk+NxfNSLOqT3+x+HgMy1VmLqDgrb4nfD9RiT/1xlSjB5eA2+U6Z
-         5C/IE82S/lrzkDqMUaCHvYmEQIYZz44GfsDq08ZEBo0LCSYEU3F1WnuOiLnMUP2wlOuU
-         lnich0SvkFAVvFRhqP+HtlJQ5iyOLudWY4i5IikX4No1278RhMvXrN/zCTjO8WdaoBV9
-         mMd/zKu2hKrWFn9W6U32f9OGO4sPRxziEz5ehWbQlvMmlKm+Vf7FkUMzPN4oY0DwQFPk
-         hA2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723548591; x=1724153391;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E6CdLFpAupTxb/5WvvUzGzWzUIwbEqDmNqfoQWI+4EI=;
-        b=h25UuG12bWsMJIvszNelsl0Rkn4twjDPAVBYgs5aL8G6XL36C6++LF9nFBEdM6zhif
-         stcepgAytm62lBhqMxrFJsFbCqj3nM2KWGe0mM/wCWd0DCv/Wz/AkM4BHX2vDX+wuQ0e
-         S+3YMjK8xTS251RnTDkcLkLj+BoiBe0pOCBTIkOg+jQBjCk434lI4kcqBaCN7E0pICXH
-         AKCvYatLj0ZRbO277nFnxtmoEHYghnA/R3ZEUlM9hEPQUtK6KSEH+fyGxJBVIGJpP6F9
-         +LK2y60ajWqNvGquzhzUKFzKCuPKLOTjxjINu4b6jvWrMfj7W0tEmxgTPcVCo+mw4qp5
-         pqSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVgqGez8li+1yzQWFTQSyatnaCAESqI97MTv5ud2fAlOxOAEsL/qcWeV+OpAOKJ9SkmkK8wk9B8AZ1tnoizePrGRjhw
-X-Gm-Message-State: AOJu0YxJrXlZc4R38jZeb2YEjNW4wHKPAZdysgegolw0wbfs6kwzjoLb
-	B+Bi3CVn8eSt7DUt4IcBACryMvITQShhA1Wq/uJiE4EbLtDh7gHW5mpkSw==
-X-Google-Smtp-Source: AGHT+IEWYyaywqcG/aQce373Hk9lNUxZznz3fOCijCcWjeO6NsVXcex+w2jxEoNS2TWAM9bKq6CQTg==
-X-Received: by 2002:a05:600c:1c1f:b0:425:64c5:5780 with SMTP id 5b1f17b1804b1-429d47f38efmr30134075e9.1.1723548590422;
-        Tue, 13 Aug 2024 04:29:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c74a68bsm223048695e9.22.2024.08.13.04.29.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 04:29:50 -0700 (PDT)
-Message-ID: <779795d2-eefd-4fac-b29f-9943f98bc83b@gmail.com>
-Date: Tue, 13 Aug 2024 12:29:47 +0100
+	s=arc-20240116; t=1723550048; c=relaxed/simple;
+	bh=qxPif2OOpYxcdenI/PE9KOx7w+AyvgSRZ9mgtvz6hK0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YjdHoes2y17g1Ym+tVIOFiDNSWmoSMjH00ZbIxc3RK2k4amp4Cdf7MsMdOtDUfK7jSs/XxurKOR6cdoKD4XqDLcOi+2vfGYkeiOxXduw6HPVboc0Upymn6NoQgSvKiOvgqQ0+uRAu2HyCIhb+gYPT3KDVCTtEYZnVV+DPCokpOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 4178 invoked by uid 109); 13 Aug 2024 11:53:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Aug 2024 11:53:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6320 invoked by uid 111); 13 Aug 2024 11:53:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Aug 2024 07:53:58 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 13 Aug 2024 07:53:58 -0400
+From: Jeff King <peff@peff.net>
+To: Matt Thompson <fortran@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Bug: Git sees branch as valid commit ref and works; should fail
+Message-ID: <20240813115358.GB968816@coredump.intra.peff.net>
+References: <CAFb48S8LDz4kiWsKSCBn8J=AHyQ5SVPFH4GY=z+8=DntT=PyAw@mail.gmail.com>
+ <xmqqy15b2aiz.fsf@gitster.g>
+ <CAFb48S8+X0=Zqi8oisB0fAgx7HoyQrahF-RGQdagXTX3RdfSNQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 7/7] builtin/maintenance: fix auto-detach with
- non-standard tasks
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1723533091.git.ps@pks.im>
- <8d6cbae951177718b49d5cfbbeca2d5b0073e266.1723533091.git.ps@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <8d6cbae951177718b49d5cfbbeca2d5b0073e266.1723533091.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFb48S8+X0=Zqi8oisB0fAgx7HoyQrahF-RGQdagXTX3RdfSNQ@mail.gmail.com>
 
-Hi Patrick
+On Mon, Aug 05, 2024 at 12:58:57PM -0400, Matt Thompson wrote:
 
-On 13/08/2024 08:18, Patrick Steinhardt wrote:
->
-> Fix this bug by asking git-gc(1) to not detach when it is being invoked
-> via git-maintenance(1). Instead, the latter command now respects a new
-> config "maintenance.autoDetach", the equivalent of "gc.autoDetach", and
-> detaches itself into the background if not told otherwise. This should
-> continue to behave the same for all users which use the git-gc(1) task,
-> only. For others though, it means that we now properly perform all tasks
-> in the background.
+> $ git for-each-ref | grep /bugfix/mathomp4/trivial-ci-commit-gcc14
+> $ echo $?
+> 1
 
-I fear that users who are running "git maintenance" from a scheduler 
-such as cron are likely to be surprised by this change in behavior. At 
-the very least "git maintenance" will no-longer return a meaningful exit 
-code. Perhaps we could switch the logic to be opt in and pass "--detach" 
-(or "-c maintenance.autoDetach=true") when running "git maintenance" 
-automatically from "git rebase" etc.
+Hmm, this is quite an interesting case. Let's simplify the test case by
+just resolving the name instead of using checkout:
 
-Best Wishes
+  $ git clone https://github.com/GEOS-ESM/GFDL_atmos_cubed_sphere.git fvdycore
+  [...]
+  $ cd fvdycore
+  $ git rev-parse bugfix/mathomp4/trivial-ci-commit-gcc14
+  cc14d30e332cd06327fe5a81ed26c24140882f42
 
-Phillip
+That narrows it down to the name resolution code. If I step through it
+in a debugger, the culprit seems to be get_describe_name(). I think it's
+taking the "-gcc14" on the end as a git-describe. E.g., in a clean repo:
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->   builtin/gc.c             |  1 +
->   run-command.c            | 12 ++++++++++-
->   t/t5616-partial-clone.sh |  6 +++---
->   t/t7900-maintenance.sh   | 43 +++++++++++++++++++++++++++++++---------
->   4 files changed, 49 insertions(+), 13 deletions(-)
-> 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 63106e2028..bafee330a2 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1063,6 +1063,7 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts,
->   		strvec_push(&child.args, "--quiet");
->   	else
->   		strvec_push(&child.args, "--no-quiet");
-> +	strvec_push(&child.args, "--no-detach");
->   
->   	return run_command(&child);
->   }
-> diff --git a/run-command.c b/run-command.c
-> index 45ba544932..94f2f3079f 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1808,16 +1808,26 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
->   
->   int prepare_auto_maintenance(int quiet, struct child_process *maint)
->   {
-> -	int enabled;
-> +	int enabled, auto_detach;
->   
->   	if (!git_config_get_bool("maintenance.auto", &enabled) &&
->   	    !enabled)
->   		return 0;
->   
-> +	/*
-> +	 * When `maintenance.autoDetach` isn't set, then we fall back to
-> +	 * honoring `gc.autoDetach`. This is somewhat weird, but required to
-> +	 * retain behaviour from when we used to run git-gc(1) here.
-> +	 */
-> +	if (git_config_get_bool("maintenance.autodetach", &auto_detach) &&
-> +	    git_config_get_bool("gc.autodetach", &auto_detach))
-> +		auto_detach = 1;
-> +
->   	maint->git_cmd = 1;
->   	maint->close_object_store = 1;
->   	strvec_pushl(&maint->args, "maintenance", "run", "--auto", NULL);
->   	strvec_push(&maint->args, quiet ? "--quiet" : "--no-quiet");
-> +	strvec_push(&maint->args, auto_detach ? "--detach" : "--no-detach");
->   
->   	return 1;
->   }
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 2da7291e37..8415884754 100755
-> --- a/t/t5616-partial-clone.sh
-> +++ b/t/t5616-partial-clone.sh
-> @@ -229,7 +229,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
->   
->   	GIT_TRACE2_EVENT="$PWD/trace1.event" \
->   	git -C pc1 fetch --refetch origin &&
-> -	test_subcommand git maintenance run --auto --no-quiet <trace1.event &&
-> +	test_subcommand git maintenance run --auto --no-quiet --detach <trace1.event &&
->   	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace1.event &&
->   	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace1.event &&
->   
-> @@ -238,7 +238,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
->   		-c gc.autoPackLimit=0 \
->   		-c maintenance.incremental-repack.auto=1234 \
->   		-C pc1 fetch --refetch origin &&
-> -	test_subcommand git maintenance run --auto --no-quiet <trace2.event &&
-> +	test_subcommand git maintenance run --auto --no-quiet --detach <trace2.event &&
->   	grep \"param\":\"gc.autopacklimit\",\"value\":\"0\" trace2.event &&
->   	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace2.event &&
->   
-> @@ -247,7 +247,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
->   		-c gc.autoPackLimit=1234 \
->   		-c maintenance.incremental-repack.auto=0 \
->   		-C pc1 fetch --refetch origin &&
-> -	test_subcommand git maintenance run --auto --no-quiet <trace3.event &&
-> +	test_subcommand git maintenance run --auto --no-quiet --detach <trace3.event &&
->   	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace3.event &&
->   	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"0\" trace3.event
->   '
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 771525aa4b..06ab43cfb5 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -49,22 +49,47 @@ test_expect_success 'run [--auto|--quiet]' '
->   		git maintenance run --auto 2>/dev/null &&
->   	GIT_TRACE2_EVENT="$(pwd)/run-no-quiet.txt" \
->   		git maintenance run --no-quiet 2>/dev/null &&
-> -	test_subcommand git gc --quiet <run-no-auto.txt &&
-> -	test_subcommand ! git gc --auto --quiet <run-auto.txt &&
-> -	test_subcommand git gc --no-quiet <run-no-quiet.txt
-> +	test_subcommand git gc --quiet --no-detach <run-no-auto.txt &&
-> +	test_subcommand ! git gc --auto --quiet --no-detach <run-auto.txt &&
-> +	test_subcommand git gc --no-quiet --no-detach <run-no-quiet.txt
->   '
->   
->   test_expect_success 'maintenance.auto config option' '
->   	GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
-> -	test_subcommand git maintenance run --auto --quiet <default &&
-> +	test_subcommand git maintenance run --auto --quiet --detach <default &&
->   	GIT_TRACE2_EVENT="$(pwd)/true" \
->   		git -c maintenance.auto=true \
->   		commit --quiet --allow-empty -m 2 &&
-> -	test_subcommand git maintenance run --auto --quiet  <true &&
-> +	test_subcommand git maintenance run --auto --quiet --detach <true &&
->   	GIT_TRACE2_EVENT="$(pwd)/false" \
->   		git -c maintenance.auto=false \
->   		commit --quiet --allow-empty -m 3 &&
-> -	test_subcommand ! git maintenance run --auto --quiet  <false
-> +	test_subcommand ! git maintenance run --auto --quiet --detach <false
-> +'
-> +
-> +for cfg in maintenance.autoDetach gc.autoDetach
-> +do
-> +	test_expect_success "$cfg=true config option" '
-> +		test_when_finished "rm -f trace" &&
-> +		test_config $cfg true &&
-> +		GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
-> +		test_subcommand git maintenance run --auto --quiet --detach <trace
-> +	'
-> +
-> +	test_expect_success "$cfg=false config option" '
-> +		test_when_finished "rm -f trace" &&
-> +		test_config $cfg false &&
-> +		GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
-> +		test_subcommand git maintenance run --auto --quiet --no-detach <trace
-> +	'
-> +done
-> +
-> +test_expect_success "maintenance.autoDetach overrides gc.autoDetach" '
-> +	test_when_finished "rm -f trace" &&
-> +	test_config maintenance.autoDetach false &&
-> +	test_config gc.autoDetach true &&
-> +	GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
-> +	test_subcommand git maintenance run --auto --quiet --no-detach <trace
->   '
->   
->   test_expect_success 'register uses XDG_CONFIG_HOME config if it exists' '
-> @@ -129,9 +154,9 @@ test_expect_success 'run --task=<task>' '
->   		git maintenance run --task=commit-graph 2>/dev/null &&
->   	GIT_TRACE2_EVENT="$(pwd)/run-both.txt" \
->   		git maintenance run --task=commit-graph --task=gc 2>/dev/null &&
-> -	test_subcommand ! git gc --quiet <run-commit-graph.txt &&
-> -	test_subcommand git gc --quiet <run-gc.txt &&
-> -	test_subcommand git gc --quiet <run-both.txt &&
-> +	test_subcommand ! git gc --quiet --no-detach <run-commit-graph.txt &&
-> +	test_subcommand git gc --quiet --no-detach <run-gc.txt &&
-> +	test_subcommand git gc --quiet --no-detach <run-both.txt &&
->   	test_subcommand git commit-graph write --split --reachable --no-progress <run-commit-graph.txt &&
->   	test_subcommand ! git commit-graph write --split --reachable --no-progress <run-gc.txt &&
->   	test_subcommand git commit-graph write --split --reachable --no-progress <run-both.txt
+  $ git init
+  $ git commit --allow-empty -m foo
+  $ git tag -m mytag mytag
+  $ git commit --allow-empty -m bar
+  $ git describe
+  mytag-1-g1a4fb75
+
+So git describe will append "-g<hex_hash>", and we likewise accept that
+style during name resolution. But in this case, "cc14" happens to be a
+valid hex (and you'll note that it matches the start of the one we
+found!).
+
+In other words, it's a false positive in the name resolver looking for
+"describe" names. We'd prefer a real ref of that full name, I think, but
+since there isn't one, we prefer the describe resolution rather than
+treating it as a path.
+
+I can think of a few ways to make this better:
+
+  - we ignore everything before the "-g<hex>" part entirely. Generally
+    this should be the name of a tag or at least some ref, so we could
+    perhaps verify that. But part of the point of sticking the hash in
+    the name is that you might have gotten the name from another source,
+    and your local one might not have the same tag. So that might be a
+    bad direction.
+
+  - the hash is abbreviated in the usual way, making it as short as
+    possible while remaining unambiguous. But unless the user goes out
+    of their way to set core.abbrev to something smaller, the minimum is
+    always 7. So perhaps get_describe_name() should be a bit more picky
+    about about that?
+
+    That doesn't fix the problem, but it makes it a lot less likely to
+    trigger in the real world. And anybody who really does somehow end
+    up with a describe name with 4 characters can always pick the hash
+    out of the string themselves (or just set core.abbrev in their local
+    repo to be more permissive).
+
+I think the second one is something like this:
+
+diff --git a/object-name.c b/object-name.c
+index 527b853ac4..a90338aa62 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1276,6 +1276,10 @@ static int get_describe_name(struct repository *r,
+ 			if (ch == 'g' && cp[-1] == '-') {
+ 				cp++;
+ 				len -= cp - name;
++				if (len < (default_abbrev < 0 ?
++					   FALLBACK_DEFAULT_ABBREV :
++					   default_abbrev))
++					return -1;
+ 				return get_short_oid(r,
+ 						     cp, len, oid, flags);
+ 			}
+
+-Peff
