@@ -1,115 +1,100 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cat-hlzsim-prod-mail1.catalyst.net.nz (cat-hlzsim-prod-mail1.catalyst.net.nz [103.250.242.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724BB195
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 01:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7D6376F5
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 03:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.250.242.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723599355; cv=none; b=otfHjumWJHKGgN6XZmE/6X6cY5aw3q/lsjKmr+Tne3dwC+Oo3Vt154W7lQw9BHdXCqQnH3zJcyQPJemwPyJiqHAPvG+3jXtzkyrGdEQT8k/szv6lpEAJcbSq/62y3PMBuPDgVNS/XtrqN6orVUUbCZBDTTnx7m/nYOihSOigwO8=
+	t=1723605515; cv=none; b=BBgGbgL8ZstCrJOzHtU6sbZ6ZDfGAjYFYCMbySWjvnXhfBTFCgLWdd7sm+PlR3RHOslya/kfDbSDeWFCSIZdR5ZjkdVS4aWLdeC3G5j4NkAqE54NDJ2peGIAVmBcPTVDp5VYSTrHwirPMoF8SCIs9KCu3JWYa5teVMErAD5qSdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723599355; c=relaxed/simple;
-	bh=usfMqPhAKkhV0tGZ/k7SGC4cRx+FsF2GDJkV1DdXEYQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hDtbpKj7GK4o6xUcS9X8hU05/Hh2cVw0tgYAWu37bb4Dxar/I6fGeCwd5s9N2bGz1UzOimVtEzWh7eOw6gEGO5PQ+UCRhU/s+fNSNo/3srR4YLZ3T1X8GxdbKht6I+PaRFAFyyLoYWCFJAmhdRGzj96PkfuGVISiKMLJZ8R5TiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T9GTRnEv; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723605515; c=relaxed/simple;
+	bh=EqEvwsAtuiG3R88/O7ALQzqbB6BQOlOllO2+B/EQmZ8=;
+	h=References:From:To:Cc:Subject:Date:In-reply-to:Message-ID:
+	 MIME-Version:Content-Type; b=IteKZZAxPx4cdcYZK4LKNVDF/8yEwHryFqLtdLH9Hgm1Xh4gXAXyPKiCEB4B0+UWLVO8bIsu8qm2hkmSaKb7teiy+AhklQxZLmAc1y/IIQ5ngeSabY9ZSLG6RcxMM/J+IupfoAn5mrK4KH2MGOcqoibZX7YV2lOrgieDYB1c65E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=catalyst.net.nz; spf=pass smtp.mailfrom=catalyst.net.nz; dkim=pass (2048-bit key) header.d=catalyst.net.nz header.i=@catalyst.net.nz header.b=E1/6LFi4; arc=none smtp.client-ip=103.250.242.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=catalyst.net.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=catalyst.net.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9GTRnEv"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2d1c1fb5cafso4119032a91.2
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 18:35:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723599354; x=1724204154; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JH1jhSxftlZq5AMuHfFkIEqydORulda0yY0xWMCsg5o=;
-        b=T9GTRnEvLqn8Zdig0+48TCC67F03CNQaTNkO3SJDR4hIv4HZBmLe7XDgN9DDzxM2VJ
-         MC1A1r6w+jHWsb3FsmaJAXlO/u4DnEwKble/9eV/uu2GPdwZZBNkxjrAoL3EUNmjcbhH
-         +VxVSfrmoEua2WbjaOjXxprLGQa1K2L4DYsyUJKgvz2Gt8uXfiaRN6tcpgOvk99yMhKN
-         uGWLCHOwuuceBBlafjDEHpkdga7SjWRuz5nStxBU8VoynFlrR2pNB4KMg6Cz5awTba8v
-         cI2+mrbB0XsXTBYq2XUBYSGzeZqmcb6mw6Xv5RpXqulUOb8d/PeGOYasYdzVh331rEWU
-         32Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723599354; x=1724204154;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JH1jhSxftlZq5AMuHfFkIEqydORulda0yY0xWMCsg5o=;
-        b=rRQDnjCANMPpJLE7/0ySK8+aOF9ZyIwox/Noz9VUWdDDAQDAei6hrwHXFHcHGi4o1m
-         bIKxLCigCdcVrRhyJZktFCU25n/8VKvWqsCoabUY7Gz8bxJGyNIVb5cLpiLXnn6sjb2b
-         99AizuvoFWZ8LLD6gc8vupW+jjQBsIvEtk4U1R0WnIikm0KthgxCCtuQ4hygM5Rw0e4O
-         f6nX2Bgm+305Udsi3/K/+3GtxDO055a64Zzp1f4BphvW5m1dcTp63mWspHgANnfGquIT
-         Qc0QFn1Qqo+dACIB96Wo8krxdpii3hicj2G9qZMYdI4/N3MAp31/Ez1qup/zqXCU+5GH
-         UuHQ==
-X-Gm-Message-State: AOJu0Yx8HIXoxczhgPA6Jq0jI2fL1Lckn082WtEc1aa7QF9Dugge8IRi
-	MnBfmsV3k54AbTLXCXAf1yL2/WOSpnuaLigAv0fkdCQIVe6UVmN6
-X-Google-Smtp-Source: AGHT+IF05pp1DYLM72kUyY33r1M2rYlHd5hNWJ33xO2sJRxO3RbiOAGlKVqMvCfdIobmfKcKfrxIiQ==
-X-Received: by 2002:a17:90a:128e:b0:2c6:ee50:5af4 with SMTP id 98e67ed59e1d1-2d3aaa79f7cmr1554485a91.6.1723599353661;
-        Tue, 13 Aug 2024 18:35:53 -0700 (PDT)
-Received: from [192.168.208.42] ([106.51.26.81])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d3ac843874sm264900a91.45.2024.08.13.18.35.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 18:35:53 -0700 (PDT)
-Message-ID: <b369797c-37c0-4f17-b857-a2ff8680cb4f@gmail.com>
-Date: Wed, 14 Aug 2024 07:05:47 +0530
+	dkim=pass (2048-bit key) header.d=catalyst.net.nz header.i=@catalyst.net.nz header.b="E1/6LFi4"
+Received: from phil-lp (unknown [115.69.188.59])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: phil@catalyst.net.nz)
+	by cat-hlzsim-prod-mail1.catalyst.net.nz (Postfix) with ESMTPSA id 312FF3FFCF;
+	Wed, 14 Aug 2024 15:18:20 +1200 (NZST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
+	s=default; t=1723605502;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/E/ibaDavml25DurYoWdDAM1cxvl2hwQQnsTLCuPAk4=;
+	b=E1/6LFi4wG84tnRIjYvejWmfoWDQWg3QpdfGHCTsQWoYIiQQOKRjVCSvUpcU3s0cKQZrIR
+	JZZMSqYOvBOvEZ+zr45Bfq+kEXc+NwCyBlb1S6+QOOoDdJOXPW9iivnHh5HhfLoFCcwB+9
+	cmxtZboVfyZLwik8ms5Gg/N8JvOD+ovd4ezo6hXB5L8XSy+CBtbZyAcZISr1juk+nQZaEN
+	u9edG2kf48rqNcbEBbJt+eG5j6rqNGzBX7X9fRpP6TqfFPWIG56PUymljZx9I/weYjV+Kj
+	15vrwz7HZtwgg/OedoeVDWyCjkOO0Hch/jESVL+5gGI2UulHNuUS0/zJbLUGfQ==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=phil@catalyst.net.nz smtp.mailfrom=phil@catalyst.net.nz
+References: <s5wr0azfeh9.fsf@catalyst.net.nz> <xmqqed6zht04.fsf@gitster.g>
+ <8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de> <xmqqle105oko.fsf@gitster.g>
+User-agent: mu4e 1.6.10; emacs 29.4
+From: Phil Sainty <phil@catalyst.net.nz>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, pclouds@gmail.com,
+ git@vger.kernel.org, hvoigt@hvoigt.net, me@ikke.info, rafa.almas@gmail.com
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+Date: Wed, 14 Aug 2024 11:13:25 +1200
+In-reply-to: <xmqqle105oko.fsf@gitster.g>
+Message-ID: <s5wed6rg5c6.fsf@catalyst.net.nz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC][PATCH v2] t: migrate t0110-urlmatch-normalization to the
- new framework
-To: Junio C Hamano <gitster@pobox.com>,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Karthik Nayak <karthik.188@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Christian Couder <christian.couder@gmail.com>,
- Christian Couder <chriscool@tuxfamily.org>
-References: <20240628125632.45603-1-shyamthakkar001@gmail.com>
- <20240813172432.55487-1-shyamthakkar001@gmail.com>
- <xmqqh6bo448j.fsf@gitster.g>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <xmqqh6bo448j.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Spamd-Result: default: False [-0.10 / 15.00];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	TAGGED_RCPT(0.00)[];
+	ARC_NA(0.00)[];
+	ASN(0.00)[asn:55850, ipnet:115.69.160.0/19, country:NZ];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_CC(0.00)[gmx.de,gmail.com,vger.kernel.org,hvoigt.net,ikke.info];
+	DKIM_SIGNED(0.00)[catalyst.net.nz:s=default];
+	MIME_TRACE(0.00)[0:+]
 
-On 14/08/24 00:52, Junio C Hamano wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
->
-> I wonder if we should get of t/t-urlmatch-normalization/ directory
-> and instead hold these test data in the form of string constants in
-> the program.  After all, you have the expected normalization result
-> hardcoded in the binary (e.g. t_url_high_bit() asks the checker
-> function to read from "url-1" file and then compare the result of
-> normalization with a hardcoded string constant), so having the test
-> data in separate files only risks the input and the output easily
-> drift apart.
-> 
-> As a side effect, it would make it easily possible to run the tests
-> anywhere, because you no longer depend on these url-$n input files.
-> It of course depends on how burdensome the limitation that we can
-> run the tests only from a fixed place really is, but it generally is
-> not a good idea to have these random sequence of bytes in small
-> files that nobody looks at in a repository in the first place.
-> 
+Junio C Hamano <gitster@pobox.com> writes:
+> Let me make sure I understand the above.  You create a commit to
+> contain the change in the submodule and at the same time create a
+> new commit to bind the updated submodule commit to superproject tree.
 
-I think the reason these inputs are present in the files is solely
-because they are random sequence of characters which contain unicode
-and even some control characters. This makes it tricky to hold the
-input string in the source itself.
+I can imagine this ability also being useful, but it would be an
+independent feature from the one initially requested here...
 
-I'm not sure there would be a straight-forward way to have these inputs
-in the C source file. There may be some way to represent them in an 
-alternate form but I suppose that would sacrifice the readability of 
-these inputs which I believe is also a significant factor for test cases.
 
-Feel free to enlighten us if we're possibly missing some straight 
-forward way of having these input URLs in the source files.
+> But I did not get the impression that it is what the original poster
+> wants.  My reading of the original thread (this is a resurrection of
+> an antient thread dating back to 2018) was that you have a submodule
+> at path S, you muck with a file in S/file, and you want to commit in
+> the context of the superproject, having the superproject track S/file
+> in its history (not just S gitlink).
 
---
-Sivaraam
+That's correct.
+
+My common usage was that I would add the entire contents of S, along
+with some associated configuration outside of S, and then make a commit
+of all of that in the superproject.
+
+The two repos (superproject and submodule S) are then tracking the files
+in S independently; so if I was to pull new changes to the submodule
+from its own upstream, git commands run from the S directory would not
+show any changes vs the state of the submodule repo, whereas commands
+run from the superproject would see new changes.
+
+Cloning the superproject repo would produce its version of S, and
+without the S/.git directory.
+
+
+-Phil
