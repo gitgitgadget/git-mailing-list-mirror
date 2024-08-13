@@ -1,64 +1,64 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED2319FA82
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 14:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A251A00E0
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 14:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723560310; cv=none; b=W0ORjD5TCwCg5ail4lbZm95WRUy4AQ0D5sayDoFPFX/sB7uIlc4xEnrDePIdZNNy+S+gAI4Rm2hZZsnApP9M3Z1SXJON8QA7iJ8AKoomc/xbjWOYwJKV/GrfRxKDzGorH5aL1m0mOZ1LC59Vo2UtXyW662z8JP8VWi4SLGNEP9I=
+	t=1723560312; cv=none; b=OiVrA7C665PFuobInUXwT+0vaNZNakuOy7Lqg3mdEKU2a9NFlgkc5SAcQ/fVfJ0vM7lKyD6LIcM/WhZ1g6U4T6NAesTXRhIz4tDtQ7JZAUC3eFQVFpaJMptrOQVGBeEt2c3Un4EeeXdQzIF2DHwm/LYWvKzKfQJwW8I/MycU9Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723560310; c=relaxed/simple;
-	bh=yH9fmeIqsXecJpYyo0jkQn8kR7eh/t5Mtz7aSlVqssg=;
+	s=arc-20240116; t=1723560312; c=relaxed/simple;
+	bh=/VfPayIC6UL3j30y/3DMYX6vAZWvR+O6NaYZtUEr51o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra8hdGzSlQPkTdwXc+u1S9Kuvjy7RiAaz2LzMxuA4Lf9sMUQyaBVcZxPogUqN/Kr0P9h0xfUupxYlt/BpEBex1JDPuH37yoZNNNkKerFYRisHIhSfaJjNqRreTyQdW2ZrGdgjIau/Ux/qTuINfFC1D0OC4mfPb5mlzVMg0mRcgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YncPjOVg; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version; b=DSjiSXIxrtevkvAHmJQH3GInDoDUeQD3jte9jvnFlxZr8tUn9ylvbTDhL99q7IYCLXMWRwzqfA6gXJKEjr7X1c3Oz/O6kk7TZCWhUO3bPQzHm28dZXhruAU7t02KBs3NkNQXuHk46m6qaZVYIZ0EbkzN/1n/5m430A2ZXJ6mF6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Scre8Jxh; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YncPjOVg"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1fc692abba4so47125485ad.2
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:45:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Scre8Jxh"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fed72d23a7so42310925ad.1
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723560307; x=1724165107; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723560310; x=1724165110; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yy3ET2wBOg8y4F76auip+bBR85/ZEBFlsakrKp0ZMgo=;
-        b=YncPjOVgDgw0Ljm5tpxMt7ekek2ifc3ytLdqSd8AFQ+NZhC1j4wTVnRablsu2Py/cR
-         dXt1qLL4QozOJTNnUoM6FW200h4dSlXPkfBIizpCho2ETfr2P/gXMiI/mZUtuxXcELC9
-         gsiaL47ko3qqiWRkbqCYdKHdjZnL8hEs54nEzQg97Gbn/mioSNAkrqgfdKx1BJjSHKDK
-         ZYvPIEIIIAFSX3JqDBDyRTdon/kJ5TlFsxR2dl2OYskQ+URKi8uy2WpfWU8fCpDSOLhR
-         jTWfoSfNVjUPpuw+qMlUc1LSys0nL+MNsQPCK9AogOekufOZuNpvWH2zjsW7u1PhHEtW
-         Ql9A==
+        bh=BDHzTIL1Y1piKl8VKW7PtejRsYdJEdO8EEiK0rwt4lU=;
+        b=Scre8JxhjNnZZqCPPplowZ47sbh+s+WWTjltLuR0qTm7qN/Mxid7MvhgGbz7SP7ZLH
+         i9NfMzFNqSU8e+hy3erYZa84xLkyPLx1addEn2WQa7xPzuHIP+hfVMTgW0EDuzH/D3X2
+         jvpYFZ1f1Chl6mCpHqFw2kc8UJRG7iw5yS+HVzHVf1ET7pb7auhCJRwC188j1IToSxc5
+         F+V+ET5VhK2WdI+b15KxNrrGtVCdNOLH/hXuY4EBfvL0G6ix2aRvyLcSmhafpJl0RA3o
+         Fz507L2ppEfY7FcZct5HksaG26IOyBg49gQe+/XIBC3CeFZF9lC997rS++vyquJzhm+u
+         OEog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723560307; x=1724165107;
+        d=1e100.net; s=20230601; t=1723560310; x=1724165110;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yy3ET2wBOg8y4F76auip+bBR85/ZEBFlsakrKp0ZMgo=;
-        b=BuskQY/o8/kUAWOKBXE9j9d/alyKl23wiC68tTVsEahuEo9c6L2V6hmH/iqSbGRyOU
-         XcKcN1Wd2DTErSvjivi0XvKl7cHnfIiIAxnf2hrwpJ0f84CqwHyUp1vM+QgHqtd33gt1
-         jH5hF1mEVTI9Egzg9cPVJBav2K5z3CGzI9cBexP1Z27a247GYIygI41dbVSV0MaCXfEU
-         1ZDfpAAhOIKR/4lrJvEED6E2tspM0oOinRHSA1VaAeYXU9yXAOMq4fGlU3AHM9mPSXoL
-         fJVBmm+Xsn4inRno0Ypy6a6xxY40ef02mFdZmXNY3vSqGdJ18FXLJSOL6gPMy4GbQtYw
-         l9DA==
-X-Gm-Message-State: AOJu0YwVlXm8Ou/2qvp6egfwXgTwLKL1ov2LQo5fxCVOh1PvNH2s247w
-	bI7hHV22tdaxDpy5iFftLr+gxlBCELQ2/Dr6KBu80VRgXT7M36ZLyAgzTex8LPo=
-X-Google-Smtp-Source: AGHT+IHOBQZfLKFaEtDP9ADAfaFcXCBcZ81aXSWX+84NyPoEvdiB7QiL3Wz5YlQTyhiV+wGqt2rOOw==
-X-Received: by 2002:a17:902:e80b:b0:1ff:493:8de1 with SMTP id d9443c01a7336-201ca12b0c9mr53579155ad.1.1723560307122;
-        Tue, 13 Aug 2024 07:45:07 -0700 (PDT)
+        bh=BDHzTIL1Y1piKl8VKW7PtejRsYdJEdO8EEiK0rwt4lU=;
+        b=ZTS6GNSlvL8JZlsIpArRVs1+jXd8XIcrwBh2fafeLbXGXujtp+WDZNRw+ItZCvGRCh
+         AVNigLcOGSKYBkuHNq44WvYa6uYuhOFBiFiYUH2WRv+srho1D98kFzZl0CVGZPDFe2j1
+         Il1ux/wTTJFXq84B5lqeeNWUSLFp6qRA04uAUp7npRJD4DNlbJhTSfZ4drCGFwjQqxta
+         ZvkqJ3ZKMnDca46JIuKYtgsMhJvUQxkA1xLC9if240xuFmcu0to8sqyI5oBDfgmVk47b
+         6PqVwiaz7z23Zrvt4pkeDMqwwQN4L7nJe7AV4BGkRdhsbkhwnlBUZm/GvqbQT7jN/xAm
+         BiSA==
+X-Gm-Message-State: AOJu0Yzzl3eG+OAm/3gnFWUrQj/9pveRA02ujD+F5SXHTJfs9oCzTcuE
+	8qWni9ovIChQyqgyqLB9cDtDEzQiH7EPUCYtEkT3UMKI5CL4OdSknPr+5z/uQH4=
+X-Google-Smtp-Source: AGHT+IG3qtTerlpyoIUqP9Cp367kNsRwi+yRtx+sCC5iiCPnmkT0cqIDKDbasQZ7i7XDZQCXz7VKbg==
+X-Received: by 2002:a17:902:dad2:b0:1fd:9238:40f with SMTP id d9443c01a7336-201ca13ec08mr45260055ad.22.1723560309818;
+        Tue, 13 Aug 2024 07:45:09 -0700 (PDT)
 Received: from Ubuntu.. ([27.61.226.190])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-201cd14b1c8sm14388805ad.78.2024.08.13.07.45.04
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-201cd14b1c8sm14388805ad.78.2024.08.13.07.45.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Aug 2024 07:45:06 -0700 (PDT)
+        Tue, 13 Aug 2024 07:45:09 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 2/4] t-reftable-readwrite: use free_names() instead of a for loop
-Date: Tue, 13 Aug 2024 20:04:48 +0530
-Message-ID: <20240813144440.4602-3-chandrapratap3519@gmail.com>
+Subject: [PATCH v3 3/4] t-reftable-readwrite: use 'for' in place of infinite 'while' loops
+Date: Tue, 13 Aug 2024 20:04:49 +0530
+Message-ID: <20240813144440.4602-4-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240813144440.4602-1-chandrapratap3519@gmail.com>
 References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
@@ -71,60 +71,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-free_names() as defined by reftable/basics.{c,h} frees a NULL
-terminated array of malloced strings along with the array itself.
-Use this function instead of a for loop to free such an array.
+Using a for loop with an empty conditional statement is more concise
+and easier to read than an infinite 'while' loop in instances
+where we need a loop variable. Hence, replace such instances of a
+'while' loop with the equivalent 'for' loop.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-readwrite.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ t/unit-tests/t-reftable-readwrite.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
 diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index d0eb85fc38..8e546b0dd6 100644
+index 8e546b0dd6..9a05dde9d6 100644
 --- a/t/unit-tests/t-reftable-readwrite.c
 +++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -7,6 +7,7 @@ license that can be found in the LICENSE file or at
- */
+@@ -269,15 +269,13 @@ static void t_log_write_read(void)
+ 	err = reftable_iterator_seek_log(&it, "");
+ 	check(!err);
  
- #include "test-lib.h"
-+#include "reftable/basics.h"
- #include "reftable/blocksource.h"
- #include "reftable/reader.h"
- #include "reftable/reftable-error.h"
-@@ -413,7 +414,6 @@ static void t_table_read_api(void)
- 	struct reftable_reader rd = { 0 };
- 	struct reftable_block_source source = { 0 };
- 	int err;
--	int i;
- 	struct reftable_log_record log = { 0 };
- 	struct reftable_iterator it = { 0 };
+-	i = 0;
+-	while (1) {
++	for (i = 0; ; i++) {
+ 		int err = reftable_iterator_next_log(&it, &log);
+ 		if (err > 0)
+ 			break;
+ 		check(!err);
+ 		check_str(names[i], log.refname);
+ 		check_int(i, ==, log.update_index);
+-		i++;
+ 		reftable_log_record_release(&log);
+ 	}
  
-@@ -432,10 +432,8 @@ static void t_table_read_api(void)
- 	check_int(err, ==, REFTABLE_API_ERROR);
+@@ -375,7 +373,7 @@ static void t_table_read_write_sequential(void)
+ 	err = reftable_iterator_seek_ref(&it, "");
+ 	check(!err);
  
- 	strbuf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_free(names[i]);
-+	free_names(names);
- 	reftable_iterator_destroy(&it);
--	reftable_free(names);
- 	reader_close(&rd);
- 	strbuf_release(&buf);
- }
-@@ -498,9 +496,7 @@ static void t_table_read_write_seek(int index, int hash_id)
- 	reftable_iterator_destroy(&it);
+-	while (1) {
++	for (j = 0; ; j++) {
+ 		struct reftable_ref_record ref = { 0 };
+ 		int r = reftable_iterator_next_ref(&it, &ref);
+ 		check_int(r, >=, 0);
+@@ -383,8 +381,6 @@ static void t_table_read_write_sequential(void)
+ 			break;
+ 		check_str(names[j], ref.refname);
+ 		check_int(update_index, ==, ref.update_index);
+-
+-		j++;
+ 		reftable_ref_record_release(&ref);
+ 	}
+ 	check_int(j, ==, N);
+@@ -590,15 +586,13 @@ static void t_table_refs_for(int indexed)
+ 	err = reftable_reader_refs_for(&rd, &it, want_hash);
+ 	check(!err);
  
- 	strbuf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_free(names[i]);
--	reftable_free(names);
-+	free_names(names);
- 	reader_close(&rd);
- }
- 
+-	j = 0;
+-	while (1) {
++	for (j = 0; ; j++) {
+ 		int err = reftable_iterator_next_ref(&it, &ref);
+ 		check_int(err, >=, 0);
+ 		if (err > 0)
+ 			break;
+ 		check_int(j, <, want_names_len);
+ 		check_str(ref.refname, want_names[j]);
+-		j++;
+ 		reftable_ref_record_release(&ref);
+ 	}
+ 	check_int(j, ==, want_names_len);
 -- 
 2.45.GIT
 
