@@ -1,54 +1,54 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AB717C7CA
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40776181317
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723540405; cv=none; b=ZwHfIhFaCO9B7aDUQJafErbOVYdDauFZzjLxGMRXTTAFnUxmvDiQYJSCEd8erFYi7ulT4XqDewFPowrkrzRea+53eGIOufDuzWF1pxQoS8bYpltLb30lL4/3GbABT5+S4wS3Ibp5YIV21apiallD3hqwEjsq4IzsdOyNkd7nxEA=
+	t=1723540407; cv=none; b=uhdD1G9F7f6boy+VoL1fLKIve6UCUfZurlzfEErjB6yd/jaGdcyuAQr8y3IVUER1SWJClLaR2PKxF9vfElyoWv9gsIirDAXAymihNkKn0T7Z51uV+aAdZmsQkgqo4ROYtyzS4xu2sFRTJs2118JCwxOssnXd8OYZkGtsYSp9hog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723540405; c=relaxed/simple;
-	bh=KZ1JrdbvsgRTo49Dn6byy63cMfHyrITqzuXt3eisQkc=;
+	s=arc-20240116; t=1723540407; c=relaxed/simple;
+	bh=bKQXJncqxbzAqW/wG955RcyqZ4C0S9BwXaCzPXd9qVs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l+quQ9ijjVOy46qkNNegPdorjwVxYxdk/3w6cWDn2jbBGqpeOsS9R99+HLilf/x7oyuV7AD53Ooy4/txrLkh7bisgo/Yob2vq4ZaEjV9+bA66zcCChd6QXV91m/8mYzL33hYNXAULKpGR2m0wj18dSH+NEUaHk6hP1Uf99+4dOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BFRoZtKS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XwxbO5s6; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=HUj8OBGz0OorOp2Bl7qptYWOL1wKorq/LWk2l1gbAFl/YZu1jVpmN+GUwPw9a2UnXsiUKpOfZlxdCBQ5P3lMNYDjbrDIthhKAHu7NIuGJjEkLAqBzBL53cGhwf02VmVZRo8BbLFsRXk89cEDglkEijtHmOOrByd1B7uxYq6xKdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F9FrJzn7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F/X+epaW; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BFRoZtKS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XwxbO5s6"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 29D62138FBA9;
-	Tue, 13 Aug 2024 05:13:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F9FrJzn7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F/X+epaW"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5C59F1151A82;
+	Tue, 13 Aug 2024 05:13:25 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 13 Aug 2024 05:13:23 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 13 Aug 2024 05:13:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723540403; x=1723626803; bh=Wvof6QhJ4i
-	k3v/hMXbSPJmemQOiJiInu0GlWaHo5PPo=; b=BFRoZtKSDb8daMw3S23CP7vuGE
-	7qzLbWo7EZ1OJlxena7zF0ILZVxGgwfxOgBuCU072z2ROCpQ1hkK6LfABGZrtDZ+
-	Y4FCavNpKiJ0UZ23oei1+NoChEW+UPpee8XnPGJvsqviFR7cdsMRV/eORZm2HlbM
-	idfrNWG195xjbjd4Lctedoq+PwswFeX1Gk8kypjcJ7+1PU4l6dHuagRhJ05J8p9g
-	kRM658BM1jsJnuGCM950eUXQKmK5oFftVMz2vUE7mmtwnMzDjb7TrxsKEyARFMoW
-	PVHyWjHIM4Fq6z0Mf2ehSmrFGdU+NZXYtKFeud2H4l6dPYG90LkytYKOs+Ow==
+	:subject:to:to; s=fm3; t=1723540405; x=1723626805; bh=nh8QavN4Cv
+	e4RLHq9qROScs9J2rGwCHmaj9FCnbCybk=; b=F9FrJzn7d+HeZwk0MqferbgoIp
+	WorciXWuop7MG9lIiNFpBCxph00aGLKTipjcXb1ymFaldXbKYMOHoSPtN6de4v7Z
+	V9zcA9HHS82E45LyPDdt9JJX7IBnhQStcyrxX7bOFJDjgCtQNINy4cmqWlywE4dK
+	P6itf6uOaWpHyb8/hr4CysDq5G5Nbrr0Dr4sSgplXbKTvib4kN7hxvOou/aBQ9Vt
+	/P9rTZJDwypbSqnIhSzmkPtLWpdq8GYLA070yq7vTAma+Ql/ulBlKLEPzx0yl54h
+	9+6djYOAnHZ4H6OQUJusf0yrUWdA6NwtdatnntV4vxT04GCRgp2ZBFepV8XA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723540403; x=1723626803; bh=Wvof6QhJ4ik3v/hMXbSPJmemQOiJ
-	iInu0GlWaHo5PPo=; b=XwxbO5s6WJ7bYH9lAREgu4ty5eyTWkLp8o8nctr9MgVg
-	+vVICiROsqpRqgP0hpSHAnsD+eF9EX7RIyGUeFJj4w4ifBAQHmvQSgdYpO61RJ+l
-	qm/dXv+VhFqmY0ok1Ltqb9wHN02pEBDZEO5LydfRCmVdXBvP7v+dA/99kgKqLjZS
-	jHklHGQXrx4Tv7yWT6mTxHgznN9KBeluB793G86L3p25727ws2QdSKEkqWE0L0rg
-	3ZJgO+Lo4Dj+FdHq1bwjbdbA7M5xoOvQJjb2L4+y2ZN9DhKP9uh4+QWCwquj7xUB
-	KARFOWU5ue2Qr6Ra0qMKvmKxj9kEBx+63ZLPPUUwzA==
-X-ME-Sender: <xms:syO7ZljnTKrXx-TX3gg08LzSgDyL51mBn3wL6hQT18jczMy6e31W3A>
-    <xme:syO7ZqCsrXcXUdbZTL7tVFbXm6BK0ubowjNJmLocCI00Bq6NMi7yJLr8PeEk7LVwt
-    xH8gdWCMIDDILBPQg>
-X-ME-Received: <xmr:syO7ZlGY6tjY0oDXW-PX7AJTwgwRafeYHcLAB7k4Mx6dOV3ZSRNt6vBoHs3Kq6G-CLYi7UXWRy6XXGM-6RIETxb414vdKOSFiB_brTSmpfWoBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudefucetufdoteggodetrfdotf
+	fm3; t=1723540405; x=1723626805; bh=nh8QavN4Cve4RLHq9qROScs9J2rG
+	wCHmaj9FCnbCybk=; b=F/X+epaWnIPgeST91VleF/vxP9IH7rBXP/xUvF+I8Tvv
+	eSFu2MkktzfDEiGGZAkViQdv52viRer4jRfQTdz7wdsN+LggIOaUwzPEqhDjLlZE
+	NY5/S9IublUMHaPRHUtf6thLx/ErFHv+TB+6xxf53JGiXEwj76MoiUmZQugulvav
+	X1BRibM1oEBFNVC2VlFWQ+vfoAnPuS7p+QEndauZJpYceTye1wThhUx4rOUHhWBt
+	IaYu45At0DaomcL7UMtxvebHkpnjxzvVXfFKFeqCj85vqZg0+J9ToTUZ6yc870Ip
+	HOteXjJ/YgtWAPvOV3+aL3V6SI7JQHIVMGy1G0//mA==
+X-ME-Sender: <xms:tSO7ZktrT8wkE5HVBcPZctMGqQN1nQ_HJMzpIhXzcHpbqoSRbUy44g>
+    <xme:tSO7ZhctUJPYFwvquVogXYs5IITBynLZZOu8unQGPpT9l5IUe9RUYCkDYY6tnRskx
+    rK1dqWd0w6JzynZiA>
+X-ME-Received: <xmr:tSO7Zvw0Ojwz-1vi7wLJVVUionIEGKrOT4NrFyfEfKgiO03Tn2eB1bOBnSF2glpRPSNLFs1XeD8SqrBR8FS5mSUwOTrUU0SSW25_U-de51Txvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,26 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudefucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:syO7ZqQMSw6EilJoCLXbheBNCCmSRrnXlnaRWMagqBM38D8ze1m4yg>
-    <xmx:syO7Zix-w55hWWTnLv-2X2EX4BkT3eEk4XGo0bHl5HIABxNm0A_uyw>
-    <xmx:syO7Zg7dDjaZxPASFPF_27wnqBXuKhr9iJaBfygrt0QePgyhP0W3Bw>
-    <xmx:syO7ZnxEdL6tTL6H7GaSifm3_JSmnHF8CNbd5G4x7ck-QSt6AxCVUg>
-    <xmx:syO7Zm-W5L2SBbhMw9M2qZebZkKXxRt3KJCQW4gQpWivSqBcYrunuZuP>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:tSO7ZnNjlpWvNxx9pBUWzDya9uxYlp-kXb1iDMZrTfSrpsBS-ADjxQ>
+    <xmx:tSO7Zk9uqXI1qez2YT_snU5weejCj9YgshYqRC8yKm-1t2BdJlvuRw>
+    <xmx:tSO7ZvWN-b7T2h-lTNOgF8vfT9CFLEm7uYQSgJ80e2dab3ueTGKg_A>
+    <xmx:tSO7ZtcgRUzYnfC5WP_L76wlehO-sdjmZxnozdJoL7MNKGcoaG9unA>
+    <xmx:tSO7ZjbdZzIkaFbJbUovcqyMeWiPn_nRkU51Y_BUukSeE4FgQLXXyPiF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 05:13:22 -0400 (EDT)
+ 13 Aug 2024 05:13:24 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fed6a4da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 09:13:05 +0000 (UTC)
-Date: Tue, 13 Aug 2024 11:13:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0889a2c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Aug 2024 09:13:08 +0000 (UTC)
+Date: Tue, 13 Aug 2024 11:13:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 01/20] path: expose `do_git_path()` as `repo_git_pathv()`
-Message-ID: <d0f5f2b17f2514cfb4b96761bcc9d677dc168752.1723540226.git.ps@pks.im>
+Subject: [PATCH v2 02/20] path: expose `do_git_common_path()` as
+ `repo_common_pathv()`
+Message-ID: <2e3f474e5d7df6e8ad676d50f2191a28e580f5fe.1723540226.git.ps@pks.im>
 References: <cover.1723013714.git.ps@pks.im>
  <cover.1723540226.git.ps@pks.im>
 Precedence: bulk
@@ -88,117 +89,87 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723540226.git.ps@pks.im>
 
-We're about to move functions of the "path" subsytem that do not use a
-`struct repository` into "path.h" as static inlined functions. This will
-require us to call `do_git_path()`, which is internal to "path.c".
-
-Expose the function as `repo_git_pathv()` to prepare for the change.
+With the same reasoning as the preceding commit, expose the function
+`do_git_common_path()` as `repo_common_pathv()`. While at it, reorder
+parameters such that they match the order we have in `repo_git_pathv()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- path.c | 20 ++++++++++----------
- path.h |  8 ++++++++
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ path.c | 22 +++++++++++-----------
+ path.h |  5 ++++-
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
 diff --git a/path.c b/path.c
-index 19f7684f38..71f1cb4dfb 100644
+index 71f1cb4dfb..069db6ff8f 100644
 --- a/path.c
 +++ b/path.c
-@@ -417,9 +417,9 @@ static void strbuf_worktree_gitdir(struct strbuf *buf,
- 		strbuf_git_common_path(buf, repo, "worktrees/%s", wt->id);
+@@ -617,16 +617,16 @@ int strbuf_git_path_submodule(struct strbuf *buf, const char *path,
+ 	return err;
  }
  
--static void do_git_path(const struct repository *repo,
--			const struct worktree *wt, struct strbuf *buf,
--			const char *fmt, va_list args)
-+void repo_git_pathv(const struct repository *repo,
-+		    const struct worktree *wt, struct strbuf *buf,
-+		    const char *fmt, va_list args)
+-static void do_git_common_path(const struct repository *repo,
+-			       struct strbuf *buf,
+-			       const char *fmt,
+-			       va_list args)
++void repo_common_pathv(const struct repository *repo,
++		       struct strbuf *sb,
++		       const char *fmt,
++		       va_list args)
  {
- 	int gitdir_len;
- 	strbuf_worktree_gitdir(buf, repo, wt);
-@@ -438,7 +438,7 @@ char *repo_git_path(const struct repository *repo,
- 	struct strbuf path = STRBUF_INIT;
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_path(repo, NULL, &path, fmt, args);
-+	repo_git_pathv(repo, NULL, &path, fmt, args);
- 	va_end(args);
- 	return strbuf_detach(&path, NULL);
- }
-@@ -449,7 +449,7 @@ void strbuf_repo_git_path(struct strbuf *sb,
- {
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_path(repo, NULL, sb, fmt, args);
-+	repo_git_pathv(repo, NULL, sb, fmt, args);
- 	va_end(args);
+-	strbuf_addstr(buf, repo->commondir);
+-	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
+-		strbuf_addch(buf, '/');
+-	strbuf_vaddf(buf, fmt, args);
+-	strbuf_cleanup_path(buf);
++	strbuf_addstr(sb, repo->commondir);
++	if (sb->len && !is_dir_sep(sb->buf[sb->len - 1]))
++		strbuf_addch(sb, '/');
++	strbuf_vaddf(sb, fmt, args);
++	strbuf_cleanup_path(sb);
  }
  
-@@ -458,7 +458,7 @@ char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
- 	va_list args;
- 	strbuf_reset(buf);
- 	va_start(args, fmt);
--	do_git_path(the_repository, NULL, buf, fmt, args);
-+	repo_git_pathv(the_repository, NULL, buf, fmt, args);
- 	va_end(args);
- 	return buf->buf;
- }
-@@ -467,7 +467,7 @@ void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
- {
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_path(the_repository, NULL, sb, fmt, args);
-+	repo_git_pathv(the_repository, NULL, sb, fmt, args);
- 	va_end(args);
- }
- 
-@@ -476,7 +476,7 @@ const char *git_path(const char *fmt, ...)
+ const char *git_common_path(const char *fmt, ...)
+@@ -634,7 +634,7 @@ const char *git_common_path(const char *fmt, ...)
  	struct strbuf *pathname = get_pathname();
  	va_list args;
  	va_start(args, fmt);
--	do_git_path(the_repository, NULL, pathname, fmt, args);
-+	repo_git_pathv(the_repository, NULL, pathname, fmt, args);
+-	do_git_common_path(the_repository, pathname, fmt, args);
++	repo_common_pathv(the_repository, pathname, fmt, args);
  	va_end(args);
  	return pathname->buf;
  }
-@@ -486,7 +486,7 @@ char *git_pathdup(const char *fmt, ...)
- 	struct strbuf path = STRBUF_INIT;
+@@ -645,7 +645,7 @@ void strbuf_git_common_path(struct strbuf *sb,
+ {
  	va_list args;
  	va_start(args, fmt);
--	do_git_path(the_repository, NULL, &path, fmt, args);
-+	repo_git_pathv(the_repository, NULL, &path, fmt, args);
+-	do_git_common_path(repo, sb, fmt, args);
++	repo_common_pathv(repo, sb, fmt, args);
  	va_end(args);
- 	return strbuf_detach(&path, NULL);
  }
-@@ -517,7 +517,7 @@ const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
- 	struct strbuf *pathname = get_pathname();
- 	va_list args;
- 	va_start(args, fmt);
--	do_git_path(the_repository, wt, pathname, fmt, args);
-+	repo_git_pathv(the_repository, wt, pathname, fmt, args);
- 	va_end(args);
- 	return pathname->buf;
- }
+ 
 diff --git a/path.h b/path.h
-index a6f0b70692..94e7030f0b 100644
+index 94e7030f0b..05aff5f4c3 100644
 --- a/path.h
 +++ b/path.h
-@@ -66,6 +66,14 @@ char *repo_git_path(const struct repository *repo,
- 		    const char *fmt, ...)
- 	__attribute__((format (printf, 2, 3)));
+@@ -37,6 +37,10 @@ void strbuf_git_common_path(struct strbuf *sb,
+ 			    const struct repository *repo,
+ 			    const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
++void repo_common_pathv(const struct repository *repo,
++		       struct strbuf *buf,
++		       const char *fmt,
++		       va_list args);
  
-+/*
-+ * Print a path into the git directory of repository `repo` into the provided
-+ * buffer.
-+ */
-+void repo_git_pathv(const struct repository *repo,
-+		    const struct worktree *wt, struct strbuf *buf,
-+		    const char *fmt, va_list args);
-+
  /*
-  * Construct a path into the git directory of repository `repo` and append it
-  * to the provided buffer `sb`.
+  * Return a statically allocated path into the main repository's
+@@ -45,7 +49,6 @@ void strbuf_git_common_path(struct strbuf *sb,
+ const char *git_common_path(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+-
+ /*
+  * The `git_path` family of functions will construct a path into a repository's
+  * git directory.
 -- 
 2.46.0.46.g406f326d27.dirty
 
