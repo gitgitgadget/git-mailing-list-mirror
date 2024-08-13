@@ -1,95 +1,119 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7CA18C3D
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 17:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6274E1A2C22
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 17:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723570584; cv=none; b=MbOORy/nhZQr8+i8Bn76yLfsAHLt2k6uEJS21MeK5xYNP8KZTK0hkar2u1ns4fk9ZXiyCqbP1sQO76HG+b74xdUvY8JkX9UQ0FT59mkgWXVV+e6LYJ3Kl8hBuaMxhiq30MPzDqXmDNMDeOMAiMUAmdKu27YkY7yWmpCZ07GRPxs=
+	t=1723570594; cv=none; b=h/Y0Kl4r801C4gcL0ZKLQ7mP/NWkxV7eAvtFgxkma2q/DdGiS7j5v4Qjh/jC00fwe3MtC4MObkHpe/1QbYgWm3jx/iAfIrqTGRoGAYbzTGpf3UxBPWE/QDMqILQQ7n1Wt4Nz6aB5YjPuThqx/lPKgZqkdwV84e7g4wd0FnOtM2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723570584; c=relaxed/simple;
-	bh=sUiTsOd4yGN5ACqrKGzauhS1Ynk4wIu/Zcd2pj7bIZ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C0r/dA60mUmZl4FiBXDJf5aqlBbiqHuaipqp3sS4dLslgNXkSBn3NNizT0/LN9aKDc/yoZvYRVBmec5C8RceNQ4vRdAAZB3G7/jVanEV0kvUd6TKE/5mM3NcxWBFfAkcUEX8Dwm3eJtbv7BvptaSfpzaxPrBr5qjhww/Xu28HXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OXmzR2GH; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723570594; c=relaxed/simple;
+	bh=ux1ltjB7fEpye+TnmiTq1fmdc6AU3AFDmWw30Fex0gE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=H4JN8WaGpfDaEvhrcsCWYdGqSN57jx15IIT9O3gkmX7DmPOiQ+uCFiTuMYLLzjKStnxGERJP0spdJH23VpaxfRPaki5j7ZCLAp3LwREHSeB5k+VJMsEae2uX5p/xb+mMu2/E5hvjI0T/a3Slm/ezauZG3qSSuDXYartvzfscx8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbWvdYhR; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OXmzR2GH"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A34F1F5F1;
-	Tue, 13 Aug 2024 13:36:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sUiTsOd4yGN5ACqrKGzauhS1Ynk4wIu/Zcd2pj
-	7bIZ0=; b=OXmzR2GHjzqcqDiKfLqo8DuxEZuiPjHe8wPpfzgRfgV+qyg58bhPy1
-	mVQkVYzfSY+IdwqNngBjG+c5gZtI8fSrAWd5bd2WK/ftEV1DwCNPIrRtpc7Lezvn
-	f9RS7grS5mWsxgqJjCu8KxXUjd55Mqj3prODv9ZekRfQRbIfKfRGY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 522791F5F0;
-	Tue, 13 Aug 2024 13:36:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 097281F5ED;
-	Tue, 13 Aug 2024 13:36:17 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Alex Galvin <agalvin@comqi.com>,  Alex Galvin
- <alex.v.galvin@gmail.com>
-Subject: Re: [PATCH] git-svn: mention `svn:globalignores` in help+docs
-In-Reply-To: <pull.1766.git.git.1723500383989.gitgitgadget@gmail.com> (Alex
-	Galvin via GitGitGadget's message of "Mon, 12 Aug 2024 22:06:23
-	+0000")
-References: <pull.1766.git.git.1723500383989.gitgitgadget@gmail.com>
-Date: Tue, 13 Aug 2024 10:36:16 -0700
-Message-ID: <xmqq4j7o5nqn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbWvdYhR"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fd6ed7688cso50502295ad.3
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 10:36:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723570592; x=1724175392; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ux1ltjB7fEpye+TnmiTq1fmdc6AU3AFDmWw30Fex0gE=;
+        b=EbWvdYhRr7jiMRtD9moZaIlsFQ6JRdDNJiGWCcOOLwzoOGXJ9Bvbo4SDBxMV6fFBhD
+         ZNCdl2qNqnPAtjY08oeNYVktYcwzuv5/sl6jDuzsa0Z+QBIsvhF16z5Nvn9Z6Ave1S+d
+         c+M2nqBWwUVG/Tiig+v5kNWVjoNuE6zlmBk301Soz/CrCdPuQXtlnYbTOWY3EYrNqz/g
+         mh9JVY/kbABsXvGl9Yk4ZFCHFmevnY6grhHDzeSYzU1fNp8NEuB8R4ua5sVO29vdFkU+
+         pZSIg9EVSZ3gZmUSOAJBqG8y+O+1fGRxB6p8+ZJpWQCZg7+zGcOZ6LeXHmaCzWinfW4o
+         bxQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723570592; x=1724175392;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ux1ltjB7fEpye+TnmiTq1fmdc6AU3AFDmWw30Fex0gE=;
+        b=rw60NuROfQPYxcc6UbJpal5WH9DqWPzIPck9TwMO6MncGphG+GgrHQp8HooDm+Q5T9
+         i4bqkPEk27jzrPl0MT0D1DGbCVRvuWC/BACXU/oqIU/uixUKXJT0vLh3MECob7QmjeBA
+         h7uxOHdlbx/K7I2bJh11/QTFHu56QwGUeJFpzb+8WLtf3bJSKHnLpej2k+x/2+cM0MEZ
+         j51OLm0zhbLij+yAVfI8z0tY1VJuMdBNqjM0hqzANhL/eIdrLlPBZKSJfnNAkOlahkww
+         2cydPXlABuP60ayH34mR3EZlvYoBUEraIRYrqT0B9CtYVk8gCdhTsR8W+j87pUpqoxY/
+         rE2g==
+X-Gm-Message-State: AOJu0YwmFIbOdlJOT828Mo38cvF6YAGB0qTirLtlYgRFml7bPj7rGgG7
+	AkbmMsU4QZWJ1uORTy2KxHKIFRMmeaYZ8laE5DDoTMPIshfDSRUcVDLShNUmzdBdktQ37MeQZwZ
+	qDDQ5j2XgfyM6xrRPLO8RCHUodi2c3f96
+X-Google-Smtp-Source: AGHT+IGwBxtFwlpXGqV8ylPIdh284oL4VaH0l0psVSJZnkGb1eiKYfMvRrGkM96sDyVzpJqp+Hp8ERHoqFi1kxxksjw=
+X-Received: by 2002:a17:903:2447:b0:1fd:9b96:32d4 with SMTP id
+ d9443c01a7336-201d64a5a2dmr3123855ad.51.1723570592181; Tue, 13 Aug 2024
+ 10:36:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8C01DEAE-599A-11EF-82CC-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+From: Piotr Siupa <piotrsiupa@gmail.com>
+Date: Tue, 13 Aug 2024 19:36:15 +0200
+Message-ID: <CAPM0=yCJ0snEznK0C+zkmGofWHE3OPWoMXSVGH6=TdM7=rZ84g@mail.gmail.com>
+Subject: "git-stash --keep-index" crashes when there are no tracked files
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Alex Galvin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hello,
 
-> From: Alex Galvin <alex.v.galvin@gmail.com>
->
-> Git-SVN was previously taught to use the svn:globalignores attribute
-> as well as svn:ignore when creating or showing .gitignore files from
-> a Subversion repository. However, the documentation and help message
-> still only mentioned svn:ignore. This commit updates Git-SVN's
-> documentation and help command to mention the newly supported attribute.
+I've found a bug.
+It's something that's unlikely to happen in a normal workflow but it
+breaks a script I'm trying to write.
 
-Thanks for tying these loose ends.  Very much appreciated.
+Here is the complete report from "git bugreport":
 
-> @@ -219,7 +219,7 @@ my %cmd = (
->  	                "Set an SVN repository to a git tree-ish",
->  			{ 'stdin' => \$_stdin, %cmt_opts, %fc_opts, } ],
->  	'create-ignore' => [ \&cmd_create_ignore,
-> -			     'Create a .gitignore per svn:ignore',
-> +			     'Create a .gitignore per directory with svn:ignore and svn:globalignores',
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-I do not know how likely it is that Subversion gains even more
-sources of exclusion data in the future, but it makes me wonder if a
-phrase like "Create a .gitignore file from ignore properties of svn"
-so that we do not have to muck with the message.  Presumably those
-who do use this feature know which properties Subversion uses to
-record the ignored paths.  On the other hand, if it is not expected
-to happen very soon, I think the text in this patch is good enough,
-and we can revisit the issue of help text getting overly long when
-we do need to add the third one.
+What did you do before the bug happened? (Steps to reproduce your issue)
+git init
+git commit --allow-empty --message='initial commit'
+touch foo
+git stash push --include-untracked --keep-index
 
-The same comment applies to the runtime option help for the other
-one.  I think listing the set of ignore properties we are aware of,
-iow what you have in this patch, is perfectly appropriate for the
-documentation.
+What did you expect to happen? (Expected behavior)
+A stash entry storing the untracked file "foo" should be created. The
+working directory and index should become empty.
 
-Thanks.
+What happened instead? (Actual behavior)
+The command did what was expected but after that it crashed with the
+following error message:
+error: pathspec ':/' did not match any file(s) known to git
+
+What's different between what you expected and what actually happened?
+There should be no error message and the exit code should be 0.
+
+Anything else you want to add:
+This happens only if there are no files in the current HEAD. Adding
+any file to the initial commit prevents the error from occurring (even
+if it is unchanged when the stash is created).
+I suspect that the command has trouble with the corner case of
+restoring the state of the index when there are no tracked files.
+I also tested it using executables of "git-stash" compiled from
+current branches "maint" and "next". The behavior is the same.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.8.0-39-generic #39~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
+Wed Jul 10 15:35:09 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
