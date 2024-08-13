@@ -1,134 +1,144 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED36D8BF3
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767317D340
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723541791; cv=none; b=NnbW7KgbxZWud94lMKzWbnRcGH6Atm0X4uyLPwerzQw65ioSp2s2L0mBbsAhk5SrFsw/ge3FQ1uHABAlXUOmDc9lif42KjA8oofdyZm/6/1zfJQj65Pr4CIK3SKAf8C6csUQ9rfnSp/P0qzh4J2fwnC+aAwjIHyWGHdcK2pD/9U=
+	t=1723542528; cv=none; b=nld7PKvcTy7mF4Umf63Vc7J/j3nUUdmaa8UaoJk10nhj7GBfeqEWN2TNQvVM3ejcP1BytDbitRQ2XXwgjScbRlvN2yIQKRPofqQm53HHEBHeOitIPDm8sAFQmEObNv8MXad17TNzLsmhxcNFngRjkE85YuBNWyDNLqNDdzLThTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723541791; c=relaxed/simple;
-	bh=9p3yNz5PRO19CEe28uQpUg5rEJSmbXMtFT3D5p9oOkY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Lm5Ca6QHLVe+z26qc1kGxhtQ04ey5UicvYLJ5dMivlwTHePooNugyksSigtuFXoGFahqtV5mommXBWDisc3A1d0FEWrzFVZjGD/7e0HA/sbgDB7qDo6n44AfNR+rvQYL6+u1YuMkqZdLYEnhJxcVi2lAN9JuhTnvQWukj8KZtWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gscBkglv; arc=none smtp.client-ip=209.85.161.46
+	s=arc-20240116; t=1723542528; c=relaxed/simple;
+	bh=V/1Dpu8Xe53u4ajGJA9dEmgerUA/qlTSfjtW8hzb+lY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=eDV6erI0fWkEYs54EFsklaKAFdh0KB8B6p1Rpb3RUlm6D4KdZM79DIXXABM9+6pTNKXZhScftayBeddLc4avaIANqIp1GQP84NFVKDlwHmRS/ixyLOlunWrG8CFW7dsl7eo6EDkVMA/UPtqhhnzHeUODnJFROv6S3QFw93EAyX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UmnedGCn; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gscBkglv"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5d5e1c86b83so3299650eaf.3
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 02:36:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmnedGCn"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-429da8b5feaso1816095e9.2
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 02:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723541789; x=1724146589; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=gmail.com; s=20230601; t=1723542525; x=1724147325; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uTOlma4L+W2xkLSi9kGG03xERGBI4xUh3/VUoOsOQXk=;
-        b=gscBkglvq0FM6+5l9XjzuSw1DlYOTpIThzn79FVJNgEyO1XOE8YgBbpsLL1Gj67+a0
-         fgsoqixraEosHu8s6rJIWaL5w7PpUbjTeswtPeE7QsHlGwS7JYf8m/LrIDSV8jCLQb/s
-         MpNUShUQSarYJk7IrG/XNE9UXEW6+BFyiLfQHbUiY+8SQ8sRumZL/k7e42ybRlg+6YBW
-         UikFKNHSyOXTDdma+4Bc5oJsYOhwTpqHz1rKbZ8PXS2vALh2EmxuoMY3x9pAHuNrrHQE
-         MS0wL/9ynsCUSn7MVZbx51ZC1IR/VNJoIblajqZy2aSqu7FfU53E04tanTQ5B55SlpdM
-         Liow==
+        bh=lJuJt84T/SxSfJ/s0jgMaiVopjzhxofxVhtDLVCTOaM=;
+        b=UmnedGCnM0Egj5cLcNYEzpQvKcWhB06lOOzCkEyPtvoRgpVdmHIZumzWJJ2vZT9nJY
+         rcn3ufgVhy5TxM2hSYJbqOhbNUFoj8hZXeXmglVf3nbdYi0b+v1DmtwOrwbppEcCMTJY
+         A8H/J1hX0yyPoLw39b2bK4L0mQfaviHg1RQqq0g5KEVgWG+nQppVPw6+YsgSd+pFR5Hf
+         G5tx/HghcFfiLApyrKECaps9LttVnzMv9mXANQXIH7UeuNqySdYXMzCrYP309rfeCO/k
+         SlYdPmxcV6/xLVTpzyfq88Y/8cHsGIw+TPPR8YMYCrw2yJtUo7eqKdQZVZ2QUGxVReWM
+         gnvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723541789; x=1724146589;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=1e100.net; s=20230601; t=1723542525; x=1724147325;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uTOlma4L+W2xkLSi9kGG03xERGBI4xUh3/VUoOsOQXk=;
-        b=ZphyUYLkWScRps6xwMshQbx5gd01UuAiSuQquAwTruTs+fBQs9HUfSG3NfXWTzRMg/
-         ErVp1tCCjWdZ27KyOtPlPCP+P3s9lZ1fvFQkTyPTfjDRFuVYwglMxb1PpKdCyALzGztz
-         HnbHZwMaayqehLIcFTwC0w8Mc6viM1/EETRJS57Iee9yExV/IXmrQdgEnyfFZM0Eb6UA
-         EArR+Ha5dZg0JtxodBTR+/bKkT6svVnuXu57Tg06ofa/yg14Z0aYcld2TF0S47kIGj8n
-         o+YGuJm61IhDM/RlEdXAm3b3M2cMxd9MjbHsRWSV42IgKFMr4OHrJeyfPzaF/xr1BKqt
-         mCHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWElna+09VlFqsZWZxR+k9boBdyf9jmCUXHowrmZqMVlckK32OPmvIDflwBfry5eRCsfrUnxO6yJBfyfCu987ep6pCj
-X-Gm-Message-State: AOJu0Ywn1SmPbLarhNB9bjtyHQ//ZH3jvpZVlOx/ktV2LkFlOI9gmLMx
-	HH9qP4pebHdSsLI79/fI4puvgTkPq+/UAIKOzb2fc2u+p/9QpQYiedxG85DiqavYUyPftQKnIRV
-	AzWXz0uEY2JNAEJJvjqfzqbM7cdexbA==
-X-Google-Smtp-Source: AGHT+IFlGOGU68KsjHAOKzPd64Xt5KNl4dmDuSB6oGJjy9H2GzYXHJu47odXKS7Cr+yYDDu5mOCR32/JE6Caha+N5rg=
-X-Received: by 2002:a05:6820:605:b0:5c2:2a3d:a671 with SMTP id
- 006d021491bc7-5da689e6cafmr3311469eaf.8.1723541788823; Tue, 13 Aug 2024
- 02:36:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 13 Aug 2024 05:36:27 -0400
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <404d64effde3bee424e338d858ed507ff83dff20.1723528765.git.ps@pks.im>
-References: <cover.1723528765.git.ps@pks.im> <404d64effde3bee424e338d858ed507ff83dff20.1723528765.git.ps@pks.im>
+        bh=lJuJt84T/SxSfJ/s0jgMaiVopjzhxofxVhtDLVCTOaM=;
+        b=BrFwQi+sSTpI13ao2B+L7oR/Kuwv3VWzfvg+97241JR0JDgN9hK001N5kWbs1VOwno
+         jNdIPMgOiew7F3sWA5Ric8nuM+CYb2Pa7zmIUQNYaYnv8Xd2TkYhg0TmsYUzBJQ8aHmn
+         evPdA7uaz/qElqybJ5MkEcxw8p76Ej192IbNCxqa7oBY4VNmYZZTop3qHGZj4ZqDdvbF
+         jwGGSv+pbWBtLxiREqNKSOG93+cACXR6fOviOGEXkn2Zxe2v7d0sTrfxvMRqyiyQIVIQ
+         7LYzmY4CI4mQTCZvGSQL38PaqtllSciCVgguEvIh+99kQVhGQ44xBZR4rxv9lhw+iFVZ
+         HZqw==
+X-Forwarded-Encrypted: i=1; AJvYcCVZhsdhcs0bU40L3Z8RQdhV4KPPaR38IbjOv7f83lB652SCHturRwOiftLx4w4dSsDM7kzg5Mk7a0X/knRppGE7ZL6s
+X-Gm-Message-State: AOJu0YxmnaAY9nI7DZU15aKfLij45jUHk6ors3SYEvZMalBFnFWBVFS1
+	YRRsvnyIOMqlJrOzNSSaVAlPOI3kwf1PcMo+UQOJ7zq+iWoBTXYVd0z5YA==
+X-Google-Smtp-Source: AGHT+IEQP65GQk1qQLGf3PnvLqDIpWxiJvpciwcdTDb95S7cEty7ymQp8eiNIDFzbLaXeVPfzluT7Q==
+X-Received: by 2002:a05:600c:1d02:b0:426:61fc:fc1a with SMTP id 5b1f17b1804b1-429d47f39d1mr27399275e9.3.1723542524693;
+        Tue, 13 Aug 2024 02:48:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c7a35ccsm223787665e9.44.2024.08.13.02.48.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Aug 2024 02:48:44 -0700 (PDT)
+Message-ID: <5720d5b9-a850-4024-a1fd-54acc6b15a74@gmail.com>
+Date: Tue, 13 Aug 2024 10:48:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 13 Aug 2024 05:36:27 -0400
-Message-ID: <CAOLa=ZSY8EWuXAK_tF4sSYGHs2Mv6nE-YtVtVkau4k5h=hOEdA@mail.gmail.com>
-Subject: Re: [PATCH 01/10] reftable/merged: expose functions to initialize iterators
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000143455061f8d5853"
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/5] config: add git_configset_alloc() and
+ git_configset_clear_and_free()
+To: Josh Steadmon <steadmon@google.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org, calvinwan@google.com, spectral@google.com,
+ emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com,
+ gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net,
+ Jason@zx2c4.com, dsimic@manjaro.org
+References: <cover.1723054623.git.steadmon@google.com>
+ <cover.1723242556.git.steadmon@google.com>
+ <908ad0b82fa084fc4e56d7f6dff49e4f255af6ec.1723242556.git.steadmon@google.com>
+ <47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com>
+ <bifcs4ijz4gsnrfjs3naqclo7nj7ajhek6eppgaj6a27ixp372@6oariraac4rz>
+Content-Language: en-US
+In-Reply-To: <bifcs4ijz4gsnrfjs3naqclo7nj7ajhek6eppgaj6a27ixp372@6oariraac4rz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000143455061f8d5853
-Content-Type: text/plain; charset="UTF-8"
+Hi Josh
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 12/08/2024 22:39, Josh Steadmon wrote:
+> On 2024.08.12 10:10, Phillip Wood wrote:
+>> Hi Josh
+>>
+>> Do we really need to add this code to config.c rather than handling it in
+>> the wrapper layer in the next patch?
+>>
+>> Looking ahead I wonder how useful it is to users of the library to separate
+>> out allocation from initialization. A function that allocates and
+>> initializes a configset would be more convenient and harder to misuse.
+>> Calling release functions *_free() rather than *_clear_and_free() would be
+>> more convenient as well. I also noticed that the data types are not
+>> namespaced when they are exported. So perhaps we could drop this patch and
+>> add the following to the next patch.
+>>
+>> /*
+>>   * Namespace data types as well as functions and ensure consistent
+>>   * naming of data types and the functions that operate on them.
+>>   */
+>> struct libgit_configset {
+>> 	struct config_set set;
+>> };
+>>
+>> struct libgit_configset *libgit_configset_new() {
+>> 	struct libgit_configset *set = xmalloc(sizeof(*set));
+>>
+>> 	git_configset_init(&set->set);
+>> 	return set;
+>> }
+>>
+>> void libgit_configset_free(struct libgit_configset *set) {
+>> 	git_configset_clear(&set->set);
+>> 	free(set);
+>> }
+> 
+> Hmmm I see your point, but I am also hoping to keep the symbol export
+> shim as small as possible, so that we can try to autogenerate it rather
+> than add entries by hand.
 
-> We do not expose any functions via our public headers that would allow a
-> caller to initialize a reftable iterator from a merged table. Instead,
-> they are expected to go via the generic `reftable_table` interface,
-> which is somewhat roundabout.
->
-> Implement two new functions to initialize iterators for ref and log
-> records to plug this gap.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/merged.c          | 12 ++++++++++++
->  reftable/reftable-merged.h |  8 ++++++++
->  2 files changed, 20 insertions(+)
->
-> diff --git a/reftable/merged.c b/reftable/merged.c
-> index 6adce44f4b..8d78b3da71 100644
-> --- a/reftable/merged.c
-> +++ b/reftable/merged.c
-> @@ -254,6 +254,18 @@ void merged_table_init_iter(struct reftable_merged_table *mt,
->  	iterator_from_merged_iter(it, mi);
->  }
->
-> +void reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
-> +					     struct reftable_iterator *it)
-> +{
-> +	merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
-> +}
-> +
-> +void reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
-> +					     struct reftable_iterator *it)
-> +{
-> +	merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
-> +}
-> +
+That's a nice aim - how do you plan to address namespacing data types 
+with that approach? The autogenerator would need to know "struct 
+config_set" wants to be wrapped as "struct libgit_configset" to ensure 
+we end up with consistent naming for the data type and its functions. 
+We'd also still want to make sure we end up with an ergonomic api which 
+means one function to allocate and initialize each data type, not 
+separate functions for allocation and initialization.
 
-These too look similar to `static void
-reftable_merged_table_init_iter_void` defined a little below, I wonder
-if we could have simply exposed that? Perhaps we remove it in the
-upcoming patches.
+> However, if people feel strongly that we don't
+> want to add helper functions like *_alloc() or *_free() for types that don't
+> already have them upstream, perhaps we can just put them in a separate
+> rust-helpers.c file or something.
 
-[snip]
+If we're not using them upstream they're just clutter as far as git is 
+concerned. Having said that if you get the autogeneration working well 
+so the output is usable without a lot of manual tweaking I can see an 
+argument for having these functions upstream.
 
---000000000000143455061f8d5853
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6a74faf0f1a7dae4_0.1
+Best Wishes
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hN0tSb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md2RSQy93SnpsYVVqakFhb1hrVHVGNHFHZndpR3ZWMwpoaWF3ZHk5QnJr
-ZUlWZWJRWE5UMnFidTI3eW5ZQTBMaHZocWtkRGRKU0c1aVkzc1VscWhBYi9naVNkeTJtNExpCnNj
-cVFQcFZWUVJQMmhiTHJOMkVmUlBhVkRvS3oxTGJkTVYwaUZVMThUczZRc01jd0wvUlkvSmV4d2lK
-T1FWS3oKblZ2TmJ5RktqRzcwVjNaeGFJbks0UmR4NEZSRnlweDl1dWFOMkxOSTJQM2xTR3FKSnVz
-bFp6OExPV3NZM2NIagpOM0NyZ0VIaVhTd1lTeU1JdU5HbWNaRkhQQ0RZZG9TN1RJRk1DT1lsY1pJ
-bWJFSHppSkgxalFyOENQM3QvRG4zCkcxS1R6WWhBd2pDUlFiWEVuTG9aK05wdTJ1L1ZhS28xUFBz
-Q3U5OXdHOGdYb3QyaWQ3ZVZ3RXJzVGNnbGtGUmcKejNIWjZ6SXl1L3ZJZC93OEdENzhET1hDSTNZ
-S3ZpeGFEREFFc0lXTDFsNmhtV3JFZ3hXMldyeElrOHk0VDF0bQp4OGJuaEFubjNyVzUrR1V3bldt
-WE5mU1Y2MktoSDlEUXZvRlhNU0l3NGxHSWNIaGt3QWVQaytYK2EwNWJJRXVsCjcvRnAvVXV3SXVn
-UHQ2cC8ycHF6czlJSTdIdnZ1eTZGMkhuWEQyST0KPXUrK3EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000143455061f8d5853--
+Phillip
