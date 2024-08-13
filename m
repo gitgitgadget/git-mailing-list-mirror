@@ -1,105 +1,64 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64F31A01B3
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 14:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFF419EED8
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 15:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723560315; cv=none; b=YOLnLB7ikLasDT3KOpPIhDWYBGudHxk2rSmhPqYooa5fBYSehkcVq7rYHWS6e5dTDBD6/07v2XXqNkPYv59BoiTj15otjdRTwEKmDLxSs48KqEa/4IV1ATyz2nvfCjHj9UPMED3uO/35aajyguFUMbY0GY5hoVAyh8pSmsKZLMU=
+	t=1723561575; cv=none; b=TID7kQyXTYUD9rI8uaITMh+bnj6Wnadju8TH2Gs20cBBMpK0hd1AjS+QVN6NbON0VB4/6OtF+VlLKl7swJ57mOQSpa7iUxKCCRBc8ZRtFPw/CqC5BNMTZam19ueGY94VyC+G5WEKplWDV8gLoyNgbDAAURID7ppGGXQpLQPCJq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723560315; c=relaxed/simple;
-	bh=QI6Jai3TnLjM7M7GSXynpzUfbkYHUm0xGcScuumdmj0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNx1dHrmfQH6pRo/qWFKpLn693J1STShDQWOK3nVSta6u4E9eRePYeiUEYOo95Gk6PtSZbA3Po+SlJs/KOl8euDtxTfo5gc1lgCfP5WJvYjfZQ4yXiISnKaNJqbKx+cBLGCOJ86prVgIG1njQH12mznsDd08b2/8wBMKdtxHogA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CmCxy/Kd; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723561575; c=relaxed/simple;
+	bh=G1jX/wn9+FxBMJX3eZ43qN1TNvvgaOQc+hQlSSD3X3c=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N6f0s5fMxUMpPIuHs7IPDadlpzYvmjlO6Feaz1HzvI5D5ail/HQhdIT7sY1adOUmny3SHLdT3FpuvP9g3SuggX4ViRTsFcQooBSdczYpZ4RQgLrEs9asqso2QKE8L6tz1At1QN/800YhBfeeGGLTyuxL67JT4CZj653THuCDX/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVKfiLMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CmCxy/Kd"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-200aa78d35aso26812905ad.3
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723560313; x=1724165113; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GDRVWmWpMijsrLk8w3wXGsOpUkPgY9wrLnYOhSIe4p8=;
-        b=CmCxy/KdhT1cWk65ry0kcdBZNnryRU0Bxl3RX5QyFspGZnL76La9nDXIZE0a7MNQlw
-         Lv1G2wmeelPs1AxRA8PUjYE7YU6TyYWzPwNdM7eNgsiSKJY7LJck+eyJV7BENS+OZFOR
-         q5IW1niHQZnOabZvmegpNcRQXug8yqMoGwLibjWVB6SjU19Xjw9TQ7TaFpsmE7SSntY/
-         okMTmtbcSKr5tS/Y92zJzRM3NAreO2AWCUOMmnUXqYnGfxZfQoVJuRcqChwzUQ6tgnXS
-         lpttJLQvfV4IS24gLOc58JW8/1pprV7AHMu0jpDfHKuGBXVfcs2ErgIpim0n6Qs42dWz
-         vAWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723560313; x=1724165113;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GDRVWmWpMijsrLk8w3wXGsOpUkPgY9wrLnYOhSIe4p8=;
-        b=vjlGGFxt0O/vYuhrr6HpuYnEbwye7m0bNmwgkqPALZq7W1bBXZ8EwUxGzHGQpBpZWa
-         v5FujcX8Ahx7upgRjlDg8uhMm5QXXj4BJiKbH1AKaSc6yd+892/5X5hzu4c7LUaNroxk
-         YuHbwuQ6HOpj2w/LD+q0aGbfIh0lf7hSIpjLx7glBO56JqDt+6Zdyn9nkR8f6ZbGsTHF
-         euxbmAcvkmXW9jp+YaFp2P4Fgab1mWdsQI/9ey6Y8h4h8GS5Kf7r7yTTAL+0VQ3wSuHs
-         ENsk7/zmb68b8dX0lQVJ1Q1HZjbVYc5bGN6vmWmuvpdToLs3kOboZdPcOuMPjUFud5X7
-         xIRg==
-X-Gm-Message-State: AOJu0YzS6Gi15MhOMkhprheOlilxKqZOnhqnTMXPy0FAvl3y2le9LEDU
-	QbuFs7IvrlvdjahfZcbDJtwd8E8KBhNdG68rRDiFOIthjnZPv38prxNZDjjyKms=
-X-Google-Smtp-Source: AGHT+IF+szp+yBixuHVll+RenWpgf0EsLNKjc9sMX98qP6GfCXO2MVV4eYnA8ab+RNcgaHDQ49JP0Q==
-X-Received: by 2002:a17:902:eccf:b0:200:aa90:f8a7 with SMTP id d9443c01a7336-201ca14e3admr36938755ad.37.1723560312832;
-        Tue, 13 Aug 2024 07:45:12 -0700 (PDT)
-Received: from Ubuntu.. ([27.61.226.190])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-201cd14b1c8sm14388805ad.78.2024.08.13.07.45.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Aug 2024 07:45:12 -0700 (PDT)
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 4/4] t-reftable-readwrite: add test for known error
-Date: Tue, 13 Aug 2024 20:04:50 +0530
-Message-ID: <20240813144440.4602-5-chandrapratap3519@gmail.com>
-X-Mailer: git-send-email 2.45.GIT
-In-Reply-To: <20240813144440.4602-1-chandrapratap3519@gmail.com>
-References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
- <20240813144440.4602-1-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVKfiLMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602FEC4AF09;
+	Tue, 13 Aug 2024 15:06:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723561574;
+	bh=G1jX/wn9+FxBMJX3eZ43qN1TNvvgaOQc+hQlSSD3X3c=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=uVKfiLMpoJRRjrVeSZTaihRfgH6pCLrcKon4c+aAeBCdNWZcJYmE2+YEgT69xJ2hh
+	 XC/MwJxNhYMFbeLbBpcYkUTLwMqMr00e7s3vQgNUOjVtfj4sVaVxcBA/Ap6SMe3yL2
+	 kZ2ToxIKAPwW4A6bmD+XCAWFM/UL60E6dW0d2d6o=
+Date: Tue, 13 Aug 2024 11:06:13 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Mike Castle <dalgoda@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Heads up: GMail regularly marking list messages as spam
+Message-ID: <20240813-sociable-fresh-whippet-3ee335@meerkat>
+References: <CA+t9iMyT8fAR_fvQXOer=ivLnNKDnH8g_M8iQiq7gdrnfG7aCg@mail.gmail.com>
+ <Zrp7yNKMxhPk6Tyt@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zrp7yNKMxhPk6Tyt@tapette.crustytoothpaste.net>
 
-When using reftable_writer_add_ref() to add a ref record to a
-reftable writer, The update_index of the ref record must be within
-the limits set by reftable_writer_set_limits(), or REFTABLE_API_ERROR
-is returned. This scenario is currently left untested. Add a test
-case for the same.
+On Mon, Aug 12, 2024 at 09:16:56PM GMT, brian m. carlson wrote:
+> Gmail and Yahoo have both set up new requirements for senders[0].  This
+> requires that all senders have SPF and DKIM, and senders sending more
+> than 5000 messages per day have DMARC set up.  One-click unsubscribe in
+> RFC 8058 is also obligatory, as is TLS for sending messages.  These
+> changes came into effect in February 2024.
+> 
+> I don't believe vger uses DKIM (at least, it doesn't appear to add DKIM
+> headers) and doesn't support RFC 8058 one-click unsubscribe.  Perhaps
+> adding support for those, as well as any other relevant requirements,
+> would improve things.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
- t/unit-tests/t-reftable-readwrite.c | 5 +++++
- 1 file changed, 5 insertions(+)
+These guidelines are only applicable if vger was the origin of the messages,
+not a forwarder. For forwarders, it is only required to add ARC signatures:
 
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index 9a05dde9d6..2ce56a0523 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -774,6 +774,11 @@ static void t_write_key_order(void)
- 	check(!err);
- 	err = reftable_writer_add_ref(w, &refs[1]);
- 	check_int(err, ==, REFTABLE_API_ERROR);
-+
-+	refs[0].update_index = 2;
-+	err = reftable_writer_add_ref(w, &refs[0]);
-+	check_int(err, ==, REFTABLE_API_ERROR);
-+
- 	reftable_writer_close(w);
- 	reftable_writer_free(w);
- 	strbuf_release(&buf);
--- 
-2.45.GIT
+https://support.google.com/mail/answer/175365?hl=en
 
+The only thing we aren't doing is we're not adding X-Forwarded-To headers,
+because mlmmj doesn't yet support it (should be in 1.5).
+
+-K
