@@ -1,91 +1,104 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55B1A3BD6
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 19:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D251A254F
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 19:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723576488; cv=none; b=ijRDU8GUlKP7nW9ZICEeuvVSVIvDEMBteoJt7GMIkOAnWuoWsAB5ltCLmS+WMEA991ZVOPJiSdrSOSznVnQEPPdPHd8r4cOsEgPesu+uMxbrFfN5jw3D3zPwgSnhdAlaThMjKeacwpgIoyz2FlHHst0XairsU4YsalX90lFfGSw=
+	t=1723576979; cv=none; b=QT93QXomcvot/f2CwARrSe7D4OMWj3cCvFSfoWNT8bipptdyIX8Yr3xkdlCrV72TGYcynMwvmPEbAzeb+vorp/CJ+oV9a5Q+zwnYHKgQzap35TTrQW1w5nBpWQK4pborp++lhxRB1TzBLY2b8qRGIML+qxNGDJ3lBs0QhJizlgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723576488; c=relaxed/simple;
-	bh=x+vj5vMgaMg52Bi23A3MdJxYn+jt3DdyxpvSZSYgsRI=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TQPIhSEQ33QojPby7EfFQMHt/ShJEagVbVpZswcSum0IjTYripvNloJov7MPkuOYi8NESbuiGXlg61gHzFSVIzLPtiN6VN67hFqDjglodGS160+3V35NWmWvJJ/yFWVo2zfH9XXUinRGx/kftqt1e26hoS3AeOJagVrQjRM6azs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 47DJEWjX1729992
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Aug 2024 19:14:32 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: "'Patrick Steinhardt'" <ps@pks.im>, <git@vger.kernel.org>,
-        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        "'Kyle Lippincott'" <spectral@google.com>,
-        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>,
-        "'Josh Steadmon'" <steadmon@google.com>,
-        "'Edward Thomson'" <ethomson@edwardthomson.com>
-References: <cover.1722415748.git.ps@pks.im> <cover.1723095269.git.ps@pks.im>	<35682b7686e570a96a8432f6b8af1996ab8d748e.1723095269.git.ps@pks.im>	<xmqqv8048mx2.fsf@gitster.g>	<03d601daed95$d10a63c0$731f2b40$@nexbridge.com> <xmqqzfpg461i.fsf@gitster.g>
-In-Reply-To: <xmqqzfpg461i.fsf@gitster.g>
-Subject: RE: [RFC PATCH v3 3/7] t/clar: fix whitespace errors
-Date: Tue, 13 Aug 2024 15:14:27 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03e701daedb5$083e1200$18ba3600$@nexbridge.com>
+	s=arc-20240116; t=1723576979; c=relaxed/simple;
+	bh=gWlG0Oer5yT8MfImu+Tku2v3qf3ajwFl1RSnc2soBMk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MkHynHcYGdr1Ounjwc95q8YB4PkAampj6HWJsRzGPSwanoFUKnIJZ9tY/EwxhoMnPbOnUSOt7br2/+wgbdLpDsfNYDI543yNVgwKVVuI2nfDfi7RASa3klagCLNrD1x60LEpgIy+XBPcETxFvSwLvb3JBGJiItEdOxa74S8QgYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bj1nXi+w; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bj1nXi+w"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B5F336F6F;
+	Tue, 13 Aug 2024 15:22:57 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=gWlG0Oer5yT8MfImu+Tku2v3qf3ajwFl1RSnc2
+	soBMk=; b=Bj1nXi+wwqX4fg/Om7CroaX+61/xRpd3uW6aMaBxAU66vIKOTEXzvJ
+	vtq3PxnY3IBvqT/2kBqXEvcXNENxT3V1QBlDNvwo0ltvhfasXd/iIDrDLNSzxBSS
+	nk8l4sFASE9MiDf4n0nOimS9I+vHm3eZ6WTo23suIPyIxY2T6x8oQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 634D536F6E;
+	Tue, 13 Aug 2024 15:22:57 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C7FF436F6D;
+	Tue, 13 Aug 2024 15:22:53 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][PATCH v2] t: migrate t0110-urlmatch-normalization to the
+ new framework
+In-Reply-To: <20240813172432.55487-1-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Tue, 13 Aug 2024 22:54:21 +0530")
+References: <20240628125632.45603-1-shyamthakkar001@gmail.com>
+	<20240813172432.55487-1-shyamthakkar001@gmail.com>
+Date: Tue, 13 Aug 2024 12:22:52 -0700
+Message-ID: <xmqqh6bo448j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE2Q9x0fuag13GoRDOLG7kBaq5wcQJKqFjGAnOgwnYCtG0nYQJDlPEmAhXkSKezEIBSgA==
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7030B920-59A9-11EF-B7BC-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-On Tuesday, August 13, 2024 2:44 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+
+> With the addition of this unit test, we impose a new restriction of
+> running the unit tests from either 't/' or 't/unit-tests/bin/'
+> directories. This is to construct the path to files which contain some
+> input urls under the 't/t-urlmatch-normalization' directory. This
+> restriction is similar to one we have for end-to-end tests, where they
+> can be ran from only 't/'.
 >
->> On Tuesday, August 13, 2024 11:26 AM, Junio C Hamano wrote:
->>>Patrick Steinhardt <ps@pks.im> writes:
->>>
->>>> Fix whitespace errors in the clar that make git-apply(1) unhappy.
->>>> This has been cherry-picked from the upstream pull request at [1].
->>>>
->>>> [1]: https://github.com/clar-test/clar/pull/97
->>>>
->>>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
->>>> ---
->>>>  t/unit-tests/clar/clar/sandbox.h  | 5 ++---
->>>>  t/unit-tests/clar/generate.py     | 1 -
->>>>  t/unit-tests/clar/test/.gitignore | 1 -
->>>>  3 files changed, 2 insertions(+), 5 deletions(-)
->>>
->>>A funny thing about this step is that the copy I carried for the past
->>>few days was an empty patch, because out of habit I use the
->>>"--whitespace=3Dfix" option while running "git am".  As that fixes =
-the
->>>whitespace breakage this step addresses while applying the previous =
-step, this
->one becomes empty.
->>>
->>>I'll requeue these patches with --whitespace=3Dwarn instead.
->>
->> Please forgive the third ask, but I really want to test the build =
-early. Suggestions?
->
->Sorry, but I do not follow.  If you have "git am" and "git clone"
->working, and if you have enough C toolchain to build the rest of Git, =
-wouldn't it be
->sufficient to also build this addition?  I think the 7 patches cleanly =
-apply to any
->recent tip of 'master'.
+> Addition of 't/unit-tests/bin/' is to allow
+> for running individual tests which is not currently possible via any
+> 'make' targets and also 'unit-tests-test-tool' target is also ran from
+> the 't/unit-tests/bin' directory.
 
-I am confused. My bad. The unit test works fine with the custom clar off =
-seen and next.
+Sorry, but I do not quite follow.  The above makes it sound as if
+the 'bin' subdirectory is something that never existed before this
+patch and this patch introduces the use of that directory, but that
+is hardly the case.  What does that "Addition of" really refer to?
 
+Do you mean "we cannot run the tests from arbitrary places, and we
+allow them to be run from t/, just like the normal tests" followed
+by "in addition, we also allow them to be run from t/unit-tests/bin
+directory because ..."?
+
+I wonder if we should get of t/t-urlmatch-normalization/ directory
+and instead hold these test data in the form of string constants in
+the program.  After all, you have the expected normalization result
+hardcoded in the binary (e.g. t_url_high_bit() asks the checker
+function to read from "url-1" file and then compare the result of
+normalization with a hardcoded string constant), so having the test
+data in separate files only risks the input and the output easily
+drift apart.
+
+As a side effect, it would make it easily possible to run the tests
+anywhere, because you no longer depend on these url-$n input files.
+It of course depends on how burdensome the limitation that we can
+run the tests only from a fixed place really is, but it generally is
+not a good idea to have these random sequence of bytes in small
+files that nobody looks at in a repository in the first place.
+
+Thanks.
