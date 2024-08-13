@@ -1,97 +1,102 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE012033A
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 17:18:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEAA2E630
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 17:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723569492; cv=none; b=d3O8B5fgSHeH2KNx2HNyNY6nChOo6oPBl62ee6IIZCXXGqVEVU3dxrPKINzUnv79n6kpD89jC2s+3PQzb5VGHnR5+neg7dHhiBQY1Kj4xvJ/oUXGgsDhX5AIXzclfqh0BYkKecacc9eQQ3rIgJpT3/I2Ry9y/uHllFr5W+/bDIY=
+	t=1723569503; cv=none; b=QodlAGAbShZqadpYmWpvyYTrlQBQ3N8o/48aOKpNoxWZB1VUdMlTC3Squ/ie6asjmJUy+8F1U8DhJQ6hqqeL7Jqt0HE+00Ox4yfbW6HDeKcAZaVJvWkoXSvTXZv8JLAL8oD/H4j7mDfCWwdbCGuHthT5ndr3VUriOoNVJqWb2cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723569492; c=relaxed/simple;
-	bh=2SdlnKJhuWf6PzxzZseYk5NuQUcgz1QjYNDeCJrpvRA=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=Ft89+qrrxPCOF6VjUlM6Ni0u9RPsH8zWtH3jGbYUDv1qPwZmknXAi225hZhZKUwQFJV17Oql1pAvPWt8olADxFKhc3JsTQ0LtRoiB7jTEdw4thy16JZE9Ws8jFR5sFBFW6wLQjA8J9ntFNEJMK+CJZp2h8iwBwyAH4ockH7v7SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yFMB60uH; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1723569503; c=relaxed/simple;
+	bh=TIX9cCR4zztZzePtiCSJmxtfG2f0z9T5BCBeb2kSVSI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=khFPVctilrBtjSx7MnHxUdtkdsm78Wek4JQ9YjaloNx9JEH0IVgyWFubX9k0E5bOnegRhYIxMyXMZiDt3a8SzqEkRmUXqazPyLxgeAK0JLNTtrA8E+tGFUEkvUhwEuplSOERPa/U39+Rf/qFHj0J2t3xp0pAe1sbDC4EL9NMw28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wo3QZjoN; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yFMB60uH"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-664fc7c4e51so116348027b3.3
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 10:18:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723569490; x=1724174290; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aEJaNbQzlBnOLdx0V2SNQk2FxHnxnbdoYeUu2IlqSTw=;
-        b=yFMB60uH2syoGWi+eU/5mSb0JfMhSdXvF4gqb559uG3E5lAtsSg6waai1RFjdWML4M
-         mi1Lij3/YHDgR8kBoVI6NxZK7RxjhurqqU09ESDih9dq9VSEChUMaLI4gYNnzgYWtTKw
-         cDIE1evuxTqZQXhC3KIWLaG6jhTeUnWAP1hGb5B8wHViMQMtTAe1EOu55/A/tangcNOQ
-         P2RyY7uXIgSTe/ySBk0yPctRRqvm0SBYEwMk/c1iPlNqIYIOBz0sgi8lMGqcGgw9wjVt
-         HoZsg/x2KRevcgygRCD+d5nsr8sHt3CficmWVzXiRU1Z0kfF4gFQamc+BCBWnVnYgK70
-         0gJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723569490; x=1724174290;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aEJaNbQzlBnOLdx0V2SNQk2FxHnxnbdoYeUu2IlqSTw=;
-        b=Ow4Z9r+oaflfI8Y0tnRb2jQylqWAqJzKtqsUOpuE4/4NWYlN/YcuDPMejR1v3liDEC
-         3iSgo6jR0G8t567haoAdfaB1YTep6jWBzhqfY32vsgAfzfyd0tQUAUHM0EooRITJ9+Vn
-         WsXdtcSvELNoLRzVnyGrSJ+ydJQXPpOOys2WcrTFzt5cBoGoDmf3rFm7A8uW2CmA/2p3
-         NS2hEH7EGJld0jWcnhYdVIzaPVbT/kfrQBkglbyF06zUOgzJ148ABYasOMN+BmQtNP8T
-         hS7KerX7eT4AIdEokMrbG0236dE0gB+myXPl7WZ+9T6JRELMB4myaDsk8EbijGpsosUB
-         Zosw==
-X-Forwarded-Encrypted: i=1; AJvYcCVjhqx0VG5R8fW3tQ9O+AXlCmQThD/v92c+tPiVbphF+0I6mw0JuJZpbx15ixWNaAl1LkJPIy60P1elJFbV7MzOQi6l
-X-Gm-Message-State: AOJu0Yzs3PGTTMHWKAesL9VhijMBJpPFSldWJNYuFiNeprJelRKYU4cM
-	x+tN15pgRQ+sLaq2frjanJCuCFw9J3MOGBhdQfi4dhAysMpxQe9injbsukxF31P33MYsHJT6O0W
-	+tyoQodGJX++VG2QvZcKhBoHzfceJHw==
-X-Google-Smtp-Source: AGHT+IHX0PIdwbJnUx4qT3+8VrjIFV3nrl5qC0fFGJINKQDcN64PFxBBIsTRr2e6grHbN9SJpqFYxfDZq/JNSPWyqhyp
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:4744:ebb2:c01c:8a34])
- (user=jonathantanmy job=sendgmr) by 2002:a81:eb06:0:b0:68f:dfc2:98ee with
- SMTP id 00721157ae682-6ac9a479123mr6367b3.5.1723569490380; Tue, 13 Aug 2024
- 10:18:10 -0700 (PDT)
-Date: Tue, 13 Aug 2024 10:18:08 -0700
-In-Reply-To: <20240813004508.2768102-1-jonathantanmy@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wo3QZjoN"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 75CF1360E6;
+	Tue, 13 Aug 2024 13:18:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TIX9cCR4zztZzePtiCSJmxtfG2f0z9T5BCBeb2
+	kSVSI=; b=wo3QZjoNHG3xcZlSEYEolWmzYcdDqVDbEggx0OUUK6slZ69BAGUXro
+	QjheNUw8k6UZfASfUFj5UY+8plj3jTPJ5OnR/S8FyleZo5J/N6EHJ/7zwiSAHfxs
+	sZPTUu5GcU451ns/TBRCoKhe+Br0aM2a4EHHZnEF5OLvQe2HtAbJk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E3C7360E5;
+	Tue, 13 Aug 2024 13:18:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BED24360E4;
+	Tue, 13 Aug 2024 13:18:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Phil Sainty <phil@catalyst.net.nz>,  pclouds@gmail.com,
+  git@vger.kernel.org,  hvoigt@hvoigt.net,  me@ikke.info,
+  rafa.almas@gmail.com
+Subject: Re: Adding nested repository with slash adds files instead of gitlink
+In-Reply-To: <8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de> (Johannes
+	Schindelin's message of "Tue, 13 Aug 2024 14:48:47 +0200 (CEST)")
+References: <s5wr0azfeh9.fsf@catalyst.net.nz> <xmqqed6zht04.fsf@gitster.g>
+	<8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de>
+Date: Tue, 13 Aug 2024 10:18:15 -0700
+Message-ID: <xmqqle105oko.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
-Message-ID: <20240813171808.504427-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 0/1] revision: fix reachable objects being gc'ed in no
- blob clone repo
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org, gitster@pobox.com, 
-	xingxin.xx@bytedance.com, jeffhostetler@github.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 081FF884-5998-11EF-9FD3-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-> Solutions I can think of:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-One more thing that I just thought of regarding the solution in this
-patch. It seems to be to have a different separation of packs: all
-objects currently in promisor packs and all objects currently not
-in promisor packs. And the way it is done is to only exclude (in
-this patch, mark UNINTERESTING, although it might be better to have
-a separate flag for it) objects in promisor packs, but not their
-ancestors. There are two ways we can go from here:
+>> >> Abusing a long standing bug does not make it a feature. I'm not
+>> >> opposed to having a new option to keep that behavior, but it should
+>> >> not be the default. If you use it that way, you're on your own.
+>> >
+>> > Was such an option ever worked on?
+>>
+>> No.
+>>
+>> I do not recall hearing anybody who have been active in the
+>> development community saying anything good about such an option.
+>> For the past 6 or so years, nobody who actively works on git thought
+>> it was an interesting and/or useful thing to work on.
+>>
+>> I cannot quite say that they thought that it is actively a bad idea
+>> to offer such an option, though.
+>
+> I have encountered the wish quite frequently to be able to make changes in
+> a subdirectory and have them reflected as a commit that is both part of
+> that subdirectory's revision history as well as part of the containing
+> project's.
 
- - Do not iterate past this object, just like for UNINTERESTING. This
-   would end up not packing objects that we need to pack (e.g. {C,T,B}2
-   below, if we only have a ref pointing to C3).
+Let me make sure I understand the above.  You create a commit to
+contain the change in the submodule and at the same time create a
+new commit to bind the updated submodule commit to superproject
+tree.  If that is what you are talking about, of course, that would
+be a nice thing to have.  Sort of "commit --recursive".  It is still
+debatable what to do with the log messages, though (you want to
+leave in the submodule an explanation that is understandable in the
+scope of the submodule, while you want to record in the superproject
+a bigger picture reasoning).
 
-  commit  tree  blob
-   C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
-   |
-   C2 ---- T2 -- B2 (created locally, in non-promisor pack)
-   |
-   C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+But I did not get the impression that it is what the original poster
+wants.  My reading of the original thread (this is a resurrection of
+an antient thread dating back to 2018) was that you have a submodule
+at path S, you muck with a file in S/file, and you want to commit in
+the context of the superproject, having the superproject track S/file
+in its history (not just S gitlink).
 
- - Iterate past this object (I think this is the path this patch took,
-   but I didn't look at it closely). This works, but seems to be very
-   slow. We would need to walk through all reachable objects (promisor
-   object or not), unlike currently in which we stop once we have
-   reached a promisor object.
-
+And that is quite different from what you said.
