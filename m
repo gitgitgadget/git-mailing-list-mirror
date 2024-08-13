@@ -1,125 +1,230 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72BB438FB9
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 20:42:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DA51386C0
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 21:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723581769; cv=none; b=L646NKU+KWr6twEHDZvI4h19mblUfMf2Pgnc5BZX8c9mHyXozljuPoD95tsKsAaMFqtIrruG4e16V8gygD3q1vHCQwJooYvr9nwUO9Oohx5J3s5aLzpBPTqLFBDxEPw6g/rnV3HiVy4bt0UMMH130eepVhjSl68TNX4WPFVSgAE=
+	t=1723585530; cv=none; b=e5vRXvgjSSYTolj7/ojk0VTh0CxZAzNmNwqR4QIbaf185gI+B7DACdgbgHn/UEiHNMGkJbiMRYqvWqFiphtX1ZtRBq0NZ/488KknkKEVvuvWSlZxKMfaNdBf85yRQMeXFcKDHSHJUZyZ/X4xhc6jT1pnwtA8f6j09A/y1JuSGrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723581769; c=relaxed/simple;
-	bh=cuFLRClvY/t+LpMVdIc519VZb53P1+94NlaLNvrlH4s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y0ZAKqQlxR8W8gmVxGq1vKaFo96YWhNDny/VWSWSKz3jo7Pu126Hol8g48VLjegcXYN8lFbDK8NDyEalBuI1pjTj/FyK0fVOaEDhnyHwpcjYxnFOcyFCOw9y45wbOASpOUutPnhUwRKjzRr/evFTQPKfmGbvsCR0kqGLz5L2+90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=T6RGXVJv; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1723585530; c=relaxed/simple;
+	bh=TBWCXrgSjbDIMWFCLcEhRLPvQSI5+XgI8NNyQ81jo8s=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=R3fCX5wr3qQgYOM3lIHS3ND1y5nX+HEszncQCbZFq5GjFm952nXHEPneINlS/slj7/KUkMhL4vkOYs5q9j9zDkJs/Wbo1Hv8aInjAJP7+g5FyaBy9oNLyt4zHxB9Lmpbhh1roE6wxXeFBftpRmmw2/JDtwzpecWsuHfZyVDWYZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NCT4NkcE; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="T6RGXVJv"
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 636B2DF9EF2
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 22:42:37 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:d713:b0b1:9800:110a])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id A072A19F57E;
-	Tue, 13 Aug 2024 22:42:26 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1723581749;
-	bh=cuFLRClvY/t+LpMVdIc519VZb53P1+94NlaLNvrlH4s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6RGXVJvzEs2/LuRYauV/EnykmZ86x+f+Tdcg6ddFfZLDm6sszU+OBpirJHInaTgk
-	 soKqALMDgYGNK6wqal8hCMErSvpjrDVRz/OheojreRmutCIOC2h+q0gE2Uw05X+kau
-	 7y16HrUFgH5/ElVMn3vCOFTmNKjSrNMxlz81TcFhaOCQ2qpmm30BH164KW5evFkwle
-	 SwZLTGF48UQ1eYfhr8Qv5asRUx6VN+aiCtap546eP5v/8MrQfYaf0qOnQbhxGzd2hW
-	 lmbaI5zbLcog/RQJ2ukst7XjQTCUBmWnZ1ETW0PSc4m57HPeTuN0ePFhI7D/1CHabV
-	 6fxFBlAJj6L1g==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc:
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] formatting macro
-Date: Tue, 13 Aug 2024 22:42:26 +0200
-Message-ID: <3596897.iIbC2pHGDl@cayenne>
-In-Reply-To: <f44c253d-9b37-451d-902d-486adb8e3d72@kdbg.org>
-References:
- <pull.1769.git.1722801936.gitgitgadget@gmail.com>
- <4617471.LvFx2qVVIh@cayenne> <f44c253d-9b37-451d-902d-486adb8e3d72@kdbg.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NCT4NkcE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723585528; x=1755121528;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:to:cc;
+  bh=TBWCXrgSjbDIMWFCLcEhRLPvQSI5+XgI8NNyQ81jo8s=;
+  b=NCT4NkcEnjnnbFYXn9OhAwehNSYLJi3lg2WCrWpFoO9yDnGOd8cqlyTU
+   JxyqySaZCRaxySZPYsSLpq+FIa6n2kvkm7H5EAIgDcICzCLMv5tCsrPmR
+   k43Nl1iZXPQuWj0snCBGgzVywxhhgmFV0jijVS/DiXbN8AhIDtaGIry3N
+   APtW9bq7zDJbPQ1NF8jb55CiIxcENuBynla4rcc/IQNA3qdlNSAMFOcs0
+   dp56ZelIhCtnIsxT+Su9yc17iqMc8XrDTlI5wqIL8uyKbUq/YVt0DCX36
+   kGarqPdwfx8A7CZ//6E6wdiijqzs+U5Y98+8ChRoe8gDuABfEpKhPxdTI
+   Q==;
+X-CSE-ConnectionGUID: gi/mfwHTQ76NkES5dE4fuQ==
+X-CSE-MsgGUID: urMZynkMQlWsz8y/35ABuw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="21909891"
+X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
+   d="scan'208";a="21909891"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 14:45:27 -0700
+X-CSE-ConnectionGUID: /u3La4SpTi+kIZk6GsGvzw==
+X-CSE-MsgGUID: w62QEoaVSIqkJntyeKKybg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
+   d="scan'208";a="63213778"
+Received: from jekeller-desk.amr.corp.intel.com (HELO localhost.localdomain) ([10.166.241.1])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 14:45:26 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Tue, 13 Aug 2024 14:45:22 -0700
+Subject: [PATCH] format-patch: add support for mailmap file
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAPLTu2YC/x3NTQqDMBBA4avIrDswSSz9uUpxMWii0zYmTNIii
+ Hdv6PLbvLdD8Sq+wL3bQf1XiqS1wZw6GBdeZ48yNYMl29PVOHy+sHxyTloxsrwjZ5ylYkgauWL
+ mOi7YuxtdXLBnMgStlNUH2f6Xx3AcP1v8VKR1AAAA
+To: git@vger.kernel.org
+Cc: Jacob Keller <jacob.keller@gmail.com>, 
+ Anthony Nguyen <anthony.l.nguyen@intel.com>
+X-Mailer: b4 0.14.0
 
-On Monday, 12 August 2024 08:35:39 CEST Johannes Sixt wrote:
-> Am 07.08.24 um 22:43 schrieb Jean-No=EBl AVILA:
->=20
-> I would like tone down my harsh opposition to mild opposition. IMO, it
-> should still be easy to *write* the documentation. It should not be
-> necessary that authors remember to use macros all over the place.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-The purpose of this series is to clarify the formatting rules for keywords =
-and=20
-placeholders, and to uniformly apply them, so that the readers can relate t=
-he=20
-meaning of what they are reading with the visual cues in the text.  The mor=
-e=20
-uniform the typesetting, the less surprised the reader, the smaller the=20
-communication impedance.
+Git has support for a mailmap file which translates author and committer
+names and email addresses to canonical values.
 
-This requirement makes the documentation *less* easy to write, for sure.
-It is no question of forcing authors to use the formatting macro everywhere=
-=2E=20
-As explained in the Guildelines V3 of the series, the macro is introduced i=
-n=20
-order to remove the most hairy forms where manually doing the formatting wo=
-uld=20
-lead to difficult to read/write sequences. I bet most writers will remember=
- and=20
-use the s macro when they want to typeset something like=20
-=2D-ignore-submodules[=3D<when>]
+Git log has log.mailmap, and the associated --mailmap and --use-mailmap
+options.
 
-As an added benefit, we can also simplify some existing parts, for instance=
- see=20
-the ones in urls.txt.
+Teach git format-patch the format.mailmap and --mailmap options so that
+formatting a patch can also reflect the canonical values from the
+mailmap file.
 
->=20
-> And I still think that we should not introduce macros just to please all
-> renderers. Let's just pick the one renderer that can do the job best. If
-> it means that some distribution cannot render the documentation
-> perfectly themselves (Debian? I don't know), they can always use the
-> pre-rendered version that Junio kindly produces.
+Reported-by: Anthony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ builtin/log.c                      | 13 ++++++++++
+ Documentation/git-format-patch.txt |  7 ++++++
+ t/t4014-format-patch.sh            | 49 +++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 68 insertions(+), 1 deletion(-)
 
-I do not understand how the renderer could solve the issue of typesetting t=
-he=20
-"good part" in the place of the writers. The macro is there to mechanize th=
-e=20
-typesetting of selected parts, but it is up to the writers to define what i=
-s a=20
-keyword and what is a placeholder in their prose. Please note also that usi=
-ng=20
-proper placeholder differentiating and typesetting should have the side-eff=
-ect=20
-of making the prose lighter, by removing the need to express which placehol=
-der=20
-we are talking about.
+diff --git a/builtin/log.c b/builtin/log.c
+index 4d4b60caa76a..94560add6fbc 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -975,6 +975,7 @@ struct format_config {
+ 	struct log_config log;
+ 	enum thread_level thread;
+ 	int do_signoff;
++	int use_mailmap;
+ 	enum auto_base_setting auto_base;
+ 	char *base_commit;
+ 	char *from;
+@@ -1131,6 +1132,10 @@ static int git_format_config(const char *var, const char *value,
+ 		cfg->do_signoff = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.mailmap")) {
++		cfg->use_mailmap = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "format.signature")) {
+ 		FREE_AND_NULL(cfg->signature);
+ 		return git_config_string(&cfg->signature, var, value);
+@@ -2042,6 +2047,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    N_("generate a cover letter")),
+ 		OPT_BOOL(0, "numbered-files", &just_numbers,
+ 			    N_("use simple number sequence for output file names")),
++		OPT_BOOL(0, "use-mailmap", &cfg.use_mailmap, N_("use mail map file")),
++		OPT_ALIAS(0, "mailmap", "use-mailmap"),
+ 		OPT_STRING(0, "suffix", &fmt_patch_suffix, N_("sfx"),
+ 			    N_("use <sfx> instead of '.patch'")),
+ 		OPT_INTEGER(0, "start-number", &start_number,
+@@ -2160,6 +2167,12 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 
+ 	rev.force_in_body_from = force_in_body_from;
+ 
++	if (cfg.use_mailmap) {
++		rev.mailmap = xmalloc(sizeof(struct string_list));
++		string_list_init_nodup(rev.mailmap);
++		read_mailmap(rev.mailmap);
++	}
++
+ 	if (!fmt_patch_suffix)
+ 		fmt_patch_suffix = cfg.fmt_patch_suffix;
+ 
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 8708b3159309..f3de349990bf 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -30,6 +30,7 @@ SYNOPSIS
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+ 		   [--filename-max-length=<n>]
+ 		   [--progress]
++		   [(--mailmap|--no-mailmap|--use-mailmap|--no-use-mailmap)]
+ 		   [<common-diff-options>]
+ 		   [ <since> | <revision-range> ]
+ 
+@@ -145,6 +146,12 @@ include::diff-options.txt[]
+ 	Print all commits to the standard output in mbox format,
+ 	instead of creating a file for each one.
+ 
++--[no-]mailmap::
++--[no-]use-mailmap::
++	Use mailmap file to map author and committer names and email
++	addresses to canonical real names and email addresses. See
++	linkgit:git-shortlog[1].
++
+ --attach[=<boundary>]::
+ 	Create multipart/mixed attachment, the first part of
+ 	which is the commit message and the patch itself in the
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 884f83fb8a45..3a3ebddfe5c4 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1215,7 +1215,7 @@ check_author() {
+ 	echo content >>file &&
+ 	git add file &&
+ 	GIT_AUTHOR_NAME=$1 git commit -m author-check &&
+-	git format-patch --stdout -1 >patch &&
++	git format-patch $2 --stdout -1 >patch &&
+ 	sed -n "/^From: /p; /^ /p; /^$/q" patch >actual &&
+ 	test_cmp expect actual
+ }
+@@ -1285,6 +1285,53 @@ test_expect_success 'format-patch wraps extremely long from-header (rfc2047)' '
+ 	check_author "Foö Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar"
+ '
+ 
++cat >mail.map <<'EOF'
++Foo B. Baz <author@example.com>
++EOF
++
++cat >expect <<'EOF'
++From: "Foo B. Baz" <author@example.com>
++EOF
++test_expect_success 'format-patch format.mailmap maps properly' '
++	test_config format.mailmap true &&
++	test_config mailmap.file mail.map &&
++	check_author "Foo B. Bar"
++'
++
++cat >expect <<'EOF'
++From: "Foo B. Bar" <author@example.com>
++EOF
++test_expect_success 'format-patch --no-mailmap overrides format.mailmap' '
++	test_config format.mailmap true &&
++	test_config mailmap.file mail.map &&
++	check_author "Foo B. Bar" "--no-mailmap"
++'
++
++cat >expect <<'EOF'
++From: "Foo B. Bar" <author@example.com>
++EOF
++test_expect_success 'format-patch --no-use-mailmap overrides format.mailmap' '
++	test_config format.mailmap true &&
++	test_config mailmap.file mail.map &&
++	check_author "Foo B. Bar" "--no-use-mailmap"
++'
++
++cat >expect <<'EOF'
++From: "Foo B. Baz" <author@example.com>
++EOF
++test_expect_success 'format-patch --mailmap' '
++	test_config mailmap.file mail.map &&
++	check_author "Foo B. Bar" "--mailmap"
++'
++
++cat >expect <<'EOF'
++From: "Foo B. Baz" <author@example.com>
++EOF
++test_expect_success 'format-patch --use-mailmap' '
++	test_config mailmap.file mail.map &&
++	check_author "Foo B. Bar" "--use-mailmap"
++'
++
+ cat >expect <<'EOF'
+ From: Foö Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar
+  Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo Bar Foo
 
-To me, Asciidoc strikes a good balance for a tool that makes it easy to wri=
-te=20
-simple things and not too complicated to write more complex ones. It is als=
-o=20
-customizable for specific needs, which is handy for our use case.  I am not=
-=20
-aware of an existing renderer that would do the job really best. What do yo=
-u=20
-have in mind?
+---
+base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
+change-id: 20240813-jk-support-mailmap-git-format-patch-439073f25010
 
-JN
-
-
-
-
-
+Best regards,
+-- 
+Jacob Keller <jacob.keller@gmail.com>
 
