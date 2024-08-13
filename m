@@ -1,815 +1,146 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FA580B
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 00:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8E37F8
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 00:45:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723509695; cv=none; b=m8q9Ql/do/RnR0+s099jBhLSryLmweLYhJ4dQjEHzEkmp9PSNYEy26aiOjLc0KHuBpGqk+9qTaUB2o6fNwrhedSGmXvX3gMw2P07Ng/7geul/KgjjfIc/bZprA6mE7bXb/2fgqu+CIjxj884vvIanSyH+3ZB0cRinyYzq775BCU=
+	t=1723509914; cv=none; b=Imo2VsOSyPDMyEpkGtSWuM+4Dx5/LLWu9wzIuQSP4lsPNdent1Ly8pegE+OkNUOJjZ/Ur+ZQYi2sW+bsfMt0QyGoL9CXlwD4J0/DCDauWR4mNasf+e3GGpkR2QZ+OmUD82X2FePRF3ggi/HeiGKXayQWQa4Hg7+bW3qxjGTa6Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723509695; c=relaxed/simple;
-	bh=dOrD34sjzIx5zS3FMwdQhmeT7C/kQDSahkrKGxqIuQA=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VsXzmvfRXRuC32MSQbs7+TM8X7E6lp4cLe2++03TB0MxSvSlO7TrudzSwdHU3J0J/34N/iDhs3WI1eVrFbj2pexFhBlfodIrchLoLG4e1yBnK3MGzBVz7yukvt1yeirGpKOAUS06w+nIfK4TTCcNb+43/5DZqt9vJ1Zn7nTEUAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=azbnbopC; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723509914; c=relaxed/simple;
+	bh=Hzf6afEb2u6r0kLtVp3rowyQTMAjsBY/GFWX2CzdGKU=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=QvUkjpo43WDZbQTCM0T31vxiXndv0yZt6a9uu/eCowP3WmCtk3lUSxI9XKYzBNetaMPLAvSMfgGgpTnVqOGgdHXJQQsPhzVSyn5U4ty0+LIgegeqztjYinhH+vJ48BkffZvDkLuq8Po9/NLs/Z2TOJ33djqJiz6rnSdFhONggLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0w4IBCUs; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="azbnbopC"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 184892F1FD;
-	Mon, 12 Aug 2024 20:41:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=d
-	OrD34sjzIx5zS3FMwdQhmeT7C/kQDSahkrKGxqIuQA=; b=azbnbopCekUPVxdKr
-	7qMyzvgjX+ivbVth3JnXmAQy7LH3Nc+PeT4rBgyPPLouQIT7tLhXsHzOcTZo+QSn
-	8pY9oYHMkfcP+yEmw5fak80HPQilGoQ3F7FphDntESoSXzgon0kqEq68cKOcSOUL
-	KJQFG3Yo8rqWTx+5Eyu/28xRGw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 01C5A2F1FC;
-	Mon, 12 Aug 2024 20:41:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66E862F1FB;
-	Mon, 12 Aug 2024 20:41:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Aug 2024, #04; Mon, 12)
-X-master-at: 25673b1c476756ec0587fb0596ab3c22b96dc52a
-X-next-at: ee80dbc4f68248653629bdd1361376c366b51623
-Date: Mon, 12 Aug 2024 17:41:26 -0700
-Message-ID: <xmqqcymd9rux.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0w4IBCUs"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e0e78047c98so7974565276.3
+        for <git@vger.kernel.org>; Mon, 12 Aug 2024 17:45:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723509912; x=1724114712; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ST9uH8Nz45LVH4pBFvbVMwaFCIRRxuSwUMVl3k+ln3g=;
+        b=0w4IBCUs/fv/jSY6h7lFfzDJXQ2+GvgskfLIuUyvy0rJFPAU97MloClWY+qMwE46oo
+         K9LxWPwZsZ2VBAPnWJSD84CYClTY6X7F8yo3oftJSZFKGfH2uiMofyhw5w51jPaziC1S
+         3vnpXGEjU7MqOm1t7Nx07/H2xtN9FAoVZyYRylFiFtyM05K8I30SdKiJrqIL1gYjC0gs
+         604tZ5i/ih8M0Z14mMoO4BJer+v7pQ0/9999zemDhe5uCTnfGAVXl3+odLf1ppvBCpCf
+         f7wp1IdciakA/9Hh8ZcjZwB0fdlQzZ7fQpjM0nyFycTYNSfd/2o467Dh3h1TTtKtzASW
+         H7IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723509912; x=1724114712;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ST9uH8Nz45LVH4pBFvbVMwaFCIRRxuSwUMVl3k+ln3g=;
+        b=u3D+x9PpO5fKpshe6WJmQZ+ME1YTSl9fMU/mGKHNItXvdzxctQae70mbQOWra6muPF
+         cew7kdnpOII7fyj8cansj49tH3YvLrIcY54MhHwC3jb5R0t5JdA9swHqFEn7ZdxXDzL3
+         FFYoQkXHRjLkDz7Rkln7T3pu/ICwDyjVpQzoE0d7IQXNGtDc0fkfMkkork90qYwzzi0s
+         piNy+ndLlpWXnjcUITrlzuvNukisbiJAP/IB/qYgb1QbbMmio6tgJxZwn4nr4Fw7JJ5t
+         dP1VvhJJIUdIOMjynoDUQHHVjfZY2Egt8hQwKOv8E3fltIF4/AQR3EGLpLKG9DalqfGG
+         DVOw==
+X-Forwarded-Encrypted: i=1; AJvYcCXBKdqmCWp3VI0CiUwE2TOagLqw/LgXEqexUBt+niK0cfv7ExtVTCm2+y7lrSIs+/VxhjjpIg6xvmhnj8O+tus544GZ
+X-Gm-Message-State: AOJu0YzXvgvB/GDstF3kUePRWK2yVr+apJGyLS8Fo2tJZf70C6zmoTSL
+	aY5DHc09Uz4jVUrsHEtBNOnaKbARwnrsqUhnOPpE9Qiv8CCXVyoO4t/6KJalI+hjNx1+vNva4KO
+	j/1Ko9/0ZW2liBJJMtbAOEjY4ZpbvhA==
+X-Google-Smtp-Source: AGHT+IFilqs+5PUVd2Gx+lRcZM5D9DVUo7OGQ+Gl/BouA6wdqsl/dFGV1F0yG0+si7fCS14qzv/KzkEwCAdYvpHZVSF2
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:95c1:e6e6:7744:c903])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:48c6:0:b0:e0e:a784:2957 with
+ SMTP id 3f1490d57ef6-e113cd54e27mr52065276.1.1723509911786; Mon, 12 Aug 2024
+ 17:45:11 -0700 (PDT)
+Date: Mon, 12 Aug 2024 17:45:08 -0700
+In-Reply-To: <20240802073143.56731-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C6F77EB2-590C-11EF-BA7E-BF444491E1BC-77302942!pb-smtp20.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* jc/tests-no-useless-tee (2024-08-08) 1 commit
-  (merged to 'next' on 2024-08-12 at 188e777e16)
- + tests: drop use of 'tee' that hides exit status
-
- Test fixes.
-
- Will merge to 'master'.
- source: <xmqq4j7uhfvm.fsf@gitster.g>
-
-
-* js/libgit-rust (2024-08-09) 5 commits
- - cgit: add higher-level cgit crate
- - config: add git_configset_alloc() and git_configset_clear_and_free()
- - cgit-sys: add repo initialization and config access
- - cgit-sys: introduce Rust wrapper for libgit.a
- - common-main: split init and exit code into new files
-
- An rust binding to libgit.a functions has been introduced.
- source: <cover.1723242556.git.steadmon@google.com>
-
-
-* xx/diff-tree-remerge-diff-fix (2024-08-09) 1 commit
-  (merged to 'next' on 2024-08-09 at cabe67c0d1)
- + diff-tree: fix crash when used with --remerge-diff
- (this branch is used by jc/range-diff-lazy-setup.)
-
- "git rev-list ... | git diff-tree -p --remerge-diff --stdin" should
- behave more or less like "git log -p --remerge-diff" but instead it
- crashed, forgetting to prepare a temporary object store needed.
-
- Will merge to 'master'.
- source: <pull.1771.v2.git.1723188292498.gitgitgadget@gmail.com>
-
-
-* jc/grammo-fixes (2024-08-09) 2 commits
- - doc: grammofix in git-diff-tree
- - tutorial: grammofix
-
- source: <xmqqed6xehzv.fsf@gitster.g>
-
-
-* jc/range-diff-lazy-setup (2024-08-09) 2 commits
- - remerge-diff: clean up temporary objdir at a central place
- - remerge-diff: lazily prepare temporary objdir on demand
- (this branch uses xx/diff-tree-remerge-diff-fix.)
-
- source: <pull.1771.git.1723123250958.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Stalled]
-
-* pp/add-parse-range-unit-test (2024-05-27) 1 commit
- - apply: add unit tests for parse_range
-
- A unit test for code that parses the hunk offset and length from a
- patch fragment header as been added.
-
- Expecting a reroll.
- cf. <b7eca313-9ea8-4132-ba1d-ed9236e07095@gmail.com>
- source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Cooking]
-
-* jc/t3206-test-when-finished-fix (2024-08-06) 1 commit
-  (merged to 'next' on 2024-08-08 at 46461db3a2)
- + t3206: test_when_finished before dirtying operations, not after
-
- Test clean-up.
-
- Will merge to 'master'.
- source: <xmqqwmkttwfm.fsf@gitster.g>
-
-
-* jc/too-many-arguments (2024-08-06) 4 commits
- - miscellaneous: avoid "too many arguments"
- - notes: avoid "too many arguments"
- - cat-file: avoid "too many arguments"
- - refs: avoid "too many arguments"
-
- Error message clarification.
-
- On hold.
- source: <20240806003539.3292562-1-gitster@pobox.com>
-
-
-* ps/leakfixes-part-4 (2024-08-08) 23 commits
- - builtin/diff: free symmetric diff members
- - diff: free state populated via options
- - builtin/log: fix leak when showing converted blob contents
- - userdiff: fix leaking memory for configured diff drivers
- - builtin/format-patch: fix various trivial memory leaks
- - diff: fix leak when parsing invalid ignore regex option
- - unpack-trees: clear index when not propagating it
- - sequencer: release todo list on error paths
- - merge-ort: unconditionally release attributes index
- - builtin/fast-export: plug leaking tag names
- - builtin/fast-export: fix leaking diff options
- - builtin/fast-import: plug trivial memory leaks
- - builtin/notes: fix leaking `struct notes_tree` when merging notes
- - builtin/rebase: fix leaking `commit.gpgsign` value
- - config: fix leaking comment character config
- - submodule-config: fix leaking name enrty when traversing submodules
- - read-cache: fix leaking hashfile when writing index fails
- - bulk-checkin: fix leaking state TODO
- - object-name: fix leaking symlink paths in object context
- - object-file: fix memory leak when reading corrupted headers
- - git: fix leaking system paths
- - remote: plug memory leak when aliasing URLs
- - Merge branch 'ps/leakfixes-part-3' into ps/leakfixes-part-4
- (this branch uses ps/leakfixes-part-3.)
-
- More leak fixes.
-
- Will merge to 'next'?
- source: <cover.1723121979.git.ps@pks.im>
-
-
-* cp/unit-test-reftable-readwrite (2024-08-09) 4 commits
- - t-reftable-readwrite: add test for known error
- - t-reftable-readwrite: use 'for' in place of infinite 'while' loops
- - t-reftable-readwrite: use free_names() instead of a for loop
- - t: move reftable/readwrite_test.c to the unit testing framework
-
- Needs review.
- source: <20240809111312.4401-1-chandrapratap3519@gmail.com>
-
-
-* ps/config-wo-the-repository (2024-08-07) 21 commits
- - config: hide functions using `the_repository` by default
- - global: prepare for hiding away repo-less config functions
- - config: don't depend on `the_repository` with branch conditions
- - config: don't have setters depend on `the_repository`
- - config: pass repo to functions that rename or copy sections
- - config: pass repo to `git_die_config()`
- - config: pass repo to `git_config_get_expiry_in_days()`
- - config: pass repo to `git_config_get_expiry()`
- - config: pass repo to `git_config_get_max_percent_split_change()`
- - config: pass repo to `git_config_get_split_index()`
- - config: pass repo to `git_config_get_index_threads()`
- - config: expose `repo_config_clear()`
- - config: introduce missing setters that take repo as parameter
- - path: hide functions using `the_repository` by default
- - path: stop relying on `the_repository` in `worktree_git_path()`
- - path: stop relying on `the_repository` when reporting garbage
- - hooks: remove implicit dependency on `the_repository`
- - editor: do not rely on `the_repository` for interactive edits
- - path: expose `do_git_common_path()` as `strbuf_git_common_pathv()`
- - path: expose `do_git_path()` as `repo_git_pathv()`
- - Merge branch 'ps/refs-wo-the-repository' into ps/config-wo-the-repository
- (this branch uses ps/refs-wo-the-repository.)
-
- Use of API functions that implicitly depend on the_repository
- object in the config subsystem has been rewritten to pass a
- repository object through the callchain.
-
- Needs review.
- source: <cover.1723013714.git.ps@pks.im>
-
-
-* ps/submodule-ref-format (2024-08-08) 8 commits
-  (merged to 'next' on 2024-08-09 at 2b17964809)
- + object: fix leaking packfiles when closing object store
- + submodule: fix leaking seen submodule names
- + submodule: fix leaking fetch tasks
- + builtin/submodule: allow "add" to use different ref storage format
- + refs: fix ref storage format for submodule ref stores
- + builtin/clone: propagate ref storage format to submodules
- + builtin/submodule: allow cloning with different ref storage format
- + git-submodule.sh: break overly long command lines
-
- Support to specify ref backend for submodules has been enhanced.
-
- Will merge to 'master'.
- source: <cover.1723102259.git.ps@pks.im>
-
-
-* jc/transport-leakfix (2024-08-07) 1 commit
-  (merged to 'next' on 2024-08-07 at eec3a24826)
- + transport: fix leak with transport helper URLs
- (this branch is used by ps/transport-leakfix-test-updates.)
-
- Leakfix.
-
- Will merge to 'master'.
- source: <xmqq34nfn7ip.fsf@gitster.g>
-
-
-* ps/transport-leakfix-test-updates (2024-08-08) 1 commit
-  (merged to 'next' on 2024-08-12 at ee80dbc4f6)
- + transport: mark more tests leak-free
- (this branch uses jc/transport-leakfix.)
-
- Test updates.
-
- Will merge to 'master'.
- source: <ZrRPD0ggZapZym7E@tanuki>
-
-
-* ag/t7004-modernize (2024-08-08) 8 commits
-  (merged to 'next' on 2024-08-09 at 7bce577df4)
- + t7004: make use of write_script
- + t7004: use single quotes instead of double quotes
- + t7004: begin the test body on the same line as test_expect_success
- + t7004: description on the same line as test_expect_success
- + t7004: do not prepare things outside test_expect_success
- + t7004: use indented here-doc
- + t7004: one command per line
- + t7004: remove space after redirect operators
-
- Coding style fixes to a test script.
-
- Will merge to 'master'.
- source: <20240808163302.17521-1-abdobngad@gmail.com>
-
-
-* ds/for-each-ref-is-base (2024-08-12) 3 commits
- - p1500: add is-base performance tests
- - for-each-ref: add 'is-base' token
- - commit-reach: add get_branch_base_for_tip
-
- 'git for-each-ref' learned a new "--format" atom to find the branch
- that the history leading to a given commit "%(is-base:<commit>)" is
- likely based on.
-
- Comments?
- source: <pull.1768.v2.git.1723397687.gitgitgadget@gmail.com>
-
-
-* jk/apply-patch-mode-check-fix (2024-08-05) 1 commit
-  (merged to 'next' on 2024-08-05 at 2dc1a81c89)
- + apply: canonicalize modes read from patches
-
- The patch parser in 'git apply' has been a bit more lenient against
- unexpected mode bits, like 100664, recorded on extended header lines.
-
- Will merge to 'master'.
- source: <20240805060010.GA120016@coredump.intra.peff.net>
-
-
-* kl/test-fixes (2024-08-05) 2 commits
-  (merged to 'next' on 2024-08-06 at 2cdcac6ce4)
- + t6421: fix test to work when repo dir contains d0
- + set errno=0 before strtoX calls
-
- A flakey test and incorrect calls to strtoX() functions have been
- fixed.
-
- Will merge to 'master'.
- source: <pull.1756.v3.git.git.1722877808.gitgitgadget@gmail.com>
-
-
-* ps/ls-remote-out-of-repo-fix (2024-08-02) 1 commit
-  (merged to 'next' on 2024-08-05 at 6438d8196d)
- + builtin/ls-remote: fall back to SHA1 outside of a repo
-
- A recent update broke "git ls-remote" used outside a repository,
- which has been corrected.
-
- Will merge to 'master'.
- source: <c52112d3946b2fd8d030580cd7acb809fa54012a.1722573777.git.ps@pks.im>
-
-
-* ps/ref-api-cleanup (2024-08-02) 1 commit
-  (merged to 'next' on 2024-08-05 at d57856ae19)
- + refs: drop `ref_store`-less functions
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <1d9add71065dabb3d7bf81529d04afbcf91e3a69.1722577074.git.ps@pks.im>
-
-
-* rs/use-decimal-width (2024-08-05) 1 commit
-  (merged to 'next' on 2024-08-06 at 99ccbb43de)
- + log-tree: use decimal_width()
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <06783722-5184-41d5-8edd-94f97b2f2794@web.de>
-
-
-* ss/packed-ref-store-leakfix (2024-08-05) 1 commit
-  (merged to 'next' on 2024-08-06 at 5003ec4218)
- + refs/files: prevent memory leak by freeing packed_ref_store
-
- Leakfix.
-
- Will merge to 'master'.
- source: <pull.1757.v2.git.git.1722851612505.gitgitgadget@gmail.com>
-
-
-* tb/t7704-deflake (2024-08-05) 1 commit
-  (merged to 'next' on 2024-08-07 at d3c0727946)
- + t/t7704-repack-cruft.sh: avoid failures during long-running tests
-
- A test that fails on an unusually slow machine was found, and made
- less likely to cause trouble by lengthening the expiry value it
- uses.
-
- Will merge to 'master'.
- source: <95cdc30bad38f464b37e87d78f38e1d91c9e083b.1722886630.git.me@ttaylorr.com>
-
-
-* sj/ref-fsck (2024-08-08) 9 commits
-  (merged to 'next' on 2024-08-09 at 3bde10da94)
- + fsck: add ref name check for files backend
- + files-backend: add unified interface for refs scanning
- + builtin/refs: add verify subcommand
- + refs: set up ref consistency check infrastructure
- + fsck: add refs report function
- + fsck: add a unified interface for reporting fsck messages
- + fsck: make "fsck_error" callback generic
- + fsck: rename objects-related fsck error functions
- + fsck: rename "skiplist" to "skip_oids"
-
- "git fsck" infrastructure has been taught to also check the sanity
- of the ref database, in addition to the object database.
-
- Will merge to 'master'.
- source: <ZrSqMmD-quQ18a9F@ArchLinux.localdomain>
-
-
-* ps/refs-wo-the-repository (2024-07-30) 5 commits
-  (merged to 'next' on 2024-08-06 at fef5e26d47)
- + refs/reftable: stop using `the_repository`
- + refs/packed: stop using `the_repository`
- + refs/files: stop using `the_repository`
- + refs/files: stop using `the_repository` in `parse_loose_ref_contents()`
- + refs: stop using `the_repository`
- (this branch is used by ps/config-wo-the-repository.)
-
- In the refs subsystem, implicit reliance of the_repository has been
- eliminated; the repository associated with the ref store object is
- used instead.
-
- Will merge to 'master'.
- cf. <ZqnEuz9uFgUwWKkc@tanuki>
- source: <cover.1722316795.git.ps@pks.im>
-
-
-* rs/t-example-simplify (2024-07-30) 1 commit
-  (merged to 'next' on 2024-08-08 at edeb01c38e)
- + t-example-decorate: remove test messages
-
- Unit test simplification.
-
- Will merge to 'master'.
- source: <5c838884-b606-465a-8f7e-ab760ddadef8@web.de>
-
-
-* cc/promisor-remote-capability (2024-07-31) 4 commits
- - promisor-remote: check advertised name or URL
- - Add 'promisor-remote' capability to protocol v2
- - strbuf: refactor strbuf_trim_trailing_ch()
- - version: refactor strbuf_sanitize()
-
- The v2 protocol learned to allow the server to advertise possible
- promisor remotes, and the client to respond with what promissor
- remotes it uses, so that the server side can omit objects that the
- client can lazily obtain from these other promissor remotes.
-
- Inviting further discussion.
- source: <20240731134014.2299361-1-christian.couder@gmail.com>
-
-
-* ps/reftable-stack-compaction (2024-08-08) 9 commits
-  (merged to 'next' on 2024-08-09 at d7875bf14b)
- + reftable/stack: handle locked tables during auto-compaction
- + reftable/stack: fix corruption on concurrent compaction
- + reftable/stack: use lock_file when adding table to "tables.list"
- + reftable/stack: do not die when fsyncing lock file files
- + reftable/stack: simplify tracking of table locks
- + reftable/stack: update stats on failed full compaction
- + reftable/stack: test compaction with already-locked tables
- + reftable/stack: extract function to setup stack with N tables
- + reftable/stack: refactor function to gather table sizes
-
- The code paths to compact multiple reftable files have been updated
- to correctly deal with multiple compaction triggering at the same
- time.
-
- Will merge to 'master'.
- source: <cover.1723123606.git.ps@pks.im>
-
-
-* rh/http-proxy-path (2024-08-02) 1 commit
-  (merged to 'next' on 2024-08-05 at d6f1fb194a)
- + http: do not ignore proxy path
-
- The value of http.proxy can have "path" at the end for a socks
- proxy that listens to a unix-domain socket, but we started to
- discard it when we taught proxy auth code path to use the
- credential helpers, which has been corrected.
-
- Will merge to 'master'.
- source: <pull.1767.v5.git.1722576007398.gitgitgadget@gmail.com>
-
-
-* jc/refs-symref-referent (2024-08-09) 3 commits
-  (merged to 'next' on 2024-08-09 at 3183f3d05b)
- + ref-filter: populate symref from iterator
- + refs: add referent to each_ref_fn
- + refs: keep track of unresolved reference value in iterators
-
- The refs API has been taught to give symref target information to
- the users of ref iterators, allowing for-each-ref and friends to
- avoid an extra ref_resolve_* API call per a symbolic ref.
-
- Will merge to 'master'.
- source: <pull.1712.v4.git.git.1723217871.gitgitgadget@gmail.com>
-
-
-* jk/osxkeychain-username-is-nul-terminated (2024-08-01) 1 commit
-  (merged to 'next' on 2024-08-05 at 34a238e047)
- + credential/osxkeychain: respect NUL terminator in username
-
- The credential helper to talk to OSX keychain sometimes sent
- garbage bytes after the username, which has been corrected.
-
- Will merge to 'master'.
- source: <20240801082556.GA640360@coredump.intra.peff.net>
-
-
-* tb/config-fixed-value-with-valueless-true (2024-08-01) 1 commit
-  (merged to 'next' on 2024-08-06 at 0476e5ba76)
- + config.c: avoid segfault with --fixed-value and valueless config
-
- "git config --value=foo --fixed-value section.key newvalue" barfed
- when the existing value in the configuration file used the
- valueless true syntax, which has been corrected.
-
- Will merge to 'master'.
- source: <c78bacfa8fb274fbb48f259b13f4f30253932f69.1722532013.git.me@ttaylorr.com>
-
-
-* jc/jl-git-no-advice-fix (2024-08-01) 1 commit
-  (merged to 'next' on 2024-08-06 at 468bfce24b)
- + t0018: remove leftover debugging cruft
-
- Remove leftover debugging cruft from a test script.
-
- Will merge to 'master'.
- source: <xmqq7cd0ulen.fsf_-_@gitster.g>
-
-
-* cp/unit-test-reftable-pq (2024-08-01) 7 commits
-  (merged to 'next' on 2024-08-05 at 05e47f7097)
- + t-reftable-pq: add tests for merged_iter_pqueue_top()
- + t-reftable-pq: add test for index based comparison
- + t-reftable-pq: make merged_iter_pqueue_check() callable by reference
- + t-reftable-pq: make merged_iter_pqueue_check() static
- + t: move reftable/pq_test.c to the unit testing framework
- + reftable: change the type of array indices to 'size_t' in reftable/pq.c
- + reftable: remove unnecessary curly braces in reftable/pq.c
-
- The tests for "pq" part of reftable library got rewritten to use
- the unit test framework.
-
- Will merge to 'master'.
- cf. <Zqt02XmevPRB3idt@tanuki>
- source: <20240801110453.5087-1-chandrapratap3519@gmail.com>
-
-
-* tb/incremental-midx-part-1 (2024-08-06) 19 commits
-  (merged to 'next' on 2024-08-12 at 92ec55fd49)
- + midx: implement support for writing incremental MIDX chains
- + t/t5313-pack-bounds-checks.sh: prepare for sub-directories
- + t: retire 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
- + midx: implement verification support for incremental MIDXs
- + midx: support reading incremental MIDX chains
- + midx: teach `midx_fanout_add_midx_fanout()` about incremental MIDXs
- + midx: teach `midx_preferred_pack()` about incremental MIDXs
- + midx: teach `midx_contains_pack()` about incremental MIDXs
- + midx: remove unused `midx_locate_pack()`
- + midx: teach `fill_midx_entry()` about incremental MIDXs
- + midx: teach `nth_midxed_offset()` about incremental MIDXs
- + midx: teach `bsearch_midx()` about incremental MIDXs
- + midx: introduce `bsearch_one_midx()`
- + midx: teach `nth_bitmapped_pack()` about incremental MIDXs
- + midx: teach `nth_midxed_object_oid()` about incremental MIDXs
- + midx: teach `prepare_midx_pack()` about incremental MIDXs
- + midx: teach `nth_midxed_pack_int_id()` about incremental MIDXs
- + midx: add new fields for incremental MIDX chains
- + Documentation: describe incremental MIDX format
-
- Incremental updates of multi-pack index files.
-
- Will merge to 'master'.
- source: <cover.1722958595.git.me@ttaylorr.com>
-
-
-* ja/doc-synopsis-markup (2024-08-12) 3 commits
- - doc: apply synopsis simplification on git-clone and git-init
- - doc: update the guidelines to reflect the current formatting rules
- - doc: introduce a synopsis custom paragraph attribute
-
- The way AsciiDoc is used for SYNOPSIS part of the manual pages has
- been revamped.  The sources, at least for the simple cases, got
- vastly pleasant to work with.
-
- Comments?
- source: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
-
-
-* tc/fetch-bundle-uri (2024-07-24) 3 commits
- - fetch: use bundle URIs when having creationToken heuristic
- - transport: introduce transport_has_remote_bundle_uri()
- - clone: remove double bundle list clear code
-
- Allow "git fetch" take advantage of bundleURI feature.
-
- Expecting a reroll or retraction.
- source: <ZqObobw8FsDMkllm@tanuki>
-
-
-* jc/leakfix-hashfile (2024-07-26) 1 commit
-  (merged to 'next' on 2024-08-06 at 7793a7fc56)
- + csum-file: introduce discard_hashfile()
-
- Leakfix.
-
- Will merge to 'master'.
- source: <xmqqle1p1367.fsf@gitster.g>
-
-
-* jc/leakfix-mailmap (2024-07-26) 1 commit
-  (merged to 'next' on 2024-08-06 at 22f73301fd)
- + mailmap: plug memory leak in read_mailmap_blob()
-
- Leakfix.
-
- Will merge to 'master'.
- source: <xmqqcyn112xi.fsf@gitster.g>
-
-
-* jr/ls-files-expand-literal-doc (2024-07-26) 1 commit
-  (merged to 'next' on 2024-08-06 at 0e7c8858ef)
- + doc: fix hex code escapes in git-ls-files
-
- Docfix.
-
- Will merge to 'master'.
- source: <CACStHN-Gs2Sxej+md6zWr3V1dFo+pp=B4yEPm9=uPambDR2NaQ@mail.gmail.com>
-
-
-* ps/leakfixes-part-3 (2024-08-01) 24 commits
-  (merged to 'next' on 2024-08-05 at e3d94036ff)
- + commit-reach: fix trivial memory leak when computing reachability
- + convert: fix leaking config strings
- + entry: fix leaking pathnames during delayed checkout
- + object-name: fix leaking commit list items
- + t/test-repository: fix leaking repository
- + builtin/credential-cache: fix trivial leaks
- + builtin/worktree: fix leaking derived branch names
- + builtin/shortlog: fix various trivial memory leaks
- + builtin/rerere: fix various trivial memory leaks
- + builtin/credential-store: fix leaking credential
- + builtin/show-branch: fix several memory leaks
- + builtin/rev-parse: fix memory leak with `--parseopt`
- + builtin/stash: fix various trivial memory leaks
- + builtin/remote: fix various trivial memory leaks
- + builtin/remote: fix leaking strings in `branch_list`
- + builtin/ls-remote: fix leaking `pattern` strings
- + builtin/submodule--helper: fix leaking buffer in `is_tip_reachable`
- + builtin/submodule--helper: fix leaking clone depth parameter
- + builtin/name-rev: fix various trivial memory leaks
- + builtin/describe: fix trivial memory leak when describing blob
- + builtin/describe: fix leaking array when running diff-index
- + builtin/describe: fix memory leak with `--contains=`
- + builtin/log: fix leaking branch name when creating cover letters
- + builtin/replay: plug leaking `advance_name` variable
- (this branch is used by ps/leakfixes-part-4.)
-
- More leakfixes.
-
- Will merge to 'master'.
- cf. <ZqvDJpNxMkvd3hSZ@nand.local>
- source: <cover.1722499961.git.ps@pks.im>
-
-
-* ag/git-svn-global-ignores (2024-07-18) 2 commits
-  (merged to 'next' on 2024-08-08 at 3ba5e164a6)
- + git-svn: use `svn:global-ignores` to create .gitignore
- + git-svn: add public property `svn:global-ignores`
-
- "git svn" has been taught about svn:global-ignores property
- recent versions of Subversion has.
-
- Will merge to 'master'.
- source: <pull.1747.v2.git.git.1721335657.gitgitgadget@gmail.com>
-
-
-* jc/safe-directory (2024-07-30) 4 commits
-  (merged to 'next' on 2024-08-05 at 77aa0f1d08)
- + safe.directory: setting safe.directory="." allows the "current" directory
- + safe.directory: normalize the configured path
- + safe.directory: normalize the checked path
- + safe.directory: preliminary clean-up
-
- Follow-up on 2.45.1 regression fix.
-
- Will merge to 'master'.
- source: <20240730184352.2503276-1-gitster@pobox.com>
-
-
-* cp/unit-test-reftable-tree (2024-08-04) 5 commits
-  (merged to 'next' on 2024-08-06 at e32c456e45)
- + t-reftable-tree: improve the test for infix_walk()
- + t-reftable-tree: add test for non-existent key
- + t-reftable-tree: split test_tree() into two sub-test functions
- + t: move reftable/tree_test.c to the unit testing framework
- + reftable: remove unnecessary curly braces in reftable/tree.c
-
- A test in reftable library has been rewritten using the unit test
- framework.
-
- Will merge to 'master'.
- cf. <Zqt1WTT_eJKEuO1z@tanuki>
- cf. <ZrCx0NWRbFOOReki@tanuki>
- source: <20240804141105.4268-1-chandrapratap3519@gmail.com>
-
-
-* ew/cat-file-optim (2024-07-15) 10 commits
- - cat-file: use writev(2) if available
- - cat-file: batch_write: use size_t for length
- - cat-file: batch-command uses content_limit
- - object_info: content_limit only applies to blobs
- - packfile: packed_object_info avoids packed_to_object_type
- - cat-file: use delta_base_cache entries directly
- - packfile: inline cache_or_unpack_entry
- - packfile: fix off-by-one in content_limit comparison
- - packfile: allow content-limit for cat-file
- - packfile: move sizep computation
-
- "git cat-file --batch" has been optimized.
-
- Expecting a reroll.
- cf. <ZqC82sDnj7Se_aVB@tanuki>
- source: <20240715003519.2671385-1-e@80x24.org>
-
-
-* jc/document-use-of-local (2024-07-15) 1 commit
-  (merged to 'next' on 2024-08-07 at 3321b54659)
- + doc: note that AT&T ksh does not work with our test suite
-
- Doc update.
-
- Will merge to 'master'.
- source: <xmqq1q3u8zmr.fsf@gitster.g>
-
-
-* jc/reflog-expire-lookup-commit-fix (2024-07-16) 1 commit
-  (merged to 'next' on 2024-08-06 at 1e59eac417)
- + Revert "reflog expire: don't use lookup_commit_reference_gently()"
-
- "git reflog expire" failed to honor annotated tags when computing
- reachable commits.
-
- Will merge to 'master'.
- source: <xmqqv8156rh2.fsf@gitster.g>
-
-
-* es/doc-platform-support-policy (2024-08-02) 1 commit
-  (merged to 'next' on 2024-08-09 at 110c94ea82)
- + Documentation: add platform support policy
-
- A policy document that describes platform support levels and
- expectation on platform stakeholders has been introduced.
-
- Will merge to 'master'.
- source: <20240802221948.2367124-1-emilyshaffer@google.com>
-
-
-* gt/unit-test-hashmap (2024-08-06) 1 commit
-  (merged to 'next' on 2024-08-09 at e62febfb4e)
- + t: port helper/test-hashmap.c to unit-tests/t-hashmap.c
-
- An existing test of hashmap API has been rewritten with the
- unit-test framework.
-
- Will merge to 'master'.
- cf. <CAP8UFD04uQbWhY0QDp+nC8VyBvpUs=tBDm=w4CzKK2GcwFZdGQ@mail.gmail.com>
- source: <20240803133517.73308-2-shyamthakkar001@gmail.com>
-
-
-* rs/unit-tests-test-run (2024-07-30) 6 commits
-  (merged to 'next' on 2024-08-12 at 9df4336877)
- + t-strvec: use if_test
- + t-reftable-basics: use if_test
- + t-ctype: use if_test
- + unit-tests: add if_test
- + unit-tests: show location of checks outside of tests
- + t0080: use here-doc test body
-
- Unit-test framework has learned a simple control structure to allow
- embedding test statements in-line instead of having to create a new
- function to contain them.
-
- Will merge to 'master'.
- source: <077a178e-eb30-45ff-b653-a514bfd33077@web.de>
-
-
-* jc/patch-id (2024-07-29) 5 commits
-  (merged to 'next' on 2024-08-06 at 9ad078b49c)
- + patch-id: tighten code to detect the patch header
- + patch-id: rewrite code that detects the beginning of a patch
- + patch-id: make get_one_patchid() more extensible
- + patch-id: call flush_current_id() only when needed
- + t4204: patch-id supports various input format
-
- The patch parser in "git patch-id" has been tightened to avoid
- getting confused by lines that look like a patch header in the log
- message.
-
- Will merge to 'master'.
- cf. <Zqh2T_2RLt0SeKF7@tanuki>
- source: <20240730011738.4032377-1-gitster@pobox.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
+Message-ID: <20240813004508.2768102-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 0/1] revision: fix reachable objects being gc'ed in no
+ blob clone repo
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
+	xingxin.xx@bytedance.com, jeffhostetler@github.com
+Content-Type: text/plain; charset="UTF-8"
+
+Han Young <hanyang.tony@bytedance.com> writes:
+> Here are the minimal steps to recreate issue.
+[snip]
+
+I think the following is what is happening. Before the final gc, the
+repo looks as follows:
+
+  commit  tree  blob
+   C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+   |
+   C2 ---- T2 -- B2 (created locally, in non-promisor pack)
+   |
+   C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+After the final gc, {C,T,B}3 and {C,T,B}1 are in a promisor pack, but
+all of {C,T,B}2 are deleted because they are thought to be promisor
+objects.
+
+> The last `git gc` will error out on fsck with error message like this:
+> 
+>   error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
+>   error: Could not read d3fbfea9e448461c2b72a79a95a220ae10defd94
+
+I'm not sure how `git gc` (or `git fsck`) knows the name of this
+object (what is the type of this object, and which object refers to
+this object?) but I think that if we implement one of the solutions I
+describe below, this problem will go away.
+
+> `git gc` will call `git repack`, which will call `git pack-objects`
+> twice on a partially cloned repo. The first call to pack-objects 
+> combines all the promisor packfiles, and the second pack-objects 
+> command packs all reachable non-promisor objects into a normal packfile.
+
+Yes, this is what I remember.
+
+> However, a bug in setup_revision caused some non-promisor objects 
+> to be mistakenly marked as in promisor packfiles in the second call 
+> to pack-objects.
+
+I think they ({C,T,B}2 in the example above) should be considered as
+promisor objects, actually. From the partial clone doc, it says of a
+promisor object: "the local repository has that object in one of its
+promisor packfiles, or because another promisor object refers to it".
+C3 (in a promisor packfile) refers to C2, so C2 is a promisor object. It
+refers to T2, which refers to B2, so all of them are promisor objects.
+However, in the Git code, I don't think this definition is applied
+recursively - if I remember correctly, we made the assumption (e.g.
+in is_promisor_object() in packfile.c) that we only need to care about
+objects in promisor packfiles and the objects they directly reference,
+because how would we know what objects they indirectly reference?
+But this does not cover the case in which we know what objects they
+indirectly reference because we pushed them to the server in the first
+place.
+
+Solutions I can think of:
+
+ - When fetching from a promisor remote, never declare commits that are
+   not in promisor packfiles as HAVE. This means that we would refetch
+   C2 and T2 as being in promisor packfiles. But it's wasteful in
+   network bandwidth, and does not repair problems in Git repos created
+   by Git versions that do not have this solution.
+
+ - When fetching from a promisor remote, parse every object and repack
+   any local objects referenced (directly or indirectly) into a promisor
+   packfile. Also does not repair problems.
+
+ - When repacking all objects in promisor packfiles, if any object they
+   refer to is present in a non-promisor packfile, do a revwalk on that
+   object and pack those objects too. The repack will probably be slower
+   because each object now has to be parsed. The revwalks themselves
+   probably will not take too long, since they can stop at known promisor
+   objects.
+
+(One other thing that might be considered is, whenever pushing to a
+promisor remote, to write the pack that's pushed as a promisor packfile.
+But I don't think this is a good idea - the server may not retain any
+packs that were pushed.)
