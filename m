@@ -1,82 +1,82 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DE118A95E
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8F118B486
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723540426; cv=none; b=XcHDQbUfxTLRt+ICfczL+aaFhggBweDD773kg/ETR1nS8ZsbF9lSg30/yc2qw/ev6CNM//0pMWJT4a63NzCo7C30LERA0w1GpSze+OxtrLgTjP189fVb31l4Hs1n3lgt+R8uXn/PhaH/BEjMHgAn/aFBDDQ7UeFXXBknE0NHi6I=
+	t=1723540429; cv=none; b=rmrowz6R795E2HKmj0Ak4d72pLXaXIY/Bs9O4l6y2wxsx5y6fp3ZS3hGLY+56oqurHqvwNyvPyGZGSnxfPAjtlfsqwFmzUDySeV8K3Er4V9cgK8QYwNkbr8oL+jZoft9iunZN6++yO/CrJLHBcJs02jMZmfnH6V5kGWVAjWNzXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723540426; c=relaxed/simple;
-	bh=+e9advTAN0KMTSvLA2EXjjMkTIuJb4s/Wm0kpWXCN/I=;
+	s=arc-20240116; t=1723540429; c=relaxed/simple;
+	bh=I15fssooDh6Pchtrdh3RHaJgk4wfx2/5caKMLFe4pTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uX32WKv/PwhpHmfZ6C0v1b19kh93Kr1fD67n46M3c0YG7kbPZHlsSAfviCFQq4zme+lZtVjI4LQQXDZR5rYNk5C/Xm6XfsyPqExnyee4eLGMzwq33K0QmtMYnSOP9Ivq3v6oX7AJuyhJWHNQvSlrEKvSNlyZ6nmFGjL32oQJTqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TyWNan8h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GB3T7T2u; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=k00VwL/KeWdQTD9+4QHjzVu2p4kn4+3SY+K1TdhNEiSjlfOK9j/0y6FXNXMwIxVBayrEIJcM3U66dsWLhQg9UWjkeQ/wZX3WHGZN1mOrDC9BiPJP4clfY96f+8oGK7tIxC/ZEwgdrEz2RIopyw0lD20jmdSAmu/bTiR8OWOkGOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZhJWobHg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H9Rdaax8; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TyWNan8h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GB3T7T2u"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 39CAD11519D0;
-	Tue, 13 Aug 2024 05:13:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZhJWobHg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H9Rdaax8"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6465E138FD24;
+	Tue, 13 Aug 2024 05:13:46 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 13 Aug 2024 05:13:43 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 13 Aug 2024 05:13:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723540423; x=1723626823; bh=YsbqfhRman
-	lck0BU7x5nKUQ/AjDnLazONUeekSz+tMo=; b=TyWNan8h83v8mxuYTt+G9GYH+g
-	uqVsWpFW5Qi9eF1+QKGshjskMZfs3o82So66fuB6HEm4mbIqDIGtzBp0KSnjhmB+
-	03htSmfK5jtdBao26SNW2j/qtI71k2TpQBZeewV/tGoktjMkgBswzBnu8T07IKDw
-	zDb58wfJwAmd+YmHUzS5NaN42DFbWp3VVypwXslYRRtB/Ehp5yDFIqJrGn2F/cl8
-	yokl/ki52oNmK+uDOJpfYMtQlinzAKMwcMKjDSePZqfXwVeoi0Vf9a/J2h97YeE0
-	7D4xZuDv5t9ZKWINbSTIoqwQW3QXxuhqB8IzCREnalpsLwZ/cSUC6Cx8aiXg==
+	:subject:to:to; s=fm3; t=1723540426; x=1723626826; bh=PAck6YOPSS
+	wo1ZSboxF1439Nd2EubxenVhoKYPXd4WE=; b=ZhJWobHg4Ga6OoP1Mb4TC1UXmr
+	8AlW5AvNRD66OphGmdk4eiLDoWT8Gb+7e2htkrv1v+8zkGuGS/UJCfkQ5lYJFv29
+	rVIyuJ5nWWus/Q9tEQEytCP1974wn4b1T2g0/VAQnEelxgnF+8aD46LcALVnLV+y
+	mW+siH4480X8BlIb68Cv3H1uOpyrg5K1olJ8paGOQXbJmlze+C46GJ91ju/jK1RS
+	wRkO+KtQUWwJuPnCNYRBCkXXcBeyua2yWh5YCigp0MDwk28PNeX8B6WhsOdrJ0G9
+	n4nfZULtvigNgAN1iQ9BKBVS5p8LIiGRMIi919U0BH4/rvKqumhfm/5xJGig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723540423; x=1723626823; bh=YsbqfhRmanlck0BU7x5nKUQ/AjDn
-	LazONUeekSz+tMo=; b=GB3T7T2ugDAa2Fk1k1vEMJQ4qazXInshJG4vY99Rghzf
-	XP06KZ2jrjneD36k+Min9vqc7weglKd5cHTYRDl5Kn2viNBGYIVUe5GU943+PJ8c
-	iMfcZXy4pOrtxV+NoJMFBDFHZGbNWluFUS7StIvGg7p0Ak86i1nkjM3VmhGMMyf3
-	kvDdVs5jqUbgLSfU88T0i35TAXGhasMwDEnVCeDg0Wt4NlWEDo35CjI9oBiGzlGQ
-	SgsAPGaQlxTyMeNcVDSPq7Z2k39ldhVpQJZqO3SkAJ1Ipsp5IOCn7GlOksMFCKK5
-	YnWmsmRBRdLsbbJzO+j96CWaONh6Jqu9TBDAb66Aeg==
-X-ME-Sender: <xms:xyO7ZoHAw2jRXuyKX3YaYxQGDheO3-x0uZh-rfH3C-0ylmdqB1T1fA>
-    <xme:xyO7ZhX5Lhe4cFVsuTGivqEeZWSb3vvoEDCXOWJLBkfjkZ8JG5iMhySwzc5nCYCDe
-    3c09xKOdoc8rgd9Aw>
-X-ME-Received: <xmr:xyO7ZiJEhd-oHivtgcjkDJcqNuPyl18EfbuUMrMXnqAMb6nINJvIl-wDFL1JVxR6Wdi5qtN3lDO-dfxYKp-bMnpVM3L1Z_azDNtGRHRUMlWreA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudefucetufdoteggodetrfdotf
+	fm3; t=1723540426; x=1723626826; bh=PAck6YOPSSwo1ZSboxF1439Nd2Eu
+	bxenVhoKYPXd4WE=; b=H9Rdaax8S+z5ivjui4OiBYr4tCIurdu+zcaZTPc3eRqM
+	utJgWVLnSoVWv/bZRYSItqtdlHzwbido6DNUvhiU4oLIEes/jmV/qKxytZJv0kXp
+	5pKvJoPZB0avZhfITDNEcxehxhvI3XReqjE8JFxk4cwPw+AJM1ZzUROLDCfpE9pT
+	2eaUKNisvjw+r3MqMAbll3zJ4HneSxKcLmvW4cJeOpJCTW5FSv936pfDZc65k7ZZ
+	DqBLsxhAnEL6MuXt1+qBQsS1tBKTLiMiyPKG+xJ6bxwkL8EDiv+g25ij5DQFhvbj
+	5TM8Q6vfa75oDz6YZh8ElU/XyxyDYWMbvAEJF5niiQ==
+X-ME-Sender: <xms:yiO7Zo1YX6MBBDE052GT45uUya69CNtXRCxKzfw0_BU8HQVthAsQrQ>
+    <xme:yiO7ZjF-GWmAIurq4D6Cg4_Ai1kLlGUiADqt_VpBmsJjcCeG3tzqy7oCJMdzzYZ_0
+    _FoeknKCH-39at4hA>
+X-ME-Received: <xmr:yiO7Zg4Zx3EkSRXhEKQ3MY5KEscKZZmiGQRaysrQh22HAZVyUYHMSEu4WBGvz4YyrGHRN2TZDEKTmMUXeK6V9JjeOXc9hbN_Sac2DhbzLRKi3g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xyO7ZqH6L3c2aacM4nnXE9noyRi1BlJ1M7CvIgidsKrC3auncs79UA>
-    <xmx:xyO7ZuUgSsHnDsQyJCugEDuLQP77o2okC5S1cKc1fNmi9YntLlJwnQ>
-    <xmx:xyO7ZtNbIFCZ3jpTp2Xe_0N4SeVDAXO3GX5ZhO5GX4bTX95qltB_Gg>
-    <xmx:xyO7Zl08aENUKmPtsLzqMlT4yyaMGm9lth-4uhIQMLbMi5uQLphIBA>
-    <xmx:xyO7ZtRIW6XpIMItEWXlZasdyIELyQhAZKEr-0wuTIDKZSmj-0z1ilMQ>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:yiO7Zh2rE9SbktNN1MJFX5YjDBrNZ2gB7CiP_bSk9ORTxFZ4ooS5kQ>
+    <xmx:yiO7ZrGtGxlv8Nhtz8i2UbUnWiyBCYQBOBHLjyZho63sBYKjlwvXwA>
+    <xmx:yiO7Zq-W6Kxrts7Lj3Hrzb73AQz1-Wy2Uy-Hbr9jbS-UnsWjQfPOWw>
+    <xmx:yiO7Zgn0WrQLu9dxgmGRCbKD4fdskPeRaaS96dVKGTSWCfmcsHXlTw>
+    <xmx:yiO7ZjCDhR1yG6skeBy5KXUGceEGdoCcaGFkE_O094zj6mCa8bwk2pm3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 05:13:42 -0400 (EDT)
+ 13 Aug 2024 05:13:45 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 134c8217 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 09:13:25 +0000 (UTC)
-Date: Tue, 13 Aug 2024 11:13:40 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 654aad23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Aug 2024 09:13:28 +0000 (UTC)
+Date: Tue, 13 Aug 2024 11:13:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/20] path: hide functions using `the_repository` by
- default
-Message-ID: <1b6651770a7aab0885222ad3425918635648e8ac.1723540226.git.ps@pks.im>
+Subject: [PATCH v2 08/20] config: introduce missing setters that take repo as
+ parameter
+Message-ID: <e316491e56a5a53a0fe9bacc0f67eabe5c3ca18b.1723540226.git.ps@pks.im>
 References: <cover.1723013714.git.ps@pks.im>
  <cover.1723540226.git.ps@pks.im>
 Precedence: bulk
@@ -89,308 +89,248 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723540226.git.ps@pks.im>
 
-The path subsystem provides a bunch of legacy functions that compute
-paths relative to the "gitdir" and "commondir" directories of the global
-`the_repository` variable. Use of those functions is discouraged, and it
-is easy to miss the implicit dependency on `the_repository` that calls
-to those functions may cause.
-
-With `USE_THE_REPOSITORY_VARIABLE`, we have recently introduced a tool
-that allows us to get rid of such functions over time. With this macro,
-we can hide away functions that have such implicit dependency such that
-other subsystems that want to be free of `the_repository` will not use
-them by accident.
-
-Move all path-related functions that use `the_repository` into a block
-that gets only conditionally compiled depending on whether or not the
-macro has been defined. This also removes all dependencies on that
-variable in "path.c", allowing us to remove the definition of said
-preprocessor macro.
+While we already provide some of the config-setting interfaces with a
+`struct repository` as parameter, others only have a variant that
+implicitly depends on `the_repository`. Fill in those gaps such that we
+can start to deprecate the repo-less variants.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- path.c |  52 +-------------------
- path.h | 147 ++++++++++++++++++++++++++++++++++++++-------------------
- 2 files changed, 100 insertions(+), 99 deletions(-)
+ config.c | 93 ++++++++++++++++++++++++++++++++++++++++++++------------
+ config.h | 15 ++++++++-
+ 2 files changed, 87 insertions(+), 21 deletions(-)
 
-diff --git a/path.c b/path.c
-index 2949261193..a3bf25b7de 100644
---- a/path.c
-+++ b/path.c
-@@ -2,8 +2,6 @@
-  * Utilities for paths and pathnames
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "environment.h"
-@@ -30,7 +28,7 @@ static int get_st_mode_bits(const char *path, int *mode)
- 	return 0;
+diff --git a/config.c b/config.c
+index 6421894614..ac89b708e7 100644
+--- a/config.c
++++ b/config.c
+@@ -3178,21 +3178,39 @@ static void maybe_remove_section(struct config_store_data *store,
+ 		*end_offset = store->parsed[store->parsed_nr - 1].end;
  }
  
--static struct strbuf *get_pathname(void)
-+struct strbuf *get_pathname(void)
++int repo_config_set_in_file_gently(struct repository *r, const char *config_filename,
++				   const char *key, const char *comment, const char *value)
++{
++	return repo_config_set_multivar_in_file_gently(r, config_filename, key, value, NULL, comment, 0);
++}
++
+ int git_config_set_in_file_gently(const char *config_filename,
+ 				  const char *key, const char *comment, const char *value)
  {
- 	static struct strbuf pathname_array[4] = {
- 		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
-@@ -453,44 +451,6 @@ void strbuf_repo_git_path(struct strbuf *sb,
- 	va_end(args);
+-	return git_config_set_multivar_in_file_gently(config_filename, key, value, NULL, comment, 0);
++	return repo_config_set_in_file_gently(the_repository, config_filename,
++					      key, comment, value);
++}
++
++void repo_config_set_in_file(struct repository *r, const char *config_filename,
++			     const char *key, const char *value)
++{
++	repo_config_set_multivar_in_file(r, config_filename, key, value, NULL, 0);
  }
  
--char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
--{
--	va_list args;
--	strbuf_reset(buf);
--	va_start(args, fmt);
--	repo_git_pathv(the_repository, NULL, buf, fmt, args);
--	va_end(args);
--	return buf->buf;
--}
--
--void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
--{
--	va_list args;
--	va_start(args, fmt);
--	repo_git_pathv(the_repository, NULL, sb, fmt, args);
--	va_end(args);
--}
--
--const char *git_path(const char *fmt, ...)
--{
--	struct strbuf *pathname = get_pathname();
--	va_list args;
--	va_start(args, fmt);
--	repo_git_pathv(the_repository, NULL, pathname, fmt, args);
--	va_end(args);
--	return pathname->buf;
--}
--
--char *git_pathdup(const char *fmt, ...)
--{
--	struct strbuf path = STRBUF_INIT;
--	va_list args;
--	va_start(args, fmt);
--	repo_git_pathv(the_repository, NULL, &path, fmt, args);
--	va_end(args);
--	return strbuf_detach(&path, NULL);
--}
--
- char *mkpathdup(const char *fmt, ...)
+ void git_config_set_in_file(const char *config_filename,
+ 			    const char *key, const char *value)
  {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -634,16 +594,6 @@ void repo_common_pathv(const struct repository *repo,
- 	strbuf_cleanup_path(sb);
+-	git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
++	repo_config_set_in_file(the_repository, config_filename, key, value);
++}
++
++int repo_config_set_gently(struct repository *r, const char *key, const char *value)
++{
++	return repo_config_set_multivar_gently(r, key, value, NULL, 0);
  }
  
--const char *git_common_path(const char *fmt, ...)
--{
--	struct strbuf *pathname = get_pathname();
--	va_list args;
--	va_start(args, fmt);
--	repo_common_pathv(the_repository, pathname, fmt, args);
--	va_end(args);
--	return pathname->buf;
--}
--
- void strbuf_git_common_path(struct strbuf *sb,
- 			    const struct repository *repo,
- 			    const char *fmt, ...)
-diff --git a/path.h b/path.h
-index 78e9230de9..e91d19fff6 100644
---- a/path.h
-+++ b/path.h
-@@ -25,7 +25,7 @@ char *mkpathdup(const char *fmt, ...)
- 	__attribute__((format (printf, 1, 2)));
+ int git_config_set_gently(const char *key, const char *value)
+ {
+-	return git_config_set_multivar_gently(key, value, NULL, 0);
++	return repo_config_set_gently(the_repository, key, value);
+ }
  
- /*
-- * The `git_common_path` family of functions will construct a path into a
-+ * The `strbuf_git_common_path` family of functions will construct a path into a
-  * repository's common git directory, which is shared by all worktrees.
-  */
+ int repo_config_set_worktree_gently(struct repository *r,
+@@ -3209,13 +3227,18 @@ int repo_config_set_worktree_gently(struct repository *r,
+ 	return repo_config_set_multivar_gently(r, key, value, NULL, 0);
+ }
  
-@@ -43,14 +43,7 @@ void repo_common_pathv(const struct repository *repo,
- 		       va_list args);
+-void git_config_set(const char *key, const char *value)
++void repo_config_set(struct repository *r, const char *key, const char *value)
+ {
+-	git_config_set_multivar(key, value, NULL, 0);
++	repo_config_set_multivar(r, key, value, NULL, 0);
  
- /*
-- * Return a statically allocated path into the main repository's
-- * (the_repository) common git directory.
-- */
--const char *git_common_path(const char *fmt, ...)
--	__attribute__((format (printf, 1, 2)));
--
--/*
-- * The `git_path` family of functions will construct a path into a repository's
-+ * The `repo_git_path` family of functions will construct a path into a repository's
-  * git directory.
+ 	trace2_cmd_set_config(key, value);
+ }
+ 
++void git_config_set(const char *key, const char *value)
++{
++	repo_config_set(the_repository, key, value);
++}
++
+ char *git_config_prepare_comment_string(const char *comment)
+ {
+ 	size_t leading_blanks;
+@@ -3293,11 +3316,12 @@ static void validate_comment_string(const char *comment)
+  * - the config file is removed and the lock file rename()d to it.
   *
-  * These functions will perform adjustments to the resultant path to account
-@@ -87,14 +80,7 @@ void strbuf_repo_git_path(struct strbuf *sb,
- 	__attribute__((format (printf, 3, 4)));
- 
- /*
-- * Return a statically allocated path into the main repository's
-- * (the_repository) git directory.
-- */
--const char *git_path(const char *fmt, ...)
--	__attribute__((format (printf, 1, 2)));
--
--/*
-- * Similar to git_path() but can produce paths for a specified
-+ * Similar to repo_git_path() but can produce paths for a specified
-  * worktree instead of current one. When no worktree is given, then the path is
-  * computed relative to main worktree of the given repository.
   */
-@@ -103,27 +89,6 @@ const char *worktree_git_path(struct repository *r,
- 			      const char *fmt, ...)
- 	__attribute__((format (printf, 3, 4)));
+-int git_config_set_multivar_in_file_gently(const char *config_filename,
+-					   const char *key, const char *value,
+-					   const char *value_pattern,
+-					   const char *comment,
+-					   unsigned flags)
++int repo_config_set_multivar_in_file_gently(struct repository *r,
++					    const char *config_filename,
++					    const char *key, const char *value,
++					    const char *value_pattern,
++					    const char *comment,
++					    unsigned flags)
+ {
+ 	int fd = -1, in_fd = -1;
+ 	int ret;
+@@ -3317,7 +3341,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	store.multi_replace = (flags & CONFIG_FLAGS_MULTI_REPLACE) != 0;
  
--/*
-- * Return a path into the main repository's (the_repository) git directory.
-- */
--char *git_pathdup(const char *fmt, ...)
--	__attribute__((format (printf, 1, 2)));
--
--/*
-- * Construct a path into the main repository's (the_repository) git directory
-- * and place it in the provided buffer `buf`, the contents of the buffer will
-- * be overridden.
-- */
--char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
--	__attribute__((format (printf, 2, 3)));
--
--/*
-- * Construct a path into the main repository's (the_repository) git directory
-- * and append it to the provided buffer `sb`.
-- */
--void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
--	__attribute__((format (printf, 2, 3)));
--
- /*
-  * Return a path into the worktree of repository `repo`.
-  *
-@@ -165,19 +130,10 @@ void report_linked_checkout_garbage(struct repository *r);
- /*
-  * You can define a static memoized git path like:
-  *
-- *    static GIT_PATH_FUNC(git_path_foo, "FOO")
-+ *    static REPO_GIT_PATH_FUNC(git_path_foo, "FOO")
-  *
-  * or use one of the global ones below.
-  */
--#define GIT_PATH_FUNC(func, filename) \
--	const char *func(void) \
--	{ \
--		static char *ret; \
--		if (!ret) \
--			ret = git_pathdup(filename); \
--		return ret; \
--	}
--
- #define REPO_GIT_PATH_FUNC(var, filename) \
- 	const char *git_path_##var(struct repository *r) \
- 	{ \
-@@ -261,4 +217,99 @@ char *xdg_cache_home(const char *filename);
-  */
- void safe_create_dir(const char *dir, int share);
+ 	if (!config_filename)
+-		config_filename = filename_buf = git_pathdup("config");
++		config_filename = filename_buf = repo_git_path(r, "config");
  
-+/*
-+ * Do not use this function. It is only exported to other subsystems until we
-+ * can get rid of the below block of functions that implicitly rely on
-+ * `the_repository`.
-+ */
-+struct strbuf *get_pathname(void);
-+
-+# ifdef USE_THE_REPOSITORY_VARIABLE
-+#  include "strbuf.h"
-+#  include "repository.h"
-+
-+/*
-+ * Return a statically allocated path into the main repository's
-+ * (the_repository) common git directory.
-+ */
-+__attribute__((format (printf, 1, 2)))
-+static inline const char *git_common_path(const char *fmt, ...)
-+{
-+	struct strbuf *pathname = get_pathname();
-+	va_list args;
-+	va_start(args, fmt);
-+	repo_common_pathv(the_repository, pathname, fmt, args);
-+	va_end(args);
-+	return pathname->buf;
+ 	/*
+ 	 * The lock serves a purpose in addition to locking: the new
+@@ -3526,7 +3550,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	ret = 0;
+ 
+ 	/* Invalidate the config cache */
+-	git_config_clear();
++	repo_config_clear(r);
+ 
+ out_free:
+ 	rollback_lock_file(&lock);
+@@ -3543,12 +3567,24 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	goto out_free;
+ }
+ 
+-void git_config_set_multivar_in_file(const char *config_filename,
+-				     const char *key, const char *value,
+-				     const char *value_pattern, unsigned flags)
++int git_config_set_multivar_in_file_gently(const char *config_filename,
++					   const char *key, const char *value,
++					   const char *value_pattern,
++					   const char *comment,
++					   unsigned flags)
+ {
+-	if (!git_config_set_multivar_in_file_gently(config_filename, key, value,
+-						    value_pattern, NULL, flags))
++	return repo_config_set_multivar_in_file_gently(the_repository, config_filename,
++						       key, value, value_pattern,
++						       comment, flags);
 +}
 +
-+/*
-+ * Construct a path into the main repository's (the_repository) git directory
-+ * and place it in the provided buffer `buf`, the contents of the buffer will
-+ * be overridden.
-+ */
-+__attribute__((format (printf, 2, 3)))
-+static inline char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
++void repo_config_set_multivar_in_file(struct repository *r,
++				      const char *config_filename,
++				      const char *key, const char *value,
++				      const char *value_pattern, unsigned flags)
 +{
-+	va_list args;
-+	strbuf_reset(buf);
-+	va_start(args, fmt);
-+	repo_git_pathv(the_repository, NULL, buf, fmt, args);
-+	va_end(args);
-+	return buf->buf;
++	if (!repo_config_set_multivar_in_file_gently(r, config_filename, key, value,
++						     value_pattern, NULL, flags))
+ 		return;
+ 	if (value)
+ 		die(_("could not set '%s' to '%s'"), key, value);
+@@ -3556,6 +3592,14 @@ void git_config_set_multivar_in_file(const char *config_filename,
+ 		die(_("could not unset '%s'"), key);
+ }
+ 
++void git_config_set_multivar_in_file(const char *config_filename,
++				     const char *key, const char *value,
++				     const char *value_pattern, unsigned flags)
++{
++	repo_config_set_multivar_in_file(the_repository, config_filename,
++					 key, value, value_pattern, flags);
 +}
 +
-+/*
-+ * Construct a path into the main repository's (the_repository) git directory
-+ * and append it to the provided buffer `sb`.
-+ */
-+__attribute__((format (printf, 2, 3)))
-+static inline void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
+ int git_config_set_multivar_gently(const char *key, const char *value,
+ 				   const char *value_pattern, unsigned flags)
+ {
+@@ -3576,12 +3620,21 @@ int repo_config_set_multivar_gently(struct repository *r, const char *key,
+ 	return res;
+ }
+ 
++void repo_config_set_multivar(struct repository *r,
++			      const char *key, const char *value,
++			      const char *value_pattern, unsigned flags)
 +{
-+	va_list args;
-+	va_start(args, fmt);
-+	repo_git_pathv(the_repository, NULL, sb, fmt, args);
-+	va_end(args);
++	char *file = repo_git_path(r, "config");
++	git_config_set_multivar_in_file(file, key, value,
++					value_pattern, flags);
++	free(file);
 +}
 +
-+/*
-+ * Return a statically allocated path into the main repository's
-+ * (the_repository) git directory.
-+ */
-+__attribute__((format (printf, 1, 2)))
-+static inline const char *git_path(const char *fmt, ...)
-+{
-+	struct strbuf *pathname = get_pathname();
-+	va_list args;
-+	va_start(args, fmt);
-+	repo_git_pathv(the_repository, NULL, pathname, fmt, args);
-+	va_end(args);
-+	return pathname->buf;
-+}
-+
-+#define GIT_PATH_FUNC(func, filename) \
-+	const char *func(void) \
-+	{ \
-+		static char *ret; \
-+		if (!ret) \
-+			ret = git_pathdup(filename); \
-+		return ret; \
-+	}
-+
-+/*
-+ * Return a path into the main repository's (the_repository) git directory.
-+ */
-+__attribute__((format (printf, 1, 2)))
-+static inline char *git_pathdup(const char *fmt, ...)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	va_list args;
-+	va_start(args, fmt);
-+	repo_git_pathv(the_repository, NULL, &path, fmt, args);
-+	va_end(args);
-+	return strbuf_detach(&path, NULL);
-+}
-+
-+# endif /* USE_THE_REPOSITORY_VARIABLE */
-+
- #endif /* PATH_H */
+ void git_config_set_multivar(const char *key, const char *value,
+ 			     const char *value_pattern, unsigned flags)
+ {
+-	git_config_set_multivar_in_file(git_path("config"),
+-					key, value, value_pattern,
+-					flags);
++	repo_config_set_multivar(the_repository, key, value,
++				 value_pattern, flags);
+ }
+ 
+ static size_t section_name_match (const char *buf, const char *name)
+diff --git a/config.h b/config.h
+index 54b47dec9e..b13e1bfb8d 100644
+--- a/config.h
++++ b/config.h
+@@ -298,14 +298,18 @@ int git_config_pathname(char **, const char *, const char *);
+ int git_config_expiry_date(timestamp_t *, const char *, const char *);
+ int git_config_color(char *, const char *, const char *);
+ int git_config_set_in_file_gently(const char *, const char *, const char *, const char *);
++int repo_config_set_in_file_gently(struct repository *r, const char *config_filename,
++				   const char *key, const char *comment, const char *value);
+ 
+ /**
+  * write config values to a specific config file, takes a key/value pair as
+  * parameter.
+  */
+ void git_config_set_in_file(const char *, const char *, const char *);
++void repo_config_set_in_file(struct repository *, const char *, const char *, const char *);
+ 
+ int git_config_set_gently(const char *, const char *);
++int repo_config_set_gently(struct repository *r, const char *, const char *);
+ 
+ /**
+  * Write a config value that should apply to the current worktree. If
+@@ -318,6 +322,7 @@ int repo_config_set_worktree_gently(struct repository *, const char *, const cha
+  * write config values to `.git/config`, takes a key/value pair as parameter.
+  */
+ void git_config_set(const char *, const char *);
++void repo_config_set(struct repository *, const char *, const char *);
+ 
+ int git_config_parse_key(const char *, char **, size_t *);
+ 
+@@ -341,9 +346,11 @@ int git_config_parse_key(const char *, char **, size_t *);
+ #define CONFIG_FLAGS_FIXED_VALUE (1 << 1)
+ 
+ int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
+-void git_config_set_multivar(const char *, const char *, const char *, unsigned);
+ int repo_config_set_multivar_gently(struct repository *, const char *, const char *, const char *, unsigned);
++void git_config_set_multivar(const char *, const char *, const char *, unsigned);
++void repo_config_set_multivar(struct repository *r, const char *, const char *, const char *, unsigned);
+ int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, const char *, unsigned);
++int repo_config_set_multivar_in_file_gently(struct repository *, const char *, const char *, const char *, const char *, const char *, unsigned);
+ 
+ char *git_config_prepare_comment_string(const char *);
+ 
+@@ -372,6 +379,12 @@ void git_config_set_multivar_in_file(const char *config_filename,
+ 				     const char *value,
+ 				     const char *value_pattern,
+ 				     unsigned flags);
++void repo_config_set_multivar_in_file(struct repository *r,
++				      const char *config_filename,
++				      const char *key,
++				      const char *value,
++				      const char *value_pattern,
++				      unsigned flags);
+ 
+ /**
+  * rename or remove sections in the config file
 -- 
 2.46.0.46.g406f326d27.dirty
 
