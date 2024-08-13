@@ -1,144 +1,113 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38C713B5B6
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB658ABF
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723533809; cv=none; b=VkkmJ1o7/2RZTO3ok6YzJ8rpDOkrg/z7T04djMfXj5Xm/7gjgUvRDG+yYTgUzJ00kYRiq6Wgf+80RGvb7X9TvHSNIlcEDVXlZrx0hltKIx7HxHainXgVGCyxw5zqVHRJoqegw0GDUM4rfskpBd4ylnvXsDtfhlh2AdL1Df7uWwY=
+	t=1723534813; cv=none; b=jJ5uOw8r4yjaFb7wQo1ucYwysPH/Nw9nyK8BjCHgwkNlQNHRp7tDHUI55qrnzXQK1FoX8MjoNkTyRWYPrbw524FPy/ZxHiN1iorZCnLxnuBrF/53QnR7gTwfpTbrBlP0JHFqz5a3Fn0muk7JTBkmUngpd+tAGr1h0OzrlvRLHhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723533809; c=relaxed/simple;
-	bh=qiz59V9yaClIilT/4L3PHgUEgXs/775H0GPQIMbOkFE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O/YsFxXVXfFPwP/oP9OPFNchrzkxwpyDzKWdAuFQRx1s1Rk0N+GH4VCDGGXqrPdcyG7/nwmajpSmTadr7yVA9W681ay3UrVvNWaSPcJDeT3CcE5nT06z5SkcNLWZ799aOUXiRrgM043YeYTdYKmxtVt1zX4obJ250Menzp7NmPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qiAfUtSd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R0AjqEjg; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723534813; c=relaxed/simple;
+	bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04yUZcsFnqjWY=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To; b=Bi7kn2DqE4xpjawPt+VTNr4dgZd1pU0rg0K8YVw5eWxPaPjkQ0ceL7Pm5KSgEyGIOIdM3oJ/Fxt49+LkLDCyRIXW9Qv66bTvjNN78syW+BEHmEmoGDU/JO4L3Ekxx2LgVrhdGy/tDy+qnGHo10xLXSR4Iail1NKgi9d/nvOL0Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hicksca.dev; spf=pass smtp.mailfrom=hicksca.dev; dkim=pass (2048-bit key) header.d=hicksca.dev header.i=@hicksca.dev header.b=mNSkBG+B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cy+OSkLl; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hicksca.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hicksca.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qiAfUtSd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R0AjqEjg"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E5E65138D263;
-	Tue, 13 Aug 2024 03:23:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=hicksca.dev header.i=@hicksca.dev header.b="mNSkBG+B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cy+OSkLl"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 55C10138FDDF
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 03:40:09 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 13 Aug 2024 03:23:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723533806; x=1723620206; bh=lPpVV7ownA
-	yAb1ftdePornJciS1dyPXeYwXIKJPF5Pg=; b=qiAfUtSdQH0RXgjZ3W0RpJqVgy
-	r4iroyHf64OrdOvkkToHvBU9SYE+PFsHknWmYbDE6IOF+IWI9Z+RuNO9xuepYdI5
-	nPYYr283p2q8btiM69DPOLW9PDpaPYpteM7X2U4NabF+jrrW+PmHUbaAXANZP6gO
-	pQTg+xkn6HSS0nFlJ72HhhNvu5RuJKqmlAfwqdmQoh1h6/kqNpzfQEjV8io1F285
-	Ml9N3zMzWiPU03rHwGZDLYWu8d6Q/IgGSMC9vZWAq4gpT33gTJMIKsDGU97e+xER
-	rQ7KQquLKTaKKisb9fs5GU0ba69ofZGoveNBIQwRp/NMy9w8W499Ctd4UwFw==
+  by phl-compute-08.internal (MEProxy); Tue, 13 Aug 2024 03:40:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hicksca.dev; h=
+	cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1723534809; x=1723621209; bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04
+	yUZcsFnqjWY=; b=mNSkBG+BK65Ypk9VdRuSF/szKZIj/LmZj/XmnajJD4AtE+w7
+	F3/UNnVW8hxHI4O6CY1wzrRtps174UZY6LiEu+fwIJbt6FRgZpShx+0BJz8pZI1U
+	3BYfhQJMADjloXyRksktF3Fp28MpkrEnW85Dr44n+yCxa4GI/gfjDaNoOWC5vKom
+	SMmbrA6VhVjNI95ce/qSf8lcC3Cecnt+Ltlgv3i/66bO7BPnD5YhXZp2qw9opf5K
+	yA08wgpHiZ2x0suWIp+VeMGszScr3twBnlcBoEbKP7DOhB7ziR5OHx/jhZ9mKoLU
+	AQg5ySlPXanrge3jupRHb6ZWB2rTj9PcbXysaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723533806; x=1723620206; bh=lPpVV7ownAyAb1ftdePornJciS1d
-	yPXeYwXIKJPF5Pg=; b=R0AjqEjgwGfVeEAnLwxY+UX3Db38NPGrLBc7Df9z7Rs0
-	AlyWpAr9WmIXTcqQBvvtc6fkKAtDONGvilANfqGnz6CKgHIgiM8w220GhX+Gdt6/
-	xERK8M0498tETbIIfSBdQuR9LN5IctbvtBkRyIjYxCjnCSkRMW/YyC986klQRKhn
-	3PcXDrooy6a+y9goFaQBpG1OXJ9tD2vdynhPsXRUjqJSBheHs6QylxqC/uhb02CT
-	VH69DmdYKNju3uJRIwrzyHIocUBoJZl+A41jqiwndMqJDp3RDrFzZRUUJGW1BHOY
-	NWSagBeK6TWG9gerUC3N3ER2X5K/59soBiB7Cr9TaA==
-X-ME-Sender: <xms:7gm7ZmcVijaHzIBdc8VoXdihN4pI7E1K-FkgW_6zxUA9HJBez31HIg>
-    <xme:7gm7ZgPD75y8QAJ5_gaLttnYSyiwQpo1siI2VulYP2gv9qOkFgMZOEzlrUqcHRA34
-    Te1OFZyjDiYj0MFjA>
-X-ME-Received: <xmr:7gm7ZngSb5NEZFJy7QDocajSOQGyG4ObqT4PRYDG-exsoX23kmiALAD6ZtVGUtmnY-qsHSZsJCIiEr9txH5503Fu16Q2iDlMPPEBUAclqG9-SA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtuddguddvtdcutefuodetggdotefrod
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1723534809; x=1723621209; bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04yUZ
+	csFnqjWY=; b=Cy+OSkLlgp4/G/E5AqmwKCMVq0LO2P2zH4JbxuTDR8Gql6hMNbP
+	9C1kX1gT1z8x7X7lyIHZdxO7ozb3FdWrERpIbijIbANhH04G4Nf4Ul16JRlKm7WH
+	jDqZjmRrZS1Y+pAegr7CyMWy/ETRbo3qEx4ZOoPDAWGn01AKN56cWyxbHuGpfQJt
+	YJ9Ym08pwSbgyZNWsxXgVMAf5dv5WmyrERURGtoaVGW78KNoViuQ5bBL1v1/lIlh
+	eCkconXrX/zZhDXf3Q63jzLv90F848gWSQWD5Tois8o6r/lrPI100AyPJ2I9Osvn
+	wQdXOtNMSOyxTNmVfHIuA7H3epaLiRQrVAw==
+X-ME-Sender: <xms:2Q27ZkiM8U07c-LKUMWL7FBopsG2GYjIsGVxcmW_lmWcuo3Fx0sFPQ>
+    <xme:2Q27ZtCGNz7nEZO87d2t62LMHkz_dC3eB3yq0CM-amD08b2ptykUh0GQlX1ARzDxL
+    uyoWQfeBXwHzQ6Uig>
+X-ME-Received: <xmr:2Q27ZsGe4__705alSeIvT9V3MWDepn4gJCL-YcrguSZEDcQWYX2gKpeS9lT8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtuddguddvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvthhhoh
-    hmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehrshgsvggt
-    khgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesgh
-    hoohhglhgvrdgtohhmpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtgho
-    mhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
-X-ME-Proxy: <xmx:7gm7Zj8ZZuzqT7zHciVtHPtauRyvLLVF1ZLV-6KvqpESVrQHxkPT9A>
-    <xmx:7gm7Zisef4bzxNoAH91z4cYjrr3KJFKRyb3u0mE-YzszFrElPL2SBg>
-    <xmx:7gm7ZqEWxRMr6yo8kKonq3BnsoVNrrKKS0bfaLmte75pBDL5h4gA4w>
-    <xmx:7gm7ZhPaSGp8F5qdxecovlj321OKfu-PzjSmXf7I5jlBuW78HOBQ6A>
-    <xmx:7gm7ZgCJZ-Pmx26_Oqb3lMyM2bUlZHB51B3rf41MoGmIu41moL-Uqgq3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 03:23:24 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 55b2972a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 07:23:07 +0000 (UTC)
-Date: Tue, 13 Aug 2024 09:23:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: rsbecker@nexbridge.com, 'Josh Steadmon' <steadmon@google.com>,
-	git@vger.kernel.org, =?utf-8?B?J1JlbsOp?= Scharfe' <l.s.r@web.de>,
-	'Kyle Lippincott' <spectral@google.com>,
-	'Phillip Wood' <phillip.wood@dunelm.org.uk>,
-	'Edward Thomson' <ethomson@edwardthomson.com>
-Subject: Re: [RFC PATCH v3 0/7] Introduce clar testing framework
-Message-ID: <ZrsJ6sYURdsxAZiQ@tanuki>
-References: <cover.1722415748.git.ps@pks.im>
- <cover.1723095269.git.ps@pks.im>
- <k6uar46lu7ffbnboguca65afwegpcpfrivzfm7gspcorfefxnw@csqkd7wsoggk>
- <xmqqy151zcsc.fsf@gitster.g>
- <033401daecfa$773fa5d0$65bef170$@nexbridge.com>
- <xmqqplqd9yp8.fsf@gitster.g>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurheptgggff
+    fkuffhvffosehmtderreertdejnecuhfhrohhmpedfvegrrhhlucfjfdcuoegtrghhsehh
+    ihgtkhhstggrrdguvghvqeenucggtffrrghtthgvrhhnpeekvdefjeetteehffegheduhe
+    ehieefffekudfhffetfedugfffueetheetleelgfenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpegtrghhsehhihgtkhhstggrrdguvghvpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:2Q27ZlRqW3E8lhjuU9HDJeBkMVZldSHkpsJUjRfPY3F8JlwiGscuDQ>
+    <xmx:2Q27ZhyCJ38dAFdDaryHL1r0Dc6fAArTx4ii10huh9TdMuNn8CXkEg>
+    <xmx:2Q27Zj4qbl3ggXIAv8zypusVXdZlHp0PFjDlTm3IeWkeMCXOyX4tFQ>
+    <xmx:2Q27ZuxBoelUo_vymw5iZBUUimp1SS6Wl5H8Y4N961abPw1EbTM4ZQ>
+    <xmx:2Q27ZirsTQnMwg88jg0UN8ZrOybntZvQvbYkbsTluWS2G3diOnWdSCg5>
+Feedback-ID: i48d14781:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 13 Aug 2024 03:40:08 -0400 (EDT)
+Content-Type: multipart/mixed;
+ boundary=ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0
+Date: Tue, 13 Aug 2024 03:40:08 -0400
+Message-Id: <D3EM3KIP9F64.368JLPGQ8MLLX@hicksca.dev>
+Subject: Subscribe
+From: "Carl H" <cah@hicksca.dev>
+To: <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
+
+--ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
+Content-Type: multipart/alternative;
+ boundary=a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a
+
+--a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a
+Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
-In-Reply-To: <xmqqplqd9yp8.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 
-On Mon, Aug 12, 2024 at 03:13:39PM -0700, Junio C Hamano wrote:
-> <rsbecker@nexbridge.com> writes:
-> 
-> >>For something as small as "clar", I think it is fine to start with the currently proposed
-> >>layout and see what happens.  If we can keep going without touching the imported
-> >>part of the sources at all, and the system proves to be useful and stable, that is a
-> >>good time to suggest moving it out and binding the selected version of the
-> >>upstream as a submodule.
-> >
-> > I think we already have a copy customized for git's use. The main clar repo on its own
-> > has portability issues. I have contributed a few fixes, but they need work.
-> 
-> Yup, but as long as the changes we make are all upstreamable, the
-> story does not change all that much.  Changes like "#ifdef TANDEM"
-> would be totally uncontroversial thing for them to accept and we
-> should be able to upstream them fairly easily, and once we thin our
-> local customization down to zero, we'd reach the state I outlined.
-> 
-> Starting out with a local copy helps us making these portability and
-> other changes without much friction, regardless of how responsive
-> the upstream is, and the request upstream would see is "here are the
-> changes to make it available on more platforms and/or making it
-> generally more useful. all of these changes have been used and
-> battle-tested in the context of the Git project for N months, please
-> apply."
+subscribe git
 
-Yeah, agreed. My intention certainly is to upstream all required
-changes. Right now, it's only two minor fixes that we need, one for
-NonStop and one for whitespace fixes.
+--a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a--
 
-While I'm still one of the maintainers of the clar, I first want to
-connect with Ed before merging any of these fixes. I would otherwise
-consider it a bit overreaching to just go in and merge things after
-having been absent from that project for such a long time. But when
-things are sorted out I think the upstreaming process should be easy
-enough.
+--ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=hickscadotdevpub.asc
+Content-Type: text/plain; charset=utf-8; name=hickscadotdevpub.asc
 
-Meanwhile, I think keeping this in the tree is fine. We can then
-optionally convert the code to a submodule once the necessary changes
-are upstream.
-
-Patrick
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FWnJMcVhCWUpLd1lCQkFI
+YVJ3OEJBUWRBVUdpd0FSYW5SaUY4cmM0c04xOFJGRG5vazVCcHh1S2E0VXVjCmFLY1F3cE8wVG1o
+cFkydHpZMkVnS0ZCbGNuTnZibUZzSUVkUVJ5QnJaWGtnYmpwRFlYSnNJRWdnWjJ3dGRXNDYKYUds
+amEzTmpZU0IxYmpwb2FXTnJjMk5oS1NBOFkyRm9RR2hwWTJ0elkyRXVaR1YyUG9pWkJCTVdDZ0JC
+RmlFRQp5VE5vejJXa0RCNTFNdnBlaDEwVDhldm1pSkFGQW1heTZsd0NHd01GQ1FlRXpnQUZDd2tJ
+QndJQ0lnSUdGUW9KCkNBc0NCQllDQXdFQ0hnY0NGNEFBQ2drUWgxMFQ4ZXZtaUpDMHRBRUF1cGVP
+cW5KTjFqUm1idzdnZlB0YkhUd3AKNlNURi9GcDluamZsdGlXNlE0TUJBUExSbCtJMUpYaTJ1YmxF
+THcvT3F2SnVySmYyelQ1WWNhMXhPaFRTNGVNRgp1RGdFWnJMcVhCSUtLd1lCQkFHWFZRRUZBUUVI
+UUtiQUhzVDg0dklvTnE5ZW5CdTNZcG1YM3h6dHJONXRpTS90CjBzMW5icDB3QXdFSUI0aCtCQmdX
+Q2dBbUZpRUV5VE5vejJXa0RCNTFNdnBlaDEwVDhldm1pSkFGQW1heTZsd0MKR3d3RkNRZUV6Z0FB
+Q2drUWgxMFQ4ZXZtaUpCUFRnRDdCN29ZMW4yNHFHVXo4THhVemdIUHhGT2NOY2doT094bwp3MU9O
+UUI5eEhIVUJBS0JYUDBaNXp3bmRVUWpOMVBEdmZoWDVta2tXM0RHSElHWmdNK0kxQkw0QQo9RmJ5
+dwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCg==
+--ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1--
