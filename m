@@ -1,156 +1,119 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6091607B9
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 12:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B428B19AD86
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 12:56:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723553353; cv=none; b=TO3X24kWRveOpnup0xMnOPxjJjp62jHqYj20kCMvL1dJm/Y3+OruBMZoR+oa0k8gZ+nLUeBrfDlMZD0HEJC4NDzZ/mFDPdrUaOrTOqjzMIXwNHPD8v3rZUICJ9Qe37J/C8uOjaunTpoo3BNuAp5eqoZiqtSyYSbvzH1M/z63nAs=
+	t=1723553785; cv=none; b=FZ7/tS1CKjWXHX5C+wVALgkqJCeuAhM90tnDhr++fmCmCuSq/3JI7CxU4DIj0prJXczQFSB0GY1UG7yFmXP2dT+z0GmboZf8qncYvttah9DbSksZ/EnAaLSWMXz1gqvFsE+dZY3Z8uUSJ4EUzptPdqV39wazcbxXqjDqGoHNhZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723553353; c=relaxed/simple;
-	bh=ieFEAguVGZNsOEJvp4Bt/6hEunHYAq/vxDx/aja8Bc8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=M1sWCzi2cAa12dQ/Sgdxgutx2i2+4uYLzp6JvcECzJvonS5pi/0svjGmwsMGHs8wdNinP3fN/7Ao76/MukfNIzu+0AK2TdQId59i63ew56fCgSPP9t01Xrisbyv7TYxTrIkpHT++DhfBXiMglIuuI1TAi2ZowHADrGrhRUJ4uWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=h5R5rWsW; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1723553785; c=relaxed/simple;
+	bh=oSLIotrkB/8mrv18DVkxbxn1JibIfyWjQVAI0fCGGg0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UlDkk0qga6PPLfj/VmITehFyZQsaPzIMv1dtxb12+0DndhKi9tI+o7Uu7LFwPsujTmBGzrrsGI1BQ0/cDCbkDHN9PjJ006yLoH9QVO7Vxn8RucU3T1C7yh0H4JwdNoWi79ykWyPSFxwfjczSYYFff9+6yLWy7gGlR5lUYRgFDzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AUJoldNf; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="h5R5rWsW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1723553329; x=1724158129;
-	i=johannes.schindelin@gmx.de;
-	bh=Rq/vMmh1jmYTpCPGSLBYYPj4DxIFjPPx0Wb0JjCJdjM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=h5R5rWsWCKNdov7FSATb2a4EDYny/RlMPBgiZE3hbZZy38Jqf5LZVSrqxpjS3+5M
-	 1Afr86yBTJuHotwtpd96fNcmDeDvXi5fYpZYJz4kYuG+WnV2Zfw22ciB7Qp9GD2X1
-	 OsuocZtSXIDwALNFe77+Ka9TT6Zi4n3Htwrm2UyG1kA4NKglcEiKnmTH0HkeHiDn9
-	 9gQbylbghnP/kKEl9DNNWru6nYt99N7a1D58bahoG2Ky218RD5KZFxDGwpz8IzdqV
-	 PEAZ2YoZ25LHSY6pmgZ6nrFFge3dR1PLJTQy3eiOavFfQlYhCqW9V2o4F2k7BP90D
-	 oGLiYDHlVV1lgEm9JQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([167.220.208.78]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McY8d-1s3QLM2h3t-00cmRL; Tue, 13
- Aug 2024 14:48:49 +0200
-Date: Tue, 13 Aug 2024 14:48:47 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Phil Sainty <phil@catalyst.net.nz>, pclouds@gmail.com, git@vger.kernel.org, 
-    hvoigt@hvoigt.net, me@ikke.info, rafa.almas@gmail.com
-Subject: Re: Adding nested repository with slash adds files instead of
- gitlink
-In-Reply-To: <xmqqed6zht04.fsf@gitster.g>
-Message-ID: <8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de>
-References: <s5wr0azfeh9.fsf@catalyst.net.nz> <xmqqed6zht04.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUJoldNf"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5d59e491fefso2640874eaf.1
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 05:56:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723553783; x=1724158583; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oSLIotrkB/8mrv18DVkxbxn1JibIfyWjQVAI0fCGGg0=;
+        b=AUJoldNfcNhLll6FGiakLrICxdBR02WKK1T+QiHebEFXkFeQJFliibzz1piCN+W5ny
+         IHY9V182rs3kKKgwbv6VrPDnuDtN9H7WsPpm5hxdPk5lb2fbgJAHFBouc+c0QyTrN5m6
+         QWGRnTeSB9z0q5bn16M1fX8ypLLqnlIC+SPVJu28R4ZWxybzZ+ly2EdZn2IWznF1dW8W
+         vZJ1oKWiR2XcHB4Tto9hMkMzkoSWf7LnK0Zz0Ke+2QygmVNzj6w8sQw68YsMjRMmBbuc
+         VU3YRVfjGpPNpOklzdKOJ/v2FJTsjprCEQBVZVwYWpX0OawSPNs1xCh8+EXQCzU0sQCM
+         MIXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723553783; x=1724158583;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oSLIotrkB/8mrv18DVkxbxn1JibIfyWjQVAI0fCGGg0=;
+        b=uid5dS49hzikw7oMCUp9yKiGRIzNfxf7ekvJxNR/MWZ6MgZ6xuihHd0lNn7VPIMUC0
+         max/VvrWVRoTGT7S4VFkenDCjmb/nFYmB3ayka4i9qziupEef40YrTmSFf0a4FvtXWHP
+         HE/MIbZCQvBTkOAeTW0uIsBWtQmjmdxzhPZhvN2ewnp70qznNpIt22mmKzfprO1ukKba
+         +YUBy/ddSIZCiMujMnOrwJsVT2QwVBa6VDqIgfqqgguJQVXT8w7eW8rQItwuG56Dghqd
+         4dq7zbKy59t5CgU14bO5u6QPPVX7876Q9ej5mHu6v3QsxmUZAaWTh9JX9OvDd7bOB0iQ
+         YWmw==
+X-Forwarded-Encrypted: i=1; AJvYcCUJTOJcMyzbH6EDUiGZf9LUsMDgW7/a0e0poPrxhOBuJC3uqdzklrHji/Ui2+pQb63KrdrDC1n5+PprWEesrQ+AXhd2
+X-Gm-Message-State: AOJu0YyxJgCSjEMVAHw7pDpQ7/IYk6JKSyMrFHAX1+4Gv206VwDpRQhq
+	38AWFJTZ5Zl4CQNOz7H1yjASzYW1O3YD2TqXucK1MEeJoeR8Y//5i4wMg6mF1XgMs3iAqPiITDG
+	ptXNaeoYF+P/TsJi/ZgctlivZm/Xa8g==
+X-Google-Smtp-Source: AGHT+IGcLCG1PCp1H0x9NvyMTUZ8sHDTBkHFfZDa1Nt9g/tHa7/d2RyXosce8WlCBbaGN7t+2/+dAtvAu58Zy8ZBhS4=
+X-Received: by 2002:a05:6820:221e:b0:5c4:57d:691e with SMTP id
+ 006d021491bc7-5da687f25edmr3748419eaf.2.1723553781824; Tue, 13 Aug 2024
+ 05:56:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 13 Aug 2024 07:56:20 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <31efb040-57cd-46a7-80f1-62a9ce9efb52@gmail.com>
+References: <31efb040-57cd-46a7-80f1-62a9ce9efb52@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1532055212-1723553329=:117"
-X-Provags-ID: V03:K1:jL3Zu0x1qOqE50LkB3Rya8j8lHHof4X4L7NIACK/hyNbGUyFMbS
- ukXe3Tj344W7N91/8Jc4Uipip6MR+BkUi+Z5PIFQa5Cdvyg27lsbAVq1BL4H8W5kRAL71Bt
- SE0/hQwuhQWJi7A9WYaoqlNs3wQTwasXCS3VUWqYilOuwhTLN4yVu2ihaFaqudoO7Ve8gf2
- drcPM0satJjV0vPwkUVLg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:4qbd22uAyq8=;nIDhwp7muwIEYgnXaYs3RWlmEwq
- TEVGUYJ2gDqeb+3ELERFSDjVyyC74S82aja1Ppk1bEGBIBEpgaIfEJa5NjNYA3BnJBfRLttHC
- ftBSSze5iinFTAxEV3fzXCdGCx5vt54ba3rHHY55Y01cneKBKRyBQmXIIg2KjyGBZ6yrN6aVm
- kRR0FFMco8yH59A0fcX0B6fEdG+HxjTU0wezAvY6HawSCmKmY/fvnQbOcQOz5mmTQvrsJI1NT
- Ut0yLVyzPsRmEM4X6ZcbijOSt2HGV2SzTcsp4zOQ51mha/aTY2fOrdkNAAS/mAONF0RwYQ7V2
- z9kOg66Lh8jFc30L0a9f1VK54XSGY320LX7Em9W90N4RS0HDTvVi7AjaUkckgmPDp++E2UNKc
- JSXmSPIezy2yNtWeEINfRFmKzhgGkr0rFW2ffxawuWWiOUaENit/rMy4YMi19ILxCOUqgnsAs
- n6Nu/60iK6N5Y15TKGRlHip447rOASPJUhQ1nL4nIw/O1wvcG8NWZgXbjPjAiKx52yq7q+LOA
- viPFT8JIuMubwPoAP/2/7LIQn9eh7YR2ifwgthNvh139o28Xz66K1u5rruTTatUNo6URqxyol
- L7+sgcRRu+0YBi7Lvl8k8ddY5JiAluRiIphLTR8A9TeKK+BlK8s7+LPyV+hL45saGNEYQA97Y
- WZP/l4XSWYe6Mhn7340hLJxAMte7JVnPpz+pMJ2434PKHaW5Y8dDHPHA0qLr29cbR+G2McT2t
- BNRlkAIaAxM2QntVc8AGrOsVfc5SwXiB1Nl9p6BGuDHkS7+8J3SW8wy1S8zOYCYKONcXHzOIy
- cKQd3YTLgMCQmrfmtNFolY/w==
+Date: Tue, 13 Aug 2024 07:56:20 -0500
+Message-ID: <CAOLa=ZTCpetjY=kU9eQxq-LXkxe==Yr=rsNQRmPLHLPsnO5KEg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BNewcomer=5D_Introducing_myself_and_expressing_int?=
+	=?UTF-8?Q?erest_in_=60Implement_support_for_reftables_in_=E2=80=9Cdumb=E2=80=9D_HTTP?=
+	=?UTF-8?Q?_transport=60_project?=
+To: AbdAlRahman Gad <abdobngad@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000eaf997061f902259"
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1532055212-1723553329=:117
-Content-Type: text/plain; charset=UTF-8
+--000000000000eaf997061f902259
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+AbdAlRahman Gad <abdobngad@gmail.com> writes:
 
-On Thu, 8 Aug 2024, Junio C Hamano wrote:
+Hello,
 
-> Phil Sainty <phil@catalyst.net.nz> writes:
+> Hi,
 >
-> >> On Wed, Jun 20, 2018 at 1:55 PM Rafael Ascens=C3=A3o <rafa.almas@gmai=
-l.com> wrote:
-> >> > On Wed, Jun 20, 2018 at 5:39 AM Kevin Daudt <me@ikke.info> wrote:
-> >> > > What this is about that when doing `git add path/` (with trailing=
- /),
-> >> >
-> >> > This is what I was referring to. If you search for 'Fake Submodules=
-',
-> >> > you'll see that some people were/are intentionally using this inste=
-ad of
-> >> > subtrees or submodules. Unfortunately the original article [1] seem=
-s to
-> >> > be dead, but searching url in the mailing list archives leads to so=
-me
-> >> > additional discussion on the subject [2,3].
-> >>
-> >> Abusing a long standing bug does not make it a feature. I'm not
-> >> opposed to having a new option to keep that behavior, but it should
-> >> not be the default. If you use it that way, you're on your own.
-> >
-> > Was such an option ever worked on?
+> My name is AbdAlRahman, I'm a senior computer science student.
+> I'm interested in working on the `Implement support for reftables in
+> =E2=80=9Cdumb=E2=80=9D HTTP transport` project with the help of a mentor,=
+ I'm aware that
+> the project is not being worked on in GSOC but I was wondering if the
+> project is still not taken in general, and whether I can work on it
+> outside of GSOC?
 >
-> No.
->
-> I do not recall hearing anybody who have been active in the
-> development community saying anything good about such an option.
-> For the past 6 or so years, nobody who actively works on git thought
-> it was an interesting and/or useful thing to work on.
->
-> I cannot quite say that they thought that it is actively a bad idea
-> to offer such an option, though.
 
-I have encountered the wish quite frequently to be able to make changes in
-a subdirectory and have them reflected as a commit that is both part of
-that subdirectory's revision history as well as part of the containing
-project's.
+I think Patrick already responded. Just adding my response too. This was
+my first time mentoring and as such, I'll probably stick to the GSoC
+schedule as that helps me plan out my time better.
 
-The benefits for monorepos, and for reproducible builds, are probably
-obvious.
+If you do pickup the project sooner, I'd be happy to review the patches
+as I can but cannot promise the dedication that having a mentor would
+provide.
 
-Sadly, I cannot think of an elegant technical design, and this is not for
-lack of trying.
+Wishing you the best :)
 
-There are lots of projects I worked on that would have benefitted from
-being able to track a subdirectory both independently as well as within
-the context of a containing project, i.e. offering to view (and
-fetch/push) the changesets in both contexts as equal first citizens.
+--000000000000eaf997061f902259
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1fe9b6940ded7a48_0.1
 
-Even the Git and libxdiff projects, as a concrete example, could
-potentially have benefitted from such a feature: Ideally, it should be
-possible to push commits made in the `xdiff/` directory not only to the
-git/git repository but also separately from the rest of Git, say, to
-xdiff/libxdiff. This way, the `libxdiff` project would still be able today
-to thrive as an independent project.
-
-The only way to implement a feature like this that I _can_ think of is to
-generate duplicate commit objects, though, with a reference to the "inner"
-commit stored in the "outer" commit object. And that strategy breaks down
-really quickly, no matter whether I think about deep dependency trees or
-about integrating commit histories that have been made in the "inner"
-project separately and now need to be merged into the "outer" project, and
-there are many more processes for which this strategy strikes me as
-inadequate.
-
-So yes, I think that the idea per se has a lot of merit in the real world
-out there. It's the implementation details that are an obstacle.
-
-Ciao,
-Johannes
-
---8323328-1532055212-1723553329=:117--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hN1YvTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOXVBQy85TDA2amxSUTBtbVV4VkE2VXNkZlZ4bnpYcQpiei9wRG9FL2xW
+RXJJZVJjQnluZ1Blamg4bitIWFQrSE9HUGRIM3o0blgzaDdQQWpoT0p6ZllMSmxiYTJrR0F6ClZy
+VFFjMHhTd0FMT1pNSjAzUU1vdGVaMHVTSWpUZExqcTQ1Y09mc3hNZi9lNDFQYlRpdTc0eGt5cFNL
+d2FHWUgKbGRKVXI4VTRaOE04NzhVaVVHY1lHNGVKazR3cEduK3VTTFN6ak5LTGt2cFY0UFJ4QXc1
+VFVRUzd5RkNzS1ZhZAprZk5xMzBpdFBqVXp5NEw1a0dUbEJFQk9EZXkxSFFNcm54L3JLaGN2S2Jz
+cXMvZXA1L1AxQUtiamhVVTRhK3ExClM2cE5kK1Ywa3YzYmRUY1FVZStFWXFlcnFadDZpSGdlUCtD
+RDlnWVREcnV4T0RZem1JYkpham5XL0krOW96OE8KWjd3aFgzVzNzdGtRQ2h2ZUowVWpodXUxcGZm
+V1NaSm1BQnNITWY1YnpEYldXKzVHLzArOTY2cUdnTklOMEZZTwo0Z2l4c2E5MHBuRnZ1ZFo5bFZh
+VkRKNW1MS25NaEJnNi9vKzBQRVpTeEptK0ZOcUg4L1pMb0ptMFZGbFlhQnR6Ci9oY0lCQlppMVEr
+cER6R0JJMGtpWUYxbkQwc1dtWkNJdGI3T3lqND0KPTFUUGkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000eaf997061f902259--
