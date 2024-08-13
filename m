@@ -1,113 +1,119 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB658ABF
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:40:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A713AA3E
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723534813; cv=none; b=jJ5uOw8r4yjaFb7wQo1ucYwysPH/Nw9nyK8BjCHgwkNlQNHRp7tDHUI55qrnzXQK1FoX8MjoNkTyRWYPrbw524FPy/ZxHiN1iorZCnLxnuBrF/53QnR7gTwfpTbrBlP0JHFqz5a3Fn0muk7JTBkmUngpd+tAGr1h0OzrlvRLHhU=
+	t=1723540000; cv=none; b=EUc9dKWGjB8j4EEw97SGlc3HxpQchwgfalYaBt/IuhdH4VtwZn1c28Ul8E9Xw80aEkCQ0YDguerHTYVAF3woJLy4ZUkbOwg2hJI6ibH9d8Av6q+EOe48CGWulKwxnK/7Uc/RDejMnxRvqPow1eYGELAFbtS4HEw3pf9CsmZq4YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723534813; c=relaxed/simple;
-	bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04yUZcsFnqjWY=;
-	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To; b=Bi7kn2DqE4xpjawPt+VTNr4dgZd1pU0rg0K8YVw5eWxPaPjkQ0ceL7Pm5KSgEyGIOIdM3oJ/Fxt49+LkLDCyRIXW9Qv66bTvjNN78syW+BEHmEmoGDU/JO4L3Ekxx2LgVrhdGy/tDy+qnGHo10xLXSR4Iail1NKgi9d/nvOL0Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hicksca.dev; spf=pass smtp.mailfrom=hicksca.dev; dkim=pass (2048-bit key) header.d=hicksca.dev header.i=@hicksca.dev header.b=mNSkBG+B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cy+OSkLl; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hicksca.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hicksca.dev
+	s=arc-20240116; t=1723540000; c=relaxed/simple;
+	bh=GWJzC2Zmomd0kuO0o6WzJJwzYsb++WjLJT1bChK31pk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lZKmpI1Ye0rhs13Fijfn1CvcAlbHu71+NT3ojQuZh4pcKIEL9jJF6lYmAeOFIDngTdq2umGfDo5V9q1aLkaMRtFmx+K3LR+AEWxnGCc+gk6W0EzwlI5r/OcIyg48NS+td+iO4aTsu5mlXMRMDCEQvASqCqn62qvdm0YDD3PM1FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=rs3qsEdl; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hicksca.dev header.i=@hicksca.dev header.b="mNSkBG+B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cy+OSkLl"
-Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 55C10138FDDF
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 03:40:09 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 13 Aug 2024 03:40:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hicksca.dev; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1723534809; x=1723621209; bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04
-	yUZcsFnqjWY=; b=mNSkBG+BK65Ypk9VdRuSF/szKZIj/LmZj/XmnajJD4AtE+w7
-	F3/UNnVW8hxHI4O6CY1wzrRtps174UZY6LiEu+fwIJbt6FRgZpShx+0BJz8pZI1U
-	3BYfhQJMADjloXyRksktF3Fp28MpkrEnW85Dr44n+yCxa4GI/gfjDaNoOWC5vKom
-	SMmbrA6VhVjNI95ce/qSf8lcC3Cecnt+Ltlgv3i/66bO7BPnD5YhXZp2qw9opf5K
-	yA08wgpHiZ2x0suWIp+VeMGszScr3twBnlcBoEbKP7DOhB7ziR5OHx/jhZ9mKoLU
-	AQg5ySlPXanrge3jupRHb6ZWB2rTj9PcbXysaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1723534809; x=1723621209; bh=/U/9gplQF6tx0NJw8SCDV0VszAU7QV04yUZ
-	csFnqjWY=; b=Cy+OSkLlgp4/G/E5AqmwKCMVq0LO2P2zH4JbxuTDR8Gql6hMNbP
-	9C1kX1gT1z8x7X7lyIHZdxO7ozb3FdWrERpIbijIbANhH04G4Nf4Ul16JRlKm7WH
-	jDqZjmRrZS1Y+pAegr7CyMWy/ETRbo3qEx4ZOoPDAWGn01AKN56cWyxbHuGpfQJt
-	YJ9Ym08pwSbgyZNWsxXgVMAf5dv5WmyrERURGtoaVGW78KNoViuQ5bBL1v1/lIlh
-	eCkconXrX/zZhDXf3Q63jzLv90F848gWSQWD5Tois8o6r/lrPI100AyPJ2I9Osvn
-	wQdXOtNMSOyxTNmVfHIuA7H3epaLiRQrVAw==
-X-ME-Sender: <xms:2Q27ZkiM8U07c-LKUMWL7FBopsG2GYjIsGVxcmW_lmWcuo3Fx0sFPQ>
-    <xme:2Q27ZtCGNz7nEZO87d2t62LMHkz_dC3eB3yq0CM-amD08b2ptykUh0GQlX1ARzDxL
-    uyoWQfeBXwHzQ6Uig>
-X-ME-Received: <xmr:2Q27ZsGe4__705alSeIvT9V3MWDepn4gJCL-YcrguSZEDcQWYX2gKpeS9lT8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtuddguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurheptgggff
-    fkuffhvffosehmtderreertdejnecuhfhrohhmpedfvegrrhhlucfjfdcuoegtrghhsehh
-    ihgtkhhstggrrdguvghvqeenucggtffrrghtthgvrhhnpeekvdefjeetteehffegheduhe
-    ehieefffekudfhffetfedugfffueetheetleelgfenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpegtrghhsehhihgtkhhstggrrdguvghvpdhnsg
-    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:2Q27ZlRqW3E8lhjuU9HDJeBkMVZldSHkpsJUjRfPY3F8JlwiGscuDQ>
-    <xmx:2Q27ZhyCJ38dAFdDaryHL1r0Dc6fAArTx4ii10huh9TdMuNn8CXkEg>
-    <xmx:2Q27Zj4qbl3ggXIAv8zypusVXdZlHp0PFjDlTm3IeWkeMCXOyX4tFQ>
-    <xmx:2Q27ZuxBoelUo_vymw5iZBUUimp1SS6Wl5H8Y4N961abPw1EbTM4ZQ>
-    <xmx:2Q27ZirsTQnMwg88jg0UN8ZrOybntZvQvbYkbsTluWS2G3diOnWdSCg5>
-Feedback-ID: i48d14781:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 13 Aug 2024 03:40:08 -0400 (EDT)
-Content-Type: multipart/mixed;
- boundary=ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="rs3qsEdl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1723539992; x=1724144792;
+	i=oswald.buddenhagen@gmx.de;
+	bh=9yyP2BMYo0HoMp6T5XV0pxm8WGy60+EU5crmHaCtNe0=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=rs3qsEdlyGSXN6W97tsKgsO5sSaN1FhC14ZYoLIt9qeAa6Sq9rDdH7gGM0JrQABS
+	 Ape8HhTfyqHFp7ZJy/Rnqn8z4OW5BTo7zU3SrteTzZVVwh4UPB8/wbv6wxJ0fNYzm
+	 BbFhUXYfmZgx1HRuiDhQVRATc8A4vmLkWUZH7jTYmFuBCOHcZGuloO5N/pdHzMtPD
+	 uAQMxp+oLFeP3LcuCAhs/E25c9JyQxRyE0yDHKmJ1+CnWdnbPlpMsXoWyNipzfjyU
+	 CitfspmVbXUqSlHynWJYdfDzzeh6fBUd6RVX851byuW3K7r/PqIA72PM3K8KagI6X
+	 R52srvLRsnE/DVnRfA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.112]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEFzx-1sVnH83jZF-00Cikt; Tue, 13
+ Aug 2024 11:06:31 +0200
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+	id 1sdnU7-klK-00; Tue, 13 Aug 2024 11:06:31 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Brian Lyles <brianmlyles@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Sean Allred <allred.sean@gmail.com>
+Subject: [PATCH 2/2] git-gui: strip commit messages less aggressively
+Date: Tue, 13 Aug 2024 11:06:31 +0200
+Message-ID: <20240813090631.1133049-3-oswald.buddenhagen@gmx.de>
+X-Mailer: git-send-email 2.46.0.180.gb23db42a00
+In-Reply-To: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
+References: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Date: Tue, 13 Aug 2024 03:40:08 -0400
-Message-Id: <D3EM3KIP9F64.368JLPGQ8MLLX@hicksca.dev>
-Subject: Subscribe
-From: "Carl H" <cah@hicksca.dev>
-To: <git@vger.kernel.org>
-X-Mailer: aerc 0.18.2
-
---ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
-Content-Type: multipart/alternative;
- boundary=a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a
-
---a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a
+MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+X-Provags-ID: V03:K1:MfD6jc0iy/WUyXmNgEJFSs5vUHWXdBBFpii32duq9Ewvy9OOuZk
+ HMoU4klLp+ZDl0BOL/BR1TPStWztUnTNfdCM1tc8DkDeRUJ2X40z+n9ybnQtExwECeA9vRL
+ qinQCGzfeVWJ/shrhjHqgG3N85wnVD2FLN4h/PKzWWqNbp5ytsRevTEVI3IrjKjBcdAaHDd
+ Lz6nuF9OoKMK1MCP1GEkQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:EmPMlE1uKas=;XV4mvGLNMPsgmWKH9o4f71aeqbv
+ yRKEM60xZUOqtoScYVLlm+HdTtB6Ertka91zUJs6hL8DpUso1wu/3t1Z/M+tq0zU7LkvBcila
+ T5Lp3yXi0ZtQBZ9fccaglhkJ8wKMDxF38uOPfvN8hKBYGSqYKEWZTYtAnKPdcUFCOso9oL/is
+ QTxsBlpfjGIw5hNDb5+c68kZfh4oB4D0wIQK1b/AcnCRyZzgo7bD5i+7nFp4UwYK7v973pFcd
+ c58zs89ABfDL13G44wkM+Pn1PiMNmigc1x9kxIjVgGl5W9Rh8KRPs79k6Lsa96YYwNwyaHMto
+ FvChDHNhZlqMCH2XCKokVwNuFYKA6MAI5WcFO7kc+FXhLCT2Ilddcyaf6CJTGtUuLLrdE1HNA
+ kg/FaY9/9Jz4nqfmNd241zBY7zIN9o5LxdNGZSeXfdh12hIj951w6zt0SzBPeSRp5mmVeQ2Y+
+ AGA/yzBtuyxYPrU8l4/6S5cgZAIeCvqaRFLLHtzdAnWcuv9b43wAVqpEnmUGmc4JlPHbi3TYo
+ Nwh/wLPrQDWzVyk1uvzanwZwDJm2jjRZ4QE4DxOi0gZkwwSFx0Du1/w5GpuNCqY8UWrDEpBSe
+ Vw7kreJOumhRarl16bm8JGVEAzDvn5GfvEekBkzMCDcwCIU1fblOZ7rZdLJ7xORlDZ/DXXxAp
+ XZJF35s2tMCsgTMDjraGT3sGBENCJw9fgzC6g8K+wV2OgJXFZOZafLrRsNGPQxFiOcPTSO7gU
+ I7oqHInyEtM6r5Dd3uW75Eddj9N/gljVNFv1cJNQrAIDHhIjkhmkM2NQBPlYN/5AfSmfSBUS6
+ eqccIEHoqiHnNJJshErhzpALXhahngUsT6MDnQXT523BI=
 
-subscribe git
+We would strip all leading and trailing whitespace, which git commit
+does not. Let's be consistent here.
 
---a972b01d8d2b471ad96e0f08edfa0422d5761cd9e8126f9e58efccbc3c2a--
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
---ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=hickscadotdevpub.asc
-Content-Type: text/plain; charset=utf-8; name=hickscadotdevpub.asc
+---
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FWnJMcVhCWUpLd1lCQkFI
-YVJ3OEJBUWRBVUdpd0FSYW5SaUY4cmM0c04xOFJGRG5vazVCcHh1S2E0VXVjCmFLY1F3cE8wVG1o
-cFkydHpZMkVnS0ZCbGNuTnZibUZzSUVkUVJ5QnJaWGtnYmpwRFlYSnNJRWdnWjJ3dGRXNDYKYUds
-amEzTmpZU0IxYmpwb2FXTnJjMk5oS1NBOFkyRm9RR2hwWTJ0elkyRXVaR1YyUG9pWkJCTVdDZ0JC
-RmlFRQp5VE5vejJXa0RCNTFNdnBlaDEwVDhldm1pSkFGQW1heTZsd0NHd01GQ1FlRXpnQUZDd2tJ
-QndJQ0lnSUdGUW9KCkNBc0NCQllDQXdFQ0hnY0NGNEFBQ2drUWgxMFQ4ZXZtaUpDMHRBRUF1cGVP
-cW5KTjFqUm1idzdnZlB0YkhUd3AKNlNURi9GcDluamZsdGlXNlE0TUJBUExSbCtJMUpYaTJ1YmxF
-THcvT3F2SnVySmYyelQ1WWNhMXhPaFRTNGVNRgp1RGdFWnJMcVhCSUtLd1lCQkFHWFZRRUZBUUVI
-UUtiQUhzVDg0dklvTnE5ZW5CdTNZcG1YM3h6dHJONXRpTS90CjBzMW5icDB3QXdFSUI0aCtCQmdX
-Q2dBbUZpRUV5VE5vejJXa0RCNTFNdnBlaDEwVDhldm1pSkFGQW1heTZsd0MKR3d3RkNRZUV6Z0FB
-Q2drUWgxMFQ4ZXZtaUpCUFRnRDdCN29ZMW4yNHFHVXo4THhVemdIUHhGT2NOY2doT094bwp3MU9O
-UUI5eEhIVUJBS0JYUDBaNXp3bmRVUWpOMVBEdmZoWDVta2tXM0RHSElHWmdNK0kxQkw0QQo9RmJ5
-dwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCg==
---ca64b25f03473e8f9d7f146fd7e954572ece165ae3ebaf91888dd4f927c1--
+Cc: Johannes Sixt <j6t@kdbg.org>
+Cc: Brian Lyles <brianmlyles@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Sean Allred <allred.sean@gmail.com>
+---
+ git-gui/lib/commit.tcl | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index f00a634624..208dc2817c 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -207,12 +207,17 @@ You must stage at least 1 file before you can commit.
+=20
+ 	# -- A message is required.
+ 	#
+-	set msg [string trim [$ui_comm get 1.0 end]]
++	set msg [$ui_comm get 1.0 end]
++	# Strip trailing whitespace
+ 	regsub -all -line {[ \t\r]+$} $msg {} msg
+ 	# Strip comment lines
+ 	regsub -all {(^|\n)#[^\n]*} $msg {\1} msg
++	# Strip leading empty lines
++	regsub {^\n*} $msg {} msg
+ 	# Compress consecutive empty lines
+ 	regsub -all {\n{3,}} $msg "\n\n" msg
++	# Strip trailing empty line
++	regsub {\n\n$} $msg "\n" msg
+ 	if {$msg eq {}} {
+ 		error_popup [mc "Please supply a commit message.
+=20
+--=20
+2.46.0.180.gb23db42a00
+
