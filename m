@@ -1,85 +1,86 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EF7188CC0
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FEE17C7BD
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723541504; cv=none; b=nCBNaz6l65IxkVf1oL4VqSS0WhaBcBqogx5/rSY6d/hPEqjNF1ovXILsB6uyWCE65ahxbimf02WteSTub2reT7A/ETvIIFUGjtdOKnRFUbVqVyDUw+srOD7SI0efKfYPQ32X6IBIHy7WETAO1oJ1lruHOirVy8AuvMy5ntAdUlc=
+	t=1723541507; cv=none; b=X8cVbZfeEBWSn0xiX51DacG6BWPRak0R+ANq9Nzr2ixBoiLHu0e7KTXjj0vUshVdjQAJnnbsjp16EltBdTCAKLcZWv4hNMt8HUKDg4wAJeaDurDSVCnlI6lfmSKgA8vS/Cxd5KK/kNiI/o/74wG0LIymSS++GcIKMVIFIwU95oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723541504; c=relaxed/simple;
-	bh=fHENi47NfIkPY9uLaYewiOQkaHaL1EyfTnxV+ewbN9Y=;
+	s=arc-20240116; t=1723541507; c=relaxed/simple;
+	bh=9SVDC8Iz2csum7pwWZFfj8C6NkQ3os6GlzSSdJXm39A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aGsFspKIYwvJPianXvVUhoUHchYapIU8TiSrv6W1U5r81mLVeam7GewQqgXCdpcVWvoJ/m3J1HIN9Jen33KwGj61b0/iASGvGruPyVTEoko7Y2fGfr4+Ew4cQ6Ae3MdhY3EMPLIC/BY6IwzEHW0bcIQZ5mOOaZJsnoYOYwuONuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IE+biBkS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H8nfd0kE; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=lvdh1+BT8teH66vbpNrlAf7BuWaAiUHhTnrOy4FaxuY8yy/mrf9kmeloXRSBC0Eqr1BSQcaNqL1xAjBwUooc+R2rCnDdFRQC5a+teQamfkaJaNd1NYX3DfNqztH/dxIf4RSSUkdpRmeKolKQqwZeKC91P61OnhVoqFRlwiByyBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n93gnvEk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQHbhWHZ; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IE+biBkS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H8nfd0kE"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 052F1138FD25;
-	Tue, 13 Aug 2024 05:31:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n93gnvEk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQHbhWHZ"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 8D929138FCF1;
+	Tue, 13 Aug 2024 05:31:45 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 13 Aug 2024 05:31:42 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 13 Aug 2024 05:31:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723541502; x=1723627902; bh=Iavsl7yNoX
-	i27c6wjO4COJj8MMmnHYhMC7QvatEYelk=; b=IE+biBkS6FB7x5CHpHnWfdYNbq
-	hNzvH9h34kpTuljFbSCldLI3zEAZcGPN3oaZuN8RC/2k4+rnFiCUIi/EGE+x5BXs
-	dIivc7knt/Ql+AYh1/pRF4oIrcqOOfiZLzMwjrfLK50hQbJ5/EMke97nqbSsB9FL
-	W1GI66zeY4d/NPAxOPCHSvQ4n7PCyOrGMAQvDr2+c+kAGsp4vvjOWWiRiHV1MAbT
-	zve0GVOJtRhqOfvVm7A9RB7AZSTezBlqNUeB8clRKYWuEpiHoylqWL25qZZoc+8n
-	do3r5L3I+Jepv0BuBbbZBDGHxwX9yaPNAP0iFWR+itHIXL41OTtgocdFqmJw==
+	:subject:to:to; s=fm3; t=1723541505; x=1723627905; bh=t0cKJCT6Dq
+	39QHiGDSWrGUXezekt2PtsslEGLNkj8JA=; b=n93gnvEkyDSGOA5FKF6h0b5eKi
+	mhIPsN7Kswmm8kVpDytyhCToBKgYTWQTz4Mb8+VCKbdpohqf9dNv3oRn/YnlYeSc
+	Q66GItpLqxnzf9BHRXKIDOL6NxLqsXndF8eEIV2sGVgd8lOxjBk9Q+L9NGkyA4j6
+	UF+gREIbos8PtSVIZrHDSlEub4N6B3I/qxt9hiKwsPUz10vnjPaA4ts15Q4n2N7T
+	JCqGY4G7BA1ePDtxg5pbMs9HZ36aW6IuAp9m36WOFHAjjrbLuI/1Ccyh48gP/ReM
+	my1b12LzChzXVy0+Oy6La+DMg+JTZQYncuZyttY21+oSlgfu/89t7gux5VjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723541502; x=1723627902; bh=Iavsl7yNoXi27c6wjO4COJj8MMmn
-	HYhMC7QvatEYelk=; b=H8nfd0kEtWvCuk1gDuP+xCOX0jtuYJYuSfzgDU9khAJ2
-	Srz2FnP5Pc8DgOwncmS+C0yDuWTYCZTEWQxJ4WCVFq8w0twjE3G3ddthLmR76rYi
-	0sk7nsB/rVhiRd3y7CrilM3ciEZzVWi7e/MBeSr37mZjTz1e9PYhUpSf7ZgiNUm2
-	w/oWnpJOyvTzLW3Ee/VmH+UA8Dtzy3BXCqKa9/H37NHTxdg7x2O9ZcJ9Jpukh4Yq
-	i+qm/dplKuH/Ub3/wV+/lmu3IlFrLCB1Srn7xaY4ghE+rGAeNPzXHwJ1ipEANIzV
-	E8s9ykJ+n3VsmMi4kD5E/xRGCijtE3BG6Pw0yJVT7Q==
-X-ME-Sender: <xms:_Se7Zj0SbOSQEWDZkps2xvVZuX4SXeSGAXOYAHB3CJtXHJjaLlT7nw>
-    <xme:_Se7ZiGumFgA-mbTE_WSzszJZpTmv8friDJzi7iTKhSPQxR-Z6k2L9dDhf0nD9VYj
-    UxpS-IWvnLHaeSAJw>
-X-ME-Received: <xmr:_Se7Zj4iQAGmGACRxc2s8Vb1Ct9MN0GhZiLR2hfWfX7WkIcHz-ALpD6Bj_PtommH2J-7FGfO02pzTEaQ90ZRXJdEPynLj4TEEjYno_hqT0TM9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudeiucetufdoteggodetrfdotf
+	fm3; t=1723541505; x=1723627905; bh=t0cKJCT6Dq39QHiGDSWrGUXezekt
+	2PtsslEGLNkj8JA=; b=XQHbhWHZu/HNuuy7Z3q88PDHZDu1HeuoryUijAznIFzC
+	DYzIPc44DrNeR1VAX9fnafY+N17L46CHNZRNoULuRF3T3ORHFnQ35ZOKlvOqnQBc
+	bEbIgnn37r1O9OLNFAKNdtTLYcaMf5Nk3ftokYW455wcAXhW5qWizIzku/PwJ411
+	VObiyGvz9hchibYzxa09y2PfaQTJVjoHzVZnmAIIPTArh1k9JyMGh8EFvzd9l4ll
+	u8yXUJzozyWJYq5xOoOFKSEwoK1SKkXiVHLR9klLfiFNwMeIO163oi694AlTDfsw
+	G1AlEXWh5jjWZhAa1mto6MOZju5ciolQXn9HfISQJg==
+X-ME-Sender: <xms:ASi7ZjnOA1hUoy1CLdM7wzTeeSxtUrAP7_5LfCrqnCGB6M3txDVBog>
+    <xme:ASi7Zm0gaLdPbefF_WzD22iZBoVIcF0RxQoj0Atgff6J69UlQIrtt3trAA9gccenY
+    81IZ7nHGOn7PtPxRA>
+X-ME-Received: <xmr:ASi7ZpoUVAbNfC-YTed4YNNYHDT2tW7RaOCGbdhoW39H_RRLJZ-EwD-2BnURdyOxq9NAwePOmxeaNsEjnwm1UtSHQ_Q21uZdHDt64ax_HYWTog>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrghmvghsse
-    hjrghmvghslhhiuhdrihhopdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdp
-    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:_Se7Zo20HcGHhv0fVhyDcGw8piG1RK8TGYUXARuvhYv02TQLcFme5Q>
-    <xmx:_Se7ZmFSHN5kSYqrTTdOXB6asNyD9IBCsNKh29M9YsWXv84vv9bunw>
-    <xmx:_Se7Zp_VZJT7QP9csbGSPasPTyomxipeMhnnrBVNz5nGRq8KeZyuCg>
-    <xmx:_Se7ZjlgDQqmdNcUKNUy_liY0YexjnVP-PVL2l9WgmnKGliodtyCAA>
-    <xmx:_Se7Zr6ApqYWO0GKobpaiyYV_VPav04b7JC3OLj7uzit7_hTEuOzPoVm>
+    eqnecuggftrfgrthhtvghrnhepgfefueeltdfhfefgteehfffhffegieeukeevteefvefg
+    udelgeegueevudfhveeknecuffhomhgrihhnpeguihhffhhophhtrdhnohenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:ASi7ZrmNKgszptR-040Y95VCWDC03iQZoZ8Q44lFIkS2wDdufTailw>
+    <xmx:ASi7Zh1SQk09zswNkolL1J1JtjiymQF-WzTt4yukWXYYyoI9VdV3cA>
+    <xmx:ASi7ZqugpdQTWyjPcKQ1DKIaLoFcZd4twQa8QruOYoMRo6htU1YMeg>
+    <xmx:ASi7ZlWcIDMe9OoCwDdKs02f23zNxsDMUrcHLe8GmpQ3S_Z7ENICaA>
+    <xmx:ASi7Zroz1d1_LQycRO-O94QA-MXKW5eKvC4SG_boxrYWRVSSWk11s05b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 05:31:40 -0400 (EDT)
+ 13 Aug 2024 05:31:44 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ca301066 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 09:31:24 +0000 (UTC)
-Date: Tue, 13 Aug 2024 11:31:39 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e3f03a88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Aug 2024 09:31:27 +0000 (UTC)
+Date: Tue, 13 Aug 2024 11:31:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 11/22] builtin/fast-import: plug trivial memory leaks
-Message-ID: <30d4e9ed437b70a46d9b625cdb9bc4230aca298f.1723540931.git.ps@pks.im>
+Subject: [PATCH v3 12/22] builtin/fast-export: fix leaking diff options
+Message-ID: <9591fb7b5e1dac2f989bd10ef2c13a191571a060.1723540931.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723540931.git.ps@pks.im>
 Precedence: bulk
@@ -92,80 +93,34 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723540931.git.ps@pks.im>
 
-Plug some trivial memory leaks in git-fast-import(1).
+Before calling `handle_commit()` in a loop, we set `diffopt.no_free`
+such that its contents aren't getting freed inside of `handle_commit()`.
+We never unset that flag though, which means that it'll ultimately leak
+when calling `release_revisions()`.
+
+Fix this by unsetting the flag after the loop.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c        | 8 ++++++--
- t/t9300-fast-import.sh       | 1 +
- t/t9304-fast-import-marks.sh | 2 ++
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ builtin/fast-export.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index d21c4053a7..6dfeb01665 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -206,8 +206,8 @@ static unsigned int object_entry_alloc = 5000;
- static struct object_entry_pool *blocks;
- static struct hashmap object_table;
- static struct mark_set *marks;
--static const char *export_marks_file;
--static const char *import_marks_file;
-+static char *export_marks_file;
-+static char *import_marks_file;
- static int import_marks_file_from_stream;
- static int import_marks_file_ignore_missing;
- static int import_marks_file_done;
-@@ -3274,6 +3274,7 @@ static void option_import_marks(const char *marks,
- 			read_marks();
- 	}
- 
-+	free(import_marks_file);
- 	import_marks_file = make_fast_import_path(marks);
- 	import_marks_file_from_stream = from_stream;
- 	import_marks_file_ignore_missing = ignore_missing;
-@@ -3316,6 +3317,7 @@ static void option_active_branches(const char *branches)
- 
- static void option_export_marks(const char *marks)
- {
-+	free(export_marks_file);
- 	export_marks_file = make_fast_import_path(marks);
- }
- 
-@@ -3357,6 +3359,8 @@ static void option_rewrite_submodules(const char *arg, struct string_list *list)
- 	free(f);
- 
- 	string_list_insert(list, s)->util = ms;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 4b6e8c6832..fe92d2436c 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1278,9 +1278,11 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	revs.diffopt.format_callback = show_filemodify;
+ 	revs.diffopt.format_callback_data = &paths_of_changed_objects;
+ 	revs.diffopt.flags.recursive = 1;
 +
-+	free(s);
- }
+ 	revs.diffopt.no_free = 1;
+ 	while ((commit = get_revision(&revs)))
+ 		handle_commit(commit, &revs, &paths_of_changed_objects);
++	revs.diffopt.no_free = 0;
  
- static int parse_one_option(const char *option)
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 1e68426852..3b3c371740 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -7,6 +7,7 @@ test_description='test git fast-import utility'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
- 
-diff --git a/t/t9304-fast-import-marks.sh b/t/t9304-fast-import-marks.sh
-index 410a871c52..1f776a80f3 100755
---- a/t/t9304-fast-import-marks.sh
-+++ b/t/t9304-fast-import-marks.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='test exotic situations with marks'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup dump of basic history' '
+ 	handle_tags_and_duplicates(&extra_refs);
+ 	handle_tags_and_duplicates(&tag_refs);
 -- 
 2.46.0.46.g406f326d27.dirty
 
