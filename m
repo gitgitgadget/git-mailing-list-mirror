@@ -1,109 +1,125 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9CD38FB9
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 20:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72BB438FB9
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 20:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723581736; cv=none; b=sKLT98V4AEPN3KxsXkW/Jgb9SB44oavf3IgG5Btn5oDGGEIZR65Px4sYINqTyjQasU7Ey6DimeFZP5FKb5sjKrS77JtXb3qfVKN89lT1gT400Ld0wxv0rzEKMaLJ9KrIcBNHAUX2DMAWZiTD788FdbT46gQdTiRWY1HpgR0t9Aw=
+	t=1723581769; cv=none; b=L646NKU+KWr6twEHDZvI4h19mblUfMf2Pgnc5BZX8c9mHyXozljuPoD95tsKsAaMFqtIrruG4e16V8gygD3q1vHCQwJooYvr9nwUO9Oohx5J3s5aLzpBPTqLFBDxEPw6g/rnV3HiVy4bt0UMMH130eepVhjSl68TNX4WPFVSgAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723581736; c=relaxed/simple;
-	bh=qme/Cizzo4C1b9vMGYJPO5GlyCKZZqQv9mc6AMb9bIg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ClZb/j7IRrJ1ibb2eFocbYAM+4LXJ2MqSBL3cuQa88ftD/dlPtV8H8lng8OmqbzBPb8lRmT+KSL2mFI8d/mBWDcJ+On6nD75HO6ycp4Z1Pnx4FrR194KGrgPtMyfyYwLfmjScWuLbPD8Vw5pE3LZZVMaBLtZJPS5fv6F1P6Y/MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZYRRUP1X; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723581769; c=relaxed/simple;
+	bh=cuFLRClvY/t+LpMVdIc519VZb53P1+94NlaLNvrlH4s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Y0ZAKqQlxR8W8gmVxGq1vKaFo96YWhNDny/VWSWSKz3jo7Pu126Hol8g48VLjegcXYN8lFbDK8NDyEalBuI1pjTj/FyK0fVOaEDhnyHwpcjYxnFOcyFCOw9y45wbOASpOUutPnhUwRKjzRr/evFTQPKfmGbvsCR0kqGLz5L2+90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=T6RGXVJv; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZYRRUP1X"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E730120CAB;
-	Tue, 13 Aug 2024 16:42:13 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qme/Cizzo4C1b9vMGYJPO5GlyCKZZqQv9mc6AM
-	b9bIg=; b=ZYRRUP1X8SfkQzymFDDOhp200DBgG3ChgHya+oiIMudwG3JbT12aRV
-	YNB1iNDNQB1r2QD27SlYx25FPFyeTLSI9w65XjucYPiidOvsF079NVPqZRakQrhU
-	5UJsjd10GnfguzfsF58Lxqlk/ULCxoGkczGizvRS8UcUJR+CNJfJA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id DF96220CA8;
-	Tue, 13 Aug 2024 16:42:13 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EFAF720CA7;
-	Tue, 13 Aug 2024 16:42:09 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Kyle Lippincott
- <spectral@google.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Josh
- Steadmon <steadmon@google.com>,  rsbecker@nexbridge.com,  Edward Thomson
- <ethomson@edwardthomson.com>
-Subject: Re: [RFC PATCH v3 3/7] t/clar: fix whitespace errors
-In-Reply-To: <xmqqv8048mx2.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	13 Aug 2024 08:25:45 -0700")
-References: <cover.1722415748.git.ps@pks.im> <cover.1723095269.git.ps@pks.im>
-	<35682b7686e570a96a8432f6b8af1996ab8d748e.1723095269.git.ps@pks.im>
-	<xmqqv8048mx2.fsf@gitster.g>
-Date: Tue, 13 Aug 2024 13:42:08 -0700
-Message-ID: <xmqqcymc40kf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="T6RGXVJv"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 636B2DF9EF2
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 22:42:37 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:d713:b0b1:9800:110a])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id A072A19F57E;
+	Tue, 13 Aug 2024 22:42:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1723581749;
+	bh=cuFLRClvY/t+LpMVdIc519VZb53P1+94NlaLNvrlH4s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=T6RGXVJvzEs2/LuRYauV/EnykmZ86x+f+Tdcg6ddFfZLDm6sszU+OBpirJHInaTgk
+	 soKqALMDgYGNK6wqal8hCMErSvpjrDVRz/OheojreRmutCIOC2h+q0gE2Uw05X+kau
+	 7y16HrUFgH5/ElVMn3vCOFTmNKjSrNMxlz81TcFhaOCQ2qpmm30BH164KW5evFkwle
+	 SwZLTGF48UQ1eYfhr8Qv5asRUx6VN+aiCtap546eP5v/8MrQfYaf0qOnQbhxGzd2hW
+	 lmbaI5zbLcog/RQJ2ukst7XjQTCUBmWnZ1ETW0PSc4m57HPeTuN0ePFhI7D/1CHabV
+	 6fxFBlAJj6L1g==
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc:
+ =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] formatting macro
+Date: Tue, 13 Aug 2024 22:42:26 +0200
+Message-ID: <3596897.iIbC2pHGDl@cayenne>
+In-Reply-To: <f44c253d-9b37-451d-902d-486adb8e3d72@kdbg.org>
+References:
+ <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <4617471.LvFx2qVVIh@cayenne> <f44c253d-9b37-451d-902d-486adb8e3d72@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8315C8E0-59B4-11EF-87DF-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Monday, 12 August 2024 08:35:39 CEST Johannes Sixt wrote:
+> Am 07.08.24 um 22:43 schrieb Jean-No=EBl AVILA:
+>=20
+> I would like tone down my harsh opposition to mild opposition. IMO, it
+> should still be easy to *write* the documentation. It should not be
+> necessary that authors remember to use macros all over the place.
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> Fix whitespace errors in the clar that make git-apply(1) unhappy. This
->> has been cherry-picked from the upstream pull request at [1].
->>
->> [1]: https://github.com/clar-test/clar/pull/97
->>
->> Signed-off-by: Patrick Steinhardt <ps@pks.im>
->> ---
->>  t/unit-tests/clar/clar/sandbox.h  | 5 ++---
->>  t/unit-tests/clar/generate.py     | 1 -
->>  t/unit-tests/clar/test/.gitignore | 1 -
->>  3 files changed, 2 insertions(+), 5 deletions(-)
->
-> A funny thing about this step is that the copy I carried for the
-> past few days was an empty patch, because out of habit I use the
-> "--whitespace=fix" option while running "git am".  As that fixes
-> the whitespace breakage this step addresses while applying the
-> previous step, this one becomes empty.
->
-> I'll requeue these patches with --whitespace=warn instead.
+The purpose of this series is to clarify the formatting rules for keywords =
+and=20
+placeholders, and to uniformly apply them, so that the readers can relate t=
+he=20
+meaning of what they are reading with the visual cues in the text.  The mor=
+e=20
+uniform the typesetting, the less surprised the reader, the smaller the=20
+communication impedance.
 
-Oops, it turns out that this is insufficient.  I'll add the
-following as a separate patch immediately after this step.
+This requirement makes the documentation *less* easy to write, for sure.
+It is no question of forcing authors to use the formatting macro everywhere=
+=2E=20
+As explained in the Guildelines V3 of the series, the macro is introduced i=
+n=20
+order to remove the most hairy forms where manually doing the formatting wo=
+uld=20
+lead to difficult to read/write sequences. I bet most writers will remember=
+ and=20
+use the s macro when they want to typeset something like=20
+=2D-ignore-submodules[=3D<when>]
 
-Thanks.
+As an added benefit, we can also simplify some existing parts, for instance=
+ see=20
+the ones in urls.txt.
 
- t/unit-tests/clar/clar/fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> And I still think that we should not introduce macros just to please all
+> renderers. Let's just pick the one renderer that can do the job best. If
+> it means that some distribution cannot render the documentation
+> perfectly themselves (Debian? I don't know), they can always use the
+> pre-rendered version that Junio kindly produces.
 
-diff --git c/t/unit-tests/clar/clar/fs.h w/t/unit-tests/clar/clar/fs.h
-index a6eda5e5dc..3e39890bd3 100644
---- c/t/unit-tests/clar/clar/fs.h
-+++ w/t/unit-tests/clar/clar/fs.h
-@@ -146,7 +146,7 @@ fs_rm_wait(WCHAR *_wpath)
- 			ERROR_PATH_NOT_FOUND == last_error)
- 			return 0;
- 
--		Sleep(RM_RETRY_DELAY * retries * retries);	
-+		Sleep(RM_RETRY_DELAY * retries * retries);
- 	}
- 	while (retries++ <= RM_RETRY_COUNT);
- 
+I do not understand how the renderer could solve the issue of typesetting t=
+he=20
+"good part" in the place of the writers. The macro is there to mechanize th=
+e=20
+typesetting of selected parts, but it is up to the writers to define what i=
+s a=20
+keyword and what is a placeholder in their prose. Please note also that usi=
+ng=20
+proper placeholder differentiating and typesetting should have the side-eff=
+ect=20
+of making the prose lighter, by removing the need to express which placehol=
+der=20
+we are talking about.
+
+To me, Asciidoc strikes a good balance for a tool that makes it easy to wri=
+te=20
+simple things and not too complicated to write more complex ones. It is als=
+o=20
+customizable for specific needs, which is handy for our use case.  I am not=
+=20
+aware of an existing renderer that would do the job really best. What do yo=
+u=20
+have in mind?
+
+JN
+
+
+
+
+
+
