@@ -1,82 +1,82 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A892194C8F
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358FA197A61
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723540466; cv=none; b=LJAcGhMmjK8zV1xAdWCnFD6ngpiGQdz/CZ5YY4/Mm4tfeRr9RiVaQzxOa+7fPZ4zEAcnbgeuTadjBKiWGdO/A5kd3L7qI+/KlQLMNsSxNoudSZohoAFetTis2ruDsodGa1miXT3/iDVdsqVggyyzf0b/cvQHVqV4SODBuVTnEsk=
+	t=1723540469; cv=none; b=jpciSmCX3Yf69IXZzT69snyr8jvDX77jBNpDzRFIueiqAw44vSid2FQ/uY2YgVGfwiq1hnS4lV9fIfYP5e2ZKzNafPhUD7/61snLJo9gVXrHDLtZfq352Cbcuk1tn1HnkHVsfV2dPJWwc3oPujD+esQzM1yzBce748M5gq7A4Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723540466; c=relaxed/simple;
-	bh=VhN2nusBpNsoMcZDNAFmuU6DoxySUd43/Ce+5JS6sGA=;
+	s=arc-20240116; t=1723540469; c=relaxed/simple;
+	bh=vcvJ2gU0T4725WY1W+MvMV+AevxExkj4K0ujkx/K0aI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WVZE8QUMbVf6/0zPgKRQgrHpuX5XQlD2GWG6HEg+MaHOZKSi3ire3NkYXPIKqWiGCefmN8Dbl7YGystdoL0A4JWAetfVrztv3oOj873RtFyqnyiLBimmiHO4KJd5yCAIn7M2SwEwarai/EIgn8p9gC1f8B40zYevfY1/SxgoQ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iGpniZqN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DyC32p+U; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=NXCdjC51/lQ7opjSi1ttgY9YQMiaJdv2exHlmdpUVrVIAt+dQondD8p6oFeD+siCMs2AdMyCxzDfd3olbgcUi09gjZaTl9GafDE2bbw2xc2K1r0TRUxUqZSS9YzWnX8VNjNT13ieKgn8UPvzwBKXI0nk2EEmHULb8rTPAvmrM7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CA8D75w0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gja20jwD; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iGpniZqN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DyC32p+U"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 4E1F21389D07;
-	Tue, 13 Aug 2024 05:14:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CA8D75w0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gja20jwD"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 7D7D31389D07;
+	Tue, 13 Aug 2024 05:14:26 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 13 Aug 2024 05:14:23 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 13 Aug 2024 05:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723540463; x=1723626863; bh=MU2tiuBb5o
-	l5NBLzvQpEwX0N5Kc+8hyadx1oWbbrORo=; b=iGpniZqNnRKPN0QLpuOCXg+BP9
-	g6AUeEuHS98OA/R9Bzwu2WVrDCTVVwkZwsIi2nGPCgQytw8RgJ0X/vh1f3HQIZNk
-	lCGXaUsSwBhkCrMeyGnS3vJ3ku1Am9z1CsG2uycVQWbotUUkYQNeURHO0DR/1v1b
-	YIJvxHqgtPR0COkR4XOjAfejWO8D8r74l5XSXgQwgpFrPmCPrnQZ6F/yx58auNQb
-	X02wN3DtYH1WWb79YmmxfCtOyQnQ83iIJo+7O28Nz3Tsd4rp6ckWqyZZwyFeoRae
-	2liZ3jWHiRgrLXPsgSUbuiXOlAdfffl6/7yerZEb2NKcyA4WkoS9zz2Uht5A==
+	:subject:to:to; s=fm3; t=1723540466; x=1723626866; bh=Vd/lrhpHZL
+	Tb4FWCV6kvAck7ro2/ITBtYZQThYlMsfU=; b=CA8D75w0W63sFVEfGaOJ8mHLBO
+	/5hNNYSE8r6mjxTVil28iVM1uM0Nef30D8SKgLGotDyYVGytMVDHiRZC8bWoYZ6A
+	2yOGd2vfYL8VfDbOgfTULZJYrDjKeFnHTf42uukXbIiLTScZ4K4NsueekaS9qbNf
+	PY3nEWoUDRjul3jBRU/el1R4u3vZZJ4sC48VkOywCoWQSaIQd9E0feL4PGSrhMpD
+	O2bRVv+WXPkc5Flt37CJMDG+T5eyR71uf7NffTNUGJQI1cERv/2jNy7x8mZibMAk
+	FQfcbxwXpdvThgGICtbJ2IMiFAg5reqA/4ojxvWvGmeXh+NvyAfUuW8rL+jQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723540463; x=1723626863; bh=MU2tiuBb5ol5NBLzvQpEwX0N5Kc+
-	8hyadx1oWbbrORo=; b=DyC32p+UBkEi/xGC9cPbfX/vlfndwhchIMWrFBiBzN4G
-	37kOoxD50bqxO2qSc6qBpk6U+M4BMIOnGADb2Bt/oQUXWM6ofIXj/T2uU1r/doQj
-	lPlgix6pHfNvRo8LVaPs41Vr5G1WIzOBcPOPkLG8cLrjoUDUS97KS7DILxnz61/Q
-	6C9Hv8KV+SFZeLIJgfOUgTdovKGHUaoGmFKKrY8gLmg2Xy7nK1wwe45FbT031Egb
-	s5ThSGpSriDlVH7Gf9UpL+6nzUz7sPl4iGwexRlTVSuKgGeY8JanVQJm9cHUuiB5
-	SE188RFyxMxjzq2F9CkcsnSQSAUfrlYvZbWd5Tr0sA==
-X-ME-Sender: <xms:7yO7ZtbTpBqmKJc6ltUdD8ciRASUxNyVTaRiWPjDK6fF2t_1UFEdDg>
-    <xme:7yO7ZkaSvpMrTLQXsa-mfrGVBtkOPzpJ8o_rPD42jl7CGaNqvD16jXoLv-H73Ww8Q
-    QCCOtXnQ3oRuMU8TA>
-X-ME-Received: <xmr:7yO7Zv-Dd6P0T-L26Za9hnBFJn70Ch9eWnLtQJpUjzLEOcj1wuLhQEqNfAEEY-5ZNKkQr0Nk8Cu8fEF967y3Sut0_I2T7hp1vz1aNPt4Odpf0g>
+	fm3; t=1723540466; x=1723626866; bh=Vd/lrhpHZLTb4FWCV6kvAck7ro2/
+	ITBtYZQThYlMsfU=; b=Gja20jwDihTAOnfF52UD1HIUPI5k74I/dFKlDtBsodue
+	s6ZrtbWbgjIoNDb4tSQlXcX4nj3gJOPT7smZtIOB14d5RHfd8/flVT+AObA0htXx
+	yLq8j6KVptpbHRd1rUIix7haxd5n8he/48bU3OwVTiwMb8wGY935EfnsQkH9eOs1
+	B1vX9AMLqR+I6G72fkLeKd5J9tyOJ6loXCzFW7oW77iu+TPzUOwEj2OjRWVEUtm5
+	JoU/jjQpJytKPI80XxaG28rin4hfTOHMGSpyLJ+DqVvVBvyN9Lft0munRI+Ev6S/
+	bvEpK2z5G6wVAsaTykU0i0a+6GOz0Hju3DQR6FrnPA==
+X-ME-Sender: <xms:8iO7ZlENKPCQnYjxkXlEY16B8lfPTs37SLt1f9z0Mv8wlRw6wKt1-w>
+    <xme:8iO7ZqWNpgnk59yu0hQ1qUdV4WUlVFJSy1hE0JNxnme1ztI1WNJPwEcFIHDCRn5sH
+    gGz2pE_5VKkgz94_w>
+X-ME-Received: <xmr:8iO7ZnLlqGCNaHHpRGr43M3f5Zew49u-8KTgS8Rx7KsI23vLjvixvYmA93H0aZFpjanKHmHRl4G6Cd4B5VftnhoU5K3fmpCc0PEbZfqvimUoww>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepieduieeitdehieeutdejudehkedvgfejudefgfeiuefg
-    jeekudegfefgffeftdehnecuffhomhgrihhnpehgnhhurdhorhhgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgs
-    pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:7yO7Zrq5cRBL4MQASc8rybZbXGzEtrBmM0FTWoFqcG2YZk7tdHldJQ>
-    <xmx:7yO7Zor0BO02aW9SmwSWBpg6ZFTKslOPel9WtxMP8hl02mlCJNxnJw>
-    <xmx:7yO7ZhS37vqYkpfS8oUlIZSEgloJzHMAWTt4kGgPMVWojc10hIxgUw>
-    <xmx:7yO7Zgp9LeH0Hdrbo4mglLTUDsElcemgvk_jeAJ_7prv-NBPaqAIeg>
-    <xmx:7yO7ZjVrB2QKMssPJupDLW9aqiWhVKhjIbZRAFdO4TwBW7jFzbJHAGfB>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:8iO7ZrGJCYwNUUvbkWgcL3BT2cah59_yc9l_8O4y787c85If54z5KQ>
+    <xmx:8iO7ZrVqNNvIgqexysI19w-ZluSNUcAfFjSQsCRVpIDVVL6vsDSGlQ>
+    <xmx:8iO7ZmOp8kJX51XUpkACKFrEZguz5D7aSDGsnrS-DzIi7jDOEMenvw>
+    <xmx:8iO7Zq2iYvluxEqOE6yh_1R7nk-_uzYErCeRh0o4tRzKNoq0LIBI-A>
+    <xmx:8iO7ZmS4czaNGZ7DRrm9hLvBDEJ4uXVdhdMbhztbKNpRtPGsS7sxYawX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 05:14:22 -0400 (EDT)
+ 13 Aug 2024 05:14:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f9d29248 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 09:14:06 +0000 (UTC)
-Date: Tue, 13 Aug 2024 11:14:21 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 237fa457 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Aug 2024 09:14:09 +0000 (UTC)
+Date: Tue, 13 Aug 2024 11:14:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 19/20] global: prepare for hiding away repo-less config
- functions
-Message-ID: <124f5794e6677da0ca3cac1e90c381ebb43fdca6.1723540226.git.ps@pks.im>
+Subject: [PATCH v2 20/20] config: hide functions using `the_repository` by
+ default
+Message-ID: <467cd481f54e6e8735a221482e435e3cd5419291.1723540226.git.ps@pks.im>
 References: <cover.1723013714.git.ps@pks.im>
  <cover.1723540226.git.ps@pks.im>
 Precedence: bulk
@@ -89,281 +89,653 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723540226.git.ps@pks.im>
 
-We're about to hide config functions that implicitly depend on
-`the_repository` behind the `USE_THE_REPOSITORY_VARIABLE` macro. This
-will uncover a bunch of dependents that transitively relied on the
-global variable, but didn't define the macro yet.
+The config subsystem provides a bunch of legacy functions that read or
+set configuration for `the_repository`. The use of those functions is
+discouraged, and it is easy to miss the implicit dependency on
+`the_repository` that calls to those functions may cause.
 
-Adapt them such that we define the macro to prepare for this change.
+Move all config-related functions that use `the_repository` into a block
+that gets only conditionally compiled depending on whether or not the
+macro has been defined. This also removes all dependencies on that
+variable in "config.c", allowing us to remove the definition of said
+preprocessor macro.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/fsmonitor/fsm-ipc-darwin.c | 2 ++
- compat/precompose_utf8.c          | 1 +
- connect.c                         | 2 ++
- credential.c                      | 2 ++
- daemon.c                          | 2 ++
- editor.c                          | 2 ++
- fsmonitor.c                       | 2 ++
- gpg-interface.c                   | 2 ++
- graph.c                           | 2 ++
- imap-send.c                       | 2 ++
- mailinfo.c                        | 2 ++
- merge-ll.c                        | 2 ++
- parallel-checkout.c               | 2 ++
- protocol.c                        | 2 ++
- refs.c                            | 2 ++
- refs/packed-backend.c             | 2 ++
- refs/reftable-backend.c           | 2 ++
- sideband.c                        | 2 ++
- t/helper/test-advise.c            | 2 ++
- t/helper/test-config.c            | 2 ++
- t/helper/test-userdiff.c          | 2 ++
- trailer.c                         | 2 ++
- versioncmp.c                      | 2 ++
- 23 files changed, 45 insertions(+)
+ config.c | 130 -----------------------------
+ config.h | 249 ++++++++++++++++++++++++++++++++++++++-----------------
+ 2 files changed, 171 insertions(+), 208 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-darwin.c
-index 52f4f29720..fe149a1b37 100644
---- a/compat/fsmonitor/fsm-ipc-darwin.c
-+++ b/compat/fsmonitor/fsm-ipc-darwin.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "gettext.h"
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 0bd5c24250..f7cc7b3be5 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -4,6 +4,7 @@
+diff --git a/config.c b/config.c
+index 08437f75e5..c4fdbf6e1b 100644
+--- a/config.c
++++ b/config.c
+@@ -6,8 +6,6 @@
+  *
   */
  
- #define PRECOMPOSE_UNICODE_C
-+#define USE_THE_REPOSITORY_VARIABLE
- 
- #include "git-compat-util.h"
- #include "config.h"
-diff --git a/connect.c b/connect.c
-index cf84e631e9..6829ab3974 100644
---- a/connect.c
-+++ b/connect.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "environment.h"
-diff --git a/credential.c b/credential.c
-index 4b1a2b94fe..ee46351ce0 100644
---- a/credential.c
-+++ b/credential.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "config.h"
-diff --git a/daemon.c b/daemon.c
-index 17d331b2f3..c65b068b76 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "config.h"
-diff --git a/editor.c b/editor.c
-index e93b4fdb09..6b9ce81d5f 100644
---- a/editor.c
-+++ b/editor.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
+-#define USE_THE_REPOSITORY_VARIABLE
+-
  #include "git-compat-util.h"
  #include "abspath.h"
  #include "advice.h"
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 2b17d60bbb..28130f748f 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "dir.h"
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 5c824aeb25..6587085cd1 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "commit.h"
- #include "config.h"
-diff --git a/graph.c b/graph.c
-index 1ca34770ee..091c14cf4f 100644
---- a/graph.c
-+++ b/graph.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "gettext.h"
- #include "config.h"
-diff --git a/imap-send.c b/imap-send.c
-index 01404e5047..b2eb3d2dd0 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -21,6 +21,8 @@
-  *  along with this program; if not, see <https://www.gnu.org/licenses/>.
+@@ -2695,78 +2693,6 @@ void git_protected_config(config_fn_t fn, void *data)
+ 	configset_iter(&protected_config, fn, data);
+ }
+ 
+-/* Functions used historically to read configuration from 'the_repository' */
+-void git_config(config_fn_t fn, void *data)
+-{
+-	repo_config(the_repository, fn, data);
+-}
+-
+-void git_config_clear(void)
+-{
+-	repo_config_clear(the_repository);
+-}
+-
+-int git_config_get(const char *key)
+-{
+-	return repo_config_get(the_repository, key);
+-}
+-
+-int git_config_get_value(const char *key, const char **value)
+-{
+-	return repo_config_get_value(the_repository, key, value);
+-}
+-
+-int git_config_get_value_multi(const char *key, const struct string_list **dest)
+-{
+-	return repo_config_get_value_multi(the_repository, key, dest);
+-}
+-
+-int git_config_get_string_multi(const char *key,
+-				const struct string_list **dest)
+-{
+-	return repo_config_get_string_multi(the_repository, key, dest);
+-}
+-
+-int git_config_get_string(const char *key, char **dest)
+-{
+-	return repo_config_get_string(the_repository, key, dest);
+-}
+-
+-int git_config_get_string_tmp(const char *key, const char **dest)
+-{
+-	return repo_config_get_string_tmp(the_repository, key, dest);
+-}
+-
+-int git_config_get_int(const char *key, int *dest)
+-{
+-	return repo_config_get_int(the_repository, key, dest);
+-}
+-
+-int git_config_get_ulong(const char *key, unsigned long *dest)
+-{
+-	return repo_config_get_ulong(the_repository, key, dest);
+-}
+-
+-int git_config_get_bool(const char *key, int *dest)
+-{
+-	return repo_config_get_bool(the_repository, key, dest);
+-}
+-
+-int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
+-{
+-	return repo_config_get_bool_or_int(the_repository, key, is_bool, dest);
+-}
+-
+-int git_config_get_maybe_bool(const char *key, int *dest)
+-{
+-	return repo_config_get_maybe_bool(the_repository, key, dest);
+-}
+-
+-int git_config_get_pathname(const char *key, char **dest)
+-{
+-	return repo_config_get_pathname(the_repository, key, dest);
+-}
+-
+ int repo_config_get_expiry(struct repository *r, const char *key, const char **output)
+ {
+ 	int ret = repo_config_get_string(r, key, (char **)output);
+@@ -3186,35 +3112,17 @@ int repo_config_set_in_file_gently(struct repository *r, const char *config_file
+ 	return repo_config_set_multivar_in_file_gently(r, config_filename, key, value, NULL, comment, 0);
+ }
+ 
+-int git_config_set_in_file_gently(const char *config_filename,
+-				  const char *key, const char *comment, const char *value)
+-{
+-	return repo_config_set_in_file_gently(the_repository, config_filename,
+-					      key, comment, value);
+-}
+-
+ void repo_config_set_in_file(struct repository *r, const char *config_filename,
+ 			     const char *key, const char *value)
+ {
+ 	repo_config_set_multivar_in_file(r, config_filename, key, value, NULL, 0);
+ }
+ 
+-void git_config_set_in_file(const char *config_filename,
+-			    const char *key, const char *value)
+-{
+-	repo_config_set_in_file(the_repository, config_filename, key, value);
+-}
+-
+ int repo_config_set_gently(struct repository *r, const char *key, const char *value)
+ {
+ 	return repo_config_set_multivar_gently(r, key, value, NULL, 0);
+ }
+ 
+-int git_config_set_gently(const char *key, const char *value)
+-{
+-	return repo_config_set_gently(the_repository, key, value);
+-}
+-
+ int repo_config_set_worktree_gently(struct repository *r,
+ 				    const char *key, const char *value)
+ {
+@@ -3236,11 +3144,6 @@ void repo_config_set(struct repository *r, const char *key, const char *value)
+ 	trace2_cmd_set_config(key, value);
+ }
+ 
+-void git_config_set(const char *key, const char *value)
+-{
+-	repo_config_set(the_repository, key, value);
+-}
+-
+ char *git_config_prepare_comment_string(const char *comment)
+ {
+ 	size_t leading_blanks;
+@@ -3569,17 +3472,6 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+ 	goto out_free;
+ }
+ 
+-int git_config_set_multivar_in_file_gently(const char *config_filename,
+-					   const char *key, const char *value,
+-					   const char *value_pattern,
+-					   const char *comment,
+-					   unsigned flags)
+-{
+-	return repo_config_set_multivar_in_file_gently(the_repository, config_filename,
+-						       key, value, value_pattern,
+-						       comment, flags);
+-}
+-
+ void repo_config_set_multivar_in_file(struct repository *r,
+ 				      const char *config_filename,
+ 				      const char *key, const char *value,
+@@ -3594,21 +3486,6 @@ void repo_config_set_multivar_in_file(struct repository *r,
+ 		die(_("could not unset '%s'"), key);
+ }
+ 
+-void git_config_set_multivar_in_file(const char *config_filename,
+-				     const char *key, const char *value,
+-				     const char *value_pattern, unsigned flags)
+-{
+-	repo_config_set_multivar_in_file(the_repository, config_filename,
+-					 key, value, value_pattern, flags);
+-}
+-
+-int git_config_set_multivar_gently(const char *key, const char *value,
+-				   const char *value_pattern, unsigned flags)
+-{
+-	return repo_config_set_multivar_gently(the_repository, key, value,
+-					       value_pattern, flags);
+-}
+-
+ int repo_config_set_multivar_gently(struct repository *r, const char *key,
+ 				    const char *value,
+ 				    const char *value_pattern, unsigned flags)
+@@ -3632,13 +3509,6 @@ void repo_config_set_multivar(struct repository *r,
+ 	free(file);
+ }
+ 
+-void git_config_set_multivar(const char *key, const char *value,
+-			     const char *value_pattern, unsigned flags)
+-{
+-	repo_config_set_multivar(the_repository, key, value,
+-				 value_pattern, flags);
+-}
+-
+ static size_t section_name_match (const char *buf, const char *name)
+ {
+ 	size_t i = 0, j = 0;
+diff --git a/config.h b/config.h
+index 589d6dae26..4d319a4193 100644
+--- a/config.h
++++ b/config.h
+@@ -26,7 +26,7 @@ struct object_id;
+ /* git_config_parse_key() returns these negated: */
+ #define CONFIG_INVALID_KEY 1
+ #define CONFIG_NO_SECTION_OR_NAME 2
+-/* git_config_set_gently(), git_config_set_multivar_gently() return the above or these: */
++/* repo_config_set_gently(), repo_config_set_multivar_gently() return the above or these: */
+ #define CONFIG_NO_LOCK -1
+ #define CONFIG_INVALID_FILE 3
+ #define CONFIG_NO_WRITE 4
+@@ -170,9 +170,9 @@ int git_default_config(const char *, const char *,
+ 
+ /**
+  * Read a specific file in git-config format.
+- * This function takes the same callback and data parameters as `git_config`.
++ * This function takes the same callback and data parameters as `repo_config`.
+  *
+- * Unlike git_config(), this function does not respect includes.
++ * Unlike repo_config(), this function does not respect includes.
+  */
+ int git_config_from_file(config_fn_t fn, const char *, void *);
+ 
+@@ -198,9 +198,9 @@ void read_very_early_config(config_fn_t cb, void *data);
+ /**
+  * Most programs will simply want to look up variables in all config files
+  * that Git knows about, using the normal precedence rules. To do this,
+- * call `git_config` with a callback function and void data pointer.
++ * call `repo_config` with a callback function and void data pointer.
+  *
+- * `git_config` will read all config sources in order of increasing
++ * `repo_config` will read all config sources in order of increasing
+  * priority. Thus a callback should typically overwrite previously-seen
+  * entries with new ones (e.g., if both the user-wide `~/.gitconfig` and
+  * repo-specific `.git/config` contain `color.ui`, the config machinery
+@@ -210,11 +210,11 @@ void read_very_early_config(config_fn_t cb, void *data);
+  *
+  * Unlike git_config_from_file(), this function respects includes.
+  */
+-void git_config(config_fn_t fn, void *);
++void repo_config(struct repository *r, config_fn_t fn, void *);
+ 
+ /**
+  * Lets the caller examine config while adjusting some of the default
+- * behavior of `git_config`. It should almost never be used by "regular"
++ * behavior of `repo_config`. It should almost never be used by "regular"
+  * Git code that is looking up configuration variables.
+  * It is intended for advanced callers like `git-config`, which are
+  * intentionally tweaking the normal config-lookup process.
+@@ -223,12 +223,12 @@ void git_config(config_fn_t fn, void *);
+  * - `config_source`
+  * If this parameter is non-NULL, it specifies the source to parse for
+  * configuration, rather than looking in the usual files. See `struct
+- * git_config_source` in `config.h` for details. Regular `git_config` defaults
++ * git_config_source` in `config.h` for details. Regular `repo_config` defaults
+  * to `NULL`.
+  *
+  * - `opts`
+  * Specify options to adjust the behavior of parsing config files. See `struct
+- * config_options` in `config.h` for details. As an example: regular `git_config`
++ * config_options` in `config.h` for details. As an example: regular `repo_config`
+  * sets `opts.respect_includes` to `1` by default.
+  */
+ int config_with_options(config_fn_t fn, void *,
+@@ -297,7 +297,6 @@ int git_config_pathname(char **, const char *, const char *);
+ 
+ int git_config_expiry_date(timestamp_t *, const char *, const char *);
+ int git_config_color(char *, const char *, const char *);
+-int git_config_set_in_file_gently(const char *, const char *, const char *, const char *);
+ int repo_config_set_in_file_gently(struct repository *r, const char *config_filename,
+ 				   const char *key, const char *comment, const char *value);
+ 
+@@ -305,10 +304,8 @@ int repo_config_set_in_file_gently(struct repository *r, const char *config_file
+  * write config values to a specific config file, takes a key/value pair as
+  * parameter.
+  */
+-void git_config_set_in_file(const char *, const char *, const char *);
+ void repo_config_set_in_file(struct repository *, const char *, const char *, const char *);
+ 
+-int git_config_set_gently(const char *, const char *);
+ int repo_config_set_gently(struct repository *r, const char *, const char *);
+ 
+ /**
+@@ -321,14 +318,13 @@ int repo_config_set_worktree_gently(struct repository *, const char *, const cha
+ /**
+  * write config values to `.git/config`, takes a key/value pair as parameter.
+  */
+-void git_config_set(const char *, const char *);
+ void repo_config_set(struct repository *, const char *, const char *);
+ 
+ int git_config_parse_key(const char *, char **, size_t *);
+ 
+ /*
+  * The following macros specify flag bits that alter the behavior
+- * of the git_config_set_multivar*() methods.
++ * of the repo_config_set_multivar*() methods.
   */
  
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "credential.h"
-diff --git a/mailinfo.c b/mailinfo.c
-index 94b9b0abf2..95228531a6 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "gettext.h"
-diff --git a/merge-ll.c b/merge-ll.c
-index 180c19df67..badb6dea57 100644
---- a/merge-ll.c
-+++ b/merge-ll.c
-@@ -4,6 +4,8 @@
-  * Copyright (c) 2007 Junio C Hamano
+ /*
+@@ -345,11 +341,8 @@ int git_config_parse_key(const char *, char **, size_t *);
+  */
+ #define CONFIG_FLAGS_FIXED_VALUE (1 << 1)
+ 
+-int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
+ int repo_config_set_multivar_gently(struct repository *, const char *, const char *, const char *, unsigned);
+-void git_config_set_multivar(const char *, const char *, const char *, unsigned);
+ void repo_config_set_multivar(struct repository *r, const char *, const char *, const char *, unsigned);
+-int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, const char *, unsigned);
+ int repo_config_set_multivar_in_file_gently(struct repository *, const char *, const char *, const char *, const char *, const char *, unsigned);
+ 
+ char *git_config_prepare_comment_string(const char *);
+@@ -374,11 +367,6 @@ char *git_config_prepare_comment_string(const char *);
+  *
+  * It returns 0 on success.
+  */
+-void git_config_set_multivar_in_file(const char *config_filename,
+-				     const char *key,
+-				     const char *value,
+-				     const char *value_pattern,
+-				     unsigned flags);
+ void repo_config_set_multivar_in_file(struct repository *r,
+ 				      const char *config_filename,
+ 				      const char *key,
+@@ -563,39 +551,11 @@ int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *i
+ int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest);
+ int git_configset_get_pathname(struct config_set *cs, const char *key, char **dest);
+ 
+-/* Functions for reading a repository's config */
+-struct repository;
+-void repo_config(struct repository *repo, config_fn_t fn, void *data);
+-
+ /**
+  * Run only the discover part of the repo_config_get_*() functions
+  * below, in addition to 1 if not found, returns negative values on
+  * error (e.g. if the key itself is invalid).
+  */
+-RESULT_MUST_BE_USED
+-int repo_config_get(struct repository *repo, const char *key);
+-int repo_config_get_value(struct repository *repo,
+-			  const char *key, const char **value);
+-RESULT_MUST_BE_USED
+-int repo_config_get_value_multi(struct repository *repo, const char *key,
+-				const struct string_list **dest);
+-RESULT_MUST_BE_USED
+-int repo_config_get_string_multi(struct repository *repo, const char *key,
+-				 const struct string_list **dest);
+-int repo_config_get_string(struct repository *repo,
+-			   const char *key, char **dest);
+-int repo_config_get_string_tmp(struct repository *repo,
+-			       const char *key, const char **dest);
+-int repo_config_get_int(struct repository *repo,
+-			const char *key, int *dest);
+-int repo_config_get_ulong(struct repository *repo,
+-			  const char *key, unsigned long *dest);
+-int repo_config_get_bool(struct repository *repo,
+-			 const char *key, int *dest);
+-int repo_config_get_bool_or_int(struct repository *repo,
+-				const char *key, int *is_bool, int *dest);
+-int repo_config_get_maybe_bool(struct repository *repo,
+-			       const char *key, int *dest);
+ int repo_config_get_pathname(struct repository *repo,
+ 			     const char *key, char **dest);
+ 
+@@ -611,17 +571,17 @@ void git_protected_config(config_fn_t fn, void *data);
+  * -------------------------------
+  *
+  * For programs wanting to query for specific variables in a non-callback
+- * manner, the config API provides two functions `git_config_get_value`
+- * and `git_config_get_value_multi`. They both read values from an internal
++ * manner, the config API provides two functions `repo_config_get_value`
++ * and `repo_config_get_value_multi`. They both read values from an internal
+  * cache generated previously from reading the config files.
+  *
+- * For those git_config_get*() functions that aren't documented,
++ * For those repo_config_get*() functions that aren't documented,
+  * consult the corresponding repo_config_get*() function's
+  * documentation.
   */
  
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "convert.h"
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 08b960aac8..01736f1352 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "entry.h"
-diff --git a/protocol.c b/protocol.c
-index 079ba75acf..bae7226ff4 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "environment.h"
-diff --git a/refs.c b/refs.c
-index 0afc70b51b..284c64dfc5 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2,6 +2,8 @@
-  * The backend-independent part of the reference module.
-  */
+ RESULT_MUST_BE_USED
+-int git_config_get(const char *key);
++int repo_config_get(struct repository *r, const char *key);
  
-+#define USE_THE_REPOSITORY_VARIABLE
+ /**
+  * Finds the highest-priority value for the configuration variable `key`,
+@@ -630,7 +590,7 @@ int git_config_get(const char *key);
+  * `value`. The caller should not free or modify `value`, as it is owned
+  * by the cache.
+  */
+-int git_config_get_value(const char *key, const char **value);
++int repo_config_get_value(struct repository *r, const char *key, const char **value);
+ 
+ /**
+  * Finds and returns the value list, sorted in order of increasing priority
+@@ -641,16 +601,15 @@ int git_config_get_value(const char *key, const char **value);
+  * owned by the cache.
+  */
+ RESULT_MUST_BE_USED
+-int git_config_get_value_multi(const char *key,
+-			       const struct string_list **dest);
+-RESULT_MUST_BE_USED
+-int git_config_get_string_multi(const char *key,
++int repo_config_get_value_multi(struct repository *r, const char *key,
+ 				const struct string_list **dest);
++RESULT_MUST_BE_USED
++int repo_config_get_string_multi(struct repository *r, const char *key,
++				 const struct string_list **dest);
+ 
+ /**
+  * Resets and invalidates the config cache.
+  */
+-void git_config_clear(void);
+ void repo_config_clear(struct repository *repo);
+ 
+ /**
+@@ -659,14 +618,15 @@ void repo_config_clear(struct repository *repo);
+  * error message and returns -1. When the configuration variable `key` is
+  * not found, returns 1 without touching `dest`.
+  */
+-int git_config_get_string(const char *key, char **dest);
++int repo_config_get_string(struct repository *r, const char *key, char **dest);
+ 
+ /**
+- * Similar to `git_config_get_string`, but does not allocate any new
++ * Similar to `repo_config_get_string`, but does not allocate any new
+  * memory; on success `dest` will point to memory owned by the config
+  * machinery, which could be invalidated if it is discarded and reloaded.
+  */
+-int git_config_get_string_tmp(const char *key, const char **dest);
++int repo_config_get_string_tmp(struct repository *r,
++			       const char *key, const char **dest);
+ 
+ /**
+  * Finds and parses the value to an integer for the configuration variable
+@@ -674,12 +634,13 @@ int git_config_get_string_tmp(const char *key, const char **dest);
+  * `dest` and returns 0. When the configuration variable `key` is not found,
+  * returns 1 without touching `dest`.
+  */
+-int git_config_get_int(const char *key, int *dest);
++int repo_config_get_int(struct repository *r, const char *key, int *dest);
+ 
+ /**
+- * Similar to `git_config_get_int` but for unsigned longs.
++ * Similar to `repo_config_get_int` but for unsigned longs.
+  */
+-int git_config_get_ulong(const char *key, unsigned long *dest);
++int repo_config_get_ulong(struct repository *r,
++			  const char *key, unsigned long *dest);
+ 
+ /**
+  * Finds and parses the value into a boolean value, for the configuration
+@@ -690,25 +651,21 @@ int git_config_get_ulong(const char *key, unsigned long *dest);
+  * configuration variable `key` is not found, returns 1 without touching
+  * `dest`.
+  */
+-int git_config_get_bool(const char *key, int *dest);
++int repo_config_get_bool(struct repository *r, const char *key, int *dest);
+ 
+ /**
+- * Similar to `git_config_get_bool`, except that integers are copied as-is,
++ * Similar to `repo_config_get_bool`, except that integers are copied as-is,
+  * and `is_bool` flag is unset.
+  */
+-int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
++int repo_config_get_bool_or_int(struct repository *r, const char *key,
++				int *is_bool, int *dest);
+ 
+ /**
+- * Similar to `git_config_get_bool`, except that it returns -1 on error
++ * Similar to `repo_config_get_bool`, except that it returns -1 on error
+  * rather than dying.
+  */
+-int git_config_get_maybe_bool(const char *key, int *dest);
+-
+-/**
+- * Similar to `git_config_get_string`, but expands `~` or `~user` into
+- * the user's home directory when found at the beginning of the path.
+- */
+-int git_config_get_pathname(const char *key, char **dest);
++int repo_config_get_maybe_bool(struct repository *r,
++			      const char *key, int *dest);
+ 
+ int repo_config_get_index_threads(struct repository *r, int *dest);
+ int repo_config_get_split_index(struct repository *r);
+@@ -732,7 +689,7 @@ NORETURN void git_die_config(struct repository *r, const char *key, const char *
+ /**
+  * Helper function which formats the die error message according to the
+  * parameters entered. Used by `git_die_config()`. It can be used by callers
+- * handling `git_config_get_value_multi()` to print the correct error message
++ * handling `repo_config_get_value_multi()` to print the correct error message
+  * for the desired value.
+  */
+ NORETURN void git_die_config_linenr(const char *key, const char *filename, int linenr);
+@@ -741,4 +698,140 @@ NORETURN void git_die_config_linenr(const char *key, const char *filename, int l
+ 	lookup_config(mapping, ARRAY_SIZE(mapping), var)
+ int lookup_config(const char **mapping, int nr_mapping, const char *var);
+ 
++# ifdef USE_THE_REPOSITORY_VARIABLE
++static inline void git_config(config_fn_t fn, void *data)
++{
++	repo_config(the_repository, fn, data);
++}
 +
- #include "git-compat-util.h"
- #include "advice.h"
- #include "config.h"
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 89976aa359..ba2ad90d10 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline void git_config_clear(void)
++{
++	repo_config_clear(the_repository);
++}
 +
- #include "../git-compat-util.h"
- #include "../config.h"
- #include "../dir.h"
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index bf4446afd3..df67923d21 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get(const char *key)
++{
++	return repo_config_get(the_repository, key);
++}
 +
- #include "../git-compat-util.h"
- #include "../abspath.h"
- #include "../chdir-notify.h"
-diff --git a/sideband.c b/sideband.c
-index 5d8907151f..5b6b872a1c 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_value(const char *key, const char **value)
++{
++	return repo_config_get_value(the_repository, key, value);
++}
 +
- #include "git-compat-util.h"
- #include "color.h"
- #include "config.h"
-diff --git a/t/helper/test-advise.c b/t/helper/test-advise.c
-index 8a3fd0009a..6967c8e25c 100644
---- a/t/helper/test-advise.c
-+++ b/t/helper/test-advise.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_value_multi(const char *key, const struct string_list **dest)
++{
++	return repo_config_get_value_multi(the_repository, key, dest);
++}
 +
- #include "test-tool.h"
- #include "advice.h"
- #include "config.h"
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index ed444ca4c2..e193079ed5 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_string_multi(const char *key,
++				const struct string_list **dest)
++{
++	return repo_config_get_string_multi(the_repository, key, dest);
++}
 +
- #include "test-tool.h"
- #include "config.h"
- #include "setup.h"
-diff --git a/t/helper/test-userdiff.c b/t/helper/test-userdiff.c
-index 0ce31ce59f..94c48ababb 100644
---- a/t/helper/test-userdiff.c
-+++ b/t/helper/test-userdiff.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_string(const char *key, char **dest)
++{
++	return repo_config_get_string(the_repository, key, dest);
++}
 +
- #include "test-tool.h"
- #include "setup.h"
- #include "userdiff.h"
-diff --git a/trailer.c b/trailer.c
-index 72e5136c73..682d74505b 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_string_tmp(const char *key, const char **dest)
++{
++	return repo_config_get_string_tmp(the_repository, key, dest);
++}
 +
- #include "git-compat-util.h"
- #include "config.h"
- #include "environment.h"
-diff --git a/versioncmp.c b/versioncmp.c
-index 45e676cbca..e3b2a6e330 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++static inline int git_config_get_int(const char *key, int *dest)
++{
++	return repo_config_get_int(the_repository, key, dest);
++}
 +
- #include "git-compat-util.h"
- #include "config.h"
- #include "strbuf.h"
++static inline int git_config_get_ulong(const char *key, unsigned long *dest)
++{
++	return repo_config_get_ulong(the_repository, key, dest);
++}
++
++static inline int git_config_get_bool(const char *key, int *dest)
++{
++	return repo_config_get_bool(the_repository, key, dest);
++}
++
++static inline int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
++{
++	return repo_config_get_bool_or_int(the_repository, key, is_bool, dest);
++}
++
++static inline int git_config_get_maybe_bool(const char *key, int *dest)
++{
++	return repo_config_get_maybe_bool(the_repository, key, dest);
++}
++
++static inline int git_config_get_pathname(const char *key, char **dest)
++{
++	return repo_config_get_pathname(the_repository, key, dest);
++}
++
++static inline void git_config_set_in_file(const char *config_filename,
++					  const char *key, const char *value)
++{
++	repo_config_set_in_file(the_repository, config_filename, key, value);
++}
++
++static inline int git_config_set_gently(const char *key, const char *value)
++{
++	return repo_config_set_gently(the_repository, key, value);
++}
++
++static inline void git_config_set(const char *key, const char *value)
++{
++	repo_config_set(the_repository, key, value);
++}
++
++static inline int git_config_set_in_file_gently(
++	const char *config_filename,
++	const char *key,
++	const char *comment,
++	const char *value)
++{
++	return repo_config_set_in_file_gently(the_repository, config_filename,
++					      key, comment, value);
++}
++
++static inline int git_config_set_multivar_in_file_gently(
++	const char *config_filename,
++	const char *key, const char *value,
++	const char *value_pattern,
++	const char *comment,
++	unsigned flags)
++{
++	return repo_config_set_multivar_in_file_gently(the_repository, config_filename,
++						       key, value, value_pattern,
++						       comment, flags);
++}
++
++static inline void git_config_set_multivar_in_file(
++	const char *config_filename,
++	const char *key,
++	const char *value,
++	const char *value_pattern,
++	unsigned flags)
++{
++	repo_config_set_multivar_in_file(the_repository, config_filename,
++					 key, value, value_pattern, flags);
++}
++
++static inline int git_config_set_multivar_gently(const char *key, const char *value,
++				   const char *value_pattern, unsigned flags)
++{
++	return repo_config_set_multivar_gently(the_repository, key, value,
++					       value_pattern, flags);
++}
++
++static inline void git_config_set_multivar(const char *key, const char *value,
++			     const char *value_pattern, unsigned flags)
++{
++	repo_config_set_multivar(the_repository, key, value,
++				 value_pattern, flags);
++}
++# endif /* USE_THE_REPOSITORY_VARIABLE */
++
+ #endif /* CONFIG_H */
 -- 
 2.46.0.46.g406f326d27.dirty
 
