@@ -1,127 +1,129 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD541993B5
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 13:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D22D1991BE
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 13:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723555167; cv=none; b=aEHMfFTo4/z/hpUNsvaGH0hI2Wb20et4BOU0Qgnnn0HzeswZhvniBbrxLKl20P01ZfWOErOK9DCDOxAEsTQ5nHDUcggJBvrfHPCuT/L7bFWGLbHfrXUVWnafED8+59dxtYMzTy++XgEaFyPZu2mwU52Y3axl3/iqwUl5iEOX8zI=
+	t=1723555248; cv=none; b=dugQMBOV1qfq71ykVMq2uCH3P2EWAW2QQXW/rbkFO09kqHmnnztUzr/0TFMLDdu4gNEYLylr6Usl1dSgSx/pVz28pgnlxL789gs/6viM8WRtJMexqRQZwqT13FQA3mYubIOkabsYS4gTCxpOxo5mZ7ghWChhAhJUjg9S9hV5Q/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723555167; c=relaxed/simple;
-	bh=rZqn8EQIYMeI6eHFiXqZwZrkRn15OKyMEhXoKGH6QME=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LZlywCCc47WSz/9uVEAggB5d1VGHmvoU2X9b4OJyNe+UkoxSjeBRhf3WqfJx4Ypvaf8KXUTnp1WpUb/0bk+Lq1tcthD5Sa465ex8KskKDrozf2OdBnYCP/PTQAP2C1/KhowxRp25gTEKOkmNkGxgabS3sC+4pcRoH0gaj4sucJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+/LnXRo; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723555248; c=relaxed/simple;
+	bh=1a5ILBz22pu6RZT3YOj0aOzydeQe1Vzt6CJg003m8cw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=NEN/SPjIVOBMp6e+zjtg0lUN8UeX7g+jrfgAtz8qfQu0AiZsXixeCpLsbzfDhtNOIO+f2+lpFQUUwIGdYzzAaYomeEoxbV77G+Ny10KcxdH0/2oPslHYaDL4/9A9duxjWVGy7C73YggmIYHJZg8B0lcf+fF79aHnmLi6iYIJFVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=tJL6jpwm; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+/LnXRo"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7a8a4f21aeso588322366b.2
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 06:19:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723555164; x=1724159964; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=P3BJeAzI3f+QoSTFL+SVH1jqq0GWNel0c5lnwydkMT8=;
-        b=F+/LnXRofMQYbo+xtUZ+0zrTWgdOgYe4L2etMqv6CjhudofoWF/Xy/WhPFCEj2boFJ
-         5mpNKPwJg/prTfcsfrSiZwlEoZTg/KMyxDD2uqbF8kCwynft84nYepr/5mMVLekNb9dG
-         1+ohQ4hgqnFkiQ8567ZLxSXgGu06ogsbW1eKuNuTBGJZCDLThREiAqtyO7be+XhpNnSC
-         dVHkIXSTdLpxaMISdrhDfFBLkIAuL/mAIfMXCA+Ilou+RiERv/0laqN9u1cl3M/iPgGz
-         VyW2PchMsQpDWcDce0MtzhCTC8I9vCc/h1cz2xgygtUaQ/tKCT/vNCVkH0+YW/cq+wue
-         vg+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723555164; x=1724159964;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P3BJeAzI3f+QoSTFL+SVH1jqq0GWNel0c5lnwydkMT8=;
-        b=um+/KUsZeTAWRwYNsk89OP9JAkBxGIpQhf5c0j77pFnHoE53aGdZzJouWKGJP0xCF8
-         BFGZJa/+Q2wpLDSYusueyNlhIYxgU4s7sF+cfnmT7zV4ex9TMFAWOIpBbQTnJPCc5t9K
-         DU/PJMQuWWgFA1fKOow/d+joDlG9uOYtSlGhku3TqhI2eK2kVCSpGq4+HRNNEmcAp68C
-         ce+wsBlAChtDVE8607HkR8x7lngjihnKWAnAbWkRmKktMurf2/VZzoQ/laJKd02gZ/Cp
-         DTZigxe2UuQkDWNa/BUvRYSmNqSAxdjj44QMKlH3D6/JwDsMamG8rFIfP5GZaOhZjAiW
-         Q8XQ==
-X-Gm-Message-State: AOJu0YzZJWNMTTLhco5K2ko1tbCeGHXH3db7RC0J3BspVj4BobKJ6umQ
-	3j92Usncrw/jWVZ3+Uq48++VINd46g/guY/YB5uIGL2UtSYpg+UK
-X-Google-Smtp-Source: AGHT+IHK7Wp4uaHIr1So/5iQ05B6nebukbVynSYXc/JUr1zDPW0v2cNFK6om1S1RWoVf84OrTng0Fg==
-X-Received: by 2002:a17:907:f7a5:b0:a7a:b8f1:fd69 with SMTP id a640c23a62f3a-a80ed1d667dmr277829266b.18.1723555163467;
-        Tue, 13 Aug 2024 06:19:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a80f3fb3575sm70592766b.90.2024.08.13.06.19.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 06:19:23 -0700 (PDT)
-Message-ID: <a02e21f1-b2a4-499a-b767-3426876d31be@gmail.com>
-Date: Tue, 13 Aug 2024 14:19:20 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="tJL6jpwm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1723555240; x=1724160040;
+	i=johannes.schindelin@gmx.de;
+	bh=7/t0sBXRfy1+PBD0ZyPt/uyZQcypdTUO4TjbObt+sjE=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=tJL6jpwmpNnBVJb2EC5BnpZ1f9OYocdF0xGCfleowMGCMDvi8v2voYjwSZTxvZnk
+	 ZVm+2O81no4F/cqlil+9KvyrY7T+1+1LAKE6WbSoerUpxmTgtWFR2Ru/1udKX/cu4
+	 ae4h6OxnnRG+skh3P6M5uQjrumtY2GDAb6cILPQdMy17Ey/AzN7irxN9ZL50O074v
+	 AufZ/0zKMKP/da1+E1G47rjYsKpltD4BY0TV4QuIxpCw+FIWhLGx6YrJ6umVUfO2W
+	 giMBFnT6YG7yRrWKVP3QJ/y7P+FldXjJd5h+vBP6iUqPyCnoocwiOWAfxM0dE7em3
+	 zUTVH3xdLfHmKt8U4A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([167.220.208.78]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N5G9n-1sENwL23nB-01155Q; Tue, 13
+ Aug 2024 15:20:40 +0200
+Date: Tue, 13 Aug 2024 15:20:39 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: PEMBERTON Brian D * DCBS <Brian.D.PEMBERTON@dcbs.oregon.gov>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Technical information about http.sslBackend schannel
+In-Reply-To: <CO6PR09MB7381B7819CC314C878A73FF2E6AB2@CO6PR09MB7381.namprd09.prod.outlook.com>
+Message-ID: <3d235ec1-5294-c9ff-0b9a-fa443e570b79@gmx.de>
+References: <CO6PR09MB7381B7819CC314C878A73FF2E6AB2@CO6PR09MB7381.namprd09.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 7/7] builtin/maintenance: fix auto-detach with
- non-standard tasks
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-References: <cover.1723533091.git.ps@pks.im>
- <8d6cbae951177718b49d5cfbbeca2d5b0073e266.1723533091.git.ps@pks.im>
- <779795d2-eefd-4fac-b29f-9943f98bc83b@gmail.com> <ZrtKoVFci6cdvMS_@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ZrtKoVFci6cdvMS_@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Mgf54Os1MQ3I+GLyWG4GiVCRUMpwJ9EC2NXvwDkSF6iYCqcL8uY
+ g9JmXYTln5tHmXJ00dxDdMXsuJhg1nuKtCfocrzirr4GCACUbkaMsqRsF3dYPnCJx6WYz4A
+ 1QfwkNXDQ9GneVnZRBff/qofkQz4nVBwHpBgnlP7KuK9vHqtDajQEYkTrmLPVqouq+iK0zY
+ mcK5uamiqNH/1CgNg6RQQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sJqEl/aNum4=;NzC/gsBkwMOo87ZYcXc6Dfditm/
+ FJH3JIjPPRqg31vMvNTXQufqBRlJawH+W6EC8rwroRMmvFtALzzWmelOMFdLvNtgDoCGnOzLe
+ UKr6Q/Em1GKZlKlNPEPIps/xUlRGNv18DbtdVIazyzFROUQMXnx8nGx1bUBIcPi+eHtjpbqO5
+ HRI81vVcMLOo1Nc6TidV+YszqxfSeA3r00DWRyCryAD4axK2v7LSuFzIatbO3JKQLA3XWJg9S
+ CW1f01pN1Zc8MAqwtezukiiRFgD/kSV+fhBoWvaTkYknntDzcThcjM/xqMtAWmgw169He/4Uc
+ qaRRXypGmwmgSyYJaOCBABufrwieEeFlKjH+9FMnX2rksyVhKiByfmyMHx1VsmvULVUGeVAmQ
+ cowcnbeRs45iEChcVuzpjaMItU1r3pgn14E5nwenfYSNr7AsCx4OYnBFuJihqZx30jXLDDXQL
+ fXilSUOmyWPH+1aE0eltt3UMtlBza34ERmFUPK4owd4B+RScBgmKokQctriAQ1Cq1Z6/Chf8E
+ zq3ikqECQyfVSNNNVAnSiLb7CLRhg0QkLb7IpkSB3Wy3VKPC+0ZFhYwuBQfkwi8mALvSaD9GG
+ cPOaHcc+mfrED9Q3XunltSnCmD3JqK6kziMGycxMpbw6ZlkwWGQ3YpUMuq1GrzfNKo9g/NL8D
+ sRuaQy0NzgBUXF0/L5mIBn9BsLkEZzNP811Pj2KXyreg8b/PYDPLZeuNJAKQMiCH5PGKo+JZ6
+ IYgZj3T+3Cpuq4FbfOgQuigjUcNyPtfg0OLGUuLS/AyAaEHX99AwEFLwwR6sp0Qa7TbSvLSBK
+ Y3+U4OnzmAjA0/eehENhlgUg==
+Content-Transfer-Encoding: quoted-printable
 
-On 13/08/2024 12:59, Patrick Steinhardt wrote:
-> On Tue, Aug 13, 2024 at 12:29:47PM +0100, Phillip Wood wrote:
->> Hi Patrick
->>
->> On 13/08/2024 08:18, Patrick Steinhardt wrote:
->>>
->>> Fix this bug by asking git-gc(1) to not detach when it is being invoked
->>> via git-maintenance(1). Instead, the latter command now respects a new
->>> config "maintenance.autoDetach", the equivalent of "gc.autoDetach", and
->>> detaches itself into the background if not told otherwise. This should
->>> continue to behave the same for all users which use the git-gc(1) task,
->>> only. For others though, it means that we now properly perform all tasks
->>> in the background.
->>
->> I fear that users who are running "git maintenance" from a scheduler such as
->> cron are likely to be surprised by this change in behavior. At the very
->> least "git maintenance" will no-longer return a meaningful exit code.
->> Perhaps we could switch the logic to be opt in and pass "--detach" (or "-c
->> maintenance.autoDetach=true") when running "git maintenance" automatically
->> from "git rebase" etc.
-> 
-> It's actually the reverse: the old behaviour when run via a scheduler
-> was to detach by default, because git-gc(1) did.
+Hi Brian,
 
-Oh, I  misunderstood what this patch is changing. So despite being 
-tagged builtin/maintenance and talking about "git maintenance" it does 
-not actually touch builtin/maintenance.c or change its behavior. What it 
-is actually doing is changing how other git commands run "git 
-maintenance --auto" so that it is always run in the background unless 
-the user configures maintenance.autoDetach=false. That sounds like a 
-good change.
+On Thu, 25 Jul 2024, PEMBERTON Brian D * DCBS wrote:
 
-Thanks for clarifying
+> I am in the process of migrating our SVN repos to Git for my agency.
+> Our infrastructure team is requesting to have more information about
+> what the http.sslBackend schannel setting does than what it stated in
+> the documentation, as it seems necessary to connect (clone,push) to our
+> remote.
+>
+> `
+> http.sslBackend
+> Name of the SSL backend to use (e.g. "openssl" or "schannel"). This
+> option is ignored if cURL lacks support for choosing the SSL backend at
+> runtime.
+> `
+>
+> My understanding is that it enables Git to connect to the Windows cert
+> store, (sorry if this is windows specific, I thought to start here,
+> sense the subject is SSL)
 
-Phillip
+The name `schannel` is short for "Secure Channel" and refers to the native
+Transport Layer Security (TLS, formerly known as SSL, for more details see
+https://en.wikipedia.org/wiki/Transport_Layer_Security) support of Windows
+that is required to transfer data via the HTTPS protocol. For details, see
+https://learn.microsoft.com/en-us/windows/win32/secauthn/secure-channel.
 
-> We now ask it to not
-> detach anymore, which fixes this. Furthermore, the default behaviour of
-> `git maintenance run` did not change either: it stays in the foreground
-> unless the `--detach` flag is given. So the thing you worry about is
-> actually getting fixed by this series :)
-> 
-> What _does_ change though is when we run `git maintenance` via our
-> auto-maintenance framework. Here we now do detach the whole maintenance
-> process, instead of only git-gc(1). This logic is only being executed by
-> random commands (git-rebase, git-pull, git-commit etc), and I'd argue it
-> is the expected behaviour.
-> 
-> Patrick
-> 
+The name `openssl` stands for the OpenSSL library (whose home page is at
+https://www.openssl.org/), which offers an open source implementation of
+the algorithms required for TLS.
+
+Git itself does not use either of these libraries directly. Instead, it
+leans on libcurl (https://curl.se/) which implements a variety of
+protocols and optionally uses a variety of TLS implementations.
+
+Now, what does this mean for you in practice?
+
+As you likely expect, the various TLS implementations all come with their
+strengths and weaknesses. Here are but two of them:
+
+- OpenSSL is historically much faster at adopting new technology. For
+  example, it implemented TLS 1.3 much earlier than Secure Channel.
+
+- Secure Channel integrates much better with Windows. For example, if you
+  direct your web browser to a site with a self-signed certificate and use
+  the convenient GUI facility to add that to the Windows certificate
+  store, Secure Channel will automatically know about this. OpenSSL does
+  not, and will require you to jump through quite a few hoops to access
+  that site.
+
+Seeing as you write from a `.gov` address, I suspect that the fact that
+Secure Channel is part of the operating system (and hence is certified in
+the same ways) will be of most interest to you.
+
+I hope this helps!
+
+Ciao,
+Johannes
