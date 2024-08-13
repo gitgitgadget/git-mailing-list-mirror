@@ -1,53 +1,53 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45D14D42C
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D122E3BB47
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723540691; cv=none; b=moQaXKd442t5k2HY1jTJA7mVmNRUC4muTNi0W363/QF4wQ0n5VcZd0mSJlj2w+G10K3KDk4r3t+BP8Yz+Py0ArZngrreJ6HZ4et0ecBucrq6eSrkAXoUfiw4EbDDN6dUyvudVTPVXVlai68JzzDtsfKnvBHJMQNAdJKdj8Arn64=
+	t=1723540697; cv=none; b=aIIRzONZuwVt40czgTThSe1NCAY5AMZzxmmgyApNJYfq1kPild4bqHQLdHPVeBf6ZOJ/HUYtRcB892dQbQBdCslfX5h9Hw3EXSazVB70kPw1rkf2CAlRFRgoh9C0qV30Cocn0/jDJqQYZ2O5n4V0gh4TvAWXmUjsU7l3iiCfy14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723540691; c=relaxed/simple;
-	bh=Ar1A81WhZILwd7ZasRx8OXstuX1ul/q+3gNrjfWp7JM=;
+	s=arc-20240116; t=1723540697; c=relaxed/simple;
+	bh=EgZjAPw2+6a20yuUkyHJ7QfOJuXWrVj0GB0gwsZ5kWw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OArvU9Ue+pSyzNT5k1pP5wyCAx5nMxINr4N7qKJ+jgNxqDrF3nnwucv3ItctKaOXlTQMj6rVC7D8NHZMVB3Elme4LwONq8vlrJkMm1vTzEiESboJ7iLuB12DCb/GRjEApAw+h7woQyOI35QO4jd5L4+uOF9aOqSAic/U3zA8UAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W0MUezA9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WMfuFYQq; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=u5MZ0JTlMgrjFRiZAuOZ/ltEdwMeT3q/gScQ9sHcdBjnCJSF1C76ECUP7gqP8cz7bDbDU5VGbIAD165vTVV5X7L7WLpw1n0fD3TDicz0PF4BWMl4qwN/pPzVwns7ZsCs603rM7klUzmRMY0Hv936bKqlb5GqG/GhdSfNt4u9k4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EZaT4HSB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gIrvZcZQ; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W0MUezA9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WMfuFYQq"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 71E4E138FD66;
-	Tue, 13 Aug 2024 05:18:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EZaT4HSB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gIrvZcZQ"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0032F138FD66;
+	Tue, 13 Aug 2024 05:18:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 13 Aug 2024 05:18:09 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 13 Aug 2024 05:18:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723540689; x=1723627089; bh=x27l3dtxWS
-	xKK+r9CqeDoMB+zn5CmItRwaFnBtM2iUk=; b=W0MUezA9jfpahjeyhGdjXdq3+4
-	O61RiRtKf8Pfc6uO1o9BzVHdFYNkwjLGnB+ZKCn6zaD9jdDopRBL4ghtUD0A8Jsq
-	+URcSvmdIips0FhxzwWDF9AvgU1Hg7B8J+LgOYLCX7T5f0FrPpJkKPZreJsWgoXc
-	93reSaBFLv7k+aIw0OniFoU7BAqXMYlGsQMuLXfX/mTf0Oz7WJsVCNM5AOygTXmA
-	i7elnjY0apCqExn0Q30XGjvFi/DPFtNz+WgG+0v6dgVCsbhiX82FQzyJHdVR4Un7
-	SzAeEtVxPR/x3f2YEVLCMqcq2HoB+oytI2vl7xgoDYX8ATX1iO7aC9eaLJgg==
+	:subject:to:to; s=fm3; t=1723540694; x=1723627094; bh=fCwi7RoOIP
+	T21okRL9Pi6RSwvpYBI4zpimZAAq+4cuo=; b=EZaT4HSBTmR6bCdMMWQyOjFpkW
+	jedj59Smzrr3BMUsQmXR9G0QARaisKw8EQArhj97oD8fhtcVg0/6APpojGHznNC1
+	Kb0g3s/ffOgRU6sP00ORfFlrIImAsTBdTIL/+frz5r34/VJsw+Tx406nqIuGMJCj
+	/Di2zORyKMhHgAgdfOKFg8aJ+E6+0vsFJnAth71qNFFNLlGfqPIK7zt1Vxx+aCYG
+	tVxbVSDvf0KCop8pKSpg9nl3gM6FCR/RxKNtfzfQYd1CxADiUQBuGd+yKxDZijV+
+	eIY42OkRkkGEK6F4SzdP99PzFHDe7IJR0oZ12ppMW3KXmruY3xDZvTSYv6xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723540689; x=1723627089; bh=x27l3dtxWSxKK+r9CqeDoMB+zn5C
-	mItRwaFnBtM2iUk=; b=WMfuFYQqx9XGpRYdArSrP5vET+owbDK1K5bhp/fQXKRN
-	y6KAkRJcEpYeuVaLOn2+mpuqrQJUU067Cz5QejHPAgf8qBWBI/v/B1U+SVLI9EPu
-	daA+AhkCB5rTGZO0fg30AtQGonhVKxur2TQMJoMqbAlfCtAHx+Cmi0SZDliU3Bkr
-	Sk4W3KUHx9bPFfjAcDkeZjKZjvXKncO1bWJmY2ilapdkXXm9hdT0oG2OFetwa6YU
-	yT6BJGTEJoUrioQ30fhu6sWYNUFyCPnIxNpQL4xIVdO/gI2zN8RHSZkVOC5DsnB4
-	Ff8l87ifEy33YlrwfuuFwxc64CedZbUJ/1JWnRtkag==
-X-ME-Sender: <xms:0SS7ZouaTzcIxuJWK0-cwuES0Hy0d_ZXhj4YH4ntZDwx9zMZ48gpTA>
-    <xme:0SS7ZlfL11uYiLumMHihFT7eJbtUwk6flLjxCK6fiVDUcwdmNoE_NU7PVJ0tGiIue
-    70i7CnaZ7NAnuwirw>
-X-ME-Received: <xmr:0SS7ZjwWJtlnqnXhGTmJHxurIokBxa6sZEQKjlaMjHFd0ug0XsdDJpQvbgGzhKEBSZIgjQxj7Dk_gMo3TFuzTN7SMcw1tY0q1jL5Jic1T9Ajow>
+	fm3; t=1723540694; x=1723627094; bh=fCwi7RoOIPT21okRL9Pi6RSwvpYB
+	I4zpimZAAq+4cuo=; b=gIrvZcZQoociXvjhnueR0Z7taMYIL+Za5YJR8qDhMfcA
+	GsPacqT93a0nehRN4k1sx4lmU38lu8NvHCjYBVFpsMO2BfGT+ZNXkCQM2Y4Mvsj8
+	X+F3diEDlY06jTN6nEVhihmv2UNd4ne1NfAsYmhFq6gpyXj0Zk4TF4kdplzxIroa
+	LlW7JbXoj40HzVHDNt+dEJeF/rRdvAgZwBjg16jsq86l67LiLKP+dzHA+lFYdi35
+	Z9TKwlO8jdwaxed7jaN26YyFkGLLOa2/cosB6LI56kHXTGki8U1p9pB/7a4v4dso
+	AUfAwthAJvxqW2cK01JcVF/HsCGLDt4otQjVQ0ri1w==
+X-ME-Sender: <xms:1iS7ZkBYaNvp7RPE7KzLpuyX4jq-zGSATWHTMTgH431VgfqTWKYiMg>
+    <xme:1iS7ZmgvrU3_MVSSjFVNJsIGoo4xAQPP_5KS4D0isfJWVnkLhLFuISu16NfhRbX5g
+    72OqWJNeRgysoRQBQ>
+X-ME-Received: <xmr:1iS7Znn3lIbAIfFbtRjzlHbW-oWS2WnqgtWERg648-x1rTeP4CdqpA8vXwYc9WK_NzbyxiO0Mv5BtveB2ZiyW6ULWXTSb4K1rhsmazNzZfBmrQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
@@ -55,31 +55,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtvddgudefucetufdoteggod
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
-    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
-    rhgtphhtthhopegrrhgtthhitghlrghmphihrhhiugesohhuthhlohhokhdrtghomhdprh
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegrrhgtth
+    hitghlrghmphihrhhiugesohhuthhlohhokhdrtghomhdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
     gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:0SS7ZrPLZHlv-0A_aTKQYP-q1x-v1M0cmjNu4FyDhGVKbiY0GOawzQ>
-    <xmx:0SS7Zo9RNX77ARixIXXB0n335jshCGhIxOnx9vXYmy4KNbFwRcJRAA>
-    <xmx:0SS7ZjXQtFYgWpkJB01CBdPi3uRiQBnc1lOCPI_6fu5VPLFgDCO8eg>
-    <xmx:0SS7ZhfWhbc-q4a9-jv3glL2J7OqBAbRTh-vMR_9KTgcMBPrbqewpA>
-    <xmx:0SS7Znnei9Ld-iHigZT9bcwiYA6hIoKz2V7wv5KMY7KFl_KJWkKro6Kk>
+X-ME-Proxy: <xmx:1iS7ZqyAM3o0Ch4a1RhUYgj2gmIt5KdMYiTyt9RLRJwzUD2b8B2SXA>
+    <xmx:1iS7ZpQVXFD57Vqu0mcY0rwNzvvYeURqTAV30dl4-fTni18NrSWPVQ>
+    <xmx:1iS7ZlbE7q9jg4s_y6850-uSfcCW8vBrUrpcK7bbge1ShJMHNoA6aA>
+    <xmx:1iS7ZiRu9HLIcwq_smnSlBdf9a9RKMCeAG5iexNwVPxcrGb5ajWlWA>
+    <xmx:1iS7ZiLSnvtWQq0LRYUJaZ5y1xSMP56qBrsu8vEBH8AoLm5qm2n5Z2ic>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Aug 2024 05:18:08 -0400 (EDT)
+ 13 Aug 2024 05:18:13 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9c7609ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 13 Aug 2024 09:17:51 +0000 (UTC)
-Date: Tue, 13 Aug 2024 11:18:05 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 17317de9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 13 Aug 2024 09:17:57 +0000 (UTC)
+Date: Tue, 13 Aug 2024 11:18:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: ArcticLampyrid <ArcticLampyrid@outlook.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 0/2] bundle: fix handling of object format
-Message-ID: <cover.1723540604.git.ps@pks.im>
+Subject: [PATCH 1/2] builtin/bundle: have unbundle check for repo before
+ opening its bundle
+Message-ID: <c57e1cca4c7d2a0f52ae8d4e0870e4e0667184fe.1723540604.git.ps@pks.im>
 References: <TYWP301MB0563973ECA440E7DAF0F7E89C4852@TYWP301MB0563.JPNP301.PROD.OUTLOOK.COM>
+ <cover.1723540604.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,27 +90,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <TYWP301MB0563973ECA440E7DAF0F7E89C4852@TYWP301MB0563.JPNP301.PROD.OUTLOOK.COM>
+In-Reply-To: <cover.1723540604.git.ps@pks.im>
 
-Hi,
+The `git bundle unbundle` subcommand requires a repository to unbundle
+the contents into. As thus, the subcommand checks whether we have a
+startup repository in the first place, and if not it dies.
 
-this small patch series addresses the segfaults reported by
-ArcticLampyrid and fixes parsing of bundles that have an object hash
-different than the object hash of the current repository.
+This check happens after we have already opened the bundle though. This
+causes a segfault when running outside of a repository starting with
+c8aed5e8da (repository: stop setting SHA1 as the default object hash,
+2024-05-07) because we have no hash function set up, but we do try to
+parse refs advertised by the bundle's header.
 
-Thanks!
+The next commit will fix that underlying issue by defaulting to the SHA1
+object format for bundles, which will also the described segfault here.
+But as we know that we will die anyway, we can do better than that and
+avoid some vain work by moving the check for a repository before we try
+to open the bundle.
 
-Patrick
+Reported-by: ArcticLampyrid <ArcticLampyrid@outlook.com>
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/bundle.c       | 5 +++--
+ t/t6020-bundle-misc.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-Patrick Steinhardt (2):
-  builtin/bundle: have unbundle check for repo before opening its bundle
-  bundle: default to SHA1 when reading bundle headers
-
- builtin/bundle.c       |  5 +++--
- bundle.c               |  7 ++++++-
- t/t6020-bundle-misc.sh | 32 ++++++++++++++++++++++++++++++++
- 3 files changed, 41 insertions(+), 3 deletions(-)
-
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index d5d41a8f67..86d0ed7049 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -207,12 +207,13 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
+ 			builtin_bundle_unbundle_usage, options, &bundle_file);
+ 	/* bundle internals use argv[1] as further parameters */
+ 
++	if (!startup_info->have_repository)
++		die(_("Need a repository to unbundle."));
++
+ 	if ((bundle_fd = open_bundle(bundle_file, &header, NULL)) < 0) {
+ 		ret = 1;
+ 		goto cleanup;
+ 	}
+-	if (!startup_info->have_repository)
+-		die(_("Need a repository to unbundle."));
+ 	if (progress)
+ 		strvec_pushl(&extra_index_pack_args, "-v", "--progress-title",
+ 			     _("Unbundling objects"), NULL);
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index fe75a06572..703434b472 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -652,4 +652,11 @@ test_expect_success 'send a bundle to standard output' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'unbundle outside of a repository' '
++	git bundle create some.bundle HEAD &&
++	echo "fatal: Need a repository to unbundle." >expect &&
++	nongit test_must_fail git bundle unbundle "$(pwd)/some.bundle" 2>err &&
++	test_cmp expect err
++'
++
+ test_done
 -- 
 2.46.0.46.g406f326d27.dirty
 
