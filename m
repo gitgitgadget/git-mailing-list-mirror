@@ -1,104 +1,158 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362D7125AC
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 14:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3CE19EEA4
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 14:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723559596; cv=none; b=VB8G6Ln5zr/4QZXeMsPMzUYJWs0ZZUjG2mAplGOAcVd+nLFlKjYj4STYgOvYjOpToH6QLJJZ6Ry/uTvB8JL28GukvV9tQL2db7Hzh2FCpKLH4j3tRBepH7dUAXg0lq3yzfBVnUwDfLC9PMfiC8NCofoYZ7x5IN66pLe+pAytD4o=
+	t=1723560303; cv=none; b=E+WQ/hbtNvHMyGzq7truc62tXSIorEuJclxy+8bWJci6DXNTZQtnsFBejE/gMa0qrd1mT5jO0S4uiLrtD/4qWMqN+5nOoTlbCYUoCCUWZCBKizISzjjKknh1WV0O/oxEiOfA2H/fUbZfN8vndo4E3zOqYTVsswlTfKCZ9bssJm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723559596; c=relaxed/simple;
-	bh=USOky9N//oVLxpj34YLSZ/r8quL6mrsoWc4KFevgGAg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j+vm6XA1ULp1qP8NREq4cHrJnoSEbX4+6N/A2exnta03B3kBX7E8JUS4+21QHp70oDzIqvuDv7SQ2x9qvokTC6k3PWVVoJTA5BWPQ/XKpif3z508QxJ1tO46ZuSOEOODG8ipMULrN9W6tiHA0Bkj2CrUNtMd0ubgbNLuIKI5DQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6QWDoAv; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1723560303; c=relaxed/simple;
+	bh=Mnzhp2fUN3ozqkS3YiZ1Rg/84MKWwSGRzSUISkqYA+E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lPcKZozkRLuGp1H/leUrp0GGMC2R8lx6CFObilU4gKNQZd9EX+G8u5ACT1K13r3SeRA6kIbmG2OWkrRIwAyMLnNfytMV11z6NP0Cb673GA8LTDtRHm0fQrDYfb2Ygzss0MUblzgi10HK8x0CqFChKOglAh7wAoHbYH9ELzyBZGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PCagz4OI; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6QWDoAv"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52efd8807aaso7365697e87.3
-        for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:33:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCagz4OI"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1fd90c2fc68so38138745ad.1
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 07:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723559593; x=1724164393; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3EP7VOZcXsTb04C+qU5LDhWVbRMNw2Ps32++kJTHDxM=;
-        b=b6QWDoAvdeCllIMZwalNeWQfgYDwj1nBCDSZgj8re5wfHXycf+YNeOaSiFzRrR2FlH
-         gbYA4v4HlssnGNJ9v8xaH74p3fBpdz6X6PkvX48n1NynXnzn8I2kAh067dRKYXMhBqJe
-         jzxmYSTSNwhj9vVtJWEy5l+KkZdK5CPySijMqa/ZqlrZhbauSGTpxWMttoGcHwV0tHhq
-         39v3FaPQZMSu+bpbxlOWADmQa15KtyF1sSGGJGfbPBuQ2nZzDqS1yGwVUyVm4j5k+f9M
-         tGMJu2c1YdRFqssH9jdx156b7bpRG2EtYQR8lnekL/G272miC7uWLXIzoH51lbhlvC9X
-         NKSQ==
+        d=gmail.com; s=20230601; t=1723560301; x=1724165101; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JaCXCBCz9g9sKRjgPoKg0jjN5TJ/BbhYaAMJE0cOnfk=;
+        b=PCagz4OIHnqNbzdmm21UaXVmDvN0o4R+fdG0+vOZ0UgvJsKWJzxY5v2aA4T/AuMPfO
+         IrNt8ehiyG/mhH7vMgm4V5CipWZawa+XPrjeh9bAkW1UJ+97noaISX27FEMqmjgMepVw
+         0kZ9OxD+b77iR85LQ0RnjbTcPZIByEgxd+zL5n2p8FHtzAxVTrEdXEs7x9pIlS/kwbjK
+         bMoumn0Cx0mnY1xalc5s7+rgmKYGcqE34ffhO5WeYFIRbEx+vRhdtQqPU2cm8v94tOob
+         8yN0d0C4AMRHetaNne073+zg0126XTyZRhGpX9Xmiy5fkjyVrvoi7DwiwEme/MgkV72J
+         rgdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723559593; x=1724164393;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3EP7VOZcXsTb04C+qU5LDhWVbRMNw2Ps32++kJTHDxM=;
-        b=SnoyqfptOuwCMD499wxw9nH6JVqagFGA8A+bbeotinzUF0F9bwSu9UrePT/WxEn21v
-         17NWDCFZ1USHuqPDIzAfKkEZM+BriP7aKwDVqAZ8DwXvsiKdiKZZy00AIhB2SRpyxRBj
-         ZffQ2Y77dakK1VpEu/3UPdgZ4p++FWm5aqq9OW+Mrt75l5+3trz1PXQb8/n94UXonPxm
-         73iIJgqR+diIdU4T9UCQltVLQMfYRRp9a2l9DLsXkAj2lFDZuP8LnaBiBDWAzN6QRyHO
-         dWAz3iUzLq26A9zWr4DjSvChfehQXAkW3NMWxtUjvi2FFeHHxD+7rzDqIlIYemixR1SN
-         OF+w==
-X-Forwarded-Encrypted: i=1; AJvYcCWGMuy5H2vzhcULZIjR19DcWoHI3D6OmQzjnIc8q18v9We2HxSZfXyyHAcTy6eHjVDZmY8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKIuV+LD3HD8n19rZSa2rFzkRurdpZ6gtPtpDwY370+Fc7s87i
-	nbCdZRWvaWY8ACXaMA635GTt6KZjJB2i1YW4POqb7zJVB/+pNTM9YXdE9JO5K5U88g==
-X-Google-Smtp-Source: AGHT+IGUKDy9NaO6alyAJyq+3lTHiV/YQNQkG1lKSsJXcdr7Hgk26N2uxNDGawqEQmASJVcwFVfU1Q==
-X-Received: by 2002:a05:6512:ac8:b0:52f:cbce:b9b7 with SMTP id 2adb3069b0e04-532135ae559mr2660038e87.0.1723559592713;
-        Tue, 13 Aug 2024 07:33:12 -0700 (PDT)
-Received: from [192.168.1.6] ([154.182.137.27])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290c74a855sm229136705e9.25.2024.08.13.07.33.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 07:33:12 -0700 (PDT)
-Message-ID: <99a7a1c9-3b37-4192-a06a-2f148e3b62d5@gmail.com>
-Date: Tue, 13 Aug 2024 17:33:09 +0300
+        d=1e100.net; s=20230601; t=1723560301; x=1724165101;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JaCXCBCz9g9sKRjgPoKg0jjN5TJ/BbhYaAMJE0cOnfk=;
+        b=RVUcjTU0IY1XoV5rlDCPpVC8f1bwdeHIgeAli2ZYDCTf6fibsdQcJF+XEwNeeUGGGB
+         n1OAEDGfvYzvO7cPwwO6xazMK7WqDAKm+eiQ6RfiUPr9VghQImfAyaYbZikm23tum6zw
+         Yr5jVfAdb8vrnEFWQS7lp0bkREUOjZhVrF1iaFF9xhYIsmEQzcRhFGzAHQFltT6GtCbf
+         sKp5Geo5x1BHfU5tOkiiqdr+BBHZKRLtvhwHMs9eOw89EOsPLdaljCHD0tiZGjQaE7dd
+         ulk7d1/pRjzO0jUJVJDRhvJkm0IJPx/+NHPtbyVbkAdhPp+tWRZgbz61caQiLj3rLH2Z
+         zUQg==
+X-Gm-Message-State: AOJu0YzcYVNnyuR/1ginq4x2Mas6KrFYZNJT8NciId2W7PLEUZudIKb5
+	w+sbUPtdWu47A4L01fJMrdy/rJcaM5+2CX44VVp0W12dfIQLKHFJNftdzzlUI9A=
+X-Google-Smtp-Source: AGHT+IFibaheDxdQB8Cm8I3HnmPy6WiDf8hhZOtTBkIZsGy4FEe/oKGdtQTPSM99TQbXIvEHVFxdAQ==
+X-Received: by 2002:a17:903:244b:b0:1fb:389b:1054 with SMTP id d9443c01a7336-201ca1b12f0mr40518255ad.52.1723560300886;
+        Tue, 13 Aug 2024 07:45:00 -0700 (PDT)
+Received: from Ubuntu.. ([27.61.226.190])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-201cd14b1c8sm14388805ad.78.2024.08.13.07.44.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Aug 2024 07:45:00 -0700 (PDT)
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: [GSoC][PATCH v3 0/4] t: port reftable/readwrite_test.c to the unit testing framework
+Date: Tue, 13 Aug 2024 20:04:46 +0530
+Message-ID: <20240813144440.4602-1-chandrapratap3519@gmail.com>
+X-Mailer: git-send-email 2.45.GIT
+In-Reply-To: <20240809111312.4401-1-chandrapratap3519@gmail.com>
+References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BNewcomer=5D_Introducing_myself_and_expressing_in?=
- =?UTF-8?Q?terest_in_=60Implement_support_for_reftables_in_=E2=80=9Cdumb?=
- =?UTF-8?Q?=E2=80=9D_HTTP_transport=60_project?=
-To: karthik nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-References: <31efb040-57cd-46a7-80f1-62a9ce9efb52@gmail.com>
- <CAOLa=ZTCpetjY=kU9eQxq-LXkxe==Yr=rsNQRmPLHLPsnO5KEg@mail.gmail.com>
-Content-Language: en-US
-From: AbdAlRahman Gad <abdobngad@gmail.com>
-In-Reply-To: <CAOLa=ZTCpetjY=kU9eQxq-LXkxe==Yr=rsNQRmPLHLPsnO5KEg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+The reftable library comes with self tests, which are exercised
+as part of the usual end-to-end tests and are designed to
+observe the end-user visible effects of Git commands. What it
+exercises, however, is a better match for the unit-testing
+framework, merged at 8bf6fbd0 (Merge branch 'js/doc-unit-tests',
+2023-12-09), which is designed to observe how low level
+implementation details, at the level of sequences of individual
+function calls, behave.
 
+Hence, port reftable/readwrite_test.c to the unit testing framework
+and improve upon the ported test. The first patch in the series moves
+the test to the unit testing framework, and the rest of the patches
+improve upon the ported test.
 
-On 8/13/24 3:56 PM, karthik nayak wrote:
-> AbdAlRahman Gad <abdobngad@gmail.com> writes:
-> 
-> Hello,
-> 
->> Hi,
->>
->> My name is AbdAlRahman, I'm a senior computer science student.
->> I'm interested in working on the `Implement support for reftables in
->> “dumb” HTTP transport` project with the help of a mentor, I'm aware that
->> the project is not being worked on in GSOC but I was wondering if the
->> project is still not taken in general, and whether I can work on it
->> outside of GSOC?
->>
-> 
-> I think Patrick already responded. Just adding my response too. This was
-> my first time mentoring and as such, I'll probably stick to the GSoC
-> schedule as that helps me plan out my time better.
-> 
-> If you do pickup the project sooner, I'd be happy to review the patches
-> as I can but cannot promise the dedication that having a mentor would
-> provide.
-> 
-> Wishing you the best :)
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 
-Thank you very much! I'll do my best.
+---
+Changes in v3:
+- Order the header files alphabetically in
+  t/unit-tests/t-reftable-readwrite.c in patch 1.
+- use check_char() and check_int() instead of check() at two
+  instances in patch 1.
+- #include 'reftable/basics.h' in patch 2 when introducing
+  free_names() in the test file.
+
+CI/PR: https://github.com/gitgitgadget/git/pull/1770
+
+Chandra Pratap(4):
+t: move reftable/readwrite_test.c to the unit testing framework
+t-reftable-readwrite: use free_names() instead of a for loop
+t-reftable-readwrite: use 'for' in place of infinite 'while' loops
+t-reftable-readwrite: add test for known error
+
+Makefile                                                         |   2 +-
+reftable/reftable-tests.h                                        |   1 -
+t/helper/test-reftable.c                                         |   1 -
+reftable/readwrite_test.c => t/unit-tests/t-reftable-readwrite.c | 441 +++++++++++++++++++++++-----------------
+4 files changed, 219 insertions(+), 226 deletions(-)
+
+Range-diff against v2:
+1:  0ebe76c331 ! 1:  03b946434e t: move reftable/readwrite_test.c to the unit testing framework
+    @@ t/unit-tests/t-reftable-readwrite.c: license that can be found in the LICENSE fi
+     -#include "reftable-tests.h"
+     -#include "reftable-writer.h"
+     +#include "test-lib.h"
+    -+#include "reftable/reader.h"
+     +#include "reftable/blocksource.h"
+    ++#include "reftable/reader.h"
+     +#include "reftable/reftable-error.h"
+     +#include "reftable/reftable-writer.h"
+
+    @@ t/unit-tests/t-reftable-readwrite.c: static void write_table(char ***names, stru
+     -		EXPECT(buf->buf[off] == 'r');
+     +		if (!off)
+     +			off = header_size((hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
+    -+		check(buf->buf[off] == 'r');
+    ++		check_char(buf->buf[off], ==, 'r');
+      	}
+
+     -	EXPECT(stats->log_stats.blocks > 0);
+    -+	check(stats->log_stats.blocks > 0);
+    ++	check_int(stats->log_stats.blocks, >, 0);
+      	reftable_writer_free(w);
+      }
+
+2:  a148702451 ! 2:  e23a515736 t-reftable-readwrite: use free_names() instead of a for loop
+    @@ Commit message
+         Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+
+      ## t/unit-tests/t-reftable-readwrite.c ##
+    +@@ t/unit-tests/t-reftable-readwrite.c: license that can be found in the LICENSE file or at
+    + */
+    +
+    + #include "test-lib.h"
+    ++#include "reftable/basics.h"
+    + #include "reftable/blocksource.h"
+    + #include "reftable/reader.h"
+    + #include "reftable/reftable-error.h"
+     @@ t/unit-tests/t-reftable-readwrite.c: static void t_table_read_api(void)
+      	struct reftable_reader rd = { 0 };
+      	struct reftable_block_source source = { 0 };
+3:  ee15af6631 = 3:  9194a4055a t-reftable-readwrite: use 'for' in place of infinite 'while' loops
+4:  3f571c09e2 = 4:  d34b01fad8 t-reftable-readwrite: add test for known error
+
