@@ -1,213 +1,156 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762E61993AC
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 12:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6091607B9
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 12:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723553155; cv=none; b=oEHDRhUFVQFV/qKrwXkq39aLf1XNzEu1NltsrnDKvD2x+AkL8yCys4U/ZLeXDe4/BW3P8SBPyUZ7Z/M5vjz5vDYOZR2QmCKbdsj9V/b2qiE5gNrlzgkBBibySnIQCpaZk75whbcd55NFETt668jqKjrQrMHvDM9+5lij79bon0U=
+	t=1723553353; cv=none; b=TO3X24kWRveOpnup0xMnOPxjJjp62jHqYj20kCMvL1dJm/Y3+OruBMZoR+oa0k8gZ+nLUeBrfDlMZD0HEJC4NDzZ/mFDPdrUaOrTOqjzMIXwNHPD8v3rZUICJ9Qe37J/C8uOjaunTpoo3BNuAp5eqoZiqtSyYSbvzH1M/z63nAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723553155; c=relaxed/simple;
-	bh=3a82u8+dOu2A/q+klbqldIgmSg7HN1+Mk3MRn43IgaA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qa/BRpJOw4g/UHGux8lfnM9btzYVuUklXf1R441+gatRVCqrFsX1X/cjExRvI25o8bEdEPmubPw2wHZI+Ip4fOsVNP8TfHPBsrjxeAUU0AAD7NbSqyIFn4GCUheclSiTffJIzoE4N+4Ia5jfLsno2ToGvQEhtTiTlpdkMn7DCOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4617 invoked by uid 109); 13 Aug 2024 12:45:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Aug 2024 12:45:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6587 invoked by uid 111); 13 Aug 2024 12:45:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Aug 2024 08:45:51 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 13 Aug 2024 08:45:50 -0400
-From: Jeff King <peff@peff.net>
-To: Matt Thompson <fortran@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH] get_oid(): enforce minimum length for "-g<hex>" names
-Message-ID: <20240813124550.GC968816@coredump.intra.peff.net>
-References: <CAFb48S8LDz4kiWsKSCBn8J=AHyQ5SVPFH4GY=z+8=DntT=PyAw@mail.gmail.com>
- <xmqqy15b2aiz.fsf@gitster.g>
- <CAFb48S8+X0=Zqi8oisB0fAgx7HoyQrahF-RGQdagXTX3RdfSNQ@mail.gmail.com>
- <20240813115358.GB968816@coredump.intra.peff.net>
+	s=arc-20240116; t=1723553353; c=relaxed/simple;
+	bh=ieFEAguVGZNsOEJvp4Bt/6hEunHYAq/vxDx/aja8Bc8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=M1sWCzi2cAa12dQ/Sgdxgutx2i2+4uYLzp6JvcECzJvonS5pi/0svjGmwsMGHs8wdNinP3fN/7Ao76/MukfNIzu+0AK2TdQId59i63ew56fCgSPP9t01Xrisbyv7TYxTrIkpHT++DhfBXiMglIuuI1TAi2ZowHADrGrhRUJ4uWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=h5R5rWsW; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="h5R5rWsW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1723553329; x=1724158129;
+	i=johannes.schindelin@gmx.de;
+	bh=Rq/vMmh1jmYTpCPGSLBYYPj4DxIFjPPx0Wb0JjCJdjM=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=h5R5rWsWCKNdov7FSATb2a4EDYny/RlMPBgiZE3hbZZy38Jqf5LZVSrqxpjS3+5M
+	 1Afr86yBTJuHotwtpd96fNcmDeDvXi5fYpZYJz4kYuG+WnV2Zfw22ciB7Qp9GD2X1
+	 OsuocZtSXIDwALNFe77+Ka9TT6Zi4n3Htwrm2UyG1kA4NKglcEiKnmTH0HkeHiDn9
+	 9gQbylbghnP/kKEl9DNNWru6nYt99N7a1D58bahoG2Ky218RD5KZFxDGwpz8IzdqV
+	 PEAZ2YoZ25LHSY6pmgZ6nrFFge3dR1PLJTQy3eiOavFfQlYhCqW9V2o4F2k7BP90D
+	 oGLiYDHlVV1lgEm9JQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([167.220.208.78]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McY8d-1s3QLM2h3t-00cmRL; Tue, 13
+ Aug 2024 14:48:49 +0200
+Date: Tue, 13 Aug 2024 14:48:47 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Phil Sainty <phil@catalyst.net.nz>, pclouds@gmail.com, git@vger.kernel.org, 
+    hvoigt@hvoigt.net, me@ikke.info, rafa.almas@gmail.com
+Subject: Re: Adding nested repository with slash adds files instead of
+ gitlink
+In-Reply-To: <xmqqed6zht04.fsf@gitster.g>
+Message-ID: <8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de>
+References: <s5wr0azfeh9.fsf@catalyst.net.nz> <xmqqed6zht04.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240813115358.GB968816@coredump.intra.peff.net>
+Content-Type: multipart/mixed; boundary="8323328-1532055212-1723553329=:117"
+X-Provags-ID: V03:K1:jL3Zu0x1qOqE50LkB3Rya8j8lHHof4X4L7NIACK/hyNbGUyFMbS
+ ukXe3Tj344W7N91/8Jc4Uipip6MR+BkUi+Z5PIFQa5Cdvyg27lsbAVq1BL4H8W5kRAL71Bt
+ SE0/hQwuhQWJi7A9WYaoqlNs3wQTwasXCS3VUWqYilOuwhTLN4yVu2ihaFaqudoO7Ve8gf2
+ drcPM0satJjV0vPwkUVLg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:4qbd22uAyq8=;nIDhwp7muwIEYgnXaYs3RWlmEwq
+ TEVGUYJ2gDqeb+3ELERFSDjVyyC74S82aja1Ppk1bEGBIBEpgaIfEJa5NjNYA3BnJBfRLttHC
+ ftBSSze5iinFTAxEV3fzXCdGCx5vt54ba3rHHY55Y01cneKBKRyBQmXIIg2KjyGBZ6yrN6aVm
+ kRR0FFMco8yH59A0fcX0B6fEdG+HxjTU0wezAvY6HawSCmKmY/fvnQbOcQOz5mmTQvrsJI1NT
+ Ut0yLVyzPsRmEM4X6ZcbijOSt2HGV2SzTcsp4zOQ51mha/aTY2fOrdkNAAS/mAONF0RwYQ7V2
+ z9kOg66Lh8jFc30L0a9f1VK54XSGY320LX7Em9W90N4RS0HDTvVi7AjaUkckgmPDp++E2UNKc
+ JSXmSPIezy2yNtWeEINfRFmKzhgGkr0rFW2ffxawuWWiOUaENit/rMy4YMi19ILxCOUqgnsAs
+ n6Nu/60iK6N5Y15TKGRlHip447rOASPJUhQ1nL4nIw/O1wvcG8NWZgXbjPjAiKx52yq7q+LOA
+ viPFT8JIuMubwPoAP/2/7LIQn9eh7YR2ifwgthNvh139o28Xz66K1u5rruTTatUNo6URqxyol
+ L7+sgcRRu+0YBi7Lvl8k8ddY5JiAluRiIphLTR8A9TeKK+BlK8s7+LPyV+hL45saGNEYQA97Y
+ WZP/l4XSWYe6Mhn7340hLJxAMte7JVnPpz+pMJ2434PKHaW5Y8dDHPHA0qLr29cbR+G2McT2t
+ BNRlkAIaAxM2QntVc8AGrOsVfc5SwXiB1Nl9p6BGuDHkS7+8J3SW8wy1S8zOYCYKONcXHzOIy
+ cKQd3YTLgMCQmrfmtNFolY/w==
 
-On Tue, Aug 13, 2024 at 07:53:58AM -0400, Jeff King wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->   - the hash is abbreviated in the usual way, making it as short as
->     possible while remaining unambiguous. But unless the user goes out
->     of their way to set core.abbrev to something smaller, the minimum is
->     always 7. So perhaps get_describe_name() should be a bit more picky
->     about about that?
-> 
->     That doesn't fix the problem, but it makes it a lot less likely to
->     trigger in the real world. And anybody who really does somehow end
->     up with a describe name with 4 characters can always pick the hash
->     out of the string themselves (or just set core.abbrev in their local
->     repo to be more permissive).
-> 
-> I think the second one is something like this:
-> 
-> diff --git a/object-name.c b/object-name.c
-> index 527b853ac4..a90338aa62 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -1276,6 +1276,10 @@ static int get_describe_name(struct repository *r,
->  			if (ch == 'g' && cp[-1] == '-') {
->  				cp++;
->  				len -= cp - name;
-> +				if (len < (default_abbrev < 0 ?
-> +					   FALLBACK_DEFAULT_ABBREV :
-> +					   default_abbrev))
-> +					return -1;
->  				return get_short_oid(r,
->  						     cp, len, oid, flags);
->  			}
+--8323328-1532055212-1723553329=:117
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-After thinking on this for a bit, it seems like the correct direction.
-So here it is written in a slightly more readable way, and with a commit
-message and tests.
+Hi,
 
--- >8 --
-Subject: [PATCH] get_oid(): enforce minimum length for "-g<hex>" names
+On Thu, 8 Aug 2024, Junio C Hamano wrote:
 
-Since 7dd45e15c2 (sha1_name.c: understand "describe" output as a valid
-object name, 2006-09-20), we'll resolve a name like "foo-g1234abc" into
-the object name "1234abc". However, this has a small chance of creating
-a surprising ambiguity.
+> Phil Sainty <phil@catalyst.net.nz> writes:
+>
+> >> On Wed, Jun 20, 2018 at 1:55 PM Rafael Ascens=C3=A3o <rafa.almas@gmai=
+l.com> wrote:
+> >> > On Wed, Jun 20, 2018 at 5:39 AM Kevin Daudt <me@ikke.info> wrote:
+> >> > > What this is about that when doing `git add path/` (with trailing=
+ /),
+> >> >
+> >> > This is what I was referring to. If you search for 'Fake Submodules=
+',
+> >> > you'll see that some people were/are intentionally using this inste=
+ad of
+> >> > subtrees or submodules. Unfortunately the original article [1] seem=
+s to
+> >> > be dead, but searching url in the mailing list archives leads to so=
+me
+> >> > additional discussion on the subject [2,3].
+> >>
+> >> Abusing a long standing bug does not make it a feature. I'm not
+> >> opposed to having a new option to keep that behavior, but it should
+> >> not be the default. If you use it that way, you're on your own.
+> >
+> > Was such an option ever worked on?
+>
+> No.
+>
+> I do not recall hearing anybody who have been active in the
+> development community saying anything good about such an option.
+> For the past 6 or so years, nobody who actively works on git thought
+> it was an interesting and/or useful thing to work on.
+>
+> I cannot quite say that they thought that it is actively a bad idea
+> to offer such an option, though.
 
-For example, in a real world case we saw a name like "foo-gcc14" where
-"gcc14" refers to the compiler, but which caused us to look for an
-object with prefix "cc14". And if the repo is large enough to have such
-an object, and small enough that there is only one such commit (since we
-feed the disambiguation lookup code with the "commit" hint), then we'll
-return that object.
+I have encountered the wish quite frequently to be able to make changes in
+a subdirectory and have them reflected as a commit that is both part of
+that subdirectory's revision history as well as part of the containing
+project's.
 
-Note that we would still resolve "foo-gcc14" as a tag name in preference
-to the describe name. But in this case it did not exist, and resolving
-anything was a surprise.
+The benefits for monorepos, and for reproducible builds, are probably
+obvious.
 
-We can't solve the ambiguity completely, but we can reduce the chances
-of it happening significantly by enforcing a minimum length we'll accept
-for the hex component. Since the name may have been generated by another
-repository, we can't know for sure what minimum they would have used,
-but a good guess is the value of core.abbrev (or if it's set to "auto",
-which is the default these days, the hard-coded minimum of "7").
+Sadly, I cannot think of an elegant technical design, and this is not for
+lack of trying.
 
-There are five new tests here:
+There are lots of projects I worked on that would have benefitted from
+being able to track a subdirectory both independently as well as within
+the context of a containing project, i.e. offering to view (and
+fetch/push) the changesets in both contexts as equal first citizens.
 
-  1. We check that describe names can be resolved at all. As far as I
-     can tell we had no existing test that covered this. It passes
-     before and after this patch.
+Even the Git and libxdiff projects, as a concrete example, could
+potentially have benefitted from such a feature: Ideally, it should be
+possible to push commits made in the `xdiff/` directory not only to the
+git/git repository but also separately from the rest of Git, say, to
+xdiff/libxdiff. This way, the `libxdiff` project would still be able today
+to thrive as an independent project.
 
-  2. Another option for solving this would be to insist that "foo" in
-     "foo-gcc14" matches an existing ref (which would have been the
-     source of the description). I don't think this is a good idea,
-     though, as part of the point of having the "-g<hex>" suffix is that
-     you might not have the same tags as whoever generated it. So this
-     test codifies the existing behavior that we do not care about the
-     parts before the "-g" at all.
+The only way to implement a feature like this that I _can_ think of is to
+generate duplicate commit objects, though, with a reference to the "inner"
+commit stored in the "outer" commit object. And that strategy breaks down
+really quickly, no matter whether I think about deep dependency trees or
+about integrating commit histories that have been made in the "inner"
+project separately and now need to be merged into the "outer" project, and
+there are many more processes for which this strategy strikes me as
+inadequate.
 
-  3. Looking at the loop in get_describe_name(), we read from the back
-     end and check for "-g" when we see a non-hex digit. But if it's not
-     "-g", we keep looking! So for a name like "foo-g1234abc-bar", we'll
-     still pass "1234abc-bar" to get_short_oid()! This is OK in
-     practice, since it will barf when seeing the non-hex digits. But
-     let's confirm that it does so. This is particularly important
-     with our length checks, since "foo-gcc14-bar" would yield a length
-     of 8, which is plausibly long (so we are likewise depending on
-     get_short_oid() to reject it).
+So yes, I think that the idea per se has a lot of merit in the real world
+out there. It's the implementation details that are an obstacle.
 
-  4. We check that names shorter than core.abbrev are rejected (i.e.,
-     the fix in this patch).
+Ciao,
+Johannes
 
-  5. Likewise, when core.abbrev is "auto", we enforce the 7-character
-     minimum.
-
-Reported-by: Matt Thompson <fortran@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- object-name.c       | 12 ++++++++++++
- t/t6120-describe.sh | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
-
-diff --git a/object-name.c b/object-name.c
-index 527b853ac4..6507a30ace 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1274,8 +1274,20 @@ static int get_describe_name(struct repository *r,
- 			 * for it to be describe output.
- 			 */
- 			if (ch == 'g' && cp[-1] == '-') {
-+				/*
-+				 * To reduce the chance of false positives,
-+				 * assume that any "-g<hex>" must have some
-+				 * minimum number of <hex> that matches what
-+				 * we'd produce when abbreviating.
-+				 */
-+				int min_len = default_abbrev;
-+				if (min_len < 0)
-+					min_len = FALLBACK_DEFAULT_ABBREV;
-+
- 				cp++;
- 				len -= cp - name;
-+				if (len < min_len)
-+					return -1;
- 				return get_short_oid(r,
- 						     cp, len, oid, flags);
- 			}
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 79e0f19deb..790afe40ac 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -707,4 +707,37 @@ test_expect_success 'describe --broken --dirty with a file with changed stat' '
- 	)
- '
- 
-+test_expect_success 'long describe name can be resolved' '
-+	name=$(git describe --long A) &&
-+	git rev-parse "A^{commit}" >expect &&
-+	git rev-parse "$name" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'resolving describe name does not depend on tag' '
-+	hash=$(git rev-parse A^{commit}) &&
-+	abbrev=$(echo $hash | cut -c1-30) &&
-+	echo "$hash" >expect &&
-+	git rev-parse "does-not-exist-g$abbrev" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'resolving describe name only valid at end' '
-+	hash=$(git rev-parse A^{commit}) &&
-+	abbrev=$(echo $hash | cut -c1-30) &&
-+	test_must_fail git rev-parse "foo-g$abbrev-bar"
-+'
-+
-+test_expect_success 'resolving describe name requires minimum abbrev (auto)' '
-+	hash=$(git rev-parse A^{commit}) &&
-+	abbrev=$(echo $hash | cut -c1-6) &&
-+	test_must_fail git -c core.abbrev=auto rev-parse "foo-g$abbrev"
-+'
-+
-+test_expect_success 'resolving describe name requires minimum abbrev (config)' '
-+	hash=$(git rev-parse A^{commit}) &&
-+	abbrev=$(echo $hash | cut -c1-20) &&
-+	test_must_fail git -c core.abbrev=25 rev-parse "foo-g$abbrev"
-+'
-+
- test_done
--- 
-2.46.0.452.ga6607598b6
-
+--8323328-1532055212-1723553329=:117--
