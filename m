@@ -1,40 +1,41 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322F216BE0D
-	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124B3174EEB
+	for <git@vger.kernel.org>; Tue, 13 Aug 2024 09:06:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723540001; cv=none; b=Q/VrVgb9XWtHmxEQZbqDRl+QUQNyS/5clyB967opJE2DZXiNWiMa+sdvQmaQ/6x7a/2M8y79F/3UraXOxlHcJhg78UZ6pg1waINns5QofpOE5rRdnQSmmMHFuAklkW2W/5KxtAS+J/9RUgY+Zwqe7ao8NOFeGyJI7ijDloRqBTk=
+	t=1723540002; cv=none; b=DMY4TRKxy1Q3IQDxh/fLQhNHW/g9p1IHS3TXKGMgO9t0em2djQ/TqNb2SvsKIWG8oOyIcoeGlzg82A4PlvcERXu2t5hRqh3MfMkDQxRt0N80ycOetetMS78B8gJSFtR+rzjS0jVF9mW+boKvtXnKTG07hIxcFP98ORmYZlF8PC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723540001; c=relaxed/simple;
-	bh=PXFtO/+eGpcSbvbxIoqsA2mbAtaTOd+Fi2MACJpCBsM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R6USjTf+g5+vsXw6RH0h2diZ/tSoaZ3QvMT6GJ+CMO2wgmLGi6uzdbBNX8lNiSiE32zn4h6B4E8t5yOZev5AIvBA4EQm9m4chJfbp2hlt9A9D0CjkbkmFvzrFhxB9M2kfmRMkQasbvYHZcPVJYEOcXley9B/kpmmVMA33aO728Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=LfQ7GKQL; arc=none smtp.client-ip=212.227.17.22
+	s=arc-20240116; t=1723540002; c=relaxed/simple;
+	bh=booAwgYnAa44PMNzehud1DrcN8uXm23y07B/GbRd9BM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NpXQn+TH9bx6ocp4wSo82N8YWZkLVrULKh7VHS+UMNfnUhDH6+MhndTS27tp0LwL9jUejEnEfDo/RrRtahmOiMeTS1BqBuxeEs1cDg5WI+a+ETbNJvjXYVk1NjUK07e9fLIF3AFmhab4hpEii2+3PDZBSWVYszflKoTXmMJG01Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=QGAK+NfX; arc=none smtp.client-ip=212.227.17.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="LfQ7GKQL"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="QGAK+NfX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
 	s=s31663417; t=1723539992; x=1724144792;
 	i=oswald.buddenhagen@gmx.de;
-	bh=jJCqv4oyIjZRb+dc9YQR3YcusUNb2d+XXXGNkIg1Ums=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 MIME-Version:Content-Transfer-Encoding:cc:
+	bh=DbJ4wYY3xRuNVftmv3XzFHVHSTK7wfp0G4/MnTX9gCc=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=LfQ7GKQLJjLL57uurNxIX8sh1xp9hHLi/LiaDjcYoIYnDH4kGalQAFtHH5l9Gz/U
-	 roDLvcIHuvw4xodZLV4vZ55/NIKlhUU2ufDvYFDeGKWDTNMEMr/e4mrOuju1a1HxZ
-	 KcOkSNOiXOXmqZ1JbaelK4EpgkW+UNeqPp2r/TPT9iM0IFBLpxPajje0ZWobaSz/Y
-	 wNpOJXggdgpNmzWnRzAynyyDPqA99/ZSPQxE+Ilm7wUaS2bDyIvTpIgCmal12QvYe
-	 I/CK2hNFn/fD4aiNianbcfzgY+1Me4VKAFX0JNT7EOwS6Gij/G2A9LUfP67jypHFS
-	 fVZ07nyvvXuAqeh8kQ==
+	b=QGAK+NfX845/umMV6Y+c4Ns2a6rc1O+0Eiz9YIUrYXZo6DfKnG8y9WVqboy9DOjv
+	 vj92xGbTMluO+6sxqp0a1jKxTaIliJ++3X/zCz7aUGvhShHyVvyyygZlU/JbQ+/GQ
+	 WPu1Pu+uluGQbAIhvcEXdTO2mYUqQ7AChnmzNoJGEQbxDDOMfHGfvk0YAixh0xquS
+	 2zEFa8QUwInMZHor42wt1CvFJfdRXq77Hr+1ULwjrAVHPmUtP7wMfo+5rUYhOmkZy
+	 ERBxc94g9fSI8IpRT6YDKZfwVRINrBsbmJv9tdBjVPsI2QiDXtte9qQo+ehN7rRsY
+	 BGtCVMso2nQC0QZLgg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from ugly.fritz.box ([89.247.162.112]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mi2O1-1s054w3jWr-00gbnN; Tue, 13
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1McH5Q-1s3eO33jjA-00bNXz; Tue, 13
  Aug 2024 11:06:31 +0200
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1sdnU7-klA-00; Tue, 13 Aug 2024 11:06:31 +0200
+	id 1sdnU7-klF-00; Tue, 13 Aug 2024 11:06:31 +0200
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>,
@@ -42,10 +43,12 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Sean Allred <allred.sean@gmail.com>
-Subject: [PATCH 0/2] Re: [BUG REPORT] git-gui invokes prepare-commit-msg hook incorrectly
-Date: Tue, 13 Aug 2024 11:06:29 +0200
-Message-ID: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
+Subject: [PATCH 1/2] git-gui: strip comments and consecutive empty lines from commit messages
+Date: Tue, 13 Aug 2024 11:06:30 +0200
+Message-ID: <20240813090631.1133049-2-oswald.buddenhagen@gmx.de>
 X-Mailer: git-send-email 2.46.0.180.gb23db42a00
+In-Reply-To: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
+References: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,43 +56,33 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:C/rLlxTUp47RIhYVYoFO+z/0qcvpUzNlAc8FKmLEHTDXgZ4K6yW
- bBsip4rWoybvzv1DpuGQfzmupWd82HUpQm1GkPyy6hCBaPO84yrmjwfpy3Qsrx0M8QypNYS
- A4VL/ZVDcei5h+0y51H4DM9ycJHnr6SMBAeNtfvSWZHO/isBukHeEST0q8dgTl1NzpDlHcL
- oAbwnEI6Cla6J/mOSB3sg==
+X-Provags-ID: V03:K1:oV1DaxjmT2fwbxjKLEBtixhwjs3i5l2V/JAWrRNpCpKJvX8RF7a
+ M8Z2cwTPW3/h9suBDJkkyjFh90NTXAv45z/G+z5gSya5mMLZ7+kO2dA5NNjvywkCH5wCIPI
+ hPn6EtwZeFpQafIywWw6PoZhWpT+2UJ3cwaXb+oEM4Bn8QJFB8aLMQ4Bdv1lHPYGJ5pxlfS
+ xi6Y2dkS07BtsUtGpdplw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EqFx/W2rl0Y=;QgB3EnIGab49H2N40x5ZMwMjPKs
- WB6iRbn+9S1OsfLmVA04lHzwns5v8E98zkvboKhAZXAstBeW1WRF48d/wrMmb8ACiDQB1EQZJ
- j3G3u89a2bXspyXoSINAwUA318q1gauWjIQcv9ks8JmG3FwcSPO8ItLd/HlfN8aVkRqkNTPkJ
- pKLLSZ0jWzp1wiUTbRmwC6ALFOsvOT70jkO75I17+TNFMOx1FT+BhDiR7Q3VgeWsEx+NNxRfM
- uRJLuddx/nR52UKzsohzj66nwDGY4WlCt/g8g9jzW+0stQUhk08/cvaAi6JppeLQZOw66iEWU
- uOtFPCjBwAiCTc1Plf2N+H17qTy0eq0kvEf6h0jo5QvoMCoeF4RFI2s7LuqniZjXidBrOD/Xx
- Z1dQ/QxZLELVhfwoQjeXrPUvzEIEqyEugKc3Bx4odDESqPxakszjHUAzv3BrZIT6NSYj56Q8x
- ygZjm1mqi+vmwan5uYgzbT8WtiN2Ixwes6wHwDumfjBQiQ8d9nhFKZFdyPly/G8g1lQq0qsaQ
- uALtw3yzhONZWW+iu54kczmSyYuQXu27fQxZg1ez10gVGAXVA01FyViOjHarDqSV3fTl7Ibjl
- rOowSfhEspQKbPwmL/zI9/UB7Esi9gfrZxdvpsOoYKtBdOkbIG+TP9FuVBm5cKkvZW/JndiRM
- erYvnVVI95wNfZij7IjuLuud8GYSoKNINFCTuwWGLzWrk66R5noNwO9SG41SCsl4tvFbDG3I+
- btUGp16JX0GnMm2ZUOSKbkifQx+lLLm6u+Wj8fSPvkxMSV23kvdvReA3CSZ0BBalIP6SFSi0k
- Y1FOQ0B1ZVut/YsA6Os3TTjcETDRw018nMcf+IUCoeRLo=
+UI-OutboundReport: notjunk:1;M01:P0:zKwaeE59/2s=;RqM4Ta4MOWYLnb3qoODFq0UCoJr
+ ynG6RaXauYJ8pCav72JriQEPFKE94AZ9rvMBkuGqdflV6OE6+O1tKRbQ9opLZ/VMoMzdUGp+d
+ 08xPeSfUcQEvz+dWSAwTSgG8yrwnuTd8pQol38gq7Lx3BgT+5B42Y+7q2remXd6cZQRkzXElG
+ HKbmcBB8WLh5RFXs45GVlya3zQ7EyX3EReyfuc+5gjNoBS1avnZyNfjxPXJQV8ilrfycivwOU
+ J874pZ9OHf4Mi/iLK/epBZOfVgqw9NJAZSACI01hj4Gko0basmLnyrcHHERL6hYwgU/hsqxue
+ CeIWBa9KoD8yOYKijVoFt0ROXCMgKrtq+5+NmNL+B0bF/l4B2+qbEk36D9bqFkfn/jTJF/YAn
+ GAIQfGxKse2B8V2p4psBwkuMWrHRo8jZHMDPZ1loocWzHHtqAfJBefz98jwLC86vqFlEXmJnY
+ iIwRzLst4gad9Iz0bL2uxMV9+kv3TNk9dkxFkaGZC2AikLo/aVQCSIxk1tmJCAGIifUjnluGj
+ M/5T4rLlYpx1lnvbpPqQc2RaEPoiF+Fe3N3oVYhpr2yF/cS/rl/mcD7NTmAGiFGHOq3izfe4r
+ ZXvX4RPODmQ9zbcW0yaSCzVJypLKUQko2eYQkAkWsCsWILM7rmrxSeFWCm8BKh5j2KOpru9ro
+ MSE1GNHsncEpv9BW/n74Lg4V+nzXmN3bHia0/An+4wUWBwNwNvJv+P4xc9+hQrq4Dc84fYST+
+ ZyPSIiWWUJdTv47sDuNG//w/wzU4iaVcHm2qe23LknMfctaOm0sqzUH/U/nDzHZ6Tw7med75n
+ 24aJiYhEzkrXOEpsS0q50yySvpW+JhBAd0KAbU+uA3M6Q=
 
-> >> So it still seems like we have two real options:
-> >>
-> >> - Start washing the message, allowing the prepare-commit-msg hook to
-> >>   provide template-like guidance to the user regardless of if they are
-> >>   using git-gui or some other editor, or
-> >> - Pass the "message" argument along to the prepare-commit-msg hook so
-> >>   that it can at least avoid adding template-like content (but of cour=
-se
-> >>   then lose the value added by that template).
-> >
-> i'm strongly in favor of the first option.
-> it also seems to be the much easier one to implement.
->
-so i thought i'd just give it a shot ...
+This is also known as "washing". This is consistent with the behavior of
+interactive git commit, which we should emulate as closely as possible
+to avoid usability problems. This way commit message templates and
+prepare hooks can be used properly, and comments from conflicted rebases
+and merges are cleaned up without having to introduce special handling
+for them.
 
-fwiw, it's debatable whether it (stil) makes sense that git-gui reimplements
-git-commit - maybe it should just call it. then the patch would boil down to
-adding --cleanup=3Dstrip to the command line.
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
 ---
 
@@ -98,15 +91,25 @@ Cc: Brian Lyles <brianmlyles@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 Cc: Eric Sunshine <sunshine@sunshineco.com>
 Cc: Sean Allred <allred.sean@gmail.com>
+---
+ git-gui/lib/commit.tcl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Oswald Buddenhagen (2):
-  git-gui: strip comments and consecutive empty lines from commit
-    messages
-  git-gui: strip commit messages less aggressively
-
- git-gui/lib/commit.tcl | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index 11379f8ad3..f00a634624 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -209,6 +209,10 @@ You must stage at least 1 file before you can commit.
+ 	#
+ 	set msg [string trim [$ui_comm get 1.0 end]]
+ 	regsub -all -line {[ \t\r]+$} $msg {} msg
++	# Strip comment lines
++	regsub -all {(^|\n)#[^\n]*} $msg {\1} msg
++	# Compress consecutive empty lines
++	regsub -all {\n{3,}} $msg "\n\n" msg
+ 	if {$msg eq {}} {
+ 		error_popup [mc "Please supply a commit message.
+=20
 --=20
 2.46.0.180.gb23db42a00
 
