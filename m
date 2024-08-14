@@ -1,55 +1,55 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4241B86D5
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 17:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2D8566A
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 17:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723657534; cv=none; b=Qd10bbBPg2tb1fY5lKMr+0ynpZjqnxUR63FPyfGnZuh7Jh0E5GZ4Bug3SRZR1tIoyHg2h3PIeNjfcjhPsaLD8H+6Ssx4QnQ2bzu7rodKvPMhdjmJ2qftjrOmLgEfjnAe9jvjQZikUary+bI7e2MC6HtpbnM8NGqHiPX08ArgZW0=
+	t=1723657669; cv=none; b=QIYeIfMrzoUxKsZGIIRpg+/iVN2kJwK7QqyrSWb/0Q89Rrv3sZyDxuUVpEnJk6AKL+OoQvhmyVBElRmWuRKQTEj/C2Gxn2p/48HoW+WEJaluv46OIN8g2iP8uAsHN/l/zR3i6PsKn/enddfZbGS7XTUWyMqYzAq4Xgvsw0O18GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723657534; c=relaxed/simple;
-	bh=ZgF93NktunkJmezEU2Oh4Yb6Qk/Tmt6zut2PlByVBS0=;
+	s=arc-20240116; t=1723657669; c=relaxed/simple;
+	bh=6UTPiQJw1y9b+KUIDtOxcjYp0AGMT/I/ogqOmcI1tbw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WZ2VjwnCsUAH5xJRSfOJMc5ajlB7SYMuDl2ejvZzyhWgThvRY/lhDl663kM6O2xC2mI+yzkMv658A+ghBeibwz8y7NUiP1YxR2Q8plFIN5+Hyq25L+KjyodlkeDyApy6XlmTUqX/ax3/XZ1TwEt5qw9TgHOsypr3418GVLYEkwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JnP5Bi24; arc=none smtp.client-ip=209.85.160.44
+	 To:Cc:Content-Type; b=M6HSU6rH36Xpw+a3uDQq1O8M+utzgTe+RplJ6OopB8bi81taBYdfFBUNSd+55ysaswEYf5hN62oYZau3vPXw5H2isDp8Q6AHAbKIQ3K70WIYDLNHuXiY26ax+8eja67YX9atseJ4YQdBAH+n8HYUUCaXewTUDBz/2S9pxcuWMgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a6mdflez; arc=none smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JnP5Bi24"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-260e12aac26so95549fac.0
-        for <git@vger.kernel.org>; Wed, 14 Aug 2024 10:45:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6mdflez"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5d5bb2ac2ddso60755eaf.0
+        for <git@vger.kernel.org>; Wed, 14 Aug 2024 10:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723657532; x=1724262332; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723657667; x=1724262467; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eU0SGWYGiXl5n77cb2p15cMEUvoozePAaIHgKVFSKxA=;
-        b=JnP5Bi24vBSxKSby7N3rXEdAXtapSKHNiPiwTNt4k+UpNPHwwyrzanukF4nR8nOU6j
-         3kbfmX+U114FdrNWFGab7dFlaLqpS24PtEsXlEU0YEQf/i48u0MfP+Fmk13dR1q4JvWI
-         L/0aqoWR6ANv0iOwv3KFDi+MEmfneAf6GXnQ0U6H59+FAwSbTuzi4tFP0yroG86MG0F7
-         Ml1l8z5WAG9d+OO/eV8pnCWNbLHC2dRPOquM4RcQMWMltVAG7RHLsgxM2ShWXqybPLQj
-         2qKKwX55qx4/N6ClFwJuGj9C7NzZbEN3VifG1IVwR9+l/+g0Pw3uflY2II0K7J9XiNJc
-         XDBw==
+        bh=YOB/kJL5eT4RvXxp2VngwAEoANTx99XtcblUGrYObGg=;
+        b=a6mdflezRhDN1u1K/zGkDGc2r1CXJHEEew0Irnnr9PX4pMHVX/oAKApzS6qCgYyil3
+         klRVeqUMx1xwool23BOmCBzMopObtWZMMs+WZKPyS3Di9liHyzNFOPnyYFs8L/K0gOtC
+         n+XeBWGHLVtCoJuswh8GV72uQmej5vAieowMl8ikn9dBF6D8yTbYG4EloPe/GAmeulxt
+         5emNzMYIuZfk1UjPucGFbeHbgGgHvYZnrxXs4l4tjYPCHt00x/C8Tu9T5pEr9oMTOCQS
+         8xLtq/ErHKglGSsAZFbBD4nS6RDRCfQRLkl9rTf5FDqA3yRbHG3pX4pVJwpCYG6iljnV
+         PU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723657532; x=1724262332;
+        d=1e100.net; s=20230601; t=1723657667; x=1724262467;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eU0SGWYGiXl5n77cb2p15cMEUvoozePAaIHgKVFSKxA=;
-        b=uDc5fWXyv2bGNbJZ6/l3pth2L18jRbp3o4JHIHpMO/peRyhl9W2c7+ujr1iuOoe7/R
-         A5PNoLZrHDvCJYLgFZ9u4N6GC5+L8zZLhGj24ksJHu3yafOVaofo2nM6H/fGRhSLra9X
-         SSGWGjf7ILEbSChZRxlh8A5Pp21eIxdyT72lvursTqxGhPM9Ei/Zxk0jSx0lUIoecUaE
-         Nef8NjCVBIfMx0dsZiDm1VgcUdknFbqG2pMlYOUsVSDVz4ruGIOa7MPiuW/dIbPqio7Z
-         IWyFvfKEFl4G15L3oOvN18iuEuLKDtHMDqqi25IoZhuvSOV8thxXkpIMppxVWNs4Ndnq
-         NXAw==
-X-Forwarded-Encrypted: i=1; AJvYcCW/E//nV46h12zebqrwyFj3aCnvyOyrSLMSR2u/gtwTn9/Q+la4EiEuVauo66xXYXR4WIWD4Wk3Ze32sjg8qd42f67F
-X-Gm-Message-State: AOJu0YzTz/T6gVLuae4tgwLMaAkzrMwTnVz7N3UA9rUSfZc2exJVK/m/
-	tikZ8JgkOB9zWgUvcCiXuNlT9H75fnFgNDm3caAOYjtzGQbn1PHPMv2IUSrq2j7kAEx81F4BzG6
-	3RPXz5akfTX87JR9XdldPLzqJ6X1OoQ==
-X-Google-Smtp-Source: AGHT+IGFgJwtJA2P+TRFQAasxYeU2KHBBLs6bgdVCEoOI5b2czdmfMk84wPCZd5fEYZAHgrbPv2AoFw9mXSz2BvKzWY=
-X-Received: by 2002:a05:6870:709b:b0:25e:29e7:14c8 with SMTP id
- 586e51a60fabf-26fe5c7ad48mr4016612fac.42.1723657531936; Wed, 14 Aug 2024
- 10:45:31 -0700 (PDT)
+        bh=YOB/kJL5eT4RvXxp2VngwAEoANTx99XtcblUGrYObGg=;
+        b=fpCKE4WXQ/dHetwd/uzdeVVzdWq0un3ki+wqwDjO6qDXcq3yW38T7FD249m5AlhgbY
+         uuVD+o5CUHDm6xeaHASpBHC0ywliUB/PIatB8nfnP8XT5bP5EzlHXxd3n97UIphEkbSo
+         vNBOKhy5saBL1l6D+7HBfM50faC+Otoe5TNTfHK8UnwvY665KB0eggw/UPFbX7ECcIYY
+         O4LhTQkEEHoEuNNsPZoihTEanzLRy97bq4FORP3DfJegp5BGlO1weRacVWVs51u62W1z
+         RqF7D8ppLWOC5L6y1TH/kXu5/JopxqJYh4bVSZ8Nw8FqF51wJC/lbKMfkwlkEkd4XSDe
+         QZ5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXnKSPD3XG1kW2ebTWQsWQdSNg2wyyINMU7rfGfdIaf0ecInzkdzG89bgkNGAN/v782svb/6t9Q0ICv6+f75SqLhvlY
+X-Gm-Message-State: AOJu0YyalrlEcd3dAeVJpK6eIG8FO/Pl2u0pPA5nQuQXHAyvpQcEdFrZ
+	QltAIriSZ03wjn2NN+QcW86AfJOnDk+839N5LKHDGOi9qYBwG3A6uSxVAYfh4KWWpGzuacmu7sG
+	n89hj0gErO4zjlom8DYe1WthbtuQ6qA==
+X-Google-Smtp-Source: AGHT+IEToKACSaGarntQsrexVZG9elwsadSuDyGK27rpJb5PEfBlOR3Ypa7UvFg7lNSa7w6+i8frHm0qF3nd+FMRqxA=
+X-Received: by 2002:a05:6871:5cd:b0:261:a04:2aad with SMTP id
+ 586e51a60fabf-26fff4273a5mr176872fac.6.1723657667102; Wed, 14 Aug 2024
+ 10:47:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,28 +57,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240813-jk-translate-alias-send-email-v2-0-912db4eb6846@gmail.com>
- <xmqq34n711uy.fsf@gitster.g>
-In-Reply-To: <xmqq34n711uy.fsf@gitster.g>
+ <20240813-jk-translate-alias-send-email-v2-2-912db4eb6846@gmail.com> <xmqqo75vyr4b.fsf@gitster.g>
+In-Reply-To: <xmqqo75vyr4b.fsf@gitster.g>
 From: Jacob Keller <jacob.keller@gmail.com>
-Date: Wed, 14 Aug 2024 10:45:21 -0700
-Message-ID: <CA+P7+xrKBqWVwkFH=WrGoLJbqVtE3AO=CBb0=UTw=E8AA+xv4g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] send-email: teach git send-email mode to translate aliases
+Date: Wed, 14 Aug 2024 10:47:36 -0700
+Message-ID: <CA+P7+xooHK-t0gEZyDeKAYYBvVJXdWyRHEOC4zok-C8+vLxqvw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] t9001-send-email.sh: update alias list used for
+ pine test
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org, 
 	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 14, 2024 at 9:54=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
-> > ---
-> > Jacob Keller (3):
-> >       t90001-send-email.sh: fix quoting for mailrc --dump-aliases test
+On Wed, Aug 14, 2024 at 10:02=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Nobody noticed the typo in the filename since the previous iteration
-> was posted?
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > The set of aliases used for the pine --dump-aliases test do not
+> > perfectly mesh with the way the pine address book is defined. While
+> > technically all valid, there are some oddities including bob's name
+> > being partially split so that the actual address is returned as
+> > "Bobbyton <bob@example.com".
+>
+> With "partially split" bob's name, do you mean the HT between Robert
+> and Bobbyton in the original?
+>
+> I am asking to see if the closing angle-bracket ">" after the
+> address is deliberately omitted to illustrate a breakage coming from
+> a malformed entry in the original address book, or it is missing
+> merely by mistake.
 >
 
-I certainly did not :D Woops. If you had pointed this out in the
-initial review, I apologize as I missed that comment.
+It is missing as a mistake, I think. The main change here is the HT
+between Robert and Bobbyton in the original was causing the fields to
+be separated.in what seemed like an unintentional way to me. The
+missing > was I think due to a copy-paste error where i failed to
+select the final > when copying to paste into the commit log.
+
+> > -     bob     Robert  Bobbyton <bob@example.com>
+> > +     bob     Robert Bobbyton bob@example.com
+>
+> Thanks.
