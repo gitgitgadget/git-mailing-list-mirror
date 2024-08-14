@@ -1,54 +1,54 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E4D1B1439
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 13:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096391B1500
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 13:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723641766; cv=none; b=NY+iBvA+rOsra09XIidATwo3QEk2P7R+tqxXLYlVwq6NZIQuySSiMWHoKWywdhBtgY4020w60nqmQHjZNlmp2NnShcpyXGe50Z/EHfwK15RLSI3DRHaq7h9b6l5gNppaPIpNVzJY336npKA9x4MXSiEnDxh4ZIbFfLRxUGqH/Ms=
+	t=1723641769; cv=none; b=ljV7jOg+66vhPztCVIrhY5ejHWPLqqN6LOh8ecpR/IvmVv1TnvxxbrgtoAHYCXXe7gbxSLHqun1sZmDqeqKiOpDYPwd9mdCaoYs+2l4MGX3VZRZvzD+LcFiEhe+yZ88sfNmre5F1fNMQbeYNM1iY7VqhKvLhx6w4UWOwTgRJwug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723641766; c=relaxed/simple;
-	bh=ZiCLUi/BUqvxOdjN//zYawYCHFEi7nYpsw6HleDgafs=;
+	s=arc-20240116; t=1723641769; c=relaxed/simple;
+	bh=UpAlBSqIAJIpMu8J2u5EahvDWzpl9hnzUvCAQFFGDKo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=area/V7oLrDK2aYYIEhd9v3wL5hY8A4XZY/u42xYR7QPytVJdtkyvCLqSQcpyqLQkE+zoNLmyMdpLtCG0rH7MTuokvdWO6Rfj5iiWnIDblL1NM398lWijcODxvGzOSnociIIsZw5M3C/a8E3rzqG4KrMhkOYrYrY1/AWCbpMoRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dobpi77z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XAZgjTHi; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=i0G6dr+bgu7F9EUakfbKO+D3cw2/OacJvs5jWjqhJyPH5rkx5MqHMi22ap0UsesyKPxaDhsPKF7JIHI/uf9VRQ0GkEdvGGTMkAwR/POQMAdB8M36aabHmvR5xV9TW2yxtWO5ihnQsT0E4RU5r+zIhzfuiS6CnKc/8RRp5mAbQcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KVOmd5yG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ksIK46sR; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dobpi77z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XAZgjTHi"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 2DEA1138FC13;
-	Wed, 14 Aug 2024 09:22:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KVOmd5yG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ksIK46sR"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 309A9114EA06;
+	Wed, 14 Aug 2024 09:22:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 14 Aug 2024 09:22:44 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 14 Aug 2024 09:22:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723641764; x=1723728164; bh=M5mbTth+1a
-	44lg4toqj2ICmCYVSy1NhOJWo3fQUJ4NU=; b=Dobpi77zK2LosyrVGGGu+YFkIO
-	4CkqoM5fJ+w/+bxjYkSGCTmYYBlnB4itP10LEETB9ZyJblJgJy6awiviS7eTEeHn
-	xFfKOYAXJeZPlBnqkoRmxcdpzFWODo0wyy6sc5qcQxgWOub2ISDzehjl6fJAdHOg
-	A478pN9y3NCCOiCf0sXTZrKTNV7ct0BD23lIKPhqZLEJaqfAtHIDBUk7gUvP1pIz
-	q6drH9/+Bhnsf8JB4arX/C4bcKIPMDpikAKled7g80siOavOqGQDu+BRc2KUFTw5
-	UK+ctm45/tRScMcQJNLZQ+guLu7nkz20B7KbETtD+Vx5ZXmzrVp5tl3rXgfw==
+	:subject:to:to; s=fm3; t=1723641767; x=1723728167; bh=ISM+OyIsFj
+	cXsFWN8SP+YOmX15fIP+fBmMlyP2t1JY4=; b=KVOmd5yG2cfSnwYR1Rqeny9rCB
+	vBAvzBFynADTycG6Ivz1tg68vYuJTXiCy1s51UADmmLnDNhlASw0+Me4LmKcNSgk
+	aM3BQKMd6z2jjW/9tI2qixm89HcVv01zQJtJkKkCFTmQOv6ks3GCCa0ZQSryhcRR
+	adfFmr9kw9mRxtjoJlMPdac528eR9I5LUuIFCwcAd3JCrzrQSFKrthDI5kms4cBt
+	boEhlOQ8IHpInFAWy94f28PLnLOkGNkNGeBKDavtPdWYMFRoUun04J3lajOyecJq
+	qdK7p5NtwRQAyKiOmNq8lXhcn8J/dLr86jWJiGfk66ZCZbo5UL0zhno6jr7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723641764; x=1723728164; bh=M5mbTth+1a44lg4toqj2ICmCYVSy
-	1NhOJWo3fQUJ4NU=; b=XAZgjTHiSCqBHa5eegVyexBX4HgQcKJzT/ZOgHXFCZ19
-	Xeb6xunOI+iwyd8sLBHt9dQeipyVCsDxDwqDn+UaCOD9YUV4BYDL/P/IGKr6mXN9
-	kEm9kOwWaDIGv2I9OKNwzB9bjIdfGmzGtHT5u67WQ5//2v7JD1A8onG3wE3COGxO
-	ErRYhFy1QtucUu35zFsb7fgRGyC3U80uMv0L3j5janzodsxDzZD8mrW9PUJ38roZ
-	HTWwCbqcTQUc4p61M+sBlUSpgN45uVpGPZtUIP7JeX26vXXToabmB03zdnM0YMNh
-	muJBUnm6vdloGwtAGBDdUafP8TZZogjVtIj85c0a0A==
-X-ME-Sender: <xms:pK-8ZspsES-Z_FW7wGPdnaWhPfEIRTj40X_xv3diU1qTvDI7uRyqZA>
-    <xme:pK-8ZirqVnC4Pqp3OX-d0GtSTEy33IMaHpVOil4N9rOq2x6YrFtpVhgDDSWQKoejP
-    4eSiEIqsIxPRpd6Zw>
-X-ME-Received: <xmr:pK-8ZhPIey35E9xOmSt_LtKwLSEyBRXTRSOHbY6njYczXpN8a6tboj3gJ5cZkoh1n6j6DEWDh-zAzrj-6RUsx-WOPhZf7D6aAsj6QXYeg1qCZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtgedgieeiucetufdoteggodetrfdotf
+	fm3; t=1723641767; x=1723728167; bh=ISM+OyIsFjcXsFWN8SP+YOmX15fI
+	P+fBmMlyP2t1JY4=; b=ksIK46sRG4TUMTjpj6uGd48UBGY++opAqwcCjiEuiXow
+	TtA9/kpI2c13NlEtvI2lPpS16uPK6OEHGkeW2icMhfnei0Ae9kLgtx9R2smywQ2B
+	vNG5Ghiu1r760nOn4i0J2uqs9k1hK07ah/JXqjynyymDnMw9/VnFKUvJuWOTHowb
+	Jik9tjRJBK2xSo5XHyJCIPS0lRHS3r0w5WZWrC30H3wUyv5SbkkRGgxlRvIc/sIK
+	GOsXsmDE1GVUfxGoiUGlpWlHKhIIqLLp62I6E+LnA5z5zR+uRcz66TkvgSDae2Pf
+	nZ18RtOkRCpewUmpnDAb8K0T1S+7NCLCqe6cDIOQhA==
+X-ME-Sender: <xms:p6-8Zry_z1E7b2RMbcekoJCCTRxGO22WZDuFfA7nYkyy4ivVlJHkAQ>
+    <xme:p6-8ZjSn_YzKSHjWxCQX_mxfjlZTv8BF9CcYxdxl2mzexNLYr3hSYP3pQqexHudc3
+    iookDzPDh-vkfk-xA>
+X-ME-Received: <xmr:p6-8ZlVBiR-uliQWaQmmwV8gO4RCWF1N2uq6Y7pJxLY6L2tKKUL78QRcUpeuk_CtavzLLUA3V5BBjQvL0_j6enKfj-MojhnkyzXK4u87gFG_bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtgedgieehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,26 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtgedgieeiucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:pK-8Zj6u3MOi-Rwm9k2mofNuKqURvvrEuuSGXaa3Gxr-l4PtFcA1Dw>
-    <xmx:pK-8Zr6o7UoDs_iT26MnCzCKxebRYSyLVfzZd9v_fME71NjjfvOA0w>
-    <xmx:pK-8Zjgp2kAV_A9ifSfxCAKHmX0N-vv3lGMxo0s7MRum7B0qSOOp2g>
-    <xmx:pK-8Zl5uKaDswZ71HTSxwXkgWdyg8aQpsADAOA3TgQ6F-7kgi4IcvQ>
-    <xmx:pK-8ZrHPsWYSNjuEfawjnfaqpc1l8WdKKAO4ASWI-JBguRNCnwfmq9Ez>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:p6-8ZlibYvNcVVPgNefTJDM2ayE8Dno_DzwBGb9-0QZE62fT0JxGCA>
+    <xmx:p6-8ZtD48PmRvWm9c-rYoVF_Bv2tS07cmuqbFR5Opqt3NqEOCZMF8g>
+    <xmx:p6-8ZuJsyyvxnJl9Cr2SrL9Wh69P_kA-nW4Fl-sGhpKsiJw4r_yUpg>
+    <xmx:p6-8ZsD5ZTgxM1QC_fley3YgyCd7twNe6zBN30ueu2y5JgYJk6f8aw>
+    <xmx:p6-8ZgNQdMXTmPqZ1UAHcvlV2r2RKVGOLlkOh1IKZVuiLuOYIJlIuPLM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 09:22:43 -0400 (EDT)
+ 14 Aug 2024 09:22:46 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 313792f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 13:22:23 +0000 (UTC)
-Date: Wed, 14 Aug 2024 15:22:40 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2a883aa1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 13:22:27 +0000 (UTC)
+Date: Wed, 14 Aug 2024 15:22:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 01/15] reftable/merged: expose functions to initialize
- iterators
-Message-ID: <472c169b501d060a90607c6ca9552eee807cb286.1723640107.git.ps@pks.im>
+Subject: [PATCH v2 02/15] reftable/merged: rename
+ `reftable_new_merged_table()`
+Message-ID: <bc6f1cd8c1b3b6f0e6f2c60eed15c6626fa8ff0f.1723640107.git.ps@pks.im>
 References: <cover.1723640107.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,62 +87,106 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723640107.git.ps@pks.im>
 
-We do not expose any functions via our public headers that would allow a
-caller to initialize a reftable iterator from a merged table. Instead,
-they are expected to go via the generic `reftable_table` interface,
-which is somewhat roundabout.
-
-Implement two new functions to initialize iterators for ref and log
-records to plug this gap.
+Rename `reftable_new_merged_table()` to `reftable_merged_table_new()`
+such that the name matches our coding style.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c          | 12 ++++++++++++
- reftable/reftable-merged.h |  8 ++++++++
- 2 files changed, 20 insertions(+)
+ reftable/merged.c                | 2 +-
+ reftable/reftable-merged.h       | 9 +++++----
+ reftable/stack.c                 | 4 ++--
+ t/unit-tests/t-reftable-merged.c | 8 ++++----
+ 4 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/reftable/merged.c b/reftable/merged.c
-index 6adce44f4b..8d78b3da71 100644
+index 8d78b3da71..25d414ec41 100644
 --- a/reftable/merged.c
 +++ b/reftable/merged.c
-@@ -254,6 +254,18 @@ void merged_table_init_iter(struct reftable_merged_table *mt,
- 	iterator_from_merged_iter(it, mi);
+@@ -192,7 +192,7 @@ static void iterator_from_merged_iter(struct reftable_iterator *it,
+ 	it->ops = &merged_iter_vtable;
  }
  
-+void reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
-+					     struct reftable_iterator *it)
-+{
-+	merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
-+}
-+
-+void reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
-+					     struct reftable_iterator *it)
-+{
-+	merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
-+}
-+
- uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
+-int reftable_new_merged_table(struct reftable_merged_table **dest,
++int reftable_merged_table_new(struct reftable_merged_table **dest,
+ 			      struct reftable_table *stack, size_t n,
+ 			      uint32_t hash_id)
  {
- 	return mt->hash_id;
 diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
-index 14d5fc9f05..4deb0ad22e 100644
+index 4deb0ad22e..72762483b9 100644
 --- a/reftable/reftable-merged.h
 +++ b/reftable/reftable-merged.h
-@@ -36,6 +36,14 @@ int reftable_new_merged_table(struct reftable_merged_table **dest,
+@@ -29,10 +29,11 @@ struct reftable_merged_table;
+ /* A generic reftable; see below. */
+ struct reftable_table;
+ 
+-/* reftable_new_merged_table creates a new merged table. It takes ownership of
+-   the stack array.
+-*/
+-int reftable_new_merged_table(struct reftable_merged_table **dest,
++/*
++ * reftable_merged_table_new creates a new merged table. It takes ownership of
++ * the stack array.
++ */
++int reftable_merged_table_new(struct reftable_merged_table **dest,
  			      struct reftable_table *stack, size_t n,
  			      uint32_t hash_id);
  
-+/* Initialize a merged table iterator for reading refs. */
-+void reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
-+					     struct reftable_iterator *it);
-+
-+/* Initialize a merged table iterator for reading logs. */
-+void reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
-+					     struct reftable_iterator *it);
-+
- /* returns the max update_index covered by this merged table. */
- uint64_t
- reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 2071e428a8..64c7fdf8c4 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -272,7 +272,7 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
+ 	}
+ 
+ 	/* success! */
+-	err = reftable_new_merged_table(&new_merged, new_tables,
++	err = reftable_merged_table_new(&new_merged, new_tables,
+ 					new_readers_len, st->opts.hash_id);
+ 	if (err < 0)
+ 		goto done;
+@@ -924,7 +924,7 @@ static int stack_write_compact(struct reftable_stack *st,
+ 	reftable_writer_set_limits(wr, st->readers[first]->min_update_index,
+ 				   st->readers[last]->max_update_index);
+ 
+-	err = reftable_new_merged_table(&mt, subtabs, subtabs_len,
++	err = reftable_merged_table_new(&mt, subtabs, subtabs_len,
+ 					st->opts.hash_id);
+ 	if (err < 0) {
+ 		reftable_free(subtabs);
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+index b6263ee8b5..210603e8c7 100644
+--- a/t/unit-tests/t-reftable-merged.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -111,7 +111,7 @@ merged_table_from_records(struct reftable_ref_record **refs,
+ 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
+ 	}
+ 
+-	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
++	err = reftable_merged_table_new(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
+ 	check(!err);
+ 	return mt;
+ }
+@@ -289,7 +289,7 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+ 		reftable_table_from_reader(&tabs[i], (*readers)[i]);
+ 	}
+ 
+-	err = reftable_new_merged_table(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
++	err = reftable_merged_table_new(&mt, tabs, n, GIT_SHA1_FORMAT_ID);
+ 	check(!err);
+ 	return mt;
+ }
+@@ -441,9 +441,9 @@ static void t_default_write_opts(void)
+ 	check_int(hash_id, ==, GIT_SHA1_FORMAT_ID);
+ 
+ 	reftable_table_from_reader(&tab[0], rd);
+-	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA256_FORMAT_ID);
++	err = reftable_merged_table_new(&merged, tab, 1, GIT_SHA256_FORMAT_ID);
+ 	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+-	err = reftable_new_merged_table(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
++	err = reftable_merged_table_new(&merged, tab, 1, GIT_SHA1_FORMAT_ID);
+ 	check(!err);
+ 
+ 	reftable_reader_free(rd);
 -- 
 2.46.0.46.g406f326d27.dirty
 
