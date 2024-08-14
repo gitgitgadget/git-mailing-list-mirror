@@ -1,117 +1,91 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+Received: from sonic307-2.consmr.mail.bf2.yahoo.com (sonic307-2.consmr.mail.bf2.yahoo.com [74.6.134.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EA21B0111
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 18:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672573A29F
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 18:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.134.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723660136; cv=none; b=h3jFpzR5c9X/yDNFCrrszaB4yO6oqdJZBzwPgh7AasLny5ExzjIbv23kQdxX3WkcQK8ToMTP4YSECVD6zb38adRbXDzFkoRO2XXEKDuz/RSGN8wrzPilXrHWwIy3phRl4s6rA265t6S0gQK8vEQ1gVxuTFQ7i2XwFU7wLu9T9Yc=
+	t=1723660789; cv=none; b=cit4UXCdrSoJWUuxSNVciGHXO/W2acuUkI3hPVeC3HWoeKNbThRv+JL0sIvco6XC2W5LD2/YuswSTvNTSb4mKPkFIzPc8C3uxMXVQKTxXk286/jO0yh0i7Q0EnQDy+36Q+x1ZlmN8F2xTbKN09q+PSwWEkfPn0VGi81E06+Vwko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723660136; c=relaxed/simple;
-	bh=yz5BkKPWDhR1d8E/fW74QO3aMVldNwTSID32AbVCIAI=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=McU4n7QR/kSTkXh6s+iJxn8grCdlfKXehK8TIDLHuvsnZINMA/FL2Cn4czHeXwOnKv8drZk8NXJC2bhu61bxB5u8WIUlmIfsXaoAaJ9Eun8QJ4df7c77Alkzdmrmn034rmQB7AAqLSxVCR+Q1qFugesHr0KDDtGdNkctN2kdv2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=E0I8axvr; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
+	s=arc-20240116; t=1723660789; c=relaxed/simple;
+	bh=8ReNk+9p/BZBvUoLIeD7HFxP0DYYBvinABwpU5lC/5E=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=DM5MIDgFpOVZdRSSIA0zHICnF5nuvworStQbjaVmTarWK0tT80lnLBDwBnwt7HT42b3Vtsu2QFFmpjcrTdurk4jNJKO5ZCeyG8fw1VDmwKvi3w/1BFptFD4TOLEctW08L1nIbyQb+psTeFB1CW4COhL4eYAmXgA5d2AbW+606e4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=ozzLicce; arc=none smtp.client-ip=74.6.134.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="E0I8axvr"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7bbe0ab18caso188703a12.0
-        for <git@vger.kernel.org>; Wed, 14 Aug 2024 11:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723660134; x=1724264934; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xdQj+AVALsdVSqqwGCVfmo/b2XuFC6H3sw2e8nHV97o=;
-        b=E0I8axvruQWYlXvKntLh7v5l2uaCCccU2o5u01iwCIGHOWN6zFz/vyTIU5TcqSlM9u
-         5RHcPEW6FYRA0bwmjqg0AH89/7S7HyUmv8pbvTcyQMArGp1NIrLXj0Lf39Ap3hMH9Wwn
-         BHklhCsllU2xXeFYJyu4j5Y++YFbYiLGSTeCx6XKAam8tf9utcPyVG47smjEwUv6+Gki
-         VClfrJ7iN1w3i0gWHwZdRxE2vZPPen11RpmuB9XNbStskyGejaYZGF4n05+0zsVSpOsV
-         90dEdhQKLpkOfZU/8s5eHKceMBKisGP5ZKE6XmP5eqKpwj5fC42Qzfj39XrXgFFkcD1X
-         wv5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723660134; x=1724264934;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xdQj+AVALsdVSqqwGCVfmo/b2XuFC6H3sw2e8nHV97o=;
-        b=aOO6aX8DmWH5MJ7VtdzRKlj7IXVmraTrMZkf06nI765bh9pMh+Gvw1AHKYyJDgCJor
-         HIvrl/WPMIlD5Y6WjlBsebpbe+cKmv6TJDXD+6kpiKoxvdhEIp6+fMsv9c1zJIS4hvU5
-         80yHk0xBv2HfLHD63AqPGBcPF/lMqk/yjmsPSqvHbWOsC1ikZpGt8YRLiCvVDVJlzePj
-         sRHGoXyqeUXqZwrGqoGrUy5Gja0g8VSs7azyRMHhyioH705jkgkzdjDgMxFdkGuNKNWC
-         eEgNEPMEwLS22a7OQM9r0FaH+tBKM8eet6BBYlzCaqNUvV2aEmvOs3+gEH7EuKvknXf/
-         SfZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUtxEzfKaeo+45HrE1tHdpGP8EDju3B+UDx4vNOs6kWnzp+yK5sENyxqe6lk+FHu1NZl20rttweDyyU+dX6P/MuqTR
-X-Gm-Message-State: AOJu0YyAFTSBykrh2I/hi1hzZat9jAiosDinJf+c9nymFrnQOAiW/UP5
-	YwdoXJnbmxPPq3nOXOBLedcrRNfTTEwGkdjejt6hNmJwuTTbg1TbdvQVStgp8xGDHFW4pONu+rf
-	HH+qiC7jos3Iacg==
-X-Google-Smtp-Source: AGHT+IEqASr3uqDtEBU/FcdNauCZFZKsloULMhUDnpjx0yvERBkNq8MgWhFknTPDql1mxHDu4UKSnw4jwNdL8IY=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a63:5c47:0:b0:6ea:87eb:9493 with SMTP id
- 41be03b00d2f7-7c6a568c523mr6363a12.2.1723660133789; Wed, 14 Aug 2024 11:28:53
- -0700 (PDT)
-Date: Wed, 14 Aug 2024 18:28:50 +0000
-In-Reply-To: <bbaa85ebad458c60c59784b690be8be2ddbe76fc.1723540226.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="ozzLicce"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723660780; bh=8ReNk+9p/BZBvUoLIeD7HFxP0DYYBvinABwpU5lC/5E=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=ozzLicceuq043GghCYz5KYc8TTOLhkkrxtD4/N/Bmdm4D1R7eg85AUeCV9HUyJmzH5BbItAbNMjf3SfkGplJrXE4D1KmFWKo65yyX4wQuuUbdu0BXwkLgruSHUzyU3H2XGnYfuBv6DVJhbZE2b77QgQuWM8nvd7KcyEjlMk/5nMHI2F+nOW4l7j9mgwMBhTFt+oNS12ZCeypv8cyfMHRU0H18eHngMNml8z3TrmxIwNFcNqJSAD7ZTBSl/adnAT693pd+qOGMR75B0PRawgCXyNjL1PDsjLmR5/b6+gsn3tfBHDqAleoaqTpmExQdPFwFoGWL9oiKPZo3EDFmXsEzg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723660780; bh=VXS2hcLucVMUMTIGOYIfSD8sf2B8H2YyNF2nHZE7n1C=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=GhpOk6FBAdJEoR8NPLEN6XgaYDkTU39dKMTYZFXQBb9fope/MeJ06DR9rVKzN1tFw0V2YlD0eF2aBvyqjlvVviUjOxj4ZSk4LzE3A+8QT/3B4P0bfVOiEqoo7pbdxDV7d96AyXhudx1/Z0zC+HrsEBt7XWDm/2YYa05uZQ6vHlAc6X/ttlvHpPa40MQu8RFVZ56GSk4D9Q1TjE1kNOhF/S9o+v/skkUNK6+ZAwNZ2QLM0ne5zrwGQz/rGbFckPXlD8antWvjRmSLKJMbMgv71kYIlp/wwGD7PttRs49fIPPe4rF2Wk505eqXq70S7bljKFh9vDp9P1R/Uepz57vkZA==
+X-YMail-OSG: dVIr8VEVM1nKYQGuIVWwXb5xxQeu7d2I1ul0V0kx3rdMr7WTZ6InvD.LJGhkpjz
+ ZRFMNtsb6ypQbDvM8.rutc6RWYLjhmvjIean9wdGhSJquHOAixxy04wgMRZB_zzPAxP5ScTAtqwt
+ a39JnJrfRjddDQJPDdZ3VT_mOTE9SGyBaZXRdWGJGSMQI0gSKeMyWEj3pnkmfxc3i1TFnZVS29C4
+ ZPk7rIdbQH2ngw6B7wOhTkl.4DeBfGEYZL2mUyCFGEp3is79DP1QRdCqxCHwHlnR1rJYKEcA8i_P
+ KZvNSfePHSEUXAa63ajp6qgCnH9jCVaWCdAy9vY1O09dYiqQABS9XsrMlpJZNYFg8ogEm.p9BH.2
+ Pim5S9xqhjgIKzeU8xmoM7RXdjBddqOavDK.uupIllP3eHAWI1ycXeR2CzYZokJXJAGbgyR.rahc
+ DslsF9wrtfo0wn7s2AVjwCHyVXv9KAkFvUmIqUsFoXCS_BpkuH4Rck5GVvk5zQUCKxx.ukwPaWB1
+ ItOLab_HCIVKySqlR.ggVGa.BzOtfUmiAY.1EzPyVwN6USYtflSS0nCcH6osFFwE0H9Q8M.irYYh
+ VvDE6lx3gXhxJOZ_XA_Iy5HmRTJDEdhUI9B7DRSPUyqd5hpf4vbnaUKzN5HPKzNTtzBQjMnkeh6i
+ qY6xEqk9nWCR7m4E9MHVQr97OP7axc8evJcGiBFaQKsC6OMCHEH1zY8YueQLUqdBPe6P6GgR92hm
+ zB4QdQeKqtHIABwQFhZmiM0I57ebShnBc3El_Ti3jUIum8JVYhWrXycQvN2p3edgttYWEK9twqD.
+ Oa2SvjQtovAG1WcEcIOBuJCsJJW0iX1LcxmIzb9evE10tRH1ouwGuuOmVRUZ5GEWYof57_W4delw
+ bhkI3QmwKYi.xQJBLJ743vD652pMJMh9I8owj0djWLNpdTRGXxjygKTmrUv3fA7ZeFAzjPk4pjeL
+ iuj71dgEn1eesJUYy.wZDA26tOh_XzUmSHr75jWfXBVkuxT5G2qbviXALDT644ntEuRrxf12zZtb
+ fPJwe5gq0A4msTLvv69Y1zJ2Ayx0uVnggM3sd8BlFi96CBbkiI9erDl.beOP.dUPorOaoW2jfoox
+ LuopglyeA5n.HBsU2Nc1PDZJtlmg5SJHXNM2ttN7RheS0zDvI8uOJuydqu85X1iHkXKSMjgqY_uY
+ tb4PmNZpG4qw7O3UmZlmO7a009G222FoQ.2RDZmuSarkE0uYo0KMO0ntFTNEG.4Wqm4A91iyl87J
+ akb.f7PC1SPdVcM1ats8dh75aeLBN4pObDOHI4d7geMKy6uBorxdXOPkcqULIksK3qLmwnMh95Y7
+ okvrBeWLS9iI0fW48.lLy6Os2rJYgU5tppjHsPnCfQyb3HbUdCKmX0LdovngQBVVfKkkn07qSd61
+ rLPcPMog7qOH.3qavHQnK1dA30c4NhlKNZy7ucTD9yv3hYxsaK3tRjWc6zE71Ep8Jr.1fm5By.a8
+ d2JPl.UwZ4ozOFXMYLyKfTRL1lnvdZUbereyAv_9SQjljAnBRxwFnFnyeIPDLNvKhkigMr0rahhN
+ IpzGxSyEGUfL79hBXp05vFJbLiIk_SGnAzHeC_Sc1EEHSb5p17r7aTO.r3oQom_AnlJseSEavyCM
+ fLgdIxxOIiPqttZOJyCqlfk1.aBc2jSkAndn2e.3DTwAXffXsfHOmFapnwDzWdtFP8GMo_5ZDqwA
+ _vtwoFe4c.HfeBqyd4c4WNNaSHGSRoUZy8zwOAFOGGBUV2CtK_9.3611JPxCCyMZyIADTFCXuAS7
+ ssncGiJse.IUFnZQQtkNLQPNij2GBdlFRb2zLVaS5XLf5nnx_KgJPDGYN.bPau8mIZiFiFG6bVW3
+ tUFJE51ualGHOi5v5bz3.zlhn4VbOyCsdJdVP3PznkFCuYLPM34ZkyuqAcunMna.jQkONcWN_stB
+ sJtnlV5XC4Bo3WhZt3GLeJRpFkL35CM8pe3CzeH8rJHOEhysIAC7hJtUNcPYZT1ytxdJy3OXyPrA
+ ByuKxsBFWgpIML_zPUzQ_JMtBEojKIp5AUtDO1sE8DMwvrUKCc2BYk45xXd3MXVAlx0BBkrVfHtG
+ zsT44S0KgvX8chb7jlqkoaH2ZMUnrH_KaEAt6WY.maqCsYbfUZr3U7dmEa8O.oKOWx0In.dJ1NDI
+ Rx7q2n9_qXKHWo7aKezJGteGUiJEvV4_Nu4Qun0.5ufnb1MeIuSGbWT5jxEXrFU6fHMWb_EwPOyK
+ KlIYZTE0O1cmWEnSHyl4WZxj9Neh3OpCS02IAgmCa3rK0bKewxj0VBJTR02iXrg--
+X-Sonic-MF: <avihpit@yahoo.com>
+X-Sonic-ID: bf3a4d67-f61c-4761-ad28-b251404b9dd7
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.bf2.yahoo.com with HTTP; Wed, 14 Aug 2024 18:39:40 +0000
+Date: Wed, 14 Aug 2024 18:09:14 +0000 (UTC)
+From: avih <avihpit@yahoo.com>
+To: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <2007960310.4114358.1723658954502@mail.yahoo.com>
+In-Reply-To: <xmqqy15rzwi5.fsf@gitster.g>
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com> <xmqqy15rzwi5.fsf@gitster.g>
+Subject: Re: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-Message-ID: <20240814182850.1273188-1-calvinwan@google.com>
-Subject: Re: [PATCH v2 05/20] path: stop relying on `the_repository` when
- reporting garbage
-From: Calvin Wan <calvinwan@google.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.22544 YMailNorrin
 
-Patrick Steinhardt <ps@pks.im> writes:
-> We access `the_repository` in `report_linked_checkout_garbage()` both
-> directly and indirectly via `get_git_dir()`. Remove this dependency by
-> instead passing a `struct repository` as parameter.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/count-objects.c | 2 +-
->  path.c                  | 6 +++---
->  path.h                  | 2 +-
->  3 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/path.c b/path.c
-> index 069db6ff8f..97a07fafc7 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -365,15 +365,15 @@ static void update_common_dir(struct strbuf *buf, int git_dir_len,
->  		strbuf_addstr(buf, LOCK_SUFFIX);
->  }
->  
-> -void report_linked_checkout_garbage(void)
-> +void report_linked_checkout_garbage(struct repository *r)
->  {
->  	struct strbuf sb = STRBUF_INIT;
->  	const struct common_dir *p;
->  	int len;
->  
-> -	if (!the_repository->different_commondir)
-> +	if (!r->different_commondir)
->  		return;
-> -	strbuf_addf(&sb, "%s/", get_git_dir());
-> +	strbuf_addf(&sb, "%s/", r->gitdir);
->  	len = sb.len;
->  	for (p = common_list; p->path; p++) {
->  		const char *path = p->path;
+ On Tuesday, July 23, 2024 at 11:25:29 PM GMT+3, Junio C Hamano <gitster@pobox.com> wrote:
+> > From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
+> >
+> > $'...' is new in POSIX (2024), and some shells support it in recent
+> > versions, while others have had it for decades (bash, zsh, ksh93).
+>
+> I will not look at this series futher during the current development
+> cycle that is about to conclude, but ...
 
-Callers have two options here for accessing the gitdir: one is including
-environment.h and calling get_git_dir(). The other is passing in `struct
-repository *r` and accessing r->gitdir. It's not entirely clear which
-should be used in what scenario. Sure with the second option the user
-has the option of passing something in that isn't `the_repository` but
-practically speaking that's not happening here and also in the large
-majority of other scenarios.
+Ping
 
-I'm OK with this patch for the purposes of the series, but do you think
-in the future we should introduce get_git_dir(struct repository *r) and
-change get_git_dir() into get_env_git_dir() that simply calls
-get_git_dir(the_repository)?
+Reminder: I'll update this part to not-use $'...' and without
+fallback, but I'm currently waiting for comments on the other parts
+as well before I update this patch.
+
+- avih
+
+
