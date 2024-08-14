@@ -1,86 +1,86 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A1313AA27
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA2A13B585
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618323; cv=none; b=uNH3k7Vd710FRqWWgq2zIWFDffK3VAFQ0RgYDbf3/WLmrcnbCGCETh1wVUru/CnmF1aAE5u4Ow/6wxcn/gV+s4I8BWzaXDRzj8ABU58oIbTWnSuwHAODHDh29Kkv7XH8/el5nZfAoAuRRXkUc1dUdh203PXQuQ7ALPFRx6Nj/Wc=
+	t=1723618325; cv=none; b=eEDrUzVcsGjjyUvbbCKapvHYUbzc1LNxxTdHxk04QhnNTRtXBh7pxzJ91O+1SWNX2eIkPYc78VUnRmQPikRBiW0egNjJDaJ8p/zVmNjr1Sw3Cd/tLHe8DrUAnlyykHU20/+ocSIf2wuHa9TljvmGqRrSkS+f3oq+wdHZLhKXR9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618323; c=relaxed/simple;
-	bh=hoFFcWuv/vPMkUdi5Yo7jCwyC10IxIxjt9eqsrkZNsg=;
+	s=arc-20240116; t=1723618325; c=relaxed/simple;
+	bh=luZlTz2hTI8YLT4pNO5tz0if96yQMyYh73CZ46a0rCk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jpl+xrFgT38cE9VAVbs9JClKv359RPyLmpZhn91EMYuNSAbWJHAHPT43dryBqlHmXQ85J84Nm8EIL92fvImo/cWOZ+s2sBLIY3Hye6l8BRmXny3CWOGpZ/FkdSK7bfwg19JHtwD2nP6epxCqFJOiYgdqqV6aC6KJCexiLLSca+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KFKsZJ05; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I73bxPts; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dj9KXv7ABcYAMv+l+L8kvHJuLPMVIlGrfMogOELKnJ/A9pMEx3iYT9A/iYq0mAByLrwh4UR/LWboUoJYDv7MXkO14talkJJHnUMzuU1TRDM9LFN9OCJjL4EcVcWHY0WX9qkahKKahXwp3xjgwqK9GrvD3XwuBMgVRlk1F+f+9e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MDAfaLcl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VuObgU35; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KFKsZJ05";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I73bxPts"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 07680138FC5C;
-	Wed, 14 Aug 2024 02:52:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MDAfaLcl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VuObgU35"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A49581388210;
+	Wed, 14 Aug 2024 02:52:03 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 14 Aug 2024 02:52:01 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 14 Aug 2024 02:52:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723618321; x=1723704721; bh=zF6cR7mg03
-	Nqj6lX7Glae3/XyFq1o41rAfNOBYrNcFA=; b=KFKsZJ05Ch/9CsBZo0dOAXIjN9
-	XEbWsKEirundCQwTPwDxiKDKT2Fgjv9M3ASo/DQEL3CZ26B20ZHOTENGfSHBAe/g
-	RdvG3gChvSNgMGORTWc6fcVRR3AgmVJGP9/q5DjI+foobmx+2iDaYjJwAbM0eSp0
-	pzHg02xLguOhD308I5YOJFOB6e4w9I+Gaw88l95oP3Ii0snRYdZbZB1rkylYYL56
-	9+9Hr7pPQ7o6XffNVENireJ4iqd+599KHg4Jk3es5+tuR9Sd2/AuKhRVRtlXb8Yi
-	OIAUAw0WqRIOftRdON2sDiY4lY+LVEIOHLVq67k/CSRlCQeeXyvQ4eZklazQ==
+	:subject:to:to; s=fm3; t=1723618323; x=1723704723; bh=vAJymv3/2V
+	GXDhjMfmXOqsXr79Vg5+j45QHKvwZBsks=; b=MDAfaLclYdlImR83c24XkLiBqW
+	QX4e8WXT9xuJ4uZaThYrDzHXqQtV3lLE1VS2A59O1xwoRDzVniBzbqZmiltIoS+2
+	UsU5j7oWc/UunTCwt1Sa6S2rrYelIaWNw+adHKLgZ+YBXl5YJjHfpmxcULM57EI5
+	wey99AkmazrAjfSuiktoadK+HtNjboRqpNgBrL3FZsR6svIMo433l/DzjUrCNLsj
+	tFaBcAjp/i5lDHmPssP6yanOvKCvD7H4N7ppiQPtkEcxF4Xd6l8vn2Kh9wuP5jv1
+	isOwrv3gKTOGa39TaILRn67XanTDAuk5lXnSEdqUeyhuutFepk9JoInBdHBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723618321; x=1723704721; bh=zF6cR7mg03Nqj6lX7Glae3/XyFq1
-	o41rAfNOBYrNcFA=; b=I73bxPtstwMDgfqwcADgk+LCYNsn5oz5BprtZAg80smQ
-	s/bSqA53ZN2MfzuUohXoUl21mJoDN6wjpSgf0x2nuBDkYd/reT6e09RStWxfhAON
-	7mlbkSwKEa/gIca+sp+2vggQZ6BxRCCltfjoGWXCQ7mde7zXkgy5OzxS0dsWc6S7
-	msFKRe4NplLMwfNjT/ll3UjPxNTshsubAumsWM9qV4H/TYHFBIjb2VG63V1X3cO0
-	Bbt8Wj6ye910kzH7CG+5PXOj2beNTLqKTim1rtkZMZa2h8hA2m+TuOgEPxfDM3/Y
-	rSarHjDXWbgSFnaBxE0ctUvGM1pHPr7xQTI4RuNPpw==
-X-ME-Sender: <xms:EFS8ZvM71wRHAd3SOv4C2OFtJ6JmsQWi3AIFyR-eZ-POwZ952BlOwQ>
-    <xme:EFS8Zp_0erW6mPjZhejiSFNNMfXN5nTz0XgqW9rBU0yX4CMc8GT3oVQL_P8vnuE6i
-    5rvNnXt1wr3xgsxHQ>
-X-ME-Received: <xmr:EFS8ZuRZFRmSSD0dOBFDRUCLpIgwzG4cNcSCDbh917mA930F14hq3AXUfz3qJbnF2uVrGRkSOY4i_I6vXnkq4w_jDOX4WP-PoJgGu_OOWxJoMg>
+	fm3; t=1723618323; x=1723704723; bh=vAJymv3/2VGXDhjMfmXOqsXr79Vg
+	5+j45QHKvwZBsks=; b=VuObgU35vzXTbXPZmEEBLvY19NHDjtNOSRDxM0NLPXyT
+	KUaHb4bjfmIUU7gW50i2Jj8yb8gpXWDNiOL8j9hHTlbeBQmg4jmpPLzKdMi7GTGq
+	JyIuingrgnNu+kLyOlgjbKFPQqL9Ef5Xaw3lYvv/GaBSz47MWtqmMA4ydeuZxj0V
+	d3LaOfgq3GMh47mqu6IO/6Y6/ya6ybSRike2s/GCRHi5n+zLzY7FJXLegoB0HZ2P
+	DfBEeY2dRnkgFBG5ktGlF6OH+saKeSj3SMr/ndHocvuxN8J2r3yIL44er7zvWN6F
+	0xTuy3ZRa9lIom4AEUmso1PBDhRHmqHEwgCvA1g3Fg==
+X-ME-Sender: <xms:E1S8ZkgmMAaZojHv3E38lTx5un5FvlG1B-ku7A9LOlv32qJ4i6HFrQ>
+    <xme:E1S8ZtAYO-fGuRxz_VsdO9JnZ52ySuxDP5nUHTetpALkT_hJSp-3SaEQ-MN0ohcrx
+    qxXVKZV1-qHOocqmw>
+X-ME-Received: <xmr:E1S8ZsHIlMMwmw0qneSmO1auYVIA-pqQLJmqKCV5UMHQdXim8h4XwQLs1KbqLJ0Gc_jrAbW7gCnSIlbeloLk2TZWoTP5eHYIP1TssZhKeqfzOA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgrmhgvshesjh
-    grmhgvshhlihhurdhiohdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:EFS8ZjuK7bfaoxc8ZALLXT5o7SXzu047Szr2kFAAcYvtJU95avlHOQ>
-    <xmx:EFS8Zneh_I5RohG-wwu08Mc8MWq1xQRv4YmytTOjt52PedfGkKEVHg>
-    <xmx:EFS8Zv1FPGfSakoGSZCPDlhzobE6Vnq8lR8GOZ6fC3rc8lw1Wl3JBQ>
-    <xmx:EFS8Zj-sZHlpJgljfCDAxTK-ILwDm5zMhKSchxhspV8DRaMwcDgEtQ>
-    <xmx:EVS8ZvSDp96BdACSBSh7psx2WmxDpq8lMfXAbmvJYkAfLUi-yt7P6DWX>
+    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjrghm
+    vghssehjrghmvghslhhiuhdrihhopdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
+    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:E1S8ZlRMhqf9PgdKz3vhRyvlpK3uzxIEqVcJYEwZ8z45PLAnIw6sug>
+    <xmx:E1S8Zhy8dW5Rq97CzEJ-HvYup5UPgM-3DDH7mVhSv-oxRj-Cqh_AHw>
+    <xmx:E1S8Zj7c2AF3KWYuOWfR5RBMj1GbYeLotqt1j74FPtClVBR7D31XoQ>
+    <xmx:E1S8ZuwL-94UEBJx6YfwjTwc1C06NEL3NzyRQnAqgc_k22mk7qZcAQ>
+    <xmx:E1S8Zomtk_akPEZ0I4mx16vvKh3xWzQGgf9J5S6Wx-zG5ooOqzZ4tGLI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 02:51:59 -0400 (EDT)
+ 14 Aug 2024 02:52:02 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5330a6c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 06:51:41 +0000 (UTC)
-Date: Wed, 14 Aug 2024 08:51:58 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3d2122a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 06:51:43 +0000 (UTC)
+Date: Wed, 14 Aug 2024 08:52:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 03/22] object-file: fix memory leak when reading corrupted
- headers
-Message-ID: <0415ac986dc8c04917502a1bb0b03afcca47ec67.1723614263.git.ps@pks.im>
+Subject: [PATCH v4 04/22] object-name: fix leaking symlink paths in object
+ context
+Message-ID: <e5130e50a9f296720960b2a8d7be14fc01a0fd30.1723614263.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723614263.git.ps@pks.im>
 Precedence: bulk
@@ -93,46 +93,40 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723614263.git.ps@pks.im>
 
-When reading corrupt object headers in `read_loose_object()`, we bail
-out immediately. This causes a memory leak though because we would have
-already initialized the zstream in `unpack_loose_header()`, and it is
-the callers responsibility to finish the zstream even on error. While
-this feels weird, other callsites do it correctly already.
-
-Fix this leak by ending the zstream even on errors. We may want to
-revisit this interface in the future such that the callee handles this
-for us already when there was an error.
+The object context may be populated with symlink contents when reading a
+symlink, but the associated strbuf doesn't ever get released when
+releasing the object context, causing a memory leak. Plug it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c   | 1 +
- t/t1450-fsck.sh | 1 +
+ object-name.c       | 1 +
+ t/t1006-cat-file.sh | 1 +
  2 files changed, 2 insertions(+)
 
-diff --git a/object-file.c b/object-file.c
-index 065103be3e..7c65c435cd 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2954,6 +2954,7 @@ int read_loose_object(const char *path,
- 	if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
- 				NULL) != ULHR_OK) {
- 		error(_("unable to unpack header of %s"), path);
-+		git_inflate_end(&stream);
- 		goto out;
- 	}
+diff --git a/object-name.c b/object-name.c
+index 240a93e7ce..e39fa50e47 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1765,6 +1765,7 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+ void object_context_release(struct object_context *ctx)
+ {
+ 	free(ctx->path);
++	strbuf_release(&ctx->symlink_path);
+ }
  
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 8a456b1142..280cbf3e03 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -6,6 +6,7 @@ test_description='git fsck random collection of tests
- * (main) A
- '
+ /*
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index ff9bf213aa..d36cd7c086 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git cat-file'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success setup '
+ test_cmdmode_usage () {
 -- 
 2.46.0.46.g406f326d27.dirty
 
