@@ -1,113 +1,87 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF001BE246
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 19:12:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AC81BD508
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 19:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723662757; cv=none; b=CUXGyDMxTiKZSJNLgedTdouDlwVezxxVEih1e/6wl30bJHGv36kJFxJcG9OUQBTLHl/N7rGtLtWN0Re3nndT0FVH26O7fjV2HBnwKcHVWQSsSW5FVt8AyBF3C5zwnTxSi1X/Vi/VwmMMHcGQEM/dyJPI82B2ZC5NMzL0uMgIpeI=
+	t=1723663803; cv=none; b=KNlsJRgIeBjfTJbaVI9QZE63s3Ux7MVfQHFKAIadF2Ol9HZUzugOH+ttJHY+DjwVv9/lzWJhO5OlOYmEA7IXCYY3DB7japRIQkPOXg2pZEoXceYh6if4zKYTa9I7oF10KCYnOFDAhobApdJrz0U0Loh0INQf7Wm0uaw99dXka7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723662757; c=relaxed/simple;
-	bh=xwdET2pYtfsKmGtisTq5ww4je2GlUWuKCwcbpXGKWnE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ot+twfuoYCJNh8ogI8k8eCf4rpmnzhNeAMNsEhvWEjipbrk9XnMJIxOQxHfEgI/I9l2xKBHhbo65OkP3aBYUDoeGUHtAtjYmd4Hsv6wNwdrOXRGV5Rt/GSJf8/uHRjDRVExPxiDj7R6Oa9XeW9R94NdGiySbsNLFgjzHd3KnPBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XqcbnTkZ; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723663803; c=relaxed/simple;
+	bh=IlzuH0QJcEuhV0tvfQujEoxN3QYUezxFsl0tZ/hfUVc=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=urvp55x8Rxw9A4aS1GETSHG/IotiJvefClQcXzMSVNTs2QEWWePjZECsKyhvAfM+Z1DD3rzXHgmKaHYb3CLqvSc0By8S1PeFDV+Vv/4xKfJeYs0wFRjkxY0v2NgERzvWPiOm0J13E/Ka+5nSAzKjc7/Kb64yM4nB9Zac1HW8vb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SZ03OJ9I; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XqcbnTkZ"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB00F34C71;
-	Wed, 14 Aug 2024 15:12:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xwdET2pYtfsK
-	mGtisTq5ww4je2GlUWuKCwcbpXGKWnE=; b=XqcbnTkZexFRe63CKXbbYP7wsr2U
-	zK0/BrANz0AtqyzqosGmlSaZBTdnF9vL4jG75ihnuqbIZnzrTg9UZA9pj9WPSJsf
-	B19bqi4PoPt5QgfHxmwTpreA4XYsgxiDYRFGKx0uNLdEi+FbWMivx0X9NH9c87cI
-	2h7shG9dyEOTQtw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E378634C70;
-	Wed, 14 Aug 2024 15:12:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C4C034C6F;
-	Wed, 14 Aug 2024 15:12:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Jacob Keller <jacob.e.keller@intel.com>,
-  Josh Steadmon <steadmon@google.com>,  Git mailing list
- <git@vger.kernel.org>,  Anthony Nguyen <anthony.l.nguyen@intel.com>
-Subject: Re: [PATCH] format-patch: add support for mailmap file
-In-Reply-To: <CA+P7+xrHDX-=fqJTM7_4cQp5PJz6QKbM78JG5tYtZXJLbiVmDg@mail.gmail.com>
-	(Jacob Keller's message of "Wed, 14 Aug 2024 10:43:39 -0700")
-References: <20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com>
-	<2mvexuxcaow45ifnqmrvpn2yz2ecxzazsbo5ui7xaiwwpzt7hr@mvl6ehbrhrp6>
-	<c0724297-1748-474c-998e-803e6a062a12@intel.com>
-	<20240814072637.GA2077794@coredump.intra.peff.net>
-	<CA+P7+xrHDX-=fqJTM7_4cQp5PJz6QKbM78JG5tYtZXJLbiVmDg@mail.gmail.com>
-Date: Wed, 14 Aug 2024 12:12:32 -0700
-Message-ID: <xmqqjzgiyl3z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SZ03OJ9I"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7bbe0ab18caso236359a12.0
+        for <git@vger.kernel.org>; Wed, 14 Aug 2024 12:30:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723663801; x=1724268601; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IlzuH0QJcEuhV0tvfQujEoxN3QYUezxFsl0tZ/hfUVc=;
+        b=SZ03OJ9I/aLV3WZsUszlhq8lw6Uac9gGWIBg63fFwnpGp6C6C0gL+5uXeZoHFswo+l
+         phmi8ccAy3D6Yqobokg5uVNuwXFW3poXJKjOqfm5oFTNzYtobNHcTKXiB3W/9My+EXM0
+         832JRusOup40BlPwpwXCkz1EKh+k9JZkodpachLt3Auc+ObzS1q451OWGCx6SRyQyQGM
+         eBljXY5ZMv/cTHCSDe7qi6AuYsayvEvrE8AK2QMmCL3uylSDvodkXeq6aEA7aZtwtsyf
+         Z8j2poJEddO/0G02DPV9hcmQLPcRI3wIVDFgHqGyN/6ZXEy3pdj+0bo3YJvG2t8h4U6o
+         2j4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723663801; x=1724268601;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IlzuH0QJcEuhV0tvfQujEoxN3QYUezxFsl0tZ/hfUVc=;
+        b=tUUxf2RuWMyWp/2TCT0lFwtYOF2nQdtmHVRnHsC6SsREvCU+zumMfgeGj9MWB3wW6U
+         hAyL7te8gciiIrrKgqlM8PL1649+MvAYtVkYvckTtHybzdmUrB0VOybFEjsDhaAMnFAs
+         LTho/YVhomlEFNI61uFrrHJ9hkDEYI83XARu9wXBFe/ueV1afL1URfb/NWMA5T46YUzh
+         i1kfMkhUkRKXq0OXgJUwBY9Zb/SS9lpjbbHI3WLvRXPlMCtnoFQIdCLzHDkQqYKnr3Fx
+         jaG/LmDmiCakZ5BOMjN7JWWGN77CWQRO0oD9yMbmc06GtD68oKxStL0Ksp40ETeSSMNm
+         qmgg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmxcqoUxkGsoVlNYe/m9RuSP8cPcjnIaoWM8nQBr6pXYVJBqrjMoD4RmcTREC2G9iIGlsjhGdBkpszz/ZxRHbTdBRk
+X-Gm-Message-State: AOJu0YyywfLt02/B9qA9kYvLj1xS9IZyf2kkDUOcCZ45hcLMepcU/5/j
+	sAYHNWsU7Bf5sfkHyR8of+9Ep8t5ci3izgJzP1vtdhiKSApuDRIwykl9RX/GayU+tBucqGIHpR3
+	/H/5qODfelha6zg==
+X-Google-Smtp-Source: AGHT+IEPYk7CYN6Ys5Vl40iA/q/fPFkSrcYJG4vvliGyXZrSxHwJvnm8d3a4jPCJQxXwBa2E6lNmxGHO1sVWEJE=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:902:d4c8:b0:200:ac2c:677f with SMTP
+ id d9443c01a7336-201d6467e41mr3833715ad.7.1723663800888; Wed, 14 Aug 2024
+ 12:30:00 -0700 (PDT)
+Date: Wed, 14 Aug 2024 19:29:57 +0000
+In-Reply-To: <cover.1723540226.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 28C0CE22-5A71-11EF-86E0-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
+Message-ID: <20240814192957.1518560-1-calvinwan@google.com>
+Subject: Re: [PATCH v2 00/20] Stop using `the_repository` in "config.c"
+From: Calvin Wan <calvinwan@google.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Hi Patrick,
 
-> On Wed, Aug 14, 2024, 12:26=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->> On Tue, Aug 13, 2024 at 05:20:41PM -0700, Jacob Keller wrote:
->> > The internal tree commits are already baked and can't be changed. We=
- can
->> > of course fix the generated patches from these commits manually. It
->> > seemed convenient to get mailmap to do this for us.
->>
->> I think that makes sense, especially if the caller is specifically
->> asking to enable address mapping. I do wonder if the new format.mailma=
-p
->> might be surprising for some callers, though. For example, would a
->> rebase using the "apply" backend quietly rewrite commit authors using
->> the mailmap?
->>
->> -Peff
->
-> Ya, I think the config probably doesn't make sense thinking about it.
+Glad to see us slowly getting rid of the global, `the_repository`! I had
+missed your original series[1] introducing the
+USE_THE_REPOSITORY_AVAILABLE macro, but going thru it provided all the
+context necessary for this series.
 
-This depends on what an average user's perception is.  People like I
-would know intimately that "format-patch" is just a glorified "log"
-with special features, so I wouldn't be surprised if somebody sends
-in a bug report saying "git -c log.mailmap=3D1 format-patch" does not
-honor the mailmap.  In other words, people may expect "git log -1 -p
---format=3Demail HEAD" and "git format-patch -1 --stdout HEAD" to be
-pretty similar.
+I see there have been a few cleanups since the first version, and I
+didn't spot any typos on my end. Overall, this is a good step towards
+reducing our dependency on `the_repository` by removing it from the
+config subsystem. Additionally, this makes libifying that subsystem much
+easier since removing globals usage is a prerequisite for libification.
+I only left a non-blocking comment on one of the patches, but besides
+that this series LGTM. Feel free to cc me on any related series in the
+future!
 
-> In our case, it may be more useful to have the mailmap not at
-> format-patch time but instead at email time...
+[1] https://lore.kernel.org/git/cover.1718106284.git.ps@pks.im/
 
-And probably you want not the regular mailmap but the custom one
-meant to be used only by send-email to ignore the recipient.  You'd
-still want to see who wrote it back when they were employed with you
-in "git log" output, and not having them in your regular mailmap
-would be a way to do so.  You can instead choose to use your regular
-mailmap to map them to their current address, which is what we seem
-to do here in this project, but it would probably be less common in
-$Corp settings.  If the mailmap you give to send-email maps these
-dead mailboxes to some known pattern (e.g. a fixed string in the
-e-mail part, like "A U Thor <invalid@invalid>"), teaching send-email
-to recognise them would be trivial.
-
-Thanks.
-
-
-
+Reviewed-by: Calvin Wan <calvinwan@google.com>
