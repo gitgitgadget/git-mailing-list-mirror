@@ -1,52 +1,53 @@
-Received: from cat-hlzsim-prod-mail1.catalyst.net.nz (cat-hlzsim-prod-mail1.catalyst.net.nz [103.250.242.12])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7D6376F5
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 03:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.250.242.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1CC3CF5E
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 04:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723605515; cv=none; b=BBgGbgL8ZstCrJOzHtU6sbZ6ZDfGAjYFYCMbySWjvnXhfBTFCgLWdd7sm+PlR3RHOslya/kfDbSDeWFCSIZdR5ZjkdVS4aWLdeC3G5j4NkAqE54NDJ2peGIAVmBcPTVDp5VYSTrHwirPMoF8SCIs9KCu3JWYa5teVMErAD5qSdo=
+	t=1723608631; cv=none; b=ec8opzg2xMLqGHwrcyZtPpNsw062VJdj0WyXulzC9A83KYC8jzofflWRE3/S84PcPqcw7P6Am7HTI1BjmdigWoMdAp8KVPjGAwp3dgxs/iTBpKnc/ZXbIlbTh4XOgHy3ZgVnIs5PJL12BDDqbq8n9JuK7Keq47hkBMxDqODtq40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723605515; c=relaxed/simple;
-	bh=EqEvwsAtuiG3R88/O7ALQzqbB6BQOlOllO2+B/EQmZ8=;
-	h=References:From:To:Cc:Subject:Date:In-reply-to:Message-ID:
-	 MIME-Version:Content-Type; b=IteKZZAxPx4cdcYZK4LKNVDF/8yEwHryFqLtdLH9Hgm1Xh4gXAXyPKiCEB4B0+UWLVO8bIsu8qm2hkmSaKb7teiy+AhklQxZLmAc1y/IIQ5ngeSabY9ZSLG6RcxMM/J+IupfoAn5mrK4KH2MGOcqoibZX7YV2lOrgieDYB1c65E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=catalyst.net.nz; spf=pass smtp.mailfrom=catalyst.net.nz; dkim=pass (2048-bit key) header.d=catalyst.net.nz header.i=@catalyst.net.nz header.b=E1/6LFi4; arc=none smtp.client-ip=103.250.242.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=catalyst.net.nz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=catalyst.net.nz
+	s=arc-20240116; t=1723608631; c=relaxed/simple;
+	bh=rYzOs4feEw9NEGcKhoFi37lvLKaM1khREWm+W6279OU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lE6tUA/lfzsgnlr3oc9dmTddaNySzujen4//11spLy9feZ48/7b42VysR/703Og51VxA7cov/Oiws0tTUeumlEL2OCciB2XUjgJN0vowt5trsb4J4EOvzR0GL5mM1R+srfeaBdd5wmsfT7Msaf2AhIHxe0hyWFf5JOhXN0OYSQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UTHIrjcs; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=catalyst.net.nz header.i=@catalyst.net.nz header.b="E1/6LFi4"
-Received: from phil-lp (unknown [115.69.188.59])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UTHIrjcs"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0CAE023F86;
+	Wed, 14 Aug 2024 00:10:29 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=rYzOs4feEw9NEGcKhoFi37lvLKaM1khREWm+W6
+	279OU=; b=UTHIrjcsX1RC5K7ihdJX4ZIKt+KHeqaY/fBenBmlb0Fbkk8cvknEML
+	JZqC28mw13s9yJs2MZNwNXJ0WKcsZ87oKuMA/hlqvPAbfYB9LlLDN7IXUd7mUvZK
+	Q8EQjx12qh5IOIEPKYY/2/mADFdkk4uwAhW0Q0F2Is+oCWqTR5kqM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 04AEB23F85;
+	Wed, 14 Aug 2024 00:10:29 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: phil@catalyst.net.nz)
-	by cat-hlzsim-prod-mail1.catalyst.net.nz (Postfix) with ESMTPSA id 312FF3FFCF;
-	Wed, 14 Aug 2024 15:18:20 +1200 (NZST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1723605502;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/E/ibaDavml25DurYoWdDAM1cxvl2hwQQnsTLCuPAk4=;
-	b=E1/6LFi4wG84tnRIjYvejWmfoWDQWg3QpdfGHCTsQWoYIiQQOKRjVCSvUpcU3s0cKQZrIR
-	JZZMSqYOvBOvEZ+zr45Bfq+kEXc+NwCyBlb1S6+QOOoDdJOXPW9iivnHh5HhfLoFCcwB+9
-	cmxtZboVfyZLwik8ms5Gg/N8JvOD+ovd4ezo6hXB5L8XSy+CBtbZyAcZISr1juk+nQZaEN
-	u9edG2kf48rqNcbEBbJt+eG5j6rqNGzBX7X9fRpP6TqfFPWIG56PUymljZx9I/weYjV+Kj
-	15vrwz7HZtwgg/OedoeVDWyCjkOO0Hch/jESVL+5gGI2UulHNuUS0/zJbLUGfQ==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=phil@catalyst.net.nz smtp.mailfrom=phil@catalyst.net.nz
-References: <s5wr0azfeh9.fsf@catalyst.net.nz> <xmqqed6zht04.fsf@gitster.g>
- <8436c2bf-45cf-8009-14cd-c5ca708ece08@gmx.de> <xmqqle105oko.fsf@gitster.g>
-User-agent: mu4e 1.6.10; emacs 29.4
-From: Phil Sainty <phil@catalyst.net.nz>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, pclouds@gmail.com,
- git@vger.kernel.org, hvoigt@hvoigt.net, me@ikke.info, rafa.almas@gmail.com
-Subject: Re: Adding nested repository with slash adds files instead of gitlink
-Date: Wed, 14 Aug 2024 11:13:25 +1200
-In-reply-to: <xmqqle105oko.fsf@gitster.g>
-Message-ID: <s5wed6rg5c6.fsf@catalyst.net.nz>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 698FA23F30;
+	Wed, 14 Aug 2024 00:10:25 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Han Young <hanyang.tony@bytedance.com>,  git@vger.kernel.org,
+  xingxin.xx@bytedance.com,  jeffhostetler@github.com
+Subject: Re: [PATCH 0/1] revision: fix reachable objects being gc'ed in no
+ blob clone repo
+In-Reply-To: <20240813171808.504427-1-jonathantanmy@google.com> (Jonathan
+	Tan's message of "Tue, 13 Aug 2024 10:18:08 -0700")
+References: <20240813171808.504427-1-jonathantanmy@google.com>
+Date: Tue, 13 Aug 2024 21:10:23 -0700
+Message-ID: <xmqqsev73ftc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,47 +55,47 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-0.10 / 15.00];
-	MIME_GOOD(-0.10)[text/plain];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	TAGGED_RCPT(0.00)[];
-	ARC_NA(0.00)[];
-	ASN(0.00)[asn:55850, ipnet:115.69.160.0/19, country:NZ];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_CC(0.00)[gmx.de,gmail.com,vger.kernel.org,hvoigt.net,ikke.info];
-	DKIM_SIGNED(0.00)[catalyst.net.nz:s=default];
-	MIME_TRACE(0.00)[0:+]
+X-Pobox-Relay-ID:
+ 2204E420-59F3-11EF-A1E1-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Let me make sure I understand the above.  You create a commit to
-> contain the change in the submodule and at the same time create a
-> new commit to bind the updated submodule commit to superproject tree.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-I can imagine this ability also being useful, but it would be an
-independent feature from the one initially requested here...
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>> Solutions I can think of:
+>
+> One more thing that I just thought of regarding the solution in this
+> patch. It seems to be to have a different separation of packs: all
+> objects currently in promisor packs and all objects currently not
+> in promisor packs. And the way it is done is to only exclude (in
+> this patch, mark UNINTERESTING, although it might be better to have
+> a separate flag for it) objects in promisor packs, but not their
+> ancestors.
 
+You're right to mention two separate bits, especially because you do
+not want the "I am in a promisor pack" bit to propagate down to the
+ancestry chain like UNINTERESTING bit does.  But isn't the approach
+to enumerate all objects in promisor packs in an oidset and give a
+quick way for is_promisor_object() to answer if an object is or is
+not in promisor pack sufficient to replace the need to use _any_
+object flag bits to manage objects in promisor packs?
 
-> But I did not get the impression that it is what the original poster
-> wants.  My reading of the original thread (this is a resurrection of
-> an antient thread dating back to 2018) was that you have a submodule
-> at path S, you muck with a file in S/file, and you want to commit in
-> the context of the superproject, having the superproject track S/file
-> in its history (not just S gitlink).
+> There are two ways we can go from here:
+>
+>  - Do not iterate past this object, just like for UNINTERESTING. This
+>    would end up not packing objects that we need to pack (e.g. {C,T,B}2
+>    below, if we only have a ref pointing to C3).
+>
+>   commit  tree  blob
+>    C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+>    |
+>    C2 ---- T2 -- B2 (created locally, in non-promisor pack)
+>    |
+>    C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+>
+>  - Iterate past this object (I think this is the path this patch took,
+>    but I didn't look at it closely). This works, but seems to be very
+>    slow. We would need to walk through all reachable objects (promisor
+>    object or not), unlike currently in which we stop once we have
+>    reached a promisor object.
 
-That's correct.
-
-My common usage was that I would add the entire contents of S, along
-with some associated configuration outside of S, and then make a commit
-of all of that in the superproject.
-
-The two repos (superproject and submodule S) are then tracking the files
-in S independently; so if I was to pull new changes to the submodule
-from its own upstream, git commands run from the S directory would not
-show any changes vs the state of the submodule repo, whereas commands
-run from the superproject would see new changes.
-
-Cloning the superproject repo would produce its version of S, and
-without the S/.git directory.
-
-
--Phil
+Thanks for helping Han & Xinxin.
