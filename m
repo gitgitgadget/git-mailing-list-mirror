@@ -1,86 +1,90 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D83D20B0F
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 04:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895EF6026A
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 04:49:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723608938; cv=none; b=lzoxxWPW13HWup/KKqVcw9g3LUxhKB2C6hQt+8uAIIGkEvKnVhtYcN9Y1p0+PtlxQCseb9gJJ3dQ27fDMAYwHFT79A97C/CnFn099gjBvW9xKrUkBcB8a6ESyv2HEJtkIFehSMCfv7Re/wKqXwx6Pvu0O3/+zsJ5CxOKuNohyTE=
+	t=1723611000; cv=none; b=dmOSw5DHEH1Ow5NJV0PbHpwnX4EDNPxQIPpEdXopqr8aSRaD4tw5wEXycz7AeTUvo898FjghwNBtDI71VmPf1AfTgL1hdfPfQhDfwuvBJE51ZDwe1LWQWWHCI4My4UIrBfVATDg9PfI2Cog57DeteMpFGHLgVeDEY8AlIonhccY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723608938; c=relaxed/simple;
-	bh=WnuCwCBlB9q+Z++z5vPVO5trJXjPu5yRWuvZxPLfYxU=;
+	s=arc-20240116; t=1723611000; c=relaxed/simple;
+	bh=T3Yt9MMDznF+vtjRaqTJlZW63If4AF7Jm+UFnk9KsLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mP1yhl6cOTHlY7FoaAB6NvEJsg2TVle1fsl73QqHnFg3SlDPjBcSrPEkMuKQnuHdpFAm6JWq97LbDZ7lzKyHOlJ5WsA5CuCou6/GbzCMjsSVjx1x9tW7gTjn6a//DudUIK02arYAqajXUnUBbt1mgkH5aFbFmEevE5bFDe6rXys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P8ZQfxQ+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AKr3xE9f; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=iJCnwTtV/XfQA+Ss2LtlAkz1fYmKosQ75NwJa332V6W+hac2mHBt8MPty90Zpb40yT9zBJMCXEm1L3gFKZrOHexgxvH1pDSHwH8K3vqtIuU121zhPtgbM6elA2a6ZSfGrDLFdIazNN8oAT6j9ipdd2D6UDxa2wEp0Elfw8CHFZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VFZP/v63; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E+iHcCxz; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P8ZQfxQ+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AKr3xE9f"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 05A11138FD4B;
-	Wed, 14 Aug 2024 00:15:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VFZP/v63";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E+iHcCxz"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 62DAE138FC64;
+	Wed, 14 Aug 2024 00:49:57 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 14 Aug 2024 00:15:34 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 14 Aug 2024 00:49:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723608934; x=1723695334; bh=4AGQXkoX2h
-	p+SSV/2bIm8NRyv1B9LZw2ITwYerTA19A=; b=P8ZQfxQ++gzpo1Z5Hk4itgQq0O
-	hmMSGPgiMoc3ZUjYjhskzZYOKGgICRY0j/ef4dJ+kUJZ30V2b2PG/wUSVfIMAT7Z
-	yIYDXd9qaupH1oayjSBwz6hVkbRLKDW2+E1elQK7b62EKx7MrKCaxGlzdzYJ53UU
-	HHrIh38rAn3P3kdwIRjD411fJFUFnAn5feKk0gIldc1e+bqlxq90RegU1AhAnppS
-	n9XSVibx+gGmBR/y5XKhB3KEIY5HeABTRwqdzu2hM3J/LwDMhTQpM5reR5yv8Frz
-	vPi3g0MNpn9nqXBMA8T52Fe8ve7vQd499HT4DXsJ0midpesubodF3BeyCwhw==
+	:subject:to:to; s=fm3; t=1723610997; x=1723697397; bh=wSWQ6FYf0b
+	OivduqhyXoZcJBM5zsXmug7o8+V3r4Q7Q=; b=VFZP/v63VxzKzZecGEHI2FmWV6
+	ldFryuaxaAxwXc9nJ9AmCuGHDKUCx84g33k0B5N0bLmxJm3a7vjZ2IhJf5pngCGf
+	2t6xBhC+dQXdocqG5uKIiGG7+SIQXksE9XojhxfYTah9mXsYNnx1mcHE+EtMKaQE
+	fzX11vrZq/SkPg68wcEb8Eih9InNfsO1ai/KeLs3qXPKzZ6vNt0fmv+ZvN7uuD3l
+	kN23byqJlAgJM1REafCUiFTvfuORtFO/y4ChiwV7FCn3DqYmTwn6phkb+DBTIWi7
+	61Yyvl7LD+15sZqV6co6/JmeO5k71BLJVHzl2BimMC44GDnYu3RIIy8cvSFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723608934; x=1723695334; bh=4AGQXkoX2hp+SSV/2bIm8NRyv1B9
-	LZw2ITwYerTA19A=; b=AKr3xE9faQOPqUKJz2tDtZNYFg9OsOSRXmxYjBQP0HXZ
-	7rvldSnFfluwZsJwT5rQ0aIAknSuoodS4vfbr3fLdRvOWaJsrOtfOIlYC/DF1+VO
-	xwp4jckoXm9v1q6W9dHMku6QxHzjG4tTdPAN52XB+yrfgX8N/2rZrnpCPj2XgUxP
-	x2h0VNMfQbWV1U8lkMfzT8lbYtlVhlrogBOVnJm1qZ3for7gHN3ot0xbIDwDDlWh
-	V0/6LWBoYTTtVwC6a1x9lCEGcJ8YwNJ7FnCmCwc6lKDznTxuZYjWNnEA7isROTcW
-	NS90XKgFYvUd71tsGeeteL3vmX2y4K87GfDDmNNzuA==
-X-ME-Sender: <xms:ZS-8ZqPeJbLI3zwuQ_YYjIoXnhocr02hNDhLBzF9jsXDg2bdb6LPgg>
-    <xme:ZS-8Zo9ZYMDMuN6dlzkG3u8bMNx_6XZ5TQdADh3JhpRAg1YceZcL9vRhjElEqUcAy
-    QExlU_6vg34xUGMNw>
-X-ME-Received: <xmr:ZS-8ZhT0sAIhGxEbpe0FJHz8ZFI6qRrZto6SmOt2fwnB2tRCx_RfBUcWpkKFzVLrQvD9qqJavwevpakDd2xnvoeKZ0LaZmYGO5aedE-ppWz_9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgkedvucetufdoteggodetrfdotf
+	fm3; t=1723610997; x=1723697397; bh=wSWQ6FYf0bOivduqhyXoZcJBM5zs
+	Xmug7o8+V3r4Q7Q=; b=E+iHcCxzmcgTgLXW8XYQc0+Aw6zVQUxTaubcPue0qQnE
+	v9HlW62wqto/b+TzE/vG2Kivi9s72kogjqACo9dMC+ZcwBT2KKfu0QXPnhQYYrfm
+	ZS+1ikCOp7ObyNvLpPH16jDSnFNPF8gDya6MN77wJK2qNJ1DP1vHYCmmXVI1D9sE
+	10CYSm9voDX0hQoAutgNWID8SFu8g+5e95e/RrsLIML+YxQO4FiES3/r9NcNv08x
+	gRNsje5c+1VzaiR5vZh2lPoyzOjpo8fWX44ozwJvc20nYeEdrcq+UMdZX+ZCVs0T
+	l2dUnodvPMEKFMv7kRUglgwV0heh2vycQdOrziLwDQ==
+X-ME-Sender: <xms:dTe8ZsSD6gkkNlhVgpQp1P7gFSuYQ6dIh-1GC76vaUTnqtFWCcxVgA>
+    <xme:dTe8ZpxO4qOCl_KM_JKbHa6A2tIv2vp8QYZHFFKeDDcvu6CpkxrYO0wY2qdY8tXnD
+    -v1kfhBXDJZ14mUtA>
+X-ME-Received: <xmr:dTe8Zp34K9HoL8PRR5gQRQpeWnUAs9fQX22BgN_JwjDHpUKWCDJ1imAkTukeuWSiiNk97dWTA5GUwuJE-QPoVJW_TMYsfPImbmtlgGcbtKpJ-w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgkeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejtddtgeffke
-    dujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguse
-    guuhhnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:ZS-8ZqtQ9b-w6TQTlq1UUg79Ks-otbRScvSclIcftGQ190Qafgukgw>
-    <xmx:ZS-8Zie_1AV-gpWZhEiT8pnEVOCmR8lxlE_QdrVcmQZy5asGpwBikg>
-    <xmx:ZS-8Zu0JLSp9jDreSprMrxwMpA399rAFhjT4ffq9xd38zliyLn3vuA>
-    <xmx:ZS-8Zm-5MYvyJ-NSboBt6CSdsiYmCSHNjSFmlsrTsif_Gibc4Fmjbw>
-    <xmx:ZS-8Zjrqk3kxe9v5GzDtJ-2by7d9vH3IctBGN0bVNv4aN0vOHdSf-c7K>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgr
+    hihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:dTe8ZgBVtSwoFiOqDho267pW1WkOKAL_akjLTUJ5RxZ1gmjXMQ1nFw>
+    <xmx:dTe8Zlj11ot0cFREUW1R-z4f8hvAU7LdQW-OICpQmrsk6bZOtwPd2Q>
+    <xmx:dTe8Zsoi-qjiAYBhZrrJScSueirEt1jBaeNrlumDjS7YNHz_6uKHjQ>
+    <xmx:dTe8Zojdl17F8yDvCnso2sTRRaVP9V8FmoanYN0UYYa4A-VfDujFIA>
+    <xmx:dTe8ZgVi0DlcZFI0M8yfost_XCwYCL1aZLoEel5qEXVkqpwJLS7mZNTU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 00:15:32 -0400 (EDT)
+ 14 Aug 2024 00:49:55 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f9f9a985 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 04:15:12 +0000 (UTC)
-Date: Wed, 14 Aug 2024 06:15:29 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f097fade (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 04:49:36 +0000 (UTC)
+Date: Wed, 14 Aug 2024 06:49:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/7] builtin/maintenance: fix auto-detach with
- non-standard tasks
-Message-ID: <ZrwvWIhjZuFkRNgl@tanuki>
-References: <cover.1723533091.git.ps@pks.im>
- <8d6cbae951177718b49d5cfbbeca2d5b0073e266.1723533091.git.ps@pks.im>
- <779795d2-eefd-4fac-b29f-9943f98bc83b@gmail.com>
- <ZrtKoVFci6cdvMS_@tanuki>
- <a02e21f1-b2a4-499a-b767-3426876d31be@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>,
+	karthik nayak <karthik.188@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 12/22] builtin/fast-export: fix leaking diff options
+Message-ID: <Zrw3Z-HyrwynS11X@tanuki>
+References: <cover.1722933642.git.ps@pks.im>
+ <cover.1723540931.git.ps@pks.im>
+ <9591fb7b5e1dac2f989bd10ef2c13a191571a060.1723540931.git.ps@pks.im>
+ <xmqqplqc755r.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,43 +93,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a02e21f1-b2a4-499a-b767-3426876d31be@gmail.com>
+In-Reply-To: <xmqqplqc755r.fsf@gitster.g>
 
-On Tue, Aug 13, 2024 at 02:19:20PM +0100, Phillip Wood wrote:
-> On 13/08/2024 12:59, Patrick Steinhardt wrote:
-> > On Tue, Aug 13, 2024 at 12:29:47PM +0100, Phillip Wood wrote:
-> > > Hi Patrick
-> > > 
-> > > On 13/08/2024 08:18, Patrick Steinhardt wrote:
-> > > > 
-> > > > Fix this bug by asking git-gc(1) to not detach when it is being invoked
-> > > > via git-maintenance(1). Instead, the latter command now respects a new
-> > > > config "maintenance.autoDetach", the equivalent of "gc.autoDetach", and
-> > > > detaches itself into the background if not told otherwise. This should
-> > > > continue to behave the same for all users which use the git-gc(1) task,
-> > > > only. For others though, it means that we now properly perform all tasks
-> > > > in the background.
-> > > 
-> > > I fear that users who are running "git maintenance" from a scheduler such as
-> > > cron are likely to be surprised by this change in behavior. At the very
-> > > least "git maintenance" will no-longer return a meaningful exit code.
-> > > Perhaps we could switch the logic to be opt in and pass "--detach" (or "-c
-> > > maintenance.autoDetach=true") when running "git maintenance" automatically
-> > > from "git rebase" etc.
-> > 
-> > It's actually the reverse: the old behaviour when run via a scheduler
-> > was to detach by default, because git-gc(1) did.
+On Tue, Aug 13, 2024 at 09:34:40AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Oh, I  misunderstood what this patch is changing. So despite being tagged
-> builtin/maintenance and talking about "git maintenance" it does not actually
-> touch builtin/maintenance.c or change its behavior. What it is actually
-> doing is changing how other git commands run "git maintenance --auto" so
-> that it is always run in the background unless the user configures
-> maintenance.autoDetach=false. That sounds like a good change.
+> > Before calling `handle_commit()` in a loop, we set `diffopt.no_free`
+> > such that its contents aren't getting freed inside of `handle_commit()`.
+> > We never unset that flag though, which means that it'll ultimately leak
+> > when calling `release_revisions()`.
+> >
+> > Fix this by unsetting the flag after the loop.
 > 
-> Thanks for clarifying
+> If I grep for 
+> 
+>     $ git grep -nH -E -e '(\.|->)no_free' \*.c
+> 
+> I notice that in a lot of places there is a pattern of doing
+> 
+>     set .no_free to 1
+>     cause a bunch of diff using the same set of options
+>     set .no_free to 0
+>     call diff_free().
+> 
+> I am curious why we do not need any diff_free() here?
 
-Yes. I should've probably prefixed this with "run-command:", not with
-"builtin/maintenance".
+Because it's already being called via `release_revisions()`.
 
 Patrick
