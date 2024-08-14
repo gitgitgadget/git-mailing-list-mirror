@@ -1,64 +1,64 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517941AED37
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 12:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1291B14E0
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 12:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723637553; cv=none; b=Rp+nTZehAwMesf6sDp9F2cgSSWGm9fHzkbGCwLloU2ReeQrkDhDh6B1tHIoEeT0glatkGRh+A70APreueW3Ov05t4m1vk2EIpbxNR1wjEzhC4KnXdOXPpJF5L9srXIOnr0QEn4gJWDFPKsLiJztBd3NoTutfgUHAibPKSJxaeXA=
+	t=1723637556; cv=none; b=LDCNwMocSYbrOeLfGGKlNdCqRs68jSliPjK6rW/K9sQ3RNSGufBU/IScVHI6Dfts6PbQmByViDbCTEeZXkw92xm6UPwdk4gtNH0LzUcmQEAo31JKRRmRHUhaQHzrzyVbyOtRAnHRLT9N26iuuu64ZoYEE/tsGngQ6U3N+8C2ANA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723637553; c=relaxed/simple;
-	bh=Ov4eLVtm6yT9uOUCtV5vJuXg3nTmt8xFArm/NwqQ/hQ=;
+	s=arc-20240116; t=1723637556; c=relaxed/simple;
+	bh=jCmSlQsEALm46t1imMVvfax0xwT6yTFSzu5OXBU/zPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSJL1IUgzMxVs8paoY1xKg3wK4ggpm+1WlII4sq0kmNPEb7tofMwPkZrSVAlNvYOHyp0Vz3PIMzhatmf7ROg8tossLz/MxPV5Juh6ZakCWgDHS62kBXzZjQHNv4XzLaPL8czTFuqS+xCtyt/NXQuwTfQTitwWA0ln6GcsIVGLb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEdRpoT3; arc=none smtp.client-ip=209.85.160.43
+	 MIME-Version; b=qUStu+4L4fcd9ZWqj/bP1HbgRTwjURRuUhZhoCdR0K5NGGCRZ0f6N+ymnjYChGQQ2u8Q0V4FPcBtJg4IsP02Eqgmd5IhOpjL6dVW2UTQWEeth6uQPbj4RskHHLgzFZ1nzDrncrNpLn6UntgzUOgpTwa7pnOhj8aa7owEN1whX3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Koz5mXVe; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEdRpoT3"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-268a9645e72so4525772fac.1
-        for <git@vger.kernel.org>; Wed, 14 Aug 2024 05:12:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Koz5mXVe"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-710dc3015bfso632605b3a.0
+        for <git@vger.kernel.org>; Wed, 14 Aug 2024 05:12:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723637551; x=1724242351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723637554; x=1724242354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kKZXsDt2QUTqx5KDs/S2P2rC9mkkY4fDIDIWexniHKE=;
-        b=NEdRpoT3YuR11dIbfAhjh3tipl343aUz6808qmtI4XEHg9lxqIciqV6OhqSVwR+RhQ
-         cZA7l/GtkRUTJpaEVL3QxCo9gbYH5Y27ZTQGV9KhT1GDGTQWHkTSR6QHtAIt+1UoNZyk
-         /VZH6E9dGoAAEnWIId/JxuQF6xabjJyKwXAGf6BT2ozGt6jO45zFlI5lZIueb/h3lukz
-         zBksP+I+8Wau0bNPMFnXPTKbfzT+LQ8BudhOJWGz2sMBot5C8dqVQLBnaAsk+W8jaYgn
-         21lGRZVuKj+my0iPmC4FGwr7RHNNQqMmCwCmTCbD6czD/semT9YK1yMvVxJ+I0Y+f9Jq
-         vlhA==
+        bh=SalHpdCC/cBvZJeQzsN38DRBcGIUfg1wbGKqy+JZGqk=;
+        b=Koz5mXVeTVRjxCLD90P6S97aEM4gRKbbo2zlszT7a1FjkbqQnV2yfkOf1ko6vE1tKV
+         6cQxj1q34i3Wox5BhbBgWWIwmZlacHcHN892eY0CD3CWdLXXOLvfiHTn5zorbDQewDSv
+         DZZQXiP6nL9/pN3wSijLvM93Et+MnFbxMXGBEQr9uzudWH1frjYTqGCopWwdv3F8gOq4
+         0//Z4Ddrn0A3VfwQ66QKyg5ISUQcH++ja2hrtMCDjEQC15+5/vyVd8OPj1V4DWsecaSS
+         khSoP+ID8PpnVGfQLARlgGl0B3piJMWh8a4OViP0tY+qezjYxXYYTPEI4BSTQwoS+g0f
+         SPsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723637551; x=1724242351;
+        d=1e100.net; s=20230601; t=1723637554; x=1724242354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kKZXsDt2QUTqx5KDs/S2P2rC9mkkY4fDIDIWexniHKE=;
-        b=vlKHdt7t1zh7GYgQTVRxG3azns37zH8+FWtjPflP7TE6IOX6aiEzP6Fa8iNGOSYn3o
-         u1mLTrytnvLUQlBfDcdn9U9wAoebFN4nNAxlZyblucLSnRGHMlxIcWK0SCf3Zo4Z+RN0
-         SP3dBfKxuaWf4xDROyBJn+6EyxI3mZwjfwwP4EJY7KKkwXbdljrYi6shnHXXYqkqUKCR
-         qKUD1WstdIGaWtb/PheHgzgLwSH/EFXxuL85Jof7BgdalkGgGqkKVAqxfFb1grG7p0rU
-         pf2jqrh1+KiIKurgTd5gTXHTVVwCOnjGyBZ0lZSa2JYVqBinNjWqGEj+KzEgCNXzBSlH
-         b2+w==
-X-Gm-Message-State: AOJu0YzAgLyed2QSLjlNh4GE5w1ruHSzcdDxHKJsHNcQjIqFspPbqiUr
-	/LnX6DT/X+d7o/o56yPJERty/2ewq4Pcqj6uM2LpjogdygfHog/ifU2IoqMOBHo=
-X-Google-Smtp-Source: AGHT+IH6xYKtLQLMn2uyTM6Wc+rn9nv3CScz/9M7CNpwx0JUodfWuvYZtVBa97VUYKABozkF2w8ezg==
-X-Received: by 2002:a05:6870:4722:b0:260:f97d:6473 with SMTP id 586e51a60fabf-26fe5bb929fmr2595677fac.38.1723637551023;
-        Wed, 14 Aug 2024 05:12:31 -0700 (PDT)
+        bh=SalHpdCC/cBvZJeQzsN38DRBcGIUfg1wbGKqy+JZGqk=;
+        b=N2GPOub0PKWbPVZrmbWgDW4a/SPLesF7xFIcIpaknzngp7ssEs6M1R9WS23euiBUPZ
+         r6b++PrzXIO943ab0k/IlV2E5urb3R5gQx+gOo9TE5sOk8/cWXKWVD0gRO29q5P3oZ7X
+         Ie8FRBaZBVcceGyiX4Y9jRXZfC7I/tNPPFm40EoDSQIJNgnUkLoNb2bjgXJomSnblzsN
+         nRBfTCiSSWNrItS3R+hbl2tEuP6El/mDe7cZvTtkh7TJxVHtR78sDRcZwE2ULJ//30e7
+         otVsgZ9w4ALt5FThTp74hvKLzdyaB745c5LtkHi4Vfbj0BMd3jLuqGbOM9lVCiEhwulP
+         stCQ==
+X-Gm-Message-State: AOJu0Yyc/aMkaRzrOTjhtH8bTK5xhapDWUbpgDf+euq2hrf82RHHQh9F
+	kAyH4VLmiqXzqjbBDfWInz7hA/iIDxJ4jp0IftFuLyn/Vvbyp9fiyKsi2nKsWsE=
+X-Google-Smtp-Source: AGHT+IF18BHzIaZhR2ikYC64/1x2dhGiou6nFXH33V4UXkB9OKdiniYY033mSEe4y54NLL6vUhshvQ==
+X-Received: by 2002:aa7:88cd:0:b0:70d:2709:3b53 with SMTP id d2e1a72fcca58-7126a42247cmr3522777b3a.4.1723637553680;
+        Wed, 14 Aug 2024 05:12:33 -0700 (PDT)
 Received: from Ubuntu.. ([106.205.236.194])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-710e5875200sm7195450b3a.37.2024.08.14.05.12.28
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-710e5875200sm7195450b3a.37.2024.08.14.05.12.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2024 05:12:30 -0700 (PDT)
+        Wed, 14 Aug 2024 05:12:33 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 08/10] t-reftable-block: add tests for log blocks
-Date: Wed, 14 Aug 2024 17:33:16 +0530
-Message-ID: <20240814121122.4642-9-chandrapratap3519@gmail.com>
+Subject: [PATCH 09/10] t-reftable-block: add tests for obj blocks
+Date: Wed, 14 Aug 2024 17:33:17 +0530
+Message-ID: <20240814121122.4642-10-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240814121122.4642-1-chandrapratap3519@gmail.com>
 References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
@@ -70,46 +70,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the current testing setup, block operations are only exercised
-for ref blocks. Add another test that exercises these operations
-for log blocks as well.
+In the current testing setup, block operations are left unexercised
+for obj blocks. Add a test that exercises these operations for obj
+blocks.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-block.c | 90 ++++++++++++++++++++++++++++++++-
- 1 file changed, 88 insertions(+), 2 deletions(-)
+ t/unit-tests/t-reftable-block.c | 79 +++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
 diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index fa289e10f2..01ef10e7a6 100644
+index 01ef10e7a6..34d37fe1a7 100644
 --- a/t/unit-tests/t-reftable-block.c
 +++ b/t/unit-tests/t-reftable-block.c
-@@ -12,7 +12,7 @@ license that can be found in the LICENSE file or at
- #include "reftable/constants.h"
- #include "reftable/reftable-error.h"
- 
--static void t_block_read_write(void)
-+static void t_ref_block_read_write(void)
- {
- 	const int header_off = 21; /* random */
- 	struct reftable_record recs[30];
-@@ -101,9 +101,95 @@ static void t_block_read_write(void)
+@@ -186,9 +186,88 @@ static void t_log_block_read_write(void)
  		reftable_record_release(&recs[i]);
  }
  
-+static void t_log_block_read_write(void)
++static void t_obj_block_read_write(void)
 +{
 +	const int header_off = 21;
 +	struct reftable_record recs[30];
 +	const size_t N = ARRAY_SIZE(recs);
-+	const size_t block_size = 2048;
++	const size_t block_size = 1024;
 +	struct reftable_block block = { 0 };
 +	struct block_writer bw = {
 +		.last_key = STRBUF_INIT,
 +	};
 +	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
++		.type = BLOCK_TYPE_OBJ,
 +	};
 +	size_t i = 0;
 +	int n;
@@ -120,18 +111,20 @@ index fa289e10f2..01ef10e7a6 100644
 +	REFTABLE_CALLOC_ARRAY(block.data, block_size);
 +	block.len = block_size;
 +	block.source = malloc_block_source();
-+	block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
++	block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
 +			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
 +
 +	for (i = 0; i < N; i++) {
-+		rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
-+		rec.u.log.update_index = i;
-+		rec.u.log.value_type = REFTABLE_LOG_UPDATE;
++		uint8_t *bytes = reftable_malloc(sizeof(uint8_t[5]));
++		memcpy(bytes, (uint8_t[]){i, i+1, i+2, i+3, i+5}, sizeof(uint8_t[5]));
++
++		rec.u.obj.hash_prefix = bytes;
++		rec.u.obj.hash_prefix_len = 5;
 +
 +		recs[i] = rec;
 +		n = block_writer_add(&bw, &rec);
-+		rec.u.log.refname = NULL;
-+		rec.u.log.value_type = REFTABLE_LOG_DELETION;
++		rec.u.obj.hash_prefix = NULL;
++		rec.u.obj.hash_prefix_len = 0;
 +		check_int(n, ==, 0);
 +	}
 +
@@ -154,8 +147,7 @@ index fa289e10f2..01ef10e7a6 100644
 +
 +	for (i = 0; i < N; i++) {
 +		block_iter_reset(&it);
-+		strbuf_reset(&want);
-+		strbuf_addstr(&want, recs[i].u.log.refname);
++		reftable_record_key(&recs[i], &want);
 +
 +		n = block_iter_seek_key(&it, &br, &want);
 +		check_int(n, ==, 0);
@@ -164,14 +156,6 @@ index fa289e10f2..01ef10e7a6 100644
 +		check_int(n, ==, 0);
 +
 +		check(reftable_record_equal(&recs[i], &rec, GIT_SHA1_RAWSZ));
-+
-+		want.len--;
-+		n = block_iter_seek_key(&it, &br, &want);
-+		check_int(n, ==, 0);
-+
-+		n = block_iter_next(&it, &rec);
-+		check_int(n, ==, 0);
-+		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, GIT_SHA1_RAWSZ));
 +	}
 +
 +	block_reader_release(&br);
@@ -185,12 +169,11 @@ index fa289e10f2..01ef10e7a6 100644
 +
  int cmd_main(int argc, const char *argv[])
  {
--	TEST(t_block_read_write(), "read-write operations on blocks work");
-+	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
-+	TEST(t_ref_block_read_write(), "read-write operations on ref blocks work");
+ 	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
++	TEST(t_obj_block_read_write(), "read-write operations on obj blocks work");
+ 	TEST(t_ref_block_read_write(), "read-write operations on ref blocks work");
  
  	return test_done();
- }
 -- 
 2.45.GIT
 
