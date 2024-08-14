@@ -1,53 +1,53 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371C313C684
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739D813A40C
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618328; cv=none; b=iRdzTZjozeEy2nTZkLF4Gw9IEPhLNEQ4todC4BoC6IYUVBmcWGILaUFVcQtnShEpW/vi5goiitQYtBMWn/Hc29A9WimsPrB9OXONHsCM1Qxz75TYuR1b3PKcNUcmFpTQTxa6GVW/xyGf++/j+9QNs3mHw+xZTM60DNCqTMm6vGo=
+	t=1723618335; cv=none; b=qaGiIu+20TAlfSnwGAK7MgoLe69JbD78LMZUY+fuqEexEgDMuTkdgTRtPMsEMxIoh3RNqmq13Zv1bYBY3q5u0bRL0LNEb9dJEzEDoQt0WCS7RMYA0PO/PC1QKGp9JGbBVK6ZpUsZ4EOPR/Ih+ooElq04+yoTMg5tDq8Y3X3cDK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618328; c=relaxed/simple;
-	bh=JUm3lsJilsFV1O2dMe3PbxtbybHfB4GcBuGmCDuimkw=;
+	s=arc-20240116; t=1723618335; c=relaxed/simple;
+	bh=dAZYz0j98vNnestOGKXW2iOYHIoBsZx/oj1Z4PZF0eQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y0YtQ8bnyopckCLFnwQYNEkZd39oJwcciEEIBgIizHmdhbS5ow4L6tDE+USCTS1lN42olHGxZfe77uftMly8mepmHXuakR3Z22LDVyB19omJbhxc7BYyTsSLss8y5NsJLXho7OGNvp65zMQcXFiHBhLysTAjnoW/y+JOhc5fUBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O4Td8bfF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m3iauNp4; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=YGylVWYiKXM/8it3UjT00eBMOhtd+dhakL8hX4BRneeY/u+ks+rUt81z1mdfvCeZxD1mimE/yXhja0f7LszEhLaxpfSuX6kDNJeYcfOrNX1uTrcUkhwomUYszLJNyPI7NGIstYuCVizEZC1BVznMo3PtfLZNZscJgdz5IcnZTcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lZAT4CA2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DiO2Q7By; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O4Td8bfF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m3iauNp4"
-Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 474591388210;
-	Wed, 14 Aug 2024 02:52:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lZAT4CA2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DiO2Q7By"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id C4FDC1151A98;
+	Wed, 14 Aug 2024 02:52:12 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 14 Aug 2024 02:52:06 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 14 Aug 2024 02:52:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723618326; x=1723704726; bh=iKG4mzjCkG
-	I7jcaSdTJ/I0imjWoGH0ua/2Y5iqWAZio=; b=O4Td8bfFhp96rHNj8UUadjoTir
-	UJnOxaiAZxde37cix1fpzrXwtqB32uF+PDWBFsFXSSEuWW56dR0lVF4HSi0G9Mf8
-	mRfChb4JQyeyXqDS1XmpHn4bgBmzPpEU506ABuiSVHuEdxX4inxkMSLsa1+4v0XB
-	4tAFbwNrai7n/uPaFZHFKXo3jIHRfC7J4G9OhkJYLoGWm8yNdN23EaTA6xQREAsR
-	1UPY7I+lRBqAjw74iqyhT/4JVIOa5wDIz3zG3RrtTO+it+tmAva3EirG4EX8nW9t
-	u9rZGN2Zd0MOh4zc7uE285R/5suG+839oPgi+vPuyHwP4pZxaMZaM/BPPZ6g==
+	:subject:to:to; s=fm3; t=1723618332; x=1723704732; bh=95K6mA5Ybu
+	4amAaRvVVRKZHzdzJH9x1N6WV3yk/phGA=; b=lZAT4CA27S/X/Wlmb5og5418gj
+	DO+KAg8RmNFeRvVJHjmLoiI7/82yKpB1iSgpIIh2DUHT6bnBfaPMd/z3hUPXvbcD
+	wpZtkTs1cmakxxLwwyy7DUewDe8wR3gC+uJ7SghF5xxN/gxCgPj6D+m6A22moSFV
+	nIunGigEciwPw86eoqXQVmjNXJWb/09QcODedGpydv2c+sEI0bcVyTMnnmYPqmum
+	WIBQIl0s3caN9fDaz4dyko7JRZaOEEadP+1OYJlFz3HRCfRMVEcoI3IdTVw7Zd4w
+	Y+7gYw0HDKAT9zx1SVy0/ceOO2QXMzwlgTqT2OXyjf/DUJECWSk5ZUvxQAww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723618326; x=1723704726; bh=iKG4mzjCkGI7jcaSdTJ/I0imjWoG
-	H0ua/2Y5iqWAZio=; b=m3iauNp4xeM1PNNGs51pdz+c03oZY7vAU2pIFO1rPHjx
-	wJ/Xjqr6qCAyjfBR1RLTJCe7ddzDHpQjzdNyFXiuUVAEZ52RiUU3ac/S3qJkQOmr
-	bgeOA8yYI6FxW6vWP8j8IAlqBiCAYYx9FuEFBDf0G+EkESWd4PtqmteBWdjPXTBT
-	xrQt2B8YOp6R3ctKu9HL7GJy3Ax9weBPHeDFlM+wkka6Bve+7ChrqGdM1Vawz4sH
-	ZFcK/1G38YWp5BRWRhsRk0op5A62Z4aM08QyXOg0TGZaM4KQ8GyyG/DYNWAX8THu
-	H3YNRfvDGHxL1Nn4NR1V8dNWUML1EkkI9FNONYbbIA==
-X-ME-Sender: <xms:FlS8ZoXj5VRTWp_wHuZReb5pc5RF4PPGlyipp26XvkPf4CryrypAhA>
-    <xme:FlS8Zsl53QyLi3XdtT0Y9DFjLojUGpeSnYCtS4fRVwZYrrcVgew-OLZCXSb8WRJFI
-    Rt7Ez5bOSs_4Km7CA>
-X-ME-Received: <xmr:FlS8ZsbIYwCDmzAZUQeZcxvKBFBbJCxUzJq256bV59AEWCl9pJkfPjAWK7RXqXNFfLKEwQCgrWKz1vxVGgXJqPa49iGC6gaIogM2Nd5DH_zFeg>
+	fm3; t=1723618332; x=1723704732; bh=95K6mA5Ybu4amAaRvVVRKZHzdzJH
+	9x1N6WV3yk/phGA=; b=DiO2Q7ByzglugF+lY6vvMcBiNoX4q4PO8AK5FJnYNG1A
+	SccWcMgcWx8hqgfFwoOBMekD/P2QUpWSUSwQ5EfSkYYbZK4MPi1kntR+ZGhVPfdN
+	Y5c+aYugWPwrZrFux7ZoExY9vZC69zRBtC/I1uClKrl3mWRYQNinltYXYshd/163
+	QD2vjHihiLPqxo1LY//gaO5vXZ/j6DCiMLHD1C2fnew9AFS7Y9aXluL/yJ/EmiZ3
+	Qc/bwtKxvowS7Kv7sRkGhtpCsnF+YGWfg0/HeImtPoPbGkZ4vpSp2pEEynw+FC2M
+	+R/j1rJDxIsQvDfwWcsIqKD6pA3FFjoS2Ck2mnlLSw==
+X-ME-Sender: <xms:HFS8ZkAnBrYwfHP4G8DwAnHKWJ-TqwLF8B7C5YyVL6Il1L4iGnSWzg>
+    <xme:HFS8ZmhS2P65nSW2c6IdbVRQSIg_K9-CimnT5ntz6IlU8Nf-xS2UTuWfpE-JGq2a8
+    Z-ozplfM3Mt-wD6qA>
+X-ME-Received: <xmr:HFS8ZnneZPsyYEJtMsjs-Iemj5bIxBdXWNxcuklxLE0wySc7WoH6uAGFlqR8W4o0VOMMhxAIjNRFAOyR_IvKSRHg2fCknDBxHG8v8pa5Y50j5w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,30 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:FlS8ZnXMSeBEaKucyvcYfRxoPi0ASzuAXsH6qfk2iv7ntzLEwCFLZA>
-    <xmx:FlS8ZinwPPtsCpNCusyDsWm2wZ3kEGXWIYCnZJVmYpqlQ7BDG8ds7Q>
-    <xmx:FlS8ZsezaS1L0J_uODQ-OkaJpR4s1u6AtpWKCS0Bp-Hhcmx-aqC--Q>
-    <xmx:FlS8ZkHnlw3cQVjYmDbt4jDpgX6_1IXyGlC-Y7k9vDZcUXjiWTnN7w>
-    <xmx:FlS8ZgY01_2OKJLUtXvTidfsMFrOmoWzGYM_hJOzlIZ4-6ltzzRSpLkO>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
+    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:HFS8ZqzbQvRL2jSXbowgW2qmpOPVEkoIzw30ZqAz-S99wbjFplT3xA>
+    <xmx:HFS8ZpTUp_j3JqV3eZrPmo8XJV0uy4tDBH-9IuG75eD9j1DB81lRPw>
+    <xmx:HFS8ZlYXyXks9YKs-kzOl4w5BVVf7d0oT0r7jPLHG1QT4328SqbjTA>
+    <xmx:HFS8ZiTFew8SFnjcWQPFWI51xHdQZC7u6azuwy6K0uOdKOb4f8sWPQ>
+    <xmx:HFS8ZoHcS7jduo-jcXDP_uS6Hjj_Zc3gnNqbmJHFVfWNlzUvvXAhK7gg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 02:52:04 -0400 (EDT)
+ 14 Aug 2024 02:52:11 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 25cef260 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 06:51:46 +0000 (UTC)
-Date: Wed, 14 Aug 2024 08:52:03 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6616149a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 06:51:52 +0000 (UTC)
+Date: Wed, 14 Aug 2024 08:52:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 05/22] bulk-checkin: fix leaking state TODO
-Message-ID: <276c828ad18c422c7cca0503e336c8aee8aeb149.1723614263.git.ps@pks.im>
+Subject: [PATCH v4 06/22] read-cache: fix leaking hashfile when writing index
+ fails
+Message-ID: <ed0608e7059c925e50daf5dc454ced781a09a948.1723614263.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723614263.git.ps@pks.im>
 Precedence: bulk
@@ -92,93 +93,257 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723614263.git.ps@pks.im>
 
-When flushing a bulk-checking to disk we also reset the `struct
-bulk_checkin_packfile` state. But while we free some of its members,
-others aren't being free'd, leading to memory leaks:
+In `do_write_index()`, we use a `struct hashfile` to write the index
+with a trailer hash. In case the write fails though, we never clean up
+the allocated `hashfile` state and thus leak memory.
 
-  - The temporary packfile name is not getting freed.
-
-  - The `struct hashfile` only gets freed in case we end up calling
-    `finalize_hashfile()`. There are code paths though where that is not
-    the case, namely when nothing has been written. For this, we need to
-    make `free_hashfile()` public.
-
-Fix those leaks.
+Refactor the code to have a common exit path where we can free this and
+other allocated memory. While at it, refactor our use of `strbuf`s such
+that we reuse the same buffer to avoid some unneeded allocations.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bulk-checkin.c   |  2 ++
- csum-file.c      |  2 +-
- csum-file.h      | 10 ++++++++++
- t/t1050-large.sh |  1 +
- 4 files changed, 14 insertions(+), 1 deletion(-)
+ read-cache.c                       | 97 ++++++++++++++++++------------
+ t/t1601-index-bogus.sh             |  2 +
+ t/t2107-update-index-basic.sh      |  1 +
+ t/t7008-filter-branch-null-sha1.sh |  1 +
+ 4 files changed, 62 insertions(+), 39 deletions(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index da8673199b..9089c214fa 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -61,6 +61,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+diff --git a/read-cache.c b/read-cache.c
+index 48bf24f87c..36821fe5b5 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2840,8 +2840,9 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	int csum_fsync_flag;
+ 	int ieot_entries = 1;
+ 	struct index_entry_offset_table *ieot = NULL;
+-	int nr, nr_threads;
+ 	struct repository *r = istate->repo;
++	struct strbuf sb = STRBUF_INIT;
++	int nr, nr_threads, ret;
  
- 	if (state->nr_written == 0) {
- 		close(state->f->fd);
-+		free_hashfile(state->f);
- 		unlink(state->pack_tmp_name);
- 		goto clear_exit;
- 	} else if (state->nr_written == 1) {
-@@ -83,6 +84,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
- 		free(state->written[i]);
+ 	f = hashfd(tempfile->fd, tempfile->filename.buf);
  
- clear_exit:
-+	free(state->pack_tmp_name);
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
+@@ -2962,8 +2963,8 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	strbuf_release(&previous_name_buf);
  
-diff --git a/csum-file.c b/csum-file.c
-index 8abbf01325..7e0ece1305 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -56,7 +56,7 @@ void hashflush(struct hashfile *f)
+ 	if (err) {
+-		free(ieot);
+-		return err;
++		ret = err;
++		goto out;
  	}
+ 
+ 	offset = hashfile_total(f);
+@@ -2985,20 +2986,20 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	 * index.
+ 	 */
+ 	if (ieot) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		write_ieot_extension(&sb, ieot);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_INDEXENTRYOFFSETTABLE, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		free(ieot);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 
+ 	if (write_extensions & WRITE_SPLIT_INDEX_EXTENSION &&
+ 	    istate->split_index) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		if (istate->sparse_index)
+ 			die(_("cannot write split index for a sparse index"));
+@@ -3007,59 +3008,66 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 			write_index_ext_header(f, eoie_c, CACHE_EXT_LINK,
+ 					       sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_CACHE_TREE_EXTENSION &&
+ 	    !drop_cache_tree && istate->cache_tree) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		cache_tree_write(&sb, istate->cache_tree);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_TREE, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_RESOLVE_UNDO_EXTENSION &&
+ 	    istate->resolve_undo) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		resolve_undo_write(&sb, istate->resolve_undo);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_RESOLVE_UNDO,
+ 					     sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_UNTRACKED_CACHE_EXTENSION &&
+ 	    istate->untracked) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		write_untracked_extension(&sb, istate->untracked);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_UNTRACKED,
+ 					     sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 	if (write_extensions & WRITE_FSMONITOR_EXTENSION &&
+ 	    istate->fsmonitor_last_update) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		write_fsmonitor_extension(&sb, istate);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_FSMONITOR, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 	if (istate->sparse_index) {
+-		if (write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0) < 0)
+-			return -1;
++		if (write_index_ext_header(f, eoie_c, CACHE_EXT_SPARSE_DIRECTORIES, 0) < 0) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 
+ 	/*
+@@ -3069,14 +3077,15 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	 * when loading the shared index.
+ 	 */
+ 	if (eoie_c) {
+-		struct strbuf sb = STRBUF_INIT;
++		strbuf_reset(&sb);
+ 
+ 		write_eoie_extension(&sb, eoie_c, offset);
+ 		err = write_index_ext_header(f, NULL, CACHE_EXT_ENDOFINDEXENTRIES, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+-		strbuf_release(&sb);
+-		if (err)
+-			return -1;
++		if (err) {
++			ret = -1;
++			goto out;
++		}
+ 	}
+ 
+ 	csum_fsync_flag = 0;
+@@ -3085,13 +3094,16 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 
+ 	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_INDEX,
+ 			  CSUM_HASH_IN_STREAM | csum_fsync_flag);
++	f = NULL;
+ 
+ 	if (close_tempfile_gently(tempfile)) {
+-		error(_("could not close '%s'"), get_tempfile_path(tempfile));
+-		return -1;
++		ret = error(_("could not close '%s'"), get_tempfile_path(tempfile));
++		goto out;
++	}
++	if (stat(get_tempfile_path(tempfile), &st)) {
++		ret = -1;
++		goto out;
+ 	}
+-	if (stat(get_tempfile_path(tempfile), &st))
+-		return -1;
+ 	istate->timestamp.sec = (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+ 	trace_performance_since(start, "write index, changed mask = %x", istate->cache_changed);
+@@ -3105,7 +3117,14 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	trace2_data_intmax("index", the_repository, "write/cache_nr",
+ 			   istate->cache_nr);
+ 
+-	return 0;
++	ret = 0;
++
++out:
++	if (f)
++		free_hashfile(f);
++	strbuf_release(&sb);
++	free(ieot);
++	return ret;
  }
  
--static void free_hashfile(struct hashfile *f)
-+void free_hashfile(struct hashfile *f)
- {
- 	free(f->buffer);
- 	free(f->check_buffer);
-diff --git a/csum-file.h b/csum-file.h
-index 566e05cbd2..ca553eba17 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -46,6 +46,16 @@ int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
- struct hashfile *hashfd(int fd, const char *name);
- struct hashfile *hashfd_check(const char *name);
- struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp);
-+
-+/*
-+ * Free the hashfile without flushing its contents to disk. This only
-+ * needs to be called when not calling `finalize_hashfile()`.
-+ */
-+void free_hashfile(struct hashfile *f);
-+
-+/*
-+ * Finalize the hashfile by flushing data to disk and free'ing it.
-+ */
- int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_component, unsigned int);
- void hashwrite(struct hashfile *, const void *, unsigned int);
- void hashflush(struct hashfile *f);
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index c71932b024..ed638f6644 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -3,6 +3,7 @@
+ void set_alternate_index_output(const char *name)
+diff --git a/t/t1601-index-bogus.sh b/t/t1601-index-bogus.sh
+index 4171f1e141..5dcc101882 100755
+--- a/t/t1601-index-bogus.sh
++++ b/t/t1601-index-bogus.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
  
- test_description='adding and checking out large blobs'
+ test_description='test handling of bogus index entries'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'create tree with null sha1' '
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index cc72ead79f..f0eab13f96 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -5,6 +5,7 @@ test_description='basic update-index tests
+ Tests for command-line parsing and basic operation.
+ '
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'core.bigFileThreshold must be non-negative' '
+ test_expect_success 'update-index --nonsense fails' '
+diff --git a/t/t7008-filter-branch-null-sha1.sh b/t/t7008-filter-branch-null-sha1.sh
+index 93fbc92b8d..0ce8fd2c89 100755
+--- a/t/t7008-filter-branch-null-sha1.sh
++++ b/t/t7008-filter-branch-null-sha1.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='filter-branch removal of trees with null sha1'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup: base commits' '
 -- 
 2.46.0.46.g406f326d27.dirty
 
