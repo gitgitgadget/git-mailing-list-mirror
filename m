@@ -1,85 +1,85 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D435313D28A
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7068213D2A4
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618340; cv=none; b=IdSLzsoL+yIH5Js8ISmwog6UQCwzUjMWidFyYLGi0ggcwC5Kd7ObN2CuBgzgLlq2kz1mk6M6rMlCLDjF81fMz6Q0Xks9W4s2FFKJUPpezSPYO4BSpvW00y50ISHNh8pL0AjwT41EM7oov0clyWOb68jf6aFG+mLbBlWbiNUvolM=
+	t=1723618343; cv=none; b=a8uKZiWXElwC8bieYVDZqloA37Y7rD13AyhEvBYaTjUOrNnj8C451UGibX0WKVmbo7EdeLnAeD8NyCXTy6hY1+BMB9T/dXgP+1sRu5WMkqm+IyO9ZHq9/0ksUA2RghHZGpdgH6fE8MAFQXddWCIEHrO1UFwoZmxGYsK24pahcig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618340; c=relaxed/simple;
-	bh=JU+n7Yx3jSr8AyZIV6SJuxZrhmweAHgRqO0ZPi6qHDk=;
+	s=arc-20240116; t=1723618343; c=relaxed/simple;
+	bh=i+z0Ja1UQC9OBf3tk7CNnJA2y7Cbl+JFKmwwPYAvNuM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qVgJiirpbLzBj8ktorK1CkAIS9A009EXBaRQIOQot2+b9h8hCzPNZvdXXJxFwYLLBZrW7XLhd5f5aSMGZbVX4nDGx1ARQqTgyfDsuHpslHSDC8qnTrZ7sTGfn6X9ROVvC1IlweA4gxWrUTkTu/O/q0aKZhHm9lbJH6FqVBwhUgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bz/wvipZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C1Es7tYB; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=p6ODw9XPNQKGjm5l0Yb+mRktdrsj/57xKKRTV43wAnhjyRNz1zzEaJ+seKzPWjYiA3+gHRwvlKgQQF4mqhi8YUA781sqTOPBaaoVEavh/HEztneZztcBgMT4kEefhap9uh6nPutLVOo2e4UIUDLspmJY6eB153fV4YMg9bR5bHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g2L4Co45; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LWk4KXb1; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bz/wvipZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C1Es7tYB"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 097EB1151A98;
-	Wed, 14 Aug 2024 02:52:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g2L4Co45";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LWk4KXb1"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id BB6C9138946B;
+	Wed, 14 Aug 2024 02:52:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 14 Aug 2024 02:52:18 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 14 Aug 2024 02:52:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723618338; x=1723704738; bh=LakOwOwaVp
-	c6934Z2Z9eCyYXy7OVRrlsGgNCDtQF08c=; b=Bz/wvipZkNCfntLnFiFc8Dpazz
-	MnvdhihR7QV4q74sfgVwBI2o/A8mp8mHPQ/HFDPm5NXDUEaQXE03I+fSjj0ksCQq
-	29L9XwhxAsoBshshUnPcF6Ch23lw495yRX5n0+aSlBGaNBWERA1DD6nOpr0hXSkl
-	YXhK1BYZA3axA8uWYb6R8voGxLMlon0a81N4pjdCgOR8+/iuepfyAtwXmZh/zkN5
-	wWIk4yZYIMZR3BkIPww04AwgCVddHVTqhqcs2kd2vsRN2M+eSrRBFP2SZkVidzhS
-	KzButmutAjqpW97um7hBOqJmZKpS36bNzwP63uPXfUgERC9qijVWVebFHJBQ==
+	:subject:to:to; s=fm3; t=1723618340; x=1723704740; bh=BOqUsUHyb3
+	BpG8+cATWFsGtJ7YKoNLA0txlZw8OisMA=; b=g2L4Co45/UhIclPq6sO9Rlp5SW
+	4KVBR59533Sku8moIpwbaTwg0iecvuuJ/Iv9w7e1POrhylnmzCOnf7breRMCGveo
+	ysqyruyOHrPr5GUcA8XitmKoeI17nR3jtYz1/T4lSFeoqNwpeYdaQ6WgalP4zg6+
+	4FfEQRIXs9NnYdwoVRII3yvQeudRu+fOdltYqLKuIxLOTSqzI0a7fv33kLf0loUh
+	NilLxddNJORN1n2Dp5hLWlLUlQhefJf6VjVGbNR7V3rnrQJQ2vCIciAtQACzaORW
+	WG+xXk3kr2c2//jwkQRx2bbTKY6bg4bJqLJh03iy200EV1Tnc3snbRR6ZbVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723618338; x=1723704738; bh=LakOwOwaVpc6934Z2Z9eCyYXy7OV
-	RrlsGgNCDtQF08c=; b=C1Es7tYBxn36RQeiQ29U/+31Szo0H6YZcIfC2wxEOWLB
-	i5STMc5O8l8IZ52a+OeU6ipvx1ni+3tus9bu5oAu2PscJpt4nrDg+4ZKCV3nqXEg
-	Yz3RyOIu1+Jx7he8r+i1QHU3WZzjgnVu9F3N8hbz26awOv7wgtjuZOfgEyvOXP8R
-	OoLGfZuu5fGfPJNZY6SbMWl2UjghgkDFDWsdJbCnXG/sItd8doH3HQeFlXzJMb4i
-	JxYkReJOe9/awKKENaa2/kM28XLzWFW4v6Vv7gohFBRTo5F4d3fJHIvQEL24KLaI
-	+Fnh2kESt1Fvo2jRXASTHovBvzbQi7LqjqJVfe+q7A==
-X-ME-Sender: <xms:IVS8Zu5juAOqb2lgue608FswCfsrVRnYricvMoOoD6zr1JI1E8DIqw>
-    <xme:IVS8Zn58qArfIVr5H8sybIe0DSjQEeRt_rYdaDu_paZCIAOoZYw_WSpe_CEWn9dq_
-    vxYkcJDQZuCnv6ViA>
-X-ME-Received: <xmr:IVS8ZteNHukpSZ6j6FqfrGXZllOBEq4uROtXf5UTIaINgXIzJX6ZLtXnjCJTPoEyxmsXoYXLdp2M3--7f60T3XnBqYowEvgEgOyjnFQ1wOp95Q>
+	fm3; t=1723618340; x=1723704740; bh=BOqUsUHyb3BpG8+cATWFsGtJ7YKo
+	NLA0txlZw8OisMA=; b=LWk4KXb1xxgiAIlXqX3rXSlkc/6pWos+EOmuXK/ZSGR7
+	ZRlCBglAO2CiY3xiaAJjBapWI2oZCkwQIRaL8IKykx0nKWRjZkEM+Uvo1/fUTcdt
+	s0OIyNpNJaSMvfLszrbMCjTRdEuYP8vPzB2WuiGzZ4tZFzYdV4nl2ud5NpdXTCmS
+	eDlMrpwotXtA5+xZuYYYFkjHOdYLeZxxvIi4Z+wKGtMW4cPGuS5K/vLSyhae7Pou
+	g4/SYfflyC/CFpjz1TXPh2rbC7AvCLMtWqOjVOiiG7Tdae05wozLhBg2XXEycFL2
+	wLSLaG9QaxwzFpcC9nKHXaFWroo3yPo8BFWVV+VHNQ==
+X-ME-Sender: <xms:JFS8ZiJBIoxLolLoT2aJcLLS-DoZKEiPZVCSslVhQeP4lx7MYG_7LA>
+    <xme:JFS8ZqJjaEB5zJFXu2cp18TvNclkv0YWIENJLM7k-RaRU6Qlwfshgx3T27nNomjGv
+    a1jr9xfn_MGJAqZcw>
+X-ME-Received: <xmr:JFS8ZitQroLN5W2BxpT70FG7rC6gDllkH5uiPNh-wsVRa4k8xQmwmBze9UtfoAedHKXg4A4UtkWua2W8ECHsHZCL_suDPKZf05RpFvPjOwSuQQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
-X-ME-Proxy: <xmx:IVS8ZrL6iC7mp93lrG1KUihW1b11X5VBBorOkjqZB1xlEpRVVp_v6A>
-    <xmx:IVS8ZiJu6pUk0n5S7cQBCFDFugz-mHKe-RRUAoIQVAsamg3Lnlyrbg>
-    <xmx:IVS8ZswMAvisqQ43RihMe0uE3df2o1VrmB7wWhVJ86VYf4v_KtNQlw>
-    <xmx:IVS8ZmJMDJcHRT5zux-_2n9KUPIIWWTQDeZR6Q0J5Tvj0IGzBU5TwQ>
-    <xmx:IlS8Zq-g3pV7dm_I81EIgSzghuLe1NZhJ7gi_lpC7Q1pwXvIQ8TBmnQr>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehmvges
+    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:JFS8ZnYwxrZA1ygQ6c1pMiSMWyCaz8TWArf-5KlRJtk4L-LzfzNdug>
+    <xmx:JFS8ZpZq-B5VvYi3zXWfHdvmkHqSHOKB4YOCsKP5A1oCb8u0e9dYbA>
+    <xmx:JFS8ZjDCtjYtUWR6vc5hYjdcfLSiQjlwKHs9WTC2KrTTL5ra7Mhm7Q>
+    <xmx:JFS8ZvZfJZVTO4St_pOcRg8riSv0J9F9A0kkjk403E8kA4aZi92ItA>
+    <xmx:JFS8ZuMyCsj0qvIC_WIO14w9HSERWH22AeEpX8h1121iFBJFYSrBB7b9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 02:52:16 -0400 (EDT)
+ 14 Aug 2024 02:52:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2f941015 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 06:51:58 +0000 (UTC)
-Date: Wed, 14 Aug 2024 08:52:14 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5eb8ed7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 06:52:00 +0000 (UTC)
+Date: Wed, 14 Aug 2024 08:52:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 08/22] config: fix leaking comment character config
-Message-ID: <9054a459a1419e333ae8f950b9c9c2bf894c55f5.1723614263.git.ps@pks.im>
+Subject: [PATCH v4 09/22] builtin/rebase: fix leaking `commit.gpgsign` value
+Message-ID: <1d3957a5ebb527d672a66f6f6226b6668924a2fa.1723614263.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723614263.git.ps@pks.im>
 Precedence: bulk
@@ -92,92 +92,83 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723614263.git.ps@pks.im>
 
-When the comment line character has been specified multiple times in the
-configuration, then `git_default_core_config()` will cause a memory leak
-because it unconditionally copies the string into `comment_line_str`
-without free'ing the previous value. In fact, it can't easily free the
-value in the first place because it may contain a string constant.
+In `get_replay_opts()`, we override the `gpg_sign` field that already
+got populated by `sequencer_init_config()` in case the user has
+"commit.gpgsign" set in their config. This creates a memory leak because
+we overwrite the previously assigned value, which may have already
+pointed to an allocated string.
 
-Refactor the code such that we track allocated comment character strings
-via a separate non-constant variable `comment_line_str_to_free`. Adapt
-sites that set `comment_line_str` to set both and free the old value
-that was stored in `comment_line_str_to_free`.
-
-This memory leak is being hit in t3404. As there are still other memory
-leaks in that file we cannot yet mark it as passing with leak checking
-enabled.
+Let's plug the memory leak by freeing the value before we overwrite it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit.c | 7 +++++--
- config.c         | 3 ++-
- environment.c    | 1 +
- environment.h    | 1 +
- 4 files changed, 9 insertions(+), 3 deletions(-)
+ builtin/rebase.c              | 1 +
+ sequencer.c                   | 1 +
+ t/t3404-rebase-interactive.sh | 1 +
+ t/t3435-rebase-gpg-sign.sh    | 1 +
+ t/t7030-verify-tag.sh         | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 66427ba82d..b2033c4887 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -684,7 +684,9 @@ static void adjust_comment_line_char(const struct strbuf *sb)
- 	const char *p;
- 
- 	if (!memchr(sb->buf, candidates[0], sb->len)) {
--		comment_line_str = xstrfmt("%c", candidates[0]);
-+		free(comment_line_str_to_free);
-+		comment_line_str = comment_line_str_to_free =
-+			xstrfmt("%c", candidates[0]);
- 		return;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index e3a8e74cfc..2f01d5d3a6 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -186,6 +186,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+ 	replay.committer_date_is_author_date =
+ 					opts->committer_date_is_author_date;
+ 	replay.ignore_date = opts->ignore_date;
++	free(replay.gpg_sign);
+ 	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+ 	replay.reflog_action = xstrdup(opts->reflog_action);
+ 	if (opts->strategy)
+diff --git a/sequencer.c b/sequencer.c
+index 0291920f0b..cade9b0ca8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -303,6 +303,7 @@ static int git_sequencer_config(const char *k, const char *v,
  	}
  
-@@ -705,7 +707,8 @@ static void adjust_comment_line_char(const struct strbuf *sb)
- 	if (!*p)
- 		die(_("unable to select a comment character that is not used\n"
- 		      "in the current commit message"));
--	comment_line_str = xstrfmt("%c", *p);
-+	free(comment_line_str_to_free);
-+	comment_line_str = comment_line_str_to_free = xstrfmt("%c", *p);
- }
+ 	if (!strcmp(k, "commit.gpgsign")) {
++		free(opts->gpg_sign);
+ 		opts->gpg_sign = git_config_bool(k, v) ? xstrdup("") : NULL;
+ 		return 0;
+ 	}
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f92baad138..f171af3061 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -26,6 +26,7 @@ Initial setup:
+  touch file "conflict".
+ '
  
- static void prepare_amend_commit(struct commit *commit, struct strbuf *sb,
-diff --git a/config.c b/config.c
-index 6421894614..205660a8fb 100644
---- a/config.c
-+++ b/config.c
-@@ -1596,7 +1596,8 @@ static int git_default_core_config(const char *var, const char *value,
- 		else if (value[0]) {
- 			if (strchr(value, '\n'))
- 				return error(_("%s cannot contain newline"), var);
--			comment_line_str = xstrdup(value);
-+			comment_line_str = value;
-+			FREE_AND_NULL(comment_line_str_to_free);
- 			auto_comment_line_char = 0;
- 		} else
- 			return error(_("%s must have at least one character"), var);
-diff --git a/environment.c b/environment.c
-index 5cea2c9f54..1d6c48b52d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -114,6 +114,7 @@ int protect_ntfs = PROTECT_NTFS_DEFAULT;
-  * that is subject to stripspace.
-  */
- const char *comment_line_str = "#";
-+char *comment_line_str_to_free;
- int auto_comment_line_char;
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- /* Parallel index stat data preload? */
-diff --git a/environment.h b/environment.h
-index e9f01d4d11..0148738ed6 100644
---- a/environment.h
-+++ b/environment.h
-@@ -9,6 +9,7 @@ struct strvec;
-  * that is subject to stripspace.
-  */
- extern const char *comment_line_str;
-+extern char *comment_line_str_to_free;
- extern int auto_comment_line_char;
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
+index 6aa2aeb628..6e329fea7c 100755
+--- a/t/t3435-rebase-gpg-sign.sh
++++ b/t/t3435-rebase-gpg-sign.sh
+@@ -8,6 +8,7 @@ test_description='test rebase --[no-]gpg-sign'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- /*
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-rebase.sh"
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 6f526c37c2..effa826744 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -4,6 +4,7 @@ test_description='signed tag tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ 
 -- 
 2.46.0.46.g406f326d27.dirty
 
