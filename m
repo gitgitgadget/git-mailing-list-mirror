@@ -1,156 +1,125 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4FA39879
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 05:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3919F
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 05:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723611719; cv=none; b=pxdy3clExXMaMPmb1RBBMIGdOVeyqvnqaKUnN4LQYLjNISVver1bUATNCstFfQrlwi79HYYQiiJc8YteKed860GRUh2JH2tGIsHP0WSNSemhwF9naT+mt75mZ+6a8D1ua+b2BmDdgUUaCQSMwS4GJgXY5NZsz0WJIPn9zvlBo7U=
+	t=1723612677; cv=none; b=qAdZ51wYqlhLBHxa3FWcFyzpfBPKkkLVInssgFQhVjy0trYQLQAVjMEkAcFOQY752DbbGPnasu6jgxRIZx+iWPb5OEGDElWV6WcgOlCimUQrxRX0DGHcxG17ASMG791Nw/Q+OfdudcET6EgD23TGPHI1nFhy8hZHhFwyVYwICoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723611719; c=relaxed/simple;
-	bh=gbhe90uHxXsRcPCQsuNS0DfGeh5V3SBp5uwmDvJ13JQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uj0XqzSGGtnjifSsHgMO+jjC+hQrmb9S6RXfXKnJKlDf2+aBYJ8xXtNcCb7dqyAFrSEj6t0CnmKZuel+kzkjpgZoy1Qj48UEGZWWosp8Wl8ULmk2uxXO74p/ipojVjmvJfAfs5Rroo7pvY3LNCrHVDZ2Ylv7N/myBUSHt6M7Uek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i0zkFLwC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UyGPq3Q3; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723612677; c=relaxed/simple;
+	bh=QS40m/JPmi93NcZDVhCIcnMwIh1neR/zG68eluSCgpA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WVn6VM9NCll9umEeXrMc7tcQT9HkbNTZCAC/P3D3CmoWmEHa8jV0JMo53/n9kdLvfi9pYwf0BVZEaOKaB87iL1wghpfrtybt8BxpQnLg17Yt3v/S94bj2Athc+shOqqpTyQLWV5RRvdJxb2IsdyRh5A8gyh+tWUJmAGVlGYK5SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S6Cbf4cW; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i0zkFLwC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UyGPq3Q3"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id EDC32138FCB2;
-	Wed, 14 Aug 2024 01:01:52 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 14 Aug 2024 01:01:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723611712; x=1723698112; bh=LW+SB9/O1u
-	TGNlx9nvpP3KXljB4iOOsSVyod8XL+B10=; b=i0zkFLwCjPWJJvUNgU7RIyybXw
-	qzmd43KNBhfd3VyMGSfvsCtbE6GZxxa+vPc9qQa1fGxGPLM58NbaCYUDfdEE8wrK
-	5hezX8d0try3kQJ3RFpbG1vx3xcjRifCbFxNENXtWVKtyECi1/O2n+EkTJVLeRtd
-	Ky+1s2ifOMVF4HybGay/wxt3e27kYNcNDW4FUjw2ORJ9W8z0b8yCNck/g+YMqug6
-	LwpY3dryMsPuAVM1IAKAMtNEhZ0gato48e/gE7aaApqMKw+Sdrp/PWE01/odCowM
-	e/OVqACIC2hfz/6a4r+wcsYvLeon1b3gYVsleUNY16BMIGL96yxhamkbXiWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723611712; x=1723698112; bh=LW+SB9/O1uTGNlx9nvpP3KXljB4i
-	OOsSVyod8XL+B10=; b=UyGPq3Q3PpCTeLl9FcnBD9zBexjskEGMxw6eCWO24DMW
-	AJ/QEqEE0qbTzudaRUZByhBVptG6Wj4nVkp6W8XhACI16iHa7WoXRPIzisfFZST0
-	dEFPxJFrk9v13xaulA7LAAKxpTVdd0FrRJn39IM81JImArVZ3otUOj4pTqYKqZ83
-	ZhomE3V69nyQimQBtfrg/7XXpV1CffnFZMC1BmTO/9qKGamyhfotuxwNa8r1lymo
-	+MMHKxbRSENhM9rT4h/9ilvIx3HjTzdXobpxWKS9l1rwxrEXA4yzsQrDHPufNTRD
-	i5tI88x5mShWq0agl5mDYG5ZuDtPfTq1TJ5TB8u2Rg==
-X-ME-Sender: <xms:QDq8ZpvSycrRgIiUeXr1RsKnJ30y-WiOsCwBfktNkuQk_K6whX_mHA>
-    <xme:QDq8ZicKAIQhMvAIkmdiqcym3gm0ZyfPQIum88v1wgpV898lx7mx1ezVQeQHo8Umo
-    6aJXmbF8N0c9tDDSg>
-X-ME-Received: <xmr:QDq8Zsy0d2LaAleXAKQ-ywrmPUYBzAT4uWY3yfM2XJsSvJAX3OYCZ4QXv3romMM3a4QxcTw2S6IZDgWhuqsZk1TlKPLD6X3ZuMXg7UKMOfEZrQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehmvgesthhtrg
-    ihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:QDq8ZgOvWlLR2_niX1n0IOKXvncZc8sGrE07cUtlrBANfWbDb0ST7A>
-    <xmx:QDq8Zp_64Lat-raSt_jNPVwbnffkuP2gTyPgxYFgQLfDXB1NFLkt-Q>
-    <xmx:QDq8ZgUscGwFUq6QZSwrXGOgxYXlWHHwFf8HhX5Mc7UJu3bEP8vUiw>
-    <xmx:QDq8ZqfNiFBS89aVAqu4kLjV4XrQcLFk6ryWl8IXWMKdEOXSKR1M9w>
-    <xmx:QDq8ZpwUjUoPftOGB4EW8Gi2NibyfJopYLEFy5yY2CQLkUzn_QaseXto>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 01:01:51 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8fcc75fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 05:01:31 +0000 (UTC)
-Date: Wed, 14 Aug 2024 07:01:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, James Liu <james@jamesliu.io>,
-	karthik nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 22/22] builtin/diff: free symmetric diff members
-Message-ID: <Zrw6M7wvPFfzv3fO@tanuki>
-References: <cover.1722933642.git.ps@pks.im>
- <cover.1723540931.git.ps@pks.im>
- <31e38ba4e150c9bc9e3aa1073869881ccba9035e.1723540931.git.ps@pks.im>
- <xmqq1q2s8k56.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S6Cbf4cW"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70eae5896bcso5575731b3a.2
+        for <git@vger.kernel.org>; Tue, 13 Aug 2024 22:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723612676; x=1724217476; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0KVxgCzBAzd00xk3aLEgeCkfM3XyiB8PA3fAjFlZvYs=;
+        b=S6Cbf4cW41eQYkP0o0tx8Becw/uh3OvRurj/imvINZ5DFK19suaBPsRwDGGAerFdh6
+         S3susS0bU93A6919ZquBHpqwPsUcI9TR1yPs8ocFT/fDwzRrZuYX2ILVfvlbhjLjiB6l
+         3+4gF+xKdeH1xohaEns4mBqySGd3+48vrlfMlKjRudzBVpq9YwCel1PjOly1h4CIYa2V
+         +d+/6Z7EIwtKRspMFFZg5e5lIs1bEZ6KV6sRVFB8MO2PAxC3aIbedMSmm7FlqINDe/a8
+         dkUMtzEQs/5gAJgf8eMWw+oGPaijQkudKfOBLZX4vreSyCZW+yVn2OV5tdGj3oObgUmb
+         m3aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723612676; x=1724217476;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0KVxgCzBAzd00xk3aLEgeCkfM3XyiB8PA3fAjFlZvYs=;
+        b=jUC0FllTUZGD0dCO9nCVtwjTKa4bzAwk+BZDymxdDfRbHz2SOYF5zJ7iQebY4oubsh
+         EyF1l+0torYcNlghRSJlvoahlQGNi41TR0YgYHvbryvbZ285T79Vf4hvbq+H6Tm7lAt+
+         SmdrG7L28lkaMupJkKHGKdqHAEs/SCMdWe2VkeD4tz8iude2m98Uf8NbO43VXU3eIEhz
+         XdtiX6lLyZjx2Uu3IvhBrdV0AhfRi/Chw37Fi9W2PhRwR61tltJ5Kkp07mTIWUYeBugN
+         /L6fjnZK2trHlwUL16ez+yXngzn+413CvzQtQbRMWiy++UNurfVcwwNbMeNlpOoEKVKc
+         OKig==
+X-Forwarded-Encrypted: i=1; AJvYcCWW3cfWO+K86QGZzPhwDVTAOONj7VoaqMQPKCnSQ1ZA3IkH4n3MxppXLPPy8+gu/PLy/2c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfmPWrlByQZfGW9goRj5gLpGM4gaU3hfK/WCBzMqx/yb0s87CJ
+	T2nvVYT3yoz0U8TdrlUuulZIW/8kBzFxtphwgSTXN+KHV4DYKDYEqaDXQA==
+X-Google-Smtp-Source: AGHT+IGsC00hxqUGmr/HQI+2TH/sl4QMYO0xxqkN3rOCpcZvTCjRpqieLDXqU5RSlWYXPBgcxlJ6ug==
+X-Received: by 2002:aa7:88cb:0:b0:70d:2e24:af66 with SMTP id d2e1a72fcca58-712673a3442mr2025536b3a.20.1723612675600;
+        Tue, 13 Aug 2024 22:17:55 -0700 (PDT)
+Received: from ?IPV6:2401:4900:4acc:78b2:495c:15af:d322:f4ed? ([2401:4900:4acc:78b2:495c:15af:d322:f4ed])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710f7e1b345sm4986870b3a.151.2024.08.13.22.17.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Aug 2024 22:17:55 -0700 (PDT)
+Message-ID: <4c14e3bf-0f0d-4600-8e17-5b5d15ad7447@gmail.com>
+Date: Wed, 14 Aug 2024 10:47:50 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1q2s8k56.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC][PATCH v2] t: migrate t0110-urlmatch-normalization to the
+ new framework
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Christian Couder <chriscool@tuxfamily.org>
+References: <20240628125632.45603-1-shyamthakkar001@gmail.com>
+ <20240813172432.55487-1-shyamthakkar001@gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20240813172432.55487-1-shyamthakkar001@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 13, 2024 at 09:25:41AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > We populate a `struct symdiff` in case the user has requested a
-> > symmetric diff. Part of this is to populate a `skip` bitmap that
-> > indicates which commits shall be ignored in the diff. But while this
-> > bitmap is dynamically allocated, we never free it.
-> >
-> > Fix this by introducing and calling a new `symdiff_release()` function
-> > that does this for us.
-> 
-> OK.
-> 
-> > +static void symdiff_release(struct symdiff *sdiff)
-> > +{
-> > +	if (!sdiff)
-> > +		return;
-> > +	bitmap_free(sdiff->skip);
-> > +}
-> 
-> Hmph, wouldn't it be a BUG if any caller feeds a NULL pointer to it,
-> though?  When symdiff was prepared but not used, sdiff->skip will be
-> NULL but sdiff is never NULL even in such a case.
+Hi Ghansyam,
 
-Good point. It does make sense for `_free()` functions to handle NULL
-pointers, but doesn't quite for `_release()` ones.
+I just wanted to share two comments based on what I observed from the 
+recent changes.
 
-> > @@ -398,7 +405,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
-> >  	struct object_array_entry *blob[2];
-> >  	int nongit = 0, no_index = 0;
-> >  	int result;
-> > -	struct symdiff sdiff;
-> > +	struct symdiff sdiff = {0};
-> 
-> And symdiff_prepare() at least clears its .skip member to NULL, so
-> this pre-initialization is probably not needed.  If we are preparing
-> ourselves for future changes of the flow in this function (e.g.
-> goto's that jump to the clean-up label from which symdiff_release()
-> is always called, even when we did not call symdiff_prepare() on
-> this thing), this is probably not sufficient to convey that
-> intention (instead I'd use an explicit ".skip = NULL" to say "we
-> might not even call _prepare() but this one is prepared to be passed
-> to _release() even in such a case").
-> 
-> Given that there is no such goto exists, and that _prepare() always
-> sets up the .skip member appropriately, I wonder if we are much
-> better off leaving sdiff uninitialized at the declaration site here.
-> If we add such a goto that bypasses _prepare() in the future, the
-> compiler will notice that we are passing an uninitialized sdiff to
-> _release(), no?
+On 13/08/24 22:54, Ghanshyam Thakkar wrote:
+ >
+> index 0000000000..e0dd50dc11
+> --- /dev/null
+> +++ b/t/unit-tests/t-urlmatch-normalization.c
+> @@ -0,0 +1,294 @@
+> +
+> +static void check_normalized_url_from_file(const char *file, const char *expect)
+> +{
+> +	struct strbuf content = STRBUF_INIT, path = STRBUF_INIT;
+> +	char *cwd_basename;
+> +
+> +	if (!check_int(strbuf_getcwd(&path), ==, 0))
+> +		return;
+> +
+> +	cwd_basename = basename(path.buf);
+> +	if (!check(!strcmp(cwd_basename, "t") || !strcmp(cwd_basename, "bin"))) {
 
-You'd hope it does, but it certainly depends on your compiler flags.
-Various hardening flags for example implicitly initialize variables, and
-I have a feeling that this also causes them to not emit any warnings
-anymore. At least I only spot such warnings in CI.
+I think comparing blindly for "bin" would not be an ideal thing to do as 
+this would let other locations which have the "bin" basename to be slip 
+through. For instance, running the test from "perl/blib/bin" would 
+result in this check letting it through. I suppose we could need a bit 
+more specific check that ensures that the test is indeed running from 
+"t/unit-tests/bin".
 
-In any case, yes, we can drop the initialization here.
+> ... snip ...
+ >
+> +static void t_url_high_bit(void)
+> +{
+> +	check_normalized_url_from_file("url-1",
+> +			    "x://q/%01%02%03%04%05%06%07%08%0E%0F%10%11%12");
+> +	check_normalized_url_from_file("url-2",
+> +			    "x://q/%13%14%15%16%17%18%19%1B%1C%1D%1E%1F%7F");
 
-Patrick
+When we run the unit-test binary from other directories, the error 
+message is thrown appropriately. But it seems to be printed for every 
+test case which seems a bit spammy. I suppose it might be helpful to do 
+it once before actually running the test cases and skip the cases when 
+we realize the binary is being run from a different directory.
+
+--
+Sivaraam
