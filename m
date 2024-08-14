@@ -1,52 +1,52 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCEE10FA
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 00:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F2F110A
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 00:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723593921; cv=none; b=BokojRmo+xsSk/60fsyfBJ1UUJY12MMjmWEtrCcEUx0rTpSh8AacFwNwgLWHLM6rTyUt5FLGYuAJ+KZu6RwGIX3hK5W1KqE1aXhcFtAhp5oJxXldVHWeG8bzzycAG2q/5/jClMCLwQ4SVWUbwUAygGs6z0tGHOTSE7XV+9NyfqM=
+	t=1723593923; cv=none; b=XLOobTqw0yyEL3hNslrkzCXF/21mzSGPI6JyRq0ho+j0z3DgT3NksYxjwdSsFQKAQj1Gmiud/v7dD5w4tf5Rq1odkqillkUboPzD4jlgV1jjGTE/gG5dT6kCN9bkg1MmpPnwcsCptUHYIypq7ocKAXsHmMMZ8iNm5Ob3b9Q+DhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723593921; c=relaxed/simple;
-	bh=cqp2yi5HfyWzdaWgFgMKGUI03W8DMlds2ixOB9FBRdU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SbUKxtDGgH7DBkVXC6K2N6gas5YS7uNJiYqdNbUzWIUiig7q05pye/T6B+4bHglO6iB/LE/q+V4oJ9s1PdqaK3xuKqbXRrKMpIEhAyntUicAgtQ25NqJzQUAwuw1kiNPC5m02rUaCf14luwtNTBNtESPH+iCJMh5hmHjCBhYRRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ub4s+PTo; arc=none smtp.client-ip=198.175.65.13
+	s=arc-20240116; t=1723593923; c=relaxed/simple;
+	bh=UkUhnwb6kIIXsbTGOZ4h9sUVrhNI7SzCxIBlbb7A+iI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=vEf5WVQn6+x3b3oaCrp8c4ybXEq3PTVicCRURiTgdE5xgCLkGV0QIYcMUJKJ/UZFgX/+EUMBGmzNPW7xAhtRRNmv5l1w3W0KjmHCIhDRwg1N9eIUC9U3fc1ibNlUCZ2BGEFHlnY2vkeUtHnDFFgf1cV378TMHGRA2jULOu6Br+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ft1HA1MH; arc=none smtp.client-ip=198.175.65.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ub4s+PTo"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ft1HA1MH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723593919; x=1755129919;
-  h=from:subject:date:message-id:mime-version:
-   content-transfer-encoding:to:cc;
-  bh=cqp2yi5HfyWzdaWgFgMKGUI03W8DMlds2ixOB9FBRdU=;
-  b=Ub4s+PToULBWGGdnFn/Zj9hI6yulFVDezMEF+WCOXj9pxkYG87CIsJFz
-   Jk2dZx+SwRbN0rS1fQN37e48FFKh8ywHHPP+msFT4F0QCKP6x19IjKOyO
-   lrDsfElzogKT4vLzzZ0QsdPMAllWGkgumG8IwNsWSQBYZlopgwaOrGYVS
-   lJHxCqbG7RA9Z2bhnHtQlkuRAxARB4EHNqsbZifhA7pjXz53ZNO+eIs8Y
-   jW5jMVCi9vjXXrZoXJcC6O1PST4G4k0zzryquuOy7E5pFSY/qY+WcJusW
-   Q6gDBv4CDjLvapTRcPoT7dHFOrErihSbOs+vlg/farfFDpvrnhU9GcU5x
-   w==;
-X-CSE-ConnectionGUID: Ifsk3O2+RHSYV2PGuOgbyw==
-X-CSE-MsgGUID: CT9sgtA6SGSGJ7QBVemxmw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="32933058"
+  t=1723593921; x=1755129921;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:references:in-reply-to:to:cc;
+  bh=UkUhnwb6kIIXsbTGOZ4h9sUVrhNI7SzCxIBlbb7A+iI=;
+  b=Ft1HA1MHDWkv0sRVjigE2HdbsCa+M/rmC4ZCWJHkHrmPkiGa/5KO5OLn
+   XrN0wdcjwdDPM1iYk1tL3pELtIM6E4Baq44VXskkFwJKf3+G1Eqmw3nQP
+   0Nad8gCJ8mWs1XeBFxfzS98JH1bnGy8vNeCxv2N4nS01vAAnl8eerMzKO
+   GkPuuLfPHFQUxcGum8F79+jUrD0hwrRkTAzMMQlwEZkFLMxupVSUE7ZjV
+   3ICtAwWKcg3tUzF/LHeqHlNfrYkCvr7hAHni/ePFGW0hKcZ7BZzYBikVy
+   OeTUdDsUTs4TI9JE7PUNya4Cu+AXhEOO9+NJQz5eg+DOWoSiihHLbaPm/
+   A==;
+X-CSE-ConnectionGUID: QxFrcFTyShWbVHnophdxtA==
+X-CSE-MsgGUID: YuDVhj0rQIWOQMSt69mXyQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="32933062"
 X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
-   d="scan'208";a="32933058"
+   d="scan'208";a="32933062"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
   by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 17:05:18 -0700
-X-CSE-ConnectionGUID: bl9PMf8ZShimOwdQNamWgQ==
-X-CSE-MsgGUID: 1a/h2TxxTjO54vwSb/T/3A==
+X-CSE-ConnectionGUID: qWPxCPAiTn635rP13ZUZWw==
+X-CSE-MsgGUID: MjtJwfoLRFuEbiW1YwVCjw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
-   d="scan'208";a="63767463"
+   d="scan'208";a="63767464"
 Received: from jekeller-desk.amr.corp.intel.com (HELO localhost.localdomain) ([10.166.241.1])
   by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 17:05:18 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v2 0/3] send-email: teach git send-email mode to translate
- aliases
-Date: Tue, 13 Aug 2024 17:05:08 -0700
-Message-Id: <20240813-jk-translate-alias-send-email-v2-0-912db4eb6846@gmail.com>
+Date: Tue, 13 Aug 2024 17:05:09 -0700
+Subject: [PATCH v2 1/3] t90001-send-email.sh: fix quoting for mailrc
+ --dump-aliases test
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,54 +55,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALT0u2YC/42NQQ6CMBAAv0L27JotICGe/IfhUOgKq9CaLiEaw
- t8tvMDjzGFmBeUorHDNVoi8iErwCfJTBt1gfc8oLjHklJdUU43PF87Reh3tzGhHsYrK3iFPVkY
- 0HVNZV2XBFwep8Y78kM/RvzeJB9E5xO+xW8xu/y0vBgkNWSrawlUtVbd+9+cuTNBs2/YDll6CC
- soAAAA=
+Message-Id: <20240813-jk-translate-alias-send-email-v2-1-912db4eb6846@gmail.com>
+References: <20240813-jk-translate-alias-send-email-v2-0-912db4eb6846@gmail.com>
+In-Reply-To: <20240813-jk-translate-alias-send-email-v2-0-912db4eb6846@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Cc: Jacob Keller <jacob.keller@gmail.com>, 
  Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 X-Mailer: b4 0.14.0
 
-The b4 program has its own "b4 send" utility for sending a patch series. It
-is similar in many respects to git send-email. Currently, it lacks support
-for processing aliases, which makes switching between git send-email and b4
-send somewhat annoying.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-It would be convenient if b4 (or other programs interacting with git) could
-make use of git send-email's alias file support.
+The .mailrc alias file format documents that multiple addresses are
+separated by spaces. The alias file used in the t9001 --dump-aliases
+mailrc test have addresses which include both a name and email. These
+are unquoted, so git send-email will parse this as an alias that
+translates to multiple independent addresses.
 
-Teach git send-email a new --translate-aliases option, which enables a new
-mode for git send-email. When executed with this option, git send-email
-will read standard input and convert each input according to the configured
-alias file. The resulting address will be output to standard out.
+The existing test does not care about this, as --dump-aliases only dumps
+the alias and not the address. However, it is incorrect for a future
+where --dump-aliases could also dump the mail addresses.
 
-I also considered implementing a new "full" format for --dump-aliases which
-would dump the entire alias file along with its configured email addresses.
-I ended up dropping that change as I felt that it would be less usable than
-the translation feature.
+Fix the test to quote the aliases properly, so that they translate to a
+single address.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-Changes in v2:
-- Use standard input instead of command line arguments
-- Link to v1: https://lore.kernel.org/r/20240808-jk-translate-alias-send-email-v1-0-10a03b3d6b06@gmail.com
+ t/t9001-send-email.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
----
-Jacob Keller (3):
-      t90001-send-email.sh: fix quoting for mailrc --dump-aliases test
-      t9001-send-email.sh: update alias list used for pine test
-      send-email: teach git send-email option to translate aliases
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 64a4ab3736ef..aa36ace393b7 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2084,9 +2084,9 @@ test_dump_aliases '--dump-aliases mailrc format' \
+ 	'bob' \
+ 	'chloe' \
+ 	'eve' <<-\EOF
+-	alias alice   Alice W Land <awol@example.com>
+-	alias eve     Eve <eve@example.com>
+-	alias bob     Robert Bobbyton <bob@example.com>
++	alias alice   "Alice W Land <awol@example.com>"
++	alias eve     "Eve <eve@example.com>"
++	alias bob     "Robert Bobbyton <bob@example.com>"
+ 	alias chloe   chloe@example.com
+ 	EOF
+ 
 
- Documentation/git-send-email.txt |   7 +++
- git-send-email.perl              |  21 ++++++-
- t/t9001-send-email.sh            | 118 +++++++++++++++++++++++++++++++++++++--
- 3 files changed, 139 insertions(+), 7 deletions(-)
----
-base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
-change-id: 20240808-jk-translate-alias-send-email-1ce048643e5d
-
-Best regards,
 -- 
-Jacob Keller <jacob.keller@gmail.com>
+2.46.0.124.g2dc1a81c8933
 
