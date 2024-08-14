@@ -1,164 +1,118 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B9D1B5808
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 15:59:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2841B8EA8
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 16:24:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723651177; cv=none; b=o6J9vAUdQkUEm0GZhmWDaflDAHMWy4hcZiPR1dXvnt/zK5dL+H0KHBsvvuXnKiPjHMKlEqYBAX4noT01SJezNHLtODhvJht4aEq4ZveXa5nxSf0RYhda35k+hQ190eQ2LsbqtkWHI3N8EJYk2I3w9PPKwi2Oy/wbtC3oZoTPaJQ=
+	t=1723652694; cv=none; b=Vkk6bj6D5i2uIuTojEz3LWoIJ1YNeh7DU9u1YqzhoNXU5xdQ1Eh5qfUNql5CBBIws0rj0V56FmJeZFtDJ4JxivzRHqB91f+dxS38kolrsa1K0Vi2Lqpf2JWeKM6rKrWknFoaEQKk8tqFL/6KQjSDZaDlYnquJTRk2GVFXeSQSZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723651177; c=relaxed/simple;
-	bh=MfQ6xhIoGwP2irk+lTTc9u/plB1rtIQtmg8q8lLE7U8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q+CZN1KSKpETnJjS3I0KDAXbN9R6fYOOvAuE+TqS8ukua6F4OE+2nLb7xPmzxY+oCO15eD2pjEjDBttBxBQBAExYuRdS72Jhfvbhh+DC0n+GYCPY/Ut50cTypjBkoml4VHhkm+usOnvfJPS59oNW/Jz00N1y/ufMwIKkxDgFNL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fJYer+/S; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723652694; c=relaxed/simple;
+	bh=n+trDRhQmPrR3Dvo3Bhlo8C+QFC93+GUzWWzrRT66j8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Awat837bqma2ymq35lGTjN/EnUPMbcFhoQAp+Rml65PdLWrwJ33CVpNGNcaMe8nEfb0dTDWwTVVazn+w5B/vV9xoXelrXqG/23Gk42rBsa0tPtfLpZAFxN2RARtaNbDIDcEtIZh4vxnmk5L89QXy/mO0t2RUBrFByb1YxtJP8Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ArtVggY0; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fJYer+/S"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-428e1915e18so46760545e9.1
-        for <git@vger.kernel.org>; Wed, 14 Aug 2024 08:59:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723651174; x=1724255974; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vp9Lwx9M1C59kq00TD6cTqMRnroMV57K9De35mOLeD4=;
-        b=fJYer+/Szpt419qtlizZjSIdt4QjyN8JRJBPstb9QHyEVJZmbQ2YPyt61fVttIfw8+
-         9xIWKYzCeuGxjrJp0wclk0969JAKbm+lDrZDeh/v/dqmyYEBLdA9Ksy7hx0l9EJZiHtK
-         YGtHYhw13uN3LtleNxL5zP0wtj/8LtC6KYgIr4YFBtdogcyzt5TdDCVUZrP3hhYCPTXy
-         dUy36mOVGDq3e2SGHWDR73prmSNV1BlrBvDtnVgemR7FVs21Rtcm3e3LdiuKGXASW5Oc
-         9l7Bq2ro2uEE1FDEOY+JW2MSWhgyGKWy4Yv8Mw8MdCBtOvHPbrtyreFyJWTABQazi/ke
-         6EBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723651174; x=1724255974;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vp9Lwx9M1C59kq00TD6cTqMRnroMV57K9De35mOLeD4=;
-        b=DdI+8PxRO+tXg5sXtMy08kW1tnVXEv979+q28zTUqgnkzGY9q5MQabtp/syiXXVOqE
-         Fjl6LCxwUhyKeyq9Khrp3knb2+SCVXWUm+Cx1cNc+ivA5wGxt8ffWMtyso6HSG8WMA77
-         LC8a8gDBkwVneYUlTuXKL8GVLJ+U+0G0/IGHNWUCteyLn4dyJ6tnNLyxYEkFy2eQIzZw
-         HTOs7F4ixKaFR1S+SCUMFurYSsisVZQsE7WGh9e6WMIOutdn5esIsXntfSrUgCjQm165
-         zN+hs9FIzJqWotN/lrvIWY2uk9MXy1Jimg/urQHcjpINMj6x4sWeGUJBdCdorHjpL5bm
-         EtsA==
-X-Gm-Message-State: AOJu0YxJ/SDcstMDLorggd1Kp2ub/YJYQi0Ss/mKh4kzPXlTO7Xxy915
-	QWk7CTke1gR8DLEvRBeBKmSG7OtDzXp4lxHoAtUjiPif8Edr0EbL
-X-Google-Smtp-Source: AGHT+IFl4Nde4KXLQ2AcYtBhOi73gowNhZoN/2SxZwVOuwJ0fyihA/kWOpGriICbCJwKUiUo+M+xkA==
-X-Received: by 2002:a05:600c:470c:b0:426:654e:16da with SMTP id 5b1f17b1804b1-429dd1effa4mr25212045e9.0.1723651173666;
-        Wed, 14 Aug 2024 08:59:33 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429d7830539sm54231255e9.0.2024.08.14.08.59.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 08:59:33 -0700 (PDT)
-Message-ID: <b676bd17-1cc8-4639-acb7-675dde32a1ae@gmail.com>
-Date: Wed, 14 Aug 2024 16:59:32 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ArtVggY0"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DA5F2291C7;
+	Wed, 14 Aug 2024 12:24:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=n+trDRhQmPrR3Dvo3Bhlo8C+QFC93+GUzWWzrR
+	T66j8=; b=ArtVggY0AiUrbAsIerj/aUKOXIisPv4g83pAAxCU+mk6Cjwa/I7k5k
+	3RFndx9LXF+Up3snHi6uozmi760obikDWES+g620UJdrq+jE7L0H6Malu1QrUW6v
+	nApJmytEeccYeoZjNoaMUz4Ai4Ppgq9/dqTLZOvSEaT+FSssOQIUY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D3685291C6;
+	Wed, 14 Aug 2024 12:24:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 492D1291C5;
+	Wed, 14 Aug 2024 12:24:44 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 06/10] reftable/generic: move generic iterator code into
+ iterator interface
+In-Reply-To: <CAOLa=ZQ15h8bFRGGhzJUPNwkCrRmc2Y26n-0x+L_V_06xWgd7g@mail.gmail.com>
+	(karthik nayak's message of "Tue, 13 Aug 2024 06:04:30 -0400")
+References: <cover.1723528765.git.ps@pks.im>
+	<14924604cebe20ac30d291399b0200016fa8b4e3.1723528765.git.ps@pks.im>
+	<CAOLa=ZQ15h8bFRGGhzJUPNwkCrRmc2Y26n-0x+L_V_06xWgd7g@mail.gmail.com>
+Date: Wed, 14 Aug 2024 09:24:42 -0700
+Message-ID: <xmqqh6bn1391.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase: apply and cleanup autostash when rebase fails to
- start
-To: Patrick Steinhardt <ps@pks.im>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Brian Lyles <brianmlyles@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1772.git.1723641747309.gitgitgadget@gmail.com>
- <ZrzA0yp45w9NuTp2@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ZrzA0yp45w9NuTp2@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B726AD0C-5A59-11EF-82C5-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-Hi Patrick
+karthik nayak <karthik.188@gmail.com> writes:
 
-On 14/08/2024 15:36, Patrick Steinhardt wrote:
-> On Wed, Aug 14, 2024 at 01:22:27PM +0000, Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> If "git rebase" fails to start after stashing the user's uncommitted
->> changes then it forgets to restore the stashed changes and remove state
-> 
-> s/remove/& the/
-> 
->> directory. To make matters worse running "git rebase --abort" to apply
-> 
-> s/worse/&,/
-> 
->> the stashed changes and cleanup the state directory fails because the
-> 
-> s/cleanup/& of/
-
-Thanks for catching those typos
-
->> diff --git a/builtin/rebase.c b/builtin/rebase.c
->> index e3a8e74cfc2..ac23c4ddbb0 100644
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -526,6 +526,23 @@ static int rebase_write_basic_state(struct rebase_options *opts)
->>   	return 0;
->>   }
->>   
->> +static int cleanup_autostash(struct rebase_options *opts)
->> +{
->> +	int ret;
->> +	struct strbuf dir = STRBUF_INIT;
->> +	const char *path = state_dir_path("autostash", opts);
+> Seems like the CI caught it too [1].
+>
+>> +	it->ops->close(it->iter_arg);
+>> +	it->ops = NULL;
+>> +	FREE_AND_NULL(it->iter_arg);
+>> +}
 >> +
->> +	if (!file_exists(path))
->> +		return 0;
->> +	ret = apply_autostash(path);
->> +	strbuf_addstr(&dir, opts->state_dir);
->> +	if (remove_dir_recursively(&dir, 0))
->> +		ret = error_errno(_("could not remove '%s'"), opts->state_dir);
-> 
-> This seems somewhat dangerous to me though. Should we really delete the
-> autostash directory in case applying the autostash has failed?
+>
+> [snip]
+>
+> [1]: https://gitlab.com/gitlab-org/git/-/jobs/7563308943
 
-Applying the stash should not fail because the rebase has not started 
-and so HEAD, the index and the worktree are unchanged since the stash 
-was created. If it does fail for some reason then apply_autostash() 
-creates a new entry under refs/stash. We definitely do want to remove 
-the directory otherwise we're left with the inconsistent state we're 
-tying to fix.
+Looking at it, the suggestions the CI job makes look hit-and-miss.
 
->> @@ -1851,9 +1871,14 @@ run_rebase:
->>   
->>   cleanup:
->>   	strbuf_release(&buf);
->> +	strbuf_release(&msg);
->>   	strbuf_release(&revisions);
->>   	rebase_options_release(&options);
->>   	free(squash_onto_name);
->>   	free(keep_base_onto_name);
->>   	return !!ret;
->> +
->> +cleanup_autostash:
->> +	ret |= !!cleanup_autostash(&options);
->> +	goto cleanup;
->>   }
-> 
-> It's somewhat curious of a code flow to jump backwards. It might be
-> easier to reason about the flow if we kept track of a variable
-> `autostash_needs_cleanup` that we set such that all jumps can go to the
-> `cleanup` label instead.
+For examle, this one
 
-It is slightly odd, but in the end I decided it was simpler to say "goto 
-cleanup_autostash" than try and keep track of what needs cleaning up 
-when saying "goto cleanup". There are a couple of similar examples in 
-builtin/stash.c:show_stash() and 
-config.c:git_config_set_multivar_in_file_gently()
+-static int stack_compact_range_stats(struct reftable_stack *st,
+-				     size_t first, size_t last,
++static int stack_compact_range_stats(struct reftable_stack *st, size_t first,
++				     size_t last,
+ 				     struct reftable_log_expiry_config *config,
+ 				     unsigned int flags)
 
-Thanks for the review
+is a degradation of readability.  "first" and "last" pretty
+much act as a pair and they read better sitting together next to
+each other.  The rewrite is reducing neither the total number of
+lines or the maximum column width.
 
-Phillip
+But this one
 
+-static void write_n_ref_tables(struct reftable_stack *st,
+-			       size_t n)
++static void write_n_ref_tables(struct reftable_stack *st, size_t n)
 
-> Patrick
-> 
+is certainly an improvement.
+
+This one
+
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_REF,
+-		.u = {
+-			.ref = *ref
+-		},
++		.u = { .ref = *ref },
+ 	};
+
+is hard to generalize but in this case it made a good suggestion.
+
+If we _expect_ that we will enumerate more members of .u, then the
+way originally written (plus trailing comma after the ".ref = *ref")
+would be easier to maintain.  But since .u is a union, we won't be
+choosing more than one member to initialize by definition, so what
+was suggested by the check-style linter is certainly much better.
+
+Thanks.
