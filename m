@@ -1,85 +1,85 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A9113D8B1
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E0313E04C
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618359; cv=none; b=qdrO1ni3/bbmm7RtGfQ03QCK5okHDy8ZvJex//kiyE4NPpEt9kCbhB51pR7nJt7/tV/CtagYJ9t6qZ+ggiILWumE9GLOWt76DRsaf7jzfcCAW5/Hc6cYGWYFmbcsJDPlLbSaNxFTStZJp5DYAAJs6ozgAINxK1o2jA9KlG+wfUM=
+	t=1723618362; cv=none; b=beD00rITorN6LjsR18INbaQSgiUIKjFISs19cBj6mFj8pui//GH8YreqqrnX8fLhLBO1Ncc4Cu1QJmJ3Sbf4HhXpmr4Dh9DXnK+gPkdWDQUc1DU78sGU2DifRhPYsCVGtafp7SeZmw3CyJOzyLYcXtTW8/4o0VwT2m0EQ8asNsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618359; c=relaxed/simple;
-	bh=Ukaij5hmrPErRpw4QDKh97/DgmHZG0a41YRLxtb5IaU=;
+	s=arc-20240116; t=1723618362; c=relaxed/simple;
+	bh=waks8hoUfznjH12i0vKxdz5LLbjHaWq8lhvqfR9VQag=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H9wCAfc+hiS8pPl0G+jY8X5v7C7i+g1Ex7ouY8LrSUpuE1f7yOWXmoqa2Md5pW0s5v6RngjxKcZt7f/pK1MwfnkgQ3tfXLTuQq2MNM7Z3Q87xlDAGUrBP0aIaKR23+1mCcTTjv2+elN8fzLQTqNSLPqqLE1FdXKK+S5+MEJvbAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UbOkcffP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uqkGd1RO; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=uu4y+vDCN84OZ5agjcRka2FH+MlQ/MKytq5wjsHdbxqNUUVaOB8db8jKUuBDPTjIypR0ubI17t+exiy/fuzymrCDGTlDIe4LVxcaX7nk13lLg2fzW/leDp0wfkm519ZnKz4XLosuNdv2+hqGEhNATTmji6rIk2LgupKYIqz/2Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nTUgib/z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uMwXkk3y; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UbOkcffP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uqkGd1RO"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id CB6031388210;
-	Wed, 14 Aug 2024 02:52:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nTUgib/z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uMwXkk3y"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 762AE114EADE;
+	Wed, 14 Aug 2024 02:52:39 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 14 Aug 2024 02:52:36 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 14 Aug 2024 02:52:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723618356; x=1723704756; bh=2pdPl8fWIg
-	Pa+FaufSSoP60mf5EmVgiEfhB5i2Ic8MQ=; b=UbOkcffPWXx9tUFOpbhpfDtf4g
-	0n1LyowtnimGFcesw9VolO7vuTgA0RhFlyE6juHa6DjiccmormqNe2HBBRKDfhth
-	h3QRsAarzzyCrT0LnNodaZdv3baYwXUnjSdZzf0wW1YQCUjB8c5z3jKGPNbeHjlE
-	xaQ2FEAF6KV6dL9zSiLMdh+UFhrh42rKRgSS/BdaYV8r1azTAu7hpmQqww0BZmvf
-	LPvKC59nDuYLm4017tQQ1FBb794BGuotteJAM5R61jvIL62RaGVN6/M3jCe5YbpV
-	/qRHz2o0KoDUK848G4T0bwYqFvImzDuJ7SWjrqmfM8Rn53gJr9S97rNaN8rw==
+	:subject:to:to; s=fm3; t=1723618359; x=1723704759; bh=VsEJeKMeqw
+	r010bAYWR8h0QBoC4ZOScl7Aq4HzEOYMU=; b=nTUgib/zoKuvG1XEBN1quFLkQQ
+	smgb6YHNdQbEDQyhxWPzjMggpGQMa2AWHH46pJrWoipOFIQwI0FHWUkebecF5rxz
+	gY7Zw+S6M5RjheqVS7Gw4zUZAY946tunb6UPvUg4CJG51GPaOb2XLEMObSCVjd7J
+	pxU/Lxn+ixhklTSTRp6kV2VNuMe0hiQpIaUh3eHmXZVLrpI5/xLGy5JjgxbVIGTA
+	cfn3o0RvSv0vJCzQAim+OZwEAV3VfaCzCdWhMURQr+F9QYkb33ZO5r3NQ3VsA3h8
+	O1os2DHg2ppWKwnbYZSKf6RnxhhgiWPUOm4RMCy/VdYbLaAn8kPC2gCcdvoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723618356; x=1723704756; bh=2pdPl8fWIgPa+FaufSSoP60mf5Em
-	VgiEfhB5i2Ic8MQ=; b=uqkGd1ROB9MFKalr0SFpVExTQuJv0QaNWe6Vw/XWrPPN
-	yx8GDQxCqP0yM5YegzfisfOfdXrfmKSYsA1IqMlxna2YZsQMTdHEymgiJrN4teXL
-	Gfw2wW2KnY27IE6wP36MVe64mvswn9rSNwIkH2BHU09PaYIAlT36w48aVF5exiwC
-	8ynK3yl0ai3myuzotoOPB6Kb3q5clDnrKUso/z1WvSgFKDOi+hc2rZ3UPrp7jvZm
-	ecta92ybEY6+e4vTH96FQ/gy+uUZ/asC5knEV40oXaBSzZ/BYDvHuS49+WTNMazE
-	7k/5mLpA2wYXA+MqVJgfvXdN6pEuiuVbHgglTmqOGw==
-X-ME-Sender: <xms:NFS8ZnxxHTxy1fvDfUUGF5Uh5DnLVhgF6cCZDqt0aBCLLt82GIv-XQ>
-    <xme:NFS8ZvTVxHoVneAbgL83H7UKkCgB8J5KsgdSh78OpW7cFEULxVGJ_F2_FcLHYPDm7
-    bGj5oLaPYnMsO71kw>
-X-ME-Received: <xmr:NFS8ZhWpWOrCNRqtfOFEUeBiMjU5duv_JKfeoIhvKf-sl3faDHBoNQf20lUm2zKVaFT3C_Ynr9C6dq1YDhhv6BhKs5W6XlcaU8lPRt-GQVGWEA>
+	fm3; t=1723618359; x=1723704759; bh=VsEJeKMeqwr010bAYWR8h0QBoC4Z
+	OScl7Aq4HzEOYMU=; b=uMwXkk3yssLhgGjdrY6bYMlI3HjMryzv0D9E1+RlKSon
+	09nGvktYQuXcrdM96cLA1hYU4KanYfq0ZtQFNJ0MxIhl3z2NnJ0zaAzS8yNqS2Ys
+	sAL1YnEfh8f43F811ZZeXIR5gmG/S2Xh7T2EpIsRk1zr1u0bD21Hac5gXwlE4kdD
+	OWnXkF0Po/WjID8FOQP95GKsb6Nuo/ZC6JxwW/zzPkuRjU3pGxAeSu6fzUqIvy/l
+	njJsJHIsgxBI7g0JHshmY21yxZM9pOvAXLiHdZA6zJuMOFRKuXXGavNC8yLITyMS
+	7KZCqr9/Ub9oI3ENVWNEaWcbV4QDjGI8nbNZknnF1A==
+X-ME-Sender: <xms:N1S8Zv9ah1Ud0SKNsF7wXpH7olfKHPirh4ZR0WkAognSq6y4mWJGrw>
+    <xme:N1S8Zrv0bFP1q7OIZExymKu9lfZ8uG3fBhT5Lbo5c0Pjms5gICGCv9gwZXDw2mcDI
+    YngKTV3EGM1nHJfXQ>
+X-ME-Received: <xmr:N1S8ZtCNCCcE90qH-mGlz9nNDygqGeAZXf4j0xEZOj6tuVKNIAAyUCA72BY5m2EGnS4WtgB77teDcrqo9Suqlvi7SmkeE1dLh6akPAobPCgPLg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
+    shhmthhpohhuthdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
     rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:NFS8ZhhI6MmOIVEg-yNOSxksZcNvbLnJsqy7whE7jsXKngCGRjAG8A>
-    <xmx:NFS8ZpAGECvgp6AyCe1Bt3K5Qpeabw-VRRRSnHHePQdmveYJfguhQw>
-    <xmx:NFS8ZqLHXilI6derto4v6V_7fpjrTHXoSTMc6hGiwF8CiUhMgDcBMw>
-    <xmx:NFS8ZoAdrLw2XtxJ1D6WIKROREcMuqgeaoiJsha1YpxVKWnzFU9HdA>
-    <xmx:NFS8Zr0t-hVkG0ksjnL0YxwxqC2iWNQNy9gH0P0onIWIRY7GxKubeYJ6>
+X-ME-Proxy: <xmx:N1S8ZretsK5RXOwW9QrzFtOM0uZWLUZunlYIJ8MKwUp5wCftcZxM5g>
+    <xmx:N1S8ZkMlRDAhRwHptXoMQNqIBJWOGyCeP2dxxg9eIqbsWEc6cEKDJQ>
+    <xmx:N1S8ZtmrKLtwjfe4gOYMkDUr4Z2Kk972_nlLDgb7WScjVrz-5cqwsA>
+    <xmx:N1S8ZuuyX0fjF29fWbCHE37AzPIgFTdY5hu7CPz0ovVvTTzF2Ru2SQ>
+    <xmx:N1S8ZgB-DU0J_rsnH6W3K5TEO7SKY7bKgPjQV4j3c6SxVfosVekYfKpH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 02:52:35 -0400 (EDT)
+ 14 Aug 2024 02:52:37 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 54cab469 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 06:52:17 +0000 (UTC)
-Date: Wed, 14 Aug 2024 08:52:33 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f193847e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 06:52:19 +0000 (UTC)
+Date: Wed, 14 Aug 2024 08:52:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 14/22] merge-ort: unconditionally release attributes index
-Message-ID: <bdfdf533134ff979f3236740b96101b83fd78bcc.1723614263.git.ps@pks.im>
+Subject: [PATCH v4 15/22] sequencer: release todo list on error paths
+Message-ID: <f6c1055805d944337752acb70cc613d8d4684d3f.1723614263.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723614263.git.ps@pks.im>
 Precedence: bulk
@@ -92,86 +92,133 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723614263.git.ps@pks.im>
 
-We conditionally release the index used for reading gitattributes in
-merge-ort based on whether or the index has been populated. This check
-uses `cache_nr` as a condition. This isn't sufficient though, as the
-variable may be zero even when some other parts of the index have been
-populated. This leads to memory leaks when sparse checkouts are in use,
-as we may not end up releasing the sparse checkout patterns.
-
-Fix this issue by unconditionally releasing the index.
+We're not releasing the `todo_list` in `sequencer_pick_revisions()` when
+hitting an error path. Restructure the function to have a common exit
+path such that we can easily clean up the list and thus plug this memory
+leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- merge-ort.c                       | 3 +--
- t/t3507-cherry-pick-conflict.sh   | 1 +
- t/t6421-merge-partial-clone.sh    | 1 +
- t/t6428-merge-conflicts-sparse.sh | 1 +
- t/t7817-grep-sparse-checkout.sh   | 1 +
- 5 files changed, 5 insertions(+), 2 deletions(-)
+ sequencer.c                     | 66 +++++++++++++++++++++++----------
+ t/t3510-cherry-pick-sequence.sh |  1 +
+ 2 files changed, 48 insertions(+), 19 deletions(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index e9d01ac7f7..3752c7e595 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -689,8 +689,7 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+diff --git a/sequencer.c b/sequencer.c
+index cade9b0ca8..ea559c31f1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5490,8 +5490,10 @@ int sequencer_pick_revisions(struct repository *r,
+ 	int i, res;
+ 
+ 	assert(opts->revs);
+-	if (read_and_refresh_cache(r, opts))
+-		return -1;
++	if (read_and_refresh_cache(r, opts)) {
++		res = -1;
++		goto out;
++	}
+ 
+ 	for (i = 0; i < opts->revs->pending.nr; i++) {
+ 		struct object_id oid;
+@@ -5506,11 +5508,14 @@ int sequencer_pick_revisions(struct repository *r,
+ 				enum object_type type = oid_object_info(r,
+ 									&oid,
+ 									NULL);
+-				return error(_("%s: can't cherry-pick a %s"),
+-					name, type_name(type));
++				res = error(_("%s: can't cherry-pick a %s"),
++					    name, type_name(type));
++				goto out;
+ 			}
+-		} else
+-			return error(_("%s: bad revision"), name);
++		} else {
++			res = error(_("%s: bad revision"), name);
++			goto out;
++		}
+ 	}
+ 
+ 	/*
+@@ -5525,14 +5530,23 @@ int sequencer_pick_revisions(struct repository *r,
+ 	    opts->revs->no_walk &&
+ 	    !opts->revs->cmdline.rev->flags) {
+ 		struct commit *cmit;
+-		if (prepare_revision_walk(opts->revs))
+-			return error(_("revision walk setup failed"));
++
++		if (prepare_revision_walk(opts->revs)) {
++			res = error(_("revision walk setup failed"));
++			goto out;
++		}
++
+ 		cmit = get_revision(opts->revs);
+-		if (!cmit)
+-			return error(_("empty commit set passed"));
++		if (!cmit) {
++			res = error(_("empty commit set passed"));
++			goto out;
++		}
++
+ 		if (get_revision(opts->revs))
+ 			BUG("unexpected extra commit from walk");
+-		return single_pick(r, cmit, opts);
++
++		res = single_pick(r, cmit, opts);
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -5542,16 +5556,30 @@ int sequencer_pick_revisions(struct repository *r,
  	 */
- 	strmap_clear_func(&opti->conflicted, 0);
  
--	if (opti->attr_index.cache_nr) /* true iff opt->renormalize */
--		discard_index(&opti->attr_index);
-+	discard_index(&opti->attr_index);
+ 	if (walk_revs_populate_todo(&todo_list, opts) ||
+-			create_seq_dir(r) < 0)
+-		return -1;
+-	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT))
+-		return error(_("can't revert as initial commit"));
+-	if (save_head(oid_to_hex(&oid)))
+-		return -1;
+-	if (save_opts(opts))
+-		return -1;
++			create_seq_dir(r) < 0) {
++		res = -1;
++		goto out;
++	}
++
++	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT)) {
++		res = error(_("can't revert as initial commit"));
++		goto out;
++	}
++
++	if (save_head(oid_to_hex(&oid))) {
++		res = -1;
++		goto out;
++	}
++
++	if (save_opts(opts)) {
++		res = -1;
++		goto out;
++	}
++
+ 	update_abort_safety_file();
+ 	res = pick_commits(r, &todo_list, opts);
++
++out:
+ 	todo_list_release(&todo_list);
+ 	return res;
+ }
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 7eb52b12ed..93c725bac3 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -12,6 +12,7 @@ test_description='Test cherry-pick continuation features
  
- 	/* Free memory used by various renames maps */
- 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index f3947b400a..10e9c91dbb 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -13,6 +13,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- TEST_CREATE_REPO_NO_TEMPLATE=1
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- pristine_detach () {
-diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
-index 711b709e75..020375c805 100755
---- a/t/t6421-merge-partial-clone.sh
-+++ b/t/t6421-merge-partial-clone.sh
-@@ -26,6 +26,7 @@ test_description="limiting blob downloads when merging with partial clones"
- #                     underscore notation is to differentiate different
- #                     files that might be renamed into each other's paths.)
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-merge.sh
- 
-diff --git a/t/t6428-merge-conflicts-sparse.sh b/t/t6428-merge-conflicts-sparse.sh
-index 9919c3fa7c..8a79bc2e92 100755
---- a/t/t6428-merge-conflicts-sparse.sh
-+++ b/t/t6428-merge-conflicts-sparse.sh
-@@ -22,6 +22,7 @@ test_description="merge cases"
- #                     underscore notation is to differentiate different
- #                     files that might be renamed into each other's paths.)
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-merge.sh
- 
-diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
-index eb59564565..0ba7817fb7 100755
---- a/t/t7817-grep-sparse-checkout.sh
-+++ b/t/t7817-grep-sparse-checkout.sh
-@@ -33,6 +33,7 @@ should leave the following structure in the working tree:
- But note that sub2 should have the SKIP_WORKTREE bit set.
  '
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'setup' '
+ # Repeat first match 10 times
 -- 
 2.46.0.46.g406f326d27.dirty
 
