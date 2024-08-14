@@ -1,38 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A436F2FD
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 07:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5474C29CFB
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 07:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723620402; cv=none; b=FYafQwV+iiCLZDlswP8KqN6yAZSAaeR3L88HMgkU/WyBYUqGnh90D2tYClcDH46Fumt6SUNXUau0Dp+xrpCIcVey5uIbF6OzbqDa5l4SQ1VVMnwBEUOvAV7cFqVNF9pEcLAmPUJjIrR0XQkZlZ6FH2abji8cu3fh0McmnbqAFV0=
+	t=1723620775; cv=none; b=hE6xWccne213hmFQwe1+hy2OAzxPZm0Tv0PQNVuotXAAepH/3GrOh3EbpQ79guhXsSVs+dOpOQFhWRu4pJH+G0xP2nXrWupq+uOwIBg8VNtVYGXigqqrrWJpmGVkIFsOQLouJljDkX1adQ/gjJfcVTWkAB/51L/5+osFPO1p7uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723620402; c=relaxed/simple;
-	bh=GJLKcnuGIXwkLMrS9r6BY3pQ2nLIFnFJFA3w66mqrug=;
+	s=arc-20240116; t=1723620775; c=relaxed/simple;
+	bh=JppbXpZCTb3MqJBdy5f/fY1FTEBv/jiw17aY59cq0v8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qZB2WeYZSfPH2u3fZrgPgMRGCCUrnU9QgoFK/72glrNR9oJpXp9u6getkvDFwR/waGhY2DT8TuCbygbmv0FkRwESObtS83j1fiXmFVP/JFJx6SdOnFprThJJz/SnwOyL8t1wOXxjS/1O+wzZVnVXRbQUZTSGW8sMFXkdNDwYkF4=
+	 Content-Type:Content-Disposition:In-Reply-To; b=LiECOTxvjAO3yPjln4Q24BQk/XMIg9VFzalUmxYiHNuVWAddOUfHdOVrQLToW/v7KFAjt2t+/i4/wIu2r10qPNv31GsEWOyj/toEzNDbiT9ffeDsLhsNrLhTrmz1m7sSol3PwIN62jNtTHMrieDm9/4Cf24PbGg0xp8FFnGqEws=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11725 invoked by uid 109); 14 Aug 2024 07:26:38 -0000
+Received: (qmail 11751 invoked by uid 109); 14 Aug 2024 07:32:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Aug 2024 07:26:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Aug 2024 07:32:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13527 invoked by uid 111); 14 Aug 2024 07:26:42 -0000
+Received: (qmail 13562 invoked by uid 111); 14 Aug 2024 07:32:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2024 03:26:42 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2024 03:32:56 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 14 Aug 2024 03:26:37 -0400
+Date: Wed, 14 Aug 2024 03:32:51 -0400
 From: Jeff King <peff@peff.net>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Anthony Nguyen <anthony.l.nguyen@intel.com>
-Subject: Re: [PATCH] format-patch: add support for mailmap file
-Message-ID: <20240814072637.GA2077794@coredump.intra.peff.net>
-References: <20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com>
- <2mvexuxcaow45ifnqmrvpn2yz2ecxzazsbo5ui7xaiwwpzt7hr@mvl6ehbrhrp6>
- <c0724297-1748-474c-998e-803e6a062a12@intel.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Mike Castle <dalgoda@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Heads up: GMail regularly marking list messages as spam
+Message-ID: <20240814073251.GB2077794@coredump.intra.peff.net>
+References: <CA+t9iMyT8fAR_fvQXOer=ivLnNKDnH8g_M8iQiq7gdrnfG7aCg@mail.gmail.com>
+ <Zrp7yNKMxhPk6Tyt@tapette.crustytoothpaste.net>
+ <20240813-sociable-fresh-whippet-3ee335@meerkat>
+ <Zrvbpt3Fkl8yjesP@tapette.crustytoothpaste.net>
+ <20240813-rampant-quokka-from-betelgeuse-4bc3c9@lemur>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,31 +42,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c0724297-1748-474c-998e-803e6a062a12@intel.com>
+In-Reply-To: <20240813-rampant-quokka-from-betelgeuse-4bc3c9@lemur>
 
-On Tue, Aug 13, 2024 at 05:20:41PM -0700, Jacob Keller wrote:
+On Tue, Aug 13, 2024 at 08:10:17PM -0400, Konstantin Ryabitsev wrote:
 
-> I've had a few cases where I was formatting an old commit. The example
-> in this case was a change made to an internal tree by one author quite
-> some time ago. In the meantime, that person has left the company, and
-> his company address is no longer valid. We still typically put the
-> original author on such a patch in order to give them credit even if
-> they're no longer on our team when sending the change, as patches are
-> made by people, not companies :)
+> > And from a personal point of view, it is definitely useful for me, as
+> > someone who manages their own mail server, to heavily negatively score
+> > all email without DKIM, but I can't do that because vger doesn't add
+> > any.  That's the only thing preventing me from doing that.
 > 
-> If we left the address alone, it would cause a bounce on the mailing
-> list if it gets included in the cc. In some cases, the upstream project
-> mailmap already includes a mapping from their old company address to
-> their current public address.
+> There is a small subset of active git mailing list posters who send mail that
+> is not DKIM-signed, for example Jeff King:
 > 
-> The internal tree commits are already baked and can't be changed. We can
-> of course fix the generated patches from these commits manually. It
-> seemed convenient to get mailmap to do this for us.
+> https://lore.kernel.org/git/20240813124550.GC968816@coredump.intra.peff.net/raw
 
-I think that makes sense, especially if the caller is specifically
-asking to enable address mapping. I do wonder if the new format.mailmap
-might be surprising for some callers, though. For example, would a
-rebase using the "apply" backend quietly rewrite commit authors using
-the mailmap?
+Uh oh, now I feel singled out. ;)
+
+It's true that I use only SPF but not DKIM. FWIW, I haven't had a huge
+problem with deliverability. But if the world is ready to move on and I
+am one of the last dinosaurs holding things up, I'm OK to be told that I
+really ought to implement DKIM to participate in the list.
+
+> However, signing their messages with a DKIM signature from vger.kernel.org
+> will serve no purpose, unless we also rewrite the From: to match the
+> vger.kernel.org domain. The From: field would need to be something like:
+> 
+>     From: Jeff King via Git Mailing List <foo+somemagic+peff.peff.net@vger.kernel.org>
+> 
+> This is called "From-munging" and is not acceptable on any mailing list that
+> sends and receives patches, because this changes the Author of the patch.
+> 
+> Thing is, this has nothing to do with vger, because if Jeff emails you
+> directly and you set a high negative score for messages without a DKIM
+> signature, you won't get his mail either. The fact that it traversed or didn't
+> traverse vger.kernel.org has no impact on that.
+
+Yep, agreed with all of that.
 
 -Peff
