@@ -1,162 +1,107 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6D01AE049
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 10:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47D394
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 11:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723631500; cv=none; b=P04QCCed0w2NCKSzIDGeRmGUPHshKChQtrG2xApWF/T7yOcN3jWnrrdc/BoEEDwp4ueBUViqjXGQ8dXqeaIUY5bxbAaTvvO0N54LePLCZ9ybPyxGCOrg3K1/pQjEkDnLuCVTLlVvVYcMNAL/VH83G8ki3CvKzrBYFMbXkTZyYLI=
+	t=1723636142; cv=none; b=ErCAUgn6KzNtmNPa4x0YVPegg+dJ3/oC3cmVpbOiP6Tjyh7lQveG6Rr0PJGt75LhJlBXZg4GGlfm1EdV+zqbwMP1CsNr8bRGfKMsOAbEu//xbHmRXPoulx4di6KVPbNIicbLdghF1QyIT2k6G3DRre/KXVdaexkUw0yz35pCMl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723631500; c=relaxed/simple;
-	bh=jgBi6oNQL+qdRE7utMh8FfsQo+FyxbRlKAjlGaLSrHE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nh9IkmX4buzyeqfFu42gHYScoiKBQHiR9BKdhIyxIssbJYO8SIYdoHAdMhTdoTUA8RoDbXi/RKhLEuYg1ou4yXmLI8gt/IGYHGdKKH9w2N6tj/5FAzB9BuPGB3HXviw0ukNUTqgqoitEkcnSBDnzgPxdzGK5I0Wg0BsAMKTy4q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XpRVH1gS; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1723636142; c=relaxed/simple;
+	bh=nau00YWVHzuCmiplf4f1MNhenCH1SJG9tzMQfELlopw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=lV2/kowrtLh5+P3eCE+PnQXLXan2xkRfuYribdO7rhC2JeR71WhwaotH3gU9B2gLwfjsDWnXuFOC80TQKkivUsdKKWrjqwyR8DURf+MQ3pzjBmxmeqgC0uNoduYE6J+wH8I+3brAxuwea7pZniFX6EJHPfXw0E/EjDIpb1bfufs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I0IL8mOp; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XpRVH1gS"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-429d2d7be1eso4226745e9.1
-        for <git@vger.kernel.org>; Wed, 14 Aug 2024 03:31:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I0IL8mOp"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f0dfdc9e16so76215831fa.2
+        for <git@vger.kernel.org>; Wed, 14 Aug 2024 04:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723631496; x=1724236296; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=56hSNiOlt1LylH+n3beA4JrC5B+sMVlxoMQsGPznpV4=;
-        b=XpRVH1gS3V08b2J7d5+3dpajhBtU9/6OgVgLp95W4FTE0qkiIsXONIb4OxJB95WZ+0
-         9TVbJHCobW4NczYOp8/R/atZKrJOvF4Gp1wdBbX8q/5PMKIaOELHoGK8KFZqUr1f7M/I
-         sb41XRTOcSPBXmbJsUprA2PNsklGaV3Zk8LyPctA6sv1+uOrVZbQsZ/qqN7tz0No8TJT
-         XvEjNNKCCqMxv3zzBPo93w7jWAm8CVqRwjVyLcVCgUXLDZKeR+TyyqDTk4A0ZuCbGhrC
-         81pHApO4+eCjGIj2ndR0GNCzT1N1ZZ0Ya3r2Vg7NWOHBGJUZ+iUtIBK2AonDM9zA6p+5
-         JbTA==
+        d=gmail.com; s=20230601; t=1723636139; x=1724240939; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nau00YWVHzuCmiplf4f1MNhenCH1SJG9tzMQfELlopw=;
+        b=I0IL8mOp5GCp+UfjSABUvmJhUYe19WXEMPVMe/O37upkhJsJsNVUfTMODbLjIJ4zdK
+         xtoIs8tahvWpFdFrFh8LEAJu43FW3XVq70VLcQfj4UrFWUuOzjtNq+EVl1kCqgr5KPun
+         IqwfEAQw5EDYetpnwsQKm1gBlPUUQ5m5tszunxlgk1gK62KpdmeO38bGSXAUktW79CT9
+         ZGqwWiH00iZrRysudRNCVzCi9delcz/4CnHSRn4jS2bZQsnovhMT/cz5mz5rnUWUxudz
+         4d3QGvCQiPKXVTUTHbQrI2h3ewYsOsH8Uyj904yfNBs+1WKf1+zda/gDdr2tHuJ3QB4+
+         i//g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723631496; x=1724236296;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=56hSNiOlt1LylH+n3beA4JrC5B+sMVlxoMQsGPznpV4=;
-        b=MDOBRma/PZizMxhvMqA8ZawZ5apj0Z+/HnMW0PHFzgBjaaCNjXtnyEdvdAD+hBCIK7
-         BaGKiZYVFTVQVzDhbSRhIx3k0WWlkkdxz8133apbfToK9LyHbilo/Atq5CFiSAvE/GmI
-         EMciUeouaRG/iBoQg6VSTFV51Muc0tVvcsQjs4fpHc+jVBq3Mkm84igo2XQX4W7rurs/
-         8aut1OegPgS0miiF8YBRMRFZM1mBFmxd4kty9Oz8gzhqVGk9QG9YEBfp5wGrcP5wvz7L
-         kRiwjr4tkuM7Wm02KlY0qi4nY5Uvc9DUYcIiklEbfiQybzXoEZPV9n6N8XhOW9gI4tnf
-         ZiRQ==
-X-Gm-Message-State: AOJu0YyEDUkzWkpZhjcsLJ5ccE3iZNOIetzPcxvjsj0C8G4HadpN7Kyr
-	J/oA4wD/BoOHVhTlisWrTR5MuxzQEG7Jhy7wPFGwMavj4yORV6k2Sy9Jiw==
-X-Google-Smtp-Source: AGHT+IEQxSlY4LwCp/iiDl5uIrcwV6MeC/k3VQluReow/yleTzjl6ynJtTNrK+fWxxp8ho+v+fu94Q==
-X-Received: by 2002:a05:600c:3b8f:b0:426:706c:a55a with SMTP id 5b1f17b1804b1-429d625a7b1mr44623615e9.2.1723631496074;
-        Wed, 14 Aug 2024 03:31:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded71dfasm15442345e9.38.2024.08.14.03.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2024 03:31:35 -0700 (PDT)
-Message-Id: <cce9921bbd8825c3a12d32b2c8b62a2c4b06333a.1723631490.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1768.v3.git.1723631490.gitgitgadget@gmail.com>
-References: <pull.1768.v2.git.1723397687.gitgitgadget@gmail.com>
-	<pull.1768.v3.git.1723631490.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 Aug 2024 10:31:30 +0000
-Subject: [PATCH v3 4/4] p1500: add is-base performance tests
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1723636139; x=1724240939;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nau00YWVHzuCmiplf4f1MNhenCH1SJG9tzMQfELlopw=;
+        b=vgts/8eIhJq+Bgi9lVzmpYhgB0udQoMxCq4YX4iLzaRdvdtakoW8zJSWkV35MRX+uk
+         NJQqwI1sLTX98fQvvai+BDauQMT+s0UvpnK+YEOIzb4uxju45xifNcFhGxPr1LacvzLK
+         eiKPl99c/r5oc6/DR6/KNkuSm1jt2U+10VQHHvBIPRiwqz670khLrVUQivRj7kjzkMJ5
+         ym7STGwMrkHfVag8wSUaUEFx9He9f7vGN/JTw35ce7Q6kSb6kOfgv/ryVEBeXva1+koP
+         uAsa1pY3Jj+eo1X8cKN9Y5YAPWuzzherVEabooCQwQ2trCHdKMDUoduUpxHFgZ8nw/up
+         ALug==
+X-Forwarded-Encrypted: i=1; AJvYcCXNzirp/PBXPv4Hpd54vpVPhWDmrkWuT3RES0PP9q/b3RZC3pY9Ice89tIEIKjTHItsTWtSxYNwv4uXdVKvK9cCRPXh
+X-Gm-Message-State: AOJu0Yz7PRSiW5hyMlDcAw3kFSTMZnPgAklAtWqBeCifq0M+wR/rTQrl
+	5YtsTobDGpWRBH6jjE+Q9C8Kda+PeiZrrAU7/rjkHLMfaNBB202hP8OTT/ao0JfFYU/ex/THnMZ
+	qlt6SvXfBgoIZG4NNJAZgmep6LSg=
+X-Google-Smtp-Source: AGHT+IHB1bwFc1c+Dm1XA8KKuFr7BfJmmyzGWZRfiBRN/quTj7cA0fEmYiMDXC+S0FBl/59qz2zIF5JM15fTAEOx/B8=
+X-Received: by 2002:a2e:90cd:0:b0:2f1:585b:f326 with SMTP id
+ 38308e7fff4ca-2f3aa1fe856mr12825661fa.45.1723636138863; Wed, 14 Aug 2024
+ 04:48:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    vdye@github.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
+ <20240813144440.4602-1-chandrapratap3519@gmail.com> <20240813144440.4602-2-chandrapratap3519@gmail.com>
+ <2rxxfpzijfmvo65xournnmx4oawzqlhgipje4cxzxvo5aqzt6u@xppoikj262cp>
+In-Reply-To: <2rxxfpzijfmvo65xournnmx4oawzqlhgipje4cxzxvo5aqzt6u@xppoikj262cp>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Wed, 14 Aug 2024 17:18:33 +0530
+Message-ID: <CA+J6zkSAa4ejLtTqNob_JyS8wwx+BX0vsgsWU9mekWcNtVY80g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] t: move reftable/readwrite_test.c to the unit
+ testing framework
+To: Josh Steadmon <steadmon@google.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Derrick Stolee <stolee@gmail.com>
+On Wed, 14 Aug 2024 at 04:03, Josh Steadmon <steadmon@google.com> wrote:
+>
+> On 2024.08.13 20:04, Chandra Pratap wrote:
+> > reftable/readwrite_test.c exercises the functions defined in
+> > reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
+> > reftable/readwrite_test.c to the unit testing framework. Migration
+> > involves refactoring the tests to use the unit testing framework
+> > instead of reftable's test framework and renaming the tests to
+> > align with unit-tests' naming conventions.
+> >
+> > Since some tests in reftable/readwrite_test.c use the functions
+> > set_test_hash(), noop_flush() and strbuf_add_void() defined in
+> > reftable/test_framework.{c,h} but these files are not #included
+> > in the ported unit test, copy these functions in the new test file.
+>
+> I'm assuming that eventually, reftable/test_framework (and all the rest
+> of reftable/libreftable_test.a) will be removed after all the tests are
+> converted to the unit test framework, is that correct?
 
-The previous two changes introduced a commit walking heuristic for finding
-the most likely base branch for a given source. This algorithm walks
-first-parent histories until reaching a collision.
+That hasn't been discussed yet but yes, that seems the most likely
+fate for reftable/test_framework.{c,h}.
 
-This walk _should_ be very fast. Exceptions include cases where a
-commit-graph file does not exist, leading to a full walk of all reachable
-commits to compute generation numbers, or a case where no collision in the
-first-parent history exists, leading to a walk of all first-parent history
-to the root commits.
+> Will other tests need these test_framework functions? If so, I'd rather
+> not end up with duplicates in each test file, even if these are small
+> functions. Is there a reason why we can't link the reftable/test_framework
+> object (or the whole reftable/libreftable_test.a library)?
 
-The p1500 test script guarantees a complete commit-graph file during its
-setup, so we will not test that scenario. Do create a new root commit in an
-effort to test the scenario of parallel first-parent histories.
+If I remember correctly, only stack and merged tests besides readwrite
+utilize these functions.
 
-Even with the extra root commit, these tests take no longer than 0.02
-seconds on my machine for the Git repository. However, the results are
-slightly more interesting in a copy of the Linux kernel repository:
+We're not #including 'test_framwork.h' in the new test files because in
+a way, the point of this GSoC project is to get rid of
+reftable/test_framework.{c,h} so we don't need to carry an entirely
+different testing framework for the reftable sub-project.
 
-Test
----------------------------------------------------------------
-1500.2: ahead-behind counts: git for-each-ref              0.12
-1500.3: ahead-behind counts: git branch                    0.12
-1500.4: ahead-behind counts: git tag                       0.12
-1500.5: contains: git for-each-ref --merged                0.04
-1500.6: contains: git branch --merged                      0.04
-1500.7: contains: git tag --merged                         0.04
-1500.8: is-base check: test-tool reach (refs)              0.03
-1500.9: is-base check: test-tool reach (tags)              0.03
-1500.10: is-base check: git for-each-ref                   0.03
-1500.11: is-base check: git for-each-ref (disjoint-base)   0.07
-
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- t/perf/p1500-graph-walks.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
-
-diff --git a/t/perf/p1500-graph-walks.sh b/t/perf/p1500-graph-walks.sh
-index e14e7620cce..5b23ce5db93 100755
---- a/t/perf/p1500-graph-walks.sh
-+++ b/t/perf/p1500-graph-walks.sh
-@@ -20,6 +20,21 @@ test_expect_success 'setup' '
- 		echo tag-$ref ||
- 		return 1
- 	done >tags &&
-+
-+	echo "A:HEAD" >test-tool-refs &&
-+	for line in $(cat refs)
-+	do
-+		echo "X:$line" >>test-tool-refs || return 1
-+	done &&
-+	echo "A:HEAD" >test-tool-tags &&
-+	for line in $(cat tags)
-+	do
-+		echo "X:$line" >>test-tool-tags || return 1
-+	done &&
-+
-+	commit=$(git commit-tree $(git rev-parse HEAD^{tree})) &&
-+	git update-ref refs/heads/disjoint-base $commit &&
-+
- 	git commit-graph write --reachable
- '
- 
-@@ -47,4 +62,20 @@ test_perf 'contains: git tag --merged' '
- 	xargs git tag --merged=HEAD <tags
- '
- 
-+test_perf 'is-base check: test-tool reach (refs)' '
-+	test-tool reach get_branch_base_for_tip <test-tool-refs
-+'
-+
-+test_perf 'is-base check: test-tool reach (tags)' '
-+	test-tool reach get_branch_base_for_tip <test-tool-tags
-+'
-+
-+test_perf 'is-base check: git for-each-ref' '
-+	git for-each-ref --format="%(is-base:HEAD)" --stdin <refs
-+'
-+
-+test_perf 'is-base check: git for-each-ref (disjoint-base)' '
-+	git for-each-ref --format="%(is-base:refs/heads/disjoint-base)" --stdin <refs
-+'
-+
- test_done
--- 
-gitgitgadget
+As far as duplicated functions are concerned, we can maybe move
+them to unit-tests/test-lib.{c,h} or a new file in reftable/. I'll create
+a patch for it sometimes later.
