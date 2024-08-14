@@ -1,87 +1,86 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104B113CABC
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E46A13CF9E
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 06:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618372; cv=none; b=lrnuLXTKSwziGCYwyLaeKG/NyJYofoQmLfbmYjPBnpQ8wjcKJqJF6bwxjV8aYxl2ua9z7M1j5bix9KAgvf5Uq++OFGe7noeuDyvWCcscR3agsgodo9TvmrXQ+C3SVTHRMuYGqpeesP4MHh6eki9BdBR2Ry5Yq8h53IlZNw7GVX8=
+	t=1723618375; cv=none; b=PgND/QfbuUVs/xIhbUIxpEFf7ElWE/5hXJR2xAL03zTTz086naKsXyjk6zRUnPqU/2UDx67eiumqpc5SdeWvrUcNxSNAxzbkMlnJRq32rsb4IHyTAA3xgJ5y/7NAJ4vdzOROlMfB3zQVbAm2CI29L4tmDZCApXbRgRadPM4db2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618372; c=relaxed/simple;
-	bh=YAEW1CzQIjBpQAIUvMZwiDeu1HYykspVabBY7cybMuY=;
+	s=arc-20240116; t=1723618375; c=relaxed/simple;
+	bh=zkdr69ZWVgse8a8Aa0KV+OS9xu+UFHizWG8N0HufK7c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ir2FhlarmXubSYd+cTGiGwM5g0maqOImENvLn9isJRYjL8gX8+YWygB+ZrAhTbNc5z3SOzfOEAeGnE60jJciT2MdtjnXuCG9BWC4N4DYtHofRumBv6KUSLmENZg72pNtqRCEzK2cSJkGlrEhV0EewEfnPWtN3mibXmlmeNex9oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j43wZK0X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vE/TRmny; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=QFxU4X9nbu18YF8aesty3cTSMhdOKyouSK5jpQ/aO7QuIGIyPZ8kF/Sj0r+OayQ0gJ5wJaiwVvh2O8u1UYCmLeehWih8EcdEApUF/hbd/0x0xxX1BTxmsirvqwAKpl8cpMtjLnd0zeT32HkGL+fkWLZ5iBU4autad113M52BB8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i44XD77a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NAtziVqR; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j43wZK0X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vE/TRmny"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 4E2E9138946B;
-	Wed, 14 Aug 2024 02:52:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i44XD77a";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NAtziVqR"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id D401D138FC5C;
+	Wed, 14 Aug 2024 02:52:52 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 14 Aug 2024 02:52:50 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 14 Aug 2024 02:52:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723618370; x=1723704770; bh=fH93M4K9L6
-	TM8thyERojgUQU2JM4w2+iXKHYGOQpLo0=; b=j43wZK0Xdww91YN8pX/JSVwxkf
-	9TKvkzEq7eX5REa/dwMTIwYbiQtkhPPmHE4RZMZrrAMaPWiEEfoBbRrSHIusZS6f
-	IsZ9p2o+q4/Zpz6wwZTMRm117QZvWdWs9O0KnWNkXSTE1QVwYKDHU0ifx1drHrH9
-	SrxCdSfz+fflJakCJpIT62wO+FK3dfS0zb3vF6P5iX2XAGpM52+YPUmh5n376hVo
-	Qg1/gkWW/lNJeYay86pifuS0hkiUAxo1d1hfpyfYcVR9GGKygz+SkhU/wKsE//mS
-	m9VbOJvoGXpLrBg63WiVPcC90+1bHqyk2zhWk6qQPbdR8bSuSc0cy9Zei4XQ==
+	:subject:to:to; s=fm3; t=1723618372; x=1723704772; bh=XAUeetf7P2
+	4rfZv6N44Ib1z4mOQLc5e3yrk7AJcS3Bs=; b=i44XD77acHxuc/smxwYekwSBqC
+	pl9CObMXVFkmAjKj40/SDmfkwhPUUoiMz4YdNydRCcdV2tcgQOfIl/kBt6yN3vSu
+	Y3MyC19p2KSmlSIRzovkCgoGHbThH6ZSWw7ddvfUpPTIk4TnqtkWgsMpEgfPI0vr
+	xP5pjhHa8MnS8/wC8SV+N23vykgLHYpYclM2rQPimM0hliK/sQ2LRyFTZwIrkNms
+	3nUj4eCCMWI2h+qTPIRBQqkaC5HtIOKXT+ax5pZO/rvbgKZvN03HoiIqGKgDT0Wd
+	vev5ZId0iodJZRNuerzYRWeEqjId+T57VecwKDCv5xAQYo6nA21b/bLn96/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723618370; x=1723704770; bh=fH93M4K9L6TM8thyERojgUQU2JM4
-	w2+iXKHYGOQpLo0=; b=vE/TRmnyOowlapd/r2Hz84WtJUEAeEUKQjM/SQiGPeVi
-	O99QWRGpy3mDvSHOPfD/AVXi1mCdeGecdCchnGfwDK8zZb2iDOqt+33YJd1OJfI+
-	J3tBcNjdTJ/zvO+qduW5MPB6CxPJPA7KJynWND/h6ZlzbR4kO3zJNxl1Ax02aB6b
-	JWx0Cx39atU/tPzBPIcL3ERvCX1NFlYQiCTG5XlqBQayZIpvM51VnEByp+K4RE/m
-	Y+weu4KgNnTBEhkW+EEQ2ElDNKEzPlFQ33T4NiKTxxuHnpxkMhEtYgouxpCB/pWs
-	ZoMO4Rj7IdJLHOSPXEFFSnmjmhlJ/TSmfGbkDi6Wpw==
-X-ME-Sender: <xms:QlS8ZvREiljVLqfArkZNehFh-rlc1nMiP2yxHEfiCq52KPhGhmXD_g>
-    <xme:QlS8ZgywuF0vhaiH341HCM1djkN8BQOk_NaAHQCe_Au_4O2uPm0oQCYUq5NIaCs2I
-    BLtC8IgidMCrUvSSQ>
-X-ME-Received: <xmr:QlS8Zk0VPoCShhV9gJAfZvatvY47zANWUUQDO1sYVuaQQW84dV2DKhC8Fq5dEZ8hel46jMP3SbDr08nlhMqaW32QzyZFb2C-nrFiLtlXofJgGg>
+	fm3; t=1723618372; x=1723704772; bh=XAUeetf7P24rfZv6N44Ib1z4mOQL
+	c5e3yrk7AJcS3Bs=; b=NAtziVqRsdjeH8pIjg/h+D5pfwobrlfv9vlmJ8eoEbql
+	PmKyUWOnmoMeGrZckcrYqmwu8HqpHH32Ed37/47Oaq1CxJwavYJE9Ov52pd+D91U
+	3nuSsT6Z1LSFu9fBUPu4bWwffCbMbEWm+kG+LpLQ0xFV6pKhX2IbSAbMlX59J00D
+	gTa54WykAxp6gAkq948zE/J2Lf/o30SfkARdwL6hvuyLkaUQ0lDq4VoVhheeL+zY
+	0TqTCRVJ3Go1I85UVbB5c5/Bi3NN4k64aYdaXaUOmmijjXa8XraJQFm/R45oyP9v
+	QCmzlUP5T3bJO+E6LJiw9BvwyJoof5TPA/puVqG1Lw==
+X-ME-Sender: <xms:RFS8Zo9KNG1ryKmImDZPF22g69qf3KvH_UrmS9kPx8GXwUEX13gZTQ>
+    <xme:RFS8ZgtVCoCY_z1EunTJJYdwomAnauAav62gG-K_TieCAsuDJsqwIYE3Lj4hbqoOF
+    -iuPgOcgVG01a18dw>
+X-ME-Received: <xmr:RFS8ZuBvUrQOQ_ZBAOEKr_N5AfNTlmIWYap5TA_Q-Ax64cdT1hzz1uLztvUVmqeUq2wret87gxsZpWncVIOFhvskgahfQaRbpBOr4mNsyiyRxw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpefgfeeuledthfefgfetheffhfffgeeiueekveetfeev
-    gfduleeggeeuveduhfevkeenucffohhmrghinhepughifhhfohhpthdrnhhonecuvehluh
-    hsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
-    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjrghmvghssehj
-    rghmvghslhhiuhdrihhopdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:QlS8ZvCrcQ_qFKLPSPWA7jmKd9_ERUKhDTbW7T3tUWhS36Hzz2I7yA>
-    <xmx:QlS8ZoiZY5Gf7jal6IPgHPnYosnb130WHU554p0_6PD5uUShGOBqjA>
-    <xmx:QlS8Zjorn11ISt7Ez2kLRkq6Vj-cWCw3k5IqY8hMsFRE6ROPBGtjsQ>
-    <xmx:QlS8ZjgVsXUXnq5jDfeMds364HE4HnTHZfkEU2AnxMDL409C_WSibQ>
-    <xmx:QlS8ZjXPovkhE2Cx3NzemrKt101fjxpvTq74ltEO1wfc2hebrJq7sQ80>
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehp
+    hhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhioh
+X-ME-Proxy: <xmx:RFS8ZodOAH94_sf0Lg0UfQoFElKCKbx905tNmn8qrezJmrvzz1YTuQ>
+    <xmx:RFS8ZtN9ZgwA39Js2sp2uz2q7fcx-r88BUJmYzKZPApcinoWtHSkbA>
+    <xmx:RFS8ZinBGdYEtXXk9sBxjz-fUQhQkHmuMloOtHcBhgssFy7vfsjjSA>
+    <xmx:RFS8Zvul617_6OivZa7gkk5Jw-iq86ruxNraw1558gZciqMmzQg4fQ>
+    <xmx:RFS8ZpBxFTfo95mHurUHm4_e_yzj31gV0B27XTv4m6ThKjtRr7b1d920>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 02:52:48 -0400 (EDT)
+ 14 Aug 2024 02:52:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 26faee76 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 06:52:30 +0000 (UTC)
-Date: Wed, 14 Aug 2024 08:52:44 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8b0c86f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 06:52:33 +0000 (UTC)
+Date: Wed, 14 Aug 2024 08:52:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: James Liu <james@jamesliu.io>, karthik nayak <karthik.188@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 18/22] builtin/format-patch: fix various trivial memory
- leaks
-Message-ID: <e00aa1ef0677175b4d276607f7b28de0e0491fc7.1723614263.git.ps@pks.im>
+Subject: [PATCH v4 19/22] userdiff: fix leaking memory for configured diff
+ drivers
+Message-ID: <cc047511349039951da63ebbfd4fda6e42a2beec.1723614263.git.ps@pks.im>
 References: <cover.1722933642.git.ps@pks.im>
  <cover.1723614263.git.ps@pks.im>
 Precedence: bulk
@@ -94,95 +93,186 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723614263.git.ps@pks.im>
 
-There are various memory leaks hit by git-format-patch(1). Basically all
-of them are trivial, except that un-setting `diffopt.no_free` requires
-us to unset the `diffopt.file` because we manually close it already.
+The userdiff structures may be initialized either statically on the
+stack or dynamically via configuration keys. In the latter case we end
+up leaking memory because we didn't have any infrastructure to discern
+those strings which have been allocated statically and those which have
+been allocated dynamically.
+
+Refactor the code such that we have two pointers for each of these
+strings: one that holds the value as accessed by other subsystems, and
+one that points to the same string in case it has been allocated. Like
+this, we can safely free the second pointer and thus plug those memory
+leaks.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/log.c           | 13 ++++++++++---
- t/t4014-format-patch.sh |  1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ range-diff.c                     |  6 +++--
+ t/t4018-diff-funcname.sh         |  1 +
+ t/t4042-diff-textconv-caching.sh |  2 ++
+ t/t4048-diff-combined-binary.sh  |  1 +
+ t/t4209-log-pickaxe.sh           |  2 ++
+ userdiff.c                       | 38 ++++++++++++++++++++++++--------
+ userdiff.h                       |  4 ++++
+ 7 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index a73a767606..f5cb00c643 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1827,12 +1827,14 @@ static struct commit *get_base_commit(const struct format_config *cfg,
- 				if (die_on_failure) {
- 					die(_("failed to find exact merge base"));
- 				} else {
-+					free_commit_list(merge_base);
- 					free(rev);
- 					return NULL;
- 				}
- 			}
+diff --git a/range-diff.c b/range-diff.c
+index 5f01605550..bbb0952264 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -450,8 +450,10 @@ static void output_pair_header(struct diff_options *diffopt,
+ }
  
- 			rev[i] = merge_base->item;
-+			free_commit_list(merge_base);
- 		}
+ static struct userdiff_driver section_headers = {
+-	.funcname = { "^ ## (.*) ##$\n"
+-		      "^.?@@ (.*)$", REG_EXTENDED }
++	.funcname = {
++		.pattern = "^ ## (.*) ##$\n^.?@@ (.*)$",
++		.cflags = REG_EXTENDED,
++	},
+ };
  
- 		if (rev_nr % 2)
-@@ -2023,6 +2025,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	const char *rfc = NULL;
- 	int creation_factor = -1;
- 	const char *signature = git_version_string;
-+	char *signature_to_free = NULL;
- 	char *signature_file_arg = NULL;
- 	struct keep_callback_data keep_callback_data = {
- 		.cfg = &cfg,
-@@ -2443,7 +2446,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ static struct diff_filespec *get_filespec(const char *name, const char *p)
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index e026fac1f4..8128c30e7f 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -5,6 +5,7 @@
  
- 		if (strbuf_read_file(&buf, signature_file, 128) < 0)
- 			die_errno(_("unable to read signature file '%s'"), signature_file);
--		signature = strbuf_detach(&buf, NULL);
-+		signature = signature_to_free = strbuf_detach(&buf, NULL);
- 	} else if (cfg.signature) {
- 		signature = cfg.signature;
- 	}
-@@ -2548,12 +2551,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			else
- 				print_signature(signature, rev.diffopt.file);
- 		}
--		if (output_directory)
-+		if (output_directory) {
- 			fclose(rev.diffopt.file);
-+			rev.diffopt.file = NULL;
-+		}
- 	}
- 	stop_progress(&progress);
- 	free(list);
--	free(branch_name);
- 	if (ignore_if_in_upstream)
- 		free_patch_ids(&ids);
+ test_description='Test custom diff function name patterns'
  
-@@ -2565,11 +2569,14 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&rdiff_title);
- 	free(description_file);
- 	free(signature_file_arg);
-+	free(signature_to_free);
-+	free(branch_name);
- 	free(to_free);
- 	free(rev.message_id);
- 	if (rev.ref_message_ids)
- 		string_list_clear(rev.ref_message_ids, 0);
- 	free(rev.ref_message_ids);
-+	rev.diffopt.no_free = 0;
- 	release_revisions(&rev);
- 	format_config_release(&cfg);
- 	return 0;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 884f83fb8a..1c46e963e4 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -8,6 +8,7 @@ test_description='various format-patch tests'
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
+index 8ebfa3c1be..a179205394 100755
+--- a/t/t4042-diff-textconv-caching.sh
++++ b/t/t4042-diff-textconv-caching.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test textconv caching'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ cat >helper <<'EOF'
+diff --git a/t/t4048-diff-combined-binary.sh b/t/t4048-diff-combined-binary.sh
+index 0260cf64f5..f399484bce 100755
+--- a/t/t4048-diff-combined-binary.sh
++++ b/t/t4048-diff-combined-binary.sh
+@@ -4,6 +4,7 @@ test_description='combined and merge diff handle binary files and textconv'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
  
+ test_expect_success 'setup binary merge conflict' '
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index 64e1623733..b42fdc54fc 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='log --grep/--author/--regexp-ignore-case/-S/-G'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_log () {
+diff --git a/userdiff.c b/userdiff.c
+index c4ebb9ff73..989629149f 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -399,8 +399,11 @@ static struct userdiff_driver *userdiff_find_by_namelen(const char *name, size_t
+ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+ 		const char *v, int cflags)
+ {
+-	if (git_config_string((char **) &f->pattern, k, v) < 0)
++	f->pattern = NULL;
++	FREE_AND_NULL(f->pattern_owned);
++	if (git_config_string(&f->pattern_owned, k, v) < 0)
+ 		return -1;
++	f->pattern = f->pattern_owned;
+ 	f->cflags = cflags;
+ 	return 0;
+ }
+@@ -444,20 +447,37 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+ 	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+-	if (!strcmp(type, "command"))
+-		return git_config_string((char **) &drv->external.cmd, k, v);
++	if (!strcmp(type, "command")) {
++		FREE_AND_NULL(drv->external.cmd);
++		return git_config_string(&drv->external.cmd, k, v);
++	}
+ 	if (!strcmp(type, "trustexitcode")) {
+ 		drv->external.trust_exit_code = git_config_bool(k, v);
+ 		return 0;
+ 	}
+-	if (!strcmp(type, "textconv"))
+-		return git_config_string((char **) &drv->textconv, k, v);
++	if (!strcmp(type, "textconv")) {
++		int ret;
++		FREE_AND_NULL(drv->textconv_owned);
++		ret = git_config_string(&drv->textconv_owned, k, v);
++		drv->textconv = drv->textconv_owned;
++		return ret;
++	}
+ 	if (!strcmp(type, "cachetextconv"))
+ 		return parse_bool(&drv->textconv_want_cache, k, v);
+-	if (!strcmp(type, "wordregex"))
+-		return git_config_string((char **) &drv->word_regex, k, v);
+-	if (!strcmp(type, "algorithm"))
+-		return git_config_string((char **) &drv->algorithm, k, v);
++	if (!strcmp(type, "wordregex")) {
++		int ret;
++		FREE_AND_NULL(drv->word_regex_owned);
++		ret = git_config_string(&drv->word_regex_owned, k, v);
++		drv->word_regex = drv->word_regex_owned;
++		return ret;
++	}
++	if (!strcmp(type, "algorithm")) {
++		int ret;
++		FREE_AND_NULL(drv->algorithm_owned);
++		ret = git_config_string(&drv->algorithm_owned, k, v);
++		drv->algorithm = drv->algorithm_owned;
++		return ret;
++	}
+ 
+ 	return 0;
+ }
+diff --git a/userdiff.h b/userdiff.h
+index 7565930337..827361b0bc 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -8,6 +8,7 @@ struct repository;
+ 
+ struct userdiff_funcname {
+ 	const char *pattern;
++	char *pattern_owned;
+ 	int cflags;
+ };
+ 
+@@ -20,11 +21,14 @@ struct userdiff_driver {
+ 	const char *name;
+ 	struct external_diff external;
+ 	const char *algorithm;
++	char *algorithm_owned;
+ 	int binary;
+ 	struct userdiff_funcname funcname;
+ 	const char *word_regex;
++	char *word_regex_owned;
+ 	const char *word_regex_multi_byte;
+ 	const char *textconv;
++	char *textconv_owned;
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
+ };
 -- 
 2.46.0.46.g406f326d27.dirty
 
