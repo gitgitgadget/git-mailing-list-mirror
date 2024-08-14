@@ -1,83 +1,88 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EF31B1430
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 12:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5BF1B1510
+	for <git@vger.kernel.org>; Wed, 14 Aug 2024 13:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723640222; cv=none; b=mlsXCik92hHFy30IgUFIVgVv68tS3KPz4yxOUlUGC3vBh53MO2uiiFcX9KVxZXpFcwwb8RdRFGRJ+I+QYSToGCf+LrZTYIEn5jMOJQpDgxbwZtcB2HFr8Gx5g9PE+7MffZxew7QXQilN07ijirPozw5/lTp93ctb9tepHhWISjE=
+	t=1723640925; cv=none; b=e1REuEjafVTHOCLmtiEarjeCltLR4CoH53TVLDEZUK3By1zhB23wLuzzkZoLwsRqrGwyG1aTyWX8pbaZ+91GFxDrhegIRZuCsr11Q9C4S51CLGZrs8zvmkzVmWXcHjmatthy46vKCqDsbIQm5FwlUNc1lyv7g23eYyTQJQS1PvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723640222; c=relaxed/simple;
-	bh=/4p/UeNnHlNP/ymzelyQhTli2zi5yQE0V927+fB/lqk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VV8AQzd6jzfcATmMvuItDu6uXxkmC1q+ZZl6mCDCapsJkHZmZXfGjcSqK4yo4fyAZkHsiryxU+KGf6qWEBIGJDXvDB6d0H4sksnxWWsUC5B1PKpbY4qCzpfvEXHizUcqN1CHe2iU8Pc5Ijk27O5EwGaBDDfsxT0PjeEAnJZUAPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lwx0AcwU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AHtd6z7C; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1723640925; c=relaxed/simple;
+	bh=mTQei8+JVMYcDSVfvdRrqG4TTQvKe/rh4QQv1wkxpJA=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JeTo3jWeuXwAbfB/FEm7xU8mKTYrWu8z/E10OhCvLWq9ud/n2fZgyldczgpXlltJOpgQUad46ZR2rFHeoxty6+509sMg2/eCnaHPN7r3JAInmp6NKzUASNMvx51IYhThxreS4ifrnFEYpxfuAOvN/4MUoLB+8CY4AZAZ1Jsnhbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rlf2VNTy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OjUlj0E+; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lwx0AcwU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AHtd6z7C"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rlf2VNTy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OjUlj0E+"
 Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id DB0BB1388073;
-	Wed, 14 Aug 2024 08:56:59 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0BB82138FCB0;
+	Wed, 14 Aug 2024 09:08:43 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 14 Aug 2024 08:56:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by phl-compute-06.internal (MEProxy); Wed, 14 Aug 2024 09:08:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723640219; x=1723726619; bh=a3rPpjjyNO
-	bvSr0qhPqkxQuSae4wunZB4T+Ak2lG780=; b=Lwx0AcwU/F2BaxJaNhGtry4ZEc
-	rOYrGKA/3TwY6vs9AUsg5pMfs9VfgOQ7QpKFTNqnVweUjyCs668uIXHQ/8bIJuIL
-	veBaB7IuQBSiJIWAW2bmKb/oOFUuKmP6ViCoIT0Ic3RiU7VI0jGn94Eb35MEzVnl
-	GmVMnofOgN/tUIMRINFm9osGpTA0PFGrSuFufE7aEsINEs+1D/8Or/22yJ+0igbo
-	rFONCpthq17B54d5pLfPUWRkfmp3ybT2ZcH2VZskqKzmXrhih+ZBUML3mn0svmsL
-	7uiZCNpX69Oh7TX3oGCw/eKqilQJq0S2qmJISDkXu8yC6ZpqF38LClmQZAMQ==
+	:subject:to:to; s=fm3; t=1723640923; x=1723727323; bh=Og3i3eu8bW
+	YOpdpGv5t6kmjrn6Ju0EBNYrcONMxmcfQ=; b=Rlf2VNTyhVbNOOwVS+tKiowA2/
+	9o/PU8S0bTNDEMiNjgakStcH2kAQdeiv62oE/rK9nX/SJMPlFBhASdYnBbMETu1b
+	zSR2rYXLVQUFm/y5PQ/neOr1rczTu3KY0TisWXnk2AVt3tnPyDl3aYO8WEaUVdAx
+	JNso/u9NulYj8jg8ym51ux1nL4QhheZ1q7Q8V9AMdNlHjXtOKAaIrqLhDhf498PA
+	GXqnFuH1642o8drDKuB8pS4bYpnWz7Gf483rckENX70ij9T298X/eolNBFeLVedT
+	4sxo4YtYTP6ONxxTxdpkvVMPaG4cD5m75I6tStrLmra8GlgigBeNqKqyEfSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723640219; x=1723726619; bh=a3rPpjjyNObvSr0qhPqkxQuSae4w
-	unZB4T+Ak2lG780=; b=AHtd6z7CIA4Gh2oi5/0cy9kam9ruOHgSSyJB9bSjZ4mE
-	3ZyNIzGL8VAZE4v0lfBI5koLKkRW3tOTEVSj4bJqmCBRChjlyLABDt+4SF419Lv8
-	PD+PO7clIKhNqZMACPXLSRQsSXAEFdc3GQDgRMIEJt4C7ALht/evg3mhri7zq5EO
-	8wnHXwXoZqGNo7oNuwHl/Z8wu0E6tCpxD97I0XunhBGZXpqfhOhnQAv5NewaZzLA
-	YKiJeQXZaLXhGR/BJRSfJ0m6sVMtSQasI3a1p8l1W9SkhbFjaQHheM4ifaSRzz+1
-	KbxR4vYqouT0RCMzFryMWywkoreftmEr1lchO0AAlw==
-X-ME-Sender: <xms:m6m8ZjHESK-zKTPnUUR8vvw1056vz9c9vi1S8O5vuynD4WFA-Qbv-w>
-    <xme:m6m8ZgWrYaWx0gZFCFZqMlRWeHgznqdrUu1LYs_blW0vUML_Ssa3Q6rqVAEe8rlPi
-    -STT3hm_jbvnGaKOA>
-X-ME-Received: <xmr:m6m8ZlKnOCDiR4eQhrgIAw9vbi26Krs1cxouXt5cLMBbJXFJB8g9eBWUHUQqhlQNY2DtDKdPfjNBmq-j1dtbYLSlpdcv-cyQyl6lb-ErGpeztw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtgedgheelucetufdoteggodetrfdotf
+	fm3; t=1723640923; x=1723727323; bh=Og3i3eu8bWYOpdpGv5t6kmjrn6Ju
+	0EBNYrcONMxmcfQ=; b=OjUlj0E+InO9Y0Ts/2N5R6vsqhy0EGEMCOHDP5zURm7Y
+	ilBeYV6bp04pvu1QVa/LWhkhyFaATOORGH+6SlvWzooWZKlTTB/8mC6Y6ghvRLlL
+	+xvu3pXUZYdNvv4QJmJ/9G1+Cu2apI/E5/jxSKp8eu8WvspEippk+dRSXNgeJCyn
+	H5iaC1uPm4ioyHARX+a16ioQU9JOU8LoG4q1d0RArEMB2t4t3n3pcv09bLXBnpMy
+	USH3BoAyNO/Rre2yCe7HvrFr3F54DV90m/iFM3Q9Sa42mh5VJfRbQNVzk+SKW6ez
+	510PvjxLuXOTj58PS3Z2aKH4bDALqweXaJR3rgptSw==
+X-ME-Sender: <xms:Wqy8ZrltEPWz8KNdkivcYpaaxXxwVpyGMXEaMs26_nDyDyLTo--qEA>
+    <xme:Wqy8Zu0JFff1IsMZqP7ApqtGVaLLu44nqSIcUZ2254mBPYs_1m2j1HdQ0Qau-pRVR
+    tmWa1jZh3DD_V10-Q>
+X-ME-Received: <xmr:Wqy8ZhqAvL4fUBU2Ge35m9RVNOKP1RFeZnab0e21JZ3gCIwfBZVhxdfCTns83ScMDc7huKNhI0Gm2cS58igqcUtrrSqrXHvNmYxTrg_zyhJwdQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtgedgieduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:m6m8ZhFW7j62v6IjE6N1Pjl_C1mHPfSGmV40WZvWN24gMzDOLhw8MQ>
-    <xmx:m6m8ZpWvvT7-g41wUkrJZ-xbyDV50z0oFNRK1Lkvoci6Js0Ifj-GEA>
-    <xmx:m6m8ZsM8xrYLdz68xBe_HdcJ1F2HRK1gfr_AGMDkiMX2bJjBDvrBgQ>
-    <xmx:m6m8Zo2iYH3KQ235zFIBx4Q06Y2NoL2v43Bwtd4CGgd6T3kBQ0t1jQ>
-    <xmx:m6m8Zmg61Y6G7a-x1R_qUb0UdmOBXoUuABI5kVp8UIlVPNIQLInArvFj>
+    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeehkeeffeeggedvgedvfeefheettddtffejuefflefggfeh
+    feelffeljedvfeehieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorh
+    hgpdhrtghpthhtoheptghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:Wqy8ZjlTNXr5YFH8d60h-ropaz3uazVnYYsqyTqQ2QV0689VoDDY3A>
+    <xmx:Wqy8Zp1pSVTcDLCECoMy_N7ia_hryaEX3m8MsSoGuSkw0cc7yVxEDw>
+    <xmx:Wqy8Ziuix9tshheUKVHmlpwbx8CmAbk11vC55nx-szUsLcWdvypFBw>
+    <xmx:Wqy8ZtU_9CvN6GKShEU8kIhEOhJLQ5ENwcZhIN5jvUwsTrTq-C828A>
+    <xmx:W6y8ZkQU3Df01hupnEvHu8wxNMaeFlwdPQf0tymNvANWiizdvGIb0tZg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Aug 2024 08:56:59 -0400 (EDT)
+ 14 Aug 2024 09:08:41 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4d359575 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 14 Aug 2024 12:56:40 +0000 (UTC)
-Date: Wed, 14 Aug 2024 14:56:57 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f300db39 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 14 Aug 2024 13:08:21 +0000 (UTC)
+Date: Wed, 14 Aug 2024 15:08:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/10] reftable/dump: drop unused printing functionality
-Message-ID: <ZrypmQOthfGS1JFn@tanuki>
-References: <cover.1723528765.git.ps@pks.im>
- <1f211e514d049379ada609e6a4e8cf985e721271.1723528765.git.ps@pks.im>
- <CAOLa=ZScKRvAWsa4D+_BCyAbxQ9580RBnJ+==DfCvrGV6C2ETg@mail.gmail.com>
+To: Josh Steadmon <steadmon@google.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 1/4] t: move reftable/readwrite_test.c to the unit
+ testing framework
+Message-ID: <ZrysVg04x_uIdNio@tanuki>
+References: <20240809111312.4401-1-chandrapratap3519@gmail.com>
+ <20240813144440.4602-1-chandrapratap3519@gmail.com>
+ <20240813144440.4602-2-chandrapratap3519@gmail.com>
+ <2rxxfpzijfmvo65xournnmx4oawzqlhgipje4cxzxvo5aqzt6u@xppoikj262cp>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,85 +91,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZScKRvAWsa4D+_BCyAbxQ9580RBnJ+==DfCvrGV6C2ETg@mail.gmail.com>
+In-Reply-To: <2rxxfpzijfmvo65xournnmx4oawzqlhgipje4cxzxvo5aqzt6u@xppoikj262cp>
 
-On Tue, Aug 13, 2024 at 06:14:33AM -0400, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Aug 13, 2024 at 03:33:04PM -0700, Josh Steadmon wrote:
+> On 2024.08.13 20:04, Chandra Pratap wrote:
+> > reftable/readwrite_test.c exercises the functions defined in
+> > reftable/reader.{c,h} and reftable/writer.{c,h}. Migrate
+> > reftable/readwrite_test.c to the unit testing framework. Migration
+> > involves refactoring the tests to use the unit testing framework
+> > instead of reftable's test framework and renaming the tests to
+> > align with unit-tests' naming conventions.
+> > 
+> > Since some tests in reftable/readwrite_test.c use the functions
+> > set_test_hash(), noop_flush() and strbuf_add_void() defined in
+> > reftable/test_framework.{c,h} but these files are not #included
+> > in the ported unit test, copy these functions in the new test file.
 > 
-> > We have a bunch of infrastructure wired up that allows us to print
-> > reftable records, tables and stacks. While this functionality is wired
-> > up via various "test-tool reftable" options, it is never used. It also
-> > feels kind of dubious whether any other eventual user of the reftable
-> > library should use it as it very much feels like a debugging aid rather
-> > than something sensible. The format itself is somewhat inscrutable and
-> > the infrastructure is non-extensible.
-> >
-> > Drop this code. The only remaining function in this context is
-> > `reftable_reader_print_blocks()`, which we do use in our tests.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  reftable/dump.c             |  16 +----
-> >  reftable/generic.c          |  47 -------------
-> >  reftable/reader.c           |  21 ------
-> >  reftable/record.c           | 127 ------------------------------------
-> >  reftable/record.h           |   4 --
-> >  reftable/reftable-generic.h |   3 -
-> >  reftable/reftable-reader.h  |   2 -
-> >  reftable/reftable-record.h  |   8 ---
-> >  reftable/reftable-stack.h   |   3 -
-> >  reftable/stack.c            |  20 ------
-> >  reftable/stack_test.c       |   7 --
-> >  11 files changed, 1 insertion(+), 257 deletions(-)
-> >
-> > diff --git a/reftable/dump.c b/reftable/dump.c
-> > index 2953e0a83a..35a1731da9 100644
-> > --- a/reftable/dump.c
-> > +++ b/reftable/dump.c
-> > @@ -41,9 +41,6 @@ int reftable_dump_main(int argc, char *const *argv)
-> >  {
-> >  	int err = 0;
-> >  	int opt_dump_blocks = 0;
-> > -	int opt_dump_table = 0;
-> > -	int opt_dump_stack = 0;
-> > -	uint32_t opt_hash_id = GIT_SHA1_FORMAT_ID;
-> >  	const char *arg = NULL, *argv0 = argv[0];
-> >
-> >  	for (; argc > 1; argv++, argc--)
-> > @@ -51,12 +48,6 @@ int reftable_dump_main(int argc, char *const *argv)
-> >  			break;
-> >  		else if (!strcmp("-b", argv[1]))
-> >  			opt_dump_blocks = 1;
-> > -		else if (!strcmp("-t", argv[1]))
-> > -			opt_dump_table = 1;
-> > -		else if (!strcmp("-6", argv[1]))
-> > -			opt_hash_id = GIT_SHA256_FORMAT_ID;
-> > -		else if (!strcmp("-s", argv[1]))
-> > -			opt_dump_stack = 1;
-> >  		else if (!strcmp("-?", argv[1]) || !strcmp("-h", argv[1])) {
-> >  			print_help();
-> >  			return 2;
-> > @@ -70,13 +61,8 @@ int reftable_dump_main(int argc, char *const *argv)
-> 
-> I'm a bit skeptical about this change because I definitely have used the
-> `-t` and `-s` options a bunch of times to understand what a table holds.
-> Since the reftable format is binary, this is the only tooling we have
-> which allows us to read this format from a plumbing point of view. I'd
-> keep them. I guess the stack printing just iterates over the tables and
-> prints them and could be removed, but I'd keep the option to dump a
-> table.
+> I'm assuming that eventually, reftable/test_framework (and all the rest
+> of reftable/libreftable_test.a) will be removed after all the tests are
+> converted to the unit test framework, is that correct? Will other tests
+> need these test_framework functions? If so, I'd rather not end up with
+> duplicates in each test file, even if these are small functions. Is
+> there a reason why we can't link the reftable/test_framework object (or
+> the whole reftable/libreftable_test.a library)?
 
-Well, I have to say that I find the output to be rather useless. But
-you're making a valid point: we don't have anything else to peek at the
-table's contents.
+The reason is likely that they use different infra, e.g. `EXPECT()` vs
+`check()`. So instead of linking `libreftable_test.a`, I think it is
+fine to duplicate the functionality in `t/unit-tests`. In not too
+distant of a future we're going to get rid of everything in the reftable
+tests anyway, including the `libreftable_test.a` library. So avoiding
+the duplication doesn't make a ton of sense to me.
 
-I'll keep this in v2, but make it an internal implementation detail of
-the test-tool. It certainly has no place in the reftable library in my
-opinion.
-
-> Also this patch misses cleaning up `print_help` if we go down this
-> route.
-
-Indeed, will fix.
+That being said, I think we should not duplicate functionality in
+`t/unit-tests`. So if there is functionality used by multiple tests, we
+should likely move it into a new `t/unit-tests/lib-reftable.c` file.
 
 Patrick
