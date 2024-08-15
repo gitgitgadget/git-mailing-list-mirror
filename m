@@ -1,185 +1,166 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FF01552EE
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 22:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E980154C1D
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 22:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723760963; cv=none; b=QMciYliUkgIJx8MnsnptjkqcNLIEvfEE9LvuVeCkDO8EB++hh8ArtSel52VW60e39YOk1tM5wPQ2eNcToICFYSSqtrjmM3JZXobqdq1rT8fhmwzd4Jyqrj9K3rEnNRsw0OjBD7OeWUPgusK3d49S85hgorITRXKWSxGv2jBGmjE=
+	t=1723760965; cv=none; b=q2IwzSMNNabGPHOCNxGP+n7LXFn9OrJtoPxcGBuOrpMlyw8WkJTEN7x9zrUn94NKPxDxsyiQrojGTeEb5O3zf75zQwzNHIJFP2Eb6NzLDM6yEFzxKc1Tn1M/G7FuRRjnTffCoWoQQ2Ee4RwSTrLoGOG794oR9zmVFNN2K8IljoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723760963; c=relaxed/simple;
-	bh=e0pUdkypE5N8JOR0223KnhXy7yYCfVdq0REDUuVeAMU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bdlneSWkXWMccC+DhUCgC/ipB60ypDymE/EX3UtFZBu8z2kMRVbAMYJEv0Cw0WRB3esqCRd8V7YmN25KGbuiGNuqIqQBwlQjRoB4GV8KpdoxyRt+SSeKfAMGNDbNk+A/rswiu8j+yVtypQJ8tRk/u2vslTnBOUd2/aGEu9ZMnPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ADK5V+H7; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1723760965; c=relaxed/simple;
+	bh=qg6g6DwNzjxpaPqxlIHJFS1/wrg4cJrWx8WqX+T9Tt0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tZFFU8DBf2MUnETNAoFpBZwQSgED7xbqcgmcO32fnyjuGIiuDP79rEEjsDFUoH1niujnQ9NifGv8EyB+JcE8iTwCBk1lVkBuGSLgPsuWxCj3Pswqi27W1/oCIFtmngv+nzMsrrp0/iMZ6WlYv37e474EbwhINLDm12QtJyyAK2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NOjnexDj; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ADK5V+H7"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e05f25fb96eso1442706276.1
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 15:29:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723760961; x=1724365761; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hk7olCEw+V+2tKC2Zlgs33ebK2vFPcs6qBfEtV08lR4=;
-        b=ADK5V+H7IfoBLAdfLgIsX7hj/3GBxj7qjTNvTmAg+tnMh0XeQyC8ZrxN0BBM3i3aMU
-         p2zmG5UhBucFn0IZ5OqEhObT0eC0wuGE4s0YimzqO5XmRIg29/MUNuc/P5CYQrsrgFi/
-         HZ60hfMvIg2js2gZxdwiNq50iRtKJySF2LZ28kyfGtCxAc7rozwdcL0gLPNnhnuMyQ+p
-         cOXLovQjKXSP1D0tHramGsEud27NoigypGzPDezQTshwetprk1uGkM9aVXqGmf2nchxO
-         udpJN1m2Bid5yGoNWVPPrfrbD7gtpf6glW0ybT7G0s7MTpoZuS8iC0DltJ3HospQYNP/
-         yiWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723760961; x=1724365761;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hk7olCEw+V+2tKC2Zlgs33ebK2vFPcs6qBfEtV08lR4=;
-        b=iNntljlVL22oTn7b2uTiaXtkWabl9jD5a54fd/PIA7+/K7zzczzo/zU2+VqsxOwX8N
-         +bA9yZZzM4gPhb9V2uScanrMcZOY4NreIU3+FH77JzCJHdtVVx05tvYyxr8L+JsWzV0e
-         fHU7mY4X+xIWmnizuo/8/W/gpGgX+9aQDPJf62FscNY/2cvctBDwMBkfOQTYGdMmuKZf
-         ni2unV/2XUXM/hhtAghN3pznvYSluf7KT0S2e2iZ1pCXKGQ4KSPqpMRaZE1pqKOSqqdM
-         moal6HPsr5IoVvyA5x/mpatNGLdXD+fJILZorDfuw297vRtl3kwyoPnNNiF6esmE+npB
-         XCDg==
-X-Gm-Message-State: AOJu0YyzWWLBRTZhJ4oFC6CUsbD7cJhFEt5QFdCtXE3q/hvPMtDwQSay
-	Eei+gEvSQUKbeDDC0Vu1PrlqU67jnbUHwexfphktNNBsLG2mezqtrEuzXcebcrTtY1B7L5B2N97
-	W
-X-Google-Smtp-Source: AGHT+IELJjF5axX7xn6DhiCySXYwPkSJRbodbp7jzHXFkpq0uuK70TW+0UN56vJbrkQxnf/3TwPUAg==
-X-Received: by 2002:a05:690c:2706:b0:64a:4728:ef8 with SMTP id 00721157ae682-6b1be8b6fbbmr10247397b3.44.1723760960789;
-        Thu, 15 Aug 2024 15:29:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af99410b80sm4179047b3.10.2024.08.15.15.29.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 15:29:20 -0700 (PDT)
-Date: Thu, 15 Aug 2024 18:29:19 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/13] ewah: implement `struct ewah_or_iterator`
-Message-ID: <04042981c1ad0edb6ab768516cdff341ee278786.1723760847.git.me@ttaylorr.com>
-References: <cover.1723755667.git.me@ttaylorr.com>
- <cover.1723760847.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NOjnexDj"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4633B2618A;
+	Thu, 15 Aug 2024 18:29:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=qg6g6DwNzjxpaPqxlIHJFS1/wrg4cJrWx8WqX+
+	T9Tt0=; b=NOjnexDjyUDjSwWJD6UBDgMtv8HtIUB/KB0XBW+ca3N84Y4plKpLVQ
+	5LJsAP64J7g81cw76b0TZ104QHrgFJj4uCsWVZeHwknjzGhSVBcv1q2ws/nnyloG
+	ZmHw2q/p8MBQamnq/IMJj3WciKKbp4or0IT7wvEuLZndjG0x9rsNo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CC6226189;
+	Thu, 15 Aug 2024 18:29:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CDA926188;
+	Thu, 15 Aug 2024 18:29:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  phillip.wood@dunelm.org.uk,  James Liu <james@jamesliu.io>
+Subject: Re: [PATCH v2 5/7] builtin/gc: add a `--detach` flag
+In-Reply-To: <xmqq34n5txcj.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	15 Aug 2024 12:11:40 -0700")
+References: <cover.1723533091.git.ps@pks.im> <cover.1723712608.git.ps@pks.im>
+	<ca78d3dc7c0270b434ee4ca4ef618212c7dc1d5b.1723712608.git.ps@pks.im>
+	<xmqq34n5txcj.fsf@gitster.g>
+Date: Thu, 15 Aug 2024 15:29:20 -0700
+Message-ID: <xmqqttflqv27.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1723760847.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D17A6746-5B55-11EF-AFEC-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-While individual bitmap layers store different commit, type-level, and
-pseudo-merge bitmaps, only the top-most layer is used to compute
-reachability traversals.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Many functions which implement the aforementioned traversal rely on
-enumerating the results according to the type-level bitmaps, and so
-would benefit from a conceptual type-level bitmap that spans multiple
-layers.
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> +test_expect_success '--detach overrides gc.autoDetach=false' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +
+>> +		# Prepare the repository such that git-gc(1) ends up repacking.
+>> +		test_commit "$(test_oid blob17_1)" &&
+>> +		test_commit "$(test_oid blob17_2)" &&
+>> +		git config gc.autodetach false &&
+>> +		git config gc.auto 2 &&
+>> +
+>> +		cat >expect <<-EOF &&
+>> +		Auto packing the repository in background for optimum performance.
+>> +		See "git help gc" for manual housekeeping.
+>> +		EOF
+>> +		GIT_PROGRESS_DELAY=0 git gc --auto --detach 2>actual &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>
+> If the gc/maintenance is going to background itself, it is possible
+> that it still is running, possibly with files under repo/.git/ open
+> and the process running in repo directory, when the test_when_finished
+> clean-up trap goes in effect?
+>
+> I am wondering where this comes from:
+>
+>   https://github.com/git/git/actions/runs/10408467351/job/28825980833#step:6:2000
+>
+> where "rm -rf repo" dies with an unusual
+>
+>   rm: can't remove 'repo/.git': Directory not empty
+>
+> and my theory is that after "rm -rf" _thinks_ it removed everything
+> underneath, before it attempts to rmdir("repo/.git"), the repack
+> process in the background has created a new pack, and "rm -rf" does
+> not go back and try to create such a new cruft.
+>
+> The most robust way to work around such a "race" is to wait for the
+> backgrounded process before cleaning up, or after seeing that the
+> message we use as a signal that the "gc" has backgrounded itself,
+> kill that backgrounded process before exiting the test and causing
+> the clean-up to trigger.
 
-Implement `struct ewah_or_iterator` which is capable of enumerating
-multiple EWAH bitmaps at once, and OR-ing the results together. When
-initialized with, for example, all of the commit type bitmaps from each
-layer, callers can pretend as if they are enumerating a large type-level
-bitmap which contains the commits from *all* bitmap layers.
+There already is a clue left by those who worked on this test the
+last time at the end of the script.  It says:
 
-There are a couple of alternative approaches which were considered:
+    # DO NOT leave a detached auto gc process running near the end of the
+    # test script: it can run long enough in the background to racily
+    # interfere with the cleanup in 'test_done'.
 
-  - Decompress each EWAH bitmap and OR them together, enumerating a
-    single (non-EWAH) bitmap. This would work, but has the disadvantage
-    of decompressing a potentially large bitmap, which may not be
-    necessary if the caller does not wish to read all of it.
+immediately before "test_done".
 
-  - Recursively call bitmap internal functions, reusing the "result" and
-    "haves" bitmap from the top-most layer. This approach resembles the
-    original implementation of this feature, but is inefficient in that
-    it both (a) requires significant refactoring to implement, and (b)
-    enumerates large sections of later bitmaps which are all zeros (as
-    they pertain to objects in earlier layers).
+In the meantime, I am wondering something simple and silly like the
+attached is sufficient.  The idea is that we expect the "oops we
+couldn't clean" code not to trigger most of the time, but if it
+does, we just wait (with back off) a bit and retry.
 
-    (b) is not so bad in and of itself, but can cause significant
-    slow-downs when combined with expensive loop bodies.
 
-This approach (enumerating an OR'd together version of all of the
-type-level bitmaps from each layer) produces a significantly more
-straightforward implementation with significantly less refactoring
-required in order to make it work.
+ t/t6500-gc.sh | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ewah/ewah_bitmap.c | 33 +++++++++++++++++++++++++++++++++
- ewah/ewok.h        | 12 ++++++++++++
- 2 files changed, 45 insertions(+)
-
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-index 8785cbc54a..b3a7ada071 100644
---- a/ewah/ewah_bitmap.c
-+++ b/ewah/ewah_bitmap.c
-@@ -372,6 +372,39 @@ void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent)
- 		read_new_rlw(it);
- }
+diff --git c/t/t6500-gc.sh w/t/t6500-gc.sh
+index 737c99e0f8..4a991e087a 100755
+--- c/t/t6500-gc.sh
++++ w/t/t6500-gc.sh
+@@ -396,8 +396,22 @@ test_expect_success 'background auto gc respects lock for all operations' '
+ 	test_cmp expect actual
+ '
  
-+void ewah_or_iterator_init(struct ewah_or_iterator *it,
-+			   struct ewah_bitmap **parents, size_t nr)
-+{
-+	size_t i;
-+
-+	memset(it, 0, sizeof(*it));
-+
-+	ALLOC_ARRAY(it->its, nr);
-+	for (i = 0; i < nr; i++)
-+		ewah_iterator_init(&it->its[it->nr++], parents[i]);
++wait_to_clean () {
++	count=10 sleep=1
++	until rm -rf "$1" && ! test -d "$1"
++	do
++		if test $count = 0
++		then
++			return 1
++		fi
++		count=$(( count - 1 ))
++		sleep=$(( sleep + sleep ))
++		sleep $sleep
++	done
 +}
 +
-+int ewah_or_iterator_next(eword_t *next, struct ewah_or_iterator *it)
-+{
-+	eword_t buf, out = 0;
-+	size_t i;
-+	int ret = 0;
-+
-+	for (i = 0; i < it->nr; i++)
-+		if (ewah_iterator_next(&buf, &it->its[i])) {
-+			out |= buf;
-+			ret = 1;
-+		}
-+
-+	*next = out;
-+	return ret;
-+}
-+
-+void ewah_or_iterator_free(struct ewah_or_iterator *it)
-+{
-+	free(it->its);
-+}
-+
- void ewah_xor(
- 	struct ewah_bitmap *ewah_i,
- 	struct ewah_bitmap *ewah_j,
-diff --git a/ewah/ewok.h b/ewah/ewok.h
-index 5e357e2493..4b70641045 100644
---- a/ewah/ewok.h
-+++ b/ewah/ewok.h
-@@ -148,6 +148,18 @@ void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent);
-  */
- int ewah_iterator_next(eword_t *next, struct ewah_iterator *it);
+ test_expect_success '--detach overrides gc.autoDetach=false' '
+-	test_when_finished "rm -rf repo" &&
++	test_when_finished "wait_to_clean repo" &&
+ 	git init repo &&
+ 	(
+ 		cd repo &&
+@@ -418,7 +432,7 @@ test_expect_success '--detach overrides gc.autoDetach=false' '
+ '
  
-+struct ewah_or_iterator {
-+	struct ewah_iterator *its;
-+	size_t nr;
-+};
-+
-+void ewah_or_iterator_init(struct ewah_or_iterator *it,
-+			   struct ewah_bitmap **parents, size_t nr);
-+
-+int ewah_or_iterator_next(eword_t *next, struct ewah_or_iterator *it);
-+
-+void ewah_or_iterator_free(struct ewah_or_iterator *it);
-+
- void ewah_xor(
- 	struct ewah_bitmap *ewah_i,
- 	struct ewah_bitmap *ewah_j,
--- 
-2.46.0.86.ge766d390f0.dirty
+ test_expect_success '--no-detach overrides gc.autoDetach=true' '
+-	test_when_finished "rm -rf repo" &&
++	test_when_finished "wait_to_clean repo" &&
+ 	git init repo &&
+ 	(
+ 		cd repo &&
 
