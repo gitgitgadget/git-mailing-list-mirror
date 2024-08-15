@@ -1,64 +1,63 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B78414E2D8
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85E614E2D8
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723755719; cv=none; b=XqhwIAjdWRNIv56e4m6M1D0iOGmD9OYyQah8p/tkQ8bgbolx4IXzuYwuvWhSxfcY82GB1//JXeLAebJ1tZHHKj5ACtIVLMrEYHTJzrG7S9kn2TujMO3ohaN8z05Y55pq5NOUJt9lL1WXZ32+g/hwoV8VQXKh+KkcEmpX3pBd5ok=
+	t=1723755722; cv=none; b=kFrFwhSaWhOam8ycce9CSl/JMhIloCviWrq59QgVy3yReFMfn7WunEOkEowMhNgUV4w9pRN8S7NPJBmcCu5K+Bc8aqnLioHNhmB+InmgtPGxKsS9GEEQ8EuqECIDDAycy8o+HY/2/gv2XRICAva0/wI3W1+BYQsxkwE+ZJxCbF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723755719; c=relaxed/simple;
-	bh=L/kx2bVz2U8MLc2sJPAacU3PrkSp0Ga/+8N5iUelGfA=;
+	s=arc-20240116; t=1723755722; c=relaxed/simple;
+	bh=2EN5w4WRwqubDhsghx1+U2Q57zYOP9x8OzM5kZNhqjA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W3olOf1YWe+sI2wig34X0tFzuER9LX7+ZdklflqBiCyoe4bNX67krcPhmrIFkc757L2kI8igb07mSDHFBVn6xsPWSvEYIBudxX6orI+cjs9IHxiboiTrX2r1OKEt6KwEak7Ke6yiqp/om6NsalbqvYdo5kwex/nWye7OpCtaMjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=idil5nhz; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=UVtARU9SkgQsqmCTJPlP03l0urf6MTNjubvkGNnHPZwZFnZjEOqJ5g0yE80ZBn4dI1BUwGpIdwA85tcH/TXy/InrZKsK2XwPnSg5oSWR2btf8hz7ExTOKAp66LCEf3teWcY2UBE13mkgKeNmBIKvFb7kFpkRddmB5sUzdOJr/Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2efi+TLO; arc=none smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="idil5nhz"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-69df49d92b8so13094187b3.3
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:01:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2efi+TLO"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-70936061d0dso919030a34.2
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723755716; x=1724360516; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723755719; x=1724360519; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BP9XtWEMOUHY4a+xwD5V4Twc3Akc76s2qr/cq3q+gvY=;
-        b=idil5nhzRhwIO+3ZqCny7IrjbAPz2w45eDYzXX1N+i46Ceg3VVFhzAmJkVkZn2CpQf
-         vFENZnO/7zgNEEEigPNTab27Hct2YeQZGmJBrpTjCUyO7rkbbwqttl4iYAiDn53h1hXV
-         lkAnpyHygqNKr7BcyKAKLpd9jXLC0kVpGvrNSfTItcOcTI0U9Ap4Q71EyxVIjjhXUEQi
-         RPD4Ky13qXBoU2qr5UKkJjthipoxkCA6SuOXxWpIr/fkujRrrIltodBXE0HsIErHw3ru
-         rFpsAgqqKAdmtjLKnbJwQrZz17SU4clwjgogtbKUNUBcab0SLVEqTAOfiDxxxF5+5hYh
-         fsLg==
+        bh=ghC4BXI7kqs9bsSqUTWFosomIzwkFW9zkMobzORZmXI=;
+        b=2efi+TLOmLpw8jyEnOj2MbSK7IJqaX2zCOKj3gKOFw8h0VigTzwKUUSof9+PnLTD1C
+         yQQw+zxMU5XZMIryyVRwukHUrfnuR9NTW2GQhlsHqQw0UnU49JonHfzbGvFviRd0diqu
+         DD/t2SDVrdaZC9GNNWhZu96AkdSHRLAShxE22TJHPxaMnIhzErynzanoHU0QA/j9oFUQ
+         X0TVs+rYCecNqAxEULbckNuNJMMcfJjy7bmjQ19Ttvm+ct9pTBWY2DrqB2G9AAOAlDIn
+         HmQh055Q+Gh01P60vDnnWEIrvzc4pmUC+t6n1xr44jCzK0GGhNiAMufymocUwu6FlP/W
+         K/Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723755716; x=1724360516;
+        d=1e100.net; s=20230601; t=1723755719; x=1724360519;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BP9XtWEMOUHY4a+xwD5V4Twc3Akc76s2qr/cq3q+gvY=;
-        b=nblJh0Md8hANYsDY4NzZQsK8aIqr10V0VDWDsk153gWgFSPMva97tmrAs9rBALVxrB
-         LbuhUIQMBMKyUeW86sm7+6boyPeLrs1zOOLjQXu6KRGsTF/GjVFi8/VR9AadlqLdi4FC
-         uNm2zx1esDmbdLkNJ0n7r/CeqVHzW/MMZjGgB8kUG63nRiJUP3PEJzpFjHHMZrmgua8G
-         pqHZic0u+tCix0tXID15SHURa61RBdqmU2Vi7G5UQ/rQd8nCVJqNKFGJOn7krWhv3Wd7
-         2/rd641KaI1JgSbZiNxvYa2+WOmfcw0ITMwYXV7VJqlpHEjIYwo9f24mdz1CpbMKPI6A
-         e/fA==
-X-Gm-Message-State: AOJu0YwC4Y6tI5N71q5bZKIaNC8a0RX9rntz/avpBGrVQTxrWyJ1u57x
-	Y9sS3uJ3ejwr78BZ9ko7vdK8t9qB6TB2zbo4601JaZojuz0W4GJdX02ns/GjDnZBXzrUMzE9GHb
-	V
-X-Google-Smtp-Source: AGHT+IEElagtaxsxzGVI5ZGRd5RlG5y1KvNrucBxERT8rUxGDdmFbKA5qxqPIO1KkDTwf/0j/zLOKg==
-X-Received: by 2002:a05:690c:6a08:b0:6ae:59e5:5f37 with SMTP id 00721157ae682-6b1b823f19amr11541127b3.13.1723755716321;
-        Thu, 15 Aug 2024 14:01:56 -0700 (PDT)
+        bh=ghC4BXI7kqs9bsSqUTWFosomIzwkFW9zkMobzORZmXI=;
+        b=pedryKKSapfmP81zp0ycHgEUMCxt2U8KcfTWKuUZlsJgNuT27CVa5J26KfvFIBjwsm
+         5y8EH7w9p9/O64wIpvwv9q7/S6vCbAGfvo9E0VULS2CgvCo+Kb8O9mDRPyxvNYn6oS/t
+         qVKLzKX5dT1O8CeTDR1dGK7cyh/fAOaKD5Ge5o7A1b6IcB4Gn3RmFuFqHYZJkwfolyUY
+         dc/AI4Fn+dW/NF710YT/4cycze1KsOkVAdu7kGcSiyJtaStgHt11sC3LZBtPTUVSGJpf
+         fGxhV/Ek9/zbaIXOaSdIXip3MOsZvXbXjlHlQmXih4mRR9hxxN9a4HlkwjLWdFSNIpMf
+         YLeQ==
+X-Gm-Message-State: AOJu0YxRMsaLPC4Ye/QHkIkIS3DW7aIBb5wROw51G5ENBsy/3SZy1hRg
+	S/Im5hFWXmzpMpSgSzz439TINP4rlPayHWpulUQqXA/sU1u2CwtAYQGMOPmr9675dpmnFgwVy/h
+	d
+X-Google-Smtp-Source: AGHT+IGTIcCzoIpw3IXxXtc3tic9+wl3N9xZttzqoCqXKW9kwgB3PgZu3jf0S57X++qmhLKcIqrOQg==
+X-Received: by 2002:a05:6830:a90:b0:703:7a77:d7d7 with SMTP id 46e09a7af769-70cac89dca2mr1092096a34.28.1723755719449;
+        Thu, 15 Aug 2024 14:01:59 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af9e0e0e1fsm3931687b3.133.2024.08.15.14.01.55
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6b0ebd8a85bsm2106057b3.66.2024.08.15.14.01.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 14:01:56 -0700 (PDT)
-Date: Thu, 15 Aug 2024 17:01:55 -0400
+        Thu, 15 Aug 2024 14:01:59 -0700 (PDT)
+Date: Thu, 15 Aug 2024 17:01:58 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 12/13] pack-bitmap.c: use `ewah_or_iterator` for type bitmap
- iterators
-Message-ID: <59a50a2ea24312eb5b643927aac3fa7143b838f5.1723755667.git.me@ttaylorr.com>
+Subject: [PATCH 13/13] midx: implement writing incremental MIDX bitmaps
+Message-ID: <da34cc944126a4dce613cb5f1c4f3f2f82cbfce4.1723755667.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,181 +69,419 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1723755667.git.me@ttaylorr.com>
 
-Now that we have initialized arrays for each bitmap layer's type bitmaps
-in the previous commit, adjust existing callers to use them in
-preparation for multi-layered bitmaps.
+Now that the pack-bitmap machinery has learned how to read and interact
+with an incremental MIDX bitmap, teach the pack-bitmap-write.c machinery
+(and relevant callers from within the MIDX machinery) to write such
+bitmaps.
+
+The details for doing so are mostly straightforward. The main changes
+are as follows:
+
+  - find_object_pos() now makes use of an extra MIDX parameter which is
+    used to locate the bit positions of objects which are from previous
+    layers (and thus do not exist in the current layer's pack_order
+    field).
+
+    (Note also that the pack_order field is moved into struct
+    write_midx_context to further simplify the callers for
+    write_midx_bitmap()).
+
+  - bitmap_writer_build_type_index() first determines how many objects
+    precede the current bitmap layer and offsets the bits it sets in
+    each respective type-level bitmap by that amount so they can be OR'd
+    together.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ builtin/pack-objects.c                  |  3 +-
+ midx-write.c                            | 35 +++++++----
+ pack-bitmap-write.c                     | 65 ++++++++++++++-----
+ pack-bitmap.h                           |  4 +-
+ t/t5334-incremental-multi-pack-index.sh | 84 +++++++++++++++++++++++++
+ 5 files changed, 161 insertions(+), 30 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e1badc7887..9fac43749c 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1622,25 +1622,29 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 	}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index e23c4950ed..9e61ff7ca3 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1342,7 +1342,8 @@ static void write_pack_file(void)
+ 
+ 			if (write_bitmap_index) {
+ 				bitmap_writer_init(&bitmap_writer,
+-						   the_repository, &to_pack);
++						   the_repository, &to_pack,
++						   NULL);
+ 				bitmap_writer_set_checksum(&bitmap_writer, hash);
+ 				bitmap_writer_build_type_index(&bitmap_writer,
+ 							       written_list);
+diff --git a/midx-write.c b/midx-write.c
+index 81501efdda..bac3b0589a 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -826,20 +826,26 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
+ 	return cb.commits;
  }
  
--static void init_type_iterator(struct ewah_iterator *it,
-+static void init_type_iterator(struct ewah_or_iterator *it,
- 			       struct bitmap_index *bitmap_git,
- 			       enum object_type type)
+-static int write_midx_bitmap(const char *midx_name,
++static int write_midx_bitmap(struct write_midx_context *ctx,
++			     const char *object_dir, const char *midx_name,
+ 			     const unsigned char *midx_hash,
+ 			     struct packing_data *pdata,
+ 			     struct commit **commits,
+ 			     uint32_t commits_nr,
+-			     uint32_t *pack_order,
+ 			     unsigned flags)
  {
- 	switch (type) {
- 	case OBJ_COMMIT:
--		ewah_iterator_init(it, bitmap_git->commits);
-+		ewah_or_iterator_init(it, bitmap_git->commits_all,
-+				      bitmap_git->base_nr);
- 		break;
- 
- 	case OBJ_TREE:
--		ewah_iterator_init(it, bitmap_git->trees);
-+		ewah_or_iterator_init(it, bitmap_git->trees_all,
-+				      bitmap_git->base_nr);
- 		break;
- 
- 	case OBJ_BLOB:
--		ewah_iterator_init(it, bitmap_git->blobs);
-+		ewah_or_iterator_init(it, bitmap_git->blobs_all,
-+				      bitmap_git->base_nr);
- 		break;
- 
- 	case OBJ_TAG:
--		ewah_iterator_init(it, bitmap_git->tags);
-+		ewah_or_iterator_init(it, bitmap_git->tags_all,
-+				      bitmap_git->base_nr);
- 		break;
- 
- 	default:
-@@ -1657,7 +1661,7 @@ static void show_objects_for_type(
- 	size_t i = 0;
- 	uint32_t offset;
- 
--	struct ewah_iterator it;
-+	struct ewah_or_iterator it;
- 	eword_t filter;
- 
- 	struct bitmap *objects = bitmap_git->result;
-@@ -1665,7 +1669,7 @@ static void show_objects_for_type(
- 	init_type_iterator(&it, bitmap_git, object_type);
- 
- 	for (i = 0; i < objects->word_alloc &&
--			ewah_iterator_next(&filter, &it); i++) {
-+			ewah_or_iterator_next(&filter, &it); i++) {
- 		eword_t word = objects->words[i] & filter;
- 		size_t pos = (i * BITS_IN_EWORD);
- 
-@@ -1707,6 +1711,8 @@ static void show_objects_for_type(
- 			show_reach(&oid, object_type, 0, hash, pack, ofs);
- 		}
- 	}
+ 	int ret, i;
+ 	uint16_t options = 0;
+ 	struct bitmap_writer writer;
+ 	struct pack_idx_entry **index;
+-	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
+-					hash_to_hex(midx_hash));
++	struct strbuf bitmap_name = STRBUF_INIT;
 +
-+	ewah_or_iterator_free(&it);
- }
++	if (ctx->incremental)
++		get_split_midx_filename_ext(&bitmap_name, object_dir, midx_hash,
++					    MIDX_EXT_BITMAP);
++	else
++		get_midx_filename_ext(&bitmap_name, object_dir, midx_hash,
++				      MIDX_EXT_BITMAP);
  
- static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
-@@ -1758,7 +1764,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- {
- 	struct eindex *eindex = &bitmap_git->ext_index;
- 	struct bitmap *tips;
--	struct ewah_iterator it;
-+	struct ewah_or_iterator it;
- 	eword_t mask;
- 	uint32_t i;
+ 	trace2_region_enter("midx", "write_midx_bitmap", the_repository);
  
-@@ -1775,7 +1781,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- 	 * packfile.
+@@ -858,7 +864,8 @@ static int write_midx_bitmap(const char *midx_name,
+ 	for (i = 0; i < pdata->nr_objects; i++)
+ 		index[i] = &pdata->objects[i].idx;
+ 
+-	bitmap_writer_init(&writer, the_repository, pdata);
++	bitmap_writer_init(&writer, the_repository, pdata,
++			   ctx->incremental ? ctx->base_midx : NULL);
+ 	bitmap_writer_show_progress(&writer, flags & MIDX_PROGRESS);
+ 	bitmap_writer_build_type_index(&writer, index);
+ 
+@@ -876,7 +883,7 @@ static int write_midx_bitmap(const char *midx_name,
+ 	 * bitmap_writer_finish().
  	 */
- 	for (i = 0, init_type_iterator(&it, bitmap_git, type);
--	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
-+	     i < to_filter->word_alloc && ewah_or_iterator_next(&mask, &it);
- 	     i++) {
- 		if (i < tips->word_alloc)
- 			mask &= ~tips->words[i];
-@@ -1795,6 +1801,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- 			bitmap_unset(to_filter, pos);
- 	}
+ 	for (i = 0; i < pdata->nr_objects; i++)
+-		index[pack_order[i]] = &pdata->objects[i].idx;
++		index[ctx->pack_order[i]] = &pdata->objects[i].idx;
  
-+	ewah_or_iterator_free(&it);
- 	bitmap_free(tips);
- }
+ 	bitmap_writer_select_commits(&writer, commits, commits_nr);
+ 	ret = bitmap_writer_build(&writer);
+@@ -884,11 +891,11 @@ static int write_midx_bitmap(const char *midx_name,
+ 		goto cleanup;
  
-@@ -1852,14 +1859,14 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
- {
- 	struct eindex *eindex = &bitmap_git->ext_index;
- 	struct bitmap *tips;
--	struct ewah_iterator it;
-+	struct ewah_or_iterator it;
- 	eword_t mask;
- 	uint32_t i;
+ 	bitmap_writer_set_checksum(&writer, midx_hash);
+-	bitmap_writer_finish(&writer, index, bitmap_name, options);
++	bitmap_writer_finish(&writer, index, bitmap_name.buf, options);
  
- 	tips = find_tip_objects(bitmap_git, tip_objects, OBJ_BLOB);
+ cleanup:
+ 	free(index);
+-	free(bitmap_name);
++	strbuf_release(&bitmap_name);
+ 	bitmap_writer_free(&writer);
  
- 	for (i = 0, init_type_iterator(&it, bitmap_git, OBJ_BLOB);
--	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
-+	     i < to_filter->word_alloc && ewah_or_iterator_next(&mask, &it);
- 	     i++) {
- 		eword_t word = to_filter->words[i] & mask;
- 		unsigned offset;
-@@ -1887,6 +1894,7 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
- 			bitmap_unset(to_filter, pos);
- 	}
+ 	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
+@@ -1072,8 +1079,6 @@ static int write_midx_internal(const char *object_dir,
+ 	trace2_region_enter("midx", "write_midx_internal", the_repository);
  
-+	ewah_or_iterator_free(&it);
- 	bitmap_free(tips);
- }
+ 	ctx.incremental = !!(flags & MIDX_WRITE_INCREMENTAL);
+-	if (ctx.incremental && (flags & MIDX_WRITE_BITMAP))
+-		die(_("cannot write incremental MIDX with bitmap"));
  
-@@ -2502,12 +2510,12 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 	struct eindex *eindex = &bitmap_git->ext_index;
- 
- 	uint32_t i = 0, count = 0;
--	struct ewah_iterator it;
-+	struct ewah_or_iterator it;
- 	eword_t filter;
- 
- 	init_type_iterator(&it, bitmap_git, type);
- 
--	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
-+	while (i < objects->word_alloc && ewah_or_iterator_next(&filter, &it)) {
- 		eword_t word = objects->words[i++] & filter;
- 		count += ewah_bit_popcount64(word);
- 	}
-@@ -2519,6 +2527,8 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 			count++;
- 	}
- 
-+	ewah_or_iterator_free(&it);
-+
- 	return count;
- }
- 
-@@ -3046,13 +3056,13 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
- {
- 	struct bitmap *result = bitmap_git->result;
- 	off_t total = 0;
--	struct ewah_iterator it;
-+	struct ewah_or_iterator it;
- 	eword_t filter;
- 	size_t i;
- 
- 	init_type_iterator(&it, bitmap_git, object_type);
- 	for (i = 0; i < result->word_alloc &&
--			ewah_iterator_next(&filter, &it); i++) {
-+			ewah_or_iterator_next(&filter, &it); i++) {
- 		eword_t word = result->words[i] & filter;
- 		size_t base = (i * BITS_IN_EWORD);
- 		unsigned offset;
-@@ -3093,6 +3103,8 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
+ 	if (ctx.incremental)
+ 		strbuf_addf(&midx_name,
+@@ -1115,6 +1120,12 @@ static int write_midx_internal(const char *object_dir,
+ 	if (ctx.incremental) {
+ 		struct multi_pack_index *m = ctx.base_midx;
+ 		while (m) {
++			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
++				error(_("could not load reverse index for MIDX %s"),
++				      hash_to_hex(get_midx_checksum(m)));
++				result = 1;
++				goto cleanup;
++			}
+ 			ctx.num_multi_pack_indexes_before++;
+ 			m = m->base_midx;
  		}
- 	}
+@@ -1404,8 +1415,8 @@ static int write_midx_internal(const char *object_dir,
+ 		FREE_AND_NULL(ctx.entries);
+ 		ctx.entries_nr = 0;
  
-+	ewah_or_iterator_free(&it);
-+
- 	return total;
+-		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
+-				      commits, commits_nr, ctx.pack_order,
++		if (write_midx_bitmap(&ctx, object_dir, midx_name.buf,
++				      midx_hash, &pdata, commits, commits_nr,
+ 				      flags) < 0) {
+ 			error(_("could not write multi-pack bitmap"));
+ 			result = 1;
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 923f793cec..8fc979cbc9 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -25,6 +25,8 @@
+ #include "alloc.h"
+ #include "refs.h"
+ #include "strmap.h"
++#include "midx.h"
++#include "pack-revindex.h"
+ 
+ struct bitmapped_commit {
+ 	struct commit *commit;
+@@ -42,7 +44,8 @@ static inline int bitmap_writer_nr_selected_commits(struct bitmap_writer *writer
  }
  
+ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
+-			struct packing_data *pdata)
++			struct packing_data *pdata,
++			struct multi_pack_index *midx)
+ {
+ 	memset(writer, 0, sizeof(struct bitmap_writer));
+ 	if (writer->bitmaps)
+@@ -50,6 +53,7 @@ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
+ 	writer->bitmaps = kh_init_oid_map();
+ 	writer->pseudo_merge_commits = kh_init_oid_map();
+ 	writer->to_pack = pdata;
++	writer->midx = midx;
+ 
+ 	string_list_init_dup(&writer->pseudo_merge_groups);
+ 
+@@ -104,6 +108,11 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
+ 				    struct pack_idx_entry **index)
+ {
+ 	uint32_t i;
++	uint32_t base_objects = 0;
++
++	if (writer->midx)
++		base_objects = writer->midx->num_objects +
++			writer->midx->num_objects_in_base;
+ 
+ 	writer->commits = ewah_new();
+ 	writer->trees = ewah_new();
+@@ -133,19 +142,19 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
+ 
+ 		switch (real_type) {
+ 		case OBJ_COMMIT:
+-			ewah_set(writer->commits, i);
++			ewah_set(writer->commits, i + base_objects);
+ 			break;
+ 
+ 		case OBJ_TREE:
+-			ewah_set(writer->trees, i);
++			ewah_set(writer->trees, i + base_objects);
+ 			break;
+ 
+ 		case OBJ_BLOB:
+-			ewah_set(writer->blobs, i);
++			ewah_set(writer->blobs, i + base_objects);
+ 			break;
+ 
+ 		case OBJ_TAG:
+-			ewah_set(writer->tags, i);
++			ewah_set(writer->tags, i + base_objects);
+ 			break;
+ 
+ 		default:
+@@ -198,19 +207,37 @@ void bitmap_writer_push_commit(struct bitmap_writer *writer,
+ static uint32_t find_object_pos(struct bitmap_writer *writer,
+ 				const struct object_id *oid, int *found)
+ {
+-	struct object_entry *entry = packlist_find(writer->to_pack, oid);
++	struct object_entry *entry;
++
++	entry = packlist_find(writer->to_pack, oid);
++	if (entry) {
++		uint32_t base_objects = 0;
++		if (writer->midx)
++			base_objects = writer->midx->num_objects +
++				writer->midx->num_objects_in_base;
++
++		if (found)
++			*found = 1;
++		return oe_in_pack_pos(writer->to_pack, entry) + base_objects;
++	} else if (writer->midx) {
++		uint32_t at, pos;
++
++		if (!bsearch_midx(oid, writer->midx, &at))
++			goto missing;
++		if (midx_to_pack_pos(writer->midx, at, &pos) < 0)
++			goto missing;
+ 
+-	if (!entry) {
+ 		if (found)
+-			*found = 0;
+-		warning("Failed to write bitmap index. Packfile doesn't have full closure "
+-			"(object %s is missing)", oid_to_hex(oid));
+-		return 0;
++			*found = 1;
++		return pos;
+ 	}
+ 
++missing:
+ 	if (found)
+-		*found = 1;
+-	return oe_in_pack_pos(writer->to_pack, entry);
++		*found = 0;
++	warning("Failed to write bitmap index. Packfile doesn't have full closure "
++		"(object %s is missing)", oid_to_hex(oid));
++	return 0;
+ }
+ 
+ static void compute_xor_offsets(struct bitmap_writer *writer)
+@@ -577,7 +604,7 @@ int bitmap_writer_build(struct bitmap_writer *writer)
+ 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 	struct prio_queue tree_queue = { NULL };
+ 	struct bitmap_index *old_bitmap;
+-	uint32_t *mapping;
++	uint32_t *mapping = NULL;
+ 	int closed = 1; /* until proven otherwise */
+ 
+ 	if (writer->show_progress)
+@@ -1010,7 +1037,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 	struct strbuf tmp_file = STRBUF_INIT;
+ 	struct hashfile *f;
+ 	off_t *offsets = NULL;
+-	uint32_t i;
++	uint32_t i, base_objects;
+ 
+ 	struct bitmap_disk_header header;
+ 
+@@ -1036,6 +1063,12 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 	if (options & BITMAP_OPT_LOOKUP_TABLE)
+ 		CALLOC_ARRAY(offsets, writer->to_pack->nr_objects);
+ 
++	if (writer->midx)
++		base_objects = writer->midx->num_objects +
++			writer->midx->num_objects_in_base;
++	else
++		base_objects = 0;
++
+ 	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++) {
+ 		struct bitmapped_commit *stored = &writer->selected[i];
+ 		int commit_pos = oid_pos(&stored->commit->object.oid, index,
+@@ -1044,7 +1077,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 
+ 		if (commit_pos < 0)
+ 			BUG(_("trying to write commit not in index"));
+-		stored->commit_pos = commit_pos;
++		stored->commit_pos = commit_pos + base_objects;
+ 	}
+ 
+ 	write_selected_commits_v1(writer, f, offsets);
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index ff0fd815b8..4242458198 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -110,6 +110,7 @@ struct bitmap_writer {
+ 
+ 	kh_oid_map_t *bitmaps;
+ 	struct packing_data *to_pack;
++	struct multi_pack_index *midx; /* if appending to a MIDX chain */
+ 
+ 	struct bitmapped_commit *selected;
+ 	unsigned int selected_nr, selected_alloc;
+@@ -124,7 +125,8 @@ struct bitmap_writer {
+ };
+ 
+ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
+-			struct packing_data *pdata);
++			struct packing_data *pdata,
++			struct multi_pack_index *midx);
+ void bitmap_writer_show_progress(struct bitmap_writer *writer, int show);
+ void bitmap_writer_set_checksum(struct bitmap_writer *writer,
+ 				const unsigned char *sha1);
+diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
+index c3b08acc73..0b6d45c8fd 100755
+--- a/t/t5334-incremental-multi-pack-index.sh
++++ b/t/t5334-incremental-multi-pack-index.sh
+@@ -43,4 +43,88 @@ test_expect_success 'convert incremental to non-incremental' '
+ 
+ compare_results_with_midx 'non-incremental MIDX conversion'
+ 
++write_midx_layer () {
++	n=1
++	if test -f $midx_chain
++	then
++		n="$(($(wc -l <$midx_chain) + 1))"
++	fi
++
++	for i in 1 2
++	do
++		test_commit $n.$i &&
++		git repack -d || return 1
++	done &&
++	git multi-pack-index write --bitmap --incremental
++}
++
++test_expect_success 'write initial MIDX layer' '
++	git repack -ad &&
++	write_midx_layer
++'
++
++test_expect_success 'read bitmap from first MIDX layer' '
++	git rev-list --test-bitmap 1.2
++'
++
++test_expect_success 'write another MIDX layer' '
++	write_midx_layer
++'
++
++test_expect_success 'midx verify with multiple layers' '
++	git multi-pack-index verify
++'
++
++test_expect_success 'read bitmap from second MIDX layer' '
++	git rev-list --test-bitmap 2.2
++'
++
++test_expect_success 'read earlier bitmap from second MIDX layer' '
++	git rev-list --test-bitmap 1.2
++'
++
++test_expect_success 'show object from first pack' '
++	git cat-file -p 1.1
++'
++
++test_expect_success 'show object from second pack' '
++	git cat-file -p 2.2
++'
++
++for reuse in false single multi
++do
++	test_expect_success "full clone (pack.allowPackReuse=$reuse)" '
++		rm -fr clone.git &&
++
++		git config pack.allowPackReuse $reuse &&
++		git clone --no-local --bare . clone.git
++	'
++done
++
++test_expect_success 'relink existing MIDX layer' '
++	rm -fr "$midxdir" &&
++
++	GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --bitmap &&
++
++	midx_hash="$(test-tool read-midx --checksum $objdir)" &&
++
++	test_path_is_file "$packdir/multi-pack-index" &&
++	test_path_is_file "$packdir/multi-pack-index-$midx_hash.bitmap" &&
++	test_path_is_file "$packdir/multi-pack-index-$midx_hash.rev" &&
++
++	test_commit another &&
++	git repack -d &&
++	git multi-pack-index write --bitmap --incremental &&
++
++	test_path_is_missing "$packdir/multi-pack-index" &&
++	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.bitmap" &&
++	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.rev" &&
++
++	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.midx" &&
++	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.bitmap" &&
++	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.rev" &&
++	test_line_count = 2 "$midx_chain"
++
++'
++
+ test_done
 -- 
 2.46.0.86.ge766d390f0.dirty
-
