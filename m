@@ -1,113 +1,94 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421C417BECA
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 11:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3981714CC
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 12:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723720929; cv=none; b=Ql3nTeMVJYH3P6KhnNgx7KOeK/sal6Ru06JAQ/s6aAWouOdk4aTR5BOhfU9KSI2tVdC3/NpzY3IA53LrJ74jD8GVseZmMlhuE12TWSUqzQiug+uiVL1qLBgwYPcaHUB1vCq3K7JgjoMcr/hH9PNZ4wPXczSI9uxOZ45JYtORQzo=
+	t=1723725881; cv=none; b=gfwlxgiU6fUdo5tT7vHWKy+qhABT6Iw+lUlaP00BhVVSCfMPe4/BZBUgKTclPnKXfV9vs4WTf3PfB1hrs+WCS1zldBLIQ2IPCP8N+7EIhBJPIaFHCgTWTKb+nkPUhav5O/K7v2dzIm9p5+AO7O/9fbIpNFLks9S2nXD7C3YyVVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723720929; c=relaxed/simple;
-	bh=7kRX5Jon/VIe/EoFfV4o5jIO+LZg+7D4Ao2bBD2rfeM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RKnr3PTzpPDMWIKmSVvWnS9FxUS8v87mTc3hK7Y9kHe+im7oL34O1v1g8vrIKQDQ9tX6weSWqixFY9+6WF1mom5BlhR+dg21/tE9kKopNQaUI5HGVFChotpD+Zu8i3sD50gFkBWZnpxrfTsW5BUr6XpDDZyvbBhjGG5pA5gpWN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lQRs2Qpp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R6GvWyPP; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723725881; c=relaxed/simple;
+	bh=MoAKJxvS9CdnhPkd/aZkKyWU+s5dsZJ9JnE6EnlbGNc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gcfSGn43ceRjF1kaJl0H96nLxZQQd5PeiBtZrP6qZvgBBV0Y5LlpnyKsxjqHZcTEWOa4hp79sxp5RCsNU/eermOAtXxmQwyTtH8slyGclmMIhLc+fO5IiF1Jvf2MTCU+eeuc4dX634feIgUTMg+9RlNLmpW5JLNeshQ5tdO7VsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=O/APWgJP; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lQRs2Qpp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R6GvWyPP"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 71CAE1151D2C;
-	Thu, 15 Aug 2024 05:41:02 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 15 Aug 2024 05:41:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723714862; x=1723801262; bh=qM/iiY8XCt
-	t39AMYBfeUn9KYYnskw1dIMvfS20NNtgc=; b=lQRs2QppnOGxNxaZEdt9rFXWED
-	8htbl2HOTm8vg1BkNppaZSvs01qNsK8/K62F6k0uCs/LeVIDMeiFNksBs3fzgNo/
-	FTakMDbXkPc/cb1BG7duE+9cTGOUgeNR/pfuwbX7g2Rp6u36ViPWp3zPhucUFFxD
-	1r1cA6Ktn/5Ir9J4JKOu23L0AjhFvns5qe/h1DRARD4khUD/yl2neL++WB1A1rbx
-	rzh2mTcmg+cBH0zU3+7E7IZsn0sSGPLf6fLZdCmvoGdw2PLnAIW34BEo2AVuYtmB
-	wGdCTcsxcO5SfqHvllr/2Ju5vp0x+oRUaNgJZw8esifoP8VZwRckOGINmOTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723714862; x=1723801262; bh=qM/iiY8XCtt39AMYBfeUn9KYYnsk
-	w1dIMvfS20NNtgc=; b=R6GvWyPPSj8+4PlYlEq3pYQIa8+POgXIoggXZim94Hkn
-	OCWi7U2rGvAIej4ZOKRrOA+baTLyY5nR9PRnOu/ebeBnyy3YvUkihkfnW24N5taE
-	XVPgYyYMLXvzd7TZhG6u5h8RPR85z5xi6Pjg7BUhuFq0Ec+glKp/O8mZTVyFx2Ty
-	o7Z3VeP+wNs4df9TZYk/3FhM7KmojI9JQ6vPbBDtdbYG4JbLpBrTWhWO4qXOPhSi
-	Qtoe+xwenEI5yloPZm89bDKhPhxVv0fvZ7uZrVy33myoxxgWMeQzcZRFHOC59zCx
-	LO+WyTLJlQSm7nkCTFYZh7su8LQhvAKCpuOtZ/H3UQ==
-X-ME-Sender: <xms:Ls29Zoq-QygGHLAspFieyEpgqDWK-5l6eEuQ5ORLLu0v86YRV5SG_A>
-    <xme:Ls29Zuo4Np2TaUcm-tOU9z4nrsmZGGZOQjZvqZkmKorQ18W5MPRuPylOw9oMyH242
-    Kq3twOcS_pRKapy-w>
-X-ME-Received: <xmr:Ls29ZtPPUAKxHaLafwtKl-sdlgu3jom08qA_yR9gZ7zstOojT6C2S3Y7gwzDvBJV31HAiSqXByHE3dC9WGVEWa4v_I2ju_A3EVX2VAs7hx9fkw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtiedgudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Ls29Zv56h2wVeepfw74vlSZLi5_BWmG2ar_kmV58yoq3_46QY85YhA>
-    <xmx:Ls29Zn5Wm9CHBNTMH_g5ddWnjpvx57BydsOSLlAK3LtgRDIY0Wzebw>
-    <xmx:Ls29Zvij5-IWLZX9RcuypE2maDQoY-O3Uh2jLLpTJ3XrNW99dxIhsw>
-    <xmx:Ls29Zh4yL2XFaiJVb0PCOhx1H6F9Ba8-fpqBgk5-b6ecp-C9b0NCdw>
-    <xmx:Ls29ZpmQM7_GrJHhryeoA8VTNMR99nxbf3Ew9tGTVINW2odRc1IDbJRs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Aug 2024 05:41:01 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0a4b708e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Aug 2024 09:40:41 +0000 (UTC)
-Date: Thu, 15 Aug 2024 11:40:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 05/10] t-reftable-block: use block_iter_reset() instead
- of block_iter_close()
-Message-ID: <Zr3NKWOFlZlkkOSn@tanuki>
-References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
- <20240814121122.4642-6-chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O/APWgJP"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B666231A2D;
+	Thu, 15 Aug 2024 08:44:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=MoAKJxvS9Cdn
+	hPkd/aZkKyWU+s5dsZJ9JnE6EnlbGNc=; b=O/APWgJPrsZH8VwXEbFbSC6cp16X
+	Xs3+63a4ZR3i1NJGFq9491erIS6WYxWrHVqKHALvpPDaQur53XROup3bawiZdXE4
+	buRtbdK0+7ahe6+DwXk7UvhNrIteEhW2w012JVX5cNQ41S+hokXUBL/fbKBtP0xL
+	EmN7+Brh7/O/j9g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AEE5331A2C;
+	Thu, 15 Aug 2024 08:44:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3536931A2B;
+	Thu, 15 Aug 2024 08:44:34 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: avih <avihpit@yahoo.com>
+Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>,
+  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
+In-Reply-To: <12887914.4232362.1723695432887@mail.yahoo.com> (avih's message
+	of "Thu, 15 Aug 2024 04:17:12 +0000 (UTC)")
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
+	<1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com>
+	<xmqqy15rzwi5.fsf@gitster.g>
+	<2007960310.4114358.1723658954502@mail.yahoo.com>
+	<xmqqfrr6yk73.fsf@gitster.g>
+	<12887914.4232362.1723695432887@mail.yahoo.com>
+Date: Thu, 15 Aug 2024 05:44:32 -0700
+Message-ID: <xmqqy14yuf9r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240814121122.4642-6-chandrapratap3519@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 1FBDCBD4-5B04-11EF-9C22-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 14, 2024 at 05:33:13PM +0530, Chandra Pratap wrote:
-> block_iter_reset() restores a block iterator to its state at the time
-> of initialization without freeing any memory while block_iter_close()
-> deallocates the memory for the iterator.
-> 
-> In the current testing setup, a block iterator is allocated and
-> deallocated for every iteration of a loop, which hurts performance.
-> Improve upon this by using block_iter_reset() at the start of each
-> iteration instead. This has the added benifit of testing
-> block_iter_reset(), which currently remains untested.
+avih <avihpit@yahoo.com> writes:
 
-I don't think that performance is a good argument, but exercising the
-reset function certainly is.
+>>> Ping
+>>>
+>>> Reminder: I'll update this part to not-use $'...' and without
+>>> fallback, but I'm currently waiting for comments on the other parts
+>>> as well before I update this patch.
+>>
+>> Ping for others.=C2=A0 I do not recall having much other things to say=
+ on
+>> the series.
+>
+> Not sure I understand.
+>
+> Shall I ping the other 7 parts individually?
 
-> Similarly, remove reftable_record_release() for a reftable record
-> that is still in use.
+No, I pinged other folks, who are reading git@vger.kernel.org, to
+give their reviews, because the prompt script is not exactly my area
+of expertise.  I commented on it only because nobody else did, and
+because I care about portability while keeping the complexity level
+down.  Other aspects of the series are better reviewed by others,
+not by me.
 
-This is a welcome change, too, to verify that reading into the same
-record multiple times does not leak memory and otherwise works as
-expected.
+If you have updated series, resending the whole series with as v2
+(e.g. [PATCH v2 1/8]..[PATCH v2 8/8], if there is no change in the
+number of patches) would be good.
 
-Patrick
+THanks.
