@@ -1,54 +1,54 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641EB19DFAB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDCB19DFA9
 	for <git@vger.kernel.org>; Thu, 15 Aug 2024 08:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723708819; cv=none; b=sKd/mN/5FUzwe9GncrIkbUSQ1sBEzy9sSKiF+44pRz3lfTp9nfPQsTtf7TiwzMZjPhmTkv2dEons9wQzTY+ZWVMEE2MYQMKBeq2Hattgcug2Mai2z0Y8U0NxzWM7U87hasyaOZAH2iiVPlWSKaBH3DzH9cNMcaIObhIANY98NnQ=
+	t=1723708819; cv=none; b=d79SbzKCj55aParnpX2FiLI5JWXWGxbGUdBAKQN+CHGFBcs9ylSzVmXMlC6rv3Vc4lcNVDS3Bep+02vGNkPVmFk8zVFqrh0g6EuQNteUQUiuoCF2CAnVwwgdBbGlzvh5uScf82vlkveLhj2jIdxRnIQtrtedPdJJi4/67ADye6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1723708819; c=relaxed/simple;
-	bh=WHPEJkJn92AOSfXG46TnrB7VYRAEhz9IE4EbSX56Ty0=;
+	bh=GV8TZwlpPamBnFRlnAMmJWUgbkPHpKXWWYhNmnr/NdY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TG9JSMFo56KJOPWQDyO5WeSy2wK+dcllm7wYxVu8OIM46DFAmQZlgY37qri5bh033+aROleKDfOsUVlLOqAiqgEAvQeAUIH/4pafGCAXqOcU19WNLtSISxTtxvV/YOzDdR6KjofU/mTsaQ+UvOn9Xr/wyiwpSEsMG7AsOFXcN6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZtWvv4fr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=axhj6gem; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=XZ/rHTvCd8JDkJK4FWSox+m+CgIk1vSb/wwn6SOxz2Q873jlryj9b9tbZGZdM+NPp7puQAHAlOSDwLHyrVKUyPxqXHyyQ9veZKqAYEykL+i6S2fPbml7VYC0u81HPP71GTpDBGQlQ5iqL02cGs0Bc8xSOD3SgR1+sQ1xkilxC5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=POilrCTr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AFk/ogTY; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZtWvv4fr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="axhj6gem"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 52267138FFAE;
-	Thu, 15 Aug 2024 04:00:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="POilrCTr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AFk/ogTY"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 502061151D1C;
+	Thu, 15 Aug 2024 04:00:09 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 15 Aug 2024 04:00:14 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 15 Aug 2024 04:00:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723708814; x=1723795214; bh=yq3F/B/N8p
-	46GAsTJCi6Olt/7R02w2IgCgohVaGAgso=; b=ZtWvv4frXBXIUHU5qEX3ngYXIK
-	TFNQFci1a1OjpOsVb7AEgNs9u4MX9raRVIml1R2TKUYas50GTF2bRbqyiVcf8R34
-	osq7PDzK8lw+aR4BgtWJOrnyBl33tupZbQBPQ4kAwUHUL0ged8u07+EGV9zXQMzd
-	rTh4lt7YIyK6CFxWV38I6k+NQg2DCcnJbjaNpWTSovoekeSO8wYyyeifHQL4XcTC
-	7nmZhTyvQPlpS5tMezdxal7WltdRzNcKKLdVd+ALDVtrAI6LjxYUAJTabkOeB6KU
-	JKy6PM/PMxdnf0/pj5vQOvwOUJ3L2llljoAFjfSRCktPjV+oz62Kqnfmo/Ug==
+	:subject:to:to; s=fm3; t=1723708809; x=1723795209; bh=QAHkKwx6uF
+	DNyDabAsWzV+m3owbZBOH55F9xLP1j8Ig=; b=POilrCTr0zHhotbLBi5lUwBfl0
+	q1pk904SYA9Odf31ZdFZ4mqsNNRsWsd1PUXofZwldhhBVSOgmDUNw//i7v1cjuq1
+	A1CdmJIf21ifJOsoEwZRNlUtD1HG5g9NTSRY3WIGUvuy0IfZwl2Ck1JXiTwFYnUB
+	2h9FOGA4TRW/RUxdl/PqDrmRJqTV6nMYPv4pc4EkJsP5s1oIjVwDCW/pYOzLF4/F
+	Z13tvLg2kXbup9X5OP5UhE8y2gGCaVqHAjsRvF9rV7nIRC7oAb6jskPooz4hubUf
+	Juq2ZkwQhf6Ej30nFLEkgBLS0auK5s7Jn4ELG78IxHxYYX/k94BqI9AQxqzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723708814; x=1723795214; bh=yq3F/B/N8p46GAsTJCi6Olt/7R02
-	w2IgCgohVaGAgso=; b=axhj6gemKwiYbmC8UgcuyLVvfabfF3ZydlrbSP3m+Nrm
-	xfK397rYAdUn2uK4vQOyVlBKqUOOl8Ksxs/llJ0C8+MTvBAjUfi8MnCvqHCKZm0F
-	OrZKN3MT7uvxximRLccyAe0WadWKlllWIXHDisw4KCtshi+dcw9eatZ82EZfmOVS
-	6aX4gKA+RmbtwoPm9+iP/D9Dt7Jo6JNVHoTrtPOosl48kS19A7Rjh+HAXS/hQzI7
-	/bQYk0LXb3N/Ee/GFQT+PET9tl2IhjzSuzXB5m+iZLzFf6Uk8uLGW43MRWNLva1H
-	wU2qq3bpyqRO1n/5LPH90p4bTdG0IFEIFcUmor2EIg==
-X-ME-Sender: <xms:jrW9ZgAgtQeJJ_F5ZndSFDFalkZm_7j7j3sKD0q-_IW3bOoT27b-vQ>
-    <xme:jrW9Zii81MqspI6VAW90sqUDHyBdHsPkiX8w7YK5lUgFyn4mfHKrs-wzlaiW_bvgx
-    PIyIqjKR2BH1Ykjzw>
-X-ME-Received: <xmr:jrW9Zjll4JmrbhzzmhO1oxDNKRg4aVKa74k5oLEmc4KCNHx_4Q0_PrWSRnf4GhF2XBmTZdR7nOnl9h-D5OhvQSMP4WxHD6LKRT-IWknVQ6T9hw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddthedguddvkecutefuodetggdotefrod
+	fm3; t=1723708809; x=1723795209; bh=QAHkKwx6uFDNyDabAsWzV+m3owbZ
+	BOH55F9xLP1j8Ig=; b=AFk/ogTYsA6bBk2e13oQJ87uqPyNO4ORQwc43ramSNQ6
+	u3ttXRmuCyN13qgbabV7BWYs0cy1ENZEJAn6H5DixxLLFccP+Z5+Xu56Ac9glZsW
+	CLS1Fv9dyvaz9Uqs78ZBMYPJzWsFezmWtq7H7qn8CLQW4plBKSKSNy+ZzildwFAS
+	kzSXreQbb1JsWu9scZRF5w9trATPTYew9HLnGugmgOj885suq2jpkv1gY15xtJbm
+	YQro4znz41jzkcU1EBLkGufxK0dC+toz/WL43zUY3K4ymiGJIqTbvsfIhGL31RHw
+	A2/6xWhdr6Xog1n90GPSRjl2Xi2lJ1jwVXoyr1spcg==
+X-ME-Sender: <xms:ibW9ZtzyQ5X-ZV_DxHb1gjK8UuvpmStSRD90ADM__WQqn7zJ1k23_w>
+    <xme:ibW9ZtQr5owi0AbYf5cFG8mX2gMWbRs6m07ayfZcB6Tvn7empOnp1OMLkXM4Nb2lY
+    2FRGslyekYl_1DX8g>
+X-ME-Received: <xmr:ibW9ZnV5MQAIg_4HIl1B_WQDANVXSUUmYlKD5PyMMZiHlAurCzIlBlJX342CydqWZGYkt08QdsOQ_ZUZMCfpcVU5a-bzGVRo0310kW1ekehFbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddthedguddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddthedguddvkecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsshgthhhusggvrhhthhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:jrW9Zmy76yJkdxGX8HsXt8RSl1ATGdpfum-24t_7nPnFeOGuRCJnvA>
-    <xmx:jrW9ZlSZlVSGTkM9mAZqISp4OUVmtbwiPX8m8AlIsL3rjaZQVdF2uw>
-    <xmx:jrW9ZhZdyh2exsTpzF5fqIi_kXmCeSv8EjSv0inxkUDqUS_mJCgBQw>
-    <xmx:jrW9ZuT3sNWI2NfUkcallmPr4r05vITWPlR1-7uBLXeWdOAlxP7wLQ>
-    <xmx:jrW9Zgf9cuM32RH1igamxhWfogEeHNn7g79iDf-0BydmaVRgxLuJV5kB>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshhstghhuhgsvghrthhhsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ibW9ZvhA7zq1U-ej5AAGyRmMzNr50Re3_SqgKVkQ0evHoFVUuxfEHg>
+    <xmx:ibW9ZvA9IT35kWa2YnhAsx0B2vj09NbohouZk1G_j6_WHNkZfjqZZQ>
+    <xmx:ibW9ZoKb855TTCK-vT25YlL6dqFdhmBmHNkoTjjF3dZ2eTrr8cGzGQ>
+    <xmx:ibW9ZuCT5RXnPqwydK183O8SotyGp60wGiXsJPsZcxQGkeSUkhtzQQ>
+    <xmx:ibW9ZiMZPEckKgiYSk8apThsXsCxTBsD6IZs7h89Ysd7Opw25LlvMhDr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Aug 2024 04:00:13 -0400 (EDT)
+ 15 Aug 2024 04:00:08 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8e4b751c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Aug 2024 07:59:52 +0000 (UTC)
-Date: Thu, 15 Aug 2024 10:00:09 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id a88e3ee6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Aug 2024 07:59:47 +0000 (UTC)
+Date: Thu, 15 Aug 2024 10:00:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 5/5] setup: make ref storage format configurable via config
-Message-ID: <a0417b7d1a8e96f71399117f3f7333c5a2920dce.1723708417.git.ps@pks.im>
+Subject: [PATCH 4/5] setup: make object format configurable via config
+Message-ID: <e1cdaf0f0edec578d1cb9358fd4c6f6b39aaad3a.1723708417.git.ps@pks.im>
 References: <cover.1723708417.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,145 +86,162 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723708417.git.ps@pks.im>
 
-Similar as the preceding commit, introduce a new "init.defaultRefFormat"
-config that allows the user to globally set the ref storage format used
-by newly created repositories.
+The object format for repositories can either be configured explicitly
+by passing the `--object-format=` option to git-init(1) or git-clone(1),
+or globally by setting the `GIT_DEFAULT_HASH` environment variable.
+While the former makes sense, setting random environment variables is
+not really a good user experience in case someone decides to only use
+SHA256 repositories.
+
+It is only natural to expect for a user that things like this can also
+be configured via their config. As such, introduce a new config
+"init.defaultObjectFormat", similar to "init.defaultBranch", that allows
+the user to configure the default object format when creating new repos.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
  Documentation/config/init.txt |  5 ++++
- setup.c                       | 14 +++++++++++
- t/t0001-init.sh               | 44 +++++++++++++++++++++++++++++++++++
- 3 files changed, 63 insertions(+)
+ setup.c                       | 40 ++++++++++++++++++++++++++++
+ t/t0001-init.sh               | 50 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 95 insertions(+)
 
 diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
-index d6f8b6e61b..9be97bcac8 100644
+index af03acdbcb..d6f8b6e61b 100644
 --- a/Documentation/config/init.txt
 +++ b/Documentation/config/init.txt
-@@ -13,3 +13,8 @@ endif::[]
- 	`--object-format=` in linkgit:git-init[1]. Both the command line option
- 	and the `GIT_DEFAULT_HASH` environment variable take precedence over
- 	this config.
-+`init.defaultRefFormat`::
+@@ -8,3 +8,8 @@ endif::[]
+ `init.defaultBranch`::
+ 	Allows overriding the default branch name e.g. when initializing
+ 	a new repository.
++`init.defaultObjectFormat`::
 +	Allows overriding the default object format for new repositories. See
-+	`--ref-format=` in linkgit:git-init[1]. Both the command line option
-+	and the `GIT_DEFAULT_REF_FORMAT` environment variable take precedence
-+	over this config.
++	`--object-format=` in linkgit:git-init[1]. Both the command line option
++	and the `GIT_DEFAULT_HASH` environment variable take precedence over
++	this config.
 diff --git a/setup.c b/setup.c
-index 770ad1393f..dd2251f655 100644
+index 5dfcdc99dd..770ad1393f 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -2286,6 +2286,7 @@ static void separate_git_dir(const char *git_dir, const char *git_link)
+@@ -2284,11 +2284,49 @@ static void separate_git_dir(const char *git_dir, const char *git_link)
+ 	write_file(git_link, "gitdir: %s", git_dir);
+ }
  
- struct default_format_config {
- 	int hash;
-+	enum ref_storage_format ref_format;
- };
- 
- static int read_default_format_config(const char *key, const char *value,
-@@ -2306,6 +2307,16 @@ static int read_default_format_config(const char *key, const char *value,
- 		goto out;
- 	}
- 
-+	if (!strcmp(key, "init.defaultrefformat")) {
++struct default_format_config {
++	int hash;
++};
++
++static int read_default_format_config(const char *key, const char *value,
++				      const struct config_context *ctx UNUSED,
++				      void *payload)
++{
++	struct default_format_config *cfg = payload;
++	char *str = NULL;
++	int ret;
++
++	if (!strcmp(key, "init.defaultobjectformat")) {
 +		ret = git_config_string(&str, key, value);
 +		if (ret)
 +			goto out;
-+		cfg->ref_format = ref_storage_format_by_name(str);
-+		if (cfg->ref_format == REF_STORAGE_FORMAT_UNKNOWN)
-+			warning(_("unknown ref storage format '%s'"), str);
++		cfg->hash = hash_algo_by_name(str);
++		if (cfg->hash == GIT_HASH_UNKNOWN)
++			warning(_("unknown hash algorithm '%s'"), str);
 +		goto out;
 +	}
 +
- 	ret = 0;
- out:
- 	free(str);
-@@ -2317,6 +2328,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
++	ret = 0;
++out:
++	free(str);
++	return ret;
++}
++
+ static void repository_format_configure(struct repository_format *repo_fmt,
+ 					int hash, enum ref_storage_format ref_format)
  {
- 	struct default_format_config cfg = {
- 		.hash = GIT_HASH_UNKNOWN,
-+		.ref_format = REF_STORAGE_FORMAT_UNKNOWN,
- 	};
- 	struct config_options opts = {
- 		.respect_includes = 1,
-@@ -2359,6 +2371,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 		if (ref_format == REF_STORAGE_FORMAT_UNKNOWN)
- 			die(_("unknown ref storage format '%s'"), env);
- 		repo_fmt->ref_storage_format = ref_format;
-+	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
-+		repo_fmt->ref_storage_format = cfg.ref_format;
++	struct default_format_config cfg = {
++		.hash = GIT_HASH_UNKNOWN,
++	};
++	struct config_options opts = {
++		.respect_includes = 1,
++		.ignore_repo = 1,
++		.ignore_worktree = 1,
++	};
+ 	const char *env;
+ 
++	config_with_options(read_default_format_config, &cfg, NULL, NULL, &opts);
++
+ 	/*
+ 	 * If we already have an initialized repo, don't allow the user to
+ 	 * specify a different algorithm, as that could cause corruption.
+@@ -2304,6 +2342,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 		if (env_algo == GIT_HASH_UNKNOWN)
+ 			die(_("unknown hash algorithm '%s'"), env);
+ 		repo_fmt->hash_algo = env_algo;
++	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
++		repo_fmt->hash_algo = cfg.hash;
  	}
- 	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
- }
+ 	repo_set_hash_algo(the_repository, repo_fmt->hash_algo);
+ 
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index cd34710f32..0178aa62a4 100755
+index 795408e16c..cd34710f32 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -620,6 +620,19 @@ test_expect_success 'init with GIT_DEFAULT_REF_FORMAT=garbage' '
- 	test_cmp expect err
+@@ -523,6 +523,56 @@ test_expect_success 'init honors --object-format' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'init warns about invalid init.defaultRefFormat' '
-+	test_when_finished "rm -rf repo" &&
-+	test_config_global init.defaultRefFormat garbage &&
++test_expect_success 'init honors init.defaultObjectFormat' '
++	test_when_finished "rm -rf sha1 sha256" &&
 +
-+	echo "warning: unknown ref storage format ${SQ}garbage${SQ}" >expect &&
++	test_config_global init.defaultObjectFormat sha1 &&
++	(
++		sane_unset GIT_DEFAULT_HASH &&
++		git init sha1 &&
++		git -C sha1 rev-parse --show-object-format >actual &&
++		echo sha1 >expected &&
++		test_cmp expected actual
++	) &&
++
++	test_config_global init.defaultObjectFormat sha256 &&
++	(
++		sane_unset GIT_DEFAULT_HASH &&
++		git init sha256 &&
++		git -C sha256 rev-parse --show-object-format >actual &&
++		echo sha256 >expected &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'init warns about invalid init.defaultObjectFormat' '
++	test_when_finished "rm -rf repo" &&
++	test_config_global init.defaultObjectFormat garbage &&
++
++	echo "warning: unknown hash algorithm ${SQ}garbage${SQ}" >expect &&
 +	git init repo 2>err &&
 +	test_cmp expect err &&
 +
-+	git -C repo rev-parse --show-ref-format >actual &&
-+	echo $GIT_DEFAULT_REF_FORMAT >expected &&
++	git -C repo rev-parse --show-object-format >actual &&
++	echo $GIT_DEFAULT_HASH >expected &&
 +	test_cmp expected actual
 +'
 +
- backends="files reftable"
- for format in $backends
- do
-@@ -650,6 +663,27 @@ do
- 		git -C refformat rev-parse --show-ref-format >actual &&
- 		test_cmp expect actual
- 	'
-+
-+	test_expect_success "init with init.defaultRefFormat=$format" '
-+		test_when_finished "rm -rf refformat" &&
-+		test_config_global init.defaultRefFormat $format &&
-+		(
-+			sane_unset GIT_DEFAULT_REF_FORMAT &&
-+			git init refformat
-+		) &&
-+
-+		echo $format >expect &&
-+		git -C refformat rev-parse --show-ref-format >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "--ref-format=$format overrides GIT_DEFAULT_REF_FORMAT" '
-+		test_when_finished "rm -rf refformat" &&
-+		GIT_DEFAULT_REF_FORMAT=garbage git init --ref-format=$format refformat &&
-+		echo $format >expect &&
-+		git -C refformat rev-parse --show-ref-format >actual &&
-+		test_cmp expect actual
-+	'
- done
- 
- test_expect_success "--ref-format= overrides GIT_DEFAULT_REF_FORMAT" '
-@@ -660,6 +694,16 @@ test_expect_success "--ref-format= overrides GIT_DEFAULT_REF_FORMAT" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides init.defaultRefFormat" '
-+	test_when_finished "rm -rf refformat" &&
-+	test_config_global init.defaultRefFormat files &&
-+
-+	GIT_DEFAULT_REF_FORMAT=reftable git init refformat &&
-+	echo reftable >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
++test_expect_success '--object-format overrides GIT_DEFAULT_HASH' '
++	test_when_finished "rm -rf repo" &&
++	GIT_DEFAULT_HASH=sha1 git init --object-format=sha256 repo &&
++	git -C repo rev-parse --show-object-format >actual &&
++	echo sha256 >expected
 +'
 +
- for from_format in $backends
- do
- 	test_expect_success "re-init with same format ($from_format)" '
++test_expect_success 'GIT_DEFAULT_HASH overrides init.defaultObjectFormat' '
++	test_when_finished "rm -rf repo" &&
++	test_config_global init.defaultObjectFormat sha1 &&
++	GIT_DEFAULT_HASH=sha256 git init repo &&
++	git -C repo rev-parse --show-object-format >actual &&
++	echo sha256 >expected
++'
++
+ test_expect_success 'extensions.objectFormat is not allowed with repo version 0' '
+ 	test_when_finished "rm -rf explicit-v0" &&
+ 	git init --object-format=sha256 explicit-v0 &&
 -- 
 2.46.0.46.g406f326d27.dirty
 
