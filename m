@@ -1,63 +1,64 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B424E1552EE
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 22:28:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546F915573B
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 22:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723760940; cv=none; b=UBvk/yl4A3EhEnLA6/c7KBdrE0OLmxqEsmSsN9dMb6cXtDK84OY+vDDOa748BMn1iHXpj9eAclI446Br4+sMKDzS7Zm5uvj7ApLJEJZq1L9tbFyXgBNvl8UoeoALcxO9DAFc63cCozWsFO5LfeJUbC96ZGAqkLt7Tros0o4Xzsk=
+	t=1723760942; cv=none; b=Q+rCJILxQEJA5DsEzn5Gdkh/LBNBwOnHat+eKgHb6Pu9G94+Lfa9hubl9VzfWkScJ4O/RpDcl0NvTaWT0JfNL5Nn/Esm6QoBn5rgGTl7+Ur1BWC87dChfM8gD6DUOOPvz32kv+lxendSyrLnuRLQyN3KeexyMrh6NH3F4u8nAkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723760940; c=relaxed/simple;
-	bh=ilh/z9+rVIxGj/lPNfJG41yrKZe1FjE1tzFQ0hjWiEU=;
+	s=arc-20240116; t=1723760942; c=relaxed/simple;
+	bh=0c1BLveCC0VTuedQ7gjhMnuviv9khlUd8jJuVt6QJGc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JtKtnQrDZN5Tr9nxaudG2mhAenvFWFngxEPORqsF3UlpUN4tinctssq8YkQJOxaUQM4wSG8uFwn7TK8su2jWE5jud362xLpF+ecBWo9cze4P1+D3ve85A6nrmb8zfqwbN8NUqm5XXLwQnHpDjmc9mENyKqfirgkw0rdl/Lf5qmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iO2MT6kL; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=RAPRWhiKkX8tU85zyKYvGBtVY4cstlpO1gPselpbOhMwi/9wn4ZIR3dJSwfnU7QSozLCGW/4VQHIWpJwA8iNnsRYsZrj2SLCA7zRoQrW8G+uajYcHIitvNAf9CfkX9ntjXc58UBwdDmgX8kuUBQnjIzjkuyiauHwGtUXepteqsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=WfrrBx/Y; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iO2MT6kL"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-68518bc1407so15652497b3.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 15:28:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WfrrBx/Y"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e124cdea21bso181038276.2
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 15:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723760937; x=1724365737; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723760940; x=1724365740; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YdO5rpfaE/UAjBShy8CXkYYFcFh8jX1HTqxdCfoZyPI=;
-        b=iO2MT6kL4i8z+4ZT9FNqV24T/i5sTAhI5BIGiOwmKcuWHPXZ1D/MQ/3Irx+XtoiX2f
-         CZZHGgxDuOIFX8jg00RnIRKQdF1LtId7JQKdZOKSPnRafmfvbQoJZkyru/gySQzkIuwq
-         xzVmJYHhh5JCDhA2OcB2DAP2/Cl16wZFgkG5nXpd5UVjrDecWxOM7g+dwcSttOSrKy2j
-         OrDYd8uboV+mIw664qShCy1W97A3JUjN+w2K8OKePWcyahjq6Hq1ZqYgm+a1BJpS2p2h
-         e3xH9mTyGxaPhHxibylr9OZXu0OIYVOzjl89IwZzCx46Gf6jEQBCBl1b1d1AE50ZzWse
-         GO7g==
+        bh=DYNYWrfBb9brsbTpEoKkvZqrdyZOZli6q8goV7oYNrU=;
+        b=WfrrBx/Y27V8m0pEcVB6Hd8dYO27wow9jDXetcqxgs3CUB1/JnfE6sVuBCKctwxrWf
+         XFp+k8BcQz1M24K33pnrlh6wy0CIpbQTWXcwQz+GAQXMS5wdywdqOV3SUdXXKI8UcKir
+         xMBtnMSH/GNC5yoqhbnCXcIekpxb48heOosAXc+TyqlY1/M11NNoc1XMP+1wC+xDQGag
+         ivsG5e1nyUjKhOXlm7vgs1a8NVjdsolJvAudLk5b5BTgmHzoXJomIHkQ68UkZBKM6z+6
+         d77CGVGwzxpJam6ap1uTwPY1zCB19gNOzmPMwVNzRAMLf9DCYudEBnj8TQVAElwnZXP/
+         32dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723760937; x=1724365737;
+        d=1e100.net; s=20230601; t=1723760940; x=1724365740;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YdO5rpfaE/UAjBShy8CXkYYFcFh8jX1HTqxdCfoZyPI=;
-        b=SCUwZd5adg2VOFw2nUypeDzJhE7TyGAvboxNMV0+nQsTdXkJIT81DmuuIT7dPymY3K
-         HfiT1Xa4krlLtMxazQH3Wd87cycbAUZ3QAlTf1tlmfqu9Z7nwl2w85vzs5Hvxs8LhhCZ
-         8KiR7S5gVYyBkMbC3xZs35YHmACLL8E56FlA+vMpvEy4cjjwmus+eCfFFR2fz0h/yun1
-         /kRcSEpIa3ET1333cQb42KzY1gwiWL+RZ9he7vOppwYoSNc4jjuIWRzapJMHV/xfIcI3
-         Bti4xvXkU94Asr/UtONlgej1Ha7K1VtwpluIO/ziSdlQUQ9eEKa7pEcCIAmoATl1z2cV
-         fRsQ==
-X-Gm-Message-State: AOJu0YxR+r93TbLDr4tJ9Q0pENjR0FwsaTZrSsepkU/HVJE9/MOGmmi3
-	ob6eoN7POFKetmr98uklQEU50HTrUD8pI3AsGaZ1GuLIs8VNUh+5oLTcIYFJJBykIgCRyqQQyCq
-	L
-X-Google-Smtp-Source: AGHT+IFtWA19eS9SzFCGMGOQivlPwbcaTkidplfeftPqOK1E+y7Nh6wpP35Pqd9VZErb0X7VK+Fktg==
-X-Received: by 2002:a05:690c:c8c:b0:6ad:f6ae:768b with SMTP id 00721157ae682-6b1bdb2193bmr13097887b3.31.1723760937219;
-        Thu, 15 Aug 2024 15:28:57 -0700 (PDT)
+        bh=DYNYWrfBb9brsbTpEoKkvZqrdyZOZli6q8goV7oYNrU=;
+        b=iAkSlpVAv+u/HHpDynO8I6CvHY3YMEj9RtsauNpMsAOX+OuR6CkqaS/jju0dRZrkzQ
+         AhEz+nYhesacmvDExvbUgN6AY5+wSiHoemMk+n6f2SOke/1C8dCLmgJSHOnza78jEJIr
+         iv97zGIN4lYTDuLrPPFr2khKusRpB+gHdmiQdOs/iZTHuOZEkCdZVTRlWH6ldhw6aU05
+         xSpHD7sb757inID7MDPaVBOcE2rE/zc6b0UQRuibJE8tf5Oy9/Yad+nmUGv9CIgPwX7m
+         uhlL8+Lkeph81juQAU9ZOafGNkj/A4s3n519XlgucnfskJ2BXbsi9+50/Vh2BYJyNFdC
+         0BtA==
+X-Gm-Message-State: AOJu0Yw8Xa5MEjqWvh/STKWL7GT0FCmurSeM1yIaOl+UGMtEMebqBNIz
+	JgRQs3XJiWdXsCBQXFAD9SJ1NEJzWC7lsDdwQ35I8W94pN1yTAK3TcDfq/ogxRczhTyKwvxAqxp
+	z
+X-Google-Smtp-Source: AGHT+IHoCCOTLyXYBaTcgVq0FoJJzoPRDpUb4FnWnQVKKeFzPokqRNKz+kkEHQEzF/y44hjSkGydWA==
+X-Received: by 2002:a05:690c:3244:b0:64b:8b8f:7770 with SMTP id 00721157ae682-6b1bb95f379mr10432347b3.23.1723760940140;
+        Thu, 15 Aug 2024 15:29:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af9950713dsm4128847b3.26.2024.08.15.15.28.56
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af9e0de828sm4086867b3.130.2024.08.15.15.28.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 15:28:56 -0700 (PDT)
-Date: Thu, 15 Aug 2024 18:28:55 -0400
+        Thu, 15 Aug 2024 15:28:59 -0700 (PDT)
+Date: Thu, 15 Aug 2024 18:28:58 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 02/13] pack-revindex: prepare for incremental MIDX bitmaps
-Message-ID: <f5d0866e5cb3f7f5695062e12b10072fa05ecff3.1723760847.git.me@ttaylorr.com>
+Subject: [PATCH v2 03/13] pack-bitmap.c: open and store incremental bitmap
+ layers
+Message-ID: <43444efc21415b8817522cbd7b590e1ce38636d5.1723760847.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1723760847.git.me@ttaylorr.com>
 Precedence: bulk
@@ -70,231 +71,177 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1723760847.git.me@ttaylorr.com>
 
-Prepare the reverse index machinery to handle object lookups in an
-incremental MIDX bitmap. These changes are broken out across a few
-functions:
+Prepare the pack-bitmap machinery to work with incremental MIDXs by
+adding a new "base" field to keep track of the bitmap index associated
+with the previous MIDX layer.
 
-  - load_midx_revindex() learns to use the appropriate MIDX filename
-    depending on whether the given 'struct multi_pack_index *' is
-    incremental or not.
+The changes in this commit are mostly boilerplate to open the correct
+bitmap(s), add them to the chain bitmap layers along the "base" pointer,
+ensures that the correct packs and their reverse indexes are loaded
+across MIDX layers, etc.
 
-  - pack_pos_to_midx() and midx_to_pack_pos() now both take in a global
-    object position in the MIDX pseudo-pack order, and finds the
-    earliest containing MIDX (similar to midx.c::midx_for_object().
+While we're at it, keep track of a base_nr field to indicate how many
+bitmap layers (including the current bitmap) exist. This will be used in
+a future commit to allocate an array of 'struct ewah_bitmap' pointers to
+collect all of the respective type bitmaps among all layers to
+initialize a multi-EWAH iterator.
 
-  - midx_pack_order_cmp() adjusts its call to pack_pos_to_midx() by the
-    number of objects in the base (since 'vb - midx->revindx_data' is
-    relative to the containing MIDX, and pack_pos_to_midx() expects a
-    global position).
-
-    Likewise, this function adjusts its output by adding
-    m->num_objects_in_base to return a global position out through the
-    `*pos` pointer.
-
-Together, these changes are sufficient to use the multi-pack index's
-reverse index format for incremental multi-pack reachability bitmaps.
+Subsequent commits will teach the functions within the pack-bitmap
+machinery how to interact with these new fields.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c   | 30 ++++++++++++++++++++----------
- pack-revindex.c | 32 +++++++++++++++++++++++---------
- 2 files changed, 43 insertions(+), 19 deletions(-)
+ pack-bitmap.c | 63 ++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 2e657a2aa4..0a7039d955 100644
+index 0a7039d955..c27383c027 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -170,6 +170,15 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
- 	return read_bitmap(index->map, index->map_size, &index->map_pos);
- }
+@@ -54,6 +54,13 @@ struct bitmap_index {
+ 	struct packed_git *pack;
+ 	struct multi_pack_index *midx;
  
-+static uint32_t bitmap_non_extended_bits(struct bitmap_index *index)
-+{
-+	if (index->midx) {
-+		struct multi_pack_index *m = index->midx;
-+		return m->num_objects + m->num_objects_in_base;
-+	}
-+	return index->pack->num_objects;
-+}
++	/*
++	 * If using a multi-pack index chain, 'base' points to the
++	 * bitmap index corresponding to this bitmap's midx->base_midx.
++	 */
++	struct bitmap_index *base;
++	uint32_t base_nr;
 +
- static uint32_t bitmap_num_objects(struct bitmap_index *index)
+ 	/* mmapped buffer of the whole bitmap index */
+ 	unsigned char *map;
+ 	size_t map_size; /* size of the mmaped buffer */
+@@ -377,8 +384,13 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ char *midx_bitmap_filename(struct multi_pack_index *midx)
  {
- 	if (index->midx)
-@@ -925,7 +934,7 @@ static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
- 
- 	if (pos < kh_end(positions)) {
- 		int bitmap_pos = kh_value(positions, pos);
--		return bitmap_pos + bitmap_num_objects(bitmap_git);
-+		return bitmap_pos + bitmap_non_extended_bits(bitmap_git);
- 	}
- 
- 	return -1;
-@@ -993,7 +1002,7 @@ static int ext_index_add_object(struct bitmap_index *bitmap_git,
- 		bitmap_pos = kh_value(eindex->positions, hash_pos);
- 	}
- 
--	return bitmap_pos + bitmap_num_objects(bitmap_git);
-+	return bitmap_pos + bitmap_non_extended_bits(bitmap_git);
- }
- 
- struct bitmap_show_data {
-@@ -1498,7 +1507,8 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 	for (i = 0; i < eindex->count; ++i) {
- 		struct object *obj;
- 
--		if (!bitmap_get(objects, st_add(bitmap_num_objects(bitmap_git), i)))
-+		if (!bitmap_get(objects,
-+				st_add(bitmap_non_extended_bits(bitmap_git), i)))
- 			continue;
- 
- 		obj = eindex->objects[i];
-@@ -1677,7 +1687,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- 	 * them individually.
- 	 */
- 	for (i = 0; i < eindex->count; i++) {
--		size_t pos = st_add(i, bitmap_num_objects(bitmap_git));
-+		size_t pos = st_add(i, bitmap_non_extended_bits(bitmap_git));
- 		if (eindex->objects[i]->type == type &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos))
-@@ -1703,7 +1713,7 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
- 
- 	oi.sizep = &size;
- 
--	if (pos < bitmap_num_objects(bitmap_git)) {
-+	if (pos < bitmap_non_extended_bits(bitmap_git)) {
- 		struct packed_git *pack;
- 		off_t ofs;
- 
-@@ -1726,7 +1736,7 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
- 		}
- 	} else {
- 		struct eindex *eindex = &bitmap_git->ext_index;
--		struct object *obj = eindex->objects[pos - bitmap_num_objects(bitmap_git)];
-+		struct object *obj = eindex->objects[pos - bitmap_non_extended_bits(bitmap_git)];
- 		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
- 			die(_("unable to get size of %s"), oid_to_hex(&obj->oid));
- 	}
-@@ -1878,7 +1888,7 @@ static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
- 	uint32_t objects_nr;
- 	size_t i, pos;
- 
--	objects_nr = bitmap_num_objects(bitmap_git);
-+	objects_nr = bitmap_non_extended_bits(bitmap_git);
- 	pos = objects_nr / BITS_IN_EWORD;
- 
- 	if (pos > result->word_alloc)
-@@ -2399,7 +2409,7 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 	for (i = 0; i < eindex->count; ++i) {
- 		if (eindex->objects[i]->type == type &&
- 		    bitmap_get(objects,
--			       st_add(bitmap_num_objects(bitmap_git), i)))
-+			       st_add(bitmap_non_extended_bits(bitmap_git), i)))
- 			count++;
- 	}
- 
-@@ -2798,7 +2808,7 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- 		BUG("rebuild_existing_bitmaps: missing required rev-cache "
- 		    "extension");
- 
--	num_objects = bitmap_num_objects(bitmap_git);
-+	num_objects = bitmap_non_extended_bits(bitmap_git);
- 	CALLOC_ARRAY(reposition, num_objects);
- 
- 	for (i = 0; i < num_objects; ++i) {
-@@ -2941,7 +2951,7 @@ static off_t get_disk_usage_for_extended(struct bitmap_index *bitmap_git)
- 		struct object *obj = eindex->objects[i];
- 
- 		if (!bitmap_get(result,
--				st_add(bitmap_num_objects(bitmap_git), i)))
-+				st_add(bitmap_non_extended_bits(bitmap_git), i)))
- 			continue;
- 
- 		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 22d3c23464..ce3f7ae214 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -383,8 +383,12 @@ int load_midx_revindex(struct multi_pack_index *m)
- 	trace2_data_string("load_midx_revindex", the_repository,
- 			   "source", "rev");
- 
--	get_midx_filename_ext(&revindex_name, m->object_dir,
--			      get_midx_checksum(m), MIDX_EXT_REV);
-+	if (m->has_chain)
-+		get_split_midx_filename_ext(&revindex_name, m->object_dir,
-+					    get_midx_checksum(m), MIDX_EXT_REV);
+ 	struct strbuf buf = STRBUF_INIT;
+-	get_midx_filename_ext(&buf, midx->object_dir, get_midx_checksum(midx),
+-			      MIDX_EXT_BITMAP);
++	if (midx->has_chain)
++		get_split_midx_filename_ext(&buf, midx->object_dir,
++					    get_midx_checksum(midx),
++					    MIDX_EXT_BITMAP);
 +	else
-+		get_midx_filename_ext(&revindex_name, m->object_dir,
-+				      get_midx_checksum(m), MIDX_EXT_REV);
++		get_midx_filename_ext(&buf, midx->object_dir,
++				      get_midx_checksum(midx), MIDX_EXT_BITMAP);
  
- 	ret = load_revindex_from_disk(revindex_name.buf,
- 				      m->num_objects,
-@@ -471,11 +475,15 @@ off_t pack_pos_to_offset(struct packed_git *p, uint32_t pos)
- 
- uint32_t pack_pos_to_midx(struct multi_pack_index *m, uint32_t pos)
- {
-+	while (m && pos < m->num_objects_in_base)
-+		m = m->base_midx;
-+	if (!m)
-+		BUG("NULL multi-pack-index for object position: %"PRIu32, pos);
- 	if (!m->revindex_data)
- 		BUG("pack_pos_to_midx: reverse index not yet loaded");
--	if (m->num_objects <= pos)
-+	if (m->num_objects + m->num_objects_in_base <= pos)
- 		BUG("pack_pos_to_midx: out-of-bounds object at %"PRIu32, pos);
--	return get_be32(m->revindex_data + pos);
-+	return get_be32(m->revindex_data + pos - m->num_objects_in_base);
+ 	return strbuf_detach(&buf, NULL);
  }
- 
- struct midx_pack_key {
-@@ -491,7 +499,8 @@ static int midx_pack_order_cmp(const void *va, const void *vb)
- 	const struct midx_pack_key *key = va;
- 	struct multi_pack_index *midx = key->midx;
- 
--	uint32_t versus = pack_pos_to_midx(midx, (uint32_t*)vb - (const uint32_t *)midx->revindex_data);
-+	size_t pos = (uint32_t*)vb - (const uint32_t *)midx->revindex_data;
-+	uint32_t versus = pack_pos_to_midx(midx, pos + midx->num_objects_in_base);
- 	uint32_t versus_pack = nth_midxed_pack_int_id(midx, versus);
- 	off_t versus_offset;
- 
-@@ -529,9 +538,9 @@ static int midx_key_to_pack_pos(struct multi_pack_index *m,
+@@ -397,10 +409,17 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
  {
- 	uint32_t *found;
+ 	struct stat st;
+ 	char *bitmap_name = midx_bitmap_filename(midx);
+-	int fd = git_open(bitmap_name);
++	int fd;
+ 	uint32_t i, preferred_pack;
+ 	struct packed_git *preferred;
  
--	if (key->pack >= m->num_packs)
-+	if (key->pack >= m->num_packs + m->num_packs_in_base)
- 		BUG("MIDX pack lookup out of bounds (%"PRIu32" >= %"PRIu32")",
--		    key->pack, m->num_packs);
-+		    key->pack, m->num_packs + m->num_packs_in_base);
- 	/*
- 	 * The preferred pack sorts first, so determine its identifier by
- 	 * looking at the first object in pseudo-pack order.
-@@ -551,7 +560,8 @@ static int midx_key_to_pack_pos(struct multi_pack_index *m,
- 	if (!found)
- 		return -1;
++	fd = git_open(bitmap_name);
++	if (fd < 0 && errno == ENOENT) {
++		FREE_AND_NULL(bitmap_name);
++		bitmap_name = midx_bitmap_filename(midx);
++		fd = git_open(bitmap_name);
++	}
++
+ 	if (fd < 0) {
+ 		if (errno != ENOENT)
+ 			warning_errno("cannot open '%s'", bitmap_name);
+@@ -446,7 +465,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 		goto cleanup;
+ 	}
  
--	*pos = found - m->revindex_data;
-+	*pos = (found - m->revindex_data) + m->num_objects_in_base;
+-	for (i = 0; i < bitmap_git->midx->num_packs; i++) {
++	for (i = 0; i < bitmap_git->midx->num_packs + bitmap_git->midx->num_packs_in_base; i++) {
+ 		if (prepare_midx_pack(the_repository, bitmap_git->midx, i)) {
+ 			warning(_("could not open pack %s"),
+ 				bitmap_git->midx->pack_names[i]);
+@@ -459,13 +478,20 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 		goto cleanup;
+ 	}
+ 
+-	preferred = bitmap_git->midx->packs[preferred_pack];
++	preferred = nth_midxed_pack(bitmap_git->midx, preferred_pack);
+ 	if (!is_pack_valid(preferred)) {
+ 		warning(_("preferred pack (%s) is invalid"),
+ 			preferred->pack_name);
+ 		goto cleanup;
+ 	}
+ 
++	if (midx->base_midx) {
++		bitmap_git->base = prepare_midx_bitmap_git(midx->base_midx);
++		bitmap_git->base_nr = bitmap_git->base->base_nr + 1;
++	} else {
++		bitmap_git->base_nr = 1;
++	}
 +
  	return 0;
- }
  
-@@ -559,9 +569,13 @@ int midx_to_pack_pos(struct multi_pack_index *m, uint32_t at, uint32_t *pos)
+ cleanup:
+@@ -516,6 +542,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 	bitmap_git->map_size = xsize_t(st.st_size);
+ 	bitmap_git->map = xmmap(NULL, bitmap_git->map_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	bitmap_git->map_pos = 0;
++	bitmap_git->base_nr = 1;
+ 	close(fd);
+ 
+ 	if (load_bitmap_header(bitmap_git) < 0) {
+@@ -535,8 +562,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ static int load_reverse_index(struct repository *r, struct bitmap_index *bitmap_git)
  {
- 	struct midx_pack_key key;
+ 	if (bitmap_is_midx(bitmap_git)) {
+-		uint32_t i;
+-		int ret;
++		struct multi_pack_index *m;
  
-+	while (m && at < m->num_objects_in_base)
-+		m = m->base_midx;
-+	if (!m)
-+		BUG("NULL multi-pack-index for object position: %"PRIu32, at);
- 	if (!m->revindex_data)
- 		BUG("midx_to_pack_pos: reverse index not yet loaded");
--	if (m->num_objects <= at)
-+	if (m->num_objects + m->num_objects_in_base <= at)
- 		BUG("midx_to_pack_pos: out-of-bounds object at %"PRIu32, at);
+ 		/*
+ 		 * The multi-pack-index's .rev file is already loaded via
+@@ -545,10 +571,15 @@ static int load_reverse_index(struct repository *r, struct bitmap_index *bitmap_
+ 		 * But we still need to open the individual pack .rev files,
+ 		 * since we will need to make use of them in pack-objects.
+ 		 */
+-		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
+-			ret = load_pack_revindex(r, bitmap_git->midx->packs[i]);
+-			if (ret)
+-				return ret;
++		for (m = bitmap_git->midx; m; m = m->base_midx) {
++			uint32_t i;
++			int ret;
++
++			for (i = 0; i < m->num_packs; i++) {
++				ret = load_pack_revindex(r, m->packs[i]);
++				if (ret)
++					return ret;
++			}
+ 		}
+ 		return 0;
+ 	}
+@@ -574,6 +605,13 @@ static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git)
+ 	if (!bitmap_git->table_lookup && load_bitmap_entries_v1(bitmap_git) < 0)
+ 		goto failed;
  
- 	key.pack = nth_midxed_pack_int_id(m, at);
++	if (bitmap_git->base) {
++		if (!bitmap_is_midx(bitmap_git))
++			BUG("non-MIDX bitmap has non-NULL base bitmap index");
++		if (load_bitmap(r, bitmap_git->base) < 0)
++			goto failed;
++	}
++
+ 	return 0;
+ 
+ failed:
+@@ -658,10 +696,9 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+ 
+ struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
+ {
+-	struct repository *r = the_repository;
+ 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 
+-	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(r, bitmap_git))
++	if (!open_midx_bitmap_1(bitmap_git, midx))
+ 		return bitmap_git;
+ 
+ 	free_bitmap_index(bitmap_git);
 -- 
 2.46.0.86.ge766d390f0.dirty
 
