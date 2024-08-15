@@ -1,151 +1,180 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A16A17A597
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 10:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CCF1AC890
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 11:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723717194; cv=none; b=dhzyFm/fgPUMtmZ/j7sCX5K6B/GjdEk5l9CrrR8M+8rgtn/L3XzcdNiN9/rJ59/pmC9yi2OgVjR4xau4/YnnMdpgTtgNE5UFytqMXe2QqAOyJ28yRDSWt64ocXBifDreiZ/SlKNnVe7h0Xd/ynfivBRgKn7/zxeaS4SxdK3cJoU=
+	t=1723719852; cv=none; b=GBhBbvt1SOTbC+oUQ83gaA6tV8Zg+MIy89NFRObpDTcAwfh5rqtULTo/GvfWXywD7dD1dJue5hBqZPMkeAh4OSKYuoVDBCfcA5CIkj3RD9wFUKbopFf2qiXWNETcwTRO/kmJOY+erjAEQU+7bJXW7ug/GRlQE71Xj8jjYGDciQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723717194; c=relaxed/simple;
-	bh=bXH/+JRWIlmrLH7tVtBv2nkQb4FlpftPq5uM3OhUk9w=;
+	s=arc-20240116; t=1723719852; c=relaxed/simple;
+	bh=nqepZnefSs4T/sc5dcQGp1TDzq0v4gni4FDM1ifkYyg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JnmFmViJ2HN8uZX6HRAAT7GgfLg1NH4ojIL4t08rD21DIsPsEqgCzV8MiiGm7bAIluI4+THVHS3pijV1jVyykzfQdkT/ODA6Bvw+R7FsAgRnHuMFx4+JNDuEfB22bcO3MVGp4fXbDBuszXQsiFP3bepsB2Rz32aav/aNAP0WDv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQuYpHlI; arc=none smtp.client-ip=209.85.167.169
+	 To:Cc:Content-Type; b=R6ey85QW4TuqLvy96+Pj7LsjBGgqIOHE4xiYMVjC0BvN1ubl/YUPuULKQAgRvX9jvVxVCPJ2bhzH3xEweCcWM+lkf23CmiQW9cutXRHFG4gOKRgIj1HOxiXp3xaQJGQ3h6o6IZh5npQOGmC+AVhsv/NCuLkRs9H9GZiZGFizRXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIYvYl4v; arc=none smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQuYpHlI"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3db23a6085aso379584b6e.1
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 03:19:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIYvYl4v"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5da6865312eso486939eaf.3
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 04:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723717191; x=1724321991; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723719850; x=1724324650; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dtb0m5KivFufqph7LNv+afFX8sba1gJNyLLyrnNHXVc=;
-        b=CQuYpHlIbfhZnD0cXyGHV9rxtEyBSKL8yegn9fwaMX8xoRMm03qWn5XBwlRbCNxQcM
-         HAX6fjSxxkVW1I9F9ZPa9UmTR05kfEueMx+3NwrjyL79Tw0unF5wYn3vB7u//nAGuz4j
-         lIK/R3F1P7fsWAodaYfp4SVaqwXSo/MJqU2r1/xSjkDWVPZdwL0saRPGq5rpmpG79yEg
-         LrYbEphpwvcK5rFkHUbPDRNugNIjlSMQvsKBaz+G2X8CFVyXCOvtH07Hz2T8RabtqkQZ
-         WGv8PeC9E5UNnpIHR4KvUk0G76GkpFhnQOcqKl1LiLWz/63xdWgayjn8VyDTPbYuv0z6
-         Mlog==
+        bh=RlXbWY6x/IDy+cbIpYDFgr7LG+488ZIrghQqqi5a82A=;
+        b=iIYvYl4v8UPeJymaky+TlhKH/tILpRmyQpUJAlnhLOaEeoBskIBmiiuuuAGCnHIhYZ
+         EFa7m7VOxaQahRlUJCqVlIsNMUplNESIGoq7p1CCrri11Rb65Hxe+XLeMGCUy4R05t2/
+         5fUdnVo1cMCZrhbDAFRw07AgbadVkp2mHv+1LEoPKbmF9ivCGQ8n6yUtWKMBJv9sRani
+         It3HMQ1lAwhWQxuh2Lxnlph7sny8Qc/Yao42zs96RMDm201FhRTiT3zcwk9kI62xLBSS
+         coj9gbU5t5OqPl/bNwzyRh6Of9rGkph3Vtdi0/CfWHrUPRMPyLsUENMByuklRG2PMzWe
+         py4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723717191; x=1724321991;
+        d=1e100.net; s=20230601; t=1723719850; x=1724324650;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dtb0m5KivFufqph7LNv+afFX8sba1gJNyLLyrnNHXVc=;
-        b=airZ44vKWw2ctLauW9/yG5dCxAZ+1czGSZypAeIuAAdB3siHCVDPZ9pwKZ+pZJyiyC
-         Cl6tSe/M6isMXDug5sbYWtFpXjIomlpJsV908lnAklornAZB6Md96vXWfFU3BPpJsZUv
-         b9/wJpNUBC6uupL60W+NyJErcTdMFtD7S5OFOppuwpr5ly07vPBtT1dVigv8PLnimQfB
-         JAI255yK2cb1PPmwlkgz7c+8KbUJpcJEP6VwM2UbSyYfM5+hpdBfFJoyQBvryhNaR98Q
-         ip7rKaODlH3TSwG6qVKiAtOxkW5GrHTqG72NwpBKGsjd/R54QWYwGgKH0dwURD7M2vpC
-         JFnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXPZQVreYRaOCBTPnqgMZmiJkBmeGjMDhPP9v3nVEPT23IogEhMf+oCLp9WA07Ep7A2Y+JG8j2a0q6e+fW8bw4UR5BN
-X-Gm-Message-State: AOJu0YxHGsgyFrZ1E6JXkDaxqsYn+LstrYfDrcs1IzjrhU9cJpepK9De
-	/l3HJ0JZVnu1y5u+Hx9xtgNhaPIpFkjpAeZiv2c3x+QpHR8TODs2+hTMFYnn35I2+yIBlT20aAd
-	4P+Vnt1DiRaUMQVivfgpkQDQhl3g=
-X-Google-Smtp-Source: AGHT+IHDGHU0JMaDPtuc1GPifgKVyE1IEcMPb+kqDTPe6HWuNZqG7Uy0w7I4LuEMYLXjx2SLL3o58cwXx3d0/CY5PO4=
-X-Received: by 2002:a05:6808:3086:b0:3d9:2e62:7065 with SMTP id
- 5614622812f47-3dd31679528mr992020b6e.1.1723717191399; Thu, 15 Aug 2024
- 03:19:51 -0700 (PDT)
+        bh=RlXbWY6x/IDy+cbIpYDFgr7LG+488ZIrghQqqi5a82A=;
+        b=MLHqXtO8TWxo/7xTV1vTZlRcs2op4IVnp++RieEVttYY8TIETML+jHls0z3W3uQmd5
+         3aNDIy6CzUQxO065RIYsNvYomndk8+Vl5WODYXMbt7SjCcOs6uCfuVMgLxH6cEO2lj6I
+         G4GHu9DB2NBiVHnE482GsQpGPbHNGpeEMvPfIV3Eu/+hipMB17z+p0Z3q9y5zBA5J2I8
+         e2rVqAxO+OII6EOUVnQXjKRDVbXze1yeL0BA5zI6Ze7iW2hzxhBYZulb1a+gBNUVBrq5
+         waht5X/UyItpvia0J+q+FNtxnOB5XezQ2uoYZM7pf0HN+p6+vmF6VqRdNEhLKCof2vU8
+         W/CQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUHHxdJ0iCa/h/UWJHAw4o345CTFV+GZuhztElXfjBClpcwVWJfVe1yNI3aB9KjY3xNl3axMi20NYmCK0FHApBCg0XH
+X-Gm-Message-State: AOJu0YyPh5wHTc6l1ZbHI/nfE0i4YrV/XuBSrCmnr05aAGItmHoDQytq
+	8GgfTa/h+jrgV/PCjplx28rWe4tC+/a2I3ic76GEIvTMGA0JF/Pd17rmlFUKnbXSnup2+9OpfoM
+	T9E5N1LIWf24DunXgzS3l44Bj0m7/XA==
+X-Google-Smtp-Source: AGHT+IGq/EQ67hMj55mm8amnMagRX1zv8hBGauDE/8lfgSfSJaDGa5IOa29OzHLHlLrQYFBNyz6qh3jZECPzuVO9aNs=
+X-Received: by 2002:a05:6820:1b85:b0:5c6:4807:2d1f with SMTP id
+ 006d021491bc7-5da7c762f5amr6919596eaf.8.1723719850134; Thu, 15 Aug 2024
+ 04:04:10 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Aug 2024 03:19:50 -0700
+ HTTPREST; Thu, 15 Aug 2024 07:04:09 -0400
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZrtrT1CPI4YUf5db@ArchLinux>
-References: <ZrtrT1CPI4YUf5db@ArchLinux>
+In-Reply-To: <xmqqh6bn1391.fsf@gitster.g>
+References: <cover.1723528765.git.ps@pks.im> <14924604cebe20ac30d291399b0200016fa8b4e3.1723528765.git.ps@pks.im>
+ <CAOLa=ZQ15h8bFRGGhzJUPNwkCrRmc2Y26n-0x+L_V_06xWgd7g@mail.gmail.com> <xmqqh6bn1391.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 15 Aug 2024 03:19:50 -0700
-Message-ID: <CAOLa=ZQVkmyVWAxyjrEQoEJ+gKJoJjfFqsDvr_A15FHGX1w=rQ@mail.gmail.com>
-Subject: Re: [RFC] Implement ref content consistency check
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000e323e2061fb62e39"
+Date: Thu, 15 Aug 2024 07:04:09 -0400
+Message-ID: <CAOLa=ZQ=6y2jRNUt_0YyoEHTSgOc6y+ECEnLccXnntbqyU_J6Q@mail.gmail.com>
+Subject: Re: [PATCH 06/10] reftable/generic: move generic iterator code into
+ iterator interface
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000005c2f9f061fb6cd0b"
 
---000000000000e323e2061fb62e39
+--0000000000005c2f9f061fb6cd0b
 Content-Type: text/plain; charset="UTF-8"
 
-shejialuo <shejialuo@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi All:
+> karthik nayak <karthik.188@gmail.com> writes:
 >
-> We have already set up the infrastructure of the ref consistency.
-> However, we have only add ref name check when establishing the
-> infrastructure in below:
->
->   https://lore.kernel.org/git/ZrSqMmD-quQ18a9F@ArchLinux.localdomain/
->
-> Actually, we already have a patch here which has already implemented the
-> ref content consistency check. But during the review process, we have
-> encountered some problems. The intention of this RFC is to make sure
-> what content we should check and also to what extend.
->
-> I conclude the following info:
->
-> 1. For the regular ref which has a trailing garbage, we should warn the
-> user. This is the most simplest situation, we could reply on
-> "parse_loose_ref_content" to do this.
-> 2. For the symref, we could also rely on "parse_loose_ref_content" to
-> get the "pointee", and check the location of the "pointee", check the
-> name of the "pointee" and the file type of the "pointee".
-> 3. FOr the symbolic ref, we could follow the idea of 2.
->
-
-Just to understand clearly, when you're talking about 'symbolic ref' you
-are referring to symbolic links?
-
-I ask because, as per our documentation in
-'Documentation/git-symbolic-ref.txt':
-
-  In the past, `.git/HEAD` was a symbolic link pointing at
-  `refs/heads/master`.  When we wanted to switch to another branch, we
-  did `ln -sf refs/heads/newbranch .git/HEAD`, and when we wanted to
-  find out which branch we are on, we did `readlink .git/HEAD`. But
-  symbolic links are not entirely portable, so they are now deprecated
-  and symbolic refs (as described above) are used by default.
-
-> But Patrick gives a question here:
->
->> In case the ref ends with a newline, should we check that the next
->> character is `\0`? Otherwise, it may contain multiple lines, which is
->> not allowed for a normal ref.
+>> Seems like the CI caught it too [1].
 >>
->> Also, shouldn't the ref always end with a newline?
+>>> +	it->ops->close(it->iter_arg);
+>>> +	it->ops = NULL;
+>>> +	FREE_AND_NULL(it->iter_arg);
+>>> +}
+>>> +
+>>
+>> [snip]
+>>
+>> [1]: https://gitlab.com/gitlab-org/git/-/jobs/7563308943
 >
-> For symref, I guess we have no spec here. From my experiments, a symref
-> could have a newline or no newline, even multiple newlines. And also
-> symref could have multiple spaces. But the following is a bad symref
->
->   ref: refs/heads/main garbage
->
-> I think we should fully discuss what we should check here. Thus I will
-> implement the code.
+> Looking at it, the suggestions the CI job makes look hit-and-miss.
 >
 
-Agreed, in refs/files-backend.c:create_symref_lock, we write symrefs as
-"ref: %s\n" so it makes sense to validate that there is nothing extra.
+Yup, this is kinda what I was expecting and why I also wanted it to be
+allowed to fail. So we have data points on what we should change to make
+it better.
 
---000000000000e323e2061fb62e39
+> For examle, this one
+>
+> -static int stack_compact_range_stats(struct reftable_stack *st,
+> -				     size_t first, size_t last,
+> +static int stack_compact_range_stats(struct reftable_stack *st, size_t first,
+> +				     size_t last,
+>  				     struct reftable_log_expiry_config *config,
+>  				     unsigned int flags)
+>
+> is a degradation of readability.  "first" and "last" pretty
+> much act as a pair and they read better sitting together next to
+> each other.  The rewrite is reducing neither the total number of
+> lines or the maximum column width.
+>
+
+Totally agreed, This is set by `ColumnLimit: 80` and I think most of the
+misses I see are because of this. This works with the `Penalties` we set
+at the bottom. We need to see what combination works best for us since
+our focus would be more on the readability front.
+
+> But this one
+>
+> -static void write_n_ref_tables(struct reftable_stack *st,
+> -			       size_t n)
+> +static void write_n_ref_tables(struct reftable_stack *st, size_t n)
+>
+> is certainly an improvement.
+>
+> This one
+>
+>  	struct reftable_record rec = {
+>  		.type = BLOCK_TYPE_REF,
+> -		.u = {
+> -			.ref = *ref
+> -		},
+> +		.u = { .ref = *ref },
+>  	};
+>
+> is hard to generalize but in this case it made a good suggestion.
+>
+> If we _expect_ that we will enumerate more members of .u, then the
+> way originally written (plus trailing comma after the ".ref = *ref")
+> would be easier to maintain.  But since .u is a union, we won't be
+> choosing more than one member to initialize by definition, so what
+> was suggested by the check-style linter is certainly much better.
+>
+> Thanks.
+
+Yup these two do look much nicer indeed. There are weird bugs in
+clang-format however and I was able to fool it to accept
+
+	struct reftable_record rec = {
+		.type = BLOCK_TYPE_REF,
+		.u = {
+			.ref = *ref },
+	};
+
+But this could also be an issue with our config too.
+
+I'll try playing around for an hour today to see if I can find some
+improvements we can make to the formatter config.
+
+Thanks
+
+--0000000000005c2f9f061fb6cd0b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: bed8d83a47bba0f8_0.1
+X-Attachment-Id: 3a6b16dc5336de72_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1hOTFrSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNTBQQy85WE1RV3JQYTlkbUhSRWVzVk9zRkxlT2dEcgpxVE44R20rUGhx
-ZUZJc2dsclVnUy9iNzNDTG1vQ0lGZm5HeUVpVmNhanlrSTBlV1JVMzRFVzZOeDlMQjdNMWdGCkxh
-VEtvQkxaeGMxZzkzRVdoK2FYMkx3bzZLRG1PaWxmSTlJallPTU1ab0JrWG5JQzRCYXdtR29wWjda
-ck9tVG4KbFVXU0hQZElpdUhlY1VzYzNsZS9BaUlhS2Z0bVBRRHdoVHE2RW0rZDJaVmhrWm8wK1pN
-dkxvVU8rSkxFVXRUNApiUmVBUVFpamhFbm5lRk8xTVB6YmFLdXhLTGdTZkNnSmR6VTYraG5zaXBz
-YmpVeS94a0tEOWVVUGtDL1oxVllrCm8zYWdQL1Q3SVFDb2lWNDg4V1RtMFZDNEMzQWVDSGhwUXlR
-anFSRnR6ck56bC92MlluanM2NDNhK3hKQXV4WTYKM0p4U0VyTVBRSktjV0k1dGY2Y0RkeFBZMjFp
-NmdnSmxXSSt2VVEycWNJQXBqcCtwSWlDK3JKVkpaTktqak1STwo5My8wMVYyUDREbysxM3Uxa283
-REJDQXhMMTB3eFdqNmZLQmwra1VEK2VZWmh3T3hDQlRyVVhSVmlIeFF3bFhjClp1elhsem1FTzlQ
-cmgwZnNsYkJoWDErbW5IMC93WTZkOTZ3ZXB3VT0KPWtDaTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1hOTRLVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN29CQy85S0k0QytUMXB6YzZiZW96aUJMWndxV2JRcwp1RXo0UzMxeHZ4
+YnVLRld2cWZCdmMyZ3M5ampTdGxtZlpSbWtjTVZ2aHNDMnlwdFJTY1lqeHVWb2hkdlFNU1BxCnFX
+YmNuamJlTHlXRFdVOGpueGhiUlBFUlkzN0Y4KzFSdzB6UVNhNWJLVjBYZkJzVUo4ODIxVWt1cDlO
+VHlJbkQKR3pwWXE4VjJxTWl5Yk5WZHpBYWI1Vk9VcWVTLzhRSGNpQ0MxUG1QbFoydFd2OGhJb09x
+Q2tBb0kwWC9aSnBrMgpUb1BlNndjSS9TdmhNNENEZC92eWpJb1RKNVhGSjZTaFZJRXlzZCtCRkFM
+MTY3dkhySjlZVVdnN2kzQmh4VjlkCkErUFNBVExmM1J4VWw5RHpZNUJqZ0FxMGJhVWd1NE5pSUFn
+cWU2T0sycS9rTXM0VTcyMjl4WHZiMTMwQjZlaVgKZCtkTjkxWmsrU21BMko2U1c3R3hCWnNoZzVs
+VGhOeXIvTlhSVUdLc1dhelRqLzNyTWE1N3VCZDIzM3dTeDk2dgpQbWZjSnZxditPSkxlSEhyajNV
+c1JBcGMrN3o5bFl4K3FDVWJBZExiMDBSTm1uWTFCeWs1YWJ1WFVpT2hKdWd3CjdiRTh2UHk1cGln
+MUlWUXFiajFSMUdkVE53UHRDR1FXUWlGZC9yQT0KPTR4SDYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e323e2061fb62e39--
+--0000000000005c2f9f061fb6cd0b--
