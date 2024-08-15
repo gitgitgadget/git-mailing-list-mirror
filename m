@@ -1,487 +1,119 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85E614E2D8
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:02:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499B981AC8
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723755722; cv=none; b=kFrFwhSaWhOam8ycce9CSl/JMhIloCviWrq59QgVy3yReFMfn7WunEOkEowMhNgUV4w9pRN8S7NPJBmcCu5K+Bc8aqnLioHNhmB+InmgtPGxKsS9GEEQ8EuqECIDDAycy8o+HY/2/gv2XRICAva0/wI3W1+BYQsxkwE+ZJxCbF8=
+	t=1723756612; cv=none; b=YpCb1VeIRTHFf7qiVSXyZG0cnhhOutH4eQ36P2zYcevE07zT4BVHJr2fJlcKbnDN/BfLKogb/Xjp11OAdTGaA68dGyeXbl6YY5EJQoEgjsRvNvWPOuOpWbuMBCpNw3fGzMj3O4/3xs+zpkaWwNN7ZpoeJrjT0V9oQGVO1NApl3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723755722; c=relaxed/simple;
-	bh=2EN5w4WRwqubDhsghx1+U2Q57zYOP9x8OzM5kZNhqjA=;
+	s=arc-20240116; t=1723756612; c=relaxed/simple;
+	bh=L5BjAOJ9UHYFSIltr8fEPo4a8eocd7cGkDEaKpn/znQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UVtARU9SkgQsqmCTJPlP03l0urf6MTNjubvkGNnHPZwZFnZjEOqJ5g0yE80ZBn4dI1BUwGpIdwA85tcH/TXy/InrZKsK2XwPnSg5oSWR2btf8hz7ExTOKAp66LCEf3teWcY2UBE13mkgKeNmBIKvFb7kFpkRddmB5sUzdOJr/Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2efi+TLO; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uv98CiH23hgwArpenU/2XQO00GXRskEtgaEHfFcdA5V9iTRPNPFOBuEVyl4ADphlYxeuotqvXbqJOk/jwH0vBsxxsHlmXUDSP5R5Z6sTE3Uf30kJGt6/ZMhrrhJJlSe/5TUOqvFi9huDSo0EnKArHen0ZeQrPt0mA1f7ciXOxSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XLnlvGnG; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2efi+TLO"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-70936061d0dso919030a34.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:02:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723755719; x=1724360519; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ghC4BXI7kqs9bsSqUTWFosomIzwkFW9zkMobzORZmXI=;
-        b=2efi+TLOmLpw8jyEnOj2MbSK7IJqaX2zCOKj3gKOFw8h0VigTzwKUUSof9+PnLTD1C
-         yQQw+zxMU5XZMIryyVRwukHUrfnuR9NTW2GQhlsHqQw0UnU49JonHfzbGvFviRd0diqu
-         DD/t2SDVrdaZC9GNNWhZu96AkdSHRLAShxE22TJHPxaMnIhzErynzanoHU0QA/j9oFUQ
-         X0TVs+rYCecNqAxEULbckNuNJMMcfJjy7bmjQ19Ttvm+ct9pTBWY2DrqB2G9AAOAlDIn
-         HmQh055Q+Gh01P60vDnnWEIrvzc4pmUC+t6n1xr44jCzK0GGhNiAMufymocUwu6FlP/W
-         K/Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723755719; x=1724360519;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ghC4BXI7kqs9bsSqUTWFosomIzwkFW9zkMobzORZmXI=;
-        b=pedryKKSapfmP81zp0ycHgEUMCxt2U8KcfTWKuUZlsJgNuT27CVa5J26KfvFIBjwsm
-         5y8EH7w9p9/O64wIpvwv9q7/S6vCbAGfvo9E0VULS2CgvCo+Kb8O9mDRPyxvNYn6oS/t
-         qVKLzKX5dT1O8CeTDR1dGK7cyh/fAOaKD5Ge5o7A1b6IcB4Gn3RmFuFqHYZJkwfolyUY
-         dc/AI4Fn+dW/NF710YT/4cycze1KsOkVAdu7kGcSiyJtaStgHt11sC3LZBtPTUVSGJpf
-         fGxhV/Ek9/zbaIXOaSdIXip3MOsZvXbXjlHlQmXih4mRR9hxxN9a4HlkwjLWdFSNIpMf
-         YLeQ==
-X-Gm-Message-State: AOJu0YxRMsaLPC4Ye/QHkIkIS3DW7aIBb5wROw51G5ENBsy/3SZy1hRg
-	S/Im5hFWXmzpMpSgSzz439TINP4rlPayHWpulUQqXA/sU1u2CwtAYQGMOPmr9675dpmnFgwVy/h
-	d
-X-Google-Smtp-Source: AGHT+IGTIcCzoIpw3IXxXtc3tic9+wl3N9xZttzqoCqXKW9kwgB3PgZu3jf0S57X++qmhLKcIqrOQg==
-X-Received: by 2002:a05:6830:a90:b0:703:7a77:d7d7 with SMTP id 46e09a7af769-70cac89dca2mr1092096a34.28.1723755719449;
-        Thu, 15 Aug 2024 14:01:59 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6b0ebd8a85bsm2106057b3.66.2024.08.15.14.01.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 14:01:59 -0700 (PDT)
-Date: Thu, 15 Aug 2024 17:01:58 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 13/13] midx: implement writing incremental MIDX bitmaps
-Message-ID: <da34cc944126a4dce613cb5f1c4f3f2f82cbfce4.1723755667.git.me@ttaylorr.com>
-References: <cover.1723755667.git.me@ttaylorr.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XLnlvGnG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1723756602;
+	bh=L5BjAOJ9UHYFSIltr8fEPo4a8eocd7cGkDEaKpn/znQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=XLnlvGnG+YzVCt9mcCxoTUC8oakuH/NvYxKXz9T17BusouTaLCV9QeHokRbmRBlWC
+	 5jBwnczw19PKpmFAbggn6xzfND4ohODOzPNA/Twpi2X87KsM2MmTS9muIOgmXyMCzf
+	 mNAIsqXf/p837cujhb8eSwkFF7fOvh11Ie2oMcmXILFffx2aabapfCPfbIevKRFfvm
+	 I/EIpgRZaNFS3gc+MYlfyZ6LrzZ5YzGPskaHHXFyCAzDtmayWrZ4Ha3BIuDPzA9KfV
+	 8uvOPVVXxsagkewaSnohZwfWAiJzw9HEbvTfD3gp+jvmBNdkonv7SkppMKunrBZB4J
+	 HtjUl6Uk/wPJwfHyPIYjM+zGpeWWgU8yXLwVr6YqbxmzIQZSVVCI7WZ6FckSbBtt0u
+	 zsDbyX8QHxdKqWOFkdBJEameklLMMN6Hw6wb969hH5RcFaR6zBlq0gc31njMtdaHrm
+	 FnX/6mwtqrjHJw8H3927HTExILVdCdIvl9OjnauICY5faUjS2jP
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3CDD9209C8;
+	Thu, 15 Aug 2024 21:16:42 +0000 (UTC)
+Date: Thu, 15 Aug 2024 21:16:40 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 0/5] Introduce configs for default repo format
+Message-ID: <Zr5wODo8tgGtPEIM@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	shejialuo <shejialuo@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
+References: <cover.1723708417.git.ps@pks.im>
+ <Zr4dvybR6j6Ifyya@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FENe770jURhC3LAk"
+Content-Disposition: inline
+In-Reply-To: <Zr4dvybR6j6Ifyya@ArchLinux>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--FENe770jURhC3LAk
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1723755667.git.me@ttaylorr.com>
+Content-Transfer-Encoding: quoted-printable
 
-Now that the pack-bitmap machinery has learned how to read and interact
-with an incremental MIDX bitmap, teach the pack-bitmap-write.c machinery
-(and relevant callers from within the MIDX machinery) to write such
-bitmaps.
+On 2024-08-15 at 15:24:47, shejialuo wrote:
+> If the user uses the following command:
+>=20
+>   $ export GIT_DEFAULT_HASH_ENVIRONMENT=3Dsha1
+>   $ git -c init.defaultObjectFormat=3Dsha256 repo
+>=20
+> The repo would be initialized with the sha1 algorithm. I think we should
+> think carefully which precedence should be higher. I cannot give an
+> answer here. I am not familiar with the whole database and do not the
+> concern. But from my own perspective, I think the precedence of the
+> config should be higher than the environment variable. This is a new
+> feature, the people who would like to use it, they will never use
+> environment variable and we should ignore the functionality of the
+> environment variable. But for people who do not know this feature, they
+> will continue to use the environment variable and they will never be
+> influenced by the configs.
 
-The details for doing so are mostly straightforward. The main changes
-are as follows:
+The standard behaviour we have with other environment variables is that
+they override the config, such as with `GIT_SSH_COMMAND` and
+`GIT_SSH_VARIANT`.  The reason is that the config in this case is
+usually per-user or per-system, but it's very common to override
+settings on an ephemeral basis with the environment.
 
-  - find_object_pos() now makes use of an extra MIDX parameter which is
-    used to locate the bit positions of objects which are from previous
-    layers (and thus do not exist in the current layer's pack_order
-    field).
+Think of the case where you have a language package manager that's
+creating a repository or fetching from one.  You can override on the
+command line with `GIT_DEFAULT_HASH` or `GIT_SSH_VARIANT`, but you can't
+control the actual `git` invocation, since it's baked into the package
+manager.  Or if you're writing a test and need all of the Git commands
+to use a particular setting, then it's easy to simply set the
+environment once and forget about it.  (This is what we do at $DAYJOB to
+implement SHA-256 test modes for our repos: the test script sets
+`GIT_DEFAULT_HASH` and all of our test repos magically use the right
+setting.)
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-    (Note also that the pack_order field is moved into struct
-    write_midx_context to further simplify the callers for
-    write_midx_bitmap()).
+--FENe770jURhC3LAk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  - bitmap_writer_build_type_index() first determines how many objects
-    precede the current bitmap layer and offsets the bits it sets in
-    each respective type-level bitmap by that amount so they can be OR'd
-    together.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c                  |  3 +-
- midx-write.c                            | 35 +++++++----
- pack-bitmap-write.c                     | 65 ++++++++++++++-----
- pack-bitmap.h                           |  4 +-
- t/t5334-incremental-multi-pack-index.sh | 84 +++++++++++++++++++++++++
- 5 files changed, 161 insertions(+), 30 deletions(-)
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZr5wOAAKCRB8DEliiIei
+gepZAQCfBHmUZcb1XpxOpe5dOhvHpaOk4/uzIDhQ4pehrPVUygD9EmH4umhDNEca
+eGrr/3nwy3gCRWb6iPv8ctjp0UYn0g8=
+=07oU
+-----END PGP SIGNATURE-----
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index e23c4950ed..9e61ff7ca3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1342,7 +1342,8 @@ static void write_pack_file(void)
- 
- 			if (write_bitmap_index) {
- 				bitmap_writer_init(&bitmap_writer,
--						   the_repository, &to_pack);
-+						   the_repository, &to_pack,
-+						   NULL);
- 				bitmap_writer_set_checksum(&bitmap_writer, hash);
- 				bitmap_writer_build_type_index(&bitmap_writer,
- 							       written_list);
-diff --git a/midx-write.c b/midx-write.c
-index 81501efdda..bac3b0589a 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -826,20 +826,26 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 	return cb.commits;
- }
- 
--static int write_midx_bitmap(const char *midx_name,
-+static int write_midx_bitmap(struct write_midx_context *ctx,
-+			     const char *object_dir, const char *midx_name,
- 			     const unsigned char *midx_hash,
- 			     struct packing_data *pdata,
- 			     struct commit **commits,
- 			     uint32_t commits_nr,
--			     uint32_t *pack_order,
- 			     unsigned flags)
- {
- 	int ret, i;
- 	uint16_t options = 0;
- 	struct bitmap_writer writer;
- 	struct pack_idx_entry **index;
--	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
--					hash_to_hex(midx_hash));
-+	struct strbuf bitmap_name = STRBUF_INIT;
-+
-+	if (ctx->incremental)
-+		get_split_midx_filename_ext(&bitmap_name, object_dir, midx_hash,
-+					    MIDX_EXT_BITMAP);
-+	else
-+		get_midx_filename_ext(&bitmap_name, object_dir, midx_hash,
-+				      MIDX_EXT_BITMAP);
- 
- 	trace2_region_enter("midx", "write_midx_bitmap", the_repository);
- 
-@@ -858,7 +864,8 @@ static int write_midx_bitmap(const char *midx_name,
- 	for (i = 0; i < pdata->nr_objects; i++)
- 		index[i] = &pdata->objects[i].idx;
- 
--	bitmap_writer_init(&writer, the_repository, pdata);
-+	bitmap_writer_init(&writer, the_repository, pdata,
-+			   ctx->incremental ? ctx->base_midx : NULL);
- 	bitmap_writer_show_progress(&writer, flags & MIDX_PROGRESS);
- 	bitmap_writer_build_type_index(&writer, index);
- 
-@@ -876,7 +883,7 @@ static int write_midx_bitmap(const char *midx_name,
- 	 * bitmap_writer_finish().
- 	 */
- 	for (i = 0; i < pdata->nr_objects; i++)
--		index[pack_order[i]] = &pdata->objects[i].idx;
-+		index[ctx->pack_order[i]] = &pdata->objects[i].idx;
- 
- 	bitmap_writer_select_commits(&writer, commits, commits_nr);
- 	ret = bitmap_writer_build(&writer);
-@@ -884,11 +891,11 @@ static int write_midx_bitmap(const char *midx_name,
- 		goto cleanup;
- 
- 	bitmap_writer_set_checksum(&writer, midx_hash);
--	bitmap_writer_finish(&writer, index, bitmap_name, options);
-+	bitmap_writer_finish(&writer, index, bitmap_name.buf, options);
- 
- cleanup:
- 	free(index);
--	free(bitmap_name);
-+	strbuf_release(&bitmap_name);
- 	bitmap_writer_free(&writer);
- 
- 	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
-@@ -1072,8 +1079,6 @@ static int write_midx_internal(const char *object_dir,
- 	trace2_region_enter("midx", "write_midx_internal", the_repository);
- 
- 	ctx.incremental = !!(flags & MIDX_WRITE_INCREMENTAL);
--	if (ctx.incremental && (flags & MIDX_WRITE_BITMAP))
--		die(_("cannot write incremental MIDX with bitmap"));
- 
- 	if (ctx.incremental)
- 		strbuf_addf(&midx_name,
-@@ -1115,6 +1120,12 @@ static int write_midx_internal(const char *object_dir,
- 	if (ctx.incremental) {
- 		struct multi_pack_index *m = ctx.base_midx;
- 		while (m) {
-+			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
-+				error(_("could not load reverse index for MIDX %s"),
-+				      hash_to_hex(get_midx_checksum(m)));
-+				result = 1;
-+				goto cleanup;
-+			}
- 			ctx.num_multi_pack_indexes_before++;
- 			m = m->base_midx;
- 		}
-@@ -1404,8 +1415,8 @@ static int write_midx_internal(const char *object_dir,
- 		FREE_AND_NULL(ctx.entries);
- 		ctx.entries_nr = 0;
- 
--		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
--				      commits, commits_nr, ctx.pack_order,
-+		if (write_midx_bitmap(&ctx, object_dir, midx_name.buf,
-+				      midx_hash, &pdata, commits, commits_nr,
- 				      flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
- 			result = 1;
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 923f793cec..8fc979cbc9 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -25,6 +25,8 @@
- #include "alloc.h"
- #include "refs.h"
- #include "strmap.h"
-+#include "midx.h"
-+#include "pack-revindex.h"
- 
- struct bitmapped_commit {
- 	struct commit *commit;
-@@ -42,7 +44,8 @@ static inline int bitmap_writer_nr_selected_commits(struct bitmap_writer *writer
- }
- 
- void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
--			struct packing_data *pdata)
-+			struct packing_data *pdata,
-+			struct multi_pack_index *midx)
- {
- 	memset(writer, 0, sizeof(struct bitmap_writer));
- 	if (writer->bitmaps)
-@@ -50,6 +53,7 @@ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
- 	writer->bitmaps = kh_init_oid_map();
- 	writer->pseudo_merge_commits = kh_init_oid_map();
- 	writer->to_pack = pdata;
-+	writer->midx = midx;
- 
- 	string_list_init_dup(&writer->pseudo_merge_groups);
- 
-@@ -104,6 +108,11 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
- 				    struct pack_idx_entry **index)
- {
- 	uint32_t i;
-+	uint32_t base_objects = 0;
-+
-+	if (writer->midx)
-+		base_objects = writer->midx->num_objects +
-+			writer->midx->num_objects_in_base;
- 
- 	writer->commits = ewah_new();
- 	writer->trees = ewah_new();
-@@ -133,19 +142,19 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
- 
- 		switch (real_type) {
- 		case OBJ_COMMIT:
--			ewah_set(writer->commits, i);
-+			ewah_set(writer->commits, i + base_objects);
- 			break;
- 
- 		case OBJ_TREE:
--			ewah_set(writer->trees, i);
-+			ewah_set(writer->trees, i + base_objects);
- 			break;
- 
- 		case OBJ_BLOB:
--			ewah_set(writer->blobs, i);
-+			ewah_set(writer->blobs, i + base_objects);
- 			break;
- 
- 		case OBJ_TAG:
--			ewah_set(writer->tags, i);
-+			ewah_set(writer->tags, i + base_objects);
- 			break;
- 
- 		default:
-@@ -198,19 +207,37 @@ void bitmap_writer_push_commit(struct bitmap_writer *writer,
- static uint32_t find_object_pos(struct bitmap_writer *writer,
- 				const struct object_id *oid, int *found)
- {
--	struct object_entry *entry = packlist_find(writer->to_pack, oid);
-+	struct object_entry *entry;
-+
-+	entry = packlist_find(writer->to_pack, oid);
-+	if (entry) {
-+		uint32_t base_objects = 0;
-+		if (writer->midx)
-+			base_objects = writer->midx->num_objects +
-+				writer->midx->num_objects_in_base;
-+
-+		if (found)
-+			*found = 1;
-+		return oe_in_pack_pos(writer->to_pack, entry) + base_objects;
-+	} else if (writer->midx) {
-+		uint32_t at, pos;
-+
-+		if (!bsearch_midx(oid, writer->midx, &at))
-+			goto missing;
-+		if (midx_to_pack_pos(writer->midx, at, &pos) < 0)
-+			goto missing;
- 
--	if (!entry) {
- 		if (found)
--			*found = 0;
--		warning("Failed to write bitmap index. Packfile doesn't have full closure "
--			"(object %s is missing)", oid_to_hex(oid));
--		return 0;
-+			*found = 1;
-+		return pos;
- 	}
- 
-+missing:
- 	if (found)
--		*found = 1;
--	return oe_in_pack_pos(writer->to_pack, entry);
-+		*found = 0;
-+	warning("Failed to write bitmap index. Packfile doesn't have full closure "
-+		"(object %s is missing)", oid_to_hex(oid));
-+	return 0;
- }
- 
- static void compute_xor_offsets(struct bitmap_writer *writer)
-@@ -577,7 +604,7 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct prio_queue tree_queue = { NULL };
- 	struct bitmap_index *old_bitmap;
--	uint32_t *mapping;
-+	uint32_t *mapping = NULL;
- 	int closed = 1; /* until proven otherwise */
- 
- 	if (writer->show_progress)
-@@ -1010,7 +1037,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	struct strbuf tmp_file = STRBUF_INIT;
- 	struct hashfile *f;
- 	off_t *offsets = NULL;
--	uint32_t i;
-+	uint32_t i, base_objects;
- 
- 	struct bitmap_disk_header header;
- 
-@@ -1036,6 +1063,12 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	if (options & BITMAP_OPT_LOOKUP_TABLE)
- 		CALLOC_ARRAY(offsets, writer->to_pack->nr_objects);
- 
-+	if (writer->midx)
-+		base_objects = writer->midx->num_objects +
-+			writer->midx->num_objects_in_base;
-+	else
-+		base_objects = 0;
-+
- 	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++) {
- 		struct bitmapped_commit *stored = &writer->selected[i];
- 		int commit_pos = oid_pos(&stored->commit->object.oid, index,
-@@ -1044,7 +1077,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 
- 		if (commit_pos < 0)
- 			BUG(_("trying to write commit not in index"));
--		stored->commit_pos = commit_pos;
-+		stored->commit_pos = commit_pos + base_objects;
- 	}
- 
- 	write_selected_commits_v1(writer, f, offsets);
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index ff0fd815b8..4242458198 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -110,6 +110,7 @@ struct bitmap_writer {
- 
- 	kh_oid_map_t *bitmaps;
- 	struct packing_data *to_pack;
-+	struct multi_pack_index *midx; /* if appending to a MIDX chain */
- 
- 	struct bitmapped_commit *selected;
- 	unsigned int selected_nr, selected_alloc;
-@@ -124,7 +125,8 @@ struct bitmap_writer {
- };
- 
- void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
--			struct packing_data *pdata);
-+			struct packing_data *pdata,
-+			struct multi_pack_index *midx);
- void bitmap_writer_show_progress(struct bitmap_writer *writer, int show);
- void bitmap_writer_set_checksum(struct bitmap_writer *writer,
- 				const unsigned char *sha1);
-diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
-index c3b08acc73..0b6d45c8fd 100755
---- a/t/t5334-incremental-multi-pack-index.sh
-+++ b/t/t5334-incremental-multi-pack-index.sh
-@@ -43,4 +43,88 @@ test_expect_success 'convert incremental to non-incremental' '
- 
- compare_results_with_midx 'non-incremental MIDX conversion'
- 
-+write_midx_layer () {
-+	n=1
-+	if test -f $midx_chain
-+	then
-+		n="$(($(wc -l <$midx_chain) + 1))"
-+	fi
-+
-+	for i in 1 2
-+	do
-+		test_commit $n.$i &&
-+		git repack -d || return 1
-+	done &&
-+	git multi-pack-index write --bitmap --incremental
-+}
-+
-+test_expect_success 'write initial MIDX layer' '
-+	git repack -ad &&
-+	write_midx_layer
-+'
-+
-+test_expect_success 'read bitmap from first MIDX layer' '
-+	git rev-list --test-bitmap 1.2
-+'
-+
-+test_expect_success 'write another MIDX layer' '
-+	write_midx_layer
-+'
-+
-+test_expect_success 'midx verify with multiple layers' '
-+	git multi-pack-index verify
-+'
-+
-+test_expect_success 'read bitmap from second MIDX layer' '
-+	git rev-list --test-bitmap 2.2
-+'
-+
-+test_expect_success 'read earlier bitmap from second MIDX layer' '
-+	git rev-list --test-bitmap 1.2
-+'
-+
-+test_expect_success 'show object from first pack' '
-+	git cat-file -p 1.1
-+'
-+
-+test_expect_success 'show object from second pack' '
-+	git cat-file -p 2.2
-+'
-+
-+for reuse in false single multi
-+do
-+	test_expect_success "full clone (pack.allowPackReuse=$reuse)" '
-+		rm -fr clone.git &&
-+
-+		git config pack.allowPackReuse $reuse &&
-+		git clone --no-local --bare . clone.git
-+	'
-+done
-+
-+test_expect_success 'relink existing MIDX layer' '
-+	rm -fr "$midxdir" &&
-+
-+	GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --bitmap &&
-+
-+	midx_hash="$(test-tool read-midx --checksum $objdir)" &&
-+
-+	test_path_is_file "$packdir/multi-pack-index" &&
-+	test_path_is_file "$packdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_file "$packdir/multi-pack-index-$midx_hash.rev" &&
-+
-+	test_commit another &&
-+	git repack -d &&
-+	git multi-pack-index write --bitmap --incremental &&
-+
-+	test_path_is_missing "$packdir/multi-pack-index" &&
-+	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.rev" &&
-+
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.midx" &&
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.rev" &&
-+	test_line_count = 2 "$midx_chain"
-+
-+'
-+
- test_done
--- 
-2.46.0.86.ge766d390f0.dirty
+--FENe770jURhC3LAk--
