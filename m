@@ -1,63 +1,62 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B394AEEA
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 17:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF65F47A4C
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 17:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723743081; cv=none; b=FMo6/ZPsz+wF3z2qfgibOz8k+L6xEpsdc/N8wlnxVMBaneeusqRxjJVXW1LSexv/zjWrfTlMiEOxov53zFKq2YVYc3LZwios+yAHAbNpRlPT8Yno5aAFWg/KHqr5xAhc878yzIWyiQn4JFx6hishmONijqh5x7WdvQfjBeEDOyU=
+	t=1723743085; cv=none; b=C5bO/atlbegKyR4msv0M4PC9cZQPIcq5dS3ROg62nr6pL0Xl8uDuZo2pJM0FLpIv1Cp2/3d9oEHnVRA/OqNk3t/fPiIuY6+7P7pcxm3uNS9NkRqcVmUlFp4q0ix6SqT96JstHHTJOxjgc9jOwxafyJBJhc1NTf1mUKY2RWa/S1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723743081; c=relaxed/simple;
-	bh=EWML87h6ljJXrIlxO9LFVvpFdZbaI1U/3r8cSLaNKus=;
+	s=arc-20240116; t=1723743085; c=relaxed/simple;
+	bh=Fd7qy4t3TDkFYCO6yq/P53pNTWe82vC1BWxAnCODuGg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SxJwSWNKsNKumyKsNY0qsitOFJO5FmG8ktY7zvxpBy5U1I2yKVAhoXc2sE+2mVQlftoCvlpmMOt9l1A7NtnQ0GwgGyiQj2LH69Ngvw++bcdfv3yvP1hKXPE8ydx+vR23qijIxJZeMIxyDmDYpMaUKndip9EfJ398/VDOT4WAsfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cOgI56Do; arc=none smtp.client-ip=209.85.219.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=XNg/04li2BksbZ5AMdw/2xEC7MhrM6jOg7p8rK6f4U7mpim7OqWlSDDRwRS7hk4SYcIra7YNFEqeor8A5psiXed1JIw82PZUT2Ms3VuYYPsJwzfoj6F7WpJqy7vewAa8krl0wt5BJK5OOx1JwXVggcad1KlnrZJICRg/vyS1414=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=V/2SAAxv; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cOgI56Do"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e116a5c3922so1164363276.1
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 10:31:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="V/2SAAxv"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-66599ca3470so11713077b3.2
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 10:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723743079; x=1724347879; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723743082; x=1724347882; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BJ8Z7O/zPtyXpw4716G96D3gWfWki+pC0qTXiuxwIIY=;
-        b=cOgI56DoZdktdZ+9BcEIeXqvn45F1kjEpa7rzsOa0cTYyjOGUrKlxGM93SFY7R2ey4
-         qxlfasQtYRCow0xb9jSUhxxMUPRN6LNO30wc4/14RzathvJHACYB0VpHq7zSJWCeeMG7
-         2GWuJ+s/6SbBXrKKFVJYBag0+Nys29A/gkaQpW1lcpfTp8TkVwEvuOG/jUHQ098bRouV
-         1BSGgElhL+VnFLlLWxZWrOnash0MgKSHlmi14kmR4fcoYmk1SP74z/o19YKPRnALCxX5
-         CWJw/4NA9SthdtWlItRSbi9CK/GUWOoyECPZc9jhb9xIo7SIwiHaucnqBkA8TfPXkjh4
-         mEBA==
+        bh=4LsIPCqLZSt0MQqlrgXtc1uo3Darr6zqOp+4k0akDmo=;
+        b=V/2SAAxvo0qWh6pVjtWjOaESwqCoa673rc6I927ekoo2KYZJujz9CgW9eLAb1PuIoK
+         7pLyf3f3O6M6zTBCIJ/+RIv9Cvb8P6jtybrPxKL0T31R6U4S5BhUbXf+6K9i9koDBqXA
+         wSoOhwubu+GZQbaS0owrSOJs/kHqsjukqJpa6XU6r4gEj/zaoWEwQ5rrXt1vJcFm6ACx
+         HHUo83sdK+TTZtdBCc7syz+SEsby4LGLh/wFeKXE9ZkmlhFlBznfZpuzl6Ey7mPzVeKI
+         xUVYVM7D6OUA9olDN7UATyHydVO5Re/VVdfyZJy6HgFrXW+PZUzST4yEokSim7ka4qlx
+         g52w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723743079; x=1724347879;
+        d=1e100.net; s=20230601; t=1723743082; x=1724347882;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BJ8Z7O/zPtyXpw4716G96D3gWfWki+pC0qTXiuxwIIY=;
-        b=JDz2iBWZr4IqaxCZ3nrJ/3ZmtmNPyM5WG46kqxGb6oHZre/2eKTX2qZ6oOmy0v3mTi
-         pAAGlQog00Mco5odKPWy5uSQi1xTeszvsW4kltNHq/+nrYbaiPz7i5f24qZstWX66Vv/
-         NY+Rxwgqa3sCF9gOG3ut5TKiKBPqk05LLZjJyNB0Z7PBHcdRF9ohiEfhOGx/PN2lvboD
-         VjPzud5CPxLQ0DfFBCwEfluDT+jTAbtBuSpH0DFF2r2UJ77DTEuSqvHSRdL03KommgjN
-         M2HDuHc/w7JFV2s0o83CeM3Yw5ZonxY9fkl/c5t8YZXn/d01Br5dQkfG6aYjMJyWK2yF
-         A/aA==
-X-Gm-Message-State: AOJu0Yw7OIInTMojNccHHdrrxKicx5oYT17QFQom1qqTyD9/6vHyXIGC
-	cuX1AyfaCAAbywlRVZzeSrU7QKT2oAbmHei1UW7qROdMeeAuoFS5NdcV7j4Z830evXEdDSMDbjP
-	3
-X-Google-Smtp-Source: AGHT+IGw8Uv3nwE9UYP8JZAIKPpnQ7R3vjZRv7n/StrO+cj09eX6yvvg04YE8BjrlJzaB4U1mAlmeA==
-X-Received: by 2002:a05:690c:48c4:b0:6b1:9815:b51f with SMTP id 00721157ae682-6b1b9594722mr4466347b3.24.1723743079112;
-        Thu, 15 Aug 2024 10:31:19 -0700 (PDT)
+        bh=4LsIPCqLZSt0MQqlrgXtc1uo3Darr6zqOp+4k0akDmo=;
+        b=XnArnQ/8xPpIHXQiVjDz7+4TSaFDsANl+nJGxTZ0nSZ5yDtUhg6jH/A78kx81AVMc5
+         +V4LWoRmOJi4CpQQ3G2wcyX406PRPAs5wc56JAUUbcdJwo0JT1MsPozCRNcXqkjTILyW
+         0VHz59axw4ieXK5zKS4g87qGUONumN95EVQCaq3PlH9Q80VpkBYheBNLOzgzso/4RO6F
+         mBW/OVFoyfbSgwQICtMwecXXwvQtRNcBEpOMMX8xNbkgp+nP2s+DZUcun+ekVW/gGfo1
+         N8wip8aElOjrlnD1VgMiQ2PoMUtdE16p7q43YI85b0Dro/3abfd1t3OvSv8lUzk5kqph
+         lzTQ==
+X-Gm-Message-State: AOJu0YwoIoVkqd1Gt5WRDiQPuidPOXzdHCSW7BoOdgIz6IZhTB/YbfI8
+	y4zsCakWYK2cLZzD9xVVARtAGbHG8F8MCaXanh46X3G871I8ZC0tmhplRN8ZyydpY/k7MRp0upK
+	u
+X-Google-Smtp-Source: AGHT+IESMl3Y6fiK917WzAIJi/2tqKilnqGJmHQSzsZEr8F6cXZsSu3I8BUsUuLo1VEAjJrzcNs4FQ==
+X-Received: by 2002:a05:690c:d1a:b0:64a:3e36:7fd1 with SMTP id 00721157ae682-6b1ba5f82f5mr3587337b3.10.1723743082050;
+        Thu, 15 Aug 2024 10:31:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af99410fc4sm3238537b3.13.2024.08.15.10.31.18
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6af99db3f95sm3185927b3.30.2024.08.15.10.31.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 10:31:18 -0700 (PDT)
-Date: Thu, 15 Aug 2024 13:31:17 -0400
+        Thu, 15 Aug 2024 10:31:21 -0700 (PDT)
+Date: Thu, 15 Aug 2024 13:31:20 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/8] pseudo-merge.c: do not generate empty pseudo-merge
- commits
-Message-ID: <c7e0ee0712034f654f018361f52c09b1043a8441.1723743050.git.me@ttaylorr.com>
+Subject: [PATCH 8/8] pseudo-merge.c: ensure pseudo-merge groups are closed
+Message-ID: <c9a64b1d2a9d6b3fe1f5fb0a7303e043114fcd8f.1723743050.git.me@ttaylorr.com>
 References: <cover.1723743050.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,61 +68,101 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1723743050.git.me@ttaylorr.com>
 
-The previous commit demonstrated it is possible to generate empty
-pseudo-merge commits, which is not useful as such pseudo-merges carry no
-information.
+When generating pseudo-merge bitmaps, it's possible that concurrent
+reference updates may reveal some pseudo-merge candidates which reach
+objects that are not contained in the bitmap's pack or pseudo-pack
+order (in the case of MIDX bitmaps).
 
-Ensure that we only generate non-empty groups by not pushing a new
-commit onto the bitmap_writer when that commit has no parents.
+The latter case is relatively easy to demonstrate: if we generate a MIDX
+bitmap with only half of the repository packed, then the unpacked
+contents are not part of the MIDX's object order.
 
+If we happen to select one or more commit(s) from the unpacked portion
+of the repository for inclusion in a pseudo-merge, we'll get the
+following message when trying to generate its bitmap:
+
+    $ git multi-pack-index write --bitmap
+    [...]
+    Selecting pseudo-merge commits: 100% (1/1), done.
+    warning: Failed to write bitmap index. Packfile doesn't have full closure (object ... is missing)
+    Building bitmaps:  50% (1/2), done.
+    error: could not write multi-pack bitmap
+
+, and the attempted bitmap write will fail, leaving the repository
+without a current bitmap.
+
+Rectify this by ensuring that the commits which are pseudo-merge
+candidates can only be so if they appear somewhere in the packing order.
+
+This is sufficient, since we know that the original packing order is
+closed under reachability, so if a commit appears in that list as a
+potential pseudo-merge candidate, we know that everything reachable from
+it also appears in the list (and thus the candidate is a good one).
+
+Noticed-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pseudo-merge.c                  | 11 +++++++----
- t/t5333-pseudo-merge-bitmaps.sh |  2 +-
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ pseudo-merge.c                  |  2 ++
+ t/t5333-pseudo-merge-bitmaps.sh | 36 +++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
 diff --git a/pseudo-merge.c b/pseudo-merge.c
-index f0fde13c47..6422be979c 100644
+index 6422be979c..7ec9d4c51c 100644
 --- a/pseudo-merge.c
 +++ b/pseudo-merge.c
-@@ -357,8 +357,10 @@ static void select_pseudo_merges_1(struct bitmap_writer *writer,
- 			p = commit_list_append(c, p);
- 		} while (j % group->stable_size);
+@@ -217,6 +217,8 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
+ 	c = lookup_commit(the_repository, oid);
+ 	if (!c)
+ 		return 0;
++	if (!packlist_find(writer->to_pack, oid))
++		return 0;
  
--		bitmap_writer_push_commit(writer, merge, 1);
--		writer->pseudo_merges_nr++;
-+		if (merge->parents) {
-+			bitmap_writer_push_commit(writer, merge, 1);
-+			writer->pseudo_merges_nr++;
-+		}
- 	}
+ 	has_bitmap = bitmap_writer_has_bitmapped_object_id(writer, oid);
  
- 	/* make up to group->max_merges pseudo merges for unstable commits */
-@@ -398,8 +400,9 @@ static void select_pseudo_merges_1(struct bitmap_writer *writer,
- 			p = commit_list_append(c, p);
- 		}
- 
--		bitmap_writer_push_commit(writer, merge, 1);
--		writer->pseudo_merges_nr++;
-+		if (merge->parents) {
-+			bitmap_writer_push_commit(writer, merge, 1);
-+			writer->pseudo_merges_nr++; }
- 		if (end >= matches->unstable_nr)
- 			break;
- 	}
 diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index 0288691340..aa1a7d26f1 100755
+index aa1a7d26f1..1dd6284756 100755
 --- a/t/t5333-pseudo-merge-bitmaps.sh
 +++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -390,7 +390,7 @@ test_expect_success 'pseudo-merge reuse' '
+@@ -410,4 +410,40 @@ test_expect_success 'empty pseudo-merge group' '
  	)
  '
  
--test_expect_failure 'empty pseudo-merge group' '
-+test_expect_success 'empty pseudo-merge group' '
- 	git init pseudo-merge-empty-group &&
- 	(
- 		cd pseudo-merge-empty-group &&
++test_expect_success 'pseudo-merge closure' '
++	git init pseudo-merge-closure &&
++	(
++		cd pseudo-merge-closure &&
++
++		test_commit A &&
++		git repack -d &&
++
++		test_commit B &&
++
++		# Note that the contents of A is packed, but B is not. A
++		# (and the objects reachable from it) are thus visible
++		# to the MIDX, but the same is not true for B and its
++		# objects.
++		#
++		# Ensure that we do not attempt to create a pseudo-merge
++		# for B, depsite it matching the below pseudo-merge
++		# group pattern, as doing so would result in a failure
++		# to write a non-closed bitmap.
++		git config bitmapPseudoMerge.test.pattern refs/ &&
++		git config bitmapPseudoMerge.test.threshold now &&
++
++		git multi-pack-index write --bitmap &&
++
++		test-tool bitmap dump-pseudo-merges >pseudo-merges &&
++		test_line_count = 1 pseudo-merges &&
++
++		git rev-parse A >expect &&
++
++		test-tool bitmap list-commits >actual &&
++		test_cmp expect actual &&
++		test-tool bitmap dump-pseudo-merge-commits 0 >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.46.0.54.gc9a64b1d2a
-
