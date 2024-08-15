@@ -1,114 +1,90 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE58E1537A4
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36A21537D4
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723757903; cv=none; b=rQ2MQX4OEE5HzCjMI6icVPoqatkoEqIM9ep1+Ac4CoA+tfikmZdGTlm3xxR6Xz/y37ohXb/s0PZDxMnnMV+qkbJTR0aJlP6SWq/wWarcBBrL/MmGDPaDLBzD5ILctGPY5iOH/O90gTNBYHQN/Bvq6o6ZXiFLF6IDhiLy8NLTbTc=
+	t=1723758746; cv=none; b=akLfKyqoJVzsHps2UURe66cQXqlrx24rB7fYznFjKO1W11CzKCeC4L30p/8j8rLxB4AYgShIyj2FbpGmmoBfbVJkG9MjMYrYaX6TDjYkdA3v/IQBUrxvhb0uhj5jHVk6jXZE9YBhAM29L1g5lRDWKKfcZKNtyg5JouX5iTEVqAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723757903; c=relaxed/simple;
-	bh=w3czjcjaZkycxCby5WUS8CDnymJIkAb/86U4MfdZcxc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CzlkPOK+9Y9rK5kjiLj9VxVIsnAMaEuMhK/FfmXkxR+nedbDUNiZLBQQCcL4p9gthiynWjycwhc2brbprW4MpgqC/8Or6doENI0darhf6z8GL0yJldiIG9I99X2hKA3FUgnGgxnPyYBpMbE031/XzgaP3INH6TvVy9XM90eStLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXFfQ8m5; arc=none smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723758746; c=relaxed/simple;
+	bh=jYBYTWATmiKCnXhPdSU8EDg2/zbPh//PptIFDVNPWUc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gP2vLAh2w1Dfs+Q7YCZ+m/ed0jzTQd3aSUUvwAhVcxjYuquO6Pu79wxwvSHoIa/4k/w16HhTCJCCELr6VRCjFIEFAZEzSSzCFU/JtIL6vKC7TpKi9J6egqgRfkkHNlvu671Pu5AxIpZ/58PCgyi2fBRfRiue0GBbzKTbq5N0GBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=U2Ef0i/7; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXFfQ8m5"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5d82eb2c4feso891618eaf.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723757901; x=1724362701; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wn7K3Q8OoMb+Duwp/UVG5jdpKNHjL9K7s47gVLfLzSg=;
-        b=jXFfQ8m59PPbRHYESvbyvubP5t/4KBdCz/CEaChryV2O5h3aV9o340prbtXjEJhgbj
-         y8xzEQhB/0cnzoT9CmXZgKrfASg1EwSHa7MJx9h0zW1FrPXSOga5GRi0eyT8ZJYlaOfD
-         cekVSJFu3DYaHSYsNUkgaF+3Ez+1vE4q0DJo6iNunewg8CJz6vouIpYPBxC2iI4IHqlJ
-         TYTpR3YrJD7123F/QGVSMnTWCWJ1ChaNYFxA9uVvzwsYKt4I/iEVH1ofAnRF3iUDgbHr
-         wM9VnQnClNMeUSlswFUppCqjH18XF3tpgpu+rwygsjFPIO0432Cq/qZ58i500/4f9DY1
-         ONLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723757901; x=1724362701;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wn7K3Q8OoMb+Duwp/UVG5jdpKNHjL9K7s47gVLfLzSg=;
-        b=CvNCx/2egvEDScIlLTI9M3IxPDY7mB9pyk7e6ZF+xdhjpuzKCXytUd6lMXjRLept6+
-         gfL2IJwROLorrOZLrKBcXemIP8V4QC4ZjfjJ/e2qDUfluUmZahxrGV68xJGkFatYgQJh
-         s0q8IehS6BQT3Dd4d3pGpUkuLHcJ0T43VzENwy5wV1W1qFsN+HAK1KuhjYzpoav6cyZF
-         gEQro0QHCd6UYLDyvSVXQjMwUwcvvxqRTrrZfLBjIN5TgEoIkBbGApmeLEg8KpZ/WBhl
-         RCjAk0Z6oFu/t42aXybBhTSU2bjuzThaTwvbzbj825Tse1j3+sohzztpwSMHlu2mq2XJ
-         L1cw==
-X-Gm-Message-State: AOJu0YxN5noNPSss4K4TARasa6AKud3IMkd8HXaAYMxI9xW1h6z6GRGA
-	rZLORHQ5H/4vlTce1JvLzF/9W1tsXbELpSWYIVp1mJymtwZIoCZo
-X-Google-Smtp-Source: AGHT+IHZUTu+kQvwYv4+t1CnYBHD4boHpciaHms6npgos2oa7afr4cHAka7T5wBuN6dVtDWYFznRmA==
-X-Received: by 2002:a05:6871:592:b0:260:f50e:923e with SMTP id 586e51a60fabf-2701c51d975mr1058970fac.37.1723757900762;
-        Thu, 15 Aug 2024 14:38:20 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-270046a5897sm551726fac.25.2024.08.15.14.38.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 14:38:20 -0700 (PDT)
-Date: Thu, 15 Aug 2024 16:37:26 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 3/5] setup: merge configuration of repository formats
-Message-ID: <hxnibmbakpvh72kfrycxnvo5a24f6atcqa73yys4zthbqpwikq@s7435n3nqmlz>
-References: <cover.1723708417.git.ps@pks.im>
- <16f52b75d8972343776adb269da305e7406ff385.1723708417.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U2Ef0i/7"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 76EB325B97;
+	Thu, 15 Aug 2024 17:52:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jYBYTWATmiKCnXhPdSU8EDg2/zbPh//PptIFDV
+	NPWUc=; b=U2Ef0i/7ncyKPFARYYrBoTOKpUnR4eD+BcU0t/MqprA9FbF1j+K1+e
+	aEHcohhq6X9jMqPcTdFS3RXzLhy++wSSS8NBlyPlFjpwvTf9yAq7uhZhwy8XgK+U
+	z+QaERcZdJTaI1Ed9qxbksgoHDuVnRz1BN3ktLOgY7FzNqU0B9CLQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EF6825B96;
+	Thu, 15 Aug 2024 17:52:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D347925B95;
+	Thu, 15 Aug 2024 17:52:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: shejialuo <shejialuo@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org,  Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 0/5] Introduce configs for default repo format
+In-Reply-To: <Zr5wODo8tgGtPEIM@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 15 Aug 2024 21:16:40 +0000")
+References: <cover.1723708417.git.ps@pks.im> <Zr4dvybR6j6Ifyya@ArchLinux>
+	<Zr5wODo8tgGtPEIM@tapette.crustytoothpaste.net>
+Date: Thu, 15 Aug 2024 14:52:21 -0700
+Message-ID: <xmqq4j7lsbca.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <16f52b75d8972343776adb269da305e7406ff385.1723708417.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A6FBFEF8-5B50-11EF-B691-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 24/08/15 10:00AM, Patrick Steinhardt wrote:
-> The configuration of repository formats is split up across two functions
-> `validate_hash_algorithm()` and `validate_ref_storage_format()`. This is
-> fine as-is, but we are about to extend the logic to also read default
-> values from the config. With the logic split across two functions, we
-> would either have to pass in additional parameters read from the config,
-> or read the config multiple times. Both of these options feel a bit
-> unwieldy.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Combining the repository format configuration logic into a single
-function seems like a good option. It looks like go we even further
-though since we also include setting the hash and ref format for
-`the_repository`. Might be nice to also mention this.
+> On 2024-08-15 at 15:24:47, shejialuo wrote:
+>> If the user uses the following command:
+>> 
+>>   $ export GIT_DEFAULT_HASH_ENVIRONMENT=sha1
+>>   $ git -c init.defaultObjectFormat=sha256 repo
+>> 
+>> The repo would be initialized with the sha1 algorithm. I think we should
+>> think carefully which precedence should be higher. I cannot give an
+>> answer here. I am not familiar with the whole database and do not the
+>> concern. But from my own perspective, I think the precedence of the
+>> config should be higher than the environment variable. This is a new
+>> feature, the people who would like to use it, they will never use
+>> environment variable and we should ignore the functionality of the
+>> environment variable. But for people who do not know this feature, they
+>> will continue to use the environment variable and they will never be
+>> influenced by the configs.
+>
+> The standard behaviour we have with other environment variables is that
+> they override the config, such as with `GIT_SSH_COMMAND` and
+> `GIT_SSH_VARIANT`.  The reason is that the config in this case is
+> usually per-user or per-system, but it's very common to override
+> settings on an ephemeral basis with the environment.
 
-> Merge the code into a new a new function `repository_format_configure()`
+Right.  It is good that somebody can give a clear answer when a new
+person says they cannot and then give an answer that contradicts
+with an established practice ;-).
 
-s/new a new/new/
 
-> that is responsible for configuring the whole repository's format. Like
-> this, we can easily read the config in a single place, only.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> -	/*
-> -	 * Now that we have set up both the hash algorithm and the ref storage
-> -	 * format we can update the repository's settings accordingly.
-> -	 */
-
-The above comment somewhat made it sound like the repository format had
-to be configured for both the hash algo and ref storage before updating
-`the_repository`, but that does not seem to be a requirement in
-actuality.
-
-> -	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
-> -	repo_set_ref_storage_format(the_repository, repo_fmt.ref_storage_format);
-> +	repository_format_configure(&repo_fmt, hash, ref_storage_format);
-
-Overall, I like that this repostory format configuration is under
-`repository_format_configure()`. The `validate_*()` functions names
-confused me slightly initially because I assumed they were only
-validating, but they also configure the repo format. Looking good :)
-
--Justin
