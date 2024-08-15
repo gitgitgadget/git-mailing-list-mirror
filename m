@@ -1,112 +1,96 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2990317C995
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1649D1993B9
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732637; cv=none; b=RvGMs95Pjm5N8bKsin35RKjinRoB0r0XYjljRWzFXmQ0ReyjV++KbipDQG62IDGFI4mT4woy3kmzn3aiOiQdpCm/vJH94PhAlWyXf6EBLlh2f8ZJ0E7EHs/vL7wSRNvwr5HIJLrAgO38/l1ziLLEiKUkXDq+17lth3tzYap4NeA=
+	t=1723732990; cv=none; b=tgQB4IvuKooVu+pV79dYSo+se4XFuKiiukVzATwReM6MKUlrMDPdFrxXShNmekSpPbg6TlKXiSsfx4Vndx7QLwhJLN0wlO+Kz/jkwitCsdpvWyUkITtT666FwKraNkr6zPR7nm9nrIuiseim0D4UVlGPFZbVgPxcWa2mDqokq8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732637; c=relaxed/simple;
-	bh=3kEwt/6rzg5QIbPUluyYOubfknWvVo/iczaqCjbWg7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hgtOGdB1HZoUn2rQHAJJctSgobY1vgfk4gKo+Dj5P4rElgNtYj95gPVbIUKrgdP9+UQRLiCn6ydQIAy+78qIEShelkqnsFOu1Rtyr6xB81Is9TSfUyJcDOglRCYcr4fMyOL8kXkXLPir0LqZujyC/1hhh0+sfZW8GoWTo0F9hKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp.bon.at (unknown [192.168.181.101])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Wl74M6vLXz5vS1
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 16:37:07 +0200 (CEST)
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4Wl74B1kBQzRpKv;
-	Thu, 15 Aug 2024 16:36:58 +0200 (CEST)
-Message-ID: <152246bb-0f38-491d-80b9-ed029010f29f@kdbg.org>
-Date: Thu, 15 Aug 2024 16:36:57 +0200
+	s=arc-20240116; t=1723732990; c=relaxed/simple;
+	bh=R5iz0hUHC/u71deZnOetHxTuR9UIZPCeKB/iFUpj0W4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=USAakFSb+pNSeLnxEsxnrnFHGAa6grMCVeVVKHIBCc3I3UTyQTVT/k8ubWMzue9Yhnqrad/fW7GoUjVHbYgbO22ZsCIiqS9KMQOQ4tYxrJ6paVnBfyxRPCZQrVG7uG2NZLn/4XXe0XYc4j/ScrjFY4L28XCA6PuO67nv9mq9fCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VfmMmngN; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VfmMmngN"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D28941DFA8;
+	Thu, 15 Aug 2024 10:43:07 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=R5iz0hUHC/u71deZnOetHxTuR9UIZPCeKB/iFU
+	pj0W4=; b=VfmMmngNYmvmOzv+G4h0ubUQQ35scasLFTd3Ct+j9Uo+cEOktvTZ9z
+	UpNLTsnwmdj16u8deaxG7RPXNh1jWSGxLO/9Ylw0ok4e/wzaWet/JeUfBMAy4YQ7
+	mqhihc3FZQaqJjsnZ7BSNc+789eO9IutTgRucLFaS93K7PLXMnp+Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C47C91DFA7;
+	Thu, 15 Aug 2024 10:43:07 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 112AA1DFA6;
+	Thu, 15 Aug 2024 10:43:06 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] safe.directory: normalize the configured path
+In-Reply-To: <0882a098-eb07-41b1-9527-04bdb77fa0d4@gmail.com> (Phillip Wood's
+	message of "Thu, 15 Aug 2024 10:51:54 +0100")
+References: <20240720220915.2933266-1-gitster@pobox.com>
+	<20240723021900.388020-1-gitster@pobox.com>
+	<20240723021900.388020-3-gitster@pobox.com>
+	<5332f244-7476-492a-a797-2ef7ba73f490@gmail.com>
+	<xmqqbk2ljvty.fsf@gitster.g>
+	<5e4906be-2cbe-44b5-b490-593ee5a42b95@gmail.com>
+	<xmqqh6bnyqjp.fsf@gitster.g>
+	<0882a098-eb07-41b1-9527-04bdb77fa0d4@gmail.com>
+Date: Thu, 15 Aug 2024 07:43:05 -0700
+Message-ID: <xmqqo75tvocm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] git-gui: strip comments and consecutive empty lines
- from commit messages
-Content-Language: en-US
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Brian Lyles <brianmlyles@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Eric Sunshine <sunshine@sunshineco.com>, Sean Allred
- <allred.sean@gmail.com>, git@vger.kernel.org
-References: <20240813090631.1133049-1-oswald.buddenhagen@gmx.de>
- <20240813090631.1133049-2-oswald.buddenhagen@gmx.de>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20240813090631.1133049-2-oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ AF569D38-5B14-11EF-9F25-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Am 13.08.24 um 11:06 schrieb Oswald Buddenhagen:
-> This is also known as "washing". This is consistent with the behavior of
-> interactive git commit, which we should emulate as closely as possible
-> to avoid usability problems. This way commit message templates and
-> prepare hooks can be used properly, and comments from conflicted rebases
-> and merges are cleaned up without having to introduce special handling
-> for them.
-> 
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> 
-> ---
-> 
-> Cc: Johannes Sixt <j6t@kdbg.org>
-> Cc: Brian Lyles <brianmlyles@gmail.com>
-> Cc: Junio C Hamano <gitster@pobox.com>
-> Cc: Eric Sunshine <sunshine@sunshineco.com>
-> Cc: Sean Allred <allred.sean@gmail.com>
-> ---
->  git-gui/lib/commit.tcl | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-> index 11379f8ad3..f00a634624 100644
-> --- a/git-gui/lib/commit.tcl
-> +++ b/git-gui/lib/commit.tcl
-> @@ -209,6 +209,10 @@ You must stage at least 1 file before you can commit.
->  	#
->  	set msg [string trim [$ui_comm get 1.0 end]]
->  	regsub -all -line {[ \t\r]+$} $msg {} msg
-> +	# Strip comment lines
-> +	regsub -all {(^|\n)#[^\n]*} $msg {\1} msg
-> +	# Compress consecutive empty lines
-> +	regsub -all {\n{3,}} $msg "\n\n" msg
->  	if {$msg eq {}} {
->  		error_popup [mc "Please supply a commit message.
->  
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I'm still not convinced that it is appropriate to silently edit a
-message entered by the user.
+> Fair enough. I will note though that this change makes it much more
+> likely that "safe.directory=." will match as it now behaves like
+> "*". Previously it only matched when we tried to match it against "."
+> whereas now it matches any directory.
 
-Nevertheless, I will pick up this series for these reasons:
+Unless you are commenting on my earlier unpublished draft, I doubt
+that it is the case.  
 
-Firstly, during an interactive rebase Git GUI has no way to inform the
-user that the commit message is a union of messages of squash- and
-fixup-commits except by presenting the comments that git-rebase inserted
-in the commit message. Stripping these comments before the user can see
-them would be a disservice. Consequently, they should be helped in the
-way that this patch does.
+If I did the code analysis correctly when I responded to Peff in
+https://lore.kernel.org/git/xmqq4j86g948.fsf@gitster.g/, that is.
 
-Secondly, there is already precedent in b9a43869c9f9 ("git-gui: remove
-lines starting with the comment character", 2021-02-03), which invoked
-git-stripspace. This commit was reverted later by c0698df0579a for
-technical reasons (incompatibilities with macOS). So it seems that a
-majority thinks this is the right way to go forward.
+There are some negative tests added by the series to verify that dot
+is really "current directory" and not "any directory" which is what
+'*' is for (and as I always tell my contributors, we should really
+get in the habit of writing more negative tests, exactly for things
+like this where we do not want a "feature" to trigger in cases we do
+not want them to).
 
-Further work would be welcome, though. The comment character can be
-configured and should not be hard-coded. The commit cited above shows
-how it can be implemented.
+Ahh, if your e-mail header is correct, you are commenting on the
+implementation in v2, which did not care if the input were absolute
+or not?  If so, then your confusion is somewhat understandable.
 
-Three more instances of `$ui_comm get` exist, which trim whitespace in
-various ways. Each should be inspected whether it still does the right
-thing.
+The things changed before the final edition v4 happened and it is
+slightly tigher than the version you are commenting on.  We refuse
+to match any non-absolute path, except for ".", since v3.  But I
+think even with the looser implementation of v2, the negative test
+would have made sure that "." was really "current and not any".
 
-All of these can be follow-up patchs, of course.
-
--- Hannes
-
+Thanks.
