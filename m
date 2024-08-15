@@ -1,63 +1,63 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA6B19DF74
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEDB19DF8C
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:14:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723727660; cv=none; b=Q9ZJbP6qBVSqRGeWxI9PMbAu79OWKB4rA7GB9Z2zYCHwMX46GG5fJ1EtVgtMkwP+8UeJyNqOQBiMQT8UVt6Cx81hPXIsM5eseguMN5DS3naRpZT83rUknwlzM/Zc02vVtvrMAvmucXaaSJmQHT3ElD1vdqUgmC93INkhjbkvYXc=
+	t=1723727661; cv=none; b=hP3iJ0/AOfuO+V1/op/QS76Do5A0GefOTUo3fYIYgegHefkkYELUyOFHubIEr0fqHox3tUh3b+Y29JFGqbMUF0rTAJ4X7oh5Os6jsNlsy++UUvEyTivr5gfaKugEJevmyVVtd4QSGk5iEQg8roTjP091fGDUmsIZHaChhR9ggKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723727660; c=relaxed/simple;
-	bh=sipFw1dJc1zbv6tyF/MqIbyJnlnjC/BLxSZ5WN2aGTs=;
+	s=arc-20240116; t=1723727661; c=relaxed/simple;
+	bh=PeWD7Xzsyt+Jh9Nqsn4TpYWX2egoJFqBtWAUMS9nZWQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=r2JZ3Q3VE81xNWSCssDQhDSCsga+AujsCZvJ6VwnvrHAMeqGz3hBrgygKZ/jEIPW9VeibFJO3YGboaKJDfzV7rijYohi69YTxwWJB3sdB4ffmixx69LLc5aGgJTs2YriHzcY5D15ueTX0XhsPuCMgn1x9vYi42YUAdp1DglsHNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M4x4N2IM; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version:To:Cc; b=QOKQPbnKZpOvE34caXL0UsHMNSKh7bryInspq1yyBSvAqMGAIb+P7Lyv0Q1KXBjBK51nJa2kVGffEX1sHO4Jxs7mhCg5VNtmx3oFrSnLC6Pz5IlNItYRmTo19HPPKhArwSqAD9NgOoz7vG2TZSLoOm53rA737/lfUiZX4kSQO1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jjSLJa8W; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M4x4N2IM"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42816ca782dso6022605e9.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:14:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jjSLJa8W"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-429e29933aaso5902875e9.0
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723727656; x=1724332456; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723727657; x=1724332457; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6FG3uwywf17nE7MKTAyfOz2NJswUr1C/H8jKjMZ6nbM=;
-        b=M4x4N2IM/BC9HG+0qT9+ydLJuL+vUfek8xPTNnb32HpPzYii49Rk992BPqh70EnOEg
-         vjLcZHWNtY85DZDpsCvdZwV6HFofVysHzK5ZrLSAaBtXJg6yRcJLhFmZcWMJLEX5aAaQ
-         HPjGUloK+mS2JJy0tN0aLfbu2N8Kl+7VAQcvp1nBgc/FJQtz4+wWC/KxlFri7jRnyOOp
-         mriz/9KgaW5st46FO8Af+TklCo36EGl8WDODe3jfkAaHHCWOSDgtG0FVnuSKNFzVV5hN
-         9OcAfatIwhp6K3WMdJSXy28Ix1JqNkCzU1GsypfpdnjbFsCTsC5qVeKC2QFFURgrbfYt
-         ic+Q==
+        bh=bffUfw/AShNzuPzmr6Fl68h5i7kGOyEHgnQZYZFtG8Q=;
+        b=jjSLJa8WLQXudrgBHXPxSeCfAX6Fav+fA8cChCKVWmSAiGq/duDsbm6FvBLKpQDP6v
+         N1MKLM9AbqlG7CphTzj9vZLya63CUafBv+BaZqvQsbSCG3LiDTT9eUKRq6m1R9iHulPI
+         7l1WqwsGi1I1w+Sl66qv0CXwtCcoL2RGvZ9ZCEuDUPVHK2EUXHnNj+E3RTukHirZ7uaO
+         ULfxKH2Hc/hFkRIeKrerR/CnWWdFmeIygQARdf1SQS3GFn3pyrLE6NxMKPTkvBvcnVSP
+         vOie0SRA87GRrZEXtNIF77Q0lWc9TXA8MM8RdctSZQIP5NkfP6C1HRmaahKcnWSZq/Ta
+         YPHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723727656; x=1724332456;
+        d=1e100.net; s=20230601; t=1723727657; x=1724332457;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6FG3uwywf17nE7MKTAyfOz2NJswUr1C/H8jKjMZ6nbM=;
-        b=oIPSo5UFuOdLTQ/ERfuGDzHg4CDl/0XtgVhZ67TUmjjxqN3nFxY4lsG+6s6qciFYTE
-         0XOBtl+d2VKlleeRdoukxqCHi/ppY/lsJ+qYZwMNIGCv6s1hGkmRpWDTkQUr9pwGMdFE
-         aEA6nZZIlLDoIEaJuVAsvixtccPLOwZABtKm/As/PBI5lxZPLN2oIhG9Jq+t9VvFppqr
-         sFht1ZXuBrVYHw+SMDw/eeF9RW8ZsVe3oWKB9djk2XTqzAByClIOZr68aBrdJg6LxUqF
-         RDIKWg1KimYXqfG8Vrd1CpvTuoymk5AKGmcso2t936/43Y7P407smLlilNRcqz9inNAS
-         8dIg==
-X-Gm-Message-State: AOJu0YyM8oYtSWBdKzRJh4xnmyFI2gsypVHg5bcAIMwb0cV9Yzwnv1jh
-	4oh3t3265ZZ2tyON3mnG/nO+TJhUIg8Kl6JMPWfJK9rKJsjp8RybHT3TRA==
-X-Google-Smtp-Source: AGHT+IFjIWNi6YwkXeyswpS3VrlGdpzjoEszcKrHNck4Zb9EuL4nd+eHMrAWNI0dSAeYVMBu4D024A==
-X-Received: by 2002:a5d:456d:0:b0:368:3717:10aa with SMTP id ffacd0b85a97d-37177761400mr3684985f8f.11.1723727656029;
+        bh=bffUfw/AShNzuPzmr6Fl68h5i7kGOyEHgnQZYZFtG8Q=;
+        b=X9H9Cp9xK6QByaIgbyLRtUNrG37j2CyIcxAC3kS9BRxC5guwKRn40M7uGy9/l/PyuO
+         yueV478ByxmjqlSWpY6831RcouUO90y3okUhcOPVLLWwYwTdpvKB0pTcgf253L9MoRuS
+         Oxj6wUrhAnhv+/2eb3adj4ulwFFCKH043DxGllK9FmZzH09788WRVj2yzU9P/GcgmI+R
+         OjiLdxeyHZkI6qVIgpmCGrnGsqeFcfmj0NM7PBkEMm0wjzN7PvPksqfuBZhVmh6+pSqc
+         Ck+dQ9dAKXbC43vrR1yUavWLZWnQEZVUQ6iyFQ7R5t+jygfyOuFXrlsY9tIUxQ3NemqN
+         eypg==
+X-Gm-Message-State: AOJu0YyBBzG/XnMmGTDtNJfjjxQFff2cBBsXD9o7gnwLfdWzAUoOfLrE
+	3Fr6JD8BR5ei1jyPE4wrhA6UA/Fsn+t/LT18TKO0hSbHYFWVCS9k0Ch7sA==
+X-Google-Smtp-Source: AGHT+IEgG8IQrbmwsQAYNToY7AVRpTmLEL+vsE45LEXebX07QUflQXnidlBHocB+I9nWJfmaew5OVQ==
+X-Received: by 2002:a05:600c:1e23:b0:426:6e86:f82 with SMTP id 5b1f17b1804b1-429dd248517mr41803165e9.22.1723727656894;
         Thu, 15 Aug 2024 06:14:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3718983a57asm1532642f8f.2.2024.08.15.06.14.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429e7bfd917sm19737715e9.8.2024.08.15.06.14.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 06:14:15 -0700 (PDT)
-Message-Id: <9ce5ddadf0bb13229461d67451094a373348771e.1723727653.git.gitgitgadget@gmail.com>
+        Thu, 15 Aug 2024 06:14:16 -0700 (PDT)
+Message-Id: <680ecb524040c64f886c4e484a64f0d17b512e27.1723727653.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
 References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
 	<pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
 From: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Aug 2024 13:14:06 +0000
-Subject: [PATCH v2 1/8] git-prompt: use here-doc instead of here-string
+Date: Thu, 15 Aug 2024 13:14:07 +0000
+Subject: [PATCH v2 2/8] git-prompt: fix uninitialized variable
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,40 +74,36 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 
 From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
 
-Here-documend is standard, and works in all shells.
+First use is in the form:  local var; ...; var=$var$whatever...
 
-Both here-string and here-doc add final newline, which is important
-in this case, because $output is without final newline, but we do
-want "read" to succeed on the last line as well.
+If the variable was unset (as bash and others do after "local x"),
+then it would error if set -u is in effect.
 
-Shells which support here-string:
-- bash, zsh, mksh, ksh93, yash (non-posix-mode).
+Also, many shells inherit the existing value after "local var"
+without init, but in this case it's unlikely to have a prior value.
 
-shells which don't, and got fixed:
-- ash-derivatives (dash, free/net bsd sh, busybox-ash).
-- pdksh, openbsd sh.
-- All Schily Bourne shell variants.
+Now we initialize it.
+
+(local var= is enough, but local var="" is the custom in this file)
 
 Signed-off-by: Avi Halachmi (:avih) <avihpit@yahoo.com>
 ---
- contrib/completion/git-prompt.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ contrib/completion/git-prompt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 5330e769a72..ebf2e30d684 100644
+index ebf2e30d684..4cc2cf91bb6 100644
 --- a/contrib/completion/git-prompt.sh
 +++ b/contrib/completion/git-prompt.sh
-@@ -137,7 +137,9 @@ __git_ps1_show_upstream ()
- 			upstream_type=svn+git # default upstream type is SVN if available, else git
- 			;;
- 		esac
--	done <<< "$output"
-+	done <<-OUTPUT
-+		$output
-+	OUTPUT
+@@ -116,7 +116,7 @@ printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
+ __git_ps1_show_upstream ()
+ {
+ 	local key value
+-	local svn_remote svn_url_pattern count n
++	local svn_remote svn_url_pattern="" count n
+ 	local upstream_type=git legacy="" verbose="" name=""
  
- 	# parse configuration values
- 	local option
+ 	svn_remote=()
 -- 
 gitgitgadget
 
