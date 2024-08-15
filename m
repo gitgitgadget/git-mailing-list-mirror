@@ -1,123 +1,157 @@
-Received: from sonic322-26.consmr.mail.bf2.yahoo.com (sonic322-26.consmr.mail.bf2.yahoo.com [74.6.132.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF295A0F5
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 19:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.132.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11E43D984
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 20:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723751745; cv=none; b=W7tZmLUWlF1nbWK8ap1LmZyrLJSwVPzxjbIxNpq408J8INhRBy4Qx/CTn1SiCLiWeDV6G74zA3jNvtBasu1dbu1JURaWNynTjOoCUQjv60HU52yPtAJx+JgNXrDqE9cv92eVzP4YOmeoO0s9sc2mCmqqE5yomRERwf8y+nRS8DM=
+	t=1723752390; cv=none; b=Ww4oFGX48x6WVgbW/fzXxkZy7JGOSivR9FaPOUSG5EkMGHVEzbK7lvYGafi9nqaXNjZYJfTkPxMsbeJ/QUed6tcq/g/eLCkXPWaqJ5Y2q2SmgipOKM27v1CJg/dzdJTJBwjqovRwuXvUPy6NO8Zi62Eaa+dLG0NXMNiUf2/5bsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723751745; c=relaxed/simple;
-	bh=EoeY8GVTElyelmv7xJvFk7uXRjGl2Qs8dEIIsk6WIvM=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=o2SXBtOqpzK2PEDpy328oJRKCYdEPFw1aIlYiAj6N6fRMzIiW76JWTz48rRaASOOkgz5hi2TgFlmumE30EfaXPhkdwYs8srERPHR/rmtTCeSK3xmnylGCyOhN3hqpbzndFrN0CUWMjNmhXgD/BQdq0zb4g/Wr7LHfbI6kPMIvbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=OVJrnN8M; arc=none smtp.client-ip=74.6.132.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1723752390; c=relaxed/simple;
+	bh=CvbbHefBMVrTQr6a0ddkRt87WVDYIwAO/sj3nNLnJ7o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sYDWGv+9WIavY5ePZzxUc8yaidR1bQexoxml0yl20EOOOxYehpcJJ9yjIakvpDNW1Upbi5ERkLEerBz4EV6Y+USFOm0qROB2XcC7vH7xPrPPTgXHSc6bchc/sHWHHT2B7QCak5rp6gyeDlqos9wGtIRLL3IZ2HhIF4yMo1UMMBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gj7WneDB; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="OVJrnN8M"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723751736; bh=EoeY8GVTElyelmv7xJvFk7uXRjGl2Qs8dEIIsk6WIvM=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=OVJrnN8MZmS7a6cQSUyiJJNjseGa6jVXYZCSoFhJ2k/+Sz+WrwEIrGrARiwbe6Qqi3zGvOwQkEKtSfJNO4982hH/9i3iW61f5tDOtDNPyhXYADY8MeFy4qg4snrNm8p0XW8YbtL93tcjHUkG2/cb1rDG4iml7zdUEUlUvWAzx040KQ2d2KU3DqXJtdOGo5G1n99n/dwP5OyKUYU5OhDjuQcMwukeJZKyaY4CaLANa4Ont7YlXyi857mKc2Rnkkieh/CjVXVJWTdLdA7FSTovH/zb5hTtrb3b6I0KykTLmjLZJUGyQ6IK9onFgqNEPE97rsElxkmuWMobRqTz8D4OuQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723751736; bh=dmjL45/GsVErKOWTniI5CsrF8YgKvuGqId/3F7fjoXN=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=aRCTXZWuJeEUDCAqN3N1IJ0JmYLFtmhEiNGRe7N+/qnGa1c+WaKUbowctJDEDTqpicl/a4677F/0WbPxW3vhmm/b5/Rcp41jJi2aDZLzfM9Iy0c2o0U58Ec3ua9VuE2OmQxDyLXlbVPjO8A0Wd3gDnM0WBckwqqxgDG8mWnA5L20yjSzbbxDgFm9LxkJL+eZqNjj+Kssw3yvdMfyNwAz84pwF9QjJxRaiiY9lgn1SRVaEhBVN7BdN3hCd1iz97N6sRpoToNXZ1OwB4xuB787DMHwMV3OIDB24ysssnM6wimv106u0FIxqLdMl5Dv5ijqZbAz6Onl70p//xu9XMehQg==
-X-YMail-OSG: SPg2BhwVM1mTP79MHTO8j1ZbbJ1GoWP0WskAmbOzXJF6VDRazNSCagzoaFWh01_
- K3cJ4eINLoH0xcZMOlBn1NzLseK72RuqzKrZPTZI5XdVsY5DaSTZWQzpIbDf3Tm6DUYwRqON5CUv
- ypeQhCtCWW3RikVYZFeSx65RrrfeuJetovNbzeRYF9g54V.i8E7rfzSl3839EK9C23.B5fxj99Ef
- mNfjJUpGXQusb5tK25CqwsOlOens_WxqX9VDMfrtpPYmtIKiiNc5fXLyEhiOwtmaRFb.7t7JW7H5
- YG1UV9ZOTAgxSfxGr2K0ZEeAi_eaYGvdKrR5osRXmJM2fxaHbCJKRju7M6ve.CbhvdD12NbDv4Ya
- InJjt1dtrZSc8arbEYobEfFyuO.sQvWNy3GQRfu4VWliJEuVeW4fhYcXhLyfQW8XwokZqj88D0dk
- xnMWUjUelrep1Ag97iUCjaouIlLTUrIaLdj.iPBuRtc5fIvp3AU1l8HtcsHk4Zjxk9i4iSBxU.RH
- s7KYQpAMhGUsVQa4hpEgPapjn9LaqVH_SGF48IoawhYGXFhEqBRF25coGhWDqAAQvIGxPLmURvBj
- Vbz8.XnvsxZygb78KMYrNkitLyz8SgEPjg3jG22c.TIpVM64wCawtAE8Vv3s_0Gb58WBvJJbdcuS
- n_cyHsKlHRImAO8DqzL76Tn9U7AkBsfTHU495XRCh5piMZdotjm1EriHw7N4rJSbaTLEMKwtHB93
- v4orWZ2Hvjl68s9QRRVKYt818wkZCr2CgpksW7d87iQsjRZ0d7fJ.kYuep4DUVoeIDQBUFKfdLvy
- dyuFd.19GvAjZnO2nrGQBx8TtPA2UzqZWTXO7Vumhp.E7YrgDr1eft5co880uBoXOVhuDauViHDD
- q0th44kq0xuVg_JLsHXEZbvz9VQMG8Umjed2Mn7W76vgJWeVq5eIGzHlvFlu4gug1oiDLDCtAwsR
- xyer7Rk7nxtwPeh8YlvNnKecOCDsMNT3XCbKpJfVIURGo38avNyWgbHFK3r_4bSoiHvCBYr1Bbxf
- NB38oYDlTqZn3UXgr2EZnnzzFnEQ.tuvsaaOKaGnpEIiPiRYviIGnJwYXBhLUMI4dTee3j7a6mEE
- CF_obcSpsWH5TDz8GIhvwG89YtbTZ3Mb4xZ2YCT68ik08_5WAdfNYqjyMh7A58XcWkgTz9mAGNK7
- F3AIoCJlAJlDTxTkwNRBD04V6llRq19Gvze0Ko7paSuHW2GTc_ZcxxRBgOoM8AkdQYNNdSpk2elo
- NdouoA0OtDhCQd8jIi7oB4wmDog4IdnR_ex.Wk51UTqfRy5VKVnuJSDw0JVGN5vVLqNgFMTGNU0f
- t_PrTGYdwNEJm_QUJJPkHbaI.Jyu06dlWNWxO6JiXByZe9P1FotRfHSm5DIO9.Xi28bWusn01LNI
- oLq.HbpfP6NH48LUDQBFuE_bix6aN56Sz581O5BjF624oZ6U1prPvTj3ahpZMYcVCHH62JLmnGYL
- ppkSdGFd1u5l9zd4Kv9NRJvRH.tZ5vQ6IKpZ72mvTjDtPEagXV7YnkrYbXSoEBYevBME2g.g_jfL
- 4VoCV2rn4ptNSpA3xD4x2ETRlT8HwhF_7hq7QkQh.Dn7KTXeBT9JFSlxzrq1ezQEAQc4PDh5lNup
- tTtFEqJCoJYyaTmxSBx3wME8ulmN1kweHPxMi6uwlv8RKzs9dMoN7M3CcSBbX3Uh3O6PcwOr_YKg
- CyEmACVLxhcJFrm63HBux7qF8ZLwT6s3jQCwbQ7NZHM2AFLNEJD1o9VfV0aEwtC326pqQ4qAchIv
- aSJ.CN4HST5I5xJPZc43LDDNXoXPigVR30tzdhDa7i586SMO5OMR6jPnDVEeVjnOl9fUbNAHY7j8
- 1V8sP.UdzGYgpwuGtA0ztifesCG_vnL7VXviY2gJUaRQuImAgWIlJWaBxh1qINyhonEWW5h3cY3W
- 2WMyn4rI0Xtgmva.7nWl.HNizqeDkjGTVQBW.o71PJz78dhO7gB68dFQ.K03Y4uY3sV8LWkRv4aW
- kHOAgYAUeo0nF7v5YtYquOmvNCWI825oe.vK.XR7J25LALlO4kkrEanbZ3c.JmPUyQ8s6UZEEJlO
- TMly2_YxJc3E3dbEug_zKJGw0W2Nho4coEm2khZnuTbQFcGn1PUk81C97zBw3U1ztvwVSGqNtuMn
- hEh6opaFlvI8Ng7NomA1Nmbfq6MiIrr.uV.8yQo0T_sSMyNguJnZEBpKbsiOTg7LgDCQ7uvv3Zsz
- ZejKjo6bByBVQRa3oRb6jxmqq355hQQuS5cC5ehvid_PDFCyiNWAtWtvGrn4-
-X-Sonic-MF: <avihpit@yahoo.com>
-X-Sonic-ID: 4ce2cecd-c057-43de-b3e6-e5f9fc246fc6
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic322.consmr.mail.bf2.yahoo.com with HTTP; Thu, 15 Aug 2024 19:55:36 +0000
-Date: Thu, 15 Aug 2024 19:53:48 +0000 (UTC)
-From: avih <avihpit@yahoo.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Message-ID: <2093707499.4382922.1723751628640@mail.yahoo.com>
-In-Reply-To: <xmqqv801sil5.fsf@gitster.g>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com> <4f77b7eb7f1110e47201b8c97c34a0cbcd14e24f.1723727653.git.gitgitgadget@gmail.com> <xmqqmsldu4iu.fsf@gitster.g> <1228065843.3779090.1723743313433@mail.yahoo.com> <xmqqv801sil5.fsf@gitster.g>
-Subject: Re: [PATCH v2 5/8] git-prompt: add some missing quotes
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gj7WneDB"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4766F2045A;
+	Thu, 15 Aug 2024 16:06:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CvbbHefBMVrTQr6a0ddkRt87WVDYIwAO/sj3nN
+	LnJ7o=; b=Gj7WneDBtQV3wDCoozvNfczhg37ZDQheGAOd9pxh5YXTTzOTzagXfK
+	rvnUXAEHm+U2jF+GKZl3buS4ChKI92n9NIIEt3FZOZnlwJDZyyFaWIJ6PilM6s6P
+	K0jdMjBuzXpU+MycC0wUeHE9/SDIPvXFn5+WFWtFcYx8vsJQq+b6g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FD6320459;
+	Thu, 15 Aug 2024 16:06:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A316D20458;
+	Thu, 15 Aug 2024 16:06:24 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] send-pack: add new tracing regions for push
+In-Reply-To: <d57f258026f941e7bc05de8dac359fc1e2e42bee.1723747832.git.steadmon@google.com>
+	(Josh Steadmon's message of "Thu, 15 Aug 2024 11:51:13 -0700")
+References: <cover.1723747832.git.steadmon@google.com>
+	<d57f258026f941e7bc05de8dac359fc1e2e42bee.1723747832.git.steadmon@google.com>
+Date: Thu, 15 Aug 2024 13:06:23 -0700
+Message-ID: <xmqq8qwxsg8w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.22544 YMailNorrin
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D933BE06-5B41-11EF-B63F-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
- On Thursday, August 15, 2024 at 10:15:53 PM GMT+3, Junio C Hamano <gitster=
-@pobox.com> wrote:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Fair enough.=C2=A0 My "we would prefer to treat $? exactly the same way
-> as no" still stands.=C2=A0 If the user did IFS=3Do, "no" would be broken.
+> From: Calvin Wan <calvinwan@google.com>
 >
->>=C2=A0=C2=A0=C2=A0 As the commit message notes, this is unlikely to fix t=
-hings in
->>=C2=A0=C2=A0=C2=A0 practice, but it will fix things with weird IFS values=
-.
+> At $DAYJOB we experienced some slow pushes and needed additional trace
+> data to diagnose them.
 >
+> Add trace2 regions for various sections of send_pack().
 >
-> Yes, so I'd prefer to see us being consistent.=C2=A0 If we quote "$?" to
-> protect ourselves from crazy folks who set insane values to $IFS, we
-> should quote "no" the same way, no?
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  send-pack.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
+>
+> diff --git a/send-pack.c b/send-pack.c
+> index fa2f5eec17..de8ba46ad5 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -512,8 +512,11 @@ int send_pack(struct send_pack_args *args,
+>  	}
+>  
+>  	git_config_get_bool("push.negotiate", &push_negotiate);
+> -	if (push_negotiate)
+> +	if (push_negotiate) {
+> +		trace2_region_enter("send_pack", "push_negotiate", the_repository);
+>  		get_commons_through_negotiation(args->url, remote_refs, &commons);
+> +		trace2_region_leave("send_pack", "push_negotiate", the_repository);
+> +	}
 
-OK, I see what you mean. But IFS-split doesn't happen on literal
-shell input (i.e. script source). It only happens on parts which
-get expanded with parameter or arithmetic expansion or command
-substitution. To quote from POSIX (2024):
+> @@ -641,10 +644,12 @@ int send_pack(struct send_pack_args *args,
+>  	/*
+>  	 * Finally, tell the other end!
+>  	 */
+> -	if (!args->dry_run && push_cert_nonce)
+> +	if (!args->dry_run && push_cert_nonce) {
+> +		trace2_region_enter("send_pack", "push_cert", the_repository);
+>  		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
+>  					       cap_buf.buf, push_cert_nonce);
+> -	else if (!args->dry_run)
+> +		trace2_region_leave("send_pack", "push_cert", the_repository);
+> +	} else if (!args->dry_run) {
 
-=C2=A0 After parameter expansion (2.6.2), command substitution (2.6.3),
-=C2=A0 and arithmetic expansion (2.6.4), if the shell variable IFS
-=C2=A0 (see 2.5.3 Shell Variables ) is set and its value is not empty,
-=C2=A0 or if IFS is unset, the shell shall scan each field containing
-=C2=A0 results of expansions and substitutions that did not occur in
-=C2=A0 double-quotes for field splitting; zero, one or multiple fields
-=C2=A0 can result.
+Misleading "diff" but this is correct.
 
-So 'IFS=3Dn; reply=3Dno; echo no; local x=3Dno' work regardless of IFS,
-because there's no expansion, and IFS is not involved.
+But makes me wonder if we really want to express these (and other
+events we saw in [PATCH 1/2]) as regions we enter and leave.
+Presumably we would generate a certificate instantly, compared to
+all the other things happening in this process, like talking over
+the network, waiting for the other end, and packing the payload, and
+I suspect that the single bit the debuggers would want to learn from
+the trace is "did we get asked to give a certificate?".
+Sandwitching a rather expensive operation inside a pair of
+enter/leave would give us a way to measure how long that operation
+took in exchanges for one extra trace log entry, and "ah, we need to
+first fetch the bundle and process it" we saw in [PATCH 1/2] is
+something that is worth timing, but I am finding a bit hard to
+believe it is worth doing for push cert generation.  It is
+understandable if there weren't any suitable mechanism to simply log
+"the control passed at this spot at this time" kind of event in the
+trace2 subsystem, but I do not think it is the case.
 
-But 'IFS=3Dn; reply=3Dno; echo $reply; local x=3D$reply' will be affected
-when unquoted $reply expands as argument to "echo" (or "local"), and
-then gets split by "n", so it would echo "o" (" o" because reasons).
-Fixed with quotes: IFS=3Dn; reply=3Dno; echo "$reply"; local x=3D"$reply"
+> @@ -686,6 +692,7 @@ int send_pack(struct send_pack_args *args,
+>  	strbuf_release(&cap_buf);
+>  
+>  	if (use_sideband && cmds_sent) {
+> +		trace2_region_enter("send_pack", "sideband_demux", the_repository);
+>  		memset(&demux, 0, sizeof(demux));
+>  		demux.proc = sideband_demux;
+>  		demux.data = fd;
+> @@ -719,6 +726,8 @@ int send_pack(struct send_pack_args *args,
+>  			if (use_sideband) {
+>  				close(demux.out);
+>  				finish_async(&demux);
+> +				if (cmds_sent)
+> +					trace2_region_leave("send_pack", "sideband_demux", the_repository);
+>  			}
+>  			fd[1] = -1;
+>  			return -1;
+> @@ -743,6 +752,7 @@ int send_pack(struct send_pack_args *args,
+>  			error("error in sideband demultiplexer");
+>  			ret = -1;
+>  		}
+> +		trace2_region_leave("send_pack", "sideband_demux", the_repository);
+>  	}
 
-Both can even be adjacent: 'IFS=3Dn reply=3Dno; echo no $reply'
-would echo "no=C2=A0 o" in all shells, because the literal `no' is
-unaffected, but the expanded $reply is affacted.
+This is also dubious.  When sideband is in effect, this records the
+fact that we did ran pack-objects and allows as to measure how much
+time it was spent.  But on a connection without sideband enabled, it
+does not record anything.  But if we start the region a line sooner,
+and finish the region a line later, we should be able to record the
+same facts even for a connection without sideband enabled.  I also
+find the name given to this region ultra-iffy.  Is it so important
+that sideband_demux was used to communicate with the other end that
+received the data our pack_objects() produced that the word
+"sideband_demux" deserves to be in the name of the region, more than
+the fact that this is the crux of sending pack data from us to them
+(i.e. the main part of the "send-pack")?
 
-So $? is the same as $reply in this regards - it expands to some
-value, so IFS gets involved, so it needs quotes. But a literal `no'
-works the same regardless if quoted or not.
-
-Worth noting in our context is that zsh doesn't do IFS word-split
-by default on parameter expansion like $x, but does split the output
-of command substitution $(cmd....), and code in git-prompt.sh is
-expected to work in zsh as well (like it always did).
