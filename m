@@ -1,135 +1,130 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B651A01D4
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B501A01B4
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723727666; cv=none; b=nIVDZOXLnLvH3nM+zfVgz/Q+EEX1wtrFXLakGo9pH6ZcvCLRlWr56teych2pVN2Q4Yh+sEvvwnPfX/8/a8NHfvFDJQMaHQnCSHHx4tM/ZxXgSGCQOJgDo3+21v89AsiakXeUO1/gFo24U/cScxhCzTOW3FwtFv2BX5wBdt9NhMc=
+	t=1723729029; cv=none; b=mSdEyFDYF+wZBOV96uMCyGGAY7cLNJysUL3DBTAbdqW9ozUnychvq0qzwC8CGH4yzKyYmrSB4m5AEpBDC1hHLEgjALEsV1tVDFGOaxQdXVt1mP5BadizRpx7qJeqJFGZ7xNNIyqSqrfRevZYGxxET7SKMFh2c2N5sQi7zBK4tU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723727666; c=relaxed/simple;
-	bh=v+jMPc8z8nEbTUtYnZtSs+t993RhPfq1zuufwrejIis=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TJ0y1CG248cOJwmiGayht9ZCAUkQqfxoTZzc06szhO4zK0akpJeQp4Y1NRyStWN5zrIcayhw/Y1Zf9dHmyxzo0WnA4mzdAVTa9aKWQiGWJLliHyDfI91uEnRGOvrBypGuoYr7Btv2bdz/dPbbpgeVlL3HmcB/9GJete1bAy/dLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bnOiL2nC; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1723729029; c=relaxed/simple;
+	bh=FF+MurQtdZdnt5dNIhE2tG3P0PL53z44+1/nj0iH53w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mnllQoqj3AlXP/y3tffKyBxZGZSECh/IOnSsUgo1zpGk47RSAygLO9MN51bnJcCePLrch+ILeu899YS2eOMFPnLmoT94WemL+NQ+dAN33N61OIPZrlkoXZhIK0m6BYt3wMPx32lTf9iOeyfgyibuK8Z0puj+z3/TQ2qG7rCE6rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bYOeGkA2; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bnOiL2nC"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42808071810so6053535e9.1
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:14:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bYOeGkA2"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc587361b6so9043545ad.2
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723727662; x=1724332462; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4YF7YjmYcjoTfiyty4/qVcE6d/YtaHOgwJiFDBZrqMM=;
-        b=bnOiL2nCfxwnPXZqNgChKMXf4r7lE2zCCVqoILF87f3xuTlG1we86EAD6NRGorYHzO
-         yxxpd1HthkSNXzwaybDdigGVXDPiBcN+PMLM47MPEbCHsC8rbNC07EcseYhw61h8BAvh
-         oFkQf34CfmcFSRC+VUS1sRzroS0ACOyLi8CGrvmrPTrza/6Vefq+lHiMsVKEfnd98l1a
-         b5iWXsJoLmMcjT87Ci3JJB/P3XMbhMJLA9tb8LEC5/I53DQGx7NljJuBPT65uAnHl1M4
-         WaGPPk1MuSylOaVr1hm2U9zxIMlMGEpSe38bSfYxoOxQD5NYjlaKCCwj9Q0il5+fRiOw
-         N1vA==
+        d=gmail.com; s=20230601; t=1723729027; x=1724333827; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GRzHvEPQ+gsCpjzJpqcGy/ugrJPjQFQhM0GeCxq8Opc=;
+        b=bYOeGkA25tL4+3PkJTRotdz4ZvXDoWQnf5W6bE4hjBcc/R6jecxrboEVtRXQ0Yr1hM
+         qcyCJACbZoIqoXKmP0RxvWhcuZbIgikwiHEbY9RD8XbNGKrIRDfwuT8WbxAqIFnN5aTc
+         Gq61GYxe8Y3n2uKggadp9B4YmCIisWdUEGYMd9RQg0hupLGndZVn4zAWqTsklbyHlIpt
+         yrpUv0xkIX5BUj8gmWbdQIKDpS9Eo7TxelINLtLFXeZUEg1ZqW5shDyXIXbeCz8PFmT0
+         k9GO9LoxQLEqD3piM0HgdE87Uo3zllopPtdreNlbVp1s5sLTtVgzOaiGOTJJwP7u0P+o
+         Yg5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723727662; x=1724332462;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4YF7YjmYcjoTfiyty4/qVcE6d/YtaHOgwJiFDBZrqMM=;
-        b=Fdge4Uck66ltad+hgJWvZPA4x8/LuEBDoXVhfs33vYJ0eBC1Dsv5xByRBDabVzI6pB
-         db965NXLcbQ+/7qyP4FQ85i5Kmof2dfu06SgcWNdoo0Dk2tTiqaIo2N6o6QvdkaPQUag
-         9lJM/WK6IyEyQSDc+uKVgWYIDLMMZHE9PfiWRqVUTUXlvVlf+6JCiL0z0/7fEY5+gEap
-         uG3bVM3/MPKieKXhJxndayQ6GHgiWAiK7V+jqY0uCWEpLBDfbw1e0GpcEPF+YRuhuVYt
-         Gw2H9KKltu+ESLRqo7G1yBOQBPOtE7pSzL7IYcx0bfUjQVJ+iT2gxIjx9F7+elfeucV9
-         UcbA==
-X-Gm-Message-State: AOJu0YwWQ8gOuRCeNQhRbVsAwXPzXTEcVC8WZesCe0j97xyukg2qpbQ2
-	1U58I8lYHZjUgPDTdTzAkcJkbbjv0AXaEf2DMB5hpar859B2RaB+HxMHcA==
-X-Google-Smtp-Source: AGHT+IEMjZcfhq15pG0YsiZPPLOeFIjQJTcIawrcn1p9MTawwnARjWMc3Zafde7ClFwAdqx+UwtU8g==
-X-Received: by 2002:a05:600c:4590:b0:428:141b:ddfc with SMTP id 5b1f17b1804b1-429dd2684b0mr47246045e9.31.1723727661517;
-        Thu, 15 Aug 2024 06:14:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded71dfasm48697895e9.38.2024.08.15.06.14.21
+        d=1e100.net; s=20230601; t=1723729027; x=1724333827;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GRzHvEPQ+gsCpjzJpqcGy/ugrJPjQFQhM0GeCxq8Opc=;
+        b=hxSz+aUH/JlUVzbufdgiAAHA8B7uGo6bGTKNr+Rgv/wgpfDWBdJIN2SSQSPlT7rRCX
+         AX6PTcG+nPp+FVSNOHPev7VplJUMMkPVGleeOKT6CTJlnr8he5HtIRJlHwJUeAdoTx5Q
+         bN/2Qe1EVmhuYxlCoYucOxSVUFIOWWps8THrg1M593DQAmm+3V7FOaqZX1D3C604TsNI
+         QI5x2WCp7fKY4hDIIr4g6lhqd0IdFQ/uhwCPTZnciYT85HgxNGVJHGKj22nOFSl+uju5
+         /Ji41iCZdwU4k41ruP9b9XjHyI0lletU+3wGYPLbUEMFabueWTyXjmG86uiXHHTEEjQM
+         JLLA==
+X-Gm-Message-State: AOJu0YxOHEQO/S0GLirHlTv+4FfhTwbQ9cH2d/RvlSLcR31LoUaVSbLc
+	TXGHxmvDDodqVye9x4RvHO/HkXhNlP/BYciEdYBiDYgBY09osERu
+X-Google-Smtp-Source: AGHT+IEj+oFzyNNCwxHvwe3a9frqMlEHSzmCi90n+QibbUAGr1gbC9L8WW0rHBstyTgsrc77WSJuCw==
+X-Received: by 2002:a17:902:e882:b0:201:fac8:ff55 with SMTP id d9443c01a7336-201fac90151mr9488675ad.13.1723729026829;
+        Thu, 15 Aug 2024 06:37:06 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f031bcf7sm10221835ad.74.2024.08.15.06.37.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 06:14:21 -0700 (PDT)
-Message-Id: <e71ddcd2232c6f687855e2d4a0c79def1164d71c.1723727653.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
-	<pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
-From: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Aug 2024 13:14:13 +0000
-Subject: [PATCH v2 8/8] git-prompt: support custom 0-width PS1 markers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 15 Aug 2024 06:37:06 -0700 (PDT)
+Date: Thu, 15 Aug 2024 21:37:44 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC] Implement ref content consistency check
+Message-ID: <Zr4EqESHSnQET1Xg@ArchLinux>
+References: <ZrtrT1CPI4YUf5db@ArchLinux>
+ <CAOLa=ZQVkmyVWAxyjrEQoEJ+gKJoJjfFqsDvr_A15FHGX1w=rQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Avi Halachmi <avihpit@yahoo.com>,
-    "Avi Halachmi (:avih)" <avihpit@yahoo.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQVkmyVWAxyjrEQoEJ+gKJoJjfFqsDvr_A15FHGX1w=rQ@mail.gmail.com>
 
-From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
+On Thu, Aug 15, 2024 at 03:19:50AM -0700, karthik nayak wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > Hi All:
+> >
+> > We have already set up the infrastructure of the ref consistency.
+> > However, we have only add ref name check when establishing the
+> > infrastructure in below:
+> >
+> >   https://lore.kernel.org/git/ZrSqMmD-quQ18a9F@ArchLinux.localdomain/
+> >
+> > Actually, we already have a patch here which has already implemented the
+> > ref content consistency check. But during the review process, we have
+> > encountered some problems. The intention of this RFC is to make sure
+> > what content we should check and also to what extend.
+> >
+> > I conclude the following info:
+> >
+> > 1. For the regular ref which has a trailing garbage, we should warn the
+> > user. This is the most simplest situation, we could reply on
+> > "parse_loose_ref_content" to do this.
+> > 2. For the symref, we could also rely on "parse_loose_ref_content" to
+> > get the "pointee", and check the location of the "pointee", check the
+> > name of the "pointee" and the file type of the "pointee".
+> > 3. FOr the symbolic ref, we could follow the idea of 2.
+> >
+> 
+> Just to understand clearly, when you're talking about 'symbolic ref' you
+> are referring to symbolic links?
+> 
 
-When using colors, the shell needs to identify 0-width substrings
-in PS1 - such as color escape sequences - when calculating the
-on-screen width of the prompt.
+I am sorry about this. It's symbolic links here.
 
-Until now, we used the form %F{<color>} in zsh - which it knows is
-0-width, or otherwise use standard SGR esc sequences wrapped between
-byte values 1 and 2 (SOH, STX) as 0-width start/end markers, which
-bash/readline identify as such.
+> > But Patrick gives a question here:
+> >
+> >> In case the ref ends with a newline, should we check that the next
+> >> character is `\0`? Otherwise, it may contain multiple lines, which is
+> >> not allowed for a normal ref.
+> >>
+> >> Also, shouldn't the ref always end with a newline?
+> >
+> > For symref, I guess we have no spec here. From my experiments, a symref
+> > could have a newline or no newline, even multiple newlines. And also
+> > symref could have multiple spaces. But the following is a bad symref
+> >
+> >   ref: refs/heads/main garbage
+> >
+> > I think we should fully discuss what we should check here. Thus I will
+> > implement the code.
+> >
+> 
+> Agreed, in refs/files-backend.c:create_symref_lock, we write symrefs as
+> "ref: %s\n" so it makes sense to validate that there is nothing extra.
 
-But now that more shells are supported, the standard SGR sequences
-typically work, but the SOH/STX markers might not be identified.
+Yes, we should do this. I will implement the code and the send the
+patches to the mailing list.
 
-This commit adds support for vars GIT_PS1_COLOR_{PRE,POST} which
-set custom 0-width markers or disable the markers.
+Thanks
 
-Signed-off-by: Avi Halachmi (:avih) <avihpit@yahoo.com>
----
- contrib/completion/git-prompt.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 75f272daa21..5c43981aa11 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -129,11 +129,16 @@
- #    strings (SGR color sequences) when calculating the on-screen
- #    prompt width, to maintain correct input editing at the prompt.
- #
--#    Currently there's no support for different markers, so if editing
--#    behaves weird when using colors in __git_ps1, then the solution
--#    is either to disable colors, or, in some shells which only care
--#    about the width of the last prompt line (e.g. busybox-ash),
--#    ensure the git output is not at the last line, maybe like so:
-+#    To replace or disable the 0-width markers, set GIT_PS1_COLOR_PRE
-+#    and GIT_PS1_COLOR_POST to other markers, or empty (nul) to not
-+#    use markers. For instance, some shells support '\[' and '\]' as
-+#    start/end markers in PS1 - when invoking __git_ps1 with 3/4 args,
-+#    but it may or may not work in command substitution mode. YMMV.
-+#
-+#    If the shell doesn't support 0-width markers and editing behaves
-+#    incorrectly when using colors in __git_ps1, then, other than
-+#    disabling color, it might be solved using multi-line prompt,
-+#    where the git status is not at the last line, e.g.:
- #      PS1='\n\w \u@\h$(__git_ps1 " (%s)")\n\$ '
- 
- # check whether printf supports -v
-@@ -309,8 +314,8 @@ __git_ps1_colorize_gitstring ()
- 		# \001 (SOH) and \002 (STX) are 0-width substring markers
- 		# which bash/readline identify while calculating the prompt
- 		# on-screen width - to exclude 0-screen-width esc sequences.
--		local c_pre="${__git_SOH}${__git_ESC}["
--		local c_post="m${__git_STX}"
-+		local c_pre="${GIT_PS1_COLOR_PRE-$__git_SOH}${__git_ESC}["
-+		local c_post="m${GIT_PS1_COLOR_POST-$__git_STX}"
- 
- 		local c_red="${c_pre}31${c_post}"
- 		local c_green="${c_pre}32${c_post}"
--- 
-gitgitgadget
