@@ -1,71 +1,86 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6760E38382
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 18:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518861388
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 18:51:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723747711; cv=none; b=h0+gA9Uy8T/vOuRHvlFWLVTmFbm0o6k9tI2qQb7R441lDSpTNqr+qwIrgbtESQkfkha7PV4aaCh5CW5yRLdbDfaQhc1SLYIiRZCq/J2cnzvos9fUYDXloFzYMJvU2c3zo9WUK+f9VKTgEAkudPzBt5We66A1OGR4bBjs/mQAZFA=
+	t=1723747877; cv=none; b=jnBLT7v/ACZYdANURVdfQGLBwhUMgLyRho0GRzWykCDsJnu5xQHiK6EYvl3iFEF1a01WOI0tRaNOZ4k4vMkdgZHPC2QbxK1OeIJ9G2bxeQZWPUGK02FshoGMBdcvkmUsmNT5EaLh8l4aMxVNCVKg1EouVDkQtfqc2qrZH78h0IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723747711; c=relaxed/simple;
-	bh=WXBCTatIIgYHT1jL8hi6Jin1pwnv3PZ3yFi9gh3XIpw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ogTSXyPAq4nWgNYaIyjUGYwQwDZRDaTl/Mm4JBljPEcfGW+DPZzhhOeq8LTjhKa9BSiJPjk4hqGTxB5UvfN6rccMgxKnQ3rSF97TVxKOw3bUcAOrOMW3h9xOgDD0DoDD0Sx9UmvhiPogTybPNoihmT8mX6Qu6cyV0dOHv64r83k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dMups2N/; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1723747877; c=relaxed/simple;
+	bh=jNkWHO4x25eQ9Moa4D3BKnnBq+csq4NXuoHZIwcN8BM=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Content-Type; b=aq9p6FruN7cpP1mQLUBO0aX6P4qN6GIfA0fUZqqtSuB6YY0gUUSCfN9yo8jCxNVB+qTgrmGO3rEhJ7jewxUF8BZkYaXHywO9sFIKyH5UT+sHn1IeVpBjvBaDbpTOHdTTUQ11cbsttup9F2ViooH52DGLxqgRwLQGRQ3CWTrUsjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2nvPxwmd; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dMups2N/"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 034A824566;
-	Thu, 15 Aug 2024 14:48:25 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=WXBCTatIIgYHT1jL8hi6Jin1pwnv3PZ3yFi9gh
-	3XIpw=; b=dMups2N/8eG65YeVuuLjckHJFvsYJJDyi7ljwCVsQnjyHsHuApyuOH
-	LID3Z8+LPaWmGX4ivnjRUgpKVNqCLbOGQB6mmkcb5w8eEP81aJNo/nQ4s3lK7T5l
-	G+gQ5xRLKakZMiQtp4joh1jpm8MeeciRuQ+gT9LE9+9GyjZ9F4aNE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EE9A424565;
-	Thu, 15 Aug 2024 14:48:24 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FE2E24564;
-	Thu, 15 Aug 2024 14:48:24 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Avi Halachmi via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Avi Halachmi <avihpit@yahoo.com>
-Subject: Re: [PATCH v2 0/8] git-prompt: support more shells v2
-In-Reply-To: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com> (Avi
-	Halachmi via GitGitGadget's message of "Thu, 15 Aug 2024 13:14:05
-	+0000")
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
-	<pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
-Date: Thu, 15 Aug 2024 11:48:23 -0700
-Message-ID: <xmqq7cchtyfc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2nvPxwmd"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e0be1808a36so2103446276.1
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 11:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723747875; x=1724352675; darn=vger.kernel.org;
+        h=to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pCpg0Z/KiJpqd7fioUhVvxKWwdEDZajAub7Kw57R9+M=;
+        b=2nvPxwmdG2Fzq98uOOjKjWfwac57a/FFlDckKPX2OYpHFVGzEGYZad/AHQ6IxA0imn
+         c1zDR502csVnF18dIJjorywmiqkacH8nuR4t7ee7vBdDGJEsWfJlqM5Tm/RyQJ4qkfuJ
+         9xIF2iddvYcegCoTNHVM3d2USe+Y0Yl8XOLhjqPuZQTZ+u8cDY5TwSWGTRuGhqRcgNNn
+         DgnhJGW+UcYhY2PvKdsucsHrVBUD2L1S7OgPx5+T8hmVVR0AnDnWNPNWJPF/vGe/3Xr5
+         QzcSxiCQFt7shD07JXPxtVAoHge/fcycV60cl2iK+8V087hMOSySbpeMlwEQ2dMH36p2
+         hhNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723747875; x=1724352675;
+        h=to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pCpg0Z/KiJpqd7fioUhVvxKWwdEDZajAub7Kw57R9+M=;
+        b=KgvSvpDmrx230qvItMTtpDlYXKwx7d1wn6PnZ3fa2Q+qUqoynX+VACW1zYnTe8y1Dw
+         mGU3b/ASxxf6FWHd9a67tFuXJLDqLJB8mX7JKZKRWJNRpfTdViNhAFKnHFR4enRE4eRb
+         IWr0eKsjgd45uxBJuAi1kV1LhUIe1jnSta2uzAqkbl86jXXN5atiVNozF8umyJseDFPq
+         ji8GYzPVy8pUvm1tG3vdK94KJUNsuqJodnG6oAV6gRI8zRR7HweaAg+MKf8SaaISJzqA
+         d7TdKyaeLHDJbUwEe23YAFozoFc5Q1B1DkTY+iqLiBXJ3Adpxy+h3s7LZXuxZZtZd+Pu
+         mIpQ==
+X-Gm-Message-State: AOJu0Yw8chDTLYqgBRUIEHreEFhHnCUa6+SYAOhl3VaRtMlEuSEIH1VW
+	ZknDa85SJTrfukMWig7T18Sk2eaFzXKWPR1nQcNePkOmSG1jrf4YBRXzhxqvEeg0qoTeszoL2na
+	KEDdsXZtDBwV/VLHm6Roq+e6lRI+rY/HutrOnZglJhRPradwawc1qNBQbUVOC8yMMHEX/EVcslr
+	8dskQsHmJNpwi/9FxXjhqKqYjuefeJjmndAGeH9Wk=
+X-Google-Smtp-Source: AGHT+IHCxMrJY4jUzPcGjP4SlwsZbYL8o+kTyeh23Xlf+rd4a/NxTrl3YDBzzH3azsEziDJXTYkbsQpt+WuLkQ==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:d4b3:f740:176c:e447])
+ (user=steadmon job=sendgmr) by 2002:a25:ae95:0:b0:e11:5b9b:a53f with SMTP id
+ 3f1490d57ef6-e1180fb0a43mr1102276.10.1723747875169; Thu, 15 Aug 2024 11:51:15
+ -0700 (PDT)
+Date: Thu, 15 Aug 2024 11:51:11 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F38B6AAC-5B36-11EF-BB37-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
+Message-ID: <cover.1723747832.git.steadmon@google.com>
+Subject: [PATCH 0/2] Add additional trace2 regions for fetch and push
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Avi Halachmi via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Last year at $DAYJOB we were having issues with slow
+fetches/pulls/pushes. We added some additional trace2 regions which
+helped us narrow down the issue to some server-side negotiation
+problems. We've been carrying these patches downstream ever since, but
+they might be useful to others as well.
 
-> This addresses review comment on part 6/8 (git-prompt: add fallback for
-> shells without $'...') which requested to use one form for all shells
-> instead $'...' where supported and a fallback otherwise.
 
-I've read the series and they looked all sensible.  Will queue but
-I'd appreciate a second set of eyes before marking it for 'next'.
+Calvin Wan (1):
+  send-pack: add new tracing regions for push
 
-Thanks.
+Josh Steadmon (1):
+  fetch: add top-level trace2 regions
+
+ builtin/fetch.c | 27 +++++++++++++++++++++++----
+ send-pack.c     | 16 +++++++++++++---
+ 2 files changed, 36 insertions(+), 7 deletions(-)
+
+
+base-commit: 25673b1c476756ec0587fb0596ab3c22b96dc52a
+-- 
+2.46.0.184.g6999bdac58-goog
+
