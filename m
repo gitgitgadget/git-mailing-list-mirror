@@ -1,64 +1,64 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7B37E0F4
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:01:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A841814F9EB
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 21:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723755698; cv=none; b=hJLDsYqdow/8LRsSo/KJn5vgFRcFt2GkC7cT8YOQTBp/6X6nMLEjkgGd//jiUuRTNGj3fsyXzUwQ64POWYgr4/ihoLBp3jFP8GPZNY2WYOLxSCU+cTlPN6t0dIdr7HCfj9IH+lgUlY/DjGbJdqN+vqPjZsHkS/0jZy7qCNzUq6Y=
+	t=1723755701; cv=none; b=CtqLW5vMn3WlxInAQvieIrvxIlXkGk22iB6Uw+jYSvhjU24jNpocDwhfl6YPB7iTsyhoIUWOuXOa23RoRfnquaYZoTGIvTRH60dxHe7XjTqCGoLhdzLE0SetorYM6PSTtX6v2voc9XLfq/gCE6DV/iz2fs54fMr2hojyzoZqFow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723755698; c=relaxed/simple;
-	bh=P4nLtaax4xZUgAoO01Y3Be2O/COrRVLoiZ/UDwWNLeM=;
+	s=arc-20240116; t=1723755701; c=relaxed/simple;
+	bh=6m0KXRcKiFTeCqXkVLH4B7gp29jjiELQPt7qeCoTVfU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p1s59n4XCBOhP6NdJbJfJ/tZgWP4xJNlTUP/byRH68lgkiWMGwttWa0kVWgK2dbn2n/gyY5EiP8hoA5HnW3WZGSiHon53yenVFhhhrLoD8aX4ARX/F2PkdZUQetNKnPu3Ck1zqdwrqMr1879gAyHA5Z070wOVrn1l2IdeuIEyc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zrxefS7L; arc=none smtp.client-ip=209.85.219.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=S6ja8Cwm1P09Jx/Dx+/Ha7phk3xEIbbQFBLi+Uhrg4kt3QrfBpXpIjux4cLtinClTbvzfDZQoYjlceMrB0FbqEVQwoJmPELkU2VMt1tTnkti/5DMZ+j5Jgbm64C+t+YDH7fOcsGWM/BdTiuy4BlsejZnqkDFg+8bVsR+2YqH/U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vtdYTR/t; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zrxefS7L"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e0ea24477f0so1444380276.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:01:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vtdYTR/t"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dfe43dca3bfso1474118276.0
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 14:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723755695; x=1724360495; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1723755698; x=1724360498; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vnXoms/JZKpsIummwddL7fQgERMHOCeXotpuHp5HbFU=;
-        b=zrxefS7L016YaWGgkvw0KSChGyGTjd2GT9agr/xv3A+ryikgYFSkukLRO68fP3DKBa
-         H5uDWS03cp3c9wo4pYUIZI0FBiPfH/P4AGQwAWVjGtkhxh82wpwKQftWqABj2BJYsxEb
-         lkXNyPax7Gbrew/HK/D2GhPOO9OIodg7Zszb8x4UrZw+dRcH6KVPOYaY/Thc0qsta5mH
-         6G/+x4ZYUF6BLdrpct2+bYVHXIAp1S084B500xast2yKvPDvkbAsSspDenDgS78VWvQ6
-         o2rg01lKeX5Qrq80OrZFvnsmqtZQGUbEZRleFMekJ2IbzgmLzdC3lwGIYyIWUDzUB+Hc
-         +Vtg==
+        bh=g3Oql4sXviHrCmOI1UoNB7tUbznuL5clvipDPDVw6Fs=;
+        b=vtdYTR/tY8dKBRE+6JnSqtcCcLmzayMpwrQ8h6Eox2/DIXfEW1zx34UCTD0p/6jHwe
+         xBTtliFADygn2BVAeclpL1h+ZaDJ3grDgxefQFKLbv1pTIvdm+8GwNF9S0RLKvEQstOe
+         AHkCSaPXfqvrdTMhwUTmvl7bYC19q+vM9DQ4b/pDRdJSQEfswsp+QODnwCKX0Gb+ZLmX
+         T2OcrpUZctUGeUOyeGTwyFzLLijJwmmA3VhZWyheh7JeRCKvdjkSwXpmGhhP0fc8Xz9t
+         TPBEzlB91T1GiNTsP2U68Fh2a/WNfG0g5+DSr/QeyVsnPZElka84zLS3EiiM3hjpUU4v
+         HhXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723755695; x=1724360495;
+        d=1e100.net; s=20230601; t=1723755698; x=1724360498;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vnXoms/JZKpsIummwddL7fQgERMHOCeXotpuHp5HbFU=;
-        b=aYAKfflak+1paPKG1dnUEnfcLdEpXUY+FkFLDOv7mYgUI3O0saJoALOmTY7yTwGsP8
-         1iyh1x6xEj1LJ0SVVG9VqSe13HA4isy46d2hHXZMq1RIZlzZbBxkyqry3J9C+c1205Is
-         y5XgTMNk9cFc0GlBxLCFRnqjJ6iq74zDjCKLNMAfP5fRLGfLNJK4lIE4cvKX0ZEx3dZ/
-         yVJ8WliiHte6J3CMW9EXfjt8m97U+AmdPLBIMb3C6cLFjh7uh0wniUcgORnSPv+BxE7C
-         N0hYk9Uk4OEmjyj6Ynl1WCBO7KK64w1MUXzjaLHm+IU51e8GvgKTkBmiP4xkU9Fj1r+d
-         NjLQ==
-X-Gm-Message-State: AOJu0YyhjeSN5AoPBpjDXhgi89NxFjLLOkr+ZKjyjDA4nvCf2pBUdwyR
-	q35HB1p6a3KGX4yxtTnVuyl8kjzURQMcFbOejbcDRWGk8KdR/PjvmMORQbjfKjhXos7zf+tlWE9
-	1
-X-Google-Smtp-Source: AGHT+IHhiLOep9HKr6QApb5ZkWdF+pH2BWzflfokhHVcoOzgRoaw9drv4AdDqTubEYaT3m4/TWH8Xg==
-X-Received: by 2002:a25:8204:0:b0:e11:7ecc:3b0b with SMTP id 3f1490d57ef6-e1180f45d93mr1121089276.14.1723755695560;
-        Thu, 15 Aug 2024 14:01:35 -0700 (PDT)
+        bh=g3Oql4sXviHrCmOI1UoNB7tUbznuL5clvipDPDVw6Fs=;
+        b=jn7ouDh83+zwxjOkr3SVrvkpeyLLPwkrGOQHIHhgO4/QtWEEqQwSTBjXPRWeE6kAhl
+         VAbvxbSHdsKmK2daoXBk9BKiNEqKFmoRCYcvZzLeYYvX13IUiSNbjTdwvIXlsAN8UFCi
+         D2dongRXXuCfhWiGtiowD5KLcTKj0gUTJ45AxM8HXc28iBGjkaDDZDxULtj9Mq6nbKEK
+         /Rb6XYWZbWMuiZHQ3a7Smumi1eafskQ3yz16XL9vwVzzfwEcy2Lg9m+JaPcXne6h2KGe
+         fBgAgwpuW+TvPGWxGm7zJ3NaNGKQY7gGmbSR74McXtx9+u1Zwif2dov+B2lcWWe+mZTX
+         k+TQ==
+X-Gm-Message-State: AOJu0YwvPDsPo0u4eMo+8O400VrsArynwoxzxXApKP2y25To6U0z1TlI
+	QXmoHD6wpuByNCahS1Sl8wbaHDi1WnZLeBL14zE3wu8ihAzwsdTq4LuEPVM3RV/ZnaakY3txMP1
+	u
+X-Google-Smtp-Source: AGHT+IGyc7prTUXLp15StunBpDxQwy5Axbhci9Cc+SLNayWn6dd/DMg9xVOvtmxbRUfN5okYm/buMQ==
+X-Received: by 2002:a05:6902:118d:b0:e0b:a4b6:670f with SMTP id 3f1490d57ef6-e118100496fmr1287552276.51.1723755698413;
+        Thu, 15 Aug 2024 14:01:38 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1171e3ff58sm451727276.18.2024.08.15.14.01.35
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1171e6a848sm453771276.31.2024.08.15.14.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 14:01:35 -0700 (PDT)
-Date: Thu, 15 Aug 2024 17:01:34 -0400
+        Thu, 15 Aug 2024 14:01:38 -0700 (PDT)
+Date: Thu, 15 Aug 2024 17:01:37 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 05/13] pack-bitmap.c: teach `show_objects_for_type()` about
+Subject: [PATCH 06/13] pack-bitmap.c: support bitmap pack-reuse with
  incremental MIDXs
-Message-ID: <b7eae5dc616f8aa93a304b6fdbfe20b8fa576d48.1723755667.git.me@ttaylorr.com>
+Message-ID: <01b8bd22cd9a6486cb79500558bd1eb2da832856.1723755667.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,22 +72,44 @@ In-Reply-To: <cover.1723755667.git.me@ttaylorr.com>
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 88623d9e06..f91ab1b572 100644
+index f91ab1b572..2b3c53d882 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1631,7 +1631,7 @@ static void show_objects_for_type(
- 				nth_midxed_object_oid(&oid, m, index_pos);
+@@ -2320,7 +2320,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 		multi_pack_reuse = 0;
  
- 				pack_id = nth_midxed_pack_int_id(m, index_pos);
--				pack = bitmap_git->midx->packs[pack_id];
-+				pack = nth_midxed_pack(bitmap_git->midx, pack_id);
- 			} else {
- 				index_pos = pack_pos_to_index(bitmap_git->pack, pos + offset);
- 				ofs = pack_pos_to_offset(bitmap_git->pack, pos + offset);
+ 	if (multi_pack_reuse) {
+-		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
++		struct multi_pack_index *m = bitmap_git->midx;
++		for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
+ 			struct bitmapped_pack pack;
+ 			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
+ 				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+@@ -2344,14 +2345,18 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 		uint32_t pack_int_id;
+ 
+ 		if (bitmap_is_midx(bitmap_git)) {
++			struct multi_pack_index *m = bitmap_git->midx;
+ 			uint32_t preferred_pack_pos;
+ 
+-			if (midx_preferred_pack(bitmap_git->midx, &preferred_pack_pos) < 0) {
++			while (m->base_midx)
++				m = m->base_midx;
++
++			if (midx_preferred_pack(m, &preferred_pack_pos) < 0) {
+ 				warning(_("unable to compute preferred pack, disabling pack-reuse"));
+ 				return;
+ 			}
+ 
+-			pack = bitmap_git->midx->packs[preferred_pack_pos];
++			pack = nth_midxed_pack(m, preferred_pack_pos);
+ 			pack_int_id = preferred_pack_pos;
+ 		} else {
+ 			pack = bitmap_git->pack;
 -- 
 2.46.0.86.ge766d390f0.dirty
 
