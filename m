@@ -1,101 +1,114 @@
-Received: from sonic312-22.consmr.mail.bf2.yahoo.com (sonic312-22.consmr.mail.bf2.yahoo.com [74.6.128.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBFC28DC1
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 04:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.128.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A9941C64
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 05:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723697867; cv=none; b=dc5h3LyQjEnJJEZuAVDBq4s/dDTYWRtYXVRUQKkbhTNm7CfsEZkIoKTuROqrpUFd2qY7sy01gPIgKf3OZiWdEdKtctWHheu+UNV49s6piwyXKVEbETcmPwoyB/a1oU0CNTFgZ73KBXnf8BmMXqsZRHfCGTuV/2QgTMUypprxmNU=
+	t=1723698796; cv=none; b=Cq/IBS2oaVR5zopOjgJBX4ch80bzoGqbEIEinR9zjomdPt9gnFQfUOLjGO0SWPjdpq7lKqAjbplrg+TKmFg8djyHSWz5TlresTT5chX9nEgJHeKZcV2emH9F4w+HYPUMIMAnqG0kt8SVaKj84ki6IqNlzc6bdn9YoGwLRnXMlas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723697867; c=relaxed/simple;
-	bh=41kAopJ0ffz2QP29y3RUorDN61Y89e+Thc0NIzYl+a0=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=k3PJSEH1LdehkhRsXGI2k5Z1Iy2jkpCvEU5u9ajyiExsg/6iuY+OB16qP/0kjEaFCSQsic0Y+fvhjZCRpqlwW3SMyXJbhhfUUlEaD3xN2P469FnzzfW3fiB6bohEHgRyipIcglWH3DE30+7/k1GRmIz1maktGL8Fr7PIH5E8/5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=mLXyW0Wm; arc=none smtp.client-ip=74.6.128.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1723698796; c=relaxed/simple;
+	bh=OFCvRX16+IbyuyuVTvbQV0fKAk+IIcOImSpoNRkxWpc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJxQsBR9H1SiAGnn6J0pFr8kzZ2q33gSyWjItBndstR72ESbAF/BCrR3J5kvzEeSmWrX2wnq/8PvCMRVjQPQeAC9kKHoYGzCc9fBscWbRJR8CLX5hwfaByZauRTow+V2Q551g6WRHnGj/a6oF6U+rhcR1fqHgwBGrvZH6AwZsBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GlnJpW6V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o79MSx2O; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="mLXyW0Wm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723697864; bh=41kAopJ0ffz2QP29y3RUorDN61Y89e+Thc0NIzYl+a0=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=mLXyW0WmrVKvH43Q9wzQf6poWIzHncRFiyORpzywaIt0U9rQtBUSPIRaBFOC5DGZFRbLVau0pTkeeymwqOvOTLcNUyK1tIWfqsYG8dXWRA96ZLFpLNNUGRFLhkeOqAs4LufShLwHF0B1oROlLuNRn9K8uSJunbrSXbIRb/hBl4kHaeQPaDhckr6Og/Znd67YrFfMrrjggfyIQc8kRFNJzIarkI8HYZ6+6OilrZjPso11vUWmPlqBsorHAWH8sUDxZsStbEIzB35VKLRD2ab1EwWJcbjXTJEE2LWcULpyq99FWp1obqVyYviGKetiUPpb1s8NBGZCldUhKHWzS1TTjg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723697864; bh=0nlnyn2vMLYNUpmQc+w9VugjTfP6wr/v79uG0eaWITi=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=LHvIqiyaXqNyP6pvR5/vSJDOO11dm63DJvgr1rlAJeiTGcEB801z7gr48IVdd9KTeCp5DxzQoLqewk6Ca7nh7SsN5uuOmEVlQYFyi2yYhsfDabbKH4cZnwqn7vgK0dyKdkAs4BsoZiaXkSLoQSkx8h0H2ZdLboudQEljOccGV+Fabv9iLSv2kF3KqAFLKntb8u3wO6e2Rfq/9Ukkey4AZ1xR6VXPmXTiairMtTZ1/FV3wqeBIAxAmP0ul/yrXOtNrCRV8QU5yQDXhMeDTi5Pk+fLe7xpwEL2gj0/1oYbesqdV+V/HTec21eG8EyTO7hHGmfMXpu+BqfN0P5+xzdppw==
-X-YMail-OSG: JUyKp_QVM1kyFjTbIs4DhiSQpr1sgd21QDUvW2gQ9jf36SR9jZJeM0XD6Xa1Pep
- xQi9a3qwXSyA9i8Ord3Gw_7uTG4pm7WyfO3OkjeT9myyL1GSlywsb5spBCet4eysOCJkgWx2Kmlc
- 24LnF_1ZcpbwMKDDem7OT5SAQU2lHdkCTlk6vcoPT5sPRYiaq5a2v3DJqf6fntWQAiRKL97j_UmT
- CP6AC1xbVh9R7aHDe4rPmMIpkjZaZKPOE4kKzb1WlH66ce8V_iRXl3zroFkehc30hW.ONL286bIw
- zptdnD0MciX4DkD37QVeKhq14QYk4oRsl691b4UKaShV7BlA06XzbobuQ75E0mEjv3.bSaOhEsCk
- od3op0tX9pzYuZUP6_OQwYa6FKA8fVwZlF0s2EW5re7fZ6CmdJLrcbMRHnYgnISsMnMjiBn63Lk2
- wGUuhGflbzAGYdctICdoao8HO0gt3LlFgSUApih9sVNEizCz2UVWhcExBPnbIEKbWIZXj6rL.vpC
- .8baML3vcZ7IqMtOgFboGX0YOVtzaV5L9pmkFMLl9m5cSPnR19mxy9t7R.i5lhAWSM6eVzB1jAEm
- Sy75.Cn873DTwVTIzaBwRNuBEDpaHWfG3BAnvQwddD.Vuo2HBqLnL.Txu_ExGxKGeci.1JK4zNmH
- 9J8YnR_mfb6EQ4NEW71UXfpZDMdFdTJ7f6teeSiDSuuq86eNXqJAgt7mRb2ISVCpxJ5_Q1u78s9i
- RXCGbcnOFKbXX_aJdP_6q5mftqagKo3cEhZkV_Du.PAWSqiDDC3AqzKxtTdog8sqG1OVphWCpXLM
- V0_5rUXtwDyX_SKEhhUgQ8v84wBBDeYjHAWjyk7DmMSqMtKzP.ZoLQD2LTHE701PKYpnS6zt3__c
- .Yh2src69RJJGXe10XfAuIk7yOIw5mgAehMtoHire7SYtqlFoRuanBbRxeeKZit9iFjf9GMGfJ.W
- 7Fx0Zkx_0A0iGzDhpFkfXWRiExczjEz54nybvrhR_kRo1kHMx4eqmQ6pkqyZMa4V4yMkRdEXz9X4
- Wo7kGYVT4Zoui9CpAskTpXFwzIQeVGJUCAOUWRkx5If7SCHt6e69sIt6on0BvF9nMGQEbrkFpW6k
- pTK6I9.ApDu5XXjkWNZxGUAZyOwxq_ho3whpz.dhJd9lM8QMtaX88EN9.5Yw7S8oZoM_0lFUGgLi
- V5aPoIXSxxqMS96X6gP9LzC6viM0AMCDsZg2mRAcpWLX8Pu.wIRAlRlFCpes0jigZVbLroB9Os.D
- Y.HIP9fPucDHW04Sg1sJjzId97m2inVOKPaTBT8LNTunAiq8xqizoCM06In1Xs0bHsjnyuXJcnHT
- H..XRrYAFXKdHjAYkWie23bGfMyuopQKDZKwc8rzojx27LR8d0ZB6lAX81cF8baq2hudpBaO3edX
- WALcnHqSEXkC7Gv6oeU4Mbx1iIQpsQ85j4Kl.m9.AXlQTaOPxf4AOgehe5e48RJ.sy6cwfxbv7SL
- 0_LPal8ZQWkN_HVSk5RQF4D4OYUHDgXgTetPx0v616k4V1Q187qmwj3tBCofpGkX.1Hnaa33a2rT
- u1jOLgfDVhHY2mWt4uOT3SJAnVhC_lfaOfNwxzygN96YU11h1WvKq0gaNIZh9nK_6H0vrhLCo.FS
- HaNfZmItwnksq7aiK4z8IFavpqwF01rc7pRaGg_Pa8GERqH4GHOmp8r4.nYPKnVJL0paf82CUxrZ
- ntrGhJpWbijQCMRf2nXwK6rVDpsM4WsNIC6P_yWvFxPvybSzTY1.az78Qoqbe_HUMAq3TKT66WTI
- W0QiXUeAkGGg7oyp8wkpLCQTZpEheW.OQ_Jqyk0qk_X3k1Uze0Lo9v_AzIVFs26OYgNEA34E4.xt
- bKrAZ1OPxNVtmE7Kbt2XIN46JspwVwWIe9vpNH9K09vES1xMpV5xlk3yZhukJI.j.AKWB1zd5e66
- Erq8ptGBQZnk3vWlOqhOErRXaoLRQ9.Oj07jYkf52S7Ijstvji9nfCg8M82dN3Yk1kkiExaKYMC9
- q5sY5G_GZObr3Ux9SG.Hwt7PY6a0IlQ.nB.dSh0nWk8.ANJAGGa8TDrAtPRcSqyorKrdImkaAW28
- jY5zqRrL_RA_MeCHiOcerVGDuHxLG6ppsmOn2A5g8rHMhVJ_TaylPXeL1PbyejxpnOdYGZLKxkq4
- Y0fQr_yz8MfVi8TwIQrZrKPqCbW.kMtpouzmhS7QlXkqRrRfo.ICfds9VTvmxlGY0POdtXZGS4_H
- HlGW6aSkiHg._AlbOaFef_.Ql
-X-Sonic-MF: <avihpit@yahoo.com>
-X-Sonic-ID: 084f13d6-8b81-41a3-977b-877dd9fab233
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.bf2.yahoo.com with HTTP; Thu, 15 Aug 2024 04:57:44 +0000
-Date: Thu, 15 Aug 2024 04:17:12 +0000 (UTC)
-From: avih <avihpit@yahoo.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <12887914.4232362.1723695432887@mail.yahoo.com>
-In-Reply-To: <xmqqfrr6yk73.fsf@gitster.g>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <1c1b58e20cab6b4989b140282353073165f0067e.1721762306.git.gitgitgadget@gmail.com> <xmqqy15rzwi5.fsf@gitster.g> <2007960310.4114358.1723658954502@mail.yahoo.com> <xmqqfrr6yk73.fsf@gitster.g>
-Subject: Re: [PATCH 6/8] git-prompt: add fallback for shells without $'...'
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GlnJpW6V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o79MSx2O"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 3EA4C138FF88;
+	Thu, 15 Aug 2024 01:13:12 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 15 Aug 2024 01:13:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723698792; x=1723785192; bh=yWPGp01kj7
+	/YIt78XCBr8BbL3Ugm2v9JfdWl84jZH+o=; b=GlnJpW6VhO18s7JX1b7nKc85oK
+	2r778vaq8qg4Zspfxi/m25hc5+qXNxmS9dQ8UVif/ef/3pWLA5vaFpK2FfkptV7n
+	rHcV9TdAoHD8PZRPZSevHzgBeWdXxcxS2pag3Bo9UKkr2RSG+mowCi2tM1/huVvq
+	Ga5vFS4CsUUZHrqYmgglUD8Q487+893sRQ9TVpCyZgkZaszHxO3uMCpwmSfM30yk
+	UUWnSZ9rHMMeqgWiu6zs3JqM43DeXKBCzNUJDauDFcnxEJ9sQNVcX7DKpbrlYk45
+	vfJH7X7zRr7wPhpEBl2KFqYfAG6SvwHRSGWirK2w7vI7bvBJb9f724iDOtBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723698792; x=1723785192; bh=yWPGp01kj7/YIt78XCBr8BbL3Ugm
+	2v9JfdWl84jZH+o=; b=o79MSx2OSwOtbiECtpAsICXHYrnRBUukyxtKzd5aqrgt
+	pO3aslaU72qKwB0hOOsIyT5YXjSCpJ+SgK0/PvbmXHkohZ4RS2laRfGaQ2Prv8xr
+	IKOsSjrwQKr6TY6mb39sJ9SIhaWZpie2iLwULZVrCb9tXv9U1l7ZqWrHM+0C7Jln
+	F8sCIuNxGRhRVMmnMhLRPow9xKrU8oFoQ5dZMh/Uc4P7dNpsT4WusdOwcsl+gsa6
+	jznrj1Gh25o/8++mDQQgaKPMIUk886KaWP+vLRgnimUbw6OYTJR0pXil9+BLFU+b
+	MG3qZ2dllYYenBNLf9hvKT3LCV96ePOovh3A0/i9dQ==
+X-ME-Sender: <xms:aI69ZuFGNZ2JZPo7cEksh7jzm4TI_e2AP3ziihTT8I_rvrNzzZnmIQ>
+    <xme:aI69ZvVvv4rIGgXxX48mzSZ5iqPCPTpFG4yU_cQICEBXZDNd45sVF0_iL5l6r0Yfn
+    5ILDECgqAP0n8pfkw>
+X-ME-Received: <xmr:aI69ZoIhVbXQJPaROcYFXcDT9IeUQRMHJG_pq4aS6cTv1J9BA3_Rl86BjBTpNdlUNn3emdl7GNqmlBbpw6bJbo4W7wRPKYHisFE_QApogN4Z2A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddthedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:aI69ZoF8FZZjKAoOifmBpM0yJFXTDxwjZ07F6mZalqM0Lwx2MOCsbg>
+    <xmx:aI69ZkWtMRa7D6XsvKTmsUUFYxpqm2o9syOc8vqJbr-ylaa5Qxegiw>
+    <xmx:aI69ZrNgVSeJO_827AAIyfq5ICE-TNwIRo6OR0BbkwUz_CS9MMhyKw>
+    <xmx:aI69Zr2P3EVuN6YgJr8CcfGXr46LJlc9FQM0YQGHTe6FyhX_9KacRQ>
+    <xmx:aI69Zix593whkFX3x_k5Yrw-Xot4jdiB9Y8AzvEHcl3ea3Qj18yv-pF_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Aug 2024 01:13:11 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8ed4f001 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Aug 2024 05:12:48 +0000 (UTC)
+Date: Thu, 15 Aug 2024 07:13:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/20] Stop using `the_repository` in "config.c"
+Message-ID: <Zr2OXEwmySOc9gpL@tanuki>
+References: <cover.1723540226.git.ps@pks.im>
+ <20240814192957.1518560-1-calvinwan@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.22544 YMailNorrin
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240814192957.1518560-1-calvinwan@google.com>
 
- On Wednesday, August 14, 2024 at 10:32:19 PM GMT+3, Junio C Hamano <gitste=
-r@pobox.com> wrote:
->> avih <avihpit@yahoo.com> writes:
->>>=C2=A0 On Tuesday, July 23, 2024 at 11:25:29 PM GMT+3, Junio C Hamano <g=
-itster@pobox.com> wrote:
->>> I will not look at this series futher during the current development
->>> cycle that is about to conclude, but ...
->>
->> Ping
->>
->> Reminder: I'll update this part to not-use $'...' and without
->> fallback, but I'm currently waiting for comments on the other parts
->> as well before I update this patch.
->
-> Ping for others.=C2=A0 I do not recall having much other things to say on
-> the series.
+On Wed, Aug 14, 2024 at 07:29:57PM +0000, Calvin Wan wrote:
+> Hi Patrick,
+> 
+> Glad to see us slowly getting rid of the global, `the_repository`! I had
+> missed your original series[1] introducing the
+> USE_THE_REPOSITORY_AVAILABLE macro, but going thru it provided all the
+> context necessary for this series.
+> 
+> I see there have been a few cleanups since the first version, and I
+> didn't spot any typos on my end. Overall, this is a good step towards
+> reducing our dependency on `the_repository` by removing it from the
+> config subsystem. Additionally, this makes libifying that subsystem much
+> easier since removing globals usage is a prerequisite for libification.
+> I only left a non-blocking comment on one of the patches, but besides
+> that this series LGTM. Feel free to cc me on any related series in the
+> future!
+> 
+> [1] https://lore.kernel.org/git/cover.1718106284.git.ps@pks.im/
 
-Not sure I understand.
+Thanks, will do!
 
-Shall I ping the other 7 parts individually?
-
-Or shall I go ahead and post the updated part 6/8 (and rebased
-parts 7 and 8 trivially)
-
-Slightly off topic, git-prompt.sh was not modified in master since
-I submitted the series, so no need to rebase the series, right?
-
-
+Patrick
