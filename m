@@ -1,83 +1,93 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8021AC8A4
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 11:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01997DA7B
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 11:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723720277; cv=none; b=tgFx0w9dOf/uFdx3A2BULa2Uw57eHSc45PLaO7XDbGMWHn1NTR6Qvs8DFuW86rTYsXS3hsujVsno04R6gGqj/863VR69K8RbuQ0ZEJMfNJYCqNE3aVkfWwzeIcZz8FqSUAU9NOZiejhrG99V1hvoVYhFIBuOIwzsHo/dnzDBG6k=
+	t=1723720876; cv=none; b=E8R7GWeUXUAFcEdvaoZzwSDzL0r6mnF5+sfCxuzvP53SPhQyO+MUWA9Tuwily3WYgIzwykVZH0Em1R4X+Vknebp/OrD3StnaQBHSOv2LALAWKJTZVYO0hsdSbVXDBW4GGxbHCXGvlhouvFyE5bs1bbcbglrUTMJXVLy81hAC008=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723720277; c=relaxed/simple;
-	bh=3DlzTMaFuwlN1t8Wa/0yfNs4iQfKhO+SngYj3DmKxhc=;
+	s=arc-20240116; t=1723720876; c=relaxed/simple;
+	bh=QUfVicw0PIhBaOd4v4o0G0egL9SKzKHY7qJuj337zsM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gElYXmKyQ8n7TktmqCcXe+u5noRnzDA1M/996GE7sTA3tUl6Ux2cEUiGp0uu6teqAGSrJSO06n+IAJ0qdhUCd8pwfefcoU2BhmHrWKUHx9Dn+JJI6Oq5lkcTYnOO4A7rlSU3CqF+0IBpYhe3HTG9mDgqs4PhDMz1WVvpUnkcmKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FmlK4He+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQevtpeg; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=t7EWEG4mHsy+mD4BzMLtCsBnZlu9jzYRWfkYbtijqTLB8798hfWMfBVjvI5NPNC2zvSA2jP6hSvWizesMSf7M6Ux2B0ENhWkUDbpa3pNRvJa1wu+Fnjkjnt0edQpNT5QijO5/4w8IpqJlwmCJU0g89BXO6mK8+0NCsBu7L+4I+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ao6/0QmK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNCAs7FH; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FmlK4He+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQevtpeg"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D0B8C138FFC9;
-	Thu, 15 Aug 2024 04:18:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ao6/0QmK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNCAs7FH"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 047FD138FC74;
+	Thu, 15 Aug 2024 05:47:50 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 15 Aug 2024 04:18:08 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 15 Aug 2024 05:47:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723709888; x=1723796288; bh=7SLyCShncY
-	cQTGShqN/rZ9H2tFLFdPqSFSJlqetv3oc=; b=FmlK4He+XPV4ovj/5ZWHKZlabE
-	0uhu9026zkf++demkYo9mwGmSmIKKdaYrZLoJggqioNVGveHKalPpgRXdZa0ynwL
-	KurZafsIwmRg+HCSaMyMKdFiszDf90Y+wGmxEo9GqNGRTbdCQbAcfnPT/nEPZquI
-	lu3BQOcAoknRDtlJX73bhesWQS7V22aycUq4iUU05vhZgSdY35Li+bpIDSvzyqjq
-	kr8C4eVnJznvC4SS2ACQVYSU4JDxlf1ug8qe9xjdx3Zm9/ws1gVfk7UUPOvSq92L
-	4MG8fiFMxndrH/+y5pnOEkbhyz+DwzBTFIqKSRE4W2b4I5gfjFXXbW0KmA3w==
+	:subject:to:to; s=fm3; t=1723715270; x=1723801670; bh=qR+S9S13TB
+	//xUp6XJigqCj5mklobo+Hv6D0rts6nOg=; b=Ao6/0QmKHiHer0cLQeX6SGVDOY
+	M1yjC5sVxLtvFM0HUVL49lSIMK7cD0w0GUXbbhE4WYmQQTN2FsKd+ygANoyxEBb+
+	n/cE3lBEvJ4T3ueAV5Y1zpKfuE3LWciRfhroStDgcpdUtXF4sadbQokYrhh95MIN
+	EFo4rfLIptum6c8neS7n6dpSBYwNlV84GFhGy4Pu9cFJZ97dHnEp6mDjkTk1rPjs
+	hRPmI9ZWJqeYKFKM71u/EDkEYrxMwk7kuB++AAf1qaWX2LLHff3ee1XqYXB/+HQV
+	e3nCfByos+pAkX6Q+WuE65g/4qUbkqEsK/VBEqU3DG0YfJUCJhWxrRPBpRFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723709888; x=1723796288; bh=7SLyCShncYcQTGShqN/rZ9H2tFLF
-	dPqSFSJlqetv3oc=; b=WQevtpegPWVIGf/P+somimfq+xMksvG3/TuY7oEsZ4vW
-	/rjrlUgvu0ibjNUIEiZTomIJKZPbMqLPazVY9Oq9tLtDnycgpBsgh5HAhL3UarPd
-	UtNiLYOSAs7LKN9uV8S9ZJgrH3v+LS1Snn+hAE0u7MtGV6aPTriSFKahYHwMwHB+
-	tofrT/rMWN+5sWHRzgRmqd7V93kAmVnalnlcX0JzPm3xz77wdcgEHYm9LKfam7b1
-	xXLvQP/hxPJfZs1QdKsYpJwj3x9o4KImMNYd+FiNrTu2TuPITdZvx+ybfArkVvNs
-	zK75US9SsJ675qT+/CIyblaMnNbRXgS8LC7w8oExKA==
-X-ME-Sender: <xms:wLm9Zk2ht13N-QFi3tSw0ZBQxQJP1QIVG_we3yFoIuONnv-Q4w_m1w>
-    <xme:wLm9ZvH3DKPAmnfzZTAl0sZhGkO_CPztJVG0AYbtxkept23EGNua-_WCbYJoXctoz
-    nDxTao24Z-BYaMKTA>
-X-ME-Received: <xmr:wLm9Zs5v1JqhtCZTlKRy3pimKLFlLaIYG51-Ks8JLcZ-jPLz7liRn6GynRBz3KtYEXqf6MiADIo80BvzoYw58t5xYrvMNQUepIUxxfHkCfmfag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtiedgtdduucetufdoteggodetrfdotf
+	fm3; t=1723715270; x=1723801670; bh=qR+S9S13TB//xUp6XJigqCj5mklo
+	bo+Hv6D0rts6nOg=; b=ZNCAs7FHbcVfJ/4wp/H3E9MIJlEd7oPrmTOvCyJ90VrC
+	9GTwE1EJB8+JbMGhUmWlWpPIshocrapI+6gSOpRxenFsy0W2lgZaGR+kNBRBaLtA
+	B0cUX7LGZ9JkOfMx+Aaqz2+ZvSUnU1Xma8vNZNTqGXFANV49XJjZjDvsiGpXKJl1
+	ee+QMXwOrJRDO1pSPoV8oBkSQSZ1ww2ZPoZsaQQ8WThUf+ZYDDh8DWpXFB2S5Iir
+	vZbBAYyUp5zwmvcjXfVcdZYAwFJ5+a+rU3ZD7KrfGqBiVwG0jnmD1/UEmB1AOtlY
+	9KSyH4TgRC3gjPSJ4RYbZOome+Mcfa9dV4Koe6BBvQ==
+X-ME-Sender: <xms:xc69Zv-gr-MnUbEJeBrGoTay5wFdSL8sQexvjOJfU5dF4Pn7xQmZJQ>
+    <xme:xc69ZrvCdpHou5hzrB1q2TgdWKk7GffeJGLqsKcNXVlibIC60XY2SxGvjn39rhyY8
+    644pEXoCwl3A4PP9w>
+X-ME-Received: <xmr:xc69ZtBDSUjwDwXR-LLj77A96GGOxPm2v2kCZqmUTwxzxpbScAhz-T9CkcI-MNwLLvAhXV8ajkEXkONyQw0EL7fAHx4duolQHP7jvesK3WPH5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtiedgudelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:wLm9Zt0assNJdcozPEIfN62Iru0f7gPABI8hu35bPUMCmvw36h1kVQ>
-    <xmx:wLm9ZnHC9_wS2zWEgATE32DyFcsTsSM1YjywSOAbjASnCN2A28y1ng>
-    <xmx:wLm9Zm_sQQ3CysjJmTvN2029PG9HbC9u_J9LxX5J9527woyIBJV0gg>
-    <xmx:wLm9Zsn2boqq414toSsQba-L-Z1a5WJTd3vafGtjwMdri3bMGim0AA>
-    <xmx:wLm9ZsRM1IMCfAmLbfNneBiSC-PMQ5eXyO9yHktlHU6HQcK5fjG1piX->
+    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
+    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhr
+    tghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepvghthhhomhhsohhnse
+    gvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnsehg
+    ohhoghhlvgdrtghomhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvg
+    drtghomh
+X-ME-Proxy: <xmx:xc69ZrcrwsI4n-CDHYcbvTu51YVzoeFMEXEGqs7-U5fzrh990ALEnw>
+    <xmx:xc69ZkPL6podmUcHC2j6qNwggAIazECdmUQipXRFfWUSsJyG0SWhDA>
+    <xmx:xc69ZtlZQeXiK7KNbX_OxqJ_8tTV3yEeYev8kxSjUzLW6H1aOdoWoQ>
+    <xmx:xc69ZuvINcgN_77uUI3JftThbByDOQ1R2meanBr9s_ZXBNRCcFHMhQ>
+    <xmx:xc69ZljAEN-APljSiTD_iWVRzbjuPMwxx6K581VNwKlVEhICPeTvVTdv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Aug 2024 04:18:07 -0400 (EDT)
+ 15 Aug 2024 05:47:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 77650f05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Aug 2024 08:17:47 +0000 (UTC)
-Date: Thu, 15 Aug 2024 10:18:06 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 22102867 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Aug 2024 09:47:28 +0000 (UTC)
+Date: Thu, 15 Aug 2024 11:47:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: James Liu <james@jamesliu.io>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/7] builtin/gc: fix leaking config values
-Message-ID: <Zr25vm8cLhS0_sKV@tanuki>
-References: <cover.1723533091.git.ps@pks.im>
- <310e361371efc156c3aaac94439bdbeaa965155f.1723533091.git.ps@pks.im>
- <D3G8EY3R09BC.2BKB6UND5J5MA@jamesliu.io>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+	Edward Thomson <ethomson@edwardthomson.com>
+Subject: [PATCH v4 4/7] t/clar: fix compatibility with NonStop
+Message-ID: <75e097dfa4a59715cd26f0e0e97213f20f416d00.1723712012.git.ps@pks.im>
+References: <cover.1722415748.git.ps@pks.im>
+ <cover.1723712012.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,44 +96,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <D3G8EY3R09BC.2BKB6UND5J5MA@jamesliu.io>
+In-Reply-To: <cover.1723712012.git.ps@pks.im>
 
-On Thu, Aug 15, 2024 at 03:22:04PM +1000, James Liu wrote:
-> On Tue Aug 13, 2024 at 5:17 PM AEST, Patrick Steinhardt wrote:
-> > Note that there is one small gotcha here with the "--prune" option. Next
-> > to passing a string, this option also accepts the "--no-prune" option
-> > that overrides the default or configured value. We thus need to discern
-> > between the option not having been passed by the user and the negative
-> > variant of it. This is done by using a simple sentinel value that lets
-> > us discern these cases.
-> >
-> > @@ -644,12 +673,15 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
-> >  	struct child_process rerere_cmd = CHILD_PROCESS_INIT;
-> >  	struct maintenance_run_opts opts = {0};
-> >  	struct gc_config cfg = GC_CONFIG_INIT;
-> > +	const char *prune_expire_sentinel = "sentinel";
-> > +	const char *prune_expire_arg = prune_expire_sentinel;
-> > +	int ret;
-> >  
-> >  	struct option builtin_gc_options[] = {
-> >  		OPT__QUIET(&quiet, N_("suppress progress reporting")),
-> > -		{ OPTION_STRING, 0, "prune", &cfg.prune_expire, N_("date"),
-> > +		{ OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"),
-> >  			N_("prune unreferenced objects"),
-> > -			PARSE_OPT_OPTARG, NULL, (intptr_t)cfg.prune_expire },
-> > +			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire_arg },
-> >  		OPT_BOOL(0, "cruft", &cfg.cruft_packs, N_("pack unreferenced objects separately")),
-> >  		OPT_MAGNITUDE(0, "max-cruft-size", &cfg.max_cruft_size,
-> >  			      N_("with --cruft, limit the size of new cruft packs")),
-> 
-> I was wondering how the `no-*` options worked since they're not
-> explicitly defined in the `builtin_gc_options` array. I guess
-> they're handled internally by `parse_options()`, and if the `no-` prefix
-> was present, it leaves that argument unset.
+The NonStop platform does not have `mkdtemp()` available, which we rely
+on in `build_sandbox_path()`. Fix this issue by using `mktemp()` and
+`mkdir()` instead on this platform.
 
-Yes, this is being handled by "parse-options.c". But With the `no-`
-prefix it won't leave the argument unset, but will explicitly unset it.
-So if the argument was already set to some value X, that value would be
-unset when parsing the `no-` variant.
+This has been cherry-picked from the upstream pull request at [1].
 
-Patrick
+[1]: https://github.com/clar-test/clar/pull/96
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/unit-tests/clar/clar/sandbox.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/t/unit-tests/clar/clar/sandbox.h b/t/unit-tests/clar/clar/sandbox.h
+index 7c177f3525..e25057b7c4 100644
+--- a/t/unit-tests/clar/clar/sandbox.h
++++ b/t/unit-tests/clar/clar/sandbox.h
+@@ -120,6 +120,12 @@ static int build_sandbox_path(void)
+ 	if (_mktemp(_clar_path) == NULL)
+ 		return -1;
+ 
++	if (mkdir(_clar_path, 0700) != 0)
++		return -1;
++#elif defined(__TANDEM)
++	if (mktemp(_clar_path) == NULL)
++		return -1;
++
+ 	if (mkdir(_clar_path, 0700) != 0)
+ 		return -1;
+ #elif defined(_WIN32)
+-- 
+2.46.0.46.g406f326d27.dirty
+
