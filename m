@@ -1,136 +1,115 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6DC1AED38
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 15:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528461AD419
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 15:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723735452; cv=none; b=NlSCINSBqsJzBcaOKMT0dL7UGpVP592bSp2Jbi/rjK6OFGb0fwkym3oKfJV6FpYWf8tbTYiMxY5sIfHDqDcL9Mk+jtdPzwkRYMaoKUYOvpQUQwMOuPcwsvvIP/jWqKPelp6rvm80+RkouaMnhHns87UDpuAElk5stfsuxw45ERc=
+	t=1723735811; cv=none; b=jxgaMCbsTKNc00yDOvgnbQWXvimSryYszzFmFBdI+WYv9YxxB1kUaXOQy+4x++eX4Yxxv53p1bYx5CBpo4HpnEgnAahOCUvvsy0PsLPf7utcKiU6dsxehXGvpuUJNoh8u84HZdqzaW/6jRRkK8zbHuj0q7DlVAqbDZ5kKJcXFo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723735452; c=relaxed/simple;
-	bh=KEhoR1cfnCQ6zCX0CL4b/xbomAJ7Bu+TVrGgV39ao08=;
+	s=arc-20240116; t=1723735811; c=relaxed/simple;
+	bh=TaJdSyzcbcIZVVbF8o1aUI9z/kVi0AGylh1uK7Yjnhg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fkEwDabl3dffKwCAXrG0PLb2F4lYriYPe7n3HgjcstnL5sSJ1D/QMixMYuKPqyMIJeHOY1K8bBxbSI8hhELMGavRGcX8s3AqKWWK0w7RIRlQ6/yOIOqjC7SheliXpPh0XdjGhJkbm2OtKUtNKp2+Wi2T/NC5DGniz18CkhjVYjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNIMhjsA; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNIMhjsA"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-710d0995e21so816241b3a.1
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 08:24:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723735450; x=1724340250; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qE4L2zdfBEEIHo1vznh1s+/ZUR+S1/puaMy0y1t6w9o=;
-        b=SNIMhjsA60AgRBJPeugns14Eddj8zmt+fHYIvD3rf+2Z4nD2ce495r4BD6l+JPrnbW
-         r42GrMGXyjTAZlJmFWXdTmGW6UjukBtlaD71o7eFlR4TAq0ItmneFJwyy4zCiHfTlAaT
-         XVNjxITVKPPXYsjW++XGvF1UJbBSzvk2pdACgnMGmQLkSJhNSU43AUgWpMYl0MSwWb9d
-         2Niqc5eoAMqUoIXzDCnvlwndB3guno9YoBuQ4u/Kcps9dhEtmV4LFKq05TR9xZM3LBuY
-         v4sGhc8Qs9XuQvY4Qlew6FhYqE/RyaOO8A69YS/nzjXPOgj4i4ICHL8X7h2TvJL5OskI
-         sh7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723735450; x=1724340250;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qE4L2zdfBEEIHo1vznh1s+/ZUR+S1/puaMy0y1t6w9o=;
-        b=YKn1opZxizXxB9tF0rAPhuD6WSV1EFrCUTtVFt0L8TvL+iRkA8h5mpvkJ2am33TjrU
-         oYsZqO/Go5Ra23XdBkQdfqyls/MGS9GcP9aJL2aAgezBPPvGcWLuTInyTxJUaDOIdRNB
-         DD763HAbNzvUk7QRe/jQJEgZ/r3hlEcXidb5XuV8yN+5ic1py816F7ofB2pO5KpUaskP
-         I/DJ/9buHrEcXaj75vF3mT5QpenEUsguJWtRNPPLfKG5yW6wGeAU+W29hDHBcbVdEqwF
-         2WrfOkUk6D84ummvhB1bgWXMfdAMFhOilUKb3m5aGPnoiz3QCy9lTACpg1qLlusXMZqh
-         n9Bw==
-X-Gm-Message-State: AOJu0YxMHVMNMyk21felJNU9o1K672Bgu/tV2uElvcUx21634HhUh2tZ
-	7kAxPZg9aGR998PLCQkJbjDOB2QhKQuP2PNOrpbfVxLguCJGSWrReUHNZw==
-X-Google-Smtp-Source: AGHT+IGDhAIbiCy502gx3Ak89hlxhhUjnG3XjxstHSXYfaf9T4ZAh13a852efrMAXROnq8EBW9fODg==
-X-Received: by 2002:a05:6a20:d493:b0:1c4:81ab:1f5e with SMTP id adf61e73a8af0-1c90503036amr52070637.38.1723735450367;
-        Thu, 15 Aug 2024 08:24:10 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127add6e6bsm1152977b3a.18.2024.08.15.08.24.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 08:24:09 -0700 (PDT)
-Date: Thu, 15 Aug 2024 23:24:47 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 0/5] Introduce configs for default repo format
-Message-ID: <Zr4dvybR6j6Ifyya@ArchLinux>
-References: <cover.1723708417.git.ps@pks.im>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IY38mxFhgy1JMjTl9iERtlJwlEw85avr79ZY8qcZCy4cYM7quKAIbO2NNeHgxqASmY2G1mld8Gy9LEojZpmZqQtNn0nbWpRKb1rGOngtl2mbbimy3Kc9pMgCH0EWxrAJLuy7cBpiooOt/vyqjJeQ/CpOi/XbHZs4ePhnZ0t/U/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 27529 invoked by uid 109); 15 Aug 2024 15:30:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Aug 2024 15:30:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8327 invoked by uid 111); 15 Aug 2024 15:30:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Aug 2024 11:30:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 15 Aug 2024 11:30:07 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH] t4129: fix racy index when calling chmod after git-add
+Message-ID: <20240815153007.GA1477220@coredump.intra.peff.net>
+References: <20240801155702.70242c31d476c46c84ee11a3@linux-foundation.org>
+ <xmqqed77hifn.fsf@gitster.g>
+ <20240801180706.933d797b0ae5744fdcdf47d2@linux-foundation.org>
+ <20240802035121.GB1246312@coredump.intra.peff.net>
+ <xmqq7cczgefh.fsf@gitster.g>
+ <20240805060010.GA120016@coredump.intra.peff.net>
+ <xmqqcym9vnwg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1723708417.git.ps@pks.im>
+In-Reply-To: <xmqqcym9vnwg.fsf@gitster.g>
 
-On Thu, Aug 15, 2024 at 09:59:54AM +0200, Patrick Steinhardt wrote:
-> Hi,
+On Thu, Aug 15, 2024 at 07:52:47AM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> to set up the default object and ref storage formats, users have to set
-> up some environment variables. This is somewhat unwieldy and not really
-> in line with how a user typically expects to configure Git, namely by
-> using the config system. It makes it harder than necessary to globally
-> default to the different formats and requires the user to munge with
-> files like `.profile` to persist that setting. Needless to say, this is
-> a bit of an awkward user experience.
+> > +test_expect_success POSIXPERM 'patch mode for deleted file is canonicalized' '
 > 
-> This patch series thus introduces two new configs to set the default
-> object hash and ref storage format for newly created repositories. Like
-> this, folks can simply use the global- or system-level config to adapt
-> to their needs. This also has the advantage of giving them the ability
-> to adapt the default formats via guarded includes, such that e.g. repos
-> in some filesystem hierarchy use format A, whereas others use format B.
-> 
-> This comes from a discussion with Sebastian (Cc'd) at the Git User Group
-> in Berlin yesterday.
-> 
-> Thanks!
-> 
-> Patrick
-> 
+> This test seems to fail under "--stress" and I need to borrow a
+> brain better clued than mine.  It appears to be fooled by mtime that
+> is not updated immediately and failing match_stat check, but since
+> the index file is written on the other side of the second resolution
+> boundary, racy-git double-checking code does not trigger, or
+> something like that.
 
-It's a good idea to make the user could set up the default object and
-ref storage formats by "git-config(1)". I have read all the patches,
-from my perspective, there is no major problems.
+Ah, thanks. I saw this fail once in CI, and then later succeed. But for
+some reason I wrote it off as CI flakiness rather than trying --stress
+locally. It's easy to reproduce the issue.
 
-But I wanna ask a question here about the following code snippet:
+I didn't puzzle out the exact condition that causes the race, but I
+think the fix is pretty clearly this:
 
-  if (repo_fmt->version >= 0 && hash !=  GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
-          die(_("..."));
-  else if (hash != GIT_HASH_UNKNOWN)
-          repo_fmt->hash_algo = hash;
-  else if (env) {
-          ...
-          repo_fmt->hash_algo = env_algo;
-  } else if (cfg.hash != GIT_HASH_UNKNOWN) {
-          repo_fmt->hash_algo = cfg.hash;
-  }
+-- >8 --
+Subject: [PATCH] t4129: fix racy index when calling chmod after git-add
 
-It's obvious that the precedence of "hash" is the top. We need to make
-sure when users execute "git init --object-format=sha256" command, this
-explicit info should be considered at the top. However, in the current
-design, the precedence of the environment variable is higher than the
-"git-config(1)".
+This patch fixes a racy test failure in t4129.
 
-If the user uses the following command:
+The deletion test added by e95d515141 (apply: canonicalize modes read
+from patches, 2024-08-05) wants to make sure that git-apply does not
+complain about a non-canonical mode in the patch, even if that mode does
+not match the working tree file. So it does this:
 
-  $ export GIT_DEFAULT_HASH_ENVIRONMENT=sha1
-  $ git -c init.defaultObjectFormat=sha256 repo
+	echo content >non-canon &&
+	git add non-canon &&
+	chmod 666 non-canon &&
 
-The repo would be initialized with the sha1 algorithm. I think we should
-think carefully which precedence should be higher. I cannot give an
-answer here. I am not familiar with the whole database and do not the
-concern. But from my own perspective, I think the precedence of the
-config should be higher than the environment variable. This is a new
-feature, the people who would like to use it, they will never use
-environment variable and we should ignore the functionality of the
-environment variable. But for people who do not know this feature, they
-will continue to use the environment variable and they will never be
-influenced by the configs.
+This is wrong, because running chmod will update the ctime on the file,
+making it stat-dirty and causing git-apply to refuse to apply the patch.
+But this only happens sometimes, since it depends on the timestamps
+crossing a second boundary (but it triggers pretty quickly when run with
+--stress).
 
-Thanks,
-Jialuo
+We can fix this by doing the chmod before updating the index. The order
+isn't important here, as the mode will be canonicalized to 100644 in the
+index anyway (in fact, the chmod is not even that important in the first
+place, since git-apply will only look at the index; I only added it as
+an extra confirmation that git-apply would not be confused by it).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t4129-apply-samemode.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
+index d9a1084b5e..87ffd2b8e1 100755
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -153,8 +153,8 @@ test_expect_success POSIXPERM 'patch mode for new file is canonicalized' '
+ test_expect_success POSIXPERM 'patch mode for deleted file is canonicalized' '
+ 	test_when_finished "git reset --hard" &&
+ 	echo content >non-canon &&
+-	git add non-canon &&
+ 	chmod 666 non-canon &&
++	git add non-canon &&
+ 
+ 	cat >patch <<-\EOF &&
+ 	diff --git a/non-canon b/non-canon
+-- 
+2.46.0.476.g32f0e7348d
+
