@@ -1,79 +1,64 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C06913C820
-	for <git@vger.kernel.org>; Wed, 14 Aug 2024 23:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B066215C3
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 00:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723676615; cv=none; b=N1xfmG1GOx4REU/E0BKKA0R/Ky5/ED1BbzZxbk8WGg1sIyhqytrVVkK8F849XxaNvrVWXZH2YcP6bnzPGbBUarYeWpE+y9e7DHl2Fb8S7hGM3R/323htjjy1j0YWsvdds42/qj7sL5UQVlZcM2kqu/qFFeu3F8DGjSQ5qS2Fos4=
+	t=1723682579; cv=none; b=YiKP0JNcNaLS/SPunkB8+Lpbw7OA7OXhO+696qUB0i9v1DW253y7iW/RYxf/tJPftp8IUB+zoBZy8krwgadbJZz470UuLdoeYd1XIy6fwJdG/fgBCFiy0NVXK4l7Dr5/lqyuahvlg4rZ3ZsWhVDXBWoB7HAX6+TFbTu5yu6Tu3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723676615; c=relaxed/simple;
-	bh=tuQzF/wicGShwCD/tNXoXWV/BntmsPXaNf33DsGjGko=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IAtWEIk88sieEYc65HmBL5NKBslC7eXL4+4eoAy/m31eE+udeu2Wv2ucn/BE/oEeCLpApPz8VuXw55D0cyz86x9mjSSExboP3yNPRFuDUAFwbBSzUzcziFB9C1RGkP0wvH+EBV7P9Y2jIZ6h0cwowk+U//5wJ2MttiFdg72UTVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KVC5BAlz; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KVC5BAlz"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 07E4C2C1EB;
-	Wed, 14 Aug 2024 19:03:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
-	uQzF/wicGShwCD/tNXoXWV/BntmsPXaNf33DsGjGko=; b=KVC5BAlzMnlmTDH2n
-	6DL58UfEFFHQowJV8HtE6h1ZI6aZqgO2vm7xyCeSJ2dEbSyCg0BA+DCiOYHPcydz
-	lqD78dJ4myMX6A23pp0XF610Dkumzysz013a81/d/eNQtw8cSRMCXXn8DHZ+m73p
-	jHJl6JrvzFi8y2YO0BkzZJESBE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 01FFB2C1EA;
-	Wed, 14 Aug 2024 19:03:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7312D2C1E6;
-	Wed, 14 Aug 2024 19:03:28 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] howto-maintain: mention preformatted docs
-Date: Wed, 14 Aug 2024 16:03:26 -0700
-Message-ID: <xmqqikw2wvup.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1723682579; c=relaxed/simple;
+	bh=dStVIXjsLetWpu/zEIi5zkxObaKyjtQItULwiYc5Srs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ro/IQjHnU2MQuGofJBjoUfGmPHE8aePlMvpKPQ2oceLDk2tK/jTfEB5MxTSTDzsc4glKLFzST+MEi/SHTj9OkRkEPz8n2RqLhsPnOwl80oEeShkq//3OKZQFYN8UL4we8WkTLetOA5qNn7VtFjPCTx3tENEr/yL0MhJxVlEbkK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 20056 invoked by uid 109); 15 Aug 2024 00:42:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Aug 2024 00:42:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21287 invoked by uid 111); 15 Aug 2024 00:42:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2024 20:42:52 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 14 Aug 2024 20:42:48 -0400
+From: Jeff King <peff@peff.net>
+To: Geoffrey Thomas <geofft@ldpreload.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] git jump: support show
+Message-ID: <20240815004248.GA2629889@coredump.intra.peff.net>
+References: <20240814200709.53450-1-geofft@ldpreload.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6B11D896-5A91-11EF-B6C6-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240814200709.53450-1-geofft@ldpreload.com>
 
-Forgot to mention that the preformatted documentation repositories
-are updated every time the master branch of the project advances.
+On Wed, Aug 14, 2024 at 04:07:09PM -0400, Geoffrey Thomas wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/howto/maintain-git.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+> This makes it easy to go to the changes in the latest commit, or a
+> previous named commit, to fix a bug and commit a fixup, to respond to
+> code review feedback, etc.
 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index 41f54050f8..da31332f11 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -181,6 +181,10 @@ by doing the following:
-      $ git diff ORIG_HEAD..   ;# final review
-      $ make test              ;# final review
- 
-+   If the tip of 'master' is updated, also generate the preformatted
-+   documentation and push the out result to git-htmldocs and
-+   git-manpages repositories.
-+
-  - Handle the remaining patches:
- 
-    - Anything unobvious that is applicable to 'master' (in other
--- 
-2.46.0-344-g6a33a8350c
+One trouble with this approach is that you're analyzing a diff whose
+endpoint is something other than the current working tree. So the line
+numbers in the diff do not necessarily correspond to what you're going
+to open in the editor.
 
+For something like the changes in the latest commit, I'd usually do "git
+jump diff HEAD^", which I think is strictly better than a "show" on the
+latest commit.
+
+For looking at older commits that doesn't work, though. And if they're
+not _too_ old, then you've got a reasonable chance of ending up
+somewhere useful. So I'm not opposed to this patch. As Eric mentioned,
+we'd probably want an update to the README. And I think it should
+mention the caveat that the post-image of the diff you're viewing won't
+necessarily match the working tree.
+
+-Peff
