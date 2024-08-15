@@ -1,130 +1,113 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B501A01B4
-	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5002744376
+	for <git@vger.kernel.org>; Thu, 15 Aug 2024 13:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729029; cv=none; b=mSdEyFDYF+wZBOV96uMCyGGAY7cLNJysUL3DBTAbdqW9ozUnychvq0qzwC8CGH4yzKyYmrSB4m5AEpBDC1hHLEgjALEsV1tVDFGOaxQdXVt1mP5BadizRpx7qJeqJFGZ7xNNIyqSqrfRevZYGxxET7SKMFh2c2N5sQi7zBK4tU8=
+	t=1723729611; cv=none; b=giIll7vp2qs0ty6igBDqN8Jx/U0erEOQuXZ9GYger1LgvF8wY+xEXXRqd1HkA2+C/fM5YRMTrrXDVRJZ7BJsc28DwNdT5GOWC9Q5CwYBBo3RPu3Xgc8L3gFUI/oIqYhK+cVS0T1ckyXb1s4oXJBnEIaOKyy6/XtAwki4P2VGZRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729029; c=relaxed/simple;
-	bh=FF+MurQtdZdnt5dNIhE2tG3P0PL53z44+1/nj0iH53w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mnllQoqj3AlXP/y3tffKyBxZGZSECh/IOnSsUgo1zpGk47RSAygLO9MN51bnJcCePLrch+ILeu899YS2eOMFPnLmoT94WemL+NQ+dAN33N61OIPZrlkoXZhIK0m6BYt3wMPx32lTf9iOeyfgyibuK8Z0puj+z3/TQ2qG7rCE6rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bYOeGkA2; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1723729611; c=relaxed/simple;
+	bh=0o7F4DqOL1jYjshNqUbZ81oLMvLDKgF8eQnwg9U81U0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=UKOlAPyemAbtwt95bTf/Uuy2/Wv9PZmfvnMlZoOUFwB0OqIGvWkBqnGIOkTIdwISvXeGwUvcIm59fRYfhs70ME5UQ22xQSIvSyVRsSKKGkb9H+8tpEt+Ub4EkZHdNGNGkBof4JC21QugRib3I1P5pCmw7N+PpgXCPdnWDHNtWuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M87zEECg; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bYOeGkA2"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1fc587361b6so9043545ad.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:37:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M87zEECg"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1fc65329979so9406795ad.0
+        for <git@vger.kernel.org>; Thu, 15 Aug 2024 06:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723729027; x=1724333827; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GRzHvEPQ+gsCpjzJpqcGy/ugrJPjQFQhM0GeCxq8Opc=;
-        b=bYOeGkA25tL4+3PkJTRotdz4ZvXDoWQnf5W6bE4hjBcc/R6jecxrboEVtRXQ0Yr1hM
-         qcyCJACbZoIqoXKmP0RxvWhcuZbIgikwiHEbY9RD8XbNGKrIRDfwuT8WbxAqIFnN5aTc
-         Gq61GYxe8Y3n2uKggadp9B4YmCIisWdUEGYMd9RQg0hupLGndZVn4zAWqTsklbyHlIpt
-         yrpUv0xkIX5BUj8gmWbdQIKDpS9Eo7TxelINLtLFXeZUEg1ZqW5shDyXIXbeCz8PFmT0
-         k9GO9LoxQLEqD3piM0HgdE87Uo3zllopPtdreNlbVp1s5sLTtVgzOaiGOTJJwP7u0P+o
-         Yg5g==
+        d=gmail.com; s=20230601; t=1723729610; x=1724334410; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nDXTAQJ08iITgHoCs9d3i707AEFQcZL10q8d4//0Fko=;
+        b=M87zEECgBOd8dvnazeGEGN2TLNQ1LocoMP5z0U864WLshvCCAQPQMfVX68FKSbbLPc
+         liSyDj2xV44WFwXcG+EocwNnWpylBpmiiAbK/vEVzd01LeVnpGxGZPrkUrHxNwxzMWuy
+         HhC8PU6hLLaeaeePjlDmVNiPPB3TUFMuljK28Jpke8ii55s5U1rSbK5mt+BCwc/aF+W/
+         +WnncSh5kfZo5q93mh2MT4CuPZRg1+eAaqi4wlxiT6XKw4eYBv/U9MMv2H6eX9q48GV5
+         qZDh1bk4oH1IXFwqWCgkpIbMURYRMpKGmIIMc91g8hDGrwVF5nA8p0uxzjQjrg0QPYaZ
+         z5Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723729027; x=1724333827;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GRzHvEPQ+gsCpjzJpqcGy/ugrJPjQFQhM0GeCxq8Opc=;
-        b=hxSz+aUH/JlUVzbufdgiAAHA8B7uGo6bGTKNr+Rgv/wgpfDWBdJIN2SSQSPlT7rRCX
-         AX6PTcG+nPp+FVSNOHPev7VplJUMMkPVGleeOKT6CTJlnr8he5HtIRJlHwJUeAdoTx5Q
-         bN/2Qe1EVmhuYxlCoYucOxSVUFIOWWps8THrg1M593DQAmm+3V7FOaqZX1D3C604TsNI
-         QI5x2WCp7fKY4hDIIr4g6lhqd0IdFQ/uhwCPTZnciYT85HgxNGVJHGKj22nOFSl+uju5
-         /Ji41iCZdwU4k41ruP9b9XjHyI0lletU+3wGYPLbUEMFabueWTyXjmG86uiXHHTEEjQM
-         JLLA==
-X-Gm-Message-State: AOJu0YxOHEQO/S0GLirHlTv+4FfhTwbQ9cH2d/RvlSLcR31LoUaVSbLc
-	TXGHxmvDDodqVye9x4RvHO/HkXhNlP/BYciEdYBiDYgBY09osERu
-X-Google-Smtp-Source: AGHT+IEj+oFzyNNCwxHvwe3a9frqMlEHSzmCi90n+QibbUAGr1gbC9L8WW0rHBstyTgsrc77WSJuCw==
-X-Received: by 2002:a17:902:e882:b0:201:fac8:ff55 with SMTP id d9443c01a7336-201fac90151mr9488675ad.13.1723729026829;
-        Thu, 15 Aug 2024 06:37:06 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f031bcf7sm10221835ad.74.2024.08.15.06.37.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 06:37:06 -0700 (PDT)
-Date: Thu, 15 Aug 2024 21:37:44 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC] Implement ref content consistency check
-Message-ID: <Zr4EqESHSnQET1Xg@ArchLinux>
-References: <ZrtrT1CPI4YUf5db@ArchLinux>
- <CAOLa=ZQVkmyVWAxyjrEQoEJ+gKJoJjfFqsDvr_A15FHGX1w=rQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1723729610; x=1724334410;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nDXTAQJ08iITgHoCs9d3i707AEFQcZL10q8d4//0Fko=;
+        b=oOr2F7cRH6Q9UDuiFf0L3cXuST6CgjyQsFh2UoYRbIlDbksRSlXLsTROszRQ/xsI2R
+         /RD2266RECMkuwZKsZ9kbf+2gVy8jTL6bcVyR1DCETq74G2TogBpmg2mOQhy8RGM4nea
+         MzrpDZT9eTxgMG4M0/pc/YZj9JcjPmzPIoWL/x5AnQsj/ZSRKDZSCnaW2pHoQsMTLB0q
+         sEJbx4548dRh1Zs5dLBYfNbGxZ061KfBw4jTVbEjjHtyg2si80IksuqWbBpax7Q9tt1K
+         iMeipJMD6v9M9SeXZdI0p722uGddTFRlggOPdcXpYDKJ996zLVKIZB8u6tuL8WOi9hdQ
+         0nZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWlV1bpEYOqbyVZVyqIujcp1DcCfrQFrM3CQz8yfjf4RbD+AiZDkCeiR8rrMGxeuKe7KDWkchj3HHygc/FdA/0YQf6S
+X-Gm-Message-State: AOJu0Ywv49A/HMoeO8sedTqet93f8H3ay832uz924TI3P8HXTw8vmVT3
+	mUpwSC8X4sQgBev7TiOoMY08DhFfJkdALyKwbnwWsFd0EE6oDv5/
+X-Google-Smtp-Source: AGHT+IHri0HQf6XNKPasvATTSkzTeOcHWs68oUr0xyoaSTbR19skLrSIq+kRffGq83rsjT3uitAkfQ==
+X-Received: by 2002:a17:903:192:b0:1fa:abda:cf7b with SMTP id d9443c01a7336-201d63b3e42mr86826185ad.9.1723729609281;
+        Thu, 15 Aug 2024 06:46:49 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:69ca:a1c4:ca16:9d53? ([2600:1700:60ba:9810:69ca:a1c4:ca16:9d53])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f038e26esm10244655ad.216.2024.08.15.06.46.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Aug 2024 06:46:48 -0700 (PDT)
+Message-ID: <6304df4c-705a-42f7-9e43-1d89404731c6@gmail.com>
+Date: Thu, 15 Aug 2024 09:46:47 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQVkmyVWAxyjrEQoEJ+gKJoJjfFqsDvr_A15FHGX1w=rQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] builtin/gc: refactor to read config into structure
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <cover.1723533091.git.ps@pks.im>
+ <ff6aa9d7ba0bd67d3682ecb44c024a6d59a7decd.1723533091.git.ps@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ff6aa9d7ba0bd67d3682ecb44c024a6d59a7decd.1723533091.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 15, 2024 at 03:19:50AM -0700, karthik nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+On 8/13/24 3:17 AM, Patrick Steinhardt wrote:
+> The git-gc(1) command knows to read a bunch of config keys to tweak its
+> own behaviour. The values are parsed into global variables, which makes
+> it hard to correctly manage the lifecycle of values that may require a
+> memory allocation.
 > 
-> > Hi All:
-> >
-> > We have already set up the infrastructure of the ref consistency.
-> > However, we have only add ref name check when establishing the
-> > infrastructure in below:
-> >
-> >   https://lore.kernel.org/git/ZrSqMmD-quQ18a9F@ArchLinux.localdomain/
-> >
-> > Actually, we already have a patch here which has already implemented the
-> > ref content consistency check. But during the review process, we have
-> > encountered some problems. The intention of this RFC is to make sure
-> > what content we should check and also to what extend.
-> >
-> > I conclude the following info:
-> >
-> > 1. For the regular ref which has a trailing garbage, we should warn the
-> > user. This is the most simplest situation, we could reply on
-> > "parse_loose_ref_content" to do this.
-> > 2. For the symref, we could also rely on "parse_loose_ref_content" to
-> > get the "pointee", and check the location of the "pointee", check the
-> > name of the "pointee" and the file type of the "pointee".
-> > 3. FOr the symbolic ref, we could follow the idea of 2.
-> >
-> 
-> Just to understand clearly, when you're talking about 'symbolic ref' you
-> are referring to symbolic links?
-> 
+> Refactor the code to use a `struct gc_config` that gets populated and
+> passed around. For one, this makes previously-implicit dependencies on
+> these config values clear. Second, it will allow us to properly manage
+> the lifecycle in the next commit.
 
-I am sorry about this. It's symbolic links here.
+I think this is a valuable goal.
 
-> > But Patrick gives a question here:
-> >
-> >> In case the ref ends with a newline, should we check that the next
-> >> character is `\0`? Otherwise, it may contain multiple lines, which is
-> >> not allowed for a normal ref.
-> >>
-> >> Also, shouldn't the ref always end with a newline?
-> >
-> > For symref, I guess we have no spec here. From my experiments, a symref
-> > could have a newline or no newline, even multiple newlines. And also
-> > symref could have multiple spaces. But the following is a bad symref
-> >
-> >   ref: refs/heads/main garbage
-> >
-> > I think we should fully discuss what we should check here. Thus I will
-> > implement the code.
-> >
-> 
-> Agreed, in refs/files-backend.c:create_symref_lock, we write symrefs as
-> "ref: %s\n" so it makes sense to validate that there is nothing extra.
+> -static const char *gc_log_expire = "1.day.ago";
+> -static const char *prune_expire = "2.weeks.ago";
+> -static const char *prune_worktrees_expire = "3.months.ago";
 
-Yes, we should do this. I will implement the code and the send the
-patches to the mailing list.
+I was going to mention this in the previous patch where you change how
+these variables are cast into git_config_get_expiry(). They aren't
+changing to non-const here, either.
 
-Thanks
+> +struct gc_config {
+...
+> +	const char *gc_log_expire;
+> +	const char *prune_expire;
+> +	const char *prune_worktrees_expire;
+
+The fact that they are initialized to const strings makes it
+difficult to know if they've been updated. I wonder if we need
+to change them to have a "if NULL, then use a const default"
+somewhere. (And maybe you do this later in the series).
+
+> +static void gc_config(struct gc_config *cfg)
+
+I appreciate that you are taking the step to make the structure
+a process parameter and not just another global.
+
+Thanks,
+-Stolee
 
