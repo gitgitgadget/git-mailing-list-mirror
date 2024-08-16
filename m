@@ -1,71 +1,71 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CF11474BF
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 23:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E335B661
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 23:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723851763; cv=fail; b=LgzHS7B1UUYccq3b3ZNkGHj+FZEZ0J2zIC3MBJlTaciY+j5/NZ7SRlBOQyRzG8QVqpxpqYSuwzV4NRCaNo7eN/XbDEdepDo19HZt/fIRY8usNc67yeLqBNBLceQpf1xt5GF/JnnEE8JwZQ2To9qJ+jHvRcOzLHONgdL6HZAhcMg=
+	t=1723852179; cv=fail; b=hz2zMXWNcEhhUJgfG2+dOzSKlZXSBwtkDjPD1dFsCXZ4/KjfKfoS+vASrvYGNkxOHtnWglYl/hA+85wRbqySVKo8TzYCPMUoVenMyb8qxSX3fUUYsQThrZlnKtVtx+MLbPJLXyQxmZoVksfaLYZKK2axpw8WtqcIUC5n9AIN2g4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723851763; c=relaxed/simple;
-	bh=Qnh/c9I7F57+oqHc255UYX7NToysOsLkegSThFkKSBw=;
+	s=arc-20240116; t=1723852179; c=relaxed/simple;
+	bh=SRJxO2vScpxM5bxsG0+xC3FZZpApUf6wZTNMvHslcWA=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=o+2lG0BNc+5AKn2A5KG9O+uxk20ZHu7c0tss2HuHldUe3BTbIvNo0xuJQW5UMpVTCP8aj6u6m9bk7CowAHoaNqWy5MeDaMyg3W17MVOUgXGwJHODxz41nb5wftX1aeCcWVhaUdXbF2nC+yNThAV9k07AV5eZVEYEWowh9UyG+ms=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FqgQrRKj; arc=fail smtp.client-ip=192.198.163.17
+	 Content-Type:MIME-Version; b=ekgfqxPqdVF+rWNHbJa9ckKwctDhzieqLQeVb6VlZvn/AFibEcN3kfcXF4LE0wG6e4GqtwkjUcXzIVGXYfu/sxW5vupjE3SBsp1WQhqADyLZ5zLy22OjlMjvn0COUW+MKiR1PiAiUz8n2rzkja64snkPTJgJc33JBqHFk7pw9ug=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CT+cmXfg; arc=fail smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FqgQrRKj"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CT+cmXfg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723851761; x=1755387761;
+  t=1723852178; x=1755388178;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=Qnh/c9I7F57+oqHc255UYX7NToysOsLkegSThFkKSBw=;
-  b=FqgQrRKjFYO7kaGsZ6M30dw3iVcxD5yKzA+3qE5XEVC/8BWAOxONdRKB
-   tNgp8bb9vB1jou11GVcoxIv+wmxnJ2ovcdDmp9GnSwW+nIlTSkKPom3An
-   9X0g/022UG6ZfxRsMx+EI0a4PJkXi72RV08phPcvraOL3t3iBKl/Na+N1
-   CQnDfOi7kzGr4WrHfjslz7OkA1wJ6n8Atic8NygXBZNg0omcq9TBbL6mq
-   z2Sm/Jc26HKDhuPTZ5fvWc1erYWn4w3weWKzKhN7SBOijqjfeFQX0fF9p
-   0uITKNweIKWC3iWkp6R0MHTK3rqEUPUPp72eNF3WhlATdwvqcIGLqTPEH
+  bh=SRJxO2vScpxM5bxsG0+xC3FZZpApUf6wZTNMvHslcWA=;
+  b=CT+cmXfgDCOYIn7TLFLuuQH1P70ZS482pU0qfCQfYjPlCnEDOowEoUXv
+   JAFE0GXphWsdmR+QR0abpHb5u0BZL38Hooj74a1M3jBBuWgXaamVhKzWi
+   v3vciBYl9JN+8yxlFfEhdm6r/E3TtUDk6FlOk5jxznOqE/rA6knotDn7I
+   NZ/uO5F3EPq3mCEluZIiS3J7egRlNalla0pqnwCFiwPAYQ/SXAd6je+vH
+   YILySMT0FWbouG7WHo2lzWAdw4iH8Ll6Zbzr5JJFugC2w6G/chnsGTghn
+   Hw77aPWXCXVZ9TE41sotFHZknU2KNQM0+VGYSnDzZWW7vNeNFGsqjo2dG
    w==;
-X-CSE-ConnectionGUID: feggXzHISlWzO6J6S4bJtA==
-X-CSE-MsgGUID: oAFCb9aWTqOejtlDxA2MBA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="22039034"
+X-CSE-ConnectionGUID: AHvWH5kqQnKeV/Au4tvhLw==
+X-CSE-MsgGUID: 6ADcswnJQ7+gCs4M2zyDqg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="39675877"
 X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
-   d="scan'208";a="22039034"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:42:40 -0700
-X-CSE-ConnectionGUID: FymRcT7CQl+NFWt0YXpctQ==
-X-CSE-MsgGUID: PVXFE53IQn2vyHl4FcAvgA==
+   d="scan'208";a="39675877"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:49:37 -0700
+X-CSE-ConnectionGUID: bn7mS1e1QtyvQVnF02R1Qg==
+X-CSE-MsgGUID: rCeqUgy9R96+BXISOBBi5Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
-   d="scan'208";a="64207966"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 16 Aug 2024 16:42:38 -0700
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+   d="scan'208";a="97317471"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 16 Aug 2024 16:49:37 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 16 Aug 2024 16:42:37 -0700
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ 15.1.2507.39; Fri, 16 Aug 2024 16:49:36 -0700
+Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 16 Aug 2024 16:42:36 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ 15.1.2507.39; Fri, 16 Aug 2024 16:49:36 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 16 Aug 2024 16:42:36 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ 15.1.2507.39 via Frontend Transport; Fri, 16 Aug 2024 16:49:36 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.40) by
+ edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 16 Aug 2024 16:42:36 -0700
+ 15.1.2507.39; Fri, 16 Aug 2024 16:49:36 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QCSGRtJlViD/JJOQy0rwbGmKGJ6RN4vQT9PCtrekDT+lOkMahYJBm/YWFdofnFajdUYmF0c3HKHmqnA3G1gzbL1WoD1XjwQK/GoyjRX6nb10bDgnXClx/kq+BOeXWYo5hViRYg9NvWmfLber+uUAXG5Uka58zt2i2xVh397C16w6xgfgRRDu8FX5jytcYDLO+wAMu39/nQUMHnB13VhaOtL29MW2Pn6ssNoYSQHK/FBuwr3Ig4XevdkRhYpHQEMEa5uEHE/EpC8kKN2d5qh1XcNSXNFp5YylxTyLH2+mH6Y1trQmLgEzbHjqNZnnBfJOz2POUZrG5rY0zaZyXcvlrQ==
+ b=Xp4/inyn5eHaoZvO6vnEu7i2ZRbqvsfLKqJ50SwCnCmtNb7OQjQz7pUupJq+Sh0M7lWPT7nalgPrDsfzRsJ1W972lRiOCDSXQ63I0WGX4R39PcDexdLrliNo9gJXXSi1lOh1l3rKc4agTCkQOjFldvRjtVkB93ync9L4+U5gJXKGrqlPE2C8QtSbHb2UFrOg+1MFFHwMoLT/PDB7Omxi+vTs+GLFiYc0p+vyJr55D98wfyHOLneJ/kH84IluOanD2mVGKXKi0v+7aQ33Dk6WwXF7TXLry7qoHM2dqbGr4Ql2rbLgi2s5PCRxdshi5IdNL+/G2e4Tmplam22WoOFgNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QiL6V/Vxeo7p4WDs3zp0v5vw2WLyjhpePwcyZsyXcVo=;
- b=KoQe88MjwcV0RXELZSaE4ddj6z6kp0k1c2il4bl6MYUlLzNS7qUMOjZxSUyfPJzd/v1ZBhF3qd321t3kM6LMf77j8eepbqVL11MsdogfJd3zNV5x4kJjH3LkKTz0HtlNsdH1IElJUSbEPyoRsoMcou5h1vSj0N3RQfrYZaxP54DLmoH4xmDJOrPkSqMSd8Xv55wyUHnFiVwQtleY8u4rgv7VXLdYZ7fZlbS2uzLHoPVkJUfkMQGKVNAGTcNhvV3RVPlr72A3EuHaD/zTUX/Zb0w4djoD6y4RTXoeAoEJiA5lkPfMVUPvIPRnDj5QH2cFdwJAfb4A5X/FFYTgZy1/jw==
+ bh=mSq7VrYiZSX4ub1MqN1OmqGdn3IE6uIfQl0ZSlktmV0=;
+ b=ImLsVUJXbdYmoTFGvdUTO7/q5Ra3B2vNRBqiZGBm/cUyJicN+Duikfy/pZ0FkOX5AhbZ1x7kz2dK5WchBlRokpQWDP2+AMWIQUFQWIHhcNuOQ2apSduFFpmtgS1ggIXdBvQ5cr8CC4Z3u81WgDQ2UjMe2a5y3p+YNhK8t1xjlIEkdQPOBtQMqyxQq5OQEWt/Q5n3UePT6oUWR08s/d+g/KYrf6XcXLMQlPZNnr+lhJqh3ObOF5JDCu75HRelzDX6CH8HgFa8YsIFA3ADbHcEzsB6sZzW5pZhy2SL4bsRW0si2u2SmuYPST7oYYifGIDMb7Pen653YvtmH+A4G4JNeQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -75,28 +75,28 @@ Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
  by DS0PR11MB8050.namprd11.prod.outlook.com (2603:10b6:8:117::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.19; Fri, 16 Aug
- 2024 23:42:34 +0000
+ 2024 23:49:33 +0000
 Received: from CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8%2]) with mapi id 15.20.7875.019; Fri, 16 Aug 2024
- 23:42:33 +0000
-Message-ID: <cf58f786-06b0-4ad3-a6fd-f593af639c98@intel.com>
-Date: Fri, 16 Aug 2024 16:42:32 -0700
+ 23:49:33 +0000
+Message-ID: <b706f695-c1db-48df-9095-664a13293f99@intel.com>
+Date: Fri, 16 Aug 2024 16:49:31 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] check-mailmap: add --no-brackets mode
+Subject: Re: [PATCH 2/2] send-email: add support for --mailmap
 To: Eric Sunshine <sunshine@sunshineco.com>
 CC: Josh Steadmon <steadmon@google.com>, <git@vger.kernel.org>, Junio C Hamano
 	<gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com>
- <20240816-jk-send-email-mailmap-support-v1-1-68ca5b4a6078@gmail.com>
- <CAPig+cSN-KU-TQ5UBR9KfxjmQ4zzjL-Y-anxDe9FaeqsV=1Xww@mail.gmail.com>
+ <20240816-jk-send-email-mailmap-support-v1-2-68ca5b4a6078@gmail.com>
+ <CAPig+cQr+n2dTN9OAbmCVc30GwUH2K67X-HGaF=-LazY1y+2bg@mail.gmail.com>
 Content-Language: en-US
 From: Jacob Keller <jacob.e.keller@intel.com>
-In-Reply-To: <CAPig+cSN-KU-TQ5UBR9KfxjmQ4zzjL-Y-anxDe9FaeqsV=1Xww@mail.gmail.com>
+In-Reply-To: <CAPig+cQr+n2dTN9OAbmCVc30GwUH2K67X-HGaF=-LazY1y+2bg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MW4PR03CA0354.namprd03.prod.outlook.com
- (2603:10b6:303:dc::29) To CO1PR11MB5089.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR04CA0107.namprd04.prod.outlook.com
+ (2603:10b6:303:83::22) To CO1PR11MB5089.namprd11.prod.outlook.com
  (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -106,151 +106,189 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|DS0PR11MB8050:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0ac6988-9aa9-43ac-20db-08dcbe4d1a0e
+X-MS-Office365-Filtering-Correlation-Id: 283390d2-ac8b-48fb-54a3-08dcbe4e142d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aGMvUFdHS2pxdHA1T0xoWWxkK1ZMKy9SK1gzYmZVRy9ZQXkrUlU1Y2FJYUJa?=
- =?utf-8?B?bTdVNkRuVHArVzhkbXorTlJ5MzllaUxxbVJBMHZTZlkwWXI1SGo0V1BlekQ4?=
- =?utf-8?B?elFyMldGMVBqVUwyYi93UjZPY0IwMG1neU5DamhoNDFwMUJpclJ6ZHNlb2N3?=
- =?utf-8?B?M0dnNnNGMjZZZUk2cElQVjNSU3d0cWZyVXNIWkhGVTdPNkZtbFZHTUwxcGNC?=
- =?utf-8?B?Z2QydHBhNTloN3p0REMyWWxkL3RWSy95VE9XbkFWWU9DME1WTXhYbXZMWWhr?=
- =?utf-8?B?MHBFSFY1OE9PbFFRMTMxczlaVGt4M0Z6ek5mcldFTWdFT09EMHpRM3FDVGdL?=
- =?utf-8?B?MWVhUyt5WjdtUDM0dEVLTktreDBOWG0wYzBxTDgzZ0NaRlM0anRrMy81RldF?=
- =?utf-8?B?S1BNdVJxZnV0MnFwK1h0VzRFVWY0YzBmNGprL09YQzhuRmtJNFowVXNjZ2lj?=
- =?utf-8?B?dDFjQnVsTi9TdlA1SVZFbkdmbUN4OXM5bU1oN3NRbkVDZitEenN3T3pCNUY2?=
- =?utf-8?B?RmJlRVFldEQ1dldOMTlQTXR3aUJSaU1iWWJMd1FoQ3VuaEN4a05pTmt5Qjhq?=
- =?utf-8?B?THFMTHdZMXZ3Rktjcjd2NFdZR0RieXVrYnVSenFpMXMyYmtoejB2SzBwZTVQ?=
- =?utf-8?B?R1gxemhVVW9qNEVFK1B5aDVyY2c0R285TDJQY3RBcHkzUmV5RjRiUFlCbWxH?=
- =?utf-8?B?OEZFd1dEc1JEMzdmdHFVZVlFZVd2b1lwcUdGLzBZUXRjUCtCRDNVaUpLWFFJ?=
- =?utf-8?B?QmFMZWE1YWRidWJwbkJuWk1BU1RYSWZzdk5HNWlVUkpuOWFsNGF4NEVHOFZF?=
- =?utf-8?B?cFJOMXV4RHZvaVlneVhDbXhXWEZvSzFmbzAwdE5Kd0gyUDdQTktKUmhPdE4v?=
- =?utf-8?B?bUZZRUl6bk9jaWxaYXRxUjJUZjJPUElTRGFraVFDV0l6dDNJNncrTkZYdjN2?=
- =?utf-8?B?dFEwOHdxTUQ0ZmcvcUZ4QnFEVi92MmJCSjVxalNTclREY1NPRHBGdWlGSytl?=
- =?utf-8?B?K1ByZ2NCVXBFc2c1ZDNWbG9ZdDZsOXI5WTRiSW9XZjN6VDB2cWZGd0NmSnI3?=
- =?utf-8?B?R2FMeUZadDBqV0U0cGxEY1lSbm0xeDRZU3RZL2FvSDlFanZVb0hDd1FBTTlZ?=
- =?utf-8?B?aEdnTU1OQWtWRWxvS1lDTzRHbXJKWHhTZE94UFppUitXaHAvMSs0SU1QM09j?=
- =?utf-8?B?dDZXYm5LazE2cXZvRjdMOXc1Qk1wMVppdFdLU0ZOa3J5blc3ZFBVWHdKZ3Nl?=
- =?utf-8?B?Mis1Q20rVC9tMjNjM3VzeHUyeUNPZWlzeDRzWk9oUEFNL0NVZ1JtN29BdXNP?=
- =?utf-8?B?OXV5QzlGV2tyTG1pSVBwcHlUZzV1bTdKVmloalBqYUVNWjZHQ294M2RUcUxi?=
- =?utf-8?B?aG4rM2tXYm9SeVdZTFd4dEdnLzBFcUh3MVBXMXJuTzZzQkdaeDVsRkNVNkJE?=
- =?utf-8?B?em9ITHdHTVNaRWJ2bUM4aWl1a2ZOOHJEaGVmazlpSExUYnhuWElTQmhzNllE?=
- =?utf-8?B?UFFPN1lYY2IxcVFCYW1uV0t4cTJyOWFvekkzM2x4ZTEvOXlTeHJDZ2V3Umti?=
- =?utf-8?B?YWRNSlpFOWw1UVJDWlJNMVp2RllsK0lVRVVkV1BVYlNSSDg1NFNxdG5lV3pZ?=
- =?utf-8?B?N1JyZkdaeVhSVmdWVkVhR2c5Z0tmSjJtcXhxV3JTc21kdDNlVERXWXBWYUNO?=
- =?utf-8?B?UjdVYTBKeWtXZGhTbDVlck5SUyswcWdEdC9mZkpKSUdSa2hBKzd4RWh2eHgr?=
- =?utf-8?B?QTZ5dEtwQmhFajVwcFZYSGFibzdKcHFvQ1B6djVpV3ZvUGpWWUpPUzhzUmtx?=
- =?utf-8?B?aWx5ZGF5NUg0NjgyUS9Sdz09?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aDVCdkVFWTZQVkFlQWVoSERjWUhNWjNPNnE4WXl1OXdZb2VOVW45V1RCY1JU?=
+ =?utf-8?B?a3dOUEFCRzd3R1E4ZmxnTTQ0bUtOUzdUOXlxbjVMSWhRTHlmSHF3bkplUmx4?=
+ =?utf-8?B?c01ndHZTdVNOaHhZVFR1UTUySmtoNG9OZHRLb1FnTS9OVXZ3Z0tQdWgyTlRW?=
+ =?utf-8?B?a0p2OU02M0w3UDZoZ1lKUGVORWJkdWlJQkpkTlMzbnVGOEFEbm9SOGxiM21I?=
+ =?utf-8?B?RWVYSzJyR3ZoWEYydnN0QXFlbVVkSmVtVDJqMnNjWlVES3ppQ00yYjdnQmV1?=
+ =?utf-8?B?SlhsVTQ2OTFseTdINkJPSGx3b2lwUzFPOW5xRzR4M3licXIrSTN6WWVSc2hp?=
+ =?utf-8?B?b3hnL1h6cUZsdFZ1dG0zZGNjWllkMXNJc2cwMlhmQ0RPZXZjd25DZGFLOGpB?=
+ =?utf-8?B?RFU2ZFFnNmJwNDMwYituV1BBeEc3UWsySG1EdTlOSE9OTDVab3JzRjYyd0Nz?=
+ =?utf-8?B?d0xON04wcW1MMU13ZythU25SSXRDM1Fnd0s3Um91VUhCN1JPL25CQmVXY2ZN?=
+ =?utf-8?B?TERzb0MzZVhvbXVyd2l0VW8rUmJ1bTU2d09yeTg2ZUY4RVE3bGFxQzhrSEFO?=
+ =?utf-8?B?NklQY3R5NUxMejdScVh2K3pnTFlaN2FLd0dsRE4vRG1IZ2F6UDZjb2x2Y2JG?=
+ =?utf-8?B?ekJsQjJlVVdacnhtdE10azQ4TVpLcTNTN202OEdCd2UyWmhWOVVJMnRkQXNU?=
+ =?utf-8?B?OEZzbUpyQnFVVHpNZjVPNnQ2L05nRzhHNXljejJNQ01iT3d3YjdRc2tWYXhJ?=
+ =?utf-8?B?VTdJN2xnSm1PaWNXZ2h1Q3BXN1VMbERJWGpWTUV5cG5HVjhwZTU3VmRGWWww?=
+ =?utf-8?B?bkltUmpzdi8veU9SM2U5Z1N3ZnVkNm1BTlBwd2g1Nzk5K2hkME14MW5PK2NW?=
+ =?utf-8?B?aDl6L0hEVG1zb09rTzZwV1R4SlZwZjloN3RzWGJPRXVOZGxxWk1QK1JVT1k5?=
+ =?utf-8?B?RzYveXN0VGxhQjhXckdNeE1iTkkzQ0duOUxxUm1qWXQ3alozbkpiZjVjK0RH?=
+ =?utf-8?B?L0JEUVozWEZmS25nOGQ4YkRDR0NhLzZzK0NJdzNqcDVoSE9uOHZTT1hqWlF1?=
+ =?utf-8?B?d0k2WkhKNjFFOHp1UUtvM3VzU1huR1cwZ3lBN3YyTmp0RStYMUtRU1VtYVJu?=
+ =?utf-8?B?NjljV3JuOGgreVlvR2RGYTllNVpWV1JhNm4zQVBDZ2dMTDYxaDZ2cjNKME5O?=
+ =?utf-8?B?TllEdW11UUQvdXdIVUVoSW9HeDgwamtQRDkzMXczb0w2Z1pZSlhyUnN4Smlu?=
+ =?utf-8?B?dUhkcktzNzdTbU41ellNRWFTaU9xTUVWVUs5SlIzeWNkVGE4RlNEWU85VEZK?=
+ =?utf-8?B?TGk4N2FDSWx4UEFFc2Y3d01jZXJPaDE4K0p5VWhGRDBNU3hPVmZJdzU3Wko1?=
+ =?utf-8?B?U2poTDVUQ3ZCTm0vTE52UXR4NHJBYlRWT3hoU2tpeGR3c0xRaFRWdUlLcFlL?=
+ =?utf-8?B?NThQVG5wdmQyVkU5dEdPb0I2QlZyUjcvcVFkRktOZ25Ra2FhcDNCQUhvRHNs?=
+ =?utf-8?B?RUNMV2lCbS9yeU1OREdQUkwrWlhOckFka3ZwU2IxOVM3dFhyT1JkQzlnRDg1?=
+ =?utf-8?B?UGU3MjFxcmQ2by9NNURKY1ZibFpFZFdGUXpXS2dsR0xmNEpscTJwM3ljcUtz?=
+ =?utf-8?B?akJrT1ljdElNdG9maTdCZjk3V1RWV0hTYm45SWJnbCt5aS81MkMxS2phZ1U0?=
+ =?utf-8?B?U2ZOYmFZTi9YSnJZU2FrYnRqTExLV3RsMzVBNDhqaVllWEJjVnppbmMxdXZv?=
+ =?utf-8?B?YkFDcVpUQjIvZ2FxUEJCNnRYZzZMSFJzV2I0YVIyK3hUaElaZmhUNEhEaGZ1?=
+ =?utf-8?B?QW0xbTVES3BacjZXaEFRUT09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?alZzZUN1d2htUDZZK2VCcUh1c0dVUWEwSVNjNHJRUEtMTllKNzhXZ2MyamRE?=
- =?utf-8?B?S2luZTY5V0luRjRhUWF1L0pwS2pzTkI3aGFPYmtWVlovT3RUMkhMUkoreEY5?=
- =?utf-8?B?UE4xN1JsRFM2VHc4MERNMUpjZWtXN08xU3F1MEg0Rlo1SmlCcnZKb1lnelZZ?=
- =?utf-8?B?TUt2SkNrMkdJWlRhNkRqZnRNMFVsaXdsTzZZRWg4WjlTdkszSm5CclNVbndh?=
- =?utf-8?B?MDgrOFExTmdMUFl0M25ndWVkN1Z3elBUa3NPM3YycktkQksxeFJDbHNpcDFu?=
- =?utf-8?B?NUhWVXYzQTU4bEpQSk10ckpEU1lmUHZCVlhhRjhWZjJpYUxPTVRIcGU2azRV?=
- =?utf-8?B?ZStsZ04rNUR4cnlEbytQOGhxeU9ZZ0l3bDh0VjNiNStMV29ERERpeDNzOXJ5?=
- =?utf-8?B?Szlmc1Y2c1c4Snkrd29PUjBEa1Q3RkRFV1B1OXdsWHpkVzM1YVZ2SEZGaVdj?=
- =?utf-8?B?NHV6ekRMbWpCeVkraUpBakdTQ0I0ZGo3WUl5T0VhK1pqRm0rTDhWZnBTeHRK?=
- =?utf-8?B?d29aNGEvK21NS3dIQnlZRkVGeTVPQzZRa1VJa0kxZzBRSjI5Y0Z3UzcwbTNK?=
- =?utf-8?B?cW5JSjhTOGg1ak5xOHVHZC9wckFZaDZkT1haMkpPVnpyRlR5VWNpY3Y2Smcr?=
- =?utf-8?B?WkZnVEExSjk1cWgzTE1TWG8weUw1ejFIcnJZLzZKeGxXb1E5b29lRmViZE8z?=
- =?utf-8?B?VFI4RzhnZ2lDTlcvMytaOHM3ZStVQUFHM04zQUxLMWRqaWhkd3BHNWdiQ0Ry?=
- =?utf-8?B?c0h3RDhaRkJaU05DWTFnZjBHak1ubDRQZzhVTXp2ei84bmNxWnd2aGFmWEZp?=
- =?utf-8?B?Y0xYb0tuK29XdWpxOUZwREJTREllVjJtZlhRTnJoYThhckpxY05wUENrdW5o?=
- =?utf-8?B?bnJ1bTNURnVrWGNmQTBGT255NkVrTnlERDdaODc1NWV5OGV4L3dlN2xEMlBB?=
- =?utf-8?B?bzZDZUo5aGx3eHoxazJKbUs3QXR6WjgrS3NhV0xzZGdmV3dCaGFnODZPMjBE?=
- =?utf-8?B?Z1U5WUZnc1hHc000cHVkTSs0VnpBRmVWUlZvMVdzUFlna2k0TWJYYXdSMkJU?=
- =?utf-8?B?VTFXamRBNHJUcnFOWXZ5d2xaWVZhSE9aOW9ZYU1oYzVXbnVIOVZHdkFDYXh0?=
- =?utf-8?B?WjVLdjNxVndQTXkwenRnUy9oQUo5UWFJbmVJbjNyRXBOUzhrYWRnaHNBZWVO?=
- =?utf-8?B?ajZsVzVTeDFWQjZOLzNTbFVpZTNLNU9oRDlXV2Rnay9iVjFqbjN6WGR1OFlJ?=
- =?utf-8?B?aTAycHUxR1pPdXpEUEhoYkpJVyswcmRRZVZIcHdQTFk5TWY5cTFZMTRYbi9Z?=
- =?utf-8?B?VCtvbHJ3RWxOYW9GcUc5dG8zSCtYWlFaV3p0K0paVUdORGxwdXZOekFTcGhr?=
- =?utf-8?B?RmVTQ3hneEQxM3BRUTZPeWtOVXNnQ0hWYXFMMU5WaDNvVW10cmMxWURpTTNl?=
- =?utf-8?B?Wk95YmZ2endld2ZqT2Y4c3BuUC9rMjYxWkRDZ1I4QXlaTFJVY2NnRlZiZko5?=
- =?utf-8?B?R25XeVAwamtpTzMwNU5ZRVBXdktMQUx5YnM0YTRnZW5MU05wYlkxOGdIam5I?=
- =?utf-8?B?WVdqUlNJQVhlTENKa2MwUUgrUnJmRzhySHdsNDROenVicWdLSTY4THdiTitR?=
- =?utf-8?B?ZG9BbW92aXoyVUdjVjVJdUFyL09QNnNZOFZxQzVOTDhSNWMwQWsxSEN2THFx?=
- =?utf-8?B?czJVZUJ0MDVIT09NdnJ4cVE2UmxNcG05VDVnbWh4U2FTUC95NzdoOTN2Skxq?=
- =?utf-8?B?ck9NWkxvYVBUL29EU2hBZHRrdHhVNTFlWmV3ZGhtVEJET3dMR2ZxMUxndzRS?=
- =?utf-8?B?K0JOTUVhNHZ5UUhlaTV3TDJ5WjBZUkVmblNXNzNyOWp5VEU1c3U3VTRxNXdz?=
- =?utf-8?B?Z0J2NnhMVXMrR1l3R2wxSUtrcStkeWtqRnFwWjhOZkNmKzFvSjFIUG1hV2NF?=
- =?utf-8?B?L0Q2ME94dmlQeWc5akJPL2JQYURYckRvRUswZ1dESGx4cE9uMlp6QkFGckR1?=
- =?utf-8?B?b0ZYS1RTM2w5ZC8yUTQveUFiZktPbzFzbnBCZ1dvMnNsdllnaU9TMmMyWUVu?=
- =?utf-8?B?ZEVyVmtqYnpOQmJFOWtIVlFWbE5wTHJ3RG5xQm4vdUJDaUoxSU9LZkE5VGtj?=
- =?utf-8?Q?fDj6kjp015yws+OnVClvRwril?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0ac6988-9aa9-43ac-20db-08dcbe4d1a0e
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VUJkVldvYlBlNUhEQWpTWWRneGYrNXE3SGpldXpzemlBNkZod25wQUc2TFln?=
+ =?utf-8?B?MHlJL1E3M21JZ2NKTVl3a0dhVHQwZUcyMjk5d2ZtWm85NjZDYlVVeHRUYW8w?=
+ =?utf-8?B?U2owL3BjTjhyeHpjWlMwV3RnYW5YTFBHSUJHWWJmWWE1VnFKc0UvVWxnYkZ3?=
+ =?utf-8?B?WFp4NmY1NU1qWUcxMWJQRDJOQTJ6OWVqVkYyc2xmNTBMTlkxd3gzMmZHRm5B?=
+ =?utf-8?B?OVlpSFVWUEl1M0F2NFJ1MXU5SkVHMk14NUtkZ0pDUDZWcDk0cmZyQVNuRlR4?=
+ =?utf-8?B?dytKZUdic2NtWW85cFNUZGxqOTl0S09yNkU5Z3FwOUhCT0hSY1IrbDE0dVVS?=
+ =?utf-8?B?OVl3UWhISzlUZTI2VXFLbVFHOEpIdWQ4Nzl2aEJvMW9PdmxDYjY0dzBlbG5o?=
+ =?utf-8?B?Tkk2TDhUbkhPbWZMVzNjNzF3a3BLY1htY2FvZ0FsTXFaRlYxOXlwTDFvT0FT?=
+ =?utf-8?B?RHFpaFdBdDQ0MXBydkFGZTRFWEliTHJRYittWHdJWEl6a1NoZy9TcjEzMGFh?=
+ =?utf-8?B?QzV2V1RFQW4zVnNQeEpkblhybjlaSmxpVDNibkVLc0tMWUd2T2NhaksrVmlG?=
+ =?utf-8?B?UG0rYXpla2ljYnBpSy94NytIaUVOZ2lKT2xZdmxVMVE4TWU2YXFQOUNTelNy?=
+ =?utf-8?B?MTZlS01ZUWtQNUFUeC8ya3dSMC9HM3Zuc0l2ZEQzeG5kQTJYVk0xb2FOUnk1?=
+ =?utf-8?B?S21HM1JNZEZ4WEsrL0FNSVVCZU5XTlB0UGU4MEJqb0NjbTJPcktSQnFVbXlt?=
+ =?utf-8?B?Um5vUWErUEVqU05NQ3hwaWZGbkRER01NRDMvVUhHUDB4WjJCVFB4dkxGWXNS?=
+ =?utf-8?B?TEFCa1pobFpxV2Jaem43bFkraHkvUTJVQWtPRkRPT3pRUVF0dzNLNy9wTDVs?=
+ =?utf-8?B?V0xSWDZ5Z0pFczAyWmZjem9qTEJuVlgzaDBrdzdxS0ptV2loK3FzejE1eHNF?=
+ =?utf-8?B?Y0NJOFRPaXB6S05Qd0pFOVVETklvVE9od0tGeTM1T2hDL3RsNCtoZHJTaHBR?=
+ =?utf-8?B?YWdYSDhzMjhTMTZGYXJQbW5CLzBmV1h1bU9PU3liWWwwRWRkY2Mzai9HM3Qy?=
+ =?utf-8?B?SEFsSlNuaTc2UnJpZTRUdnk0TmxySktKTHVlWVpXUTVHMmp2eW9IaU5pN2pv?=
+ =?utf-8?B?THFVUkNsTW91ZUhkbEdzSTM0MEhneTluTFY5cStmWEg3S25LNDV0cVowZGhr?=
+ =?utf-8?B?Ump0UWFXNzg1YzN2V2Rmb3hEekFqSklsZjlEaytUOTcyOHliRHJtN0lxSFgy?=
+ =?utf-8?B?NTlFNUFYOUcxVW9CTzR6MzlIQlg2Y3BteVpkdEo0czlMQ2dCaDltalhBRThj?=
+ =?utf-8?B?cTF4ZUIzWjJNMTRlV3J4Ym5OdWI0YlpnRzRMaTNJMUxOZGk1OTBwUEx0VE96?=
+ =?utf-8?B?U1dNMkxGYnM2c3Q0RFZ4WWZqMFBYaFcxZlBEcGhqdFl5ZjBENjM1NXZMblNi?=
+ =?utf-8?B?TUZJQWNqOElYQXhVRm1WdTBKV3RkaUlIZ0dUT2pBQzlQd0IraDM0KzJIYmNG?=
+ =?utf-8?B?TDZPdkZMT3lkNXRhbm9mcnB2Q0hhNkxvVDlzSnlQbEV6TUpMK2dQQnI4QlRI?=
+ =?utf-8?B?blE2OVhrUE5tRFkwclorSU44NlFJOXlHVE4rTVBZT2sreFZNSjkrcnF3Uk9r?=
+ =?utf-8?B?Q3I5SlRWbldkNXNTREM0ejB0a1hVaFJDckZHZ1AweUxCMXZ5L0hqL3ZBUUZR?=
+ =?utf-8?B?YWN2c3g2M1RTV2p5UVpFbVlPRnlqckw0T0FUSzVMRGVvWGdldHBJNnlYYVJj?=
+ =?utf-8?B?TkwvZ1d4SmhHK3pUZ2JCNTVaamtENTR6aWtDclFGb2RrbWl1aVBsT1RyNWJa?=
+ =?utf-8?B?K2NDUW1jZXdtTzllMHA3MHBsWnAvaVlyM09TL3ZDYzhqQ3JkNDM4bUU4M0pP?=
+ =?utf-8?B?RGhXU0wwTW1DUTV4VStkd0o1aFRyYWV1bkxKQ1A1d2NSNUFSdFN5RDNZOFo3?=
+ =?utf-8?B?cTBzU1FZY0JDejZNOWxYYjBTTXEzVUphM203OTJpcWpmcGdsMnFyWlFZNlBR?=
+ =?utf-8?B?R0NqdmNETWRLOEJvSGFWWTRCemR5RWNjdnY5cUFBWVlqSlYwaFJVSTVNTFo1?=
+ =?utf-8?B?Mnp0dFYwMXRVd2FYblZZOTlxM2N6UHFSaG85aTh2YjNVQndVUHMremxwTExR?=
+ =?utf-8?Q?ZUDSRO1V62ig+IGKqMpxHtloi?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 283390d2-ac8b-48fb-54a3-08dcbe4e142d
 X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2024 23:42:33.9330
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2024 23:49:33.5770
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yOwASxKzf6yepkOzEa/rWcTOG6j1mKzzWk7OIRhHWDsOxHBIrRDPLSf8RB1WV5QNc5a99dqlDzoZ7JORSwHfIk4lMT+hWp9gF3new1+Jszo=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1GtEI7f7qlrlW4scdWCE41ew/tjplhJKosUGLvVHC5z/5gStrG6VHTAR/o/m3aUzqDRv+zKIawb12tLT/nl596yHlM/EOj/pCwFY+Q5MytM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8050
 X-OriginatorOrg: intel.com
 
 
 
-On 8/16/2024 4:22 PM, Eric Sunshine wrote:
+On 8/16/2024 4:41 PM, Eric Sunshine wrote:
 > On Fri, Aug 16, 2024 at 7:06 PM Jacob Keller <jacob.e.keller@intel.com> wrote:
->> The git check-mailmap command can be used to convert identities to their
->> canonical real name and email address. Currently, if a simple email
->> address is provided without surrounding angle brackets, git
->> check-mailmap will fail:
+>> In certain cases, a user may be generating a patch for an old commit
+>> which now has an out-of-date author or other identity. For example,
+>> consider a team member who contributes to an internal fork of a project,
+>> and then later leaves the company.
 >>
->>   $ git check-mailmap test@example.com
->>   fatal: unable to parse contact: test@example.com
+>> It may be desired to submit this change upstream, but the author
+>> identity now points to an invalid email address which will bounce. This
+>> is likely to annoy users who respond to the email on the public mailing
+>> list.
 >>
->> This is generally fine since identifies are expected to be of the form
-> 
-> s/identifies/identities/
-> 
->> "name <email@domain>". However, requiring brackets around simple email
->> addresses can make it difficult to support mailmap operation in other
->> environments where angle brackets may be missing.
+>> This can be manually corrected, but requires a bit of effort, as it may
+>> require --suppress-cc or otherwise formatting a patch separately and
+>> manually removing any unintended email addresses.
 >>
->> Specifically, attempting to support the mailmap within git send-email is
->> tricky, since angle brackets are not always provided for addresses.
+>> Git already has support for the mailmap, which allows mapping addresses
+>> for old commits to new canonical names and addresses.
 >>
->> Teach check-mailmap a new '--no-brackets' mode. In this mode, any
->> contact line which cannot be interpreted by split_ident_line is treated
->> as a simple address without a name. In addition, when any contact does
->> not have a name, output the mail address without the angle brackets.
->> Note that angle brackets are accepted if they are present, however the
->> output will strip them.
+>> Teach git send-email the --mailmap option. When supplied, use git
+>> check-mailmap (with the --no-brackets mode) as a final stage when
+>> processing address lists. This will convert all addresses to their
+>> canonical name and email according to the mailmap file.
+>>
+>> A mailmap file can then be configured to point the invalid addresses
+>> either to their current canonical email (if they still participate in
+>> the open source project), or possibly to new owner within the company.
+>>
+>> This enables the sender to avoid accidentally listing an invalid address
+>> when sending such a change.
 > 
-> What is not explained by the commit message is why we need this new
-> option as opposed to merely making git-check-mailmap accept such
-> addresses by default. Are there difficulties or downsides to making
-> this the default behavior? Do other things break if this new behavior
-> becomes the default as opposed to being an explicit opt-in?
-> 
-
-Mostly I did it this way out of conservative caution to avoid breaking
-existing users. It could be that nothing breaks and loosening the
-restriction on what we pass it would be sufficient.
-
->> This mode will be useful for git send-email in a following feature
->> implementation to enable mapping any email addresses to their canonical
->> value.
-> 
-> I'm a bit skeptical about how this new flag also changes the output
-> format to suppress the angle brackets. It seems like that's something
-> the caller could do easily enough if desired. For instance:
-> 
->     $addr =~ s/^<(.*)>$/\1/;
-> 
-> Or, is there some deeper reason for doing this?
+> Nit: The final two paragraphs appear to repeat what was already stated
+> or implied earlier, thus don't seem to add any value to the commit
+> message.
 > 
 
-For one, the documentation of git check-mailmap specifies that it passes
-other values through "as-is", but this mode would convert
-"user@example.com" to "<user@example.com>"
+Sure, I think I got a bit verbose here.
 
-I suppose thats not a big deal, and it was more a matter of not wanting
-to bother the caller to force it to strip any brackets if it didn't want
-them. I think its probably fine to require that.
+> Nit aside, similar to the question I asked about [1/2], are there
+> downsides to merely enabling this new behavior by default? It seems
+> like it would be generally desirable to have this translation happen
+> by default, so making everyone opt-in may be a disservice. On the
+> other hand, starting out with it disabled by default is understandable
+> as a cautious first step, though it might be nice to explain that in
+> the commit message. Similarly, one can imagine a world in which people
+> want to enable this and forget about it, thus would like it to be
+> controlled by configuration (though that can, of course, be left for a
+> future change).
 
+I definitely did it mostly out of conservative: "don't change the
+default behavior".
+
+For a general mailmap I think enabling it by default, with a config
+option to disable it. I think it might also make sense to have
+per-identity configuration, so that different identities could point at
+a different mailmap.
+
+For example, one of the use cases we have is to have a mailmap file that
+takes the now-invalid addresses and points them all to the current
+maintainer. This way, the maintainer (who is sending these patches)
+would have all the old addresses automatically point to him instead of
+generating the bounced messages as currently happens on accident. This
+type of mailmap file likely does not make sense as a general-purpose file.
+
+I think for per-identity configurations, we would either need to add an
+option to git check-mailmap to pass the mailmap file, or I would need to
+figure out how to set config when calling Git::command() to force a
+specific mailmap.
+
+> 
 >> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+>> ---
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> @@ -1085,6 +1090,14 @@ sub expand_one_alias {
+>> +sub mailmap_address_list {
+>> +       my @addr_list = @_;
+>> +       if ($mailmap and @addr_list) {
+>> +               @addr_list = Git::command('check-mailmap', '--no-brackets', @_);
+>> +       }
+>> +       return @addr_list;
+>> +}
+> 
+> For some reason, I found this logic more difficult to follow than
+> expected, possibly because it doesn't feel quite Perlish, or possibly
+> because in this codebase, we often take care of the easy cases first
+> and return early. Thus, I may have been expecting the above to be
+> written more along the lines of:
+> 
+>     sub mailmap_address_list {
+>         return @_ unless @_ && $mailmap;
+>         return Git::command('check-mailmap', '--no-brackets', @_);
+>     }
+> 
+
+Ah, yea that makes more sense. I had been trying to figure that out but
+I am not as used to the unless syntax.
+
+> Of course, it's highly subjective and not at all worth a reroll.
+> 
