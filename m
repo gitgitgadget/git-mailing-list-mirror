@@ -1,93 +1,85 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6235E1386BF
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5145B14534A
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723793778; cv=none; b=DYZ8Ulph9zgRv4p/IQjpVms+rRp/n6+mGd/qR2bdXLY4kMDa6RrmfPakhp2dMbi8Qzu8aFtzCDzdeXAOFi33JynBZgfYt6DIxJSySFnA74e50TCsBXBq7Aj8ZRSsrd8O4kFj/SrFD3C2LB0rpNjlcHM49TnNQswh2uTmH+0OjLY=
+	t=1723794137; cv=none; b=M0GJVd+myBT4895JHXQsMCYsGOxcFEio6+zUNCbvf5kGlD+zukFfIyKTYF2TxO1UQ77ITRfVGDC+Shl9CLobL3IYRk9RJLnsqeLWNAcnpFkiBBP0SI/dCZY5lfVWgMlBgDH2eRsA6rxXN6MQQWH+va279v8sBwt1fvafpX0TlGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723793778; c=relaxed/simple;
-	bh=QUfVicw0PIhBaOd4v4o0G0egL9SKzKHY7qJuj337zsM=;
+	s=arc-20240116; t=1723794137; c=relaxed/simple;
+	bh=9SfuZAu4Ma/EnfHr3WDT4zMPi+5jJPm/napUpICSEzQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tU2fGz0gKtEpJVVrK3uIRRpMgOzWGsdg8wY39TK4n0Esuvxc3NmQ9yUDCZjEie1glafZxjtTbWz6MuLcuYlvCeVyKe1SiRisVTmf/NqK8O9z/dTPO+RxwMOJv2uX1WJdIY9UUDTG1cBJf92uveg2HZwj7EEkKS6OCL2k/D8bOhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pE7i5BM7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XV0zhxEm; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=nhb7oaHdmkT6NTM0f7CFDR8z4xBxNh+6e7akWotBTtdViGtzAcS89H8/ShAYtGQlyCI/j4aPzHhJSx0jOxdnxts4I38Ens34JnvCV2f9ADVnNcZgMeUCDMAKGgUcxcZMjrrCoL728GjA1uAFmYvZLy1cnvEG6igYdgwXdHLAcWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=haxSjx84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oL1mxCMP; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pE7i5BM7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XV0zhxEm"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="haxSjx84";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oL1mxCMP"
 Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7DC69138C92C;
-	Fri, 16 Aug 2024 03:04:46 -0400 (EDT)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id C5B001151AB4;
+	Fri, 16 Aug 2024 03:42:14 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 16 Aug 2024 03:04:46 -0400
+  by phl-compute-08.internal (MEProxy); Fri, 16 Aug 2024 03:42:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723791886; x=1723878286; bh=qR+S9S13TB
-	//xUp6XJigqCj5mklobo+Hv6D0rts6nOg=; b=pE7i5BM7HaUks3Xzpraqh5x78a
-	AHR+Hpa9nmJmxO2SrAXMyQvLkwBZa79+noYz196l01ksH+7su9BiKScEJRSqHyA9
-	/h5ZnTtKqpJRQqh5aU8x8JduQLYy9Wvxj3AyLOKSu/Jm3YhV0Hvc8/9IxJKTa8lK
-	MFkclmaPZWTheikdV+vWLX3xCPcJRqsD1DCamfykX1CRp5hZrs8hWNbQ+EoK7UhG
-	igwOrQ45GA58jT3SiBmIX2Kf4/DOiyEWkiolZrLADfHSlB1VgqkF7AKoVOj3lxET
-	CSvshpqLU3Yff8bmR9q9ZH+wDvjBWvBmYY80HR4qqAfOBsQn1pnY+GvxFIbQ==
+	:subject:to:to; s=fm3; t=1723794134; x=1723880534; bh=qTRqzRU9em
+	ZgsxmQc7X5qm0FvM5ovVDAeJoqsDfm2Nw=; b=haxSjx844mNViGRpkciPWb7bNv
+	8hP6tvOazf7ajz5DZGiwDCKGHCYXE56szteOt+AmJ4q+6sNvWkDW/QSXofvUGTvu
+	3JNh2tCqDP7jiSHHSd8kn2OucULe0N4loZHuqW60XGJXA5xO5MxUtQZkspJ0Cvse
+	HHfvTXYtoM4bmFiRMJ8xiRCnUFp90LvuXpHcrB6elnk7CEdYxiflY1VopM5+M8+K
+	qDtZ9+GFY+VQMcM4pCjS00cTSLVL25V0D4SBiWXqZfcRqJYgtj/4VTN7psVq/kK7
+	xhtOkIil/EYooDKXJUKiiUEt540AZ9vvrLMyCbtAtWygL6pGRKz0Pgb/0CRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723791886; x=1723878286; bh=qR+S9S13TB//xUp6XJigqCj5mklo
-	bo+Hv6D0rts6nOg=; b=XV0zhxEmRkUeckM4C9bhvUi9iiIi9tPJLLiOEcPSK5cC
-	u6xaXMYFmf+Ik2FyQVpCczMBpy+4jiZl1Si6EWWW7CZDMYfI5s7/L6fYMiDCD+n8
-	bcC4ZIEr76Z6DcNlEAttm/9EUZekbU0pRpW46IOLBJzI757zFa2cOHVUCzXkRf73
-	o9+HYHsnjFWvhd9yp0eFO/El+Pfk+uZxgoGx3fZKjZrBS9/YVku6qUfNhm3kPG/x
-	+h+2JmFNou5iAx+GlTLYD+rth3W1dilpODOYE5gucs5znbhkkZZYS4slLyzN9UvT
-	8WbLIrbUGWJExHUv2dCe9VHGjH8vgqgCgeynWCHing==
-X-ME-Sender: <xms:Dvq-ZhLG1W4S7TLCrlTBac5QCT4LXAbt6hmawrPOsOQJlH4qqAJloA>
-    <xme:Dvq-ZtKdh71sM1RYH0eJX1w2rQ3gwmm_8goXrBlk39Aj6btwcXTaxoGlDTmtcGoxu
-    d7Z55YfBdoBH7IbtQ>
-X-ME-Received: <xmr:Dvq-Zps2gRstn9BYTyHhkmg0k-5ELQlOroLoAoMtSdQVElP3NaM7xJBCSfFLVq8TAU-WuFLwfhacuzY2Mt0ePifVceN7PAXPsvXZSfpLAJbCB_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedgudduiecutefuodetggdotefrod
+	fm3; t=1723794134; x=1723880534; bh=qTRqzRU9emZgsxmQc7X5qm0FvM5o
+	vVDAeJoqsDfm2Nw=; b=oL1mxCMP+bhen93N6NqBmn5LIxPz0Q90vxtodneH9laS
+	j+WHq+XsgEg3fHLpO7qc6o/clVU7UMs3kDA1JCUPSUsoEJK/Sx8y0aaJxb65mj0I
+	NIS9qc+x1656mBuKGMzqumqHny5Bjqn386TEptpxF+2Z26UhnpkB9R9Rq8ekSwaW
+	ng7eWhUVAm0AxOJCTDMBYHh7NkknrTO9yL5ADBEnmz/XfWyL6ypFyyNuzL1k3cwl
+	10BXrZsjxom02MeE11urZoPM7Y0wJ//IUp/pwjF0HN2C2jxBboF0vmojn7dV+Gfc
+	2TJWMQ1JaSzzICbX4piE+HH9mNxj29gSrkBGu1FdBw==
+X-ME-Sender: <xms:1gK_ZkZv_0qdMTxbHWRJ1ONfY2YtCZZy6rgJKQhU59DyKz1ZzU5ytQ>
+    <xme:1gK_ZvZgOf2y_3h1mdXvFIaajgJ4NXBtI7fpJFl7N3r5UbKTGTHH1TFYko6DA1XPA
+    LvRdhzZFRktJh1xHw>
+X-ME-Received: <xmr:1gK_Zu-kswxvR2iPVdJ5hbihhGkFf1P5_ShPJz531zvA9zyHgPPIwGLQeizz4534ZW2eoQjCqrea3UUGz-GTf9ZTThdvWsnqSEoyE4a4lrMpbdM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpefhiefgvdffvddtuefhlefgleehgfefveeuteffudfg
-    heetgfevlefhueeuveeuvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplh
-    drshdrrhesfigvsgdruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhn
-    vghlmhdrohhrghdruhhkpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthh
-    homhhsohhnrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtth
-    hopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhpvggtthhr
-    rghlsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhg
-X-ME-Proxy: <xmx:Dvq-Zibu2tJVM3Ps_k0CXcQdmROTcJY92Vr8WkQ3f3TGr_dLfOQt1Q>
-    <xmx:Dvq-ZoZOeTTYUfS6iEUAOUV1iF_VvsriXhkN3vbws-lscuOMtzl-QA>
-    <xmx:Dvq-ZmBvoWx9SjNjG-bJ2JcTatzJ9UoyAc6S3DpvXIkxB0BSNH-lBw>
-    <xmx:Dvq-ZmY96qlBFMXPm4xfA-EH0eDDT7RLbD8RBqpPsNEt9zIyM74CJQ>
-    <xmx:Dvq-ZuP7JhSqmvxrzHNn6xqe08PMSsl3YTHKYuq8YY5aLk-4nnL22eqv>
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphht
+    thhopegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:1gK_Zupf42GpsKGYvHAvPfJYI_02m8mKSj8i7DywsfbDSpHiO_Zj4g>
+    <xmx:1gK_ZvrW94nRGd-awUEgd1M9OfhUbiOK3Hj4JUd2sxQW0sdpNY5qRA>
+    <xmx:1gK_ZsTACeXpTFxu3NfSsTeo9N4xjKZw39oACF7-3Vb7izIO00Z8rQ>
+    <xmx:1gK_Zvq8pGeGWffuyjFF5zDw1Y1uhPNk7eGbPHvKYwWyTdaHeZgs5Q>
+    <xmx:1gK_ZuX69xLiQguhxj5UgdVUhO1EtfzUyxddjieuWpM33jzoX3B_9muf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 03:04:44 -0400 (EDT)
+ 16 Aug 2024 03:42:13 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a144a918 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 07:04:21 +0000 (UTC)
-Date: Fri, 16 Aug 2024 09:04:42 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f0b54918 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 07:41:49 +0000 (UTC)
+Date: Fri, 16 Aug 2024 09:42:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
-	Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH v5 3/9] t/clar: fix compatibility with NonStop
-Message-ID: <db53673294e6b1aee7e095eb57b571b9e17e5757.1723791831.git.ps@pks.im>
-References: <cover.1722415748.git.ps@pks.im>
- <cover.1723791831.git.ps@pks.im>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 08/10] t-reftable-block: add tests for log blocks
+Message-ID: <Zr8C0ir5UHzaHfUq@tanuki>
+References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
+ <20240814121122.4642-9-chandrapratap3519@gmail.com>
+ <Zr3NMOQWYDOufHXg@tanuki>
+ <CA+J6zkSOF-RtrBvgunMsTdL4Qd8H10zUHesXYtYG8DW+kJht-w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,38 +88,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1723791831.git.ps@pks.im>
+In-Reply-To: <CA+J6zkSOF-RtrBvgunMsTdL4Qd8H10zUHesXYtYG8DW+kJht-w@mail.gmail.com>
 
-The NonStop platform does not have `mkdtemp()` available, which we rely
-on in `build_sandbox_path()`. Fix this issue by using `mktemp()` and
-`mkdir()` instead on this platform.
+On Fri, Aug 16, 2024 at 12:06:47AM +0530, Chandra Pratap wrote:
+> On Thu, 15 Aug 2024 at 15:11, Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Wed, Aug 14, 2024 at 05:33:16PM +0530, Chandra Pratap wrote:
+> > > @@ -101,9 +101,95 @@ static void t_block_read_write(void)
+> > >               reftable_record_release(&recs[i]);
+> > >  }
+> > >
+> > > +static void t_log_block_read_write(void)
+> > > +{
+> > > +     const int header_off = 21;
+> > > +     struct reftable_record recs[30];
+> > > +     const size_t N = ARRAY_SIZE(recs);
+> > > +     const size_t block_size = 2048;
+> > > +     struct reftable_block block = { 0 };
+> > > +     struct block_writer bw = {
+> > > +             .last_key = STRBUF_INIT,
+> > > +     };
+> > > +     struct reftable_record rec = {
+> > > +             .type = BLOCK_TYPE_LOG,
+> > > +     };
+> > > +     size_t i = 0;
+> > > +     int n;
+> > > +     struct block_reader br = { 0 };
+> > > +     struct block_iter it = BLOCK_ITER_INIT;
+> > > +     struct strbuf want = STRBUF_INIT;
+> > > +
+> > > +     REFTABLE_CALLOC_ARRAY(block.data, block_size);
+> > > +     block.len = block_size;
+> > > +     block.source = malloc_block_source();
+> > > +     block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
+> > > +                       header_off, hash_size(GIT_SHA1_FORMAT_ID));
+> > > +
+> > > +     for (i = 0; i < N; i++) {
+> > > +             rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
+> > > +             rec.u.log.update_index = i;
+> > > +             rec.u.log.value_type = REFTABLE_LOG_UPDATE;
+> > > +
+> > > +             recs[i] = rec;
+> > > +             n = block_writer_add(&bw, &rec);
+> > > +             rec.u.log.refname = NULL;
+> > > +             rec.u.log.value_type = REFTABLE_LOG_DELETION;
+> > > +             check_int(n, ==, 0);
+> > > +     }
+> > > +
+> > > +     n = block_writer_finish(&bw);
+> > > +     check_int(n, >, 0);
+> >
+> > Do we maybe want to rename `n` to `ret`? That's way more customary in
+> > our codebase.
+> 
+> Sure thing, but then I would want to change the existing test (which gets
+> renamed as t_ref_block_read_write) and I'm unsure of which patch would
+> be the most suitable for that change. Would it be fine to include that
+> change as a part of this patch?
 
-This has been cherry-picked from the upstream pull request at [1].
+The way I'd do it is to first do the minimum required changes to port
+the old test to the new testing framework, without any of the cleanups
+to align code style. Then I'd put another commit on top that does all
+the changes like removing braces, converting types and also adapting
+names.
 
-[1]: https://github.com/clar-test/clar/pull/96
+> > > +     block_writer_release(&bw);
+> > > +
+> > > +     block_reader_init(&br, &block, header_off, block_size, GIT_SHA1_RAWSZ);
+> > > +
+> > > +     block_iter_seek_start(&it, &br);
+> > > +
+> > > +     for (i = 0; ; i++) {
+> > > +             int r = block_iter_next(&it, &rec);
+> > > +             check_int(r, >=, 0);
+> > > +             if (r > 0)
+> > > +                     break;
+> >
+> > We can also reuse `n` (or `ret`) here, right?
+> >
+> > > +             check(reftable_record_equal(&recs[i], &rec, GIT_SHA1_RAWSZ));
+> > > +     }
+> >
+> > One thing that this loop doesn't verify is whether we actually got the
+> > expected number of log records. It could be that the first iteration
+> > already returns `r > 0`, which is not our expectation. So we should
+> > likely add a check for `i == N` after the loop.
+> 
+> What about something like
+> if (r > 0) {
+>     check_int(i, ==, N);
+>     break;
+> }
+> That should achieve the same results if I'm not wrong.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/unit-tests/clar/clar/sandbox.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+Yup, looks good to me.
 
-diff --git a/t/unit-tests/clar/clar/sandbox.h b/t/unit-tests/clar/clar/sandbox.h
-index 7c177f3525..e25057b7c4 100644
---- a/t/unit-tests/clar/clar/sandbox.h
-+++ b/t/unit-tests/clar/clar/sandbox.h
-@@ -120,6 +120,12 @@ static int build_sandbox_path(void)
- 	if (_mktemp(_clar_path) == NULL)
- 		return -1;
- 
-+	if (mkdir(_clar_path, 0700) != 0)
-+		return -1;
-+#elif defined(__TANDEM)
-+	if (mktemp(_clar_path) == NULL)
-+		return -1;
-+
- 	if (mkdir(_clar_path, 0700) != 0)
- 		return -1;
- #elif defined(_WIN32)
--- 
-2.46.0.46.g406f326d27.dirty
-
+Patrick
