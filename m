@@ -1,175 +1,106 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A262713FD84
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 22:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D1813C80F
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 23:06:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723848694; cv=none; b=pTA8NIkelkfwucjejNXAeXJqfZ6qn3nz/7ntW4w/T5dk0610m2vr6x4Ntuhi02O6Eso6YYrEM9UX0KQ48SThZLF2rstRFj4RlXxh5ZqD1W3ZMUsdNyJ5GAwb0GU5igEdZM9dM13vMkHMeLh6ZJ4AgFCmpNJNI5HQ87Iebqe43RA=
+	t=1723849596; cv=none; b=poHG7uvALONjasYe7BrXvgJJlEs1o988bOxHEcr+lPZpcT5iWen4JYhC1Vj7vMhqQ7oo/L6lLFlLVvCGPaHmxrf7BuYbmqi/TPkYDDCAA9zbi3iQB98VSiTOhRsLF9hoxhEFy8slSYgP994fT1SUefFcJBIHef4WTJ8v3LfMbZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723848694; c=relaxed/simple;
-	bh=Feowbj5v/BtTESMhkt4OfojVMCkUovrwe8MwQMAyRmA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIKAToaCeUkgGFIh7b6jQhX7Fglpv4PHimmwP6UcIzLOhRkztO+FFl6EkNL34elmjt20x8Ls80opwvyIWcmJyil5HP5uRfD/46U4P0ok03amtn0FiAIxbO79AxGMbWR//NJdq/Ilx0Rt3KsDDDgOcD/vWipVa/enUBDSUAUHj4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b927Lwyv; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723849596; c=relaxed/simple;
+	bh=cma9xy+DQTMmeXaelGQkEHRySDHjqu+ZluyemtDSAn8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To; b=rPSeoeTQoMdpt+8NH00/6Ivek7g4ZeSHJvwrxN4cXiapk1wW//h12+H0xdb2RgSEJuYHQi+8LZkqXjSeKgD7u5A4RbTmCztd+SCO5ybX1NW/UwPURScrHmSXJCkFsF6HPPbfjTAre8d6wsouJgj6YZeW34U9OQgC1l9U1BfSmgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b/OKOUBD; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b927Lwyv"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1fec34f94abso24544315ad.2
-        for <git@vger.kernel.org>; Fri, 16 Aug 2024 15:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723848690; x=1724453490; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1VcODOGt07b8AMASSLj6onrA1EheBLLlI8m747MQ6zY=;
-        b=b927LwyvgCPtmUeIPiMxF1twgURqhvLkpfRfwSNHZ+bvr9r2Z0d3dmitiDzD5CJcwf
-         TB7h+E5oIiv1IH9WFklwk2GS1ZECfp07X8+IyY8dsKUJY51oxNltNx4X+I8SrdkHhHUU
-         8KtSah2Ht3fsumRijQQ/UyxJtR7AIbO9PBk7hfIxH/bjIUVSZjjOSq7nycEKuiirGmuT
-         tsfe8tq8UWAxWItnvDQ0nVrZfAud5dgjky5T2u8eCliP07ZlEfzvGS+fkppUiEZ5U8VG
-         E8RueDoh/s1K/tRTbPqsVr+G59BgnbLJXta+ZAky8Ozw8z8YcvmgKA7RlYfwn74uOptd
-         QOrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723848690; x=1724453490;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1VcODOGt07b8AMASSLj6onrA1EheBLLlI8m747MQ6zY=;
-        b=cuHIlURifcOooBxf9D/CjArv/ss6NFPAYfgiGCJB6vPqS1YCXZzygrkaFdDG5QKeVu
-         VwTJIwKZT/cq+lAeHLV3WeRi8bUqwPS+hdBw+SZnqFCPpuU2fg0MqeCdmFpYKf6YkdJ4
-         jTkEGuKxAlMbTi0aco7ozqPjBaBSZkrPCxDaQhitkBK279QmRfyfb8k/E6sglEdKFtWK
-         ywBf/FTBof2wc128GcF2jM83uVHI454fzwA+NqgIKfgd5/qhxiZAyJKoSAstpgC19ghd
-         wEJq6JZfRnmeByKMyY8MtaFcdCUVxKE/DlJnQfr3mJrKbPKGSIV7PijMizf40b/RWXaM
-         Yf3w==
-X-Gm-Message-State: AOJu0Yw+9ODXFR1FBIhUn015bVy2illAN/OCJk/8fGo8ozfBoGGSa/Xo
-	F6XXcY4RbzyI+VNUBRF4HP5k5NT7yK9Bpid5V3X7mQipmvMFOoEBLRaYQgWA
-X-Google-Smtp-Source: AGHT+IG3UgJlSB/C+f25HGGe/ZSYCzm3w6y+23mnc5c1ir2JipBIxc6V2nqrKE5TqOh2hd+bWLqqpA==
-X-Received: by 2002:a17:903:360e:b0:1fb:8419:8384 with SMTP id d9443c01a7336-20203e4c4b0mr52812515ad.13.1723848690463;
-        Fri, 16 Aug 2024 15:51:30 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.116.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f037903csm30013165ad.125.2024.08.16.15.51.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Aug 2024 15:51:30 -0700 (PDT)
-From: Matheus Tavares <matheus.tavb@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	johannes.schindelin@gmx.de,
-	newren@gmail.com,
-	ps@pks.im,
-	Lincoln Yuji <lincolnyuji@hotmail.com>,
-	Rodrigo Siqueira <siqueirajordao@riseup.net>
-Subject: [PATCH v2] rebase -x: don't print "Executing:" msgs with --quiet
-Date: Fri, 16 Aug 2024 19:48:30 -0300
-Message-ID: <be3c968b0d9085843cd9ce67e85aadfaaafa69c8.1723848510.git.matheus.tavb@gmail.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
-References: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b/OKOUBD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723849594; x=1755385594;
+  h=from:subject:date:message-id:mime-version:
+   content-transfer-encoding:to;
+  bh=cma9xy+DQTMmeXaelGQkEHRySDHjqu+ZluyemtDSAn8=;
+  b=b/OKOUBD09xhwxNiFY2TvNYFU6+T6gBLbajzO85C6ZMtIPjf0hDDSvmn
+   9pMt8k3Ilbnr3HXBhY/yS0R3EbiJwHgvqC2YB6rrFPQhAj2AgxOfYmnO/
+   nn+fFt/+ZjhVmCKm+MEt487BeR5bqYnLxl0Qr2qpXGF/i7uc9wEQDkJMg
+   AW9R07MRbvmS6mAUL/sPYU0bMUPLXQXZNCaO/N8gos/53oRdEzU1NLzw7
+   k5JjUEXwy9ZbDiYxmz9msa+CWlR4IdB6G0rjeHB/h40h/u6ELfDwBKC4e
+   +5m3Tj5jvhLWlCAF0XrZr5XGKbTrYMHVk1uNUkVEuIRyDlk4jnOe3zTOl
+   A==;
+X-CSE-ConnectionGUID: 6e4I695JSF69XX3R8+MEEw==
+X-CSE-MsgGUID: tZjgfIhtSa+T6Rv4eDMKsw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="33571616"
+X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
+   d="scan'208";a="33571616"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:06:33 -0700
+X-CSE-ConnectionGUID: kmWxZbGJSAunl+6Yb9MjNQ==
+X-CSE-MsgGUID: bY3OWcmiQfqgiSDts7PKlA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
+   d="scan'208";a="64704680"
+Received: from jekeller-desk.amr.corp.intel.com (HELO localhost.localdomain) ([10.166.241.1])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:06:33 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH 0/2] send-email: add --mailmap support
+Date: Fri, 16 Aug 2024 16:06:22 -0700
+Message-Id: <20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG7bv2YC/x3MQQqDMBBA0avIrDuQhJKkXkW6CDrWsRpDRqUg3
+ t3YzYe3+QcIZSaBujog087CSyzQjwraIcQPIXfFYJR5Kq8tjl8Uih3SHHjCO3NIKFtKS15Rhxd
+ 5661rnYHySJl6/v3/zfs8L/pni7lvAAAA
+To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+ Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-Mailer: b4 0.14.0
 
-`rebase --exec` doesn't obey --quiet and ends up printing a few messages
-about the command being executed:
+I recently sent a series to enable mailmap support in format patch. The
+discussion led me to realize that the true problem we wanted solved is to
+map addresses at send time, so that we do not accidentally include a dead
+mail address when sending an old change.
 
-  git rebase HEAD~3 --quiet --exec "printf foo >/dev/null"
-  Executing: printf foo >/dev/null
-  Executing: printf foo >/dev/null
-  Executing: printf foo >/dev/null
+Instead of worrying about what the formatted patch has, this series
+implements support for mailmap at the send-email, which will translate all
+addresses, and not just the author/commit addresses for a patch, but also
+the email for any trailers.o
 
-Let's fix that.
+I considered also that it may be useful to make send-email read a mailmap
+file from the identity config blocks, but have not figured out how to
+implement this yet.
 
-Reported-by: Lincoln Yuji <lincolnyuji@hotmail.com>
-Reported-by: Rodrigo Siqueira <siqueirajordao@riseup.net>
-Signed-off-by: Matheus Tavares <matheus.tavb@gmail.com>
+I ended up needing to extend git check-mailmap to handle addresses without
+the angle brackets as well.
+
+I think this is closer to solving the actual problem we have, which is
+wanting to avoid adding dead email addresses for coworkers who have moved
+on, but without completely removing their name from the works.
+
+Link to previous: https://lore.kernel.org/r/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-Changes in v2:
-- Applied commit message fixes by Patrick.
-- Fixed codestyle.
-- Added regression test.
-- Also checked "!opt->quiet" before calling term_clear_line() (this
-  would only print whitspaces, so no direct impact for users, but the
-  bytes are still there when the output is captured by scripts, like the
-  test script :)
-- Added Lincoln as one of the reporters.
+Jacob Keller (2):
+      check-mailmap: add --no-brackets mode
+      send-email: add support for --mailmap
 
- sequencer.c       | 13 +++++++------
- t/t3400-rebase.sh |  7 +++++++
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ builtin/check-mailmap.c             | 27 ++++++++++++-----
+ Documentation/git-check-mailmap.txt |  8 ++++-
+ git-send-email.perl                 | 14 +++++++++
+ t/t4203-mailmap.sh                  | 60 +++++++++++++++++++++++++++++++++++++
+ t/t9001-send-email.sh               | 49 ++++++++++++++++++++++++++++++
+ 5 files changed, 149 insertions(+), 9 deletions(-)
+---
+base-commit: 87a1768b93a67d0420255a43d9e07387b2e805ad
+change-id: 20240816-jk-send-email-mailmap-support-1a9e86867c72
 
-diff --git a/sequencer.c b/sequencer.c
-index 0291920f0b..79d577e676 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3793,12 +3793,13 @@ static int error_failed_squash(struct repository *r,
- 	return error_with_patch(r, commit, subject, subject_len, opts, 1, 0);
- }
- 
--static int do_exec(struct repository *r, const char *command_line)
-+static int do_exec(struct repository *r, const char *command_line, int quiet)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int dirty, status;
- 
--	fprintf(stderr, _("Executing: %s\n"), command_line);
-+	if (!quiet)
-+		fprintf(stderr, _("Executing: %s\n"), command_line);
- 	cmd.use_shell = 1;
- 	strvec_push(&cmd.args, command_line);
- 	strvec_push(&cmd.env, "GIT_CHERRY_PICK_HELP");
-@@ -4902,7 +4903,7 @@ static int pick_one_commit(struct repository *r,
- 	if (item->command == TODO_EDIT) {
- 		struct commit *commit = item->commit;
- 		if (!res) {
--			if (!opts->verbose)
-+			if (!opts->quiet && !opts->verbose)
- 				term_clear_line();
- 			fprintf(stderr, _("Stopped at %s...  %.*s\n"),
- 				short_commit_name(r, commit), item->arg_len, arg);
-@@ -4994,7 +4995,7 @@ static int pick_commits(struct repository *r,
- 					NULL, REF_NO_DEREF);
- 
- 			if (item->command == TODO_BREAK) {
--				if (!opts->verbose)
-+				if (!opts->quiet && !opts->verbose)
- 					term_clear_line();
- 				return stopped_at_head(r);
- 			}
-@@ -5010,10 +5011,10 @@ static int pick_commits(struct repository *r,
- 			char *end_of_arg = (char *)(arg + item->arg_len);
- 			int saved = *end_of_arg;
- 
--			if (!opts->verbose)
-+			if (!opts->quiet && !opts->verbose)
- 				term_clear_line();
- 			*end_of_arg = '\0';
--			res = do_exec(r, arg);
-+			res = do_exec(r, arg, opts->quiet);
- 			*end_of_arg = saved;
- 
- 			if (res) {
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index ae34bfad60..15b3228c6e 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -235,6 +235,13 @@ test_expect_success 'rebase --merge -q is quiet' '
- 	test_must_be_empty output.out
- '
- 
-+test_expect_success 'rebase --exec -q is quiet' '
-+	git checkout -B quiet topic &&
-+	git rebase --exec true -q main >output.out 2>&1 &&
-+	test_must_be_empty output.out
-+	
-+'
-+
- test_expect_success 'Rebase a commit that sprinkles CRs in' '
- 	(
- 		echo "One" &&
+Best regards,
 -- 
-2.46.0
+Jacob Keller <jacob.keller@gmail.com>
 
