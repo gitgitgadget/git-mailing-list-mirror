@@ -1,54 +1,54 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4427DA89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A40653373
 	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723793775; cv=none; b=Ddv9rAaxtxUMos3f9T73drWcidru2Ru37nMpBhHZbVOtcEwhnsisvb1Hkl2nrIudOpnG7XfelV5inQTpq2wDKMkKrSLQyvq3m5AdAioSbITxuIfftDWaMb3jxQhq/sy1ZwFmZb+Lw3sW/yLE7QcN53E2A0Dojm5GnTT4GleDSvY=
+	t=1723793775; cv=none; b=YZIY+yUXmEQY+Ou+MR0qQbz+ayiNJjaY68VSKXSkVlf5oc9M7Xt4qZG+4GI27DckNtVkrqhJVJOzQFABLTSlC7hH8E/+8t9jueW6HZEzQlUlMZSjYLxx2LXWvv+UBTofaFgXlQj2WG/56t8opTWOO08eOryJMNirtb3TpiMjt6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1723793775; c=relaxed/simple;
-	bh=mgBfpGYWtwrQbOJXcNh28IOdQwK/z4IWl+MvZKGObmQ=;
+	bh=9JYxltfo8+D8cVL4HYSdBPc3yMzObAj7FvUNwkQXbW4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jwY46VdTrB4miJM81OLkbblCN4qhLFh4P4Fep6gHVl9Y4Asuz578T/CYzS9O4rFif0VZ+5Q/+/Klaln7AbE8B+wxtrik7duLvjrtzTisJoscM96LP6EmhNf+Hao+f++qP1jLEsOnPQvLONpkHUhiXhdfqvO01Im92WqAECOVAc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oiQlac5I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZbviBoVP; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=rExWAZTkEuIGFZUUwM03TRwLAoSP8TLt6t93E5jpu/Ssc2dtM228AYq/IwI8e6boskdWghFWnbIt0LTUjwT9/h5tm0PZZOT/Bz6sSrNZi9USBDhLBmHemTjg6Bigtbf0ECRY7xWJrWoINAGkFNf/t7lES4qV/ddoYAIfrS2MNl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ihSQXBtB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B2nmJ18C; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oiQlac5I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZbviBoVP"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 30B321151B73;
-	Fri, 16 Aug 2024 03:04:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ihSQXBtB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B2nmJ18C"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5E6FC1151BE8;
+	Fri, 16 Aug 2024 03:04:48 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 16 Aug 2024 03:04:54 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 16 Aug 2024 03:04:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723791894; x=1723878294; bh=Az857i2Hlv
-	3JlCrtn4Zxo7Zc0/kCKBtkkkVMWTVeLKc=; b=oiQlac5INpfrKx+LLYbPq2KhcR
-	ftkvQqVG1ZLHZqVpm2e/cftDDhON8gaGEYYg/kfaGv+qNxCf2brs7apaEWnPgBlB
-	rayMMyLzEtljjXt+oNgWCWi5feECySvxuK9o+NgkQ3yni1iFkKvDEwMg6Ukx5JsS
-	ekQBxKEv8yQ7st2dyRq+KO1HNbv4c6CNF0Zmmt9vIjrQqixUYOt8RkS2s3BG29mw
-	CzmD5LAnPFsB/MZaIpHlHxFQBelNumrzb8D3rbszfiv7s8rRp3bMybDCm/IurBRZ
-	lyeG/yRkAHi+PjrG66La4WcvD2GcoJ32znjMUHDM7jPcXdtdRs/wdqLn1JcQ==
+	:subject:to:to; s=fm3; t=1723791888; x=1723878288; bh=Uq3uJU5vO1
+	TwN5ESL0+PCfabpEoF4QGgM3ojDg50j2g=; b=ihSQXBtBT2tN7/e3aB7x7YLpn4
+	wqx1opBFdq1xnBe9Knq9n1TOrwN1HgHSG/u8fZT977rdwJavw3eLs+iVkdXZS7v2
+	YF4FBFtmmiWadshVcD+v5rBJF6Ih6SYBzwEDB0nyZivkIcKyBC5K6nJBJlHWH37u
+	8jyG2ou39AvMs1IxrQfqPBp5Q24q/A5KMm/EGijyC9cgFjSQUzfaPPyf+T5x4Lrt
+	l4P4LhfhiMK2QfZU2cLE8O5iM80Hakg296R2jBpimVKV5VtviRA7ZmudG5hKdIjx
+	u3gz0uACN6X10gU9chOlhlLdaVmj2ZrIN7zn6a5YpL4XRTavLGFpZHW6szdA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723791894; x=1723878294; bh=Az857i2Hlv3JlCrtn4Zxo7Zc0/kC
-	KBtkkkVMWTVeLKc=; b=ZbviBoVP8eZpqykfUQcic1ZON7n3t+iycjrvLokhZ9D8
-	lE+xRR66sHqzcEGdoQb3Ls9RNWtgA37jEAbYGYy3ABlXvBy8XkGfccSE6DRRx4tx
-	HT41ntPKMOYOF95SpM1XGAQuqhDNxTHhf5UhnOgzYq/r8Tt6Ocu79N1jFED3kRUb
-	IGzjHZ/8E5dLu0pxIA4pkq0sSuLIebvTLU4DpAIxH2gq8vi9rTPLXBJKrFu2agVa
-	3EHbBPNFbIs/htbPri2UUCNjYoiqSBC1N1+/KXknJZrOoKaSKLv4cI0iA6peVjSO
-	Yxyi7CLW6r/oFipqQulGU2SFEbji+3RMrGhyMfGh/g==
-X-ME-Sender: <xms:Fvq-Zp7Rfso5PfN3YPBOXe003PQWslHK8WX88eYxoJmdnj4LRf0R3w>
-    <xme:Fvq-Zm5Q8bEMG-DsYWnAZqhFT1i3gzv6-Zel0rY_KRnmFUp4pXF-S4CWKwkL65S64
-    D-AUcfkgGs1L5blSQ>
-X-ME-Received: <xmr:Fvq-ZgdryhKYtX09Sf3njb2hNdvw1FNUqn25PnDsyYBS8ofu7iXCPOtTggvRxTA8O6t4lQaRleGQo-A1b_h_ehAlHT4M6vdPf0lZ_b3vyLlFSxc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddujecutefuodetggdotefrod
+	fm3; t=1723791888; x=1723878288; bh=Uq3uJU5vO1TwN5ESL0+PCfabpEoF
+	4QGgM3ojDg50j2g=; b=B2nmJ18C6ufOVCUYbpV9ikr22Ex+gDkDV7FOnM4N0L45
+	5duw2S4beF4w7V/M9YW2y3rIeVi9+H6fW3U0Cx0TKitqGs6x+DWNeVivx/107xVJ
+	O77m8mQ1fo3kp8r5qCFWIPYYXwbEwsw4jIR83FjQ/Ki6CVyJvSMwbP/w3oHCXjmC
+	Juy3r3gkZIGBZ6btRqWdnb33NcAhE/sGR0BRb2NmljG0MZXVAzs0WhXpFXgEq5Ob
+	VXnqddZNIDGNnEU5wtFRBW0RDSORdJ805plqZUG9+fyA7FYQmyrP1l6hhw0sX/RM
+	uHKCh3NpkzhCjvSxFmHlO77XYeTctJT1hknfO1s/cg==
+X-ME-Sender: <xms:EPq-ZvPIWQPWvrrZYgOhevrRKvB2kBo8XHvm1n0pO-mQQafyF_Z6kQ>
+    <xme:EPq-Zp_9vlm7u51Vw9nMUHfm7bWhlnNBkyDWZlLwFzGV9gwg829haJzUSpvqY4ThA
+    YiyXOCAaQh8tL3w9g>
+X-ME-Received: <xmr:EPq-ZuQuI3a1Jbw6yUr39U-ovfhFFi5WA6snI-XEx6AB-PFHdH1IO7TCMAvAJ-s4y8ABaSum3IaV3y9l3_gi7d_uOtra0MVZYxPbn3SoTsCzJI4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedgudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddujecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghp
-    thhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhm
-    rdhorhhgrdhukhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpd
-    hrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthht
-    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:Fvq-ZiJIr93VJ1t9KrLVgXSceGinS2VoiFDd8-t3yypt9ufn9uMFdg>
-    <xmx:Fvq-ZtIGDBbH0wbR4rKLeJmVbkBq8awlGzfS2Pk_-3LQleQlXt0fLw>
-    <xmx:Fvq-Zrwvvhegf5HxFFMABkzuPJVwA5CDq-VIvF1FjZvX0SVQJle33A>
-    <xmx:Fvq-ZpLMynbDXxlmKDUD_Iznt5Kqf1f7FbVBKS268vzzD4oSLDtKFQ>
-    <xmx:Fvq-Zk8jFrFEftj8IZHJ_OGxtt8yYs3mGMawTISBGACD1Si5k37f8Ffj>
+    shhmthhpohhuthdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmsh
+    honhdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphh
+    hilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpd
+    hrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtthhopehr
+    shgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
+X-ME-Proxy: <xmx:EPq-Zjs7LyCcPhLs_fpoBaAFMArVv7d7sjdqp-Ytaz9JKhMYAZnLtg>
+    <xmx:EPq-Znf--iP4Ix9gEie6cwIgtazOHaLtkFZQpu1QMC3VfMnoqqCNcQ>
+    <xmx:EPq-Zv3eFxv9BpP4mkQ8QvwQU2IW1dcKfFM2oQjEFZMeCAZo3a1kuA>
+    <xmx:EPq-Zj_RWmXAdwiU149Ee7fTCbT_XWZ830sjIELtrbkhlA_qO_p8-g>
+    <xmx:EPq-ZmyYSzwB3h1lTGFMCo_RDyUnu16WHgQEpTaXJ0wHyLv_9lvk98DO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 03:04:52 -0400 (EDT)
+ 16 Aug 2024 03:04:46 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 242d61ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 07:04:29 +0000 (UTC)
-Date: Fri, 16 Aug 2024 09:04:48 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 36125928 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 07:04:24 +0000 (UTC)
+Date: Fri, 16 Aug 2024 09:04:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -83,8 +83,8 @@ Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
 	Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH v5 5/9] Makefile: make hdr-check depend on generated headers
-Message-ID: <06364b2b72202868c8fec804fd91264316e1595e.1723791831.git.ps@pks.im>
+Subject: [PATCH v5 4/9] Makefile: fix sparse dependency on GENERATED_H
+Message-ID: <b6199c88dd7f07d63ea1a9bed730c875b3748814.1723791831.git.ps@pks.im>
 References: <cover.1722415748.git.ps@pks.im>
  <cover.1723791831.git.ps@pks.im>
 Precedence: bulk
@@ -97,38 +97,52 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723791831.git.ps@pks.im>
 
-The "hdr-check" Makefile target compiles each of our headers as a
-standalone code unit to ensure that they are not missing any type
-declarations and can be included standalone.
+The "check" Makefile target is essentially an alias around the "sparse"
+target. The one difference though is that it will tell users to instead
+run the "test" target in case they do not have sparse(1) installed, as
+chances are high that they wanted to execute the test suite rather than
+doing semantic checks.
 
-With the next commit we will wire up the clar unit testing framework,
-which will have the effect that some headers start depending on
-generated ones. While we could declare that dependency explicitly, it
-does not really feel very maintainable in the future.
+But even though the "check" target ultimately just ends up executing
+`make sparse`, it still depends on our generated headers. This does not
+make any sense though: they are irrelevant for the "test" target advice,
+and if these headers are required for the "sparse" target they must be
+declared as a dependency on the aliased target, not the alias.
 
-Instead, we do the same as in the preceding commit and have the objects
-depend on all of our generated headers. While again overly broad, it is
-easy to maintain and generating headers is not an expensive thing to do
-anyway.
+But even moving the dependency to the "sparse" target is wrong, as
+concurrent builds may then end up generating the headers and running
+sparse concurrently. Instead, we make them a dependency of the specific
+objects. While that is overly broad, it does ensure correct ordering.
+The alternative, specifying which file depends on what generated header
+explicitly, feels rather unmaintainable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0736d3c88e..5384bf8104 100644
+index 674b0ac4e1..0736d3c88e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3283,7 +3283,7 @@ HCC = $(HCO:hco=hcc)
- 	@echo '#include "git-compat-util.h"' >$@
- 	@echo '#include "$<"' >>$@
+@@ -3253,7 +3253,7 @@ check-sha1:: t/helper/test-tool$X
  
--$(HCO): %.hco: %.hcc FORCE
-+$(HCO): %.hco: %.hcc $(GENERATED_H) FORCE
- 	$(QUIET_HDR)$(CC) $(ALL_CFLAGS) -o /dev/null -c -xc $<
+ SP_OBJ = $(patsubst %.o,%.sp,$(OBJECTS))
  
- .PHONY: hdr-check $(HCO)
+-$(SP_OBJ): %.sp: %.c %.o
++$(SP_OBJ): %.sp: %.c %.o $(GENERATED_H)
+ 	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+ 		-Wsparse-error \
+ 		$(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $< && \
+@@ -3294,7 +3294,7 @@ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+ .PHONY: check
+-check: $(GENERATED_H)
++check:
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
 -- 
 2.46.0.46.g406f326d27.dirty
 
