@@ -1,154 +1,143 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic307-1.consmr.mail.bf2.yahoo.com (sonic307-1.consmr.mail.bf2.yahoo.com [74.6.134.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA2554BD4
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 11:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29411A4F04
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 11:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.134.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723808373; cv=none; b=CqkJ1MmKp1HaucSsK/ViB1pIbhOEoZoM8vYjmaI2TfciD8YYjzWs1FCeALibJCigpHGYq250fWCDD8jC+2OpBxt9AKtredvF/OTB7uirerK5zDTxxevj/0pq54Qs0TeK7vvmLk8/QCZQVsi/FV7JvHso1fFRG3u0PRZLLJbNIPw=
+	t=1723809425; cv=none; b=JRUxbGfsKcvLaqke/N/vZkwas5njD7U7JfsVRrU3PIEmzOUmqP8GJkli6CHuVvx7IF5eT2ebFs7aQEUp8cXW7WI6q96VvAO9Xjupf/1D87KzBsVgoYNXklxQITsWa8N8YAADvD9QYg6OYHVDfYJm6P2KmYqu7XnbQ5kUcoqZWL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723808373; c=relaxed/simple;
-	bh=DgfJzw3ZUbhBNnt+jIm0ZZX4J4DLSxegTEfxNlYXg78=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JWLWBEyz/nI4daHB//5z4FkRHV/HOykPQjVGSWheqBMjNhGudkHjItGKjeZB9LadxMvQlO03ifGcD56/TRfFZXxNJOiCuMJXzGJw7UMQBGAarbjpu+A7VI6z5TWnsr6SytjVX+3yZAP9ojNxLnnmEX82mE55JDyEjyzKZzqchb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RK5t42uE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OyDMCZ67; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1723809425; c=relaxed/simple;
+	bh=u2/Q0wc74Eglr0Lw/jLOObYlm6u8DqEDcjCL/vgZnEI=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=quVX2cUyctuRw7z8z9wqv+itunwXet4Um6aog6OyYwgUJE+lSeEX5if6ZmCmR1oQ5s+emDKavK+yub4jAN3d0Elsd98zwUOj9WAI7gnZ5csyv5k/kzTRtat7inClagceLYhTAsVYfZwUxdBku0Ca4hxDmPdhemgoN/qFsrNL38Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=bvZ7TgxH; arc=none smtp.client-ip=74.6.134.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RK5t42uE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OyDMCZ67"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E19BF1151BEE;
-	Fri, 16 Aug 2024 07:39:30 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 16 Aug 2024 07:39:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1723808370;
-	 x=1723894770; bh=bOPjemaRWS3/zyIGjYkrzBtQeFFGQv1tVzTGcY+vn2g=; b=
-	RK5t42uEqKwCXaaBvwyiF85PyMKutaLF7QQyzcXXzffdtmU7OCXJukSNloyVGt1j
-	3WZie2CCtq7SjLffCUmWA8v620nBfInK6PlSJifIRVavBU9D8u05rpPPzhv7qj2K
-	qbkO9oQVYOFGP79RkTb422xXSClMv1jZb/45BepKypD9PSFcl9SOkDcOuFh6oCBG
-	DBvVmoqZbLDcbNUwrJHQv33Fe7CoYue+8pr1KKXFwEFwQzL+bTp178jn2GEbGr3T
-	cIy3puZsuJUJdJAh4OVDW6T/GsXfQQG0rJwpRSxvPlk5gdhBI2YWSjd/kS72h3by
-	E/UpZA85ru7FpwhjmiXrKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723808370; x=
-	1723894770; bh=bOPjemaRWS3/zyIGjYkrzBtQeFFGQv1tVzTGcY+vn2g=; b=O
-	yDMCZ67Fu6ILzUUpXRfuqzeINTmCahujUOvzfgVpMj0EiMef3QZdzXvnlnk5XuiI
-	yMcEfyxOUp/nUiRG9rB1MOtWJ4tZBDgVuE37MH4MPErtSMEoXQEgt0nVep0mYFa8
-	vKVBv9AV1W4bnKMg+mzEEKPe8zS+YyVfzm5pIGc8bgv4KZj4F4pAolY1w1lo2CGa
-	xJ5W6+wiCo6W5WFSr3/aFNFMMQ44CKVkgaCQgkOBteaAsi0oSOnh0fkCqOrUwT2f
-	M4ljxRcLkbtTRK+WTO2/e2+rcvVbLH7A/14Bnq1ai1xTcnTtvtwl601Tx5qnPy0v
-	NryRlLcnOTBNXEoZ3Fw6Q==
-X-ME-Sender: <xms:cjq_ZqnOPiVM4TEkq6VlgPDmaNtj0O-f8suwNJz5Sr2F_kNWWpDG0g>
-    <xme:cjq_Zh3wK6O3UyAIysqTxBDyb9diy4NWBly9tQdhXc-zXRfLUPePLe2obqg9EBSWb
-    njlD_VDl7DPbbdPmA>
-X-ME-Received: <xmr:cjq_Zoqii2sOEtM4H8uEmgge-IFgJyA_zJ3MT5vs4TWQgo6QZxedYdSwI5EhUoQDSRlz70kRTIhdpIWez4EOxONmfJNlfy-Mx6S4fh5Pe85dyTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtkedggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtugfgjgesthekredttddtjeen
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepleehfffggeeiueefheeitefhgeevjedvvdejtdeuudev
-    vddvtdektdfggeejffeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepudefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegushhimhhitgesmhgrnhhjrghrohdrohhrghdprh
-    gtphhtthhopehjrghsohhnseiigidvtgegrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvg
-    drtghomhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghp
-    thhtohepmhhhsehglhgrnhguihhumhdrohhrghdprhgtphhtthhopehsphgvtghtrhgrlh
-    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhn
-    vggtohdrtghomhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtg
-    homh
-X-ME-Proxy: <xmx:cjq_ZumclwYDEOIFyESAO_OgHydvrplill12sVjwUA_8kSp2FlCW2w>
-    <xmx:cjq_Zo3plvZhjqCkWT1QikUW_JyR2hI23__tDPV9Z1384TMqn-v4gQ>
-    <xmx:cjq_Zlu7-Kja0xD6CphE3hNyGM64ujxuZPuIUnUfrG_HGC3BBpzKNg>
-    <xmx:cjq_ZkUZvX58xjyFW30XSgnX70-TCDRzpR6UDNAM5KeC9gD0TQN1lQ>
-    <xmx:cjq_Zj2y0imee93M-0s3mJPRa2qRlog4nAkbfvskNQxQCOY4If9KgFqD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 07:39:28 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e2e24866 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 11:39:03 +0000 (UTC)
-Date: Fri, 16 Aug 2024 13:39:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Josh Steadmon <steadmon@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>, git@vger.kernel.org,
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com, mh@glandium.org,
-	sandals@crustytoothpaste.net
-Subject: Re: [PATCH v2 0/5] Introduce cgit-rs, a Rust wrapper around libgit.a
-Message-ID: <Zr86bF3y_YMZx0CQ@tanuki>
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1723242556.git.steadmon@google.com>
- <Zrdn6QcnfmZhyEqJ@zx2c4.com>
- <6398d60387a6607398e4b8731363572e@manjaro.org>
- <CAPig+cSotr8CNZLy4xnm4qyJsuQsxjzsYMVU5sf3eeoEiE8aXg@mail.gmail.com>
- <xmqq5xs688cz.fsf@gitster.g>
- <CAPig+cSVNqBPjV3_41f6Ag2X4+-q4HidEo0D=1UaMG-Kv7pa5Q@mail.gmail.com>
- <k4cokm5xtwazlv44ys2uzmrfufubbq7tcmcwzasuccog3zcojf@4ftvda4nfqxj>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="bvZ7TgxH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723809422; bh=u2/Q0wc74Eglr0Lw/jLOObYlm6u8DqEDcjCL/vgZnEI=; h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=bvZ7TgxHJFMNcrs+k6ImAFYhK/UYf7FFj0jsRfwJHSo7xFtDCeZPXqcyimglgJXZwEu2FbU88eJ2crWxQq28+YILTgXlEXcvfX/J2yJJAbRupeGkgiZCEKguQJB+lN/GunPYmVJvAwS/TZ63mNwqFBUHocs1zMi0o3PLKZ50jzN28yw40yFfskKdBp/q/8RxueoqdG3Rostu/wXaKv9E/ppm1TbaTw4Q8J9ugtihSuovVVYXGwadzuToGic0U2gKkI5AEvNlBk4B8m9DzSGKnnUjMyMn/WTipf8f2RlPP6/yvhPVyTqrKT1z7QfuY6hbHFrFC/CZjvujEP0kzVfiNw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1723809422; bh=Kz7j1tgN8eIedkBnvweHOTJLX4fepMzeZJamTaaKPq9=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=FVjNpgbnh+8N1/FwuKJtwLanIoLOe2G6sucVxW7cEjdiBdhsNQAvpzTio8g5vRJKmbpQhtY0HqPu7ukj44E5Z09HyOGBJhKDUcWpmOIqmaD5UbhlubNu4vccm62MNZRaDBN50c87YkAudup9A2OkUn59nQE/B33ChegptJfsmnUxhXvtxebdrmvlSOUGpExm6rwtiYCe6XxjEttE5FFbGrWuWD/3ehQHeW1ntJogY3zko9I6AaCEnNICaLP5z4BIiWsuPEqDH8FDl5auPkOjVm5+uXwlPcFGcRQ42f2MqUZrQ7LlgIsuNxvZP/ulHlkmOBqzu+MykhwpL1kc/t0kBg==
+X-YMail-OSG: ec.J7_IVM1lbumHhegadsjRc9AH4wBLsNGwckjaEylWQAS95.FP2hvuO9otvgy8
+ swlGvjUSo.zaIwVPD7ViIX0buIRUcGp8rOPBR0sb9rtH8s7aWACkUXjSciMB.U9rLZ..81Iz69yS
+ hUbYQA1BfYfdITLeQ8YNxcmt40SCanbPw1vWqjAc_9QDIQhuhi0RzStLCsPfX2GQ0gA1PIUsJGjf
+ 2Wx2s_DL6ANP8dqPBq5BAMAp4K8G9uRpWgLRpwXOs0DfpSF3TKwpHNZoRuc6nWXtJIciGYAN0wyP
+ H.78kdIhlI8X5peGCqci8dbmgqrtModhp.1jC4p_mY_EIcQ4RgwwzWavrQpncez1EBY0JSDd2gED
+ fO9b6oZj4ltH7aFrBK48B1Wt1rGENA_ItIE91gHqxYwLcwEgVjHqBFnYqnpmDjuLYL0UdKSOtFDP
+ 2DoL_OamLx_hg9CwTbj9U42B.bcFq7Ek.cwOBk7LIHyW.T4V_5yMi7lZEXBMskr2jL1jo5BHH5wp
+ F6jWxnxYfuPtxPHgVT5dp1PhqWEdJMqpKisP9iQN3R_6yImbSLS4IOusOoJhJHOtpRPy8Uei1iHA
+ .X9e2zR6jY6bEzAyOg0Lk2neiYYiN0kX_h14YCLcnzuKijhw_fY.d47obtVdh_Jg69N9SvOdUk0m
+ AmIDAUA9f8L8uxu2y8RPlWtidWZve0cowTQKyYlkEKu4CS9524X.eff7vmH7_dlxx8MEthWSL9i0
+ TBavpIwSRdnXWl9Nb_ok51LcCb3sa4exmJFDuPI6Rgp.geEq.SA4cuJZRr4pvzisjB.PMGDAdMhT
+ OJ4mcVss4zFyzO1XniN9361O.mMnbeAsNk7v_0AD4lPvN18HKhnMBWGFx1QgoXPpd1RJqQDM.rGj
+ U4oAo2OQWkJqm7BgiHC3pkq6siAoG94VChsvs.Q2jTmCYitmJ97yVaFuuAZqLCMAFvjeq2JXXXCu
+ baAj2NQt6POnN.vqOuiVfiHzv83xBGwDJOdu_yJ1IrKhJ73ZYAHyZZ_nzvj0_aF93Q3hUgfk3ZD0
+ OLIJ4vO0Z5ry9peD3gO5eacBqbs9R4NuAxxuvWS89.kjz5z3Qo_8Wf3Q2o38mN7OK_rsdykNWZir
+ _XVQDj9G_eemAf2DTWPuPN0xI02uWWkA5I9fJEwbeyB7L3jgUiQuy_QQKRcj80pIpgOd06RUDBIT
+ v.G75th2SE1qAiDh_Vj9eFZ16KzjI1iGpni5u25v0IGk5W9YEyoOQelmSIy.NMxdUrE_mLsukoT4
+ y2H3C0HkqfTrRo_N4.zmjoE0tWsYruZkLsRJDllHUMMWXg_P8KUbT1bIsm9ttm46xnrpB6AX8z1G
+ qH5nMEmgQsS3mDdGCsO0lxT3zqPyy5ZKqiCJrSIhYSyLBe9IjL9FQGUr1sufVPUx_z5l7vI5yYIJ
+ XrGKsRlTFM2JUA7MqKOysdYEOJ5iN3.WtwpIV.HOpixrQycsSD_4autTpcYmvsVriyjQoaeJeClc
+ izuMRVLmDXbtuEoVXY_CkHFYp5myT35LoeA8sCTjjlD.R5HIbgCsHEGz58MvYFV4jAFgLK6JkRpj
+ G12QmpyQxcB8GI9JdKEf6AHOCOsF_Ns9sPTo516foK97mCNRdWYVfNJ6c9DzIhjjcFaHUpSpGnPK
+ xU5TPcA0NqifkwFCwy2lR3MKxLIPiXAxPN4ZZQwN9_89eKudsAAO_dGDJrh2e.Da47udga1xkhgx
+ 2o.EwjYbbs2opnpM6rozxCY6UMYBustOJqxk3SqJqg20i4ZIeC00cBm6hCD7V4drhTSCSLhmZNSa
+ jLnoKHkbXFmgpahgHyw9QziNb1lMMM.KMgzwNP3QTDoC.LQdZQIxPM_jQ4ul4pdIcHM2FNjvfqf2
+ ZO8QvfLzoX3_TDoNKZH683qwoKPYkx9c_.6TAZZa8uMSe6arZiH1zXZeMPAjVFEd0hqKfu3gTQ1u
+ njVWpyScs2wJmYhVXtxR9fJ96xRM9soyXnRfTimye6_zTGr9QrTDQEzJa_inTcEp.BuwJl3iO71Q
+ GXnjKCFdkVxmRPJVjJeDdu1f.p1muurrPlD1baL5RksprwREj3lgE6N7sukQtraskkMqNbp0TNnu
+ UMcoxhewj6TuPFA7aPAskc04ydbsXnRmKw96uBBgVHyvtvuYncV9B0ydd1j8tMbO_Eqh6THgqYCJ
+ bWLCirFalS0Qpl1IK.xObZ6pN5.MOnOub6QjWQwrTlm6pesRheDj4Ji61MJry3FCNB9OBMuOuKBs
+ J4qtD9W1UD8nt_Qgd8UmhQELVSAwjkFrRYQ--
+X-Sonic-MF: <avihpit@yahoo.com>
+X-Sonic-ID: 20750778-123c-4556-9a6b-330689cea211
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.bf2.yahoo.com with HTTP; Fri, 16 Aug 2024 11:57:02 +0000
+Date: Fri, 16 Aug 2024 11:35:33 +0000 (UTC)
+From: avih <avihpit@yahoo.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Message-ID: <701460728.4505561.1723808133505@mail.yahoo.com>
+In-Reply-To: <Zr8vWCKrddYpABIr@tanuki>
+References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com> <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com> <7e994eae7bc3dfa021262410c801ddb124ce24f1.1723727653.git.gitgitgadget@gmail.com> <Zr8Swsn3H2ebB7g6@tanuki> <1677713578.1741123.1723802016957@mail.yahoo.com> <Zr8vWCKrddYpABIr@tanuki>
+Subject: Re: [PATCH v2 3/8] git-prompt: don't use shell arrays
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <k4cokm5xtwazlv44ys2uzmrfufubbq7tcmcwzasuccog3zcojf@4ftvda4nfqxj>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.22544 YMailNorrin
 
-On Mon, Aug 12, 2024 at 02:32:12PM -0700, Josh Steadmon wrote:
-> On 2024.08.12 05:03, Eric Sunshine wrote:
-> > On Mon, Aug 12, 2024 at 4:15 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > > The original iteration had this:
-> > >
-> > >     * bikeshedding on the name (yes, really). There is an active, unrelated
-> > >       CGit project [4] that we only recently became aware of. We originally
-> > >       took the name "cgit" because at $DAYJOB we sometimes refer to git.git
-> > >       as "cgit" to distinguish it from jgit [5].
-> > 
-> > A tangent: Speaking of external/other projects, I don't think we've
-> > seen an explanation yet as to why this Rust wrapper is proposed as a
-> > `contrib/` item of Git itself, as opposed to being a separate project.
-> > 
-> > I can only think of two possible reasons why they might want it in the
-> > Git project itself...
-> > 
-> > (1) Easier access to the library portions of Git ("libgit") since that
-> > portion of the code is not otherwise published as a standalone
-> > library. However, a workable alternative would be for the Rust wrapper
-> > to carry its own "vendored"[1] copy of Git. This would also ensure
-> > more reliable builds since they wouldn't have to worry about the
-> > "libgit" API changing from under them, and can adjust for "libgit" API
-> > changes when they manually pull in a new vendored copy. Hence, I'm not
-> > convinced that this is a valid reason to carry the Rust wrapper in
-> > Git.
-> > 
-> > (2) Perhaps the intention is that this Rust wrapper work will allow
-> > Rust to be used within Git itself[3]? If that's the case, then
-> > `contrib/` seems the wrong resting place for this code.
-> 
-> Neither, actually. We hope that by keeping the crate definition in the
-> main Git repo and by allowing developers to optionally run them by
-> default as part of CI and `make test`, we can catch breaking bugs as
-> early as possible. We're also hoping that we'll get more attention from
-> interested developers by staying in the main repo rather than in a
-> separate project.
+ On Friday, August 16, 2024 at 01:52:11 PM GMT+3, Patrick Steinhardt <ps@pk=
+s.im> wrote:
+>On Fri, Aug 16, 2024 at 09:53:36AM +0000, avih wrote:
+>>=C2=A0 On Friday, August 16, 2024 at 11:50:14 AM GMT+3, Patrick Steinhard=
+t <ps@pks.im> wrote:
+>> > On Thu, Aug 15, 2024 at 01:14:08PM +0000, Avi Halachmi (:avih) via Git=
+GitGadget wrote:
+>> >>
+>> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
+vn_remote[$((${#svn_remote[@]} + 1))]=3D"$value"
+>> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
+vn_remotes=3D${svn_remotes}${value}${LF}=C2=A0 # URI\nURI\n...
+>> >
+>> >
+>> > I was wondering whether this is something we want to quote, mostly
+>> > because I still have the failures of dash in mind when assigning value=
+s
+>> > with spaces to a `local` variable without quoting. I do not know wheth=
+er
+>> > the same issues also apply to non-local variables though, probably not=
+.
+>>
+>> IFS field splitting and glob expansion strictly never happen and never
+>> happened at the assignment part of a "simple command", since the first
+>> version of POSIX in 1994, so quotes are not needed to avoid that.
+>
+> That's the theory, yes. But as said, we did hit bugs in similar areas in
+> dash where that wasn't properly honored, as Junio also pointed out on a
+> later patch. But that was in non-POSIX area anyway, as to the best of my
+> knowledge it only happens with `local` assignments.
 
-That to me raises an important question: who is the one fixing breakage?
-Hypothetically speaking, if I continue with my refactoring spree to drop
-`the_repository`, do I also have to fix the Rust bindings that I break
-as a consequence?
+Yes. "local" is special, and not only because it's not POSIX.
 
-Patrick
+The difference with "local" is that it takes assignment as arguments.
+
+A "simple command" (posix term) is composed of optional assignment[s]
+and optional command (and arguments).
+
+The assigments part is never IFS-split or glob-expanded, while the
+command and arguments part is (in words which include unquoted
+expansion or substitution) and therefore needs quotes, e.g.:
+
+foo=3D$x bar=3D$y echo a=3D"$b" c=3D"$d"
+
+There are other commands (beyond "local") which take assignment[s]
+as arguments, like "export", "readonly" and "command".
+
+Before posix 2024, these commands also required quoting of the
+arguments-assignments - just like "local" needed in dash.
+
+But posix 2024 introduced the concept of a "declaration utility"
+(which takes assignments as arguments, like export, readonly, etc),
+and the concept of "assignment context" where IFS-split and glob
+expansion don't happen - like the assignment part of a simple
+command, but now also in the assignment arguments of declaration
+utilities.
+
+And indeed, new versions of shells now don't need quotes in export
+etc, and shells now make "local" a declaration utility which
+doesn't need quotes of the assignment args, including in dash.
+
+However, the reason we do use quotes in local, export, etc, is
+because many instances of shells which don't yet (or will ever)
+support it still exist, so we quote for compatibility with those,
+but still it's only needed in assignments which are arguments to
+commands - not in the assignment part of a simple command.
+
+I've also updated the wording a bit of my guidelines in part 5/8,
+and I'll include it at the commit message of 5/8 v3.
