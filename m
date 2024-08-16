@@ -1,85 +1,83 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF3B13A259
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F418254645
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 08:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723794302; cv=none; b=aiQZAal1nVyewkw+MeK7S1qCVtgxBJZk2G3Y4qjVhwYcSFIdl421zeoOhmTHvqRJnEVMhAu3ev6TSr42OVltm4v24sguLjHu4iuUSStbgkaEQ0IAFx+N97mSXwDB6YKRfn2g+lCVlAs69mDBszEo81hYjRX8QWOsG7SJbj/o4/E=
+	t=1723795610; cv=none; b=rDy2O6E+Yh2OMEnOUYNZkYUk2Qz2WteHh4f5i6gBXZitLXwwyPAzyslZkiMkgxuRgM/hVwjldHEH05WRjdZkok6f4VJ2Hp+YGVr18XMYWlRP2sT7GDIyhYTZlH1NQDxgP+uhuZzXlLn39IxbAwckOnwjtIyTZgNdG5SmmFkryC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723794302; c=relaxed/simple;
-	bh=mz4BSIVX3mFSRnpMW2VxXlo7DQAInnTkCdaG3V8y9eQ=;
+	s=arc-20240116; t=1723795610; c=relaxed/simple;
+	bh=/H+qyURNoeUKA0P/sOLseeX14fkkPKR0fTydWO3Liik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uWtvOTthNiDwieqzmCXm6p3XTbQlmSke053uzxIbW5rVqJ8AhdPiPBMB8wvVx4ft/DPs5f2OVFDNSQiWr4s8dXqaAjjbsNANUe77eLjBOl+Rw4e5PDi7DPGUDZsRAGK5F8yjLVg4jtnKdbttSft0+adaWwNRcA6SOhC88Lq8of8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EAIIiDVC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VTuK8cqT; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=FgS9/cJ22vvg+wearHjEDFj4f7eYFhsFu9sIIgAeSmt58LBuLM2lzdaKaYEDthWv+l6GslHugmXipgSHBSOohsZITg499nfXtQchO5sUPnKR/lIEyST+PtRj/tRfZbOqXxOGpyTl+aV+20+MW8PMP2txF730AnxzFtt+xHAmPAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=miesidZG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EjcuRXZQ; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EAIIiDVC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VTuK8cqT"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A8C1E1151AD6;
-	Fri, 16 Aug 2024 03:44:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="miesidZG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EjcuRXZQ"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 8F2CE1151AC0;
+	Fri, 16 Aug 2024 04:06:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 16 Aug 2024 03:44:59 -0400
+  by phl-compute-08.internal (MEProxy); Fri, 16 Aug 2024 04:06:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723794299; x=1723880699; bh=z1sUv/j8hS
-	kfdH3V5w3kb9D8Ttd24XAMcJIaQO1J2fk=; b=EAIIiDVCdfjiZaJWUMGo1bBfP4
-	oP9CZlPgKCFxJzLjKqmZEqn6MKsUZcU669GuBi7zfkYJx3AjUfLYvWyna1UnYD+t
-	4Nvye1Iz4KlLsh/qwmCMInm56F9KWAYTdkUDnDK5Nb8YNvL9q/A0n3EMOZJKRhCV
-	XZK5yrFy6YHR0K4V2dZKlOWgxFroA+HkvKjdy7nuaiDlPcLUvnfkwsYOCCfAHi5t
-	qw6OaMKX4KNSRUgK+GlTrEQpk5IVI3WyYCCW+8dcrcogk5HohBujoT3cp8wUhFRA
-	Udwdi+uZbQSL6zaEZc5bPGWxDyw4AzEwpIERe6KEZRH33MZSvXQ4Y+u2W9FA==
+	:subject:to:to; s=fm3; t=1723795607; x=1723882007; bh=BsMiB55uo7
+	exmfHtMX6KaPRIZCBPp8qrPtMXsLum0WI=; b=miesidZGnWhF9G8RpJ2eR+bEZl
+	l2pQL+AtwKFcWm7dVy7Yjlqfj44kGx6zVf55WnzEqd+geJTtUQ3CLkCZ8WS7eTYJ
+	d/eNc102nfSfw76P/+zRLRPasEprHjTrFBbymGn9xgtTERa/HmJYCYq1jmpiIwUs
+	oX7iOWQvVQ8Ar4Y2wv3wh6I5buOUIIfw5Gv5sbEaCgZFx2EY8aScgCuqq+3SUD30
+	goIOfq149+RZ+me6ereiibIMtWRzZx/U/TMH48mI1xqXRBorA3hCtcDNcB9+4YNq
+	mIQqRaJPTK5c6f8D8STGNT9qUUu/huYDnABjXfQrkTLluFubuYmKk8P/vYhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723794299; x=1723880699; bh=z1sUv/j8hSkfdH3V5w3kb9D8Ttd2
-	4XAMcJIaQO1J2fk=; b=VTuK8cqTsfyxyMs0v//EVzpgPQJs0rgcZXQyGTwRyVpl
-	S5R7VLhfbEfI2BOepEfkgk3tIO79VTH9/319fNFidnd8HHroe96Q7iOxhI/exo76
-	d1Z/jusoI1xUG/wkD1JaT1BVkvvU+i5sKdbbWvYoQtzk8hInlwDEROdb8AmZD0i3
-	dd9u1pCTfOtCz7N6J/CDNeZCh972xW0xuLjaBh/RfA6xCDwpz5A+OM8DsqLS5k1s
-	xFrotVV+WvE6fFcCqR2lByLU+tx2qgS03RJO2VnVF0B3jFeJgK7Jh4yt2O+UukaE
-	f2Vc17rjZAx5IUANctlDF9guBQNCD4RXHhXcfgXpgQ==
-X-ME-Sender: <xms:ewO_Zkb7xaSkecN9c4qj3pwhTpcajRsERGOQpwUR8DPceBcG97KxlA>
-    <xme:ewO_Zvb8iqj7sFO2OBp_54SyKZRM_yAg9iJpbUtCRfFBlBJUWdziuMiBAjmKQKT_X
-    nXg8w7cEKXNPjc18A>
-X-ME-Received: <xmr:ewO_Zu8QmyDuOPFf0KEfEIJqrXOwqFk83aH23ExXhtDCAOHz457l98dz-ioIXQdZCf9mg004uvCUYU-SLLpxjkQo3VKAyuI5dR6RwU1tVwyjRUo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddvhecutefuodetggdotefrod
+	fm3; t=1723795607; x=1723882007; bh=BsMiB55uo7exmfHtMX6KaPRIZCBP
+	p8qrPtMXsLum0WI=; b=EjcuRXZQh9Mmfg/g6wWeHreLRbevEZb2teEzc8//Evo0
+	UDuBPEwJ5b4ia/nj+6Tfxa9l609yxPWHvjBizyir1jRduqvXy8hz5OpZuBl7ZUlg
+	bw22Fk+RAi23ZE98l0dHjAMXg+g08HDGd0B65mjC3A1LCusX+EEXAuNbyJ/CtLNg
+	vXA4bTDNGa6n8JdZyqd1r0jEQtp5ALn3rJASdSRxyV1IDx8JsYuwEa43tfwhBLnv
+	n+v3RwsW3XMUm5vVhU7hbagMqC1Y/MDZyG9ZkVvE2flmxmE+eA4Y2BwRFAd5Ykrz
+	Vltj3qzgev4NWI4hxGndG2skQWvTOCU7dSPWGsjW4Q==
+X-ME-Sender: <xms:lwi_Zp_HL083tGvdMjH_tW7X9FMAsdhswX1gbQZk6nkxGYpKR6tU0w>
+    <xme:lwi_Ztv0OtV1_AOocVRFfjc0EDEWiArkE8iI1GuL_gvL2BW_TfRRDnejdtbPLJInp
+    nAI7fxINz7HA1w6PA>
+X-ME-Received: <xmr:lwi_ZnBbW13g_VJS3oBZYmccNrlcjENN4OwvJJT8vgg-_HhC7YoUNKWj_W_wSIBs5jurzZ-ozpNdCg58Zj3dX5coSx5pYE6ODEudZJN2KzD5sHg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtoheptghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-X-ME-Proxy: <xmx:ewO_ZupbdFZM8ZH0lF4E-Ed1IJh_fuFCBRaii-t4Kbafy3lJowlI8g>
-    <xmx:ewO_ZvoiGz6LioZczxynVZXy31PuB1kk-2FhFNbDlxk1yTBJeLNLcA>
-    <xmx:ewO_ZsQcWV5_aHfEvoZqy58dVRN1091D1V-1kzYYH-hFh_OXTnnXzw>
-    <xmx:ewO_ZvroFitRaNQdxs9XQjELRaODyFhu5Kmo31pserGrJVF4NNQ7QQ>
-    <xmx:ewO_ZuXWVkzRDlsi7hTeGNw-rBOyKz09EfspwZABm_WX-yZY6r2L6ozv>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:lwi_Ztf6L4Sw2txX6FRGVa7eOr4vFG6HsZTr-D1nfUheAe9uqRrwUA>
+    <xmx:lwi_ZuO7QlD4irq_VnaD8BaLP8cMCxy1cS1LI0a8T74_v-ljmC2ZVQ>
+    <xmx:lwi_ZvmNYrHNpXyZsXE6g38Yt3Qcju2uE6NHDsxEtOrb9c0QYPrNFg>
+    <xmx:lwi_Zou6rVQ3CnxfRdK80cJ7DoKd40TevsozWdIgWJoHxQSRbdEVJA>
+    <xmx:lwi_ZnZC5qxXubJYJYjWAQJOPwmTbW4IAfDT8PB63tVTC8z8pXZeinZy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 03:44:58 -0400 (EDT)
+ 16 Aug 2024 04:06:46 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 172b8b99 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 07:44:35 +0000 (UTC)
-Date: Fri, 16 Aug 2024 09:44:56 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c02f3e71 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 08:06:22 +0000 (UTC)
+Date: Fri, 16 Aug 2024 10:06:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 09/10] t-reftable-block: add tests for obj blocks
-Message-ID: <Zr8Dcvfg01f3mKd9@tanuki>
-References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
- <20240814121122.4642-10-chandrapratap3519@gmail.com>
- <Zr3NNBTXNXSCrTpJ@tanuki>
- <CA+J6zkRHZ3NF8QV_oFBVEO8gCy-Pvf6zerdiY7aKCqkofRPktA@mail.gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/7] builtin/maintenance: fix auto-detach with
+ non-standard tasks
+Message-ID: <Zr8IkziW-TfotARy@tanuki>
+References: <cover.1723533091.git.ps@pks.im>
+ <de298972-a359-46dd-b808-4edaa8701d40@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,70 +86,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+J6zkRHZ3NF8QV_oFBVEO8gCy-Pvf6zerdiY7aKCqkofRPktA@mail.gmail.com>
+In-Reply-To: <de298972-a359-46dd-b808-4edaa8701d40@gmail.com>
 
-On Fri, Aug 16, 2024 at 12:41:34AM +0530, Chandra Pratap wrote:
-> On Thu, 15 Aug 2024 at 15:11, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Wed, Aug 14, 2024 at 05:33:17PM +0530, Chandra Pratap wrote:
-> > > In the current testing setup, block operations are left unexercised
-> > > for obj blocks. Add a test that exercises these operations for obj
-> > > blocks.
-> >
-> > Same remarks here as for the preceding commit.
-> >
-> > > @@ -186,9 +186,88 @@ static void t_log_block_read_write(void)
-> > >               reftable_record_release(&recs[i]);
-> > >  }
-> > >
-> > > +static void t_obj_block_read_write(void)
-> > > +{
-> > > +     const int header_off = 21;
-> > > +     struct reftable_record recs[30];
-> > > +     const size_t N = ARRAY_SIZE(recs);
-> > > +     const size_t block_size = 1024;
-> > > +     struct reftable_block block = { 0 };
-> > > +     struct block_writer bw = {
-> > > +             .last_key = STRBUF_INIT,
-> > > +     };
-> > > +     struct reftable_record rec = {
-> > > +             .type = BLOCK_TYPE_OBJ,
-> > > +     };
-> > > +     size_t i = 0;
-> > > +     int n;
-> > > +     struct block_reader br = { 0 };
-> > > +     struct block_iter it = BLOCK_ITER_INIT;
-> > > +     struct strbuf want = STRBUF_INIT;
-> > > +
-> > > +     REFTABLE_CALLOC_ARRAY(block.data, block_size);
-> > > +     block.len = block_size;
-> > > +     block.source = malloc_block_source();
-> > > +     block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
-> > > +                       header_off, hash_size(GIT_SHA1_FORMAT_ID));
-> > > +
-> > > +     for (i = 0; i < N; i++) {
-> > > +             uint8_t *bytes = reftable_malloc(sizeof(uint8_t[5]));
-> > > +             memcpy(bytes, (uint8_t[]){i, i+1, i+2, i+3, i+5}, sizeof(uint8_t[5]));
-> >
-> > From the top of my head I'm not sure whether we use inline-array
-> > declarations like this anywhere. I'd rather just make it a separate
-> > variable, which also allows us to get rid of the magic 5 via
-> > `ARRAY_SIZE()`.
+On Thu, Aug 15, 2024 at 10:04:10AM -0400, Derrick Stolee wrote:
+> On 8/13/24 3:17 AM, Patrick Steinhardt wrote:
 > 
-> We _do_ use inline array declarations like this, here's an example from
-> t/unit-tests/t-prio-queue.c:
-> TEST(TEST_INPUT(((int []){ STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP }),
->           ((int []){ 1, 2, 3, 4, 5, 6 })), "prio-queue works when LIFO
-> stack is reversed");
+> > I recently configured git-maintenance(1) to not use git-gc(1) anymore,
+> > but instead to use git-multi-pack-index(1). I quickly noticed that the
+> > behaviour here is somewhat broken because instead of auto-detaching when
+> > `git maintenance run --auto` executes, we wait for the process to run to
+> > completion.
+> > 
+> > The root cause is that git-maintenance(1), probably by accident,
+> > continues to rely on the auto-detaching mechanism in git-gc(1). So
+> > instead of having git-maintenance(1) detach, it is git-gc(1) that
+> > detaches and thus causes git-maintenance(1) to exit early. That of
+> > course falls flat once any maintenance task other than git-gc(1)
+> > executes, because these won't detach.
+> > 
+> > Despite being a usability issue, this may also cause git-gc(1) to run
+> > concurrently with any other enabled maintenance tasks. This shouldn't
+> > lead to data loss, but it can certainly lead to processes stomping on
+> > each others feet.
+> > 
+> > This patch series fixes this by wiring up new `--detach` flags for both
+> > git-gc(1) and git-maintenance(1). Like this, git-maintenance(1) now
+> > knows to execute `git gc --auto --no-detach`, while our auto-maintenance
+> > will execute `git mainteance run --auto --detach`.
 > 
-> I did implement bytes[] as a local variable array when I first worked
-> on this patch but that turned out to be tricky due to variable scoping
-> and pointer semantics, so I ultimately settled on this approach.
+> Thank you for noticing this behavior, which is essentially an unintended
+> regression from when the maintenance command was first introduced. It
+> worked for most users because of the accidental detachment of the GC
+> task, but now users can correctly customize their automatic maintenance
+> to run in the background.
+> 
+> This was my oversight, as I was focused on scheduled maintenance as
+> being the primary way that users would customize their maintenance tasks.
+> Thank you for unifying the concepts.
+> 
+> I sprinkled in commentary, and most of it was just things I noticed
+> while reading the series in order but then later patches or a careful
+> read made my comments non-actionable.
+> 
+> This v1 looks good to me.
 
-Oh, I didn't mean to say that you should _only_ use the local array.
-Rather something like this:
-
-        uint8_t[] bytes = { i, i + 1, i + 2, i + 3, i + 5 }, *allocated;
-        DUP_ARRAY(allocated, bytes, ARRAY_SIZE(bytes));
+Thanks for your thorough review!
 
 Patrick
