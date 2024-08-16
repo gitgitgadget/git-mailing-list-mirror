@@ -1,53 +1,53 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD0884DE4
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 08:50:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B740D7581B
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 09:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723798237; cv=none; b=E+RdLMtoHGP9XoLinCPzVLYqUQpV8sK3UvdZ1Bm3dYzyqdvMSzjAk7x+C3Z6AbRH86Axvy9TbsjnJRztg0pdHmpu434DfPLJPGHeUx8OHub6iIjIicxJwQk0yNzWL2u/QzQKDlqvM5AlEtb24srSHayrrasKozrGIkyPOzvRv2U=
+	t=1723799175; cv=none; b=Hz8PJRZM11LFaMm0ME+i5PcYhcz2RxiEeLU2d64DdMpByBS2Z5wz1Ki5JK7qvyWypw0DVht2Tw+BJTHknKqZHW4mStCTd8FWCpv28DqBwHH0Yjvq5y9XlEF7R1fWkAac/T4ZcMbB6xvf2TpPOD1w0cQPhs7RZurUyC4GpmltNIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723798237; c=relaxed/simple;
-	bh=gHLQlx+Co+hyw8zUUSSoe2uuZDoyrUIwr0uEV3hCbhs=;
+	s=arc-20240116; t=1723799175; c=relaxed/simple;
+	bh=iwvBxeyOchcJfVlelwb+BzBURrC9sMspLnBIDaxUUf4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Il9+exIj8WRLPVUkiHlljGisksc/NPcSBrTAM1AUZRCuHBTbGuE6UFVtb3TypCsBpbPbjXwM2C9SiIQIBlghq3GNpXPmBmCCirR68DqbK2iNJYiV40KAoihEus7qm7d6X9xMuItdQCPiCL2JFcMwhd0AxkuYa9lfDlPq/suDrwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C1BPc3ln; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=opJ2wMUw; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=JJhM99V8iETjlOhXQ+GlHmZjbvXr/9qEwqyh/peiPJtgZaaSurnZS7/GLI3waYBD0kYuC2NFWsLckKAS2VLlBRZXLumtUopibWSjb5+XMn9dAKJXGk6k5rWHgRBHs26wmUkdWB8oJAcTLK98BMouQioHCcuIvtt/tqP5FWMRaew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dSnXOeqc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=byWwxfUv; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C1BPc3ln";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="opJ2wMUw"
-Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5A71511449FF;
-	Fri, 16 Aug 2024 04:50:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dSnXOeqc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="byWwxfUv"
+Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0C849138FCE5;
+	Fri, 16 Aug 2024 04:56:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 16 Aug 2024 04:50:34 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 16 Aug 2024 04:56:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723798234; x=1723884634; bh=vKyaDuVmbB
-	XuYCuhkjYQJSKQkd+DbsCtBNXhPyshXhY=; b=C1BPc3lnmIiOX6FXbIJFYItxap
-	bQbJ20Ma7kZVbLWuxbNvQxAJgdLLDOI/Ix1zkKdk5g7MsPcwvF/dXRa4Vz8Cuwk7
-	igSu3bAre022qtfXRPHZS92MxYReO8FSG0inRDAPiC6QRtgBvIvpmz6OIpONlsoP
-	B4PZ+lvWBVlyHBsIuNX/WKNkz4cEFquNeLy3dWfGrLulF7DFlRctaWNfD4aJUxGM
-	dEf4a1AMBwSFpHl6FE6YlfO262xgr6NCUT7erAdUO1JamB3fmg9712NC/GdoDY+P
-	2DsS8LTP/yFw2TFcH7rZnkXN/6Chb9qD8bgGDE0lBnuR2mmbAzfMYSaH5McQ==
+	:subject:to:to; s=fm3; t=1723798619; x=1723885019; bh=OXWalzTFc4
+	FNVw6teJewSP6UL1rKnyuTQvntJbAWPHY=; b=dSnXOeqc3pC6ZCouTHVJzhPSER
+	Zy5C2gisjyNZ/ktF+y57gcue4hwLsIW2hMs0eKs/ckqFg3P+3goY1U+02rw3+ZXh
+	5IgB75wvE3JsSqUlmFbXhj3phTfPf56s9zx1IUHLi8pq+9e5TxjZ6BW9p7l4YuFa
+	PiXnVRWFgGSi9EI564uccXoWGYG/arnzQ/Fxm/bGiVX8a2j7HPEk10NwWvqGzDtn
+	bsCHz4A1cHsCD1uYxQ9CBJhzYhUKN9Xnnmun5/Jm6MYXDQMkf16gOCVtPC9QNVc+
+	ltaWagRYkP4huvJgFb0cl39oHSRUI0lx4oYYh/uzd4CkWHPgQ2UlitOOMlfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723798234; x=1723884634; bh=vKyaDuVmbBXuYCuhkjYQJSKQkd+D
-	bsCtBNXhPyshXhY=; b=opJ2wMUwOG7ywGWvNh5d9TXj4miqeBgDVdI4DBS1Del+
-	cvQ0IUi4Pdu03iiX5XEs48TnUTLGpRN7Kk/hZLOV84p7s5953wvg4eDKlVl7pqZ2
-	mD8m+1y6xa3VJMH08BrkaDEwZzu4E74g34kxbfsM1bALmNYBcZWUnb+x1Ud7Vqcq
-	623z/QRacVaVTK1Kiwyg1GJ6Wemk9EsX93BFV32l9EGlECDKSTckUFP2Ir6vBIt5
-	JNxL6GGfctH0SScqOpypQd900jjKixPgHU8W0o9yQxzptPS2IIBo9isT7rrT6Lvo
-	cVA/WsKBOWzNrJlWTCjeKqt8suup10coXkZXfvoBKQ==
-X-ME-Sender: <xms:2hK_ZjxpGNUBhoLraaaeEsPg3WhWlRp5mrN4VSUBTNu0qXX-NkiTgw>
-    <xme:2hK_ZrTSNv3Y7MnlhdCPj4OpffCHsf_Zx3AhYno53AstUhD150ZTro03ZRg5Y1u9s
-    mgoTZrMxvPGTnqr6Q>
-X-ME-Received: <xmr:2hK_ZtXG9V7WEOzDuR6XSz06JM2N1Y-XNwFUJS_-vRyYUABS3FWUewsjQ4-3hc34P_dceKies89Qvj9A05vej-7d2GRhi_oCDM-uXnfQbPSyP9s>
+	fm3; t=1723798619; x=1723885019; bh=OXWalzTFc4FNVw6teJewSP6UL1rK
+	nyuTQvntJbAWPHY=; b=byWwxfUvaMBbwNio7ZDz70pTvk+DeNAEdjOPr3gRwndG
+	Vw0uw/CJkmNdTqSxWR4L8kdRL+ZqW/2rcF7p74gOh0VYCKcsYfdbvhhnV1rboC7C
+	1KkH0W9VMVPAYU4Y+fx6Bnf0j+L/Kz/9snBrrEfgU++mPmhq97U7OP3gQSjtQeqr
+	9jWZPlFdQaG3OAhg0/0xt8j6y5qKPSagzZ0UnkyK7dvACrtAlMMFuo7maYsUtJRL
+	E2vXih10HxAEut0Rva0noV6nuQmhAAbEio5ZTUZJLktbfAIDbbIM8FXaXANAizAN
+	DGITKZeUwzsa7+aXFJKP886hVuIYgXgkSdCjxWDyeg==
+X-ME-Sender: <xms:WhS_Zu1Qr2k215YvJKGoM0jjgR4v1A_fItN5eRD6DVyOlMc16onZ4g>
+    <xme:WhS_ZhF_zOrNrB74PiwBHdbGG6okr9guUMiMHa-8-Dd3GhRjRfC13EOrGdhl07WtY
+    -3Pf_yPZgY45TcUBw>
+X-ME-Received: <xmr:WhS_Zm64R4xIx5QUUZKfT3SHwTiwXlUkKjXXr2CS36cAVhL4Cu67ObVMopJBiKT9ZPhig8w0Ytp3eBuZqgMP_CMKOmBprM_m4rqZf05cEQIlNT0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtkedgtdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,34 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtkedgtdekucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdp
-    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
-    hopegrvhhihhhpihhtseihrghhohhordgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:2hK_ZthyiIaww3r3O0aKheyKW1EClaffdhy-itqmDNl8wT5Etl9t7w>
-    <xmx:2hK_ZlC6qkr9MCJHyJgmQi9K3MFwETbuKNro3UdNJLGxmUuz9i_CgA>
-    <xmx:2hK_ZmLQu9Dqfn74bxXd8yg3nHnFtOtgslz_NQywOaRqLySGPCI6MA>
-    <xmx:2hK_ZkBXJSaz4eyYsqCqaHKoYtRf5tgY9osw5T_kvmOLIpAJ7ydSxw>
-    <xmx:2hK_Zo7sRPZwKB57AI_SY324RWa0wn0jAtyEi8ATVztcyCpB8fS-ERtp>
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsshgthhhu
+    sggvrhhthhesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhush
+    hthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:WhS_Zv3Gh9j-2qjm9SJhq9VQo5juPJLcxniipmWvB2BUyLBestq09Q>
+    <xmx:WhS_ZhHMFkI1yNyAakTbiN1Cqg7Af6gdA553uXAWKfQ8EEDr9DPlmQ>
+    <xmx:WhS_Zo_Fnv13dFAciKAx4iUFX0oufI9O0jmCcGE2dQVOwXMjJyyVCw>
+    <xmx:WhS_ZmkpijYtrqlyOdZdeo0Nacw-5dbcKJT8ayao24M2qFMMOM3zhQ>
+    <xmx:WxS_ZqMXmpyPC9cE48Vxff0Z3jAyXKRDEMdmCYiRf3EjTi_pNPn3oRR->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 04:50:33 -0400 (EDT)
+ 16 Aug 2024 04:56:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c0dfa359 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 08:50:09 +0000 (UTC)
-Date: Fri, 16 Aug 2024 10:50:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id a6cebb4d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 08:56:34 +0000 (UTC)
+Date: Fri, 16 Aug 2024 10:56:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Avi Halachmi via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
+To: git@vger.kernel.org
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Avi Halachmi <avihpit@yahoo.com>
-Subject: Re: [PATCH v2 0/8] git-prompt: support more shells v2
-Message-ID: <Zr8SyWSHH1lAfyuc@tanuki>
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
- <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
- <xmqq7cchtyfc.fsf@gitster.g>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 2/5] t0001: delete repositories when object format tests
+ finish
+Message-ID: <6b0cefef6af3a94cd3b650b2ab06de489dbdaf20.1723798388.git.ps@pks.im>
+References: <cover.1723708417.git.ps@pks.im>
+ <cover.1723798388.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,22 +92,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq7cchtyfc.fsf@gitster.g>
+In-Reply-To: <cover.1723798388.git.ps@pks.im>
 
-On Thu, Aug 15, 2024 at 11:48:23AM -0700, Junio C Hamano wrote:
-> "Avi Halachmi via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > This addresses review comment on part 6/8 (git-prompt: add fallback for
-> > shells without $'...') which requested to use one form for all shells
-> > instead $'...' where supported and a fallback otherwise.
-> 
-> I've read the series and they looked all sensible.  Will queue but
-> I'd appreciate a second set of eyes before marking it for 'next'.
+The object format tests create one-shot repositories that are only used
+by the respective test, but never delete them. This makes it hard to
+pick a proper repository name in subsequent tests, as more and more
+names are taken already.
 
-I did have a look, but honestly I wouldn't consider that to be a
-qualified review. POSIX shell tends to get borderline unreadable, so I
-don't want to claim to understand everything I've read.
+Delete these repositories via `test_when_finished`.
 
-In any case, I didn't spot anything grave.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t0001-init.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Patrick
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 2093f5c1ee..795408e16c 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -500,6 +500,7 @@ test_expect_success 're-init from a linked worktree' '
+ '
+ 
+ test_expect_success 'init honors GIT_DEFAULT_HASH' '
++	test_when_finished "rm -rf sha1 sha256" &&
+ 	GIT_DEFAULT_HASH=sha1 git init sha1 &&
+ 	git -C sha1 rev-parse --show-object-format >actual &&
+ 	echo sha1 >expected &&
+@@ -511,6 +512,7 @@ test_expect_success 'init honors GIT_DEFAULT_HASH' '
+ '
+ 
+ test_expect_success 'init honors --object-format' '
++	test_when_finished "rm -rf explicit-sha1 explicit-sha256" &&
+ 	git init --object-format=sha1 explicit-sha1 &&
+ 	git -C explicit-sha1 rev-parse --show-object-format >actual &&
+ 	echo sha1 >expected &&
+@@ -522,6 +524,7 @@ test_expect_success 'init honors --object-format' '
+ '
+ 
+ test_expect_success 'extensions.objectFormat is not allowed with repo version 0' '
++	test_when_finished "rm -rf explicit-v0" &&
+ 	git init --object-format=sha256 explicit-v0 &&
+ 	git -C explicit-v0 config core.repositoryformatversion 0 &&
+ 	test_must_fail git -C explicit-v0 rev-parse --show-object-format
+-- 
+2.46.0.46.g406f326d27.dirty
+
