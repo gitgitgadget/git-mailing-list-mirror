@@ -1,53 +1,53 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A40653373
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781A6839F4
 	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723793775; cv=none; b=YZIY+yUXmEQY+Ou+MR0qQbz+ayiNJjaY68VSKXSkVlf5oc9M7Xt4qZG+4GI27DckNtVkrqhJVJOzQFABLTSlC7hH8E/+8t9jueW6HZEzQlUlMZSjYLxx2LXWvv+UBTofaFgXlQj2WG/56t8opTWOO08eOryJMNirtb3TpiMjt6k=
+	t=1723793775; cv=none; b=PfxUy74hNfgd6I2gJTqrpWF8bNgK42L/1dGWsGHh4QCa2RPUnGymlZt+7xd1DzeB+4AE2t3nOTcCXiqMbJbuMSdYG/+NNDDunDuVYjmU96PZxgeoT91S8EKKuqxNGDEl6mdGUxYxe45cCGGourrvM/7Y0r+UkfSdPIG2mae7jTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1723793775; c=relaxed/simple;
-	bh=9JYxltfo8+D8cVL4HYSdBPc3yMzObAj7FvUNwkQXbW4=;
+	bh=B0x4nMCDptS6Dx0fUemWGRMIUeCKlPsrFIxGNUbN3VY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rExWAZTkEuIGFZUUwM03TRwLAoSP8TLt6t93E5jpu/Ssc2dtM228AYq/IwI8e6boskdWghFWnbIt0LTUjwT9/h5tm0PZZOT/Bz6sSrNZi9USBDhLBmHemTjg6Bigtbf0ECRY7xWJrWoINAGkFNf/t7lES4qV/ddoYAIfrS2MNl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ihSQXBtB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B2nmJ18C; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vpjjf7FyT2gFR2diSPMBjrIaYJeNYbEJZW3J0tdgUtlUmbii/ttBxe7dLkif4ifBtbzOzrVwEB0Kw/6rUphT5mVGtCs3Zqjq2VI5dWgcwRGDZf68tS9y1HUO9fCgO6zKYv7+UCx4SH79NgTnCxgpjgNNfK/FV8NvY3zPsAEIjfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bTKmFh+S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LONuH8ki; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ihSQXBtB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B2nmJ18C"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 5E6FC1151BE8;
-	Fri, 16 Aug 2024 03:04:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bTKmFh+S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LONuH8ki"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6CB05138CADA;
+	Fri, 16 Aug 2024 03:04:41 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 16 Aug 2024 03:04:48 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 16 Aug 2024 03:04:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1723791888; x=1723878288; bh=Uq3uJU5vO1
-	TwN5ESL0+PCfabpEoF4QGgM3ojDg50j2g=; b=ihSQXBtBT2tN7/e3aB7x7YLpn4
-	wqx1opBFdq1xnBe9Knq9n1TOrwN1HgHSG/u8fZT977rdwJavw3eLs+iVkdXZS7v2
-	YF4FBFtmmiWadshVcD+v5rBJF6Ih6SYBzwEDB0nyZivkIcKyBC5K6nJBJlHWH37u
-	8jyG2ou39AvMs1IxrQfqPBp5Q24q/A5KMm/EGijyC9cgFjSQUzfaPPyf+T5x4Lrt
-	l4P4LhfhiMK2QfZU2cLE8O5iM80Hakg296R2jBpimVKV5VtviRA7ZmudG5hKdIjx
-	u3gz0uACN6X10gU9chOlhlLdaVmj2ZrIN7zn6a5YpL4XRTavLGFpZHW6szdA==
+	:subject:to:to; s=fm3; t=1723791881; x=1723878281; bh=n4d/teAYQr
+	+mxE/vfY/0lfZ3DGDeOvNvVlG8shdrbJQ=; b=bTKmFh+Si5ihZW4Xv8SLrP9jcF
+	rolbNK6mp2gfr0/cBtDSPfDrCKaYXZIWrZBUiepztcpxV5a3+JLHcgqyLkD9qNUN
+	shX76+GZmDo14SCcuDpUlyhjI/TPAmB50tNoEOewXL+JhARLl7U1R0UB2APu1Y4y
+	shI5BSFdSFO95QT7sV7+9szr0gr2AgnWl+oGd3cOOPNTF80jGvu5wSHXDdKquJXq
+	rPcncmLm2dq/uSyoXlM/t5/III5gLFH3otbKh7ncGA/F5BjYNDGt5snjRdKEgw1r
+	1Y7efsUBfcwQAJPgQoarNYshnLJNTzOAFJJ3YajY5EE2vKVDVJaiShYkhV+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1723791888; x=1723878288; bh=Uq3uJU5vO1TwN5ESL0+PCfabpEoF
-	4QGgM3ojDg50j2g=; b=B2nmJ18C6ufOVCUYbpV9ikr22Ex+gDkDV7FOnM4N0L45
-	5duw2S4beF4w7V/M9YW2y3rIeVi9+H6fW3U0Cx0TKitqGs6x+DWNeVivx/107xVJ
-	O77m8mQ1fo3kp8r5qCFWIPYYXwbEwsw4jIR83FjQ/Ki6CVyJvSMwbP/w3oHCXjmC
-	Juy3r3gkZIGBZ6btRqWdnb33NcAhE/sGR0BRb2NmljG0MZXVAzs0WhXpFXgEq5Ob
-	VXnqddZNIDGNnEU5wtFRBW0RDSORdJ805plqZUG9+fyA7FYQmyrP1l6hhw0sX/RM
-	uHKCh3NpkzhCjvSxFmHlO77XYeTctJT1hknfO1s/cg==
-X-ME-Sender: <xms:EPq-ZvPIWQPWvrrZYgOhevrRKvB2kBo8XHvm1n0pO-mQQafyF_Z6kQ>
-    <xme:EPq-Zp_9vlm7u51Vw9nMUHfm7bWhlnNBkyDWZlLwFzGV9gwg829haJzUSpvqY4ThA
-    YiyXOCAaQh8tL3w9g>
-X-ME-Received: <xmr:EPq-ZuQuI3a1Jbw6yUr39U-ovfhFFi5WA6snI-XEx6AB-PFHdH1IO7TCMAvAJ-s4y8ABaSum3IaV3y9l3_gi7d_uOtra0MVZYxPbn3SoTsCzJI4>
+	fm3; t=1723791881; x=1723878281; bh=n4d/teAYQr+mxE/vfY/0lfZ3DGDe
+	OvNvVlG8shdrbJQ=; b=LONuH8kiUAfl8InCBgk8mZY1Bip8Lk452xUziYN0Pf5C
+	5H8BMpgWZUVHZHzPPgptCWnSZ7/PhvoTAPpH2QiLFgqz62Z1tSr5I1xh3he5DFsS
+	JjysSLT4QMUg1WEvJxUWxeOSA3klmtVgctIAOgFN5V1AoQyb3h3Pen7L6fPELXwL
+	rTN6hm/kcuMXsMiBaNFH0FJ+F0j0Q4Pt02w3gircUgfOoyus5HO3L44m9lkVvDUm
+	Nx50jK7cDq4YRT1Byu9h1PgwxzpbsVewpNWmll2Zo06Myb52t1BRD4yzUhXsCyTv
+	OPFEV20Du0ZduRj1TUusoVdfdvup5M+8YS/Dl8iJDQ==
+X-ME-Sender: <xms:Cfq-ZtbFvvfzwrzghql6KR6k15zqnC2pcZMX1_JmJ-Gc_iAYoeyAgw>
+    <xme:Cfq-ZkacNh-9BLsCmVNhJJ3aTCIn0au6JiW0wng-qPayfp4Wovw_FEdtzt4F6LIZq
+    UQmmxDDOQtWtl19dw>
+X-ME-Received: <xmr:Cfq-Zv_FjxZs5GdDjXsmjfMgqpYfvgxx4HXx-jYmyET_vipKTxCXxXlSFphfeIDJorc9s-HXnBhxOd-VML8sLgzyN88VT3Ju1VOoOxHxwVneWU0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedgudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedgudduiecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmsh
-    honhdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphh
-    hilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpd
-    hrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtthhopehr
-    shgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
-X-ME-Proxy: <xmx:EPq-Zjs7LyCcPhLs_fpoBaAFMArVv7d7sjdqp-Ytaz9JKhMYAZnLtg>
-    <xmx:EPq-Znf--iP4Ix9gEie6cwIgtazOHaLtkFZQpu1QMC3VfMnoqqCNcQ>
-    <xmx:EPq-Zv3eFxv9BpP4mkQ8QvwQU2IW1dcKfFM2oQjEFZMeCAZo3a1kuA>
-    <xmx:EPq-Zj_RWmXAdwiU149Ee7fTCbT_XWZ830sjIELtrbkhlA_qO_p8-g>
-    <xmx:EPq-ZmyYSzwB3h1lTGFMCo_RDyUnu16WHgQEpTaXJ0wHyLv_9lvk98DO>
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoheprhhssggvtghkvghrse
+    hnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtg
+    homhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthht
+    ohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:Cfq-ZrrTEbURtNrUS98r580Rpxct4vrDT2fNJ5ZswN2aTVOCA_kt5g>
+    <xmx:Cfq-ZooGjNQ1fJ9saiMpLlG0HEWyyKokbrNWGCIfkTod0o7jHhH_uw>
+    <xmx:Cfq-ZhRhnYHQB6cBZ-mmwePtOS1jGhT7cx_SEJ2VGCFstTZZg-nr6w>
+    <xmx:Cfq-ZgrfR94HkWOYMfUIVDRE-8glVSwOTyFGHrwiKPHGPaw757UIyA>
+    <xmx:Cfq-ZkcsSGnXlwwnSTqm1sXpl3Q2hoA-CocxTpM21FTTJrYMoaiwEUli>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Aug 2024 03:04:46 -0400 (EDT)
+ 16 Aug 2024 03:04:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 36125928 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Aug 2024 07:04:24 +0000 (UTC)
-Date: Fri, 16 Aug 2024 09:04:45 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 15a2de5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 07:04:16 +0000 (UTC)
+Date: Fri, 16 Aug 2024 09:04:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -83,8 +83,8 @@ Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
 	Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH v5 4/9] Makefile: fix sparse dependency on GENERATED_H
-Message-ID: <b6199c88dd7f07d63ea1a9bed730c875b3748814.1723791831.git.ps@pks.im>
+Subject: [PATCH v5 1/9] t: do not pass GIT_TEST_OPTS to unit tests with prove
+Message-ID: <832dc0496fb4daaf858a4b44fba86695fb1e20cb.1723791831.git.ps@pks.im>
 References: <cover.1722415748.git.ps@pks.im>
  <cover.1723791831.git.ps@pks.im>
 Precedence: bulk
@@ -97,52 +97,55 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1723791831.git.ps@pks.im>
 
-The "check" Makefile target is essentially an alias around the "sparse"
-target. The one difference though is that it will tell users to instead
-run the "test" target in case they do not have sparse(1) installed, as
-chances are high that they wanted to execute the test suite rather than
-doing semantic checks.
+When using the prove target, we append GIT_TEST_OPTS to the arguments
+that we execute each of the tests with. This doesn't only include the
+intended test scripts, but also ends up passing the arguments to our
+unit tests. This is unintentional though as they do not even know to
+interpret those arguments, and is inconsistent with how we execute unit
+tests without prove.
 
-But even though the "check" target ultimately just ends up executing
-`make sparse`, it still depends on our generated headers. This does not
-make any sense though: they are irrelevant for the "test" target advice,
-and if these headers are required for the "sparse" target they must be
-declared as a dependency on the aliased target, not the alias.
+This isn't much of an issue because our current set of unit tests mostly
+ignore their arguments anyway. With the introduction of clar-based unit
+tests this is about to become an issue though, as these do parse their
+command line argument to alter behaviour.
 
-But even moving the dependency to the "sparse" target is wrong, as
-concurrent builds may then end up generating the headers and running
-sparse concurrently. Instead, we make them a dependency of the specific
-objects. While that is overly broad, it does ensure correct ordering.
-The alternative, specifying which file depends on what generated header
-explicitly, feels rather unmaintainable.
+Prepare for this by passing GIT_TEST_OPTS to "run-test.sh" via an
+environment variable. Like this, we can conditionally forward it to our
+test scripts, only.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/Makefile    | 3 ++-
+ t/run-test.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 674b0ac4e1..0736d3c88e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3253,7 +3253,7 @@ check-sha1:: t/helper/test-tool$X
+diff --git a/t/Makefile b/t/Makefile
+index 4c30e7c06f..d2212de0b7 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -68,7 +68,8 @@ failed:
+ 	test -z "$$failed" || $(MAKE) $$failed
  
- SP_OBJ = $(patsubst %.o,%.sp,$(OBJECTS))
+ prove: pre-clean check-chainlint $(TEST_LINT)
+-	@echo "*** prove (shell & unit tests) ***"; $(CHAINLINTSUPPRESS) TEST_SHELL_PATH='$(TEST_SHELL_PATH_SQ)' $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
++	@echo "*** prove (shell & unit tests) ***"
++	@$(CHAINLINTSUPPRESS) TEST_OPTIONS='$(GIT_TEST_OPTS)' TEST_SHELL_PATH='$(TEST_SHELL_PATH_SQ)' $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS)
+ 	$(MAKE) clean-except-prove-cache
  
--$(SP_OBJ): %.sp: %.c %.o
-+$(SP_OBJ): %.sp: %.c %.o $(GENERATED_H)
- 	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
- 		-Wsparse-error \
- 		$(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $< && \
-@@ -3294,7 +3294,7 @@ style:
- 	git clang-format --style file --diff --extensions c,h
- 
- .PHONY: check
--check: $(GENERATED_H)
-+check:
- 	@if sparse; \
- 	then \
- 		echo >&2 "Use 'make sparse' instead"; \
+ $(T):
+diff --git a/t/run-test.sh b/t/run-test.sh
+index 13c353b91b..63328ac630 100755
+--- a/t/run-test.sh
++++ b/t/run-test.sh
+@@ -10,7 +10,7 @@ case "$1" in
+ 		echo >&2 "ERROR: TEST_SHELL_PATH is empty or not set"
+ 		exit 1
+ 	fi
+-	exec "${TEST_SHELL_PATH}" "$@"
++	exec "${TEST_SHELL_PATH}" "$@" ${TEST_OPTIONS}
+ 	;;
+ *)
+ 	exec "$@"
 -- 
 2.46.0.46.g406f326d27.dirty
 
