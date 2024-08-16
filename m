@@ -1,127 +1,134 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236C582C60
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 06:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4427DA89
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723789244; cv=none; b=O5Thjn+43ciHK2XJ9O8Bfi6JcmXC+TGKAv9AmoX/96jW6snodOqLaUydtogMFZSBhR1TOokGUe2mt50EJuF/PHF+ThPeIyUB/IAfyeaSHRTeR8syJpM4dkjErcKbt2onO3lu6CRSjKVbPuTHyJZ2Kb54j/hxfjj2jBv6PCc1DPg=
+	t=1723793775; cv=none; b=Ddv9rAaxtxUMos3f9T73drWcidru2Ru37nMpBhHZbVOtcEwhnsisvb1Hkl2nrIudOpnG7XfelV5inQTpq2wDKMkKrSLQyvq3m5AdAioSbITxuIfftDWaMb3jxQhq/sy1ZwFmZb+Lw3sW/yLE7QcN53E2A0Dojm5GnTT4GleDSvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723789244; c=relaxed/simple;
-	bh=As9EWZF6jO2L2ub1v2LzED2XY93G8PevJA98rix3gJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XZJmKeuiotXSXjuxJs6QWu0HjaXG8yq/G7SQGI80Vet3zdcCUSKaOlJaOBnz3ifp7EB1/WqCuCjL16tWqIKt+fQRM2gARIm/cmAXSAwIyUzym0FMOBGd+qr5oGpvn478Q2pma29sP8YngkjxKa9j3vEFOkKS9aMnB0LYRxMHzjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ipiwqUV2; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723793775; c=relaxed/simple;
+	bh=mgBfpGYWtwrQbOJXcNh28IOdQwK/z4IWl+MvZKGObmQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jwY46VdTrB4miJM81OLkbblCN4qhLFh4P4Fep6gHVl9Y4Asuz578T/CYzS9O4rFif0VZ+5Q/+/Klaln7AbE8B+wxtrik7duLvjrtzTisJoscM96LP6EmhNf+Hao+f++qP1jLEsOnPQvLONpkHUhiXhdfqvO01Im92WqAECOVAc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oiQlac5I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZbviBoVP; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ipiwqUV2"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e0bfa0b70ceso1658114276.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2024 23:20:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723789242; x=1724394042; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+Ogp1+Rxv7VM0rQmUx3VGcb78tri0C6mlN5fRIgpwYU=;
-        b=ipiwqUV2copCrdzWw1u8Rd2sPA4+OwIh26QUXNHl7Py4VqPmT2N+jPKF63wb/Su5ec
-         ryNe8avg08eQf7JEosZaiZajHcg4pKLuKiBO8iiTJljA/VnksEiTA2QWAXtz7os1lhXg
-         1xsk8KFfjwOKRT2B7HRYet8zthUo4SvF8anU4HDeBC6z02eMZDyI2OEkxNdBCMCCf3OU
-         1N9gArRPbViW9WolazE637IyxAVgkZwyeJtN34S8LnICKJr/EI8tQJF/zxuDlKRZUhiH
-         KmRRbr/J//D6uz/7DY9iJ1H+CzL3FfIGRR7ZxYTfvDJ2lvgeZekF0mmEs2T+PpNxyR4p
-         9KuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723789242; x=1724394042;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Ogp1+Rxv7VM0rQmUx3VGcb78tri0C6mlN5fRIgpwYU=;
-        b=v4j/u27LmDS81H/a6P4hMAAdS8P2dUddRJ6WxN4xArO3M2n5wA1AZvfmEVWIEQ0fAH
-         TnxiWX+08HDd/6YDtfXqAStQaoold933Coznf2P+2HeF0/SKFh/tNs/WPIVzcB253s2A
-         +Dt3PoQZR4o/KdCT1Jdmc88pp/Yidi5culRIHU/1P7haO8W4RgZOQc5H6jfES4ur7jr9
-         MiZNJLOpDDxncBu+BBTffgub3p3nYUSpmY7iuYf2ggG7KRvbnvPcVJcbZ0IW9yeFVzS7
-         v6Uosn7Lx7afyp5Qh9arghzKnt++FyvEf7PvnsGX+sl/O7Pq0KeAd9teE5o00c4R7fgp
-         SLZQ==
-X-Gm-Message-State: AOJu0YxhKCnQxrj25XP1FeDbahYxM9vl9klkB1WP8/9ss4EU3yuM77nI
-	+yDamnY7XUp6PoY9rDfLRpfDc6+U0fNsqhcJ6feYB2qtNQmaTXgoSQQ09++S24iLpuQKmd64TBk
-	Y7QogKotWyzJjfCGyFfonHNZiMYg=
-X-Google-Smtp-Source: AGHT+IEoP5zArVdbk8F4PnpozNOppBTPelHajalU/nKdcp0fdBIakd27ENzA3t6dQXyWgU/mil5SiVLzwieCVgk1QEo=
-X-Received: by 2002:a05:6902:230b:b0:e11:7578:ffbb with SMTP id
- 3f1490d57ef6-e1180fd5ae9mr2471987276.36.1723789242125; Thu, 15 Aug 2024
- 23:20:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oiQlac5I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZbviBoVP"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 30B321151B73;
+	Fri, 16 Aug 2024 03:04:54 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 16 Aug 2024 03:04:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1723791894; x=1723878294; bh=Az857i2Hlv
+	3JlCrtn4Zxo7Zc0/kCKBtkkkVMWTVeLKc=; b=oiQlac5INpfrKx+LLYbPq2KhcR
+	ftkvQqVG1ZLHZqVpm2e/cftDDhON8gaGEYYg/kfaGv+qNxCf2brs7apaEWnPgBlB
+	rayMMyLzEtljjXt+oNgWCWi5feECySvxuK9o+NgkQ3yni1iFkKvDEwMg6Ukx5JsS
+	ekQBxKEv8yQ7st2dyRq+KO1HNbv4c6CNF0Zmmt9vIjrQqixUYOt8RkS2s3BG29mw
+	CzmD5LAnPFsB/MZaIpHlHxFQBelNumrzb8D3rbszfiv7s8rRp3bMybDCm/IurBRZ
+	lyeG/yRkAHi+PjrG66La4WcvD2GcoJ32znjMUHDM7jPcXdtdRs/wdqLn1JcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1723791894; x=1723878294; bh=Az857i2Hlv3JlCrtn4Zxo7Zc0/kC
+	KBtkkkVMWTVeLKc=; b=ZbviBoVP8eZpqykfUQcic1ZON7n3t+iycjrvLokhZ9D8
+	lE+xRR66sHqzcEGdoQb3Ls9RNWtgA37jEAbYGYy3ABlXvBy8XkGfccSE6DRRx4tx
+	HT41ntPKMOYOF95SpM1XGAQuqhDNxTHhf5UhnOgzYq/r8Tt6Ocu79N1jFED3kRUb
+	IGzjHZ/8E5dLu0pxIA4pkq0sSuLIebvTLU4DpAIxH2gq8vi9rTPLXBJKrFu2agVa
+	3EHbBPNFbIs/htbPri2UUCNjYoiqSBC1N1+/KXknJZrOoKaSKLv4cI0iA6peVjSO
+	Yxyi7CLW6r/oFipqQulGU2SFEbji+3RMrGhyMfGh/g==
+X-ME-Sender: <xms:Fvq-Zp7Rfso5PfN3YPBOXe003PQWslHK8WX88eYxoJmdnj4LRf0R3w>
+    <xme:Fvq-Zm5Q8bEMG-DsYWnAZqhFT1i3gzv6-Zel0rY_KRnmFUp4pXF-S4CWKwkL65S64
+    D-AUcfkgGs1L5blSQ>
+X-ME-Received: <xmr:Fvq-ZgdryhKYtX09Sf3njb2hNdvw1FNUqn25PnDsyYBS8ofu7iXCPOtTggvRxTA8O6t4lQaRleGQo-A1b_h_ehAlHT4M6vdPf0lZ_b3vyLlFSxc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddtjedguddujecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghp
+    thhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhm
+    rdhorhhgrdhukhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpd
+    hrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthht
+    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:Fvq-ZiJIr93VJ1t9KrLVgXSceGinS2VoiFDd8-t3yypt9ufn9uMFdg>
+    <xmx:Fvq-ZtIGDBbH0wbR4rKLeJmVbkBq8awlGzfS2Pk_-3LQleQlXt0fLw>
+    <xmx:Fvq-Zrwvvhegf5HxFFMABkzuPJVwA5CDq-VIvF1FjZvX0SVQJle33A>
+    <xmx:Fvq-ZpLMynbDXxlmKDUD_Iznt5Kqf1f7FbVBKS268vzzD4oSLDtKFQ>
+    <xmx:Fvq-Zk8jFrFEftj8IZHJ_OGxtt8yYs3mGMawTISBGACD1Si5k37f8Ffj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Aug 2024 03:04:52 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 242d61ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 16 Aug 2024 07:04:29 +0000 (UTC)
+Date: Fri, 16 Aug 2024 09:04:48 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+	Edward Thomson <ethomson@edwardthomson.com>
+Subject: [PATCH v5 5/9] Makefile: make hdr-check depend on generated headers
+Message-ID: <06364b2b72202868c8fec804fd91264316e1595e.1723791831.git.ps@pks.im>
+References: <cover.1722415748.git.ps@pks.im>
+ <cover.1723791831.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
-In-Reply-To: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 15 Aug 2024 23:20:29 -0700
-Message-ID: <CABPp-BEd8LvpMMf_sT5zvYrxNVe-Q=oUX7ANQa1f27GmM4=crw@mail.gmail.com>
-Subject: Re: [PATCH] rebase -x: don't print "Executing:" msgs with --quiet
-To: Matheus Tavares <matheus.tavb@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de, 
-	Rodrigo Siqueira <siqueirajordao@riseup.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1723791831.git.ps@pks.im>
 
-On Thu, Aug 15, 2024 at 8:26=E2=80=AFPM Matheus Tavares <matheus.tavb@gmail=
-.com> wrote:
->
-> `rebase --exec` doesn't obey --quiet and end up printing a few messages
-> about the cmd being executed:
->
->   git rebase HEAD~3 --quiet --exec "printf foo >/dev/null"
->   Executing: printf foo >/dev/null
->   Executing: printf foo >/dev/null
->   Executing: printf foo >/dev/null
->
-> Let's fix that.
->
-> Suggested-by: Rodrigo Siqueira <siqueirajordao@riseup.net>
-> Signed-off-by: Matheus Tavares <matheus.tavb@gmail.com>
-> ---
->  sequencer.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 0291920f0b..d5824b41c1 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3793,12 +3793,14 @@ static int error_failed_squash(struct repository =
-*r,
->         return error_with_patch(r, commit, subject, subject_len, opts, 1,=
- 0);
->  }
->
-> -static int do_exec(struct repository *r, const char *command_line)
-> +static int do_exec(struct repository *r, const char *command_line, int q=
-uiet)
->  {
->         struct child_process cmd =3D CHILD_PROCESS_INIT;
->         int dirty, status;
->
-> -       fprintf(stderr, _("Executing: %s\n"), command_line);
-> +       if (!quiet) {
-> +               fprintf(stderr, _("Executing: %s\n"), command_line);
-> +       }
->         cmd.use_shell =3D 1;
->         strvec_push(&cmd.args, command_line);
->         strvec_push(&cmd.env, "GIT_CHERRY_PICK_HELP");
-> @@ -5013,7 +5015,7 @@ static int pick_commits(struct repository *r,
->                         if (!opts->verbose)
->                                 term_clear_line();
->                         *end_of_arg =3D '\0';
-> -                       res =3D do_exec(r, arg);
-> +                       res =3D do_exec(r, arg, opts->quiet);
->                         *end_of_arg =3D saved;
->
->                         if (res) {
-> --
-> 2.46.0
+The "hdr-check" Makefile target compiles each of our headers as a
+standalone code unit to ensure that they are not missing any type
+declarations and can be included standalone.
 
-Makes sense and looks good to me.  It's kind surprising just how many
-places we've ignored --quiet over the years...anyway, thanks for
-fixing another one of them.
+With the next commit we will wire up the clar unit testing framework,
+which will have the effect that some headers start depending on
+generated ones. While we could declare that dependency explicitly, it
+does not really feel very maintainable in the future.
+
+Instead, we do the same as in the preceding commit and have the objects
+depend on all of our generated headers. While again overly broad, it is
+easy to maintain and generating headers is not an expensive thing to do
+anyway.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 0736d3c88e..5384bf8104 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3283,7 +3283,7 @@ HCC = $(HCO:hco=hcc)
+ 	@echo '#include "git-compat-util.h"' >$@
+ 	@echo '#include "$<"' >>$@
+ 
+-$(HCO): %.hco: %.hcc FORCE
++$(HCO): %.hco: %.hcc $(GENERATED_H) FORCE
+ 	$(QUIET_HDR)$(CC) $(ALL_CFLAGS) -o /dev/null -c -xc $<
+ 
+ .PHONY: hdr-check $(HCO)
+-- 
+2.46.0.46.g406f326d27.dirty
+
