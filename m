@@ -1,119 +1,92 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE711C57A2
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 21:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DFC13D882
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 22:10:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723845306; cv=none; b=imgXnVgZF4gYLmadlQBZ2CkBbNzIgqpCcvZ89SHa/EYi4rRHtXqzuGv64WlhBOY3ILirja7aq3vO7ts84RgaAL6HBxpfytw9dL6pz9AyqBEp+Z09C3W6v6PqQVODggkFku6f8A7yefyUbq64elAPhrmj9EH8s10ASKhkttcuEjc=
+	t=1723846226; cv=none; b=exIhrqeWH397J8ljfBLjQQnX3X6O769CBTm+8VOiyLd70wmU22cq1jhOj0cbmOxHPBF5SoH0VBoBvHpJ1VMKTF/90i93Xg+Y9UorHuCk9SS8FknKfdRW0YhxiudssgvOH/SViKbvv9/XwXQghKvG5Xk1QrMCjOoDiaL/gMSxROk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723845306; c=relaxed/simple;
-	bh=i6UiiD5dOvEiIQtPXCj9rVDE60iZLtoZnI2zsbByHbM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UnykpQPcT64sRz8f+4szovl9xDMf50YfVO34Jh89K2n0JuQYTAzskXm2PNiTrnMJwIVw4jqbO2CJZpQmCNt2YCouWjGAgk23yhbN0MCgJPO94zKIWM2lQicNjp/20ahTO7Z2V26NbzZF6+1N62z5Qn0fiSmE9bAYBlmpbz1N9d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=toKphUan; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1723846226; c=relaxed/simple;
+	bh=R543t81IWW1jdoydsTOtncldvRyLlYR7dCBiruEXeD4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PJWhwxxIYLcA+ACcdbBbvCmZqw5Q7Srp5ggXThkwPM5/NeCyMQoYZskN+SSeu+TnZMJ6wfpNpQdV/M69rutdg0yHb53yx8HPQXPGCtGLzRqfJ69TdZGTAMKNp26+BC2eOROwckcK6fo35LqXDsfuf7DRdeXfywsOq4Gn8gn45iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mEfZKdvA; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="toKphUan"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1723845301;
-	bh=i6UiiD5dOvEiIQtPXCj9rVDE60iZLtoZnI2zsbByHbM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=toKphUan6KeDo3DnwhhLtBKRcxOKg6Gh4aSPQjdJYLmW2k6sdnF6u2w+rKxMNsQ4L
-	 mS0GpwkX1wbACT4nFUNaj9UFoFSYvvLXsQby2uhh/+KG5ma5a9k5rNOFLnxI7wW8cl
-	 czl1HHYjG1BudVgAOuOHW8dSrMKZYKU2WULuPSJiiiTw4YkJNCeelKZINYcIAQKkeb
-	 UEVs6jBZiSdi78JEWSs2Eaclko04HeXAozeOd30WoZHNlNvVPoeTi4xg7KqihwDOt9
-	 1rK0xEoA3w5IprjTLAMchmM2/m/udI7MShGQM5ZmG2yRRw/vM6NdkEwEWp5q9Il5y8
-	 zZmhBeYqinp09Zw1qmUHr4TN+vqpEYHlbjevG2KbT4TdGMINfi41xtvd6KCYD9kH7X
-	 i3p4HMW2d3MMkLvaS3RBQw0ZHml30JzleivPCrMiwtu30ZkSv+k+DEAb2qh42j2rBi
-	 CZp81OXEVonvfTvcL+R2/nnWDeJ4LppmcPN0igXOMTf8KnxW3UN
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mEfZKdvA"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E1FF2CBA2;
+	Fri, 16 Aug 2024 18:10:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=R543t81IWW1jdoydsTOtncldvRyLlYR7dCBiru
+	EXeD4=; b=mEfZKdvAJVZmxaFd/Lv0Q3AupghJkFgwLdR2fmj/4ils6OjVjSVHLr
+	mRKhYfoT6vDpoDq94fAB3lNDnlGmDWLkaKHkSfdgantkX1XSp9y+3I5Amy3XSLZm
+	qkLaFV84GbomDbxcFZe7iz84upDP6jBjlvIv7XDfA9MAjnOQL6lhQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 771832CBA1;
+	Fri, 16 Aug 2024 18:10:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EB37E209C8;
-	Fri, 16 Aug 2024 21:55:01 +0000 (UTC)
-Date: Fri, 16 Aug 2024 21:55:00 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBBA82CBA0;
+	Fri, 16 Aug 2024 18:10:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Bence Ferdinandy <bence@ferdinandy.com>,  git@vger.kernel.org
 Subject: Re: feature request: set remote/HEAD with fetch
-Message-ID: <Zr_KtAXQuFwEmFfI@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
+In-Reply-To: <Zr_KtAXQuFwEmFfI@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 16 Aug 2024 21:55:00 +0000")
 References: <D3HBD7C1FR14.74FL1Q1S9UCB@ferdinandy.com>
+	<Zr_KtAXQuFwEmFfI@tapette.crustytoothpaste.net>
+Date: Fri, 16 Aug 2024 15:10:21 -0700
+Message-ID: <xmqqplq8jf02.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jnRfKk364fqsL34d"
-Content-Disposition: inline
-In-Reply-To: <D3HBD7C1FR14.74FL1Q1S9UCB@ferdinandy.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5525B69C-5C1C-11EF-AF57-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+>> My current workaround is an alias:
+>>     fetchall = !git fetch --all && git remote | xargs -i git remote set-head -a {}
+>> 
+>> which works for me, but I think it would be more elegant not to have to do this.
+>
+> I believe this would be a valuable change.  I know a lot of other users
+> want this features as well.  However, I think it needs to be opt-in,
+> since there are some cases where you want `git fetch` to specifically
+> fetch only certain objects or don't want to modify the refs. For
+> example, I know some server-side implementations use `git fetch`
+> internally and require refs to be updated in a special way, and they
+> would not appreciate extra refs appearing.
+
+Yeah, "remote set-head" implementation internally uses the same
+"what's the current state of the refs on the other side?" query as
+what "fetch" does when it contacts the other side, so it makes sense
+for a new feature "git fetch --set-head ..." to internally do what
+is done by "remote set-head".
+
+What should *not* happen automatically without an opt-in is to
+overwrite an existing refs/remotes/$remote/HEAD with a new value.
+It might even make sense to allow it to happen, even if the
+"--set-head" option is not given from the command line, if
+"refs/remotes/$remote/HEAD" does not exist.
+
+Thanks.
 
 
---jnRfKk364fqsL34d
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2024-08-16 at 11:53:31, Bence Ferdinandy wrote:
-> Hi,
->=20
-> this comes after a bit of discussion on #git. The current behaviour of gi=
-t is
-> that when cloning, `refs/remotes/[remote]/HEAD` is set, but if you use `g=
-it
-> init` and `git remote add`, then you must manually run `git remote set-he=
-ad -a`
-> to arrive at the same state. Having origin/HEAD set is pretty useful for
-> scripting and aliases, because you don't need to remember what the current
-> project uses (origin/[master|main|trunk|etc]).
->=20
-> I would propose that running `git fetch` should also update remote/HEAD. =
-In
-> case there is a possibility that it is useful in some cases that remote/H=
-EAD is
-> actually different from whatever is set in the remote repository as the d=
-efault
-> branch, I think a setting for opt-out would be better, and the default
-> behaviour should be essentially always running `set-head -a`.
->=20
-> My current workaround is an alias:
->     fetchall =3D !git fetch --all && git remote | xargs -i git remote set=
--head -a {}
->=20
-> which works for me, but I think it would be more elegant not to have to d=
-o this.
 
-I believe this would be a valuable change.  I know a lot of other users
-want this features as well.  However, I think it needs to be opt-in,
-since there are some cases where you want `git fetch` to specifically
-fetch only certain objects or don't want to modify the refs. For
-example, I know some server-side implementations use `git fetch`
-internally and require refs to be updated in a special way, and they
-would not appreciate extra refs appearing.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
 
---jnRfKk364fqsL34d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZr/KswAKCRB8DEliiIei
-gVDFAQCUc9v+H4TmItlxnvJ7444kK5KqiKtOH5A6crRylk3ZCgD9GuzAIH7uy0iI
-vJITJ1KQHz6tXJpVrItXvqgNdnuPSQs=
-=pLmK
------END PGP SIGNATURE-----
-
---jnRfKk364fqsL34d--
