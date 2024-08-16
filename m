@@ -1,56 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F41B1BE238
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 16:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EB91BDA87
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 17:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723826550; cv=none; b=qdpG6DtXemVUXGTqjP2QNEFJje8JRbaRdw/GTY7r4Bqq7SFXws08NkwOkfiYUyo3751zV/e7o8x2dYcYMmNSWgUQ2dK77uUzJuJdUNjTPO53xkp22HwYuHv1ppFbQL3zlTNrgAHmHXNrenTNPwPuNaRXpxDj6JchJp/SZAHfDiI=
+	t=1723828393; cv=none; b=hle0U2M2ey3cEFrxIsskYAUcTvFwkHkoIlyHseheTigG0BQv7NY8N4g1RC5/1h9XFST2qf6R3hC5MzN31SeJa0i3Wd3MY7Xxo8gtwtfqe70sOOE3uHeAXw2TIsOtjO4t0+d0Rtra8ow8zwOBVAba9SBEJ+R/1/IFQ0Oy4E+MpEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723826550; c=relaxed/simple;
-	bh=fIAg+ML/HJe5yZ+QLtqNe7HcaqZanRSp+GmpOs8nMk8=;
+	s=arc-20240116; t=1723828393; c=relaxed/simple;
+	bh=30JQ/Szj857dbFjpiCJr972c5dk410q7d71zH4xrGHA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q0ALwRX/i0Sccp7WvVqrBkaXkM7LBhjFzSBmD79ocw7cEprawl5dpWpvfWR3jVALz71Uw14RIwk2f7+7zh4I630JPdP1BIWwg002HN9n+0o9WZ0Ep8WcpZ1wudy8I7kaGudpe3F/DWF3IKLKVs2E9Ne+eXIKZjzG8p7JRsKmaAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xtQz75Ow; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=r4aWYLPnyUfC8SBEYRZQk93ehoP2Dz+4gK9zoxIdrTZeshYZvtbOImi+YrcHV9lFHOuRoqDmkaTl21ARulGY76mndGKKg+L3LHhZ3SkzEH8umD50uSJro4oWPtg8x7X/L5jUDA+V7KRy+iVdtWvowqFdpJvf56Xwj0O6Jt6O1f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NY4YGMWx; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xtQz75Ow"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EEFC62DFB4;
-	Fri, 16 Aug 2024 12:42:27 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NY4YGMWx"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E3D442A5CB;
+	Fri, 16 Aug 2024 13:13:10 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fIAg+ML/HJe5yZ+QLtqNe7HcaqZanRSp+GmpOs
-	8nMk8=; b=xtQz75Ow5qXNDOSoEO2Klry5cb6hRfx/nesqOBoqWQBSjB3gml+6A9
-	wLqmPFm5rlh8JGRys+DKuJ/pTB3QeJjp708gaDsl0W5YVO2i5qqyt+ak9YbUfUu/
-	NkvZLOmHN7owRQV7E+KV69+iCoH36PKbjJBG6I6U/f1B0fQFpip08=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E699C2DFB3;
-	Fri, 16 Aug 2024 12:42:27 -0400 (EDT)
+	:content-type; s=sasl; bh=30JQ/Szj857dbFjpiCJr972c5dk410q7d71zH4
+	xrGHA=; b=NY4YGMWxC48H/71fhXvB/Q+HvCtGfo9+StQg907S4Zj0mjmjNR9vOw
+	IDoKogJRDCXZ8PR2yGe7DLdiXSRTis5QFAbvuw1Oa/N9I1PMmLBVtIj/frfY+1bz
+	9etrGfr/C9dxd8vEvzGUIDTxQQjKpaVF00L85CDkgiTlSAnjuXhOI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB27C2A5CA;
+	Fri, 16 Aug 2024 13:13:10 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5BBEE2DFB2;
-	Fri, 16 Aug 2024 12:42:27 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 264222A5C9;
+	Fri, 16 Aug 2024 13:13:10 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: avih <avihpit@yahoo.com>
-Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>,  "brian m. carlson"
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Sebastian Schuberth <sschuberth@gmail.com>,
+  Justin Tobler <jltobler@gmail.com>,  "brian m. carlson"
  <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 4/8] git-prompt: replace [[...]] with standard code
-In-Reply-To: <1371885213.4494853.1723804592269@mail.yahoo.com> (avih's message
-	of "Fri, 16 Aug 2024 10:36:32 +0000 (UTC)")
-References: <pull.1750.git.git.1721762306.gitgitgadget@gmail.com>
-	<pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
-	<232340902a1feeafe526528eb88b8d0814d11545.1723727653.git.gitgitgadget@gmail.com>
-	<xmqqsev5u4yr.fsf@gitster.g>
-	<1371885213.4494853.1723804592269@mail.yahoo.com>
-Date: Fri, 16 Aug 2024 09:42:26 -0700
-Message-ID: <xmqqttfkl8r1.fsf@gitster.g>
+Subject: Re: [PATCH v2 4/5] setup: make object format configurable via config
+In-Reply-To: <85086620628b1fa136ebf7a1c9e2f64ebdbc7b92.1723798388.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 16 Aug 2024 10:57:03 +0200")
+References: <cover.1723708417.git.ps@pks.im> <cover.1723798388.git.ps@pks.im>
+	<85086620628b1fa136ebf7a1c9e2f64ebdbc7b92.1723798388.git.ps@pks.im>
+Date: Fri, 16 Aug 2024 10:13:07 -0700
+Message-ID: <xmqqed6ol7bw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,22 +57,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 859F2E80-5BEE-11EF-9597-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ D003AA24-5BF2-11EF-A2CC-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-avih <avihpit@yahoo.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> FWIW, the common form in this file was "[" (46 instances),
-> then "[[" (13 instances), and finally "test" (3 instances).
+> The precedence order now is the following, where the first one wins:
+>
+>   1. The `--object-format=` switch.
+>
+>   2. The `GIT_DEFAULT_HASH` environment variable.
+>
+>   3. The `init.defaultObjectFormat` config variable.
+>
+> This matches the typical precedence order we use in Git. We typically
+> let the environment override the config such that the latter can easily
+> be overridden on an ephemeral basis, for example by scripts.
 
-Yes, that came from the fact that this file has historically been
-considered bash-only and our Bourne shell coding guidelines do not
-apply.  
+Thanks for documenting this, as the reason for deciding the
+precedence between environment and configuration is no longer as
+strong as it used to be.
 
-> So I'd still think changing "[[" forms into "[" is the better choice
-> for this file in a compatibility-focused change, as it leaves the
-> file in a mostly consistent usage of "[" throughout.
+Before the "git -c var=val" happened, the only sensible preference
+order was to allow environment to override a configured default by
+doing "VAR=val git cmd ...".  In other words, the order used to be
+something you could safely forget and still infer the right order
+with logic alone.
 
-Absolutely.  We are in agreement (I said this is a good first step).
-I do think making it more consistent after the dust settles (read:
-not before the series graduates to 'master') would be a good idea,
-though.
+But with "git -c var=val", even if a hypothetical Git allowed
+configuration to override environment, a user could still override
+them with "-c var=val", so "environment trumps configuration" is no
+longer "because there is no sensible workaround if it were the other
+way around", but merely "because that used to be the only logical
+way".
+
