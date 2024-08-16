@@ -1,51 +1,51 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5881D1422BF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FC4145A1B
 	for <git@vger.kernel.org>; Fri, 16 Aug 2024 23:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723849598; cv=none; b=mbNxcv81V5Sxv7OHHeSWhlR6Qag17nH9gDNl39dRNKhWY3F1zRX7VUWjfuWvc3Pet9FqZlHlDcffUtlPKDiyPPsYliE2fmCpJKowulFEvHUDGyS3bZzBOkAFT4P/SgFasUukZ7ylXiMprvccBKe8qOrECHWw8r4bRLGUjSi6DU8=
+	t=1723849599; cv=none; b=JFgvgoGhkNgW0VCqVHFR+SSrhxqAbe+Pa/wdkTGe4nIGtf+sMzQ891aHu1K6OD4KXqj+z/hRV+Y1uSf4lyzDuB/witEgWXCzIDLVrxc1g1uW7x7w5h5w/0nKsVw3SWpvcd8tzREo+1MjJCtVE7qDCiPR7ulQc1X2csKYnCq1chs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723849598; c=relaxed/simple;
-	bh=BUU0oJI0AVfRA/1j4RQw+Ddfh8nKDl2XyzpvWu89VnE=;
+	s=arc-20240116; t=1723849599; c=relaxed/simple;
+	bh=VRn3fcP2JnAJiLx0QLB92MrJ2qRsX+Sl4hfItY/hMUI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To; b=GqFIETahBT2KQAwUIXkP6aQrEYmYhfIjnFZ9eGITNWRVyC+DfpM4ftD4Hs5I5kZynuSBMz/5rfMWcBcPuVgMmyu8ehdu0kGus+FLWejZfGX86HoHL4PL03xqKOt1OXgaIXUhn6YWSn467qkGv227sQkjynGH1uOh58ANOt8d0t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OEV5yBWz; arc=none smtp.client-ip=192.198.163.10
+	 In-Reply-To:To; b=q+Uuaqvow3rQHnJO2hjbs72IE6thMhPSsjQ9PKGAGEhMnWS1Ie5W7/geGR19BpHKL5N4i7VKquHCxaTYbxndg7nS0/XwdRvQy5kvLaPhA97YN+Jmomc7041DW3qzCykUfDt15sESEwzxkoxw0w5YIe+JKnKNUab7x1N6jjEf1s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HTNSDsl+; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OEV5yBWz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HTNSDsl+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723849596; x=1755385596;
+  t=1723849597; x=1755385597;
   h=from:date:subject:mime-version:content-transfer-encoding:
    message-id:references:in-reply-to:to;
-  bh=BUU0oJI0AVfRA/1j4RQw+Ddfh8nKDl2XyzpvWu89VnE=;
-  b=OEV5yBWzZOylqoa1v/UeEdcAaVwA1lsK3Q884swu3sYZ5Tt40nSeYKqa
-   QypPgF7vE1E/nYDYK7fQXEo0eWAkqPKFjPvMYexp4pLN8C6Jp3pyIoR8I
-   B4DSFooY3wQyw7stcFDi8/wh2Vim56NTH5KRfIZz90563JG/vghORQS5o
-   38hBQlOri80TFX/ewQLkSUJUPgciAPd9cHyNvZWKJTq1E2nH7UvaPFYPS
-   JH76kvGa4yaEvfbgBk39KKafgbq3tznKFJD73a7JI3+6qJSO4GeCQeRwe
-   PcYL/hREUM0NxaBXA2qedl2gy5M3Rf7QNeS7vJT/W2OCLlp67P4NsTsuR
-   Q==;
-X-CSE-ConnectionGUID: FMp2lL3wQDmghA8q7AEdcQ==
-X-CSE-MsgGUID: JiahqV2cRD+hueGIetUGbQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="33571620"
+  bh=VRn3fcP2JnAJiLx0QLB92MrJ2qRsX+Sl4hfItY/hMUI=;
+  b=HTNSDsl+RaEuZoWL/P5Eol2wg1bwUalsxQGqyPtAd0UFVwyjZSAk98Vc
+   pCy/KwVsRGYNujiE/LzaGQiHbEnDIBtFBWYZXPzenQnZpmuW5+76vxh49
+   THlKwoYqVsD2KalzfaMTq3e5YpcxuEXLqIJU4Iz5/snCNciWHh5YNBF7C
+   yoibnH/+Ta7rOrpZ4wpoLw8lFzCNHhtRcPS3pPlF+hP1tu0T9r3UzqO6v
+   sT2Visjn+6ULnpYUMp54J5mLloTO22CxZ9OxKqkMJJbtEwShbe6ARLCBS
+   WY8qRevLoO7QbefkDACWOD6ecfvJpYZ7+7KA5/YUQnPBxAUQutvvROWOV
+   g==;
+X-CSE-ConnectionGUID: 346LFP+iTuWQbw+BQaMcQg==
+X-CSE-MsgGUID: 8dQva0Q1R5aXsO7/+5c4Lg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="33571625"
 X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
-   d="scan'208";a="33571620"
+   d="scan'208";a="33571625"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
   by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:06:33 -0700
-X-CSE-ConnectionGUID: wuIOOGhTSzaKEaEl/5aCjA==
-X-CSE-MsgGUID: q9iycPYtSZe1COFw1R3NRw==
+X-CSE-ConnectionGUID: uvWDA6ZgQxmEtCWUntANpQ==
+X-CSE-MsgGUID: pMzC6sBNSTCCkZ62igGw5A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.10,153,1719903600"; 
-   d="scan'208";a="64704681"
+   d="scan'208";a="64704682"
 Received: from jekeller-desk.amr.corp.intel.com (HELO localhost.localdomain) ([10.166.241.1])
   by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 16:06:33 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Fri, 16 Aug 2024 16:06:23 -0700
-Subject: [PATCH 1/2] check-mailmap: add --no-brackets mode
+Date: Fri, 16 Aug 2024 16:06:24 -0700
+Subject: [PATCH 2/2] send-email: add support for --mailmap
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240816-jk-send-email-mailmap-support-v1-1-68ca5b4a6078@gmail.com>
+Message-Id: <20240816-jk-send-email-mailmap-support-v1-2-68ca5b4a6078@gmail.com>
 References: <20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com>
 In-Reply-To: <20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com>
 To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
@@ -63,193 +63,154 @@ X-Mailer: b4 0.14.0
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-The git check-mailmap command can be used to convert identities to their
-canonical real name and email address. Currently, if a simple email
-address is provided without surrounding angle brackets, git
-check-mailmap will fail:
+In certain cases, a user may be generating a patch for an old commit
+which now has an out-of-date author or other identity. For example,
+consider a team member who contributes to an internal fork of a project,
+and then later leaves the company.
 
-  $ git check-mailmap test@example.com
-  fatal: unable to parse contact: test@example.com
+It may be desired to submit this change upstream, but the author
+identity now points to an invalid email address which will bounce. This
+is likely to annoy users who respond to the email on the public mailing
+list.
 
-This is generally fine since identifies are expected to be of the form
-"name <email@domain>". However, requiring brackets around simple email
-addresses can make it difficult to support mailmap operation in other
-environments where angle brackets may be missing.
+This can be manually corrected, but requires a bit of effort, as it may
+require --suppress-cc or otherwise formatting a patch separately and
+manually removing any unintended email addresses.
 
-Specifically, attempting to support the mailmap within git send-email is
-tricky, since angle brackets are not always provided for addresses.
+Git already has support for the mailmap, which allows mapping addresses
+for old commits to new canonical names and addresses.
 
-Teach check-mailmap a new '--no-brackets' mode. In this mode, any
-contact line which cannot be interpreted by split_ident_line is treated
-as a simple address without a name. In addition, when any contact does
-not have a name, output the mail address without the angle brackets.
-Note that angle brackets are accepted if they are present, however the
-output will strip them.
+Teach git send-email the --mailmap option. When supplied, use git
+check-mailmap (with the --no-brackets mode) as a final stage when
+processing address lists. This will convert all addresses to their
+canonical name and email according to the mailmap file.
 
-This mode will be useful for git send-email in a following feature
-implementation to enable mapping any email addresses to their canonical
-value.
+A mailmap file can then be configured to point the invalid addresses
+either to their current canonical email (if they still participate in
+the open source project), or possibly to new owner within the company.
+
+This enables the sender to avoid accidentally listing an invalid address
+when sending such a change.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- builtin/check-mailmap.c             | 27 ++++++++++++-----
- Documentation/git-check-mailmap.txt |  8 ++++-
- t/t4203-mailmap.sh                  | 60 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 86 insertions(+), 9 deletions(-)
+ git-send-email.perl   | 14 ++++++++++++++
+ t/t9001-send-email.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+)
 
-diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
-index b8a05b8e07b5..7c8cde370b97 100644
---- a/builtin/check-mailmap.c
-+++ b/builtin/check-mailmap.c
-@@ -9,6 +9,7 @@
- #include "write-or-die.h"
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 72044e5ef3a8..9a081e9f9b41 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -46,6 +46,8 @@ sub usage {
+     --compose-encoding      <str>  * Encoding to assume for introduction.
+     --8bit-encoding         <str>  * Encoding to assume 8bit mails if undeclared
+     --transfer-encoding     <str>  * Transfer encoding to use (quoted-printable, 8bit, base64)
++    --[no-]mailmap                 * Use mailmap file to map all email addresses to canonical
++                                     real names and email addresses.
  
- static int use_stdin;
-+static int no_brackets;
- static const char * const check_mailmap_usage[] = {
- N_("git check-mailmap [<options>] <contact>..."),
- NULL
-@@ -16,6 +17,7 @@ NULL
+   Sending:
+     --envelope-sender       <str>  * Email envelope sender.
+@@ -278,6 +280,7 @@ sub do_edit {
+ my $chain_reply_to = 0;
+ my $use_xmailer = 1;
+ my $validate = 1;
++my $mailmap = 0;
+ my $target_xfer_encoding = 'auto';
+ my $forbid_sendmail_variables = 1;
  
- static const struct option check_mailmap_options[] = {
- 	OPT_BOOL(0, "stdin", &use_stdin, N_("also read contacts from stdin")),
-+	OPT_BOOL(0, "no-brackets", &no_brackets, N_("do not require or output brackets for nameless email addresses")),
- 	OPT_END()
- };
+@@ -524,6 +527,8 @@ sub config_regexp {
+ 		    "thread!" => \$thread,
+ 		    "validate!" => \$validate,
+ 		    "transfer-encoding=s" => \$target_xfer_encoding,
++		    "mailmap!" => \$mailmap,
++		    "use-mailmap!" => \$mailmap,
+ 		    "format-patch!" => \$format_patch,
+ 		    "8bit-encoding=s" => \$auto_8bit_encoding,
+ 		    "compose-encoding=s" => \$compose_encoding,
+@@ -1085,6 +1090,14 @@ sub expand_one_alias {
+ our ($message_id, %mail, $subject, $in_reply_to, $references, $message,
+ 	$needs_confirm, $message_num, $ask_default);
  
-@@ -25,19 +27,28 @@ static void check_mailmap(struct string_list *mailmap, const char *contact)
- 	size_t namelen, maillen;
- 	struct ident_split ident;
- 
--	if (split_ident_line(&ident, contact, strlen(contact)))
-+	if (!split_ident_line(&ident, contact, strlen(contact))) {
-+		name = ident.name_begin;
-+		namelen = ident.name_end - ident.name_begin;
-+		mail = ident.mail_begin;
-+		maillen = ident.mail_end - ident.mail_begin;
-+	} else if (no_brackets) {
-+		name = contact;
-+		namelen = 0;
-+		mail = contact;
-+		maillen = strlen(contact);
-+	} else {
- 		die(_("unable to parse contact: %s"), contact);
--
--	name = ident.name_begin;
--	namelen = ident.name_end - ident.name_begin;
--	mail = ident.mail_begin;
--	maillen = ident.mail_end - ident.mail_begin;
++sub mailmap_address_list {
++	my @addr_list = @_;
++	if ($mailmap and @addr_list) {
++		@addr_list = Git::command('check-mailmap', '--no-brackets', @_);
 +	}
- 
- 	map_user(mailmap, &mail, &maillen, &name, &namelen);
- 
- 	if (namelen)
--		printf("%.*s ", (int)namelen, name);
--	printf("<%.*s>\n", (int)maillen, mail);
-+		printf("%.*s <%.*s>\n", (int)namelen, name, (int)maillen, mail);
-+	else if (no_brackets)
-+		printf("%.*s\n", (int)maillen, mail);
-+	else
-+		printf("<%.*s>\n", (int)maillen, mail);
++	return @addr_list;
++}
++
+ sub extract_valid_address {
+ 	my $address = shift;
+ 	my $local_part_regexp = qr/[^<>"\s@]+/;
+@@ -1294,6 +1307,7 @@ sub process_address_list {
+ 	@addr_list = expand_aliases(@addr_list);
+ 	@addr_list = sanitize_address_list(@addr_list);
+ 	@addr_list = validate_address_list(@addr_list);
++	@addr_list = mailmap_address_list(@addr_list);
+ 	return @addr_list;
  }
  
- int cmd_check_mailmap(int argc, const char **argv, const char *prefix)
-diff --git a/Documentation/git-check-mailmap.txt b/Documentation/git-check-mailmap.txt
-index 02f441832321..30f44391a9dd 100644
---- a/Documentation/git-check-mailmap.txt
-+++ b/Documentation/git-check-mailmap.txt
-@@ -27,13 +27,19 @@ OPTIONS
- 	Read contacts, one per line, from the standard input after exhausting
- 	contacts provided on the command-line.
- 
-+--no-brackets::
-+	Do not require ``<`` and ``>`` angle brackets when interpreting
-+	contacts without a name. Additionally, do not output brackets when
-+	outputting an email without a name.
-+
- 
- OUTPUT
- ------
- 
- For each contact, a single line is output, terminated by a newline.  If the
- name is provided or known to the 'mailmap', ``Name $$<user@host>$$'' is
--printed; otherwise only ``$$<user@host>$$'' is printed.
-+printed; otherwise only ``$$<user@host>$$'' is printed. If ``--no-brackets``
-+is specified, output only ``<user@host>`` for contacts without a name.
- 
- 
- CONFIGURATION
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 79e5f42760d9..83f012b34ab1 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -80,6 +80,66 @@ test_expect_success 'check-mailmap bogus contact --stdin' '
- 	test_must_fail git check-mailmap --stdin bogus </dev/null
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 64a4ab3736ef..185697d22563 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2379,6 +2379,55 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+ 	test_cmp expected-list actual-list
  '
  
-+test_expect_success 'check-mailmap --no-brackets simple address: no mapping' '
-+	cat >expect <<-EOF &&
-+		bugs@company.xy
++test_expect_success $PREREQ 'mailmap support with --to' '
++	clean_fake_sendmail &&
++	test_config mailmap.file "mailmap.test" &&
++	cat >mailmap.test <<-EOF &&
++	Some Body <someone@example.com> <someone@example.org>
 +	EOF
-+	git check-mailmap --no-brackets bugs@company.xy >actual &&
-+	test_cmp expect actual
++	git format-patch --stdout -1 >a.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--to=someone@example.org \
++		--mailmap \
++		a.patch \
++		2>errors >out &&
++	grep "^!someone@example\.com!$" commandline1
 +'
 +
-+test_expect_success 'check-mailmap --no-brackets address with brackets: no mapping' '
-+	cat >expect <<-EOF &&
-+		bugs@company.xy
++test_expect_success $PREREQ 'mailmap support in To header' '
++	clean_fake_sendmail &&
++	test_config mailmap.file "mailmap.test" &&
++	cat >mailmap.test <<-EOF &&
++	<someone@example.com> <someone@example.org>
 +	EOF
-+	git check-mailmap --no-brackets "<bugs@company.xy>" >actual &&
-+	test_cmp expect actual
++	git format-patch --stdout -1 --to=someone@example.org >a.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--mailmap \
++		a.patch \
++		2>errors >out &&
++	grep "^!someone@example\.com!$" commandline1
 +'
 +
-+test_expect_success 'check-mailmap --no-brackets simple address: mapping' '
-+	cat >.mailmap <<-EOF &&
-+		New Name <bugs@company.xy>
++test_expect_success $PREREQ 'mailmap support in Cc header' '
++	clean_fake_sendmail &&
++	test_config mailmap.file "mailmap.test" &&
++	cat >mailmap.test <<-EOF &&
++	<someone@example.com> <someone@example.org>
 +	EOF
-+	cat >expect <<-EOF &&
-+		New Name <bugs@company.xy>
-+	EOF
-+	git check-mailmap --no-brackets bugs@company.xy >actual &&
-+	test_cmp expect actual
++	git format-patch --stdout -1 --cc=someone@example.org >a.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--mailmap \
++		a.patch \
++		2>errors >out &&
++	grep "^!someone@example\.com!$" commandline1
 +'
 +
-+test_expect_success 'check-mailmap --stdin --no-brackets simple address: mapping' '
-+	cat >.mailmap <<-EOF &&
-+		New Name <bugs@company.xy>
-+	EOF
-+	cat >stdin <<-EOF &&
-+		bugs@company.xy
-+	EOF
-+	cat >expect <<-EOF &&
-+		New Name <bugs@company.xy>
-+	EOF
-+	git check-mailmap --stdin --no-brackets <stdin >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check-mailmap --no-brackets simple address: mapping, no name' '
-+	cat >.mailmap <<-EOF &&
-+		<bugs@company.xz> <bugs@company.xy>
-+	EOF
-+	cat >expect <<-EOF &&
-+		bugs@company.xz
-+	EOF
-+	git check-mailmap --no-brackets bugs@company.xy >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check-mailmap --no-brackets bogus address' '
-+	cat >expect <<-EOF &&
-+		bogus
-+	EOF
-+	git check-mailmap --no-brackets bogus >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'No mailmap' '
- 	cat >expect <<-EOF &&
- 	$GIT_AUTHOR_NAME (1):
+ test_expect_success $PREREQ 'test using command name with --sendmail-cmd' '
+ 	clean_fake_sendmail &&
+ 	PATH="$PWD:$PATH" \
 
 -- 
 2.46.0.124.g2dc1a81c8933
