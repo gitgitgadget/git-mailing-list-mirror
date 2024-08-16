@@ -1,185 +1,99 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B7719FA91
-	for <git@vger.kernel.org>; Fri, 16 Aug 2024 13:38:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467D01BD039
+	for <git@vger.kernel.org>; Fri, 16 Aug 2024 14:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723815515; cv=none; b=un3gfjwIZUPRSGwfgJ3dBllE43dqqkzmeMjZuuEVPPR7VpYqO1+ipVasEHjySgPusMxf6EVYAP2sFRf7bXU8S9ydW/9cn2RniCA8kY2m6AXqjpp6jDMmpP2lAnApVOlaXYpW+yUIshmP56AME5RkFOUTIQYELeiXMM3CVKBvmsY=
+	t=1723819648; cv=none; b=dMPc+SHjxUEbf260uAHnMnWFxNO/pa0cyv+GsT31lkw8aP8T+uDD5j/RErQ8EdVuD2Dck8KaQBV+jMztyKCvoo1FKW8bm++hcIEJmaCv5qHNu74WK6fxw4sTsFZqM2K3YOAONro32oEXoJBlflbP9deAc5SUjVCPmUqLLHFu25I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723815515; c=relaxed/simple;
-	bh=HeUHMyFeVZ+4mhlA/7YuRmFeiv+Oc1yZp4pprTbSzuo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q9ran/qfswgsgBOrqMeyDux1QHGuQOksJrX2X29Z3bBHZtE8jmFwahmP+ZbGxR1wZfnvxZWD0PTgfwDlxVCRycP0uDYT8mAIywG+MdxI65YiaHGaP/70JY4XUGIybCBhhY65Fblsfdj39zTY4/JuWxZ+6BG5piRT53ZDMIYPbxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSv80ikG; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1723819648; c=relaxed/simple;
+	bh=gacvfys0pJqpV5OWAXC+Hs93lOyg2dlfq589MgGJic4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mzn/BOboNGqEw9Unx9YRS49KEgRozsRDhesx+aO/L9Iu/Hr3SzJoCj58Gt5S7dEQA4uO8Gub43Ygbo8JJRVFGkIfU7R9uRMrjTG5LAFclhnwenbuawuprOox+e8V7M/a/AXAUqf8hyq+TOaaCMnCs31K9DeTbMNmgqfQ5Q+nYlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xo8sSY3i; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSv80ikG"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-428e3129851so14676465e9.3
-        for <git@vger.kernel.org>; Fri, 16 Aug 2024 06:38:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xo8sSY3i"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3db35ec5688so1174691b6e.3
+        for <git@vger.kernel.org>; Fri, 16 Aug 2024 07:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723815512; x=1724420312; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NAxG8ZM0gbGY9wZuHHxusym+2nogGeHD0Oo6mnJD3Lg=;
-        b=bSv80ikGWJvhA5l9fsi+SLc/sysjvNQ7CEao8iTikh59oRsLps2DrbgLcoaq0vnq7W
-         jBUV+g3PSwZc1D4IVVqwWCzTMtFZ1r0MKyPrKxB9xZogbwskxb0GZ6ESPF71ckxPHAJP
-         yUOnpS5vPfvyV8Y8u+P9bsEbFRL9eR/jQZ378kSbQnbykqIm/szLnH47nY0JtwlhaCPG
-         9SU26Z9rVlDPHpWtag2+0/wa8v4BkAe5E745xQ/KrEqKcVs1PWmxHGhcq+cq2H4Ds/bs
-         GiV3pgrxTZAGOhtVnVfxxMBbh5rXd9+GdjgntFOa/xWZGOC2cWE6yKzsh/XRBG83f2qn
-         cr2g==
+        d=gmail.com; s=20230601; t=1723819646; x=1724424446; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2u2bJP7K92Q1Athx7abMYptTfxiyjHaMcQe0cM6gDI=;
+        b=Xo8sSY3iD1YlxV4DC2ccRek3m9w9riTEExVCjGAzizxDXKgRQXnxqVk3RdGc1WxYyR
+         PbQlu3boRYfKEHOGpFpWrVeV2hPuAC1j5cfWVlomNqyBQMyWpMY7wA6Sv9IRKln0wzFP
+         S5Fa62yXF/bQdobzviCSRbX2pdbFujKmaTT4RfYDHO+VPZekRJyr4zqOt7dtzfewFNs7
+         VtnYpPMZDTbsq3yYOR0ps4F6+a54fetcDLXPTgJ0qQGRGLDF1n5foGVCudYRulUTBZrQ
+         PtIKF2Lr4wk4XkR485TXApWgJMRiXPr0jdNQoqWq+ay8DrXbtcInXlmfvqs9p+jl/uVR
+         xDKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723815512; x=1724420312;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NAxG8ZM0gbGY9wZuHHxusym+2nogGeHD0Oo6mnJD3Lg=;
-        b=TMOrigTOCNJrMVoORyTkqHh1IjoBZAd6qLgDDKYYQwagA0Oy88rNYh2DDUTpTlhuvp
-         1K/e33Re6OcqoOLRczgXxagygoJ6+MO9Uj8xuYV/zbLUa7WEhi6kxuAHcB2COIhp1SeF
-         TLmlrzp41SdcNcPMqbXildFhOG8NsIkw9QQjz6cux3U/spNPt0r8Q8C+DQxKbU7ynFWi
-         YrYrRaqt+BaujgUPYikW3YQwH+JDiHZnj0IsaiRGzZVezO4f4//KKSb1tdTsMMtAnBw0
-         dHa+rQVVcQgE30sZse1WDE3oHagEWoFgZbqrKoHYgd71CUI88v7Cz2yNMBuwzgdXaHmg
-         CuVw==
-X-Forwarded-Encrypted: i=1; AJvYcCXezzUPe4f5hthStboxAvOBF0yWVcf2Oj7UgPifAt7kskHBCNF6N69G8fzAgXB4mlbmpQzdXpReYPJR8JsiOY0Qor4n
-X-Gm-Message-State: AOJu0Yz5mJjkti8qn1Jay6Ep1Rdwykje7xmOvrap2V6DHLqJ8hUzKxL2
-	hjuVQCnfqPPJbZ3VWFvIg6YgeLZ2QBLYy4XmBQ2p3ghdUmqv7RIW/uNWWQ==
-X-Google-Smtp-Source: AGHT+IH2PQFH39LId3Z4AF+ZXj7c7fP0VUVUoCtVilCc17KexilYBNrzljWdTchY16xUoO9srLulVA==
-X-Received: by 2002:a05:600c:138f:b0:428:2502:75b5 with SMTP id 5b1f17b1804b1-429ed7ba9c0mr18896755e9.11.1723815511306;
-        Fri, 16 Aug 2024 06:38:31 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69b:eb01:545f:b423:671d:5e99? ([2a0a:ef40:69b:eb01:545f:b423:671d:5e99])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ed650735sm23005115e9.12.2024.08.16.06.38.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Aug 2024 06:38:31 -0700 (PDT)
-Message-ID: <4aa6f557-1dfc-4aaa-b6db-e47013568ecc@gmail.com>
-Date: Fri, 16 Aug 2024 14:38:30 +0100
+        d=1e100.net; s=20230601; t=1723819646; x=1724424446;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O2u2bJP7K92Q1Athx7abMYptTfxiyjHaMcQe0cM6gDI=;
+        b=XSZfPwuAPTmjWBBSRbpW0/6+ECZjuHdBvzOcWzx6wyv2YFy81Lrk8sL2BT6AYGcM21
+         ipnqZYdc57r4qF93skGA5LB8JvAUVnBvb5om3ekRFK0b3SXGAF64YZ6eE7QKsPAOGP2x
+         CzhMhfyPDULnIyaF8ATPF0Q+kuYarIN2yyD1okivtQWZYlhgw6M35Utrg/lcpb9VKGU0
+         9+XDSq+3bE5Z19pfS5N34+p1zLpx6jpS3NZ/7OfmpWKummiiUDTKCTYbXPgeoqz41HYx
+         1cCLgfqtEzKd21kxBsjFoHoYORig/VGZeS5nyvEWuAy1aeocWtpIzZtaO0YBR1hhMjFY
+         YY9A==
+X-Gm-Message-State: AOJu0YylfqU3TNYcor118SRkbLG1gXn89C163oGKDK83830GZO7EF5MT
+	N26rktM0a3ZpWqlFjmOQ4aH1Y+MaL7wjvL/GGHCmwkEXzy3DEDbanYDcOevCpL0=
+X-Google-Smtp-Source: AGHT+IFaJwQmJ610VSTCbmAwjRqXfxBgClB0hg1DZpkbW9Crn4aeFPaZTCDOa30xNyhMtyIxqeoQvA==
+X-Received: by 2002:a05:6808:22a1:b0:3d9:24f8:7dd2 with SMTP id 5614622812f47-3dd3acc2dc7mr2790376b6e.6.1723819646171;
+        Fri, 16 Aug 2024 07:47:26 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3dd33f047b4sm700250b6e.56.2024.08.16.07.47.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Aug 2024 07:47:25 -0700 (PDT)
+Date: Fri, 16 Aug 2024 09:46:35 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/5] Introduce configs for default repo format
+Message-ID: <ay6lkuxsmdlqbjcrhk2qooh2ewuaumfzjpyhgowbsh4mycwwyv@pzsttqqgqvsp>
+References: <cover.1723708417.git.ps@pks.im>
+ <cover.1723798388.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 9/9] t/unit-tests: convert ctype tests to use clar
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
- Edward Thomson <ethomson@edwardthomson.com>
-References: <cover.1722415748.git.ps@pks.im> <cover.1723791831.git.ps@pks.im>
- <ca09d19fd51cd4b3072b339f483b6b6d6e467b56.1723791831.git.ps@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ca09d19fd51cd4b3072b339f483b6b6d6e467b56.1723791831.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1723798388.git.ps@pks.im>
 
-Hi Patrick
+On 24/08/16 10:56AM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the second version of my patch series that introduces two new
+> config settings `init.defaultRefFormat` and `init.defaultObjectFormat`
+> to make the default formats configurable without environment variables.
+> 
+> Changes compared to v1:
+> 
+>   - Extend commit message to mention that we also move
+>     `repo_set_ref_storage_format()` and `repo_set_hash_algo()` into
+>     `repository_format_configure()`.
+> 
+>   - Extend commit message to explain precedence.
+> 
+>   - Fix a grammar issue.
+> 
+>   - Fix a copy/paste error in the documentation of
+>     `init.defaultRefFormat`.
+> 
+> Thanks!
+> 
+> Patrick
 
-On 16/08/2024 08:05, Patrick Steinhardt wrote:
->   #define TEST_CHAR_CLASS(class, string) do { \
->   	size_t len = ARRAY_SIZE(string) - 1 + \
->   		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
->   		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) == sizeof(char)); \
-> -	int skip = test__run_begin(); \
-> -	if (!skip) { \
-> -		for (int i = 0; i < 256; i++) { \
-> -			if (!check_int(class(i), ==, !!memchr(string, i, len)))\
-> -				test_msg("      i: 0x%02x", i); \
-> -		} \
-> -		check(!class(EOF)); \
-> -	} \
-> -	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
-> +	for (int i = 0; i < 256; i++) \
-> +		cl_assert_equal_i(class(i), !!memchr(string, i, len)); \
+All of my comments have been addressed with this version of the patch
+series. This version looks good to me. Thanks
 
-If this fails how are we supposed to know which character it was checking?
-
-Thanks
-
-Phillip
-
-> +	cl_assert(!class(EOF)); \
->   } while (0)
->   
->   #define DIGIT "0123456789"
-> @@ -33,21 +27,72 @@
->   	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
->   	"\x7f"
->   
-> -int cmd_main(int argc, const char **argv) {
-> +void test_ctype__isspace(void)
-> +{
->   	TEST_CHAR_CLASS(isspace, " \n\r\t");
-> +}
-> +
-> +void test_ctype__isdigit(void)
-> +{
->   	TEST_CHAR_CLASS(isdigit, DIGIT);
-> +}
-> +
-> +void test_ctype__isalpha(void)
-> +{
->   	TEST_CHAR_CLASS(isalpha, LOWER UPPER);
-> +}
-> +
-> +void test_ctype__isalnum(void)
-> +{
->   	TEST_CHAR_CLASS(isalnum, LOWER UPPER DIGIT);
-> +}
-> +
-> +void test_ctype__is_glob_special(void)
-> +{
->   	TEST_CHAR_CLASS(is_glob_special, "*?[\\");
-> +}
-> +
-> +void test_ctype__is_regex_special(void)
-> +{
->   	TEST_CHAR_CLASS(is_regex_special, "$()*+.?[\\^{|");
-> +}
-> +
-> +void test_ctype__is_pathspec_magic(void)
-> +{
->   	TEST_CHAR_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~");
-> +}
-> +
-> +void test_ctype__isascii(void)
-> +{
->   	TEST_CHAR_CLASS(isascii, ASCII);
-> +}
-> +
-> +void test_ctype__islower(void)
-> +{
->   	TEST_CHAR_CLASS(islower, LOWER);
-> +}
-> +
-> +void test_ctype__isupper(void)
-> +{
->   	TEST_CHAR_CLASS(isupper, UPPER);
-> +}
-> +
-> +void test_ctype__iscntrl(void)
-> +{
->   	TEST_CHAR_CLASS(iscntrl, CNTRL);
-> +}
-> +
-> +void test_ctype__ispunct(void)
-> +{
->   	TEST_CHAR_CLASS(ispunct, PUNCT);
-> +}
-> +
-> +void test_ctype__isxdigit(void)
-> +{
->   	TEST_CHAR_CLASS(isxdigit, DIGIT "abcdefABCDEF");
-> -	TEST_CHAR_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
-> +}
->   
-> -	return test_done();
-> +void test_ctype__isprint(void)
-> +{
-> +	TEST_CHAR_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
->   }
+-Justin
