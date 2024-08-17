@@ -1,117 +1,119 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFE58821
-	for <git@vger.kernel.org>; Sat, 17 Aug 2024 02:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190B10F7
+	for <git@vger.kernel.org>; Sat, 17 Aug 2024 03:15:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723861534; cv=none; b=XXseySGSfQdiW+WtrUODumtpIuwJLrrazqTpsUD1BxiQM8hIQCfdkmjGDzLW6I8Z+nvgLslaqsQOwhdNVAhJ4mUP2/2L3slUB5s7cPvU+qML/SAoHUV5mg4ptL1Xc9CwF0tAr7qtzWC63037kVCNxu6eO95x99Veg79CfHVdNWY=
+	t=1723864544; cv=none; b=bVpUwfw7Ve3Hy2hPPDP5uSVUIG8drOGyLiupf4jTrhJuLrswO+0Yu7BF+VR0JAdaCvw/9s0vQ53hZ+oy/SIAOIeoC7K0AxAQN0I3g7orQd1ig55zCOl4MyPQaskTsiRVwhi1kctNZfmZ8pRADYXDZXycYbzBultNzC8s8/amOZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723861534; c=relaxed/simple;
-	bh=0/zurBqBPoxegbpfKGEXuQqljpUsvPRSPYe288bRtcg=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rfJiuBLR5LS3nxylNn7/7ttYfBa/BbXZg+bn7Xpi4UbCruFGBQ8r+YCo7f3pc3oc7wo/hine27GOWdrXhBd936iZ++lmRdK8mfQ0FAclRrRk7Al/loJKaVDLKH4LSMMLWY9T14IQb6Z0+qNtQfVMmXTHV1zcz0TSnsL2adGJfM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 47H2PMv22520067
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 17 Aug 2024 02:25:23 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Zdenek Wagner'" <zdenek.wagner@gmail.com>, <git@vger.kernel.org>
-References: <CAC1phya475QkpfLp84sb=2UQs+mFos3OhuHDjmBzboeDBbtjtg@mail.gmail.com>
-In-Reply-To: <CAC1phya475QkpfLp84sb=2UQs+mFos3OhuHDjmBzboeDBbtjtg@mail.gmail.com>
-Subject: RE: git push does not work over https WebDAV
-Date: Fri, 16 Aug 2024 22:25:17 -0400
-Organization: Nexbridge Inc.
-Message-ID: <011301daf04c$b6b30fe0$24192fa0$@nexbridge.com>
+	s=arc-20240116; t=1723864544; c=relaxed/simple;
+	bh=O6rahuwuJTlmFbxlG/w0zIajktYlUEdG1kfdJBmREaw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=nnYUHoWt4ziVu1i76GPtUlKr7bS9O817EaNoA07EYji0zD/DG8AtWu8TzErAMYLnsp0Hg7jXiziq4oZsD07lLwnIrKTQdkxWHgr9esVzTsph/K4UTR+WKP1aFZwTV43aJijeU1NcMzCzOmBC8GqHXCKQM2eORSF2dc4XiG1VLfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=di73jD3y; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="di73jD3y"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6b443880945so5370077b3.0
+        for <git@vger.kernel.org>; Fri, 16 Aug 2024 20:15:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723864542; x=1724469342; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dVw6TzWn8D+7BVhuhE3VG1ywn91NjND0W1yL1zcvgTM=;
+        b=di73jD3yhdv6p3aU1lK+qS8EcXOazAWxe+hZuw23VA6xXZ2M6SxM4i/b/fxWAkTQO0
+         tHUkYFkXuygqpdcVFYevnPwvRdaWqgsDUCC1siRc5X1ESyJKm+QCdQNrZVEcWxj29m+w
+         dZ1E271CJiBf9wIT8zeMqyZKJzEvk/bJ4aWfLCXsGvdyqzkaeixtGFLNhrps2klSvU3o
+         zGvMcDLbJQV74qAUhzJSK5zQdbMA7egMWAA9d0Y0rbApggHrOjvubh1OEJeFluoassRp
+         3xNGwMnqc5pv2HdAyHspBwDX7tnspQzhuTvOJ5rWVEVXKmdse3o7UQf8OUkFlLbYEgFO
+         6dXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723864542; x=1724469342;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dVw6TzWn8D+7BVhuhE3VG1ywn91NjND0W1yL1zcvgTM=;
+        b=sqDPczSj5rrV8EiRXs3X72/4z5Oe4AIKuf72ObuJXTodA/2Tj2cGCDOjcvs/q5cvfN
+         auxvojZEYdLMu5u9un5tcW68kxVULROPAO+DravnHn95cf5xz22ErL14xWMifgRc8Oec
+         DZ9vk0NnqKCqsw28EUVLO9Drh9WUVz1KskCl3+eLv9ltsR2R9Ga+k9V+SH9zUuFR/H+u
+         xpTvecv0vEoagopsQk3kmU6qQmOd4QhOgGoeXYXOs9ZSj8L1p4MLJwZfnvl/r7lGNGMc
+         QahZpTovkDBW8cxPDXPLrS1MiDWRhGfCuaicUgPVFz9kBfqKa70toDFH/OsWVPoVnhD+
+         j03Q==
+X-Gm-Message-State: AOJu0YzHoJPlYwf4PDmX6pqMU6LgNywxfCcR5pdJzyG/WImeU9HNk2EB
+	r4lAOQWrxi8q1ZJxMRB16/dAkBkLdeL5bkCKFOF11Mqlvbv7/EcX51HUS72+jSigUzPYxsTLk1E
+	YJAdcPUKnl5szVWrpOnAaZ2IoTDUCHlNu
+X-Google-Smtp-Source: AGHT+IG4bnYx0F6Din3DGNgxwuQqShIYcqJPcXYKib3UhY4ao6AOspk8jMD3cBDgADECLGwetBfsR+gzXPPyOwhlPeI=
+X-Received: by 2002:a05:690c:6d0e:b0:64b:893f:fc28 with SMTP id
+ 00721157ae682-6b1bd17d13dmr49172727b3.46.1723864541800; Fri, 16 Aug 2024
+ 20:15:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJVJytsGpA9Yoe68xPY/cF7eGjBy7E2SsUg
+From: James <purpleidea@gmail.com>
+Date: Fri, 16 Aug 2024 23:15:05 -0400
+Message-ID: <CADCaTgpcmMbLoKR-rWf_roWfbgWJL6HuURDxwovvKQA8syf=vw@mail.gmail.com>
+Subject: Regression bug with latest SAFE ownership patch
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Friday, August 16, 2024 9:11 PM, Zdenek Wagner wrote:
->To: git@vger.kernel.org
->What did you do before the bug happened? (Steps to reproduce your =
-issue) git
->commit git push
->
->What did you expect to happen? (Expected behavior) The changes being =
-pushed to
->the repo via https WebDAV
->
->What happened instead? (Actual behavior) $ git push
->error: Cannot access URL
->https://userfiles.math-gnostics.eu/git/mg-software.git/, return code
->22
->fatal: git-http-push failed
->error: failed to push some refs to
->'https://userfiles.math-gnostics.eu/git/mg-software.git'
->
->The credentials are in ~/.netrc, git clone and git pull works fine on =
-all my repos on
->the same server, git push returns the same error
->
->Apache error log reports successfull access with the GET method (clone, =
-pull) but
->"user not found" for the PROPFIND method
->
->What's different between what you expected and what actually happened?
->git push does not work at all
->
->Anything else you want to add:
->It is apparently an issue of git which is not OS specific, I have the =
-same behaviour in
->Fedora 39 and Mac OSX, both having git 2.46.0. Everything works fine =
-with git
->2.44.0 and earlier. I have
->temporarily solved my problem by downgrading git in Fedora 39. I have =
-not trid
->2.45.0.
->
->Please review the rest of the bug report below.
->You can delete any lines you don't wish to share.
->
->
->[System Info]
->git version:
->git version 2.46.0
->cpu: x86_64
->no commit associated with this build
->sizeof-long: 8
->sizeof-size_t: 8
->shell-path: /bin/sh
->feature: fsmonitor--daemon
->libcurl: 8.9.1
->zlib: 1.3.1
->uname: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Mon Jun 24 00:56:10 =
-PDT
->2024; root:xnu-8020.240.18.709.2~1/RELEASE_X86_64 x86_64 compiler info:
->clang: 14.0.0 (clang-1400.0.29.202) libc info: no libc information =
-available $SHELL
->(typically, interactive shell): /bin/bash
->
->Linux penguin.czw57 6.10.3-100.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Mon
->Aug  5 14:46:47 UTC 2024 x86_64 GNU/Linux
->
->
->[Enabled Hooks]
+I am not a subscriber to this mailing list, so please please CC-me on replies.
 
-Does your .curlrc specify --netrc or -n? Those appear to be required to =
-specify the
-Use of .netrc in curl.
+I believe the recent changes for the safe ownership patch seemed to
+have introduced a regression. I have a git repo which is on a shared
+server that I trust and control. Adding a safe.directory does _not_
+allow me to use this repo anymore. I can't even run a `git fetch`
+without an error. I have renamed the repo name and directory, but
+output is otherwise precise. Full logs and versions shown below:
 
---Randall
+james@computer1:~/whatever$ git remote show server2
+fatal: detected dubious ownership in repository at
+'/home/someoneelse/whatever/.git'
+To add an exception for this directory, call:
 
+    git config --global --add safe.directory /home/someoneelse/whatever/.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+james@computer1:~/whatever$ git config --add safe.directory
+/home/someoneelse/whatever/.git
+james@computer1:~/whatever$ git config --add safe.directory '*'
+james@computer1:~/whatever$ git fetch server2
+fatal: detected dubious ownership in repository at
+'/home/someoneelse/whatever/.git'
+To add an exception for this directory, call:
+
+    git config --global --add safe.directory /home/someoneelse/whatever/.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+james@computer1:~/whatever$ cat .git/config
+[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[remote "server2"]
+    url = ssh://root@server2:/home/someoneelse/whatever/
+    fetch = +refs/heads/*:refs/remotes/server2/*
+[safe]
+    directory = /home/someoneelse/whatever/.git
+    directory = *
+james@computer1:~/whatever$ git version
+git version 2.45.2
+james@computer1:~/whatever$ ssh root@server2 git version
+git version 2.45.2
+james@computer1:~/whatever$
+
+Thanks,
+James
+@purpleidea
+https://purpleidea.com/
+https://github.com/purpleidea/mgmt/
