@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60DD12FB37
-	for <git@vger.kernel.org>; Sat, 17 Aug 2024 08:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF18712FB37
+	for <git@vger.kernel.org>; Sat, 17 Aug 2024 08:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723882929; cv=none; b=uc94dBzoOn/hSn+3Uf9H58p6hvj9DjnyUBuQ5X+LDrfSTXdIsVjSuzMlf5srAq4nstNhcWOW034AJjmyobInJ9q0ruDnt9vd+4DzKqZwIXKU+kLegMQ571+lLMxA7+hHtY9UC+EzCi52UyaCDIix810kwuNirK/dCYOAh5bjOhY=
+	t=1723882946; cv=none; b=KS9UxIOVsniOND23XlKHDzKuoEbQ0C9WspRrt0D0G+0AmVqK38LUvhT27tq04Zy1U0OKiq8+ULyyAfGFFocagOjDH7LKzWnHer1Vk/bhqyZR1Yhvie0uEibRqxgwI0j8Uez0iZt6YUNXgAyLbVbccDuO8W8YWt6WaEBa6WZVOpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723882929; c=relaxed/simple;
-	bh=HDM8Gr27BOIroCbJaHqBmHiEQYBADP+vm00l62abY0s=;
+	s=arc-20240116; t=1723882946; c=relaxed/simple;
+	bh=bT1Q/yoNzwMVG4uBHGXHgjmUee4G59zWxiNumrk9P6I=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qVV2A17DND5+a8MlCem63DXCupH6Pbmu5BtDmbLm8iruOmX40YfLQAfElH5wzIKyRM7wX2GoWNdAgyM53LLrI+0Fxf232zKVIoyL40uXekAFBZ39BR3ZZOl8udi828F8UpXJ2+HRoVnTZrWMVvdXEPc/2dU6rZKjH/l4YX9RKrs=
+	 Content-Type:Content-Disposition:In-Reply-To; b=t/3H+W0IpU4RkX0XdYERUS3afg6GXts9EI2vc9XGuDCWLCo2u3WLY2MmxUoyAaDBD650vJ/xxY+STG7ojPJHMu3pyEuex7PpKlrwakwosogfjaGM5KgbZ8O2sPSXB6ks5iRMOFw/ntlVu4IwpD4nJ1ABVnRoszVK8FLvLdkewTw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 24682 invoked by uid 109); 17 Aug 2024 08:22:06 -0000
+Received: (qmail 24685 invoked by uid 109); 17 Aug 2024 08:22:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Aug 2024 08:22:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Aug 2024 08:22:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27938 invoked by uid 111); 17 Aug 2024 08:22:10 -0000
+Received: (qmail 27941 invoked by uid 111); 17 Aug 2024 08:22:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Aug 2024 04:22:10 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Aug 2024 04:22:28 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 17 Aug 2024 04:22:05 -0400
+Date: Sat, 17 Aug 2024 04:22:22 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 03/15] refs: mark unused parameters in ref_store fsck
- callbacks
-Message-ID: <20240817082205.GC10287@coredump.intra.peff.net>
+Subject: [PATCH 04/15] refs: mark unused parameters in
+ do_for_each_reflog_helper()
+Message-ID: <20240817082222.GD10287@coredump.intra.peff.net>
 References: <20240817082101.GA6761@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,48 +39,40 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240817082101.GA6761@coredump.intra.peff.net>
 
-Commit ab6f79d8df (refs: set up ref consistency check infrastructure,
-2024-08-08) added virtual functions to the ref store for doing fsck
-checks. But the packed and reftable backends do not yet do anything.
+This is an each_ref_fn callback, so it has to match that interface. We
+marked most of these in 63e14ee2d6 (refs: mark unused each_ref_fn
+parameters, 2022-08-19), but in this case:
 
-Let's annotate them to silence -Wunused-parameter.
+  - this function was created in 31f898397b (refs: drop unused params
+    from the reflog iterator callback, 2024-02-21), and most of the
+    arguments were correctly mark as UNUSED, but "flags" was missed.
+
+  - commit e8207717f1 (refs: add referent to each_ref_fn, 2024-08-09)
+    added a new argument to the each_ref_fn callback. In most callbacks
+    it added an UNUSED annotation, but it missed one case.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs/packed-backend.c   | 4 ++--
- refs/reftable-backend.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ refs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index f00106df14..afd292ec6a 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1733,8 +1733,8 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
- 	return empty_ref_iterator_begin();
- }
+diff --git a/refs.c b/refs.c
+index 74de3d3009..584674520e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2390,9 +2390,10 @@ struct do_for_each_reflog_help {
+ 	void *cb_data;
+ };
  
--static int packed_fsck(struct ref_store *ref_store,
--		       struct fsck_options *o)
-+static int packed_fsck(struct ref_store *ref_store UNUSED,
-+		       struct fsck_options *o UNUSED)
+-static int do_for_each_reflog_helper(const char *refname, const char *referent,
++static int do_for_each_reflog_helper(const char *refname,
++				     const char *referent UNUSED,
+ 				     const struct object_id *oid UNUSED,
+-				     int flags,
++				     int flags UNUSED,
+ 				     void *cb_data)
  {
- 	return 0;
- }
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 8b7ffbf66f..7337d4422d 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -2309,8 +2309,8 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 	return ret;
- }
- 
--static int reftable_be_fsck(struct ref_store *ref_store,
--			    struct fsck_options *o)
-+static int reftable_be_fsck(struct ref_store *ref_store UNUSED,
-+			    struct fsck_options *o UNUSED)
- {
- 	return 0;
- }
+ 	struct do_for_each_reflog_help *hp = cb_data;
 -- 
 2.46.0.585.gd6679c16d8
 
