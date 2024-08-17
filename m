@@ -1,113 +1,104 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7253CD2E5
-	for <git@vger.kernel.org>; Sat, 17 Aug 2024 15:34:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823CE8BE8
+	for <git@vger.kernel.org>; Sat, 17 Aug 2024 16:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723908864; cv=none; b=nQqa3yucOKv3VcJF2QnL3Zdx/RmXicOQJUJPBdVEy6/xfk7DeLHUlzfxlJ8JlQCCN7JMUAnnmTtw9dOlseLanx3X7fqYED8GVZTYAmb0leByNbtpKJXB6IoC4GnEecfIvjhZKvoekU11eyGBzrGXWqX23OVUcMLW/HnnyG9HR28=
+	t=1723912131; cv=none; b=Ccv+R0I7cSRA+cZyCx3KDDnJZQsl7rbFNhdhCzihP6RyI5jl2NecHc3iDW8B6YYE8Y/DLGTJtg0k0kjaA0CD0IrmDMkzxc7zF6c87Nq8OA/gjz2jMF8ZWP1Nmi63bA9qxXmyfdLaVwUf17ve5ZsNxdu69WG0zBrxqojD8zH5gCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723908864; c=relaxed/simple;
-	bh=NqXLqgaF+vFiVhrFGUbAHeLGJj5goUCu6OxAvaN9XbA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SRHILlADZX6all/j4QcihZ8kUSgYvJZjRvzxs2QSLV2NlT5m9vBh5j9kTQyGhZU2SQVUqtUMbNYN+9UvnqIrAUs06Eh28tZPAWnqr7LccbC8LKv58IfE33oCRAsCny0rJvsgzOOL83wjBDwavg/jMtcZxKcuflg4RIKG6MJeiwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0e4oHsAr; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1723912131; c=relaxed/simple;
+	bh=KXBC6+mJGXtcw1hW1ZPsRBp507PgVNxuGpihZNkreLs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SI5aYbWA6ztEnMowrM65fZXc4++5ZhxAbOJIehBodHx5DpjfNbZ7cETNT3W7bPJ8j7oNxPM0i7uVXKmdgwRVgW8oc5FiAuLEyEln0RtKbcyRhMPTsrwF5kZ3Be97xmVzDVlmAXzxFqOU3SbiFd+xwEFKHsOG9XvJYHVfUI5PktQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L1aemfHr; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0e4oHsAr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1723908859;
-	bh=NqXLqgaF+vFiVhrFGUbAHeLGJj5goUCu6OxAvaN9XbA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=0e4oHsArGVqZsb7dq0tTd81EdF/TEr4MLcgTGhz12EbeAUx/VcOsxD9llKURdBr69
-	 vxABCOlV55SmB7CAMLOExS+1OIdzcJufY/QU6W/zYbAiI8Uq8BUSSmIB6qvs5QjZ9O
-	 1qTeiI9SZw3Bok1nOVZZNkDRsCB+EByl8lUWeXDu7CtW16+pj2pjZi4O1KmgAB31nV
-	 FU6mQXnEZGlTEfTFxCK9HN9ZmAVy4GC7iSU6isuzR09Tp4tgjUvrGt3QJWSi3pM/J4
-	 WFh8uNa3aQSO7GPjM2tgdFthvux541EoE+odFWSdb1LEAB2yg1HnGyyNI8uG/dhMf3
-	 HogiKoob4p5TFLR2W8kyttQ2S+gn2zuKakefFAY218u4Knl0F11wZOE9FfO9qBybt2
-	 X7VTNH4pb4Nir0x8cCeutAgOwbJS0ODWMGGSAgYN9Lbj70YOVTdZAul1anMY8VJTl4
-	 z81oAj52HDxeIDlW37YEmmdc4N8QcT9efacWrrXuftBJcfwSp/L
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L1aemfHr"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 925C33224B;
+	Sat, 17 Aug 2024 12:28:43 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=KXBC6+mJGXtcw1hW1ZPsRBp507PgVNxuGpihZN
+	kreLs=; b=L1aemfHryW6tVhn61UxTeKdKJ8yDzaFKVHfdb0pYabwZQvQ/NZ6nXn
+	swG8kkKvvrMnbyc0ThufPD8NXrwO40ITurhxyE4Md0zihE7swwe/WiTxhe8t7dLx
+	U9/hTK9lybeepGSN62gnPOCDYRFsSWNWKH43nQ9iirlV71dN1AlTs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 89E863224A;
+	Sat, 17 Aug 2024 12:28:43 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E8174209C8;
-	Sat, 17 Aug 2024 15:34:19 +0000 (UTC)
-Date: Sat, 17 Aug 2024 15:34:18 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: James <purpleidea@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Regression bug with latest SAFE ownership patch
-Message-ID: <ZsDC-nRxPIxQmoTj@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	James <purpleidea@gmail.com>, git@vger.kernel.org
-References: <CADCaTgpcmMbLoKR-rWf_roWfbgWJL6HuURDxwovvKQA8syf=vw@mail.gmail.com>
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 34D5B32249;
+	Sat, 17 Aug 2024 12:28:40 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: avih <avihpit@yahoo.com>
+Cc: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 5/8] git-prompt: add some missing quotes
+In-Reply-To: <12028161.4698975.1723889226498@mail.yahoo.com> (avih's message
+	of "Sat, 17 Aug 2024 10:07:06 +0000 (UTC)")
+References: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
+	<pull.1750.v3.git.git.1723886760.gitgitgadget@gmail.com>
+	<3a41ad889cc33a1fc0414b8f14af6438b49c88ee.1723886761.git.gitgitgadget@gmail.com>
+	<CAPig+cQVHVoDFD484dxu2gOuvzVHj9-78pyTnCo2-uy6=N5P-g@mail.gmail.com>
+	<12028161.4698975.1723889226498@mail.yahoo.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Sat, 17 Aug 2024 09:28:38 -0700
+Message-ID: <xmqqcym7i05l.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MaIPzIA5bJ7LntHk"
-Content-Disposition: inline
-In-Reply-To: <CADCaTgpcmMbLoKR-rWf_roWfbgWJL6HuURDxwovvKQA8syf=vw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C302960A-5CB5-11EF-9E48-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
+avih <avihpit@yahoo.com> writes:
 
---MaIPzIA5bJ7LntHk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I was trying to wait few days for more comments on v2 (perhaps
+> like yours), but I noticed that v2 was already was just integrated
+> into "seen", so I posted v3 to address the existing comments on v2.
 
-On 2024-08-17 at 03:15:05, James wrote:
-> I am not a subscriber to this mailing list, so please please CC-me on rep=
-lies.
->=20
-> I believe the recent changes for the safe ownership patch seemed to
-> have introduced a regression. I have a git repo which is on a shared
-> server that I trust and control. Adding a safe.directory does _not_
-> allow me to use this repo anymore. I can't even run a `git fetch`
-> without an error. I have renamed the repo name and directory, but
-> output is otherwise precise. Full logs and versions shown below:
->=20
-> james@computer1:~/whatever$ git remote show server2
-> fatal: detected dubious ownership in repository at
-> '/home/someoneelse/whatever/.git'
-> To add an exception for this directory, call:
->=20
->     git config --global --add safe.directory /home/someoneelse/whatever/.=
-git
-> fatal: Could not read from remote repository.
->=20
-> Please make sure you have the correct access rights
-> and the repository exists.
-> james@computer1:~/whatever$ git config --add safe.directory
-> /home/someoneelse/whatever/.git
-> james@computer1:~/whatever$ git config --add safe.directory '*'
+Please consider that it is just like being on the list and nothing
+else to be in "seen".  It merely is another place some patches I've
+"seen" are published, to help those of you who find "git fetch &&
+git log -pW origin/master..origin/topic" a more convenient way to
+review the changes.  This is outlined in the note I send out
+occasionally.
 
-This adds the option to the local configuration, but it has to be in the
-global (`--global`) or system (`--system`) config.  A malicious user
-that owned the repository could modify the local config, so it can't be
-trusted for this reason.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+    https://lore.kernel.org/git/xmqqmslewwpo.fsf@gitster.g/
 
---MaIPzIA5bJ7LntHk
-Content-Type: application/pgp-signature; name="signature.asc"
+If you think that v2 needs a few more days' exposure to receive more
+feedback from reviewers, and that v3 might be incomplete before
+waiting for their feedback, just saying so as a response to the
+"What's cooking" message is a very effective way to make sure I'll
+wait for an updated iteration.  Such a comment on individual topics
+is *not* limited to the author of the topic, e.g.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+  https://lore.kernel.org/git/owlyil264yew.fsf@fine.c.googlers.com/
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZsDC+QAKCRB8DEliiIei
-gcpzAQDDqVLS9hd1dMHY3kbZGwkPx1zADrZTjqkK2OTpzJ2GpgEA0nX2GF+RtE//
-0i7Svjq1iHw2Zdl91Tdv/naiWqBrWwA=
-=osLD
------END PGP SIGNATURE-----
+is an example (but the particular example was sent a bit too
+late---such a "wait, don't merge, an update is coming" needs to come
+before the topic is merged down to 'next'.
 
---MaIPzIA5bJ7LntHk--
+  https://lore.kernel.org/git/13f08ce5-f036-f769-1ba9-7d47b572af28@gmail.com/
+
+is an example of a reviewer sending a "stop, I have an improvement
+to suggest on this one I'll send soon" on a topic by somebody else.
+
+  https://lore.kernel.org/git/Zr2_4sNu56_frqlr@tanuki/
+
+is an example of the author saying "this topic of mine should be
+complete already", which is a bit less usual and takes some finesse
+to avoid sounding too self-promoting (this particular example does
+so well).
