@@ -1,62 +1,63 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FB518054
-	for <git@vger.kernel.org>; Sat, 17 Aug 2024 09:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD73614831D
+	for <git@vger.kernel.org>; Sat, 17 Aug 2024 09:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723886767; cv=none; b=ov/mjk9vTC3eGgv6P/0fGy7hhEGhV4JMN1TWECtomNOgHHPoQ5d7mgbLIghOfwL/SDBNhuL0mpaeCFTl+TIi0jg1c6YI6/uCbnWCZCO2I5J1Y3xPs339PGMHIjN6SY8jRAbAWVrfB2PJBqRkfQ86zqObQPdGduns/xh1fkD5tcw=
+	t=1723886768; cv=none; b=OxzEs74CGhqccCrTAlaCt1CeNSjXkKp1/NtS4q0g5QKZomk7gpC7uvrcSSK4p1wxALQpJIoYWKWdZQ4sqsmHzH3SaFLZ+YzR5J4Ta9lbMcw9DoQvJ5r+pZZDjQh/0bz7QgZS9RZ9v9ZzdNwRxsVspY11ylq9D6KtV5w0Ns5vC4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723886767; c=relaxed/simple;
-	bh=DvrovK2RhCxHLFqm+KbW7QMeNbJF9j4oWJMrKWXEDBg=;
+	s=arc-20240116; t=1723886768; c=relaxed/simple;
+	bh=PeWD7Xzsyt+Jh9Nqsn4TpYWX2egoJFqBtWAUMS9nZWQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JkopUmtECwOEuRu3xK9dXi6dqljUcqcbRoEE+FyH5MT707nu94crr8WQb33ynbd9Uq2l0qPcbRj4VW26KF7DaJ+LS8qV7qFr8YXWMUMAi+QpJOI9EdwFn5bybBvZtMQTLxrSX/i9/6m6tI4U1m0L3uFcPancJxS8uWKZFZYvG9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fRxmeh7/; arc=none smtp.client-ip=209.85.167.43
+	 MIME-Version:To:Cc; b=sbrJ5jU6+P0a3GuJM6Kygw/olv3HKvV43qBBP8LiS/8sRYiDj6QqG65jjhftSpmhBAY7fj9PhCQtuUmGjxnlM2fzsyGmMM9kPkgxTWDXZOjJ72FY4dNtHXDJQfa3bdmb0XQVn1eYms/py4b9D4MCZOcPAJbBH6ItvXY2rEILOSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PV+u69nP; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fRxmeh7/"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52f04c29588so3754025e87.3
-        for <git@vger.kernel.org>; Sat, 17 Aug 2024 02:26:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PV+u69nP"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3718ca50fd7so1419140f8f.1
+        for <git@vger.kernel.org>; Sat, 17 Aug 2024 02:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723886763; x=1724491563; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723886764; x=1724491564; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yoyzDjnmVviXdgVK/vuaJ36Sizbft0I5Tyd8ORGxNEI=;
-        b=fRxmeh7/ZQ0mSrJV3ayF7Tb9G1UQsIHPrVDuBqFdXgQP6EDo6/ReEccWohDKlB+zaD
-         +zilpuros6Zt+nwvra1BckWUsFakks5Rg0z1oJJOIu3NSg5w6EqZ+mdiJm7Y6fK+My/O
-         2JIBIbCddo4NcVl0uzWEWnKgSclh13Sv1JCF+2TDO6dhuhUtC9oATNG2I8dh9q9FXywP
-         cSWa9HOJFIBjv3YwMNMDkxuVcoLeB6sFxZvHT4POwaMDlmfhlngHAb0ywMQVRK3z3XwM
-         wwGKr3YOjbkPyAGUKNUmarl5T6HF57fdm0biqVsl2KpzDCqZC/3V3/o+tOD6cf+4Ok/z
-         8rQw==
+        bh=bffUfw/AShNzuPzmr6Fl68h5i7kGOyEHgnQZYZFtG8Q=;
+        b=PV+u69nPyI+dao45hDjCJjNoHMDrGe2tBKCtf4zjIqKTkNZR8IGERNFE4mNwl1hlUi
+         ylC1nqYd3MkmfHK2QriTG1ilcsIjJXKDWhm16dBTj7TNT4XL3R8V++LGQNAwjeXhJn6Z
+         zOEkfKvDWmMMfjj3dQQ+pvFyPvRZQPc9zzpZ1sm+Mz5YucMWZVQ7X/3x1rJpnsNdaknB
+         er4KsjEyt3qVxzDeoKpQ7Zney378Zd8bC/yx8fgj33EzjR3KJaQ01YZlSOYoBlnGBbWP
+         ZqtYqYNzvruZV8ivu+T73/X2LzTTIkjSvc9miXZfVn10MaEmP64Ck0NIr8/Uv2hluBcn
+         Y30Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723886763; x=1724491563;
+        d=1e100.net; s=20230601; t=1723886764; x=1724491564;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yoyzDjnmVviXdgVK/vuaJ36Sizbft0I5Tyd8ORGxNEI=;
-        b=BTdrjlEPM4oLdMx/v48TVchcwHG1uqUVCRD+5UGHaJyNh1YmsDbzHKZslkV8xHT89C
-         5Twib4TZ0p8OghlyXTOF1IRFajcCYjeFEomIQF+dI1CZ5jBAsij2TmF4w8Xwf5yPqKoH
-         LjzM6iBoXDLYh6B4IaiYLWiZ3fD1o7A3lmEWMZRFSZcfq3ce1dEDAmF/nYIJKsPN2Xw5
-         8H3YsHtWAwiVOozCGwY+GWq3Wx8C6yyX10NSZQd0pGdukqpBzMyFXCLX1RHQx/mecpV1
-         dSerf2DCbopiJHLEKFB9T61zvj8y7NuKWJ7JC5hWjJwHrIiP2gzvkoQnDiA34kitTiVQ
-         aoBg==
-X-Gm-Message-State: AOJu0YzHj8vsQ1tPoy/whuQSDOiZSMOWbM0557RbNGLUfWaF3jm3tQ3q
-	FQ3oDwIoMVEQFgo0cbOzgZ32zMQxf4cnkXEVzMEWZPndl12MpzILmtAHPw==
-X-Google-Smtp-Source: AGHT+IHvjkvb4b8MeXI7xAh3jMB8UxOMpJROcR4RkDJPc2gzgB//mazeMVsjHfCA1QEgE2+SYLXW/Q==
-X-Received: by 2002:a05:6512:2391:b0:52c:df51:20bc with SMTP id 2adb3069b0e04-5331c696975mr3267516e87.16.1723886762285;
-        Sat, 17 Aug 2024 02:26:02 -0700 (PDT)
+        bh=bffUfw/AShNzuPzmr6Fl68h5i7kGOyEHgnQZYZFtG8Q=;
+        b=Zj6WKFnMhRfSvsOIiUKEvwi4m2cSI1JDUmDBWX/lsBfM4E/xkKn/72Qb80mKMwedm0
+         z0XECesoRe8oz7IM1DTJvtGxxO9MTM61Y3tNQUHPS79muM6FMKbFqdFRGM1WTELSclGM
+         DdbsresJEhFqMp+wLzX7M2ImF6gCwLt2G9HyY055BP1AW5uPtt1yARJPQu9P6MflgP7W
+         DFN9/qMjKY99wPN9DbTkh7jKrsdUgsAUqVpLYnSFdyMo9WrA+EfRHX7r9Ozos/nmhNzR
+         rXqgXH4VWLbrfoRmPsKF9hGZX9vhzRGC6s+u9yGazzx2EH5eQ84dn2+PS+eM2h9howiI
+         4JsA==
+X-Gm-Message-State: AOJu0YwKtOzGeN2Zn7zxEDbxlI4FTk+FX3i44XciRz61XjQ2Nv8hOhgf
+	Cc8HIr6mfwMbJFvJRurb4n558g1vSGBwgYy+f3JvuNOfFJb/jVNt8pb6ag==
+X-Google-Smtp-Source: AGHT+IHnpl7IIWCEXgubz87Orj9DemIiK2m+Qw4jbvpYOKftE4fp4/fk//2DkYFV2bcmcb0uc/C9og==
+X-Received: by 2002:a5d:424e:0:b0:371:9366:6d8d with SMTP id ffacd0b85a97d-37194328b5amr3445376f8f.19.1723886764285;
+        Sat, 17 Aug 2024 02:26:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded18630sm98561805e9.1.2024.08.17.02.26.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-371898aacf9sm5419978f8f.102.2024.08.17.02.26.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Aug 2024 02:26:01 -0700 (PDT)
-Message-Id: <pull.1750.v3.git.git.1723886760.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
+        Sat, 17 Aug 2024 02:26:03 -0700 (PDT)
+Message-Id: <680ecb524040c64f886c4e484a64f0d17b512e27.1723886760.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1750.v3.git.git.1723886760.gitgitgadget@gmail.com>
 References: <pull.1750.v2.git.git.1723727653.gitgitgadget@gmail.com>
-From: "Avi Halachmi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 17 Aug 2024 09:25:52 +0000
-Subject: [PATCH v3 0/8] git-prompt: support more shells v3
+	<pull.1750.v3.git.git.1723886760.gitgitgadget@gmail.com>
+From: "Avi Halachmi (:avih) via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 17 Aug 2024 09:25:54 +0000
+Subject: [PATCH v3 2/8] git-prompt: fix uninitialized variable
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,97 +71,41 @@ To: git@vger.kernel.org
 Cc: "Junio C. Hamano" <gitster@pobox.com>,
     "brian m. carlson" <sandals@crustytoothpaste.net>,
     Patrick Steinhardt <ps@pks.im>,
-    Avi Halachmi <avihpit@yahoo.com>
+    Avi Halachmi <avihpit@yahoo.com>,
+    "Avi Halachmi (:avih)" <avihpit@yahoo.com>
 
-This addresses review comments on part 5/8 v2 (git-prompt: add some missing
-quotes) to fix typo in the commit message "aguments" into "arguments", but
-which was used to reword it a bit so that it's more accurate.
+From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
 
-Also addresses review comment on part 7/8 v2 (git-prompt: ta-da! document
-usage in other shells) and fix typo "Conpatibility".
+First use is in the form:  local var; ...; var=$var$whatever...
 
-Avi Halachmi (:avih) (8):
-  git-prompt: use here-doc instead of here-string
-  git-prompt: fix uninitialized variable
-  git-prompt: don't use shell arrays
-  git-prompt: replace [[...]] with standard code
-  git-prompt: add some missing quotes
-  git-prompt: don't use shell $'...'
-  git-prompt: ta-da! document usage in other shells
-  git-prompt: support custom 0-width PS1 markers
+If the variable was unset (as bash and others do after "local x"),
+then it would error if set -u is in effect.
 
- contrib/completion/git-prompt.sh | 191 ++++++++++++++++++++-----------
- 1 file changed, 126 insertions(+), 65 deletions(-)
+Also, many shells inherit the existing value after "local var"
+without init, but in this case it's unlikely to have a prior value.
 
+Now we initialize it.
 
-base-commit: d19b6cd2dd72dc811f19df4b32c7ed223256c3ee
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1750%2Favih%2Fprompt-compat-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1750/avih/prompt-compat-v3
-Pull-Request: https://github.com/git/git/pull/1750
+(local var= is enough, but local var="" is the custom in this file)
 
-Range-diff vs v2:
+Signed-off-by: Avi Halachmi (:avih) <avihpit@yahoo.com>
+---
+ contrib/completion/git-prompt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- 1:  9ce5ddadf0b = 1:  9ce5ddadf0b git-prompt: use here-doc instead of here-string
- 2:  680ecb52404 = 2:  680ecb52404 git-prompt: fix uninitialized variable
- 3:  7e994eae7bc = 3:  7e994eae7bc git-prompt: don't use shell arrays
- 4:  232340902a1 = 4:  232340902a1 git-prompt: replace [[...]] with standard code
- 5:  4f77b7eb7f1 ! 5:  3a41ad889cc git-prompt: add some missing quotes
-     @@ Commit message
-            not expanded:   t="~"; a=${t}user  b=\~foo~;  echo "~user" $t/dir
-      
-          But the main reason for quoting is to prevent IFS field splitting
-     -    (which also coalesces IFS chars) and glob expansion after parameter
-     -    expansion or command substitution.
-     +    (which also coalesces IFS chars) and glob expansion in parts which
-     +    contain parameter/arithmetic expansion or command substitution.
-      
-     -    In _command-arguments_, expanded/substituted values must be quoted:
-     +    "Simple command" (POSIX term) is assignment[s] and/or command [args].
-     +    Examples:
-     +      foo=bar         # one assignment
-     +      foo=$bar x=y    # two assignments
-     +      foo bar         # command, no assignments
-     +      x=123 foo bar   # one assignment and a command
-     +
-     +    The assignments part is not IFS-split or glob-expanded.
-     +
-     +    The command+args part does get IFS field split and glob expanded,
-     +    but only at unquoted expanded/substituted parts.
-     +
-     +    In the command+args part, expanded/substituted values must be quoted.
-     +    (the commands here are "[" and "local"):
-            Good: [ "$mode" = yes ]; local s="*" x="$y" e="$?" z="$(cmd ...)"
-            Bad:  [ $mode = yes ];   local s=*   x=$y   e=$?   z=$(cmd...)
-      
-     -    Still in _agumemts_, no need to quote non-expandable values:
-     +    The arguments to "local" do look like assignments, but they're not
-     +    the assignment part of a simple command. they're at the command part.
-     +
-     +    Still at the command part, no need to quote non-expandable values:
-            Good:                 local x=   y=yes;   echo OK
-            OK, but not required: local x="" y="yes"; echo "OK"
-          But completely empty (NULL) arguments must be quoted:
-     @@ Commit message
-          "local" does not behave with assignment context in some shells,
-          hence we require quotes when using "local" - for compatibility.
-      
-     -    First value in 'case...' doesn't IFS-split/glob, doesn't need quotes:
-     +    The value between 'case' and 'in' doesn't IFS-split/glob-expand:
-            Good:       case  * $foo $(cmd...)  in ... ; esac
-            identical:  case "* $foo $(cmd...)" in ... ; esac
-      
- 6:  363b7015763 = 6:  e735a1696a0 git-prompt: don't use shell $'...'
- 7:  4aa75cdb5dd ! 7:  e70440e669a git-prompt: ta-da! document usage in other shells
-     @@ contrib/completion/git-prompt.sh
-       # GIT_PS1_HIDE_IF_PWD_IGNORED to a nonempty value. Override this on the
-       # repository level by setting bash.hideIfPwdIgnored to "false".
-      +#
-     -+# Conpatibility with other shells (beyond bash/zsh):
-     ++# Compatibility with other shells (beyond bash/zsh):
-      +#
-      +#    We require posix-ish shell plus "local" support, which is most
-      +#    shells (even pdksh), but excluding ksh93 (because no "local").
- 8:  e71ddcd2232 = 8:  633e71a01d3 git-prompt: support custom 0-width PS1 markers
-
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index ebf2e30d684..4cc2cf91bb6 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -116,7 +116,7 @@ printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
+ __git_ps1_show_upstream ()
+ {
+ 	local key value
+-	local svn_remote svn_url_pattern count n
++	local svn_remote svn_url_pattern="" count n
+ 	local upstream_type=git legacy="" verbose="" name=""
+ 
+ 	svn_remote=()
 -- 
 gitgitgadget
+
