@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6095A83A06
-	for <git@vger.kernel.org>; Sat, 17 Aug 2024 07:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C4F20E6
+	for <git@vger.kernel.org>; Sat, 17 Aug 2024 07:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723879781; cv=none; b=Pkf82KZB6HhDzxJNpabyp31DLhfI9CO1gcygRvHmI7mTbgN14MNNUdXhtUF39zAUPflzhO6eXwFEN8ZHejS/g9vDAUUQmIFGaage7jkfTtmdKl0ADQduLoan9d19rwRq3zCN0hh0oRYCfHJSzk+7iyu52uDmBzutwLV9I6hqy74=
+	t=1723879789; cv=none; b=fzJwEqS1pEPvn8LL60f3vRgcYZE8qETlibWvJOg4nszs9Hv6ai9VsoW83++exvgcMqW/4lIx7aTsRRStHRxqXfxsfh4KrtQK152UNqKFQUba4KYjel0ySU82VICt33G9YUI0aqANd2XBh++6E0fZHA1Rse44YEFkWTt5xHy9/Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723879781; c=relaxed/simple;
-	bh=xA23hBW1h6exUVtVn11HXbb7CfdyletrlSKyC0veqfE=;
+	s=arc-20240116; t=1723879789; c=relaxed/simple;
+	bh=PWAsPAuK/XgUfakIfggmy9KExA2NPl/u0Qcb36qPJQU=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fsLxzCfagn/YYDlTIt/huGZb13vccak2f/y+eq4i5WlBO0Q7ab1dXscvo/dDkzyvZPiWp7hsDZyM49qk+LOhjIiwJaa7SjKIJO8vL93iiTkbF6lq3hrPHKVDaiG7E+l1KC+dzVb/cDECOyheOI4dFbl3JgZAtiWMe2in3sxD61c=
+	 Content-Type:Content-Disposition:In-Reply-To; b=CCqgpGbC9OA2Vzmktq0et85i4zbH8MR6CXH5LO9BdLUgl4XwE4YyOf+yi5BiiW4ZwK9APEN7xNJoK28CETVrNpj5JsaFOvpjJ9OI2DIYCnSssatD2aPE6v85a4dzCXpocs/VJoqAg9DohYKYTJwjDEN1VKJsQsRSvLuBYTfGgGc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23586 invoked by uid 109); 17 Aug 2024 07:29:38 -0000
+Received: (qmail 23591 invoked by uid 109); 17 Aug 2024 07:29:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Aug 2024 07:29:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Aug 2024 07:29:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27575 invoked by uid 111); 17 Aug 2024 07:29:42 -0000
+Received: (qmail 27579 invoked by uid 111); 17 Aug 2024 07:29:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Aug 2024 03:29:42 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Aug 2024 03:29:50 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 17 Aug 2024 03:29:37 -0400
+Date: Sat, 17 Aug 2024 03:29:45 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 3/5] pack-bitmap: drop unused parameters from
- select_pseudo_merges()
-Message-ID: <20240817072937.GC1535915@coredump.intra.peff.net>
+Subject: [PATCH 4/5] ref-filter: drop unused parameters from
+ email_atom_option_parser()
+Message-ID: <20240817072945.GD1535915@coredump.intra.peff.net>
 References: <20240817072621.GA1535666@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,67 +39,38 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240817072621.GA1535666@coredump.intra.peff.net>
 
-We take the array of indexed_commits (and its length), but there's no
-need. The selection is based on ref reachability, not the linearized set
-of commits we're packing.
+This code was extracted from person_email_atom_parser() in a3d2e83a17
+(ref-filter: add mailmap support, 2023-09-25), but the part that was
+extracted doesn't care about the atom struct or the error strbuf.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-A careful reader may wonder whether we ought to be using the set of
-commits to limit what we're willing to select (since we can't make a
-bitmap for a commit that isn't in our index).
+ ref-filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-And this is indeed a problem, but the solution doesn't involve using
-indexed_commits. It should be fixed in this series:
-
-  https://lore.kernel.org/git/c9a64b1d2a9d6b3fe1f5fb0a7303e043114fcd8f.1723743050.git.me@ttaylorr.com/
-
- pack-bitmap-write.c | 2 +-
- pseudo-merge.c      | 3 +--
- pseudo-merge.h      | 3 +--
- 3 files changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 7787600234..9b9ca1cc36 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -737,7 +737,7 @@ void bitmap_writer_select_commits(struct bitmap_writer *writer,
- 
- 	stop_progress(&writer->progress);
- 
--	select_pseudo_merges(writer, indexed_commits, indexed_commits_nr);
-+	select_pseudo_merges(writer);
+diff --git a/ref-filter.c b/ref-filter.c
+index 6d8b591930..2d7a65a56b 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -742,8 +742,7 @@ static int person_name_atom_parser(struct ref_format *format UNUSED,
+ 	return 0;
  }
  
- 
-diff --git a/pseudo-merge.c b/pseudo-merge.c
-index 1d7f5381a4..c952a7cba9 100644
---- a/pseudo-merge.c
-+++ b/pseudo-merge.c
-@@ -425,8 +425,7 @@ static void sort_pseudo_merge_matches(struct pseudo_merge_matches *matches)
- 	QSORT(matches->unstable, matches->unstable_nr, commit_date_cmp);
- }
- 
--void select_pseudo_merges(struct bitmap_writer *writer,
--			  struct commit **commits, size_t commits_nr)
-+void select_pseudo_merges(struct bitmap_writer *writer)
+-static int email_atom_option_parser(struct used_atom *atom,
+-				    const char **arg, struct strbuf *err)
++static int email_atom_option_parser(const char **arg)
  {
- 	struct progress *progress = NULL;
- 	uint32_t i;
-diff --git a/pseudo-merge.h b/pseudo-merge.h
-index 3aecba772b..4b5febaa63 100644
---- a/pseudo-merge.h
-+++ b/pseudo-merge.h
-@@ -95,8 +95,7 @@ struct pseudo_merge_commit_idx {
-  *
-  * Optionally shows a progress meter.
-  */
--void select_pseudo_merges(struct bitmap_writer *writer,
--			  struct commit **commits, size_t commits_nr);
-+void select_pseudo_merges(struct bitmap_writer *writer);
+ 	if (!*arg)
+ 		return EO_RAW;
+@@ -761,7 +760,7 @@ static int person_email_atom_parser(struct ref_format *format UNUSED,
+ 				    const char *arg, struct strbuf *err)
+ {
+ 	for (;;) {
+-		int opt = email_atom_option_parser(atom, &arg, err);
++		int opt = email_atom_option_parser(&arg);
+ 		const char *bad_arg = arg;
  
- /*
-  * Represents a serialized view of a file containing pseudo-merge(s)
+ 		if (opt < 0)
 -- 
 2.46.0.585.gd6679c16d8
 
