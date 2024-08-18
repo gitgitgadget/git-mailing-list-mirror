@@ -1,63 +1,63 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F12374CB
-	for <git@vger.kernel.org>; Sun, 18 Aug 2024 14:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2585F442C
+	for <git@vger.kernel.org>; Sun, 18 Aug 2024 15:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723993165; cv=none; b=Q7E/pRR84R+76vEkzbmDh0qnURyKjjuQpiT04EQoLfRECdZOmToY4V84ZiMjWb/ikeyQtry99P6PkTvvZ8qC5my5MLX5MKCFIPrHy6dSjW0hBJM0xjvDCTfb8ciHjwoJ83qnRcgv/Go/+8LehKReLoyBcUokMsj08DcYADPWKMw=
+	t=1723993258; cv=none; b=KFdJUGX5O0XJIvRtc/3Gmi4sqQXw/8idKd+FMqCU+dneH+p2RptHv1vJONcFopQ3cBGNTWAhRnNoPoex8Zybw09/QxeKoOU/S3L5ThmR9sNDTue4U+vl1IYapHhIzrLmSZhH5Ytomm4DR2Rp3Rk3LWkHx+9NhIi9r6pQZ5cosJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723993165; c=relaxed/simple;
-	bh=FaYan3pHF+tMEJW/wwn5vKSA/+RFPf/VcAN8z6LcRgY=;
+	s=arc-20240116; t=1723993258; c=relaxed/simple;
+	bh=oc3J+x3Cb4etv0CKFpLB1eyBt0mOWkPLxfTUX7SDKJ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wu12NGn5ukSOU24II2CJxjeOY2EFegrEOBKV9SMLvV2SMHQp63JWlanvWcztEBOxq7UaoSOAL2fQWYbhSd5pkZP3C5kG1BIb3MZJc/+9wJDjJ8ymaH7iPu3XRxkqtXxOphvt/gX8ShMGzHFN/mYLkPkRdALc8FvGiKM+ejUJmu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UPwIH0HH; arc=none smtp.client-ip=209.85.210.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=itTQw/USrwRSVclNGxUBR/dm3KQ70KwobAG65oz/4FbvY3RSQk82l9/oOyKQCDCq2hMPqBYItRwwg1jYErppIfv60bwUgLEh6Fi6bTMUeaNMvhZze5VR8OyjwwxrppUZS5vjrxRDYM0TNrXFr/6WwBv18B/nyGuDQKT1Wkr7n68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hfYKOYt4; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UPwIH0HH"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-70f5ef740b7so3189916b3a.2
-        for <git@vger.kernel.org>; Sun, 18 Aug 2024 07:59:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hfYKOYt4"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-710e39961f4so2287786b3a.3
+        for <git@vger.kernel.org>; Sun, 18 Aug 2024 08:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723993163; x=1724597963; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1723993256; x=1724598056; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1k/DUO2k+sKUz28MaYvGvWj+kpUC3P/3qAnRK+CniPE=;
-        b=UPwIH0HH1nssqHiDIRqT5r+f559j73z8llIzqkQt0/CdLO8zs21klg0EYTzYcc70XB
-         j+QaZma0raVCXBAUsQ+Mil3ZeJBN7hxzunY6lJ6Za3D1g6++SiTRgfmSMIvYwje288wp
-         7UKuz1Xnt8njSJVfTwwY05F0aIK/j9WojBAWdgK9QeQP1ya1+OcmREsIBQ4DTfv4WFrT
-         0EsniVhT/1IrkouD5y4smLBerBWS9+6hFBt0PPimqAZhRhPgdvqBB+3iYuTYHYKzAHPS
-         XKkPg6qA9jfenFtBLAmvLXPflPrUliXiWOVuYaLwR+rGXwsVj/9vSPN6VpT+zz2wd6aR
-         nA2A==
+        bh=VW8oDhZXfBP7ucD9l6y2jGB3MYaxB0TVGcGEZ01xKRk=;
+        b=hfYKOYt4lFOTqtgoKA8e2djGarEXbR3KkGlAzid9aZaUdJ7a/Pw/U1kguWfEkeXRQ5
+         P3vFBV8gnS37g/yFG7FzHN0VJiQy7kcmXMV6DeOB5IBm7NwTKSm0OI4BvXBCeOAcTYJO
+         nVu9uZJLZ5m8wDvTY599P8pLLAs1YsLI8AzQOI/wxKTpIXk6DLPE9M6JRZZSKI2nFPBM
+         zJWnFMTVNsI+je89PbL2FEpq7ZVeiGGNdRtpQC90aVwbYaq9PkI2XOCn6xM8mQp31HVw
+         jkE7WueMum0uqEm47zKHpewzT9/yanzKncnr2orSOJIOhnYY26l/vW9qS+yGzG0jJ2uL
+         H0JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723993163; x=1724597963;
+        d=1e100.net; s=20230601; t=1723993256; x=1724598056;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1k/DUO2k+sKUz28MaYvGvWj+kpUC3P/3qAnRK+CniPE=;
-        b=CQteGWRXKJjY3kBCLqsM7MlTd87NpggW/1pEBwv5AK7y9cg9tUq3YdMYaqLjdsjWnY
-         HigTJ/zhKT/fu/0JwRuIwZTHTdOqTRpWhJYbCkCztlx6jEH2JTo3qn6dV/xA3CIXcCDi
-         P6RpZycAtoJd2p+LCIAKX/WTltUSpSskotztBebCGFZscQlPY3PoPIYJNKzf1LVtCsCx
-         NLS8CKPnoxhrPNyVifzPBalf5cODcD/5WBJnLm8FPgBIEDhmdm2TWB5U+4bpf3QMKBJT
-         WaPev1ECr/GHAb0xm8vkAhS1jWxBWAvFaSNxfOc7GlZO0nfNE3+i+vTxRsImpL5+Vxei
-         Hifw==
-X-Gm-Message-State: AOJu0YxleVZWWczO2R607FfW38jSjrFJxWvSNX0p8FNwInEXJYRcMZpz
-	HyEzKzSNOpes3lfT6kRnPIefvqbTN575WdnfjM0gZOeKFTDppjjbo9rGFQ==
-X-Google-Smtp-Source: AGHT+IFWVMQt1vYuk75tR+2T0liOf5VSjoLt/JjqxJFUmUQCSEofeZuT7WG5KEbfQOKGO1CdW6nM1g==
-X-Received: by 2002:a05:6a00:3cc9:b0:70d:14d1:1bb7 with SMTP id d2e1a72fcca58-713c52645bfmr10537335b3a.28.1723993162584;
-        Sun, 18 Aug 2024 07:59:22 -0700 (PDT)
+        bh=VW8oDhZXfBP7ucD9l6y2jGB3MYaxB0TVGcGEZ01xKRk=;
+        b=lz+TeEEaWLaMYR4Gio7haxHTIMQ5Rnqytu/+eIYr5kUd1TLXkMmi88dP4hXjY+mIhf
+         MOj5HF74aZFzlqvLTPIYu1TaVLjV1PCRNVszp+ReIB9UmM5Kfiqdn7Sy20mUiRlYtMsT
+         mqquZ+pSgzLA64t1KKNEGqtctLQq+g0TviQbaxDE03dENqzeADMZ0qU2hmC/Q3528SzW
+         21icO1yczsVZu12bJbzF2oNDstx/CfwJfktBjyRf2/CQv8MwF1fFJjW2dkyQn/g4hz4R
+         eDfNA6MngEaTY0moG5f4Ip3DDPx5boEOp52sdoQtj6r2xMGDA+E532qG2RFw5u3QLgBV
+         23Og==
+X-Gm-Message-State: AOJu0YxlcuySt6Bs3ehYzYHV7d8ZYVj0QZvJEVGJbAE2AsP3zLn/7JrR
+	2DaGVP3wj+PdC1pS3unrAX1iYSDTlJbLiD86Jl0krx7Ls+b9rrWxFaMFvA==
+X-Google-Smtp-Source: AGHT+IEFVDOh4QdoOG4W8In9acnhVahLLZ2pbr+TJmu6Dihp5MvganS2z8spy2UL8yzmVk+vKNcFZA==
+X-Received: by 2002:a05:6a21:3a81:b0:1c4:a2a7:b18e with SMTP id adf61e73a8af0-1c904fb5106mr8277618637.30.1723993255630;
+        Sun, 18 Aug 2024 08:00:55 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7c6b61c72d8sm5333557a12.23.2024.08.18.07.59.21
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d3e3171bd3sm5601976a91.31.2024.08.18.08.00.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Aug 2024 07:59:22 -0700 (PDT)
-Date: Sun, 18 Aug 2024 23:00:03 +0800
+        Sun, 18 Aug 2024 08:00:55 -0700 (PDT)
+Date: Sun, 18 Aug 2024 23:01:36 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v1 0/4] add ref content check for files backend
-Message-ID: <ZsIMc6cJ-kzMzW_8@ArchLinux>
-References: <ZrtrT1CPI4YUf5db@ArchLinux>
+Subject: [PATCH v1 1/4] fsck: introduce "FSCK_REF_REPORT_DEFAULT" macro
+Message-ID: <ZsIM0L72bei9Fudt@ArchLinux>
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,40 +66,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZrtrT1CPI4YUf5db@ArchLinux>
+In-Reply-To: <ZsIMc6cJ-kzMzW_8@ArchLinux>
 
-Hi All:
+In "fsck.c::fsck_refs_error_function", we need to tell whether "oid" and
+"referent" is NULL. So, we need to always initialize these parameters to
+NULL instead of letting them point to anywhere when creating a new
+"fsck_ref_report" structure.
 
-This patch aims at adding ref content check for files backend. By the
-RFC we have discussed, I add three types of checks.
+In order to conveniently create a new "fsck_ref_report", add a new macro
+"FSCK_REF_REPORT_DEFAULT".
 
-1. Check regular ref content. I enhance the "parse_loose_ref_contents"
-to validate the content of the regular ref and warn the user about the
-trailing garbage.
-2. Check symbolic ref content. Check the trailing garbage and content.
-3. Check symlink ref by reusing the function introduced by #2.
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
+ fsck.h               | 6 ++++++
+ refs/files-backend.c | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-The CI is passed:
-
-  https://github.com/shejialuo/git/pull/14
-
-Thanks,
-Jialuo
-
-shejialuo (4):
-  fsck: introduce "FSCK_REF_REPORT_DEFAULT" macro
-  ref: add regular ref content check for files backend
-  ref: add symbolic ref content check for files backend
-  ref: add symlink ref consistency check for files backend
-
- Documentation/fsck-msgids.txt |  12 +++
- fsck.h                        |  10 ++
- refs.c                        |   2 +-
- refs/files-backend.c          | 188 +++++++++++++++++++++++++++++++++-
- refs/refs-internal.h          |   2 +-
- t/t0602-reffiles-fsck.sh      | 183 +++++++++++++++++++++++++++++++++
- 6 files changed, 392 insertions(+), 5 deletions(-)
-
+diff --git a/fsck.h b/fsck.h
+index 500b4c04d2..8894394d16 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -152,6 +152,12 @@ struct fsck_ref_report {
+ 	const char *referent;
+ };
+ 
++#define FSCK_REF_REPORT_DEFAULT { \
++	.path = NULL, \
++	.oid = NULL, \
++	.referent = NULL, \
++}
++
+ struct fsck_options {
+ 	fsck_walk_func walk;
+ 	fsck_error error_func;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 8d6ec9458d..725a4f52e3 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3446,7 +3446,7 @@ static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
+ 		goto cleanup;
+ 
+ 	if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
+-		struct fsck_ref_report report = { .path = NULL };
++		struct fsck_ref_report report = FSCK_REF_REPORT_DEFAULT;
+ 
+ 		strbuf_addf(&sb, "%s/%s", refs_check_dir, iter->relative_path);
+ 		report.path = sb.buf;
 -- 
 2.46.0
 
