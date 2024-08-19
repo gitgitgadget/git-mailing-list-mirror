@@ -1,67 +1,89 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94CD288B1
-	for <git@vger.kernel.org>; Sun, 18 Aug 2024 17:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7A312B8B
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 00:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724003046; cv=none; b=EgvJl7tVr6RhUM9b7IijhRccDrqRSTAO52A4RL9Xbl9dJoTujr8HEtxmu7OtiNt2Wz3TGeb09ajulFfbSS4yvfDE7jLUKnqBsH4e2+bSiUABTkcVZKs3gIUwqN3RtOXbpiC6WU+/l7bxGrHML3UyAOVxrQ+XeVvP7AwWjyl2ut0=
+	t=1724028318; cv=none; b=OXAkJ+jRL/JxrRYtDcRz3hCfk7d3uyO9GFk0eMCgyMBF/SJqUj8A8SCtXDkCxVR/OUY7KnOK7JER3M09VVgkUgiZ2tJ7MuGIMlq5+up6SbWqi51L5a6LdJOHyea5cof1GU+hluLzlXC0ha4xfpXMtjw/24RKL2u258FqABTUHwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724003046; c=relaxed/simple;
-	bh=NxztY5KGC3rbQnQq0RwSIcmBm33XibKxTLTg/qxnlfM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZFyKchar0258Emqi50gCe/ytuBW9jgs4jQSDuFmloSieS1tkspSPKdKZ94UiS5sKb9YwY5ADlyzHw/zIdQtIRvgnqBcIlf+YIe8iEvsr9IxBZjHPL4cgfvGtuc/3Px8QPLP5ejPazkUqVIssqi1xjRNdJgdhYQ8Z/aJlaYFC51k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=bBOVb+xC; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1724028318; c=relaxed/simple;
+	bh=0WoGSB2mb2very34mRatIU265wGvpTFUbLQRiznqUhc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=rtXcWTMFUsCSmc6AyylRDwIhclepT2h/5MzdJoXzv+wzqYee37boR+6zLj3NCAQGeNdR7KuMxHGeVVIId95+xwOPtBcVGtInnyoPzAbULC2gMCbWfZIoc7t7X5c4R7W5RpW1zR6MGymUdIL8JmrWMQlwmpADBdj3Nucl+a7NqI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOW3Ne+A; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="bBOVb+xC"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5151F47A;
-	Sun, 18 Aug 2024 17:36:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1724002597;
-	bh=NxztY5KGC3rbQnQq0RwSIcmBm33XibKxTLTg/qxnlfM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bBOVb+xCB9fFIxcZDxdT1ltoYTzPfBqTkK2PlFu5x8EZ/G7FKgdwIX7ielDCxi/xz
-	 V673TcN4qaI+AfPobAZKJeNTNrc0U0Z/OVYIKMuV7vFpIc+REB7BqbbF7wv9isUdaz
-	 6k0EOU09foQMdDKU2Oupx9gswKOUhpZ0QMV21eps=
-Date: Sun, 18 Aug 2024 17:36:37 +0000
-From: Eric Wong <e@80x24.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: assert vs BUG [was: [PATCH v1 05/10] cat-file: use delta_base_cache
- entries directly]
-Message-ID: <20240818173637.M96307@dcvr>
-References: <20240715003519.2671385-1-e@80x24.org>
- <20240715003519.2671385-6-e@80x24.org>
- <ZqC872ExETzRH60Z@tanuki>
- <20240726074201.M876490@dcvr>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOW3Ne+A"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-454b12cc82cso11173891cf.1
+        for <git@vger.kernel.org>; Sun, 18 Aug 2024 17:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724028316; x=1724633116; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pR/DQwJnbAo9jMm6EXOiuwPPHdFTZVe/8/AJ65wv2tE=;
+        b=HOW3Ne+A7saGuqwp2KFRJOlEmnkX7SiRFOhFcJQ0QWx7PqXuvucjy8EPBEd3FttIgy
+         h1fBSyN3P63oARg7uONnn0htNVlEl6YtT8N5qlImHsFoXBokjMD20P7i7GEHki7g0VnY
+         USysSaBm5XN9+nBGol2rmSGt4IMS8f7SBKYc/5bXjipc0a45pIyU7Lg3nEq07RdEUiiK
+         9p25LK6FE2XvCP/SLdWRxLXzXKK21v9F8HIfscNkXjLLVsbbrwySjCopv9JKh/siQol+
+         UY4i5oqQiHbGwPwvCWaaMIUbmKN+4nVHqhukrPHOAt7d55DhdGp6OBONfUIw+5aAFxVT
+         IGjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724028316; x=1724633116;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pR/DQwJnbAo9jMm6EXOiuwPPHdFTZVe/8/AJ65wv2tE=;
+        b=ZnA0ETrTIeB4Gnb4LzgdJToYLWK/KNhQ/QY5ThOI6PJBwwtxOYFuGQ/ym+Mex0GjqV
+         QU/rU9porGz60WW+2spdN7P4Ftm0rSh9CWqggR5QES/WeaPFmcDdlAwMhOCy+s1D0mqd
+         v3jan+83nqJVTBjgaMN2XFnRauHrbLqAVNmx+yIrOyQdWUipDr/ZJlLpcdYt66FORtNy
+         zSssxDufTWH9UxcTpCywn94zWyQLy9el5EJwo8WDIN/W3p6/EZy4fMjf0UBM7ncCCq3P
+         4Ri8lF/WToDOhA3I3F9+xlF6T3ynuz4REuNfQTXm/LG2nop/Mr/yruFUVdnxmVhG6XMy
+         PUkA==
+X-Gm-Message-State: AOJu0YzfnUiCQadgKA7Z4Z7zxL0Vpv06qHOL+A7Pdlsk4j1UEvWWcIsH
+	uoVdY66gE7oSA9gy3loeKpx/s/hqJ6Sz0Tikm9z1k7mfLrv2TBLIvQNjNR2e7N57y40mEjddmvI
+	tehAmVTcOgX30qm2D4adK0X7awSRQwUc8
+X-Google-Smtp-Source: AGHT+IFrr/ATyFMuQ/gRuxdO8ccIzzitR8CyORA94FIyxWPn0Dc6oFM24T4g0QBf/8WE4/mBEtY6pgk/ktl4BuAX6+w=
+X-Received: by 2002:a05:622a:5811:b0:447:f11d:3a59 with SMTP id
+ d75a77b69052e-453743ce5ddmr119990861cf.63.1724028315730; Sun, 18 Aug 2024
+ 17:45:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240726074201.M876490@dcvr>
+From: Yukai Chou <muzimuzhi@gmail.com>
+Date: Mon, 19 Aug 2024 08:45:02 +0800
+Message-ID: <CAEg0tHRL9+tqY0k2GiGzhc-VgMVsHqppLRFHbc=M33R6AoLXEg@mail.gmail.com>
+Subject: [PATCH] doc: add --show-names for git config
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Eric Wong <e@80x24.org> wrote:
-> Patrick Steinhardt <ps@pks.im> wrote:
-> > We shouldn't use asserts, but rather use `BUG()` statements in our
-> > codebase. `assert()`s don't help users that run production builds.
-> 
-> OK.
+Option "--show-names" was introduced along with the "get" subcommand
+of git-config(1) [1]. It was used in Deprecated Modes doc examples,
+normal and completion tests, but not documented.
 
-Thinking about this more, I still favor assert() in common code
-paths since it's only meant to be used during development and
-later removed or neutralized (via -DNDEBUG).
+It's known by both "get" and "list", though has no effect on "list".
 
-IOW, I treat assert() as scaffolding that can/should later be
-removed once the code is proven to work well.  We also have
-plenty of existing asserts in our codebase.
+Signed-off-by: Yukai Chou <muzimuzhi@gmail.com>
+---
+ Documentation/git-config.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Furthermore, assert() is also a well known API which reduces the
-learning curve for drive-by hackers (I still consider myself
-a drive-by since my I do minimal C).
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 65c645d461..525c29fcff 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -268,6 +268,10 @@ Valid `<type>`'s include:
+  all queried config options with the scope of that value
+  (worktree, local, global, system, command).
+
++--show-names::
++ Output also the names of config variables for `list` or
++ `get`.
++
+ --get-colorbool <name> [<stdout-is-tty>]::
+
+  Find the color setting for `<name>` (e.g. `color.diff`) and output
+-- 
+2.46.0
