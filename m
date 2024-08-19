@@ -1,136 +1,71 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F87F142900
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 11:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B124E15B111
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 12:15:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724066950; cv=none; b=omARjuraJbHOPZlT7I7O/q93WT95QhLS/FqS7lIGns2Fx4Vht4hkENLfzgK1XsZ3jeFK6kdoix0b++L8rTGatuBvsnI4ax+q48CkRcJ/fG3aMFq9SwpJQEMmxEPE+zFPGUcVNqZuqahyp9MVznKBLJFuswgoymXc4hy936dIV8o=
+	t=1724069714; cv=none; b=jeKgIJhrobHhHkIDc8E5wSRRrPs75LcfiqjBn4mwTw5Ni3bB+QusG8Zvekd+0Ud1uvaX0e5XEIaTiIu00GFPKhoUgVeQAT2zM2nz5tFPXvVvaensG1NJ2MVCvt29JQpiw+quAU8gBU7Bymf8E5IzXfSvoYDAusJJisWsDI+MlMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724066950; c=relaxed/simple;
-	bh=TuuS5YhKf81OKD9+NSrVRRDEQ8gis0ibjcIA3kdWoSg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Do/ebEGxrkw9QG2XdDJOYybgkdPZrQOj23SPxikCVNfLoY/y+al06kL5PzR19ynMQq2bsxPOvBgf91YbgrWyBjgMKMKEafRH0nMBCTne3s9vvWpB+Fa6wr8njc3vWMH3+wDcAKIrIo6l+tQ3FhVpPZhHxGby/v+1kS3ZbpRQi7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cLM31Sze; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1724069714; c=relaxed/simple;
+	bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=OBQKpPlgjIRM8i5GcrQuTOiDITl5ncV8x2cnSZGxQQi2Ns4I1/2RzDIHOrzpktKa3qA464vd7mBeCcB2OqHjl2TgnU4Hjc1vIgngOvFyjG6aawgvKsBpPudsg3dIKiAm2LnT01Z+2FvRCi9SCyPqTpGAzIVg5JTbB6QJSX1gYEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ue3dTbkJ; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cLM31Sze"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a728f74c23dso549956066b.1
-        for <git@vger.kernel.org>; Mon, 19 Aug 2024 04:29:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ue3dTbkJ"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2020e83eca1so21485365ad.2
+        for <git@vger.kernel.org>; Mon, 19 Aug 2024 05:15:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724066946; x=1724671746; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZmKYWxatjLLicy33ba34ub+8gL36lohiwuJZqaecq2Q=;
-        b=cLM31Szeh0AKePuWfEm5gs5rXq8BMdBC2vxoVvsVcqfjxuMYT1B2YhrULURvv2cMCm
-         uaDMxJQwA0gE3e9NFys/RNfIPUkrGp9lbFBFjK6VAnfy7Tcs3pjOFGeHmFiMKqOUEGgP
-         ceAJaoPG542u4+/qAevls9W7Tx0oI4UfteVxhfMWa10xwNk3pJpmxkvvVuqBIBxPNKdW
-         /oc2Xe8r9n+IfaKICRn09nQIjZ7cTyF0YCUlLLjVySgA4chBPV8/Wety230VoPaY5aXW
-         g1TTx4wyh6jfmBzs/dfCV0r+1KzXpyZxTa9PIO6urHHPOxUQwxx30WYMrYP/6LQrkZDo
-         NU5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724066946; x=1724671746;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1724069713; x=1724674513; darn=vger.kernel.org;
+        h=to:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZmKYWxatjLLicy33ba34ub+8gL36lohiwuJZqaecq2Q=;
-        b=aXieYebR3a/7+D3LwxpMZ4e66ARbIbqMe831F+aneo9leWcGgopefyQyMvkTo98RsD
-         NcjQ1Nt7137altVni3MkxM7Mivj94ItZgeiDBnA1ISAs4+5nzl+SaET7Q7qhub9kMlB8
-         uH/CjawFEdWty4jWF2lAm52u5P+F1v5+PXt2QLaub9LzBMIXWzRbNSkt89YM0bqAQ4Os
-         wIbz2tvxzsZmFuZglQ+TqwZFfygkhZGeQE+mbLDSMQckfz53NAe93I0TZPHxWwBX6M7O
-         av6/xqW+W9I3sv9TK0kfA6VbOMJ/+/o7ZlaBGL/l3NBD9ZZxMrrNnYyxEOpBu0quXQKN
-         YZ7A==
-X-Gm-Message-State: AOJu0YxwWkbne46+5eOlJTuZJRmcmn86qw7u1rRfeksGLd2sh4TFRUK2
-	bS+hJeQuSHtv0jC93zeYwGT2rn0TSPVCOhbVYRosQVB06umpoELAY8oKrQ==
-X-Google-Smtp-Source: AGHT+IHwg+LVAw6dK/uK+lbEWHehA5oHbDkxj7fb0El4pjsieIgAWqPqO0kWNgR/Y972+IX5LC/mYw==
-X-Received: by 2002:a17:907:f193:b0:a80:f893:51bb with SMTP id a640c23a62f3a-a8392a4c515mr715592166b.68.1724066946031;
-        Mon, 19 Aug 2024 04:29:06 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83838cefe0sm621403766b.47.2024.08.19.04.29.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Aug 2024 04:29:05 -0700 (PDT)
-Message-Id: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
-From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 19 Aug 2024 11:29:04 +0000
-Subject: [PATCH] git gui: add directly calling merge tool from gitconfig
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        b=Ue3dTbkJhPpdCvIFO+JR95fnrdk+gve73rMkXLLLIJZR0CWn41y1ImHKdpQHwU/UaF
+         O7zFw9Wq20LHKK+bKlgssN0gr7LTxeuHnT13MkYMopeqoF4XCbHYXBwTcV83hf/SLmav
+         cjKYgex1BLytaG/fdUPI1xwcdd6hMTm+RX4U5iDlwZvtdXQBj+mPC3s9cYTz7T+ovKWN
+         QZzXJbD2y6TETkX1shdSh/0DTp7FiB/VNfrBecNb0zN4Xht9JuIrvuYLGmucFLqWo41/
+         JQdcm4d98Ry5U6hMckSf3DGHBcgRBxdLmOPXuEakdLKUnkEZvkFtLOHeJ3JalXVxtYcG
+         RZnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724069713; x=1724674513;
+        h=to:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        b=dVkrIzsegUXnDDwbUjViM+1CRWeiLXQQdtzy1bzifxb0UnbFa8sxHf4aPAK89ZdOvK
+         pSL52oSiuu7Z1HmydZIkXKpKkmjJVfvB6uJXoomaFrJKDVWRj1jj5VgYr4CkY5AK6Sms
+         QByfEdv+Xfeirp5L33cqqaaxx7LqtqOUqyTteU3X39tA9i/7j5b5ZOC3qu7N+sftnLXO
+         1nXcUI/L9QXJJl5ypSzpiCPDWFvsW2i2eifrVqS8siS/7N19cgxBunlk4FPX1P/q+qBX
+         rd8JkAKEO2tg1QpHosH0KH0qWonxyaw2YWdUEHJ70s6foFrcAzZ9gmv6LSbCRnizeFic
+         Nxog==
+X-Gm-Message-State: AOJu0Yyp6ZszVMIyPymTC7olFj8JqfPPiMXzojdvNwk9NKIKqsiIe/w6
+	uGovqJZicu07HBrYRx640iy6arwekb+xcQZUk4pgYLHgb439sY9O4RKRGw==
+X-Google-Smtp-Source: AGHT+IFujNcDWjaMfUo34DlAMWBaUqzfFBLuzMjkhUqef5Zz0/X2NxvJeGxEzwHbboM5GFLmJCC3xA==
+X-Received: by 2002:a17:902:ced2:b0:202:2ead:f93f with SMTP id d9443c01a7336-2022eadfc1dmr46809065ad.1.1724069712516;
+        Mon, 19 Aug 2024 05:15:12 -0700 (PDT)
+Received: from smtpclient.apple ([117.20.113.88])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f03a1533sm61379515ad.272.2024.08.19.05.15.11
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Aug 2024 05:15:12 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: khmer song and funny clip 855 <limeangkonkhmer@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0 (1.0)
+Date: Mon, 19 Aug 2024 19:15:09 +0700
+Subject: =?utf-8?Q?Hello_let=E2=80=99s_start?=
+Message-Id: <C2009750-8973-4BFD-A967-6AA4F9542982@gmail.com>
 To: git@vger.kernel.org
-Cc: ToBoMi <tobias.boesch@miele.com>,
-    deboeto <tobias.boesch@miele.com>
+X-Mailer: iPhone Mail (19H386)
 
-From: deboeto <tobias.boesch@miele.com>
 
-* git Gui can open a merge tool when conflicts are
-    detected. The merge tools that are allowed to
-    call have to be hard coded into git Gui
-    althgough there are configuration options for
-    merge tools git in the git config. Git calls
-    the configured merge tools directly from the
-    config while git Gui doesn't.
-* git Gui can now call the tool configured in the
-    gitconfig directly.
-* Can be enabled through setting
-    gui.mergeToolFromConfig
-* Disabled by default, since option is most likely
-    never set
-* bc3 and vscode tested
 
-Signed-off-by: deboeto <tobias.boesch@miele.com>
----
-    git gui: add directly calling merge tool from gitconfig
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1773%2FToBoMi%2Fadd_merge_tool_from_config_file-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1773/ToBoMi/add_merge_tool_from_config_file-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1773
-
- Documentation/config/gui.txt |  4 ++++
- git-gui/lib/mergetool.tcl    | 11 +++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/gui.txt b/Documentation/config/gui.txt
-index 171be774d24..e63d0b46e7c 100644
---- a/Documentation/config/gui.txt
-+++ b/Documentation/config/gui.txt
-@@ -55,3 +55,7 @@ gui.blamehistoryctx::
- 	linkgit:gitk[1] for the selected commit, when the `Show History
- 	Context` menu item is invoked from 'git gui blame'. If this
- 	variable is set to zero, the whole history is shown.
-+
-+gui.mergeToolFromConfig::
-+	If true, allow to call the merge tool configured in gitconfig
-+	in git gui directly.
-\ No newline at end of file
-diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
-index e688b016ef6..fbd0889612a 100644
---- a/git-gui/lib/mergetool.tcl
-+++ b/git-gui/lib/mergetool.tcl
-@@ -272,8 +272,15 @@ proc merge_resolve_tool2 {} {
- 		}
- 	}
- 	default {
--		error_popup [mc "Unsupported merge tool '%s'" $tool]
--		return
-+		if {[is_config_true gui.mergetoolfromconfig]} {
-+			set path [get_config mergetool.$tool.path]
-+			set cmdline_config [get_config mergetool.$tool.cmd]
-+			set cmdline_substituted [subst -nobackslashes -nocommands $cmdline_config]
-+			set cmdline [lreplace $cmdline_substituted 0 0 $path]
-+		} else {
-+			error_popup [mc "Unsupported merge tool '%s'" $tool]
-+			return
-+		}
- 	}
- 	}
- 
-
-base-commit: b9849e4f7631d80f146d159bf7b60263b3205632
--- 
-gitgitgadget
+Sent from my iPhone
