@@ -1,89 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA750157A5A
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 09:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1A115D5D8
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 09:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724059039; cv=none; b=TS6jJ1GnE0LEcXBXMNuWA4M8EQ98s1X2uIK2yewZFcPE8lUF3KxdWEOfCSaOt4YZBEs/gvNiaoypyeGVkhR/ngwyvXYX9RJuD0S2RyM7hedDN9WM31zM0NibzwW3vLefHmHH2mhSwWhHbSDVBLK/QT1/NUVHoihGf4qFfXYxtmI=
+	t=1724059045; cv=none; b=NO93YobordI97Qhq4sokd52sCGZZ/B792iwIqVa6/pv4tSZ3errpmy1ux+IMPWSU5DoX4bXIIZYum3iFMF7TJk5G83J3SupswnsTs1Rh9+K8tMwPBGvK7MoWVdFjYa/4QuuTpGGwfO2ezbirMItoCBN0Ywh2WTEOMOiKtKPMct8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724059039; c=relaxed/simple;
-	bh=4MY6ebRueWOyvdZFQDsQFxACwL6pUDw1iZP+vNW1OHQ=;
+	s=arc-20240116; t=1724059045; c=relaxed/simple;
+	bh=Dsuw87vX9zNBKUwFRZbZDFqgYjaC7l6M3y1YlDOjt00=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nnzN9z/KDOyItJ5xv5J5atkyeWLlUFk5yEmt54dxJcKuW3/ZRfPhDNVtb+Q9he0JoL4KdEOg8mU4pxLDGLfe0964dZrXuLIgMlO9UTzN2nxgH6j3rgimhiRSl1tymly4Wkk/Q92hkwJP6wObCeknXD/MxNpy26hrl0qypyW2NNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8848 invoked by uid 109); 19 Aug 2024 09:17:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Aug 2024 09:17:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18389 invoked by uid 111); 19 Aug 2024 09:17:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Aug 2024 05:17:21 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Aug 2024 05:17:15 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Torl1KS5r/ElGiHDxs3ueORNxMeOIv0CNIuo9RtyvQ6AqZvZWwdGxZuVUTjN7qPH12e6rxQRSP8NJwb3rSTLA9c3hy2bpZz4UEOepabrFu5hmCwyTbMtVpiUnm3EUVy0rPe4R0OWvBG5Ol+nYiLLKznnyZyFp0yxtU+16Gg9QV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qaiy1vaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZQl6L7h; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qaiy1vaE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZQl6L7h"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 183D61150836;
+	Mon, 19 Aug 2024 05:17:23 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 19 Aug 2024 05:17:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724059043; x=1724145443; bh=S2qThJ4jvA
+	XehXUSZ5eH+q1moCK9mX9v4GbW4cp2mbE=; b=Qaiy1vaEuN6xVInZILR8cDXEox
+	H2/lQI+f349PCRaSzn99B+brzDvFyIumNwlPulA2zUd4xYr0u6pHzyxo+FZ9KiAV
+	m3NYR1/ojqevv4ramqf+pgXbdde1BdJEIWczF0YBQgkR8kR5FumA24E1tMQVXksI
+	OaqxZaWRZwZeWsGfe2AuCiOjq+RzbewDYKPXA1XoOX6P/q/Jt6hROUOgNat7Kw4/
+	1fme6+CPDqhUszc01V9SUtpO+8dOWIxxFge4Zuuf2kT0LY3W1COGtsNJZw8DE4Ff
+	sSE5Jqx0bThs3jWDAXugY0VHbwrN3NrDOTW4C4Z5oxBbk6sOzb+MjvsiHCNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724059043; x=1724145443; bh=S2qThJ4jvAXehXUSZ5eH+q1moCK9
+	mX9v4GbW4cp2mbE=; b=hZQl6L7hLuNiOzLXStweb+swJJmQRmFuYNbhRHl6B4K/
+	awixBJ9ni3EYSAqtekVX8wScHUE1vM7+JYZsgbs7LKchIg51c7AZx4Mf0Pz6kAT1
+	lL05c+1FhIUbwYD1SIa03XZrlWtvLIvBNGpijl2w2KRIoeLpjw/4m5f7mkd7fqcS
+	dBS13OQP7Rm89DvClPB0XMDDi5CSLChxFuWnTgdtRySIuRgyJVMoz3ivcDk55RdU
+	bd9V0noZYuozZhQG6dH7EYdkfVEBzu9iFJ6TpO+da0E5qsH7urJTWCU+7tJOYxHY
+	QQFIQmGDg8nRfrRWRk7I9RaU8u5+q9ywqX0VhKmUQg==
+X-ME-Sender: <xms:og3DZjrFSzB3McGzqR3plx2IsnsC5NSVPW0FgtNoIOLZFTB3drzWag>
+    <xme:og3DZtox4wgtRd1SCvBybzicvWvxdlRkLihzbBxjR2sYFUrXa6wraMmq8sNQgagn7
+    2uoOIHkS9Yfoam52A>
+X-ME-Received: <xmr:og3DZgNu3t-qhua5xxg882w2AYra8pRLS65lUTbkAq-0yeZ1oUzCELvRvYCf1pFEzrO_ZEO25Lvvn3LNOmR7gR1T4JRkIts7CiiVtY_qvK88PWM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddugedgudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
+    thhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
+    tghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllh
+    hiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:og3DZm71MnL1Au8_1LCzh_Zfkc8SPZwUFcNVnCyA-jPol2h7rSZMbA>
+    <xmx:og3DZi4Y30nC_xca5KsZ9lfRXcVpaDXh-5whXlzokVh4Nd3-3aZ6Hg>
+    <xmx:og3DZug7BZPM_rXN7fqtZFJJa8UDNwqRzdg47y98hqNkThRgB5qGVA>
+    <xmx:og3DZk6DiilZvfm71tvnxVcbwkwGVjjMjZfskUdlst7QAkskPCrX1g>
+    <xmx:ow3DZpbmRFFgAux2b6HtDk2gUFqo--94YoWpIeyHwqcG-oiTaR-48P17>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Aug 2024 05:17:21 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7251e16b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Aug 2024 09:16:51 +0000 (UTC)
+Date: Mon, 19 Aug 2024 11:17:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
 	phillip.wood@dunelm.org.uk, James Liu <james@jamesliu.io>,
 	Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] builtin/maintenance: fix loose objects task emitting
- pack hash
-Message-ID: <20240819091715.GB2958552@coredump.intra.peff.net>
+Subject: Re: [PATCH 1/3] t7900: fix flaky test due to leaking background job
+Message-ID: <ZsMNndPUOgKrqI4t@tanuki>
 References: <ZsLjcjhgI8Wk2tIV@tanuki>
  <cover.1724053639.git.ps@pks.im>
- <c25b5333f60a5920c1fade06532e3379c6686908.1724053639.git.ps@pks.im>
- <20240819085522.GD2955268@coredump.intra.peff.net>
- <ZsMLZ3Tlhxsg6Qdr@tanuki>
+ <4805bb6f6c2c96a2c40d1d8359b63b8c7045e0b6.1724053639.git.ps@pks.im>
+ <20240819084943.GB2955268@coredump.intra.peff.net>
+ <ZsMIa_5jCFs4OWYx@tanuki>
+ <20240819091241.GA2958552@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZsMLZ3Tlhxsg6Qdr@tanuki>
+In-Reply-To: <20240819091241.GA2958552@coredump.intra.peff.net>
 
-On Mon, Aug 19, 2024 at 11:07:51AM +0200, Patrick Steinhardt wrote:
-
-> > I have not paid much attention to the "maintenance" stuff. It is a
-> > little weird to me that it is not building on "git repack", which
-> > already handles this, but perhaps there are reasons. Anyway, totally
-> > unrelated to your patch (which looks good to me).
+On Mon, Aug 19, 2024 at 05:12:41AM -0400, Jeff King wrote:
+> On Mon, Aug 19, 2024 at 10:55:07AM +0200, Patrick Steinhardt wrote:
 > 
-> git-repack(1) is way less efficient than running git-pack-objects(1)
-> directly. I've also noticed that at one point in time when revamping how
-> we do housekeeping in Git.
+> > > This looks correct, but should we be doing it for all of the "git
+> > > maintenance" runs in that script? They're all going to kick off detached
+> > > gc jobs, I think.
+> > 
+> > Only those that use `--detach` run in the background.
 > 
-> It mostly boils down to git-repack(1) doing a connectivity check,
-> whereas git-pack-objects(1) doesn't. We just soak up every single loose
-> object, and then eventually we expire them via git-multi-pack-index(1)'s
-> "expire" subcommand.
+> I thought since the default for maintenance.autoDetach was true, all of
+> the "--auto" ones would need something similar. I notice a lot of those
+> use "--task", though, so maybe that doesn't count. I'm not clear on all
+> of the rules.
 
-Hmph. I'd have suggested that we should teach git-repack to do the more
-efficient thing. I'm a bit worried about having parallel universes of
-how maintenance works making it harder to reason about when or how
-things happen, and how various concurrent / racy behaviors work.
+`maintenance.autoDetach` only influences the auto-maintenance as
+executed by `run_auto_maintenance()`.
 
-But it's probably a bit late to re-open that (and certainly it's not
-part of your series).
-
-> > I wondered if you needed --no-detach here to avoid a race, but I guess
-> > as a non-auto run, it would never background?
-> 
-> Even the `--auto` run does not background. That was the case for
-> git-gc(1), but is not the case for git-maintenance(1). You now have to
-> pass `--detach` explicitly to cause it to background, which I think is
-> the saner way to do this anyway.
-
-Am I misreading the documentation? The entry for maintenance.autoDetach
-on 'next' says:
-
-  If unset, the value of `gc.autoDetach` is used as a fallback. Defaults
-  to true if both are unset, meaning that the maintenance process will
-  detach.
-
--Peff
+Patrick
