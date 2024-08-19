@@ -1,59 +1,57 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E061DC47F
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 20:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDEC49627
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 20:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724098104; cv=none; b=XnemXzg2F3ONSuDuH4UuJZAW4p4tDOmdrEL5ZsmSL5MdLo4DyVJ6FUE8A113nR667FCBVj2J+eswLgwrI4/cQgqL9kt1/huwv+2gDE5IybB7i8SgnRKwSJz2sGH6Qerf4FiNlgYur+7ig+EDM7aPS05xdmuY7Iaqv51pMI5p3E8=
+	t=1724098660; cv=none; b=iu8XugjNk2HeAzaN6xLRJW5VLkQB+yPM81P2Ep7Kle+GzHIhIRVL9OTjymFkAkuWbhqfDFEm4yW7Rx9yhA2lbPv+ohIQH6hwPOAS4ZYC0IHcaloa3VnXDCTsugrskvOJlyIHAD93eqR9MyGOCd1QoYK40jRrxoyAwrEbTcc+AGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724098104; c=relaxed/simple;
-	bh=P6y1FYC46Rb8chSEjAyISpoAFUiSOWhpaIq1/4ltuD8=;
+	s=arc-20240116; t=1724098660; c=relaxed/simple;
+	bh=0/RUAOvXBDGuecRdNrrAUOKVOcXYYwqLxxq3ZmT2w38=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YT8Tacq2hfjdPW4jmVR6xtrHwWCNNOAhd2Rrpdst0romJvDtnMHVn0NdExXcyVO8/UfSIYmyyHLOuHm0MELPBvrEj4YDSPShtiUmN6M1fm8OVBoYcht8f7h/5JxnPK0Cz0/jEhkEFjP/STFbCEyXmlFEUF2Uf2aw+Xs9OvxQlE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rWBL98uj; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=edifb981DZUxa3ZtSwuzISB9kqtbw88XYsTIZqlXPCbggThc0A0Co9p7dHMqssXra4LB6GDYEGMEdfWukBj3Z0CwMiEk6EfmpRbamOl8HCZ6cUqH+FlhZwSOeCexXlDyEpmyM98RB9GbTP8f4w392lPZxZU+3fO6k7R2sKWrzyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bGrubSYa; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rWBL98uj"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AA012F494;
-	Mon, 19 Aug 2024 16:08:21 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bGrubSYa"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F9BE27B40;
+	Mon, 19 Aug 2024 16:17:32 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=P6y1FYC46Rb8
-	chSEjAyISpoAFUiSOWhpaIq1/4ltuD8=; b=rWBL98ujC5HFZZEhkw+XNd25TizN
-	vQaz6wzV22t3TJ8DFFHahJDYrxUoHsEcAEzljlhntky/kBxqNOON2Oh6lpSqaok5
-	anlgkuZeZaYCzCzAXl7k8Svc5SMCc/ookqdLvxsxZ6jUL8dCZyXY9OP44BED3bnG
-	52DwC43mOqWQ2cY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 627312F493;
-	Mon, 19 Aug 2024 16:08:21 -0400 (EDT)
+	:content-type; s=sasl; bh=0/RUAOvXBDGuecRdNrrAUOKVOcXYYwqLxxq3Zm
+	T2w38=; b=bGrubSYamG8uxZ+/NJSE42/QzBVABsyErxoVlDc7zOS+LMlgBBLuI5
+	PBnHpHdxL62Q3iiRRKQrF/rev8fcCGqmQfUMSZ4NX7rPf6u5DowVAUkO0AojUC34
+	M/jPUDolaSTqmGBkwIfZ/YHHxvTaTpjMK7xobjrng3Kd9ROSSwR+Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9810E27B3F;
+	Mon, 19 Aug 2024 16:17:32 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C05C02F492;
-	Mon, 19 Aug 2024 16:08:20 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 24B6E27B3C;
+	Mon, 19 Aug 2024 16:17:29 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, =?utf-8?Q?Jean-No=C3=ABl?=
- Avila <jn.avila@free.fr>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Patrick Steinhardt <ps@pks.im>,
-    Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/3] doc: introducing synopsis para
-In-Reply-To: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
- (=?utf-8?Q?=22Jean-No=C3=ABl?=
-	Avila via GitGitGadget"'s message of "Sun, 11 Aug 2024 15:20:09
-	+0000")
-References: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
-	<pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
-Date: Mon, 19 Aug 2024 13:08:19 -0700
-Message-ID: <xmqqzfp8cm30.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Matheus Tavares Bernardino <matheus.tavb@gmail.com>,
+  git@vger.kernel.org,  johannes.schindelin@gmx.de,  newren@gmail.com,
+  ps@pks.im,  Lincoln Yuji <lincolnyuji@hotmail.com>,  Rodrigo Siqueira
+ <siqueirajordao@riseup.net>
+Subject: Re: [PATCH v2] rebase -x: don't print "Executing:" msgs with --quiet
+In-Reply-To: <08dc334a-e1d9-4aa1-945e-c543de549163@gmail.com> (Phillip Wood's
+	message of "Mon, 19 Aug 2024 14:57:16 +0100")
+References: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
+	<be3c968b0d9085843cd9ce67e85aadfaaafa69c8.1723848510.git.matheus.tavb@gmail.com>
+	<xmqq34n3jswh.fsf@gitster.g>
+	<CAGdrTFhZ6KeDPDUoCsV3h5myPuoYf7RR8eFdbFFXGrUGCdEkEw@mail.gmail.com>
+	<08dc334a-e1d9-4aa1-945e-c543de549163@gmail.com>
+Date: Mon, 19 Aug 2024 13:17:27 -0700
+Message-ID: <xmqqv7zwclns.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,25 +59,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- C811C46A-5E66-11EF-B449-9B0F950A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 0EEAC214-5E68-11EF-B530-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Jean-No=C3=ABl Avila (3):
->   doc: introduce a synopsis custom paragraph attribute
->   doc: update the guidelines to reflect the current formatting rules
->   doc: apply synopsis simplification on git-clone and git-init
+> On 18/08/2024 14:03, Matheus Tavares Bernardino wrote:
+>> ...
+>> term_clean_line()", the correct approach would be to modify
+>> "term_clean_line()" to return earlier "if (!isatty(1))". What do you
+>> think?
+>
+> On the face of it that sounds like a good idea but I haven't thought
+> too much about it. These messages are all going to stderr rather than
+> stdout. If we do go that way we'll need to adjust
+> launch_specified_editor() in editor.c to either suppress the hint or
+> terminate it with '\n' if stderr is not a terminal.
 
-This topic has become quiet.  I still find s:["someything you really
-want to say"] notation a bit annoying to my eyes, but its may be the
-best compromise we can come up with.
+Right.
 
-So unless we have a strong objection, or (even better) an objection
-with an alternative that is less yucky, perhaps it is time to
-declare that this is the variant of AsciiDoc/Asciidoctor that we'd
-adopt for our documentation.  Comments?
+The true reason why I brought it up was because (1) it looked really
+funny to avoid doing that term_clean_line() under "--verbose" as
+well as under "--quiet" and the code should explain what reasoning
+backs such decision but it did not, and (2) that unexplained funny
+pattern repeated, which probably was a sign that it needed to become
+a small helper function with descriptive name to encapsulate the
+logic to decide when to call and when not to call the clean-line,
+which as a bonus would give a central place for us to explain the
+reason behind not cleaning the line under "--verbose" and the same
+for "--quiet" (as I suspect that these two want to omit the call for
+different reasons).
 
 Thanks.
