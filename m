@@ -1,105 +1,182 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734F816B75F
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 12:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830011D696
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 12:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724070416; cv=none; b=t4A0mXEPirJPWXBryLkU84c5Gq38XDkFbByQZtHA6VibJ7keIC7CYXi2aAtpJ0m7J0BTkOwn5N2UQ4IZs8POavYlQYZ2hJbP7Gy6NCj8hJXQHoLimmQOwuocdrDABIRLPJ/GIGP61uNXom71LFEZnoVQhCuRxkarsOK+hlNczWU=
+	t=1724071587; cv=none; b=fMcPm4PPbXvjV0K1K/eXUy9os8dU2QTv8H5BN4T/URnpPOTUMN0FfjjjGy3psg6JoVApdaJhT6cwNLw1e4KAyPHXLrzZvqILVwKJQDTilIjFjC9DJd9SSLEuKLKQAxnkaylDvIGiOPE5OEPvr/s7imXW7trEkcGwaoeK6QrHXdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724070416; c=relaxed/simple;
-	bh=nGjq1+2iFh+uKKoZfNy5Sj4kH5oLUYASx5r+rUTYS5Q=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=givq+4ML0MxrqdvfpKHGOaKLcJaK3uFOwZ0CkmTHRQsKAOm0exQKOEs0loMvHQRJUBWz5RoGiuGjkpuG18aa+naaxhf4pGuqQRd9GBCZPV9sdRgJVbBPSBRWhPKEym8253epnlstIEwqHfOn14vap01OsMrkVuHgF94035G/wQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cX3aMILE; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1724071587; c=relaxed/simple;
+	bh=LPsd6FXIdy8Ea84XE2gDt12MQedpduqlgBSRV0DjPck=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p86KXwuryCA9H+qgqNzxJlupCvuKH0YJzZA+sNdZRMME/C4+vj58oFIWLtfBt6qRNTMuD5xiU7bPBWoNEh6LmmxCtAAb0vHB2WSOYBTlMFgJopTnUGGlwuHmMd1Q1UBNC8ZI7KKmOc9otDiPeL519UiaNBnn+Leag54V9xbMlbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lK5oKhLb; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cX3aMILE"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5bec87ececeso3198948a12.0
-        for <git@vger.kernel.org>; Mon, 19 Aug 2024 05:26:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lK5oKhLb"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5314c6dbaa5so5708144e87.2
+        for <git@vger.kernel.org>; Mon, 19 Aug 2024 05:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724070412; x=1724675212; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=BvtMgS+ionRHC/iU6gZMDPv9Nbkq2RCNVbMfeXDoEb4=;
-        b=cX3aMILEt8UehABHYq+eGiXfAYDZQaQVwueZ1BXLWB/1YzqPk1Z2hNOKEyUGqTh/GR
-         m1t5zGckvA/YA+rfiEhfU1kDh6p+6gGQ3DyG5IcNUB2ux7RlFz49JXi041ABflg19no7
-         aEF1yZQlpaTFAuercZ3gGwbWSFSv1ySH/f9IES1SBSPXQnt/CSckJEmW1dJhFLixQKS3
-         cNsl2z8+aXH/awseWDwFldZHQYztoBSDMKB0BC7rHQ/IS0CKe2cUZH/B9ZwhPDd59Ulz
-         sVH7WuujF5TKx0uYlBz0HSLDod8a0+JARj/jNB0KMawHpAyg5HoUU9u8091Mkjg4u+3J
-         TxSQ==
+        d=gmail.com; s=20230601; t=1724071583; x=1724676383; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/dcCA02XhiW7uODXKJJJjACw916GhVyyKdZH6/Uge6o=;
+        b=lK5oKhLb4PwdMF+Z7OCtxFZpGOqZ9qDFfIKIv5YTfbUCvZ8qB2ox9h25zlFYnqcQ/I
+         DSMwM3mJxpIoQye4GTp92/cLloZn2jL4qkdB+yf3Zybrjg3mbiZKzyPE567kPiSWjY70
+         i/MwOtVWBSYXpOT81r0K1lFvs/2p0e8hYFvEK65CQubwpScyfI8XrrMQQzjVmgSpdrQr
+         pzAfDugPyLkJ2RYDxqeVMkUWU4CqoV386RbsqFCuZsh+CMAPuEb/td5xP1jtq+XTMGEG
+         Cz5Oxsi4G7Pvdrw+vIR3UtVxe8ICclzNCyvvKEm5p5ixBQJnGCeP8LelE+N8aHieXj9H
+         G5jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724070412; x=1724675212;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BvtMgS+ionRHC/iU6gZMDPv9Nbkq2RCNVbMfeXDoEb4=;
-        b=qNzdj7p8/s4vDOsL+cgSmMJG3QB/0VLO9GM8W7QxVx/BBpUt6s9+cZ4Fgtf5JPC+cc
-         kiL4vkKAkdPH82epOMOj9myso7BX35u4CvCgk7c+1ae2MgiWtFN4Y7YvJhG25sOTsdFs
-         IxwQM6rui6vPlJWEVV07hvWHNyQQ0WOqAI/Fp2GfDh4k0W3eeRwU+pR0x8wkTmhtgInX
-         9N305o43miCXo4ATDY8MJ+582+wh/t9v9n92pOclUQp1U+i1vzlXRPKEwtemSKgscK5B
-         pnAedOwYjwj0LYYWaEC5Y4CXyvIRny15DPj+5/IXEKfNHXwgqQ6uwt6A4ohmWiAUakwu
-         za4g==
-X-Gm-Message-State: AOJu0YzVUq/H1GZOn6TS/LpVYGoZhB4tlEd5fMRtqN67zCCXkmeG/hpZ
-	jNX1YzQjR0lsqmWyxyiLkqn0N7Pk5TdMOfMaEbbpky51RsfS51Krt0PR0g==
-X-Google-Smtp-Source: AGHT+IGGkhkz+KalSgqvYTYu9BsnZiaMfwOEkUAon3qLX+ZCpKCXwEUZdw8XTM4vt2YeM7orOs4wPw==
-X-Received: by 2002:a05:6402:4312:b0:5be:fadc:8714 with SMTP id 4fb4d7f45d1cf-5befadc8845mr2386846a12.5.1724070412142;
-        Mon, 19 Aug 2024 05:26:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bebbde48e7sm5674589a12.26.2024.08.19.05.26.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Aug 2024 05:26:51 -0700 (PDT)
-Message-Id: <pull.1761.git.git.1724070410906.gitgitgadget@gmail.com>
-From: "ahmed akef via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 19 Aug 2024 12:26:50 +0000
-Subject: [PATCH] docs: explain the order of output in cat-file batch
- operations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1724071583; x=1724676383;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/dcCA02XhiW7uODXKJJJjACw916GhVyyKdZH6/Uge6o=;
+        b=jsW5SjA1z4WWMDT15OBBUP/x2w744eLCjD6PnMgCyNvwCYHz71xcvpaabX6eUTpj9w
+         Uayl6wX1gRV8jOnKPn3xGjkMYuBSlJwAhnJqo5CfjD5v2pQuFpbN1j1Wx0fWn1z3R5Sx
+         2dhHLcl6+HPUy4Ja4++jNfu0tOAAL+lrOOBvHDLOlQq97gGHPUfT9fB5eDRMJYKtDaCO
+         4wz4GCD6LAPTP97enSfCLDGZLFO1rGA4WNMaD/0JVRyZi9F/repJqklfOcv9eQyY4h8w
+         fiC06DzA0s/IzFjzZwZP7exR6iTl1agD1LsHp50m7mbcz9vEetlhQrS4sTRrpjbmxnVz
+         er4A==
+X-Gm-Message-State: AOJu0YwCmBatzaZ5VDOzGAGDZ+i+8rbwYGN6s941zaVzuDxljHTaIspi
+	X9cH6Yp1FZn9MmqTD/4BUNYtr5RtmdW6J90VDI54pdSzQ8nL4vct1SqFsI7gZWnN+CvpbwBb7vR
+	++2Wu4eKiBPxNtE6yR9UJFRFHMx8=
+X-Google-Smtp-Source: AGHT+IG2gMiS+zjARuZAeG0bsWBJdHlD+19+NGaCNtEw1o/hgwJnac7AueHLjU5uFE3wiXg/rDOtZtvfE+uP5MNsh7w=
+X-Received: by 2002:a05:6512:3045:b0:52b:9c8a:734f with SMTP id
+ 2adb3069b0e04-5331c6e54a6mr8138521e87.50.1724071582762; Mon, 19 Aug 2024
+ 05:46:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: ahmed akef <aemed.akef.1@gmail.com>,
-    ahmed akef <aemed.akef.1@gmail.com>
+References: <20240813172432.55487-1-shyamthakkar001@gmail.com> <20240814142057.94671-1-shyamthakkar001@gmail.com>
+In-Reply-To: <20240814142057.94671-1-shyamthakkar001@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 19 Aug 2024 14:46:11 +0200
+Message-ID: <CAP8UFD2-VbyK-ZecDKEvgKicWrVe=e=z6mH_xjmrf=a4ZAYd8w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v3] t: migrate t0110-urlmatch-normalization to the
+ new framework
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: ahmed akef <aemed.akef.1@gmail.com>
+On Wed, Aug 14, 2024 at 4:21=E2=80=AFPM Ghanshyam Thakkar
+<shyamthakkar001@gmail.com> wrote:
+>
+> helper/test-urlmatch-normalization along with
+> t0110-urlmatch-normalization test the `url_normalize()` function from
+> 'urlmatch.h'. Migrate them to the unit testing framework for better
+> performance. And also add different test_msg()s for better debugging.
+>
+> In the migration, last two of the checks from `t_url_general_escape()`
+> were slightly changed compared to the shellscript. This involves changing
 
-the order of the output is not described explicitly so someone can make
-complex code to parse it instead of just depending on the order
+Nit: s/shellscript/shell script/
 
-Signed-off-by: ahmed akef <aemed.akef.1@gmail.com>
----
-    explain the order of output in cat-file batch operations since it is not
-    explicit
+>
+> '\'' -> '
+> '\!' -> !
+>
+> in the urls of those checks. This is because in C strings, we don't
+> need to escape "'" and "!". Other than these two, all the urls were
+> pasted verbatim from the shellscript.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1761%2Fahmedakef%2Fexplain-the-order-of-output-in-cat-file-batch-operations-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1761/ahmedakef/explain-the-order-of-output-in-cat-file-batch-operations-v1
-Pull-Request: https://github.com/git/git/pull/1761
+Nit: s/shellscript/shell script/
 
- Documentation/git-cat-file.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Another change is the removal of MINGW prerequisite from one of the
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index bd95a6c10a7..f1e0b4a7219 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -270,8 +270,8 @@ BATCH OUTPUT
- ------------
- 
- If `--batch` or `--batch-check` is given, `cat-file` will read objects
--from stdin, one per line, and print information about them. By default,
--the whole line is considered as an object, as if it were fed to
-+from stdin, one per line, and print information about them sequentially in the same order.
-+By default, the whole line is considered as an object, as if it were fed to
- linkgit:git-rev-parse[1].
- 
- When `--batch-command` is given, `cat-file` will read commands from stdin,
+Nit: s/of MINGW prerequisite/of a MINGW prerequisite/
 
-base-commit: 406f326d271e0bacecdb00425422c5fa3f314930
--- 
-gitgitgadget
+> test. It was there because[1] on Windows, the command line is a
+> Unicode string, it is not possible to pass arbitrary bytes to a
+> program. But in unit tests we don't have this limitation.
+>
+> And since we can construct strings with arbitrary bytes in C, let's
+> also remove the test files which contain URLs with arbitrary bytes in
+> the 't/t0110' directory and instead embed those URLs in the unit test
+> code itself.
+>
+> [1]: https://lore.kernel.org/git/53CAC8EF.6020707@gmail.com/
+>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+> This version addresses Junio's review and removes the restriction
+> of running the unit tests in the 't/' and 't/unit-tests/bin'
+> introduced in v2 by embedding the URLs in the code itself.
+
+Nice change.
+
+[...]
+
+> +static void compare_normalized_urls(const char *url1, const char *url2,
+> +                                   size_t equal)
+
+Nit: it's better to use 'unsigned int' or just 'int' for bool flags
+like "equal". Or is there a reason to use 'size_t' instead?
+
+> +{
+> +       char *url1_norm =3D url_normalize(url1, NULL);
+> +       char *url2_norm =3D url_normalize(url2, NULL);
+> +
+> +       if (equal) {
+> +               if (!check_str(url1_norm, url2_norm))
+> +                       test_msg("input url1: %s\n  input url2: %s", url1=
+,
+> +                                url2);
+> +       } else if (!check_int(strcmp(url1_norm, url2_norm), !=3D, 0)) {
+> +               test_msg(" url1_norm: %s\n   url2_norm: %s\n"
+> +                        "  input url1: %s\n  input url2: %s",
+> +                        url1_norm, url2_norm, url1, url2);
+
+Nit: something like "normalized url1" might be a bit better than
+"url1_norm" as for the 'url1' variable we use "input url1" instead of
+just "url1".
+
+> +       }
+> +       free(url1_norm);
+> +       free(url2_norm);
+> +}
+> +
+> +static void check_normalized_url_length(const char *url, size_t len)
+> +{
+> +       struct url_info info;
+> +       char *url_norm =3D url_normalize(url, &info);
+> +
+> +       if (!check_int(info.url_len, =3D=3D, len))
+> +               test_msg("     input url: %s\n  normalized url: %s", url,
+> +                        url_norm);
+
+Above "normalized url" is used for "url_norm" which is good.
+
+> +       free(url_norm);
+> +}
+> +
+> +/* Note that only file: URLs should be allowed without a host */
+
+Nit: maybe s/file:/"file:"/ would make things a bit clearer.
+
+[...]
+
+> +/*
+> + * http://@foo specifies an empty user name but does not specify a passw=
+ord
+> + * http://foo  specifies neither a user name nor a password
+> + * So they should not be equivalent
+> + */
+
+Nit: the above comment would be a bit better with URLs inside double
+quotes, with a full stop (period) at the end of each sentence and with
+only one space character between "http://foo" and "specifies".
+
+Except for the above nits, I am happy with this version. Thanks.
