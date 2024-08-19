@@ -1,52 +1,53 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D6A186E56
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 19:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CFF4438B
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 19:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724095014; cv=none; b=YUZxJdSIc/O0vOEmJoI5geWH5xNS70Acp5SRGB72bg+gKJyv0kpZ2TuE2YgCMmIoRr7sB/QPhvvZL+b9WPf5LRaLzLT33BZhXu6Dv2l95d2fS3rK0yg43F14scUPsXFQDzyzrq0ysQaWxNSunCi/gOR10mNbQ6Kc+IrDvQjyuEY=
+	t=1724095379; cv=none; b=emraAu5iL+hLdRLdBod+qjt+ElWnDyDjGTKUJ9dtopJ46Y33MjY5klWdj6weIGHjwzbtLpVhGejgGyspAmWfTGW8VwM0qRS1PMWNZ1E81hxQ0dBZQO/bNLJimowTjTTd2NmdbJkD9rzgY+rZYXXAEvCQtDD2X+VkqVU0KYliBNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724095014; c=relaxed/simple;
-	bh=MwS2iFi8Jc+dYpw2FV+H80SCy0RwWPcPDr6kf6Ll/yU=;
+	s=arc-20240116; t=1724095379; c=relaxed/simple;
+	bh=ew8TDarCuKKwXeoKdO6HP7+pDH9+PJAcceCQcxMs7JM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JUKb66xHdR20NLx423ji5v/h7Qn3ADzgIbDIYQpbwFsmFzl2MKZcNDLcm4r/eNiOc5gzmGBBGfrknVKwT2GX4cqDEGG5ewWteZfACf+ZiOTetxw36fCcKuL6O8oaZSKzWL8EcvVv4y1CoUpNI2/5XjVhD4YHVt56ROMQNaurdJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dQM0wkwv; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=WMCh7W1HF5RuFfInUmkX3EPtb26kmKx3ZnudIQrj6Rms34HXG23g5UZ5W1nJwP+zxo9aHTIIY4lvfcfuJ0i8fcM+n6oHoktpoRexG7C33xgITAY2olH1SutarA0ltTtDADwPE1XWAk0mWo1cUYDCb3e1taTQrfGeAwhOCexrCOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uUgofGEf; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dQM0wkwv"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AC0251B6D8;
-	Mon, 19 Aug 2024 15:16:52 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uUgofGEf"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E05502EEE8;
+	Mon, 19 Aug 2024 15:22:50 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MwS2iFi8Jc+dYpw2FV+H80SCy0RwWPcPDr6kf6
-	Ll/yU=; b=dQM0wkwvUKP4QSDxQoYnJaYL6aQYM6w+Z9XTyPpZwpCh3XpqWTyxhX
-	UzJpdL2mj0DnKIoJ/Z/U6K9FC27EewgVDWbkILn+wtNN4ksf7T6tf2YzpSlmMV7V
-	uHBE8fmnq18j8CXzKTpR/PLSPBt5Fh9IJLRbGeeMoBRKvQU/JVB10=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A532E1B6D7;
-	Mon, 19 Aug 2024 15:16:52 -0400 (EDT)
+	:content-type; s=sasl; bh=ew8TDarCuKKwXeoKdO6HP7+pDH9+PJAcceCQcx
+	Ms7JM=; b=uUgofGEfBqEdWHlTx502C8aZgYatfWDCu7T9pNFRjegIO4p/+Kk0dp
+	98VzLihVVd8SidFjZChKC+Ac81+sMkBrCqlzsnTZ/KoUyIfKeKlb+Io5ikpgTqhx
+	3GQXTDJnT7tWkgYQ1sZeaw1u19XhHl5lTC7JDnYlxUjdLYageuB3I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D754E2EEE7;
+	Mon, 19 Aug 2024 15:22:50 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 32D421B6D6;
-	Mon, 19 Aug 2024 15:16:49 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 457022EEE6;
+	Mon, 19 Aug 2024 15:22:50 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: v2.46.1? was Re: What's cooking in git.git (Aug 2024, #06; Fri,
- 16)
-In-Reply-To: <b6e3763d-945f-fdf7-e620-cd26b8c72419@gmx.de> (Johannes
-	Schindelin's message of "Mon, 19 Aug 2024 18:49:07 +0200 (CEST)")
-References: <xmqqwmkgjomp.fsf@gitster.g>
-	<b6e3763d-945f-fdf7-e620-cd26b8c72419@gmx.de>
-Date: Mon, 19 Aug 2024 12:16:47 -0700
-Message-ID: <xmqqplq4e31c.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>, Yukai Chou
+ <muzimuzhi@gmail.com>
+Subject: Re: [PATCH v2] doc: add --show-names for git config
+In-Reply-To: <CAEg0tHQDT7LesB2kiQD4rXwcUs5ZhOH+YWdn990tfGdrnYdgZg@mail.gmail.com>
+	(Yukai Chou's message of "Tue, 20 Aug 2024 02:27:56 +0800")
+References: <CAEg0tHRL9+tqY0k2GiGzhc-VgMVsHqppLRFHbc=M33R6AoLXEg@mail.gmail.com>
+	<xmqqcym4fqhp.fsf@gitster.g>
+	<CAEg0tHQDT7LesB2kiQD4rXwcUs5ZhOH+YWdn990tfGdrnYdgZg@mail.gmail.com>
+Date: Mon, 19 Aug 2024 12:22:49 -0700
+Message-ID: <xmqqle0se2ra.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,21 +57,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 955732B4-5E5F-11EF-8483-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+ 6C900CD8-5E60-11EF-8CD2-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+[Cc-ing the author of 4e513890 that was referred to by this change.]
 
-> I frequently look at these two paragraphs in the What's cooking mails, or
-> more specifically: at a paragraph inserted between these two occasionally,
-> to get hints about imminent maintenance versions (to allow me to better
-> prepare for them such as keeping back component updates in Git for Windows
-> that strike me as needing some exercise before being released in an
-> official version).
+Yukai Chou <muzimuzhi@gmail.com> writes:
+
+> 4e513890 (builtin/config: introduce "get" subcommand,
+> 2024-05-06) introduced "--show-names" option that is used to
+> give the name of the configuration variable to each output entry
+> in addition to the value.  It however forgot to document it,
+> even though the option is used in a few examples.
 >
-> About 2.5h after sending the quoted mail, it seems that the `maint` branch
-> was updated with a hint that you plan on releasing a v2.46.1.
-
-There is no immediate need for it and 2.46.1 does not even have to
-happen.  Just a grab bag of topics that are safe and are already on
-track for 2.47 are kept in case we accumulate enough of them.
-
+> Document it.
+>
+> Signed-off-by: Yukai Chou <muzimuzhi@gmail.com>
+> ---
+> Thanks for your review and suggestions Junio. I must have stayed up
+> too late yesterday, so what the commit message was sent was not the
+> final version.
+>
+>  Documentation/git-config.txt | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index 65c645d461..16323c4ed0 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -268,6 +268,9 @@ Valid `<type>`'s include:
+>   all queried config options with the scope of that value
+>   (worktree, local, global, system, command).
+>
+> +--show-names::
+> + Output also the names of config variables for `list` or `get`.
+> +
+>  --get-colorbool <name> [<stdout-is-tty>]::
+>
+>   Find the color setting for `<name>` (e.g. `color.diff`) and output
