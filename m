@@ -1,54 +1,59 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D491553BC
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 20:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E061DC47F
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 20:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724097616; cv=none; b=UFZMxVCUz8Pn91/9PKUr/gvIr4rS55c3/hKndG36OVLqtunmqZ+7wf1cQU5P67uevzZgtLY3yyg9Nfj+AU74HW6LyCne+qRnxl7D3Y7dgfHc2x5j7yUaQiVOzxFey8zbhO7usprWF5SFpGbDXtNe1W4VdfQSGVwzGJWU4ybvLUQ=
+	t=1724098104; cv=none; b=XnemXzg2F3ONSuDuH4UuJZAW4p4tDOmdrEL5ZsmSL5MdLo4DyVJ6FUE8A113nR667FCBVj2J+eswLgwrI4/cQgqL9kt1/huwv+2gDE5IybB7i8SgnRKwSJz2sGH6Qerf4FiNlgYur+7ig+EDM7aPS05xdmuY7Iaqv51pMI5p3E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724097616; c=relaxed/simple;
-	bh=ZzwvtjquB+yxTIUVqageAyzUzwrrNLtht7QBQnOSYTA=;
+	s=arc-20240116; t=1724098104; c=relaxed/simple;
+	bh=P6y1FYC46Rb8chSEjAyISpoAFUiSOWhpaIq1/4ltuD8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S3PTCKq1pcMsVCNcmoZTr/EhvY+WEKbKH4tH3JTqm6KN1F8MaKybCtKGygtNMFzp40fBuIRdeOd1Cs2gTZ63dSqKJQhkOJAhtCmpi7qmgi509PY00jhDoDxqoR5nsc8rs+F87UvvVSFvn4TMZ719BbVSLOkHHDm3Z7HXUWzWl8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CGC3nfio; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=YT8Tacq2hfjdPW4jmVR6xtrHwWCNNOAhd2Rrpdst0romJvDtnMHVn0NdExXcyVO8/UfSIYmyyHLOuHm0MELPBvrEj4YDSPShtiUmN6M1fm8OVBoYcht8f7h/5JxnPK0Cz0/jEhkEFjP/STFbCEyXmlFEUF2Uf2aw+Xs9OvxQlE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rWBL98uj; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CGC3nfio"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAB2223470;
-	Mon, 19 Aug 2024 16:00:13 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rWBL98uj"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AA012F494;
+	Mon, 19 Aug 2024 16:08:21 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZzwvtjquB+yxTIUVqageAyzUzwrrNLtht7QBQn
-	OSYTA=; b=CGC3nfioY5Pm808kDvw1X07IatAT4A+Q1dmppd+cdXlfXLTm0ze21F
-	bjHfezK18+ol52pikyDp+L+JrJl6vJIxRMCutK3wkVddi9SCrZFFlMp2NT1FCSt5
-	NYPiRIp2GI5nOJJpk9FfVfiZ7krSCgBpg4Od/JCGeGJLqaXsj7bz8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A07D52346F;
-	Mon, 19 Aug 2024 16:00:13 -0400 (EDT)
+	:content-type:content-transfer-encoding; s=sasl; bh=P6y1FYC46Rb8
+	chSEjAyISpoAFUiSOWhpaIq1/4ltuD8=; b=rWBL98ujC5HFZZEhkw+XNd25TizN
+	vQaz6wzV22t3TJ8DFFHahJDYrxUoHsEcAEzljlhntky/kBxqNOON2Oh6lpSqaok5
+	anlgkuZeZaYCzCzAXl7k8Svc5SMCc/ookqdLvxsxZ6jUL8dCZyXY9OP44BED3bnG
+	52DwC43mOqWQ2cY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 627312F493;
+	Mon, 19 Aug 2024 16:08:21 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECA8B23469;
-	Mon, 19 Aug 2024 16:00:12 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C05C02F492;
+	Mon, 19 Aug 2024 16:08:20 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  John Cai <johncai86@gmail.com>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/4] Add 'promisor-remote' capability to protocol v2
-In-Reply-To: <ZrDYIFolRlERFdUT@tanuki> (Patrick Steinhardt's message of "Mon,
-	5 Aug 2024 15:48:16 +0200")
-References: <20240731134014.2299361-1-christian.couder@gmail.com>
-	<20240731134014.2299361-4-christian.couder@gmail.com>
-	<ZrDYIFolRlERFdUT@tanuki>
-Date: Mon, 19 Aug 2024 13:00:11 -0700
-Message-ID: <xmqq5xrwe110.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, =?utf-8?Q?Jean-No=C3=ABl?=
+ Avila <jn.avila@free.fr>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Patrick Steinhardt <ps@pks.im>,
+    Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/3] doc: introducing synopsis para
+In-Reply-To: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+	Avila via GitGitGadget"'s message of "Sun, 11 Aug 2024 15:20:09
+	+0000")
+References: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
+	<pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+Date: Mon, 19 Aug 2024 13:08:19 -0700
+Message-ID: <xmqqzfp8cm30.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,52 +61,25 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- A54F04F2-5E65-11EF-B300-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ C811C46A-5E66-11EF-B449-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> +In this case, or if the client doesn't want to use any promisor remote
->> +the server advertised, the client should reply only "promisor-remote"
->> +without any value or "=" sign after it.
->
-> Why does the client have to advertise anything if they don't want to use
-> any of the promisor remotes?
+> Jean-No=C3=ABl Avila (3):
+>   doc: introduce a synopsis custom paragraph attribute
+>   doc: update the guidelines to reflect the current formatting rules
+>   doc: apply synopsis simplification on git-clone and git-init
 
-Yeah, it is not very well justified why an empty capability needs to
-be sent (from both sides).  My recommendation is to drop that part
-of the design, but if there is a reason to keep, it should be done
-by explaining how differently the other side should behave when the
-capability is not sent at all and when the capability with no
-promisor remote is sent.
+This topic has become quiet.  I still find s:["someything you really
+want to say"] notation a bit annoying to my eyes, but its may be the
+best compromise we can come up with.
 
->> +The "promisor.advertise" and "promisor.acceptFromServer" configuration
->> +options can be used on the server and client side respectively to
->> +control what they advertise or accept respectively. See the
->> +documentation of these configuration options for more information.
->
-> One thing I'm not totally clear on is the consequence of this
-> capability. What is the expected consequence if the client accepts one
-> of the promisor remotes? What is the consequence if the client accepts
-> none?
-
-Yes, I also found the documentation lacking in that respect.  The
-series talks about how the exchange can proceed, without saying much
-(if anything) about what both sides want to exchange promisor-remote
-for---what effect does it have on the behaviour of both sides to
-send one.  I covered this point in one of my reviews a bit more.
-
-  https://lore.kernel.org/git/xmqqikwl2zca.fsf@gitster.g/
-
-> In the former case I'd expect that the server is free to omit objects,
-> but that isn't made explicit anywhere, I think. Also, is there any
-> mechanism that tells the client exactly which objects have been omitted?
-> In the latter case I assume that the result will be a full clone, that
-> is the server fetched any objects it didn't have from the promisor?
->
-> Or does the server side continue to only honor whatever the client has
-> provided as object filters, but signals to the client that it shall
-> please contact somebody else when backfilling those promised objects?
+So unless we have a strong objection, or (even better) an objection
+with an alternative that is less yucky, perhaps it is time to
+declare that this is the variant of AsciiDoc/Asciidoctor that we'd
+adopt for our documentation.  Comments?
 
 Thanks.
