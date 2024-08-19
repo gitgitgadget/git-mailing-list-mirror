@@ -1,154 +1,106 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B0317557E
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 16:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EA617837D
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 16:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724086082; cv=none; b=NNdwVP55kkissQ7KjZtqS44Gw1QKQvi0YlnMD+Y9FiD75zpoCeesvrYV6EqOTU+B5h7otKs8hWIAxYDiEqlr+CV7xJL5eqPkJ3gcOnsTAW4UAhlOlHtVZXLa6vmMR00RJ9b5TDeZDeLQYbQUNfBaZnWIJzQLRk5pUS67ERHYXL0=
+	t=1724086154; cv=none; b=iDVZjYLcx8bbudGdZUWYmDguFC3aHbRAmJfu196ROwhfybx7MjS/NGmdZOmS0bPO8DqrsyqP7eOIbe2iWJ3rZWDqyemkO3U7mu8G1NbZ/ZG0f6kK303Sbh0X3HzpNlP7aP8VBqZ/5wSozVg5oeMKk6kg7YJ77rm27qDlQuz+nM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724086082; c=relaxed/simple;
-	bh=6HDQ1BAxvjYtRf/8SSdGN42NAiOkOjEa9dOL3AYdsXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dPPUDBaP/Lj2wLWCrN4o/GgsuFyGgyQ6MKiZHRbIgXp/LP3MTrswYJ0yMd9ZoguKrsZGmLS4z/feNCmeZ6fOlr0a9v5XbvTxHoj0U4PiUbimNAVpAP0Sgdi3rbCAcxmBirajJKkgxokbZwOoSZho86AnDEjJTyGza1lETCglImU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iFrtnQBO; arc=none smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724086154; c=relaxed/simple;
+	bh=SaHXLsTjmf+0HSGdn30L4RFUmIJ7OCXC8ik7oOZbVN0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=EtDYvr2uNgSWE6GzMsBywfba4J/czA2CfrmlXb9DRymBrwCKa50mPGS2CxJzSG6yOmgTl86Oi8JTS0jIWQTmWU2myA8TU6mEAWPogvyJw4prCcTpYzMiJ3rvv/pQv2iJEL3AomBwt+UZ+4ABxwodKSRdA5a4I0jec1/OmK22+LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=GhLMDf3S; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iFrtnQBO"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-3db1eb76702so3318972b6e.0
-        for <git@vger.kernel.org>; Mon, 19 Aug 2024 09:48:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724086080; x=1724690880; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oOZuhFnDznu+4aX9SRJJo7j810fnZZUbGNd645ngyp4=;
-        b=iFrtnQBOss8HiWSc8lQdCejzBeCAVQ0Fa0/QRffO4K6f8y0oOdP/LNMxAemSdaXZ/v
-         IPL4bsUAuyOiAm1CDwXMmIXtrQ4GjBojnyKQJYJY4bQdi+TS1mb/b3lZpPOIgoR6gklz
-         KL+nnip4Kvbkg2+92gLWp7eqSX/LtK7OxQLL8k4CNJnbueyLyQZX3hbLJUL63w7VRPjp
-         9Ohr7A3xhE7f/kVFkrEFoTw3xdltj97JUJoTNPD1pUM+uKSp3tJ1PUYQf2OAsiutbpAN
-         60rANcKIQlCP3a6+y2bPxv3Hp/64INfHgERPK+mU5FYAa8/MSMKWYj+kOW0iBYQWkep3
-         R1pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724086080; x=1724690880;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oOZuhFnDznu+4aX9SRJJo7j810fnZZUbGNd645ngyp4=;
-        b=u81rh6fe0L+AFvUzcdi9QFNAca/k+3cdpbJtoQ85MqviZBrCqGCGU/zr3iaWk6Yp2Q
-         IPIZ6gzyVQc9TH5QMyNDzRdcP3F2WknIAYYr1FAI+dmiN+4mCswLaedu/yMahIX52z3H
-         +3m2FBz0Y+mka62c+Q7chj9sQe4SdlOPpIl9iBmApjbvIAHJ3qhV1LUDgrUhpQ57Eqhz
-         1j3ymKbcisZNf23aTf/8Y6Z9UIHLO65efdWbkKCOlBdg2PPwvYD0C/mwp5tqCkcDb/j7
-         uEQ9DvvoLAt9nut9KCrdQWUmKHxq2AXPmDLI6P4+jnFUeFW0uVwmsNhuhgG3RGiCA3Bl
-         avpA==
-X-Gm-Message-State: AOJu0YzWVQL9eWhT+jcZs7yqZZyQyW99jiNU2fO8f5fagf7zPEa22Fzd
-	80ow2MIZ9AuK/L07+UOf6dijNT3ljzlY4Xn7CoxC7plvzgVT/jMQ+5S2yQ==
-X-Google-Smtp-Source: AGHT+IGmAyMsB7S+f96HvvylndE0eNyRgbh0KWUTWMbCziUSqwYoKb7vbZLYR05vKNnutUnMASi3MA==
-X-Received: by 2002:a05:6808:18a1:b0:3d8:4603:e7a0 with SMTP id 5614622812f47-3dd3ad47e55mr11947927b6e.27.1724086080394;
-        Mon, 19 Aug 2024 09:48:00 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3dd33ef574csm2402515b6e.54.2024.08.19.09.47.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Aug 2024 09:48:00 -0700 (PDT)
-Date: Mon, 19 Aug 2024 11:47:06 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/10] reftable/merged: stop using generic tables in the
- merged table
-Message-ID: <gzhbfjhyhhmje53s3zp4crzvwf7dfkcixl3uxw3h4fvsv32x37@6rvvt7svtrjg>
-References: <cover.1723528765.git.ps@pks.im>
- <86e2f9f5dc64eee97510e597820791287032ba29.1723528765.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="GhLMDf3S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1724086148; x=1724690948;
+	i=johannes.schindelin@gmx.de;
+	bh=ZyfUc/dZjjv6lJJtKE844BvNxUJ+NpifxSIHJDdKEFA=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=GhLMDf3SOmHvAmpLF4hiA+7DG6jiA8v9QGnhV4u2HDFl7MjgjXe1AVC0YQv2hLeI
+	 +Ym83V6MKAd1C30GNT/qRWE7o538U32zqBVxmqJwhex01A2EiqTDvo+amVprH+Ydi
+	 xjUQFu53b1126zISgJMiWksuGLZD0ZzZP0TT/Ve3JR/69jcIK+2FyomYsvFTI7ZuR
+	 2wbIy9VeInYfsDu/AzZl/GxzRdm/e8r0pzDdFYx9GU575pYpVK6tp3vpnsbUqj8bh
+	 eRg0PF9/UsfyOszarjlp3c6pcb3bHI3RrCsoT9PRmbOycXi7QwN9bYh7Qr9f0mL2F
+	 N8vhhgside5B+bYISA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.249]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8GMk-1s2VaG0GuW-017KsB; Mon, 19
+ Aug 2024 18:49:08 +0200
+Date: Mon, 19 Aug 2024 18:49:07 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: v2.46.1? was Re: What's cooking in git.git (Aug 2024, #06; Fri,
+ 16)
+In-Reply-To: <xmqqwmkgjomp.fsf@gitster.g>
+Message-ID: <b6e3763d-945f-fdf7-e620-cd26b8c72419@gmx.de>
+References: <xmqqwmkgjomp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86e2f9f5dc64eee97510e597820791287032ba29.1723528765.git.ps@pks.im>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:+Z0uBhTNdfxWEUr4JNlDzCDudqhYtqhznf2C3CHrdG3k2CG2aN9
+ TETAZdV3wetj389tZ+XrA9VldHLKVjIhvU15LKhu1Vd4saGHIU35ghuC5EEpDXt6RiiT7Zg
+ OwX7FpJgI1nxjdO4dwUVuLVDWVylx+XgC2m+SA0IfXgTjp8nXd5NVFW/NmLk4x2orueKKm/
+ Z38NuDPbTXiDHT3GbyJ/Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:tzkAsDN3Hsk=;L36W2tx/Knso9xyJ3FRwUfxHHwn
+ YRK3O4/0ORx8SdJAh/8NhuUdTFIPQHJy0V0vjRGG376cu5hjKw51G5pB7LA3WWm+PaHahdh4E
+ i1XKjggetOp5/ArmTSXTIv4czPNfBSbSichBSUuOoLxc4cN64XspzhLjXaH9eP6zQT4HAzA6q
+ UH57xj0n6nLVpm9XAB4A8u8GtseomqGjc8yBhQ16UmPQBdeFXBzZlzQLwA6yD5ixUR0KYoNOY
+ 8Sl2dFzAHQDHZGYHZEhSIfon7SpMXCFaRCKy0R9mpyD9/DDUV2zi0UnToE4Or9y3K1YoWgauU
+ kM3zfxyzIs4W2LnrJmnj7JkNoR+499v1dG0Bg+FeHQ+GN2OFbrCdTQ91CPbXFXPPjQvzgXYXw
+ K+FPC8G9LzuyOeHmAL35MIO8iQ+PPMOUPHpAmNzsJJZhd3xMhx9AvgeXKOn7LfRNkbB4BLxM2
+ noOD7s8cYz4D2MA06TYT/r4NrE2p3gjLS+UoDfnHBIzPuBYsibqIi13vvX75MB3r2hhSUJ9oO
+ 533/fddjF9qUZg9X25sszfNTdmXBe+8TC1p6KWHZR7eAMMMYTL9Gi48C47WE13KKb6xIPcpw4
+ tJXTcAIFRQtWzIgr+9ZL3JVsvuSErFOBV/ze91c9gM7JwIEg7HjaVKhXdSOP3OeuWKtQj8/cx
+ HryARMRikdIlsSwCJ98/QRJDzXE4+M4iI49bNrV/f8vePMhJPkyN320vROW18WnR2aLkZp0TC
+ Fe8VmLPidxWz6zxne6sMsTv4aRiPkB1AI9zKuT5ZZoNM/v4AGkAgTpZLVyFjyCC7LxIy2Igai
+ tRowchJ6ZxD4/YASkeI+xZ2A==
+Content-Transfer-Encoding: quoted-printable
 
-On 24/08/13 08:24AM, Patrick Steinhardt wrote:
-> The merged table provides access to a reftable stack by merging the
-> contents of those tables into a virtual table. These subtables are being
-> tracked via `struct reftable_table`, which is a generic interface for
-> accessing either a single reftable or a merged reftable. So in theory,
-> it would be possible for the merged table to merge together other merged
-> tables.
-> 
-> This is somewhat nonsensical though: we only ever set up a merged table
-> over normal reftables, and there is no reason to do otherwise. This
-> generic interface thus makes the code way harder to follow and reason
-> about than really necessary. The abstraction layer may also have an
-> impact on performance, even though the extra set of vtable function
-> calls probably doesn't really matter.
+Hi Junio,
 
-Agreed! When I was reading through the reftable code for the first time
-I remember being rather confused by this interface. It left me wondering
-if merge tables could also be composed of other merge tables, but I
-couldn't think of a valid reason to ever do so.
+On Fri, 16 Aug 2024, Junio C Hamano wrote:
 
-> Refactor the merged tables to use a `struct reftable_reader` for each of
-> the subtables instead, which gives us direct access to the underlying
-> tables. Adjust names accordingly.
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).  Commits prefixed with '-' are only in 'seen', and
+> aren't considered "accepted" at all and may be annotated with an URL
+> to a message that raises issues but they are no means exhaustive.  A
+> topic without enough support may be discarded after a long period of
+> no activity (of course they can be resubmit when new interests
+> arise).
+>
+> Copies of the source code to Git live in many repositories, and the
+> following is a list of the ones I push into or their mirrors.  Some
+> repositories have only a subset of branches.
 
-Using `struct reftable_reader` directly instead of the generic `struct
-reftable_table` sounds like the right decision and the flexibility
-it provids is unneeded and only adds complexity.
+I frequently look at these two paragraphs in the What's cooking mails, or
+more specifically: at a paragraph inserted between these two occasionally,
+to get hints about imminent maintenance versions (to allow me to better
+prepare for them such as keeping back component updates in Git for Windows
+that strike me as needing some exercise before being released in an
+official version).
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip] 
-> diff --git a/reftable/merged.h b/reftable/merged.h
-> index 2efe571da6..de5fd33f01 100644
-> --- a/reftable/merged.h
-> +++ b/reftable/merged.h
-> @@ -12,8 +12,8 @@ license that can be found in the LICENSE file or at
->  #include "system.h"
->  
->  struct reftable_merged_table {
-> -	struct reftable_table *stack;
-> -	size_t stack_len;
-> +	struct reftable_reader **readers;
-> +	size_t readers_len;
+About 2.5h after sending the quoted mail, it seems that the `maint` branch
+was updated with a hint that you plan on releasing a v2.46.1.
 
-The merged table is being made to directly reference the table readers
-instead of going through the generic `struct reftable_table`. Makes
-sense.
+Could I ask you what your plans are regarding v2.46.1 so that I don't
+exercise my weak fortune-telling abilities that would shock Sybill
+Trelawney?
 
->  	uint32_t hash_id;
->  
->  	/* If unset, produce deletions. This is useful for compaction. For the
-> diff --git a/reftable/reader.c b/reftable/reader.c
-> index 29c99e2269..f7ae35da72 100644
-> --- a/reftable/reader.c
-> +++ b/reftable/reader.c
-> @@ -605,9 +605,9 @@ static void iterator_from_table_iter(struct reftable_iterator *it,
->  	it->ops = &table_iter_vtable;
->  }
->  
-> -static void reader_init_iter(struct reftable_reader *r,
-> -			     struct reftable_iterator *it,
-> -			     uint8_t typ)
-> +void reader_init_iter(struct reftable_reader *r,
-> +		      struct reftable_iterator *it,
-> +		      uint8_t typ)
->  {
->  	struct reftable_reader_offsets *offs = reader_offsets_for(r, typ);
->  
-> diff --git a/reftable/reader.h b/reftable/reader.h
-> index e869165f23..a2c204d523 100644
-> --- a/reftable/reader.h
-> +++ b/reftable/reader.h
-> @@ -57,6 +57,10 @@ int init_reader(struct reftable_reader *r, struct reftable_block_source *source,
->  void reader_close(struct reftable_reader *r);
->  const char *reader_name(struct reftable_reader *r);
->  
-> +void reader_init_iter(struct reftable_reader *r,
-> +		      struct reftable_iterator *it,
-> +		      uint8_t typ);
-
-At first I was wondering if we should prefix the function name with
-`reftable_`, but this is only exposed as part of the internal reftable
-interface and matches the format of other "reftable/reader.h" functions.
+Thank you,
+Johannes
