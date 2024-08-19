@@ -1,91 +1,94 @@
 Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7C9947A
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 08:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D45415C145
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 09:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724057806; cv=none; b=bVnlWUU6+ye+A1GnsAQWWQ/T6em/6M11G4wfolrItj5P1AclP+6jnjV2PPqgKJD6JPdF14EFbRfQDUFR0zpKYD2sv8Pp4KznghJMq0YWEHLrpNQyBbR9vzJheMQdiirtJ6NT43vgRZggybXfyUDpsDU7tajd9UcMf4Cv/Ug/jjE=
+	t=1724058289; cv=none; b=doK1910MqOvxC9dtX1eSUsCuYj+R2PAGO9M7h1XzLzRefHnj9OLDsX195msQjQFctdjFIILrmJGSgR83MFN6ZuIY6IFkRQLZgEUtc10m72JzBIrLCIDVQk9QZ8ud9JZen4wahY34c8a48dNw/nGVQOoxGRvcDDyW4ni2czer4Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724057806; c=relaxed/simple;
-	bh=wSG3dHnWnu6j/Rh694vqRgqXqf9g3/0I8AIjraMFwVw=;
+	s=arc-20240116; t=1724058289; c=relaxed/simple;
+	bh=fsyk788pM+oRDpXoOJAunyWIphKw5pcsT2+LNCF+t7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TIgxZt3KFETLphKB8TvM1PeKrf8s6dQYh3II2i2H8vfyCbPbAhOWI3EyqYIypE1nKQJgdzpL2fJlTLTS2xkW4VhsX6vk9j+g8yN3uQ4xrB8m/TwoD5OXlZ1mw3wvCJclrFG2ztq47zzW7Z2vcLsrD1pcL01QFKI9J52TZmy+UIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bG2RDMSn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sq6H0zg7; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=ul8T/vyfvAhovY7mVL9s3ty9/Pzc0dfC2LL4XNIsw6z5yA74RHT4GMk4x/y3A8q7oLqlRNdKO9Q7+em8Hskb/mXbTsxmBx421OjA48GqBeTylvZUDWsDl37oECVJGobVNd9910tX5HDFHoXyJ8GKt2GLfnd65BIW64IYfUtEv+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tlQAuqZc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ssg/IUC0; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bG2RDMSn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sq6H0zg7"
-Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 82056138FF98;
-	Mon, 19 Aug 2024 04:56:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tlQAuqZc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ssg/IUC0"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 42012138FFCD;
+	Mon, 19 Aug 2024 05:04:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 19 Aug 2024 04:56:43 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 19 Aug 2024 05:04:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724057803; x=1724144203; bh=JpDK/52/J4
-	PeLzynbUutdU0sLMp04bOu6YQR7U1xCkg=; b=bG2RDMSnTf+XNmksy7PWQObySz
-	XC1O9K3S4pf/DFEuIq6BdjVAKtjcgTvVyp9atDUWIF5JS6t/U/xrsLyLEFVKMLPz
-	wh8jndGjE/e5u8lEt3sEpCEunesxhHARsujj/H5rT/qvuio6LuNJHbjXXpYqb460
-	SBxbjmc9/r4BzSO0KnkNzFUhzdsbdOpCYL2R9QNupJ1rTB8vO8mPLaIgg7BmStx1
-	c4iZBkAlKwCgaD5ZsTUwjUPalPvRm48ZuHASjbR+aCafizv0oYDG2nUpPmqVKaJb
-	JFAsMuUrA716acwtubV5+ltg4oHALPDh2opgYELjqRXqsYvvO0nxNUuC2o0Q==
+	:subject:to:to; s=fm1; t=1724058287; x=1724144687; bh=Hc5uhN2fgB
+	yBfdcxv1N/iqkHDVHD778V745qu3oMYdI=; b=tlQAuqZcqQr6fts3NYzfuVYrjm
+	SCJejlbFGNtD/jIDwVF2feHnxfIFzQC59zFKUWWsNseFxrvZM84M9kN3CSaefN9S
+	P1lUP6lWmKHcXZyAETStAIVERQLKdNz9MU7C+E9zyJN07KIf5TSWeJTQnqL4f8WT
+	1FzfeITRc4OKLEYm/ZFrKaMpLGSVZiIppasIv14xxhL9ahnWpkdPcugjwmaFCq2Y
+	7QxVc2u5ipp67Pl69UDv2aaBA39PDIHfKYusOLvimci8LUb6QzS2LRbxFoRClP1U
+	/olJjRDBt5u4jK3nsA9rPTpbUrJya9cWCW961W3cpphAGJie9MT71xabHgEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724057803; x=1724144203; bh=JpDK/52/J4PeLzynbUutdU0sLMp0
-	4bOu6YQR7U1xCkg=; b=Sq6H0zg74eTaIme3R3hR3Pufqv6+Qx6X82CIUGhnjqT+
-	T48ZFzLKbUzLko0qsSDqaRQKc3enApNdPCfdX1oL8ncjDsEFm5N0nVEHYw/KoV7w
-	sLPp4cG8VbCZyJn0MyRoyC6QR3DyI7cHd7VHnYFHlgX3daFSvHx4b2suiteOzo9k
-	8be1NwDrOGn6WbOkeStxNHB9YTccP8k14AikbeBDRnAqI4WMrGVDnXrhp42pd8fq
-	zYiHcNobESwtbbzx4GcPkPTBonGcm2f3WXIa+lHkpjjs1l9NkvbWReXl5sCAZCzC
-	MZaI7pQiWODGIChvZbm8LCsM8VxZtoZTwH3uMqLwZw==
-X-ME-Sender: <xms:ywjDZoODonNbJ7rj7gDlrizq1qZRhg84RoRqjnaUV9AKTr_HA1vOsw>
-    <xme:ywjDZu_ME10AHWJn38ZWat5y0UT0oNm3Cq3Z_txEvVzecm-fqstkDPMwqN5Gs-X6e
-    yf49n9qmgPlp2PVMg>
-X-ME-Received: <xmr:ywjDZvRTQZEU5ku-vxIKNveN-af-W6bIUwMX34Zn4PWtenVQtGsums-iyarGXnETePUIFBjWfgTEOmjNinBSCTOVwGsrQGAr9iybmovpDDo7h1s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddugedguddtucetufdoteggodetrfdotf
+	fm1; t=1724058287; x=1724144687; bh=Hc5uhN2fgByBfdcxv1N/iqkHDVHD
+	778V745qu3oMYdI=; b=Ssg/IUC0k9ufldUfLFzSS+VZK3/MI9Cur9sJtSvc/QWn
+	q9NZ61CFtR7VjxXQjazIQF24TCl1UFUROA6rHWDPVI7dcxfpH5OhpTAkGI4AxTHO
+	xDQChCSd1EJID1g/5tW54lolbfiUwZr2Z//CERmquV/gXnnmh3Xb+7qSX3RQ1vGy
+	5yaROOaI8WF2mwNB/OVWdT/QEj+i3Orz6RZH/Of5aXjtgvzp3Q+AAU0EIIF+GpkA
+	x3MH5rBGlRJU0VsU4rza26k5S3CMCZaV6VPu72JGtBC/h7czE78CkFbcrevb8jYG
+	yP0p9Um75c6TXWvU13GfV7rJDn+SB1bgUWLT4970pg==
+X-ME-Sender: <xms:rwrDZvxX6J_bLvqJWCISCpXPDJYvd7k_F8Lbs-D8M6Epkqy6QhcJxw>
+    <xme:rwrDZnT6P8HlFJit9nrDriLov6rPhU8Tr0cP4hvRuaNAabdskLDi9O3L2lriLljLF
+    cx3xSZrY1RE0924Qw>
+X-ME-Received: <xmr:rwrDZpUzkjUd7RS5DXG2fGI2I4BUTfNcql6rBHObkmqvYSe-hWgUmqTOV327c8HVmBHFHr5uVbTLuLkZFkadHdFKGiW9UPVN0-XltTNVfZPRF60>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddugedgudduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    eqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudelueel
+    gfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
-    hrghdruhhkpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ywjDZgtjEcx9kc3CHAKfsA_X0Saj-FTjj6Dz4bq-yYyPz7oNbSl3uQ>
-    <xmx:ywjDZgfSypaB5DEOerizNdz5HCB0uzUd0H-_QauIaA2YfM5_tiQ9UQ>
-    <xmx:ywjDZk1TaJ6bV0V-LTBSzdcRsDZvPQ6Zbl4rYlg_WDxtBVwu4l64IA>
-    <xmx:ywjDZk833DD7SjIR8Ub49lxgEzZloOg9e4PVgAqBtdM1TEDf3cB9nQ>
-    <xmx:ywjDZutwVjiPR14TakxjCuaxKUDnNRYLtOJ7HeChc6xnWf5ml4icWvhm>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:rwrDZphA1zENL5_TASErhC5i_aQ0ej11qUbcRM-jCFU3nHnkwiY_FQ>
+    <xmx:rwrDZhDVEjXek5ALCoZbOQYbN89dPDkA53TDuLsg-vF027VO86Fo-w>
+    <xmx:rwrDZiK0F1Bu6Bye-LifrFDN8BfKMpgGP3q-9e0dEF1MQakiu7p3uw>
+    <xmx:rwrDZgDQ42P6ZE0axmv2mrbMu-jB93kWQZ0ryK_KVuxkEmuanFajMw>
+    <xmx:rwrDZrAJLYDgcjLgGl5cHGJC2zJnH07Zp2aj2bBqThxJ2cxE3OtVXnuI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Aug 2024 04:56:41 -0400 (EDT)
+ 19 Aug 2024 05:04:45 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 34f060a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 19 Aug 2024 08:56:11 +0000 (UTC)
-Date: Mon, 19 Aug 2024 10:56:38 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f033d36e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Aug 2024 09:04:15 +0000 (UTC)
+Date: Mon, 19 Aug 2024 11:04:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
 	phillip.wood@dunelm.org.uk, James Liu <james@jamesliu.io>,
 	Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] t7900: exercise detaching via trace2 regions
-Message-ID: <ZsMIxmX2Ash9YtEU@tanuki>
-References: <ZsLjcjhgI8Wk2tIV@tanuki>
- <cover.1724053639.git.ps@pks.im>
- <9712aae82bcb51dd94fdc10f4156e9c78e4b6d8c.1724053639.git.ps@pks.im>
- <20240819085105.GC2955268@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 7/7] run-command: fix detaching when running auto
+ maintenance
+Message-ID: <ZsMKpNMDTysNcreR@tanuki>
+References: <cover.1723533091.git.ps@pks.im>
+ <cover.1723804990.git.ps@pks.im>
+ <9befef7c1f7520d58af2b2db17174b8dbc493d56.1723804990.git.ps@pks.im>
+ <20240817121424.GA2439299@coredump.intra.peff.net>
+ <ZsLjcjhgI8Wk2tIV@tanuki>
+ <20240819084614.GA2955268@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,47 +97,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240819085105.GC2955268@coredump.intra.peff.net>
+In-Reply-To: <20240819084614.GA2955268@coredump.intra.peff.net>
 
-On Mon, Aug 19, 2024 at 04:51:05AM -0400, Jeff King wrote:
-> On Mon, Aug 19, 2024 at 09:48:02AM +0200, Patrick Steinhardt wrote:
+On Mon, Aug 19, 2024 at 04:46:14AM -0400, Jeff King wrote:
+> On Mon, Aug 19, 2024 at 08:17:22AM +0200, Patrick Steinhardt wrote:
 > 
-> > In t7900, we exercise the `--detach` logic by checking whether the
-> > command ended up writing anything to its output or not. This supposedly
-> > works because we close stdin, stdout and stderr when daemonizing. But
-> > one, it breaks on platforms where daemonize is a no-op, like Windows.
-> > And second, that git-maintenance(1) outputs anything at all in these
-> > tests is a bug in the first place that we'll fix in a subsequent commit.
+> > >   2. Having racy background maintenance doesn't seem great for test
+> > >      robustness. At the very least, it might subject us to the "rm"
+> > >      problems mentioned elsewhere, where we fail to clean up. Annotating
+> > >      individual "git gc" or "git maintenance" calls with an extra
+> > >      descriptor isn't too bad, but in this case it's all happening under
+> > >      the hood via fetch. Is it a potential problem for every script,
+> > >      then? If so, should we disable background detaching for all test
+> > >      repos, and then let the few that want to test it turn it back on?
 > > 
-> > Introduce a new trace2 region around the detach which allows us to more
-> > explicitly check whether the detaching logic was executed. This is a
-> > much more direct way to exercise the logic, provides a potentially
-> > useful signal to tracing logs and also works alright on platforms which
-> > do not have the ability to daemonize.
+> > Might be a good idea to set `maintenance.autoDetach=false` globally,
+> > yes. The only downside is of course that it wouldn't cause us to detect
+> > failures like the above, where the concurrency itself causes failure.
+> > 
+> > Anyway, for now I'll:
+> > 
+> >   - Send a patch to fix the race in t7900.
+> > 
+> >   - Investigate the reftable concurrency issue.
+> > 
+> >   - _Not_ send a patch that sets `maintenance.autoDetach=false`.
 > 
-> Nice, this is so much cleaner than the way the existing test worked. The
-> code looks good, but...
+> That sounds like a good direction. I do suspect there are at least _two_
+> races in t7900:
 > 
-> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> > index 074eadcd1c..46a61d66fb 100755
-> > --- a/t/t7900-maintenance.sh
-> > +++ b/t/t7900-maintenance.sh
-> > @@ -950,8 +950,9 @@ test_expect_success '--no-detach causes maintenance to not run in background' '
-> >  		# We have no better way to check whether or not the task ran in
-> >  		# the background than to verify whether it output anything. The
-> >  		# next testcase checks the reverse, making this somewhat safer.
-> > -		git maintenance run --no-detach >out 2>&1 &&
-> > -		test_line_count = 1 out
-> > +		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-> > +			git maintenance run --no-detach >out 2>&1 &&
-> > +		! test_region maintenance detach trace.txt
-> >  	)
-> >  '
+>   1. the detached maintenance that we run explicitly, which causes the
+>      "rm" cleanup to fail
 > 
-> ...I think this "we have no better way..." comment is now out of date
-> (and can probably just be dropped).
+>   2. whatever earlier test is kicking off detached maintenance via "git
+>      fetch", which is causing the reftable concurrency issue.
+> 
+> Fixing (1) should be easy (and it looks like you've already sent a
+> series). Fixing the reftable code will stop us from segfaulting for (2),
+> but I wonder if that detached maintenance might cause similar "rm" style
+> problems elsewhere.
 
-Oops, yes, that one is definitely stale. I'll drop it in the next
-version of this patch series.
+It certainly might. The only reason why I don't want to send that patch
+now is that it feels a bit too reactionary. We haven't had issues in the
+past with it to the best of my knowledge, even though it is an issue in
+theory.
+
+We can certainly revisit that though if we see that it indeed is a more
+widespread issue.
+
+> > The last one requires a bit more discussion first, and we have been
+> > running with `gc.autoDetach=true` implicitly in the past. Thinking a bit
+> > more about it, the reason why the above bug triggers now is that
+> > git-gc(1) itself runs git-pack-refs(1), but does that _synchronously_
+> > before detaching itself. Now we detach at a higher level in the
+> > hierarchy, which means that the previously-synchronous part now runs
+> > asynchronously, as well.
+> 
+> That makes sense. I guess we've perhaps been doing background gc for a
+> long time, then, just not in the refs? In practice most repos in the
+> test suite aren't big enough to trigger auto-gc anyway, so it may only
+> affect a handful of scripts.
+
+Yup. We should expect this to work just fine, because it can trigger
+regardless of whether or not we run auto-compaction concurrently or not.
+After all, the reftable backend even performs auto-compaction after
+every write to the table, so any two concurrent writes may hit the bug
+without even invoking git-maintenance(1) at all.
+
+> Once the reftable issue is fixed, it's possible that the lingering
+> detached processes don't cause a problem in practice (because they're
+> not really writing much, and/or have finished by the time anybody else
+> gets to cleanup), and we can just live with them. But I'm worried that
+> sounds like wishful thinking. ;)
+
+Could certainly be, yeah. I just want to focus on fixing the immediate
+issues before we jump to conclusions too fast.
 
 Patrick
