@@ -1,128 +1,151 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A471BDCF
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 13:57:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F2577F01
+	for <git@vger.kernel.org>; Mon, 19 Aug 2024 15:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724075849; cv=none; b=gydXs9I6uib8mNoUIR9bsnBvbC5O3tFQl9vHo17H0+l3NgfNCFdOahQ72IHUc+6DgJLjFQbGmG1F1O8Ew/cU5jFG+frFIYwI7F0xzzSl2vwuXBZf7RtwdF3BVauSnohGr7j/p8lxRJNg2gGhf20HmP/7WXoaqahBnvgmRsvfvD4=
+	t=1724081986; cv=none; b=L6RLx8LW6+2v93qvVb5dn1eoA44gySyraDMjkBk0wVggoBcrj6L8drvfEb0IQzDKqXKwwoCEYdwRms4NsI5tP2FsCbSTYd9H4cd9duSkL8imvCRGfOETahjPlCbR6SBHVnSgEg1cbd58MOr7h6FIH5ruFhcEhBedorPF0oX4nwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724075849; c=relaxed/simple;
-	bh=YEnQw5LvhwtHOBrcwyDYddqCIYRB7iG+9FW0/7BtmPg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WcRuw39Ho1pa2NJ1tBGiJLEqBlAJXiM5xQ0Xnbl3kkYTKxIM5SJ2eCOJwk44XJWrahgJuYPDxzxz5CNRRRXa7SoSV/V94jwtw89wEYHXawgLDP6lG3JuD6+SWF3vCvPfl2I1DJ3tuDYgF36A60+6TJwnGRzr6HfSbPjJC3oDCZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CAxFyvWN; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724081986; c=relaxed/simple;
+	bh=kzMELHZpDJ0wqkrq8dzfAsvx9sZXLtkmUYX6RPS667A=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=r6pFKGvqVZH89y4lwxjKzXHgIm2AT2wdQIg1SaWyq37HOaZzK8uNPnQsY13bwYFVkrofr6rx/kXB0irWO3sriqJ/2aNKiGZ+1G9+x+mZYST09zZiB50tD8CjKLgrraxdc0xghkiRnF4EN+n1WJHUaMRgpHulwdG7EJhMyDSY8dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pkq9scZ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JUf0qHvs; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CAxFyvWN"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3718cd91185so2242041f8f.2
-        for <git@vger.kernel.org>; Mon, 19 Aug 2024 06:57:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724075846; x=1724680646; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xCbNHZBImN6CGJFP6Wzl6+M7fQSDpEZ+Bi9pM0Z1mM8=;
-        b=CAxFyvWNvMzwpUSP3vn+Y9+0WuFA8lBpX2pMUtHn7R5/f/DUtuEnhiiXDakPg4iJcP
-         pov94qWNU0WxlcZYDk9BiHpAk7UeZF9EruZEPMcDcVi8kRY8j74SSS2y7vQVQbU+mpma
-         zvkJ0XnANp8qMO4GTqv8oCoAYACWiP4sdCnIuUHOP8iqRBaDxnA7y7oMPTjY4RPT2xf/
-         3K8aVQ8FQYvPYgOrDb5YWa7H/konFpmnIZdCaLUC7pigcNZHkLcGXONjt3QLlHP7kc5y
-         LsirBVqreuXe1XVnymJk3j4GjkzupwzN5ZtGQzwu24IErVO5qAjF/eJysctM1Xh0onF4
-         ZAwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724075846; x=1724680646;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xCbNHZBImN6CGJFP6Wzl6+M7fQSDpEZ+Bi9pM0Z1mM8=;
-        b=br+Pd2k9u28l/cVtWbVnCAJorR4U0K//g0oQI+km60aIO9BVFKO9HTclj27HBBgnaE
-         0tWuXIL5xwKT1Kf04gxZxjix05KM6mTnHkEdfHwjCIavyKV2C+dgv5Ss30IPTTrxk75x
-         Ys9oK/IgOhNHXMAtlC6KA3mQC5fXPat7K7EAd0eM1WS4PHcaj7TAqC/nd5Z6vwgnYr6J
-         eWK5ULJJa17Bm181EZ3ZBq30+XC2IB4jg1FKCCWvxM2oi7APlv/VuVoODRNudcNVCovN
-         eubLMNL1cP3bOJJ+wAmelIFW8ZSVMN++coqzxCcA8GRiQ6bngeQBunNnsKPeFaUmGxOO
-         iUGA==
-X-Gm-Message-State: AOJu0YyW7U2bBkJj9JqgSzhHbpcKVW2cbqF+Uh21RJjTfgyLY0uQN0qd
-	grefnjUtGevOznlEpksYVCHU+NSpAohQEJHWXt5vZrdMQqs3Z1BW
-X-Google-Smtp-Source: AGHT+IECSKgm8nJvtUDCm8YVQ0GpXslrmQQbkl4vma9WltPIciLk2wSkXnOvrrmFdhy9qKcYlXD9Bg==
-X-Received: by 2002:adf:c089:0:b0:371:8ebc:a2 with SMTP id ffacd0b85a97d-37194328d7emr6411830f8f.21.1724075845470;
-        Mon, 19 Aug 2024 06:57:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded19839sm169697955e9.6.2024.08.19.06.57.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 06:57:25 -0700 (PDT)
-Message-ID: <08dc334a-e1d9-4aa1-945e-c543de549163@gmail.com>
-Date: Mon, 19 Aug 2024 14:57:16 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pkq9scZ5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JUf0qHvs"
+Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 771BA1151AD3;
+	Mon, 19 Aug 2024 11:39:42 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 19 Aug 2024 11:39:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1724081982; x=1724168382; bh=+apmJ8lLpsggbO+pYxen/BkUYMXJMJV2
+	lSbRz6y6hCA=; b=Pkq9scZ5Rc+DrFzRxtWYfjJK3paysqG8IBoJBpVW5oPo89SN
+	mKr5cWVfP8tM4sux4z8IyX6E1b6Sqq9eYqHPqLd9qB9q8149Hof4b/iKE9Iojgh2
+	4b9itQ/LQvmQWHVKt+yOIrSlkS4ntxRep6X0Cy47eJz5XGBl9/zkFkqYDsruik03
+	YhrruStOfbDcvXRLtnHyeGQjzvtK9FtRClsX3G3b5ZS7SAzxJVj+jmyRutawhQDR
+	bPIGlK7TBO3WqpvpRxZkJJq05WvRT2stzprs7T0qM49lYUAy2r4Bt1p5iQqEuwr/
+	A3xY6J/Tp20kbQHFePPAL60RodAswNsFOCC0oQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1724081982; x=1724168382; bh=+apmJ8lLpsggbO+pYxen/BkUYMXJMJV2lSb
+	Rz6y6hCA=; b=JUf0qHvsz0oxC1KRW35nphhqOBVNDi2bjDGJMjZYUPLx+dE2d0j
+	D1cjMfSFbz2Z274iHM/HE3XBoiROaHUDp+JQrS2JAa5JYVHrfgsHcFjr8/+dihQy
+	MRYHBHyakur+Y0klV2Ky7l+AaFwBFcH3SJXs0AAXuqUI7DQlRjsgix0QxmFRf2PA
+	uvvDXwp+8lTcHFWUN9SCefYQbp6pLq2AuOvpJhRhVBr0ocvEYyQho3GjT0MA7K4P
+	Jnn/0O02FZpd0+F9Fd0xwVGRiqAah2zLD2JQsY+k4FnfNqgNfFY1AOv2vars6aZ9
+	8rA0/yJ/rQuJOJ2jX8ue8u34Xs8bEvd/X5A==
+X-ME-Sender: <xms:PmfDZkOcT8P160kTUOgtvfliPECpEaWaL67F48-wBKkM7-jw8l_yyw>
+    <xme:PmfDZq_WAx9T-_THBIycgWLHa3Q8wSCGF9dEjb2zYYpJR-xXH3mcmQ_gElYidhYAO
+    FUQETtL2fezOkZyhQ>
+X-ME-Received: <xmr:PmfDZrT6N0pLVu2WsjD4P1Y4laxsnoA9gs5onW3ktUpDkZfF4WRxD04hi4j3yU70ONo0ks2C_OdYySPSdyaAH6MWqq-kOUmboLR0q2gt30HSz4s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddugedgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiuedvhfetteelgf
+    fhhedtvdehlefhtdffhffhgfeljeefvdetfeevledtueeivdenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:PmfDZsvi5l-iNS9qCX0eYfkiCIeBGMOXl4mSeE1S2sqqV4A5lKtOoQ>
+    <xmx:PmfDZse2eJ7dVK8_BGDFpWZzwYWsiTKEpHsGmXAXsg-C8yNl686N3g>
+    <xmx:PmfDZg0593_DX7dAFQa1CgozQVXngVp9XUevnkbBfX3bxpTI4TuUGA>
+    <xmx:PmfDZg-KHupYJhalVjtsGfAt2mgQ0FwuYtob4IlXxEWpHd7C4zaEtg>
+    <xmx:PmfDZto1oye4S0qpqnPzI0eQJn3dp4w1WJ88N8txKjVGqbT5yfVw-SR_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Aug 2024 11:39:41 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 942e195a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 19 Aug 2024 15:39:09 +0000 (UTC)
+Date: Mon, 19 Aug 2024 17:39:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Subject: [PATCH 00/10] reftable: fix reload with active iterators
+Message-ID: <cover.1724080006.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] rebase -x: don't print "Executing:" msgs with --quiet
-To: Matheus Tavares Bernardino <matheus.tavb@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, newren@gmail.com,
- ps@pks.im, Lincoln Yuji <lincolnyuji@hotmail.com>,
- Rodrigo Siqueira <siqueirajordao@riseup.net>
-References: <767ea219e3365303535c8b5f0d8eadb28b5e872e.1723778779.git.matheus.tavb@gmail.com>
- <be3c968b0d9085843cd9ce67e85aadfaaafa69c8.1723848510.git.matheus.tavb@gmail.com>
- <xmqq34n3jswh.fsf@gitster.g>
- <CAGdrTFhZ6KeDPDUoCsV3h5myPuoYf7RR8eFdbFFXGrUGCdEkEw@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAGdrTFhZ6KeDPDUoCsV3h5myPuoYf7RR8eFdbFFXGrUGCdEkEw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi Matheus
+Hi,
 
-On 18/08/2024 14:03, Matheus Tavares Bernardino wrote:
-> On Sat, Aug 17, 2024 at 8:22 AM Junio C Hamano <gitster@pobox.com> wrote:
-> The idea is that, when running in --quiet mode, we don't want to print
-> anything, not even a line-cleaning char sequence.
-> 
-> Nonetheless, since these are invisible chars (assuming we haven't
-> printed anything to be "cleaned" before them), printing them doesn't
-> actually make a difference to the user running rebase in the terminal,
-> as they won't see the chars anyways.
-> 
-> The actual issue is when piping/redirecting the rebase output, which
-> will include these invisible chars... So perhaps, instead of modifying
-> the sequencer.c to use "if (!opts->quiet && !opts->verbose)
-> term_clean_line()", the correct approach would be to modify
-> "term_clean_line()" to return earlier "if (!isatty(1))". What do you
-> think?
+as reported by Peff in [1], the reftable backend fails in t5616 in a
+racy manner. The cause of this is that git-maintenance(1) processes leak
+into subsequent tests and perform concurrent compaction of the stack.
+The reftable backend is expected to handle this gracefully, but doesn't.
 
-On the face of it that sounds like a good idea but I haven't thought too 
-much about it. These messages are all going to stderr rather than 
-stdout. If we do go that way we'll need to adjust 
-launch_specified_editor() in editor.c to either suppress the hint or 
-terminate it with '\n' if stderr is not a terminal.
+The issue can surface whenever reloading the reftable stack while an
+iterator is active. In case some of the tables got compacted, we will
+end up closing them and thus the iterator now tries to use those closed
+tables.
 
->> I actually would have expected that this message ...
->>
->>>                        fprintf(stderr, _("Stopped at %s...  %.*s\n"),
->>>                                short_commit_name(r, commit), item->arg_len, arg);
->>
->> ... goes away when opts->quiet is in effect ;-).
-> 
-> Sure, I can add that :) I was mostly focused on the "Executing ..."
-> lines, so that's why I haven't seen/touched this one.
+This patch series fixes that issue by starting to refcount the readers.
+Each iterator will bump the refcount, thus avoiding the problem. While
+at it, I also found a second issue where we segfault when reloading a
+table fails while reusing one of the table readers. In this scenario, we
+would end up releasing the reader of the stack itself, even though it
+would still be used by it.
 
-If we're going to suppress this we should probably suppress the message 
-about amending the commit that gets printed after this by 
-error_with_patch(). There are a number of other places that we ignore 
-"--quiet". stopped_at_head() prints a similar message to the one above 
-when we stop for a "break" command and currently ignores "--quiet". 
-Should the messages from "--autostash" be suppressed by "--quiet"? What 
-about when a commit is dropped because it is has become empty in 
-do_pick_commit()?
+This patch series addresses those issues by making the reftable reader
+refcounted. The first 6 patches do some simplifications of code which is
+close. The remaining 4 ones introduce refcounting and wire it up as
+required.
 
-Thanks for working on this, it would be nice to have the sequencer 
-respect "--quiet" better.
+With this, the following command now passes:
 
-Phillip
+    make -C .. -j20 SANITIZE=address && GIT_TEST_DEFAULT_REF_FORMAT=reftable ./t5616-partial-clone.sh --run=1-16 --stress
+
+The patch series builds on top of Junio's ps/reftable-drop-generic at
+1a3c3870ee (reftable/generic: drop interface, 2024-08-14). It's only on
+seen right now, but would otherise cause a bunch of conflicts.
+
+Thanks!
+
+[1]: <20240817121424.GA2439299@coredump.intra.peff.net>
+
+Patrick Steinhardt (10):
+  reftable/blocksource: drop malloc block source
+  reftable/stack: inline `stack_compact_range_stats()`
+  reftable/reader: rename `reftable_new_reader()`
+  reftable/reader: inline `init_reader()`
+  reftable/reader: inline `reader_close()`
+  reftable/stack: fix broken refnames in `write_n_ref_tables()`
+  reftable/reader: introduce refcounting
+  reftable/reader: keep readers alive during iteration
+  reftable/stack: reorder swapping in the reloaded stack contents
+  reftable/stack: fix segfault when reload with reused readers fails
+
+ reftable/block_test.c            |   3 +-
+ reftable/blocksource.c           |  20 -----
+ reftable/blocksource.h           |   2 -
+ reftable/reader.c                | 149 ++++++++++++++++---------------
+ reftable/reader.h                |   5 +-
+ reftable/readwrite_test.c        |  85 +++++++++---------
+ reftable/reftable-reader.h       |  19 ++--
+ reftable/stack.c                 |  90 +++++++++++--------
+ reftable/stack_test.c            | 115 +++++++++++++++++++++++-
+ t/helper/test-reftable.c         |   4 +-
+ t/unit-tests/t-reftable-merged.c |  10 +--
+ 11 files changed, 311 insertions(+), 191 deletions(-)
+
+
+base-commit: 1a3c3870ee1a65b0579ccbac6b18e22b8c44c5b4
+-- 
+2.46.0.164.g477ce5ccd6.dirty
+
