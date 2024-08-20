@@ -1,91 +1,126 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E4E1E2107
-	for <git@vger.kernel.org>; Mon, 19 Aug 2024 22:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBE4610B
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 00:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724107155; cv=none; b=ikU/Tpv8I22tiRzGDa4iVqfCc76cdMiJ0I4Z9cwzf/1qmiAifu2nTjMAPMiNukjwNuYKC2DnCg8G306kHHFf64hZf4XdCatqiM1mncYZxJEDXDb2kpqK81Lzj+213yXQ+MR3zevYnyTm4kEfB7JRa27XFIeaUEday41+uQS5ndA=
+	t=1724112481; cv=none; b=i70oZfy9Mn0QSAGoeig3XxUCQflbQnd4EFLBowNi0S9t0GzKiaGGZT210IEx1pOWbZOwo5r3QMm/AcBdSf1Hbm9MvtfDi2gJ6W3fyF5I+Dmu0Ym39Tv7ih9VzA0hWuPALLsiGzFsxj5qUlQnYvBvzMc68Y1GdY6wMYRyXiAwtyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724107155; c=relaxed/simple;
-	bh=36z+dL6ejp0HYS2sXiooK26LgBczEdZoEG1KcfhraVI=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VsrELBIwigFK9taJtOAFrAf3by9t9Iy+oIdSr20qAkhViGeYaPB5bCzi2HK7sBLHIUcNhvQcg5G0f5Pjdg+P62rhkCQEvI75cTQQ6l1TZAEkydv52yUQlvgPfq0rv2hv49bcA75ikXDSUoWM4nAucWsYY6f4IMSTT3OvTA6eTAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-12-196.cpe.net.cable.rogers.com [99.228.12.196])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 47JMd1MY3039552
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 22:39:02 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: "'Patrick Steinhardt'" <ps@pks.im>, <git@vger.kernel.org>,
-        "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        "'Kyle Lippincott'" <spectral@google.com>,
-        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>,
-        "'Josh Steadmon'" <steadmon@google.com>,
-        "'Edward Thomson'" <ethomson@edwardthomson.com>
-References: <cover.1722415748.git.ps@pks.im> <cover.1723791831.git.ps@pks.im>	<369060793306daab1796ae3063b4eaacc287f12d.1723791831.git.ps@pks.im>	<xmqqr0akcion.fsf@gitster.g>	<01ed01daf281$c5dba4a0$5192ede0$@nexbridge.com> <xmqqmsl8cga2.fsf@gitster.g>
-In-Reply-To: <xmqqmsl8cga2.fsf@gitster.g>
-Subject: RE: [PATCH v5 2/9] t: import the clar unit testing framework
-Date: Mon, 19 Aug 2024 18:38:56 -0400
-Organization: Nexbridge Inc.
-Message-ID: <01ee01daf288$97977310$c6c65930$@nexbridge.com>
+	s=arc-20240116; t=1724112481; c=relaxed/simple;
+	bh=Tq4f7bN1dblmpBgI8ColD25iH7WGkdAvB4mTkIKGs1s=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To; b=tE5DN/ClINh7flNrUx83THem0I//jq2pmZlDoANa0eHuAtxMMk6+b8Pb0gGsBBth6HBCZTP1xy8cL+BvIkn8ZanEUMHjqOom1xB676REYQ+5/u7skAA85eUuQRBsBIdrsL1JPUNaVXYE3+M1MzP2cHRU02DC194jVAZA970b9EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dREW0enb; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dREW0enb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724112479; x=1755648479;
+  h=from:subject:date:message-id:mime-version:
+   content-transfer-encoding:to;
+  bh=Tq4f7bN1dblmpBgI8ColD25iH7WGkdAvB4mTkIKGs1s=;
+  b=dREW0enbk/IG5Ckv1RpQYNfiNqkaPgenWsw/56esAGwGtEbAGoDiXbJc
+   rhCtJ3dzeaQRUiGvV891Yoo2qS/8mDv6MgiBc69Au9xVKcb7i+18zDlW0
+   3NZNmwkJek92vbCBelbyW4KA9YrywbH+NEwPPRQnC4yL0KtCIIRrog8om
+   xoKnjwl9fI2Ryyol2lvzVEyYuHQkQL56oDQadzzsgmKllp+r1OVN0N+c/
+   bU3v4OjF7KeFk1WQShtOkW0t4v071TWQpUorgN7tdUQ7RCdIGZCVy18eZ
+   0+bPYi//GrKf3mASxNFhWCac/KM7WPye1KuBlIHM8DlMgA5DbrzExjaaF
+   g==;
+X-CSE-ConnectionGUID: FFID865AS3eCtEt8KQvxZA==
+X-CSE-MsgGUID: /bZQtWBRQFCMDKBEQ0jskg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11169"; a="33542524"
+X-IronPort-AV: E=Sophos;i="6.10,160,1719903600"; 
+   d="scan'208";a="33542524"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 17:07:58 -0700
+X-CSE-ConnectionGUID: b7xlIBDMRfGp/TRyPlXrkQ==
+X-CSE-MsgGUID: 8xeX6OJKSqmN6dQ9z263ZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,160,1719903600"; 
+   d="scan'208";a="91277717"
+Received: from unknown (HELO localhost.localdomain) ([10.166.241.20])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 17:07:59 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v2 0/3] send-email: add --mailmap support
+Date: Mon, 19 Aug 2024 17:07:48 -0700
+Message-Id: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQE2Q9x0fuag13GoRDOLG7kBaq5wcQNmbeWFAk1tFCACHM9gHgLyowdHApuuR5yzDZFkMA==
+X-B4-Tracking: v=1; b=H4sIAFTew2YC/42NQQ6CMBBFr0Jm7Zi2wVJdcQ/DopYRRoU2LRIN4
+ e4WTuDmJ+/n5/0FEkWmBJdigUgzJ/ZjBnUowPV27Ai5zQxKqFIYqfHxxERjizRYfuEWgw2Y3iH
+ 4OKG0ZzLa6MpVCrIjRLrzZ/dfm8w9p8nH7343y6391zxLFKiNs6dbabWoTN1tk6PzAzTruv4Ad
+ HahO8oAAAA=
+To: Josh Steadmon <steadmon@google.com>, 
+ Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.0
 
-On Monday, August 19, 2024 6:14 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->> On Monday, August 19, 2024 5:22 PM, Junio C Hamano wrote:
->>>Patrick Steinhardt <ps@pks.im> writes:
->>>
->>>> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c new
->>>> file mode 100644 index 0000000000..3fc2c76815
->>>> --- /dev/null
->>>> +++ b/t/unit-tests/clar/clar.c
->>>> @@ -0,0 +1,842 @@
->>>> ...
->>>> +
->>>> +#ifdef _WIN32
->>>> +#	include <windows.h>
->>>> +#	include <io.h>
->>>> +#	include <shellapi.h>
->>>> +#	include <direct.h>
->>>
->>>This seems to break Windows build
->>>
->>>  In file included from t/unit-tests/clar/clar.c:22:
->>>  D:/git-sdk-64-minimal/mingw64/include/windows.h:89:10: fatal error:
->shellapi.h:
->>>No such file or directory
->>>     89 | #include <shellapi.h>
->>>        |          ^~~~~~~~~~~~
->>>  compilation terminated.
->>>
->>>https://github.com/git/git/actions/runs/10459342252/job/28963152995
->>>
->>>As we have other topics that I do want to do well in 'seen' before
->>>merging them to 'next', I'd temporarily drop this topic from 'seen'
->>>and push out the rest of the topics.
->>
->> shellapi.h is not portable. This breaks the NonStop build also.
->
->Even inside "#ifdef _WIN32"?
+I recently sent a series to enable mailmap support in format patch. The
+discussion led me to realize that the true problem we wanted solved is to
+map addresses at send time, so that we do not accidentally include a dead
+mail address when sending an old change.
 
-Good point, but I did not see that in the prior review. My apologies.
+Instead of worrying about what the formatted patch has, this series
+implements support for mailmap at the send-email, which will translate all
+addresses, and not just the author/commit addresses for a patch, but also
+the email for any trailers.o
+
+With v2, we now have a configuration option (sendemail.mailmap) to enable
+this behavior. In addition, I enabled support for email-specific mailmap
+files.
+
+The intention of these is to allow a maintainer to map the known-dead
+addresses of former colleagues onto a current email for an owner within the
+team. This would be used to update the send addresses to avoid including
+no-longer-valid addresses when sending patches. This is intended for cases
+where the original author is no longer valid such as when they are no
+longer employed to work on the project. While sometimes pointing to a
+canonical public address of that person may make sense, in other contexts,
+removing them from the email makes sense.
+
+I believe this version solves the use case we have of ensuring that we stop
+sending emails with invalid addresses, and may be useful for others as
+well.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+Changes in v2:
+- Loosen restriction on git check-mailmap by default, rather than
+  introducing a specific --no-brackets option.
+- Re-write commit message for the send-email changes.
+- Add --mailmap-file and --mailmap-blob options to git check-mailmap.
+- Add configuration options to git send-email for enabling mailmap support
+  by default, as well as providing send-email specific mailmap files.
+- Link to v1: https://lore.kernel.org/r/20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com
+- Link to previous "v0": https://lore.kernel.org/r/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com
+
+---
+Jacob Keller (3):
+      check-mailmap: accept "user@host" contacts
+      [1] check-mailmap: add options for additional mailmap sources
+      send-email: add mailmap support via sendemail.mailmap and --mailmap
+
+ mailmap.h                           |   7 +++
+ builtin/check-mailmap.c             |  25 +++++---
+ mailmap.c                           |   9 +--
+ Documentation/git-check-mailmap.txt |  18 ++++--
+ git-send-email.perl                 |  20 ++++++
+ t/t4203-mailmap.sh                  |  33 +++++++++-
+ t/t9001-send-email.sh               | 122 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 215 insertions(+), 19 deletions(-)
+---
+base-commit: 87a1768b93a67d0420255a43d9e07387b2e805ad
+change-id: 20240816-jk-send-email-mailmap-support-1a9e86867c72
+
+Best regards,
+-- 
+Jacob Keller <jacob.keller@gmail.com>
 
