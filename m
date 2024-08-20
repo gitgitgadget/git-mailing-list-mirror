@@ -1,54 +1,54 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4FE18E370
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 11:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3AA18E370
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 11:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724153567; cv=none; b=kjblXqYi3Vr2Ldvdiw+asNPb5j3lQ+KTWfbY9D8a7EIZW/ch6sMnRvNXduD8KKSIC2LsZo1cAc9y941RJLVlfsiiGmgkK2YFoYXhPVaHLJtH7daqjc6Su7fYFysz0kv5TwdsJE5KNT5ZepV2lRBXxp5BwGvukbMZ8UkAryEBekk=
+	t=1724153584; cv=none; b=u5+rrKPB0P9VlfWWd3yNou9cC7V4BvmK1yk5HtN0t6K8VyaKcUYuCv1CUagXwzntZc98gGAOvBDw65l0bfJaBZm56N2qFiPk5PuHxPpQz0Alt16ayeatgNL8JbfZsonolFXUbUpHCS32VO39CCb8yklLiNMhXyu9pazbFXink2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724153567; c=relaxed/simple;
-	bh=IzxHC4qBW2URWvqsJotzw8P0k3pn9CRJl2iMxBo0dO8=;
+	s=arc-20240116; t=1724153584; c=relaxed/simple;
+	bh=BhxC+Tv/4JB2qV1GqxEWeTiMLrDqFK+087poazCHumM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ksOnm9ENXNG8S3cp0wunaXpXqvF7sfRTfhnFv0FuVEIqqY4BQjKKtfGVcGIbkiZHWPh8vDAj0J9nUOe35sYoyE6xL7HEFZdtmnOM84/51S0X/VVOWcOzEUldXfQWBdF58eFK1Jn2kQlrR2U0fwGHroocY/66OKXecfHTIuYqNCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krz0R9Vh; arc=none smtp.client-ip=209.85.219.53
+	 To:Cc:Content-Type; b=W9N6oxANFRUeyzj8bBGzbn8JfAn8j2zwPxFL1I+T9MPmckJPtgyo4+9KfZvsJLUE3xFvYYE6216gV2WEAvAvYxuRSDxZLTHAEXTfy0ACdj78jpcv3gtjSOePmtigKWr7Vxy7cIJMedqeBQEeBa1mZbHnG/WYDfFykrs1dkvqxRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MjpcheVl; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krz0R9Vh"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6bf66fe9d8bso27637526d6.0
-        for <git@vger.kernel.org>; Tue, 20 Aug 2024 04:32:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MjpcheVl"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6bf6dedbfe1so31831116d6.3
+        for <git@vger.kernel.org>; Tue, 20 Aug 2024 04:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724153565; x=1724758365; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1724153581; x=1724758381; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PH3khXrWc7TafSRfyKQYz3FEAn5KTMWK8iXhWFiByPM=;
-        b=krz0R9VhKpU0Qa8otgiGUHJWtNRejdx6xBq1bVSxtog9tqi9rEoEaJIyPcQsfhHijJ
-         kUP9+x0/qMQALyQY94dediU3jakZ26UmofuGF8ruw1T4nO/AZjpMpp9P7veHlL8O/vgG
-         B/9fekQpOgGxst1cAeVwotIJyegl65FyvCHWV+azFo+q4dm7qwQ3DdUnPXT/rJkcdjCH
-         ho8VTsz8XNrOzAxkdI6McqgIk4dZgtQE6NV1xuwUUCScWMtPkn+gZb5qO3AGdNQl81tz
-         15US+8WoaKl5X3U519vxUKnhgHfHJZLrzTFtvUsP4xWnwDQC0j74xm3uAhsoV6EBCfbN
-         T8Sw==
+        bh=BhxC+Tv/4JB2qV1GqxEWeTiMLrDqFK+087poazCHumM=;
+        b=MjpcheVlFvb3m92a3B9Wtx6VAPish4C+oxLcMWr1mgUghOEGs1p/NlBQDNYMSwBABO
+         HVne8joeYUYl0/jZIWujOmrzRf4js42T4bnbtR5rHXkJXkzqhhH8kqaG/gcj9udBf01T
+         DZdanEJATptvUnP+mS+QWIbDMSFq3Vdxzhxcdm2+rHWIwD1fZu7aw1v6+Iw1M4wIKX55
+         C7uSd1g0TCi4cxD7rGqY46yXpnN4EN/AY46aEjqc00w3HzwgECo7Uct9Jq01K+F0/fQz
+         5s5G2RSi3BxRjmB4YJr+tzO/9728zG98BzzIyAP6FuuDLbWAWVly5PMci3ypAQrUL3Bg
+         l+tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724153565; x=1724758365;
+        d=1e100.net; s=20230601; t=1724153581; x=1724758381;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PH3khXrWc7TafSRfyKQYz3FEAn5KTMWK8iXhWFiByPM=;
-        b=GWdIM5/Zh6J8KEnlkkF++8581u+8ac+F1JQ2RMPA7YmPHMx5fJExZgDkHLDpwLC7KW
-         ORPk+pQobDdtgRdDPaxsopSr273u34kwN8uPbt15yNmV8/ooIF8ANMgCNTJ4DJB0Sstj
-         R+hWBNeQyfCEpSDAFjZdoadOnCb/QrWNz0zlxWhwyoWGO40DeFD1ijX+YozOTocZw86v
-         /by6vKpMO2x7ehj3mX06yYdui5023FNb1bCIlmQ0m6rQnFxkE8bWwOVXoimXJwLLUM3C
-         g3w4IinJKJlu76zJkpVhDC066E6FY6FxGkSxOL32+If1fyH6dD2P4U8qLLH0mjboCo3p
-         JVKg==
-X-Gm-Message-State: AOJu0Ywz86E9drnA/wCLJav4zs5eOJ3Q1WGvMEO3YYhkj5Vum1dZEbOc
-	mSjQ2JVyhS0nwKS71kcIPZsPBw9G6ycwo8SfuYI67JRgngcoPV8Pg0qF/XpiK+NQ/NCQE7kq7Bd
-	6vvehY4MVG8YIalq3MbsFjLgKiSE=
-X-Google-Smtp-Source: AGHT+IEv+NIjwgzuCoAIFFIQseuJoANuI3AEW/ScMMTNKbP96Jaoz5cKng+NqWAejV9ESuP5QYY+Jc7ynL87+ZkNZ7U=
-X-Received: by 2002:a05:6214:5f10:b0:6bf:6604:c867 with SMTP id
- 6a1803df08f44-6bf7ce5302bmr209374696d6.28.1724153564625; Tue, 20 Aug 2024
- 04:32:44 -0700 (PDT)
+        bh=BhxC+Tv/4JB2qV1GqxEWeTiMLrDqFK+087poazCHumM=;
+        b=MB9Cq4HkegrK8g4xuWNSPyegTfuD9F22uDf9LExpyKwdzCvooeH+z7Q+X/f4HTZHNI
+         nyUBkA/c5kHySbXqTf3jKFAMtXwoDGeVI4okRtUvEwZvOOA5TxdDHTap/nUxKD3tGm8Z
+         U2TD9tmDbg8e5ZuCc7PLDPfi6itQcS9a88h4S7L+H/18Xkga7I81GV5Tpvp4CEhycu5L
+         UAJRIK0SlB/CwVz6ybDjb+JeP8KDsAhKa9Q3v34Eru9al1RKNDbBvRBC+BBzAtd8XIog
+         x1EAgGM930mSOVWf+PoCR3O5dc1/Z7mIqcV5hm0Vnyuyc3tViOj4WDVxkc+2JezhGKhY
+         6DPA==
+X-Gm-Message-State: AOJu0YwUCDoA6m+vd/LI9y/BKS9Om2qAR3m6XJvpck+EveNK7eYI6Ut+
+	4K+NwcPXsk5lHt0hA0+5QEYkg3LGpwtSYizZMsqvr4rXT9zh+JBZ2x7fXONBlNpa+7OWP3oKiPm
+	Qmmt0DlCYcFW7aDx0hVPGNN5A1Ak=
+X-Google-Smtp-Source: AGHT+IHqVq+cVooKZAk04fJsfgsnX+/tFC0/Jm/0Hn8EfexQYbryOUsff8JspRmSkDsTtsTzdpwvW2EqG4VrJwx72dw=
+X-Received: by 2002:a05:6214:4498:b0:6bf:78ad:ebc8 with SMTP id
+ 6a1803df08f44-6bf7cdc657cmr232058956d6.24.1724153581422; Tue, 20 Aug 2024
+ 04:33:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,11 +56,11 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240731134014.2299361-1-christian.couder@gmail.com>
- <20240731134014.2299361-4-christian.couder@gmail.com> <ZqpjV/A9ZVPDiGgA@nand.local>
-In-Reply-To: <ZqpjV/A9ZVPDiGgA@nand.local>
+ <20240731134014.2299361-4-christian.couder@gmail.com> <Zqpa8/aLpgtzoBH2@nand.local>
+In-Reply-To: <Zqpa8/aLpgtzoBH2@nand.local>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 20 Aug 2024 13:32:30 +0200
-Message-ID: <CAP8UFD2OR=5QvyFT6EGQkekFBtjRWoMShQ=_eT=ypH=FswUaRA@mail.gmail.com>
+Date: Tue, 20 Aug 2024 13:32:48 +0200
+Message-ID: <CAP8UFD04M2m0_Y5uVpau2BTsJWLq85fvBCVz2VYEcx902dXWBA@mail.gmail.com>
 Subject: Re: [PATCH 3/4] Add 'promisor-remote' capability to protocol v2
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>, 
@@ -68,100 +68,100 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, John Cai <johncai86
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 31, 2024 at 6:16=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+On Wed, Jul 31, 2024 at 5:40=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
 :
 >
 > On Wed, Jul 31, 2024 at 03:40:13PM +0200, Christian Couder wrote:
-> > diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotoc=
-ol-v2.txt
-> > index 414bc625d5..4d8d3839c4 100644
-> > --- a/Documentation/gitprotocol-v2.txt
-> > +++ b/Documentation/gitprotocol-v2.txt
-> > @@ -781,6 +781,43 @@ retrieving the header from a bundle at the indicat=
-ed URI, and thus
-> >  save themselves and the server(s) the request(s) needed to inspect the
-> >  headers of that bundle or bundles.
-> >
-> > +promisor-remote=3D<pr-infos>
-> > +~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > +
-> > +The server may advertise some promisor remotes it is using, if it's OK
-> > +for the server that a client uses them too. In this case <pr-infos>
-> > +should be of the form:
-> > +
-> > +     pr-infos =3D pr-info | pr-infos ";" pr-info
+> > By default, or if "promisor.advertise" is set to 'false', a server S wi=
+ll
+> > advertise only the "promisor-remote" capability without passing any
+> > argument through this capability. This means that S supports the new
+> > capability but doesn't wish any client C to directly access any promiso=
+r
+> > remote X S might use.
 >
-> So <pr-infos> uses the ';' character to delimit multiple <pr-info>s,
-> which means that <pr-info> can't use ';' itself. You mention above that
-> <pr-info> is supposed to be generic so that we can add other fields to
-> it in the future. Do you imagine that any of those fields might want to
-> use the ';' in their values?
+> Even if the server supports this new capability, is there a reason to
+> advertise it to the client if the server knows ahead of time that it has
+> no promisor remotes to advertise?
 
-Yeah, but, as for the 'url' field where the value is urlencoded, the
-value can be encoded if it could contain some special characters.
+I think it could be useful at least in some cases for C to know that S
+has the capability to advertise promisor remotes but decided not to
+advertise any. For example, if C knows that the repo has a lot of very
+large files, it might realize that S is likely not a good mirror of
+the repo if it doesn't have the 'promisor-remote' capability.
 
-> One that comes to mind is the shared token example you wrote about
-> above. It would be nice to not restrict what characters the token can
-> contain.
+I agree that it's more useful the other way though. That is for a
+server to know that the client has the capability but might not want
+to use it.
 
-I agree but I think urlencoding, or maybe other simple encodings like
-base64, should be easy and simple enough to work around this.
+For example, when C clones without using X directly, it can be a
+burden for S to have to fetch large objects from X (as it would use
+precious disk space on S, and unnecessarily duplicate large objects).
+So S might want to say "please use a newer or different client that
+has the 'promisor-remote' capability" if it knows that the client
+doesn't have this capability. If S knows that C has the capability but
+didn't configure it or doesn't want to use it, it could instead say
+something like "please consider activating the 'promisor-remote'
+capability by doing this and that to avoid burdening this server and
+get a faster clone".
 
-> I wonder if it would instead be useful to have <pr-infos> first write
-> out how many <pr-info>s it contains, and then write out each <pr-info>
-> separated by a NUL byte, so that none of the files in the <pr-info>
-> itself are restricted in what characters they can use.
+Note that the client might not be 'git'. It might be a "compatible"
+implementation (libgit2, gix, JGit, etc), so using the version passed
+in the "agent" protocol capability is not a good way to detect if the
+client has the capability or not.
 
-I am not sure how NUL bytes would interfere with the pkt-line.[c,h] code th=
-ough.
+In the end, as it looks very useful for S to know if C has the
+capability or not, and as it seems natural that S and C behave the
+same regarding advertising the capability, I think the choice of
+always advertising the capability, even when not using it, is the
+right one.
 
-> > +static void promisor_info_vecs(struct repository *repo,
-> > +                            struct strvec *names,
-> > +                            struct strvec *urls)
-> > +{
-> > +     struct promisor_remote *r;
-> > +
-> > +     promisor_remote_init(repo);
-> > +
-> > +     for (r =3D repo->promisor_remote_config->promisors; r; r =3D r->n=
-ext) {
-> > +             char *url;
-> > +             char *url_key =3D xstrfmt("remote.%s.url", r->name);
-> > +
-> > +             strvec_push(names, r->name);
-> > +             strvec_push(urls, git_config_get_string(url_key, &url) ? =
-NULL : url);
->
-> Do you mean to push NULL onto urls here? It seems risky since you have
-> to check that each entry in the strvec is non-NULL before printing it
-> out (which you do below in promisor_remote_info()).
+> I am not sure what action the client would take if it knows the server
+> supports this capability, but does not actually have any promisor
+> remotes to advertise. I would suggest that setting promisor.advertise to
+> false indeed prevents advertising it as a capability in the first place.
 
-The code doesn't seem risky to me as it allows us to treat the case
-when git_config_get_string() fails and when it succeeds but possibly
-sets 'url' to NULL (not sure if it's possible though as I didn't
-check) in the same way.
+It could, in some cases, help C realize that S is likely using old or
+unoptimized server software for the repo, and C could decide based on
+this to use a different mirror repo. For example if C wants to clone
+some well known open source AI repo that has a lot of very large files
+and is mirrored on many common repo hosting platforms (GitHub, GitLab,
+etc), C might be happy to get a clue of how likely the different
+mirrors are to be optimized to serve that repo.
 
-Yeah, it means that we have to check if each entry in the strvec is
-non-NULL, but I think it's quite easy, and honestly I didn't want to
-ask myself questions like should we treat an URL of a remote
-configured as an empty string in the same way as the URL not
-configured. I think it's much simpler to just pass as-is the content,
-if any, that we get from git_config_get_string().
+I agree that it might not be a very good reason right now, but I think
+it might be in the future. Anyway the main reason for such a behavior
+is (as I said above) that it is very useful for S to know if C has the
+'promisor-remote' capability or not.
 
-> Or maybe you need to in order to advertise promisor remotes without
-> URLs?
+> Selfishly, it prevents some issues that I have when rolling out new Git
+> versions within GitHub's infrastructure, since our push proxy layer
+> picks a single replica to replay the capabilities from, but obviously
+> replays the client's response to all replicas. So if only some replicas
+> understand the new 'promisor-remote' capability, we can run into issues.
 
-Yeah, I think we should advertise promisor remotes that don't have an
-URL configured. It might seem strange, but maybe servers might want in
-the future to have hidden/secret URLs (URLs that they use, likely
-internally on the server, but don't want to pass for some reason to a
-client).
+I understand the problem, but I think it might be worked around by
+first deploying on a single replica with the new 'promisor-remote'
+capability disabled in the config, which is the default. Yeah, that
+replica might behave a bit differently than the others, but the client
+behavior shouldn't change much. And when things work well with a
+single replica with the capability disabled, then more replicas with
+that capability disabled can be rolled out until they all have it.
 
-> If so, I'm not sure what the benefit would be to the client if it
-> doesn't know where to go to retrieve any objects without having a URL.
+More issues are likely to happen when actually enabling the
+capability, but this is independent of the fact that the
+'promisor-remote' capability is advertised even if it is not enabled.
 
-The client might already have an URL for the promisor-remote (and it
-might be a different one than the one the server would use if
-hidden/secret URLs become a thing). That's why patch 4/4 implements
-the "KnownName" value for the "promisor.acceptFromServer" config
-option.
+> I'm not sure if the client even bothers to send back promisor-remote if
+> the server did not send any such remotes to begin with,
+
+If S sends 'promisor-remote' even without sending any remote
+information then C should reply using 'promisor-remote' too. I think
+it can help S decide if setting up promisor remotes is worth it or
+not, if S can easily know if many of its clients could use them or
+not.
+
+
+> but between that
+> and what I wrote in the second paragraph here, I don't see a reason to
+> advertise the capability when promisor.advertise is false.
