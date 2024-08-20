@@ -1,120 +1,201 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF98188CBC
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C13149005
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:39:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139488; cv=none; b=qkct5N8O3fTUbRV4Jt17uhcFo/NxkUd5XWtreLITcDPUeeW8MsZOlfoOzMdylDHZNHRMZQpmS0iqXuV3HThOdaSLbL/oV9a4tFDWsPje0X5rTOsnpTl0m6nbENL6T9U9v+UkicwpSW5K0QuoPevHMlOk9k6iRQd8NVTNxzdua/M=
+	t=1724139560; cv=none; b=Z0frz1Am9DXn8O5TXZRa/vJaDU5OwAqJs6D995CPiHaUk5xPeKDKb5s9aL64V30cj8B36nSVAQilM/xaJnY006sJRQJJmtpoycaeNsVEkyywpSoz+l4JmKXHOZczPiM3ePYzcLoypV+I7sOAaDC/KPX4xbVYC/nCQ5vhl6dnI9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139488; c=relaxed/simple;
-	bh=J3129aBC0ZDbnVKQmoy3Midp+id4OcIGgrd2tbsPn7I=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=gjt6Eo2bGmUIkHI5nLp2Dl9rAmTrfopcY4PfxnBGh8siTQwxPaaPnMw8NVf4bs4G6OaXVtAyNUVllIVyIOOVyx5H4BgJEC6tvQ8OSbSrU3QL3Gdxcxy6Oj332PDfiTPemECRP4RmTnI6N+o4XK7+JYMqmkFWpm1JsvtAiT89ji4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MtwaI7/6; arc=none smtp.client-ip=209.85.210.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724139560; c=relaxed/simple;
+	bh=QaA1704pclqdLAAv4gcSs/g1XMj+punaD2vBwK3vxeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UB98hHaRsLgUrOk3mzKZVY8IshZsPRDQpE2Pl/hzvy64q3c9iFcYzA7N7bCfetgdndDmkBRkEoKflR047Tjf4YVbiySmJL3fWcOmyNiTOlpt2EWBFy22bFtZKevCuQd0+YDNakqFZMyoH+fdVwYNSZXPn/X19FcdubJds0ZG4fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rxPn8fRM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jYg+d+sL; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtwaI7/6"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7093705c708so4738165a34.1
-        for <git@vger.kernel.org>; Tue, 20 Aug 2024 00:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724139486; x=1724744286; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O+EDk+Z2aMmTHR5aVQNigvGrNlmwvsT4+FKoC7xtzFE=;
-        b=MtwaI7/6Bw5hdAB0+A9fotc5QRLMMlcmab1+DyhtKCI6knHR6T1JK9X8OEdROEsPQx
-         NxUvVNi/QGl2C0vlPtT6cnfSDVAneIkWVNZHgbDYB3/mblE0xz4u/DCGpboEUCzF4xgS
-         zer9Jbw99SBPPjBgcrtu8kxPglzHNHEbIo48ikRifXP+0xXJKaZ/p1QLarnMp4oq3w0e
-         f0oZce4uV66/OQ6GawKZ/wSAyOJVs8217Z98eIjISTMB1D3aSxvrdR9RCEKSTcz7Nnn+
-         WWLONZJDWK423ngmELo3LtIfL1lNWwdLNo1xpgiS3R0Stvsu3WUTvrIMm4KLxoUAD6YB
-         BTAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724139486; x=1724744286;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O+EDk+Z2aMmTHR5aVQNigvGrNlmwvsT4+FKoC7xtzFE=;
-        b=Grppa/DdDE7UugZfoOCHl2csKA2HM7Os3f8P5xZ/CKbAGVNOlIDB0i31Dgw2FDaPHC
-         J7VWosX3jLGahEfutfbRbipZfJV1rn1yGmAg9xUw5/7T2dUFJW51NNxiGxIafrRLN+Tw
-         3xY7aBzbO9RL6drDg1kY2cUv5CUVYKZTcpGQy3f4ZRpO89D2iSQI4r1ynySma1DN4oX/
-         LcE2+kg9WniRTPFEDXg927dBiX0B90auRIQMM6/mG7fzGGgj4yyHvRx229a4hK/rorRg
-         Oik8tL/D0OOXUcdIePwbAsFCeGv/U0Y+jbnG7+ZHhKvJI4g+rPot83xY45tbBjefQdFA
-         4AJA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRn7kwq6GrxS52JqNpkxKD9owPI01ohiX/u1+MM+GLgCHGiqS4h8edicZf4l21AOlge9Ib779Jh6O0A9Xe4Z+Glt0e
-X-Gm-Message-State: AOJu0Yy6vLGkSV7l5RKmwHKx7Ln1q1rp3xRGew82qmPo1dGJLx+8wj+X
-	pkAkxPcpccXgfiGYKbeMBSVHFtt/UrsKPCYALxWgD+DYDgNX0P5Y6Iqjvm1DAiP6FWyKqBrsKNw
-	qw1WZvwDC7NWjMstK+I6UW9ODRRicwQ==
-X-Google-Smtp-Source: AGHT+IGjiPYl2zVH9Zh+7BdIrSsIygOi7wQsmUaXx1Y0vJz91B4UfCGTuomeKLjyFVlgvhbtJut5fX6mBShtiddxnLg=
-X-Received: by 2002:a05:6871:723:b0:25e:fb:af8c with SMTP id
- 586e51a60fabf-2708136ae73mr1645435fac.18.1724139486180; Tue, 20 Aug 2024
- 00:38:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Aug 2024 03:38:05 -0400
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1723640107.git.ps@pks.im>
-References: <cover.1723640107.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rxPn8fRM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jYg+d+sL"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id AAABB138FF68;
+	Tue, 20 Aug 2024 03:39:15 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 03:39:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724139555; x=1724225955; bh=fILJhoURBv
+	FhRSeeWysoL/3sBW3OIKjix0UfpBiT3aM=; b=rxPn8fRMJ9h+KbapgEpuPzDZCO
+	6B/vkibieeVUj+WkOjMtyTuoiZxv/+X0UnD1zVgbrf4SsNKQyHKNo0OFdz2lNPlY
+	9116wdih2HoUKVigLffnYgM4/DZylnU4LnjaySxC07r2J9M2u1gi2BzNoepePumu
+	e4jdGfYj/v89vCdnoPYXqYyZ7JYtSx3XoPAEnNje56sRw5LD4/H84O68oTFWAQEl
+	Zq+wqFFufn3BkwtsvEBYiMKGghsaREK5VLBCMIWTjc2pBhysGVXsGby2vD2cbJaL
+	+CSKapuDPTVv39/0q909qZappOMFfKwDxS6j7COKy857NJaxJ7EseEmns4RA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724139555; x=1724225955; bh=fILJhoURBvFhRSeeWysoL/3sBW3O
+	IKjix0UfpBiT3aM=; b=jYg+d+sLI/Qo32WOd4+hmZ1Ht+ej++DWz9kD8MpXWBpf
+	mSSYacWP4mv+LMvRAR7iP84q96pqOIdCXJ6jRXOSvJR6BiKusY7B4uIQrYRqat1T
+	TLRVN4n3Wu+M70h3a9lHWFSQKNEo5usaZcyJvsy1JeXawyighBy+VU42cJXwVSP4
+	POyhFcRx/LYjE7sMna77OqtVRX7dACGy0pYycTnUm0SqAKA8kHctCxMTp5fpd2vA
+	+OjKj2Qv7aG8CpGWLpXQry4r8x7QFzwM1W9v015WtVVYhVoJZshEjFIaIMrmqqNL
+	YbecA6QiH6msb9ycSxctE1H1f3DHhYbt1QwtX2w3Fg==
+X-ME-Sender: <xms:I0jEZgPqSTrSOEOKF4otvnFlZq28l5G97BEWs1sVjDxeCbK6kuTENg>
+    <xme:I0jEZm9xcdZR6vRL2FOh9sGxoyUkRsLmGtXSVLkoJR5lv0DYjUfmAU45nuDeNoL0R
+    JecgHQ0Bfw5X23RQA>
+X-ME-Received: <xmr:I0jEZnRe6wWhGpIOJntJ8yG8XIv9Uv-m9KAUA9qtOYZjr6WCvgh_WTShSyk3dVtx3VDzr5tx_MazJzesQ2GiwfNWGX84HqcgSikRH1SBmpQnm81c-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduhedguddvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehphhhilhhl
+    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:I0jEZovb5uvsW9N9lF09rtAc1WlosoV0Wj_FY9RKbx2ATk3W9qu1TQ>
+    <xmx:I0jEZocg8gT2D98lW3qGKR1s4Arp0UKvORJYcrC8NgAlCcF-N7xp2g>
+    <xmx:I0jEZs2_qzPyvCPdgxJIE1Kut1OPtPaZiR3jnCNknvvMLSZTWHhrow>
+    <xmx:I0jEZs9pDFgeWnyIEsz-sexGCp7xwJtEXz7B5lYvvrbl-4egczFGUg>
+    <xmx:I0jEZms1Zk5VIHkSVuKATa08Jx17rjASxGcEptZlgFYgamD8FIBiRQwH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Aug 2024 03:39:13 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7b29e1bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Aug 2024 07:38:40 +0000 (UTC)
+Date: Tue, 20 Aug 2024 09:39:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+	phillip.wood@dunelm.org.uk, James Liu <james@jamesliu.io>,
+	Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] builtin/maintenance: fix loose objects task emitting
+ pack hash
+Message-ID: <ZsRIHS0mFZaRHFVc@tanuki>
+References: <ZsLjcjhgI8Wk2tIV@tanuki>
+ <cover.1724053639.git.ps@pks.im>
+ <c25b5333f60a5920c1fade06532e3379c6686908.1724053639.git.ps@pks.im>
+ <20240819085522.GD2955268@coredump.intra.peff.net>
+ <ZsMLZ3Tlhxsg6Qdr@tanuki>
+ <20240819091715.GB2958552@coredump.intra.peff.net>
+ <ZsMPqEWVOSLOi39o@tanuki>
+ <20240819102602.GA2961332@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 Aug 2024 03:38:05 -0400
-Message-ID: <CAOLa=ZRBzKnVOhpgdWcwY3pJqR8ozSdVuUCC66sFw_H-LPrz2A@mail.gmail.com>
-Subject: Re: [PATCH v2 00/15] reftable: drop generic `reftable_table` interface
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000009e1bba0620188197"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240819102602.GA2961332@coredump.intra.peff.net>
 
---0000000000009e1bba0620188197
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Aug 19, 2024 at 06:26:02AM -0400, Jeff King wrote:
+> On Mon, Aug 19, 2024 at 11:26:06AM +0200, Patrick Steinhardt wrote:
+> 
+> > > Am I misreading the documentation? The entry for maintenance.autoDetach
+> > > on 'next' says:
+> > > 
+> > >   If unset, the value of `gc.autoDetach` is used as a fallback. Defaults
+> > >   to true if both are unset, meaning that the maintenance process will
+> > >   detach.
+> > 
+> > You've omitted the important part:
+> > 
+> > 	Many Git commands trigger automatic maintenance after they have
+> > 	written data into the repository. This boolean config option
+> > 	controls whether this automatic maintenance shall happen in the
+> > 	foreground or whether the maintenance process shall detach and
+> > 	continue to run in the background.
+> > 
+> > The `maintenance.autoDetach` setting only impacts auto-maintentance as
+> > run via `run_auto_maintenance()`. The `--auto` flag is somewhat
+> > orthogonal: it asks the git-maintenance(1) job to do nothing in case the
+> > repository is already optimal.
+> 
+> Ah. I naively assumed that they did so by passing the "--auto" flag. But
+> I see now that the caller actually checks the config and passes
+> "--detach" or not.
+> 
+> That seems kind of unfriendly to scripted porcelains which want to
+> invoke it, since they have to reimplement that logic. The idea of "git
+> gc --auto" was that it provided a single API for scripts to invoke,
+> including respecting the user's config. Now that "maintenance --auto"
+> has taken that over, I'd have expected it to do the same.
+> 
+> To be clear, I don't feel all that strongly about it, but I'm not sure I
+> buy the argument that it is orthogonal, or that here:
+> 
+> > For git-gc(1) we indeed did tie the `--auto` flag to backgrounding,
+> > which is somewhat nonsensical. There are usecases where you may want to
+> > pass `--auto`, but still have it run in the foreground. That's why we
+> > handle this differently for git-maintenance(1), which requires you to
+> > pass an explicit `--detach` flag.
+> 
+> we couldn't just patch "--no-detach" for cases where you want to be sure
+> it is in the foreground.
 
-Patrick Steinhardt <ps@pks.im> writes:
+We certainly could. But honestly, your scripted use case you mention
+above is even more of an argument why we shouldn't do it, in my opinion.
+We have long had the stance that the behaviour of plumbing tools should
+_not_ be impacted by the user configuration. And detaching based on some
+config to me very much sounds like the exact opposite.
 
-> Hi,
->
-> this is the second version of my patch series that gets rid of the
-> generic `reftable_table` interface. It made it way harder to understand
-> the reftable code base and is not really required nowadays anymore where
-> we have generic re-seekable reftable iterators.
->
-> Changes compared to v1:
->
->   - Fix some commit message typos.
->
->   - Remove some braces while at it.
->
->   - Drop the "-c" switch from the test-tool's help output.
->
->   - Restore printing-related functionality, but move all of it into the
->     test-helper. It has no reason to exist in the reftable library.
->
-> Thanks!
->
-> Patrick
->
+Mind you, we are all quite used to `git gc --auto` detaching. But if I
+were new to the project, I'd find it quite surprising that it may or may
+not detach if all I want it to do is to decide for itself whether it
+needs to garbage collect or not. It is much more straight forward and
+way less surprising for a script writer to use `--detach` if they want
+the script to detach, because now the command does what they want
+without them having to worry about the user's config.
 
-This version looks inline with the review I did on the previous
-version. It looks great to me. Thanks
+> > Also, we cannot change the behaviour of git-maintenance(1) retroactively
+> > to make `--auto` detach. While it already essentially did detach for
+> > git-gc(1), that was a bug. E.g. when running as part of the scheduler,
+> > we'd always have detached and thus ended up with a bunch of concurrent
+> > git-gc(1) processes. So even though it does make sense for the scheduler
+> > to use `--auto`, it wouldn't want the process to detach.
+> 
+> Backwards compatibility is a more compelling argument here, if we've had
+> "maintenance --auto" that didn't ever detach (though it sounds like it
+> did, via gc, anyway). But yes, one kicked off from a scheduler should be
+> using --no-detach, I'd think.
 
-[snip]
+Yes, we did, but as mentioned it was buggy. Once the scheduler kicks
+off, you'd now have N git-gc(1) processes all running in parallel to
+each other. With N being large you will certainly face some issues. You
+also lose the exit code, which is another issue.
 
---0000000000009e1bba0620188197
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3eeecb6034070232_0.1
+But as you said, you could make the scheduler pass `--no-detach`. In
+fact, the first versions of this patch series were using your approach,
+where I changed `git maintenance run --auto` to detach based on the
+config. But after some thought (and after seeing the negative fallout
+that this had on our test suite) I decided to throw this approach away
+because it just didn't feel right to me.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iRVI5c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnlrQy85RitCWldaT1l2YXcwWU5yRWNrTDJ5dXkzRApKNDhIazFWVG5j
-amhZdGRvODhrT2JZc25lMUcrT1ZLOXdsSmlkbWlqQzZkUXIrMTI0MUdvSGtDWTFCSWFPRzY0Cmw3
-TzVZYjYwK3FUVk0vNFdPWFErTjdEUUN4VHNrU01hUUtvb1I2MjJkVGd0czEyMlNQRlNtaktZQ0Rl
-RFdnZWwKckt1dUlJc0E3c0JyQTdNYXRVQ1pzTWlOVER0QTdOUEhUTWpVSDhISG5PemhnSk9ZMVIv
-Slo5U3RrY1cvUWNoUwpEVm9hb0E0ak15bGJTZm9wL0JwQlh3UDVzK1dDTWc3RnBKU29lTlpFWkdU
-eHBBUXZyeWs3Q1V0R3pXN0t0LzMyCmJyRkdrZ2piQU9QUCtQODB6L28xNEc3ak5kZklRNnBwSlQx
-elNhNStWMUNtbGZCSytDd3BTbEx1Tk9kKzlPdU0KT0dVbEFHYVBCRGRJY2xHN2ZtOVJzTEZRUkEx
-ZmFCT1owcmd3UVA5dUhxVU94aXFId0xXeWY0dXFkUWVvNUlydApnTHhZelhzWHd2alp2VHR5VGdU
-Z0tJNUdnMVVDVlE3WVMxRFJ1LzhJQTdWZHpyRE5ianFkbjR6TWF0b1M5WkpyCmtyUzF5VGpYMzIr
-TTZhdVF1VU5vWnZ5S3lsemk4bW9EQ1VONjkxQT0KPVVlNUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009e1bba0620188197--
+> Like I said, I don't feel strongly enough to work on any changes here.
+> I'd hoped to never think about repository maintenance ever again. So you
+> can take these as just impressions of a (relatively) clueful user seeing
+> it for the first time. ;)
+
+I certainly appreciate the discussion, thanks for chiming in! I'm still
+not convinced that we should continue to couple auto-maintenance and
+backgrounding to each other. In my opinion, this behaviour was a mistake
+in the past and continues to surprise now, too. Making it an explicit
+option feels more natural to me.
+
+That being said, when others feel strongly about this, as well, then I'm
+of course happy to adapt.
+
+Patrick
