@@ -1,80 +1,79 @@
 Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C8D43AB2
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB390191F6D
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724162743; cv=none; b=UQ31CT5bGdYtxxIobp3Vn0Mj7kFWbbx5gzKJy8f0guxPTEp7vx/YbIQWfSNqNYvyJXNn5TNx9JfKDzVKcdjZWviZTnvo2RE2NW39npzR2Tbn7O8wgk1r0+DB2v37JDHY3nXhOIGUvCcENj+ZR8y1T0oWXJJleLydEJCjoXnlMwY=
+	t=1724162746; cv=none; b=lRk0du2cqclbATtGKaY16HRLjwd53QK6n7yyDvrXD+x2iF0aHVGUA3ZoxaqrFtykX5fL+ojBJUbHFE2WJT5gG46lCAPZyrGLwc471By+gVyZfmGUAwiGV+0p1WsQZzwg8DGDtC0w7kzZ4YEEavJ/g4rbKTQpwvPt91MgmRlNQIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724162743; c=relaxed/simple;
-	bh=C5cwareO0W7oYeLcgZkeCKuwuCjDCFyEOhsDpvAgKxI=;
+	s=arc-20240116; t=1724162746; c=relaxed/simple;
+	bh=eowiTkLzdfTLy9KuGhwXGUGGY+unWvi17iYZP3vx+AI=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sV/oGVWZElRmwRozZmLuJES7foCOFBing+T8YfL2o2KrIqiNzIqeZWrcDTIrVmTr8DG6eQApR7LKvcZV1//LGoCEbl0EppVfkpqzFImDuJ+0NAKZr2SOzkgbn4ftDra/W022XjbVp0CcKShPeSr9NeinKOU8aV6X8rie3pZOrkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZNJgrPrn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=evXBMWHF; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=kcLCkIFFHvtqIHsOR6Y4aI7SfsSc/0pTFLubN7phifRcdt9RmsET5v54U5NII6VSXKY/eOiBSTi21XpgXzFncP18A9JkwI9Vh0W1ZrlGi+ddoaFvJ0+un7gQWkEgC9qVgfzBPoi8ZkKRd2dBOID9YbgoDqWHH5lhaWVcxBrDiTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gzeGYYg2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eLjP4vAe; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZNJgrPrn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="evXBMWHF"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gzeGYYg2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eLjP4vAe"
 Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 77E48138FF1E
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:41 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id C14FE138D263
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:43 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 10:05:41 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 10:05:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724162741; x=1724249141; bh=8MsbH4+FTr
-	HtG/Xv2YoGxlTRjel4tAHFGdg9PDQNSMg=; b=ZNJgrPrnuth6YkfurjrCVTtME8
-	z/UM6gl2jbY5sQ8yxxh3LNAOyvgnHB0rsZcM0V+Tt/3tY/VtLVqoUprX8DOUDTnF
-	TmGT7NdywBiI+FN5qNpdQ0ldsYSo4Iuivjqkot0GMw+JzGr4XrMB5lXttFhO+30W
-	s6Q9WpyMzRMAQlGEdfWK0wZXkejOUcHuyM6KXZ5EOzAm1itmitNeQeHwEZ+BFhry
-	LbndWZR9mgrSe5iGVcXdaENav2zlCeu3cVr0DnkwDG+p/ZK+6Z1KL7+0BrOqJ1ot
-	hbYN2Q5qHc3jQL4JLs4EbE9mFyLgVyYCQzRPK4ZqJoyD3qx1IYndi6+6Hb4g==
+	:subject:to:to; s=fm1; t=1724162743; x=1724249143; bh=VpZD48IYH/
+	iZ5avU+FtTy+iY4+9OcKX3DOr/5Hgxg98=; b=gzeGYYg2I/yBoDbob/vtfSi+Ec
+	TRww75DFA5G1XwQAsCBr7i7OS/hanajMlAlyZHiPBwuRx4LrIjiB30k6pZTJlowe
+	FZwRvB0btsOigLvFth5Oxjw2n/NiBQdNCAyZfi0hzYJpF/JAkF6nP+2JmN0jpAgk
+	IhlZBCUbmkO5pDc+edsfj/7alnplJ3iZJ/tnUyJofync6Ye6jvtbwPqDRnJlwjzb
+	RA8GsrddShciB7LzmhhiO9bjoS/eMxTUyZdFNrRvlFsN9CYWLUu/MB7nZhnVKBk2
+	Gd4SoXZv4bo3MUrcifH+6t1s52jIlN4B16d8NScocaoGtpxoCpOHfRge6hMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724162741; x=1724249141; bh=8MsbH4+FTrHtG/Xv2YoGxlTRjel4
-	tAHFGdg9PDQNSMg=; b=evXBMWHFn5i0fxBpwJKEfA5BdUDdZSfweiY2zjdPw85i
-	hh+s4alfOFaJc9FHSPePAtuahPkCPSuMxBSPWmohn3xw4GoXS33lUdmBpFFrHjwE
-	ja+eRgjWIM0+xCUrCFJc+5IaIGVFK7VDjh3AlbKOScChNgXjgqXQCChJKtifr8Zw
-	a9x8bsi199SqcqlLWIzuyPYrwxQtlIQCPqn+OeJ4iGj41Rcjt3UbFBLZM975NFT4
-	BOSW/Z1zRd1lCPFpuyaGYAEaXxumF9O8QvShUjJR9GlziK1EuL7sNIHb0F0HOdxs
-	T9Y90LZ2a0N3Ti304DYEd9bt0sQkVJdVxaL4bmJcDg==
-X-ME-Sender: <xms:tKLEZqNamHpI6b1eo_k05p6l8n3tLhqpyQIDbZ0D7TCD1FhqDDnE2g>
-    <xme:tKLEZo8lh0RgDD4st6t-KFEae-by71ntzPNSLgYyhxIU-Cd_8a6oJUkZeLTPb9pLm
-    U_9KAq1ggIEirO1uw>
-X-ME-Received: <xmr:tKLEZhTQfTJCcS4JmoOdoWNInzCLydsPmI3UvGTsce3v4zc68GbrphajxFmfth3pg5sfgoSnRLSYtdnZreH7ZOpa0z8_jHuX890kwwhhss6QZjuXwQ>
+	fm1; t=1724162743; x=1724249143; bh=VpZD48IYH/iZ5avU+FtTy+iY4+9O
+	cKX3DOr/5Hgxg98=; b=eLjP4vAe6UAY34V2oh71HHkqiLziTlo8sKnRDo9rh26W
+	NvVMlmjEovFRhGSeQXHF8u27EDzUnBjRPRhJytuAjv96ehcli+TzPw+qZRS0O+na
+	AIrQ5K/bGUSQ1kTvPAYCmSAdh4uwHbtkbTi2SU4id9ZGqQxT7XR9KIvMzQvLiT89
+	8W6e92OFQvhFDsSogCjHYFuB1Gf1rexTfQjwvTj+84wUBSZPf25D8uUCiZIknbsV
+	VCq4/oZ0cwtxquUKjkDShP+8oyiAFSO4lu8Z/PHTc+x4KboK7d39M8Ki3vdN+0ie
+	jlWVOr4fx0U8LjHEUdKSMsu22UCrmP+MDIET2BSxvg==
+X-ME-Sender: <xms:t6LEZsuHr-vp7tqYjSxOQBOfKHACp8Lv4DaJRj8eoJjEH3KDSjfvCQ>
+    <xme:t6LEZpdP147uD_Y0X3Ty3TMSmgboQysOUS6aZ1jWQ3rBzrQkC30SlnbRKWqa0gncU
+    b90Nnrqmcvqi6pyag>
+X-ME-Received: <xmr:t6LEZnzlwot5-iGRVlw5tkdTsAJ-ixbcbzZc7jo8OuGEC3mzxmp72M3K0BQtWoh1ygX7upgDpdeLlBW3BoRrjhuqrwbD473GuqZGy0udsfkW4o6qrA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgjeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepkeelhedtfeduie
-    elveffteekhfefieeuvdegtdffiedvtdduueefveejffduieelnecuffhomhgrihhnpehh
-    thhtphdrshhhpdhhthhtphgurdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:taLEZqv81vcWRmPLDBJmnV1kuOPQs3bynb6hDt7la-o_an5SucNM7A>
-    <xmx:taLEZif7ciEd9757V45OPKZKhrAJ28XzG92m9AHRugskjsHyxvvHxQ>
-    <xmx:taLEZu2VdGYyOPxwk5SVh0uqHR6lT9pnzjTmhaWH0OD9CQIXo2TDeg>
-    <xmx:taLEZm9VcI3wywEDgRUe7bSb_RZiCb_Y2bkbn00yTwMjuU1AE2LFYQ>
-    <xmx:taLEZmHSsk5mDr2_9shUhD0DDclPSqpzKSGAGeuFH5bdzRe-jdNxs3aa>
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
+    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
+    ihiivgepjeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:t6LEZvOJXPc6RmzakAScNy3V3FvwDxCbcgJEdtAdlWUn-Pdv5XSOiA>
+    <xmx:t6LEZs_SnpiRepn3f6YJyg0I_-0F12OfDvDQKKM3XogLmE965TXYDg>
+    <xmx:t6LEZnVYwAbLWyATStMSU1H9mpJiCv_eS3ruNxnwjLUR7_zSnOufeg>
+    <xmx:t6LEZldZ2CNhJ5WK9xBG3nzqvGiAIzketkmBr4Ml2yZp7eAERnQQ8Q>
+    <xmx:t6LEZqnAEVV0j4uCvMJaUWXG7RgerCRtoMpCBnkVgtBRsjVaK9Smf3ba>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:40 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 901dc1b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id a056732a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 20 Aug 2024 14:05:09 +0000 (UTC)
-Date: Tue, 20 Aug 2024 16:05:35 +0200
+	Tue, 20 Aug 2024 14:05:12 +0000 (UTC)
+Date: Tue, 20 Aug 2024 16:05:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 12/20] builtin/send-pack: fix leaking refspecs
-Message-ID: <5d8e0a3d8b4c063d0c707a1bed8c692e6719c47f.1724159575.git.ps@pks.im>
+Subject: [PATCH 13/20] sideband: fix leaks when configuring sideband colors
+Message-ID: <5d09959b6426e53a68e1bce547f9507bdf21bcde.1724159575.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,93 +85,61 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724159575.git.ps@pks.im>
 
-We never free data associated with the assembled refspec in
-git-send-pack(1), causing a memory leak. Fix this.
+We read a bunch of configs in `use_sideband_colors()` to configure the
+colors that Git should use. We never free the strings read from the
+config though, causing memory leaks. Fix those.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/send-pack.c           | 1 +
- t/t5400-send-pack.sh          | 1 +
- t/t5401-update-hooks.sh       | 2 ++
- t/t5408-send-pack-stdin.sh    | 2 ++
- t/t5548-push-porcelain.sh     | 1 +
- t/t5812-proto-disable-http.sh | 2 ++
- 6 files changed, 9 insertions(+)
+ sideband.c                          | 8 +++++---
+ t/t5409-colorize-remote-messages.sh | 1 +
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 17cae6bbbdf..ef0df808249 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -338,5 +338,6 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+diff --git a/sideband.c b/sideband.c
+index 5d8907151fe..deb6ec0a8b7 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -30,7 +30,7 @@ static int use_sideband_colors(void)
  
- 	free_refs(remote_refs);
- 	free_refs(local_refs);
-+	refspec_clear(&rs);
- 	return ret;
+ 	const char *key = "color.remote";
+ 	struct strbuf sb = STRBUF_INIT;
+-	char *value;
++	char *value = NULL;
+ 	int i;
+ 
+ 	if (use_sideband_colors_cached >= 0)
+@@ -43,15 +43,17 @@ static int use_sideband_colors(void)
+ 	} else {
+ 		use_sideband_colors_cached = GIT_COLOR_AUTO;
+ 	}
++	FREE_AND_NULL(value);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+ 		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
+ 		if (git_config_get_string(sb.buf, &value))
+ 			continue;
+-		if (color_parse(value, keywords[i].color))
+-			continue;
++		color_parse(value, keywords[i].color);
++		FREE_AND_NULL(value);
+ 	}
++
+ 	strbuf_release(&sb);
+ 	return use_sideband_colors_cached;
  }
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 3f81f16e133..248c74d8ef2 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -9,6 +9,7 @@ test_description='See why rewinding head breaks send-pack
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index fa5de4500a4..516b22fd963 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='remote messages are colorized on the client'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- cnt=64
-diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-index d8cadeec733..3c1ea6086e7 100755
---- a/t/t5401-update-hooks.sh
-+++ b/t/t5401-update-hooks.sh
-@@ -4,6 +4,8 @@
- #
- 
- test_description='Test the update hook infrastructure.'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
-index e8737df6f95..c3695a4d4e3 100755
---- a/t/t5408-send-pack-stdin.sh
-+++ b/t/t5408-send-pack-stdin.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='send-pack --stdin tests'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- create_ref () {
-diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index 6282728eaf3..ecb3877aa4b 100755
---- a/t/t5548-push-porcelain.sh
-+++ b/t/t5548-push-porcelain.sh
-@@ -4,6 +4,7 @@
- #
- test_description='Test git push porcelain output'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # Create commits in <repo> and assign each commit's oid to shell variables
-diff --git a/t/t5812-proto-disable-http.sh b/t/t5812-proto-disable-http.sh
-index 769c717e88b..f69959c64ca 100755
---- a/t/t5812-proto-disable-http.sh
-+++ b/t/t5812-proto-disable-http.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='test disabling of git-over-http in clone/fetch'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-proto-disable.sh"
- . "$TEST_DIRECTORY/lib-httpd.sh"
+ test_expect_success 'setup' '
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
