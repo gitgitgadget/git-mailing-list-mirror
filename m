@@ -1,53 +1,53 @@
 Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B7018FDC5
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 12:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A4319005E
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 12:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724158779; cv=none; b=KNgpG12huqcxm6a0ZFNyse3sEEzAJixFF/OHK8piz9UUM7U9FlIQqvJaYFCp1N/KT7xrD65gSqbI7qMB8SO3iUw7HiyqTRkkgsRLdI3x57/WWeoGy+emUKJXbMyy/7m5yVKg1DNE1Oe1Yz7e0xF29gupf+e3UJV7FxAv54DFqfY=
+	t=1724158783; cv=none; b=QCvi7+PgEovzE15NvLN9pK4YVhtdWk+DTyZVwygr1UWR584KshAv9MwYjgpgKUTI4tKu05+u50HoAfkW3Ts3AoaNmFOSlqmd09AH7coRZ12i60PtG/1G5eDj5ohossUuaNuM/Du4C+ph7SwYWDBGbDVcAuYxfr5JVWAteYITMhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724158779; c=relaxed/simple;
-	bh=CTlPi2KIfP1RQ9Y38h/ttGSb2vddDa5SogW3R+0R/KU=;
+	s=arc-20240116; t=1724158783; c=relaxed/simple;
+	bh=x2cKQTmTYgDfp2cRzAjRTZj4YZvvH2p+JEFtyD/LMHo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oq1eHhcRlKjJPSOcvHK+6ibcmXuJJcfC/yU19txaHSQ5um8uffWpv/0jHpCbST9zwmEGcGqwAQz97fKqk74uj2nwX75gV4UH7702uFTRJtWzB7H5MVxQZhjjhpONr15WGVLINzGjmYisqoHD/xqLBqasR9Q5Bf9WsKusb5r255E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=seYuYlwV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pB8lbooX; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=EzYHkrbLmB9oTWyJDzLMsClszSn7XuN1ntur4AQamH+lblMhxkNe+q6QMW1lRJsjtxOm8fDEwV4flxfFy4t2WfvyM4xhwXBhgdVnnjZARMW0HiFBaYX4FFVmequEOwumg421EtI8tee/A37SfbFFY9+57hVqlr3sn3H4GlhkLHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A5gA9QNi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hOzorRYX; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="seYuYlwV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pB8lbooX"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id D26FE138FE6A;
-	Tue, 20 Aug 2024 08:59:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A5gA9QNi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hOzorRYX"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C6E5A138FF57;
+	Tue, 20 Aug 2024 08:59:40 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 20 Aug 2024 08:59:36 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 20 Aug 2024 08:59:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724158776; x=1724245176; bh=I35LB29C6D
-	8DY35fHi3oEnxaHnpT0iaySPGEanWRTgY=; b=seYuYlwVRGmPzpzPlh9Omp0MZ+
-	S9jIePVTphsItua/RX/4E4CzX8kMdA5kfUOeo/NjgfjFi8Py0prSv6KNFTKKrfQ6
-	6MNhdNl+ZgXiEoSItGwPr9K/N2B6Vs1euAHAQOfjNypStHbXMCCV+3uuY1nkYkDd
-	yokPrJ2Tzh4uuqohbm8LsbUcUlL0XprrhaqravL2tUk64BW/u9QgsUBij8r7yrZi
-	yzNroknE25Zx48XYf9r2/pa8kwQffxwDiZjqk2ez5xtAQHVECeVkSGBzwj4BJAvu
-	QZHGLMP7PkbeHWhPJz/V5bHy8JoqbIihKi0hk8H6bqhE3pMBc+eK4+huAYZg==
+	:subject:to:to; s=fm1; t=1724158780; x=1724245180; bh=lp+4xPdO9L
+	Pzo0mULxe0RaqECoUABKKvrxBNhzHlIN4=; b=A5gA9QNif89k1gS2v5vpYTk9wy
+	Kdjxc5R5WjkFfJmNrXYIGr8N/r0++8ZY+mPCIWyokjnjNYZ5rZnGTRVAcRls3Tof
+	J3IcXxGz5RDtmi6tiIfr54RigkeZnP+pL+SL6NfwOqOVEjGk6BMZSIGDHfBioqh/
+	5jYFQVm7a1vP3GsnVDGr6l0xg7ZkkBh+oyvARni62Qv2kxpl9+3pnUF+uSFjYyKU
+	DWAdPDqJtmlRMlyEkO/4bhnhubXnJFq7T0pWZOo4lSJxdTciVj9d0NiKcxkWfbha
+	Q616rKGxxcwmMjcZU5rkIYG7tBPe5JYaviB9Q7CjOI2ryoeBvSwdaY7TCgNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724158776; x=1724245176; bh=I35LB29C6D8DY35fHi3oEnxaHnpT
-	0iaySPGEanWRTgY=; b=pB8lbooXV0ICbPtr89Z71k+IEJk7ZJ4l28Dnv65/zAgg
-	fBnLMwEI/O322o3R9TOot/+sgkNMJr2rQYBdk8ZMcIz0e+eusTSlQpyVfGeJZqfZ
-	UGfM/TfBLwaSsaePKLmnjJm8u/X04OheHCbrfPvAUSX5RP55st3IPEChjlWDfqco
-	O8jWfNqyH7MgzgeBfpGLGuYP+RCt0Yax1ozCDmd501+ydN7vt3Fc/kIxOHwQvFAd
-	NKyc1p8wiV1i5suKg2UT/CbTzb4aecsLPVgTUaRjPkoophW4tpoy1nDlPiFUneLy
-	9GbXW1Gp+3Ht0BvNgPiBCH7HkJreiT2FiSkShTkBgg==
-X-ME-Sender: <xms:OJPEZu65yi-I_mh-lACS7YFJ4q-nrdu_8YCVqxxkLUWhEU8Mlh0BuA>
-    <xme:OJPEZn4au48Hop1YhBZPOzoAUTGse611WAet-chCZvLeoRQXyBn3M8RHAMTq8t9FX
-    4RrQ58c_wGLjRfKWg>
-X-ME-Received: <xmr:OJPEZtfT__MdaE-zOIRi9bejGMt54urhFMX_bVZihA_-Fh-XD5wHycoqr4NWS2LHKnotcfrLBNxgqGLFnXuMKaQjtecUsnaQt4Fyx7yxsCmNDiEhqg>
+	fm1; t=1724158780; x=1724245180; bh=lp+4xPdO9LPzo0mULxe0RaqECoUA
+	BKKvrxBNhzHlIN4=; b=hOzorRYX1HrdaLpYBMibT7cim3P7AL3p8+kUo4yA/QYL
+	EfwzCJAkbrMAkhyDm7cfomQmfChyHKed8UYO9UDjabGnB/typ1BqA5IUMX7Qj94I
+	Q2eVpccR1BiK+InuQRuLEcqO+fGCj4TujazU+MOizlNPd6tf3qfOgT5VM5amNjAa
+	sZdyS9i+p5wKW96qt+SU4FA/fwkVJvEu7PcIZTdDu/UN6ttjrCC6wdNmG122G72t
+	0c0QlVjoPD7JHbaJFgql5G3+0DQLmGHUyLmepNQ4I/QK37sO8J9K0P8uQcFKlDxp
+	IEqMleYWkuVUqWbF65bU0IP6uxrpURCuHf3NQ/B+7w==
+X-ME-Sender: <xms:PJPEZl-hKpBodCkfTCx7LvxJyVGIOyM-fg7mHDBeg8ou9C13CPyu4g>
+    <xme:PJPEZpsrrBzu9YVeMpM5FXthTVoLGcFRQYCeBK10c0FBcZKkgD7chlGg6o6H7gNTs
+    d2JEt517spEpCpxjw>
+X-ME-Received: <xmr:PJPEZjArwHjb8bbgbY4NCJWht8KCB-Cegplj7ejNs1Y1-vkIcg0tG7S3LXF2EQ11jKHwr2b8itrDMF-UiRN15JcTE2qGMtwaBXgK1m_IJsaBOAqN-A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgheejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgheejucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
-    hnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehsphgvtghtrhgrlhesgh
-    hoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthho
-    pehsthgvrggumhhonhesghhoohhglhgvrdgtohhm
-X-ME-Proxy: <xmx:OJPEZrLIV72F0aC-B1rKXbT43-jeM7N3cbBCxp4QjTHOINVoIzW_8w>
-    <xmx:OJPEZiIkDBnl2dLYCi2qcsozhmaUG14zwz2xKQOuXyd2sNtChe0reQ>
-    <xmx:OJPEZsyK4N4Ko7NZBOm1q8qkjWldxrft_NuvCsPhZJYemuJQziu9AA>
-    <xmx:OJPEZmLy-_BPesJuGXXa23T5OuRac6uFxrCHbPabV326iC1MwDnO7g>
-    <xmx:OJPEZh9gt8hO9uiJaMamfSSkKbh4ye-VRj-p7lMhu8JA2S-w8QYyxij_>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghthhho
+    mhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtoheplhdrshdrrh
+    esfigvsgdruggvpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheprhhs
+    sggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
+X-ME-Proxy: <xmx:PJPEZpfvwsUceqT2HoUCQqzH7eU_2x4Oz4mwn9KxPwLE2619xOrDhA>
+    <xmx:PJPEZqNxuWSiExVblrWBSimc6uWXCImh7BgcVvj_EGwoS1Z7iDQvjA>
+    <xmx:PJPEZrlwOBwIp-tg2evnOHFi7kBDXIrrUc6Xk_U-zJvrDRcF4j1N3Q>
+    <xmx:PJPEZkvGd4QkYSloFZ1JtovQeV3sQTQBpQ0164P9MKRDeobwi5vQYA>
+    <xmx:PJPEZrg_kPJpBeOzxiofg1L-m2oTlAhwhyHOPMOi-949svMaNTvn_EWu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 08:59:35 -0400 (EDT)
+ 20 Aug 2024 08:59:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f95d0d37 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Aug 2024 12:59:03 +0000 (UTC)
-Date: Tue, 20 Aug 2024 14:59:33 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5410ae8e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Aug 2024 12:59:08 +0000 (UTC)
+Date: Tue, 20 Aug 2024 14:59:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -82,12 +82,11 @@ Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Kyle Lippincott <spectral@google.com>,
 	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
 	Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH v5 9/9] t/unit-tests: convert ctype tests to use clar
-Message-ID: <ZsSTNV3EeTJQ3Ywn@tanuki>
+Subject: Re: [PATCH v5 0/9] Introduce clar testing framework
+Message-ID: <ZsSTOczuGhT5zwoV@tanuki>
 References: <cover.1722415748.git.ps@pks.im>
  <cover.1723791831.git.ps@pks.im>
- <ca09d19fd51cd4b3072b339f483b6b6d6e467b56.1723791831.git.ps@pks.im>
- <4aa6f557-1dfc-4aaa-b6db-e47013568ecc@gmail.com>
+ <b87700d2-0c9a-4d0c-9ee4-e6a91278d596@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,33 +95,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4aa6f557-1dfc-4aaa-b6db-e47013568ecc@gmail.com>
+In-Reply-To: <b87700d2-0c9a-4d0c-9ee4-e6a91278d596@gmail.com>
 
-On Fri, Aug 16, 2024 at 02:38:30PM +0100, Phillip Wood wrote:
+On Fri, Aug 16, 2024 at 02:37:34PM +0100, Phillip Wood wrote:
 > Hi Patrick
 > 
-> On 16/08/2024 08:05, Patrick Steinhardt wrote:
-> >   #define TEST_CHAR_CLASS(class, string) do { \
-> >   	size_t len = ARRAY_SIZE(string) - 1 + \
-> >   		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
-> >   		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) == sizeof(char)); \
-> > -	int skip = test__run_begin(); \
-> > -	if (!skip) { \
-> > -		for (int i = 0; i < 256; i++) { \
-> > -			if (!check_int(class(i), ==, !!memchr(string, i, len)))\
-> > -				test_msg("      i: 0x%02x", i); \
-> > -		} \
-> > -		check(!class(EOF)); \
-> > -	} \
-> > -	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
-> > +	for (int i = 0; i < 256; i++) \
-> > +		cl_assert_equal_i(class(i), !!memchr(string, i, len)); \
+> On 16/08/2024 08:04, Patrick Steinhardt wrote:
+> > Hi,
+> > 
+> > this is the fifth version of my patch series that introduces the clar
+> > testing framework for our unit tests.
 > 
-> If this fails how are we supposed to know which character it was checking?
+> Thanks for working on this, I'm broadly in favor of this change. I
+> like the way it keeps each test as a function and adds automatic test
+> registration with support for setup and teardown functions. I am keen
+> though to keep an emphasis on good diagnostic messages when tests
+> fail. Looking at the conversions in this series all of the test_msg()
+> lines that provide useful debugging context are removed. I'm not sure
+> using yaml to report errors rather than human readable messages is an
+> improvement either.
 > 
-> Thanks
+> I wonder if we want to either improve the assertions offered by clar
+> or write our own. I find the names of the cl_assert_equal_?()
+> functions are a bit cumbersome. The aim of the check_* names was to
+> try and be both concise and descriptive. Adding our own check_* macros
+> on top of clar would also make it easier to port our existing tests.
+> 
+> Here are some thought having read through the assertion and error
+> reporting code:
+> 
+>  - As I think you've pointed out elsewhere there are no equivalents
+>    for check_int(a, <|<=|>|>=, b) so we're forced to use cl_assert()
+>    and forego the better diagnostic messages that come from a
+>    dedicated comparison macro. We should fix this as a priority.
 
-I'll introduce a new function `cl_failf()` that allows us to print
-information like this.
+Agreed, this one also feels rather limiting to me. Are you okay with me
+doing this as a follow-up in case this series lands?
+
+>  - cl_assert_equal_i() casts its arguments to int whereas check_int()
+>    and check_uint() are careful to avoid truncation and keep the
+>    original signedness (if that's a word). I think that's unlikely to
+>    be a problem with our current test but could trip us up in the
+>    future.
+
+Yeah. If it ever becomes a problem we can likely just introduce
+something like `cl_assert_equal_u()` to achieve the same for unsigned.
+Both should probably end up casting to `intmax_t` and `uintmax_t`,
+respectively.
+
+>  - cl_assert_equal_s() prints each argument as-is. This means
+>    that it passes NULL arguments through to snprintf() which is
+>    undefined according to the C standard. Compare this to check_str()
+>    that is NULL safe and is careful to escape control characters and
+>    add delimiters to the beginning and end of the string to make it
+>    obvious when a string contains leading or trailing whitespace.
+
+Good point indeed, and something I'm happy to fix upstream.
+
+>  - The cl_assert_equal_?() macros lack type safety for the arguments
+>    being compared as they are wrappers around a variadic function.
+>    That could be fixed by having each macros wrap a dedicated
+>    function that wraps clar__fail().
+
+Some of them do indeed, others generate issues. I don't think we have to
+have dedicated functions, but could do something about this with
+`__attribute__((format (printf, ...)))`.
+
+>  - There is no equivalent of test_todo() to mark assertions that are
+>    expected to fail. We're not using that yet in our tests but our
+>    experience with the integration tests suggests that we are likely
+>    to want this in the future.
+
+Heh, funny that you mention this. I had this discussion some 6 years ago
+I think, where I also mentioned that this should exist as a feature. In
+any case, I agree.
+
+>  - To me the "sandbox" feature is mis-named as it does not provide any
+>    confinement. It is instead a useful mechanism for running a test in
+>    a temporary directory created from a template.
+
+I guess we'll either just have to not use it or ignore that it's named a
+bit awkwardly. Changing this in clar probably wouldn't work well because
+other projects may depend on it.
+
+>  - There are no checks for failing memory allocations - the return
+>    value of calloc() and strdup() are used without checking for NULL.
+
+I'll commit to fixing this upstream if this lands.
+
+>  - The use of longjmp is a bit of a double edged sword as it makes it
+>    easy to leak resources on test failures.
+
+I have to say that this is one of the best features of the clar to me.
+The current test framework we use doesn't, which in theory requires you
+to always `return` whenever there was an error. But that results in code
+that is both awful to read and write, so for most of the tests simply
+don't bother at all. And consequently, the tests are quite likely to
+cause segfaults once one of the checks fails because we didn't abort
+running the testcase, but things are broken.
+
+In practice, I'd claim that you don't typically care all that much about
+memory leaks once your basic assertions start to fail.
+
+So, things that need addressing and that I'm happy to do as follow ups:
+
+  - Introduce functions that compare integers.
+
+  - Improve type safety of the `cl_assert_equal_?()` macros.
+
+  - Adapt `cl_assert_equal_s()` to handle NULL pointers.
+
+  - Introduce checks for failing memory allocations.
+
+Nice to have would be support for known-failing tests.
 
 Patrick
