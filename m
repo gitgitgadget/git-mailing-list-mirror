@@ -1,167 +1,120 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B437146586
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:34:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF98188CBC
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139265; cv=none; b=PCt6UippDGoEHwucH08N/wvzsQAKhKwRoaybLE0VT/QpobYsqRt2dtcsjy/oTWFxCW/160hxe/qzKvnaan6eIiVNN6OlaHG6SvgUBhrIh7zhiSKc4tCQSVHoqJiPg28U5AkC4yVh6QMRhjdaiZ/u9A2jI8B+b2lzkFQqoXW6B0c=
+	t=1724139488; cv=none; b=qkct5N8O3fTUbRV4Jt17uhcFo/NxkUd5XWtreLITcDPUeeW8MsZOlfoOzMdylDHZNHRMZQpmS0iqXuV3HThOdaSLbL/oV9a4tFDWsPje0X5rTOsnpTl0m6nbENL6T9U9v+UkicwpSW5K0QuoPevHMlOk9k6iRQd8NVTNxzdua/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139265; c=relaxed/simple;
-	bh=QLiR2yGA/oc50fwxpxNo4wRFu/Af4AfOUiDbbiXMaog=;
+	s=arc-20240116; t=1724139488; c=relaxed/simple;
+	bh=J3129aBC0ZDbnVKQmoy3Midp+id4OcIGgrd2tbsPn7I=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=d+MUXERcPJJcfFyBoRUo+3HFdrmtc9pLjlQG2quOscV2L+vrb7tj8BP0CzfRXeUAbEVx51V64x2901deXp0BSk7q/VNdLWs0W/HCTzMV8/2ovISRn4XIzGhDbz7DOpDPrf9tFgpMVM3xyz+KQV4PuZ/3mA/1Lroooy4dawnkELM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a1Qr6LJs; arc=none smtp.client-ip=209.85.161.46
+	 To:Content-Type; b=gjt6Eo2bGmUIkHI5nLp2Dl9rAmTrfopcY4PfxnBGh8siTQwxPaaPnMw8NVf4bs4G6OaXVtAyNUVllIVyIOOVyx5H4BgJEC6tvQ8OSbSrU3QL3Gdxcxy6Oj332PDfiTPemECRP4RmTnI6N+o4XK7+JYMqmkFWpm1JsvtAiT89ji4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MtwaI7/6; arc=none smtp.client-ip=209.85.210.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a1Qr6LJs"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5d5c7f23f22so3210570eaf.0
-        for <git@vger.kernel.org>; Tue, 20 Aug 2024 00:34:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtwaI7/6"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7093705c708so4738165a34.1
+        for <git@vger.kernel.org>; Tue, 20 Aug 2024 00:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724139262; x=1724744062; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1724139486; x=1724744286; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ffC38caJWPV1NsJXpA0+eqYAVCDSGY1UcoDVpJuiLNA=;
-        b=a1Qr6LJsBF7Ct+GjZgCqVibJqJn9zfBT2MinT7Mv485Q1wHKZF0PD4XE9/iq+nASUY
-         LxvicXGeqyYwefs7prbPfHlNoicZTcaoXQt1FZrtBm+y3HJVrHLdiqxJS5K1EHT15E9P
-         j/ye6uU0Zf9QGN6DrrelOlRiDfE9X+KcvsDa9YlJUbelMJhd/E9frdBbQrm9YFSGnM+w
-         ixsuewSKMt18FYzSU9TrZEvIjAA54npOXYOy2Wxg4yoynbUDJs+0H/E4nUuXKHFu5tNo
-         gSi+/aMFuRglG/YE4XCxkzl9bmkIlKBfp/C9WmoePputYxO5lFicOmt9h6a53pOWwdTC
-         clBA==
+        bh=O+EDk+Z2aMmTHR5aVQNigvGrNlmwvsT4+FKoC7xtzFE=;
+        b=MtwaI7/6Bw5hdAB0+A9fotc5QRLMMlcmab1+DyhtKCI6knHR6T1JK9X8OEdROEsPQx
+         NxUvVNi/QGl2C0vlPtT6cnfSDVAneIkWVNZHgbDYB3/mblE0xz4u/DCGpboEUCzF4xgS
+         zer9Jbw99SBPPjBgcrtu8kxPglzHNHEbIo48ikRifXP+0xXJKaZ/p1QLarnMp4oq3w0e
+         f0oZce4uV66/OQ6GawKZ/wSAyOJVs8217Z98eIjISTMB1D3aSxvrdR9RCEKSTcz7Nnn+
+         WWLONZJDWK423ngmELo3LtIfL1lNWwdLNo1xpgiS3R0Stvsu3WUTvrIMm4KLxoUAD6YB
+         BTAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724139262; x=1724744062;
+        d=1e100.net; s=20230601; t=1724139486; x=1724744286;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ffC38caJWPV1NsJXpA0+eqYAVCDSGY1UcoDVpJuiLNA=;
-        b=Lzh0Ejhz04UFbvnlFdL6Bfccs2X3bl2eJH0Nc6eP6JgR4fuCOrGJ1kmUeOg5AfV5ek
-         qj2uUH0a4pRPJGqPVFIamfrMPkpPsb97zNJG+K2oHY95MCKLmWQABMj/Tou8GQU9wWAU
-         3exw4JqKQ3CW1RWaMZvGBT++tyfzx82fcCIhoF+2y6whIYrR+4yGv/RD+tcqe0yzYN7t
-         /uRwo8f3lU55zNaJSXA/y2ym61cS2Hvr8VWznOm2rhNWXlK/ODH+ojVAihvwbcBBdbiJ
-         I5eKYyLpDmMWbGiktw6qBlU9q4LZVIbswcX/2NunJ1StmPuF86HSah8/x8DCU9DcyZKk
-         P54Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU96xzw3Oz0QuwmRQtDRAS2fzmZubH5DcPXZ61Eom7bTgOcPl0EB+tqvVGqsooOlEZHeQ8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuJ+FSxRJO29KQ/TvZUWn3uOIJhcJOYmYTA+ka1HDg3zfUhyFN
-	qvcIbzgeDhqOsWDEyOFBJ/obCSY/dRI18bHuuZ75r/AFxHUYwcqI++wu4QOikHASbz3+zxwUCYw
-	eLp+5dqtVUxdjBvM/W+1na1FK5BUpQA==
-X-Google-Smtp-Source: AGHT+IHE0pGxLS62CRyCTEeaPXpg1DWqDgF4wnDb3ectwa64LFt6rPotcQ8RRIWM6xEGKwFFAgz7F66aKuwhGvPQzlg=
-X-Received: by 2002:a05:6820:22a3:b0:5da:a06b:c405 with SMTP id
- 006d021491bc7-5daa06bc906mr12789543eaf.0.1724139262342; Tue, 20 Aug 2024
- 00:34:22 -0700 (PDT)
+        bh=O+EDk+Z2aMmTHR5aVQNigvGrNlmwvsT4+FKoC7xtzFE=;
+        b=Grppa/DdDE7UugZfoOCHl2csKA2HM7Os3f8P5xZ/CKbAGVNOlIDB0i31Dgw2FDaPHC
+         J7VWosX3jLGahEfutfbRbipZfJV1rn1yGmAg9xUw5/7T2dUFJW51NNxiGxIafrRLN+Tw
+         3xY7aBzbO9RL6drDg1kY2cUv5CUVYKZTcpGQy3f4ZRpO89D2iSQI4r1ynySma1DN4oX/
+         LcE2+kg9WniRTPFEDXg927dBiX0B90auRIQMM6/mG7fzGGgj4yyHvRx229a4hK/rorRg
+         Oik8tL/D0OOXUcdIePwbAsFCeGv/U0Y+jbnG7+ZHhKvJI4g+rPot83xY45tbBjefQdFA
+         4AJA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRn7kwq6GrxS52JqNpkxKD9owPI01ohiX/u1+MM+GLgCHGiqS4h8edicZf4l21AOlge9Ib779Jh6O0A9Xe4Z+Glt0e
+X-Gm-Message-State: AOJu0Yy6vLGkSV7l5RKmwHKx7Ln1q1rp3xRGew82qmPo1dGJLx+8wj+X
+	pkAkxPcpccXgfiGYKbeMBSVHFtt/UrsKPCYALxWgD+DYDgNX0P5Y6Iqjvm1DAiP6FWyKqBrsKNw
+	qw1WZvwDC7NWjMstK+I6UW9ODRRicwQ==
+X-Google-Smtp-Source: AGHT+IGjiPYl2zVH9Zh+7BdIrSsIygOi7wQsmUaXx1Y0vJz91B4UfCGTuomeKLjyFVlgvhbtJut5fX6mBShtiddxnLg=
+X-Received: by 2002:a05:6871:723:b0:25e:fb:af8c with SMTP id
+ 586e51a60fabf-2708136ae73mr1645435fac.18.1724139486180; Tue, 20 Aug 2024
+ 00:38:06 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Aug 2024 09:34:21 +0200
+ HTTPREST; Tue, 20 Aug 2024 03:38:05 -0400
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <7acfe4fecc54beaa71d65f04c92e31ebe95aa1a0.1723640107.git.ps@pks.im>
-References: <cover.1723640107.git.ps@pks.im> <7acfe4fecc54beaa71d65f04c92e31ebe95aa1a0.1723640107.git.ps@pks.im>
+In-Reply-To: <cover.1723640107.git.ps@pks.im>
+References: <cover.1723640107.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 Aug 2024 09:34:21 +0200
-Message-ID: <CAOLa=ZSOiNKdJcMkE-P052cZjRXPcFQ7y1LnZFOZ0DMtqGnM+g@mail.gmail.com>
-Subject: Re: [PATCH v2 10/15] t/helper: inline `reftable_stack_print_directory()`
+Date: Tue, 20 Aug 2024 03:38:05 -0400
+Message-ID: <CAOLa=ZRBzKnVOhpgdWcwY3pJqR8ozSdVuUCC66sFw_H-LPrz2A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/15] reftable: drop generic `reftable_table` interface
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004696de06201874e7"
+Content-Type: multipart/mixed; boundary="0000000000009e1bba0620188197"
 
---0000000000004696de06201874e7
+--0000000000009e1bba0620188197
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Move `reftable_stack_print_directory()` into the "dump-reftable" helper.
-> This follows the same reasoning as the preceding commit.
+> Hi,
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/reftable-stack.h |  3 ---
->  reftable/stack.c          | 20 --------------------
->  reftable/stack_test.c     |  7 -------
->  t/helper/test-reftable.c  | 23 ++++++++++++++++++++++-
->  4 files changed, 22 insertions(+), 31 deletions(-)
+> this is the second version of my patch series that gets rid of the
+> generic `reftable_table` interface. It made it way harder to understand
+> the reftable code base and is not really required nowadays anymore where
+> we have generic re-seekable reftable iterators.
 >
-> diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-> index 09e97c9991..f4f8cabc7f 100644
-> --- a/reftable/reftable-stack.h
-> +++ b/reftable/reftable-stack.h
-> @@ -140,7 +140,4 @@ struct reftable_compaction_stats {
->  struct reftable_compaction_stats *
->  reftable_stack_compaction_stats(struct reftable_stack *st);
+> Changes compared to v1:
 >
-> -/* print the entire stack represented by the directory */
-> -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id);
-> -
->  #endif
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index d08ec00959..bedd503e7e 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -1603,23 +1603,3 @@ int reftable_stack_clean(struct reftable_stack *st)
->  	reftable_addition_destroy(add);
->  	return err;
->  }
-> -
-> -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id)
-> -{
-> -	struct reftable_stack *stack = NULL;
-> -	struct reftable_write_options opts = { .hash_id = hash_id };
-> -	struct reftable_merged_table *merged = NULL;
-> -	struct reftable_table table = { NULL };
-> -
-> -	int err = reftable_new_stack(&stack, stackdir, &opts);
-> -	if (err < 0)
-> -		goto done;
-> -
-> -	merged = reftable_stack_merged_table(stack);
-> -	reftable_table_from_merged_table(&table, merged);
-> -	err = reftable_table_print(&table);
-> -done:
-> -	if (stack)
-> -		reftable_stack_destroy(stack);
-> -	return err;
-> -}
-> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-> index dbca9eaf4a..42044ed8a3 100644
-> --- a/reftable/stack_test.c
-> +++ b/reftable/stack_test.c
-> @@ -179,13 +179,6 @@ static void test_reftable_stack_add_one(void)
->  	EXPECT(0 == strcmp("master", dest.value.symref));
->  	EXPECT(st->readers_len > 0);
+>   - Fix some commit message typos.
 >
-> -	printf("testing print functionality:\n");
-> -	err = reftable_stack_print_directory(dir, GIT_SHA1_FORMAT_ID);
-> -	EXPECT_ERR(err);
-> -
-> -	err = reftable_stack_print_directory(dir, GIT_SHA256_FORMAT_ID);
-> -	EXPECT(err == REFTABLE_FORMAT_ERROR);
-> -
+>   - Remove some braces while at it.
+>
+>   - Drop the "-c" switch from the test-tool's help output.
+>
+>   - Restore printing-related functionality, but move all of it into the
+>     test-helper. It has no reason to exist in the reftable library.
+>
+> Thanks!
+>
+> Patrick
 >
 
-We loose this test due to the movement. It is okay, because the code
-that it is testing, is now only available in the testing section and is
-a test-helper. But it would be nice to mention this in the commit
-message.
+This version looks inline with the review I did on the previous
+version. It looks great to me. Thanks
 
 [snip]
 
---0000000000004696de06201874e7
+--0000000000009e1bba0620188197
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 731f8ea3370f0b97_0.1
+X-Attachment-Id: 3eeecb6034070232_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iRVJ2a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNEVVQy85bkt0Tk1TOUNObFdobzdvNzVxU3d0RDN0Rgp0aDl2dEJxRGJ4
-dkNEVmFMdFVBSzhsM3E3aXNVOXNKUXYxVjVRdENUUjJ5UUlGdjI3M0xEQTByRUd5a0VTaG9KCldo
-NWY0MjhZMUJodFJ4NFVaWFZ2Rmlnd2RTdnUwL3hzZWpXeUkyUzV0SXFYOGh4djJ4REREZVdTZ0hr
-WFQxQjMKQ1JHdUpjT1ZHUHczamR1SnIvOE1jZjlCRjVpS0JPTTR1VjhOMnYyWlpKcHcvMThDS252
-RWM4K3dONldYNjY4UQpDZlRvM3c2dzk0d1ZvTHhhRmFNYXF4RGptc2dieElMeVhZSEgzSGdUSW9h
-QzJ1dnRVaXBUMzg1eTUyTUhrdTBTCkVGL1dtd0NxNWFQY0JJQ1RWWEZuYkhlVHN3ZFRqRFZOOWdH
-RWFlRzhWRGlnRjg2cjA5Q2NlaGY3UEZJWVA5UEUKR21yRFQ5bHZlN3FVMVZuWkpxa0p0R0t3YlhC
-aWlCY1VvS3F3WHYraDJFVXJjWUFLM0JiWXoraEFKSDhFR3RwWgpEd1BzNDQ3MWpFVW9ES2VLa2Fa
-RkR0THdOQ1ZJMUhmNnhadUNWSzJPU2ZYTGprbVFYSUJDL3JZdXg1b0RlQkxYClVoT1RoYmwrWUZE
-YzJGUExyTlJWWmdwTXdoc2pSYXFkSXphK3o4cz0KPW41a1IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1iRVI5c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnlrQy85RitCWldaT1l2YXcwWU5yRWNrTDJ5dXkzRApKNDhIazFWVG5j
+amhZdGRvODhrT2JZc25lMUcrT1ZLOXdsSmlkbWlqQzZkUXIrMTI0MUdvSGtDWTFCSWFPRzY0Cmw3
+TzVZYjYwK3FUVk0vNFdPWFErTjdEUUN4VHNrU01hUUtvb1I2MjJkVGd0czEyMlNQRlNtaktZQ0Rl
+RFdnZWwKckt1dUlJc0E3c0JyQTdNYXRVQ1pzTWlOVER0QTdOUEhUTWpVSDhISG5PemhnSk9ZMVIv
+Slo5U3RrY1cvUWNoUwpEVm9hb0E0ak15bGJTZm9wL0JwQlh3UDVzK1dDTWc3RnBKU29lTlpFWkdU
+eHBBUXZyeWs3Q1V0R3pXN0t0LzMyCmJyRkdrZ2piQU9QUCtQODB6L28xNEc3ak5kZklRNnBwSlQx
+elNhNStWMUNtbGZCSytDd3BTbEx1Tk9kKzlPdU0KT0dVbEFHYVBCRGRJY2xHN2ZtOVJzTEZRUkEx
+ZmFCT1owcmd3UVA5dUhxVU94aXFId0xXeWY0dXFkUWVvNUlydApnTHhZelhzWHd2alp2VHR5VGdU
+Z0tJNUdnMVVDVlE3WVMxRFJ1LzhJQTdWZHpyRE5ianFkbjR6TWF0b1M5WkpyCmtyUzF5VGpYMzIr
+TTZhdVF1VU5vWnZ5S3lsemk4bW9EQ1VONjkxQT0KPVVlNUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004696de06201874e7--
+--0000000000009e1bba0620188197--
