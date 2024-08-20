@@ -1,51 +1,51 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0D619478
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 19:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF041547D1
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 19:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724181951; cv=none; b=dYTowtuitJN9W8DbNcIoUN9PFkZVAnPDbxf2rc9p3m/oZYaXkcEzrQUr8w1g3W4ZmiKtDe27TiPo4xb/4gVX4lIriHFFGqnuqPfP/wvqVcRv2ES0+ow5PdC+v/DM2eazVaiwpFGkw0EG9Nq01pol8gHEtq+PRIOlX23X95agquM=
+	t=1724183467; cv=none; b=f2gVVBd2a2wl0zJg2XgOzCVYOgrduD2pXwyo12eY4DoKbLSJBtZWdxLHtoY2LtXRkDnAZv9xYnvhbXcwl9AoqRijsu+qOvIxaQwGyBt4YKlFvC39seRWxckAsGgNrixgSZ3Zbi6rlpUy4rElVGshCjbSZCyv0A7q2wWRbGuGDLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724181951; c=relaxed/simple;
-	bh=hmm8RdjfFVsMYvT36GAHW9DuYlorQMjCgxw7lIipq94=;
+	s=arc-20240116; t=1724183467; c=relaxed/simple;
+	bh=EE0m61vtZ7chULDmWE2438z9UsblMuof0MruLan5huM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dj4qyG8DeClbshTPbGtN64DWp/IlkD8T6YRubpAQpWP88F6Mp31DD5lWpKhQ+YoYSXXT8VnmyYE0zmwE8hWLG0HlOoNEcIw6TQaoOpWDQMuUCJ4bT4oLD9teJRST0h1b9kq9PgCmC0Di3Cgce3o51jEwg03je3sKDAuSXnG/MN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W09ub993; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=uCWH8Fnz9LfktgfJ0fhfvBUaY7RoZueVTNMuyM7rKv8FPfACF5+awZ0TMIFe1M6yzyL6M2Au88hQarzT3wIlKQn3GOA+AOnV+paVBzAog1HQ6AgbAG6NGaKVx+ixRPqI1O07ALGgGPwBjcuz/RPvVtlBxjROmbuR80kRiBmFJYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GZg1XTg1; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W09ub993"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 878C7260B3;
-	Tue, 20 Aug 2024 15:25:43 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GZg1XTg1"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 658542DEC6;
+	Tue, 20 Aug 2024 15:51:04 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hmm8RdjfFVsMYvT36GAHW9DuYlorQMjCgxw7lI
-	ipq94=; b=W09ub993dDiOSCT4a2keGm9fedCh3xWXzgQ5JDRsxKQnaYRPrasURT
-	QeDirC7JsnpEKlvwbAPey+3AcyE1AlIbTvzq8/gDzHo+mUEViI484ut6AJvBdAZN
-	wgugsSaxvcxz9LF7t+4lLmQjxSzB67CkM4sp7littxlCkdBOOO+sQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8116D260B2;
-	Tue, 20 Aug 2024 15:25:43 -0400 (EDT)
+	:content-type; s=sasl; bh=EE0m61vtZ7chULDmWE2438z9UsblMuof0MruLa
+	n5huM=; b=GZg1XTg1cow6rx9xjqVp3j+SK4mPA1QsEQawfF3xKQkFTg2/MXT2i6
+	CyDIq+4gw560NtdCdhtk6r8fLuG26G84dfgZ4xyBRotwBn1ak77sPYumkr23aVNj
+	OsjLL+QBBPeCFkxSqIe6bDEfbQCiafvrtK+Kr4JtHH1yKZFwh3Uqo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 536AD2DEC5;
+	Tue, 20 Aug 2024 15:51:04 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0E108260B1;
-	Tue, 20 Aug 2024 15:25:40 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DC37E2DEC1;
+	Tue, 20 Aug 2024 15:51:02 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/20] mailinfo: fix leaking header data
-In-Reply-To: <69e30ea5179eff6472be54ebba64ebca3e562f32.1724159575.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 20 Aug 2024 16:05:02 +0200")
+Subject: Re: [PATCH 02/20] convert: fix leaks when resetting attributes
+In-Reply-To: <ed0f01bf92c83fb7371326bd1a59933619de2c47.1724159575.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Tue, 20 Aug 2024 16:05:05 +0200")
 References: <cover.1724159575.git.ps@pks.im>
-	<69e30ea5179eff6472be54ebba64ebca3e562f32.1724159575.git.ps@pks.im>
-Date: Tue, 20 Aug 2024 12:25:38 -0700
-Message-ID: <xmqq5xrv8099.fsf@gitster.g>
+	<ed0f01bf92c83fb7371326bd1a59933619de2c47.1724159575.git.ps@pks.im>
+Date: Tue, 20 Aug 2024 12:51:01 -0700
+Message-ID: <xmqqikvv6kii.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,72 +55,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- FC2A6C2A-5F29-11EF-B990-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+ 87DA7AF0-5F2D-11EF-A10B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> We populate the `mailinfo` arrays `p_hdr_data` and `s_hdr_data` with
-> data parsed from the mail headers. These arrays may end up being only
-> partially populated with gaps in case some of the headers do not parse
-> properly. This causes memory leaks because `strbuf_list_free()` will
-> stop iterating once it hits the first `NULL` pointer in the backing
-> array.
+> When resetting parsed gitattributes, we free the list of convert drivers
+> parsed from the config. We only free some of the drivers' fields though
+> and thus have memory leaks.
 >
-> Fix this by open-coding a variant of `strbuf_list_free()` that knows to
-> iterate through all headers.
-
-Well spotted.  An array of strbuf is often a wrong data structure
-for anything, but luckily we use it and suffer from a bug like this
-only rarely.
-
-The fix makes sense.  Will queue.
-
-
-
+> Fix this by freeing all allocated convert driver fields to plug these
+> memory leaks.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  mailinfo.c          | 17 +++++++++++++++--
->  t/t5100-mailinfo.sh |  1 +
->  2 files changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/mailinfo.c b/mailinfo.c
-> index 94b9b0abf22..a4fa64994ac 100644
-> --- a/mailinfo.c
-> +++ b/mailinfo.c
-> @@ -1290,8 +1290,21 @@ void clear_mailinfo(struct mailinfo *mi)
->  	strbuf_release(&mi->inbody_header_accum);
->  	free(mi->message_id);
->  
-> -	strbuf_list_free(mi->p_hdr_data);
-> -	strbuf_list_free(mi->s_hdr_data);
-> +	for (size_t i = 0; header[i]; i++) {
-> +		if (!mi->p_hdr_data[i])
-> +			continue;
-> +		strbuf_release(mi->p_hdr_data[i]);
-> +		free(mi->p_hdr_data[i]);
-> +	}
-> +	free(mi->p_hdr_data);
-> +
-> +	for (size_t i = 0; header[i]; i++) {
-> +		if (!mi->s_hdr_data[i])
-> +			continue;
-> +		strbuf_release(mi->s_hdr_data[i]);
-> +		free(mi->s_hdr_data[i]);
-> +	}
-> +	free(mi->s_hdr_data);
->  
->  	while (mi->content < mi->content_top) {
->  		free(*(mi->content_top));
-> diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-> index c8d06554541..065156c1f39 100755
-> --- a/t/t5100-mailinfo.sh
-> +++ b/t/t5100-mailinfo.sh
-> @@ -5,6 +5,7 @@
->  
->  test_description='git mailinfo and git mailsplit test'
->  
-> +TEST_PASSES_SANITIZE_LEAK=true
->  . ./test-lib.sh
->  
->  DATA="$TEST_DIRECTORY/t5100"
+
+The helper has only one caller, which makes me wonder why we do not
+have to call it more often.  If "git checkout" or "log -p" notice an
+attribute file is updated, I wonder they should call it, for
+example.  But of course this is completely out of scope of this
+topic.
+
+This has been leaking even before 9642479a (convert: fix leaking
+config strings, 2024-08-01) straightened out the ownership rules of
+the value obtained from git_config_string().
+
+The fix makes sense.  Will queue.  Thanks.
