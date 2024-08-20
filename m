@@ -1,79 +1,79 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCEF1922C7
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC601922C7
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724162714; cv=none; b=DSlhcanefxhGxJRKvBV+Cdpx9+ZJ8WS/ohDkbsNIFusmBj8e0voAfbMAwB41hYFQqGGyKJIBcDo06bElbgfJKp8alKyGVjtYSIwlLKJ78T1N/jcw6R4G48XT3B29icWHfpQO2ax1bRqHwWarrRHbUKTgTyL8jt3BNHWlag128/U=
+	t=1724162718; cv=none; b=QWWBq46MvPVi7gKU2j1j2uu6Tmu8s7GfoKloxrcL64XbKWgz+oQt2HsIITwGMAtWGTRK577clkWNlODrQg9ybcKSrpK8pQ3jCjGAtO7R5sdDnpF5PygIbIHUseuHum8GKRoMWArzCwsx5ftEeUdoRRLILdmvRSyRdmBM8y4+NcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724162714; c=relaxed/simple;
-	bh=P5drRehIGea+ag3xyfV65e0jcQew4diTYUjbw+m4vkM=;
+	s=arc-20240116; t=1724162718; c=relaxed/simple;
+	bh=mcRQa9G7hy7QauywfNNmby8ICn9wUCkZYmWcBv9yqGE=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=opRopTNfwmBriGXpSI6JgLj88+HQS5GKXPRf9MFE5xXFURdUzsvC7WNMaO4t+1UcleJWpMKGtVkmpMRJU/Kqgn5VSciNfX3REkO0YiPMv0LqiytkLBmeNrXchzVKY1v2Uvo7/Ezgv+dMPlupzPOKupHDbyruiHahR/Dmz6eAL1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jnGwFtOq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aj7PS3j+; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=HEJS+uf8Vgieo/Rtuna9e7VWJVltKocZ8hXQXQ7qOhPK5ik7kzU8s6gpYjq/MCtgQaN7jdLPCe8lreV2OTGwUEYoaFzUShvi9MjygvQDNwEDIYJkX02Ey+IGKzv4NGQrq1lMVbPmbeaE3L7xYQFSq0UsCQnfzvppdnBxPVqY9Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cXm25ofa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C7kkGRlM; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jnGwFtOq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aj7PS3j+"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7662B138FC5F
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cXm25ofa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C7kkGRlM"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id C6DDD1151AA6
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 20 Aug 2024 10:05:12 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 10:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724162712; x=1724249112; bh=gIqz7cvmrU
-	YU5R0PzCrSfb5630P5WWOl03TGpFeXqw4=; b=jnGwFtOqCIaHoavjXK58WG//+i
-	o5DpchX9qqpZTpwOUtmPbsFS9pifvfz3wMZPfzTUMsdVMhPPqk9fpXcarq2FxhAm
-	2iwr42dVu/fV2rxQ3n8jq4YIulmQ+Sqyh8ZoJhcyAUfIxdru9B5e7iGCouofYUK2
-	t+buDfBS8DlxPEv2W9VW6K7wqn2PGDj2gpVh276NVaAVv2s0KnZoSgDronvfb/q5
-	oF7ZolAv8trfM3suqvjV5893D9g06SyD3YkwWjB0QEGHdbE+g7UaxgqftTobGs5w
-	4DgL4lLClMohU4VQ3gXd++k0Q6HZULM+bdNEW4y3eCOH9nw+cGlZAM31Oo4w==
+	:subject:to:to; s=fm1; t=1724162715; x=1724249115; bh=HX6AGxmsBS
+	j0RUbqpwNe1xuthWI35IE6uoPJO6H0/dQ=; b=cXm25ofaHu72QWoHNG1jVSwRcq
+	WUhXQ63/KbO0aSdN93WO2KoAyECGutL6AHLcAs36WsjBfAJdoF3gFzhXaDx8AZES
+	O5MspKQmR/9zZ0TD43STyBwCEDqIEuR4sO+/RvfP5i5u63uqMK4FvXqSnaCzkNV6
+	I4wTu+7IL6vAo6M/6o/FlSsD2F6vqxR+dxzVaCAefR1lhdQn6Eo8jwfGrt5CfXQJ
+	h8yb8QwUWt+H+wzS3jijkaesGX3gMU5vfEcObjtgyizk2WHn89wifAWTFaPLll+w
+	nfAyNZoGr13KxGRf7JcnlnvaSHZcR65h4Qx7zrU8vEN/AEydQ8ImQ6noD5Kw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724162712; x=1724249112; bh=gIqz7cvmrUYU5R0PzCrSfb5630P5
-	WWOl03TGpFeXqw4=; b=aj7PS3j+Popo/uN4J9fx+bcJ12JOERYgr4tx8HvInTSm
-	1fj4f7EPCp9ZGdsekTCENg7EpMIS22nsfan2RvURkHzcLI0qsPd5Uw6sVh6No1No
-	E0bAfFfP3MzbG3tQSQ2MTMuMHb6d2ZZuicvpdO+xZ0R1JyYx2y6mHzNt6qMABe2y
-	vMa4d21BwhBEgKNyAVbRg0cadfmwmWXOU7uGSfGhbAUD6QNIZXOHrr29uiPtKaJu
-	n5M8B8THp9rf7x//+jSTm3B825enhpfeirHEazYPoZ97rpbx/87fPs5mnMjDbZP4
-	95/BWaZIFO2KHI7/9yvTRIksSQjNBg++Ib3dIpJgGQ==
-X-ME-Sender: <xms:mKLEZhEMS4B7Y2qEOdi2qC8r_fz_c2ZSnDn7YcoZrqe-CbwzMYmyzQ>
-    <xme:mKLEZmWFbTJtGt35I468I-1CR8bBEN1GGzrbqgjnf52-mBVhZxuWurk_O-4kJhAXc
-    -C2EWtlrDiNkjeAKw>
-X-ME-Received: <xmr:mKLEZjLi9mRRZwGXTOzQSB2v2uYkB4rqoXQdsqe0QbFB_eVJgSEBL3JrzY1hBFyKmNTT5o90kmokzmNeh36o6T9faYIcjUVw4GOBNgbxEMS5Nr-j0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgjedtucetufdoteggodetrfdotf
+	fm1; t=1724162715; x=1724249115; bh=HX6AGxmsBSj0RUbqpwNe1xuthWI3
+	5IE6uoPJO6H0/dQ=; b=C7kkGRlMpWypJoAH4RdMA26s5OA5M+xIhhJOC+l+Gdw5
+	+lQDnrYy3c3RI8H7zukN5MmZK00k6rx00H4naNb+p/iDFQ7+CbauPxNGMkxy0u0q
+	e3zZCe6+qc+iUBfmiblgfq+9yJ1PZJYDNsbmYXbNDaji4Zfsqq8fVvv6I6rm5iip
+	pu18Lsy22Jydkt2DAkdglkmt8KcGEIxwHtbdmY9LlAqt3xLr2FJ3Bvykx3sSiTj6
+	kePL6Dk4xjUfXBCONyx/AepoH1rrqFaj181PAKu8t3FGU7373Mgsw2OXkjRXdlhn
+	LrtJTHOd9iV6Z6Pd7mA/Xor1gkdvc9W2gHou0n84jA==
+X-ME-Sender: <xms:m6LEZgzV8ud4wO2lkXvvxHqXnwQ8OgBKYCMCIyfmGng7pa_aNg9v0Q>
+    <xme:m6LEZkSa0wQCKX3NLD1W088D1TPAuOwsQWMGMpbzZ0F8Jx8B4inLz78H146jTKgOi
+    NAj_tp95RrNoFuuQA>
+X-ME-Received: <xmr:m6LEZiUfwlBlhAdqSWLbwRye63iJ-e920nyX3KeUNREIfLCeWOAAjPUUX1VBSFNOl7spBjQzVzUoFcHY31X21soS-gttJfsGrNi4UTt8ga_JYrUNew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgjeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:mKLEZnGnUvNmCVOE52ODix26kVMtE5OdVsRbi2aNt3Z0m2ffffVsbQ>
-    <xmx:mKLEZnWVEHP1yRvC17vldTlLAWwP0njUC9hzkd2a2yBdlHSHO5G6Gg>
-    <xmx:mKLEZiNdGaP_SUi9fraCd_lCcHOjLoPZqijCjNYEuI5yBdHRmbNhNQ>
-    <xmx:mKLEZm2rW-TUkgepjk9AMdwTiOhTkYmizvwtjeEzZlrYXopm8HwYRw>
-    <xmx:mKLEZufPUjFWZ4BSIZQfkKokDVVFTjrF5lglc_8iv1xWEqmsXsWcvx25>
+X-ME-Proxy: <xmx:m6LEZujsodtVqD8Bu3fOUOE4Zjz9QDR0Bdck5CGh0vgHI7YNjSX3Fg>
+    <xmx:m6LEZiAT7tAzUKnSHl1KAjWuAaE7-bAQEcFch7hTHpZ2-xCPUtMcIA>
+    <xmx:m6LEZvKA87ybqeRJsPn3reL40O4TC9CRvPfljRYZQNSZYUZgNG7jWQ>
+    <xmx:m6LEZpDkPGf6aJUODLwS3wI0L8GOWSX4dDDgTzur_iJwwe70iDcf4Q>
+    <xmx:m6LEZj6t4lJzt2tER1MQFWGS4kZ7HsznSliSRtMnaleR1hJbz9z-0I5e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:11 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:14 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 92178409 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 22c054df (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 20 Aug 2024 14:04:40 +0000 (UTC)
-Date: Tue, 20 Aug 2024 16:05:10 +0200
+	Tue, 20 Aug 2024 14:04:43 +0000 (UTC)
+Date: Tue, 20 Aug 2024 16:05:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 04/20] pretty: fix leaking key/value separator buffer
-Message-ID: <696467780e6a1b3d6050987c9305ff48213e306d.1724159575.git.ps@pks.im>
+Subject: [PATCH 05/20] builtin/merge-tree: fix leaking `-X` strategy options
+Message-ID: <53db2fc7206cc11cae4930eba8c413fce4715afb.1724159575.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,48 +85,65 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724159575.git.ps@pks.im>
 
-The `format_set_trailers_options()` function is responsible for parsing
-a custom pretty format for trailers. It puts the parsed options into a
-`struct process_trailer_options` structure, while the allocated memory
-required for this will be put into separate caller-provided arguments.
-It is thus the caller's responsibility to free the memory not via the
-options structure, but via the other parameters.
-
-While we do this alright for the separator and filter keys, we do not
-free the memory associated with the key/value separator. Fix this to
-plug this memory leak.
+The `-X` switch for git-merge-tree(1) will push each option into a local
+`xopts` vector that we then end up parsing. The vector never gets freed
+though, causing a memory leak. Plug it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pretty.c                      | 1 +
- t/t4205-log-pretty-formats.sh | 2 ++
- 2 files changed, 3 insertions(+)
+ builtin/merge-tree.c             | 13 ++++++++++---
+ t/t4301-merge-tree-write-tree.sh |  1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index af8f433cdcb..6b684d7b828 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1776,6 +1776,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		}
- 	trailer_out:
- 		string_list_clear(&filter_list, 0);
-+		strbuf_release(&kvsepbuf);
- 		strbuf_release(&sepbuf);
- 		return ret;
- 	}
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 158b49d4b60..eb63ce011fa 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -5,6 +5,8 @@
- #
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 9bca9b5f33c..c00469ed3db 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -533,6 +533,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 	int expected_remaining_argc;
+ 	int original_argc;
+ 	const char *merge_base = NULL;
++	int ret;
  
- test_description='Test pretty formats'
+ 	const char * const merge_tree_usage[] = {
+ 		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+@@ -625,7 +626,9 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			strbuf_list_free(split);
+ 		}
+ 		strbuf_release(&buf);
+-		return 0;
 +
++		ret = 0;
++		goto out;
+ 	}
+ 
+ 	/* Figure out which mode to use */
+@@ -664,7 +667,11 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 
+ 	/* Do the relevant type of merge */
+ 	if (o.mode == MODE_REAL)
+-		return real_merge(&o, merge_base, argv[0], argv[1], prefix);
++		ret = real_merge(&o, merge_base, argv[0], argv[1], prefix);
+ 	else
+-		return trivial_merge(argv[0], argv[1], argv[2]);
++		ret = trivial_merge(argv[0], argv[1], argv[2]);
++
++out:
++	strvec_clear(&xopts);
++	return ret;
+ }
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index eea19907b55..37f1cd7364c 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git merge-tree --write-tree'
+ 
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # Tested non-UTF-8 encoding
+ # This test is ort-specific
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
