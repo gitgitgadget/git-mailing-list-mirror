@@ -1,79 +1,80 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8267743AB2
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5784E191476
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724162705; cv=none; b=gnYOHywC34C/k0DVT/nXkZ1lWAqOucIfxvbVIrQwxBPv0tjk+sbbCct4Iv3tgVIEQ9kRw98Ub1U1RJRO8G9DzF4eCfeGhP2RrD3rKcWJAGWq5/WapDR11aEBh2Dw9VKsfSwzormLxyhftJOK3kQb5i2Tr5fsH4vcyNwc/coUuNA=
+	t=1724162706; cv=none; b=GMIeKAcmh9YB2pRfICjZBQLFXAV7m5K7soMNPneXlLnRF++it9c7RnsbJhywJeQsIxt+sKeYpI6RxdBM9O5dF6dVveLcZpYimgfYzaKqfVEU2FIlxYLO/ArnKCC+m2UFazDuXAW6Fkn1INuFGYFC2smZSAm06WcsDFSqTz4PU4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724162705; c=relaxed/simple;
-	bh=IavKdE/LvRk0dzdc0UPk1fVNAR7dxmW2E7mzPHVDBJg=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=cNTMn/8flSKHRK4zT2sX5xJIaHv/lF4xnTG14kal6f3/FuiL9imcyumNV1DxROP3eDONwumTIElQM9aT8hi1w7xvKVD2g5EHcwCaQaZmpVPaJXlA6kxgCYTTuNg/N+IH16WEioyA/niWJ1riRbnMQYuwWYI2WcJE7MmyfnKcZ8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B9XJL1ON; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G1+nJ/rq; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1724162706; c=relaxed/simple;
+	bh=JSmfvtR/Ct2tqfGDjOlz6UwxLrCiRpmHYB+uixyz8DU=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sESPGXBM7/eDG7PnLxJIxHKAGfSQH4iCiqIUQ75v5S8iSq4a1za9RQ7MkeIvnscRFNuNzLD4yKAcWRngGXAoqNBDhsU3Rmq0Dlia7uG2OsUsTJ7GvFytY0Z7MK6WwDdn84MoKwwOkCRvsfgXJnzvflECg/g4imSqf9TeRYa+xy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ohc/uhH6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tkx7xXzR; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B9XJL1ON";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G1+nJ/rq"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ohc/uhH6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tkx7xXzR"
 Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 88BF51151A89
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:02 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6AABF138D263
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:04 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 10:05:02 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 10:05:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1724162702; x=1724249102; bh=eZnP83btJX2hX69aeEl2jQqlNfJbll8t
-	Wycpsv8hS7Q=; b=B9XJL1ONk+BrmZQtuqO0sjQgl1UMYTpIff+cepkTpKCUyTFk
-	Ua3vYL2dK8y1XHvFF0C/+rKeiL6P3QUmiG63c3VCU5i6VQoRQ7QpIzwrmVol1gFb
-	Dvw5kcJmAeM1s84wsGufBnEfcMPAGkrpif2r04VDrrLToTHiP/5aHKhe5l+QxWet
-	QtYv67N391yBbouocsYR6Stvs5C2T6g+/nQxq2eZmpeHVqsRSLVtjGVlSQoD+Nee
-	Qb9cAU5Y5tFYB8bqCvE4eR02nRR0IsHQ1rdWz9ygGj6PeY//BgbBa0lhtoUrqfKJ
-	/QrXJG5DI71z5GDRRxbMN6HlaG/WIiZlkrjYxQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724162704; x=1724249104; bh=osC24z7dhB
+	sS6tpvNcPKRxMjKSKUX0C6NSUaScxGReA=; b=Ohc/uhH6+2H90UvV38pk3sTd7n
+	N3E6moXgWbAGxwU3aWbDibq9wvOvlMF+/SxMzaOBtoAF3uS6SZc+v1kgkfiWjPfU
+	gkYkWJFyQm+5AWKkeTDidKjffB20HW9O8VU3p8UXPN8xnq2jY/zLY47iFFDIJE9H
+	F62nHFcgPeIfvQ9ZlU9J6jL5n+rSVSqzS5a/K9n6Pmne8phMtjPyCcwb1INpd8Uf
+	JbcWlLkIs2aJd5Fk4AdlRrKesNcOMMz4jdnfRhyUpDoTAHmMr7tU/eQo3LfJJOP8
+	yKPZrQDgGDJR4Eg6zsYtcxXCb/K4X7fdHMkqGKeLUD/ZBMKuKmvddwKfs7gQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1724162702; x=1724249102; bh=eZnP83btJX2hX69aeEl2jQqlNfJbll8tWyc
-	psv8hS7Q=; b=G1+nJ/rq+UlWn5u7YItk0J2iKCuOXrSiXzjz/OD0QHGUThB7aH6
-	ywhgipN86q2v4jvPaNJGR5H/zgyzlNiMxfIk1hjNA6iHOPpVJgngdA2rf7hXX/Hd
-	V4AmwbqV+4gz9Zxc0nQPB9gwOLYcQyYoUSG/oC3zRDFdlw//mjPC7pmlKRiEOwbe
-	GrxSL7SUmn2I8YcBCm3mZMpgKSjsn+/2O79aPNm7MznaSrtUwiOMm1PvBepHsDlt
-	5GpmVrtPzjROWJo0tPf+WN1M/q99hGfbOyWTkZUMYqK+V296dJOvVMwhbmonS6re
-	BA5nzL9sBejipLtHEm/FwzamL4/gn1GWlHQ==
-X-ME-Sender: <xms:jqLEZtKjJUnV1kNk6xD3P2_pnHZ7018svC4SRXZ5AFHT3G0fjHzmeg>
-    <xme:jqLEZpKIw1_kHMGyaR2pQj5-Y3vRda8WtrizYuRlOPqPV2PYgLsbym-R_SwcixgCR
-    q7iP9Ako-t4Qjptbw>
-X-ME-Received: <xmr:jqLEZluq7OzU09C0mgZma2-OY8-Wmhv3YlM_8r6V1tPXs676wNhuRj1M_afrSJg3RnMKiSk_DsibbPzGi6lgYqp9KtqDaZThxioNeyqYHYvEVb4HNw>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724162704; x=1724249104; bh=osC24z7dhBsS6tpvNcPKRxMjKSKU
+	X0C6NSUaScxGReA=; b=Tkx7xXzRunMLk4lskhO4TDCehcCCNz2WjlvwYyYN3f0x
+	1Yh6yCktUZ1nTYMkPA3tlaiplePeZXYAqz6olsc7wYe6HPKlUS5q3OdV7R8+jXiX
+	pdpN3joi5S6JAZlIfxlWgy+zXW1KqXX6LwTfK/7FLzz1pFnauSdW6vAERW1yV2na
+	kKDlLEBBbj49Wy57u1qnNe1i2P75Wllt9lJ0HkfpXbt1v/Ts34ku1mz1Esw1zF1g
+	JlV19i7COYBGedgewf9pb4yg0rbTZWPHW7OPN4jT+iOWTRKRFoRD+0bPvP0W5TI9
+	F0w1VpWuAWPBuehJHxnErSl2bjpl1OjA8bClTrckiQ==
+X-ME-Sender: <xms:kKLEZmioY4Q5rnY_L0cnqsrJ3UaEm2J5hW-z8KJF4rT2zAV51U5LAw>
+    <xme:kKLEZnBAkp-ZUrF21ytApS-lUTNM7h2iBclvWON_MIRorAu-ciS5KCFtkrS-Ftwaw
+    hUGKrN3C4XUventGA>
+X-ME-Received: <xmr:kKLEZuFnytVcGPWt_WKWFmZWQEJfTizYH9_QWhtwQaRC5h1Qg6qXjwCR128trh2oJQ_y8SNtf8t5h2H9snM2S47PeSE4BAvNQ8rRt281MuKhrWvkXA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgjedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
-    fkgggtugesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghr
-    ughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepleehkedtieetfeeiff
-    egieevkeejhfdvkeetjeefkeetgeejleelffeftdffgeeunecuffhomhgrihhnpehhthht
-    phdrshhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:jqLEZua2mbxZgI4Qvq9d7I0UrcToWhoAzCGtTYMEXyIB7t14a7zH8Q>
-    <xmx:jqLEZkZIEbSk6haEKtcYrp0kZ0uRk-5J7jYy_KXb13Cler_csutg1g>
-    <xmx:jqLEZiBGuQewY7oTcbwwlYNTjVLNFRk9oOrDQW2jrqkb2MI3Qc1dng>
-    <xmx:jqLEZiYtAZfRK9iYjbueUUqwioFDgdiZLsi_cTTnZrtnw83LOg5upA>
-    <xmx:jqLEZvx4_ixnePEqoRANoczpIXA0L1DRNNkm8nZjkERjOOFTiEt8rBg_>
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
+    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kKLEZvTM0QbYw-tH_VImTqjXbC7RS3IfR1hOkgqTojJ2XrsTUsaaaQ>
+    <xmx:kKLEZjxAqyp84zurrK_1k_06Opko9QGnxT-DXtf-u51pxrK1TnONOQ>
+    <xmx:kKLEZt7d1sbgyLXHVip41xk6Bc9x2rIdfcBHjW_rbG9AEfp6l8CCTg>
+    <xmx:kKLEZgx9FzQNyFh4_bAAKpqsz3NP5u0p61A2YEW1NMWV4U0gXsrxOg>
+    <xmx:kKLEZsoC8nUBUa2agBoRBZyMdZN2aeINaXZvf9ik-t645Xg2So2vtPrr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:01 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:03 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1bc4335e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2ec8664d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 20 Aug 2024 14:04:30 +0000 (UTC)
-Date: Tue, 20 Aug 2024 16:04:58 +0200
+	Tue, 20 Aug 2024 14:04:32 +0000 (UTC)
+Date: Tue, 20 Aug 2024 16:05:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 00/20] Memory leak fixes (pt.5)
-Message-ID: <cover.1724159575.git.ps@pks.im>
+Subject: [PATCH 01/20] mailinfo: fix leaking header data
+Message-ID: <69e30ea5179eff6472be54ebba64ebca3e562f32.1724159575.git.ps@pks.im>
+References: <cover.1724159575.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,85 +83,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1724159575.git.ps@pks.im>
 
-Hi,
+We populate the `mailinfo` arrays `p_hdr_data` and `s_hdr_data` with
+data parsed from the mail headers. These arrays may end up being only
+partially populated with gaps in case some of the headers do not parse
+properly. This causes memory leaks because `strbuf_list_free()` will
+stop iterating once it hits the first `NULL` pointer in the backing
+array.
 
-another week, another set of memory leak fixes. With this series we're
-down to ~128 leaking test suites, down from 359 before starting with
-this effort. So we're about 2/3rds done. Naturally, part 6 is also
-almost ready.
+Fix this by open-coding a variant of `strbuf_list_free()` that knows to
+iterate through all headers.
 
-This series is built on top of bb9c16bd4f (The sixth batch, 2024-08-19)
-with Junio's ps/leakfixes-part-4 at 77d4b3dd73 (builtin/diff: free
-symmetric diff members, 2024-08-14) merged into it.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ mailinfo.c          | 17 +++++++++++++++--
+ t/t5100-mailinfo.sh |  1 +
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (20):
-  mailinfo: fix leaking header data
-  convert: fix leaks when resetting attributes
-  pretty: fix memory leaks when parsing pretty formats
-  pretty: fix leaking key/value separator buffer
-  builtin/merge-tree: fix leaking `-X` strategy options
-  builtin/upload-archive: fix leaking args passed to `write_archive()`
-  builtin/archive: fix leaking `OPT_FILENAME()` value
-  midx-write: fix leaking hashfile on error cases
-  builtin/repack: fix leaks when computing packs to repack
-  t/helper: fix leaking multi-pack-indices in "read-midx"
-  transport: fix leaking OID arrays in git:// transport data
-  builtin/send-pack: fix leaking refspecs
-  sideband: fix leaks when configuring sideband colors
-  builtin/fetch-pack: fix leaking refs
-  remote: fix leaking config strings
-  remote: fix leaks when matching refspecs
-  remote: fix leaking peer ref when expanding refmap
-  builtin/fetch: fix leaking transaction with `--atomic`
-  transport: fix leaking arguments when fetching from bundle
-  transport: fix leaking negotiation tips
-
- archive.c                           | 10 ++++++
- builtin/archive.c                   |  7 ++--
- builtin/fetch-pack.c                | 20 ++++++-----
- builtin/fetch.c                     |  8 ++---
- builtin/merge-tree.c                | 13 +++++--
- builtin/repack.c                    | 36 ++++++++++++++-----
- builtin/send-pack.c                 |  1 +
- builtin/upload-archive.c            |  8 +++--
- convert.c                           |  3 ++
- mailinfo.c                          | 17 +++++++--
- midx-write.c                        | 24 ++++++-------
- pretty.c                            | 13 +++++--
- remote.c                            | 55 +++++++++++++++++++++--------
- sideband.c                          |  8 +++--
- t/helper/test-read-midx.c           |  8 ++++-
- t/t4150-am.sh                       |  1 +
- t/t4205-log-pretty-formats.sh       |  2 ++
- t/t4301-merge-tree-write-tree.sh    |  1 +
- t/t5000-tar-tree.sh                 |  1 +
- t/t5003-archive-zip.sh              |  1 +
- t/t5100-mailinfo.sh                 |  1 +
- t/t5319-multi-pack-index.sh         |  2 ++
- t/t5400-send-pack.sh                |  1 +
- t/t5401-update-hooks.sh             |  2 ++
- t/t5408-send-pack-stdin.sh          |  2 ++
- t/t5409-colorize-remote-messages.sh |  1 +
- t/t5501-fetch-push-alternates.sh    |  1 +
- t/t5505-remote.sh                   |  1 +
- t/t5510-fetch.sh                    |  1 +
- t/t5519-push-alternates.sh          |  1 +
- t/t5536-fetch-conflicts.sh          |  1 +
- t/t5548-push-porcelain.sh           |  1 +
- t/t5553-set-upstream.sh             |  1 +
- t/t5574-fetch-output.sh             |  1 +
- t/t5703-upload-pack-ref-in-want.sh  |  1 +
- t/t5812-proto-disable-http.sh       |  2 ++
- t/t6050-replace.sh                  |  1 +
- t/t7704-repack-cruft.sh             |  1 +
- transport.c                         |  8 +++++
- 39 files changed, 203 insertions(+), 64 deletions(-)
-
+diff --git a/mailinfo.c b/mailinfo.c
+index 94b9b0abf22..a4fa64994ac 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -1290,8 +1290,21 @@ void clear_mailinfo(struct mailinfo *mi)
+ 	strbuf_release(&mi->inbody_header_accum);
+ 	free(mi->message_id);
+ 
+-	strbuf_list_free(mi->p_hdr_data);
+-	strbuf_list_free(mi->s_hdr_data);
++	for (size_t i = 0; header[i]; i++) {
++		if (!mi->p_hdr_data[i])
++			continue;
++		strbuf_release(mi->p_hdr_data[i]);
++		free(mi->p_hdr_data[i]);
++	}
++	free(mi->p_hdr_data);
++
++	for (size_t i = 0; header[i]; i++) {
++		if (!mi->s_hdr_data[i])
++			continue;
++		strbuf_release(mi->s_hdr_data[i]);
++		free(mi->s_hdr_data[i]);
++	}
++	free(mi->s_hdr_data);
+ 
+ 	while (mi->content < mi->content_top) {
+ 		free(*(mi->content_top));
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index c8d06554541..065156c1f39 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -5,6 +5,7 @@
+ 
+ test_description='git mailinfo and git mailsplit test'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ DATA="$TEST_DIRECTORY/t5100"
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
