@@ -1,110 +1,116 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75845191F8C
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B678194131
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 15:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724164278; cv=none; b=GAFyp9Z/JyGq5PpahqX4tRRqJAw/rPs044uwyKKGpD45RrRgsfIEwxkR3xxLKW2QFqsvE/5ldoXhi7FIeYYPlC4j+U/qzds0YzqieaN7M6w12DrpECC4BuSdxfAr6kwNtZqemdFMMBDOHmcqF/DBoQFvyTLOIU3QpmyIvnq+nJE=
+	t=1724166019; cv=none; b=cPy7AV7mp5zaXhs2ryQDy/Hnh/pFU2mIKH21+/jkkBAZNbunHfYkWDaao7D0WbISubRLU1II8pM2ODfkJSdyaCliOITbKVIHw4DzEcHigkxWDCgjekw0Q9yZzKRPYDMA1l1IX3ROU8R/CoP48mk2v4bFX6G/uoaKBhimkD3EGTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724164278; c=relaxed/simple;
-	bh=RjQbAfOpbrZgha6qPKjwPyOGc8F38ZPOqJskeUpqc+c=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hH31LFVk4B35WKQ/ubVSztyVj8MqY2JZsvdKB6p2n4pB3K/EteTd6ip3VEswNNfBCFXzzySgltb6WsIg4TytBd2hX+3flaT+bG06sgzBifmqBIUdum283Wa/gjpZbMLTvzvG4nxRHvIg9zXQN9X2AtJGPpz1IdrjwaSIp6pA4Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eBMAgqSu; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724166019; c=relaxed/simple;
+	bh=WVETMF5nYWGh1Aq5PI9XD2ub1jdiXWVUC3LFaOfmnS4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cgZy38/EOcmtwQSNweSL6j/O9nowurt7Fc2xgKia7BMX/HoTVN+9ftAe/Ne0Gh77r6ScmpnlA3yLk4vO6vePnpENTP0oFzCpJ/lb+ScfG3mJEuuTTwE7sW5pg6UmiPaDzGMXBoQrrcJqXVXS8sZ6ARF8cVo2Z5Cuq1xIecrnzSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RRaUjC/R; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eBMAgqSu"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5becdf7d36aso4502851a12.1
-        for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:31:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724164274; x=1724769074; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VaORfh1ANfJV4xaETZE0klTl+j6AuhrXzJgAmJ3IlZA=;
-        b=eBMAgqSuJfB7Jt+DTxEc52kbqxf3ohGAkZw4TC250pY/WWVq4zzVwsC3yOtLZYqJtF
-         uit17ObZ7MrPOhOfDrO7Rx9AdmaUDODC5Hz/nGBGaxjPriJ2PAFjgiRx2I9MNmHW+aB3
-         UAbRS4K6ndl45Zyc2oWJH6JKEtJs2BMRENL7UtE78JPlddvMeaHS2n8bh4OLFCbhKDhR
-         oQmAxQsFTFdo8KKc3NlehT1NkuL4AhrrEH2snlA6bxbCYwS61W8n1PxcWTUGtMxDN6LE
-         m3rrF6B/Mj1pnt+ML19sDuYqr+GO67R5RbXwKGDWqSsiKziPmDjT+i60XZKNaOghV3DZ
-         Bopw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724164274; x=1724769074;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VaORfh1ANfJV4xaETZE0klTl+j6AuhrXzJgAmJ3IlZA=;
-        b=T8HgkuvkcuufzTGYH2KH5lxrkSuCuyntfAmQj2onzT9SiBFBwNeIkHe098Q/C5PoV5
-         FtYAtMMTxzhf9QJXfPTa/miJijrZksgKWoOB60v84sgxoCwLWD0pmxPkZAsJocniYKXb
-         hNNtPF1QvPcmkWvcdsx+GvL7aRGTdE0ZlYPCCJKHCppRiQv7M1Ta9N+akScQ5VRBHIRm
-         Qw0tRxZAIav2ynw0OZ/GFL+GQpPnZaX2F3l5qcLzo6pGAGYH+QzMGEwk3C/ztY1mv9ZF
-         IGNeFHAc7o6Lt7k4rV6NTuJnP2juG1nzw7aFlwb1VNWp7DNcp4rZH/gzP1uw6/WSUQE3
-         HD6g==
-X-Gm-Message-State: AOJu0YwMP9ylvNcTwpQqPx4RbwYARfUnkDLsUV1hwpC9Dn2YEbCaIxF8
-	PoGN//szisS2bijWiaUvFPDuRVOB1SjWBmf+Fzyt3vvRhCOrWo/NC8YxeQ==
-X-Google-Smtp-Source: AGHT+IGJoeoZAid/Gm0buMr8VuMB5Zyzwe3IBucRIoMLVsuTbJuTPSpd3T8hltJAxxlDVSUiju4frw==
-X-Received: by 2002:a05:6402:518a:b0:5bf:a7f:d20 with SMTP id 4fb4d7f45d1cf-5bf0a7f0f02mr2233785a12.12.1724164273773;
-        Tue, 20 Aug 2024 07:31:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bf0110009bsm1860964a12.37.2024.08.20.07.31.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2024 07:31:13 -0700 (PDT)
-Message-Id: <1e2ad9d536e075098edd913b326086a88c69ad4a.1724164270.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1775.git.1724164270.gitgitgadget@gmail.com>
-References: <pull.1775.git.1724164270.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 20 Aug 2024 14:31:10 +0000
-Subject: [PATCH 2/2] ci(win+VS): download the vcpkg artifacts using a
- dedicated GitHub Action
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RRaUjC/R"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B09223DDA;
+	Tue, 20 Aug 2024 11:00:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=WVETMF5nYWGh1Aq5PI9XD2ub1jdiXWVUC3LFaO
+	fmnS4=; b=RRaUjC/RXoFrZmeM6Luxm9tLPn4NhbcciCBlmJBARaFGmEkoJTRr1F
+	yoPUM9bEY+bOmekDPiYN7Yx1R8gZpt6nA6u/TpC+Yd3f0UPd0LUi+RcJA5YwadfD
+	8NSdIHFyedquW8sxqbWlgZK7PmFM8WDVncDk3fh5WOVbe7jEa5Dr0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 938BB23DD9;
+	Tue, 20 Aug 2024 11:00:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 143EE23DD3;
+	Tue, 20 Aug 2024 11:00:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2024, #07; Mon, 19)
+In-Reply-To: <20240820051819.GA3020004@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 20 Aug 2024 01:18:19 -0400")
+References: <xmqqa5h8c8zu.fsf@gitster.g>
+	<20240820051819.GA3020004@coredump.intra.peff.net>
+Date: Tue, 20 Aug 2024 08:00:12 -0700
+Message-ID: <xmqq1q2jck8z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E78BDE72-5F04-11EF-A0EE-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Jeff King <peff@peff.net> writes:
 
-The Git for Windows project provides a GitHub Action to download and
-cache Azure Pipelines artifacts (such as the `vcpkg` artifacts), hiding
-gnarly internals, and also providing some robustness against network
-glitches. Let's use it.
+> I did have one fixup for this series, based on feedback from Ghanshyam.
+> Here it is as a separate patch on top.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .github/workflows/main.yml | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+Ah, I recall seeing it.  
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 85e5767aae6..1ee0433acc1 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -181,14 +181,10 @@ jobs:
-         repository: 'microsoft/vcpkg'
-         path: 'compat/vcbuild/vcpkg'
-     - name: download vcpkg artifacts
--      shell: powershell
--      run: |
--        $urlbase = "https://dev.azure.com/git/git/_apis/build/builds"
--        $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=9&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
--        $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[0].resource.downloadUrl
--        (New-Object Net.WebClient).DownloadFile($downloadUrl, "compat.zip")
--        Expand-Archive compat.zip -DestinationPath . -Force
--        Remove-Item compat.zip
-+      uses: git-for-windows/get-azure-pipelines-artifact@v0
-+      with:
-+        repository: git/git
-+        definitionId: 9
-     - name: add msbuild to PATH
-       uses: microsoft/setup-msbuild@v2
-     - name: copy dlls to root
--- 
-gitgitgadget
+My personal take was that calling this one via the same setup()
+wrapper was just fine, which made it similar to everybody else.
+
+But I am also fine to treat the first parameter to TEST() as just a
+simple Boolean, which is the right way to think about it anyway ;-)
+It is mere a happenstance that all others use the setup() thing
+because they happen to share the need to perform the same set-up.
+
+Will queue on top.  Thanks.
+
+> -- >8 --
+> Subject: [PATCH] t-hashmap: stop calling setup() for t_intern() test
+>
+> Commit f24a9b78a9 (t-hashmap: mark unused parameters in callback
+> function, 2024-08-17) noted that the t_intern() does not need its
+> hashmap parameter, but we have to keep it to conform to the function
+> pointer interface of setup().
+>
+> But since the only thing setup() does is create and tear down the
+> hashmap, we can just skip calling setup() entirely for this case, and
+> drop the unused parameters. This simplifies the code a bit.
+>
+> Helped-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/unit-tests/t-hashmap.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/unit-tests/t-hashmap.c b/t/unit-tests/t-hashmap.c
+> index da102eb541..83b79dff39 100644
+> --- a/t/unit-tests/t-hashmap.c
+> +++ b/t/unit-tests/t-hashmap.c
+> @@ -322,8 +322,7 @@ static void t_alloc(struct hashmap *map, unsigned int ignore_case)
+>  	free(removed);
+>  }
+>  
+> -static void t_intern(struct hashmap *map UNUSED,
+> -		     unsigned int ignore_case UNUSED)
+> +static void t_intern(void)
+>  {
+>  	const char *values[] = { "value1", "Value1", "value2", "value2" };
+>  
+> @@ -357,6 +356,6 @@ int cmd_main(int argc UNUSED, const char **argv UNUSED)
+>  	TEST(setup(t_iterate, 0), "iterate works");
+>  	TEST(setup(t_iterate, 1), "iterate (case insensitive) works");
+>  	TEST(setup(t_alloc, 0), "grow / shrink works");
+> -	TEST(setup(t_intern, 0), "string interning works");
+> +	TEST(t_intern(), "string interning works");
+>  	return test_done();
+>  }
