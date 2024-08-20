@@ -1,79 +1,79 @@
 Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A0191F93
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F24191F93
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 14:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724162757; cv=none; b=uwgbmPwzutpmNly5EYewkXG1bLoaORAtvHD+55N6PA0zxy31njKZd/UubTIlxqiRpD4Qf8fNXpBlhK83wt5ozd9lKZxbUoFn5RU4RHHdFxLBMYkKX9A1yGDQyZ2ZXbFfkTwu4opLm1JA6QBPgRm08rL4JnU2Vy4M7uR+am6JV2w=
+	t=1724162762; cv=none; b=L7IFLw2bruv1N8FUOMGyJB2+YDgAVoFhiHfngSkDmkB4M+m0hLd+tXBtLHfsfnpXy96LgcOFx7YNgCxrYe2UnQL+PxThMSTaYS/A/NzwYb0JokVfdFytM18CtmxdxF9eIYtawTlNWePCq/bxBL+p1QYr9sceHJD6YP2FGpLbWRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724162757; c=relaxed/simple;
-	bh=j0WEXaLLA5C/GnIjUA3mAXwSU5Wd8l4cEdYJOGhcOJE=;
+	s=arc-20240116; t=1724162762; c=relaxed/simple;
+	bh=QLPG/ImQs2pcRSbXlKo57qxLPs1KHvNODyorTa4JRDI=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RdRJGZdV0LguSULRByIOLcUiIba4LJZquiDXUP2kULfzfXAPbLk00PHOcmSorLM+9Wgi864Igv4knKxhb2kTlxKsXBKC2CvedEYPPe5UuPNQvYCOuhkGdRn1GGEYjATMvaqXKZsZeVcfCSUsJXJ0Iz/84N2XkR3P9GJdxLkE9bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pJfaFSqU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k43BORYb; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=WhfrFD1anJPrZeSyUDyUZ1s3rlC3ckFi7VOBHzuWsbZno3wVqIFAuSPpq6Z5+V4o2h/bsESwmSUr1PD+tClA9udrvuZcHn6n6q+Mo8kaSYXW+1abEJyGpAbK1T3cbcMHBRHBkrVyd2L8/N4JVOucTg/v/bFA19nmGoC500ya2rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZuxuswhE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ovbl+AVN; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pJfaFSqU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k43BORYb"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id D9DD2114BEE1
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZuxuswhE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ovbl+AVN"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D48051151A9E
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 20 Aug 2024 10:05:54 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 20 Aug 2024 10:05:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724162754; x=1724249154; bh=FKLhRoExGG
-	zleaqPxBTINQGg8KhL27hmoPCsao7mJk8=; b=pJfaFSqUPdUPS5400mHy749vmO
-	HfUlwcyCiecntQKgv+702fX+SoLqFadt95P3A2cUnYoun+4BVFFmC7PRbHsRnUoR
-	bM8qRXdmqOr28Qg2oqZcBNfDi1udF7ahQkuwWNVOlAFGs+7rON5IfTUK/IE8f5AY
-	jsxr5qysgxV3xKT+mOQMojiPyCKAUp5rYYMT6rUq8Q8jc746jClrWDMqrREUPJEY
-	DQW3kEc3q8WiOI0uHvHwawrDe0FuYArZobb2hIXRv+ndsbVUDiRbPEHtfPYEYrEx
-	s0fS6QyskqbcXCh7hcUkwm45c3QhDSiH4K0NHLyOZpK4VCcG9r88IlaThZ8w==
+	:subject:to:to; s=fm1; t=1724162759; x=1724249159; bh=LmZRIKtX9a
+	uGvNsTj8OGDyx1pMfRoPXBFiMIdsEFrXY=; b=ZuxuswhEDHKrXANTKcJ7IHUYsi
+	65CJAc1Oe8KZ/FH6RCkbOU2u0VSpaAq52v/JyzETJfy/USEsmSHILh4B91/uHjB1
+	jHGwCEBKDX2ORvsQHJxIiP29Fl+niaWeLP0dtaSEhmjILvLiGEQJ5vo0yFPYfoKg
+	qqktJEGujFGBO0mcgBpWrfBLEkCpuWISWfjwPX2R4rK78QVha9qRevKIqsn90oqP
+	iBvuzvBURWIKG2YZqZqsAs0L8oQbwjAOnJxHJVc0U2tVbgt88oN+SLQ7fCbSU4sU
+	CMgdr2VTkxx7YK2AvnEBf4aiKQKq9Y5gtHEIMyLiZYoXaqVibXK3femsuDLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724162754; x=1724249154; bh=FKLhRoExGGzleaqPxBTINQGg8KhL
-	27hmoPCsao7mJk8=; b=k43BORYbIfrFR0VEt1Gk76zTluDFUxfmJs/27UnnTVHX
-	6HY4Su+GM6DAiE6azAGP8X+xiFDVQWIubvvprFBcfsj2HePbSM8yFkCfsCz2XK0w
-	NuXcS5limv7sWy+SDpTKj48rXbvjyhM+FDEfMyMcAuOVGYTTa0t4t0s+3SSOHWSG
-	fQXffiNaqMh3nXsZXML5tWRN8ws07lwEc9APYk3vejn3R8IIt6Rl/ic1xXsODRbP
-	iQeC96qT+SYOqdyCJZYdTK8qKpqZGlDNk7U3AO6Vqt1UnCL0SM2kCtmqmGt8BHQq
-	Hx195+vAgThVwabPAzpEttggAFNAjuplCeQVQTbnKg==
-X-ME-Sender: <xms:wqLEZuEg4hd7D1G-zCsb_wkL279YUZZK_i50BO2fuI9OA_2hDe3CPA>
-    <xme:wqLEZvVBNArqNDRoomCLjoJDAHxXZXyaxBAjdtFQ7gk56tc2dlXlk44Nn8_JGlh4u
-    yQ8LmdEeZPP7QCZbA>
-X-ME-Received: <xmr:wqLEZoKLvoZHcJZW_AXvYLOjOFF9ke1nCIEqv2y-I0qB9gsSW-EJquHDIxCxMOral24xHK2d8xvOHCapgU95nu1di0ErzG7Ccl8cn7Qq-s7HZPEfTA>
+	fm1; t=1724162759; x=1724249159; bh=LmZRIKtX9auGvNsTj8OGDyx1pMfR
+	oPXBFiMIdsEFrXY=; b=Ovbl+AVNTr6iAA+yl41cKDS4QOJDbiTDjS9IjA02KBw0
+	i6tGndnFKUvc7QAd/H+WXXfUeRwJyhVv012GvqEiZBZzqR+jrhX9RskYYeFdXWlb
+	AIni5I8MiyRQtW6Y2zHKxMlKg3zn7+iUgrYgrnK5ktAXH3CksV3sd5g7VbZGn09n
+	brMbw3vd0CBJPTBoBxLf6j3VuZ4BC41HVh7n6kbQXM7D/c6OPMahu1u80d7FjmM8
+	zAkG08C2GnNRcnLl4WQ3aKu4sWvVrA9ShnJHePgloN1vKMubmv0GqyK55+SCdzee
+	y9g2xwuxS9M3KjfNWcUys8vKr4LvjOZHp3TW6vqMRw==
+X-ME-Sender: <xms:x6LEZgqFialymQKbtXUjFWAPbIhZBwIDc5KOrh4jbAvUZaFOuMBwbA>
+    <xme:x6LEZmq9QlbTsSppQX1bd6oe3i5RGux3uHVppUjk1nIGv_YVl0bDk40-hpPynUxkb
+    W-oJAiw4FqRwN2HLw>
+X-ME-Received: <xmr:x6LEZlM6sDF89m5hHvDdPKB4ZDiSy9MbLLB1ZBxxq7QFiErz2MVvhhNwBpkW1OCpMMXKOwbtJjCNcTLOvSdyv5G-hH47stmEWczn3rLBSB9_GwkyhA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduiedgjedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:wqLEZoGeMy3jGzj0pUa-yNB-iSTiGumnOPIjXOy9Ri9LUJWMoMhSMg>
-    <xmx:wqLEZkUnkthsB7wWOSf43OoLTs97BubOAviYBk5NwdSG8wM0tOdcKA>
-    <xmx:wqLEZrNSBRDnns3AbXILxgXCWppop620d8BW81FXnmzvXEW8tez-TA>
-    <xmx:wqLEZr2ZMoQhT1kjEhDgzAlLEWmbCF3qsmqNjmoE1QH-T8UpPBb7kw>
-    <xmx:wqLEZveYFQZWaKRJu3ehmsFl8FoomQ7000yL5ZuVuWzCmqW-ztFHGL4h>
+X-ME-Proxy: <xmx:x6LEZn7T1n8wg-rkBP7Apqfwex5bymhI0GgUHjJj5JEYsiMHvGqKPA>
+    <xmx:x6LEZv4E5-jlfkTPMJGithF7vT-Hlk8RHP0uImgf0eh5nHk0I2Kbew>
+    <xmx:x6LEZnjw5xe-t444P1HW3a9byHAFgqOn_sqBiPdQ-158YnmMc1tgEA>
+    <xmx:x6LEZp7ECsFpRxQWDFxOOLQ1o7OioC2RNb6Y42tCDBbp8ZU9rbWRFw>
+    <xmx:x6LEZpSQmdba_Ntdagn1SrDUwF031BS4v2rBrId4OynPh7JbJ541lOC3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:54 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 20 Aug 2024 10:05:59 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fd3b0c82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id a2108e09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 20 Aug 2024 14:05:22 +0000 (UTC)
-Date: Tue, 20 Aug 2024 16:05:52 +0200
+	Tue, 20 Aug 2024 14:05:27 +0000 (UTC)
+Date: Tue, 20 Aug 2024 16:05:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 17/20] remote: fix leaking peer ref when expanding refmap
-Message-ID: <773fe580d750e94e34499f385701794eefbc9c27.1724159575.git.ps@pks.im>
+Subject: [PATCH 18/20] builtin/fetch: fix leaking transaction with `--atomic`
+Message-ID: <9ede792550e0b289d931c7f0fcf467873f09c5a5.1724159575.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,83 +85,64 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724159575.git.ps@pks.im>
 
-When expanding remote refs via the refspec in `get_expanded_map()`, we
-first copy the remote ref and then override its peer ref with the
-expanded name. This may cause a memory leak though in case the peer ref
-is already set, as this field is being copied by `copy_ref()`, as well.
+With the `--atomic` flag, we use a single ref transaction to commit all
+ref updates in git-fetch(1). The lifetime of transactions is somewhat
+weird: while `ref_transaction_abort()` will free the transaction, a call
+to `ref_transaction_commit()` won't. We thus have to manually free the
+transaction in the successful case.
 
-Fix the leak by freeing the peer ref before we re-assign the field.
+Adapt the code to free the transaction in the exit path to plug the
+resulting memory leak. As `ref_transaction_abort()` already freed the
+transaction for us, we have to unset the transaction when we hit that
+code path to not cause a double free.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- remote.c                           | 2 ++
- t/t5536-fetch-conflicts.sh         | 1 +
- t/t5553-set-upstream.sh            | 1 +
- t/t5703-upload-pack-ref-in-want.sh | 1 +
- t/t6050-replace.sh                 | 1 +
- 5 files changed, 6 insertions(+)
+ builtin/fetch.c         | 8 ++++----
+ t/t5574-fetch-output.sh | 1 +
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 892a47086db..6b50cafbbd3 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2062,6 +2062,8 @@ static struct ref *get_expanded_map(const struct ref *remote_refs,
- 		    !ignore_symref_update(expn_name, &scratch)) {
- 			struct ref *cpy = copy_ref(ref);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c297569a473..0264483c0e5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1731,11 +1731,8 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
  
-+			if (cpy->peer_ref)
-+				free_one_ref(cpy->peer_ref);
- 			cpy->peer_ref = alloc_ref(expn_name);
- 			if (refspec->force)
- 				cpy->peer_ref->force = 1;
-diff --git a/t/t5536-fetch-conflicts.sh b/t/t5536-fetch-conflicts.sh
-index 23bf6961700..2dcbe790523 100755
---- a/t/t5536-fetch-conflicts.sh
-+++ b/t/t5536-fetch-conflicts.sh
-@@ -2,6 +2,7 @@
+ 		retcode = ref_transaction_commit(transaction, &err);
+-		if (retcode) {
+-			ref_transaction_free(transaction);
+-			transaction = NULL;
++		if (retcode)
+ 			goto cleanup;
+-		}
+ 	}
  
- test_description='fetch handles conflicting refspecs correctly'
+ 	commit_fetch_head(&fetch_head);
+@@ -1803,8 +1800,11 @@ static int do_fetch(struct transport *transport,
+ 		if (transaction && ref_transaction_abort(transaction, &err) &&
+ 		    err.len)
+ 			error("%s", err.buf);
++		transaction = NULL;
+ 	}
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- D=$(pwd)
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-index 70e3376d31b..33e919a17e1 100755
---- a/t/t5553-set-upstream.sh
-+++ b/t/t5553-set-upstream.sh
-@@ -4,6 +4,7 @@ test_description='"git fetch/pull --set-upstream" basic tests.'
++	if (transaction)
++		ref_transaction_free(transaction);
+ 	display_state_release(&display_state);
+ 	close_fetch_head(&fetch_head);
+ 	strbuf_release(&err);
+diff --git a/t/t5574-fetch-output.sh b/t/t5574-fetch-output.sh
+index 5883839a04e..f7707326ea1 100755
+--- a/t/t5574-fetch-output.sh
++++ b/t/t5574-fetch-output.sh
+@@ -5,6 +5,7 @@ test_description='git fetch output format'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- check_config () {
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index 191097171bc..f75fae52c83 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -2,6 +2,7 @@
- 
- test_description='upload-pack ref-in-want'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- get_actual_refs () {
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index c6e9b33e44e..d7702fc7562 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -7,6 +7,7 @@ test_description='Tests replace refs functionality'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- 
+ test_expect_success 'fetch with invalid output format configuration' '
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
