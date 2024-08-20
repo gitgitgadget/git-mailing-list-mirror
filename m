@@ -1,171 +1,123 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9A18E345
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 08:06:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1B818E74B
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 11:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724141189; cv=none; b=IpVP3qJXSWxAaRfCrCEk8p1M62VSqbiqc5dt85898r4No7jKRgiCNyIr0wxSBhfnUXpiQ82ufC8Ct/Y5fjTMBDc2tDV3SLsAcuUhYAFLljf+y6/Lqvava3/FNOkUkezCeYJiCuWBOl54fDbN+jhbc7/KbeBLRZ8/yRMbw4jWwao=
+	t=1724153386; cv=none; b=dlE8GHKvdrzxSGgsb7w8laAaFgMmc5X9k32QPzSFzJzDt2z63KTQOGYGgNUqKuY/AEDv5gS7oR3tE2MTYdQeEUOwj01chTQ2IEcG/n87hLI79ge7JPgxOLCKCO22L42lVkGxHRZTJZe2pFHK28X7PYLUiRItqjEKXrrxuQJE03o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724141189; c=relaxed/simple;
-	bh=oLQB0NMFIacezbNttBVgHNdqA5XjrCCpVC5a3fqRCHg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t4vbxrHnq66UmW8rlYeApuh5qabA87aoa/U/U1t4xfH6uW2A73b+1hMZk+laWImCqAo5lpdoS7eLhnCTgodG5JsJjveK1RWf9YnhFH9F3TBwe2PZs35oN4KTqn2qWtfuct2VFngz9qhuFGrKAmwjVrzwiC/t8IU+BNEmK5cXleY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JENlNsne; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nnTpo5Hi; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724153386; c=relaxed/simple;
+	bh=/gzssEUM1lwrQvPLnEELwit5ctS9n7fvoIBZFqnLmuc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kC8+YKm1CppOWUfknrdk2LNT0BwMJyvwaZ3Mk0wDOPCrN9kNcUTR9J26DeDB9gtqrOLySDix5HoTUh877AHtX4gqB3Q0N3pGodBJIJSINdW9idyI9mjIIX/MHnM0r+iBHrAU5yd2GScR5uNUXJy8m5Qv1jaSghbTn86/Vcoqz3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMCmnBjt; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JENlNsne";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nnTpo5Hi"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 49B871151B09;
-	Tue, 20 Aug 2024 04:06:26 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 04:06:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724141186; x=1724227586; bh=cv6EjOkgn5
-	K8JFRV7xPpY60zPR4OeYY9mG5YKWr6pX0=; b=JENlNsnek+qAbwElwYwLEreR7L
-	wYQUDB9SFIXYKCidFlKpjo1L/Ex2QOAqzMOpTBVkRzU3SrLFMoTIGsLh9rY+WB05
-	Ke1B/n4ErKwNM2uWZ5W6ynAUKwElZWuujLJTpIgMx7p1XANdvMtXGXC+eNUiByBK
-	0qWP88J0E5u8msLjVfWkjxCzsWTAfMbHQ2/YEsMXWsEToqju1eFhS9pDJfW09gXr
-	EwGcTHUVjcs6TkOfUAz5JCBWLovEdcon4CPegz1Lq4dgWYEuHWdPzNpkC00Oz5zd
-	qGYQnITp2eRLBEzQC91i0esrjkVcCv1Y2I3MyIPNImplIJRwiznTuH7um+NQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724141186; x=1724227586; bh=cv6EjOkgn5K8JFRV7xPpY60zPR4O
-	eYY9mG5YKWr6pX0=; b=nnTpo5HijEn0AQXFqM5Oj9W34hn2o5TBv3blNN3roT9x
-	W4DdjFbuyBPTFyZ/ruHG+PWN9ZzS9dcjuDpzpTyOnJX284RHe81fVtNj++eNGjaw
-	jON8EVzK+lzGBqTVfTPRsalU2Y628H3TToU//5DPsEKCcyDIoIRnMLqEZkLvnKfG
-	ZRNNO3BkdOzEgfZ3fYrBJMtDIOSyadq8h6NcI69+HnLb18sZ9Shkzpfnwufyexj6
-	BQj0ARBOOyUFUfklAiLSUppT26q+5AM1fnrK8SBQccy/oRXtjD8PgZ3DgbQUZsXd
-	q6MGp8BUGVYl73nB/46Z/rcTOa8iauk0eH4fG8e+iA==
-X-ME-Sender: <xms:gk7EZkO_eWedeohFf6CL2KH6iiflyLXW41xh2ngyqfM79egJ6jdnfA>
-    <xme:gk7EZq-9ZiTRPZ70-o-HLiKnCnVvprLkuuQo8tiMbFtFoGuIKEFkfUfPgwWBdVwhP
-    Tgd2cYBtuqxr2Wz1A>
-X-ME-Received: <xmr:gk7EZrRV3mTQyJ-HD1RNYu6cPF-Nwjt9d6kRBO6Ik76XixvpEBku8ykU9o3TqIiYUx4Csiee7b6EYc-NI0MHItzB5rDTqWEFtd42QahnJ8ECtalxQA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduhedguddvkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:gk7EZsuhfRLOKmMWbEE_GGeJmD9FvhHJ1I1W7mujGwhqZUPuW43Q1w>
-    <xmx:gk7EZscJQixvPv39gL2zAAmR_sSG7r4X8fG2xJtQfDEnogH5XUMkyg>
-    <xmx:gk7EZg2QQUNbuxXhwJ9ctQXX8UyfsSlOh-31XiRw0pU-_ycRCFfoeQ>
-    <xmx:gk7EZg-V7w6MA0KSLRQVjIDvGDRxRV0mImgcstky5BwCh3omcrVz2w>
-    <xmx:gk7EZtroI3j-HX7xmaMQRRLuG1bNv7_yczVPiZxttqbJzL4wYkERCAbX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 04:06:25 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 016db9f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Aug 2024 08:05:53 +0000 (UTC)
-Date: Tue, 20 Aug 2024 10:06:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 10/15] t/helper: inline
- `reftable_stack_print_directory()`
-Message-ID: <ZsROcj6FDHyQjc-U@tanuki>
-References: <cover.1723640107.git.ps@pks.im>
- <7acfe4fecc54beaa71d65f04c92e31ebe95aa1a0.1723640107.git.ps@pks.im>
- <CAOLa=ZSOiNKdJcMkE-P052cZjRXPcFQ7y1LnZFOZ0DMtqGnM+g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMCmnBjt"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3718acbc87fso2850797f8f.3
+        for <git@vger.kernel.org>; Tue, 20 Aug 2024 04:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724153383; x=1724758183; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4w8FsdUhuGxK4bloV09UsZOnG/sUPks5lJ6KGz/5cG4=;
+        b=CMCmnBjtT2frx8DFRTEKvx4gegPZyyC+TnvYEPmiW1gLjzneH1qldj3iViPRR2dp2w
+         Y14kla7JA7a6ytUtX0X4UpCo5CAObdd7KbjhR89XiLQRbxkNwTmsczfYgoJcVAxkUt6A
+         qqLSBxMkpoxfdRl/MG1AXjM13yOz9z91A7DScV32tDn+pWLKcYj7rE4n/hx/hHWWshm5
+         ojuPbmfqW8XeW77R7/+C2wkM3RBOms8G94uQP0dkn0BGtVvgzaYrciQmJHezmkDXhSKa
+         L1u2S1MnJ8MOrkH6ZExa5pAuWaCyELc1J6ZerCtV89RPWKvyowWNQ0+bMdJGbWREClrh
+         Adlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724153383; x=1724758183;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4w8FsdUhuGxK4bloV09UsZOnG/sUPks5lJ6KGz/5cG4=;
+        b=dXQ6AdfKxi2PcLhLBCChD90O36BjHy3cM9qOV8GsEn1LRq2w697w/CLBcaBbhkAFxB
+         miT3v1v/ETKtgV20ag7Dji9rVskj74wMIYOWCy6pVapwabqKgICFXT8dffqGcH5B9EJg
+         RmQ35wj4AXcvcI+NOiI9KBNTw5MZXlslKGgw8J5YSjPpD4DmW36MP/m0jRCfkCnqe7Pz
+         AbulTL9vOhtiKa3ab19+871yqM3KtM3WFap8GxMkltbm1IaZvdr3Svt18lakrDI6kT4S
+         I8+ZD/cjaCw1urJntx8qxmlJF55XE0z5XLKtnqWdHubzywDCrOhUWHELE+AKElD4cVC+
+         3wdQ==
+X-Gm-Message-State: AOJu0YzDVK0o2NSeWJa6oR5iee8VnkIO+I/2cAbZMwCTJ0vua8vlW2FC
+	0VFBB3Pzlxi6Nr0rb4cfoPpsKhZMdDTwkgYzp5ztueWfXMMqGyzlRVcp78CuL7kOvGf7t7Rgcat
+	D0xbQRr4fRm2pA1+iepQCb309x1E=
+X-Google-Smtp-Source: AGHT+IFeVXCkAsOfvv1fHSd6EjjttpQMeDM+BhcvGKa4+E36kUvbrIJ9eKaHcwVchvpUefh+6WLhGH+uR7xk/lk3JHY=
+X-Received: by 2002:a5d:5913:0:b0:371:8e39:6f88 with SMTP id
+ ffacd0b85a97d-3719443cd05mr8103741f8f.17.1724153381933; Tue, 20 Aug 2024
+ 04:29:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSOiNKdJcMkE-P052cZjRXPcFQ7y1LnZFOZ0DMtqGnM+g@mail.gmail.com>
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240731134014.2299361-2-christian.couder@gmail.com> <xmqqzfpx5vk5.fsf@gitster.g>
+In-Reply-To: <xmqqzfpx5vk5.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 20 Aug 2024 13:29:29 +0200
+Message-ID: <CAP8UFD0u+pziZunGqqpKJQj333kBD4oA5dm97hffGX3v72TCHw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] version: refactor strbuf_sanitize()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 20, 2024 at 09:34:21AM +0200, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Move `reftable_stack_print_directory()` into the "dump-reftable" helper.
-> > This follows the same reasoning as the preceding commit.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  reftable/reftable-stack.h |  3 ---
-> >  reftable/stack.c          | 20 --------------------
-> >  reftable/stack_test.c     |  7 -------
-> >  t/helper/test-reftable.c  | 23 ++++++++++++++++++++++-
-> >  4 files changed, 22 insertions(+), 31 deletions(-)
-> >
-> > diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-> > index 09e97c9991..f4f8cabc7f 100644
-> > --- a/reftable/reftable-stack.h
-> > +++ b/reftable/reftable-stack.h
-> > @@ -140,7 +140,4 @@ struct reftable_compaction_stats {
-> >  struct reftable_compaction_stats *
-> >  reftable_stack_compaction_stats(struct reftable_stack *st);
-> >
-> > -/* print the entire stack represented by the directory */
-> > -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id);
-> > -
-> >  #endif
-> > diff --git a/reftable/stack.c b/reftable/stack.c
-> > index d08ec00959..bedd503e7e 100644
-> > --- a/reftable/stack.c
-> > +++ b/reftable/stack.c
-> > @@ -1603,23 +1603,3 @@ int reftable_stack_clean(struct reftable_stack *st)
-> >  	reftable_addition_destroy(add);
-> >  	return err;
+On Wed, Jul 31, 2024 at 7:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > diff --git a/strbuf.c b/strbuf.c
+> > index 3d2189a7f6..cccfdec0e3 100644
+> > --- a/strbuf.c
+> > +++ b/strbuf.c
+> > @@ -1082,3 +1082,12 @@ void strbuf_strip_file_from_path(struct strbuf *=
+sb)
+> >       char *path_sep =3D find_last_dir_sep(sb->buf);
+> >       strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
 > >  }
-> > -
-> > -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id)
-> > -{
-> > -	struct reftable_stack *stack = NULL;
-> > -	struct reftable_write_options opts = { .hash_id = hash_id };
-> > -	struct reftable_merged_table *merged = NULL;
-> > -	struct reftable_table table = { NULL };
-> > -
-> > -	int err = reftable_new_stack(&stack, stackdir, &opts);
-> > -	if (err < 0)
-> > -		goto done;
-> > -
-> > -	merged = reftable_stack_merged_table(stack);
-> > -	reftable_table_from_merged_table(&table, merged);
-> > -	err = reftable_table_print(&table);
-> > -done:
-> > -	if (stack)
-> > -		reftable_stack_destroy(stack);
-> > -	return err;
-> > -}
-> > diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-> > index dbca9eaf4a..42044ed8a3 100644
-> > --- a/reftable/stack_test.c
-> > +++ b/reftable/stack_test.c
-> > @@ -179,13 +179,6 @@ static void test_reftable_stack_add_one(void)
-> >  	EXPECT(0 == strcmp("master", dest.value.symref));
-> >  	EXPECT(st->readers_len > 0);
-> >
-> > -	printf("testing print functionality:\n");
-> > -	err = reftable_stack_print_directory(dir, GIT_SHA1_FORMAT_ID);
-> > -	EXPECT_ERR(err);
-> > -
-> > -	err = reftable_stack_print_directory(dir, GIT_SHA256_FORMAT_ID);
-> > -	EXPECT(err == REFTABLE_FORMAT_ERROR);
-> > -
-> >
-> 
-> We loose this test due to the movement. It is okay, because the code
-> that it is testing, is now only available in the testing section and is
-> a test-helper. But it would be nice to mention this in the commit
-> message.
+> > +
+> > +void strbuf_sanitize(struct strbuf *sb)
+> > +{
+> > +     strbuf_trim(sb);
+> > +     for (size_t i =3D 0; i < sb->len; i++) {
+> > +             if (sb->buf[i] <=3D 32 || sb->buf[i] >=3D 127)
+> > +                     sb->buf[i] =3D '.';
+> > +     }
+> > +}
+>
+> This looked a bit _too_ specific for the use of the transport layer
+> (which raises the question if it should even live in strbuf.[ch]).
+> It also made me wonder if different callers likely want to have
+> different variants (e.g., do not trim, only trim at the tail, squash
+> a run of unprintables into a single '.', use '?'  instead of '.',
+> etc., etc.).
+>
+> It turns out that there is only *one* existing caller that gets
+> replaced with this "common" version, which made it a Meh to me.
+>
+> Let's hope that there will be many new callers to make this step
+> worthwhile.
 
-Ah, good point, I'll mention that. The test was basically worthless
-anyway as we didn't very anything -- only that it doesn't crash.
+A very similar step was also part of my previous patch series to add
+an OS version to the protocol. See:
 
-Patrick
+https://lore.kernel.org/git/20240619125708.3719150-2-christian.couder@gmail=
+.com/
+
+My opinion is that the code is doing something often needed when
+dealing with the protocol, so it is worth it to refactor that code
+soon, and then adapt it later when needed with options (to not trim,
+only trim at the tail, use '?'  instead of '.', etc).
+
+I am not sure if it should live in strbuf.[ch], but on the other hand
+if we indeed adapt it over time with a number of options for different
+use cases, it might end up in strbuf.[ch], so it is a reasonable bet
+to put it there right away. I must also say that I don't know which
+other place(s) would be a good home for it.
