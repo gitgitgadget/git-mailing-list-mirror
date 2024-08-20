@@ -1,96 +1,84 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C13149005
-	for <git@vger.kernel.org>; Tue, 20 Aug 2024 07:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9A18E345
+	for <git@vger.kernel.org>; Tue, 20 Aug 2024 08:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139560; cv=none; b=Z0frz1Am9DXn8O5TXZRa/vJaDU5OwAqJs6D995CPiHaUk5xPeKDKb5s9aL64V30cj8B36nSVAQilM/xaJnY006sJRQJJmtpoycaeNsVEkyywpSoz+l4JmKXHOZczPiM3ePYzcLoypV+I7sOAaDC/KPX4xbVYC/nCQ5vhl6dnI9c=
+	t=1724141189; cv=none; b=IpVP3qJXSWxAaRfCrCEk8p1M62VSqbiqc5dt85898r4No7jKRgiCNyIr0wxSBhfnUXpiQ82ufC8Ct/Y5fjTMBDc2tDV3SLsAcuUhYAFLljf+y6/Lqvava3/FNOkUkezCeYJiCuWBOl54fDbN+jhbc7/KbeBLRZ8/yRMbw4jWwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139560; c=relaxed/simple;
-	bh=QaA1704pclqdLAAv4gcSs/g1XMj+punaD2vBwK3vxeg=;
+	s=arc-20240116; t=1724141189; c=relaxed/simple;
+	bh=oLQB0NMFIacezbNttBVgHNdqA5XjrCCpVC5a3fqRCHg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UB98hHaRsLgUrOk3mzKZVY8IshZsPRDQpE2Pl/hzvy64q3c9iFcYzA7N7bCfetgdndDmkBRkEoKflR047Tjf4YVbiySmJL3fWcOmyNiTOlpt2EWBFy22bFtZKevCuQd0+YDNakqFZMyoH+fdVwYNSZXPn/X19FcdubJds0ZG4fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rxPn8fRM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jYg+d+sL; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=t4vbxrHnq66UmW8rlYeApuh5qabA87aoa/U/U1t4xfH6uW2A73b+1hMZk+laWImCqAo5lpdoS7eLhnCTgodG5JsJjveK1RWf9YnhFH9F3TBwe2PZs35oN4KTqn2qWtfuct2VFngz9qhuFGrKAmwjVrzwiC/t8IU+BNEmK5cXleY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JENlNsne; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nnTpo5Hi; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rxPn8fRM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jYg+d+sL"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id AAABB138FF68;
-	Tue, 20 Aug 2024 03:39:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JENlNsne";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nnTpo5Hi"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 49B871151B09;
+	Tue, 20 Aug 2024 04:06:26 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 20 Aug 2024 03:39:15 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 20 Aug 2024 04:06:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724139555; x=1724225955; bh=fILJhoURBv
-	FhRSeeWysoL/3sBW3OIKjix0UfpBiT3aM=; b=rxPn8fRMJ9h+KbapgEpuPzDZCO
-	6B/vkibieeVUj+WkOjMtyTuoiZxv/+X0UnD1zVgbrf4SsNKQyHKNo0OFdz2lNPlY
-	9116wdih2HoUKVigLffnYgM4/DZylnU4LnjaySxC07r2J9M2u1gi2BzNoepePumu
-	e4jdGfYj/v89vCdnoPYXqYyZ7JYtSx3XoPAEnNje56sRw5LD4/H84O68oTFWAQEl
-	Zq+wqFFufn3BkwtsvEBYiMKGghsaREK5VLBCMIWTjc2pBhysGVXsGby2vD2cbJaL
-	+CSKapuDPTVv39/0q909qZappOMFfKwDxS6j7COKy857NJaxJ7EseEmns4RA==
+	:subject:to:to; s=fm1; t=1724141186; x=1724227586; bh=cv6EjOkgn5
+	K8JFRV7xPpY60zPR4OeYY9mG5YKWr6pX0=; b=JENlNsnek+qAbwElwYwLEreR7L
+	wYQUDB9SFIXYKCidFlKpjo1L/Ex2QOAqzMOpTBVkRzU3SrLFMoTIGsLh9rY+WB05
+	Ke1B/n4ErKwNM2uWZ5W6ynAUKwElZWuujLJTpIgMx7p1XANdvMtXGXC+eNUiByBK
+	0qWP88J0E5u8msLjVfWkjxCzsWTAfMbHQ2/YEsMXWsEToqju1eFhS9pDJfW09gXr
+	EwGcTHUVjcs6TkOfUAz5JCBWLovEdcon4CPegz1Lq4dgWYEuHWdPzNpkC00Oz5zd
+	qGYQnITp2eRLBEzQC91i0esrjkVcCv1Y2I3MyIPNImplIJRwiznTuH7um+NQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724139555; x=1724225955; bh=fILJhoURBvFhRSeeWysoL/3sBW3O
-	IKjix0UfpBiT3aM=; b=jYg+d+sLI/Qo32WOd4+hmZ1Ht+ej++DWz9kD8MpXWBpf
-	mSSYacWP4mv+LMvRAR7iP84q96pqOIdCXJ6jRXOSvJR6BiKusY7B4uIQrYRqat1T
-	TLRVN4n3Wu+M70h3a9lHWFSQKNEo5usaZcyJvsy1JeXawyighBy+VU42cJXwVSP4
-	POyhFcRx/LYjE7sMna77OqtVRX7dACGy0pYycTnUm0SqAKA8kHctCxMTp5fpd2vA
-	+OjKj2Qv7aG8CpGWLpXQry4r8x7QFzwM1W9v015WtVVYhVoJZshEjFIaIMrmqqNL
-	YbecA6QiH6msb9ycSxctE1H1f3DHhYbt1QwtX2w3Fg==
-X-ME-Sender: <xms:I0jEZgPqSTrSOEOKF4otvnFlZq28l5G97BEWs1sVjDxeCbK6kuTENg>
-    <xme:I0jEZm9xcdZR6vRL2FOh9sGxoyUkRsLmGtXSVLkoJR5lv0DYjUfmAU45nuDeNoL0R
-    JecgHQ0Bfw5X23RQA>
-X-ME-Received: <xmr:I0jEZnRe6wWhGpIOJntJ8yG8XIv9Uv-m9KAUA9qtOYZjr6WCvgh_WTShSyk3dVtx3VDzr5tx_MazJzesQ2GiwfNWGX84HqcgSikRH1SBmpQnm81c-g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduhedguddvgecutefuodetggdotefrod
+	fm1; t=1724141186; x=1724227586; bh=cv6EjOkgn5K8JFRV7xPpY60zPR4O
+	eYY9mG5YKWr6pX0=; b=nnTpo5HijEn0AQXFqM5Oj9W34hn2o5TBv3blNN3roT9x
+	W4DdjFbuyBPTFyZ/ruHG+PWN9ZzS9dcjuDpzpTyOnJX284RHe81fVtNj++eNGjaw
+	jON8EVzK+lzGBqTVfTPRsalU2Y628H3TToU//5DPsEKCcyDIoIRnMLqEZkLvnKfG
+	ZRNNO3BkdOzEgfZ3fYrBJMtDIOSyadq8h6NcI69+HnLb18sZ9Shkzpfnwufyexj6
+	BQj0ARBOOyUFUfklAiLSUppT26q+5AM1fnrK8SBQccy/oRXtjD8PgZ3DgbQUZsXd
+	q6MGp8BUGVYl73nB/46Z/rcTOa8iauk0eH4fG8e+iA==
+X-ME-Sender: <xms:gk7EZkO_eWedeohFf6CL2KH6iiflyLXW41xh2ngyqfM79egJ6jdnfA>
+    <xme:gk7EZq-9ZiTRPZ70-o-HLiKnCnVvprLkuuQo8tiMbFtFoGuIKEFkfUfPgwWBdVwhP
+    Tgd2cYBtuqxr2Wz1A>
+X-ME-Received: <xmr:gk7EZrRV3mTQyJ-HD1RNYu6cPF-Nwjt9d6kRBO6Ik76XixvpEBku8ykU9o3TqIiYUx4Csiee7b6EYc-NI0MHItzB5rDTqWEFtd42QahnJ8ECtalxQA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduhedguddvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:I0jEZovb5uvsW9N9lF09rtAc1WlosoV0Wj_FY9RKbx2ATk3W9qu1TQ>
-    <xmx:I0jEZocg8gT2D98lW3qGKR1s4Arp0UKvORJYcrC8NgAlCcF-N7xp2g>
-    <xmx:I0jEZs2_qzPyvCPdgxJIE1Kut1OPtPaZiR3jnCNknvvMLSZTWHhrow>
-    <xmx:I0jEZs9pDFgeWnyIEsz-sexGCp7xwJtEXz7B5lYvvrbl-4egczFGUg>
-    <xmx:I0jEZms1Zk5VIHkSVuKATa08Jx17rjASxGcEptZlgFYgamD8FIBiRQwH>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:gk7EZsuhfRLOKmMWbEE_GGeJmD9FvhHJ1I1W7mujGwhqZUPuW43Q1w>
+    <xmx:gk7EZscJQixvPv39gL2zAAmR_sSG7r4X8fG2xJtQfDEnogH5XUMkyg>
+    <xmx:gk7EZg2QQUNbuxXhwJ9ctQXX8UyfsSlOh-31XiRw0pU-_ycRCFfoeQ>
+    <xmx:gk7EZg-V7w6MA0KSLRQVjIDvGDRxRV0mImgcstky5BwCh3omcrVz2w>
+    <xmx:gk7EZtroI3j-HX7xmaMQRRLuG1bNv7_yczVPiZxttqbJzL4wYkERCAbX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Aug 2024 03:39:13 -0400 (EDT)
+ 20 Aug 2024 04:06:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7b29e1bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Aug 2024 07:38:40 +0000 (UTC)
-Date: Tue, 20 Aug 2024 09:39:09 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 016db9f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Aug 2024 08:05:53 +0000 (UTC)
+Date: Tue, 20 Aug 2024 10:06:22 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	phillip.wood@dunelm.org.uk, James Liu <james@jamesliu.io>,
-	Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] builtin/maintenance: fix loose objects task emitting
- pack hash
-Message-ID: <ZsRIHS0mFZaRHFVc@tanuki>
-References: <ZsLjcjhgI8Wk2tIV@tanuki>
- <cover.1724053639.git.ps@pks.im>
- <c25b5333f60a5920c1fade06532e3379c6686908.1724053639.git.ps@pks.im>
- <20240819085522.GD2955268@coredump.intra.peff.net>
- <ZsMLZ3Tlhxsg6Qdr@tanuki>
- <20240819091715.GB2958552@coredump.intra.peff.net>
- <ZsMPqEWVOSLOi39o@tanuki>
- <20240819102602.GA2961332@coredump.intra.peff.net>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 10/15] t/helper: inline
+ `reftable_stack_print_directory()`
+Message-ID: <ZsROcj6FDHyQjc-U@tanuki>
+References: <cover.1723640107.git.ps@pks.im>
+ <7acfe4fecc54beaa71d65f04c92e31ebe95aa1a0.1723640107.git.ps@pks.im>
+ <CAOLa=ZSOiNKdJcMkE-P052cZjRXPcFQ7y1LnZFOZ0DMtqGnM+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,103 +87,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240819102602.GA2961332@coredump.intra.peff.net>
+In-Reply-To: <CAOLa=ZSOiNKdJcMkE-P052cZjRXPcFQ7y1LnZFOZ0DMtqGnM+g@mail.gmail.com>
 
-On Mon, Aug 19, 2024 at 06:26:02AM -0400, Jeff King wrote:
-> On Mon, Aug 19, 2024 at 11:26:06AM +0200, Patrick Steinhardt wrote:
+On Tue, Aug 20, 2024 at 09:34:21AM +0200, karthik nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > > Am I misreading the documentation? The entry for maintenance.autoDetach
-> > > on 'next' says:
-> > > 
-> > >   If unset, the value of `gc.autoDetach` is used as a fallback. Defaults
-> > >   to true if both are unset, meaning that the maintenance process will
-> > >   detach.
-> > 
-> > You've omitted the important part:
-> > 
-> > 	Many Git commands trigger automatic maintenance after they have
-> > 	written data into the repository. This boolean config option
-> > 	controls whether this automatic maintenance shall happen in the
-> > 	foreground or whether the maintenance process shall detach and
-> > 	continue to run in the background.
-> > 
-> > The `maintenance.autoDetach` setting only impacts auto-maintentance as
-> > run via `run_auto_maintenance()`. The `--auto` flag is somewhat
-> > orthogonal: it asks the git-maintenance(1) job to do nothing in case the
-> > repository is already optimal.
+> > Move `reftable_stack_print_directory()` into the "dump-reftable" helper.
+> > This follows the same reasoning as the preceding commit.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  reftable/reftable-stack.h |  3 ---
+> >  reftable/stack.c          | 20 --------------------
+> >  reftable/stack_test.c     |  7 -------
+> >  t/helper/test-reftable.c  | 23 ++++++++++++++++++++++-
+> >  4 files changed, 22 insertions(+), 31 deletions(-)
+> >
+> > diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+> > index 09e97c9991..f4f8cabc7f 100644
+> > --- a/reftable/reftable-stack.h
+> > +++ b/reftable/reftable-stack.h
+> > @@ -140,7 +140,4 @@ struct reftable_compaction_stats {
+> >  struct reftable_compaction_stats *
+> >  reftable_stack_compaction_stats(struct reftable_stack *st);
+> >
+> > -/* print the entire stack represented by the directory */
+> > -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id);
+> > -
+> >  #endif
+> > diff --git a/reftable/stack.c b/reftable/stack.c
+> > index d08ec00959..bedd503e7e 100644
+> > --- a/reftable/stack.c
+> > +++ b/reftable/stack.c
+> > @@ -1603,23 +1603,3 @@ int reftable_stack_clean(struct reftable_stack *st)
+> >  	reftable_addition_destroy(add);
+> >  	return err;
+> >  }
+> > -
+> > -int reftable_stack_print_directory(const char *stackdir, uint32_t hash_id)
+> > -{
+> > -	struct reftable_stack *stack = NULL;
+> > -	struct reftable_write_options opts = { .hash_id = hash_id };
+> > -	struct reftable_merged_table *merged = NULL;
+> > -	struct reftable_table table = { NULL };
+> > -
+> > -	int err = reftable_new_stack(&stack, stackdir, &opts);
+> > -	if (err < 0)
+> > -		goto done;
+> > -
+> > -	merged = reftable_stack_merged_table(stack);
+> > -	reftable_table_from_merged_table(&table, merged);
+> > -	err = reftable_table_print(&table);
+> > -done:
+> > -	if (stack)
+> > -		reftable_stack_destroy(stack);
+> > -	return err;
+> > -}
+> > diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> > index dbca9eaf4a..42044ed8a3 100644
+> > --- a/reftable/stack_test.c
+> > +++ b/reftable/stack_test.c
+> > @@ -179,13 +179,6 @@ static void test_reftable_stack_add_one(void)
+> >  	EXPECT(0 == strcmp("master", dest.value.symref));
+> >  	EXPECT(st->readers_len > 0);
+> >
+> > -	printf("testing print functionality:\n");
+> > -	err = reftable_stack_print_directory(dir, GIT_SHA1_FORMAT_ID);
+> > -	EXPECT_ERR(err);
+> > -
+> > -	err = reftable_stack_print_directory(dir, GIT_SHA256_FORMAT_ID);
+> > -	EXPECT(err == REFTABLE_FORMAT_ERROR);
+> > -
+> >
 > 
-> Ah. I naively assumed that they did so by passing the "--auto" flag. But
-> I see now that the caller actually checks the config and passes
-> "--detach" or not.
-> 
-> That seems kind of unfriendly to scripted porcelains which want to
-> invoke it, since they have to reimplement that logic. The idea of "git
-> gc --auto" was that it provided a single API for scripts to invoke,
-> including respecting the user's config. Now that "maintenance --auto"
-> has taken that over, I'd have expected it to do the same.
-> 
-> To be clear, I don't feel all that strongly about it, but I'm not sure I
-> buy the argument that it is orthogonal, or that here:
-> 
-> > For git-gc(1) we indeed did tie the `--auto` flag to backgrounding,
-> > which is somewhat nonsensical. There are usecases where you may want to
-> > pass `--auto`, but still have it run in the foreground. That's why we
-> > handle this differently for git-maintenance(1), which requires you to
-> > pass an explicit `--detach` flag.
-> 
-> we couldn't just patch "--no-detach" for cases where you want to be sure
-> it is in the foreground.
+> We loose this test due to the movement. It is okay, because the code
+> that it is testing, is now only available in the testing section and is
+> a test-helper. But it would be nice to mention this in the commit
+> message.
 
-We certainly could. But honestly, your scripted use case you mention
-above is even more of an argument why we shouldn't do it, in my opinion.
-We have long had the stance that the behaviour of plumbing tools should
-_not_ be impacted by the user configuration. And detaching based on some
-config to me very much sounds like the exact opposite.
-
-Mind you, we are all quite used to `git gc --auto` detaching. But if I
-were new to the project, I'd find it quite surprising that it may or may
-not detach if all I want it to do is to decide for itself whether it
-needs to garbage collect or not. It is much more straight forward and
-way less surprising for a script writer to use `--detach` if they want
-the script to detach, because now the command does what they want
-without them having to worry about the user's config.
-
-> > Also, we cannot change the behaviour of git-maintenance(1) retroactively
-> > to make `--auto` detach. While it already essentially did detach for
-> > git-gc(1), that was a bug. E.g. when running as part of the scheduler,
-> > we'd always have detached and thus ended up with a bunch of concurrent
-> > git-gc(1) processes. So even though it does make sense for the scheduler
-> > to use `--auto`, it wouldn't want the process to detach.
-> 
-> Backwards compatibility is a more compelling argument here, if we've had
-> "maintenance --auto" that didn't ever detach (though it sounds like it
-> did, via gc, anyway). But yes, one kicked off from a scheduler should be
-> using --no-detach, I'd think.
-
-Yes, we did, but as mentioned it was buggy. Once the scheduler kicks
-off, you'd now have N git-gc(1) processes all running in parallel to
-each other. With N being large you will certainly face some issues. You
-also lose the exit code, which is another issue.
-
-But as you said, you could make the scheduler pass `--no-detach`. In
-fact, the first versions of this patch series were using your approach,
-where I changed `git maintenance run --auto` to detach based on the
-config. But after some thought (and after seeing the negative fallout
-that this had on our test suite) I decided to throw this approach away
-because it just didn't feel right to me.
-
-> Like I said, I don't feel strongly enough to work on any changes here.
-> I'd hoped to never think about repository maintenance ever again. So you
-> can take these as just impressions of a (relatively) clueful user seeing
-> it for the first time. ;)
-
-I certainly appreciate the discussion, thanks for chiming in! I'm still
-not convinced that we should continue to couple auto-maintenance and
-backgrounding to each other. In my opinion, this behaviour was a mistake
-in the past and continues to surprise now, too. Making it an explicit
-option feels more natural to me.
-
-That being said, when others feel strongly about this, as well, then I'm
-of course happy to adapt.
+Ah, good point, I'll mention that. The test was basically worthless
+anyway as we didn't very anything -- only that it doesn't crash.
 
 Patrick
