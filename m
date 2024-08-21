@@ -1,132 +1,114 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B96A170A1C
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 20:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9519B7405A
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 21:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724273988; cv=none; b=YOpbISHvotQF9JwcMDud3763PuOOe7bwK7qE0SiJQVk/ePPBl9WBWOfUjaKPDksXIFDBjkxA7hZqedaLkrxZkPHTKpRMyEoPD06abhKpydkasxOoYxWrwG1Qwubk3SOXmFiKPX9C1FYlMJMsc6KKlP656edr63TYahiDoJd7mDk=
+	t=1724274373; cv=none; b=bIKNdaOQHr5UbXWTdgwMOcV/2tUOPjbuk3B1o5omHsJ3gxXMTzMAzAPhqchTHZJ6hZWmbvExg+6plprhwpMQyRh1+u0dOc0FfoP7EDuQnyAfAfgeeaBw1Qwx6Ntm9vBQNOAmTi7mbxqo8jZRn3d2b472JRUmcdOwsYbSFILcbGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724273988; c=relaxed/simple;
-	bh=Ms2JkLc1VnHtR5Im1Qt9N+SXxyRr9EjtuseWAcN7xp4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lxACP5/bK8Cx8u239BAoAw0x7oRdEiCbjnGD670eOAYSWDzSSc6/ue+9RW+AOUKZJSiQ6gq+GrBS4xMuxTITdlJE6kYXUdGpmRyRZJpxB8StFfVS1NoThGQJhL7baT2s9K80pbPN0jl22PDrJJypDqtP9IbSeAFJBR4k46gwfb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dcnnLGjr; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724274373; c=relaxed/simple;
+	bh=aUsjFT/0WOkpQf+RsRx+Xt54ffx8soIGK8emaNbU2Pw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hT5A5fC4SHwBo6qat8+z5VAHQMxLRlYSPP4uFbtYwRypSsSVlH7piiL0fp/VM3j2rtJBLhPZuUMLYFawaZ1aV1kp7KkrMbMvxr9yINLFYMGU4+5GvXb+6eYZYiBIn4H+r90XyGY3wSjHSFliMBAwMoytQtO1R0UHoBw9/s9lebA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=s6jciCQa; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dcnnLGjr"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44A2B19170;
-	Wed, 21 Aug 2024 16:59:45 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Ms2JkLc1VnHt
-	R5Im1Qt9N+SXxyRr9EjtuseWAcN7xp4=; b=dcnnLGjrmXf2P3S8clhomlIH+pyE
-	0V7l65Qemym+TVD+aI3fIDhFUO+vq+BmpPi9HD5esDIeBqqJ5vkF9u1HvcV/ccHV
-	vD65w6MzXXC9flbQnIrPny/mU7bV4qwr98AnPzVORdoEoIIApTbHM+5hB02McFjM
-	dXrvPO1YSZscqL4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C17B1916F;
-	Wed, 21 Aug 2024 16:59:45 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4A141916E;
-	Wed, 21 Aug 2024 16:59:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Yukai Chou <muzimuzhi@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: builtin/config: --name-only doesn't imply --show-names in "git
- config get"
-In-Reply-To: <CAEg0tHQVK9hgcHTzn-ZPdwoFbbYFB2joeT0jLQgtD6yEH+1GiA@mail.gmail.com>
-	(Yukai Chou's message of "Thu, 22 Aug 2024 04:28:34 +0800")
-References: <CAEg0tHTWzgD5bw3oK7-Rtv9oTymqyhvZz3bcJ7yNRhF8wXMLGA@mail.gmail.com>
-	<xmqqttfd2734.fsf@gitster.g>
-	<CAEg0tHQVK9hgcHTzn-ZPdwoFbbYFB2joeT0jLQgtD6yEH+1GiA@mail.gmail.com>
-Date: Wed, 21 Aug 2024 13:59:43 -0700
-Message-ID: <xmqqttfdwq0w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="s6jciCQa"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:e989:1c38:bc34:7c99])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id E336AB00565;
+	Wed, 21 Aug 2024 23:05:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1724274363;
+	bh=aUsjFT/0WOkpQf+RsRx+Xt54ffx8soIGK8emaNbU2Pw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=s6jciCQatdz5KWYjNGmHiEsVlqPYAVng68D0e436oBl8YR9UmZOJmzjH9rJ/KKKIx
+	 uN44pYAgbjX/XSgV54EqCZFOyY9Qi/WjijYSyv7ZEcmC0ZwNKtqww3KT/lAe9YZRqE
+	 MA2bA/BdxDpnVNa2lUQxGzuTywWIx+ajhMYusLWSAKrthDcVuRGvULFl3JMVsEBtae
+	 npUEXMaHh3OnP0YP6e68OUR7Xa+b/vNqkhW59FDEik+o8kifhN2tveSx0mLx+NPTPx
+	 5RBHsC1GIT9MEeuiaLOu4A/rKsQbupPag+1KtgTSSSkDIT8RR4HKuK/6BILloJHKcV
+	 MO/m1fdnWsv+w==
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:
+ =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+ Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/3] doc: introducing synopsis para
+Date: Wed, 21 Aug 2024 23:05:57 +0200
+Message-ID: <1986021.PYKUYFuaPT@cayenne>
+In-Reply-To: <xmqqzfp8cm30.fsf@gitster.g>
+References:
+ <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
+ <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+ <xmqqzfp8cm30.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 4B08A1AA-6000-11EF-BC40-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-Yukai Chou <muzimuzhi@gmail.com> writes:
+Le lundi 19 ao=FBt 2024, 22:08:19 CEST Junio C Hamano a =E9crit :
+> "Jean-No=EBl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > Jean-No=EBl Avila (3):
+> >   doc: introduce a synopsis custom paragraph attribute
+> >   doc: update the guidelines to reflect the current formatting rules
+> >   doc: apply synopsis simplification on git-clone and git-init
+>=20
+> This topic has become quiet.  I still find s:["someything you really
+> want to say"] notation a bit annoying to my eyes, but its may be the
+> best compromise we can come up with.
+>=20
+> So unless we have a strong objection, or (even better) an objection
+> with an alternative that is less yucky, perhaps it is time to
+> declare that this is the variant of AsciiDoc/Asciidoctor that we'd
+> adopt for our documentation.  Comments?
+>=20
+> Thanks.
+>=20
 
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2024=E5=B9=B48=E6=9C=8822=E6=
-=97=A5=E5=91=A8=E5=9B=9B 00:07=E5=86=99=E9=81=93=EF=BC=9A
->>
->> Yukai Chou <muzimuzhi@gmail.com> writes:
->>
->> > # get empty line(s)
->> > git config get --all --name-only remote.origin.fetch
->> > # get lines of name(s)
->> > git config get --all --show-names --name-only remote.origin.fetch
->> >
->> > Either the doc or the behavior of --name-only needs some adjustment.
->>
->> This argues for making "all" imply we need to show the name of the
->> configuration variable,
->
-> Sorry can you elaborate on what that "all" meant? A new option "--show-=
-all"?
+I understand that you are reluctant to include a change that, as the=20
+maintainer, you do not feel comfortable  keeping alive.=20
 
-Sorry, but "--all" is probably a red herring.
+The whole discussion thread tells me that other developers are not ready to=
+ go=20
+down the "full markup" path. Understandably, this makes it more difficult f=
+or=20
+everyone to propose changes and review them, as there's no tool to track su=
+ch=20
+formatting errors and we have to rely on careful manual cross-checking.
 
-What I wanted to say was that we can=20
+I would like to thank you for pushing so that the markup can be simplified =
+as=20
+much as can be. It can be simplified further one step further: it is possib=
+le=20
+both in asciidoc/asciidoctor to override the formatting of inline verbatim=
+=20
+texts, so that everything that is backquoted is processed as a synopsis=20
+string.=20
+This way, strings like
 
- (1) get rid of "--show-name",
+`<commit>`
+`diff.statGraphWidth=3D<width>`
+` --dirstat-by-file[=3D<param>,...]`
 
- (2) have the combination of options that can emit values for more
-    than one key to automatically show both name and value, and
+are automatically rendered with the expected styles.
 
- (3) add "--hide-name" so that such command can still show only the
-     value.
+However, contrary to the s macro, this is quite disruptive as it forces the=
+=20
+new processing on all existing manpages. Another drawback is that it is no=
+=20
+longer genuine asciidoc, but it seems more in line with the critics. I'm=20
+refining the regexp at the moment to check for side-effects.
 
-where I mixed up (2) and "all".  In fact, "--all" is not something
-that gives values for more than one key (it is things like regexp
-and urlmatch).
+Is this proposition more appropriate?
 
-For example:
 
- $ git config --get-regexp 'sendemail\..*'
 
-would show values for more than one variable, and depending on the=20
-variable, it may show the values for one variable more than once.
-According to the documentation, this was replaced with
-
-    --get-regexp <name-regexp>::
-            Replaced by `git config get --all --show-names --regexp <name=
--regexp>`.
-
-but it could have been
-
-    git config get --all --regexp <name-regexp>
-
-as it is clear --regexp could give results for more than one key.
-
-This points at a bug in the documentation, by the way.  "git config --get=
--all"
-is described like so:
-
-    --get-all <name> [<value-pattern>]::
-            Replaced by `git config get [--value=3D<pattern>] --all --sho=
-w-names <name>`.
-
-but this gives values for only one key, and the command does not
-show key names.  It is replaced by
-
-	git config get [--value=3D<pattern>] --all <name>
-
-without "--show-names".
 
