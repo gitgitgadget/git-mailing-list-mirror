@@ -1,99 +1,140 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F05142631
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D846314C5AE
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724263665; cv=none; b=H6pmPLpyVsdS/tb1CvY7hHO0JjkARzCDN0GY3wIX+Awz+GVWh98FHVyc3p0zemxIPUW9llSbNTXo8je6aZBG6/6UrV6lt1mu2P8AFzg6XhK8MaZTh+Q9eUuWp4uAxH+FCO/6KvODx3dHEZ8ufNXMRdvMi7J1oJqXSoxPLf0AFBU=
+	t=1724264636; cv=none; b=Eet365BjDtfbvr2sALOsx5BFd4yUE/Ywsx9Com9euoeT7iY82MHBX4EjI7QW7fY7e9M9GvjF0e38MR8EYf7BAOm4UyOXtKhFVPyt/96ukjiOk7b4vvlLiijmDsU4fkX8PEQiUDBEpFV3YZo9ywRXzAwaRZbQrHpx5xipr1lFZ0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724263665; c=relaxed/simple;
-	bh=9daN2ZfIWEIT5e3v4/r3G57/fQuhwbAi1Qihn7e3cUA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qiyfwfRkRbGd7CUXn0+HLJZlkEySUnJPKe7/YVT4LD5CUwwZkNsVzTsmPSbCpi12o+OAjiTHSldOa2wTOUTST5+6TGSeD0viErNx/T1awgS/VTh6Q2QsuGiLSG4ZJ8Yh+v67K6XVdxg0NhRLf2/moq6cFRR6f9vfihEzKteAYQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dg2aoNDR; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724264636; c=relaxed/simple;
+	bh=ZOXjTU50EqQaVZXBjxyVsmqXy5gYCtx4NZL0IPIzUDk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lE+daa+m36vT9qGhh5bijuD+yyDb4MevGjxeB1pu1dGvhXQCekvk0h+TmiPLu0q5NppQaYPMscrGYBX9gTbMqeNmcYAPdRMskc73h6DS0/XU5hnOYiZNap3wYLSXsVqBV65qvZTADRR86Hhxn2g279ftrLguNeGnnaSBX/F0d3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ieCO3O/h; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dg2aoNDR"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2217236816;
-	Wed, 21 Aug 2024 14:07:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=9daN2ZfIWEIT5e3v4/r3G57/fQuhwbAi1Qihn7
-	e3cUA=; b=Dg2aoNDR9OCznnxeVcfuzDQG+r5tgCVkv+jnhAmmlxSnW7kB2owzHo
-	mrHQI+Z840kQvGJoFof8v7xrnEDcGpyRAFqtyGD+xhkV5QdkOk4n3MOAqiYTWJHV
-	PQz0DBpQf7TN4ttK7fOOoIs9QDUKgOjjnnBEg2lOiGQaUlNwvv+Qo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A40C36815;
-	Wed, 21 Aug 2024 14:07:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9799836814;
-	Wed, 21 Aug 2024 14:07:40 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 19/20] transport: fix leaking arguments when fetching
- from bundle
-In-Reply-To: <b72f7d1ee394291a018061c91222ea17a99c2e53.1724159575.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 20 Aug 2024 16:05:59 +0200")
-References: <cover.1724159575.git.ps@pks.im>
-	<b72f7d1ee394291a018061c91222ea17a99c2e53.1724159575.git.ps@pks.im>
-Date: Wed, 21 Aug 2024 11:07:39 -0700
-Message-ID: <xmqqseuxyck4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ieCO3O/h"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-202018541afso21105ad.1
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:23:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1724264634; x=1724869434; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4ElCBrTroCknMXm0mgjhLhqe1gD/O8GfzJ5vgUPkmOY=;
+        b=ieCO3O/ht+XLJ+URKUTm4ZQb/VV/2osWmefAoe3jPjgzmnvnl0TNdU5B70//zdWGQs
+         GSmBIe2qvfKEi8xqD7mW09sWzKHLpK3/bdRc/psboDsjwupiTPg0SnnTF7P42DVwfufu
+         AiUC6mo4vTFTct4C0NtwNtBPMYA+AUe0lZeLJcyFyd/3K51GeZc5pmYwRpMXeMEDhhcd
+         tkAWDa197sUEf5NcIY4Qi3rFD2Crp3NCzTA8uEQdvPqvwrbJ4UHVWxJGsd2w62vM8Vs0
+         7S7Ul8XL7rsyGxbx+KekzS+x/unAslfxu0fzE3JQjL79gLRW7yNUeezx4Z7zEMgo3x9s
+         /vrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724264634; x=1724869434;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4ElCBrTroCknMXm0mgjhLhqe1gD/O8GfzJ5vgUPkmOY=;
+        b=wasrP6OrhJLrbHGcIzB448d7SirMF+gpB6E3pZ+QoMkSMIUjJGzsCF0+C0vWizEE5B
+         QL63nw3ywEWNhAOLZDbBI+lXkpP3LPliZxu/9YroF9PkIz6Fu3dEnC4CdlKOs7YJICY9
+         8ZfkfN9gVNNd+btwmUi9GGjqyIwVZ5D4a+V9W6XhdZFvXUHaIIM11eGlInmSlBrVur8K
+         X6lY7npAohnND3sZRNZhMBU4gRhYwkgX+JEwmI8q7u0Ma+8ljHDaVL22yY0hd4RQHgE5
+         0MPJxFH2gkekUXE/Jp5zq65gOjpLfonoZuCgWMchyD/t6Z4QidPbNgyJwMshmrXl9gYB
+         sDsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXqtOZhAwgmeh+uKBQZwZgTMOkXfklzYdbIPVGMyvLYvqqNXrqoYR0u7HmDFDmaHP+2PvE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBIB2lJFlNd/Kw+IZ0c0AKmqYm6/ZRBt6GvkfapIByPyYnU1+P
+	q9AWv8qIzSMp06TenmVEHh0G9ffWrevCHQCBDDHTUIWERflSNxaTwujm5R05Rw==
+X-Google-Smtp-Source: AGHT+IHfpmjq0xAGiUxNg6+sErsheBxyAlSmtaPFL8rf87In6jgC60BMJRozbx2yZeubcKDRhBoDuw==
+X-Received: by 2002:a17:902:cec8:b0:201:e646:4ca with SMTP id d9443c01a7336-20382370792mr275915ad.14.1724264633517;
+        Wed, 21 Aug 2024 11:23:53 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:b433:fc59:16ec:53b3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f0378952sm96806835ad.133.2024.08.21.11.23.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Aug 2024 11:23:53 -0700 (PDT)
+Date: Wed, 21 Aug 2024 11:23:48 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] send-email: add --mailmap support
+Message-ID: <ozlr4xnrfk5vggtwhgwmnk7ewthfu4lpuerk3lpludj6ggpgux@zngcfcr6zve4>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Jacob Keller <jacob.e.keller@intel.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Jeff King <peff@peff.net>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 416B2FD6-5FE8-11EF-98D6-BF444491E1BC-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In `fetch_refs_from_bundle()` we assemble a vector of arguments to pass
-> to `unbundle()`, but never free it. Fix this leak.
->
-> This memory leak gets hit in t5510, but fixing it isn't sufficient to
-> make the whole test suite pass.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+On 2024.08.19 17:07, Jacob Keller wrote:
+> I recently sent a series to enable mailmap support in format patch. The
+> discussion led me to realize that the true problem we wanted solved is to
+> map addresses at send time, so that we do not accidentally include a dead
+> mail address when sending an old change.
+> 
+> Instead of worrying about what the formatted patch has, this series
+> implements support for mailmap at the send-email, which will translate all
+> addresses, and not just the author/commit addresses for a patch, but also
+> the email for any trailers.o
+> 
+> With v2, we now have a configuration option (sendemail.mailmap) to enable
+> this behavior. In addition, I enabled support for email-specific mailmap
+> files.
+> 
+> The intention of these is to allow a maintainer to map the known-dead
+> addresses of former colleagues onto a current email for an owner within the
+> team. This would be used to update the send addresses to avoid including
+> no-longer-valid addresses when sending patches. This is intended for cases
+> where the original author is no longer valid such as when they are no
+> longer employed to work on the project. While sometimes pointing to a
+> canonical public address of that person may make sense, in other contexts,
+> removing them from the email makes sense.
+> 
+> I believe this version solves the use case we have of ensuring that we stop
+> sending emails with invalid addresses, and may be useful for others as
+> well.
+> 
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 > ---
->  transport.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/transport.c b/transport.c
-> index f0672fdc505..da639d3bff0 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -189,6 +189,8 @@ static int fetch_refs_from_bundle(struct transport *transport,
->  		       &extra_index_pack_args,
->  		       fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0);
->  	transport->hash_algo = data->header.hash_algo;
-> +
-> +	strvec_clear(&extra_index_pack_args);
->  	return ret;
->  }
+> Changes in v2:
+> - Loosen restriction on git check-mailmap by default, rather than
+>   introducing a specific --no-brackets option.
+> - Re-write commit message for the send-email changes.
+> - Add --mailmap-file and --mailmap-blob options to git check-mailmap.
+> - Add configuration options to git send-email for enabling mailmap support
+>   by default, as well as providing send-email specific mailmap files.
+> - Link to v1: https://lore.kernel.org/r/20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com
+> - Link to previous "v0": https://lore.kernel.org/r/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com
+> 
+> ---
+> Jacob Keller (3):
+>       check-mailmap: accept "user@host" contacts
+>       [1] check-mailmap: add options for additional mailmap sources
+>       send-email: add mailmap support via sendemail.mailmap and --mailmap
+> 
+>  mailmap.h                           |   7 +++
+>  builtin/check-mailmap.c             |  25 +++++---
+>  mailmap.c                           |   9 +--
+>  Documentation/git-check-mailmap.txt |  18 ++++--
+>  git-send-email.perl                 |  20 ++++++
+>  t/t4203-mailmap.sh                  |  33 +++++++++-
+>  t/t9001-send-email.sh               | 122 ++++++++++++++++++++++++++++++++++++
+>  7 files changed, 215 insertions(+), 19 deletions(-)
+> ---
+> base-commit: 87a1768b93a67d0420255a43d9e07387b2e805ad
+> change-id: 20240816-jk-send-email-mailmap-support-1a9e86867c72
+> 
+> Best regards,
+> -- 
+> Jacob Keller <jacob.keller@gmail.com>
+> 
 
-Hmph.  unbundle() has this:
-
-	if (extra_index_pack_args) {
-		strvec_pushv(&ip.args, extra_index_pack_args->v);
-		strvec_clear(extra_index_pack_args);
-	}
-
-so while I think this patch would not hurt at all, do we need this
-patch?
-
-The other caller of unbundle() that passes the extra_index_pack_args
-is cmd_bundle_unbundle() and it does not do anything after it is
-done.
+This looks good to me, just some small test complaints in Patch #1.
+Thanks for sending the series!
