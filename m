@@ -1,82 +1,113 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE17C1531C6
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 08:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4071EA3AC
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 09:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724227847; cv=none; b=pLcuEqH4RfTbdkaOT37Z3stgIXGMMbTthYHYb1HQPBhBD1T3y0Kz12WfeoAQuqPkXkenNL9zIbdp7oXEVTkIINzRNYKV+vmvKQWLiGdG3SX2B2vMge/uI8TdUL4d1lzWGuDG/9TBF3mcn/wwI0fLm47saXwnJXVU25AVoe6iWA8=
+	t=1724232491; cv=none; b=FEcaQy5BkQXIWfhtZ+w7ssXWAl7HkFYkal3i1X20s9pDloRd3eRUrHDbomkij8vdzckgzGfM4m/hkSBPYzkDPAlN5UQcLeYY0Xs38pWWQqrYf5pJKhJ3s8MnLpY3TgkTddd5Wj2cz9BLtYQG2oymvc1kL4d+98dLnkhXEmnqxEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724227847; c=relaxed/simple;
-	bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=N5wlLVjuOh16/icCs/OLsZhOd2KPRc2jhvioK1xDWco7jSU6ZKacIevNXeZymUSGLdb6xj93mJz6JoLOq9OIa1SZbQ1M7bbmUcduR4ZAt/oTNRXhhc4CDROLqJDmlLrTjtv8XR8+eBqt7gjMPQ8dEHkfNdjHQ1WIVWDnsLPEdxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JI4dV2+u; arc=none smtp.client-ip=209.85.160.170
+	s=arc-20240116; t=1724232491; c=relaxed/simple;
+	bh=HM+MeXmlvuTjdsxOWprs+RfBnFhn5pTRGKQKwfu3Ezk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gOA0vHt+vFNyXWlGeP5TU0J2UQ8V8CEax906rnySOmtEZhzK1hiidPedNDcL+bMLRYTe7dwxX9RC0UAxP+dbBSU+8wiEcO8OAjvxO+uo7uVF03fpfiJ40+03lZFOE2C3YMUWKn5aX6BfQRzSwpiF7j3QID3s9gME0e/W1OGbVk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kyrhbOoO; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JI4dV2+u"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-44fe58fcf29so35623751cf.2
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 01:10:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kyrhbOoO"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a83597ce5beso94882066b.1
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 02:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724227845; x=1724832645; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
-        b=JI4dV2+uYYKGYDrD5dJ4qTPQwSRrAze8G9v6vmvZmoimAXprrHF0EO8NnvJ7P2zT5X
-         2B22OEoF5U4CpzcIH85DvlMT7fu3En2B5Fug1wYrNu4ryA4WaPF63iJjgj9B7baMcKTh
-         CBVd8CYyW4Lyp9MtuKuO5k3IyU+EVkeJsEBMyq4y9NsmyUAS89ogNER2PpI9xHP0hbBq
-         Xb5vZ+Qhaarsu18RsccoyfFkdsKQ/USoF6nCT9KUvbGVa1Zq9z+T64+C45q4mN4zTV6D
-         rMXRCHq9pWB6uyZcIznib33vCOB+9F/6M8+3JnRcNmyumlWdr+b0X1GpLPPAJZfSyXEu
-         X2mg==
+        d=gmail.com; s=20230601; t=1724232487; x=1724837287; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2F0eU0jJQS5b2rKfYRVx1JZtI3zdSl7LxZeSKl3gNFY=;
+        b=kyrhbOoOcmGcWn7MAYaPlnvQHCHAQsfAem09/X5nzVDvpMEjoW2iQQ/FYm4wBA+ilW
+         he1APyrBq7L8Vnd9vRqev+3JPydRegVDX21EnlC5iNreors8LxkZs7dNBQiONMXkQW6T
+         j9xN9icG5efN7j2+wDmuIdWhnlKUXSYxFHnDNuCKbWPomcDJJpFJbNnX9NsXvkz1pgMr
+         YNJCFVEra7CFJJwVESISM60I063iBioLIBYoZvJjYg0ixzmgHycj5EdxCjC7FydfE1Ym
+         GlJByhGsgznYo8eOVtT9Ppr+PJqBKIcLJqB6YEot1KI9iq0qBOewaD9xu7VyAJnF//yd
+         wlEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724227845; x=1724832645;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
-        b=VpKm6bjqYL4I3d3vYkOogHad6+qFxSqiXXFAOjUBFO9C/0zDzV2GZY4FPNGfb4iAEr
-         KNqhJFCmI3sLQFLGjpvDtzjnIF6eGuMxI5cVqWbdsQ+/jC+6X0oHytkRoiNJiW1u8ejn
-         b6aFKltpairvGsiyS7mhn3clNqAlMG8s90HHfNgKwHl/VCcXAVJF+pzVlFVmv6ZZ3oGf
-         PzvhXwyNDE6MdYCwOCP82pNRRdsithQKnsQlsDyrdiRUktfcRSH37NIOmE+0hPLBCxeK
-         fJTCiBxhTTEDJd7Qiv/Pf2anlWd6og9GP/cwxrButP6MdwEjzFJN3ZTjzLuOTK39/736
-         2+Hg==
-X-Gm-Message-State: AOJu0YyrPj0t4NPkmrSA7q/kDAyHlUfgkiEm6S1/4KSE+AWnUlRDqCkx
-	xOH0TNhVJBX7MZWDjFn3IlXJTDMObcbxLWewMbmtXKc1BQp9AEaetfwsnMCh3A49aW5n3Usef4Q
-	Ju4JiQbWpc1WfOOyxjoOzZkzAvA4pEt3+
-X-Google-Smtp-Source: AGHT+IFSri32bxwCa/RFNDPqq+QNxMU+Uc4/XrtNlUJkBMDWLZJs4pDIkLJ9V4hS8EVsQ9dBlPookAhiObFS461NH0Q=
-X-Received: by 2002:a05:622a:251b:b0:44f:f6f0:7d2b with SMTP id
- d75a77b69052e-454f268675cmr15473821cf.53.1724227844473; Wed, 21 Aug 2024
- 01:10:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724232487; x=1724837287;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2F0eU0jJQS5b2rKfYRVx1JZtI3zdSl7LxZeSKl3gNFY=;
+        b=TWIzBCOjtIPZUQutZQCLXZzcIQWAicuCzAgRuG4nYvehioQuD6kZx1XnXWDl6XPVL+
+         QwWNc+t60AXxyl+USpnX59ydt82/4NoAd1qnKF1EBNo0D5GC23UeZrhV/VwP0hqOdQz9
+         BDv8Eb4pkICVA05CNXyRO2FRROf20nX7UFSrsM/KwEwLNWosxWrEJ31blyEVLFhlWMun
+         eMwJYyDWIGAuY1H/ny+HYTitre1TH5VVQ/RDJ73bRHK0dF0rBrjAqACt8QTocmLNvPUD
+         W+Iem+9LPxMlXQyrRp8JfVX4yzziqxOVWl9dtaFrd7lg0PsqONGs3Z2HHcUi2XCVyx7h
+         +MKw==
+X-Gm-Message-State: AOJu0YzIdTJ7+YECyx3oD42oj7EwOVoHBD1W0qtaAybt/o8F5J+RAQAw
+	9CMKqzQNHuXp0zkiS8n2S4Y+4s4LflII/Yk/k6sIvqraJJkx/CK3KmIkBQ==
+X-Google-Smtp-Source: AGHT+IFNNjE1Vrv8NugLdh8kI/P8CcMimxs/ZIEIYywTeKKCEIxXsBlkUzRPkuZ7Fz2MVjQn2EbNHA==
+X-Received: by 2002:a17:907:944f:b0:a72:5f3f:27a2 with SMTP id a640c23a62f3a-a867014256dmr135073466b.26.1724232486897;
+        Wed, 21 Aug 2024 02:28:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8383745e66sm871671466b.0.2024.08.21.02.28.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Aug 2024 02:28:06 -0700 (PDT)
+Message-Id: <pull.1768.git.git.1724232485264.gitgitgadget@gmail.com>
+From: "ahmed akef via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Aug 2024 09:28:05 +0000
+Subject: [PATCH] docs: explain the order of output in the batched mode of
+ git-cat-file(1)
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yukai Chou <muzimuzhi@gmail.com>
-Date: Wed, 21 Aug 2024 16:10:33 +0800
-Message-ID: <CAEg0tHTWzgD5bw3oK7-Rtv9oTymqyhvZz3bcJ7yNRhF8wXMLGA@mail.gmail.com>
-Subject: builtin/config: --name-only doesn't imply --show-names in "git config get"
 To: git@vger.kernel.org
-Cc: ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
+Cc: "Patrick Steinhardt [ ]" <ps@pks.im>,
+    ahmed akef <aemed.akef.1@gmail.com>,
+    ahmed akef <aemed.akef.1@gmail.com>
 
-The v2.46.0 doc of git-config(1) says
+From: ahmed akef <aemed.akef.1@gmail.com>
 
-> --name-only
-> Output only the names of config variables for `list` or `get`.
-https://git-scm.com/docs/git-config#Documentation/git-config.txt---name-only
+The batched mode of git-cat-file(1) reads multiple objects from stdin
+and prints their respective contents to stdout.
+The order in which those objects are printed is not documented
+and may not be immediately obvious to the user.
+Document it.
 
-But the behavior of --name-only is more like "disable non-name outputs
-and leave the output state of names as-is". Thus using --name-only
-alone, one gets totally empty lines (which might be weird); only using
---name-only and --show-names together, can one get output of just
-names.
+Signed-off-by: ahmed akef <aemed.akef.1@gmail.com>
+---
+    docs: explain the order of output in The batched mode of git-cat-file(1)
+    
+    The batched mode of git-cat-file(1) reads multiple objects from stdin
+    and prints their respective contents to stdout. The order in which those
+    objects are printed is not documented and may not be immediately obvious
+    to the user. Document it.
 
-# get empty line(s)
-git config get --all --name-only remote.origin.fetch
-# get lines of name(s)
-git config get --all --show-names --name-only remote.origin.fetch
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1768%2Fahmedakef%2Fexplain-the-order-of-output-in-cat-file-batch-operations-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1768/ahmedakef/explain-the-order-of-output-in-cat-file-batch-operations-v1
+Pull-Request: https://github.com/git/git/pull/1768
 
-Either the doc or the behavior of --name-only needs some adjustment.
+ Documentation/git-cat-file.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Yukai Chou
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index bd95a6c10a7..f1e0b4a7219 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -270,8 +270,8 @@ BATCH OUTPUT
+ ------------
+ 
+ If `--batch` or `--batch-check` is given, `cat-file` will read objects
+-from stdin, one per line, and print information about them. By default,
+-the whole line is considered as an object, as if it were fed to
++from stdin, one per line, and print information about them sequentially in the same order.
++By default, the whole line is considered as an object, as if it were fed to
+ linkgit:git-rev-parse[1].
+ 
+ When `--batch-command` is given, `cat-file` will read commands from stdin,
+
+base-commit: 80ccd8a2602820fdf896a8e8894305225f86f61d
+-- 
+gitgitgadget
