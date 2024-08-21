@@ -1,126 +1,151 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828E31607A1
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 19:09:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B4579CD
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 19:23:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724267382; cv=none; b=CHaNhZsKuXzlB9v4J5SxgnshGdWugCc4YcSO0R+Czjk5UYTe1jZ5eVlfp9XrsDya5DLCMGNLKBrOVJtzgjvW5ZnLCypRNz8wRP3n48gSJK+PzVfMDgTCchJQKCwbd6Pjh+kOIWKFAqY0EsBPsNsG7laKA7JATX/oPUU44gjI9wE=
+	t=1724268214; cv=none; b=l+T2JsoyaEWqdLuj+TYBbRq3O+yBYw4MGfAtyvTIculv4P4Hs1Mqyuj8ZEcpMfEcjdklUxKuRyuZCW+W6r8/sLEmK9+bIOdPPvSVE89olDvvXer7vMOD3Ybs2RwFo1PiSfEqnXTWg9KMrHl8+T5tP+BcPdhE7jfZ0VFOrOP01No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724267382; c=relaxed/simple;
-	bh=h0/3IMI0bbEkpyqFWSvHc4Cfv9Wvdcji97rbqrIrD0U=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CP70a1mbCNgXQxuZgRtVBPBnkYVfMp3/GDPFiyFJJYGA7sZmR/nNedz+pEGRkRmtDQ94f6PNkTUTKYX1hvaAopcgEDD4nIqQXhN3v8sceDBYEamrxkCBaQHL26LhDwn+xSIXHBoGozUtZIVjNgmbFchPz3Ulu4bk9/NWjqlQXnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZShV/bVa; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724268214; c=relaxed/simple;
+	bh=IERbAYLNqhNPxEX7VQRCGD5xzAbo0NmC5PrGf2nZhq4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q2DqqoQdGA2/T4LcRIG7Dg/IEjMaaASjJOBZtB9NbwkwOeRZbfsdautBO4aFTbbc+r0Sod9+SReg41kWt7MQRWXXbpB0seW7l1l6mUgKFiDK3l3SS+Q8Vxq7ySrZIaK3dELR06Qyn3WLtTMFK25zTcHFTTDnSK+ojEm5K4js9Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tXJ47J/s; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZShV/bVa"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5bede548f7cso52015a12.2
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 12:09:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tXJ47J/s"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a7aada2358fso188299866b.0
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 12:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724267378; x=1724872178; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/V/WhbkEWsuFTEHK9w+b1kgD1nryQtleqgKyXetyNIA=;
-        b=ZShV/bVaNzjOCakeQtoPR1goVcD4ws4gzjPUNv31TlVV6dOm8hUtb9tJnLOhTOtvqd
-         hDORmRupO2H8EqFBTOjr3UReZQSjSB4f0BZoNBti3OaPBtma8TUzt1bNcoVifwCUGBqo
-         GttcinRNzDMQATFLidys9JbEFeyX0idMUBPpoMbh31ZGgjYf5VJwtFGFHTae/2sw4XCP
-         Cn9DmURsuNnPFfFtQE6j8O4fr197Q0oEoBBos4ptqwgHg8igCzBBbA7ikDITkJJYIZ2f
-         z+d5oE6TFkpmG1ycYuNT3V07Cttk4kuPTXT09VzqdW609MxLvcp7iWyvM0pp+OvqCnZ4
-         wqEw==
+        d=google.com; s=20230601; t=1724268211; x=1724873011; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z6DHZirgGzw1KQvZmzHcQ6MhT/OT+XvZdz/EGsqqZzQ=;
+        b=tXJ47J/sWteOOLI51BX/J3tSdMadZGqiLkffiloVNuz1URVyA3JMwJ8KON3DT5DgnM
+         KJvE2qz7Gihdm11T4XGyWC0anom/hf7uzciVb++pSobFmVUt8Ga2LcLX12rnrgmhyr9L
+         +LjjtH3GIWVSf7YLObJAYNPEOriS3wyUriHfhyqXqDPXUkILo4RqnscDopcwT9vZJHe3
+         9kji79pHWpd35Zc8Gwtlqaat7d3wgzKJ9rWVmrVeXHSSiNx3KdG4N54VUV2HAGLGrVi3
+         b718zOx6GVdi8KUuHAFNiwdO0JK1zOIFLEePrQ5NSZNnnlmr3qpI3mqyIvqzdDclBk64
+         PbvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724267378; x=1724872178;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/V/WhbkEWsuFTEHK9w+b1kgD1nryQtleqgKyXetyNIA=;
-        b=FDWQVPRRvCvRPFnoclv5tkyN6sZnvxygt2ri+bLEmlfye3U9tutpHiMnACMFNx+9Vx
-         0M9q4K8pf91Zj5B9iiciHssL8BfJr7YG2fB8PKLsnw+7Vyw+6gXgzsXq3slZshzB7gDj
-         CXqwGLCSGrd1A61At9jojJmnXRCI3CcGEgJtyn8g5qvOQ4cwxpqlTI+cBH+/yPnSSvTN
-         +2BjCmJ8y91106oVD23S6pbnBGCShIyUvJv6/9jDbLaRJlmQivr5jqe8eOjytm++HIDt
-         PUbv7IXbOIEl7fudm2uGkDBi39u3/XhgZytBeFwJhQpbRX3RzdERYZ72n5zrHtk4nvo1
-         OM/g==
-X-Gm-Message-State: AOJu0YyKpz6UM6OkH8uIuVU0yEHyIQPE1KPfu3HrEhopgSYrVmPoSZTR
-	d127NjTRL7502qSJMhWkfwLqtv1d9wg6qnfD74rIbesM5yQTQ9FD57rYhZ1H
-X-Google-Smtp-Source: AGHT+IHz7ZepGPfJS3rs/ORlWYr2bYTja8giuPoi6MrD8BOYGsi4236FI12oBz6yX7UzCuvgR7/b0g==
-X-Received: by 2002:a05:6402:2186:b0:5a0:e61c:edfd with SMTP id 4fb4d7f45d1cf-5bf1f0dd1a5mr2034393a12.14.1724267377985;
-        Wed, 21 Aug 2024 12:09:37 -0700 (PDT)
-Received: from localhost.localdomain (d171-197.icpnet.pl. [109.173.171.197])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bf1aba180bsm1703649a12.7.2024.08.21.12.09.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 12:09:37 -0700 (PDT)
-From: Piotr Siupa <piotrsiupa@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	Piotr Siupa <piotrsiupa@gmail.com>
-Subject: [PATCH] builtin/stash: test push with new file added and removed
-Date: Wed, 21 Aug 2024 21:09:21 +0200
-Message-Id: <20240821190921.18772-1-piotrsiupa@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1724268211; x=1724873011;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z6DHZirgGzw1KQvZmzHcQ6MhT/OT+XvZdz/EGsqqZzQ=;
+        b=Un+L7YM23+lTcoefnhRyszDJcZGWwisDreCHk4NXv0J2qvR1pSpfa77BUXcPT58HXs
+         1Q8Lsm3tt94QBCv6ILQs9ZPc92hFAzjIr3/ICm/jb8+hsTOAJULW6Ru6buWhhZTU0Bep
+         X3HNbem///Aj9OoXmPbR+A0Rle4ZWeXFww4+GRCiovEwdcB8wCclg6HqJh76iiyyeqSx
+         3+5tU8Gb79ABzkdqTzd3lhKayXVIeh5MzOCQ5wyqP9lH7jln6y1uKdJNZaqcy+34gkts
+         xkVi2jDiigMzrbEVr4UQyRZzLDPi7f/rJ5Coq3ScZVeraRJO0ERRqTfwHt973PXvyrYm
+         WoTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVw18Xby7JfC6Zdv7SOfHKeo6kTv/IvVvHjGLCgw2iq5bDvizbPgPhz6PMLJiQhtt+5fDc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJMedZb324YQtQ+S6zTlmEEQoD5mkbouFq0H/qgNsUcvjifPeA
+	hbaj/ndvbJdDcBlOCEiWnNEzoRnUHgFRvxeOO7cxgBARBi2kJdkt+D3+PsnxTPTHErDniuktPzb
+	lW8cidSzILir0wF6B+jmrz+RlaqZbwJ1haDMd
+X-Google-Smtp-Source: AGHT+IFti2BhsVHMT9vAsvDhIo6E1GYDqduRBCbPBxgBQ5fdata1gqF+AGM0H/yXCYIdAQIYJFPGC9Mt2St7vApWPfA=
+X-Received: by 2002:a17:907:9708:b0:a6e:f869:d718 with SMTP id
+ a640c23a62f3a-a868a89ab65mr60517066b.21.1724268210027; Wed, 21 Aug 2024
+ 12:23:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <e3f7d292-ee51-4784-8c85-14b5223c380f@gmail.com> <20240821184605.341205-1-calvinwan@google.com>
+In-Reply-To: <20240821184605.341205-1-calvinwan@google.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Wed, 21 Aug 2024 12:23:14 -0700
+Message-ID: <CAO_smViznLAxxGH+rfouUquq8tNJn16-CSoLbbGosy3fuYzTgQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] cgit: add higher-level cgit crate
+To: Calvin Wan <calvinwan@google.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com, 
+	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In the scenario when a new file is added to index, then it is deleted
-from the workspace, and then a stash is created, the information about
-the deletion is lost.
-The resulting stash contains the file but not the information that it
-was deleted. The file is also back in the workspace after the push.
+On Wed, Aug 21, 2024 at 11:46=E2=80=AFAM Calvin Wan <calvinwan@google.com> =
+wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> > Hi Josh
+> >
+> > On 09/08/2024 23:41, Josh Steadmon wrote:
+> > > From: Calvin Wan <calvinwan@google.com>
+> > >
+> > > Wrap `struct config_set` and a few of its associated functions in
+> > > cgit-sys. Also introduce a higher-level "cgit" crate which provides a
+> > > more Rust-friendly interface to config_set structs.
+> >
+> > Having an ergonamic interface is a really good idea. As far as the
+> > naming goes I think the suggestion of "libgit-rs" is a good one.
+>
+> Agreed -- we plan on renaming it to "libgit-rs" in the next reroll.
+>
+> >
+> > > diff --git a/contrib/cgit-rs/cgit-sys/public_symbol_export.h b/contri=
+b/cgit-rs/cgit-sys/public_symbol_export.h
+> > > index 64332f30de..882c7932e8 100644
+> > > --- a/contrib/cgit-rs/cgit-sys/public_symbol_export.h
+> > > +++ b/contrib/cgit-rs/cgit-sys/public_symbol_export.h
+> > > @@ -9,6 +9,18 @@ void libgit_init_git(const char **argv);
+> > >
+> > >   int libgit_parse_maybe_bool(const char *val);
+> >
+> > I'm suprised the compiler does not complain that 'struct config_set' is
+> > not declared in this header - I was expecting to see
+> >
+> >       struct config_set;
+>
+> I'm surprised as well actually. Removing the forward declaration of
+> "struct config_set" in repository.h doesn't result in any complaints
+> from the compiler either. Will add it in the reroll, but am curious if
+> anyone has any ideas why the compiler isn't complaining.
 
-This commit adds a test for such scenario (as a known breakage).
+C doesn't require structs be forward declared separately. You can
+change the name to be anything you want, and as long as the forward
+declaration of the function and the function definition agree, you're
+fine. If they don't agree, well, let's hope you don't encounter that
+(it's the same problem as if you have a forward declaration that's
+*not* visible from the definition that disagrees with the definition:
+`void some_func();` vs. `int some_func(int arg) { ... }` -- if the
+forward declaration wasn't made in the same translation unit that
+defines `some_func`, nothing detects this misuse in C).
 
-Signed-off-by: Piotr Siupa <piotrsiupa@gmail.com>
----
- t/t3903-stash.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+For this reason, you should only ever use forward declarations that
+are provided by "the code" that's being forward declared. i.e. if
+you're trying to use a function from foo.c, please forward declare it
+in foo.h, and only there. This way, assuming foo.c includes foo.h,
+you'll detect mismatches.
 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index a7f71f8126..84f0309b3d 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -469,6 +469,37 @@ test_expect_success 'stash rm and ignore (stage .gitignore)' '
- 	test file = "$(cat .gitignore)"
- '
- 
-+test_expect_failure 'stash add and rm' '
-+	test_when_finished "rm -rf add_and_rm" &&
-+	git init add_and_rm &&
-+	(
-+		cd add_and_rm &&
-+		git commit --allow-empty --message init &&
-+
-+		# create a stash with "file" ONLY in the index
-+		echo content >file &&
-+		git add file &&
-+		rm file &&
-+		git stash &&
-+		# no reason for the file to reappear but is will not hurt to check
-+		test_path_is_missing file &&
-+
-+		# apply the stash without "--index"
-+		# it should behave as if "file" was not in the stash
-+		git stash apply &&
-+		test_path_is_missing file &&
-+		test_must_fail git restore file &&
-+
-+		# apply the stash with "--index"
-+		# it should restore "file" in index but not in workspace
-+		git stash apply --index &&
-+		test_path_is_missing file &&
-+		git restore file &&
-+		echo content >expect &&
-+		test_cmp expect file
-+	)
-+'
-+
- test_expect_success SYMLINKS 'stash file to symlink' '
- 	git reset --hard &&
- 	rm file &&
--- 
-2.34.1
+[apologies if people got multiple copies of this, I sent with HTML
+mode enabled the first time]
 
+>
+> > before the function declarations. As I said in my comments on the last
+> > patch I think we'd be better to namespace our types as well as our
+> > functions in this library layer so this can be resued by other language
+> > bindings.
+>
+> Are you suggesting something like "#define libgit_config_set
+> config_set"? I wouldn't be comfortable renaming config_set in git.git
+> just yet until config/config_set can be a standalone library by itself.
+>
+> >
+> >  > [...]
+> > > +    pub fn get_str(&mut self, key: &str) -> Option<CString> {
+> >
+> > If we're adding an ergonomic api then having return CString isn't ideal=
+.
+> > I think the equivalent function in libgit2-rs has variants that return =
+a
+> > String which is convinent if the caller is expecting utf8 values or
+> > Vec<u8> for non-utf8 values.
+>
+> Having both get_cstr() and get_str() makes sense to me.
