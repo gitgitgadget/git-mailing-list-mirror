@@ -1,54 +1,54 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCB0192580
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 06:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A8419258A
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 06:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724223241; cv=none; b=GqMIu87t5Hn0Fg871kIUbUmzlz3rLdwM7x92trrLLIwWcCeMN/PGY6cl18c5sW88kR4UC7Fi4sh9vqaItmf8syJdnch5NHrqf7UdXmmu5OhBCDqps0WzGwWamfkqEcug6w07Ote0zNmwGXGtGPDmcuSP+6ANpLf1oemfHW0CSJI=
+	t=1724223242; cv=none; b=oGXVOqfH5GSMqA8QhONUewaAwJaf+j4cm+gM2Y0zsaXQDynmv1J6MyYe14olKecpJIeOjKwQNrHGNt7xvCIJoFMi10BIEWuBgD1n8KGiRKc+keNBwpljwvpl7r6/p1oLGk2pnaJxtoBgwi3RRsMmZ5reso5rJAY25uOXGq/KVic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724223241; c=relaxed/simple;
-	bh=QPoXrd3C0u9RzzflGJa9UM04MzcIbISkc4dLqpSkTrw=;
+	s=arc-20240116; t=1724223242; c=relaxed/simple;
+	bh=75TvTFb+M+C4zW1Cqq5iUJCOduFtYL7Ule+vgKh9uSA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FnhfZdWb8MG+EaZiDdCM6fk71deylu+anuCX+ez/W7DQ78baJzl1t2FXtSy6jXDCNxWi1ofWDsbUsK3SZlFZNZaFcPREUJIYazX0jcyNm5p8eoyURiIu7hUNENuzEA8ggfe5BFEMTNf2E/pUmHbIK/qXAKlxHyTAQfntE0Dwumk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=afGGfL2z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rGl8iugV; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=SyJJtiwas4bOdmMeoju/P35yZbTZnt511ykqBx0zMFWUltd+LCmvHE8zDQFa3CeuxKKUMwZCDeJX3Va5tKZmKCaiYKGKJ3fWR+yOXUzvhfMVR6WbFbZA7TBBQCigDhhYJDVZ786Qr+OOvt+gUJ58LfpB7j/O5IsQk7nWK6I9vsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b+8Zo8Ig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuMnQgGm; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="afGGfL2z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rGl8iugV"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 57F84138FF84;
-	Wed, 21 Aug 2024 02:53:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b+8Zo8Ig";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuMnQgGm"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id AD010138FF53;
+	Wed, 21 Aug 2024 02:53:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 21 Aug 2024 02:53:57 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 21 Aug 2024 02:53:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724223237; x=1724309637; bh=xnsnmlaGov
-	LIeaVmKsiqfL26eJc2/RxElpyE8+aed+U=; b=afGGfL2zA59tdjAaob1J8JBp4k
-	l12+0KJbflKDdT52YBhQBHprdJDuDPtXhwNvNV0MMXzOVd5zNRus05S5vZ5h7DOK
-	ABYx5mXWLSjclfXr9Ck8tZyB6i3egYTiLdmzgdyS7GpKK1FWL1kzJ1t6T5SPWaI+
-	IqIb8JXyqsQ8RxUz5MveFsv7hofPpaBnq6tAOIYgItPKWvFawdUxwnjofZ0opEN5
-	cig+i9czJf8I2i/eaIieS8VeGo1j2EswDAZuhQvZ10PL0/fVY45Gy6paz8QSkSo2
-	avROnsShpV+B5Jm0To1fjYqSSN33oNVzpJ+b3UShdA3Hfx83MtCndr8K19GQ==
+	:subject:to:to; s=fm1; t=1724223239; x=1724309639; bh=pNab+PpV5W
+	qofBqazOXJtWYN2yAqD98ojdeJe2dwsrc=; b=b+8Zo8IgfpcJvbBa9j6B0IAl78
+	1FKgszEiEDP5CQUzxgqNNHMQPrPZDj0sgzhr+GsdwRwonfBO0qWW1BgELxwjjhB8
+	y1GvODTfu/8DRzGRevTCY3UbCx8S3jze4TSJ7jQ4cMxI4OzfPvdGx/Kbn5MYtyNq
+	3bXhaSvgmfACpnug5ng4SjBQRdpoaRlHWBwDZx+cf1vc9OkaVsfMH6AICENxBuMT
+	dSCTZHYrgUKyLwarUdQbTFf71Pm9G2AMnA79mCcdqkHiWJ/tIC46w43uPPFm99FG
+	ITQOcbsbjTxKqH4CuwnwrAZ2YNUy4Mivp9yaXl0d+iTIDvyBjJpDbWpeJ5Dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724223237; x=1724309637; bh=xnsnmlaGovLIeaVmKsiqfL26eJc2
-	/RxElpyE8+aed+U=; b=rGl8iugVCINam8mxKByntT0Y32DvIlr5YbhAAyvvM78e
-	Uo1Gn5fAo5rXRcJMh7qLhUIZ+ObcahrAh6aqtvGazyN/2CvsTNAxyRMzyE1tc3Pn
-	qWjJjlQS5D/xI/DZHEWdYluXkaNlJGrDIrmeECv5S6u9FBGigHOjz4cRrSZTYRDv
-	bwxPk965ucElqaMvOPx8SAytS/jKLLN1K/wTxWDGCwZ2Kwndhea8AOrO9iFk4N8B
-	AkYEXTuL/vTLWJgxAxy1KraSpZddssvLjU7NotFdFHcUdE1b4i9hhqG7+3QMvqC1
-	qodpZNm+lrKoPCI39qvqDrZ7v6j7lvJfXYsungU12A==
-X-ME-Sender: <xms:BY_FZsKSUcL6ze4fWKRu7Wpg8eXu42ozKFuHAPsqFtMojX3IMtM0iQ>
-    <xme:BY_FZsLkY9V7HATzCzJl380fVWPLi-ENOCdvZlcHDjt0MLRvigHgkn4jjyvqoe1yx
-    TCowWMzfN5qXaKPqw>
-X-ME-Received: <xmr:BY_FZssKR7Gl6RCb1E_yDXvuS9GGSUjJU2ejYyAlzqjOi-a2ui1noTw3NVRmDoEAtTkbCkdUalF3pHptwvonaWo5qmAjL3egBaMSEupOMyPldA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedgudduvdcutefuodetggdotefrod
+	fm1; t=1724223239; x=1724309639; bh=pNab+PpV5WqofBqazOXJtWYN2yAq
+	D98ojdeJe2dwsrc=; b=EuMnQgGmJJEtrm+SNaXvTdMRqIZkyXPhbDQUXz8jIR3A
+	KF+qhd9HF/I2LAmFcBVyDPt1me5EJxopX1mlb1GXVS4cWs82O9FmrppvcRgIgkqY
+	4v6oIrGsW+Fa/KjTGrDshRloOGPy9fMdnmRaYsJmJ98/FDk4NAY/pcIlo6NGU2Km
+	UZUlQPJSCFJDrd2FyZAOJGkKhm9t0bkIOnBBrxSg+T8cM9EY81gqPMbJOvfRPm3L
+	km37IFZUTfN3++9+T5r+OpLKlc3p+FfJO64yP5WFmFcYiWVTFmU+c9iTGPs9JC6i
+	MUsHMmRGnmIjU3mpONEItcvd47rtgmC9Mo2uD6B8Sw==
+X-ME-Sender: <xms:B4_FZt50wwRaF4bmjZgAliqwZAqn_ZaXkpM4XeZOrKiFGQlU5uKspg>
+    <xme:B4_FZq5S1ird_ckoNHzXM5zShe1gTSfe5XXDovumcyDGzOZYoDcfdxqr8npqIwOwU
+    VQAGjZaxYqGeIPVDw>
+X-ME-Received: <xmr:B4_FZkfgUd8lKctsol_LgmVjIN-Qplz6e6rRrrZmDDmz5EwStWd1v_YXqzOaAX4K4tu_yYRepBw98VfQgdQ8TSC6cCriSPSReIlFpual_LJLUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
     evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
@@ -58,27 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedgudduvdcutefuodetgg
     gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
     thgvrhesphhosghogidrtghomhdprhgtphhtthhopehmuhiiihhmuhiihhhisehgmhgrih
     hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:BY_FZpZm-ZA8zKEG_mDHC4TF3b4fzBQogTO_WJUpaH3LTZm-GU3_lA>
-    <xmx:BY_FZjY2566ZNY-wPgWddNzjgBMU2_T036G9xHtqOXV3jQIdiS9gBA>
-    <xmx:BY_FZlA11YGg8GqoDQjdz5jlWHJj87zCc-YDFeQ820OrGBMnrxbcYQ>
-    <xmx:BY_FZpYkC84MRhrHHOei6HAOpVAWt49yTVlcJk9VPpQCs7L1m7EgDA>
-    <xmx:BY_FZvH00HJQR6bI-XZm3UM_w1RzGSdJQmbehLP-kkPrU5LTRQIuIwdH>
+X-ME-Proxy: <xmx:B4_FZmK0sz2lwYo15B5NTsdGiv8ztqtvq8k2CsZj7DJcpuYayggF5g>
+    <xmx:B4_FZhKeLzx1YFj7g1SSLybSbY7z1tCySYTxT9bEgj3kqmsymAKswg>
+    <xmx:B4_FZvwVyT3tG7576DYLDeMX5bvhsi1zv2sXZsgqHW_xHeNTuDB7YQ>
+    <xmx:B4_FZtJVTDdyyprPqyooHl8CfKRJVkGZsgaChuZY8gmG3uhAkowLeQ>
+    <xmx:B4_FZh2_p3IO4MKHwZLiTMNYF3l5SjmDKQCfOIt96gKO6eeHKxfuyUkQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Aug 2024 02:53:56 -0400 (EDT)
+ 21 Aug 2024 02:53:58 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cfcf50ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Aug 2024 06:53:22 +0000 (UTC)
-Date: Wed, 21 Aug 2024 08:53:52 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d085f2dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Aug 2024 06:53:26 +0000 (UTC)
+Date: Wed, 21 Aug 2024 08:53:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Yukai Chou <muzimuzhi@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Yukai Chou <muzimuzhi@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2] doc: add --show-names for git config
-Message-ID: <ZsWO-K4UFXsG7QNY@tanuki>
+Subject: Re: [PATCH] doc: add --show-names for git config
+Message-ID: <ZsWPBCW-pI4qIykK@tanuki>
 References: <CAEg0tHRL9+tqY0k2GiGzhc-VgMVsHqppLRFHbc=M33R6AoLXEg@mail.gmail.com>
  <xmqqcym4fqhp.fsf@gitster.g>
- <CAEg0tHQDT7LesB2kiQD4rXwcUs5ZhOH+YWdn990tfGdrnYdgZg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,40 +86,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEg0tHQDT7LesB2kiQD4rXwcUs5ZhOH+YWdn990tfGdrnYdgZg@mail.gmail.com>
+In-Reply-To: <xmqqcym4fqhp.fsf@gitster.g>
 
-On Tue, Aug 20, 2024 at 02:27:56AM +0800, Yukai Chou wrote:
-> 4e513890 (builtin/config: introduce "get" subcommand,
-> 2024-05-06) introduced "--show-names" option that is used to
-> give the name of the configuration variable to each output entry
-> in addition to the value.  It however forgot to document it,
-> even though the option is used in a few examples.
-> 
-> Document it.
-> 
-> Signed-off-by: Yukai Chou <muzimuzhi@gmail.com>
-> ---
-> Thanks for your review and suggestions Junio. I must have stayed up
-> too late yesterday, so what the commit message was sent was not the
-> final version.
-> 
->  Documentation/git-config.txt | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index 65c645d461..16323c4ed0 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -268,6 +268,9 @@ Valid `<type>`'s include:
->   all queried config options with the scope of that value
->   (worktree, local, global, system, command).
-> 
-> +--show-names::
-> + Output also the names of config variables for `list` or `get`.
-> +
+On Mon, Aug 19, 2024 at 09:04:50AM -0700, Junio C Hamano wrote:
+> As to the name, I tend to agree that --show-names is a strange name
+> for the option, and I would have even suggest making "--all" to show
+> the name by default and give "--hide-name" option to countermand it
+> if we were adding this topic afresh today.  But that unfortunately
+> is all too late to change without much more effort than just changing
+> the name.
 
-This looks sensible. I'd probably drop the "also" here, which reads a
-bit awkward. Do we also want to spell out how names and values are
-separated from each other?
+Mh. Yeah, that might've been the better default indeed. The new command
+is still relatively young, but still, I don't know whether changing this
+is in the picture now.
 
 Patrick
