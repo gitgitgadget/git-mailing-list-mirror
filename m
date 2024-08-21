@@ -1,51 +1,52 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AAC1B2ED8
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 17:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F05142631
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724263142; cv=none; b=OcJZwKptBxc7w9mPZVnc1V02XZuVEdwtZ2faRAgkLom9UBR3euwzDKYl+KBUU6zM62ZzvK6wlyEXYZCkHB3hiYVzO0sZHhhtvYUNHI2O2xYVMw2dl4TmdxK6oDPck9hTzuVG13hv+wuDdi/QxrhASVDh9DKtPcVOeHpIeWJEIzI=
+	t=1724263665; cv=none; b=H6pmPLpyVsdS/tb1CvY7hHO0JjkARzCDN0GY3wIX+Awz+GVWh98FHVyc3p0zemxIPUW9llSbNTXo8je6aZBG6/6UrV6lt1mu2P8AFzg6XhK8MaZTh+Q9eUuWp4uAxH+FCO/6KvODx3dHEZ8ufNXMRdvMi7J1oJqXSoxPLf0AFBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724263142; c=relaxed/simple;
-	bh=muKckglp+wLnaR+Cspiz7KeZZCizoSKkaMtlQZ09rkY=;
+	s=arc-20240116; t=1724263665; c=relaxed/simple;
+	bh=9daN2ZfIWEIT5e3v4/r3G57/fQuhwbAi1Qihn7e3cUA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uturBp2bRTPqh7B7TkeJNTn/gEGtb0p2DLO3rYtdA8Cfh716jf/S7jt1FMY/JiIS64dR7vtDy3naiYyfw3PEQ1mQWUT6dCiDGu9QXGe2T7MQMJbpQZ45EegjibuZGP3a/2TWb5cuI5m4AXNPdbQPhNc6zW8PYRLB3RDVFY81xJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=T9vRdrG5; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=qiyfwfRkRbGd7CUXn0+HLJZlkEySUnJPKe7/YVT4LD5CUwwZkNsVzTsmPSbCpi12o+OAjiTHSldOa2wTOUTST5+6TGSeD0viErNx/T1awgS/VTh6Q2QsuGiLSG4ZJ8Yh+v67K6XVdxg0NhRLf2/moq6cFRR6f9vfihEzKteAYQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dg2aoNDR; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T9vRdrG5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dg2aoNDR"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 437273663F;
-	Wed, 21 Aug 2024 13:59:00 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2217236816;
+	Wed, 21 Aug 2024 14:07:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=muKckglp+wLnaR+Cspiz7KeZZCizoSKkaMtlQZ
-	09rkY=; b=T9vRdrG5+4QQM+kkhAn4b7t/24QRVHTlvcYzqZ7Q6N7Rm8otdaoMYX
-	lJtJxatIK5q0v8U1CNKKqIqVb224uec/Qb+gNH2Ol9sY19uXhF7ywP8m8YM7YVmP
-	Fgw1Oz8axh/nv7uwLFRrHUlO/70F0NnazWVaAimBMmTdfX5cWaMwI=
+	:content-type; s=sasl; bh=9daN2ZfIWEIT5e3v4/r3G57/fQuhwbAi1Qihn7
+	e3cUA=; b=Dg2aoNDR9OCznnxeVcfuzDQG+r5tgCVkv+jnhAmmlxSnW7kB2owzHo
+	mrHQI+Z840kQvGJoFof8v7xrnEDcGpyRAFqtyGD+xhkV5QdkOk4n3MOAqiYTWJHV
+	PQz0DBpQf7TN4ttK7fOOoIs9QDUKgOjjnnBEg2lOiGQaUlNwvv+Qo=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C81D3663E;
-	Wed, 21 Aug 2024 13:59:00 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A40C36815;
+	Wed, 21 Aug 2024 14:07:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C046736608;
-	Wed, 21 Aug 2024 13:58:56 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9799836814;
+	Wed, 21 Aug 2024 14:07:40 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 15/20] remote: fix leaking config strings
-In-Reply-To: <97346d6f944e3587a08d96a5e1b4ead8df8a0bc0.1724159575.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 20 Aug 2024 16:05:46 +0200")
+Subject: Re: [PATCH 19/20] transport: fix leaking arguments when fetching
+ from bundle
+In-Reply-To: <b72f7d1ee394291a018061c91222ea17a99c2e53.1724159575.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Tue, 20 Aug 2024 16:05:59 +0200")
 References: <cover.1724159575.git.ps@pks.im>
-	<97346d6f944e3587a08d96a5e1b4ead8df8a0bc0.1724159575.git.ps@pks.im>
-Date: Wed, 21 Aug 2024 10:58:55 -0700
-Message-ID: <xmqqy14pycyo.fsf@gitster.g>
+	<b72f7d1ee394291a018061c91222ea17a99c2e53.1724159575.git.ps@pks.im>
+Date: Wed, 21 Aug 2024 11:07:39 -0700
+Message-ID: <xmqqseuxyck4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,24 +56,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 0930868A-5FE7-11EF-8302-BF444491E1BC-77302942!pb-smtp20.pobox.com
+ 416B2FD6-5FE8-11EF-98D6-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -2802,6 +2809,7 @@ void remote_state_clear(struct remote_state *remote_state)
->  	for (i = 0; i < remote_state->remotes_nr; i++)
->  		remote_clear(remote_state->remotes[i]);
->  	FREE_AND_NULL(remote_state->remotes);
-> +	FREE_AND_NULL(remote_state->pushremote_name);
->  	remote_state->remotes_alloc = 0;
->  	remote_state->remotes_nr = 0;
+> In `fetch_refs_from_bundle()` we assemble a vector of arguments to pass
+> to `unbundle()`, but never free it. Fix this leak.
+>
+> This memory leak gets hit in t5510, but fixing it isn't sufficient to
+> make the whole test suite pass.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  transport.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/transport.c b/transport.c
+> index f0672fdc505..da639d3bff0 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -189,6 +189,8 @@ static int fetch_refs_from_bundle(struct transport *transport,
+>  		       &extra_index_pack_args,
+>  		       fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0);
+>  	transport->hash_algo = data->header.hash_algo;
+> +
+> +	strvec_clear(&extra_index_pack_args);
+>  	return ret;
+>  }
 
-As remote_state has two extra structures embedded in it, I wonder if
-we should be clearing them in this function, but possibly it is
-cleared elsewhere or perhaps in a later series?
+Hmph.  unbundle() has this:
 
-As the focus of this step is about strings that we obtained from the
-config API, it is totally outside the scope of this topic, even if
-it turns out to be needed to clear them.
+	if (extra_index_pack_args) {
+		strvec_pushv(&ip.args, extra_index_pack_args->v);
+		strvec_clear(extra_index_pack_args);
+	}
 
-Looking good.  Thanks.
+so while I think this patch would not hurt at all, do we need this
+patch?
+
+The other caller of unbundle() that passes the extra_index_pack_args
+is cmd_bundle_unbundle() and it does not do anything after it is
+done.
