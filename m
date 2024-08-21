@@ -1,64 +1,64 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E352190472
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 12:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046D18C929
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 12:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724244140; cv=none; b=uk2o+ztiF56riGnpC3Hdqk1o6qIxh7C9TUQYBZinvIglbEzPEQnxPxHcXOrNUAgRObziKBcd7t9vEwrbqmmmFgdM+TzfX5lrki6nDyh36lAvj23NCs0ErZ4xhCTlcstEqvTzGyMw4vPogAn+M4KoxdN7H7cig+NMUKgK+BtNgwc=
+	t=1724244143; cv=none; b=losSX8ppeHMBbAMzlf9sFWFD8xLrUsu444mkntF0+6TvTxXx4cdNecAdWFmq0Q2Ol7kNkrcYIlyqqBOytCN7V8l2hBduWca2Yo3Qxp2GXSTZ1tKVnMy9K1ijzHihwP1YZJ+JylKixWYU2zfllNQP4QLWYFWq2gZOK9JmibtMUMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724244140; c=relaxed/simple;
-	bh=agZnrMOtyNjNzuJqUc7XskvIpJQwL7dokPxm5FKsbaU=;
+	s=arc-20240116; t=1724244143; c=relaxed/simple;
+	bh=61cKOBkwMaN3Pb6Bz8j2jjKcVO5mWqMNJZdQ2PWxCm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T71SltXlX1LjptSSKajgcu2iIrCyg1dz2w5SimrNQl+gbjNtuI0jqRMSk1Yqytqd3iDXr06CZyzwBfykkqzp56/c6aXIxkajizpke7R6H9SNOi6gsV5p0j181GJCIM/f2FmbHnBI2YfULbaGXjyZZ8sIw59RIzFx5r6CPxBb9ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kjXiYJml; arc=none smtp.client-ip=209.85.215.181
+	 MIME-Version; b=tBiKAaFl7HrnhSjSpa7WxmCJgljTYNjwo3reUbr/0cLNXiVEEpSysPJMZ9DunahhK//munOwqOklrugou5fEiQGn2Ycw6WY6c0LK4r01r/K3b01kko9qpHnFVbHAHN2KptGgf2JkFv6mgdf2v3mjWLBP0YEq4ltArsZGtGpXa+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lWKge1CE; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kjXiYJml"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7cd895682fcso248223a12.0
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 05:42:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lWKge1CE"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-7cd895682fcso248236a12.0
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 05:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724244138; x=1724848938; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1724244141; x=1724848941; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lPViukUUlapprpV9Rr9pSwpDCDAk1R+nEMTnVCtTuyk=;
-        b=kjXiYJml9lyXJnXTRPUniorRC6SnS4UIaJd1ut4r73haYhdicu6O6S3M3B2x44e4CG
-         Ll8XdTt1WVoRSPaG8HXSCIDKCoGhFABMc7ObaM9YUgHIZgD29O4yPOHi9SPSobgqYUGQ
-         w5INwaFC5tJq7jT5A+2qa2l8JZ3a0nsMWY8UxaAg9HVv+4PCHUxtosLoUDkCW+A60oKT
-         Iz2JMC/wqHrGLiphvNkr2uHfHMkuZzKfF7CqK/4TzNSdziKXpxZ/A9OdGCdBfDGKmPb3
-         RbWZI+5PvUdedKJNAMlL+t8mqsLZB2EcgIYO4Ppvcd3EFogUnGv7wNeCYxbMEyzx1uxY
-         4r/w==
+        bh=x/AOHJYi9/WQuiiiDcao3F43bozZGndvsf3LEuJHY1M=;
+        b=lWKge1CEtnhfuHS4rVec3G1Gw9YXtL7tFgYT1g/6Zskc8yx96ePETh6VH5WJ4VQvmL
+         SETbkMJioX5khroYlU78iFVMZZR2xTr3j26n7sg5Wiwptfx6ggpRqRID6Ccfnol1vXsB
+         Ya3OPV6g78SLHWGF/e8IJEyewIC1j6zpQ+5ZxdjpBCX/PFOAWzolY8CZjwhclCrPDJNY
+         GoqfbiivtXDD+DbGZuzZhn1RXkksl9DY2hiTRBGQy3e4LEhPxZKgNK7X6+r+XY0m2/Yi
+         pzjdBO5eb3pLEyG/CXwX0lxkxq6iPGb62PB1UQgxWUYgVnsrl7+slZMilnkbHGxeT6sI
+         sHfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724244138; x=1724848938;
+        d=1e100.net; s=20230601; t=1724244141; x=1724848941;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lPViukUUlapprpV9Rr9pSwpDCDAk1R+nEMTnVCtTuyk=;
-        b=sbSDjRiOPb+CyDdPI+bmaJZnEpLOVGHxcRATc6KXGVUP9wyXV9GaZUGpIy3kGIb1yl
-         JJkYtHaAOgfIIy/r/f9v6/2CJ1FsyYxd6o2Bupx8irQlJUMuRMmFDBPeVkixQSBZhRip
-         EO46X9owv91iG7YjRpzoUv9M1QFscOBRTTGAziXD2Ke1OB2REqQmpP4nhpZq5vGPXwEX
-         HNiPQJdW98Ecr9yaYhscr18fI01VmZCM7Rrnb+YUG7dLW9LvLCh0T1MKi+92rVxqmLVV
-         gnS1LqE+ewfAJtE3MPP957ybCQK81Q48mf3B63S96FeOmMN6acaCFjOYkLmyNK2Vj65t
-         Lx4Q==
-X-Gm-Message-State: AOJu0Yy6hokY4oWDb50xakF6WfY2zMJULeNPH6kvm+cVct2/IPn7A9Bi
-	sjYgAoMGGZLGTk5lntOaDJZFgIRqyTiFrovvWjK/FwcqjSlnYCQQh3GL10VD
-X-Google-Smtp-Source: AGHT+IH8CAnPpnb9Kupr/8IF7nwGjTEFrFgwQ4kMMkhlV8tfX1Jb5EFftM/gFm+TsBBE418wgxAzQQ==
-X-Received: by 2002:a17:90a:c68d:b0:2c9:649c:5e08 with SMTP id 98e67ed59e1d1-2d5e99f84e8mr2094972a91.15.1724244137969;
-        Wed, 21 Aug 2024 05:42:17 -0700 (PDT)
+        bh=x/AOHJYi9/WQuiiiDcao3F43bozZGndvsf3LEuJHY1M=;
+        b=VcnHXl+1nRqnFfQkhs4zFKUU9dASe28bMm67NWcH62Xs9k+GpMQgiRMFEdGI4xHWx6
+         3FLeu/QoqFF2mRpXJ8linQTVBgiw5JkJPumjRLVbHpMIQrWGr3SPtctiLV4NqFN91kD3
+         9KRq1Z6XAwkbtWhLwbhKQ76htIhGZaYigygB4ZLJlmWmsneC4gaybrxcTywGJ4fQ/wX8
+         kE0aZ6KXuXz9hkPnRYxSfwder+xhkxWqioR9DFFjvdgiOiceqJKgg0kh3BBIlId+ZT4s
+         KZk4U/2no8f8Cne1sWH1CG2r8EXpJbv0SOvTgL6bqbHmOaMXyRVdjKZaq0aZjBgWWUnn
+         E6LQ==
+X-Gm-Message-State: AOJu0YzWCVE3HMA3MvoM3W3Qownvi+ANmBXHqymJEtXnQUy3jMJ1L1do
+	YDN6Iy1QwbDnA8kwMIHcLaVURvS8EMCQC+GqNPGqLUqSmIHKzFyp7BQitTJ1
+X-Google-Smtp-Source: AGHT+IHvQveZ8cnGwnXFS94gXdH47oWKF8Y73EcsYbsSbCW2HojB2IuP7ghsjNTi4AGyZ+wKS2WvUw==
+X-Received: by 2002:a05:6a21:2d07:b0:1c4:21c0:ea0f with SMTP id adf61e73a8af0-1cad8352b99mr2928611637.33.1724244141086;
+        Wed, 21 Aug 2024 05:42:21 -0700 (PDT)
 Received: from Ubuntu.. ([27.59.95.0])
-        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2d5ebba8853sm1670963a91.56.2024.08.21.05.42.15
+        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2d5ebba8853sm1670963a91.56.2024.08.21.05.42.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 05:42:17 -0700 (PDT)
+        Wed, 21 Aug 2024 05:42:20 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 01/11] t: move reftable/block_test.c to the unit testing framework
-Date: Wed, 21 Aug 2024 18:00:51 +0530
-Message-ID: <20240821124150.4463-2-chandrapratap3519@gmail.com>
+Subject: [PATCH v3 02/11] t: harmonize t-reftable-block.c with coding guidelines
+Date: Wed, 21 Aug 2024 18:00:52 +0530
+Message-ID: <20240821124150.4463-3-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240821124150.4463-1-chandrapratap3519@gmail.com>
 References: <20240816175414.5169-1-chandrapratap3519@gmail.com>
@@ -71,176 +71,140 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-reftable/block_test.c exercises the functions defined in
-reftable/block.{c, h}. Migrate reftable/block_test.c to the unit
-testing framework. Migration involves refactoring the tests
-to use the unit testing framework instead of reftable's test
-framework and renaming the tests to follow the unit-tests'
-naming conventions.
+Harmonize the newly ported test unit-tests/t-reftable-block.c
+with the following guidelines:
+- Single line 'for' statements must omit curly braces.
+- Structs must be 0-initialized with '= { 0 }' instead of '= { NULL }'.
+- Array sizes and indices should preferably be of type 'size_t'and
+  not 'int'.
+- Return code variable should preferably be named 'ret', not 'n'.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- Makefile                                      |  2 +-
- reftable/reftable-tests.h                     |  1 -
- t/helper/test-reftable.c                      |  1 -
- .../unit-tests/t-reftable-block.c             | 45 +++++++++----------
- 4 files changed, 22 insertions(+), 27 deletions(-)
- rename reftable/block_test.c => t/unit-tests/t-reftable-block.c (76%)
+ t/unit-tests/t-reftable-block.c | 52 ++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 13890710f8..a30cd636f8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1340,6 +1340,7 @@ UNIT_TEST_PROGRAMS += t-oidmap
- UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-prio-queue
- UNIT_TEST_PROGRAMS += t-reftable-basics
-+UNIT_TEST_PROGRAMS += t-reftable-block
- UNIT_TEST_PROGRAMS += t-reftable-merged
- UNIT_TEST_PROGRAMS += t-reftable-pq
- UNIT_TEST_PROGRAMS += t-reftable-record
-@@ -2681,7 +2682,6 @@ REFTABLE_OBJS += reftable/stack.o
- REFTABLE_OBJS += reftable/tree.o
- REFTABLE_OBJS += reftable/writer.o
- 
--REFTABLE_TEST_OBJS += reftable/block_test.o
- REFTABLE_TEST_OBJS += reftable/dump.o
- REFTABLE_TEST_OBJS += reftable/readwrite_test.o
- REFTABLE_TEST_OBJS += reftable/stack_test.o
-diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
-index 4b666810af..3d9118b91b 100644
---- a/reftable/reftable-tests.h
-+++ b/reftable/reftable-tests.h
-@@ -10,7 +10,6 @@ license that can be found in the LICENSE file or at
- #define REFTABLE_TESTS_H
- 
- int basics_test_main(int argc, const char **argv);
--int block_test_main(int argc, const char **argv);
- int record_test_main(int argc, const char **argv);
- int readwrite_test_main(int argc, const char **argv);
- int stack_test_main(int argc, const char **argv);
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 623cf3f0f5..7bdd18430b 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -5,7 +5,6 @@
- int cmd__reftable(int argc, const char **argv)
- {
- 	/* test from simple to complex. */
--	block_test_main(argc, argv);
- 	readwrite_test_main(argc, argv);
- 	stack_test_main(argc, argv);
- 	return 0;
-diff --git a/reftable/block_test.c b/t/unit-tests/t-reftable-block.c
-similarity index 76%
-rename from reftable/block_test.c
-rename to t/unit-tests/t-reftable-block.c
-index 90aecd5a7c..f2b9a8a6f4 100644
---- a/reftable/block_test.c
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+index f2b9a8a6f4..b1b238ac2a 100644
+--- a/t/unit-tests/t-reftable-block.c
 +++ b/t/unit-tests/t-reftable-block.c
-@@ -6,17 +6,13 @@ license that can be found in the LICENSE file or at
- https://developers.google.com/open-source/licenses/bsd
- */
- 
--#include "block.h"
-+#include "test-lib.h"
-+#include "reftable/block.h"
-+#include "reftable/blocksource.h"
-+#include "reftable/constants.h"
-+#include "reftable/reftable-error.h"
- 
--#include "system.h"
--#include "blocksource.h"
--#include "basics.h"
--#include "constants.h"
--#include "record.h"
--#include "test_framework.h"
--#include "reftable-tests.h"
--
--static void test_block_read_write(void)
-+static void t_block_read_write(void)
+@@ -16,20 +16,20 @@ static void t_block_read_write(void)
  {
  	const int header_off = 21; /* random */
  	char *names[30];
-@@ -45,7 +41,7 @@ static void test_block_read_write(void)
+-	const int N = ARRAY_SIZE(names);
+-	const int block_size = 1024;
+-	struct reftable_block block = { NULL };
++	const size_t N = ARRAY_SIZE(names);
++	const size_t block_size = 1024;
++	struct reftable_block block = { 0 };
+ 	struct block_writer bw = {
+ 		.last_key = STRBUF_INIT,
+ 	};
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_REF,
+ 	};
+-	int i = 0;
+-	int n;
++	size_t i = 0;
++	int ret;
+ 	struct block_reader br = { 0 };
+ 	struct block_iter it = BLOCK_ITER_INIT;
+-	int j = 0;
++	size_t j = 0;
+ 	struct strbuf want = STRBUF_INIT;
+ 
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+@@ -40,26 +40,26 @@ static void t_block_read_write(void)
+ 
  	rec.u.ref.refname = (char *) "";
  	rec.u.ref.value_type = REFTABLE_REF_DELETION;
- 	n = block_writer_add(&bw, &rec);
--	EXPECT(n == REFTABLE_API_ERROR);
-+	check_int(n, ==, REFTABLE_API_ERROR);
+-	n = block_writer_add(&bw, &rec);
+-	check_int(n, ==, REFTABLE_API_ERROR);
++	ret = block_writer_add(&bw, &rec);
++	check_int(ret, ==, REFTABLE_API_ERROR);
  
  	for (i = 0; i < N; i++) {
  		char name[100];
-@@ -59,11 +55,11 @@ static void test_block_read_write(void)
- 		n = block_writer_add(&bw, &rec);
+-		snprintf(name, sizeof(name), "branch%02d", i);
++		snprintf(name, sizeof(name), "branch%02"PRIuMAX, (uintmax_t)i);
+ 
+ 		rec.u.ref.refname = name;
+ 		rec.u.ref.value_type = REFTABLE_REF_VAL1;
+ 		memset(rec.u.ref.value.val1, i, GIT_SHA1_RAWSZ);
+ 
+ 		names[i] = xstrdup(name);
+-		n = block_writer_add(&bw, &rec);
++		ret = block_writer_add(&bw, &rec);
  		rec.u.ref.refname = NULL;
  		rec.u.ref.value_type = REFTABLE_REF_DELETION;
--		EXPECT(n == 0);
-+		check_int(n, ==, 0);
+-		check_int(n, ==, 0);
++		check_int(ret, ==, 0);
  	}
  
- 	n = block_writer_finish(&bw);
--	EXPECT(n > 0);
-+	check_int(n, >, 0);
+-	n = block_writer_finish(&bw);
+-	check_int(n, >, 0);
++	ret = block_writer_finish(&bw);
++	check_int(ret, >, 0);
  
  	block_writer_release(&bw);
  
-@@ -73,11 +69,11 @@ static void test_block_read_write(void)
+@@ -68,9 +68,10 @@ static void t_block_read_write(void)
+ 	block_iter_seek_start(&it, &br);
  
  	while (1) {
- 		int r = block_iter_next(&it, &rec);
--		EXPECT(r >= 0);
-+		check_int(r, >=, 0);
- 		if (r > 0) {
+-		int r = block_iter_next(&it, &rec);
+-		check_int(r, >=, 0);
+-		if (r > 0) {
++		ret = block_iter_next(&it, &rec);
++		check_int(ret, >=, 0);
++		if (ret > 0) {
++			check_int(i, ==, N);
  			break;
  		}
--		EXPECT_STREQ(names[j], rec.u.ref.refname);
-+		check_str(names[j], rec.u.ref.refname);
- 		j++;
- 	}
- 
-@@ -90,20 +86,20 @@ static void test_block_read_write(void)
+ 		check_str(names[j], rec.u.ref.refname);
+@@ -85,20 +86,20 @@ static void t_block_read_write(void)
+ 		strbuf_reset(&want);
  		strbuf_addstr(&want, names[i]);
  
- 		n = block_iter_seek_key(&it, &br, &want);
--		EXPECT(n == 0);
-+		check_int(n, ==, 0);
+-		n = block_iter_seek_key(&it, &br, &want);
+-		check_int(n, ==, 0);
++		ret = block_iter_seek_key(&it, &br, &want);
++		check_int(ret, ==, 0);
  
- 		n = block_iter_next(&it, &rec);
--		EXPECT(n == 0);
-+		check_int(n, ==, 0);
+-		n = block_iter_next(&it, &rec);
+-		check_int(n, ==, 0);
++		ret = block_iter_next(&it, &rec);
++		check_int(ret, ==, 0);
  
--		EXPECT_STREQ(names[i], rec.u.ref.refname);
-+		check_str(names[i], rec.u.ref.refname);
+ 		check_str(names[i], rec.u.ref.refname);
  
  		want.len--;
- 		n = block_iter_seek_key(&it, &br, &want);
--		EXPECT(n == 0);
-+		check_int(n, ==, 0);
+-		n = block_iter_seek_key(&it, &br, &want);
+-		check_int(n, ==, 0);
++		ret = block_iter_seek_key(&it, &br, &want);
++		check_int(ret, ==, 0);
  
- 		n = block_iter_next(&it, &rec);
--		EXPECT(n == 0);
--		EXPECT_STREQ(names[10 * (i / 10)], rec.u.ref.refname);
-+		check_int(n, ==, 0);
-+		check_str(names[10 * (i / 10)], rec.u.ref.refname);
+-		n = block_iter_next(&it, &rec);
+-		check_int(n, ==, 0);
++		ret = block_iter_next(&it, &rec);
++		check_int(ret, ==, 0);
+ 		check_str(names[10 * (i / 10)], rec.u.ref.refname);
  
  		block_iter_close(&it);
- 	}
-@@ -116,8 +112,9 @@ static void test_block_read_write(void)
- 	}
+@@ -107,9 +108,8 @@ static void t_block_read_write(void)
+ 	reftable_record_release(&rec);
+ 	reftable_block_done(&br.block);
+ 	strbuf_release(&want);
+-	for (i = 0; i < N; i++) {
++	for (i = 0; i < N; i++)
+ 		reftable_free(names[i]);
+-	}
  }
  
--int block_test_main(int argc, const char *argv[])
-+int cmd_main(int argc, const char *argv[])
- {
--	RUN_TEST(test_block_read_write);
--	return 0;
-+	TEST(t_block_read_write(), "read-write operations on blocks work");
-+
-+	return test_done();
- }
+ int cmd_main(int argc, const char *argv[])
 -- 
 2.45.GIT
 
