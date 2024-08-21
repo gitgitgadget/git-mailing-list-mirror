@@ -1,83 +1,137 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B0720B326
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 10:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327431C1AB7
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 10:23:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724234818; cv=none; b=sDx2Ru7d9NxjgByOHfo+uYTCiHGbnNqmXSNit16aAUoUNOyWulQC2Ow/LHxrymACkmczA8toWVxUSaH5/CsDjA/ZJHfXok3VW5WRhse6urcQmkuZlBgUIi02HwDyjch/9d1SwbXeLovlSVWuq93+S+JpoexwJLEkKHkA2d6Qzxo=
+	t=1724235835; cv=none; b=h9nVNrReEnhV55l9trXqf6IVOT/RsAuYdvj8Nrd0IW8yZrBW2hhNkarB2GJvtPiqXWQwFxxAzT9JuhsZ7mtDuKAfdguceb0Qjd5pBkGoHNh7RYeEcqZV/3hdIBwlqHZlsK5LHr7HQw07YI9nVZsFCcCYHsVFK9df6zW5aq1JPgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724234818; c=relaxed/simple;
-	bh=SmVKwgGxunnr+4n3JdQqS+bxbE3lXYY3x16s/S1Rbbg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Pl5u7XF0IXXCc5oNs2QJ97uPR2YdZKq7RDm0a5as+k/5Fd6nHETTpaxlotkUD2EHF4m1J/MWiEmDi2zlN4Wi2Lck+zN50RkWKnfOdCDbwDFpe8DsVhTHrt9Gz4OXrLXUpTrey1/s9o1w+t23Bxp68F4f9vZkZe0w3uUb6+pNAHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CTLoUUSS; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724235835; c=relaxed/simple;
+	bh=6f18zF9nFlv6nojyxPrCLuI9LH6E0/PfPigNUsifp9M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GHI7+xiqVrImr89O34l6GhH9L8GmzW515+iXZvVXUyM03fsEIKZ3qu0td5T/UJh2YQBV1Z7bc8zT8a8A/583Wo4tPuv8BpnD76E/krw2Y6ceo6Id4y7YiOkaoeuEz+Yf+iziphQeyf1dXRMqa/YyxtdmZocAOAG1bDYpFTDNKQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hZPQnRMV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CD4PBk0n; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CTLoUUSS"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a7d26c2297eso743876666b.2
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 03:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724234816; x=1724839616; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SmVKwgGxunnr+4n3JdQqS+bxbE3lXYY3x16s/S1Rbbg=;
-        b=CTLoUUSSm6KrI5F4zav6MbwPLNLiCdmbAHrviCnrppZpWUiabn39ugpHJ1GMBi9VIN
-         nzFZk8eEA3yah2Sdjcnu62ofjsxnLtHFNsfHJVFdoqSoWgtugpUn3vFmfRxJSPGlAGjl
-         3wtUf+/YiTR/vKPMmsnIevqYoB4ocjcwUbsc/ZFj9AduTDntySSidX7nHyJgiLBHyA3y
-         JyJ7oUHRgD90/4WkETFfWoroEpED3vTJTBpvF9i/4atfLRJD6XODDdQIcKqB4PQBCiBt
-         lKjrV1M9o8ZTPxbukvi1CiLI2M8YcDW9dN35nD3uutCqXqAYBjkQ8L3Eijbtg96LGfhY
-         9tOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724234816; x=1724839616;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SmVKwgGxunnr+4n3JdQqS+bxbE3lXYY3x16s/S1Rbbg=;
-        b=VuLp8KyNX/tB8Rb3WoGUMjlVxQDecNzLnPQXE+n7wEVu5HHqCkGWlhQb5UEYwpJyU9
-         G7/HWvHpWXng4gczHccpisp63dPMXFhhLzC0msGLEOoGGnuYx3QGX+5bWp+vZOPMBivO
-         6BqESk1AsfpgtdLdRKlfRFdPEwVRrp+nWAVgwqzNGDkMdVYt0iCgbNTxYBZqJyGEQcVK
-         NkBArxZxVgB6s6vKWRDxTKl4h2hNm+ZO5Bpy0WoXbrhWgQLJfQw+BK2XqGES41iHWURH
-         8QhXwQ5wy6+STGRz9rDsC3pFJ4osXjpPJQNBjkXM/RMQ+2ECnuY9/vR6VMNXMHsj9B4t
-         oMYQ==
-X-Gm-Message-State: AOJu0YyziVt4f1ovSXvorLRUPXMxDEQO0ztxod7H/HRNNyOIeWpVbrCx
-	rLO46iabtzHW78Mf6KN+SSffg3NJiWMCitUrpPKTTiHAUbdnp5XROjppHBAe3r6to7K5KXIG3QH
-	Zj1xl7oPPUfLRFMKLLj8NPgwljA1fFw==
-X-Google-Smtp-Source: AGHT+IHPHONRYaWqKcRfNdNjLnu+YWEXCnOu6oTbvqvMq1WQB01TGrtEMYuQwLiPHhKo4dJIAWlDZVoC22xOZCRpNE4=
-X-Received: by 2002:a17:907:9712:b0:a77:c84b:5a60 with SMTP id
- a640c23a62f3a-a866f287301mr124845666b.26.1724234815172; Wed, 21 Aug 2024
- 03:06:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hZPQnRMV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CD4PBk0n"
+Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 409041151BA2;
+	Wed, 21 Aug 2024 03:28:39 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Wed, 21 Aug 2024 03:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724225319; x=1724311719; bh=agpmT5i/H4
+	I9CpFwP+ZgZCDHnOLEswww+MqSwwzRYZ8=; b=hZPQnRMVHiW1b7Xtj7UEBI9hl+
+	P1XnIZPpSKf21j77CfqGF3BxUsMyQMMaMnKpYrB6txHSAvP71WLkWMJUFm3Ccuu9
+	f+H85VCClu9eMIXSAkeakJclxp+g66zMhR/SA4uRsActrCVnJjl62QxJPNMDv/dk
+	k0ODlB3WrD1zqdU57Oj+XTIao7v2jNXhGpLgwhNYXF8jXaB6i+QrbXzoG5uvgQZD
+	dqb1x85rWFpNqTV4Y2DTFAiz7ndvzrzTBDf/Vz4QPGV6lCaKW8ulBgaGjqZHIsBC
+	adrThhDeQQ4+eQFYWgvXhIvWxb/fRIyn7R+M1JZiyFLatKjp75ksKlWlcnCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724225319; x=1724311719; bh=agpmT5i/H4I9CpFwP+ZgZCDHnOLE
+	swww+MqSwwzRYZ8=; b=CD4PBk0nTfEcwRmSTLb00LxyTke0e9h96K3pvtM/vQuT
+	nUj/T55rENl2EObR4RKtXVr7XtTYhdotS1bqc5G+vTwVO1x/36CkoRXU1bb9wfI6
+	jcb3OjwbdWGv0AKMTsqlnnM23OEhVnCWp2QxCCjYBRyLkHybRsc/mmnMhP/p98Zd
+	gXEr6dae2ZptpAhmcN0v9AnB79ns5uzVy4zsLdEvnkdIH/042yvVKJQm/dds7QS4
+	wjloC1wYQmfLVXz1H8C/3i9c69pWfNagPv9/I44Lk5lQg9pKYlVaMmJWL4Dda/sm
+	gfmjOZ4VsXw+HYjoCHbdsQ0sCFgjymCa0yZ04/cp2A==
+X-ME-Sender: <xms:J5fFZviCwPo5hpGJY_IfGHEpW4UFiseQFqHTJdA3V9PNVcp9m7aKow>
+    <xme:J5fFZsCvOM50C-nTKMjXjWkUUe3tH7MrybnlNcUd0zsOg8tE-HtA8Q2QobKkWsjCf
+    5BmHIqYi84MT3z4tA>
+X-ME-Received: <xmr:J5fFZvGsaTgDUEUriVUh7g275NXeWteRY0GQl8-urjoX5oV0aEcaLxZ_-8b6tSskUtHz8bCeEjT_Hgj0xkGzCIfgv50FM8p8H_OeYHmVsy7KNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedguddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeejffffveehtedukeegjedtuefhjeeghedtffetgfeg
+    feeljeefhffgueehjefhvdenucffohhmrghinhepphhkshdrihhmnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgs
+    pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhish
+    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopegthhgrnhgurhgrphhr
+    rghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:J5fFZsSUbqfrrPSzAMtt2HvKGzP8pv9-yah9htoMy28HUR_vQLcFwQ>
+    <xmx:J5fFZswzsfxlqdAkPQXbuj7gdRrDuAROnUTQNOOk3i8pGdZUF1bqsQ>
+    <xmx:J5fFZi7y8vQB1bWzzbKkNn81iAV8HDAg7LG4uJG5ohumr3JRWMm7Lw>
+    <xmx:J5fFZhwDDCoYQ49MawbH53_DDlTXyi_fA6bCSbJnxDhWkgynsJvZpQ>
+    <xmx:J5fFZo8vCvBGymBhXgQDyGcaoeXyL6qLj2PctA68XiSulIdMoQ9i1Axf>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Aug 2024 03:28:38 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3eb569dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Aug 2024 07:28:04 +0000 (UTC)
+Date: Wed, 21 Aug 2024 09:28:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Chandra Pratap <chandrapratap3519@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 09/11] t-reftable-block: add tests for log blocks
+Message-ID: <ZsWXF_zJTIsp8XOE@tanuki>
+References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
+ <20240816175414.5169-1-chandrapratap3519@gmail.com>
+ <20240816175414.5169-10-chandrapratap3519@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240814142057.94671-1-shyamthakkar001@gmail.com> <20240820152008.21354-2-shyamthakkar001@gmail.com>
-In-Reply-To: <20240820152008.21354-2-shyamthakkar001@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 21 Aug 2024 12:06:43 +0200
-Message-ID: <CAP8UFD1WJqKUe-SA=w0oGQNgpLdaQNkc5Uh0rZtmCvDD1oQk7A@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4] t: migrate t0110-urlmatch-normalization to the
- new framework
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240816175414.5169-10-chandrapratap3519@gmail.com>
 
-On Tue, Aug 20, 2024 at 5:20=E2=80=AFPM Ghanshyam Thakkar
-<shyamthakkar001@gmail.com> wrote:
->
-> helper/test-urlmatch-normalization along with
-> t0110-urlmatch-normalization test the `url_normalize()` function from
-> 'urlmatch.h'. Migrate them to the unit testing framework for better
-> performance. And also add different test_msg()s for better debugging.
+On Fri, Aug 16, 2024 at 10:55:32PM +0530, Chandra Pratap wrote:
+> @@ -103,9 +103,97 @@ static void t_block_read_write(void)
+>  		reftable_record_release(&recs[i]);
+>  }
+>  
+> +static void t_log_block_read_write(void)
+> +{
+> +	const int header_off = 21;
+> +	struct reftable_record recs[30];
+> +	const size_t N = ARRAY_SIZE(recs);
+> +	const size_t block_size = 2048;
+> +	struct reftable_block block = { 0 };
+> +	struct block_writer bw = {
+> +		.last_key = STRBUF_INIT,
+> +	};
+> +	struct reftable_record rec = {
+> +		.type = BLOCK_TYPE_LOG,
+> +	};
+> +	size_t i = 0;
+> +	int ret;
+> +	struct block_reader br = { 0 };
+> +	struct block_iter it = BLOCK_ITER_INIT;
+> +	struct strbuf want = STRBUF_INIT;
+> +
+> +	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+> +	block.len = block_size;
+> +	block.source = malloc_block_source();
+> +	block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
+> +			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
 
-This version addresses all the suggestions (nits actually) to improve
-the previous version, so it seems to me that it is good to go.
+Nit: instead of a `malloc_block_source()`, you may use
+`block_source_from_strbuf()`. The former will go away with the patch
+series at [1].
 
-Thanks.
+I'm also happy to rebase my patch series once yours lands and do this
+myself. Guess yours will land faster anyway, and there are conflicts
+regardless of whether you do or don't update the test here. The same
+applies to the subsequent patches which use a `malloc_block_source()`.
+
+So this isn't really worth a reroll by itself, and other than that this
+patch looks good to me.
+
+Patrick
+
+[1]: <cover.1724080006.git.ps@pks.im>
