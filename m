@@ -1,103 +1,104 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAA81B3B0C
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:27:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396EE1D131A
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724264848; cv=none; b=ni+3bC9wOQDj5NVxFxKUVF4v/LHXEbZfFySoodhoeLIFZn1tpZKV6as330xZAJMNYoOa9RqeUK3pd8EHwlxsJJ4eCZqd0mewnQrJzRhUIpqRJPt0cD/emVD3wWLtmrfhAlL1mDG69kt1G4GCvaCfNi1l2Od7FKih/V0XT4hz4HQ=
+	t=1724265489; cv=none; b=oRcjeaB09lNs/F1j55R1bmsnM4dCouEGVgQip9uppcZ7mmghQVvy727I/9KpXyVzW/6iqhdjWy9rU6ruGS3oOVOVW8brWWwQ09PNV1VJzzhOjWvs1H3iW/yRJJbihbQ+7cbfFHG51YxDPWVgrLvxbiwQvsKYX8C2Dox1P37pekw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724264848; c=relaxed/simple;
-	bh=f1XOKWjPwcZjdIpOM8djJEcioVZU519a9rVpKOBW/ls=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=l/1w7rhM8NjV00CFHKLqOuXWK7u9ZHUvr+ki620tiVYfmkYTAt72ylRY62JuXPwVnTcJv+niOcqaJs0s0brlR6c/7OoM5C1nhq0nEofY79YkneUCdQEtNJ+PJ+4Dy3o5k2ZLCInVwS4CllKQhA0h/byqXDVIDkZYU1QEnTCBFz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-493b2710495so30150137.1
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:27:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724264845; x=1724869645;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nm2/uOsdKBGjS2SkusL+VvCH9Sjq3ZAQvpwullZyAqc=;
-        b=uTFGUVBRi9Yk6Pp1R2WH9GWoi3P1Qij+35RIg+JKfx04jNRU1w1IzEt9B0Wu3+sjwR
-         MH/nWyysrOdmz0XFuIAXzBTeLECdr47nH0M3mPbfQ/3fUn0Hgn6wtdiVav4Sa3+EbGEV
-         KjGKRYblwPNv6zgx8WKCqGCdrxsxh/ylBNqSyrzF9nzCHNTiLKJt3zHF2E5oTUqeOmxc
-         aTw+AGw6HsJgd/8DVBGOOyZ6RcbwIE0TtNYcYTQRjbOZ9Lq74nHguCo0m2CfO5ne8ya9
-         s5R61J7GOhcSu80WDGKgCarivF5JxjssG63tV1KnjUN3rFWfu4/nm0cbFf43JqCOzjSn
-         oiTg==
-X-Forwarded-Encrypted: i=1; AJvYcCXJVocqo1TvoWk0K2tfEoNwdYqE7eqewxc+O0lK4WuFcvF6xS1GEsgEjkT/7rh7QlaWR4M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3pKgqFYNXy77/5X9QoAtn5hIHxhQ85rTaYgMYFlRq7HFegdRe
-	bdrxJb2VmMKNYoBH8NVH6pnRZXosDwT5iQyxbHKtD/7gaccS6FpxpnypHcgRNvn6i+HeFpZr2pg
-	3cO7j7Gc+MbccVOIY27DVIUQkgeQ=
-X-Google-Smtp-Source: AGHT+IHRIvkZOiStQB6W3Numr3C8m8mDCOG2dgIqzWi5wrDPimFhOjVeiS2e5ouQ/iNVGpe1o/EXtSB6eoRVbrRGhTU=
-X-Received: by 2002:a05:6102:440d:b0:493:b58c:7d98 with SMTP id
- ada2fe7eead31-498d39e4dc7mr2214373137.5.1724264844933; Wed, 21 Aug 2024
- 11:27:24 -0700 (PDT)
+	s=arc-20240116; t=1724265489; c=relaxed/simple;
+	bh=JCEJgCKvaCqTzCV9q9fKS5PyhC+2ZGcEvVZlAqZXuSQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cDb7vklRcCfdb+cmyXPVhnaE5u8McuCT4hu0LQBFOT+qKBZ3CA4Q4KrA9lrOcUprdQb41OwCVlAoa2g6HaU2hWNvjVaW6F3mV0NLkjqdJNn4Ni8Yxr3Zckh5AFWNLYiG+a6VzTJJJ+NNPmr9NgqDIi2viYLh4txFGjS0OzVg3dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CRYfM2t7; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CRYfM2t7"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A859236BE9;
+	Wed, 21 Aug 2024 14:38:07 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=JCEJgCKvaCqTzCV9q9fKS5PyhC+2ZGcEvVZlAq
+	ZXuSQ=; b=CRYfM2t7Pd7TVz6nSB+NATDFoJZhc9cTc0tgsKUnMbGPEznJK7eFVU
+	ZpDWXFTReSMV6xSsfVg4bL6DqYIJ+pMaGXsKTh2n3cH5Vnw2qqCN1jrLx4fNeR1c
+	yCmPcCN8w6YusHIV1JKGKONiLf7aHRxjyfm9euivwdDocr+Th7rCg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A10A836BE8;
+	Wed, 21 Aug 2024 14:38:07 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 30D4F36BE5;
+	Wed, 21 Aug 2024 14:38:04 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood123@gmail.com>,  phillip.wood@dunelm.org.uk,  James Liu
+ <james@jamesliu.io>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/3] t7900: exercise detaching via trace2 regions
+In-Reply-To: <ZsMIxmX2Ash9YtEU@tanuki> (Patrick Steinhardt's message of "Mon,
+	19 Aug 2024 10:56:38 +0200")
+References: <ZsLjcjhgI8Wk2tIV@tanuki> <cover.1724053639.git.ps@pks.im>
+	<9712aae82bcb51dd94fdc10f4156e9c78e4b6d8c.1724053639.git.ps@pks.im>
+	<20240819085105.GC2955268@coredump.intra.peff.net>
+	<ZsMIxmX2Ash9YtEU@tanuki>
+Date: Wed, 21 Aug 2024 11:38:02 -0700
+Message-ID: <xmqqfrqxyb5h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
- <20240819-jk-send-email-mailmap-support-v2-1-d212c3f9e505@gmail.com> <mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
-In-Reply-To: <mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 21 Aug 2024 14:27:12 -0400
-Message-ID: <CAPig+cRhEJP6-ZX3X9SYrGM335-XTp8V=D9Yc7xkJQAh-g8xRw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] check-mailmap: accept "user@host" contacts
-To: Josh Steadmon <steadmon@google.com>, Jacob Keller <jacob.e.keller@intel.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 805B461E-5FEC-11EF-A6AA-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-On Wed, Aug 21, 2024 at 1:50=E2=80=AFPM Josh Steadmon <steadmon@google.com>=
- wrote:
-> On 2024.08.19 17:07, Jacob Keller wrote:
-> > diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> > @@ -73,11 +73,40 @@ test_expect_success 'check-mailmap --stdin argument=
-s: mapping' '
-> >  test_expect_success 'check-mailmap bogus contact' '
-> > -     test_must_fail git check-mailmap bogus
-> > +     cat >expect <<-EOF &&
-> > +     <bogus>
-> > +     EOF
-> > +     git check-mailmap bogus >actual &&
-> > +     test_cmp expect actual
-> >  '
+Patrick Steinhardt <ps@pks.im> writes:
+
+>> ...I think this "we have no better way..." comment is now out of date
+>> (and can probably just be dropped).
 >
-> I think I'd just remove this test case altogether, IIUC it' doesn't
-> provide any additional value vs. the "check-mailmap simple address: no
-> mapping" test below.
+> Oops, yes, that one is definitely stale. I'll drop it in the next
+> version of this patch series.
 
-I had the same thought upon reading this.
+I am not sure if there is a need for "the next version"; in the
+meantime, let me do this.  I'd prefer to merge the main topic down
+to 'master' soonish.
 
-> >  test_expect_success 'check-mailmap bogus contact --stdin' '
-> > -     test_must_fail git check-mailmap --stdin bogus </dev/null
-> > +     cat >expect <<-EOF &&
-> > +     <bogus>
-> > +     EOF
-> > +     cat >stdin <<-EOF &&
-> > +     bogus
-> > +     EOF
-> > +     git check-mailmap --stdin <stdin >actual &&
-> > +     test_cmp expect actual
-> > +'
->
-> Similarly, I might change this to use a real address instead of "bogus",
-> as we're no longer checking for invalid input.
+Thanks.
 
-Ditto for this change, but even more so because this is a fairly
-significant semantic change. In particular, the documented and
-intended behavior of the command when --stdin is specified is that it
-will consume email addresses from *both* the command-line and from
-standard input, and I think the point of the original test was to
-verify that it still correctly recognized a bogus email address
-specified as an argument even when --stdin is requested. Given that
-understanding (assuming it's correct), then the original test was
-already perhaps somewhat iffy anyhow, but after this change, it is
-even less meaningful.
+1:  759b453f9f = 1:  759b453f9f t7900: fix flaky test due to leaking background job
+2:  b64db3e437 ! 2:  51a0b8a2a7 t7900: exercise detaching via trace2 regions
+    @@ Commit message
+         do not have the ability to daemonize.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    +    [jc: dropped a stale in-code comment from a test]
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+      ## builtin/gc.c ##
+    @@ builtin/gc.c: static int maintenance_run_tasks(struct maintenance_run_opts *opts
+     
+      ## t/t7900-maintenance.sh ##
+     @@ t/t7900-maintenance.sh: test_expect_success '--no-detach causes maintenance to not run in background' '
+    - 		# We have no better way to check whether or not the task ran in
+    - 		# the background than to verify whether it output anything. The
+    - 		# next testcase checks the reverse, making this somewhat safer.
+    + 		git config set maintenance.loose-objects.auto 1 &&
+    + 		git config set maintenance.incremental-repack.enabled true &&
+    + 
+    +-		# We have no better way to check whether or not the task ran in
+    +-		# the background than to verify whether it output anything. The
+    +-		# next testcase checks the reverse, making this somewhat safer.
+     -		git maintenance run --no-detach >out 2>&1 &&
+     -		test_line_count = 1 out
+     +		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
+3:  eac44feff3 = 3:  8311e3b551 builtin/maintenance: fix loose objects task emitting pack hash
