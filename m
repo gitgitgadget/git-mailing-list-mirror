@@ -1,104 +1,123 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396EE1D131A
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469F016D4FB
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724265489; cv=none; b=oRcjeaB09lNs/F1j55R1bmsnM4dCouEGVgQip9uppcZ7mmghQVvy727I/9KpXyVzW/6iqhdjWy9rU6ruGS3oOVOVW8brWWwQ09PNV1VJzzhOjWvs1H3iW/yRJJbihbQ+7cbfFHG51YxDPWVgrLvxbiwQvsKYX8C2Dox1P37pekw=
+	t=1724265976; cv=none; b=iLg1FVFTd/aVtLys9iKSHjmDvwRmn7g1sDWO8T1vjzA0LaH4/HJPxNunMXDWZ/B9gxZqnKh8qeVaY4aJz3sg1q4VfnBKnS4Sz5hhIBWZwH3uIWOIndtKymzjw7NzFa6cMvsrh6q5zemLlTNgeT9YBXoIDBDksBDnY2hJfF268CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724265489; c=relaxed/simple;
-	bh=JCEJgCKvaCqTzCV9q9fKS5PyhC+2ZGcEvVZlAqZXuSQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cDb7vklRcCfdb+cmyXPVhnaE5u8McuCT4hu0LQBFOT+qKBZ3CA4Q4KrA9lrOcUprdQb41OwCVlAoa2g6HaU2hWNvjVaW6F3mV0NLkjqdJNn4Ni8Yxr3Zckh5AFWNLYiG+a6VzTJJJ+NNPmr9NgqDIi2viYLh4txFGjS0OzVg3dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CRYfM2t7; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724265976; c=relaxed/simple;
+	bh=CHbsW6esayo6eiSornh37ocAq3+Jwv+Ktupm4nPxJro=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=OZdT0fzKIazPfQdcnd8L0tCW4TvytLYT1ffwQA4YhdQQ5/J82Lb5mDiJkn8h8YapA8LdIFTZj4D8EUmygqBG8G65gzfWSOOqlL77UcOWqi7KradnqR3NoY7X8dVhWHU/Wtmb0YCkRHyDu9oIn8WL0F2RvMXoJLPfxl2EeFdtBVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XZde99fy; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CRYfM2t7"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A859236BE9;
-	Wed, 21 Aug 2024 14:38:07 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JCEJgCKvaCqTzCV9q9fKS5PyhC+2ZGcEvVZlAq
-	ZXuSQ=; b=CRYfM2t7Pd7TVz6nSB+NATDFoJZhc9cTc0tgsKUnMbGPEznJK7eFVU
-	ZpDWXFTReSMV6xSsfVg4bL6DqYIJ+pMaGXsKTh2n3cH5Vnw2qqCN1jrLx4fNeR1c
-	yCmPcCN8w6YusHIV1JKGKONiLf7aHRxjyfm9euivwdDocr+Th7rCg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A10A836BE8;
-	Wed, 21 Aug 2024 14:38:07 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 30D4F36BE5;
-	Wed, 21 Aug 2024 14:38:04 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood123@gmail.com>,  phillip.wood@dunelm.org.uk,  James Liu
- <james@jamesliu.io>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/3] t7900: exercise detaching via trace2 regions
-In-Reply-To: <ZsMIxmX2Ash9YtEU@tanuki> (Patrick Steinhardt's message of "Mon,
-	19 Aug 2024 10:56:38 +0200")
-References: <ZsLjcjhgI8Wk2tIV@tanuki> <cover.1724053639.git.ps@pks.im>
-	<9712aae82bcb51dd94fdc10f4156e9c78e4b6d8c.1724053639.git.ps@pks.im>
-	<20240819085105.GC2955268@coredump.intra.peff.net>
-	<ZsMIxmX2Ash9YtEU@tanuki>
-Date: Wed, 21 Aug 2024 11:38:02 -0700
-Message-ID: <xmqqfrqxyb5h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XZde99fy"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7cd854e1869so11664a12.2
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:46:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1724265974; x=1724870774; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=hpuG9EFgLgJSb2Wjn8aSBrEYXKvtbjBxRf48pQrMWig=;
+        b=XZde99fyjSBRWy2WpTHfT9JeMRhdd12FDE1l/1PViNKZgi1CQM7cQU6holbEt12Luk
+         1VWAseZuQgH7LCsd6NTboCZvRDl09fctMEmseih0y1P0Uqo6cGMp3ZWVNmhCqYk0oclW
+         QbEzdb5Ui9qYQYnRR7oF9fGXTD0gPEryLy9Wh5eZaZA8zKXq7VgaU1noCFastQaB5LID
+         PCCY/guTGbvfaG4xyc7TlwpYk4DeciQuRj3HkYO2dLLWbuMKh9RfIrp5V59an4X6DXgS
+         5E43vrWw2FLDnpKQzVbPjcYb/n3/LxESPDqWqcZWeJuBP8OU+LpNEiA1PWsF5ln+ExTU
+         /Gsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724265974; x=1724870774;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hpuG9EFgLgJSb2Wjn8aSBrEYXKvtbjBxRf48pQrMWig=;
+        b=H3Yjwty/FsA8SVllPEUUSd6GyAJPuD3DSOWtO4vIggfei4rJBO5mcMmdmKqu6yWVMO
+         2DcgLyT2/eL3x/0DetwtZPlEXRCrhxa/9rYWlHOd45/BQgFGGAIGUT33KDZmjSrz/4AH
+         g3gF/+SbiinB8ywL5U9E9NyOge2r9NoioL9KABj1sIfMin175fjiTc7AQ3KOoVm+GEx5
+         aZFF8R5rEPlv9EcE3X2OMMf4BQl6gG8YwkgFKf9tMFNwJwn5U5uft8TgcRoGcqN4y7Cg
+         Wp9Ykpkig8M2L5PBZKzSSDbrjaL2b67lGl4mzLlvndlhyyL91RSDryG+3Tlty0jS7ExL
+         8Vjg==
+X-Forwarded-Encrypted: i=1; AJvYcCVQvor9IrhoJrXLbVR7bx45WZPWDaja+hJ+qefpi1nT9NJOzGHWe27KnEKjWKGzVPjzfnQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5Sb4CP8vbcws7H/HIMqf333IZ5TfiQfBMGJjBq0wj2SM4gbCo
+	QNXwMUVyVxJprl87/G6sEyMeIbxwECNxT89t+ED2N/RGguiWgNZI24k5amUVhSKxj4N/ht1CciO
+	hEcocVHfd5GsnIg==
+X-Google-Smtp-Source: AGHT+IG9mmYmpoQtbVqaLC0sfNC6lLGq065132o/PuA+P/3hz2Nm18lHIrD0TikFuunqUzG/1MB4gc+HZCrTYt0=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:164d:b0:2d3:d0b8:ec3a with SMTP
+ id 98e67ed59e1d1-2d5ea8a50ccmr58188a91.7.1724265974283; Wed, 21 Aug 2024
+ 11:46:14 -0700 (PDT)
+Date: Wed, 21 Aug 2024 18:46:05 +0000
+In-Reply-To: <e3f7d292-ee51-4784-8c85-14b5223c380f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 805B461E-5FEC-11EF-A6AA-BF444491E1BC-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
+Message-ID: <20240821184605.341205-1-calvinwan@google.com>
+Subject: Re: [PATCH v2 5/5] cgit: add higher-level cgit crate
+From: Calvin Wan <calvinwan@google.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Calvin Wan <calvinwan@google.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, 
+	sandals@crustytoothpaste.net, Jason@zx2c4.com, dsimic@manjaro.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+> Hi Josh
+> 
+> On 09/08/2024 23:41, Josh Steadmon wrote:
+> > From: Calvin Wan <calvinwan@google.com>
+> > 
+> > Wrap `struct config_set` and a few of its associated functions in
+> > cgit-sys. Also introduce a higher-level "cgit" crate which provides a
+> > more Rust-friendly interface to config_set structs.
+> 
+> Having an ergonamic interface is a really good idea. As far as the 
+> naming goes I think the suggestion of "libgit-rs" is a good one.
 
->> ...I think this "we have no better way..." comment is now out of date
->> (and can probably just be dropped).
->
-> Oops, yes, that one is definitely stale. I'll drop it in the next
-> version of this patch series.
+Agreed -- we plan on renaming it to "libgit-rs" in the next reroll.
 
-I am not sure if there is a need for "the next version"; in the
-meantime, let me do this.  I'd prefer to merge the main topic down
-to 'master' soonish.
+> 
+> > diff --git a/contrib/cgit-rs/cgit-sys/public_symbol_export.h b/contrib/cgit-rs/cgit-sys/public_symbol_export.h
+> > index 64332f30de..882c7932e8 100644
+> > --- a/contrib/cgit-rs/cgit-sys/public_symbol_export.h
+> > +++ b/contrib/cgit-rs/cgit-sys/public_symbol_export.h
+> > @@ -9,6 +9,18 @@ void libgit_init_git(const char **argv);
+> >   
+> >   int libgit_parse_maybe_bool(const char *val);
+> 
+> I'm suprised the compiler does not complain that 'struct config_set' is 
+> not declared in this header - I was expecting to see
+> 
+> 	struct config_set;
 
-Thanks.
+I'm surprised as well actually. Removing the forward declaration of
+"struct config_set" in repository.h doesn't result in any complaints
+from the compiler either. Will add it in the reroll, but am curious if
+anyone has any ideas why the compiler isn't complaining.
 
-1:  759b453f9f = 1:  759b453f9f t7900: fix flaky test due to leaking background job
-2:  b64db3e437 ! 2:  51a0b8a2a7 t7900: exercise detaching via trace2 regions
-    @@ Commit message
-         do not have the ability to daemonize.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    +    [jc: dropped a stale in-code comment from a test]
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      ## builtin/gc.c ##
-    @@ builtin/gc.c: static int maintenance_run_tasks(struct maintenance_run_opts *opts
-     
-      ## t/t7900-maintenance.sh ##
-     @@ t/t7900-maintenance.sh: test_expect_success '--no-detach causes maintenance to not run in background' '
-    - 		# We have no better way to check whether or not the task ran in
-    - 		# the background than to verify whether it output anything. The
-    - 		# next testcase checks the reverse, making this somewhat safer.
-    + 		git config set maintenance.loose-objects.auto 1 &&
-    + 		git config set maintenance.incremental-repack.enabled true &&
-    + 
-    +-		# We have no better way to check whether or not the task ran in
-    +-		# the background than to verify whether it output anything. The
-    +-		# next testcase checks the reverse, making this somewhat safer.
-     -		git maintenance run --no-detach >out 2>&1 &&
-     -		test_line_count = 1 out
-     +		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-3:  eac44feff3 = 3:  8311e3b551 builtin/maintenance: fix loose objects task emitting pack hash
+> before the function declarations. As I said in my comments on the last 
+> patch I think we'd be better to namespace our types as well as our 
+> functions in this library layer so this can be resued by other language 
+> bindings.
+
+Are you suggesting something like "#define libgit_config_set
+config_set"? I wouldn't be comfortable renaming config_set in git.git
+just yet until config/config_set can be a standalone library by itself.
+
+> 
+>  > [...]
+> > +    pub fn get_str(&mut self, key: &str) -> Option<CString> {
+> 
+> If we're adding an ergonomic api then having return CString isn't ideal. 
+> I think the equivalent function in libgit2-rs has variants that return a 
+> String which is convinent if the caller is expecting utf8 values or 
+> Vec<u8> for non-utf8 values.
+
+Having both get_cstr() and get_str() makes sense to me.
