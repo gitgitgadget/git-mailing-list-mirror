@@ -1,98 +1,148 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9621D185925
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 07:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993E51885A7
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 07:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724223621; cv=none; b=eoa3UcHUydIJ1Eeoo7EHUTvbMQQFY/0qae64sK7GmNxCW8mjq0iusjX4BwVBVmEukvEsAxJfGmazTGcsxjr6lYfAsfATUWvCMNFppmjnuTEB5AxFFBflpX9JH2izB2GbiUnjS+yQB6jnLe60RiWmtr4AljojyITr5SRhK+NSD/Q=
+	t=1724223630; cv=none; b=q0T1rXOMRUKB8Xwpzby12FYoINkXLQqUb67G2IIfGE8kYF88sKpmGjWDol9+sNwCrVdIqFKLzf8EI8FpiwyzW7v7kx2cxs6m2UhrlxypLeDiLeHZFvuI1/zNNW9mxUgjlpQ0cxJWphYz6s+5F3jEn9bVAlZ7Kv+uXdFZ9iAkkTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724223621; c=relaxed/simple;
-	bh=N0HiDdwNsl2AckZ6q6Lu1LUEMBLtWhCBJdCOjdu2ZDM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gRnKWUFzDKMv7KD9BfBC6JmYXSUHswqBoCinxKVV2bCbn4/T3RleGw2RmuJsFY3F9d2mrrMiWCTUTQrsAjpG5MEYMxlC7DEDluIwj3XGHOo7pOXDtjVQ37NZ5BSRbSpE0FVxXjKECLJnmcjSdgzIiuXdvf/F5yj4Srpu1MvNQFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7a649612fc8so45811085a.0
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 00:00:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724223618; x=1724828418;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=27OwdejWQv0AhjPfXa/3FEpXSHsveqfraQb7Ykz98P0=;
-        b=n0IPUdS3Q6LYn2giu5GnqLq2VINkvFJ58ZwPW00srjMuuObkWO0slqX/yIA+ubOsPZ
-         N30hwLsF/Y51uDWa2wNWX409OFtId+d2zeC7uVNflrd5Hnl060JXfT61JuBc8GPGZFqy
-         zlvrK56+nXU4F5WAyaYxfcjz1wv3g67OsisagyU8Qi8mSELZDon1wX2Th3y30fDntNVt
-         P/Ph4S/ra2ydgg/01bNJsX6rUJoLOe0EphcxThYrbZdL4aiDgAG9c1G4zkNc3YsdX5P9
-         DSgq4gh5XmfTn9cLhyiPLRY09RlQ8bVIypHrcGoyIbSBPMhWuUVjBawJz+2bm0rBs9K1
-         a9jw==
-X-Gm-Message-State: AOJu0Yx/LbxcoFQJrpZtYF1ohYaaIuZhu2XbKb7ahctSev+fvcsxlk6H
-	DmrPyasbacrIXF3pE/6xffFL8ms7fbZXhICk/xXhBmHRGcM/jiUrCK0n51yUZzQAh7csGr4MEsq
-	OyS1TPYKwOdgOrKTHg+hITkXUZdM=
-X-Google-Smtp-Source: AGHT+IElllX7IU6HtENqlHVb3dYhs2N6i4g5t8W7/b/6/9M5Xka/+3rqrx/85q+ZOI0M1TY3lXfDqo7TX6scPZUF2MM=
-X-Received: by 2002:a05:6214:2583:b0:6b7:b149:ce06 with SMTP id
- 6a1803df08f44-6c155e1ce80mr11363586d6.4.1724223618557; Wed, 21 Aug 2024
- 00:00:18 -0700 (PDT)
+	s=arc-20240116; t=1724223630; c=relaxed/simple;
+	bh=AYSAlhc2lYTDX0nBsLanTbCtm8qXA9ZO/PpL4jTDNnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TZfeWJx5og4npIw0OgGNl+XQXNpFRc9P4vSDmfhsa89iLVRAauhOo9pUrzuqwV0zMsqwNT5W/ccnEW7U4E7QTeOHboFDW6qe+YmOdztcpXd59ahq3o/riPGoud30GBU53iA8kgnO3GKUXAbpNouhVRVQ/32CO1hCP3c+JVoNyVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gnie3Kez; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A3MSfLef; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gnie3Kez";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A3MSfLef"
+Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id B88141151C10;
+	Wed, 21 Aug 2024 03:00:27 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 21 Aug 2024 03:00:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724223627; x=1724310027; bh=J4vYvoqbOr
+	S9xAp+BJfyBJY9sYDq8cBJ172Nzm34Ryc=; b=gnie3KezrOnSC9W2TOhDkOJAEf
+	l7cVCKI3R5tP+vuurYE5a3ij2GHgvAgEgS43d41r91XW55RGcKEZvobCqhiLCrKs
+	fM+0t/GcFe/qBrGSZNoaZO++oIp3+oeqhcCgA/vUjyq3XQl94m+Zu3165qgckTO6
+	4XMb79vgdbGFLAeKrp0HRM+jUvzu5HDV3CMy4kpY+W7eIf1tGpCxZGef7vzGoyrb
+	/aP9EmKHsYy8hDnV0zmjkJarn8XxY3eXauSSGRUMzaqkXnGiY4p0fWxAbPVWT8lf
+	80POwKQVOpAx9oY5D4qXhGRFRmJKYxZKmSoVJh5P+8Q5hhBl80X0ELtCtwkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724223627; x=1724310027; bh=J4vYvoqbOrS9xAp+BJfyBJY9sYDq
+	8cBJ172Nzm34Ryc=; b=A3MSfLefR2lsWHWxpHARuW7p7ydBRcP1qKFJVrz0KNk8
+	yR038rS5uCei3zRtgD84tc0KjX0ibfxeOlSrVkONdiAolwyw991dJdzNwO6L6UAR
+	7Y1jkHFnyHZdkz5F5dFAK/l2iW2j0uZ5QIfVrg/vS3rhHLl3vbSQNEIx/PwHaXmp
+	uEG887Ji3OVbxtvFbm+8oFp26g0yuVLuWRf9JWj9U237aAZ717e3IoWJ/XfoqOYK
+	WCW0a/aByPMb47ZnkZ9dwo9e8/XycQJ/ch6NEhHHYrYT345cQJDxlazHrvUM9pEZ
+	wyfOHtjbadgEWFKSKCl8OOp/2C8Nt9j5Vk+l+5ATow==
+X-ME-Sender: <xms:i5DFZm4X74LSFw9E_EM4oCLOJQsR8Rb8Aqon2VNo5ktLMf01cHCkcw>
+    <xme:i5DFZv7pN9SH3Q64-LLi_GF9-fH5vc_t57vZXniAGIHcDbJ83cKoOR84CVYlh6pv5
+    lysNwidd3kVfzvyJw>
+X-ME-Received: <xmr:i5DFZlctkYneC6HizvT3XrhvbSJsvQTvpznOpQLF-2DOGCfOGj5zjXzer1-vQao2InaM3l8ApcAI8KXD5QFqw9sYWQ5sUmgXXMX7jau_-7oTmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpefhiefgvdffvddtuefhlefgleehgfefveeuteffudfg
+    heetgfevlefhueeuveeuvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprg
+    gvmhgvugdrrghkvghfrddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihht
+    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:i5DFZjLko4ShNrE60RhZp9mLXN5oHDFL2Ss2bxrz_Zvdc4-uwhOSEg>
+    <xmx:i5DFZqLZKK9vzUNw9KxUQ3cuQ62VvX-R_rfEDagKaho0AMQgejHBew>
+    <xmx:i5DFZkzSKuYNG8H4VdrbtncvCAM_0M3CyAIBDSm-My7wFO8s-vlWYQ>
+    <xmx:i5DFZuJj2bEUIU8b48kGSXyLrp59X-uVPE9PnyISZ-hepMre5Gjjng>
+    <xmx:i5DFZm21xsKms5UKGYEiR2fy2xTIPHoMTvPwPdvhnPr9BflN84Dp2oH1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Aug 2024 03:00:26 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ecd1df6a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Aug 2024 06:59:53 +0000 (UTC)
+Date: Wed, 21 Aug 2024 09:00:24 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: ahmed akef via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, ahmed akef <aemed.akef.1@gmail.com>
+Subject: Re: [PATCH] docs: explain the order of output in cat-file batch
+ operations
+Message-ID: <ZsWQgYclF4ahQPrQ@tanuki>
+References: <pull.1761.git.git.1724070410906.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240710083416.GA2060328@coredump.intra.peff.net> <20240710083755.GE2060601@coredump.intra.peff.net>
-In-Reply-To: <20240710083755.GE2060601@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 21 Aug 2024 03:00:05 -0400
-Message-ID: <CAPig+cTACjostXvjJMnLEpgbnfat9cjM63pLXwNJm1=2P3gq8g@mail.gmail.com>
-Subject: Re: [PATCH v2 5/9] chainlint.pl: check line numbers in expected output
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1761.git.git.1724070410906.gitgitgadget@gmail.com>
 
-On Wed, Jul 10, 2024 at 4:37=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> [...]
-> It would be possible to do all of this in shell via the Makefile, but it
-> gets a bit complicated (and requires a lot of extra processes). Instead,
-> I've written a short perl script that generates the concatenated files
-> (we already depend on perl, since chainlint.pl uses it). Incidentally,
-> this improves a few other things:
-> [...]
-> diff --git a/t/chainlint-cat.pl b/t/chainlint-cat.pl
-> @@ -0,0 +1,29 @@
-> +#!/usr/bin/env perl
-> +
-> +my $outdir =3D shift;
-> +open(my $tests, '>', "$outdir/tests")
-> +       or die "unable to open $outdir/tests: $!";
-> +open(my $expect, '>', "$outdir/expect")
-> +       or die "unable to open $outdir/expect: $!";
-> +
-> +print $expect "# chainlint: $outdir/tests\n";
-> +
-> +my $offset =3D 0;
-> +for my $script (@ARGV) {
-> +       print $expect "# chainlint: $script\n";
-> +
-> +       open(my $expect_in, '<', "chainlint/$script.expect")
-> +               or die "unable to open chainlint/$script.expect: $!";
-> +       while (<$expect_in>) {
-> +               s/^\d+/$& + $offset/e;
-> +               print $expect $_;
-> +       }
-> +
-> +       open(my $test_in, '<', "chainlint/$script.test")
-> +               or die "unable to open chainlint/$script.test: $!";
-> +       while (<$test_in>) {
-> +               /^# LINT: / and next;
-> +               print $tests $_;
-> +               $offset++;
-> +       }
-> +}
+On Mon, Aug 19, 2024 at 12:26:50PM +0000, ahmed akef via GitGitGadget wrote:
+> From: ahmed akef <aemed.akef.1@gmail.com>
+> 
+> the order of the output is not described explicitly so someone can make
+> complex code to parse it instead of just depending on the order
 
-I'm surprised that we're not closing the two file handles opened on
-each iteration of this loop. Is that intentional? Or am I forgetting
-my Perl and they are somehow getting closed anyhow (for instance, by
-the <...> operator hitting EOF)?
+We aim to write full sentences in commit messages. That is, they start
+with an upper-case letter and should end with some form of punctuation.
+It's also not immediately clear what "the output" refers to without
+referring to the subject. And last but not least, it could use some
+explanation that this all refers to the `--batch` mode, only.
+
+I would have probably written something like this:
+
+  The batched mode of git-cat-file(1) reads multiple objects from stdin
+  and prints their respective contents to stdout. The order in which
+  those objects are printed is not documented and may not be immediately
+  obvious to the user. Document it.
+
+This explains the context, proceeds to the problem and then says how we
+address the problem.
+
+> Signed-off-by: ahmed akef <aemed.akef.1@gmail.com>
+> ---
+>     explain the order of output in cat-file batch operations since it is not
+>     explicit
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1761%2Fahmedakef%2Fexplain-the-order-of-output-in-cat-file-batch-operations-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1761/ahmedakef/explain-the-order-of-output-in-cat-file-batch-operations-v1
+> Pull-Request: https://github.com/git/git/pull/1761
+> 
+>  Documentation/git-cat-file.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index bd95a6c10a7..f1e0b4a7219 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -270,8 +270,8 @@ BATCH OUTPUT
+>  ------------
+>  
+>  If `--batch` or `--batch-check` is given, `cat-file` will read objects
+> -from stdin, one per line, and print information about them. By default,
+> -the whole line is considered as an object, as if it were fed to
+> +from stdin, one per line, and print information about them sequentially in the same order.
+> +By default, the whole line is considered as an object, as if it were fed to
+
+These lines are now overly long. We should likely wrap them at 72
+characters.
+
+I'd likely also replace "sequentially in the same order" with "in the
+same order as they have been read from stdin", which feels a bit more
+explicit to me.
+
+Thanks!
+
+Patrick
