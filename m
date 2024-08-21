@@ -1,77 +1,76 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1655A1B81C5
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 15:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57FC1B1D7A
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 16:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724254806; cv=none; b=u94UIg55CXx8CottLZ3+tNq/tTApm+QJ8y2Taop5tNLkrjim8z9Q2AM3pmxhZngJOcvWxxXrZAl3ob5krgT1WpNUNV8038OTq8lz7ON+ZXis46ZwlL0QZbViuQCXTB1gYADHIjBkut5zVrgOc6wZcCr9xgX7cJxuUxAFl8jfJ3k=
+	t=1724256061; cv=none; b=Mq6F4qX4C1Ny1gLW92JUcYGn7vaoYnZHAJZnL6z6bcO/V08Y0PUWb6q7l6nirgpRporcpdJVEDazYOKKCmX23zBk8rV9xOOrrofTJttzebTwikNFLoZCQDfUok4cm3yWZf6O/ejbkEGgay7WERC2DIh9CPi4qFHEsebS7khqfpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724254806; c=relaxed/simple;
-	bh=cyozs/XDbXvQtihkSYNLzT1K7zowK3/4YuXxHy8m/PY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZXyzklBSkrM5grG8921u5IzHNW4/sh4qnV1V1Hb2qyM6fMsenkz+cA7cExFHOz72Lr2Unnchm8eAr2GMbctl+QlrtRaaChBfN/ulksXKwdJfLGAY+FL8PbI/BdRY0aKyOYJEBae+fmQsq9apL/Bq5rJfMFDz/y1HKFwoHUOx0uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 28029 invoked by uid 109); 21 Aug 2024 15:40:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Aug 2024 15:40:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13997 invoked by uid 111); 21 Aug 2024 15:40:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Aug 2024 11:40:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 21 Aug 2024 11:40:01 -0400
-From: Jeff King <peff@peff.net>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	ps@pks.im, james@jamesliu.io, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
-Message-ID: <20240821154001.GA506216@coredump.intra.peff.net>
-References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1724256061; c=relaxed/simple;
+	bh=EIMU049ICtuCoY69WoTYK9wU3c3LFWU9ecKmQPaL3Pw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GL/Hq4N0BIhkIRN7T/5y1bSCnPDg8wPnf3N4q3v7Lzrb96/Zw41J5V8SoNRc8mHOSJiRA8xfSKY2RP8CfFPDzBwufUkdWNHelB9x0yJDyip/QTNTz7UpKZvAekMFK1K9sPGnYDBoezeugOxfm69QeP2u8LI4w1KGPpmX5KEOClY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L//+t5u2; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L//+t5u2"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FD5E36B2E;
+	Wed, 21 Aug 2024 12:00:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=EIMU049ICtuCoY69WoTYK9wU3c3LFWU9ecKmQP
+	aL3Pw=; b=L//+t5u2SVO/4qKtlJorUx7nIQSCos5ihvzOlcmkuCKB8AbhaJNek/
+	2BJGd0LSiIZ4XlV6ZDmeJs39emCCcQsNALE/+oAJlvtMzKCDF6VD7OENz1Ff679g
+	e1f9tTPKt0pUmn4bw/V0g4XUl1Q4Kg6L8wHI6sl29SSrz8W7yegzs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75D1136B2D;
+	Wed, 21 Aug 2024 12:00:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DEE9A36B2C;
+	Wed, 21 Aug 2024 12:00:57 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matheus Tavares <matheus.tavb@gmail.com>
+Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  newren@gmail.com,
+  ps@pks.im,  phillip.wood123@gmail.com,  Lincoln Yuji
+ <lincolnyuji@hotmail.com>,  Rodrigo Siqueira <siqueirajordao@riseup.net>
+Subject: Re: [PATCH v3] rebase --exec: respect --quiet
+In-Reply-To: <f105b34b8e6b33448f4d0ef07d51b7bbf4e71aaa.1724203912.git.matheus.tavb@gmail.com>
+	(Matheus Tavares's message of "Tue, 20 Aug 2024 22:31:52 -0300")
+References: <be3c968b0d9085843cd9ce67e85aadfaaafa69c8.1723848510.git.matheus.tavb@gmail.com>
+	<f105b34b8e6b33448f4d0ef07d51b7bbf4e71aaa.1724203912.git.matheus.tavb@gmail.com>
+Date: Wed, 21 Aug 2024 09:00:56 -0700
+Message-ID: <xmqq7cc93lxj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8DDAFF0C-5FD6-11EF-8AF2-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wed, Aug 21, 2024 at 11:02:25AM +0000, Derrick Stolee via GitGitGadget wrote:
+Matheus Tavares <matheus.tavb@gmail.com> writes:
 
-> Advice is supposed to be for humans, not machines. Why do we output it when
-> stderr is not a terminal? Let's stop doing that.
-> 
-> I'm labeling this as an RFC because I believe there is some risk with this
-> change. In particular, this does change behavior to reduce the output that
-> some scripts may depend upon. But this output is not intended to be locked
-> in and we add or edit advice messages without considering this impact, so
-> there is risk in the existing system already.
+> rebase --exec doesn't obey --quiet and ends up printing messages about
+> the command being executed:
+> ...
+> Changes in v3:
+> - Skipped term_clean_line() when stderr is not a TTY.
+> - Removed the !opts->quiet condition when calling term_clean_line().
+> - Reworded commit message to better explain the proposed changes.
 
-Playing devil's advocate for a moment: what about programs that read
-stderr but intend to relay the output to the user?
+The updated title and log message, and the new approach to squelch
+term_clear_line() when it is not needed.  Both look quite sensible.
 
-For example, programs running on the server side of a push are spawned
-by receive-pack with their stderr fed into a muxer that ships it to the
-client, who then dumps it to the user's terminal. Would we ever want to
-see their advice?
+Will replace.  Thanks.
 
-My guess is "conceivably yes", though I don't know of a specific example
-(and in fact, I've seen the "your hook was ignored because it's not
-executable" advice coming from a server, which was actually more of an
-annoyance on the client side).
-
-Ditto for upload-pack. Another possible place where it matters:
-interfaces that wrap Git and collect the output to show to the user. I
-don't use git-gui, but I'd imagine it does this in some places.
-
-Looking over patch 7, I think the escape hatch for all of these cases
-would be setting GIT_ADVICE=1. Which isn't too bad, but it does require
-some action. I'm not sure if it is worth it (but then, I am not all that
-sympathetic to the script you mentioned that was trying to be too clever
-about parsing stderr).
-
--Peff
