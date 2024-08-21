@@ -1,103 +1,98 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A8419258A
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 06:54:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9621D185925
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 07:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724223242; cv=none; b=oGXVOqfH5GSMqA8QhONUewaAwJaf+j4cm+gM2Y0zsaXQDynmv1J6MyYe14olKecpJIeOjKwQNrHGNt7xvCIJoFMi10BIEWuBgD1n8KGiRKc+keNBwpljwvpl7r6/p1oLGk2pnaJxtoBgwi3RRsMmZ5reso5rJAY25uOXGq/KVic=
+	t=1724223621; cv=none; b=eoa3UcHUydIJ1Eeoo7EHUTvbMQQFY/0qae64sK7GmNxCW8mjq0iusjX4BwVBVmEukvEsAxJfGmazTGcsxjr6lYfAsfATUWvCMNFppmjnuTEB5AxFFBflpX9JH2izB2GbiUnjS+yQB6jnLe60RiWmtr4AljojyITr5SRhK+NSD/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724223242; c=relaxed/simple;
-	bh=75TvTFb+M+C4zW1Cqq5iUJCOduFtYL7Ule+vgKh9uSA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SyJJtiwas4bOdmMeoju/P35yZbTZnt511ykqBx0zMFWUltd+LCmvHE8zDQFa3CeuxKKUMwZCDeJX3Va5tKZmKCaiYKGKJ3fWR+yOXUzvhfMVR6WbFbZA7TBBQCigDhhYJDVZ786Qr+OOvt+gUJ58LfpB7j/O5IsQk7nWK6I9vsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b+8Zo8Ig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuMnQgGm; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b+8Zo8Ig";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuMnQgGm"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id AD010138FF53;
-	Wed, 21 Aug 2024 02:53:59 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 21 Aug 2024 02:53:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724223239; x=1724309639; bh=pNab+PpV5W
-	qofBqazOXJtWYN2yAqD98ojdeJe2dwsrc=; b=b+8Zo8IgfpcJvbBa9j6B0IAl78
-	1FKgszEiEDP5CQUzxgqNNHMQPrPZDj0sgzhr+GsdwRwonfBO0qWW1BgELxwjjhB8
-	y1GvODTfu/8DRzGRevTCY3UbCx8S3jze4TSJ7jQ4cMxI4OzfPvdGx/Kbn5MYtyNq
-	3bXhaSvgmfACpnug5ng4SjBQRdpoaRlHWBwDZx+cf1vc9OkaVsfMH6AICENxBuMT
-	dSCTZHYrgUKyLwarUdQbTFf71Pm9G2AMnA79mCcdqkHiWJ/tIC46w43uPPFm99FG
-	ITQOcbsbjTxKqH4CuwnwrAZ2YNUy4Mivp9yaXl0d+iTIDvyBjJpDbWpeJ5Dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724223239; x=1724309639; bh=pNab+PpV5WqofBqazOXJtWYN2yAq
-	D98ojdeJe2dwsrc=; b=EuMnQgGmJJEtrm+SNaXvTdMRqIZkyXPhbDQUXz8jIR3A
-	KF+qhd9HF/I2LAmFcBVyDPt1me5EJxopX1mlb1GXVS4cWs82O9FmrppvcRgIgkqY
-	4v6oIrGsW+Fa/KjTGrDshRloOGPy9fMdnmRaYsJmJ98/FDk4NAY/pcIlo6NGU2Km
-	UZUlQPJSCFJDrd2FyZAOJGkKhm9t0bkIOnBBrxSg+T8cM9EY81gqPMbJOvfRPm3L
-	km37IFZUTfN3++9+T5r+OpLKlc3p+FfJO64yP5WFmFcYiWVTFmU+c9iTGPs9JC6i
-	MUsHMmRGnmIjU3mpONEItcvd47rtgmC9Mo2uD6B8Sw==
-X-ME-Sender: <xms:B4_FZt50wwRaF4bmjZgAliqwZAqn_ZaXkpM4XeZOrKiFGQlU5uKspg>
-    <xme:B4_FZq5S1ird_ckoNHzXM5zShe1gTSfe5XXDovumcyDGzOZYoDcfdxqr8npqIwOwU
-    VQAGjZaxYqGeIPVDw>
-X-ME-Received: <xmr:B4_FZkfgUd8lKctsol_LgmVjIN-Qplz6e6rRrrZmDDmz5EwStWd1v_YXqzOaAX4K4tu_yYRepBw98VfQgdQ8TSC6cCriSPSReIlFpual_LJLUg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehmuhiiihhmuhiihhhisehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:B4_FZmK0sz2lwYo15B5NTsdGiv8ztqtvq8k2CsZj7DJcpuYayggF5g>
-    <xmx:B4_FZhKeLzx1YFj7g1SSLybSbY7z1tCySYTxT9bEgj3kqmsymAKswg>
-    <xmx:B4_FZvwVyT3tG7576DYLDeMX5bvhsi1zv2sXZsgqHW_xHeNTuDB7YQ>
-    <xmx:B4_FZtJVTDdyyprPqyooHl8CfKRJVkGZsgaChuZY8gmG3uhAkowLeQ>
-    <xmx:B4_FZh2_p3IO4MKHwZLiTMNYF3l5SjmDKQCfOIt96gKO6eeHKxfuyUkQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Aug 2024 02:53:58 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d085f2dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Aug 2024 06:53:26 +0000 (UTC)
-Date: Wed, 21 Aug 2024 08:53:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yukai Chou <muzimuzhi@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: add --show-names for git config
-Message-ID: <ZsWPBCW-pI4qIykK@tanuki>
-References: <CAEg0tHRL9+tqY0k2GiGzhc-VgMVsHqppLRFHbc=M33R6AoLXEg@mail.gmail.com>
- <xmqqcym4fqhp.fsf@gitster.g>
+	s=arc-20240116; t=1724223621; c=relaxed/simple;
+	bh=N0HiDdwNsl2AckZ6q6Lu1LUEMBLtWhCBJdCOjdu2ZDM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gRnKWUFzDKMv7KD9BfBC6JmYXSUHswqBoCinxKVV2bCbn4/T3RleGw2RmuJsFY3F9d2mrrMiWCTUTQrsAjpG5MEYMxlC7DEDluIwj3XGHOo7pOXDtjVQ37NZ5BSRbSpE0FVxXjKECLJnmcjSdgzIiuXdvf/F5yj4Srpu1MvNQFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7a649612fc8so45811085a.0
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 00:00:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724223618; x=1724828418;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=27OwdejWQv0AhjPfXa/3FEpXSHsveqfraQb7Ykz98P0=;
+        b=n0IPUdS3Q6LYn2giu5GnqLq2VINkvFJ58ZwPW00srjMuuObkWO0slqX/yIA+ubOsPZ
+         N30hwLsF/Y51uDWa2wNWX409OFtId+d2zeC7uVNflrd5Hnl060JXfT61JuBc8GPGZFqy
+         zlvrK56+nXU4F5WAyaYxfcjz1wv3g67OsisagyU8Qi8mSELZDon1wX2Th3y30fDntNVt
+         P/Ph4S/ra2ydgg/01bNJsX6rUJoLOe0EphcxThYrbZdL4aiDgAG9c1G4zkNc3YsdX5P9
+         DSgq4gh5XmfTn9cLhyiPLRY09RlQ8bVIypHrcGoyIbSBPMhWuUVjBawJz+2bm0rBs9K1
+         a9jw==
+X-Gm-Message-State: AOJu0Yx/LbxcoFQJrpZtYF1ohYaaIuZhu2XbKb7ahctSev+fvcsxlk6H
+	DmrPyasbacrIXF3pE/6xffFL8ms7fbZXhICk/xXhBmHRGcM/jiUrCK0n51yUZzQAh7csGr4MEsq
+	OyS1TPYKwOdgOrKTHg+hITkXUZdM=
+X-Google-Smtp-Source: AGHT+IElllX7IU6HtENqlHVb3dYhs2N6i4g5t8W7/b/6/9M5Xka/+3rqrx/85q+ZOI0M1TY3lXfDqo7TX6scPZUF2MM=
+X-Received: by 2002:a05:6214:2583:b0:6b7:b149:ce06 with SMTP id
+ 6a1803df08f44-6c155e1ce80mr11363586d6.4.1724223618557; Wed, 21 Aug 2024
+ 00:00:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcym4fqhp.fsf@gitster.g>
+References: <20240710083416.GA2060328@coredump.intra.peff.net> <20240710083755.GE2060601@coredump.intra.peff.net>
+In-Reply-To: <20240710083755.GE2060601@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 21 Aug 2024 03:00:05 -0400
+Message-ID: <CAPig+cTACjostXvjJMnLEpgbnfat9cjM63pLXwNJm1=2P3gq8g@mail.gmail.com>
+Subject: Re: [PATCH v2 5/9] chainlint.pl: check line numbers in expected output
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 19, 2024 at 09:04:50AM -0700, Junio C Hamano wrote:
-> As to the name, I tend to agree that --show-names is a strange name
-> for the option, and I would have even suggest making "--all" to show
-> the name by default and give "--hide-name" option to countermand it
-> if we were adding this topic afresh today.  But that unfortunately
-> is all too late to change without much more effort than just changing
-> the name.
+On Wed, Jul 10, 2024 at 4:37=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> [...]
+> It would be possible to do all of this in shell via the Makefile, but it
+> gets a bit complicated (and requires a lot of extra processes). Instead,
+> I've written a short perl script that generates the concatenated files
+> (we already depend on perl, since chainlint.pl uses it). Incidentally,
+> this improves a few other things:
+> [...]
+> diff --git a/t/chainlint-cat.pl b/t/chainlint-cat.pl
+> @@ -0,0 +1,29 @@
+> +#!/usr/bin/env perl
+> +
+> +my $outdir =3D shift;
+> +open(my $tests, '>', "$outdir/tests")
+> +       or die "unable to open $outdir/tests: $!";
+> +open(my $expect, '>', "$outdir/expect")
+> +       or die "unable to open $outdir/expect: $!";
+> +
+> +print $expect "# chainlint: $outdir/tests\n";
+> +
+> +my $offset =3D 0;
+> +for my $script (@ARGV) {
+> +       print $expect "# chainlint: $script\n";
+> +
+> +       open(my $expect_in, '<', "chainlint/$script.expect")
+> +               or die "unable to open chainlint/$script.expect: $!";
+> +       while (<$expect_in>) {
+> +               s/^\d+/$& + $offset/e;
+> +               print $expect $_;
+> +       }
+> +
+> +       open(my $test_in, '<', "chainlint/$script.test")
+> +               or die "unable to open chainlint/$script.test: $!";
+> +       while (<$test_in>) {
+> +               /^# LINT: / and next;
+> +               print $tests $_;
+> +               $offset++;
+> +       }
+> +}
 
-Mh. Yeah, that might've been the better default indeed. The new command
-is still relatively young, but still, I don't know whether changing this
-is in the picture now.
-
-Patrick
+I'm surprised that we're not closing the two file handles opened on
+each iteration of this loop. Is that intentional? Or am I forgetting
+my Perl and they are somehow getting closed anyhow (for instance, by
+the <...> operator hitting EOF)?
