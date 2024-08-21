@@ -1,249 +1,77 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC03D1B1D5E
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 14:21:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1655A1B81C5
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 15:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724250066; cv=none; b=WcAJq4mxVWJNMjXosIju4BeChfLXFIRhQ3m9wZ2xr84osHwqPyafZJBYDnfSSiwSw8HfOsbt6Pj4LQ3VGkQhcNwQeqb2gA+7bxlwEDhnvRv8QT+eL+3FcTK9UcMoE5XK8C+PORt93/hrM0ga+WwKA3K7qkhhBFtQBLoDPzJr6wQ=
+	t=1724254806; cv=none; b=u94UIg55CXx8CottLZ3+tNq/tTApm+QJ8y2Taop5tNLkrjim8z9Q2AM3pmxhZngJOcvWxxXrZAl3ob5krgT1WpNUNV8038OTq8lz7ON+ZXis46ZwlL0QZbViuQCXTB1gYADHIjBkut5zVrgOc6wZcCr9xgX7cJxuUxAFl8jfJ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724250066; c=relaxed/simple;
-	bh=ItdQY5+Sv0Ui6sc2WwLuijYMTMgjHptyflQlYLoIlGM=;
+	s=arc-20240116; t=1724254806; c=relaxed/simple;
+	bh=cyozs/XDbXvQtihkSYNLzT1K7zowK3/4YuXxHy8m/PY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pmOgSVhWuPEES0nOICi/qvYMlxqMDulabTvR6WQNdfK06x2qAEVD+8McXbQbXstYjQzTwaEMrvEr/bPCtae/67CKSrK2HS70wgs5AyQW4Mv5WQMUsuzIdaTPv/DO8+S7Z2Le5asWfOI/hJsjlu9IhKWTXTywY8NH9UyRMv0jKYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R5EvgzpP; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R5EvgzpP"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7cd895682fcso301910a12.0
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 07:21:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724250064; x=1724854864; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iyxgRuSaArbv6/4+0hs/ufvCRvM7ugIcNdMESbUTnHE=;
-        b=R5EvgzpPMt5PQumkZOPllOPkvCBMZrg2wXx54XOTNTelysX9wim10LC0O4VdB1gUln
-         7ebs30gxDwKgUURrNaFDCZOXTlEStvTeCKqg64tTxTHONSd1zUz1EzK0p9xaszV3SEub
-         QanQF5OQ8NkRG4wJRh4RNHX1axpB66klf+30pjqHr4eHqriyI8lm3LQQ74GqwBrt0E39
-         jUv5LJWCZYhuERSivfANPVQoAWCBbou5+zVB+w1BazQrRkqF3777tyIAgyLWUZpTDh2J
-         IrZKmpPc3P0hlZSLJFQ6k9zuSLnI7jfGyn0muxUoqK6VknW6hUlViMTLdD9norEyaMBY
-         JFcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724250064; x=1724854864;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iyxgRuSaArbv6/4+0hs/ufvCRvM7ugIcNdMESbUTnHE=;
-        b=As4MhaoyP8qPeAYAW0juXDwF8811tk+8OQiGWU5u/kO24m7+GlqrZLvd9QXrqeTNAg
-         Nms/XM9IAS2VHwgU6X4YgucT8jVcknAZYqoz5x70CgyVMTW4kYwQ2/NDGdXt/baB6mzM
-         OKGQMC0xjrn9ljtV1v3s1/40jGslNgtiA0MwVcv2kqpwaFR936LRy8kojkxRX8jMEwwZ
-         wfsyToDstv87aigCvH8LikXbO3z2KulC1WBRMCXONACPHWCDWsvgft41eHoCKitG3X8c
-         jJewngzXSwPTvK7Lbu9/hUsh9ZJO6wuBUQ4ZFyh1XP87exelBSQaQBIffusme5Rbr4EK
-         QoYQ==
-X-Gm-Message-State: AOJu0YzwnRDunfOk1xUcFYZMRiDyeKRoibLFnU2GLATlg+es/Hk53lGz
-	/WDjf+pzjiljB7Evebt5F/oa014F1KpxSyjXmcW/dsKLQsjubmZ0
-X-Google-Smtp-Source: AGHT+IEZooaMMePPFf7cYFSSFB4mxitCsGR86xBg+JLryA8lDI5U4whwERA5XKOMmsQmA438nqMaLg==
-X-Received: by 2002:a05:6a20:9f47:b0:1c2:8af6:31c2 with SMTP id adf61e73a8af0-1cad83a024cmr3353410637.44.1724250063774;
-        Wed, 21 Aug 2024 07:21:03 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7c6b636b07fsm11272792a12.86.2024.08.21.07.21.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 07:21:03 -0700 (PDT)
-Date: Wed, 21 Aug 2024 22:21:47 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v1 2/4] ref: add regular ref content check for files
- backend
-Message-ID: <ZsX3-yU52X2fe6JT@ArchLinux>
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
- <ZsIM2DRDbJsvNjAM@ArchLinux>
- <xmqqed6j9m24.fsf@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZXyzklBSkrM5grG8921u5IzHNW4/sh4qnV1V1Hb2qyM6fMsenkz+cA7cExFHOz72Lr2Unnchm8eAr2GMbctl+QlrtRaaChBfN/ulksXKwdJfLGAY+FL8PbI/BdRY0aKyOYJEBae+fmQsq9apL/Bq5rJfMFDz/y1HKFwoHUOx0uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 28029 invoked by uid 109); 21 Aug 2024 15:40:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Aug 2024 15:40:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13997 invoked by uid 111); 21 Aug 2024 15:40:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Aug 2024 11:40:03 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Aug 2024 11:40:01 -0400
+From: Jeff King <peff@peff.net>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	ps@pks.im, james@jamesliu.io, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
+Message-ID: <20240821154001.GA506216@coredump.intra.peff.net>
+References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqed6j9m24.fsf@gitster.g>
+In-Reply-To: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
 
-On Tue, Aug 20, 2024 at 09:49:23AM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+On Wed, Aug 21, 2024 at 11:02:25AM +0000, Derrick Stolee via GitGitGadget wrote:
+
+> Advice is supposed to be for humans, not machines. Why do we output it when
+> stderr is not a terminal? Let's stop doing that.
 > 
-> > We implicitly reply on "git-fsck(1)" to check the consistency of regular
-> 
-> "reply" -> "rely", I think.
+> I'm labeling this as an RFC because I believe there is some risk with this
+> change. In particular, this does change behavior to reduce the output that
+> some scripts may depend upon. But this output is not intended to be locked
+> in and we add or edit advice messages without considering this impact, so
+> there is risk in the existing system already.
 
-I will fix in the next version.
+Playing devil's advocate for a moment: what about programs that read
+stderr but intend to relay the output to the user?
 
-> > refs. However, when parsing the regular refs for files backend, we allow
-> > the ref content to end with no newline or contain some garbages. We
-> > should warn the user about above situations.
-> 
-> Hmph, should we?  
->
+For example, programs running on the server side of a push are spawned
+by receive-pack with their stderr fed into a muxer that ships it to the
+client, who then dumps it to the user's terminal. Would we ever want to
+see their advice?
 
-I am very sorry about this. Actually, I should not use "should". I don't
-give compelling reasons here why we need to introduce such checks. I
-just told the reviewer "we should warn". I will try to avoid above
-mistakes where I didn't give enough motivation.
+My guess is "conceivably yes", though I don't know of a specific example
+(and in fact, I've seen the "your hook was ignored because it's not
+executable" advice coming from a server, which was actually more of an
+annoyance on the client side).
 
-> What does the name-to-object-name-mapping layer (aka "get_oid" API)
-> do when they see such a file in the $GIT_DIR/refs/ hierarchy?  If
-> they are treated as valid ref in the "normal" code path, it needs a
-> strong justification to tighten the rules retroactively, much
-> stronger than "Our current code, and any of our older versions,
-> would have written such a file as a loose ref with our code."
-> 
+Ditto for upload-pack. Another possible place where it matters:
+interfaces that wrap Git and collect the output to show to the user. I
+don't use git-gui, but I'd imagine it does this in some places.
 
-Let me first talk about what will happen when we use the following
-command:
+Looking over patch 7, I think the escape hatch for all of these cases
+would be setting GIT_ADVICE=1. Which isn't too bad, but it does require
+some action. I'm not sure if it is worth it (but then, I am not all that
+sympathetic to the script you mentioned that was trying to be too clever
+about parsing stderr).
 
-  $ git checkout bad-branch
-
-I use "gdb" to find the following call sequence:
-
-  "cmd_checkout" -> "checkout_main" -> "parse_branchname_arg" ->
-  ... -> "get_oid_basic" -> "repo_dwim_ref" -> ... ->
-  "parse_loose_ref_contents" -> "parse_oid_hex_algop" ->
-  "get_oid_hex_algop"
-
-I dive into the "object-name.c::get_oid_basic" function. If we pass the
-actually "oid", it will call the "get_oid_hex_algop" directly.
-Otherwise, it will execute the following code:
-
-  if (!len && reflog_len)
-      refs_found = ...;
-  else if (reflog_len)
-      refs_found = ...
-  else
-      refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, !fatal);
-
-  if (!refs_found)
-      return -1;
-
-As we can see, when there is no corresponding refs found by calling
-"repo_dwim_ref" function, "get_oid_basic" function will return -1. And
-here we could have one important conclusion:
-
-  The "get_oid_basic" function relies on "repo_dwim_ref" function to
-  parse the ref and get the pointee "oid". So, it uses the interfaces
-  provided by ref backend.
-
-Next, we look at what will "parse_loose_ref_contents" do for regular
-refs.
-
-  int parse_loose_ref_contents(...)
-  {
-      ...
-      if (parse_oid_hex_algop(buf, oid, *p, algop) ||
-         (*p != '\0' && !isspace(*p))) {
-            *type |= REF_ISBROKEN;
-            *failure_errno = EINVAL;
-            return -1;
-      }
-      return 0;
-  }
-
-Let's continue to see what "parse_oid_hex_algop" will do:
-
-  int parse_oid_hex_algop(...)
-  {
-      int ret = get_oid_hex_algop(hex, oid, algop);
-      if (!ret) {
-          *end = hex + algop->hexsz;
-      }
-      return ret;
-  }
-
-If the result of "get_oid_hex_algop" is successful. We will set the
-"end" pointer here. The "get_oid_hex_algop" will eventually call the
-"get_hash_hex_algop" function
-
-  static int get_hash_hex_algop(...)
-  {
-      int i;
-      for (i = 0; i < algop->rawsz; i++) {
-          int val = hex2chr(hex);
-          if (val < 0)
-              return -1;
-          *hash+= = val;
-          hex += 2;
-      }
-      return 0;
-  }
-
-This function will convert the hex to char by the raw size of the
-algorithm. And by the following code, we could conclude the following
-things:
-
-1. "41053a9084501db79c72b14e8a5a0b67de3f91ae" is correct, because it
-will be parsed successfully by "get_hash_hex_algop" and "*p == '\0'".
-2. "41053a9084501db79c72b14e8a5a0b67de3f91aef" is not correct, it will
-be parsed successfully by "get_hash_hex_algop" but "*p != '\0'"
-and "isspace(*p)" is false. So the check in "parse_loose_ref_contents"
-cannot be passed.
-3. "1053a9084501db79c72b14e8a5a0b67de3f91a" is not correct, it cannot be
-parsed successfully by "get_hash_hex_algop".
-4. "41053a9084501db79c72b14e8a5a0b67de3f91ae garbage" is correct,
-because it will be parsed successfully by "get_hash_hex_algop" and
-"isspace(*p)" is true.
-
-By the above discussion, I could answer you comments one by one.
-
-> If the content is short (e.g., in SHA-1 repository it only has 39
-> hexdigit) even if that may be sufficient to uniquely name the
-> object, we should warn about it, of course.
-
-When the content is short, although it may be sufficient to identify the
-object, we should still report an error here. This is because we care
-about the ref. As we can see from above discussion, the "object-name.c"
-totally relies on the interfaces provided by the ref backend. And
-"get_hash_hex_algop" is unhappy about this situation. And eventually the
-"object-name.c::get_oid_basic" will be unhappy, return -1.
-
-> A file that has 64-hexdigit with a terminating LF at the end may be
-> a valid file to be in $GIT_DIR/refs/ hierarchy in a SHA-256
-> repository, but such a file in a SHA-1 repository should also be
-> subject to a warning, as it could be a sign that somebody screwed up
-> object format conversion.
-
-I agree with this idea. But in this implementation, we want to reuse the
-"parse_loose_ref_contents" to check the consistency of the regular refs.
-If we are in a SHA-1 repository, "parse_loose_ref_contents" will be
-unhappy about this. However, I don't think we need to provide user that
-"the content is 64-hexdigit ...". We just report "bad ref content" to
-the user. This will also indicate the user something is wrong, you need
-to check the ref database.
-
-> But a file that has only 40-hexdigit without a terminating LF at the
-> end?  Or a file that has 40-hexdigit followed by a CRLF instead of
-> LF?  Or a file that has the identical content as a valid ref on its
-> first line, but has extra stuff on its second and subsequent lines?
-
-This is the core problem why we want to introduce more strict check.
-Because in the current "parse_loose_ref_contents" function, as long as
-the next byte of the end of the hex is '\0', spaces, LF, CRLF. We could
-know that the content of the ref is OK.
-
-But in my view, we should warn the user about this situation. This is
-because in the original code, we do not check the ref strictly for files
-backend. And I think at current, the normal user should not interact
-with the git database. If there are some garbages we found in the ref
-database, I guess this could be a sign for the user: "Watch out! there
-may be something wrong".
-
-> "What are we protecting us from with this tightening?" is the
-> question we should be asking ourselves, when evaluating each of
-> these new rules that fsck used not to care about.
-
-That's a hard question, really. I find it hard to know what should we
-do? The motivation is hard to describe. But I think this reply could
-make thing more clear here.
-
-Thanks,
-Jialuo
+-Peff
