@@ -1,218 +1,96 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379481C943C
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D0616190B
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 12:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724238166; cv=none; b=GNqzty9sN1dlXXeDwuhE4s2cwOmDwMD9iUbGWSHTU/kcdov9/sm4GO0WOKJwZn5Y8ni1j3EsxD6PpUL0AT2aCXp6A7ajU0MyWpCjuntwb0G4Wafgz3a1UHdlfRfzHI+zKysU9WNal1Mg3UTlMRLfOvEHHcQeQcLUPTDGz8bX0mc=
+	t=1724242506; cv=none; b=hVVUlAlQuk00vvP7iVZCHCSoxDp/ODxoUlMXGHqlUzQkK0DLFO3J+wK5c2oXMLHqFuqsxTi9Qp+p0Ty87HMv8ZKdJj09bzFyi2UKijxNn42UKR0KWi1qo2HMQdAxAUaTdT9KnSOLZW9qar4ntDzoCFUPWJanzUCYIo6BQCuazmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724238166; c=relaxed/simple;
-	bh=eTV3mFVpkM6DyzopiZpy/q4hgja6LJ5PR3D2Ah1FxYI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=u9ZGwfWUll3cJ7FvKT+SJ2UnBWyOP/WBU5BIngFzpw1HVcyVLnBFt4ZtMK0QsgVIO3B/U1ssETH/M8+qztumBAM/1dsG60t7jRQaswvpYBZYNP05b1sBHF17U0Snzbo+O9fuV4rq9y9c/UgM8e2S9O6/hLLCF8b3Ofjmn7tbeCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OhrV+cps; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OhrV+cps"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5befd2f35bfso3683492a12.2
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 04:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724238162; x=1724842962; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vfB9xVofbfd1pN3u2l2Y851KysG9YRVpuJQRoSL0Fds=;
-        b=OhrV+cpsnYa8D0jM4G/o9durgNHGDm3oC/l6YuRNZ7r/WOgf3laVik4aiFJiGkpmkX
-         7kRrOv3RIv+wZBvgEzo6B3+WwfOqg3RM82n5w0v2HaBNl+VsIpFAozc8XgWAeIakqFuy
-         7gBkGMGEG9q3zk9qrcqMxHA75/T9t2+gEfOa93TlGoEgXOwuhEaLPcP6K+C6HTS0F7E2
-         lD7vYxi5K/3H2PJ2J5Ub7O2SP7HP7Ie5X2sNN/L17FE+jzIuUc21DWubkKc+DMJ+7+G1
-         /sIZzqzQoP3z6zW+jBKbLIKoa77z3weMYDNAOz+GWPMVEWv8Wz62YQL6J3tzF4Om1co6
-         4f0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724238162; x=1724842962;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vfB9xVofbfd1pN3u2l2Y851KysG9YRVpuJQRoSL0Fds=;
-        b=kvpQuH6sdwGSDn9uiPpebDo+FTJ/HXGdJuW7FF4GP8tUYEidXzOjyOMtaSYxXKsNeN
-         9S8cE1GtFmYs1HdzUcA2iEz3sJVsU7pNALunpC4v9PBc7rHc27JH231NcDsQ+U6lyqHl
-         qPE59PCsMeFgiATVHc39Xp2pPwouRp5K4DvJWVeAJmqdHYr2pjcHNjMU1ymbIkiR6gnM
-         5i0bTHZUdItD+1dK6LH5Rjw0JJnKMW8hdGCn1vvDsOE/sY6o+cCFqUvKv/Q+Xrj1ph05
-         /jBRqxhbGO4ukg26CsDJoKAla8mbP8rsHT5Njv+dpB0zGMBMinV7QgVY32Hg27hdYTAK
-         aV+g==
-X-Gm-Message-State: AOJu0YznlXYI5BanBs5Z+gdKAmOtF7cPaSl1zxEFuQn9Bsrb2CSrtHjD
-	ZvyHpvgOwxVZ6MPpJPIGEsS2hl4fTcQuhMwOjvLddof0NmXzlpehuaFUnQ==
-X-Google-Smtp-Source: AGHT+IHOiAy+wZ3ZQQczD9WrP5Zh14jxcEDD4IlLOZxzhI9oBpyBfJpIHh5zgQar3oSKF6AMdod/ZQ==
-X-Received: by 2002:a05:6402:254d:b0:5be:fa53:f81 with SMTP id 4fb4d7f45d1cf-5bf1f28a6damr1534190a12.37.1724238161592;
-        Wed, 21 Aug 2024 04:02:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bebbdfb7aasm7957528a12.51.2024.08.21.04.02.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 04:02:41 -0700 (PDT)
-Message-Id: <25d769903b2ab4a4c454929bf6378751bd366a37.1724238153.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
-References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 21 Aug 2024 11:02:32 +0000
-Subject: [PATCH 7/7] advice: refuse to output if stderr not TTY
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1724242506; c=relaxed/simple;
+	bh=UmlIT7oHHi2bWSreRHqx3wH1R0/iXurw5sN6X5Fmz90=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hPTwpfnng0T20w0DHnksHK45tF8bfxAQ/H2aSScAcjzYwF2NEXtcO4YGTiZCylOLoIXGvRe/ZpG3b42szRWcRY4mV8Wid10h3jxZ0D3v5LtQQZOmyv8lnWjKF76Aj2yoC3h2qkVqjED1rKK4fF19JmTFc7RJ2wVtWTBJwhtPLRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 26532 invoked by uid 109); 21 Aug 2024 12:14:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Aug 2024 12:14:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12054 invoked by uid 111); 21 Aug 2024 12:14:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Aug 2024 08:14:55 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Aug 2024 08:14:54 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2 5/9] chainlint.pl: check line numbers in expected
+ output
+Message-ID: <20240821121454.GA498761@coredump.intra.peff.net>
+References: <20240710083416.GA2060328@coredump.intra.peff.net>
+ <20240710083755.GE2060601@coredump.intra.peff.net>
+ <CAPig+cTACjostXvjJMnLEpgbnfat9cjM63pLXwNJm1=2P3gq8g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    Johannes.Schindelin@gmx.de,
-    ps@pks.im,
-    james@jamesliu.io,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTACjostXvjJMnLEpgbnfat9cjM63pLXwNJm1=2P3gq8g@mail.gmail.com>
 
-From: Derrick Stolee <derrickstolee@github.com>
+On Wed, Aug 21, 2024 at 03:00:05AM -0400, Eric Sunshine wrote:
 
-The advice system is intended to help end users around corner cases or other
-difficult spots when using the Git tool. As such, they are added without
-considering the possibility that they could break scripts or external tools
-that execute Git processes and then parse the output.
+> > +for my $script (@ARGV) {
+> > +       print $expect "# chainlint: $script\n";
+> > +
+> > +       open(my $expect_in, '<', "chainlint/$script.expect")
+> > +               or die "unable to open chainlint/$script.expect: $!";
+> > +       while (<$expect_in>) {
+> > +               s/^\d+/$& + $offset/e;
+> > +               print $expect $_;
+> > +       }
+> > +
+> > +       open(my $test_in, '<', "chainlint/$script.test")
+> > +               or die "unable to open chainlint/$script.test: $!";
+> > +       while (<$test_in>) {
+> > +               /^# LINT: / and next;
+> > +               print $tests $_;
+> > +               $offset++;
+> > +       }
+> > +}
+> 
+> I'm surprised that we're not closing the two file handles opened on
+> each iteration of this loop. Is that intentional? Or am I forgetting
+> my Perl and they are somehow getting closed anyhow (for instance, by
+> the <...> operator hitting EOF)?
 
-I will not debate the merit of tools parsing stderr, but instead attempt to
-be helpful to tool authors by avoiding these behavior changes across Git
-versions.
+They're scoped to the loop with "my", so they'll both be closed for each
+iteration of the outer loop when the handles go out of scope.
 
-In b79deeb5544 (advice: add --no-advice global option, 2024-05-03), the
---no-advice option was presented as a way to help tool authors specify that
-they do not want any advice messages. As part of this implementation, the
-GIT_ADVICE environment variable is given as a way to communicate the desire
-for advice (=1) or no advice (=0) and pass that along to all child
-processes.
+You can verify with something like:
 
-However, both the --no-advice option and the GIT_ADVICE environment variable
-require the tool author to change how they interact with Git to gain this
-protection.
+  touch foo bar baz
+  strace -e openat,write,close \
+  perl -e '
+	for my $script (@ARGV) {
+		syswrite(STDOUT, "opening $script");
+		open(my $in, "<", $script);
+		syswrite(STDOUT, "finished $script");
+	}
+  ' foo bar baz >/dev/null
 
-If Git instead disables the advice system when stderr is not a terminal,
-then tool authors benefit immediately.
+which should show:
 
-It is important, though, to let interested users force advice to be enabled,
-even when redirecting stderr to a non-terminal file. Be sure to test this by
-ensuring GIT_ADVICE=1 forces advice to be written to non-terminals.
+  write(1, "opening foo", 11)             = 11
+  openat(AT_FDCWD, "foo", O_RDONLY|O_CLOEXEC) = 3
+  write(1, "finished foo", 12)            = 12
+  close(3)                                = 0
+  write(1, "opening bar", 11)             = 11
+  [...etc...]
 
-The changes leading up to this already set GIT_ADVICE=1 in all other test
-scripts that care about the advice being output (or not).
-
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- Documentation/config/advice.txt |  9 ++++++---
- advice.c                        |  4 +++-
- t/t0018-advice.sh               | 18 +++++++++++++-----
- 3 files changed, 22 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index 0ba89898207..4946a8aff8d 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -1,8 +1,11 @@
- advice.*::
- 	These variables control various optional help messages designed to
--	aid new users.  When left unconfigured, Git will give the message
--	alongside instructions on how to squelch it.  You can tell Git
--	that you do not need the help message by setting these to `false`:
-+	aid new users. These are only output to `stderr` when it is a
-+	terminal.
-++
-+When left unconfigured, Git will give the message alongside instructions
-+on how to squelch it.  You can tell Git that you do not need the help
-+message by setting these to `false`:
- +
- --
- 	addEmbeddedRepo::
-diff --git a/advice.c b/advice.c
-index 6b879d805c0..05cf467b680 100644
---- a/advice.c
-+++ b/advice.c
-@@ -133,7 +133,9 @@ int advice_enabled(enum advice_type type)
- 	static int globally_enabled = -1;
- 
- 	if (globally_enabled < 0)
--		globally_enabled = git_env_bool(GIT_ADVICE_ENVIRONMENT, 1);
-+		globally_enabled = git_env_bool(GIT_ADVICE_ENVIRONMENT, -1);
-+	if (globally_enabled < 0)
-+		globally_enabled = isatty(2);
- 	if (!globally_enabled)
- 		return 0;
- 
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-index fac52322a7f..c63ef070a76 100755
---- a/t/t0018-advice.sh
-+++ b/t/t0018-advice.sh
-@@ -8,7 +8,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--test_expect_success 'advice should be printed when config variable is unset' '
-+test_expect_success TTY 'advice should be printed when config variable is unset' '
- 	cat >expect <<-\EOF &&
- 	hint: This is a piece of advice
- 	hint: Disable this message with "git config advice.nestedTag false"
-@@ -17,7 +17,7 @@ test_expect_success 'advice should be printed when config variable is unset' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'advice should be printed when config variable is set to true' '
-+test_expect_success TTY 'advice should be printed when config variable is set to true' '
- 	cat >expect <<-\EOF &&
- 	hint: This is a piece of advice
- 	EOF
-@@ -26,13 +26,13 @@ test_expect_success 'advice should be printed when config variable is set to tru
- 	test_cmp expect actual
- '
- 
--test_expect_success 'advice should not be printed when config variable is set to false' '
-+test_expect_success TTY 'advice should not be printed when config variable is set to false' '
- 	test_config advice.nestedTag false &&
- 	test-tool advise "This is a piece of advice" 2>actual &&
- 	test_must_be_empty actual
- '
- 
--test_expect_success 'advice should not be printed when --no-advice is used' '
-+test_expect_success TTY 'advice should not be printed when --no-advice is used' '
- 	q_to_tab >expect <<-\EOF &&
- 	On branch trunk
- 
-@@ -54,7 +54,7 @@ test_expect_success 'advice should not be printed when --no-advice is used' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'advice should not be printed when GIT_ADVICE is set to false' '
-+test_expect_success TTY 'advice should not be printed when GIT_ADVICE is set to false' '
- 	q_to_tab >expect <<-\EOF &&
- 	On branch trunk
- 
-@@ -76,6 +76,8 @@ test_expect_success 'advice should not be printed when GIT_ADVICE is set to fals
- 	test_cmp expect actual
- '
- 
-+# This test also verifies that GIT_ADVICE=1 ignores the requirement
-+# that stderr is a terminal.
- test_expect_success 'advice should be printed when GIT_ADVICE is set to true' '
- 	q_to_tab >expect <<-\EOF &&
- 	On branch trunk
-@@ -99,4 +101,10 @@ test_expect_success 'advice should be printed when GIT_ADVICE is set to true' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'advice should not be printed when stderr is not a terminal' '
-+	test_config advice.nestedTag true &&
-+	test-tool advise "This is a piece of advice" 2>actual &&
-+	test_must_be_empty actual
-+'
-+
- test_done
--- 
-gitgitgadget
+-Peff
