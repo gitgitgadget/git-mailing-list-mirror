@@ -1,137 +1,173 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327431C1AB7
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 10:23:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF441C8713
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:02:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724235835; cv=none; b=h9nVNrReEnhV55l9trXqf6IVOT/RsAuYdvj8Nrd0IW8yZrBW2hhNkarB2GJvtPiqXWQwFxxAzT9JuhsZ7mtDuKAfdguceb0Qjd5pBkGoHNh7RYeEcqZV/3hdIBwlqHZlsK5LHr7HQw07YI9nVZsFCcCYHsVFK9df6zW5aq1JPgM=
+	t=1724238158; cv=none; b=G0NeeCX9aFEkndFP0wqEWcDzSNQUKP4iaCXX+D7BckA0hw46ylLvjk1Ypgb3dxkjC1x7KPsC2LjfxQ0SXQGLF4vgwECEBe/PBVJCPml7iXNfi/ykthjxV/W727MpQJhIfTCsX5nompi2hQiLxCi2WGnDVs4ahUPrskKA9xeZ26M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724235835; c=relaxed/simple;
-	bh=6f18zF9nFlv6nojyxPrCLuI9LH6E0/PfPigNUsifp9M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GHI7+xiqVrImr89O34l6GhH9L8GmzW515+iXZvVXUyM03fsEIKZ3qu0td5T/UJh2YQBV1Z7bc8zT8a8A/583Wo4tPuv8BpnD76E/krw2Y6ceo6Id4y7YiOkaoeuEz+Yf+iziphQeyf1dXRMqa/YyxtdmZocAOAG1bDYpFTDNKQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hZPQnRMV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CD4PBk0n; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724238158; c=relaxed/simple;
+	bh=xIGwqruw+lIIURY4Jr/nKyhaS6JpXUD7Jpg0mF+O7i4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CFZNTWv6PC/ozVHU8dF7sk1JWJNi9GQo4yBKu8zxQVmtCjwtYK4sLGT9qitMIfWcNJ9npx6SIv8bQHnTHfEPrmLsdTgrn6+UXVQfFxJhN9Ke7OtKI0HyL5JkXCLaFLHlVlftYrZ1TijjrFe15XOVdi1i2UdTvd+Gq8rGvbSV0xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIVVGnKd; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hZPQnRMV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CD4PBk0n"
-Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 409041151BA2;
-	Wed, 21 Aug 2024 03:28:39 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Wed, 21 Aug 2024 03:28:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724225319; x=1724311719; bh=agpmT5i/H4
-	I9CpFwP+ZgZCDHnOLEswww+MqSwwzRYZ8=; b=hZPQnRMVHiW1b7Xtj7UEBI9hl+
-	P1XnIZPpSKf21j77CfqGF3BxUsMyQMMaMnKpYrB6txHSAvP71WLkWMJUFm3Ccuu9
-	f+H85VCClu9eMIXSAkeakJclxp+g66zMhR/SA4uRsActrCVnJjl62QxJPNMDv/dk
-	k0ODlB3WrD1zqdU57Oj+XTIao7v2jNXhGpLgwhNYXF8jXaB6i+QrbXzoG5uvgQZD
-	dqb1x85rWFpNqTV4Y2DTFAiz7ndvzrzTBDf/Vz4QPGV6lCaKW8ulBgaGjqZHIsBC
-	adrThhDeQQ4+eQFYWgvXhIvWxb/fRIyn7R+M1JZiyFLatKjp75ksKlWlcnCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724225319; x=1724311719; bh=agpmT5i/H4I9CpFwP+ZgZCDHnOLE
-	swww+MqSwwzRYZ8=; b=CD4PBk0nTfEcwRmSTLb00LxyTke0e9h96K3pvtM/vQuT
-	nUj/T55rENl2EObR4RKtXVr7XtTYhdotS1bqc5G+vTwVO1x/36CkoRXU1bb9wfI6
-	jcb3OjwbdWGv0AKMTsqlnnM23OEhVnCWp2QxCCjYBRyLkHybRsc/mmnMhP/p98Zd
-	gXEr6dae2ZptpAhmcN0v9AnB79ns5uzVy4zsLdEvnkdIH/042yvVKJQm/dds7QS4
-	wjloC1wYQmfLVXz1H8C/3i9c69pWfNagPv9/I44Lk5lQg9pKYlVaMmJWL4Dda/sm
-	gfmjOZ4VsXw+HYjoCHbdsQ0sCFgjymCa0yZ04/cp2A==
-X-ME-Sender: <xms:J5fFZviCwPo5hpGJY_IfGHEpW4UFiseQFqHTJdA3V9PNVcp9m7aKow>
-    <xme:J5fFZsCvOM50C-nTKMjXjWkUUe3tH7MrybnlNcUd0zsOg8tE-HtA8Q2QobKkWsjCf
-    5BmHIqYi84MT3z4tA>
-X-ME-Received: <xmr:J5fFZvGsaTgDUEUriVUh7g275NXeWteRY0GQl8-urjoX5oV0aEcaLxZ_-8b6tSskUtHz8bCeEjT_Hgj0xkGzCIfgv50FM8p8H_OeYHmVsy7KNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddujedguddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejffffveehtedukeegjedtuefhjeeghedtffetgfeg
-    feeljeefhffgueehjefhvdenucffohhmrghinhepphhkshdrihhmnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgs
-    pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhish
-    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopegthhgrnhgurhgrphhr
-    rghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:J5fFZsSUbqfrrPSzAMtt2HvKGzP8pv9-yah9htoMy28HUR_vQLcFwQ>
-    <xmx:J5fFZswzsfxlqdAkPQXbuj7gdRrDuAROnUTQNOOk3i8pGdZUF1bqsQ>
-    <xmx:J5fFZi7y8vQB1bWzzbKkNn81iAV8HDAg7LG4uJG5ohumr3JRWMm7Lw>
-    <xmx:J5fFZhwDDCoYQ49MawbH53_DDlTXyi_fA6bCSbJnxDhWkgynsJvZpQ>
-    <xmx:J5fFZo8vCvBGymBhXgQDyGcaoeXyL6qLj2PctA68XiSulIdMoQ9i1Axf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Aug 2024 03:28:38 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3eb569dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Aug 2024 07:28:04 +0000 (UTC)
-Date: Wed, 21 Aug 2024 09:28:34 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 09/11] t-reftable-block: add tests for log blocks
-Message-ID: <ZsWXF_zJTIsp8XOE@tanuki>
-References: <20240814121122.4642-1-chandrapratap3519@gmail.com>
- <20240816175414.5169-1-chandrapratap3519@gmail.com>
- <20240816175414.5169-10-chandrapratap3519@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIVVGnKd"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5bed0a2b1e1so2651409a12.3
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 04:02:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724238155; x=1724842955; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qkZu+ZOVWi9h4i69+T7CU0lkG0e/tbmmdsZ9h4QUFro=;
+        b=JIVVGnKdNRPm/YQZv0Yqme0ClwWZDh/L0Z9gtdEu9rRohgdAnFJSK0MOKttibjg3uM
+         gOr01N9ZEvI2gRvpfB84ByhoWudB9ir69kTwgQ1BG5SyR0n5yjV0qB4ZsLSswcxs5kM7
+         p5JCi+cII9MoSpAbwFsgzIIHGEEW6yCdaZoBHkXJM+nTYRpfgCAtlKMagv0DKk4YnP5E
+         M6wVJYaW/YGEmNaLbJCV5O4wIcNpMdrU86SmPWhF+Iv37P2xIXR3eLwz08tjm9zoNoVp
+         HLB7ywJacEgy0K2PFqcUGKkP/b/eB0AmDt/4luuowMsG/dbd2u9BC3QYPytKNgTpYJl/
+         fHyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724238155; x=1724842955;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qkZu+ZOVWi9h4i69+T7CU0lkG0e/tbmmdsZ9h4QUFro=;
+        b=rLaQRJlVd7EUcjYC6ga6EQ7lARvgY95IGOfOxXWY0w+lSdty5vA4efnPuWLwQe/YqH
+         04tF8j0/XNuKnfx6X1k/HK1vRIr9tt4WwA2qEwRYckD4aYg9u7AZnyOUr3efjCGZt36r
+         zfXgo6H11cJ2gY7U70KkJHkvNcKfcJ9xWcSxGQ+Hfe9tt0TpkGwpElSKAvJKCRfjeKYl
+         C5l2sBNsEkvRESgLgVkg4uhXGLSNYTsmDXKvyfMDyTcMKHH2fmvfHvrl2OYizoCmFnDO
+         8T+H5Rh/N1YLt5YLyqC6fWa9u8NmCdQ4yOPtPww/wvsgteEOxO3x4RAFuClumm2+tu/f
+         ThRQ==
+X-Gm-Message-State: AOJu0YyaO0TW3C67DXXQ5KgQpxAnOfNztkqivtQyXN7Pes68HEv8cSbe
+	3DY65ecNWM97xMxnu5KcTdKp9cqXhDZeOGZOEwIgbZ0OmmZiPP62GCit/g==
+X-Google-Smtp-Source: AGHT+IFKgrNlJ3UMrN6ItH11BdL6YteVRg00roP035z/zB16ZfSkhWDJj8qNqprGVMYsOLuw87L35A==
+X-Received: by 2002:a05:6402:2710:b0:58b:1a5e:c0e7 with SMTP id 4fb4d7f45d1cf-5bf1f294373mr1558628a12.35.1724238154456;
+        Wed, 21 Aug 2024 04:02:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5beef16a9bbsm4288733a12.57.2024.08.21.04.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Aug 2024 04:02:34 -0700 (PDT)
+Message-Id: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 21 Aug 2024 11:02:25 +0000
+Subject: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240816175414.5169-10-chandrapratap3519@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Johannes.Schindelin@gmx.de,
+    ps@pks.im,
+    james@jamesliu.io,
+    Derrick Stolee <stolee@gmail.com>
 
-On Fri, Aug 16, 2024 at 10:55:32PM +0530, Chandra Pratap wrote:
-> @@ -103,9 +103,97 @@ static void t_block_read_write(void)
->  		reftable_record_release(&recs[i]);
->  }
->  
-> +static void t_log_block_read_write(void)
-> +{
-> +	const int header_off = 21;
-> +	struct reftable_record recs[30];
-> +	const size_t N = ARRAY_SIZE(recs);
-> +	const size_t block_size = 2048;
-> +	struct reftable_block block = { 0 };
-> +	struct block_writer bw = {
-> +		.last_key = STRBUF_INIT,
-> +	};
-> +	struct reftable_record rec = {
-> +		.type = BLOCK_TYPE_LOG,
-> +	};
-> +	size_t i = 0;
-> +	int ret;
-> +	struct block_reader br = { 0 };
-> +	struct block_iter it = BLOCK_ITER_INIT;
-> +	struct strbuf want = STRBUF_INIT;
-> +
-> +	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-> +	block.len = block_size;
-> +	block.source = malloc_block_source();
-> +	block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
-> +			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
+Advice is supposed to be for humans, not machines. Why do we output it when
+stderr is not a terminal? Let's stop doing that.
 
-Nit: instead of a `malloc_block_source()`, you may use
-`block_source_from_strbuf()`. The former will go away with the patch
-series at [1].
+I'm labeling this as an RFC because I believe there is some risk with this
+change. In particular, this does change behavior to reduce the output that
+some scripts may depend upon. But this output is not intended to be locked
+in and we add or edit advice messages without considering this impact, so
+there is risk in the existing system already.
 
-I'm also happy to rebase my patch series once yours lands and do this
-myself. Guess yours will land faster anyway, and there are conflicts
-regardless of whether you do or don't update the test here. The same
-applies to the subsequent patches which use a `malloc_block_source()`.
+This series is motivated by an internal tool breaking due to the advice
+message added to Git 2.46.0 by 9479a31d603 (advice: warn when sparse index
+expands, 2024-07-08). This tool is assuming that any output to stderr is an
+error, and in this case is attempting to parse it to determine what kind of
+error (warning, error, or failure).
 
-So this isn't really worth a reroll by itself, and other than that this
-patch looks good to me.
+I've recommended that the tool author remove the advice message for now, but
+I'd like to help other tool authors avoid this surprise.
 
-Patrick
+I read the thread for the --no-advice option [1] looking to see if this was
+presented as an option, but did not see it as part of that review. I hope
+that this is not considered a breaking change for users, but I could see the
+argument for that.
 
-[1]: <cover.1724080006.git.ps@pks.im>
+[1]
+https://lore.kernel.org/git/20240424035857.84583-1-james@jamesliu.io/t/#u
+
+ * Patches 1-5 are preparation patches to make the test library work to test
+   the advice system after the final patch. These are split by test file
+   name to reduce the size of the patches, but could be squashed into a
+   megapatch if necessary. This is usually a simple addition of the
+   GIT_ADVICE=1 environment variable, but there were some changes made to
+   those lines to be more correct as necessary.
+ * Patch 6 highlights the fact that 'git status' uses advice_enabled() to
+   determine if it should print certain parenthetical results. See
+   format_tracking_info() in remote.c for an example. This output doesn't
+   use the advise() method, but instead appends to a string buffer that is
+   later sent to stdout. (If we think this part of the change is too risky,
+   then we could move the isatty() out of advice_enabled() and into
+   advise(), but that would not match the existing behavior of what is
+   blocked by --no-advice.)
+ * Patch 7 modifies advice_enabled() to disable when isatty(2) is false and
+   GIT_ADVICE is unset.
+
+Thanks, - Stolee
+
+Derrick Stolee (7):
+  t1000-2000: add GIT_ADVICE=1 for advice tests
+  t3000-4000: add GIT_ADVICE=1 to advice tests
+  t5000: add GIT_ADVICE=1 to advice tests
+  t6000: add GIT_ADVICE=1 to advice tests
+  t7000: add GIT_ADVICE=1 to advice tests
+  t7508/12: set GIT_ADVICE=1 across all tests
+  advice: refuse to output if stderr not TTY
+
+ Documentation/config/advice.txt           |  9 ++-
+ advice.c                                  |  4 +-
+ t/lib-httpd.sh                            |  2 +-
+ t/t0018-advice.sh                         | 18 +++--
+ t/t1092-sparse-checkout-compatibility.sh  | 18 ++---
+ t/t2020-checkout-detach.sh                | 25 ++++---
+ t/t2024-checkout-dwim.sh                  |  5 +-
+ t/t2060-switch.sh                         |  4 +-
+ t/t2204-add-ignored.sh                    |  8 +--
+ t/t2400-worktree-add.sh                   | 12 ++--
+ t/t3200-branch.sh                         |  4 +-
+ t/t3404-rebase-interactive.sh             |  2 +-
+ t/t3501-revert-cherry-pick.sh             |  2 +-
+ t/t3507-cherry-pick-conflict.sh           |  4 +-
+ t/t3510-cherry-pick-sequence.sh           |  6 +-
+ t/t3600-rm.sh                             | 12 ++--
+ t/t3602-rm-sparse-checkout.sh             | 18 ++---
+ t/t3700-add.sh                            |  6 +-
+ t/t3705-add-sparse-checkout.sh            | 32 ++++-----
+ t/t4150-am.sh                             | 14 ++--
+ t/t5505-remote.sh                         |  5 +-
+ t/t5520-pull.sh                           |  4 +-
+ t/t5541-http-push-smart.sh                |  6 +-
+ t/t6001-rev-list-graft.sh                 |  4 +-
+ t/t6050-replace.sh                        |  6 +-
+ t/t6436-merge-overwrite.sh                |  6 +-
+ t/t6437-submodule-merge.sh                | 16 ++---
+ t/t6439-merge-co-error-msgs.sh            | 12 ++--
+ t/t7002-mv-sparse-checkout.sh             | 85 ++++++++++++-----------
+ t/t7004-tag.sh                            |  2 +-
+ t/t7060-wtstatus.sh                       | 11 +--
+ t/t7201-co.sh                             |  2 +-
+ t/t7400-submodule-basic.sh                |  2 +-
+ t/t7402-submodule-rebase.sh               |  3 +-
+ t/t7406-submodule-update.sh               |  2 +-
+ t/t7500-commit-template-squash-signoff.sh |  3 +-
+ t/t7508-status.sh                         |  4 ++
+ t/t7512-status-help.sh                    |  8 ++-
+ t/t7520-ignored-hook-warning.sh           |  8 +--
+ 39 files changed, 214 insertions(+), 180 deletions(-)
+
+
+base-commit: bb9c16bd4f1a9a00799e10c81ee6506cf468c0c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1776%2Fderrickstolee%2Fadvice-tty-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1776/derrickstolee/advice-tty-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1776
+-- 
+gitgitgadget
