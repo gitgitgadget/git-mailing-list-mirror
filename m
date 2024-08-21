@@ -1,71 +1,82 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D740188A39
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 07:31:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE17C1531C6
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 08:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724225476; cv=none; b=Mt4Vk+Np8fBBrD1AgH+tPYFo+/DObm0OiheSRrGNsUNddiU/Uiwon8YEjjyq3k22HlxfCXO0ZszEicY18EWR3AqQdsltGkd8NRKM+uP++1fOsurtc/AtUvvQw6qN1PJ7i7BSTJV8MGKE8hZw9fkWzJu8bNpoAiYToMcn7RkWuL0=
+	t=1724227847; cv=none; b=pLcuEqH4RfTbdkaOT37Z3stgIXGMMbTthYHYb1HQPBhBD1T3y0Kz12WfeoAQuqPkXkenNL9zIbdp7oXEVTkIINzRNYKV+vmvKQWLiGdG3SX2B2vMge/uI8TdUL4d1lzWGuDG/9TBF3mcn/wwI0fLm47saXwnJXVU25AVoe6iWA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724225476; c=relaxed/simple;
-	bh=fHYeFhCCwDeAxwjmhqZR3EWqvXEB+ML2lDcpJfDNLu4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R2jKj71qVEUwyTWpUSnVNC8jU8UzBz/CPzWJlD9ZwgGdi+K6Xvf9dsFZVDAenwqbBvpcW5jrQuLH5qsiiTXKz8EHsW+5ACbYvUuCluPc5LYV8ZVbf0/B8WtNHRmaStCVuN08p5yRbKpm0M02bYVSg/V899wQS+xysEUJMeMNkDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1724227847; c=relaxed/simple;
+	bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=N5wlLVjuOh16/icCs/OLsZhOd2KPRc2jhvioK1xDWco7jSU6ZKacIevNXeZymUSGLdb6xj93mJz6JoLOq9OIa1SZbQ1M7bbmUcduR4ZAt/oTNRXhhc4CDROLqJDmlLrTjtv8XR8+eBqt7gjMPQ8dEHkfNdjHQ1WIVWDnsLPEdxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JI4dV2+u; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6bf743ef85cso547076d6.1
-        for <git@vger.kernel.org>; Wed, 21 Aug 2024 00:31:14 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JI4dV2+u"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-44fe58fcf29so35623751cf.2
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 01:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724227845; x=1724832645; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
+        b=JI4dV2+uYYKGYDrD5dJ4qTPQwSRrAze8G9v6vmvZmoimAXprrHF0EO8NnvJ7P2zT5X
+         2B22OEoF5U4CpzcIH85DvlMT7fu3En2B5Fug1wYrNu4ryA4WaPF63iJjgj9B7baMcKTh
+         CBVd8CYyW4Lyp9MtuKuO5k3IyU+EVkeJsEBMyq4y9NsmyUAS89ogNER2PpI9xHP0hbBq
+         Xb5vZ+Qhaarsu18RsccoyfFkdsKQ/USoF6nCT9KUvbGVa1Zq9z+T64+C45q4mN4zTV6D
+         rMXRCHq9pWB6uyZcIznib33vCOB+9F/6M8+3JnRcNmyumlWdr+b0X1GpLPPAJZfSyXEu
+         X2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724225473; x=1724830273;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fHYeFhCCwDeAxwjmhqZR3EWqvXEB+ML2lDcpJfDNLu4=;
-        b=p441gDwaIbGD98YYN1E9HW6Tp6+0UdCofApuVxTvxZevO9rOO7FfP/UTf8qAj9uIeE
-         hSP7rqW1sxnzWY5vM2ek8A5K+0upoQJWyDaNPTWvGUZeZ4ui5TKiZSRw6Eb3KtTxsPhk
-         EJNTEVkJVQeks1JyLV0kHXfzMKSkKVh2cDc4USp/q5zYoMdNLmHmxJemzZ3vSrTQy0KT
-         XEmms14bssC2qx66u21tbPNcZTcMerLDNfCDWGVvUenp2x6HDk3nL5N4SZZkt8CTWcrf
-         /RUM8UOAQXFXDk/dnq+cIrsy5KYyG9jtZPfaj+gkPJL1nl9OoA7YSgHkznARamWPhj0x
-         fgCA==
-X-Gm-Message-State: AOJu0YzT1FvECT89JnTnVDTKmnCwe0ohJRpRu6wQ+5ubBqVETYBP8iOz
-	P+cNbghgZRjcnXDD+udYXRwByvsFICB9izbAYrfDaymTbpmzSEqsx6P96nhTR3HWdx5tKL1jkCd
-	2teJI5mP6F857ZW51Tk2eMCVZfOw=
-X-Google-Smtp-Source: AGHT+IEKCRdrKxffrSFcn5XMGiz4m8ABYeG7ncD8wIqqkhgmgtI6/70kTa+FbltX3MYvyPVKuLlPTe0T634X6RZegxo=
-X-Received: by 2002:ad4:5c49:0:b0:6bf:7d3c:a24b with SMTP id
- 6a1803df08f44-6c155f5f31emr10451856d6.0.1724225473258; Wed, 21 Aug 2024
- 00:31:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724227845; x=1724832645;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cbs5dLi65MKs9pEnh2QJtEiX+ueQSDy/qu80f5osBy0=;
+        b=VpKm6bjqYL4I3d3vYkOogHad6+qFxSqiXXFAOjUBFO9C/0zDzV2GZY4FPNGfb4iAEr
+         KNqhJFCmI3sLQFLGjpvDtzjnIF6eGuMxI5cVqWbdsQ+/jC+6X0oHytkRoiNJiW1u8ejn
+         b6aFKltpairvGsiyS7mhn3clNqAlMG8s90HHfNgKwHl/VCcXAVJF+pzVlFVmv6ZZ3oGf
+         PzvhXwyNDE6MdYCwOCP82pNRRdsithQKnsQlsDyrdiRUktfcRSH37NIOmE+0hPLBCxeK
+         fJTCiBxhTTEDJd7Qiv/Pf2anlWd6og9GP/cwxrButP6MdwEjzFJN3ZTjzLuOTK39/736
+         2+Hg==
+X-Gm-Message-State: AOJu0YyrPj0t4NPkmrSA7q/kDAyHlUfgkiEm6S1/4KSE+AWnUlRDqCkx
+	xOH0TNhVJBX7MZWDjFn3IlXJTDMObcbxLWewMbmtXKc1BQp9AEaetfwsnMCh3A49aW5n3Usef4Q
+	Ju4JiQbWpc1WfOOyxjoOzZkzAvA4pEt3+
+X-Google-Smtp-Source: AGHT+IFSri32bxwCa/RFNDPqq+QNxMU+Uc4/XrtNlUJkBMDWLZJs4pDIkLJ9V4hS8EVsQ9dBlPookAhiObFS461NH0Q=
+X-Received: by 2002:a05:622a:251b:b0:44f:f6f0:7d2b with SMTP id
+ d75a77b69052e-454f268675cmr15473821cf.53.1724227844473; Wed, 21 Aug 2024
+ 01:10:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240701220815.GA20293@coredump.intra.peff.net> <20240710083416.GA2060328@coredump.intra.peff.net>
-In-Reply-To: <20240710083416.GA2060328@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 21 Aug 2024 03:31:02 -0400
-Message-ID: <CAPig+cRiVnVX=7y_ZnornQabOh8TaCCud5T0=ynY1+BZEYYNFA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] here-doc test bodies (now with 100% more chainlinting)
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+From: Yukai Chou <muzimuzhi@gmail.com>
+Date: Wed, 21 Aug 2024 16:10:33 +0800
+Message-ID: <CAEg0tHTWzgD5bw3oK7-Rtv9oTymqyhvZz3bcJ7yNRhF8wXMLGA@mail.gmail.com>
+Subject: builtin/config: --name-only doesn't imply --show-names in "git config get"
+To: git@vger.kernel.org
+Cc: ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 10, 2024 at 4:34=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> And here's a v2 that addresses the chainlint issue mentioned by Eric.
-> There were a lot of patches flying around, but this is only the second
-> posting of the whole topic. This can replace all of what's in
-> jk/test-body-in-here-doc.
->
-> I won't bother with a range diff; patches 8 and 9 are just the original
-> v1 patches verbatim, and everything else is new.
+The v2.46.0 doc of git-config(1) says
 
-Sorry for the late response; I only just got around to reading this
-series (which, I know, is already in "master").
+> --name-only
+> Output only the names of config variables for `list` or `get`.
+https://git-scm.com/docs/git-config#Documentation/git-config.txt---name-only
 
-With the possible exception of one question I asked[*] about patch
-5/9, the entire series looks good. Thanks.
+But the behavior of --name-only is more like "disable non-name outputs
+and leave the output state of names as-is". Thus using --name-only
+alone, one gets totally empty lines (which might be weird); only using
+--name-only and --show-names together, can one get output of just
+names.
 
-[*]: https://lore.kernel.org/git/CAPig+cTACjostXvjJMnLEpgbnfat9cjM63pLXwNJm=
-1=3D2P3gq8g@mail.gmail.com/
+# get empty line(s)
+git config get --all --name-only remote.origin.fetch
+# get lines of name(s)
+git config get --all --show-names --name-only remote.origin.fetch
+
+Either the doc or the behavior of --name-only needs some adjustment.
+
+Yukai Chou
