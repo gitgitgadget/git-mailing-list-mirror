@@ -1,104 +1,103 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE8114C5AE
-	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAA81B3B0C
+	for <git@vger.kernel.org>; Wed, 21 Aug 2024 18:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724264770; cv=none; b=XybBRxypdWlQRt6E9vr5lgtfpg+AO29d8lTanEW0Ct3iL06C3da7UCsQY4C4rQGCRPQKU7AYw5GMSASmtx/ogLQ5lCXagTwtRHuzPwG3qsqBnCDBQI5jf1tjKCWVnguryyzXQOjaA4MYxx8mBTd0i6TQqA2NbJPBOFqf/cDGv4w=
+	t=1724264848; cv=none; b=ni+3bC9wOQDj5NVxFxKUVF4v/LHXEbZfFySoodhoeLIFZn1tpZKV6as330xZAJMNYoOa9RqeUK3pd8EHwlxsJJ4eCZqd0mewnQrJzRhUIpqRJPt0cD/emVD3wWLtmrfhAlL1mDG69kt1G4GCvaCfNi1l2Od7FKih/V0XT4hz4HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724264770; c=relaxed/simple;
-	bh=0ROBRY4oBMV00YME2rkirnuyNuQyN79XMOQEHosKFb8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=arHHoyNDYuYOfc7AyxKv/xaIiV02MsPe7x9fKY2e9QxxKueqvso9XI/nuoWaiY0X2eNyhXOVmqhzIPi/oF5jKAILt/cywRdnycbFF+G9hNkvJqqmwR7LzZOCY7LSaiV32Jj2c0fZ4A24uge+aup1ZdMRKCGJCQlOXFkO2tFXVFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SiTp636p; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SiTp636p"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EEC737E2D;
-	Wed, 21 Aug 2024 14:26:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=0ROBRY4oBMV00YME2rkirnuyNuQyN79XMOQEHo
-	sKFb8=; b=SiTp636pT0rQqnsqK2555LtC7PsXW4jyZ9dYSbD2pvqrtDdXueoefB
-	HDrZUeCOAxH6YaXI6FxYKTgRQ+i/nObeE+DozlG0bwSa4Wxv4i/pNJna+SBQ/RIq
-	JCR3oY4ifSWg26XcTry2+Tc6shFh7rBe9Ubow3NEpxy2FinYf5YY0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 268AD37E2C;
-	Wed, 21 Aug 2024 14:26:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8B9EC37E2A;
-	Wed, 21 Aug 2024 14:26:07 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] check-mailmap: accept "user@host" contacts
-In-Reply-To: <mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
-	(Josh Steadmon's message of "Wed, 21 Aug 2024 10:50:14 -0700")
-References: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
-	<20240819-jk-send-email-mailmap-support-v2-1-d212c3f9e505@gmail.com>
-	<mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
-Date: Wed, 21 Aug 2024 11:26:06 -0700
-Message-ID: <xmqqjzg9ybpd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724264848; c=relaxed/simple;
+	bh=f1XOKWjPwcZjdIpOM8djJEcioVZU519a9rVpKOBW/ls=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=l/1w7rhM8NjV00CFHKLqOuXWK7u9ZHUvr+ki620tiVYfmkYTAt72ylRY62JuXPwVnTcJv+niOcqaJs0s0brlR6c/7OoM5C1nhq0nEofY79YkneUCdQEtNJ+PJ+4Dy3o5k2ZLCInVwS4CllKQhA0h/byqXDVIDkZYU1QEnTCBFz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-493b2710495so30150137.1
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 11:27:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724264845; x=1724869645;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nm2/uOsdKBGjS2SkusL+VvCH9Sjq3ZAQvpwullZyAqc=;
+        b=uTFGUVBRi9Yk6Pp1R2WH9GWoi3P1Qij+35RIg+JKfx04jNRU1w1IzEt9B0Wu3+sjwR
+         MH/nWyysrOdmz0XFuIAXzBTeLECdr47nH0M3mPbfQ/3fUn0Hgn6wtdiVav4Sa3+EbGEV
+         KjGKRYblwPNv6zgx8WKCqGCdrxsxh/ylBNqSyrzF9nzCHNTiLKJt3zHF2E5oTUqeOmxc
+         aTw+AGw6HsJgd/8DVBGOOyZ6RcbwIE0TtNYcYTQRjbOZ9Lq74nHguCo0m2CfO5ne8ya9
+         s5R61J7GOhcSu80WDGKgCarivF5JxjssG63tV1KnjUN3rFWfu4/nm0cbFf43JqCOzjSn
+         oiTg==
+X-Forwarded-Encrypted: i=1; AJvYcCXJVocqo1TvoWk0K2tfEoNwdYqE7eqewxc+O0lK4WuFcvF6xS1GEsgEjkT/7rh7QlaWR4M=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3pKgqFYNXy77/5X9QoAtn5hIHxhQ85rTaYgMYFlRq7HFegdRe
+	bdrxJb2VmMKNYoBH8NVH6pnRZXosDwT5iQyxbHKtD/7gaccS6FpxpnypHcgRNvn6i+HeFpZr2pg
+	3cO7j7Gc+MbccVOIY27DVIUQkgeQ=
+X-Google-Smtp-Source: AGHT+IHRIvkZOiStQB6W3Numr3C8m8mDCOG2dgIqzWi5wrDPimFhOjVeiS2e5ouQ/iNVGpe1o/EXtSB6eoRVbrRGhTU=
+X-Received: by 2002:a05:6102:440d:b0:493:b58c:7d98 with SMTP id
+ ada2fe7eead31-498d39e4dc7mr2214373137.5.1724264844933; Wed, 21 Aug 2024
+ 11:27:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D5368CAE-5FEA-11EF-8777-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com>
+ <20240819-jk-send-email-mailmap-support-v2-1-d212c3f9e505@gmail.com> <mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
+In-Reply-To: <mjlmmgwczact5ryprmorqztip2ynpcu5gpbulfabnoul2ubnr6@pfaxe7j4xo3h>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 21 Aug 2024 14:27:12 -0400
+Message-ID: <CAPig+cRhEJP6-ZX3X9SYrGM335-XTp8V=D9Yc7xkJQAh-g8xRw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] check-mailmap: accept "user@host" contacts
+To: Josh Steadmon <steadmon@google.com>, Jacob Keller <jacob.e.keller@intel.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Josh Steadmon <steadmon@google.com> writes:
-
->>  test_expect_success 'check-mailmap bogus contact' '
->> -	test_must_fail git check-mailmap bogus
->> +	cat >expect <<-EOF &&
->> +	<bogus>
->> +	EOF
->> +	git check-mailmap bogus >actual &&
->> +	test_cmp expect actual
->>  '
+On Wed, Aug 21, 2024 at 1:50=E2=80=AFPM Josh Steadmon <steadmon@google.com>=
+ wrote:
+> On 2024.08.19 17:07, Jacob Keller wrote:
+> > diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> > @@ -73,11 +73,40 @@ test_expect_success 'check-mailmap --stdin argument=
+s: mapping' '
+> >  test_expect_success 'check-mailmap bogus contact' '
+> > -     test_must_fail git check-mailmap bogus
+> > +     cat >expect <<-EOF &&
+> > +     <bogus>
+> > +     EOF
+> > +     git check-mailmap bogus >actual &&
+> > +     test_cmp expect actual
+> >  '
 >
 > I think I'd just remove this test case altogether, IIUC it' doesn't
 > provide any additional value vs. the "check-mailmap simple address: no
 > mapping" test below.
 
-Sorry, but I do not follow.  The other one is <bogus@company.xx>
-that looks more globally routable address than a local-only <bogus>
-mailbox.  Isn't it worth ensuring that we will keep treating them
-the same way?
+I had the same thought upon reading this.
 
-Having said that ...
+> >  test_expect_success 'check-mailmap bogus contact --stdin' '
+> > -     test_must_fail git check-mailmap --stdin bogus </dev/null
+> > +     cat >expect <<-EOF &&
+> > +     <bogus>
+> > +     EOF
+> > +     cat >stdin <<-EOF &&
+> > +     bogus
+> > +     EOF
+> > +     git check-mailmap --stdin <stdin >actual &&
+> > +     test_cmp expect actual
+> > +'
+>
+> Similarly, I might change this to use a real address instead of "bogus",
+> as we're no longer checking for invalid input.
 
->> -For each ``Name $$<user@host>$$'' or ``$$<user@host>$$'' from the command-line
->> -or standard input (when using `--stdin`), look up the person's canonical name
->> -and email address (see "Mapping Authors" below). If found, print them;
->> -otherwise print the input as-is.
->> +For each ``Name $$<user@host>$$'', ``$$<user@host>$$'', or ``$$user@host$$''
->> +from the command-line or standard input (when using `--stdin`), look up the
->> +person's canonical name and email address (see "Mapping Authors" below). If
->> +found, print them; otherwise print the input as-is.
-
-... it seems that <user> without <@host> is a supported format.
-Should we update the document, too? 
-
-If the @host-less name is meant to trigger a random unspecified
-behaviour, whatever the code happens to do, that is perfectly fine,
-but then we probably should not be etching it in the stone by
-writing a test for it.  So because of a  reason that is completely
-different from yours, I'd support removal of the "bogus" test, if
-that is the case.
-
-Thanks.
+Ditto for this change, but even more so because this is a fairly
+significant semantic change. In particular, the documented and
+intended behavior of the command when --stdin is specified is that it
+will consume email addresses from *both* the command-line and from
+standard input, and I think the point of the original test was to
+verify that it still correctly recognized a bogus email address
+specified as an argument even when --stdin is requested. Given that
+understanding (assuming it's correct), then the original test was
+already perhaps somewhat iffy anyhow, but after this change, it is
+even less meaningful.
