@@ -1,157 +1,69 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8171D1F57
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 21:57:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B37E1CC17A
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 22:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724363877; cv=none; b=W0H6PMauARMgKqepz82GeDlL3wU9f6f2YjJlWT1jt3qQIMXO6Aa1119JZScxbHhTnF5/yQ5BxYbtiu/VQzccYT9a7pBCY+HdTu1COkqXhnzpeU9kPTK3HxycYEjHQjcRY3gypHCth266+QoNKmS4y+5humN5DWtTeVpIsgiHhu4=
+	t=1724364633; cv=none; b=fKK1nl2fVqpfXhVQQuSw0vGnamW83yQeUi/RjqwyOIwaFACakbghnVhikA/RY2r6XRxSofpHLrjJyCkVKqHrLF0FLI/5iMhN8mwXM74OMMt6My9RvF358dtNTP5MzSSl3/ITqrIFy2MnP8p6GacauWq/wL20o0gwLbQcrHWc59g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724363877; c=relaxed/simple;
-	bh=5Pwro6nhs+4TWySdQVXlCrjnuka0MfIh2v/FCYEwi4I=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=gViu+g2df1WhnkSYkRvoqm5S0tJOx/WJ8ZegiVh25sbuAFmBfyuaOYGZlCsWWpyfs0C1ZMpghC0wC9Qma9QOwjpTkwqB8puRrl4jGXuCmIfBJHShesxWOZ9thTysWb54OxM4Cdj2tVErhMteg10z/3SAYTNTdleksfUQeUiuXLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l3iVgbur; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1724364633; c=relaxed/simple;
+	bh=4m2CAKx1ZzjhgrGmbrtT5RUQlHCGe2pLM8hEr+m6elM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n/l4dmDyaJLlST6kn4iEAakf80fb5pINOe0bZCb/L+0Z4xGVvsjMDCwOjMlkOfBfJm8EHJj8ihoD38BL31ooKTC28vy1VJAe47x9cEgfF4YcmoElOV32GyT2e+VPSieYRNsB4i+X77bYakkqOQvXurmMsISRJ5414jMQ2HJYXFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=B/ar/X0n; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l3iVgbur"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6886cd07673so28265507b3.3
-        for <git@vger.kernel.org>; Thu, 22 Aug 2024 14:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1724363875; x=1724968675; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7QwKjMvDV2HZQEtHHY+BmfEHf/61LRTqf6VgscGldM=;
-        b=l3iVgburdbsaWkeaUYSRPmWempP2Ns5s2qUP0bMXubwmyEl2D3jX0xnQPG7mwyPzlk
-         xc9ELPhBsjddtDKGQKmIVxpJc3XxqMq5gVHAGVidRw3pLtnN/HTYBp9klzKumQd/SggZ
-         JwClWbAVfoahpE63AIPQvxY5JsGt+pFMQ32nHT42AjA0jOMoUPNpZPILlp2mKMpKxi7Q
-         0hKq5z+3t5N519v2OGM/4oM45oksTTTWAYyRBPXxlXQzq0Lz7fQgdjI9DTNKC8U0zw/l
-         ufjxF6IdJDe8knNQkTshTt8yvP7qrL2zFBo5nIsTBGPS8A6ixhwpi/T8FT9yj7P7HHzm
-         QBkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724363875; x=1724968675;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7QwKjMvDV2HZQEtHHY+BmfEHf/61LRTqf6VgscGldM=;
-        b=P9IKbDHp24qCQ8ojybAaM4BoqFMP5mZGa1HSQtJ0O5tXCxdfIAAKr/A+8HRf5XHle8
-         YHaugoG1WT0Zjy+32dOHzT5l7eaTcvA3nWWqunK6bjgZZqutVV8TFo8YFW7vAbc2VYPl
-         U8uqoEUGjUjfN0EUA/rOpISSuRphP7jjguL77gqu0Jw4Vztqy2w4QkGBSrusYSUJm0Rc
-         FklpK30TCkKRD9X+olQw43VYjEBilGc38KTT3M7JbGV39dRAT1yUUKiG74qq7pOE7hpO
-         fxd9+XFffJqE6DbHM0F8lhMl43zsWz4SKDy+/nvMs5OeZw/epo7otzTaaSOgTBjUSJ5S
-         8QZw==
-X-Gm-Message-State: AOJu0Yzd3KsMovDep1G/5VQMne91vZw+lB3OI/JTY4KRL6LMRnU+FSw3
-	wZmM4DgHrGkrjp/n/UTQg9OyEM71zFRg5heIFh4hrYaCnL19V2aL5cknUjnjoRPDZnNX7jaLfKK
-	GmypAiTmxutEcYk4AP2a3dmldjumPuMw2uWCB24QrBgq5KDpvP1w4dI8CHg3qRqC1LGptPr0wGc
-	NYkre038+1eWQmiB56/Onz1bkmTA18OiCoVz5Nv/I=
-X-Google-Smtp-Source: AGHT+IFhzbhftKLHZJqYGwravfEFckBDdbaJJ+9n/aXj/E/5jkqnduLTm9Ihc3ScMoBPndmDQyKzeZCmhA/DXw==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:9ba9:7ac3:74ce:2b8f])
- (user=steadmon job=sendgmr) by 2002:a05:690c:74c1:b0:62d:a29:53a0 with SMTP
- id 00721157ae682-6c628b9655dmr65137b3.7.1724363874988; Thu, 22 Aug 2024
- 14:57:54 -0700 (PDT)
-Date: Thu, 22 Aug 2024 14:57:47 -0700
-In-Reply-To: <cover.1724363615.git.steadmon@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B/ar/X0n"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0982C31136;
+	Thu, 22 Aug 2024 18:10:30 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4m2CAKx1ZzjhgrGmbrtT5RUQlHCGe2pLM8hEr+
+	m6elM=; b=B/ar/X0nbwxOo0GVtryO85sn/WWO4x1QNUcFBh2OJZmg/iv72OtIOG
+	5M8DAdIGpof3yrSMUqxeMuzgweXthDWtWf+sLZYT7HB9Vje4wdhTR9ffIWG7x13C
+	hctmFu9hxbDk6cp6dy03VzXY5TL0zxcmO/NNQz6F+kG+pg1M/RPbE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 00CFB31135;
+	Thu, 22 Aug 2024 18:10:30 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 57D1C31134;
+	Thu, 22 Aug 2024 18:10:29 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Add additional trace2 regions for fetch and push
+In-Reply-To: <cover.1724363615.git.steadmon@google.com> (Josh Steadmon's
+	message of "Thu, 22 Aug 2024 14:57:44 -0700")
+References: <cover.1723747832.git.steadmon@google.com>
+	<cover.1724363615.git.steadmon@google.com>
+Date: Thu, 22 Aug 2024 15:10:28 -0700
+Message-ID: <xmqq1q2gqkdn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1723747832.git.steadmon@google.com> <cover.1724363615.git.steadmon@google.com>
-X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <1927bb5b1f8c6486d49013fb216c4cd672fcfbc5.1724363615.git.steadmon@google.com>
-Subject: [PATCH v2 3/3] send-pack: add new tracing regions for push
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 577A02F2-60D3-11EF-9168-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-From: Calvin Wan <calvinwan@google.com>
+Josh Steadmon <steadmon@google.com> writes:
 
-At $DAYJOB we experienced some slow pushes and needed additional trace
-data to diagnose them.
+> Last year at $DAYJOB we were having issues with slow
+> fetches/pulls/pushes. We added some additional trace2 regions which
+> helped us narrow down the issue to some server-side negotiation
+> problems. We've been carrying these patches downstream ever since, but
+> they might be useful to others as well.
 
-Add trace2 regions for various sections of send_pack().
-
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- send-pack.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/send-pack.c b/send-pack.c
-index fa2f5eec17..9666b2c995 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -75,6 +75,7 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
- 	int i;
- 	int rc;
- 
-+	trace2_region_enter("send_pack", "pack_objects", the_repository);
- 	strvec_push(&po.args, "pack-objects");
- 	strvec_push(&po.args, "--all-progress-implied");
- 	strvec_push(&po.args, "--revs");
-@@ -146,8 +147,10 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
- 		 */
- 		if (rc > 128 && rc != 141)
- 			error("pack-objects died of signal %d", rc - 128);
-+		trace2_region_leave("send_pack", "pack_objects", the_repository);
- 		return -1;
- 	}
-+	trace2_region_leave("send_pack", "pack_objects", the_repository);
- 	return 0;
- }
- 
-@@ -170,6 +173,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
- 	int new_report = 0;
- 	int once = 0;
- 
-+	trace2_region_enter("send_pack", "receive_status", the_repository);
- 	hint = NULL;
- 	ret = receive_unpack_status(reader);
- 	while (1) {
-@@ -268,6 +272,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
- 			new_report = 1;
- 		}
- 	}
-+	trace2_region_leave("send_pack", "receive_status", the_repository);
- 	return ret;
- }
- 
-@@ -512,8 +517,11 @@ int send_pack(struct send_pack_args *args,
- 	}
- 
- 	git_config_get_bool("push.negotiate", &push_negotiate);
--	if (push_negotiate)
-+	if (push_negotiate) {
-+		trace2_region_enter("send_pack", "push_negotiate", the_repository);
- 		get_commons_through_negotiation(args->url, remote_refs, &commons);
-+		trace2_region_leave("send_pack", "push_negotiate", the_repository);
-+	}
- 
- 	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
- 		args->disable_bitmaps = !use_bitmaps;
-@@ -641,10 +649,11 @@ int send_pack(struct send_pack_args *args,
- 	/*
- 	 * Finally, tell the other end!
- 	 */
--	if (!args->dry_run && push_cert_nonce)
-+	if (!args->dry_run && push_cert_nonce) {
- 		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
- 					       cap_buf.buf, push_cert_nonce);
--	else if (!args->dry_run)
-+		trace2_printf("Generated push certificate");
-+	} else if (!args->dry_run) {
- 		for (ref = remote_refs; ref; ref = ref->next) {
- 			char *old_hex, *new_hex;
- 
-@@ -664,6 +673,7 @@ int send_pack(struct send_pack_args *args,
- 						 old_hex, new_hex, ref->name);
- 			}
- 		}
-+	}
- 
- 	if (use_push_options) {
- 		struct string_list_item *item;
--- 
-2.46.0.295.g3b9ea8a38a-goog
+Thanks, will queue.
 
