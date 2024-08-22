@@ -1,83 +1,83 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D321487F9
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9DE1531DD
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724308531; cv=none; b=P2R6XZstE2f8DcN5c079KmpWOC6/zoyhmOIDBTEltFAie2n5r3x8REjT0z2OhW2y2vX/2y9ap9SSVv84rc7OsuBWgNg+oF/Bil/6apZ5O0SW3XjUwTASjFpt+2ihaXwHaV1Ox9mRmAONGRd8ASvvEZRQorzKhnXfjc5g8Q3qLfQ=
+	t=1724308534; cv=none; b=kDuZTmQDeKK1ijnEO9s3BnbSWyK6PaLieU1TnslXyd3KobYOwCITByks6CHiD8lHXjIM0bSEAuy6c7RUcL12UEZ3Xjik2C5oDddjZfx7x4t7NcouEEVMtk3VRqzpyPFKtLA+bH+A0rhnTg6KG6rLpkIOfYsDlW4020M4BMKZW6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724308531; c=relaxed/simple;
-	bh=HXaYwMm0emX9TDOvEcQoMqTc+6N5lzbBbDiSEqNI73I=;
+	s=arc-20240116; t=1724308534; c=relaxed/simple;
+	bh=oU8p9FYXWfXU19Bcbefcs8O2kCC8cDY43dXuk5nlswY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WYspobBoVlQy8tKSzDvneuiiC7g+CZE0Kxa9YDD92I8KCOOLOBrqmhAir+7zwhj6+8gZ6wQN5cMw+Q3d9zipJJcWORfDQg0BtZs7+XU2EHnPrtccR4egfYTZXjOBdnxllcqXI2DSZV8Axs/JaM4KSld+m+r8DfQaXaYOM2k0Mbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f4J3Lp6o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K5NK5fEu; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=cqkCScDJQM6iUyRienSAKsKUeDmEOtnRBP4GNlp0DS49i2c8N/d5R7L2aAzL9tD7DXT3ZaZie0PmBubOvwFBCRZFh8xC+2m9QRnLgwipvTJYWaCziPap4gnxPyOEVz418ptgjFpEL0Dx6M+BYdPYPtoMjsbrIKXAAYp23L/ipk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gk5Lvfiv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j+4pP+YF; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f4J3Lp6o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K5NK5fEu"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A3A5E1151AFF;
-	Thu, 22 Aug 2024 02:35:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gk5Lvfiv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j+4pP+YF"
+Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id BEC721151AF6;
+	Thu, 22 Aug 2024 02:35:31 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 22 Aug 2024 02:35:29 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 22 Aug 2024 02:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724308529; x=1724394929; bh=9jNogeP9qC
-	ouxRjRwy1Wl1chF9oyTsFasgZrjg+sFW4=; b=f4J3Lp6oVfCddWYdhEyxOxuB9A
-	IAf5/cehZ2IPz/wO8FnVfgQ22g8h09z3GGPTeZ/kT8IhpAhNEzCkGVMK1ao455Sa
-	iCEGoow4t00yRcZUMI6904IWhoggfq0T9Tb4FCYtoaQB6hgU9Pjcc+td4/cmRTL1
-	Mi5aKxTW4dXMU2/swMbWUqP9SfWupGAU/wCDOFjccEMFRELYYPMLiP66+CW8qtmR
-	ieHtKHUZFKQx2DPixuD5jq7NnEg32Wwwv6VwOPgdxwMrfBt/59PJQRCDqh+yA8Ah
-	DVwx7XwM8QlTC4IjXuqmggiowJFFGuXNUx6XuRf3e17Qrm9fRxpqxb4ZODOw==
+	:subject:to:to; s=fm1; t=1724308531; x=1724394931; bh=TD8ITKIMpy
+	uKUcmkR4eZDrsevvHko7HwcZ4qC/BosjQ=; b=gk5LvfivDc2/bJbUeAaK/R8A4M
+	KGyS7gDyCfGs6boJ75OSuSzYlSy7Cpv4K2t93aA2e8xQ4uMHycURDHUkkpnrpd5d
+	Fz0Vvo3hlVBDgEF13izCEdWvHE8fU2u6I8PP/GXe+JPVrIMycS134CtmLEjMrdhS
+	u+o+Nj1AY6zl+3eaWYlS7C51kWsyqaAmGVGqopo51vM5P5abGl2QvCIKzSRsHXs5
+	cjw2lsWLZmoXAz3GbJraizxt+PlNUJGqigrZYaX1uGUeukzI61AXgah0qUY5LuXq
+	rD0SWWoivgf0Mbq9QMFfj7lAM6qaetfzpksjny2xQ1SjVy+hwIQcehkkyFVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724308529; x=1724394929; bh=9jNogeP9qCouxRjRwy1Wl1chF9oy
-	TsFasgZrjg+sFW4=; b=K5NK5fEuqqXKNphyAaVdfqL/kCJx0rnhUTq2QBJ6EPG3
-	Zbho+WKBFc8z0bX/MU4QpOLIB/j/ofEtMNiIvf/wEogzyuAO2LXqlZ4mtK9waxFx
-	YUcFiAUGi/naTSSOkuBo2YdxYQODVwGd61E3qS3oHbLLkDno7b2HIpibfjn1cdw+
-	nWK+Iw62AA04GPJvUgEPajrE1Y58pqzsuHvaoy8cEZUbOocDeUEl8qo7NkEG90qz
-	xS40hKbGD/SDH/3OKk82QvmnG8a+e2QfF8rWSGB0M+dGtM5L9A/cKSxA6CQqvtDK
-	2phHeQjSLVqWFTrdbOYeTropKXEtpN05eAeggdDAqw==
-X-ME-Sender: <xms:MdzGZoRdktslM_tGHPsA22HuHNXw0ZBeGJZgJd7-Js3fBJf05-cwGw>
-    <xme:MdzGZlyF_PLM2rzJgdTVD6A2UlMN-nwLMhsKlA2vYPqaCk6CZoET6QEPXHkF_kUkl
-    8wL6st5gOZBykinxg>
-X-ME-Received: <xmr:MdzGZl3IhQWCkgwMhHRQphCx1rxsr7Y9Ts8PrsEL1nCj0NLX8lMDWMA0iXXANKqrhs_LWI5mtFi5dx7Uq4eWxEDWiqpZcP_ydyaefQAaopvenD4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddutdcutefuodetggdotefrod
+	fm1; t=1724308531; x=1724394931; bh=TD8ITKIMpyuKUcmkR4eZDrsevvHk
+	o7HwcZ4qC/BosjQ=; b=j+4pP+YF3ko4ZLZPn+3VkElU6xI6Yf9YVPSgkPX/tztb
+	qp3S1XTDl+bjbSqmVkmORIA1GUHD5eTcRVilj8das+WEtbHg7VBmenoh7Z3GXyY5
+	DcKwDyXeAr9cm9Zg6N+SfDWsn7x0WlXV6yy21MWH5wJDGY2+LYPcwmwGHaxyoqAX
+	/B2LkWBB9VPYC111h7V3ZVG7IbOQcn06EpVDgZTJduePmKSPqe9jdNveu8ABpyiD
+	IPwtpd980yCV9cIIe6dx6RqBUSa/3M1ZpgZYw/XbY5gQ94KxxisvVbOH4Ipo0wEz
+	Mi2jJ1kOGlgbLKUS8FgwI/1AaYRTFls6dPhALgjpTQ==
+X-ME-Sender: <xms:M9zGZl7GSmLNtPcN25ubD60m--0m1__qsY4ddHHVP_ZCJh6LFZsxfw>
+    <xme:M9zGZi4GrbLucx6BoWP3XHNN87RdlrUrnnT3f-1DPvZjW1tN1Zy_ceCNp2gL7afit
+    xK8Je-dvSheYyTTtg>
+X-ME-Received: <xmr:M9zGZsdNARWcJ_EV6P3PinPAWQ5Wsct_9WSkSJiSNV6L8qlsEc0jbcP06sNoC-QHEyIRbXB0SHbHbFviQarqbW8RQOudcRFdQqoJRbIlZzxb-4o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:MdzGZsBJmSycdEEbVhXYH2AYjTGcoSmN9IJw5k3Hq-oCggbRmzDk4w>
-    <xmx:MdzGZhirym4kIflfQPIn0Fi6TFhpcwsc7MI7A6xccX7GgPf0SQK2xw>
-    <xmx:MdzGZooFCU2D6ehsvvMdiexYmBYYyBhA8pP4Vwi5nRdvHCKaoGbv2Q>
-    <xmx:MdzGZkjppiF5X9ibCaY0sg6t8qZeeLyY6W2t0YWzZ-xQg3ItM-_bww>
-    <xmx:MdzGZmvSNPFgOb-I-MwID__kXD7AgVkO7MQFnHqB00gs3esl0FDtyWbX>
+    hmqeenucggtffrrghtthgvrhhnpeeuieeuudfhvefhkeeigfekgfegleejtdffteehheet
+    hffhvdeludekkeffhfffvdenucffohhmrghinhepghhoohhglhgvrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:M9zGZuJTxqcvc_vyP7e5AmmHh_eRqsEAt8MMGa06OXDFuhZvjH26JA>
+    <xmx:M9zGZpKHaitaWCV_dlYiTNY-8PteBZOq58Pt_9hbro2HiRV73IWBLw>
+    <xmx:M9zGZnyBp0moltNTSmkQ0-GhunnL1jOzxWchTtws7Krski2NkdtiNA>
+    <xmx:M9zGZlIblTMgWXmXkWg5p7JBKtzjTYwIhMOTxrrmSvned99f-Tz1NQ>
+    <xmx:M9zGZp0amCgXrHjqtxyd9wP7AlgvJnoCSIH2vphdYCc4Q4RhuWxUwhXC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 02:35:28 -0400 (EDT)
+ 22 Aug 2024 02:35:30 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5c786b8f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 06:34:53 +0000 (UTC)
-Date: Thu, 22 Aug 2024 08:35:24 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e5b15d9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 06:34:56 +0000 (UTC)
+Date: Thu, 22 Aug 2024 08:35:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: karthik nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 14/15] t/helper: refactor to not use `struct
- reftable_table`
-Message-ID: <8eab399dfc6e0b3abaa9d8fe291850d692e019b4.1724308389.git.ps@pks.im>
+Subject: [PATCH v3 15/15] reftable/generic: drop interface
+Message-ID: <b5d7b5679b573a9d0c0458b0a2e29f0ac1855237.1724308389.git.ps@pks.im>
 References: <cover.1723640107.git.ps@pks.im>
  <cover.1724308389.git.ps@pks.im>
 Precedence: bulk
@@ -90,119 +90,427 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724308389.git.ps@pks.im>
 
-The `struct reftable_table` interface in our "reftable" test helper gets
-used such that we can easily print either a single table, or a merged
-stack. This generic interface is about to go away.
+The `reftable_table` interface provides a generic infrastructure that
+can abstract away whether the underlying table is a single table, or a
+merged table. This abstraction can make it rather hard to reason about
+the code. We didn't ever use it to implement the reftable backend, and
+with the preceding patches in this patch series we in fact don't use it
+at all anymore. Furthermore, it became somewhat useless with the recent
+refactorings that made it possible to seek reftable iterators multiple
+times, as these now provide generic access to tables for us. The
+interface is thus redundant and only brings unnecessary complexity with
+it.
 
-Prepare the code for this change by using merged tables instead. When
-printing the stack we've already got one. When using a single table, we
-can create a merged table from it to adapt.
-
-This removes the last user of the generic interface.
+Remove the `struct reftable_table` interface and its associated
+functions.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-reftable.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ Makefile                         |  1 -
+ reftable/generic.c               | 77 --------------------------------
+ reftable/generic.h               | 27 -----------
+ reftable/iter.c                  |  1 -
+ reftable/iter.h                  |  1 -
+ reftable/merged.c                | 38 ----------------
+ reftable/reader.c                | 41 -----------------
+ reftable/reftable-generic.h      | 44 ------------------
+ reftable/reftable-merged.h       |  6 ---
+ reftable/reftable-reader.h       |  7 ---
+ reftable/stack.c                 |  1 -
+ t/unit-tests/t-reftable-merged.c |  1 -
+ 12 files changed, 245 deletions(-)
+ delete mode 100644 reftable/generic.c
+ delete mode 100644 reftable/generic.h
+ delete mode 100644 reftable/reftable-generic.h
 
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 234fb80010f..c1942156b50 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -3,7 +3,6 @@
- #include "hex.h"
- #include "reftable/system.h"
+diff --git a/Makefile b/Makefile
+index 343f19a488b..41dfa0bad2c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2674,7 +2674,6 @@ REFTABLE_OBJS += reftable/merged.o
+ REFTABLE_OBJS += reftable/pq.o
+ REFTABLE_OBJS += reftable/reader.o
+ REFTABLE_OBJS += reftable/record.o
+-REFTABLE_OBJS += reftable/generic.o
+ REFTABLE_OBJS += reftable/stack.o
+ REFTABLE_OBJS += reftable/tree.o
+ REFTABLE_OBJS += reftable/writer.o
+diff --git a/reftable/generic.c b/reftable/generic.c
+deleted file mode 100644
+index 495ee9af6b0..00000000000
+--- a/reftable/generic.c
++++ /dev/null
+@@ -1,77 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
+-
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#include "constants.h"
+-#include "record.h"
+-#include "generic.h"
+-#include "iter.h"
+-#include "reftable-iterator.h"
+-#include "reftable-generic.h"
+-
+-void table_init_iter(struct reftable_table *tab,
+-		     struct reftable_iterator *it,
+-		     uint8_t typ)
+-{
+-
+-	tab->ops->init_iter(tab->table_arg, it, typ);
+-}
+-
+-void reftable_table_init_ref_iter(struct reftable_table *tab,
+-				  struct reftable_iterator *it)
+-{
+-	table_init_iter(tab, it, BLOCK_TYPE_REF);
+-}
+-
+-void reftable_table_init_log_iter(struct reftable_table *tab,
+-				  struct reftable_iterator *it)
+-{
+-	table_init_iter(tab, it, BLOCK_TYPE_LOG);
+-}
+-
+-int reftable_table_read_ref(struct reftable_table *tab, const char *name,
+-			    struct reftable_ref_record *ref)
+-{
+-	struct reftable_iterator it = { NULL };
+-	int err;
+-
+-	reftable_table_init_ref_iter(tab, &it);
+-
+-	err = reftable_iterator_seek_ref(&it, name);
+-	if (err)
+-		goto done;
+-
+-	err = reftable_iterator_next_ref(&it, ref);
+-	if (err)
+-		goto done;
+-
+-	if (strcmp(ref->refname, name) ||
+-	    reftable_ref_record_is_deletion(ref)) {
+-		reftable_ref_record_release(ref);
+-		err = 1;
+-		goto done;
+-	}
+-
+-done:
+-	reftable_iterator_destroy(&it);
+-	return err;
+-}
+-
+-uint64_t reftable_table_max_update_index(struct reftable_table *tab)
+-{
+-	return tab->ops->max_update_index(tab->table_arg);
+-}
+-
+-uint64_t reftable_table_min_update_index(struct reftable_table *tab)
+-{
+-	return tab->ops->min_update_index(tab->table_arg);
+-}
+-
+-uint32_t reftable_table_hash_id(struct reftable_table *tab)
+-{
+-	return tab->ops->hash_id(tab->table_arg);
+-}
+diff --git a/reftable/generic.h b/reftable/generic.h
+deleted file mode 100644
+index 837fbb8df20..00000000000
+--- a/reftable/generic.h
++++ /dev/null
+@@ -1,27 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
+-
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#ifndef GENERIC_H
+-#define GENERIC_H
+-
+-#include "record.h"
+-#include "reftable-generic.h"
+-
+-/* generic interface to reftables */
+-struct reftable_table_vtable {
+-	void (*init_iter)(void *tab, struct reftable_iterator *it, uint8_t typ);
+-	uint32_t (*hash_id)(void *tab);
+-	uint64_t (*min_update_index)(void *tab);
+-	uint64_t (*max_update_index)(void *tab);
+-};
+-
+-void table_init_iter(struct reftable_table *tab,
+-		     struct reftable_iterator *it,
+-		     uint8_t typ);
+-
+-#endif
+diff --git a/reftable/iter.c b/reftable/iter.c
+index 225feb78714..97a4642ed57 100644
+--- a/reftable/iter.c
++++ b/reftable/iter.c
+@@ -11,7 +11,6 @@ license that can be found in the LICENSE file or at
+ #include "system.h"
+ 
+ #include "block.h"
+-#include "generic.h"
+ #include "constants.h"
+ #include "reader.h"
+ #include "reftable-error.h"
+diff --git a/reftable/iter.h b/reftable/iter.h
+index 3b401f12590..befc4597df1 100644
+--- a/reftable/iter.h
++++ b/reftable/iter.h
+@@ -14,7 +14,6 @@ license that can be found in the LICENSE file or at
+ #include "record.h"
+ 
+ #include "reftable-iterator.h"
+-#include "reftable-generic.h"
+ 
+ /*
+  * The virtual function table for implementing generic reftable iterators.
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 2e72eab3069..128a810c55d 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -13,7 +13,6 @@ license that can be found in the LICENSE file or at
+ #include "pq.h"
+ #include "reader.h"
+ #include "record.h"
+-#include "generic.h"
+ #include "reftable-merged.h"
+ #include "reftable-error.h"
+ #include "system.h"
+@@ -270,40 +269,3 @@ uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
+ {
+ 	return mt->hash_id;
+ }
+-
+-static void reftable_merged_table_init_iter_void(void *tab,
+-						 struct reftable_iterator *it,
+-						 uint8_t typ)
+-{
+-	merged_table_init_iter(tab, it, typ);
+-}
+-
+-static uint32_t reftable_merged_table_hash_id_void(void *tab)
+-{
+-	return reftable_merged_table_hash_id(tab);
+-}
+-
+-static uint64_t reftable_merged_table_min_update_index_void(void *tab)
+-{
+-	return reftable_merged_table_min_update_index(tab);
+-}
+-
+-static uint64_t reftable_merged_table_max_update_index_void(void *tab)
+-{
+-	return reftable_merged_table_max_update_index(tab);
+-}
+-
+-static struct reftable_table_vtable merged_table_vtable = {
+-	.init_iter = reftable_merged_table_init_iter_void,
+-	.hash_id = reftable_merged_table_hash_id_void,
+-	.min_update_index = reftable_merged_table_min_update_index_void,
+-	.max_update_index = reftable_merged_table_max_update_index_void,
+-};
+-
+-void reftable_table_from_merged_table(struct reftable_table *tab,
+-				      struct reftable_merged_table *merged)
+-{
+-	assert(!tab->ops);
+-	tab->ops = &merged_table_vtable;
+-	tab->table_arg = merged;
+-}
+diff --git a/reftable/reader.c b/reftable/reader.c
+index fbd93b88dff..082cf00b606 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -11,11 +11,9 @@ license that can be found in the LICENSE file or at
+ #include "system.h"
+ #include "block.h"
+ #include "constants.h"
+-#include "generic.h"
+ #include "iter.h"
+ #include "record.h"
+ #include "reftable-error.h"
+-#include "reftable-generic.h"
+ 
+ uint64_t block_source_size(struct reftable_block_source *source)
+ {
+@@ -759,45 +757,6 @@ uint64_t reftable_reader_min_update_index(struct reftable_reader *r)
+ 	return r->min_update_index;
+ }
+ 
+-/* generic table interface. */
+-
+-static void reftable_reader_init_iter_void(void *tab,
+-					   struct reftable_iterator *it,
+-					   uint8_t typ)
+-{
+-	reader_init_iter(tab, it, typ);
+-}
+-
+-static uint32_t reftable_reader_hash_id_void(void *tab)
+-{
+-	return reftable_reader_hash_id(tab);
+-}
+-
+-static uint64_t reftable_reader_min_update_index_void(void *tab)
+-{
+-	return reftable_reader_min_update_index(tab);
+-}
+-
+-static uint64_t reftable_reader_max_update_index_void(void *tab)
+-{
+-	return reftable_reader_max_update_index(tab);
+-}
+-
+-static struct reftable_table_vtable reader_vtable = {
+-	.init_iter = reftable_reader_init_iter_void,
+-	.hash_id = reftable_reader_hash_id_void,
+-	.min_update_index = reftable_reader_min_update_index_void,
+-	.max_update_index = reftable_reader_max_update_index_void,
+-};
+-
+-void reftable_table_from_reader(struct reftable_table *tab,
+-				struct reftable_reader *reader)
+-{
+-	assert(!tab->ops);
+-	tab->ops = &reader_vtable;
+-	tab->table_arg = reader;
+-}
+-
+ int reftable_reader_print_blocks(const char *tablename)
+ {
+ 	struct {
+diff --git a/reftable/reftable-generic.h b/reftable/reftable-generic.h
+deleted file mode 100644
+index b8b1323a331..00000000000
+--- a/reftable/reftable-generic.h
++++ /dev/null
+@@ -1,44 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
+-
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#ifndef REFTABLE_GENERIC_H
+-#define REFTABLE_GENERIC_H
+-
+-#include "reftable-iterator.h"
+-
+-struct reftable_table_vtable;
+-
+-/*
+- * Provides a unified API for reading tables, either merged tables, or single
+- * readers. */
+-struct reftable_table {
+-	struct reftable_table_vtable *ops;
+-	void *table_arg;
+-};
+-
+-void reftable_table_init_ref_iter(struct reftable_table *tab,
+-				  struct reftable_iterator *it);
+-
+-void reftable_table_init_log_iter(struct reftable_table *tab,
+-				  struct reftable_iterator *it);
+-
+-/* returns the hash ID from a generic reftable_table */
+-uint32_t reftable_table_hash_id(struct reftable_table *tab);
+-
+-/* returns the max update_index covered by this table. */
+-uint64_t reftable_table_max_update_index(struct reftable_table *tab);
+-
+-/* returns the min update_index covered by this table. */
+-uint64_t reftable_table_min_update_index(struct reftable_table *tab);
+-
+-/* convenience function to read a single ref. Returns < 0 for error, 0
+-   for success, and 1 if ref not found. */
+-int reftable_table_read_ref(struct reftable_table *tab, const char *name,
+-			    struct reftable_ref_record *ref);
+-
+-#endif
+diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
+index 03c2619c0ff..16d19f8df20 100644
+--- a/reftable/reftable-merged.h
++++ b/reftable/reftable-merged.h
+@@ -26,8 +26,6 @@ license that can be found in the LICENSE file or at
+ /* A merged table is implements seeking/iterating over a stack of tables. */
+ struct reftable_merged_table;
+ 
+-/* A generic reftable; see below. */
+-struct reftable_table;
+ struct reftable_reader;
+ 
+ /*
+@@ -60,8 +58,4 @@ void reftable_merged_table_free(struct reftable_merged_table *m);
+ /* return the hash ID of the merged table. */
+ uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *m);
+ 
+-/* create a generic table from reftable_merged_table */
+-void reftable_table_from_merged_table(struct reftable_table *tab,
+-				      struct reftable_merged_table *table);
+-
+ #endif
+diff --git a/reftable/reftable-reader.h b/reftable/reftable-reader.h
+index 7c7d1716516..69621c5b0fc 100644
+--- a/reftable/reftable-reader.h
++++ b/reftable/reftable-reader.h
+@@ -23,9 +23,6 @@
+ /* The reader struct is a handle to an open reftable file. */
+ struct reftable_reader;
+ 
+-/* Generic table. */
+-struct reftable_table;
+-
+ /* reftable_new_reader opens a reftable for reading. If successful,
+  * returns 0 code and sets pp. The name is used for creating a
+  * stack. Typically, it is the basename of the file. The block source
+@@ -60,10 +57,6 @@ uint64_t reftable_reader_max_update_index(struct reftable_reader *r);
+ /* return the min_update_index for a table */
+ uint64_t reftable_reader_min_update_index(struct reftable_reader *r);
+ 
+-/* creates a generic table from a file reader. */
+-void reftable_table_from_reader(struct reftable_table *tab,
+-				struct reftable_reader *reader);
+-
+ /* print blocks onto stdout for debugging. */
+ int reftable_reader_print_blocks(const char *tablename);
+ 
+diff --git a/reftable/stack.c b/reftable/stack.c
+index bedd503e7e1..d3a95d2f1d7 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -14,7 +14,6 @@ license that can be found in the LICENSE file or at
+ #include "merged.h"
+ #include "reader.h"
+ #include "reftable-error.h"
+-#include "reftable-generic.h"
+ #include "reftable-record.h"
+ #include "reftable-merged.h"
+ #include "writer.h"
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+index 577b1a5be87..93345c6c8be 100644
+--- a/t/unit-tests/t-reftable-merged.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -12,7 +12,6 @@ license that can be found in the LICENSE file or at
+ #include "reftable/merged.h"
+ #include "reftable/reader.h"
  #include "reftable/reftable-error.h"
 -#include "reftable/reftable-generic.h"
  #include "reftable/reftable-merged.h"
- #include "reftable/reftable-reader.h"
- #include "reftable/reftable-stack.h"
-@@ -33,7 +32,7 @@ static void print_help(void)
- 	       "\n");
- }
+ #include "reftable/reftable-writer.h"
  
--static int dump_table(struct reftable_table *tab)
-+static int dump_table(struct reftable_merged_table *mt)
- {
- 	struct reftable_iterator it = { NULL };
- 	struct reftable_ref_record ref = { NULL };
-@@ -41,13 +40,12 @@ static int dump_table(struct reftable_table *tab)
- 	const struct git_hash_algo *algop;
- 	int err;
- 
--	reftable_table_init_ref_iter(tab, &it);
--
-+	reftable_merged_table_init_ref_iterator(mt, &it);
- 	err = reftable_iterator_seek_ref(&it, "");
- 	if (err < 0)
- 		return err;
- 
--	algop = &hash_algos[hash_algo_by_id(reftable_table_hash_id(tab))];
-+	algop = &hash_algos[hash_algo_by_id(reftable_merged_table_hash_id(mt))];
- 
- 	while (1) {
- 		err = reftable_iterator_next_ref(&it, &ref);
-@@ -77,8 +75,7 @@ static int dump_table(struct reftable_table *tab)
- 	reftable_iterator_destroy(&it);
- 	reftable_ref_record_release(&ref);
- 
--	reftable_table_init_log_iter(tab, &it);
--
-+	reftable_merged_table_init_log_iterator(mt, &it);
- 	err = reftable_iterator_seek_log(&it, "");
- 	if (err < 0)
- 		return err;
-@@ -118,15 +115,13 @@ static int dump_stack(const char *stackdir, uint32_t hash_id)
- 	struct reftable_stack *stack = NULL;
- 	struct reftable_write_options opts = { .hash_id = hash_id };
- 	struct reftable_merged_table *merged = NULL;
--	struct reftable_table table = { NULL };
- 
- 	int err = reftable_new_stack(&stack, stackdir, &opts);
- 	if (err < 0)
- 		goto done;
- 
- 	merged = reftable_stack_merged_table(stack);
--	reftable_table_from_merged_table(&table, merged);
--	err = dump_table(&table);
-+	err = dump_table(merged);
- done:
- 	if (stack)
- 		reftable_stack_destroy(stack);
-@@ -135,10 +130,12 @@ static int dump_stack(const char *stackdir, uint32_t hash_id)
- 
- static int dump_reftable(const char *tablename)
- {
--	struct reftable_block_source src = { NULL };
--	int err = reftable_block_source_from_file(&src, tablename);
-+	struct reftable_block_source src = { 0 };
-+	struct reftable_merged_table *mt = NULL;
- 	struct reftable_reader *r = NULL;
--	struct reftable_table tab = { NULL };
-+	int err;
-+
-+	err = reftable_block_source_from_file(&src, tablename);
- 	if (err < 0)
- 		goto done;
- 
-@@ -146,9 +143,15 @@ static int dump_reftable(const char *tablename)
- 	if (err < 0)
- 		goto done;
- 
--	reftable_table_from_reader(&tab, r);
--	err = dump_table(&tab);
-+	err = reftable_merged_table_new(&mt, &r, 1,
-+					reftable_reader_hash_id(r));
-+	if (err < 0)
-+		goto done;
-+
-+	err = dump_table(mt);
-+
- done:
-+	reftable_merged_table_free(mt);
- 	reftable_reader_free(r);
- 	return err;
- }
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
