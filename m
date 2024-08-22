@@ -1,128 +1,244 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96265184532
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5714F4CE05
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724318296; cv=none; b=owNQDA77GqRb9d0JS6IOpO0gnFKSQmvxJXb27zM+3RFY3pkjj2Ls2/wsuP563isqUGuphQgc4eLhsSgCXCEbsVXp4jav/TOdscY9YTEOnqEtmWjenzVPjKCBskWKGwrcBPJiVG0ccd7fAK2jGa2XzArWuMfHqSfbALhZp9KuKHE=
+	t=1724318881; cv=none; b=ZQL6Hhpqkn1kpZoVvukU4voqVrqSxa7FT4CpfWXlpLh6D1L/p9ANrX0OTz5Jk5CYOHYtR7Zn6QdWVYNcP/xaSK2MJHhvknTVBX5PpGtooiyBlTpkiuYkCsyjinxdI3K5/34ugMIA4Kaf7lxBhPM2xmtsINjsm5zExyOS33tRhso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724318296; c=relaxed/simple;
-	bh=zwg0kB4Rcsb8XD2nW8KQ2yJ+gZvuwV/Z3iVedjkkw2c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R9VclsmUo5SrcROzmbzj7UCjUed/MQLlwew/23ZT0kHAN4MDzzJxFTBwkXKnkZvHtMIPtfftJm3gVVr44Vn0e0DUDSovqcnSuEF8ZkNw1WLb7m8Bm/Ovd4F+zwqZkTUkD1j3hvynSQl7QJ47ic+DDdDrjx9x+XUS31ZgXLmqtoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nnS+AQCy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PLOWr/sd; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724318881; c=relaxed/simple;
+	bh=9Kv1+F0zGW+36iRHnLPY+yZ2kMNjSzjV/WKQmNr+UGI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VaHCNjHm6MyD5hRxIa1e1yTYVxdk5HGDGCbN1tXzeH4mqpDXA02jpdl2tPEMYWXqFRkqTyY3EDfkIITp0uHDoCbFexId3aYHQeuUrAgFdq6rYRgnSIhEIZSojoIWYIaFAwCiRUSvmJpCi4037TpMwgLiKpdM6HTIDeNdur1//vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQV2ffO1; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nnS+AQCy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PLOWr/sd"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id E52221151BA8;
-	Thu, 22 Aug 2024 05:18:13 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 22 Aug 2024 05:18:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724318293; x=1724404693; bh=Fx58xHcaAV
-	XHT+2XgotGrdn2miPfx3kVxV8MC6HNayM=; b=nnS+AQCyOmpU3ElFQOweEEoIBv
-	xpDGUoEsWLl95dXMGyouw3X7Ol6IP4hhdw8cl1dZBpPPl6vqm7KwBClqYUCMN5l2
-	bwSVpV50mLFyEnwUm/8wIFht7VpsijBkBDvbXdArfqN7eETu97sdYUJo10coZN80
-	DqvmgRLVH+sLS2hj4XcvGOBPDniyctwuLfVOiXxhACISZhsiDAtm6QucKPpQN3S9
-	O7N8mB1guToaYx0BEK2IAOKYOdkREGW6o5eHjwaI6927Jg23sz7FIl1tv17jq/ez
-	FUWX6nwvp5PwZC26NHqRqZv+LOor9+/ZfRhc9Hr250YJiFpMmNDvC1INA1Aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724318293; x=1724404693; bh=Fx58xHcaAVXHT+2XgotGrdn2miPf
-	x3kVxV8MC6HNayM=; b=PLOWr/sdSH6gJhglZDH1tQyhtBggUUdhg8pPuCRnJKB7
-	pEh0w9yHRBHCD9nHGQz9oXyv7Pl3EU/qF2pb7x9NjY8BMmwJWBxN7ziOalsK3yRu
-	XclJ6QDcmMMoad5KyhNFJY9EydYyIX9wMRd1+6fDlX9tosC682NPaxFWpdwc/My9
-	1W379VOFxod5wiGaesMiTn6NCWBooAW0HMkeq7T9OYj7TVRy56RuQHZN9XcBde2J
-	GGSHEAVFA7RN+L4Obvn/exT30iU+Pdk5azNHkhhWq2O+biMuxVBDlzk4sl1DA6+M
-	XzQQJgqpHNxYLbyB8pQlOIkNPjME/RGHk7+YOh8neQ==
-X-ME-Sender: <xms:VQLHZrCnL_px98NhhwyFS6NgxPFjoD7SDaGrQH4GAUqo66KAwLdjaA>
-    <xme:VQLHZhiiKNUAadVt5_ytldi5VckBG7Do7BeBTflhkhFVDXBq8E37GGHPs3DZW3xYB
-    hHrOVKragG-J8kSXg>
-X-ME-Received: <xmr:VQLHZmnsbnlGvRmBGDUBHDWF9djyCrk3HlNMrR04_hnVtdlpjeYfXXS8kTHlLuR47R58ZU_gNjO1an8uYfCFGupYOCWivHhWwbq5OLlA8EmETL8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:VQLHZtxqUKAn18qvM5PyOLuJrqNXAmvoqQ0YYqKXfeKOe_LBT0JFbw>
-    <xmx:VQLHZgTsUgk10bAHlqlzLg1Z710GVW437tuL4I8uxbGY4VzeEuZF1g>
-    <xmx:VQLHZgay8ASbxrMHXggERL5DNNy9hfZHwalGfdJesrXwI3bNPtPUzQ>
-    <xmx:VQLHZhTCkh7bnijtRBPfi15_HXwHI9jZtIRXUouA6xv5ZgCJ2pnfGg>
-    <xmx:VQLHZrf1pQmSNXQpKg0B86qDQYTc14e-U_QkFAefFX05mXuvm2VTF6JS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 05:18:13 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6570c4c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 09:17:38 +0000 (UTC)
-Date: Thu, 22 Aug 2024 11:18:11 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 20/20] transport: fix leaking negotiation tips
-Message-ID: <c3d2b035761fa8a14df4d128375a24bf5821da9d.1724315484.git.ps@pks.im>
-References: <cover.1724159575.git.ps@pks.im>
- <cover.1724315484.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQV2ffO1"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-533488ffb03so773210e87.3
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 02:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724318877; x=1724923677; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nW4wY2WnqanA0R5ubNAY3L9qc59QDHvIA8suQEvS+Rk=;
+        b=dQV2ffO1MrNnTwqRTSDFngZ8RnR8wYzoa030pxJYZfAiAb8TjZc/3znza1lhjc64OG
+         PGD7uu6jX3sgs1d6dk8oMGADriBCelKtj+K3ot7ZcVGpjlHmUyW+Pf4Rh9FDf5qYanfL
+         FH1EZuJuob0XlsJCEaEm18Dau6RGPrn8KiIUOGAr/1SvJI54k3C+X5Jm4ZP/fYPNduhS
+         YsJng+dK5bPmQGkFDi9t1cK94S9DVSPCjyUWjUjS+SCXzbnTS5Yq79V9/QOdyEbsbXL/
+         e8FfPJjgKJDLcQZdy+0z8IWIkniPV3X1RLwLSc0gEUiHC+fvtN/z2LaymzUbz+/sLFYW
+         zIJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724318877; x=1724923677;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nW4wY2WnqanA0R5ubNAY3L9qc59QDHvIA8suQEvS+Rk=;
+        b=fTLlLx6f9CGtRDtWI0SnXQ3HKJ9DGxaEMfb5vvKAXckdLUtZY0oW0AESrhoOSA2vy7
+         p5CSXx5Twe+aOWp8Ux16p1nXeXHkfCWvwKqzDKewxnRz2K3ICa96BszhB6PyaHk58p5n
+         WorWxit8JOYfda4iHMGbW0SMHYdQoCWQC6muyzbZoRcC+5MZOQsvP3u35KiDD45PaT4n
+         CSerHP9c/eLwUuUYOy/LDMmYycL8mIU2MsjFXNYfOa2cOHPI+D2kX4Ytab0unO/eWlMy
+         MhOootrP1wfSiNWLxcW0fofs9cGiL4lsdyOknK36Mf9D9WgalKRbyyB/O9yaH7D2jum6
+         AquA==
+X-Gm-Message-State: AOJu0YxBtvmGG2lNAPBvU/TUc2jUIdLKX0aLCYukwURQUqbAFkj6OxUN
+	BeCs47V46794+E0kSq4Vgxl0iOdKLEt+n+MW75DLzlfly3luTaGgwP3eKA==
+X-Google-Smtp-Source: AGHT+IFJxPvPwayuNUNi6Z9xHvhQVSIQpRxgTzhruSyknUgsfPkHQLNSZjJ4nuQRUEJrTAJKEaSCjg==
+X-Received: by 2002:a05:6512:3b23:b0:52e:934f:bda5 with SMTP id 2adb3069b0e04-5334faeb6aamr793188e87.21.1724318876298;
+        Thu, 22 Aug 2024 02:27:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f2adc4asm91666666b.86.2024.08.22.02.27.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 02:27:55 -0700 (PDT)
+Message-Id: <pull.1774.git.1724318874608.gitgitgadget@gmail.com>
+From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Aug 2024 09:27:54 +0000
+Subject: [PATCH] gitk: added external diff file rename detection
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1724315484.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: ToBoMi <tobias.boesch@miele.com>,
+    deboeto <tobias.boesch@miele.com>
 
-We do not free negotiation tips in the transport's smart options. Fix
-this by freeing them on disconnect.
+From: deboeto <tobias.boesch@miele.com>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+* If a file was renamed between commits and
+    an external diff is started through gitk
+    on the THE ORIGINAL FILE NAME (not the
+    renamed one), gitk was unable to open
+    the renamed file in the external diff
+    editor.
+    It failed to fetch the renamed file from
+    git, because it fetched it with the original
+    path in contrast to using the renamed path
+*   gitk now detects the rename and opens the
+    external diff with the original and the RENAMED
+    file instead of no file (it is able to fetch
+    the renamed file now from git with the renamed
+    path/filename)
+* Since git doesn't destinguish between move or
+    rename this also works for moved files
+* External diff detection and usage is optional
+    and has to be enabled in gitk settings
+* External rename detection ist marked
+    EXPERIMENTAL in the settings and disabled
+    by default
+* Showing the renamed file doesn't work when THE
+    RENAMED FILE is selected in gitk and an
+    external diff ist started on that file,
+    because the selected file is not renamed in
+    that commit. It already IS the renamed file.
+
+Signed-off-by: deboeto <tobias.boesch@miele.com>
 ---
- t/t5510-fetch.sh | 1 +
- transport.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+    gitk: added external diff file rename detection
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 3b3991ab867..0890b9f61c5 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -5,6 +5,7 @@ test_description='Per branch config variables affects "git fetch".
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1774%2FToBoMi%2Fdetect_renamed_files_when_opening_diff-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1774/ToBoMi/detect_renamed_files_when_opening_diff-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1774
+
+ gitk-git/gitk | 54 ++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 7 deletions(-)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 7a087f123d7..f7427f6d3f2 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -3662,11 +3662,33 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+                "revision $diffid"]
+ }
  
- '
++proc check_for_renames_in_diff {filepath} {
++    global ctext
++
++    set renamed_filenames [list {}]
++    set filename [file tail $filepath]
++    set rename_from_text_length 12
++    set rename_to_text_length 10
++    set reg_expr_rename_from {^rename from (.*$filename)}
++    set reg_expr_rename_from [subst -nobackslashes -nocommands $reg_expr_rename_from]
++    set reg_expr_rename_to {^rename to (.*)}
++    set rename_from_text_index [$ctext search -elide -regexp -- $reg_expr_rename_from 0.0]
++    if { ($rename_from_text_index != {})} {
++        set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to $rename_from_text_index]
++        if { ($rename_from_text_index != {}) && ($rename_to_text_index != {}) } {
++            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_length chars" "$rename_from_text_index lineend"]
++            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_length chars" "$rename_to_text_index lineend"]
++        }
++    }
++    return $renamed_filenames
++}
++
+ proc external_diff {} {
+     global nullid nullid2
+     global flist_menu_file
+     global diffids
+     global extdifftool
++    global file_rename_detection
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-bundle.sh
+     if {[llength $diffids] == 1} {
+         # no reference commit given
+@@ -3692,8 +3714,21 @@ proc external_diff {} {
+     if {$diffdir eq {}} return
  
-diff --git a/transport.c b/transport.c
-index da639d3bff0..0f20fc56e40 100644
---- a/transport.c
-+++ b/transport.c
-@@ -947,6 +947,10 @@ static int disconnect_git(struct transport *transport)
- 		finish_connect(data->conn);
- 	}
+     # gather files to diff
+-    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+-    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
++    if {$file_rename_detection} {
++        set renamed_filenames [check_for_renames_in_diff $flist_menu_file]
++        set rename_from_filename [lindex $renamed_filenames 1]
++        set rename_to_filename [lindex $renamed_filenames 2]
++        if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
++            set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
++            set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
++        } else {
++            set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
++            set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
++        }
++    } else {
++        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
++        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
++    }
  
-+	if (data->options.negotiation_tips) {
-+		oid_array_clear(data->options.negotiation_tips);
-+		free(data->options.negotiation_tips);
-+	}
- 	list_objects_filter_release(&data->options.filter_options);
- 	oid_array_clear(&data->extra_have);
- 	oid_array_clear(&data->shallow);
+     if {$difffromfile ne {} && $difftofile ne {}} {
+         set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
+@@ -11577,7 +11612,7 @@ proc create_prefs_page {w} {
+ proc prefspage_general {notebook} {
+     global NS maxwidth maxgraphpct showneartags showlocalchanges
+     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
+-    global hideremotes want_ttk have_ttk maxrefs web_browser
++    global hideremotes want_ttk have_ttk maxrefs web_browser file_rename_detection
+ 
+     set page [create_prefs_page $notebook.general]
+ 
+@@ -11639,12 +11674,16 @@ proc prefspage_general {notebook} {
+     grid $page.lgen - -sticky w -pady 10
+     ${NS}::checkbutton $page.want_ttk -variable want_ttk \
+         -text [mc "Use themed widgets"]
++    ${NS}::checkbutton $page.file_rename_detection -variable file_rename_detection \
++        -text [mc "Use ext diff file rename detection"]
++    ${NS}::label $page.file_rename_detection_note -text [mc "(EXPERIMENTAL\nTries to find the file path of a\nrenamed file in external diff)"]
+     if {$have_ttk} {
+         ${NS}::label $page.ttk_note -text [mc "(change requires restart)"]
+     } else {
+         ${NS}::label $page.ttk_note -text [mc "(currently unavailable)"]
+     }
+     grid x $page.want_ttk $page.ttk_note -sticky w
++    grid x $page.file_rename_detection $page.file_rename_detection_note -sticky w
+     return $page
+ }
+ 
+@@ -11725,7 +11764,7 @@ proc doprefs {} {
+     global oldprefs prefstop showneartags showlocalchanges
+     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
+     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
+-    global hideremotes want_ttk have_ttk
++    global hideremotes want_ttk have_ttk file_rename_detection
+ 
+     set top .gitkprefs
+     set prefstop $top
+@@ -11734,7 +11773,7 @@ proc doprefs {} {
+         return
+     }
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-                   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++                   limitdiffs tabstop perfile_attrs hideremotes want_ttk file_rename_detection} {
+         set oldprefs($v) [set $v]
+     }
+     ttk_toplevel $top
+@@ -11860,7 +11899,7 @@ proc prefscan {} {
+     global oldprefs prefstop
+ 
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-                   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++                   limitdiffs tabstop perfile_attrs hideremotes want_ttk file_rename_detection} {
+         global $v
+         set $v $oldprefs($v)
+     }
+@@ -12404,6 +12443,7 @@ set autoselect 1
+ set autosellen 40
+ set perfile_attrs 0
+ set want_ttk 1
++set file_rename_detection 0
+ 
+ if {[tk windowingsystem] eq "aqua"} {
+     set extdifftool "opendiff"
+@@ -12498,7 +12538,7 @@ config_check_tmp_exists 50
+ set config_variables {
+     mainfont textfont uifont tabstop findmergefiles maxgraphpct maxwidth
+     cmitmode wrapcomment autoselect autosellen showneartags maxrefs visiblerefs
+-    hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk
++    hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk file_rename_detection
+     bgcolor fgcolor uifgcolor uifgdisabledcolor colors diffcolors mergecolors
+     markbgcolor diffcontext selectbgcolor foundbgcolor currentsearchhitbgcolor
+     extdifftool perfile_attrs headbgcolor headfgcolor headoutlinecolor
+
+base-commit: b9849e4f7631d80f146d159bf7b60263b3205632
 -- 
-2.46.0.164.g477ce5ccd6.dirty
-
+gitgitgadget
