@@ -1,53 +1,53 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BEC16EB76
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 08:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147D2282EA
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 08:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724316398; cv=none; b=tdR4Oom3cHyL0WaU3ZAyFzvHkzUhauIARSDDnhjlKXMMU1Y4NYkD91eVW7uLD5x4pENlid+4OChhYarinyzMQhTnOaB2zYKjL/Z0W9U51J+vEyfgGb+ycnylAn292c2vpj1JFDWBTbu/ifHc75aJ24irNSOpwfeYriGq8sBSUDY=
+	t=1724316517; cv=none; b=iYtbXMqtvlvGnbT456ePWAqWXIDLa5tP44AcFGbibFKtap0qbi09vYEdcRzPXn1J9ja3hami3d0W29qA/tDA/uqpCNWVHOzDVMPGeH99V3FK0VCSmaX2p81bS554kCYBaTSd/rqKJ/XO+HtqeliS16GdclBHtu43E7EeKVqoobA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724316398; c=relaxed/simple;
-	bh=QzO5IxmqtMFdedb9m4iIe5DcP5E50iyRxEqagWvpTtk=;
+	s=arc-20240116; t=1724316517; c=relaxed/simple;
+	bh=k7l6N540iL74DrU6ga+/8HfkLqn37hCzDztAksZWHQg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I1MMI40ozy5VaDbGswCVmR/+1h3rwURPISIEvzCSL/rEs0c1+LUrHPSRQt9cKwmmS1CsD26GZKkGayndq1viEDDEzKwnQQkBxR51sYyQOt3M84pDNh7Xbo6T21Rz6vKqO3wZuX9c9YBzj8XIsyRQMeY4fuIjTbL7fRNt6C6lfUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wjj17MKD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tX+x+/Gu; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=g+dEt0gcVMSpG1vNVSYgxJOKYQaPENXJl9jrpVkB1mels0k7h5CYqLgbSKqkC8tPeQzQM66ZEREx6KeTt4XEex4PtQjmAxHLpOdJH6jitUwM0u6muSN7c627z2H80vPcMzqO0LImEF0kcgP+6NcCmNygpds78el+wqJbf7iNLYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WWP/uhU4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eugkD18L; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wjj17MKD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tX+x+/Gu"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id B258F1151BEF;
-	Thu, 22 Aug 2024 04:46:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WWP/uhU4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eugkD18L"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1AA1B1151A93;
+	Thu, 22 Aug 2024 04:48:35 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 22 Aug 2024 04:46:35 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 22 Aug 2024 04:48:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724316395; x=1724402795; bh=Np+CDqq9vq
-	aFdFTAZ4s8Cz5eWS+Rqk7+cnxaSQ/I7Kw=; b=Wjj17MKD18Ni0rWiEDo2netjMU
-	BEhSRWQwVTNG6sV87kkclVnjql96iGt+Eej1V6U2uDV8Yvf2ExgQ56HmYkAQI74a
-	SDGkrbJLS46bbEeOhJmvTQmZWVuqYqzUcVXI3mdlyc4FSypomwWl6S+TvmiBgZy1
-	I/9hxMWxQvqkZDIOosqV5O+Gks4Q5EqaXFeSJ3c7+G06RjLk8ZenoWptddoKoLae
-	9KgYKg902zVY0Le73pN6U585IklRuVWMdfUpDaBMHdXZDKm/A21hFnF7JJzVzBpc
-	GXlwx80v/rfzc/vSXxGporHdaHsSxvd0YVwBwM39+27GZP1ewvUw3mJ1Sc1A==
+	:subject:to:to; s=fm1; t=1724316515; x=1724402915; bh=8C6HYySz7v
+	6EZ2a9DcWjSoFYsKQ1OSmpKyH2C/KmP+0=; b=WWP/uhU4c4JC+B7t3DyU8W74RD
+	9VljPs5jCtU6ZBW5Q2Ao1B/+NbPrXgjpmjO7Ey766Eapb+kpjnhwVtKBLyhxej8x
+	cET3h5RFLfL03l7WK1bB2cDy6MOuHs+pLtBt3/A7/+ynu/pXxyFzGvocSE5UbWp7
+	rNtktb1kRcZ0AxSpZQsxErXxgCIzdhWplOVRFpuz3DkGc+0ip5+WhAYaCXtjbit1
+	wtoIAuk1EaGiEca+6QyRoGXLNffro+EPTY09KaxCq2eWyxq/Xp94Xai/tblf++aM
+	3cyycwKsVaRXj0EQX2UoPXH3ln71zzZdj1a3udf+MCk7isc+NmpfR9vnnojA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724316395; x=1724402795; bh=Np+CDqq9vqaFdFTAZ4s8Cz5eWS+R
-	qk7+cnxaSQ/I7Kw=; b=tX+x+/GuxwnUayEAtNjJ/R7SPtCaEHH/GS9F4inJ9zkK
-	ZFqgj4cyQWPgjUH4mXaAPrhP13iCe8OiL1DHtz4myoPI2ahRroJmuLuEBmjfXymz
-	dMHwsuz28BFUKP3DCAEUZeBEyuzWp3upZeo25eMXcj3MBQZkuOHR+RX38lat+4es
-	IZiuKbIafOzkowejGZqYX8esgn5ggFzJ9XaK+xF+TMps8Kmb+d/RVDA0uXYMBXbM
-	b9yOFoSo9fk/3Gw3IqdxLA9R6NVSoQjUTvRFF3mMHd00KoLS0UsUWrlc4rDTsTyR
-	mvCp8DfZWf8WZPhuxxGJBWU/jHIKkK/9R85w3yv/Kg==
-X-ME-Sender: <xms:6_rGZjci9otWD02fItJwIvOLK55j8vu95QeEZP1216jmp16Tsr3VjQ>
-    <xme:6_rGZpMXND8ceoiVRkldO1ZxWHgwjAMITDsvyct6_umv3W1HMrTgx1hkoDokCH9eh
-    fjd78L4mFmOCnWP4Q>
-X-ME-Received: <xmr:6_rGZshzQONECoQUyj-A9MA7jvWODCeEnPdd8b4S7oUNs44on8j27c0VaQumeyNhT240OR6bhd_qOx_uv1XbW3rm8OJSBL78R7ExDqI4DYE9g2c>
+	fm1; t=1724316515; x=1724402915; bh=8C6HYySz7v6EZ2a9DcWjSoFYsKQ1
+	OSmpKyH2C/KmP+0=; b=eugkD18LmAmjs5xLhAJ5Eo6ZsrTByzMm/8G0/hR+mgVv
+	M9NL0cNb8X0zC4u916bPyGOBMxYeBhAc1kntKtY5UsLlAKFfRl1Fs3L1RriWjp7H
+	A4haG1r8ET5iP99jTb4N8xET1bp2/9FKxl+15k2faOE7xyIf9CJNRtq8/x9TNsSF
+	6WInjkyTHpVL/1rNDjCFqWnPGHLrAMlTFOXQJDgWXqsCeaZE7B5Cz/TEjwnSYm1h
+	hCUX0Nl8hGugv/mdqFqYE2mHx0x/hwgtqj10MknBDHpx8miIek8RERKEp3oVC3DN
+	ccBpZZ9/eqYlmCC2a3SzxDJqSwjkz2QtN6oyTCDN/A==
+X-ME-Sender: <xms:YvvGZgmI_-aFEioH3g_6--TsEZBvAm6T3_tpg4LSUMmiXUXBGTUwKQ>
+    <xme:YvvGZv0dR22-YfVvDRAPzORkVmILMtwDMcQ4cgw93R335A7YqhqgupHo0Rq4lTKyy
+    lPi6XuLx49qzr6ZxQ>
+X-ME-Received: <xmr:YvvGZupq1W5M0zfst_U-AF1IdIv_GsKwkPdACbng4aT-U-633HfAMiXVchJXIe56y-NWqjVcEBY1VEKg_y1HV9LjGHsC_pTruHZPrusbq3wSuuI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgtdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,32 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgtdejucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeekse
-    hgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:6_rGZk9ouhsMRWMHUDVFfLaMSD4cPsVKHdpOkfcBL9nwT1bj5WbcRw>
-    <xmx:6_rGZvsnLS_LzbU5zSPuu8nWIOFpt6SVvBACrUZrz7cv7TivgMQjkw>
-    <xmx:6_rGZjEkcK5el-WXzvsM6YY_ZGlbC0mWAczo2HVX0lwj_bj6O1Is5w>
-    <xmx:6_rGZmMADVSAWN5ujCmAPI11R4NU7i47ZBjtLm143xpjRWxl1fbmZA>
-    <xmx:6_rGZpIYK8n_BD6z6VjLAztDYZGhAhAoa6CnYDj3FwrjUk2ihEKYiFZS>
+    mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Y_vGZsktiK8dBOaYw-EZh9MrVemTb80WHXbbwUQF0APo5XLboG-E3A>
+    <xmx:Y_vGZu3YrdVWERQI6CCu2WoP3zhHy2vX8phWqUh4gwK5JVT2EqzqPQ>
+    <xmx:Y_vGZjvnTC1m96tWmGsZssGgPyx8FZyns14AyDiXl7TzBVNrNMsKhw>
+    <xmx:Y_vGZqUHfyiNzq1GaweGReM-U-dIXed-HcGk0H-U_3Dv-0eDDvot5w>
+    <xmx:Y_vGZhQG6ggCZs6oPYPxLx5TZH1DAaunPnVFLVp45HT-FrP8FQUdJc5Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 04:46:34 -0400 (EDT)
+ 22 Aug 2024 04:48:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b56e5177 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 08:45:58 +0000 (UTC)
-Date: Thu, 22 Aug 2024 10:46:31 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id df799be8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 08:47:58 +0000 (UTC)
+Date: Thu, 22 Aug 2024 10:48:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v1 2/4] ref: add regular ref content check for files
  backend
-Message-ID: <Zsb64NTyqc_oHNFO@tanuki>
+Message-ID: <Zsb7XgX4Lt_4LX_P@tanuki>
 References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
  <ZsIM2DRDbJsvNjAM@ArchLinux>
- <xmqqed6j9m24.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,55 +89,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqed6j9m24.fsf@gitster.g>
+In-Reply-To: <ZsIM2DRDbJsvNjAM@ArchLinux>
 
-On Tue, Aug 20, 2024 at 09:49:23AM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > We implicitly reply on "git-fsck(1)" to check the consistency of regular
-> 
-> "reply" -> "rely", I think.
-> 
-> > refs. However, when parsing the regular refs for files backend, we allow
-> > the ref content to end with no newline or contain some garbages. We
-> > should warn the user about above situations.
-> 
-> Hmph, should we?  
-> 
-> If the content is short (e.g., in SHA-1 repository it only has 39
-> hexdigit) even if that may be sufficient to uniquely name the
-> object, we should warn about it, of course.  A file that has
-> 64-hexdigit with a terminating LF at the end may be a valid file to
-> be in $GIT_DIR/refs/ hierarchy in a SHA-256 repository, but such a
-> file in a SHA-1 repository should also be subject to a warning, as
-> it could be a sign that somebody screwed up object format
-> conversion.
-> 
-> But a file that has only 40-hexdigit without a terminating LF at the
-> end?  Or a file that has 40-hexdigit followed by a CRLF instead of
-> LF?  Or a file that has the identical content as a valid ref on its
-> first line, but has extra stuff on its second and subsequent lines?
-> 
-> What does the name-to-object-name-mapping layer (aka "get_oid" API)
-> do when they see such a file in the $GIT_DIR/refs/ hierarchy?  If
-> they are treated as valid ref in the "normal" code path, it needs a
-> strong justification to tighten the rules retroactively, much
-> stronger than "Our current code, and any of our older versions,
-> would have written such a file as a loose ref with our code."
-> 
-> "What are we protecting us from with this tightening?" is the
-> question we should be asking ourselves, when evaluating each of
-> these new rules that fsck used not to care about.
+On Sun, Aug 18, 2024 at 11:01:44PM +0800, shejialuo wrote:
+> +static int files_fsck_refs_content(struct ref_store *ref_store,
+> +				   struct fsck_options *o,
+> +				   const char *refs_check_dir,
+> +				   struct dir_iterator *iter)
+> +{
+> +	struct fsck_ref_report report = FSCK_REF_REPORT_DEFAULT;
+> +	struct strbuf ref_content = STRBUF_INIT;
+> +	struct strbuf referent = STRBUF_INIT;
+> +	struct strbuf refname = STRBUF_INIT;
+> +	const char *trailing = NULL;
+> +	unsigned int type = 0;
+> +	int failure_errno = 0;
+> +	struct object_id oid;
+> +	int ret = 0;
+> +
+> +	strbuf_addf(&refname, "%s/%s", refs_check_dir, iter->relative_path);
+> +	report.path = refname.buf;
+> +
+> +	if (S_ISREG(iter->st.st_mode)) {
 
-I'd say filesystem corruption, buggy implementations and compatibility
-with other implementations of Git. The format for refs does not allow
-for any other information than either an object ID for plain refs, and
-the referee for symbolic refs. The fact that we do accept that is a mere
-implementation detail because we reuse the same function to parse refs
-that we also use for pseudorefs. And these _can_ have additional data.
-
-So any reference that contains additional data is not a proper ref and
-thus should be warned about from my point of view. No Git tooling should
-write them, so if something does it's a red flag to me.
+We can avoid having to indent the remainder of this function if we `goto
+cleanup` here.
 
 Patrick
