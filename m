@@ -1,53 +1,53 @@
 Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59E31D12EA
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B633F9F9
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724308482; cv=none; b=mkHkvRYprBiVzhvUeUwC2q8MG6KpPw7FX2FfG7nhQnIEX8QElYTCqdsaBgAYNuAA0ClYaA/cbhZ6yUey+WjBRDcNe1Tav61A8qJQ/BC29let/ucLHgILYvaWyfgzqicxm8e+YXAvQXMvIBN75xb3xRrEkh6eGtFI7/cYkchXcfQ=
+	t=1724308484; cv=none; b=q5+Z/4grWCaFFw8IGDGxRG4cO4zB4ku7MtxedT0XWaWzOBg4wrdV7WUIIUHsg2/jRrt4h5KxiOhSwM6VP0977S15gnM57zqe0PyZYRzHKlcwP6s8jSKUQlRzrzRGzvHHE1CIYN0Us18pSsPtotLWOxhgu8wB/Six78VhyBcbyNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724308482; c=relaxed/simple;
-	bh=d6+TSJaWxtoKpbfSvSKidADxB64icz0ZxylZ7uh5nX8=;
+	s=arc-20240116; t=1724308484; c=relaxed/simple;
+	bh=9AMmEU6dn6hK4aEZwweXr6TDxZaIUUXGWOsHyZBTwq0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YAk7e5TKHhBejpZvz+cq7evdKtSrgC6ieuTMs9oGRk4PK3kagxFv1S/HIxJ9TjJcxndq1cvaPHesprLk1BaRoV7xaOcH99uXemTNdYBbVLxvNo/BRB8Oeo15mhg9my205T4nXAxgudzDZN6Ex8tvmjgVVm+ABfHgmdeuFBOELuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CAw0eKIZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImGHQyXC; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=akw8ci5T43anl1ueATRHej8bsE5RR8fy4KPq8vYcboQklEPJcSQodSh7fKV/pqg8NXo7qmC/NKNbZZOX+F0WCsxXADjGLDgX9R/ehWuL3mc3m8w7D6wTKPnBHYUs8c8tJ1gOxSifE9raO38jSNLwVUqxgLu/Aiz9a6HCyq93vNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YaIHD3Ob; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sw++VSmy; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CAw0eKIZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImGHQyXC"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YaIHD3Ob";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sw++VSmy"
 Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id B2857138FC16;
-	Thu, 22 Aug 2024 02:34:39 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id EEB83138FF1D;
+	Thu, 22 Aug 2024 02:34:41 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 22 Aug 2024 02:34:39 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 22 Aug 2024 02:34:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724308479; x=1724394879; bh=r0nyzQo7l8
-	mAtK9UfcVpkhaqmQ+rXR9us+dh7yGLe/s=; b=CAw0eKIZBXsh1YOcUHGEt26YYO
-	dTuhxK2vGNF9WVdBZRHkKgzHdiMa0oMm3lrz9w1VIpslJBix1qZlDPNCkpHxFRrq
-	aJw3MdNgQDhvJAV9AMxs5lKcGmgQGE6PQrc/Ev5ApvzKWrvtKtiT7ApTnYHHXbxP
-	PQ578XXJq6i74DQDMxcjiubmLjjNIqqjqjbnBPdyExjh9ww0HnFqr1zvosT9ErMj
-	3ezcUbmnQt9/Iuig8ingVoCeTl3luaxeWoWSeWMbDq/127VlS1dPH2efeJYTK7ub
-	GogKI86gh6fQCMZK3EPXOSxPzG1qWZjU+0xTYa9VAyJzBUMfWep6Tov29DkQ==
+	:subject:to:to; s=fm1; t=1724308481; x=1724394881; bh=PWVhlmu27/
+	zqKL6sLqTigT4B710qyT6FlT5NXxYYrhM=; b=YaIHD3ObzwJtqNxktA5VZOLGIQ
+	BXwJKP7UyjRUpCP+HRfKMhxEOKO7DcmJk7RP/YwOsb3Qt2KGBsLvvbOz1wx0oytR
+	G3acnYQjiiiZeUDSzB3VRWtSRZdjCKtKPqKDqfQWbKKvRZPrYNmfG6IKeU9RpgMM
+	rmjA0mBTb3sPxI0mAMbdm9vJBdAY/8C+FXXHQCMA69/xzrjt76hs8op4Bejx8adK
+	d1wjBml83bx1SqGqhvimXMeLyTMKyatAy4I4VlkHHYaSSKRI1usz4AlnNAMLVMyZ
+	gEJ0SbIcGaKSDN6/KIZUU3upwBoPZvIKVZqiDqEyHj4Orq6ktYuZB8qvgYaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724308479; x=1724394879; bh=r0nyzQo7l8mAtK9UfcVpkhaqmQ+r
-	XR9us+dh7yGLe/s=; b=ImGHQyXCFI6V1YiCi1WMmSQ0kmnfu9EECu7kesi2Vxod
-	f4wBQeCOMICC5hdPI3nUZXBoFLBeKEZBZ0uriIEGurZ7BtmSk9r2HqVq7wXbHJlI
-	YfuoFOy1Ddq3LOYpC8+QJPh9sNEmrHYp9k4bkAcVsj/T8PURpdJT6jR1s5rdqXiw
-	AZa5t6Y0SwRDR7dgd5sHD29nkWbLLsIbYJZa+MSjx9XxiIywiPzKMIM7FdCKjUIU
-	jm6kvR4UBjsMUq+CVvKOe7Zol9giL9z3PBM1EYA/0WftZz34d4cvuc3H7nA/WLQi
-	5UaPWlwLanf8DQLkmGE4LZQe8anOot9zg8KQq8TfaA==
-X-ME-Sender: <xms:_9vGZscOkg7fjVQQYn6OeaX3hROhFKpZpFoUuRjHeattmyHTQ4Vn1g>
-    <xme:_9vGZuMw4eYhitPGLhctrQe7lF98ESGos1jz3mGVF5bZCCQFyr0bwFIWehFMeOZ1Y
-    1gYqLgXASeSTLkW0A>
-X-ME-Received: <xmr:_9vGZtgacoLwJZAfacwX4QDapDWLXhmDMhynan9nkpKBPRKSWq_2V33wz-qbkhts8lz4uYhJfSTSha_cP_CZN8Syg8MsLLDytfp1Flzwyj350kA>
+	fm1; t=1724308481; x=1724394881; bh=PWVhlmu27/zqKL6sLqTigT4B710q
+	yT6FlT5NXxYYrhM=; b=sw++VSmy51j3rYAQ3NoSE9C2kakCTCT5VMar0iex0fKD
+	xrmv1P1N1ekTJXEK9C6Ap5Vx8Ou+q2/cIVqCAESDT3vGvm9diJVl/8+gYUc08ui8
+	dGrZpD0JlbTIiSAl0aMsj89hRrlx4dGwwmnOgsGc6jGpg+26S3DoocsusmShbZTc
+	rTw68TRqkO2dTkx/CrP9HQdWm3MY7Wg0Pu7/1K8mi1YRhQPHVr9ZBU3ES71Jg2db
+	pJk8qZeFgKmsRNP90KIjHBjxpc07Ko/hkk/ILotJ/nMOvJQT2UK0GRDbTACQGH/q
+	KuZh/AYdl0Sc3cRwh2P8tTfrjPTuqpwFqtZN5oyIvQ==
+X-ME-Sender: <xms:AdzGZgkjRTEKaCj8Eo2s40LMCySkDdCtFPOUToOnE8YLoqBHzS3v6Q>
+    <xme:AdzGZv0cLHq6eeCqDfOAFmepvmfoMnl7aKaDpw_EoXUyFiLLIvTsAS_NGy04Jb0uz
+    26lTxZkxxsgfKnu2w>
+X-ME-Received: <xmr:AdzGZur9b71_bHWCuAj78d2txfhyeA1V9SIsV9v23q-72BZJh81MABvuXDkl2wbBokcFVZHC8z-Z5x6XYWHklX1j9AyQBv24voo4G-MMVU661jY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -57,27 +57,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddutdcutefuodetgg
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:_9vGZh_qtmLvyq-kf_oXfuG6-40UsgNM_sy-CPz-4IxnoTE_WE5OTQ>
-    <xmx:_9vGZotNEVGZZwA6UAGu476sMx03_NXOLxmZHSa6YVoW1UTC6m86Yw>
-    <xmx:_9vGZoGCE5e1l0iBwBrXG-zF7t7CGLZj4hY0okTO1C_KIH48TeLE0g>
-    <xmx:_9vGZnMIGHoib93Q5GJxYi1lzdIzeIXZuJgg0SZDwH3BjtWiib_Oxw>
-    <xmx:_9vGZkJX33iQrHiSJen1SWphyH9PGmxF3pPfX-bwdDshlWDQxF1-IR4z>
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:AdzGZsnEaotIK_GsEMLamMXbUZCjyUlCZyN68p_3c9qeuBJpJ3VkpA>
+    <xmx:AdzGZu0j0jy4k8K7Azyr6H1hC7lCc_LAUalEuCdqb_e6WYx6h6sDtA>
+    <xmx:AdzGZjvWItde_igujR3CovlotqPMmmCgmk_NgCe4uqs7iu4NiuK-Gw>
+    <xmx:AdzGZqXKTwEb-ZNXKAa_iRwZwfJQ6ayzHzEW2ez9p3K2rSNxV8Mj_Q>
+    <xmx:AdzGZjyou9896CdUOaFUfpYGN-rZG4EZVADHtp9l-z9lqEUcDKKMOWJT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 02:34:38 -0400 (EDT)
+ 22 Aug 2024 02:34:40 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c3905f5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 06:34:03 +0000 (UTC)
-Date: Thu, 22 Aug 2024 08:34:36 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e767441b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 06:34:06 +0000 (UTC)
+Date: Thu, 22 Aug 2024 08:34:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: karthik nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 00/15] reftable: drop generic `reftable_table` interface
-Message-ID: <cover.1724308389.git.ps@pks.im>
+Subject: [PATCH v3 01/15] reftable/merged: expose functions to initialize
+ iterators
+Message-ID: <472c169b501d060a90607c6ca9552eee807cb286.1724308389.git.ps@pks.im>
 References: <cover.1723640107.git.ps@pks.im>
+ <cover.1724308389.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,103 +88,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1723640107.git.ps@pks.im>
+In-Reply-To: <cover.1724308389.git.ps@pks.im>
 
-Hi,
+We do not expose any functions via our public headers that would allow a
+caller to initialize a reftable iterator from a merged table. Instead,
+they are expected to go via the generic `reftable_table` interface,
+which is somewhat roundabout.
 
-this is the third version of my patch series that gets rid of the
-generic `reftable_table` interface. It made it way harder to understand
-the reftable code base and is not really required nowadays anymore where
-we have generic re-seekable reftable iterators.
+Implement two new functions to initialize iterators for ref and log
+records to plug this gap.
 
-There is only a single change compared to v2, which updates one of the
-commit messages to explain why it is fine to drop tests for the printing
-functionality.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/merged.c          | 12 ++++++++++++
+ reftable/reftable-merged.h |  8 ++++++++
+ 2 files changed, 20 insertions(+)
 
-This patch series continues to build on top of 25673b1c47 (The third
-batch, 2024-08-07) with Junio's ps/reftable-stack-compaction at
-f234df07f6 (reftable/stack: handle locked tables during auto-compaction,
-2024-08-08) merged into it.
-
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (15):
-  reftable/merged: expose functions to initialize iterators
-  reftable/merged: rename `reftable_new_merged_table()`
-  reftable/merged: stop using generic tables in the merged table
-  reftable/stack: open-code reading refs
-  reftable/iter: drop double-checking logic
-  reftable/generic: move generic iterator code into iterator interface
-  reftable/dump: drop unused `compact_stack()`
-  t/helper: inline `reftable_dump_main()`
-  t/helper: inline `reftable_reader_print_file()`
-  t/helper: inline `reftable_stack_print_directory()`
-  t/helper: inline `reftable_table_print()`
-  t/helper: inline printing of reftable records
-  t/helper: use `hash_to_hex_algop()` to print hashes
-  t/helper: refactor to not use `struct reftable_table`
-  reftable/generic: drop interface
-
- Makefile                         |   2 -
- reftable/dump.c                  | 111 ---------------
- reftable/generic.c               | 229 -------------------------------
- reftable/generic.h               |  37 -----
- reftable/iter.c                  | 126 ++++++++++++++---
- reftable/iter.h                  |  30 +++-
- reftable/merged.c                |  72 ++++------
- reftable/merged.h                |   4 +-
- reftable/reader.c                |  70 +---------
- reftable/reader.h                |   4 +
- reftable/record.c                | 127 -----------------
- reftable/record.h                |   1 -
- reftable/reftable-generic.h      |  47 -------
- reftable/reftable-merged.h       |  26 ++--
- reftable/reftable-reader.h       |   9 --
- reftable/reftable-record.h       |   8 --
- reftable/reftable-stack.h        |   3 -
- reftable/reftable-tests.h        |   1 -
- reftable/stack.c                 |  94 ++++++-------
- reftable/stack_test.c            |  29 ++--
- t/helper/test-reftable.c         | 189 ++++++++++++++++++++++++-
- t/unit-tests/t-reftable-merged.c |  17 +--
- 22 files changed, 422 insertions(+), 814 deletions(-)
- delete mode 100644 reftable/dump.c
- delete mode 100644 reftable/generic.c
- delete mode 100644 reftable/generic.h
- delete mode 100644 reftable/reftable-generic.h
-
-Range-diff against v2:
- 1:  472c169b501 =  1:  472c169b501 reftable/merged: expose functions to initialize iterators
- 2:  bc6f1cd8c1b =  2:  bc6f1cd8c1b reftable/merged: rename `reftable_new_merged_table()`
- 3:  58e91ab4b34 =  3:  58e91ab4b34 reftable/merged: stop using generic tables in the merged table
- 4:  6ba3fcee411 =  4:  6ba3fcee411 reftable/stack: open-code reading refs
- 5:  cac08a934c5 =  5:  cac08a934c5 reftable/iter: drop double-checking logic
- 6:  103262dc79c =  6:  103262dc79c reftable/generic: move generic iterator code into iterator interface
- 7:  4011fa65d81 =  7:  4011fa65d81 reftable/dump: drop unused `compact_stack()`
- 8:  ceaa296bfd4 =  8:  ceaa296bfd4 t/helper: inline `reftable_dump_main()`
- 9:  a62e4612e97 =  9:  a62e4612e97 t/helper: inline `reftable_reader_print_file()`
-10:  7acfe4fecc5 ! 10:  242c179df5f t/helper: inline `reftable_stack_print_directory()`
-    @@ Commit message
-         Move `reftable_stack_print_directory()` into the "dump-reftable" helper.
-         This follows the same reasoning as the preceding commit.
-     
-    +    Note that this requires us to remove the tests for this functionality in
-    +    `reftable/stack_test.c`. The test does not really add much anyway,
-    +    because all it verifies is that we do not crash or run into an error,
-    +    and it specifically doesn't check the outputted data. Also, as the code
-    +    is now part of the test helper, it doesn't make much sense to have a
-    +    unit test for it in the first place.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## reftable/reftable-stack.h ##
-11:  8bd53a1a656 = 11:  a05e2060996 t/helper: inline `reftable_table_print()`
-12:  c50aabbb804 = 12:  ee22a08e11e t/helper: inline printing of reftable records
-13:  5498395872c = 13:  0a3c619e842 t/helper: use `hash_to_hex_algop()` to print hashes
-14:  5390be75c37 = 14:  8eab399dfc6 t/helper: refactor to not use `struct reftable_table`
-15:  5aeab8ee077 = 15:  b5d7b5679b5 reftable/generic: drop interface
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 6adce44f4b6..8d78b3da719 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -254,6 +254,18 @@ void merged_table_init_iter(struct reftable_merged_table *mt,
+ 	iterator_from_merged_iter(it, mi);
+ }
+ 
++void reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
++					     struct reftable_iterator *it)
++{
++	merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
++}
++
++void reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
++					     struct reftable_iterator *it)
++{
++	merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
++}
++
+ uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
+ {
+ 	return mt->hash_id;
+diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
+index 14d5fc9f05c..4deb0ad22e1 100644
+--- a/reftable/reftable-merged.h
++++ b/reftable/reftable-merged.h
+@@ -36,6 +36,14 @@ int reftable_new_merged_table(struct reftable_merged_table **dest,
+ 			      struct reftable_table *stack, size_t n,
+ 			      uint32_t hash_id);
+ 
++/* Initialize a merged table iterator for reading refs. */
++void reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
++					     struct reftable_iterator *it);
++
++/* Initialize a merged table iterator for reading logs. */
++void reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
++					     struct reftable_iterator *it);
++
+ /* returns the max update_index covered by this merged table. */
+ uint64_t
+ reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
