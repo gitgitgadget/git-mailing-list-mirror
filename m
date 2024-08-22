@@ -1,154 +1,132 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA211D1F5B
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 19:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDFF17588
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 19:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724354896; cv=none; b=NLYD+9kpBwUmeBE0JucAwLgYM3VTATXGvXooyLUr/m+kSnAuklof4TMeuV6m2p7zxg72DKhr9vevcaeSuI2bLEmBPZz3mVkq3yA6JEOJARTCXMXTG3i7m2nuefZMRk9hiLzzefnXe8tEGUijce9fohZ8SyTmpQBtamFmLdntvM4=
+	t=1724356237; cv=none; b=NIb3yMYLLEu1ltFVURAKn8Uo4s8qTlXC/tnO7A6sdSpVhOjCt1NNdkJ2TqoYwRXxfSHJmAHh86IRM0qnG9cTCmnq8+8vKeql95bdOtKr9ifXrv4ktJbg/jjyppNr/kHW2jMYkbEtjTuL9mhjYXQ3WJPQatSI+lkmSfVsAmFiYXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724354896; c=relaxed/simple;
-	bh=rTMpMZgx6zf6lOZWPpOaMcxs8vm0P1LVBcYVZk0s8MY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KV3JLRpjJ01JF1XFERiO2epp01jnLP/KTlfjE9yI+eAtTSUWPSseY9rCuTUNGBOnrE99B8aq/JKkzE2e9K/V+Q4CtSJ5BOCTeULyUqfwyQ60lYVe5ngV5t+nxOtQ/jiJoD8Olb0cZ/AcfmgqOJS7fjHbIFlJF4lQ9KZxRoEa9Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ncts@debian.org>)
-	id 1shDTa-002rdR-14; Thu, 22 Aug 2024 21:28:06 +0200
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ncts@debian.org>)
-	id 1shDTZ-0005bX-IP; Thu, 22 Aug 2024 21:28:05 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1415192)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1shDTA-00H1WV-Ay; Thu, 22 Aug 2024 21:27:40 +0200
-Date: Fri, 23 Aug 2024 03:27:31 +0800
-From: Blair Noctis <ncts@debian.org>
-To: Simon Richter <sjr@debian.org>
-Cc: git@vger.kernel.org, debian-devel@lists.debian.org
-Subject: Re: Representing Debian Metadata in Git
-Message-ID: <5b59d9f0-74a2-418c-acd7-ff1ecbfea467@sail.ng>
-In-Reply-To: <eb963843-9e2c-49f2-911f-fa36f33f9bfd@debian.org>
-References: <eb963843-9e2c-49f2-911f-fa36f33f9bfd@debian.org>
+	s=arc-20240116; t=1724356237; c=relaxed/simple;
+	bh=MZJUjDEyuqm0og0j8KQ0KkAo5+l212rElWXzSDxYXHU=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=d6RmqcYds7+cpOgytJK361gTEHcifebBHkSEgLxIMEC8SyyyoC0T8gHZ4509TgoifYyxtt7XorWcIqhtrPzlQlg4HjbVeZB571lEc+MQQLEL7I5MdyvmfOCBv063c6/gUvwbKF0vJcrB5FGCjVWnzSF4VSSbUxcTuNd5tKkeNwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kqPq9XEW; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kqPq9XEW"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f4f24263acso8119611fa.0
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 12:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724356234; x=1724961034; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rWxEtQr2J/kaWTJIPOmF5FqpOdNvSUmbCKLrCxCnmyY=;
+        b=kqPq9XEWvNxkXD7k03yAb3B0dSOazPOjff/s8Rt9gmCWir7oc7KWHHK5ERYi5E5TiI
+         k7YVkBhje7TF6XmNM07TRmgJEHsVwleZK+gMjXGcb7kLHGP+5zzayn6jdnoRAadXWLNg
+         U4HBoOkmrpqp0m1Pto5gSGYxzfTaHZ62zkzsJAAowEXSBPIL7zyN5Hkc68YXo1wLOaP5
+         7TaFivhyanQk4IRmrGj/I/gG7rckb8MAIl4xEXT9MkqCAaKpVyAhYcG6uYxEkduIjthl
+         GW1xjNioIUzdqBXSh8FdU5bmFly14b17HguDz8H40SXuJxAWYdTlVhebc7K45dsjyDrm
+         mSGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724356234; x=1724961034;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rWxEtQr2J/kaWTJIPOmF5FqpOdNvSUmbCKLrCxCnmyY=;
+        b=n/dCe+RVr6PKy/P+ERmww0tLP0tG67AW8uryq4PpNutxUiK65iLVs51UtkF1cZRyRI
+         M3XT9PElMD1dUFz5X+KQMVE7EBmhgJduNGFwLSJjiniB3ytDGZORWplcaXXz8O0NVjNl
+         WAsjV18vruTQOfcLyAXQggbMKnR4utqomVe7F0rKfJZh1iFgJIuFCZboil4QBssKlkVL
+         PqTN4q31SQwqeMtTpNSywmeChlfQO07yneqnZl6fMOlYYPjpTC0OTfHHeEe1/W+AwgJU
+         5dMZfGg/72A+8r1Ke9BnXum4Q4AqeT0wsCVWSgnIlRPoCWRCA38c6TQFNRGaM4ZPg7T9
+         M+gQ==
+X-Gm-Message-State: AOJu0Yx1VzUddjWJO8x1gFUUFF8Ej9HyUGXk+teSJhGbxOk4b3js65LH
+	DK4cKZckyFIGR4JJ8WGKqKudmgUfTmAmHxtpV9xXZOCJr6WF0od/jbzESQ==
+X-Google-Smtp-Source: AGHT+IHXCRyUB7IT3CVMqDGGErBk97P9Iwa3sf0oPGv9vNBgYSyT2qbPbjMNvnFe9O+9rTImx3LWDA==
+X-Received: by 2002:a05:6512:1094:b0:533:71f:3a3d with SMTP id 2adb3069b0e04-534388473f6mr8946e87.24.1724356232986;
+        Thu, 22 Aug 2024 12:50:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f436cb9sm157278766b.121.2024.08.22.12.50.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 12:50:32 -0700 (PDT)
+Message-Id: <pull.1768.v3.git.git.1724356231639.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1768.v2.git.git.1724234729288.gitgitgadget@gmail.com>
+References: <pull.1768.v2.git.git.1724234729288.gitgitgadget@gmail.com>
+From: "ahmed akef via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Aug 2024 19:50:31 +0000
+Subject: [PATCH v3] docs: explain the order of output in the batched mode of
+ git-cat-file(1)
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/0bcZ22_YkbXenx30LmTK5aF";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+To: git@vger.kernel.org
+Cc: ahmed akef <aemed.akef.1@gmail.com>,
+    ahmed akef <aemed.akef.1@gmail.com>
 
---Sig_/0bcZ22_YkbXenx30LmTK5aF
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+From: ahmed akef <aemed.akef.1@gmail.com>
 
-On 2024-08-20 15:10, Simon Richter wrote:
-(...)
-> Right now, git is used mainly as a network file system, and only tagged=20
-> releases are expected to be consistent enough to compile, because often=20
-> going from one consistent state to another as an atomic operation would=20
-> require multiple changes to be applied in the same commit.
->=20
-> The imported archive is represented either directly as a tree (which may=
-=20
-> be imported from the upstream project if no files are undistributable=20
-> for Debian), or via a mechanism that can reproduce a compressed archive=20
-> that is bitwise identical to the upstream release, from a tree and some=20
-> additional patch data.
->=20
-> The patch stack is stored as a set of patches inside a directory, and=20
-> rebased using quilt.
->=20
-> An alternate representation stores the patch stack as a branch that is=20
-> rebased using git, and then exported to single files.
->=20
-> The Debian changelog is stored as a file inside Git, but some automation=
-=20
-> exists to update this from Git commit messages.
->=20
-> Debian changelog entries refer to bugs in the Debian Bug Tracking=20
-> system. There is a desire to also incorporate forges (currently, GitLab)=
-=20
-> and refer to the forges' issue tracker from commit messages (where the=20
-> issue tracker is used for team collaboration, while the Debian BTS is=20
-> used for user-visible bugs).
->=20
-> All of this is very silly, because we're essentially storing metadata as=
-=20
-> data because we cannot express in Git what we're actually doing, and the=
-=20
-> conflicting priorities people have have led to conflicting solutions.
->=20
-> I'd like to xkcd 927 this now, and find a common mapping.
+The batched mode of git-cat-file(1) reads multiple objects from stdin
+and prints their respective contents to stdout.
+The order in which those objects are printed is not documented
+and may not be immediately obvious to the user.
+Document it.
 
-Here's my very likely very naive 2 cents: we are basically maintaining a=20
-fork for each non-native package.
+Signed-off-by: ahmed akef <aemed.akef.1@gmail.com>
+---
+    docs: explain the order of output in The batched mode of git-cat-file(1)
+    
+    this is the same change as https://github.com/git/git/pull/1761 but due
+    to missteps, the PR got closed and I couldn't fix it, also applied the
+    review comments from @pks-t
+    cc: Patrick Steinhardt ps@pks.im
 
-Being a fork, a "Debianized" package can also live like other "upstream"=20
-forks: with its own branch based on the original, make necessary changes
-and record them as commits; merge original onto its own branch, dealing
-with conflicts; maintain its own changelog; rinse and repeat.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1768%2Fahmedakef%2Fexplain-the-order-of-output-in-cat-file-batch-operations-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1768/ahmedakef/explain-the-order-of-output-in-cat-file-batch-operations-v3
+Pull-Request: https://github.com/git/git/pull/1768
 
-Debian-specific metadata can be represented structurally in commit=20
-messages, or if necessary, (still) in a plain debian/ subdirectory that
-won't conflict with upstream.
+Range-diff vs v2:
 
-Then,
-
->  From a requirements perspective, I'd like to be able to
->=20
->  =C2=A0- express patches as commits:
->  =C2=A0=C2=A0 - allow cherry-picking upstream commits as Debian patches
->  =C2=A0=C2=A0 - allow cherry-picking Debian patches for upstream submissi=
-on
->  =C2=A0- generate the Debian changelog from changes committed to Git
->  =C2=A0- express filter steps for generating the upstream archive(s) from=
- a=20
-> tree=E2=80=91ish and some metadata
->  =C2=A0- store upstream signatures inside Git
->  =C2=A0- keep a history of patches, including patches applied to previous=
-ly=20
-> released packages
-
-these are naturally met; and
-
-(...)
-> Changes to packaging would still be represented as commit objects=20
-> containing a tree, but that tree would contain a special entry for the=20
-> "debian" subdirectory that points to the last packaging change.
-
-no more needed.
-
-> This is very high-level so far, because I'd like to get some feedback=20
-> first on whether it makes sense to pursue this further.This would use=20
-> up the last unused three-bit object type in Git, so it will have to be=20
-> very generic on this side to not block future development -- and it=20
-> would require a lot of design effort on the Debian side as well to=20
-> hammer out the details.
-
-Even less thought out, but probably easier to implement once the design=20
-is finished. ;)
-
---=20
-Sdrager,
-Blair Noctis
+ 1:  3f742957aa1 ! 1:  6adeb2c7bb3 docs: explain the order of output in the batched mode of git-cat-file(1)
+     @@ Documentation/git-cat-file.txt: BATCH OUTPUT
+      -the whole line is considered as an object, as if it were fed to
+      -linkgit:git-rev-parse[1].
+      +from stdin, one per line, and print information about them in the same
+     -+order as they have been read from stdin. By default, the whole line is
+     ++order as they have been read. By default, the whole line is
+      +considered as an object, as if it were fed to linkgit:git-rev-parse[1].
+       
+       When `--batch-command` is given, `cat-file` will read commands from stdin,
 
 
---Sig_/0bcZ22_YkbXenx30LmTK5aF
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+ Documentation/git-cat-file.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index bd95a6c10a7..d5890ae3686 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -270,9 +270,9 @@ BATCH OUTPUT
+ ------------
+ 
+ If `--batch` or `--batch-check` is given, `cat-file` will read objects
+-from stdin, one per line, and print information about them. By default,
+-the whole line is considered as an object, as if it were fed to
+-linkgit:git-rev-parse[1].
++from stdin, one per line, and print information about them in the same
++order as they have been read. By default, the whole line is
++considered as an object, as if it were fed to linkgit:git-rev-parse[1].
+ 
+ When `--batch-command` is given, `cat-file` will read commands from stdin,
+ one per line, and print information based on the command given. With
 
-iHUEARYKAB0WIQScTWEJ927Sl0a/hB7sV97Kb1Pv6QUCZseRJAAKCRDsV97Kb1Pv
-6bxqAQCF6gpaGD2XdPUp63vA0VsAH1/9VgUOxtexgVtx7WznlAD/U4sJBltfuJah
-onBfOcv8IfAn/J2pe7bRAJsYRhvJ9Qo=
-=NCuz
------END PGP SIGNATURE-----
-
---Sig_/0bcZ22_YkbXenx30LmTK5aF--
+base-commit: 80ccd8a2602820fdf896a8e8894305225f86f61d
+-- 
+gitgitgadget
