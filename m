@@ -1,240 +1,136 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821561CF8B
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 08:54:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC6019470
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724316844; cv=none; b=chzpnRjQgQ/TAxnXpZPyuBk4MWUDjXzPGWnYWkXd5JL/MX5eNQl3GHdgXArHEuAA2CSX9SjMQ4h6uGuBZ14q6e8lSFxKN0xCZ9DVBjqSeFFfV+7qugB51h2Ljc1nwpeFoze4w6whSN6ZwLWYTjIH7gQ7pP9WHTKyDW5YfoywWw0=
+	t=1724317946; cv=none; b=Ufp6fToWMkXi7BI4ortaWW4HcnFnJv2YAbAVWI8zstcl+9hWqhXlPdDHa1BkuBTUzuIae2SD0XOlwTnDi6p0LgOVkXILPwnqj4DBBZfHzO+ESL+BaYC2fWnuLuvn/NosUYt3MUS3JoSeOGH0PzlYmyYVoMelNpO/dZeJTsWy7Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724316844; c=relaxed/simple;
-	bh=a7TK7vG2vh+QP+2WUY3VK7IKgyf4YvAxlhSY33lkeuc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dU8lausSBpzE83XcKmo3JavZrqxW2zyUn0wN5j6pj0Vnx1rTrxzN43rvJyVp2KE4dAIhHzH76Cb8bZdnLCYmUypYdys93vVLhsbbyLMS14XwCPG3swZ8g1Hs+lc5TWcDTc+Eq5WeHk2ZkpPwwWjkIWbXFSBwBlO5fyRiNADY4rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tyR0Z0NE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q9tWKl8w; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724317946; c=relaxed/simple;
+	bh=oOOhbNhkcpSwlh7MsdNPIBmxzvSQ1f/U4nea7nIC0Kw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AUaw1NORy0ItKg058kO9gBMfHvpIHoOU5ZeaH1qF6JyY4Lj0geBaD1btmdxZIm221P5py4tFUc3d6OGWA4h7q1Wplo44r3KYGrt6XrT5eY5Qm5C47TcWWoc1PVlQy+ljItjbv1GT8DZ2D3GUGbMVhMvzpZOZyxl6Oum2k42itDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVVvGknf; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tyR0Z0NE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q9tWKl8w"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 920CB1390070;
-	Thu, 22 Aug 2024 04:54:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 22 Aug 2024 04:54:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724316841; x=1724403241; bh=R89DilfjXq
-	RScZYE0ulLybtLSOAapA1Oq6cNQsVz0qw=; b=tyR0Z0NECriOQE5nf789hqZP/3
-	Yo0GKq0u6MSCCd3DGnZlw/YRp9YFjMspYCKZZVAsBC+3xRdy4VWn0oGV+r6lgzfK
-	YVfNR2vIfNxVD0KyLgnywWbxGFi/eHsC5Vf+7gYDZVlUfx23GfdMlNtu4Xt5rNqJ
-	wRYiV8w8QwbcJ8ICfqDqT3zgcDJ3iZ5M1gIzeDDh/7KC6Q+MhmP+zOrF6FfrO1xU
-	XlE3ElHFlcd1OpJC4n52IY1tFGoybm+6LA6BpY2oVgwTER0VAuBP7hqqbws1eHOQ
-	TFIWpFrK9nJVUI7L1u0mRy/U67rZN3RYxycqxJyxRRT/CL7sIjjJpnxSIKqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724316841; x=1724403241; bh=R89DilfjXqRScZYE0ulLybtLSOAa
-	pA1Oq6cNQsVz0qw=; b=Q9tWKl8wjQdUYcbwwjEFoJ3IXmrhrVYaOh9VcqJjazmC
-	XrqICKmc40olrt5kHmmkfifYIpUR//rb87RBPfC+Pqm6aXjo0H54/guEW9sszigC
-	qrvze3bRvsMEyNUWhzEb6yoOlttrxVt9NcY9sih0TxduLQxulfYiY3EFemqri3Pq
-	xytiF+I22RYk4rk7yFPrYkIq6jiteNP13rX/Qdrq+JqKoWaUrGzLIrTG6RMFXu61
-	k34WGIdT/7ktYuINgG7UIUt8dt9yNWEMY0LY+Kekt49GnxmxEvjAWOdc8z41ITbE
-	w6Z3AshgxSmDx4QwO0f1QN+4IqDBqOphTkyduIFvSA==
-X-ME-Sender: <xms:qfzGZrfA2VEnOuBmtJuvqPXAvTvKwU8j6Bk1YY6fUWcCB7gqUQcFfQ>
-    <xme:qfzGZhOUhR_gntZGtOIiUs5FnGTeHO9HoGSKClvCt584KSsM52p8KnoBJu7rU2Af4
-    d89dCUbmn--pz1Vzw>
-X-ME-Received: <xmr:qfzGZkh2zWFBSlmRmDqgeQ07hGHVLJc7lT5PzPrJQzcF1FumFpfokSXTXeOGA-6PAxb-4H2M4TjczjmIyfaMnt7VuHWHAplaA6ALEGd08Se7aao>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhh
-    vghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:qfzGZs94A_yEbFtAYIrqPOH0U4bhaqnFK_fy3g_5WiWqu0XtIq4C0w>
-    <xmx:qfzGZnsuHIk6zK5wI_wz3piUNYqFq46xRMyrsZRAEkWS0sht0mXrSQ>
-    <xmx:qfzGZrHoDLfV-JK_YPSKz3QHPmg8-GHNfpeBAux3GU-v1nKgVLoX0g>
-    <xmx:qfzGZuOqV_2d8hZkFUGblpYXc5SaBb96zR-EVW8Zaeguke-_HFfWsA>
-    <xmx:qfzGZhKTMCDV-tFtv8NcW_jC2hQEOR-mgn7tnVp7y70bXFaWcipbyWVI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 04:54:00 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f59ee4cd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 08:53:24 +0000 (UTC)
-Date: Thu, 22 Aug 2024 10:53:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 3/4] ref: add symbolic ref content check for files
- backend
-Message-ID: <Zsb8oDA-vyLxNY0U@tanuki>
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
- <ZsIM4OZWfylcP5Ix@ArchLinux>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVVvGknf"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5334adf7249so802231e87.3
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 02:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724317942; x=1724922742; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=IHB1szAbSia3OZ5xVbYHkaD5WA0wgMQ5dqoMwztv7T0=;
+        b=fVVvGknf+u46jzlPR393oYt93UlnRVLuYw0BRZoT7xR2psepMuGGVCZGZFT5j8TR0O
+         oMjv1jYrA3aSaDI7+Cj44WexCr/c2RWTkX+27nyWHjd+vmJbMyBBTjVwagqFCLH9IL25
+         BFNjSk9U41N6l1AP3ReMgD0XeYkc4BzdQhTiFE8XVS9K8kWk2991pApnw9eKP3lLu3cr
+         VU0Wq98dWZ6KuTPnfezRnj6jMsJeLBjkyh2sIn8cxtHwVwNGex8wbg8RkATy4HDnUF+s
+         6kliR+CDJpeKYKA0FueraHAQdBxVSsaqZ5/HWz4/2pKWnp0H0vUfEdXdlQ+HiuQFMGvz
+         i92w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724317942; x=1724922742;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IHB1szAbSia3OZ5xVbYHkaD5WA0wgMQ5dqoMwztv7T0=;
+        b=XH6IGukvwEUuCZn9bDxAFhYU1vWuQKW7aTGr0ZB1KLFS08FhfeuujFUPKWz4kG2NW3
+         ctmzwn/KAGpEhTuVMn5cZaaScWbRayhrYDCdsWVoJ+h5YWpXPwxMx57DYcYXub8ADwpQ
+         aoarBKUdJMfK/iwIDHziREiK1Smrk2NqIwbIh/ynpbgsR7SgsFf86S2HG2Cglc9SLF3Q
+         oNZgyotohVFm7AZYUPGmNiYJAI2MnErPdn9xMZmsZ11zIhWGG6jYZpE8RyhTS0iDxr5A
+         u2voS93LrP+l9lW3VahHrRZlT8sPTJ+JTeu2UDU+Eb5aFSLKUlMtii6G1PUn1nvHOol0
+         Kn8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXYt2eT1k1OL9BV2ywQpboU2D/+ydf2jduBcsOU8zxgMYdgn+59mPEZlqM9rcjfVLv4ECQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFVyJeG7nIKj6lkCn8AYuiewrno32nB9EeWn8J5H7sVOPA5+7K
+	nHDLMA5LFuKZsvoYYmG/vP63stcZPRCs1fSe3BItQ8JD/OWQ+ZMR
+X-Google-Smtp-Source: AGHT+IEE/J0b1GAKb1wgYK+OiiN+sMbCU+KyK4xvD2JEgR5LhIq3zZr3sl/vJsWHbSR+7zZlnC5+aQ==
+X-Received: by 2002:a05:6512:15a9:b0:530:ad8b:de11 with SMTP id 2adb3069b0e04-533485650bbmr2796497e87.9.1724317941820;
+        Thu, 22 Aug 2024 02:12:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f433671sm89045666b.128.2024.08.22.02.12.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Aug 2024 02:12:21 -0700 (PDT)
+Message-ID: <9c6d8fea-997e-49d5-9195-e1721a750a36@gmail.com>
+Date: Thu, 22 Aug 2024 10:12:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZsIM4OZWfylcP5Ix@ArchLinux>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 5/5] cgit: add higher-level cgit crate
+To: Calvin Wan <calvinwan@google.com>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+ spectral@google.com, emilyshaffer@google.com, emrass@google.com,
+ rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org,
+ sandals@crustytoothpaste.net, Jason@zx2c4.com, dsimic@manjaro.org
+References: <20240821184605.341205-1-calvinwan@google.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20240821184605.341205-1-calvinwan@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Aug 18, 2024 at 11:01:52PM +0800, shejialuo wrote:
-> We have already introduced the checks for regular refs. There is no need
-> to check the consistency of the target which the symbolic ref points to.
-> Instead, we just check the content of the symbolic ref itself.
-> 
-> In order to check the content of the symbolic ref, create a function
-> "files_fsck_symref_target". It will first check whether the "pointee" is
-> under the "refs/" directory and then we will check the "pointee" itself.
-> 
-> There is no specification about the content of the symbolic ref.
-> Although we do write "ref: %s\n" to create a symbolic ref by using
-> "git-symbolic-ref(1)" command. However, this is not mandatory. We still
-> accept symbolic refs with null trailing garbage. Put it more specific,
-> the following are correct:
-> 
-> 1. "ref: refs/heads/master   "
-> 2. "ref: refs/heads/master   \n  \n"
-> 3. "ref: refs/heads/master\n\n"
-> 
-> But we do not allow any non-null trailing garbage. The following are bad
-> symbolic contents.
-> 
-> 1. "ref: refs/heads/master garbage\n"
-> 2. "ref: refs/heads/master \n\n\n garbage  "
-> 
-> In order to provide above checks, we will traverse the "pointee" to
-> report the user whether this is null-garbage or no newline. And if
-> symbolic refs contain non-null garbage, we will report
-> "FSCK_MSG_BAD_REF_CONTENT" to the user.
-> 
-> Then, we will check the name of the "pointee" is correct by using
-> "check_refname_format". And then if we can access the "pointee_path" in
-> the file system, we should ensure that the file type is correct.
-> 
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  Documentation/fsck-msgids.txt |  3 ++
->  fsck.h                        |  1 +
->  refs/files-backend.c          | 87 +++++++++++++++++++++++++++++++++++
->  t/t0602-reffiles-fsck.sh      | 52 +++++++++++++++++++++
->  4 files changed, 143 insertions(+)
-> 
-> diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-> index 1688c2f1fe..73587661dc 100644
-> --- a/Documentation/fsck-msgids.txt
-> +++ b/Documentation/fsck-msgids.txt
-> @@ -28,6 +28,9 @@
->  `badRefName`::
->  	(ERROR) A ref has an invalid format.
->  
-> +`badSymrefPointee`::
-> +	(ERROR) The pointee of a symref is bad.
-> +
->  `badTagName`::
->  	(INFO) A tag has an invalid format.
->  
-> diff --git a/fsck.h b/fsck.h
-> index 975d9b9da9..985b674dd9 100644
-> --- a/fsck.h
-> +++ b/fsck.h
-> @@ -34,6 +34,7 @@ enum fsck_msg_type {
->  	FUNC(BAD_REF_CONTENT, ERROR) \
->  	FUNC(BAD_REF_FILETYPE, ERROR) \
->  	FUNC(BAD_REF_NAME, ERROR) \
-> +	FUNC(BAD_SYMREF_POINTEE, ERROR) \
->  	FUNC(BAD_TIMEZONE, ERROR) \
->  	FUNC(BAD_TREE, ERROR) \
->  	FUNC(BAD_TREE_SHA1, ERROR) \
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index ae71692f36..bfb8d338d2 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3434,12 +3434,92 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
->  				  const char *refs_check_dir,
->  				  struct dir_iterator *iter);
->  
-> +/*
-> + * Check the symref "pointee_name" and "pointee_path". The caller should
-> + * make sure that "pointee_path" is absolute. For symbolic ref, "pointee_name"
-> + * would be the content after "refs:".
-> + */
-> +static int files_fsck_symref_target(struct fsck_options *o,
-> +				    struct fsck_ref_report *report,
-> +				    const char *refname,
-> +				    struct strbuf *pointee_name,
-> +				    struct strbuf *pointee_path)
-> +{
-> +	unsigned int newline_num = 0;
-> +	unsigned int space_num = 0;
-> +	const char *p = NULL;
-> +	struct stat st;
-> +	int ret = 0;
-> +
-> +	if (!skip_prefix(pointee_name->buf, "refs/", &p)) {
-> +
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_BAD_SYMREF_POINTEE,
-> +				      "points to ref outside the refs directory");
-> +		goto out;
-> +	}
-> +
-> +	while (*p != '\0') {
+Hi Calvin
 
-We typically write this `while (*p)`.
+On 21/08/2024 19:46, Calvin Wan wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+ >
+>> before the function declarations. As I said in my comments on the last
+>> patch I think we'd be better to namespace our types as well as our
+>> functions in this library layer so this can be resued by other language
+>> bindings.
+> 
+> Are you suggesting something like "#define libgit_config_set
+> config_set"? I wouldn't be comfortable renaming config_set in git.git
+> just yet until config/config_set can be a standalone library by itself.
 
-> +		if ((space_num || newline_num) && !isspace(*p)) {
-> +			ret = fsck_report_ref(o, report,
-> +					      FSCK_MSG_BAD_REF_CONTENT,
-> +					      "contains non-null garbage");
-> +			goto out;
-> +		}
-> +
-> +		if (*p == '\n') {
-> +			newline_num++;
-> +		} else if (*p == ' ') {
-> +			space_num++;
-> +		}
-> +		p++;
-> +	}
+I was suggesting[1] adding
 
-Can't we replace this with a single `strchr('\n')` call to check for the
-newline and then verify that the next character is a `\0`? The check for
-spaces would then be handled by `check_refname_format()`.
+     struct libgit_configset {
+	    struct config_set set;
+     };
 
-> +	/*
-> +	 * Missing target should not be treated as any error worthy event and
-> +	 * not even warn. It is a common case that a symbolic ref points to a
-> +	 * ref that does not exist yet. If the target ref does not exist, just
-> +	 * skip the check for the file type.
-> +	 */
-> +	if (lstat(pointee_path->buf, &st) < 0)
-> +		goto out;
-> +
-> +	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode)) {
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_BAD_SYMREF_POINTEE,
-> +				      "points to an invalid file type");
-> +		goto out;
-> +	}
+to public_symbol_export.c and rewriting the wrappers in that file to use 
+this struct e.g.
 
-What exactly are we guarding against here? Don't we already verify that
-files in `refs/` have the correct type? Or are we checking that it does
-not point to a directory?
+     int libgit_configset_get_int(struct libgit_configset *cs,
+				 const char *key, int *dest)
+     {
+	    return git_configset_get_int(&cs.set, key, dest);
+     }
 
-Patrick
+In public_symbol_export.h we'd then have
+
+     struct libgit_configset;
+
+     int libgit_configset_get_int(struct libgit_configset *,
+				 const char *, int *);
+
+If we want the symbol exports to be useful outside of the rust bindings 
+I think we need to namespace our types as well as our functions.
+
+[1] 
+https://lore.kernel.org/git/5720d5b9-a850-4024-a1fd-54acc6b15a74@gmail.com
+
+>>> +    pub fn get_str(&mut self, key: &str) -> Option<CString> {
+>>
+>> If we're adding an ergonomic api then having return CString isn't ideal.
+>> I think the equivalent function in libgit2-rs has variants that return a
+>> String which is convinent if the caller is expecting utf8 values or
+>> Vec<u8> for non-utf8 values.
+> 
+> Having both get_cstr() and get_str() makes sense to me.
+
+Just to be clear get_cstr() would return Vec<u8>? I'm far from a rust 
+expert but my understanding was that crates that wrap C libraries 
+generally avoid using CString in their API.
+
+Best Wishes
+
+Phillip
