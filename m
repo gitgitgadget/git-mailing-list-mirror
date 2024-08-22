@@ -1,88 +1,83 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4F32D611
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59E31D12EA
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724307561; cv=none; b=EDGUJrtOzoVAft1+FrafEAw6KYCck/+9tb5Zmio1j8BcGnrn3e/i8CvVHzYrzVIPPkG4BTKru5Xlj6m9QOn4hJIdykYvOVR/72Il6maYyuiIDmthZ+3pw3kjZGXB1OFLZ7RFXRrbQd4dhT+4aV6JhjWEXrkPCTBB7K23Tm6mF6s=
+	t=1724308482; cv=none; b=mkHkvRYprBiVzhvUeUwC2q8MG6KpPw7FX2FfG7nhQnIEX8QElYTCqdsaBgAYNuAA0ClYaA/cbhZ6yUey+WjBRDcNe1Tav61A8qJQ/BC29let/ucLHgILYvaWyfgzqicxm8e+YXAvQXMvIBN75xb3xRrEkh6eGtFI7/cYkchXcfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724307561; c=relaxed/simple;
-	bh=YDUura2jJNQXK2MhjpIg6Yi2worMkDqiyoooNhAPJ+k=;
+	s=arc-20240116; t=1724308482; c=relaxed/simple;
+	bh=d6+TSJaWxtoKpbfSvSKidADxB64icz0ZxylZ7uh5nX8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H8QrJE+zGJEpDufjKH9KG4BhHlfkUoBJPAKwgCTnbaTiVcWc1Ph5djpQnD5SbYOp/4rP3y7RsjKnlfdzgAA9bhM4HhtfMxNUUGkV7MMNcZow3lqbZYu9B3gFvG9I7Tvlcaj6BRwQcywDroaGF27wsAAAEdMXKPdbZ9kW8DLOW7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GL6x9/V7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=la8d9j2B; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=YAk7e5TKHhBejpZvz+cq7evdKtSrgC6ieuTMs9oGRk4PK3kagxFv1S/HIxJ9TjJcxndq1cvaPHesprLk1BaRoV7xaOcH99uXemTNdYBbVLxvNo/BRB8Oeo15mhg9my205T4nXAxgudzDZN6Ex8tvmjgVVm+ABfHgmdeuFBOELuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CAw0eKIZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImGHQyXC; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GL6x9/V7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="la8d9j2B"
-Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BAEA21151B89;
-	Thu, 22 Aug 2024 02:19:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CAw0eKIZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImGHQyXC"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id B2857138FC16;
+	Thu, 22 Aug 2024 02:34:39 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 22 Aug 2024 02:19:18 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 22 Aug 2024 02:34:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724307558; x=1724393958; bh=nGVC89XpQM
-	orglOjM6pq6maSWCdA9nWgq4fTidHKCEE=; b=GL6x9/V7VQIkzO/YcQWOgkUnph
-	JcwActnO1BGKz3mY198PS4KzSyjFezPJfFfQzc1n2hW2npe6iK4Lhf0s/CIhucSz
-	qhzozA5B3qFgbWly1EcBqInpzAhu8wq/H+B5knRwQ9/0IQXUnEUl5uAPeM9DKDQ0
-	c2Zdptc7bBvjKiYcgkY7gqqfKd5UhE41ov7NmQaX8vNxybUP1RDjZGep6WsMB0dI
-	USRNx6ime2ik4lfk0i1nfhoyJ0o9Uk4sFPD9x4JzV0KRGjKFUFUlFA8N9XAnwRg0
-	2gBegaPeSD0yFE7XqdeB8kVHfOI1qO2VzeCVXVtyR/PYbDHUtGbwwOkzOOOw==
+	:subject:to:to; s=fm1; t=1724308479; x=1724394879; bh=r0nyzQo7l8
+	mAtK9UfcVpkhaqmQ+rXR9us+dh7yGLe/s=; b=CAw0eKIZBXsh1YOcUHGEt26YYO
+	dTuhxK2vGNF9WVdBZRHkKgzHdiMa0oMm3lrz9w1VIpslJBix1qZlDPNCkpHxFRrq
+	aJw3MdNgQDhvJAV9AMxs5lKcGmgQGE6PQrc/Ev5ApvzKWrvtKtiT7ApTnYHHXbxP
+	PQ578XXJq6i74DQDMxcjiubmLjjNIqqjqjbnBPdyExjh9ww0HnFqr1zvosT9ErMj
+	3ezcUbmnQt9/Iuig8ingVoCeTl3luaxeWoWSeWMbDq/127VlS1dPH2efeJYTK7ub
+	GogKI86gh6fQCMZK3EPXOSxPzG1qWZjU+0xTYa9VAyJzBUMfWep6Tov29DkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724307558; x=1724393958; bh=nGVC89XpQMorglOjM6pq6maSWCdA
-	9nWgq4fTidHKCEE=; b=la8d9j2BBmysGPXMnb7dANuYr01rtmI0+WPCbvNj9rt7
-	U/PmrNpMkmMczN7Z5Zyv84VhyDnlTzqnW48t4Q8zrLZlVuFBNMaD/2SOsoFkCjTi
-	h39Lf8fWA+ME02rm4Eb2fb+wpt1vfF/ZB6MxGh9uPDNFK8UmIWxj5Ysw+80VRw/w
-	FskIMGsWSzRanDRqrL9QGtVbpmBL6D+4QZqqe3ZWQEdMxCFLsr1wSZCha+LfWuLh
-	bnww2/4nrlORwPGGKX9osDg/7jp+SqfJqTgmPu/P3vAxmt8irX/NbPokW8O/a5aU
-	TlHGFROJS2bC6KgAuXucrcPFxv3SqtCOl0gUp+S4/Q==
-X-ME-Sender: <xms:ZtjGZkixfGygvt6c31NjEgXXEyuJIIAbEayqbjGKM_Jle-4a8Fn4LA>
-    <xme:ZtjGZtBHtF4qUIs2Hvnt5YhgYjlmhQwyWn5t0PqQ7hkOaLBKti6HJgh6JTK8nUraz
-    6bhYA8b1ppwmzGI6w>
-X-ME-Received: <xmr:ZtjGZsHLZ9bPas1y1RVHTtWXs6LF4b_3awndqM4km_1PsQ6rZzulJGEoNAZyE_uaIksiyQEmxoaX6dMl1vszVhRMJ69Eu4Q1co1w4GWdnm6J5oA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddtjecutefuodetggdotefrod
+	fm1; t=1724308479; x=1724394879; bh=r0nyzQo7l8mAtK9UfcVpkhaqmQ+r
+	XR9us+dh7yGLe/s=; b=ImGHQyXCFI6V1YiCi1WMmSQ0kmnfu9EECu7kesi2Vxod
+	f4wBQeCOMICC5hdPI3nUZXBoFLBeKEZBZ0uriIEGurZ7BtmSk9r2HqVq7wXbHJlI
+	YfuoFOy1Ddq3LOYpC8+QJPh9sNEmrHYp9k4bkAcVsj/T8PURpdJT6jR1s5rdqXiw
+	AZa5t6Y0SwRDR7dgd5sHD29nkWbLLsIbYJZa+MSjx9XxiIywiPzKMIM7FdCKjUIU
+	jm6kvR4UBjsMUq+CVvKOe7Zol9giL9z3PBM1EYA/0WftZz34d4cvuc3H7nA/WLQi
+	5UaPWlwLanf8DQLkmGE4LZQe8anOot9zg8KQq8TfaA==
+X-ME-Sender: <xms:_9vGZscOkg7fjVQQYn6OeaX3hROhFKpZpFoUuRjHeattmyHTQ4Vn1g>
+    <xme:_9vGZuMw4eYhitPGLhctrQe7lF98ESGos1jz3mGVF5bZCCQFyr0bwFIWehFMeOZ1Y
+    1gYqLgXASeSTLkW0A>
+X-ME-Received: <xmr:_9vGZtgacoLwJZAfacwX4QDapDWLXhmDMhynan9nkpKBPRKSWq_2V33wz-qbkhts8lz4uYhJfSTSha_cP_CZN8Syg8MsLLDytfp1Flzwyj350kA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefheevvdeg
-    ieetgeeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidr
-    uggvpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhope
-    hsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ZtjGZlSTEAT9Vzttm5A3qmMT3RYrS5sXGAJPAT6iiLyC5HkrbynHyQ>
-    <xmx:ZtjGZhz3H4Xzx73at5qHscitV3bb7Hz-Ee8iuJDMInwn37oUjqoQSg>
-    <xmx:ZtjGZj77Vf1icAYkGvKQvYLpVGRVglR3_vOsbFfq6vcyhVyo90aYuA>
-    <xmx:ZtjGZuw-G_E5LlC4c1TJj91x8gwpDC79IXl_A-yfAiqVTcRhuETSlw>
-    <xmx:ZtjGZon4GIU_L6ff5Z5Hyfe3fkIi55vdYlTRYyzh5KQu4ABpNMesW8VA>
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:_9vGZh_qtmLvyq-kf_oXfuG6-40UsgNM_sy-CPz-4IxnoTE_WE5OTQ>
+    <xmx:_9vGZotNEVGZZwA6UAGu476sMx03_NXOLxmZHSa6YVoW1UTC6m86Yw>
+    <xmx:_9vGZoGCE5e1l0iBwBrXG-zF7t7CGLZj4hY0okTO1C_KIH48TeLE0g>
+    <xmx:_9vGZnMIGHoib93Q5GJxYi1lzdIzeIXZuJgg0SZDwH3BjtWiib_Oxw>
+    <xmx:_9vGZkJX33iQrHiSJen1SWphyH9PGmxF3pPfX-bwdDshlWDQxF1-IR4z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 02:19:17 -0400 (EDT)
+ 22 Aug 2024 02:34:38 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7143315a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 06:18:42 +0000 (UTC)
-Date: Thu, 22 Aug 2024 08:19:14 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c3905f5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 06:34:03 +0000 (UTC)
+Date: Thu, 22 Aug 2024 08:34:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de, james@jamesliu.io,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
-Message-ID: <ZsbYYo3pLUAmBU0e@tanuki>
-References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
- <xmqqbk1l25p3.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: karthik nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v3 00/15] reftable: drop generic `reftable_table` interface
+Message-ID: <cover.1724308389.git.ps@pks.im>
+References: <cover.1723640107.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,83 +86,103 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqbk1l25p3.fsf@gitster.g>
+In-Reply-To: <cover.1723640107.git.ps@pks.im>
 
-On Wed, Aug 21, 2024 at 09:36:56AM -0700, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > Advice is supposed to be for humans, not machines. Why do we output it when
-> > stderr is not a terminal? Let's stop doing that.
-> 
-> Last night while skimming the series on my phone (read: not a real
-> review at all), I found it very annoying that GIT_ADVICE=1 had to be
-> sprinkled all over the place.  I wonder if we want to instead set
-> and export it in t/test-lib.sh and turn it off as needed?
-> 
-> The end-to-end tests we have are primarily to guarantee the
-> continuity of the end-user experience by humans, and ensuring that
-> an advice message is given when appropriate and it does not get
-> shown otherwise is very much inherent part of them.  An alternative
-> workaround to counteract the breakage this series causes of course
-> is to run everything under test_terminal and it probably is much
-> more kosher philosophically ;-), but compared to that, globally
-> disabling the "if (!isatty(2))" while running the tests, and
-> temporarily lifting that disabling during tests of the new feature
-> added by this series would be easier to reason about, I would
-> suspect.
-> 
-> > This series is motivated by an internal tool breaking due to the advice
-> > message added to Git 2.46.0 by 9479a31d603 (advice: warn when sparse index
-> > expands, 2024-07-08). This tool is assuming that any output to stderr is an
-> > error, and in this case is attempting to parse it to determine what kind of
-> > error (warning, error, or failure).
-> 
-> The "anything on stderr is an error" attitude needs to be fixed
-> regardless of where it comes from (tcl/tk scripts have, or at least
-> used to have, the tendency, which I found annoying), but regardless,
-> I thought we added a mechanism to squelch all advice messages for
-> this exact purpose at f0e21837 (Merge branch 'jl/git-no-advice',
-> 2024-05-16).  Why isn't the tool using the mechanism that already
-> exists?
-> 
-> I would have supported the behaviour proposed by this series 100% if
-> it were on the table when we were introducing the advise mechanism,
-> but unfortunately nobody seemed have suggested it back then.  I am
-> willing to go with an "experiment" to change the behaviour,
-> deliberately breaking "backward compatibility", if we have a wide
-> support here during the review period.  FWIW, I think any scripts
-> that scrape the advice messages are already broken.
+Hi,
 
-I continue to believe that the biggest issue in this context is that
-there is no proper interface between Git and its caller that would allow
-the caller to learn about errors in a machine-parseable way. Matching
-error messages against regular expressions is bad, and can easily be
-broken by the output changing in whatever way. This may be because the
-error message itself was changed, or it may be because we have started
-to show advice messages. It's extremely fragile, and from my point of
-view there is no good way to classify errors right now.
+this is the third version of my patch series that gets rid of the
+generic `reftable_table` interface. It made it way harder to understand
+the reftable code base and is not really required nowadays anymore where
+we have generic re-seekable reftable iterators.
 
-I won't argue that checking whether stderr is empty or not is good -- it
-almost certainly feels wrong to me. But that's only one small part of a
-more widespread issue. Having structured error handling in Git, e.g. via
-a new structure that represents errors as discussed a couple of months
-ago [1] would go a long way. I didn't quite like the approach chosen by
-that patch series, but think that the idea certainly has merit.
+There is only a single change compared to v2, which updates one of the
+commit messages to explain why it is fine to drop tests for the printing
+functionality.
 
-The other question is why advice is being shown in the first place. In
-theory, all one should ever use in scripted usecases are plumbing tools.
-And as plumbing tools are explicitly not designed for users, they should
-never show advice in the first place. I guess chances are high though
-that the scripts in question used porcelain. That is also understandable
-though: our plumbing tools are often not as powerful as the porcelain
-ones, which has been lamented on the mailing list several times.
+This patch series continues to build on top of 25673b1c47 (The third
+batch, 2024-08-07) with Junio's ps/reftable-stack-compaction at
+f234df07f6 (reftable/stack: handle locked tables during auto-compaction,
+2024-08-08) merged into it.
 
-So I certainly get the sentiment of this patch series, but feel like we
-continue to work around the underlying problems. Those are rooted rather
-deep though, so fixing them is nothing we can do in a release or two,
-but rather on the order of years. Meanwhile I guess we have to find
-short-term solutions.
+Thanks!
 
 Patrick
 
-[1]: https://lore.kernel.org/git/pull.1666.git.git.1708241612.gitgitgadget@gmail.com/
+Patrick Steinhardt (15):
+  reftable/merged: expose functions to initialize iterators
+  reftable/merged: rename `reftable_new_merged_table()`
+  reftable/merged: stop using generic tables in the merged table
+  reftable/stack: open-code reading refs
+  reftable/iter: drop double-checking logic
+  reftable/generic: move generic iterator code into iterator interface
+  reftable/dump: drop unused `compact_stack()`
+  t/helper: inline `reftable_dump_main()`
+  t/helper: inline `reftable_reader_print_file()`
+  t/helper: inline `reftable_stack_print_directory()`
+  t/helper: inline `reftable_table_print()`
+  t/helper: inline printing of reftable records
+  t/helper: use `hash_to_hex_algop()` to print hashes
+  t/helper: refactor to not use `struct reftable_table`
+  reftable/generic: drop interface
+
+ Makefile                         |   2 -
+ reftable/dump.c                  | 111 ---------------
+ reftable/generic.c               | 229 -------------------------------
+ reftable/generic.h               |  37 -----
+ reftable/iter.c                  | 126 ++++++++++++++---
+ reftable/iter.h                  |  30 +++-
+ reftable/merged.c                |  72 ++++------
+ reftable/merged.h                |   4 +-
+ reftable/reader.c                |  70 +---------
+ reftable/reader.h                |   4 +
+ reftable/record.c                | 127 -----------------
+ reftable/record.h                |   1 -
+ reftable/reftable-generic.h      |  47 -------
+ reftable/reftable-merged.h       |  26 ++--
+ reftable/reftable-reader.h       |   9 --
+ reftable/reftable-record.h       |   8 --
+ reftable/reftable-stack.h        |   3 -
+ reftable/reftable-tests.h        |   1 -
+ reftable/stack.c                 |  94 ++++++-------
+ reftable/stack_test.c            |  29 ++--
+ t/helper/test-reftable.c         | 189 ++++++++++++++++++++++++-
+ t/unit-tests/t-reftable-merged.c |  17 +--
+ 22 files changed, 422 insertions(+), 814 deletions(-)
+ delete mode 100644 reftable/dump.c
+ delete mode 100644 reftable/generic.c
+ delete mode 100644 reftable/generic.h
+ delete mode 100644 reftable/reftable-generic.h
+
+Range-diff against v2:
+ 1:  472c169b501 =  1:  472c169b501 reftable/merged: expose functions to initialize iterators
+ 2:  bc6f1cd8c1b =  2:  bc6f1cd8c1b reftable/merged: rename `reftable_new_merged_table()`
+ 3:  58e91ab4b34 =  3:  58e91ab4b34 reftable/merged: stop using generic tables in the merged table
+ 4:  6ba3fcee411 =  4:  6ba3fcee411 reftable/stack: open-code reading refs
+ 5:  cac08a934c5 =  5:  cac08a934c5 reftable/iter: drop double-checking logic
+ 6:  103262dc79c =  6:  103262dc79c reftable/generic: move generic iterator code into iterator interface
+ 7:  4011fa65d81 =  7:  4011fa65d81 reftable/dump: drop unused `compact_stack()`
+ 8:  ceaa296bfd4 =  8:  ceaa296bfd4 t/helper: inline `reftable_dump_main()`
+ 9:  a62e4612e97 =  9:  a62e4612e97 t/helper: inline `reftable_reader_print_file()`
+10:  7acfe4fecc5 ! 10:  242c179df5f t/helper: inline `reftable_stack_print_directory()`
+    @@ Commit message
+         Move `reftable_stack_print_directory()` into the "dump-reftable" helper.
+         This follows the same reasoning as the preceding commit.
+     
+    +    Note that this requires us to remove the tests for this functionality in
+    +    `reftable/stack_test.c`. The test does not really add much anyway,
+    +    because all it verifies is that we do not crash or run into an error,
+    +    and it specifically doesn't check the outputted data. Also, as the code
+    +    is now part of the test helper, it doesn't make much sense to have a
+    +    unit test for it in the first place.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## reftable/reftable-stack.h ##
+11:  8bd53a1a656 = 11:  a05e2060996 t/helper: inline `reftable_table_print()`
+12:  c50aabbb804 = 12:  ee22a08e11e t/helper: inline printing of reftable records
+13:  5498395872c = 13:  0a3c619e842 t/helper: use `hash_to_hex_algop()` to print hashes
+14:  5390be75c37 = 14:  8eab399dfc6 t/helper: refactor to not use `struct reftable_table`
+15:  5aeab8ee077 = 15:  b5d7b5679b5 reftable/generic: drop interface
+-- 
+2.46.0.164.g477ce5ccd6.dirty
+
