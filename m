@@ -1,80 +1,80 @@
 Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E03181B83
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AACC1836D5
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724318276; cv=none; b=ZbDD+1f2SaEZTiU8z8UJ7Wla3vET+0xK3KZFupEN/hEiQMbp2r7Q4Zzxo+vFIQqig+G4DDmDNO0deL5gF3nJiMbhLxFYVRX5CuFB7Bd9eHDt19mwUmo1abbI2OQlgIpJo3jIbYvrevyS1Gyvgd+iKW86fjXRgkgpTPs6Og5agFc=
+	t=1724318280; cv=none; b=p7e8FjMrSk4ZmR65yUL39lshG/F7H6di0yD/D+aIRZZ2X8odwzNKfrx409isT7RuUw503Fo2lq1eHKLVLf8c1YgHprGvynQHXnXl9bj57+IGBVSpLc75iP96KZSAbSwdmscRCXsUZ8JyG7t19vAbJYw8NxJcnOy+/WlK9vf73IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724318276; c=relaxed/simple;
-	bh=9wQt4BHiI/bt4NyKITEtRjgp3D8b62VJEnSMyDCYMkQ=;
+	s=arc-20240116; t=1724318280; c=relaxed/simple;
+	bh=Br3jKC5gK8wl0Mwp21gqIuK66/tgOmHZ8tL7Z58VCHo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=raCos67MGaMi1y7SSQ313AmOfW2Y+T+0qEh1FlvtTbpblm3ZrooPFcXG7TUfblSIzLuS/VRAjYogK7Z5iVXOlob3oceKs6Ywn4eOp/TBO/UKfV+IwZlIk11AgM3A3sV7ObT1gS2OvTQncwXQbSY/7hMOqalPkuXbHWpsZ0387lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IQcQ7KvJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lPtKRjjV; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=lKC/09HsODALwkibpEMud/8z3e1pAHbXy7jv8dVrO6Esp6m3CYNcyNJ9FHm+aoefcpRvkikhZxYTHg8llqSc45Lwxq6mps69fdj7LGFAXkmlnUzkNJAqfcx1gcLpz7M76eFYiNMdo9Pd2JYvLRJqvP2pz+uzSFxCM7SXdc99FvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VJ9P3WDv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f9u8rm7u; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IQcQ7KvJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lPtKRjjV"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id A1BE61151ACA;
-	Thu, 22 Aug 2024 05:17:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VJ9P3WDv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f9u8rm7u"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id B20B11151ACA;
+	Thu, 22 Aug 2024 05:17:57 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 22 Aug 2024 05:17:54 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 22 Aug 2024 05:17:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724318274; x=1724404674; bh=jJaGu/U2tT
-	ESezbyhYQIMT3CF0nv9IjwY5IFbxYDrss=; b=IQcQ7KvJna8yD+BEZT/snQXqc6
-	e8WfMqHkmUvTAxtSiF4ASoCKqzx31UhBkP3X1Vom7hcMQcS3EXiH2prtvpwUcTqC
-	oqx+uZ1xVtHspvIi2kpZL97bCq35Wdh7V2IbMi2pg0V4ZAwHzq/v+UPXdSJuf53U
-	fc+qNVmXp3h//qXaFp3m8+VOS3vGI3nXyVxjGulpD/7p9CKI8Dz76V2ck8ebCYNN
-	PhaMb6tYlKpf3EuQDdiBhG0vCYwS/AKtKBsLLuyGTg4XOpYYlOcfR76vOGwwZebb
-	gqKQE105yLIVP62l3uGeWoFAOPo7ZKPfP2IiuYgOY5dgu4irBG0orHVg7kzg==
+	:subject:to:to; s=fm1; t=1724318277; x=1724404677; bh=5y/4KdAzaD
+	VUjmsq6cdSaKltOTfA6iBNuSaHl1RINP4=; b=VJ9P3WDvdZ+VfugAzgB2Ci+HZP
+	Lcx5aE8ayw5+pfD7Zy/lqbSwx/ANcvneoaZkVFJz3kZh06R6YdT/sl6jp5Hi+ZWN
+	WyQ6X6JWfwLRl4t+bFhAk/LBRPc62xQ/sq7i77QFRUiNyzTUkMFsV2iw1jkZ9k5i
+	KWMoFT1KjC3wX5WuNp3qX4jIhs34LYpOMBD8m946xyhVrnl5r9hDsmdgxnnr3f5S
+	OCfO3hPAZPz14mM9AtNf8HLZFMTKaUo905BU2G0ck4za2LwRGOBFnXJ/m4mkz0CL
+	kSRTxpnVQAmKiqTJXDTCg8EeC514ej6guZDlqO6eOPVZOHjzJTdh8nN2KDKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724318274; x=1724404674; bh=jJaGu/U2tTESezbyhYQIMT3CF0nv
-	9IjwY5IFbxYDrss=; b=lPtKRjjVNW5+2/Y+5w19kbfN34ul5OmXd7GI1sWiFwoL
-	TYqojm8fB7awgCM0YKdCH6uw1aVtxgECGKNi66wFXgujnys1wsb2i7sOsa02wo6l
-	nTCK3/2J3QGie1PlzWueViWaYwyEs6JjeV40rV/IgebhbdN5wkFfSliZxxXwk8vj
-	9yzEW3yvveC1X1DgDXV1DGsjPnuvgacBCAIyv/MJ0jvHZrbNaBHqstUSc1rNxarD
-	aoTF987d+uqGvL2ScnrzEAiFlPFHn1kYGZBaLo1pIVW7iJABdIRv9tcFUBCdIjqW
-	fzgvd0y4r9qUhuoF5TmzLZiGhwNMaomjALDSwgt/Xw==
-X-ME-Sender: <xms:QgLHZr6Z7-ECxvOQ2KRVY25QDI8HeryqYPRVixvddnrd5w1P_A587g>
-    <xme:QgLHZg5GQz4xYLj-wp1P4xVK5viovl2KVYRI_9_qgZB-tHhrqdnhfe5CbtLTi7SXB
-    2zCm2xbFnFC-xhI0g>
-X-ME-Received: <xmr:QgLHZifA3aMyNJ2fu9DSCWik9AP-I9yZoFt27eFrZ2q7C0sN_IhBG_yMufd10DN4qf15y56MmiJKSEksX5hU29XsbwmAswsFmghTIGmrxqNgfVM>
+	fm1; t=1724318277; x=1724404677; bh=5y/4KdAzaDVUjmsq6cdSaKltOTfA
+	6iBNuSaHl1RINP4=; b=f9u8rm7uICHjdPl/+Ig8/RsGfF2gfU+aMqddU8kh3Uyf
+	uzEVWJ9vDyQalVCPPjdqlBQfWkvbeeSy3lyE1pZS4VS7HMsiXNR6GK5TFsjiS+x4
+	rEav1m++izvEntpgifWfesgClTcYPeYW/C1M3xvXDdZGOq8H8xIStwV+hP7+l0qZ
+	EVxuQZShuHCbKAHQq4sBBqJfSDT6rGWRc1UUhCzsF3VbovbRhRzubQNL2KdDAVFH
+	bspu5T4RTVMC35uDRWOZ28EoRXWqI353hm9Dm0SWittAodCNXFi8Iro3yuSi/lTe
+	lZB11gCXUZfbxBoGVTdegniskIYUlTR3Gz3umFKODA==
+X-ME-Sender: <xms:RQLHZjasA9CD4cMPjsyF78bNwtA3th4UwgfXPxjuV1bvhGIEMEesJw>
+    <xme:RQLHZibzBry6TU4MDp5PiXQjsMHo0370JuD9wH3ZTDeGK4d-c5MWpldXo8Pz26WAU
+    z4o1XaBnZfCSXjP4g>
+X-ME-Received: <xmr:RQLHZl8D0l80IQqnIjrahs2K0GTqKA7JIu-fBJksWnd1lXScXe4ryObXoA9aQf7mf-Nf1FtHgSadAkV6qyNEreXIdItMp-qsD2LUkjZl1sHHSII>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    ufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
     drtghomh
-X-ME-Proxy: <xmx:QgLHZsJG5TqP9XEIh_7Sn7gP2aUi1XoH7AOfopTRWFiscK01q-ITGw>
-    <xmx:QgLHZvIwTcR37QQHBz5yo9igiKDAjZBjr10zSHtURE-VaCXdHq9HMg>
-    <xmx:QgLHZlzf1Wr4NTOVZla6lq60xx5ZbWM2eCMxHBrabX-WGvSA4Xp9MQ>
-    <xmx:QgLHZrJTKsdeps_BzxyVPOhBQQUQ19P-Eee4-DMyzK9DpVXOiUnjiQ>
-    <xmx:QgLHZmWqHl1zd1nWjzuGSaIjPBtstdPODySYZaoAmazpI3TxsnMQvvmL>
+X-ME-Proxy: <xmx:RQLHZpo16j3XF1WeFdmhZzUDv7rXmiq8LMrhOfgZvGa3suRuY4NTfQ>
+    <xmx:RQLHZuryHPvvsQY3I9LsFoTve18B_fLPmBAgvjgadPWDG0tejLxiew>
+    <xmx:RQLHZvRFMEpR8O9Yx70F9Ecv4jXNVjfb6vXxffdZF-jjJC3bq6MDfQ>
+    <xmx:RQLHZmqS9HzzLGzh9Z_VLnXUIBHNUQ_OzIYxqXmeVrw6upSV9qfmgg>
+    <xmx:RQLHZl2zN4gDHTUmxLV_kljgXl9VDGDqAHewsR4BrdHO-gQRg5-SEIzF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 05:17:53 -0400 (EDT)
+ 22 Aug 2024 05:17:56 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fffbd242 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 09:17:19 +0000 (UTC)
-Date: Thu, 22 Aug 2024 11:17:52 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 45affc52 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 09:17:22 +0000 (UTC)
+Date: Thu, 22 Aug 2024 11:17:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 14/20] builtin/fetch-pack: fix leaking refs
-Message-ID: <aac84c5a2b7822983822f4b9dcfd65af0e808208.1724315484.git.ps@pks.im>
+Subject: [PATCH v2 15/20] remote: fix leaking config strings
+Message-ID: <532328b78140620549385c7e2dff3ecc98036593.1724315484.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
  <cover.1724315484.git.ps@pks.im>
 Precedence: bulk
@@ -87,78 +87,124 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724315484.git.ps@pks.im>
 
-We build several ref lists in git-fetch-pack(1), but never free them.
-Fix those leaks.
+We're leaking several config strings when assembling remotes, either
+because we do not free preceding values in case a config was set
+multiple times, or because we do not free them when releasing the remote
+state. This includes config strings for "branch" sections, "insteadOf",
+"pushInsteadOf", and "pushDefault".
+
+Plug those leaks.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch-pack.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ remote.c | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index af329e8d5cf..fe404d1305b 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -46,7 +46,7 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix UNUSED)
- {
- 	int i, ret;
--	struct ref *ref = NULL;
-+	struct ref *fetched_refs = NULL, *remote_refs = NULL;
- 	const char *dest = NULL;
- 	struct ref **sought = NULL;
- 	int nr_sought = 0, alloc_sought = 0;
-@@ -228,19 +228,20 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix UNUSED)
- 	version = discover_version(&reader);
- 	switch (version) {
- 	case protocol_v2:
--		get_remote_refs(fd[1], &reader, &ref, 0, NULL, NULL,
-+		get_remote_refs(fd[1], &reader, &remote_refs, 0, NULL, NULL,
- 				args.stateless_rpc);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
--		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
-+		get_remote_heads(&reader, &remote_refs, 0, NULL, &shallow);
- 		break;
- 	case protocol_unknown_version:
- 		BUG("unknown protocol version");
- 	}
- 
--	ref = fetch_pack(&args, fd, ref, sought, nr_sought,
-+	fetched_refs = fetch_pack(&args, fd, remote_refs, sought, nr_sought,
- 			 &shallow, pack_lockfiles_ptr, version);
-+
- 	if (pack_lockfiles.nr) {
- 		int i;
- 
-@@ -260,7 +261,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix UNUSED)
- 	if (finish_connect(conn))
- 		return 1;
- 
--	ret = !ref;
-+	ret = !fetched_refs;
- 
- 	/*
- 	 * If the heads to pull were given, we should have consumed
-@@ -270,11 +271,14 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix UNUSED)
- 	 */
- 	ret |= report_unmatched_refs(sought, nr_sought);
- 
--	while (ref) {
-+	for (struct ref *ref = fetched_refs; ref; ref = ref->next)
- 		printf("%s %s\n",
- 		       oid_to_hex(&ref->old_oid), ref->name);
--		ref = ref->next;
--	}
- 
-+	for (size_t i = 0; i < nr_sought; i++)
-+		free_one_ref(sought[i]);
-+	free(sought);
-+	free_refs(fetched_refs);
-+	free_refs(remote_refs);
+diff --git a/remote.c b/remote.c
+index 7d5b8f750d8..2c52119bbb2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -243,6 +243,17 @@ static struct branch *make_branch(struct remote_state *remote_state,
  	return ret;
  }
+ 
++static void branch_release(struct branch *branch)
++{
++	free((char *)branch->name);
++	free((char *)branch->refname);
++	free(branch->remote_name);
++	free(branch->pushremote_name);
++	for (int i = 0; i < branch->merge_nr; i++)
++		refspec_item_clear(branch->merge[i]);
++	free(branch->merge);
++}
++
+ static struct rewrite *make_rewrite(struct rewrites *r,
+ 				    const char *base, size_t len)
+ {
+@@ -263,6 +274,14 @@ static struct rewrite *make_rewrite(struct rewrites *r,
+ 	return ret;
+ }
+ 
++static void rewrites_release(struct rewrites *r)
++{
++	for (int i = 0; i < r->rewrite_nr; i++)
++		free((char *)r->rewrite[i]->base);
++	free(r->rewrite);
++	memset(r, 0, sizeof(*r));
++}
++
+ static void add_instead_of(struct rewrite *rewrite, const char *instead_of)
+ {
+ 	ALLOC_GROW(rewrite->instead_of, rewrite->instead_of_nr + 1, rewrite->instead_of_alloc);
+@@ -373,8 +392,10 @@ static int handle_config(const char *key, const char *value,
+ 			return -1;
+ 		branch = make_branch(remote_state, name, namelen);
+ 		if (!strcmp(subkey, "remote")) {
++			FREE_AND_NULL(branch->remote_name);
+ 			return git_config_string(&branch->remote_name, key, value);
+ 		} else if (!strcmp(subkey, "pushremote")) {
++			FREE_AND_NULL(branch->pushremote_name);
+ 			return git_config_string(&branch->pushremote_name, key, value);
+ 		} else if (!strcmp(subkey, "merge")) {
+ 			if (!value)
+@@ -406,9 +427,11 @@ static int handle_config(const char *key, const char *value,
+ 		return 0;
+ 
+ 	/* Handle remote.* variables */
+-	if (!name && !strcmp(subkey, "pushdefault"))
++	if (!name && !strcmp(subkey, "pushdefault")) {
++		FREE_AND_NULL(remote_state->pushremote_name);
+ 		return git_config_string(&remote_state->pushremote_name, key,
+ 					 value);
++	}
+ 
+ 	if (!name)
+ 		return 0;
+@@ -475,12 +498,15 @@ static int handle_config(const char *key, const char *value,
+ 		else if (!strcmp(value, "--tags"))
+ 			remote->fetch_tags = 2;
+ 	} else if (!strcmp(subkey, "proxy")) {
++		FREE_AND_NULL(remote->http_proxy);
+ 		return git_config_string(&remote->http_proxy,
+ 					 key, value);
+ 	} else if (!strcmp(subkey, "proxyauthmethod")) {
++		FREE_AND_NULL(remote->http_proxy_authmethod);
+ 		return git_config_string(&remote->http_proxy_authmethod,
+ 					 key, value);
+ 	} else if (!strcmp(subkey, "vcs")) {
++		FREE_AND_NULL(remote->foreign_vcs);
+ 		return git_config_string(&remote->foreign_vcs, key, value);
+ 	}
+ 	return 0;
+@@ -2797,16 +2823,26 @@ struct remote_state *remote_state_new(void)
+ 
+ void remote_state_clear(struct remote_state *remote_state)
+ {
++	struct hashmap_iter iter;
++	struct branch *b;
+ 	int i;
+ 
+ 	for (i = 0; i < remote_state->remotes_nr; i++)
+ 		remote_clear(remote_state->remotes[i]);
+ 	FREE_AND_NULL(remote_state->remotes);
++	FREE_AND_NULL(remote_state->pushremote_name);
+ 	remote_state->remotes_alloc = 0;
+ 	remote_state->remotes_nr = 0;
+ 
++	rewrites_release(&remote_state->rewrites);
++	rewrites_release(&remote_state->rewrites_push);
++
+ 	hashmap_clear_and_free(&remote_state->remotes_hash, struct remote, ent);
+-	hashmap_clear_and_free(&remote_state->branches_hash, struct remote, ent);
++	hashmap_for_each_entry(&remote_state->branches_hash, &iter, b, ent) {
++		branch_release(b);
++		free(b);
++	}
++	hashmap_clear(&remote_state->branches_hash);
+ }
+ 
+ /*
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
