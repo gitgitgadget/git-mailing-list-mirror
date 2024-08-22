@@ -1,53 +1,53 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021C217DFF5
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF5617DFFA
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724318241; cv=none; b=dMuJWuMpUPFOSQiYqqkxNOZzZpqUrSuEA2PJfA5mTR5jLTdIE9VMMFB+fdVczl0ONjSENOrrXTRALcqiSVdlFYnEWbkqz5mrLcaHdnypFnBa18CwFwuZq1w946U9lltANIpHWIeNrTnxMdm2bdfzK22iHG2yaTwQ3PlOgQsPFKM=
+	t=1724318243; cv=none; b=babpVNl46r22A/q8DWcvxdLqMOZEw9To1NMFbDNDzm2WGV5If0yaILZaf6Y18wFFBk01Vl3+G8VHDCF9oHzOoqRpu/3HC1URwM7MZ6RE6IPdZA54AQ1a/UGGh0ecijoUwDMGbkAuX7Vusq+d94Lz0T1+WAnU2zq9K41gpaIdGYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724318241; c=relaxed/simple;
-	bh=pBE8DpSvADQS90zjfMIk60gizQly99VD9eNn1SMkJpQ=;
+	s=arc-20240116; t=1724318243; c=relaxed/simple;
+	bh=fuuaad+LzJ9J1ACv7inm/m10mCKweBOzjIGwHn49G1E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=umpBGUcQ2/gDnn/ilmf5nKwgoqwmZxGBOCLmYP8RPys2KwC+quElhvtnA5L0FT4YV4daAGGXqbE5+1mO2qeNbpuevSdjz35t/juRtiXl+sICor0qUky0j1rass849TD5kTfmDHoTf9Y1CcAR7NdYO1gJCeKlFR4OFvMblR6A+hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oImLs3Mn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EafBKEk1; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=uTpvdaoL2/czyFVt28ypnB2McG5leXgbwIiSIpuctCLmQ3N8HHA9ze3weK3QQv0iNPkOXK/7io75agcRTRYX84naT/1dTq4K6KtwxEwxAy/IwcdWG69QZPHNCzGC2wEJ0ae3dPbCEQOGdGq1wlJr6v7uzDdJAPQfbd+ZpXoBq6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=teCrfAA1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CZVsbe7p; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oImLs3Mn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EafBKEk1"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 24231138FF3B;
-	Thu, 22 Aug 2024 05:17:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="teCrfAA1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CZVsbe7p"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3330A1151BBC;
+	Thu, 22 Aug 2024 05:17:21 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 22 Aug 2024 05:17:19 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 22 Aug 2024 05:17:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724318239; x=1724404639; bh=5seFfBAru9
-	++D3GpBhHiohA0nwaxb4Q0IbTVGtzw/kQ=; b=oImLs3Mnm7elu8Evmer2Hk2tLW
-	LN3ktsZEWcoTX3ZP98hnVr9TL8b64PeSIuvoU+OKyZvppEfXxUUoZ+jP7wnCCiWg
-	Gwo7bt8U8gMP5BdBXY6gRAcF0EvQqQd+Lb4V06QDg0GyoZtAIy9+xv+ZhXqzdtYJ
-	NmEYwgRywyvguEQCZqVEx2z7utNaH14fnpAOHg9LfgUvYG0Bc3HaONWpzNNKElfG
-	sVxpVNgoYUIGjZEcY+7vPdLbDNUebXGmp80bNGPSq1WupIkr2vzBy4v7GwWu17ej
-	Eg64xcNmK1vP3TSWklyyDZ876xmn66jKoXBBpp8GglB8MGR/7UK7d2gOKkUw==
+	:subject:to:to; s=fm1; t=1724318241; x=1724404641; bh=MCNmPwlZVK
+	aOUdZLbwJsg8dSauQ89p0CarHzsRUi4qA=; b=teCrfAA1oixzAxQIKXaVPLChJ+
+	U8ISILtOgHJIkVZyzq3twmP9sOQphzshKqWZe/fSja1VUtqZtKmB5qukoABtHPYo
+	S3R9v+D4zCniGt/d3WJVNlVJMCimMELlxCTLf4vI0ukvKASwGS9WcJtmJpHoso7e
+	Ss3iYL7f56D8C+mSEFqspGEDDOin/PhXBs8XlORg1aspZ2rQ9CjQEEGsZVz+V0u1
+	/QC7SKfPpWSdixEYZ3XL5sXIOoDfADWrevu12Vb6iICQlT2zW/pAtpLIU+/8RH1T
+	FZ/fWib3E2FS/Jd81DDZUmZqjLlGl2T/TyeenymZSDhz8Et753PjkRWDfZcg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724318239; x=1724404639; bh=5seFfBAru9++D3GpBhHiohA0nwax
-	b4Q0IbTVGtzw/kQ=; b=EafBKEk1PoWzofMVAFTgHbe7V3M8BtxLZm5sKdUekx4I
-	2IECCIhhscg+0kKrbMvWatcpIQf91/CqYwwyg+XZR1AQH0KOcnLYaFaSezloiZrg
-	jzLD54r1rEGGL3LUHHT2XwrbvnCbsWsrnHQP9rEOV38lnV0lnP7n4d1b+sHkNNFk
-	WYFuChtLbOkIVb7TA3NhED2FRaodKA2xh9fiQpvxDTDMosvgvNdhBs/nsr9SUKXS
-	SHcB6f2bKm/licihIsnl/1taIOp99Sp9zoIV1R7fPIBbQVdc5LyQwzhwKdsnBM0X
-	Q/04MBxTGBo+vVxTfB5hQTyAHlFS7Vy9EDONXtT6sA==
-X-ME-Sender: <xms:HwLHZm4PqRz8qxrWf7W4CfGoGVjlIZcCZthkuY1WwtmzEoLX87RTcg>
-    <xme:HwLHZv6BNv1Hsb2xWuPBk0kMfSIfaDw4iayK1DGJizpzBh0EARmwOy8IjFxOk39n4
-    jtV3OpjSS6CfBOBpg>
-X-ME-Received: <xmr:HwLHZlflh9rDviv59YrYEygTqo8L5JzdHjfoqCu7Ngn3bdxQBsvxp9kPVGY4d1YyTk9_6XVVE9xzXpBSOVUwQoXsio9TbxdKfDUlZqiRcKqNJAE>
+	fm1; t=1724318241; x=1724404641; bh=MCNmPwlZVKaOUdZLbwJsg8dSauQ8
+	9p0CarHzsRUi4qA=; b=CZVsbe7pK03soVn7UT13xZdUVh0zZVB/kaqs7zQZZvwe
+	MZQ9Xa2g6KiNJR03r8bg8yuDdpjMr8Z1LMKK0ySDrCXuJ2gz/K50pJ5/cq9B2nYL
+	LaE92EljXrJd1Fk18shshMCDBXX5kBz4k3VezLEwXuDBmq6yo1WiNPM+YYyaT1KJ
+	t6qQZiBZUlj+KVzgda9ga5S3SELkgy/jFgXd/rDUlf2ZeDilHkQcrhX2V2yXOv9N
+	vPW11jvXyGJkkernqCh25NcUWI1bQRQy2WJW/ntQRvxIsg/VEhsNhrtgprXQ6+Ce
+	vvNzKdK4KSpupep/ylN+VZdmjYAChpQYtbYHD2x1WA==
+X-ME-Sender: <xms:IQLHZn3a1mm-CVnrVxBcvcb8Jcp-01x_LJG6Qr8YQ-vxQms05s-CyQ>
+    <xme:IQLHZmFx-TF25EFgKFVJlcTSb4nuEU5Lz9i-EculgdqzIFYtM4S6_wBlyfReezihl
+    CjbURcajmydxNJSbg>
+X-ME-Received: <xmr:IQLHZn7E3v1F4SYPS-rxSJeGi_cWdd8Aj5RI1FVzukZgWYuQlT72TXAboOCz_SZi30vKJsepKs7lhYty6yGruccj1QXAt1jEYG6o1SsokEAkTDk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
@@ -55,26 +55,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggod
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:HwLHZjI8AEeFQ3q0BMHowqmdh8w4s-Z7eZfOcwUV8L8DhwUOvyN_IA>
-    <xmx:HwLHZqJRiocyaS2Fz5ibTeqNUe1nMvaDjT9KOysu9Gq43ZkssOQ8BQ>
-    <xmx:HwLHZkzqejmbBqurBx8vDDkugapW1APGdTndOupO8d81ol26gZzpog>
-    <xmx:HwLHZuKbg0D5VLlWdQ-y1NP2fnNcfa7uRNRPM2FkDj4TftQLxk8P5Q>
-    <xmx:HwLHZhUxvYi8CxZHl2N_ewlcVmc6dOYnxUgGvBSsE3r1ncIO13RPdYw3>
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:IQLHZs1JbumpVGoKgDA9XoDb44bmwzXFphRN46THG_hM_UqoWLKDdw>
+    <xmx:IQLHZqFeg4WD6cfF3HagvkWQtX9cApEa4d40Eg4p4mBSnQuvRH7M_g>
+    <xmx:IQLHZt-MRjuaagobkG_lWGtMubHXtLJYSMsNIewEKGuJUfM3Nu9nMQ>
+    <xmx:IQLHZnnmy1FL0jQ9bEugEFe380U1Xq02ZlgaBaliUeXxLRqTS9F8Tg>
+    <xmx:IQLHZvQ-xTYv1mpmajdVrDVcI0rCR5Xb_GK6tyrv3PyHIhH96NqJwMV->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 05:17:18 -0400 (EDT)
+ 22 Aug 2024 05:17:20 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id df486a15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 09:16:43 +0000 (UTC)
-Date: Thu, 22 Aug 2024 11:17:16 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f348494b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 09:16:46 +0000 (UTC)
+Date: Thu, 22 Aug 2024 11:17:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 03/20] pretty: fix memory leaks when parsing pretty formats
-Message-ID: <8a1963685e73fecb64bebb1154ad6205caf09a8d.1724315484.git.ps@pks.im>
+Subject: [PATCH v2 04/20] pretty: fix leaking key/value separator buffer
+Message-ID: <1c368a4489a23e258ad66b2b10ec8721f7409b3a.1724315484.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
  <cover.1724315484.git.ps@pks.im>
 Precedence: bulk
@@ -87,59 +87,48 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724315484.git.ps@pks.im>
 
-When parsing pretty formats from the config we leak the name and user
-format whenever these are set multiple times. This is because we do not
-free any already-set value in case there is one.
+The `format_set_trailers_options()` function is responsible for parsing
+a custom pretty format for trailers. It puts the parsed options into a
+`struct process_trailer_options` structure, while the allocated memory
+required for this will be put into separate caller-provided arguments.
+It is thus the caller's responsibility to free the memory not via the
+options structure, but via the other parameters.
 
-Plugging this leak for the name is trivial. For the user format we need
-to be a bit more careful, because we may end up assigning a pointer into
-the allocated region when the string is prefixed with either "format" or
-"tformat:". In order to make it safe to unconditionally free the user
-format we thus strdup the stripped string into the field instead of a
-pointer into the string.
+While we do this alright for the separator and filter keys, we do not
+free the memory associated with the key/value separator. Fix this to
+plug this memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pretty.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ pretty.c                      | 1 +
+ t/t4205-log-pretty-formats.sh | 2 ++
+ 2 files changed, 3 insertions(+)
 
 diff --git a/pretty.c b/pretty.c
-index 44222fb83c6..5e162d7204d 100644
+index 5e162d7204d..5e5ae452530 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -63,7 +63,7 @@ static int git_pretty_formats_config(const char *var, const char *value,
- 				     void *cb UNUSED)
- {
- 	struct cmt_fmt_map *commit_format = NULL;
--	const char *name;
-+	const char *name, *stripped;
- 	char *fmt;
- 	int i;
- 
-@@ -90,15 +90,21 @@ static int git_pretty_formats_config(const char *var, const char *value,
- 		commit_formats_len++;
+@@ -1776,6 +1776,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		}
+ 	trailer_out:
+ 		string_list_clear(&filter_list, 0);
++		strbuf_release(&kvsepbuf);
+ 		strbuf_release(&sepbuf);
+ 		return ret;
  	}
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 158b49d4b60..eb63ce011fa 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -5,6 +5,8 @@
+ #
  
-+	free((char *)commit_format->name);
- 	commit_format->name = xstrdup(name);
- 	commit_format->format = CMIT_FMT_USERFORMAT;
- 	if (git_config_string(&fmt, var, value))
- 		return -1;
+ test_description='Test pretty formats'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
--	if (skip_prefix(fmt, "format:", &commit_format->user_format)) {
-+	free((char *)commit_format->user_format);
-+	if (skip_prefix(fmt, "format:", &stripped)) {
- 		commit_format->is_tformat = 0;
--	} else if (skip_prefix(fmt, "tformat:", &commit_format->user_format)) {
-+		commit_format->user_format = xstrdup(stripped);
-+		free(fmt);
-+	} else if (skip_prefix(fmt, "tformat:", &stripped)) {
- 		commit_format->is_tformat = 1;
-+		commit_format->user_format = xstrdup(stripped);
-+		free(fmt);
- 	} else if (strchr(fmt, '%')) {
- 		commit_format->is_tformat = 1;
- 		commit_format->user_format = fmt;
+ # Tested non-UTF-8 encoding
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
