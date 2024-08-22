@@ -1,80 +1,80 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D807183CBB
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:18:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A666D17C7BF
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724318283; cv=none; b=Jd4YZDWuYtkzIhHq3jCCQ4saGw97+iCLb/uHkfEvLuJ7RFkv8dtGDBtJIg1znvbNOQgUtPcx5+MJehhAOANXos3eAD716nNTK6GIXzxgMvaQaWew0DL65f2Q9AdWAL6ErhrCTKK6S0h2JhWKe+e/f//ypaHuar8MjvaqPBoRb38=
+	t=1724318288; cv=none; b=kgJe8pV0kYBFlENDHs8kmDSO+3odye80PiD7M98l8Wz9ua4U5SrypN2tBG4Vb6uX3TVeLa6CNIFWYUMeGpgnVvKvhKePgya25U2jGVXtwab6badQnaRvFxskN0YE3Xel+XSqnki4NMHB6crYVt9sQ9gHDoj+bEvdmnV6SFgIs5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724318283; c=relaxed/simple;
-	bh=jAXZqjKBd2lnb1NJkLguqIf3Np+pHY/i8dlkw+R1REI=;
+	s=arc-20240116; t=1724318288; c=relaxed/simple;
+	bh=Yv2LFQ9ioVW6DdtzwAVt41x9Yh8dQVMyRci6CX3f9k8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EwrXTef9WeJfAdM/UJY6xOZzI66pnWD60jZimq4Kmw1X4vH0X7z2JDZFS6d2CZyyHpJ3U1IYhuGtdrmnizbS1rfsdtzZ4E9NN/akK+z3zsIO7KcBRuoBQJO+rgar5tjMRUx+Aq5TqtyY0VcRLIE7tMab8O9lYrb9YKzQmxEuGQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oL21ymw2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OAskiTBL; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bi+WPSq30LIlV12b+8/zTyFcfuN1OVAmfsafNdV3Cj4dzq4ta6HyT4udb12bbFxVfaa/8PXo37fWMilyx9P9qj9FHAPVmtMwRT0XY8MNgfDMoIg9gnbezHhwtfe1YBG2x8jYrv96MgI70N7L9SKNSYq9vOwqbNCJX84j8rmsbGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lyhKS0WB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ldOmxkAc; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oL21ymw2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OAskiTBL"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BF7711151AAF;
-	Thu, 22 Aug 2024 05:18:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lyhKS0WB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ldOmxkAc"
+Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
+	by mailfout.nyi.internal (Postfix) with ESMTP id CB45F138FFF2;
+	Thu, 22 Aug 2024 05:18:05 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 22 Aug 2024 05:18:00 -0400
+  by phl-compute-08.internal (MEProxy); Thu, 22 Aug 2024 05:18:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724318280; x=1724404680; bh=ifLKllzCxc
-	GOnMh8nEjf1em21EvBrqzrhAwyaz8Z5KM=; b=oL21ymw2ewpVMS/QvR5xWkgW4R
-	vtTVdiE3Z2TN2pMGQMtVOa2CkDjHFUm7MHQr68jjzf5u7eJzEX7DQLWNaf4lNIWI
-	bmuJknBFREIU/j5rr4Lzuw55Q4jV85ZhaynUu28era18y0V3EF7IzGpFhBn4kdOQ
-	/B3srJ7YO4PholTsoSuZNtIqzC7nazHfkdBqGua1tf7+5bOs7RKi4f8bWixRcpnr
-	Ddooqsy4i4sKDEPL4xtIdCH0a9g6GRzYRszuJ96uDOqivBTnuir1VmHcXSNG1wKl
-	E6p6kjaQAn2GdhSI1E5HgonVjqiW3sD0FnsXl0vOC9UuHfPpdXAX3NfEGDtg==
+	:subject:to:to; s=fm1; t=1724318285; x=1724404685; bh=cbwJi4s7i9
+	nVCQ+fBAzIe7l3AWVi4WR8/NABSIWwcVw=; b=lyhKS0WBcyl7ZkFj+06G59Nxe7
+	P20kR/ncyKvAQouTIbxXjRNxPZzLI7/Xz4x7/AIgn2dtGjtBB2uYypvxbIfn49fA
+	EMTXImrz6hLjLjBfSHSE0JDwWQkN78ho4iKliCXfBMAMzsxGEUMg/m4A9lABIuSQ
+	Ab5QFLbDYEKummx00FO+xmxdtWPtwZBivYtqZj0h6HR4clfFYNU02js3YDh6R9lE
+	gk4aCQAe3pOFMwgFyxp9jegiu297RAxnbhNGGqc1glbhVSSJLZ5RGHwLbpr16KDy
+	UrFFHEy4Pj0a/tJeIL91cIuKHruVshnLa2Rrt2x98y+wdOyHaX+DfKx6C4CQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724318280; x=1724404680; bh=ifLKllzCxcGOnMh8nEjf1em21EvB
-	rqzrhAwyaz8Z5KM=; b=OAskiTBLGrQ+WRRKXSPCk7HVWHyhgfazj1Tq0v86mzO9
-	7aoNPD1iyaJ1xWQn489vBLa0e54SizsroCFNpCp8u11HdD7E0TC8BgJrNoKeok+4
-	xZTyTk3NIDLf4HmQx1DbLIyFXf+9jdRULffCLBrWvfrfSbDkCc4tL18FJI+eFprZ
-	jt/dudbOMEbnaet+MN7MUt8CYDGMt8RDD2m0+RP1cCoKk3JgH1aDFaEhOOWvqOng
-	Xr/g6o6xTQzgyb/kVG7JvYzSTszFSBPEDHQzI8TTYJGCgvfDeINWXso7xwBxgVXP
-	9ynPb5G8Yb1C/otI2Vh0ZdxO5S7DLXqFQzfzsjuDNw==
-X-ME-Sender: <xms:SALHZo6xVDkQF69Uq9n7To69dOIIWu2pVMWkI68P43KkNvhPjUOLnw>
-    <xme:SALHZp5Jc5vhoKvjQACXpm2rgh3Xu-kDXfOYuOvWaFTJVR3WmT3ZTChx2e_uLeaNS
-    4lYT5D92mbZOSde2A>
-X-ME-Received: <xmr:SALHZnekQp003BXZZCzhepx_BpnkNXafTXksKGeZwRGem4y3MXJBd6-kup_1RPgsSunzGvbRCyOFm7SbUt8_EHkmfFAmc6YPLtT6HMa--rqAqb0>
+	fm1; t=1724318285; x=1724404685; bh=cbwJi4s7i9nVCQ+fBAzIe7l3AWVi
+	4WR8/NABSIWwcVw=; b=ldOmxkAcyJLKUT08HBZTAIlXkVyE+jrb2fpL2N7MIEjU
+	5QdIArKjsrTLkvXAHtnes7/3LPEXYPrb/zvRWTKvhQZoVbCpredMsImk/y8dQyG6
+	OmNDyPUmpZ42VPMt2a6zUZ6HIOgo/vCK63TTGRqHqmqVa4/q3DItzWuT5pWN8pVs
+	CIwnlWiFvYoef9LQGHLSC5+DVTeYLZCSa8j+eNRmqhcEuW/LNK5EdeO+lHzX7fjE
+	Idmz1b5ivt7ga/hqbOuK8EVp3CVYlWfXg7CjXBjSe9DhqQVpjYD56mExIkiVLoOX
+	+aQZw99PSOKie5gSmABbTZ+LzzMM7cYevCB7FBwWkw==
+X-ME-Sender: <xms:TQLHZiAWY1jDcMqD69bxu0f1AO9GjwzVRDcspu8W5yOeUEMyrIzQaA>
+    <xme:TQLHZshHhxW_tzGOIGvvzNeBbQd_154CCBaHfBNIDlC7DVkJdOE_ozUVkbHhcy1TQ
+    70o2YLzi67WgDgfZg>
+X-ME-Received: <xmr:TQLHZlmY10hmSTBO_qhnreimZE_sQ_ez8XZWNlYxtNkHyQtxr3URHnrt_6Fd0EoISpGmXT9WHLdzxyAzTPIcHa5FYwi6zDJdJlI33Ioyy4y5Ewg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
     vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
     drohhrgh
-X-ME-Proxy: <xmx:SALHZtJcuum1gpo2rqc_KchDuwNr9lMNHM0dxeN3A7UuvccJkmPhQg>
-    <xmx:SALHZsL1md1sQbobf2chRfGRZ9wKix8Rk41IVuhFKdux33JULF1c9g>
-    <xmx:SALHZuyLGPlB74itWijIlsuVSEhHCkz8ukFHU4OKXWcs8zuVmP1Ogg>
-    <xmx:SALHZgItVzX3L-3vdcZsB-ldsKCrqJAk7k1Q8wAbaWBFInSA_nwgLQ>
-    <xmx:SALHZjU5UfDu2YTfEmwD5wi5M_Hsj1-6ClpGryjk68l__NlT9Vmg8rLR>
+X-ME-Proxy: <xmx:TQLHZgxAm5tEUThwtFAHtfWnMSn0SwTbaBqOOJilUbCdZDWdus-xfw>
+    <xmx:TQLHZnTR-Gs_HcNy7sTARP-pJaa2IVGqx9NleiQjRoBHMZ04Lxv7ng>
+    <xmx:TQLHZrYC9rQ0WgKEijzTKgbTBfWL3Uy-J6VByi4_nBXcAt_MGrPpLw>
+    <xmx:TQLHZgQ9lNlQIwraLHn98hvspv-LNN6eE-JLAnKNO7XWKR4bm5o7WQ>
+    <xmx:TQLHZicZuYOompCpWDL-1qcMho_FhsXGUSgXwLRgXoqJgsE761yJVEtj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 05:17:59 -0400 (EDT)
+ 22 Aug 2024 05:18:04 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cf33b870 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 09:17:25 +0000 (UTC)
-Date: Thu, 22 Aug 2024 11:17:58 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 80322b2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 09:17:30 +0000 (UTC)
+Date: Thu, 22 Aug 2024 11:18:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 16/20] remote: fix leaks when matching refspecs
-Message-ID: <440b3d993724c465971628e9548c4937a7cd0833.1724315484.git.ps@pks.im>
+Subject: [PATCH v2 17/20] remote: fix leaking peer ref when expanding refmap
+Message-ID: <662ec4e6484aa7fc495d528a0b58ef18e3be1953.1724315484.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
  <cover.1724315484.git.ps@pks.im>
 Precedence: bulk
@@ -87,106 +87,83 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724315484.git.ps@pks.im>
 
-In `match_explicit()`, we try to match a source ref with a destination
-ref according to a refspec item. This matching sometimes requires us to
-allocate a new source spec so that it looks like we expect. And while we
-in some end up assigning this allocated ref as `peer_ref`, which hands
-over ownership of it to the caller, in other cases we don't. We neither
-free it though, causing a memory leak.
+When expanding remote refs via the refspec in `get_expanded_map()`, we
+first copy the remote ref and then override its peer ref with the
+expanded name. This may cause a memory leak though in case the peer ref
+is already set, as this field is being copied by `copy_ref()`, as well.
 
-Fix the leak by creating a common exit path where we can easily free the
-source ref in case it is allocated and hasn't been handed over to the
-caller.
+Fix the leak by freeing the peer ref before we re-assign the field.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- remote.c          | 43 +++++++++++++++++++++++++++++--------------
- t/t5505-remote.sh |  1 +
- 2 files changed, 30 insertions(+), 14 deletions(-)
+ remote.c                           | 2 ++
+ t/t5536-fetch-conflicts.sh         | 1 +
+ t/t5553-set-upstream.sh            | 1 +
+ t/t5703-upload-pack-ref-in-want.sh | 1 +
+ t/t6050-replace.sh                 | 1 +
+ 5 files changed, 6 insertions(+)
 
 diff --git a/remote.c b/remote.c
-index 2c52119bbb2..6ea81f9665b 100644
+index 6ea81f9665b..8f3dee13186 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -1344,18 +1344,21 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 			  struct ref ***dst_tail,
- 			  struct refspec_item *rs)
- {
--	struct ref *matched_src, *matched_dst;
--	int allocated_src;
-+	struct ref *matched_src = NULL, *matched_dst = NULL;
-+	int allocated_src = 0, ret;
+@@ -2081,6 +2081,8 @@ static struct ref *get_expanded_map(const struct ref *remote_refs,
+ 		    !ignore_symref_update(expn_name, &scratch)) {
+ 			struct ref *cpy = copy_ref(ref);
  
- 	const char *dst_value = rs->dst;
- 	char *dst_guess;
- 
--	if (rs->pattern || rs->matching || rs->negative)
--		return 0;
-+	if (rs->pattern || rs->matching || rs->negative) {
-+		ret = 0;
-+		goto out;
-+	}
- 
--	matched_src = matched_dst = NULL;
--	if (match_explicit_lhs(src, rs, &matched_src, &allocated_src) < 0)
--		return -1;
-+	if (match_explicit_lhs(src, rs, &matched_src, &allocated_src) < 0) {
-+		ret = -1;
-+		goto out;
-+	}
- 
- 	if (!dst_value) {
- 		int flag;
-@@ -1394,18 +1397,30 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 		      dst_value);
- 		break;
- 	}
--	if (!matched_dst)
--		return -1;
--	if (matched_dst->peer_ref)
--		return error(_("dst ref %s receives from more than one src"),
--			     matched_dst->name);
--	else {
-+
-+	if (!matched_dst) {
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	if (matched_dst->peer_ref) {
-+		ret = error(_("dst ref %s receives from more than one src"),
-+			    matched_dst->name);
-+		goto out;
-+	} else {
- 		matched_dst->peer_ref = allocated_src ?
- 					matched_src :
- 					copy_ref(matched_src);
- 		matched_dst->force = rs->force;
-+		matched_src = NULL;
- 	}
--	return 0;
-+
-+	ret = 0;
-+
-+out:
-+	if (allocated_src)
-+		free_one_ref(matched_src);
-+	return ret;
- }
- 
- static int match_explicit_refs(struct ref *src, struct ref *dst,
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 08424e878e1..532035933f3 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
++			if (cpy->peer_ref)
++				free_one_ref(cpy->peer_ref);
+ 			cpy->peer_ref = alloc_ref(expn_name);
+ 			if (refspec->force)
+ 				cpy->peer_ref->force = 1;
+diff --git a/t/t5536-fetch-conflicts.sh b/t/t5536-fetch-conflicts.sh
+index 23bf6961700..2dcbe790523 100755
+--- a/t/t5536-fetch-conflicts.sh
++++ b/t/t5536-fetch-conflicts.sh
 @@ -2,6 +2,7 @@
  
- test_description='git remote porcelain-ish'
+ test_description='fetch handles conflicting refspecs correctly'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- setup_repository () {
+ D=$(pwd)
+diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
+index 70e3376d31b..33e919a17e1 100755
+--- a/t/t5553-set-upstream.sh
++++ b/t/t5553-set-upstream.sh
+@@ -4,6 +4,7 @@ test_description='"git fetch/pull --set-upstream" basic tests.'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ check_config () {
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 191097171bc..f75fae52c83 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='upload-pack ref-in-want'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ get_actual_refs () {
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index c6e9b33e44e..d7702fc7562 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -7,6 +7,7 @@ test_description='Tests replace refs functionality'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ 
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
