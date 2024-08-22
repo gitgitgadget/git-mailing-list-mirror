@@ -1,146 +1,107 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907A5181B87
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 12:53:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F61F26AC1
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 13:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724331237; cv=none; b=KE5A9igM4jW6T7w9uXTuM/ulUGS125fJfx24Luyp9uOHCedrY7FBKYsnLrd68HnbPN2km4Z1j/8ONYm4WF5m8rhWkbGnOhxcWF5kCRzvyhMCh27TMeilR6wSlFfeKnJVMJBExvNOfiRhwk9bkl0Wtr7Us3ZBlEGccmLZfOwtmzM=
+	t=1724332547; cv=none; b=c4aLvZMbP47IlxC3ZJ8e/axC9vCE2JTCm+1gw0UTzbIRINjBk+7aBlBZZTNG712fgsy2f9Mtd6Kc8IQ5sA/zMSjrzgPBN2ONumi8ULZPPLXmVAP6oyMsI47ioccojF9erGzd5DwaK8BC6xQJLNj+egmKbmdOBprg26FDE1crFnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724331237; c=relaxed/simple;
-	bh=rUfZUPI1pWKypmdOPnmmgReDzS7iyflEonoeS6OgsoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uR+NSk7bPpQb7WyRe/ivEHSOledUkYgWSQ2FuZU/+D3qiUXVY6krApYbc6K+GroE4Df3isq71pzMBRp/klkUncVN113vXg1fqVN3aVhPFRiGnjICYL1K2EV/aI2qF0MyVioJiQ7sIduYmcTfZgANYO1hrftM6c7mXoDHS9sKOhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ip6CMa7k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ret82fbx; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724332547; c=relaxed/simple;
+	bh=+k71jZ/KSt2uVn8K3gmomR8QyYfbPZnC2n+S60Wcous=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XRIQAnqJZd7Lg+JqInNebGgSVhFFXqqheOyYyOsQKzP5p3YJ2tXb+DLWtu4Dx+UZerrDMQLU95get1v21p0DCwia281ooJfl3jYGVbJkfIKytiKA1mLEc8iS6idSEx3WYRmbUyr20VQDCSMGKOsS4ZUYLZOljzUv7xUzk+/Cn/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmyuHFdh; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ip6CMa7k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ret82fbx"
-Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 463E01151B24;
-	Thu, 22 Aug 2024 08:53:54 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 22 Aug 2024 08:53:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724331234; x=1724417634; bh=xJJQa093L6
-	Hqpv7urvpQPONAmrDt6FiVx/8gltOIo+Q=; b=Ip6CMa7kIIyqWhbKxYcx5ugpou
-	QUHqYQ3IHYqj1Z3CppcLTKLiaDfF1hUwbnfRJ7HAP4U8PnpKmdbsToCGBHAfg41D
-	zJTiN5OEe+ZHv3XxDljcauAOeKM+bkZ7iqCez8kSx2FLAuWh28T0cgZfrTH93eEH
-	Ot02KT6g3zQhVE8zxcnKUx5USN8x/ScXgrow8DRtm9SVNZDMXvxydbfVhylbFkL4
-	kncaTHDzbxE8RVpB6cW2MPjg+Pg2sGUplT7s06tfbRFZpkhMmZglUMi9o9T3du7q
-	dTTNG6t9kFT23YTT1OsVE0uyFoogvEYohG5CaY8pG8NQD8XeLexSrh6kxcbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724331234; x=1724417634; bh=xJJQa093L6Hqpv7urvpQPONAmrDt
-	6FiVx/8gltOIo+Q=; b=Ret82fbxcFLXik9LknF+0oxyXQAj9LexeNOLIW9zUd5k
-	sHiG7BDsyKiAkvvOr5YNtRPJgYwEUVVIy+Zn2p3JdRmYjDt6wQPPjN9Izyx+0rqy
-	nthUWB2GqD83v77MKK4U+br5ZCt8svm76cC76YJMzraXYmLH9f7wJFpNyoR+RnhI
-	bxuizUa9xfT/PcJp+5PRHkPOmqL1WPWf3JR3y8+fTSAcrSnA2LTVvg4EBcyZ7ZSS
-	MMrV09dI+K2p/U6j4wlZB2TR57Vhrq6M63/y7kx14MWNY56psGswDuasDp0AGZAW
-	vl6bcSumNPQRWcZfHovj9yWWE7AyoKMTfdxe0Eu4fQ==
-X-ME-Sender: <xms:4jTHZhwZ8SrJdsJgd6rFcIn3VMdL7rRE7ydQVlVIQhQ-q6oeQZaGhA>
-    <xme:4jTHZhT1_Jrtc7mALADRYn_K73f_6MkR2Yd8PIFPR6ejMz8rHpahKfyoeIr2TLQRf
-    h4xtwbFRzkmISyfCg>
-X-ME-Received: <xmr:4jTHZrWptH9ZFqIQZZxVS_H8XZcjbqMpoifJEBnob0iDRKH0CeDznnqe_rPMjSCEon-K8SleI12K2AkAvzDe_BzJ34BySzVrPK3_n9jDbsMZrjo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgheeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:4jTHZjhMJF67nquImteIkyaH7-hRHuxtPl8nexrCij6NfJKul4-aQg>
-    <xmx:4jTHZjCI0sFqC7mQQv4m0m0LgY0D7BZwVkHNMuGAc39UkiYj8MzcSQ>
-    <xmx:4jTHZsK4JVrQKGyCOn929StanhHPyOQt3IvCDfdiC7tH2nNfL2EAvw>
-    <xmx:4jTHZiCIg0cTgtfUDutaa5-oAs0bN0iPeTXf2lzvfzOWSt3aLRMQ9w>
-    <xmx:4jTHZmNrdPqHstpblI7yEWXCVjQPm7irc5U4FFS39bwgB_UqlAVvwZ9R>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 08:53:53 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f1a99212 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 12:53:16 +0000 (UTC)
-Date: Thu, 22 Aug 2024 14:53:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/10] reftable: fix reload with active iterators
-Message-ID: <Zsc03CSJ3Ece5L6s@tanuki>
-References: <cover.1724080006.git.ps@pks.im>
- <20240822124100.GA1070988@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmyuHFdh"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-201ed196debso7180935ad.1
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:15:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724332545; x=1724937345; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kfbb6RVpU8iVEsjzyom49EjZvtm8eUiE8lN32hdj0og=;
+        b=SmyuHFdhGiGmsUN5S760M8YVeqCEpRDaWOOv3Q1ZOmhOJZZGf1lSGC3WG7C6b73Dp2
+         f1CXMidaEaFCs/KKtonpGRYPecPtiBwcIAcpUOyFsPf4d7gD/W9Gl+DntH6sUgESYMZ3
+         4BOUoOLg96iFvnzHwFLyIbyuIhY170jxNvOUoXwtQSi0dPOFxK6cLcrwxz3k4f3MWAUe
+         8M3oDDfKUIHGl51lIv7W74UYqP40gN5Yge2Q3maX4Y8vmLMwlcF8i8XLnP96MHtsGpgy
+         iolA7iCOJpSUV7T3ub6ZzYJ70cIzhbXv8pm1oaK6VrGFfg2wwV7a/3pOvVv/fSMXJEjn
+         o9EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724332545; x=1724937345;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kfbb6RVpU8iVEsjzyom49EjZvtm8eUiE8lN32hdj0og=;
+        b=dABuv1nqRInEFmYExJ5dt43eujza5iaDUnE4cTol50QLJE7zVhx4KCHnqzJX5y871B
+         NdIblt8i8ku1giVRRHltRB/QYx45cUPj8LDkHTviUQEyeYXrpvrwI+HQNMOQ55naAJ57
+         oZ4lQ2tQSil2L/iDTW4IMZkKTgwAs9mJP2l4jd8jUce8Yc0o02KRn8h5RueifWP6QxqL
+         NyWAFJYmCwTQa/ilZZitPOc7UhZcyFH7FrtLvfstBeAH1MgTXQaLclp1WYsrq3/BS8da
+         DyOJjH/Z5T+bPw7LHI0sYvokBL2YlHI+YRAKOn1+MJH6xMsqEyAx0xGZqkFjIPPgFq+i
+         WT/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUQ9exLx+57oHqNRdk2sv6if5Xuz7P2xTuY/ugIvHQXb/rPuhuDtc7NS+wmq72PmRFwmjs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywe1eG0cumz5xy9oy2VM3Iyr7wpYHu2KziZHq+svFADzFpo4qve
+	BQxReb1+3SCAp/tKlrvqmqy3ZS5OMzWN6LRXBBDJ80IVxMwlqg/H
+X-Google-Smtp-Source: AGHT+IFwoqQdUDDg2VqFV4xJPL3GjXEJZeT7sqifMp2xe2m5jo3lLjDiCntqdF3qz4dVp+/EHjWZVg==
+X-Received: by 2002:a17:902:728c:b0:1fb:3474:9527 with SMTP id d9443c01a7336-20367d32671mr52951825ad.25.1724332545046;
+        Thu, 22 Aug 2024 06:15:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:874:83ce:907c:8496? ([2600:1700:60ba:9810:874:83ce:907c:8496])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038557e7e9sm12257175ad.69.2024.08.22.06.15.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Aug 2024 06:15:44 -0700 (PDT)
+Message-ID: <e90949ed-8065-4498-9ddb-3d5c6afa7b35@gmail.com>
+Date: Thu, 22 Aug 2024 09:15:42 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240822124100.GA1070988@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de, ps@pks.im,
+ james@jamesliu.io, peff@peff.net, gombasgg@gmail.com
+References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 22, 2024 at 08:41:00AM -0400, Jeff King wrote:
-> On Mon, Aug 19, 2024 at 05:39:38PM +0200, Patrick Steinhardt wrote:
+On 8/21/24 7:02 AM, Derrick Stolee via GitGitGadget wrote:
+> Advice is supposed to be for humans, not machines. Why do we output it when
+> stderr is not a terminal? Let's stop doing that.
 > 
-> > This patch series fixes that issue by starting to refcount the readers.
-> > Each iterator will bump the refcount, thus avoiding the problem. While
-> > at it, I also found a second issue where we segfault when reloading a
-> > table fails while reusing one of the table readers. In this scenario, we
-> > would end up releasing the reader of the stack itself, even though it
-> > would still be used by it.
-> 
-> I gave a fairly cursory look over this, as I'm not all that familiar
-> with the reftable code. But everything looked pretty sensible to me.
+> I'm labeling this as an RFC because I believe there is some risk with this
+> change. 
 
-Thanks for your review, appreciated!
+Thanks, all, for the feedback about the risk of making such a change. I
+agree that we should not pursue this direction.
 
-> I wondered how we might test this. It looks like you checked the
-> --stress output (which I confirmed seems fixed for me), along with a
-> synthetic test directly calling various reftable functions. Both seem
-> good to me.
-> 
-> I had hoped to be able to have a non-racy external test, where running
-> actual Git commands showed the segfault in a deterministic way. But I
-> couldn't come up with one. One trick we've used for "pausing" a reading
-> process is to run "cat-file --batch" from a fifo. You can ask it to do
-> some ref lookups, then while it waits for more input, update the
-> reftable, and then ask it to do more.
-> 
-> But I don't think that's sufficient here, as the race happens while we
-> are actually iterating. You'd really need some for_each_ref() callback
-> that blocks in some externally controllable way. Possibly you could do
-> something clever with partial-clone lazy fetches (where you stall the
-> fetch and then do ref updates in the middle), but that is getting pretty
-> convoluted.
-> 
-> So I think the tests you included seem like a good place to stop.
+The main issues are:
 
-Yeah. I think demonstrating the issues on the API level is okayish. It
-would of course have been nice to also do it via our shell scripts, but
-as you say, it feels rather fragile.
+  1. Some tools create a wrapper around Git and may want to supply the
+     advice to the user by parsing stderr.
 
-> I did have a little trouble applying this for testing. I wanted to do it
-> on 'next', which has the maintenance changes to cause the race. But
-> merging it there ended up with a lot of conflicts with other reftable
-> topics (especially the tests). I was able to resolve them all, but you
-> might be able to make Junio's life easier by coordinating the topics a
-> bit.
+  2. The advice system has been on for a long time and we cannot know
+     where other dependencies could be for it.
 
-I can certainly do that. I know that there are conflicts both with the
-patch series dropping the generic tables and with the patch series that
-move the reftable unit tests into our own codebase. I did address the
-former by basing it on top of that series, but didn't yet address the
-latter.
+I'll abandon this RFC, but plan on the following action items:
 
-I'm okay with waiting a bit until most of the conflicting topics land. I
-guess most of them should be close to landing anyway. Alternatively, I
-can also pull all of them in as dependencies.
+  * Document GIT_ADVICE in Documentation/git.exe.
 
-Patrick
+  * Modify Documentation/config/advice.txt to mention GIT_ADVICE and
+    recommend that automated tools calling Git commands set it to zero.
+
+  * If we have a place to recommend best practices for automation
+    executing Git commands, then I would add GIT_ADVICE=0 as a
+    recommendation there. I couldn't find one myself. Do we have one?
+
+Thanks!
+-Stolee
+
