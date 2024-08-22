@@ -1,83 +1,157 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from srv1.howhill.co.uk (mx2.howhill.co.uk [85.95.36.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484812E405
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 19:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCC376025
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 19:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.95.36.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724353268; cv=none; b=i5m6HDMg1emb53ookGaO/Yz5+xDoH1uq3RVvXI/cDXYfajklmAxjJTJnds5hCCHRw3ptpUNADSD4D5owklbQa16+vLKqwio8f1UrYYhNx32havPlOh36bn+0eJyVD9Ae4fsyul95XhwyBJHZqTk4gU7bgHU9xeKH7zQ2oFohxI0=
+	t=1724353725; cv=none; b=l+5D9673r+qPvQdV1vTdHYiWJkmX+ZP9NDtIfPq62cQtMwgC8GFyujIoJ/cEAPP3ZLaEqGibGtdAPzStyy4Bhnh7xQ6JwgCOnkcNAHYq1BSVvNRTSLHdM/NefNSWmh5VhekaQdsrRXNsD3NlmmFoTD5UaD//q5yy3UJWSEeAcxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724353268; c=relaxed/simple;
-	bh=/LMtJBzmDUtArkx4+/a92aHRS2VuWhk86LcA66Rvu0w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kUJiDkC0HaOiLXar1+dcvTnjMja5jGtjzTPwXZ1XLlungm0ppa+prWx/61BrBTV9xH+o6H5BW2UiHva84Fu2b8TNscY56l6+QdLxbTdUfrvvakj6NJhOhJra0kBMaPfjnM34Ufzei8WvPNMlhdO27Wmishm9xWDafulGM2dXvhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z/Wle0R1; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724353725; c=relaxed/simple;
+	bh=pxGeqEvcV5IKnKpxPU0bX/Oclku2lcyUJ3zM8CwfXX8=;
+	h=Content-Type:Message-ID:Date:MIME-Version:From:Subject:To; b=DDmIsadSUx9xaiK6NKpEd+1O+Rkeuq0JSxR4lWrxwyYcMUIDdtegFRMjeq21zOnyWEJVM7Qh1DRZucZXhVNl62EVsHs69MJP/InMKsyFLj/ZsszITuNDM0sl2LKZjxma8hLHCIgubvQJX60dfpqKSjncNyoLiQIDBV0LsnhHRy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howhill.com; spf=pass smtp.mailfrom=howhill.com; dkim=pass (2048-bit key) header.d=howhill.com header.i=@howhill.com header.b=TdvEUy9P; arc=none smtp.client-ip=85.95.36.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howhill.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howhill.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z/Wle0R1"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E16EE1AF3A;
-	Thu, 22 Aug 2024 15:01:06 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/LMtJBzmDUtArkx4+/a92aHRS2VuWhk86LcA66
-	Rvu0w=; b=Z/Wle0R1vflNjD8SVFmGNlbMgedvtdd5q5tK8M9rUiEzq3terB1iSN
-	gca5vmthwz1ito28ugxQdFMLo5HJjbhGQMBzSJs0l1peCjpxmfCCzII7lL4mqLi+
-	ie4hXhKWqi1CvKWUMSjdIyyclyjEcfr1Kzdzve0lCpPgcxyfTFxZ4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C45A61AF39;
-	Thu, 22 Aug 2024 15:01:06 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 54FC51AF38;
-	Thu, 22 Aug 2024 15:01:03 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 00/20] Memory leak fixes (pt.5)
-In-Reply-To: <cover.1724315484.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Thu, 22 Aug 2024 11:17:08 +0200")
-References: <cover.1724159575.git.ps@pks.im> <cover.1724315484.git.ps@pks.im>
-Date: Thu, 22 Aug 2024 12:01:01 -0700
-Message-ID: <xmqqh6bcqt5e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=howhill.com header.i=@howhill.com header.b="TdvEUy9P"
+Received: from [192.168.1.223] (Ellychnia-corrusca.howhill.co.uk [192.168.1.223])
+	(Authenticated sender: willow)
+	by srv1.howhill.co.uk (Postfix) with ESMTPSA id EF08F9C969
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 20:00:57 +0100 (BST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 srv1.howhill.co.uk EF08F9C969
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=howhill.com;
+	s=default; t=1724353258;
+	bh=Ybrg9ABT4UtobGqvrsL8f6Jh/BCmtgTrOlIeffSn1xA=;
+	h=Date:From:Subject:To:From;
+	b=TdvEUy9P+GzGlYgs8u555f9rPYK3oDhIlK0o+7MogV0Nyt59Nm8SLTt1blEztvfYf
+	 wKKIz8QPuVaqxKTdVoOZnaEQNWoixjPweT7DoSCHZJdzfDmzxYAw69DNYoB4GV/RQr
+	 uef/Iof2u3HgbXW0cPIBBek8tgeqNNtiwQMXlqWHyZZ3fZvxGxRRG/JGtctsBAwy95
+	 WtLC6GcuL/yywiHU/3G/QBaGVR0bNTEvfs4v8/ssoeyzhiqyoat9bbZSPnaSeR0fkT
+	 zKRgvKyrGHeCbAXuufMyyQjElfoAWw5rcuuVmEYDWIHsFbphbQsR/8MxkuaJiiFU2s
+	 3UE+0EqTFtzgQ==
+Content-Type: multipart/mixed; boundary="------------5qhEUwkdl3UP5p3a5CI7BJFw"
+Message-ID: <f6ebc032-3a5a-4ec5-ab6a-160f26e9bb4e@howhill.com>
+Date: Thu, 22 Aug 2024 20:00:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E0CE17E8-60B8-11EF-AAB7-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+From: Willow Liquorice <willow@howhill.com>
+Subject: git diff --word-diff misbehaving over paragraph breaks?
+To: git@vger.kernel.org
+Content-Language: en-GB
+X-Spamd-Result: default: False [-1.64 / 20.00];
+	BAYES_HAM(-2.97)[99.89%];
+	SUBJECT_ENDS_QUESTION(1.00)[];
+	MIME_BASE64_TEXT_BOGUS(1.00)[];
+	GENERIC_REPUTATION(-0.67)[-0.67108001906725];
+	MIME_GOOD(-0.10)[multipart/mixed,text/plain,text/x-rst];
+	MIME_BASE64_TEXT(0.10)[];
+	XM_UA_NO_VERSION(0.01)[];
+	TO_DN_NONE(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:+,3:+];
+	HAS_ATTACHMENT(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	RCPT_COUNT_ONE(0.00)[1];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[]
+X-Rspamd-Queue-Id: EF08F9C969
+X-Rspamd-Server: srv1.howhill.co.uk
 
-Patrick Steinhardt <ps@pks.im> writes:
+This is a multi-part message in MIME format.
+--------------5qhEUwkdl3UP5p3a5CI7BJFw
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> this is version 2 of this patch series that fixes another set of memory
-> leaks.
->
-> Changes compared to v1:
->
->   - Remove spaces between cast and variable.
->
->   - Clarify why we move the `ctx.entries_nr` block.
->
->   - Adapt sideband colors to use `git_config_get_string_tmp()` such that
->     we do not have to allocate the strings in the first place.
->
->   - Fix more memory leaks for config values in the remote state.
->
->   - Refactor `unbundle()` to not free extra args passed by the caller
->     anymore. Instead, this is now always done by the caler.
+I'm having some trouble diffing revisions of the Jargon File at the word 
+level, because the formatting seems to be confusing git diff 
+--word-‍diff. The diffs produced are far from minimal, or word diffs for 
+that matter.
 
-All these changes look sensible to me.
+I've attached a pair of files that produces non-minimal output. The 
+entire first paragraph of the diff is rewritten in the diff despite the 
+fact that it is nearly identical across revisions. The word diff can be 
+made sensible by removing the second blank line so that the term and 
+definition are no longer in separate "paragraphs".
 
-Let me wait for a few days for others' comments, and then mark the
-topic for 'next'.
+The behaviour persists whether I set the word regex to 
+"[[:punct:]]+|[[:alnum:]]+" or use the default word regex.
 
-Thanks.
+IMO this behaviour is aberrant: whitespace is whitespace regardless of 
+whether it constitutes a paragraph break or not. Is there a command line 
+option, or specific way of phrasing the regex, that I'm missing, or is 
+this a bug?
+
+	- Willow Liquorice
+--------------5qhEUwkdl3UP5p3a5CI7BJFw
+Content-Type: text/x-rst; charset=UTF-8; name="Acme1.rst"
+Content-Disposition: attachment; filename="Acme1.rst"
+Content-Transfer-Encoding: base64
+
+DQogICA6QWNtZTogbi4gIFRoZSBjYW5vbmljYWwgc3VwcGxpZXIgb2YgYml6YXJyZSwgZWxh
+Ym9yYXRlLCAgICBhbmQNCm5vbi1mdW5jdGlvbmFsIGdhZGdldHJ5IC0gd2hlcmUgUnViZSBH
+b2xkYmVyZyBhbmQgSGVhdGggICAgUm9iaW5zb24NCih0d28gY2FydG9vbmlzdHMgd2hvIHNw
+ZWNpYWxpemVkIGluIGVsYWJvcmF0ZSAgICBjb250cmFwdGlvbnMpIHNob3AuDQpUaGUgbmFt
+ZSBoYXMgYmVlbiBodW1vcm91c2x5IGV4cGFuZGVkIGFzIEEgKG9yICAgIEFtZXJpY2FuKSBD
+b21wYW55DQpNYWtpbmcgRXZlcnl0aGluZy4gIChJbiBmYWN0LCBBY21lIHdhcyBhIHJlYWwg
+ICAgYnJhbmQgc29sZCBmcm9tIFNlYXJzDQpSb2VidWNrIGNhdGFsb2dzIGluIHRoZSBlYXJs
+eSAxOTAwcy4pICAgICBEZXNjcmliaW5nIHNvbWUgWCBhcyBhbiAiQWNtZQ0KWCIgZWl0aGVy
+IG1lYW5zICJUaGlzIGlzICAgIHtpbnNhbmVseSBncmVhdH0iLCBvciwgbW9yZSBsaWtlbHks
+ICJUaGlzDQpsb29rcyB7aW5zYW5lbHkgICAgZ3JlYXR9IG9uIHBhcGVyLCBidXQgaW4gcHJh
+Y3RpY2UgaXQncyByZWFsbHkgZWFzeSB0bw0Kc2hvb3QgeW91cnNlbGYgICAgaW4gdGhlIGZv
+b3Qgd2l0aCBpdC4iICBDb21wYXJlIHtwaXN0b2x9Lg0KDQogICBUaGlzIHRlcm0sIHNwZWNp
+YWxseSBjaGVyaXNoZWQgYnkgQW1lcmljYW4gaGFja2VycyBhbmQgZXhwbGFpbmVkDQpoZXJl
+IGZvciB0aGUgYmVuZWZpdCBvZiBvdXIgb3ZlcnNlYXMgYnJldGhyZW4sIGNvbWVzIGZyb20g
+dGhlICAgIFdhcm5lcg0KQnJvdGhlcnMnIHNlcmllcyBvZiAiUm9hZHJ1bm5lciIgY2FydG9v
+bnMuICBJbiB0aGVzZSAgICBjYXJ0b29ucywgdGhlDQpmYW1pc2hlZCBXaWxlIEUuIENveW90
+ZSB3YXMgZm9yZXZlciBhdHRlbXB0aW5nIHRvICAgIGNhdGNoIHVwIHdpdGgsDQp0cmFwLCBh
+bmQgZWF0IHRoZSBSb2FkcnVubmVyLiAgSGlzIGF0dGVtcHRzIHVzdWFsbHkgICAgaW52b2x2
+ZWQgb25lIG9yDQptb3JlIGhpZ2gtdGVjaG5vbG9neSBSdWJlIEdvbGRiZXJnIGRldmljZXMg
+LSAgICByb2NrZXQgamV0cGFja3MsDQpjYXRhcHVsdHMsIG1hZ25ldGljIHRyYXBzLCBoaWdo
+LXBvd2VyZWQgICAgc2xpbmdzaG90cywgZXRjLiAgVGhlc2Ugd2VyZQ0KdXN1YWxseSBkZWxp
+dmVyZWQgaW4gbGFyZ2UgY2FyZGJvYXJkICAgIGJveGVzLCBsYWJlbGVkIHByb21pbmVudGx5
+IHdpdGgNCnRoZSBBY21lIG5hbWUuICBUaGVzZSBkZXZpY2VzICAgIGludmFyaWFibHkgbWFs
+ZnVuY3Rpb25lZCBpbiBpbXByb2JhYmxlDQphbmQgdmlvbGVudCB3YXlzLg0KDQo=
+--------------5qhEUwkdl3UP5p3a5CI7BJFw
+Content-Type: text/x-rst; charset=UTF-8; name="Acme2.rst"
+Content-Disposition: attachment; filename="Acme2.rst"
+Content-Transfer-Encoding: base64
+
+DQo6QWNtZTogbi4NCg0KICAgW2Zyb20gIEdyZWVrICBha21lICBoaWdoZXN0ICBwb2ludCAg
+b2YgcGVyZmVjdGlvbiBvciBhY2hpZXZlbWVudF0gVGhlDQogICBjYW5vbmljYWwgc3VwcGxp
+ZXIgb2YgYml6YXJyZSwgZWxhYm9yYXRlLCBhbmQgbm9uLWZ1bmN0aW9uYWwgZ2FkZ2V0cnkN
+CiAgIC0tICB3aGVyZSAgUnViZSAgR29sZGJlcmcgIGFuZCAgSGVhdGggIFJvYmluc29uICAo
+dHdvIGNhcnRvb25pc3RzIHdobw0KICAgc3BlY2lhbGl6ZWQgIGluICBlbGFib3JhdGUgIGNv
+bnRyYXB0aW9ucykgIHNob3AuICBUaGUgIG5hbWUgIGhhcyBiZWVuDQogICBodW1vcm91c2x5
+IGV4cGFuZGVkIGFzIEEgKG9yIEFtZXJpY2FuKSBDb21wYW55IE1ha2luZyBFdmVyeXRoaW5n
+LiAoSW4NCiAgIGZhY3QsICBBY21lICB3YXMgYSByZWFsIGJyYW5kIHNvbGQgZnJvbSBTZWFy
+cyBSb2VidWNrIGNhdGFsb2dzIGluIHRoZQ0KICAgZWFybHkgIDE5MDBzLikgRGVzY3JpYmlu
+ZyBzb21lIFggYXMgYW4gIkFjbWUgWCIgZWl0aGVyIG1lYW5zICJUaGlzIGlzDQogICB7aW5z
+YW5lbHkgIGdyZWF0fSIsICBvciwgbW9yZSBsaWtlbHksICJUaGlzIGxvb2tzIHtpbnNhbmVs
+eSBncmVhdH0gb24NCiAgIHBhcGVyLCBidXQgaW4gcHJhY3RpY2UgaXQncyByZWFsbHkgZWFz
+eSB0byBzaG9vdCB5b3Vyc2VsZiBpbiB0aGUgZm9vdA0KICAgd2l0aCBpdC4iIENvbXBhcmUg
+e3Bpc3RvbH0uDQoNCiAgIFRoaXMgdGVybSwgc3BlY2lhbGx5IGNoZXJpc2hlZCBieSBBbWVy
+aWNhbiBoYWNrZXJzIGFuZCBleHBsYWluZWQgaGVyZQ0KICAgZm9yICB0aGUgIGJlbmVmaXQg
+IG9mICBvdXIgIG92ZXJzZWFzICBicmV0aHJlbiwgY29tZXMgZnJvbSB0aGUgV2FybmVyDQog
+ICBCcm90aGVycycgIHNlcmllcyAgb2YgICJSb2FkLXJ1bm5lciIgY2FydG9vbnMuIEluIHRo
+ZXNlIGNhcnRvb25zLCB0aGUNCiAgIGZhbWlzaGVkICBXaWxlICBFLiAgQ295b3RlICB3YXMg
+IGZvcmV2ZXIgYXR0ZW1wdGluZyB0byBjYXRjaCB1cCB3aXRoLA0KICAgdHJhcCwgIGFuZCAg
+ZWF0IHRoZSBSb2FkLXJ1bm5lci4gSGlzIGF0dGVtcHRzIHVzdWFsbHkgaW52b2x2ZWQgb25l
+IG9yDQogICBtb3JlICBoaWdoLXRlY2hub2xvZ3kgIFJ1YmUgIEdvbGRiZXJnICBkZXZpY2Vz
+ICAtLSAgcm9ja2V0ICBqZXRwYWNrcywNCiAgIGNhdGFwdWx0cywgIG1hZ25ldGljICB0cmFw
+cywgaGlnaC1wb3dlcmVkIHNsaW5nc2hvdHMsIGV0Yy4gVGhlc2Ugd2VyZQ0KICAgdXN1YWxs
+eSBkZWxpdmVyZWQgaW4gbGFyZ2Ugd29vZGVuIGNyYXRlcyBsYWJlbGVkIHByb21pbmVudGx5
+IHdpdGggdGhlDQogICBBY21lICBuYW1lICAtLSB3aGljaCwgcHJvYmFibHkgbm90IGJ5IGNv
+aW5jaWRlbmNlLCB3YXMgdGhlIHRyYWRlIG5hbWUNCiAgIG9mICBhICBwZWcgIGJhciAgc3lz
+dGVtICBmb3IgIHN1cGVyaW1wb3NpbmcgIGFuaW1hdGlvbiAgY2VscyAgdXNlZCBieQ0KICAg
+Y2FydG9vbmlzdHMgIHNpbmNlICBmb3JldmVyLiBBY21lIGRldmljZXMgaW52YXJpYWJseSBt
+YWxmdW5jdGlvbmVkIGluDQogICBpbXByb2JhYmxlIGFuZCB2aW9sZW50IHdheXMuDQoNCg==
+
+
+--------------5qhEUwkdl3UP5p3a5CI7BJFw--
