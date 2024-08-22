@@ -1,140 +1,205 @@
-Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2013.outbound.protection.outlook.com [40.92.89.13])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D4717DE16
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 10:40:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724323223; cv=fail; b=hjndSZ6Z8Ga9pvyNX7ZX0P0Fh5w1ldzCbOLtVQpfqyzULQPQqyZiHPaAc/2eRGjA5Iu7zbKyAv6hxYxXy5NV/o76smFB+2sVG6fYM76IOqq6cYZHCP7lnQ+NHqCjgk7NMkKMGgYXXjOpFvZHtKubi+NzGCZHGw1GXSqIwm+kUSI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724323223; c=relaxed/simple;
-	bh=tpeuWg/hJzOQw1iRPhijro3nBSDnJw1+v0L8N8PhklA=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=cFJyZE5qKMZRyfAqqWbQABJzk5al9jhdj7b+Q+jnqUorQNMfQPdnWIBsXSUmkAAcXEKBnOgiSwyytjO15+WOgPg+uxC9B4vALBG12Jz7tcVcWFFtIwdtsuK5go+4p0U83NRNyC+EByOMBuKkECLrAv0669DC/BVsOibmOMPljx0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.de; spf=pass smtp.mailfrom=hotmail.de; dkim=pass (2048-bit key) header.d=HOTMAIL.DE header.i=@HOTMAIL.DE header.b=JQaeqF3B; arc=fail smtp.client-ip=40.92.89.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFF23774
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 11:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724326557; cv=none; b=bPZA2AqRt6WLphcUYIW7xBOan0y2oLzcalE5nCTdvHNrhue3dOsN6RDduHEQpwkY231b87wkpLqkXe4k9QuQkxMoHIrEUQ4/iwTNCjFv+5+uX5L/6uDL6HwFsT3OtTvu3Na+nWOj8mv8VG2mp6wft8jDh9Phq5F2ZpZQCJ/t2+Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724326557; c=relaxed/simple;
+	bh=rWVurxbZERmSNlrw2fgOcMV/hBtNdIE88S+LnuOVa+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dUI/zyVkBjiJ6+th4w4uIN9/es22bccv3Rwtg1j3I/wXkQYP01T/mBQFmLvSqYelgPupLWBOq7tNzEJ5hEabA5RjFVKZpNbn/980477jadRHCL2LFLOfr8cHv2QnXOC7e0avOd4iKRFmYI6HVBpr6zfj7r9vxBOJBwoz30j9hZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hV8ba2O+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rbYI8b2S; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=HOTMAIL.DE header.i=@HOTMAIL.DE header.b="JQaeqF3B"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eGF5ZiaftUnW4P/FseXSU/6NVY/TJHDo1Dz7qut1IHWTaf/9/23/o3bSAXRSQcjiyDJFI605bvxPh3VtYohbyVxhawMCVx0t9c5VDVs0R6ibfDkg2DzWT7CRuvV3P1T10AChEDpH5LzrCQWDi3lXH7lKOfIBtZzeqNJg6hvfhgVcuMtKcDewP63fNffe9Bz+YyX3PjNNhcvdlytfJo7JJUfBxYt57/kiciOdOUgrTAsXAgSPT4+/1QvktAU84YSeC3wso+GlQI+bS0UPsdiNQhVjyZ/fWBgnj499wFFJ6sl5Jgbq1uduRfr+zLz5YPsQlaj9ECBIe8cQbK799FyyCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Jf96aJwQHkdTanP27zFqqh5i3orFQ5YHU2SaADNKNEs=;
- b=D4ApaqGfXTH3QumRsmPPQxlx6qpD6bG5k7mLOPE3S2FaYHl9R/+U8vJFqnaBMsjrrtMgT5CtP6AIrT57pGn3eTukxm88CjPyZ4LHuFOxvoHmcs9s1R9qDevkd8SQZX9GQR+WTlCvlpodPhNTzecHUbB3t9UDBFoo03LDIXeoT/i1Gp+zNbidpfpQykWnWdL4hmFCkHIT1Xl30fYyFkbacfPd9tSJOXxYSF0cdAutATE5UP2Tw1bIYfmWCqDBGVhKYrtxNqVs2N5mu1c9SVfu2pTnBw6T9AV+qda9u1i0Yxg5VY6J/lJ1EhNYFWMcuhem4RvtfyJyUkM4Fg1+ZpphqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HOTMAIL.DE;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Jf96aJwQHkdTanP27zFqqh5i3orFQ5YHU2SaADNKNEs=;
- b=JQaeqF3BK3GCINKkTOBzhjtxtWDns4WXSeY2Uop6k8XYxh5npLT2GZzsnDkkEpCjt8lqiFs/sFbOb+LvXORpFTB8Jb1FRrJsQTlEaQgJ4A6IEVjU3d3LQg0DRa1dgJIQKIYrCFn2jJJZqJo1CDsHQfdeyfn0w/FeJJWrYizwx6d8awArZAhzrwjRjIsKF+ljFT66wsWUx8BdEFzWJ67imWwHOqZGD7UdJ1hOmceyeNQ+iSd2S7tYff24Ccrm5qvZr3d0fRPNgcjzfoVHy5RMyipgdJx1mVcRa2D6Ux0Nj7BKgZnR4CImKntyNxsN1nNiv84z+CRniT9uXvqmthyAPw==
-Received: from DB8P194MB0870.EURP194.PROD.OUTLOOK.COM (2603:10a6:10:165::11)
- by PR3P194MB0731.EURP194.PROD.OUTLOOK.COM (2603:10a6:102:41::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.18; Thu, 22 Aug
- 2024 10:40:17 +0000
-Received: from DB8P194MB0870.EURP194.PROD.OUTLOOK.COM
- ([fe80::c9c7:d977:f2ad:5306]) by DB8P194MB0870.EURP194.PROD.OUTLOOK.COM
- ([fe80::c9c7:d977:f2ad:5306%4]) with mapi id 15.20.7875.019; Thu, 22 Aug 2024
- 10:40:16 +0000
-From: Marlon Regenhardt <marlon.r@hotmail.de>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Wrong error message when cloning from http gitlab (and everything
- still works anyway)
-Thread-Topic: Wrong error message when cloning from http gitlab (and
- everything still works anyway)
-Thread-Index: AQHa9HyIP8RoebiGKkWAP7d2bHFevrIzFfqw
-Date: Thu, 22 Aug 2024 10:40:15 +0000
-Message-ID:
- <DB8P194MB0870877CBCB0576CCCB520C0E08F2@DB8P194MB0870.EURP194.PROD.OUTLOOK.COM>
-References:
- <DB8P194MB08704DAF8B33C67FCCE43EBDE08F2@DB8P194MB0870.EURP194.PROD.OUTLOOK.COM>
-In-Reply-To:
- <DB8P194MB08704DAF8B33C67FCCE43EBDE08F2@DB8P194MB0870.EURP194.PROD.OUTLOOK.COM>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [RMqTjBeZx8g/3di7ucx/A0nPhiX9GKEb]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB8P194MB0870:EE_|PR3P194MB0731:EE_
-x-ms-office365-filtering-correlation-id: cd4a9568-dea5-46d9-c0de-08dcc296cf64
-x-microsoft-antispam:
- BCL:0;ARA:14566002|461199028|8060799006|19110799003|15030799003|15080799003|4302099013|3412199025|440099028|102099032|1602099012;
-x-microsoft-antispam-message-info:
- Vb1ryYHdVOXsL5qon/l1AmqDVLLoMp43SPQL5qcOGHV566m91VA7rrWIGdXgralK3jkWnbPf6yekO/eEtbrCdvAWKb4dYqO0aHKggCGCuRJ3tPu8EN3geZ/Q/f6pgQ/BMRzYwxTybr6o/Xs6mDZCM58ErkMRjst7x5zlyLWoZuYRQoAw4wpZXAJhZCvvkFCtU/IekTWahZuECb7mHsvMGaI1JKshhGL353fIj3zpD+c0Yhu+ziDEN7oI2jLlAGcQ0xkGpt09tSCP8PrHfCpZfmoJ4opacDDf6jyDhupIVbH1r1HvISgXRCXCZ27wqjfUZgsJi3ydCcj/d21Am7TrRm2HXxH5PVtuoHcPaWvCXPZfQjbMI96wvWdw9o/Th4kT9ssJa2r8ZDJesqKAFlXZSCk1E3RTxinbaqPUezAhqncicVtyfvBea0Vv23olBn1qI/foNdggU3OWGsZQoNzpDYA+T6wVODp1Scrx0nfXAc+oofDFTynjKbkHrtfvFZH9J8aof/DxWXuS6+Ayvv33IHabLCRRvKMnKpm5pvSt3fZeE5V8oH5JPj19cF94E0g4MVYMHI6ybm1wRZnGrZQ1M57wYNk9ArSVL8TwzwCYjaNMfkrGRZ2F1EBFqg5DlRXREdPhiGJLFC3RX3DVYTupNq9bFkX95bQgtAIP0BGo//NKTGUOO95+RCfGTl7WS9a4lKa/2gCeIOfo7hPBkyh7d2KfDSP9JeHPSldcqV5pOM47wmwfBS9q8BMNyct4HJCAUIacopH6JafYPb8Puf3skngN7NUSWZ/2zn0E4QVM+ntWhaIzQz24HMh74y9VO5fP
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?NnT9KY4U3pIAKJygUI5Sjf7rAxqgmIeD3wpovuGpNOy3Zkthg/YP7GOHjZ?=
- =?iso-8859-1?Q?+6H/g9C4ROE2h3jN0hzQefglDbk5bGmUjSRbNUW9IUrxn7q7SxVtfqGzgJ?=
- =?iso-8859-1?Q?fi73G5kvyMaiAB50wzmBEAa4NtD0t+lDj5VlmWv3yKwma25MjhT/NZcEcN?=
- =?iso-8859-1?Q?TFg7ib/6cLLql8Re11vyYP2kdmiV27iDl3yLwuRdewyb/8IvfrbNYMy274?=
- =?iso-8859-1?Q?HCPfzPa5316Hxb4fLqFfWLFMOHhXlClN5p5kFLIpg2JSLTDjziWyNgarRL?=
- =?iso-8859-1?Q?UKik9z+qpvyBjtJBbMYeeQCSuhgfOlggCg5u/MYzcM9IfOqESS/usESnB5?=
- =?iso-8859-1?Q?iIQCl5BlFtZ9sYeWv9VQ+hTSml6OU9LBHBqUwtKcHkKnKQFNDELMRi034X?=
- =?iso-8859-1?Q?QwaR7hcSiRBynvWcETUfIO8EGAy266+M6XuuNNxwXc68J8xDMTyIKow+RM?=
- =?iso-8859-1?Q?Y8wBYDqD7GQhFVxnQmmNy08YRAGNCZCEd6oW94WpUyXXCVeE7lB+P426FC?=
- =?iso-8859-1?Q?7oA58nZq3sYzbsLuianqEiXsk3NCK8ie50GINYROmuD4rczvZLFEVnxjSh?=
- =?iso-8859-1?Q?31iIL6pWAAX/tl9mxOGqXgE6aFCeknR29SZWjzu8bPP5jf9cPC5VliqKIA?=
- =?iso-8859-1?Q?qTOlBSlAelYXKsuvi/4q53AgwxuXGTghg4yovqp18H0ee4WHgaMfmKLzZF?=
- =?iso-8859-1?Q?A4Nu/gA/ESqBZ2zS6xw0Kd64Wi5JWoz4k8Mqs4n8gbqEJRBI6eJKzcrxcP?=
- =?iso-8859-1?Q?IqGZGpp8epAMeL98z23BPKuK43Ir+w0moY6bxfb1iCJhRaK8NeSX5pNLGx?=
- =?iso-8859-1?Q?Vuv121vT67rEdpOeYimliqWnphJn9ES7US1ZFzH8L4+XyQhZs6+7khwAsB?=
- =?iso-8859-1?Q?kxLckuOScXtL3gj3WdX4xd4T7Y4CHkJXz861ZE5AjEAXESdN07xLgMIp9E?=
- =?iso-8859-1?Q?Ft3jbE6jhL3rMAF+EkPD3JAhPybUfDTF/tho1C9yH6NekKqtoQF9y1tF8I?=
- =?iso-8859-1?Q?w7fStSSxw3ec/uZGaMsLjuXqewTXw3J6SZnJjpQ8rx58TTIXC1XSpNa02c?=
- =?iso-8859-1?Q?ZB/ntf5xXBr0MfsraU4LkRLCBP9dhBE5z3QBlI2GAKFOG/jocLvrPdH8o1?=
- =?iso-8859-1?Q?6JEcCMvf0hSPiCzhCLzrH/gGDZGvPOcVGeYOqNTwQQJHhOatL7vT3gNat6?=
- =?iso-8859-1?Q?/an/qoA68+fhp7TAKe7kKV9oVeJK+RTg5DtU0nx/DUgl6x1/PLqagA/K7m?=
- =?iso-8859-1?Q?dCs3KFN65m2RUgOnxOzg=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hV8ba2O+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rbYI8b2S"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1B9A61151BA8;
+	Thu, 22 Aug 2024 07:35:54 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 22 Aug 2024 07:35:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724326554; x=1724412954; bh=CG1qxApC9k
+	t0Pj3DamHh6mhvd1JMRVcWZTInki5GtKw=; b=hV8ba2O+Z+S/XnsQaHEPgV+HFg
+	TlYKgdAYs6EDcNeHU+2A73ORDtR/S0UFu/zVm7AV++jvxDu009LEQCaxHN+zjY6n
+	08uIAZNt4NZ7jgrQ9I8Lw1JgPUC/gg82G9bkKn/TCDPDyYmq9HInhlsrfy39WAy/
+	lWJJDYq1Ptip0NXl49mya5terMzVVaRZcHbJLQTvgY0hsvFkxPyaX1Dq1+Z3x3ZX
+	PjuYmiDiEezC+K8+URoaZ17HYtfihyfaEUlUvMK66AFO6CV5R0mvH7wUeRJtl1Jp
+	jaqGfC90LtekS0KsOsJ5szg4WpRIK1YsfpsadQp+06VG1PkSwfPLGl8vc8lQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724326554; x=1724412954; bh=CG1qxApC9kt0Pj3DamHh6mhvd1JM
+	RVcWZTInki5GtKw=; b=rbYI8b2SGd43iUpxyIg46l0Rsq7MkwO6idrd+EhaSBfQ
+	S8++mWobq5f1RrUxeMbx1fvsKVJRuut1O/MMArcGYkI8n0aDRxrAoPCuPClS8VAU
+	Q2zf6O1ltJ7HrqyPVHJT5zOcNiMuX1K3krlgujMAhmp30/DdRt0BCqtXbsTglotz
+	mfA9yhwDVCyqzdNzVSF0LoCwLfwqieqflUjaI7SSCailxAULIS1Z216L6ZKjUfn8
+	W0y8WHvh81NiAnUOs95TIgrqNrl+qZvmOgE9e9YPmvQMit3eigjhQbhuDstsf+uk
+	qz7Hy+yDUWKD/6NyO4zJRh6Fb/B4XPcwGMB6g4Yq+w==
+X-ME-Sender: <xms:mSLHZlBQ-RL8R4fcXK8spi8g0GWtLnXku3G8q5NDaHkwhz4t_V3ClA>
+    <xme:mSLHZjguBcRsqWGLcPtL-DRfKKiUT-Xz6xUapngBtiTrO5TcDrc_OmytBtqJuV0Lq
+    sIGjdSFoHL7N4HGQQ>
+X-ME-Received: <xmr:mSLHZglWu0B_S8gOoO9dpL6E2XiUDbO-wqkahA8KU_DxmuJ9kiGbof2MFmeMgisMYUXbbrdGbUCSnduUM7JSpvURPL2vUt4NeXLgU-zQhhuklEU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddggeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdr
+    udekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:mSLHZvwjP0JslZI_o2IX14bsMzGFoYGKcc5bDnB6wf1lndxoSIS6lA>
+    <xmx:mSLHZqR-yt8axp-o8O6UgYFq33nNrwU-02mME_Y-jmQzeRLe35TinA>
+    <xmx:mSLHZibgFa8BGoSCqbfclDRVfXEphj-veVo2x47bHW2XMX4BDzCkag>
+    <xmx:mSLHZrQlWD13aHn0ivJAbqRZ8dcdS1QW6pnDZhUi1UbhaV3n-ddwxA>
+    <xmx:miLHZofkLw15SC1YDgufVNTBHREhzj_fYktaiyVuSJ2jzxWlAp4kEv5c>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Aug 2024 07:35:52 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id be9ad1c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 11:35:16 +0000 (UTC)
+Date: Thu, 22 Aug 2024 13:35:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/10] reftable/reader: introduce refcounting
+Message-ID: <ZscilS_kLcJyHThx@framework>
+References: <cover.1724080006.git.ps@pks.im>
+ <fc0ed68d4675bcd4c89bf63419ec6e8b6b7f5fca.1724080006.git.ps@pks.im>
+ <CAOLa=ZThdm98qrcQVu2uXkHJ2meEnJJCsBSPSLMQeSwsojQ-Fg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-43ca8.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB8P194MB0870.EURP194.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: cd4a9568-dea5-46d9-c0de-08dcc296cf64
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Aug 2024 10:40:15.9846
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3P194MB0731
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZThdm98qrcQVu2uXkHJ2meEnJJCsBSPSLMQeSwsojQ-Fg@mail.gmail.com>
 
-Hi,=0A=
-=0A=
-I'm currently setting up my new work PC (now Windows 11) and got a weird er=
-ror message when cloning our repository:=0A=
-=0A=
- - run git clone on an http GitLab instance, in my case I ran `git clone ht=
-tp://gitlab.company-local-domain.de/group/project=A0LocalRepo-Name`=0A=
-   Note:=0A=
-    - http, not https=0A=
-    - GitLab=0A=
- - Get the following error message:=0A=
-   fatal: Unencrypted HTTP is not supported for GitHub. Ensure the reposito=
-ry remote URL is using HTTPS.=0A=
- - Get prompted for and enter credentials=0A=
- - Get warning about redirecting to .git URL=0A=
- - Cloning commences and finishes successfully=0A=
-=0A=
-Our GitLab is only reachable from the internal network, so adding https has=
-n't been a priority for our admins.=0A=
-There is no GitHub involved at all, not sure where that comes from.=0A=
-Except for the error message, everything works fine.=0A=
-The message only appeared the first time I cloned something from this domai=
-n. From the second time, everything appeared as expected again.=0A=
-git version shows 2.46.0.windows.1=0A=
-=0A=
-Best regards=0A=
-Marlon Regenhardt=
+On Thu, Aug 22, 2024 at 02:47:43AM -0700, karthik nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > It was recently reported that concurrent reads and writes may cause the
+> > reftable backend to segfault. The root cause of this is that we do not
+> > properly keep track of reftable readers across reloads.
+> >
+> > Suppose that you have a reftable iterator and then decide to reload the
+> > stack while iterating through the iterator. When the stack has been
+> > rewritten since we have created the iterator, then we would end up
+> > discarding a subset of readers that may still be in use by the iterator.
+> > The consequence is that we now try to reference deallocated memory,
+> > which of course segfaults.
+> >
+> > One way to trigger this is in t5616, where some background maintenance
+> > jobs have been leaking from one test into another. This leads to stack
+> > traces like the following one:
+> >
+> >   + git -c protocol.version=0 -C pc1 fetch --filter=blob:limit=29999 --refetch origin
+> >   AddressSanitizer:DEADLYSIGNAL
+> >   =================================================================
+> >   ==657994==ERROR: AddressSanitizer: SEGV on unknown address 0x7fa0f0ec6089 (pc 0x55f23e52ddf9 bp
+> > 0x7ffe7bfa1700 sp 0x7ffe7bfa1700 T0)
+> >   ==657994==The signal is caused by a READ memory access.
+> >       #0 0x55f23e52ddf9 in get_var_int reftable/record.c:29
+> >       #1 0x55f23e53295e in reftable_decode_keylen reftable/record.c:170
+> >       #2 0x55f23e532cc0 in reftable_decode_key reftable/record.c:194
+> >       #3 0x55f23e54e72e in block_iter_next reftable/block.c:398
+> >       #4 0x55f23e5573dc in table_iter_next_in_block reftable/reader.c:240
+> >       #5 0x55f23e5573dc in table_iter_next reftable/reader.c:355
+> >       #6 0x55f23e5573dc in table_iter_next reftable/reader.c:339
+> >       #7 0x55f23e551283 in merged_iter_advance_subiter reftable/merged.c:69
+> >       #8 0x55f23e55169e in merged_iter_next_entry reftable/merged.c:123
+> >       #9 0x55f23e55169e in merged_iter_next_void reftable/merged.c:172
+> >       #10 0x55f23e537625 in reftable_iterator_next_ref reftable/generic.c:175
+> >       #11 0x55f23e2cf9c6 in reftable_ref_iterator_advance refs/reftable-backend.c:464
+> >       #12 0x55f23e2d996e in ref_iterator_advance refs/iterator.c:13
+> >       #13 0x55f23e2d996e in do_for_each_ref_iterator refs/iterator.c:452
+> >       #14 0x55f23dca6767 in get_ref_map builtin/fetch.c:623
+> >       #15 0x55f23dca6767 in do_fetch builtin/fetch.c:1659
+> >       #16 0x55f23dca6767 in fetch_one builtin/fetch.c:2133
+> >       #17 0x55f23dca6767 in cmd_fetch builtin/fetch.c:2432
+> >       #18 0x55f23dba7764 in run_builtin git.c:484
+> >       #19 0x55f23dba7764 in handle_builtin git.c:741
+> >       #20 0x55f23dbab61e in run_argv git.c:805
+> >       #21 0x55f23dbab61e in cmd_main git.c:1000
+> >       #22 0x55f23dba4781 in main common-main.c:64
+> >       #23 0x7fa0f063fc89 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+> >       #24 0x7fa0f063fd44 in __libc_start_main_impl ../csu/libc-start.c:360
+> >       #25 0x55f23dba6ad0 in _start (git+0xadfad0) (BuildId: 803b2b7f59beb03d7849fb8294a8e2145dd4aa27)
+> >
+> 
+> The stacktrace is for iterating over refs, what I don't understand is
+> where in this flow do we actually reload the stack.
+
+Basically, whenever you call into the reftable backend we check whether
+we need to reload the stack. So, when creating a reftable iterator,
+reading a single ref, writing refs and so on. So in the above code flow
+we had a ref iterator, but during iteration we ended up reading other
+refs, as well.
+
+> > While it is somewhat awkward that the maintenance processes survive
+> > tests in the first place, it is totally expected that reftables should
+> > work alright with concurrent writers. Seemingly they don't.
+> >
+> > The only underlying resource that we need to care about in this context
+> > is the reftable reader, which is responsible for reading a single table
+> > from disk. These readers get discarded immediately (unless reused) when
+> > calling `reftable_stack_reload()`, which is wrong. We can only close
+> > them once we know that there are no iterators using them anymore.
+> >
+> > Prepare for a fix by converting the reftable readers to be refcounted.
+> >
+> 
+> Okay so my understanding is that `refcounted` refers to a reference
+> count which keeps tracks of the stacks which are referring to the
+> reader. The name is also used in `struct blame_origin` in blame.{c,h}.
+> Makes a lot more sense now :)
+
+Yup.
+
+> > diff --git a/reftable/reader.h b/reftable/reader.h
+> > index 88b4f3b421..3710ee09b4 100644
+> > --- a/reftable/reader.h
+> > +++ b/reftable/reader.h
+> > @@ -50,6 +50,8 @@ struct reftable_reader {
+> >  	struct reftable_reader_offsets ref_offsets;
+> >  	struct reftable_reader_offsets obj_offsets;
+> >  	struct reftable_reader_offsets log_offsets;
+> > +
+> > +	uint64_t refcount;
+> 
+> Wonder if there is a chance that we decrement refcount from 0 and hence
+> cause a wraparound.
+
+This should never happen in practice. And if it does, we would hit a
+BUG():
+
+    void reftable_reader_decref(struct reftable_reader *r)
+    {
+    	if (!r)
+    		return;
+    	if (!r->refcount)
+    		BUG("cannot decrement ref counter of dead reader");
+    	if (--r->refcount)
+    		return;
+    	block_source_close(&r->source);
+    	FREE_AND_NULL(r->name);
+    	reftable_free(r);
+    }
+
+If the refcount is at zero already, we hit the bug.
+
+Patrick
