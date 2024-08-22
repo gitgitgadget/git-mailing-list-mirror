@@ -1,80 +1,80 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0575517C7C3
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E71717CA1F
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 09:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724318255; cv=none; b=SVJwU45U26jWIBdXglf6yhZEKM5KtC7SXynmTdtrTTo4pK++VblwXqHmky0u/93ztknWskqx6OUks4w7JlssAw1OH3ZAFQ25cynRyyzGy+t7wNCtRd8zlhsahpfJ0pfYrZp7wTxXpSiKqJ0rUFGBoGCtzJSkOAc4H2/DfiR3UT0=
+	t=1724318257; cv=none; b=dSgcBFlIqA9Bt3MmQ5P/DRO2lMGjEWaDfMj9dIoAkorf5R5658k1oJL0bOgrMmBOWnGN3LhMrhQeh/B8l/kxWhd3gBCGdpaUM//MDwjspfP4OwLWAfu53jcfLREsU2giIdAMZXUMCYnCLAXfcAFv/L1R9krnY2Qylr/jNpyP1RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724318255; c=relaxed/simple;
-	bh=+efCFzN5AJynIXOyAn8If4Vqm3JpKtRIWXMyvKo6mk0=;
+	s=arc-20240116; t=1724318257; c=relaxed/simple;
+	bh=IBaND85xDInviqKYQgaqKTVmM+3mOwvES62yg0Af6js=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bhDhTTp4O6bfrVWtZyI76cIHVCQjA7+JIgH9H69bfVfGhKZPpZqlDe6Xjaxn6v/4p6LIoqNuMn0+6G5yNaKblvMzxQweKKOu2zqZ5ocdgpTCFopjr56FYsk+TTs4ltVRLBjPZPfcLjZmB2F2tiQDCEo+H42g9qe3ySdEgLwo/Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PoYreMbh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oo4Y98YR; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=E4tiGyZQrR5TfYtx1PCQ+a4KGs/6LM3O0fAb/nykdcF5A33gsWNXiD/LCPHOvYAD4mePLYaTicewZ9vQY+X6AwMYMPyiCc3LX0QeP1bB9prDISaxdlWErWS9TKL6F0+XA9ZUjrj42OZ47xf/t0A/wIGn/aqXHG0Zy+2BvHPKdSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=klmtR3Q0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YJn6FloK; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PoYreMbh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oo4Y98YR"
-Received: from phl-compute-08.internal (phl-compute-08.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 55539138FF98;
-	Thu, 22 Aug 2024 05:17:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="klmtR3Q0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YJn6FloK"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 60BDA1390067;
+	Thu, 22 Aug 2024 05:17:35 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Thu, 22 Aug 2024 05:17:33 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 22 Aug 2024 05:17:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724318253; x=1724404653; bh=bAkMX/B++S
-	8eeyt+CSPR2tJB/BpVSX65rkau1VWDiR4=; b=PoYreMbhG9eaDVAh6VaX4Dvl30
-	1Pwv1TDMkM3HhY59UtntmkRHTuTErxePjvOIFXSWxqqXL56A3ygHsVXxxcv/lC8g
-	bUT9M2/kx30iwPdoUrifXLrikLN9yTqREqh5BtCA85sxv5liBocqbBTOsZ4h3R0h
-	IVI3Py0A9vHY856+VrZ3neznGYEn8mb62G67/dKIbgzdoKiTqi5rE2/BQpDiCfx9
-	hym8QQUP+K7gorPIQyaHD7GQnV6zjEfbRhGlzg8gSSQ5HfFMtlZ8VIM9Zi5K1G1N
-	p7FVFcIhcX5f/0HLu//KSCJUrp+SrlNoy2l4v4oANb3irKE/wnVrGJjCO+lA==
+	:subject:to:to; s=fm1; t=1724318255; x=1724404655; bh=a9qZNEVrVl
+	ZXZ7pzxUKhGs9dQNL6o6tYDl5LR+6ljVI=; b=klmtR3Q0smzB2c4YjzD+oDeYGz
+	LPhunwLwdu5MwbFIflSBIlnWbejCtNz5dfyCtpjQoikOcF0WEsbsm8P+JJ7TEfLG
+	aYDEkmNcNlKN/j+Ex9loNfyi7YouPfngsRSNFbmWxo7wVuXjv0tq1guxL1Kp087i
+	djrpy1baEfGB4Acgl4DO+48BkZce86CSTE3lQedQx5wkVNtKxnCEOH/opZ/cP5Eq
+	o/Jl18/sDbC/PIbdoVgqfQu7JUptNJ6DyaJUvl1tCBHq+eP1q4tdJXJniXjPb3F2
+	n2A513aqx+m5ZuVtJIZv91Gpau4Er3pewmRY97TvvIJbPVwPKRPeCbNorEYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724318253; x=1724404653; bh=bAkMX/B++S8eeyt+CSPR2tJB/BpV
-	SX65rkau1VWDiR4=; b=oo4Y98YRmzuAgAdzkz/dda4tbdsjgFBHir8fXIbYqMBt
-	5ZM81bhGb3agNblPGuUQ1mbe6LJMYv2p7RbZwt0OdHefylEiNT9uhm5Ge+W1K2LJ
-	PPWZiNY0a1PnAn0J4NQD3TWn7oWFpcNNDubIqyxnZKhmsPbZodUxseTvEl2/LYGX
-	+R/IRJq8tBu4MgzNmiJrq8A5ArWX87fxmXk511+aqs9HQ6KvSunxDhDjdzjhyddt
-	v8F1MWE5ivmT53bhv6i0siNal+Md4YSp86bkWXr5GhZCayLQiKaeVVvUsNwWtEUI
-	iIU+KDH11iOq4cWRureoCKDzq8CQ8vGaIkH//FJkGA==
-X-ME-Sender: <xms:LQLHZolUZoj-KR2Nw862S0Auh3mYgHhLOFPigg6ZiG1nRnNulZvVkQ>
-    <xme:LQLHZn0wxwdP6ZCpz29rE1v2JbHtRc0qht39Q5aDhtexQYRpmLbwj_NADj8ctd0i1
-    qaGolJk_XXmKHwLOA>
-X-ME-Received: <xmr:LQLHZmpL_FV90UQdy9AdrjbxV37VZlqLT5cM2XqxXcwtwWJfzNcnThCdJCOMv3OlzwcBM5KiBbT9HIsZiP9pR_m_84P1UCApGlRXhzpV9UqAmYk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddguddvucetufdoteggodetrfdotf
+	fm1; t=1724318255; x=1724404655; bh=a9qZNEVrVlZXZ7pzxUKhGs9dQNL6
+	o6tYDl5LR+6ljVI=; b=YJn6FloK75Np5UGcmCe5DgTk0tDxzMyiNT9bzDZZEFxu
+	QSbP4pxtHiaXYDvDGhn/ynyLlvnJF9TIN/twlheKUND3MYQVrmj8UcgWCuNC1+An
+	GCPgV5lhLqWES+xUd4yePDSLfpfP9Y56VXKMaoFwiJSOtAwFUHSquo/1E/OXJrVw
+	ZgnyIn9VfSBdSXShU0RSQ8xXIqlDfKW/qj63Ge6LPnaThjyGSNDADewHrk5RqDJ8
+	Z3dJ4Og8LrCr3D3BZAR6mHgTLl6+VgMD+tqVDngHXeR2h+wLgOYOLrjSKLFDuzQv
+	dK/Dr3VPmGwGydsqHIp7jj/hJby5gyMYyr/WEyWpTA==
+X-ME-Sender: <xms:LwLHZhX_X-VPyXgn1sGxbOr04_Gw0tWwRqfTf2jsOm4BU53pfqPaPQ>
+    <xme:LwLHZhmWXo52o4U1BodxIkIZatWmiayOwrlp2417g7GkwY5DbKCt-7koTr5Q4dTT0
+    emPpgpSAeO7NROMMA>
+X-ME-Received: <xmr:LwLHZta2jJ2yeA6osOOOP9Sx-mJHE13q0OuyE9sCMZeneRnYjuB0ceWNaJIYhpO7rPG9lBwpzhldqEWOL9xhPvmP_UG6gBSt1Rv9QfCaVSqQ2rQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvtddgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
     ufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:LQLHZknEyP7cyLHr-p3QDB2-FtbegFJDhh_8iWw23-Nq45U0vp0dCQ>
-    <xmx:LQLHZm3tZFmAaQC6c_KrLOj62p9ZcL4BK6OQ8sURR46cM-6yLg1WhQ>
-    <xmx:LQLHZruhq6SVr2tjlh4es5DxSQ2tMtEp1XJJLbskzumaFB-35YLr-w>
-    <xmx:LQLHZiVwYwVVPJQ2-JnQ3LIuaDirxRqiECHYpEfvtOSvaAA0RSSrxA>
-    <xmx:LQLHZkBbBfbjKd5jrVCTj6O6xJ4kx5aIOE2Mh-C6AQXpa1zTvu4LX87o>
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:LwLHZkWJWeejpcW03sqRsC97bzbwoPBn7k4hTMsA3yn0SnTZkaHE4A>
+    <xmx:LwLHZrk0U5DFQ1Lo-E5VOgFO0pCCtlUklwc_B0VGcUqjvyLpV4wWeQ>
+    <xmx:LwLHZhdFPr41fpK66THtJiXqNeZd5RUBrI-Z0qVrIIcHoB-PnvzhgA>
+    <xmx:LwLHZlGmZwg8cD8GgG2ZhwjALIF6ozq1mccnSGWbvXszPvodyifL_g>
+    <xmx:LwLHZgzAAIsy77K0KFi2rNHQi5Hl3V5EY8i5dhZxILlFi_OUSJKZZXPY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 05:17:32 -0400 (EDT)
+ 22 Aug 2024 05:17:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4a988ed0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 09:16:57 +0000 (UTC)
-Date: Thu, 22 Aug 2024 11:17:30 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id db4f5e96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 09:17:00 +0000 (UTC)
+Date: Thu, 22 Aug 2024 11:17:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/20] builtin/archive: fix leaking `OPT_FILENAME()` value
-Message-ID: <38487f3f65b7ab0aa1351a15efa8494b6e040f8e.1724315484.git.ps@pks.im>
+Subject: [PATCH v2 08/20] midx-write: fix leaking hashfile on error cases
+Message-ID: <693c93ddbf761202bff2d7a3213b7afd80049174.1724315484.git.ps@pks.im>
 References: <cover.1724159575.git.ps@pks.im>
  <cover.1724315484.git.ps@pks.im>
 Precedence: bulk
@@ -87,67 +87,70 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724315484.git.ps@pks.im>
 
-The "--output" switch is an `OPT_FILENAME()` option, which allocates
-memory when specified by the user. But while we free the string when
-executed without the "--remote" switch, we don't otherwise because we
-return via a separate exit path that doesn't know to free it.
+When writing the MIDX file we first create the `struct hashfile` used to
+write the trailer hash, and then afterwards we verify whether we can
+actually write the MIDX in the first place. When we decide that we
+can't, this leads to a memory leak because we never free the hash file
+contents.
 
-Fix this by creating a common exit path.
+We could fix this by freeing the hashfile on the exit path. There is a
+better option though: we can simply move the checks for the error
+condition earlier. As there is no early exit between creating the
+hashfile and finalizing it anymore this is sufficient to fix the memory
+leak.
+
+While at it, also move around the block checking for `ctx.entries_nr`.
+This change is not required to fix the memory leak, but it feels natural
+to move together all massaging of parameters before we go with them and
+execute the actual logic.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/archive.c      | 7 +++++--
- t/t5000-tar-tree.sh    | 1 +
- t/t5003-archive-zip.sh | 1 +
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ midx-write.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/archive.c b/builtin/archive.c
-index b50981504f3..63f02990d11 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -100,13 +100,16 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 	if (output)
- 		create_output_file(output);
+diff --git a/midx-write.c b/midx-write.c
+index e3fa33203fa..07d98d494aa 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -1308,6 +1308,18 @@ static int write_midx_internal(const char *object_dir,
+ 		pack_name_concat_len += MIDX_CHUNK_ALIGNMENT -
+ 					(pack_name_concat_len % MIDX_CHUNK_ALIGNMENT);
  
--	if (remote)
--		return run_remote_archiver(argc, argv, remote, exec, output);
-+	if (remote) {
-+		ret = run_remote_archiver(argc, argv, remote, exec, output);
-+		goto out;
++	if (ctx.nr - dropped_packs == 0) {
++		error(_("no pack files to index."));
++		result = 1;
++		goto cleanup;
 +	}
++
++	if (!ctx.entries_nr) {
++		if (flags & MIDX_WRITE_BITMAP)
++			warning(_("refusing to write multi-pack .bitmap without any objects"));
++		flags &= ~(MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP);
++	}
++
+ 	if (ctx.incremental) {
+ 		struct strbuf lock_name = STRBUF_INIT;
  
- 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
+@@ -1333,18 +1345,6 @@ static int write_midx_internal(const char *object_dir,
+ 		f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
+ 	}
  
- 	ret = write_archive(argc, argv, prefix, the_repository, output, 0);
+-	if (ctx.nr - dropped_packs == 0) {
+-		error(_("no pack files to index."));
+-		result = 1;
+-		goto cleanup;
+-	}
+-
+-	if (!ctx.entries_nr) {
+-		if (flags & MIDX_WRITE_BITMAP)
+-			warning(_("refusing to write multi-pack .bitmap without any objects"));
+-		flags &= ~(MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP);
+-	}
+-
+ 	cf = init_chunkfile(f);
  
-+out:
- 	free(output);
- 	return ret;
- }
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 72b8d0ff02e..7abba8a4b20 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -25,6 +25,7 @@ commit id embedding:
- '
- 
- TEST_CREATE_REPO_NO_TEMPLATE=1
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- SUBSTFORMAT=%H%n
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index 961c6aac256..01f591c99b9 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -3,6 +3,7 @@
- test_description='git archive --format=zip test'
- 
- TEST_CREATE_REPO_NO_TEMPLATE=1
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- SUBSTFORMAT=%H%n
+ 	add_chunk(cf, MIDX_CHUNKID_PACKNAMES, pack_name_concat_len,
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
