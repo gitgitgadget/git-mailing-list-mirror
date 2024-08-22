@@ -1,82 +1,84 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D394B14F138
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A26214F138
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724308520; cv=none; b=m/YLGro1cMSZNM1qW3ial9rxwxOP9Ge8AdW/4OYfaD9kwvHZ5Sl5LMMs4WCrj6HzB+cR9IPFvbyX776QEIpHfyz2eUbsz5WfpPZhnyx+PpWFxp44P/Ii9vhrVNIw6/MQVwW/tgfYZf35URnGCApz0Qh2Fvi0CuSEiVH6AMtzjBU=
+	t=1724308524; cv=none; b=DZ1ayYYIjcPYpN/5PblngBaZO9sZyrGIo8Tkmg4hjdocj8I4aDprkhqLwgQaLsMImkBbudI2jUfYNo0o9LEHlHznFClrK1bKfR0zC6xqtCpZOaMbxinDE/Ayk4cY/DISgIEY7/4ml6dgPkAwHCz/fIxDSrU/lNDZrDUkIFVdK4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724308520; c=relaxed/simple;
-	bh=JgKj1Aa9yUWGk/3/J14PocxDq0yttPGEAe+8SKh57F4=;
+	s=arc-20240116; t=1724308524; c=relaxed/simple;
+	bh=LcSxVzmmWAQ6i8vqs/M6zriyybkkWjemQ9+bd8tDVMU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wz99/2vOOh+Ib4HQOkUnO2SLd3Mh6V/wweE9wgG2+zs7/Ks9Xbdr+J0ghsW6XAswLpyk1At+4CF6+NOEdXnSQJ+x6w+LLNjwOKCxindosiDi06y5nzGN4gMzt9ipGXLYwGCKBE2KxIJOnV4OyhyqGwxEji2U07HxVyrSywZL/+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b6BKFMlh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZS+0Xvy; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=AVY9whHk22YMfxcCnJsuEYckzp3u6LIIYShCWYsuyhvQv3W41fHUkGEnpf0fiWhe72crOG62IOT/EfIb+qkuPMtyVb2V+IyYLJ9rwF0iiEYJglE5JpBl3BA1zLwtTnZiTlfSRwv/7jvcroN/B9bV3OLG/akgT6EGF9Uypj+Wilw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qMFN8isE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gGOX+fCg; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b6BKFMlh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZS+0Xvy"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 03F911151C11;
-	Thu, 22 Aug 2024 02:35:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qMFN8isE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gGOX+fCg"
+Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3C5381151AF6;
+	Thu, 22 Aug 2024 02:35:21 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 22 Aug 2024 02:35:18 -0400
+  by phl-compute-07.internal (MEProxy); Thu, 22 Aug 2024 02:35:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724308517; x=1724394917; bh=j28WK6mDeG
-	HWF8/XAlSF/jVi0yi90iFz3naMJuhkkZM=; b=b6BKFMlh/HQ/sGbSK/PxU/BfkW
-	c2ingHcyxUVUm2mCgfkFubkBU4YWgtxiZLA+9yu/QeU+nnzz2BO56CFrz2UChMx2
-	DEv9AEh8qDVliTXQjzXBKOw4CYUpgkWcPiBWrs6kFTQY44VkbwUgHdn7/CeqS+2b
-	B4+GzAtJP/4IG9ZnhWi+6jO11kAPpPOmYKbJnNYzL40IrcCsQHBGDxCrBmjjQayW
-	dSsqtjin/ZfSn5uK6ox7ZWJlAk+RhFCYF7PYkJH99TzzVjMEc1OF5DUDVcHXKG28
-	u2UG3WKfxezEHySd9bGNn5TWKrFHIGKP/04BefS/U3ukwFyGiWrkYcR1fSLg==
+	:subject:to:to; s=fm1; t=1724308521; x=1724394921; bh=ZztTG6Tilb
+	FBcBYG4zD6gPvBQaYUN5UFBFv3nvc/tjU=; b=qMFN8isEWnbIBmZNLKBWkMGXl/
+	tjcX1ljmtiRq2nAOqNj3s7ZvS/V61vsbJl6Dy15KNROtD9Y3vpU90wl7oPLw4/LK
+	xd5UONR3t6RWYVRPK08iQPgyNI/GCg3iwFOVYIqPLRrdJffda9Pdg+BDE1Po5XwM
+	g6TOTWSliMpRR2c4GgASP1jkDaQ441ru0Dcvbl441V9R4j7lSTzmlHq01g5X2YBs
+	kjhv8NzITk8JL4Sf0eHx62oTt903cL2Xk/LMEd8ZitmsoCFaKckIAcxFNiN+17QE
+	RFATRnO2rysOBijA9JnxZ2Do2nyEtSdBRer4dKPODlYcbH2jAUYLeXHvlKiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724308517; x=1724394917; bh=j28WK6mDeGHWF8/XAlSF/jVi0yi9
-	0iFz3naMJuhkkZM=; b=EZS+0Xvy4u3/q58o0JCjp8FrEsfoGiCbF7gqzUtlTikF
-	NwM3a9JQw8Ko06Lvobr8PuzOkTiyUkz5MlQc6axUN8nTac96m2pVSrGPGUadsZkj
-	1AMuo2m1TOF1oDGK2+yhMp/fh6MDxjBhotqWd2W7kLRioKFzEnkj/K2Hwsn+cSjk
-	WMFSmvETGf9ycyF3Z0zHm40tE+bNJFyCdss3ov/4+0aBUdxrkiLifbmJDAA6YQzB
-	bYMQrsLaFEImHslUIwgJEA5Ey0SFyzHKDtKpZdsk07jg7v0M1ndP4P3MLoRM1U1q
-	3GNQeTonbEz8QJpCAQeQROByk7pGUxf4AiX37vokcg==
-X-ME-Sender: <xms:JdzGZswmtCkpU9-NYdhOmwmO6m0j2-Jl34k30pM9mQy5hnf7wUU_Yg>
-    <xme:JdzGZgTplZDCSJebstG-jgTvHcZZZDMYRTAwmVZv63xUZlqZ-zjU4Ucq3b5FYmeD8
-    gOXwlFpV9uLnNCwzg>
-X-ME-Received: <xmr:JdzGZuUmPn4tr9JRfWkd948WxwhdbrCVxMsPIrjSFsmaS0fGJkKMSJ73EMnEKuGtcxbxDGbcQuzM_RQxDUKsjaow9MYGGGqB7c8ghs7zRJOM14s>
+	fm1; t=1724308521; x=1724394921; bh=ZztTG6TilbFBcBYG4zD6gPvBQaYU
+	N5UFBFv3nvc/tjU=; b=gGOX+fCgHbWOwPGvTOG8ixH6saZzm3ydLHPmc0GWaCMF
+	0XN6R6VkkFUYjMjEFlFPr8nJHsfY2G/pbgUp+1G7WAhGKZjVAeX0TI0/TiuhfEQY
+	ZZ1jcTzT9vAy5Uk8JFv6F4gciYrLawFlegqQ9Oxjt9dfCQp6MniqQZ+iLUiwVjvV
+	7qbjkuutQa+IaS8vGKMuQNGjyZpvzkHzOhYBJlyALqgHcEg2YIewxlaryyPMmsep
+	bWAMl3AAZNY0ikob//aI1rIeMkkTa1uraRI6gv+SrLStWE+JnxLPdeff+iRJtQ7x
+	TTmPjY0GVdXvhw0LX6XlwHuDW/V8mP0rJTqVbKGztg==
+X-ME-Sender: <xms:KdzGZuZMUrMGZS8Fua5x2J9AC8ekmj66EtbVpyQC6lFvDfxaSm_lpQ>
+    <xme:KdzGZhZ-H-u8AClJuG1HFrjeffWu1zK-2jcYxZmAwj2ceNGb7LlYS8iU1QmF1HaMJ
+    _9Ht6g9D9aLVKAdWA>
+X-ME-Received: <xmr:KdzGZo_LWK819PlDDpbNlaufrcRbQXGSw2crrW2luAkTyRCAAPCSU45e3qlOuEeuuuKJiG92DwHkB2aUONZ98a9AqffLKI_R6m5BDty4JFsmnec>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgr
-    rhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:JdzGZqi5Z01v8U6YVDgTHcNhoD2x1rHVhqXQpYE93hn2NmDrU2e-NA>
-    <xmx:JdzGZuDAGjnMUeZhRYtGs0K8pkERl9K3k14HRfDttRXqtfgy3BjGWg>
-    <xmx:JdzGZrL7E-kzcC2a4T6XVF6yMpAPk-O5SL_zT60vonFXuyrZTp2JNw>
-    <xmx:JdzGZlCoWQimaxnuQG11Oxq40Xe68RKIsF_9OYmnmBaUZBT8rkKhmA>
-    <xmx:JdzGZpNlSUnBu1Q_mh87hf2PzzdZ69FAR_5Z3H3u1azFh57o10p3TF39>
+    hmqeenucggtffrrghtthgvrhhnpeetgeeutedufeeiheejvdeuvdetuefhveegvedvtddv
+    udevtefgffejteekvdfhtdenucffohhmrghinhepvhgrlhdvrdhtrghrghgvthdpuhhpug
+    grthgvrdhnrghmvgdpuhhpuggrthgvrdgvmhgrihhlpdhuphgurghtvgdrthiipdhuphgu
+    rghtvgdrnhgvfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:KdzGZgqSaF4w8pXPsLNK8Q6lfZgffJ9t57lUZPqB5-KDgw06yCTK4w>
+    <xmx:KdzGZpruNq_ONgh4MKisfpRfChD_-A0mVUyL2swSTXr5M227p11dIg>
+    <xmx:KdzGZuSPoPd4V4jPUmd_Ur1iYQvyTJR-TCjsQg8LAb6ohH__A62hwg>
+    <xmx:KdzGZpqtcYGmg4ZQXRBwR_HD9CUbyofSrVzxmbMM_piooZVdlk_PsQ>
+    <xmx:KdzGZgWOrfK8t1BAoKx9njz3ckzAMVJfs6DE6nDkWyrxaAbFQ1GnU3a_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 02:35:16 -0400 (EDT)
+ 22 Aug 2024 02:35:20 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fe72c824 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 06:34:42 +0000 (UTC)
-Date: Thu, 22 Aug 2024 08:35:15 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2dfafab1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Aug 2024 06:34:45 +0000 (UTC)
+Date: Thu, 22 Aug 2024 08:35:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: karthik nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 11/15] t/helper: inline `reftable_table_print()`
-Message-ID: <a05e20609962676a2b5f0cd8ce678c2c86c84114.1724308389.git.ps@pks.im>
+Subject: [PATCH v3 12/15] t/helper: inline printing of reftable records
+Message-ID: <ee22a08e11e74abadb0daa05d1023f46d689e2ed.1724308389.git.ps@pks.im>
 References: <cover.1723640107.git.ps@pks.im>
  <cover.1724308389.git.ps@pks.im>
 Precedence: bulk
@@ -89,163 +91,369 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724308389.git.ps@pks.im>
 
-Move `reftable_table_print()` into the "dump-reftable" helper. This
+Move printing of reftable records into the "dump-reftable" helper. This
 follows the same reasoning as the preceding commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/generic.c          | 47 ---------------------------------
- reftable/reftable-generic.h |  3 ---
- t/helper/test-reftable.c    | 52 +++++++++++++++++++++++++++++++++++--
- 3 files changed, 50 insertions(+), 52 deletions(-)
+ reftable/record.c          | 127 -------------------------------------
+ reftable/record.h          |   1 -
+ reftable/reftable-record.h |   8 ---
+ t/helper/test-reftable.c   |  77 +++++++++++++++++++---
+ 4 files changed, 69 insertions(+), 144 deletions(-)
 
-diff --git a/reftable/generic.c b/reftable/generic.c
-index 6ecf9b880f7..495ee9af6b0 100644
---- a/reftable/generic.c
-+++ b/reftable/generic.c
-@@ -61,53 +61,6 @@ int reftable_table_read_ref(struct reftable_table *tab, const char *name,
- 	return err;
+diff --git a/reftable/record.c b/reftable/record.c
+index a2cba5ef747..e26bd4bc8d9 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -259,58 +259,6 @@ static void reftable_ref_record_copy_from(void *rec, const void *src_rec,
+ 	}
  }
  
--int reftable_table_print(struct reftable_table *tab) {
--	struct reftable_iterator it = { NULL };
--	struct reftable_ref_record ref = { NULL };
--	struct reftable_log_record log = { NULL };
--	uint32_t hash_id = reftable_table_hash_id(tab);
--	int err;
--
--	reftable_table_init_ref_iter(tab, &it);
--
--	err = reftable_iterator_seek_ref(&it, "");
--	if (err < 0)
--		return err;
--
--	while (1) {
--		err = reftable_iterator_next_ref(&it, &ref);
--		if (err > 0) {
--			break;
--		}
--		if (err < 0) {
--			return err;
--		}
--		reftable_ref_record_print(&ref, hash_id);
--	}
--	reftable_iterator_destroy(&it);
--	reftable_ref_record_release(&ref);
--
--	reftable_table_init_log_iter(tab, &it);
--
--	err = reftable_iterator_seek_log(&it, "");
--	if (err < 0)
--		return err;
--
--	while (1) {
--		err = reftable_iterator_next_log(&it, &log);
--		if (err > 0) {
--			break;
--		}
--		if (err < 0) {
--			return err;
--		}
--		reftable_log_record_print(&log, hash_id);
--	}
--	reftable_iterator_destroy(&it);
--	reftable_log_record_release(&log);
--	return 0;
+-static char hexdigit(int c)
+-{
+-	if (c <= 9)
+-		return '0' + c;
+-	return 'a' + (c - 10);
 -}
 -
- uint64_t reftable_table_max_update_index(struct reftable_table *tab)
+-static void hex_format(char *dest, const unsigned char *src, int hash_size)
+-{
+-	assert(hash_size > 0);
+-	if (src) {
+-		int i = 0;
+-		for (i = 0; i < hash_size; i++) {
+-			dest[2 * i] = hexdigit(src[i] >> 4);
+-			dest[2 * i + 1] = hexdigit(src[i] & 0xf);
+-		}
+-		dest[2 * hash_size] = 0;
+-	}
+-}
+-
+-static void reftable_ref_record_print_sz(const struct reftable_ref_record *ref,
+-					 int hash_size)
+-{
+-	char hex[GIT_MAX_HEXSZ + 1] = { 0 }; /* BUG */
+-	printf("ref{%s(%" PRIu64 ") ", ref->refname, ref->update_index);
+-	switch (ref->value_type) {
+-	case REFTABLE_REF_SYMREF:
+-		printf("=> %s", ref->value.symref);
+-		break;
+-	case REFTABLE_REF_VAL2:
+-		hex_format(hex, ref->value.val2.value, hash_size);
+-		printf("val 2 %s", hex);
+-		hex_format(hex, ref->value.val2.target_value,
+-			   hash_size);
+-		printf("(T %s)", hex);
+-		break;
+-	case REFTABLE_REF_VAL1:
+-		hex_format(hex, ref->value.val1, hash_size);
+-		printf("val 1 %s", hex);
+-		break;
+-	case REFTABLE_REF_DELETION:
+-		printf("delete");
+-		break;
+-	}
+-	printf("}\n");
+-}
+-
+-void reftable_ref_record_print(const struct reftable_ref_record *ref,
+-			       uint32_t hash_id) {
+-	reftable_ref_record_print_sz(ref, hash_size(hash_id));
+-}
+-
+ static void reftable_ref_record_release_void(void *rec)
  {
- 	return tab->ops->max_update_index(tab->table_arg);
-diff --git a/reftable/reftable-generic.h b/reftable/reftable-generic.h
-index 65670ea093b..b8b1323a331 100644
---- a/reftable/reftable-generic.h
-+++ b/reftable/reftable-generic.h
-@@ -41,7 +41,4 @@ uint64_t reftable_table_min_update_index(struct reftable_table *tab);
- int reftable_table_read_ref(struct reftable_table *tab, const char *name,
- 			    struct reftable_ref_record *ref);
+ 	reftable_ref_record_release(rec);
+@@ -480,12 +428,6 @@ static int reftable_ref_record_cmp_void(const void *_a, const void *_b)
+ 	return strcmp(a->refname, b->refname);
+ }
  
--/* dump table contents onto stdout for debugging */
--int reftable_table_print(struct reftable_table *tab);
+-static void reftable_ref_record_print_void(const void *rec,
+-					   int hash_size)
+-{
+-	reftable_ref_record_print_sz((struct reftable_ref_record *) rec, hash_size);
+-}
+-
+ static struct reftable_record_vtable reftable_ref_record_vtable = {
+ 	.key = &reftable_ref_record_key,
+ 	.type = BLOCK_TYPE_REF,
+@@ -497,7 +439,6 @@ static struct reftable_record_vtable reftable_ref_record_vtable = {
+ 	.is_deletion = &reftable_ref_record_is_deletion_void,
+ 	.equal = &reftable_ref_record_equal_void,
+ 	.cmp = &reftable_ref_record_cmp_void,
+-	.print = &reftable_ref_record_print_void,
+ };
+ 
+ static void reftable_obj_record_key(const void *r, struct strbuf *dest)
+@@ -516,21 +457,6 @@ static void reftable_obj_record_release(void *rec)
+ 	memset(obj, 0, sizeof(struct reftable_obj_record));
+ }
+ 
+-static void reftable_obj_record_print(const void *rec, int hash_size)
+-{
+-	const struct reftable_obj_record *obj = rec;
+-	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+-	struct strbuf offset_str = STRBUF_INIT;
+-	int i;
+-
+-	for (i = 0; i < obj->offset_len; i++)
+-		strbuf_addf(&offset_str, "%" PRIu64 " ", obj->offsets[i]);
+-	hex_format(hex, obj->hash_prefix, obj->hash_prefix_len);
+-	printf("prefix %s (len %d), offsets [%s]\n",
+-	       hex, obj->hash_prefix_len, offset_str.buf);
+-	strbuf_release(&offset_str);
+-}
+-
+ static void reftable_obj_record_copy_from(void *rec, const void *src_rec,
+ 					  int hash_size)
+ {
+@@ -701,41 +627,8 @@ static struct reftable_record_vtable reftable_obj_record_vtable = {
+ 	.is_deletion = &not_a_deletion,
+ 	.equal = &reftable_obj_record_equal_void,
+ 	.cmp = &reftable_obj_record_cmp_void,
+-	.print = &reftable_obj_record_print,
+ };
+ 
+-static void reftable_log_record_print_sz(struct reftable_log_record *log,
+-					 int hash_size)
+-{
+-	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+-
+-	switch (log->value_type) {
+-	case REFTABLE_LOG_DELETION:
+-		printf("log{%s(%" PRIu64 ") delete\n", log->refname,
+-		       log->update_index);
+-		break;
+-	case REFTABLE_LOG_UPDATE:
+-		printf("log{%s(%" PRIu64 ") %s <%s> %" PRIu64 " %04d\n",
+-		       log->refname, log->update_index,
+-		       log->value.update.name ? log->value.update.name : "",
+-		       log->value.update.email ? log->value.update.email : "",
+-		       log->value.update.time,
+-		       log->value.update.tz_offset);
+-		hex_format(hex, log->value.update.old_hash, hash_size);
+-		printf("%s => ", hex);
+-		hex_format(hex, log->value.update.new_hash, hash_size);
+-		printf("%s\n\n%s\n}\n", hex,
+-		       log->value.update.message ? log->value.update.message : "");
+-		break;
+-	}
+-}
+-
+-void reftable_log_record_print(struct reftable_log_record *log,
+-				      uint32_t hash_id)
+-{
+-	reftable_log_record_print_sz(log, hash_size(hash_id));
+-}
+-
+ static void reftable_log_record_key(const void *r, struct strbuf *dest)
+ {
+ 	const struct reftable_log_record *rec =
+@@ -1039,11 +932,6 @@ static int reftable_log_record_is_deletion_void(const void *p)
+ 		(const struct reftable_log_record *)p);
+ }
+ 
+-static void reftable_log_record_print_void(const void *rec, int hash_size)
+-{
+-	reftable_log_record_print_sz((struct reftable_log_record*)rec, hash_size);
+-}
+-
+ static struct reftable_record_vtable reftable_log_record_vtable = {
+ 	.key = &reftable_log_record_key,
+ 	.type = BLOCK_TYPE_LOG,
+@@ -1055,7 +943,6 @@ static struct reftable_record_vtable reftable_log_record_vtable = {
+ 	.is_deletion = &reftable_log_record_is_deletion_void,
+ 	.equal = &reftable_log_record_equal_void,
+ 	.cmp = &reftable_log_record_cmp_void,
+-	.print = &reftable_log_record_print_void,
+ };
+ 
+ static void reftable_index_record_key(const void *r, struct strbuf *dest)
+@@ -1137,13 +1024,6 @@ static int reftable_index_record_cmp(const void *_a, const void *_b)
+ 	return strbuf_cmp(&a->last_key, &b->last_key);
+ }
+ 
+-static void reftable_index_record_print(const void *rec, int hash_size)
+-{
+-	const struct reftable_index_record *idx = rec;
+-	/* TODO: escape null chars? */
+-	printf("\"%s\" %" PRIu64 "\n", idx->last_key.buf, idx->offset);
+-}
+-
+ static struct reftable_record_vtable reftable_index_record_vtable = {
+ 	.key = &reftable_index_record_key,
+ 	.type = BLOCK_TYPE_INDEX,
+@@ -1155,7 +1035,6 @@ static struct reftable_record_vtable reftable_index_record_vtable = {
+ 	.is_deletion = &not_a_deletion,
+ 	.equal = &reftable_index_record_equal,
+ 	.cmp = &reftable_index_record_cmp,
+-	.print = &reftable_index_record_print,
+ };
+ 
+ void reftable_record_key(struct reftable_record *rec, struct strbuf *dest)
+@@ -1334,9 +1213,3 @@ void reftable_record_init(struct reftable_record *rec, uint8_t typ)
+ 		BUG("unhandled record type");
+ 	}
+ }
+-
+-void reftable_record_print(struct reftable_record *rec, int hash_size)
+-{
+-	printf("'%c': ", rec->type);
+-	reftable_record_vtable(rec)->print(reftable_record_data(rec), hash_size);
+-}
+diff --git a/reftable/record.h b/reftable/record.h
+index d778133e6ec..5003bacdb0c 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -136,7 +136,6 @@ void reftable_record_init(struct reftable_record *rec, uint8_t typ);
+ /* see struct record_vtable */
+ int reftable_record_cmp(struct reftable_record *a, struct reftable_record *b);
+ int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size);
+-void reftable_record_print(struct reftable_record *rec, int hash_size);
+ void reftable_record_key(struct reftable_record *rec, struct strbuf *dest);
+ void reftable_record_copy_from(struct reftable_record *rec,
+ 			       struct reftable_record *src, int hash_size);
+diff --git a/reftable/reftable-record.h b/reftable/reftable-record.h
+index ff486eb1f75..2d42463c581 100644
+--- a/reftable/reftable-record.h
++++ b/reftable/reftable-record.h
+@@ -60,10 +60,6 @@ const unsigned char *reftable_ref_record_val2(const struct reftable_ref_record *
+ /* returns whether 'ref' represents a deletion */
+ int reftable_ref_record_is_deletion(const struct reftable_ref_record *ref);
+ 
+-/* prints a reftable_ref_record onto stdout. Useful for debugging. */
+-void reftable_ref_record_print(const struct reftable_ref_record *ref,
+-			       uint32_t hash_id);
+-
+ /* frees and nulls all pointer values inside `ref`. */
+ void reftable_ref_record_release(struct reftable_ref_record *ref);
+ 
+@@ -111,8 +107,4 @@ void reftable_log_record_release(struct reftable_log_record *log);
+ int reftable_log_record_equal(const struct reftable_log_record *a,
+ 			      const struct reftable_log_record *b, int hash_size);
+ 
+-/* dumps a reftable_log_record on stdout, for debugging/testing. */
+-void reftable_log_record_print(struct reftable_log_record *log,
+-			       uint32_t hash_id);
 -
  #endif
 diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index db62ea8dc3b..82159fa51f4 100644
+index 82159fa51f4..cb22d7537a9 100644
 --- a/t/helper/test-reftable.c
 +++ b/t/helper/test-reftable.c
-@@ -30,6 +30,54 @@ static void print_help(void)
+@@ -30,12 +30,33 @@ static void print_help(void)
  	       "\n");
  }
  
-+static int dump_table(struct reftable_table *tab)
++static char hexdigit(int c)
 +{
-+	struct reftable_iterator it = { NULL };
-+	struct reftable_ref_record ref = { NULL };
-+	struct reftable_log_record log = { NULL };
-+	uint32_t hash_id = reftable_table_hash_id(tab);
-+	int err;
-+
-+	reftable_table_init_ref_iter(tab, &it);
-+
-+	err = reftable_iterator_seek_ref(&it, "");
-+	if (err < 0)
-+		return err;
-+
-+	while (1) {
-+		err = reftable_iterator_next_ref(&it, &ref);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_ref_record_print(&ref, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_ref_record_release(&ref);
-+
-+	reftable_table_init_log_iter(tab, &it);
-+
-+	err = reftable_iterator_seek_log(&it, "");
-+	if (err < 0)
-+		return err;
-+
-+	while (1) {
-+		err = reftable_iterator_next_log(&it, &log);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_log_record_print(&log, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_log_record_release(&log);
-+	return 0;
++	if (c <= 9)
++		return '0' + c;
++	return 'a' + (c - 10);
 +}
 +
- static int dump_stack(const char *stackdir, uint32_t hash_id)
++static void hex_format(char *dest, const unsigned char *src, int hash_size)
++{
++	assert(hash_size > 0);
++	if (src) {
++		int i = 0;
++		for (i = 0; i < hash_size; i++) {
++			dest[2 * i] = hexdigit(src[i] >> 4);
++			dest[2 * i + 1] = hexdigit(src[i] & 0xf);
++		}
++		dest[2 * hash_size] = 0;
++	}
++}
++
+ static int dump_table(struct reftable_table *tab)
  {
- 	struct reftable_stack *stack = NULL;
-@@ -43,7 +91,7 @@ static int dump_stack(const char *stackdir, uint32_t hash_id)
+ 	struct reftable_iterator it = { NULL };
+ 	struct reftable_ref_record ref = { NULL };
+ 	struct reftable_log_record log = { NULL };
+ 	uint32_t hash_id = reftable_table_hash_id(tab);
++	int hash_len = hash_size(hash_id);
+ 	int err;
  
- 	merged = reftable_stack_merged_table(stack);
- 	reftable_table_from_merged_table(&table, merged);
--	err = reftable_table_print(&table);
-+	err = dump_table(&table);
- done:
- 	if (stack)
- 		reftable_stack_destroy(stack);
-@@ -64,7 +112,7 @@ static int dump_reftable(const char *tablename)
- 		goto done;
+ 	reftable_table_init_ref_iter(tab, &it);
+@@ -45,14 +66,35 @@ static int dump_table(struct reftable_table *tab)
+ 		return err;
  
- 	reftable_table_from_reader(&tab, r);
--	err = reftable_table_print(&tab);
-+	err = dump_table(&tab);
- done:
- 	reftable_reader_free(r);
- 	return err;
+ 	while (1) {
++		char hex[GIT_MAX_HEXSZ + 1] = { 0 }; /* BUG */
++
+ 		err = reftable_iterator_next_ref(&it, &ref);
+-		if (err > 0) {
++		if (err > 0)
+ 			break;
+-		}
+-		if (err < 0) {
++		if (err < 0)
+ 			return err;
++
++		printf("ref{%s(%" PRIu64 ") ", ref.refname, ref.update_index);
++		switch (ref.value_type) {
++		case REFTABLE_REF_SYMREF:
++			printf("=> %s", ref.value.symref);
++			break;
++		case REFTABLE_REF_VAL2:
++			hex_format(hex, ref.value.val2.value, hash_len);
++			printf("val 2 %s", hex);
++			hex_format(hex, ref.value.val2.target_value,
++				   hash_len);
++			printf("(T %s)", hex);
++			break;
++		case REFTABLE_REF_VAL1:
++			hex_format(hex, ref.value.val1, hash_len);
++			printf("val 1 %s", hex);
++			break;
++		case REFTABLE_REF_DELETION:
++			printf("delete");
++			break;
+ 		}
+-		reftable_ref_record_print(&ref, hash_id);
++		printf("}\n");
+ 	}
+ 	reftable_iterator_destroy(&it);
+ 	reftable_ref_record_release(&ref);
+@@ -64,14 +106,33 @@ static int dump_table(struct reftable_table *tab)
+ 		return err;
+ 
+ 	while (1) {
++		char hex[GIT_MAX_HEXSZ + 1] = { 0 };
++
+ 		err = reftable_iterator_next_log(&it, &log);
+-		if (err > 0) {
++		if (err > 0)
+ 			break;
+-		}
+-		if (err < 0) {
++		if (err < 0)
+ 			return err;
++
++		switch (log.value_type) {
++		case REFTABLE_LOG_DELETION:
++			printf("log{%s(%" PRIu64 ") delete\n", log.refname,
++			       log.update_index);
++			break;
++		case REFTABLE_LOG_UPDATE:
++			printf("log{%s(%" PRIu64 ") %s <%s> %" PRIu64 " %04d\n",
++			       log.refname, log.update_index,
++			       log.value.update.name ? log.value.update.name : "",
++			       log.value.update.email ? log.value.update.email : "",
++			       log.value.update.time,
++			       log.value.update.tz_offset);
++			hex_format(hex, log.value.update.old_hash, hash_len);
++			printf("%s => ", hex);
++			hex_format(hex, log.value.update.new_hash, hash_len);
++			printf("%s\n\n%s\n}\n", hex,
++			       log.value.update.message ? log.value.update.message : "");
++			break;
+ 		}
+-		reftable_log_record_print(&log, hash_id);
+ 	}
+ 	reftable_iterator_destroy(&it);
+ 	reftable_log_record_release(&log);
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
