@@ -1,57 +1,51 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB0E1CB31B
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 15:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205411CB31B
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 15:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724339248; cv=none; b=s6MlFQX55Syk9CO8WemvMpUhP+gfB4/NCpSHvI2ge5CrsjRSIa8N2ASNsLcsAHtQeFzHmYMjyWjFK1Wip0lfAkvzdnYgBa8SoGMV8JexAj5nsW0HSPjiIVkVaDN7cYc2BRuUHs1DRH54QN4jRMq1ZaTG/sI147myWY1HJIZdThI=
+	t=1724339468; cv=none; b=JTReq/kxqlY8Te0WAISG83x2jZGv1N0lh1g3pbjDPeWANoU+B8pdkljP6sgELnMvKm7PlzBG6ruwxcyU93M3TJ5GWR1QZqQcVbbSXgSlu5LX8NM/Y6JcQ3TlAwhsbCfIne/tdbAUwbsPmI8xPPuRe0eSDhUUUw7IE2b21G5U4Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724339248; c=relaxed/simple;
-	bh=656dMq95XkqjD22JJbHPyK30fWdCfGfLXSvBXX5yPjE=;
+	s=arc-20240116; t=1724339468; c=relaxed/simple;
+	bh=/ud+e2HG5UCSNNVhN58wGPypaFLXq2im0vSbcnmT0p4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rcmNGa2J8/UvdtfDcETvfK9GpIzFse1WM6KK8RXkQihpon8eBCvB0Najsm8ZURA38tObAiIN85v8jmTbKRZ7q11NJlRDoM7hipn3PbtE/s7kMLaG3vouK5UZfInHpJczHs7Uc29BzKNRJT1ohWUO61vy0IPlDIRc0R2jFxDX+ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=o0IdPQoH; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=o7qSfQ8PSbSMUzcO/asEQPbJjWdVGhW9/pXR7obvEZWLm3vBmQjVxiIqyBDiOXIQ4Ke8fvKXrqOY82RkFjoVgWHqOiOcGKORuqXGjyuGPWluJHIiVAYVbOgmAKriFEk4c0N+AJ02ImY0C3rF2Ww0ichc3oWdcVeNJ6wAfZDFuEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z22E8bEp; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o0IdPQoH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z22E8bEp"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 50BC6190E7;
-	Thu, 22 Aug 2024 11:07:20 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B0FD51915D;
+	Thu, 22 Aug 2024 11:11:05 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=656dMq95XkqjD22JJbHPyK30fWdCfGfLXSvBXX
-	5yPjE=; b=o0IdPQoHmTdus7UBRP4SPjflL/9N5YQR479Cnc31x3Qp5aqwsWooGi
-	3X94to6wB0UF9uUbbQ5W6xn4PGCaCAYwdeLDFCMXHW8AinG079d2jHGdo9RUwWdj
-	K+kZeNu9GY8nZ5muyXb72AKc1FrthaTNU2Hg8khRG40dsxVq8EmnE=
+	:content-type; s=sasl; bh=/ud+e2HG5UCSNNVhN58wGPypaFLXq2im0vSbcn
+	mT0p4=; b=Z22E8bEpBiGI1pM9Lino1r5XIkaKu4RGAy69MGUSSsM1zmjz1fX1hc
+	9jHefKwLW0tkEGwJ3x0w5JiH4gdnLEO5KW5GOuZcYmk+j1xpnf1U29vnZupFz7c0
+	2TIYDEM617BnQJo3kAZft5pdIgNAJT5NG31v7eSdv0LBHWCAeUeFQ=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 48F1C190E6;
-	Thu, 22 Aug 2024 11:07:20 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A956B1915C;
+	Thu, 22 Aug 2024 11:11:05 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A157F190E5;
-	Thu, 22 Aug 2024 11:07:15 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1E7801915A;
+	Thu, 22 Aug 2024 11:11:02 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ahmed Akef <aemed.akef.1@gmail.com>
-Cc: ahmed akef via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2] docs: explain the order of output in the batched
- mode of git-cat-file(1)
-In-Reply-To: <CAH64z8Ji59amg5Y=cBJzFKt_XiB0A5re35g9jHPWS6AoyGpRWw@mail.gmail.com>
-	(Ahmed Akef's message of "Thu, 22 Aug 2024 09:31:57 +0200")
-References: <pull.1768.git.git.1724232485264.gitgitgadget@gmail.com>
-	<pull.1768.v2.git.git.1724234729288.gitgitgadget@gmail.com>
-	<xmqqa5h5ztd9.fsf@gitster.g>
-	<CAH64z8+dScuQbvu1aHnodE7VpCvgU2djbJhQDff76iyeFtpdTw@mail.gmail.com>
-	<CAH64z8KUWSNii_U5k5fAz3q9cu34+pOWk2Rmw-60x7iOKOD8gQ@mail.gmail.com>
-	<CAH64z8Ji59amg5Y=cBJzFKt_XiB0A5re35g9jHPWS6AoyGpRWw@mail.gmail.com>
-Date: Thu, 22 Aug 2024 08:07:14 -0700
-Message-ID: <xmqqv7zsvbod.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 00/10] reftable: fix reload with active iterators
+In-Reply-To: <20240822124100.GA1070988@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 22 Aug 2024 08:41:00 -0400")
+References: <cover.1724080006.git.ps@pks.im>
+	<20240822124100.GA1070988@coredump.intra.peff.net>
+Date: Thu, 22 Aug 2024 08:11:00 -0700
+Message-ID: <xmqqr0agvbi3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,35 +55,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 37A70BFE-6098-11EF-B22D-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+ BEA2B3CE-6098-11EF-9648-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
-Ahmed Akef <aemed.akef.1@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-Administrivia: please do not break the discussion thread by dropping
-In-Reply-To: and / or References: headers.  For those who are
-following from sidelines, this is a reponse to
+> But I don't think that's sufficient here, as the race happens while we
+> are actually iterating. You'd really need some for_each_ref() callback
+> that blocks in some externally controllable way. Possibly you could do
+> something clever with partial-clone lazy fetches (where you stall the
+> fetch and then do ref updates in the middle), but that is getting pretty
+> convoluted.
 
-    https://lore.kernel.org/git/xmqqa5h5ztd9.fsf@gitster.g/
+;-)
 
->> * "as they have been read from stdin"; drop "from stdin" here, as
->>   we already know we are talking about the mode that reads object
->>   names from the standard input and there is no need to repeat it.
->
-> it is needed to explain that git will not do any optimization to the
-> order of paths
-> before printing the output.
+> So I think the tests you included seem like a good place to stop.
 
-I do not think "from stdin" is necessary for that.  The sentence
-begins ...
+Yeah, I agree with this assessment.
 
->  If `--batch` or `--batch-check` is given, `cat-file` will read objects
-> +from stdin, one per line, and print information about them in the same
-> +order as they have been read from stdin. By default, the whole line is
-> +considered as an object, as if it were fed to linkgit:git-rev-parse[1].
+> I did have a little trouble applying this for testing. I wanted to do it
+> on 'next', which has the maintenance changes to cause the race. But
+> merging it there ended up with a lot of conflicts with other reftable
+> topics (especially the tests). I was able to resolve them all, but you
+> might be able to make Junio's life easier by coordinating the topics a
+> bit.
 
-... by explaining that the command reads from the standard input, and
-does something to each in the same order as they were read.  If you
-already said you are reading from the standard input, the order you
-read them is the order youread them from the standard input.
+I haven't tried merging the topic to 'next', jumping over other
+topics in flight in 'seen'.  Thanks for a heads up, but I am hoping
+that my rerere database is fairly complete for this topic by now.
 
-Drop the "from stdin" from "as they have been read from stdin".
+Thanks.
