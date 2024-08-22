@@ -1,155 +1,184 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781381CB13B
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 13:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA1B1CBEA3
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 13:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724333054; cv=none; b=UQcKTz3OD4Lyxn0+UNFjk7xpRg6PofvaeZQniGHDXOUZGqHJmXcMChra/0sQDuvqdKvRp2666BulKwJGNo/2E+w+MxoBAgRf43l1Ypvhy0fBRzowDUUxI4U4tiB8THkgeFkq836b4U7CVWucCpHhUarr4DaUW0lI4vP2IxvoLvk=
+	t=1724334738; cv=none; b=UatQ0xhvUT+NzoRcQT54HWk0XnSbJhR4ayVrG0hIrtJ0UDv0clOdQd5aiWpx3AdJyF4Fnvs7tWZXN5wn1bsPzeNkD1491UdHVTAW+1ONPdeNzednfZEekI4Kfpy+HTikLkAyI60JTe/iLpPT5R9q8MxO6IJeiHWbS3Swh+rApck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724333054; c=relaxed/simple;
-	bh=RgpUXMOW4GhOYNLI6qMqf4oEldY6JoFl+aYi6gQFOug=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G33JOgY6WfbxeufiqeYNFJMdNop2YGfWswn7duZlSjCmxRzsNt3Gu6ArCkNUKZzHxnNSPf1kR77MYaYHwmbRMhXc31JCYxPQ7IqvvhyBPOc4kjgFdlpS/WHBN3J8gcQ9lCABH7jE/SQnWYxvCLHZSlMOdG2yR9TjVmy593TgKr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EjC/JOel; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1724334738; c=relaxed/simple;
+	bh=4ZJLsjvwgUN6AjIkhsZ7Tnje5A4OynzUlEr3WCNY0do=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TBLInUeDIWM/q+ulJ19WjeGn3Z2FKF9IvgmXMbvTpadqhso/6PgcrDygzQ7nnOvwSeIvpyJdxX7P8DukwK3OQCPw+fCkWWJEd6MzYSO+lKwOnwaUI4pIBqfvyJWh/rdbhPgNf0llMiamxqR/UZI65s3GFK5qzlm/efn8GnxDxpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cF7lILs6; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EjC/JOel"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a7d26c2297eso103570266b.2
-        for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:24:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cF7lILs6"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a7a9cf7d3f3so123938366b.1
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724333051; x=1724937851; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1724334734; x=1724939534; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6tYmPYgAwk6rd453a9eiGpMscnJE99UmbQiO4Il9pUg=;
-        b=EjC/JOelONrgwBz7tdSSpCBFGMrMyE7n08vt9FGPUxNefdO0O529hN8jOUusYY9oC5
-         qflpZFPIbu890pyZawdL19nXHnwq0uIkGbs/vKqAf/3GxNLlJZmJA/MwyLdBhuYiBssS
-         9PgHppLkm2B+OJdOQh4ptXjT7Lxb3MxAr4xVZjxaRY6NKYfQakKyInBC/KVTWpJTRXpA
-         8pWNQxSZiU1mp31PESoFNubXjJU4fPn2YDkQA1ry9EkWD5qOgKpcmZig5lGVMAQh6QoF
-         qgx0j2ZVKaDeD0Z2R55yG9mR92LBUk4Tjbg7odqzGmtrcaKh5srANiIsU0D43JAyo3c9
-         rvNw==
+        bh=b+NdsCErubiLGJIR5dXdi8R9RG3AGEU2sfKs0rufTPs=;
+        b=cF7lILs6pBi/Lu14dVl2O1Gku6uXhT40oYqK22DdUyFAfEdd+1Flz6eAP81S+rWYGv
+         E0aYMOcG78Mc6X7OHwRdVNp/Fe7g3tnk0ceTWV7bCXtWxMnUmQ6o/2dEmIq1sELvrOZZ
+         /oTODptANj6rnCRl+JeOaEHmISiDTVnQyBSjYona2kmh8W3m+kkuQHmfI/kVWcbkDuc3
+         3KnUK1j9cN0K9jtPLLbrBcD5Wn/EDfppc5EpNDVd/l8c7jzvLJmKNlMh0tEdgRhCiNsU
+         VQ8nSN7bQIOjSN1R25/JxYlIK8x2GaswgrjLvi67WYPWov/BlbIJA/0tTzhcGWVAv3k3
+         +RFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724333051; x=1724937851;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1724334734; x=1724939534;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6tYmPYgAwk6rd453a9eiGpMscnJE99UmbQiO4Il9pUg=;
-        b=Gkq5BXZ88wdXYMjc0qldiygruhS1P+urC0Lp4/yJ7M33ib9vyj4y1Y3Eb9zXjIEG2L
-         sltpEck6GGQwFd059ClNOHU1FK/16GIUuRsTJcFwWHE7q83ccyhsbeUsu0nKoVM9FvWI
-         ocDcsVaGT3NJpEAxAbAU3xqQTn9E7NUPNXyFsZ6l1qL/s4FP6X6CPxy/W6v8T4DseZSx
-         m8Tf9j6Q84S0PwiIEb771QdDLEARBES+QyXQAVnsASMzLaf7CFZCfoks6m2qitBjfg3/
-         z83+ImtBwKJ1u/pKJzP3bL+6dJZdI+jTTE8+Mi98F8nlzjc8ckHPVbUXPLHBoY6UO0EZ
-         hn1g==
-X-Forwarded-Encrypted: i=1; AJvYcCUqwijE9m21RAgXz+60HflOceN+tjis8DaLRxPfMRU35BFkfuGGAoXy++29efbQzz+Ur9s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPBKF/LdIEYhk3fHO7OT8fLMzniKgPIR0kvKSV8TCeDc1tLeHL
-	9k0O+FxGqHq1adcXISX0oCbvAqccgGaXpUOL6ue2vKFYISKGwcmd
-X-Google-Smtp-Source: AGHT+IENE5CP7GM/caqUq9Taa6oyKbMWQTFI12XDCHB+8pDHEKmtVJgfnOIIP9sZSNZFeUThXnJIgQ==
-X-Received: by 2002:a17:907:9620:b0:a86:7ddf:2909 with SMTP id a640c23a62f3a-a867ddf33b7mr381871666b.14.1724333049970;
-        Thu, 22 Aug 2024 06:24:09 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:d2c6:37ff:fef6:7b1? ([2a0a:ef40:6d3:8001:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a868f43367fsm120485266b.115.2024.08.22.06.24.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2024 06:24:09 -0700 (PDT)
-Message-ID: <27a37848-cdf8-46bb-9764-d8f952504c12@gmail.com>
-Date: Thu, 22 Aug 2024 14:24:08 +0100
+        bh=b+NdsCErubiLGJIR5dXdi8R9RG3AGEU2sfKs0rufTPs=;
+        b=Yj+RBOp43rH18kkm30JmY9oHKSPbObjhHptqR8xuDZdudIiT3cDewvqbCWhZ8mF4pY
+         YSl8w6R1/Kj3BNfIzaPMmYSNRZb14cCQnYkNfIs/P1XVEnFLB08Ab+/l2VhAvxcELrWc
+         XOqXD7pyGcbvT7FfqXuE8LuNCQoR+w9sWfCJLjSTyU0JmEGyk+0gim5UtPloFrs2IuVF
+         rOldvZDKw0iLWHttjSsHnxS1zY0EevvkMYiUsgRSwXy1a+zlCzW3dYUUFOoZ+P5nxYF+
+         57JOaWJWMRtxz6ILcaQrYbasFozOIBSl7F+a6e5YkA+IlRrsgUzh79sxnG0pKS2PS4Mz
+         Y6hg==
+X-Gm-Message-State: AOJu0YxGm/Qql2WcmNKfb3geXriWXCYI+Ots5FjNzrTM386zfOm/Z9jw
+	NEEpLpPc2Ca6VjOL6ufLAws1LU2794q+TTuEhMp10t7Nj+c+N9YKUVC+zg==
+X-Google-Smtp-Source: AGHT+IHw5KLqhnaDCKvmcClb5NVH1tVbSiJufZBuhgUjmyJUqbLYjm+y0rppbAOPQGomKHCzSCWOyA==
+X-Received: by 2002:a17:907:3d8a:b0:a7a:8cb9:7491 with SMTP id a640c23a62f3a-a866f8f391dmr374703866b.54.1724334733658;
+        Thu, 22 Aug 2024 06:52:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f29a568sm123389166b.53.2024.08.22.06.52.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 06:52:13 -0700 (PDT)
+Message-Id: <pull.1769.git.git.1724334732249.gitgitgadget@gmail.com>
+From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Aug 2024 13:52:12 +0000
+Subject: [PATCH] exec_cmd: RUNTIME_PREFIX on z/OS systems
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/5] cgit: add higher-level cgit crate
-To: Kyle Lippincott <spectral@google.com>, Calvin Wan <calvinwan@google.com>
-Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
- emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com,
- gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net,
- Jason@zx2c4.com, dsimic@manjaro.org
-References: <e3f7d292-ee51-4784-8c85-14b5223c380f@gmail.com>
- <20240821184605.341205-1-calvinwan@google.com>
- <CAO_smViznLAxxGH+rfouUquq8tNJn16-CSoLbbGosy3fuYzTgQ@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAO_smViznLAxxGH+rfouUquq8tNJn16-CSoLbbGosy3fuYzTgQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Haritha  <harithamma.d@ibm.com>,
+    D Harithamma <harithamma.d@ibm.com>
 
-On 21/08/2024 20:23, Kyle Lippincott wrote:
-> On Wed, Aug 21, 2024 at 11:46 AM Calvin Wan <calvinwan@google.com> wrote:
->>
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>> 
->>> I'm suprised the compiler does not complain that 'struct config_set' is
->>> not declared in this header - I was expecting to see
->>>
->>>        struct config_set;
->>
->> I'm surprised as well actually. Removing the forward declaration of
->> "struct config_set" in repository.h doesn't result in any complaints
->> from the compiler either. Will add it in the reroll, but am curious if
->> anyone has any ideas why the compiler isn't complaining.
-> 
-> C doesn't require structs be forward declared separately. You can
-> change the name to be anything you want, and as long as the forward
-> declaration of the function and the function definition agree, you're
-> fine.
+From: D Harithamma <harithamma.d@ibm.com>
 
-Oh, TIL. The declaration
+Enable Git to resolve its own binary location using __getprogramdir
+and getprogname.
 
-     struct foo *f(struct bar*);
+Since /proc is not a mandatory filesystem on z/OS, we cannot rely on the
+git_get_exec_path_procfs method to determine Git's executable path. To
+address this, we have implemented git_get_exec_path_zos, which resolves
+the executable path by extracting it from the current program's
+directory and filename.
 
-declares "struct foo" and "struct bar" as well as function "f". The 
-declaration of "struct bar" is scoped to the parameter list and so is 
-not visible to the rest of the file. This is why we forward declare 
-structs that are used in parameter lists and why the compiler complains 
-if we don't. The declaration of "struct foo" does have file scope though 
-which explains why the compiler does not complain about 
-public_symbol_export.h because "struct config_set" is declared as a 
-return value before it is used in any parameter lists.
+Signed-off-by: D Harithamma <harithamma.d@ibm.com>
+---
+    exec_cmd: RUNTIME_PREFIX on z/OS systems
+    
+    Enable Git to resolve its own binary location using __getprogramdir and
+    getprogname.
+    
+    Since /proc is not a mandatory filesystem on z/OS, we cannot rely on the
+    git_get_exec_path_procfs method to determine Git's executable path. To
+    address this, we have implemented git_get_exec_path_zos, which resolves
+    the executable path by extracting it from the current program's
+    directory and filename.
 
-Thanks
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1769%2FHarithaIBM%2FexecmdFix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1769/HarithaIBM/execmdFix-v1
+Pull-Request: https://github.com/git/git/pull/1769
 
-Phillip
+ Makefile         |  8 ++++++++
+ config.mak.uname |  1 +
+ exec-cmd.c       | 23 +++++++++++++++++++++++
+ 3 files changed, 32 insertions(+)
 
-> If they don't agree, well, let's hope you don't encounter that
-> (it's the same problem as if you have a forward declaration that's
-> *not* visible from the definition that disagrees with the definition:
-> `void some_func();` vs. `int some_func(int arg) { ... }` -- if the
-> forward declaration wasn't made in the same translation unit that
-> defines `some_func`, nothing detects this misuse in C).
-> 
-> For this reason, you should only ever use forward declarations that
-> are provided by "the code" that's being forward declared. i.e. if
-> you're trying to use a function from foo.c, please forward declare it
-> in foo.h, and only there. This way, assuming foo.c includes foo.h,
-> you'll detect mismatches.
-> 
-> [apologies if people got multiple copies of this, I sent with HTML
-> mode enabled the first time]
-> 
->>
->>> before the function declarations. As I said in my comments on the last
->>> patch I think we'd be better to namespace our types as well as our
->>> functions in this library layer so this can be resued by other language
->>> bindings.
->>
->> Are you suggesting something like "#define libgit_config_set
->> config_set"? I wouldn't be comfortable renaming config_set in git.git
->> just yet until config/config_set can be a standalone library by itself.
->>
->>>
->>>   > [...]
->>>> +    pub fn get_str(&mut self, key: &str) -> Option<CString> {
->>>
->>> If we're adding an ergonomic api then having return CString isn't ideal.
->>> I think the equivalent function in libgit2-rs has variants that return a
->>> String which is convinent if the caller is expecting utf8 values or
->>> Vec<u8> for non-utf8 values.
->>
->> Having both get_cstr() and get_str() makes sense to me.
-> 
+diff --git a/Makefile b/Makefile
+index a87e18b317d..bdc68234823 100644
+--- a/Makefile
++++ b/Makefile
+@@ -385,6 +385,10 @@ include shared.mak
+ # supports calling _NSGetExecutablePath to retrieve the path of the running
+ # executable.
+ #
++# When using RUNTIME_PREFIX, define HAVE_ZOS_GET_EXECUTABLE_PATH if your platform
++# supports calling __getprogramdir and getprogname to retrieve the path of the
++# running executable.
++#
+ # When using RUNTIME_PREFIX, define HAVE_WPGMPTR if your platform offers
+ # the global variable _wpgmptr containing the absolute path of the current
+ # executable (this is the case on Windows).
+@@ -2155,6 +2159,10 @@ ifdef HAVE_NS_GET_EXECUTABLE_PATH
+ 	BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
+ endif
+ 
++ifdef HAVE_ZOS_GET_EXECUTABLE_PATH
++        BASIC_CFLAGS += -DHAVE_ZOS_GET_EXECUTABLE_PATH
++endif
++
+ ifdef HAVE_WPGMPTR
+ 	BASIC_CFLAGS += -DHAVE_WPGMPTR
+ endif
+diff --git a/config.mak.uname b/config.mak.uname
+index aa0fd26bd53..904bcf35987 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -648,6 +648,7 @@ ifeq ($(uname_S),OS/390)
+ 	NO_GECOS_IN_PWENT = YesPlease
+ 	HAVE_STRINGS_H = YesPlease
+ 	NEEDS_MODE_TRANSLATION = YesPlease
++	HAVE_ZOS_GET_EXECUTABLE_PATH = YesPlease
+ endif
+ ifeq ($(uname_S),MINGW)
+         ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
+diff --git a/exec-cmd.c b/exec-cmd.c
+index 909777f61f4..507e67d528b 100644
+--- a/exec-cmd.c
++++ b/exec-cmd.c
+@@ -150,6 +150,25 @@ static int git_get_exec_path_darwin(struct strbuf *buf)
+ }
+ #endif /* HAVE_NS_GET_EXECUTABLE_PATH */
+ 
++#ifdef HAVE_ZOS_GET_EXECUTABLE_PATH
++/*
++ * Resolves the executable path from current program's directory and name.
++ *
++ * Returns 0 on success, -1 on failure.
++ */
++static int git_get_exec_path_zos(struct strbuf *buf)
++{
++	char *dir = __getprogramdir();
++	char *exe = getprogname();
++	if (dir && exe) {
++		strbuf_addf(buf, "%s/%s", dir, exe);
++		return 0;
++	}
++	return -1;
++}
++
++#endif /* HAVE_ZOS_GET_EXECUTABLE_PATH */
++
+ #ifdef HAVE_WPGMPTR
+ /*
+  * Resolves the executable path by using the global variable _wpgmptr.
+@@ -206,6 +225,10 @@ static int git_get_exec_path(struct strbuf *buf, const char *argv0)
+ 		git_get_exec_path_wpgmptr(buf) &&
+ #endif /* HAVE_WPGMPTR */
+ 
++#ifdef HAVE_ZOS_GET_EXECUTABLE_PATH
++		git_get_exec_path_zos(buf) &&
++#endif /*HAVE_ZOS_GET_EXECUTABLE_PATH */
++
+ 		git_get_exec_path_from_argv0(buf, argv0)) {
+ 		return -1;
+ 	}
 
+base-commit: 3a7362eb9fad0c4838f5cfaa95ed3c51a4c18d93
+-- 
+gitgitgadget
