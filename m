@@ -1,138 +1,89 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6861757EA
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 05:57:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5F92AF0D
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 06:03:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724306250; cv=none; b=lOTEz7fJYNB5i9nJlDEYGQzaz9KNXWsfUxHd3Dd3YtOEoc4BwCodqO7JnATXfFfoSJqdjtMYoQkS77ITCQoGPB+RNlN1jXrSKSSt6NxFNSYb1orEiXhkczMoz1sRgMwsYnpzH4PZhPl9HfnJw6v9z/RB6QFuSYxKjhlmAGFXSKg=
+	t=1724306631; cv=none; b=Bk2fK8StxOGcHW2OX1HsVJY2nZAwwjTo1StqdG7kmXfDWqjdZ8fU3AE9mi+SEjs4ctvkSQwgpEWxOFtEZBRwnO6mWjsDvf7/C2pBmqge5ESw3OokLwcD+Ldpyl0XEpCBG0nC7wd/2lJ9YGW8NgSbjfU/yxAZ+9Ega4s7iQRvCU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724306250; c=relaxed/simple;
-	bh=ycfulgDuaYi/izldoqRONyX0JLlzNQNFuok/Q4BAXck=;
+	s=arc-20240116; t=1724306631; c=relaxed/simple;
+	bh=/xE0krL6Bu411cwjLE3dPqOgIXiymINISnQIm4qg2HM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lD+wm/IqpJBcFWPHYI5lEyIWeUkJXOALCVhmvkJxBNKuMqhfCX8Y5yhh89AcqGMIDBPq5TiABOyRCfCSKeZkqSNcP/M2mHIWKbv3+hNctt1ouekOMLQy4diutlmXm68x+PpmRwJJ5Q1tnGdKlpn6UiHZ7Uv1zd+XFtLCzx5V25o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YK+St1+B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WCS3o36t; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=iDbabYbDyad7y6ZD+cBA6MPrp+fA0P9IPIox9sGGBtr8TZbbwUrvW7KK56oDj3E3vpxSEPFJn4lnivNecjv69Th3fiaGN9J+Q0Y4Z5OVKi1PdsMc2SrWKP6OS/5Ee4jwrR4b98J5zroMH9Zk+Tv0psWSE8gNOX31y+obHnWpTbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZMCi2mM; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YK+St1+B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WCS3o36t"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id C1049138FFEC;
-	Thu, 22 Aug 2024 01:57:26 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 22 Aug 2024 01:57:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1724306246;
-	 x=1724392646; bh=l59kyfXK3/1Ub2t7up2KKEqHh4oA2owpjjNNL2gzwjw=; b=
-	YK+St1+BO9UDep3WE8hxQARyymgrR7FmMTNgLdvnS67GSjal+BcGl2qynjG86a54
-	ceUbltlyDYyLnoMjsxmy1hAdiHCUl2S2KtM9KCED9KSlG7lVSYz7hAAh+XG+P/Xk
-	/+ALOpC90RZFAQ6CiR4pObj0RmgD4ukubJQPCN/QGo7Ly1qGp+V9q3Yaus4u7SEJ
-	xs/wTmc71UwGyIOSAEMPuwtdhzzm6scTjpweHWbmawvWxWtwWP1UJ7WXDMjAOq5P
-	LSsZQXX/2LCEagZ1gswXguO3tVpRQnKmrSv3qKCyXGeNvYG0dUuSTijzkvBlRwVT
-	aAJT0I2ExxTD9R0RQLrSMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1724306246; x=
-	1724392646; bh=l59kyfXK3/1Ub2t7up2KKEqHh4oA2owpjjNNL2gzwjw=; b=W
-	CS3o36tCrRB+JgPCgypDQpq9yv0x0ULFj3Em9hcmClWod+IBjtMw+9OOL9Uey7GH
-	JD7xObHL7+T48hVg7FD16lxMpJU4I3bzuGU4sxpc/kAPMT5q17B3cksEjrGXHzKn
-	mfvelmmyIwwEupDEAcPnG5JE9EspT1DbgWMhbHi/PbU97Jm53ZMMZhYocs5oGXjF
-	cyvmxiWb6GYje5UA18xOcVYmZtmo9MPeC7ZiXsGdycwUK42xLi6FGBCZuwVut3Tr
-	RK4MGKsQgV7hOS/LAbiMxxdHW28R3b1oeTNE39laMfXaRO7qTKmMPbVzFGkuvwkZ
-	gjM8exPxJb8PNJdhOx1tQ==
-X-ME-Sender: <xms:RtPGZvLGpB6Jdoe3G6szzRhbIFpJNbunTLcavDc72BtTSFYiIArhyQ>
-    <xme:RtPGZjI99KHSP02hZ0OKkT71a8i-E505giBRyS7gaQ8-yMoeHCutUwWsVRGPSGYw_
-    0gbIifUg-hxfnARxQ>
-X-ME-Received: <xmr:RtPGZntScSHrXS1yl-PQlR0IrzpI3Opx0cBH9d8_IUlUIFi0XOIzQLJuG8fbnt931AIcCN4c1NO9CCyKsn7xaB6EcrRV4jLCDhxrmelNne1rLJ0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduledguddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedvfeejie
-    dtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmuhii
-    ihhmuhiihhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:RtPGZoYMogVC7RZFUScZLCynoJeHcRGjOWh9vzQVPoRZ940aPn3W2g>
-    <xmx:RtPGZmZ9C_kjvlwr9HflaDvIUZ1BbN7y5JRuOPSiN858CKvxSPYrzg>
-    <xmx:RtPGZsCkfOu0HcQptsGEUgm9HRpqt7WKlhIHQDX350v-HCowLgeMGA>
-    <xmx:RtPGZkY3tBNxqdHyDBTuJSoGMCCRCCBgdFCVIBjMSJbGbzmXwObPUw>
-    <xmx:RtPGZmHizLoxUggg-dTazp-9EZU8-gsRacXmEWcqPOgxMijb9sqFEGbj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Aug 2024 01:57:25 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 104c4965 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Aug 2024 05:56:50 +0000 (UTC)
-Date: Thu, 22 Aug 2024 07:57:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yukai Chou <muzimuzhi@gmail.com>, git@vger.kernel.org
-Subject: Re: builtin/config: --name-only doesn't imply --show-names in "git
- config get"
-Message-ID: <ZsbTPeFIPcqnEd-n@tanuki>
-References: <CAEg0tHTWzgD5bw3oK7-Rtv9oTymqyhvZz3bcJ7yNRhF8wXMLGA@mail.gmail.com>
- <xmqqttfd2734.fsf@gitster.g>
- <CAEg0tHQVK9hgcHTzn-ZPdwoFbbYFB2joeT0jLQgtD6yEH+1GiA@mail.gmail.com>
- <xmqqttfdwq0w.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZMCi2mM"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-371941bbfb0so179469f8f.0
+        for <git@vger.kernel.org>; Wed, 21 Aug 2024 23:03:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724306627; x=1724911427; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/xE0krL6Bu411cwjLE3dPqOgIXiymINISnQIm4qg2HM=;
+        b=UZMCi2mMtKn1pLA3CBcfEPgXoCD8NHV7WPmd7LtnuDli0hFMl8zdJsIXgkXW+7sWoj
+         D1/1FOwi7yuxZ/rdcyMN4/iIxejsjYesK6n/vENxjCshOmS2ME+PE99YilHSdWt2bYNN
+         mBY4gBkZLBKIRnLS4mxxvVZR+5Xdt11NmjUxH9flvCOEiJMtMaetfB5qVfsqkJBXNKe5
+         israWscsiLsvRFhwn0d9KNMVGhkNsN6kziSSha3hPkpq93Yj/6PlZ9QqNMUuAEDF/x31
+         SKp1Bvd/pkwfxBCgOBSoiqhnWAUpgwljRp448PrsnUgUWfjEpHJHY2jgX6rWgfOuOr5y
+         PYIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724306627; x=1724911427;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/xE0krL6Bu411cwjLE3dPqOgIXiymINISnQIm4qg2HM=;
+        b=AVpgfpV6oR7ApqK+hisFmcvE5gF9lDofTT6N4Xo5L/nijRdE6YFtrxEIrPtgaeq/5a
+         wuuPHlEc/g9jslyFAUdLN+q/+vxfE4Zz5DH2k4pmI9+ZZSEpE32fd9EyuF1j1n3N0HJy
+         ykI7bLEa8ZUNH9NC4YpTkXd5jsmHdKLdCnUQ2ZX0Uccpn9GKiWjTeA6ugCP8BmPPEJhN
+         TEWOOm2iCLrweaVcWBuXag/oldNPdBX/zGN3klN6zJL80OMjyYHuRrduEAHcZNelGnmk
+         EP4slxvFSPJRMBV+8tqOeE5QHddoEwFU24cVkj9U8UXJy1Y3unShg7sloxuRkknX/eMv
+         Yraw==
+X-Gm-Message-State: AOJu0Yx6TH7ouAtHlp+rc7cShSVa3h783d9Od82Jr6kEy8mZqlfgy1CD
+	NOZtrBEZw+vrklAjLCsPOfye/V/ynwB+TzaDcIb7QGHA2tG3ZAut
+X-Google-Smtp-Source: AGHT+IFpOWcM8NxB6TaiPkkliZPlRDVrEbHaZ9Oap/G4/kMEMzdkq1sHd+MKX6s4sNNOu7seinTgtA==
+X-Received: by 2002:adf:f24f:0:b0:368:7f59:a9f2 with SMTP id ffacd0b85a97d-372fd57f3c7mr2990409f8f.10.1724306627245;
+        Wed, 21 Aug 2024 23:03:47 -0700 (PDT)
+Received: from raspi.lan (85-67-102-31.pool.digikabel.hu. [85.67.102.31])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-373081457c5sm755106f8f.42.2024.08.21.23.03.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Aug 2024 23:03:46 -0700 (PDT)
+Date: Thu, 22 Aug 2024 08:03:45 +0200
+From: Gabor Gombas <gombasgg@gmail.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	ps@pks.im, james@jamesliu.io, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 0/7] [RFC] advice: refuse to output if stderr not TTY
+Message-ID: <ZsbUwZM0ZPuWIlS7@lan>
+Mail-Followup-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	ps@pks.im, james@jamesliu.io, Derrick Stolee <stolee@gmail.com>
+References: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqttfdwq0w.fsf@gitster.g>
+In-Reply-To: <pull.1776.git.1724238152.gitgitgadget@gmail.com>
 
-On Wed, Aug 21, 2024 at 01:59:43PM -0700, Junio C Hamano wrote:
-> Yukai Chou <muzimuzhi@gmail.com> writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> 于2024年8月22日周四 00:07写道：
-> >>
-> >> Yukai Chou <muzimuzhi@gmail.com> writes:
-> >>
-> >> > # get empty line(s)
-> >> > git config get --all --name-only remote.origin.fetch
-> >> > # get lines of name(s)
-> >> > git config get --all --show-names --name-only remote.origin.fetch
-> >> >
-> >> > Either the doc or the behavior of --name-only needs some adjustment.
-> >>
-> >> This argues for making "all" imply we need to show the name of the
-> >> configuration variable,
-> >
-> > Sorry can you elaborate on what that "all" meant? A new option "--show-all"?
-> 
-> Sorry, but "--all" is probably a red herring.
-> 
-> What I wanted to say was that we can 
-> 
->  (1) get rid of "--show-name",
-> 
->  (2) have the combination of options that can emit values for more
->     than one key to automatically show both name and value, and
-> 
->  (3) add "--hide-name" so that such command can still show only the
->      value.
-> 
-> where I mixed up (2) and "all".  In fact, "--all" is not something
-> that gives values for more than one key (it is things like regexp
-> and urlmatch).
+Hi,
 
-I wouldn't get rid of `--show-name`, as it also implicitly brings along
-`--no-show-name`, basically checking the box for (3).
+On Wed, Aug 21, 2024 at 11:02:25AM +0000, Derrick Stolee via GitGitGadget wrote:
 
-In any case, I agree that it probably makes sense to do (2). Unless I'm
-mistaken, the only case we need to care about is `--regexp`, because
-without all the emitted names would be the same anyway.
+> Advice is supposed to be for humans, not machines. Why do we output it when
+> stderr is not a terminal? Let's stop doing that.
 
-Patrick
+Really bad idea. "/some/script 2>&1 | tee /some/where | less" is a
+common, generic debug construct (with countless variations of the exact
+commands in the pipe - this is Unix, after all). If /some/script happens
+to run git, then I _do_ want to see all the diagnostic messages it might
+produce, both recorded at /some/where, and displayed by "less".
+
+Regards,
+Gabor
