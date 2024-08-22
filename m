@@ -1,55 +1,55 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E641514E4
-	for <git@vger.kernel.org>; Thu, 22 Aug 2024 21:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8171D1F57
+	for <git@vger.kernel.org>; Thu, 22 Aug 2024 21:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724363875; cv=none; b=bWcMd8Z25rJ3UPAMObIFeVxI5NSU/HpumfYiduxRFbCFwNHp95w7fLAMl0hJQQ2ijEIqs9TdcuLGHCkVQL0vaMqJSZcNho98SmR8jZPljJm3qoRtB+T+lNc8lzuJxEzVuTDeeCw9UZx+5tgSYAMkN8/gIg4erF1Yl7WRZUwV9Yg=
+	t=1724363877; cv=none; b=W0H6PMauARMgKqepz82GeDlL3wU9f6f2YjJlWT1jt3qQIMXO6Aa1119JZScxbHhTnF5/yQ5BxYbtiu/VQzccYT9a7pBCY+HdTu1COkqXhnzpeU9kPTK3HxycYEjHQjcRY3gypHCth266+QoNKmS4y+5humN5DWtTeVpIsgiHhu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724363875; c=relaxed/simple;
-	bh=iwPW7BMmuQW5n9Xl8Qu2r8Es2k+XR1sWU7ryv8Sr0RA=;
+	s=arc-20240116; t=1724363877; c=relaxed/simple;
+	bh=5Pwro6nhs+4TWySdQVXlCrjnuka0MfIh2v/FCYEwi4I=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=PqCaZGOxnV9gv9OH8n8FG/HEtzC2ohEqNsZg6q2crLyejb5fccjfCZFD3PMUuXJC2bqT2abfLnfs0+AxKNRtQGwiTABeJbjrNCQdsQjygWAZ9+fkrnxrq59BhYwDZJ4ipH55QPSQVLSPk9bvFbGnE0eHnGkwjRXO3pcwxtWpxhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k9C4jLCj; arc=none smtp.client-ip=209.85.128.201
+	 To:Cc:Content-Type; b=gViu+g2df1WhnkSYkRvoqm5S0tJOx/WJ8ZegiVh25sbuAFmBfyuaOYGZlCsWWpyfs0C1ZMpghC0wC9Qma9QOwjpTkwqB8puRrl4jGXuCmIfBJHShesxWOZ9thTysWb54OxM4Cdj2tVErhMteg10z/3SAYTNTdleksfUQeUiuXLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l3iVgbur; arc=none smtp.client-ip=209.85.128.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k9C4jLCj"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6b38bd44424so23947477b3.0
-        for <git@vger.kernel.org>; Thu, 22 Aug 2024 14:57:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l3iVgbur"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6886cd07673so28265507b3.3
+        for <git@vger.kernel.org>; Thu, 22 Aug 2024 14:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1724363873; x=1724968673; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1724363875; x=1724968675; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+Z24jjw16+/t/V7SNBDOEUvuaImj+68r5+hs1G665Q=;
-        b=k9C4jLCjk7GFyaj8G+PBrrMTzp/VR8Kyf0MPat9642rmbYLKGwzkqqOCEvu2qnE7CZ
-         AWOLKSGIR3E6V11jbd8tB5vEBN2WQMiD99N2JdlTj+tjQu6Nqn28PdDfCEmrAbwxPLNd
-         zNHlhFeK/U0TxUpzXnHSBiOMPZ4yIQ11ar1Fu435WtIos4KBnZ7TUu6KElphGC8NKBdk
-         F/J7SL5wwG48UBE/arXIjX9kCSM+ezymNhUXd2IJPK8Jq7T4Qk4bYcbKgrv2csxFpes7
-         5zsRgMOzfeKBfVVgjGEWB/d2gSDtnHMc3KhG+F2v7TQhzFCGnIg5Kt1zl158f3VmmCo/
-         GjrQ==
+        bh=E7QwKjMvDV2HZQEtHHY+BmfEHf/61LRTqf6VgscGldM=;
+        b=l3iVgburdbsaWkeaUYSRPmWempP2Ns5s2qUP0bMXubwmyEl2D3jX0xnQPG7mwyPzlk
+         xc9ELPhBsjddtDKGQKmIVxpJc3XxqMq5gVHAGVidRw3pLtnN/HTYBp9klzKumQd/SggZ
+         JwClWbAVfoahpE63AIPQvxY5JsGt+pFMQ32nHT42AjA0jOMoUPNpZPILlp2mKMpKxi7Q
+         0hKq5z+3t5N519v2OGM/4oM45oksTTTWAYyRBPXxlXQzq0Lz7fQgdjI9DTNKC8U0zw/l
+         ufjxF6IdJDe8knNQkTshTt8yvP7qrL2zFBo5nIsTBGPS8A6ixhwpi/T8FT9yj7P7HHzm
+         QBkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724363873; x=1724968673;
+        d=1e100.net; s=20230601; t=1724363875; x=1724968675;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+Z24jjw16+/t/V7SNBDOEUvuaImj+68r5+hs1G665Q=;
-        b=HQKWa54um1Y4zNvYTP3d6t+HMi448bYoAobt+TNDx1B11hpOuEk3DKttsl6yMl7I1S
-         q7C31dtGLadsGAH6cxR+38H2fNdOjxbjoKhlquktjkCPVzddiCpEab09BJ9UyGXUk4R8
-         4UaCMFHhw520prmxOoUo6X8XpSjgWQENZx5BE/K273CcivseSTOs+RV39bTEeJekb+YF
-         JvkUseJ6gGOkA7/30+m7JanpTecY74mJ1x4jqpuFUjFi9xBVSq2nvzAIlQSwFEBFvfmD
-         Ew6zw+WgSJbAmEM/1xyF31l2cwcpC+dt3gD1Lzj8mNVmoUOhpaKnChGVTxs7hZ+vqsmf
-         66HA==
-X-Gm-Message-State: AOJu0Yzg5qNSZCNEILsHlnQf2C85K1b2M6Hl/MC1T8YYJ7n2AGmmMTWx
-	UADTxuHcYkAL6FDbD8zx0gluo5qTZUPb4uHdiw8Ma1JqgwoXp7fxt0IRk8ig6wFUJ9/6rqNSO6W
-	BhgzUJs4flwViHtv3kKxZ5mkzp07TS2QMS0iUs6mi2B/2qg7BdYFc0FzJcCWnH7AbvwxrAHJUn/
-	oFP55ehMWsWsvEeV7pf8eNbceR2Mkxi8v18hZGE+0=
-X-Google-Smtp-Source: AGHT+IFcnSiWWXehPdiwLlWL7DkmWVNlY5XEoZaCGX9Jme9p2nCUWkFDb5uHhiWWv/usNbo/3Lg7GE8s79YBmA==
+        bh=E7QwKjMvDV2HZQEtHHY+BmfEHf/61LRTqf6VgscGldM=;
+        b=P9IKbDHp24qCQ8ojybAaM4BoqFMP5mZGa1HSQtJ0O5tXCxdfIAAKr/A+8HRf5XHle8
+         YHaugoG1WT0Zjy+32dOHzT5l7eaTcvA3nWWqunK6bjgZZqutVV8TFo8YFW7vAbc2VYPl
+         U8uqoEUGjUjfN0EUA/rOpISSuRphP7jjguL77gqu0Jw4Vztqy2w4QkGBSrusYSUJm0Rc
+         FklpK30TCkKRD9X+olQw43VYjEBilGc38KTT3M7JbGV39dRAT1yUUKiG74qq7pOE7hpO
+         fxd9+XFffJqE6DbHM0F8lhMl43zsWz4SKDy+/nvMs5OeZw/epo7otzTaaSOgTBjUSJ5S
+         8QZw==
+X-Gm-Message-State: AOJu0Yzd3KsMovDep1G/5VQMne91vZw+lB3OI/JTY4KRL6LMRnU+FSw3
+	wZmM4DgHrGkrjp/n/UTQg9OyEM71zFRg5heIFh4hrYaCnL19V2aL5cknUjnjoRPDZnNX7jaLfKK
+	GmypAiTmxutEcYk4AP2a3dmldjumPuMw2uWCB24QrBgq5KDpvP1w4dI8CHg3qRqC1LGptPr0wGc
+	NYkre038+1eWQmiB56/Onz1bkmTA18OiCoVz5Nv/I=
+X-Google-Smtp-Source: AGHT+IFhzbhftKLHZJqYGwravfEFckBDdbaJJ+9n/aXj/E/5jkqnduLTm9Ihc3ScMoBPndmDQyKzeZCmhA/DXw==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:9ba9:7ac3:74ce:2b8f])
- (user=steadmon job=sendgmr) by 2002:a05:690c:3010:b0:69b:2f8e:4d1a with SMTP
- id 00721157ae682-6c629345858mr38707b3.9.1724363873106; Thu, 22 Aug 2024
- 14:57:53 -0700 (PDT)
-Date: Thu, 22 Aug 2024 14:57:46 -0700
+ (user=steadmon job=sendgmr) by 2002:a05:690c:74c1:b0:62d:a29:53a0 with SMTP
+ id 00721157ae682-6c628b9655dmr65137b3.7.1724363874988; Thu, 22 Aug 2024
+ 14:57:54 -0700 (PDT)
+Date: Thu, 22 Aug 2024 14:57:47 -0700
 In-Reply-To: <cover.1724363615.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,133 +59,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1723747832.git.steadmon@google.com> <cover.1724363615.git.steadmon@google.com>
 X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-Message-ID: <acaa72cad30172f707a8706a7e0fd0131ea4b6fc.1724363615.git.steadmon@google.com>
-Subject: [PATCH v2 2/3] fetch: add top-level trace2 regions
+Message-ID: <1927bb5b1f8c6486d49013fb216c4cd672fcfbc5.1724363615.git.steadmon@google.com>
+Subject: [PATCH v2 3/3] send-pack: add new tracing regions for push
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-At $DAYJOB we experienced some slow fetch operations and needed some
-additional data to help diagnose the issue.
+From: Calvin Wan <calvinwan@google.com>
 
-Add top-level trace2 regions for the various modes of operation of
-`git-fetch`. None of these regions are in recursive code, so any
-enclosed trace messages should only see their nesting level increase by
-one.
+At $DAYJOB we experienced some slow pushes and needed additional trace
+data to diagnose them.
+
+Add trace2 regions for various sections of send_pack().
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- builtin/fetch.c | 16 +++++++++++++++-
- bundle-uri.c    |  4 ++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ send-pack.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 693f02b958..9e20a41d2a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2407,6 +2407,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		struct oidset_iter iter;
- 		const struct object_id *oid;
+diff --git a/send-pack.c b/send-pack.c
+index fa2f5eec17..9666b2c995 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -75,6 +75,7 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 	int i;
+ 	int rc;
  
-+		trace2_region_enter("fetch", "negotiate-only", the_repository);
- 		if (!remote)
- 			die(_("must supply remote when using --negotiate-only"));
- 		gtransport = prepare_transport(remote, 1);
-@@ -2415,6 +2416,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		} else {
- 			warning(_("protocol does not support --negotiate-only, exiting"));
- 			result = 1;
-+			trace2_region_leave("fetch", "negotiate-only", the_repository);
- 			goto cleanup;
- 		}
- 		if (server_options.nr)
-@@ -2425,11 +2427,17 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		while ((oid = oidset_iter_next(&iter)))
- 			printf("%s\n", oid_to_hex(oid));
- 		oidset_clear(&acked_commits);
-+		trace2_region_leave("fetch", "negotiate-only", the_repository);
- 	} else if (remote) {
--		if (filter_options.choice || repo_has_promisor_remote(the_repository))
-+		if (filter_options.choice || repo_has_promisor_remote(the_repository)) {
-+			trace2_region_enter("fetch", "setup-partial", the_repository);
- 			fetch_one_setup_partial(remote);
-+			trace2_region_leave("fetch", "setup-partial", the_repository);
-+		}
-+		trace2_region_enter("fetch", "fetch-one", the_repository);
- 		result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
- 				   &config);
-+		trace2_region_leave("fetch", "fetch-one", the_repository);
- 	} else {
- 		int max_children = max_jobs;
- 
-@@ -2449,7 +2457,9 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			max_children = config.parallel;
- 
- 		/* TODO should this also die if we have a previous partial-clone? */
-+		trace2_region_enter("fetch", "fetch-multiple", the_repository);
- 		result = fetch_multiple(&list, max_children, &config);
-+		trace2_region_leave("fetch", "fetch-multiple", the_repository);
++	trace2_region_enter("send_pack", "pack_objects", the_repository);
+ 	strvec_push(&po.args, "pack-objects");
+ 	strvec_push(&po.args, "--all-progress-implied");
+ 	strvec_push(&po.args, "--revs");
+@@ -146,8 +147,10 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 		 */
+ 		if (rc > 128 && rc != 141)
+ 			error("pack-objects died of signal %d", rc - 128);
++		trace2_region_leave("send_pack", "pack_objects", the_repository);
+ 		return -1;
  	}
- 
- 	/*
-@@ -2471,6 +2481,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			max_children = config.parallel;
- 
- 		add_options_to_argv(&options, &config);
-+		trace2_region_enter_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
- 		result = fetch_submodules(the_repository,
- 					  &options,
- 					  submodule_prefix,
-@@ -2478,6 +2489,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 					  recurse_submodules_default,
- 					  verbosity < 0,
- 					  max_children);
-+		trace2_region_leave_printf("fetch", "recurse-submodule", the_repository, "%s", submodule_prefix);
- 		strvec_clear(&options);
- 	}
- 
-@@ -2501,9 +2513,11 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		if (progress)
- 			commit_graph_flags |= COMMIT_GRAPH_WRITE_PROGRESS;
- 
-+		trace2_region_enter("fetch", "write-commit-graph", the_repository);
- 		write_commit_graph_reachable(the_repository->objects->odb,
- 					     commit_graph_flags,
- 					     NULL);
-+		trace2_region_leave("fetch", "write-commit-graph", the_repository);
- 	}
- 
- 	if (enable_auto_gc) {
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 1e0ee156ba..dc0c96955b 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -13,6 +13,7 @@
- #include "config.h"
- #include "fetch-pack.h"
- #include "remote.h"
-+#include "trace2.h"
- 
- static struct {
- 	enum bundle_list_heuristic heuristic;
-@@ -799,6 +800,8 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
- 		.id = xstrdup(""),
- 	};
- 
-+	trace2_region_enter("fetch", "fetch-bundle-uri", the_repository);
-+
- 	init_bundle_list(&list);
- 
- 	/*
-@@ -824,6 +827,7 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
- 	for_all_bundles_in_list(&list, unlink_bundle, NULL);
- 	clear_bundle_list(&list);
- 	clear_remote_bundle_info(&bundle, NULL);
-+	trace2_region_leave("fetch", "fetch-bundle-uri", the_repository);
- 	return result;
++	trace2_region_leave("send_pack", "pack_objects", the_repository);
+ 	return 0;
  }
  
+@@ -170,6 +173,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 	int new_report = 0;
+ 	int once = 0;
+ 
++	trace2_region_enter("send_pack", "receive_status", the_repository);
+ 	hint = NULL;
+ 	ret = receive_unpack_status(reader);
+ 	while (1) {
+@@ -268,6 +272,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			new_report = 1;
+ 		}
+ 	}
++	trace2_region_leave("send_pack", "receive_status", the_repository);
+ 	return ret;
+ }
+ 
+@@ -512,8 +517,11 @@ int send_pack(struct send_pack_args *args,
+ 	}
+ 
+ 	git_config_get_bool("push.negotiate", &push_negotiate);
+-	if (push_negotiate)
++	if (push_negotiate) {
++		trace2_region_enter("send_pack", "push_negotiate", the_repository);
+ 		get_commons_through_negotiation(args->url, remote_refs, &commons);
++		trace2_region_leave("send_pack", "push_negotiate", the_repository);
++	}
+ 
+ 	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
+ 		args->disable_bitmaps = !use_bitmaps;
+@@ -641,10 +649,11 @@ int send_pack(struct send_pack_args *args,
+ 	/*
+ 	 * Finally, tell the other end!
+ 	 */
+-	if (!args->dry_run && push_cert_nonce)
++	if (!args->dry_run && push_cert_nonce) {
+ 		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
+ 					       cap_buf.buf, push_cert_nonce);
+-	else if (!args->dry_run)
++		trace2_printf("Generated push certificate");
++	} else if (!args->dry_run) {
+ 		for (ref = remote_refs; ref; ref = ref->next) {
+ 			char *old_hex, *new_hex;
+ 
+@@ -664,6 +673,7 @@ int send_pack(struct send_pack_args *args,
+ 						 old_hex, new_hex, ref->name);
+ 			}
+ 		}
++	}
+ 
+ 	if (use_push_options) {
+ 		struct string_list_item *item;
 -- 
 2.46.0.295.g3b9ea8a38a-goog
 
