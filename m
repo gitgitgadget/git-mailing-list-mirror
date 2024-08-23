@@ -1,83 +1,83 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E08C18BB94
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 14:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3A6193079
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 14:12:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724422366; cv=none; b=ebw3Y/ykJ/1QIZhan/kwTXLZIEfRNcUfiEbU5Ezjsb5yhGp6/XWN8A3wJeLurXEeQiPt93b4pGWHVhNPWFQOK0r7rUibMhuyqSUi2f+6iH7fM98xRnwkD8FIQTlhHmQMlQ8aDzSD0C6TJUs+qYfLqgQSNilpqj+zu9YdhBMYKY8=
+	t=1724422369; cv=none; b=pGoD96q3MMTpOfXdzurr6kbPDbX5J7ZSDiQ5rQsUpaEy0yUgK3fTJ9V+aHGmkGffZxb4CQJzrcvwiO4WbdxeyHn7OHvAgyvXQsrQSWxJm0GJp1bPIZuWKVwM4YqhVLFwwjlZOCpM+bxezSj5YNLj8LvvfM8+NivpsOtBaJwKNhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724422366; c=relaxed/simple;
-	bh=nktoUlX1I5/mhgC7giDFsmwkfdc2tGUfBldMysdUMjU=;
+	s=arc-20240116; t=1724422369; c=relaxed/simple;
+	bh=ZgSunjuh6ggOd8p/VvvntkSSOQweJDtzHpRiLnx5aZU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T9shrUJWnYRE+JMMvRYDQFSYamaZBGXzMiRUE0LhlZk2w5snIxQedZA8NNbvnr8aSuwWS63bvOAoHmi69Sm0uDaNGTtj2OrDuWHduP1yChM+hRZaA6Ru6WL5H+Acq1sKgxY5odOHhMiwD30B0+smzYJyPBZCnCIpRNnxiixzssg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m9eMONNI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLknHfGd; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=W4FYtFj3L2RbPDrbdUu2nAazWk+JRgQez84y/cycPfZKf3xbgOVKIk5Ijp0mwl7y2+LEl75oiIp7mNSBQYQVLrweD0BVmuG4C221E5YYLxFU4pSNmEE25edCXINmKy954Z0uN12AGe8Oj07AushNxeceYPwEIbswB4lF5OA7S1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SZW+Zsie; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RUkJX99E; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m9eMONNI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLknHfGd"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 32AB0114875E;
-	Fri, 23 Aug 2024 10:12:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SZW+Zsie";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RUkJX99E"
+Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 92874138FFCD;
+	Fri, 23 Aug 2024 10:12:46 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Aug 2024 10:12:43 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 23 Aug 2024 10:12:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724422363; x=1724508763; bh=Wd2a0r7EKv
-	9Bk5KCWTcXYDg7eiRLDUaKIaLs9Oe0i9w=; b=m9eMONNIofSREqscJSzjvOVGYM
-	vmf1umCF9udgquTmyTnQOb2hLOAk5oQHFKNPyZ1ARPx4zwKbCqd8TqpiswjgQdta
-	K/L3SviGFQ6IbdlQg9eAqzU9kgY8PP+dr1FEc44sqjk4YNBrE/0urw8lyX67KMaH
-	sNm5INkDf8ZimPPYW6T4FSZQgMQRhsccmMizCjtLCLtP320YE5v3l3hgH8Lfes3h
-	hMFbgFJXhQl+mGAlv3+canQIZlnCROENAnzX/HGclG5uq+/MevP5lQLkhP5ulN0E
-	/cl2A9uoDcHJsFfQZ+1ljH7afhI6kpLHYgzXbCvZ7uHILWikeSG5BIIsgBFA==
+	:subject:to:to; s=fm1; t=1724422366; x=1724508766; bh=Q+FierekXH
+	iyCpu0QO+M9TUVyqp6BxOqI9P3ZH60sAk=; b=SZW+ZsiehrYM5EnrgRfF/FiQo3
+	wW00AJIfdzgpu9E9r94SmAdwsazROYw4MRta/MZ71+DrJU2cqoFNbtPverkgJpDV
+	HcP0hc5EfS8846hIE+7ckYpNpXt3PB5E+IOlMvkTKiUM6lMa3s6+XUEPo01e5ojd
+	w8lNNXbZVyNHk+6kxL8enWjTpocOMzfODc8moUk+496Qpha68sWHCUC+ke5RlXzI
+	7pT5SCYo+fLGfnEfwPIMjWzaHRyhw3JjP/7YpewVScNDyvY9aVdZHvD/tSwV8gGM
+	JsXVirs+Yp/DBxAUFyhJhYydwZyPSjcMxnnfDe2KiFf84/pRrkIBIH83bHmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724422363; x=1724508763; bh=Wd2a0r7EKv9Bk5KCWTcXYDg7eiRL
-	DUaKIaLs9Oe0i9w=; b=hLknHfGd44ogE5OUF/H8cef60OyRyJMn1hOxSpcurDN/
-	EFIc2pW4xSR5uioHsXPNxL0eFk7R4/4JnMCpXrz4IGDm0NOafh33xTqrVY+77QXi
-	KN8lOc3cqncDnT57m3dfw9pDD4KH86yaXYUo2KQQMeGnOxwbSf8GVn3vOWoK1BtE
-	865Hq5G+2yStvKH2tlDiNcCS9XJBXzI/YskKgZCgSVESfYxeq7vXeidgF401octV
-	qMa+GBjnlDF+q+YRYDXxUj19WTYifoFc0Gw7yIcvRLQeGywhwfHvIticcCx0SFK7
-	/7eoHLVs1Hb4hHlNZiSlFZZahHCVrQjZq4DD8BbHMQ==
-X-ME-Sender: <xms:25jIZlGnQI2WV24boJSzLun4bEnPdiEV8WgDl9C1wUsqm7csupQZxQ>
-    <xme:25jIZqUffP-YyIq1yo29p36tBGuIqvnjLH8VwtNNLLaZ9BCp9Pg0-eH9fQ0jLFhKX
-    PbDY0oE1Wspdre7CA>
-X-ME-Received: <xmr:25jIZnIPxIVXQrJeGUYIbhmZniXn_Jp-F9YoU2mwnwrZaln_5oickFc1LycV_yCKUsQX-L3Ybq51kXt4OMUjFnUXPioVcdIfTbGWLHXrcrrKDSDJ4g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvvddgjedvucetufdoteggodetrfdotf
+	fm1; t=1724422366; x=1724508766; bh=Q+FierekXHiyCpu0QO+M9TUVyqp6
+	BxOqI9P3ZH60sAk=; b=RUkJX99Evi2Hhe4ZfHx7QrN5q1/ZwFnVDqSMXA5dSSjN
+	UCTXtXQax2O8kn1jBKUxydTkjDmm0WN6ttmVbotkZf1GOqQLvUylaIm1FLQvnBUh
+	BJshUTluCbQBPDzY5ZZWGyVYEBwq15yEfCCpgUy+vmRJuaPCOJR1N7mCip0z6yVo
+	JrmGpJgRXsRh7AP9/se30ESjjicIu0HmX8uVa8Xqb/vIPj4AskNaF+43egrAiWvf
+	dXOspNbEcVQ/o5Kga4dANOiKfFEo07Bf9Ec2kUYAUh4rljbTG7KhcW7/lAchpvzS
+	n5R6Ja8XbTJfmp+xhJPgNvhsjrQucV6x/dcNE6ryLA==
+X-ME-Sender: <xms:3pjIZkaSY83hLHdVxG2-G7tofQ-K9X4jC1M8005p2Sx_9y21ogSVtg>
+    <xme:3pjIZvZHTr2eIm11VnOAQOTEZ1QCAnV5K40O2Ugo4-oJ0zN5g4ri-PbNzt8fxGD08
+    DCleX-gnmipLfz6Ew>
+X-ME-Received: <xmr:3pjIZu__I5E3tsqhZ_mfQ_PUuqQiVSPSLVxv4I2TfBo668jUHapph2lWRuR0HJTDFYG8OEf5lzrPY9Oyen8W5YnlQpxJe05TF_P1tOK34sVAPpXyYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvvddgjeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnheptdetudffkedtffelvdeghfeuvdekieeuheeiudfgjedu
-    ffegheffleelkeetjedtnecuffhomhgrihhnpehosghjpghofhhfshgvthhsrdhishenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
-    shdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:25jIZrFrVnjwBMk0HIq25mhBhrmGX95hfR7xQuKlY5TDo1c3TSihZg>
-    <xmx:25jIZrWk_OKbdqb68QPlB2s275ofivStaCb-5-zlG8bBF4HFx-gdqA>
-    <xmx:25jIZmNbT-9rZX2xW_ZD4zoHqMqNkTheFdl80d4yCSPrpCbR16vuPg>
-    <xmx:25jIZq1sxry6I4cnZMr7E4rgB0ki6B5J-P5fw-xMbCjm8XL5V7_IOQ>
-    <xmx:25jIZhwEBhDsNvSfJM1eztyWIuI1mtovFuMDjGZb8b7VSV3_8jZGKp8x>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:3pjIZuoefJtqL4yQjcsKabZI6twap2GXwCGPWsr41ZJF1t_pKRvWMg>
+    <xmx:3pjIZvopm1-GYig-8dzwHQtuaN_vpENk0cS8-uwj0jHKDl7-kR0XLg>
+    <xmx:3pjIZsQXJhyNyKTcLDJgCAYyPfJhwBOIQcLGe13iqrDIIrA52JWCPQ>
+    <xmx:3pjIZvrH34gnSwO3sCck1xviaaSlnGl339qqREd389NyfELzo89D2w>
+    <xmx:3pjIZgmcICQ9B-KQKPXvPA9wzgYc_hAwqw4idkyMPcQfHM2rMoCb3p65>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Aug 2024 10:12:41 -0400 (EDT)
+ 23 Aug 2024 10:12:45 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c7eff9d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Aug 2024 14:12:05 +0000 (UTC)
-Date: Fri, 23 Aug 2024 16:12:37 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 892fe8b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Aug 2024 14:12:07 +0000 (UTC)
+Date: Fri, 23 Aug 2024 16:12:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, karthik nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/10] reftable/reader: inline `init_reader()`
-Message-ID: <3b6670975011ea5126c6584be48500b9fc241ab0.1724420744.git.ps@pks.im>
+Subject: [PATCH v2 05/10] reftable/reader: inline `reader_close()`
+Message-ID: <b129d8a8687975a813f3b165b82ce4599b6e3901.1724420744.git.ps@pks.im>
 References: <cover.1724080006.git.ps@pks.im>
  <cover.1724420744.git.ps@pks.im>
 Precedence: bulk
@@ -90,440 +90,83 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724420744.git.ps@pks.im>
 
-Most users use an allocated version of the `reftable_reader`, except for
-some tests. We are about to convert the reader to become refcounted
-though, and providing the ability to keep a reader on the stack makes
-this conversion harder than necessary.
+Same as with the preceding commit, we also provide a `reader_close()`
+function that allows the caller to close a reader without freeing it.
+This is unnecessary now that all users will have an allocated version of
+the reader.
 
-Update the tests to use `reftable_reader_new()` instead to prepare for
-this change.
+Inline it into `reftable_reader_free()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reader.c         | 122 +++++++++++++++++++-------------------
- reftable/reader.h         |   2 -
- reftable/readwrite_test.c |  73 ++++++++++++-----------
- 3 files changed, 98 insertions(+), 99 deletions(-)
+ reftable/reader.c | 9 ++-------
+ reftable/reader.h | 1 -
+ reftable/stack.c  | 5 +----
+ 3 files changed, 3 insertions(+), 12 deletions(-)
 
 diff --git a/reftable/reader.c b/reftable/reader.c
-index ea4fdea90b6..9239679ad95 100644
+index 9239679ad95..037417fcf63 100644
 --- a/reftable/reader.c
 +++ b/reftable/reader.c
-@@ -162,58 +162,6 @@ static int parse_footer(struct reftable_reader *r, uint8_t *footer,
- 	return err;
+@@ -579,12 +579,6 @@ void reftable_reader_init_log_iterator(struct reftable_reader *r,
+ 	reader_init_iter(r, it, BLOCK_TYPE_LOG);
  }
  
--int init_reader(struct reftable_reader *r, struct reftable_block_source *source,
--		const char *name)
+-void reader_close(struct reftable_reader *r)
 -{
--	struct reftable_block footer = { NULL };
--	struct reftable_block header = { NULL };
--	int err = 0;
--	uint64_t file_size = block_source_size(source);
--
--	/* Need +1 to read type of first block. */
--	uint32_t read_size = header_size(2) + 1; /* read v2 because it's larger.  */
--	memset(r, 0, sizeof(struct reftable_reader));
--
--	if (read_size > file_size) {
--		err = REFTABLE_FORMAT_ERROR;
--		goto done;
--	}
--
--	err = block_source_read_block(source, &header, 0, read_size);
--	if (err != read_size) {
--		err = REFTABLE_IO_ERROR;
--		goto done;
--	}
--
--	if (memcmp(header.data, "REFT", 4)) {
--		err = REFTABLE_FORMAT_ERROR;
--		goto done;
--	}
--	r->version = header.data[4];
--	if (r->version != 1 && r->version != 2) {
--		err = REFTABLE_FORMAT_ERROR;
--		goto done;
--	}
--
--	r->size = file_size - footer_size(r->version);
--	r->source = *source;
--	r->name = xstrdup(name);
--	r->hash_id = 0;
--
--	err = block_source_read_block(source, &footer, r->size,
--				      footer_size(r->version));
--	if (err != footer_size(r->version)) {
--		err = REFTABLE_IO_ERROR;
--		goto done;
--	}
--
--	err = parse_footer(r, footer.data, header.data);
--done:
--	reftable_block_done(&footer);
--	reftable_block_done(&header);
--	return err;
+-	block_source_close(&r->source);
+-	FREE_AND_NULL(r->name);
 -}
 -
- struct table_iter {
- 	struct reftable_reader *r;
- 	uint8_t typ;
-@@ -637,16 +585,68 @@ void reader_close(struct reftable_reader *r)
- 	FREE_AND_NULL(r->name);
+ int reftable_reader_new(struct reftable_reader **out,
+ 			struct reftable_block_source *source, char const *name)
+ {
+@@ -655,7 +649,8 @@ void reftable_reader_free(struct reftable_reader *r)
+ {
+ 	if (!r)
+ 		return;
+-	reader_close(r);
++	block_source_close(&r->source);
++	FREE_AND_NULL(r->name);
+ 	reftable_free(r);
  }
  
--int reftable_reader_new(struct reftable_reader **p,
--			struct reftable_block_source *src, char const *name)
-+int reftable_reader_new(struct reftable_reader **out,
-+			struct reftable_block_source *source, char const *name)
- {
--	struct reftable_reader *rd = reftable_calloc(1, sizeof(*rd));
--	int err = init_reader(rd, src, name);
--	if (err == 0) {
--		*p = rd;
--	} else {
--		block_source_close(src);
--		reftable_free(rd);
-+	struct reftable_block footer = { 0 };
-+	struct reftable_block header = { 0 };
-+	struct reftable_reader *r;
-+	uint64_t file_size = block_source_size(source);
-+	uint32_t read_size;
-+	int err;
-+
-+	REFTABLE_CALLOC_ARRAY(r, 1);
-+
-+	/*
-+	 * We need one extra byte to read the type of first block. We also
-+	 * pretend to always be reading v2 of the format because it is larger.
-+	 */
-+	read_size = header_size(2) + 1;
-+	if (read_size > file_size) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+
-+	err = block_source_read_block(source, &header, 0, read_size);
-+	if (err != read_size) {
-+		err = REFTABLE_IO_ERROR;
-+		goto done;
-+	}
-+
-+	if (memcmp(header.data, "REFT", 4)) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+	r->version = header.data[4];
-+	if (r->version != 1 && r->version != 2) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+
-+	r->size = file_size - footer_size(r->version);
-+	r->source = *source;
-+	r->name = xstrdup(name);
-+	r->hash_id = 0;
-+
-+	err = block_source_read_block(source, &footer, r->size,
-+				      footer_size(r->version));
-+	if (err != footer_size(r->version)) {
-+		err = REFTABLE_IO_ERROR;
-+		goto done;
-+	}
-+
-+	err = parse_footer(r, footer.data, header.data);
-+	if (err)
-+		goto done;
-+
-+	*out = r;
-+
-+done:
-+	reftable_block_done(&footer);
-+	reftable_block_done(&header);
-+	if (err) {
-+		reftable_free(r);
-+		block_source_close(source);
- 	}
- 	return err;
- }
 diff --git a/reftable/reader.h b/reftable/reader.h
-index a2c204d523c..762cd6de667 100644
+index 762cd6de667..88b4f3b4212 100644
 --- a/reftable/reader.h
 +++ b/reftable/reader.h
-@@ -52,8 +52,6 @@ struct reftable_reader {
+@@ -52,7 +52,6 @@ struct reftable_reader {
  	struct reftable_reader_offsets log_offsets;
  };
  
--int init_reader(struct reftable_reader *r, struct reftable_block_source *source,
--		const char *name);
- void reader_close(struct reftable_reader *r);
+-void reader_close(struct reftable_reader *r);
  const char *reader_name(struct reftable_reader *r);
  
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-index 101cdb5cd66..2f2ff787b26 100644
---- a/reftable/readwrite_test.c
-+++ b/reftable/readwrite_test.c
-@@ -195,7 +195,7 @@ static void test_log_write_read(void)
- 	struct reftable_log_record log = { NULL };
- 	int n;
- 	struct reftable_iterator it = { NULL };
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	struct reftable_block_source source = { NULL };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
-@@ -236,10 +236,10 @@ static void test_log_write_read(void)
+ void reader_init_iter(struct reftable_reader *r,
+diff --git a/reftable/stack.c b/reftable/stack.c
+index c72435b0596..0ac9cdf8de1 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -290,7 +290,6 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
+ 			const char *name = reader_name(cur[i]);
+ 			stack_filename(&table_path, st, name);
  
- 	block_source_from_strbuf(&source, &buf);
+-			reader_close(cur[i]);
+ 			reftable_reader_free(cur[i]);
  
--	err = init_reader(&rd, &source, "file.log");
-+	err = reftable_reader_new(&reader, &source, "file.log");
- 	EXPECT_ERR(err);
- 
--	reftable_reader_init_ref_iterator(&rd, &it);
-+	reftable_reader_init_ref_iterator(reader, &it);
- 
- 	err = reftable_iterator_seek_ref(&it, names[N - 1]);
- 	EXPECT_ERR(err);
-@@ -254,7 +254,7 @@ static void test_log_write_read(void)
- 	reftable_iterator_destroy(&it);
- 	reftable_ref_record_release(&ref);
- 
--	reftable_reader_init_log_iterator(&rd, &it);
-+	reftable_reader_init_log_iterator(reader, &it);
- 
- 	err = reftable_iterator_seek_log(&it, "");
- 	EXPECT_ERR(err);
-@@ -279,7 +279,7 @@ static void test_log_write_read(void)
- 	/* cleanup. */
- 	strbuf_release(&buf);
- 	free_names(names);
--	reader_close(&rd);
-+	reftable_reader_free(reader);
- }
- 
- static void test_log_zlib_corruption(void)
-@@ -288,7 +288,7 @@ static void test_log_zlib_corruption(void)
- 		.block_size = 256,
- 	};
- 	struct reftable_iterator it = { 0 };
--	struct reftable_reader rd = { 0 };
-+	struct reftable_reader *reader;
- 	struct reftable_block_source source = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
-@@ -331,18 +331,18 @@ static void test_log_zlib_corruption(void)
- 
- 	block_source_from_strbuf(&source, &buf);
- 
--	err = init_reader(&rd, &source, "file.log");
-+	err = reftable_reader_new(&reader, &source, "file.log");
- 	EXPECT_ERR(err);
- 
--	reftable_reader_init_log_iterator(&rd, &it);
-+	reftable_reader_init_log_iterator(reader, &it);
- 	err = reftable_iterator_seek_log(&it, "refname");
- 	EXPECT(err == REFTABLE_ZLIB_ERROR);
- 
- 	reftable_iterator_destroy(&it);
- 
- 	/* cleanup. */
-+	reftable_reader_free(reader);
- 	strbuf_release(&buf);
--	reader_close(&rd);
- }
- 
- static void test_table_read_write_sequential(void)
-@@ -352,7 +352,7 @@ static void test_table_read_write_sequential(void)
- 	int N = 50;
- 	struct reftable_iterator it = { NULL };
- 	struct reftable_block_source source = { NULL };
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	int err = 0;
- 	int j = 0;
- 
-@@ -360,10 +360,10 @@ static void test_table_read_write_sequential(void)
- 
- 	block_source_from_strbuf(&source, &buf);
- 
--	err = init_reader(&rd, &source, "file.ref");
-+	err = reftable_reader_new(&reader, &source, "file.ref");
- 	EXPECT_ERR(err);
- 
--	reftable_reader_init_ref_iterator(&rd, &it);
-+	reftable_reader_init_ref_iterator(reader, &it);
- 	err = reftable_iterator_seek_ref(&it, "");
- 	EXPECT_ERR(err);
- 
-@@ -381,11 +381,11 @@ static void test_table_read_write_sequential(void)
- 		reftable_ref_record_release(&ref);
- 	}
- 	EXPECT(j == N);
-+
- 	reftable_iterator_destroy(&it);
-+	reftable_reader_free(reader);
- 	strbuf_release(&buf);
- 	free_names(names);
--
--	reader_close(&rd);
- }
- 
- static void test_table_write_small_table(void)
-@@ -404,7 +404,7 @@ static void test_table_read_api(void)
- 	char **names;
- 	struct strbuf buf = STRBUF_INIT;
- 	int N = 50;
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	struct reftable_block_source source = { NULL };
- 	int err;
- 	int i;
-@@ -415,10 +415,10 @@ static void test_table_read_api(void)
- 
- 	block_source_from_strbuf(&source, &buf);
- 
--	err = init_reader(&rd, &source, "file.ref");
-+	err = reftable_reader_new(&reader, &source, "file.ref");
- 	EXPECT_ERR(err);
- 
--	reftable_reader_init_ref_iterator(&rd, &it);
-+	reftable_reader_init_ref_iterator(reader, &it);
- 	err = reftable_iterator_seek_ref(&it, names[0]);
- 	EXPECT_ERR(err);
- 
-@@ -431,7 +431,7 @@ static void test_table_read_api(void)
- 	}
- 	reftable_iterator_destroy(&it);
- 	reftable_free(names);
--	reader_close(&rd);
-+	reftable_reader_free(reader);
- 	strbuf_release(&buf);
- }
- 
-@@ -440,7 +440,7 @@ static void test_table_read_write_seek(int index, int hash_id)
- 	char **names;
- 	struct strbuf buf = STRBUF_INIT;
- 	int N = 50;
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	struct reftable_block_source source = { NULL };
- 	int err;
- 	int i = 0;
-@@ -453,18 +453,18 @@ static void test_table_read_write_seek(int index, int hash_id)
- 
- 	block_source_from_strbuf(&source, &buf);
- 
--	err = init_reader(&rd, &source, "file.ref");
-+	err = reftable_reader_new(&reader, &source, "file.ref");
- 	EXPECT_ERR(err);
--	EXPECT(hash_id == reftable_reader_hash_id(&rd));
-+	EXPECT(hash_id == reftable_reader_hash_id(reader));
- 
- 	if (!index) {
--		rd.ref_offsets.index_offset = 0;
-+		reader->ref_offsets.index_offset = 0;
- 	} else {
--		EXPECT(rd.ref_offsets.index_offset > 0);
-+		EXPECT(reader->ref_offsets.index_offset > 0);
+ 			/* On Windows, can only unlink after closing. */
+@@ -299,10 +298,8 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
  	}
  
- 	for (i = 1; i < N; i++) {
--		reftable_reader_init_ref_iterator(&rd, &it);
-+		reftable_reader_init_ref_iterator(reader, &it);
- 		err = reftable_iterator_seek_ref(&it, names[i]);
- 		EXPECT_ERR(err);
- 		err = reftable_iterator_next_ref(&it, &ref);
-@@ -480,7 +480,7 @@ static void test_table_read_write_seek(int index, int hash_id)
- 	strbuf_addstr(&pastLast, names[N - 1]);
- 	strbuf_addstr(&pastLast, "/");
- 
--	reftable_reader_init_ref_iterator(&rd, &it);
-+	reftable_reader_init_ref_iterator(reader, &it);
- 	err = reftable_iterator_seek_ref(&it, pastLast.buf);
- 	if (err == 0) {
- 		struct reftable_ref_record ref = { NULL };
-@@ -498,7 +498,7 @@ static void test_table_read_write_seek(int index, int hash_id)
- 		reftable_free(names[i]);
- 	}
- 	reftable_free(names);
--	reader_close(&rd);
-+	reftable_reader_free(reader);
- }
- 
- static void test_table_read_write_seek_linear(void)
-@@ -530,7 +530,7 @@ static void test_table_refs_for(int indexed)
- 	int i = 0;
- 	int n;
- 	int err;
--	struct reftable_reader rd;
-+	struct reftable_reader *reader;
- 	struct reftable_block_source source = { NULL };
- 
- 	struct strbuf buf = STRBUF_INIT;
-@@ -579,18 +579,18 @@ static void test_table_refs_for(int indexed)
- 
- 	block_source_from_strbuf(&source, &buf);
- 
--	err = init_reader(&rd, &source, "file.ref");
-+	err = reftable_reader_new(&reader, &source, "file.ref");
- 	EXPECT_ERR(err);
- 	if (!indexed) {
--		rd.obj_offsets.is_present = 0;
-+		reader->obj_offsets.is_present = 0;
- 	}
- 
--	reftable_reader_init_ref_iterator(&rd, &it);
-+	reftable_reader_init_ref_iterator(reader, &it);
- 	err = reftable_iterator_seek_ref(&it, "");
- 	EXPECT_ERR(err);
- 	reftable_iterator_destroy(&it);
- 
--	err = reftable_reader_refs_for(&rd, &it, want_hash);
-+	err = reftable_reader_refs_for(reader, &it, want_hash);
- 	EXPECT_ERR(err);
- 
- 	j = 0;
-@@ -611,7 +611,7 @@ static void test_table_refs_for(int indexed)
- 	strbuf_release(&buf);
- 	free_names(want_names);
- 	reftable_iterator_destroy(&it);
--	reader_close(&rd);
-+	reftable_reader_free(reader);
- }
- 
- static void test_table_refs_for_no_index(void)
-@@ -928,11 +928,11 @@ static void test_corrupt_table_empty(void)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_block_source source = { NULL };
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	int err;
- 
- 	block_source_from_strbuf(&source, &buf);
--	err = init_reader(&rd, &source, "file.log");
-+	err = reftable_reader_new(&reader, &source, "file.log");
- 	EXPECT(err == REFTABLE_FORMAT_ERROR);
- }
- 
-@@ -941,13 +941,14 @@ static void test_corrupt_table(void)
- 	uint8_t zeros[1024] = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_block_source source = { NULL };
--	struct reftable_reader rd = { NULL };
-+	struct reftable_reader *reader;
- 	int err;
- 	strbuf_add(&buf, zeros, sizeof(zeros));
- 
- 	block_source_from_strbuf(&source, &buf);
--	err = init_reader(&rd, &source, "file.log");
-+	err = reftable_reader_new(&reader, &source, "file.log");
- 	EXPECT(err == REFTABLE_FORMAT_ERROR);
-+
- 	strbuf_release(&buf);
- }
- 
+ done:
+-	for (i = 0; i < new_readers_len; i++) {
+-		reader_close(new_readers[i]);
++	for (i = 0; i < new_readers_len; i++)
+ 		reftable_reader_free(new_readers[i]);
+-	}
+ 	reftable_free(new_readers);
+ 	reftable_free(cur);
+ 	strbuf_release(&table_path);
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
