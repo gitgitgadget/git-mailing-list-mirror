@@ -1,83 +1,83 @@
 Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCCE18890D
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 14:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FB8189521
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 14:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724422356; cv=none; b=gTeGUa4gTncZ+l04uUpbWwnrHQ1gnsEpyqcS5y3JMM2oTuPuWDFCbGFO0q0qMkjvvK00jmBqdJ5mQ0MtJ/krgA9vbeHW6nFD01IGA4ui6CAFKiP+iwmujKKLKU/KEGVmR2Ca1L5zWggCWyLwUP6Rq/VO+1CWS3kVBR5zHI5T3aM=
+	t=1724422357; cv=none; b=VrGayF2MPSbQSAZovYg4g4k+DfpV2A9nquZUHWpn91ueUUltVjdH5k1JAyucDpaVMGwR0VxmRh5I+fZDb2vrOk5OsLbmRmM9nv6XgIgv8gQx6pnUaSB0OdpRazmffEU3PqRk1fZ/NgmI+zSryR2aVYvI1gaP53JrV7l0yTyhiXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724422356; c=relaxed/simple;
-	bh=0yRNSqd6ZUFg+q54E+wI645F5+3u7qNqXSjEfe3nV8s=;
+	s=arc-20240116; t=1724422357; c=relaxed/simple;
+	bh=ldtUrMemno6DYaGxJNd1d4lTu6bzZSdyz/i2l1NdJbE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SeeMkmtzqun5xkrr5JKZH3q1d8kLZjNyBD9CDRca/5uswCq/IsNoBoL1X8Ctf+IO8UZkLl50bsTli8EaLcvSIdeFhMBhtD3jOnD9V6zIt/iDl0PrwVhIXp0vpTW4OntQPkcNxt/6yTkqzyrl18hYfChJep1vDrWObMrdF9OwUPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B/a6NLXb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MIzxQq5o; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=hlsapiFfOhwe85EDZA5WhF91/1agwL1QQEbfrQmJu3OfUkV3Hi42A/SOWGCAe39lgUdbnCtd+YJZbVkOHnwErlleQGAuxduAWj8O46FaOpQTLNQ7aBSA54Ida6CftqBNs4VM5fU4A8LdCNfoOWXG5AKfr9KGtNvnoj6izhWEiQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TvoAEGgT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYGY48Rb; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B/a6NLXb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MIzxQq5o"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 24957138FFC4;
-	Fri, 23 Aug 2024 10:12:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TvoAEGgT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYGY48Rb"
+Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 7659E138FFCB;
+	Fri, 23 Aug 2024 10:12:34 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 23 Aug 2024 10:12:32 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 23 Aug 2024 10:12:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724422352; x=1724508752; bh=o2pS6SKjr2
-	fmp194IidRXafb3pzSTJdz4YHx6jmYyxQ=; b=B/a6NLXb0wAbsb/pvYQaqGahn+
-	r6zZq7Tj5cyjXKt/onf+DsbQr8L5AyH1pWZDrDcvBEyNPYlqioODWxOqFPwFgY1u
-	tGaMXPK2qtSUB55Q7ZCE6oGho3I4ha9cfIFDAEfKbzZOZKBgVDNGqwMv7C+dXyYj
-	GnJucSCYfOo+16GzzG7WYMrjXn4T4s02GaEVVrOfRq3TH21bviEmm7F0pahpzFsF
-	GcK/4+jhx7/aJQWsLblqgWN1+GC9EHJxfCkcWd3g8WEhUMBpLo3LalTsbHFrmVeY
-	Kr8GZWsjfdnkEv+1yKHwW8tTAsBB42GEdTkUtbNzu52VaEOCzHhaMR49uD3Q==
+	:subject:to:to; s=fm1; t=1724422354; x=1724508754; bh=HFfoI+cj3M
+	N+A52EBzM78o6HUx3a1PkzzTk021v3CHk=; b=TvoAEGgTGgnQI3aBTvvMYQ1Pbw
+	5fWFakVNxAPL6KpD8STOzq4inLE3yqfJxehlAF4eRKZA9htMJ2V8/+i6ZhsURXj8
+	EQaYznJGd6iXUB85y6vY3WmZPA3dqzNpWOq+jfwN+bHOmrdPxS0WBz9CScEin4aU
+	oeEyNfWm0Hhb8Co1eH5jA0V9qeAFPg23KRWBS58VuPh+HcamyDlF5YkCQ/rqaazU
+	4dTVjNePOl2HA3mKK3xjm/viDPNzO45JMjdPzKT7jFzEY9s8ByWbnOudtw/yL7bf
+	ODSFprIdYviuXEyY/BpBKUVVKgGQrdE4lqYKMzIjv2ys/tkhsXvG5mKtP/ZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724422352; x=1724508752; bh=o2pS6SKjr2fmp194IidRXafb3pzS
-	TJdz4YHx6jmYyxQ=; b=MIzxQq5o4xDCemCOuAZf0kEpkOYq9+n3E3ELZHzd/w8q
-	/9ed8V0Xauf3wza7rNtISNriMY7jHNLRhY0FkgPu5LiJx8sVqITCCaMmn7jyhF4c
-	LubAVT9VO6MJn7ZaGgu+54Ox8wfNHXpC6/SdfrYLIvIuuPz3UATY9pBTdawDN4nZ
-	araNJly3BcUXZYi3dGfKzbfczVaSiVnAcxgHzOugX8DPqrjT143sFUlgkJcDMqru
-	xZcIKwTNGgvms0ZlJMTM/Z1jB4njufICGj6pa1WMp9TPwudYaDOzp+HCHa7XaNb4
-	jVHgX7ftjCyVO9zyqwgA9cwT9auYY3ohrkuERK1zOQ==
-X-ME-Sender: <xms:0JjIZnepnVBydSjgshAZgcvGEAdSGYbM2sCoePDvXK42TZGheixwfw>
-    <xme:0JjIZtMtDK3iTs5co_hVbpRgeo7PmSv6N-_XWH-oG2ZRBx5K23zB27jlxJVTnJFc2
-    JfbBt29xm0Fn6VgnA>
-X-ME-Received: <xmr:0JjIZghtP8-OyEiKau4RHEQGyG7_aXYonVo2W3Qd8J1M3CqXq_A1bxz4lKbWWNLk3PchQUsYRMmxn5LyGp1xkqdD2lX1FNAvugBdpBbUTbSrSNvYng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvvddgjeefucetufdoteggodetrfdotf
+	fm1; t=1724422354; x=1724508754; bh=HFfoI+cj3MN+A52EBzM78o6HUx3a
+	1PkzzTk021v3CHk=; b=gYGY48Rbq/3wMZhB5TNq9GOj7OPbu/IxgTi0y3rmQzNX
+	NP+r1PGP1nmKZELTgvxtN6zzHYipGLPd+aWF00XPcvu/37lRg9a/6tewYhwDq1bI
+	gYqkP3755S0G1JfOnIgGsOfqirJCZaOsLD3D7VeL6oH+0OvXt/QZhoEK136oA5Rp
+	OsqJj2kr4GoxdKD1JhJpAewJc63cIl6wfMXU/9HhuBsdtQBjCVS4X2glguVpESqY
+	aTAn/E4FREvCju1Wr7vioHGxCSR2M1xjrqxNR4takikC0KeN5Z4ZJNhUtsItiUCs
+	VOGALQ7Xf4GrkJuHwkxTRk8/RGmNwf9mEwaub7IxTg==
+X-ME-Sender: <xms:0pjIZhvC-817K4Le75a3yfsFORpTiSAJmyrcWgQ_Y6EcLy5p2OCLvg>
+    <xme:0pjIZqcDcIfuSoRVbcRlgzGuAB7BH81ocMob0JQbi_wwNGZ85_1IET1g53179ZnOi
+    X8OFunJUfvvqeh70w>
+X-ME-Received: <xmr:0pjIZkzwTXVM62mv0mURIQd7gyK-cZ9dHT-aY7E8yit5bJw8Atozh2iauInEDShKE61PywUG47YfYWyUQJqYvXVoDKp_PL9816gNx13xOUw6fNptEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvvddgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:0JjIZo8IOvJcsAuGF4Dw5YJXZOlP6P2gYtp14pBifbJzGcADPzPhcw>
-    <xmx:0JjIZjvjfWhknqNfDz8tvQu8FvFyFaZhbXsBxSjvBB6Kmb2qh2MCrA>
-    <xmx:0JjIZnFeC73TxBq62efacl0IGo2wgJhBtAXXtbPs7_XepKW06zLKPw>
-    <xmx:0JjIZqNNejW4PB4WYU6cxtzk6XZ_I-grJ7idHC9T7274HKAH66-EDQ>
-    <xmx:0JjIZtLNfKX2QzocOAZC7uvyN0_7unvAqAM2M8PFb5-YBSKIlC0ZG4E1>
+X-ME-Proxy: <xmx:0pjIZoMEB6vcgiPGJyMCc1FsvZMFyVU-0QhNZKnmitUsk2VR6uyzIw>
+    <xmx:0pjIZh9iEh-Bozyr9tTvPvKMd3S4c_n4iDwGq4oag5YUFTJ0hF4Mlg>
+    <xmx:0pjIZoU9dpYdQl98cFWDImM-1EHBbz7U8AShqFE0E7FjHlIhhzYuqA>
+    <xmx:0pjIZidB18qa011c38-7d3lH-g2pLuI0wK6xOooC48NmA-eS3KMJnQ>
+    <xmx:0pjIZtYty8-A8sNJ9c768SaHpNNcS-kK5SOe3Ar_nZoFQ-6x7QlBM4WA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Aug 2024 10:12:30 -0400 (EDT)
+ 23 Aug 2024 10:12:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 51b8ab95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Aug 2024 14:11:53 +0000 (UTC)
-Date: Fri, 23 Aug 2024 16:12:29 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9204415d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Aug 2024 14:11:56 +0000 (UTC)
+Date: Fri, 23 Aug 2024 16:12:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, karthik nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 01/10] reftable/blocksource: drop malloc block source
-Message-ID: <fee3d3523eb867c6b45f4c133fb3b001be1ddd63.1724420744.git.ps@pks.im>
+Subject: [PATCH v2 02/10] reftable/stack: inline `stack_compact_range_stats()`
+Message-ID: <3c0cf2bf46f4106d7c0b30c863946262639b2351.1724420744.git.ps@pks.im>
 References: <cover.1724080006.git.ps@pks.im>
  <cover.1724420744.git.ps@pks.im>
 Precedence: bulk
@@ -90,83 +90,61 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724420744.git.ps@pks.im>
 
-The reftable blocksource provides a generic interface to read blocks via
-different sources, e.g. from disk or from memory. One of the block
-sources is the malloc block source, which can in theory read data from
-memory. We nowadays also have a strbuf block source though, which
-provides essentially the same functionality with better ergonomics.
+The only difference between `stack_compact_range_stats()` and
+`stack_compact_range()` is that the former updates stats on failure,
+whereas the latter doesn't. There are no callers anymore that do not
+want their stats updated though, making the indirection unnecessary.
 
-Adapt the only remaining user of the malloc block source in our tests
-to use the strbuf block source, instead, and remove the now-unused
-malloc block source.
+Inline the stat updates into `stack_compact_range()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/block_test.c  |  3 ++-
- reftable/blocksource.c | 20 --------------------
- reftable/blocksource.h |  2 --
- 3 files changed, 2 insertions(+), 23 deletions(-)
+ reftable/stack.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/reftable/block_test.c b/reftable/block_test.c
-index 90aecd5a7c6..de8f426a429 100644
---- a/reftable/block_test.c
-+++ b/reftable/block_test.c
-@@ -34,11 +34,12 @@ static void test_block_read_write(void)
- 	struct block_reader br = { 0 };
- 	struct block_iter it = BLOCK_ITER_INIT;
- 	int j = 0;
-+	struct strbuf block_data = STRBUF_INIT;
- 	struct strbuf want = STRBUF_INIT;
+diff --git a/reftable/stack.c b/reftable/stack.c
+index d3a95d2f1d7..891ea971b72 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -1328,17 +1328,9 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	strbuf_release(&table_name);
+ 	free_names(names);
  
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
- 	block.len = block_size;
--	block.source = malloc_block_source();
-+	block_source_from_strbuf(&block.source, &block_data);
- 	block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
- 			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
- 
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index eeed254ba9c..1774853011d 100644
---- a/reftable/blocksource.c
-+++ b/reftable/blocksource.c
-@@ -55,26 +55,6 @@ void block_source_from_strbuf(struct reftable_block_source *bs,
- 	bs->arg = buf;
+-	return err;
+-}
+-
+-static int stack_compact_range_stats(struct reftable_stack *st,
+-				     size_t first, size_t last,
+-				     struct reftable_log_expiry_config *config,
+-				     unsigned int flags)
+-{
+-	int err = stack_compact_range(st, first, last, config, flags);
+ 	if (err == REFTABLE_LOCK_ERROR)
+ 		st->stats.failures++;
++
+ 	return err;
  }
  
--static void malloc_return_block(void *b, struct reftable_block *dest)
--{
--	if (dest->len)
--		memset(dest->data, 0xff, dest->len);
--	reftable_free(dest->data);
--}
--
--static struct reftable_block_source_vtable malloc_vtable = {
--	.return_block = &malloc_return_block,
--};
--
--static struct reftable_block_source malloc_block_source_instance = {
--	.ops = &malloc_vtable,
--};
--
--struct reftable_block_source malloc_block_source(void)
--{
--	return malloc_block_source_instance;
--}
--
- struct file_block_source {
- 	uint64_t size;
- 	unsigned char *data;
-diff --git a/reftable/blocksource.h b/reftable/blocksource.h
-index 072e2727ad2..659a27b4063 100644
---- a/reftable/blocksource.h
-+++ b/reftable/blocksource.h
-@@ -17,6 +17,4 @@ struct reftable_block_source;
- void block_source_from_strbuf(struct reftable_block_source *bs,
- 			      struct strbuf *buf);
+@@ -1346,7 +1338,7 @@ int reftable_stack_compact_all(struct reftable_stack *st,
+ 			       struct reftable_log_expiry_config *config)
+ {
+ 	size_t last = st->merged->readers_len ? st->merged->readers_len - 1 : 0;
+-	return stack_compact_range_stats(st, 0, last, config, 0);
++	return stack_compact_range(st, 0, last, config, 0);
+ }
  
--struct reftable_block_source malloc_block_source(void);
--
- #endif
+ static int segment_size(struct segment *s)
+@@ -1452,8 +1444,8 @@ int reftable_stack_auto_compact(struct reftable_stack *st)
+ 					   st->opts.auto_compaction_factor);
+ 	reftable_free(sizes);
+ 	if (segment_size(&seg) > 0)
+-		return stack_compact_range_stats(st, seg.start, seg.end - 1,
+-						 NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
++		return stack_compact_range(st, seg.start, seg.end - 1,
++					   NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
+ 
+ 	return 0;
+ }
 -- 
 2.46.0.164.g477ce5ccd6.dirty
 
