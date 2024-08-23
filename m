@@ -1,213 +1,204 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE42C16DEA7
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 10:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABAF149C40
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 10:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724408055; cv=none; b=TKUKZ+ZACQCColhV2y17A6vcW7mGNzE2PKR1wcypr0BkL7oAcRo7NVU7ZYf6W9owgljUWzXT5Hd8UmOnsbORuIIa/Tw3cqB/27ozmoLF56ZnnQVgQo0MgXmKLTNnA5fA3QLv2CmUM5SFxCl3ahGdgcusmj4hbZCwxOV8hHS3zug=
+	t=1724408490; cv=none; b=QwYG2Qc9V/nFVb5xqNFn+wYcB/7JXQyNbJYusmVQCZynmqp7rqGZoDRbwSfuXwkQwoeIucagwL+KhibJzP4QEJEJozIHxnIHqMV//h0mZHjFyAwwdbKssZaPd6vjOMF0cO4S8aB4jCDQKemwsME6Oa/ITId3FZye9i8sxIgl8Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724408055; c=relaxed/simple;
-	bh=TZjzJTl7gwgBglffUrRGfGlmj8+ltsHs3TuPC9DxM6k=;
+	s=arc-20240116; t=1724408490; c=relaxed/simple;
+	bh=DVcRpH39JbZ2NlinO28OwFRUnKhsscnZY/cIDx68tRA=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b8gIMjfcFXTLi8wYJVur2TgUEJxBlmrafJ/52rBIlCseQ15PatzN+Jw2ZNzGYz/Vb6Fz7mLIObeprKKGPC7jcdCIcRSC2rI0aM5QnxdsyOdrtTamDQ/rNTqrZzvjr3lEd6+hL+DvnHhZgSAoS/2DOEU3tpW/VQpWlZQiUwrIjDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqWbmSOR; arc=none smtp.client-ip=209.85.210.54
+	 To:Cc:Content-Type; b=ut5y1vsnQZJseHxOdQnF6ZwgiU3Mukrm/B6HDcp01jOQ5vWYoR4yBoS5v2nhGHRnE9dwzSWL57CYFL30/8IT51+n/bCctuOElOO32BU8mC3+p87XSnqx1fOQWsbVVietO8kjMN+rJPt/vNYWWr19kiO3kuHG5vWFKXD9EhsDQig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ePyOFlr0; arc=none smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqWbmSOR"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-70b3b62025dso1418707a34.0
-        for <git@vger.kernel.org>; Fri, 23 Aug 2024 03:14:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ePyOFlr0"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-70c9cda7f1cso1001598a34.3
+        for <git@vger.kernel.org>; Fri, 23 Aug 2024 03:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724408053; x=1725012853; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1724408488; x=1725013288; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6zvwsqZ6FSYXXYIbLiFzg8ijzkuHzIkeL6evsgpLWiw=;
-        b=JqWbmSOR2SU+cyapwPi95nH1VRKJ7qxR2sfXzu4R5afAOn1LXu/TVxM2jn0evB9Z1X
-         wjcz/XobvplyBpNpMGY998KybbCSyWpTT3X71HKEWxpfXN7ap/y/IOgM+G1AaNmXHJDb
-         Q6xVOt4lZa1S87Xp6GmHowCYIwzRiQui2h7uvmFFXYdBsxSxyMS8/cRwUg8QejSnZCl9
-         0P3mGpKUEXR1rqai7QVTXfIQnALVHaMPGlwBtjBEjJfzV0m0Jg81vf+Dz9B9nPBD5geB
-         u3Z7mlBF+devJevhbXTYc9cl0jGJPv+oSvSpXMBUns6G6T5NFpJ/8n2S24E+79baSvWb
-         crsw==
+        bh=wh8Bjn4Vv+MFxxk4s1591aflDDmrballXRtAgXXf7KI=;
+        b=ePyOFlr02pm4tieAYdunYATDfs7ZD24O/KDeKz9Mkkop06cyLWR6utnorTtXmgsman
+         WG9ngsF06GTlKQkrK7cCU4duzZ46k482C4fcim9xSzUaN1IWftrlXcZB5B40fulh+Ybs
+         O/YT1YtXaFU+BFClRRTEu7pIf0bsCKxLQ4NuSLwrE2Rf+nasG5raqRN5Be1O+67hHzZJ
+         1duKoe49BlEOyknkkNT6ZLraoAYAhk1vFj6Ep+gMP3NdjAfdp7zdr8JbwI6sg/UhHopy
+         6PgtSKBilqgUasZco7LO6yfOCKbg1FRBKyZbiFt7lGtksdtWQnZknPI3j33NUL5MSONV
+         y/Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724408053; x=1725012853;
+        d=1e100.net; s=20230601; t=1724408488; x=1725013288;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6zvwsqZ6FSYXXYIbLiFzg8ijzkuHzIkeL6evsgpLWiw=;
-        b=GyMV88Y6TZhOOfLl3i4Miw+iAkOW5PF1gxnGLZmWmq8agtzX8mGKiM1NFUUZyyQE1b
-         eprOU4amg2pfVp+HSwjyw141RMraBj1+ziTvs3w8MsApaTpTOnFoM208fctzSPGFbPXu
-         /dMEiokOj8N9JO9pDDiD0C+o9V7abuyGY+q5B2XXgDKmnLU3bZUWf6U3L079Ty9VxxJX
-         zyIcRf8SIwglIaHNxr2fkHUb7LwapBBMfNmJP8SMefNCeiMVgB+gi/NfjvDgRAI5Ozvx
-         4bqqpj5Wkfu34lZLSzLONVzTEY474H/zkz0O5GUgFpNQpI2f1ie5h2ih07CHHqJv0GFx
-         BBTQ==
-X-Gm-Message-State: AOJu0YwWHBOZDdSlYER1Jftta4kt60Nx+bhS3gDkxQNpO5unTVNpSXIx
-	44T9zTpIiLGaAYuF01c5eoxiDA48WzQlb2HYJ0J/hKmq5EBbN/7KoIyOHDHlSGTfPmsFZHuYioh
-	ACkTTqiFYhO7wAbfKXyXO2nHqINnihA==
-X-Google-Smtp-Source: AGHT+IFKRFIIpYDWZK72UUZpypjdvQS9x7KQwzu70oLGTv3mZm/jdbsknkiPno0pJlhdoTLkMH9tGYUnmHWJ71y7fXA=
-X-Received: by 2002:a05:6808:1490:b0:3d9:385d:8747 with SMTP id
- 5614622812f47-3de2a8e2734mr1642884b6e.32.1724408052641; Fri, 23 Aug 2024
- 03:14:12 -0700 (PDT)
+        bh=wh8Bjn4Vv+MFxxk4s1591aflDDmrballXRtAgXXf7KI=;
+        b=tFr5zQ8svb2loguvIGbkfrNRWXIjKRrgIqhdUR66Z4G2LUTLHs9pPMEMEC60opgGJG
+         H7v7UcJwiBnhwi63pxhVg3yW7l6KOU2K/UBi1QpZK6PMr4aYCH/C9QKWHW/9tFMdyIl+
+         RokxaDHmFBhWM85vxlfPSSHOfDWejgq8b24g88G92JE0cx8HCQhdH2Oo7KIGnEeHBRIP
+         XV1FGAs8143rkmMhBlJyEAFaeIpVItVdYsKVF3tqQ7ctQob8VSJP70ScT7tlgM8jmv+n
+         BFuJSHFN2w9CaW7PZSsQohPQ4GfFF1BhxJnzfEV9REfwhjmO2U7a7eSkp8IuUKu8eWWS
+         Yo3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU4LLi21IqukKMOg8BMYaQBK4AMcfTaYXAOLEpLyLdX+9Fn0h2Z4PYmpfeqtQrUcAj6WfA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzhORF+1R6Bh3vlDxRMSSXpcl3GUb8GLnyqDa1S696b0KA9ZR4E
+	kJKN47+ztT+QktPPbi+slI4m9DHjd9BB9TzuEeP8MO6zPflrAPue+BIeOEaS4p+ePEryvEF1uLr
+	Qa59XywMStEHD6586bZnEvE5tBdo=
+X-Google-Smtp-Source: AGHT+IHy+dAEcydcZ0uOLUBWpAFfpT0UOppNRzhKxw1nbaVr0iCfR1ECeYxpQaLK0H2+3mxdVXomKZFBSPzVpnCNYvA=
+X-Received: by 2002:a05:6808:1396:b0:3d9:3ded:1fc3 with SMTP id
+ 5614622812f47-3de2a8503acmr1669762b6e.17.1724408488309; Fri, 23 Aug 2024
+ 03:21:28 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 23 Aug 2024 03:14:11 -0700
+ HTTPREST; Fri, 23 Aug 2024 03:21:27 -0700
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZscilS_kLcJyHThx@framework>
-References: <cover.1724080006.git.ps@pks.im> <fc0ed68d4675bcd4c89bf63419ec6e8b6b7f5fca.1724080006.git.ps@pks.im>
- <CAOLa=ZThdm98qrcQVu2uXkHJ2meEnJJCsBSPSLMQeSwsojQ-Fg@mail.gmail.com> <ZscilS_kLcJyHThx@framework>
+In-Reply-To: <026820562882afb31d7224c90722e09bef835340.1724080006.git.ps@pks.im>
+References: <cover.1724080006.git.ps@pks.im> <026820562882afb31d7224c90722e09bef835340.1724080006.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 23 Aug 2024 03:14:11 -0700
-Message-ID: <CAOLa=ZRf9cGyB23EUn_Mb1inJuqNVA85tGGN6SWxcVjbc98QQg@mail.gmail.com>
-Subject: Re: [PATCH 07/10] reftable/reader: introduce refcounting
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="0000000000006d16f50620570950"
+Date: Fri, 23 Aug 2024 03:21:27 -0700
+Message-ID: <CAOLa=ZQarx37De=xmD73D3dPzxp0j8pfb-TBc4u6nKkJn_TT1g@mail.gmail.com>
+Subject: Re: [PATCH 08/10] reftable/reader: keep readers alive during iteration
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="00000000000064d74b0620572383"
 
---0000000000006d16f50620570950
+--00000000000064d74b0620572383
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Thu, Aug 22, 2024 at 02:47:43AM -0700, karthik nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > It was recently reported that concurrent reads and writes may cause the
->> > reftable backend to segfault. The root cause of this is that we do not
->> > properly keep track of reftable readers across reloads.
->> >
->> > Suppose that you have a reftable iterator and then decide to reload the
->> > stack while iterating through the iterator. When the stack has been
->> > rewritten since we have created the iterator, then we would end up
->> > discarding a subset of readers that may still be in use by the iterator.
->> > The consequence is that we now try to reference deallocated memory,
->> > which of course segfaults.
->> >
->> > One way to trigger this is in t5616, where some background maintenance
->> > jobs have been leaking from one test into another. This leads to stack
->> > traces like the following one:
->> >
->> >   + git -c protocol.version=0 -C pc1 fetch --filter=blob:limit=29999 --refetch origin
->> >   AddressSanitizer:DEADLYSIGNAL
->> >   =================================================================
->> >   ==657994==ERROR: AddressSanitizer: SEGV on unknown address 0x7fa0f0ec6089 (pc 0x55f23e52ddf9 bp
->> > 0x7ffe7bfa1700 sp 0x7ffe7bfa1700 T0)
->> >   ==657994==The signal is caused by a READ memory access.
->> >       #0 0x55f23e52ddf9 in get_var_int reftable/record.c:29
->> >       #1 0x55f23e53295e in reftable_decode_keylen reftable/record.c:170
->> >       #2 0x55f23e532cc0 in reftable_decode_key reftable/record.c:194
->> >       #3 0x55f23e54e72e in block_iter_next reftable/block.c:398
->> >       #4 0x55f23e5573dc in table_iter_next_in_block reftable/reader.c:240
->> >       #5 0x55f23e5573dc in table_iter_next reftable/reader.c:355
->> >       #6 0x55f23e5573dc in table_iter_next reftable/reader.c:339
->> >       #7 0x55f23e551283 in merged_iter_advance_subiter reftable/merged.c:69
->> >       #8 0x55f23e55169e in merged_iter_next_entry reftable/merged.c:123
->> >       #9 0x55f23e55169e in merged_iter_next_void reftable/merged.c:172
->> >       #10 0x55f23e537625 in reftable_iterator_next_ref reftable/generic.c:175
->> >       #11 0x55f23e2cf9c6 in reftable_ref_iterator_advance refs/reftable-backend.c:464
->> >       #12 0x55f23e2d996e in ref_iterator_advance refs/iterator.c:13
->> >       #13 0x55f23e2d996e in do_for_each_ref_iterator refs/iterator.c:452
->> >       #14 0x55f23dca6767 in get_ref_map builtin/fetch.c:623
->> >       #15 0x55f23dca6767 in do_fetch builtin/fetch.c:1659
->> >       #16 0x55f23dca6767 in fetch_one builtin/fetch.c:2133
->> >       #17 0x55f23dca6767 in cmd_fetch builtin/fetch.c:2432
->> >       #18 0x55f23dba7764 in run_builtin git.c:484
->> >       #19 0x55f23dba7764 in handle_builtin git.c:741
->> >       #20 0x55f23dbab61e in run_argv git.c:805
->> >       #21 0x55f23dbab61e in cmd_main git.c:1000
->> >       #22 0x55f23dba4781 in main common-main.c:64
->> >       #23 0x7fa0f063fc89 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
->> >       #24 0x7fa0f063fd44 in __libc_start_main_impl ../csu/libc-start.c:360
->> >       #25 0x55f23dba6ad0 in _start (git+0xadfad0) (BuildId: 803b2b7f59beb03d7849fb8294a8e2145dd4aa27)
->> >
->>
->> The stacktrace is for iterating over refs, what I don't understand is
->> where in this flow do we actually reload the stack.
->
-> Basically, whenever you call into the reftable backend we check whether
-> we need to reload the stack. So, when creating a reftable iterator,
-> reading a single ref, writing refs and so on. So in the above code flow
-> we had a ref iterator, but during iteration we ended up reading other
-> refs, as well.
->
+> The lifetime of a table iterator may surive the lifetime of a reader
 
-Yes, makes sense. Thanks for clarifying.
+s/surive/survive
 
->> > While it is somewhat awkward that the maintenance processes survive
->> > tests in the first place, it is totally expected that reftables should
->> > work alright with concurrent writers. Seemingly they don't.
->> >
->> > The only underlying resource that we need to care about in this context
->> > is the reftable reader, which is responsible for reading a single table
->> > from disk. These readers get discarded immediately (unless reused) when
->> > calling `reftable_stack_reload()`, which is wrong. We can only close
->> > them once we know that there are no iterators using them anymore.
->> >
->> > Prepare for a fix by converting the reftable readers to be refcounted.
->> >
->>
->> Okay so my understanding is that `refcounted` refers to a reference
->> count which keeps tracks of the stacks which are referring to the
->> reader. The name is also used in `struct blame_origin` in blame.{c,h}.
->> Makes a lot more sense now :)
+> when the stack gets reloaded. Keep the reader from being released by
+> increasing its refcount while the iterator is still being used.
 >
-> Yup.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/reader.c     |  2 ++
+>  reftable/stack_test.c | 49 +++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 51 insertions(+)
 >
->> > diff --git a/reftable/reader.h b/reftable/reader.h
->> > index 88b4f3b421..3710ee09b4 100644
->> > --- a/reftable/reader.h
->> > +++ b/reftable/reader.h
->> > @@ -50,6 +50,8 @@ struct reftable_reader {
->> >  	struct reftable_reader_offsets ref_offsets;
->> >  	struct reftable_reader_offsets obj_offsets;
->> >  	struct reftable_reader_offsets log_offsets;
->> > +
->> > +	uint64_t refcount;
->>
->> Wonder if there is a chance that we decrement refcount from 0 and hence
->> cause a wraparound.
+> diff --git a/reftable/reader.c b/reftable/reader.c
+> index 64a0953e68..f877099087 100644
+> --- a/reftable/reader.c
+> +++ b/reftable/reader.c
+> @@ -175,6 +175,7 @@ static int table_iter_init(struct table_iter *ti, struct reftable_reader *r)
+>  {
+>  	struct block_iter bi = BLOCK_ITER_INIT;
+>  	memset(ti, 0, sizeof(*ti));
+> +	reftable_reader_incref(r);
+>  	ti->r = r;
+>  	ti->bi = bi;
+>  	return 0;
+> @@ -262,6 +263,7 @@ static void table_iter_close(struct table_iter *ti)
+>  {
+>  	table_iter_block_done(ti);
+>  	block_iter_close(&ti->bi);
+> +	reftable_reader_decref(ti->r);
+>  }
 >
-> This should never happen in practice. And if it does, we would hit a
-> BUG():
+>  static int table_iter_next_block(struct table_iter *ti)
+> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> index bc3bf77274..91e716dc0a 100644
+> --- a/reftable/stack_test.c
+> +++ b/reftable/stack_test.c
+> @@ -1076,6 +1076,54 @@ static void test_reftable_stack_compaction_concurrent_clean(void)
+>  	clear_dir(dir);
+>  }
 >
->     void reftable_reader_decref(struct reftable_reader *r)
->     {
->     	if (!r)
->     		return;
->     	if (!r->refcount)
->     		BUG("cannot decrement ref counter of dead reader");
->     	if (--r->refcount)
->     		return;
->     	block_source_close(&r->source);
->     	FREE_AND_NULL(r->name);
->     	reftable_free(r);
->     }
->
-> If the refcount is at zero already, we hit the bug.
->
-> Patrick
+> +static void test_reftable_stack_read_across_reload(void)
+> +{
+> +	struct reftable_write_options opts = { 0 };
+> +	struct reftable_stack *st1 = NULL, *st2 = NULL;
+> +	struct reftable_ref_record rec = { 0 };
+> +	struct reftable_iterator it = { 0 };
+> +	char *dir = get_tmp_dir(__LINE__);
+> +	int err;
+> +
+> +	/* Create a first stack and set up an iterator for it. */
+> +	err = reftable_new_stack(&st1, dir, &opts);
+> +	EXPECT_ERR(err);
+> +	write_n_ref_tables(st1, 2);
+> +	EXPECT(st1->merged->readers_len == 2);
+> +	reftable_stack_init_ref_iterator(st1, &it);
+> +	err = reftable_iterator_seek_ref(&it, "");
+> +	EXPECT_ERR(err);
+> +
+> +	/* Set up a second stack for the same directory and compact it. */
+> +	err = reftable_new_stack(&st2, dir, &opts);
+> +	EXPECT_ERR(err);
+> +	EXPECT(st2->merged->readers_len == 2);
+> +	err = reftable_stack_compact_all(st2, NULL);
 
-Yup, this seems correct. Thanks.
+Shouldn't we verify that `EXPECT(st2->merged->readers_len == 1);` here?
 
---0000000000006d16f50620570950
+> +	EXPECT_ERR(err);
+> +
+> +	/*
+> +	 * Verify that we can continue to use the old iterator even after we
+> +	 * have reloaded its stack.
+> +	 */
+> +	err = reftable_stack_reload(st1);
+> +	EXPECT_ERR(err);
+> +	EXPECT(st2->merged->readers_len == 1);
+
+Oh we do it here, I would've expected it above the `st1` reload. And
+probably expected `EXPECT(st1->merged->readers_len == 2);` here to
+confirm that we still have the readers.
+
+> +	err = reftable_iterator_next_ref(&it, &rec);
+> +	EXPECT_ERR(err);
+> +	EXPECT(!strcmp(rec.refname, "refs/heads/branch-0000"));
+> +	err = reftable_iterator_next_ref(&it, &rec);
+> +	EXPECT_ERR(err);
+> +	EXPECT(!strcmp(rec.refname, "refs/heads/branch-0001"));
+> +	err = reftable_iterator_next_ref(&it, &rec);
+> +	EXPECT(err > 0);
+> +
+> +	reftable_ref_record_release(&rec);
+> +	reftable_iterator_destroy(&it);
+> +	reftable_stack_destroy(st1);
+> +	reftable_stack_destroy(st2);
+> +	clear_dir(dir);
+> +}
+> +
+>  int stack_test_main(int argc, const char *argv[])
+>  {
+>  	RUN_TEST(test_empty_add);
+> @@ -1098,6 +1146,7 @@ int stack_test_main(int argc, const char *argv[])
+>  	RUN_TEST(test_reftable_stack_auto_compaction_fails_gracefully);
+>  	RUN_TEST(test_reftable_stack_update_index_check);
+>  	RUN_TEST(test_reftable_stack_uptodate);
+> +	RUN_TEST(test_reftable_stack_read_across_reload);
+>  	RUN_TEST(test_suggest_compaction_segment);
+>  	RUN_TEST(test_suggest_compaction_segment_nothing);
+>  	return 0;
+> --
+> 2.46.0.164.g477ce5ccd6.dirty
+
+--00000000000064d74b0620572383
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f7c4a5923e7b120c_0.1
+X-Attachment-Id: 45f9c59730b4fef7_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iSVlQQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEgzQy85aDJTY3RRdkJWcm93REdrQXlxSGlxTWw0Nwo1RFlTa0p0S296
-dGJWbm1PN2VFbTZEbjVRRGJORjJSME0wZ0xSTFBOUlFzQ0s1YjM2WTEyOGtlVTQ0WWNkZFluCm9q
-SlZFeHZmVUd5U1QyUlRYZ2tMUGsyMkc0aHoxaTNmTVg3aFJmS0J0dXhDNjhNTVBQeEkvMmZGVytE
-SGpJaG0KRVArTU5RSlN1NWFCV1M1ckk3Z3RzMm0xS2ZmMTRadnpiV0dFVW5VVWQvdjBxMXZjaGls
-TWxDWHpySXZNQVpUZwpYN20yOXkrd3NNK1BSMmpkd2c3elRSZWY4SjhVQy90Skc2NVZ3K3RHQjRj
-NkErZ1BOdXRaK0xYUTg0OENjR0xsCjd0MU9mTks1YllBdUw3ZWwvMkkvNjdVQVM3dUR5YUdLWGov
-TWhMbzcwazh3M0xpdWVFcmo1MUNzL0YwTFFuWDYKRWNNTHFEeXBWZ0lpNUtlMTZsbmNnaTlKanJu
-QjBscFRhMUw3bUxSVzM5UjFZZk16K0I3NDRibnJ5Vk40OXc5ZgpKTEUwTkFCSDRiT1B5K2VZL043
-UjhPbXFvcW8wQURmajZwcy9rd3JRdnZkbWFzNWxIa1J6VklFZXJLODlFMHZDCmZDQWZVRVc3U1da
-bW5Na3lmSXhKN2hOam9VVTFRWW9jMjFya1hLYz0KPVJPd1IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1iSVlxWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meTZDQy8wUXVjRXhsdWZ2YVZTL3NEcHJTczJ1WVBwUQoxdDN1dlF4Vlhj
+cUhKcm9yYXhNcWJBL2M5YkxHblpHY2tvc0tXVVhMRlJXOTAybElMOENIdFJLUWd3ODhFWSt3Cmh5
+djRITEVyTUhZQ2h0SGVzK1orbDdUY1lMTVQxM29LeFJkaDVYWDNBQUJ4ODNEak9mdjJ5L0l2SG5K
+cUtKNWwKdXVveGZHSzNvMVRmcU9FK0laejN0RnhIRHZUWTJRRzJqNDQvQjBOMmZKTHFPdUNBK2Nn
+U1FhUzR0Qkd2RjhURgpGQmRBRXFjbHVFNzRRK3U1Rm5XWHhIVVVsdWJEQVZLWGJhYkJma1lxMS81
+UXhnTlpHYXQvRU1SdXdaOHlhazR4CmwrS2F4V01wTW5GeWZxK0RGZFpQdWMyVi9HbzhLOUZXUE1U
+S0FsZkJ3Sk9BMnV0a1kyaTBsd3BqTzgzQUIvSVgKdzViK0g3NHcyb3RKUlFjM09VakRLOXpPdnQr
+N1BRd21LUUVVeEZQbG52TWRZOUlOMkxSMkNoRS9PMkR5SWQxUwpNWlpmUVRPczFDVGVhdEpvamtk
+ODNCQjRTaGJvdXR0ZysyVWl0UDNydXR4U3ZFUVUvN2VhK1dHbE0vNlBreFhTCjRhUWRtMktPSGs5
+NFVhRVNUZ0kwS2RsdzBIZ2RLK3dTcWQ5WUx3OD0KPXJQb3MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006d16f50620570950--
+--00000000000064d74b0620572383--
