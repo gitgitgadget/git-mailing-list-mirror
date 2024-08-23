@@ -1,38 +1,38 @@
 Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122B11494D6
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 22:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE68185B72
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 22:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724453228; cv=none; b=b6150xlddYb/hCS+B+D7YRps3UazH6fq9uD9rOfxUwFxLNMQa9Pnd0dUD8EOPtdeuOdrqmoDNkvFH7A1aBQeUAx2dEYoaGCyTqxVj4IfAcEO2+REiiuMHiCAUj1L4RYOuA8LhqYLz+3I+1z0LyK/P4zL02ZNlUDnn9yqDYj3TO0=
+	t=1724453235; cv=none; b=gOZnS6fZAm3IAO8usBmEWVYBk+djQJvVaiIRIYhLWfgXANl41O/KNo2wp0tGSjbIBvYX5VRJ9oZWl4skEFge4znDbpwlRj7tBJ8Z/ynHOPdMtgIZMtZmS0OvktW7nDJtfLcDNu7havWF7fyStcdSzIf9Q8cmDDOcK+Plp/Zzzj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724453228; c=relaxed/simple;
-	bh=ruXvqtXfHI9fbe8aylVbfYydgcKGcefYxmqgx+bQKAU=;
+	s=arc-20240116; t=1724453235; c=relaxed/simple;
+	bh=6OVRRV5hJacNEh3iVoby8LVAWThACnoCmwApPeqpLWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqkM1nyKD+K/eUhtjzQsjrLClIrgWEQt7wxh6qnXeR7LP/NWfmk/HoadFyd1zPsCtjE/nMGYVi/MRbDPBQ/+G1YcdOVTGvC8qUrbEo50IN0Y87XeTnetxtBt83UC9Ubh1znNoHuvcvM4G+xmqHG79tRbgNQV02qSb7pYuE5ybO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=bJElrAGV; arc=none smtp.client-ip=173.255.242.215
+	 MIME-Version; b=Bo5aeEJn1e+UzgPZaHrWt7uVlg8V8oadhGvbFml+AuXLl0lNp4OeTaAsZJt5bzEsUnrgtxeAcxoLFAOCETQPwi8WqMV4vGPNi3od/Mcnyee5bp0EcDFG+DrnhfwlWrYMIi/mnfOtnha7AeFj09iftt46nZQbi+av4Rlv7aNB4Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=P+Vi2X0W; arc=none smtp.client-ip=173.255.242.215
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="bJElrAGV"
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="P+Vi2X0W"
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D101A1F51A;
-	Fri, 23 Aug 2024 22:46:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FF8D1F51B;
+	Fri, 23 Aug 2024 22:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1724453191;
-	bh=ruXvqtXfHI9fbe8aylVbfYydgcKGcefYxmqgx+bQKAU=;
+	s=selector1; t=1724453192;
+	bh=6OVRRV5hJacNEh3iVoby8LVAWThACnoCmwApPeqpLWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJElrAGV2xlJbGjHXAMk+4yOP9h3vDFXGyiE7iDWaNQ8ccYQD4rnE9Dpgpd42uu4e
-	 b4/787v/6pIX93xQKJZMm72980bonk/CJOA4PECv8wS4QIePyRF/nON6f3Rev+wV5b
-	 LPOdbMBKuoDaPdVEB7SpVIWK2qHLR8dI5f5LCuOA=
+	b=P+Vi2X0WHpgYO/TRd8NIeKfqP1pGabAkh9gcsb1UKDV5Us55H9OTDdddB22B0Bhux
+	 ARHuc6OWATAtlv5QcB2U4LbiSzSQnhrh0Su94u4jXUuW1m8SdRuzk98XzFfipm+3EP
+	 CaboVW5tUe+xVOQ/eFuUzS5Trah/sAj6vBbxooGM=
 From: Eric Wong <e@80x24.org>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 04/10] packfile: inline cache_or_unpack_entry
-Date: Fri, 23 Aug 2024 22:46:24 +0000
-Message-ID: <20240823224630.1180772-5-e@80x24.org>
+Subject: [PATCH v2 05/10] cat-file: use delta_base_cache entries directly
+Date: Fri, 23 Aug 2024 22:46:25 +0000
+Message-ID: <20240823224630.1180772-6-e@80x24.org>
 In-Reply-To: <20240823224630.1180772-1-e@80x24.org>
 References: <20240823224630.1180772-1-e@80x24.org>
 Precedence: bulk
@@ -43,107 +43,186 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We need to check delta_base_cache anyways to fill in the
-`whence' field in `struct object_info'.  Inlining (and getting
-rid of) cache_or_unpack_entry() makes it easier to only do the
-hashmap lookup once and avoid a redundant lookup later on.
+For objects already in the delta_base_cache, we can safely use
+one entry at-a-time directly to avoid the malloc+memcpy+free
+overhead.  For a 1MB delta base object, this eliminates the
+speed penalty of duplicating large objects into memory and
+speeds up those 1MB delta base cached content retrievals by
+roughly 30%.
 
-This code reorganization will also make an optimization to
-use the cache entry directly easier to implement in the next
-commit.
+While only 2-7% of objects are delta bases in repos I've looked
+at, this avoids up to 96MB of duplicated memory in the worst
+case with the default git config.
+
+The new delta_base_cache_lock is a simple single-threaded
+assertion to ensure cat-file (and similar) is the exclusive user
+of the delta_base_cache.  In other words, we cannot have diff
+or similar commands using two or more entries directly from the
+delta base cache.  The new lock has nothing to do with parallel
+access via multiple threads at the moment.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- packfile.c | 48 +++++++++++++++++++++---------------------------
- 1 file changed, 21 insertions(+), 27 deletions(-)
+ builtin/cat-file.c | 16 +++++++++++++++-
+ object-file.c      |  5 +++++
+ object-store-ll.h  |  8 ++++++++
+ packfile.c         | 33 ++++++++++++++++++++++++++++++---
+ packfile.h         |  4 ++++
+ 5 files changed, 62 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index bc4bb89610..8debcdca3e 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -386,7 +386,20 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 
+ 	if (data->content) {
+ 		batch_write(opt, data->content, data->size);
+-		FREE_AND_NULL(data->content);
++		switch (data->info.whence) {
++		case OI_CACHED:
++			/*
++			 * only blame uses OI_CACHED atm, so it's unlikely
++			 * we'll ever hit this path
++			 */
++			BUG("TODO OI_CACHED support not done");
++		case OI_LOOSE:
++		case OI_PACKED:
++			FREE_AND_NULL(data->content);
++			break;
++		case OI_DBCACHED:
++			unlock_delta_base_cache();
++		}
+ 	} else if (data->type == OBJ_BLOB) {
+ 		if (opt->buffer_output)
+ 			fflush(stdout);
+@@ -815,6 +828,7 @@ static int batch_objects(struct batch_options *opt)
+ 			data.info.sizep = &data.size;
+ 			data.info.contentp = &data.content;
+ 			data.info.content_limit = big_file_threshold;
++			data.info.direct_cache = 1;
+ 		}
+ 	}
+ 
+diff --git a/object-file.c b/object-file.c
+index 1cc29c3c58..19100e823d 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1586,6 +1586,11 @@ static int do_oid_object_info_extended(struct repository *r,
+ 			oidclr(oi->delta_base_oid, the_repository->hash_algo);
+ 		if (oi->type_name)
+ 			strbuf_addstr(oi->type_name, type_name(co->type));
++		/*
++		 * Currently `blame' is the only command which creates
++		 * OI_CACHED, and direct_cache is only used by `cat-file'.
++		 */
++		assert(!oi->direct_cache);
+ 		if (oi->contentp)
+ 			*oi->contentp = xmemdupz(co->buf, co->size);
+ 		oi->whence = OI_CACHED;
+diff --git a/object-store-ll.h b/object-store-ll.h
+index b71a15f590..669bb93784 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -298,6 +298,14 @@ struct object_info {
+ 		OI_PACKED,
+ 		OI_DBCACHED
+ 	} whence;
++
++	/*
++	 * Set if caller is able to use OI_DBCACHED entries without copying.
++	 * This only applies to OI_DBCACHED entries at the moment,
++	 * not OI_CACHED or any other type of entry.
++	 */
++	unsigned direct_cache:1;
++
+ 	union {
+ 		/*
+ 		 * struct {
 diff --git a/packfile.c b/packfile.c
-index 8ec86d2d69..0a90a5ed67 100644
+index 0a90a5ed67..40c6c2e387 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1444,23 +1444,6 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
+@@ -1362,6 +1362,14 @@ static enum object_type packed_to_object_type(struct repository *r,
+ static struct hashmap delta_base_cache;
+ static size_t delta_base_cached;
+ 
++/*
++ * Ensures only a single object is used at-a-time via oi->direct_cache.
++ * Using two objects directly at once (e.g. diff) would cause corruption
++ * since populating the cache may invalidate existing entries.
++ * This lock has nothing to do with parallelism at the moment.
++ */
++static int delta_base_cache_lock;
++
+ static LIST_HEAD(delta_base_cache_lru);
+ 
+ struct delta_base_cache_key {
+@@ -1444,6 +1452,18 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
  	free(ent);
  }
  
--static void *cache_or_unpack_entry(struct repository *r, struct packed_git *p,
--				   off_t base_offset, unsigned long *base_size,
--				   enum object_type *type)
--{
--	struct delta_base_cache_entry *ent;
--
--	ent = get_delta_base_cache_entry(p, base_offset);
--	if (!ent)
--		return unpack_entry(r, p, base_offset, type, base_size);
--
--	if (type)
--		*type = ent->type;
--	if (base_size)
--		*base_size = ent->size;
--	return xmemdupz(ent->data, ent->size);
--}
--
++static void lock_delta_base_cache(void)
++{
++	delta_base_cache_lock++;
++	assert(delta_base_cache_lock == 1);
++}
++
++void unlock_delta_base_cache(void)
++{
++	delta_base_cache_lock--;
++	assert(delta_base_cache_lock == 0);
++}
++
  static inline void release_delta_base_cache(struct delta_base_cache_entry *ent)
  {
  	free(ent->data);
-@@ -1521,20 +1504,35 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 		       off_t obj_offset, struct object_info *oi)
+@@ -1453,6 +1473,7 @@ static inline void release_delta_base_cache(struct delta_base_cache_entry *ent)
+ void clear_delta_base_cache(void)
  {
- 	struct pack_window *w_curs = NULL;
--	unsigned long size;
- 	off_t curpos = obj_offset;
- 	enum object_type type;
-+	struct delta_base_cache_entry *ent;
+ 	struct list_head *lru, *tmp;
++	assert(!delta_base_cache_lock);
+ 	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
+ 		struct delta_base_cache_entry *entry =
+ 			list_entry(lru, struct delta_base_cache_entry, lru);
+@@ -1466,6 +1487,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	struct delta_base_cache_entry *ent;
+ 	struct list_head *lru, *tmp;
  
++	assert(!delta_base_cache_lock);
  	/*
- 	 * We always get the representation type, but only convert it to
- 	 * a "real" type later if the caller is interested.
- 	 */
--	if (oi->contentp && !oi->content_limit) {
--		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
--						      &type);
-+	oi->whence = OI_PACKED;
-+	ent = get_delta_base_cache_entry(p, obj_offset);
-+	if (ent) {
-+		oi->whence = OI_DBCACHED;
-+		type = ent->type;
-+		if (oi->sizep)
-+			*oi->sizep = ent->size;
-+		if (oi->contentp) {
-+			if (!oi->content_limit ||
-+					ent->size <= oi->content_limit)
-+				*oi->contentp = xmemdupz(ent->data, ent->size);
-+			else
-+				*oi->contentp = NULL; /* caller must stream */
-+		}
-+	} else if (oi->contentp && !oi->content_limit) {
-+		*oi->contentp = unpack_entry(r, p, obj_offset, &type,
-+						oi->sizep);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
- 	} else {
-+		unsigned long size;
- 		type = unpack_object_header(p, &w_curs, &curpos, &size);
- 
- 		if (oi->sizep) {
-@@ -1558,8 +1556,8 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 
+ 	 * Check required to avoid redundant entries when more than one thread
+ 	 * is unpacking the same object, in unpack_entry() (since its phases I
+@@ -1520,11 +1542,16 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 		if (oi->sizep)
+ 			*oi->sizep = ent->size;
  		if (oi->contentp) {
- 			if (oi->sizep && *oi->sizep <= oi->content_limit) {
--				*oi->contentp = cache_or_unpack_entry(r, p, obj_offset,
--								      oi->sizep, &type);
-+				*oi->contentp = unpack_entry(r, p, obj_offset,
-+							&type, oi->sizep);
- 				if (!*oi->contentp)
- 					type = OBJ_BAD;
- 			} else {
-@@ -1608,10 +1606,6 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 		} else
- 			oidclr(oi->delta_base_oid, the_repository->hash_algo);
- 	}
--
--	oi->whence = in_delta_base_cache(p, obj_offset) ? OI_DBCACHED :
--							  OI_PACKED;
--
- out:
- 	unuse_pack(&w_curs);
- 	return type;
+-			if (!oi->content_limit ||
+-					ent->size <= oi->content_limit)
++			/* ignore content_limit if avoiding copy from cache */
++			if (oi->direct_cache) {
++				lock_delta_base_cache();
++				*oi->contentp = ent->data;
++			} else if (!oi->content_limit ||
++					ent->size <= oi->content_limit) {
+ 				*oi->contentp = xmemdupz(ent->data, ent->size);
+-			else
++			} else {
+ 				*oi->contentp = NULL; /* caller must stream */
++			}
+ 		}
+ 	} else if (oi->contentp && !oi->content_limit) {
+ 		*oi->contentp = unpack_entry(r, p, obj_offset, &type,
+diff --git a/packfile.h b/packfile.h
+index eb18ec15db..94941bbe80 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -210,4 +210,8 @@ int is_promisor_object(const struct object_id *oid);
+ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 	     size_t idx_size, struct packed_git *p);
+ 
++/*
++ * release lock acquired via oi->direct_cache
++ */
++void unlock_delta_base_cache(void);
+ #endif
