@@ -1,82 +1,90 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60CB8493
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 05:45:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6443FE56E
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 07:21:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724391912; cv=none; b=b2vurLBA+Lxi/jQYJwFyjiMaLBW6AzfEZn/mG878dD7ewyRYMAlycNw/WvhsV+l5nYGjZ50n1EANDEFfsCORS9eOSKTyLqDGxZ8mdI1E8CePEPrMmVyrZYyuqnTIYK5vYvOxEA39TIymmQ1SSt+gqJlEPB50VeJGxLcpx4EJBh4=
+	t=1724397682; cv=none; b=Z2/qaHDIGWburOLQswNIS8UT2JzrQ4eZKltaGBJAmB6ZRvmt6bsUby47K4YNJkBrvD07zlBhkrvA61qj3MUWjvgabUU/GB3HgXGPfPqPMPx1HganoZakPkx2bc73RZHo4G9+3WGevv9B09lJM/s51qmmM0w59aWZp+XYXZo5N14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724391912; c=relaxed/simple;
-	bh=ylBFgU0RQ0SrK/+OHpKGjmtjcSiP1bEIzWwDy8RuzxY=;
+	s=arc-20240116; t=1724397682; c=relaxed/simple;
+	bh=WsEa2rTkwF3d9hc6ADx+f+xgr/gEpEOExuz6764OQuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M6U65ulFaXCy43AlDl9we5Fh9F7ZhB0Q0I8SVugPad6BkxU+aDSs9Kje8fLRsxenGx9fGc26/TBx+SBncibRcgmcAWggIzgSvOVxJy3aoodS7KHF1nyZkJhvoreoWV5Z+abWgTiA7BuUInXYqpiijlY4zqTFymW1ihORd1JPXIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D2BvhRLY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=buRUE6DW; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=RBg1p9FDzkosO6+Xs/OsoDIJkNPRsC0leUorA57E9iMozvltN+VuBUiqHU+MJfhzc3D0dej8IVDCsGmxabTKjZLwvFQ3NJJafUVmIxLyZmpUKpeu5xShdb1qJIbRSwhUv2gDeYOVdxxubLE/Xn/xqDnYXT4N83YO/d4ty0DCx+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hzoYOxTB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eqfhwyzD; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D2BvhRLY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="buRUE6DW"
-Received: from phl-compute-06.internal (phl-compute-06.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EBFBA1151B35;
-	Fri, 23 Aug 2024 01:45:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hzoYOxTB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eqfhwyzD"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 82457114677D;
+	Fri, 23 Aug 2024 03:21:19 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 23 Aug 2024 01:45:09 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 23 Aug 2024 03:21:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724391909; x=1724478309; bh=ew0YNy7U+L
-	JB5aq9bF+QSxwWHAfusNk/nMWQT2BDq/E=; b=D2BvhRLYbqAZ1EtdFhOSxDKVKA
-	rLv64ICY9XJgipnxXYFIR2KRoYWqvFX02FPQ3gKVVkx6Z6c1xSgb+W6xSrvjUsgy
-	gtUhasvcRscSIv1XULG922xWST59n0WfuRCLXIzfp2eXFFPv08AyzvMt54UVBTSk
-	NTasDQMO1Rob4dUxOXTBs3fb38PG0XtfFSKOAaAxYo7+bJfcvEoWWohiKOADx1xC
-	9CwTIV6ecquYjwRQDlXBJOyEWvLS2Lz9wN4oFlXcMxIMzopnD+VDqH2JGIWre3Bq
-	Z0wgUtl1ZfP5runY5DEwP1rGQARsts/iSyawXnJVx+h0UtJON+ep+QwWEm4w==
+	:subject:to:to; s=fm1; t=1724397679; x=1724484079; bh=0gUIJAygUU
+	tmdM4A3uIZgYlqgVKyOlWhVYbxK4OWbG4=; b=hzoYOxTBM+QtmrDTo0lmetuNij
+	3vAo/datFjABbegQmrPBxacSwvrYGa7dZhJdoOCiu+BXjpVv2/ncmfnThi75DU3b
+	d9+oo5JN9ZoU2msanmoSibW6SUKEkCkS2qpRQJip5vccNIKOBEMDa/ojuOebTSgG
+	z3gLnjdiB0wDSpbyt4iHIPDcZy0g0kwA81/PIUZSHdeapMQKFtdnO3WN+J1XGtFk
+	a52f1RkLfyt7Ialt2QkDi7hsTVFa2jBLzMeJk2y7aMn25EPcce3+wIbrWTpCQtn8
+	6McbhUwvyGKe3ahBQyhfBHpU+I7PWQiepQDWce2go3PO1wieiTcC+JYd8DFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724391909; x=1724478309; bh=ew0YNy7U+LJB5aq9bF+QSxwWHAfu
-	sNk/nMWQT2BDq/E=; b=buRUE6DW1g0OHVKFKqmKyip7/2axlN/7y3PO3SUbvTr+
-	orbrbcqRxqEmzJBAx8lDfUdgswAUD2/Q2+KHYhJdSocfjo7Uv+pJcwZuFTwNApjj
-	h8kW/ENS30vNsKPxIIZfdYrWzaTqeQxcNZdSUdjDJFJBCvx+qozTVvnUOdlTeT+a
-	G5oXOUtJ2hvNolao6QEJMu5DFYaB8e8k4PmgtFjHdJnsHuWUJWWUV+EZjWNISZGe
-	9+lSMZZEZsNnYBI1sjlp6H8sAgcbL93p2x2ECmJGbrEVtjXwF2VPtNgGPPcxd14l
-	LdRzauC212hO/6CDRcHFaf4zR+nI5sKpme5z7LfVgA==
-X-ME-Sender: <xms:5SHIZmdcV8Uo2nRXLGu46UcgHYZ97udpizsQpP0GeRb2_ovLOUgrsw>
-    <xme:5SHIZgP-IExpKr_jgB3Duph3O52RPeaCJxhfBc68htWP3lm4rldEMO1_bksGO5iu0
-    QARBuff7DqSQF1EYA>
-X-ME-Received: <xmr:5SHIZngxZ8rdG1PdVlNZGuTQfzO1hxC5-Dy9Noe2idBq-5q7HsfSH2wYux-fcv8WxkiQ9hOP6L9WvtwW4bzV9SEP4SqwWpjPTKgqg_kyEdTzvfvJbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvuddgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopegtohgvlhgrtggrnhhthhhushhhvgigsehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:5SHIZj9M5dP20LlLNgagfXKHmY8bY8riYMfYk31F17j-5yIf8nmNNA>
-    <xmx:5SHIZivVeWMyqCPtKJcox8l4GfRhhLe2JZ_4izFvGtn9K-8rjPZeQA>
-    <xmx:5SHIZqEB7x7RcindcKI_3yzIzDpFsiOqfG4z5CwIUdy3xsi9z_PsWw>
-    <xmx:5SHIZhPpQ3i8ZXy6aSdVtzwP-2_LCYqd52Z37YzzsQQsI14d7lFltg>
-    <xmx:5SHIZmKav48Pf3h39fwoYaGI_QVZWzgDrcVSlRph4OUc2-E7OAGVVFfG>
+	fm1; t=1724397679; x=1724484079; bh=0gUIJAygUUtmdM4A3uIZgYlqgVKy
+	OlWhVYbxK4OWbG4=; b=eqfhwyzDRjFrnW0qOrFqyc7Tuw2aG27nDkOiWVKJPVQE
+	jf+eT/EzhJHX6SPZxFU65R+kYtrD1N7lanN2NCJ/y8aySlmlMFTBRXoUPSXdK8sM
+	jNTJnzaX3lOEu0xiIVQ9QAg05R5/AtsKAImGG0Ul5uPj2fOJQT/FU6ymcJOg8Yn6
+	NLngTqhpt2T46O1bLkDhUVyW4tenLqOTvgHEBWucVu6C6AdZSSzY7NcYljxpvcTQ
+	4XY5Z+2znYSVSyN+Tc33EqDtf//LN1P+xPjJrz8+plPQxMKpx1xiOtDnnmVIRsNa
+	NueVq+wsbShneR3CscBveFj9DemZ+xMF8YIxsKHRhA==
+X-ME-Sender: <xms:bzjIZn4niBBAVZsMfD4vvRMzfeFO1kkKyRJ4a0fgeSMdJhhe84ecNg>
+    <xme:bzjIZs4gklEFS35HmGv6XZZM0LSe_1QDD7X5BFPKtsdleIwpXct6k0Jo28DSse5O9
+    Uu0Mu7Sd8omy_dRvA>
+X-ME-Received: <xmr:bzjIZudj-d3AsWXi0TJ8wMwhIYvWO-CRsx2rYLnbitNWlstM6V9oDsqUuYRNgbgSWRr3iYSPLoKkQCZlhV87AXiQS6uW22-KmCAUXqr7olTZJB78tg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvuddguddukecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuoh
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:bzjIZoJ_yEK889iGbxNXToSXu_0EqzS5WQpZP8lnM1qUVoi_35stZw>
+    <xmx:bzjIZrLaCBYSwGw6JMZT8N9Kt9jUd21pXLtaQZ71OJkyLJLEm0-N7g>
+    <xmx:bzjIZhymP88GQ2HcBqn4vx8AjMvIP7vMBEScmcuXQDcMHiXpKMnJ5w>
+    <xmx:bzjIZnJzxElrXWRN0KTJw2udS00RunI4VB9vRUPfaGi1mmdq20BJcA>
+    <xmx:bzjIZoE-clixmJYfm3jIz0mkgmuZXemTXaSzH52Cvl7gBbuIqKheVu3p>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 Aug 2024 01:45:08 -0400 (EDT)
+ 23 Aug 2024 03:21:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6e88985f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 23 Aug 2024 05:44:31 +0000 (UTC)
-Date: Fri, 23 Aug 2024 07:45:04 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id ceda6c6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 23 Aug 2024 07:20:39 +0000 (UTC)
+Date: Fri, 23 Aug 2024 09:21:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Celeste Liu <coelacanthushex@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc: replace 3 dash with correct 2 dash in git-config(1)
-Message-ID: <Zsgh4LacdOt8N69o@tanuki>
-References: <20240822172042.54065-1-CoelacanthusHex@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v1 2/4] ref: add regular ref content check for files
+ backend
+Message-ID: <Zsg4ZLHFD4nzISc6@tanuki>
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
+ <ZsIM2DRDbJsvNjAM@ArchLinux>
+ <xmqqed6j9m24.fsf@gitster.g>
+ <Zsb64NTyqc_oHNFO@tanuki>
+ <xmqq1q2gtu19.fsf@gitster.g>
+ <xmqqwmk8sfaz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,46 +93,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240822172042.54065-1-CoelacanthusHex@gmail.com>
+In-Reply-To: <xmqqwmk8sfaz.fsf@gitster.g>
 
-On Fri, Aug 23, 2024 at 01:20:41AM +0800, Celeste Liu wrote:
-> Commit 4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06)
-> introduced this typo.
-
-We typically do not word the commit message as a continuation of the
-subject. The subject often becomes invisible in many contexts, so it is
-helpful if it can be read standalone while providing all of the context
-necessary. So mentioning what is wrong would be welcome here.
-
-> Fixes: 4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06)
-
-We do not use Fixes tags in the Git project.
-
-> Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
-> ---
->  Documentation/git-config.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Aug 22, 2024 at 09:17:08AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index 65c645d461..79360328aa 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -130,7 +130,7 @@ OPTIONS
->  --all::
->  	With `get`, return all values for a multi-valued key.
->  
-> ----regexp::
-> +--regexp::
->  	With `get`, interpret the name as a regular expression. Regular
->  	expression matching is currently case-sensitive and done against a
->  	canonicalized version of the key in which section and variable names
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >> So any reference that contains additional data is not a proper ref and
+> >> thus should be warned about from my point of view. No Git tooling should
+> >> write them, so if something does it's a red flag to me.
+> >
+> > If you find such a file in $GIT_DIR/refs/ hierarchy, because our
+> > consumer side has been looser than necessary forever, and we never
+> > have written such a file ourselves, it is a sign that a third-party
+> > tool wrote it, and that the third-party tool used our reader
+> > implementation as the specification.  That is why I am hesitant to
+> > retroactively tighten the rules like this patch does.
+> 
+> I forgot to add my recommended course of action, without which a
+> review is worth much less X-<.
+> 
+> I am OK if we tightened the rules retroactively, as long as it
+> starts as a probing check (i.e. "info: we found an unusual thing
+> in the wild. Please report this to us so that we can ask you for
+> more details like how such a ref that would violate a rule that was
+> retroactively tightened got there", not "error: malformed ref").
 
-This looks obviously correct to me.
-
-There's one more thing I noticed: the synopsis for `git config get` says
-`--regrexp=<regexp>`, which is clearly wrong. As you're already at it,
-would you mind including a second patch that corrects this?
-
-Thanks!
+Okay, that makes sense. The fsck infrastructure does have info message
+types, so this should certainly be doable. I'd argue that we might want
+to make this an `FSCK_WARN`, but I'm also fine with iteratively bumping
+up the severity from INFO to WARN to ERROR when we don't observe any
+complaints about this tightening.
 
 Patrick
