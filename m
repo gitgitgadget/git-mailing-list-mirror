@@ -1,164 +1,580 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609081953B9
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 21:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E729F1494D6
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 22:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724447597; cv=none; b=jwH7m7UAizhU5oY+WIzCg/QRQDANfuY+EcxDu12VLvQRX+/IY3L8jWmTcrtoqWLHy9Qp+iF2Q4wCffyoDvUWJ5DEFNPXahUZ6hmAPMTuInqCUKPdd9xNosnYqz6G2kFmxlbD/wvkiFKKVDbhUZ185WqW8CGiGzFqyJOv2X+kAsk=
+	t=1724453200; cv=none; b=BWeDHe92SX3uU4ENNx4mfy/6Ku6I+Wu25oZWY4RKxjEz2ZQafwKe11Rozhy08r8tTLbNBucPrrG99UZDiJgEqjgvTL4mkbBdteAGPnK9SnM9ntfP+Hl/hWI8/G7sXAXUqyMPPd9duOYxiG9D+PXgvXGJObcRPIi8xR87ahswurc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724447597; c=relaxed/simple;
-	bh=V/pvX0Bua1szlMsRlKcaQHlDH+TCIALMK3HZ3uXXvIw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LGlC3AqDqyBfXorFB1OCx4PTHaAEvBQnq2K9jpFsk8X6Xmwh2SZc3yw/bADbdwv96Z0AI/T3EE/XInfvahLgZgdiYziP+7N4RSqU6hTILw0WIMiXJOkWF09kN3kajX6aZR+l3Rg/SUld0SZI0OKv+SwGuhhe8u4ghm0Fkyz8oL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=j63OgyCx; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724453200; c=relaxed/simple;
+	bh=WKLCJspcil65kshPlJENapJe5zbxHDynqgOLiFuQa40=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hEGOjMNRjkcmXvfNYJ6mkf6oMw4fHKtj2qoFbcaFCm6+ui2p+nK1ItdDKdP+XVT1wNxq2L/vGMhar8TVvygQYh3i+TDpLOEY+TrEB8EVU3JlVjrA0CeCNlNaZMYH9UB/Qq8m4Ld+wsqF0ixRHKiG84tzwL75R36xrjrEraHwCBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=e1lBr8/D; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j63OgyCx"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CDBB226599;
-	Fri, 23 Aug 2024 17:13:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=V/pvX0Bua1sz
-	lMsRlKcaQHlDH+TCIALMK3HZ3uXXvIw=; b=j63OgyCxvVJyAJgVb+AYP6qzcCFi
-	jO3Y5h4k1Woz8MSF5Q5HURaaitQC4+Dt8gAo79zOYgBa0hopBOFgOFBiZb13wDfn
-	kO3V5tvnqLJqwx7uKHiYwUvtnwgG2gdeKT8JQTqjG/rWtwnT5Az+my6zdcYRZBK4
-	L5zA7tMa3sdGhA0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C696826598;
-	Fri, 23 Aug 2024 17:13:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3B03926597;
-	Fri, 23 Aug 2024 17:13:11 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] remote: plug memory leaks at early returns
-In-Reply-To: <82cb986c-6830-4d9a-bad1-fe4cab6a76eb@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Fri, 23 Aug 2024 22:21:10 +0200")
-References: <82cb986c-6830-4d9a-bad1-fe4cab6a76eb@web.de>
-Date: Fri, 23 Aug 2024 14:13:09 -0700
-Message-ID: <xmqqseuvndsq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="e1lBr8/D"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6FEB1F47A;
+	Fri, 23 Aug 2024 22:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1724453191;
+	bh=WKLCJspcil65kshPlJENapJe5zbxHDynqgOLiFuQa40=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=e1lBr8/DDHNOmT6KwsOiNXSglPzSXklM2bOG+a41bkPRtRX9NP94smqPyALfcDXKs
+	 VE5q0VtX5wKmt864fVQG/cebm1gNuYPNXbSMRkhLqDwbUb3aXB4kYh9ZTM6RkgPhRW
+	 nhKTA1Kln1I8TpsYbcbzcz3VqOZw62xOD6jObFs4=
+From: Eric Wong <e@80x24.org>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 00/10] cat-file speedups
+Date: Fri, 23 Aug 2024 22:46:20 +0000
+Message-ID: <20240823224630.1180772-1-e@80x24.org>
+In-Reply-To: <20240715003519.2671385-1-e@80x24.org>
+References: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 809C9688-6194-11EF-93CA-E92ED1CD468F-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+This continues the work of Jeff King and my initial work to
+speed up cat-file --batch(-contents)? users in
+https://lore.kernel.org/git/20240621062915.GA2105230@coredump.intra.peff.net/T/
 
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  builtin/remote.c | 23 +++++++++++++++--------
->  1 file changed, 15 insertions(+), 8 deletions(-)
+v1 is here:
+https://lore.kernel.org/git/20240715003519.2671385-1-e@80x24.org/T/
 
-Looks straight-forward.  Does this allow us to mark any test script
-as leak-free?  I understand that Patrick has another round of
-leakfixes topic that is not yet published, and I'd prefer to see us
-not step each other's toes.
+v2 changes:
 
-Will queue in the meantime but may drop it if Patrick says it
-already is covered or something.
+- attempts to improve various commit messages
+  (the human language part of my brain has been pretty broken
+  for a few years, now :<)
+- expand comments around delta_base_cache_lock
+- remove DIRECT_CACHE knob since it's always on
+- move `else' arm removal in print_object_or_die from 7/10 to
+  8/10 to fix t1006 under bisect
 
-Thanks.
+I've kept the assert() calls rather than using BUG() since they're
+in easily tested code paths and the tests they perform aren't
+useful in release builds.  The assertions should remain useful for
+future development if we introduce more caching.
 
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index d1f9292ed2..0acc547d69 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -164,6 +164,7 @@ static int add(int argc, const char **argv, const c=
-har *prefix)
->  	struct strbuf buf =3D STRBUF_INIT, buf2 =3D STRBUF_INIT;
->  	const char *name, *url;
->  	int i;
-> +	int result =3D 0;
->
->  	struct option options[] =3D {
->  		OPT_BOOL('f', "fetch", &fetch, N_("fetch the remote branches")),
-> @@ -230,8 +231,10 @@ static int add(int argc, const char **argv, const =
-char *prefix)
->  			       fetch_tags =3D=3D TAGS_SET ? "--tags" : "--no-tags");
->  	}
->
-> -	if (fetch && fetch_remote(name))
-> -		return 1;
-> +	if (fetch && fetch_remote(name)) {
-> +		result =3D 1;
-> +		goto out;
-> +	}
->
->  	if (master) {
->  		strbuf_reset(&buf);
-> @@ -241,14 +244,15 @@ static int add(int argc, const char **argv, const=
- char *prefix)
->  		strbuf_addf(&buf2, "refs/remotes/%s/%s", name, master);
->
->  		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, =
-buf2.buf, "remote add"))
-> -			return error(_("Could not setup master '%s'"), master);
-> +			result =3D error(_("Could not setup master '%s'"), master);
->  	}
->
-> +out:
->  	strbuf_release(&buf);
->  	strbuf_release(&buf2);
->  	string_list_clear(&track, 0);
->
-> -	return 0;
-> +	return result;
->  }
->
->  struct branch_info {
-> @@ -715,6 +719,7 @@ static int mv(int argc, const char **argv, const ch=
-ar *prefix)
->  	struct rename_info rename;
->  	int i, refs_renamed_nr =3D 0, refspec_updated =3D 0;
->  	struct progress *progress =3D NULL;
-> +	int result =3D 0;
->
->  	argc =3D parse_options(argc, argv, prefix, options,
->  			     builtin_remote_rename_usage, 0);
-> @@ -747,9 +752,11 @@ static int mv(int argc, const char **argv, const c=
-har *prefix)
->
->  	strbuf_addf(&buf, "remote.%s", rename.old_name);
->  	strbuf_addf(&buf2, "remote.%s", rename.new_name);
-> -	if (repo_config_rename_section(the_repository, buf.buf, buf2.buf) < 1=
-)
-> -		return error(_("Could not rename config section '%s' to '%s'"),
-> -				buf.buf, buf2.buf);
-> +	if (repo_config_rename_section(the_repository, buf.buf, buf2.buf) < 1=
-) {
-> +		result =3D error(_("Could not rename config section '%s' to '%s'"),
-> +			       buf.buf, buf2.buf);
-> +		goto out;
-> +	}
->
->  	if (oldremote->fetch.raw_nr) {
->  		strbuf_reset(&buf);
-> @@ -870,7 +877,7 @@ static int mv(int argc, const char **argv, const ch=
-ar *prefix)
->  	strbuf_release(&buf);
->  	strbuf_release(&buf2);
->  	strbuf_release(&buf3);
-> -	return 0;
-> +	return result;
->  }
->
->  static int rm(int argc, const char **argv, const char *prefix)
-> --
-> 2.30.2
+Thanks to Patrick for reviewing v1 and Jeff for the
+content_limit work.
+
+Eric Wong (8):
+  packfile: fix off-by-one in content_limit comparison
+  packfile: inline cache_or_unpack_entry
+  cat-file: use delta_base_cache entries directly
+  packfile: packed_object_info avoids packed_to_object_type
+  object_info: content_limit only applies to blobs
+  cat-file: batch-command uses content_limit
+  cat-file: batch_write: use size_t for length
+  cat-file: use writev(2) if available
+
+Jeff King (2):
+  packfile: move sizep computation
+  packfile: allow content-limit for cat-file
+
+ Makefile            |   3 ++
+ builtin/cat-file.c  | 124 +++++++++++++++++++++++++++++++-------------
+ config.mak.uname    |   5 ++
+ git-compat-util.h   |  10 ++++
+ object-file.c       |  12 +++++
+ object-store-ll.h   |   9 ++++
+ packfile.c          | 122 ++++++++++++++++++++++++++++---------------
+ packfile.h          |   4 ++
+ t/t1006-cat-file.sh |  19 +++++--
+ wrapper.c           |  18 +++++++
+ wrapper.h           |   1 +
+ write-or-die.c      |  66 +++++++++++++++++++++++
+ write-or-die.h      |   2 +
+ 13 files changed, 312 insertions(+), 83 deletions(-)
+
+Range-diff against v1:
+ 1:  36b799ab67 !  1:  b4025cee1f packfile: move sizep computation
+    @@ Metadata
+      ## Commit message ##
+         packfile: move sizep computation
+     
+    -    This makes the next commit to avoid redundant object info
+    -    lookups easier to understand.
+    +    Moving the sizep computation now makes the next commit to avoid
+    +    redundant object info lookups easier to understand.  There is
+    +    no user-visible change, here.
+     
+         [ew: commit message]
+     
+    @@ Commit message
+     
+      ## packfile.c ##
+     @@ packfile.c: int packed_object_info(struct repository *r, struct packed_git *p,
+    - 
+    - 	/*
+    - 	 * We always get the representation type, but only convert it to
+    --	 * a "real" type later if the caller is interested.
+    -+	 * a "real" type later if the caller is interested. Likewise...
+    -+	 * tbd.
+    - 	 */
+    - 	if (oi->contentp) {
+    - 		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
+    -@@ packfile.c: int packed_object_info(struct repository *r, struct packed_git *p,
+      			type = OBJ_BAD;
+      	} else {
+      		type = unpack_object_header(p, &w_curs, &curpos, &size);
+ 2:  50f576ab16 !  2:  bdf6f57fae packfile: allow content-limit for cat-file
+    @@ Metadata
+      ## Commit message ##
+         packfile: allow content-limit for cat-file
+     
+    -    This avoids unnecessary round trips to the object store to speed
+    +    Avoid unnecessary round trips to the object store to speed
+         up cat-file contents retrievals.  The majority of packed objects
+         don't benefit from the streaming interface at all and we end up
+         having to load them in core anyways to satisfy our streaming
+         API.
+     
+         This drops the runtime of
+    -    `git cat-file --batch-all-objects --unordered --batch' from
+    -    ~7.1s to ~6.1s on Jeff's machine.
+    +    `git cat-file --batch-all-objects --unordered --batch' on
+    +    git.git from ~7.1s to ~6.1s on Jeff's machine.
+     
+         [ew: commit message]
+     
+    @@ object-store-ll.h: struct object_info {
+     
+      ## packfile.c ##
+     @@ packfile.c: int packed_object_info(struct repository *r, struct packed_git *p,
+    - 	 * a "real" type later if the caller is interested. Likewise...
+    - 	 * tbd.
+    + 	 * We always get the representation type, but only convert it to
+    + 	 * a "real" type later if the caller is interested.
+      	 */
+     -	if (oi->contentp) {
+     +	if (oi->contentp && !oi->content_limit) {
+ 3:  6eb732401a !  3:  7e762e3481 packfile: fix off-by-one in content_limit comparison
+    @@ Commit message
+         slurping objects which match loose object handling and slurp
+         objects with size matching the content_limit exactly.
+     
+    +    This change is merely for consistency with the majority of
+    +    existing code and there is no user visible change in nearly all
+    +    cases.  The only exception being the corner case when the object
+    +    size matches content_limit exactly where users will see a
+    +    speedup from avoiding an extra lookup.
+    +
+         Signed-off-by: Eric Wong <e@80x24.org>
+     
+      ## packfile.c ##
+ 4:  9476824ac7 !  4:  a558101b85 packfile: inline cache_or_unpack_entry
+    @@ Commit message
+         packfile: inline cache_or_unpack_entry
+     
+         We need to check delta_base_cache anyways to fill in the
+    -    `whence' field in `struct object_info'.  Inlining
+    -    cache_or_unpack_entry() makes it easier to only do the hashmap
+    -    lookup once and avoid a redundant lookup later on.
+    +    `whence' field in `struct object_info'.  Inlining (and getting
+    +    rid of) cache_or_unpack_entry() makes it easier to only do the
+    +    hashmap lookup once and avoid a redundant lookup later on.
+     
+         This code reorganization will also make an optimization to
+    -    use the cache entry directly easier to implement.
+    +    use the cache entry directly easier to implement in the next
+    +    commit.
+     
+         Signed-off-by: Eric Wong <e@80x24.org>
+     
+    @@ packfile.c: int packed_object_info(struct repository *r, struct packed_git *p,
+      
+      	/*
+      	 * We always get the representation type, but only convert it to
+    - 	 * a "real" type later if the caller is interested. Likewise...
+    - 	 * tbd.
+    + 	 * a "real" type later if the caller is interested.
+      	 */
+     -	if (oi->contentp && !oi->content_limit) {
+     -		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
+ 5:  c99dfb84d4 !  5:  74d21ac89d cat-file: use delta_base_cache entries directly
+    @@ Commit message
+         cat-file: use delta_base_cache entries directly
+     
+         For objects already in the delta_base_cache, we can safely use
+    -    them directly to avoid the malloc+memcpy+free overhead.
+    +    one entry at-a-time directly to avoid the malloc+memcpy+free
+    +    overhead.  For a 1MB delta base object, this eliminates the
+    +    speed penalty of duplicating large objects into memory and
+    +    speeds up those 1MB delta base cached content retrievals by
+    +    roughly 30%.
+     
+         While only 2-7% of objects are delta bases in repos I've looked
+         at, this avoids up to 96MB of duplicated memory in the worst
+    -    case with the default git config.  For a more reasonable 1MB
+    -    delta base object, this eliminates the speed penalty of
+    -    duplicating large objects into memory and speeds up those 1MB
+    -    delta base cached content retrievals by roughly 30%.
+    +    case with the default git config.
+     
+         The new delta_base_cache_lock is a simple single-threaded
+    -    assertion to ensure cat-file is the exclusive user of the
+    -    delta_base_cache.
+    +    assertion to ensure cat-file (and similar) is the exclusive user
+    +    of the delta_base_cache.  In other words, we cannot have diff
+    +    or similar commands using two or more entries directly from the
+    +    delta base cache.  The new lock has nothing to do with parallel
+    +    access via multiple threads at the moment.
+     
+         Signed-off-by: Eric Wong <e@80x24.org>
+     
+      ## builtin/cat-file.c ##
+    -@@
+    - #include "promisor-remote.h"
+    - #include "mailmap.h"
+    - #include "write-or-die.h"
+    -+#define USE_DIRECT_CACHE 1
+    - 
+    - enum batch_mode {
+    - 	BATCH_MODE_CONTENTS,
+     @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+      
+      	if (data->content) {
+      		batch_write(opt, data->content, data->size);
+     -		FREE_AND_NULL(data->content);
+     +		switch (data->info.whence) {
+    -+		case OI_CACHED: BUG("FIXME OI_CACHED support not done");
+    ++		case OI_CACHED:
+    ++			/*
+    ++			 * only blame uses OI_CACHED atm, so it's unlikely
+    ++			 * we'll ever hit this path
+    ++			 */
+    ++			BUG("TODO OI_CACHED support not done");
+     +		case OI_LOOSE:
+     +		case OI_PACKED:
+     +			FREE_AND_NULL(data->content);
+     +			break;
+     +		case OI_DBCACHED:
+    -+			if (USE_DIRECT_CACHE)
+    -+				unlock_delta_base_cache();
+    -+			else
+    -+				FREE_AND_NULL(data->content);
+    ++			unlock_delta_base_cache();
+     +		}
+      	} else if (data->type == OBJ_BLOB) {
+      		if (opt->buffer_output)
+    @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
+      			data.info.sizep = &data.size;
+      			data.info.contentp = &data.content;
+      			data.info.content_limit = big_file_threshold;
+    -+			data.info.direct_cache = USE_DIRECT_CACHE;
+    ++			data.info.direct_cache = 1;
+      		}
+      	}
+      
+    @@ object-store-ll.h: struct object_info {
+      	} whence;
+     +
+     +	/*
+    -+	 * set if caller is able to use OI_DBCACHED entries without copying
+    -+	 * TODO OI_CACHED if its use goes beyond blame
+    ++	 * Set if caller is able to use OI_DBCACHED entries without copying.
+    ++	 * This only applies to OI_DBCACHED entries at the moment,
+    ++	 * not OI_CACHED or any other type of entry.
+     +	 */
+     +	unsigned direct_cache:1;
+     +
+    @@ packfile.c: static enum object_type packed_to_object_type(struct repository *r,
+      static struct hashmap delta_base_cache;
+      static size_t delta_base_cached;
+      
+    -+/* ensures oi->direct_cache is used properly */
+    ++/*
+    ++ * Ensures only a single object is used at-a-time via oi->direct_cache.
+    ++ * Using two objects directly at once (e.g. diff) would cause corruption
+    ++ * since populating the cache may invalidate existing entries.
+    ++ * This lock has nothing to do with parallelism at the moment.
+    ++ */
+     +static int delta_base_cache_lock;
+     +
+      static LIST_HEAD(delta_base_cache_lru);
+ 6:  79a84221b2 !  6:  83b6367950 packfile: packed_object_info avoids packed_to_object_type
+    @@ Metadata
+      ## Commit message ##
+         packfile: packed_object_info avoids packed_to_object_type
+     
+    -    For calls the delta base cache, packed_to_object_type calls
+    +    For entries in the delta base cache, packed_to_object_type calls
+         can be omitted.  This prepares us to bypass content_limit for
+         non-blob types in the following commit.
+     
+ 7:  63b36d759d !  7:  7e0f8c0cf6 object_info: content_limit only applies to blobs
+    @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, s
+     +					data->type == OBJ_TAG)) {
+     +			size_t s = size;
+     +
+    -+			if (USE_DIRECT_CACHE &&
+    -+					data->info.whence == OI_DBCACHED) {
+    ++			if (data->info.whence == OI_DBCACHED) {
+     +				content = xmemdupz(content, s);
+     +				data->info.whence = OI_PACKED;
+     +			}
+    @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, s
+     +
+     +		batch_write(opt, content, size);
+      		switch (data->info.whence) {
+    - 		case OI_CACHED: BUG("FIXME OI_CACHED support not done");
+    + 		case OI_CACHED:
+    + 			/*
+    +@@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+    + 			BUG("TODO OI_CACHED support not done");
+      		case OI_LOOSE:
+      		case OI_PACKED:
+     -			FREE_AND_NULL(data->content);
+     +			free(content);
+      			break;
+      		case OI_DBCACHED:
+    - 			if (USE_DIRECT_CACHE)
+    - 				unlock_delta_base_cache();
+    - 			else
+    --				FREE_AND_NULL(data->content);
+    -+				free(content);
+    - 		}
+    --	} else if (data->type == OBJ_BLOB) {
+    -+	} else {
+    -+		assert(data->type == OBJ_BLOB);
+    - 		if (opt->buffer_output)
+    - 			fflush(stdout);
+    - 		if (opt->transform_mode) {
+    -@@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+    - 			stream_blob(oid);
+    - 		}
+    - 	}
+    --	else {
+    --		enum object_type type;
+    --		unsigned long size;
+    --		void *contents;
+    --
+    --		contents = repo_read_object_file(the_repository, oid, &type,
+    --						 &size);
+    --		if (!contents)
+    --			die("object %s disappeared", oid_to_hex(oid));
+    --
+    --		if (use_mailmap) {
+    --			size_t s = size;
+    --			contents = replace_idents_using_mailmap(contents, &s);
+    --			size = cast_size_t_to_ulong(s);
+    --		}
+    --
+    --		if (type != data->type)
+    --			die("object %s changed type!?", oid_to_hex(oid));
+    --		if (data->info.sizep && size != data->size && !use_mailmap)
+    --			die("object %s changed size!?", oid_to_hex(oid));
+    --
+    --		batch_write(opt, contents, size);
+    --		free(contents);
+    --	}
+    - }
+    - 
+    - static void print_default_format(struct strbuf *scratch, struct expand_data *data,
+    + 			unlock_delta_base_cache();
+     
+      ## object-file.c ##
+     @@ object-file.c: static int loose_object_info(struct repository *r,
+    @@ packfile.c: int packed_object_info(struct repository *r, struct packed_git *p,
+      				if (!*oi->contentp)
+      					type = OBJ_BAD;
+      			} else {
+    +
+    + ## t/t1006-cat-file.sh ##
+    +@@ t/t1006-cat-file.sh: test_expect_success 'confirm that neither loose blob is a delta' '
+    + 	test_cmp expect actual
+    + '
+    + 
+    ++test_expect_success 'setup delta base tests' '
+    ++	foo="$(git rev-parse HEAD:foo)" &&
+    ++	foo_plus="$(git rev-parse HEAD:foo-plus)" &&
+    ++	git repack -ad
+    ++'
+    ++
+    + # To avoid relying too much on the current delta heuristics,
+    + # we will check only that one of the two objects is a delta
+    + # against the other, but not the order. We can do so by just
+    + # asking for the base of both, and checking whether either
+    + # oid appears in the output.
+    + test_expect_success '%(deltabase) reports packed delta bases' '
+    +-	git repack -ad &&
+    + 	git cat-file --batch-check="%(deltabase)" <blobs >actual &&
+    + 	{
+    +-		grep "$(git rev-parse HEAD:foo)" actual ||
+    +-		grep "$(git rev-parse HEAD:foo-plus)" actual
+    ++		grep "$foo" actual || grep "$foo_plus" actual
+    + 	}
+    + '
+    + 
+    ++test_expect_success 'delta base direct cache use succeeds w/o asserting' '
+    ++	commands="info $foo
+    ++info $foo_plus
+    ++contents $foo_plus
+    ++contents $foo" &&
+    ++	echo "$commands" >in &&
+    ++	git cat-file --batch-command <in >out
+    ++'
+    ++
+    + test_expect_success 'setup bogus data' '
+    + 	bogus_short_type="bogus" &&
+    + 	bogus_short_content="bogus" &&
+ 8:  271f6241bd !  8:  ef83e8b426 cat-file: batch-command uses content_limit
+    @@ Commit message
+         Signed-off-by: Eric Wong <e@80x24.org>
+     
+      ## builtin/cat-file.c ##
+    +@@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+    + 		case OI_DBCACHED:
+    + 			unlock_delta_base_cache();
+    + 		}
+    +-	} else if (data->type == OBJ_BLOB) {
+    ++	} else {
+    ++		assert(data->type == OBJ_BLOB);
+    + 		if (opt->buffer_output)
+    + 			fflush(stdout);
+    + 		if (opt->transform_mode) {
+    +@@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+    + 			stream_blob(oid);
+    + 		}
+    + 	}
+    +-	else {
+    +-		enum object_type type;
+    +-		unsigned long size;
+    +-		void *contents;
+    +-
+    +-		contents = repo_read_object_file(the_repository, oid, &type,
+    +-						 &size);
+    +-		if (!contents)
+    +-			die("object %s disappeared", oid_to_hex(oid));
+    +-
+    +-		if (use_mailmap) {
+    +-			size_t s = size;
+    +-			contents = replace_idents_using_mailmap(contents, &s);
+    +-			size = cast_size_t_to_ulong(s);
+    +-		}
+    +-
+    +-		if (type != data->type)
+    +-			die("object %s changed type!?", oid_to_hex(oid));
+    +-		if (data->info.sizep && size != data->size && !use_mailmap)
+    +-			die("object %s changed size!?", oid_to_hex(oid));
+    +-
+    +-		batch_write(opt, contents, size);
+    +-		free(contents);
+    +-	}
+    + }
+    + 
+    + static void print_default_format(struct strbuf *scratch, struct expand_data *data,
+     @@ builtin/cat-file.c: static void parse_cmd_contents(struct batch_options *opt,
+      			     struct expand_data *data)
+      {
+    @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
+      		data.info.typep = &data.type;
+      		if (!opt->transform_mode) {
+      			data.info.sizep = &data.size;
+    -
+    - ## t/t1006-cat-file.sh ##
+    -@@ t/t1006-cat-file.sh: test_expect_success 'confirm that neither loose blob is a delta' '
+    - 	test_cmp expect actual
+    - '
+    - 
+    -+test_expect_success 'setup delta base tests' '
+    -+	foo="$(git rev-parse HEAD:foo)" &&
+    -+	foo_plus="$(git rev-parse HEAD:foo-plus)" &&
+    -+	git repack -ad
+    -+'
+    -+
+    - # To avoid relying too much on the current delta heuristics,
+    - # we will check only that one of the two objects is a delta
+    - # against the other, but not the order. We can do so by just
+    - # asking for the base of both, and checking whether either
+    - # oid appears in the output.
+    - test_expect_success '%(deltabase) reports packed delta bases' '
+    --	git repack -ad &&
+    - 	git cat-file --batch-check="%(deltabase)" <blobs >actual &&
+    - 	{
+    --		grep "$(git rev-parse HEAD:foo)" actual ||
+    --		grep "$(git rev-parse HEAD:foo-plus)" actual
+    -+		grep "$foo" actual || grep "$foo_plus" actual
+    - 	}
+    - '
+    - 
+    -+test_expect_success 'delta base direct cache use succeeds w/o asserting' '
+    -+	commands="info $foo
+    -+info $foo_plus
+    -+contents $foo_plus
+    -+contents $foo" &&
+    -+	echo "$commands" >in &&
+    -+	git cat-file --batch-command <in >out
+    -+'
+    -+
+    - test_expect_success 'setup bogus data' '
+    - 	bogus_short_type="bogus" &&
+    - 	bogus_short_content="bogus" &&
+ 9:  d91030b69c =  9:  6a94452e54 cat-file: batch_write: use size_t for length
+10:  c356b9e1ce ! 10:  1442e43ec7 cat-file: use writev(2) if available
+    @@ Metadata
+      ## Commit message ##
+         cat-file: use writev(2) if available
+     
+    -    Using writev here is can be 20-40% faster than three write
+    -    syscalls in succession for smaller (1-10k) objects in the delta
+    -    base cache.  This advantage decreases as object sizes approach
+    -    pipe size (64k on Linux).  This reduces wakeups and syscalls on
+    -    the read side, as well, especially if the reader is relying on
+    -    non-blocking I/O.
+    +    Using writev here is 20-40% faster than three write syscalls in
+    +    succession for smaller (1-10k) objects in the delta base cache.
+    +    This advantage decreases as object sizes approach pipe size (64k
+    +    on Linux).
+    +
+    +    writev reduces wakeups and syscalls on the read side as well:
+    +    each write(2) syscall may trigger one or more corresponding
+    +    read(2) syscalls in the reader.  Attempting atomicity in the
+    +    writer via writev also reduces the likelyhood of non-blocking
+    +    readers failing with EAGAIN and having to call poll||select
+    +    before attempting to read again.
+     
+         Unfortunately, this turns into a small (1-3%) slowdown for
+         gigantic objects of a megabyte or more even with after
+    @@ Commit message
+         defaults to being compatible with non-blocking stdout and able
+         to poll(2) after hitting EAGAIN on write(2).  Using stdio on
+         files with the O_NONBLOCK flag is (AFAIK) unspecified and likely
+    -    subject to portability problems.
+    +    subject to portability problems and thus avoided.
+     
+         Signed-off-by: Eric Wong <e@80x24.org>
+     
+    @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, s
+     -		batch_write(opt, content, size);
+     +		batch_writev(opt, data, hdr, size);
+      		switch (data->info.whence) {
+    - 		case OI_CACHED: BUG("FIXME OI_CACHED support not done");
+    - 		case OI_LOOSE:
+    + 		case OI_CACHED:
+    + 			/*
+     @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+      		}
+      	} else {
+    @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
+     -			data.info.contentp = &data.content;
+     +			data.info.contentp = &data.iov[1].iov_base;
+      			data.info.content_limit = big_file_threshold;
+    - 			data.info.direct_cache = USE_DIRECT_CACHE;
+    + 			data.info.direct_cache = 1;
+      		}
+     
+      ## config.mak.uname ##
+
+base-commit: a7dae3bdc8b516d36f630b12bb01e853a667e0d9
