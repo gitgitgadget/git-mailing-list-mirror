@@ -1,153 +1,113 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05C8186601
-	for <git@vger.kernel.org>; Fri, 23 Aug 2024 12:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FFE15FD13
+	for <git@vger.kernel.org>; Fri, 23 Aug 2024 13:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724417056; cv=none; b=VlM7jF1Uk+yyCxJz98u9hV2/Wz8UMGGQklFI6qkjDcFxiz/TgfwYfepbq338nk+TY8acnyI32AuCEiBsIOD0Wd4FtcU1UCpTuotQQ013ddl5qd4TLePJzOrJpgDTNCfjEYYnbH62RiFInlWyDgEJKh6j9qpSkuizoEiXgM39fls=
+	t=1724418782; cv=none; b=QJMuy513kBc8ss+ViH8mK99k80shJ4USbO+JVJ98meeHoCOrfpSWkX92nSDcka63ow5CnWbfbdadiwBlu6yjauMXeBcSvetzEl76mCCS0peC4/XPYJdFB/rbCCTJz8aLwFkQXiHKMEPntS7VJTRmH9/OyZO1l/U/X/DxQujSkjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724417056; c=relaxed/simple;
-	bh=ui4ilQR0SI9ItjcLqBtDUpRYAT/gFkKj+aD9xFqnA7M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxDMSQqwXdq9j+Ao4iFLxG95vdBeZsPEOVswKhMnrR51naJOLJfkilyX6zk3ASw/cfPBa0/9lfQl+9XQ2pMcf4p94HTQ+8jB6YEaKEzGdUaMOLT9pumZZ2UPgX9oQhYa8zyjwOx+9SX5uB2n5DUKtpBM4Rnj8otgsnk38k4lxpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=AdMex7jS; arc=none smtp.client-ip=209.85.161.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1724418782; c=relaxed/simple;
+	bh=EPOO7hefq4Be5cO8/zFAxk3DfU6XLzysRLAuWuwOvTY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IUYpfuuAJy2kOF5AysR3pDPztFG+LoowrUNyZZM+SdNFptFiODVpfLjD/BVGUJS7AhwVqQ/Hi6soTgtBv57ZIS7uOFS9OQIkYqT9oBwAq3bDbPMzyW9zQbAmuJtwmsrziSjk26TUclllPXTRJ8sApyuD3tmvZTz3BGSQti0hlVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+IdekcB; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="AdMex7jS"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5dca997d29eso1397871eaf.0
-        for <git@vger.kernel.org>; Fri, 23 Aug 2024 05:44:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+IdekcB"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2025031eb60so16577035ad.3
+        for <git@vger.kernel.org>; Fri, 23 Aug 2024 06:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1724417053; x=1725021853; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I90/UP/q6icXCkBilSfBdZt6nPg8mq0ZvwJtHoU+Nnw=;
-        b=AdMex7jS/KDLaNcZxjQCP0KLZWZETYmauKsC/KsvJ1Xn/EQKQm+qxHpe9Sq1L0WVHW
-         D4Ag+GI2EHnOvr4oL/w2xnLIJrCi22dSxlQcAL3bj3S75QAy6/EMNnkcjGqEvou20dkg
-         se96lMFvx7A8tnPK1YxopJe4ub5ufEvVswROASb0/wyvFjuGezkID1cI/ghJ6+e64aJy
-         OLqeQ5/J7Wh0E+c/X8KsUpjQ/gbtEgF2Nhj93IOsmnOkfn4BcMjB4B/DZJvbdzgg3xLi
-         3VxayVi5T6h/S3pSEIfChw0DMJ2M9Vvwo0/dKbB0lo/Mf4TwDF02rjxyR3rLBGEuX0d7
-         OqKg==
+        d=gmail.com; s=20230601; t=1724418780; x=1725023580; darn=vger.kernel.org;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tQ5LFAMQiVqvvKA9JkgEM1F5AM4JtEbWwvkRPZUT5dk=;
+        b=R+IdekcBZ961XCewQv0rwhk31G8479v+CSLwlWmfXdBYP2Gr8C5oUthYmdr6e90hgn
+         2yZEGzi0lHX5Y6/edS9FOMbv+qGRlBofWLMOmau5qFz8KiAkLPYRp8hohEt/WpIdWH16
+         iuvQslEy06fdPFeT5aWQFfgyXEp1Yela4KvtyJUtQOLGYVnWfuR5/S2i8prZYSIGd+5B
+         FBaHEoRGrqvrRvqdTeMp27aAlD7PsWa8/g7UnSYXOxnM85KQd+2pWH9nOmgDH1plj8sR
+         w5mybuno7GxIEYwFTaL7rM5Uc5HHsJFpSAUPzDTDl6HrQt8JZk/tWSecfi2SEeaZ3ZbN
+         BCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724417053; x=1725021853;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I90/UP/q6icXCkBilSfBdZt6nPg8mq0ZvwJtHoU+Nnw=;
-        b=ldCIRXJ/xRWQLn31HtRcCzc7CFWTecHZVyTBEqX2nIO8FU1gHB5Qggk1C+/4ig8hkT
-         0ROdMgVT5y/3MYTWgxVdmPINq8KS9d+Vuse9Yuev+ECpSeLqakSFmbq9Dq9irnvKaSky
-         K8V6ZfDzjijvBDTsmc4xJD9tSdKpZ7YjAdSxPkqpuB4KmlXTiU2TBEDkUbhpjcBT6Hfk
-         PGyWAWPj29WOmEHfLEJOTqpMuqz8TfF1rvh+kv9GRY4/SyfhI8Tnr2JP90b3Jb9BXjzF
-         1uSg4ErXVCfAlc05Q4ZilumoY/uCYBaQtG2Uey6XE2A9nyUb5odhsxWQOSUHQYc6XujP
-         /QOA==
-X-Gm-Message-State: AOJu0Yz1Qfse4TsMaLti+6QH8bJyK+NQRFTV/bhOuSOYdTj0duaNUe+v
-	LM+ZfeEx+3YYVqVPArqab+knII6izJAKPZF4+53g79IuE+30Ui80T9wCphNunygCZyUkDXoC5K/
-	K
-X-Google-Smtp-Source: AGHT+IHzLtiWZ0QXKU//n0pQtxi9nQFhv6cfoQrpLYjhMHnErJCKGx0a5/KXkRP3+VnxPfsHpyHT7g==
-X-Received: by 2002:a05:6808:d4e:b0:3d5:5e18:cf32 with SMTP id 5614622812f47-3de2a916b5cmr2132339b6e.48.1724417053439;
-        Fri, 23 Aug 2024 05:44:13 -0700 (PDT)
-Received: from localhost.localdomain ([139.177.225.236])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7cd9ad56c5esm3068023a12.75.2024.08.23.05.44.11
+        d=1e100.net; s=20230601; t=1724418780; x=1725023580;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tQ5LFAMQiVqvvKA9JkgEM1F5AM4JtEbWwvkRPZUT5dk=;
+        b=eomzoscA/ru27iJrda65Sk6pGsnayRZsPOmyO4rpzY48Y/bcBvuGcCI1rs176b7xAl
+         pQfx+b7KSrJoCjzgg/FAof2SggXNpPHfGupo5cjipICEykEy2LXDi+ueFHYP/oavbGkW
+         2ZEx6G7bXx2IAl1Dx7lCb2U9+o56zs1v7OWWYz0F29vJizysuPuS7L2kTwQpiWHv9f+L
+         vnApJzVItpujGS+q6aj5jp/2bbkK4/8QE5c1GYL3DdcWxpgBtj/Gu1AEP3zzaRR2trRj
+         +u318+Z/77RHapzZ6p5w1UcSaLqdFfbUjsGugbQO8DbzYVfasuHu1PWO2KWTZqEgUTc9
+         jy6Q==
+X-Gm-Message-State: AOJu0YyxaXccSjrsR8/KtU3VNO2mDghyHOuMYJtZX88R+L6RUJvkpmj/
+	KI6oltwRQ2xSLLdQQxHZqeBi2pZ1rJMsrKeq50ry4PYj/EIhWFZE
+X-Google-Smtp-Source: AGHT+IGLUL/+YyK6RTBHQLdUthqB9spfJYkjye2UaQ19fNmZyMDk2kIjY4ZyE6SwTZc/hM8Cu0eNvw==
+X-Received: by 2002:a17:902:ea11:b0:1fd:63d7:5d21 with SMTP id d9443c01a7336-2039e4ef18fmr23287335ad.47.1724418780016;
+        Fri, 23 Aug 2024 06:13:00 -0700 (PDT)
+Received: from localhost (240.94.125.34.bc.googleusercontent.com. [34.125.94.240])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038557e7f4sm28068725ad.70.2024.08.23.06.12.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2024 05:44:12 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [WIP v2 4/4] repack: use new exclude promisor pack objects option
-Date: Fri, 23 Aug 2024 20:43:54 +0800
-Message-ID: <20240823124354.12982-5-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240823124354.12982-1-hanyang.tony@bytedance.com>
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
- <20240823124354.12982-1-hanyang.tony@bytedance.com>
+        Fri, 23 Aug 2024 06:12:59 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Celeste Liu <coelacanthushex@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] doc: replace 3 dash with correct 2 dash in
+ git-config(1)
+In-Reply-To: <20240823-fix-doc-regexp-v2-1-e4eafdd60378@gmail.com> (Celeste
+	Liu's message of "Fri, 23 Aug 2024 16:21:08 +0800")
+References: <20240823-fix-doc-regexp-v2-1-e4eafdd60378@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Fri, 23 Aug 2024 06:12:58 -0700
+Message-ID: <xmqqttfbpelh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-use --exclude-promisor-pack-objects to pack objects in partial clone repo.
-git repack will call git pack-objects twice on a partially cloned repo.
-The first call to pack-objects combines all the objects in promisor packfiles,
-and the second pack-objects command packs all reachable non-promisor objects
-into a normal packfile. However 'objects in promisor packfiles' plus
-'non-promisor objects' does not equal 'all the reachable objects in repo',
-Since promisor objects also include objects referenced in promisor packfile.
+Celeste Liu <coelacanthushex@gmail.com> writes:
 
---exclude-promisor-pack-objects only excludes objects in promisor packfiles,
-this way we don't discard any reachable objects in git repack.
----
- builtin/pack-objects.c | 8 ++++----
- builtin/repack.c       | 2 +-
- list-objects.c         | 3 ++-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+> Commit 4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06)
+> introduced this typo, it uses 3 dash for regexp argument instead of
+> correct 2 dash.
+>
+> Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
+> ---
+> Changes in v2:
+> - Clarify typo details.
+> - Remove Fixes tag because Git doesn't use it.
+> - Link to v1: https://lore.kernel.org/git/20240822172042.54065-1-CoelacanthusHex@gmail.com/
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c481feadbf..a2b1aaa2e0 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -238,7 +238,7 @@ static enum {
- } write_bitmap_index;
- static uint16_t write_bitmap_options = BITMAP_OPT_HASH_CACHE;
- 
--static int exclude_promisor_objects;
-+static int exclude_promisor_pack_objects;
- 
- static int use_delta_islands;
- 
-@@ -4391,7 +4391,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, "missing", NULL, N_("action"),
- 		  N_("handling for missing objects"), PARSE_OPT_NONEG,
- 		  option_parse_missing_action),
--		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
-+		OPT_BOOL(0, "exclude-promisor-pack-objects", &exclude_promisor_pack_objects,
- 			 N_("do not pack objects in promisor packfiles")),
- 		OPT_BOOL(0, "delta-islands", &use_delta_islands,
- 			 N_("respect islands during delta compression")),
-@@ -4473,10 +4473,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		strvec_push(&rp, "--unpacked");
- 	}
- 
--	if (exclude_promisor_objects) {
-+	if (exclude_promisor_pack_objects) {
- 		use_internal_rev_list = 1;
- 		fetch_if_missing = 0;
--		strvec_push(&rp, "--exclude-promisor-objects");
-+		strvec_push(&rp, "--exclude-promisor-pack-objects");
- 	}
- 	if (unpack_unreachable || keep_unreachable || pack_loose_unreachable)
- 		use_internal_rev_list = 1;
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 62cfa50c50..aafe7d30ce 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1289,7 +1289,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strvec_push(&cmd.args, "--indexed-objects");
- 	}
- 	if (repo_has_promisor_remote(the_repository))
--		strvec_push(&cmd.args, "--exclude-promisor-objects");
-+		strvec_push(&cmd.args, "--exclude-promisor-pack-objects");
- 	if (!write_midx) {
- 		if (write_bitmaps > 0)
- 			strvec_push(&cmd.args, "--write-bitmap-index");
-diff --git a/list-objects.c b/list-objects.c
-index 985d008799..9b3ff0fe1d 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -178,7 +178,8 @@ static void process_tree(struct traversal_context *ctx,
- 		 * requested.  This may cause the actual filter to report
- 		 * an incomplete list of missing objects.
- 		 */
--		if (revs->exclude_promisor_objects &&
-+		if ((revs->exclude_promisor_objects ||
-+		    revs->exclude_promisor_pack_objects) &&
- 		    is_promisor_object(&obj->oid))
- 			return;
- 
--- 
-2.45.2
+Thanks.  I'll do "typo, it" -> "typo. It" while queuing.
 
+I couldn't spot the "regrexp", either, by the way.
+
+> ---
+>  Documentation/git-config.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index 65c645d461..79360328aa 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -130,7 +130,7 @@ OPTIONS
+>  --all::
+>  	With `get`, return all values for a multi-valued key.
+>  
+> ----regexp::
+> +--regexp::
+>  	With `get`, interpret the name as a regular expression. Regular
+>  	expression matching is currently case-sensitive and done against a
+>  	canonicalized version of the key in which section and variable names
+>
+> ---
+> base-commit: 3a7362eb9fad0c4838f5cfaa95ed3c51a4c18d93
+> change-id: 20240823-fix-doc-regexp-727a82281737
+>
+> Best regards,
