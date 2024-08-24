@@ -1,160 +1,623 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E531F80B
-	for <git@vger.kernel.org>; Sat, 24 Aug 2024 17:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AD98F62
+	for <git@vger.kernel.org>; Sat, 24 Aug 2024 17:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724518834; cv=none; b=ioqk2RgEtzBElEj5ofq3EI1YTea3g+cIz+Q9lcQWEKS0AWufKMZV4hYDoRhbZIbrjWb8vDXQwNQP0ulPed1JYmGjCQLyRmQ8HtllYlC0bjR/GVF0bpxev0TFMywu9EZ7/bnXvH1TwhHuIPX5lCvwMlurA5BV5OQXnD3eHO1+cc4=
+	t=1724518982; cv=none; b=Kz/rkSAloE8CJdsxJ8hN1OHfgEuMJiQ2Qb8An6ONewAetpG8X6eRMrwv1jQp8jGmhTq3p7kCBL2ilsDuiKzQOjsfydFHACVryD2X05f03zLL+NIFsbzGcmzTbOU0bWA+LGVUCxsyYjkLdGo+rI/jYEFFHnYHL1bDM/oaWkrZ07Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724518834; c=relaxed/simple;
-	bh=lPTFyB2/8HFRp12vBuZwqQXkydhNmT76UCasGGpBEHA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=ksp5vpD5DEzJR1E+kxikSsAeN7KRfjsqHcmgkejHnnWu+5QUrFCqFU+3W9nDfcaiWce0FKwZXVQZK7S6ZrHc18uOvSqdUycmjYEStWZtXrlD+ILtpev4XEr9xLpPgE5zJO9qSK6IuHs0CERxcb14sJnbO4eRj1CDhl5aPYHxpXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k4Enxfbr; arc=none smtp.client-ip=209.85.161.44
+	s=arc-20240116; t=1724518982; c=relaxed/simple;
+	bh=Bi2n5GTIS6gyb/Nvsz5R2JujHOgDq0+qDhjm7QIex/M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IAtVH/TS8S6jpHwfEwxQUxg1rwfDwG+FveLt+CZ+IfkUuXecScpCoZu9PDXdUcFXs+/Bqsz+yM+sGXwWJnzlm03t2KSUyUhP+ob3mn+1xIOI9/kmCHqrrrVUeHMKx7yF5HDYt6SNbYpQbLwJr9PcpniZ2V3aOXVZasLmfqMl3vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O4TWYTck; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k4Enxfbr"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5d5f9d68805so2154479eaf.3
-        for <git@vger.kernel.org>; Sat, 24 Aug 2024 10:00:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O4TWYTck"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-714261089c1so2146775b3a.0
+        for <git@vger.kernel.org>; Sat, 24 Aug 2024 10:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724518832; x=1725123632; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1724518979; x=1725123779; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L3N53SgnZpIu5+1DIgBerhg5+AlNLclvQmUWiiaDWoY=;
-        b=k4Enxfbrr32S+HbpCDvLE2X5VgSZz7kl50Thc6bLQorI6yyfOHnXUEg+0+FRE1gdVZ
-         AgpSlXFSlNhY910y6tIftNeD7rJ1F1jljWY01Ohv3eW4JqhF8OxUlcjtA+X2aVe+u1o8
-         EuTSMeeL0uRZZduAw1d3JzAOrecKyMqUvn0b4JuYKEVPn52D1634XhQAnRzxYpXcUC9V
-         rGIN7n16SUTYdGBA2OjBlR25qncRafjsy+cLiJU329VPFnF7t8YnpBb7+k7xx1juibw+
-         lmb6pGA+FhmHDukZyl1lYn+9IrXMYDq94EvOwdYx6piKRjzI8Ive8bNon0VkJGtcYJ+4
-         FYrA==
+        bh=v6ID2aMV+zft3GIUf8iJ87/dFKEdcNyJEAEmY4cmao8=;
+        b=O4TWYTckBBviCL9CJeZXWUE6f2Wm50xdiFUoPQZk/xbWuJ9aHzTMwovc4bBFJ8JsSv
+         rMKZpyIwQwpxGZa9oA6ncwvy9zV7/TE9svPW5KRScoCFNBtrW2iZMD5o27sLCDwnFMCi
+         LcIUEGN4eKRE7RF9CccF8oA6PbUB7ddrjc7FomfOSnye6mmbOhlLEwW1G5XnzvHvX4ja
+         TPktMjgugsC3I4Nl28RkBgMlMS8g8HwkZBsjonaiyvuX77SX8CjP68TzNKPfnIQZYNx+
+         Q8HqQa8G0GWb406Q4YQ5OkmlY1Zpp2z3nBz3vSrfFKLkyocTmYJxS5eqmFB4GSry27pc
+         PBLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724518832; x=1725123632;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=L3N53SgnZpIu5+1DIgBerhg5+AlNLclvQmUWiiaDWoY=;
-        b=cwkpoguRDL4bOgGs1Csn6VuTemte+T3zn62FWSgsuAfm/yp5aDeU4OKHen0KLSwnq6
-         KZYVYsKljptcKHh+/Bpt21eBqMPVHY1YxG5QAyDP0sDQT7GAASEVixmwMKeyWAvpSyGH
-         hGbeQZBur1SYTfnCISFk2wV++eZcdTszu0veSMixg4AcM8scfZXDN5QUdhBoIBcf9FG/
-         srlDvkJWdNMqmAjtodDRnhpZr3BoIhyxSz65MEjjB5DUWr+GePqiyVpizUHfIZSo9m/W
-         n1hg9Tdg0aCK3HyfKmbaVhMg1c+lPljjQS4RkZ3WuCCdY7i17z1fqkqrXjqoKBaOgvd/
-         10WA==
-X-Gm-Message-State: AOJu0Yy1GF/7RIo8Yh023uxbUC+O0/4BZK7ZIbKqjUmYLzYHXYI/Gucq
-	oHLYJpcl0pHDkRGiO7UNFcVp7sskJXPoQkhw9qtyDSxesVZfvyQEGFUrTDLe7FdE6w==
-X-Google-Smtp-Source: AGHT+IGi8ydWd/T38h36sxUa850uTamQnqAjA2PXxtmlvij+lQbs86Y0qbVnlPKd6sbPY+RxiA7YbA==
-X-Received: by 2002:a05:6808:1524:b0:3db:ae5:9bf3 with SMTP id 5614622812f47-3de2a882c2amr6280553b6e.15.1724518831693;
-        Sat, 24 Aug 2024 10:00:31 -0700 (PDT)
-Received: from localhost ([106.222.205.87])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7cd9ac99502sm4982241a12.14.2024.08.24.10.00.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Aug 2024 10:00:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724518979; x=1725123779;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v6ID2aMV+zft3GIUf8iJ87/dFKEdcNyJEAEmY4cmao8=;
+        b=rZGUq387cuBepiDDmCITKzMnCStn40wL7AoL8L1qdb8Lt+J8I/BFEho0zfXmY3rWTu
+         AD1HDh2EnQmiY96ODrQ1KQE1iSMrp5v+Lhbsg+JObI6ckX9KoCUxhBp8ZHUH1rQJ6qh+
+         2yEVm5ARM+s+Q5Y4VxeUkRcohoLyPkVYrloDr1bLi68//xAX7K01+wNqDdFjnLhejSwt
+         ZH9ydv0crbfREv+PVgd3L1XIvfeqePeUrZTcsAYi9i9Sfp+OShDCoZDsMch3xH6nj/OJ
+         7hpJOompIQ/ugAhX5y0oxUiUfcd7xTBm1iwNnt93DhvNh8RxLwrxl3GXDT+YM4el1cCR
+         TrPw==
+X-Gm-Message-State: AOJu0YyvpyOyehjnA6cI3ZA7E5Tjkvv5M1NhlRi2KNToShhsfXMCAmt3
+	UtusQgRDaoAY9t91NO+kOmQ8dVMkDxrblv5u7W+DcgoYsNNoZpsLIhKpGZQEHa/vyQ==
+X-Google-Smtp-Source: AGHT+IGfp2qMP8QV7jZejU+U6OgeU3d64eN81xdGmYBBkHWr6PJNxFBY/T3vXA9CsJSII1ni1vm6tg==
+X-Received: by 2002:a05:6a21:9214:b0:1c4:779b:fb02 with SMTP id adf61e73a8af0-1cc89ee1a97mr10185530637.21.1724518978689;
+        Sat, 24 Aug 2024 10:02:58 -0700 (PDT)
+Received: from localhost.localdomain ([106.222.205.87])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71434309676sm4875026b3a.174.2024.08.24.10.02.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Aug 2024 10:02:58 -0700 (PDT)
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [GSoC][PATCH v3] t: port helper/test-oid-array.c to unit-tests/t-oid-array.c
+Date: Sat, 24 Aug 2024 22:32:13 +0530
+Message-ID: <20240824170223.36080-1-shyamthakkar001@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240803132206.72166-1-shyamthakkar001@gmail.com>
+References: <20240803132206.72166-1-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 24 Aug 2024 22:30:25 +0530
-Message-Id: <D3OAWJKG9PX9.6MOABOQ77MOB@gmail.com>
-Subject: Re: [GSoC][PATCH v2] t: port helper/test-oid-array.c to
- unit-tests/t-oid-array.c
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Christian Couder" <christian.couder@gmail.com>
-Cc: <git@vger.kernel.org>, "Christian Couder" <chriscool@tuxfamily.org>,
- "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>, "Phillip Wood"
- <phillip.wood123@gmail.com>
-References: <20240703034638.8019-2-shyamthakkar001@gmail.com>
- <20240803132206.72166-1-shyamthakkar001@gmail.com>
- <CAP8UFD3E2idN6mUYzEyh11Fzmj07q+BQuyVCtUkPP=cuxsUODw@mail.gmail.com>
-In-Reply-To: <CAP8UFD3E2idN6mUYzEyh11Fzmj07q+BQuyVCtUkPP=cuxsUODw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> wrote:
-> On Sat, Aug 3, 2024 at 3:22 PM Ghanshyam Thakkar
-> <shyamthakkar001@gmail.com> wrote:
-> > Migrate them to the unit testing framework for better runtime
-> > performance and efficiency. Also 'the_hash_algo' is used internally in
->
-> It doesn't seem to me that a variable called 'the_hash_algo' is used
-> internally in oid_array_lookup() anymore.
+helper/test-oid-array.c along with t0064-oid-array.sh test the
+oid-array.h API, which provides storage and processing
+efficiency over large lists of object identifiers.
 
-It is. oid_array_lookup() uses oid_pos():hash-lookup.c, which uses
-'the_hash_algo'.
+Migrate them to the unit testing framework for better runtime
+performance and efficiency. Also 'the_hash_algo' is used internally in
+oid_array_lookup(), but we do not initialize a repository directory,
+therefore initialize the_hash_algo manually. And
+init_hash_algo():lib-oid.c can aid in this process, so make it public.
 
-> > +static void t_enumeration(const char **input_args, size_t input_sz,
-> > +                         const char **result, size_t result_sz)
-> > +{
-> > +       struct oid_array input =3D OID_ARRAY_INIT, expect =3D OID_ARRAY=
-_INIT,
-> > +                        actual =3D OID_ARRAY_INIT;
-> > +       size_t i;
-> > +
-> > +       if (fill_array(&input, input_args, input_sz))
-> > +               return;
-> > +       if (fill_array(&expect, result, result_sz))
-> > +               return;
->
-> It would have been nice if the arguments were called 'expect_args' and
-> 'expect_sz' in the same way as for 'input'. Is there a reason why we
-> couldn't just use 'expect' (or maybe 'expected') everywhere instead of
-> 'result'?
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+---
+Changes in v3:
+ - changed commmit message and comments for more accurate description
+ - removed test_min() and return early when actual.nr and expect.nr
+   don't match
+ - rename result to expect for more accurate description
+ - removed a redundant check in t_enumeration()
+ - add check_int() around one of calls of get_oid_arbitrary_hex()
+ - rebased to latest master
 
-I have changed them to 'expect' in v3.
+ Makefile                   |   2 +-
+ t/helper/test-oid-array.c  |  49 ---------------
+ t/helper/test-tool.c       |   1 -
+ t/helper/test-tool.h       |   1 -
+ t/t0064-oid-array.sh       | 122 -----------------------------------
+ t/unit-tests/lib-oid.c     |   2 +-
+ t/unit-tests/lib-oid.h     |   8 +++
+ t/unit-tests/t-oid-array.c | 126 +++++++++++++++++++++++++++++++++++++
+ 8 files changed, 136 insertions(+), 175 deletions(-)
+ delete mode 100644 t/helper/test-oid-array.c
+ delete mode 100755 t/t0064-oid-array.sh
+ create mode 100644 t/unit-tests/t-oid-array.c
 
-> Also after the above 'input.nr' is equal to 'input_sz' and 'expect.nr'
-> is equal to 'result_sz' otherwise we would have already returned fron
-> the current function.
->
-> > +       oid_array_for_each_unique(&input, add_to_oid_array, &actual);
-> > +       check_uint(actual.nr, =3D=3D, expect.nr);
->
-> I think it might be better to return if this check fails. Otherwise it
-> means that we likely messed something up in the 'input_args' or
-> 'result' arguments we passed to the function, and then...
->
-> > +       for (i =3D 0; i < test_min(actual.nr, expect.nr); i++) {
-> > +               if (!check(oideq(&actual.oid[i], &expect.oid[i])))
->
-> ...we might not compare here the input oid with the corresponding
-> result oid we intended to compare it to. This might result in a lot of
-> not very relevant output.
->
-> Returning if check_uint(actual.nr, =3D=3D, expect.nr) fails would avoid
-> such output and also enable us to just use 'actual.nr' instead of
-> 'test_min(actual.nr, expect.nr)' in the 'for' loop above.
+diff --git a/Makefile b/Makefile
+index e298c8b55e..8813753d99 100644
+--- a/Makefile
++++ b/Makefile
+@@ -808,7 +808,6 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-match-trees.o
+ TEST_BUILTINS_OBJS += test-mergesort.o
+ TEST_BUILTINS_OBJS += test-mktemp.o
+-TEST_BUILTINS_OBJS += test-oid-array.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-pack-mtimes.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+@@ -1337,6 +1336,7 @@ UNIT_TEST_PROGRAMS += t-example-decorate
+ UNIT_TEST_PROGRAMS += t-hash
+ UNIT_TEST_PROGRAMS += t-hashmap
+ UNIT_TEST_PROGRAMS += t-mem-pool
++UNIT_TEST_PROGRAMS += t-oid-array
+ UNIT_TEST_PROGRAMS += t-oidmap
+ UNIT_TEST_PROGRAMS += t-oidtree
+ UNIT_TEST_PROGRAMS += t-prio-queue
+diff --git a/t/helper/test-oid-array.c b/t/helper/test-oid-array.c
+deleted file mode 100644
+index 076b849cbf..0000000000
+--- a/t/helper/test-oid-array.c
++++ /dev/null
+@@ -1,49 +0,0 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+-#include "test-tool.h"
+-#include "hex.h"
+-#include "oid-array.h"
+-#include "setup.h"
+-#include "strbuf.h"
+-
+-static int print_oid(const struct object_id *oid, void *data UNUSED)
+-{
+-	puts(oid_to_hex(oid));
+-	return 0;
+-}
+-
+-int cmd__oid_array(int argc UNUSED, const char **argv UNUSED)
+-{
+-	struct oid_array array = OID_ARRAY_INIT;
+-	struct strbuf line = STRBUF_INIT;
+-	int nongit_ok;
+-
+-	setup_git_directory_gently(&nongit_ok);
+-	if (nongit_ok)
+-		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+-
+-	while (strbuf_getline(&line, stdin) != EOF) {
+-		const char *arg;
+-		struct object_id oid;
+-
+-		if (skip_prefix(line.buf, "append ", &arg)) {
+-			if (get_oid_hex(arg, &oid))
+-				die("not a hexadecimal oid: %s", arg);
+-			oid_array_append(&array, &oid);
+-		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
+-			if (get_oid_hex(arg, &oid))
+-				die("not a hexadecimal oid: %s", arg);
+-			printf("%d\n", oid_array_lookup(&array, &oid));
+-		} else if (!strcmp(line.buf, "clear"))
+-			oid_array_clear(&array);
+-		else if (!strcmp(line.buf, "for_each_unique"))
+-			oid_array_for_each_unique(&array, print_oid, NULL);
+-		else
+-			die("unknown command: %s", line.buf);
+-	}
+-
+-	strbuf_release(&line);
+-	oid_array_clear(&array);
+-
+-	return 0;
+-}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index da3e69128a..353d2aaaa4 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -43,7 +43,6 @@ static struct test_cmd cmds[] = {
+ 	{ "match-trees", cmd__match_trees },
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
+-	{ "oid-array", cmd__oid_array },
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "pack-mtimes", cmd__pack_mtimes },
+ 	{ "parse-options", cmd__parse_options },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 642a34578c..d3d8aa28e0 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -64,7 +64,6 @@ int cmd__scrap_cache_tree(int argc, const char **argv);
+ int cmd__serve_v2(int argc, const char **argv);
+ int cmd__sha1(int argc, const char **argv);
+ int cmd__sha1_is_sha1dc(int argc, const char **argv);
+-int cmd__oid_array(int argc, const char **argv);
+ int cmd__sha256(int argc, const char **argv);
+ int cmd__sigchain(int argc, const char **argv);
+ int cmd__simple_ipc(int argc, const char **argv);
+diff --git a/t/t0064-oid-array.sh b/t/t0064-oid-array.sh
+deleted file mode 100755
+index de74b692d0..0000000000
+--- a/t/t0064-oid-array.sh
++++ /dev/null
+@@ -1,122 +0,0 @@
+-#!/bin/sh
+-
+-test_description='basic tests for the oid array implementation'
+-
+-TEST_PASSES_SANITIZE_LEAK=true
+-. ./test-lib.sh
+-
+-echoid () {
+-	prefix="${1:+$1 }"
+-	shift
+-	while test $# -gt 0
+-	do
+-		echo "$prefix$ZERO_OID" | sed -e "s/00/$1/g"
+-		shift
+-	done
+-}
+-
+-test_expect_success 'without repository' '
+-	cat >expect <<-EOF &&
+-	4444444444444444444444444444444444444444
+-	5555555555555555555555555555555555555555
+-	8888888888888888888888888888888888888888
+-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+-	EOF
+-	cat >input <<-EOF &&
+-	append 4444444444444444444444444444444444444444
+-	append 5555555555555555555555555555555555555555
+-	append 8888888888888888888888888888888888888888
+-	append aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+-	for_each_unique
+-	EOF
+-	nongit test-tool oid-array <input >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'ordered enumeration' '
+-	echoid "" 44 55 88 aa >expect &&
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echo for_each_unique
+-	} | test-tool oid-array >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'ordered enumeration with duplicate suppression' '
+-	echoid "" 44 55 88 aa >expect &&
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echo for_each_unique
+-	} | test-tool oid-array >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'lookup' '
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echoid lookup 55
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -eq 1
+-'
+-
+-test_expect_success 'lookup non-existing entry' '
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echoid lookup 33
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -lt 0
+-'
+-
+-test_expect_success 'lookup with duplicates' '
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echoid lookup 55
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -ge 3 &&
+-	test "$n" -le 5
+-'
+-
+-test_expect_success 'lookup non-existing entry with duplicates' '
+-	{
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echoid append 88 44 aa 55 &&
+-		echoid lookup 66
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -lt 0
+-'
+-
+-test_expect_success 'lookup with almost duplicate values' '
+-	# n-1 5s
+-	root=$(echoid "" 55) &&
+-	root=${root%5} &&
+-	{
+-		id1="${root}5" &&
+-		id2="${root}f" &&
+-		echo "append $id1" &&
+-		echo "append $id2" &&
+-		echoid lookup 55
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -eq 0
+-'
+-
+-test_expect_success 'lookup with single duplicate value' '
+-	{
+-		echoid append 55 55 &&
+-		echoid lookup 55
+-	} | test-tool oid-array >actual &&
+-	n=$(cat actual) &&
+-	test "$n" -ge 0 &&
+-	test "$n" -le 1
+-'
+-
+-test_done
+diff --git a/t/unit-tests/lib-oid.c b/t/unit-tests/lib-oid.c
+index 37105f0a8f..8f0ccac532 100644
+--- a/t/unit-tests/lib-oid.c
++++ b/t/unit-tests/lib-oid.c
+@@ -3,7 +3,7 @@
+ #include "strbuf.h"
+ #include "hex.h"
+ 
+-static int init_hash_algo(void)
++int init_hash_algo(void)
+ {
+ 	static int algo = -1;
+ 
+diff --git a/t/unit-tests/lib-oid.h b/t/unit-tests/lib-oid.h
+index 8d2acca768..c949af082c 100644
+--- a/t/unit-tests/lib-oid.h
++++ b/t/unit-tests/lib-oid.h
+@@ -13,5 +13,13 @@
+  * environment variable.
+  */
+ int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
++/*
++ * Returns one of GIT_HASH_{SHA1, SHA256, UNKNOWN} based on the value of
++ * GIT_TEST_DEFAULT_HASH environment variable. The fallback value in case
++ * of absence of GIT_TEST_DEFAULT_HASH is GIT_HASH_SHA1. It also uses
++ * check(algo != GIT_HASH_UNKNOWN) before returning to verify if the
++ * GIT_TEST_DEFAULT_HASH's value is valid or not.
++ */
++int init_hash_algo(void);
+ 
+ #endif /* LIB_OID_H */
+diff --git a/t/unit-tests/t-oid-array.c b/t/unit-tests/t-oid-array.c
+new file mode 100644
+index 0000000000..99e3de9dc8
+--- /dev/null
++++ b/t/unit-tests/t-oid-array.c
+@@ -0,0 +1,126 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
++#include "test-lib.h"
++#include "lib-oid.h"
++#include "oid-array.h"
++#include "hex.h"
++
++static int fill_array(struct oid_array *array, const char *hexes[], size_t n)
++{
++	for (size_t i = 0; i < n; i++) {
++		struct object_id oid;
++
++		if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), ==, 0))
++			return -1;
++		oid_array_append(array, &oid);
++	}
++	if (!check_uint(array->nr, ==, n))
++		return -1;
++	return 0;
++}
++
++static int add_to_oid_array(const struct object_id *oid, void *data)
++{
++	struct oid_array *array = data;
++
++	oid_array_append(array, oid);
++	return 0;
++}
++
++static void t_enumeration(const char **input_args, size_t input_sz,
++			  const char **expect_args, size_t expect_sz)
++{
++	struct oid_array input = OID_ARRAY_INIT, expect = OID_ARRAY_INIT,
++			 actual = OID_ARRAY_INIT;
++	size_t i;
++
++	if (fill_array(&input, input_args, input_sz))
++		return;
++	if (fill_array(&expect, expect_args, expect_sz))
++		return;
++
++	oid_array_for_each_unique(&input, add_to_oid_array, &actual);
++	if(!check_uint(actual.nr, ==, expect.nr))
++		return;
++
++	for (i = 0; i < actual.nr; i++) {
++		if (!check(oideq(&actual.oid[i], &expect.oid[i])))
++			test_msg("expected: %s\n       got: %s\n     index: %" PRIuMAX,
++				 oid_to_hex(&expect.oid[i]), oid_to_hex(&actual.oid[i]),
++				 (uintmax_t)i);
++	}
++
++	oid_array_clear(&actual);
++	oid_array_clear(&input);
++	oid_array_clear(&expect);
++}
++
++#define TEST_ENUMERATION(input, expect, desc)                                     \
++	TEST(t_enumeration(input, ARRAY_SIZE(input), expect, ARRAY_SIZE(expect)), \
++			   desc " works")
++
++static void t_lookup(const char **input_hexes, size_t n, const char *query_hex,
++		     int lower_bound, int upper_bound)
++{
++	struct oid_array array = OID_ARRAY_INIT;
++	struct object_id oid_query;
++	int ret;
++
++	if (!check_int(get_oid_arbitrary_hex(query_hex, &oid_query), ==, 0))
++		return;
++	if (fill_array(&array, input_hexes, n))
++		return;
++	ret = oid_array_lookup(&array, &oid_query);
++
++	if (!check_int(ret, <=, upper_bound) ||
++	    !check_int(ret, >=, lower_bound))
++		test_msg("oid query for lookup: %s", oid_to_hex(&oid_query));
++
++	oid_array_clear(&array);
++}
++
++#define TEST_LOOKUP(input_hexes, query, lower_bound, upper_bound, desc) \
++	TEST(t_lookup(input_hexes, ARRAY_SIZE(input_hexes), query,      \
++		      lower_bound, upper_bound),                        \
++	     desc " works")
++
++static void setup(void)
++{
++	/* The hash algo is used by oid_array_lookup() internally */
++	int algo = init_hash_algo();
++	if (check_int(algo, !=, GIT_HASH_UNKNOWN))
++		repo_set_hash_algo(the_repository, algo);
++}
++
++int cmd_main(int argc UNUSED, const char **argv UNUSED)
++{
++	const char *arr_input[] = { "88", "44", "aa", "55" };
++	const char *arr_input_dup[] = { "88", "44", "aa", "55",
++					"88", "44", "aa", "55",
++					"88", "44", "aa", "55" };
++	const char *res_sorted[] = { "44", "55", "88", "aa" };
++	const char *nearly_55;
++
++	if (!TEST(setup(), "setup"))
++		test_skip_all("hash algo initialization failed");
++
++	TEST_ENUMERATION(arr_input, res_sorted, "ordered enumeration");
++	TEST_ENUMERATION(arr_input_dup, res_sorted,
++			 "ordered enumeration with duplicate suppression");
++
++	TEST_LOOKUP(arr_input, "55", 1, 1, "lookup");
++	TEST_LOOKUP(arr_input, "33", INT_MIN, -1, "lookup non-existent entry");
++	TEST_LOOKUP(arr_input_dup, "55", 3, 5, "lookup with duplicates");
++	TEST_LOOKUP(arr_input_dup, "66", INT_MIN, -1,
++		    "lookup non-existent entry with duplicates");
++
++	nearly_55 = init_hash_algo() == GIT_HASH_SHA1 ?
++			"5500000000000000000000000000000000000001" :
++			"5500000000000000000000000000000000000000000000000000000000000001";
++	TEST_LOOKUP(((const char *[]){ "55", nearly_55 }), "55", 0, 0,
++		    "lookup with almost duplicate values");
++	TEST_LOOKUP(((const char *[]){ "55", "55" }), "55", 0, 1,
++		    "lookup with single duplicate value");
++
++	return test_done();
++}
 
-Changed this in v3.
+Range-diff against v2:
+1:  27124bbb00 ! 1:  408a179736 t: port helper/test-oid-array.c to unit-tests/t-oid-array.c
+    @@ Commit message
+         t: port helper/test-oid-array.c to unit-tests/t-oid-array.c
+     
+         helper/test-oid-array.c along with t0064-oid-array.sh test the
+    -    oid-array.h library, which provides storage and processing
+    +    oid-array.h API, which provides storage and processing
+         efficiency over large lists of object identifiers.
+     
+         Migrate them to the unit testing framework for better runtime
+    @@ Makefile: TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+      TEST_BUILTINS_OBJS += test-online-cpus.o
+      TEST_BUILTINS_OBJS += test-pack-mtimes.o
+      TEST_BUILTINS_OBJS += test-parse-options.o
+    -@@ Makefile: UNIT_TEST_PROGRAMS += t-ctype
+    - UNIT_TEST_PROGRAMS += t-example-decorate
+    +@@ Makefile: UNIT_TEST_PROGRAMS += t-example-decorate
+      UNIT_TEST_PROGRAMS += t-hash
+    + UNIT_TEST_PROGRAMS += t-hashmap
+      UNIT_TEST_PROGRAMS += t-mem-pool
+     +UNIT_TEST_PROGRAMS += t-oid-array
+      UNIT_TEST_PROGRAMS += t-oidmap
+    @@ t/unit-tests/lib-oid.h
+      int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
+     +/*
+     + * Returns one of GIT_HASH_{SHA1, SHA256, UNKNOWN} based on the value of
+    -+ * GIT_TEST_DEFAULT_HASH. The fallback value in case of absence of
+    -+ * GIT_TEST_DEFAULT_HASH is GIT_HASH_SHA1.
+    ++ * GIT_TEST_DEFAULT_HASH environment variable. The fallback value in case
+    ++ * of absence of GIT_TEST_DEFAULT_HASH is GIT_HASH_SHA1. It also uses
+    ++ * check(algo != GIT_HASH_UNKNOWN) before returning to verify if the
+    ++ * GIT_TEST_DEFAULT_HASH's value is valid or not.
+     + */
+     +int init_hash_algo(void);
+      
+    @@ t/unit-tests/t-oid-array.c (new)
+     +#include "oid-array.h"
+     +#include "hex.h"
+     +
+    -+static inline size_t test_min(size_t a, size_t b)
+    -+{
+    -+	return a <= b ? a : b;
+    -+}
+    -+
+     +static int fill_array(struct oid_array *array, const char *hexes[], size_t n)
+     +{
+     +	for (size_t i = 0; i < n; i++) {
+    @@ t/unit-tests/t-oid-array.c (new)
+     +}
+     +
+     +static void t_enumeration(const char **input_args, size_t input_sz,
+    -+			  const char **result, size_t result_sz)
+    ++			  const char **expect_args, size_t expect_sz)
+     +{
+     +	struct oid_array input = OID_ARRAY_INIT, expect = OID_ARRAY_INIT,
+     +			 actual = OID_ARRAY_INIT;
+    @@ t/unit-tests/t-oid-array.c (new)
+     +
+     +	if (fill_array(&input, input_args, input_sz))
+     +		return;
+    -+	if (fill_array(&expect, result, result_sz))
+    ++	if (fill_array(&expect, expect_args, expect_sz))
+     +		return;
+     +
+     +	oid_array_for_each_unique(&input, add_to_oid_array, &actual);
+    -+	check_uint(actual.nr, ==, expect.nr);
+    ++	if(!check_uint(actual.nr, ==, expect.nr))
+    ++		return;
+     +
+    -+	for (i = 0; i < test_min(actual.nr, expect.nr); i++) {
+    ++	for (i = 0; i < actual.nr; i++) {
+     +		if (!check(oideq(&actual.oid[i], &expect.oid[i])))
+     +			test_msg("expected: %s\n       got: %s\n     index: %" PRIuMAX,
+     +				 oid_to_hex(&expect.oid[i]), oid_to_hex(&actual.oid[i]),
+     +				 (uintmax_t)i);
+     +	}
+    -+	check_uint(i, ==, result_sz);
+     +
+     +	oid_array_clear(&actual);
+     +	oid_array_clear(&input);
+     +	oid_array_clear(&expect);
+     +}
+     +
+    -+#define TEST_ENUMERATION(input, result, desc)                                     \
+    -+	TEST(t_enumeration(input, ARRAY_SIZE(input), result, ARRAY_SIZE(result)), \
+    ++#define TEST_ENUMERATION(input, expect, desc)                                     \
+    ++	TEST(t_enumeration(input, ARRAY_SIZE(input), expect, ARRAY_SIZE(expect)), \
+     +			   desc " works")
+     +
+     +static void t_lookup(const char **input_hexes, size_t n, const char *query_hex,
+    @@ t/unit-tests/t-oid-array.c (new)
+     +	struct object_id oid_query;
+     +	int ret;
+     +
+    -+	if (get_oid_arbitrary_hex(query_hex, &oid_query))
+    ++	if (!check_int(get_oid_arbitrary_hex(query_hex, &oid_query), ==, 0))
+     +		return;
+     +	if (fill_array(&array, input_hexes, n))
+     +		return;
+    @@ t/unit-tests/t-oid-array.c (new)
+     +
+     +static void setup(void)
+     +{
+    ++	/* The hash algo is used by oid_array_lookup() internally */
+     +	int algo = init_hash_algo();
+    -+	/* because the_hash_algo is used by oid_array_lookup() internally */
+     +	if (check_int(algo, !=, GIT_HASH_UNKNOWN))
+     +		repo_set_hash_algo(the_repository, algo);
+     +}
+    @@ t/unit-tests/t-oid-array.c (new)
+     +	TEST_ENUMERATION(arr_input_dup, res_sorted,
+     +			 "ordered enumeration with duplicate suppression");
+     +
+    -+	/* ret is the return value of oid_array_lookup() */
+     +	TEST_LOOKUP(arr_input, "55", 1, 1, "lookup");
+     +	TEST_LOOKUP(arr_input, "33", INT_MIN, -1, "lookup non-existent entry");
+     +	TEST_LOOKUP(arr_input_dup, "55", 3, 5, "lookup with duplicates");
+-- 
+2.46.0
 
->
-> > +                       test_msg("expected: %s\n       got: %s\n     in=
-dex: %" PRIuMAX,
-> > +                                oid_to_hex(&expect.oid[i]), oid_to_hex=
-(&actual.oid[i]),
-> > +                                (uintmax_t)i);
-> > +       }
-> > +       check_uint(i, =3D=3D, result_sz);
->
-> As we saw above that 'expect.nr' is equal to 'result_sz', this check
-> can fail only if 'actual.nr' is different from 'expect.nr' which we
-> already checked above. So I think this check is redundant and we might
-> want to get rid of it.
-
-Removed in v3.
-
->
-> In fill_array() above, we use check_int() to check the result of
-> get_oid_arbitrary_hex() like this:
->
-> if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), =3D=3D, 0))
->
-> It doesn't look consistent to not use check_int() to check the result
-> of get_oid_arbitrary_hex() here. Or is there a specific reason to do
-> it in one place but not in another?
-
-Not in particular. Added check_int() in v3.
-
-Thanks for the review.
