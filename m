@@ -1,96 +1,87 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849C714AD0C
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 19:26:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF192B9C5
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 19:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724700403; cv=none; b=GpknbMQQ6EOtHLDbsDkprpalvFfFxHGmADxK7qOE9OcBd0JQ1rEsDEDSy2I/xK5hqSeTxD5yilV4nJsTPXkBdZBBPT4TsI21kIcBmEj8lrFvv1WuCoa78wXNvEAYcdr6i1jOVPrgp2O4LsL66MQnrTXjU/Tz3jyNQLsuD++7v1M=
+	t=1724701068; cv=none; b=UFf4t2UsJrxp4/GD/TY9X0fnvyD941h3f8WoXdyJp2bOaYHPUWe8PBQ1oudPuCu+n/vK94VQIHyhFXGSO0xu1YHuicBveIJWnpLCpkQEG5dEdAgrR4TIjM7hrTITJDKalDaemuIW1TJf+byPUJ2yLKdNLo85fSz8ySOn5+pgFiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724700403; c=relaxed/simple;
-	bh=dGTJs656ixkEgCQYmNNyQTSsAK9l2DU66g4Ln4yB/dM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fdRQELpVOQvAbl05VjybB7E/E9Af5EjPvBc5IwEbdJ0OPHR4cGM3n4uRJQYa35PepFVcbqeCUH9lwIN4H6WgKx9sMMwstnjkv43o9AZrluo4C2lZZf/ozF2oL4y+Ycg9NiBlW4sTu5WjoAnKXMlHan58HDiBKhrjaP/xnNh7QNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AnPAB3NB; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724701068; c=relaxed/simple;
+	bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qnEojkLit4+R6n2tdKKdLBrHCBjaZ8zn03BlPRlO9nphw3LeR/sW5W++DsP1pyj1DqB//zF4aKhy/WYG2IUgcbpy+o6fS3b/DBniMp6txij3JIijrtHCHrXgEZXJl48zLNtoT90TgtX7YdfZ5rihgve+rVnIrQCpxTfd79ln8gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=CIDT+DOj; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AnPAB3NB"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E4CC01C78F;
-	Mon, 26 Aug 2024 15:26:41 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dGTJs656ixkEgCQYmNNyQTSsAK9l2DU66g4Ln4
-	yB/dM=; b=AnPAB3NBXqPtfcjWqSsl8KYy0FSmEu4W4IlePol231ZbKY8VFLECN2
-	uv44Jgi7BVpszk09wv8SYeFS9wRwbz6FcSBI3m2zoCsFGSLe7IxwsIvfjhmU/zyp
-	fn9mIyIG4uMrA/qZuIBUzLOiwE/5rqN928yhPZtSZ6dHkdi7N9Nzw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id DD6551C78E;
-	Mon, 26 Aug 2024 15:26:41 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 750731C78D;
-	Mon, 26 Aug 2024 15:26:38 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [GSoC][PATCH v3 0/6] t: port reftable/stack_test.c to the unit
- testing framework
-In-Reply-To: <xmqqwmk3hzly.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	26 Aug 2024 12:07:37 -0700")
-References: <20240823120514.11070-1-chandrapratap3519@gmail.com>
-	<20240826173627.4525-1-chandrapratap3519@gmail.com>
-	<xmqqcylvjhtt.fsf@gitster.g>
-	<CA+J6zkQKc=NmBnuih9Y+2oMjQtVOhKxJ_RfOLGxvWxcBbMH+kA@mail.gmail.com>
-	<xmqqwmk3hzly.fsf@gitster.g>
-Date: Mon, 26 Aug 2024 12:26:36 -0700
-Message-ID: <xmqqo75fhyqb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="CIDT+DOj"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f401c20b56so40913601fa.0
+        for <git@vger.kernel.org>; Mon, 26 Aug 2024 12:37:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google; t=1724701064; x=1725305864; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
+        b=CIDT+DOjhxjSDfuMDO9C69n2FWtlqtpCqokuqzsvHzJi7SCUTfcl+WVAISZqMBXcCh
+         A7Jo+pZt4keil0BSvtPdK/xJpfH1OChmTELr19/XS2MCQQPw4wjBTmhjWjIlPd6lmI8u
+         Fms1uTRgAtv2AgD7cwAxtHZRooP6UeHyyKIQ4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724701064; x=1725305864;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
+        b=jp+MUjekxXH4/jFFWEqIdpSxRu0dvehx57iVfCabysIm9wgYfIUNJWNZRRzp9JTv+R
+         qIpzvgJIPgK9rHQQjgULUdRVKL2uN9nnmuBx0h1/ku/mSSe2lzDArhC/Ni8RN00B7bMd
+         sPh2dAxz4LngjI1VJ1yXzNnAzhhgFynI99C+G8NqmwlV7P4vZJefShynGKyso/AXw2jv
+         2QjSwOVEEouleY2ZpwO1QYXqabFS2jZdXPP98PHxyiP3p5PWf6RcUeRFfoQLgtzv1z2H
+         3UoxF+7qPZ5HWxj8djdv36c8JfSdVEH7sj0/4+ExA8f796k2g/ZIkZ+E3HnK9lpfsvNr
+         JnvQ==
+X-Gm-Message-State: AOJu0YzdOyQpp+SXWH4vexkx2aD8yn3NLkXqczuuiF7pb6pac15VfPTz
+	AB+fS4Q8Hri84UCbkpstseC5ZIVrtZYE1W+YxH9PaTXAtt++JY+M0KQwY4VAq+S0ZDTLp+HoXrC
+	mzIK3cYZA6dhu5TmxspFV0f0D5af2Zrtu6k9Y
+X-Google-Smtp-Source: AGHT+IERAj00Jpo56ipYMNjnlOoWrDB9PC/307pfufwE0nBrdxHqFThGtPNicNgAcAxbY+mDYPVDFNNvzKXjT2Ns0D8=
+X-Received: by 2002:a05:6512:33d1:b0:533:4517:5363 with SMTP id
+ 2adb3069b0e04-5344dd982e5mr202467e87.21.1724701063817; Mon, 26 Aug 2024
+ 12:37:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1D777114-63E1-11EF-8EF8-E92ED1CD468F-77302942!pb-smtp21.pobox.com
+References: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
+ <xmqqv7znjir3.fsf@gitster.g>
+In-Reply-To: <xmqqv7znjir3.fsf@gitster.g>
+From: Tao Klerks <tao@klerks.biz>
+Date: Mon, 26 Aug 2024 21:37:32 +0200
+Message-ID: <CAPMMpoiPeSyLHUd072Q9AozdaCAjpOL03jY-0Y33B2iEQ5EdTQ@mail.gmail.com>
+Subject: Re: Sensible way to see what objects are being fetched just-in-time
+ in a partial clone?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 26, 2024 at 7:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+>
+> Unlike the diff machinery, blame does not have a prefetch machinery.
+> I am glad that somebody is looking at it.
 
-> On the other hand, you should realize that every topic first is
-> queued to 'seen' and only after it proves that it plays well with
-> other topics in flight, it is considered to advance to 'next'.  So
-> if you conflict with other topics that makes you conflict when
-> merged to either 'next' or 'seen', you'd be better off creating a
-> more suitable base than 'master' and then build on top of it.
+I'm not convinced I'm looking at it in a very useful way from your
+perspective: My C skills being spectacularly lacking for fixing the
+core code, I am just writing an external python-based wrapper for "my"
+users.
 
-$ git log --first-parent --oneline \
-  cp/unit-test-reftable-stack..next -- reftable/stack_test.c
-
-tells me that Patrick's "concurrent compaction" and "drop generic"
-are the big two topics that touch reftable/stack_test.c file that
-you are removing.  As the former already depends on the latter,
-it may make sense to 
-
-    $ git checkout -b cp/unit-test-reftable-stack master
-    $ git merge ps/reftable-concurrent-compaction
-
-to prepare the base, and then rebuild these patches on top of it.
-There is another topic jk/mark-unused-parameters that touches the
-same file, but the conflict it causes is trivial.
-
-In any case, the cover letter is a good place to describe how you
-prepared such a custom base (as opposed to "the patches in this
-topic apply cleanly to any recent tip of 'master', as the topic
-touches a relatively dormant calm area of the code base", in which
-case you do not say anything).
-
-Thanks.
-
+I will try to "productize" it sufficiently to send here in case it's
+useful to someone, but all I can really offer the community-at-large
+is confirmation that in principle, the approach works as you would
+expect: With some small number of jit-fetches for rename-detection
+during the revision walk(s), and with one blob-prefetch call
+afterwards, "git blame" can be made to run cleanly/quickly in a
+"filter:none" clone even on a file like "git.c", with hundreds of
+revisions.
