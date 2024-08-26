@@ -1,99 +1,101 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E57191F78
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 16:38:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1731450EE
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 16:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724690325; cv=none; b=hQycqLSUlJtjP8WK0RuTPn5w31GVCrNcttoFiDyRkNf0hpJUqARKCPA3TpBUiSACGcxHpE0t0ZTuJZdEjrS7aAcoo9B1nNTqNmbXRReEaZhzZm4t6xgN7YczknjrNGWvxeIEgoQW5ZJ8NJCsdR4tgxxWcu8KP0YXbt96790YQHU=
+	t=1724691320; cv=none; b=lHO7FwrI2PmHF+CkIlUrByOOck5FvMj4ZEM0Ew2NwnflXNYVavy1jekDN+y8+vNS8aL6mVkEEC68lrRLDs301PWPcnjZFTDbKqx5DaQgNtuXmDjOwUf56W2HpMI4hgLe0F87oKNfp+NZ+ghVyOYPj2pJGGaEZaak+juldBznAaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724690325; c=relaxed/simple;
-	bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=laPFSGWVxgFBh9asuvZLKOdalwUdSCF++jMOuUHnMYRIGwfK8xpIK3flWOt/axPwGTediBYZvhI1inbWxk1mpON7MekymG222uH/gANhqgPtmq2kmiegXMZg9UVKtaL5+76TIXw0+zGjoQ6CvYfH9xZ+Jc7baaMuuWSecs+VmJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=PLvkeo55; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
+	s=arc-20240116; t=1724691320; c=relaxed/simple;
+	bh=2WWe/snhi7o3uel5tPvm3WXafRmVY6gaKwlJOX+VCeM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XYUVOaTB+l4xUrf1leSM+ucqqZ2zBlMpeeC7++fljh26oh14K5iHFw7htcEOgJI6EiPDYDfEUd8LZe+d+CINcW3abcdeePznfdv5a1rvmJ50cV3TTmpP0Jt5Y0qiu2z+I84UkWZXSjPsGs+8eRTpeNA9bY0DR54Nn4w2ChGYSrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W9wtmUvb; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="PLvkeo55"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso7590084e87.0
-        for <git@vger.kernel.org>; Mon, 26 Aug 2024 09:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1724690321; x=1725295121; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
-        b=PLvkeo55UPhaFVNjv2lAKu6XUg6DCkDOrm1MpOaIPxrogLQWdTkm9hqQckgeq9MLnH
-         M66DEdsoMzNHKYZDMit0f32cMAa7adsAwuk5068lcwFFZcRQTUthikIuvNddGyFTqlD9
-         fT8EFIlaXUqeImXujkd3l0MhtnqN//6VSY2FQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724690321; x=1725295121;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
-        b=qprOd93kYgS3d3h3ErmXA0lUJYICHCF7YTVcbMn93eonlH9u6OdjQITkoBOORLf/2b
-         N8x0U+2fZW1BqDTGXR8tfjf66o1AX6whRFqCnPqc0Z/r2CLtB+mqRohfoe0uCA7H8BYm
-         qFB+qlGykHAOjicx5EYp3klKO23KholF5+8xR80R8g8cKZdF3VcwV10RrapmJNGs1Eqq
-         5tiq7fbnP4SCfej4dkBacAJAwu0lbZ3KXjkj/6HWVAtEXCXI+FNCqwuwVAmkMHxLnh/C
-         12r78BBrd4SFZp1Nn/yE8KC3NtU9GIoQPFzsdtw3H2VFu5wS01hw4dC3VgxVs20GBUgP
-         9xvQ==
-X-Gm-Message-State: AOJu0YxoW1UGmlwhbNJpDph4VkBSRsUvBHWGiCE2lQCIsmLUdFi0Sd8Z
-	NNDAZHfRV6Hfeph2k/iBDyhV+wB8JzeQHeJwK+mgBb2EXx/+w40LBxSWidleg8QcfGhIUrMxWlK
-	DPH26GUufcutBbYue5AHPwBtG+lTNefWePSlXeLQXkMItIkawgZJnlUaogQ==
-X-Google-Smtp-Source: AGHT+IFBoxP5g3U3iPH16HzcTigzOEIAVwV0oZmW4CbR8ZRzbT4tuUbt0KRCLnRAdT76Ukw9LvXu/xvQlDWdceY/rJA=
-X-Received: by 2002:a05:6512:3f11:b0:533:efaf:ab26 with SMTP id
- 2adb3069b0e04-53438791a8dmr6858644e87.36.1724690321172; Mon, 26 Aug 2024
- 09:38:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W9wtmUvb"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 768CF27A40;
+	Mon, 26 Aug 2024 12:55:18 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=2WWe/snhi7o3uel5tPvm3WXafRmVY6gaKwlJOX
+	+VCeM=; b=W9wtmUvbq7KhRfwT8Pfta80gZJiLE3MC9JQbp/Eksx54TnS3PdsmmW
+	TussgMbgr2NtDTuvk+Bxr033NdKuZdIpaAmuXYp780Z2pEqTQaM8IMalu4XT2+vW
+	xLYFYC6D4XqBMkjFj3IFhadkVixMTQF+DTzZ86faXRKj81XP1PGzw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F04D27A3F;
+	Mon, 26 Aug 2024 12:55:18 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ECDC927A3D;
+	Mon, 26 Aug 2024 12:55:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <e@80x24.org>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v2 03/10] packfile: fix off-by-one in content_limit
+ comparison
+In-Reply-To: <20240823224630.1180772-4-e@80x24.org> (Eric Wong's message of
+	"Fri, 23 Aug 2024 22:46:23 +0000")
+References: <20240823224630.1180772-1-e@80x24.org>
+	<20240823224630.1180772-4-e@80x24.org>
+Date: Mon, 26 Aug 2024 09:55:13 -0700
+Message-ID: <xmqq1q2bmdfy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Tao Klerks <tao@klerks.biz>
-Date: Mon, 26 Aug 2024 18:38:29 +0200
-Message-ID: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
-Subject: Sensible way to see what objects are being fetched just-in-time in a
- partial clone?
-To: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F7465678-63CB-11EF-8473-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-Hi folks,
+Eric Wong <e@80x24.org> writes:
 
-In working with Partial / Filtered Clone repos, there are situations
-where objects get fetched just-in-time - eg during a "git blame", if
-you did a "blob:none" filtered clone, you can easily end up with
-hundreds of fetches as git iterates backwards through the file
-history.
+> object-file.c::loose_object_info() accepts objects matching
+> content_limit exactly, so it follows packfile handling allows
+> slurping objects which match loose object handling and slurp
+> objects with size matching the content_limit exactly.
+>
+> This change is merely for consistency with the majority of
+> existing code and there is no user visible change in nearly all
+> cases.  The only exception being the corner case when the object
+> size matches content_limit exactly where users will see a
+> speedup from avoiding an extra lookup.
+>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
 
-I was trying to write a "git blame optimizer" to pre-fetch all the
-suitable blobs, and it wasn't working right, so the "git blame" was
-still fetching stuff - but I couldn't see what it was fetching (which
-made it hard to investigate the bug in my script).
+I would have preferred to see this (and also "is oi->content_limit
+zero?" check I mentioned earlier) as part of the previous step,
+which added this comparison that is not consistent with the majority
+of existing code.  It's not like importing from an external project
+we communicate with only occasionally, in which case we may want to
+import "pristine" source and fix it up separetly in order to make it
+easier to re-import updated material.
 
-I did end up getting a list of some just-in-time fetched blobs, by
-dumping a list of *all* the object IDs I had locally, before and after
-a still-fetching-stuff "git blame" run, and doing a before/after
-comparison of the resulting list of objects. To get the list of
-objects found locally I did:
-
-git cat-file --batch-check='%(objectname)' --batch-all-objects --unordered
-
-(ref: a conversation with Peff last year:
-https://lore.kernel.org/git/20230621064459.GA607974@coredump.intra.peff.net/
-)
-
-This was a sucky process though - and I was very surprised that I
-couldn't see what was being fetched (what the stdin content to the
-just-in-time fetch calls were) with any of the trace env vars that I
-was able to find documented: GIT_TRACE, GIT_CURL_VERBOSE,
-GIT_TRACE_PERFORMANCE, GIT_TRACE_PACK_ACCESS, GIT_TRACE_PACKET,
-GIT_TRACE_PACKFILE, GIT_TRACE_SETUP, GIT_TRACE_SHALLOW
-
-The only thing I could easily see were the *args* passed to nested git
-processes.
-
-Is there any way to see what a just-in-time fetch is fetching? Or any
-way to see the content passed around on stdin in nested git processes?
-
-Thanks,
-Tao
+>  packfile.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/packfile.c b/packfile.c
+> index c12a0515b3..8ec86d2d69 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -1557,7 +1557,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+>  		}
+>  
+>  		if (oi->contentp) {
+> -			if (oi->sizep && *oi->sizep < oi->content_limit) {
+> +			if (oi->sizep && *oi->sizep <= oi->content_limit) {
+>  				*oi->contentp = cache_or_unpack_entry(r, p, obj_offset,
+>  								      oi->sizep, &type);
+>  				if (!*oi->contentp)
