@@ -1,51 +1,55 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA26198A02
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 17:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655AB198A02
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 17:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724693332; cv=none; b=GLJC17rB2FY+IJdSm3hyObrNPEWRwLnfjhZGgPvdOKHCRhubJlijsRRT6qAy6kwjm600504gMwgHLOUokEewuXketqlNudgnOJnEvTBuumfvYGgn+Muc1t3HJBWb35L38y2gNyxWhqYVN0AXcyBXoYWq9b7eUyyvcu08mP5/h/w=
+	t=1724693483; cv=none; b=UTD/ocZxgVI9NZOVAeIRDOPYOZS0JPjF/UWs0k1nzJP/MtXRdVD7Qms48pUl4OIT4708ho5BG0hcObz9+R7nMdkMo7WLHrPU79Z7FLPoth7fDiZ9k+HNoI6Cjdv9/P4YxFiUSUBUvQHnm+0Vd87Q89BV9D/kezu/fDFY8gjDxq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724693332; c=relaxed/simple;
-	bh=ap9ZQ+CC6HkdMtSZUrgR2yGyJhzz4WepKi1HAUKjDGk=;
+	s=arc-20240116; t=1724693483; c=relaxed/simple;
+	bh=egP4cR7adKicNJv8D5oc1pQ/ToTg6em0R6kX6d2YBJs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PHkGP2cCOwUbMrbIOSOpJmWkIanI03oyToXxWBYS8rHXbaKUxObSUfb0cnFXZ6HTCgbcKOcccqFyWmDBtKRn1+mojCTMSK27VkEOww9eg6LWkGVFiFSagTO5AgD6a4z6xlYOkBd+zFcd5uZE3K4K3YpH07rZmLepnktRcmSXJkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WibDXCVS; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=Z5+wCNgUCtNmrYi+AYRV+F9BbIvkzlM197ev3LFzG0Nr7avU9TDbHj9dPNhh5C9ePed0DbFMW6BEJsnHQeFAst/6mHRHpS+NtiTKdFsqMr+JAS7Hf9Z0neS0kHbR5oXYBiAIYe3ZoXr7myS89CC8ghIQfnfQhkaWStTe30GGaqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mcW25hNJ; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WibDXCVS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mcW25hNJ"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 507102AFAE;
-	Mon, 26 Aug 2024 13:28:50 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D0F12B065;
+	Mon, 26 Aug 2024 13:31:21 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ap9ZQ+CC6HkdMtSZUrgR2yGyJhzz4WepKi1HAU
-	KjDGk=; b=WibDXCVSc2jw8jIKrueq1zg0kSQQFkojmQBbeJgSQvGz+/CtYaj/ye
-	bMjFkW04Te1urY+PLpesE1f9Uxv0F0KB1Mmc2OeipzwC0/jP4AY2DprLTxawhppj
-	Uyihtn/HkVLqfmp4gjdf5uURleDaQfkk9+Hk/nV4oC3wnuNZey09c=
+	:content-type; s=sasl; bh=egP4cR7adKicNJv8D5oc1pQ/ToTg6em0R6kX6d
+	2YBJs=; b=mcW25hNJkeFi6UIUe1dvZ3ayKHi0WiXCgIr0DFaKhiZ3Ao589TmTvQ
+	gVmErdF78aSN3hicK/FC5PNfyQg1CWF5/YxbS466AxNry/a7S4BLJx7uUHNpVHDj
+	O6QsnVFPIL6nW5GtVyOp7Y48roGzrSNTh/MeyonFQbVqr0aO5GclU=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 491442AFAD;
-	Mon, 26 Aug 2024 13:28:50 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43EB62B064;
+	Mon, 26 Aug 2024 13:31:21 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B05032AFAC;
-	Mon, 26 Aug 2024 13:28:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98F6C2B063;
+	Mon, 26 Aug 2024 13:31:20 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tao Klerks <tao@klerks.biz>
-Cc: git <git@vger.kernel.org>
-Subject: Re: Sensible way to see what objects are being fetched just-in-time
- in a partial clone?
-In-Reply-To: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
-	(Tao Klerks's message of "Mon, 26 Aug 2024 18:38:29 +0200")
-References: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
-Date: Mon, 26 Aug 2024 10:28:48 -0700
-Message-ID: <xmqqv7znjir3.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Celeste Liu <coelacanthushex@gmail.com>
+Subject: [PATCH] git-config.1: --get-all description update
+In-Reply-To: <xmqq34mrkxre.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	26 Aug 2024 10:19:17 -0700")
+References: <20240822172042.54065-1-CoelacanthusHex@gmail.com>
+	<Zsgh4LacdOt8N69o@tanuki>
+	<6c9f666e-12ad-4b67-a44a-3111686454f3@gmail.com>
+	<ZswfgYsZrzY6kc1E@tanuki> <xmqqa5gznwf9.fsf@gitster.g>
+	<8c1c031b-4f36-4825-93ef-408c50b0ee2f@gmail.com>
+	<xmqq34mrkxre.fsf@gitster.g>
+Date: Mon, 26 Aug 2024 10:31:19 -0700
+Message-ID: <xmqqplpvjimw.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,24 +59,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A828C210-63D0-11EF-A637-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 021B8BC2-63D1-11EF-A375-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Tao Klerks <tao@klerks.biz> writes:
+"git config --get-all foo.bar" shows all values for the foo.bar
+variable, but does not give the variable name in each output entry.
+Hence it is equivalent to "git config get --all foo.bar", without
+"--show-names", in the more modern syntax.
 
-> This was a sucky process though - and I was very surprised that I
-> couldn't see what was being fetched (what the stdin content to the
-> just-in-time fetch calls were) with any of the trace env vars that I
-> was able to find documented: GIT_TRACE, GIT_CURL_VERBOSE,
-> GIT_TRACE_PERFORMANCE, GIT_TRACE_PACK_ACCESS, GIT_TRACE_PACKET,
-> GIT_TRACE_PACKFILE, GIT_TRACE_SETUP, GIT_TRACE_SHALLOW
-
-Yeah, lazy fetch codepath seems to be, eh, not quite well polished
-yet.
-
-I am kind of surprised that there is no trace2() events around
-promisor_remote_get_direct() or its callers.  Perhaps it is a good
-idea to add one to log how often it is triggered, and how large a
-batch the callers of the function is making?
-
-Unlike the diff machinery, blame does not have a prefetch machinery.
-I am glad that somebody is looking at it.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+diff --git i/Documentation/git-config.txt w/Documentation/git-config.txt
+index 65c645d461..1ee5c89ba2 100644
+--- i/Documentation/git-config.txt
++++ w/Documentation/git-config.txt
+@@ -309,7 +309,7 @@ recommended to migrate to the new syntax.
+ 	Replaced by `git config get [--value=<pattern>] <name>`.
+ 
+ --get-all <name> [<value-pattern>]::
+-	Replaced by `git config get [--value=<pattern>] --all --show-names <name>`.
++	Replaced by `git config get [--value=<pattern>] --all <name>`.
+ 
+ --get-regexp <name-regexp>::
+ 	Replaced by `git config get --all --show-names --regexp <name-regexp>`.
