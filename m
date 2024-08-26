@@ -1,94 +1,110 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABD1768FD
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 18:49:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E482B9A1
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 19:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724698143; cv=none; b=lV/v2d4XxyffBbS/fa7mGh8g8o9kL3Ye4dKp6/VgTZpJGXG6xNF53sKu+yWTyNlSqOc/us1NrR6WIkdv41RSh21YD0jt+j2kEUoycpJJ13jvUyKQU2mM6MgrVu4mObsMhvm5O0ZTtYSlhR9FbDWZbTrevCOwJ44cCFwtu6KZAJo=
+	t=1724698841; cv=none; b=LK4TMxWDODfn7fFGhvdrFxgsOdvdsWHVrkZb0Z+E8UWgmjkLJBH4Gxw21gSJdid6BPIamWGMxL/ArpicCRI9/NPyY05HEsZykI68j0CHVZRJMFYMUd/04y0mM2cq+up1NpT2VHGFmU6AEsErRPtnz7jahFKT04ppdamnO5nj620=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724698143; c=relaxed/simple;
-	bh=Rr6De+C0cgIAJPokEkk96GAWOyEn/6MNIkudLy6fJ3I=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t6MQ22rUypYXgzxDgz1F+yznUtUPDr6iBURoTzmacmjtI3ExtzRCqZ0x3JsRwTCSWbO8W7wPEDXrh6Jg3YfmLcgEi77xIv20aC6B6PhJfAV/Pwa6LEJl5CdbWy4Ua+Mtj34hg/XeR2pGpX5WgDiP5JSl1M5PiEEdaEEPC1uOciE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=T2zH83DH; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724698841; c=relaxed/simple;
+	bh=6UQIqVQaXJcr5XUFaQpd/39WenwLQQsa5b4QX1WBZiw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=NsOL8RWFHiTCkdpO7O6L6EbSpZA8u2w1PDCDRnfgSumEJpXQ+HZBIP0e7NlmnMhZWr0VniAKiiZheF1NcxpKLEDzXEYd2xooBzkGHEZJ+FgG5fJQqhUX0FkBGskzh+v8aXVlb5U0JJDdj7R6ffaw2x6t1uebFqt9SVq2EupsW+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=clz+kW0Z; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T2zH83DH"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 23EFB2BA85;
-	Mon, 26 Aug 2024 14:48:59 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
-	r6De+C0cgIAJPokEkk96GAWOyEn/6MNIkudLy6fJ3I=; b=T2zH83DHsWacIa6gO
-	JEEVffJp6LTl7tbN86Fttb8OkdAz1OGswaaG2KzN97Pdaluv2RYf1OYLRtJLXnYq
-	nW+IhsMr/Zps5fuKpS5tPPFro/Cct7JuvrTr+Vl7GYlkQYs+iZzxDTsXhssszwFj
-	NJqDJw7mWEWpnCyRqpYGTOuJK4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C3772BA84;
-	Mon, 26 Aug 2024 14:48:59 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 837402BA83;
-	Mon, 26 Aug 2024 14:48:58 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2] git-config.1: fix description of --regexp in synopsis
-Date: Mon, 26 Aug 2024 11:48:57 -0700
-Message-ID: <xmqq4j77jf1i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="clz+kW0Z"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f3ea86377aso48703671fa.1
+        for <git@vger.kernel.org>; Mon, 26 Aug 2024 12:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google; t=1724698837; x=1725303637; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6UQIqVQaXJcr5XUFaQpd/39WenwLQQsa5b4QX1WBZiw=;
+        b=clz+kW0Z+BXBYAdPsQd2XP03PSaBQtE5rUDheA0sWqBgTLkzaiCjLksYbxd91tqHDs
+         ByupG1Z7dWHXnn5SXdUqb823ZMxDiSS8R8rZ8zdV1cO7UdALi6yEV0WJYuULdYN6ZsaO
+         Bygl6O6FidiuhPPHWmHVDmDYh5jhVD0PdhIzU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724698837; x=1725303637;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6UQIqVQaXJcr5XUFaQpd/39WenwLQQsa5b4QX1WBZiw=;
+        b=XItMoOPVsRYnVx4tQ/L5+P9I0twr0XFv5UY8PMjUF3L/wANUnVQY/OweMr6ogP1Ofl
+         7531TZ2RepWwJFKsvWXP5GWwznP+GoLPWTKVWe1bW0o9OeXCdzvUl2Dm7sTqZNzP3JG/
+         qVg9DkZp97spAiMWvFsp2bPm/zwfiOp0HBYoEDSKKChehc7/cJTVZdoQdd0XwIy4Ta1x
+         AxIayprq+/OyzclnLGwFpQoPhneKXy9UYNunBAKrIR0th4Tjx36HUs58w2Ltv6uN3NEy
+         yxpTyUxSrstx5P6LOxdsYKM1o/z8HXpaMNrfLZ5OzW53iCe7F6NxG3Vh1QDUTlyIMkGJ
+         V5vw==
+X-Gm-Message-State: AOJu0YyXQE7fqCZGxWjHvKK2rvKT9jq2fzU+Sod32kzhQeR5+3xBlCYw
+	6RpmZjdfi3iKwIg8U+tMX+/51sPCCIt328zOs4sUkmA+L/9bbc9AA7LoIOIe4Yv+cqYDix3QcLT
+	uRaH2t7P42ZJqVSol5uWyoySCPL7WPKQenRBrt9DWqiGWpJ0+T4ct3In36A==
+X-Google-Smtp-Source: AGHT+IHE35SVwW0ENmRLAkChcVH9djj6gy2VuBp0nNTIyeRBV9xLigtCR7803ese05frmeitZzHO15eE+HcjrsxoEc4=
+X-Received: by 2002:a05:6512:4025:b0:530:ae22:a6ea with SMTP id
+ 2adb3069b0e04-5344e4fae9cmr211465e87.40.1724698836903; Mon, 26 Aug 2024
+ 12:00:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- DA702140-63DB-11EF-BCA2-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+From: Tao Klerks <tao@klerks.biz>
+Date: Mon, 26 Aug 2024 21:00:24 +0200
+Message-ID: <CAPMMpogApZ6VN9sYxgmtHCickkstM6HZq1teeAa+a2t1_BY0sQ@mail.gmail.com>
+Subject: Can git log be made to "follow" in the same way as git blame? Why /
+ in what way is "--follow" broken or limited?
+To: git <git@vger.kernel.org>
+Cc: Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The synopsis says --regexp=<regexp> but the --regexp option is a
-Boolean that says "the name given is not literal, but a pattern to
-match the name".
+Hi folks,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * t0450 strikes again X-<.  This should pass that test.
+I've been working on a "git blame optimizer for partial clone repos",
+following up on a thread with Derrick Stolee from 2021 (
+https://lore.kernel.org/git/0b57cba9-3ab3-dfdf-5589-a0016eaea634@gmail.com/
+), with the intention to pre-fetch all locally-missing blobs for a
+given file in the history of a branch/commit, and it ended up being
+much more complex to do that I expected, basically because "git log
+--follow -- SOMEFILE" doesn't return all the commits containing
+versions of "SOMEFILE" that "git blame" will end up visiting.
 
- Documentation/git-config.txt | 2 +-
- builtin/config.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+I thought this strange/interesting, because (as far as I can tell), as
+long as there are no renames in the history of the file, "git log --
+SOMEFILE", without the "--follow", *does* seem to return all the
+commits containing unique versions of the file.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 65c645d461..85a7edc407 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git config list' [<file-option>] [<display-option>] [--includes]
--'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp=<regexp>] [--value=<value>] [--fixed-value] [--default=<default>] <name>
-+'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<value>] [--fixed-value] [--default=<default>] <name>
- 'git config set' [<file-option>] [--type=<type>] [--all] [--value=<value>] [--fixed-value] <name> <value>
- 'git config unset' [<file-option>] [--all] [--value=<value>] [--fixed-value] <name> <value>
- 'git config rename-section' [<file-option>] <old-name> <new-name>
-diff --git a/builtin/config.c b/builtin/config.c
-index 20a0b64090..97e4d5f57c 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -17,7 +17,7 @@
- 
- static const char *const builtin_config_usage[] = {
- 	N_("git config list [<file-option>] [<display-option>] [--includes]"),
--	N_("git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp=<regexp>] [--value=<value>] [--fixed-value] [--default=<default>] <name>"),
-+	N_("git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<value>] [--fixed-value] [--default=<default>] <name>"),
- 	N_("git config set [<file-option>] [--type=<type>] [--all] [--value=<value>] [--fixed-value] <name> <value>"),
- 	N_("git config unset [<file-option>] [--all] [--value=<value>] [--fixed-value] <name> <value>"),
- 	N_("git config rename-section [<file-option>] <old-name> <new-name>"),
--- 
-2.46.0-528-g6fe5f670b3
+The only reference to this weirdness that I could find in the doc,
+after ripping my hair out for a few hours, was in a note on
+"log.follow" config, under the "git log" doc eg at
+https://git-scm.com/docs/git-log : "This has the same limitations as
+--follow, i.e. it cannot be used to follow multiple files and does not
+work well on non-linear history."
 
+What seems weird and interesting to me, is that whatever is going
+"wrong" in "git log --follow" doesn't happen in "git blame". I
+couldn't find an easy way to demo/prove it, but I found experimentally
+that the set of blobs examined by "git blame" (and fetched
+just-in-time if-needed in a partial clone) is larger than the set of
+blobs in commits output by "git log --follow -- FILENAME", but not
+larger than the set of blobs in commits output by "git log --
+FILENAME" (for a file that has not been renamed).
+
+You can see the strange effect that "--follow" has by comparing a run
+with and without on "git.c" in the git project for example - a file
+that was never renamed:
+
+git log --pretty='%H' -- git.c | sort | uniq > ~/test1 # 717 commits
+git log --pretty='%H' --follow -- git.c | sort | uniq > ~/test2 # 537 commits
+
+You'll find that with "--follow", you get a couple extra commits, and
+a whole bunch missing. You can try to fill them in with
+"--full-history" etc, but while such options are *accepted*, they are
+also completely and utterly *ignored*.
+
+Insofar as this is a known issue... is there an intelligible reason
+for it? Should be something we aspire to fix, or should the doc be
+improved to make it more obvious what this option does and doesn't do?
+
+Thanks,
+Tao
