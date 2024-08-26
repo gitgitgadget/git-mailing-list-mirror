@@ -1,87 +1,108 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF192B9C5
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 19:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A54156458
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 19:44:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724701068; cv=none; b=UFf4t2UsJrxp4/GD/TY9X0fnvyD941h3f8WoXdyJp2bOaYHPUWe8PBQ1oudPuCu+n/vK94VQIHyhFXGSO0xu1YHuicBveIJWnpLCpkQEG5dEdAgrR4TIjM7hrTITJDKalDaemuIW1TJf+byPUJ2yLKdNLo85fSz8ySOn5+pgFiI=
+	t=1724701442; cv=none; b=HnJE6odi7Yc0tGwtJsBD0d4yG63XoRbgftOGx52tUQ+VSJm1asnVWWmP4rSXp+PEbKBN6npAAr+k8RxGU7/QnImdF8T1yU1hCdXLJP6DbWzqT5VArU2BaDbnNt3q2IAemtkAF2R6riT/pbmG2OSVWPmsJodOcvliEN3CYAkVMX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724701068; c=relaxed/simple;
-	bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qnEojkLit4+R6n2tdKKdLBrHCBjaZ8zn03BlPRlO9nphw3LeR/sW5W++DsP1pyj1DqB//zF4aKhy/WYG2IUgcbpy+o6fS3b/DBniMp6txij3JIijrtHCHrXgEZXJl48zLNtoT90TgtX7YdfZ5rihgve+rVnIrQCpxTfd79ln8gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=CIDT+DOj; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
+	s=arc-20240116; t=1724701442; c=relaxed/simple;
+	bh=rBw0o3SCoOgT8zPENz+INkYpKjVBqW11foS/AkOH1LQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FnKoLbMkx2cQyv1laWP21zZzKM/J4kluVKxNvJEroCVQdioYonJRfdeMxwpJ9n0alrM9s0FdvgzvYFPGonac4W5c8gY7BCiz28t/+AUhPeC6Das97BhbC9TaG3ECelyZRV/y0ffQx/c90wzcyJH3jeh7ZMZk9VFymmRP4/47QuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AJcrq7HJ; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="CIDT+DOj"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f401c20b56so40913601fa.0
-        for <git@vger.kernel.org>; Mon, 26 Aug 2024 12:37:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1724701064; x=1725305864; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
-        b=CIDT+DOjhxjSDfuMDO9C69n2FWtlqtpCqokuqzsvHzJi7SCUTfcl+WVAISZqMBXcCh
-         A7Jo+pZt4keil0BSvtPdK/xJpfH1OChmTELr19/XS2MCQQPw4wjBTmhjWjIlPd6lmI8u
-         Fms1uTRgAtv2AgD7cwAxtHZRooP6UeHyyKIQ4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724701064; x=1725305864;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kFqslyfNBZFkTHrpe/HiIq2daofnbyT7dzuSgvCYb4g=;
-        b=jp+MUjekxXH4/jFFWEqIdpSxRu0dvehx57iVfCabysIm9wgYfIUNJWNZRRzp9JTv+R
-         qIpzvgJIPgK9rHQQjgULUdRVKL2uN9nnmuBx0h1/ku/mSSe2lzDArhC/Ni8RN00B7bMd
-         sPh2dAxz4LngjI1VJ1yXzNnAzhhgFynI99C+G8NqmwlV7P4vZJefShynGKyso/AXw2jv
-         2QjSwOVEEouleY2ZpwO1QYXqabFS2jZdXPP98PHxyiP3p5PWf6RcUeRFfoQLgtzv1z2H
-         3UoxF+7qPZ5HWxj8djdv36c8JfSdVEH7sj0/4+ExA8f796k2g/ZIkZ+E3HnK9lpfsvNr
-         JnvQ==
-X-Gm-Message-State: AOJu0YzdOyQpp+SXWH4vexkx2aD8yn3NLkXqczuuiF7pb6pac15VfPTz
-	AB+fS4Q8Hri84UCbkpstseC5ZIVrtZYE1W+YxH9PaTXAtt++JY+M0KQwY4VAq+S0ZDTLp+HoXrC
-	mzIK3cYZA6dhu5TmxspFV0f0D5af2Zrtu6k9Y
-X-Google-Smtp-Source: AGHT+IERAj00Jpo56ipYMNjnlOoWrDB9PC/307pfufwE0nBrdxHqFThGtPNicNgAcAxbY+mDYPVDFNNvzKXjT2Ns0D8=
-X-Received: by 2002:a05:6512:33d1:b0:533:4517:5363 with SMTP id
- 2adb3069b0e04-5344dd982e5mr202467e87.21.1724701063817; Mon, 26 Aug 2024
- 12:37:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AJcrq7HJ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 609E328EB3;
+	Mon, 26 Aug 2024 15:44:00 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=rBw0o3SCoOgT8zPENz+INkYpKjVBqW11foS/Ak
+	OH1LQ=; b=AJcrq7HJIhe3k/Zi/dJMcDn8lWCZcTyPpiVmILRi3k1/JeKNLb2RDK
+	JjcHnN+TFwul9WKZVIxmVbHO0jMVywtku5enJxjiK/A188UFCdgI0Yikmtk85ub6
+	s9bcPGi5PUdhchFyrbRlaWP+w9Ef4RIaQ5SHJixhBCbDQwQCy/xbo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 592C728EB2;
+	Mon, 26 Aug 2024 15:44:00 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DA2C528EB1;
+	Mon, 26 Aug 2024 15:43:56 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tao Klerks <tao@klerks.biz>
+Cc: git <git@vger.kernel.org>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: Can git log be made to "follow" in the same way as git blame?
+ Why / in what way is "--follow" broken or limited?
+In-Reply-To: <CAPMMpogApZ6VN9sYxgmtHCickkstM6HZq1teeAa+a2t1_BY0sQ@mail.gmail.com>
+	(Tao Klerks's message of "Mon, 26 Aug 2024 21:00:24 +0200")
+References: <CAPMMpogApZ6VN9sYxgmtHCickkstM6HZq1teeAa+a2t1_BY0sQ@mail.gmail.com>
+Date: Mon, 26 Aug 2024 12:43:55 -0700
+Message-ID: <xmqqa5gzhxxg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
- <xmqqv7znjir3.fsf@gitster.g>
-In-Reply-To: <xmqqv7znjir3.fsf@gitster.g>
-From: Tao Klerks <tao@klerks.biz>
-Date: Mon, 26 Aug 2024 21:37:32 +0200
-Message-ID: <CAPMMpoiPeSyLHUd072Q9AozdaCAjpOL03jY-0Y33B2iEQ5EdTQ@mail.gmail.com>
-Subject: Re: Sensible way to see what objects are being fetched just-in-time
- in a partial clone?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8869076A-63E3-11EF-8776-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-On Mon, Aug 26, 2024 at 7:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
->
-> Unlike the diff machinery, blame does not have a prefetch machinery.
-> I am glad that somebody is looking at it.
+Tao Klerks <tao@klerks.biz> writes:
 
-I'm not convinced I'm looking at it in a very useful way from your
-perspective: My C skills being spectacularly lacking for fixing the
-core code, I am just writing an external python-based wrapper for "my"
-users.
+> What seems weird and interesting to me, is that whatever is going
+> "wrong" in "git log --follow" doesn't happen in "git blame".
 
-I will try to "productize" it sufficiently to send here in case it's
-useful to someone, but all I can really offer the community-at-large
-is confirmation that in principle, the approach works as you would
-expect: With some small number of jit-fetches for rename-detection
-during the revision walk(s), and with one blob-prefetch call
-afterwards, "git blame" can be made to run cleanly/quickly in a
-"filter:none" clone even on a file like "git.c", with hundreds of
-revisions.
+Yes, because log.follow was done as a checkbox item but blame was
+done as a real feature ;-)
+
+In tree-diff.c:try_to_follow_renames(), you'll notice that it only
+has a space to remember a single path in .single_follow member in
+the diff_opts.  That member is the hack.
+
+Imagine that the original commit had paths A and B, and over time,
+the history diverged and in one fork A got renamed to C while
+another fork B got renamed to C.  Eventually these two forks merge.
+Now you want to "follow" C, so .single_follow member will have C.
+
+
+  ----1----3----5(rename A to C)----7---9---10---11
+       \                               /
+        2----4----6(rename B to C)----8
+
+You follow the history of one fork and notice that C came from A at
+commit #5.  Great.  Your .pathspec member will be _switched_ to A
+and you keep following the history of A.
+
+Imagine further that your history traversal didn't follow one fork
+fully before following the other fork, but dug commits from newer to
+older, so your traversal jumps around between two forks.  What
+happens when your "git log --follow HEAD -- C" that has internally
+switched to follow A already jumps back to follow the other fork at
+this point?  It does see that A exists (maybe unchanged), and you
+see A's history, but that is not a releavant history---what ended up
+in the final C from that fork was in B, not A.
+
+Unlike the above checkbox hack, "git blame" uses a real data
+structure to keep track of what came from where.  Instead of a
+global "this single path is what interests us now", it knows "in
+this commit, this is the path we are looking at", and when it looks
+at the parents of that commit, it checks where that path the child
+was interested in came from each different parent, and records a
+similar "in this commit (which is parent of the commit we were
+looking at), this path is what we are interested in".
+
+To equip "git log --follow" with similar "correctness" as "git
+blame", you'd need to somehow stop using that single .pathspec thing
+for the purpose of keeping track of "which path are we following
+now?" and instead use "this is the path we are following" that is
+per history traversal path.
