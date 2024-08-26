@@ -1,139 +1,73 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C64A14534A
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 09:51:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152C426AED
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 11:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724665870; cv=none; b=oBTCJgZuJiNpb4DWTEfRRM0DrfYbw+af5h7tquogenMZHwbqnFQF6QWhKrrt16OPdKdZTTuoD4W7jyMfS8197O0kcxhz1RpXBo2H1Y/nnCzWKtr7JhJyc2ykFLSq85Lu22qtehOpVJUquWdz+KQoQDtITMURdGwj6ui8iYESB4Q=
+	t=1724670596; cv=none; b=rlJqzcEMPGs2dFCcCgP9xz4qdyjbjGM1b7EP+Y23qCEtD6Bld9gJQdM9hVWDBlv05/pKLCjsNbJTZWeF9ZYScB37QEP/iUAYCnj4+mxJZRTMwNmfXc6mtWqcLLdA4ikmneBYmmHkzV3DgIaixrNtaH5aQbW8mF5p+XU1h2AjZuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724665870; c=relaxed/simple;
-	bh=lwBX4dVwOznj6kOS2OhhcTUQs7/I2WBTxYRXBl49pJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yyswhju2k9SoB/LEZeVFNTciiGmVC3mqsYKtwii7VRFI4J6NYatTPYx2YrMGrGxN3WeOqs8dVf93RAXSg7HvJi14TOZh2/Co/7q+Nv/5mQMlkmJWt66BDsmyxVOIlrRa46BUmh4Wi8+FxoGRmp5G+2DcsCV0EOAOvSgXuJ0dn+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VBtIXB/q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o7L7FKss; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724670596; c=relaxed/simple;
+	bh=3dJZcCgWEBX08UkBEu72praBywPCxdPvLAnS8yuQsX4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=deaCzOzfq7AsA5qy2IODS3q7tF+X0MeHcHUmg6boE8Z3I6s//MXZPt0WWlxYgvYihVMAlCt0YhUULt7wY9CU3Xmhp8cl11pl0Zw56otXe0y4tp+2itbsXLLb3oURrXW+7nW0fP0EkzUylmC2yckFHlyueBbZ9iel46k704oVJVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k5hE9u+K; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VBtIXB/q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o7L7FKss"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1007F1151AF5;
-	Mon, 26 Aug 2024 05:51:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 26 Aug 2024 05:51:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724665867; x=1724752267; bh=dod9Z+Wmim
-	/lqNKtKbo2ZeSho5VlgbgYO3E56t/lPKY=; b=VBtIXB/qir0SKDKVM/Z1nyATso
-	brRaZt6NYYYY0APXnx6D1Ju/MS19lzQ6dLvOhbV8yjckX28ER3IPKw9j1Pkir+QD
-	/uby5seFd0zuJeLDuq1HveEMHrl98m1/7+c7cItHodefEX1l2WGMhX1AoQhytiz9
-	BjjwcAF6HOdXu0DuIU0JFgZg+y1VDfkd41HTlx3ehqpf80d7rx/DQIvIzis/2ZQT
-	c8pW+8uWZyEII/IDSD+nhuhJVwIg57l0ZopFj3bi4J4T5Pp2mNfrCBzWD9TOxMby
-	cyyooV1LGa15uQzC+Dw5gT0Z24dLGz0tH4iq25CoqwpsNAaMLet0L/aLSYuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724665867; x=1724752267; bh=dod9Z+Wmim/lqNKtKbo2ZeSho5Vl
-	gbgYO3E56t/lPKY=; b=o7L7FKsstDgqeN9mfxQt7fBrJgYEPTqrHU6w28+2NEMq
-	fUbwcCETkqJsCuAVqVCulIcZVAmeoW/MiFg90kpCg7Xg6W+cKfPdGaSdzJGbd3/1
-	2hYqusgp++rzd6o9pbLl36e6M6HTYFlBb3krllR3jNdmg7sAlL0r09OmVCwRoMfy
-	+51M7Ubye4S3X0Rmer1ag9fY0ArXUvNt95/MzmUkKIyjxcjr6K1cR4HPA+lommCP
-	90Ak8JOLBIfpCAGcV/d5iUqp8VuFxJdkR68hA9kvhlXfbMIoHezx7zkN0AVYF7vg
-	VG7GKbUAEu3TxR+ulVruTLXv04W4qOLGl7LDmQYOOA==
-X-ME-Sender: <xms:ClDMZlS3LbN0MVdlTCiNdAvQes-fQlXiC3oxhZJn3AugMgxlBE6yYA>
-    <xme:ClDMZuyikn6aj66FDDnic8odNd-ks-2Yx730z5hgpHUTCi9QcU4qbtaaE96Pxad2D
-    wKSdekFO8f7r3u0Fw>
-X-ME-Received: <xmr:ClDMZq2-v3NtbE0SrqB0_vBNzpkLLouRsAnewJXm-SOHcwfBv422itThqjmx7SqXf_dq8gFMLKjSO1g2roLqG0um8wRBBpE29kguc91HKi8a9Ww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvkedgvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ClDMZtAJU6CibwGAW-F4CTQlyXyLu_YIV4X-rBHSXMq7wmtyySoltA>
-    <xmx:ClDMZujRL4Yk4-2K2fmvlGHrE3VEdBFKimRhLMK9Mu3JziKK3GQxxA>
-    <xmx:ClDMZhpsuUt6SbKir6XkPP3Qynx9JcJj8_yV_OZebniC9U-QoY_WuA>
-    <xmx:ClDMZpj0p3sJPLcDv2VQB_HbJmbsF9USXumtb2pHSNl105y0vue4zw>
-    <xmx:C1DMZhs03CoScK0a7eTx5hiF4jLKeSuR3-y_GQ_0bNxF4BCT1IgFNlx_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Aug 2024 05:51:05 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a8e817f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 26 Aug 2024 09:51:01 +0000 (UTC)
-Date: Mon, 26 Aug 2024 11:51:00 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] bundle-uri: plug leak in unbundle_from_file()
-Message-ID: <ZsxQBEpfChQozhF7@tanuki>
-References: <20240826083052.1542228-1-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5hE9u+K"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e13c23dbabdso3951537276.3
+        for <git@vger.kernel.org>; Mon, 26 Aug 2024 04:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724670594; x=1725275394; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jvuDpB5fb7uL7N6uy5jUegc7cl+gXlDbB7FAxnBz+zA=;
+        b=k5hE9u+Ke50IrAJk1sIBrjwy2JHh4R7Q7k0LLY1d4D78z/0ctwGiwqZFC+F+l3AhSB
+         xE8DIgcHJKaVOx1eKE2Qdo5qFz8cssE9HLdFU213rePpvHZeARIva6cjH2037g9IVBmj
+         QV6g1v6OpSnX2MwZVoQrIOto9vcPS5iIp2xFQkRNlxIdd3Abkm6V68pBXvXxOXPbvucJ
+         va4PfNXTTd5WThsfzKxrsdL2xduf0Gs+/Ct7Jo1DKclWuxrP4caMiJwelPPIF0jOZ0P5
+         WYoSeZqRDsimOMN7cSnL55peaTGKUnB7w3RhM8BKdzuvtmjr6HpAaIbfbjQ/mhyBITku
+         qHGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724670594; x=1725275394;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jvuDpB5fb7uL7N6uy5jUegc7cl+gXlDbB7FAxnBz+zA=;
+        b=ij/MzkpWSP6g8WMJRORRqV+0rBcWR3R+x80IjfnnO5m+13VsWKjdQxltGsyw3n8Qxo
+         EfudKQbsXEpVxY/uwNqFU4RMuVHqRobsqO6y0e2XwPtlhxMJNr4EE3yfCyGxh6QebrsV
+         9fMPYtqYw2QWGW75Khr//c3qU894hlJfYyxFWwtfrh8Y7DFSFHuuDgjzm20KFpSsayd0
+         GGh7v+V8r+gZsFFQpmn9FdkCe/zegWdJkb/BJQBh26yXG24s7gnpApdOzn+0DLtxMgnn
+         SYXq8eekU77Cg5HcV7C8zLZSUNFT5A7Ooz5QuJpZiInxz5QlDoYipRpRU/RLgikvOP0Z
+         lN3Q==
+X-Gm-Message-State: AOJu0Ywk77l44BwV3CSdUztjLMh0K50YjAh8GH3ADZqBasi45836SacN
+	9VpJjV9n4wjNQoytwhCBxkNJTHUBynkkKNTWYFaZV0wjQgyAkSk0GuC074jxGeJph69d8rtAEQZ
+	YSwei4bUuETmV/vp/rzmleoYNGtn5R2c5
+X-Google-Smtp-Source: AGHT+IE1OUWjMvpMKz3L8HeqFWqht9apT8h85Ya38JHhKEKtt3trwjrnqOtY96AQVYEwQ6PhpBVZnzDW0PpewJUfIzk=
+X-Received: by 2002:a05:690c:4612:b0:664:badf:5a80 with SMTP id
+ 00721157ae682-6c62924fa0amr86426437b3.28.1724670593839; Mon, 26 Aug 2024
+ 04:09:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240826083052.1542228-1-toon@iotcl.com>
+From: Pavel Rappo <pavel.rappo@gmail.com>
+Date: Mon, 26 Aug 2024 12:09:43 +0100
+Message-ID: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
+Subject: How to turn off rename detection for cherry-pick?
+To: Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Aug 26, 2024 at 10:30:52AM +0200, Toon Claes wrote:
-> When the function returns early, the variable bundle_ref is not released
-> through strbuf_release().
-> 
-> Fix this leak. And while at it, remove assignments in the conditions of
-> the "if" statements as suggested in the CodingGuidelines.
-> 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  bundle-uri.c | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
-> 
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 1e0ee156ba..eb49cba182 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -367,17 +367,21 @@ static int unbundle_from_file(struct repository *r, const char *file)
->  	struct strbuf bundle_ref = STRBUF_INIT;
->  	size_t bundle_prefix_len;
-> 
-> -	if ((bundle_fd = read_bundle_header(file, &header)) < 0)
-> -		return 1;
-> +	bundle_fd = read_bundle_header(file, &header);
-> +	if (bundle_fd < 0) {
-> +		result = 1;
-> +		goto cleanup;
-> +	}
-> 
->  	/*
->  	 * Skip the reachability walk here, since we will be adding
->  	 * a reachable ref pointing to the new tips, which will reach
->  	 * the prerequisite commits.
->  	 */
-> -	if ((result = unbundle(r, &header, bundle_fd, NULL,
-> -			       VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0))))
-> -		return 1;
-> +	result = unbundle(r, &header, bundle_fd, NULL,
-> +			  VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0));
-> +	if (result)
-> +		goto cleanup;
+As far as I understand, the "ort" strategy does not allow turning off
+rename detection. The best you can do is set the similarity index
+threshold to 100%. However, it does not address the case of candidate
+files being exactly the same.
 
-This changes the returned error code from `1` to whatever `unbundle()`
-returns. Is this intentional? If so, the commit message should explain
-why this change is safe.
+So, it seems to me that the only way to do it would be to downgrade to
+the "recursive" strategy and set the "no-renames" option:
 
-Other than that this looks good to me, and the fix does not conflict
-with any of my leak-plugging series.
+    git cherry-pick --strategy=recursive --strategy-option=no-renames
+<commit>...
 
-Thanks!
-
-Patrick
+Is my understanding correct? Thanks.
