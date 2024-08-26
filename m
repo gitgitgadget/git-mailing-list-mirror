@@ -1,235 +1,246 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E09364A9
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 20:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1A63B782
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 21:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724704674; cv=none; b=QuaGSG433gvwZKDXcoLyP8vY2fbGkxSFH02ch7GvSbkwQk9WGVUkimisDAaVp5FhET/81Z0u6+/ugjOGGHnHX2Y7GhoNsB2zH2fTCvtTF46avNLoGmHVLjdQ+DhE9K8KOZHGf4t0bHGVptV0eGAGLCUE6altlfKwMgk4f3g//c0=
+	t=1724707877; cv=none; b=vEw3DxPIInKjp6WFFzwb2y/0RypqkqCLY4PYkH/ju58yCr+Dn1/zb7Yiv9pDRGf5ladXL2DJmuB1UfgVbAiw0sdw3NlItSdkhtYy48WDDFuRlnJeXy0eCoinPzIaGWpx9oJafzBJXqO2FJMf4OHGysLRbtKzDNBaUrXr4znsfRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724704674; c=relaxed/simple;
-	bh=YbRVr1e58ysK9lOuleDyjx++csc7nprcaFoTCFQspm8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L1GaBUxMwrGTRZsgmbxU6F09O4a7flSb30wL7xNpYGeJHTquT9t+sLTnDGL8NDPVjRUlB/veZ4PlyZIMJDV331IZRiJeMX0xoxmSIw8WefjxaRqfDbGBTrBatzZ8GwlheMDb/3C6VvdeK4WsVwld0kedrAF+1cGAX+ro/N0B5Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=DioIq9w8; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
+	s=arc-20240116; t=1724707877; c=relaxed/simple;
+	bh=PzzXkxdcR7U0UJIwX0A22VqoT0lycD17MVRg0KK0xbM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=exnu0msKhSvNe4Ebp8cj+M4eil0K2y/weNhnyp77vVbbUrx6pvnsg6D9Gs95DX7jxVQY6gU9WhzWdauxsZvBTWabKBqIig8k+Nq+ys5crt00tdS3D9btaRPX8tET4Twlj3qD6EbUyASIghVVwYX0g1ccDWo+eLPy8LsTCzwS/Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ml08Gdse; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="DioIq9w8"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53346132365so5574705e87.1
-        for <git@vger.kernel.org>; Mon, 26 Aug 2024 13:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1724704670; x=1725309470; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YbRVr1e58ysK9lOuleDyjx++csc7nprcaFoTCFQspm8=;
-        b=DioIq9w8g+sy7aI0edBs5Z6k1eEQHK9yNA2A1LlH01tG009m4iKnqwxMHMoe4AtV+E
-         dHZVxoptMOHloWWYBAWH6GQHJAuca2A6rbDgbC4kZDH9/bDcUnvBUDfpA9nH33aBoloD
-         wTZ7dyMjOs1FgbHldixYBXfoA15PWQY/Wdoic=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724704670; x=1725309470;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YbRVr1e58ysK9lOuleDyjx++csc7nprcaFoTCFQspm8=;
-        b=bdXNy6ua9C2XyP1ITjUdqbT6yILK6mnz5T18rUgg5h/wM+uBqY+jHDAk8UcQVdugTM
-         hskIYB2X6mgaKxbsyFE/2ZuHtiWHq6PPib8PraY7V7VUD8TDRakB4zc7BiJgezDMweVw
-         wC0W4xmIJKhuhNAkJEa5sJNStS0PmR2cFkqwx8xM/uUAi5NjWWMs/+JZ2nPx70+LMGKL
-         ns7LH6GoDZzxNzRjhj6XjWP20rIbFyGJ7gjpr0UIeFdpHH43PL7ShvoaHJOgRDawuKHM
-         FwxaXNvGFS8iYPSaxNVP2v1YAbZBF8pf87zbIpx04yGBRXJeQb6cK5O1lOKhp1s0Sl1X
-         H90w==
-X-Gm-Message-State: AOJu0Yz3b19Z1ymwZgPtKXazL6eu9kMKdocGnqQepGsDZDNDkgbV821f
-	Td1jYuQqmdKNv1R6Hyuro686cjUCHJKXhuMYW+5AI0EWXjA3N1rBpX+yVjg6I3Lk0MLiRxXcosb
-	eDDX4Rdy1zpPJkO8M05jfzBSMkgh5kUjCEdMn3YkIbtLwQjw/+EtSF1s=
-X-Google-Smtp-Source: AGHT+IEuTuwALCW8Kt5u4wm7zWhkOW2Nr+b/hqhRZ4x6eVEssFydWq3y8yDCn6LgEQEB/5R9j2R/kAAilrHH99FwZGM=
-X-Received: by 2002:a05:6512:a8b:b0:52c:e17c:3741 with SMTP id
- 2adb3069b0e04-5344e3bc066mr304879e87.5.1724704669702; Mon, 26 Aug 2024
- 13:37:49 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ml08Gdse"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E47CC1D84E;
+	Mon, 26 Aug 2024 17:31:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PzzXkxdcR7U0UJIwX0A22VqoT0lycD17MVRg0K
+	K0xbM=; b=Ml08GdseSrgUeSmgbGFZbnp+WYinMOEEkqbnN2Ro5q7Hbgu9xSdd5y
+	3Jwa5pkSt6L7qz0c1c1iGsJ3IIhNpm8TMNE7kbDeXjjlt/lsosR6GfxlgArP9ws+
+	3Xbqriy+Ee3tJvxzrsundRn98atkViCZqhqiwODeaZEfumy7clJjg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DCE161D84D;
+	Mon, 26 Aug 2024 17:31:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 42D801D84C;
+	Mon, 26 Aug 2024 17:31:11 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <e@80x24.org>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v2 05/10] cat-file: use delta_base_cache entries directly
+In-Reply-To: <20240823224630.1180772-6-e@80x24.org> (Eric Wong's message of
+	"Fri, 23 Aug 2024 22:46:25 +0000")
+References: <20240823224630.1180772-1-e@80x24.org>
+	<20240823224630.1180772-6-e@80x24.org>
+Date: Mon, 26 Aug 2024 14:31:09 -0700
+Message-ID: <xmqqjzg3geea.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
- <xmqqv7znjir3.fsf@gitster.g> <CAPMMpoiPeSyLHUd072Q9AozdaCAjpOL03jY-0Y33B2iEQ5EdTQ@mail.gmail.com>
-In-Reply-To: <CAPMMpoiPeSyLHUd072Q9AozdaCAjpOL03jY-0Y33B2iEQ5EdTQ@mail.gmail.com>
-From: Tao Klerks <tao@klerks.biz>
-Date: Mon, 26 Aug 2024 22:37:37 +0200
-Message-ID: <CAPMMpojae7t1Z0PQPf=d2WzzbaMwkhvo34b_sxdtUQxvDu4fJw@mail.gmail.com>
-Subject: Python-based fetch optimizer script for "blame" in Partial Clones
- (was: Re: Sensible way to see what objects are being fetched just-in-time in
- a partial clone?)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="0000000000002e532006209c19e4"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 839977BA-63F2-11EF-9C06-E92ED1CD468F-77302942!pb-smtp21.pobox.com
 
---0000000000002e532006209c19e4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Eric Wong <e@80x24.org> writes:
 
-On Mon, Aug 26, 2024 at 9:37=E2=80=AFPM Tao Klerks <tao@klerks.biz> wrote:
+> For objects already in the delta_base_cache, we can safely use
+> one entry at-a-time directly to avoid the malloc+memcpy+free
+> overhead.  For a 1MB delta base object, this eliminates the
+> speed penalty of duplicating large objects into memory and
+> speeds up those 1MB delta base cached content retrievals by
+> roughly 30%.
 >
-> On Mon, Aug 26, 2024 at 7:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> >
-> > Unlike the diff machinery, blame does not have a prefetch machinery.
-> > I am glad that somebody is looking at it.
+> While only 2-7% of objects are delta bases in repos I've looked
+> at, this avoids up to 96MB of duplicated memory in the worst
+> case with the default git config.
 >
-> I will try to "productize" it sufficiently to send here in case it's
-> useful to someone, but all I can really offer the community-at-large
-> is confirmation that in principle, the approach works as you would
-> expect: With some small number of jit-fetches for rename-detection
-> during the revision walk(s), and with one blob-prefetch call
-> afterwards, "git blame" can be made to run cleanly/quickly in a
-> "filter:none" clone even on a file like "git.c", with hundreds of
-> revisions.
+> The new delta_base_cache_lock is a simple single-threaded
+> assertion to ensure cat-file (and similar) is the exclusive user
+> of the delta_base_cache.  In other words, we cannot have diff
+> or similar commands using two or more entries directly from the
+> delta base cache.  The new lock has nothing to do with parallel
+> access via multiple threads at the moment.
+>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+>  builtin/cat-file.c | 16 +++++++++++++++-
+>  object-file.c      |  5 +++++
+>  object-store-ll.h  |  8 ++++++++
+>  packfile.c         | 33 ++++++++++++++++++++++++++++++---
+>  packfile.h         |  4 ++++
+>  5 files changed, 62 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index bc4bb89610..8debcdca3e 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -386,7 +386,20 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+>  
+>  	if (data->content) {
+>  		batch_write(opt, data->content, data->size);
+> -		FREE_AND_NULL(data->content);
+> +		switch (data->info.whence) {
+> +		case OI_CACHED:
+> +			/*
+> +			 * only blame uses OI_CACHED atm, so it's unlikely
+> +			 * we'll ever hit this path
+> +			 */
+> +			BUG("TODO OI_CACHED support not done");
+> +		case OI_LOOSE:
+> +		case OI_PACKED:
+> +			FREE_AND_NULL(data->content);
+> +			break;
+> +		case OI_DBCACHED:
+> +			unlock_delta_base_cache();
+> +		}
+>  	} else if (data->type == OBJ_BLOB) {
+>  		if (opt->buffer_output)
+>  			fflush(stdout);
+> @@ -815,6 +828,7 @@ static int batch_objects(struct batch_options *opt)
+>  			data.info.sizep = &data.size;
+>  			data.info.contentp = &data.content;
+>  			data.info.content_limit = big_file_threshold;
+> +			data.info.direct_cache = 1;
+>  		}
+>  	}
+>  
+> diff --git a/object-file.c b/object-file.c
+> index 1cc29c3c58..19100e823d 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1586,6 +1586,11 @@ static int do_oid_object_info_extended(struct repository *r,
+>  			oidclr(oi->delta_base_oid, the_repository->hash_algo);
+>  		if (oi->type_name)
+>  			strbuf_addstr(oi->type_name, type_name(co->type));
+> +		/*
+> +		 * Currently `blame' is the only command which creates
+> +		 * OI_CACHED, and direct_cache is only used by `cat-file'.
+> +		 */
+> +		assert(!oi->direct_cache);
 
-FWIW, here is the script I ended up with, which seems to work reliably
-for me (through renames etc). Obviously I'd love to see this built
-into "git blame" itself, but this wrapper might help someone out there
-in the meantime.
+If "git cat-file" ever gets enhanced to also use
+pretend_object_file(), this assumption gets violated.  
 
---0000000000002e532006209c19e4
-Content-Type: application/octet-stream; name="git-pblame.py"
-Content-Disposition: attachment; filename="git-pblame.py"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m0bglnh80>
-X-Attachment-Id: f_m0bglnh80
+What happens then?  Would we return inconsistent answer to the
+caller that may result in garbage output, breaking the downstream
+process somehow?  If so, I'd prefer to see this guarded more
+explicitly with "if (...)  BUG()" than assert() here.
 
-aW1wb3J0IHN1YnByb2Nlc3MKaW1wb3J0IHN5cwoKIyBQcmludCBzdGF0dXMgdXBkYXRlcyBvbiBz
-dGRlcnIsIGFuZCBjb2xvciB0aGVtIGlmIGEgdHR5IGlzIGRldGVjdGVkLiBOb3dhZGF5cyAoMjAy
-NCkgZXZlbiBXaW5kb3dzIGlzIEFOU0ktZXNjYXBlLWZyaWVuZGx5Lgp0ZXJtaW5hbF9mb3VuZF9p
-c2ggPSBzeXMuc3RkZXJyLmlzYXR0eSgpCmRlZiBwcmludF9pbmZvKGluZm8pOgogICAgaWYgdGVy
-bWluYWxfZm91bmRfaXNoOgogICAgICAgIHN5cy5zdGRlcnIud3JpdGUoIlwwMzNbMTszMG0iKQog
-ICAgc3lzLnN0ZGVyci53cml0ZShpbmZvKQogICAgaWYgdGVybWluYWxfZm91bmRfaXNoOgogICAg
-ICAgIHN5cy5zdGRlcnIud3JpdGUoIlwwMzNbMG0iKQogICAgc3lzLnN0ZGVyci53cml0ZSgnXG4n
-KQoKIyBTaW1wbGUgY29tbWFuZC1ydW5uaW5nIHdyYXBwZXIKZGVmIHJ1bl9mb3Jfc3Rkb3V0X3N0
-cmluZyhhcmdzLCBhbGxvd2VkX2Vycm9yY29kZXM9Tm9uZSwgaGlkZV9zdGRlcnI9RmFsc2UpOgog
-ICAgaWYgYWxsb3dlZF9lcnJvcmNvZGVzIGlzIE5vbmU6CiAgICAgICAgYWxsb3dlZF9lcnJvcmNv
-ZGVzID0gW10KICAgIHByb2Nlc3NfcmVzdWx0ID0gc3VicHJvY2Vzcy5ydW4oYXJncywgc3Rkb3V0
-PXN1YnByb2Nlc3MuUElQRSwgc3RkZXJyPXN1YnByb2Nlc3MuUElQRSBpZiBoaWRlX3N0ZGVyciBl
-bHNlIE5vbmUpCiAgICBpZiBwcm9jZXNzX3Jlc3VsdC5yZXR1cm5jb2RlIG5vdCBpbiBhbGxvd2Vk
-X2Vycm9yY29kZXM6CiAgICAgICAgcHJvY2Vzc19yZXN1bHQuY2hlY2tfcmV0dXJuY29kZSgpCiAg
-ICByZXR1cm4gcHJvY2Vzc19yZXN1bHQuc3Rkb3V0LmRlY29kZShlbmNvZGluZz0ndXRmOCcsIGVy
-cm9ycz0icmVwbGFjZSIpCgojIENoZWNrIGZvciBsb2NhbCBwcmVzZW5jZSBvZiBhbiBvYmplY3Qg
-aW4gYSBwYXJ0aWFsIHJlcG8gKHdpdGhvdXQgaW1tZWRpYXRlbHkgdHJ5aW5nIHRvIGZldGNoIGl0
-ISkKZGVmIG9iamVjdF9leGlzdHNfbG9jYWxseShvaWQpOgogICAgIyBzdHJhdGVneSBkaXNjdXNz
-ZWQvZGlzY292ZXJlZCBpbiBodHRwczovL2xvcmUua2VybmVsLm9yZy9naXQvQ0FQTU1wb2hhNnJC
-QS1ULTdjbjNEUVRfbmJOZmtuaWdMVGt5NTV4MFRFbXQ0QXkyR1JBQG1haWwuZ21haWwuY29tLwog
-ICAgIyBpbnRlcmVzdGluZ2x5LCBldmVuIHRob3VnaCB3ZSdyZSB0YWxraW5nIHRvIHJldi1saXN0
-IGFib3V0IGFuIG9iamVjdCB0aGF0J3Mgbm90IGEgcmV2IGF0IGFsbCAoaXQncyBhIGJsb2IpLCBp
-dCdzIGhhcHB5IGFueXdheS4KICAgIHRyeToKICAgICAgICBydW5fZm9yX3N0ZG91dF9zdHJpbmco
-WydnaXQnLCAncmV2LWxpc3QnLCAnLS1taXNzaW5nPXByaW50JywgJy0xJywgb2lkXSwgaGlkZV9z
-dGRlcnI9VHJ1ZSkKICAgICAgICByZXR1cm4gVHJ1ZQogICAgZXhjZXB0OgogICAgICAgIHJldHVy
-biBGYWxzZQoKZGVmIGNodW5rX2xpc3QobGlzdF90b19jaHVuaywgbWF4X3NpemUpOgogICAgcmV0
-dXJuIFtsaXN0X3RvX2NodW5rW2k6aSttYXhfc2l6ZV0gZm9yIGkgaW4gcmFuZ2UoMCxsZW4obGlz
-dF90b19jaHVuayksbWF4X3NpemUpXQoKIyBNYWluIGxvZ2ljIG9mIHNjcmlwdApkZWYgcHJlZmV0
-Y2hfcGFydGlhbGNsb25lX2Jsb2JzX2Zvcl9wYXRoKHRhcmdldF9yZW1vdGUsIHJlcXVlc3RlZF9m
-aWxlbmFtZSwgcmVxdWVzdGVkX3JldmlzaW9uKToKICAgIGlmIHJ1bl9mb3Jfc3Rkb3V0X3N0cmlu
-ZyhbJ2dpdCcsICdjb25maWcnLCAnLS1ib29sJywgZidyZW1vdGUue3RhcmdldF9yZW1vdGV9LnBy
-b21pc29yJ10sIFsxXSkucnN0cmlwKCkgIT0gJ3RydWUnOgogICAgICAgICMgSWYgbm90IHBhcnRp
-YWwgY2xvbmUsIG5vdGhpbmcgdG8gZG8sIGp1c3QgbGV0IGJsYW1lIHJ1biBub3JtYWxseS4KICAg
-ICAgICByZXR1cm4KCiAgICAjIGludGVybmFsIG5vdGU6IGFzIGRvY3VtZW50ZWQgaW4gaHR0cHM6
-Ly9naXQtc2NtLmNvbS9kb2NzL2dpdC1sb2csICItLWZvbGxvdyIgZG9lc24ndCB3b3JrICgib24g
-bm9uLWxpbmVhciBoaXN0b3J5IikuCiAgICAjICAgU2ltaWxhcmx5LCAiLS1maW5kLXJlbmFtZXMi
-IGRvZXNuJ3Qgd29yayBvbiBhIGZpbGVuYW1lLWZpbHRlcmVkIGxvZyBlaXRoZXIgKHRoZSBwcmV2
-aW91cy9vdGhlciBuYW1lIGlzIGV4Y2x1ZGVkLCBzbyBpdCdzIGp1c3QgYW4gYWRkKQogICAgIyAg
-IE5lZWQgdG8gaXRlcmF0ZSBtYW51YWxseSBvdmVyIG5hbWUtc3RhdHVzIHJlc3VsdHMgaW5zdGVh
-ZCwgZGV0ZWN0aW5nIHJlbmFtZXMgZXhwbGljaXRseSB3aGVuZXZlciB0aGVyZSdzIGFuICJBZGQi
-LgogICAgZmlsZXNfdG9fY2hlY2sgPSB7IHJlcXVlc3RlZF9maWxlbmFtZSB9CiAgICBmaWxlc19j
-aGVja2VkID0gc2V0KCkKICAgIGJsb2JzX3RvX2NoZWNrX2ZvciA9IHNldCgpCgogICAgd2hpbGUg
-bGVuKGZpbGVzX3RvX2NoZWNrKSA+IGxlbihmaWxlc19jaGVja2VkKToKICAgICAgICBmb3IgZmls
-ZV90b19jaGVjayBpbiBzZXQoZmlsZXNfdG9fY2hlY2spOgogICAgICAgICAgICBpZiBmaWxlX3Rv
-X2NoZWNrIGluIGZpbGVzX2NoZWNrZWQ6CiAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAg
-ICAgICAgcHJpbnRfaW5mbyhmIi4uLmNoZWNraW5nICdnaXQgbG9nJyBmb3IgaGlzdG9yeSBvZiBm
-aWxlICd7ZmlsZV90b19jaGVja30nIGluIHtyZXF1ZXN0ZWRfcmV2aXNpb259Li4uIikKICAgICAg
-ICAgICAgbG9nX291dHB1dCA9IHJ1bl9mb3Jfc3Rkb3V0X3N0cmluZyhbJ2dpdCcsICdsb2cnLCAn
-LS1uYW1lLXN0YXR1cycsICctLXByZXR0eT0laCcsIHJlcXVlc3RlZF9yZXZpc2lvbiwgJy0tJywg
-ZmlsZV90b19jaGVja10pCgogICAgICAgICAgICBpZiBub3QgKGxvZ19vdXRwdXQgb3IgZmlsZXNf
-Y2hlY2tlZCk6CiAgICAgICAgICAgICAgICAjIGRpcmVjdCByZWZlcmVuY2UgdG8gcmVxdWVzdGVk
-X2ZpbGVuYW1lIGZvciBjbGFyaXR5LCBldmVuIHRob3VnaHQgd2UgbG9vcGVkIG9uIGZpbGVfdG9f
-Y2hlY2sgd2hpY2ggaGFzIHRoZSBzYW1lIHZhbHVlIGhlcmUKICAgICAgICAgICAgICAgIHJhaXNl
-IEV4Y2VwdGlvbihmIlRoZSBwcm92aWRlZCBmaWxlbmFtZS9wYXRoICh7cmVxdWVzdGVkX2ZpbGVu
-YW1lfSkgZGlkIG5vdCBtYXRjaCBhbnkgZ2l0IGhpc3RvcnkgKG9mIHRoZSBjdXJyZW50IGNvbW1p
-dCkuIikKCiAgICAgICAgICAgIGN1cnJlbnRfcmV2aXNpb24gPSBOb25lCiAgICAgICAgICAgIGZv
-ciBsb2dfbGluZSBpbiBsb2dfb3V0cHV0LnNwbGl0KCdcbicpOgogICAgICAgICAgICAgICAgaWYg
-bm90IGxvZ19saW5lOgogICAgICAgICAgICAgICAgICAgICMgaWdub3JlIGVtcHR5IGxpbmVzIGlu
-IG91dHB1dCAtIHRoZXkgZmVhdHVyZSBiZXR3ZWVuIHRoZSBoYXNoIGFuZCB0aGUgIm5hbWUtc3Rh
-dHVzIiBiaXQKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgIGlm
-ICdcdCcgbm90IGluIGxvZ19saW5lOgogICAgICAgICAgICAgICAgICAgICMgaWYgc29tZXRoaW5n
-IGFuZCBubyB0YWJzLCB0aGVuIG11c3QgYmUgYSBjb21taXQgaGFzaAogICAgICAgICAgICAgICAg
-ICAgIGN1cnJlbnRfcmV2aXNpb24gPSBsb2dfbGluZQogICAgICAgICAgICAgICAgICAgIGxzX3Ry
-ZWVfcmVzdWx0ID0gcnVuX2Zvcl9zdGRvdXRfc3RyaW5nKFsnZ2l0JywgJ2xzLXRyZWUnLCBjdXJy
-ZW50X3JldmlzaW9uLCAnLXInLCAnLS0nLCBmaWxlX3RvX2NoZWNrXSkKICAgICAgICAgICAgICAg
-ICAgICBpZiBsc190cmVlX3Jlc3VsdDoKICAgICAgICAgICAgICAgICAgICAgICAgYmxvYnNfdG9f
-Y2hlY2tfZm9yLmFkZChsc190cmVlX3Jlc3VsdC5zcGxpdCgnXHQnKVswXS5zcGxpdCgnICcpWzJd
-KQogICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAgICAgICAgICAgIyBpZiB0YWIs
-IHRoaXMgc2hvdWxkIGJlIGEgIm5hbWUtc3RhdHVzIiBsaW5lCiAgICAgICAgICAgICAgICAjIFBS
-T0RVQ1RJWkFUSU9OOiBub3RlIC0gdGhlcmUgbWlnaHQgYmUgYSBidWcgaGVyZSB3aXRoIGZpbGVu
-YW1lcyB0aGF0IGNvbnRhaW4gbGluZWJyZWFrcyEhIG9yIG1vcmUgZ2VuZXJhbGx5IHdpdGggZG91
-YmxlLXF1b3RlZCBxdWFsaWZpY2F0aW9uCiAgICAgICAgICAgICAgICBmaWxlX2NoYW5nZV90eXBl
-ID0gbG9nX2xpbmVbMF0KICAgICAgICAgICAgICAgIGlmIGZpbGVfY2hhbmdlX3R5cGUgbm90IGlu
-IFsnQScsICdSJywgJ0QnLCAnTScsICdUJ106CiAgICAgICAgICAgICAgICAgICAgcmFpc2UgRXhj
-ZXB0aW9uKGYiVW5leHBlY3RlZCBsaW5lIGZvdW5kIGluIGxvZyBvdXRwdXQ6ICh7bG9nX2xpbmV9
-KSIpCgogICAgICAgICAgICAgICAgaWYgbG9nX2xpbmVbMF0gIT0gJ0EnOgogICAgICAgICAgICAg
-ICAgICAgICMgd2UncmUgb25seSBpbnRlcmVzdGVkIGluICduYW1lLXN0YXR1cycgb3V0cHV0IGlm
-IGl0J3MgdGVsbGluZyB1cyBhYm91dCBhbiBhZGRpdGlvbiAod2hpY2ggbWlnaHQgYWN0dWFsbHkg
-aGF2ZSBiZWVuIGEgcmVuYW1lKQogICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAg
-ICAgICAgICAgZGlmZl9uYW1lc3RhdF9yZXN1bHQgPSBydW5fZm9yX3N0ZG91dF9zdHJpbmcoWydn
-aXQnLCAnZGlmZicsICctLW5hbWUtc3RhdHVzJywgZid7Y3VycmVudF9yZXZpc2lvbn1+Li57Y3Vy
-cmVudF9yZXZpc2lvbn0nXSkKICAgICAgICAgICAgICAgIGZvciBjaGFuZ2VkX2ZpbGUgaW4gZGlm
-Zl9uYW1lc3RhdF9yZXN1bHQuc3BsaXQoJ1xuJyk6CiAgICAgICAgICAgICAgICAgICAgaWYgZmls
-ZV90b19jaGVjayBpbiBjaGFuZ2VkX2ZpbGUgYW5kIGNoYW5nZWRfZmlsZS5zdGFydHN3aXRoKCdS
-Jyk6CiAgICAgICAgICAgICAgICAgICAgICAgIHJlbmFtZWRfZmlsZXMgPSBjaGFuZ2VkX2ZpbGUu
-c3BsaXQoJ1x0JylbMV0KICAgICAgICAgICAgICAgICAgICAgICAgcG90ZW50aWFsbHlfbmV3X2Zp
-bGVwYXRoID0gcmVuYW1lZF9maWxlcy5zcGxpdCgnICcpWzBdCgogICAgICAgICAgICAgICAgICAg
-ICAgICAjIFBST0RVQ1RJWkFUSU9OOiBub3RlIC0gdGhlcmUgaXMgcHJvYmFibHkgYSBidWcgaGVy
-ZSB3aXRoIHNwYWNlcyBpbiBmaWxlbmFtZXMKICAgICAgICAgICAgICAgICAgICAgICAgZmlsZXNf
-dG9fY2hlY2suYWRkKHBvdGVudGlhbGx5X25ld19maWxlcGF0aCkKICAgICAgICAgICAgICAgICAg
-ICAgICAgcHJpbnRfaW5mbyhmIi4uLmFkZGVkIHtwb3RlbnRpYWxseV9uZXdfZmlsZXBhdGh9IHRv
-IGZpbGVwYXRocyB3ZSBsb29rIGZvciBhcyBwZXIgcmVuYW1lIGluIHJldmlzaW9uIHtjdXJyZW50
-X3JldmlzaW9ufS4uLiIpCgogICAgICAgICAgICBmaWxlc19jaGVja2VkLmFkZChmaWxlX3RvX2No
-ZWNrKQogICAgICAgICAgICBwcmludF9pbmZvKGYiLi4uZG9uZSBjaGVja2luZyBoaXN0b3J5IG9m
-IGZpbGUgJ3tmaWxlX3RvX2NoZWNrfScuLi4iKQogICAgcHJpbnRfaW5mbyhmIi4uLmRvbmUgY2hl
-Y2tpbmcgaGlzdG9yeS4uLiIpCgogICAgcHJpbnRfaW5mbyhmIi4uLmNoZWNraW5nIGZvciBwcmVz
-ZW5jZSBvZiB7bGVuKGJsb2JzX3RvX2NoZWNrX2Zvcil9IGJsb2JzIGluIGxvY2FsIHJlcG8uLi4i
-KQogICAgIyBpbiB3aW5kb3dzIHJ1bm5pbmcgYSBwcm9jZXNzIHBlciBibG9iIHdpbGwgdGFrZSBh
-IHdoaWxlLCBidXQgc3RpbGwgbXVjaCBsZXNzIHRoYW4gYSB3aG9sZSBsb3Qgb2YgZmV0Y2ggY2Fs
-bHMgb2YgY291cnNlCiAgICBibG9ic190b19mZXRjaCA9IHsgYmxvYiBmb3IgYmxvYiBpbiBibG9i
-c190b19jaGVja19mb3IgaWYgbm90IG9iamVjdF9leGlzdHNfbG9jYWxseShibG9iKSB9CiAgICBw
-cmludF9pbmZvKGYiLi4uZG9uZSBjaGVja2luZyBibG9iIHByZXNlbmNlLi4uIikKCiAgICBpZiBi
-bG9ic190b19mZXRjaDoKICAgICAgICAjIGFjdHVhbGx5IGZldGNoIGJsb2JzOyBkb24ndCBib3Ro
-ZXIgY2FwdHVyaW5nIG91dHB1dDsgYWxsIHRoZSBmdW5reSBhcmdzIGltaXRhdGUgZ2l0J3Mgb3du
-IGppdC1ibG9iLWZldGNoZXMKICAgICAgICAjIGJhdGNoIGluIHNldHMgb2YgMzAwIGJsb2JzIGZv
-ciB3aW5kb3dzIGhhcHBpbmVzcyAoY29tbWFuZGxpbmUgbGVuZ3RoIGxpbWl0cykKICAgICAgICBw
-cmludF9pbmZvKGYiLi4uZmV0Y2hpbmcge2xlbihibG9ic190b19mZXRjaCl9IGJsb2JzIGluIGJ1
-bGsgZnJvbSByZW1vdGUge3RhcmdldF9yZW1vdGV9Li4uIikKICAgICAgICBmb3IgYmxvYnNfY2h1
-bmsgaW4gY2h1bmtfbGlzdChsaXN0KGJsb2JzX3RvX2ZldGNoKSwgMzAwKToKICAgICAgICAgICAg
-cnVuX2Zvcl9zdGRvdXRfc3RyaW5nKFsnZ2l0JywgJy1jJywgJ2ZldGNoLm5lZ290aWF0aW9uQWxn
-b3JpdGhtPW5vb3AnLCAnZmV0Y2gnLCB0YXJnZXRfcmVtb3RlLCAnLS1uby10YWdzJywgJy0tbm8t
-d3JpdGUtZmV0Y2gtaGVhZCcsICctLXJlY3Vyc2Utc3VibW9kdWxlcz1ubycsICctLWZpbHRlcj1i
-bG9iOm5vbmUnLCAqYmxvYnNfY2h1bmtdKQogICAgICAgIHByaW50X2luZm8oZiIuLi5kb25lIGZl
-dGNoaW5nLi4uIikKCiMgTWFpbiBzY3JpcHQKZGVmIHJ1bl9zY3JpcHQoKToKICAgIGlmIGxlbihz
-eXMuYXJndikgPCAyOgogICAgICAgIHJhaXNlIEV4Y2VwdGlvbihmIlRoaXMgc2NyaXB0ICh7X19m
-aWxlX199KSBleHBlY3RzIGF0IGxlYXN0IG9uZSBhcmd1bWVudCwgdGhlIGZpbGVwYXRoIHRvIGJs
-YW1lLlxuIgogICAgICAgICAgICAgICAgICAgICAgICAiVGhlICpsYXN0KiBhcmd1bWVudCBpcyBl
-eHBlY3RlZCB0byBiZSB0aGUgZmlsZXBhdGguXG4iCiAgICAgICAgICAgICAgICAgICAgICAgICJJ
-ZiBtb3JlIHRoYW4gMSBhcmcgaXMgcHJvdmlkZWQsIHRoZW4gdGhlIGZpcnN0IGFyZyBpcyBleHBl
-Y3RlZCB0byBiZSBhIHJldmlzaW9uLlxuIgogICAgICAgICAgICAgICAgICAgICAgICAiSWYgbW9y
-ZSB0aGFuIDIgYXJncyBhcmUgcHJvdmlkZWQsIHRoZSBhZGRpdGlvbmFsIGFyZ3MgKGluIHRoZSBt
-aWRkbGUpIGFyZSBwYXNzZWQgZGlyZWN0bHkgdG8gJ2dpdCBibGFtZScuXG4iCiAgICAgICAgICAg
-ICAgICAgICAgICAgICkKCiAgICByZXF1ZXN0ZWRfZmlsZW5hbWUgPSBzeXMuYXJndlstMV0KICAg
-IHJlcXVlc3RlZF9yZXZpc2lvbiA9IHN5cy5hcmd2WzFdIGlmIGxlbihzeXMuYXJndikgPiAyIGVs
-c2UgJ0hFQUQnCgogICAgIyBQUk9EVUNUSVpBVElPTjogVGhlcmUgc2hvdWxkIGJlIGEgd2F5IHRv
-IHNwZWNpZnkgdGhlIHJlbW90ZSB0byB0aGlzIHNjcmlwdCBldmVuIGFzIGV2ZXJ5dGhpbmcgZWxz
-ZSBnb2VzIHRvIGJsYW1lCiAgICB0YXJnZXRfcmVtb3RlID0gJ29yaWdpbicKCiAgICBwcmVmZXRj
-aF9wYXJ0aWFsY2xvbmVfYmxvYnNfZm9yX3BhdGgodGFyZ2V0X3JlbW90ZSwgcmVxdWVzdGVkX2Zp
-bGVuYW1lLCByZXF1ZXN0ZWRfcmV2aXNpb24pCgogICAgIyBhY3R1YWxseSBydW4gYmxhbWUKICAg
-IGJsYW1lX2FyZ3MgPSBbJ2dpdCcsICdibGFtZScsICpzeXMuYXJndlsxOl1dCiAgICBwcmludF9p
-bmZvKGYiLi4ucnVubmluZyBibGFtZSAoeycgJy5qb2luKGJsYW1lX2FyZ3MpfSkuLi4iKQogICAg
-cHJvY2Vzc19yZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bihibGFtZV9hcmdzKQogICAgZXhpdChwcm9j
-ZXNzX3Jlc3VsdC5yZXR1cm5jb2RlKQoKaWYgX19uYW1lX18gPT0gJ19fbWFpbl9fJzoKICAgIHJ1
-bl9zY3JpcHQoKQo=
---0000000000002e532006209c19e4--
+>  		if (oi->contentp)
+>  			*oi->contentp = xmemdupz(co->buf, co->size);
+
+Regardless of the answer of the question above about assert(),
+shouldn't the step [02/10] of this series also have been made to pay
+attention to oi->content_limit mechanism?  It looks inconsistent.
+
+> diff --git a/object-store-ll.h b/object-store-ll.h
+> index b71a15f590..669bb93784 100644
+> --- a/object-store-ll.h
+> +++ b/object-store-ll.h
+> @@ -298,6 +298,14 @@ struct object_info {
+>  		OI_PACKED,
+>  		OI_DBCACHED
+>  	} whence;
+> +
+> +	/*
+> +	 * Set if caller is able to use OI_DBCACHED entries without copying.
+> +	 * This only applies to OI_DBCACHED entries at the moment,
+> +	 * not OI_CACHED or any other type of entry.
+> +	 */
+> +	unsigned direct_cache:1;
+
+This is a "response" from the API to the caller, but "Set if ..."
+sounds as if you are telling the caller what to do.  Would the
+caller set this bit when making a request to say "I am cat-file and
+I use entry before making any other requests to the object layer so
+I am sure object layer will not evict the entry I am using"?  No,
+that is not a "response".
+
+You seem to set this bit in batch_objects(), so it does sound like
+that the bit is expected to be set by the caller to tell the API
+something.  If that is the case, then (1) move it to "request" part
+of the object_info structure, and (2) define what it means to be
+"able to use ... without copying".  Mechanically, it may mean
+"contentp directly points into the delta base cache", but what
+implication does it have to callers?  If the caller obtains such a
+pointer in .contentp, what is required for its access pattern to
+make accessing the pointer safe?  The caller cannot use the pointed
+memory after it accesses another object?  What is the definition of
+"access" in the context of this discussion?  Does "checking for
+existence of an object" count as an access?
+
+> +static void lock_delta_base_cache(void)
+> +{
+> +	delta_base_cache_lock++;
+> +	assert(delta_base_cache_lock == 1);
+> +}
+> +
+> +void unlock_delta_base_cache(void)
+> +{
+> +	delta_base_cache_lock--;
+> +	assert(delta_base_cache_lock == 0);
+> +}
+
+I view assert() validating precondition for the control flow to pass
+the point in the code path, so the above looks somewhat surprising.
+
+Shouldn't we instead checking the current value first and then only
+if the caller is _allowed_ to lock/unlock from that state (i.e. the
+lock is not held/the lock is held), increment/decrement the variable?
+
+> +			/* ignore content_limit if avoiding copy from cache */
+> +			if (oi->direct_cache) {
+> +				lock_delta_base_cache();
+> +				*oi->contentp = ent->data;
+> +			} else if (!oi->content_limit ||
+> +					ent->size <= oi->content_limit) {
+>  				*oi->contentp = xmemdupz(ent->data, ent->size);
+
+This somehow looks making the memory ownership rules confusing.
+
+How does the caller know when it can free(oi->contentp) after a call
+returns?  If it sets direct_cache and got a non-NULL *oi->contentp
+back, is it always pointing at a borrowed piece memory, so that it
+does not have to worry about freeing, but if it didn't set
+direct_cache, it can be holding an allocated piece of memory and you
+are responsible for freeing it?
+
+The following is a tangent that is not necessary to be addressed in
+this series, but since I've spent time to think about it already,
+let me record it as #leftoverbits here.
+
+Whatever the answers to the earlier questions on the comment on the
+direct_cache member are, I wonder if the access pattern of the
+caller that satisfies such requirement allows a lot simpler
+solution.  Would it give us similar performance boost by (morally)
+reverting 85fe35ab (cache_or_unpack_entry: drop keep_cache
+parameter, 2016-08-22) to resurrect the "pass ownership of a delta
+base cache entry to the caller" feature?  We give the content to the
+caller of object_info, and evict the cached delta base.  Ideally, we
+shouldn't have to ask the caller to do anything special, other than
+just setting contentp to non-NULL (and optionally setting
+content_limit), and the choice of copying or passing the ownership
+should be made in the object access layer, which knows how big the
+object is (e.g., small things may be easier to recreate), how deep
+the delta chain the entry in the delta base cache is (e.g., a delta
+base object that is simply deflated can be recreated cheaply, while
+one based on top of 100-delta deep chain is very expensive to
+recreate), etc.
+
