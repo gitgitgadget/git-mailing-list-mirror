@@ -1,190 +1,139 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790B113212B
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 09:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C64A14534A
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 09:51:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724664699; cv=none; b=RNJohpsB06cD+iBHWR4rcKN/2cWv6wKqM2tgk6X+pIObS2PPN2iYS4X1kFmFHCzL3YZksX0SFD3qwPxROoE+aR8QwT6hrvCyvSVePR2olLIhqJSQDmxrD2BdBktnbuIP32EEbLUgjrBqXEMRBIyEaofAQx5MB2JWmdH5rAxJcs0=
+	t=1724665870; cv=none; b=oBTCJgZuJiNpb4DWTEfRRM0DrfYbw+af5h7tquogenMZHwbqnFQF6QWhKrrt16OPdKdZTTuoD4W7jyMfS8197O0kcxhz1RpXBo2H1Y/nnCzWKtr7JhJyc2ykFLSq85Lu22qtehOpVJUquWdz+KQoQDtITMURdGwj6ui8iYESB4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724664699; c=relaxed/simple;
-	bh=ZaYM6x2INPryzoofA6cX9WCbFGEF5lSQSoexm3suCNw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iTCAYJr28G7HhwxozI30hZajZOH04eBrOaGVZ4evQUOplItU5hWZ/OJKGL88HrBgA+5mZI2v2kD2OJhunDGLj24ReQrRUXKX7dyhIqRgeALWTM3YDxXg0dpeJCjpFyVFdUX64mMkfi1pR40deTdw2/dQ///N7i4VdujUtKIaEag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ThJeoyKA; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724665870; c=relaxed/simple;
+	bh=lwBX4dVwOznj6kOS2OhhcTUQs7/I2WBTxYRXBl49pJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yyswhju2k9SoB/LEZeVFNTciiGmVC3mqsYKtwii7VRFI4J6NYatTPYx2YrMGrGxN3WeOqs8dVf93RAXSg7HvJi14TOZh2/Co/7q+Nv/5mQMlkmJWt66BDsmyxVOIlrRa46BUmh4Wi8+FxoGRmp5G+2DcsCV0EOAOvSgXuJ0dn+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VBtIXB/q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o7L7FKss; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ThJeoyKA"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-58ef19aa69dso4394719a12.3
-        for <git@vger.kernel.org>; Mon, 26 Aug 2024 02:31:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724664696; x=1725269496; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JM3j8vHUaDKBWQSreARk7iCkwu755fN+6gT0RaAAOPc=;
-        b=ThJeoyKAIjAerWVa0LqetcfiK4Ikruga+iqu09f+igELAoUqXSnjQvLjrVWnYak9jm
-         4iqw8En/Hr9Ta6pNYpPqBAtW6SkcfQ/scD9VfmpXIvpblQUP29idAyNgRCQWH/IGyJOk
-         cEPUu6iV0d0/FobnatNs3YFHrjgpkCW+F3xoVzI1tZ7N4isNGFOreQsiyPMpg0XMAuQN
-         4GooY3u08GzE43YX8nHtLUcGfF3+1EctQDoq1PK2vzTM5tAcLxhNLilmQlJ0iiBBO5g6
-         O0hEN6KI13kNfTVxDTyDyUJzRnEYK08SzjbXlDl+t1HUJNi06WnZPi41YKHJH+11R6iS
-         kqxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724664696; x=1725269496;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JM3j8vHUaDKBWQSreARk7iCkwu755fN+6gT0RaAAOPc=;
-        b=trM776oa0F8G4NNhnUtWmdJVGTdNpKhKBqS+lIoRBcQd+xBVEQNOS81rKAL/O4V6mY
-         zyaY0XJEl/dKZ8cyi+PH2/tPqM0TNIwiXLdZhiguofFKbulD4iaTbvOb+VJIS/xXDhCt
-         94ib186kDR5Blpu2ZpyijDlX+zqPGo1j+x/baR0La2VVfqOLIrkzd3OOJSM/VZUTtW1B
-         a41S4nQ3OY0QibfBQgxAgriOAmx3y6AAJFThSMaGdXyLA3prPYiOB+pSN+LSxl1UhiEG
-         Hfwog/hkzBt/OR/GgyITQFug2hFaLAaSGyFVmRg/tZeGDho9p7bAx+nGw3i5qWCz5/+5
-         e/2g==
-X-Gm-Message-State: AOJu0YzF+edz1zw/Nfb863X5sCeHmTfXQbHPM6lVBisWiSzqQixIGpmU
-	LlY+ptT5DtwX4SgD7MpSlAo0KHAV+gbRfCkDD7cIqzuoJ6uZDot6RS6lPbtCjliZ2pGEFJZrAZ4
-	e1HnU880j2XI3ZCHy2q7VmtvaLEyMZDmY
-X-Google-Smtp-Source: AGHT+IFSifbbPFDLgMjVmoYH0ticfmkEGKKROB4ctrNwkcgiZyXtpTqPZDkUABD6T/e7JqImCR/4rF6pb7lknPlZt+Y=
-X-Received: by 2002:a17:907:7e95:b0:a7a:9ca6:528 with SMTP id
- a640c23a62f3a-a86a5165852mr731987066b.11.1724664695065; Mon, 26 Aug 2024
- 02:31:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VBtIXB/q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o7L7FKss"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1007F1151AF5;
+	Mon, 26 Aug 2024 05:51:07 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 26 Aug 2024 05:51:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1724665867; x=1724752267; bh=dod9Z+Wmim
+	/lqNKtKbo2ZeSho5VlgbgYO3E56t/lPKY=; b=VBtIXB/qir0SKDKVM/Z1nyATso
+	brRaZt6NYYYY0APXnx6D1Ju/MS19lzQ6dLvOhbV8yjckX28ER3IPKw9j1Pkir+QD
+	/uby5seFd0zuJeLDuq1HveEMHrl98m1/7+c7cItHodefEX1l2WGMhX1AoQhytiz9
+	BjjwcAF6HOdXu0DuIU0JFgZg+y1VDfkd41HTlx3ehqpf80d7rx/DQIvIzis/2ZQT
+	c8pW+8uWZyEII/IDSD+nhuhJVwIg57l0ZopFj3bi4J4T5Pp2mNfrCBzWD9TOxMby
+	cyyooV1LGa15uQzC+Dw5gT0Z24dLGz0tH4iq25CoqwpsNAaMLet0L/aLSYuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1724665867; x=1724752267; bh=dod9Z+Wmim/lqNKtKbo2ZeSho5Vl
+	gbgYO3E56t/lPKY=; b=o7L7FKsstDgqeN9mfxQt7fBrJgYEPTqrHU6w28+2NEMq
+	fUbwcCETkqJsCuAVqVCulIcZVAmeoW/MiFg90kpCg7Xg6W+cKfPdGaSdzJGbd3/1
+	2hYqusgp++rzd6o9pbLl36e6M6HTYFlBb3krllR3jNdmg7sAlL0r09OmVCwRoMfy
+	+51M7Ubye4S3X0Rmer1ag9fY0ArXUvNt95/MzmUkKIyjxcjr6K1cR4HPA+lommCP
+	90Ak8JOLBIfpCAGcV/d5iUqp8VuFxJdkR68hA9kvhlXfbMIoHezx7zkN0AVYF7vg
+	VG7GKbUAEu3TxR+ulVruTLXv04W4qOLGl7LDmQYOOA==
+X-ME-Sender: <xms:ClDMZlS3LbN0MVdlTCiNdAvQes-fQlXiC3oxhZJn3AugMgxlBE6yYA>
+    <xme:ClDMZuyikn6aj66FDDnic8odNd-ks-2Yx730z5hgpHUTCi9QcU4qbtaaE96Pxad2D
+    wKSdekFO8f7r3u0Fw>
+X-ME-Received: <xmr:ClDMZq2-v3NtbE0SrqB0_vBNzpkLLouRsAnewJXm-SOHcwfBv422itThqjmx7SqXf_dq8gFMLKjSO1g2roLqG0um8wRBBpE29kguc91HKi8a9Ww>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvkedgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ClDMZtAJU6CibwGAW-F4CTQlyXyLu_YIV4X-rBHSXMq7wmtyySoltA>
+    <xmx:ClDMZujRL4Yk4-2K2fmvlGHrE3VEdBFKimRhLMK9Mu3JziKK3GQxxA>
+    <xmx:ClDMZhpsuUt6SbKir6XkPP3Qynx9JcJj8_yV_OZebniC9U-QoY_WuA>
+    <xmx:ClDMZpj0p3sJPLcDv2VQB_HbJmbsF9USXumtb2pHSNl105y0vue4zw>
+    <xmx:C1DMZhs03CoScK0a7eTx5hiF4jLKeSuR3-y_GQ_0bNxF4BCT1IgFNlx_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Aug 2024 05:51:05 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a8e817f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Aug 2024 09:51:01 +0000 (UTC)
+Date: Mon, 26 Aug 2024 11:51:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] bundle-uri: plug leak in unbundle_from_file()
+Message-ID: <ZsxQBEpfChQozhF7@tanuki>
+References: <20240826083052.1542228-1-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240824172028.39419-1-shyamthakkar001@gmail.com>
-In-Reply-To: <20240824172028.39419-1-shyamthakkar001@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 26 Aug 2024 11:31:22 +0200
-Message-ID: <CAP8UFD2yTMNmx0n1jhOu7dz_4XeOyTy1iLmRWYmuf9QJf75hsQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] unit-tests: add tests for oidset.h
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240826083052.1542228-1-toon@iotcl.com>
 
-On Sat, Aug 24, 2024 at 7:20=E2=80=AFPM Ghanshyam Thakkar
-<shyamthakkar001@gmail.com> wrote:
->
-> Add tests for oidset.h library, which were not previously present using
-> the unit testing framework.
-
-It might be interesting to also say if there are tests for oidset in
-the end-to-end tests, not just in the unit test framework. Also I
-think oidset.h is more an API than a library.
-
-> This imposes a new restriction of running the test from the 't/' and
-> 't/unit-tests/bin'
-
-Either "from 't/' and 't/unit-tests/bin'" or "from the 't/' and
-'t/unit-tests/bin' directory" would be a bit better.
-
-> for constructing the path to the test files which
-> are used by t_parse_file(), which tests the parsing of object_ids from
-> a file.
-
-This might be clearer if it mentioned that t_parse_file() actually
-tests oidset_parse_file() which is part of the oidset.h API.
-
-> This restriction is similar to the one we already have for
-> end-to-end tests, wherein, we can only run those tests from 't/'.
-
-Ok.
-
-> The
-> addition of allowing 't/unit-tests/bin' for allowing to run tests from
-> is for running individual unit tests,
-
-Maybe: "Allowing to run tests from 't/unit-tests/bin', in addition to
-'t/', makes it possible to run individual unit tests,"
-
-> which is not currently possible
-> via any 'make' target. And 'make unit-tests-test-tool' also runs from
-> 't/unit-tests/bin'
-
-It would be nice if you gave a few examples of commands that can be
-run after this patch while they didn't work before it.
-
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+On Mon, Aug 26, 2024 at 10:30:52AM +0200, Toon Claes wrote:
+> When the function returns early, the variable bundle_ref is not released
+> through strbuf_release().
+> 
+> Fix this leak. And while at it, remove assignments in the conditions of
+> the "if" statements as suggested in the CodingGuidelines.
+> 
+> Signed-off-by: Toon Claes <toon@iotcl.com>
 > ---
-> I know there is some hesitance from the community in imposing the
-> restriction of running the unit tests from certain directories, so
-> if this case does not justify imposing such a restriction, I am fine
-> with removing t_parse_file() in the next version.
+>  bundle-uri.c | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index 1e0ee156ba..eb49cba182 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -367,17 +367,21 @@ static int unbundle_from_file(struct repository *r, const char *file)
+>  	struct strbuf bundle_ref = STRBUF_INIT;
+>  	size_t bundle_prefix_len;
+> 
+> -	if ((bundle_fd = read_bundle_header(file, &header)) < 0)
+> -		return 1;
+> +	bundle_fd = read_bundle_header(file, &header);
+> +	if (bundle_fd < 0) {
+> +		result = 1;
+> +		goto cleanup;
+> +	}
+> 
+>  	/*
+>  	 * Skip the reachability walk here, since we will be adding
+>  	 * a reachable ref pointing to the new tips, which will reach
+>  	 * the prerequisite commits.
+>  	 */
+> -	if ((result = unbundle(r, &header, bundle_fd, NULL,
+> -			       VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0))))
+> -		return 1;
+> +	result = unbundle(r, &header, bundle_fd, NULL,
+> +			  VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0));
+> +	if (result)
+> +		goto cleanup;
 
-My opinion is that it might be good to remove t_parse_file() for now,
-as testing oidset_parse_file() might not be so important. Later an
-iteration in a separate patch could then perhap add it while better
-discussing if the restrictions that come with adding it are worth it.
+This changes the returned error code from `1` to whatever `unbundle()`
+returns. Is this intentional? If so, the commit message should explain
+why this change is safe.
 
-> diff --git a/t/unit-tests/lib-oid.c b/t/unit-tests/lib-oid.c
-> index 37105f0a8f..8f0ccac532 100644
-> --- a/t/unit-tests/lib-oid.c
-> +++ b/t/unit-tests/lib-oid.c
-> @@ -3,7 +3,7 @@
->  #include "strbuf.h"
->  #include "hex.h"
->
-> -static int init_hash_algo(void)
-> +int init_hash_algo(void)
->  {
->         static int algo =3D -1;
->
-> diff --git a/t/unit-tests/lib-oid.h b/t/unit-tests/lib-oid.h
-> index 8d2acca768..fc3e7aa376 100644
-> --- a/t/unit-tests/lib-oid.h
-> +++ b/t/unit-tests/lib-oid.h
-> @@ -14,4 +14,5 @@
->   */
->  int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
->
-> +int init_hash_algo(void);
->  #endif /* LIB_OID_H */
+Other than that this looks good to me, and the fix does not conflict
+with any of my leak-plugging series.
 
-It seems that the changes above will go away when some patches you
-already sent will be merged, which should happen soon. It might have
-been nice to say this in the section after the "---" line.
+Thanks!
 
-> +static void t_parse_file(void)
-> +{
-> +       struct strbuf path =3D STRBUF_INIT;
-> +       struct oidset st =3D OIDSET_INIT;
-> +       struct object_id oid;
-> +       int hash_algo =3D init_hash_algo();
-> +
-> +       if (!check_int(hash_algo, !=3D, GIT_HASH_UNKNOWN))
-> +               return;
-
-If initializing the hash algo fails here, it is likely because it
-already failed when get_oid_arbitrary_hex() (which initializes it) was
-called in the tests before this one. So I think it might be even
-better to move the above hash algo initialization code to setup() and
-make setup() error out in case the initialization fails. Then setup()
-could pass 'hash_algo' to all the functions it calls, even if some of
-them don't use it.
-
-> +       strbuf_test_data_path(&path, hash_algo);
-> +       oidset_parse_file(&st, path.buf, &hash_algos[hash_algo]);
-> +       check_int(oidset_size(&st), =3D=3D, 6);
-> +
-> +       if (!get_oid_arbitrary_hex("00", &oid))
-> +               check_int(oidset_contains(&st, &oid), =3D=3D, 1);
-> +       if (!get_oid_arbitrary_hex("44", &oid))
-> +               check_int(oidset_contains(&st, &oid), =3D=3D, 1);
-> +       if (!get_oid_arbitrary_hex("cc", &oid))
-> +               check_int(oidset_contains(&st, &oid), =3D=3D, 1);
-> +
-> +       if (!get_oid_arbitrary_hex("11", &oid))
-> +               check_int(oidset_contains(&st, &oid), =3D=3D, 0);
-> +
-> +       oidset_clear(&st);
-> +       strbuf_release(&path);
-> +}
-
-Thanks.
+Patrick
