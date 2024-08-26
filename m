@@ -1,149 +1,112 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC71A2AE97
-	for <git@vger.kernel.org>; Sun, 25 Aug 2024 10:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179CC8C11
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 05:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724582735; cv=none; b=SLCm6eeiPmNjJKtwbK4G5ADwx53Lcgm1g+P5/ugoEbiVME9d5gimekcAxJQvibroiqNyCDrfNjRgWvdIrAU2sK0LfKGieNu5bdetqh7dw043lzVcdQudcpTGpIX+bpOvxvIpUEQPUx2wAg0b90Y6gtG1I8Y/2BgTGtyhrMScLYM=
+	t=1724650596; cv=none; b=brwrKUCufL5dinC49u+i4Iib2mPAecSvWb2EEcvNabzxK5It5S+HcdGPgNv3H6tmHwD2i6OzKv0nRZSlNOUFSSx8iQZGehliFaAPT7l93mrXJghhuWFfvP/kpN32YzjiUCJ8V8WzThdFL+vbTq27zdA2Ctpel93mIWDMRvuulH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724582735; c=relaxed/simple;
-	bh=qHGrpcx90jKXBEvgcoaaAPQvR+wd7A5DkyGeol56KRQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=RIqG9h7pe3wfH7epZ5wZ+fsJQ1YLMlt2iqeWdCdqqbe/a6sv1jCqw6lpRwHadmvCSb/TOstXdr17iA/Rky9EauK6rLj3la55v3c8T9rOmhj7eYyK5scJBLt6epcenoTBDKDWpV7IkJbtqkYDjUMwQyKBCgnDhhpWeyjl+r2ILik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fHaySWjB; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724650596; c=relaxed/simple;
+	bh=rYthTVMTRwUYysoaECVXneov72EgEDqk6v4LrGt/+UM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Al11oq5/HDADCbUsIquaqxZu48zbH1GudSMVGxpklBzx8rUouSUEqcimPRWtcUsG255CwFezrluj2mA0R9Hv2JRxttuv1T5rSvExEsbIQsj7YFvCuVdr6F9T0MMI3/Dm1KCoQIGlSC3hyxZLKZ9ez4LUoQMmQ9FpQZHmF+z4Lac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s4wikZT2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBMiTZ8g; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fHaySWjB"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-71446fefddfso1527070b3a.0
-        for <git@vger.kernel.org>; Sun, 25 Aug 2024 03:45:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724582733; x=1725187533; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OEg9wDUaTdk3c9FtGycHIXHMEPRqrx/UVB4mVuoCbu0=;
-        b=fHaySWjBbpXMo7q8Tq49JQF/18LI9XXgsUyw2fgAiauWR106YeNFD0wFmnxNsfISyg
-         7enWGE+KHQlAp3G7Uuc8HGjthVGwkHrIZhkEtGrK/2r4Fhj5owwvby9fTDFVpXU4KQvP
-         /2x5+zUsi7pdir2jyGtbbpTxHXdwMMaXSzG36X/peHhNaSeI2OgGS0Jq2gAo7vAIU/0c
-         Qkq9T79XcOYy2E6Fv8KN4MuXcRRY+xJeGX9j1HBpmwCmT5ESiJsZ6FM92Y9/D8zBMZic
-         hxpmYyF6pNO5CHHIqK/cx4ScB/zV336d2CkIP9B9wax919SExWj8z1+iDkRlg/AJYmSP
-         Au/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724582733; x=1725187533;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OEg9wDUaTdk3c9FtGycHIXHMEPRqrx/UVB4mVuoCbu0=;
-        b=IsoYrVcQ+TzTHSnjp8bCUCNrCkvpdl/mm3h4/LlpssnwI0cz2vl4YJLOik5da29P06
-         yFTRWE4iOBO4xErEcOkzXeBMT8KpifExI11645zPejigVUS2PRe88bZg+Yo6pwA+5rtv
-         VhA/oCt44vW53tSpjr3OguS4x/e6qyzuseoUKU79s/kS/Ab6saKFfylO1vBkOwcZPS1w
-         JeTuHvB1/xmFnfABIMA5N1DKYDYt9vNZYXqI70V/f10DEKrnjtQ/Jh26wKsFC60zBCfS
-         yEiV+OfVpANP4k/frbkk/smkGCb/D/yZpbBz+vEO5jm2t0h/DXZcaQbdxlWQcpEocXUd
-         j3jg==
-X-Gm-Message-State: AOJu0YyFs2STSg8q51YDQPMCqgJMucChbccyTt44XYr/T99uOhgg54mj
-	+upJy/7HjwEsAH/OkigNlqnqAXwy2XQ+X6oMde1eMasNYmpaJkS1
-X-Google-Smtp-Source: AGHT+IH5O8cykQjnXOathNa0tTy7LFqLQgAg96mKYInYRXYoAdQCUH5qetTpVZV5Zbm6qy2s3m1FLQ==
-X-Received: by 2002:a05:6a21:e8a:b0:1c6:ed16:30e4 with SMTP id adf61e73a8af0-1cc89d29e87mr7990329637.7.1724582732486;
-        Sun, 25 Aug 2024 03:45:32 -0700 (PDT)
-Received: from localhost ([106.222.205.87])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20385567f74sm52183075ad.60.2024.08.25.03.45.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Aug 2024 03:45:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s4wikZT2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBMiTZ8g"
+Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id C7D191151B70;
+	Mon, 26 Aug 2024 01:36:31 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 26 Aug 2024 01:36:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1724650591;
+	 x=1724736991; bh=DqFzHqKdQY99WlRs8HWXhign1wAOQrac73iC1bccZ7Y=; b=
+	s4wikZT2KC9Kp5UqGss8pZAot6a5zmoNmpbJK9Am9ytbJVWUHEl4wG0uLBvsioaU
+	TtoP3eDGWbFx/1AF2lyqjZPmwUuvFVdKYjjDR/FWn1ruOjIHUcK97ISH57rA7Ylq
+	x6GuXYfgPAbdxt9j6utc4SVk2Rj1IHi1ZSYFAaWnwNlIq0CUt7xphbbeMdhbYJ6o
+	LZA6UBMOXlXkg5Ku7d3B7yZQilZXuzr1lBUFKhNMFAzPeEZLD4WJMWl7CDrUBPpz
+	SU3lY/XESbluEWuQhEX5qZnIRXze1KwFvLwCWmo4yQdcef1UPqfyIUQdW/FrqycA
+	SbSQACKJOHsuTA0pZIZrmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1724650591; x=
+	1724736991; bh=DqFzHqKdQY99WlRs8HWXhign1wAOQrac73iC1bccZ7Y=; b=f
+	BMiTZ8gmytc3rSF9oFMDg6+YSuSMQRIGG8HKwNMiskMbOgJAlnCN3K5iacVfoudt
+	uFRAbkheAgf5XRXLwmQq4d3XFaAPikGIURBtF2zt3qHoeiKvmS/76VQgQXMqPFmy
+	QkyhRcn837MZ0a/34Z09Z4NwR3KaNePCNswSzr4r2DUPLS+3eV6pLM5nSyWAcFB8
+	1lrmSMR8PkuC/7/tF+WbjGy6Qi0XZKB/v+BPvDgv/30Xv+ffekM0TxescwgLmGQY
+	OUPRil84+cRm6LY4u09Itn6mFqU0DD63X9q/4k5MZBFQMg5I0N72vUp/x1FiwbKY
+	7KiKibnFX0x1KyTD8sIdw==
+X-ME-Sender: <xms:XxTMZie1Cdg6vm3T4ylZa74vYz8Xc6ZXESMVnyf5LiNPm4YgN0QEWA>
+    <xme:XxTMZsNHzc5qIZkPUW5a1_lYgZPzREIb_9kkAYOjaGpfPEYKCZxTq-7bxARWNxsEQ
+    rO33NBoq9YpeapCSw>
+X-ME-Received: <xmr:XxTMZjgYBbXQmiqsb74u25RgRDzo5F3UXuKcNyocIRk1_yIVJiIQs0DS1lEb_EpnNi_avtRH-T9eqB7FfuX6E_QMLfE-OGeuasaKDOO-poAopvo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvjedgleekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
+    etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XxTMZv8Lcc9OPcGm3lSa7Vh7m8CcGstLLmVgyFZbe_L1KM4BC7iCxg>
+    <xmx:XxTMZuv5QFETwVHCKZKt7rOcdITVZFUveZE1Iu0JyNYxe04-VQI8nQ>
+    <xmx:XxTMZmEnvqj-6PSG547-O2UDHQubknQxoX8TxT7-xDLDsFMPeHVjXQ>
+    <xmx:XxTMZtN7YY4HAvCYmhq61NaFFousOABHAhI8zn9G1LgGOyDQUD5miw>
+    <xmx:XxTMZiK4pbAe84PP3haltjATPFm1cDj2XDcIULH3TnXgDZMQ1Pf4CTF2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 Aug 2024 01:36:30 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6d4cea34 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 26 Aug 2024 05:36:26 +0000 (UTC)
+Date: Mon, 26 Aug 2024 07:36:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] remote: plug memory leaks at early returns
+Message-ID: <ZswUWj_dg7-kM8b0@tanuki>
+References: <82cb986c-6830-4d9a-bad1-fe4cab6a76eb@web.de>
+ <xmqqseuvndsq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 25 Aug 2024 16:15:27 +0530
-Message-Id: <D3OXJZTMW1BP.1EYWBW4CTQVES@gmail.com>
-Subject: Re: [GSoC][PATCH v3] t: port helper/test-oid-array.c to
- unit-tests/t-oid-array.c
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Christian Couder" <christian.couder@gmail.com>
-Cc: <git@vger.kernel.org>, "Christian Couder" <chriscool@tuxfamily.org>,
- "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>, "Phillip Wood"
- <phillip.wood123@gmail.com>
-References: <20240803132206.72166-1-shyamthakkar001@gmail.com>
- <20240824170223.36080-1-shyamthakkar001@gmail.com>
- <CAP8UFD3mq+k8QXDrFAp5bfoCN+sNgm3vJvuhryxVYDaj-SZU0g@mail.gmail.com>
-In-Reply-To: <CAP8UFD3mq+k8QXDrFAp5bfoCN+sNgm3vJvuhryxVYDaj-SZU0g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqseuvndsq.fsf@gitster.g>
 
-Christian Couder <christian.couder@gmail.com> wrote:
-> On Sat, Aug 24, 2024 at 7:02 PM Ghanshyam Thakkar
-> <shyamthakkar001@gmail.com> wrote:
-> >
-> > helper/test-oid-array.c along with t0064-oid-array.sh test the
-> > oid-array.h API, which provides storage and processing
-> > efficiency over large lists of object identifiers.
-> >
-> > Migrate them to the unit testing framework for better runtime
-> > performance and efficiency. Also 'the_hash_algo' is used internally in
-> > oid_array_lookup(), but we do not initialize a repository directory,
-> > therefore initialize the_hash_algo manually.
->
-> Even if 'the_hash_algo' is used internally in oid_array_lookup()
-> through oid_pos(), this patch initializes the hash algo for the repo
-> using repo_set_hash_algo(), which contains the following single
-> instruction:
->
-> repo->hash_algo =3D &hash_algos[hash_algo];
->
-> So "therefore initialize the_hash_algo manually" is not quite true, as
-> it doesn't look like 'the_hash_algo' is even used.
-
-the_hash_algo is just:
-    define the_hash_algo the_repository->hash_algo
-
-and we do initialize the_repository->hash_algo manually.
-
->
-> Also I think it's not clear how initializing a repository directory is
-> related to the hash algo.
-
-That is mentioned because the old code in helper/test-oid-array.c used
-to call setup_git_directory_gently() to setup a git directory, which
-would also initialize the_repository->hash_algo.
-
->
-> So maybe something like the following would be better:
->
-> "As we don't initialize a repository in these tests, the hash algo
-> that functions like oid_array_lookup() use is not initialized,
-> therefore call repo_set_hash_algo() to initialize it."
-
-Will change.
-
->
-> > And
-> > init_hash_algo():lib-oid.c can aid in this process, so make it public.
-> >
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> > Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> > Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+On Fri, Aug 23, 2024 at 02:13:09PM -0700, Junio C Hamano wrote:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+> > Signed-off-by: René Scharfe <l.s.r@web.de>
 > > ---
-> > Changes in v3:
-> >  - changed commmit message and comments for more accurate description
-> >  - removed test_min() and return early when actual.nr and expect.nr
-> >    don't match
-> >  - rename result to expect for more accurate description
-> >  - removed a redundant check in t_enumeration()
-> >  - add check_int() around one of calls of get_oid_arbitrary_hex()
->
-> This looks good.
->
-> >  - rebased to latest master
->
-> It's nice to say it was rebased, but it's better to tell the reason
-> why it was rebased.
+> >  builtin/remote.c | 23 +++++++++++++++--------
+> >  1 file changed, 15 insertions(+), 8 deletions(-)
+> 
+> Looks straight-forward.  Does this allow us to mark any test script
+> as leak-free?  I understand that Patrick has another round of
+> leakfixes topic that is not yet published, and I'd prefer to see us
+> not step each other's toes.
 
-No particular reason other than the fact that v2 was posted 20 days ago.
-And it is not merged into 'seen' or 'next', so it shouldn't be a
-problem.
+No, this doesn't conflict with anything I have. And even if it did, I'd
+be happy to drop some patches from my local series :)
 
-Thanks.
+The changes themselves also look good to me, thanks!
+
+Patrick
