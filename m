@@ -1,53 +1,52 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1731450EE
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 16:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E2A18D64D
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 17:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724691320; cv=none; b=lHO7FwrI2PmHF+CkIlUrByOOck5FvMj4ZEM0Ew2NwnflXNYVavy1jekDN+y8+vNS8aL6mVkEEC68lrRLDs301PWPcnjZFTDbKqx5DaQgNtuXmDjOwUf56W2HpMI4hgLe0F87oKNfp+NZ+ghVyOYPj2pJGGaEZaak+juldBznAaU=
+	t=1724692195; cv=none; b=dPeApePiuKws/wdUg8Xu+ID2iSiyhtQ+S/+ZNJw42KawWOeFyxmUkJeaVSd90QtvtbGGNnNLINm7RCQmakZkB5cRJYbTm4Op+lS+kQ0TqXFIRZxjCmQ+LHawMecQoaJ6UrCcQYANIgGil+QF/c9CBmj0xPf9laBhFTBzg6gA1QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724691320; c=relaxed/simple;
-	bh=2WWe/snhi7o3uel5tPvm3WXafRmVY6gaKwlJOX+VCeM=;
+	s=arc-20240116; t=1724692195; c=relaxed/simple;
+	bh=nhrgqXO9CCF6q348JgNc+mcigoDhdoehtENI56yc4G8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XYUVOaTB+l4xUrf1leSM+ucqqZ2zBlMpeeC7++fljh26oh14K5iHFw7htcEOgJI6EiPDYDfEUd8LZe+d+CINcW3abcdeePznfdv5a1rvmJ50cV3TTmpP0Jt5Y0qiu2z+I84UkWZXSjPsGs+8eRTpeNA9bY0DR54Nn4w2ChGYSrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=W9wtmUvb; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=uAiYJypTAPsM/p++tZuejiyFeNxzsi/gVdDnYe+iUE9UknMEDvKv+ai6bPuEh/CbWEyhAZGvgGe4dwPFcE8J5tgj7gaz7cOEnBbf38Amb4ePKHCDNh1CQp30aipMrEvCV4NI3Cb7JE9IOnfag7MW7L2eLs8TQDZubsaukWikrto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kpxLTC7J; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W9wtmUvb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kpxLTC7J"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 768CF27A40;
-	Mon, 26 Aug 2024 12:55:18 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D34027BAB;
+	Mon, 26 Aug 2024 13:09:53 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=2WWe/snhi7o3uel5tPvm3WXafRmVY6gaKwlJOX
-	+VCeM=; b=W9wtmUvbq7KhRfwT8Pfta80gZJiLE3MC9JQbp/Eksx54TnS3PdsmmW
-	TussgMbgr2NtDTuvk+Bxr033NdKuZdIpaAmuXYp780Z2pEqTQaM8IMalu4XT2+vW
-	xLYFYC6D4XqBMkjFj3IFhadkVixMTQF+DTzZ86faXRKj81XP1PGzw=
+	:content-type; s=sasl; bh=nhrgqXO9CCF6q348JgNc+mcigoDhdoehtENI56
+	yc4G8=; b=kpxLTC7Jwj+3mdT6VyU3n9SjgiJ1BoUWky2SHncQAMM8lJa14BuGiv
+	pFrWokTKu+yPRY/xDFsj9X8FB5+xXE0/ppAwGMe/Xi+J5cvKgVxgTW/hOUWBvAAL
+	ZX5ZL5bVSc5GYxHa5qUokI9XWLnhg2cpyJNwqwXK4DZKSA7tPYObo=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F04D27A3F;
-	Mon, 26 Aug 2024 12:55:18 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4320A27BAA;
+	Mon, 26 Aug 2024 13:09:53 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ECDC927A3D;
-	Mon, 26 Aug 2024 12:55:14 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B77ED27BA6;
+	Mon, 26 Aug 2024 13:09:49 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Eric Wong <e@80x24.org>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
  <ps@pks.im>
-Subject: Re: [PATCH v2 03/10] packfile: fix off-by-one in content_limit
- comparison
-In-Reply-To: <20240823224630.1180772-4-e@80x24.org> (Eric Wong's message of
-	"Fri, 23 Aug 2024 22:46:23 +0000")
+Subject: Re: [PATCH v2 04/10] packfile: inline cache_or_unpack_entry
+In-Reply-To: <20240823224630.1180772-5-e@80x24.org> (Eric Wong's message of
+	"Fri, 23 Aug 2024 22:46:24 +0000")
 References: <20240823224630.1180772-1-e@80x24.org>
-	<20240823224630.1180772-4-e@80x24.org>
-Date: Mon, 26 Aug 2024 09:55:13 -0700
-Message-ID: <xmqq1q2bmdfy.fsf@gitster.g>
+	<20240823224630.1180772-5-e@80x24.org>
+Date: Mon, 26 Aug 2024 10:09:48 -0700
+Message-ID: <xmqqjzg3ky77.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,45 +56,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F7465678-63CB-11EF-8473-BF444491E1BC-77302942!pb-smtp20.pobox.com
+ 00AF17B6-63CE-11EF-9B3F-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
 Eric Wong <e@80x24.org> writes:
 
-> object-file.c::loose_object_info() accepts objects matching
-> content_limit exactly, so it follows packfile handling allows
-> slurping objects which match loose object handling and slurp
-> objects with size matching the content_limit exactly.
+> We need to check delta_base_cache anyways to fill in the
+> `whence' field in `struct object_info'.  Inlining (and getting
+> rid of) cache_or_unpack_entry() makes it easier to only do the
+> hashmap lookup once and avoid a redundant lookup later on.
 >
-> This change is merely for consistency with the majority of
-> existing code and there is no user visible change in nearly all
-> cases.  The only exception being the corner case when the object
-> size matches content_limit exactly where users will see a
-> speedup from avoiding an extra lookup.
->
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
+> This code reorganization will also make an optimization to
+> use the cache entry directly easier to implement in the next
+> commit.
 
-I would have preferred to see this (and also "is oi->content_limit
-zero?" check I mentioned earlier) as part of the previous step,
-which added this comparison that is not consistent with the majority
-of existing code.  It's not like importing from an external project
-we communicate with only occasionally, in which case we may want to
-import "pristine" source and fix it up separetly in order to make it
-easier to re-import updated material.
+"cache entry" -> "cached entry"; we tend to use "cache entry"
+exclusively to mean an entry in the in-core index structure,
+and not the cached objects held in the object layer.
 
->  packfile.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/packfile.c b/packfile.c
-> index c12a0515b3..8ec86d2d69 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1557,7 +1557,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
->  		}
+>  {
+>  	struct pack_window *w_curs = NULL;
+> -	unsigned long size;
+>  	off_t curpos = obj_offset;
+>  	enum object_type type;
+> +	struct delta_base_cache_entry *ent;
 >  
->  		if (oi->contentp) {
-> -			if (oi->sizep && *oi->sizep < oi->content_limit) {
-> +			if (oi->sizep && *oi->sizep <= oi->content_limit) {
->  				*oi->contentp = cache_or_unpack_entry(r, p, obj_offset,
->  								      oi->sizep, &type);
->  				if (!*oi->contentp)
+>  	/*
+>  	 * We always get the representation type, but only convert it to
+>  	 * a "real" type later if the caller is interested.
+>  	 */
+> -	if (oi->contentp && !oi->content_limit) {
+> -		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
+> -						      &type);
+> +	oi->whence = OI_PACKED;
+> +	ent = get_delta_base_cache_entry(p, obj_offset);
+> +	if (ent) {
+> +		oi->whence = OI_DBCACHED;
+
+OK.  This is very straight-forward.  It is packed but if we grabbed
+it from the delta-base-cache, that is the only case we know it is
+dbcached.
+
+> +		type = ent->type;
+> +		if (oi->sizep)
+> +			*oi->sizep = ent->size;
+> +		if (oi->contentp) {
+> +			if (!oi->content_limit ||
+> +					ent->size <= oi->content_limit)
+> +				*oi->contentp = xmemdupz(ent->data, ent->size);
+> +			else
+> +				*oi->contentp = NULL; /* caller must stream */
+
+This assignment of NULL is more explicit than the original; is it
+because the original assumed that *(oi->contentp) is initialized to
+NULL if oi->contentp asks us to give the contents?
+
+> +	} else if (oi->contentp && !oi->content_limit) {
+> +		*oi->contentp = unpack_entry(r, p, obj_offset, &type,
+> +						oi->sizep);
+>  		if (!*oi->contentp)
+>  			type = OBJ_BAD;
+
+Nice.  The code structure is still easy to follow, even though the
+if/else cascade here are organized differently with more cases (used
+to be "are we peeking the contents, or not?"---now it is "do this if
+we can grab from the delta base cache, do one of these other things
+if we have go to the packfile").
+
