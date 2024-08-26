@@ -1,98 +1,99 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257D949631
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 16:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E57191F78
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 16:38:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724688390; cv=none; b=qvIfigsoJwI8IXWL7FNYT7pNOkR5UUf5NyfUoD+UqKE+MczMrYTW5voqk8nGAog7TI56ifTQUwFR8jTAYUMgJRgDcOYxWm2OiyVhm7ZKTX+i01pwD4T453bbRVWN1kAlMkywIrFMtjrorVJgR3sqJmKzm6VPN1TFcO0R4I9dik4=
+	t=1724690325; cv=none; b=hQycqLSUlJtjP8WK0RuTPn5w31GVCrNcttoFiDyRkNf0hpJUqARKCPA3TpBUiSACGcxHpE0t0ZTuJZdEjrS7aAcoo9B1nNTqNmbXRReEaZhzZm4t6xgN7YczknjrNGWvxeIEgoQW5ZJ8NJCsdR4tgxxWcu8KP0YXbt96790YQHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724688390; c=relaxed/simple;
-	bh=fxmn2UBaVkfLxoiD5LB/J93mJpp4b8N+fHp5HXqzyMQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oLz0IobWBGPBSCQIQSRaecT+TaimnnhpmraAw2PAtNzJTN3h4AJxvUJvMHoAzB4hfHAI3g1+tjBqHdvdvs4pyT1Nbps3veHKMC44JXcvOHovjOr8U3jcTuaKCZdMbNJISKFXPE1mhDnZ9Qg2ghwDAUJXzM1h9ghuPVwNWaXFOzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NMLt/FPZ; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724690325; c=relaxed/simple;
+	bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=laPFSGWVxgFBh9asuvZLKOdalwUdSCF++jMOuUHnMYRIGwfK8xpIK3flWOt/axPwGTediBYZvhI1inbWxk1mpON7MekymG222uH/gANhqgPtmq2kmiegXMZg9UVKtaL5+76TIXw0+zGjoQ6CvYfH9xZ+Jc7baaMuuWSecs+VmJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=PLvkeo55; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NMLt/FPZ"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AAAE5386A7;
-	Mon, 26 Aug 2024 12:06:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fxmn2UBaVkfLxoiD5LB/J93mJpp4b8N+fHp5HX
-	qzyMQ=; b=NMLt/FPZ0bxK0PkV0eNiOVDwcycijs05UGB4cCnHkpusy3pUZ5ajRY
-	9MW6ChAW5/goOwyg3VqKmQvpCFsyhRrPrZxQqP0d70S/guCABAW0oyO4jQWdUQ4h
-	LW69H2dfBxSoR35g9IbtZhAncwbpfXtP/h0Eyc8NO1H874H7jZCyg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A1FAC386A6;
-	Mon, 26 Aug 2024 12:06:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C216F386A5;
-	Mon, 26 Aug 2024 12:06:21 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] bundle-uri: plug leak in unbundle_from_file()
-In-Reply-To: <ZsxQBEpfChQozhF7@tanuki> (Patrick Steinhardt's message of "Mon,
-	26 Aug 2024 11:51:00 +0200")
-References: <20240826083052.1542228-1-toon@iotcl.com>
-	<ZsxQBEpfChQozhF7@tanuki>
-Date: Mon, 26 Aug 2024 09:06:20 -0700
-Message-ID: <xmqqle0jmfpf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="PLvkeo55"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso7590084e87.0
+        for <git@vger.kernel.org>; Mon, 26 Aug 2024 09:38:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google; t=1724690321; x=1725295121; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
+        b=PLvkeo55UPhaFVNjv2lAKu6XUg6DCkDOrm1MpOaIPxrogLQWdTkm9hqQckgeq9MLnH
+         M66DEdsoMzNHKYZDMit0f32cMAa7adsAwuk5068lcwFFZcRQTUthikIuvNddGyFTqlD9
+         fT8EFIlaXUqeImXujkd3l0MhtnqN//6VSY2FQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724690321; x=1725295121;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=G9Lsp6TbgI8tOONFON1TfP1b1kO2xpqaLEbm0MEbFVA=;
+        b=qprOd93kYgS3d3h3ErmXA0lUJYICHCF7YTVcbMn93eonlH9u6OdjQITkoBOORLf/2b
+         N8x0U+2fZW1BqDTGXR8tfjf66o1AX6whRFqCnPqc0Z/r2CLtB+mqRohfoe0uCA7H8BYm
+         qFB+qlGykHAOjicx5EYp3klKO23KholF5+8xR80R8g8cKZdF3VcwV10RrapmJNGs1Eqq
+         5tiq7fbnP4SCfej4dkBacAJAwu0lbZ3KXjkj/6HWVAtEXCXI+FNCqwuwVAmkMHxLnh/C
+         12r78BBrd4SFZp1Nn/yE8KC3NtU9GIoQPFzsdtw3H2VFu5wS01hw4dC3VgxVs20GBUgP
+         9xvQ==
+X-Gm-Message-State: AOJu0YxoW1UGmlwhbNJpDph4VkBSRsUvBHWGiCE2lQCIsmLUdFi0Sd8Z
+	NNDAZHfRV6Hfeph2k/iBDyhV+wB8JzeQHeJwK+mgBb2EXx/+w40LBxSWidleg8QcfGhIUrMxWlK
+	DPH26GUufcutBbYue5AHPwBtG+lTNefWePSlXeLQXkMItIkawgZJnlUaogQ==
+X-Google-Smtp-Source: AGHT+IFBoxP5g3U3iPH16HzcTigzOEIAVwV0oZmW4CbR8ZRzbT4tuUbt0KRCLnRAdT76Ukw9LvXu/xvQlDWdceY/rJA=
+X-Received: by 2002:a05:6512:3f11:b0:533:efaf:ab26 with SMTP id
+ 2adb3069b0e04-53438791a8dmr6858644e87.36.1724690321172; Mon, 26 Aug 2024
+ 09:38:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 22F708E6-63C5-11EF-BA74-9B0F950A682E-77302942!pb-smtp2.pobox.com
+From: Tao Klerks <tao@klerks.biz>
+Date: Mon, 26 Aug 2024 18:38:29 +0200
+Message-ID: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
+Subject: Sensible way to see what objects are being fetched just-in-time in a
+ partial clone?
+To: git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi folks,
 
-> On Mon, Aug 26, 2024 at 10:30:52AM +0200, Toon Claes wrote:
->> When the function returns early, the variable bundle_ref is not released
->> through strbuf_release().
->> 
->> Fix this leak. And while at it, remove assignments in the conditions of
->> the "if" statements as suggested in the CodingGuidelines.
-> ...
->> -	if ((result = unbundle(r, &header, bundle_fd, NULL,
->> -			       VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0))))
->> -		return 1;
->> +	result = unbundle(r, &header, bundle_fd, NULL,
->> +			  VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0));
->> +	if (result)
->> +		goto cleanup;
->
-> This changes the returned error code from `1` to whatever `unbundle()`
-> returns. Is this intentional? If so, the commit message should explain
-> why this change is safe.
+In working with Partial / Filtered Clone repos, there are situations
+where objects get fetched just-in-time - eg during a "git blame", if
+you did a "blob:none" filtered clone, you can easily end up with
+hundreds of fetches as git iterates backwards through the file
+history.
 
-Thanks for reviewing carefully.
+I was trying to write a "git blame optimizer" to pre-fetch all the
+suitable blobs, and it wasn't working right, so the "git blame" was
+still fetching stuff - but I couldn't see what it was fetching (which
+made it hard to investigate the bug in my script).
 
-Both of two callers of unbundle_from_file() are used as the
-condition of an if() statement, so unbundle() that signals an error
-with -1 wouldn't be a problem, I would think.
+I did end up getting a list of some just-in-time fetched blobs, by
+dumping a list of *all* the object IDs I had locally, before and after
+a still-fetching-stuff "git blame" run, and doing a before/after
+comparison of the resulting list of objects. To get the list of
+objects found locally I did:
 
-It may not be a bad idea as a #leftoverbits item, after the dust
-settles, to clean up the calling convention in this file (may not be
-limited to the code path that reaches this function) to follow the
-usual "signal success with 0, failures are signalled with a negative
-value".  Then we can just return the value we got from a failing
-read_bundle_header(), just the same way we return the value we got
-from a failing unbundle().
+git cat-file --batch-check='%(objectname)' --batch-all-objects --unordered
 
-> Other than that this looks good to me, and the fix does not conflict
-> with any of my leak-plugging series.
+(ref: a conversation with Peff last year:
+https://lore.kernel.org/git/20230621064459.GA607974@coredump.intra.peff.net/
+)
 
-Yup.  Thanks, both.
+This was a sucky process though - and I was very surprised that I
+couldn't see what was being fetched (what the stdin content to the
+just-in-time fetch calls were) with any of the trace env vars that I
+was able to find documented: GIT_TRACE, GIT_CURL_VERBOSE,
+GIT_TRACE_PERFORMANCE, GIT_TRACE_PACK_ACCESS, GIT_TRACE_PACKET,
+GIT_TRACE_PACKFILE, GIT_TRACE_SETUP, GIT_TRACE_SHALLOW
+
+The only thing I could easily see were the *args* passed to nested git
+processes.
+
+Is there any way to see what a just-in-time fetch is fetching? Or any
+way to see the content passed around on stdin in nested git processes?
+
+Thanks,
+Tao
