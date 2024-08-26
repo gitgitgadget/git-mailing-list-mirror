@@ -1,54 +1,51 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717471917DF
-	for <git@vger.kernel.org>; Mon, 26 Aug 2024 17:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA26198A02
+	for <git@vger.kernel.org>; Mon, 26 Aug 2024 17:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724692768; cv=none; b=WhNbEXMV6pyAKECthpWK7bVgLVG6vHjAlYY0MbVk2eW/yUOEXeZMEGE8Mi4fjmw0H0ROx5aAhcZIIHRCXnXYIus1mVTZTthpraz3t2by1oPtknw0YYKrLR2WbkyGo0AzVmOIO/ShiX8d3LTyfeoaYN+ip05iVedp9DnWkJfv1aY=
+	t=1724693332; cv=none; b=GLJC17rB2FY+IJdSm3hyObrNPEWRwLnfjhZGgPvdOKHCRhubJlijsRRT6qAy6kwjm600504gMwgHLOUokEewuXketqlNudgnOJnEvTBuumfvYGgn+Muc1t3HJBWb35L38y2gNyxWhqYVN0AXcyBXoYWq9b7eUyyvcu08mP5/h/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724692768; c=relaxed/simple;
-	bh=xuCne/zgOoFvpU7/1nB2IAJD+jyiG6MgVQyRVLojgYk=;
+	s=arc-20240116; t=1724693332; c=relaxed/simple;
+	bh=ap9ZQ+CC6HkdMtSZUrgR2yGyJhzz4WepKi1HAUKjDGk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R5gzxdJb5dGnOi3id5FzaNt8Xoa6s6jQ04cF/m0pa2oGGcHWXGW2HoS+seWaYCC4D0ReSXZQMPWmU0Y9NJorh/CPAxZ30wpa6yulb0YhUw4MlZO3OXNHMNmmLsW5IQkHdY2+bWgaZOG80iF9TYZdO8lm7poc/lLSX9xcUmkfhGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JfevBkO+; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=PHkGP2cCOwUbMrbIOSOpJmWkIanI03oyToXxWBYS8rHXbaKUxObSUfb0cnFXZ6HTCgbcKOcccqFyWmDBtKRn1+mojCTMSK27VkEOww9eg6LWkGVFiFSagTO5AgD6a4z6xlYOkBd+zFcd5uZE3K4K3YpH07rZmLepnktRcmSXJkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WibDXCVS; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JfevBkO+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WibDXCVS"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 537732AEEF;
-	Mon, 26 Aug 2024 13:19:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 507102AFAE;
+	Mon, 26 Aug 2024 13:28:50 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xuCne/zgOoFvpU7/1nB2IAJD+jyiG6MgVQyRVL
-	ojgYk=; b=JfevBkO++Wf3dBD9VCR/txkRW+diapCPcCdEt4NaApoO5ItsSWtxEj
-	iDtdU7Q4ylUXRRjPPPVenSX2nHaaXvhwsTKVzUMNXpF6OmzTmoFcC/j5TPzHChRu
-	SojMEPFBZeKFcVSbVYE1g94B5nOR5x5Lvxl7/HM+SiuuBWH6OwQ60=
+	:content-type; s=sasl; bh=ap9ZQ+CC6HkdMtSZUrgR2yGyJhzz4WepKi1HAU
+	KjDGk=; b=WibDXCVSc2jw8jIKrueq1zg0kSQQFkojmQBbeJgSQvGz+/CtYaj/ye
+	bMjFkW04Te1urY+PLpesE1f9Uxv0F0KB1Mmc2OeipzwC0/jP4AY2DprLTxawhppj
+	Uyihtn/HkVLqfmp4gjdf5uURleDaQfkk9+Hk/nV4oC3wnuNZey09c=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A4952AEED;
-	Mon, 26 Aug 2024 13:19:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 491442AFAD;
+	Mon, 26 Aug 2024 13:28:50 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B150E2AEEC;
-	Mon, 26 Aug 2024 13:19:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B05032AFAC;
+	Mon, 26 Aug 2024 13:28:49 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Celeste Liu <coelacanthushex@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] doc: replace 3 dash with correct 2 dash in git-config(1)
-In-Reply-To: <8c1c031b-4f36-4825-93ef-408c50b0ee2f@gmail.com> (Celeste Liu's
-	message of "Mon, 26 Aug 2024 23:56:44 +0800")
-References: <20240822172042.54065-1-CoelacanthusHex@gmail.com>
-	<Zsgh4LacdOt8N69o@tanuki>
-	<6c9f666e-12ad-4b67-a44a-3111686454f3@gmail.com>
-	<ZswfgYsZrzY6kc1E@tanuki> <xmqqa5gznwf9.fsf@gitster.g>
-	<8c1c031b-4f36-4825-93ef-408c50b0ee2f@gmail.com>
-Date: Mon, 26 Aug 2024 10:19:17 -0700
-Message-ID: <xmqq34mrkxre.fsf@gitster.g>
+To: Tao Klerks <tao@klerks.biz>
+Cc: git <git@vger.kernel.org>
+Subject: Re: Sensible way to see what objects are being fetched just-in-time
+ in a partial clone?
+In-Reply-To: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
+	(Tao Klerks's message of "Mon, 26 Aug 2024 18:38:29 +0200")
+References: <CAPMMpog7=ZnhJhrgZFwzRZibLtK1-LyOhsrp5c4O85ocRFDZxw@mail.gmail.com>
+Date: Mon, 26 Aug 2024 10:28:48 -0700
+Message-ID: <xmqqv7znjir3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,37 +55,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 53D23E04-63CF-11EF-8977-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ A828C210-63D0-11EF-A637-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Celeste Liu <coelacanthushex@gmail.com> writes:
+Tao Klerks <tao@klerks.biz> writes:
 
-> And is there need a new patch to fix this? Or you will fix it directly?
->> 
->> The synopsis should lose "=<regexp>" part, as the option does not
->> take any arguments.
+> This was a sucky process though - and I was very surprised that I
+> couldn't see what was being fetched (what the stdin content to the
+> just-in-time fetch calls were) with any of the trace env vars that I
+> was able to find documented: GIT_TRACE, GIT_CURL_VERBOSE,
+> GIT_TRACE_PERFORMANCE, GIT_TRACE_PACK_ACCESS, GIT_TRACE_PACKET,
+> GIT_TRACE_PACKFILE, GIT_TRACE_SETUP, GIT_TRACE_SHALLOW
 
-It is a separate documentation bug.  We can fix it separately.
+Yeah, lazy fetch codepath seems to be, eh, not quite well polished
+yet.
 
------ >8 --------- >8 --------- >8 -----
-Subject: git-config.1: two random small fixes
+I am kind of surprised that there is no trace2() events around
+promisor_remote_get_direct() or its callers.  Perhaps it is a good
+idea to add one to log how often it is triggered, and how large a
+batch the callers of the function is making?
 
-The synopsis says --regexp=<regexp> but the --regexp option is a
-Boolean that says "the name given is not literal, but a pattern to
-match the name".
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
-diff --git c/Documentation/git-config.txt w/Documentation/git-config.txt
-index 65c645d461..1ee5c89ba2 100644
---- c/Documentation/git-config.txt
-+++ w/Documentation/git-config.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git config list' [<file-option>] [<display-option>] [--includes]
--'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp=<regexp>] [--value=<value>] [--fixed-value] [--default=<default>] <name>
-+'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<value>] [--fixed-value] [--default=<default>] <name>
- 'git config set' [<file-option>] [--type=<type>] [--all] [--value=<value>] [--fixed-value] <name> <value>
- 'git config unset' [<file-option>] [--all] [--value=<value>] [--fixed-value] <name> <value>
- 'git config rename-section' [<file-option>] <old-name> <new-name>
+Unlike the diff machinery, blame does not have a prefetch machinery.
+I am glad that somebody is looking at it.
