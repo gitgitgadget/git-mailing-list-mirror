@@ -1,53 +1,52 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500261C2E
-	for <git@vger.kernel.org>; Tue, 27 Aug 2024 01:11:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DB4747F
+	for <git@vger.kernel.org>; Tue, 27 Aug 2024 01:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724721098; cv=none; b=LoKbRtY/sRXdSpNEXvRprilE0xPF/Jqtbe3JRHgw+3CidW2c4OFhFTcYhw7prH0F/wZB1h7LRIElKIifiKjxfjr109TfuCvYSmSch5fCL9E39wE4Fe9u1Ue/sbO5/jM1Tm21RrorNmX0XKV6x9lV+TJb1WyHm3Hvmokqgw8C/IE=
+	t=1724723402; cv=none; b=NktNz51e7UCg4jKtxvxGzGFyvycy19iYnRJ2iQUth/xoizjS6DeMU15hhJ5zbLg+BgaPt6WprfTkDzgpmRF39efbed4KjCOoTcmYb8ozTk1n68j5OlmTe+Zuf3c3D4x2Fc9dLn1NXpuj/hsxdaEsHXl6wtbrd3fcrx8LBnJshPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724721098; c=relaxed/simple;
-	bh=EraqNPo/o7gbDvaNj7/C2rFyeIsaJMOoE/oSc2iz8pQ=;
+	s=arc-20240116; t=1724723402; c=relaxed/simple;
+	bh=brq5UsUszfFHz59Ft/DhU5sRbzg80+/kQE7ZKQs1gNs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lYKobDqotFZHjxX4w1AWPOgHzQeflOgfziVtqbQIRQylBebEOPapoxzTYcHenVFhPtpVzoo2D6b3Hs+8zx8Ebees2xeNM+Ty8Ad4VjWXaFspvK+wh0V7moUkSDLrAEyqw6OeeFg9CUJiLOzgR29pP+la1+ugsb38Ro+h0/oBcbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ltrStjzK; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=lWd8UB442+aJMpT0QD4YoR9XIQhdXw7NJaPDCJRr7EVgS2l7QLy9DTZPGwBNtVneRb1g4a8WUTqZ6d78jKfPxS8ZDU+IngxWwUJnYjS+G0v2u9P6W6+m4ZzWTIRy6dmkCeIsd8DO0g8+62MODXX4hhRPsl670gM5vyk1U/TgA6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iXm6Ehse; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ltrStjzK"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D4B3C1F476;
-	Mon, 26 Aug 2024 21:11:36 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iXm6Ehse"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C93B2B0A5;
+	Mon, 26 Aug 2024 21:50:00 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=EraqNPo/o7gb
-	DvaNj7/C2rFyeIsaJMOoE/oSc2iz8pQ=; b=ltrStjzKsm1dD36vvTN/50NM8GqS
-	nIVbKYonMb00jD4K09kXELYlFo/xpbWGcB42If0zhA1hViAcTjppVxZy34QwlMwU
-	qMl2KiQ576WR3RN2r+0N1a09BUFhAljTXIqTZrs4Pi3dIW3CF/VJKPk7HWFJIctP
-	ppRp0jnJJiLoXnc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CEB8C1F475;
-	Mon, 26 Aug 2024 21:11:36 -0400 (EDT)
+	:content-type; s=sasl; bh=brq5UsUszfFHz59Ft/DhU5sRbzg80+/kQE7ZKQ
+	s1gNs=; b=iXm6Ehsebj+XnkLjLWkhRbyZINSNftof21bWepYlqmzYqLriJP1U93
+	kfLZs4pk0sA6fXz27AtnR5jRnOJ43jQ8o/3J71dBoXbPK8Jnsx/AenQ2+cK4EeV/
+	XMiONhM65XD6PJrzy1LNb6DLO2KuPD33F/zZKzONTD7Lw6TRZtR1I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 75EE02B0A4;
+	Mon, 26 Aug 2024 21:50:00 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 541A81F473;
-	Mon, 26 Aug 2024 21:11:33 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CBC7B2B0A3;
+	Mon, 26 Aug 2024 21:49:55 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
 Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/5] apply: introduce `ignore_ws_default`
-In-Reply-To: <5e35f260-056c-4af3-95d9-70d6f117bff9@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Sun, 25 Aug 2024 12:17:37 +0200")
+Subject: Re: [PATCH 3/5] apply: whitespace errors in context lines if we have
+In-Reply-To: <xmqqo75eeqx0.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	26 Aug 2024 17:43:39 -0700")
 References: <6dd964c2-9dee-4257-8f1a-5bc31a73722e@gmail.com>
-	<5e35f260-056c-4af3-95d9-70d6f117bff9@gmail.com>
-Date: Mon, 26 Aug 2024 18:11:31 -0700
-Message-ID: <xmqq4j76epmk.fsf@gitster.g>
+	<5da09529-e95b-407b-9e66-34ebac4b4128@gmail.com>
+	<xmqqo75eeqx0.fsf@gitster.g>
+Date: Mon, 26 Aug 2024 18:49:54 -0700
+Message-ID: <xmqqv7zmd9a5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,104 +54,54 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 4C9164FC-6411-11EF-9B98-E92ED1CD468F-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ A8F59C54-6416-11EF-8002-BF444491E1BC-77302942!pb-smtp20.pobox.com
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> When we see `--whitespace=3Dfix` we don't consider a possible
-> option: `--no-ignore-whitespace`.
+> Hmph.  0a80bc9f (apply: detect and mark whitespace errors in context
+> lines when fixing, 2015-01-16) deliberately added this check because
+> we will correct the whitespace breakages on these lines after
+> parsing the hunk with this function while applying.
 >
-> The expected result in the following example is a failure when
-> applying the patch, however:
+> It is iffy that this case arm for " " kicks in ONLY when applying in
+> the forward direction (which is not what you are changing).  When
+> applying a patch in reverse, " " is still an "unchanged" context
+> line, so we should be treating it the same way regardless of the
+> direction.
 >
->     $ printf "a \nb\nc\n" >file
->     $ git add file
->     $ cat >patch <<END
->     --- a/file
->     +++ b/file
->     @@ -1,3 +1,2 @@
->      a
->     -b
->      c
->     END
->     $ git apply --no-ignore-whitespace --whitespace=3Dfix patch
->     $ xxd file
->     00000000: 610a 630a                                a.c.
->
-> This unexpected result will be addressed in an upcoming commit.
->
-> As a preparation, we need to detect when the user has explicitly
-> said `--no-ignore-whitespace`.
+> But at least the call to check_whitespace() from this place when we
+> are correcting whitespace rule violations is not iffy, as far as I
+> can tell.
 
-If you said, before all of the above, what _other_ case you are
-trying to differenciate from the case where the user explicitly gave
-the "--no-ignore-whitespace" option, it would clarify why a
-differenciator is needed.  IOW, perhaps start
+Having said all that, I do have to wonder how much value we are
+getting by supporting that odd "feature" that makes apply take input
+in a single session a patch that touches the same path TWICE.
 
-    By default, "git apply" does not ignore whitespace changes
-    (i.e. state.ws_ignore_action is initialized to ignore_ws_none).
-    However we want to treat this default case and the case where
-    the user explicitly gave the "--no-ignore-whitespace" option FOR
-    SUCH AND SUCH REASONS.
+If we can get rid of that feature (which I consider a misfeature),
+we can lose quote a lot of code (anything that touches fn_table can
+go) and recover the code quality that got visibly worse with the
+addition of that feature back.
 
-    ... elaborate SUCH AND SUCH REASONS as needed here ...
+And without the "input may touch the same path TWICE", we do not
+have to worry about this "context lines after applying a single
+patch with whitespace=fix will have to be matched loosely with
+respect to the whitespace when another patch modifies the same file
+around the same lines", making your changes in [3/5] trivially the
+right thing to do.
 
-    Initialize state.ws_ignore_action to ignore_ws_default, and
-    later after the parse_options() returns, if the state is still
-    _default, we can tell there wasn't such an explicit option.
+So, I am inclined to say that
 
-or something?
+ * we propose to get rid of that "a single input may touch the same
+   path TWICE" feature at Git 3.0 boundary.
 
-The rest of the code paths are not told what to do when they see
-ws_ignore_action is set to this new value, so I somehow find it iffy
-that this step is complete.  Shouldn't it at least flip some other bit
-after apply_parse_options() makes parse_options() call and notices that
-the default value is still there, and then replace the _default value
-with ws_none, or something, along the lines of ...
+ * we at the same time apply [3/5] (and possibly others, but I do
+   not think we want [1/5]).
 
- apply.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+But until we can shed our pretense that the "single input may touch
+the same path TWICE" is seriously supported, I do not think applying
+this series as-is makes sense, as it directly contradicts with that
+(mis)feature.
 
-diff --git i/apply.c w/apply.c
-index 6e1060a952..acc0f64d37 100644
---- i/apply.c
-+++ w/apply.c
-@@ -5190,5 +5190,13 @@ int apply_parse_options(int argc, const char **arg=
-v,
- 		OPT_END()
- 	};
-=20
--	return parse_options(argc, argv, state->prefix, builtin_apply_options, =
-apply_usage, 0);
-+	ret =3D parse_options(argc, argv, state->prefix,
-+			    builtin_apply_options, apply_usage, 0);
-+	if (!ret) {
-+		if (state->ws_ignore_action =3D=3D ignore_ws_default) {
-+			... note that --no-ignore-whitespace was *NOT* used ...
-+			state->ws_ignore_action =3D ignore_ws_none;
-+		}
-+	}
-+	return ret;
- }
 
-... without that anywhere state.ws_ignore_action gets inspected, the
-all must treat _none and _default pretty much the same way, no?
-
-> Currently, we only have one explicit consideration for
-> `ignore_ws_change`, and no, implicit or explicit, considerations for
-> `ignore_ws_none`.  Therefore, no modification to the existing logic
-> is required in this step.
-
-Yes, that is a plausible excuse, but it feels somehat brittle.
-
-More importantly, the proposed log message does not explain why
-"--no-ignore-whitespace", which is the default, needs to be special
-cased when it is given explicitly.  You had symptoms you want to fix
-described, but it is probably a few steps disconnected from the
-reason why the default vs explicit setting of ws_ignore_action need
-to make the code behave differently.
-
-Thanks.
