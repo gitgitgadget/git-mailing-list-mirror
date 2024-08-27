@@ -1,51 +1,51 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B831F943
-	for <git@vger.kernel.org>; Tue, 27 Aug 2024 21:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF93D19755B
+	for <git@vger.kernel.org>; Tue, 27 Aug 2024 21:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724794054; cv=none; b=HMPDexDlaLA1OKkUTo2WUVY/7K/LpCMyfZHlOv6jvMRv7KxbfHdy1+cmmouz8BgaZ5ogxb6n0KhvqfCeAQ85AJgjPKdZd85PGqQHnONz5XJ40MyKBYkKW0wMLZVMpAGV/8cKbpLXAdtjX4kRSvL6risWTrq8jnK0uZiykcCOW9M=
+	t=1724794056; cv=none; b=My9Xb+xvKtEiwnRtrtV6uURljId7DaWys+wN5XyjhqKlqAQA1ccNMFOdK0JRrtSOd36KUOHsT6Yj+8pXpWH+Xbijq4mKLrfVxSGKLIJzzYiSVpaA3Iv8Tcl2xAgYDHmU/620wXL/bNbOYT8yEYRTMIJX/xcY2Eyv7z+jBzC5Hiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724794054; c=relaxed/simple;
-	bh=g4Hv93sK2D4Bd2Z6PGFwmaHDe4UZLXSH8AiuWxttPIw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To; b=efUADtygok57YJ1g6kidoQK7sL7g4CdngYtCyUhN8xg6FfzPx7p9E/iJHn78aOuOQotiIMdRTQkKAtvn9LoTn1Rx7gI3E/VH5Cg29VbiaYKydpxQdrEmuf7D4QwAtrNcG+qAOS/npihB2/+xqymqBBiD/5rylQLns7/bz6fV0Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nbJC7WNw; arc=none smtp.client-ip=192.198.163.9
+	s=arc-20240116; t=1724794056; c=relaxed/simple;
+	bh=lw6NiF1fm48C5S9eXHjrHshC4CLfBRLpYzW5t+PdPFc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To; b=R52/ZlkKcHW425UFlfW0WuI9+JcEctzBdoNWdV5jidRLtyGmESyyukA0BxqtKXLGXGEPMstAbJIE3RT1Q/NozsivkeFgdOsNDFcZB5m5+M3jazetgRZ+RB5ihGqqOMpGT098YcQXUTfPtmgvZNTFoWU/TPCMG6XfnadXJIyQYdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cEs+xcKp; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nbJC7WNw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cEs+xcKp"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724794053; x=1756330053;
-  h=from:subject:date:message-id:mime-version:
-   content-transfer-encoding:to;
-  bh=g4Hv93sK2D4Bd2Z6PGFwmaHDe4UZLXSH8AiuWxttPIw=;
-  b=nbJC7WNwpeaYUwZv7cDxpN/HApQdzjkSQz5IG/+TPMV1EoNEi86qsFyB
-   BNLFOuNqS8GkQvyYq8elMULgVEQi+sDPBH+e10cNNtFjTpFrrXiNl4I9U
-   SMlyFbig/XeWZJWLQ6F8A8n4ylXxOs0it2p9q3qhhoNGQUmT2f6jev0vJ
-   tJoOR5bjK7mJfGBhHYEIur2ksaj2vvaqLFfiuem6XLM0xeNRSgcYx1QBk
-   TYHfzncLbH45ClRp28szYXkKHUhUipHvAtt1caQoE9Ks1OyHKYNwtkJ7U
-   WCu2ytyNl+/LSa6MvsX9wx1ZdRLd2H3XmUNPNAUXx0FZgqkKO31YpPP5N
-   A==;
-X-CSE-ConnectionGUID: SMkqwQdZTwumxw2Egv9cSg==
-X-CSE-MsgGUID: dEE2hbz+SgCnaF8kkbTUtw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11177"; a="33959501"
+  t=1724794055; x=1756330055;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:references:in-reply-to:to;
+  bh=lw6NiF1fm48C5S9eXHjrHshC4CLfBRLpYzW5t+PdPFc=;
+  b=cEs+xcKpifmb+mV/QtiudW/y9VLg92n9DqWV/qQX+kvrz1xK1SgbEQZb
+   6p+gLF6INuNdNr5HSLwUv1Slm9g5kUcrMHW9CibsxgI02QUUcrnmJYpBH
+   G3brWmG5tFZnOu/oQbgAVYU5qYLs8syRXsJ0HkcTxeFXp2tOEyhsIl8Ev
+   +ut4DLOhRt/pmxpjuZcyWz7TRZRSsGk9dvigxvYF3hZgZ3B4IKCB/fRoY
+   hKdBxEKks7TiSoYxRnvuewjy1rSymIEp3eWUj02iqSZg9G5q5SJkHzeOh
+   LerqgVfMXOI2z0gzqyYxUIJ3TNZ5p0fYN5Yr2SRRoYGcy3SLv8Lzy14Df
+   Q==;
+X-CSE-ConnectionGUID: oPmXMwd7Rt2jyyJ71+vbbw==
+X-CSE-MsgGUID: j+G293wyStSjHHxJjPcZmA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11177"; a="33959506"
 X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
-   d="scan'208";a="33959501"
+   d="scan'208";a="33959506"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
   by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 14:27:32 -0700
-X-CSE-ConnectionGUID: jLGaghJnSvGR6p90l78Ldw==
-X-CSE-MsgGUID: oY0ESeSsQPSagcrjzcQu0g==
+X-CSE-ConnectionGUID: 81uXMQYAQvO8pQTglBunGQ==
+X-CSE-MsgGUID: hvjoFxvSRG6q13ujiS3VQA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
-   d="scan'208";a="63517534"
+   d="scan'208";a="63517535"
 Received: from jekeller-desk.jf.intel.com ([10.166.241.20])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 14:27:32 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v3 0/3] send-email: add --mailmap support
-Date: Tue, 27 Aug 2024 14:27:15 -0700
-Message-Id: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
+Date: Tue, 27 Aug 2024 14:27:16 -0700
+Subject: [PATCH v3 1/3] check-mailmap: accept "user@host" contacts
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,79 +54,157 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALNEzmYC/43NwQ6CMAyA4VchO1uzDRjDk+9hPMxRYCqwbLhoC
- O/uxombXpr8TfN1IR6dQU9O2UIcBuPNNMbIDxnRvRo7BNPEJpzygkom4P4Aj2MDOCjzhDQGZcG
- /rJ3cDEzVKIUUla44iYZ12Jr35l+usXvj58l9tneBpe2/cmBAQUityluhBK3kuUsnRz0NJMmB7
- 7X6l8aj1nDGdd7WWNJyr63r+gWoFDxXGAEAAA==
+Message-Id: <20240827-jk-send-email-mailmap-support-v3-1-bec5ba9be391@gmail.com>
+References: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
+In-Reply-To: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
 To: Eric Sunshine <sunshine@sunshineco.com>, 
  Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
  Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.0
 
-I recently sent a series to enable mailmap support in format patch. The
-discussion led me to realize that the true problem we wanted solved is to
-map addresses at send time, so that we do not accidentally include a dead
-mail address when sending an old change.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Instead of worrying about what the formatted patch has, this series
-implements support for mailmap at the send-email, which will translate all
-addresses, and not just the author/commit addresses for a patch, but also
-the email for any trailers.o
+git check-mailmap splits each provided contact using split_ident_line.
+This function requires that the contact either be of the form "Name
+<user@host>" or of the form "<user@host>". In particular, if the mail
+portion of the contact is not surrounded by angle brackets,
+split_ident_line will reject it.
 
-Since v2, we now have a configuration option (sendemail.mailmap) to enable
-this behavior. In addition, I enabled support for email-specific mailmap
-files.
+This results in git check-mailmap rejecting attempts to translate simple
+email addresses:
 
-The intention of these is to allow a maintainer to map the known-dead
-addresses of former colleagues onto a current email for an owner within the
-team. This would be used to update the send addresses to avoid including
-no-longer-valid addresses when sending patches. This is intended for cases
-where the original author is no longer valid such as when they are no
-longer employed to work on the project. While sometimes pointing to a
-canonical public address of that person may make sense, in other contexts,
-removing them from the email makes sense.
+  $ git check-mailmap user@host
+  fatal: unable to parse contact: user@host
 
-I believe this version solves the use case we have of ensuring that we stop
-sending emails with invalid addresses, and may be useful for others as
-well.
+This limits the usability of check-mailmap as it requires placing angle
+brackets around plain email addresses.
+
+In particular, attempting to use git check-mailmap to support mapping
+addresses in git send-email is not straight forward. The sanitization
+and validation functions in git send-email strip angle brackets from
+plain email addresses. It is not trivial to add brackets prior to
+invoking git check-mailmap.
+
+Instead, modify check_mailmap() to allow such strings as contacts. In
+particular, treat any line which cannot be split by split_ident_line as
+a simple email address.
+
+No attempt is made to actually parse the address line, or validate that
+it is actually an email address. Implementing such validation is not
+trivial. Besides, we weren't validating the address between angle
+brackets before anyways.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-Changes in v3:
-- Edit description of patch 1 to clarify lack of validation of email
-  addresses.
-- Update tests for check-mailmap, removing the bogus contact tests entirely.
-- Link to v2: https://lore.kernel.org/r/20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com
+ builtin/check-mailmap.c             | 18 +++++++++-------
+ Documentation/git-check-mailmap.txt |  8 +++----
+ t/t4203-mailmap.sh                  | 42 +++++++++++++++++++++++++++++++++----
+ 3 files changed, 53 insertions(+), 15 deletions(-)
 
-Changes in v2:
-- Loosen restriction on git check-mailmap by default, rather than
-  introducing a specific --no-brackets option.
-- Re-write commit message for the send-email changes.
-- Add --mailmap-file and --mailmap-blob options to git check-mailmap.
-- Add configuration options to git send-email for enabling mailmap support
-  by default, as well as providing send-email specific mailmap files.
-- Link to v1: https://lore.kernel.org/r/20240816-jk-send-email-mailmap-support-v1-0-68ca5b4a6078@gmail.com
-- Link to previous "v0": https://lore.kernel.org/r/20240813-jk-support-mailmap-git-format-patch-v1-1-1aea690ea5dd@gmail.com
+diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
+index b8a05b8e07b5..6b7fb53494f0 100644
+--- a/builtin/check-mailmap.c
++++ b/builtin/check-mailmap.c
+@@ -25,13 +25,17 @@ static void check_mailmap(struct string_list *mailmap, const char *contact)
+ 	size_t namelen, maillen;
+ 	struct ident_split ident;
+ 
+-	if (split_ident_line(&ident, contact, strlen(contact)))
+-		die(_("unable to parse contact: %s"), contact);
+-
+-	name = ident.name_begin;
+-	namelen = ident.name_end - ident.name_begin;
+-	mail = ident.mail_begin;
+-	maillen = ident.mail_end - ident.mail_begin;
++	if (!split_ident_line(&ident, contact, strlen(contact))) {
++		name = ident.name_begin;
++		namelen = ident.name_end - ident.name_begin;
++		mail = ident.mail_begin;
++		maillen = ident.mail_end - ident.mail_begin;
++	} else {
++		name = NULL;
++		namelen = 0;
++		mail = contact;
++		maillen = strlen(contact);
++	}
+ 
+ 	map_user(mailmap, &mail, &maillen, &name, &namelen);
+ 
+diff --git a/Documentation/git-check-mailmap.txt b/Documentation/git-check-mailmap.txt
+index 02f441832321..7747e38e25e3 100644
+--- a/Documentation/git-check-mailmap.txt
++++ b/Documentation/git-check-mailmap.txt
+@@ -15,10 +15,10 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ 
+-For each ``Name $$<user@host>$$'' or ``$$<user@host>$$'' from the command-line
+-or standard input (when using `--stdin`), look up the person's canonical name
+-and email address (see "Mapping Authors" below). If found, print them;
+-otherwise print the input as-is.
++For each ``Name $$<user@host>$$'', ``$$<user@host>$$'', or ``$$user@host$$''
++from the command-line or standard input (when using `--stdin`), look up the
++person's canonical name and email address (see "Mapping Authors" below). If
++found, print them; otherwise print the input as-is.
+ 
+ 
+ OPTIONS
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 79e5f42760d9..2265ff8872df 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -72,12 +72,46 @@ test_expect_success 'check-mailmap --stdin arguments: mapping' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'check-mailmap bogus contact' '
+-	test_must_fail git check-mailmap bogus
++test_expect_success 'check-mailmap simple address: mapping' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-EOF &&
++	New Name <$GIT_AUTHOR_EMAIL>
++	EOF
++	cat .mailmap >expect &&
++	git check-mailmap "$GIT_AUTHOR_EMAIL" >actual &&
++	test_cmp expect actual
+ '
+ 
+-test_expect_success 'check-mailmap bogus contact --stdin' '
+-	test_must_fail git check-mailmap --stdin bogus </dev/null
++test_expect_success 'check-mailmap --stdin simple address: mapping' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-EOF &&
++	New Name <$GIT_AUTHOR_EMAIL>
++	EOF
++	cat >stdin <<-EOF &&
++	$GIT_AUTHOR_EMAIL
++	EOF
++	cat .mailmap >expect &&
++	git check-mailmap --stdin <stdin >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'check-mailmap simple address: no mapping' '
++	cat >expect <<-EOF &&
++	<bugs@company.xx>
++	EOF
++	git check-mailmap "bugs@company.xx" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'check-mailmap --stdin simple address: no mapping' '
++	cat >expect <<-EOF &&
++	<bugs@company.xx>
++	EOF
++	cat >stdin <<-EOF &&
++	bugs@company.xx
++	EOF
++	git check-mailmap --stdin <stdin >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'No mailmap' '
 
----
-Jacob Keller (3):
-      check-mailmap: accept "user@host" contacts
-      check-mailmap: add options for additional mailmap sources
-      send-email: add mailmap support via sendemail.mailmap and --mailmap
-
- mailmap.h                           |   7 +++
- builtin/check-mailmap.c             |  25 +++++---
- mailmap.c                           |   9 +--
- Documentation/git-check-mailmap.txt |  18 ++++--
- git-send-email.perl                 |  20 ++++++
- t/t4203-mailmap.sh                  |  42 +++++++++++--
- t/t9001-send-email.sh               | 122 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 222 insertions(+), 21 deletions(-)
----
-base-commit: 87a1768b93a67d0420255a43d9e07387b2e805ad
-change-id: 20240816-jk-send-email-mailmap-support-1a9e86867c72
-
-Best regards,
 -- 
-Jacob Keller <jacob.keller@gmail.com>
+2.46.0.124.g2dc1a81c8933
 
