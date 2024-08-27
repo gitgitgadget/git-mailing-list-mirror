@@ -1,41 +1,61 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1EF17ADFC
-	for <git@vger.kernel.org>; Tue, 27 Aug 2024 20:24:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DA8481CD
+	for <git@vger.kernel.org>; Tue, 27 Aug 2024 21:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724790247; cv=none; b=jQcW/OQtW5N8nLNq3QR5l8RyqbF9sy1v3feoq3I3w3kGJaLG6djo2+rQuRLAZAYcnbBICKfqpc9/PnIsnWN9hK613Bedg2S9g7BFYWvAqrd1cbiSf0XSDVcZpUP/RT7uLH8byIZBS1vqZKnbDsAkl4JpH+ygghahnDv3TGMsBtU=
+	t=1724793209; cv=none; b=MnJWTnpBsJbjvnbzJRR8yHgLGbSyiIGLN3KaQw1AasL4Uu8zYC5sGLQMc3xUHUPX7x+Iwue1+CZ4qGFgu5jNpjYVNHhMsoT/z/1N9co4Z/Qz0Mg97j0znnWJmy7g11cmHsKmhtsF4sIAOEwaKM84y5Eh8gohjHrxNs3aIM3j3mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724790247; c=relaxed/simple;
-	bh=QP2/6YS9F6qXPeyW9WiIehAtQDUHIeEoxPLpsf46swI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HckpDvOUqfRAlCF6olw+5+uFsy/ryGTxqY7nnaeqPoIHOv80VjCcPfq8dPl46tlLFibKY4z+DJ5LVsbIvg+SphiggocXyQGaIADhg5/UuJo0PxPW/0dCu0I1ls0GMLq8DLMf0Lxu7/In0dQM/is0JaX7BJT3RkFkKKcAZqpshvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=JXTD02OI; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+	s=arc-20240116; t=1724793209; c=relaxed/simple;
+	bh=bOlvL/fQ3nDcDmn1RdGQE6dJ9gKg3Mmd3uEBPORUDQY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SF9+6xbopErZyzOuHpgj5dqbADOtJnMG2QlubtFt6pY9aVwHvH2ttduYDiT4o+VY068t3GcU3HGUbxH9+yn+z8eQRwLkNaBoYPNlAcTN8kPZno1rfRQi99ABF0WBGwHN5PuGu8n+4SNecCp5eTxyI8RlRsnS4xn+UiWAmIanEIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NMSQOrlV; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="JXTD02OI"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 944661F47A;
-	Tue, 27 Aug 2024 20:23:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1724790239;
-	bh=QP2/6YS9F6qXPeyW9WiIehAtQDUHIeEoxPLpsf46swI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JXTD02OIy7rPxrifj5sBSX0aJf3rS7EBjwRotEGUNjQrBaRle0n6QDFSKI8osvRqD
-	 ETBNg2Y6YQWXPT3qVwy/c1F0k5H1PFhLpSvYg61XHGQ/ZoNF2v1gy3etW7iX+qz9dY
-	 cmbd6TmTHR1/aWoHPpa8ouF/Kb+7Sr5z0hEZHKo0=
-Date: Tue, 27 Aug 2024 20:23:59 +0000
-From: Eric Wong <e@80x24.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 02/10] packfile: allow content-limit for cat-file
-Message-ID: <20240827202359.M464972@dcvr>
-References: <20240823224630.1180772-1-e@80x24.org>
- <20240823224630.1180772-3-e@80x24.org>
- <xmqqcylvky69.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NMSQOrlV"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-709340f1cb1so3074682a34.3
+        for <git@vger.kernel.org>; Tue, 27 Aug 2024 14:13:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1724793206; x=1725398006; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OzhNv6o9uX3xVfJINUs3i708IniL+uoQ/q5QFmdugYI=;
+        b=NMSQOrlVkLbPWMvQZBCsqEjE/7BQ1cus0UV1jI+g/eVD3xJpjbb5/lbIzp/7qRcn5x
+         Kg2qIs9OwKLoPd0SIDsdjiH3sMzZ5DyDyj91Uv9K3IwWUMvhEL9kap+ecVtJYD80FbNi
+         Q/GDQGDAiNGF71etr7KoxBuvpifWK49x1Z9C8EIZJiFNC+fhpgYWjJPVf1IR56Q/0wJ6
+         2abYuELNZaB2/gK5Z2uyWIN1OC/oL+LMkbYROeqtemPb2FiWMTbR6YbsF7g4RUKJhFtF
+         bHtC77gwZpMuUwXoS/eznpx2Zuivx2CeSVptlsIqOhRj7bRBD/TP5LR9pZgjaTkDDBG7
+         3QAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724793206; x=1725398006;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OzhNv6o9uX3xVfJINUs3i708IniL+uoQ/q5QFmdugYI=;
+        b=JVxOzUYPjejhVm6KzmO1E63/umxk4wrzVjFn5eR/2jLdZ2st3GysSSM+nFleDBJW+D
+         BpnbzIusElraju0QDZVS9o9y0HKCgXvIGtZLJDlg5lsCgHpc5KQ6uqY0zB43M8Q1Iqiv
+         /Tl92TWMBItJbOtZwrx26FTeJxAlch1L3Eud68Glr9dLaS10pBAwVRA2aBYwimmf7Llc
+         iO6xEl2VVQK+Cp7bnM8evzjfguW75s8OPgV3tZb4zTsRYv2x8Q2J9T4mpjNmIXiLoHw3
+         JM1Uhla0lYCT/pXayek0ewB8kHWAAqnd+j8g2XOMIhNrtnMrabgWyrFe7bCgOxsHNWp7
+         JiVQ==
+X-Gm-Message-State: AOJu0YxUryNpjr025QM/uwKWKdB8vqmzskvCAoJcPhol3kT6VvPRDEVu
+	xnzENFsAfkveS47kiQpiR7AX68+F6lEd3zuq4r7nNS83R37aYtpTSXCjf/EahPzkvgOM3AluFEL
+	p
+X-Google-Smtp-Source: AGHT+IFIo4Vdm1MXuZGKV2HTFC0lmBvHPqjpxeNVicILBCEiSb7wc26C+bg+mKlLd3BBnSgC9DjW+w==
+X-Received: by 2002:a05:6830:dc9:b0:709:33ee:f578 with SMTP id 46e09a7af769-70e0eb2df69mr16426466a34.14.1724793205857;
+        Tue, 27 Aug 2024 14:13:25 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6c39d3a9f90sm20866077b3.96.2024.08.27.14.13.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Aug 2024 14:13:25 -0700 (PDT)
+Date: Tue, 27 Aug 2024 17:13:24 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] pack-objects: brown-paper-bag fixes for multi-pack reuse
+Message-ID: <cover.1724793201.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,91 +64,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqcylvky69.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
-> > From: Jeff King <peff@peff.net>
-> >
-> > Avoid unnecessary round trips to the object store to speed
-> > up cat-file contents retrievals.  The majority of packed objects
-> > don't benefit from the streaming interface at all and we end up
-> > having to load them in core anyways to satisfy our streaming
-> > API.
-> 
-> What I found missing from the description is something like ...
-> 
->     The new trick used is to teach oid_object_info_extended() that a
->     non-NULL oi->contentp that means "grab the contents of the objects
->     here" can be told to refrain from grabbing an object that is too
->     large.
+This series fixes a couple of issues (some cosmetic, others less so) in
+multi-pack reuse noticed when rolling this out over a few real-world,
+internal repositories on GitHub's servers.
 
-OK.
+The patches are laid out as follows:
 
-> > diff --git a/object-file.c b/object-file.c
-> > index 065103be3e..1cc29c3c58 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -1492,6 +1492,12 @@ static int loose_object_info(struct repository *r,
-> >  
-> >  		if (!oi->contentp)
-> >  			break;
-> > +		if (oi->content_limit && *oi->sizep > oi->content_limit) {
-> 
-> I cannot convince myself enough to say "content limit" is a great
-> name.  It invites "limited by what?  text files are allowed but
-> images are not?".
+  - The first three patches demonstrate, prepare for, and fix a
+    significant bug with multi-pack reuse which results in all sorts of
+    strange behavior (explained in detail in the third commit of this
+    series).
 
-Hmm... naming is a most difficult problem :<
+  - The fourth patch is a minor (mostly cosmetic) performance
+    optimization that avoids duplicate calls to pack_pos_to_offset()
+    when performing pack-reuse with a MIDX bitmap.
 
-->slurp_max?  It could be ->content_slurp_max, but I think
-that's too long...
+  - The final patch is a cosmetic fix to avoid using the value of a
+    constant instead of the name constant itself.
 
-Would welcome other suggestions...
+Thanks in advance for your review!
 
-> > diff --git a/object-store-ll.h b/object-store-ll.h
-> > index c5f2bb2fc2..b71a15f590 100644
-> > --- a/object-store-ll.h
-> > +++ b/object-store-ll.h
-> > @@ -289,6 +289,7 @@ struct object_info {
-> >  	struct object_id *delta_base_oid;
-> >  	struct strbuf *type_name;
-> >  	void **contentp;
-> > +	size_t content_limit;
-> >  
-> >  	/* Response */
-> >  	enum {
-> > diff --git a/packfile.c b/packfile.c
-> > index 4028763947..c12a0515b3 100644
-> > --- a/packfile.c
-> > +++ b/packfile.c
-> > @@ -1529,7 +1529,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  	 * We always get the representation type, but only convert it to
-> >  	 * a "real" type later if the caller is interested.
-> >  	 */
-> > -	if (oi->contentp) {
-> > +	if (oi->contentp && !oi->content_limit) {
-> >  		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
-> >  						      &type);
-> >  		if (!*oi->contentp)
-> > @@ -1555,6 +1555,17 @@ int packed_object_info(struct repository *r, struct packed_git *p,
-> >  				*oi->sizep = size;
-> >  			}
-> >  		}
-> > +
-> > +		if (oi->contentp) {
-> > +			if (oi->sizep && *oi->sizep < oi->content_limit) {
-> 
-> It happens that with the current code structure, at this point,
-> oi->content_limit is _always_ non-zero.  But it felt somewhat
-> fragile to rely on it, and I would have appreciated if this was
-> written with an explicit check for oi->content_limit, just like how
-> it is done in loose_object_info() function.
+Taylor Blau (5):
+  t/t5332-multi-pack-reuse.sh: verify pack generation with --strict
+  pack-bitmap: tag bitmapped packs with their corresponding MIDX
+  builtin/pack-objects.c: translate bit positions during pack-reuse
+  pack-bitmap.c: avoid repeated `pack_pos_to_offset()` during reuse
+  builtin/pack-objects.c: do not open-code `MAX_PACK_OBJECT_HEADER`
 
-Right.  I actually think something like:
+ builtin/pack-objects.c      | 46 +++++++++++++++++++++++++++++--------
+ midx.c                      |  1 +
+ pack-bitmap.c               | 12 ++++++----
+ pack-bitmap.h               |  1 +
+ t/t5332-multi-pack-reuse.sh | 35 ++++++++++++++++++++++++----
+ 5 files changed, 78 insertions(+), 17 deletions(-)
 
-		assert(oi->content_limit); /* see `if' above */
-		if (oi->sizep && *oi->sizep < oi->content_limit) {
 
-is good for documentation purposes since this is in the `else'
-branch of the `if (oi->contentp && !oi->content_limit) {' condition.
+base-commit: 159f2d50e75c17382c9f4eb7cbda671a6fa612d1
+-- 
+2.46.0.426.g82754d92509
