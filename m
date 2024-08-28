@@ -1,94 +1,100 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F09149C53
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 17:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7283D1D554
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 18:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724867734; cv=none; b=Rdu6LNbvujvuANtQwMQsASRy59tMMB+nFh4h01OPoeknJ2e2nxYBk8o0UNnUdOPjf1HqChU3cc6W0O/mQQF1y2z3jnWYig8+EmQsEpHZNARuCDEn/iPIDohEgbDCqd95P+OGTM1Mj4Islh6IAzfRX+QLbCeLefvLHDZydyiwkus=
+	t=1724868606; cv=none; b=e+B+LMCBKsr6RjXDkPnJXSJejmEGK8xAj1VTZrkbb2p8r6/4cO0JudsAvObmHMAZM84p9n9SGWEfTVD2996Jbb+eRfNLJeqGHUJpytFQ59O8rVtqx3fiV75R8pz4rO1wLN3Bq+1ZssARPxv+yJwCzrxGQ6c8vEzTOzaXsX/KccA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724867734; c=relaxed/simple;
-	bh=usNdq8N3zS0XE82Dk7Be/W3o6qHrmTV/YBwlL92Fctc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e9+dGXGmJvUhLALeKYF6Dr/UGD0E7fqxmbrPJHLXNTxjwoZYOdfKKzTeD2yWDhjef3qhxEomPPwEkq2Bkbx8oSv410ffSQrVDzx7IvXMdvNyKVOn8LdQ7cWQjulOtebVSgzITAYmLKPX84lHpHLxxWWq/iPNXNdENmJiGO/lD/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fXoP1zGs; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fXoP1zGs"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B671F3C353;
-	Wed, 28 Aug 2024 13:55:25 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=usNdq8N3zS0XE82Dk7Be/W3o6qHrmTV/YBwlL9
-	2Fctc=; b=fXoP1zGs+7VJFWQymCIPoCn/xpFns8BIq9C5FWW2XRMbHGTbT+2jQD
-	3qkljMzNDJywdQppudRR8SodpIko+8QqlsafgASLo15i+HLmwYbfgThqMsBAS5JN
-	HI/EA56r5BXP9wwzS3GtRd1YpSPhbWq9wriR55NHLE8Yov1ojDRkA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AE1213C352;
-	Wed, 28 Aug 2024 13:55:25 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 41A303C351;
-	Wed, 28 Aug 2024 13:55:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: [PATCH] fixup! midx: implement writing incremental MIDX bitmaps
-In-Reply-To: <afefb4555750661ffd2c573a33d92f8fcb9f435a.1723760847.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Thu, 15 Aug 2024 18:29:28 -0400")
-References: <cover.1723755667.git.me@ttaylorr.com>
-	<cover.1723760847.git.me@ttaylorr.com>
-	<afefb4555750661ffd2c573a33d92f8fcb9f435a.1723760847.git.me@ttaylorr.com>
-Date: Wed, 28 Aug 2024 10:55:20 -0700
-Message-ID: <xmqqseuozg53.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724868606; c=relaxed/simple;
+	bh=sFzcpAbrYXbzPhf9tDjTymxgELlDm+IuO0twRaCa7Hg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jr5iiYdQc0Cfr+KKie+B04r5sqc3LCdkO40C3kKW870OOSOcrEsHE+CYiqyVhsFC6SKGFcoCdsL9VAtMh3IhlkVDiWcVWDoVJL8jyJ3A90H8yr/Ttzyol0neSUzu7A8a2a1/X0dRHv4D0NI8fXT0cIO+NzPHvJB0qX6bA+TrhDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 26543 invoked by uid 109); 28 Aug 2024 18:10:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 18:10:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29911 invoked by uid 111); 28 Aug 2024 18:10:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2024 14:10:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 28 Aug 2024 14:10:00 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] reftable: mark unused parameters in empty iterator
+ functions
+Message-ID: <20240828181000.GA4034725@coredump.intra.peff.net>
+References: <20240828040944.GA4005021@coredump.intra.peff.net>
+ <xmqq34mo1si1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B237BC24-6566-11EF-856D-BF444491E1BC-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq34mo1si1.fsf@gitster.g>
 
-With -Wunused, the compiler notices that the midx_name parameter is
-unused.  In this case, it is truly unused, the function signature is
-not constrained externally, so we can simply drop the parameter from
-the definition of the function and its sole caller.
+On Wed, Aug 28, 2024 at 10:12:22AM -0700, Junio C Hamano wrote:
 
-This comes from 01a2cbab (midx: implement writing incremental MIDX
-bitmaps, 2024-08-15), so I'll squash the following to that commit.
+> Jeff King <peff@peff.net> writes:
+> 
+> > This should go on top of ps/reftable-drop-generic. Arguably this could
+> > have been done as part of the conflict resolution when merging into next
+> > alongside jk/mark-unused-parameters, but at this point I think a
+> > separate patch is the best way forward.
+> 
+> As marking with UNUSED used to be optional before -Wno-unused-param
+> got removed, I agree that it is better to apply this on top to be
+> explicit, rather than burying it in an evil merge with a topic that
+> marked other unrelated parameters as UNUSED.
 
- midx-write.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[warning: philosophical rambling ahead]
 
-diff --git c/midx-write.c w/midx-write.c
-index bac3b0589a..0ad9139fdb 100644
---- c/midx-write.c
-+++ w/midx-write.c
-@@ -827,7 +827,7 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- }
- 
- static int write_midx_bitmap(struct write_midx_context *ctx,
--			     const char *object_dir, const char *midx_name,
-+			     const char *object_dir,
- 			     const unsigned char *midx_hash,
- 			     struct packing_data *pdata,
- 			     struct commit **commits,
-@@ -1415,7 +1415,7 @@ static int write_midx_internal(const char *object_dir,
- 		FREE_AND_NULL(ctx.entries);
- 		ctx.entries_nr = 0;
- 
--		if (write_midx_bitmap(&ctx, object_dir, midx_name.buf,
-+		if (write_midx_bitmap(&ctx, object_dir,
- 				      midx_hash, &pdata, commits, commits_nr,
- 				      flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
+The reason I mentioned the merge here is that I think you could argue
+this is a mis-merge that already happened. Forget for a moment the
+recent series that makes UNUSED non-optional, and consider the merge of
+jk/mark-unused-parameters and ps/reftable-drop-generic.
 
+The former updated code in reftable/generic.c, and the latter removed
+that file entirely, so there's a conflict. And it's tempting to say "ok,
+we don't care about this code anymore, so take the deletion", which is
+what your merge did. But the code in question was actually moved in that
+series, via f2406c81b9 (reftable/generic: move generic iterator code
+into iterator interface, 2024-08-22). So I think the correct resolution
+for the merge is to move those updates along with the code into the new
+file; otherwise we are accidentally reverting part of what
+jk/mark-unused-parameters did.
+
+That said, I think you can get pretty philosophical here. Did the
+reftable topic move the code, or did it delete some old code and add
+some new code that needed the same change? :)
+
+I also think it's pretty hard to notice these kinds of resolutions in
+practice. There's a conflict at the point of deletion, but there's
+nothing in the merge workflow that tells you "btw, this code is now over
+here, so you should port the modifications from the side branch over".
+
+Interestingly, I think a rebase of one topic onto the other might have
+made it more clear, since the code movement happened in its own step
+(which would make what was going on more obvious). I guess Michael
+Haggerty's "imerge" would probably show something similar (actually, I
+just tried it, and it indeed hones in on f2406c81 and 4695c3f3 as the
+source of the conflict).
+
+Anyway, I am not proposing to do anything different. _If_ we considered
+the merge of the two topics that is in next to be an incorrect
+resolution, we could repair that when merging to master. But I think
+doing so is complicated. And certainly the philosophy of "if something
+is tricky, try to be as explicit as possible" seems like a good one
+here.
+
+Mostly I just found it kind of an interesting case. :)
+
+-Peff
