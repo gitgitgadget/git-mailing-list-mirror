@@ -1,139 +1,281 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1561C158216
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 08:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18AE132114
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 08:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724833295; cv=none; b=qkdUbqO0o8gP50H/1pZmgKBnyBKrl3ndON0w6roe3V6kivZm0w4xoykKbbeugObzEQqvfZ1TfFJUOgLBmzUEVglbsjdFy3f+YMKbNCJu7U6HRLEy13XSo9Tl38HeUE2H1C7x59NMZigsDTSR5kSSkuW1fDqJkDOWA5C7jjV+Yv8=
+	t=1724833924; cv=none; b=Bri3vcCWM42Ah9Iy94rR1xm2o0oDqnaX8Rgpz4ttGulkxtvwQYLanIHkBCzVth0LZFy982qZwdGhpwvu/nKDz+G4NdSwD4vvgsDZX8uZhVTs+Mm0hmk9fDW5GHniojEp0yimcxFtQSLoz2STwXZQO2BVeawnyVb1c7Ywpx1+oao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724833295; c=relaxed/simple;
-	bh=+CKIa+NDDuxGhyD9ffT6FiCCAO5UeYuh1CbAae/uhOo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=de1etZwQmOo1J96sHTHEnH+qZj7JeYF98l4CVhwzIP2Aq5vf4/Fn5Y+/vGVfcSEK9MwRKnak21mlTD/3K+UxmLOLFQ7UL8e73a4A87B0qJ/hMGPWZWjlb35QUAWub8rJlK6GEl5JNUA/R/+3cH/qNQaMFOkboFxj00QtM30LpEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T0fN+k56; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZArV/U8j; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1724833924; c=relaxed/simple;
+	bh=S61laTplL2BIVTLBhLEit6Lh+rbRlNd38aUi5wtkHQ4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bjVXQRr7Bi1md6Hc+/nC+GRTok+XZ5qGuMSzCkHB8OCvBi8sGDU6WRDsSz+osF/NNrCDpi6IIs2Lzg34B44QM1XBd5xJKczjaFhacKYlAZbhNAuIgW6CTIHVeSz6qHuY5ErbecbI/DtLaM8ZEJwl+gpvHYe4YNYBf4V4gqYdzVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HP+HBvM/; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T0fN+k56";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZArV/U8j"
-Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2BF8411470C9;
-	Wed, 28 Aug 2024 04:21:32 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 28 Aug 2024 04:21:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1724833292;
-	 x=1724919692; bh=54eXWipA5GuH2SIp3OTT+n2A8d7yQD5B0mzd/5hC72o=; b=
-	T0fN+k56iLESQ0pFbbmTU31gTK6XHFZH/6/YbdaGBFqouPmx4BE+P5c1XLSjrZ06
-	cDM+QZIn3jA03h5s6LaaJ+G0lxBMBE7NcmWHIgWzmOGlhz9rLXGfuB0Rzsw14Iv4
-	mkgXc6jQsbco/HkGLTeaqC54w8MLpN7aTrcy6jGvyOI6FqLpHtYwiSdaRtinZU1j
-	lWwhg3E2dBDtzE4+qHfoNdzVBTTaQzt1L+uTl9NnkOl3xKrbC6ozOcIE9kqJWknT
-	XBNnPAfar79v5DBApz+SfWH7ilf19/rGVW4h2ejl+11jE/+QjJ4/ng1BOYdWWxWw
-	pfFMl2Ba7JBbMIKQZJ23Ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1724833292; x=
-	1724919692; bh=54eXWipA5GuH2SIp3OTT+n2A8d7yQD5B0mzd/5hC72o=; b=Z
-	ArV/U8jMRd2lRBFhXSHQ9gh6v0xi9RsV0/Hhhfa7PhO372kT/Sf6qblU/67/uFm1
-	7dkgjcEP6KPCvXXg1f/6A9zgJCaeI/as7qlRwjorsmMfTIEiXQIjIR2rHN7WuPT0
-	k4wrm2/jJcAdO0BEOC2dNGgggWwSDXhaaANnY6+vdl+epzPblPp1VKiICTCgBswP
-	JLfLi7u6fEErcRfnHjekUB66yOrKhys4tyluD++HAWF+/IyI9UpMFAJ7gqnTKCs3
-	KAGf1bBg+hsFGTwSJSZ21tBGxJCF6czozmStVRAzjqO8gVaXCRB+MaTJI7BV1dZN
-	QAZ8+S5ETbceCeVa22eNA==
-X-ME-Sender: <xms:C97OZrY8KOP31n1J63rlPc42rLZv5ZhBMjuU1tnsNx9QYQ-j-fECpA>
-    <xme:C97OZqZ5a_KBiFIUJLAUssglYCPJBaK9tPC8e8LNiHxUYlYIhPLpKZB6_ogUBdHMC
-    6YcH_RNB77Dcw51Ww>
-X-ME-Received: <xmr:C97OZt9HdtehXXRnyDuW-ywv95_ul_6r_G6_47pwh_EuqIOJMRHT2wYizYq-UFA1Rx22lBwrnOo6ajv5gJuN4lBqmkec76ZpnW8-kxVN5Gskgds>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefvddgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejudeuffetudefvdehvdeugeduheehheejgfdvhefg
-    geeftdejleejueeugfelueenucffohhmrghinhepmhgrkhdruggvvhenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggt
-    ohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:DN7OZhpgZupY3qR10zh63EW3wqfE5Ckl3ZpUnvVVAPQL2tn75K_07w>
-    <xmx:DN7OZmoLKihmvysNKdTfmPiQCAgNOrm4a8PqYqMmrQY3sf2he_ubQA>
-    <xmx:DN7OZnS0xtJE-TCSccuomRIPxkfZCOEmOTh2dbiXdVmcBxtgedEtMg>
-    <xmx:DN7OZuqeSKoUY9o0F4RHS2qc4lUUnJO1BNVQFvsJgoVqUv2cY91FiQ>
-    <xmx:DN7OZpW0HZxYRbSawXcslNklu1aq-TWNv5WZsD8F67S6-O39snldPcYP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Aug 2024 04:21:31 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dac3dc2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Aug 2024 08:21:24 +0000 (UTC)
-Date: Wed, 28 Aug 2024 10:21:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 6/6] config.mak.dev: enable -Wunused-parameter by default
-Message-ID: <Zs7eBocE3RZb71-q@tanuki>
-References: <20240828035722.GA3998881@coredump.intra.peff.net>
- <20240828040049.GF3999193@coredump.intra.peff.net>
- <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HP+HBvM/"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f50966c478so33353471fa.1
+        for <git@vger.kernel.org>; Wed, 28 Aug 2024 01:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724833920; x=1725438720; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=prKdvFJksm28TKqxlyvYTUpeq1a8JVc0caafu7xbOJ4=;
+        b=HP+HBvM/LTc+lwanSE3rgcDV1lNy5E48GHCgkLlFwuHxydc20dChPpo7wozP18IUuR
+         Wi7CLSTAknQLMCAGkga9gaiTUYn2eWXUHimbgACV0MBbWf+dIrO6OApaIWa543MNgxNR
+         Cbs12ClzHdhqRNHgsWKLK+VpoVnOLAwJnWEDOWMFCT+t/35goXQsUTdeshXeCZZIW8r2
+         NPHkGLO7pZzCv0uEZXJz0qnujUV4WCcbWe8V0jMKawIhIJSjdyHyYp/0p6h29PrAe1qk
+         hTiMgTO0XKRjgnQ6JaYowZylvhQ3kRY8knQTt73UGhW/Exv7uO5JpfZhx71hTPPOxY6T
+         xYZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724833920; x=1725438720;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=prKdvFJksm28TKqxlyvYTUpeq1a8JVc0caafu7xbOJ4=;
+        b=jhv5tY/3lHPW+Z0+txQj4OLLDVWknzOUt7/AzLfxp2dGz4qYytHTuBjzbICGR9G+dW
+         3cCzVj7Od3Ozcpv2YzjfLplgGrGa74OQgDAQKuQG83OtyXOEOKOLb8a1nYcJR+VraK5L
+         aVFC8IJaH0tby2XrwsyIQZAGrdZrMWAmLd1rSldngBn1WRTFOWLR6EgvhwvzdCdAj9dr
+         e0YH+fj95jRZeEet+ScWMoREKS52e+cqmgAE7IiNJpsEjmcIPD1p47+Zg2sJRW0f7Ap1
+         R7RnEw4LBbOtHiSkrAVaQRDTksI62eAu40/1rrNsa20/UGld2xxshJl4RlthGbjSlJZ1
+         c8Dg==
+X-Gm-Message-State: AOJu0Yx2OZT71mtNQvSZRu4pgYDzzcJabtZjl4Jd8/6sRVxa6KQ/CGvm
+	YTjAuKGyWDeY1XxuFq/QaRnnjKq4eKtd3bnBaSX/xA6AZOs4FsugQRpT8w==
+X-Google-Smtp-Source: AGHT+IG5n4dcoW9J24szkToxdLd2txIkQR7bjyURZDMZn7dSrExXsX/iEU0UQCHGohwSDngpT9THYw==
+X-Received: by 2002:a05:651c:b09:b0:2f3:d00f:24ea with SMTP id 38308e7fff4ca-2f55b6bd098mr9039821fa.21.1724833918768;
+        Wed, 28 Aug 2024 01:31:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c0bb1c5b39sm1954883a12.20.2024.08.28.01.31.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Aug 2024 01:31:58 -0700 (PDT)
+Message-Id: <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
+References: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
+From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 28 Aug 2024 08:31:56 +0000
+Subject: [PATCH v2] git gui: add directly calling merge tool from gitconfig
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: ToBoMi <tobias.boesch@miele.com>,
+    deboeto <tobias.boesch@miele.com>
 
-On Wed, Aug 28, 2024 at 01:56:13AM -0400, Eric Sunshine wrote:
-> On Wed, Aug 28, 2024 at 12:01 AM Jeff King <peff@peff.net> wrote:
-> > Having now removed or annotated all of the unused function parameters in
-> > our code base, I found that each instance falls into one of three
-> > categories:
-> >
-> >   1. ignoring the parameter is a bug (e.g., a function takes a ptr/len
-> >      pair, but ignores the length). Detecting these helps us find the
-> >      bugs.
-> >
-> >   2. the parameter is unnecessary (and usually left over from a
-> >      refactoring or earlier iteration of a patches series). Removing
-> >      these cleans up the code.
-> >
-> >   3. the function has to conform to a specific interface (because it's
-> >      used via a function pointer, or matches something on the other side
-> >      of an #ifdef). These ones are annoying, but annotating them with
-> >      UNUSED is not too bad (especially if the compiler tells you about
-> >      the problem promptly).
-> > [...]
-> > And since the code base is now at a spot where we compile cleanly with
-> > -Wunused-parameter, turning it on will make it the responsibility of
-> > individual patch writers going forward.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > diff --git a/config.mak.dev b/config.mak.dev
-> > @@ -54,7 +54,6 @@ ifeq ($(filter extra-all,$(DEVOPTS)),)
-> >  DEVELOPER_CFLAGS += -Wno-sign-compare
-> > -DEVELOPER_CFLAGS += -Wno-unused-parameter
-> 
-> What is the expectation regarding newcomers to the project or even
-> people who have not been following this topic and its cousins?
-> Documentation/CodingGuidelines recommends enabling DEVELOPER mode,
-> which is good, but this change means that such people may now be hit
-> with a compiler complaint which they don't necessarily know how to
-> deal with in the legitimate case #3 (described above). Should
-> CodingGuidelines be updated to mention "UNUSED" and the circumstances
-> under which it should be used?
+From: deboeto <tobias.boesch@miele.com>
 
-Updating our coding guidelines would certainly be welcome. Other than
-that this series looks good to me and is a step into the right direction
-in my opinion. Thanks!
+git gui can open a merge tool when conflicts are
+detected (Right click in the diff of the file with
+conflicts).
+The merge tools that are allowed to
+use are hard coded into git gui.
 
-Patrick
+If one wants to add a new merge tool it has to be
+added to git gui through a source code change.
+This is not convenient in comparison to how it
+works in git (without gui).
+
+git itself has configuration options for a merge tools
+path and command in the git config.
+New merge tools can be set up there without a
+source code change.
+
+Those options are used only by pure git in
+contrast to git gui. git calls the configured
+merge tools directly from the config while git
+Gui doesn't.
+
+With this change git gui can call merge tools
+configured in the gitconfig directly without a
+change in git gui source code.
+It needs a configured merge.tool and a configured
+mergetool.cmd config entry.
+
+gitconfig example:
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	path = the/path/to/Code.exe
+	cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+
+Without the mergetool.cmd configuration and an
+unsupported merge.tool entry, git gui behaves
+mainly as before this change and informs the user
+about an unsupported merge tool, but now also
+shows a hint to add a config entry for the tool
+in gitconfig.
+
+If a wrong mergetool.cmd is configured by accident
+it is beeing handled by git gui already. In this
+case git gui informs the user that the merge tool
+couldn't be opened. This behavior is preserved by
+this change and should not change.
+
+Beyond compare 3 and Visual Studio code were
+tested as manually configured merge tools.
+
+Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+---
+    git gui: add directly calling merge tool from gitconfig
+    
+    cc: Johannes Sixt j6t@kdbg.org
+    
+    Changes since v1:
+    
+     * Used existing option mergetool.cmd in gitconfig to trigger the direct
+       call of the merge tool configured in the config instead adding a new
+       option mergeToolFromConfig
+     * Removed assignment of merge tool path to a variable and reused the
+       already existing one: merget_tool_path
+     * Changed formatting of the commit message
+     * Added more context and an examples to the commit message
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1773%2FToBoMi%2Fadd_merge_tool_from_config_file-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1773/ToBoMi/add_merge_tool_from_config_file-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1773
+
+Range-diff vs v1:
+
+ 1:  59e8f454a70 ! 1:  e77d6dec6c5 git gui: add directly calling merge tool from gitconfig
+     @@ Metadata
+       ## Commit message ##
+          git gui: add directly calling merge tool from gitconfig
+      
+     -    * git Gui can open a merge tool when conflicts are
+     -        detected. The merge tools that are allowed to
+     -        call have to be hard coded into git Gui
+     -        althgough there are configuration options for
+     -        merge tools git in the git config. Git calls
+     -        the configured merge tools directly from the
+     -        config while git Gui doesn't.
+     -    * git Gui can now call the tool configured in the
+     -        gitconfig directly.
+     -    * Can be enabled through setting
+     -        gui.mergeToolFromConfig
+     -    * Disabled by default, since option is most likely
+     -        never set
+     -    * bc3 and vscode tested
+     -
+     -    Signed-off-by: deboeto <tobias.boesch@miele.com>
+     -
+     - ## Documentation/config/gui.txt ##
+     -@@ Documentation/config/gui.txt: gui.blamehistoryctx::
+     - 	linkgit:gitk[1] for the selected commit, when the `Show History
+     - 	Context` menu item is invoked from 'git gui blame'. If this
+     - 	variable is set to zero, the whole history is shown.
+     -+
+     -+gui.mergeToolFromConfig::
+     -+	If true, allow to call the merge tool configured in gitconfig
+     -+	in git gui directly.
+     - \ No newline at end of file
+     +    git gui can open a merge tool when conflicts are
+     +    detected (Right click in the diff of the file with
+     +    conflicts).
+     +    The merge tools that are allowed to
+     +    use are hard coded into git gui.
+     +
+     +    If one wants to add a new merge tool it has to be
+     +    added to git gui through a source code change.
+     +    This is not convenient in comparison to how it
+     +    works in git (without gui).
+     +
+     +    git itself has configuration options for a merge tools
+     +    path and command in the git config.
+     +    New merge tools can be set up there without a
+     +    source code change.
+     +
+     +    Those options are used only by pure git in
+     +    contrast to git gui. git calls the configured
+     +    merge tools directly from the config while git
+     +    Gui doesn't.
+     +
+     +    With this change git gui can call merge tools
+     +    configured in the gitconfig directly without a
+     +    change in git gui source code.
+     +    It needs a configured merge.tool and a configured
+     +    mergetool.cmd config entry.
+     +
+     +    gitconfig example:
+     +    [merge]
+     +            tool = vscode
+     +    [mergetool "vscode"]
+     +            path = the/path/to/Code.exe
+     +            cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+     +
+     +    Without the mergetool.cmd configuration and an
+     +    unsupported merge.tool entry, git gui behaves
+     +    mainly as before this change and informs the user
+     +    about an unsupported merge tool, but now also
+     +    shows a hint to add a config entry for the tool
+     +    in gitconfig.
+     +
+     +    If a wrong mergetool.cmd is configured by accident
+     +    it is beeing handled by git gui already. In this
+     +    case git gui informs the user that the merge tool
+     +    couldn't be opened. This behavior is preserved by
+     +    this change and should not change.
+     +
+     +    Beyond compare 3 and Visual Studio code were
+     +    tested as manually configured merge tools.
+     +
+     +    Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+      
+       ## git-gui/lib/mergetool.tcl ##
+      @@ git-gui/lib/mergetool.tcl: proc merge_resolve_tool2 {} {
+     @@ git-gui/lib/mergetool.tcl: proc merge_resolve_tool2 {} {
+       	default {
+      -		error_popup [mc "Unsupported merge tool '%s'" $tool]
+      -		return
+     -+		if {[is_config_true gui.mergetoolfromconfig]} {
+     -+			set path [get_config mergetool.$tool.path]
+     -+			set cmdline_config [get_config mergetool.$tool.cmd]
+     -+			set cmdline_substituted [subst -nobackslashes -nocommands $cmdline_config]
+     -+			set cmdline [lreplace $cmdline_substituted 0 0 $path]
+     ++		set tool_cmd [get_config mergetool.$tool.cmd]
+     ++		if {$tool_cmd ne {}} {
+     ++			set tool_cmd_file_vars_resolved [subst -nobackslashes -nocommands $tool_cmd]
+     ++			set cmdline [lreplace $tool_cmd_file_vars_resolved 0 0 $merge_tool_path]
+      +		} else {
+     -+			error_popup [mc "Unsupported merge tool '%s'" $tool]
+     ++			error_popup [mc "Unsupported merge tool '%s'. Is the tool command and path configured properly in gitconfig?" $tool]
+      +			return
+      +		}
+       	}
+
+
+ git-gui/lib/mergetool.tcl | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+index e688b016ef6..4c4e8f47bb0 100644
+--- a/git-gui/lib/mergetool.tcl
++++ b/git-gui/lib/mergetool.tcl
+@@ -272,8 +272,14 @@ proc merge_resolve_tool2 {} {
+ 		}
+ 	}
+ 	default {
+-		error_popup [mc "Unsupported merge tool '%s'" $tool]
+-		return
++		set tool_cmd [get_config mergetool.$tool.cmd]
++		if {$tool_cmd ne {}} {
++			set tool_cmd_file_vars_resolved [subst -nobackslashes -nocommands $tool_cmd]
++			set cmdline [lreplace $tool_cmd_file_vars_resolved 0 0 $merge_tool_path]
++		} else {
++			error_popup [mc "Unsupported merge tool '%s'. Is the tool command and path configured properly in gitconfig?" $tool]
++			return
++		}
+ 	}
+ 	}
+ 
+
+base-commit: 159f2d50e75c17382c9f4eb7cbda671a6fa612d1
+-- 
+gitgitgadget
