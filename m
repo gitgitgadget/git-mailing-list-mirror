@@ -1,182 +1,103 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB9D45C1C
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C441A2560
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724856044; cv=none; b=KvhrwMnEcVkp0O/JF0eURVVxAWHTcdaBUC9OchjQ94pDqWqMqiWugjYiOkiFsWfsFSB9IBJnMtJhaRk9I0SYyMAPXM8FWFNnpccecdsREhA6e9SSyigLo8U7+fgv8AilUGUQZ5MyqGWymohtqwGBV12FCXXUKbB8IFdMi5RcU6g=
+	t=1724856503; cv=none; b=Vqwbxvza7/qqKDOCE5ooJGOonCodl8bGg64nBR4vDaRbE/Pmbq2LunchAs2UA42fJSNRwNex7kWNo20h6zUfGuAW9wgmKh8J/2nGg3KyK8ooUwjvh6MrE7UvC85Qc9KqSbYmn/YstVfJVsT6XKIxuiIdie+4bYndhbNhxWFBJJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724856044; c=relaxed/simple;
-	bh=m7FdgrJp7abpirySCkzCnC5IXP1IPGR76Yy9qYl+P0Q=;
+	s=arc-20240116; t=1724856503; c=relaxed/simple;
+	bh=YaUipSDzExhyd72Z+jSdxjfUwMBX6l3tfqnPSetyyfU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C+qZ3f3qWNcv3I0XOrrto32PczfcvfTaphkSwSbFiMkOTB0QNwQwlCub63y6H5IYxn93G6ZOSdTpeEGIKR9KMzFqmUpfhE7T3W88bNPplakXPfT0HRrTmeZ7hDIuv9VL1SukD0af6mzCUOfw0bwSjKWcRGdi5wViHJ9W9H14VUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e7O7PRi0; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e7O7PRi0"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-714186ce2f2so5361740b3a.0
-        for <git@vger.kernel.org>; Wed, 28 Aug 2024 07:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724856042; x=1725460842; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D/uMLrtMXoOs+cuOpXAdyyk11kaLo+yBj7cMkcz8dlg=;
-        b=e7O7PRi0HAnNlKDB61mnpy/Lzo0qclBcUvAhmrB5oTokKbJgeyBsYlGMbtz6WbSx23
-         PdhNsl8h6K5rRRlI7/0Vs8jIH0EaX9LbiS0RWuSQpy7sWyTIhobJu0ewk98mP800X+zz
-         AXzPM+rwMsPjsm2UMFLJA8bkzRaIIljSXlB3xY6acJp4n1qyKzCabWGaKTy11Vi4DZLl
-         6A+qmg+LuUs9MGwvv2zH708LyR+L5nt4RuupFEJfLjV0Bz7UbulyTMNPxBo7bzG3bVwM
-         NDuMBTM8YGw74R+U0+upFoun3yallWVT8k9+oGcH1p9kwuLiysDelhUgFp/NKVCVcbvw
-         p1Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724856042; x=1725460842;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D/uMLrtMXoOs+cuOpXAdyyk11kaLo+yBj7cMkcz8dlg=;
-        b=HmeWuUjLVxfYj9IBOToHQlMVIpE++Kq2sQ0mRpjN1nK+zf0nfKbRFhiHdl/wJkgPRX
-         TNI7EQyKpqd9cV9uVUVuGswjB87Mto5RPjG768jDkqxgKvsel3xCCderq4C5fQ2XLMRV
-         oJCCEqFWntZl2dM/JQtzNwrDotKSP/ADJqQ6Czrb/nbAZeZO24PBYJ0HqP1TkT+o/fZu
-         HCJkMbxHGGlD7umXKUbt1f2AXDW5BxjSIEXcakzX9YqYUR+nZjBkmC948hIACg/iMQa6
-         DpSvZKb3ZHQuDS04OfAYi1xZbd0gVoKHWpy2u9YzXLCVYD47Oedlz3XtnMJxK5EYCLVS
-         xc3w==
-X-Gm-Message-State: AOJu0YxfgS9t5HH4Ohw2ut4wB1LJYVulEhHyxazhD3y0FZ+B3hdXiVYo
-	bs7bVKz5O5LQvn5Sreyw0wv+b4Nrmazz+qNN00/XdC+hDTaoowe4
-X-Google-Smtp-Source: AGHT+IETny53YzroEa3kiDm1Tp5bAfp+kKNbUOMC1rtIAAoHWKs4iVcEWKsTABWvsGCsye9HcHBsEQ==
-X-Received: by 2002:a05:6a00:1950:b0:714:2881:44cc with SMTP id d2e1a72fcca58-7144577249bmr17447086b3a.10.1724856041844;
-        Wed, 28 Aug 2024 07:40:41 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-714343341cdsm10210401b3a.198.2024.08.28.07.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 07:40:40 -0700 (PDT)
-Date: Wed, 28 Aug 2024 22:41:32 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] ref: add regular ref content check for files
- backend
-Message-ID: <Zs83HCZjM1gycfv1@ArchLinux>
-References: <Zs348uXMBdCuwF-2@ArchLinux>
- <Zs353oLDaw2SbNQs@ArchLinux>
- <Zs8c81Z-zb4uQpp6@tanuki>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vritpq9IyHBJrjqHh1NjbFiBtlrfEpsO0booQChQz0u2Mdvt0Ct8WBa1ZsIxdAc/U983pEVgr+n9kBOxHvPeJOscRVo83NnQPqjePPLnOJAsFqR/a4kmJorNSzY5KSvX+3PaPe1wOBpu+NBi/qNmgmBxEmLnHIgVtI9pq+xgYBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 25409 invoked by uid 109); 28 Aug 2024 14:48:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 14:48:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27523 invoked by uid 111); 28 Aug 2024 14:48:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2024 10:48:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 28 Aug 2024 10:48:14 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH 7/6] CodingGuidelines: mention -Wunused-parameter and UNUSED
+Message-ID: <20240828144814.GB4020916@coredump.intra.peff.net>
+References: <20240828035722.GA3998881@coredump.intra.peff.net>
+ <20240828040049.GF3999193@coredump.intra.peff.net>
+ <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zs8c81Z-zb4uQpp6@tanuki>
+In-Reply-To: <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
 
-On Wed, Aug 28, 2024 at 02:50:01PM +0200, Patrick Steinhardt wrote:
-> On Wed, Aug 28, 2024 at 12:07:58AM +0800, shejialuo wrote:
-> > @@ -170,6 +173,12 @@
-> >  `nullSha1`::
-> >  	(WARN) Tree contains entries pointing to a null sha1.
-> >  
-> > +`refMissingNewline`::
-> > +	(INFO) A valid ref does not end with newline.
-> 
-> This reads a bit funny to me. If the ref is valid, why do we complain?
-> 
-> Maybe this would read better if you said "An otherwise valid ref does
-> not end with a newline".
-> 
+On Wed, Aug 28, 2024 at 01:56:13AM -0400, Eric Sunshine wrote:
 
-I think we should just drop the "valid" here. Because for symref, it
-may miss newline and is NOT valid.
+> > And since the code base is now at a spot where we compile cleanly with
+> > -Wunused-parameter, turning it on will make it the responsibility of
+> > individual patch writers going forward.
+> [...]
+> What is the expectation regarding newcomers to the project or even
+> people who have not been following this topic and its cousins?
+> Documentation/CodingGuidelines recommends enabling DEVELOPER mode,
+> which is good, but this change means that such people may now be hit
+> with a compiler complaint which they don't necessarily know how to
+> deal with in the legitimate case #3 (described above). Should
+> CodingGuidelines be updated to mention "UNUSED" and the circumstances
+> under which it should be used?
 
-I will improve this in the next version.
+Yeah, I agree some guidance is in order. How about this on top? I didn't
+go into the decision tree of when you should remove the parameter versus
+using it versus annotating it. I think in general that the first two are
+pretty obvious when they are appropriate, and we just need to focus on
+the annotating option.
 
-> > @@ -3430,6 +3434,65 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
-> >  				  const char *refs_check_dir,
-> >  				  struct dir_iterator *iter);
-> >  
-> > +static int files_fsck_refs_content(struct ref_store *ref_store,
-> > +				   struct fsck_options *o,
-> > +				   const char *refs_check_dir,
-> > +				   struct dir_iterator *iter)
-> > +{
-> > +	struct strbuf ref_content = STRBUF_INIT;
-> > +	struct strbuf referent = STRBUF_INIT;
-> > +	struct strbuf refname = STRBUF_INIT;
-> > +	struct fsck_ref_report report = {0};
-> > +	const char *trailing = NULL;
-> > +	unsigned int type = 0;
-> > +	int failure_errno = 0;
-> > +	struct object_id oid;
-> > +	int ret = 0;
-> > +
-> > +	strbuf_addf(&refname, "%s/%s", refs_check_dir, iter->relative_path);
-> > +	report.path = refname.buf;
-> > +
-> > +	if (S_ISREG(iter->st.st_mode)) {
-> 
-> This is still indenting the whole body. You mentioned that you don't
-> want to use `goto`, but in our codebase it's actually quite idiomatic.
-> And you already use it anyway.
-> 
+-- >8 --
+Subject: [PATCH] CodingGuidelines: mention -Wunused-parameter and UNUSED
 
-I think so, indenting is noisy. Will use "goto" to avoid indenting.
+Now that -Wunused-parameter is on by default for DEVELOPER=1 builds,
+people may trigger it, blocking their build. When it's a mistake for the
+parameter to exist, the path forward is obvious: remove it. But
+sometimes you need to suppress the warning, and the "UNUSED" mechanism
+for that is specific to our project, so people may not know about it.
 
-> > diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> > index 71a4d1a5ae..7c1910d784 100755
-> > --- a/t/t0602-reffiles-fsck.sh
-> > +++ b/t/t0602-reffiles-fsck.sh
-> > @@ -89,4 +89,91 @@ test_expect_success 'ref name check should be adapted into fsck messages' '
-> >  	test_must_be_empty err
-> >  '
-> >  
-> > +test_expect_success 'regular ref content should be checked' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	branch_dir_prefix=.git/refs/heads &&
-> > +	tag_dir_prefix=.git/refs/tags &&
-> > +	cd repo &&
-> > +	git commit --allow-empty -m initial &&
-> > +	git checkout -b branch-1 &&
-> > +	git tag tag-1 &&
-> > +	git commit --allow-empty -m second &&
-> > +	git checkout -b branch-2 &&
-> > +	git tag tag-2 &&
-> > +	git checkout -b a/b/tag-2 &&
-> 
-> Wouldn't it be sufficient to only create a single commit, e.g. via
-> `test_commit`? From all I can see all you need is some object ID, so
-> creating the tags and second commit doesn't seem to be necessary.
-> 
+Let's put some advice in CodingGuidelines, including an example warning
+message. That should help people who grep for the warning text after
+seeing it from the compiler.
 
-I agree with this. I will clean the code for the next version.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/CodingGuidelines | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-> > +	printf "%s" "$(git rev-parse branch-1)" > $branch_dir_prefix/branch-1-no-newline &&
-> 
-> We don't typically have spaces after the redirect. So you should remove
-> them here and in all the subsequent instances.
-> 
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index ccaea39752..d0fc7cfe60 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -258,6 +258,13 @@ For C programs:
+    ensure your patch is clear of all compiler warnings we care about,
+    by e.g. "echo DEVELOPER=1 >>config.mak".
+ 
++ - When using DEVELOPER=1 mode, you may see warnings from the compiler
++   like "error: unused parameter 'foo' [-Werror=unused-parameter]",
++   which indicates that a function ignores its argument. If the unused
++   parameter can't be removed (e.g., because the function is used as a
++   callback and has to match a certain interface), you can annotate the
++   individual parameters with the UNUSED keyword, like "int foo UNUSED".
++
+  - We try to support a wide range of C compilers to compile Git with,
+    including old ones.  As of Git v2.35.0 Git requires C99 (we check
+    "__STDC_VERSION__"). You should not use features from a newer C
+-- 
+2.46.0.754.g24c813f009
 
-I will clean the code style here.
-
-> > +	git refs verify 2>err &&
-> > +	cat >expect <<-EOF &&
-> > +	warning: refs/heads/branch-1-no-newline: refMissingNewline: missing newline
-> > +	EOF
-> > +	rm $branch_dir_prefix/branch-1-no-newline &&
-> > +	test_cmp expect err &&
-> 
-> I was wondering whether each of these cases should be a separate test,
-> but that may be a bit wasteful. Alternatively, can we maybe set up a
-> single repository with all the garbage that we want to verify and then
-> double check that executing `git refs verify` surfaces them all in a
-> single invocation?
-> 
-
-Actually, I have also thought about separating the tests which may
-clear and I dropped this idea due to the reason the same as yours. I DO
-agree that we should set up a single repository with all the garbage
-that we want to verify. This is necessary.
-
-Thanks,
-Jialuo
