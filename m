@@ -1,125 +1,102 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8D71850B5
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 18:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CA41A7AFD
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 19:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724870555; cv=none; b=C7lq3ZGFoxgbZXVwmVNX+tRyqLSsJeDjWRrIny9fJk3NXV6XanN2Na6VSHmaRGwCj+j0gamBCayRfHtMoFQDsIynWCtGUa7TKmtSik4luM0rGGi+fJd7q8CPzO4ILRd6Mofwn4RWa6pCqBeE0+51aRLkQzEVD+og+sb5ESON7Es=
+	t=1724874847; cv=none; b=QkKrbtxSxBeN3lRGY894X33KTAPs8Z2zvHoo4R89rtFXSAUhjf2lPVqBlxplQ6Tuoxrt618tWWktLloTxcDoWM7pHfB4ZCtCTcaSF78rRiBYd0reGcFg3IJYyuP8MU8d/PLvP4vR+M4ltj/yvRuiKAkOaS4MNzzK0vY3ggMsGfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724870555; c=relaxed/simple;
-	bh=iBhLq2+bbJGgn/n717gL/Va1ftb3JUnPmSD97tFM6k0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dkfvGo8KK3esX7kK/gsMIHBoctpWtGP05pqMNfcCYavP72xIjNuyhHLXu2vQLQLzx6gqa2aqTf6vbvuE0GQAl97greKb5gfrFkGxfpHwZKUuFsQhtFW8tcSfPkGztSzUkriveH8yG51OmoRrcNt9EwOO/pkyJnlOoxY9p1YYfgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HmPJ/w67; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HmPJ/w67"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E70B28026;
-	Wed, 28 Aug 2024 14:42:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=iBhLq2+bbJGgn/n717gL/Va1ftb3JUnPmSD97t
-	FM6k0=; b=HmPJ/w67UTNkuRucleCfiT4DoZq256rNDIR+3BDtot3jHAMNFSLpmp
-	i3DO5J6oitF/zbir07DpwJPVpC1MhlCin0p7GyixvyWYlMJf4qSNjUZZfc2+Sfx8
-	q2p7G8NG99PhGVEIU/UVwzRwvlq2HpGASy5pK4df/oWi7tp/8KlLQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8351028025;
-	Wed, 28 Aug 2024 14:42:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD44928024;
-	Wed, 28 Aug 2024 14:42:31 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: [PATCH] SQUASH??? remove unused parameters
-In-Reply-To: <Zs348uXMBdCuwF-2@ArchLinux> (shejialuo@gmail.com's message of
-	"Wed, 28 Aug 2024 00:04:02 +0800")
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
-Date: Wed, 28 Aug 2024 11:42:30 -0700
-Message-ID: <xmqqle0gzdyh.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724874847; c=relaxed/simple;
+	bh=QWBdhMZMTshjUi7BYcgExf7yTZO0XwiQf7/08DMwEyU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QWw5lhfcUW21Pc04A6JawbKAE5aAfkEk/Ar1usMFxCcxHRPQRCVU0Rb4d8Rcph5gfh3xNPMA5RcluB7pm0wGPyMA572c0ApsEKFqhevvpjvOYnmjv3veUlrWqoB3wlTi2gqx+xkEO/lOcxsklmcqdAemLMdNkop4Csl+p79OVWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-493bc0adb20so386060137.3
+        for <git@vger.kernel.org>; Wed, 28 Aug 2024 12:54:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724874844; x=1725479644;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZWb0W3CK1iC6wAKi526dZ8nR3aJBvlNpwCi1g5TXSHQ=;
+        b=UpcOqT3x1g01hFQAThbyVUjx8vGV4c+ftLhoNvdou3+YiBy0DP9YXyDMqRpUQl+4Ub
+         ewTuT10mOBC8obFt1IkgAXwS9cLwxKCDJPHgYG4RBnTLgqA6TgI+yp9e1918YE/sfXKc
+         PoLalTT9DM576xNXeH21j7n0AsgVfH3p83ALFA7sX1uePGwRHeXPpY6NEajD6htdRtj7
+         bMBqg42lIAglB/C1bzu9zHDwiWz3/pPUBxrg0ET7D1wGf0vPHXZJ+yYXxbD5Npl9/7Vc
+         Ak9wrorz4TScaLdmDJstIDF/iNfDNZ5Ubg7nRHfiuvjPwgqhvsZprhqGs+62DL5kHalJ
+         aqVQ==
+X-Gm-Message-State: AOJu0YyB2XY+XvrrAMmmwsFOLuUuf8TOImhifsyJkWcQ5A0PD7JCfCQu
+	S0AO04nbWlTuRmHjUE22uJxmXoAxiXOwFiJyXU0Hr5TI8opAyVeUcnuK48Wvdxw0VFinIhMkpl9
+	3ZuL+WzzLfP/gGElWYZbW8x0ENwQ=
+X-Google-Smtp-Source: AGHT+IEXMvj1YUiIFQfoAVLThr27bukMjyGgkmx/i6oanuPzan5Y2Bp+Aj/iUdF3+eYYw9uNFfKQRe/Now1zAnJlF8E=
+X-Received: by 2002:a05:6102:508c:b0:493:31f9:d14e with SMTP id
+ ada2fe7eead31-49a5ae55d5emr594031137.2.1724874843968; Wed, 28 Aug 2024
+ 12:54:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 48D0CD82-656D-11EF-AF61-9B0F950A682E-77302942!pb-smtp2.pobox.com
+References: <20240828035722.GA3998881@coredump.intra.peff.net>
+ <20240828040049.GF3999193@coredump.intra.peff.net> <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
+ <20240828144814.GB4020916@coredump.intra.peff.net>
+In-Reply-To: <20240828144814.GB4020916@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 28 Aug 2024 15:53:53 -0400
+Message-ID: <CAPig+cSBPxtv50KknJVbucAa9RGxQxP66XHpjCjECWdSGPRHjw@mail.gmail.com>
+Subject: Re: [PATCH 7/6] CodingGuidelines: mention -Wunused-parameter and UNUSED
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With -Wunused-parameter, the compiler notices that many parameters
-are unused.  They are truly unused, and the signatures for the
-functions involved are not constrained externally, so we can simply
-drop the parameters from the definition of these functions and their
-callers.
+On Wed, Aug 28, 2024 at 10:48=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 28, 2024 at 01:56:13AM -0400, Eric Sunshine wrote:
+> > What is the expectation regarding newcomers to the project or even
+> > people who have not been following this topic and its cousins?
+> > Documentation/CodingGuidelines recommends enabling DEVELOPER mode,
+> > which is good, but this change means that such people may now be hit
+> > with a compiler complaint which they don't necessarily know how to
+> > deal with in the legitimate case #3 (described above). Should
+> > CodingGuidelines be updated to mention "UNUSED" and the circumstances
+> > under which it should be used?
+>
+> Yeah, I agree some guidance is in order. How about this on top? I didn't
+> go into the decision tree of when you should remove the parameter versus
+> using it versus annotating it. I think in general that the first two are
+> pretty obvious when they are appropriate, and we just need to focus on
+> the annotating option.
+>
+> -- >8 --
+> Subject: [PATCH] CodingGuidelines: mention -Wunused-parameter and UNUSED
+>
+> Now that -Wunused-parameter is on by default for DEVELOPER=3D1 builds,
+> people may trigger it, blocking their build. When it's a mistake for the
+> parameter to exist, the path forward is obvious: remove it. But
+> sometimes you need to suppress the warning, and the "UNUSED" mechanism
+> for that is specific to our project, so people may not know about it.
+>
+> Let's put some advice in CodingGuidelines, including an example warning
+> message. That should help people who grep for the warning text after
+> seeing it from the compiler.
 
-Please squash these in when the topic gets rerolled.  Thanks.
+Makes sense.
 
- refs/files-backend.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
+nes
+> @@ -258,6 +258,13 @@ For C programs:
+> + - When using DEVELOPER=3D1 mode, you may see warnings from the compiler
+> +   like "error: unused parameter 'foo' [-Werror=3Dunused-parameter]",
+> +   which indicates that a function ignores its argument. If the unused
+> +   parameter can't be removed (e.g., because the function is used as a
+> +   callback and has to match a certain interface), you can annotate the
+> +   individual parameters with the UNUSED keyword, like "int foo UNUSED".
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 8641e3ba65..69dd283c9d 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1966,9 +1966,8 @@ static int create_ref_symlink(struct ref_lock *lock, const char *target)
- 	return ret;
- }
- 
--static int create_symref_lock(struct files_ref_store *refs,
--			      struct ref_lock *lock, const char *refname,
--			      const char *target, struct strbuf *err)
-+static int create_symref_lock(struct ref_lock *lock, const char *target,
-+			      struct strbuf *err)
- {
- 	if (!fdopen_lock_file(&lock->lk, "w")) {
- 		strbuf_addf(err, "unable to fdopen %s: %s",
-@@ -2584,8 +2583,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 	}
- 
- 	if (update->new_target && !(update->flags & REF_LOG_ONLY)) {
--		if (create_symref_lock(refs, lock, update->refname,
--				       update->new_target, err)) {
-+		if (create_symref_lock(lock, update->new_target, err)) {
- 			ret = TRANSACTION_GENERIC_ERROR;
- 			goto out;
- 		}
-@@ -3443,7 +3441,6 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
-  */
- static int files_fsck_symref_target(struct fsck_options *o,
- 				    struct fsck_ref_report *report,
--				    const char *refname,
- 				    struct strbuf *pointee_name,
- 				    struct strbuf *pointee_path,
- 				    unsigned int symbolic_link)
-@@ -3565,7 +3562,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 		} else {
- 			strbuf_addf(&pointee_path, "%s/%s",
- 				    ref_store->gitdir, referent.buf);
--			ret = files_fsck_symref_target(o, &report, refname.buf,
-+			ret = files_fsck_symref_target(o, &report,
- 						       &referent,
- 						       &pointee_path,
- 						       symbolic_link);
-@@ -3589,7 +3586,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 	}
- 
- 	strbuf_addstr(&referent, pointee_name);
--	ret = files_fsck_symref_target(o, &report, refname.buf,
-+	ret = files_fsck_symref_target(o, &report,
- 				       &referent, &pointee_path,
- 				       symbolic_link);
- 
--- 
-2.46.0-563-gaeb9b172ce
-
+Perfect. This fully addresses the question expressed by my review
+comment. Thank you.
