@@ -1,103 +1,137 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C441A2560
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:48:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341B17C9AF
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:58:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724856503; cv=none; b=Vqwbxvza7/qqKDOCE5ooJGOonCodl8bGg64nBR4vDaRbE/Pmbq2LunchAs2UA42fJSNRwNex7kWNo20h6zUfGuAW9wgmKh8J/2nGg3KyK8ooUwjvh6MrE7UvC85Qc9KqSbYmn/YstVfJVsT6XKIxuiIdie+4bYndhbNhxWFBJJk=
+	t=1724857135; cv=none; b=s8/pSP7BWTFM93OopcoXsclo72DzTCcdIcRa/p1WqN4gAMBJ6AeveiWdwsoXuBPldm4i8I45LbtH0pfLBCG3ZlMDMAVW1o84g7XM3pOK1RSRI/aIMZZi9kkk1+Yc2FTROnry/2qrEhQbEsugGbzV1G7Wo4Qu0P7ssJkU7BiCZ+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724856503; c=relaxed/simple;
-	bh=YaUipSDzExhyd72Z+jSdxjfUwMBX6l3tfqnPSetyyfU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vritpq9IyHBJrjqHh1NjbFiBtlrfEpsO0booQChQz0u2Mdvt0Ct8WBa1ZsIxdAc/U983pEVgr+n9kBOxHvPeJOscRVo83NnQPqjePPLnOJAsFqR/a4kmJorNSzY5KSvX+3PaPe1wOBpu+NBi/qNmgmBxEmLnHIgVtI9pq+xgYBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 25409 invoked by uid 109); 28 Aug 2024 14:48:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 14:48:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27523 invoked by uid 111); 28 Aug 2024 14:48:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2024 10:48:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 28 Aug 2024 10:48:14 -0400
-From: Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: [PATCH 7/6] CodingGuidelines: mention -Wunused-parameter and UNUSED
-Message-ID: <20240828144814.GB4020916@coredump.intra.peff.net>
-References: <20240828035722.GA3998881@coredump.intra.peff.net>
- <20240828040049.GF3999193@coredump.intra.peff.net>
- <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
+	s=arc-20240116; t=1724857135; c=relaxed/simple;
+	bh=4LD49u5giNbB7xT55MQc2fzFxZfa84BZkef4KX7EBoA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TEkxR5/QI/0+11tobj9mslvATt/LVhn+qoexS2mrvj0s+2X0ZVlbVbsW80YhfxkKX2YYdGwN5rZaBt/0X2/VDulalMmQdrSeKyzzslRLhYIajo7D+GtUuL8Eg2HsolS0htsN2m/152fAQ6ueK8aj2DlHQoUL+XWxCmWi/gUyyDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hwD3F/YU; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwD3F/YU"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5bec4fc82b0so1334705a12.1
+        for <git@vger.kernel.org>; Wed, 28 Aug 2024 07:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724857132; x=1725461932; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BP7jqJR9DYSb5soyA1mBcS6/5iqDbxV8cAY2QSPnrnk=;
+        b=hwD3F/YUtS9zcF9oJSZn9PZF9mmhYeSfvwlScvzEYUnCvq6+XZe0x1KNl39wHkY24H
+         D3JH2ow8Md7IpkHdPVp6Bx9azChaZJEdNIv554YbzlQ4AHR7SLWlk4BtNCArw8ivUjeq
+         lNuCaCw06YTmYnWCgbw7DdirgpDM0P5R5wnz221BFonE/ay0OGB/yXQigcq3uxiYSVVt
+         yLoBQp1bxF4B9CEJbJ2l8tx98rVFVcLxPejdGWDS++3RRYU3Zm21Pvwsy5wyOECu9Epf
+         XHJAx/qK+nYl5G9rfNeUelX6VhZC0t/xLob1neN/I06q3dzk76FZyyPLH5MV7/v18IsM
+         BPEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724857132; x=1725461932;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BP7jqJR9DYSb5soyA1mBcS6/5iqDbxV8cAY2QSPnrnk=;
+        b=uNatq9WN8L+IyD9XRUF5o88lOvIs7a8b2Hwdype9hiXvrWKYUv8i3EZFyQvjWHUhyD
+         Uul9Ot1WP45jpNtGRiZWNiykzroJjSNagMxdSDM6YXVvAVJ4f/VgJWcHIYRYD78s0O6u
+         B/1VY6UVpya7JgVz4jjQr48YiwSjWSPJcWAEoSq8sknPTfe5nU98fjjHdBKu8XnGuv07
+         Ul6xobTppwyEkC6GTtEsei6Wb0EcMmD+Vg+Lqe8JmRF21UnqO1VbKgbl/n67mf+iFyib
+         l1TAeslH+AZnCV9w5ISLW+OYJUHu862xw7FhiApIoxWn+IiS8WJtBvhRWyvLdQr1ljR2
+         u3CA==
+X-Gm-Message-State: AOJu0YwdgEVaJiAK72A910e8uTEC+YnoXyzew9bRHQTL93E33hW0qRjq
+	i0kVtZRyqjTyuSOjYdAfBJ/hcx0SeBDeZgcTb9G0nlYOwMWsB71/
+X-Google-Smtp-Source: AGHT+IG1eXWvwqCUWYvBQVksUpylnwsK5RPdjyrnAb3Ueo7ErD9zsHAUOWD8bOKnCnfOAURc1E0Ewg==
+X-Received: by 2002:a17:906:f59c:b0:a77:c051:36a9 with SMTP id a640c23a62f3a-a870a99dbc0mr264803266b.9.1724857131325;
+        Wed, 28 Aug 2024 07:58:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a86e548963asm255693466b.44.2024.08.28.07.58.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Aug 2024 07:58:50 -0700 (PDT)
+Message-ID: <13c94c27-0975-46dc-b94e-72fd3972ef16@gmail.com>
+Date: Wed, 28 Aug 2024 15:58:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 00/13] Introduce clar testing framework
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>,
+ Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+ Edward Thomson <ethomson@edwardthomson.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1722415748.git.ps@pks.im> <cover.1724159966.git.ps@pks.im>
+ <e9c015a6-7fc2-4783-9ef6-05359adf46cc@gmail.com> <Zs8uDnUAFFKF4DTF@tanuki>
+Content-Language: en-US
+In-Reply-To: <Zs8uDnUAFFKF4DTF@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 28, 2024 at 01:56:13AM -0400, Eric Sunshine wrote:
+Hi Patrick
 
-> > And since the code base is now at a spot where we compile cleanly with
-> > -Wunused-parameter, turning it on will make it the responsibility of
-> > individual patch writers going forward.
-> [...]
-> What is the expectation regarding newcomers to the project or even
-> people who have not been following this topic and its cousins?
-> Documentation/CodingGuidelines recommends enabling DEVELOPER mode,
-> which is good, but this change means that such people may now be hit
-> with a compiler complaint which they don't necessarily know how to
-> deal with in the legitimate case #3 (described above). Should
-> CodingGuidelines be updated to mention "UNUSED" and the circumstances
-> under which it should be used?
+On 28/08/2024 15:03, Patrick Steinhardt wrote:
+> On Wed, Aug 28, 2024 at 02:18:49PM +0100, Phillip Wood wrote:
+>> On 20/08/2024 15:02, Patrick Steinhardt wrote:
+>>> Hi,
+>>>
+>>> this is another version of my patch series that introduces the clar
+>>> testing framework for our C unit tests.
+>>
+>> I've left some comments on the code, most of them are points I made in the
+>> last round that received no response. My main concern is that the assertions
+>> offered by clar are not as convinent as the check_* macros.
+> 
+> Did you have a look at my reply at <ZsSTOczuGhT5zwoV@tanuki>, where I
+> responded to these concerns?
 
-Yeah, I agree some guidance is in order. How about this on top? I didn't
-go into the decision tree of when you should remove the parameter versus
-using it versus annotating it. I think in general that the first two are
-pretty obvious when they are appropriate, and we just need to focus on
-the annotating option.
+Oh sorry I'd completely missed that mail (it came in while I was off 
+line and I failed to notice it).
 
--- >8 --
-Subject: [PATCH] CodingGuidelines: mention -Wunused-parameter and UNUSED
+> In summary: I'm aware that this is still a rough edge. I'd be happy to
+> follow up on this and improve usability of the assertions, but doing it
+> likely is a bit more involved, mostly because I want to upstream all
+> changes in this context. So I'd rather want to land a basic version
+> first, and then I'd iterate and improve asserts.
 
-Now that -Wunused-parameter is on by default for DEVELOPER=1 builds,
-people may trigger it, blocking their build. When it's a mistake for the
-parameter to exist, the path forward is obvious: remove it. But
-sometimes you need to suppress the warning, and the "UNUSED" mechanism
-for that is specific to our project, so people may not know about it.
+That sounds reasonable
 
-Let's put some advice in CodingGuidelines, including an example warning
-message. That should help people who grep for the warning text after
-seeing it from the compiler.
+>> What's the plan for converting our current tests if this gets merged? If we
+>> were to add wrappers that provide check_int() etc. that would greatly
+>> simplify the conversion. I think it would offer a more ergonomic api for
+>> writing new tests than the verbose and non-typesafe cl_assert_equal_i() and
+>> friends.
+> 
+> My plan would first be to let things cook for a bit while I sort out the
+> rough spots upstream. Once done and once we are sufficiently sure that
+> this is the direction to go I'm happy to do the conversion myself.
+> 
+> Whether we want to have wrappers... I dunno, I don't think the names are
+> all that bad. They have a clear namespace and say rather directly what
+> they are doing, which I value more than briefness (to a certain extent,
+> of course).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/CodingGuidelines | 7 +++++++
- 1 file changed, 7 insertions(+)
+One could argue the check_* are namespaced by "check". I find writing 
+unit tests in C is pretty tedious and having to type cl_assert_equal_? 
+just adds to that.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index ccaea39752..d0fc7cfe60 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -258,6 +258,13 @@ For C programs:
-    ensure your patch is clear of all compiler warnings we care about,
-    by e.g. "echo DEVELOPER=1 >>config.mak".
- 
-+ - When using DEVELOPER=1 mode, you may see warnings from the compiler
-+   like "error: unused parameter 'foo' [-Werror=unused-parameter]",
-+   which indicates that a function ignores its argument. If the unused
-+   parameter can't be removed (e.g., because the function is used as a
-+   callback and has to match a certain interface), you can annotate the
-+   individual parameters with the UNUSED keyword, like "int foo UNUSED".
-+
-  - We try to support a wide range of C compilers to compile Git with,
-    including old ones.  As of Git v2.35.0 Git requires C99 (we check
-    "__STDC_VERSION__"). You should not use features from a newer C
--- 
-2.46.0.754.g24c813f009
+> The type safety is another topic though, and something I
+> will aim to address.
 
+Thanks, it sounds like we're more or less on the same page
+
+Best Wishes
+
+Phillip
+
+> Thanks!
+> 
+> Patrick
