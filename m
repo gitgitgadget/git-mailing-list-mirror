@@ -1,33 +1,32 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663DF1E49B
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 04:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6E642A8F
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 04:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724817653; cv=none; b=mHVjUVPfBwVjA0wtD817nlA87rdDfuKWeN0NmE05PCdQu+TBVCYYGn94JtUju+gZcY03+kCJhp78Ok7jPi7O39wMUgcu48coaGh07yLJN/wLxwHQP4JQBcahV+LDPzkA4EbjAnsMHoXBMOihQFwbSnoMiDqIMHZ5dUWVa5wPrYQ=
+	t=1724818086; cv=none; b=ndhtkuf5G7ScCbCy5w/F9h3xT0N9uaX7IdMYwX/VSyxzD2uE6Jgr5JxOY5Osc5uswBqz8H8sm4X9nm7jkAhLVyh09QihGPPAMYtwz1MLvxmo0pMwxkEXGKb9vX8nT3FRkUa45UMuXtTBB/nDX/5e2YxFI2UsYCMp97B2a8a7cwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724817653; c=relaxed/simple;
-	bh=p1WMXBfUe3TKe8/WlrmNHnTUwzWxBzSUL2gd/7lBx4E=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g4JRTHw3lRIaVVmehg1W+gTupAuGTM04Sj7rpBqVCTwvcB+IR5hBPRzK/R7Y1nYzV6bhSXsU5I072ou5WFzAMV2cwMbHcPzLTmqYfjRWq+KabMM3sT69SmN4hU98xiAHNLXnsegiwVBlPhrZlujcKgHtBxA656e/Q+7U4v0bxoU=
+	s=arc-20240116; t=1724818086; c=relaxed/simple;
+	bh=rxwTFQLTMayFhDBFltCaH36YLS9LK5/KyPxjjQSnpi4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Be8LfWjDvT3s5qGy5QFnJcEIedXs9GP+l6Dye1WCHkNqa2wJDA3A2XZsSxPN28BU/CKduYM5+yzxWY1Ci1ek1pI/u+feKkTwMWfady/MwV4njq9O5qPGyKa5tebj20dsm1ScIY2z7mgTfrtzGi4+yryTubIop0DDyuVoox8TO9E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 20552 invoked by uid 109); 28 Aug 2024 04:00:51 -0000
+Received: (qmail 20568 invoked by uid 109); 28 Aug 2024 04:08:04 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 04:00:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 04:08:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23107 invoked by uid 111); 28 Aug 2024 04:00:53 -0000
+Received: (qmail 23155 invoked by uid 111); 28 Aug 2024 04:08:07 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2024 00:00:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2024 00:08:07 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 28 Aug 2024 00:00:49 -0400
+Date: Wed, 28 Aug 2024 00:08:03 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 6/6] config.mak.dev: enable -Wunused-parameter by default
-Message-ID: <20240828040049.GF3999193@coredump.intra.peff.net>
-References: <20240828035722.GA3998881@coredump.intra.peff.net>
+Subject: [PATCH] t-reftable-block: mark unused argv/argc
+Message-ID: <20240828040803.GA4004932@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -36,50 +35,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240828035722.GA3998881@coredump.intra.peff.net>
 
-Having now removed or annotated all of the unused function parameters in
-our code base, I found that each instance falls into one of three
-categories:
-
-  1. ignoring the parameter is a bug (e.g., a function takes a ptr/len
-     pair, but ignores the length). Detecting these helps us find the
-     bugs.
-
-  2. the parameter is unnecessary (and usually left over from a
-     refactoring or earlier iteration of a patches series). Removing
-     these cleans up the code.
-
-  3. the function has to conform to a specific interface (because it's
-     used via a function pointer, or matches something on the other side
-     of an #ifdef). These ones are annoying, but annotating them with
-     UNUSED is not too bad (especially if the compiler tells you about
-     the problem promptly).
-
-Certainly instances of (3) are more common than (1), but after finding
-all of these, I think there were enough cases of (1) that it justifies
-the work in annotating all of the (3)s.
-
-And since the code base is now at a spot where we compile cleanly with
--Wunused-parameter, turning it on will make it the responsibility of
-individual patch writers going forward.
+This is conceptually the same as the cases in df9d638c24 (unit-tests:
+ignore unused argc/argv, 2024-08-17), but this unit test was migrated
+from the reftable tests in a parallel branch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- config.mak.dev | 1 -
- 1 file changed, 1 deletion(-)
+This should go on top of cp/unit-test-reftable-block. It could also be
+done as an evil merge when we merge with the final unused-parameter
+topic, but I think doing it this way is less confusing.
 
-diff --git a/config.mak.dev b/config.mak.dev
-index 5229c35484..50026d1e0e 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -54,7 +54,6 @@ ifeq ($(filter extra-all,$(DEVOPTS)),)
- DEVELOPER_CFLAGS += -Wno-empty-body
- DEVELOPER_CFLAGS += -Wno-missing-field-initializers
- DEVELOPER_CFLAGS += -Wno-sign-compare
--DEVELOPER_CFLAGS += -Wno-unused-parameter
- endif
- endif
+ t/unit-tests/t-reftable-block.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+index 582a8e6036..f0124fc3d0 100644
+--- a/t/unit-tests/t-reftable-block.c
++++ b/t/unit-tests/t-reftable-block.c
+@@ -359,7 +359,7 @@ static void t_index_block_read_write(void)
+ 		reftable_record_release(&recs[i]);
+ }
  
+-int cmd_main(int argc, const char *argv[])
++int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ {
+ 	TEST(t_index_block_read_write(), "read-write operations on index blocks work");
+ 	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
 -- 
 2.46.0.754.g24c813f009
