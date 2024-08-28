@@ -1,72 +1,74 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA1A1B5AA
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 01:55:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7995569D2B
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 03:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724810111; cv=none; b=hebTsczZXicnUt2sxejRVr+DPxGhyzVDumsHy6euMoSIk3XYZ6fMxwIy/nA2XPA4UCo5Gqn72gc2TjfH2G3g9EAWD33M1+R9J94FRDyhU4tPWIpfoboBMg5fnYj2z/OABNmBD8xJaKRcvW9nlpnkJEsLRq9MaXzFNyzyAbe6Buk=
+	t=1724817452; cv=none; b=qGC30P0vI6/Hz2Wg4OhGu/OELi18NUoF7R6XS3oqDU3RvKGlhzlqxLhqRe2RW55BWT7Bbb7DvNr5+S9sZJHwv33oHPv08Iute0inG376GvK40e6J7C9LjPihKCH4TqDk593pHNaNqJErIpSeTQ8Nt1qqB/IrZXLQl5V+QL7y07U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724810111; c=relaxed/simple;
-	bh=PwG2JAVOQHDSe24uifmu1nRPc59ePPBLDNIAYvhBJT0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D61EUfVOSWazbux1vC9VMRUw4Quc8nlPXJ4BwTfkWRq3MWOElcP3CGU13tCKL9f9zKtDmYsYcMS7LlvqHxTewamdKuZd7H8hOnDO9lCwR62w4fItjLZkxKdpryiquH2dRtbuXRldJhRfsi130q4QcCI/13jduoD3jM6asq/IicQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=A2rG9Kj4; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A2rG9Kj4"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B4CC23A1ED;
-	Tue, 27 Aug 2024 21:55:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PwG2JAVOQHDSe24uifmu1nRPc59ePPBLDNIAYv
-	hBJT0=; b=A2rG9Kj4+R7owX6zi9PeGgj0S/W4qZ9d1Im+MDAliMf+dZn1Wq5xTH
-	fFLShhKAw35Jjv6oCvm4PMyVq0yD+BIjrJ1xStHvI5i+k9SFVFMKBkKgCsMgS49O
-	0jZhplr3POEL7KEaEe49WdoP2BrJpr3IkmATE/4NLceuCs1GMJPac=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E0D23A1EB;
-	Tue, 27 Aug 2024 21:55:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 51C293A1EA;
-	Tue, 27 Aug 2024 21:55:07 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,  Josh Steadmon
- <steadmon@google.com>,  git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/3] send-email: add --mailmap support
-In-Reply-To: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
-	(Jacob Keller's message of "Tue, 27 Aug 2024 14:27:15 -0700")
-References: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
-Date: Tue, 27 Aug 2024 18:55:04 -0700
-Message-ID: <xmqqjzg15s3r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724817452; c=relaxed/simple;
+	bh=I48aN0KVmQexCJxrdSg/ZSLmGhzcKpEFPENKHoMT2Tc=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=nqdtUeFpwpkfse31cguFVOxmO4UI2V3QnyytUi0ztOVrDCSxHd4qpZ3ChFu1gPsgvmFQvj4QI1FzM03kv9Zv7B10MNS5vYDBGb7ioiWsr/m5iJ4c57t2GiIWKoKn2Cvhao0Ku/5IM+SRQOXBhHAgjKTMaXnQlHdW3NuVG51GfCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 20532 invoked by uid 109); 28 Aug 2024 03:57:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Aug 2024 03:57:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23037 invoked by uid 111); 28 Aug 2024 03:57:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Aug 2024 23:57:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 27 Aug 2024 23:57:22 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Subject: [PATCH 0/6] unused parameters: the final countdown
+Message-ID: <20240828035722.GA3998881@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8D0B3FCE-64E0-11EF-8856-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+After many long sets of patches fixing and annotating existing cases,
+this is the culminating series that actually turns on -Wunused-parameter
+in our DEVELOPER=1 builds.
 
-> Changes in v3:
-> - Edit description of patch 1 to clarify lack of validation of email
->   addresses.
-> - Update tests for check-mailmap, removing the bogus contact tests entirely.
-> - Link to v2: https://lore.kernel.org/r/20240819-jk-send-email-mailmap-support-v2-0-d212c3f9e505@gmail.com
+When applied on 'master', everything should compile cleanly with the new
+warning. There are some new cases introduced in 'next', but I'll send
+separate patches to go on those individual topics.
 
-All the incremental changes looked sensible to me.  Let me wait for
-a few days and then mark the topic for 'next', unless others find
-issues.
+The first two patches fix new spots that cropped up since the last round
+of fixes. Patches 3-5 address compat/ code. And then the interesting one
+is patch 6.
 
-Thanks.
+  [1/6]: gc: mark unused config parameter in virtual functions
+  [2/6]: t-reftable-readwrite: mark unused parameter in callback function
+  [3/6]: compat: disable -Wunused-parameter in 3rd-party code
+  [4/6]: compat: disable -Wunused-parameter in win32/headless.c
+  [5/6]: compat: mark unused parameters in win32/mingw functions
+  [6/6]: config.mak.dev: enable -Wunused-parameter by default
+
+ builtin/gc.c                        | 16 ++++++++--------
+ compat/mingw.c                      | 15 ++++++++-------
+ compat/mingw.h                      | 18 +++++++++---------
+ compat/nedmalloc/nedmalloc.c        |  2 ++
+ compat/regex/regcomp.c              |  2 ++
+ compat/stub/procinfo.c              |  2 +-
+ compat/win32/headless.c             |  2 ++
+ compat/win32/pthread.c              |  2 +-
+ compat/win32/pthread.h              |  4 ++--
+ compat/win32/syslog.c               |  2 +-
+ compat/win32mmap.c                  |  2 +-
+ compat/winansi.c                    |  2 +-
+ config.mak.dev                      |  1 -
+ t/unit-tests/t-reftable-readwrite.c |  2 +-
+ 14 files changed, 39 insertions(+), 33 deletions(-)
+
+-Peff
