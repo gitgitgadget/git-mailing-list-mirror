@@ -1,133 +1,139 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEC0156967
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 08:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1561C158216
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 08:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724833169; cv=none; b=nvQUtYWFDm4wrr1uq/47LB2n4g4SFRr7xK1eFcb/U7eQh7MrpPpqTWi6Pir/OdufjO6Rh3hqvE0OFtCVmBy1rWvuVclCyo5pGOtNvLcga/Q1sE3Vi1Vx215SFulurscnDtUAxGJAEmQN16/8ujeWZWZ/OcdnT4tXNFBwExM6FrY=
+	t=1724833295; cv=none; b=qkdUbqO0o8gP50H/1pZmgKBnyBKrl3ndON0w6roe3V6kivZm0w4xoykKbbeugObzEQqvfZ1TfFJUOgLBmzUEVglbsjdFy3f+YMKbNCJu7U6HRLEy13XSo9Tl38HeUE2H1C7x59NMZigsDTSR5kSSkuW1fDqJkDOWA5C7jjV+Yv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724833169; c=relaxed/simple;
-	bh=VmTWWxVXctRtCZjoDCXt5TZ1s45j485FSPl1B/t0oi0=;
+	s=arc-20240116; t=1724833295; c=relaxed/simple;
+	bh=+CKIa+NDDuxGhyD9ffT6FiCCAO5UeYuh1CbAae/uhOo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=elZGOk65yrNLYrwKmJlR0YtynNPuZf52QlUTKpw2I4mLPeYDJf8DLss3VeXZrhiwVzlhK0Kz5p6NnK44qGAdbYytQgLOfIO/jKxZHVlAb5Z1Bld88Fup0CFmRhNHMnox3E2/KD+nZtpTFSRx+ATVa5jomkSWqvvJdSPDA7LI1qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kqUvL1As; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJQbHA3e; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=de1etZwQmOo1J96sHTHEnH+qZj7JeYF98l4CVhwzIP2Aq5vf4/Fn5Y+/vGVfcSEK9MwRKnak21mlTD/3K+UxmLOLFQ7UL8e73a4A87B0qJ/hMGPWZWjlb35QUAWub8rJlK6GEl5JNUA/R/+3cH/qNQaMFOkboFxj00QtM30LpEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T0fN+k56; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZArV/U8j; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kqUvL1As";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJQbHA3e"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5050613900BC;
-	Wed, 28 Aug 2024 04:19:25 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 28 Aug 2024 04:19:25 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T0fN+k56";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZArV/U8j"
+Received: from phl-compute-03.internal (phl-compute-03.nyi.internal [10.202.2.43])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2BF8411470C9;
+	Wed, 28 Aug 2024 04:21:32 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 28 Aug 2024 04:21:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724833165; x=1724919565; bh=ej7B/XtmZ9
-	PZIA2Tuk+ti4B++ThsTVFH7uiA0qgTs1Y=; b=kqUvL1AsVX7qRUx87g6ypU8gWF
-	k4OmROkyjpvxh2DIODJynDvpmk6zcU/hlQpdJ7O6DxMC5B090zjabyWRisWy4EC3
-	daoe0khvTwI4JDOWa+1qUoi0KFwyv6C5i5HuJh1MH9wyXEVcPWcFFp30jzbwNmsU
-	auxn0mvJvHyQYBLBUDmzmpRxBGYuB6KwoGwgrv1qs2K53mLAiy/UR31XAkuIV2JM
-	Xq57GL9YZ+hUQQ/p35lntRi04EsEF5LJICak7eO2RtqFHZ+7ZuaiAWfozHXIkKx8
-	jj044yaaPOraqVZN2JTSmF/4bsPYhZMk7BARzxi/9BE4RFNpbX77GcmlXgzg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1724833292;
+	 x=1724919692; bh=54eXWipA5GuH2SIp3OTT+n2A8d7yQD5B0mzd/5hC72o=; b=
+	T0fN+k56iLESQ0pFbbmTU31gTK6XHFZH/6/YbdaGBFqouPmx4BE+P5c1XLSjrZ06
+	cDM+QZIn3jA03h5s6LaaJ+G0lxBMBE7NcmWHIgWzmOGlhz9rLXGfuB0Rzsw14Iv4
+	mkgXc6jQsbco/HkGLTeaqC54w8MLpN7aTrcy6jGvyOI6FqLpHtYwiSdaRtinZU1j
+	lWwhg3E2dBDtzE4+qHfoNdzVBTTaQzt1L+uTl9NnkOl3xKrbC6ozOcIE9kqJWknT
+	XBNnPAfar79v5DBApz+SfWH7ilf19/rGVW4h2ejl+11jE/+QjJ4/ng1BOYdWWxWw
+	pfFMl2Ba7JBbMIKQZJ23Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724833165; x=1724919565; bh=ej7B/XtmZ9PZIA2Tuk+ti4B++Ths
-	TVFH7uiA0qgTs1Y=; b=CJQbHA3eQ/BJI4UqpWIwo7ypFWgvXUO1MpwkGqA4qnGK
-	sKm/a0usvW5y58DaUiqruLkxOf/GrCo9kiw/gPxnUoVxJJHWHeIIePsp7s5DOFOh
-	UJR1Nzl0G1ZkII2MWU7oKhzy3KrkiCDOv/6qNOxZnA2gF8oZfSlR4fsGQAtuXI+H
-	2I6//XiPiVY030T9U1tJW+MyNdyNfFKRsrvhd3f4/oAzL4FYx/0FUJAP3puNdwdC
-	HvzJOLH98+Pr9H8pNxVhAp7mqADl8iBa0MG2JaBIEK3wJhtC+WxUU/RvMXvjJtap
-	CejUy69J+aoowYDdjkaWsFtUil38YNuw7ylMUUG/Pw==
-X-ME-Sender: <xms:jd3OZt7M8rW_AhDQznSJ2-BeK_VFfNuVAq6n_-RC5D95YOeIP1Wf_Q>
-    <xme:jd3OZq7KDkUZKT3OuwXJUAe9dWpvrkEI9M4Kcy4jzShuZXWs1Be7hbAq967tAU_ii
-    ZZ3x_C8D47heFOwgg>
-X-ME-Received: <xmr:jd3OZkf4LGXWmgIJNBPyDCQOJLm-yyOOaR_9q9Kn4RgPE9DJjSeDGtSCeHGqcKRDqgTe1tGT6CnudQjJiGh8PMRSeJVs8rFklDUbE3BA_wiKREE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefvddgtddvucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1724833292; x=
+	1724919692; bh=54eXWipA5GuH2SIp3OTT+n2A8d7yQD5B0mzd/5hC72o=; b=Z
+	ArV/U8jMRd2lRBFhXSHQ9gh6v0xi9RsV0/Hhhfa7PhO372kT/Sf6qblU/67/uFm1
+	7dkgjcEP6KPCvXXg1f/6A9zgJCaeI/as7qlRwjorsmMfTIEiXQIjIR2rHN7WuPT0
+	k4wrm2/jJcAdO0BEOC2dNGgggWwSDXhaaANnY6+vdl+epzPblPp1VKiICTCgBswP
+	JLfLi7u6fEErcRfnHjekUB66yOrKhys4tyluD++HAWF+/IyI9UpMFAJ7gqnTKCs3
+	KAGf1bBg+hsFGTwSJSZ21tBGxJCF6czozmStVRAzjqO8gVaXCRB+MaTJI7BV1dZN
+	QAZ8+S5ETbceCeVa22eNA==
+X-ME-Sender: <xms:C97OZrY8KOP31n1J63rlPc42rLZv5ZhBMjuU1tnsNx9QYQ-j-fECpA>
+    <xme:C97OZqZ5a_KBiFIUJLAUssglYCPJBaK9tPC8e8LNiHxUYlYIhPLpKZB6_ogUBdHMC
+    6YcH_RNB77Dcw51Ww>
+X-ME-Received: <xmr:C97OZt9HdtehXXRnyDuW-ywv95_ul_6r_G6_47pwh_EuqIOJMRHT2wYizYq-UFA1Rx22lBwrnOo6ajv5gJuN4lBqmkec76ZpnW8-kxVN5Gskgds>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefvddgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:jd3OZmLsjDNqzJfS6S8TTA8A6y0y0uHaUjLvP4E267rju2tel7_jYg>
-    <xmx:jd3OZhJ2_LHmQw4jiYrPdcLfRDRji5hh3B0ct2dk_-BoYP0LWTmSWw>
-    <xmx:jd3OZvwNEZCynZ1OPMygoVn6MeFxBSeUt7UmvCljh_yJTq5zxssvUA>
-    <xmx:jd3OZtLtwIjzINMLGDDcRXzRizex7j9dN2LCrtYqNI3sFySmTJcjHQ>
-    <xmx:jd3OZoVzRbrdB6v3oLhd9HO1hRAvVMJu9Uh8oS_jJeFNIyepEv9EnPg7>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeejudeuffetudefvdehvdeugeduheehheejgfdvhefg
+    geeftdejleejueeugfelueenucffohhmrghinhepmhgrkhdruggvvhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
+    sggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggt
+    ohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:DN7OZhpgZupY3qR10zh63EW3wqfE5Ckl3ZpUnvVVAPQL2tn75K_07w>
+    <xmx:DN7OZmoLKihmvysNKdTfmPiQCAgNOrm4a8PqYqMmrQY3sf2he_ubQA>
+    <xmx:DN7OZnS0xtJE-TCSccuomRIPxkfZCOEmOTh2dbiXdVmcBxtgedEtMg>
+    <xmx:DN7OZuqeSKoUY9o0F4RHS2qc4lUUnJO1BNVQFvsJgoVqUv2cY91FiQ>
+    <xmx:DN7OZpW0HZxYRbSawXcslNklu1aq-TWNv5WZsD8F67S6-O39snldPcYP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Aug 2024 04:19:24 -0400 (EDT)
+ 28 Aug 2024 04:21:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8990f55d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Aug 2024 08:19:16 +0000 (UTC)
-Date: Wed, 28 Aug 2024 10:19:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id dac3dc2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 28 Aug 2024 08:21:24 +0000 (UTC)
+Date: Wed, 28 Aug 2024 10:21:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] reftable: mark unused parameters in empty iterator
- functions
-Message-ID: <Zs7diDgkP33jG5W7@tanuki>
-References: <20240828040944.GA4005021@coredump.intra.peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 6/6] config.mak.dev: enable -Wunused-parameter by default
+Message-ID: <Zs7eBocE3RZb71-q@tanuki>
+References: <20240828035722.GA3998881@coredump.intra.peff.net>
+ <20240828040049.GF3999193@coredump.intra.peff.net>
+ <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240828040944.GA4005021@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
 
-On Wed, Aug 28, 2024 at 12:09:44AM -0400, Jeff King wrote:
-> These unused parameters were marked in a68ec8683a (reftable: mark unused
-> parameters in virtual functions, 2024-08-17), but the functions were
-> moved to a new file in a parallel branch via f2406c81b9
-> (reftable/generic: move generic iterator code into iterator interface,
-> 2024-08-22).
+On Wed, Aug 28, 2024 at 01:56:13AM -0400, Eric Sunshine wrote:
+> On Wed, Aug 28, 2024 at 12:01 AM Jeff King <peff@peff.net> wrote:
+> > Having now removed or annotated all of the unused function parameters in
+> > our code base, I found that each instance falls into one of three
+> > categories:
+> >
+> >   1. ignoring the parameter is a bug (e.g., a function takes a ptr/len
+> >      pair, but ignores the length). Detecting these helps us find the
+> >      bugs.
+> >
+> >   2. the parameter is unnecessary (and usually left over from a
+> >      refactoring or earlier iteration of a patches series). Removing
+> >      these cleans up the code.
+> >
+> >   3. the function has to conform to a specific interface (because it's
+> >      used via a function pointer, or matches something on the other side
+> >      of an #ifdef). These ones are annoying, but annotating them with
+> >      UNUSED is not too bad (especially if the compiler tells you about
+> >      the problem promptly).
+> > [...]
+> > And since the code base is now at a spot where we compile cleanly with
+> > -Wunused-parameter, turning it on will make it the responsibility of
+> > individual patch writers going forward.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > diff --git a/config.mak.dev b/config.mak.dev
+> > @@ -54,7 +54,6 @@ ifeq ($(filter extra-all,$(DEVOPTS)),)
+> >  DEVELOPER_CFLAGS += -Wno-sign-compare
+> > -DEVELOPER_CFLAGS += -Wno-unused-parameter
 > 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This should go on top of ps/reftable-drop-generic. Arguably this could
-> have been done as part of the conflict resolution when merging into next
-> alongside jk/mark-unused-parameters, but at this point I think a
-> separate patch is the best way forward.
-> 
->  reftable/iter.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/reftable/iter.c b/reftable/iter.c
-> index 97a4642ed5..1d99fe4f7d 100644
-> --- a/reftable/iter.c
-> +++ b/reftable/iter.c
-> @@ -25,17 +25,17 @@ int iterator_next(struct reftable_iterator *it, struct reftable_record *rec)
->  	return it->ops->next(it->iter_arg, rec);
->  }
->  
-> -static int empty_iterator_seek(void *arg, struct reftable_record *want)
-> +static int empty_iterator_seek(void *arg UNUSED, struct reftable_record *want UNUSED)
->  {
->  	return 0;
->  }
->  
-> -static int empty_iterator_next(void *arg, struct reftable_record *rec)
-> +static int empty_iterator_next(void *arg UNUSED, struct reftable_record *rec UNUSED)
->  {
->  	return 1;
->  }
->  
-> -static void empty_iterator_close(void *arg)
-> +static void empty_iterator_close(void *arg UNUSED)
->  {
->  }
+> What is the expectation regarding newcomers to the project or even
+> people who have not been following this topic and its cousins?
+> Documentation/CodingGuidelines recommends enabling DEVELOPER mode,
+> which is good, but this change means that such people may now be hit
+> with a compiler complaint which they don't necessarily know how to
+> deal with in the legitimate case #3 (described above). Should
+> CodingGuidelines be updated to mention "UNUSED" and the circumstances
+> under which it should be used?
 
-These changes look obviously correct to me, thanks!
+Updating our coding guidelines would certainly be welcome. Other than
+that this series looks good to me and is a step into the right direction
+in my opinion. Thanks!
 
 Patrick
