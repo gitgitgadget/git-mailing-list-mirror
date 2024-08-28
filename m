@@ -1,94 +1,66 @@
-Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FD41DFED
-	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC8349644
+	for <git@vger.kernel.org>; Wed, 28 Aug 2024 14:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724853790; cv=none; b=FS+2KQuw0TUWPYdbWguTDrgj4gvmt4ePKzKmugbOgL3GUGuHTepzDZEDd5EyLcUWGGYjzN7L2SoAI6Mw4J7yniZFYxtVuwsOUMd+VBUJ6ZmLJ9j5U1zg7URehkmLwmCc/57Gz0oChM5jOua+1KTDpjaFwQfye9e+bWs8b3MZcJo=
+	t=1724855458; cv=none; b=Wa5ZNGbRID6OMCvAFwPN28Dot2GJ7Xbr1CoKe2YMhPxuniNJGPxG7ESz3tPoaREFIdleQgvJI7rB4V96/bn1oaI2L1aNoZ8fRUP/xKoA/mjb5kpiSQGOE7OOU1KZhVNEUGEcjSjfPuZGhI56iwg4CbX+aJaQtU1Y97NMzo1Uzm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724853790; c=relaxed/simple;
-	bh=qq+N4rZxU93n7UXtNEFU1IfKIlkH4QvvzLP2aH+BtCg=;
+	s=arc-20240116; t=1724855458; c=relaxed/simple;
+	bh=oUs2srJBm04XxhA+sJ1z0gVGyvMpN8SYoFDaSElD35o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ovKColFMl4r1yIrL7BR8dCp4W2BBomR61ReVzlERcLW6EBbYZc1NI9Hzw59RO+ZkWGVBsaFvHPM8wT9kYDO5F6Yim4sEoln7sAVi3blc2hD91vv5EwzXx5hLtUlCX95KArUm6Q2iSwf3odmgt/XlgB9fHux/s7BuIX3SEJYmMzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iJSkAc45; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uOrLzMee; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=M3hETkrnQRBwe4XWjhQaCEb/yAREn/hS8LrFqoC5taLFyJk6j0ukf+dTsFZOSJR92Pt1qVrrVWwicGrY4R0U8YXFkSqOIcdpQev4hbJoEF3WX3btEPnbXjbxlvbNgwjmgtmgZ1F8sh/z/og5Ft+57ep52AYumuPzJzdEZSJO+Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HIT8sDMX; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iJSkAc45";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uOrLzMee"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E4751138FF37;
-	Wed, 28 Aug 2024 10:03:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 28 Aug 2024 10:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724853787; x=1724940187; bh=OkcreJjDp8
-	ZSXYii3ygmu98oic+GnwwjDWGRlnAe9dI=; b=iJSkAc45DejaksCJWBYV5aKjHo
-	UpL1Bok9my5CImVHjrGxO57fY5E0iiuUUweV8hcC/wbuDWCwlZPxMrgaXmQ6ePSa
-	QCTO8YIPOoZ3RE1WgqmS5UCl6vq+sAHsTyupAuHT35Sib7rCJwAGNxT1L40wljhr
-	118zN37voaZlL/kQ1n/HUiInWKaZraI0ThfuaT78oqEA7zxmn3QDKmA9w3x7/fVy
-	/IQtpqb+t36g7bCK9OW6ijk6E3QvjILFlXQjNcoXDX2fKloMxTuuzQtshvm/R3mI
-	oYl2cxjNg7HzlJpt0OzKSRY3y22H9XVAvtXZcyj0WlR8gWJGAdmS80/d54tA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724853787; x=1724940187; bh=OkcreJjDp8ZSXYii3ygmu98oic+G
-	nwwjDWGRlnAe9dI=; b=uOrLzMeet+Xiy5vYayvV+LZAOHte+Y55lHpt4iYaQG0b
-	EVPvkkQnTd6diSpHGgOOckXafwQgDJdKUkW4DWv2bEc9puMS3LD0qWGPq/WiwuCN
-	JKqYhhGamUZtvbBqem6rXp9hT3C9iOJDcPap5UddrHgxcgktq2i0DUV/YdavCAsL
-	ieGMm3TbOCXBsusY7KEGP9yF0aHe766S/jTZbCoD66tFtpySXuXMCI3alcJ8zczt
-	yiWUZEDE+Aa0Mnqb8+IJqnlQmdym5HTG9Z8uXlNkQ+sVOJ2i8fu32u4CVO6teNis
-	4qvtA3G91iUhjsubf7v/NmSFvbPk0e2RNcaJTbvO2g==
-X-ME-Sender: <xms:Gy7PZic7tW62MKTENe50DIFtmRjsEO4MONGIgZj0SLVcRNfidVjHGA>
-    <xme:Gy7PZsNVOZjRE-1vXKL1wEKPoF7qqx45CLjczbJhl2861RX94P8_YaOSUWOMqtt69
-    -t9Dfz3QVdUX9UAgg>
-X-ME-Received: <xmr:Gy7PZjgOm3RuDdOzxVs8BpuqWtq1g-EQNko7Gm0gxWB_IWv6R6A4iz_y12O0aLFUQyRzyZWm1QtAZqcfEIfPw2EUB1l69OK-5xIums8z7VdGd5A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefvddgjedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgt
-    phhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtph
-    htthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehs
-    phgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguseguuhhnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:Gy7PZv_JTuVeBz9aNI0jCXLRmnzY2OoNaNnPgFTzNuksbvtBrpKghg>
-    <xmx:Gy7PZuvfXgEyMZVm48hv0Cliw4BJNDCB7LzVS7CroFfXF29JusR4Aw>
-    <xmx:Gy7PZmEVHYos1NYcY7T07Xwh5JOeLN7BLbw4yCML2A1dHkFc_DVqQQ>
-    <xmx:Gy7PZtPRoDXa7xbEOEWwrG8IPdJes8H_SUhMoFsdxErQXtjUIKtLOg>
-    <xmx:Gy7PZoJoNhsTsklfp78P3yq2RhXp2beMZeLHDITHehTYQrZKNnsJAtyf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Aug 2024 10:03:05 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b2ace139 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 28 Aug 2024 14:02:57 +0000 (UTC)
-Date: Wed, 28 Aug 2024 16:03:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 00/13] Introduce clar testing framework
-Message-ID: <Zs8uDnUAFFKF4DTF@tanuki>
-References: <cover.1722415748.git.ps@pks.im>
- <cover.1724159966.git.ps@pks.im>
- <e9c015a6-7fc2-4783-9ef6-05359adf46cc@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HIT8sDMX"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-714114be925so5723475b3a.2
+        for <git@vger.kernel.org>; Wed, 28 Aug 2024 07:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724855457; x=1725460257; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=48cEA4P9eAn7WsO8vY8CGg7/15qe2ZsgxdRDVJIntcQ=;
+        b=HIT8sDMXgJ4RGl0RIBULevsEF0z+QpzPJbeWR+hWSP0MaqQHqFl80+T5XgbNFytZky
+         rS68vy9yBUbHFwW0+kMDQUt5Ae8uf+NYQXQG5LGj/bLU6Lwx9T3KxIhfCI8ZnNBuu3se
+         r6P49IbOFFI9gPP3vwSb/dzlh8YQpmGSHDrhqvGNLJqWFE6ynG50uDAKXNo1eOjyoz88
+         GUIQ3o0/f1Ju9Ap1OpwmWSvm3zdHj9JlTsGtrLsdLfSah4ub0TF+RcLUHXRXFDLRjvwy
+         tKNQORNkRXS3Fyd2Fvnmy7Dv3H+422nlWkLN1SdhkayL5LEd5YDDk+b158oBlVNKZmNc
+         gFMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724855457; x=1725460257;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=48cEA4P9eAn7WsO8vY8CGg7/15qe2ZsgxdRDVJIntcQ=;
+        b=jK9T4vcr7v3UCuMXkUSe8heH2bfnY1zDPNgSvWTBG5uOKpbBMdIXFvB+xm0w4kzBdO
+         GIWdVWzWy2HTBCmBeVLqaDURVv6a+6Lmf93iayHuPV/aszlTTj6/XAXv7Cp48onJ+XhG
+         rbftg0S2hINiBPCtiiDyTRW/RKw7RA89jG1NS93P3tLPfiCHktjNj5c0wsL/G6iA2c9f
+         +7V060nKkzR0/1bJ49wf1eE50itVrroOc4/7xJo6A0ShjUiR62+aF0hLR+e6GNHF5VqU
+         8IFcP6FwxTeYKLmWagdh/IvN7/xcZr4V4fD1z/7MUfQ0IiSI/3zZqfypzfz+7D1ZH9Wb
+         qUjQ==
+X-Gm-Message-State: AOJu0Yy6VX7CgQQtfgxwOYqWMOoJFjoQ1MYp0RtYWqn+IC7EFg22k2TV
+	5PmgrPLu3GiVok0K9vux/W+XTT1yYaadkJZmXBZiOGGBtiiX/Ohf
+X-Google-Smtp-Source: AGHT+IHOC5iVmgX7yqlUmQDG2KyPE4hZ0a3lIOUmpimLvZRIj0etlffJ/Sa8sAir5Ag6gB8UYABd9g==
+X-Received: by 2002:a05:6a00:cd0:b0:714:1ca1:7134 with SMTP id d2e1a72fcca58-715d10e61cemr2498370b3a.18.1724855456420;
+        Wed, 28 Aug 2024 07:30:56 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-714342e09c3sm10157127b3a.122.2024.08.28.07.30.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Aug 2024 07:30:55 -0700 (PDT)
+Date: Wed, 28 Aug 2024 22:31:48 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 2/4] ref: add regular ref content check for files
+ backend
+Message-ID: <Zs801HqHg45v_q6X@ArchLinux>
+References: <Zs348uXMBdCuwF-2@ArchLinux>
+ <Zs353oLDaw2SbNQs@ArchLinux>
+ <xmqqjzg1aksx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,44 +69,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e9c015a6-7fc2-4783-9ef6-05359adf46cc@gmail.com>
+In-Reply-To: <xmqqjzg1aksx.fsf@gitster.g>
 
-On Wed, Aug 28, 2024 at 02:18:49PM +0100, Phillip Wood wrote:
-> On 20/08/2024 15:02, Patrick Steinhardt wrote:
-> > Hi,
-> > 
-> > this is another version of my patch series that introduces the clar
-> > testing framework for our C unit tests.
+On Tue, Aug 27, 2024 at 11:21:34AM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
 > 
-> I've left some comments on the code, most of them are points I made in the
-> last round that received no response. My main concern is that the assertions
-> offered by clar are not as convinent as the check_* macros.
+> > We implicitly rely on "git-fsck(1)" to check the consistency of regular
+> > refs. However, when parsing the regular refs for files backend by using
+> > "files-backend.c::parse_loose_ref_contents", we allow the ref content to
+> > be end with no newline or contain some garbages.
+> 
+> "to be end with" -> "to end with".
+> "or contain" -> "or to contain" (optional, I think).
+> 
+> Or "... the ref content without terminating newline, or with extra
+> bytes after the terminating newline."
+> 
 
-Did you have a look at my reply at <ZsSTOczuGhT5zwoV@tanuki>, where I
-responded to these concerns?
+Thanks, I will fix this in the next version.
 
-In summary: I'm aware that this is still a rough edge. I'd be happy to
-follow up on this and improve usability of the assertions, but doing it
-likely is a bit more involved, mostly because I want to upstream all
-changes in this context. So I'd rather want to land a basic version
-first, and then I'd iterate and improve asserts.
+> > It may seem that we should report an error or warn fsck message to the
+> > user about above situations. However, there may be some third-party
+> > tools customizing the content of refs. We should not report an error
+> > fsck message.
+> 
+> Even though we never created such loose refs ourselves, we have
+> accepted such loose refs forever, so it is entirely possible
+> that third-party tools may rely on such loose refs being valid.
+> Let's notice such a "curiously formatted" loose ref files and
+> tell the users our findings, so that we can assess the possible
+> extent of damage if/when we retroactively tightened the parsing
+> rules in the future.
+> 
 
-> What's the plan for converting our current tests if this gets merged? If we
-> were to add wrappers that provide check_int() etc. that would greatly
-> simplify the conversion. I think it would offer a more ergonomic api for
-> writing new tests than the verbose and non-typesafe cl_assert_equal_i() and
-> friends.
+I think I could organize the above to the commit message to better show
+the motivation why we should not report an error fsck message.
 
-My plan would first be to let things cook for a bit while I sort out the
-rough spots upstream. Once done and once we are sufficiently sure that
-this is the direction to go I'm happy to do the conversion myself.
+> > We should not allow the user to upgrade the fsck warnings to errors. It
+> > might cause compatibility issue which will break the legacy repository.
+> 
+> I am not sure this is a right thing to say.  If the user wants to
+> ensure that the tool they use in their repository, which may include
+> some third-party reimplementation of Git, would never create such a
+> (semi-)malformed loose ref files, it is within their right, and it
+> is the most reasonable way, to promote these "curiously formatted
+> loose ref" fsck warnings to errors.
+> 
+> Is your "We should not allow" above backed by code that prevents
+> them from promoting the warnings to errors, or is it merely a
+> declaration of your intention?
+> 
 
-Whether we want to have wrappers... I dunno, I don't think the names are
-all that bad. They have a clear namespace and say rather directly what
-they are doing, which I value more than briefness (to a certain extent,
-of course). The type safety is another topic though, and something I
-will aim to address.
+I have introduced some misunderstanding here. In the previous paragraph,
+I have mentioned that if the caller set the "strict" field in
+"fsck_options", the fsck warns would be automatically converted to fsck
+errors which may cause some trouble.
 
-Thanks!
+So I think here we should move this paragraph just after the previous
+paragraph to indicate why we do want to make a info fsck message here.
+Actually, the user could still explicitly use the following command
 
-Patrick
+  git -c fsck.refMissingNewline=error refs verify
+
+to upgrade the fsck info to fsck error. But if the user use "--strict"
+like the following:
+
+  git refs verify --strict
+
+The fsck warns would be automatically converted to fsck errors. But
+actually at current, we do not want to the user implicitly upgrade fsck
+warns to fsck errors by using "--strict" flag. That's why we need to
+introduce the "FSCK_INO" here.
+
+Actually, I was inspired by the Jeff King's commit:
+
+  4dd3b045f5 (fsck: downgrade tree badFilemode to "info", 2022-08-10)
+
+In this commit, Jeff downgrades badFilemode to "info" to avoid above
+situation. I will improve the commit message to make things clearer.
+
+However, from my perspective, the semantic of "FSCK_INFO" is a little
+unsuitable here. The comment says:
+
+  /* infos (reported as warnings, but ignored by default) */
+
+The "ignored by default" here is very confusing. Actually, we make the
+"info" lower than the "warn" to avoid automatically converting the "warn"
+to "error" by setting "strict" field in "fsck_options".
+
+But "ignored by default" will make the user think "oh, it's info, but we
+report it as warnings". We cannot know the real intention of the
+"FSCK_INFO" unless we have above context.
+
+But I guess this is too far from the intention of this patch. We may
+improve this later.
+
+> > @@ -170,6 +173,12 @@
+> >  `nullSha1`::
+> >  	(WARN) Tree contains entries pointing to a null sha1.
+> >  
+> > +`refMissingNewline`::
+> > +	(INFO) A valid ref does not end with newline.
+> > +
+> > +`trailingRefContent`::
+> > +	(INFO) A ref has trailing contents.
+> > +
+> >  `treeNotSorted`::
+> >  	(ERROR) A tree is not properly sorted.
+> 
+> There is no mention of "you shouldn't promote these to error" here,
+> which is good.  But wouldn't we want to tell users to report such
+> curiously formatted loose refs, after figuring out who created them,
+> to help us to eventually make the check stricter in the future?
+> 
+
+From the review from the Patrick, I will add another patch in the
+"Documentation/BreakingChanges.txt" later.
+
+> Git 3.0 boundary might be a good time to tighten interoperability
+> rules such that we won't accept anything we wouldn't have written
+> ourselves (not limited to loose ref format, but this applies to
+> anything on-disk or on-wire), but we'd need enough preparation if we
+> want to be able to do so in the future.
+> 
+> Thanks.
+> 
+
+Thanks,
+Jialuo
