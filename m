@@ -1,65 +1,39 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1BB14A4EB
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 19:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A401B3B3B
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 19:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724958246; cv=none; b=axNAxQiWrMOr6/n5Xhsn/7cjGbLckQNIuSylVNvjwnTVT8ZywsLz8UI3MtkY9eqVaPLOj4DHQ9NOr0oL1JseVAa7f91b5OhSap1fGl7+iHoIeOn+bzH69gH1Y5moEFLOUoNR6vEYeaoG+rsA9Y8NF/CiHwWl9C8wdB1OK5nZiL8=
+	t=1724959637; cv=none; b=K17VpQTkByTv46f2jRAZZsWne4jihKPmZcxkoEbMMQEHJEDNDh2FO/tyxmzsBh3aJ5WQho+7J/OhYnjbHoBhHXNNZDCRB7bNYbByqZvagp4+bU2U5Afj9cxKELVEv/ypLzmnRzxyaowIq5AExtW3TKxh+0vqIFUBau4Gytbq2+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724958246; c=relaxed/simple;
-	bh=NkNYqEJzNyU2Ak6YFHIAdfucdxMo3/ogtWHsffc/i2A=;
+	s=arc-20240116; t=1724959637; c=relaxed/simple;
+	bh=zyv1vkHnvZHXHuufqKyJe0JJizL7xTN5lo4jyp5wwfk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GNV4nt9HehX/oTiumqYz3wDrBMflF6+1fabGTiSNKhAUiVcH7TI1F1ujtXXH7+62Tdd+Z9E+uqCYWlFwN6mjqMWlVjjqqtCrDMuBWRgeMCcv1q9gc6VjmUn7Ch3/8fyWevP6s0v/Xk34m4qvtJO/EaNEvt5wJG2yNkzmA/uteXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oNHHBAou; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oNHHBAou"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e13cda45037so1060683276.3
-        for <git@vger.kernel.org>; Thu, 29 Aug 2024 12:04:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1724958244; x=1725563044; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NkNYqEJzNyU2Ak6YFHIAdfucdxMo3/ogtWHsffc/i2A=;
-        b=oNHHBAoutgo9/YDrYUtpbRPMl/cCG5D94AZ5LgwcXcYDV1aH0GLFLPPrHOpj6o0X/8
-         zmMBY4UnnxxWlAmcDOIgR8JfCGYa92K7L1KG0QpS2ARBeuTUwygdOdho267SIx0BpSh7
-         RzfF57WRAdoI1UV8PBeBgcMCXDB/v1ydyH1+v+SjbYtbOUTvsMf1MlrfEpj8UgbvFhL0
-         0zdiSHxM4oHc+4jZ9HIFdZz0Ejg74VqP1PmViSMf3IsJpYxknAwysdShsrkKWZHchJEX
-         3GdEJbs3Fbh66XN4cl67akXZ+rHne/XDZxMx/ZOlt07Iup95tv5V0nonYufnCTg0IHTp
-         cZfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724958244; x=1725563044;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NkNYqEJzNyU2Ak6YFHIAdfucdxMo3/ogtWHsffc/i2A=;
-        b=C/awWD+/2rtqSfjC0tVnAN7AoHDbPpWMzPyw+lyiTVD8nqGspiGbsClRS4y8cEEuC5
-         P2hTYb/q2Lww1rB0iEjK5jGcPWzivEhJmmXkiZiQwfTXePfpZYZlfU3EB2TJPxWoeQxE
-         Fhn0J7IucL58WpQEe+1jx1qJavOoHtYz7u3a8PYvxVAD3RWTFzcaYTlX4mYF8EnhGiwC
-         14VgyMq1Q+tRz8SbjurjZH7HWWKCr1Kaxdo5ho0vrCFmsAhAbviKPKU2+KzPRVKPyFWA
-         xQ7yEBSJhU6iZhz1+4dbIlb/rKJBQEyIIW/Tg/QAU3MIPZndaYYYlGii+Q4Ft3Hl00E9
-         GJ5Q==
-X-Gm-Message-State: AOJu0Yz3HVqrr1yUcc098aBppAtfrzMr31dwsEVYlutlarVCJ6D6dZAS
-	/a1CUHjqwIqI16zNGDkJAy7MGPQ6uPNR2ROaQqN6ga68tqOaarKDWcPX4MBkgWUn35PhM3OHXsi
-	3
-X-Google-Smtp-Source: AGHT+IGELrH1jQjmlbooQsldeHMENG1f3hLbM3G3DD2ivTQn+TPE9dqn72svWFmigtYWFtuSmyVwow==
-X-Received: by 2002:a25:b18a:0:b0:e1a:74f7:37fe with SMTP id 3f1490d57ef6-e1a74f73877mr440461276.5.1724958243818;
-        Thu, 29 Aug 2024 12:04:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1a6266e3bbsm347659276.17.2024.08.29.12.04.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2024 12:04:03 -0700 (PDT)
-Date: Thu, 29 Aug 2024 15:04:02 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8] pseudo-merge: avoid empty and non-closed
- pseudo-merge commits
-Message-ID: <ZtDGImCRmC0N/cen@nand.local>
-References: <cover.1723743050.git.me@ttaylorr.com>
- <20240817104412.GE551779@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=e1f6Jj3GarUzKbLbsYGrFt+ky9wkDO57YC4G5kBsIJaDnaxDHiAD0E1qgbv3XArU+aqeXK2wL811Qd/BSdhS7q7fsHRpasd2Z68rH/BA0VFJRnw1RmK5Bnh/+KRZmHTyp0vXDsnyCF9UFewK/mWrS1ixV5YmHwrXibWMGe+E+rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 5815 invoked by uid 109); 29 Aug 2024 19:27:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 19:27:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9889 invoked by uid 111); 29 Aug 2024 19:27:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 15:27:15 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 29 Aug 2024 15:27:13 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] fixup! midx: implement writing incremental MIDX bitmaps
+Message-ID: <20240829192713.GA423429@coredump.intra.peff.net>
+References: <cover.1723755667.git.me@ttaylorr.com>
+ <cover.1723760847.git.me@ttaylorr.com>
+ <afefb4555750661ffd2c573a33d92f8fcb9f435a.1723760847.git.me@ttaylorr.com>
+ <xmqqseuozg53.fsf_-_@gitster.g>
+ <20240828183356.GA4043247@coredump.intra.peff.net>
+ <ZtDEhNRfXth63SJs@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,20 +42,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240817104412.GE551779@coredump.intra.peff.net>
+In-Reply-To: <ZtDEhNRfXth63SJs@nand.local>
 
-On Sat, Aug 17, 2024 at 06:44:12AM -0400, Jeff King wrote:
-> On Thu, Aug 15, 2024 at 01:30:56PM -0400, Taylor Blau wrote:
->
-> > This series fixes a couple of small issues with pseudo-merge groups,
-> > where it is possible to (a) select pseudo-merges that are not closed
-> > over reachability with respect to the bitmap's pack or MIDX, and (b)
-> > generate empty pseudo-merge commits.
->
-> Thanks, the whole series looks good to me (I left some comments, but it
-> is all just walking through my thought process).
+On Thu, Aug 29, 2024 at 02:57:08PM -0400, Taylor Blau wrote:
 
-Thanks (as always) for a thoughtful review!
+> On Wed, Aug 28, 2024 at 02:33:56PM -0400, Jeff King wrote:
+> > Is that right, though? It looks like the caller might pass in a
+> > tempfile name like .../pack/multi-pack-index.d/tmp_midx_XXXXXX,
+> > if we're in incremental mode. But we'll write directly to
+> > "multi-pack-index-$hash.bitmap" in the same directory. I'm not sure to
+> > what degree it matters, since that's the name we want in the long run.
+> > But would we possibly overwrite an active-in-use file rather than doing
+> > the atomic rename-into-place if we happened to generate the same midx?
+> >
+> > It feels like we should still respect the name the caller is using for
+> > tempfiles, and then rename it into the correct spot at the end.
+> 
+> In either case, we're going to write to a temporary file initialized by
+> the pack-bitmap machinery and then rename() it into place at the end of
+> bitmap_writer_finish().
 
-Thanks,
-Taylor
+OK, that addresses my worry, if we're always writing to a tempfile (and
+I verified with some recent stracing that this is the case). So renaming
+that into tmp_midx_XXXXXX.bitmap would just be a pointless extra layer
+of renames.
+
+I do wonder if it's possible for us to generate a new different revindex
+and bitmap pair for the same midx hash, and for a reader to see a
+mismatched set for a moment. But that's an atomicity problem, and an
+extra layer of renames is not going to solve that.
+
+> On the caller side, in the non-incremental mode, we'll pass
+> $GIT_DIR/objects/pack/multi-pack-index-$hash.bitmap as the location,
+> write its contents into a temporary file, and then rename() it there.
+> 
+> But in the incremental mode this series introduces, I think it would be
+> a bug to pass a tmp_midx_XXXXXX file path there, since nobody would move
+> it from tmp_midx_XXXXX-$HASH.bitmap into its final location.
+> 
+> So I think what's written here with the fixup! patch is right (and
+> should be squashed into 13/13 in the next round), but let me know if I'm
+> missing something.
+
+What confused me is that write_midx_reverse_index() _does_ still take
+midx_name, and respects it. But I think that is a bug!
+
+We do not usually even call that function, since modern midx's have a
+RIDX chunk inside them instead of a separate file. But if you do this:
+
+  # generate an extra pack
+  git commit --allow-empty -m foo
+  git repack -d
+
+  # make an incremental midx with a .rev file; usually this ends up
+  # as a RIDX chunk, so we have to force it.
+  GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --incremental --bitmap
+
+then you'll end up with a tmp_midx_XXXXXX-*.rev file leftover in
+multi-pack-index.d (since, as you note, nobody is moving those into
+place).
+
+So probably write_midx_reverse_index() needs the same treatment to
+derive its own filenames for the incremental case, and to drop the
+midx_name parameter.
+
+Or I wonder if we could simply drop the code to write a separate .rev
+file entirely? I don't think there's a reason anybody would want it.
+
+-Peff
