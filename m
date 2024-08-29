@@ -1,81 +1,80 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE53418F2D1
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 09:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0634818FC84
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 09:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724924354; cv=none; b=PsUzwYo41rswsd5KYMI6JRgna3UymdPOh/V5WXjJ3B9uE/uoDSLmf7IpeWvlUtX3yVBGIB1G5R8sBUK8vkxXQriEATmV+ZKdSFN19De0SWXpuOXMVrA51//beiyMKzy6zq5UCGi093AasdGCu4FuQ3+7scsfI/tT3Uz4aVITEjI=
+	t=1724924357; cv=none; b=rl1ynZ28LBAmrnFj2dzWo0+Jjm5i3YVphk9SxLwglTsOn/4qYZziaxX5Eh3aBAlvviOqfG1+Ihvw+nDtLTxHNqvL+Qh8TXmMTaBNFv0bFXeDKVCf487uHQyaidXsz6/M6XeNP06FkjWvFX8mEv0gV1Z3F6w7Of0z6bfRG3Wt3Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724924354; c=relaxed/simple;
-	bh=jVDhSaCroLryPc7BTjVD3V8dlBTv6lfvJP+J9TUmX8k=;
+	s=arc-20240116; t=1724924357; c=relaxed/simple;
+	bh=8eOG7V/j8a9xbiofvwfUgM8epzyfufMLuIRGC8lIKts=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AmpbiAWJmW4DTaNzdPWLj8pq11oSIzvaPePZMnIoum7eIWrwja1TY6Pa6y3UXwVXq4Yr2/s+izP/b1voKmAJt067pFNNumk02rtnx5ocowUuXPjhVMGWmLXG3oJ7NlgogjHNDY4CrtDLIZpnd64QL88584Ir+CrRICoEh71nW/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nELchdf9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cnFBIjWv; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=cYJQljqP0hxDOxwzdHZsJDHLWbVk+2T9CQVqUkFdtpxKeT1ilJ4GYRxn/AR4S2ybKwaWC4Rtl477OVjrKC2XK/YnZGCd8n303tdT/R4m9e58ZvFwL5fM2VXb0tjY2E51SitHJbxBsB8NdB1SO1H7ZNyUKAmI3PtbFY2660V12Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sj/YGSkB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k7CCHGrA; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nELchdf9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cnFBIjWv"
-Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 1428C1151CE6;
-	Thu, 29 Aug 2024 05:39:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sj/YGSkB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k7CCHGrA"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 138D71151CC3;
+	Thu, 29 Aug 2024 05:39:15 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 29 Aug 2024 05:39:12 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 29 Aug 2024 05:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724924352; x=1725010752; bh=EqkRaVpezP
-	5Gle8sx/YgIgo3+DjDvKZHMRTI7S95LHg=; b=nELchdf9pQiP3jQ2b3Cgno8AQY
-	aVlsBeEY+F82V/2aZnF/aijAu4LvR55zyaDbc8dtDeOnKIWjmEede4bQwMi7m3Zl
-	tnqwLq2tzKILa+H/HBotPsGOfWcQh8f3sYbrraK//wlUMMyHY3Cw69fjF1Z5P/CU
-	t7tb9Jqrwy9F69mAA8K/Y0XI+UTwgDt4uXy/M4YPGdWGYL+7iKyWH7yQVWGO0Gk5
-	udjkeH9N7Ti6A8Ve4av9/rxPNVrNtIXAwd4GvAnFs+aubKBz86wgQK9yJS2VekR8
-	d5XEIagAtM/LqHvTuY+PjQ811abDAKPmXCZsNcwv5Rog8UFG0KsWwkiiznfQ==
+	:subject:to:to; s=fm1; t=1724924355; x=1725010755; bh=JTYkqay8tG
+	Kra5vGqEltXTgHjzaFkvjI4FmWTrbSPgE=; b=Sj/YGSkBW7a/BXnpaCzlnuYnkv
+	BjzEomXDrosjOZ/XsIuhv5UgronOg+5OrYmrRLEmVwUn5QX63sBiAHF8XGjbdSQa
+	dWc1UQLf6kWh4xbTwFOzuFtFBgrHvFp9gpsqDdDKddWAL6S22TNNwGsm3HuTtPxt
+	rMtikxz1C3IJUkyDc1nUZ0nxegIeDnizt+U9BcX1edPrc3T+YhhuoV1gpeM2HmvE
+	cxHVsyedJK5MKcuB8BJlQjyScmUaQYhNBX/8kjTnXewAjPFKU0OII+FLdEnrQa6l
+	twi5Z1asWgR3hrAIRpBK3uuNiOhvb0MdOM5raZrp7YxX0Hwc6GU0upH4Txqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724924352; x=1725010752; bh=EqkRaVpezP5Gle8sx/YgIgo3+DjD
-	vKZHMRTI7S95LHg=; b=cnFBIjWv70uxvYLJmrP+e5M1AZhg+MdH+AzQxl+yDDgN
-	oYZXHRYo645kVehuwmYUeC0gwr2IJBeBkRQxVIWyPIYXk6I3BV0JCK1nLYmgnXAe
-	1yfTCUdKyS1i44z2Ixx4H15/As8NjHo3JGpfDq3uBLB9XRSZGMVdHOlzzRfZFXQR
-	+LN4Iv3VxevecUVJR3U9AKfxFjB5/L+3fAZQrPVIB4/x6IZMIITtGcCnEHY+9ZRu
-	hcqEqrJSuarqXV/7AZYUmBJ0EwGBheqGYVxwCyHMzcX+3aWqwYrKZYaxty88hBuV
-	IqaB/FOfkoOJzCRsxaljSFPUQ3N7ac4z9DRgWu+wAQ==
-X-ME-Sender: <xms:v0HQZifcXCmOmpQjw9aPd230IZYGg4A6XX3VK0KcIjqF6o6yHBpWtQ>
-    <xme:v0HQZsPiPhgR1Ovc0soLTgnYCoCcp7gHx3gpq8Uvi_DpNsXlKcC3uXB5YQ-qubfvz
-    RXz_YpOgOiQvvrUTw>
-X-ME-Received: <xmr:v0HQZjgXpu_qP2Rt4iZBkL0S2CR6jNBkwV4Cly138irsHyhXIgzuQkEOrQKk1UIgngI2GHxeP8kLxKzjGHNr9gaGw0E0p4AOUzGxc-hRXq77wGk>
+	fm1; t=1724924355; x=1725010755; bh=JTYkqay8tGKra5vGqEltXTgHjzaF
+	kvjI4FmWTrbSPgE=; b=k7CCHGrAUTOWnQOZHBIRBA4fgr5Ox9NLHnYjae/gk1Ey
+	hR72zbGt+V4K84DJNGMbot5L92VUOssG7TZxF0SfIMpywy6BZv3FCFUumxFuRiUX
+	rQELgVFvr935pyAq0RAAilkAXEMhUyJWAlCFCNdLUEmvHn11XtAKaaYHx4gbni2y
+	Fqae1xHUQKpdB9ha5RX6aOH1zgKbPerf0WxJojTggKxFrszlISvv6/OHH4XN3vL3
+	qePPiStF1IMOiNz9Ex5AbTm5T35UpAZyvR9mJSdCJXwCop92rm89YSZhqgKl1iTk
+	MOyD+oPPd8GFFUhg4B8PtA2YgiRPxM4FX5Iw8Vx2dw==
+X-ME-Sender: <xms:wkHQZqeqE8vvyl9qdKSOqdFJfTaFB0kW1iAUWbTaV80JhhomwCjjDQ>
+    <xme:wkHQZkPPm471y7KbKf3NrkqV1xoQ4bWbV96HGyHTcQeCRrKYqXhghzLByv1dBj1qS
+    wYVuyYhf82-exwFGw>
+X-ME-Received: <xmr:wkHQZrjJsdfzN9gLhWgt6niP9D4EAbuKunrkOMin1SWTnfs7UqBTqsmMeoDc-GBE5YwtM8Emss2TFcNTu5YEPQS-OLe2fmLbAl6AilXu1nbJSDM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefgedgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:v0HQZv-eF39qKj-EAP25Yz0dzallO1Dmgq5cc-n65roT8-XUKmhbrQ>
-    <xmx:wEHQZuuQP0eLI8khOvg-IlO6gpnUHiUg-0fUvEG3d1OAVBU-p3Yrgw>
-    <xmx:wEHQZmFyzlWEocMTwXx5ysn-gwZtA907pcDQo3SXjXgCNVAkCCcecQ>
-    <xmx:wEHQZtNqswV2opKmI1jL8KUWZQiSFQ4jXm2qpoGt65WPh6LLLbwCvg>
-    <xmx:wEHQZn6w9U1Bvdb7Kzdz2LIF-W2BhHeiPKWHLJ52Zn1v9Cf2NAz6ly-v>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:wkHQZn-fcVzDo7jDNC43k18AV9dCPv_n61onKtscvoPYdSFqttsYIA>
+    <xmx:w0HQZmvHBNlWEvL4GNRxVSUidsfntzo9cpLrG9ABAhwV_LmuFdwrcg>
+    <xmx:w0HQZuGmvdPPUDppQokkgKwESi0FyM491JPB1jT4IW76iNhAoEV7pg>
+    <xmx:w0HQZlPFt_Np6IyWNWKRNuO0wnr74IZ8EsFn1HEdQecLWe6o1T3ObQ>
+    <xmx:w0HQZv42u_Wu6GyWyU-cJkaZQi7p1JFV4UzONjibHLSV6F1KOPSL_gIW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Aug 2024 05:39:11 -0400 (EDT)
+ 29 Aug 2024 05:39:14 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id eaf0917c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 29 Aug 2024 09:39:03 +0000 (UTC)
-Date: Thu, 29 Aug 2024 11:39:10 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c193a4b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 29 Aug 2024 09:39:06 +0000 (UTC)
+Date: Thu, 29 Aug 2024 11:39:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>
-Subject: [PATCH 14/21] repo-settings: split out declarations into a
- standalone header
-Message-ID: <b2c11c8e3169da9ff254efd4ba3f7efd0df73b59.1724923648.git.ps@pks.im>
+Subject: [PATCH 15/21] branch: stop modifying `log_all_ref_updates` variable
+Message-ID: <f1b6807fae32f58aa8243884205bd8df307856bc.1724923648.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,178 +86,49 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1724923648.git.ps@pks.im>
 
-While we have "repo-settings.c", we do not have a corresponding
-"repo-settings.h" file. Instead, this functionality is part of the
-"repository.h" header, making it hard to discover.
+In "branch.c" we modify the global `log_all_ref_updates` variable to
+force creation of a reflog entry. Modifying global state like this is
+discouraged, as it may have all kinds of consequences in other places of
+our codebase.
 
-Split the declarations out of "repository.h" and create a standalone
-header file with them.
+Stop modifying the variable and pass the `REF_FORCE_CREATE_REFLOG` flag,
+which has the same effect.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- repo-settings.c |  1 +
- repo-settings.h | 56 +++++++++++++++++++++++++++++++++++++++++++++++++
- repository.h    | 51 +-------------------------------------------
- 3 files changed, 58 insertions(+), 50 deletions(-)
- create mode 100644 repo-settings.h
+ branch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/repo-settings.c b/repo-settings.c
-index 2b4e68731be..6165546e80a 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -1,5 +1,6 @@
- #include "git-compat-util.h"
- #include "config.h"
-+#include "repo-settings.h"
- #include "repository.h"
- #include "midx.h"
+diff --git a/branch.c b/branch.c
+index c887ea21514..08fa4094d2b 100644
+--- a/branch.c
++++ b/branch.c
+@@ -601,6 +601,7 @@ void create_branch(struct repository *r,
+ 	int forcing = 0;
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
++	int flags = 0;
+ 	char *msg;
  
-diff --git a/repo-settings.h b/repo-settings.h
-new file mode 100644
-index 00000000000..ff20a965373
---- /dev/null
-+++ b/repo-settings.h
-@@ -0,0 +1,56 @@
-+#ifndef REPO_SETTINGS_H
-+#define REPO_SETTINGS_H
-+
-+struct fsmonitor_settings;
-+struct repository;
-+
-+enum untracked_cache_setting {
-+	UNTRACKED_CACHE_KEEP,
-+	UNTRACKED_CACHE_REMOVE,
-+	UNTRACKED_CACHE_WRITE,
-+};
-+
-+enum fetch_negotiation_setting {
-+	FETCH_NEGOTIATION_CONSECUTIVE,
-+	FETCH_NEGOTIATION_SKIPPING,
-+	FETCH_NEGOTIATION_NOOP,
-+};
-+
-+struct repo_settings {
-+	int initialized;
-+
-+	int core_commit_graph;
-+	int commit_graph_generation_version;
-+	int commit_graph_changed_paths_version;
-+	int gc_write_commit_graph;
-+	int fetch_write_commit_graph;
-+	int command_requires_full_index;
-+	int sparse_index;
-+	int pack_read_reverse_index;
-+	int pack_use_bitmap_boundary_traversal;
-+	int pack_use_multi_pack_reuse;
-+
-+	/*
-+	 * Does this repository have core.useReplaceRefs=true (on by
-+	 * default)? This provides a repository-scoped version of this
-+	 * config, though it could be disabled process-wide via some Git
-+	 * builtins or the --no-replace-objects option. See
-+	 * replace_refs_enabled() for more details.
-+	 */
-+	int read_replace_refs;
-+
-+	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
-+
-+	int index_version;
-+	int index_skip_hash;
-+	enum untracked_cache_setting core_untracked_cache;
-+
-+	int pack_use_sparse;
-+	enum fetch_negotiation_setting fetch_negotiation_algorithm;
-+
-+	int core_multi_pack_index;
-+};
-+
-+void prepare_repo_settings(struct repository *r);
-+
-+#endif /* REPO_SETTINGS_H */
-diff --git a/repository.h b/repository.h
-index c603e969ae7..24a66a496a6 100644
---- a/repository.h
-+++ b/repository.h
-@@ -2,9 +2,9 @@
- #define REPOSITORY_H
+ 	if (track == BRANCH_TRACK_OVERRIDE)
+@@ -619,7 +620,7 @@ void create_branch(struct repository *r,
+ 		goto cleanup;
  
- #include "strmap.h"
-+#include "repo-settings.h"
+ 	if (reflog)
+-		log_all_ref_updates = LOG_REFS_NORMAL;
++		flags |= REF_FORCE_CREATE_REFLOG;
  
- struct config_set;
--struct fsmonitor_settings;
- struct git_hash_algo;
- struct index_state;
- struct lock_file;
-@@ -14,59 +14,12 @@ struct submodule_cache;
- struct promisor_remote_config;
- struct remote_state;
- 
--enum untracked_cache_setting {
--	UNTRACKED_CACHE_KEEP,
--	UNTRACKED_CACHE_REMOVE,
--	UNTRACKED_CACHE_WRITE,
--};
--
--enum fetch_negotiation_setting {
--	FETCH_NEGOTIATION_CONSECUTIVE,
--	FETCH_NEGOTIATION_SKIPPING,
--	FETCH_NEGOTIATION_NOOP,
--};
--
- enum ref_storage_format {
- 	REF_STORAGE_FORMAT_UNKNOWN,
- 	REF_STORAGE_FORMAT_FILES,
- 	REF_STORAGE_FORMAT_REFTABLE,
- };
- 
--struct repo_settings {
--	int initialized;
--
--	int core_commit_graph;
--	int commit_graph_generation_version;
--	int commit_graph_changed_paths_version;
--	int gc_write_commit_graph;
--	int fetch_write_commit_graph;
--	int command_requires_full_index;
--	int sparse_index;
--	int pack_read_reverse_index;
--	int pack_use_bitmap_boundary_traversal;
--	int pack_use_multi_pack_reuse;
--
--	/*
--	 * Does this repository have core.useReplaceRefs=true (on by
--	 * default)? This provides a repository-scoped version of this
--	 * config, though it could be disabled process-wide via some Git
--	 * builtins or the --no-replace-objects option. See
--	 * replace_refs_enabled() for more details.
--	 */
--	int read_replace_refs;
--
--	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
--
--	int index_version;
--	int index_skip_hash;
--	enum untracked_cache_setting core_untracked_cache;
--
--	int pack_use_sparse;
--	enum fetch_negotiation_setting fetch_negotiation_algorithm;
--
--	int core_multi_pack_index;
--};
--
- struct repo_path_cache {
- 	char *squash_msg;
- 	char *merge_msg;
-@@ -273,8 +226,6 @@ int repo_read_index_unmerged(struct repository *);
-  */
- void repo_update_index_if_able(struct repository *, struct lock_file *);
- 
--void prepare_repo_settings(struct repository *r);
--
- /*
-  * Return 1 if upgrade repository format to target_version succeeded,
-  * 0 if no upgrade is necessary, and -1 when upgrade is not possible.
+ 	if (forcing)
+ 		msg = xstrfmt("branch: Reset to %s", start_name);
+@@ -630,7 +631,7 @@ void create_branch(struct repository *r,
+ 	if (!transaction ||
+ 		ref_transaction_update(transaction, ref.buf,
+ 					&oid, forcing ? NULL : null_oid(),
+-					NULL, NULL, 0, msg, &err) ||
++					NULL, NULL, flags, msg, &err) ||
+ 		ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 	ref_transaction_free(transaction);
 -- 
 2.46.0.421.g159f2d50e7.dirty
 
