@@ -1,38 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9A01B86FE
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 19:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1121BA26E
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 19:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724960223; cv=none; b=qNsrFg08/5nbDzDFa351i/vKkVtstkRVv8dfCQn3S6FoBZc5tDJ1TvixDes4bmQM2NbPSblznOTiBYx0lUWesqwUm+inAbLggNyMH348ZDcU5WYlMF8ljALmrgko3lalYmkLqRQwsjXEb106PF7zAs9cmI7f1x+ZU2gxds3ar+U=
+	t=1724960457; cv=none; b=lrHlGqqsDbH1VZ7fQaE5WHyOZG4wSmhem4zzWaSQNpovFxGhbOhC8Verl72FY2W05ufow8Pdmqeh+O2jO2UeiuFoCVe29m+WlQaBIvqZleki0tJ/MZEmswyoR99535rjRliB17vx3qaewOsCQhj0Qpgo57PDj3N8Wa4J3AKFyaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724960223; c=relaxed/simple;
-	bh=wfqRtbgOwlTc9nGB7CaG955LmxhV3XgoRzOVqw3+N+0=;
+	s=arc-20240116; t=1724960457; c=relaxed/simple;
+	bh=Bbc5KCNtbM9AzjhaStABuN51prSuRxJBVOHLs85UsX4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NA2zyU3jY0uxsF9JeM5b1ywinAajjug2+1DPm6f6wg56x/LFDf4nM0nolcRDlkvDHYLq7r+Kfse8jwPqN+IKkVuHIYOQ92n/LEcbNQ3pVrwpetepA3dn/vtwKRMPLPw57K7krwAgFVRfGOX/7HnzSr8hmPS60eQJdRa6CqzdHkU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Th4Xt0nmbwMGpigVaieS5EkonGJ0YuVMr/jU9h7bG5uAYrJFLiGyC/JjdDrY6lsh2yp9lzMiW/51jN2AlrP9EIJZDiQDH7PWxAaF32A2owUSor77VgyXAeRGhMsqQrCaOYuLGM4QPkD1uj4rBCfXw42SdUAL7KOTSlF7F8Z+eBY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 5851 invoked by uid 109); 29 Aug 2024 19:37:00 -0000
+Received: (qmail 5860 invoked by uid 109); 29 Aug 2024 19:40:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 19:37:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 19:40:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9945 invoked by uid 111); 29 Aug 2024 19:37:01 -0000
+Received: (qmail 9978 invoked by uid 111); 29 Aug 2024 19:40:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 15:37:01 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 15:40:56 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 29 Aug 2024 15:36:59 -0400
+Date: Thu, 29 Aug 2024 15:40:54 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] pack-bitmap: initialize `bitmap_writer_init()` with
- packing_data
-Message-ID: <20240829193659.GB423429@coredump.intra.peff.net>
-References: <cover.1723743050.git.me@ttaylorr.com>
- <9d322fc5399c453913d08f35eee907b5c909ad6b.1723743050.git.me@ttaylorr.com>
- <20240817103155.GA551779@coredump.intra.peff.net>
- <ZtDFRYQRLQoe+CHS@nand.local>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] CodingGuidelines: also mention MAYBE_UNUSED
+Message-ID: <20240829194054.GC423429@coredump.intra.peff.net>
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
+ <Zs348uXMBdCuwF-2@ArchLinux>
+ <xmqqbk1cz69c.fsf@gitster.g>
+ <20240829040215.GA4054823@coredump.intra.peff.net>
+ <xmqqseunxtks.fsf_-_@gitster.g>
+ <20240829175215.GA415423@coredump.intra.peff.net>
+ <xmqq8qwfw6e9.fsf@gitster.g>
+ <xmqq4j73w5up.fsf_-_@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,40 +44,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZtDFRYQRLQoe+CHS@nand.local>
+In-Reply-To: <xmqq4j73w5up.fsf_-_@gitster.g>
 
-On Thu, Aug 29, 2024 at 03:00:21PM -0400, Taylor Blau wrote:
+On Thu, Aug 29, 2024 at 11:18:06AM -0700, Junio C Hamano wrote:
 
-> > Even the midx code, which is not generating a pack, uses a "fake"
-> > packing_data as the way to express that (because inherently the bit
-> > ordering is all coming from the pack-index nature). If we likewise ever
-> > wrote code to generate bitmaps from an existing pack, it would probably
-> > use packing_data, too. :)
-> 
-> I agree for the most part, though there is a lot of weight in
-> packing_data that would be nice to not have to carry around. I know
-> within GitHub's infrastructure we sometimes OOM kill invocations of "git
-> multi-pack-index write --bitmap" because of the memory overhead (a lot
-> of which is dominated by the actual traversal and bitmap generation, but
-> a lot that comes from just the per-object overhead).
-> 
-> I've thought about alternative structures that might be a little more
-> memory efficient, but it's never gotten to the top of my list.
+> +/*
+> + * MAYBE_UNUSED marks a function parameter that may be unused, but
+> + * whose use is not an error.  It also can be used to annotate a
+> + * function, a variable, or a type that may be unused.
+> + *
+> + * Depending on a configuration, all uses of such a thing may become
+> + * #ifdef'ed away.  Marking it with UNUSED would give a warning in a
+> + * compilation where it is indeed used, and not marking it at all
+> + * would give a warning in a compilation where it is unused.  In such
+> + * a case, MAYBE_UNUSED is the appropriate annotation to use.
+> + */
+>  #define MAYBE_UNUSED __attribute__((__unused__))
 
-True. What the index and bitmap steps really want is not an array of
-object_entry, but an array of pack_idx_entry (which is the first
-component of an object_entry).
-
-I wonder how feasible it would be to simply hold two arrays with
-corresponding entries at each index. Many places only care about one or
-the other. But for places that do care about both, especially ones that
-receive a pointer to an individual object_entry, they'd need to receive
-pointers to both.
-
-I briefly looked at the compile errors that come from making such a
-change. Many of them look trivial, but I think some of them get weird
-(the ext_bases array is also holding object_entry structs). So maybe
-worth pursuing in the long run, but not something to knock out this
-afternoon.
+Thanks, I think this is good. There's more nuanced discussion about when
+the "MAYBE" variant could be used for non-parameters, but I don't know
+that it's worth trying to enumerate every place we've found it useful.
 
 -Peff
