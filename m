@@ -1,124 +1,69 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1ED15AAB6
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CE6335C0
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724962795; cv=none; b=elWZxypjiGzu0t87+ofYLFGBn41bpLpPLP5SCx4gt/SkWf0M1ujNc4R25L1wm2u3/1OE7p2fjzl+vmondOaoqcs9xK1EdXKLK22nvTwKGKN12B3YPkpX1IHWQm8QPbEeMgm8B2vFEsIT4/mzcYaIgtbx2Z4vDMpmrYCGEl46cVc=
+	t=1724963276; cv=none; b=ezO/yH8lwoV5G7+pa9ydr2MVrR8OQk+pkzZXOrw03cjCe8/vzip3xQYeFLPklJTghDwWk6xwfi9V0YgCU5COgGbZG1xTXc5RXlmbzdC8RfLRc4a4MiDnPKsnDeTW/2rurko9q3ZbjHFa9X68Mb6I/OOK3UqO5ZELtfE0TpqFQdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724962795; c=relaxed/simple;
-	bh=16M5vwlzutyklqJZno3KMQuQj8m9JHlZjuM/pzCgZ4o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jPbKozVlhfiEZzo7w+wJO8ItSrfrbIbuOR8iakQOokOq42wtpFTfJj+4OMJsRuhx61J2x61+SFEfM8R5UcuOhe/aOk0kxMXAobOUZAGScDLDtWMiH6lXt3XZfvu4SijJETVGrXDQV7jS+B/aUvn6FnWqOnWECS05MffOtbHf3FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iTvFVY90; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iTvFVY90"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3F6734D03;
-	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=16M5vwlzutyklqJZno3KMQuQj8m9JHlZjuM/pz
-	CgZ4o=; b=iTvFVY90vGn7csIIyHIOmve3rj63og+DKxyux6CgvdL+dkxshRGzoW
-	omUZJit/ABLXwCTdHcCQrHrN09VXwdUyKaoFcXrGxjKQ6Z81Tm0Cp77udCmxlXgL
-	VUVlSaSdxcBthDIFvOtJqul2hYD46/27Ps1pl1i+2PwfqKUPWFm14=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CC2EE34D02;
-	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 422E934D01;
-	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 9/6] git-compat-util: guard definition of MAYBE_UNUSED
- with __GNUC__
-In-Reply-To: <20240829194536.GD423429@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 29 Aug 2024 15:45:36 -0400")
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
-	<xmqqbk1cz69c.fsf@gitster.g>
-	<20240829040215.GA4054823@coredump.intra.peff.net>
-	<xmqqseunxtks.fsf_-_@gitster.g>
-	<20240829175215.GA415423@coredump.intra.peff.net>
-	<xmqq8qwfw6e9.fsf@gitster.g> <xmqq4j73w5up.fsf_-_@gitster.g>
-	<xmqqttf3uquc.fsf_-_@gitster.g>
-	<20240829194536.GD423429@coredump.intra.peff.net>
-Date: Thu, 29 Aug 2024 13:19:50 -0700
-Message-ID: <xmqqcylrulnd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724963276; c=relaxed/simple;
+	bh=kpVIetFfo4jUW5bVFfuZ2Mg9bQBlE8Xb3Z+Q0DizcfI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sDNDUhBLewKZlPAFleHx6/nYRXBg981o1Eohit4UYOK5cIRrAnfcggDZbMrrUB9MGt3jCV9mf5I0clrkrJXg5CGzVuz8KhDgyvneJf39Q9Ko7NHMXHVJ1d62R15uAVNGLdgknJ7vGV/06ClPwEqvHk1I6oYFppml1WyKkDKe9Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4568104962fso1397151cf.1
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 13:27:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724963273; x=1725568073;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kpVIetFfo4jUW5bVFfuZ2Mg9bQBlE8Xb3Z+Q0DizcfI=;
+        b=wEpaw6YnKvy+V55+F9+/uLUDOqU8X5FIHt1yFueXtos1R02YUwawHMk5A8I91z0/va
+         eVeT+MBD7V3r08yfcuHYua/AjiyHXUrzrS0QYgxFX8B6SxePt3uqplC3MVJEwPi6Ieb2
+         vHMwv5Rp48dScI3nvRbxse3kT6fI264H7MU6uWi/m7pOAY+QfAQMhAINqUoQRi1zS47N
+         nz1mr7UVVmPDFQgw+ReHCfV84PlRfVpiTaQ8X04CYmR6vohvUmnP1PNoHRR0equNGrPv
+         anM59tM6PkZHx7kyJt6c907IpFbn07CjGR6WcP88kzo26qZFUoS76DT5tuaL7khrayQN
+         RnhQ==
+X-Gm-Message-State: AOJu0YxxAYeOn6/ipqpPZeTHVyS6mBaV9Y64KoSP+K+AVFR3ZEVpQkNi
+	P81nr/soUmb66y+vQC9kS5ZGEZfYsmPnl7yYR7rC2DuxHzGIpUTeMjDdU7Q/g3v3jRA5wgMWX4E
+	095o4sDoA+Rc2njcjhXpZYRm+NdM=
+X-Google-Smtp-Source: AGHT+IEXw/++Sj+8fVSX2Xq67p4sKj0HIQUDY95jNT6T6Iw3q/O68d6tuIxGnhqjz23Amx9VCCKXeBrFZ2anOILB73o=
+X-Received: by 2002:a05:6214:4103:b0:6b4:fda5:88b6 with SMTP id
+ 6a1803df08f44-6c3495f9315mr384696d6.1.1724963272798; Thu, 29 Aug 2024
+ 13:27:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0BC2429A-6644-11EF-87FB-9B0F950A682E-77302942!pb-smtp2.pobox.com
+References: <20240829200807.GA430283@coredump.intra.peff.net> <20240829200953.GB432235@coredump.intra.peff.net>
+In-Reply-To: <20240829200953.GB432235@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 29 Aug 2024 16:27:41 -0400
+Message-ID: <CAPig+cS0fT6+j3nQx7rh7bTDoMCsEUUWK3_YnpuiJVo+bVZWBQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] grep: prefer UNUSED to MAYBE_UNUSED for pcre allocators
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 29, 2024 at 4:10=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> We prove custom malloc/free callbacks for the pcre library to use. Those
 
-> On Thu, Aug 29, 2024 at 11:27:39AM -0700, Junio C Hamano wrote:
+s/prove/provide/
+
+> take an extra "data" parameter, but we don't use it. Back when these
+> were added in 513f2b0bbd (grep: make PCRE2 aware of custom allocator,
+> 2019-10-16), we only had MAYBE_UNUSED. But these days we have UNUSED,
+> which we should prefer, as it will let the compiler inform us if the
+> code changes to actually use the parameters.
 >
->> Just like we only define UNUSED macro when __GNUC__ is defined,
->> and fall back to an empty definition otherwise, we should do the
->> same for MAYBE_UNUSED.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  * Before I forget that we have discussed this, just as a
->>    documentation (read: this is not a patch to be applied).
->> 
->>    I think this only matters when a compiler satisfies all three
->>    traits:
->> 
->>    - does not define __GNUC__
->>    - does have its own __attribute__() macro
->>    - barfs on __attribute__((__unused__))
->> 
->>    Otherwise we will define __attribute__(x) away to empty to cause
->>    no harm.
->> 
->>    Since we have survived without complaints without such a guard
->>    for quite some time, it may be a sign that no compiler that knows
->>    __attribute__() that people ever tried to compile Git with barfs
->>    with __attribute__((__unused__)).  I dunno.
+> I also moved the annotations to come after the variable name, which is
+> how we typically spell it.
 >
-> Yeah, I was surprised that this didn't have a guard and was not
-> currently barfing on other compilers. And the answer is that we already
-> turn __attribute__ into a noop on non-GNUC platforms.
-
-Plus these non-GNUC platforms either
-
- (1) do not have their own __attribute__, which lets us turn
-     __attribute__() into noop, or
-
- (2) have their own __attribute__, but they happen to support
-     __attribute__((__unused__)).
-
-If somebody has __attribute__() and does not support (__unused__) in
-it, use of MAYBE_UNUSED would be broken (maybe their __attribute__()
-supports other things but not unused).
-
-> Which made me wonder if UNUSED really needs its guards. It does, because
-> it is defined early in the file, before the __attribute__ handling. I
-> don't think we want to move it down, since it needs to be available for
-> use by inline'd compat wrappers. But arguably we should move the
-> attribute macro earlier in the file?
-
-And moving __attribute__ definition earlier in the file would not
-help such a platform with broken __attribute__((__unused__))
-
-> I don't know that it is really worth spending too much time futzing
-> with, though.
-
-I am inclined to think it is not.  So let's scrap the patch.  The
-list archive will hopefully remember when it becomes necessary ;-)
+> Signed-off-by: Jeff King <peff@peff.net>
