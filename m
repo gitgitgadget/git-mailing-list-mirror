@@ -1,75 +1,116 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC05B18C00A
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EC1898E5
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724970376; cv=none; b=lIjzCvy3oTsbjr/hk9KlJ2by/+3GvPQbFV2LTF5zXM7KWdtPWa+6l9Wiyik6kA+yISquqfb3kLXPx4s15EJJztYK4a3lazMtg567e5x05PoJL5x79tUy7T+k2wZyAn2rfdlUO37Q1ngRSgtc4AUbFMoZY9EpbSqLMTMS2fKS89Q=
+	t=1724971115; cv=none; b=ScGu5JzUiGOVSd3NvonBrpDkzyQYILS4zPuiE7xRGIFp53kRxY1Xezxqn2QiYOE1K5fvBiXE5F9BXu0WCVrDFlzP+lMZuMRKDL+KSZD6TbFnR0vCJqlm5PHntmTdQbxjHxsAzx5FuVHN1hHaWxVitpeVOaGtTYcmJNFtiiOy2TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724970376; c=relaxed/simple;
-	bh=3eW7fFTp3dIDtY+Eqxqxf4pOXhVX7YGNFoOqwCREX+I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=juHOUNp1+6jq+cpwde86HP9jDgdM2zDCah8QDauTTuStLQnFP+J2VpPSnrpofu43aLLkypEd5g1KTLJIdYbWwcOHIxNxcoL8oFUC2HwTOeSg6/smyrMVa+gUwg5VDbhnpjNZYswkvAO80lZ9W/ytS+qQfYdhpTg9IcpVkhn8LC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6742 invoked by uid 109); 29 Aug 2024 22:26:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 22:26:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12828 invoked by uid 111); 29 Aug 2024 22:26:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 18:26:14 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 29 Aug 2024 18:26:12 -0400
-From: Jeff King <peff@peff.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] compat/terminal: mark parameter of git_terminal_prompt()
- UNUSED
-Message-ID: <20240829222612.GA445751@coredump.intra.peff.net>
-References: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
+	s=arc-20240116; t=1724971115; c=relaxed/simple;
+	bh=BtIJlgY4b4ErneDFyd5LEw/NvjmybDoVIjM6Wa2NxaU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mHwuLJmFdCtWBbbXQm18jjjqfiZ/floc16u0iCHrzFgP0fuT42ofeaoLLYAW5TeQe2WYT9lrNSdG5iuAyzFEg4GoF/j6hGkpbqWZlY/wrIohjTnQ1UpF+rPO+S8PZrI+gQXaLHzpot8+oZ1dMLY1QvxoI3L1TntUQ5vBOMNVvGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CYJ91XPi; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CYJ91XPi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E05D2693E;
+	Thu, 29 Aug 2024 18:38:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=BtIJlgY4b4ErneDFyd5LEw/NvjmybDoVIjM6Wa
+	2NxaU=; b=CYJ91XPiOZbmfI3Pv2+OZQjmnjfHNFma3V0KNIoSbhXZVpaZIcd36S
+	uuLIESNQPbMxkXuX5bzaP5vPy+7n+qtSrehMZniTBu6ywgpF33M4AplHAQWOsM75
+	fLZJLoiO7CVAbV8laCaEVLySQDHLcFzO5RZN032TR1Pvld3LaK1P8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 360772693D;
+	Thu, 29 Aug 2024 18:38:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B5792693C;
+	Thu, 29 Aug 2024 18:38:30 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Yukai Chou <muzimuzhi@gmail.com>,  git@vger.kernel.org
+Subject: Re: Tags auto fetched by "git fetch origin" but not "git fetch
+ origin main"
+In-Reply-To: <ZtD0kJU_OdBBktZ2@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 29 Aug 2024 22:22:08 +0000")
+References: <CAEg0tHRbGBBq7i78bTSfws_WZO=2W7xuDwiT2qFA5iOza8qDDA@mail.gmail.com>
+	<ZtDo--AY43-bPTHG@tapette.crustytoothpaste.net>
+	<xmqqy14ft36l.fsf@gitster.g>
+	<ZtD0kJU_OdBBktZ2@tapette.crustytoothpaste.net>
+Date: Thu, 29 Aug 2024 15:38:29 -0700
+Message-ID: <xmqqjzfzt0nu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6A7C8288-6657-11EF-918D-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Aug 29, 2024 at 10:57:50PM +0100, Ramsay Jones wrote:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> The 'seen' branch fails to compile on cygwin (but its fine on Linux), due
-> to an unused parameter. I haven't looked too hard at the code (at first
-> blush, it seemed to me that it should not even be trying to compile that
-> code, but ...), I simply added an UNUSED to fix the build. ;)
-> 
-> So, this may not be the correct 'fix' for this, but I thought I should
-> report it here, since I don't have time to look into this now. sorry! :(
+> But the `--tags` option says this:
+>
+>   Fetch all tags from the remote (i.e., fetch remote tags refs/tags/* into
+>   local tags with the same name), in addition to whatever else would
+>   otherwise be fetched. Using this option alone does not subject tags to
+>   pruning, even if --prune is used (though tags may be pruned anyway if
+>   they are also the destination of an explicit refspec; see --prune).
+>
+> That implies that all tags are fetched.
 
-Thanks, this is definitely the right fix. I have to rely on CI for
-catching cases outside of what I build locally, and it looks like we
-don't trigger this fallback code at all in CI (we hit HAVE_DEV_TTY for
-Linux and macOS, and then GIT_WINDOWS_NATIVE for Windows).
+That is stronger than "implies", I would think.  Indeed I know from
+the code inspection that the auto-following only triggers when neither
+--tags or --no-tags option is given, i.e. builtin/fetch.c has this:
 
-Here's a potential commit message for the patch:
+	if (tags == TAGS_DEFAULT && autotags)
+		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
 
-  If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, the fallback
-  code calls the system getpass(). This unfortunately ignores the "echo"
-  boolean parameter, as we have no way to implement that functionality.
-  But we still have to keep the unused parameter, since our interface
-  has to match the other implementations.
+where the variable tags is initialized to TAGS_DEFAULT,
+--tags/--no-tags sets it to TAGS_SET or TAGS_UNSET, and autotags is
+incremented only if a refspec we use has right hand side after the
+colon, i.e. stores what we fetched in our refs/ namespace.
 
-As an aside, I wonder if cygwin could be using either /dev/tty or the
-Windows variant. But that's obviously a separate patch, and either way
-we'd want to fix this fallback code in the meantime.
+> I think we need somebody to test things and clarify the documentation.
 
-I actually kind of wonder if we could get away with assuming that every
-non-Windows platform is Unix-y enough to have /dev/tty, and just delete
-the fallback code entirely. But that is probably wishful thinking.
+Done ;-)
 
--Peff
+> In addition, it might be useful to add a `--relevant-tags` option or
+
+A similar option is called "--follow-tags" on the "git push" side.
+I _think_ it is just the matter of adding the option and have it set
+the tags variable back to TAGS_DEFAULT, i.e.
+
+
+diff --git c/builtin/fetch.c w/builtin/fetch.c
+index c297569a47..f22c00a39d 100644
+--- c/builtin/fetch.c
++++ w/builtin/fetch.c
+@@ -2186,6 +2186,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			    N_("fetch all tags and associated objects"), TAGS_SET),
+ 		OPT_SET_INT('n', NULL, &tags,
+ 			    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
++		OPT_SET_INT(0, "follow-tags", &tags,
++			    N_("auto-follow tags"), TAGS_DEFAULT)),
+ 		OPT_INTEGER('j', "jobs", &max_jobs,
+ 			    N_("number of submodules fetched in parallel")),
+ 		OPT_BOOL(0, "prefetch", &prefetch,
+
+
+but I didn't look too deeply into it.  It needs compile testing,
+documentation updates and new teststo cover the behaviour.
+
+Thanks.
