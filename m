@@ -1,119 +1,124 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254C31BA882
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1ED15AAB6
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724962602; cv=none; b=tMgQuUJK2RhD+UoOEbdEBtEOm3fJnm9JLwQqm78OMZR4yn39RrEnldCU2umbyI5NqT6VzPBNa3a69IkulZIO23K7LcmZ6nxOgiHK0mR2L63et4REd8su2VRTV8xMSvqz+pyBCs6BHGzSSm2KTEcmu1lCTkOMxSwQHLuHPX7VGQg=
+	t=1724962795; cv=none; b=elWZxypjiGzu0t87+ofYLFGBn41bpLpPLP5SCx4gt/SkWf0M1ujNc4R25L1wm2u3/1OE7p2fjzl+vmondOaoqcs9xK1EdXKLK22nvTwKGKN12B3YPkpX1IHWQm8QPbEeMgm8B2vFEsIT4/mzcYaIgtbx2Z4vDMpmrYCGEl46cVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724962602; c=relaxed/simple;
-	bh=DvgjveYipN7E0GW+g52fsVYRvu9x3C8Wqjb4SCrfbEQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=POEf5xNT9hJNcfgJYE5Bm6/2rb7vmyp9OIm1X2FpdvpkCiHGZB1jRAiWvVgzKwkOlH6JDKDu4Toajg0NMZD0g/u6FsRhWxZBRwqoNhd9hrGF8Lc9uLIb2fcQMEQ9xFenPLkc6MDJNP3Vo9r8lMkLvIYRjyysfx5jifvwI16gKao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xbse/aAf; arc=none smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724962795; c=relaxed/simple;
+	bh=16M5vwlzutyklqJZno3KMQuQj8m9JHlZjuM/pzCgZ4o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jPbKozVlhfiEZzo7w+wJO8ItSrfrbIbuOR8iakQOokOq42wtpFTfJj+4OMJsRuhx61J2x61+SFEfM8R5UcuOhe/aOk0kxMXAobOUZAGScDLDtWMiH6lXt3XZfvu4SijJETVGrXDQV7jS+B/aUvn6FnWqOnWECS05MffOtbHf3FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iTvFVY90; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xbse/aAf"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5df9a9f7fe2so656575eaf.2
-        for <git@vger.kernel.org>; Thu, 29 Aug 2024 13:16:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724962600; x=1725567400; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BM2qkjtQb29LYYbG9pm/9GIW2uINuY0JJxpA9FxLCk0=;
-        b=Xbse/aAflfPwDwdzoi8FVBV25qeKurqQOH8DW5J0hI+5mjFoSkaLiUamTyrvwQIIyn
-         tEqn3zODLJoEppQ6DB13o8QnZjps1cEECcX8MYXQ1o/Cn8eux8QCO5ePgD7cf8C/Sz3e
-         ervm5BOfJajU3G8N9cSBzElJhAzedh8Sqb6j11pP8DDadMXnGo2eGmUU+z/XJuFd5FnE
-         gtC5jtle3VEughi2X5YcCfNTJ3qT2PZCutxHFPhxbp1xwDxTZWEZZI5azF6RuxbhpoXQ
-         afWFRRenRNSSKcXRYOZbTwzzVWQY+xYj47lMN51VF/TZ/1NHH4W3hRq6ipnk4NcHIUnu
-         ztPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724962600; x=1725567400;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BM2qkjtQb29LYYbG9pm/9GIW2uINuY0JJxpA9FxLCk0=;
-        b=aZnAI5EprtyqbAyAidRndPAsqLPeOYeRxw7i5+tB0h8CF0X1ZOTY/rFnmVdt4J4bIZ
-         BDkIDC1/6dU4xEyt2Ej3oRTwaIG/tJWk0mPMka4NdzsYU1TdhUVin+iMElfYLwZR7ndx
-         hZiL4yixjCicYtqJA/jzz5SmXzmrklvOZl0oXdH9KncpOKJ+GlSr+wFDWkDnNN6Mm4Il
-         YeAWTMj99ak1lMD9XkmYI0v5Fus1OY5ENU4dnyudA6q045aCm/hOZV9WNVD6r9Av+LH2
-         yxhLoI7RCe9CXaVjpgsWB4H+UYEPxHOVLf7u/ZsYgmVfpswE/uLuQ7N0jbh5/WEyd7Zd
-         dEVg==
-X-Gm-Message-State: AOJu0YxhQVyhO1NqEhrA2Wspk8FQjb4GzN94UjNuMuMyJCW8xWG9E2pv
-	pf9C1lXdMueClt06YWCaJ2HJib6F5zhOXpr4ey6zDn6HFvkGZbZW1XQdyHzt
-X-Google-Smtp-Source: AGHT+IEP9Md+zyDj+GiE82fPjhHQm0fHRJBDmFd7UnmvWCXyj2i208K0DmHrdX2ae9jnQzAX6qWt/A==
-X-Received: by 2002:a05:6870:b52c:b0:270:172c:32ae with SMTP id 586e51a60fabf-277902e3bd8mr4629358fac.32.1724962600042;
-        Thu, 29 Aug 2024 13:16:40 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70f671cf757sm61601a34.81.2024.08.29.13.16.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2024 13:16:39 -0700 (PDT)
-Date: Thu, 29 Aug 2024 15:15:36 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 01/21] environment: make `get_git_dir()` accept a
- repository
-Message-ID: <3fvisdomxvcepnfbx2aruzyhqj2ntfjaapk7escwhylxxuq7r4@inhrmm26blg2>
-References: <cover.1724923648.git.ps@pks.im>
- <0fe3e3e1cccf2eae7d81ccecf431da623b39fa79.1724923648.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iTvFVY90"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3F6734D03;
+	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=16M5vwlzutyklqJZno3KMQuQj8m9JHlZjuM/pz
+	CgZ4o=; b=iTvFVY90vGn7csIIyHIOmve3rj63og+DKxyux6CgvdL+dkxshRGzoW
+	omUZJit/ABLXwCTdHcCQrHrN09VXwdUyKaoFcXrGxjKQ6Z81Tm0Cp77udCmxlXgL
+	VUVlSaSdxcBthDIFvOtJqul2hYD46/27Ps1pl1i+2PwfqKUPWFm14=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CC2EE34D02;
+	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 422E934D01;
+	Thu, 29 Aug 2024 16:19:51 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 9/6] git-compat-util: guard definition of MAYBE_UNUSED
+ with __GNUC__
+In-Reply-To: <20240829194536.GD423429@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 29 Aug 2024 15:45:36 -0400")
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
+	<xmqqbk1cz69c.fsf@gitster.g>
+	<20240829040215.GA4054823@coredump.intra.peff.net>
+	<xmqqseunxtks.fsf_-_@gitster.g>
+	<20240829175215.GA415423@coredump.intra.peff.net>
+	<xmqq8qwfw6e9.fsf@gitster.g> <xmqq4j73w5up.fsf_-_@gitster.g>
+	<xmqqttf3uquc.fsf_-_@gitster.g>
+	<20240829194536.GD423429@coredump.intra.peff.net>
+Date: Thu, 29 Aug 2024 13:19:50 -0700
+Message-ID: <xmqqcylrulnd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0fe3e3e1cccf2eae7d81ccecf431da623b39fa79.1724923648.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0BC2429A-6644-11EF-87FB-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 24/08/29 11:38AM, Patrick Steinhardt wrote:
-> The `get_git_dir()` function retrieves the path to the Git directory for
-> `the_repository`. Make it accept a `struct repository` such that it can
-> work on arbitrary repositories and make it part of the repository
-> subsystem. This reduces our reliance on `the_repository` and clarifies
-> scope.
+Jeff King <peff@peff.net> writes:
 
-Seems sensible to me. We are simply making it so `the_repository` is no
-longer implicit to the function.
+> On Thu, Aug 29, 2024 at 11:27:39AM -0700, Junio C Hamano wrote:
+>
+>> Just like we only define UNUSED macro when __GNUC__ is defined,
+>> and fall back to an empty definition otherwise, we should do the
+>> same for MAYBE_UNUSED.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  * Before I forget that we have discussed this, just as a
+>>    documentation (read: this is not a patch to be applied).
+>> 
+>>    I think this only matters when a compiler satisfies all three
+>>    traits:
+>> 
+>>    - does not define __GNUC__
+>>    - does have its own __attribute__() macro
+>>    - barfs on __attribute__((__unused__))
+>> 
+>>    Otherwise we will define __attribute__(x) away to empty to cause
+>>    no harm.
+>> 
+>>    Since we have survived without complaints without such a guard
+>>    for quite some time, it may be a sign that no compiler that knows
+>>    __attribute__() that people ever tried to compile Git with barfs
+>>    with __attribute__((__unused__)).  I dunno.
+>
+> Yeah, I was surprised that this didn't have a guard and was not
+> currently barfing on other compilers. And the answer is that we already
+> turn __attribute__ into a noop on non-GNUC platforms.
 
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -407,7 +407,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
->  
->  		discard_index(the_repository->index);
->  		read_index_from(the_repository->index, get_lock_file_path(&index_lock),
-> -				get_git_dir());
-> +				repo_get_git_dir(the_repository));
+Plus these non-GNUC platforms either
 
-Now that the `repo_get_git_dir()` function has been moved to
-"repository.h" should we also directly include this header in the c
-file? Or is the implicit reference sufficent? From our coding guidelines
-is seems we preferred to be direct.
+ (1) do not have their own __attribute__, which lets us turn
+     __attribute__() into noop, or
 
-It looks like there are several other hunks missing direct references to
-"repository.h" too.
+ (2) have their own __attribute__, but they happen to support
+     __attribute__((__unused__)).
 
-[snip]
-> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-> index 1593713f4cb..c54e736716a 100644
-> --- a/builtin/fsmonitor--daemon.c
-> +++ b/builtin/fsmonitor--daemon.c
-> @@ -1311,7 +1311,8 @@ static int fsmonitor_run_daemon(void)
->  	strbuf_addstr(&state.path_gitdir_watch, "/.git");
->  	if (!is_directory(state.path_gitdir_watch.buf)) {
->  		strbuf_reset(&state.path_gitdir_watch);
-> -		strbuf_addstr(&state.path_gitdir_watch, absolute_path(get_git_dir()));
-> +		strbuf_addstr(&state.path_gitdir_watch,
-> +			      absolute_path(repo_get_git_dir(the_repository)));
+If somebody has __attribute__() and does not support (__unused__) in
+it, use of MAYBE_UNUSED would be broken (maybe their __attribute__()
+supports other things but not unused).
 
-In this c file, now that `repo_get_git_dir()` lives in "repository.h",
-is the "environment.h" header file needed anymore?
+> Which made me wonder if UNUSED really needs its guards. It does, because
+> it is defined early in the file, before the __attribute__ handling. I
+> don't think we want to move it down, since it needs to be available for
+> use by inline'd compat wrappers. But arguably we should move the
+> attribute macro earlier in the file?
 
--Justin
+And moving __attribute__ definition earlier in the file would not
+help such a platform with broken __attribute__((__unused__))
+
+> I don't know that it is really worth spending too much time futzing
+> with, though.
+
+I am inclined to think it is not.  So let's scrap the patch.  The
+list archive will hopefully remember when it becomes necessary ;-)
