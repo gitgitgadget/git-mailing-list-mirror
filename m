@@ -1,88 +1,79 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from hu-is-mx-01.gaijin.team (hu-is-mx-01.gaijin.team [213.163.39.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA1A15AD99
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8C618A92B
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.163.39.217
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724964377; cv=none; b=Wr9oVMIl6KI7wH0Xks0ICQbI5+g2RXXWGBuOMyB6KIGOJh6mE5tcgm2bRoaIR/HxsorNpOl9/61YfwQf9fHEGR1jW6j+FFH6WXcZafG3unMIrxKHnqM3KZR0VmX29vuEL9lZVjDe4FodbJ7kTnlq2FNnU9JZ4zN5rnXWqprpoGg=
+	t=1724964679; cv=none; b=ZIJqX+V3gt6lLiiMY+w71QkkToWprjjk9eC4v9FRINTo2SxePVX0putBg2EjH+2owT/rHgbapb4f+mJvtAxMgXuAuGuGiBS3OL3fIT4/gkNs+kLtDuDtK/75HZzOeEPRP6Rj0WYN//UUYGTfK0Mrlz4FQEmVjtIR5+48FoXXmvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724964377; c=relaxed/simple;
-	bh=7f1IEEkjr2nwn4qUntYQN79BWnZRhodo82nlb+9LKLs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t949DeFHC//vtXwAgzeLoLuAn2UtssAby9EmrZKsMUyYnRz/ZKVWvGC/F8j/+tSR8LbUuVcff6ut0bcKUwnKxS6OE2vF7Jh68/gchagYWeung2SkxJS5sjv8gx+uhYKUOuw4YD6BjUQeEO8LWKr9qH6EX585Ei+FtGa025Ltt4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q5D1nvGd; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724964679; c=relaxed/simple;
+	bh=YwEDaDp20fmivKaLSMThz81isK1Wotk3RAU2h3LRV4c=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=J5UduljgBfP7uREOo++PPd7HZe54zfBBSRRuqFu6/+LKGFM4quno9C3Y6wCeqBaTx/hiUDXFFXbIs4gwpZpWjj8J9wM2coPtpDHnRPW2meXzNIDXWjUS8gWHt/xGcHAqg/QC5/90yFkyNCvp6WcqNsaWyAJxzQidNcMTIOF2Flc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaijin.team; spf=pass smtp.mailfrom=gaijin.team; dkim=pass (1024-bit key) header.d=gaijin.team header.i=@gaijin.team header.b=YLK56XP+; arc=none smtp.client-ip=213.163.39.217
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaijin.team
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gaijin.team
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q5D1nvGd"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F48D35145;
-	Thu, 29 Aug 2024 16:46:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7f1IEEkjr2nwn4qUntYQN79BWnZRhodo82nlb+
-	9LKLs=; b=Q5D1nvGd5eZGjLG+FQwfkASVxyqsZ5FqP0OMMFMTAEcomVa2Nsevv/
-	xUcPclFnKfwGnk2Z9g2/ktxzDKtE42PTqc2EqaPd+26J62FTeWQvZjV2mXt9YV58
-	LYjBtjAGf5yYg7dbYxBudH9wVpOgoonFMy6FwQplNOtP13utQHqZw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0775F35144;
-	Thu, 29 Aug 2024 16:46:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DFB235142;
-	Thu, 29 Aug 2024 16:46:14 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] clean up some MAYBE_UNUSED cases
-In-Reply-To: <20240829200807.GA430283@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 29 Aug 2024 16:08:07 -0400")
-References: <20240829200807.GA430283@coredump.intra.peff.net>
-Date: Thu, 29 Aug 2024 13:46:12 -0700
-Message-ID: <xmqq34mnukff.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=gaijin.team header.i=@gaijin.team header.b="YLK56XP+"
+Message-ID: <7d1dad03-703c-47ae-a039-c15aa765fd0b@gaijin.team>
+DKIM-Filter: OpenDKIM Filter v2.11.0 hu-is-mx-01.gaijin.team 3AA9B389
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaijin.team; s=mail;
+	t=1724964221; bh=Eh0M85M+j1e9CCUlaDPbaAfa27tI1od16iKsUa4UFxM=;
+	h=Date:To:From:Subject:From;
+	b=YLK56XP+NmY/KcETGFFEy5HTzUz+t7bpgjoYz21r1h9beNE7FBd35VB3L3cdIxS29
+	 Ei+gV2Eii3j33bEvKQSwawuLHKJyB+y4sCjk1TJyavLbnNMKdtq7uMElQBCUJNsJM4
+	 Y7yXfTiA8gf7bNa6N9uboEq1TvRxm4RZ4Vo+lmZ4=
+Date: Thu, 29 Aug 2024 23:43:40 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- BB5E5826-6647-11EF-AF39-9B0F950A682E-77302942!pb-smtp2.pobox.com
+To: git@vger.kernel.org
+Content-Language: en-US
+From: Roman Sandu <r.sandu@gaijin.team>
+Subject: Committing crimes with NTFS-3G
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Jeff King <peff@peff.net> writes:
+Good day!
 
->   - builtin/gc.c's check_crontab_process(). The whole function is marked
->     as MAYBE_UNUSED here, which is a little funny. It's because
->     is_crontab_available() may or may not call us based on __APPLE__.
->     Should we conditionally define the function, too, in that case? It
->     would mean repeating the #ifdef. Alternatively, we could define it
->     like this:
->
->       #ifdef __APPLE__
->       static int check_crontab_process(const char *cmd UNUSED)
->       {
->               return 0;
->       }
->       #else
->       static int check_crontab_process(const char *cmd UNUSED)
->       {
->               [...the real function...]
->       }
->       #endif
+I have a decently sized (80K files) monorepo on an NTFS drive that I 
+have been working with for a while under Windows via git-for-windows. 
+Recently, I had to (temporarily) switch to Ubuntu (24.04) via dual-boot 
+for irrelevant reasons, and I decided that simply mounting my NTFS drive 
+and using the monorepo from Ubuntu is a great idea, actually, as NTFS-3G 
+allow for seamless interop with NTFS via UserMapping. And so that is 
+exactly what I did and It Just Works!
 
-Or inline the body of check_crontab_process() at its sole callsite
-(the other side of "#ifdef APPLE") in is_crontab_available() and get
-rid of check_crontab_process().
+Except it kind of does not. Every time I run `git status` it takes 8 
+seconds, which is very painful when doing tricky history rewriting.
 
->     But I think we're getting into "well, this is how I would have
->     written it" territory, and it doesn't matter much either way in
->     practice. It's probably better to just leave it alone.
+To diagnose the problem, I ran git status with GIT_TRACE_PERFORMANCE 
+enabled, and what I see is that the "refresh index" region is taking up 
+99% of the time. Digging further, `strace -fc git status` tells me that 
+99% of the time is spent on newfstatat'ing files. Okay, makes sense, 
+stat'ing files through FUSE is not all that quick. But how many files 
+are we talking about? My repository has `feature.manyFiles` enabled in 
+git, so I would expect `core.untrackedCache` make it so that `git 
+status` skips basically everything except for the root folder which 
+contains, what, 20 subfolders? But it actually does >96K stat calls! 
+Which is more than the amount of files in the repository in total. 
+Briefly looking at the output of `strace -f git status`, I see that git 
+indeed goes through basically all of the repository, even things that 
+have not changed for years, as if `core.untrackedCache` is not actually 
+enabled. Manually enabling it on top of `feature.manyFiles` does not 
+help. Note that `git update-index --test-untracked-cache` tells me that 
+mtime does indeed work, and I've also manually stat'ed some folders 
+which `git status` re-stats on every run and I see that the modify time 
+is indeed a couple of hours ago, yet even when running `git status` 
+several times in a row it re-scans the entire folder every time.
 
-OK.
+So, what do I do about this? It honestly looks like a git bug to me, 
+maybe it silently fails to update the index with new timestamps because 
+it was initially created on Windows? But I have no clue how to narrow 
+this issue down further, so any ideas or suggestions would be appreciated!
+
+Regards,
+Roman Sandu
