@@ -1,107 +1,88 @@
-Received: from kitenet.net (kitenet.net [66.228.36.95])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587E8EAD5
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:41:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.228.36.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA1A15AD99
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724964105; cv=none; b=r0DF12znOTJr2tLxCKhFweumIcZZS07CCNT/ctK0s85NkmWCWlvU5mrmWNeyuCR4GUoZnN72OdXjL5+9KlmD7iU+H8TYaNKzLN5AIcjLbkz4GFGuxETfAtNHH2Q5lDzFI6H72K1pdG58dUSZGvdr4RykqMobK50izrcvPWdqC14=
+	t=1724964377; cv=none; b=Wr9oVMIl6KI7wH0Xks0ICQbI5+g2RXXWGBuOMyB6KIGOJh6mE5tcgm2bRoaIR/HxsorNpOl9/61YfwQf9fHEGR1jW6j+FFH6WXcZafG3unMIrxKHnqM3KZR0VmX29vuEL9lZVjDe4FodbJ7kTnlq2FNnU9JZ4zN5rnXWqprpoGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724964105; c=relaxed/simple;
-	bh=A9ftYNZ2uBdiGx8NC8l+zKcyLbP1qJZJHuKAK33kL70=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AxCdu4k8mwyXhNNS3X/99OILzmowzitBl/YqpSHFUBtkBT21j8ZM1uySNXr2YlzjuloLEyYVxKUjevxX/hND0ucB77Uejx/XyYzosHiuc1JK/+0IifznKWpIR7rvZNERgeLo92XcBWQiyzsutWFnBye4tofeRmDS5g0qtyhovVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name; spf=pass smtp.mailfrom=kitenet.net; dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b=ZBGxTw/Q; arc=none smtp.client-ip=66.228.36.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joeyh.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitenet.net
+	s=arc-20240116; t=1724964377; c=relaxed/simple;
+	bh=7f1IEEkjr2nwn4qUntYQN79BWnZRhodo82nlb+9LKLs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t949DeFHC//vtXwAgzeLoLuAn2UtssAby9EmrZKsMUyYnRz/ZKVWvGC/F8j/+tSR8LbUuVcff6ut0bcKUwnKxS6OE2vF7Jh68/gchagYWeung2SkxJS5sjv8gx+uhYKUOuw4YD6BjUQeEO8LWKr9qH6EX585Ei+FtGa025Ltt4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q5D1nvGd; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=joeyh.name header.i=@joeyh.name header.b="ZBGxTw/Q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=joeyh.name; s=mail;
-	t=1724963657; bh=A9ftYNZ2uBdiGx8NC8l+zKcyLbP1qJZJHuKAK33kL70=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZBGxTw/QpNkOwECdWfs/0vAhvMsLIJLQSFdMXCFJgsYPvDvxXTXJcNx0OlY01+Eex
-	 ba2LiS/szQPeH61vAH4cdRh0OSZGJgmEl3VH3XuiyLN/gvuYzNtjmn7j14/03DFr30
-	 13/IWGfO90UwREb2ptNjiA8JL/8U0AZX9QiCDC28=
-X-Question: 42
-Date: Thu, 29 Aug 2024 16:34:17 -0400
-From: Joey Hess <id@joeyh.name>
-To: phillip.wood@dunelm.org.uk
-Cc: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
-Subject: Re: Local git server can't serve https until repos owned by http,
- can't serve ssh unless repos owned by user after 2.45.1
-Message-ID: <ZtDbSRU68lgkjPw7@kitenet.net>
-References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
- <xmqq8qz376fb.fsf@gitster.g>
- <20240617211513.GM19642@kitsune.suse.cz>
- <20240625072419.GU19642@kitsune.suse.cz>
- <xmqqr0cl6lxl.fsf@gitster.g>
- <20240625183411.GW19642@kitsune.suse.cz>
- <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q5D1nvGd"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F48D35145;
+	Thu, 29 Aug 2024 16:46:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7f1IEEkjr2nwn4qUntYQN79BWnZRhodo82nlb+
+	9LKLs=; b=Q5D1nvGd5eZGjLG+FQwfkASVxyqsZ5FqP0OMMFMTAEcomVa2Nsevv/
+	xUcPclFnKfwGnk2Z9g2/ktxzDKtE42PTqc2EqaPd+26J62FTeWQvZjV2mXt9YV58
+	LYjBtjAGf5yYg7dbYxBudH9wVpOgoonFMy6FwQplNOtP13utQHqZw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0775F35144;
+	Thu, 29 Aug 2024 16:46:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DFB235142;
+	Thu, 29 Aug 2024 16:46:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] clean up some MAYBE_UNUSED cases
+In-Reply-To: <20240829200807.GA430283@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 29 Aug 2024 16:08:07 -0400")
+References: <20240829200807.GA430283@coredump.intra.peff.net>
+Date: Thu, 29 Aug 2024 13:46:12 -0700
+Message-ID: <xmqq34mnukff.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BHPKoHutNcwzBOAa"
-Content-Disposition: inline
-In-Reply-To: <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BB5E5826-6647-11EF-AF39-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
+Jeff King <peff@peff.net> writes:
 
---BHPKoHutNcwzBOAa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>   - builtin/gc.c's check_crontab_process(). The whole function is marked
+>     as MAYBE_UNUSED here, which is a little funny. It's because
+>     is_crontab_available() may or may not call us based on __APPLE__.
+>     Should we conditionally define the function, too, in that case? It
+>     would mean repeating the #ifdef. Alternatively, we could define it
+>     like this:
+>
+>       #ifdef __APPLE__
+>       static int check_crontab_process(const char *cmd UNUSED)
+>       {
+>               return 0;
+>       }
+>       #else
+>       static int check_crontab_process(const char *cmd UNUSED)
+>       {
+>               [...the real function...]
+>       }
+>       #endif
 
-Phillip Wood wrote:
-> That is indeed unexpected. I set up git-daemon on my laptop this morning =
-and
-> in order to get it to work one has to add "."  as well as the repository
-> paths one wants to serve to the list of safe directories. Clearly that is
-> undesirable and does not really feel any safer that using
-> "safe.directory=3D*".
+Or inline the body of check_crontab_process() at its sole callsite
+(the other side of "#ifdef APPLE") in is_crontab_available() and get
+rid of check_crontab_process().
 
-Having also now run into this new landmine, I don't
-see how safe.directory adds any security to git-daemon at all.
+>     But I think we're getting into "well, this is how I would have
+>     written it" territory, and it doesn't matter much either way in
+>     practice. It's probably better to just leave it alone.
 
-git-daemon is already told which directory contains the repositories
-to export, and they have to have git-daemon-export-ok in them as well.
-So the user has already specified what repositories it is safe for
-git-daemon to use.
-
-> What is happening is that git-daemon checks that the
-> repository path is listed as safe and then changes into that directory and
-> forks
->=20
-> 	git upload-pack --strict .
-
-git-daemon might as well run children with safe.directory=3D* itself.
-
---=20
-see shy jo
-
---BHPKoHutNcwzBOAa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmbQ20kACgkQ2xLbD/Bf
-jzjoBw/9GfBvqDL1NtfeuyIPFXe0aiCTlU3DSUfdW/eneBBtdD2iMbIyQIHougss
-1pAEIBz3YzCkCNH29+Fx102tpsbbWuMW/MFsOa76ZPdnwVKBzbBVsYaPrL3y8T7T
-Idg989JubQ3+0hnvlKWhqrOM19XAGAOayXFEEq7qvyOtNclwt8XzuOKPrh9JEHdr
-MW77MoSIorlsaviMx+7hCuppI9Up9FJz27E9IBsKk2wQz/m5Vvwtg7kJRRnDRWhV
-CxqLUb2fFz9RKyp0lxQ/Cvubkp3nzNJqw7Shwneh2pA/eH+nKJK9M6iNwL1n/hv+
-ymzR6S4q7+4lWIotXgZl9MumFZzTLC3RBnLlwSsCGWHxE/WaXHnyByd658RZ+UgH
-c/PR7t9RoDOuUxxgYxy4aSSacxmAI/kcrnu1KEFsYE+oE6oDHp68At/r2QRg0EBE
-2i9HNjYQYPX9ZuPuHITLlHdwBnlL+Q9fjrgOpTuZcOYqtgxKjdI9mIDkXn5Gptkz
-Ma3ntHS96IShicRa7E5an2RUsurBCAwbZNXwotENtGoAh3w13lpGkF5aW4ij/+os
-DHig7g84btHFF4dPx7m4p0ojDfz6Ln4pe+WL5HP6BgIg71jlEFMRmydU6qYx8sGa
-J8t1aBC0RoI0R6qiBNhwK0EAxSgblpMbawgL2gD/KPMZQBpfmSg=
-=GAJw
------END PGP SIGNATURE-----
-
---BHPKoHutNcwzBOAa--
+OK.
