@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E139414A0B2
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672A21311B5
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724962117; cv=none; b=QukXGQTMQtYU3IUfSjn9i/93oHMXbHlgNZgS3BFk93iB7aIXO+CAvsU8jYrXpr1PxIxVSeOtyU0tInoSKLMLPEl3QQRq+OYN5hGpS3IwFVcb4VKfStuFqi/89QNEBcrp/Ro/aZDWNh/4O7zHSOjvBEkLUGKJWFjXnvediVmnSXE=
+	t=1724962197; cv=none; b=NpZEt0OOes12mFEDauFcdwdJ/lE2OwZqo9U4TONla16fxxIYR9GCfwKYBdqH2NolohYiUi8WX4Han15cA75J7FGm5zZGeFw+snwUl8UXggIlH6dX6I7dEi8ExEuPtFV29PCG596/xM3Rr59TeUM4qT3dY1MYHDind5EaUdPH1eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724962117; c=relaxed/simple;
-	bh=suDSuXhF5ixCd75ic7rFNsxrAYUX4MzT5KDGqr33fMg=;
+	s=arc-20240116; t=1724962197; c=relaxed/simple;
+	bh=2sHOigIrCj+i20poQ8LwVPvxF3b64ZXQdJJon0jL7sc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IHJq4PfD2yXoiIhkq2TFB8cJA/WYUJziqFLlC5R6WQ1NlrtE4Vme7Fa9UQWPnpRJhVmOitmrR786iIKf2gmbPIwQD2TSoRlaJ6TGuU2QhrGxT/2w7StrKdV1b2xc9icnkJnVXo3EmMnxf0zldfCYf7dJjNFG1PE/bQyi7Gbsl+s=
+	 Content-Type:Content-Disposition:In-Reply-To; b=tfKcp7Ard1VbrnuPOOD8O7SJ0ExWGzeAEzboB29pXKzWuOhHV43Kl8yTjmQqrt6USIBpk4F5mO81msdPmnDkMs2WbzmzYwHiJ9kdQjvXa2vESF1Ox1EXarJR81YQthrc82ocsajDOqTmP9ZhckhCqxyxDv8DJcHyCZ0sIf2HUQI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 5937 invoked by uid 109); 29 Aug 2024 20:08:34 -0000
+Received: (qmail 5946 invoked by uid 109); 29 Aug 2024 20:09:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 20:08:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 20:09:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10740 invoked by uid 111); 29 Aug 2024 20:08:35 -0000
+Received: (qmail 10754 invoked by uid 111); 29 Aug 2024 20:09:55 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 16:08:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 16:09:55 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 29 Aug 2024 16:08:33 -0400
+Date: Thu, 29 Aug 2024 16:09:53 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] gc: drop MAYBE_UNUSED annotation from used parameter
-Message-ID: <20240829200833.GA432235@coredump.intra.peff.net>
+Subject: [PATCH 2/2] grep: prefer UNUSED to MAYBE_UNUSED for pcre allocators
+Message-ID: <20240829200953.GB432235@coredump.intra.peff.net>
 References: <20240829200807.GA430283@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,34 +39,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240829200807.GA430283@coredump.intra.peff.net>
 
-The "opts" parameter is always used, so marking it with MAYBE_UNUSED is
-just confusing.
+We prove custom malloc/free callbacks for the pcre library to use. Those
+take an extra "data" parameter, but we don't use it. Back when these
+were added in 513f2b0bbd (grep: make PCRE2 aware of custom allocator,
+2019-10-16), we only had MAYBE_UNUSED. But these days we have UNUSED,
+which we should prefer, as it will let the compiler inform us if the
+code changes to actually use the parameters.
 
-This annotation goes back to 41abfe15d9 (maintenance: add pack-refs
-task, 2021-02-09), when it really was unused. Back then we did not have
-the UNUSED macro that would complain if the code changed to use the
-parameter. So when we started using it in bfc2f9eb8e (builtin/gc:
-forward git-gc(1)'s `--auto` flag when packing refs, 2024-03-25), nobody
-noticed.
+I also moved the annotations to come after the variable name, which is
+how we typically spell it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/gc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Where "how we typically spell it" is "me", because I wrote 99% of the
+annotations we have. ;) I'm open to debate, but only if it is
+accompanied by a patch to change all of them to be consistent.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 0e361253e3..7dac971405 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -260,7 +260,7 @@ static int pack_refs_condition(UNUSED struct gc_config *cfg)
- 	return 1;
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 2f8b9553df..e5761426e4 100644
+--- a/grep.c
++++ b/grep.c
+@@ -245,7 +245,7 @@ static int is_fixed(const char *s, size_t len)
+ #ifdef USE_LIBPCRE2
+ #define GREP_PCRE2_DEBUG_MALLOC 0
+ 
+-static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_data)
++static void *pcre2_malloc(PCRE2_SIZE size, void *memory_data UNUSED)
+ {
+ 	void *pointer = malloc(size);
+ #if GREP_PCRE2_DEBUG_MALLOC
+@@ -255,7 +255,7 @@ static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_data)
+ 	return pointer;
  }
  
--static int maintenance_task_pack_refs(MAYBE_UNUSED struct maintenance_run_opts *opts,
-+static int maintenance_task_pack_refs(struct maintenance_run_opts *opts,
- 				      UNUSED struct gc_config *cfg)
+-static void pcre2_free(void *pointer, MAYBE_UNUSED void *memory_data)
++static void pcre2_free(void *pointer, void *memory_data UNUSED)
  {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
+ #if GREP_PCRE2_DEBUG_MALLOC
+ 	static int count = 1;
 -- 
 2.46.0.761.g18aface1ae
-
