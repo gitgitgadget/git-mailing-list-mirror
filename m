@@ -1,53 +1,53 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0DB1B4C3C
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 16:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509162BD08
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 16:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724947672; cv=none; b=bo1Qkp+DdHondHBb+hg/6lr/yzhTF3R0R0mGIuWLaxg2WwgptC36V9fQHBXXzcNYlzz9UE2wA5Gm7vJWIQ2eNfgWSR7y4nb8jkoBWoyEcIuUIxUWojZwCyFiznVA8mAat1qRn6XvD+0IsybCn0Knwrjec/8Fb3SqWBx7q162EFU=
+	t=1724947966; cv=none; b=PzsG5cDqnZao5tbBITfdpTgMXIAywz2pD2H4T2erWVoOFbswaO/BPF3Yl1k5KNv8zV2h7EuphKWZnl6UwtA07zQAm8ru1E+IWKB1jsyaJ3DbzkyskIaOYfd9hYKDhpgN38Zw80s/nV9uW3OB8u+SkltpQ07wUDY8JqVppw/yYW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724947672; c=relaxed/simple;
-	bh=wOVvSa6enEpFI7fcimVulZsJ+zQk4C7MZkq91se/mh8=;
+	s=arc-20240116; t=1724947966; c=relaxed/simple;
+	bh=LFLykA04dX/W9+2M+fVMoSKWF0Ebazj0RTqTVtkbRNE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uiLaF6uWpeS4/1AdTLFj21LTgAm5+vWXWErHkcYEjQ9tpRrwrK6onQyKbq3D92Ca/AgAMttcrpg/ZzEaYUfgczGol9KsAmeZcssxsY5ZAjc/SZavdjPu5L6QseQ/6+wzTbh/GYvJLKiJ2xTyB8yY6F10xx+h5q/P8JgyMelaE+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tC/PV9iK; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=r5KCQNm4s5X1KRvbhVI8IBYdef8JcwUZasnv5vJh004UicLvlZiHB+JyP/KXyBf0idx1j3l5qfveOWAnLyofeXtgXLAWAopvE8QGWrLbO7lsKL2nmJW1WJfy2FM8yHkmlBxP3HU9HhgiZkfL2kPRy5w/z85C+X4LRTLNGVLifZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mqYZM2DR; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tC/PV9iK"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mqYZM2DR"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B4C4A323DA;
-	Thu, 29 Aug 2024 12:07:49 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7EE45324ED;
+	Thu, 29 Aug 2024 12:12:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wOVvSa6enEpFI7fcimVulZsJ+zQk4C7MZkq91s
-	e/mh8=; b=tC/PV9iKV+Nn5BAj582OYx2rlLfN4rF/u575xOVnYTVxF3Iq07Su8n
-	qvKLpAwacZQrb/hc+4oXcb/tpDaJCbVTYhX8ZGYrEaQcpGO4eWiGzJMLCVz46avQ
-	EmFYrGvofIxcRl4+ab1In6CpNWvcDrPMBGiHoXTZyg0VsCCyTQ58M=
+	:content-type; s=sasl; bh=LFLykA04dX/W9+2M+fVMoSKWF0Ebazj0RTqTVt
+	kbRNE=; b=mqYZM2DRutx2TzvQcZjTX6cMsN+xSBROUGPh4h7rHI3/q+BuWPK2tD
+	V7q/qF5HTIv1lsOBGPTknbclZVf+vinA5l7xfQRmFEf/C3D6PRau36/T++CtK6HT
+	X37kyVAhgWzftnW+SRia8Z7KaqV4yrTXIqJBK3gHIwA+4UypJ23eM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ABFED323D9;
-	Thu, 29 Aug 2024 12:07:49 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 77519324EC;
+	Thu, 29 Aug 2024 12:12:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 208A0323D7;
-	Thu, 29 Aug 2024 12:07:49 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DCFB8324EB;
+	Thu, 29 Aug 2024 12:12:43 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon claes <toon@iotcl.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 14/22] shallow: fix leaking members of `struct
- shallow_info`
-In-Reply-To: <87ed67jtxy.fsf@iotcl.com> (Toon claes's message of "Thu, 29 Aug
-	2024 16:16:09 +0200")
-References: <cover.1724656120.git.ps@pks.im>
-	<2a63030ff09f938d705c117406b501ecf81f67de.1724656120.git.ps@pks.im>
-	<87ed67jtxy.fsf@iotcl.com>
-Date: Thu, 29 Aug 2024 09:07:47 -0700
-Message-ID: <xmqqr0a7wbvw.fsf@gitster.g>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] add ref content check for files backend
+In-Reply-To: <ZtCYMiOXVUM7SD3v@ArchLinux> (shejialuo@gmail.com's message of
+	"Thu, 29 Aug 2024 23:48:02 +0800")
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
+	<xmqqbk1cz69c.fsf@gitster.g>
+	<20240829040215.GA4054823@coredump.intra.peff.net>
+	<xmqq5xrjzzxt.fsf@gitster.g> <ZtCYMiOXVUM7SD3v@ArchLinux>
+Date: Thu, 29 Aug 2024 09:12:42 -0700
+Message-ID: <xmqqmskvwbnp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,29 +57,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- D6435596-6620-11EF-83DA-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ 85F5A700-6621-11EF-BD79-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Toon claes <toon@iotcl.com> writes:
+shejialuo <shejialuo@gmail.com> writes:
 
->>  void clear_shallow_info(struct shallow_info *info)
->>  {
->> +	if (info->used_shallow) {
->> +		for (size_t i = 0; i < info->shallow->nr; i++)
->> +			free(info->used_shallow[i]);
->> +		free(info->used_shallow);
->> +	}
->> +
->> +	free(info->need_reachability_test);
->> +	free(info->reachable);
->> +	free(info->shallow_ref);
->>  	free(info->ours);
->>  	free(info->theirs);
->>  }
+> From my current understanding, I think I need to rebase two patches
+> provided by your here:
 >
-> `prepare_shallow_info()`, which allocates new memory. So would it be
-> worth to rename this function to `release_shallow_info()`?
+>   https://lore.kernel.org/git/xmqqle0gzdyh.fsf_-_@gitster.g/
+>   https://lore.kernel.org/git/xmqqbk1cz69c.fsf@gitster.g/
 
-In the longer term in a separate "renaming everything" effort, yes.
-In the context of "plug many resource leaks" series, probably no.
-
-Thanks.
+They are to be squashed into your patch, "suggested edit" for your
+changes, not "to be rebased".  In other words, we do not want to see
+a patch (from your v2 as-is) to create problems and then another
+patch (taken from one of these links) applied on top to remedy them.
+We instead want to see a patch (start from your v2 but with the
+changes from these links) that does not introduce problems in the
+first place.
