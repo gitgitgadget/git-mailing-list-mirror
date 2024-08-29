@@ -1,110 +1,82 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219FC14A09E
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 18:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0361B6528
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 18:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724954788; cv=none; b=AdjcqGLzkgd6G5Jpxl9HEbLkceo9DMYnfcUSfGXXtquDIBnZHre+5g2GVpocUriKaV8WeZqHSUnFUd0t51+2NCU9T1DtljKQ/5QvBnlSyR7EQ6r1FXc0ylwdz7naWV7R7KrgPOHp8a5dzyMPm2e641QOZI7sifhy6lzIj8RfG2A=
+	t=1724955050; cv=none; b=ZaD7P5WkB3R9yP9YneynV412sW2Eq6GyzP50vzYHCtDZbvWPWgpAcC6NrVLSTQs3DwouhsS0NE74ly+iihpOjmai3NNiQXkhetEY1P/b/0ebLGteXz3DoJMY3QStdgoxe+griS8p4KDgWN/DJewjuqZCZ+7XjJq+lCw4E2ePQxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724954788; c=relaxed/simple;
-	bh=hmnTkAAHqhrJ+WPpj4F5xmR7h39on3oRfk3bK9f+kMg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oYGMhmFuDp+BOLT3HCzQpTTso7HghOJSf8+nb8peZefT4RNAk/z40n6MhKzyoUMLutN7H/keAVjS8f4oieAzf/k3EfVACZrRwArhE0onxXHsJJZypmnYJgy6I7G1Z70nf+Wt6kBzTGuQq0iDEqXJsJkqdlVTiCmXHLjasnAzZKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=b8NgXgAT; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b8NgXgAT"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5B7824113;
-	Thu, 29 Aug 2024 14:06:23 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hmnTkAAHqhrJ+WPpj4F5xmR7h39on3oRfk3bK9
-	f+kMg=; b=b8NgXgATzbdz5gjp+Nt7H7tPUCzsmhBrUhcd+qYXSt0UBvHVB2r/kJ
-	X0Ugnu83i8tQ5IJteYb71OfRSU2s4vIZurWt+73+cWmZgH16JxKHRFLPFhPv4rQY
-	0qdLAhs1ZKkuq4QMAqtTK0+9cCcmdTs0sXuI3rQqaWWqdoOu5sZz0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE89824112;
-	Thu, 29 Aug 2024 14:06:23 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 559CF24111;
-	Thu, 29 Aug 2024 14:06:23 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 8/6] CodingGuidelines: also mention MAYBE_UNUSED
-In-Reply-To: <20240829175215.GA415423@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 29 Aug 2024 13:52:15 -0400")
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
-	<xmqqbk1cz69c.fsf@gitster.g>
-	<20240829040215.GA4054823@coredump.intra.peff.net>
-	<xmqqseunxtks.fsf_-_@gitster.g>
-	<20240829175215.GA415423@coredump.intra.peff.net>
-Date: Thu, 29 Aug 2024 11:06:22 -0700
-Message-ID: <xmqq8qwfw6e9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724955050; c=relaxed/simple;
+	bh=gSrbWrZsocZ7/4n2HcOV6QXpU2not6uTZ2h06SEqkqY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UlpWr6U8RyreUJND23BT2EijScx8Ad4uncPesTeoyoWzySsWe3Nx0XrrzajS/pxtLS2pfkU8azl8/yfU2JmV3DCwp6pYPsXAjCzEh2vd20nJgCRPmglsIZAH7qUxk0ndZfDi/H4nUeYAn+Ah+kVkgOTHuAWakagE5MOPOqfqNZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-44fe4b1dd19so1009111cf.0
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 11:10:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724955047; x=1725559847;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gSrbWrZsocZ7/4n2HcOV6QXpU2not6uTZ2h06SEqkqY=;
+        b=m5g4WF5gTTg0vdibvrHw1GXOT/jGcuOKWynBkXmQQ0HhB64+Mi9qQ4kC+rUEmIZMtA
+         fdTXMCqBQJfHQbLi5kp27bidJYjjdNaiBt8TkMX8+zh6ueTJl5e0jUii9beCA8CNl0hl
+         5GAuwug0iYFBezkx3nlcriI+NQDQXK5ejKnN7AqGgYdzXN1av188AbMlae/445w9/oYJ
+         ZZUPt2l0Xfv+3TbvN+NKJswxoSv+Wy4IwzHMKOyqfx2poUdlKCJloVwRnRKIIbp0LBFk
+         vS8c3VqvRjAIUXpT0dUEkalPKq7A+9HVjBpoOu6B78xKeKAKiae3ncfnE6IBhNfm6Yrc
+         GI4g==
+X-Forwarded-Encrypted: i=1; AJvYcCU0zrDG5A6XiTQ9e5sa3KezuRmCI61DfMJdWfgR5o4bWqZgvEiFUiNIEQJmuG25JpdMs0Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YykSGaT2cRapPnbX4sUUc3us8/vsLgC2WXZQhwMpfruvxosMdmr
+	Sf+aNFowHNkFvfoSamLwoDyK22hgu90qusfi4JljMOPJ9DhpwgSgNTZHeC9R26bWHdWFRtp1Kyu
+	DZ86G4JzliRVrtlYkmgu0ostDcho=
+X-Google-Smtp-Source: AGHT+IHpoS9QewW3ErhM68iXdxmR+Wac7wEMSIHLj4ie0oTsRJmtYygA1ffMFalT94A/ob822Nh9zjmNTs4dGnYsf/c=
+X-Received: by 2002:a05:6214:2481:b0:6b7:7832:2211 with SMTP id
+ 6a1803df08f44-6c33e614be4mr23952316d6.3.1724955047462; Thu, 29 Aug 2024
+ 11:10:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 66AA4468-6631-11EF-85B2-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+ <20240829091625.41297-2-ericsunshine@charter.net> <ZtBHbftK7vdTEz93@tanuki> <20240829170712.GA405209@coredump.intra.peff.net>
+In-Reply-To: <20240829170712.GA405209@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 29 Aug 2024 14:10:36 -0400
+Message-ID: <CAPig+cSWoQ8pkdy3gyRQFUwoQ5ZytK9HjobHd3EJxdFRJhDWxQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] chainlint: make error messages self-explanatory
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
->> +/*
->> + * MAYBE_UNUSED marks a function parameter that may be unused, but
->> + * whose use is not an error.
->> + *
->> + * Depending on a configuration, all uses of a function parameter may
->> + * become #ifdef'ed away.  Marking such a parameter with UNUSED would
->> + * give a warning in a compilation where the parameter is indeed used,
->> + * and not marking such a parameter would give a warning in a
->> + * compilation where the parameter is unused.
->> + */
->>  #define MAYBE_UNUSED __attribute__((__unused__))
+On Thu, Aug 29, 2024 at 1:07=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 29, 2024 at 12:03:33PM +0200, Patrick Steinhardt wrote:
+> > I find the resulting error messages a bit confusing: to me it reads as
+> > if "ERR" is missing the ampersands. Is it actually useful to have the
+> > ERR prefix in the first place? We do not output anything but errors, so
+> > it feels somewhat redundant.
 >
-> This is all good as pertains to function parameters. But the original
-> reason we added MAYBE_UNUSED was actually for static functions that were
-> auto-generated by the commit-slab macros. Saying "...marks a function
-> parameter" implies to me that it's the only use. I don't know if we want
-> to be more expansive here or not. Adding auto-generated macro functions
-> should be quite a rarity, I'd think.
+> I wonder if coloring "ERR" differently, or perhaps even adding a colon,
+> like "ERR: ", would make it stand out more.
 
-True.  You can annotate types, variables, and functions with the
-attributes as well.  How about saying something like this
+I considered both of these ideas. Coloring "ERR" was dismissed almost
+immediately due to the (admittedly tiny) bit of extra complexity and
+the minimal color palette available (and since I couldn't trust myself
+to not waste an inordinate amount of time trying to arrive at the
+perfect color combination).
 
-    MAYBE_UNUSED marks a function parameter that may be unused but
-    whose use is not an error.  It also can be applied to functions,
-    types and variables.
+My first draft did place a colon after "ERR", but it seemed
+unnecessarily noisy, so I dropped it. However, I don't feel overly
+strongly about it and can add it back if people think it would be
+helpful.
 
-and then keep the explanation of why you may want to use the maybe-
-variant as-is, using a function parameter as an example?  Or I could
-rewrite "parameter" and "function parameter" in it with "thing"
-(with double quotes around), like:
+> FWIW, I find the existing error messages pretty readable, but that is
+> probably a sign that my mind has been poisoned by using chainlint too
+> much already. ;)
 
-    Depending on a configuration, all uses of a "thing" may become
-    #ifdef'ed away....
-
-Unlike the use of deprecated attribute, our definition of
-MAYBE_UNUSED is not guarded with anything.  Shouldn't we at least do
-
-    #if defined(__GNUC__)
-    #define MAYBE_UNUSED __attribute__((__unused__))
-    #else
-    #define MAYBE_UNUSED /* noop */
-    #endif
-
-or something, by the way?
-
-Thanks.
+Goal achieved.
