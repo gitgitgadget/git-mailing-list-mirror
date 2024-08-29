@@ -1,84 +1,119 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672A21311B5
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254C31BA882
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 20:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724962197; cv=none; b=NpZEt0OOes12mFEDauFcdwdJ/lE2OwZqo9U4TONla16fxxIYR9GCfwKYBdqH2NolohYiUi8WX4Han15cA75J7FGm5zZGeFw+snwUl8UXggIlH6dX6I7dEi8ExEuPtFV29PCG596/xM3Rr59TeUM4qT3dY1MYHDind5EaUdPH1eQ=
+	t=1724962602; cv=none; b=tMgQuUJK2RhD+UoOEbdEBtEOm3fJnm9JLwQqm78OMZR4yn39RrEnldCU2umbyI5NqT6VzPBNa3a69IkulZIO23K7LcmZ6nxOgiHK0mR2L63et4REd8su2VRTV8xMSvqz+pyBCs6BHGzSSm2KTEcmu1lCTkOMxSwQHLuHPX7VGQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724962197; c=relaxed/simple;
-	bh=2sHOigIrCj+i20poQ8LwVPvxF3b64ZXQdJJon0jL7sc=;
+	s=arc-20240116; t=1724962602; c=relaxed/simple;
+	bh=DvgjveYipN7E0GW+g52fsVYRvu9x3C8Wqjb4SCrfbEQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tfKcp7Ard1VbrnuPOOD8O7SJ0ExWGzeAEzboB29pXKzWuOhHV43Kl8yTjmQqrt6USIBpk4F5mO81msdPmnDkMs2WbzmzYwHiJ9kdQjvXa2vESF1Ox1EXarJR81YQthrc82ocsajDOqTmP9ZhckhCqxyxDv8DJcHyCZ0sIf2HUQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 5946 invoked by uid 109); 29 Aug 2024 20:09:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 20:09:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10754 invoked by uid 111); 29 Aug 2024 20:09:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 16:09:55 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 29 Aug 2024 16:09:53 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] grep: prefer UNUSED to MAYBE_UNUSED for pcre allocators
-Message-ID: <20240829200953.GB432235@coredump.intra.peff.net>
-References: <20240829200807.GA430283@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=POEf5xNT9hJNcfgJYE5Bm6/2rb7vmyp9OIm1X2FpdvpkCiHGZB1jRAiWvVgzKwkOlH6JDKDu4Toajg0NMZD0g/u6FsRhWxZBRwqoNhd9hrGF8Lc9uLIb2fcQMEQ9xFenPLkc6MDJNP3Vo9r8lMkLvIYRjyysfx5jifvwI16gKao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xbse/aAf; arc=none smtp.client-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xbse/aAf"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5df9a9f7fe2so656575eaf.2
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 13:16:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724962600; x=1725567400; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BM2qkjtQb29LYYbG9pm/9GIW2uINuY0JJxpA9FxLCk0=;
+        b=Xbse/aAflfPwDwdzoi8FVBV25qeKurqQOH8DW5J0hI+5mjFoSkaLiUamTyrvwQIIyn
+         tEqn3zODLJoEppQ6DB13o8QnZjps1cEECcX8MYXQ1o/Cn8eux8QCO5ePgD7cf8C/Sz3e
+         ervm5BOfJajU3G8N9cSBzElJhAzedh8Sqb6j11pP8DDadMXnGo2eGmUU+z/XJuFd5FnE
+         gtC5jtle3VEughi2X5YcCfNTJ3qT2PZCutxHFPhxbp1xwDxTZWEZZI5azF6RuxbhpoXQ
+         afWFRRenRNSSKcXRYOZbTwzzVWQY+xYj47lMN51VF/TZ/1NHH4W3hRq6ipnk4NcHIUnu
+         ztPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724962600; x=1725567400;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BM2qkjtQb29LYYbG9pm/9GIW2uINuY0JJxpA9FxLCk0=;
+        b=aZnAI5EprtyqbAyAidRndPAsqLPeOYeRxw7i5+tB0h8CF0X1ZOTY/rFnmVdt4J4bIZ
+         BDkIDC1/6dU4xEyt2Ej3oRTwaIG/tJWk0mPMka4NdzsYU1TdhUVin+iMElfYLwZR7ndx
+         hZiL4yixjCicYtqJA/jzz5SmXzmrklvOZl0oXdH9KncpOKJ+GlSr+wFDWkDnNN6Mm4Il
+         YeAWTMj99ak1lMD9XkmYI0v5Fus1OY5ENU4dnyudA6q045aCm/hOZV9WNVD6r9Av+LH2
+         yxhLoI7RCe9CXaVjpgsWB4H+UYEPxHOVLf7u/ZsYgmVfpswE/uLuQ7N0jbh5/WEyd7Zd
+         dEVg==
+X-Gm-Message-State: AOJu0YxhQVyhO1NqEhrA2Wspk8FQjb4GzN94UjNuMuMyJCW8xWG9E2pv
+	pf9C1lXdMueClt06YWCaJ2HJib6F5zhOXpr4ey6zDn6HFvkGZbZW1XQdyHzt
+X-Google-Smtp-Source: AGHT+IEP9Md+zyDj+GiE82fPjhHQm0fHRJBDmFd7UnmvWCXyj2i208K0DmHrdX2ae9jnQzAX6qWt/A==
+X-Received: by 2002:a05:6870:b52c:b0:270:172c:32ae with SMTP id 586e51a60fabf-277902e3bd8mr4629358fac.32.1724962600042;
+        Thu, 29 Aug 2024 13:16:40 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70f671cf757sm61601a34.81.2024.08.29.13.16.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 13:16:39 -0700 (PDT)
+Date: Thu, 29 Aug 2024 15:15:36 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH 01/21] environment: make `get_git_dir()` accept a
+ repository
+Message-ID: <3fvisdomxvcepnfbx2aruzyhqj2ntfjaapk7escwhylxxuq7r4@inhrmm26blg2>
+References: <cover.1724923648.git.ps@pks.im>
+ <0fe3e3e1cccf2eae7d81ccecf431da623b39fa79.1724923648.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240829200807.GA430283@coredump.intra.peff.net>
+In-Reply-To: <0fe3e3e1cccf2eae7d81ccecf431da623b39fa79.1724923648.git.ps@pks.im>
 
-We prove custom malloc/free callbacks for the pcre library to use. Those
-take an extra "data" parameter, but we don't use it. Back when these
-were added in 513f2b0bbd (grep: make PCRE2 aware of custom allocator,
-2019-10-16), we only had MAYBE_UNUSED. But these days we have UNUSED,
-which we should prefer, as it will let the compiler inform us if the
-code changes to actually use the parameters.
+On 24/08/29 11:38AM, Patrick Steinhardt wrote:
+> The `get_git_dir()` function retrieves the path to the Git directory for
+> `the_repository`. Make it accept a `struct repository` such that it can
+> work on arbitrary repositories and make it part of the repository
+> subsystem. This reduces our reliance on `the_repository` and clarifies
+> scope.
 
-I also moved the annotations to come after the variable name, which is
-how we typically spell it.
+Seems sensible to me. We are simply making it so `the_repository` is no
+longer implicit to the function.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Where "how we typically spell it" is "me", because I wrote 99% of the
-annotations we have. ;) I'm open to debate, but only if it is
-accompanied by a patch to change all of them to be consistent.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -407,7 +407,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  
+>  		discard_index(the_repository->index);
+>  		read_index_from(the_repository->index, get_lock_file_path(&index_lock),
+> -				get_git_dir());
+> +				repo_get_git_dir(the_repository));
 
- grep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Now that the `repo_get_git_dir()` function has been moved to
+"repository.h" should we also directly include this header in the c
+file? Or is the implicit reference sufficent? From our coding guidelines
+is seems we preferred to be direct.
 
-diff --git a/grep.c b/grep.c
-index 2f8b9553df..e5761426e4 100644
---- a/grep.c
-+++ b/grep.c
-@@ -245,7 +245,7 @@ static int is_fixed(const char *s, size_t len)
- #ifdef USE_LIBPCRE2
- #define GREP_PCRE2_DEBUG_MALLOC 0
- 
--static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_data)
-+static void *pcre2_malloc(PCRE2_SIZE size, void *memory_data UNUSED)
- {
- 	void *pointer = malloc(size);
- #if GREP_PCRE2_DEBUG_MALLOC
-@@ -255,7 +255,7 @@ static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_data)
- 	return pointer;
- }
- 
--static void pcre2_free(void *pointer, MAYBE_UNUSED void *memory_data)
-+static void pcre2_free(void *pointer, void *memory_data UNUSED)
- {
- #if GREP_PCRE2_DEBUG_MALLOC
- 	static int count = 1;
--- 
-2.46.0.761.g18aface1ae
+It looks like there are several other hunks missing direct references to
+"repository.h" too.
+
+[snip]
+> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> index 1593713f4cb..c54e736716a 100644
+> --- a/builtin/fsmonitor--daemon.c
+> +++ b/builtin/fsmonitor--daemon.c
+> @@ -1311,7 +1311,8 @@ static int fsmonitor_run_daemon(void)
+>  	strbuf_addstr(&state.path_gitdir_watch, "/.git");
+>  	if (!is_directory(state.path_gitdir_watch.buf)) {
+>  		strbuf_reset(&state.path_gitdir_watch);
+> -		strbuf_addstr(&state.path_gitdir_watch, absolute_path(get_git_dir()));
+> +		strbuf_addstr(&state.path_gitdir_watch,
+> +			      absolute_path(repo_get_git_dir(the_repository)));
+
+In this c file, now that `repo_get_git_dir()` lives in "repository.h",
+is the "environment.h" header file needed anymore?
+
+-Justin
