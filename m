@@ -1,135 +1,117 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8CE18CC1A
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 15:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0CC1B3B08
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 15:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724945958; cv=none; b=i93mknXduznRLj9ZgkDENNDU4XgBskTZMgIjz7oSSymcaPQQurSLqPE2lCAAiZE4Z4X5Qn78Fmfg//kcLy6NtnkFOO/0DLSrUFmM4+bOuFHF9WIpaKoiVDFAXvyJ5XNIaNdJBv4Z13V71PFxpKzRQHSVuKQ0U+K30QwDlCdG1G0=
+	t=1724946431; cv=none; b=aeJowXBQ3mVtTd6jfJrCMv2otiXdjabs5JS1uiaJFpFhw7+BAXSHlcHxpoq+kGPMEmIYYOU4mt8Tl2gvMh6RBHp4rMVo6JGvd9JjdeZC45PZ47+M060QQuRg4xGw2iD212r4eaFzaCrIv2ABEi9WrHWgS2SImMrSqENkACQsCck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724945958; c=relaxed/simple;
-	bh=npqGDPM21QdCYDZ9wNCafe2SxZWACgU52jKqJEN3QBs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WX58RTfbtCeMVvMONn1THtpOOOfNW57OzeP+rFNXyL6PRva+RtaxHuH47+MMUOntfjvxvXRm7Cp/L2WIZJXvufeMINBO0QBKbx5+34Ta2XAkS8eWyuokeRNSNwRCyzWWu+tZrEA+hyYVBkODvc+LTHGnmO+FPfrE5OoN4pXT9mM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k3nAvtIV; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724946431; c=relaxed/simple;
+	bh=ZO31ubHt9mBJ2EULo+Nz9kS39JEuALOkXntyFMZh1gs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RkSGhsYporJButdPjbkOytLyYmOETmuc4h5dmo9G58ZBlQk8mD/50u9/TJHyNVXZjzaU6UJkhdTCk0BPijJ7GTvwvDS6QhPF4vKbe1tlcVbtbA9k9PRuBqTDxQ6JhVfYqya4g54oCsp32ZURxXNZey7J5fTLHupqq2zyvS5qfAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sk7parMj; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k3nAvtIV"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 54D6831C2F;
-	Thu, 29 Aug 2024 11:39:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=npqGDPM21QdCYDZ9wNCafe2SxZWACgU52jKqJE
-	N3QBs=; b=k3nAvtIViqLeoI6n/D8n6nM7ZukOoXvd8B28bIcleGnuOE+HJTf7/C
-	JGixtG3TuWrFEEr9WAuYok0fU/IUfCr7DD7MWNi3ZhUFd8okjaFVhKlIHkbvl43l
-	odVy8ndMTy+sKHUclpwZalYvcW3j+9w9EOkCPhz1N64J31jHSgZjg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A68C31C2E;
-	Thu, 29 Aug 2024 11:39:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC56A31C2D;
-	Thu, 29 Aug 2024 11:39:14 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <ericsunshine@charter.net>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] chainlint: make error messages self-explanatory
-In-Reply-To: <20240829091625.41297-2-ericsunshine@charter.net> (Eric
-	Sunshine's message of "Thu, 29 Aug 2024 05:16:24 -0400")
-References: <20240829091625.41297-1-ericsunshine@charter.net>
-	<20240829091625.41297-2-ericsunshine@charter.net>
-Date: Thu, 29 Aug 2024 08:39:13 -0700
-Message-ID: <xmqq7cbzxrry.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sk7parMj"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7cd9e634ea9so541773a12.0
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 08:47:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724946429; x=1725551229; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=19pOYqOl3I9870eXelgBzJkHhlo9o66XSetrRQMeIhw=;
+        b=Sk7parMjhv87/r0VhmxIczcKcoOjBywahLq7x+zHoah5qEp/l87667I6UyM+gFrK13
+         jt9CBU1HUACYndY6bMmz8ySKS6/flZtBzKjEu60XrO7/oum1U4qkPoc6TbLpVL70WyZh
+         cmL/tN01eZgsBbUx6PxFp9NgcEeJGtjNtONxbMyb1QVSdBAiCwQf6eo/cSiTTp9T9rig
+         xGpY0AdCxQ/gY99kZyA+HfVYkB8IPKIWVItphvNkLOOClwL1tCur4MyCcJskXzfbr3/2
+         YJ7yOHdNoP5+RX25A7UI/4pLdpXMVPfnlI40xrLCgqoEeYS8ouMl/0EUEIn0O0HDVrT7
+         2xAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724946429; x=1725551229;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=19pOYqOl3I9870eXelgBzJkHhlo9o66XSetrRQMeIhw=;
+        b=bZ/qVU5xIoQrCuu08swEZ/KJUpl6/+bLgwtBso2e3K/arBcbe7lpoSvz5SB4c+Z6KC
+         NAZ5tdem1EAUw5QIsZglLxuHbNdZEHtgy7bWS6O+kEv4qC5Vl7VkMkSmq/HIRZkq3EDz
+         rh0vuI5SR5TkFnQPvNvqUoIINopqBEDINg03D+l+MAl2j/LCw6Iku/nDbgCpSgB12VHW
+         3BEI1Qqwuzx1DHLwkQwCgoRR3BO3tZ9/wG7IWoxSqx5Qbfb6LRBPt2zG96HYxZf/1zy5
+         Ziwd8YeFDA3jL73KiKmSJUTtSNTNLXWA50kLVGc+5X6122XO3wDA+R63hH/552alpBlw
+         jlZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUBhSjblAx7H/EcPK46vHkaZi8diOpW1v1adAQ6Ddxv5w/rIRpI+UqJ1fuXjd7qzlGXfp4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YySq/w3TN9dPRJXxsLvvU3k1+nGRtkk9r/TcHDUeiFs8MeUGY3/
+	JRPqs1y+Y2G/XudJir9fPSJXg7Az23B5x2OzJaSBSipGiLgQbbGc
+X-Google-Smtp-Source: AGHT+IFTp1OItMbquVQPUSzIgMds3tzlFE6lvcgiLCboythY/pwWHnhyo7rw/paUKg/R1cWBEmz7Ug==
+X-Received: by 2002:a05:6a21:c8c:b0:1c6:b0cc:c448 with SMTP id adf61e73a8af0-1cce10b34e8mr2081267637.43.1724946428982;
+        Thu, 29 Aug 2024 08:47:08 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d22e7821cesm1380779a12.55.2024.08.29.08.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 08:47:08 -0700 (PDT)
+Date: Thu, 29 Aug 2024 23:48:02 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] add ref content check for files backend
+Message-ID: <ZtCYMiOXVUM7SD3v@ArchLinux>
+References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
+ <Zs348uXMBdCuwF-2@ArchLinux>
+ <xmqqbk1cz69c.fsf@gitster.g>
+ <20240829040215.GA4054823@coredump.intra.peff.net>
+ <xmqq5xrjzzxt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D862B686-661C-11EF-842D-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5xrjzzxt.fsf@gitster.g>
 
-Eric Sunshine <ericsunshine@charter.net> writes:
-
-> "?!LOOP?!" case is particularly serious since it is likely that some
-> newcomers are unaware that shell loops do not terminate automatically
-> upon error, and it is more difficult for a newcomer to figure out how to
-> correct the problem by examining surrounding code since `|| return 1`
-> appears in test scrips relatively infrequently (compared, for instance,
-> with &&-chaining).
-
-"scrips" -> "scripts"
-
-I'd prefer to see "some newcomes are unaware that" part rewritten
-and toned down, as it is not our primary business to help total
-newbies to learn shells, it certainly is not what the chain lint
-checker should bend over backwards to do.
-
-    ... particularly serious, as it does not convey that returning
-    control with "|| return 1" (or "|| exit 1" from a subshell)
-    immediately after we detect an error is the canonical way we
-    chose in this project to handle errors in a loop.  Because it
-    happens relatively infrequently, this norm is harder to figure
-    out for a new person on their own than other patterns (like
-    &&-chaining).
-
-> Address these shortcomings by emitting human-consumable messages which
-> both explain the problem and give a strong hint about how to correct it.
-
-"consumable" -> "readable".
-
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ...
->  # Input arguments are pathnames of shell scripts containing test definitions,
->  # or globs referencing a collection of scripts. For each problem discovered,
->  # the pathname of the script containing the test is printed along with the test
-> -# name and the test body with a `?!FOO?!` annotation at the location of each
-> +# name and the test body with a `?!ERR?!` annotation at the location of each
->  # detected problem, where "FOO" is a tag such as "AMP" which indicates a broken
-
-"FOO" -> "ERR"?
-
-> @@ -619,6 +623,15 @@ sub unwrap {
->  	return $s
->  }
+On Wed, Aug 28, 2024 at 09:59:58PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > As an aside, I wonder if we should consider deprecating and eventually
+> > dropping support for core.prefersymlinkrefs. I can't think of a reason
+> > anybody would want to use it, and of course it makes no sense as we move
+> > on to alternate backends like reftables.
+> 
+> Yup.  Perhaps add an entry or two to BreakingChanges document?
+> 
+>  Documentation/BreakingChanges.txt | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git c/Documentation/BreakingChanges.txt w/Documentation/BreakingChanges.txt
+> index 0532bfcf7f..2a85740f3c 100644
+> --- c/Documentation/BreakingChanges.txt
+> +++ w/Documentation/BreakingChanges.txt
+> @@ -115,6 +115,12 @@ info/grafts as outdated, 2014-03-05) and will be removed.
+>  +
+>  Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
 >  
-> +sub format_problem {
-> +	local $_ = shift;
-> +	/^AMP$/ && return "missing '&&'";
-> +	/^LOOPRETURN$/ && return "missing '|| return 1'";
-> +	/^LOOPEXIT$/ && return "missing '|| exit 1'";
-> +	/^HEREDOC$/ && return 'unclosed heredoc';
-> +	die("unrecognized problem type '$_'\n");
-> +}
+> +* Support for core.prefersymlinkrefs will be dropped.  Support for
+> +  existing repositories that use symbolic links to represent a
+> +  symbolic ref may or may not be dropped.
+> ++
+> +Cf. <20240829040215.GA4054823@coredump.intra.peff.net>
 > +
->  sub check_test {
->  	my $self = shift @_;
->  	my $title = unwrap(shift @_);
-> @@ -641,7 +654,8 @@ sub check_test {
->  	for (sort {$a->[1]->[2] <=> $b->[1]->[2]} @$problems) {
->  		my ($label, $token) = @$_;
->  		my $pos = $token->[2];
-> -		$checked .= substr($body, $start, $pos - $start) . " ?!$label?! ";
-> +		my $err = format_problem($label, $token);
-> +		$checked .= substr($body, $start, $pos - $start) . " ?!ERR $err?! ";
->  		$start = $pos;
->  	}
->  	$checked .= substr($body, $start);
+>  == Superseded features that will not be deprecated
+>  
+>  Some features have gained newer replacements that aim to improve the design in
 
-With the hunks omitted before the above two that let us tell between
-RETURN vs EXIT, the above two makes the problems much easier to
-read.
+From my current understanding, I think I need to rebase two patches
+provided by your here:
 
-All the "examples" (self tests) and changes to them looked sensible.
+  https://lore.kernel.org/git/xmqqle0gzdyh.fsf_-_@gitster.g/
+  https://lore.kernel.org/git/xmqqbk1cz69c.fsf@gitster.g/
 
-Thanks.
+I think in this patch, we just info the user that we will drop
+"core.prefersymlinkrefs" later, so I should not concern about this
+patch and also the [PATCH 8/6].
+
+Thanks,
+Jialuo
