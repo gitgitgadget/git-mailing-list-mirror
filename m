@@ -1,99 +1,76 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1E7156F41
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 23:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540CC156F41
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 23:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724973141; cv=none; b=NEueHqcuN5K6LATBS/Ervi6ztCYI/8fRmGs/cn9CdUdj9xynIHZDe+vMfBsokrRB4nzpKT1YP6aCTH/KakdDJR4Ovk2sVyFWbuVKHHFC4CKQQtEyJF15L2yL1FChbxB5v5UDQpC/ptVaGTWiVBwn1Y9QPZHM9K+lVO45AkCYU+8=
+	t=1724973198; cv=none; b=qHhMvLckCUFg5W7x47e3QUYPfskz/M5y27bq2p7y+NH0I2IPVFkkbmbg/8ciUr5zynFgxmJw+kbNYucycpobLHSurGvh3op9uslvEEWiLoNz0/PlLekrcLbQK8OF76+xV36CddnEPI0nmcS8qALgvwZOCysOvEg3DOtAAYE46Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724973141; c=relaxed/simple;
-	bh=A0y6FPZPP1ej0fHKwyrg01nfoadYsxFZuD06aER8VAU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aicm8TkKA30v1+b5TofoFgLQDmL2nSxWkrzDmtxRUa4G9dCJRG5F/Osl1wg1icQqP0UIcT6pyq9K3wPLLzrDpPdPTEGcO//0jQDtXqBhBMMEfZJpBlAPwVaDkbeK60nPChJ6u1tQDftCE0DNIWvSuuwP5MzDmjQ8U3oDInCUJdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPPbdgoQ; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724973198; c=relaxed/simple;
+	bh=gMS40Bsydreyl/2To6CI2IXCIzehxFfZOyLv0ADWUbo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ICwzWSlAIKzhiq/Z2i3tssQaEl8Vce3OzzeWFFCa88WjnP7OQZpFJO7Mq9Pi+la4UFUjIEmOn9S+hB9LYC3vxOfdGRoZbKbGub/BPOfexHyyvr8QO/XEpZQ28J7ZmiyBHYugn5PR/ZlJwUTWBRrv9K4AQyi5ws9k+thnLCFf/Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VNXn2NJn; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPPbdgoQ"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6b47ff8a59aso11431437b3.2
-        for <git@vger.kernel.org>; Thu, 29 Aug 2024 16:12:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724973138; x=1725577938; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W5Qeu9z5n5Ko3HAyOC7ABx3S4C5QwCdSt+sJo+iBobI=;
-        b=WPPbdgoQsMgYyfBXX7gsQPAeH0ce4XWlac7qUxSBe9ca2Fv2ifs5ZXWi/3fxpBILAm
-         n0Ku4FmVsmDMNz3+5cuxDqokJNNuD7cHdT220BxDj+eG8yUDau1M00/RRyvZuKSH25T8
-         KfmsdRmBo0mNL/tPRq7F6aWAeMrv5gnm2Md2O36RuuBHbt896VGhiUuVNkMyarYFe9vn
-         wHQwTtrl7sjFc8MBGsh05UVFZrkPyFo4OmgwKMvvLTz5klVUmzW+DQTm79R7+5ba+aWd
-         tloz+v4ifdxkTX6E8XztfHtmCh/uDiNPCKObfea7qBxwEjYvH6BuP9QpYZeuv4/bBB/q
-         0TGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724973138; x=1725577938;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W5Qeu9z5n5Ko3HAyOC7ABx3S4C5QwCdSt+sJo+iBobI=;
-        b=BAcmIRev1veZUX+qHBkDMdoGd1pCoIpT2FDiTCwWOsr0D85JwLl2try1zPxz2sux1/
-         42bR9hKDOl6lIOQ/BsK3W2KH+YT7MH7i784In1LPhpEoi6fwqb8LTmcKdYVWYdK2u6Yf
-         bG7BTJQQdrf1mg4g6A8m6B7nDWICagsIhB8XDcka3NsU4q3X8zuG1IqRHE3tW/qj3ybV
-         Bn6BD6qeQoQjOTLBN5MBbHu8rQzwcaGysmCQyPefVHdqjFiajeRlWX9COi1UV6BPJg7/
-         u9gwUeOnNzOibQZFreW66yal92ljrYbU1az0w1P4lDMArOobN0XEd/VcwM3iOR3toBLM
-         w+og==
-X-Forwarded-Encrypted: i=1; AJvYcCUIWq2babbnml2N5PTxs3HBJNtp2KYnY5sN/di3lgzTUFsTJyUmEdSRjjUUAmImXcvW5DQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbmHIXINE9jnl9BA5HwX1/IYBg17zZpMJPFR4gThxAZpKxiMFy
-	O7Eu9Ftwa4IZwiIAndPW4ZGGYZr8TDfTanwXPFg/JCY5EfhTabUe7TsdwxUWfPJeNyH4NX2HPUh
-	OMFarTzf5mHztvEIjiBVEnELAl1Y=
-X-Google-Smtp-Source: AGHT+IGRnmR4Ru+fFMENdYJPtsOTOsgxhyymimiPu2rPI9HaVx/T9re1PDtyRKxtBn0eRLQYb0vhopCEYcj9i//dFB8=
-X-Received: by 2002:a05:690c:3245:b0:6b0:a6f0:b0da with SMTP id
- 00721157ae682-6d40f340af9mr2290667b3.12.1724973138452; Thu, 29 Aug 2024
- 16:12:18 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VNXn2NJn"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1AE0536712;
+	Thu, 29 Aug 2024 19:13:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gMS40Bsydrey
+	l/2To6CI2IXCIzehxFfZOyLv0ADWUbo=; b=VNXn2NJnDyNiovGyXC+NBDKQMIt0
+	jDABqeAmQYroIwxoLU0adPRlh725pi/3CKeue2vmeN6KoR/zB6BX9vI8G992F4mr
+	tOVUvHEMwV+5q06+1rXG469MWBO1RpFOMvDu7ATwNJT2O9v4DlDp6Qsf9rqnMzSt
+	7qEmzQLcyyAGRVQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 11A623670F;
+	Thu, 29 Aug 2024 19:13:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7F3FE3670E;
+	Thu, 29 Aug 2024 19:13:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/5] apply: honor `ignore_ws_none` with `correct_ws_error`
+In-Reply-To: <afade304-51e3-441d-9ae6-e0a422d00bc4@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Thu, 29 Aug 2024 07:07:53 +0200")
+References: <6dd964c2-9dee-4257-8f1a-5bc31a73722e@gmail.com>
+	<1eb33969-1739-4a27-a77b-3f4268f5519d@gmail.com>
+	<xmqqseuqerb1.fsf@gitster.g>
+	<afade304-51e3-441d-9ae6-e0a422d00bc4@gmail.com>
+Date: Thu, 29 Aug 2024 16:13:14 -0700
+Message-ID: <xmqqed66udmd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
- <CAChcVunYDO_KAmEOoWEL2q63_Gzua-Kt3BmE5Snb8==K9Cww1w@mail.gmail.com> <20240829214336.GA440013@coredump.intra.peff.net>
-In-Reply-To: <20240829214336.GA440013@coredump.intra.peff.net>
-From: Pavel Rappo <pavel.rappo@gmail.com>
-Date: Fri, 30 Aug 2024 00:12:07 +0100
-Message-ID: <CAChcVukzk=-1JNAoffWQEEv4Ne1FozGEwzGuaUWuiwhoHkcUng@mail.gmail.com>
-Subject: Re: How to turn off rename detection for cherry-pick?
-To: Jeff King <peff@peff.net>
-Cc: Elijah Newren <newren@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 452CF44A-665C-11EF-838F-9B0F950A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-You seem to have confirmed my understanding that I described in my
-initial email (you replied to my second email in this thread).
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-On Thu, Aug 29, 2024 at 10:43=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Aug 29, 2024 at 09:47:52AM +0100, Pavel Rappo wrote:
->
-> > The reason I ask this is that we've run into a (probably practically
-> > rare) case where cherry-pick changes a wrong file. We want to be able
-> > to detect such cases.
->
-> You can pass merge strategy options on the command line. The old
-> "recursive" strategy has a "no-renames" option, so:
->
->   git cherry-pick --strategy=3Drecursive -Xno-renames feature
->
-> generates a modify/delete conflict for your example. Curiously, the
-> modern default, "ort", does not seem to respect that option. You can
-> bump up the limit to require exact renames, though, which does prevent
-> the mismerge in your case. Like:
->
->   git cherry-pick -Xfind-renames=3D100% feature
->
-> There are also other strategies that do not do rename detection, but I
-> think you are better off using one of the more commonly-used strategies
-> and just disabling renames. IMHO it's a bug that ort doesn't respect
-> -Xno-renames.
->
-> -Peff
+> I'm not very happy with the new enum, but I haven't come up with a
+> better idea.
+> ...
+> None of them are better, I think.
+
+Not adding a new enum is probably much better.  See the "additional
+thought" in my review on [3/5], for example.
+
+Thanks.
+
