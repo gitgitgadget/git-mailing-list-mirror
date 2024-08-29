@@ -1,117 +1,160 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0CC1B3B08
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 15:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC61B29D7
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 15:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724946431; cv=none; b=aeJowXBQ3mVtTd6jfJrCMv2otiXdjabs5JS1uiaJFpFhw7+BAXSHlcHxpoq+kGPMEmIYYOU4mt8Tl2gvMh6RBHp4rMVo6JGvd9JjdeZC45PZ47+M060QQuRg4xGw2iD212r4eaFzaCrIv2ABEi9WrHWgS2SImMrSqENkACQsCck=
+	t=1724946921; cv=none; b=lYFlt25EN81VT6cDvNtSL4HjWrpajsg7EBArk11G+1gTrjHYLqxJT55vRmDMQRtzaHturtz0KPlhm7zYCEysAC0XR7nu+f7GUydYzw9/fy+f2iqWQos+7xZCROamw1aM4BEMmX4q6qZz8G3VauBKA08HdL5fI+BEnyACP2j6Hw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724946431; c=relaxed/simple;
-	bh=ZO31ubHt9mBJ2EULo+Nz9kS39JEuALOkXntyFMZh1gs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RkSGhsYporJButdPjbkOytLyYmOETmuc4h5dmo9G58ZBlQk8mD/50u9/TJHyNVXZjzaU6UJkhdTCk0BPijJ7GTvwvDS6QhPF4vKbe1tlcVbtbA9k9PRuBqTDxQ6JhVfYqya4g54oCsp32ZURxXNZey7J5fTLHupqq2zyvS5qfAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sk7parMj; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724946921; c=relaxed/simple;
+	bh=ZacXWhsY84SK8kMzChPOAYiiJ+sIwbAQU3KQf0A1xtg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nQQW+xsG2a8hZdkqdXPfBNHxyC+MFIyrYGhki9o5o9b8vAodwmfnhJ5mxjJbVi50aUjV9PztSyaYj8sAsEJ0D52DxsQdpavn6MDL7Z9+GDWObFQ/AXAM7x4v8cow+FJ2u1qOCnH3SSYgXtAS1KaAIR9FJSYwpKHlo7Ay3p/h4s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nJcnBpoQ; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sk7parMj"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7cd9e634ea9so541773a12.0
-        for <git@vger.kernel.org>; Thu, 29 Aug 2024 08:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724946429; x=1725551229; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=19pOYqOl3I9870eXelgBzJkHhlo9o66XSetrRQMeIhw=;
-        b=Sk7parMjhv87/r0VhmxIczcKcoOjBywahLq7x+zHoah5qEp/l87667I6UyM+gFrK13
-         jt9CBU1HUACYndY6bMmz8ySKS6/flZtBzKjEu60XrO7/oum1U4qkPoc6TbLpVL70WyZh
-         cmL/tN01eZgsBbUx6PxFp9NgcEeJGtjNtONxbMyb1QVSdBAiCwQf6eo/cSiTTp9T9rig
-         xGpY0AdCxQ/gY99kZyA+HfVYkB8IPKIWVItphvNkLOOClwL1tCur4MyCcJskXzfbr3/2
-         YJ7yOHdNoP5+RX25A7UI/4pLdpXMVPfnlI40xrLCgqoEeYS8ouMl/0EUEIn0O0HDVrT7
-         2xAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724946429; x=1725551229;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=19pOYqOl3I9870eXelgBzJkHhlo9o66XSetrRQMeIhw=;
-        b=bZ/qVU5xIoQrCuu08swEZ/KJUpl6/+bLgwtBso2e3K/arBcbe7lpoSvz5SB4c+Z6KC
-         NAZ5tdem1EAUw5QIsZglLxuHbNdZEHtgy7bWS6O+kEv4qC5Vl7VkMkSmq/HIRZkq3EDz
-         rh0vuI5SR5TkFnQPvNvqUoIINopqBEDINg03D+l+MAl2j/LCw6Iku/nDbgCpSgB12VHW
-         3BEI1Qqwuzx1DHLwkQwCgoRR3BO3tZ9/wG7IWoxSqx5Qbfb6LRBPt2zG96HYxZf/1zy5
-         Ziwd8YeFDA3jL73KiKmSJUTtSNTNLXWA50kLVGc+5X6122XO3wDA+R63hH/552alpBlw
-         jlZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUBhSjblAx7H/EcPK46vHkaZi8diOpW1v1adAQ6Ddxv5w/rIRpI+UqJ1fuXjd7qzlGXfp4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YySq/w3TN9dPRJXxsLvvU3k1+nGRtkk9r/TcHDUeiFs8MeUGY3/
-	JRPqs1y+Y2G/XudJir9fPSJXg7Az23B5x2OzJaSBSipGiLgQbbGc
-X-Google-Smtp-Source: AGHT+IFTp1OItMbquVQPUSzIgMds3tzlFE6lvcgiLCboythY/pwWHnhyo7rw/paUKg/R1cWBEmz7Ug==
-X-Received: by 2002:a05:6a21:c8c:b0:1c6:b0cc:c448 with SMTP id adf61e73a8af0-1cce10b34e8mr2081267637.43.1724946428982;
-        Thu, 29 Aug 2024 08:47:08 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d22e7821cesm1380779a12.55.2024.08.29.08.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2024 08:47:08 -0700 (PDT)
-Date: Thu, 29 Aug 2024 23:48:02 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] add ref content check for files backend
-Message-ID: <ZtCYMiOXVUM7SD3v@ArchLinux>
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux>
- <Zs348uXMBdCuwF-2@ArchLinux>
- <xmqqbk1cz69c.fsf@gitster.g>
- <20240829040215.GA4054823@coredump.intra.peff.net>
- <xmqq5xrjzzxt.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nJcnBpoQ"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AA5932121;
+	Thu, 29 Aug 2024 11:55:19 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ZacXWhsY84SK8kMzChPOAYiiJ+sIwbAQU3KQf0
+	A1xtg=; b=nJcnBpoQPWl4dIDgt1wLvep2o53EYzJNsgoEYr+UQuSliawta6sn6A
+	M8XJa33QBiuJHjtsvR+BcfsOZim0qFsnE8xhrqI42s/jkIFEmRoL6UDi6+G1B91S
+	/ey1xvAFvqkfQrCuDEwxgPe+AKo8YIZriM5B/WnLdqFpJElAVknHc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 22A7D3211F;
+	Thu, 29 Aug 2024 11:55:19 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 815AE3211E;
+	Thu, 29 Aug 2024 11:55:18 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <ericsunshine@charter.net>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] chainlint: reduce annotation noise-factor
+In-Reply-To: <20240829091625.41297-3-ericsunshine@charter.net> (Eric
+	Sunshine's message of "Thu, 29 Aug 2024 05:16:25 -0400")
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+	<20240829091625.41297-3-ericsunshine@charter.net>
+Date: Thu, 29 Aug 2024 08:55:17 -0700
+Message-ID: <xmqqv7zjwcgq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5xrjzzxt.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 16DE8F50-661F-11EF-B3E1-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Aug 28, 2024 at 09:59:58PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > As an aside, I wonder if we should consider deprecating and eventually
-> > dropping support for core.prefersymlinkrefs. I can't think of a reason
-> > anybody would want to use it, and of course it makes no sense as we move
-> > on to alternate backends like reftables.
-> 
-> Yup.  Perhaps add an entry or two to BreakingChanges document?
-> 
->  Documentation/BreakingChanges.txt | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git c/Documentation/BreakingChanges.txt w/Documentation/BreakingChanges.txt
-> index 0532bfcf7f..2a85740f3c 100644
-> --- c/Documentation/BreakingChanges.txt
-> +++ w/Documentation/BreakingChanges.txt
-> @@ -115,6 +115,12 @@ info/grafts as outdated, 2014-03-05) and will be removed.
->  +
->  Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
+Eric Sunshine <ericsunshine@charter.net> writes:
+
+> From: Eric Sunshine <sunshine@sunshineco.com>
+>
+> When chainlint detects a problem in a test definition, it highlights the
+> offending code with an "?!ERR ...?!" annotation. The rather curious "?!"
+> delimiter was chosen to draw the reader's attention to the problem area.
+>
+> Later, chainlint learned to color its output when sent to a terminal.
+> Problem annotations are colored with a red background which stands out
+> well from surrounding text, thus easily draws the reader's attention. As
+> such, the additional "?!" decoration became superfluous (when output is
+> colored), however the decoration was retained since it serves as a good
+> needle when using the terminal's search feature to "jump" to the next
+> problem.
+>
+> Nevertheless, the "?!" decoration is noisy and ugly and makes it
+> unnecessarily difficult for the reader to pluck the problem description
+> from the annotation. For instance, it is easier to see at a glance what
+> the problem is in:
+>
+>     ERR missing '&&'
+>
+> than in the noisier:
+>
+>     ?!ERR missing '&&'?!
+>
+> Therefore drop the "!?" decoration when output is colored (but retain it
+> otherwise).
+
+Wait.  That does not qualify "Therefore".
+
+We talked about a "good needle" and then complained how ugly the
+string that was happened to be chosen as good needle is.  That is
+not enough to explain why it is justified to "lose" the needle.  The
+only thing you justified is to move away from the ugly pattern, as a
+typical "terminal's search feature" does not give us an easy way to
+"jump to the next text painted yellow".
+
+> Note that the preceding change gave all problem annotations a uniform
+> "ERR" prefix which serves as a reasonably suitable replacement needle
+> when searching in a terminal, so loss of "?!" in the output should not
+> be overly problematic.
+
+Drop this separate paragraph, promote its contents up from "Note"
+status and as a proper part of the previous sentence in its rewrite,
+something like:
+
+    Since the errors are all uniformly prefixed with "ERR", which
+    can be used as the "good needle" instead, lose the "!?"
+    decoration when output is colored.
+
+to replace "Therefore" and everything that follow.
+
+> @@ -663,7 +666,7 @@ sub check_test {
+>  	$checked =~ s/^\d+ \n//;
+>  	$checked =~ s/(\s) \?!/$1?!/mg;
+>  	$checked =~ s/\?! (\s)/?!$1/mg;
+> -	$checked =~ s/(\?![^?]+\?!)/$c->{rev}$c->{red}$1$c->{reset}/mg;
+> +	$checked =~ s/\?!([^?]+)\?!/$erropen$1$errclose/mg;
+
+Hmph.  With $erropen and $errclose, I was hoping that we can shed
+the reliance on the "?!" mark even internally.  This is especially
+true that in the early part of this sub, the problem description was
+very much structured piece of data, not something the consuming code
+need to pick out of an already formatted text like this, risking to
+get confused by the payload (i.e. the text that came from the
+problematic test script inside "substr($body, $start, $pos-$start)"
+may contain anything, including "?!", right?).
+
+>  	$checked =~ s/^\d+/$c->{dim}$&$c->{reset}/mg;
+>  	$checked .= "\n" unless $checked =~ /\n$/;
+>  	push(@{$self->{output}}, "$c->{blue}# chainlint: $title$c->{reset}\n$checked");
+> @@ -805,9 +808,9 @@ sub check_script {
+>  			my $c = fd_colors(1);
+>  			my $s = join('', @{$parser->{output}});
+>  			$emit->("$c->{bold}$c->{blue}# chainlint: $path$c->{reset}\n" . $s);
+> -			$nerrs += () = $s =~ /\?![^?]+\?!/g;
+>  		}
+>  		$ntests += $parser->{ntests};
+> +		$nerrs += $parser->{nerrs};
+>  	}
+>  	return [$id, $nscripts, $ntests, $nerrs];
+>  }
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 54247604cb..b652cb98cd 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1606,7 +1606,7 @@ if test "${GIT_TEST_CHAIN_LINT:-1}" != 0 &&
+>     test "${GIT_TEST_EXT_CHAIN_LINT:-1}" != 0
+>  then
+>  	"$PERL_PATH" "$TEST_DIRECTORY/chainlint.pl" "$0" ||
+> -		BUG "lint error (see '?!...!? annotations above)"
+> +		BUG "lint error (see 'ERR' annotations above)"
+>  fi
 >  
-> +* Support for core.prefersymlinkrefs will be dropped.  Support for
-> +  existing repositories that use symbolic links to represent a
-> +  symbolic ref may or may not be dropped.
-> ++
-> +Cf. <20240829040215.GA4054823@coredump.intra.peff.net>
-> +
->  == Superseded features that will not be deprecated
->  
->  Some features have gained newer replacements that aim to improve the design in
+>  # Last-minute variable setup
 
-From my current understanding, I think I need to rebase two patches
-provided by your here:
-
-  https://lore.kernel.org/git/xmqqle0gzdyh.fsf_-_@gitster.g/
-  https://lore.kernel.org/git/xmqqbk1cz69c.fsf@gitster.g/
-
-I think in this patch, we just info the user that we will drop
-"core.prefersymlinkrefs" later, so I should not concern about this
-patch and also the [PATCH 8/6].
-
-Thanks,
-Jialuo
+Overall the two patches looked great.
+Thanks.
