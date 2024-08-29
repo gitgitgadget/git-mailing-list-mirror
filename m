@@ -1,111 +1,126 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from impout006.msg.chrl.nc.charter.net (impout006aa.msg.chrl.nc.charter.net [47.43.20.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC18A15666A
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 08:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B52418DF79
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 09:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.43.20.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724921286; cv=none; b=p2OmC0A1eoPra/jq+NZTnCpE0oiul99g4QRlqAWpJfbeqzLOoWewTj3QeHNFwABvuvkYMPCyBVZURjocfxqynsspx1B5d4y+YT7k202hxP3eH3/I9jitmP27LdITNJsn/26lYCfeZpXRD+2LDXnBTWihOxdfCKatHX0SBEGKSZg=
+	t=1724923108; cv=none; b=FVV9pskb7nx4ZqdfkFdy0r5dHrxzDhoFPJKv2ukWoT6IGX4VVBn9fz3fwX/TJZNDrkrmRUpk7pQ1vofMpn7ikqT7bBCJtN+nfPQRzTYNitqURApVkEYL1PnROI16j2UHr4W7j4f+8VKEA/Fo0j99l1LT+1pI9h+Zt23DPXlH82Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724921286; c=relaxed/simple;
-	bh=NCEQioBk9VYqatLTU4eexcJhIp6noiUkHaoUHltcQ+c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=BKiY4MOFn3eMObfUnzi/NZlBoBOn1Xe8KnQp5IqnijxKfIBgHzTj0myKXFpirDY/s4B82ScfYxxzO8nRgRoBdDV9VTOJ3DzJTw2ot3mTyYu8ZNy2YYGQG8CsJHN0Cy1EKD+z+wJGQIcm8x0pwM/KucJC1EyNKyoJN/V/mX00FPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BXp+5r6d; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1724923108; c=relaxed/simple;
+	bh=1GLPbkcNZz6Q9WBnO4Rha/iX8xuuocST9NfHodaiXQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LzMpGFMaX0UklKszjvvCvsDv1bEHmENFx83AfwxLljPyv6gnxO08/P06h5BdcRjhPzIzAYorWCvzuEzboD1TtfxxxFATCFDvVYPCfKoovXc+sq8zslyJUkVppXatp0FKzixIZWCUAUhS04uwxye+0D1EK+GVeGd/I4pMivA1Ego=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net; spf=pass smtp.mailfrom=charter.net; dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b=sXaV27CR; arc=none smtp.client-ip=47.43.20.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BXp+5r6d"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6b0c5b1adfaso3894957b3.0
-        for <git@vger.kernel.org>; Thu, 29 Aug 2024 01:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724921284; x=1725526084; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wVeO1wMzfTCkVh/+WFVnhLnV+krfpi+8ChRIx4i8IY0=;
-        b=BXp+5r6d/zY8mhmI8CV4CNL3YmCDjeipCAvx8LypkJWNLp6iXRPJq7D77mFeNUdDmT
-         FNlhO1F9YTkbv9pFWfgFKKM5L3Y7+MlUqHRrRBmb2P2Oc1CalXRokGIJnuao+f+Q0aZ6
-         sCSBn4VZMesvTDeGskffKwjQPWtdbSOh4aY5UnXI/5kuUGtsTJe9Phx6cx/IDdZF4oXH
-         wVFHqxJr+wi4JF1yN9Z4zsz2ge5NMqJAj+mlpOVAl0SgKIiy2m1KykDBJAFutKG/oUmw
-         Sf+eMlEn0KVAvTMWxRmySebRgiNymvTEwz9QfEpyIGo7UXIev0uS50vxr3ykGgaovoXj
-         WBjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724921284; x=1725526084;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wVeO1wMzfTCkVh/+WFVnhLnV+krfpi+8ChRIx4i8IY0=;
-        b=WOB2cnQQiZ7nEdCj7sTLgOdiPT8qHNrTptJiOEAzAtw/vnfDdlu+KIqS6PR9iMvOAP
-         X5XUTsxUp/nfN14YMT7uhT4DQMYkbj8vdlXorSNnZnfgga6A0ybK5SvfzxS36wj8s0Ct
-         qXC1wRf8twIV9Kkgzy5MraVeYdd9DmODTXHR62Wwo66yKreilcA0YfawtsuxMr0U6hTi
-         2a6sqDzeGxWPtpjFaQkte/wZCDzqeKuo52IPBMicfCecnn+EccO9TSmPyxfob2b04pTl
-         0mewKKleTO3Z16lQJGSHXuu/JOfMjbQyqP0O3OmjLmMKngsl0N77/1Tcwd/fOqDwjcrp
-         l03A==
-X-Gm-Message-State: AOJu0YwmzmnddKgxIryLTR9DWKEr0IyN+97fvgMa+ncpTUrXsrAzQf0i
-	uCOFx8TLP9WOIe8Qx/W3CglkVBr79foRX2lOn1U5+eBmCDDbBXjEKtHYBDIfaQLSMSsknLWYFaI
-	kkaAC2nz84xizFosM1II9pxBnw6acep99
-X-Google-Smtp-Source: AGHT+IFHT2U9KcVKkVOXV41+2B6ImnD0nSRw6kZdiD13ZXjzpjPgfy0PwgHorvQWfXjNGCU4L3nV6Gjrx3D1yMy9Mcc=
-X-Received: by 2002:a05:690c:90:b0:6af:eaa:3dd4 with SMTP id
- 00721157ae682-6d276116797mr25020027b3.13.1724921283619; Thu, 29 Aug 2024
- 01:48:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b="sXaV27CR"
+Received: from localhost.localdomain ([97.71.114.58])
+	by cmsmtp with ESMTPA
+	id jbGiswlxTYUSUjbGpsPmjV; Thu, 29 Aug 2024 09:16:48 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=charter.net;
+	s=c20240129; t=1724923008;
+	bh=1GLPbkcNZz6Q9WBnO4Rha/iX8xuuocST9NfHodaiXQQ=;
+	h=From:To:Cc:Subject:Date;
+	b=sXaV27CRvOcAp7c/31ZwO8m6Nat6D7xaKDfBsBoKxxUCvdNtWojT5cVPlGgkBJLLW
+	 KxYbsjcgnrR57tYbVveR8Y1i/xf8sxhI0rLoh+SGyaBibUYrnxehfIRdhfI6jC2NJB
+	 MZ8EJUHRiarmYwnQgEIK+TR0PhBbCFvUJ9KnwesrtI/L7GgHxuVMb+iZw0DteqJAwP
+	 h5Yhy5pOVoSD2Sl6BVaBSfdmtIPWUMP9+rKbYgjJSatRJwZQW9OTM45BZX7kzGPuMu
+	 S6Q/OTo3sZWnunEsmQ1Bwi3NmrXGWJc2wBINVnfq8RzhejmIrdfQQIA+JO2BIBsfXT
+	 luY7XDvCbQkOw==
+Authentication-Results: charter.net; auth=pass (LOGIN)
+ smtp.auth=ericsunshine@charter.net
+X-Authority-Analysis: v=2.4 cv=A99qPbWG c=1 sm=1 tr=0 ts=66d03c80
+ a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=ovBSteCl7yC8hWqpu0wA:9
+ a=jYKBPJSq9nmHKCndOPe9:22 a=AjGcO6oz07-iQ99wixmX:22
+From: Eric Sunshine <ericsunshine@charter.net>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] make chainlint output more newcomer-friendly
+Date: Thu, 29 Aug 2024 05:16:23 -0400
+Message-ID: <20240829091625.41297-1-ericsunshine@charter.net>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
-In-Reply-To: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
-From: Pavel Rappo <pavel.rappo@gmail.com>
-Date: Thu, 29 Aug 2024 09:47:52 +0100
-Message-ID: <CAChcVunYDO_KAmEOoWEL2q63_Gzua-Kt3BmE5Snb8==K9Cww1w@mail.gmail.com>
-Subject: Re: How to turn off rename detection for cherry-pick?
-To: Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfBNFnaK9tSUHwZOmrThQ3IhI5taYzIZuaCk3WO3qPam704d3d+Lk++w36d7hhnLCvFM1u+JIluNsN0EUgGdvHlSENEm3YbDdrtZeaDmDJkuqj+IILrkF
+ 3Gijq+NsRBbetOy3371tLfFFslHdcM6vNkNyvQhD0BJS8aWUvEUBovbll7qosQS/0Hyxst+9eJK9yDPV4exibCVRKo11z3ntxccSlFah+i6MZb6Frza3sG/E
+ P76rD+h2SYp1SxJQWSi/SFA5hq0UEDQ/JV/R9jJFBng=
 
-The reason I ask this is that we've run into a (probably practically
-rare) case where cherry-pick changes a wrong file. We want to be able
-to detect such cases.
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-Distilled from the actual repo, here is the case. Create a repo first:
+For the sake of newcomers to the project, I have several times over the
+last couple years thought to update t/README to explain the rather
+cryptic and terse problem annotations emitted by chainlint (i.e.
+"?!FOO?!"), but I never got around to it. However, a review comment[*] I
+posted recently suggesting an update to CodingGuidelines reminded me of
+the need to update t/README.
 
-    mkdir cherry-pick-carefully
-    cd cherry-pick-carefully
-    git init -b main .
-    cat << EOF > x.txt
-    1
-    2
-    3
-    4
-    5
-    EOF
-    git add x.txt
-    git commit -m "Add x.txt"
-    git checkout -b feature
-    git rm x.txt
-    git add x.txt
-    git commit -m "Delete x.txt"
-    cat << EOF > y.txt
-    1
-    2
-    3
-    4
-    EOF
-    git add y.txt
-    git commit -m "Add y.txt, similar but not equal"
-    cat << EOF > y.txt
-    1
-    2
-    4
-    EOF
-    git add y.txt
-    git commit -m "Slightly change y.txt"
-    git checkout main
+As such, I set about to do so but quickly realized that it would be far
+more useful to newcomers for chainlint to emit friendly problem
+descriptions rather than expecting users to know to consult t/README to
+interpret the existing cryptic annotations. This patch series, which
+improves chainlint's output, is the result of that epiphany.
 
-Now try to cherry-pick feature's head commit onto main:
+[*]: https://lore.kernel.org/git/CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com/
 
-    cd cherry-pick-carefully
-    git cherry-pick feature
+Eric Sunshine (2):
+  chainlint: make error messages self-explanatory
+  chainlint: reduce annotation noise-factor
 
-With a default git configuration, this should (surprisingly to many)
-change x.txt instead of y.txt, which is not what the user would
-expect.
+ t/chainlint.pl                                | 33 ++++++++++++++-----
+ t/chainlint/arithmetic-expansion.expect       |  2 +-
+ t/chainlint/block.expect                      |  8 ++---
+ t/chainlint/broken-chain.expect               |  2 +-
+ t/chainlint/case.expect                       |  4 +--
+ t/chainlint/chain-break-false.expect          |  2 +-
+ t/chainlint/chained-block.expect              |  2 +-
+ t/chainlint/chained-subshell.expect           |  4 +--
+ t/chainlint/command-substitution.expect       |  2 +-
+ t/chainlint/complex-if-in-cuddled-loop.expect |  2 +-
+ t/chainlint/cuddled.expect                    |  4 +--
+ t/chainlint/for-loop.expect                   |  8 ++---
+ t/chainlint/function.expect                   |  4 +--
+ t/chainlint/here-doc-body-indent.expect       |  2 +-
+ t/chainlint/here-doc-body-pathological.expect |  4 +--
+ t/chainlint/here-doc-body.expect              |  4 +--
+ t/chainlint/here-doc-double.expect            |  2 +-
+ t/chainlint/here-doc-indent-operator.expect   |  2 +-
+ .../here-doc-multi-line-command-subst.expect  |  2 +-
+ t/chainlint/here-doc-multi-line-string.expect |  2 +-
+ t/chainlint/if-condition-split.expect         |  2 +-
+ t/chainlint/if-in-loop.expect                 |  4 +--
+ t/chainlint/if-then-else.expect               |  4 +--
+ t/chainlint/inline-comment.expect             |  2 +-
+ t/chainlint/loop-detect-failure.expect        |  2 +-
+ t/chainlint/loop-in-if.expect                 |  8 ++---
+ t/chainlint/multi-line-string.expect          |  2 +-
+ t/chainlint/negated-one-liner.expect          |  4 +--
+ t/chainlint/nested-cuddled-subshell.expect    |  6 ++--
+ t/chainlint/nested-here-doc.expect            |  2 +-
+ t/chainlint/nested-loop-detect-failure.expect |  6 ++--
+ t/chainlint/nested-subshell-comment.expect    |  2 +-
+ t/chainlint/nested-subshell.expect            |  2 +-
+ t/chainlint/not-heredoc.expect                |  2 +-
+ t/chainlint/one-liner-for-loop.expect         |  2 +-
+ t/chainlint/one-liner.expect                  |  6 ++--
+ t/chainlint/pipe.expect                       |  2 +-
+ t/chainlint/semicolon.expect                  | 12 +++----
+ t/chainlint/subshell-here-doc.expect          |  2 +-
+ t/chainlint/subshell-one-liner.expect         | 10 +++---
+ t/chainlint/token-pasting.expect              |  8 ++---
+ t/chainlint/unclosed-here-doc-indent.expect   |  2 +-
+ t/chainlint/unclosed-here-doc.expect          |  2 +-
+ t/chainlint/while-loop.expect                 |  8 ++---
+ t/test-lib.sh                                 |  2 +-
+ 45 files changed, 108 insertions(+), 91 deletions(-)
+
+-- 
+2.46.0
+
