@@ -1,67 +1,91 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BF01BAECC
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 21:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A9A1BAECB
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:01:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724967848; cv=none; b=IWy+2Xg51Z4W4SENKhfxyCTS5MgqR+3LtRQypbGrlSA4RSrCRMQZl27ZU9e8Sw6VxUTdsw+wA3pT+/PVXijXeZCcMNi5nPWCDPfEWrPyacO6Cm15XF5qKwU/7vcPTe16li0A1QcWyta5fQSZsdDg6xGlukVSGhydAL1ZfDB5FnA=
+	t=1724968865; cv=none; b=d0/4D5mXmvbIveO2DimshF2zDp/lO7RyASY9oMT4COJnwgErhTUkinReELyEZEsnQZYjWb0rqx7MUZdgMRd6FYAONHLz9ly4SueebLMezYpMTps+1BmCGDzrc3d6cZ2qHiCsNLtZbpXexH/q8J2rf/r3aaCuk3wl3gBqaMVV3vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724967848; c=relaxed/simple;
-	bh=RqyNEZuHI8uzyLOd2+G48zd8GBY7H4N8T0iw4vTxdS4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c84aF23KzpZnmB709iOfVKpdsxNL95nn7g+j/q26UxE2vN7nuDU33zb6p/kkS5gK6uTEbytpmowCTXzBf2S0UOjYPnwVGXcHaNUozoqTTAcRniIC4oxMUjnMUERKLo0/L4fCjfYeQz+J45vVdquw8zJ6i9PagvSG2WC3p4po/ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kpk1V7Hu; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724968865; c=relaxed/simple;
+	bh=mXR26tK+eyCvZzbTMyJMjpW87WrENVOQhBOvhDicVvg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=ZEhm0LXbpHoNGLffl3XuQLQjkCvoXoHEIAp4FzwUm8duBVp+1PhwO0xrITr/UqSuhASsmR7E5Gzf0uLyTNasMkQcEMTtfXOGMbJ3Yvjh1xdtJ2ph2bCWnFcXdmAQMmcA9RIGPdoegk2VcC1+SjRW7mRswUbFTzbKebBZHg35J7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=RPnEu4Xo; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kpk1V7Hu"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4009735A81;
-	Thu, 29 Aug 2024 17:44:05 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=RqyNEZuHI8uzyLOd2+G48zd8GBY7H4N8T0iw4v
-	TxdS4=; b=Kpk1V7HuJegM10CBcLr7eR0c/MRNyQrXPI1uF16lrv5REx/DYdoAAj
-	PqXGd7xPKE+1YQtPaIQQVixVOjVBDrTxw6UQ7p6v9n24vMX7Yu/uLKA0GugggvF+
-	vq1MZ9DW14ZEsfIQTZeObGBiQkN3mahakV13iipAPp/P3SMeDpung=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2562C35A80;
-	Thu, 29 Aug 2024 17:44:05 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2FB5F35A7F;
-	Thu, 29 Aug 2024 17:44:04 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Yukai Chou <muzimuzhi@gmail.com>,  git@vger.kernel.org
-Subject: Re: Tags auto fetched by "git fetch origin" but not "git fetch
- origin main"
-In-Reply-To: <ZtDo--AY43-bPTHG@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 29 Aug 2024 21:32:43 +0000")
-References: <CAEg0tHRbGBBq7i78bTSfws_WZO=2W7xuDwiT2qFA5iOza8qDDA@mail.gmail.com>
-	<ZtDo--AY43-bPTHG@tapette.crustytoothpaste.net>
-Date: Thu, 29 Aug 2024 14:44:02 -0700
-Message-ID: <xmqqy14ft36l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="RPnEu4Xo"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id jn9LsUlt9x2dSjn9Msl32Q; Thu, 29 Aug 2024 22:57:53 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1724968673; bh=YUB6Xq6ptR11wGXdQstANzScKw+HFvccE4BoirLyvA4=;
+	h=Date:To:Cc:From:Subject;
+	b=RPnEu4XoBdz3FDUa07VSA2gL4sVxEe7kxZmwcU+wBgBbSynPJ5sIL12rJLRPpq4u1
+	 ozQbX1AA1UQvZYltq/9wWBQmN4Yl2OD4l5Tx1YYdykwTWs7qh5FunXWDgbJnC5dUBS
+	 SfB5itmpzo1So2pMvfEZAFKwHNkyJHLKCDhb1hqbUNN8X0DwX/lMSJq85KQsSWfZKv
+	 B/nbsv2dGBcQQjlYp7JNnJVEq0JAXKwqG7TJtWBZd/SxZ4QVpexgzt2b7cLsSULEyF
+	 P/34DEjJuy1Ok1cn+0ac6WXleyxmSdsK8zjdGk0/R5Foahs/xzvKhrvKthUXjKHD1h
+	 hrf2Wq/GUPlgA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=GMarEfNK c=1 sm=1 tr=0 ts=66d0eee1
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=cltIsxnoqMMrNDaYa_sA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
+Date: Thu, 29 Aug 2024 22:57:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CF8CD536-664F-11EF-A9D8-9B0F950A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] compat/terminal: mark parameter of git_terminal_prompt()
+ UNUSED
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOXbVsvHK9eZcYZxMb9HGvAaV3obEpM2XA8JOLh5sGT9/ICCJguuke1OGcfjFIc2bm59Ct4GFI51gmd88+yu56ailG7L0niqV+/Mm1b3JCZkWvkivlSL
+ L/zp/vrfWe0IU/JplaQMamsjfGJaduy8D/ahtbdhbdRGVURqFAKBw74AM62BDtXx6rxN8MvKXRK0vLf21DRe/eJLQjkDYr1YQ3g=
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> If you want tags nonetheless, you can use the `--tags` option, which
-> should fetch tags in addition to the refspec provided.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-But doesn't that grab _all_ tags, not only the relevant tags that
-point into the history leading to the commits being fetched?
+Hi,
+
+The 'seen' branch fails to compile on cygwin (but its fine on Linux), due
+to an unused parameter. I haven't looked too hard at the code (at first
+blush, it seemed to me that it should not even be trying to compile that
+code, but ...), I simply added an UNUSED to fix the build. ;)
+
+So, this may not be the correct 'fix' for this, but I thought I should
+report it here, since I don't have time to look into this now. sorry! :(
+
+ATB,
+Ramsay Jones
+
+ compat/terminal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/terminal.c b/compat/terminal.c
+index 0afda730f2..d54efa1c5d 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -594,7 +594,7 @@ void restore_term(void)
+ {
+ }
+ 
+-char *git_terminal_prompt(const char *prompt, int echo)
++char *git_terminal_prompt(const char *prompt, int echo UNUSED)
+ {
+ 	return getpass(prompt);
+ }
+-- 
+2.46.0
