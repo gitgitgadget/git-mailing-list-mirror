@@ -1,128 +1,75 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB718B479
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC05B18C00A
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724970134; cv=none; b=BNFShELZFPFHoSDHJ6YbiOHtmcx8gSr+tErdmjPsdfwgj7XmxqXwZCKBErVIbb8sXLgv8a+JRFgdFya49O+SvDf1YC42BZHsAAK5d/6vsk2+VkVjjc1w2IEy5RYAib2m8ynbkmrCGV50xi63c3khVZDefX242I+9pPBeojDveFQ=
+	t=1724970376; cv=none; b=lIjzCvy3oTsbjr/hk9KlJ2by/+3GvPQbFV2LTF5zXM7KWdtPWa+6l9Wiyik6kA+yISquqfb3kLXPx4s15EJJztYK4a3lazMtg567e5x05PoJL5x79tUy7T+k2wZyAn2rfdlUO37Q1ngRSgtc4AUbFMoZY9EpbSqLMTMS2fKS89Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724970134; c=relaxed/simple;
-	bh=531sT2jr8NmsN4JFXH9c6Ckr3/jPk/X9fQNJMRHaMpo=;
+	s=arc-20240116; t=1724970376; c=relaxed/simple;
+	bh=3eW7fFTp3dIDtY+Eqxqxf4pOXhVX7YGNFoOqwCREX+I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XJowT449cQ6TJ777CmcPKdljNPS0niC+bB3EhSVlSpAzBfE712HigDbB8rEoOfAjNitswzZgWomRrr3jNkJEGE6Xp1Z/zrpFdH+hPBwY3g9T/kQw/BH7cMo3zsii/FCks9L26xgmKNvOT3EscMBp8X7k684APFqMzfZnFZwqPdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pau1j8/0; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pau1j8/0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1724970129;
-	bh=531sT2jr8NmsN4JFXH9c6Ckr3/jPk/X9fQNJMRHaMpo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pau1j8/0k8oBuZFE54k8FyFgpcsuKfFJOpY6oXdkDl6A7e2psJ0UBWATU9UUqGU55
-	 KSG6vnHHLgXqIHWw+jrSzaPpZ17i1qMC7gdLQd/Q2ODGWN4QELq8FyFqfD0bWaCScM
-	 rvAd3tCIOQPX6iQ9LnR72yeh+ZsAowpHDj8YaRon1xCy4256DdXWt6+o98fJdPEySO
-	 gf1WQt3njW3nqdv3q18DLLTgJLNH2K5gGqmF/d4D9eh99nOQkd6whYEXclrQW1mMxT
-	 XK14EwAA+Zn2xxN6nMW2/n01esrfdMd8CbiFQhWwT4cjoaZEE3PSEnX94f5LItnGoX
-	 vT8VzrjxF++OmUUWJfRK5AhkyseUdtV9gCxwwHfHe+tfmDQsJFQ8lL9FMEDXAUVcrb
-	 l3qD1yrnciZo+DnLk4borxI7l/dx6HiRm3utpy1vnOcIJmCWdxAe63tyPKwBqsbQgq
-	 5iDsMqON+33GQeJOIecNJVwXRu+Lp1ZOaaeFJcQhdkMOTmTiUzL
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C6F9324429;
-	Thu, 29 Aug 2024 22:22:09 +0000 (UTC)
-Date: Thu, 29 Aug 2024 22:22:08 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yukai Chou <muzimuzhi@gmail.com>, git@vger.kernel.org
-Subject: Re: Tags auto fetched by "git fetch origin" but not "git fetch
- origin main"
-Message-ID: <ZtD0kJU_OdBBktZ2@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Yukai Chou <muzimuzhi@gmail.com>, git@vger.kernel.org
-References: <CAEg0tHRbGBBq7i78bTSfws_WZO=2W7xuDwiT2qFA5iOza8qDDA@mail.gmail.com>
- <ZtDo--AY43-bPTHG@tapette.crustytoothpaste.net>
- <xmqqy14ft36l.fsf@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=juHOUNp1+6jq+cpwde86HP9jDgdM2zDCah8QDauTTuStLQnFP+J2VpPSnrpofu43aLLkypEd5g1KTLJIdYbWwcOHIxNxcoL8oFUC2HwTOeSg6/smyrMVa+gUwg5VDbhnpjNZYswkvAO80lZ9W/ytS+qQfYdhpTg9IcpVkhn8LC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 6742 invoked by uid 109); 29 Aug 2024 22:26:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Aug 2024 22:26:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12828 invoked by uid 111); 29 Aug 2024 22:26:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 18:26:14 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 29 Aug 2024 18:26:12 -0400
+From: Jeff King <peff@peff.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat/terminal: mark parameter of git_terminal_prompt()
+ UNUSED
+Message-ID: <20240829222612.GA445751@coredump.intra.peff.net>
+References: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cD2PdMP9e4OyK0eq"
-Content-Disposition: inline
-In-Reply-To: <xmqqy14ft36l.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---cD2PdMP9e4OyK0eq
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
 
-On 2024-08-29 at 21:44:02, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > If you want tags nonetheless, you can use the `--tags` option, which
-> > should fetch tags in addition to the refspec provided.
->=20
-> But doesn't that grab _all_ tags, not only the relevant tags that
-> point into the history leading to the commits being fetched?
+On Thu, Aug 29, 2024 at 10:57:50PM +0100, Ramsay Jones wrote:
 
-It's not clear to me.  The description says this:
+> The 'seen' branch fails to compile on cygwin (but its fine on Linux), due
+> to an unused parameter. I haven't looked too hard at the code (at first
+> blush, it seemed to me that it should not even be trying to compile that
+> code, but ...), I simply added an UNUSED to fix the build. ;)
+> 
+> So, this may not be the correct 'fix' for this, but I thought I should
+> report it here, since I don't have time to look into this now. sorry! :(
 
-  By default, any tag that points into the histories being fetched is
-  also fetched; the effect is to fetch tags that point at branches that
-  you are interested in. This default behavior can be changed by using
-  the --tags or --no-tags options or by configuring
-  remote.<name>.tagOpt. By using a refspec that fetches tags explicitly,
-  you can fetch tags that do not point into branches you are interested
-  in as well.
+Thanks, this is definitely the right fix. I have to rely on CI for
+catching cases outside of what I build locally, and it looks like we
+don't trigger this fallback code at all in CI (we hit HAVE_DEV_TTY for
+Linux and macOS, and then GIT_WINDOWS_NATIVE for Windows).
 
-That implies that `--tags` or `--no-tags` simply changes whether that
-limited set of tags is fetched.
+Here's a potential commit message for the patch:
 
-But the `--tags` option says this:
+  If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, the fallback
+  code calls the system getpass(). This unfortunately ignores the "echo"
+  boolean parameter, as we have no way to implement that functionality.
+  But we still have to keep the unused parameter, since our interface
+  has to match the other implementations.
 
-  Fetch all tags from the remote (i.e., fetch remote tags refs/tags/* into
-  local tags with the same name), in addition to whatever else would
-  otherwise be fetched. Using this option alone does not subject tags to
-  pruning, even if --prune is used (though tags may be pruned anyway if
-  they are also the destination of an explicit refspec; see --prune).
+As an aside, I wonder if cygwin could be using either /dev/tty or the
+Windows variant. But that's obviously a separate patch, and either way
+we'd want to fix this fallback code in the meantime.
 
-That implies that all tags are fetched.
+I actually kind of wonder if we could get away with assuming that every
+non-Windows platform is Unix-y enough to have /dev/tty, and just delete
+the fallback code entirely. But that is probably wishful thinking.
 
-I think we need somebody to test things and clarify the documentation.
-(I'm not volunteering because I have a lot of things on my plate right
-now.)
-
-In addition, it might be useful to add a `--relevant-tags` option or
-some such that simply fetches the relevant tags when arbitrary refspecs
-are specified.  If someone felt super interested, they could even make
-an additional generic option over other refspecs (I can imagine
-something like GitHub's refs/pull might be interesting for users).
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---cD2PdMP9e4OyK0eq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtD0jwAKCRB8DEliiIei
-gZM0AQDKScvC8vEApgaN6fSo+NWKP1RNY/29AxjngP+B3fVOtgD+LK9SwL1sRNbB
-SIHW3z3nvRGJuJ9zW3IugWvf9rdGtw4=
-=4s4P
------END PGP SIGNATURE-----
-
---cD2PdMP9e4OyK0eq--
+-Peff
