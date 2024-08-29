@@ -1,116 +1,99 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EC1898E5
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 22:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1E7156F41
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 23:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724971115; cv=none; b=ScGu5JzUiGOVSd3NvonBrpDkzyQYILS4zPuiE7xRGIFp53kRxY1Xezxqn2QiYOE1K5fvBiXE5F9BXu0WCVrDFlzP+lMZuMRKDL+KSZD6TbFnR0vCJqlm5PHntmTdQbxjHxsAzx5FuVHN1hHaWxVitpeVOaGtTYcmJNFtiiOy2TI=
+	t=1724973141; cv=none; b=NEueHqcuN5K6LATBS/Ervi6ztCYI/8fRmGs/cn9CdUdj9xynIHZDe+vMfBsokrRB4nzpKT1YP6aCTH/KakdDJR4Ovk2sVyFWbuVKHHFC4CKQQtEyJF15L2yL1FChbxB5v5UDQpC/ptVaGTWiVBwn1Y9QPZHM9K+lVO45AkCYU+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724971115; c=relaxed/simple;
-	bh=BtIJlgY4b4ErneDFyd5LEw/NvjmybDoVIjM6Wa2NxaU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mHwuLJmFdCtWBbbXQm18jjjqfiZ/floc16u0iCHrzFgP0fuT42ofeaoLLYAW5TeQe2WYT9lrNSdG5iuAyzFEg4GoF/j6hGkpbqWZlY/wrIohjTnQ1UpF+rPO+S8PZrI+gQXaLHzpot8+oZ1dMLY1QvxoI3L1TntUQ5vBOMNVvGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CYJ91XPi; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1724973141; c=relaxed/simple;
+	bh=A0y6FPZPP1ej0fHKwyrg01nfoadYsxFZuD06aER8VAU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aicm8TkKA30v1+b5TofoFgLQDmL2nSxWkrzDmtxRUa4G9dCJRG5F/Osl1wg1icQqP0UIcT6pyq9K3wPLLzrDpPdPTEGcO//0jQDtXqBhBMMEfZJpBlAPwVaDkbeK60nPChJ6u1tQDftCE0DNIWvSuuwP5MzDmjQ8U3oDInCUJdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPPbdgoQ; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CYJ91XPi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E05D2693E;
-	Thu, 29 Aug 2024 18:38:31 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=BtIJlgY4b4ErneDFyd5LEw/NvjmybDoVIjM6Wa
-	2NxaU=; b=CYJ91XPiOZbmfI3Pv2+OZQjmnjfHNFma3V0KNIoSbhXZVpaZIcd36S
-	uuLIESNQPbMxkXuX5bzaP5vPy+7n+qtSrehMZniTBu6ywgpF33M4AplHAQWOsM75
-	fLZJLoiO7CVAbV8laCaEVLySQDHLcFzO5RZN032TR1Pvld3LaK1P8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 360772693D;
-	Thu, 29 Aug 2024 18:38:31 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B5792693C;
-	Thu, 29 Aug 2024 18:38:30 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Yukai Chou <muzimuzhi@gmail.com>,  git@vger.kernel.org
-Subject: Re: Tags auto fetched by "git fetch origin" but not "git fetch
- origin main"
-In-Reply-To: <ZtD0kJU_OdBBktZ2@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 29 Aug 2024 22:22:08 +0000")
-References: <CAEg0tHRbGBBq7i78bTSfws_WZO=2W7xuDwiT2qFA5iOza8qDDA@mail.gmail.com>
-	<ZtDo--AY43-bPTHG@tapette.crustytoothpaste.net>
-	<xmqqy14ft36l.fsf@gitster.g>
-	<ZtD0kJU_OdBBktZ2@tapette.crustytoothpaste.net>
-Date: Thu, 29 Aug 2024 15:38:29 -0700
-Message-ID: <xmqqjzfzt0nu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPPbdgoQ"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6b47ff8a59aso11431437b3.2
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 16:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724973138; x=1725577938; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W5Qeu9z5n5Ko3HAyOC7ABx3S4C5QwCdSt+sJo+iBobI=;
+        b=WPPbdgoQsMgYyfBXX7gsQPAeH0ce4XWlac7qUxSBe9ca2Fv2ifs5ZXWi/3fxpBILAm
+         n0Ku4FmVsmDMNz3+5cuxDqokJNNuD7cHdT220BxDj+eG8yUDau1M00/RRyvZuKSH25T8
+         KfmsdRmBo0mNL/tPRq7F6aWAeMrv5gnm2Md2O36RuuBHbt896VGhiUuVNkMyarYFe9vn
+         wHQwTtrl7sjFc8MBGsh05UVFZrkPyFo4OmgwKMvvLTz5klVUmzW+DQTm79R7+5ba+aWd
+         tloz+v4ifdxkTX6E8XztfHtmCh/uDiNPCKObfea7qBxwEjYvH6BuP9QpYZeuv4/bBB/q
+         0TGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724973138; x=1725577938;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W5Qeu9z5n5Ko3HAyOC7ABx3S4C5QwCdSt+sJo+iBobI=;
+        b=BAcmIRev1veZUX+qHBkDMdoGd1pCoIpT2FDiTCwWOsr0D85JwLl2try1zPxz2sux1/
+         42bR9hKDOl6lIOQ/BsK3W2KH+YT7MH7i784In1LPhpEoi6fwqb8LTmcKdYVWYdK2u6Yf
+         bG7BTJQQdrf1mg4g6A8m6B7nDWICagsIhB8XDcka3NsU4q3X8zuG1IqRHE3tW/qj3ybV
+         Bn6BD6qeQoQjOTLBN5MBbHu8rQzwcaGysmCQyPefVHdqjFiajeRlWX9COi1UV6BPJg7/
+         u9gwUeOnNzOibQZFreW66yal92ljrYbU1az0w1P4lDMArOobN0XEd/VcwM3iOR3toBLM
+         w+og==
+X-Forwarded-Encrypted: i=1; AJvYcCUIWq2babbnml2N5PTxs3HBJNtp2KYnY5sN/di3lgzTUFsTJyUmEdSRjjUUAmImXcvW5DQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbmHIXINE9jnl9BA5HwX1/IYBg17zZpMJPFR4gThxAZpKxiMFy
+	O7Eu9Ftwa4IZwiIAndPW4ZGGYZr8TDfTanwXPFg/JCY5EfhTabUe7TsdwxUWfPJeNyH4NX2HPUh
+	OMFarTzf5mHztvEIjiBVEnELAl1Y=
+X-Google-Smtp-Source: AGHT+IGRnmR4Ru+fFMENdYJPtsOTOsgxhyymimiPu2rPI9HaVx/T9re1PDtyRKxtBn0eRLQYb0vhopCEYcj9i//dFB8=
+X-Received: by 2002:a05:690c:3245:b0:6b0:a6f0:b0da with SMTP id
+ 00721157ae682-6d40f340af9mr2290667b3.12.1724973138452; Thu, 29 Aug 2024
+ 16:12:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6A7C8288-6657-11EF-918D-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
+ <CAChcVunYDO_KAmEOoWEL2q63_Gzua-Kt3BmE5Snb8==K9Cww1w@mail.gmail.com> <20240829214336.GA440013@coredump.intra.peff.net>
+In-Reply-To: <20240829214336.GA440013@coredump.intra.peff.net>
+From: Pavel Rappo <pavel.rappo@gmail.com>
+Date: Fri, 30 Aug 2024 00:12:07 +0100
+Message-ID: <CAChcVukzk=-1JNAoffWQEEv4Ne1FozGEwzGuaUWuiwhoHkcUng@mail.gmail.com>
+Subject: Re: How to turn off rename detection for cherry-pick?
+To: Jeff King <peff@peff.net>
+Cc: Elijah Newren <newren@gmail.com>, Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+You seem to have confirmed my understanding that I described in my
+initial email (you replied to my second email in this thread).
 
-> But the `--tags` option says this:
+On Thu, Aug 29, 2024 at 10:43=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
->   Fetch all tags from the remote (i.e., fetch remote tags refs/tags/* into
->   local tags with the same name), in addition to whatever else would
->   otherwise be fetched. Using this option alone does not subject tags to
->   pruning, even if --prune is used (though tags may be pruned anyway if
->   they are also the destination of an explicit refspec; see --prune).
+> On Thu, Aug 29, 2024 at 09:47:52AM +0100, Pavel Rappo wrote:
 >
-> That implies that all tags are fetched.
-
-That is stronger than "implies", I would think.  Indeed I know from
-the code inspection that the auto-following only triggers when neither
---tags or --no-tags option is given, i.e. builtin/fetch.c has this:
-
-	if (tags == TAGS_DEFAULT && autotags)
-		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
-
-where the variable tags is initialized to TAGS_DEFAULT,
---tags/--no-tags sets it to TAGS_SET or TAGS_UNSET, and autotags is
-incremented only if a refspec we use has right hand side after the
-colon, i.e. stores what we fetched in our refs/ namespace.
-
-> I think we need somebody to test things and clarify the documentation.
-
-Done ;-)
-
-> In addition, it might be useful to add a `--relevant-tags` option or
-
-A similar option is called "--follow-tags" on the "git push" side.
-I _think_ it is just the matter of adding the option and have it set
-the tags variable back to TAGS_DEFAULT, i.e.
-
-
-diff --git c/builtin/fetch.c w/builtin/fetch.c
-index c297569a47..f22c00a39d 100644
---- c/builtin/fetch.c
-+++ w/builtin/fetch.c
-@@ -2186,6 +2186,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			    N_("fetch all tags and associated objects"), TAGS_SET),
- 		OPT_SET_INT('n', NULL, &tags,
- 			    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
-+		OPT_SET_INT(0, "follow-tags", &tags,
-+			    N_("auto-follow tags"), TAGS_DEFAULT)),
- 		OPT_INTEGER('j', "jobs", &max_jobs,
- 			    N_("number of submodules fetched in parallel")),
- 		OPT_BOOL(0, "prefetch", &prefetch,
-
-
-but I didn't look too deeply into it.  It needs compile testing,
-documentation updates and new teststo cover the behaviour.
-
-Thanks.
+> > The reason I ask this is that we've run into a (probably practically
+> > rare) case where cherry-pick changes a wrong file. We want to be able
+> > to detect such cases.
+>
+> You can pass merge strategy options on the command line. The old
+> "recursive" strategy has a "no-renames" option, so:
+>
+>   git cherry-pick --strategy=3Drecursive -Xno-renames feature
+>
+> generates a modify/delete conflict for your example. Curiously, the
+> modern default, "ort", does not seem to respect that option. You can
+> bump up the limit to require exact renames, though, which does prevent
+> the mismerge in your case. Like:
+>
+>   git cherry-pick -Xfind-renames=3D100% feature
+>
+> There are also other strategies that do not do rename detection, but I
+> think you are better off using one of the more commonly-used strategies
+> and just disabling renames. IMHO it's a bug that ort doesn't respect
+> -Xno-renames.
+>
+> -Peff
