@@ -1,81 +1,85 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F3F1917DC
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 09:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092E8DDA6
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 10:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724924375; cv=none; b=K+/DVLCY3lqmedvH/G4zLxTwQa8GU2UzKARZYR5NbBxZFZI/xLt+/96aYa8fxm+d73ZC3+T/j6qc8Z+o05aAuGya+zyflvknvu3v+JpMMYux84/U6cUQVlb/7HNAZAsh7xhMfnIyDJ9G8UKjnazjKI/RrQZPBirAOoj8WjDit1o=
+	t=1724925821; cv=none; b=UGR7AlnXQGsG+stvxftwuQDZmqj7wnq8uZbv8f+wzk59p0WC3JOdVB8+F7Hfg8nJcVABK8S0MSoSlUU7x72UpsM6vgmHuc3bikQ8t9gRQg1klJWGdlTFsCvXL5wDAXcKJGiBi0CAMaPUgjPGLrrHqKEKDHAVN68jHyijhDSTn9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724924375; c=relaxed/simple;
-	bh=U9J5P0oCJzY32aGIm9ibRn0px/mBMJPwQUTois44z6s=;
+	s=arc-20240116; t=1724925821; c=relaxed/simple;
+	bh=n/MDD9wbXn2JBeWvXDhMcU3rfXwinbNcvihB2A056Vg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kWd4rEKblogeGYbGZpyJYUQZYuoMUOLqHQ/56oeTF88XdxYXE5oG/mLwtX6UKt41seOwEens7vkvPCNDTHt7Lhzr6U6l8WFehkKbKggewT6G05DHWyK7arVDtUkk/4InrmRGkikX1YKH3Fh1XfxnMc6YkLbWmPSsugX5tBB7BD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aXeH9nB0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZcwbzKDG; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=WEGTsKazuqIr7a3UUu9MhGhOyJ5P5ECx5JwBixWzdicx5juIijwWCYt6nHsR//55u9ACyjR/CShyR7kiC0dNPAj9S2nuhS/dB7bE/4nFbCNrhbWvY8D2/QSmDloAb7+l4yvLSxUFAslUarIclmZC8vZaoJgU19gbtjZkQiSRqnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mM4+hDuA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwSocbAA; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aXeH9nB0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZcwbzKDG"
-Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3CF161151C1D;
-	Thu, 29 Aug 2024 05:39:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mM4+hDuA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwSocbAA"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2EAE61151BB6;
+	Thu, 29 Aug 2024 06:03:39 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 29 Aug 2024 05:39:33 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 29 Aug 2024 06:03:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1724924373; x=1725010773; bh=5yq6q6JNiw
-	d4+YshgH/avjb7HWZjW0RZYeknNET2kqE=; b=aXeH9nB02uDinjlpXE9MSs7gNy
-	BEno1LuvJnHHdnYZ0jZM4u8LBYBeMXYas5fbvsfbxXpxu6+Y4OyxTL/XTC80IpsL
-	j8W4LmOIJSsdJ837tU1rm8S8LN3xFm/rjl//DWtHe6KpcixUjy2eDkjrVDfKN6iX
-	vZCb78th+CVYUy5pEloZY50PuBUCGMRmW/mTQSDSsmJb7iOuBsTnsvXZsdM+tC5x
-	7jVzDHtFRkBEUhfWi2+XAsevVh+YnmDPA4pOFLwSj983x2BOJAWdLK6jhTPP0eyq
-	IQShkVnd3/XyYwtMjlLne0UPAvnUoW5O66GJHY+wWHyrxcfL6HfgNhhtNBDQ==
+	:subject:to:to; s=fm1; t=1724925819; x=1725012219; bh=zO+5h/bTa8
+	KWZiskOcAkcHOs42un+cqsSt/hrEUrVAc=; b=mM4+hDuAEl2Xzw2E03atmswZmu
+	O7PXFMANXycnC4Qw6lOLDPRulI0rxCZ/2CIP2nlJGvBjM9g+ozywSHZsKXKaY1fq
+	sWAS7674JNCtvPk3N50EwomAKDyYLzVt8sMqWnjLIvdvv8POQNkWu9RpucmbrUOz
+	pv1/LnwBPKC+oAFxo4u4XFVZvxyzSMCQuvlyzMmeVPrtOhmu8PAjXk+MvTOoiW1f
+	qPDmBmHjPcLAby6AsiUaC1PAkk9vZQ02c9QEugETfQhW6B6Ch0IRBazyh+69s04F
+	HPi8UGTzCgsLC2YQzTubi0N0qLkBBnHSSql+EaB3bVWoxWtNjdXkJLfkdK1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1724924373; x=1725010773; bh=5yq6q6JNiwd4+YshgH/avjb7HWZj
-	W0RZYeknNET2kqE=; b=ZcwbzKDGXWSuiP6u7GXUmfZdwj0dUm88R+f0J6xV0m56
-	LMurnHqhD56uXw+PjlmGWyVTu06QET4BqWbe2GJVVqfy5UIF42NgBr1vkYFuN0I7
-	FvfQwVSoFneP1uNd6sX8IyfPZgN93ziWgtTxnTPzeqmNSr2u+x+idcVe16PIOP6y
-	9x4B8wkbaTEUQztMSnshDLqVQjwzH0ieQniCMOFMXHiIdyoucptuP/mvS0dYFUb0
-	9H3/hYzgy1be4tSpXmdZ5GJ98MBpmpiGwTgN1ONVrhijl/NRxwinWaxYrhzarKgA
-	LvfcUKwyF+d1w1BkxzrHSc7W8S13Mlzeb38g6gANpg==
-X-ME-Sender: <xms:1UHQZqaLLZw7fSKj5dsvnoB-n0-sjc0aO4aE7Kzb9Kyl47wnO-frTA>
-    <xme:1UHQZta12WMEtOwdljZ5bss2A45aNaXyjuk8eP1FaYx_jqi4JE8GCkDhAS3VOD3pI
-    6DiQ87DBoCF9QHXKA>
-X-ME-Received: <xmr:1UHQZk8IuUlfuRiFoiWvYNAmDLjAoyhnw2cdGHMhnihXZp_Z0hDbUJ5_YypmEdRkaps98whXBugFev4BaGiZWOeVyZXgyC2mxXoHY22LRUuXluM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefgedgudekucetufdoteggodetrfdotf
+	fm1; t=1724925819; x=1725012219; bh=zO+5h/bTa8KWZiskOcAkcHOs42un
+	+cqsSt/hrEUrVAc=; b=mwSocbAAGgpfgPYDgR7OUna55bpveihJVEP9dvhpKJqT
+	Pkhz0ryqdnCcrI1+t2oQFGegnRoaf7DxylOgHoG7a/ij0i5V+ffOv9LfUw4L8vYI
+	7ovPN4tbtGTpO0pmMtN/qlDhB+7mclEQHo9PA+BZpyp+/CfDfuFgQcMCQehAex6t
+	EFHKKzctDz3L1v9Bs79yH7Ob6AgaMlfZBLhKE+xjbbCRJTviOtj/5Lw+lyJ56yDS
+	jDhMdN6BN3sN+tMW2CXoRwG1vN5ngpsPrKCC+cgPhmzdFi6eI3UCs0Id5HAeFY4x
+	/64AmD8K9CWWbqNqvQtW4xVVBBw4mwG4wtzi5qYYig==
+X-ME-Sender: <xms:ekfQZrStGd1Djz_SGq7FH7xdU2CIk3vBw4u8o-_pe74m6GC57Ax7NA>
+    <xme:ekfQZszJ5LfWcRj8pX_aAuCKTDymB7hH534G8qOxBXJOgGNUtQr0I4ydIC8qxQZY4
+    SmxOUK-2vFNRn-f7g>
+X-ME-Received: <xmr:ekfQZg2MJ8F2OFpxBmN37bSJ9-ad1RIrF3R-3CJ19tmI7C2LPH7u0uGXceFtNjS4NUe-bzS5OaPaENIJsDT51J6RLA-7NDdlQJce0OgHkzbhe_c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefgedgvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1UHQZsrv9hDivyuXDH7C2yyk-ypsbbAR43OXQVgQxwJmzHrrGPCACA>
-    <xmx:1UHQZlpZD4vUUvTrxNutp1dUjduPRm9G9c3AnfuB_HuJ0CdDnAeWzA>
-    <xmx:1UHQZqSDruv47nL4MfnMGU1fv6By_kNOvu3kjRjAyBz51YXg4aH-uA>
-    <xmx:1UHQZlr2YCmp97iGUQ2GglQi5A8dTzJCpW9Z66bgS62HnXL8t5Gu7A>
-    <xmx:1UHQZs13RgJEsb4MDvsLQYIYltRBJq8setNvIJZmZCp7xWmWlfaUoz7->
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepvghrihgtshhunhhshhhinhgvsegthhgrrhhtvghrrdhnvghtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:ekfQZrC7iWzPWGDs_fi4-FOx4MdHrgqOaEEDFUuubvc_x1DtPbJSug>
+    <xmx:e0fQZkjOyNfshOKA3LJvbJAhB-YRseMdEbvsFMLjiZv3bAR1S1f58g>
+    <xmx:e0fQZvogG2UjX_viDwsLRibXzerSj5_JEBmOw0XgldVSqT7e28mu9w>
+    <xmx:e0fQZvg3QxHM2bZLTLRp0QKtMZugH9EC7rRPm_6UYt_YoWt2IkPZXQ>
+    <xmx:e0fQZsfNNm0B5SXcGVtOxzGP0lr6ZJ9-3RStFUf2KzGvYCWSuMnPouyK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Aug 2024 05:39:32 -0400 (EDT)
+ 29 Aug 2024 06:03:37 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 128652f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 29 Aug 2024 09:39:24 +0000 (UTC)
-Date: Thu, 29 Aug 2024 11:39:31 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9002947e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 29 Aug 2024 10:03:26 +0000 (UTC)
+Date: Thu, 29 Aug 2024 12:03:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>
-Subject: [PATCH 21/21] environment: stop storing "core.notesRef" globally
-Message-ID: <ecafe1585f8ec9a6862a45b86244305f3e1294ab.1724923648.git.ps@pks.im>
-References: <cover.1724923648.git.ps@pks.im>
+To: Eric Sunshine <ericsunshine@charter.net>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] chainlint: make error messages self-explanatory
+Message-ID: <ZtBHbftK7vdTEz93@tanuki>
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+ <20240829091625.41297-2-ericsunshine@charter.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,244 +88,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1724923648.git.ps@pks.im>
+In-Reply-To: <20240829091625.41297-2-ericsunshine@charter.net>
 
-Stop storing the "core.notesRef" config value globally. Instead,
-retrieve the value in `default_notes_ref()`. The code is never called in
-a hot loop anyway, so doing this on every invocation should be perfectly
-fine.
+On Thu, Aug 29, 2024 at 05:16:24AM -0400, Eric Sunshine wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
+> 
+> The annotations emitted by chainlint to indicate detected problems are
+> overly terse, so much so that developers new to the project -- those who
+> should most benefit from the linting -- may find them baffling. For
+> instance, although the author of chainlint and seasoned Git developers
+> may understand that "?!AMP?!" is an abbreviation of "ampersand" and
+> indicates a break in the &&-chain, this may not be obvious to newcomers.
+> 
+> Similarly, although the annotation "?!LOOP?!" is understood by project
+> regulars to indicate a missing `|| return 1` (or `|| exit 1` in a
+> subshell), newcomers may find it more than a little perplexing. The
+> "?!LOOP?!" case is particularly serious since it is likely that some
+> newcomers are unaware that shell loops do not terminate automatically
+> upon error, and it is more difficult for a newcomer to figure out how to
+> correct the problem by examining surrounding code since `|| return 1`
+> appears in test scrips relatively infrequently (compared, for instance,
+> with &&-chaining).
+> 
+> Address these shortcomings by emitting human-consumable messages which
+> both explain the problem and give a strong hint about how to correct it.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/notes.c | 22 ++++++++++++++--------
- config.c        |  8 --------
- environment.c   |  1 -
- environment.h   |  2 --
- notes.c         | 21 +++++++++++++--------
- notes.h         |  3 ++-
- 6 files changed, 29 insertions(+), 28 deletions(-)
+A worthwhile goal indeed. As you say, especially figuring out how to fix
+the loop annotations is not exactly straight forward.
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 04f9dfb7fbd..5d594a07240 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -897,6 +897,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 			      1, PARSE_OPT_NONEG),
- 		OPT_END()
- 	};
-+	char *notes_ref;
- 
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_notes_merge_usage, 0);
-@@ -924,7 +925,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	if (do_commit)
- 		return merge_commit(&o);
- 
--	o.local_ref = default_notes_ref();
-+	notes_ref = default_notes_ref(the_repository);
-+	o.local_ref = notes_ref;
- 	strbuf_addstr(&remote_ref, argv[0]);
- 	expand_loose_notes_ref(&remote_ref);
- 	o.remote_ref = remote_ref.buf;
-@@ -953,7 +955,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
--		    remote_ref.buf, default_notes_ref());
-+		    remote_ref.buf, notes_ref);
- 	strbuf_add(&(o.commit_msg), msg.buf + 7, msg.len - 7); /* skip "notes: " */
- 
- 	result = notes_merge(&o, t, &result_oid);
-@@ -961,7 +963,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	if (result >= 0) /* Merge resulted (trivially) in result_oid */
- 		/* Update default notes ref with new commit */
- 		refs_update_ref(get_main_ref_store(the_repository), msg.buf,
--				default_notes_ref(), &result_oid, NULL, 0,
-+				notes_ref, &result_oid, NULL, 0,
- 				UPDATE_REFS_DIE_ON_ERR);
- 	else { /* Merge has unresolved conflicts */
- 		struct worktree **worktrees;
-@@ -973,14 +975,14 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
- 		worktrees = get_worktrees();
- 		wt = find_shared_symref(worktrees, "NOTES_MERGE_REF",
--					default_notes_ref());
-+					notes_ref);
- 		if (wt)
- 			die(_("a notes merge into %s is already in-progress at %s"),
--			    default_notes_ref(), wt->path);
-+			    notes_ref, wt->path);
- 		free_worktrees(worktrees);
--		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", default_notes_ref(), NULL))
-+		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", notes_ref, NULL))
- 			die(_("failed to store link to current notes ref (%s)"),
--			    default_notes_ref());
-+			    notes_ref);
- 		fprintf(stderr, _("Automatic notes merge failed. Fix conflicts in %s "
- 				  "and commit the result with 'git notes merge --commit', "
- 				  "or abort the merge with 'git notes merge --abort'.\n"),
-@@ -988,6 +990,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	free_notes(t);
-+	free(notes_ref);
- 	strbuf_release(&remote_ref);
- 	strbuf_release(&msg);
- 	return result < 0; /* return non-zero on conflicts */
-@@ -1084,6 +1087,7 @@ static int prune(int argc, const char **argv, const char *prefix)
- static int get_ref(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = { OPT_END() };
-+	char *notes_ref;
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_notes_get_ref_usage, 0);
- 
-@@ -1092,7 +1096,9 @@ static int get_ref(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_get_ref_usage, options);
- 	}
- 
--	puts(default_notes_ref());
-+	notes_ref = default_notes_ref(the_repository);
-+	puts(notes_ref);
-+	free(notes_ref);
- 	return 0;
- }
- 
-diff --git a/config.c b/config.c
-index 53c68f3da61..1266eab0860 100644
---- a/config.c
-+++ b/config.c
-@@ -1555,14 +1555,6 @@ static int git_default_core_config(const char *var, const char *value,
- 		return git_config_string(&check_roundtrip_encoding, var, value);
- 	}
- 
--	if (!strcmp(var, "core.notesref")) {
--		if (!value)
--			return config_error_nonbool(var);
--		free(notes_ref_name);
--		notes_ref_name = xstrdup(value);
--		return 0;
--	}
--
- 	if (!strcmp(var, "core.editor")) {
- 		FREE_AND_NULL(editor_program);
- 		return git_config_string(&editor_program, var, value);
-diff --git a/environment.c b/environment.c
-index 9dd000cda36..a2ce9980818 100644
---- a/environment.c
-+++ b/environment.c
-@@ -67,7 +67,6 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
- #endif
- enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
--char *notes_ref_name;
- int grafts_keep_true_parents;
- int core_apply_sparse_checkout;
- int core_sparse_checkout_cone;
-diff --git a/environment.h b/environment.h
-index aa38133da9c..923e12661e1 100644
---- a/environment.h
-+++ b/environment.h
-@@ -203,8 +203,6 @@ enum object_creation_mode {
- };
- extern enum object_creation_mode object_creation_mode;
- 
--extern char *notes_ref_name;
--
- extern int grafts_keep_true_parents;
- 
- extern int repository_format_precious_objects;
-diff --git a/notes.c b/notes.c
-index da42df282d5..f4f18daf07e 100644
---- a/notes.c
-+++ b/notes.c
-@@ -992,15 +992,16 @@ static int notes_display_config(const char *k, const char *v,
- 	return 0;
- }
- 
--const char *default_notes_ref(void)
-+char *default_notes_ref(struct repository *repo)
- {
--	const char *notes_ref = NULL;
-+	char *notes_ref = NULL;
-+
- 	if (!notes_ref)
--		notes_ref = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		notes_ref = xstrdup_or_null(getenv(GIT_NOTES_REF_ENVIRONMENT));
- 	if (!notes_ref)
--		notes_ref = notes_ref_name; /* value of core.notesRef config */
-+		repo_config_get_string(repo, "core.notesref", &notes_ref);
- 	if (!notes_ref)
--		notes_ref = GIT_NOTES_DEFAULT_REF;
-+		notes_ref = xstrdup(GIT_NOTES_DEFAULT_REF);
- 	return notes_ref;
- }
- 
-@@ -1010,13 +1011,14 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 	struct object_id oid, object_oid;
- 	unsigned short mode;
- 	struct leaf_node root_tree;
-+	char *to_free = NULL;
- 
- 	if (!t)
- 		t = &default_notes_tree;
- 	assert(!t->initialized);
- 
- 	if (!notes_ref)
--		notes_ref = default_notes_ref();
-+		notes_ref = to_free = default_notes_ref(the_repository);
- 	update_ref_namespace(NAMESPACE_NOTES, xstrdup(notes_ref));
- 
- 	if (!combine_notes)
-@@ -1033,7 +1035,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 
- 	if (flags & NOTES_INIT_EMPTY ||
- 	    repo_get_oid_treeish(the_repository, notes_ref, &object_oid))
--		return;
-+		goto out;
- 	if (flags & NOTES_INIT_WRITABLE && refs_read_ref(get_main_ref_store(the_repository), notes_ref, &object_oid))
- 		die("Cannot use notes ref %s", notes_ref);
- 	if (get_tree_entry(the_repository, &object_oid, "", &oid, &mode))
-@@ -1043,6 +1045,9 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 	oidclr(&root_tree.key_oid, the_repository->hash_algo);
- 	oidcpy(&root_tree.val_oid, &oid);
- 	load_subtree(t, &root_tree, t->root, 0);
-+
-+out:
-+	free(to_free);
- }
- 
- struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
-@@ -1105,7 +1110,7 @@ void load_display_notes(struct display_notes_opt *opt)
- 
- 	if (!opt || opt->use_default_notes > 0 ||
- 	    (opt->use_default_notes == -1 && !opt->extra_notes_refs.nr)) {
--		string_list_append(&display_notes_refs, default_notes_ref());
-+		string_list_append_nodup(&display_notes_refs, default_notes_ref(the_repository));
- 		display_ref_env = getenv(GIT_NOTES_DISPLAY_REF_ENVIRONMENT);
- 		if (display_ref_env) {
- 			string_list_add_refs_from_colon_sep(&display_notes_refs,
-diff --git a/notes.h b/notes.h
-index 235216944bc..6dc6d7b2654 100644
---- a/notes.h
-+++ b/notes.h
-@@ -4,6 +4,7 @@
- #include "string-list.h"
- 
- struct object_id;
-+struct repository;
- struct strbuf;
- 
- /*
-@@ -70,7 +71,7 @@ extern struct notes_tree {
-  * 3. The value of the core.notesRef config variable, if set
-  * 4. GIT_NOTES_DEFAULT_REF (i.e. "refs/notes/commits")
-  */
--const char *default_notes_ref(void);
-+char *default_notes_ref(struct repository *repo);
- 
- /*
-  * Flags controlling behaviour of notes tree initialization
--- 
-2.46.0.421.g159f2d50e7.dirty
+[snip]
+> diff --git a/t/chainlint.pl b/t/chainlint.pl
+> index 5361f23b1d..d79f183dfd 100755
+> --- a/t/chainlint.pl
+> +++ b/t/chainlint.pl
+> @@ -9,7 +9,7 @@
+>  # Input arguments are pathnames of shell scripts containing test definitions,
+>  # or globs referencing a collection of scripts. For each problem discovered,
+>  # the pathname of the script containing the test is printed along with the test
+> -# name and the test body with a `?!FOO?!` annotation at the location of each
+> +# name and the test body with a `?!ERR?!` annotation at the location of each
+>  # detected problem, where "FOO" is a tag such as "AMP" which indicates a broken
+>  # &&-chain. Returns zero if no problems are discovered, otherwise non-zero.
+>  
+> @@ -181,7 +181,7 @@ sub swallow_heredocs {
+>  			$self->{lineno} += () = $body =~ /\n/sg;
+>  			next;
+>  		}
+> -		push(@{$self->{parser}->{problems}}, ['UNCLOSED-HEREDOC', $tag]);
+> +		push(@{$self->{parser}->{problems}}, ['HEREDOC', $tag]);
+>  		$$b =~ /(?:\G|\n).*\z/gc; # consume rest of input
+>  		my $body = substr($$b, $start, pos($$b) - $start);
+>  		$self->{lineno} += () = $body =~ /\n/sg;
 
+I was wondering why this is being changed here, as I found the old name
+to be easier to understand. Then I saw further down that you essentially
+use those as identifiers for the actual problem.
+
+Is there a specific reason why we now have the separate translation
+step? Couldn't we instead push the translated message here, directly?
+
+> @@ -296,8 +297,11 @@ sub parse_group {
+>  
+>  sub parse_subshell {
+>  	my $self = shift @_;
+> -	return ($self->parse(qr/^\)$/),
+> -		$self->expect(')'));
+> +	$self->{insubshell}++;
+> +	my @tokens = ($self->parse(qr/^\)$/),
+> +		      $self->expect(')'));
+> +	$self->{insubshell}--;
+> +	return @tokens;
+>  }
+>  
+>  sub parse_case_pattern {
+
+Okay. The subshell recursion level tracking here is required such that
+we can discern LOOPEXIT vs LOOPRETURN cases. Makes sense.
+
+> @@ -641,7 +654,8 @@ sub check_test {
+>  	for (sort {$a->[1]->[2] <=> $b->[1]->[2]} @$problems) {
+>  		my ($label, $token) = @$_;
+>  		my $pos = $token->[2];
+> -		$checked .= substr($body, $start, $pos - $start) . " ?!$label?! ";
+> +		my $err = format_problem($label, $token);
+> +		$checked .= substr($body, $start, $pos - $start) . " ?!ERR $err?! ";
+>  		$start = $pos;
+>  	}
+>  	$checked .= substr($body, $start);
+> diff --git a/t/chainlint/arithmetic-expansion.expect b/t/chainlint/arithmetic-expansion.expect
+> index 338ecd5861..2efd65dcbd 100644
+> --- a/t/chainlint/arithmetic-expansion.expect
+> +++ b/t/chainlint/arithmetic-expansion.expect
+> @@ -4,6 +4,6 @@
+>  5 	baz
+>  6 ) &&
+>  7 (
+> -8 	bar=$((42 + 1)) ?!AMP?!
+> +8 	bar=$((42 + 1)) ?!ERR missing '&&'?!
+>  9 	baz
+>  10 )
+
+I find the resulting error messages a bit confusing: to me it reads as
+if "ERR" is missing the ampersands. Is it actually useful to have the
+ERR prefix in the first place? We do not output anything but errors, so
+it feels somewhat redundant.
+
+Patrick
