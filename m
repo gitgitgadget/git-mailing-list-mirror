@@ -1,110 +1,101 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A151B1D41
-	for <git@vger.kernel.org>; Thu, 29 Aug 2024 18:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C874914B086
+	for <git@vger.kernel.org>; Thu, 29 Aug 2024 18:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724956064; cv=none; b=SPbOa6hPjvDiF+eSDulTKEbVNCFbid3iX9HdsM6Bb8zD8UN333ucN21rbyZlpOY5WEG5mH1Xbhu9dXZhLJR4M2iJq5FU3Q7vscd/7dFu4sSVZRMej/WTx61k//qeVCdDKSZ77PvXzKNAbo1pAEkfBI3A3a9paO2+aNqtW1UqB7I=
+	t=1724956112; cv=none; b=QwYDEq3eHHqyPtXjwijdnBbbI9rqMLXkZoTPS8LK5MM1U8Z5lVwg/55V4oX2rjeF/k0rIHbiGa6gqRoQA1SGgLFa7wmZ6C8qc14j+MVbKM34yi0HkWfpphLTsxHQJJ4nBzn4enMB196qO/tGUrmUKGwzJlYKg+QFVJlZSiAmB68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724956064; c=relaxed/simple;
-	bh=HlG+WkLkWghzg5v9E/Fm4JxwpuymfGl5JvJqyybowes=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HOYiAWcZQaXChJOQfWkzXS4338MEOY83etWPMUXH5GqgXbh7xltn2Swb4IIS6r8DOOrtXoNCn7odG98ShSyVxJZsxKMl966XHzB+Cxk25u82m6/th3gfJpWF856XCGS/BRJtpyztv+iNm6kutlEcdCqdRBowbyyYQSg1dth4tXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=u97MsUtv; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u97MsUtv"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01D8E24362;
-	Thu, 29 Aug 2024 14:27:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HlG+WkLkWghzg5v9E/Fm4JxwpuymfGl5JvJqyy
-	bowes=; b=u97MsUtvbJJNPI2BN4wKLfD/uriH1dvIzzlw/P6SQ3UJ2JFOsc/nM1
-	3UnxPu8RZQ4RbmJW4j2N4FUwzvsNTGh8AAbKgz1djuC/9s6UIgLNITHgkuRnYYEb
-	vC5+vgsX4PrNlN62gJbOF4jy8ja2iisxIDdolIz79i5wQURfkY0mI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EEE0A24361;
-	Thu, 29 Aug 2024 14:27:41 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6588524360;
-	Thu, 29 Aug 2024 14:27:40 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: [PATCH 9/6] git-compat-util: guard definition of MAYBE_UNUSED with
- __GNUC__
-In-Reply-To: <xmqq4j73w5up.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Thu, 29 Aug 2024 11:18:06 -0700")
-References: <ZsIMc6cJ-kzMzW_8@ArchLinux> <Zs348uXMBdCuwF-2@ArchLinux>
-	<xmqqbk1cz69c.fsf@gitster.g>
-	<20240829040215.GA4054823@coredump.intra.peff.net>
-	<xmqqseunxtks.fsf_-_@gitster.g>
-	<20240829175215.GA415423@coredump.intra.peff.net>
-	<xmqq8qwfw6e9.fsf@gitster.g> <xmqq4j73w5up.fsf_-_@gitster.g>
-Date: Thu, 29 Aug 2024 11:27:39 -0700
-Message-ID: <xmqqttf3uquc.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1724956112; c=relaxed/simple;
+	bh=2QAZs6EOF8u1gXEZ7zcK0Sm5Uzmw9jkyVCv5pqGnfKs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sPAdAjRIQ9i8H1xS2catdGhChCFIrWxm0au+QImcKqHqyoF7eaJTsS/K6IFe7yzUklM0zLWHZlpwO/yt080u5k6yfKJ+3Fe+oP1YAh2708dSmOhXEZxF0ah4V18NqIlGVEx5iDbuPxWsSiyrCOMbK7K9Ewl8YDCS+wE06VbihDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-456874b6cc2so808681cf.3
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 11:28:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724956109; x=1725560909;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QomfNWXlmbRbN18xLmXbBIrU27PXeS+Ez6oc5uCCsF8=;
+        b=T7K24LQc4TQCtpn3d3ZWFVQ5lmQxNx1FBBDN/zfhaJKEe8TXlUw4238JRmEZHQC5fP
+         X8WImQumv1YOT9kTyGKY/wnvcBZpoT50SssO7zWfpI/izLxxHtB9sLRB1GAAtg0eGhBP
+         daqvumuQVbH2ffjfn2YbVvyOJ3X/3a/i6opOLR7hsS7cnaDhjNhGFT30MREhY96DwBU5
+         0DdM9L+raQpjHy6ApjTqHC2nvkSU8q8NQ4l0T4cnjPnDs+3nBX3tng6/7PrG7cdsnNNz
+         bCxMEQyk3DCL4zMaNijBlmx68WEUDypVWrcBzbzLx9ZlPLebXkX/J9D+SYLKVBpMNXtX
+         9wrw==
+X-Forwarded-Encrypted: i=1; AJvYcCX08b7Ht0aGZJkL3UX+XwhHYRxGmbUkH9NDz+EFO1ro3yUiIkSxs66pwmyEgGWTltL68JY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFnAmm1BlTSDc5/hd80WFd9c6HLu6Wf94YGFtqmsfa+B6qC8by
+	GlfPwSwvbOPfF6wONCRGRxujDuNSHVThHSykQlyzMED/G0IXrnKs5O1YpAHMCCnrRCNvl9jf0/h
+	FRg6tpAiGE/jZc/nu/Quk3Ii4Too=
+X-Google-Smtp-Source: AGHT+IFeuo5GowOHhFY6QFkQrepikiwh7+85F5kuDk4jL7ITIQL2TRScfJqXUcibwp2VBc1Iv/JDWkQytO6j24doNxA=
+X-Received: by 2002:a05:6214:d6d:b0:6b7:586c:6db with SMTP id
+ 6a1803df08f44-6c33e7e2162mr23872326d6.9.1724956108607; Thu, 29 Aug 2024
+ 11:28:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5FDB12E0-6634-11EF-8174-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+ <20240829091625.41297-3-ericsunshine@charter.net> <ZtBHecRkFQkSAF6C@tanuki>
+In-Reply-To: <ZtBHecRkFQkSAF6C@tanuki>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 29 Aug 2024 14:28:17 -0400
+Message-ID: <CAPig+cTTXmaAjJrOOSKKDKvMAE+yD9wfoYii5C21jGpq=sqtyA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] chainlint: reduce annotation noise-factor
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
+	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Just like we only define UNUSED macro when __GNUC__ is defined,
-and fall back to an empty definition otherwise, we should do the
-same for MAYBE_UNUSED.
+On Thu, Aug 29, 2024 at 6:03=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> On Thu, Aug 29, 2024 at 05:16:25AM -0400, Eric Sunshine wrote:
+> > Note that the preceding change gave all problem annotations a uniform
+> > "ERR" prefix which serves as a reasonably suitable replacement needle
+> > when searching in a terminal, so loss of "?!" in the output should not
+> > be overly problematic.
+>
+> Okay, now the "ERR" prefix becomes a bit more important because we drop
+> the other punctuation. I'm still not much of a fan of it, though. Makes
+> me wonder whether we want to take a clue from how compilers nowadays
+> format this, e.g. by using "pointers".
+>
+> So this:
+>     7   fish |
+>     8   cow ?!AMP?!
+>
+> Would become this:
+>     t/chainlint/pipe.actual:8: error: expected ampersands (&&)
+>     7   fish |
+>     8   cow
+>             ^
+>
+> While this would be neat, I guess it would also be way more work than
+> the current series you have posted. And whether that work is ultimately
+> really worth it may be another question. Probably not.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Before I forget that we have discussed this, just as a
-   documentation (read: this is not a patch to be applied).
+Interestingly, I'm not always a fan of the sort of compiler output you
+suggest since I often have more difficulty interpreting the output and
+locating the actual problem[*] than if the annotation was merely
+inline, sitting immediately next to the problem itself.
 
-   I think this only matters when a compiler satisfies all three
-   traits:
+Also, the vast majority of the time, chainlint will be flagging a
+missing "&&" at the end of line, so with the inline annotation, it's
+very easy to see (especially when colored) exactly where the problem
+is at a glance.
 
-   - does not define __GNUC__
-   - does have its own __attribute__() macro
-   - barfs on __attribute__((__unused__))
+Hence, the cost of implementing "^" doesn't feel particularly
+worthwhile (and, with my limited Git time these days, I'm unlikely to
+do so).
 
-   Otherwise we will define __attribute__(x) away to empty to cause
-   no harm.
-
-   Since we have survived without complaints without such a guard
-   for quite some time, it may be a sign that no compiler that knows
-   __attribute__() that people ever tried to compile Git with barfs
-   with __attribute__((__unused__)).  I dunno.
-
- git-compat-util.h | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e4a306dd56..74ed581b5d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -673,7 +673,11 @@ static inline int git_has_dir_sep(const char *path)
-  * would give a warning in a compilation where it is unused.  In such
-  * a case, MAYBE_UNUSED is the appropriate annotation to use.
-  */
-+#ifdef __GNUC__
- #define MAYBE_UNUSED __attribute__((__unused__))
-+#else
-+#define MAYBE_UNUSED
-+#endif
- 
- #include "compat/bswap.h"
- 
--- 
-2.46.0-563-gaeb9b172ce
-
+[*] This is especially so when dealing with foreign code which is
+wider than my 80-column terminal or 80-column editor window, in which
+the source text and the "^" may wrap over multiple lines.
