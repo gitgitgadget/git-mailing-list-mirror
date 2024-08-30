@@ -1,126 +1,94 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAF71BE259
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 20:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAAA1BD00B
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 20:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725051224; cv=none; b=pyN3rmoY4iT4Wz1qB5ll1Meqjq7Glapn1Z2gCErAwQ80awC2IQuTY6EU+zoxNJy1nyWYjIymJOKm0mvVg34V+ReKdiBpn8LZ5rbQ/6bGLG6t455KI661+yL+Rl10tt/nRyjRjSVFrFWxcuQwz9P/lGpqWyEuy69zDJVClfJ8b24=
+	t=1725051569; cv=none; b=hoZcAbrpkVSmINPeZdzWrFLH0OIBoHn1AAjNHhTOuHe0xW7mp+0lFkK3hV11MzYKlQOLAiXGs9vpyXWiw4waocij3PW2uHIh+IwGK233VhSXDdYog/aeWclf3+yKlScSsjzlPBk5Hy3/e0j8rsmgHxoiah1k49NSDmhhesCyktg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725051224; c=relaxed/simple;
-	bh=/S0zCJEY7jH93IxN+GZE7iNpwtS7rm2a5RCB4xzyN4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u+iuxN0T7Sge7B29ACqgtAiZvJx0Ru2+8zpSRABAVauLLlNOjYuAtTpCxWjyivcLTeGinDsrEu4f/xloxSQeW8ehgJHwznVei47eFVtXiD2o/T/OWpQpy9aFAAWxi7jXyc9OPucUi1R7ar/H9P3sGJzgxMM/MoMNDPS6MIAohZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 14263 invoked by uid 109); 30 Aug 2024 20:53:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 30 Aug 2024 20:53:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27400 invoked by uid 111); 30 Aug 2024 20:53:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 30 Aug 2024 16:53:34 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 30 Aug 2024 16:53:31 -0400
-From: Jeff King <peff@peff.net>
-To: Yuri Karnilaev <karnilaev@gmail.com>
-Cc: git@vger.kernel.org
-Subject: [PATCH] revision: free commit buffers for skipped commits
-Message-ID: <20240830205331.GA1038751@coredump.intra.peff.net>
-References: <60B730E6-F3C6-4B57-94D6-E5A71754DAF3@gmail.com>
+	s=arc-20240116; t=1725051569; c=relaxed/simple;
+	bh=097/TVNsicZ1Br4UdXLTyxoy6yN5KzHrxLYwYIN3rWQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=rRwx7VeYPZXC/BNys0oMnkDI1IdkwKhisdOaltSBWD8PbjCXPqCDzbEQEVKWXnz0tv/S0GQEsrycu6PyaMV8jxRUqbgoblKJbp+uy4ZiRfG7AeQPm4ZbChjcBQT9iwmwP0KZN1/tJMACWBykRff7+sz39wotUUJYlbbjpDyZMVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cDzQJo8V; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDzQJo8V"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a869332c2c2so549187466b.0
+        for <git@vger.kernel.org>; Fri, 30 Aug 2024 13:59:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725051565; x=1725656365; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RLGoXtXWUzUDOQiboa1CUzuutjA9Nf3xzQ6EeSsLAbI=;
+        b=cDzQJo8V2FqIvbHCCNaPKyIE9xTGOpJdjQkPd3yqIe1MKIUi1XmfHObdTszVeLTbkJ
+         w6wf/+fuFWwoQ66cEQglYDFfFxK4GkVpIEbaTJ+jioZ6kzvt7a8ugvCiKoQ313yzTy3V
+         tmQ3WF6/WYUP194UE1v7eD4NJYK1uKGIch5c862HCXpPo8U8ZzIvHfwTsHSt7WIt4+eb
+         Dqc8YmtCNH/SWBOcBde6692lw8/PVoMOjvzES4XWvLIgecj/5K4oXUqD5L2WzD7+JJEo
+         fasf5pA2zmP6p96AoiyHUQQynPHmF6ED9T33v7qhnYRvzMlMJYZsg+FK02VfQxGjyhsM
+         7HWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725051565; x=1725656365;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RLGoXtXWUzUDOQiboa1CUzuutjA9Nf3xzQ6EeSsLAbI=;
+        b=LqhBRc/0EOU8aWgMHTqOU23TYuBsKMAlvB5yoXn8hick6knnuEio0cTuJIn8LYXQMG
+         kA5cqgNH3dIm3h5ddIHig99lVY7BlMGG+5Oj8snzA5V6inaXsIAqGFWIewK+i/bbmO1y
+         2Fhsv8AKKh2k+JvndeAKo9cplR63wtIu/zSgltzniIjNc5Vm9bifiMtEMhpdXkijA7DV
+         OJHE2cbJdqXWD9G6U/vMz6u5Xlmb70QaeeHgViYtwSeZrPzh38zzVX8E7YQi0YIRzzkY
+         zhIet2bQ4ziDiX6ulZoJTFFUQ/v/DycELs17926yBKv73U666rwJKrQFSPBWCVF652zn
+         bKbg==
+X-Gm-Message-State: AOJu0YyJ7fO0hVbVsJITIZgNWX/2K1jXwJFVi8Ivm5Eys6ULr0CAHiuO
+	YrzMVuucP1O0SrwYAVoLcipH7Az+gsjR+8vVEqCa6RUZQP167MdcBmPXuA3OpmtpbZW+SXci8gE
+	gGUw30iz6rWgc4ayQadmUHMrONsP8suuj
+X-Google-Smtp-Source: AGHT+IGeMO+Vj1Tyx82XixCbmScJ17D32wOhpNEaSTfAP/rVOmSJ4qvK0gowJjGMVBr+K6wJzl4LkwmiNl2yNeXNPyI=
+X-Received: by 2002:a17:907:1ca4:b0:a86:84c3:a87 with SMTP id
+ a640c23a62f3a-a89827a9635mr732669566b.24.1725051565000; Fri, 30 Aug 2024
+ 13:59:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <60B730E6-F3C6-4B57-94D6-E5A71754DAF3@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 30 Aug 2024 22:59:13 +0200
+Message-ID: <CAP8UFD0NFhuhs66Q3CGSCxbLnZR0M8PCjpqKuFP0X=NvEA=EbQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 114
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Aug 30, 2024 at 03:20:15PM +0300, Yuri Karnilaev wrote:
+Hi everyone,
 
-> As you can see from the results, the peak memory usage when processing
-> commits in batches is 10 times higher than when processing all commits
-> in one go.
-> Can you please explain why this happens? Is there a way to work around
-> this? Or maybe can you fix this in future Git versions?
+A draft of a new Git Rev News edition is available here:
 
-Try this:
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-114.md
 
--- >8 --
-Subject: [PATCH] revision: free commit buffers for skipped commits
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-In git-log we leave the save_commit_buffer flag set to "1", which tells
-the commit parsing code to store the object content after it has parsed
-it to find parents, tree, etc. That lets us reuse the contents for
-pretty-printing the commit in the output. And then after printing each
-commit, we call free_commit_buffer(), since we don't need it anymore.
+  https://github.com/git/git.github.io/issues/724
 
-But some options may cause us to traverse commits which are not part of
-the output. And so git-log does not see them at all, and doesn't free
-them. One such case is something like:
+You can also reply to this email.
 
-  git log -n 1000 --skip=1000000
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
-which will churn through a million commits, before showing only a
-thousand. We loop through these inside get_revision(), without freeing
-the contents. As a result, we end up storing the object data for those
-million commits simultaneously.
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-We should free the stored buffers (if any) for those commits as we skip
-over them, which is what this patch does. Running the above command in
-linux.git drops the peak heap usage from ~1.1GB to ~200MB, according to
-valgrind/massif. (I thought we might get an even bigger improvement, but
-the remaining memory is going to commit/tree structs, which we do hold
-on to forever).
+Jakub, Markus, Kaartic and I plan to publish this edition on
+Sunday September 1st, 2024.
 
-Note that this problem doesn't occur if:
-
-  - you're running a git-rev-list without a --format parameter; it turns
-    off save_commit_buffer by default, since it only output the object
-    id
-
-  - you've built a commit-graph file, since in that case we'd use the
-    optimized graph data instead of the initial parse, and then do a
-    lazy parse for commits we're actually going to output
-
-There are probably some other option combinations that can likewise
-end up with useless stored commit buffers. For example, if you ask for
-"foo..bar", then we'll have to walk down to the merge base, and
-everything on the "foo" side won't be shown. Tuning the "save" behavior
-to handle that might be tricky (I guess maybe drop buffers for anything
-we mark as UNINTERESTING?). And in the long run, the right solution here
-is probably to make sure the commit-graph is built (since it fixes the
-memory problem _and_ drastically reduces CPU usage).
-
-But since this "--skip" case is an easy one-liner, it's worth fixing in
-the meantime. It should be OK to make this call even if there is no
-saved buffer (e.g., because save_commit_buffer=0, or because a
-commit-graph was used), since it's O(1) to look up the buffer and is a
-noop if it isn't present. I verified by running the above command after
-"git commit-graph write --reachable", and it takes the same time with
-and without this patch.
-
-Reported-by: Yuri Karnilaev <karnilaev@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- revision.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/revision.c b/revision.c
-index ac94f8d429..2d7ad2bddf 100644
---- a/revision.c
-+++ b/revision.c
-@@ -4407,6 +4407,7 @@ static struct commit *get_revision_internal(struct rev_info *revs)
- 				c = get_revision_1(revs);
- 				if (!c)
- 					break;
-+				free_commit_buffer(revs->repo->parsed_objects, c);
- 			}
- 		}
- 
--- 
-2.46.0.769.g1b22d789e3
-
+Thanks,
+Christian.
