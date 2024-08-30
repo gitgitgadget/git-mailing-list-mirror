@@ -1,197 +1,96 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F3BBA3D
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 23:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C93B172BAE
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 23:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725060624; cv=none; b=CJAaPTkorcJdEK/rzHDSXaxBmCzuj5dPPFMbKa+uIMzrmd/dGYsME0gFANFC/5moc6Ni1wBPUJtg2ogZK/UnIZo9zTvJySoHuFfxch6fMGCJfBYent3iS8zvmXVP9x5S7LQYSmHwCS8GA9MYzhoMrCYre8D0yjSMMOMZbsZpPe8=
+	t=1725061894; cv=none; b=XPGK2Zi09GuOKN1aBZ2wbBgqfeCui5mgeXIb+aw7DeT6z3rXdr5c0qeD6pBn2/uZYnH1rOzrSZsEqRBsWpvPR1j2Z5n/m9PfSf0GiGWlEMHJMKV3GI2/prP3cZvaC030gqtCZyU850ECxwiIW5H8bAma3ALBTu/VDv3C14LWnu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725060624; c=relaxed/simple;
-	bh=0u2k/eVNvp25d8e9HZ+fr7vkNpOoXzbYkExYmUQ4pUc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UzlxZuP/bSqPdGBiRxp1ugCOuxA9ND2ahe68GfbqyKgoEL/bxdLgBZb9X5rMUbGhTow3/d1X+rs0+jtADJezJjrFPfxexvhiaEnQmQY+uFh7Ojj1m95bshvv+GvkmXfDh1BltUdAycjNvktmeVUJBYDFeU1xyUA+gVHBzzjM4q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-45680350696so2332431cf.2
-        for <git@vger.kernel.org>; Fri, 30 Aug 2024 16:30:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725060621; x=1725665421;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YM7Zi1l9whJ8ehgKkHCYBzwYZzwTicYI8ZBTfSB6QoA=;
-        b=q3GjD7IXm876G1q4fPEVI7KMeK39V0xtSca4lR9tEIbDO7mfqsDl9fQgNRwil/Ui7I
-         L6EiR0YJcQs4q4qsEqTCKKSwQ783H54c/TJ7hH97yv4ASGUALQLhPhk6xIHkk+jsHQ5N
-         vyoySvY4psQy1S/N0A+c1fhXOhzS2jwgAH5nW5hGQJBscXrNHw2HrtURwLaPihaBmIJ4
-         av+5h8SnRnrL8YuKWH/uQl64+dqAbsQqiTTTJH0cHUITnRoS4j5e304fxWwg3nPGMu+e
-         YqoA3iinMxB7U+d021pFLtd7nHCD80MCmjDtWMOsPob3s5oQbkvDUcY0vAoPzxAuSSeD
-         Bc4A==
-X-Forwarded-Encrypted: i=1; AJvYcCXGKuB+sVcid4LCz9HCsny+ZYDthQUr2/aQ+E9PNQQ2nIacw4ggAAjij0/pZcwZHjOQ350=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJfn287Kya0Aam7+WWfmSi9l+B5zGLiz2iMy7IK2Hd6uQHcM7n
-	JDT1nuoI2tCvnE/HQOJGiSeaad0atzc6NT7vUbbc5nnLCHSLXuC41qf0dRM/nmaAS8t3GcSs7RF
-	ejHeqe4jLWegK8Wke3YvrQX3IIoLJdt0/7aw=
-X-Google-Smtp-Source: AGHT+IH8qPoeENnTdfAAxEihiIXJo2+G5Obe5ct2bOPtSuBqiwHMgjqigy3FSLoN0rLQs1UKuKSyEaRoE6nlnDDd8Vc=
-X-Received: by 2002:a05:6214:c45:b0:6bf:7d51:e497 with SMTP id
- 6a1803df08f44-6c3495fbf78mr23158266d6.2.1725060620974; Fri, 30 Aug 2024
- 16:30:20 -0700 (PDT)
+	s=arc-20240116; t=1725061894; c=relaxed/simple;
+	bh=i9n0g2FbB2Afha4t/OKfCJyNQT9OK8cBGJUh93eonkI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IpHe6Ph/5jG/xjGBBYVQ5Omy9gpa7wk9sGzB8Oy62GB6P82w0pRH6l9dqSNxUVwbWQJ1Hp0r5swgx21MB6SyaDV3dpvJanV5ZZ+OeNn9ybT0aWxokPH7U0BTZNHQAXf+D9/j7EQBHE+9SRK1qrBupGA4YcHcI6QLtkw87wg2PPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTk1Nlol; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTk1Nlol"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D72E23A22;
+	Fri, 30 Aug 2024 19:51:32 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=i9n0g2FbB2Afha4t/OKfCJyNQT9OK8cBGJUh93
+	eonkI=; b=hTk1NlolAKes77C7OjH9mKrql0c/1xmYSTZEAj+er2JlFJDwVRbny7
+	LHGD8mq5ShJSfTZ7BXHVx17+4Sxui8ZB6/ITatKPSNosrudtJaY7xq0lq2gdQdW0
+	FDIi+22vcc1wxvmmFobUBVfnmzqUaE3FtvDX6KXi5CtAmJv2B5NZM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 25F6923A21;
+	Fri, 30 Aug 2024 19:51:32 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8EA9523A20;
+	Fri, 30 Aug 2024 19:51:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH 2/2] chainlint: reduce annotation noise-factor
+In-Reply-To: <CAPig+cSZ8Sot9oq+rmzBTmQU-Fnay92roTO=Mk0uT+-JUzMcXw@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 30 Aug 2024 19:30:09 -0400")
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+	<20240829091625.41297-3-ericsunshine@charter.net>
+	<xmqqv7zjwcgq.fsf@gitster.g>
+	<CAPig+cSZ8Sot9oq+rmzBTmQU-Fnay92roTO=Mk0uT+-JUzMcXw@mail.gmail.com>
+Date: Fri, 30 Aug 2024 16:51:30 -0700
+Message-ID: <xmqqle0dpo1p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240829091625.41297-1-ericsunshine@charter.net>
- <20240829091625.41297-3-ericsunshine@charter.net> <xmqqv7zjwcgq.fsf@gitster.g>
-In-Reply-To: <xmqqv7zjwcgq.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 30 Aug 2024 19:30:09 -0400
-Message-ID: <CAPig+cSZ8Sot9oq+rmzBTmQU-Fnay92roTO=Mk0uT+-JUzMcXw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] chainlint: reduce annotation noise-factor
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C8265836-672A-11EF-A4E8-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On Thu, Aug 29, 2024 at 11:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <ericsunshine@charter.net> writes:
-> > When chainlint detects a problem in a test definition, it highlights th=
-e
-> > offending code with an "?!ERR ...?!" annotation. The rather curious "?!=
-"
-> > delimiter was chosen to draw the reader's attention to the problem area=
-.
-> >
-> > Later, chainlint learned to color its output when sent to a terminal.
-> > Problem annotations are colored with a red background which stands out
-> > well from surrounding text, thus easily draws the reader's attention. A=
-s
-> > such, the additional "?!" decoration became superfluous (when output is
-> > colored), however the decoration was retained since it serves as a good
-> > needle when using the terminal's search feature to "jump" to the next
-> > problem.
-> >
-> > Nevertheless, the "?!" decoration is noisy and ugly and makes it
-> > unnecessarily difficult for the reader to pluck the problem description
-> > from the annotation. For instance, it is easier to see at a glance what
-> > the problem is in:
-> >     ERR missing '&&'
-> > than in the noisier:
-> >     ?!ERR missing '&&'?!
-> > Therefore drop the "!?" decoration when output is colored (but retain i=
-t
-> > otherwise).
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> It may be possible to do something like this instead (untested), but
+> I'm not sure it's worth the complexity:
 >
-> Wait.  That does not qualify "Therefore".
->
-> We talked about a "good needle" and then complained how ugly the
-> string that was happened to be chosen as good needle is.  That is
-> not enough to explain why it is justified to "lose" the needle.  The
-> only thing you justified is to move away from the ugly pattern, as a
-> typical "terminal's search feature" does not give us an easy way to
-> "jump to the next text painted yellow".
->
-> > Note that the preceding change gave all problem annotations a uniform
-> > "ERR" prefix which serves as a reasonably suitable replacement needle
-> > when searching in a terminal, so loss of "?!" in the output should not
-> > be overly problematic.
->
-> Drop this separate paragraph, promote its contents up from "Note"
-> status and as a proper part of the previous sentence in its rewrite,
-> something like:
->
->     Since the errors are all uniformly prefixed with "ERR", which
->     can be used as the "good needle" instead, lose the "!?"
->     decoration when output is colored.
->
-> to replace "Therefore" and everything that follow.
+>     $checked .= substr($body, $start, $pos - $start);
+>     $checked .= ' ' unless $checked =~ /\s$/;
+>     $checked .= "$erropenERR $err$errclose";
+>     $checked .= ' ' unless $pos + 1 >= length($body) ||
+>         substr($body, $pos + 1, 1) =~ /\s/;
 
-Perhaps the following would make for a more palatable commit message?
+I think the complexity you mention is the updates to existing code
+to get to the above end state?  Using some setup like ...
 
-    When chainlint detects a problem in a test definition, it
-    highlights the offending code with a "?!...?!" annotation. The
-    rather curious "?!" decoration was chosen to draw the reader's
-    attention to the problem area and to act as a good "needle" when
-    using the terminal's search feature to "jump" to the next problem.
+	($erropen, errclose) = 
+		$colored_output ? ("?!", "?!") : ("<RED>", "<RESET>");
 
-    Later, chainlint learned to color its output when sent to a
-    terminal. Problem annotations are colored with a red background
-    which stands out well from surrounding text, thus easily draws the
-    reader's attention. Together with the preceding change which gave
-    all problem annotations a uniform "ERR" prefix, the noisy "?!"
-    decoration has become superfluous as a search "needle" so omit it
-    when output is colored.
+... and then using a code like the above would be quite
+straightforward and the end result cannot become simpler than that
+;-)
 
-> > @@ -663,7 +666,7 @@ sub check_test {
-> >       $checked =3D~ s/(\s) \?!/$1?!/mg;
-> >       $checked =3D~ s/\?! (\s)/?!$1/mg;
-> > -     $checked =3D~ s/(\?![^?]+\?!)/$c->{rev}$c->{red}$1$c->{reset}/mg;
-> > +     $checked =3D~ s/\?!([^?]+)\?!/$erropen$1$errclose/mg;
->
-> Hmph.  With $erropen and $errclose, I was hoping that we can shed
-> the reliance on the "?!" mark even internally.
+> As first implemented, there was no structured "problem description".
+> chainlint originally just output a stream of raw parse tokens (not the
+> original test text), and when a problem was discovered the "?!...?!"
+> annotations were embedded directly in the output stream. This was
+> still the case even when colored output was implemented[1]; in fact,
+> the annotations were colored after-the-fact by searching for "?!...?!"
+> in the output stream. It was only when chainlint was taught to output
+> the original test text verbatim[2] that problem descriptions became
+> structured data.
 
-Good point. Just above the shown context:
+Exactly.
 
-    $checked .=3D substr($body, $start, $pos - $start) . " ?!ERR $err?! ";
-
-unconditionally adds the "?!" decorations even when the output is
-colored, and then the:
-
-    $checked =3D~ s/\?!([^?]+)\?!/$erropen$1$errclose/mg;
-
-removes them. It would be nice to add the "?!" decoration only when
-not coloring output, however, together with the explicit space added
-before and after "?!...?!" by:
-
-    $checked .=3D substr($body, $start, $pos - $start) . " ?!ERR $err?! ";
-
-the related:
-
-    $checked =3D~ s/(\s) \?!/$1?!/mg;
-    $checked =3D~ s/\?! (\s)/?!$1/mg;
-
-ensure, for aesthetic reasons, that there is one, and only one, space
-before and after the annotation.
-
-It may be possible to do something like this instead (untested), but
-I'm not sure it's worth the complexity:
-
-    $checked .=3D substr($body, $start, $pos - $start);
-    $checked .=3D ' ' unless $checked =3D~ /\s$/;
-    $checked .=3D "$erropenERR $err$errclose";
-    $checked .=3D ' ' unless $pos + 1 >=3D length($body) ||
-        substr($body, $pos + 1, 1) =3D~ /\s/;
-
-> This is especially
-> true that in the early part of this sub, the problem description was
-> very much structured piece of data, not something the consuming code
-> need to pick out of an already formatted text like this, risking to
-> get confused by the payload (i.e. the text that came from the
-> problematic test script inside "substr($body, $start, $pos-$start)"
-> may contain anything, including "?!", right?).
-
-As first implemented, there was no structured "problem description".
-chainlint originally just output a stream of raw parse tokens (not the
-original test text), and when a problem was discovered the "?!...?!"
-annotations were embedded directly in the output stream. This was
-still the case even when colored output was implemented[1]; in fact,
-the annotations were colored after-the-fact by searching for "?!...?!"
-in the output stream. It was only when chainlint was taught to output
-the original test text verbatim[2] that problem descriptions became
-structured data.
-
-I was never overly concerned about "?!" appearing as part of the
-actual payload, partly because it is an unusual character sequence to
-be present in shell code anyhow (indeed, it only appears in t5510),
-partly because it requires "?!" to be doubled up (i.e. "?!...?!"), and
-partly because this processing kicks in only when a linting problem is
-actually discovered,
-
-[1]: 7c04aa7390 (chainlint: colorize problem annotations and test
-delimiters, 2022-09-13)
-[2]: 73c768dae9 (chainlint: annotate original test definition rather
-than token stream, 2022-11-08)
+Thanks.
