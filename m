@@ -1,54 +1,54 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBB171E65
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C90316F282
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:09:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725008966; cv=none; b=pgK1gfSExrLSDujEsMerIilRwn19bviVppD7DkbjzdbvAuY6Rk1qBmF77FqIJXA22Yyb5aBoBcv2KSSnieegtluQ2HUz77yLS1isibh5H5Jjk8PfzcJvcsnZIPTDui9/ngdUZqCzCJA2i9WDvBNPaxi/QN5eDKrEUyhxt64IuUE=
+	t=1725008968; cv=none; b=E6XQo2XagX0R0+eLdAAQtb4nZkVJdvz5l5834LZDiznm9IvWk1aEExkc7WBVljiSiLcmok0+1RQOZW3NxdvJYlfTUwVjWmOK3s+MvkGiKMJxvBii4HJiLdT68d5APSYtct+VHeEYb14MEVId51vEW1PzU214j8F+Z7q7LlO1d+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725008966; c=relaxed/simple;
-	bh=7FlUWH34xV50jWr4R+KmwLKrUw6lhPCMltwzgcXTnJ0=;
+	s=arc-20240116; t=1725008968; c=relaxed/simple;
+	bh=D5MU50bYaWux5hG/GAGaU1v58ZHkCnoj1xT1ZltDFoA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=niAuu86WNGnJAeq1bfVC6q88VLNkAdIcYYV7UbcG7ml/nQ22/PUiSCtBC/d97pTIxaSdcJ3XpBH26Y+TnXoTiU8JmjGBl22eYWg3m8XFGeHTxNV3rJrvtBJpz7DWIVa3Dv/7K9T0nu5pGhCt0+42v2Ohj06WKrL5988jn4crm5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gkKILTTg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Enfq3mVL; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=bqGEg3kiINH5tXJ1A/j4ceVMTbeXDTlrsrYA+4rEoRVq3pJb4J2OhYBIrzAJ4S5LHnUa0964csxJvWCbR2pSOucnbzdadtq7s/9cLFAylrZNFfvKhT6KG+RXP7dTwW8SQSqNtmyq+CJV0C69UKMfFog1GNP/mg9RKGG/1a90hVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=suZ2IXjf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EvWWP1Uq; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gkKILTTg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Enfq3mVL"
-Received: from phl-compute-07.internal (phl-compute-07.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id AB6A2114022E;
-	Fri, 30 Aug 2024 05:09:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="suZ2IXjf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EvWWP1Uq"
+Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E82BF1380266;
+	Fri, 30 Aug 2024 05:09:25 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 30 Aug 2024 05:09:23 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 30 Aug 2024 05:09:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725008963; x=1725095363; bh=/V0TukJ6Dj
-	WW7fQeR3viYT60KXRL9/FFuaVEmSmuoJc=; b=gkKILTTg/7AEDx/t6aqpg1Hgy/
-	fFq+jr/6ubzvleEHXOSTabi+xgxwZ+I4TBvfb2JVovJeGGMZPiED14YUPHZYlsU/
-	eRLhau6caWBK1TUSCMo85V17IruRR6Xd+L0YbCEyINfaGTZWuzrkWOSrf28LNsDl
-	IApkHR4z+jvZ82PG2eWeN2oIyop+gosHAqZnGG8hbzmYGghrZGvC9EkVt9lUWTCg
-	399PMXWKfQhV2hGLA4UhZtz2RUBBIZAtN05HxRSrmT5IpPU7mRa7hSfenGP3SUa9
-	QAMMfoKnI61q1cANdg+Ybp4IA/Tm0YYaHxYlT6XNcA96IT9z2rrgv8Pury1w==
+	:subject:to:to; s=fm1; t=1725008965; x=1725095365; bh=aTq5u0vFnq
+	usadQrB0mvYtORZo3HHmDPXzy0GjkOiLY=; b=suZ2IXjflcA73bTsk7G2lT8cu/
+	Omjm2lT7bwQVYoysr8GJQD53jdNyrqFqgz5h3E0Zvnm+76/17vMkSRykjkpzdtBI
+	/Q74I2sZ+XCNimGSfhpevCFQ4qv7ko6mimqrPbZoNvqxi56SHcUPbWIG/QF8wv52
+	VylS+6f3dyOlN5NcTPdhEodbCWahLwmtchW5b2iL9gVKtHek20FzzDP7YmNyRYGd
+	7LpV4eiJfQ9CZYMIUWoXBi60NcgPL3Plk4qOsX8qWs+1glKnZuvaaMZZieYzWmq+
+	xgF5/nUvAmjkoU/ua2BpXBfrsr+VrFsWrS8pTsl6o/fOVn4BtccgEUyfQwzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725008963; x=1725095363; bh=/V0TukJ6DjWW7fQeR3viYT60KXRL
-	9/FFuaVEmSmuoJc=; b=Enfq3mVLKuMm0/mKYfPh2/S5CO9j9yBqk5Jy5cf1vqXO
-	PBEb/ctd9bxbNPUaNrgs83RrETuJtBCT2jmPNVxfjsiMoSxjfLgfSXs9AfRQFkuM
-	l9+eIeujVBT5NNbrQfPKjwWrq1mEfrPoYPueyN5W3Qcwpw+yFViQD3lIE9N4JySd
-	pGgnoPqkuXGZafoKfVwdnmAAhjyoAXh6WQusGnG12Z9fTAutFi3wgD28dY1paEGn
-	m9OR2Lvp/ddY+11Dd89Lk329ViA031pl0pDLjXMi1G9OBgOGP0cq+sSehweZRMPm
-	k6K7o6No9zwfIclCvUnco8BFpswOf4jfVdhcWVXgXw==
-X-ME-Sender: <xms:Q4zRZjviG5lqokk9yczEP-H3ilhTN8GLXYImnuonxScSvi-uXLspfQ>
-    <xme:Q4zRZkdxej6kaawZfyI0WXf998epoqKJHFUy9Vxzrnzt7Zy3HwJ8iiBWaI-jWSYty
-    QCFzjIZerZkCrbS_Q>
-X-ME-Received: <xmr:Q4zRZmxdvJLHS5Wq41NiQa1mB2Y0__u8CnKdLOs1fqrIAbzWmr93qDKqNWoLJFH1gB0KyWdilCBmI5YExr4lB8IMyJquZLrLVdQJhfAMVetjneju1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedguddvucetufdoteggodetrfdotf
+	fm1; t=1725008965; x=1725095365; bh=aTq5u0vFnqusadQrB0mvYtORZo3H
+	HmDPXzy0GjkOiLY=; b=EvWWP1UqUOBt2cBKV4VKN3qru9HziRcEjEx9vf8Gm4cO
+	qJTXY9aWoeBJQcBZ5aJBBYZc+4BNw25M0E1xx2YKwAME5de4fzgedkjKKoIyzg49
+	5L3lJ3dP5X3DMWij368zYgO/GXYAN0ugnsfSokAUYgCZ7/qDoG2t9WgCvc+Ijj7w
+	7bajUsljaxVb0GdKymBukF2wIu1/gecxSbfXDuNmI0Bkk63ooX56F4DhqaQISYei
+	fpWkMjIAO6zsDzMYXKlY7wrU7lUo4gv9KeOVGyO6fYgDXdpCqBewxENPOlN5ekzg
+	2vBVm4jyoAaiMmEGyQ1i4BNFigZkhu7SKOT+ECKWOg==
+X-ME-Sender: <xms:RYzRZjwk9vwHSXkq8IZzqozKb8Fz1o_lEdOFDpI1HDo_4-upSgjVdg>
+    <xme:RYzRZrRxoZC_NtwicHi79COWYyVVzBTlqctmLDhjfWHBjX3Z4tQfK_a1p3h0Rt9pc
+    AdjHRUeKmCTkDWU1g>
+X-ME-Received: <xmr:RYzRZtV5NYJzyzBGdHu5JKu2TxckSnCIvam_KjeQr2tqaJ_WGrs-Sq4GO0s5LzG7nQWGDrE4g6Y9uEGqVH2LzY-CACm7rxUDMkBadv0SZ4gYxPi04w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedgudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,28 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedguddvucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhooh
-    hglhgvrdgtohhm
-X-ME-Proxy: <xmx:Q4zRZiM7lsIjBkN77S64Oy0c5mWuU6USHfmvn4UlHhL1XZ70Tuik2g>
-    <xmx:Q4zRZj9koO0qOhdo5fWLRjMrU3rPjWMqYAdh-5x40oBQJHujTF937Q>
-    <xmx:Q4zRZiXlVdRSbQPzfxHZBu1GsywHKoT-UB9o2HTWD_SNqh5aDv8BFw>
-    <xmx:Q4zRZkdgK1s5aEvKrMUgqKndzZ273LY4xDrHxMa6CeneS8GEQ6qLAQ>
-    <xmx:Q4zRZvYQmAk31HeLvOpmXJuZFJz56kzX9tQ4aUG7TSOowFDbL3oh6Vw_>
+    mhhtphhouhhtpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:RYzRZtipecfRQUwsWuLvKDlLADbzyxcietgm7r8eLr3849Y78IBqYw>
+    <xmx:RYzRZlAlyVxpMnLpbJkAg-zj0kLQoBOTsR8FkFp0gs52hVmVWOYFsw>
+    <xmx:RYzRZmJf0X8mpNrIlkNv6x9aeyDaaQitq3nMEDKAkrJpzoyRI1i0vg>
+    <xmx:RYzRZkA6zeR1Eldry2CZdN150f2FPgjV02N01M91jm2y5ZHO-jgSQA>
+    <xmx:RYzRZg_R03XAvpm57gjs-hPHTjtCEJhe3Xz_7BKgrp0jD63XZtwKJMc2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Aug 2024 05:09:22 -0400 (EDT)
+ 30 Aug 2024 05:09:24 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 97930346 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Aug 2024 09:09:11 +0000 (UTC)
-Date: Fri, 30 Aug 2024 11:09:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id eba67386 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Aug 2024 09:09:14 +0000 (UTC)
+Date: Fri, 30 Aug 2024 11:09:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/21] environment: move `odb_mkstemp()` into object layer
-Message-ID: <ac2cc4e03719ecf6d6a2eb4aacb8a162429addb0.1725008898.git.ps@pks.im>
+Subject: [PATCH v2 10/21] environment: make `get_git_namespace()`
+ self-contained
+Message-ID: <f0d3794dfc44cd4393fd79fab9f60b73cf33db89.1725008898.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1725008897.git.ps@pks.im>
 Precedence: bulk
@@ -90,188 +91,109 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725008897.git.ps@pks.im>
 
-The `odb_mkstemp()` function is quite clearly tied to the object store,
-but regardless of that it is located in "environment.c". Move it over,
-which also helps to get rid of dependencies on `the_repository` in the
-environment subsystem.
+The logic to set up and retrieve `git_namespace` is distributed across
+different functions which communicate with each other via a global
+environment variable. This is rather pointless though, as the value is
+always derived from an environment variable, and this environment
+variable does not change after we have parsed global options.
+
+Convert the function to be fully self-contained such that it lazily
+populates once called.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bundle-uri.c      |  2 +-
- environment.c     | 34 ----------------------------------
- environment.h     | 15 ---------------
- object-file.c     | 33 +++++++++++++++++++++++++++++++++
- object-store-ll.h | 15 +++++++++++++++
- 5 files changed, 49 insertions(+), 50 deletions(-)
+ environment.c | 57 ++++++++++++++++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 28 deletions(-)
 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 1e0ee156ba3..eb8eca078bb 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -4,7 +4,6 @@
- #include "bundle-uri.h"
- #include "bundle.h"
- #include "copy.h"
--#include "environment.h"
- #include "gettext.h"
- #include "refs.h"
- #include "run-command.h"
-@@ -13,6 +12,7 @@
- #include "config.h"
- #include "fetch-pack.h"
- #include "remote.h"
-+#include "object-store-ll.h"
- 
- static struct {
- 	enum bundle_list_heuristic heuristic;
 diff --git a/environment.c b/environment.c
-index 4d0637b3822..f337efd1dd5 100644
+index f337efd1dd5..49844418419 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -23,7 +23,6 @@
- #include "commit.h"
- #include "strvec.h"
- #include "object-file.h"
--#include "object-store-ll.h"
- #include "path.h"
- #include "replace-object.h"
- #include "tmp-objdir.h"
-@@ -268,39 +267,6 @@ void set_git_work_tree(const char *new_work_tree)
- 	repo_set_worktree(the_repository, new_work_tree);
- }
+@@ -122,8 +122,6 @@ int core_preload_index = 1;
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
  
--int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
--{
--	int fd;
--	/*
--	 * we let the umask do its job, don't try to be more
--	 * restrictive except to remove write permission.
--	 */
--	int mode = 0444;
--	git_path_buf(temp_filename, "objects/%s", pattern);
--	fd = git_mkstemp_mode(temp_filename->buf, mode);
--	if (0 <= fd)
--		return fd;
+-static char *git_namespace;
 -
--	/* slow path */
--	/* some mkstemp implementations erase temp_filename on failure */
--	git_path_buf(temp_filename, "objects/%s", pattern);
--	safe_create_leading_directories(temp_filename->buf);
--	return xmkstemp_mode(temp_filename->buf, mode);
--}
--
--int odb_pack_keep(const char *name)
--{
--	int fd;
--
--	fd = open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
--	if (0 <= fd)
--		return fd;
--
--	/* slow path */
--	safe_create_leading_directories_const(name);
--	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
--}
--
- static void set_git_dir_1(const char *path)
- {
- 	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
-diff --git a/environment.h b/environment.h
-index 52e1803aba6..682d4f2e3b5 100644
---- a/environment.h
-+++ b/environment.h
-@@ -200,21 +200,6 @@ extern int grafts_keep_true_parents;
- 
- extern int repository_format_precious_objects;
- 
--/*
-- * Create a temporary file rooted in the object database directory, or
-- * die on failure. The filename is taken from "pattern", which should have the
-- * usual "XXXXXX" trailer, and the resulting filename is written into the
-- * "template" buffer. Returns the open descriptor.
-- */
--int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
--
--/*
-- * Create a pack .keep file named "name" (which should generally be the output
-- * of odb_pack_name). Returns a file descriptor opened for writing, or -1 on
-- * error.
-- */
--int odb_pack_keep(const char *name);
--
- const char *get_log_output_encoding(void);
- const char *get_commit_output_encoding(void);
- 
-diff --git a/object-file.c b/object-file.c
-index fa4121b98ad..968da27cd41 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -419,6 +419,39 @@ enum scld_error safe_create_leading_directories_const(const char *path)
- 	return result;
- }
- 
-+int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
-+{
-+	int fd;
-+	/*
-+	 * we let the umask do its job, don't try to be more
-+	 * restrictive except to remove write permission.
-+	 */
-+	int mode = 0444;
-+	git_path_buf(temp_filename, "objects/%s", pattern);
-+	fd = git_mkstemp_mode(temp_filename->buf, mode);
-+	if (0 <= fd)
-+		return fd;
-+
-+	/* slow path */
-+	/* some mkstemp implementations erase temp_filename on failure */
-+	git_path_buf(temp_filename, "objects/%s", pattern);
-+	safe_create_leading_directories(temp_filename->buf);
-+	return xmkstemp_mode(temp_filename->buf, mode);
-+}
-+
-+int odb_pack_keep(const char *name)
-+{
-+	int fd;
-+
-+	fd = open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
-+	if (0 <= fd)
-+		return fd;
-+
-+	/* slow path */
-+	safe_create_leading_directories_const(name);
-+	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
-+}
-+
- static void fill_loose_path(struct strbuf *buf, const struct object_id *oid)
- {
- 	int i;
-diff --git a/object-store-ll.h b/object-store-ll.h
-index c5f2bb2fc2f..53b8e693b1b 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -231,6 +231,21 @@ struct raw_object_store {
- struct raw_object_store *raw_object_store_new(void);
- void raw_object_store_clear(struct raw_object_store *o);
- 
-+/*
-+ * Create a temporary file rooted in the object database directory, or
-+ * die on failure. The filename is taken from "pattern", which should have the
-+ * usual "XXXXXX" trailer, and the resulting filename is written into the
-+ * "template" buffer. Returns the open descriptor.
-+ */
-+int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
-+
-+/*
-+ * Create a pack .keep file named "name" (which should generally be the output
-+ * of odb_pack_name). Returns a file descriptor opened for writing, or -1 on
-+ * error.
-+ */
-+int odb_pack_keep(const char *name);
-+
  /*
-  * Put in `buf` the name of the file in the local object database that
-  * would be used to store a loose object with the specified oid.
+  * Repository-local GIT_* environment variables; see environment.h for details.
+  */
+@@ -146,27 +144,6 @@ const char * const local_repo_env[] = {
+ 	NULL
+ };
+ 
+-static char *expand_namespace(const char *raw_namespace)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	struct strbuf **components, **c;
+-
+-	if (!raw_namespace || !*raw_namespace)
+-		return xstrdup("");
+-
+-	strbuf_addstr(&buf, raw_namespace);
+-	components = strbuf_split(&buf, '/');
+-	strbuf_reset(&buf);
+-	for (c = components; *c; c++)
+-		if (strcmp((*c)->buf, "/") != 0)
+-			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
+-	strbuf_list_free(components);
+-	if (check_refname_format(buf.buf, 0))
+-		die(_("bad git namespace path \"%s\""), raw_namespace);
+-	strbuf_addch(&buf, '/');
+-	return strbuf_detach(&buf, NULL);
+-}
+-
+ const char *getenv_safe(struct strvec *argv, const char *name)
+ {
+ 	const char *value = getenv(name);
+@@ -205,8 +182,6 @@ void setup_git_env(const char *git_dir)
+ 							  : "refs/replace/");
+ 	update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
+ 
+-	free(git_namespace);
+-	git_namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+ 	if (shallow_file)
+ 		set_alternate_shallow_file(the_repository, shallow_file, 0);
+@@ -229,9 +204,35 @@ int have_git_dir(void)
+ 
+ const char *get_git_namespace(void)
+ {
+-	if (!git_namespace)
+-		BUG("git environment hasn't been setup");
+-	return git_namespace;
++	static const char *namespace;
++
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf **components, **c;
++	const char *raw_namespace;
++
++	if (namespace)
++		return namespace;
++
++	raw_namespace = getenv(GIT_NAMESPACE_ENVIRONMENT);
++	if (!raw_namespace || !*raw_namespace) {
++		namespace = "";
++		return namespace;
++	}
++
++	strbuf_addstr(&buf, raw_namespace);
++	components = strbuf_split(&buf, '/');
++	strbuf_reset(&buf);
++	for (c = components; *c; c++)
++		if (strcmp((*c)->buf, "/") != 0)
++			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
++	strbuf_list_free(components);
++	if (check_refname_format(buf.buf, 0))
++		die(_("bad git namespace path \"%s\""), raw_namespace);
++	strbuf_addch(&buf, '/');
++
++	namespace = strbuf_detach(&buf, NULL);
++
++	return namespace;
+ }
+ 
+ const char *strip_namespace(const char *namespaced_ref)
 -- 
 2.46.0.421.g159f2d50e7.dirty
 
