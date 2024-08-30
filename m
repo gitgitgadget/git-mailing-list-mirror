@@ -1,89 +1,94 @@
-Received: from hu-is-mx-01.gaijin.team (hu-is-mx-01.gaijin.team [213.163.39.217])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E94333CD1
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 19:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.163.39.217
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC82E1BE852
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 19:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725045961; cv=none; b=j5bZ6iyRMEIwG/qJd7wXYcmgtmEfGzih7BLBEHOzocdAKoTZBVpbyVbmc/QcRr+8eMKuyoJUqSuoayYMEG1MFs2jFmYTesBSx46PA3UywON/WI0FCj5L92g27iztnJ8GQyrWfsQz1pnAguD/WvpaMGG7zsSdZ+tVCK315bOktqk=
+	t=1725046398; cv=none; b=ubHWPfigAWK1Y8ZJFDLzjAI2PMtKuHPmeaVOnhL2ZSbmDBa2KgAJNZLiKongyXPwwMVugw/jmU6v0we2u+tqpO9oO3mTrSgqgKlAJigwDIYzKvKlJnMf5CuHkpGymutczHjt1U1pArKiWquy8oTNk6/PWx8CgzJsxgGp4KkGnKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725045961; c=relaxed/simple;
-	bh=4qYy+JIA+4/LV2CRkUFFeuWmsFza7UYxLKVnzUty9PI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=FQjlTW+M+B+mw9c0fqrsk5oroGHhOrzLCwFEWIv1YvryTofBjyBPxXcZbOUeJaBJA1+YqOb1mkxoc/OZdN5kQmfhJN17g0SD0lJhVehI4Q49zySo2MLZ2JNIJNRgcopvbcK+7FWsTN0nr6zYflZIbSMZBK+qMdSnrQNIBktgF+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaijin.team; spf=pass smtp.mailfrom=gaijin.team; dkim=pass (1024-bit key) header.d=gaijin.team header.i=@gaijin.team header.b=ABWKSMak; arc=none smtp.client-ip=213.163.39.217
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaijin.team
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gaijin.team
+	s=arc-20240116; t=1725046398; c=relaxed/simple;
+	bh=983aj0m9Nd1cMEI8yG3tAFsNx/OO1ec9KQUeOaqTv1k=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=E9+h0AhtIEdSU/xJz26zYMBk7O8UZrPMND3iUbNquwjTUo6AOTmvTSQH/8fbBwccTqRZ7fHCD+fFowlBveDf/583s428I8LG1uYUSdRvv1lwMxYkOTXQmD4IFr0xgfnPmHXWAfL+jCWCnJ39155qKZrOj6K92oyO7kv8QHAr7cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=h2zzJp5R; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gaijin.team header.i=@gaijin.team header.b="ABWKSMak"
-Message-ID: <fe9d19fa-661d-4358-aa0a-ea419c419266@gaijin.team>
-DKIM-Filter: OpenDKIM Filter v2.11.0 hu-is-mx-01.gaijin.team 3D51738A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaijin.team; s=mail;
-	t=1725045957; bh=jngkiu0FuaBDHtTvLvVMkCCXj/gS29/NSzqmpUXEjTo=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=ABWKSMakVx+6PgvGxf9qwqzKiE8tDDPCt+kw2o/1/bRX7+GLau/nW7LbS/eqOuxt5
-	 z5uwxQz8yFj8bmSZ0vCAioNh5cSOfEdiBJX4MEjQ2ushvOQ7IciCyLBD/Da7Df3AKF
-	 5bblsC8AoOthFgwZbvBpcpXXvd2ny0BpI+vP2Whc=
-Date: Fri, 30 Aug 2024 22:25:56 +0300
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h2zzJp5R"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0771316AA;
+	Fri, 30 Aug 2024 15:33:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=9
+	83aj0m9Nd1cMEI8yG3tAFsNx/OO1ec9KQUeOaqTv1k=; b=h2zzJp5RZLJhwCsEI
+	XFyTPZaAb97I0i0xUWPfJ2+Yxt/t5J9PzG4P01BKMxSDK9aV6F0ow7KoQNUnixOv
+	wF9nhFb/z6iwB9II5YX9QoM72QRX9XMAlxxatpMCaMAuWg+cFMF196rl0A64Vm/Z
+	TAGIHmhrMj0KqH2cHoJuev1JnY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 996A3316A9;
+	Fri, 30 Aug 2024 15:33:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F795316A8;
+	Fri, 30 Aug 2024 15:33:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] refs/files-backend: work around -Wunused-parameter
+Date: Fri, 30 Aug 2024 12:33:13 -0700
+Message-ID: <xmqqjzfxrekm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: Committing crimes with NTFS-3G
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <7d1dad03-703c-47ae-a039-c15aa765fd0b@gaijin.team>
- <ZtEWvQOwLPgjIFks@tapette.crustytoothpaste.net>
- <3eda2715-3b44-469e-85d5-f25504212928@gaijin.team>
- <ZtHe8Vi9aRmY-UMI@tapette.crustytoothpaste.net>
-Content-Language: en-US
-From: Roman Sandu <r.sandu@gaijin.team>
-In-Reply-To: <ZtHe8Vi9aRmY-UMI@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B38046CC-6706-11EF-92A5-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-The stat output for a random file in the root of the repository is as 
-follows:
-```
-   File: <CENSORED>
-   Size: 91876     	Blocks: 184        IO Block: 4096   regular file
-Device: 259,2	Inode: 4630629     Links: 1
-Access: (0664/-rw-rw-r--)  Uid: ( 1000/romasandu)   Gid: ( 1000/romasandu)
-Access: 2024-08-29 17:41:04.855126300 +0300
-Modify: 2024-08-29 17:41:04.855609000 +0300
-Change: 2024-08-29 17:41:04.855609000 +0300
-  Birth: -
-```
-Maybe lack of a birth stat is what drives git crazy?
+This is needed to build things with -Werror=unused-parameter on a
+platform without symbolic link support.
 
-My git version is 2.43.0, which is the one from the Ubuntu 24.04 repo.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ refs/files-backend.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Neither `core.trustctime` nor `core.checkStat minimal` (nor a 
-combination of them) help.
-
-
-On 8/30/24 18:02, brian m. carlson wrote:
-> On 2024-08-30 at 12:52:05, Roman Sandu wrote:
->> Yes, I am aware that the index will be fully refreshed on the first run of
->> status. That is completely acceptable. But that is not what I am observing,
->> it is being refreshed on every single run of `git status`!
->>
->> After running stat before and after a status, the sha256 is identical. Both
->> for files and for folders. Maybe Windows has somehow corrupted the index
->> with its negative aura which makes git invalidate it on every single run?
->> Are there tools in git to diagnose the reason for the index's cache being
->> invalidated?
-> 
-> It would still be helpful to see the output of the `stat` command, since
-> that would tell us useful things about what's causing Git to think the
-> data has changed.  For example, some systems lack certain timestamp
-> granularity, which can break Git when compiled in certain ways.
-> 
-> You can see if setting `core.trustctime` to false fixes it, and you can
-> also try `core.checkStat` to `minimal` as well.  You should try them in
-> that order to see if they fix things.
-> 
-> Also, what version of Git are you using?  Is it the one in Ubuntu 24.04,
-> or the one from the git-core PPA, or a different one?
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 1cff65f6ae..4c5573b19c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1946,10 +1946,13 @@ static int commit_ref_update(struct files_ref_store *refs,
+ 	return 0;
+ }
+ 
++#ifdef NO_SYMLINK_HEAD
++#define create_ref_symlink(a, b) (-1)
++#else
+ static int create_ref_symlink(struct ref_lock *lock, const char *target)
+ {
+ 	int ret = -1;
+-#ifndef NO_SYMLINK_HEAD
++
+ 	char *ref_path = get_locked_file_path(&lock->lk);
+ 	unlink(ref_path);
+ 	ret = symlink(target, ref_path);
+@@ -1957,9 +1960,9 @@ static int create_ref_symlink(struct ref_lock *lock, const char *target)
+ 
+ 	if (ret)
+ 		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
+-#endif
+ 	return ret;
+ }
++#endif
+ 
+ static int create_symref_lock(struct ref_lock *lock, const char *target,
+ 			      struct strbuf *err)
+-- 
+2.46.0-592-gd813a5bb5c
 
