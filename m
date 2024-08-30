@@ -1,50 +1,27 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from shells.gnugeneration.com (shells.gnugeneration.com [66.240.222.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5FB4A1D
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 00:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB8814B061
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 04:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.240.222.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724978883; cv=none; b=dgbRalvDZhp9aAo5usKHxEIDihV1skcxSv72F9qI4ZLIlgVUGBg1wrc9UMxrDqGdPdVtKlbwXpGFvF93jDWhMj0q41PSmoHKxpWI9jNJRMJCrlNTEM/gk9EHGSXRsuSLqUN4Xanu+zkRRu/kPIbENwXypBk7VtLL5A2REpecP4w=
+	t=1724992032; cv=none; b=MSuBviLurwnkRhbp2E8LkGr+/A4jNnmP2BBEKLCBa21dv6lGi/sCMTCZOXxsWX5Of5hVX65LdpfWDFZjP7Qdam6GsV2NqzUxtKIcGYZsAGuCz1Xcv4lhUdgpFqTlCOWqXPipRQRbfpgwJY4I8KI7oZpcZlQqVTe/dbXaPaI3cJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724978883; c=relaxed/simple;
-	bh=gI6E3J/xl6AtIwvJ9IOD8j6V1M7UmB5VXxwA+3mGA9Y=;
+	s=arc-20240116; t=1724992032; c=relaxed/simple;
+	bh=IPbiX1gEEQvNlOOjyXuqBjKvJwvO10Rtjc2SKJQdkes=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bBbVto/f28h9ISa6oaygwBV9PtvUijQ2j5OJkjIO1M/fQDZ9zgmdL+Y8qhWwbawCraWR05W5kOdqFHajeyGayGJiiDCVfZHwiaIMEbz0bp3KHb3d9brYiYNSP9IzhxmuIfNNGLmJ6CSpa/Ns5VLqe6UgstK22ra7loxgt3ywTD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ma6tUQoD; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ma6tUQoD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1724978879;
-	bh=gI6E3J/xl6AtIwvJ9IOD8j6V1M7UmB5VXxwA+3mGA9Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ma6tUQoDvTNE08s1GtC8opJkBoMZTfO8imj04+5fdj2CwvWCgouoZP44Pdncve5Uf
-	 LQx1gdXSf8Edd+HiT7RcUWAMB5V2DQRS9n+2TxOj4ck6ot//jSu5QaYupdOoRSBt9/
-	 FauPs7JFG1cQ1UaUppXfF66YdYuVaxGUIQdGNfgOY/Mv7b92ncL4jp0CUBs1wdutlq
-	 dQgkX5iFBHE74QP1UAWh3YDFhjpngnevzlIwB6KotyDss9DI17CGfw8/BkTbL9R9U3
-	 b1cicm5hg3WTtPRzSbYdsNUPnzSXecorRwAjogcfsejMz4k8Zn1APueQtPaNZy72w8
-	 9j6MJzQcyI5OEKUGC4g6vT58nAD8kwFbkLoujefAS8DCqxBjzMBaiAnjTSSgqDJB3c
-	 cK+a89ObchJG1o4S09uqFaMAGXPvOvxLVXcEAihFd0zNFLrOH280StmhQcklXkI7kl
-	 82tgEGyfFQIJrEh1H5r05DX+DNMWb4BdaY/s5zFKXTKWK1OrGm3
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6D33A24429;
-	Fri, 30 Aug 2024 00:47:59 +0000 (UTC)
-Date: Fri, 30 Aug 2024 00:47:57 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=eynJi7PFlxC1apqpmQ7VdDrEru36LmN0hDNk6mbpKf14FBt+Op1R1ryPr5lGvmTnHM+UH6UtsgmzuSn5DOXtYQv9eQ+V23byXNoDpGlWUL5bMnl0hOg5YFuPHmLsERj/msNeiEXI5OHR5/Cd9ZpDqxFHEWlotZWlt6jFZGC426k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengaru.com; spf=pass smtp.mailfrom=shells.gnugeneration.com; arc=none smtp.client-ip=66.240.222.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengaru.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shells.gnugeneration.com
+Received: by shells.gnugeneration.com (Postfix, from userid 1000)
+	id 0DC7EC00B6B; Thu, 29 Aug 2024 21:18:31 -0700 (PDT)
+Date: Thu, 29 Aug 2024 21:18:30 -0700
+From: Vito Caputo <vcaputo@pengaru.com>
 To: Roman Sandu <r.sandu@gaijin.team>
 Cc: git@vger.kernel.org
 Subject: Re: Committing crimes with NTFS-3G
-Message-ID: <ZtEWvQOwLPgjIFks@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Roman Sandu <r.sandu@gaijin.team>, git@vger.kernel.org
+Message-ID: <20240830041830.m675suaade5jrj3p@shells.gnugeneration.com>
 References: <7d1dad03-703c-47ae-a039-c15aa765fd0b@gaijin.team>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,73 +29,54 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XA5UUN57ftKSFAJs"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <7d1dad03-703c-47ae-a039-c15aa765fd0b@gaijin.team>
-User-Agent: Mutt/2.2.13 (2024-03-09)
 
-
---XA5UUN57ftKSFAJs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2024-08-29 at 20:43:40, Roman Sandu wrote:
+On Thu, Aug 29, 2024 at 11:43:40PM +0300, Roman Sandu wrote:
 > Good day!
->=20
+> 
 > I have a decently sized (80K files) monorepo on an NTFS drive that I have
-> been working with for a while under Windows via git-for-windows. Recently=
-, I
+> been working with for a while under Windows via git-for-windows. Recently, I
 > had to (temporarily) switch to Ubuntu (24.04) via dual-boot for irrelevant
 > reasons, and I decided that simply mounting my NTFS drive and using the
 > monorepo from Ubuntu is a great idea, actually, as NTFS-3G allow for
 > seamless interop with NTFS via UserMapping. And so that is exactly what I
 > did and It Just Works!
-
-In general, I would not recommend this.  NTFS doesn't support Unix
-permissions, so I'd expect a lot of things to be broken.  A lot of
-people like using NTFS to share data across Windows and Linux, but UDF
-is a much better choice and I'm not surprised that NTFS isn't working
-the way you'd expect.
-
-Also, when you share a repository across systems, you should expect the
-index to be fully refreshed each time you change the OS, reading every
-file in the repository[0].
-
+> 
+> Except it kind of does not. Every time I run `git status` it takes 8
+> seconds, which is very painful when doing tricky history rewriting.
+> 
+> To diagnose the problem, I ran git status with GIT_TRACE_PERFORMANCE
+> enabled, and what I see is that the "refresh index" region is taking up 99%
+> of the time. Digging further, `strace -fc git status` tells me that 99% of
+> the time is spent on newfstatat'ing files. Okay, makes sense, stat'ing files
+> through FUSE is not all that quick. But how many files are we talking about?
+> My repository has `feature.manyFiles` enabled in git, so I would expect
+> `core.untrackedCache` make it so that `git status` skips basically
+> everything except for the root folder which contains, what, 20 subfolders?
+> But it actually does >96K stat calls! Which is more than the amount of files
+> in the repository in total. Briefly looking at the output of `strace -f git
+> status`, I see that git indeed goes through basically all of the repository,
+> even things that have not changed for years, as if `core.untrackedCache` is
+> not actually enabled. Manually enabling it on top of `feature.manyFiles`
+> does not help. Note that `git update-index --test-untracked-cache` tells me
+> that mtime does indeed work, and I've also manually stat'ed some folders
+> which `git status` re-stats on every run and I see that the modify time is
+> indeed a couple of hours ago, yet even when running `git status` several
+> times in a row it re-scans the entire folder every time.
+> 
 > So, what do I do about this? It honestly looks like a git bug to me, maybe
 > it silently fails to update the index with new timestamps because it was
 > initially created on Windows? But I have no clue how to narrow this issue
 > down further, so any ideas or suggestions would be appreciated!
+> 
 
-Can you pick some file in your repository and run `stat` on it, before
-and after running `git status`, and include the output?
+It was pretty big news that Paragon's read-write NTFS driver was merged
+into the kernel.  You might want to give that a try if your main problem
+is performance.
 
-For example:
+https://lore.kernel.org/lkml/CAHk-=wjn4W-7ZbHrw08cWy=12DgheFUKLO5YLgG6in5TA5HxqQ@mail.gmail.com/
 
-  stat http.c | tee /tmp/before
-  git status
-  stat http.c | tee /tmp/after
-  sha256sum /tmp/before /tmp/after
-
-My guess is that NTFS-3G is not emulating something properly and it's
-differing at some point.
-
-[0] https://git-scm.com/docs/gitfaq#sync-working-tree
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---XA5UUN57ftKSFAJs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtEWvQAKCRB8DEliiIei
-gR6sAP0Tlq46ZvpcVkJ2XMpozloWCQBbJWecjuc3PdgQDFXkmwD+KPP+W/U0OaGO
-sn6AEkfQ4JIrccGNiGNVvDxHtCsioAA=
-=r/18
------END PGP SIGNATURE-----
-
---XA5UUN57ftKSFAJs--
+Regards,
+Vito Caputo
