@@ -1,92 +1,109 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DDD1B86E2
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 18:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BF933CD1
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 19:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725043273; cv=none; b=BQf6FccJ1oCXyjk7z1zlmvM7ajYCFRTPC1oY/qTEsw3iTWytuag3YxN+Mg9T6aZDaVngUNPMuM/t26bm1wSBjkV1RTMeNQsrvvoCvZR16RittiXwqTihWNLv6NR5KZ5E73BqpBcdZcFCjEYnsMdOeKiL9NVCq2nT5Az27+Upc+U=
+	t=1725044508; cv=none; b=ohSbIon9OndWZVLGN1iPuqT4B3m4+7bxYfKfJ1mcV1jPJucQnwLiw46/N+QuGpZGBOsWnymktolTVxZn4ORfP9x4U8DL/e6gI/Yi3fF9sySML605XO51Wu0uK20cyO3xkfUm9ilrdOwo5hOh7QrlTjP2QoYZFQlSOqxK2GjjugA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725043273; c=relaxed/simple;
-	bh=qcrE6cmC/m3A+ZaoSDrAGt0CB0XkZoquY0IfR+4Vm3Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VMTQ7UFol45pdzIfjkK2t243DphDlqMv+AxLctR/5CxDtfKNAkhSck8vKDqI8cDcOx1mlqzOfXhlwz37+DyN7tWvzezEkOOfkK/IC5N9L9Ma8e3kyGdtMJLkMO4+of6OOh76bfhX+2cAX/mG7+5UNIq9SG3Z5YYy5g2QkMVMdwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GX9fr5be; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725044508; c=relaxed/simple;
+	bh=9hPy6juD1ZKlYyS/R45wnjJf1uq7Er0bkY/wkFSKmFU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XKm0ZYkqsqjz6Sq5R26xzjGjTfowgI8THKN2cdPIsWMQIx4G5fDpJEjJNw3rO+fjKPeR5iuvFkg5DO8m1ONL4pHOPHoCBpsfCsT6R55muIGmbLz+F71QSI/1ZBO4N69b+Aouxv7awh+k0ffzY93j8e1la7L2rSJi5sO+QsmS07Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1XcxxLxj; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GX9fr5be"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A55720A47;
-	Fri, 30 Aug 2024 14:41:11 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qcrE6cmC/m3A+ZaoSDrAGt0CB0XkZoquY0IfR+
-	4Vm3Q=; b=GX9fr5beDO/wACVbxhOueqKqdlzr1p0MAZ4V8EYWXTcHBId7Zgeq3L
-	e7ktr/ydsfRTSH3qB2J2SyBGNxw7nM6aWi2BOdgQwoj6rm0VYSE85RzKKGEdMV4b
-	fu6cxYVMBF5lAIzfpzx+EI7E+ztnzC5sHG4tB7Sok5HMRVwkKX8M8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1129020A46;
-	Fri, 30 Aug 2024 14:41:11 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1XcxxLxj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1725044503;
+	bh=9hPy6juD1ZKlYyS/R45wnjJf1uq7Er0bkY/wkFSKmFU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=1XcxxLxjx+yY+qzeimuJgr1uJRemcar39ABcpVE2MLt1vqgG7qD2CRHU4ez+NlVeM
+	 esWG4tm4LLUOW+RB9gFmOC034T0LaK/bmat7BPBwDgLNyRVsW7Ie4o/fMU6AFC38OW
+	 f6DBeN1UFG6Q4rpKOq2L7OSk9dT0OzQ9fkOqZDD7ETcFIuLFZ/6qA8kzMcBn9qh+Q3
+	 hF7In2YRHWvpZ1rzQS5PjY2FbNvYOtHBhge6UrRkUnGiVEEfAjd4wMb7KiGiAO0Txr
+	 knZ01FVyijhY4sewm4SbpQO73Fl9SmtEDwcNwgW+cBgJJtZ8fncol61ml7dUtfMF3Y
+	 rUfP20RqlccMLfRWet5kareqY104xGrq3oc/unf8nTMvHULJWXOXRBiw3xi9e/GT80
+	 alPHrpjI5haR63HShETES5sR77dgjw+Kr8zikV7SBdnHmNEu9HDI6K4fuu4mx9pm+H
+	 30XsSvgJD6Xn/bKBqur1R/vUCX9QmUVAcYgXZYTR1h+PVj6JCdY
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5869F20A45;
-	Fri, 30 Aug 2024 14:41:10 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,  Jeff
- King <peff@peff.net>
-Subject: Re: [PATCH 1/2] chainlint: make error messages self-explanatory
-In-Reply-To: <CAPig+cQ+6am7-BSnWZz5=C0Q1Vyng0T4goB+ZE9TKJMrpi_Jpg@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 29 Aug 2024 18:04:43 -0400")
-References: <20240829091625.41297-1-ericsunshine@charter.net>
-	<20240829091625.41297-2-ericsunshine@charter.net>
-	<xmqq7cbzxrry.fsf@gitster.g>
-	<CAPig+cQ+6am7-BSnWZz5=C0Q1Vyng0T4goB+ZE9TKJMrpi_Jpg@mail.gmail.com>
-Date: Fri, 30 Aug 2024 11:41:08 -0700
-Message-ID: <xmqqv7zhrgzf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8F1B4260C9;
+	Fri, 30 Aug 2024 19:01:43 +0000 (UTC)
+Date: Fri, 30 Aug 2024 15:02:09 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Roman Sandu <r.sandu@gaijin.team>
+Cc: git@vger.kernel.org
+Subject: Re: Committing crimes with NTFS-3G
+Message-ID: <ZtHe8Vi9aRmY-UMI@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Roman Sandu <r.sandu@gaijin.team>, git@vger.kernel.org
+References: <7d1dad03-703c-47ae-a039-c15aa765fd0b@gaijin.team>
+ <ZtEWvQOwLPgjIFks@tapette.crustytoothpaste.net>
+ <3eda2715-3b44-469e-85d5-f25504212928@gaijin.team>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6D0B5AF8-66FF-11EF-AC54-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DFmEqIZGs5E1zjfY"
+Content-Disposition: inline
+In-Reply-To: <3eda2715-3b44-469e-85d5-f25504212928@gaijin.team>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> How about this?
->
->     The "?!LOOP?!" case is particularly serious because that terse
->     single word does nothing to convey that the loop body should end
->     with "|| return 1" (or "|| exit 1" in a subshell) to ensure that a
->     failing command in the body aborts the loop immediately, which is
->     important since a shell loop does not automatically terminate when
->     an error occurs within its body. Moreover, unlike &&-chaining
->     which is ubiquitous in Git tests, the "|| return 1" idiom is
->     relatively infrequent, thus may be harder for a newcomer to
->     discover by consulting nearby code.
+--DFmEqIZGs5E1zjfY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Strike ", which is important since .*\ its body." and the above
-reads perfect.
+On 2024-08-30 at 12:52:05, Roman Sandu wrote:
+> Yes, I am aware that the index will be fully refreshed on the first run of
+> status. That is completely acceptable. But that is not what I am observin=
+g,
+> it is being refreshed on every single run of `git status`!
+>=20
+> After running stat before and after a status, the sha256 is identical. Bo=
+th
+> for files and for folders. Maybe Windows has somehow corrupted the index
+> with its negative aura which makes git invalidate it on every single run?
+> Are there tools in git to diagnose the reason for the index's cache being
+> invalidated?
 
->> > -# name and the test body with a `?!FOO?!` annotation at the location of each
->> > +# name and the test body with a `?!ERR?!` annotation at the location of each
->> >  # detected problem, where "FOO" is a tag such as "AMP" which indicates a broken
->>
->> "FOO" -> "ERR"?
->
-> Yep. Sharp eyes.
+It would still be helpful to see the output of the `stat` command, since
+that would tell us useful things about what's causing Git to think the
+data has changed.  For example, some systems lack certain timestamp
+granularity, which can break Git when compiled in certain ways.
 
-OK.  I'll mark the topic to be expecting a reroll for these small
-messaging plus "ERR" -> "ERR:" but without other larger changes
-mentioned in the thread.
+You can see if setting `core.trustctime` to false fixes it, and you can
+also try `core.checkStat` to `minimal` as well.  You should try them in
+that order to see if they fix things.
 
-Thanks.
+Also, what version of Git are you using?  Is it the one in Ubuntu 24.04,
+or the one from the git-core PPA, or a different one?
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--DFmEqIZGs5E1zjfY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtHe8QAKCRB8DEliiIei
+gTRSAQDi9j0dG2xC688PmizDASXerl+rGS8KuekxyQV5VfSK8AD9EfmU4rlF5JQK
+wdIizhlWglS/ipPpllDg2KnW18OlFAE=
+=9VcD
+-----END PGP SIGNATURE-----
+
+--DFmEqIZGs5E1zjfY--
