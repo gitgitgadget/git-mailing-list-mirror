@@ -1,54 +1,54 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9667416F0DF
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C536016F0DF
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725008990; cv=none; b=aqo6JfOSWwRxEZO0YtEA9Zc3L1ppdIH3znS2fO4cPMZDJfcn3xNHfa+Pf7cQ3UkH5DC9iuLraHjZn5pzBnuC1/w6w6GlZQx088/B5WGBijUeWCzK4bU7oRoFdlIJKGquclpg6N3c+PVX39SdGUyxcUM4xVV3UYEC28OR6ABx/40=
+	t=1725008997; cv=none; b=lozhcFuVX/MokETgJUBT1u6JSxHd0FdmhzN7ZPu5dTRqFpbflwReXcPrt4ngJxn/RDZdbX+WsZNPNeFkgTVBtD+CiKmpch7fTFjQ/u1+P7v40tQv5LJOWO6yfBdpg6VuG6OQplI+dNPJ4i9Dmcy7ZnMA7iO3Sy6bZFsy4VlLICc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725008990; c=relaxed/simple;
-	bh=fSUnCJWataJWqrnhhlGDppGgbRQS2LhbUZ/v9fw3Fh0=;
+	s=arc-20240116; t=1725008997; c=relaxed/simple;
+	bh=9pfP4dcviIUTLnfk7IWbUtC9fvIm7q+MxrO3ZCKDzwQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cTHCP1kVwegSnZijMijueScbh8iCT1cLyOPpOtQmoEK6xu9n/BziIl8Pzb0zT8bp7eColLMQbhohAK6HV+osXQNYgn1x42j7LtK+juyeS7V+F9Q0VXMexDzWWm5UL+ipvoOWpTad75YkQgD/7whRSu/uufQpsY9K3o6J6x14H48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JOpRYy/i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PJrqlDyW; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=TVsrSuFaLBmfGDrYUa19nxcPPOT+aZGqdri0STaSklytXVCk0yW75AsvoJLEFCodheFBd237Q0NdPLqddzh7FHWZBH4+oyBEvT6Cz2j01mdCHrxhuYzYHNIxpTBLfEvUZ2uM1beYx6K1PdRVxz94zQUjvKXzFk+rx9QlpfproHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rtlABMMh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dY4EMz4q; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JOpRYy/i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PJrqlDyW"
-Received: from phl-compute-01.internal (phl-compute-01.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id D0ABF114022E;
-	Fri, 30 Aug 2024 05:09:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rtlABMMh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dY4EMz4q"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 2CAA01380278;
+	Fri, 30 Aug 2024 05:09:55 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 30 Aug 2024 05:09:47 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 30 Aug 2024 05:09:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725008987; x=1725095387; bh=icPTQm46xs
-	AVzTUWR+VyLDfzy1G4ON/xcomPtpmKYc8=; b=JOpRYy/iWLP42EwunpzZi6nyB5
-	Ey1zq6GTxCnPFnOtMpt/yl6H6eZE0ZSRZX8WME8pDbVs1JIBnYYnxKblfB+oy03+
-	GmySOWNzSgsyaVLHs2LUeTwL7Xmeqlj1mj2cqI/26vqGq4jwG7cAkBt2dhfuFvBm
-	JxBkwfnzE01VK9W+8omTj+LddI4UFSzDtd0B+1QoKYs+3iIWulabBSBMBGelKrdu
-	Um4RrTdt0BUsHLoZH78HBAnbEbp4MQpilFZBSJLZysGV2pE/auURt5GXKFui622+
-	VoiDJYs3l+EbF2dPlQJuSlnd6/AWWuNHALnVRlY3H/djAIP7ZwVIihX/CqPg==
+	:subject:to:to; s=fm1; t=1725008995; x=1725095395; bh=CdZY+u5+q7
+	F4CgYABKCWSrAOvKXeGRglmGfFH9B1LmM=; b=rtlABMMhqz7BGfVhwzy/jsN2lO
+	TKdwJhPkWLN1hmkhLcjZIpESmvkiUI68ZrsC+1j1jccZbbFsQyjLqZzR/Ls2806E
+	iogHRbzCNCe1PxnPWlRd/nS/r96obrznfTU6PkRgVeBJzvGzzvW0TGF5zxTTHKdQ
+	mPEBifi+G5TzziuT7FgU7l9d/3nEY+r/y10J/jQ7K4UyEraO3zNnFx9lwKohPm2m
+	ve2ULwZyLP1wc3kA0vbGLz/ZU1WBDMsN+DzB8EE9ikorgweMzhysffR1srtshHcz
+	8t2jEXyZs0Ry9OkB8oj5C8P3WC3u06p72TC9gN8woOrWH9zesmptLMoJpvPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725008987; x=1725095387; bh=icPTQm46xsAVzTUWR+VyLDfzy1G4
-	ON/xcomPtpmKYc8=; b=PJrqlDyWWFaSVxrXX9CaRs5d3SGrTQrmW26aQwXDYlDC
-	vh1mMnFCqjFoJm1JNRrAMZjBw+Y9Y3xpFsqTE5eyOjXiJZzinX3fVj9sjdVXT1z5
-	YLy+UwOxiVyj56VdaeX/FqlRVreK9a9wn2jXZd5gAKw9oz1lP32fe3RrO3ujbwvo
-	hu2gOTZs3uro3+urK4UnHjGgySEHoKsMcpbvW0riaMIj+82JB55OUhR+lHLQ5wMY
-	0khU2lzp5HH0cegM2CdV8LcxSP0jzv0WHyrwFZNqvCHchyYtwYw5Sw6sfilB9xbV
-	knKn/JfwyV3dFH51JYcv/DWmsyPM+Hz8MZboRelVCQ==
-X-ME-Sender: <xms:W4zRZl164T1svQf7Tvk6sCT1M4RlqSH9ig1hCzNu9vlLb6VP5D4UcQ>
-    <xme:W4zRZsHDoqjutA4z5AfQiGvCgFzm-6HyQ1kHrto4rpb6vMk-RNxjWz5xltjEdVAdd
-    XXesaNQMZu3Ytsm2A>
-X-ME-Received: <xmr:W4zRZl4XedSLD_e4gYrMEXiU7c9JKDuPR9lcSKLylHzShYltkVlL-7hUIElPwcU0jLXBPil3NLriSmhhw7aXh9NxKueCiUC0fJksqTw-Itz0KJGCCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedgudefucetufdoteggodetrfdotf
+	fm1; t=1725008995; x=1725095395; bh=CdZY+u5+q7F4CgYABKCWSrAOvKXe
+	GRglmGfFH9B1LmM=; b=dY4EMz4qrXT7KOfzu8ohoBETwwo5WiRHICQdf9YmV9ub
+	72GtUMwD1PLHaSR+NeGsX/YNcNtOG66Bur+xk0KQB3fm4oCAODUVXGXyTIcmYITt
+	1D+/m+8cJ3fNaqd9rtkHcrZhlJnGHzzGPaJLp1CFSGuytDfaXLVJ5/ldFVW8WQ6P
+	hU7ObaIelV1qGyJbosS56toermon/mEn5V50W0W1OWmVtmpZpJKa6PvBULT7x9qD
+	4yx4+ZzHMrxjSJYtFPSE/uiy1tjcHwAPwbjGX9TvghOen8JwriexQfw61qHq8pp5
+	4yMjs2aZnp+MNnWT//mN6h/0YMWCCyqWbvCgIdV7xw==
+X-ME-Sender: <xms:YozRZhMEEvcfcZokqCvmfSxlYoT-drmLX6UD7pGQUOGe6mIgr0PGzQ>
+    <xme:YozRZj_qzuX1k406ZwHtVe0Io1Tnk3iDGiP6E4c90vDPwGwAL9XswGuObrDYXdbFz
+    hUdiXtx7kzM4YabWQ>
+X-ME-Received: <xmr:YozRZgSvAktsPWF1zhMtKlHa2pIkeRUqf-g6c_Fojiw8SNI4JnUQefrRLJDmw6JX3KHt-Lalg2KCccPhuUiieMJXYMIFaUUT3KNqRlzkhms_fssqtQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedgudefucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhg
-X-ME-Proxy: <xmx:W4zRZi3TGJZPumZiBlx7JjobV3wszinD7RPvLf956TPXzq4fNnQxjQ>
-    <xmx:W4zRZoEcDCaCq32gYKfCEPJHAzN5wDqmCNInvaQoG13pF6kOrk7JeA>
-    <xmx:W4zRZj-llrozJbPMfLZ6dQjDiBZnobExpdJhIyrSsL9bcDvVKMVk-A>
-    <xmx:W4zRZlmHTDVwOR7tkzYDaEP8a7f83FqU0Jpi3ouqzZKiIlE3dLdeng>
-    <xmx:W4zRZkhIvJJL6sDe0sAoKbGA3XuhmOFgu2sVMCIcnWucw2usmCCf-E-a>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrlhhv
+    ihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:Y4zRZtuI9W2grMQOlIsWvtb1KMSq6AoF5leDzyhsv6ajr9pG-wvocw>
+    <xmx:Y4zRZpfLp7oaohFKukZ7RMOv9L3-p2rC9-sh2WEHkQgKybo-HVCAFg>
+    <xmx:Y4zRZp31dVzZV4dSkGoyAxKP42Tf54pBI-LkRLmGZdc5jiv4uKn80g>
+    <xmx:Y4zRZl8zPl5QUgmrg2NXFaAgwDehb_wPIkWVqvfyN-CuQHnFANP9pQ>
+    <xmx:Y4zRZg4vmYqLEag8Dg0Xj-rxDrNC2jkZVxisWR2K_kynBpI763ZSbywW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Aug 2024 05:09:46 -0400 (EDT)
+ 30 Aug 2024 05:09:53 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b44855a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Aug 2024 09:09:35 +0000 (UTC)
-Date: Fri, 30 Aug 2024 11:09:44 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 876554ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Aug 2024 09:09:43 +0000 (UTC)
+Date: Fri, 30 Aug 2024 11:09:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 17/21] refs: stop modifying global `log_all_ref_updates`
- variable
-Message-ID: <9cc8518a02d6bacfc11caa30c37f6bffaad69cfe.1725008898.git.ps@pks.im>
+Subject: [PATCH v2 18/21] environment: stop storing "core.logAllRefUpdates"
+ globally
+Message-ID: <b5ed6928070ca02463bf53d339aba47bbf25e86a.1725008898.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1725008897.git.ps@pks.im>
 Precedence: bulk
@@ -91,278 +91,223 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725008897.git.ps@pks.im>
 
-In refs-related code we modify the global `log_all_ref_updates`
-variable, which is done because `should_autocreate_reflog()` does not
-accept passing an `enum log_refs_config` but instead accesses the global
-variable. Adapt its interface such that the value is provided by the
-caller, which allows us to compute the proper value locally without
-having to modify global state.
+The value of "core.logAllRefUpdates" is being stored in the global
+variable `log_all_ref_updates`. This design is somewhat aged nowadays,
+where it is entirely possible to access multiple repositories in the
+same process which all have different values for this setting. So using
+a single global variable to track it is plain wrong.
 
-This change requires us to move the enum to "repo-settings.h", or
-otherwise we get compilation errors due to include cycles. We're about
-to fully move this setting into the repo-settings subsystem anyway, so
-this is fine.
+Remove the global variable. Instead, we now provide a new function part
+of the repo-settings subsystem that parses the value for a specific
+repository. While that may require us to read the value multiple times,
+we work around this by reading it once when the ref backends are set up
+and caching the value there.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/checkout.c      |  3 ++-
- environment.h           |  8 ++------
- refs.c                  |  5 +++--
- refs.h                  |  4 +++-
- refs/files-backend.c    | 23 ++++++++++++-----------
+ builtin/checkout.c      |  2 ++
+ config.c                | 10 ----------
+ environment.c           |  1 -
+ environment.h           |  2 --
+ refs/files-backend.c    |  4 +++-
  refs/reftable-backend.c | 12 +++++++-----
- repo-settings.h         |  7 +++++++
- 7 files changed, 36 insertions(+), 26 deletions(-)
+ repo-settings.c         | 16 ++++++++++++++++
+ repo-settings.h         |  3 +++
+ setup.c                 |  2 +-
+ 9 files changed, 32 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4cfe6fab505..6db7f39492e 100644
+index 6db7f39492e..7e18b87c7a4 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -23,6 +23,7 @@
- #include "read-cache.h"
- #include "refs.h"
- #include "remote.h"
-+#include "repo-settings.h"
- #include "resolve-undo.h"
- #include "revision.h"
- #include "setup.h"
-@@ -954,7 +955,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+@@ -951,6 +951,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 	const char *old_desc, *reflog_msg;
+ 	if (opts->new_branch) {
+ 		if (opts->new_orphan_branch) {
++			enum log_refs_config log_all_ref_updates =
++				repo_settings_get_log_all_ref_updates(the_repository);
+ 			char *refname;
  
  			refname = mkpathdup("refs/heads/%s", opts->new_orphan_branch);
- 			if (opts->new_branch_log &&
--			    !should_autocreate_reflog(refname)) {
-+			    !should_autocreate_reflog(log_all_ref_updates, refname)) {
- 				int ret;
- 				struct strbuf err = STRBUF_INIT;
+diff --git a/config.c b/config.c
+index f3066c37477..47101c3e977 100644
+--- a/config.c
++++ b/config.c
+@@ -1452,16 +1452,6 @@ static int git_default_core_config(const char *var, const char *value,
+ 		return 0;
+ 	}
  
+-	if (!strcmp(var, "core.logallrefupdates")) {
+-		if (value && !strcasecmp(value, "always"))
+-			log_all_ref_updates = LOG_REFS_ALWAYS;
+-		else if (git_config_bool(var, value))
+-			log_all_ref_updates = LOG_REFS_NORMAL;
+-		else
+-			log_all_ref_updates = LOG_REFS_NONE;
+-		return 0;
+-	}
+-
+ 	if (!strcmp(var, "core.warnambiguousrefs")) {
+ 		warn_ambiguous_refs = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 64ae13ef240..992d87e0d60 100644
+--- a/environment.c
++++ b/environment.c
+@@ -77,7 +77,6 @@ int sparse_expect_files_outside_of_patterns;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+-enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
+ int max_allowed_tree_depth =
+ #ifdef _MSC_VER
+ 	/*
 diff --git a/environment.h b/environment.h
-index 934859e1c59..0b4e5afc36d 100644
+index 0b4e5afc36d..315fd319951 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -1,6 +1,8 @@
- #ifndef ENVIRONMENT_H
- #define ENVIRONMENT_H
- 
-+#include "repo-settings.h"
-+
- /* Double-check local_repo_env below if you add to this list. */
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
- #define GIT_COMMON_DIR_ENVIRONMENT "GIT_COMMON_DIR"
-@@ -179,12 +181,6 @@ extern int core_apply_sparse_checkout;
+@@ -181,8 +181,6 @@ extern int core_apply_sparse_checkout;
  extern int core_sparse_checkout_cone;
  extern int sparse_expect_files_outside_of_patterns;
  
--enum log_refs_config {
--	LOG_REFS_UNSET = -1,
--	LOG_REFS_NONE = 0,
--	LOG_REFS_NORMAL,
--	LOG_REFS_ALWAYS
--};
- extern enum log_refs_config log_all_ref_updates;
- 
+-extern enum log_refs_config log_all_ref_updates;
+-
  enum rebase_setup_type {
-diff --git a/refs.c b/refs.c
-index ceb72d4bd74..d7402bcd196 100644
---- a/refs.c
-+++ b/refs.c
-@@ -24,7 +24,7 @@
- #include "submodule.h"
- #include "worktree.h"
- #include "strvec.h"
--#include "repository.h"
-+#include "repo-settings.h"
- #include "setup.h"
- #include "sigchain.h"
- #include "date.h"
-@@ -958,7 +958,8 @@ static char *normalize_reflog_message(const char *msg)
- 	return strbuf_detach(&sb, NULL);
- }
- 
--int should_autocreate_reflog(const char *refname)
-+int should_autocreate_reflog(enum log_refs_config log_all_ref_updates,
-+			     const char *refname)
- {
- 	switch (log_all_ref_updates) {
- 	case LOG_REFS_ALWAYS:
-diff --git a/refs.h b/refs.h
-index f8b919a1388..f2c4ccde611 100644
---- a/refs.h
-+++ b/refs.h
-@@ -3,6 +3,7 @@
- 
- #include "commit.h"
- #include "repository.h"
-+#include "repo-settings.h"
- 
- struct fsck_options;
- struct object_id;
-@@ -111,7 +112,8 @@ int refs_verify_refname_available(struct ref_store *refs,
- 
- int refs_ref_exists(struct ref_store *refs, const char *refname);
- 
--int should_autocreate_reflog(const char *refname);
-+int should_autocreate_reflog(enum log_refs_config log_all_ref_updates,
-+			     const char *refname);
- 
- int is_branch(const char *refname);
- 
+ 	AUTOREBASE_NEVER = 0,
+ 	AUTOREBASE_LOCAL,
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 1bbb550f3af..f5871abcf75 100644
+index f5871abcf75..a536d7d1b57 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -8,6 +8,7 @@
- #include "../hex.h"
- #include "../fsck.h"
- #include "../refs.h"
-+#include "../repo-settings.h"
- #include "refs-internal.h"
- #include "ref-cache.h"
- #include "packed-backend.h"
-@@ -1443,6 +1444,7 @@ static int write_ref_to_lockfile(struct files_ref_store *refs,
- static int commit_ref_update(struct files_ref_store *refs,
- 			     struct ref_lock *lock,
- 			     const struct object_id *oid, const char *logmsg,
-+			     int flags,
- 			     struct strbuf *err);
+@@ -75,6 +75,7 @@ struct files_ref_store {
+ 	unsigned int store_flags;
  
- /*
-@@ -1586,7 +1588,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	oidcpy(&lock->old_oid, &orig_oid);
+ 	char *gitcommondir;
++	enum log_refs_config log_all_ref_updates;
  
- 	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
--	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
-+	    commit_ref_update(refs, lock, &orig_oid, logmsg, 0, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
- 		goto rollback;
-@@ -1603,14 +1605,11 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 		goto rollbacklog;
- 	}
+ 	struct ref_cache *loose;
  
--	flag = log_all_ref_updates;
--	log_all_ref_updates = LOG_REFS_NONE;
- 	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
--	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
-+	    commit_ref_update(refs, lock, &orig_oid, NULL, REF_SKIP_CREATE_REFLOG, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
- 	}
--	log_all_ref_updates = flag;
+@@ -107,6 +108,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
+ 	refs->gitcommondir = strbuf_detach(&sb, NULL);
+ 	refs->packed_ref_store =
+ 		packed_ref_store_init(repo, refs->gitcommondir, flags);
++	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
  
-  rollbacklog:
- 	if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
-@@ -1705,13 +1704,17 @@ static int log_ref_setup(struct files_ref_store *refs,
+ 	chdir_notify_reparent("files-backend $GIT_DIR", &refs->base.gitdir);
+ 	chdir_notify_reparent("files-backend $GIT_COMMONDIR",
+@@ -1704,7 +1706,7 @@ static int log_ref_setup(struct files_ref_store *refs,
  			 const char *refname, int force_create,
  			 int *logfd, struct strbuf *err)
  {
-+	enum log_refs_config log_refs_cfg = log_all_ref_updates;
+-	enum log_refs_config log_refs_cfg = log_all_ref_updates;
++	enum log_refs_config log_refs_cfg = refs->log_all_ref_updates;
  	struct strbuf logfile_sb = STRBUF_INIT;
  	char *logfile;
  
-+	if (log_refs_cfg == LOG_REFS_UNSET)
-+		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
-+
- 	files_reflog_path(refs, &logfile_sb, refname);
- 	logfile = strbuf_detach(&logfile_sb, NULL);
- 
--	if (force_create || should_autocreate_reflog(refname)) {
-+	if (force_create || should_autocreate_reflog(log_refs_cfg, refname)) {
- 		if (raceproof_create_file(logfile, open_or_create_logfile, logfd)) {
- 			if (errno == ENOENT)
- 				strbuf_addf(err, "unable to create directory for '%s': "
-@@ -1800,9 +1803,6 @@ static int files_log_ref_write(struct files_ref_store *refs,
- 	if (flags & REF_SKIP_CREATE_REFLOG)
- 		return 0;
- 
--	if (log_all_ref_updates == LOG_REFS_UNSET)
--		log_all_ref_updates = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
--
- 	result = log_ref_setup(refs, refname,
- 			       flags & REF_FORCE_CREATE_REFLOG,
- 			       &logfd, err);
-@@ -1891,6 +1891,7 @@ static int write_ref_to_lockfile(struct files_ref_store *refs,
- static int commit_ref_update(struct files_ref_store *refs,
- 			     struct ref_lock *lock,
- 			     const struct object_id *oid, const char *logmsg,
-+			     int flags,
- 			     struct strbuf *err)
- {
- 	files_assert_main_repository(refs, "commit_ref_update");
-@@ -1898,7 +1899,7 @@ static int commit_ref_update(struct files_ref_store *refs,
- 	clear_loose_ref_cache(refs);
- 	if (files_log_ref_write(refs, lock->ref_name,
- 				&lock->old_oid, oid,
--				logmsg, 0, err)) {
-+				logmsg, flags, err)) {
- 		char *old_msg = strbuf_detach(err, NULL);
- 		strbuf_addf(err, "cannot update the ref '%s': %s",
- 			    lock->ref_name, old_msg);
-@@ -1931,7 +1932,7 @@ static int commit_ref_update(struct files_ref_store *refs,
- 			struct strbuf log_err = STRBUF_INIT;
- 			if (files_log_ref_write(refs, "HEAD",
- 						&lock->old_oid, oid,
--						logmsg, 0, &log_err)) {
-+						logmsg, flags, &log_err)) {
- 				error("%s", log_err.buf);
- 				strbuf_release(&log_err);
- 			}
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 1c4b19e737f..c78186423a1 100644
+index c78186423a1..043e19439f6 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -19,6 +19,7 @@
- #include "../reftable/reftable-record.h"
- #include "../reftable/reftable-error.h"
- #include "../reftable/reftable-iterator.h"
-+#include "../repo-settings.h"
- #include "../setup.h"
- #include "../strmap.h"
- #include "parse.h"
-@@ -158,20 +159,21 @@ static struct reftable_stack *stack_for(struct reftable_ref_store *store,
+@@ -52,6 +52,7 @@ struct reftable_ref_store {
+ 	struct reftable_write_options write_options;
  
- static int should_write_log(struct ref_store *refs, const char *refname)
- {
--	if (log_all_ref_updates == LOG_REFS_UNSET)
--		log_all_ref_updates = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
-+	enum log_refs_config log_refs_cfg = log_all_ref_updates;
-+	if (log_refs_cfg == LOG_REFS_UNSET)
-+		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
+ 	unsigned int store_flags;
++	enum log_refs_config log_all_ref_updates;
+ 	int err;
+ };
  
--	switch (log_all_ref_updates) {
-+	switch (log_refs_cfg) {
- 	case LOG_REFS_NONE:
- 		return refs_reflog_exists(refs, refname);
- 	case LOG_REFS_ALWAYS:
- 		return 1;
- 	case LOG_REFS_NORMAL:
--		if (should_autocreate_reflog(refname))
-+		if (should_autocreate_reflog(log_refs_cfg, refname))
- 			return 1;
- 		return refs_reflog_exists(refs, refname);
- 	default:
--		BUG("unhandled core.logAllRefUpdates value %d", log_all_ref_updates);
-+		BUG("unhandled core.logAllRefUpdates value %d", log_refs_cfg);
+@@ -157,21 +158,21 @@ static struct reftable_stack *stack_for(struct reftable_ref_store *store,
  	}
  }
  
+-static int should_write_log(struct ref_store *refs, const char *refname)
++static int should_write_log(struct reftable_ref_store *refs, const char *refname)
+ {
+-	enum log_refs_config log_refs_cfg = log_all_ref_updates;
++	enum log_refs_config log_refs_cfg = refs->log_all_ref_updates;
+ 	if (log_refs_cfg == LOG_REFS_UNSET)
+ 		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
+ 
+ 	switch (log_refs_cfg) {
+ 	case LOG_REFS_NONE:
+-		return refs_reflog_exists(refs, refname);
++		return refs_reflog_exists(&refs->base, refname);
+ 	case LOG_REFS_ALWAYS:
+ 		return 1;
+ 	case LOG_REFS_NORMAL:
+ 		if (should_autocreate_reflog(log_refs_cfg, refname))
+ 			return 1;
+-		return refs_reflog_exists(refs, refname);
++		return refs_reflog_exists(&refs->base, refname);
+ 	default:
+ 		BUG("unhandled core.logAllRefUpdates value %d", log_refs_cfg);
+ 	}
+@@ -278,6 +279,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 	base_ref_store_init(&refs->base, repo, gitdir, &refs_be_reftable);
+ 	strmap_init(&refs->worktree_stacks);
+ 	refs->store_flags = store_flags;
++	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
+ 
+ 	refs->write_options.hash_id = repo->hash_algo->format_id;
+ 	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
+@@ -1220,7 +1222,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 		} else if (!(u->flags & REF_SKIP_CREATE_REFLOG) &&
+ 			   (u->flags & REF_HAVE_NEW) &&
+ 			   (u->flags & REF_FORCE_CREATE_REFLOG ||
+-			    should_write_log(&arg->refs->base, u->refname))) {
++			    should_write_log(arg->refs, u->refname))) {
+ 			struct reftable_log_record *log;
+ 			int create_reflog = 1;
+ 
+diff --git a/repo-settings.c b/repo-settings.c
+index 3a76ba276c9..1322fd2f972 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -124,3 +124,19 @@ void prepare_repo_settings(struct repository *r)
+ 	 */
+ 	r->settings.command_requires_full_index = 1;
+ }
++
++enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *repo)
++{
++	const char *value;
++
++	if (!repo_config_get_string_tmp(repo, "core.logallrefupdates", &value)) {
++		if (value && !strcasecmp(value, "always"))
++			return LOG_REFS_ALWAYS;
++		else if (git_config_bool("core.logallrefupdates", value))
++			return LOG_REFS_NORMAL;
++		else
++			return LOG_REFS_NONE;
++	}
++
++	return LOG_REFS_UNSET;
++}
 diff --git a/repo-settings.h b/repo-settings.h
-index 28f95695b3a..d03b6e57f0c 100644
+index d03b6e57f0c..76adb96a669 100644
 --- a/repo-settings.h
 +++ b/repo-settings.h
-@@ -16,6 +16,13 @@ enum fetch_negotiation_setting {
- 	FETCH_NEGOTIATION_NOOP,
- };
+@@ -65,4 +65,7 @@ struct repo_settings {
  
-+enum log_refs_config {
-+	LOG_REFS_UNSET = -1,
-+	LOG_REFS_NONE = 0,
-+	LOG_REFS_NORMAL,
-+	LOG_REFS_ALWAYS
-+};
+ void prepare_repo_settings(struct repository *r);
+ 
++/* Read the value for "core.logAllRefUpdates". */
++enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *repo);
 +
- struct repo_settings {
- 	int initialized;
- 
+ #endif /* REPO_SETTINGS_H */
+diff --git a/setup.c b/setup.c
+index 19cce5afa72..74991914726 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2354,7 +2354,7 @@ static int create_default_files(const char *template_path,
+ 	else {
+ 		git_config_set("core.bare", "false");
+ 		/* allow template config file to override the default */
+-		if (log_all_ref_updates == LOG_REFS_UNSET)
++		if (repo_settings_get_log_all_ref_updates(the_repository) == LOG_REFS_UNSET)
+ 			git_config_set("core.logallrefupdates", "true");
+ 		if (needs_work_tree_config(original_git_dir, work_tree))
+ 			git_config_set("core.worktree", work_tree);
 -- 
 2.46.0.421.g159f2d50e7.dirty
 
