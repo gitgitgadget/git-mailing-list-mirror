@@ -1,85 +1,83 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE00175D30
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFE0175D4F
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 09:10:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725009003; cv=none; b=E8JDQ8HxIQuMEKE9MSfpDTti2RNVXyAyDGrg0QlQLqsNm/0h4fXIYVp8WbuWn65OcxXfcAnjy0JYSKxykxUWgYPD66k0Mi19YXOhu2HycpLGEnlgnXEgu9U9P4hMygATJ1DCVrQmA4/cnsTAH6rOGmL/awqsfLM4ZoYRmvM8PBA=
+	t=1725009005; cv=none; b=mfH5Q6NkjB94HTS+sYdsHbPMPv0dYerqA8Xm1/iURSqwjYiBt/YV5iL90bmHASFinJOmdL3oJmc72GzjWr+8IUNWnB2DYY0fCxwm7MGo+0I7KOjO08PFQVS2vVxZ5N2mKrQTBxSad9vT4uK8rx+1goPV6cgiIFuTLob1W0GU6tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725009003; c=relaxed/simple;
-	bh=Iu3vDPgNXAZDAIcgXXU9Ke5jUY1p9Ytsn2EzS5cGhxE=;
+	s=arc-20240116; t=1725009005; c=relaxed/simple;
+	bh=U9J5P0oCJzY32aGIm9ibRn0px/mBMJPwQUTois44z6s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Shwm0dSzsXhNlOi4ElVlLSK0Chkf4RNBUKvNzkos3FPHPhln44LJgiEd/7dOW9qbGP6J/0Zcz54MC/5r2j0cnLUlb1OGeCGN/SDEF9lc/6o4mBTGajoHKsAn3V08ryI+QKCk3KRA5E/72+NZiUgWSasIv7Pp1OzkSVg5gnLny6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qAEWl/UI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NsIdeeFv; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=oIas3GUwomyxZizQGIZ60Eggy2Cuec9VfxFrwvybwE1hX7NQ7b79jA/ZV4kUD+yTj54AXhfPixA4+sniR3M0uyKgZTwwjdcc+WD4gim14DphOLyKRLQcA33J8Ot21efk5tx8/oZWe7rSr9nSGz/TiGSsgebhNv3r0gk9deGsTQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZLHZ3dGx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iUvMm/bS; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qAEWl/UI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NsIdeeFv"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZLHZ3dGx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iUvMm/bS"
 Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C8A681140229;
-	Fri, 30 Aug 2024 05:10:00 -0400 (EDT)
+	by mailfout.nyi.internal (Postfix) with ESMTP id 208CA1380277;
+	Fri, 30 Aug 2024 05:10:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 30 Aug 2024 05:10:00 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 30 Aug 2024 05:10:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725009000; x=1725095400; bh=P3Tz/e7OIr
-	UM3+si6TKcKwZZaFdVeqDfPakrWKeU4PM=; b=qAEWl/UIlq6tiGYvY2xgJsepSx
-	6aOCsaVX81vjosCb38tVNlDBoTsZo1l0ZcSfQmlokXa4HCfzGwCkso8ELlmq546T
-	5RoKSoJZps+5gdZZ2uJlLu3hzGRK4uhMHu6HWjtDqdwxuf+8Dx9rif2NrG2sIiVa
-	SfWHsWmBZq+f5sS4cDzhBf+zbRC45ThHGnHMqj4N8M5yv42BFVMisr0ouWy/0bp8
-	Bh/I/Ld4rav8873dwLJnRKMgzbQzaeVzyKdRDw3RjyUAh56yvB0UYQ4dfEK0CWuv
-	aoBVwGx0LxlZOY5FYOwU8vHZFqHLozvRUV1gLpbPqoDicSygEHdlCrsE8JXw==
+	:subject:to:to; s=fm1; t=1725009003; x=1725095403; bh=5yq6q6JNiw
+	d4+YshgH/avjb7HWZjW0RZYeknNET2kqE=; b=ZLHZ3dGxc9UmBK8JP7pLvq5tMp
+	4l1WziSoe/V+3TrvFBYHKLLej3/25qkcZZoIegosFwe/8EjK9zCpTmkCxFdro4yU
+	LgI9gWRPDdL6LGaB6WpX41Kce6RxKdyUSKh+uex+TcbWeOuokykiid2Va/y1eldU
+	g/dxsjvGNHtmQo6e2PcTb0gQXvOml/DFAy060lSIKA1EBnSsVBVymJ7S+BgRzTr0
+	gyRV+inoqDEhxw5Y3U47wtgFqv20SDsgfQZ7jrU3jjKf18Z+whb/FY+pM+V75iKo
+	bSuCS6IWOZ6brjUBdrpLXlB0ewIm6w0KfJ/zU78OSo2xRuH8J2/Se+Va9Fhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725009000; x=1725095400; bh=P3Tz/e7OIrUM3+si6TKcKwZZaFdV
-	eqDfPakrWKeU4PM=; b=NsIdeeFvoA8CwTAM8DDLMqI2lTLJWCks35bgYX6s0puc
-	qqat81KeobNPhEP2eJUfWv/n2XEjyvnOklutBRk6yAPpsu61GxNrMSTTrf9apjAQ
-	Fao1ROodzO8sCdBMLZFxe92JV095HmJZpy/ED6zsHjAPD+nKRyuC68Yco/gFCbQa
-	9/KbH3jvQvCK53DnJLlGio3azw5v22V6msjKpEL5N6BCR+hnY7lhmBtwhZf0FRB8
-	BffAXjG1MYNPUdKuez3wN13UqzV9PXOOnCgGqIfBhoBpSqBj75Mrmh1ALyT8VaTY
-	xcqcbUfq/pj10Y677tgm9/sVof3QX+wIh8KQsKzXWw==
-X-ME-Sender: <xms:aIzRZh09I9J_e-vhS1jrrw5Azg66lRP5ydM3xC0c1n2_Ij-BDGQWuw>
-    <xme:aIzRZoEvm-YHNMZ0lvdSI-kUbDy6dVmcmPKdzPI9Hdp9uR43nHawX7rrBFE1mS7rM
-    SNz108BC3tvNQ4TsA>
-X-ME-Received: <xmr:aIzRZh54DT0y2udcoNUxNk1kIpgj2g8992Tfqi5hUEXZ56NPlv2qaLIosdU9MIlQtxVVlsRItw2ziWoxG5jqubHV2ldGV5AjuyAzSbv7Jl1rH7odjg>
+	fm1; t=1725009003; x=1725095403; bh=5yq6q6JNiwd4+YshgH/avjb7HWZj
+	W0RZYeknNET2kqE=; b=iUvMm/bSO4m4gBu67tYSemLOneOKf1HelUTyR/1oNwZD
+	yMcEDcDAtGBlIVVE8f1dP+Qt67zksIbR8FIqCtDWUOUTB08o7y9Hp7pJs6aZJXj0
+	X/Vjg8k1l1YLZ+yGyJX4DDYm05e64PC9nHK+frOVGEomgMucaXUO4GJrjV6pcaDi
+	/NxVVzat98rBvCttOta6hJyAjtT8mjordK3yBgahyXzrE8vvt67MY+CuWCYr8Mqh
+	bJHT6hmI7mL6kUCBSh7Do10ZMwZGqN1Tj8i8z7fpmqhPJUoDDmOsQ5jXABNHNlRv
+	LOfc65U4Hk2sQq7eB6SYyi58mzFJ0nSEuinyj7DhHg==
+X-ME-Sender: <xms:aozRZhQrIPvc8jhXsdDaZwydVm9fLajmTflUmo6-H3KUGY6-UU1Oog>
+    <xme:aozRZqxrzClkIxnUmV7m4Wepp9jhB7TyaVt37ttsnswu02WDmLGZiGFbXPBkJuS_q
+    7mHudmqliodtqDLJQ>
+X-ME-Received: <xmr:aozRZm24ttany2bXREQ9-N9G_y7JWeKP-HjNjHQ9hnIbLcHZrnI1zuIMZ2sdcyIwodrBXu5P0ZPUpdb7_YHfDQQrldFqROYb-3XdCaiGhf4Se6yw8A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefiedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepudeffeetteekudekffevudefgfelhefgteffhfdvveff
-    keevleevjeejfefgfeeinecuffhomhgrihhnpeifrghrnhgrmhgsihhguhhouhhsrhgvfh
-    hsrdhinhhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    tggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:aIzRZu2EMh2JMnvAvtBeDZ_grroN8D0F29H7ROjoQhzxk1UrS_4bGA>
-    <xmx:aIzRZkFLrx4H04wGJhv8sJo362Q5f111-RHTxcpWFyvTc4FeE3J71A>
-    <xmx:aIzRZv8MEs2OZmoBq-oBg4efRFJJ2KHOaQ11XaCZ3tjFMpUQTjIKsA>
-    <xmx:aIzRZhk0DhhLWfVFlI8LsxIwGIfJLWrsyPQnamJcrJrtZBrucGO6iQ>
-    <xmx:aIzRZgjNvk8owUAf5Qgd5niZgl3WN0zxiw0Fp_FBHdhzuijvmFh4D_yO>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:a4zRZpDg3WS26011XyDRsXzAVV_JRn2p2_BD7GOraqLKcqCVQc26uw>
+    <xmx:a4zRZqjBPWvPb1IZPUbjU_nVfeOMEi8f7uuCSAg-qq2b70hs4nJZdw>
+    <xmx:a4zRZtoAD93ztR_aVCZSKJ5mA8z8lI6qlggHSuhFXx4_Xi9nkLdCUQ>
+    <xmx:a4zRZljKvOE7oMO_rxQCh5R4szqWgbJLnRQnFKgxJ1JZQmvXScA07w>
+    <xmx:a4zRZidMrJY7etFLZu7VBqenIxDH9lqUIpSP_d_mTXfLrWGOiR0Ge76i>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Aug 2024 05:09:59 -0400 (EDT)
+ 30 Aug 2024 05:10:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 25444885 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 30 Aug 2024 09:09:49 +0000 (UTC)
-Date: Fri, 30 Aug 2024 11:09:58 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id bc156321 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 30 Aug 2024 09:09:51 +0000 (UTC)
+Date: Fri, 30 Aug 2024 11:10:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 20/21] environment: stop storing "core.warnAmbiguousRefs"
- globally
-Message-ID: <fc6fcebf7f737617c635b338e3c0dce10e77881c.1725008898.git.ps@pks.im>
+Subject: [PATCH v2 21/21] environment: stop storing "core.notesRef" globally
+Message-ID: <a0b75c4bc99c83748d793d311764535fc193a470.1725008898.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1725008897.git.ps@pks.im>
 Precedence: bulk
@@ -92,210 +90,242 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725008897.git.ps@pks.im>
 
-Same as the preceding commits, storing the "core.warnAmbiguousRefs"
-value globally is misdesigned as this setting may be set per repository.
-
-Move the logic into the repo-settings subsystem. The usual pattern here
-is that users are expected to call `prepare_repo_settings()` before they
-access the settings themselves. This seems somewhat fragile though, as
-it is easy to miss and leads to somewhat ugly code patterns at the call
-sites.
-
-Instead, introduce a new function that encapsulates this logic for us.
-This also allows us to change how exactly the lazy initialization works
-in the future, e.g. by only partially initializing values as requested
-by the caller.
+Stop storing the "core.notesRef" config value globally. Instead,
+retrieve the value in `default_notes_ref()`. The code is never called in
+a hot loop anyway, so doing this on every invocation should be perfectly
+fine.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rev-parse.c | 4 +++-
- config.c            | 5 -----
- environment.c       | 1 -
- environment.h       | 1 -
- object-name.c       | 5 +++--
- ref-filter.c        | 3 ++-
- refs.c              | 4 ++--
- repo-settings.c     | 9 +++++++++
- repo-settings.h     | 4 ++++
- 9 files changed, 23 insertions(+), 13 deletions(-)
+ builtin/notes.c | 22 ++++++++++++++--------
+ config.c        |  8 --------
+ environment.c   |  1 -
+ environment.h   |  2 --
+ notes.c         | 21 +++++++++++++--------
+ notes.h         |  3 ++-
+ 6 files changed, 29 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index a5108266daf..34b46754426 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -19,6 +19,7 @@
- #include "path.h"
- #include "diff.h"
- #include "read-cache-ll.h"
-+#include "repo-settings.h"
- #include "repository.h"
- #include "revision.h"
- #include "setup.h"
-@@ -899,7 +900,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			}
- 			if (opt_with_value(arg, "--abbrev-ref", &arg)) {
- 				abbrev_ref = 1;
--				abbrev_ref_strict = warn_ambiguous_refs;
-+				abbrev_ref_strict =
-+					repo_settings_get_warn_ambiguous_refs(the_repository);
- 				if (arg) {
- 					if (!strcmp(arg, "strict"))
- 						abbrev_ref_strict = 1;
-diff --git a/config.c b/config.c
-index a59890180a3..53c68f3da61 100644
---- a/config.c
-+++ b/config.c
-@@ -1447,11 +1447,6 @@ static int git_default_core_config(const char *var, const char *value,
- 		return 0;
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 04f9dfb7fbd..5d594a07240 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -897,6 +897,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 			      1, PARSE_OPT_NONEG),
+ 		OPT_END()
+ 	};
++	char *notes_ref;
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     git_notes_merge_usage, 0);
+@@ -924,7 +925,8 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 	if (do_commit)
+ 		return merge_commit(&o);
+ 
+-	o.local_ref = default_notes_ref();
++	notes_ref = default_notes_ref(the_repository);
++	o.local_ref = notes_ref;
+ 	strbuf_addstr(&remote_ref, argv[0]);
+ 	expand_loose_notes_ref(&remote_ref);
+ 	o.remote_ref = remote_ref.buf;
+@@ -953,7 +955,7 @@ static int merge(int argc, const char **argv, const char *prefix)
  	}
  
--	if (!strcmp(var, "core.warnambiguousrefs")) {
--		warn_ambiguous_refs = git_config_bool(var, value);
+ 	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
+-		    remote_ref.buf, default_notes_ref());
++		    remote_ref.buf, notes_ref);
+ 	strbuf_add(&(o.commit_msg), msg.buf + 7, msg.len - 7); /* skip "notes: " */
+ 
+ 	result = notes_merge(&o, t, &result_oid);
+@@ -961,7 +963,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 	if (result >= 0) /* Merge resulted (trivially) in result_oid */
+ 		/* Update default notes ref with new commit */
+ 		refs_update_ref(get_main_ref_store(the_repository), msg.buf,
+-				default_notes_ref(), &result_oid, NULL, 0,
++				notes_ref, &result_oid, NULL, 0,
+ 				UPDATE_REFS_DIE_ON_ERR);
+ 	else { /* Merge has unresolved conflicts */
+ 		struct worktree **worktrees;
+@@ -973,14 +975,14 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+ 		worktrees = get_worktrees();
+ 		wt = find_shared_symref(worktrees, "NOTES_MERGE_REF",
+-					default_notes_ref());
++					notes_ref);
+ 		if (wt)
+ 			die(_("a notes merge into %s is already in-progress at %s"),
+-			    default_notes_ref(), wt->path);
++			    notes_ref, wt->path);
+ 		free_worktrees(worktrees);
+-		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", default_notes_ref(), NULL))
++		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", notes_ref, NULL))
+ 			die(_("failed to store link to current notes ref (%s)"),
+-			    default_notes_ref());
++			    notes_ref);
+ 		fprintf(stderr, _("Automatic notes merge failed. Fix conflicts in %s "
+ 				  "and commit the result with 'git notes merge --commit', "
+ 				  "or abort the merge with 'git notes merge --abort'.\n"),
+@@ -988,6 +990,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	free_notes(t);
++	free(notes_ref);
+ 	strbuf_release(&remote_ref);
+ 	strbuf_release(&msg);
+ 	return result < 0; /* return non-zero on conflicts */
+@@ -1084,6 +1087,7 @@ static int prune(int argc, const char **argv, const char *prefix)
+ static int get_ref(int argc, const char **argv, const char *prefix)
+ {
+ 	struct option options[] = { OPT_END() };
++	char *notes_ref;
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     git_notes_get_ref_usage, 0);
+ 
+@@ -1092,7 +1096,9 @@ static int get_ref(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_get_ref_usage, options);
+ 	}
+ 
+-	puts(default_notes_ref());
++	notes_ref = default_notes_ref(the_repository);
++	puts(notes_ref);
++	free(notes_ref);
+ 	return 0;
+ }
+ 
+diff --git a/config.c b/config.c
+index 53c68f3da61..1266eab0860 100644
+--- a/config.c
++++ b/config.c
+@@ -1555,14 +1555,6 @@ static int git_default_core_config(const char *var, const char *value,
+ 		return git_config_string(&check_roundtrip_encoding, var, value);
+ 	}
+ 
+-	if (!strcmp(var, "core.notesref")) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		free(notes_ref_name);
+-		notes_ref_name = xstrdup(value);
 -		return 0;
 -	}
 -
- 	if (!strcmp(var, "core.abbrev")) {
- 		if (!value)
- 			return config_error_nonbool(var);
+ 	if (!strcmp(var, "core.editor")) {
+ 		FREE_AND_NULL(editor_program);
+ 		return git_config_string(&editor_program, var, value);
 diff --git a/environment.c b/environment.c
-index 6805c7b01df..9dd000cda36 100644
+index 9dd000cda36..a2ce9980818 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -35,7 +35,6 @@ int minimum_abbrev = 4, default_abbrev = -1;
- int ignore_case;
- int assume_unchanged;
- int is_bare_repository_cfg = -1; /* unspecified */
--int warn_ambiguous_refs = 1;
- int warn_on_object_refname_ambiguity = 1;
- int repository_format_precious_objects;
- char *git_commit_encoding;
+@@ -67,7 +67,6 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
+ #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+ #endif
+ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+-char *notes_ref_name;
+ int grafts_keep_true_parents;
+ int core_apply_sparse_checkout;
+ int core_sparse_checkout_cone;
 diff --git a/environment.h b/environment.h
-index 0cab644e2d3..aa38133da9c 100644
+index aa38133da9c..923e12661e1 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -156,7 +156,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern int warn_ambiguous_refs;
- extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
- extern char *apply_default_ignorewhitespace;
-diff --git a/object-name.c b/object-name.c
-index 09c1bd93a31..c892fbe80aa 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -20,6 +20,7 @@
- #include "pretty.h"
- #include "object-store-ll.h"
- #include "read-cache-ll.h"
-+#include "repo-settings.h"
- #include "repository.h"
- #include "setup.h"
- #include "midx.h"
-@@ -959,7 +960,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	int fatal = !(flags & GET_OID_QUIETLY);
- 
- 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
--		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
-+		if (repo_settings_get_warn_ambiguous_refs(r) && warn_on_object_refname_ambiguity) {
- 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
-@@ -1020,7 +1021,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	if (!refs_found)
- 		return -1;
- 
--	if (warn_ambiguous_refs && !(flags & GET_OID_QUIETLY) &&
-+	if (repo_settings_get_warn_ambiguous_refs(r) && !(flags & GET_OID_QUIETLY) &&
- 	    (refs_found > 1 ||
- 	     !get_short_oid(r, str, len, &tmp_oid, GET_OID_QUIETLY)))
- 		warning(warn_msg, len, str);
-diff --git a/ref-filter.c b/ref-filter.c
-index b6c6c101276..7f5cf5a1269 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -13,6 +13,7 @@
- #include "object-name.h"
- #include "object-store-ll.h"
- #include "oid-array.h"
-+#include "repo-settings.h"
- #include "repository.h"
- #include "commit.h"
- #include "mailmap.h"
-@@ -2160,7 +2161,7 @@ static const char *show_ref(struct refname_atom *atom, const char *refname)
- 	if (atom->option == R_SHORT)
- 		return refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
- 						    refname,
--						    warn_ambiguous_refs);
-+						    repo_settings_get_warn_ambiguous_refs(the_repository));
- 	else if (atom->option == R_LSTRIP)
- 		return lstrip_ref_components(refname, atom->lstrip);
- 	else if (atom->option == R_RSTRIP)
-diff --git a/refs.c b/refs.c
-index d7402bcd196..3bee3e78299 100644
---- a/refs.c
-+++ b/refs.c
-@@ -730,7 +730,7 @@ int expand_ref(struct repository *repo, const char *str, int len,
- 		if (r) {
- 			if (!refs_found++)
- 				*ref = xstrdup(r);
--			if (!warn_ambiguous_refs)
-+			if (!repo_settings_get_warn_ambiguous_refs(repo))
- 				break;
- 		} else if ((flag & REF_ISSYMREF) && strcmp(fullref.buf, "HEAD")) {
- 			warning(_("ignoring dangling symref %s"), fullref.buf);
-@@ -775,7 +775,7 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 			if (oid)
- 				oidcpy(oid, &hash);
- 		}
--		if (!warn_ambiguous_refs)
-+		if (!repo_settings_get_warn_ambiguous_refs(r))
- 			break;
- 	}
- 	strbuf_release(&path);
-diff --git a/repo-settings.c b/repo-settings.c
-index 1322fd2f972..4699b4b3650 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -140,3 +140,12 @@ enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *re
- 
- 	return LOG_REFS_UNSET;
- }
-+
-+int repo_settings_get_warn_ambiguous_refs(struct repository *repo)
-+{
-+	prepare_repo_settings(repo);
-+	if (repo->settings.warn_ambiguous_refs < 0)
-+		repo_cfg_bool(repo, "core.warnambiguousrefs",
-+			      &repo->settings.warn_ambiguous_refs, 1);
-+	return repo->settings.warn_ambiguous_refs;
-+}
-diff --git a/repo-settings.h b/repo-settings.h
-index 76adb96a669..51d6156a117 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -56,16 +56,20 @@ struct repo_settings {
- 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
- 
- 	int core_multi_pack_index;
-+	int warn_ambiguous_refs; /* lazily loaded via accessor */
+@@ -203,8 +203,6 @@ enum object_creation_mode {
  };
- #define REPO_SETTINGS_INIT { \
- 	.index_version = -1, \
- 	.core_untracked_cache = UNTRACKED_CACHE_KEEP, \
- 	.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE, \
-+	.warn_ambiguous_refs = -1, \
+ extern enum object_creation_mode object_creation_mode;
+ 
+-extern char *notes_ref_name;
+-
+ extern int grafts_keep_true_parents;
+ 
+ extern int repository_format_precious_objects;
+diff --git a/notes.c b/notes.c
+index da42df282d5..f4f18daf07e 100644
+--- a/notes.c
++++ b/notes.c
+@@ -992,15 +992,16 @@ static int notes_display_config(const char *k, const char *v,
+ 	return 0;
  }
  
- void prepare_repo_settings(struct repository *r);
+-const char *default_notes_ref(void)
++char *default_notes_ref(struct repository *repo)
+ {
+-	const char *notes_ref = NULL;
++	char *notes_ref = NULL;
++
+ 	if (!notes_ref)
+-		notes_ref = getenv(GIT_NOTES_REF_ENVIRONMENT);
++		notes_ref = xstrdup_or_null(getenv(GIT_NOTES_REF_ENVIRONMENT));
+ 	if (!notes_ref)
+-		notes_ref = notes_ref_name; /* value of core.notesRef config */
++		repo_config_get_string(repo, "core.notesref", &notes_ref);
+ 	if (!notes_ref)
+-		notes_ref = GIT_NOTES_DEFAULT_REF;
++		notes_ref = xstrdup(GIT_NOTES_DEFAULT_REF);
+ 	return notes_ref;
+ }
  
- /* Read the value for "core.logAllRefUpdates". */
- enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *repo);
-+/* Read the value for "core.warnAmbiguousRefs". */
-+int repo_settings_get_warn_ambiguous_refs(struct repository *repo);
+@@ -1010,13 +1011,14 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	struct object_id oid, object_oid;
+ 	unsigned short mode;
+ 	struct leaf_node root_tree;
++	char *to_free = NULL;
  
- #endif /* REPO_SETTINGS_H */
+ 	if (!t)
+ 		t = &default_notes_tree;
+ 	assert(!t->initialized);
+ 
+ 	if (!notes_ref)
+-		notes_ref = default_notes_ref();
++		notes_ref = to_free = default_notes_ref(the_repository);
+ 	update_ref_namespace(NAMESPACE_NOTES, xstrdup(notes_ref));
+ 
+ 	if (!combine_notes)
+@@ -1033,7 +1035,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 
+ 	if (flags & NOTES_INIT_EMPTY ||
+ 	    repo_get_oid_treeish(the_repository, notes_ref, &object_oid))
+-		return;
++		goto out;
+ 	if (flags & NOTES_INIT_WRITABLE && refs_read_ref(get_main_ref_store(the_repository), notes_ref, &object_oid))
+ 		die("Cannot use notes ref %s", notes_ref);
+ 	if (get_tree_entry(the_repository, &object_oid, "", &oid, &mode))
+@@ -1043,6 +1045,9 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	oidclr(&root_tree.key_oid, the_repository->hash_algo);
+ 	oidcpy(&root_tree.val_oid, &oid);
+ 	load_subtree(t, &root_tree, t->root, 0);
++
++out:
++	free(to_free);
+ }
+ 
+ struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
+@@ -1105,7 +1110,7 @@ void load_display_notes(struct display_notes_opt *opt)
+ 
+ 	if (!opt || opt->use_default_notes > 0 ||
+ 	    (opt->use_default_notes == -1 && !opt->extra_notes_refs.nr)) {
+-		string_list_append(&display_notes_refs, default_notes_ref());
++		string_list_append_nodup(&display_notes_refs, default_notes_ref(the_repository));
+ 		display_ref_env = getenv(GIT_NOTES_DISPLAY_REF_ENVIRONMENT);
+ 		if (display_ref_env) {
+ 			string_list_add_refs_from_colon_sep(&display_notes_refs,
+diff --git a/notes.h b/notes.h
+index 235216944bc..6dc6d7b2654 100644
+--- a/notes.h
++++ b/notes.h
+@@ -4,6 +4,7 @@
+ #include "string-list.h"
+ 
+ struct object_id;
++struct repository;
+ struct strbuf;
+ 
+ /*
+@@ -70,7 +71,7 @@ extern struct notes_tree {
+  * 3. The value of the core.notesRef config variable, if set
+  * 4. GIT_NOTES_DEFAULT_REF (i.e. "refs/notes/commits")
+  */
+-const char *default_notes_ref(void);
++char *default_notes_ref(struct repository *repo);
+ 
+ /*
+  * Flags controlling behaviour of notes tree initialization
 -- 
 2.46.0.421.g159f2d50e7.dirty
 
