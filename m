@@ -1,78 +1,72 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC3F11C92
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 00:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA834683
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 00:44:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724977911; cv=none; b=WegeRRlK9UQ288JOBR1xI7WhyZoAYdCmBhbFViUBWu+Uo3YuEKkcGJtkb9yTve6QmqRqcwt4vzc9HRcg91SqnFZ0jBrEOlJlkqUXdhwuvsdRMRFC1D3I+cVNV+QvQSbIayx/nSWWvW2ZUBw1iND2l+poxae5dhAXlO0m0oJc140=
+	t=1724978655; cv=none; b=RP9ZXYVfQU/f3jDly+dWr625GEUiCtHMIXHAVaZ674KUsr6HOQchG811fNr0HMyqdqFGGDfJMfTXdWO5ky6VQQEB6PcAAFX6WpFXUwaW3dZ2SFJL+JgeDKHBJFrS5vGRXaL8L1KB5QbAdL59w71P66Z3AFYFIOxs9PUyp6qNIT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724977911; c=relaxed/simple;
-	bh=UksqA28oq8F3KosGvvH4uhO2bPcaxQAQHeBs4LgLvsM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GJteu7ww3zM59jIPPBwoF7xBmVoX6/myVmwS1E6R6sVlF9WCYIkF880mEex5qsRyoU/g+8s3eG0qh2MsrC2JprUbOLaaQI/Hx7kChic/00cCJUySBS+ywgqjosNothwmxEHmGxpcqe5dJfLukuscbw3bz4DGaV1XFryZuW7WvEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6996 invoked by uid 109); 30 Aug 2024 00:31:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 30 Aug 2024 00:31:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13673 invoked by uid 111); 30 Aug 2024 00:31:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Aug 2024 20:31:50 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 29 Aug 2024 20:31:47 -0400
-From: Jeff King <peff@peff.net>
-To: Pavel Rappo <pavel.rappo@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-Subject: Re: How to turn off rename detection for cherry-pick?
-Message-ID: <20240830003147.GA450797@coredump.intra.peff.net>
-References: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
- <CAChcVunYDO_KAmEOoWEL2q63_Gzua-Kt3BmE5Snb8==K9Cww1w@mail.gmail.com>
- <20240829214336.GA440013@coredump.intra.peff.net>
- <CAChcVukzk=-1JNAoffWQEEv4Ne1FozGEwzGuaUWuiwhoHkcUng@mail.gmail.com>
+	s=arc-20240116; t=1724978655; c=relaxed/simple;
+	bh=HSMo4RKBSfkUglX/4j3zBnJYnFHm3HEKXOtiyb4clPA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OGQb+3tkgUEI0GUFyfyKtHG5w/Myk1tyldmNEjHI/HSki4ZuKD2AL8kJt0rKRLCCwhskRgnbFtsSmblhlNgXKUsFD8bjWPotfMq8EHrJACMDR5eIcit/uFO8q/81NXimX3gEanW6LE0Gi0irKt/g072iuFqmY604KVo7G6ByM1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UycB1aLo; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UycB1aLo"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-846bc787b3dso62845241.2
+        for <git@vger.kernel.org>; Thu, 29 Aug 2024 17:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724978652; x=1725583452; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=muSSVAzj6jdocEYy/S+S+NPSNi6yjtKPBoVOBLIARXE=;
+        b=UycB1aLo6CIiEP/VKWPDp06Qdk0Qv9ipcOT4MIVDuj48lVNZ6GTkd0f6Pv5m4cwBqt
+         Mb0UBAuDMhKdf/9mwsfpqZEgLyzeMVXyi7QRTtzCZpAHHQHHoNf5vzlDIR5wD+WTdmrZ
+         YO7awRwBtGynS4bQmp2TgB+ALQ6lc0O+N5ENa5DYH9DLw8Yf8NRRk6aZUJgHu0Ii5e2A
+         ihEx3/r/hEklqfAlV1S34Em2T6YIUXHVJb+UxiNXbkjAOHB85DQimMRL9LVEpMhFjbQk
+         RS/QbtfMV7FVOZfb/YrGsRYa762p8smSLNrRfhWj6BcXoBxUnOqDLPXnTwC+wVL3GvOz
+         XODA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724978652; x=1725583452;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=muSSVAzj6jdocEYy/S+S+NPSNi6yjtKPBoVOBLIARXE=;
+        b=ACMIHbqXKefmQ9g7N6ox7DwsUi/nZkid6kRd70VvTOkhoN8MQPkFMS9Ua2SBIe2e6t
+         OS3PjiQOThOcq6nF5IqkweV8nw4d/dzejIMr7fWOsAT+2yx9eVEO3bHJ+Bjf7aAIbLOf
+         YrDoFaEm98QhKGEP4J3i1RcfqlQMynLuXT6EqVD5FUOLxw3Z+rIzArgi8VgOrRAthubs
+         qG+H0F5ruKO9ENB42Sk5O3kJG9P0tNL0xBOEkgMZbjsPEHlMP/09aZlaOXXlBamijcIA
+         asShlK7wfD1s15OSaGvGJONPVdA3pM14KUIg7FzXfRWuR7Ddl5bFRqiGMsP/JV4oU9Jj
+         UqMA==
+X-Gm-Message-State: AOJu0YzAF3uEH0j2GX1QpSFZ4bLrA+RZHUrbmzSzpGRjfkR+r6yr7Fcn
+	kM+o+eHD4fDHZWO3QapWXDkZSFEvnL5kxqI2YguSB0adkstoO9D1a8yK9M4U6cFKOGkzzRy7qtI
+	rOFfOtZwjVl+13wKO6sWfGcXYRwYBni/C
+X-Google-Smtp-Source: AGHT+IF6rDGw/NUnfOLifVSX6VDYBchBYMB5MeBDJ/Fh7bn6kKSSf01zLVrYKJlT2S9tVzUpbhDjAm+Jc7wRau9Lx6A=
+X-Received: by 2002:a05:6122:3c88:b0:4f5:21fb:5e49 with SMTP id
+ 71dfb90a1353d-4fff16c288dmr5450971e0c.14.1724978652452; Thu, 29 Aug 2024
+ 17:44:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAChcVukzk=-1JNAoffWQEEv4Ne1FozGEwzGuaUWuiwhoHkcUng@mail.gmail.com>
+From: Adam Laughlin <adam.laughlin@gmail.com>
+Date: Thu, 29 Aug 2024 18:43:46 -0600
+Message-ID: <CALDEA19kJtPi+LAryAcdZSGevfGUYw2e7DXOEWySQubYoBoG4Q@mail.gmail.com>
+Subject: git-show multiple files delimiter?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Aug 30, 2024 at 12:12:07AM +0100, Pavel Rappo wrote:
+Hi, git-show allows multiple input paths but concatenates the output
+without a delimiter to distinguish between them.  That seems
+improbable, but I can't find a way to add a delimiter in docs at
+https://git-scm.com/docs/git-show or code at
+https://github.com/git/git. Is there one I'm missing?
 
-> You seem to have confirmed my understanding that I described in my
-> initial email (you replied to my second email in this thread).
+Thanks!
 
-Heh, I did not even see the first message in the thread. But since we
-independently arrived at the same conclusions, I guess we can consider
-everything there accurate. :)
+Adam
 
-I do think it's a bug that ort doesn't respect -Xno-renames. The fix is
-probably something like this:
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index 3752c7e595..94b3ce734c 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3338,7 +3338,7 @@ static int detect_regular_renames(struct merge_options *opt,
- 	repo_diff_setup(opt->repo, &diff_opts);
- 	diff_opts.flags.recursive = 1;
- 	diff_opts.flags.rename_empty = 0;
--	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	diff_opts.detect_rename = opts->detect_rename;
- 	diff_opts.rename_limit = opt->rename_limit;
- 	if (opt->rename_limit <= 0)
- 		diff_opts.rename_limit = 7000;
-
-though I'm not sure how DIFF_DETECT_COPIES should be handled
-("recursive" silently downgrades it to DIFF_DETECT_RENAME).
-
-I've added ort's author to the thread, so hopefully he should have a
-more clueful response.
-
--Peff
+P.S., The discord community invite appears to have expired.
