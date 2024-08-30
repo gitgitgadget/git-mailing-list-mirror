@@ -1,56 +1,54 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEF714A4EA
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 17:48:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DDD1B86E2
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 18:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725040131; cv=none; b=lOVnKI5oevKeqzY537BOYndwoujvWyzzP/0ENJwoHjeFiWjDvQmyMs00TE39g4GaaSgqwg2n5UgTeSMUbDWgjgWqHhB7DVmD/agFeVWy8qHi5HnSdYzjozXBxus0iRvKCd0HLuEU9WfO60aVRkI+cKVZ75CUUNyMq/eSwp7LBZM=
+	t=1725043273; cv=none; b=BQf6FccJ1oCXyjk7z1zlmvM7ajYCFRTPC1oY/qTEsw3iTWytuag3YxN+Mg9T6aZDaVngUNPMuM/t26bm1wSBjkV1RTMeNQsrvvoCvZR16RittiXwqTihWNLv6NR5KZ5E73BqpBcdZcFCjEYnsMdOeKiL9NVCq2nT5Az27+Upc+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725040131; c=relaxed/simple;
-	bh=4Vi82dp4Q3CT0vNwwsyxBRbsS+4FLV6sq/ffqixpWR0=;
+	s=arc-20240116; t=1725043273; c=relaxed/simple;
+	bh=qcrE6cmC/m3A+ZaoSDrAGt0CB0XkZoquY0IfR+4Vm3Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=roLJLwFJt+qv6jt+pxC+p3eNmj2ZYZoxNN7HkKGrlrQN2iCGJWONvdPecZ9BMDzSVE2+HhB205iDcI5fdg2g+mOHKxHTTIT2c1DWcfjp02shNZCBnQpLeY8CsIe8r5R9sq/FpNanYmHj0K6OaQDJsXyy/CA85ckrsoRUrrGIKyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pVkrjNar; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=VMTQ7UFol45pdzIfjkK2t243DphDlqMv+AxLctR/5CxDtfKNAkhSck8vKDqI8cDcOx1mlqzOfXhlwz37+DyN7tWvzezEkOOfkK/IC5N9L9Ma8e3kyGdtMJLkMO4+of6OOh76bfhX+2cAX/mG7+5UNIq9SG3Z5YYy5g2QkMVMdwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GX9fr5be; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pVkrjNar"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D2C730577;
-	Fri, 30 Aug 2024 13:48:48 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GX9fr5be"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A55720A47;
+	Fri, 30 Aug 2024 14:41:11 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4Vi82dp4Q3CT
-	0vNwwsyxBRbsS+4FLV6sq/ffqixpWR0=; b=pVkrjNarPLT911x6iZQKhZfhQOts
-	QfFUHf2SV1DATbsliJRZlnqsqT/p9Avhze92N0WLbJWCM/12dYFb9Ua3EOwaKdzK
-	r31oVxfXs0cjfykI84msX1QpoZfHFcjvdCIHgJdgroct0dnQgdHZ9KgL1XUs6TS4
-	QfhE2AA9ODCGMMU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 737FB30576;
-	Fri, 30 Aug 2024 13:48:48 -0400 (EDT)
+	:content-type; s=sasl; bh=qcrE6cmC/m3A+ZaoSDrAGt0CB0XkZoquY0IfR+
+	4Vm3Q=; b=GX9fr5beDO/wACVbxhOueqKqdlzr1p0MAZ4V8EYWXTcHBId7Zgeq3L
+	e7ktr/ydsfRTSH3qB2J2SyBGNxw7nM6aWi2BOdgQwoj6rm0VYSE85RzKKGEdMV4b
+	fu6cxYVMBF5lAIzfpzx+EI7E+ztnzC5sHG4tB7Sok5HMRVwkKX8M8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1129020A46;
+	Fri, 30 Aug 2024 14:41:11 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C411230574;
-	Fri, 30 Aug 2024 13:48:47 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5869F20A45;
+	Fri, 30 Aug 2024 14:41:10 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,  Patrick
- Steinhardt <ps@pks.im>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/3] doc: introducing synopsis para
-In-Reply-To: <1986021.PYKUYFuaPT@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Wed, 21 Aug 2024 23:05:57 +0200")
-References: <pull.1766.v2.git.1721855179.gitgitgadget@gmail.com>
-	<pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
-	<xmqqzfp8cm30.fsf@gitster.g> <1986021.PYKUYFuaPT@cayenne>
-Date: Fri, 30 Aug 2024 10:48:46 -0700
-Message-ID: <xmqqa5gtsxz5.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH 1/2] chainlint: make error messages self-explanatory
+In-Reply-To: <CAPig+cQ+6am7-BSnWZz5=C0Q1Vyng0T4goB+ZE9TKJMrpi_Jpg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 29 Aug 2024 18:04:43 -0400")
+References: <20240829091625.41297-1-ericsunshine@charter.net>
+	<20240829091625.41297-2-ericsunshine@charter.net>
+	<xmqq7cbzxrry.fsf@gitster.g>
+	<CAPig+cQ+6am7-BSnWZz5=C0Q1Vyng0T4goB+ZE9TKJMrpi_Jpg@mail.gmail.com>
+Date: Fri, 30 Aug 2024 11:41:08 -0700
+Message-ID: <xmqqv7zhrgzf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,53 +56,37 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 1BED6280-66F8-11EF-88B2-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 6D0B5AF8-66FF-11EF-AC54-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> ... It can be simplified further one step further: it is possible=20
-> both in asciidoc/asciidoctor to override the formatting of inline verba=
-tim=20
-> texts, so that everything that is backquoted is processed as a synopsis=
-=20
-> string.=20
-> This way, strings like
+> How about this?
 >
-> `<commit>`
-> `diff.statGraphWidth=3D<width>`
-> ` --dirstat-by-file[=3D<param>,...]`
->
-> are automatically rendered with the expected styles.
->
-> However, contrary to the s macro, this is quite disruptive as it forces=
- the=20
-> new processing on all existing manpages. Another drawback is that it is=
- no=20
-> longer genuine asciidoc, but it seems more in line with the critics. I'=
-m=20
-> refining the regexp at the moment to check for side-effects.
->
-> Is this proposition more appropriate?
+>     The "?!LOOP?!" case is particularly serious because that terse
+>     single word does nothing to convey that the loop body should end
+>     with "|| return 1" (or "|| exit 1" in a subshell) to ensure that a
+>     failing command in the body aborts the loop immediately, which is
+>     important since a shell loop does not automatically terminate when
+>     an error occurs within its body. Moreover, unlike &&-chaining
+>     which is ubiquitous in Git tests, the "|| return 1" idiom is
+>     relatively infrequent, thus may be harder for a newcomer to
+>     discover by consulting nearby code.
 
-Thanks for thinking these things through.  The fact that such a
-"magic" processing will hide the gory details from those whose
-primary interest is to describe the commands and their options cuts
-both ways.  It is a very welcome thing for developers around here, I
-would assume.  At the same time, I can understand that purists would
-find it unacceptably ugly, as `backticks` is now much more than a
-mark-up that means "this text is typeset in monospace".  Inside it,
-<text inside angle brackets>, [optional text], and (choices), all
-signal that they have special meaning by being typeset differently.
+Strike ", which is important since .*\ its body." and the above
+reads perfect.
 
-I do not personally mind that, and I would even dream about a future
-in which other projects notice what you did to AsciiDoctor, love it,
-adopt it, and eventually it feeds back to improve AsciiDoctor proper.
+>> > -# name and the test body with a `?!FOO?!` annotation at the location of each
+>> > +# name and the test body with a `?!ERR?!` annotation at the location of each
+>> >  # detected problem, where "FOO" is a tag such as "AMP" which indicates a broken
+>>
+>> "FOO" -> "ERR"?
+>
+> Yep. Sharp eyes.
 
-It is very likely that is because I haven't seen any "side effects"
-yet ;-)
+OK.  I'll mark the topic to be expecting a reroll for these small
+messaging plus "ERR" -> "ERR:" but without other larger changes
+mentioned in the thread.
 
 Thanks.
-
