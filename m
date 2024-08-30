@@ -1,84 +1,149 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC2917B508
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 10:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24031D1312
+	for <git@vger.kernel.org>; Fri, 30 Aug 2024 12:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725014116; cv=none; b=ukiNqaMwXlwDmPUcZQ1WkGtIbX7p6d6aOvad6tZRjzeUZwe3Kn7Rh04MpKVmtjW7/RELS1WL4C25ZHEe2NLWJgYa0rpIRU7hIrWPNW6ENWxb4MuCZ/Kq07BD2Bj7dc0MCw0QBN5sW6vECdKCl3DwyBnRWN7oP2r2vZbECIf2WKs=
+	t=1725020431; cv=none; b=KKR1OvK8Te9Di2RkBFniM1FtaIqdj4q8+a15RcTHq+Qnv9XEoQKJUOci4/Fx1oeiSl6f9Hfyi/HeyTOXtxcDdW5j2ZJkA0CrSdOrm4YTdc+MEy1XjikGaHgXH4xWkZng/a8IN6bnNI9hxyPfrdcO1oG2L1qEp3T7i9yNCtqJ64k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725014116; c=relaxed/simple;
-	bh=quwNNkCOnRGCa8mVRiCzj5kOlvHJ+PlJalJIh2ZOctI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dVlW4sMGss86VHVGGEnCnsXIjMwLrR8yXXtLTjEXyR9NNcDG4eCMXOx+Ve0SCGqnAUBCe+ScjWOBaRDzqWsmENy/ei4w3iVz841YV5Yst3YTahiU5ozWcAIsu5KivSqnwXIiXwAJhUETyY7uGTfoD8B8z7QVvb2+iJKSWl76h/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SMsTr4h5; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1725020431; c=relaxed/simple;
+	bh=LYzxscr/aD6BuXd7sXUHvTOOSxW5fTwQr/gpjOY6sgI=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=uA7KS1pf+lUuzQxl1QhDlwRi5shXk9oTicsaeNiL025SUoKNUCO7XaGQQRh51cYLC7uRpJ8gaWh0tVYh4n6iga3xdebQy4PlmHIBhpLUaPVsdeU+OAzAvhXWlDaN0MRwhFs/AIYr4IEAJOGemrTpIr3UcWm+Eje8Ay9sMQE+Y1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+3tN/NV; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SMsTr4h5"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6b3afc6cd01so21471357b3.1
-        for <git@vger.kernel.org>; Fri, 30 Aug 2024 03:35:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+3tN/NV"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f4f505118fso20613351fa.3
+        for <git@vger.kernel.org>; Fri, 30 Aug 2024 05:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725014114; x=1725618914; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=quwNNkCOnRGCa8mVRiCzj5kOlvHJ+PlJalJIh2ZOctI=;
-        b=SMsTr4h5+rR3ome8VU2Y0OwOcL67Tjes+a7ltzWRUjrjxY5l2NdsrkTHdzxIoKxEML
-         ahBbCoY0FBAbZIyd5KXIH8AzHeWoSxuGy1/ut12WC9KAcIlH+3EpdC4gXqODlEasdZ5l
-         +NFSqJtko0b3D9MGxWes3i7X+frrLLsM3IUDshua577QAGf40suQt8oS1lGlAey8eWIE
-         wmg11hSZN2XB1kCSj/iDsK3WOmjjTAkhQMboygZoQJGosgoCEy+Cgo+eekKttzGDoxAi
-         4CBmFU8ntZ6l0dqs2+orq+zKER50JKIiF1yiajFL4FgUZfSaMFU1dqaVDKoXBKrAoKgO
-         zwow==
+        d=gmail.com; s=20230601; t=1725020428; x=1725625228; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tA74IIwrgAgRDQ3RLmt71AIAu7n51I+6o9Q47GQTYmI=;
+        b=L+3tN/NV8c5aggifGR4JDv3wSFo88o6WsGnnjpEJcUEHSSilC/9GaLdHOO+ompr1YJ
+         0/utIASczjmjHvqepJJau9pfl0G0xAxFNmF4vUzu3K+GQhxVpVUXG0L0UxcCHKLFq1hA
+         M+KZa+8z6IwxXZ6subHacFkgWiC5mmAO9rx/ANClHY5t2vtGuaJpBCFo3wO42lqp5fO3
+         dFNjYaydt1qP0lNu+Gyqt2P1VsGw0aYxcI7mPZk1ZrKI/NToiytV8piGVheYvnhkRGlg
+         MIWLrI/0/cxoiv2l/7eZ/sxpWEzOZVkwjH/hfYKVMIzr0z1SR1dLWpCC9k3mhE3CoYCx
+         gZ/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725014114; x=1725618914;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=quwNNkCOnRGCa8mVRiCzj5kOlvHJ+PlJalJIh2ZOctI=;
-        b=RDUFIpNhytjWDXdjpbN+/3YoyavmsfLJ2QI0RN8mu1zA1SjIAZM81CcZpl1UAYJzZo
-         k0J0s2Gu2frHowYQBTuskZpTUDjlaF2ZanvmvtM//TD1eHb7rytkdM2VESCjKpRbWZ94
-         Ea26iEiOqAERTWRMWn+ZIX+vjverBMJnl3oV0VMD2spBS0Tmm6vGkdyYWl1ouaVMkM7U
-         qX4K/BdsdQjuNsBXYZV4gT6SXNWsBhNR9DhGF3p4n6OXegNhJ96I//Fx0Oa00YgpeI30
-         rL94gZDdoNznoDpHKCYOJbd2Imj3J6B8zCJSdbMYdBjV1jRliAtutkFqFd5hjuoShMPq
-         hIKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUrfQAl9C3nnVLEYZyNbG8JQivweZSP8a75rmkVYb/BCDsWXwJZNKHrPYLnKxuS61bNWE4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOpCpTR8mazaKz7Z9sU53cVMw/TDcWacCv+dC5ok3BrD10gkbx
-	MEB5b4gt3c65WdczHouAoQZ9PJUZztoVnlgAa9MHiM0vvKT4WMemXeD0CRT7w9d8xQp9FpXzMEI
-	w3xnca/I6mfk6oBH5IUorvs9B6o0=
-X-Google-Smtp-Source: AGHT+IE6MVyrOpIwb5vfPrCXxb5cBe114tCr83y70sYLeGWJekHbI3KOvyHJ6gNwyfFxl/dueqcWS60ZE1af0mGezF8=
-X-Received: by 2002:a05:690c:62c3:b0:6ae:c229:158c with SMTP id
- 00721157ae682-6d285637160mr47531067b3.6.1725014114375; Fri, 30 Aug 2024
- 03:35:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725020428; x=1725625228;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tA74IIwrgAgRDQ3RLmt71AIAu7n51I+6o9Q47GQTYmI=;
+        b=WW4rrU4SkMK/b3U1Jn0daHgwXWZn6flf1USfc6qRujjJoVkgRCQ8gxK1I+kCv4BrXM
+         gtWGOeMyMmv9TofwoSrjLX2nzMFuy+2iMPK+TvRt/nroWjiU3gz+Ys5c8esxrEUz4wd1
+         Y/CmPacgr7ORb8CkDtl0zO6rbn8W1TdfZ9h2kMKdhPus6crB6sovpMt2IeSK+bBTz2ry
+         GzTzn6/RcmOHxDWU9BcYQkDMLCnKzKQnvazXkqNUg/ZVc10jzo92phWtlpGHcTE8iZeG
+         UBOJCUckFTwMqF4s3lOlLcsBTJZwcWAIoEEc6qcKylFUtgsiOOs1IvfhnJS3o8XyNJx5
+         kSMw==
+X-Gm-Message-State: AOJu0YwLScnD/YpY7pWI5bj9WA+2f/a2N1dPXbU/vAHBI8w2UbwMM7pZ
+	dADFqO0EfimGRANxkHtio+yq9H0hb1fninEf3MPR3bIU3Dv3KORiJD5EKA==
+X-Google-Smtp-Source: AGHT+IGHou8Jgfl7rIA5K1nFcqGlqVEd5L2oT+Xd0C8doMYZIQIEO29hshvUEz9/oNtj6tMzwfpEsQ==
+X-Received: by 2002:a05:651c:19a3:b0:2f3:ed84:9e66 with SMTP id 38308e7fff4ca-2f6103a6ee7mr48085961fa.13.1725020427132;
+        Fri, 30 Aug 2024 05:20:27 -0700 (PDT)
+Received: from smtpclient.apple (88-113-116-214.elisa-laajakaista.fi. [88.113.116.214])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f614de9744sm6518671fa.0.2024.08.30.05.20.26
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Aug 2024 05:20:26 -0700 (PDT)
+From: Yuri Karnilaev <karnilaev@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAChcVumj41NCAcjzLyDGAyb+-QuL0Ha1AANe67jKVBT8xDRYdg@mail.gmail.com>
- <CAChcVunYDO_KAmEOoWEL2q63_Gzua-Kt3BmE5Snb8==K9Cww1w@mail.gmail.com>
- <20240829214336.GA440013@coredump.intra.peff.net> <CAChcVukzk=-1JNAoffWQEEv4Ne1FozGEwzGuaUWuiwhoHkcUng@mail.gmail.com>
- <20240830003147.GA450797@coredump.intra.peff.net>
-In-Reply-To: <20240830003147.GA450797@coredump.intra.peff.net>
-From: Pavel Rappo <pavel.rappo@gmail.com>
-Date: Fri, 30 Aug 2024 11:35:03 +0100
-Message-ID: <CAChcVu=MSLr7Gaf8nmQdVr=Mm=nXkWEjMd9MNNM3dcr=-1igDA@mail.gmail.com>
-Subject: Re: How to turn off rename detection for cherry-pick?
-To: Jeff King <peff@peff.net>
-Cc: Elijah Newren <newren@gmail.com>, Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Unpredictable peak memory usage when using `git log` command
+Message-Id: <60B730E6-F3C6-4B57-94D6-E5A71754DAF3@gmail.com>
+Date: Fri, 30 Aug 2024 15:20:15 +0300
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51)
 
-On Fri, Aug 30, 2024 at 1:31=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> <snip>
->
-> I've added ort's author to the thread, so hopefully he should have a
-> more clueful response.
->
+Hello,
 
-Thanks!
+I encountered an issue when using the `git log` command to retrieve =
+commits in large repositories. My task is to iterate over all commits =
+and output them in a specific format. However, my computer has limited =
+memory, so I am looking for a way to reduce the memory consumption of =
+this operation.
 
-Some time ago I created a gist which might better summarise the issue:
-https://gist.github.com/pavelrappo/3b1cd89b6015ab0eade1b11876d563ff
+I tested two different commands on the `torvalds/linux` repository as an =
+example of a large repository and noticed a significant difference in =
+peak memory usage:
+
+1. Processing all commits in one go:
+```
+/usr/bin/time -l -h -p git log --ignore-missing =
+--pretty=3Dformat:%H%x02%P%x02%aN%x02%aE%x02%at%x00 --numstat > 1.txt
+```
+Result:
+```
+real 594,01
+user 562,22
+sys 12,43
+          7407976448  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              187437  page reclaims
+              274228  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1031  voluntary context switches
+              287056  involuntary context switches
+       5455479398547  instructions retired
+       1828253079874  cycles elapsed
+           135_616_064  peak memory footprint
+```
+
+2. Processing commits in batches:
+```
+/usr/bin/time -l -h -p git log --ignore-missing =
+--pretty=3Dformat:%H%x02%P%x02%aN%x02%aE%x02%at%x00 -n 1000 =
+--skip=3D1000000 --numstat > 1.txt
+```
+Result:
+```
+real 9,83
+user 7,48
+sys 0,40
+          2390540288  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               93487  page reclaims
+               52995  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 634  voluntary context switches
+               14183  involuntary context switches
+         50173495540  instructions retired
+         24906960156  cycles elapsed
+          1_470_935_680  peak memory footprint
+```
+
+As you can see from the results, the peak memory usage when processing =
+commits in batches is 10 times higher than when processing all commits =
+in one go.
+Can you please explain why this happens? Is there a way to work around =
+this? Or maybe can you fix this in future Git versions?
+
+Operating System: Mac OS 14.6.1 (23G93)
+Git Version: 2.39.3 (Apple Git-146)
+
+Best regards,
+Yuri=
