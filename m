@@ -1,131 +1,181 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3409F16A940
-	for <git@vger.kernel.org>; Sat, 31 Aug 2024 10:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF234171A1
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 13:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725099890; cv=none; b=dMa9HEOI/ByfAZJgnTnsV5lnzgCEzu79m/spuUOIX53/5e+qsWR8aj0qkdvZoRXr0PKIU2tEgcp4GpaYbnGc1Mdm77xqibTEO1eivbYM75gDpvIDSAUShDTXvlrC5TMQME53f1HBDoK2793iT2tuVza4SdvqX8Rq8W7VSRU69No=
+	t=1725112338; cv=none; b=CBqvatpeW1DwGuKJLW+o+S9yUTd6LwFrd6exFpPkvhVB/O6UWT10RgRdWg7dqllmyHGJYZRyz8fhjhwixM2MR9pAo0s/miOtmNKnO6mTAKNArhP9qhQczh0/QlNLlyi+NevxzMulAaIVB3XZSTQhc3gJe7TTy09u88k+ishGCjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725099890; c=relaxed/simple;
-	bh=W+jvin7qg5jnoglh+X3ErXpuYHjZUv32SGoAgji6u9w=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Ww48DoxCtbfeD/SAVyd6ws6HEK8MbNEOCc+LM0a0F+pMC/f3i+HaSMKyW59lc2g7vFe052TYYULuodxshfmWSFCu/JBuprpwd0VVWpu3tfygQ50cLAdeoQ8zCL4kOocr916safiyYxQ8PH7XBhOOeJ6x4o8Q2225TatR+O6NfHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eZlvIOjn; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eZlvIOjn"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53349d3071eso3507325e87.2
-        for <git@vger.kernel.org>; Sat, 31 Aug 2024 03:24:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725099887; x=1725704687; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kn/eUqAItQ4Ja0y4bnzbarZa5dc4k02TDEVdxSKRW34=;
-        b=eZlvIOjnwkIs7XejbcYbQo5oqysZXSn1SCH3EWygWixEpumealuuRE9mxL8Q5xB+5b
-         J9hl/f44v90wB9of5wAKI3GMrU3iwirWOXWYxUSEZSOhdrlCEwU9r1YG087A9BKtHPVa
-         8LPf+YTlKtZVgabw6OMHoAUok2ywSfY79tcohz4ZqGwGHNxP8jFBzG+QE06U4AIvldHg
-         7ViaSxe2s5iI3qp+TqJr+hlt/LpNBFrsv89Kr4eJXgPZAIfLvgugA2t54BYWFDDvEI3U
-         BO8NBXz0dZI/FEGZxLy2HqI7ewIdxrtEUAZQeBWzyZOlofUG8i7o2ahHYodbaDV7vsjb
-         kAeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725099887; x=1725704687;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kn/eUqAItQ4Ja0y4bnzbarZa5dc4k02TDEVdxSKRW34=;
-        b=GhHBdFCn+1udecgM9nXdIQbrVvbSf9jzkSXRsJdkZuUaR1yhXrtJjnXsi/UKvsvlxv
-         n+tjyNRn0fPPrldaU2XUbAW26e/qJJoD7DnhQhuKxg23AtOQpXW3tfMK12lcAejOiUM5
-         diDeBJhxQMLN/9cnp9nPnOYwM/UEr0NdLFbJ+J7xSFIMt5C+uTdKO8sDZkfGukHNP3hO
-         Guwe3z2o1FRLLsuMJbD7eX3DExkt9HMTHQQdox7U7fBUookVWgMDJTprqQ4xX7YYWBqV
-         cFT8ZUvhGYOEZEUhJj3LS+01HGWbcUxsDynpPKlFiEBnn26X+mhkFQX0wkFq+RXEJ/0b
-         +cig==
-X-Gm-Message-State: AOJu0YwmkTpXY6hE4jfvwEw4oJxOemcOnrzCeGnrwTSzemiqlYo3AMaZ
-	jJL0LjvJCq8qf8qYfIPdEWa1FJIg+BlsO+lmu4c/O9+abVSFYlfyw8CMIQ==
-X-Google-Smtp-Source: AGHT+IH1moPtrP7XFZRrjQT0puBfT1vO9pnYg/8zhZvr01Vh/POzU6f3L9JwDrV6gLhmCuSyrgPgPA==
-X-Received: by 2002:a05:6512:10d6:b0:52e:d0f8:2d30 with SMTP id 2adb3069b0e04-53546bb8cdbmr3592659e87.59.1725099886649;
-        Sat, 31 Aug 2024 03:24:46 -0700 (PDT)
-Received: from smtpclient.apple (88-113-116-214.elisa-laajakaista.fi. [88.113.116.214])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5354079b82fsm916346e87.17.2024.08.31.03.24.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 31 Aug 2024 03:24:45 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	s=arc-20240116; t=1725112338; c=relaxed/simple;
+	bh=mDL63Mv63h36wzOlMMOsi+tbYeRzbTyJl/w6CwkRcok=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lc8/mAg5//xw9iZg4Cr7vXZsVVYnqol9HSt4z6PmFtbsrrwy8RTYOAekzt8y5OVrwdFzZ07JLJ6LUBNfrF2He3ckB3OO8Et42OYtvFeW6S9NzJP2LCx30P4EPQzswYf8ASIy4NjWj9A2cE76CQKW3qxRWQ4+Pvqkzu4NadjrTb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4WwxK35Nk3z5vdP
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 15:52:07 +0200 (CEST)
+Received: from [192.168.1.102] (089144221034.atnat0030.highway.webapn.at [89.144.221.34])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4WwxJs62lczRnmK;
+	Sat, 31 Aug 2024 15:51:56 +0200 (CEST)
+Message-ID: <61b9b041-97cf-47ac-84ef-1467aba873e3@kdbg.org>
+Date: Sat, 31 Aug 2024 15:51:55 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: Unpredictable peak memory usage when using `git log` command
-From: Yuri Karnilaev <karnilaev@gmail.com>
-In-Reply-To: <20240830210607.GB1038751@coredump.intra.peff.net>
-Date: Sat, 31 Aug 2024 13:24:35 +0300
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <13D8CFB5-4073-42CC-BFDD-ADFE8FFE985C@gmail.com>
-References: <60B730E6-F3C6-4B57-94D6-E5A71754DAF3@gmail.com>
- <20240830210607.GB1038751@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3776.700.51)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] git gui: add directly calling merge tool from
+ gitconfig
+To: ToBoMi <tobias.boesch@miele.com>
+Cc: ToBoMi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
+ <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thanks, Peff!
+Am 28.08.24 um 10:31 schrieb ToBoMi via GitGitGadget:
+> From: deboeto <tobias.boesch@miele.com>
+> 
+> git gui can open a merge tool when conflicts are
+> detected (Right click in the diff of the file with
+> conflicts).
+> The merge tools that are allowed to
+> use are hard coded into git gui.
+> 
+> If one wants to add a new merge tool it has to be
+> added to git gui through a source code change.
+> This is not convenient in comparison to how it
+> works in git (without gui).
+> 
+> git itself has configuration options for a merge tools
+> path and command in the git config.
+> New merge tools can be set up there without a
+> source code change.
+> 
+> Those options are used only by pure git in
+> contrast to git gui. git calls the configured
+> merge tools directly from the config while git
+> Gui doesn't.
+> 
+> With this change git gui can call merge tools
+> configured in the gitconfig directly without a
+> change in git gui source code.
+> It needs a configured merge.tool and a configured
+> mergetool.cmd config entry.
 
-I will try the recommendations for optimizing memory consumption for my =
-task, that you mentioned.
+OK.
 
-Have a nice day,
-Yuri
+> gitconfig example:
+> [merge]
+> 	tool = vscode
+> [mergetool "vscode"]
+> 	path = the/path/to/Code.exe
+> 	cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 
-> On 31. Aug 2024, at 0.06, Jeff King <peff@peff.net> wrote:
->=20
-> On Fri, Aug 30, 2024 at 03:20:15PM +0300, Yuri Karnilaev wrote:
->=20
->> 2. Processing commits in batches:
->> ```
->> /usr/bin/time -l -h -p git log --ignore-missing =
---pretty=3Dformat:%H%x02%P%x02%aN%x02%aE%x02%at%x00 -n 1000 =
---skip=3D1000000 --numstat > 1.txt
->> ```
->> [...]
->> Operating System: Mac OS 14.6.1 (23G93)
->> Git Version: 2.39.3 (Apple Git-146)
->=20
-> I sent a patch which I think should make things better for you, but I
-> wanted to mention two things in a more general way:
->=20
->  1. You should really consider building a commit-graph file with "git
->     commit-graph write --reachable". That will reduce the memory usage
->     for this case, but also improve the CPU quite a bit (we won't have
->     to open those million skipped commits to chase their parent
->     pointers).
->=20
->     I haven't kept up with the defaults for writing graph files. I
->     thought gc.writeCommitGraph defaults to "true" these days, though
->     that wouldn't help in a freshly cloned repository (arguably we
->     should write the commit graph on clone?).
->=20
->  2. Using "--skip" still has to traverse all of those intermediate
->     commits. So it's effectively quadratic in the number of commits
->     overall (you end up skipping the first 1000 over and over).
->=20
->     It's been a while since I've had to "paginate" segments of history
->     like this, but a better solution is along the lines of:
->=20
->       - use "-n 1000" to get 1000 commits in each chunk
->=20
->       - use "--boundary" to report the commits that were queued to be
-> 	 traversed next but weren't shown
->=20
->       - in invocations after the first one, start the traversal at
-> 	 those boundary commits, rather than HEAD
->=20
->     You'll probably need to add "%m" to your format to show the
->     boundaries (or alternatively, you can do the commit selection with
->     rev-list, and then output the result to "log --no-walk --stdin" to
->     do the pretty-printing).
->=20
-> -Peff
+I found it annoying that I had to configure .path in addition to .cmd.
+Typically, you would put the correct path into the .cmd configuration.
+In fact, `git mergetool` works without .path and fails when .cmd does
+not contain the correct path.
+
+> Without the mergetool.cmd configuration and an
+> unsupported merge.tool entry, git gui behaves
+> mainly as before this change and informs the user
+> about an unsupported merge tool, but now also
+> shows a hint to add a config entry for the tool
+> in gitconfig.
+
+Good.
+
+While testing I configured meld incorrectly once and got no feedback
+whatsoever, but I would not attribute this to this patch.
+
+There is no such thing called "gitconfig". Just strike "in gitconfig".
+
+> If a wrong mergetool.cmd is configured by accident
+> it is beeing handled by git gui already. In this
+> case git gui informs the user that the merge tool
+> couldn't be opened. This behavior is preserved by
+> this change and should not change.
+
+Good.
+
+> 
+> Beyond compare 3 and Visual Studio code were
+> tested as manually configured merge tools.
+> 
+> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+
+You updated this line, but not the From: line. Would you mind
+configuring your user.name and then `git commit --amend --reset-author`?
+
+>  git-gui/lib/mergetool.tcl | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+> index e688b016ef6..4c4e8f47bb0 100644
+> --- a/git-gui/lib/mergetool.tcl
+> +++ b/git-gui/lib/mergetool.tcl
+> @@ -272,8 +272,14 @@ proc merge_resolve_tool2 {} {
+>  		}
+>  	}
+>  	default {
+> -		error_popup [mc "Unsupported merge tool '%s'" $tool]
+> -		return
+> +		set tool_cmd [get_config mergetool.$tool.cmd]
+> +		if {$tool_cmd ne {}} {
+> +			set tool_cmd_file_vars_resolved [subst -nobackslashes -nocommands $tool_cmd]
+
+I just learnt that a string value containing double-quotes is broken
+into a list in the expected way (keeps quoted parts together as a single
+element). However, this form of substitution replaces variable values
+with arbitrary text without taking into account that the original string
+is actually a list. Should we not break the string into a list first,
+and apply the substitution on the list elements?
+
+If there is a straight-forward way to do this (say, an obvious two-liner
+at most), we should do it. Otherwise, I can live with this solution for
+now because it requires file names with double-quotes to break the
+expected list nature.
+
+There is another thing, though, that I would not want to take as
+lightly: The -nocommands modifier of `subst` does not live up to its
+promises, and it is even the documented behavior: command substitutions
+in array indexes are still executed. Consider this configuration:
+
+[merge]
+        tool = evil
+[mergetool "evil"]
+        cmd = meld \"$REMOTE([exit])\"
+
+Guess what happens when I run the merge tool? It exits Git GUI!
+
+I suggest to reject any configuration that contains an opening bracket
+'[' or anything else that introduces a command execution.
+
+> +			set cmdline [lreplace $tool_cmd_file_vars_resolved 0 0 $merge_tool_path]
+> +		} else {
+> +			error_popup [mc "Unsupported merge tool '%s'. Is the tool command and path configured properly in gitconfig?" $tool]
+
+Can we not have a more helpful text? How about
+
+			error_popup [mc "Unsupported merge tool '%s'.
+
+See the git-config manual page how to configure mergetool.%s.cmd
+suitably." $tool $tool]
+
+> +			return
+> +		}
+>  	}
+>  	}
+>  
+
+-- Hannes
 
