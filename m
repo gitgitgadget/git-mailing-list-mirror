@@ -1,27 +1,41 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF234171A1
-	for <git@vger.kernel.org>; Sat, 31 Aug 2024 13:52:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72D2A932
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 14:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725112338; cv=none; b=CBqvatpeW1DwGuKJLW+o+S9yUTd6LwFrd6exFpPkvhVB/O6UWT10RgRdWg7dqllmyHGJYZRyz8fhjhwixM2MR9pAo0s/miOtmNKnO6mTAKNArhP9qhQczh0/QlNLlyi+NevxzMulAaIVB3XZSTQhc3gJe7TTy09u88k+ishGCjo=
+	t=1725116349; cv=none; b=cWwrxcP7xVbdy5oe9x/zoaO+JRk+H8FAwoJUGuTLMoLR4p5XubDQGQ3w5cktqM2H80ZtpgvwbA9rGs1u6vTYuWf4fsJXC9aLR6XOy8Lt8Ihh97G3SxNlw52qgbcHOL2mXWPgkZawPr1xgRE0AJrDXf85cL41dtJfYg60/4re95E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725112338; c=relaxed/simple;
-	bh=mDL63Mv63h36wzOlMMOsi+tbYeRzbTyJl/w6CwkRcok=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lc8/mAg5//xw9iZg4Cr7vXZsVVYnqol9HSt4z6PmFtbsrrwy8RTYOAekzt8y5OVrwdFzZ07JLJ6LUBNfrF2He3ckB3OO8Et42OYtvFeW6S9NzJP2LCx30P4EPQzswYf8ASIy4NjWj9A2cE76CQKW3qxRWQ4+Pvqkzu4NadjrTb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp3.bon.at (unknown [192.168.181.108])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4WwxK35Nk3z5vdP
-	for <git@vger.kernel.org>; Sat, 31 Aug 2024 15:52:07 +0200 (CEST)
-Received: from [192.168.1.102] (089144221034.atnat0030.highway.webapn.at [89.144.221.34])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4WwxJs62lczRnmK;
-	Sat, 31 Aug 2024 15:51:56 +0200 (CEST)
-Message-ID: <61b9b041-97cf-47ac-84ef-1467aba873e3@kdbg.org>
-Date: Sat, 31 Aug 2024 15:51:55 +0200
+	s=arc-20240116; t=1725116349; c=relaxed/simple;
+	bh=M9XymZ1+K0BUl0CvOULh1WZTaH/VZhk/PmjYaHLRP9U=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=J4ktxn86sPMQqJcv+TRM/7KqaojhDqXDfYULwDCUEcO+mib3ZOAd9orA5zbBzeVZq9wz/CaGaPQXzBiMRYe0o6VFoyUuB9wzsPkh8sjMGIM0gZsjS0jNLzequFuUmpszKK1bHX8eXUpbB5rg89P9p+chGCmqpMRe6LCB+41JyBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=jGRE4/w9; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="jGRE4/w9"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id kPZ2sXhJKx2dSkPZ3slT7Q; Sat, 31 Aug 2024 15:58:58 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1725116338; bh=vWyrEpWfh10lm1LW3FBIQ13Td50R9ySSk9ZbRfdmdyU=;
+	h=Date:To:Cc:From:Subject;
+	b=jGRE4/w9fuvzHLhkvZA0TUC+0I59jLerGFfefiJspgHAPjmTciv2o0t348ABFbKZo
+	 KCe6VUx6I8/jjNJkjwuB37My0ovUQEzakG7TOzPCCKIqjMwFIkJb3TYXvvdvR+IO4k
+	 FueF3Zg1A994891UL4i/4YrhkOm+ND2FD3KUYaBYoJ2X/BDj0ooNjIr5Ap1m2ICH0T
+	 wDPLwRWUmvK06eGMYJFMoNEAbxR0/Hl/Yd8UutCbxIVuxRTB/mhzwSSJzzMl8kSCoH
+	 21OLKan233dNUN3HamUVBh2jm3KIVHFDUxAG9BfIVApnBR4LVne2A233WMEdRipjhn
+	 2w4mxxaIMjOPw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=GMarEfNK c=1 sm=1 tr=0 ts=66d32fb2
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=EBOSESyhAAAA:8 a=d7MK3yTqj3rUFUKQ4nsA:9
+ a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <ce1c1d66-e0eb-4143-b334-1a83c0492415@ramsayjones.plus.com>
+Date: Sat, 31 Aug 2024 15:58:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -29,153 +43,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] git gui: add directly calling merge tool from
- gitconfig
-To: ToBoMi <tobias.boesch@miele.com>
-Cc: ToBoMi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
- <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
 Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v2] compat/terminal: mark parameter of git_terminal_prompt()
+ UNUSED
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfKFa7jauPwDBOVKCt8wdUQsCfVx/v1oJIIxCrx6WTtaC3GlNLTPiLzd1fwiQj1GZ8BB/HWpJS99C2PWumO6yX8/Tfd36r/lr/qhu0j7dyQAOMnjBuhh3
+ 3gO8WORzDjCoGRemF94HG1KJT7qED6gOQlufpTc5Gr9zUy/rPSZoswEaOP4OcKpFGILYY8uMvtO0FSfrqSMCQjQQmt1TsvZuqFI=
 
-Am 28.08.24 um 10:31 schrieb ToBoMi via GitGitGadget:
-> From: deboeto <tobias.boesch@miele.com>
-> 
-> git gui can open a merge tool when conflicts are
-> detected (Right click in the diff of the file with
-> conflicts).
-> The merge tools that are allowed to
-> use are hard coded into git gui.
-> 
-> If one wants to add a new merge tool it has to be
-> added to git gui through a source code change.
-> This is not convenient in comparison to how it
-> works in git (without gui).
-> 
-> git itself has configuration options for a merge tools
-> path and command in the git config.
-> New merge tools can be set up there without a
-> source code change.
-> 
-> Those options are used only by pure git in
-> contrast to git gui. git calls the configured
-> merge tools directly from the config while git
-> Gui doesn't.
-> 
-> With this change git gui can call merge tools
-> configured in the gitconfig directly without a
-> change in git gui source code.
-> It needs a configured merge.tool and a configured
-> mergetool.cmd config entry.
 
-OK.
+If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, the fallback
+code calls the system getpass(). This unfortunately ignores the "echo"
+boolean parameter, as we have no way to implement that functionality.
+But we still have to keep the unused parameter, since our interface
+has to match the other implementations.
 
-> gitconfig example:
-> [merge]
-> 	tool = vscode
-> [mergetool "vscode"]
-> 	path = the/path/to/Code.exe
-> 	cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-I found it annoying that I had to configure .path in addition to .cmd.
-Typically, you would put the correct path into the .cmd configuration.
-In fact, `git mergetool` works without .path and fails when .cmd does
-not contain the correct path.
+Hi,
 
-> Without the mergetool.cmd configuration and an
-> unsupported merge.tool entry, git gui behaves
-> mainly as before this change and informs the user
-> about an unsupported merge tool, but now also
-> shows a hint to add a config entry for the tool
-> in gitconfig.
+Sorry for being a bit tardy with this, but I'm up-to-my-ears! :)
 
-Good.
+I feel a bit sheepish about taking authorship of this patch, since Jeff
+contributed way more than I did to the text! (I was going to count the
+words to get a better metric, but I have to go out now; if I don't send
+this now it will be tomorrow ...).
 
-While testing I configured meld incorrectly once and got no feedback
-whatsoever, but I would not attribute this to this patch.
+ATB,
+Ramsay Jones
 
-There is no such thing called "gitconfig". Just strike "in gitconfig".
+ compat/terminal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> If a wrong mergetool.cmd is configured by accident
-> it is beeing handled by git gui already. In this
-> case git gui informs the user that the merge tool
-> couldn't be opened. This behavior is preserved by
-> this change and should not change.
-
-Good.
-
-> 
-> Beyond compare 3 and Visual Studio code were
-> tested as manually configured merge tools.
-> 
-> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
-
-You updated this line, but not the From: line. Would you mind
-configuring your user.name and then `git commit --amend --reset-author`?
-
->  git-gui/lib/mergetool.tcl | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
-> index e688b016ef6..4c4e8f47bb0 100644
-> --- a/git-gui/lib/mergetool.tcl
-> +++ b/git-gui/lib/mergetool.tcl
-> @@ -272,8 +272,14 @@ proc merge_resolve_tool2 {} {
->  		}
->  	}
->  	default {
-> -		error_popup [mc "Unsupported merge tool '%s'" $tool]
-> -		return
-> +		set tool_cmd [get_config mergetool.$tool.cmd]
-> +		if {$tool_cmd ne {}} {
-> +			set tool_cmd_file_vars_resolved [subst -nobackslashes -nocommands $tool_cmd]
-
-I just learnt that a string value containing double-quotes is broken
-into a list in the expected way (keeps quoted parts together as a single
-element). However, this form of substitution replaces variable values
-with arbitrary text without taking into account that the original string
-is actually a list. Should we not break the string into a list first,
-and apply the substitution on the list elements?
-
-If there is a straight-forward way to do this (say, an obvious two-liner
-at most), we should do it. Otherwise, I can live with this solution for
-now because it requires file names with double-quotes to break the
-expected list nature.
-
-There is another thing, though, that I would not want to take as
-lightly: The -nocommands modifier of `subst` does not live up to its
-promises, and it is even the documented behavior: command substitutions
-in array indexes are still executed. Consider this configuration:
-
-[merge]
-        tool = evil
-[mergetool "evil"]
-        cmd = meld \"$REMOTE([exit])\"
-
-Guess what happens when I run the merge tool? It exits Git GUI!
-
-I suggest to reject any configuration that contains an opening bracket
-'[' or anything else that introduces a command execution.
-
-> +			set cmdline [lreplace $tool_cmd_file_vars_resolved 0 0 $merge_tool_path]
-> +		} else {
-> +			error_popup [mc "Unsupported merge tool '%s'. Is the tool command and path configured properly in gitconfig?" $tool]
-
-Can we not have a more helpful text? How about
-
-			error_popup [mc "Unsupported merge tool '%s'.
-
-See the git-config manual page how to configure mergetool.%s.cmd
-suitably." $tool $tool]
-
-> +			return
-> +		}
->  	}
->  	}
->  
-
--- Hannes
-
+diff --git a/compat/terminal.c b/compat/terminal.c
+index 0afda730f2..d54efa1c5d 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -594,7 +594,7 @@ void restore_term(void)
+ {
+ }
+ 
+-char *git_terminal_prompt(const char *prompt, int echo)
++char *git_terminal_prompt(const char *prompt, int echo UNUSED)
+ {
+ 	return getpass(prompt);
+ }
+-- 
+2.46.0
