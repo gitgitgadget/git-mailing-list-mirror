@@ -1,80 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from forward204d.mail.yandex.net (forward204d.mail.yandex.net [178.154.239.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A536E81E
-	for <git@vger.kernel.org>; Sat, 31 Aug 2024 02:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BFBEEC9
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 06:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.217
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725072007; cv=none; b=XweByLh2aUwtBbD9z3g4RkDTFyLlpZ4o39mHtU+2FP7iQIWVXidaJh9Fi+hpzrCBPeyYAHp2KtgeQnv2Q74Gh3iQDxMd6yo9VHIqPDbywd09jxzQi68vMvgzhrabqZjOq0J4WikVXtstOTOVbiFY2YGgCGjacqMazWQ6IX9Ax0I=
+	t=1725087189; cv=none; b=MxvLWLETehn3s+JeSf0DDTnz8Y4c2Gtzygh5ztGLTFy6kKddPTN27YMVXe8XBIVpUIKR6TqZ/TNrtNjJdeJXHZU2sm8s9A6f2kVtv7bWiB7e9/hmPPZF4RTLXHLK3tANleDShVMT8dQTOjcbavyTTWHDi8sSVwoP1t2XytbVQUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725072007; c=relaxed/simple;
-	bh=oavJ77eu6z+Txi7b1ziZZAQFUUTupvGajX8CpLviXFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mK86zV2hCKO+qv9yCeeA4tEZflkSlWnf7E0WG9puttXIVm8gu1ZI10WZtc2vTIg+odtG1/iO/Ojng8NfbSkM+RGSoTfOPe+jHfbIaLzboGoD4+oy93WY9ugB6jnI3wN/eCvu3tp16j5E36uaVc57kQ2+EcMiAAyUAqSyvGd3uhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17742 invoked by uid 109); 31 Aug 2024 02:40:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 31 Aug 2024 02:40:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30315 invoked by uid 111); 31 Aug 2024 02:40:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 30 Aug 2024 22:40:05 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 30 Aug 2024 22:40:02 -0400
-From: Jeff King <peff@peff.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] compat/terminal: mark parameter of git_terminal_prompt()
- UNUSED
-Message-ID: <20240831024002.GA2150243@coredump.intra.peff.net>
-References: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
- <20240829222612.GA445751@coredump.intra.peff.net>
- <44804f4c-26af-4d23-b044-ec32a13b549c@ramsayjones.plus.com>
+	s=arc-20240116; t=1725087189; c=relaxed/simple;
+	bh=uT7pX4jxevCxm8d62mJsNc3+OgXVrHObRTJdvCAWc1I=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=I3N34LkRAb01rPIkdhdSBRpiv0rhjqC+WfXFUTdO11v+n889ROxJDtyVyE+jN3rld93O/ZNHECVGAOHiCS2gDvEZ039S8DG9KHTtDj4BoQR3ECCz21pvWiIXNI+olyDCLo3NHDMXgI8VFHD+1D+xNeylZ0nj1duxsqsPkgDwIzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=0upti.me; spf=pass smtp.mailfrom=0upti.me; dkim=pass (1024-bit key) header.d=0upti.me header.i=@0upti.me header.b=LK/jxtf1; arc=none smtp.client-ip=178.154.239.217
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=0upti.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=0upti.me
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=0upti.me header.i=@0upti.me header.b="LK/jxtf1"
+Received: from forward101d.mail.yandex.net (forward101d.mail.yandex.net [IPv6:2a02:6b8:c41:1300:1:45:d181:d101])
+	by forward204d.mail.yandex.net (Yandex) with ESMTPS id 32BB3628A1
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 09:46:20 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-99.klg.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-99.klg.yp-c.yandex.net [IPv6:2a02:6b8:c42:94a0:0:640:af90:0])
+	by forward101d.mail.yandex.net (Yandex) with ESMTPS id 7848260022
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 09:46:12 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-99.klg.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id BkRpoQGVluQ0-hrXqCvpd;
+	Sat, 31 Aug 2024 09:46:12 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=0upti.me; s=mail;
+	t=1725086772; bh=VjmQNPGiiKWcM9mLUPrVaYOCGtnaQX9f5cQLuvuK/y4=;
+	h=Subject:From:To:Date:Message-ID;
+	b=LK/jxtf10AonCufZpA+8JdoqjOQgDalMidKhDq4yHuNhwwG3OMnawYnsT6u2kWe3T
+	 tdwdcDpxI5lggs5EOoAhthi3Gs+GhYwpf1tvQu0QEnjx0ADqE8EMIvGQUx6DPB1lLa
+	 K5lKorbfAWcgpR9yIjmDgAea+DDJ2ZW60paLpT5Y=
+Authentication-Results: mail-nwsmtp-smtp-production-main-99.klg.yp-c.yandex.net; dkim=pass header.i=@0upti.me
+Message-ID: <14ec9394-a7ea-456c-800a-6a84c52e5cda@0upti.me>
+Date: Sat, 31 Aug 2024 09:46:10 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <44804f4c-26af-4d23-b044-ec32a13b549c@ramsayjones.plus.com>
+User-Agent: Mozilla Thunderbird Beta
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Ilya K <me@0upti.me>
+Subject: git 2.46.0 crashes when trying to verify-pack outside of a repo
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 31, 2024 at 02:40:22AM +0100, Ramsay Jones wrote:
+Hello folks!
 
-> > Here's a potential commit message for the patch:
-> > 
-> >   If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, the fallback
-> >   code calls the system getpass(). This unfortunately ignores the "echo"
-> >   boolean parameter, as we have no way to implement that functionality.
-> >   But we still have to keep the unused parameter, since our interface
-> >   has to match the other implementations.
-> 
-> Yes, this reads well. Do you want to send an updated patch or shall I?
+We've updated to Git 2.46.0 in NixOS, and encountered an issue with Dulwich (a Python Git implementation) tests failing[0] because it attempts to call `git verify-pack` on a bare pack, with no surrounding repo. This used to work in Git 2.45.x, but in 2.46 it simply prints "error: index-pack died of signal 11". This seems to happen on any pack, including ones generated by Git itself (at least on a random pack from a random checkout I tested).
 
-I assumed you would. Thanks!
+Here's a traceback from the crash:
 
-> > As an aside, I wonder if cygwin could be using either /dev/tty or the
-> > Windows variant. But that's obviously a separate patch, and either way
-> > we'd want to fix this fallback code in the meantime.
-> 
-> Yes, this is what I meant by '... it should not even be trying to compile
-> that code ...' ;) ie I was expecting HAVE_DEV_TTY to be set on cygwin (which
-> does have /dev/tty).
-> 
-> However, there may be reasons for it not being set - I haven't had time to
-> look into it yet.
+    (gdb) bt
+    #0  0x00000000005d93ef in add_packed_git (
+        path=path@entry=0x7dd8f0 "pack-a94057e69dcef307b749cd32232e845c48bb32c9.idx", path_len=45,
+        local=local@entry=1) at packfile.c:754
+    754             if (path_len < the_hash_algo->hexsz ||
+    #1  0x000000000046bd38 in read_idx_option (
+        pack_name=0x7dd8f0 "pack-a94057e69dcef307b749cd32232e845c48bb32c9.idx", opts=0x7fffffffcd00)
+        at builtin/index-pack.c:1652
+    1652            struct packed_git *p = add_packed_git(pack_name, strlen(pack_name), 1);
+    #2  cmd_index_pack (argc=3, argv=<optimized out>, prefix=<optimized out>)
+        at builtin/index-pack.c:1883
+    1883                    read_idx_option(&opts, index_name);
+    #3  0x000000000040651d in run_builtin (argv=0x7fffffffd270, argc=3, p=0x7a0560 <commands+1344>)
+        at git.c:476
+    476             status = p->fn(argc, argv, prefix);
+    #4  handle_builtin (argc=3, argv=0x7fffffffd270) at git.c:732
+    732                     exit(run_builtin(builtin, argc, argv));
+    #5  0x0000000000407690 in run_argv (argcp=argcp@entry=0x7fffffffd04c,
+        argv=argv@entry=0x7fffffffd040) at git.c:796
+    796                             handle_builtin(*argcp, *argv);
+    #6  0x000000000040812c in cmd_main (argc=<optimized out>, argc@entry=4, argv=<optimized out>,
+        argv@entry=0x7fffffffd268) at git.c:931
+    931                     int was_alias = run_argv(&argc, &argv);
+    #7  0x00000000004061fd in main (argc=4, argv=0x7fffffffd268) at common-main.c:64
+    64              result = cmd_main(argc, argv);
 
-I doubt there is a good reason. When I introduced HAVE_DEV_TTY ages ago
-(2011, apparently!) I kept the conservative default as-is to avoid
-disrupting other platforms. So I suspect it is simply that nobody on
-Cygwin noticed the lousy fallback behavior, or knew that there was an
-alternative (the most obvious problem is that when we prompt for a
-username, what the user types is not visible).
+It seems like `the_hash_algo` (which, AFAIUI, is macroed to `the_repository->hash_algo`) may be uninitialized here, but I'm not familiar enough with the codebase to really tell if that's the issue.
 
-Testing welcome, of course. :)
+If you want to reproduce it, simply copy any pack file from a repo's .git/objects/pack/ to a directory that's not a repo, then `git verify-pack <the-file-you-just-copied>`.
 
--Peff
+If you need any more information, please contact me.
+
+Thanks in advance!
+
+[0]: https://github.com/jelmer/dulwich/issues/1359
+
