@@ -1,96 +1,102 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C93B172BAE
-	for <git@vger.kernel.org>; Fri, 30 Aug 2024 23:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044BA3FC2
+	for <git@vger.kernel.org>; Sat, 31 Aug 2024 01:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725061894; cv=none; b=XPGK2Zi09GuOKN1aBZ2wbBgqfeCui5mgeXIb+aw7DeT6z3rXdr5c0qeD6pBn2/uZYnH1rOzrSZsEqRBsWpvPR1j2Z5n/m9PfSf0GiGWlEMHJMKV3GI2/prP3cZvaC030gqtCZyU850ECxwiIW5H8bAma3ALBTu/VDv3C14LWnu8=
+	t=1725068617; cv=none; b=PYBpeYc5xSETQ7GKBeT1wCV4Ep3UAPHI6Q3XhUy16ejzoi2tZ2qBQItBhtJ5onyozD7ziWu0laYpw/amyptl6cfK0Nmt51Mf6IlXQDWMwPApA52mXwxKYaV40YoStLP1/Aj8yb9ywA3mMmUpO5jUa5Fw5Dm6cUHFFw9PnITl0y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725061894; c=relaxed/simple;
-	bh=i9n0g2FbB2Afha4t/OKfCJyNQT9OK8cBGJUh93eonkI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IpHe6Ph/5jG/xjGBBYVQ5Omy9gpa7wk9sGzB8Oy62GB6P82w0pRH6l9dqSNxUVwbWQJ1Hp0r5swgx21MB6SyaDV3dpvJanV5ZZ+OeNn9ybT0aWxokPH7U0BTZNHQAXf+D9/j7EQBHE+9SRK1qrBupGA4YcHcI6QLtkw87wg2PPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTk1Nlol; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725068617; c=relaxed/simple;
+	bh=G3nzlvA3ouaf2tMG+10o/OBZCVpryYD65Wpd68HxSpM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EF4MCvneLFmzQxbB27uVA6iDTOTaxfDhQ+9W+zIqN3U+REnF+wVM9B0RrVVnqAMjJcmt1qOaYj/u+HXSghl6TrVSPOJHP6KA1xD/9O4KdRaN/Y3+dRMMOx1GFA9KI1aurcvTb/E0Cbvy7GOioEIbWZgk0xi17AjipZRmNslrzSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Al6/u0S9; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTk1Nlol"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D72E23A22;
-	Fri, 30 Aug 2024 19:51:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=i9n0g2FbB2Afha4t/OKfCJyNQT9OK8cBGJUh93
-	eonkI=; b=hTk1NlolAKes77C7OjH9mKrql0c/1xmYSTZEAj+er2JlFJDwVRbny7
-	LHGD8mq5ShJSfTZ7BXHVx17+4Sxui8ZB6/ITatKPSNosrudtJaY7xq0lq2gdQdW0
-	FDIi+22vcc1wxvmmFobUBVfnmzqUaE3FtvDX6KXi5CtAmJv2B5NZM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 25F6923A21;
-	Fri, 30 Aug 2024 19:51:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8EA9523A20;
-	Fri, 30 Aug 2024 19:51:31 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,  Jeff
- King <peff@peff.net>
-Subject: Re: [PATCH 2/2] chainlint: reduce annotation noise-factor
-In-Reply-To: <CAPig+cSZ8Sot9oq+rmzBTmQU-Fnay92roTO=Mk0uT+-JUzMcXw@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 30 Aug 2024 19:30:09 -0400")
-References: <20240829091625.41297-1-ericsunshine@charter.net>
-	<20240829091625.41297-3-ericsunshine@charter.net>
-	<xmqqv7zjwcgq.fsf@gitster.g>
-	<CAPig+cSZ8Sot9oq+rmzBTmQU-Fnay92roTO=Mk0uT+-JUzMcXw@mail.gmail.com>
-Date: Fri, 30 Aug 2024 16:51:30 -0700
-Message-ID: <xmqqle0dpo1p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Al6/u0S9"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id kD6EsRn4o28tEkD6GsuuSZ; Sat, 31 Aug 2024 02:40:24 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1725068424; bh=v035kIlOTjSPuoZVDq1m/LEHoy2GKINSrdjQ0jPjSd8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Al6/u0S9G5x4GekUTKG7+CIEjK4UQt92JqJTjJgt0qepcSnGVOU1HXfBMmSk1PXNr
+	 ASMyu7QHMcz/0G0mweGAss5u2h7adwyu4Du6fqGK5ColirKYg+0PVx2hcnDXKrNsMH
+	 gitYhMBp1M17wc+KpYOH53E5Q/gtB243ORKsT6D1r6Oes2fDknYzV+eigw38k6jkuH
+	 I/qQWxtjZqgCgyxZED2PnPyJpLoJSEkR931eBxVc2efwZQSJxpBwPBbX/VmzE234Ga
+	 YCLqKTsdcLT49uDRh3ML1a0cvUoT9g5TicZtUiyR4pa8ffQ79ULf35Sfy+thJ/cAOY
+	 menh/VeVigbOw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=Hda3TTE8 c=1 sm=1 tr=0 ts=66d27488
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=YNQwINirT3CMJDUDQEQA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <44804f4c-26af-4d23-b044-ec32a13b549c@ramsayjones.plus.com>
+Date: Sat, 31 Aug 2024 02:40:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C8265836-672A-11EF-A4E8-9B0F950A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] compat/terminal: mark parameter of git_terminal_prompt()
+ UNUSED
+To: Jeff King <peff@peff.net>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
+ <20240829222612.GA445751@coredump.intra.peff.net>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20240829222612.GA445751@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfIEhA9bAKqrDHUl3yhesVOMKPnFzaH35Ff7Q0bOHJhH76NTZanSRqamtraO39Tz71qEhglWkmTF5zDAdOyJcAJ0zdkVT6teUfPWB7U1oGfo4j+38KVjA
+ PyPEUs2L2EIJw4hTClKvN3/6myXMu4e2ecQyIubhxmAJj2oYj3UnOYGmW5ezcQwq817XS9XnrWaJwIwrqZ7jl5c8c8p38J9djJo=
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> It may be possible to do something like this instead (untested), but
-> I'm not sure it's worth the complexity:
->
->     $checked .= substr($body, $start, $pos - $start);
->     $checked .= ' ' unless $checked =~ /\s$/;
->     $checked .= "$erropenERR $err$errclose";
->     $checked .= ' ' unless $pos + 1 >= length($body) ||
->         substr($body, $pos + 1, 1) =~ /\s/;
 
-I think the complexity you mention is the updates to existing code
-to get to the above end state?  Using some setup like ...
+On 29/08/2024 23:26, Jeff King wrote:
+> On Thu, Aug 29, 2024 at 10:57:50PM +0100, Ramsay Jones wrote:
+> 
+>> The 'seen' branch fails to compile on cygwin (but its fine on Linux), due
+>> to an unused parameter. I haven't looked too hard at the code (at first
+>> blush, it seemed to me that it should not even be trying to compile that
+>> code, but ...), I simply added an UNUSED to fix the build. ;)
+>>
+>> So, this may not be the correct 'fix' for this, but I thought I should
+>> report it here, since I don't have time to look into this now. sorry! :(
+> 
+> Thanks, this is definitely the right fix. I have to rely on CI for
+> catching cases outside of what I build locally, and it looks like we
+> don't trigger this fallback code at all in CI (we hit HAVE_DEV_TTY for
+> Linux and macOS, and then GIT_WINDOWS_NATIVE for Windows).
+> 
+> Here's a potential commit message for the patch:
+> 
+>   If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, the fallback
+>   code calls the system getpass(). This unfortunately ignores the "echo"
+>   boolean parameter, as we have no way to implement that functionality.
+>   But we still have to keep the unused parameter, since our interface
+>   has to match the other implementations.
 
-	($erropen, errclose) = 
-		$colored_output ? ("?!", "?!") : ("<RED>", "<RESET>");
+Yes, this reads well. Do you want to send an updated patch or shall I?
 
-... and then using a code like the above would be quite
-straightforward and the end result cannot become simpler than that
-;-)
+> As an aside, I wonder if cygwin could be using either /dev/tty or the
+> Windows variant. But that's obviously a separate patch, and either way
+> we'd want to fix this fallback code in the meantime.
 
-> As first implemented, there was no structured "problem description".
-> chainlint originally just output a stream of raw parse tokens (not the
-> original test text), and when a problem was discovered the "?!...?!"
-> annotations were embedded directly in the output stream. This was
-> still the case even when colored output was implemented[1]; in fact,
-> the annotations were colored after-the-fact by searching for "?!...?!"
-> in the output stream. It was only when chainlint was taught to output
-> the original test text verbatim[2] that problem descriptions became
-> structured data.
+Yes, this is what I meant by '... it should not even be trying to compile
+that code ...' ;) ie I was expecting HAVE_DEV_TTY to be set on cygwin (which
+does have /dev/tty).
 
-Exactly.
+However, there may be reasons for it not being set - I haven't had time to
+look into it yet.
 
-Thanks.
+ATB,
+Ramsay Jones
+
+
