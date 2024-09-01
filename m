@@ -1,134 +1,101 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B9F23AB
-	for <git@vger.kernel.org>; Sun,  1 Sep 2024 15:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34AF23AB
+	for <git@vger.kernel.org>; Sun,  1 Sep 2024 15:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725204378; cv=none; b=mww+U4eUZVzl9/rsUaDq8GHUugs3uDFlT3FyTEtarmY4PeYZMK+R/mPeNbGDdU63GtX5YWpQFijNUnuFMzQCJt43/DeZpBGWvC7w7Asuclrbg1jvYcIAm2VJv4GSTAGtIPa41u5MDBTzgC0A+O4dfmCcj5qtDnJtrjZOn6IXpLM=
+	t=1725204394; cv=none; b=YA5ivxU3q0XoyR7Qnbm/75hvQX0gC1FRUf6kmgYXhsSIBMFTPGRPE2du8whO/wgy+K7TbMdxRk1CgCogdWCAE1wrbGGVXacpSOHC3yGTFYUAXb6tGe3AOc87iUxwVZ88tmaiYpvf4iXOPfoTETnH+MyWY+XP6Ifk4xPtVnkdCrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725204378; c=relaxed/simple;
-	bh=7q3JtsclLhAemgyvIP5werCoZHVH1I/1I4dKwrGoOcs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BI2711nGg2Ja8sSkxw9AG6Y01ggzuTiCW7KTy+Ru3b9WhouM1hGOZJHU5yWKBwvJJHg8Spqb491HSR+sWzxskaJz5spgJD6L4UFhHHydUebBvfSqn7lEfvLrPfQ/spNIpCu+ArJDEZ9osRFDR2nbcvUgfGTi1E8d43aj/zlhuxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ieJOfbYS; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725204394; c=relaxed/simple;
+	bh=+uPlV298JoktKhz9QMZ5vxd39o+wZcafvZ+5lp8Ky7k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=n+yqKn8Y8YI5Q3UIs6b/ugs0ZqDi80lNIwi5re67INGJgv80uth7CEk7cSoOQ6jwvbNYhgmW+qKCYFoU44drkKctSkLntExD4LFM6fxQ9nBwB71zIbbaR6nY121nr5qpeEjmVimnVXzzw0aAXq2gHAVSMuAkwOPflk8eYu6Y6OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a4YMcs39; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ieJOfbYS"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B0DE37FFE;
-	Sun,  1 Sep 2024 11:26:10 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7q3JtsclLhAemgyvIP5werCoZHVH1I/1I4dKwr
-	GoOcs=; b=ieJOfbYS/3lPjeDMLPDhFPRvFgxMkDB/SpzqZfOePwQpjX42vlgAv0
-	aecjrIZwXZJMPXTRX7TQC5tviTNGaQTdLuc7jrwKv40IpWL2gR8vH13eRh7ajEsa
-	twSJ55jN8IjrOd4EU50nJdL91OARz79JG+hzEMVFcs9GfPJ8B08bY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6020937FFD;
-	Sun,  1 Sep 2024 11:26:10 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A31637FFC;
-	Sun,  1 Sep 2024 11:26:09 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ilya K <me@0upti.me>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: git 2.46.0 crashes when trying to verify-pack outside of a repo
-In-Reply-To: <14ec9394-a7ea-456c-800a-6a84c52e5cda@0upti.me> (Ilya K.'s
-	message of "Sat, 31 Aug 2024 09:46:10 +0300")
-References: <14ec9394-a7ea-456c-800a-6a84c52e5cda@0upti.me>
-Date: Sun, 01 Sep 2024 08:26:08 -0700
-Message-ID: <xmqq7cbvpf8v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a4YMcs39"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5becfd14353so3188156a12.1
+        for <git@vger.kernel.org>; Sun, 01 Sep 2024 08:26:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725204390; x=1725809190; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AvxPyb4lv2ip7MJsj7czpuACithCiBFB3jZgwn9I8e8=;
+        b=a4YMcs39xFfnEpSWrg0OgzwxqngP22donpC/j6tJ+HVQsVsjt9qVvh7sChDjg4oS9n
+         idaH6YMmtZkofhqcgn5+ElOAKwwCkQyn0VSZCymQw0k+ySMV9OVH3T2grfwTrsm4TLyV
+         MT5ly3U+U7IPdd0U/24yE5FGNgjJxUZ318k43IMj9RmHW9pYGrDKjDWH0Z98my1aa2nP
+         vKi/kVT0nWcyoGuLkca52w2vtq+S0x+KZquf6RXz1wltaJp12tsBxXbZEZtYNE2ZUcyK
+         mfOO4yTeAuvPciCmQI/7Z3hZ7awsvy9Wj90Pz9oRdGRIVL+0I5nAUe8VgIHBrDn5lf0x
+         NQwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725204390; x=1725809190;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AvxPyb4lv2ip7MJsj7czpuACithCiBFB3jZgwn9I8e8=;
+        b=AgJUmNgaSkWEj2TbabWYGHy4mz89vAnqT1euwpzvnnCbp2WrzWV9A1gpr31Y+NVbtY
+         9ydbTGMTAfEzuUCDk4FGS7JlUv41oK0jtYWW+6wQSI+QfAEvtaaGSbJWh7HLOGGFLOFq
+         YwBUZVWK0O+F8GazsaBQmN1zUfhngw/0lvfiHl+bXufsuPg5Vmsbh622i8jej2qO3InZ
+         XyLTMAlCzqopa6d89qYW7pzNygcXRZJUBnxZh3BwYTYaQpP8zKQkDMOIODfKoe3mezCR
+         puF7nLqe8/If1iK84UFD2hX8vdQP9D9OQf40bE3VhAK5LOsS0Wfln0ADzQ69H9jRNafH
+         dJbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWazvTI99dlvMpcdPvAfQsfUGoWr6lmuff+0YtDzjIh0X3pYdbqbTraSOSsVZRrzkmLOoc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwZ6OG/4CxFRH0RRaUTDhkUh2SGrUh5oB+8b+W+Pm7tGdaWEuC
+	RFg56ob3vuuKasScIjrsgI7X/x+pXrx1tlq/JPIBbdlFepp/nrs77xZ2sw==
+X-Google-Smtp-Source: AGHT+IFw4waCJO1erg5i5W29HuJcAOFbyXgiHtLeVuXEF9pW1dGnxFlZaDKhdjfnNsUFmEysJEynlQ==
+X-Received: by 2002:a05:6402:5188:b0:5c2:5141:84b0 with SMTP id 4fb4d7f45d1cf-5c25141866dmr1197353a12.35.1725204389336;
+        Sun, 01 Sep 2024 08:26:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c73477sm4397939a12.39.2024.09.01.08.26.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Sep 2024 08:26:28 -0700 (PDT)
+Message-ID: <61a4fcc1-1dd8-48a4-a1d4-0201232c9b26@gmail.com>
+Date: Sun, 1 Sep 2024 16:26:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 83AF3CC0-6876-11EF-8E81-9B0F950A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: `git rebase (--no-fork-point) --onto=<newbase> [<upstream>
+ [<branch>]]` leaves HEAD detached and *HEAD not moved when <branch> is
+ exactly `HEAD`
+To: Han Jiang <jhcarl0814@gmail.com>, git@vger.kernel.org
+References: <CANrWfmSY1F4UB2QSjN8XKY7Kwx6FL8SOrz_OadZ4u8XYDpZfBg@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CANrWfmSY1F4UB2QSjN8XKY7Kwx6FL8SOrz_OadZ4u8XYDpZfBg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ilya K <me@0upti.me> writes:
+On 01/09/2024 12:02, Han Jiang wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
 
-> We've updated to Git 2.46.0 in NixOS, and encountered an issue
-> with Dulwich (a Python Git implementation) tests failing[0]
-> because it attempts to call `git verify-pack` on a bare pack, with
-> no surrounding repo. This used to work in Git 2.45.x, but in 2.46
-> it simply prints "error: index-pack died of signal 11".
+> git -C './client/repo' -c 'core.editor=cat' rebase
+> --onto=HEAD@{upstream} --interactive "$(git -C './client/repo'
+> merge-base --fork-point HEAD@{upstream} HEAD)" HEAD
 
-Thanks.  This is a fallout from code-wide clean-up in 2.46.0 where
-we do not assume that everybody runs SHA-1.
+"git rebase <upstream> <branch>" is designed to switch to a different 
+branch before rebasing it. If you do not want to switch branches you 
+should use "git rebase <upstream>". "<branch>" is expected to be a 
+branch name, not a symbolic ref to the branch like "HEAD".
 
-------- >8 -------
-Subject: verify-pack: fall back to SHA-1 outside a repo
+> Replacing `HEAD` with branch name (`"$(git -C './client/repo' branch
+> --show-current)"`) works around the problem.
 
-In c8aed5e8da (repository: stop setting SHA1 as the default object hash,
-2024-05-07), we have stopped setting the default hash algorithm for
-`the_repository`. Consequently, code that relies on `the_hash_algo` will
-now crash when it hasn't explicitly been initialized, which may be the
-case when running outside of a Git repository.
+This is working as expected.
 
-As the verify-pack command ought to be able to infer what algorithm
-is used in the input file (and if the input file does not have such
-an information, that by itself is a problem), and the command allows
-an option to explicitly tell what algorithm to use in case it cannot
-be guessed from the input file, in theory we shouldn't have to use
-the default algorithm anywhere in the operation of the command, but
-we fail fairly early in the process when run outside a repository
-without any default algorithm set.
+"git checkout HEAD" is a no-op so "git rebase <upstream> HEAD" is 
+behaving differently to "git checkout HEAD && git rebase <upstream>". We 
+could look at changing that but it would be a breaking change for anyone 
+relying on the current behavior to detach HEAD before rebasing.
 
-Resurrect the setting of the default algorithm just like we used to
-do before 2.46.0
+Best Wishes
 
-Reported-by: Ilya K <me@0upti.me>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/verify-pack.c  | 4 ++++
- t/t5300-pack-object.sh | 4 ++++
- 2 files changed, 8 insertions(+)
-
-diff --git c/builtin/verify-pack.c w/builtin/verify-pack.c
-index 011dddd2dc..5b663905ae 100644
---- c/builtin/verify-pack.c
-+++ w/builtin/verify-pack.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "config.h"
- #include "gettext.h"
-+#include "hash.h"
- #include "run-command.h"
- #include "parse-options.h"
- #include "strbuf.h"
-@@ -77,6 +78,9 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	if (!the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, verify_pack_options,
- 			     verify_pack_usage, 0);
-diff --git c/t/t5300-pack-object.sh w/t/t5300-pack-object.sh
-index 4ad023c846..d6f45d8923 100755
---- c/t/t5300-pack-object.sh
-+++ w/t/t5300-pack-object.sh
-@@ -322,6 +322,10 @@ test_expect_success 'verify-pack catches a corrupted sum of the index file itsel
- 	fi
- '
- 
-+test_expect_success 'verify-pack outside a repository' '
-+	nongit git verify-pack -v "$(pwd)/test-1-${packname_1}.idx"
-+'
-+
- test_expect_success 'build pack index for an existing pack' '
- 	cat test-1-${packname_1}.pack >test-3.pack &&
- 	git index-pack -o tmp.idx test-3.pack &&
+Phillip
