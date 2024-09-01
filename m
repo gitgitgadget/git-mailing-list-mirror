@@ -1,66 +1,65 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39CB17DFF4
-	for <git@vger.kernel.org>; Sun,  1 Sep 2024 16:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E799183CAF
+	for <git@vger.kernel.org>; Sun,  1 Sep 2024 16:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725206614; cv=none; b=l7IERGRR50oycpmIfOFq1hDBgAkt65KulBHiH136fenQqRnqUK51to0qkGbOKNbCxPKRKW9LFMT4VqV8HFsEbAUHhyo0IWIrVBFu6Hi6wFc+DXBqmnjvHaH2QHaZ5jfjlIBe9QG8Z468rzVr4oBit+K0cKruui7WXssalLiy7pM=
+	t=1725206617; cv=none; b=UO3oUlQ8wZT26uChtyPSn0AA/dUkfcVIcR3UdDkw5SAg/p16rj+x+Qfd4PX/U43TLfaNu7KUht6LXO67Wfolt86MuGKwAv4FRFxnBubx3z9eK6GH5VJLiMLMLeSkucSpT/rqSpcydfwvisJLNiK/74+J0KX4IL/pOSXoRcE/G9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725206614; c=relaxed/simple;
-	bh=7fTJuw9P9vU6sJtyZFlLHwvsZlxS+aPCP4dPuOMdegE=;
+	s=arc-20240116; t=1725206617; c=relaxed/simple;
+	bh=uxffkUl2BIiQ85XgcgvdR5a6LyYcEDUS0oln3AoW9rw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nBgvuRQ3nX/6C5OE8XWkKEtKFnTjzTaAiGVMJasaLmU9Nd93WifY4uproD1hBa34xZqme0mRL/lCXnqQ1feAQo/le4YK/NLkktd68hXcuLkxqbEBrzsS5l1mKao2hvKJRuHQQo/lJeAPstuAYobOtYXN+ka4INiz/6cZFLfkrzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=EqeNeXrK; arc=none smtp.client-ip=209.85.160.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=qLjvHqc7az3Ov/zkJXHCzxMnLQQHe5H6yvMsskvW8Qb4in+F6oaF7ZCA50FAsoCPRCw/tcsJ5A76i48aAG8RnC5C3cw5q/2MUUkFMIe9YqxdM068ognfdKQuweajFLwAMo+SThpMtpx5nEcx7SDRHUrmVyMK/iw3tsIelkvyq7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eMyyY0Aq; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EqeNeXrK"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-27018df4ff3so2200676fac.1
-        for <git@vger.kernel.org>; Sun, 01 Sep 2024 09:03:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eMyyY0Aq"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e1a9e4fa5aaso854095276.2
+        for <git@vger.kernel.org>; Sun, 01 Sep 2024 09:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725206610; x=1725811410; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725206614; x=1725811414; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6LxYreUVxCdHo+0bKb2lGeQIBpUecTpOEGnIHyvKrhA=;
-        b=EqeNeXrKiAPYNykvhgvc/OOs+Usjp7X95flMEfTw2DsjCVXvM3W+yEZKqL2VEZq8yx
-         3PMRIDmRtzNZQlxJ/RaVw/YsONPXN8+utsLPmxNl+tsZ9vHXueqimI6kVIMA/Fran3QD
-         +9/XQm7EceL6cwq/4o+1n7K7FSe97niizi/x8SJKsVg/qo8IEvWe7CDbu6fyPJOiqs1S
-         wwITB8KoEctDIeTuyuGKPOQr0rCC2ECHD4cHJ4/Q1pV19RbRytzffGNOYhwdu5BGScwC
-         0gR/XxUlNK40mrJTEi4qaavJVPe3JCWIP1hmoRy42TjXYCHsHdrg/21vT+fnvR5wnor3
-         8gYQ==
+        bh=EcHdwGMtPU4DstWWCxwP4CpV3Zt4cbcBQ5eoR9PyQOI=;
+        b=eMyyY0AqEVMIOu3gs2UI3OHlDVG6H2EnT8pOU4RWpBs0TfYkmhquKAaAq6J+bw/rC/
+         s2502uQX1PbL8GdgMd7M1O8Qx7rl2DnUKE1DrR7SJJpV7Va6S6MM/BlwmVn94CvK+0lo
+         z7W+SVxe626j/wcuWv0MZIGFnprWj1YyvbRoXViTAr1UopRVhDkaCLTvNfY4dcwifn92
+         ky3jctLFvVQimmSnWxlJCqqevOpyjPf19nt31AEd3Uja6vvS4BPuRcfdg7vAyOjXDwPw
+         3mEC03PNDjiH5ApHdXbWV3zd1+y29utWVTsHmn7FfZtvmu3xioLmWDgartr4rc6WLvy+
+         kUmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725206610; x=1725811410;
+        d=1e100.net; s=20230601; t=1725206614; x=1725811414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6LxYreUVxCdHo+0bKb2lGeQIBpUecTpOEGnIHyvKrhA=;
-        b=VCvnrQj9zFlLmSjg+lXcAwGqlCe2Wb2ySvrj1H0EmSrWo6icUOha51FxzOhg/Klrmu
-         f1uSMd5BLAIjTGFvcGIIfaeYD7xwRSGZbEVh9rAyxDP2F6c6A6xUtvLl9vlZPS6mj+7d
-         iw/zf3ENLa5zHjGv/fVA0W8lwxLY1aUWlOKDh+myYHZBVcmC+O417noRtHSR94N1nVSZ
-         sIIqhd7wI29KAMtfG1v1IjP1R7UrAlp5UWV06wlPANEqaLE+Of92mbZw0jGspQov7/Lf
-         fkub28Zaf+kuS50eiC/8/S/tKLJtZUg413roT4M3yyeEp//u1HXGET3lcuFyIpFcNwrE
-         x1yQ==
-X-Gm-Message-State: AOJu0YwqjufwT8Aoc6gW84eqy9BSUmnXg+ygmjJaS1fp5UiKQAX9Asn6
-	l/FTZ+VHMsH/RkY9S4h3F5/5rqUX262eEU+/FlXuQmkk2qWyAXd1KJ7hpUh2DW7mdFsjIkfkm9z
-	7joc=
-X-Google-Smtp-Source: AGHT+IEsgVAFLsIIMNMTVUF/Hv6A6pm5a98nUKQQLLgaLHmzfxXVQTuQ6GWT5siZoAwIf3UqsLMPQw==
-X-Received: by 2002:a05:6871:4e97:b0:261:44d:3b86 with SMTP id 586e51a60fabf-277d0443357mr5518965fac.23.1725206610431;
-        Sun, 01 Sep 2024 09:03:30 -0700 (PDT)
+        bh=EcHdwGMtPU4DstWWCxwP4CpV3Zt4cbcBQ5eoR9PyQOI=;
+        b=wvmSD8Qy6UDR1WX8tBu2M39iHTcI/Vs10pobPD1gdR93MGfeExXz6MZDtx2iQXiHUi
+         y3mFR7a9JbUQ7y5i7jjJkVqhCoP6exKOTSaRuDFIl0n2vKOG4scHjIXBKu8Z0GZHXXru
+         kJu/9GlXWwlpVI3EUydkf5A14BwOFTER1r2LGOsKtA27RbNcauRgXzgQnJClGsYakalJ
+         ruUzsThp8MZgUAnGHBhRhWq4sopM06xPY88zmEC7TxU8yHNPcwhTkUj5QJEa7qT1gfOT
+         ryaQzwES2om9CmnVPG2NerJSLnQ/6AR7W/Y7xASLUPLxsPt9Q9TRbH3rHEREieY3u4DS
+         4w1w==
+X-Gm-Message-State: AOJu0YyLEs+9A1ZB+BVIjYcIXEx+qsJJrC36M/0AidDKgbmf6lEO+jAN
+	m/CxMyvjWhn4fFAq9omciZ0DxpWh58oH3ubmy1SHHf9xizMvBN/8YaWJORHHgGV3h8u404PO25y
+	ofUI=
+X-Google-Smtp-Source: AGHT+IH9tf0UZcEa1wbwIRlCiLh1ALGrjrJl7MkkRbVRLzGxGDRebBbEt+rTaLOQfntxGWxq4N416Q==
+X-Received: by 2002:a05:690c:6d8b:b0:675:a51b:fafd with SMTP id 00721157ae682-6d40f535fffmr95784627b3.31.1725206614212;
+        Sun, 01 Sep 2024 09:03:34 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1a626e3d5asm1436013276.44.2024.09.01.09.03.29
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6d6c4eebe3fsm1993487b3.49.2024.09.01.09.03.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Sep 2024 09:03:29 -0700 (PDT)
-Date: Sun, 1 Sep 2024 12:03:28 -0400
+        Sun, 01 Sep 2024 09:03:33 -0700 (PDT)
+Date: Sun, 1 Sep 2024 12:03:32 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] Makefile: allow specifying a SHA-1 for non-cryptographic
- uses
-Message-ID: <682e4c2cc3581c72262ea6a9b488a246fc6fde28.1725206584.git.me@ttaylorr.com>
+Subject: [PATCH 4/4] csum-file.c: use fast SHA-1 implementation when available
+Message-ID: <e8f5cbd280cc07f68014bd4024d55a740374b349.1725206584.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,106 +71,119 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1725206584.git.me@ttaylorr.com>
 
-Introduce _FAST variants of the OPENSSL_SHA1, BLK_SHA1, and
-APPLE_COMMON_CRYPTO_SHA1 compile-time knobs which indicate which SHA-1
-implementation is to be used for non-cryptographic uses.
+Update hashwrite() and friends to use the fast_-variants of hashing
+functions, calling for e.g., "the_hash_algo->fast_update_fn()" instead
+of "the_hash_algo->update_fn()".
 
-There are a couple of small implementation notes worth mentioning:
+These callers only use the_hash_algo to produce a checksum, which we
+depend on for data integrity, but not for cryptographic purposes, so
+these callers are safe to use the fast (and potentially non-collision
+detecting) SHA-1 implementation.
 
-  - There is no way to select the collision detecting SHA-1 as the
-    "fast" fallback, since the fast fallback is only for
-    non-cryptographic uses, and is meant to be faster than our
-    collision-detecting implementation.
+To time this, I took a freshly packed copy of linux.git, and ran the
+following with and without the OPENSSL_SHA1_FAST=1 build-knob. Both
+versions were compiled with -O3:
 
-  - There are no similar knobs for SHA-256, since no collision attacks
-    are presently known and thus no collision-detecting implementations
-    actually exist.
+    $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
+    $ valgrind --tool=callgrind ~/src/git/git-pack-objects \
+        --revs --stdout --all-progress --use-bitmap-index <in >/dev/null
+
+Without OPENSSL_SHA1_FAST=1 (that is, using the collision-detecting
+SHA-1 implementation for both cryptographic and non-cryptographic
+purposes), we spend a significant amount of our instruction count in
+hashwrite():
+
+    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
+    159,998,868,413 (79.42%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+
+, and the resulting "clone" takes 19.219 seconds of wall clock time,
+18.94 seconds of user time and 0.28 seconds of system time.
+
+Compiling with OPENSSL_SHA1_FAST=1, we spend ~60% fewer instructions in
+hashwrite():
+
+    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
+     59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+
+, and generate the resulting "clone" much faster, in only 11.597 seconds
+of wall time, 11.37 seconds of user time, and 0.23 seconds of system
+time, for a ~40% speed-up.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile | 25 +++++++++++++++++++++++++
- hash.h   | 25 +++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
+ csum-file.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e298c8b55ec..d24f9088802 100644
---- a/Makefile
-+++ b/Makefile
-@@ -517,6 +517,10 @@ include shared.mak
- # Define APPLE_COMMON_CRYPTO_SHA1 to use Apple's CommonCrypto for
- # SHA-1.
- #
-+# Define the same Makefile knobs as above, but suffixed with _FAST to
-+# use the corresponding implementations for "fast" SHA-1 hashing for
-+# non-cryptographic purposes.
-+#
- # If don't enable any of the *_SHA1 settings in this section, Git will
- # default to its built-in sha1collisiondetection library, which is a
- # collision-detecting sha1 This is slower, but may detect attempted
-@@ -1982,6 +1986,27 @@ endif
- endif
- endif
+diff --git a/csum-file.c b/csum-file.c
+index bf82ad8f9f5..cb8c39ecf3a 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -50,7 +50,7 @@ void hashflush(struct hashfile *f)
  
-+ifdef OPENSSL_SHA1_FAST
-+ifndef OPENSSL_SHA1
-+	EXTLIBS += $(LIB_4_CRYPTO)
-+	BASIC_CFLAGS += -DSHA1_OPENSSL_FAST
-+endif
-+else
-+ifdef BLK_SHA1_FAST
-+ifndef BLK_SHA1
-+	LIB_OBJS += block-sha1/sha1.o
-+	BASIC_CFLAGS += -DSHA1_BLK_FAST
-+endif
-+else
-+ifdef APPLE_COMMON_CRYPTO_SHA1_FAST
-+ifndef APPLE_COMMON_CRYPTO_SHA1
-+	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
-+	BASIC_CFLAGS += -DSHA1_APPLE_FAST
-+endif
-+endif
-+endif
-+endif
-+
- ifdef OPENSSL_SHA256
- 	EXTLIBS += $(LIB_4_CRYPTO)
- 	BASIC_CFLAGS += -DSHA256_OPENSSL
-diff --git a/hash.h b/hash.h
-index f255e5c1e8a..450e579b405 100644
---- a/hash.h
-+++ b/hash.h
-@@ -15,6 +15,31 @@
- #include "block-sha1/sha1.h"
- #endif
+ 	if (offset) {
+ 		if (!f->skip_hash)
+-			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
++			the_hash_algo->fast_update_fn(&f->ctx, f->buffer, offset);
+ 		flush(f, f->buffer, offset);
+ 		f->offset = 0;
+ 	}
+@@ -73,7 +73,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	if (f->skip_hash)
+ 		hashclr(f->buffer, the_repository->hash_algo);
+ 	else
+-		the_hash_algo->final_fn(f->buffer, &f->ctx);
++		the_hash_algo->fast_final_fn(f->buffer, &f->ctx);
  
-+#if defined(SHA1_APPLE_FAST)
-+#include <CommonCrypto/CommonDigest.h>
-+#define platform_SHA_CTX_fast CC_SHA1_CTX
-+#define platform_SHA1_Init_fast CC_SHA1_Init
-+#define platform_SHA1_Update_fast CC_SHA1_Update
-+#define platform_SHA1_Final_fast CC_SHA1_Final
-+#elif defined(SHA1_OPENSSL_FAST)
-+#  include <openssl/sha.h>
-+#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
-+#    define SHA1_NEEDS_CLONE_HELPER_FAST
-+#    include "sha1/openssl.h"
-+#  endif
-+#  define platform_SHA_CTX_fast openssl_SHA1_CTX
-+#  define platform_SHA1_Init_fast openssl_SHA1_Init
-+#  define platform_SHA1_Clone_fast openssl_SHA1_Clone
-+#  define platform_SHA1_Update_fast openssl_SHA1_Update
-+#  define platform_SHA1_Final_fast openssl_SHA1_Final
-+#elif defined(SHA1_BLK_FAST)
-+#include "block-sha1/sha1.h"
-+#define platform_SHA_CTX_fast blk_SHA_CTX
-+#define platform_SHA1_Init_fast blk_SHA1_Init
-+#define platform_SHA1_Update_fast blk_SHA1_Update
-+#define platform_SHA1_Final_fast blk_SHA1_Final
-+#endif
-+
- #if defined(SHA256_NETTLE)
- #include "sha256/nettle.h"
- #elif defined(SHA256_GCRYPT)
+ 	if (result)
+ 		hashcpy(result, f->buffer, the_repository->hash_algo);
+@@ -128,7 +128,7 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+ 			 * f->offset is necessarily zero.
+ 			 */
+ 			if (!f->skip_hash)
+-				the_hash_algo->update_fn(&f->ctx, buf, nr);
++				the_hash_algo->fast_update_fn(&f->ctx, buf, nr);
+ 			flush(f, buf, nr);
+ 		} else {
+ 			/*
+@@ -174,7 +174,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
+ 	f->name = name;
+ 	f->do_crc = 0;
+ 	f->skip_hash = 0;
+-	the_hash_algo->init_fn(&f->ctx);
++	the_hash_algo->fast_init_fn(&f->ctx);
+ 
+ 	f->buffer_len = buffer_len;
+ 	f->buffer = xmalloc(buffer_len);
+@@ -208,7 +208,7 @@ void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpo
+ {
+ 	hashflush(f);
+ 	checkpoint->offset = f->total;
+-	the_hash_algo->clone_fn(&checkpoint->ctx, &f->ctx);
++	the_hash_algo->fast_clone_fn(&checkpoint->ctx, &f->ctx);
+ }
+ 
+ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
+@@ -219,7 +219,7 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
+ 	    lseek(f->fd, offset, SEEK_SET) != offset)
+ 		return -1;
+ 	f->total = offset;
+-	the_hash_algo->clone_fn(&f->ctx, &checkpoint->ctx);
++	the_hash_algo->fast_clone_fn(&f->ctx, &checkpoint->ctx);
+ 	f->offset = 0; /* hashflush() was called in checkpoint */
+ 	return 0;
+ }
+@@ -245,9 +245,9 @@ int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
+ 	if (total_len < the_hash_algo->rawsz)
+ 		return 0; /* say "too short"? */
+ 
+-	the_hash_algo->init_fn(&ctx);
+-	the_hash_algo->update_fn(&ctx, data, data_len);
+-	the_hash_algo->final_fn(got, &ctx);
++	the_hash_algo->fast_init_fn(&ctx);
++	the_hash_algo->fast_update_fn(&ctx, data, data_len);
++	the_hash_algo->fast_final_fn(got, &ctx);
+ 
+ 	return hasheq(got, data + data_len, the_repository->hash_algo);
+ }
 -- 
 2.46.0.425.ge8f5cbd280c
-
