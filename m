@@ -1,117 +1,116 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52712EEC8
-	for <git@vger.kernel.org>; Mon,  2 Sep 2024 09:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787201C2DCF
+	for <git@vger.kernel.org>; Mon,  2 Sep 2024 09:27:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725267870; cv=none; b=QbUCNfvE/s8jIYFtBUvcA74GL7z8ouokheSRvEtixGdsFPsTj4Yo3Saw2BGbIdckui+FAXTUwrU2jSefSOBoxVXwAKfNXDXqqzEZncbTqucA5JLMfs3DwruHmxQeN/lR5B27eonG78oWCZM4cgfgMAqm2kIH0sm1xfYFq5BMOBA=
+	t=1725269271; cv=none; b=IsDNdgpVOIzQkvArWWbT1mdG3tcg4Es67XIjHNVy3lgOA/5RpHkIcRqBBGbwpTpglmfvsLG63xYFB/XUqUme2jPq/CEbTxQ/Cc9s7Pjp0SywwiXVrzc/SFUE9ANnTsi4XJuG5NjXPRvI5vuO5APdcHp2w5zQOUJGACbqxEcAjJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725267870; c=relaxed/simple;
-	bh=qnDxG00WjT3xfgGr10jqMofYzYMN4ThUEZsFMnHXKB8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qQVEjnEvdgwc3dr2YDx3MJbVmQmPPbOuFSJ5Y5RyJlCZUg4VozRD8JWcaEKtxuvrtaMRMtSevi+S64NlONzAkdpa0cTa6c/2dX1274JkgLyAu99WEtLXihHlJA4VhQeJ0LLrJQmNMf4E1b4j8XevG70cx+S7td1QC/LllDXizEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dnu9Q8Ef; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725269271; c=relaxed/simple;
+	bh=zpjXOmmvAHZaMK+WH+5Wgw3BWwhKNT2m5dxYgwCHoR8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CY4LLry0iqYpleePzGZOoXK5/bt4Jr7HVVxybVkiLMkstUuuqXi7cQwkoawpoffTiGRI3yf8PKVCnSZR7ksFMEBFb3LaFHTEUtW1+c06YhRTNUWqgthoXf16W97I+KW+x3A1Yey5yxiWk0XyNlgYWMillFJdge0H9QDNhHnbiOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kOH9JuSH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SGa+Da9k; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dnu9Q8Ef"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a868d7f92feso442187566b.2
-        for <git@vger.kernel.org>; Mon, 02 Sep 2024 02:04:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725267867; x=1725872667; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YW1lbUo140DAdEKqWt2EBbeikRYULLRn6sFh5G0pqnU=;
-        b=Dnu9Q8Efb1wap+gymXdVwWyrGlmaIM4HOGp8Z+TTEKLzNBDyMB6qZtH3pnXxtQYNcr
-         OATb6QhcXArsCGp0xVC4KDz+hcHqHJi/A82XGKki7PnbJMkH006sSKeT1kSoljS9IG1+
-         0El4m1nHFd7vlDC6+IY2QFo3nN2dskeUbzWZ02YWXh8FfjZGuT598yLnIpz290WeY+9h
-         ulbJ2xNiv92/6Y/twP4acc0dmCg7JZKWwJnHLmfDOKR78qPt3FP/nM5sVgmNVfZUpEF9
-         LQuETmH5eDtnQBBp6DncLY62cnIc1QDWRm4NThCywf9720ozqSQhvXOa1Qr242d5RT7a
-         u75Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725267867; x=1725872667;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YW1lbUo140DAdEKqWt2EBbeikRYULLRn6sFh5G0pqnU=;
-        b=L7yJBvGffCcOpFVok5f1fwXuUA6ki1dTj9tgdK0EzawsaqTQOJG6fwa0isMRDcVXIB
-         lBZ3DOPW6886wuLBLNdfnKmd0TTJLWCm4KnW3+Bd2SkJKyythDa2PxQbSno+R8ToLU1Q
-         p+EtAaeVpoqAdq3aGu/rjG8EHoJJMbCB6JSu73VoaXxlSE3YNrWgxf+AVFYzQy+J2oKm
-         bWWzsyDM4ach5Xg8M9/kGwxVGNgGlt2OBcYt9Aub0BfsgQCEJ6TwG+sdQlMKolImaCCR
-         VK/0w+UbMuMWbDBnGB2+yRzWMAy9E/ErdkBpXaO9tIYy+RxmWAW5yLiG4d/PqXkbNTPD
-         UAfg==
-X-Forwarded-Encrypted: i=1; AJvYcCWScZXxKETuCs8eVfzU6q/Atek174akjIBdJ/c4y8uGWJaBoC070T3EEbEW3az+BRwVYzA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6dvsszoNVPIksgcj4ygTn4WUEROGvg8F5Jty7WL+34FV9sVoN
-	n4kfkuHtjoflsotRmA4X7S2vz4mbOk6rkLimtQ94fEUg4Hu3Udz5
-X-Google-Smtp-Source: AGHT+IEdlQzgqaKEHNai6q0uO/asVdcNFxyWAyUhXxtsWRpJUoZr12wb3wC+SBMCZUcLNwI642gyfw==
-X-Received: by 2002:a17:906:6a09:b0:a86:43c0:4270 with SMTP id a640c23a62f3a-a897f77fc2amr1005145766b.13.1725267866852;
-        Mon, 02 Sep 2024 02:04:26 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891db42fsm526221266b.184.2024.09.02.02.04.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Sep 2024 02:04:26 -0700 (PDT)
-Message-ID: <981c8e52-e51d-4aab-a970-bb41315e02cb@gmail.com>
-Date: Mon, 2 Sep 2024 10:04:24 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kOH9JuSH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SGa+Da9k"
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 733E511401FA;
+	Mon,  2 Sep 2024 05:27:48 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 02 Sep 2024 05:27:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725269268; x=1725355668; bh=WIobH6SBlK
+	HLgeDbv3igTu3QOTI9uam6fnoR9jjytfA=; b=kOH9JuSHsL772LANPMt/8Huu5o
+	l9DjmibqA7wzohEg5JXwgZuHcUEDzAlvdMqEXrWNJ6X8KmRHrx0k16UPjtvfiWwY
+	lLOasXFgJ/I/dltJbBHjnyT9LIrzrDDefJBKljGm+eGCHNSoIpJE7xfdpkyfvJ5D
+	XUzVxzltoh5/aQ9M+GUKw2C9ZJJjdb8OfcnUIrGq4U47p4XxU781uvZIEmuMBplO
+	p76w3SJaHGSSxvR0h57ZPcxuumag8uG0CVb00+eDnW2+5asv5YBJE+CMZhT63YNt
+	Y6mWoJIIzNVkP2hADs29jvCT3lR1gDayIXqB0mMEArzE7rsHc8TeBwExiqLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725269268; x=1725355668; bh=WIobH6SBlKHLgeDbv3igTu3QOTI9
+	uam6fnoR9jjytfA=; b=SGa+Da9ki7PKRpVWsxdlVLl7xKm9Otfm6MqP80d38mSY
+	NDs87RezPM08LxuDnAtks+DiAEN45GR94CJJR4TjIp1qiPahFmmUO4RSs3i7OdoB
+	kedYiorXf44CmDNPiGcTyvyBnY+OgUu04JtPd5t8KK7xIqRVs/xc/RSEygxO6vGO
+	8UBIATv96lqmw5XXfsJidImEdw5Wl6x4pAi/b1atcefya3t4AGYUGAEWvS2OpG6C
+	WT+Am1qSAbrk1WEhymkh8Iav8xPchAYc2n0PF5uZRNjlLnknFjC7nCYoI4yeDbSR
+	JLM44mPLZ+8VsbUqrkRvkaqhfdaXMv5734viIVvJ6w==
+X-ME-Sender: <xms:FIXVZjDMvFoF_BS3N65ht_uUnQSqUpBBkUTy8zGfy0Otg9lFOkq9CA>
+    <xme:FIXVZpgsDGZ_hb4ErxSiQsrpNPuOzDjGEj7TN-REOTUrUHMz23xGZ9dfeJ7DRZ02l
+    adSlkzE9Hh1KL5wtw>
+X-ME-Received: <xmr:FIXVZunkv0ZO09VmIIhFcXomkMEBGOdahoN0L7zTHbOqn8HU_qaZRa4wj7CnWJ9JohX18JHwx5cSRua0cFHssX1UWg_pPbWCn18j7n15FOKEQN0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehfedgudeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:FIXVZlw5DeEAQm8w9XlnsahCKgpHtzo-cmOjv6EXOwfV1PGknzUdsQ>
+    <xmx:FIXVZoTYPZneLkwzb182TfG-sqLj7KGdsy9mWw8Gw6ZR_LXMDp2Knw>
+    <xmx:FIXVZoZkcmL5IP0EAkbnVOS6x4jK51f1NfaFaRarcYnVeO2ZpEju3A>
+    <xmx:FIXVZpTCKgOU4zazVA1u4to4jn2kqps4_1I1J8gPLLhLM7EL8vuyww>
+    <xmx:FIXVZjfyUS56wDA6iuk1QsDIdPPnFllyC3hWjgS-KrBYXodmGLQORX_7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Sep 2024 05:27:47 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id f77ed3b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Sep 2024 09:27:41 +0000 (UTC)
+Date: Mon, 2 Sep 2024 11:27:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 04/22] builtin/push: fix leaking refspec query result
+Message-ID: <ZtWFCnJ5DZU2m8Q3@tanuki>
+References: <cover.1724656120.git.ps@pks.im>
+ <92fc97b3db86bb0bdf610a2f76c03a96a99bfe8d.1724656120.git.ps@pks.im>
+ <xmqqttf1pt96.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: `git rebase (--no-fork-point) --onto=<newbase> [<upstream>
- [<branch>]]` leaves HEAD detached and *HEAD not moved when <branch> is
- exactly `HEAD`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Han Jiang <jhcarl0814@gmail.com>, git@vger.kernel.org
-References: <CANrWfmSY1F4UB2QSjN8XKY7Kwx6FL8SOrz_OadZ4u8XYDpZfBg@mail.gmail.com>
- <61a4fcc1-1dd8-48a4-a1d4-0201232c9b26@gmail.com> <xmqq1q23pegz.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq1q23pegz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqttf1pt96.fsf@gitster.g>
 
-Hi Junio
-
-On 01/09/2024 16:42, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On Fri, Aug 30, 2024 at 02:59:01PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
->> "<branch>" is expected to be a
->> branch name, not a symbolic ref to the branch like "HEAD".
+> > When appending a refspec via `refspec_append_mapped()` we leak the
+> > result of `query_refspecs()`. The overall logic around refspec queries
+> > is quite weird, as callers are expected to either set the `src` or `dst`
+> > pointers, and then the (allocated) result will be in the respective
+> > other struct member.
 > 
-> I question the correctness of this, though.
+> Hmph, is it necessary to say "quite weird" for the purpose of this
+> change?  The query interface is designed to be usable to query both
+> ways and within that constraints, I find it designed very nicely
+> (but I do not think that is necessary to be said for the purpose of
+> this change, either)..
 
-Yes as you explain below, it is a bit of an over simplification
+I don't quite agree that it's nicely designed -- I find it rather hard
+to use and reason about, and the fact that so many callsites get this
+interface wrong seems to indicate that there is at least some sort of
+truth to this assessment.
 
-> The "what to rebase"
-> argument can be any arbitrary commit-ish, and if it is a name of a
-> local branch, that branch is rebased.  If it is not, the HEAD is
-> detached and that detached HEAD state is rebased.  The latter is
-> handy when you are unsure if you want to really touch the branch.
-> i.e. "git rebase master topic^0"---this way you'd end up on a
-> detached HEAD that shows what would happen if you really rebased
-> "topic" branch, but if you do not like the result, you can just
-> discard the state by e.g., checking out some branch, and you do not
-> even contaminate the reflog of the "topic" branch with the record of
-> this failed exeriment.
- >
-> I have a mild suspicion that the "rebase" command might have changed
-> its behaviour since the days back when it was implemented as a shell
-> script, when the "what to rebase" argument is HEAD, as the most
-> natural implementation to do this "optionally first switch to it
-> when the argument is given" in the scripted Porcelain is to actually
-> run "git checkout HEAD", which should be a somewhat noisy no-op.j
+But I don't mind removing this subjective opinion from the commit
+message. I'll do that in case I end up rerolling this patch series.
 
-It appears to have changed in 0cb06644a5 (rebase [--onto O] A B: omit 
-needless checkout, 2008-03-15). That also changed the reflog messages 
-written by "git rebase <upstream> <branch>" so that "git checkout @{n}" 
-does not see the new branch being checked out.
+Thanks!
 
-Best Wishes
-
-Phillip
+Patrick
