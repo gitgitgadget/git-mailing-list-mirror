@@ -1,118 +1,113 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C6716F0D0
-	for <git@vger.kernel.org>; Mon,  2 Sep 2024 09:29:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767A019E964
+	for <git@vger.kernel.org>; Mon,  2 Sep 2024 12:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725269393; cv=none; b=GdPzOuHdWeD0khaK6zf9X8jEWD7zxV+zHPUuDW+aice2cT/ea7M9NkRayBPugpKA/gWpZ7CYR5xzVZfP5agbc66FiY7nVdk5PENjpVxxMcMdJJF9ZyYFJ+izRLDITqwBHy6AZVZnopZVNLsXLvzOU18SGftl0RtFj4f6C7TGmik=
+	t=1725279242; cv=none; b=Nh3K0e6abX5AHuYpW3ulHAzRLAC/WX3BVErAESf+qkOKE0skvuodnopd3wV41VHqilk2051QjJRC2l0SaBhq/c8Jjl6KyBkW5FKTmW5McNLSdPUFOmXxnb5VPPFqvS5psDucpiSyv+u1KPfrZTuSrjBaGYa9MgnAkK2BSbQsBFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725269393; c=relaxed/simple;
-	bh=GjAYcJoUi5x5YEESeQlYCVvQlpqMtsIjQJj3qmIsctg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LTrDRph1TdJfg1PUFoaq4oU8D6f+Bydo6vSnpCQC7EcBLbOEYvjaiV9+gmqQE7VDvuo+TMkpbOn47Go2h/u0YK346RhYqh+iHukaJR1w5YEXj7ZeU5H7C+5FT0bHWQLVTGE3QXXZLLsl1RBB+CCucw/twfBluAEv5RPN+GcdSQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TrCicULf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hIwGBw/V; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1725279242; c=relaxed/simple;
+	bh=PJYEIfddQAtq2BkN6B6ybEu0BD3QtdNUBKoO7wZKyDw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FYNugnhlYYL8yf9QbU9HulAdZnyLLp49xjeq+GdkV/FCJ65OxdWMTakthatcG7NZI8o9QxnGs5MATg5iCATuT4wSV+NAmCk4hS3rsf4aBdfpl8TqFQVqpo9UJLcXd+lZfmrMHfk5uFRW2xaa/JFySSOZn+DtVBLDN06HFX/2zm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSHAmBLl; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TrCicULf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hIwGBw/V"
-Received: from phl-compute-04.internal (phl-compute-04.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id CFF05114025E;
-	Mon,  2 Sep 2024 05:29:50 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Sep 2024 05:29:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725269390; x=1725355790; bh=/FtKyt7zrS
-	XVORhgicGtyLZjU/sv+bP8+XF49ddJZEM=; b=TrCicULfE5X+98ZDtk8P0yuXl+
-	R28zztBKBt3sqaMLcwOv5pjGsmla6Ecw/ECRAr6VFhqXOKVImiBGH2XIjzaVqR4P
-	pBTRXzp32lZbDQ/JhXgrCCp0Z1Dvr9MEMCMLSJbDr4TmTPu5OFnl0PU/d4IDFWBm
-	qriR1cuTcH4mZA5NyYyXtlMb36i//QxBhDitXAtvXwBvjKYr54IQeDuYTXWgWa54
-	Go9RzTAF4Zqd8s0n8NWWDn1AvZ9iyf0wLSHlI1R74TWwpkpCqsso/kWBc1KfPTI0
-	QanmB4xUlFa8qLvkRcovV/u6xok36v8dQ7APMRzzMrWxbeT+FUvXpJykx9eA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725269390; x=1725355790; bh=/FtKyt7zrSXVORhgicGtyLZjU/sv
-	+bP8+XF49ddJZEM=; b=hIwGBw/Vu3eZ//MYhP5Vy8/YcrsSRgsk33VZP0MyszI9
-	x87nWaz9T77Mohne/W2yChUsXrklXl+Jl+A3DWdvc6HFpqsly5xvzaYGWFEhX+XE
-	tYMLpZDhVeshiH616lLR49R14yMOz7idjEzsK68su3HiZps4EY7y7QRf4rrSTEsd
-	pYBUh8hULOeKCtFx51mmqBQZO+x1npJyZpfyZ0n9jjMOxSYGCKpc1pETaFn0KdAa
-	BDgp+zdXU/Joef9dNe8pOVkmKX3YDc7juvWShJXAhCJMqYZaG076IY4+1H+nMVc+
-	NIQTMFB/JA8kKRPM9JHHylKQPTYMUJIJsQcAMmRnwQ==
-X-ME-Sender: <xms:joXVZoR7oLwll4t3N98QeHgSZsXn5LNcmg7zlQO5lxhiz5T1zfq9Og>
-    <xme:joXVZlxL8xyeF5NiWz6yZWYgNokiO2IaYaad5MrhPMktZFJ5iXny_IqSK3yu9JXa3
-    SPwBRuq9AJsHCdBeg>
-X-ME-Received: <xmr:joXVZl0WfCGMAvFBjFyRrQlJkDiAIrzvvtbWtsov0WVroU39xS8uCzU-TS4XPJWkmqY2BF0LJ9xkKIeqVXHx_LEAVBSooxNQj04Kb1XHI--q7-g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehfedgudeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
-    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:joXVZsB_jEY1ifsHLLTAHlXG7ZH35w0w9a0w805SRbW7I0_IdqA_Yw>
-    <xmx:joXVZhip3MVpri-9hofqLaXqx5bOarT9gIJgXGYvxxG4NnT5rmNcBQ>
-    <xmx:joXVZoor5rGxyqgGS3ssHhz3GJtdPCRFtdODjQEoCSFVYUXYuj2l9Q>
-    <xmx:joXVZkgX9MuXhnW027asXGqFHFQpX9mjSGCuRVbiEWtsTNaIxcC6lQ>
-    <xmx:joXVZmu4UMoF_Pw3bjCPKDoh8IO5njkK7peVBludopQubkfjLF61BbHm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Sep 2024 05:29:49 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 37baa027 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Sep 2024 09:29:44 +0000 (UTC)
-Date: Mon, 2 Sep 2024 11:29:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 00/21] environment: guard reliance on `the_repository`
-Message-ID: <ZtWFiv-caqIfYLoD@tanuki>
-References: <cover.1724923648.git.ps@pks.im>
- <xmqqle0fuml4.fsf@gitster.g>
- <ZtFtpjaGFhORNEP4@tanuki>
- <xmqqr0a6rmxo.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSHAmBLl"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a7a81bd549eso347187966b.3
+        for <git@vger.kernel.org>; Mon, 02 Sep 2024 05:14:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725279238; x=1725884038; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mswh4cxwq3WB/mJarJM51mk1dwIcMPTrJt9r7G5g2TU=;
+        b=VSHAmBLlW8voqnMiz6VjptPDVNmHlstznbGSco5vzuydDplDHR+XchZ/U5xbI+o/uI
+         GQTXhOplqcoweWcBShUcjqPCd2eSynbBtzc2+MdLAqhNandiyhCEMF3vOZUCfpudlUTh
+         DJtcLV5qMR6UERJ6wMvroEKnH4bys+bnlfL3JumsKnfODvEPJiZ/QUZbKwJCMjGpxzJI
+         YlI/X9qwOVyfu4dbJLItJfXxl+BntQJoX8nko1nndhteTFQnF0w4g+W+zxTJNa5w2hnR
+         xHV86qCn8kztA7+pEggTmqAef/IQNqm/4VDzx9AjnMA1FH2XFxOLwGD1UFqXTMR4RBK8
+         /UNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725279238; x=1725884038;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Mswh4cxwq3WB/mJarJM51mk1dwIcMPTrJt9r7G5g2TU=;
+        b=GpNHY9leoqqFkgOy9h5DkEvbFHleV4Hp0Y0tyYTcrDo94QqUDcL+Llp1WPa1R9E+EO
+         WrF1Yt3AsjmI/L1uGerx43Essmy0U8xu21JlsU7cjKdq5RZIW7GsjQGRGdwxEEE0kBhN
+         ZkHQRmjimoOQel6kA3Cb3vK6S0wtTCD7JN2VeNB1UVosuoY4lYBGKWrlk7JzfoEfENgo
+         Jhmp01/fGq1Fhr1zGsIGJVPze02dfhjcu45PVWFzPxmeJU6+NBKx1RFKn2YQFPJVNDWw
+         dn4/zYr+wElFrzILXj1QGK9+Zbi7OrPCfFbQKnHTauAuw6XE7taQJ3HBbCkb12EupzOx
+         nt6Q==
+X-Gm-Message-State: AOJu0YxJvrMn/IWu0zkYHfN1HJcWkrQF7AxqXu5GvxUJ+/JuZmarQ7xW
+	i6bwh8Rn8j5QKPyMGqRuVhxlkkgYWspmotKUy2/KpkVwVXDTP9oECuk9XA==
+X-Google-Smtp-Source: AGHT+IFAAWLyD54KwTjUgVBnwpE6mO5BP8jSQTrvkc131XKzA1BT79Bb0FkvSc/0xPU0a+tVZoXpvg==
+X-Received: by 2002:a17:906:6a20:b0:a86:7f9f:9222 with SMTP id a640c23a62f3a-a897fad296amr976658566b.67.1725279237937;
+        Mon, 02 Sep 2024 05:13:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8989215cb5sm549073066b.191.2024.09.02.05.13.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Sep 2024 05:13:57 -0700 (PDT)
+Message-Id: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Sep 2024 12:13:52 +0000
+Subject: [PATCH 0/4] Support server option from configuration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr0a6rmxo.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Brandon Williams <bmwill@google.com>,
+    Jonathan Tan <jonathantanmy@google.com>,
+    blanet <bupt_xingxin@163.com>
 
-On Fri, Aug 30, 2024 at 09:32:35AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Thu, Aug 29, 2024 at 12:59:35PM -0700, Junio C Hamano wrote:
-> >> There may be more, but I know at least of these at the moment from
-> >> https://github.com/git/git/actions/runs/10619536685/job/29437358521
-> >> 
-> >> Perhaps this can become [0.5/21] of the series, before globals are
-> >> hidden behind the macro.
-> >
-> > Thanks, I'll add these. I really need to spend some time to finally get
-> > Win32 builds set up in GitLab CI.
-> 
-> Windows builds we can get from GitHub Actions already.  It would be
-> nice if somebody had Cygwin, which might have avoided a need for
-> <d8c5e920-aff7-4e4b-af77-0d3193466b57@ramsayjones.plus.com>
+Currently, server options for Git protocol v2 can only be specified via the
+command line option "--server-option ", which is inconvenient for users who
+want to specify a list of default options.
 
-We already have it, yeah. But as I typically only use GitLab CI, I tend
-to hit the failures on Windows systems when the series is already out
-there, which requires a roundtrip that would have otherwise been
-avoided.
+This patch series introduces a new multi-valued configuration,
+fetch.serverOption, to specify default server options. Designed similarly to
+push.pushOption:
 
-In any case, having Cygwin added to the mix in addition certainly would
-be nice.
+ 1. Server options set in lower-priority configuration files (e.g.,
+    /etc/gitconfig or $HOME/.gitconfig) can be overridden or unset in more
+    specific repository configurations using an empty string.
+ 2. Command-line specified server options take precedence over those from
+    the configuration.
 
-Patrick
+All commands involving server options, including git-fetch, git-clone,
+git-ls-remote, and git-pull, have been updated to recognize the new
+configuration.
+
+Xing Xin (4):
+  transport: add parse_transport_option() method
+  builtin/fetch.c: add fetch.serverOption configuration
+  builtin/clone.c: recognize fetch.serverOption configuration
+  builtin/ls-remote.c: recognize fetch.serverOption configuration
+
+ Documentation/config/fetch.txt  | 29 ++++++++++
+ Documentation/fetch-options.txt |  3 ++
+ Documentation/git-clone.txt     |  3 ++
+ Documentation/git-ls-remote.txt |  3 ++
+ builtin/clone.c                 | 22 +++++---
+ builtin/fetch.c                 | 31 ++++++++---
+ builtin/ls-remote.c             | 32 ++++++++++--
+ builtin/push.c                  |  6 +--
+ t/t5702-protocol-v2.sh          | 93 ++++++++++++++++++++++++++++-----
+ transport.c                     |  8 +++
+ transport.h                     |  3 ++
+ 11 files changed, 196 insertions(+), 37 deletions(-)
+
+
+base-commit: 4590f2e9412378c61eac95966709c78766d326ba
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1776%2Fblanet%2Fxx%2Fadd-server-option-from-config-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1776/blanet/xx/add-server-option-from-config-v1
+Pull-Request: https://github.com/git/git/pull/1776
+-- 
+gitgitgadget
