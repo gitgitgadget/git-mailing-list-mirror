@@ -1,117 +1,83 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A479182B4
-	for <git@vger.kernel.org>; Mon,  2 Sep 2024 02:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A303A8E4
+	for <git@vger.kernel.org>; Mon,  2 Sep 2024 03:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725245933; cv=none; b=B0+kXEjD59dXi48rA5VZajIg9MZNi96qaPN7O0mRVXWj0zm/Xl1wENoyWtxnwjcDGFmbwAUdO1o3fLeTzJYOiJnldjm8TTK7EddnMRckWco3WyKC6bkBiK8QAXWloXzrrzCiXoNFf4+gtnNZ1j5GWC+6EFkS0FxxkLWnwAX1IKc=
+	t=1725248501; cv=none; b=DTatZe23wsiah94qXQZGXhfjswHXWa6eGHt77JD69tI11ZgSjDESa87ndk8gEsO0u3z20+1rhKblYT0ZglAUFBBDm/1/HEOKC2AjCOpeFtsv3ZugqOU8VrmVSnMvasmZklM32EhGa+JbgZHDLOSdrfj84rU26FktZZzmSDnypFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725245933; c=relaxed/simple;
-	bh=enFKLb6oL0LsQFOkz3xi9A1pp4paH+zb2ibgSXVxOhM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZsW6ONywyTg5H2/e1y8HT6MD1jWJ4HJHs9G8owlHEFlPgGtQKiQzE5R941b9BDgrEa4mfsWlLdLfD5yB+t6ZpDvveZ32C7sT2qnbw/Pr7bWaIu8NKlKOB7c+tCEpDtDyqaCQjpzE9h2Y0TVmXMfwOhEpHQeMI7XJKpCFos3ryas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c95Yhfes; arc=none smtp.client-ip=209.85.167.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725248501; c=relaxed/simple;
+	bh=zExPCaf1LU57xmQpiDciGoAFlZmFfCM7ju8s36z/5pk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=i63XR91H2EtpBlTi7MKqGWi3khkqoqydXJ/fHmmt36/vqFjYeyKc/MDlL8WdWC5a8rrZIXgtGpfVKgtNySf6NL2b5GdQh5GmoeQXlQni+c6HyQDWgSioa+E+IXoQ+hGGvGI43pPmVW14s9V+PGcvAxRgZWEiS451u48/jYHudNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GOX0z8Ik; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c95Yhfes"
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3df06040fa6so2020846b6e.3
-        for <git@vger.kernel.org>; Sun, 01 Sep 2024 19:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725245931; x=1725850731; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NAckgoa8hfE90FANbN7m5fBgddgrmkC8O+8vSumxbCw=;
-        b=c95YhfesW9T7+v2ork7mNjIaDtCanZFIN9YANmXqE36CXBn7KzF5GBTx44Ul7yZmEN
-         6quvng1OhqWja3rScaMi6e/xmkGyMzVBAAVGcA+4zjVDOcYeAnjZLeXmfpZw8D4fRZLJ
-         /NC7zJUMFrJCxAfaDrlH3NZNhpwmPBl8KvOFSMatLotN0TFxlKgV3coCDDgbz/iRzXNH
-         0LEn/vWZDJCsk7lNM6UIFTfljGxxwccN2iBzxuBy/MmjOJXGIXprNVVm1AU/p0wKUdld
-         rV4doUR9yEjNP8ddD7iL0/olueSoPk5DIzN/RlEZpyUXR4un5lWmfpCNs9c4trgYLj8Y
-         xIiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725245931; x=1725850731;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NAckgoa8hfE90FANbN7m5fBgddgrmkC8O+8vSumxbCw=;
-        b=ViRhUvru7smsucxdBx3HWF3TO6h/xRFFOfRtgbomMb09o+XTRcWs/hgXJf7CEVjIqr
-         vZNA/NDGAgazMcyWHJ8p4eUbPVmMUXZ/Ho8ScovlHX1fAC2KyA5ok09XbtJQJ0QnZXkT
-         rzjMCLcueC1w34gFyzr8d8UZZU0b18bNpavLv/LpfbwlBceXPZR7jF9ooCabdcnxjX7I
-         CLCo+j510OOzF9D1HHNTaDh4gwzfThhYy8h+tPr6lTct70ZGHw5p44K+JpkNQauyASBC
-         36HFm+us/kN68VMEJ0BoR6KLI41rXMPtcBLZ5i2ZI46YjQfGpqFPk39Qa+QavsyyYGrx
-         mBhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVmEMAy5mn1V7sGlm/9BtHBzrhp2cvdzNyRfz52+RL3ZlCbSJlGPJ3damOpZYQFGIV9n9k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWrgxxRG7U2CzmO5osLVodtDwHXdZavq/8GBBxyFuiNY/K6H1G
-	2nZ+7p/fcuR3tOzIfAFdnV6uv+yOd4Wf14gzhAVndV0Uch2EXuBW
-X-Google-Smtp-Source: AGHT+IFbvqQc3CBpacMWqTSZdsFyFRtaaBJD0SxvS/uoQBYOOzjfxkVKVBjGV4gWkUqo1gph3dPwUw==
-X-Received: by 2002:a05:6830:71a3:b0:709:42dc:a017 with SMTP id 46e09a7af769-70f706f42e2mr6619479a34.12.1725245931142;
-        Sun, 01 Sep 2024 19:58:51 -0700 (PDT)
-Received: from panther.lan ([2607:fa18:92fe:92b::47f])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-715e55a5223sm5882828b3a.72.2024.09.01.19.58.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Sep 2024 19:58:50 -0700 (PDT)
-From: Alex Henrie <alexhenrie24@gmail.com>
-To: Johannes.Schindelin@gmx.de,
-	cogoni.guillaume@gmail.com,
-	stolee@gmail.com,
-	gitster@pobox.com,
-	git@vger.kernel.org
-Cc: Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] mergetools: vscode: new tool
-Date: Sun,  1 Sep 2024 20:59:14 -0600
-Message-ID: <20240902025918.99657-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.46.0
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GOX0z8Ik"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D79701F1FE;
+	Sun,  1 Sep 2024 23:41:38 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=zExPCaf1LU57xmQpiDciGoAFlZmFfCM7ju8s36
+	z/5pk=; b=GOX0z8IkiDvKvc61z5t98zyEnZ8oL5huWqWgSHVpRj4iy5ofpESdFq
+	DPKk4iDA8We1w38IeQIx2gxHoWz+zet2p8Xm/YuNux5BBnrKoWv2uU3PNN5UWuc/
+	u8wX/BDc8vpbjznuLLL3H1Ti94wB90GlXLiPsSlaCOx6KfZcWWDvA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C902D1F1FD;
+	Sun,  1 Sep 2024 23:41:38 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 30AA31F1FC;
+	Sun,  1 Sep 2024 23:41:38 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
+ non-cryptographic uses
+In-Reply-To: <cover.1725206584.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Sun, 1 Sep 2024 12:03:15 -0400")
+References: <cover.1725206584.git.me@ttaylorr.com>
+Date: Sun, 01 Sep 2024 20:41:36 -0700
+Message-ID: <xmqq8qwaoh73.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 425C9062-68DD-11EF-801E-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-VSCode has supported three-way merges since 2022, see
-<https://github.com/microsoft/vscode/issues/5770#issuecomment-1188658476>.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Although the program binary is located at /usr/bin/code, name the
-mergetool "vscode" because the word "code" is too generic and would lead
-to confusion. The name "vscode" also matches Git's existing
-contrib/vscode directory.
+> After some profiling, I noticed that we spend a significant amount of
+> time in hashwrite(), which is not all that surprising. But much of that
+> time is wasted in GitHub's infrastructure, since we are using the same
+> collision-detecting SHA-1 implementation to produce a trailing checksum
+> for the pack which does not need to be cryptographically secure.
 
-On Windows, VSCode adds the directory that contains code.cmd to %PATH%,
-so there is no need to invoke mergetool_find_win32_cmd to search for the
-program.
+Cute.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- mergetools/vscode | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
- create mode 100644 mergetools/vscode
+I wish we can upgrade the file formats so that a writer can choose
+the hash algorithm independently from whatever the payload uses.
+Most of our use of the tail sum are for files that are consumed
+locally in the same repository so nobody shouldn't need to know that
+you are using xxHash for the tail sum instead.
 
-diff --git a/mergetools/vscode b/mergetools/vscode
-new file mode 100644
-index 0000000000..3b39b458d6
---- /dev/null
-+++ b/mergetools/vscode
-@@ -0,0 +1,19 @@
-+diff_cmd () {
-+	"$merge_tool_path" --wait --diff "$LOCAL" "$REMOTE"
-+}
-+
-+diff_cmd_help () {
-+	echo "Use Visual Studio Code (requires a graphical session)"
-+}
-+
-+merge_cmd () {
-+	"$merge_tool_path" --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
-+}
-+
-+merge_cmd_help () {
-+	echo "Use Visual Studio Code (requires a graphical session)"
-+}
-+
-+translate_merge_tool_path () {
-+	echo code
-+}
--- 
-2.46.0
+Except that the story is not so simple for packfiles, which is named
+after the file's tail sum, so you cannot use a hash algorithm of
+your choice independently without affecting other folks.  All other
+csum-file protected file types are lot smaller than the pack files
+to matter, sadly.
 
