@@ -1,89 +1,89 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1B220FA9B
-	for <git@vger.kernel.org>; Mon,  2 Sep 2024 13:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63B620124A
+	for <git@vger.kernel.org>; Mon,  2 Sep 2024 13:41:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725284494; cv=none; b=frPdVcYp/Cov9N/1Mf/bGdG7Sjx0ev+j0pH4lZkW/7tt4j4Tv+jG9cfxE8n7I15o20YG4OmSUgYWXNX9mfl0OVo/BjIrqUPh64Rux/mE3pJ06y7HiYnQVjD78RgsLHfMLGNIR7JuXrz0HUc78q83AxwGBOY1g7jc049GVhFDkwI=
+	t=1725284500; cv=none; b=EeshmmG9mcc1U1ox1NkYBr/qOkbYRHDxtUz+diYmNxMWTFRg+7ynC3/A/oapCohuaugf8HqZcw4ZoIkWKD0Zg1GyxXAYW51vQq+quU4M4K9MRjtQtTr+WwmmNC79feo+HWYyvOYP0FQxHXQX62TJDM0jGQjRrtJJDnORV4rOYoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725284494; c=relaxed/simple;
-	bh=QqB/epwPqWWIZxXL366WZQBfGlhdvtK10FUphZ1pBMY=;
+	s=arc-20240116; t=1725284500; c=relaxed/simple;
+	bh=elWLTZQGxU7YOmhYaNV7rdy1SQWDbThOBIY3P/yyAR0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XeWhQZ8JrGqgJ5dRLp/h4x6O6AByzn3lju5tnVX5ohoUJ5sM1C54ElVjGaZpjuRLw48f2KFlfKfpxuUV6XegBh23IZ+9eXFbH5tuUadanuD7t7z2a82Iv1H7YYpMDjsIN8mlQNMuVJZfbAZ777co4x5En4TqumGYy+U/MmNGj3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aJDCibhv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FHeKsM3G; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=YxDzCJbPmgEw2FPUkNpB45FnnrR2lMplvC3kEGDYflTY+hYluHynWkXYHGtVMgC8wi2ogF22xe0HeCeBMdoM0cdcyZXjx5CH2t+sZCSnYSLq9HmNnKBmhV4STf70oXf201iI9ggFBrb9WVDarHb9/ERawBIxLtvv6bx3+jMi+Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TmmCYIO0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g7fbAZg4; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aJDCibhv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FHeKsM3G"
-Received: from phl-compute-02.internal (phl-compute-02.nyi.internal [10.202.2.42])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 416791140237;
-	Mon,  2 Sep 2024 09:41:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TmmCYIO0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g7fbAZg4"
+Received: from phl-compute-05.internal (phl-compute-05.nyi.internal [10.202.2.45])
+	by mailfout.nyi.internal (Postfix) with ESMTP id B8067138015C;
+	Mon,  2 Sep 2024 09:41:37 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 02 Sep 2024 09:41:31 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 02 Sep 2024 09:41:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725284491; x=1725370891; bh=QxI6OBhCJk
-	4hi5TBhD7w26dhmIe9agJpeHDCDVZjpIQ=; b=aJDCibhv29/yG1YtChO7J/J2dA
-	TQ+CzhdU3oZVv7fHsHn1RZkACE87OIYz52/JvZO+jtFyiw7+hJlIAHeMEmDHDgk1
-	DWFWFh3aUJH/aZBmdnWLiQMGDzv279oF84nh4DI6ZDfGUxzhZ1iL35M3Y23I7g6z
-	Cm5X3Sqrzvb6PcFd1+B/Z0KYXYGP7k1i9I3g1m8i+ITij57AyYGXxyJEhDtO0Xlw
-	cAmbxKOKC85GuRbeMt8n9KxFu+uWUM98Tvi8Y5X76ZU7jO/TItEO0ftVlXhttvbg
-	mqF3psfFd2/T6jVjCmNWcncPkBF9Ci+OZ+D2WxVjwECqEoOc5Wdoj7FwtaAQ==
+	:subject:to:to; s=fm1; t=1725284497; x=1725370897; bh=+xgKUR039D
+	Sx63B3TQC+5tF50aMhDb6X4lj4doyllWA=; b=TmmCYIO0M+9Cbde3Zy2nDPwXbJ
+	fLH82qxXfsayKjv2eQ8rR2sNOBZCPeNlmbGY0Qofb40/dej8tSDEaumgO7638gRN
+	iWlGpHd0Mxggx6DJINEkeDyHARXJgZDhZCMK63g3/XLZjjM1ZP/7EJEY66e7oawb
+	nqpIpIon3V/ZGOtiOXygYN2PnIrMTfTclrGF5mMtLVFqg9hMRdlQGS9R6IES/NRL
+	Z886hctZGJ8Q1W5cXa+ZTUdAydlpbepUdt+BjK0h5/Gaa1W2NITR0xSYJPP6+4sz
+	O6EctFalXsVZWgl8ofzyH5fKzbjOFzJL8ki/3iTlda9ZCuAIaINatDYZznuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725284491; x=1725370891; bh=QxI6OBhCJk4hi5TBhD7w26dhmIe9
-	agJpeHDCDVZjpIQ=; b=FHeKsM3GtYuqF6FM0wu0wOoxAocLJBhLqw9En3D5H207
-	67D5zfPhtSiK5hybyQWMFIWfFfSHAWsXCTA7zh7LI9//2ik4s6uIYk1HgcvlRT44
-	tNNSeN64Lq019my8K7x8OzJyJsLuk+3zU2drv9HY+SmNMRQkkTNC5vm8kLUKE2nC
-	I7DAqAu7B8TqEgTBgKl/qt/3RacoKZo14BH1F6B6qNMEZcjRXkQ/8cKwvdNUXWPF
-	044cJamXLuP8+caHTXH5TrD+TLYqUuq9jWo7mB7zqprbFXDhck2dnAo9HBq/VVzB
-	QDkoXLEI+6a21sQEjexvR6wSpxLFp4K2rRt66L3iYg==
-X-ME-Sender: <xms:i8DVZo51MmoT6XQQANHiyLT87kn20RzuKojZFNWgWViDoYwOUuHE5A>
-    <xme:i8DVZp6991e0ArDYFcKLIm2FLWGkHtGF2z7KsDZAwdYzoY9zzQSuOo3FXt0N4gYIp
-    Yr2M9siZLv3apSJOg>
-X-ME-Received: <xmr:i8DVZncI4NEwu6gemtBvBvsJYV9NOqGIj2Ubay0xUh2Qw550n91JQH2dcWpwsGK6vL_pUhwzzRORPv4DJzfK761Z6MOeCnJRaKn_JJ3O9xqaJIA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehfedgieejucetufdoteggodetrfdotf
+	fm1; t=1725284497; x=1725370897; bh=+xgKUR039DSx63B3TQC+5tF50aMh
+	Db6X4lj4doyllWA=; b=g7fbAZg4lwq6maPpZfI+zsgdpoLMEf7l8YQ1h30GyuKM
+	cEx7fmXI2vkG4vpu8EcbEPB4/gkoTh/hTX/UOzeMRUy/8+X3iCcYJKJz+Wz31598
+	7NgppCNAQITvKjV/rgwuXVQ+HA22ETbG8kfaoFrVKNGvNJ1XaBNStAHr4p2fF1WI
+	i+jcVb45hu7QKo+f6zDThZUJUeVa6wWG1sd92YHObS7iJWZRb1uNMIb6QedT8Mmu
+	nVEebOd4X470S/4C7AP2qYVXBzGzjiK9VtArVl0uZ2pYVwuzfLDe3A3SucXA5hjh
+	OezsUrftBf9RnTN1IaBDEdnvMvj5ZkJFxi02ULzQ7Q==
+X-ME-Sender: <xms:kcDVZopvU78TNUdzZjbSICDSr_EdAur4J5ELT1s9vxSK0XJfU7CGhQ>
+    <xme:kcDVZuqV6jOfrPf3njKev52gOn0a9vtRyqULFwCjy8dVM5JQhyWJMu32UMOm_IlsB
+    uJiuPi3fQIqFI4Mgw>
+X-ME-Received: <xmr:kcDVZtNoqvSl7CN0PkOi1lJUJBardkyDdFd76f0NM4pGwrBJJwGXgaNB8cW9GvqUD8GUDFjbcuXpzPQu2T1pvzoYXAGv-eQL3E_Ul7d49YqwFA0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehfedgieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddtvden
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudelueel
-    gfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
-    tghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:i8DVZtLwlei15lcuSC71Ubcw4n8kaSp2WrdYDvVDQ961DlFbsjSasg>
-    <xmx:i8DVZsL5Dxh6msPBWcPQn7S2b_lWhk-hA392Jj32jqr6Gys97Qtzlg>
-    <xmx:i8DVZuw_8JTjeMLd9MD9w3jHFP0Fj_gi2sKQ9r8sbQZPmjKqNv7yVg>
-    <xmx:i8DVZgLR5kvr13TqRYiHEVWtyhtb5s9BzpOnnwUvMb-XdMeZEARKsA>
-    <xmx:i8DVZk9agIufkpr26xF2CyYBkjAKpXMIXFYV7jV621RewzDQNOp1GkwW>
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghl
+    shestghruhhsthihthhoohhthhhprghsthgvrdhnvght
+X-ME-Proxy: <xmx:kcDVZv6fIyhmCOvOR9_Y2mtVe-taHubmID36KT05hum1H2_154Zx2A>
+    <xmx:kcDVZn4XVReZMtoy62J6r1PEP4h-il1MWWUB68W1tHyOHRimvMfnyw>
+    <xmx:kcDVZvjQZM-jS5nZL6MWfFyui01cK7vT-mzfOA7p4qIK5JqMKGQzIA>
+    <xmx:kcDVZh5b6QgAF-NsfP3-oQfAsQ3hqNbhe_TVjaIc_CTWe6cIAa-jMA>
+    <xmx:kcDVZkvLAzHTCILkv2-viKyeO9OUcP2MHMTT898L0G8Nm5aSeskXW2nY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Sep 2024 09:41:29 -0400 (EDT)
+ 2 Sep 2024 09:41:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 95b9dab0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Sep 2024 13:41:24 +0000 (UTC)
-Date: Mon, 2 Sep 2024 15:41:28 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8097abea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Sep 2024 13:41:31 +0000 (UTC)
+Date: Mon, 2 Sep 2024 15:41:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] Makefile: allow specifying a SHA-1 for
- non-cryptographic uses
-Message-ID: <ZtXAiIwLgtQNkwyH@tanuki>
+Subject: Re: [PATCH 4/4] csum-file.c: use fast SHA-1 implementation when
+ available
+Message-ID: <ZtXAi9KYOKejJmOS@tanuki>
 References: <cover.1725206584.git.me@ttaylorr.com>
- <682e4c2cc3581c72262ea6a9b488a246fc6fde28.1725206584.git.me@ttaylorr.com>
+ <e8f5cbd280cc07f68014bd4024d55a740374b349.1725206584.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,81 +92,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <682e4c2cc3581c72262ea6a9b488a246fc6fde28.1725206584.git.me@ttaylorr.com>
+In-Reply-To: <e8f5cbd280cc07f68014bd4024d55a740374b349.1725206584.git.me@ttaylorr.com>
 
-On Sun, Sep 01, 2024 at 12:03:28PM -0400, Taylor Blau wrote:
-> diff --git a/Makefile b/Makefile
-> index e298c8b55ec..d24f9088802 100644
-> @@ -1982,6 +1986,27 @@ endif
->  endif
->  endif
->  
-> +ifdef OPENSSL_SHA1_FAST
-> +ifndef OPENSSL_SHA1
-> +	EXTLIBS += $(LIB_4_CRYPTO)
-> +	BASIC_CFLAGS += -DSHA1_OPENSSL_FAST
-> +endif
-> +else
-> +ifdef BLK_SHA1_FAST
-> +ifndef BLK_SHA1
-> +	LIB_OBJS += block-sha1/sha1.o
-> +	BASIC_CFLAGS += -DSHA1_BLK_FAST
-> +endif
-> +else
-> +ifdef APPLE_COMMON_CRYPTO_SHA1_FAST
-> +ifndef APPLE_COMMON_CRYPTO_SHA1
-> +	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
-> +	BASIC_CFLAGS += -DSHA1_APPLE_FAST
-> +endif
-> +endif
-> +endif
-> +endif
-> +
+On Sun, Sep 01, 2024 at 12:03:32PM -0400, Taylor Blau wrote:
+> Update hashwrite() and friends to use the fast_-variants of hashing
+> functions, calling for e.g., "the_hash_algo->fast_update_fn()" instead
+> of "the_hash_algo->update_fn()".
+> 
+> These callers only use the_hash_algo to produce a checksum, which we
+> depend on for data integrity, but not for cryptographic purposes, so
+> these callers are safe to use the fast (and potentially non-collision
+> detecting) SHA-1 implementation.
+> 
+> To time this, I took a freshly packed copy of linux.git, and ran the
+> following with and without the OPENSSL_SHA1_FAST=1 build-knob. Both
+> versions were compiled with -O3:
+> 
+>     $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
+>     $ valgrind --tool=callgrind ~/src/git/git-pack-objects \
+>         --revs --stdout --all-progress --use-bitmap-index <in >/dev/null
+> 
+> Without OPENSSL_SHA1_FAST=1 (that is, using the collision-detecting
+> SHA-1 implementation for both cryptographic and non-cryptographic
+> purposes), we spend a significant amount of our instruction count in
+> hashwrite():
+> 
+>     $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
+>     159,998,868,413 (79.42%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+> 
+> , and the resulting "clone" takes 19.219 seconds of wall clock time,
+> 18.94 seconds of user time and 0.28 seconds of system time.
+> 
+> Compiling with OPENSSL_SHA1_FAST=1, we spend ~60% fewer instructions in
+> hashwrite():
+> 
+>     $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
+>      59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+> 
+> , and generate the resulting "clone" much faster, in only 11.597 seconds
+> of wall time, 11.37 seconds of user time, and 0.23 seconds of system
+> time, for a ~40% speed-up.
 
-What a cascade of `endif`s :)
+Neat. I knew that SHA1DC was slower, but I certainly didn't expect it to
+make such a huge difference.
 
-Do we also want to wire up support in config.mak.uname such that the
-fast variants are default-enabled? Or is there a good reason to not do
-that?
+I of course wish that we just moved on and switched the default to
+SHA256, which should provide similar speedups. But that of course
+wouldn't help all the projects out there that will use SHA1 for the next
+couple decades.
 
-> diff --git a/hash.h b/hash.h
-> index f255e5c1e8a..450e579b405 100644
-> --- a/hash.h
-> +++ b/hash.h
-> @@ -15,6 +15,31 @@
->  #include "block-sha1/sha1.h"
->  #endif
->  
-> +#if defined(SHA1_APPLE_FAST)
-> +#include <CommonCrypto/CommonDigest.h>
-> +#define platform_SHA_CTX_fast CC_SHA1_CTX
-> +#define platform_SHA1_Init_fast CC_SHA1_Init
-> +#define platform_SHA1_Update_fast CC_SHA1_Update
-> +#define platform_SHA1_Final_fast CC_SHA1_Final
-> +#elif defined(SHA1_OPENSSL_FAST)
-> +#  include <openssl/sha.h>
-> +#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
-> +#    define SHA1_NEEDS_CLONE_HELPER_FAST
-> +#    include "sha1/openssl.h"
-> +#  endif
-> +#  define platform_SHA_CTX_fast openssl_SHA1_CTX
-> +#  define platform_SHA1_Init_fast openssl_SHA1_Init
-> +#  define platform_SHA1_Clone_fast openssl_SHA1_Clone
-> +#  define platform_SHA1_Update_fast openssl_SHA1_Update
-> +#  define platform_SHA1_Final_fast openssl_SHA1_Final
-> +#elif defined(SHA1_BLK_FAST)
-> +#include "block-sha1/sha1.h"
-> +#define platform_SHA_CTX_fast blk_SHA_CTX
-> +#define platform_SHA1_Init_fast blk_SHA1_Init
-> +#define platform_SHA1_Update_fast blk_SHA1_Update
-> +#define platform_SHA1_Final_fast blk_SHA1_Final
-> +#endif
-> +
->  #if defined(SHA256_NETTLE)
->  #include "sha256/nettle.h"
->  #elif defined(SHA256_GCRYPT)
+One thing I'm missing is an analysis of users of "csum-file.c" so that
+we can assess whether it is safe to switch over this subsystem to use
+the fast variant. As far as I can see it's used for packfiles, commit
+graphs, the index, packfile reverse indices, MIDXs. None of them strike
+me as particularly critical, also because almost all of them would be
+created locally by the user anyway.
 
-Curiously, some of the nested statements here are indented whereas
-others aren't. We should aim to make that consistent.
+The only exception are of course packfiles, which get generated by the
+remote. Is it possible to generate packfiles with colliding trailer
+hashes? And if so, how would the client behave if it was served a
+packfile with such a collision?
 
 Patrick
