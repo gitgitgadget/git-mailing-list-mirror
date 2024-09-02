@@ -1,149 +1,355 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD3B19E992
-	for <git@vger.kernel.org>; Mon,  2 Sep 2024 14:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4671CB533
+	for <git@vger.kernel.org>; Mon,  2 Sep 2024 15:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725286110; cv=none; b=K+4L4xHd3psWo/6culBtUcTD4BqBoKopa3NGgaezEKYF/24Qkw+GhIVO+1VZI0XF7GZOHF9LCa1U9QswnaB8+1FUlxOLMgisBxj5IjPUld6wxeh5iqGIpSx8rMFVdI5yTeNikRd7OuArN7rBwlEDvbUALNmSITtnKQGb2qbtD7w=
+	t=1725289985; cv=none; b=FPzNsx6HcI2i7lhuZNRqjuly7Vb5FTRLFgG+1FikEXk26QWDQ9Qr4wKwlUL31t6PlbpYKQpYb+X034F8sOCqlxpt8r9oqFXsrxHwOobrvcl8fA4YCX0HVIkUbUmiKtIfw/ciDDzZ9Osijd3JeJdGfhlDNAWtAC+Su55k3Aw4mFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725286110; c=relaxed/simple;
-	bh=x3lmgrcS1zj3uyKRhB2GXTYY7a2zqCnNLzjgsNnZ9dU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rox0eT7EvQ+vMNcE1bg8Csr3lK++DOCm8tng6evGnL7FOOH05vaE32pziOGQ4wR4+0lWy2Ajy3knBKRWZqEAD9P4rveRdyFB8DFybfEUWcUTaWNV519t1Wjc9Wu7lMW0nfNyyJwaq6ouroAmTFxPgd5S3OZNsXYtjLosostaqnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=b/D665z4; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1725289985; c=relaxed/simple;
+	bh=BxDCrNFOhADVLSIXpJTStX2dfF21lwE4pAciQAG8cJ0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ruo12sxXC+YWRAz4+O8iaQdIaursCeasYtwHbVj+JJ40JnhOp5AAu4Mc68M/Uhtya3yYInDWQpwZxZ4QzTU/6wai5itjCz4Wq6RlZtJ2tWnumx2rt6R+QVdHNH+MkXyKSOuL2TtZCQm2MEQqjZFGUtVIh6OFpQhVE3TcDxJrrk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VL1JnwM5; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="b/D665z4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1725286107;
-	bh=x3lmgrcS1zj3uyKRhB2GXTYY7a2zqCnNLzjgsNnZ9dU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=b/D665z4IQqeO6H3BSNiXXJzFcOdkK77WyNP41G5a94RMWL65v/6IF5V3rG1Lomvt
-	 ntT+VxfRfDrzLI5M6l9m2CmWpOwUMY5ga94rOcTGrD7XEFpBPZq0olPTFWQ9G8abrK
-	 9BkD9ulIDEppPigV+TH0qGkviock/YZKaWt1t16YQDV16sUuJ6zFL9A8dv8OpWKLFJ
-	 dFSBdlzPP27+K+K4qoYVv8g7UtCGnxY/KMeYXJ99XS11yiMzmhU0+gWJRyoR1Vja4L
-	 DCt3c0l5dgKUP6QH0S20KZoHRSRCOTcmi5Jl2KRzqUU51bZtRNhJVLZw6Q1MGOTlur
-	 HOvgk94JlwDzFY5kA9wN0pyHP7risCVCAhPkre9q64P01wFUp6F7uSuBBQQhZklcTm
-	 OamVGZiDhLt7qSkZo0NGjfXL5AJZxGA3GBo7rFGfN+t61RUvWmuK63zwI1BD59XXtE
-	 AhVYYjCgPWLpkS8aRfsDLUXwO+kQ4wcSLYYATUj92R9FJYjR7mJ
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 26B6E24454;
-	Mon,  2 Sep 2024 14:08:27 +0000 (UTC)
-Date: Mon, 2 Sep 2024 14:08:25 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-Message-ID: <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1725206584.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VL1JnwM5"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a866d3ae692so251935666b.0
+        for <git@vger.kernel.org>; Mon, 02 Sep 2024 08:13:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725289981; x=1725894781; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yscUuo+dHIOieRmsRGEYjgqr4XN7WbAK+tak2KRgiSI=;
+        b=VL1JnwM5WNl3IQAiGh/n9q854QnIEYahjJ+ys5AXTtByqQtbET5JlB9alfsI2Xo6cJ
+         6H0DrivhpanrMG0lluXyyLw8wjkULHzt40jb3oNtbU7HZTXU+xq0EtGDf6ryVa4hTfWo
+         t9uQ/imc+6+PmuinPNNZR4UrNgoDiB0i2BfUHEw4cyXhbxf+wr0dQxrFJsIt8smPLITe
+         2ufiu2OZ0+D4Ong7wgL4vHu+GFzPZDxilVfQjIp0481Ukb/txhXNlzIN7ud9OFsODJ77
+         yDqF2lv0fGEp+LAVMdgSPbsumeMDW5lZ2G2jXI1dl58faeQM1v+PsGmkQAdFpoL8Zdl5
+         73UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725289981; x=1725894781;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yscUuo+dHIOieRmsRGEYjgqr4XN7WbAK+tak2KRgiSI=;
+        b=X3JN01tmNp1vBRud+7iv0RQ13O0AbptddSNWf9NlpOuWFoI3Ft4r2uw6yUpB4OmGKX
+         qBGE69YXP9NSkwyhI7RByyQvm+vlwmpdlY7KOwN0j9Ht65tM4mTijcCMPLBoJ7T+8Kj7
+         X9ywhAP5pihf+tUkHsUTxsDrggmKC4hPiYn4A5/FWfqVfF6R9BMuMJ0cSFuW/SpMRrcq
+         Y3O5n8s2k7UUa35WWj6mDz2ZSEI0NmZ1SyLyeTQCpsM1MiZzLC3yJ54XfUOHAndoOnED
+         oJJ6XGab7slRQEDZxHrs/kljN3bko8axabYfQsZdMdATLkI9l76HC0g7FNZz3W3tOxrD
+         NUhQ==
+X-Gm-Message-State: AOJu0Yy3SgsshqNM/ZATfGryTjFr7V7aI6vO0O+ZBC9IVKyHnURPu7dN
+	Hq0APr+4B7o6T6tfXmwQZr5YyADfSFSJ+/vzAzfNT/hVng6C8yEn4gmBRA==
+X-Google-Smtp-Source: AGHT+IFvrR4rGQMKqHHAbZsJTaEh7xEx5PanCJU7fsIxHgnuxGTKnxDOieYVo0acgwMOvSmxfvHu0g==
+X-Received: by 2002:a05:6402:1e8b:b0:5be:e6a6:4cc3 with SMTP id 4fb4d7f45d1cf-5c21ed3e9e4mr15801531a12.14.1725289980770;
+        Mon, 02 Sep 2024 08:13:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226cd4bcbsm5388800a12.74.2024.09.02.08.13.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Sep 2024 08:13:00 -0700 (PDT)
+Message-Id: <pull.1772.v2.git.1725289979450.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1772.git.1723641747309.gitgitgadget@gmail.com>
+References: <pull.1772.git.1723641747309.gitgitgadget@gmail.com>
+From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Sep 2024 15:12:59 +0000
+Subject: [PATCH v2] rebase: apply and cleanup autostash when rebase fails to
+ start
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/e/G/NUrB8GQsvpN"
-Content-Disposition: inline
-In-Reply-To: <cover.1725206584.git.me@ttaylorr.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>
+
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
+
+If "git rebase" fails to start after stashing the user's uncommitted
+changes then it forgets to restore the stashed changes and remove the
+state directory. To make matters worse, running "git rebase --abort" to
+apply the stashed changes and cleanup the state directory fails because
+the state directory only contains the "autostash" file and is missing
+the "head-name" and "onto" files required by read_basic_state().
+
+Fix this by applying the autostash and removing the state directory if
+the pre-rebase hook or initial checkout fail. This matches what
+finish_rebase() does at the end of a successful rebase. If the user
+modifies any files after the autostash is created it is possible there
+will be conflicts when the autostash is applied. In that case
+apply_autostash() saves the stash in a new entry under refs/stash and so
+it is safe to remove the state directory containing the autostash file.
+
+New tests are added to check the autostash is applied and the state
+directory is removed if the rebase fails to start. Checks are also added
+to some existing tests in order to ensure there is no state directory
+left behind when a rebase fails to start and no autostash has been
+created.
+
+Reported-by: Brian Lyles <brianmlyles@gmail.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    rebase: apply and cleanup autostash when rebase fails to start
+    
+    Thanks to Junio and Patrick for their comments on V1. I've updated the
+    commit message to correct the typos found by Patrick and added an
+    explanation of why it is safe to remove the state directory.
+    
+    In his review Patrick suggested removing the backwards jump after
+    applying the autostash and cleaning up the state directory in favor of a
+    variable that tracks if we need to apply the autostash. I've decided not
+    to do that as I think having to set a variable before jumping to a
+    cleanup label is more complicated and error prone. There are similar
+    backward jumps in builtin/stash.c:show_stash() and
+    config.c:git_config_set_multivar_in_file_gently()
+    
+    Thanks to Brian for reporting this. This patch is based on maint, when
+    merging with master there is an easily resolved conflict with a change
+    from 'ps/config-wo-the-repository' which modifies an adjacent line.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1772%2Fphillipwood%2Frebase-fix-autostash-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1772/phillipwood/rebase-fix-autostash-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1772
+
+Range-diff vs v1:
+
+ 1:  f5b46082047 ! 1:  c76c05092aa rebase: apply and cleanup autostash when rebase fails to start
+     @@ Commit message
+          rebase: apply and cleanup autostash when rebase fails to start
+      
+          If "git rebase" fails to start after stashing the user's uncommitted
+     -    changes then it forgets to restore the stashed changes and remove state
+     -    directory. To make matters worse running "git rebase --abort" to apply
+     -    the stashed changes and cleanup the state directory fails because the
+     -    state directory only contains the "autostash" file and is missing the
+     -    "head-name" and "onto" required by read_basic_state().
+     +    changes then it forgets to restore the stashed changes and remove the
+     +    state directory. To make matters worse, running "git rebase --abort" to
+     +    apply the stashed changes and cleanup the state directory fails because
+     +    the state directory only contains the "autostash" file and is missing
+     +    the "head-name" and "onto" files required by read_basic_state().
+      
+          Fix this by applying the autostash and removing the state directory if
+     -    the pre-rebase hook or initial checkout fail. New tests are added to
+     -    check the autostash is applied and the state directory is removed if the
+     -    rebase fails to start. Checks are also added to some existing tests in
+     -    order to ensure there is no state directory left behind when a rebase
+     -    fails to start and no autostash has been created.
+     +    the pre-rebase hook or initial checkout fail. This matches what
+     +    finish_rebase() does at the end of a successful rebase. If the user
+     +    modifies any files after the autostash is created it is possible there
+     +    will be conflicts when the autostash is applied. In that case
+     +    apply_autostash() saves the stash in a new entry under refs/stash and so
+     +    it is safe to remove the state directory containing the autostash file.
+     +
+     +    New tests are added to check the autostash is applied and the state
+     +    directory is removed if the rebase fails to start. Checks are also added
+     +    to some existing tests in order to ensure there is no state directory
+     +    left behind when a rebase fails to start and no autostash has been
+     +    created.
+      
+          Reported-by: Brian Lyles <brianmlyles@gmail.com>
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
 
---/e/G/NUrB8GQsvpN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ builtin/rebase.c            | 39 +++++++++++++++++++++++++++++-------
+ t/t3400-rebase.sh           |  8 ++++++--
+ t/t3413-rebase-hook.sh      |  4 +++-
+ t/t3420-rebase-autostash.sh | 40 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 81 insertions(+), 10 deletions(-)
 
-On 2024-09-01 at 16:03:15, Taylor Blau wrote:
-> This series adds a build-time knob to allow selecting an alternative
-> SHA-1 implementation for non-cryptographic hashing within Git, starting
-> with the `hashwrite()` family of functions.
->=20
-> This series is the result of starting to roll out verbatim multi-pack
-> reuse within GitHub's infrastructure. I noticed that on larger
-> repositories, it is harder thus far to measure a CPU speed-up on clones
-> where multi-pack reuse is enabled.
->=20
-> After some profiling, I noticed that we spend a significant amount of
-> time in hashwrite(), which is not all that surprising. But much of that
-> time is wasted in GitHub's infrastructure, since we are using the same
-> collision-detecting SHA-1 implementation to produce a trailing checksum
-> for the pack which does not need to be cryptographically secure.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index e3a8e74cfc2..ac23c4ddbb0 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -526,6 +526,23 @@ static int rebase_write_basic_state(struct rebase_options *opts)
+ 	return 0;
+ }
+ 
++static int cleanup_autostash(struct rebase_options *opts)
++{
++	int ret;
++	struct strbuf dir = STRBUF_INIT;
++	const char *path = state_dir_path("autostash", opts);
++
++	if (!file_exists(path))
++		return 0;
++	ret = apply_autostash(path);
++	strbuf_addstr(&dir, opts->state_dir);
++	if (remove_dir_recursively(&dir, 0))
++		ret = error_errno(_("could not remove '%s'"), opts->state_dir);
++	strbuf_release(&dir);
++
++	return ret;
++}
++
+ static int finish_rebase(struct rebase_options *opts)
+ {
+ 	struct strbuf dir = STRBUF_INIT;
+@@ -1726,7 +1743,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (require_clean_work_tree(the_repository, "rebase",
+ 				    _("Please commit or stash them."), 1, 1)) {
+ 		ret = -1;
+-		goto cleanup;
++		goto cleanup_autostash;
+ 	}
+ 
+ 	/*
+@@ -1749,7 +1766,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			if (options.switch_to) {
+ 				ret = checkout_up_to_date(&options);
+ 				if (ret)
+-					goto cleanup;
++					goto cleanup_autostash;
+ 			}
+ 
+ 			if (!(options.flags & REBASE_NO_QUIET))
+@@ -1775,8 +1792,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	/* If a hook exists, give it a chance to interrupt*/
+ 	if (!ok_to_skip_pre_rebase &&
+ 	    run_hooks_l("pre-rebase", options.upstream_arg,
+-			argc ? argv[0] : NULL, NULL))
+-		die(_("The pre-rebase hook refused to rebase."));
++			argc ? argv[0] : NULL, NULL)) {
++		ret = error(_("The pre-rebase hook refused to rebase."));
++		goto cleanup_autostash;
++	}
+ 
+ 	if (options.flags & REBASE_DIFFSTAT) {
+ 		struct diff_options opts;
+@@ -1821,9 +1840,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+ 	ropts.head_msg = msg.buf;
+ 	ropts.default_reflog_action = options.reflog_action;
+-	if (reset_head(the_repository, &ropts))
+-		die(_("Could not detach HEAD"));
+-	strbuf_release(&msg);
++	if (reset_head(the_repository, &ropts)) {
++		ret = error(_("Could not detach HEAD"));
++		goto cleanup_autostash;
++	}
+ 
+ 	/*
+ 	 * If the onto is a proper descendant of the tip of the branch, then
+@@ -1851,9 +1871,14 @@ run_rebase:
+ 
+ cleanup:
+ 	strbuf_release(&buf);
++	strbuf_release(&msg);
+ 	strbuf_release(&revisions);
+ 	rebase_options_release(&options);
+ 	free(squash_onto_name);
+ 	free(keep_base_onto_name);
+ 	return !!ret;
++
++cleanup_autostash:
++	ret |= !!cleanup_autostash(&options);
++	goto cleanup;
+ }
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index ae34bfad607..972ea85febc 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -145,7 +145,9 @@ test_expect_success 'Show verbose error when HEAD could not be detached' '
+ 	test_when_finished "rm -f B" &&
+ 	test_must_fail git rebase topic 2>output.err >output.out &&
+ 	test_grep "The following untracked working tree files would be overwritten by checkout:" output.err &&
+-	test_grep B output.err
++	test_grep B output.err &&
++	test_must_fail git rebase --quit 2>err &&
++	test_grep "no rebase in progress" err
+ '
+ 
+ test_expect_success 'fail when upstream arg is missing and not on branch' '
+@@ -422,7 +424,9 @@ test_expect_success 'refuse to switch to branch checked out elsewhere' '
+ 	git checkout main &&
+ 	git worktree add wt &&
+ 	test_must_fail git -C wt rebase main main 2>err &&
+-	test_grep "already used by worktree at" err
++	test_grep "already used by worktree at" err &&
++	test_must_fail git -C wt rebase --quit 2>err &&
++	test_grep "no rebase in progress" err
+ '
+ 
+ test_expect_success 'rebase when inside worktree subdirectory' '
+diff --git a/t/t3413-rebase-hook.sh b/t/t3413-rebase-hook.sh
+index e8456831e8b..426ff098e1d 100755
+--- a/t/t3413-rebase-hook.sh
++++ b/t/t3413-rebase-hook.sh
+@@ -110,7 +110,9 @@ test_expect_success 'pre-rebase hook stops rebase (1)' '
+ 	git reset --hard side &&
+ 	test_must_fail git rebase main &&
+ 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
+-	test 0 = $(git rev-list HEAD...side | wc -l)
++	test 0 = $(git rev-list HEAD...side | wc -l) &&
++	test_must_fail git rebase --quit 2>err &&
++	test_grep "no rebase in progress" err
+ '
+ 
+ test_expect_success 'pre-rebase hook stops rebase (2)' '
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index 63e400b89f2..b43046b3b0d 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -82,6 +82,46 @@ testrebase () {
+ 	type=$1
+ 	dotest=$2
+ 
++	test_expect_success "rebase$type: restore autostash when pre-rebase hook fails" '
++		git checkout -f feature-branch &&
++		test_hook pre-rebase <<-\EOF &&
++		exit 1
++		EOF
++
++		echo changed >file0 &&
++		test_must_fail git rebase $type --autostash -f HEAD^ &&
++		test_must_fail git rebase --quit 2>err &&
++		test_grep "no rebase in progress" err &&
++		echo changed >expect &&
++		test_cmp expect file0
++	'
++
++	test_expect_success "rebase$type: restore autostash when checkout onto fails" '
++		git checkout -f --detach feature-branch &&
++		echo uncommitted-content >file0 &&
++		echo untracked >file4 &&
++		test_when_finished "rm file4" &&
++		test_must_fail git rebase $type --autostash \
++							unrelated-onto-branch &&
++		test_must_fail git rebase --quit 2>err &&
++		test_grep "no rebase in progress" err &&
++		echo uncommitted-content >expect &&
++		test_cmp expect file0
++	'
++
++	test_expect_success "rebase$type: restore autostash when branch checkout fails" '
++		git checkout -f unrelated-onto-branch^ &&
++		echo uncommitted-content >file0 &&
++		echo untracked >file4 &&
++		test_when_finished "rm file4" &&
++		test_must_fail git rebase $type --autostash HEAD \
++							unrelated-onto-branch &&
++		test_must_fail git rebase --quit 2>err &&
++		test_grep "no rebase in progress" err &&
++		echo uncommitted-content >expect &&
++		test_cmp expect file0
++	'
++
+ 	test_expect_success "rebase$type: dirty worktree, --no-autostash" '
+ 		test_config rebase.autostash true &&
+ 		git reset --hard &&
 
-Hmm, I'm not sure this is the case.  Let's consider the case where SHA-1
-becomes as easy to collide as MD4, which requires less than 2 hash
-operations for a collision, in which case we can assume that it's
-trivial, because eventually we expect that will happen with advances in
-technology.
-
-So in that case, we believe that an attacker who knows what's in a pack
-file and can collide one or more of the objects can create another
-packfile with a different, colliding object and cause the pack contents
-to be the same.  Because we use the pack file hash as the name of the
-pack and we use rename(2), which ignores whether the destination exists,
-that means we have to assume that eventually an attacker will be able to
-overwrite one pack file with another with different contents without
-being detected simply by pushing a new pack into the repository.
-
-Even if we assume that SHA-1 attacks only become as easy as MD5 attacks,
-the RapidSSL exploits[0][1] demonstrate that an attacker can create
-collisions based on predictable outputs even with imprecise feedback. We
-know SHA-1 is quite weak, so it could actually be quite soon that
-someone finds an improvement in attacking the algorithm.  Note that
-computing 2^56 DES keys by brute force costs about $20 from cloud
-providers[2], and SHA-1 provides only 2^61 collision security, so a
-small improvement would probably make this pretty viable to attack on
-major providers with dedicated hardware.
-
-This is actually worse on some providers where the operations tend to be
-single threaded.  In those situations, there is no nondeterminism from
-threads to make packs slightly different, and thus it would be extremely
-easy to create such collisions predictably based on what an appropriate
-upstream version of Git does.
-
-So I don't think we can accurately say that cryptographic security isn't
-needed here.  If we need a unique name that an attacker cannot control
-and there are negative consequences (such as data loss) from the
-attacker being able to control the name, then we need cryptographic
-security here, which would imply a collision-detecting SHA-1 algorithm.
-
-We could avoid this problem if we used link(2) and unlink(2) to avoid
-renaming over existing pack files, though, similar to loose objects.
-We'd need to not use the new fast algorithm unless core.createObject is
-set to "link", though.
-
-[0] https://en.wikipedia.org/wiki/MD5
-[1] https://www.win.tue.nl/hashclash/rogue-ca/
-[2] https://crack.sh/
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---/e/G/NUrB8GQsvpN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtXG2QAKCRB8DEliiIei
-gYJ5AP45kZhSd+8aJcqw4UKk4p3gceu/oqhsfESc4Bnpee5glgEAhYlzoPMBvW8d
-g7f4TnHA1tSjEcxKKWsxI6A3LJbZzw4=
-=5nF4
------END PGP SIGNATURE-----
-
---/e/G/NUrB8GQsvpN--
+base-commit: 39bf06adf96da25b87c9aa7d35a32ef3683eb4a4
+-- 
+gitgitgadget
