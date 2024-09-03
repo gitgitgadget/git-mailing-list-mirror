@@ -1,139 +1,70 @@
-Received: from pfhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715991D6786
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 08:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E407205E23
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 08:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725351147; cv=none; b=RTxrNxg23KkMvdfsDhi7yjh2GetWn1NVZJKuS6SNtij+U4PDM4Tt3J1CCd5wvhWE2SScLRw+Ww4P75t7JNyZQlBmxjcOgKzDs3b21/S4yIPElokRu5F5nxeEPiTtbFB7LBdfyl3MqKTEz++6poRZ9XOrrZXckzYOH+5B36pb7CI=
+	t=1725351509; cv=none; b=eDyL5E4+ArVXeFeOl6C8jOguF5a079+0NraO4wzmvJ1v4vP3/MPOo+OId0J1Z3Bevs45abRs8slEWs1n2lkBETQ3Zurjz1bkVIhTK4vT5G2dBSVY8ArKbw1i5fHHEu5Tsy0JPR4DJBWyKcYjYISKv2IqW+PyrOEBIFFpzB3gjJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725351147; c=relaxed/simple;
-	bh=wNIraeVVjXJMXSbp6hASLO+hLuhq+myB6V5THArsqdA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e7VJnK1QCQV/JXLrAblb7EHUNTWn54hPPZGysFmOfLFb7JvS5dM+L7E1+D4RmKoiQEou1uC80ftVwZ5pha03qv+6UoMeqiH/MmUGyPBnh9q9/kEawwQXZnqggrtb0r+7egPZxH/29HRaV0HzmlgWM8KD71hqmtR+BGMlmOquI+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QX4fNrek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gUWxRKSC; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1725351509; c=relaxed/simple;
+	bh=yzQiYI8IvBFqzj+ReNu8wT8Wi9NWRvSxSe3RHoPp51s=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=rJ2nWheimf9UJPCTVJomZpqCNNxgw6eFBvHFV6e9EGuhitXkHnO1BDXdX65UGDcs72OA3LN6p4EUAWxmvmd8XLHEpEVCOXZ6qFhZdF2neg7La5FT7OY0xc5VcoM7Pgsq/NHOHGLL32o8bf6TrmV9gkwxcelPPeBWTj4h58ueEDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LavFRutE; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QX4fNrek";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gUWxRKSC"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4149B11402B0;
-	Tue,  3 Sep 2024 04:12:24 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Sep 2024 04:12:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725351144; x=1725437544; bh=W+UrVLKIra
-	waYHSVpB0x5KCa3v8uVRy/mt0va1ndFPs=; b=QX4fNrekh6vX+7MfFJ0Jqc9GoQ
-	sAiiojqMT33DzxK87aVxbdRHheGkGOYl4IK4pOTAOhXJALipowP5Kz1Vbfhc+ps7
-	UqCPn315xv+eIocrVdcrfvGU9+IsfXlIjq8BSy41LmPDHUV5Vn7PIYwexIxRRzNu
-	I//nsOqWJRAL/0dfThtppTN0hTRLwi57bjZ5i1OAZHJ1UrFfgynpodJglF05M5ZD
-	x7eZDlbcMliC0bzYOPUk/xIZPYDyLGbT2O46sfBoutPcbZmAxETckkti8MzgDZck
-	7V3xLWPcJjpEu2G9W1jLCCYFG4DAd95voZDKGSdje8hCtKSRyNgK9rYv0ZrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725351144; x=1725437544; bh=W+UrVLKIrawaYHSVpB0x5KCa3v8u
-	VRy/mt0va1ndFPs=; b=gUWxRKSC6XybDa7QmoTzYwyOASfqeHgckDVgP/1hVMWj
-	JI26i72/MaF2olTUIB8y+xM+w01PMqYe3gVZ6snKWflrKqZ4q/weu1iNQvYetnRO
-	vgbIT4FGI2X1/CXrUeeNDmRpT7GJf1R6BXegdJq5qI4i0jK+ajEynGvt34Z0UloA
-	YamklWwHhco+aw2C4yNjwPEtgw02s6VewPExNDAWUnYHufUKhk3r2Sj8yqPr6OXD
-	y5vYS23B5Uxd24SJcNjUQHh70jLb3Ji90/mqD5gG+3V+rsl2XYLAsxLNtvQ7PgEd
-	c8gJ7QjdZmNOxBV7iDEq/+1q+qQX7h9eI3XFPfJZ/g==
-X-ME-Sender: <xms:6MTWZsLb67kqm5s55_6Edfrmu-zKL-ENHBgwTgtLdycFOJyZRctSRw>
-    <xme:6MTWZsL5qivkWTeUmFtPE6vv53Mw-xXtqWv8_kGa0eH-wcS2YHcAbAZT7hD-VRZDH
-    mRUIVolcrxIPYPJHg>
-X-ME-Received: <xmr:6MTWZsv7aKYjCxg8ShQLAWq1bjeSiRoDJNN5muR7ZaliCUrL8fF6FVi2dgyp2yPuGoD8SyTBKoGE4HXVvJN5kPimS4inudyNjroppThTjNUvWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhecutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
-    kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
-    dlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhr
-    ohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenuc
-    ggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffh
-    ueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehjohhhrg
-    hnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehrshgsvggt
-    khgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopegvthhhohhmshhonhesvg
-    gufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmh
-    drohhrghdruhhkpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhtvg
-    grughmohhnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:6MTWZpYD85r9u808k0gcVENoGYpl5C6R3fee-ZDcjBPQRB83aXnxEQ>
-    <xmx:6MTWZjYPPe0IjeGfgbsDwwwjOIeOQxJcx3DU3vCmKDyWVH0qBX9yNQ>
-    <xmx:6MTWZlCaWDnD5AdQrXPXLoCRI8XcHuJ0MDNO5dUF0MNKZOoAnODGLw>
-    <xmx:6MTWZpYluxmbWRK3mpe9ZYpSJB4-JcgSjo-qcY8NlwvJ-NJnxs_BRg>
-    <xmx:6MTWZtk1yDrAwemW0z2yVRAmNcLYX7Y4oHC_aWTPJqTTyAsuk4CWe962>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Sep 2024 04:12:22 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4bc690c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Sep 2024 07:45:35 +0000 (UTC)
-Date: Tue, 3 Sep 2024 09:45:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 02/13] t: import the clar unit testing framework
-Message-ID: <Zta-pKzaJtkedZTO@tanuki>
-References: <cover.1722415748.git.ps@pks.im>
- <cover.1724159966.git.ps@pks.im>
- <1710e9f9ff75cee76be6d5c1311344c6564e3801.1724159966.git.ps@pks.im>
- <435e3840-ee46-4ca3-a525-747848da9930@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LavFRutE"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-7cd9e634ea9so3328779a12.0
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 01:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725351508; x=1725956308; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yzQiYI8IvBFqzj+ReNu8wT8Wi9NWRvSxSe3RHoPp51s=;
+        b=LavFRutEwHdEIVOwTyFs0JGVg9O+7JpoCjXRUK41QK6t14skqSlwGxaW9hV9BBL6Vb
+         36btB3XA586tjGC3ZvXFESOwV5Xi8kxC3RB/ru9mnTjtWmDeoaO4x2ZmNGF0YUbsq9UU
+         ouwgpb/wykxdHnEuMoK7IxRSwMlEnqh3vakHNwr4VD0h9pNhLMaI+ZK5yoM7A7DXRjzk
+         Jvk6asFbUVJljQ3MjHM2OjXJjaesUCsVmlZIGycUWrvswIhM7e91PJ+fC3AZyJ1z54pd
+         TnMqnRZFv00lpAqVa7f5ojpV0TowmbiJ/4EW6FbqKTdTW2kF1VG83L5pPGd0GDdDjhC5
+         HzXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725351508; x=1725956308;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yzQiYI8IvBFqzj+ReNu8wT8Wi9NWRvSxSe3RHoPp51s=;
+        b=WVMhZoNjdKo0hmDacffmpdWmTs1UA0ckhzcdb9DjD8/YsPXqRp61CSPvaPePXLWTj1
+         vXRmhsl3jFkY4Neynku+Y2sekfJLN9B0VGhRCqI/GcM4uGLaReUVdfwRxJ8MVb0qfZHo
+         u4nQcHw9jnX2N8cSk7m0StTtQgwJeCFPGdlKIZadY6edTZsfwZxflirh7SPBat71fdeL
+         JiHG7a4S7g3dTGm290ejoEryjlAwFYQd2kGtYK/83n3gZ/4qAHMWRhIZb3AnoesRbtnU
+         yu5adQ26zcRTVjvdZjHLI/bVdcxRXZtRs4hpLAHBnexpx/n0L6+U6w8Jok2dF99r0WSM
+         D7iQ==
+X-Gm-Message-State: AOJu0YyTSjpJcsJxP+gvy51Q5KvULer2YksqJU913HME71V3b/090H7U
+	EhEn1PwzKxGx+ZWMP+mZOoLCucp2bGFkrBTWWEAzIeNYw0OuOd0xkyGtivGVkY0vz8wpulVFZXo
+	ZYdM9nrbYtSS7UGMT0yVackfW3oJjZjXhDJw=
+X-Google-Smtp-Source: AGHT+IH08dAjD1B+zmlv55aX2bZyzceg+n2JpunjEu63qwo13Jp9CZUZ6m7s3IzIEMarv9klJF1WgsqPWQQME1yLohA=
+X-Received: by 2002:a05:6a21:999c:b0:1ce:e6ff:df29 with SMTP id
+ adf61e73a8af0-1cee6ffdf67mr6668404637.14.1725351507561; Tue, 03 Sep 2024
+ 01:18:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <435e3840-ee46-4ca3-a525-747848da9930@gmail.com>
+From: Loredana Tralli <loredana.tralli@gmail.com>
+Date: Tue, 3 Sep 2024 10:18:16 +0200
+Message-ID: <CAEO06G+SLu-LAe0mkR3ZbaL0MZpBm9PhntQjF-YwVPMtnuH=rQ@mail.gmail.com>
+Subject: Ask for feature on git
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Aug 28, 2024 at 02:16:52PM +0100, Phillip Wood wrote:
-> Hi Patrick
-> 
-> On 20/08/2024 15:02, Patrick Steinhardt wrote:
-> > Import the clar unit testing framework at commit 1516124 (Merge pull
-> > request #97 from pks-t/pks-whitespace-fixes, 2024-08-15). The framework
-> > will be wired up in subsequent commits.
-> 
-> I would be good to explain why we're doing this so we have a record in the
-> project history. A summary of the advantages and disadvantages of using clar
-> vs our current unit test framework would be helpful as well.
+Hello,
+I'm a developer and I really use and love git. I'd really want to
+thank you for your big work
 
-Will do.
+I'd like to ask if exists or if it's possible to implement a feature.
+Is it possible to have a git command to find out which is the parent branch?
 
-> > diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-> > [...]
-> > +static void
-> > +clar_parse_args(int argc, char **argv)
-> > +{
-> > [...]
-> > +		case 'q':
-> > +			_clar.report_errors_only = 1;
-> > +			break;
-> 
-> I think this option is incompatible with TAP output as when TAP output is
-> selected the first error is printed as part of clar_print_ontest() and
-> clar_print_errors() is a no-op. We should error out if it is given with '-t'
-
-Yup. I'll address this by implementing our own option parsing.
-
-The remainder of your concerns relate to the clar implementation itself,
-and as such I won't yet address them. I'll work with upstream to get
-these fixed after this series lands though, as outlined in [1].
-
-[1]: <ZsSTOczuGhT5zwoV@tanuki>
-
-Patrick
+Thanks and Best Regards,
+Loredana Tralli
