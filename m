@@ -1,166 +1,547 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pfout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385FF1C7662
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EEB1C767C
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725354019; cv=none; b=KDSvE/nMl0mSkwpDGG6uY1sbsiRnODO2+YIbsaoGo03YHfJzw5kGvpmW8+hHxMLP9lpgaGlW55aiz6sKB/Vy5uC0tm9bUGpT2WoObeZFV/j7kNDBuJ2qusjvoACiRj2v84TuKLdWFaoUyvNuOH30/fLfK8Hzai4u2gTc6ZuWQf0=
+	t=1725354880; cv=none; b=Kz9Uw9dZsvdGfQufzJQOYrgN3L8ZqBGPSFyjn58RVRjuxrX90C+BvZl9zK2OKDilhOvmQ6BU9uR5qVdcevrB3BSHbY04RTN/lEghLOYR8kbBu1Wk7NQdu8kjtW05MHebJaR6qWRzc+LjT50lmqw4n81B+Z7eqS+99uK1xxkD218=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725354019; c=relaxed/simple;
-	bh=fXLZ1SDSGCQPHsLOUJ6sfFUUUlT2jLa4OCpjcx5mLFw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=sCMX/a7oUwGs2VGezYmG4kqWJVMe/Lo1ke5Bc7vZDIEZ6oHJ2IAwCSuss6xCPJz4rCI8gRDXzOhjXzClh83XYuEZGa/dUAllIZH/C/G2ajs7o1RI3k4rOhxneZrQ6BtHTN/ZwgZluPGV8areXXECICBkyY8g9VJ+nkF+tqDDekU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kubtIf8W; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725354880; c=relaxed/simple;
+	bh=2WK1OeEM5FNWbbToMUKPOG0S0qlhsBEYU1u2QnhRPxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kZEBY2ax5eqMFRjkia281BOIiARQe1yhsFx7aVnv+RHQDwO8n4wYIUApLceaw2sh24bDwFP1if/jR+yQHRBKGfQBHCipijPt62xZ7IdMaYh/QDpAXoVrAfKLPhjri2shHyzp6T1WZwCMZKZQ6XyqjyarJGceT5h+BOPmoeqO9i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hOvpr2VI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F+v7gEBa; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kubtIf8W"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2780827dbafso677033fac.1
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 02:00:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725354017; x=1725958817; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I+4RGV7QHtQUpkJPSE1GhsjI1YdonohoRjh0pLJn2H8=;
-        b=kubtIf8WVZSl69rhm7DATOZagA6Y0Mr8ooYfc6d7OjedwT6wBxbte2goMHgYkEIHGt
-         12FXU94CZzildecNAqJc7fjkFNgIB8L6XlFYKXFH4l0BFqB6E/rbCctSqIwKzg9hgStr
-         oPYFIRQ/4WLDESyA+yKrnH8bNsuafR7Y1SwEIjvYiEoLeynk5H+KIn0kxX9/aUcUw8cw
-         eYkEoC28vIVdXr47YY4OsyUmzWHpAuPrNc5yGc5NTwICETKrRUL91SJggwFNTiERV7cr
-         uZ2WaK2xLioEIiEWGCEELZ7NiNEcKJhJ1dbvVp6q67b22Eu2G9BDpxgmLN6aeV43Bn7b
-         L8cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725354017; x=1725958817;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I+4RGV7QHtQUpkJPSE1GhsjI1YdonohoRjh0pLJn2H8=;
-        b=VKq1qhJy8QPhHtBFcZAQJRAJWLLrj/HSqjESiyRD4jRzC/sRkmQ6TlaqseTfoK+l7g
-         oNTzgUF89qRlt1OoUCkpPkjn1SdphXwATuxF3+XAkdaiyRZ3OxNYuEc/lYzwZk1YJioZ
-         f80k99JpC91bjEoAfE5x1WQ71pCF29O+jEHmlvSHt4cmrVed2POTRs0tFQgRyQFigQxW
-         DAG2zDK+kVDO9YK10WGrOKbVloeJ1QKLOqRV+X2nTLU4Ai5CtINP1lRhTJEyUTYe3sq4
-         uuvL6pBz3TDHxvBl6z5Mv+5ePcC2tYoZYqj1PldddZIhRPnTmRt+f46W7uGEmKPoP0Jk
-         ryiA==
-X-Forwarded-Encrypted: i=1; AJvYcCVtcSU8ixe9bk15/WA0s3CSOeJ8XYkwYNHxLcwY+AMpYmUB9bvvvcEX+VvRHDYG0biqbCQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxPs1oo2WZgAOhL56M4KVx2avxLYC04wopHqnWq7zS4M5Df3oc
-	rk6CfbFNYQJdl51PhEvoFM/TwcZ87sLGqZLVxdA1E6bGllHf73rlneKhkdD0uIdl8sJElJo49Zk
-	8kQi7QtYcfAq6Vza5XaX9BP/ihUFDcg==
-X-Google-Smtp-Source: AGHT+IFhxyxb7RWzZsEOyCWJM6fg8SMdYbMj4swvWDDm4LLjjI1ANozZg4fFtwenjfCEkgtRvrLx0VyhxBPLi1hI6Yk=
-X-Received: by 2002:a05:6870:6b0b:b0:261:f8e:a37a with SMTP id
- 586e51a60fabf-277d03a8867mr10173730fac.14.1725354017168; Tue, 03 Sep 2024
- 02:00:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Sep 2024 02:00:16 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <9a63abfe3b812a32d69c7393004bea4f88971559.1725280479.git.ps@pks.im>
-References: <cover.1725280479.git.ps@pks.im> <9a63abfe3b812a32d69c7393004bea4f88971559.1725280479.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hOvpr2VI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F+v7gEBa"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0FB7B1380393;
+	Tue,  3 Sep 2024 05:14:37 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Sep 2024 05:14:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725354877; x=1725441277; bh=lbJ/0ptIi6
+	LBrvhFiKsBIqsphi/B5TNPBu6CqpGC/ho=; b=hOvpr2VIDmuEViKfrufocyV72b
+	3sDR2xou+4TS1dWoA8NwoNUNtVrNLLykBKQ5XI0jWTYZS0OE/xxcNaAEY1WCqwOq
+	AqmnoEAsAdxO83LpresWIcz/TtI+jRPdwyCKXrRA8LCcapBQAlBTzAdKnel4mAVF
+	AOh3Gw/BIi72lBXjKf06B0SgR7dBnloNyA0PIBxymSJYrsbq3rT/e5Lwh8L+uqI+
+	LLn+mp6JsynFqbRaN42oaOlMudlWpUaEJHneIGVqijN2iwNeVshJB4HnpEuN+3nM
+	M1hnbCq7jZbYU8mr2xlEsY43yuosFQrv1O/FEOnuDde/H+Z3JYv8YpqkzcNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725354877; x=1725441277; bh=lbJ/0ptIi6LBrvhFiKsBIqsphi/B
+	5TNPBu6CqpGC/ho=; b=F+v7gEBaagpl7JgjLpdmB7kHuHoU3/VkJv9chrV1MvsD
+	pWXu+gDOB2fxmX65YpsCUQ5NwvN6N3c9T1tRrGKXnJTdn2TxLqyfOBF0guslIR6C
+	sFl8dHTEPgDyvoaZwYVzNh0JI7rfg24E9Q3+QJLt9u718V3bKeMrbf2yEZX2EbEf
+	Fkei5APwOQ5sUCiPKV6CX3rn5eKHznIz26W3ys2gXhZdJtq5ixFgjQoWf8aDnuMM
+	LeszeogzqS+EYupQ5+wDfUDvY/68GPz8lnOR5tKF4SRfkyNe3qYOxa75b0QfDEss
+	20njlCTxKgYsM36h0VvG0UQRU6s4Jzvxe1z2j+yzDQ==
+X-ME-Sender: <xms:fNPWZshFLMSGVZXRRtxA6BWQfuKsXU6DnLijUUpPHRHOcGbO9BYyEg>
+    <xme:fNPWZlCC4Vke9kYJF8F2mpBI-N48ZcjOhnQbI4r8FLn9LIdAlikV8kqV2iZeoHOG6
+    2mxAXefVP6vOgLhIA>
+X-ME-Received: <xmr:fNPWZkG0OFm8J896VoalnXMRe7rkFz_2kb1Va495MQNCUcnpXyokr0xLU3-6jf1MGj1UL0CdDGpBz2phXnG4AQPLQe94o9XtMm2ycPcsyw3zLw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhedgudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhr
+    ghdruhhkpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepshhtvg
+    grughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehsphgvtghtrhgrlhesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrd
+    gtohhmpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fNPWZtSR5r1T1n3Pu2ixLHwUNuWSHfbKV8hj5q2yk2GBjHPpiGiDcA>
+    <xmx:fNPWZpxT5IX9B8Y83ZnhNcwXnBj7cwYuomgdAIrbQj0r8dQAFZV_DQ>
+    <xmx:fNPWZr5dDALo3dttv-z-ve06bkXxhjxIV0RJNmJHxrQlmssJ7vc7cg>
+    <xmx:fNPWZmwvQp1v0BWAMdmcuMqqguegZbHhsOV6TlY0_grWP0cQXODXFA>
+    <xmx:fdPWZpfP07Xe1KXcaTeHf5K0vjhinEqPee_hCy5TPmdT36XrYgBj-StE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Sep 2024 05:14:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id da5fd14f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Sep 2024 09:14:26 +0000 (UTC)
+Date: Tue, 3 Sep 2024 11:14:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v7 00/14] Introduce clar testing framework
+Message-ID: <cover.1725349234.git.ps@pks.im>
+References: <cover.1722415748.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 3 Sep 2024 02:00:16 -0700
-Message-ID: <CAOLa=ZRGvU4LvX9kjvF3dJCTvKR6CC1CwPTp515c3Wt5M8a5vA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] refs/files: use heuristic to decide whether to repack
- with `--auto`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004e43a40621334983"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1722415748.git.ps@pks.im>
 
---0000000000004e43a40621334983
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Patrick Steinhardt <ps@pks.im> writes:
+this is the seventh version fo my patch series that introduces the clar
+unit testing framework.
 
-> The `--auto` flag for git-pack-refs(1) allows the ref backend to decide
-> whether or not a repack is in order. This switch has been introduced
-> mostly with the "reftable" backend in mind, which already knows to
-> auto-compact its tables during normal operations. When the flag is set,
-> then it will use the same auto-compaction mechanism and thus end up
-> doing nothing in most cases.
->
-> The "files" backend does not have any such heuristic yet and instead
+Changes compared to v6:
 
-Nit: s/instead/will instead/
+  - Add some explanations for why we introduce clar in the first place
+    to the second commit message.
 
-> packs any loose references unconditionally. So we rewrite the complete
-> "packed-refs" file even if there's only a single loose reference to be
-> packed.
->
-> Even worse, starting with 9f6714ab3e (builtin/gc: pack refs when using
-> `git maintenance run --auto`, 2024-03-25), `git pack-refs --auto` is
-> unconditionally executed via our auto maintenance, so we end up repacking
-> references every single time auto maintenance kicks in. And while that
-> commit already mentioned that the "files" backend unconditionally packs
-> refs now, the author obviously didn't quite think about the consequences
-> thereof. So while the idea was sound, we really should have added a
-> heuristic to the "files" backend before implementing it.
->
-> Introduce a heuristic that decides whether or not it is worth to pack
-> loose references. The important factors to decide here are the number of
-> loose references in comparison to the overall size of the "packed-refs"
-> file. The bigger the "packed-refs" file, the longer it takes to rewrite
-> it and thus we scale up the limit of allowed loose references before we
-> repack.
->
-> As is the nature of heuristics, this mechansim isn't obviously
-> "correct", but should rather be seen as a tradeoff between how much
-> resources we spend packing refs and how inefficient the ref store
-> becomes. For all I can say, we have successfully been using the exact
-> same heuristic in Gitaly for several years by now.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/files-backend.c          | 75 +++++++++++++++++++++++++++++++
->  refs/packed-backend.c         | 18 ++++++++
->  refs/packed-backend.h         |  7 +++
->  t/t0601-reffiles-pack-refs.sh | 85 ++++++++++++++++++++++++++++++-----
->  4 files changed, 175 insertions(+), 10 deletions(-)
->
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 1cff65f6ae5..261e2b8570f 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1311,6 +1311,78 @@ static int should_pack_ref(struct files_ref_store *refs,
->  	return 0;
->  }
->
-> +static size_t fastlog2(size_t sz)
+  - Split out implementation of the test driver, that is the main
+    function, into a separate commit.
 
-Nit: We already `reftable/stack_test.c:fastlog2` and `bisect.c:log2i`. I
-wonder if it would be nice to consolidate all of them. But I guess it's
-okay, since the reftable code anyways is isolated from the rest of the
-Git code.
+  - Reimplement argument parsing ourselves. This allows more flexibility
+    and gets rid of some options that do not make sense for us.
 
-> +{
-> +	size_t l = 0;
-> +	if (!sz)
-> +		return 0;
-> +	for (; sz; sz /= 2)
-> +		l++;
-> +	return l - 1;
-> +}
+  - Add an empty line between declarations and code.
 
-[snip]
+  - Improve the test messages in ctype tests to also mention our
+    expectations.
 
-The rest of the patch looks great!
+  - Adapt `cl_failf()` to not use `xstrfmt()`, but `snprintf()` with a
+    static buffer instead.
 
---0000000000004e43a40621334983
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b5b1f05fb5feec28_0.1
+Thanks!
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iVzBCOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1melZLQy80dmFtOW1jSGZxdUJkczdHTFpLR1pPNmdaMApOOG9GU1RVc1dq
-NTR6eU9RcTJzNno0eFNZdUUzTGg0REFzN1NjYStyTjRHUnFtbS9YUWcwNTREaERTMlBRWjZlCllt
-Rk9XbVJoWUgvNkptNjJkL1Y2NmFOS0pERGxZTUVzbUtFSjdjYWs2L0twUmEvSDlzRzh2eUhlQWVr
-YmRqNm8KNm5HYi9MWDViemdEM3hXY1EwUUlBdHFoS0pCcC81SDdVYlJndi9IQ0NWS2c1Z1ZneVNT
-MVRKWFByRlR6alhZZwpvUXI4bUZYcm54UTFKR1BkdC94WUFmVW5FMWJEREJhL2tsd3VULzhVc1A4
-aHBKUFExWlhSWVlZdDVSK1FzSUhrCm1QL05uMkxtYXdFaUZYb0ZQMm9jTmMxKytPTG5xVWJkcGdU
-dTRrY2hPanVjSHB4SXFsOWp0bFVjWWNjWUs5VEsKMTZmQitJWGFsekYvR3NXWklsakFEYS9kTmp0
-UTcwdUpyWFgrOFR3VmxxMGxxS0tjbmNXNW5Gc3pJNVFGdUNWdwpUV3RwTzJ5RjdRck00N1VJVmdN
-aHBBdGZyckFoYmlvcktGU2RvZEZwaEFmd0YzQ2h0bmZxb1lHRjJEUnlhMm9CCk9uL3k5VUJtSUpJ
-cGVVUDdVSFk0RzVyUDdZQTE4c0UydVNXWmlzRT0KPUJIVVAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004e43a40621334983--
+Patrick
+
+Johannes Schindelin (4):
+  clar: avoid compile error with mingw-w64
+  clar(win32): avoid compile error due to unused `fs_copy()`
+  clar: stop including `shellapi.h` unnecessarily
+  clar: add CMake support
+
+Patrick Steinhardt (10):
+  t: do not pass GIT_TEST_OPTS to unit tests with prove
+  t: import the clar unit testing framework
+  t/clar: fix compatibility with NonStop
+  Makefile: fix sparse dependency on GENERATED_H
+  Makefile: make hdr-check depend on generated headers
+  Makefile: do not use sparse on third-party sources
+  Makefile: wire up the clar unit testing framework
+  t/unit-tests: implement test driver
+  t/unit-tests: convert strvec tests to use clar
+  t/unit-tests: convert ctype tests to use clar
+
+ .gitignore                                 |   1 +
+ Documentation/technical/unit-tests.txt     |   2 +
+ Makefile                                   |  53 +-
+ contrib/buildsystems/CMakeLists.txt        |  53 ++
+ t/Makefile                                 |   4 +-
+ t/run-test.sh                              |   2 +-
+ t/unit-tests/.gitignore                    |   2 +
+ t/unit-tests/clar-generate.awk             |  50 ++
+ t/unit-tests/clar/.github/workflows/ci.yml |  23 +
+ t/unit-tests/clar/COPYING                  |  15 +
+ t/unit-tests/clar/README.md                | 329 ++++++++
+ t/unit-tests/clar/clar.c                   | 842 +++++++++++++++++++++
+ t/unit-tests/clar/clar.h                   | 173 +++++
+ t/unit-tests/clar/clar/fixtures.h          |  50 ++
+ t/unit-tests/clar/clar/fs.h                | 524 +++++++++++++
+ t/unit-tests/clar/clar/print.h             | 211 ++++++
+ t/unit-tests/clar/clar/sandbox.h           | 159 ++++
+ t/unit-tests/clar/clar/summary.h           | 143 ++++
+ t/unit-tests/clar/generate.py              | 266 +++++++
+ t/unit-tests/clar/test/.gitignore          |   4 +
+ t/unit-tests/clar/test/Makefile            |  39 +
+ t/unit-tests/clar/test/clar_test.h         |  16 +
+ t/unit-tests/clar/test/main.c              |  40 +
+ t/unit-tests/clar/test/main.c.sample       |  27 +
+ t/unit-tests/clar/test/resources/test/file |   1 +
+ t/unit-tests/clar/test/sample.c            |  84 ++
+ t/unit-tests/{t-ctype.c => ctype.c}        |  71 +-
+ t/unit-tests/strvec.c                      | 241 ++++++
+ t/unit-tests/t-strvec.c                    | 211 ------
+ t/unit-tests/unit-test.c                   |  45 ++
+ t/unit-tests/unit-test.h                   |  10 +
+ 31 files changed, 3457 insertions(+), 234 deletions(-)
+ create mode 100644 t/unit-tests/clar-generate.awk
+ create mode 100644 t/unit-tests/clar/.github/workflows/ci.yml
+ create mode 100644 t/unit-tests/clar/COPYING
+ create mode 100644 t/unit-tests/clar/README.md
+ create mode 100644 t/unit-tests/clar/clar.c
+ create mode 100644 t/unit-tests/clar/clar.h
+ create mode 100644 t/unit-tests/clar/clar/fixtures.h
+ create mode 100644 t/unit-tests/clar/clar/fs.h
+ create mode 100644 t/unit-tests/clar/clar/print.h
+ create mode 100644 t/unit-tests/clar/clar/sandbox.h
+ create mode 100644 t/unit-tests/clar/clar/summary.h
+ create mode 100755 t/unit-tests/clar/generate.py
+ create mode 100644 t/unit-tests/clar/test/.gitignore
+ create mode 100644 t/unit-tests/clar/test/Makefile
+ create mode 100644 t/unit-tests/clar/test/clar_test.h
+ create mode 100644 t/unit-tests/clar/test/main.c
+ create mode 100644 t/unit-tests/clar/test/main.c.sample
+ create mode 100644 t/unit-tests/clar/test/resources/test/file
+ create mode 100644 t/unit-tests/clar/test/sample.c
+ rename t/unit-tests/{t-ctype.c => ctype.c} (68%)
+ create mode 100644 t/unit-tests/strvec.c
+ delete mode 100644 t/unit-tests/t-strvec.c
+ create mode 100644 t/unit-tests/unit-test.c
+ create mode 100644 t/unit-tests/unit-test.h
+
+Range-diff against v6:
+ 1:  e48a6461137 =  1:  b67f10ec0b0 t: do not pass GIT_TEST_OPTS to unit tests with prove
+ 2:  1710e9f9ff7 !  2:  55a9b46e65f t: import the clar unit testing framework
+    @@ Metadata
+      ## Commit message ##
+         t: import the clar unit testing framework
+     
+    +    Our unit testing framework is a homegrown solution. While it supports
+    +    most of our needs, it is likely that the volume of unit tests will grow
+    +    quite a bit in the future such that we can exercise low-level subsystems
+    +    directly. This surfaces several shortcomings that the current solution
+    +    has:
+    +
+    +      - There is no way to run only one specific tests. While some of our
+    +        unit tests wire this up manually, others don't. In general, it
+    +        requires quite a bit of boilerplate to get this set up correctly.
+    +
+    +      - Failures do not cause a test to stop execution directly. Instead,
+    +        the test author needs to return manually whenever an assertion
+    +        fails. This is rather verbose and is not done correctly in most of
+    +        our unit tests.
+    +
+    +      - Wiring up a new testcase requires both implementing the test
+    +        function and calling it in the respective test suite's main
+    +        function, which is creating code duplication.
+    +
+    +    We can of course fix all of these issues ourselves, but that feels
+    +    rather pointless when there are already so many unit testing frameworks
+    +    out there that have those features.
+    +
+    +    We line out some requirements for any unit testing framework in
+    +    "Documentation/technical/unit-tests.txt". The "clar" unit testing
+    +    framework, which isn't listed in that table yet, ticks many of the
+    +    boxes:
+    +
+    +      - It is licensed under ISC, which is compatible.
+    +
+    +      - It is easily vendorable because it is rather tiny at around 1200
+    +        lines of code.
+    +
+    +      - It is easily hackable due to the same reason.
+    +
+    +      - It has TAP support.
+    +
+    +      - It has skippable tests.
+    +
+    +      - It preprocesses test files in order to extract test functions, which
+    +        then get wired up automatically.
+    +
+    +    While it's not perfect, the fact that clar originates from the libgit2
+    +    project means that it should be rather easy for us to collaborate with
+    +    upstream to plug any gaps.
+    +
+         Import the clar unit testing framework at commit 1516124 (Merge pull
+         request #97 from pks-t/pks-whitespace-fixes, 2024-08-15). The framework
+         will be wired up in subsequent commits.
+ 3:  5c21aa87aa2 =  3:  f24401f0a87 t/clar: fix compatibility with NonStop
+ 4:  06d2bce0d82 =  4:  658a601c541 clar: avoid compile error with mingw-w64
+ 5:  f88b3421a09 =  5:  0b8a6ac5fed clar(win32): avoid compile error due to unused `fs_copy()`
+ 6:  5fb4c55be33 =  6:  c50e7a0ea68 clar: stop including `shellapi.h` unnecessarily
+ 7:  e0dcbd5ca83 =  7:  b8f3f16dd27 Makefile: fix sparse dependency on GENERATED_H
+ 8:  77a03f8df70 =  8:  3d3fe443b9a Makefile: make hdr-check depend on generated headers
+ 9:  c91dd7327e3 =  9:  7d0f494850a Makefile: do not use sparse on third-party sources
+10:  115c15aa9ae ! 10:  9c74c5ae019 Makefile: wire up the clar unit testing framework
+    @@ Commit message
+         anything. Thus, it would cause a compiler error if a function name was
+         mistyped and thus not picked up by "generate.py".
+     
+    +    The test driver "unit-test.c" is an empty stub for now. It will get
+    +    implemented in the next commit.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## .gitignore ##
+    @@ t/unit-tests/unit-test.c (new)
+     @@
+     +#include "unit-test.h"
+     +
+    -+int cmd_main(int argc, const char **argv)
+    ++int cmd_main(int argc UNUSED, const char **argv UNUSED)
+     +{
+    -+	const char **argv_copy;
+    -+	int ret;
+    -+
+    -+	/* Append the "-t" flag such that the tests generate TAP output. */
+    -+	ALLOC_ARRAY(argv_copy, argc + 2);
+    -+	COPY_ARRAY(argv_copy, argv, argc);
+    -+	argv_copy[argc++] = "-t";
+    -+	argv_copy[argc] = NULL;
+    -+
+    -+	ret = clar_test(argc, (char **) argv_copy);
+    -+
+    -+	free(argv_copy);
+    -+	return ret;
+    ++	return 0;
+     +}
+     
+      ## t/unit-tests/unit-test.h (new) ##
+ -:  ----------- > 11:  8bd5b3e2b29 t/unit-tests: implement test driver
+11:  b3b8df04872 ! 12:  3c3b9eacdfb t/unit-tests: convert strvec tests to use clar
+    @@ Commit message
+         clar-based tests looks like.
+     
+         The tests are part of the "t/unit-tests/bin/unit-tests" binary. When
+    -    running that binary, it generates TAP output:
+    +    running that binary with an injected error, it generates TAP output:
+     
+             # ./t/unit-tests/bin/unit-tests
+             TAP version 13
+    @@ Commit message
+             ok 1 - strvec::init
+             ok 2 - strvec::dynamic_init
+             ok 3 - strvec::clear
+    -        ok 4 - strvec::push
+    -        ok 5 - strvec::pushft_pushf
+    +        not ok 4 - strvec::push
+    +            ---
+    +            reason: |
+    +              String mismatch: (&vec)->v[i] != expect[i]
+    +              'foo' != 'fo' (at byte 2)
+    +            at:
+    +              file: 't/unit-tests/strvec.c'
+    +              line: 48
+    +              function: 'test_strvec__push'
+    +            ---
+    +        ok 5 - strvec::pushf
+             ok 6 - strvec::pushl
+             ok 7 - strvec::pushv
+             ok 8 - strvec::replace_at_head
+    @@ t/unit-tests/strvec.c (new)
+     +#define check_strvec(vec, ...) \
+     +	do { \
+     +		const char *expect[] = { __VA_ARGS__ }; \
+    -+		cl_assert(ARRAY_SIZE(expect) > 0); \
+    -+		cl_assert_equal_p(expect[ARRAY_SIZE(expect) - 1], NULL); \
+    -+		cl_assert_equal_i((vec)->nr, ARRAY_SIZE(expect) - 1); \
+    ++		size_t expect_len = ARRAY_SIZE(expect); \
+    ++		cl_assert(expect_len > 0); \
+    ++		cl_assert_equal_p(expect[expect_len - 1], NULL); \
+    ++		cl_assert_equal_i((vec)->nr, expect_len - 1); \
+     +		cl_assert((vec)->nr <= (vec)->alloc); \
+    -+		for (size_t i = 0; i < ARRAY_SIZE(expect); i++) \
+    ++		for (size_t i = 0; i < expect_len; i++) \
+     +			cl_assert_equal_s((vec)->v[i], expect[i]); \
+     +	} while (0)
+     +
+     +void test_strvec__init(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	cl_assert_equal_p(vec.v, empty_strvec);
+     +	cl_assert_equal_i(vec.nr, 0);
+     +	cl_assert_equal_i(vec.alloc, 0);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__dynamic_init(void)
+     +{
+     +	struct strvec vec;
+    ++
+     +	strvec_init(&vec);
+     +	cl_assert_equal_p(vec.v, empty_strvec);
+     +	cl_assert_equal_i(vec.nr, 0);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__clear(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_push(&vec, "foo");
+     +	strvec_clear(&vec);
+     +	cl_assert_equal_p(vec.v, empty_strvec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__pushf(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushf(&vec, "foo: %d", 1);
+     +	check_strvec(&vec, "foo: 1", NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__pushl(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	check_strvec(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__replace_at_head(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_replace(&vec, 0, "replaced");
+     +	check_strvec(&vec, "replaced", "bar", "baz", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__replace_in_between(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_replace(&vec, 1, "replaced");
+     +	check_strvec(&vec, "foo", "replaced", "baz", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__replace_with_substring(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", NULL);
+     +	strvec_replace(&vec, 0, vec.v[0] + 1);
+     +	check_strvec(&vec, "oo", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__remove_at_head(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_remove(&vec, 0);
+     +	check_strvec(&vec, "bar", "baz", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__remove_at_tail(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_remove(&vec, 2);
+     +	check_strvec(&vec, "foo", "bar", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__remove_in_between(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_remove(&vec, 1);
+     +	check_strvec(&vec, "foo", "baz", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__pop_empty_array(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pop(&vec);
+     +	check_strvec(&vec, NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__pop_non_empty_array(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_pushl(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_pop(&vec);
+     +	check_strvec(&vec, "foo", "bar", NULL);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__split_empty_string(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_split(&vec, "");
+     +	check_strvec(&vec, NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__split_single_item(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_split(&vec, "foo");
+     +	check_strvec(&vec, "foo", NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__split_multiple_items(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_split(&vec, "foo bar baz");
+     +	check_strvec(&vec, "foo", "bar", "baz", NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__split_whitespace_only(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_split(&vec, " \t\n");
+     +	check_strvec(&vec, NULL);
+     +	strvec_clear(&vec);
+    @@ t/unit-tests/strvec.c (new)
+     +void test_strvec__split_multiple_consecutive_whitespaces(void)
+     +{
+     +	struct strvec vec = STRVEC_INIT;
+    ++
+     +	strvec_split(&vec, "foo\n\t bar");
+     +	check_strvec(&vec, "foo", "bar", NULL);
+     +	strvec_clear(&vec);
+12:  1ac2e48a7f2 ! 13:  c8360db2f86 t/unit-tests: convert ctype tests to use clar
+    @@ Commit message
+         on failure:
+     
+             # start of suite 1: ctype
+    -        ok 1 - ctype::isspace
+    -        not ok 2 - ctype::isdigit
+    +        not ok 1 - ctype::isspace
+                 ---
+                 reason: |
+                   Test failed.
+    -              0x61 is classified incorrectly
+    +              0x0d is classified incorrectly: expected 0, got 1
+                 at:
+                   file: 't/unit-tests/ctype.c'
+    -              line: 38
+    -              function: 'test_ctype__isdigit'
+    +              line: 36
+    +              function: 'test_ctype__isspace'
+                 ---
+    +        ok 2 - ctype::isdigit
+             ok 3 - ctype::isalpha
+             ok 4 - ctype::isalnum
+             ok 5 - ctype::is_glob_special
+    @@ t/unit-tests/t-ctype.c => t/unit-tests/ctype.c
+     -				test_msg("      i: 0x%02x", i); \
+     -		} \
+     -		check(!class(EOF)); \
+    --	} \
+    -+	for (int i = 0; i < 256; i++) \
+    -+		if (class(i) != !!memchr(string, i, len)) \
+    -+			cl_failf("0x%02x is classified incorrectly", i); \
+    ++	for (int i = 0; i < 256; i++) { \
+    ++		int actual = class(i), expect = !!memchr(string, i, len); \
+    ++		if (actual != expect) \
+    ++			cl_failf("0x%02x is classified incorrectly: expected %d, got %d", \
+    ++				 i, expect, actual); \
+    + 	} \
+     +	cl_assert(!class(EOF)); \
+      } while (0)
+      
+    @@ t/unit-tests/unit-test.h
+     +#include "strbuf.h"
+     +
+     +#define cl_failf(fmt, ...) do { \
+    -+	char *desc = xstrfmt(fmt, __VA_ARGS__); \
+    ++	char desc[4096]; \
+    ++	snprintf(desc, sizeof(desc), fmt, __VA_ARGS__); \
+     +	clar__fail(__FILE__, __func__, __LINE__, "Test failed.", desc, 1); \
+    -+	free(desc); \
+     +} while (0)
+13:  131036c398e = 14:  d51c146cd9d clar: add CMake support
+-- 
+2.46.0.421.g159f2d50e7.dirty
+
