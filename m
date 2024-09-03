@@ -1,521 +1,131 @@
-Received: from pfhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0410190482
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF88C1DC720
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:47:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725392591; cv=none; b=bCmWlM+QLXttFx9cl/rwBip8909G/alnfOQJGJmzkNLR1k+zE520fIulMlTEwM4iX4kRIrWfjbEogsUBO6/GTgGBnbT0giOtxh8jHLK2lPV2v2576oTsVw0x2ktAeYUbUknFlBLVUALvZtG+FvQAcHLOilNIufqaAa416sADHHk=
+	t=1725392864; cv=none; b=KvNmO4E4Z603A1Nf1WEOhATKp7cCod/IbSEO9D64dI5tEUPdKJOK1IOJMdlP1rACbACE4hXdklcf7U2bc1iacpBhF4zr0cRPo2/xuZ2NuUA2sMx4NQj0mGMcrzNjdDEqZqO2Pzalf4lDghsseeYgSzuZK/BQzRa0b+I4CL8G83k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725392591; c=relaxed/simple;
-	bh=66mPhaqr+n8A0McYlCPGIZ1KwmUgW2jIaaHi9Ipnvd8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cZEeFUBchtPBbYvIzkCKkfB3x3wc8Hl3uWjZV80t48Wu1zvohFO5h0AgRqCGqdlnageVVSjynaTALuGF1Ne1eYj/tqbREr7QweD3TR0qxzsbOO/+bmE/sSSASWk1WwvwAA50XrYMYnw/pdB1xFPydSRDxrwdVs7aelhg7i7OY0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=owlfolio.org; spf=pass smtp.mailfrom=owlfolio.org; dkim=pass (2048-bit key) header.d=owlfolio.org header.i=@owlfolio.org header.b=muL/MBeT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nwC1jWWG; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=owlfolio.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=owlfolio.org
+	s=arc-20240116; t=1725392864; c=relaxed/simple;
+	bh=BCgB1wPXFAMDJ7/A/Dek9yc1vJSwIPxnrewU31E2rlM=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7AMw0A5P+APfv90pCQg02Qp4NcAoAX3vZekJdumdhS2tnWhHnV9aZGgMr2TUqgiLtqegPbhiCs4X6me6OBrQ+b/rzFguTNSoGtGzPY6utwJu/b+R4yOF8mj0K8PxjCh1xdFmDkBdjEGs2EyNJ4GADRJUq0InDHnw/vBBX9frNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=LVwaW+ZY; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=owlfolio.org header.i=@owlfolio.org header.b="muL/MBeT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nwC1jWWG"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E30741140253;
-	Tue,  3 Sep 2024 15:43:06 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Sep 2024 15:43:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=owlfolio.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1725392586; x=1725478986; bh=EY
-	6VCEH4WerIEAYvvTAVnTl1HlQmJFLlXsPyidswWR0=; b=muL/MBeTaM5Ank1mML
-	HvdfQO1Jcd+M5vPPGRofJqlXrP8lX8QWRzKYbVdyi31QGLCcnt+5b3lPUzBksjmX
-	b1WGaV4RLgs44UuIPCH2r+SUkLGUmYAq8ecE4DoqLmnNI6zfLfQQlq4qXs8fEi2Q
-	OakdT5yxCfkXEnKZCrXSGdyyFO/bBA+v36XF09jF6UNp0bwT3+nGi54ym573BMAd
-	bF3NpgRggmQjCIC8dSKG21yDtVaI8HQKlRnl575k6DpQB5IEjDPct0TLE7qn4VId
-	2BkCraCXR00tlmAXoKQ7030nXdCJa2PHlM53AmOtDMLuq8I4MTca+gyR7dXxKr3b
-	OrHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1725392586; x=1725478986; bh=EY6VCEH4WerIE
-	AYvvTAVnTl1HlQmJFLlXsPyidswWR0=; b=nwC1jWWGi2ySkcnWnCH9qXU2ysLqb
-	hBD9fQmXCNX8+LXn4GuA55cnpeDei0KZAlRsce+u9EJD6r/emfQecsOKTI8yCu4k
-	+dNDNBNq1rzHYUMr2nUXYG6v6xe9/uFsmhYqTqGOHyJUNFk1GxF+EP3yoO4+6aQ9
-	HVAvNMhBdkObK93+ybnmo/awjUwnkf5tMpeIJ3etvEA8vSIB/9AuCrRrv+1s5U+u
-	p/7HwABA+PZWbpNKavFLPg5zTLdxk8vE9WLu5Vl9hADy4zkQqxvefo9OVv7b/3XQ
-	c8I/pq5HEBt26d2uVfbvoeIAyAgZCfTqG8miotpKivdERTu4zfvsTV7Aw==
-X-ME-Sender: <xms:ymbXZtgdd8U8lPUaQjCq5mktUXZwALQJuD4QX5n5bbSutHjrb9nzgg>
-    <xme:ymbXZiDhnTPw0kubHT4uhI_Vw0LTBsJ3JrQIu0Rjyg9GlJ4qKPqOwyddcbO6qGHxZ
-    rStDKIGhNLt5UZkgzc>
-X-ME-Received: <xmr:ymbXZtHyWxPYU43oubjqi-c2IYXW_PGh2U20HDg48GTcypV0C3slskGxvHVuU8eZB_aNPqDl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhedgudegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
-    pefhvfevufffkffogggtgfesthekredtredtjeenucfhrhhomhepkggrtghkucghvghinh
-    gsvghrghcuoeiirggtkhesohiflhhfohhlihhordhorhhgqeenucggtffrrghtthgvrhhn
-    pefhheduveefvdeiheejiedvveeihedtgeellefflefgffdttdfgfeelvddvlefhveenuc
-    ffohhmrghinhepphihthhhohhnrdhorhhgpdhgihhthhhusgdrihhopdhgihhthhhusgdr
-    tghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    iirggtkhesohiflhhfohhlihhordhorhhgpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepiigrtghk
-    sehofihlfhholhhiohdrohhrgh
-X-ME-Proxy: <xmx:ymbXZiSV3TXj9hxp2NqcUFHgVUcRA113Haawy7_eUDqEzq3nZH1LuQ>
-    <xmx:ymbXZqycyvRzyLtungf0rTW7I3GhnnWMZVXtDt-s0LcIIH4k8R7vSA>
-    <xmx:ymbXZo7ZfVo6vy5MypJ6KoK5EK4ObmE_CPUFVlOQmOaDVoOa1B13Sw>
-    <xmx:ymbXZvzGkL6OyKS1u32s5Pa6zAOgJtWg-off5R2vVdxO3IDR37Tb2A>
-    <xmx:ymbXZu-ihl0a_yvtoxHCXbFBQyMW9pe0_HKceBVJLZmNXgFYz5kCoLQk>
-Feedback-ID: i876146a2:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Sep 2024 15:43:05 -0400 (EDT)
-Received: by moxana.owlfolio.org (sSMTP sendmail emulation); Tue, 03 Sep 2024 15:43:05 -0400
-From: Zack Weinberg <zack@owlfolio.org>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org,
-	Zack Weinberg <zack@owlfolio.org>
-Subject: [filter-repo PATCH]: add --callbacks option to load many callbacks from one file
-Date: Tue,  3 Sep 2024 15:42:44 -0400
-Message-ID: <20240903194244.16709-1-zack@owlfolio.org>
-X-Mailer: git-send-email 2.44.2
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="LVwaW+ZY"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7a8160a7239so293040785a.3
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 12:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725392862; x=1725997662; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BkcwLBF1sb2qFZ6JEYpzJnIXaWrKB6L+FUmjztIX7zg=;
+        b=LVwaW+ZYACi078UsAF5FmM1bYX/vM3d/qs6g+AyEBAnjx4oewN2bxk+1tv0fzJLKJ8
+         DWKG1Agq+PVkS7cd2iEZxqZdpQlcRcFc/RkJzcNpGpeqora1OYZxcx0BPvL5c9wcHPSI
+         jN5q82qbJj9V3+FtsS1ue6HetkC7XYwBgQAFijfWYqKCxPi2cNEFIHp6Ni8Fo+57Khb5
+         hoxWUAGMaVEiq4kEUlydB5scVon6Ulz+NTtXxGD8ff6CrdAGuZCM2sPUcWwfUFxiUBwT
+         WvuwMSv3VdX3GxNeHcK83xNRvLfJJTdGW+UPrSbik/MFBWjLO7aSNNu55V6X0S0dsNvu
+         zIog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725392862; x=1725997662;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BkcwLBF1sb2qFZ6JEYpzJnIXaWrKB6L+FUmjztIX7zg=;
+        b=Jaz8WXCqqsw/IwNyS7PZ4ffwANPnprbS1VbSsxQ68cswszC2m4kKZardjvaFeGfPPT
+         Lg1iajFgAWBZOg6Z7wCqzwVhqYjA3G3TIuXZRwl3AGyky63fmOXV8a9U3Twngv9Z8Ddn
+         iPUeQMkAhioVHimiX0RKuFkxSQan5/4J293YgJO7A9OvYCwKOBE6PztciCeZTx1gLTm5
+         75m1trpstfj5TF2UjoGNl8FOhsJRc5nL9g0LLd6djJJDe+kJG1Mgvkx3LBYY3PKDsF9u
+         PooY1cmspzy4Z5GSSBNoqoWc6aWo9LJo2F6XO2mBfLMqvdb/rvnZxESzPHBRlsSMjDMU
+         i4vQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWGpQCrCe+t/DUx9VsbgxQ4eyZa+Q9iCvfEGfbSG6o3LI/su0vd3IpnSPQOwin/Rs7hs/4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwA/iMjicJqIVQaizpm6thkScO3dyJ6hs7TLRHopwpQxEykdKTQ
+	1EJwsfXG1FXVZGKAatgm5spEqbsuQjIEo9WLntgOm77xxnCZ0sg/TkDpuXIDpDc=
+X-Google-Smtp-Source: AGHT+IHuOCAt68FKMAdq7jlg7aczw4ZhvhCp6MbHojH74/fLgzeMGL25chML4fUfkdfeVBnNfHnYwA==
+X-Received: by 2002:a05:620a:f06:b0:79f:57b:f633 with SMTP id af79cd13be357-7a80427797dmr1899132285a.56.1725392861682;
+        Tue, 03 Sep 2024 12:47:41 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a806d3a047sm556588185a.98.2024.09.03.12.47.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Sep 2024 12:47:41 -0700 (PDT)
+Date: Tue, 3 Sep 2024 15:47:39 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
+ non-cryptographic uses
+Message-ID: <Ztdn25zfi8WHO+GS@nand.local>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
 
-If you are trying to do something complicated with filter-repo,
-you might need to share state among several callbacks, which is
-currently impossible (short of poking values into someone else’s
-namespace) because each callback defined on the command line gets
-its own globals dictionary.
+On Mon, Sep 02, 2024 at 02:08:25PM +0000, brian m. carlson wrote:
+> On 2024-09-01 at 16:03:15, Taylor Blau wrote:
+> > This series adds a build-time knob to allow selecting an alternative
+> > SHA-1 implementation for non-cryptographic hashing within Git, starting
+> > with the `hashwrite()` family of functions.
+> >
+> > This series is the result of starting to roll out verbatim multi-pack
+> > reuse within GitHub's infrastructure. I noticed that on larger
+> > repositories, it is harder thus far to measure a CPU speed-up on clones
+> > where multi-pack reuse is enabled.
+> >
+> > After some profiling, I noticed that we spend a significant amount of
+> > time in hashwrite(), which is not all that surprising. But much of that
+> > time is wasted in GitHub's infrastructure, since we are using the same
+> > collision-detecting SHA-1 implementation to produce a trailing checksum
+> > for the pack which does not need to be cryptographically secure.
+>
+> Hmm, I'm not sure this is the case.  Let's consider the case where SHA-1
+> becomes as easy to collide as MD4, which requires less than 2 hash
+> operations for a collision, in which case we can assume that it's
+> trivial, because eventually we expect that will happen with advances in
+> technology.
 
-Or, if you are trying to do something simple but long-winded, such as
-replacing the entire contents of a file, you might want to define long
-multi-line (byte) strings as global variables, to avoid having to deal
-with the undocumented number of spaces inserted at the beginning of
-each line by the callback parser.
+I'm not sure this attack is possible as you described.
 
-To facilitate these kinds of uses, add a new command line option
-`--callbacks`.  The argument to this option is a file, which should
-define callback functions, using the same naming convention as is
-described for individual command line callbacks, e.g.
+We still run any packs through index-pack before landing them in
+$GIT_DIR/objects/pack, and index-pack still uses the collision-detecting
+SHA-1 implementation (if the repository uses SHA-1 and Git was compiled
+with it).
 
-    def name_callback(name):
-        ...
+So if I were a malicious attacker trying to compromise data on a forge,
+I would have to first (a) know the name of some pack that I was trying
+to collide, then (b) create a pack which collides with that one before
+actually pushing it. (b) seems difficult to impossible to execute
+(certainly today, maybe ever) because the attacker only controls the
+object contents within the pack, but can't adjust the pack header,
+object headers, compression, etc.
 
-to set the name callback.  Any Python callable is acceptable, e.g.
+But even if the attacker could do all of that, the remote still needs to
+index that pack, and while checksumming the pack, it would notice the
+collision (or SHA-1 mismatch) and reject the pack by die()-ing either
+way. (AFAICT, this all happens in
+builtin/index-pack.c::parse_pack_objects()).
 
-    class Callbacks:
-        def name_callback(self, name):
-            ...
+> So in that case, we believe that an attacker who knows what's in a pack
+> file and can collide one or more of the objects can create another
+> packfile with a different, colliding object and cause the pack contents
+> to be the same.  Because we use the pack file hash as the name of the
+> pack and we use rename(2), which ignores whether the destination exists,
+> that means we have to assume that eventually an attacker will be able to
+> overwrite one pack file with another with different contents without
+> being detected simply by pushing a new pack into the repository.
 
-    callbacks = Callbacks()
-    name_callback = callbacks.name_callback
+Right... but I think we would die() before we attempt to rename() the
+pack into place as above.
 
-will also work.  People who know about the undocumented second argument
-to some callbacks may define callbacks that take two arguments.
-
-The callbacks file is loaded as an ordinary Python module; it does _not_
-get any automatic globals, unlike individual command line callbacks.
-However, `import git_format_repo` will work inside the callbacks file,
-even if git_format_repo.py has not been made available in general.
-
-Tests are added which lightly exercise the new feature, and I have
-also used it myself for a real repo rewrite (of the “simple but
-long-winded” variety).
-
-----
-
-Also document (briefly) the existing feature of supplying a file
-name rather than an inline function body to --foo-callback options,
-and the availability of an unspecified set of globals to individual
-callbacks (with instruction to see the source code for details).
-
-This patch introduces uses of the Python standard library modules
-errno, importlib, and inspect.  All functionality used from these
-modules was available in 3.6 or earlier.
-
-This patch introduces several new translatable strings and changes
-one existing translatable string.
-
-----
-
-Signed-off-by: Zack Weinberg <zack@owlfolio.org>
----
- Documentation/git-filter-repo.txt |  39 ++++++-
- git-filter-repo                   | 164 +++++++++++++++++++++++-------
- t/t9391-filter-repo-lib-usage.sh  |   2 +-
- t/t9392-python-callback.sh        |  57 ++++++++++-
- 4 files changed, 219 insertions(+), 43 deletions(-)
-
-diff --git a/Documentation/git-filter-repo.txt b/Documentation/git-filter-repo.txt
-index 85cd5b9..09128e4 100644
---- a/Documentation/git-filter-repo.txt
-+++ b/Documentation/git-filter-repo.txt
-@@ -1084,7 +1084,7 @@ For flexibility, filter-repo allows you to specify functions on the
- command line to further filter all changes.  Please note that there
- are some API compatibility caveats associated with these callbacks
- that you should be aware of before using them; see the "API BACKWARD
--COMPATIBILITY CAVEAT" comment near the top of git-filter-repo source
-+COMPATIBILITY CAVEAT" comment near the top of the git-filter-repo source
- code.
- 
- All callback functions are of the same general format.  For a command line
-@@ -1102,10 +1102,39 @@ def foo_callback(foo):
- --------------------------------------------------
- 
- Thus, you just need to make sure your _BODY_ modifies and returns
--_foo_ appropriately.  One important thing to note for all callbacks is
--that filter-repo uses bytestrings (see
--https://docs.python.org/3/library/stdtypes.html#bytes) everywhere
--instead of strings.
-+_foo_ appropriately.  Alternatively, _BODY_ can be the name of a file,
-+in which case the function body is read from that file.
-+
-+Callback functions defined this way have access to all the standard
-+library modules imported by git-filter-repo itself, plus its public
-+library API; see the `public_globals` variable, near the top of
-+git-filter-repo, for the exact list.
-+
-+Callback functions can also be defined in a group:
-+
-+--------------------------------------------------
-+--callbacks FILE
-+--------------------------------------------------
-+
-+will load FILE as a Python module.  FILE should define functions
-+(actually, any Python callable will do) for each of the callbacks you
-+wish to use, with names like `foo_callback`, where `foo` corresponds
-+to a `--foo-callback` command line option.  This can be useful if you
-+need to share state among your callbacks, or do some preparation in
-+advance of the first call.
-+
-+Callback functions defined this way are _not_ given access to any
-+modules or globals that FILE doesn’t import for itself.  However,
-+`import git_filter_repo` will work inside FILE, whether or not
-+`git_filter_repo.py` has been installed (see `INSTALL.md` in the
-+source tree for further explanation).
-+
-+There can be only one callback function of a particular type, however
-+you define it.
-+
-+When writing callbacks, keep in mind that git-filter-repo uses
-+bytestrings (see https://docs.python.org/3/library/stdtypes.html#bytes)
-+everywhere, instead of strings.
- 
- There are four callbacks that allow you to operate directly on raw
- objects that contain data that's easy to write in
-diff --git a/git-filter-repo b/git-filter-repo
-index 9cce52a..7334c2d 100755
---- a/git-filter-repo
-+++ b/git-filter-repo
-@@ -32,8 +32,10 @@ operations; however:
- 
- import argparse
- import collections
-+import errno
- import fnmatch
- import gettext
-+import inspect
- import io
- import os
- import platform
-@@ -53,10 +55,10 @@ __all__ = ["Blob", "Reset", "FileChange", "Commit", "Tag", "Progress",
- 
- # The globals to make visible to callbacks. They will see all our imports for
- # free, as well as our public API.
--public_globals = ["__builtins__", "argparse", "collections", "fnmatch",
--                  "gettext", "io", "os", "platform", "re", "shutil",
--                  "subprocess", "sys", "time", "textwrap", "tzinfo",
--                  "timedelta", "datetime"] + __all__
-+public_globals = ["__builtins__", "argparse", "collections", "errno",
-+                  "fnmatch", "gettext", "inspect", "io", "os", "platform",
-+                  "re", "shutil", "subprocess", "sys", "time", "textwrap",
-+                  "tzinfo", "timedelta", "datetime"] + __all__
- 
- deleted_hash = b'0'*40
- write_marks = True
-@@ -1719,6 +1721,9 @@ class FilteringOptions(object):
-       def foo_callback(foo):
-         BODY
- 
-+    Alternatively, BODY can be a filename; then the contents of that file
-+    will be used as the BODY in the callback function.
-+
-     Thus, to replace 'Jon' with 'John' in author/committer/tagger names:
-       git filter-repo --name-callback 'return name.replace(b"Jon", b"John")'
- 
-@@ -1728,8 +1733,14 @@ class FilteringOptions(object):
-     To remove all .DS_Store files:
-       git filter-repo --filename-callback 'return None if os.path.basename(filename) == b".DS_Store" else filename'
- 
--    Note that if BODY resolves to a filename, then the contents of that file
--    will be used as the BODY in the callback function.
-+    You can also use the --callbacks option to define several callback
-+    functions at once:
-+
-+      git filter-repo --callbacks my_callbacks.py
-+
-+    my_callbacks.py will be parsed as a Python module.  It should
-+    define functions with names like 'foo_callback', corresponding to
-+    the various --foo-callback options.
- 
-     For more detailed examples and explanations AND caveats, see
-       https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#CALLBACKS
-@@ -1983,6 +1994,10 @@ EXAMPLES
-         help=_("Python code body for processing reset objects; see "
-                "CALLBACKS section below."))
- 
-+    callback.add_argument('--callbacks', metavar="FILE",
-+        help=_("File defining callback functions, to be loaded as a "
-+               "Python module; see CALLBACKS section below."))
-+
-     desc = _(
-       "Specifying alternate source or target locations implies --partial,\n"
-       "except that the normal default for --replace-refs is used.  However,\n"
-@@ -2259,6 +2274,104 @@ EXAMPLES
-       args.refs = ['--all']
-     return args
- 
-+class Callbacks(object):
-+  ''' A set of callback functions; handles fabricating such functions
-+      from the command line arguments. '''
-+
-+  TYPES = [
-+    'blob', 'commit', 'tag', 'reset', 'done',
-+    'filename', 'message', 'name', 'email', 'refname'
-+  ]
-+
-+  @staticmethod
-+  def load_callbacks_module(fname):
-+    ''' Load FNAME as a module object; returns that module object. '''
-+    # Make "import git_filter_repo" work inside the file we're loading,
-+    # whether or not git_filter_repo.py has been installed.
-+    if 'git_filter_repo' not in sys.modules:
-+      sys.modules['git_filter_repo'] = sys.modules[__name__]
-+
-+    # this recipe almost verbatim from
-+    # https://docs.python.org/3.9/library/importlib.html#importing-a-source-file-directly
-+    # (documented to work in 3.5 and later)
-+    from importlib import util
-+    spec = util.spec_from_file_location('git_filter_repo.callbacks', fname)
-+    module = util.module_from_spec(spec)
-+    sys.modules['git_filter_repo.callbacks'] = module
-+    spec.loader.exec_module(module)
-+
-+    return module
-+
-+  @staticmethod
-+  def parse_single_callback(cb_type, cb_name, fname_or_body):
-+    try:
-+      with open(fname_or_body, "rt") as fp:
-+        body = fp.read()
-+    except OSError as e:
-+      # There is no dedicated OSError subclass for "name too long".
-+      if e.errno in (errno.ENOENT, errno.ENAMETOOLONG):
-+        body = fname_or_body
-+      else:
-+        raise
-+
-+    if 'return ' not in body and cb_type not in ('blob', 'commit',
-+                                                 'tag', 'reset'):
-+      raise SystemExit(
-+        _("Error: --%s-callback should have a return statement") % cb_type
-+      )
-+
-+    def_stmt = (
-+      'def {name}({argname}, _do_not_use_this_var = None):\n'
-+      .format(name=cb_name, argname=cb_type)
-+      + '  '
-+      + '\n  '.join(body.splitlines())
-+    )
-+    callback_globals = {g: globals()[g] for g in public_globals}
-+    callback_locals = {}
-+    exec(def_stmt, callback_globals, callback_locals)
-+    return callback_locals[cb_name]
-+
-+  @staticmethod
-+  def make_callback(cb_type, cb_name, mod, fname_or_body):
-+    cb = None
-+
-+    if mod is not None:
-+      cb = getattr(mod, cb_name, None)
-+      if cb is not None:
-+        if not callable(cb):
-+          raise SystemExit(_("Error: %s is not callable") % cb_name)
-+        # the second argument to blob, commit, tag, and reset filters is
-+        # not documented as part of the command line callbacks API; allow
-+        # people using --callbacks to define callbacks with only one argument
-+        sig = inspect.signature(cb)
-+        if len(sig.parameters) == 1:
-+          real_cb = cb
-+          def wrapper(obj, _unused = None):
-+            return real_cb(obj)
-+          cb = wrapper
-+
-+    if fname_or_body is not None:
-+      if cb is not None:
-+        raise SystemExit(_(
-+          "Error: Cannot define %s_callback in --callbacks module and also"
-+          " use --%s-callback"
-+        ) % (cb_type, cb_type))
-+      cb = Callbacks.parse_single_callback(cb_type, cb_name, fname_or_body)
-+
-+    return cb
-+
-+  def __init__(self, args):
-+    if args.callbacks is None:
-+      mod = None
-+    else:
-+      mod = Callbacks.load_callbacks_module(args.callbacks)
-+
-+    for cb_type in Callbacks.TYPES:
-+      cb_name = cb_type + '_callback'
-+      setattr(self, cb_type, Callbacks.make_callback(
-+        cb_type, cb_name, mod, getattr(args, cb_name, None)
-+      ))
-+
- class RepoAnalyze(object):
- 
-   # First, several helper functions for analyze_commit()
-@@ -2877,37 +2990,16 @@ class RepoFilter(object):
-     self._full_hash_re = re.compile(br'(\b[0-9a-f]{40}\b)')
- 
-   def _handle_arg_callbacks(self):
--    def make_callback(argname, str):
--      callback_globals = {g: globals()[g] for g in public_globals}
--      callback_locals = {}
--      exec('def callback({}, _do_not_use_this_var = None):\n'.format(argname)+
--           '  '+'\n  '.join(str.splitlines()), callback_globals, callback_locals)
--      return callback_locals['callback']
--    def handle(type):
--      callback_field = '_{}_callback'.format(type)
--      code_string = getattr(self._args, type+'_callback')
--      if code_string:
--        if os.path.exists(code_string):
--          with open(code_string, 'r', encoding='utf-8') as f:
--            code_string = f.read()
--        if getattr(self, callback_field):
-+    arg_callbacks = Callbacks(self._args)
-+    for cb_type in Callbacks.TYPES:
-+      callback_field = '_{}_callback'.format(cb_type)
-+      arg_cb = getattr(arg_callbacks, cb_type)
-+      if arg_cb is not None:
-+        if getattr(self, callback_field) is not None:
-           raise SystemExit(_("Error: Cannot pass a %s_callback to RepoFilter "
--                             "AND pass --%s-callback"
--                           % (type, type)))
--        if 'return ' not in code_string and \
--           type not in ('blob', 'commit', 'tag', 'reset'):
--          raise SystemExit(_("Error: --%s-callback should have a return statement")
--                           % type)
--        setattr(self, callback_field, make_callback(type, code_string))
--    handle('filename')
--    handle('message')
--    handle('name')
--    handle('email')
--    handle('refname')
--    handle('blob')
--    handle('commit')
--    handle('tag')
--    handle('reset')
-+                             "AND define it on the command line"
-+                             % cb_type))
-+        setattr(self, callback_field, arg_cb)
- 
-   def _run_sanity_checks(self):
-     self._sanity_checks_handled = True
-diff --git a/t/t9391-filter-repo-lib-usage.sh b/t/t9391-filter-repo-lib-usage.sh
-index 3a86961..daf1d57 100755
---- a/t/t9391-filter-repo-lib-usage.sh
-+++ b/t/t9391-filter-repo-lib-usage.sh
-@@ -157,7 +157,7 @@ test_expect_success 'erroneous.py' '
- 		cd erroneous &&
- 		test_must_fail $TEST_DIRECTORY/t9391/erroneous.py 2>../err &&
- 
--		test_i18ngrep "Error: Cannot pass a tag_callback to RepoFilter AND pass --tag-callback" ../err
-+		test_i18ngrep "Error: Cannot pass a tag_callback to RepoFilter AND define it" ../err
- 	)
- '
- 
-diff --git a/t/t9392-python-callback.sh b/t/t9392-python-callback.sh
-index cb36292..cafb9cf 100755
---- a/t/t9392-python-callback.sh
-+++ b/t/t9392-python-callback.sh
-@@ -181,7 +181,7 @@ test_expect_success 'callback has return statement sanity check' '
- 	)
- '
- 
--test_expect_success 'Callback read from a file' '
-+test_expect_success 'callback read from a file' '
- 	setup name-callback-from-file &&
- 	(
- 		cd name-callback-from-file &&
-@@ -192,5 +192,60 @@ test_expect_success 'Callback read from a file' '
- 	)
- '
- 
-+test_expect_success 'callback defined in a module' '
-+	setup name-callback-from-module &&
-+	(
-+		cd name-callback-from-module &&
-+		cat >> ../callbacks.py <<\EOF &&
-+def name_callback(name):
-+    return name.replace(b"N.", b"And")
-+EOF
-+		git filter-repo --callbacks ../callbacks.py &&
-+		git log --format=%an >log-person-names &&
-+		grep Copy.And.Paste log-person-names
-+	)
-+'
-+
-+test_expect_success 'friendly error when module callbacks are not callable' '
-+	setup bad-callback-friendly-error &&
-+	(
-+		cd bad-callback-friendly-error &&
-+		cat >> ../bad-callbacks.py <<\EOF &&
-+name_callback = "not a callable"
-+EOF
-+		test_must_fail git filter-repo --callbacks ../bad-callbacks.py 2>../err &&
-+		test_i18ngrep "Error: name_callback is not callable" ../err &&
-+		rm ../err
-+	)
-+'
-+
-+test_expect_success 'module/cmdline callback collision' '
-+	setup mod-cmdline-callback-collision &&
-+	(
-+		cd mod-cmdline-callback-collision &&
-+		cat >> ../mccoll-callbacks.py <<\EOF &&
-+def name_callback(name):
-+    return name.replace(b"N.", b"And")
-+EOF
-+		cat >> ../mccoll-name-cb <<\EOF &&
-+return name.replace(b"N.", b"And")
-+EOF
-+		test_must_fail git filter-repo --callbacks ../mccoll-callbacks.py --name-callback ../mccoll-name-cb 2>../err &&
-+		test_i18ngrep "Error: Cannot define name_callback in --callbacks module and also use --name-callback" ../err &&
-+		rm ../err
-+	)
-+'
-+
-+test_expect_success 'module callbacks can import git_filter_repo' '
-+	setup mod-callbacks-can-import &&
-+	(
-+		cd mod-callbacks-can-import &&
-+		cat >> ../import-test-callbacks.py <<\EOF &&
-+import git_filter_repo
-+EOF
-+		git filter-repo --callbacks ../import-test-callbacks.py
-+	)
-+'
-+
- 
- test_done
--- 
-2.44.2
-
+Thanks,
+Taylor
