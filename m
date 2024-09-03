@@ -1,69 +1,69 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3951DC72B
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:50:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06131CF7C7
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725393061; cv=none; b=GFTqldjEhELUwAIp6rPmorQtnKtXJKoCshx3WdeUaagNiE4KmPvY/lTX4dEdjfm5vcM7dAhchyD3ArA9/Un0vaHgbR4w39bSKHGseh1qcM3DEaoQFyi2AoiKOCiHq0iP8tAS1068qe2dxluRSVKDQH3/8wCI2nAsLK0skwji4Aw=
+	t=1725393177; cv=none; b=daOWqSGjOVZMrC4eopvVhwcWrtwrvZYXwn5giXBXZQp8SoKs43ICbS70CI5KQDkUuzm+12PQEGdvyz8lDLPid726oNOwzN6TGejhPesZhTdjKVOk7ePnHVdvEmCYLilMHtr96QYJzqDKx8RxcvRBXJiTlaHASmyQdidhXz2Vv8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725393061; c=relaxed/simple;
-	bh=epDHs752GA4zNGrsnQderR/H0dnfbM52dIKbi4xwpJw=;
+	s=arc-20240116; t=1725393177; c=relaxed/simple;
+	bh=ZkLzDQJBvsTICOfHk/xRuWJgiwHYt+RIF9VUoPKgwIA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B1NEIjNj+s8R0hr4aDdP7GQ3LU3ZukL839t6d++uKFtbCNfJOeH43Q/WDOOzB/0sPmxy3xDV8I/JvU545ucC2D3YDMYxTMOq1qxWrF3H62rfFHQwDCGCASlKgTPkdq8ZtwnSCF1wezEVKFwpLNcRi4HTMWUPTTzjwd7O7VlhUW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZlIcE1bG; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=UDWm+GynSpgocAqjLzNukqWADj3xwqi+VJwluIHfu1ydKVa1V+lBZl6QmFQyI0ZnXJECo7jQq7I7q3q88y6tL9Chx7S+gVTNscbMbgbSbCL8jn75jtY6qQrmwNfQt9n1MVGaFqpc4+yaBK9y/yvNZFPuNwWoc3fg6s2gACtt/sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KOZDNwLr; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZlIcE1bG"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6d47d860fc4so32533437b3.3
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 12:50:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KOZDNwLr"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-456768fb0a6so32964041cf.1
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 12:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725393058; x=1725997858; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725393175; x=1725997975; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t14xa2Dg1XQ1zPR0+G9If4oYdN5QlZ9ZZpb8gcXe5Yg=;
-        b=ZlIcE1bGDJ2PkPgw5uZfpDMk6gLXtLp3NQ3PVN09z52m/3eUUfUviBngyWGJFGBKZ5
-         EgUbmjw17AgdDqEG6vDmkA5qOhkaz6Cop3KjxZcCI/nr4fJW5QH54lYCbVyZttzg77Pa
-         OO8yshxUjYF3LQ4j8B786zujhNucQhna7yv/EOFdYqrjIek2yibSqFigPMe8FDAdot7J
-         GzdDs45tBgiRwMWBXRDJ7AXjfmngs6WsH41k75S7yWo5fUa51B7sqRWxZqZGmbVZyx8B
-         zDKhXisxSRyslOJjf5dqcKZoYAGO0HSncKG93ZJAAMUzNdh/GCtTTGjja5dXJa3bjE3u
-         Ip1g==
+        bh=UJxksiCfx6UYG93EDXcFEsuYlohnPYfndD15ZPpM5PU=;
+        b=KOZDNwLrOUek5tpul9vevFOr5naPsH5v9FxpY97bUZVlz4n9wu38ez+et6MZ/kjKm6
+         l3nBgEKSCbK2qnvyvk44hFB1ZZ1WmLs/ibKQrH+va493yiU2h5qFSZDdRTwAoMqiWZgW
+         GxhKIUi1yiNibTyhFo52eC0dnCm/egm9UW9au7j+nurxTrGXB58RbNjnxeHHd366aJ/p
+         kN0wUfCHVAgEcEIUgFp3zjJ5Iam65bEKseVowCvPQofblNo+8THyDrFofxK0rBjqSRN4
+         2KG4piKMnMayTsBIjnb7DzXEklPxX7MH345xablF1WAeHkNWkUCOZLuyXk6nUkhSM5Jg
+         cT2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725393058; x=1725997858;
+        d=1e100.net; s=20230601; t=1725393175; x=1725997975;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t14xa2Dg1XQ1zPR0+G9If4oYdN5QlZ9ZZpb8gcXe5Yg=;
-        b=AAw54l6MFaBX4e3WXWioN/tUFkFiHG4zuLIVYdh0HMX/EyykxQWsEayGcBX4mdhKEf
-         3lgbcPGf3HDBua6WsrcqR5IJLHOYOHR73iz8Na7NdyHsILtFRdMxzu4CBbvVomEDVwJh
-         vuoc1Mq827Mw75Jg6apA2VxUWI0c8h5kn4WwCgKG19yNpHmKu1hPK0zwY9upX9D6e8uh
-         Sltsanhp3Dbz/hAgfDOSFiePGpL8nPj8cTy/hIMfQazBRrV1mPFbBLv785MrRLQU2JFv
-         Cxm+4wnk7Dqa4SdxgpUBywbTvNg4I0/G9YA/Crd1hY3bXadtcjoDibXGqmywYz+JXWF1
-         Hwvg==
-X-Gm-Message-State: AOJu0YzPYnO2qRFVkuguZXie/XocqtJ73TvsUdCfGs2IfDDp85zL6vgN
-	kBd5eUfv1hORnUG4JiaL0tVeryivHUP2IGIU4yoh82aEuVcY6hQYxBq7/WgtwJrwzQuXpQMnQic
-	5V80=
-X-Google-Smtp-Source: AGHT+IGwd7ID8+Z42J1SO9Zy1uL4i+Lxtbuf4UdEXck4TUUegxCWRLGW2ZAgXkd3v0b7kH0QBxEC+g==
-X-Received: by 2002:a05:690c:fd0:b0:65f:aa06:13ab with SMTP id 00721157ae682-6d40d987cccmr161260677b3.1.1725393058446;
-        Tue, 03 Sep 2024 12:50:58 -0700 (PDT)
+        bh=UJxksiCfx6UYG93EDXcFEsuYlohnPYfndD15ZPpM5PU=;
+        b=NXXp1z/88+BxT22BB5FaIaamx+y3laijx2owjhmWXJ/XHxZVKq98R9/UTJ4qpO7YwO
+         YTvjgeK1i2sRUxM0v9Ujgx9LeuCWT1gm/+gcR2UmA+Mxoq134cbSX0NBE22dEjSWu316
+         0cKUXqWKZELy+UTZUT7RC0QIJv9x91Lr8KhrZlcmxiXYLf6KGe18NXdOcSJXQCmxoTdB
+         TlOeWfeqDFdjoT68JIPw0660dm3EiZ0Xo1kqA+71qPc7iuy1lxIfCRwOze0SyBQ01ukL
+         ytzJOVFfS1E4eiPOuqt7aXL7LY4DVqHCMQND+EuSY1USaEVCEZEWBPXSfLbHWHbdN3eh
+         6q6w==
+X-Forwarded-Encrypted: i=1; AJvYcCV1fuRXT5Y4IRIxUqi58B0l9mTEQMn3n6SiHhqR73ptEbVY8zT4lq0x8ySv07MeDRCr4tU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGu+vx+kP5N4HI7830T4XyI19ofXWUV3O0Gi/Lhk0k2Nzpj2ZW
+	q81vhIV9L6eRq8qaCIrjxCcAp7YvRJOAADQhEYfu7+/86sDu8sw7maCuubAP6xM=
+X-Google-Smtp-Source: AGHT+IESXui6O3hjzC1NmmAC6Aw4jgyBz4VvAvzPPWtQqQiPTYNhlCEPC6e/YQxt27jzwfWT5gbGOg==
+X-Received: by 2002:a05:622a:a0b:b0:447:ee02:220 with SMTP id d75a77b69052e-457e2db98dcmr60364471cf.30.1725393174745;
+        Tue, 03 Sep 2024 12:52:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6d2d5db0f32sm21104097b3.125.2024.09.03.12.50.57
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45682ced1c3sm53202271cf.54.2024.09.03.12.52.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 12:50:57 -0700 (PDT)
-Date: Tue, 3 Sep 2024 15:50:56 -0400
+        Tue, 03 Sep 2024 12:52:54 -0700 (PDT)
+Date: Tue, 3 Sep 2024 15:52:53 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] csum-file.c: use fast SHA-1 implementation when
- available
-Message-ID: <ZtdooJo0XFaBBoU0@nand.local>
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/4] hash.h: scaffolding for _fast hashing variants
+Message-ID: <ZtdpFWtWae2r4Lj4@nand.local>
 References: <cover.1725206584.git.me@ttaylorr.com>
- <e8f5cbd280cc07f68014bd4024d55a740374b349.1725206584.git.me@ttaylorr.com>
- <ZtXAi9KYOKejJmOS@tanuki>
+ <6ac6f934c32bdc600cdb8d2a08d4aa390c1f2994.1725206584.git.me@ttaylorr.com>
+ <ZtXAhP69zu7cDnsA@tanuki>
+ <xmqqh6awlkac.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,77 +72,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZtXAi9KYOKejJmOS@tanuki>
+In-Reply-To: <xmqqh6awlkac.fsf@gitster.g>
 
-On Mon, Sep 02, 2024 at 03:41:31PM +0200, Patrick Steinhardt wrote:
-> On Sun, Sep 01, 2024 at 12:03:32PM -0400, Taylor Blau wrote:
-> > Update hashwrite() and friends to use the fast_-variants of hashing
-> > functions, calling for e.g., "the_hash_algo->fast_update_fn()" instead
-> > of "the_hash_algo->update_fn()".
-> >
-> > These callers only use the_hash_algo to produce a checksum, which we
-> > depend on for data integrity, but not for cryptographic purposes, so
-> > these callers are safe to use the fast (and potentially non-collision
-> > detecting) SHA-1 implementation.
-> >
-> > To time this, I took a freshly packed copy of linux.git, and ran the
-> > following with and without the OPENSSL_SHA1_FAST=1 build-knob. Both
-> > versions were compiled with -O3:
-> >
-> >     $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
-> >     $ valgrind --tool=callgrind ~/src/git/git-pack-objects \
-> >         --revs --stdout --all-progress --use-bitmap-index <in >/dev/null
-> >
-> > Without OPENSSL_SHA1_FAST=1 (that is, using the collision-detecting
-> > SHA-1 implementation for both cryptographic and non-cryptographic
-> > purposes), we spend a significant amount of our instruction count in
-> > hashwrite():
-> >
-> >     $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-> >     159,998,868,413 (79.42%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
-> >
-> > , and the resulting "clone" takes 19.219 seconds of wall clock time,
-> > 18.94 seconds of user time and 0.28 seconds of system time.
-> >
-> > Compiling with OPENSSL_SHA1_FAST=1, we spend ~60% fewer instructions in
-> > hashwrite():
-> >
-> >     $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-> >      59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
-> >
-> > , and generate the resulting "clone" much faster, in only 11.597 seconds
-> > of wall time, 11.37 seconds of user time, and 0.23 seconds of system
-> > time, for a ~40% speed-up.
+On Tue, Sep 03, 2024 at 10:27:39AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> Neat. I knew that SHA1DC was slower, but I certainly didn't expect it to
-> make such a huge difference.
+> > While the property we care about in the context of this patch series
+> > indeed is that the second hash is faster, I think the more important
+> > property is that it's insecure. If I were seeing two APIs, one labelled
+> > fast and one labelled slow, I would of course pick the fast one. So I
+> > wonder whether we should rename things accordingly so that developers
+> > aren't intrigued to pick the fast one without thinking, and also to have
+> > a more useful signal that stands out to reviewers.
+>
+> I do not think this topic is going in the direction it set out to,
+> but if we are to resurrect it by
+>
+>  (1) first to ensure that we won't overwrite existing on-disk files
+>      and other things as needed to safely swap the tail sum to a
+>      cryptographically insecure hash function;
 
-Yeah, I was similarly surprised as you are.
+I discussed this with brian in the sub-thread where I am talking to
+them, but I think this is already the case. The pack is read in
+index-pack and the checksum is verified without using the _fast hash
+functions, so we would detect:
 
-> One thing I'm missing is an analysis of users of "csum-file.c" so that
-> we can assess whether it is safe to switch over this subsystem to use
-> the fast variant. As far as I can see it's used for packfiles, commit
-> graphs, the index, packfile reverse indices, MIDXs. None of them strike
-> me as particularly critical, also because almost all of them would be
-> created locally by the user anyway.
+  - either half of a colliding pair of objects, when reading individual
+    objects' contents to determine their SHA-1s, or
 
-Right, the only case I believe we care about hash collisions is writing
-loose objects, and hashing packed objects from within a packfile. The
-loose object write path does not use hashfile(), so it is immune from
-these changes.
+  - a colliding pack checksum, when computing the whole pack's checksum
+    (which also does not use the _fast variants of these functions), and
 
-The path where we read the objects packed in a packfile to determine
-their OID is also safe, because that happens in index-pack and does not
-use the _fast variants of these functions.
+  - a mismatched pack checksum, when verifying the pack's checksum
+    against the one stored in the pack.
 
-> The only exception are of course packfiles, which get generated by the
-> remote. Is it possible to generate packfiles with colliding trailer
-> hashes? And if so, how would the client behave if it was served a
-> packfile with such a collision?
+>  (2) devise a transition plan to use a hash function that computes a
+>      value that is different from SHA-1 (or SHA-256 for that
+>      matter); and
+>
+>  (3) pick a hash function that computes a lot faster but is insecure
+>      and transition to it.
 
-I think the answer to this is "no", but let's consolidate this
-discussion into the sub-thread where brian and I are already chatting
-about this to avoid having the discussion in two places.
+So I do not think that either of these two steps are necessary.
 
 Thanks,
 Taylor
