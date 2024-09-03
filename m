@@ -1,92 +1,92 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BC213DB92
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 14:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BBF22EE5
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 15:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725374585; cv=none; b=VYUwUbi0Ke76vd410/vaObTuHvjHUgPAQbCf/EIdgE/VcQ+lbaKiMPocYkifGnsncIy46hUHjnHDczEAjqaxeHAtKVuWYZjJFKP/gZ/u/VzAJfos1LJA2+gDhmC1HxIWSED/jOI/mESkpQjvFs9uW1I1/ffBu0ldZorEtjKzX7c=
+	t=1725377919; cv=none; b=pnTuPrpBhsGdBv4952oWEVEAr/ka/Jsg7Fx7iJPs2+9Nop8A4m5PuiKM9hdDqUpyeKZ9BDXlfDzZKviKNEGPL8sVAOpE//mvQD8fbBon/aVShB3do8En1kXKoJEzT4sSNRG/J8GPv+69uIa3gLjuWMw18ggBeyNCVm/jvNvSjeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725374585; c=relaxed/simple;
-	bh=xm+MUduMcGK6/7f+yZ1YPL/CQVn02GDwmOJB23CEeW8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=YTpgpsa9oK78Lw+fVj6V7j37svvfmiz7oQnQwhFuQDFc+uUPrsRuXmU6W6RwI3EC7ByVpDDxBGmtBuU7Zl+dM7QVJM5zH5sMMKCg4U2DpaLuOG48rHDECasMNtAaLcqPDR78tDkL3ObGf86+EVp0FjXjXWYjkUnDM/PCKzZsn4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=JOAeiuzX; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725377919; c=relaxed/simple;
+	bh=UDH08JAd/6tDqg/MoLvAZ0gb3m6vRfplWtcf73EUPxQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aUI47taXE2GuhdvA7lvtFLOM8L6viGIyiQadt8utEJ5N4nUxzy4R6Aea8rAgiVUaDTiRrLN29KNCoYn/tbKYvGHYomK5d0a9nPGjt/RdN3NC2PzDQsv0pZDo6BimjRPyRJZjzwNm0/jv05CG9D69Q5N1iYpnvqsN8hYcmD7tYYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ufzQ5JVV; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JOAeiuzX"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e1ce8a675f7so1745360276.3
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 07:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725374582; x=1725979382; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xm+MUduMcGK6/7f+yZ1YPL/CQVn02GDwmOJB23CEeW8=;
-        b=JOAeiuzXOXnw07KAT1BjzxCr1HcWhhJeOwzg46KVQlptWuqB5VuXnAGInJ96sKp43l
-         aQwqQtPZs0pcrrp2OecVE+T8siSuy+ZriUZriL3nOj2hDMdpdW+Gquy4lXtbB7vUoM+7
-         axd0+jXtiE45odIqO9UitQCOIdQKINrGUqnWkJ/I+Jz7ehXiRU6vlQ65tlNN62opmJu0
-         7HxsPv7ff+6H8fKraNeBiIERHFqBJx0gXwFH/+9evwoHtHSl4oUszkCX8Xn+kXgLRqok
-         znp+zyncMJIGmL6WA1fsuVH6e2r5uZrxEGcqJh1DldBEH0HSP1hhCHotDqGSJ0DsV5v4
-         ABoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725374582; x=1725979382;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xm+MUduMcGK6/7f+yZ1YPL/CQVn02GDwmOJB23CEeW8=;
-        b=pWJVbYtXCQzBDea8QuYNGQZFaCnU3Jw730aHUxfnli7Qwi4P5/w5GDzmQE/XCNjMZk
-         dwEFPfTso5lFzGLUX8jy+kyUTgsRLykYQKb3564oJcOBDvYfAFWac1PEnAOgR4ux20zj
-         q3ep5Xd2xfb/Doeesce/rD5B7m4f0q4gTqLJI6g0nsqcICbfHm+MQzXLNhqTY90iyFhn
-         Oh+SaW0Qkgu/AXWmWJOCtMs4FHZ5jthavon78Kkn1QNUiYzjyUMF0AZDR3OFtvhDQ1gr
-         2Sl+5obniU8OMe4FD0Kc++KUUjMM68EC7UJiBzwyLbK3gLQyChDT0G6q9gddVNlgys+h
-         XX9w==
-X-Gm-Message-State: AOJu0YzoNl//z8Nd8CeNb1L+QOD0y7T2wl4XirB6NFhHNX8i5iHj6ZtS
-	85Hlu3H8ebspk4bpzxDVn/axFkOlbhOsKyyjJWPkVXIe45VIlmjVM7nElCRRGaBq3LlZdccfgU2
-	0980=
-X-Google-Smtp-Source: AGHT+IFdxVOXnYRfDRmSxankwdVabIm4CExUD+yXwNLjjg9OJTeHneFZ9ge57tfxnoR8ujtDA8E72w==
-X-Received: by 2002:a05:6902:c03:b0:e0b:c297:8a1c with SMTP id 3f1490d57ef6-e1a79fdc00emr17462132276.15.1725374582259;
-        Tue, 03 Sep 2024 07:43:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1a94966e24sm1412260276.46.2024.09.03.07.43.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 07:43:01 -0700 (PDT)
-Date: Tue, 3 Sep 2024 10:43:00 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Pedro Rijo <pedrorijo91@gmail.com>
-Subject: [ANNOUNCE] git-scm.com running on heroku-24
-Message-ID: <ZtcgdJmVunVwwCmk@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ufzQ5JVV"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B23B925C42;
+	Tue,  3 Sep 2024 11:38:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=UDH08JAd/6tDqg/MoLvAZ0gb3m6vRfplWtcf73
+	EUPxQ=; b=ufzQ5JVV9YBnuSggD1nTiu0afKjh2QmVj9oGKdnqJJFG097oNTcUBE
+	qWfLicXu5jopHkeNhF9bf9M/3NtuQo82Ka/tlL+TA75mG68wj8WSqCKlswHEjZcQ
+	YeYN17FwyxI4Qm2VS9cEcjPHVWudM3dABMh6zYz0ekHc3m+JoGpp0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AADF925C41;
+	Tue,  3 Sep 2024 11:38:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A0C025C40;
+	Tue,  3 Sep 2024 11:38:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Han Jiang <jhcarl0814@gmail.com>,  git@vger.kernel.org
+Subject: Re: `git rebase (--no-fork-point) --onto=<newbase> [<upstream>
+ [<branch>]]` leaves HEAD detached and *HEAD not moved when <branch> is
+ exactly `HEAD`
+In-Reply-To: <981c8e52-e51d-4aab-a970-bb41315e02cb@gmail.com> (Phillip Wood's
+	message of "Mon, 2 Sep 2024 10:04:24 +0100")
+References: <CANrWfmSY1F4UB2QSjN8XKY7Kwx6FL8SOrz_OadZ4u8XYDpZfBg@mail.gmail.com>
+	<61a4fcc1-1dd8-48a4-a1d4-0201232c9b26@gmail.com>
+	<xmqq1q23pegz.fsf@gitster.g>
+	<981c8e52-e51d-4aab-a970-bb41315e02cb@gmail.com>
+Date: Tue, 03 Sep 2024 08:38:29 -0700
+Message-ID: <xmqq4j6woih6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 92769BC8-6A0A-11EF-A01E-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-I upgraded the git-scm.com Heroku app to use the heroku-24 stack, which
-moves us off of the deprecated heroku-20 stack.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-The heroku-20 stack was deprecated [1] a few months ago back in June of
-this year, and builds will begin failing periodically starting in
-February, 2025. I've been getting periodic emails from Heroku about
-this, and finally found some time to perform the upgrade.
+>> I have a mild suspicion that the "rebase" command might have changed
+>> its behaviour since the days back when it was implemented as a shell
+>> script, when the "what to rebase" argument is HEAD, as the most
+>> natural implementation to do this "optionally first switch to it
+>> when the argument is given" in the scripted Porcelain is to actually
+>> run "git checkout HEAD", which should be a somewhat noisy no-op.j
+>
+> It appears to have changed in 0cb06644a5 (rebase [--onto O] A B: omit
+> needless checkout, 2008-03-15). That also changed the reflog messages
+> written by "git rebase <upstream> <branch>" so that "git checkout
+> @{n}" does not see the new branch being checked out.
 
-This should be a no-op for anyone using or visiting the site. I deployed
-a review app to test the changes beforehand, and everything seems to be
-working after creating and seeding the database, etc.
+Thanks for digging.  Even if we now know that it was a regression in
+the early times of the current code, it is way too old to change it
+now.
 
-But if you notice any issues, please do not hesitate to open an issue on
-the git/git-scm.com repository [2], or reply to this thread.
+Unless we want to do so at a major version bump, but I do not know
+if this is big enough to worth writing a release note entry for.
+Users who do want to run a trial rebase of the current branch on a
+detached HEAD have all been already using HEAD^0 as the <branch>
+argument and they have been fine without complaints.
 
-There is some work ongoing to move the site away from Heroku [3], but
-this change should keep the site running smoothly in the meantime until
-that work is complete.
+Making it consistent in the opposite direction by changinging "git
+checkout HEAD" to detach HEAD is unthinkable.  So what we have is
+fine, I would think.
 
-Thanks,
-Taylor
-
-[1]: https://help.heroku.com/NPN275RK/heroku-20-end-of-life-faq
-[2]: https://github.com/git/git-scm.com
-[3]: https://github.com/git/git-scm.com/pull/1804
+Thanks.
