@@ -1,68 +1,68 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E261D223A
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C5C1D7E2B
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 19:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725392415; cv=none; b=Enq06+P94w3AKyzbJixFayXQLUv9ni69Nxde00ju8K3uiUontq9OuY7v0ze3IdzYlPSUjJqyDRY0HbF7coXtSTtgBYPRfdsQvIpkNMaLIQek8KjXLFQXwpUiSiWApSEWq9B4rnFtCPxT8PMUX9KI4FyhIy8Z5CvBScUoevwfefQ=
+	t=1725392587; cv=none; b=KUzwJwcEXXnWCnAizfPfW3AHTRnjWZRyuL8nRl7VUoJy7BFRdtDh2GDxFQz7tbkB6pGbwW1maVBjTPpqsZPUW5c+cF16YT+WiAfi3bD0BvjUOGq08XZt3AacA5GiA2HaXUnBZe/Ng0P7ABw6GtWxQuTX1O2j3GwZkCibu7D/v/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725392415; c=relaxed/simple;
-	bh=HGYilpS55BkIEyhObr8iP+LzBRRrygt05ugr0mLeoR4=;
+	s=arc-20240116; t=1725392587; c=relaxed/simple;
+	bh=b/Evwa8efVbDFlN2fFDuk5HNMOgQlyKDZjnhNUBV45w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h8G9AlXkbfSgsCjm83VChBdQSGtlLi1Hkhr0N3hUcOp9ll/8F82mu+nzTIfOGUc7ObpNyEn4qTMrNR/n17JvLynI6Le+Jyr13d3klonY9zRCg7VWGZ8k1JhT+RqY2lrVbvHcEHYR2jB4r7Ipw4MurOZRPTk+9A6/EpuB5q8cMIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lvZxdzhq; arc=none smtp.client-ip=209.85.128.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=uDZOLeAQTbAjw3Obi8ew/aRBLUazT9LYVuzYwbtqdB7Of6g90LcZJbuCq1ofZnx64s5lOmicdvsVk0pfNMWTgVl2lwBNTG3YyhOFNO8tl2I5IyvNvazTAJ+P9seR8teCq+5WqRz3UM0kqsknBrNyh5FBwdpFgOFWU1sA7g7yIOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=s+ubP81H; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lvZxdzhq"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6b4412fac76so45760067b3.1
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 12:40:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="s+ubP81H"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e02c4983bfaso6001820276.2
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 12:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725392413; x=1725997213; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725392585; x=1725997385; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qGyx3uTqVEOxu7LJC5JUmrjtvbBJHgo+hVnM9OlYyko=;
-        b=lvZxdzhqeGIAoDL8HKTJNDaremvYc3oHqG4gBLLg2O91vl5Uqq9tD+zMWyxDylY5rH
-         P5C8GxIan0x7oRFVb2wj9MdsRgx+v5icxZL2qquJxFNZO+zAxgZniw25isk9fr1TYrXH
-         6dPv8jwvzsMi6NVOzViERkcAoqgvaXX3lqt9WShm7h4dof5JpJdxY45E0zd4xu7fw8pr
-         08DgyestCb/clUlO2m+jWq41D5zx3jlPW9rh35258Npe9Tb5diYLsTjLyvlLTXKPNbsb
-         XSwuuSiiVpzlgLuVuuFplhquwRCx858/AWvo1NiY5Mi5Kw+dVDzJqd/tnwqHvoWsGGpK
-         THhA==
+        bh=Rwoh3AeGzpCOdYPCWVITqSW+KlmmbF4NEp2UZ8liJSI=;
+        b=s+ubP81H7mCgVbMgiLpkEv4mHGcGZ5VIhwPJoTMaQ3Q+KvqR15YJuHmSCnkwVaOOi7
+         SDeuhGnuEXij/tmoJKDqTdAn9jQiqhjZfHT9/BzWJC5ZWSE/0fUBybMhMXFBOi88isZy
+         spru60MdhT9uBfD2uEtXlFf5K19zEcdGKQmqaZvvWz2b+Uq3B3vkhU/Ed9ifLWSp3DUj
+         DJTPEMgGSyDWBr2+JVc17EU/8BdHGglWGOrhPnShqlmeH2rvNDn1Q0aTXKTFzo9G5RUn
+         ytPlI+fy+lhRqnvdNiNqAqPfDcqarmlIsW2egqsBJt6ENIWb3kxrFp6Z3I2+fQwRcjwl
+         M92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725392413; x=1725997213;
+        d=1e100.net; s=20230601; t=1725392585; x=1725997385;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qGyx3uTqVEOxu7LJC5JUmrjtvbBJHgo+hVnM9OlYyko=;
-        b=CicfX1l9VzC9sKvGmLrWFGUEKye2VCi2ekNMUI1uilfBvdWnMMTqhONlCUP0BqWZ+1
-         +qFhfxe7esd3kWo9PicY5Bvk5Y4+jeBxaukMcdZNxorPaIueIfGqhMrp6ZFlSc9XwNif
-         fouzkkkN6veZk93GmNFmMwRHGfCdRoNppP6pIYJBYxZlNE+eg7iJX9VI+2FvGgZffxNa
-         dAwACi+lNh0TRfcWwhp080W3V0tRQbhPi5mWMFK1g1hIWFtv5j6mG0qDpwSu9ngZ3kz3
-         WhLo6IAzux1oNqFstasreEzTM4vwS4zHIrvNj7KOP65/klq4Jn9gY5gU/gUo6JL1Brop
-         vVeQ==
-X-Gm-Message-State: AOJu0Yx2piSpyUG3F4Q14ofhdATGnAW/h63sFcjbY7RX/lknPSHDw9vt
-	sO/AovLl6Vvedt3w3/Xht7KxWIIeiHhojXVshmDFXZBTjUB+J736edlJ9MX9vqZP0HfZkiCUCCX
-	6nYE=
-X-Google-Smtp-Source: AGHT+IFI2aTGnP01x+gJGSR4IYlU6QZzS6mZiHWmCwJfxVJECm2WPILJvYXzFhTUOGMqe6XShrfbuw==
-X-Received: by 2002:a05:690c:102:b0:64b:4a9f:540d with SMTP id 00721157ae682-6d40f9286f4mr141556507b3.31.1725392412834;
-        Tue, 03 Sep 2024 12:40:12 -0700 (PDT)
+        bh=Rwoh3AeGzpCOdYPCWVITqSW+KlmmbF4NEp2UZ8liJSI=;
+        b=jnkuSCfdukN9i8y9TmJ3C6UR82VWy6cuhUUCNwBcocUx8SBJixyoM0V+gnuj1pssO3
+         Ax3yUmUw23SlI9XV8dWI6xWVmbnnwnXSPFYeciSo6/D526DqmOjYEmRlyuncJXryGHll
+         00kT2loSZyLZfSrVE2EK1i+u/5B4H79CIkDwd4k4JXwcwQZjCYxsc/x+GA2wwIhEgDHI
+         Q0cMg5HS+XzVRbP8yEY9Y0mvEv1BEs6O3iXjdzdp/7cd0r//M3er7pdm/7vggxYeAjtj
+         yzNQCUku4GGWc5pb2mRw4yR8RaKRUUxwrPqh6lHqA3KRl9BT6/Jc7v61YifWqYjaMo6k
+         Ruvw==
+X-Gm-Message-State: AOJu0YwW9DO3wCjON9kegKWoP6pMsYulq1n94diRPvNHrg5MzXcLR/cU
+	kvJXq3aKEKUIiEVmSEZsY8rTsryxFh6Lwt/FgAcAIzO0zo13vG5CA4vq5XDYT94=
+X-Google-Smtp-Source: AGHT+IGxp9XccH1qofvsc4ePZOer2VOVJ4uGJPrSOxlq3rssnHukN2ueMGc80xesnGuPaLMpbWd5cw==
+X-Received: by 2002:a05:6902:2601:b0:e1a:b102:47f0 with SMTP id 3f1490d57ef6-e1ab1024a76mr8921787276.41.1725392584792;
+        Tue, 03 Sep 2024 12:43:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6d6d99b0b1csm9642197b3.109.2024.09.03.12.40.12
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1cf1ac2a4csm559842276.12.2024.09.03.12.43.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 12:40:12 -0700 (PDT)
-Date: Tue, 3 Sep 2024 15:40:11 -0400
+        Tue, 03 Sep 2024 12:43:04 -0700 (PDT)
+Date: Tue, 3 Sep 2024 15:43:03 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] hash.h: scaffolding for _fast hashing variants
-Message-ID: <ZtdmGwuEgOdLCglF@nand.local>
+Subject: Re: [PATCH 3/4] Makefile: allow specifying a SHA-1 for
+ non-cryptographic uses
+Message-ID: <Ztdmx6UD0XYcv/BP@nand.local>
 References: <cover.1725206584.git.me@ttaylorr.com>
- <6ac6f934c32bdc600cdb8d2a08d4aa390c1f2994.1725206584.git.me@ttaylorr.com>
- <ZtXAhP69zu7cDnsA@tanuki>
+ <682e4c2cc3581c72262ea6a9b488a246fc6fde28.1725206584.git.me@ttaylorr.com>
+ <ZtXAiIwLgtQNkwyH@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,57 +71,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZtXAhP69zu7cDnsA@tanuki>
+In-Reply-To: <ZtXAiIwLgtQNkwyH@tanuki>
 
-On Mon, Sep 02, 2024 at 03:41:24PM +0200, Patrick Steinhardt wrote:
-> > This commit does not actually introduce any new compile-time knobs to
-> > control which implementation is used as the fast SHA-1 variant, but does
-> > add scaffolding so that the "git_hash_algo" structure has five new
-> > function pointers which are "fast" variants of the five existing
-> > hashing-related function pointers:
-> >
-> >   - git_hash_init_fn fast_init_fn
-> >   - git_hash_clone_fn fast_clone_fn
-> >   - git_hash_update_fn fast_update_fn
-> >   - git_hash_final_fn fast_final_fn
-> >   - git_hash_final_oid_fn fast_final_oid_fn
-> >
-> > The following commit will introduce compile-time knobs to specify which
-> > SHA-1 implementation is used for non-cryptographic uses.
+On Mon, Sep 02, 2024 at 03:41:28PM +0200, Patrick Steinhardt wrote:
+> > +endif
+> > +endif
+> > +endif
+> > +endif
+> > +
 >
-> While the property we care about in the context of this patch series
-> indeed is that the second hash is faster, I think the more important
-> property is that it's insecure. If I were seeing two APIs, one labelled
-> fast and one labelled slow, I would of course pick the fast one. So I
-> wonder whether we should rename things accordingly so that developers
-> aren't intrigued to pick the fast one without thinking, and also to have
-> a more useful signal that stands out to reviewers.
+> What a cascade of `endif`s :)
 
-I tried to come up with a different name myself when writing this
-series, and wasn't happy with any of the others that I came up with. I
-thought of "insecure_init_fn()", or "non_cryptographic_init_fn()". The
-first one appears scarier than the second, but both are mouthfuls.
+Heh, indeed. These are copy/pasted from the hunk below this one, so
+nothing new here.
 
-As a middle-ground, I updated the comments to say "fast /
-non-cryptographic" in places where they just said "fast" previously. Let
-me know if you think that's sufficient, otherwise I can try and come up
-with some more names.
+> Do we also want to wire up support in config.mak.uname such that the
+> fast variants are default-enabled? Or is there a good reason to not do
+> that?
 
-> We may want to apply our new coding guidelines around nested
-> preprocessor directives, which should also use indenting.
+I thought that I might consider doing that in a separate series, if at
+all. I would like have users opt-in to the new behavior rather than
+imposing any change on them in this series.
 
-Gotcha.
-
-> > @@ -222,6 +249,21 @@ struct git_hash_algo {
-> >  	/* The hash finalization function for object IDs. */
-> >  	git_hash_final_oid_fn final_oid_fn;
+> > diff --git a/hash.h b/hash.h
+> > index f255e5c1e8a..450e579b405 100644
+> > --- a/hash.h
+> > +++ b/hash.h
+> > @@ -15,6 +15,31 @@
+> >  #include "block-sha1/sha1.h"
+> >  #endif
 > >
-> > +	/* The fast hash initialization function. */
+> > +#if defined(SHA1_APPLE_FAST)
+> > +#include <CommonCrypto/CommonDigest.h>
+> > +#define platform_SHA_CTX_fast CC_SHA1_CTX
+> > +#define platform_SHA1_Init_fast CC_SHA1_Init
+> > +#define platform_SHA1_Update_fast CC_SHA1_Update
+> > +#define platform_SHA1_Final_fast CC_SHA1_Final
+> > +#elif defined(SHA1_OPENSSL_FAST)
+> > +#  include <openssl/sha.h>
+> > +#  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
+> > +#    define SHA1_NEEDS_CLONE_HELPER_FAST
+> > +#    include "sha1/openssl.h"
+> > +#  endif
+> > +#  define platform_SHA_CTX_fast openssl_SHA1_CTX
+> > +#  define platform_SHA1_Init_fast openssl_SHA1_Init
+> > +#  define platform_SHA1_Clone_fast openssl_SHA1_Clone
+> > +#  define platform_SHA1_Update_fast openssl_SHA1_Update
+> > +#  define platform_SHA1_Final_fast openssl_SHA1_Final
+> > +#elif defined(SHA1_BLK_FAST)
+> > +#include "block-sha1/sha1.h"
+> > +#define platform_SHA_CTX_fast blk_SHA_CTX
+> > +#define platform_SHA1_Init_fast blk_SHA1_Init
+> > +#define platform_SHA1_Update_fast blk_SHA1_Update
+> > +#define platform_SHA1_Final_fast blk_SHA1_Final
+> > +#endif
+> > +
+> >  #if defined(SHA256_NETTLE)
+> >  #include "sha256/nettle.h"
+> >  #elif defined(SHA256_GCRYPT)
 >
-> Providing some context here why there are two sets of functions would
-> help future readers.
+> Curiously, some of the nested statements here are indented whereas
+> others aren't. We should aim to make that consistent.
 
-Very fair, will adjust (as above).
+Sure, this one was also copy/pasted from the block above, but I'll
+adjust the new one accordingly.
 
 Thanks,
 Taylor
