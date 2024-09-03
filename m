@@ -1,53 +1,53 @@
-Received: from pfout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from pfhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8CA15573A
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 08:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AACD1D6786
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 08:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725351141; cv=none; b=dTsEK9kNtgYLmCrY08DhXjOMU4yUm+kksOTgwqWR1Qk6R8GGHMRl0qdLaAjRRumUOLVUlSgZEGst+O03Q/dccrdytFaMnP+AZ3VCP1LJie66KoFKHiKZkmfZETI81d9AuD7E5bjcPwTGf5zcrQ3bJQC5Nfs3YX5hJsGzhJSS6j0=
+	t=1725351143; cv=none; b=KDbojOlx0BD+6qevEdckZgnWtmrHvgde3MWmYesGNqtI1XVdGEqzn4miSSPFm3lWCew3sk+XKhZ6W96C6c7/xXxnYvAQRU5QOgyOFDkAo+nunMEMwHakwkhjDlxe2Gp7Im/uW4zn1/5Yml4zEhMe0E+em3loDQc9/48QIl3V9Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725351141; c=relaxed/simple;
-	bh=pbOVk2cPLGQLwwY5MqxhlmcVC0lprBluFHqh3ZEJkBs=;
+	s=arc-20240116; t=1725351143; c=relaxed/simple;
+	bh=N16gRFAlLYmBWpldg2dA8QAM2VZnoaCamJZSGPSHjAM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ku5Jy0eOPDqPUvdlYeS3jCD+4nJSnHHbE7I96YRnrsvKQworQdpo7+UO+EBDK9HxqA6SFvrTO7vjS/oDlt/AjhQfwgUeyRqyFwUJPoNHPUv4FayekgA+L+1V2y0HmuSFjclnibil3Yi+CyzMXG+u103TvKnhE0KiZVD+CgamUyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GdJSQ8S4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QpCOkAD0; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=d35lpIZ8fbJ0Te4bOsNvVhmZK9fZirC39IFP7bpxpg/XaklyLBPO/TclrNM5ar+jbNSqoi9kLm+PiYM41sEKxxVgffKWgqCKCJAj7H69ZISKPLeEA3cZvyYuw7EnfksJAmJAomxPJEPEnQVqYS2VbCbgByFBUW7WjzrRHVnVMXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dwVG6imv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EjpRbQSN; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GdJSQ8S4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QpCOkAD0"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A579913803BA;
-	Tue,  3 Sep 2024 04:12:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dwVG6imv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EjpRbQSN"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 794C3114027F;
+	Tue,  3 Sep 2024 04:12:20 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Sep 2024 04:12:18 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 03 Sep 2024 04:12:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725351138; x=1725437538; bh=rK++GwryXT
-	CGqOPa1fnE/Q0lkn80m80+CS/mX4iYiJw=; b=GdJSQ8S4mN+cfbmDAXhNtqmPsc
-	XT/kNS6Ho/H8TAEbnb+PakkIBQ0+8E0peQfaJhfpjaVCrzVfrAUQo2I6+0WzVMbk
-	Psc4zF8fjNrjJJsUjG6lZJkgIE1gTC+XmP0eAcTR7X1g6aVezEAJV6j4DzuzmaOk
-	AL5Hx+WnEpk27wo82h2Cg9YFiU1NTzSLz9BvawsivtmYmO4Mc35BarDf/udqwiw9
-	pzHX10H+vDDRUFzvr++lLFqq8aZaahhjIm4/Wv/9qu0WBX+DG/CNST9yarLMrmZh
-	tjTNCR2UvAmoOd5YF3Oqy2a89pGVQJRPnjPpov+Cz2b+Cf0coxKlw6WlcDwg==
+	:subject:to:to; s=fm1; t=1725351140; x=1725437540; bh=c9EQmqlKiH
+	eiODeYlZ16Qk+byFP3eCr2L9gK4KeWJJQ=; b=dwVG6imvu123PxqshASO7lnMKI
+	Ghm0vI7v16CWnq28s26IJU/0F4eQzz5WQaZImlaUcacffnRveHN3Jl84UTE5RnLH
+	PwUhNUF5Ry3upovh0RqoVARnGtBfw35utrCtQkkhfXA205NaKdgSRV6pSILKsGLS
+	cO5o9hR9H7wO0j5xLmeYYY3UdlIQlJafEplvcYGnzubZAyT1lymsr1f7nQ4IbBL8
+	LoCNWFDuDFRp/2Ts5TJmvTVQEreXVK1LVjDRKI++WWVk1KZF1Oy2spe5yyyDhz9N
+	44JwONkWn1LmD5Isj1qelSLlT1fvjJK6Y+XODZriFJAxbKa+k0AG+MTFiwEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725351138; x=1725437538; bh=rK++GwryXTCGqOPa1fnE/Q0lkn80
-	m80+CS/mX4iYiJw=; b=QpCOkAD04cJt3DQyBpd7HianrEtSZcPqmdMBj8YkISzU
-	QK3VdpFPmNcp72nkP7pmRIhKm1IMG6nUnEvpbPFBiDoqexfK8i5wVGy/4dJK8G13
-	aDZcey0CjCU+8ERV7XeNaPj4ytGIh9Ma+SvMTC0Cy8KOsGaKS1mMvk8Fe1oLJUoi
-	142/hM2imaB+JoQimgsCvW8elofINr+CkuNTq9Juttd4ovCgs8lMDZR/LSGFeyjd
-	mY1vSlb8lhjut74p9KUcCx+e7jljVqGYnQkgzEWxsVx6mxvWvf9a9qh27vfogs9o
-	+nawLFyjw27jFPnccQM2Zby0G/nacmQDnfstgrxg2Q==
-X-ME-Sender: <xms:4sTWZoYSOEnhx6ycvqfvGtIUaaKvryFq6RrDVZ47ZHL6252X6j6tWQ>
-    <xme:4sTWZjZjAh2OblJiWj05LUd8BDc7qTxt7PGlJxI0MS3lqUccR3-wusTF7YGPQWCRD
-    EdqonAGauwXtIN8Cw>
-X-ME-Received: <xmr:4sTWZi8aT8AG4Ugw2lNKZxUiA93lTSiiYUTKdX3syP3IiSA8FIT-yYMhO6qDyh6pukEOQhP11Mgdayk1MVjYv9QFvluPlsQlQJFGa2uyQY5fpQ>
+	fm1; t=1725351140; x=1725437540; bh=c9EQmqlKiHeiODeYlZ16Qk+byFP3
+	eCr2L9gK4KeWJJQ=; b=EjpRbQSNfk+wEwDrg6aID1rHNwL1YllGmn+UUq77VoJI
+	O1LZpCXOlaAzq0hrPET4VgM9HwVEyEdy1smQanrg3/uGBPtsH+fx/wi8amdclwmJ
+	kh6Rg5BJRok1jTh5H1j0EnDJqjy/HoBjcKAzrn2A5vsDY8CFNoKPDS0v6gNzuzPd
+	o588CiX27dXzrO62++W8AV9g23ln512tSecoQJdQISctA/v7Zeq0Mc/eckFCPZh3
+	dWm+t05p/MSw9UvX1bxvKPjrZr9GhGm/3AUcHXbjvhlpJBjQM5wnb/ztVsxn98tB
+	qiuBFJcIdOXsLMdH1wopkN0729ykuFM56Qba9nElJw==
+X-ME-Sender: <xms:5MTWZo6xuEw_GjB6iQTbSvjgAfw8B9UTK4tWwx1aHy_NOAHWuTPMug>
+    <xme:5MTWZp5JB7Ut1cln3uFXoRwJZZ6ZEFdEWbxc-UrYdjVSfBvQTwd29OrlTr6YjjxsL
+    1vKXLdPGz7C1wCGkw>
+X-ME-Received: <xmr:5MTWZnekRnmaFGyEPS90vYDGEmYlWxRbs0NjWlfd1-KMAjl58nR7LJHDCfWgORPKRROiBmnX23xgY1t3I2CG0ZEgnwjZD0WKd1Xe991w6-ha8Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhecutefuodetggdotefrodftvfcurf
     hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
     kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
@@ -56,26 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhecutefuodetggdotefrod
     ggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffh
     ueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
     hrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehphhhilhhlihhp
-    rdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegvthhhohhmshhonh
-    esvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
-    rdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    ohhuthdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpth
     htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtthhopehrshgsvggtkh
-    gvrhesnhgvgigsrhhiughgvgdrtghomh
-X-ME-Proxy: <xmx:4sTWZirMax0cftXzd6NDwzL_4q4KATKZZt8ClpgQGUgVO17sh9em_Q>
-    <xmx:4sTWZjpuTz-40yzC8TC9NOis84oG_9lm8hNlCh9pUozok32STpD-0w>
-    <xmx:4sTWZgSnOLyD3eGrBu8US7dDGkKzhMHQvzLaut4fxpaP02YMSV8jbA>
-    <xmx:4sTWZjpGeuxkIWcK_9BOp0s0dg_FParaWYdyDVczyckKX7EBoozK5w>
-    <xmx:4sTWZm1LFLDRLShT_SswYHNIxFtx-6boLdne32cMhdsuIf4e8RiNmgZt>
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehlrdhsrdhrseifvg
+    gsrdguvgdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdp
+    rhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprh
+    gtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:5MTWZtJcbi8rPabWQCVi9BgaW5yABB82kq-8Us6ntB2GQ2ujf-3fNg>
+    <xmx:5MTWZsL1PUNSoKPLBP9j6RUAoLH57wF7Ga15hWfQrwfX3GFZA_BsSw>
+    <xmx:5MTWZuyL7JdeOhsg2ut0KFjRD7RHxzKQOL92yiiTpx6nAlhVI9qM_g>
+    <xmx:5MTWZgItm01PoGSm68X6Mwb3m3e3OADeGBCP2IHnYwh44OtaHTNiuw>
+    <xmx:5MTWZhVW_NN8IaHSvPTvAYYb3PW-6Bp6liyuFhSDHPoPkTHusyVrjSTW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Sep 2024 04:12:16 -0400 (EDT)
+ 3 Sep 2024 04:12:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 76ab0b84 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Sep 2024 07:45:28 +0000 (UTC)
-Date: Tue, 3 Sep 2024 09:45:33 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 943c0585 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Sep 2024 07:45:31 +0000 (UTC)
+Date: Tue, 3 Sep 2024 09:45:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -84,12 +84,12 @@ Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
 	Edward Thomson <ethomson@edwardthomson.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 11/13] t/unit-tests: convert strvec tests to use clar
-Message-ID: <Zta-nU4UMyrWgABW@tanuki>
+Subject: Re: [PATCH v6 12/13] t/unit-tests: convert ctype tests to use clar
+Message-ID: <Zta-oVnKUNEE86q-@tanuki>
 References: <cover.1722415748.git.ps@pks.im>
  <cover.1724159966.git.ps@pks.im>
- <b3b8df048725c25b14860513b7950b158a6990ea.1724159966.git.ps@pks.im>
- <c6f13f6b-7899-4bbd-986a-9bb1649b214f@gmail.com>
+ <1ac2e48a7f2d41d60ff56890d8d87125f30c2f76.1724159966.git.ps@pks.im>
+ <2dbdb173-9e31-4dbc-a65a-dd952ec1c213@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,118 +98,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c6f13f6b-7899-4bbd-986a-9bb1649b214f@gmail.com>
+In-Reply-To: <2dbdb173-9e31-4dbc-a65a-dd952ec1c213@gmail.com>
 
-On Wed, Aug 28, 2024 at 02:17:05PM +0100, Phillip Wood wrote:
+On Wed, Aug 28, 2024 at 02:18:02PM +0100, Phillip Wood wrote:
 > Hi Patrick
 > 
 > On 20/08/2024 15:02, Patrick Steinhardt wrote:
-> > Convert the strvec tests to use the new clar unit testing framework.
-> > This is a first test balloon that demonstrates how the testing infra for
-> > clar-based tests looks like.
+> > Convert the ctype tests to use the new clar unit testing framework.
+> > Introduce a new function `cl_failf()`
+> 
+> This is a nice addition which somewhat mitigates the lack of an equivalent
+> to test_msg() that adds addition context messages to test failures.
+> 
+> > that allows us to print a
+> > formatted error message, which we can use to point out which of the
+> > characters was classified incorrectly. This results in output like this
+> > on failure:
 > > 
-> > The tests are part of the "t/unit-tests/bin/unit-tests" binary. When
-> > running that binary, it generates TAP output:
+> >      # start of suite 1: ctype
+> >      ok 1 - ctype::isspace
+> >      not ok 2 - ctype::isdigit
+> >          ---
+> >          reason: |
+> >            Test failed.
 > 
-> It would be interesting to see a comparison between the current framework
-> and clar of the output from a failing test - the TAP output for passing
-> tests is pretty much the same regardless of the framework used.
+> "Test failed." is not the reason for the test failure
 
-Will do.
+The clar expects two strings, one "general" description and the details.
+I agree that it's a bit shoddy to have this as part of the reason, it
+really should be a separate "field". But it allows us to distinguish
+e.g. between test failures and tests which emitted a warning, only.
 
-> >      # ./t/unit-tests/bin/unit-tests
-> >      TAP version 13
-> >      # start of suite 1: strvec
-> >      ok 1 - strvec::init
-> > [...] The binary also supports some parameters that allow us to run only
-> > a
-> > subset of unit tests or alter the output:
-> > 
-> >      $ ./t/unit-tests/bin/unit-tests -h
-> >      Usage: ./t/unit-tests/bin/unit-tests [options]
-> > 
-> >      Options:
-> >        -sname        Run only the suite with `name` (can go to individual test name)
-> >        -iname        Include the suite with `name`
-> >        -xname        Exclude the suite with `name`
-> >        -v            Increase verbosity (show suite names)
+> >            0x61 is classified incorrectly
+> >          at:
+> >            file: 't/unit-tests/ctype.c'
+> >            line: 38
+> >            function: 'test_ctype__isdigit'
+> >          ---
 > 
-> The output above seems to include the suite name - are we running the tests
-> with '-v' from our Makefile?
+> This is rather verbose compared to the current framework
 
-The `-v` switch is actually doing nothing when generating TAP output.
+I guess this is a matter of taste. I actually prefer the more verbose
+style.
 
-> >        -q            Only report tests that had an error
+> # check "isdigit(i) == !!memchr("123456789", i, len)" failed at
+> t/unit-tests/t-ctype.c:36
+> #    left: 1
+> #   right: 0
+> #       i: 0x30
+> not ok 2 - isdigit works
 > 
-> This option is incompatible with TAP output. As we force TAP output we
-> should find a way to stop displaying this help.
-> 
-> >        -Q            Quit as soon as a test fails
-> >        -t            Display results in tap format
-> 
-> We force TAP output by adding '-t' to argv in main() so this line is not
-> very helpful
+> The current tests also shows which characters are expected to return true
+> and distinguishes between the two possible failure modes which are (a)
+> misclassification and (b) returning a non-zero integer other than '1' as
+> "true". The new test output does not allow the person running the test to
+> distinguish between these two failure modes.
 
-True indeed. This is the default argument parsing and output from clar,
-so it's nothing that we can change. That being said, I guess the best
-way to address this is to use our own option parsing here instead of
-using whatever clar provides, and then we can also print our own usage.
+This one is true though. Will amend.
 
-Will amend accordingly.
-
-> >        -l            Print suite names
-> >        -r[filename]  Write summary file (to the optional filename)
-> 
-> > diff --git a/t/unit-tests/strvec.c b/t/unit-tests/strvec.c
-> > [..]
-> > +#define check_strvec(vec, ...) \
-> > +	do { \
-> > +		const char *expect[] = { __VA_ARGS__ }; \
-> > +		cl_assert(ARRAY_SIZE(expect) > 0); \
-> 
-> As there are a lot occurrences of ARRAY_SIZE(expect) it is probably worth
-> adding
-> 
-> 	size_t expect_len = ARRAY_SIZE(expect);
-> 
-> above.
-
-Can do.
-
-> > +		cl_assert_equal_p(expect[ARRAY_SIZE(expect) - 1], NULL); \
-> > +		cl_assert_equal_i((vec)->nr, ARRAY_SIZE(expect) - 1); \
-> > +		cl_assert((vec)->nr <= (vec)->alloc); \
-> 
-> The conversion here loses the values of nr and alloc which is a shame as
-> they would be useful when debugging a test failure.
-
-This is something I'd address in the future, once we have macros that
-can do relative comparisons.
-
-> > +		for (size_t i = 0; i < ARRAY_SIZE(expect); i++) \
-> > +			cl_assert_equal_s((vec)->v[i], expect[i]); \
-> 
-> The original test also printed the array index of the failing check. As the
-> elements of the test vectors all seem to be unique that is less of a worry
-> than if we had tests with repeating elements.
-> 
-> > +	} while (0)
+> > diff --git a/t/unit-tests/unit-test.h b/t/unit-tests/unit-test.h
+> > index 66ec2387cc6..4c461defe16 100644
+> > --- a/t/unit-tests/unit-test.h
+> > +++ b/t/unit-tests/unit-test.h
+> > @@ -1,3 +1,10 @@
+> >   #include "git-compat-util.h"
+> >   #include "clar/clar.h"
+> >   #include "clar-decls.h"
+> > +#include "strbuf.h"
 > > +
-> > +void test_strvec__init(void)
-> > +{
-> > +	struct strvec vec = STRVEC_INIT;
+> > +#define cl_failf(fmt, ...) do { \
+> > +	char *desc = xstrfmt(fmt, __VA_ARGS__); \
 > 
-> If we're rewriting the tests perhaps we can take the opportunity to add a
-> blank line to each one after the variable declarations in accordance with
-> our coding guidelines.
+> In our current framework we avoid relying on the strbuf api and functions
+> like xstrfmt() that use it as we want to be able to test strbuf.c with the
+> framework. We'd be better with a macro wrapping a new function that uses a
+> stack allocated buffer and p_snprintf() like clar__assert_equal(). That
+> would allow us to upstream this change as well.
 
-Can do.
+I don't think it's all that important to avoid a low-level API like
+`xstrfmt()`. But the second argument makes sense to me indeed.
 
-> It might be a good opportunity to show the set-up and tear-down facilities
-> in clar as well instead of repeating the initialization in each test.
+> > +	clar__fail(__FILE__, __func__, __LINE__, "Test failed.", desc, 1); \
+> > +	free(desc); \
+> 
+> This is leaked on failure due to the use of longjmp.
 
-I don't think it's a good fit here, as setup and teardown would hit the
-system under test. I rather think they should be used in cases where you
-e.g. always have to setup a repository for your tests.
+As discussed elsewhere I don't think this leak matters all that much.
+But it's getting fixed with your proposal, so that's that.
 
 Patrick
