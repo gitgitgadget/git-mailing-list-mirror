@@ -1,84 +1,169 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74E168D0
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 22:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A5C1EC01E
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 22:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725403296; cv=none; b=VpDF/dfn0QKyEVyHUys/z7AB62vAkadYeNsn9cMGz4S7s6EqB06IUGruqUZi5xmeVow6p5k1FSyXq6QoB1hlRqkqKe9vKYkwanFMQBz2c6wwblPlBkFkCQ4ygiroNhyvdphpHlRvG0Q0w45cHTz1JY//7xXxj2bdxABL6JffflE=
+	t=1725403709; cv=none; b=oDbkruXRIHaIYBY3Jik1qM6b7NwWw0aShRDl4KKJrleRMWqlrQkCS8D1H5UK1ScaUKShyF+soqVwFFR0tM7L8BKX/VVMZ4pqqcGPTNZw7gN4/s6QFG3lWcBzK4/zSw0DgKpvBQJocjFtaoZFtzNG3O3KGm1hUqlqNYU08Blh30k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725403296; c=relaxed/simple;
-	bh=YZZ6tT/h31acoEFz+WqL2FlKxY/H285r6nqndGPa2pM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RqJAMzxHpsCQdobS/TkiPqkCjsoL+eInYCZkhCj0G7axLk4FnXc1tasLBvYbiEKC9D4HEpenfc3p11Tuy7OPNWHiFEpjdTpy9ncpaCMpSSO2RWWYbnB1KLFiOMnf0m7lcQwZpY8hOz2/ONfoNh1xe8IMJYdkt1fEACVD9yZUxiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=d2fyBb2t; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725403709; c=relaxed/simple;
+	bh=ZKtBI+lrFhKqaOk2NwIp1SHtGbLhVKwsvzZ+sqbcueU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FSrNaUV3YxP8irjJxhIRDas6b8MGV+KgZZvywEq7dC5fNgGj5av7324VF/6W4m/HpZSCt4r5Vonq7S7CAEnXK2PP2fP39Hib3oZtn5p3fmT65I4MM0aMnnvUijSQgiHxMIBhmdfdVJVWGffMuH3Dy6m7NxoVLbWOyzEFZ7tmHBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3TJC+cn; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d2fyBb2t"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 37B4F3AB27;
-	Tue,  3 Sep 2024 18:41:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YZZ6tT/h31acoEFz+WqL2FlKxY/H285r6nqndG
-	Pa2pM=; b=d2fyBb2t2anmYLXCd1leWDDDfFZ3fSzh9abyEbf/1NW3JDKdlnJ+th
-	CZ79N7KnAvM9RkI1/x6mv+cvATeqnnUaRU9pIkYmzoxG7wvj+tBsh6noUiuuSCWp
-	29T0xc1TH4ACvJoGEvu++oROxeBivMsFpOeg1UpHsCMnQOrw2nNLk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F68B3AB26;
-	Tue,  3 Sep 2024 18:41:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 967663AB25;
-	Tue,  3 Sep 2024 18:41:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Jeff King <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-In-Reply-To: <Ztdn25zfi8WHO+GS@nand.local> (Taylor Blau's message of "Tue, 3
-	Sep 2024 15:47:39 -0400")
-References: <cover.1725206584.git.me@ttaylorr.com>
-	<ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
-	<Ztdn25zfi8WHO+GS@nand.local>
-Date: Tue, 03 Sep 2024 15:41:31 -0700
-Message-ID: <xmqq1q20gy1w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3TJC+cn"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a8a16c53d3cso260416266b.1
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 15:48:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725403706; x=1726008506; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZKtBI+lrFhKqaOk2NwIp1SHtGbLhVKwsvzZ+sqbcueU=;
+        b=G3TJC+cn9HUBnyi1j1nXlL0WqURsSbf/xtQLBGj8GGBxhWRqeX8jqrYmtB8INVeMhr
+         oGc3QmCePPZGIpv4Wr4mmkxU5Krn/U00FMC9WnFb6ZDeMa9QBpz/r1re6MjyiCxyJn5E
+         lcA0/Vj9+t56OBFCy0f1MIrlsbr0pFmrP4I3+eFyhzthAytwokQTORYTMhsOvdsc75Gy
+         RZQhByvldu7YW2RdRUngfL6IqnRLbHBaTqMMGbbQh9PZgxAiGmqW/kIG+o1ZM+VnPwVQ
+         kq2lRDDJu+yp9TUHhMZajeNBunik3I/Wg/Y4fIMg1PHxv+wkfQNuRDbNZiri6VKP0UBT
+         M2dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725403706; x=1726008506;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZKtBI+lrFhKqaOk2NwIp1SHtGbLhVKwsvzZ+sqbcueU=;
+        b=jHYdEB1kzDr6GeNZiR15NPsMS0nL49LjkdNrUNco119kALWFBxZ4cBbOKnyy6QouVt
+         T7sxlXm3xGq6+y0fRhs4Te1LQ63pQSuheJB6chPAeF2ujQP3E0XM0I1XCnMlWhWgFuPf
+         5bYn3Pebeoz+fxv1JSanpIQdPbxASwBNqH2IRgQwHWjXjV2zPoeyVMR77WrR9XM3ozRk
+         zcc5hOAcasH5bE4UxKzdkJ4orYhwgMg7CtrjWjWReTffUIXmCAmgIoTGh/rgTyfjTd2Q
+         Y8ZFEquyi57JdUOiwDhpRlpwTfpVXR4VMw289wPItl5uUqRKuNBRuY9PsrjA8i6v1hnL
+         /FPA==
+X-Gm-Message-State: AOJu0YxyuRj0Um3qxcqoftcfSFFZJKNkLeraKRLdD9exA9dTzJ2x6JZ8
+	Kh6wyTx1fCK7feuscRaw4/8iJsX1u7aHr+bs1Dav73MGTBXYyMgQS7XbpgNF3ZuuzI4ebZgdxjP
+	IYrgtgplBRpLp5ghcJivZhXybnw99iAyl
+X-Google-Smtp-Source: AGHT+IHYu3QKloo33tcs0/3fxoqeHDoqLiYVnozNbB91HwyLDwu7/Kn/+3Q26TNYTEXFZaTt1NjSrm5hD6v+tv8zbSQ=
+X-Received: by 2002:a17:907:8694:b0:a86:a1db:7aed with SMTP id
+ a640c23a62f3a-a897f8364d2mr1466250866b.22.1725403706019; Tue, 03 Sep 2024
+ 15:48:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AB05A964-6A45-11EF-8373-9B0F950A682E-77302942!pb-smtp2.pobox.com
+From: Han Jiang <jhcarl0814@gmail.com>
+Date: Wed, 4 Sep 2024 10:48:15 +1200
+Message-ID: <CANrWfmS3ja=-7PWHESJVYX2YGQbCkX8-xbAgghgoNZZDpwKUoQ@mail.gmail.com>
+Subject: `git remote set-url <remote> <newurl> [<oldurl>]` fails to set first
+ url when multiple urls are selected
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> But even if the attacker could do all of that, the remote still needs to
-> index that pack, and while checksumming the pack, it would notice the
-> collision (or SHA-1 mismatch) and reject the pack by die()-ing either
-> way. (AFAICT, this all happens in
-> builtin/index-pack.c::parse_pack_objects()).
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-The hosting side writes a packfile and computes the tail sum once.
-You force the clients that clone or fetch validate the tail sum.
-Usually clients outnumber the hoster by large orders of magnitude.
+cd '/'; cd '/'; rm --force --recursive -- './test_git'; mkdir "$_"; cd "$_";
+mkdir --parents -- './server1' './server2' './server3' './server4'
+'./server5' './server6' './client';
+git -C './client' init './repo'
+git -C './client/repo' remote --verbose
+git -C './client/repo' config list --local --show-scope --show-origin
+git -C './client/repo' remote add server 'file://'"$(realpath
+'./server1/repo.git')"
+git -C './client/repo' config set --local --append 'remote.server.url'
+'file://'"$(realpath './server2/repo.git')"
+git -C './client/repo' config set --local --append
+'remote.server.pushurl' 'file://'"$(realpath './server3/repo.git')"
+git -C './client/repo' config set --local --append
+'remote.server.pushurl' 'file://'"$(realpath './server4/repo.git')"
+git -C './client/repo' config set --local --append
+'url.scheme1://authority1/path1/.insteadOf' 'file://'"$(realpath
+'./')"'/'
+git -C './client/repo' config set --local --append
+'url.scheme2://authority2/path2/.pushInsteadOf' 'file://'"$(realpath
+'./')"'/'
+git -C './client/repo' remote --verbose
+git -C './client/repo' config list --local --show-scope --show-origin
+git -C './client/repo' remote get-url server
+git -C './client/repo' remote get-url --all server
+git -C './client/repo' remote get-url --push server
+git -C './client/repo' remote get-url --push --all server
 
-That sounds like you are optimizing for a wrong side, but it does
-point at another aspect of this problem.
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')"
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')" 'server'
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')" 'server2'
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')"
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')" 'server'
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')" 'server4'
+git -C './client/repo' remote --verbose
+git -C './client/repo' config list --local --show-scope --show-origin
+git -C './client/repo' remote get-url server
+git -C './client/repo' remote get-url --all server
+git -C './client/repo' remote get-url --push server
+git -C './client/repo' remote get-url --push --all server
 
-Even without limiting ourselves to the tail sum, our uses of the
-hash function fall into two categories, ones that do not have to be
-overly cautious (i.e., when we are generating data and computing the
-hash over that data), and the others that we do want to be paranoid
-(i.e., when we receive check-summed data from outside world and
-suspect that the data was generated by an adversary).
+What did you expect to happen? (Expected behavior)
+
+https://git-scm.com/docs/git-remote says:
+if <oldurl> is given, sets first URL for remote <name> that matches
+regex <oldurl> to <newurl>.
+if no <oldurl> is given, sets first URL to <newurl>.
+so these commands should not fail:
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')"
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')" 'server'
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')"
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')" 'server'
+
+What happened instead? (Actual behavior)
+
+these commands fail:
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')"
+git -C './client/repo' remote set-url server 'file://'"$(realpath
+'./server5/repo.git')" 'server'
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')"
+git -C './client/repo' remote set-url server --push
+'file://'"$(realpath './server6/repo.git')" 'server'
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.46.0.windows.1
+cpu: x86_64
+built from commit: 2e6a859ffc0471f60f79c1256f766042b0d5d17d
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.9.0
+OpenSSL: OpenSSL 3.2.2 4 Jun 2024
+zlib: 1.3.1
+uname: Windows 10.0 22631
+compiler info: gnuc: 14.1
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
