@@ -1,109 +1,219 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pfhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3A21A0BF2
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC8B1A0BF0
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725356886; cv=none; b=Nf1h7cm5xqep6RtXu09WwpPeCSXj4rPs7wo5kTIe+DSQp38RbOb+g7MzGSC1AC1phaX/Tvyf65oB2RR2follQlmvakxpuVcS+Ns9UWBtJmXXlFtUOAkd45EOwck87H3e/tY3UsWMboo5n/ia4IUum9Ci8u5Xiizi3si0Kh4Uyas=
+	t=1725356935; cv=none; b=XkjdTn9ZQm/6bISj/wQwNYV2LxPOI82/Ezr/rmblGSebFlqtzlxi4N1qdh4ijxqGRuprtQUM2QsthWrrUPF18bqpgDxhn3gtVr9RE39gEiYrY9wYR9DvP1RWp+CIc8XiqOgjcGD42MJG73W6fW9vcnDAQ2oMXB13sXSc3o4toyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725356886; c=relaxed/simple;
-	bh=hJk68djd+blsdCrN5kBgaG6L39I78d5MAdVir43Hv+Y=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bxDn61nOD1QbSRi6ioNA5dTBBxNVshHKgdYCJTpdeeaFXjH+r3XkGJNj+lW0if5BbmNBqGXfy+Lm54M0GOUjwPzXzIjKAmyXBJjSzRsLiUVOfFY5tZ9aOsl4yLH0bUC/bboJfqo2q+kYC7BdpTDz3Y/8L2nYhWQP5aq/88Rrsig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dWsA7TkL; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725356935; c=relaxed/simple;
+	bh=57/W+F2vvNA97M89wUPeTPHda8mpyhPisvOFv6Go73c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=faaw68l4ka+ZHwZojTSadzrv+AOf6oSMBS7uHiPahPmskaBMSC0r7uua94h3APh9M4nhI3zDzfZTn9XVqstNb1F3/7VHBe/01nEzBUFLwpx93dAsV+cSJUuiKb8JmdRWkog7njo/hAgmgYowSAphTpFL48FXCbTMFic6BpNXwsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NxnWVaYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QwfZBMR+; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dWsA7TkL"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c241feb80dso5504084a12.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 02:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725356883; x=1725961683; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=77g8QVpytjR8UOaSwumnI8AMyxiogbLCWCM57o9eips=;
-        b=dWsA7TkLTtUgUVZZOnA9xPc0A1+XUZTZrcMahkBZRwOijNrmXH3aBzLYYs+yhxXNzT
-         i/nVvYXUss3W+9hxKGa0TEpcLy2Elz2MIUz1c5J339DeSLtX6/oY3Kw+TbUpaA60xWBK
-         09Rsw7qe53EzOEttsCHL/l7tjInszrIXMMYmTXdOaMlP06mcVldGC6vHigL5pOW6jwYl
-         RgzJOHyfQFttGYI/NYw8/gv+S6DrOlr5miDDiihX4tncvtqB/C4epX/SYWQynOq3Hvcj
-         EToUB28TzB30WvDwCPYbkZWQGoma1w/JQRyXvA5H611gsVOGHDdwAad3wF1mUVZBBwgD
-         z7rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725356883; x=1725961683;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=77g8QVpytjR8UOaSwumnI8AMyxiogbLCWCM57o9eips=;
-        b=YYd08FJj0i/R7FgkvfZG9jKl6Ic+PfH/XsFijWn7+qWY1JOPTe2g83jhDM7TI36O/S
-         rBbYczbXMJZHEVmuHlnqVZiak4XaKKzfvtKqhjOd/1DRLl3/6m9Yn7gK0/mbi/x8aObq
-         RBy4i5DZC3BvJuQZGRk/XsS9BwiTUcn2vW+Et/PGPt7QyMruW6PXED4bGuacRgvt7LvK
-         /P82gOvp6SpYAWhZhfhdBWn2Krvij1q4z/5tKvSKYHIaTRwlBdR8ILfJ4LM5JVxitUGI
-         yrId/QvVfuXaSPFfL8myJRCXKZebU3x5jCdLe0mwOjFY1NQCdevCzAknDknI0EBaFJ/7
-         AjDw==
-X-Gm-Message-State: AOJu0YyaJOIQeO1pu2ig0Yya2SGDplYCkwzSjagp7iKWFOQOIAWt9Lwz
-	99hobUBQA9uGn/i++12VuIidqC6c8MuC8+3Jb5ZxQdRLiZI5JSJN
-X-Google-Smtp-Source: AGHT+IHvz6TYK/1tquI0orGQMZIQTIf2iPNH+z6OlXKwMJhCQypN45BaWBxOlNyYkYqfZR+5cKepZw==
-X-Received: by 2002:a17:907:6d11:b0:a86:9ff9:6768 with SMTP id a640c23a62f3a-a89827a401bmr1741559766b.22.1725356882711;
-        Tue, 03 Sep 2024 02:48:02 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891d6f16sm659096466b.150.2024.09.03.02.48.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Sep 2024 02:48:02 -0700 (PDT)
-Message-ID: <3be1d990-9f9c-4963-bce3-742511b79022@gmail.com>
-Date: Tue, 3 Sep 2024 10:48:01 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NxnWVaYY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QwfZBMR+"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BDE6D114030C;
+	Tue,  3 Sep 2024 05:48:52 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 03 Sep 2024 05:48:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1725356932;
+	 x=1725443332; bh=mF4saK1elKhJgqki7JnxD04LgAAmzVl8s7J2fhpvrbg=; b=
+	NxnWVaYYinF54+3EBmtZF32CgnTAy8jnngSFDRI4EmSb1uTiSQQOpuoUMG/T24sj
+	ilZpINQhcZEAsW+ZqfjqO00e9lq/wdyapqtjcjmN+Dy097XQovstF6I7bXG9FoAn
+	Ucb3XqwHoYnGUP2U10x7pyGbWfjYEhoHEb6CpYpyrvrletbkO/LLOmWyPnBcJ/dJ
+	lEvsRifQAEDh2Oqz0+6W2zCtjrjB8dLnCMjTntRiPKYegZsz2iQNijdj26gH/XyW
+	0SXkjRibYiArIGnLvrqG6fuKm7NWC+VrYfRTnbxn+KiD9F69oH2tCabXgoeXvcVj
+	nP6XQr78gX33k+7tmXxTjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725356932; x=
+	1725443332; bh=mF4saK1elKhJgqki7JnxD04LgAAmzVl8s7J2fhpvrbg=; b=Q
+	wfZBMR+0a3fcYVkVjhFe7jQ15oObP5wjYxN+W3DRoNRTRBfevWHhOX9R8KNStcJm
+	N5y1hdnmM2TfCgTk4DSC/57uuwPd81Qvcoi7FD3CchaKL7+bu+nAJ9rFcaRgj/KO
+	XjYJ8iAwg/gJhILwoaG+dN6Y4VtLmJzpb4SQ38pcSIozFt39uX/XiS1AuxFFCAmF
+	BcRsg0tmwp/Sqek364qBgaNw4UFav2CqZ0oGXXWNr9XDZ6mYrpwLLM/BCaGTxJVj
+	7H/CjerNOU7g7Q20rPMZv76iz2jU6K1NBdl6n2DnxSnWIVRt29Io8d826WOLdmKu
+	GxV9vhUny10Z4mUDQ4r7Q==
+X-ME-Sender: <xms:hNvWZgJeD6GXTgwrkJT8jJc_qveiJVPMI0YLu37Qr3C2HDWMa9Q5Jw>
+    <xme:hNvWZgLvzg-tRl5GPP4mGUfRC6tyV7M0MlZD3p0s3A4VRJ50ZfoyRvRNMsf1t5xt0
+    h6igc1i5MeP1FrfdA>
+X-ME-Received: <xmr:hNvWZgvoD68ihWtx4IFlTmAM7u6wzSvuntFO0ec1A0THzlsJYMCvd79RTJPYT_gxyOqGqyF59Uo-YNKqT_gSkYWs9DPTIg-S-1Ninx1d3H1VkQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehhedgudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepleevgedvtd
+    ejtefgteefvdekiefflefhgedukeffveeftdfhveeuhfegfeduveffnecuffhomhgrihhn
+    pegvgigrmhhplhgvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehshhhusghhrghmshhiiiiilhgvshesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hNvWZtYaR40RL0Whh6J0BG-SBDm2YZGzFJqqleNg923u9Egn6kE2Hg>
+    <xmx:hNvWZnZ17palesKHHiH8Y8EGLzVXQa2Rc5MuIHh7ov5WW4wlGGV46Q>
+    <xmx:hNvWZpCjvp7wfr8ojvprLpaFmh8mvgvHwMNUEtAQSWZ2cfOJzhym9w>
+    <xmx:hNvWZtaVfPnilGw_gcYYWQWnbI4-_R773vkcEZjwO-r5tH08O9w_ag>
+    <xmx:hNvWZjHrodcRtnX5yEElln1rNdX7YfDiE9XIJhqmDK9Pa61yH_v7yymV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Sep 2024 05:48:51 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 50f7cdad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Sep 2024 09:48:43 +0000 (UTC)
+Date: Tue, 3 Sep 2024 11:48:47 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Shubham Kanodia <shubhamsizzles@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Improvement: `git-maintenance` to allow configuring of remotes
+ to fetch
+Message-ID: <ZtbbejUrUO2tdsUQ@pks.im>
+References: <CAG=Um+1wTbXn_RN+LOCrpZpSNR_QF582PszxNyhz5anVHtBp+w@mail.gmail.com>
+ <Zs8KzG0vzCEDvkvx@tanuki>
+ <xmqq4j7438yc.fsf@gitster.g>
+ <CAG=Um+2OQofcfo3vjvPJEAUht5cGg0LnPAx54SWUPETgkRACPQ@mail.gmail.com>
+ <ZtacHCuql0pX3V2u@tanuki>
+ <CAG=Um+17JYyqC6n0gU3GSNaVz1PaB1U50M1hy87zObB+Rc03Qg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 11/13] t/unit-tests: convert strvec tests to use clar
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>,
- Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
- Edward Thomson <ethomson@edwardthomson.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover.1722415748.git.ps@pks.im> <cover.1724159966.git.ps@pks.im>
- <b3b8df048725c25b14860513b7950b158a6990ea.1724159966.git.ps@pks.im>
- <c6f13f6b-7899-4bbd-986a-9bb1649b214f@gmail.com> <Zta-nU4UMyrWgABW@tanuki>
-Content-Language: en-US
-In-Reply-To: <Zta-nU4UMyrWgABW@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAG=Um+17JYyqC6n0gU3GSNaVz1PaB1U50M1hy87zObB+Rc03Qg@mail.gmail.com>
 
-Hi Patrick
-
-On 03/09/2024 08:45, Patrick Steinhardt wrote:
-> On Wed, Aug 28, 2024 at 02:17:05PM +0100, Phillip Wood wrote:
->> Hi Patrick
->>
->> On 20/08/2024 15:02, Patrick Steinhardt wrote:
->> It might be a good opportunity to show the set-up and tear-down facilities
->> in clar as well instead of repeating the initialization in each test.
+On Tue, Sep 03, 2024 at 11:31:04AM +0530, Shubham Kanodia wrote:
+> On Tue, Sep 3, 2024 at 10:48 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Sep 02, 2024 at 09:16:24PM +0530, Shubham Kanodia wrote:
+> > > > Patrick Steinhardt <ps@pks.im> writes:
+> > > >
+> > > > > I'm not aware of any discussion around this...
+> > > >
+> > > > I do not think so, either.
+> > > >
+> > > > I agree that it makes as much sense to limit prefetches to a subset
+> > > > of remotes as it makes sense to limit to certain hierarchies (e.g.
+> > > > excluding refs/changes/ or even limiting to refs/heads/seen and
+> > > > nothing else).
+> > >
+> > > I'm seeking advice on the configuration option structure for this
+> > > feature. The typical config format for maintenance tasks seems to be
+> > > as follows:
+> > >
+> > > `maintenance.<task-name>.<option>`
+> > >
+> > > A natural extension of this for the prefetch task could be:
+> > >
+> > > ```
+> > > git config maintenance.prefetch.<remote-name>.refs refs/heads/master
+> > > ```
+> > >
+> > > In this structure, the 'refs' value represents only the source part of
+> > > a refspec, and both remote and refs can be configured.
+> > > Specifying a full refspec isn't necessary since the --prefetch option
+> > > may override the destination anyway.
+> > >
+> > > While I've successfully implemented this approach, I'm open to
+> > > suggestions for alternative configuration options. My concerns are:
+> > >
+> > > 1. Most Git configurations are nested up to three levels deep, whereas
+> > > this proposal introduces a fourth level.
+> > > 2. This configuration appears in the config file as:
+> > >
+> > > ```
+> > > [maintenance "prefetch.origin"]
+> > >        refs = refs/heads/master
+> > > ```
+> > > which might look odd?
+> >
+> > Agreed, it does. To me, the most natural way to configure this would be
+> > as part of the remotes themselves:
+> >
+> > ```
+> > [remote "origin"]
+> >     url = https://example.com/repo.git
+> >     fetch = +refs/heads/*:refs/remotes/origin/*
+> >     # Whether or not the prefetch task shall fatch this repository.
+> >     # Defaults to `true`.
+> >     prefetch = true
+> >     # An arbitrary number of refspecs used by the prefetch task.
+> >     # Overrides the fetch refspec if given, otherwise we fall back to
+> >     # using the fetch refspec.
+> >     prefetchRefspec = +refs/heads/main:refs/remotes/origin/main
+> > ```
+> >
+> > The prefetch refspec would be rewritten by git-maintenance(1) such that
+> > the destination part (the right-hand side of the refspec) is prefixed
+> > with `refs/prefetch/`, same as the fetch refspec would be changed in
+> > this way.
+> >
+> > An alternative would be to _not_ rewrite the prefetch refspec at all and
+> > thus allow the user to prefetch into arbitrary hierarchies. But I'm a
+> > bit worried that this might cause users to misconfigure prefetches by
+> > accident, causing it to overwrite their usual set of refs.
+> >
+> > > Also, hopefully my mail is formatted better this time!
+> >
+> > It is, thanks!
+> >
+> > Patrick
 > 
-> I don't think it's a good fit here, as setup and teardown would hit the
-> system under test. I rather think they should be used in cases where you
-> e.g. always have to setup a repository for your tests.
+> Interesting. I guess if we put this in `remote.*` instead of
+> `maintenance.*` what's unclear then is if this setting should also be
+> respected by `git fetch --prefetch`
+> when used outside the context of a maintenance task — since that'd
+> probably be a bigger change.
 
-I'm not sure I follow. I was suggesting we define 
-test_strvec__initialize() to initialize a global strvec which the tests 
-use and is then freed by test_strvec__cleanup() like the tests/adding.c 
-example the clar's README.md. That would allow use to remove the setup 
-and teardown from each test. As I understand it clar's setup/cleanup 
-functionality is usable without setting up a sandbox directory for each 
-test.
+I would've expected it to already do, given that it is explicitly
+documented in git-fetch(1) to be for git-maintenance(1). I don't have
+enough knowledge around the prefetching task though to be able to tell
+whether it should or shouldn't.
 
-I'll take a look at v7 in the next few days - I suspect we're getting to 
-the point where it's ready to be merged.
+> For instance, the `skipFetchAll` remote config option seems to apply
+> to prefetches (within maintenance & outside) and normal fetches.
+> 
+> Additionally, we'd need to discuss what to do with backward compatibility:
+> 
+> If we were designing maintenance prefetch right now, it'd probably
+> make sense not to fetch it for any remote / refspec by default unless
+> explicitly enabled since
+> fetching all refs can be a waste of space in more cases than not.
+> 
+> However, since the current behaviour already fetches all remotes and
+> refs, I don't know if breaking this is something we could do? If not,
+> the behavior would be —
+> 
+> 1. If none of the remotes specify a `prefetch: true`, then prefetch
+> all remotes and refs (backwards compat)
+> 2. If at least one of the remotes specifies `prefetch: true` then only
+> that remote should be fetched
+> 3. Two-tier `fetch` / `prefetchRefSpec` hierarchy to decide which refs
+> to fetch (we can decide on the name later as `fetch` and
+> `prefetchRefSpec` seem asymmetrical)
 
-Best Wishes
+I don't think we should change the current default. As mentioned in my
+mail, `prefetch` should default to `true` such that the behaviour as we
+have it right now is unchanged. Thus any remote that doesn't have it
+gets fetched by default, and to disable fetching a specific remote you
+would have to set `remote.<name>.prefetch = false`.
 
-Phillip
+While the second item, namely change the default to `false` when there
+is at least one `prefetch` config, might be something to consider. But
+in the end I think it would lead to confusing behaviour, so I'd not go
+there personally.
 
-> Patrick
+Patrick
