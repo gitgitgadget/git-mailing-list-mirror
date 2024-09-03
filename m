@@ -1,165 +1,231 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED9A1D88C3
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 22:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B1F1D7E4C
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 22:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725401216; cv=none; b=AKtblKJg9GLJzhXh+CybckaG8FRIthkQNt9Rin3HUCXJQQUzOvFXbkom7HVrS5/27vUn06EkvstgR4yRfHSmYyIEjqSluflRRIwZW+CI0tg+TCa2lVfCrpg6UY2Cy+4ubmkdd3sEY/OTNjM/gwRR+p2vHI3Z9FGhYFii76cH7aY=
+	t=1725401491; cv=none; b=FbNQMcZ94ID2m4xuIveoNvd855s64Q0kaBFjO/KD8Rd1pNBaZzpu3bfFFcI/WeueEoYaDgp5cpqHDWulDdDdKy6+fs71l5NvY8Eu8A7LLDjvziEilxse+YxXt6nfFzYVQfnVpfqEB7oxu/HAIEp/T83ZluoFRrQlHin9jjjN/JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725401216; c=relaxed/simple;
-	bh=k3zqn/w4HkRx5sqHTuYeI4pIkAW4NRjhqcgFW4oEVdQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SlUVLSA5y3wE/IOLVXWXa2vYRazODAgFis4y3pZiZs9CzcV7WSEOl8DaOBMJ5BEEsDwVS4lFQA7YY+BQSaV7MYS1ygomgZCkI8HKw3US2x3XIWSqVdRNkreYXJgyN9h+RO8dAUE5ghYpf5xj8xuAYLiDQ5v88CVwfk4ShVDL2yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTP6Te03; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1725401491; c=relaxed/simple;
+	bh=C08jB2iTWeEB+npV7cYmZC61P1EF7EmAy+X6x4ZUp0k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IJWmpCaGxup8/KKjz3XF7099dahqmqgSniBFqbCG42ylIZErVmnufzeiQXWe4H/eN3seEymevSi5FZh9UZC7bPcX13ofkvMN6zN1bDmJtMEwF9+0kpJAxHegNtJrxMZqkzNzPPHid0ruloEYdG3d62iuMJJTOW/Wj6mU49XAhw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqQEG+Yq; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTP6Te03"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a866d3ae692so339353866b.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 15:06:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqQEG+Yq"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-82a316f8ae1so167370539f.1
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 15:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725401211; x=1726006011; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1725401488; x=1726006288; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/yMnIJkTJjce0gXAPjc03uZ/yS9kmwpi7BaT3dAzcQE=;
-        b=bTP6Te03Mc/kTSaRwo9Hlp8Kfribb3/CYWVHDGOnidwMPM0p3PetGx2ycl3c8kYAVk
-         hxpDPkkj+Ult7L2o+W5Wwg4xCfuBmLOCkyJV6ijdwivE1cbZ8TMHqZdUyn8nU412wXIH
-         SCajRckqpwVHyQUJqwi9aIhnSgNPlRM3rE9Vyn9VXayZoqWu5wD3yYtkwMbCb5pz41Ht
-         k4ooNG+/wmMicU55OTj1RrFaWcFLQ2UjVG+xGOMuTyiT9phv+jsjVS88V5x0ekigQfLp
-         1l+1DsMdeuPvSnS7n3oKLTMMt24+p3L5Pt1XOeE6X+4dFQnrrogNFbf0EIf9MaKm1/lL
-         jppw==
+        bh=jAOsxT32qBucJfCONeTopZXSTR3mNH4ARmeZJWal3dE=;
+        b=hqQEG+Yq2uWpBfMoeGAy1I4KMgnmZsi+82qYSp/gD3JYOPnH1cdQB1kuALGw9PMdI+
+         HOANCUK3Q8J+OSEY4cKXPpB2MUh+U1LYqJMDp4buit0UkanpazdpJ2lvB3846cZD24PQ
+         Hlhu4dow1NAXnOaDxfnfOntNSWWaFcC3Mp1rykkUXekLF5kSRfuanTDFQCgmTTu92RFt
+         h75PGcTcLIH2I0z2srO2VskS6luMUwQTTsdCq/8/tV3IhDjpGrl6aSxeJWQJjTpBM55i
+         +bTfQcuv8nBYF+zCysUdaVr6w5YSxrXsXYjO1VLfwJYM9mE6l51vy1Gx+eeQ5hPR7GJa
+         US/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725401211; x=1726006011;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1725401488; x=1726006288;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/yMnIJkTJjce0gXAPjc03uZ/yS9kmwpi7BaT3dAzcQE=;
-        b=nQHnaYBiDtHqX5eoDjwWMZJz3oWCYQ/M78IRZdkjQvJJfnYmgPCee5D2E781c6J/mc
-         UDYmZV1IBwITyMzOtEkTeytUTr9DZTbOS1WyEDeJE/UNgX5zHt7vb28lcHqVQfvRSHh7
-         /a4PBk6lUbk0bSE6OD8AB2w5n0iAjFP1vduybSdqVSJfv4ukqeiKeMRAl0GbXt73VysT
-         kpYAtNWpw6uEChWbrsj0S8Y+rFHbran0CSjLc3/vH8IEH91/vFWq1E+UF6bodxAyouS9
-         FdAPUpfxHqSVqKIY+8kOOB2aKic1shVAiqn5bVU+qLuSoGBJ14Zu9PhzfUqtvwJT/Jmo
-         np5Q==
-X-Gm-Message-State: AOJu0YyU0o/Vm7DxgilIL0GMf3c61ruNZ2ouwnyMnTFsDgC49XaP6VEz
-	cXm3lsWOfQXdGZj2Ns54pa9FJHU3jEEJFb20nVvUsHbFc+5taFqn03w9Kg==
-X-Google-Smtp-Source: AGHT+IE2rg+ICD+Ui0bcw2akoE0kV02bXM8JOBHf+QADRtkNCQs0EGLyND13AJVcClINXzFNnqdR1Q==
-X-Received: by 2002:a05:6402:d08:b0:5c2:1803:ac65 with SMTP id 4fb4d7f45d1cf-5c21ed54d08mr17128815a12.21.1725401210330;
-        Tue, 03 Sep 2024 15:06:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c24b5ad63dsm4447658a12.80.2024.09.03.15.06.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 15:06:50 -0700 (PDT)
-Message-Id: <ac913257309960d86a9c11e825c76621c6ac405c.1725401207.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1770.v4.git.git.1725401207.gitgitgadget@gmail.com>
-References: <pull.1770.v3.git.git.1725386044.gitgitgadget@gmail.com>
-	<pull.1770.v4.git.git.1725401207.gitgitgadget@gmail.com>
-From: "Kevin Lyles via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Sep 2024 22:06:47 +0000
-Subject: [PATCH v4 2/2] builtin/cat-file: mark 'git cat-file' sparse-index
- compatible
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=jAOsxT32qBucJfCONeTopZXSTR3mNH4ARmeZJWal3dE=;
+        b=TpF9XT72AXvOs8oZxk7CVYC5W4wtcBVHxICAQO1VuJU10ftcSRNo7n4XR7wRBunqKa
+         BlCXG5WZoGPWeIwPlkOQZ5qtZfPBAgrBmhIPwbFoZAHUWDQb/F9sfgyYI0Ni9heR44at
+         KyhpPNx9R5jpqQBwie8JCeI0UiuojKc8btWWgoQAMpSFvueS8O9upX3E+rWvziGMlRqg
+         N83kkTRttVl1U/cTxc4L7bYrFDpP84mDv6Ndcv2jmkMNb9GKER7cbtWTLMJ4t/Nen5a9
+         ukiNQHNWXIw8Nb3oNhA38gsqrfZmM4VbYooFsHGEnvpkwSaZPSPvhjVItneiShomG3pV
+         eeEQ==
+X-Gm-Message-State: AOJu0Yz1i3C7qru6kiwDHIBamNmdJJH6Gwf7V6DBP5+XI3Mr0augqbft
+	u8m/gS47oI6qYexVc6fcxJfXHhVvhicpfW7yQAhONaawuW6E1mijgL2lKhVQQvBLDaw2xsmOh13
+	Ye8iS+ERjEzTjbs3xhG8UGPMJ2micJV56
+X-Google-Smtp-Source: AGHT+IHFW3XE5z7LECi2iRXelnkMt59/y55Im9d6CbRHCDBYj1/FYtMBzalqssaxC2tjtkalK2jjExjPQ7cWOOqGDDE=
+X-Received: by 2002:a05:6602:3d4:b0:82a:4be0:94e2 with SMTP id
+ ca18e2360f4ac-82a5eacb613mr814634539f.9.1725401488146; Tue, 03 Sep 2024
+ 15:11:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Kevin Lyles <klyles+github@epic.com>,
-    Kevin Lyles <klyles+github@epic.com>
+References: <20240903194244.16709-1-zack@owlfolio.org>
+In-Reply-To: <20240903194244.16709-1-zack@owlfolio.org>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 3 Sep 2024 15:11:16 -0700
+Message-ID: <CABPp-BFqbiS8xsbLouNB41QTc5p0hEOy-EoV0Sjnp=xJEShkTw@mail.gmail.com>
+Subject: Re: [filter-repo PATCH]: add --callbacks option to load many
+ callbacks from one file
+To: Zack Weinberg <zack@owlfolio.org>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kevin Lyles <klyles+github@epic.com>
+Hey,
 
-This change affects how 'git cat-file' works with the index when
-specifying an object with the ":<path>" syntax (which will give file
-contents from the index).
+Thanks for sending this in.
 
-'git cat-file' expands a sparse index to a full index any time contents
-are requested from the index by specifying an object with the ":<path>"
-syntax. This is true even when the requested file is part of the sparse
-index, and results in much slower 'git cat-file' operations when working
-within the sparse index.
+On Tue, Sep 3, 2024 at 12:43=E2=80=AFPM Zack Weinberg <zack@owlfolio.org> w=
+rote:
+>
+> If you are trying to do something complicated with filter-repo,
+> you might need to share state among several callbacks, which is
+> currently impossible (short of poking values into someone else=E2=80=99s
+> namespace) because each callback defined on the command line gets
+> its own globals dictionary.
 
-Mark 'git cat-file' as not needing a full index, so that you only pay
-the cost of expanding the sparse index to a full index when you request
-a file outside of the sparse index.
+Sharing state is not impossible; it's done in multiple examples in
+filter-repo.  If you want to do something complicated with
+filter-repo, you can just import it as a library.
+contrib/filter-repo-demos includes several more complicated examples,
+including complete replacements for git-filter-branch and
+bfg-repo-cleaner.  Let's look at how some of them hook up callbacks:
 
-Add tests to ensure both that:
-- 'git cat-file' returns the correct file contents whether or not the
-  file is in the sparse index
-- 'git cat-file' expands to the full index any time you request
-  something outside of the sparse index
+$ git grep 'callback=3D.*\.' contrib/
+contrib/filter-repo-demos/bfg-ish:    self.filter =3D
+fr.RepoFilter(fr_args, commit_callback=3Dself.commit_update)
+contrib/filter-repo-demos/clean-ignore:  filter =3D fr.RepoFilter(args,
+commit_callback=3Dchecker.skip_ignores)
+contrib/filter-repo-demos/filter-lamely:
+ commit_callback=3Dself.fixup_commit,
+contrib/filter-repo-demos/filter-lamely:
+ refname_callback=3Dself.tag_rename,
+contrib/filter-repo-demos/filter-lamely:
+ tag_callback=3Dself.deref_tags)
 
-Signed-off-by: Kevin Lyles <klyles+github@epic.com>
----
- builtin/cat-file.c                       |  3 ++
- t/t1092-sparse-checkout-compatibility.sh | 36 ++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+The fact that these callbacks point towards an instance method
+function makes it clear that these functions will all have access to
+the relevant instance ('self' or 'checker' in the examples above),
+even when they are different callbacks.  They also have wider access
+to whatever globals you might want to define in that file as well;
+it's only the simple one-off defined-at-the-command-line callbacks
+that were geared towards the simplistic cases that have a separation.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 18fe58d6b8b..1afdfb5cbae 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -1047,6 +1047,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	if (batch.buffer_output < 0)
- 		batch.buffer_output = batch.all_objects;
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	/* Return early if we're in batch mode? */
- 	if (batch.enabled) {
- 		if (opt_cw)
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 4cbe9b1465d..eb32da2a7f2 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2358,4 +2358,40 @@ test_expect_success 'advice.sparseIndexExpanded' '
- 	grep "The sparse index is expanding to a full index" err
- '
- 
-+test_expect_success 'cat-file -p' '
-+	init_repos &&
-+	echo "new content" >>full-checkout/deep/a &&
-+	echo "new content" >>sparse-checkout/deep/a &&
-+	echo "new content" >>sparse-index/deep/a &&
-+	run_on_all git add deep/a &&
-+
-+	test_all_match git cat-file -p :deep/a &&
-+	ensure_not_expanded cat-file -p :deep/a &&
-+	test_all_match git cat-file -p :folder1/a &&
-+	ensure_expanded cat-file -p :folder1/a
-+'
-+
-+test_expect_success 'cat-file --batch' '
-+	init_repos &&
-+	echo "new content" >>full-checkout/deep/a &&
-+	echo "new content" >>sparse-checkout/deep/a &&
-+	echo "new content" >>sparse-index/deep/a &&
-+	run_on_all git add deep/a &&
-+
-+	echo ":deep/a" >in &&
-+	test_all_match git cat-file --batch <in &&
-+	ensure_not_expanded cat-file --batch <in &&
-+
-+	echo ":folder1/a" >in &&
-+	test_all_match git cat-file --batch <in &&
-+	ensure_expanded cat-file --batch <in &&
-+
-+	cat >in <<-\EOF &&
-+	:deep/a
-+	:folder1/a
-+	EOF
-+	test_all_match git cat-file --batch <in &&
-+	ensure_expanded cat-file --batch <in
-+'
-+
- test_done
--- 
-gitgitgadget
+> Or, if you are trying to do something simple but long-winded, such as
+> replacing the entire contents of a file, you might want to define long
+> multi-line (byte) strings as global variables, to avoid having to deal
+> with the undocumented number of spaces inserted at the beginning of
+> each line by the callback parser.
+
+Yeah, I can see how the added spaces would be slightly annoying for
+the case of multi-line strings (though simple callbacks like
+`--name-callback 'return name.replace(b"Wiliam", b"William")'` require
+that some kind of leading whitespace be added, and the command line
+--*-callback options are targetted towards the simpler usecases, after
+all).  However, even in that case you can just use textwrap.dedent.
+For example:
+
+git filter-repo --blob-callback '
+  import textwrap
+  blob.data =3D bytes(textwrap.dedent("""\
+    This is the new
+    file that I am
+    replacing every blob
+    with.  It is great.
+    """), "utf-8")
+'
+
+And now every file in your repository is replaced by one with the
+following contents:
+"""
+This is the new
+file that I am
+replacing every blob
+with.  It is great.
+"""
+Notice the lack of leading spaces.
+
+> To facilitate these kinds of uses, add a new command line option
+> `--callbacks`.  The argument to this option is a file, which should
+> define callback functions, using the same naming convention as is
+> described for individual command line callbacks, e.g.
+>
+>     def name_callback(name):
+>         ...
+>
+> to set the name callback.  Any Python callable is acceptable, e.g.
+>
+>     class Callbacks:
+>         def name_callback(self, name):
+>             ...
+>
+>     callbacks =3D Callbacks()
+>     name_callback =3D callbacks.name_callback
+>
+> will also work.  People who know about the undocumented second argument
+> to some callbacks may define callbacks that take two arguments.
+>
+> The callbacks file is loaded as an ordinary Python module; it does _not_
+> get any automatic globals, unlike individual command line callbacks.
+> However, `import git_format_repo` will work inside the callbacks file,
+> even if git_format_repo.py has not been made available in general.
+
+What is this git_format_repo thing you speak of?
+
+Anyway, separate from that and given the above comments I made about
+importing git_filter_repo and textwrap.dedent, I'm a little unsure why
+this new callbacks command line flag helps.  The usage of
+git_filter_repo.py as a library exists for the general case already.
+Simple command line flags like `--path` or `--replace-text` exist to
+handle the simplest cases.  All the *-callback command line flags
+exist to provide a middle ground where the user needs something a bit
+more generic and programmatic, but is still targeting a certain piece
+of data from the fast-export stream and doesn't want the little extra
+verbosity from placing things in a separate file and importing
+git_filter_repo and the few lines of glue necessary to hook it up.
+
+In that scheme, this new --callbacks option doesn't seem to "fit" to
+me.  It makes the middle ground more generic, but not as generic as
+the ability to just import git_filter_repo and do whatever you want.
+There's no specific targeting it provides, which makes it feel to me
+as there's no specific reason for it to exist separate from the more
+generic usecase.
+
+> Tests are added which lightly exercise the new feature, and I have
+> also used it myself for a real repo rewrite (of the =E2=80=9Csimple but
+> long-winded=E2=80=9D variety).
+>
+> ----
+>
+> Also document (briefly) the existing feature of supplying a file
+> name rather than an inline function body to --foo-callback options,
+> and the availability of an unspecified set of globals to individual
+> callbacks (with instruction to see the source code for details).
+
+Thanks for being helpful.  Do note, though, that different logical
+changes should be in separate patches.
+
+> This patch introduces uses of the Python standard library modules
+> errno, importlib, and inspect.  All functionality used from these
+> modules was available in 3.6 or earlier.
+
+Since I recently bumped the minimum required python to 3.6, this is
+all good.  Thanks for calling it out.
+
+> This patch introduces several new translatable strings and changes
+> one existing translatable string.
+
+Again, thanks for taking the time to call this out.
+
+> ---
+>  Documentation/git-filter-repo.txt |  39 ++++++-
+>  git-filter-repo                   | 164 +++++++++++++++++++++++-------
+>  t/t9391-filter-repo-lib-usage.sh  |   2 +-
+>  t/t9392-python-callback.sh        |  57 ++++++++++-
+>  4 files changed, 219 insertions(+), 43 deletions(-)
+
+I skimmed over the patch briefly, and it seems to generally be
+reasonable, but I didn't look real close since I'm not sure if the
+feature "fits".  Does the knowledge about textwrap.dedent or the
+ability to import git_filter_repo help you out?
+
+
+
+Hope that helps,
+Elijah
