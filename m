@@ -1,116 +1,109 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC3A1A0BF2
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3A21A0BF2
+	for <git@vger.kernel.org>; Tue,  3 Sep 2024 09:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725356838; cv=none; b=ADUO8JpdtXsMNBHRbfO37q+bFIW2zbL7vMFFxSBz3lBGfSx2T6IqkIN2uxObdRhfEg8svq8zVZqEdd8XXsxPBlHUN+gVYQaahFrtjtGg/79O440gQJ9xo1Fb+0L/PaScBt1s+BPa/dMIB3ztVHbrbExp2heE6JRXKF7kmXSKp6M=
+	t=1725356886; cv=none; b=Nf1h7cm5xqep6RtXu09WwpPeCSXj4rPs7wo5kTIe+DSQp38RbOb+g7MzGSC1AC1phaX/Tvyf65oB2RR2follQlmvakxpuVcS+Ns9UWBtJmXXlFtUOAkd45EOwck87H3e/tY3UsWMboo5n/ia4IUum9Ci8u5Xiizi3si0Kh4Uyas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725356838; c=relaxed/simple;
-	bh=yY04Ol82KyyXMBy6GGmXx9KBjYGsAeTFa553CqbAqUo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BzmXuX0VOQBCKES7FdG4if9Ycn8FnR1puX9NfGl4sNgpQ5+UcdjEfiC196G9RfD6UH6QeVj8BOCw0rnNFwfYzjYusZU9U3QiCLahh8nPcFuD8y4SnRsOvYnrA0PCDX0GXIYkH+0jxDmVdLVg1YGSlUKR/RzKyucVKyXmn/uMFVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1725356886; c=relaxed/simple;
+	bh=hJk68djd+blsdCrN5kBgaG6L39I78d5MAdVir43Hv+Y=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=bxDn61nOD1QbSRi6ioNA5dTBBxNVshHKgdYCJTpdeeaFXjH+r3XkGJNj+lW0if5BbmNBqGXfy+Lm54M0GOUjwPzXzIjKAmyXBJjSzRsLiUVOfFY5tZ9aOsl4yLH0bUC/bboJfqo2q+kYC7BdpTDz3Y/8L2nYhWQP5aq/88Rrsig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dWsA7TkL; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6c35e1e1182so768796d6.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 02:47:16 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dWsA7TkL"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c241feb80dso5504084a12.0
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 02:48:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725356883; x=1725961683; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=77g8QVpytjR8UOaSwumnI8AMyxiogbLCWCM57o9eips=;
+        b=dWsA7TkLTtUgUVZZOnA9xPc0A1+XUZTZrcMahkBZRwOijNrmXH3aBzLYYs+yhxXNzT
+         i/nVvYXUss3W+9hxKGa0TEpcLy2Elz2MIUz1c5J339DeSLtX6/oY3Kw+TbUpaA60xWBK
+         09Rsw7qe53EzOEttsCHL/l7tjInszrIXMMYmTXdOaMlP06mcVldGC6vHigL5pOW6jwYl
+         RgzJOHyfQFttGYI/NYw8/gv+S6DrOlr5miDDiihX4tncvtqB/C4epX/SYWQynOq3Hvcj
+         EToUB28TzB30WvDwCPYbkZWQGoma1w/JQRyXvA5H611gsVOGHDdwAad3wF1mUVZBBwgD
+         z7rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725356835; x=1725961635;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V5Q9z7jZLs4EYzK/pXCyYpMZUUKrQsHiMj24/bucJ9E=;
-        b=Z3WBgPxSSk8geqB7VjqE2e86SPCG+83Q1O9M5W3lkw57sHvE5MnF1kJghwbHwbQFG5
-         8INFSPlXaPSLqhDLmkkfR+6UEb4T7iuPLSyZRZwehx+KAd05xoScUCexqEF6IlPVdh7B
-         EbvCbmcg7O/xmECcoTTW80qiYvomVfLKXUXv0Kj50LGM5IHlgBEvtpjQhW3ONa9avXGF
-         pV0+y6iOewP8BvAIk0n59zbGRz0wIgBaMqS5c86A86y+I4aVjf+GZZ7XB58urSTYN9th
-         x07poZjAPyOqwGUWg1tcqXdpvzdY8Wnl4YWRZgg/eniohHA29zGCNb4Srz0Td2zZEs/D
-         Lgdw==
-X-Gm-Message-State: AOJu0YzOhiOXwsZv+BOiYTpk9SRvnacz2FWHCvJe5ajq/km3w7lucP5F
-	gbNNtbIbiN1TC3pSKKUc6ebctPDcRbe835foN4/bMubfsm1zxAmfNwM8eGfl3mvEEV5owbKge7t
-	fBezzYpUxBWhxlIKNb3XR8xwImIQ=
-X-Google-Smtp-Source: AGHT+IGrpkbYmP83SgqHcsi9C2HLvWCJgNFCkTJBGIWzPlLPlhZChkypMo/DJ35BNpb8Gp4paMxmEzhx6dGe6uJaSLg=
-X-Received: by 2002:a05:6214:252b:b0:6c3:6f2a:1fe1 with SMTP id
- 6a1803df08f44-6c36f2a229dmr19686456d6.2.1725356835653; Tue, 03 Sep 2024
- 02:47:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725356883; x=1725961683;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=77g8QVpytjR8UOaSwumnI8AMyxiogbLCWCM57o9eips=;
+        b=YYd08FJj0i/R7FgkvfZG9jKl6Ic+PfH/XsFijWn7+qWY1JOPTe2g83jhDM7TI36O/S
+         rBbYczbXMJZHEVmuHlnqVZiak4XaKKzfvtKqhjOd/1DRLl3/6m9Yn7gK0/mbi/x8aObq
+         RBy4i5DZC3BvJuQZGRk/XsS9BwiTUcn2vW+Et/PGPt7QyMruW6PXED4bGuacRgvt7LvK
+         /P82gOvp6SpYAWhZhfhdBWn2Krvij1q4z/5tKvSKYHIaTRwlBdR8ILfJ4LM5JVxitUGI
+         yrId/QvVfuXaSPFfL8myJRCXKZebU3x5jCdLe0mwOjFY1NQCdevCzAknDknI0EBaFJ/7
+         AjDw==
+X-Gm-Message-State: AOJu0YyaJOIQeO1pu2ig0Yya2SGDplYCkwzSjagp7iKWFOQOIAWt9Lwz
+	99hobUBQA9uGn/i++12VuIidqC6c8MuC8+3Jb5ZxQdRLiZI5JSJN
+X-Google-Smtp-Source: AGHT+IHvz6TYK/1tquI0orGQMZIQTIf2iPNH+z6OlXKwMJhCQypN45BaWBxOlNyYkYqfZR+5cKepZw==
+X-Received: by 2002:a17:907:6d11:b0:a86:9ff9:6768 with SMTP id a640c23a62f3a-a89827a401bmr1741559766b.22.1725356882711;
+        Tue, 03 Sep 2024 02:48:02 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891d6f16sm659096466b.150.2024.09.03.02.48.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2024 02:48:02 -0700 (PDT)
+Message-ID: <3be1d990-9f9c-4963-bce3-742511b79022@gmail.com>
+Date: Tue, 3 Sep 2024 10:48:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1722415748.git.ps@pks.im> <cover.1725349234.git.ps@pks.im> <55a9b46e65f2072ca7994b042dfe24d1c153c334.1725349234.git.ps@pks.im>
-In-Reply-To: <55a9b46e65f2072ca7994b042dfe24d1c153c334.1725349234.git.ps@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 3 Sep 2024 05:47:04 -0400
-Message-ID: <CAPig+cRrwGsGA+2B5+eYpQY-TdGsDspTgviDgwZ+Zx_sAknZzA@mail.gmail.com>
-Subject: Re: [PATCH v7 02/14] t: import the clar unit testing framework
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com, 
-	Edward Thomson <ethomson@edwardthomson.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 11/13] t/unit-tests: convert strvec tests to use clar
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>,
+ Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+ Edward Thomson <ethomson@edwardthomson.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1722415748.git.ps@pks.im> <cover.1724159966.git.ps@pks.im>
+ <b3b8df048725c25b14860513b7950b158a6990ea.1724159966.git.ps@pks.im>
+ <c6f13f6b-7899-4bbd-986a-9bb1649b214f@gmail.com> <Zta-nU4UMyrWgABW@tanuki>
+Content-Language: en-US
+In-Reply-To: <Zta-nU4UMyrWgABW@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 3, 2024 at 5:15=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:>
-> Our unit testing framework is a homegrown solution. While it supports
-> most of our needs, it is likely that the volume of unit tests will grow
-> quite a bit in the future such that we can exercise low-level subsystems
-> directly. This surfaces several shortcomings that the current solution
-> has:
->
->   - There is no way to run only one specific tests. While some of our
->     unit tests wire this up manually, others don't. In general, it
->     requires quite a bit of boilerplate to get this set up correctly.
->
->   - Failures do not cause a test to stop execution directly. Instead,
->     the test author needs to return manually whenever an assertion
->     fails. This is rather verbose and is not done correctly in most of
->     our unit tests.
->
->   - Wiring up a new testcase requires both implementing the test
->     function and calling it in the respective test suite's main
->     function, which is creating code duplication.
->
-> We can of course fix all of these issues ourselves, but that feels
-> rather pointless when there are already so many unit testing frameworks
-> out there that have those features.
->
-> We line out some requirements for any unit testing framework in
+Hi Patrick
 
-Perhaps you meant s/line out/outline/ ?
+On 03/09/2024 08:45, Patrick Steinhardt wrote:
+> On Wed, Aug 28, 2024 at 02:17:05PM +0100, Phillip Wood wrote:
+>> Hi Patrick
+>>
+>> On 20/08/2024 15:02, Patrick Steinhardt wrote:
+>> It might be a good opportunity to show the set-up and tear-down facilities
+>> in clar as well instead of repeating the initialization in each test.
+> 
+> I don't think it's a good fit here, as setup and teardown would hit the
+> system under test. I rather think they should be used in cases where you
+> e.g. always have to setup a repository for your tests.
 
-(Not worth a reroll.)
+I'm not sure I follow. I was suggesting we define 
+test_strvec__initialize() to initialize a global strvec which the tests 
+use and is then freed by test_strvec__cleanup() like the tests/adding.c 
+example the clar's README.md. That would allow use to remove the setup 
+and teardown from each test. As I understand it clar's setup/cleanup 
+functionality is usable without setting up a sandbox directory for each 
+test.
 
-> "Documentation/technical/unit-tests.txt". The "clar" unit testing
-> framework, which isn't listed in that table yet, ticks many of the
-> boxes:
->
->   - It is licensed under ISC, which is compatible.
->
->   - It is easily vendorable because it is rather tiny at around 1200
->     lines of code.
->
->   - It is easily hackable due to the same reason.
->
->   - It has TAP support.
->
->   - It has skippable tests.
->
->   - It preprocesses test files in order to extract test functions, which
->     then get wired up automatically.
->
-> While it's not perfect, the fact that clar originates from the libgit2
-> project means that it should be rather easy for us to collaborate with
-> upstream to plug any gaps.
->
-> Import the clar unit testing framework at commit 1516124 (Merge pull
-> request #97 from pks-t/pks-whitespace-fixes, 2024-08-15). The framework
-> will be wired up in subsequent commits.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+I'll take a look at v7 in the next few days - I suspect we're getting to 
+the point where it's ready to be merged.
+
+Best Wishes
+
+Phillip
+
+> Patrick
