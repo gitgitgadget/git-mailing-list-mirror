@@ -1,82 +1,81 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279F31DB53C
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 14:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79921DC054
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 14:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725459427; cv=none; b=hOBDkASho+Kx6jVQN0kCJHzvuWpO98jCkuW6/WSB4CiUyJsG05yrs5gPpwzrOPXp28QBu9SdiBDXgj5XgGNLUvThab8DYcBVKKNmuf39yZYuiII7HllVIkdDpgdTIhynt2nLQZZBD09YfKwA69J39AmwWpCUhgSK03/Kxl0/9MY=
+	t=1725459429; cv=none; b=qWO8iXI/AMP6H9FWnIfQGZwbVrFuMcJTY1vT7D1gM7Ov2nFJF8li6uNwDFNNV4AhvFVGYRHtadIiRnRnZe1xuv/gM7qQJ+atRCPTwhIBBPcufgh7ixguQ5KAZ0/5Ykph4Y9vJMNrXBEglsgtoI+7P2zkTpA8grFkVnG98Y2k/7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725459427; c=relaxed/simple;
-	bh=WJV7ZTffzxMTUUQZwfVQic13cfm+BlfrEvKBM9Q8Akg=;
+	s=arc-20240116; t=1725459429; c=relaxed/simple;
+	bh=SAHY+PdiUtzIBe+RK/fdpb33fipuVfGB2nKxKXSeyLQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mUisJqiph926TDC343ZyokaOsgnYZqvONXxsEhe28ZEPgfkjXtUw3hiCdoysKaO/bBcQlOsD4KCwCa8i8fuahASsrVhE1pbu/5k0e6PF9tWUXaMcOu+TusDyHz/YKrRAlYuLhRlTxV5OvLwrhjt5KvLFUApvNyf89IkkyGmQRkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RnGDa37Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uF/WXhs5; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZUpNmCw/xzitcOWGdRnLWFN7uSELTgPjOzZNR1u00UfUL4f1eXNv8er6xcqWzgC+FLhHHlkuvxsjonZfwo//6dTUg74LYisfgZ88cz/J5cL8HMraJLcX6rrRQaP1MSbiUpG51TaXbmbhDixsiaNpDv7OaiSh5h2NnaRguzEwu+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z4PWlzAq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R5HgZfUM; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RnGDa37Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uF/WXhs5"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 31497114020F;
-	Wed,  4 Sep 2024 10:17:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z4PWlzAq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R5HgZfUM"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 174941380230;
+	Wed,  4 Sep 2024 10:17:07 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Sep 2024 10:17:05 -0400
+  by phl-compute-07.internal (MEProxy); Wed, 04 Sep 2024 10:17:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725459425; x=1725545825; bh=u0M1X8O8Jp
-	OdmDIbfBT2QXjGb60MbKWQqz0ekV13yXM=; b=RnGDa37Y04BowVY8yH7JDFXbi7
-	gCbSY5VLYAG/FcEOWDmcA9wl2Lo0bKhKsgfKijCczDQGy0n6LXaqjs03+P85CvBw
-	z+iWb45qFD6ZkqUN5rUbBx1krgqpsNvjUuzfh4w8v0ZUggjofbhtDqPzrW1uxuuO
-	YOsROZ0Pai3QXxeTnjitbKKesJdJUpxlyzLbzw2Q/YgpTP5XuBj6/IP8+kVkVdrT
-	MUPsdiBJhScJ6emAYyo8FqGoKzYp+l1BROiw7cWs2enklZhozRA3mDk6If+jeD3b
-	s4u2QcPy72gudSOd1aKy9wbLAPh855X3eeIyhD45lwaWnSEmvGXCb97+IsIQ==
+	:subject:to:to; s=fm1; t=1725459427; x=1725545827; bh=ixXb51MvR2
+	NmbwtyEwguUi/dDme3vewRtZKE4RwCzmY=; b=Z4PWlzAqHYpGxyE70/Hmnq/wXO
+	nmGKSgUvGguK/SmoMb2b+nScgMel7AFMYvYVuGuXQ5m5KIHBzbOaihefqAnSybc+
+	dAkrRggK/zssf+XTwpiIofJbBOThtaut65vDg/GXXleEPbcpMsS25Mda4FuzkBRq
+	VIg4NImiKm/CyaCSWahtNOpvfMj9JBgwX6Rx+fpbi7xVkb2qKvri08WijQIS2Usk
+	1hBEjR0we73NdEMyB0t68N6GCAQVN+1KslrXvEp6IBf4kwTCmqIKQSKRP8dnAVDF
+	ABdVXDUWwgkNX1zMpwjt35egn5K2QehmkSL83Uft6Clpy0XkESiHcxv/+gfg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725459425; x=1725545825; bh=u0M1X8O8JpOdmDIbfBT2QXjGb60M
-	bKWQqz0ekV13yXM=; b=uF/WXhs52F/lDQIkYBrlu1uBEn0l66Acqt/On6axlV+o
-	wyzpxPOspnypQDZUCg+2b+54Pq9HA9Lu1t4ZfwfbikZQmrRxwgamWGYBHyfOf0aD
-	mE6rKhz54QIJSudA66WmGhJuZS9vr14vKQsL1MKvvwih54yrftW9opEXNku6trdO
-	p9lB4WKG1VxPB9SKhuviDzllk27yQh9qdarLJ88Q7KtHJrbeMgX9NKWAwvtlwbH7
-	LaIQxNnzHOFOghQ4ScR1P4919i4aXROcczrdS78bnfPvPf8nOnzXsgyAWQLQjRQZ
-	uuPN34taUPzz0k9H6JWw/pYBVOBUYuJyDNQjo4H6Kg==
-X-ME-Sender: <xms:4WvYZjexwTMkgjeWMGMtfB-6YE82id0j5joqmAIwRkt42qOsfhNr1g>
-    <xme:4WvYZpP6WWeTJjcbqeqIM3C-c5I4jSxzoTnxE8R40ulbISvTI6sM4n5ErBz__vblP
-    _mnp8blCI5q8HWGJA>
-X-ME-Received: <xmr:4WvYZsgaVEnrugdTzh2AfNoSLLpyP-WoCdQZksljbjAcE-Fc0Qj8PAP1RD7SxKzcGatXJ24A3SBigPZfoXWak8THIOx4Oc5Z97kr52OrnGWF8kc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehjedgjeegucetufdoteggodetrfdotf
+	fm1; t=1725459427; x=1725545827; bh=ixXb51MvR2NmbwtyEwguUi/dDme3
+	vewRtZKE4RwCzmY=; b=R5HgZfUMwPehcUGv+8uqoHlX+WijOK7hccSp+woNgnVE
+	MPqbjB0DFLObLNbYKiBj1C9MWWGmeqTTYx3rQN59KhNTzxGpU2IvdxAI1E6Ckx7A
+	H0OxCkHmrb6PYCYIMEoqcSMLifkMNyp3mmkxhnIzQWyJ3L6J7SJ0GJKFxkPl6mJ3
+	dfTJay6wIK4NIkb8+I9RlKKmLCbDRNMmEZPXzeubVaD0cQh4YY1O7rqLAHcFlUIL
+	54nKjuQIOOVzbbN09yxLYipBsDKDdMWUagSRlkbidHqvpLemn0KMCQ17k3rEvLjb
+	ByqY4/MoAnPjbkiU/53AC3N02BlajB+O4TmpZjvDaA==
+X-ME-Sender: <xms:4mvYZpkeKqqktfBSzJhEiLEYQmIIkyfYZyGN3Kmv8BjS8L5GDlLZkQ>
+    <xme:4mvYZk2ZbnZcVNrcQrgOWV2uufzJkipTiRCRKqUaxyL49nU5QMC1i90kfqqUCTGZo
+    SOhFCRRzEb4xSq6kg>
+X-ME-Received: <xmr:4mvYZvrLLttVBoMh51zFJMJ2PLzB-89GLUVDhEI3f5AduWd5-HZQaCCpAWN0FIidKTOYAB7WDn6u_OWwG4f1aHteHMnsm12Ba0NoAYYOB1_ZMQg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehjedgjeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
-    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrsh
-    gsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehsthgvrggumhho
-    nhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtg
-    hpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrg
-    hrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgusegu
-    uhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
-    rdguvg
-X-ME-Proxy: <xmx:4WvYZk-DIi4zIBDzJJZzFV4l81WKlJayV-EVoeDVPXpdLwZdTH02iQ>
-    <xmx:4WvYZvumwnGXagUh0PmpTSjXLEJDMzFT_f1udgGHqWXTgSdYQ9m3_g>
-    <xmx:4WvYZjE3MWyuIxLbGWz0E0K47YEu-Vsm81f9qHVfjntLZQBlOdoSUg>
-    <xmx:4WvYZmMXVBrLr64f97NAmnQh1NVjNoVSppjMYeBZsYZtzMaPz53_cQ>
-    <xmx:4WvYZtIVqzhoFYLJyVPeBRKdF2ZsBxgAaXMSHq83p7S40Z4Gvd_JsuOS>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
+    hnrdgtohhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsth
+    gvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhpvggtthhrrghlsehg
+    ohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhn
+    vghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguseguuhhnvghlmhdrohhrghdruhhk
+X-ME-Proxy: <xmx:4mvYZpnhinntKzJ_nBufrIy1-ERxZ4iMoZ-tMVd1S1J9xHaEhu1woA>
+    <xmx:4mvYZn1IIWou-GzpAa2KtCsSpqV09K_9iFb7tx-D_vgZCvwaN8L4WQ>
+    <xmx:4mvYZovHbtFuVd0Bjzk4schlJWvOiHCKWgzZ_yIhn8Xi0odTBqMSjQ>
+    <xmx:4mvYZrVpM6QIg8bdyEyteuj8RasrGgGyYXGfhzf4GmxTJ7_ke9hpzw>
+    <xmx:42vYZpyab6jsDKO_VklGdwlovUoQfvRembuYwvC_sUUGd4NuJg00_6Mb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Sep 2024 10:17:03 -0400 (EDT)
+ 4 Sep 2024 10:17:05 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 351d7da1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Sep 2024 14:16:53 +0000 (UTC)
-Date: Wed, 4 Sep 2024 16:16:59 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 74174983 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Sep 2024 14:16:56 +0000 (UTC)
+Date: Wed, 4 Sep 2024 16:17:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
@@ -86,8 +85,8 @@ Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
 	Edward Thomson <ethomson@edwardthomson.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v8 06/14] clar: stop including `shellapi.h` unnecessarily
-Message-ID: <c50e7a0ea68ba6fb4ef669403f79d3217d242f9f.1725459142.git.ps@pks.im>
+Subject: [PATCH v8 07/14] Makefile: fix sparse dependency on GENERATED_H
+Message-ID: <b8f3f16dd2776b889922f7d07ee5d448268fac65.1725459142.git.ps@pks.im>
 References: <cover.1722415748.git.ps@pks.im>
  <cover.1725459142.git.ps@pks.im>
 Precedence: bulk
@@ -100,46 +99,52 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725459142.git.ps@pks.im>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+The "check" Makefile target is essentially an alias around the "sparse"
+target. The one difference though is that it will tell users to instead
+run the "test" target in case they do not have sparse(1) installed, as
+chances are high that they wanted to execute the test suite rather than
+doing semantic checks.
 
-The `shellapi.h` header was included as of
-https://github.com/clar-test/clar/commit/136e763211aa, to have
-`SHFileOperation()` declared so that it could be called.
+But even though the "check" target ultimately just ends up executing
+`make sparse`, it still depends on our generated headers. This does not
+make any sense though: they are irrelevant for the "test" target advice,
+and if these headers are required for the "sparse" target they must be
+declared as a dependency on the aliased target, not the alias.
 
-However, https://github.com/clar-test/clar/commit/5ce31b69b525 removed
-that call, and therefore that `#include <shellapi.h>` is unnecessary.
+But even moving the dependency to the "sparse" target is wrong, as
+concurrent builds may then end up generating the headers and running
+sparse concurrently. Instead, we make them a dependency of the specific
+objects. While that is overly broad, it does ensure correct ordering.
+The alternative, specifying which file depends on what generated header
+explicitly, feels rather unmaintainable.
 
-It is also unwanted in Git because this project uses a subset of Git for
-Windows' SDK in its CI builds that (for bandwidth reasons) excludes tons
-of header files, including `shellapi.h`.
-
-So let's remove it.
-
-Note: Since the `windows.h` header would include `shellapi.h` anyway, we
-also define `WIN32_LEAN_AND_MEAN` to avoid this and similar other
-unnecessary includes before including `windows.h`.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/unit-tests/clar/clar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-index e2ebe551d38..cef0f023c24 100644
---- a/t/unit-tests/clar/clar.c
-+++ b/t/unit-tests/clar/clar.c
-@@ -19,9 +19,9 @@
- #include <sys/stat.h>
+diff --git a/Makefile b/Makefile
+index 28742a60964..efd305ab358 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3254,7 +3254,7 @@ check-sha1:: t/helper/test-tool$X
  
- #ifdef _WIN32
-+#	define WIN32_LEAN_AND_MEAN
- #	include <windows.h>
- #	include <io.h>
--#	include <shellapi.h>
- #	include <direct.h>
+ SP_OBJ = $(patsubst %.o,%.sp,$(OBJECTS))
  
- #	define _MAIN_CC __cdecl
+-$(SP_OBJ): %.sp: %.c %.o
++$(SP_OBJ): %.sp: %.c %.o $(GENERATED_H)
+ 	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+ 		-Wsparse-error \
+ 		$(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $< && \
+@@ -3295,7 +3295,7 @@ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+ .PHONY: check
+-check: $(GENERATED_H)
++check:
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
 -- 
 2.46.0.519.g2e7b89e038.dirty
 
