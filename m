@@ -1,124 +1,83 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4C139D0B
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 21:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F2182863
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 21:50:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725485402; cv=none; b=XRPL5JR2ijgOpILU/p1onWO9SMGv+1U+YuFQ8WaoLPBp4gbOtu6vqFS7Bxmbmaz1cgJELqhixrPQlCS2MoVnxr3iMjxqZ0K3PbjulFKq/PShYakj6WaxmqJp0XFZ4yYJBQpVx+49VUv5w6kGCloC+I7Y1RlbLGS3veHqe+GYcBE=
+	t=1725486624; cv=none; b=gWaiV0LwCCoEElzx3oe0RQXvgIEtG/TjJQT8Mm0o9WBiSQkZW8IbLW6UOwl6mKDAnw5gjpo0igFva1afYov5Pj4jkyGGmZEuytS1iugz2w5/ezv0crWhC3zF3dsUJ1+3TLSNoEef6ISEGYuGbEWFjXaeerSNG1MMQDh8j7Sgn0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725485402; c=relaxed/simple;
-	bh=R9ZW4au9SnjcG65FysLKAjVLojesBj20q9yr8CGPxb0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OIeBvyIb8j/06ULSDRYZDbggj64DvujY2t+/CxzZ/M/olTkmzNjYg+FMtDyRMZtYc8h4lS4tE49ZzdQuCQ+nTHSv4RXCvBuqW3emxrCENMp1uKjCNiVwQonIpMP8Njai9d1PaV9n4dee/uAsQGZNU3fDC0KZj0g0RGUcHrwfPl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Dy5rFCuy; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725486624; c=relaxed/simple;
+	bh=ve5kaf0Mk0cq1lY5zXqw3KoQjV7xx9Ki7HCy1JKp/IY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l11c+XuFEXinzV4xXZdK/X+OQu4ogugP9ShQ8O2WZLCN1yWlz3yN2Z22aczzWr087j2Jp12MCZOpDDQjaXEzDP1kgFBOtz6ZqjnEUVSzeykqdYBo+ca9yLAlVjSyMhTxzgXPtIAOPQQNQbV6bbQ2Mb4nT8EQyM6XGHeFN92CDLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VcPyEtNo; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Dy5rFCuy"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-202018541afso25045ad.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 14:29:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725485397; x=1726090197; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fJenQ7Ujd5L7HeOo55URrgFaZfUmKEz7oGzjzwUl9RQ=;
-        b=Dy5rFCuywxwFIns+MvlQDoaLYOHDHCnK9qiDOqMmgLYjoUg9e+uB2E6ac3pTRLW+6x
-         SisLyQM1e04bTmlByhes78aT9ydLpXqt7HDLp7kfn59lvyGVMSf4oJ9BF0A1Iw+ZZo0l
-         26ho4tGxRm00MECrSNAOjKaQnZvt389nxUVeW1reKnBRfEVY0Blwxu5lRVipB0jhGyhN
-         MDlLIbPf4+3YITL+q+wVmOG5j2gj0yZpV77r65t+beW2lsooVbnFjyD/8Z8QfHVVyZIv
-         Y6dzGtNyYz5hirV3tMKFxTuYZlUYmAgx81w1pcpPyMQfla1vR3O155Mmbbnt1ZQCtv9f
-         zDzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725485397; x=1726090197;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fJenQ7Ujd5L7HeOo55URrgFaZfUmKEz7oGzjzwUl9RQ=;
-        b=O+x4kuaemFPFI9J4ISxqQIkdq/wH9pbIJinrlTfHlRRj78vZA28fRaJoKpgjwSh+Z0
-         9g898hTdu97bB6FL67y8AOLPWTHRuTlthfXrV7mBvd5qKk0zWHyNV90inAo+xKmCe8io
-         3OWKM4ZIMolmgwEhr96AYnKOXdo/hDBW2ewu6+uObAhy94gykwh2mdKcAl/uMljtfYKd
-         TESZHPlUA1ONR8yAEwq+h291pFRLLaB2Y5azghWawJXGN6MZsmgnb4TrihTgJrggPGlW
-         WySDuRCu7GBcZxyJgZ2O1j/UkVNtg9uSqvmBOac/c27RyOdweI/akinRFFMOB43B05A1
-         /93g==
-X-Forwarded-Encrypted: i=1; AJvYcCXGMkSMbEpeumDefxVGSZaIWQ9Y8vBhww38JM8/CXWPUVxEkk6OqpDXCfb/mC2j4jdGWrQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAsFDHBr+wJVN941FnqtwV/62enjr6aNvqqq5rZD3aF/NwPwIG
-	y8lumgA2MlqHRQ4ks9xh4P8gmUxFD6XfCGIpq7z1R48pq/2O+PV8prC5NUts/A==
-X-Google-Smtp-Source: AGHT+IE16yFH7S/ErwBIVyogHtEtL+Je9FyxtHmupGdpbOHAHLlTcFRqLPKW+5PLe0f02BGFZ6N6kw==
-X-Received: by 2002:a17:902:e5ca:b0:1fb:172a:f3d4 with SMTP id d9443c01a7336-206d0af3a2bmr988345ad.8.1725485396669;
-        Wed, 04 Sep 2024 14:29:56 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:8ab0:8477:188c:de4d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206aea6707csm17669175ad.255.2024.09.04.14.29.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2024 14:29:55 -0700 (PDT)
-Date: Wed, 4 Sep 2024 14:29:50 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Calvin Wan <calvinwan@google.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-Subject: Re: [RFC PATCH 6/6] contrib/cgit-rs: add a subset of configset
- wrappers
-Message-ID: <vtj54bv437e4libwv2a3yycdrva5wsoboo6rs2fbys23sxhvhr@64xsd2uqdbua>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Calvin Wan <calvinwan@google.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com
-References: <20240904173053.1220621-1-calvinwan@google.com>
- <xmqq8qw79slu.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VcPyEtNo"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C789B20FE5;
+	Wed,  4 Sep 2024 17:50:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ve5kaf0Mk0cq1lY5zXqw3KoQjV7xx9Ki7HCy1J
+	Kp/IY=; b=VcPyEtNoV33pxN6qGnkqX23QhWOJeYn97kVlWoIbm29hreYXYMC1mF
+	j4xzoJ4fC2J77AbN5Wa6qzvN9s36a8AUqwXUknuuFCfyakQlGh83T8m2N62vcBtU
+	egGiZp12rqIWCViDrW7t6+Kq2KrJAaBKVsTM7a0OyO1axwxwvIwTs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BF76520FE4;
+	Wed,  4 Sep 2024 17:50:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3356F20FE3;
+	Wed,  4 Sep 2024 17:50:21 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 08/22] remote: fix leaking tracking refs
+In-Reply-To: <7fafcc53d23672bb0339c44ea3874b3628785f08.1724656120.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 26 Aug 2024 09:21:56 +0200")
+References: <cover.1724656120.git.ps@pks.im>
+	<7fafcc53d23672bb0339c44ea3874b3628785f08.1724656120.git.ps@pks.im>
+Date: Wed, 04 Sep 2024 14:50:19 -0700
+Message-ID: <xmqq34mf84x0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qw79slu.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ AEBBF51E-6B07-11EF-AF85-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 2024.09.04 11:33, Junio C Hamano wrote:
-> Calvin Wan <calvinwan@google.com> writes:
-> 
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >> ...
-> >> Debian stable is the version that most projects who have defined
-> >> lifespans track, so it's also what we should track.  According to my
-> >> recommended approach, that would be 1.63.
-> >
-> > ... I also don't think reinventing the wheel with
-> > our own implementation makes sense in this case,
-> 
-> I do agree that we would want to avoid that.
-> 
-> > and even if Debian were
-> > to upgrade stable to a higher version today, we would still need to
-> > support oldstable for another year.
-> 
-> I doubt that part, though.  As long as the rust binding stays an
-> optional code, as long as we are supported by the "current" system,
-> we would still have enough audience to matter.
-> 
-> What's the primary objective of this effort, by the way?  
-> 
-> Is it "we need to access the guts of Git implementation from Rust"?
-> Or does it merely serve as an example application to have Rust
-> bindings, a good goal to have to give us an incentive to clean up
-> the subsystem interactions in our code?  
+Patrick Steinhardt <ps@pks.im> writes:
 
-For us at $DAYJOB, it's "we need to access the guts of Git from Rust".
+> @@ -1123,6 +1123,7 @@ void free_one_ref(struct ref *ref)
+>  		return;
+>  	free_one_ref(ref->peer_ref);
+>  	free(ref->remote_status);
+> +	free(ref->tracking_ref);
+>  	free(ref->symref);
+>  	free(ref);
+>  }
+> @@ -2620,8 +2621,10 @@ static int remote_tracking(struct remote *remote, const char *refname,
+>  	dst = apply_refspecs(&remote->fetch, refname);
+>  	if (!dst)
+>  		return -1; /* no tracking ref for refname at remote */
+> -	if (refs_read_ref(get_main_ref_store(the_repository), dst, oid))
+> +	if (refs_read_ref(get_main_ref_store(the_repository), dst, oid)) {
+> +		free(dst);
+>  		return -1; /* we know what the tracking ref is but we cannot read it */
+> +	}
+>  
+>  	*dst_refname = dst;
+>  	return 0;
 
-> If it is the former, we cannot reasonably achieve that goal until
-> some form of standardized foreign function interface becomes
-> available to wide audience.  If it is the latter, on the other hand,
-> it does not have to be Rust---if the version of Rust that is
-> distirbuted to the mainstream users is not yet ready to be used in
-> such a way, we could pick another goal (like, "Can we clean-up the
-> interface cgit uses to call into us, so that the parts used by them
-> look more like a proper library?").
-> 
-> Thanks.
-
-I think brian already addressed your point about having a standard FFI,
-but if there's anything that still needs clarification please let me
-know.
+Looking good.
