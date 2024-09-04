@@ -1,126 +1,73 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49930635
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 04:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FEF4D5BD
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 06:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725424896; cv=none; b=DWM7uDCSRYJEngVfVnDBFmuEIsDddaKxqCn5fOOf9lGG7g7ResnA6C+nOSGgXDndGkGgBy4URFaEWwVsJxY5Q5frTjDvvp45PHuLDUV3RvBlCO2dAq0QRrGWV8FbZJ8lGTAykzLXReq7SMxZCKWR8M+SdcI/WEmsCNHpGJVI/V8=
+	t=1725430565; cv=none; b=AwxoVrgUr63/pfUCikEZgnqEvP/Lf8A5thyzj0wqRa9Lbd6AZn50RDfeM0t7aio9bkwJeQUZYnwem/8fOXupqe+OFywFtqqKaK7aCW2iALuREGyoAm8UCRqpmWVr+sWYY6TH6VVjdPPbZwjMP6INAQUWkPBnzMnLOtmttKVinP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725424896; c=relaxed/simple;
-	bh=j+M8tehX3y+jG62fggJz7AvNdHAyvTN7VDrCPRlWhUA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jgj5AkZLoaZKjhES88iDP8+u98IcaC7KPTnHJRKrsR/Gwvr/b9hEVPWiiiT3Xu1zPk0eyJ+lOu6+JWM4JICOwSxFat9GuaHXKCIFhfjN43gjcUo1LOT0eW65ejmNwOByEGMryC3Vcc96FTuG4eqRCGkY9ZeiccyHoT9pJ/Ako1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WgdBKZ1P; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WgdBKZ1P"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 219923E1BB;
-	Wed,  4 Sep 2024 00:41:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=j+M8tehX3y+j
-	G62fggJz7AvNdHAyvTN7VDrCPRlWhUA=; b=WgdBKZ1Pps0W2gO6/ZrpFvRXXeZ2
-	TmKPXW2Q2LF8RghefiMp/kbO0TdpvC5VlnmJnydkS5iNCZDTdzyixSrAgfR8EzSE
-	PkOSPLumyz7bvQyE5mDUhGKhrecIKXJbqCXdWp0QZpVc7Kdja4/O0gtFooCxWFkk
-	qCi7GrwZ51G+xMc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 191563E1BA;
-	Wed,  4 Sep 2024 00:41:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 814433E1B9;
-	Wed,  4 Sep 2024 00:41:32 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/5] apply: honor `ignore_ws_none` with `correct_ws_error`
-In-Reply-To: <50d85a93-6711-4b42-87a5-f26b58b8c5c7@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Wed, 4 Sep 2024 00:06:10 +0200")
-References: <6dd964c2-9dee-4257-8f1a-5bc31a73722e@gmail.com>
-	<1eb33969-1739-4a27-a77b-3f4268f5519d@gmail.com>
-	<xmqqseuqerb1.fsf@gitster.g>
-	<afade304-51e3-441d-9ae6-e0a422d00bc4@gmail.com>
-	<xmqqed66udmd.fsf@gitster.g>
-	<50d85a93-6711-4b42-87a5-f26b58b8c5c7@gmail.com>
-Date: Tue, 03 Sep 2024 21:41:31 -0700
-Message-ID: <xmqqseugdo90.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1725430565; c=relaxed/simple;
+	bh=SzpQrdm1JiOhT5EooIWJhrbBpYc6b7NADlqAO+FDv3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=me42TCd7xg+CX7hqks8nWo76oI7OsDpSXNVY39nTP4JFwZXSkwwKBB9SXBJKwYEqjJi99qxaKxwnGTamUx92WUVvw5IDB7Xw2SlpEhD/TX28nh/zArTRT56gQSN3I1iNXGkk43Ju4mPKPT99d/cLb33Dm/2PeCQQqtPOxQGGIF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.106])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4WzC0q2nFLz5vYd
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 08:15:55 +0200 (CEST)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4WzC0f0QdKzRnmG;
+	Wed,  4 Sep 2024 08:15:44 +0200 (CEST)
+Message-ID: <a33a73f7-e6dd-4f97-a635-c6c5dfcadeb1@kdbg.org>
+Date: Wed, 4 Sep 2024 08:15:44 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- F592F6A8-6A77-11EF-9501-9B0F950A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?B?UmU6IGBnaXQgZmV0Y2ggLS1yZWZtYXA9PHJlZnNwZWM+4oCmIDxyZXBv?=
+ =?UTF-8?Q?sitory=3E_=3Crefspec=3E=E2=80=A6_=60_providing_NON-empty_=3Crefsp?=
+ =?UTF-8?Q?ec=3E_to_the_--refmap_ALSO_causes_Git_to_ignore_the_configured_re?=
+ =?UTF-8?Q?fspecs?=
+To: Han Jiang <jhcarl0814@gmail.com>
+References: <CANrWfmSe0ekbRR9VsX8jALWQQVdhDv-2WTSm47jHTiV9-Z7-pg@mail.gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <CANrWfmSe0ekbRR9VsX8jALWQQVdhDv-2WTSm47jHTiV9-Z7-pg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Am 04.09.24 um 06:09 schrieb Han Jiang:
+> What did you expect to happen? (Expected behavior)
+> 
+> In `git fetch --refmap='+refs/heads/branch1:refs/remotes/server/branch1'
+> server branch1 branch2`,
+> `remote.server.fetch=+refs/heads/*:refs/remotes/server/*` merges with
+> `--refmap='+refs/heads/branch1:refs/remotes/server/branch1'`,
 
-> If I understand correctly the example you mentioned, using
-> `in_fn_table()` cannot help us in `parse_fragment()`.  But I could be
-> completely wrong and misunderstanding your intention.
+The way I read the documentation of --refmap, I cannot infer any sort of
+merging of refspec, only that a replacement occurs.
 
-Hmph.  It's unfortunate that the control flow goes like this:
+> so these should be what would be done:
+> branch1 -> server/branch1
+> branch2 -> server/branch2
+> 
+> What happened instead? (Actual behavior)
+> 
+> In `git fetch --refmap='+refs/heads/branch1:refs/remotes/server/branch1'
+> server branch1 branch2`,
+> `remote.server.fetch=+refs/heads/*:refs/remotes/server/*` is replaced
+> by `--refmap='+refs/heads/branch1:refs/remotes/server/branch1'`,
+> so these are what would be done:
+> branch1 -> server/branch1
 
- apply_all_patches()
- -> apply_patch()
-    -> parse_chunk()
-       -> parse_single_patch()
-          -> parse_fragment()
-    -> use_patch()
-    -> check_patch_list()
-       -> check_patch()
-          -> apply_data()
-             -> add_to_fn_table()
+So, this seems the correct output, because it is no longer specified how
+branch2 should be stored locally.
 
-So deciding if a context line (or a new line for that matter)
-contains a whitespace error is done too early in the current code,
-and if you want to do this correctly, you'd need to move the check
-down so that it happens in apply_one_fragment() that is called in
-apply_data().  The rest of the whitespace checks are done there, and
-regardless of the "patch that touches the same path twice" issue,
-it feels like the right thing to do anyway.
+-- Hannes
 
-Such a "right" fix might be involved.  If we want to punt, I think
-you can still inspect the *patch inside parse_single_patch(), and
-figure out if the target path of the current fragment you are
-looking at has already been touched in the current session (we parse
-everything into the patch struct whose fragments member has a
-chained list of fragments).  Normally that should not be the case.
-If we know we are not being fed such a patch with duplicated paths,
-we do not have to inspect whitespace issues while parsing a context
-' ' line in parse_fragments().
-
-> I still don't see a better option than introducing a new value
-> `default`.
-
-As long as we can tell that our input is not a patch that touches
-the same path twice, we shouldn't need a new knob or a command line
-option.  When we are dealing with Git generated patch that does not
-mention the same path twice, we can unconditionally say "unless
---ignore-space-change and other options that allow loose matching of
-context lines are given, it is an error if context lines do not
-exactly match, even when we are correcting for whitespace rule
-violations".  Otherwise, we may need to keep the current workaround
-logic in case a later change has a line as a ' ' context for a file
-that an earlier change modified (and fixed with --whitespace=3Dfix).
-=20
-It is a different story if all you want to change is to add to
---whitespace family of options a new "silent-fix" that makes
-corrections in the same way as "fix" (or "strip"), but wihtout
-giving any warnings.  I think it makes sense to have such a mode,
-but that is largely orthogonal to the discussion we are having, I
-think, even though it might result in a similar effect visible to
-the end-users.
-
-Thanks.
