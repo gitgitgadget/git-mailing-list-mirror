@@ -1,115 +1,114 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E405A16EC0E
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 07:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB5519750B
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 08:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725436358; cv=none; b=itc1+yRn35t714rZE51lXWIxy7cBdsdlCwgmd8xRnNIp99NCxbhtKIsFWcweIcFWXEA7xYvlwe1cXK2BH+BvTE85xkwJqAAlry2Mjf89fzFQbg/pVG/F3YEmP0RIMDCDT4pNPyEedsb1nlX6QR4FWVK6Pe+xTMwSFvXLR9DrYpk=
+	t=1725439789; cv=none; b=iKcCSKZBiwVYcS9B5A/SSa1wcDNUWiyIFaGk2htsq+zWMoo6GG2Ys2WEwksBZpyy/MSh5mkBc9pxuZwu6U5/bupXLIzdbdWGeUZdbEb6qd1nVYpMPfEFJtErwV5YW5R2bWJWf7/wCN8cDTtj9WaZbbHAYQhiegeKuZcSIiTLmEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725436358; c=relaxed/simple;
-	bh=S2JHiI8fhYAoDjP2m96m011CQmPA2Lr7cRR42uOzOIo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=pBG1r99KNp5J9HlrV7OOp3n0Nyc8cv4vw04+lgWg4qIULqeIlxHbtLQYih0seWswYwe501KLlNax3iHqyBqVs6M0XZV1KMEIrZmTGA66RGgRRCi5GLHjOh/dA3kKZyAvvPeD3wYe/7pPSg+14MZeSSvVxhBFf1WBtNsCA9TZWrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=eT+SPo78 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1725439789; c=relaxed/simple;
+	bh=vTtvN7SRiFx/GzG2P7a1BrMMKKHgr4vZN75sbgrZYT8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lqSDMjR6wJTTmXQ8q5eENgbGdc2788MAKlWoRYRopC6Oi3hd8PGyPi97UaLMCvxrcq7M1YtxaltFMjhscvfntwpJ8Bikytc8Z4pHQD1ooBvS0XcLMkFAe3qKZp56CzgCaOlEV5CO5Z+pDXPXsR7zkzmH03KgVL44NxEGZbkpMgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P7viLkQq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XE9XPP02; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="eT+SPo78"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=LpKN2RT9N1JB2TsR+pcbEvOPrmFca+jMsE2DRyHJRBM=; b=e
-	T+SPo783V2HFu3/wmBviqGZeeVWQ18zHciXN+ZL5BkRO+dyiN1PK/9eVm7hMHRAW
-	2krKHpAiBkzpbVBVx359n4n5xjCyKcqZIGIosN2TEKQVJNtpKE6fawcwHTDv/CnE
-	QpKhxW/gSt5HgG08DUaVSpdfDW6k/gmYW3O9sq8JiU=
-Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
- ajax-webmail-wmsvr-40-116 (Coremail) ; Wed, 4 Sep 2024 15:49:28 +0800 (CST)
-Date: Wed, 4 Sep 2024 15:49:28 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Brandon Williams" <bmwill@google.com>, 
-	"Jonathan Tan" <jonathantanmy@google.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH 3/4] builtin/clone.c: recognize fetch.serverOption
- configuration
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZtbgafDQwbU9tBoq@pks.im>
-References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
- <7c3ebda513d872a2ab2aa0cff5887757de4cde0a.1725279236.git.gitgitgadget@gmail.com>
- <ZtbgafDQwbU9tBoq@pks.im>
-X-NTES-SC: AL_Qu2ZB/iYuUkt7iCQZ+kXn0oVhe85UMW2ufsg3YReP500pSTf/jo/cVZeF3/T8OyTJR+2mTGpWxxh+uBdT4pXWL7lU3d/uJWQ1ob0MS7c+EmM
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P7viLkQq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XE9XPP02"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C69991380295;
+	Wed,  4 Sep 2024 04:49:46 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 04 Sep 2024 04:49:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725439786; x=1725526186; bh=9pHKdenU5h
+	mqq5o7Jd6pXW7iiesDBSp0d4j0Aiggd7c=; b=P7viLkQqIIW0FBD8FNE9Qq4hzn
+	4miZEwjDZ0/4HAJOJYarLHExh7sqEMqqdkJ2O9t4us/UsKlKFVAhzt84t+YBqa2w
+	fCPMXUgMKPojqyMNvj84UeAyqOcUMVad7PDbBnzhP29I+F7rVwIqPAFCaFhKDd0H
+	vhd8Cbm9IJmtoUVgkYhjDpJvmEoNmeO+uA5hSi4cOU/+GvCgvMHGnVCNFIj9yFU2
+	APMgau0U6sM6HWxwTQiJ0iVFOBsOAYrxSYiiv0FSSWg1ckg9ZsW7naulhACfrGHE
+	XZKya6rk09oCa9wPz654YX9N7ElMM2dsHKw4m+i399qsQFQP0gAzhM7Ff0nQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725439786; x=1725526186; bh=9pHKdenU5hmqq5o7Jd6pXW7iiesD
+	BSp0d4j0Aiggd7c=; b=XE9XPP02L3ZzZrQ8KpqfPOY/2hqw+AzdQ6Gs0/SR1Z9h
+	8c0QVJode929vSO1M2TDk8NSN2pfzCPW73CUDGxwUB2JSA2SfRw13akHUs1qSCdg
+	VM54hZTz4GLx//ekx/5fL9ibft75mBFsziYLz1i7wlPG5L5w44kHaEAN4Vwv9dkQ
+	Y+qndfdGgQ1epUmXyW7EvuJhYycIKzhdHOr1kASK0rqMqD5Y9Yh1Lo2gqyDZsyQX
+	dM5MmdQZOlt+fzdSwgGnhNnyKkVlHE2gfU4eK3QDXFVf65UZNKw8AVXBdJGlb1Yz
+	2zEksbV+79bBBxsqsvTl1z4DGObIzbBzZFYsmHozFQ==
+X-ME-Sender: <xms:Kh_YZu494YqoSqBLzygr3LHxw2xIR9Z5hF3gsMhLd-8A1wfEd9rPig>
+    <xme:Kh_YZn5O6UKi4bnDz3tMnk25ULxIqCq4-sMBjHEk0cnmrxMmveQ7H_A6KYpsfGt0c
+    H7qiQ1c_IFFhRKEhA>
+X-ME-Received: <xmr:Kh_YZtf3Y7G03_2DuVd8XpnwJPjamJwZV_EjrOqFdJ2a630IsJkJb-ONbC4J4p_h1YjG2qlNXu4NYnjpjMvTLSj0H6I0bDVm5lwMdZK6--as>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehjedgtdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Kh_YZrIcU4kn4SM2PY8V-l53GbFJaAaQ41Y36eOcm8RNB6vIil00BA>
+    <xmx:Kh_YZiLohjBlFADJ-CfPPh7l-OHL3VMpy77J1ogkyI54n2SatAPytQ>
+    <xmx:Kh_YZsz-PdoJfy_ftx1MjekP3dS7MFNxGtpk7EbLUuT70IEtvGUc4A>
+    <xmx:Kh_YZmJW_t0WBt9Wk8bwlAs7DoCAOvPK7fqGQ9bTpMh6EA_nB4phYQ>
+    <xmx:Kh_YZpUXRnNoexQFuf8qz2KXDSYkf3L6tlVZ3tBbKh8AzFieljBiWmpB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Sep 2024 04:49:45 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8be67946 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Sep 2024 08:49:35 +0000 (UTC)
+Date: Wed, 4 Sep 2024 10:49:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] refs/files: use heuristic to decide whether to
+ repack with `--auto`
+Message-ID: <ZtgfIPOZO1p4_ExF@pks.im>
+References: <cover.1725280479.git.ps@pks.im>
+ <9a63abfe3b812a32d69c7393004bea4f88971559.1725280479.git.ps@pks.im>
+ <CAOLa=ZRGvU4LvX9kjvF3dJCTvKR6CC1CwPTp515c3Wt5M8a5vA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3_wUIEdhm9fFBAA--.53305W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRR9QbWXAorf2gQACsi
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZRGvU4LvX9kjvF3dJCTvKR6CC1CwPTp515c3Wt5M8a5vA@mail.gmail.com>
 
-QXQgMjAyNC0wOS0wMyAxODowOTo0NSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBNb24sIFNlcCAwMiwgMjAyNCBhdCAxMjoxMzo1NVBNICswMDAwLCBYaW5nIFhp
-biB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+PiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9n
-aXQtY2xvbmUudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0Cj4+IGluZGV4IDhlOTI1
-ZGI3ZTljLi4xMDU2NDVlZDY4NSAxMDA2NDQKPj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtY2xv
-bmUudHh0Cj4+ICsrKyBiL0RvY3VtZW50YXRpb24vZ2l0LWNsb25lLnR4dAo+PiBAQCAtMTQ5LDYg
-KzE0OSw5IEBAIG9iamVjdHMgZnJvbSB0aGUgc291cmNlIHJlcG9zaXRvcnkgaW50byBhIHBhY2sg
-aW4gdGhlIGNsb25lZCByZXBvc2l0b3J5Lgo+PiAgCXVua25vd24gb25lcywgaXMgc2VydmVyLXNw
-ZWNpZmljLgo+PiAgCVdoZW4gbXVsdGlwbGUgKystLXNlcnZlci1vcHRpb249KytfXzxvcHRpb24+
-X18gYXJlIGdpdmVuLCB0aGV5IGFyZSBhbGwKPj4gIAlzZW50IHRvIHRoZSBvdGhlciBzaWRlIGlu
-IHRoZSBvcmRlciBsaXN0ZWQgb24gdGhlIGNvbW1hbmQgbGluZS4KPj4gKwlXaGVuIG5vICsrLS1z
-ZXJ2ZXItb3B0aW9uPSsrX188b3B0aW9uPl9fIGlzIGdpdmVuIGZyb20gdGhlIGNvbW1hbmQKPj4g
-KwlsaW5lLCB0aGUgdmFsdWVzIG9mIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgYGZldGNoLnNlcnZl
-ck9wdGlvbmAKPj4gKwlhcmUgdXNlZCBpbnN0ZWFkLgo+PiAgCj4+ICBgLW5gOjoKPj4gIGAtLW5v
-LWNoZWNrb3V0YDo6Cj4KPkknbSBub3QgYSAxMDAlIHN1cmUsIGJ1dCBJIGRvbid0IHRoaW5rIHRo
-YXQgYGZldGNoLipgIGNvbmZpZ3MgdHlwaWNhbGx5Cj5pbXBhY3QgZ2l0LWNsb25lKDEpLiBTbyB0
-aGlzIGhlcmUgaXMgYSB0YWQgc3VycHJpc2luZyB0byBtZS4KPgo+SXQgbWFrZXMgbWUgd29uZGVy
-IHdoZXRoZXIgaXQgaXMgYWN0dWFsbHkgc2Vuc2libGUgdG8gaW1wbGVtZW50IHRoaXMgYXMKPnBh
-cnQgb2YgdGhlIGBmZXRjaGAgbmFtZXNwYWNlIGluIHRoZSBmaXJzdCBwbGFjZS4gSSdtIG5vdCB5
-ZXQgcXVpdGUgc3VyZQo+d2hlcmUgdGhpcyB3aG9sZSBzZXJpZXMgc2xvdHMgaW4sIHRoYXQgaXMg
-d2h5IG9uZSB3b3VsZCB3YW50IHRvIHNldCB1cAo+ZGVmYXVsdCBzZXJ2ZXIgb3B0aW9ucyBpbiB0
-aGUgZmlyc3QgcGxhY2UuIFNvIHdoYXQgSSdtIHdvbmRlcmluZyByaWdodAo+bm93IGlzIHdoZXRo
-ZXIgdGhlIHNlcnZlciBvcHRpb25zIGFyZSBzb21ldGhpbmcgdGhhdCB5b3Ugd2FudCB0byBhcHBs
-eQo+Z2xvYmFsbHkgZm9yIGFsbCByZW1vdGVzLCBvciB3aGV0aGVyIHlvdSdkIHJhdGhlciB3YW50
-IHRvIHNldCB0aGVtIHVwCj5wZXIgcmVtb3RlLgoKU29ycnkgZm9yIG5vdCBleHBsYWluaW5nIG91
-ciB1c2UgY2FzZSBjbGVhcmx5LiBXZSBoYXZlIHNldmVyYWwgaW50ZXJuYWwKcmVwb3NpdG9yaWVz
-IGNvbmZpZ3VyZWQgd2l0aCBudW1lcm91cyBDSSB0YXNrcywgZWFjaCByZXF1aXJpbmcgY29kZQpw
-cmVwYXJhdGlvbiAoc29tZXRpbWVzIHZpYSBjbG9uZSwgc29tZXRpbWVzIHZpYSBmZXRjaCkuIFRo
-ZXNlIENJIHRhc2tzCmFyZSB1c3VzYWxseSB0cmlnZ2VyZWQgYnkgcG9zdC1yZWNlaXZlIGhvb2ss
-IHNvIHRoZSBjb25jdXJyZW50IHRhc2tzIGFyZQphY3R1YWxseSBmZXRjaGluZyB0aGUgc2FtZSBj
-b3B5IG9mIGNvZGUuCgpPbiBnaXQgc2VydmVyLCB3ZSB3YW50IHRvIGRlcGxveSBhIHNwZWNpYWwg
-cGFjay1vYmplY3RzLWhvb2sgdG8gbWl0aWdhdGUKdGhlIHBlcmZvcm1hbmNlIGltcGFjdHMgY2F1
-c2VkIGJ5IHRoZXNlIENJIHRhc2tzIChzbyB0aGUgcGFja2ZpbGUKcHJvZHVjZWQgYnkgZ2l0LXBh
-Y2stb2JqZWN0cyBjYW4gYmUgcmV1c2VkKS4gIFNpbmNlIG5vdCBhbGwgY2xvbmUvZmV0Y2gKb3Bl
-cmF0aW9ucyBjYW4gYmVuZWZpdCBmcm9tIHRoaXMgY2FjaGluZyBtZWNoYW5pc20gKGUuZy4gcHVs
-bHMgZnJvbQp1c2VycycgZGV2IGVudmlyb25tZW50KSwgd2UgbmVlZCB0aGUgY2xpZW50IHRvIHBh
-c3MgYSBzcGVjaWFsIGlkZW50aWZpZXIKdG8gaW5mb3JtIHRoZSBzZXJ2ZXIgd2hldGhlciBjYWNo
-aW5nIHN1cHBvcnQgc2hvdWxkIGJlIGVuYWJsZWQgZm9yIHRoYXQKY2xvbmUvZmV0Y2guIENsZWFy
-bHksIHVzaW5nIHNlcnZlciBvcHRpb25zIGlzIGEgZ29vZCBjaG9pY2UuCgpUbyBhY2hpZXZlIG91
-ciBkZXNpZ24sIHdlIG5lZWQgdG8gYWRkIHR3byBwYXRjaCBzZXJpZXMgdG8gZ2l0OgoKMS4gU3Vw
-cG9ydCBpbmplY3Rpbmcgc2VydmVyIG9wdGlvbnMgdG8gaWRlbnRpZnkgZW52aXJvbm1lbnRzIHZp
-YQogICBjb25maWd1cmF0aW9uLCBiZWNhdXNlIGFkZGluZyB0aGUgLS1zZXJ2ZXItb3B0aW9uIHBh
-cmFtZXRlciB3b3VsZAogICByZXF1aXJlIHRvbyBtYW55IHNjcmlwdCBtb2RpZmljYXRpb25zLCBt
-YWtpbmcgaXQgZGlmZmljdWx0IHRvIGRlcGxveS4KICAgVGhpcyBpcyB3aGF0IHRoaXMgcGF0Y2gg
-c2VyaWVzIGRvZXMuCjIuIEdpdCBzZXJ2ZXIgc2hvdWxkIHBhc3MgdGhlIHJlY2VpdmVkIHNlcnZl
-ciBvcHRpb25zIGFzIGVudmlyb25tZW50CiAgIHZhcmlhYmxlcyAoc2ltaWxhciB0byBwdXNoIG9w
-dGlvbnMpIHRvIHRoZSBwYWNrLW9iamVjdHMtaG9vay4KCj5JbiB0aGUgbGF0dGVyIGNhc2UgSSBj
-b3VsZCBzZWUgdGhhdCBpdCBtYXkgbWFrZSBzZW5zZSB0byBpbnN0ZWFkIG1ha2UKPnRoaXMgYHJl
-bW90ZS48bmFtZT4uc2VydmVyT3B0aW9uYC4gVGhpcyB3b3VsZCBhbHNvIHJlbW92ZSB0aGUgdW5j
-bGVhbgoKSSBuYW1lZCB0aGUgbmV3IGNvbmZpZ3VyYXRpb24gYGZldGNoLnNlcnZlck9wdGlvbmAg
-bWFpbmx5IHRvIGZvbGxvdyB0aGUKYHB1c2gucHVzaE9wdGlvbmAgcGF0dGVybi4gIFNpbmNlIHdo
-aWNoIHNlcnZlciBvcHRpb25zIHRvIHN1cHBvcnQgaXMKYWN0dWFsbHkgc2VydmVyLXNwZWNpZmlj
-LCB1c2luZyBgcmVtb3RlLjxuYW1lPi5zZXJ2ZXJPcHRpb25gIGlzIGEgZ29vZAppZGVhIGZvciBn
-aXQtZmV0Y2guIEhvd2V2ZXIsIGhvdyBzaG91bGQgd2UgZGVzaWduIHRoZSBjb25maWd1cmF0aW9u
-IGZvcgpnaXQtbHMtcmVtb3RlIG9yIGdpdC1jbG9uZSwgaWYgd2Ugd2FubmEgcHJvdmlkZSBhbGwg
-b2YgdGhlbSB3aXRoIGEKZGVmYXVsdCBsaXN0IG9mIHNlcnZlciBvcHRpb25zIHRvIHNlbmQ/Cgo+
-ZGVzaWduIHRoYXQgYSBmZXRjaC1yZWxhdGVkIGNvbmZpZyBub3cgaW1wYWN0cyBjbG9uZXMsIGV2
-ZW4gdGhvdWdoIGl0Cj5ub3cgd29ya3MgZGlmZmVyZW50bHkgdGhhbiBvdXIgcHVzaCBvcHRpb25z
-Lgo+Cj5JIGd1ZXNzIHRoaXMgZGVwZW5kcyBvbiB0aGUgYWN0dWFsIHVzZWNhc2UuCj4KClhpbmcg
-WGluCg==
+On Tue, Sep 03, 2024 at 02:00:16AM -0700, karthik nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The `--auto` flag for git-pack-refs(1) allows the ref backend to decide
+> > whether or not a repack is in order. This switch has been introduced
+> > mostly with the "reftable" backend in mind, which already knows to
+> > auto-compact its tables during normal operations. When the flag is set,
+> > then it will use the same auto-compaction mechanism and thus end up
+> > doing nothing in most cases.
+> >
+> > The "files" backend does not have any such heuristic yet and instead
+> 
+> Nit: s/instead/will instead/
+> 
+> > packs any loose references unconditionally. So we rewrite the complete
+> > "packed-refs" file even if there's only a single loose reference to be
+> > packed.
+
+Revisiting this: isn't the current version of this sentence correct?
+Replacing it with "will instead" certainly makes it incorrect without
+also changing "packs" to "pack".
+
+Patrick
