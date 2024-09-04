@@ -1,100 +1,122 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F142B1D9D6B
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 13:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60BA4400
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 14:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725458387; cv=none; b=EG+6smRlm5YzORZr/jVXlgSl67ZplNzuXO6zXT+i5cTFEIgXc0oCh1Q68pDWVTu7p2++bZWcmOW8/ah9FZGYr3g5B9GkQuGZQwr1bsONilJfm/l1ihqDAqMFTvHlh0ixDSqS8d/3XxY5dx4IQbIFwv8twCmjtNywtVV82mpQ2+o=
+	t=1725458504; cv=none; b=d7ookJsaXo/3tB3Mcr9ltPA223/meDKqFLLxHKTlZpXqSyZ02gx85AkmL9Lbb96CxECpJSyZEmYMMe4jUByjs9N2IqIBUQlrxbNXjdMHum2uNrgKxP/V622ux/UrJwTwaKcU5vaol6JHFZ2y6hv5HdsbtKxEKOztOnJ43Cuo+uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725458387; c=relaxed/simple;
-	bh=4HQyCh4tmhzK+d7QHEwxRl7ql3jnNh+K5sxPsmX/54A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iAql2boPCGsFtFTUY/X4tbS/PwZecQkEu/6fYsUOjA5KXAGRjW+isj6CNRSXE+yudLSGnBxDM9/ilZRuD54WpSmXBqd7uHkQJEfLiUyNYwWxtJim2psQwQAre+330ec7AxpWXAIkTofTTjNINWmurD3rW0cRSPTFFpQ1TKAjh+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HmBfX5q8; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725458504; c=relaxed/simple;
+	bh=0glsumhkfZYA/1J0qihENHr4ltgNmX0uQDxoP1qQT3k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sHBD2ME/5oekKMeBd3u6td2Dho/nlFT6PqbFJb68Fotn3acn0zq+JGq5M4W0JVcRHbRe0P6vKrpAcC4ALIlas+lYmcDLo0Fnpy3rUS1IhnH0u4xGCl/8wQ4t91pHV0UTrmjcrOgGi1seC5weaf8nLLqVJ+UrnDy67PcUKV/6JqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=QHZE3vCv; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HmBfX5q8"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2d892997913so2960678a91.3
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 06:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725458385; x=1726063185; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4HQyCh4tmhzK+d7QHEwxRl7ql3jnNh+K5sxPsmX/54A=;
-        b=HmBfX5q8DL0NkC5C3o198rqocjkJZ0yWO1a0wskimP0LyPFU0LrK9MFAYC8/8oTFEN
-         PKVnhhAo1wsLDkmNoDGue2ZxpFQqTDOFnalUgdJpAjmJ/UxC5ry6q1kFWxAN4m7/2ZH0
-         XdQjxMLv28pcs2Cic2347wRmach+SIAF2qjlGsQ5SbSEjnqBqCo71+RGWeMgnmavfRFp
-         It+6ylS5L3JXUDMfthltdOvFg0v1/Ez0XZN/Vmc8Lpcq9/goCc1EQIXQ7Fy98zcv3M7P
-         zzd6qP27l8XwwAC6rI6CgqhpDJGgHQkUZcf+mayAGgBOII1CdwTUCsaMOzjlG12vmofB
-         llLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725458385; x=1726063185;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4HQyCh4tmhzK+d7QHEwxRl7ql3jnNh+K5sxPsmX/54A=;
-        b=MVoliVxRYJlNkdbmnPAnHM0RQOCME64nWZrv7uj6/b1XpNZlBycpTYEPlsAOuP+sjP
-         fNhKNt7/kyKYvyNtcyYPqTxoxZ1MCR+dPqI9vCvJz7uiKVhVbrFF1HCnru/TvLAn7x1f
-         RPXVKwEzS7PAMswfA/vj+nK4IQCNwCp8dVeNVmMpUWRPs5jhtRILUa2CV/YR77cowuqq
-         OtuCaDPftSlZ5qdr3o81luUVCVR+6GoV/FFZsNUdAhFMmOFvDgVTYdmUrNV/ozNx7nJK
-         IjQZEfCuV0KLCkdVG2z0iqoY+W0jnw3O39RkR1qcqneLXlrTqQJjQ5uR9W4ZCTIvmU3I
-         1AnQ==
-X-Gm-Message-State: AOJu0YyyViuRb/wSl7gQXt7cLvmT45JHspMEEgJaWrHQBqwylfgl/200
-	42gmJ2BTgl3xp8W8+DafgyYzi7uruejtphPIRhcCeNLspwlpskFf2bl5ZT0+z/oPbOvZn2Z76pi
-	oq7K/ENb0v8sQg6Zgq7qAtZHEBOE=
-X-Google-Smtp-Source: AGHT+IGMowtJB/QTKqh1prGcnXsc6UCHWmU9GdNnkNeddJ8+IOgXWs4QuJS88q85LIivN3yxioZLFqy7X8ufV6y+98U=
-X-Received: by 2002:a17:90a:b898:b0:2c9:a3ca:cc98 with SMTP id
- 98e67ed59e1d1-2d8904c6ed8mr12431699a91.7.1725458384999; Wed, 04 Sep 2024
- 06:59:44 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QHZE3vCv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1725458494;
+	bh=0glsumhkfZYA/1J0qihENHr4ltgNmX0uQDxoP1qQT3k=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=QHZE3vCv8Uh4XUKHvqpnnzpLJAMhF2ysTWYuhquUsNUsCxfjmcrjVsbcE6jrT+Pf6
+	 9h4z0FtSorvTPTgyLl9RrKb9hWiKOHChjG3MwExYhnsZS+bKok2udI+UMC2N/+zqRf
+	 7m9JoKKIhNZXVMZKoQWkbmkNVcT1O8jpFt7VlvOMf6dzxN+C/QXtkWCa3l74BVLeo+
+	 ujv6eqZVG4LthJYjMXRBc7KIM8wM9e85OdyHK3JBM7fc4DfyRArl+Kufs6q2orHHND
+	 +iDpg96sMS+9kBVpsbO01sreaa4NQ7AEhveCRcaq6yJCsNZTqMyKF7M65bWelu6Y6k
+	 ugG5T6T4g6sj903VQU/qtKneN3EOMOGhXwPxoWl9ctBD4wcGhUj0y+es8rlhj7yYNe
+	 Le9yHyBltFBAa1cXis6zS3xc2MkBnZEse8uILXfUSDlKF1XtZqbc6ODUMRmiPL2LHK
+	 Ax+MXx5FTgzfq1ALWEmORDR0s9fdnQ+Ua9ByBPnnBybCW86LqX1
+Received: from tapette.crustytoothpaste.net (unknown [74.12.158.47])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3AFE624454;
+	Wed,  4 Sep 2024 14:01:34 +0000 (UTC)
+Date: Wed, 4 Sep 2024 14:01:04 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
+ non-cryptographic uses
+Message-ID: <ZthoII9swrVNLIqZ@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
+ <Ztdn25zfi8WHO+GS@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEO06G+SLu-LAe0mkR3ZbaL0MZpBm9PhntQjF-YwVPMtnuH=rQ@mail.gmail.com>
- <20240903170438.nhcnojx6upsxsj6d@carbon>
-In-Reply-To: <20240903170438.nhcnojx6upsxsj6d@carbon>
-From: Loredana Tralli <loredana.tralli@gmail.com>
-Date: Wed, 4 Sep 2024 15:59:33 +0200
-Message-ID: <CAEO06GKzQTfm9z8ODCAYdHsWwgfHau0kuFA7WFkVqkPHbsm_1g@mail.gmail.com>
-Subject: Re: Ask for feature on git
-To: Loredana Tralli <loredana.tralli@gmail.com>, Simon.Richter@hogyros.de, kostix@bswap.ru
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="e+XzCzuCyzwCPfNH"
+Content-Disposition: inline
+In-Reply-To: <Ztdn25zfi8WHO+GS@nand.local>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Hello,
-Thank you both for your answers.
 
-I was wondering if exists a bash/cli command to find out from with
-branch a created the new branch.
-Usually we can see it with graph or something like in this answers
-https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs,
-nand I'd like to know if there is a command through bash to check
-directly "you created branch test from branch release".
+--e+XzCzuCyzwCPfNH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks in advance for your help,
-Regards
+On 2024-09-03 at 19:47:39, Taylor Blau wrote:
+> We still run any packs through index-pack before landing them in
+> $GIT_DIR/objects/pack, and index-pack still uses the collision-detecting
+> SHA-1 implementation (if the repository uses SHA-1 and Git was compiled
+> with it).
+>=20
+> So if I were a malicious attacker trying to compromise data on a forge,
+> I would have to first (a) know the name of some pack that I was trying
+> to collide, then (b) create a pack which collides with that one before
+> actually pushing it. (b) seems difficult to impossible to execute
+> (certainly today, maybe ever) because the attacker only controls the
+> object contents within the pack, but can't adjust the pack header,
+> object headers, compression, etc.
 
-Loredana Tralli
+Packing single-threaded is deterministic in my tests, so it would seem
+that this is possible, even if inconvenient or difficult to execute.
+It's not very hard to get access to the configuration a forge is using
+either because it's open source or open core, or just from getting the
+on-premises version's configuration, so we have to assume that the
+attacker knows the configuration, and we also can determine what packs
+are on the server side if we've pushed all of the objects ourselves.
 
-Il giorno mar 3 set 2024 alle ore 19:04 Konstantin Khomoutov
-<kostix@bswap.ru> ha scritto:
->
-> On 9/3/24 17:18, Loredana Tralli wrote:
->
-> > Is it possible to have a git command to find out which is the parent branch?
->
-> Please try to specify what you consider to be a "parent branch" in your
-> workflow. The problem is that there are multiple things in Git which may match
-> what you are asking for. Even better would be to try to explain your original
-> problem you're struggling with - which made you want the feature being
-> discussed.
->
-> Still, please consider that in Git, commits do not belong to any
-> branch: each commit has metadata but that metadata do not record the name of
-> the branch (if any!) which was checked out at the time the commit was created
-> (on someone's computer).
->
+> But even if the attacker could do all of that, the remote still needs to
+> index that pack, and while checksumming the pack, it would notice the
+> collision (or SHA-1 mismatch) and reject the pack by die()-ing either
+> way. (AFAICT, this all happens in
+> builtin/index-pack.c::parse_pack_objects()).
+
+If we're certain that we'll always index the pack, then I agree we would
+detect this at that point, and so it would probably be safe.  As you and
+I discussed elsewhere, I'm not the expert on the pack code, so I'll
+defer to your analysis here.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--e+XzCzuCyzwCPfNH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZthoHwAKCRB8DEliiIei
+gYYLAQCzbyT/Dj6TdOiOhUJd8FpVfrvH8Yr+Sodl3uemWtstSAD/Z/SRA7va9Ulk
+85hJSq4gfGit6vFUAwc5WkirBk2oHw8=
+=MA9j
+-----END PGP SIGNATURE-----
+
+--e+XzCzuCyzwCPfNH--
