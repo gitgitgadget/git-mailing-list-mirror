@@ -1,170 +1,116 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C7B4778C
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 17:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F70F44376
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 17:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725470272; cv=none; b=UD5gaW6NMprIrEekpM8EiO+Mf9YSYxkJOuhdEvOjhqwmFCbs/N54bYdWKKI0geAT1pKpiImhilGFtOmVUuXRUwmcEVxFf0wxa0+fzkor8cbOJ9q/adSWSWXirO4iYsXu/fY4C3HFnfRtYTpR0r2ewhSLUUJpaYJrGyVIauZxCe8=
+	t=1725471059; cv=none; b=ebxRUv5g4BngdziMifWmwD5vGFwqvUmGzbWuW2JolSZ0qgr6xKzKT1d0wHZrW/S8yh8AqoFzXSEEo4X4fILl5JjH4ImfDfIiUOQ/J9fPCPFtUmPy1X6pCkmvdv/iZWX5mbf2Y0ebehso2vjiqRf49yox1hJvi6vE/cmCI7B8HpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725470272; c=relaxed/simple;
-	bh=K5Bk0rMy66k35Q8T+rkRlN79+vIXVhTRld8TrX25tAA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UlNW5kyi5xAtSLS6VUItx5++TYc/OoAKW4Uxq/o+Z2+mJNmscZLU+hRLVsiMKrzMx+JNR4OsJ7Q7CZYIXJKVuejDnbBEhSdR3ayrZ+kQMiFS8SdHVFVBs3DfFo+s7zTDyDJjLEPqtOSDpBdySBUI6ldBoCzjGYja7uSeDe8Oaw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hUMKAhy9; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725471059; c=relaxed/simple;
+	bh=Mf/gZMPhkVoOonJ1arO5KTrqmMQT+/HuQe7h4QBwilM=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=qVyUvHZ9GCf7Ufn3Nz0w3O5oUYc4FTAOpnpSz2nfrb+wjlVoMfXN+aWOTGLMG8GW1AHVYuNuqYbXJvVsAhtBUU652zCtf8GvEp3rW3wh2hYBLuLp4fmeMELsm2iOiSpu1ARA+gyJBVV5BF9Kccm8V9v7SCh61GTW6sfZZR5jgJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=we2K/p0I; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hUMKAhy9"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6133036B65;
-	Wed,  4 Sep 2024 13:17:49 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=K5Bk0rMy66k35Q8T+rkRlN79+vIXVhTRld8TrX
-	25tAA=; b=hUMKAhy9qZg5tWulqIyYlHR0eLvfiD/uqmHLTHtet2WqljE4epWCu5
-	oPSqn9tPfq2GcwjNapMs1dS8Ybwb/nHJYPq1C2H47d2zx77uuFh0kAA7k9jIRoFl
-	L24oierdz6EECKluZZeUCr0BXQVuYmegZ3e0FUXQVt9O4z+qGqutU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EF07B36B63;
-	Wed,  4 Sep 2024 13:17:48 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58ECC36B62;
-	Wed,  4 Sep 2024 13:17:48 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 1/6] t: move reftable/stack_test.c to the unit
- testing framework
-In-Reply-To: <20240904150132.11567-2-chandrapratap3519@gmail.com> (Chandra
-	Pratap's message of "Wed, 4 Sep 2024 20:08:01 +0530")
-References: <20240826173627.4525-1-chandrapratap3519@gmail.com>
-	<20240904150132.11567-1-chandrapratap3519@gmail.com>
-	<20240904150132.11567-2-chandrapratap3519@gmail.com>
-Date: Wed, 04 Sep 2024 10:17:47 -0700
-Message-ID: <xmqqmskn9w3o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="we2K/p0I"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6d73d0944acso89447687b3.1
+        for <git@vger.kernel.org>; Wed, 04 Sep 2024 10:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1725471056; x=1726075856; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ddzVl6OyB0dYI8Mwia21cDdlGz8fCVYd4ruIV/8sxJw=;
+        b=we2K/p0IwNvq53EvW8WqBNE9wdDtBh49CXD5EurIVIUZqvCNbgAGOOxxqPyYflnTfT
+         ecSR5OrR/vWhEDn6c9TYcfl6KkWWq8irExEd9SbEXQCnANq/sQ2DMwUIR92NYYriCiHD
+         qghdE177pWMCqFVg5aoZK2HWUEpIstpBL6vZa9hcyWbBsziX8REkwSEg3qedZ+jceMoH
+         FBiWS0jeKd6oxg3CnNsKUY3+ovX/PHgWCcENXYf8xIJz2lv7LF4EIbXC1ecY9qSiL8U0
+         QnFhtoYnyUc04L1b5duvcrsRlbJxCC2TKMm5C5mS011sLoQP3ZxgJiBCK48QX3qWJHhr
+         tZbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725471056; x=1726075856;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ddzVl6OyB0dYI8Mwia21cDdlGz8fCVYd4ruIV/8sxJw=;
+        b=LcG8i9/gsDp4dARde1JBZ67GNGR0yT4W4AfH6CY8zilEitTBzcYgLDlrd9XKUR1JsB
+         QlaaPT9S0D/cSlFdU4ZYDEn694Vnmg3rS9YUI9LDFHOBsvDdNuHKnxPiXpN0ETp+eW15
+         RsJ05y5nvmVNYtNC1/caqXejnw664Wxgi6k9A1AxSZ2l0elw+i6heqnLFWBCh8zXmicy
+         7VKp/ZCjJNtOaB4JY+4GDl8qGM7c3a78JHgzJvRx7N5DgFESWH8tGul4RmzHRWR/ZbmI
+         aOSN3UILeWJbYBKjdQuRFQ/bYpTQho7Qe5AiPox6R1Sf63V48kHyddaR2Pp+KyAZMXpg
+         +VRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV3mkZXEcmNLViWVHWWCDOrIBy0B7OiXWnBX/w98bVfKld8bAw2L+3Y3GLPQq+/gu2QXW4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVpCN4qZWwCz4wTyzKlWXAfiL7i7aDvlETEWYMPk2oCQ6Mmrp2
+	zhU1uMZUdlHMcB9l9khrd5HTJrN1jy/HU4RGV2NwBWum4akbmHRM2vbIlPUE8MEmcOGleWCnhdB
+	L1QcuE6gmC4Upbg==
+X-Google-Smtp-Source: AGHT+IHIydXKIxMI85k20QsSF1mMhO/LLl2tPfri+5Vmh5ZmYk4YssU1U0EM5kD+XffywyNJcn3lCoBjO9c9D0c=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a05:690c:418c:b0:667:8a45:d0f9 with SMTP
+ id 00721157ae682-6d40af0505bmr415497b3.0.1725471056553; Wed, 04 Sep 2024
+ 10:30:56 -0700 (PDT)
+Date: Wed,  4 Sep 2024 17:30:53 +0000
+In-Reply-To: <ZrPpxE7OZtqsbD81@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9BADAA06-6AE1-11EF-9BE1-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
+Message-ID: <20240904173053.1220621-1-calvinwan@google.com>
+Subject: Re: [RFC PATCH 6/6] contrib/cgit-rs: add a subset of configset wrappers
+From: Calvin Wan <calvinwan@google.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Calvin Wan <calvinwan@google.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com
+Content-Type: text/plain; charset="UTF-8"
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> On 2024-08-07 at 18:21:31, Josh Steadmon wrote:
+> > diff --git a/contrib/cgit-rs/Cargo.toml b/contrib/cgit-rs/Cargo.toml
+> > index 7b55e6f3e1..5768fce9e5 100644
+> > --- a/contrib/cgit-rs/Cargo.toml
+> > +++ b/contrib/cgit-rs/Cargo.toml
+> > @@ -14,3 +14,4 @@ path = "src/lib.rs"
+> >  
+> >  [dependencies]
+> >  libc = "0.2.155"
+> > +home = "0.5.9"
+> 
+> Okay, here's where we get to my previous mention of supported platforms.
+> This depends on Rust 1.70, and Debian stable has only 1.63.  Trying
+> `cargo build --release` on that version returns this:
+> 
+>   Downloaded home v0.5.9
+>   Downloaded libc v0.2.155
+>   Downloaded 2 crates (752.3 KB) in 0.17s
+> error: package `home v0.5.9` cannot be built because it requires rustc 1.70.0 or newer, while the currently active rustc version is 1.63.0
+> 
+> My recommended approach here is to support the version in Debian stable,
+> plus the version in Debian oldstable for a year after the new stable
+> comes out, which is what I do.  That gives people a year to upgrade if
+> they want to use our code.  We _don't_ want to follow the
+> latest-stable-Rust approach because it isn't appropriate that software
+> has a six-week lifespan of support and that isn't going to work for
+> software like Git that people often compile locally on older versions.
+> 
+> We also need to be conscious that while Rust upstream provides some
+> binaries for some platforms, many platforms rely on the distro packages
+> because Rust upstream doesn't ship binaries for their target.  Thus,
+> simply using rustup is not viable for many targets, which is another
+> reason that latest-stable-Rust won't fly.
+> 
+> Debian stable is the version that most projects who have defined
+> lifespans track, so it's also what we should track.  According to my
+> recommended approach, that would be 1.63.
 
->  int cmd__reftable(int argc, const char **argv)
->  {
->  	/* test from simple to complex. */
-> -	stack_test_main(argc, argv);
->  	return 0;
->  }
-
-This makes cmd__reftable() a no-op.
-
-Even though you cannot remove t/helpter/test-reftable.c, as it
-contains the implementation for "test-tool dump-reftable", we should
-at least be able to do something like this.
-
---- >8 ---
-Subject: [PATCH 7/6] t: clean up leftover reftable test cruft
-
-With migration of the tests of the reftable to the unit-tests
-framework, "test-tool reftable" has become an expensive no-op.
-
-Retire everything that uses "test-tool reftable", and everything
-that is used to implement it.
-
-While at it, make the cmds[] list alphabetically sorted again by
-moving the entry for "dump-reftable".
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/helper/test-reftable.c     |  6 ------
- t/helper/test-tool.c         |  3 +--
- t/helper/test-tool.h         |  1 -
- t/t0032-reftable-unittest.sh | 16 ----------------
- 4 files changed, 1 insertion(+), 25 deletions(-)
-
-diff --git c/t/helper/test-reftable.c w/t/helper/test-reftable.c
-index d27d7ee798..e62298c6a4 100644
---- c/t/helper/test-reftable.c
-+++ w/t/helper/test-reftable.c
-@@ -9,12 +9,6 @@
- #include "reftable/reftable-tests.h"
- #include "test-tool.h"
- 
--int cmd__reftable(int argc, const char **argv)
--{
--	/* test from simple to complex. */
--	return 0;
--}
--
- static void print_help(void)
- {
- 	printf("usage: dump [-st] arg\n\n"
-diff --git c/t/helper/test-tool.c w/t/helper/test-tool.c
-index f8a67df7de..252fa5de63 100644
---- c/t/helper/test-tool.c
-+++ w/t/helper/test-tool.c
-@@ -26,6 +26,7 @@ static struct test_cmd cmds[] = {
- 	{ "drop-caches", cmd__drop_caches },
- 	{ "dump-cache-tree", cmd__dump_cache_tree },
- 	{ "dump-fsmonitor", cmd__dump_fsmonitor },
-+	{ "dump-reftable", cmd__dump_reftable },
- 	{ "dump-split-index", cmd__dump_split_index },
- 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
- 	{ "env-helper", cmd__env_helper },
-@@ -61,9 +62,7 @@ static struct test_cmd cmds[] = {
- 	{ "read-graph", cmd__read_graph },
- 	{ "read-midx", cmd__read_midx },
- 	{ "ref-store", cmd__ref_store },
--	{ "reftable", cmd__reftable },
- 	{ "rot13-filter", cmd__rot13_filter },
--	{ "dump-reftable", cmd__dump_reftable },
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
- 	{ "revision-walking", cmd__revision_walking },
-diff --git c/t/helper/test-tool.h w/t/helper/test-tool.h
-index e74bc0ffd4..84291318cb 100644
---- c/t/helper/test-tool.h
-+++ w/t/helper/test-tool.h
-@@ -55,7 +55,6 @@ int cmd__read_graph(int argc, const char **argv);
- int cmd__read_midx(int argc, const char **argv);
- int cmd__ref_store(int argc, const char **argv);
- int cmd__rot13_filter(int argc, const char **argv);
--int cmd__reftable(int argc, const char **argv);
- int cmd__regex(int argc, const char **argv);
- int cmd__repository(int argc, const char **argv);
- int cmd__revision_walking(int argc, const char **argv);
-diff --git c/t/t0032-reftable-unittest.sh w/t/t0032-reftable-unittest.sh
-deleted file mode 100755
-index 471cb37ac2..0000000000
---- c/t/t0032-reftable-unittest.sh
-+++ /dev/null
-@@ -1,16 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2020 Google LLC
--#
--
--test_description='reftable unittests'
--
--TEST_PASSES_SANITIZE_LEAK=true
--. ./test-lib.sh
--
--test_expect_success 'unittests' '
--	TMPDIR=$(pwd) && export TMPDIR &&
--	test-tool reftable
--'
--
--test_done
+After getting rid of the `home` crate, the only other issue we ran into
+downgrading the version to 1.63 was with `std::ffi{c_char, c_int}`.
+Those were only made available in 1.64 and they are obviously quite
+necessary for us to be able to call C functions. Do you know of any
+alternatives we can use? I also don't think reinventing the wheel with
+our own implementation makes sense in this case, and even if Debian were
+to upgrade stable to a higher version today, we would still need to
+support oldstable for another year.
