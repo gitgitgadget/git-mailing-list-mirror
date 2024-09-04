@@ -1,96 +1,163 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F751D5CF4
-	for <git@vger.kernel.org>; Tue,  3 Sep 2024 23:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F56B173
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 00:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725405589; cv=none; b=iQ/Ys/WA2pMPa2i80B3L3po0n9nlQZtR2nGzWVWRf+FiJ3qROMT9cGG7hJQYDwmermqQ0KXE8ER3u5ENVtgzu+sodXP3Ay8RInMSj05pBRRr03KxvKb6qyzbSnZ6dNE6Gi55YfloqUCzNp/xHhDbtlIZif4r91VMHAk8E4wx4K0=
+	t=1725408514; cv=none; b=kgtdgVUvjOmw11ocVkblzbrFhALDg69bvicWtIUMkuf+M3uASJQiSziSsmvzTwNc/skr4Q0SAnUH62o7LVYIfo0rCDzJWbJ7KRc3wThVudB5vuZO9RlAgNBFmK16UU/1V71+UWGE0WpodMdq5imkkKoBqNjr7Ev1LgvAfjwKKrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725405589; c=relaxed/simple;
-	bh=92Q+F8CQ9KxB82Z6T1+zrXCbtL3P77QPayE5hUBemh0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LLQH8XnoKc7iCbFG6v380w9e27aGC/x1AN4d8H5xLMPsJ7e2q5e1X1DpfMW7JsTxrIt4i+3x9drEOMhXsyP3nVoqZpRCNVMmBcapBSMAo86mBRXCWOPgzSAxhx2zODyBlnpwac4GUUHBIB1gA5/Z46w3GLE2fDxHqXk81Pdg73Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AHSbexnN; arc=none smtp.client-ip=209.85.166.177
+	s=arc-20240116; t=1725408514; c=relaxed/simple;
+	bh=SKfLy6Dbqdayp91cRYaqkr2BH8bcjR0U3cVmwg+iIhM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SWzNi8GlhIGMJUfFPgbSqjlQa/to1WChhnyxOLLSvL2JOJfybuAvNA5PNJ170ZYubGXF4Uz3qk+Rzl1jM9r4kjgc/pSFcDcSweisUg3uy7rP6/X3EBxV1rhYHsRFYcztGFuN5bzt9bZYhh3gAgRet6JvfYKE16Za/hDW2w/X3f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jIWQcmUS; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHSbexnN"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-39e6a1e0079so23368945ab.0
-        for <git@vger.kernel.org>; Tue, 03 Sep 2024 16:19:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jIWQcmUS"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8695cc91c8so600344166b.3
+        for <git@vger.kernel.org>; Tue, 03 Sep 2024 17:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725405587; x=1726010387; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=gmail.com; s=20230601; t=1725408510; x=1726013310; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5cVAHJkTVEmlztrXT/3im/ughDXMUt8CAsGgIDXivdk=;
-        b=AHSbexnNmMYyZOiW6OWyi8TL7JHFY6ip6VeCPeARHt0UGcpsicoY1bmuZ7OAUAvNHP
-         SHdeKKLOeLB89MgPNyyNMXpPX40vjbhoX+osINYoZFHaWoUOLnoP8HQEmQGZ2zZqLfot
-         t6EYUbWZTST3UQo+e0xfE5ShTjzTWFFLVJyjuoZyB8cMfwEOea+HPoBGNEa/AaY8XavJ
-         yjO5iKmoVlih5h1N+8UPU0ggJgly3cHEKnak1+1b7Z2Onmfvoq/MArVCWGGu38CLJdlo
-         JbkZ94qMXz2uSeZCZqfYGo0m3oi9tiCER440iOBEOHojwiMwZ7ZwqjwINE4tCJVB+eJJ
-         ghfQ==
+        bh=SKfLy6Dbqdayp91cRYaqkr2BH8bcjR0U3cVmwg+iIhM=;
+        b=jIWQcmUSNrEWOUGz+px34WEmB67e/JhRQklkTyGHPtQlXKE7FY0YISCvgDIWzcDUKT
+         nOAOj+bYva6Tw2tyUTKV8WbNRLcvu9FTbUtx6m5VDlatLktFBtaHyCvEumvwMX0hpLxQ
+         QyLY0A+k2odvMbe8jGPQKQZ+HPbYLFJT4Ui55QLoaFtN4kWLMY8B7s4zJw2uCnpnRIsp
+         gQiPhkS6iBKOSB19LNQlv1baR49orbUlK926zobvgNmqh+yq+Xc4Sx+woanB8WubE8Q9
+         Fwt+CZycouVJ2Ma/UPA078KOhRQxvt79wS4O0oSVaRRFHvF+4/vf35iLmp1RoYW/Wu34
+         NNOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725405587; x=1726010387;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=1e100.net; s=20230601; t=1725408510; x=1726013310;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5cVAHJkTVEmlztrXT/3im/ughDXMUt8CAsGgIDXivdk=;
-        b=thsqIYDFm1c2DF8HdgsZ+i9cv04uwO1LUQNvPZE3Mrv/KMfpMHdhAvO5+7srtcH1zU
-         uQp6hOVf3+V8IDz/D2GkQiCdIbegvQdb8Hibunhvu+L2iGlGhqmNYKUxl6QzI3+0YI8W
-         OP6f67mdLAAfbi1nOs2KOOiQrRS1pRnJacfyEwPi14pEKtgiM/oF9EQDImPod64QVQvU
-         JxAedVegL8n4J1i2fccJn3ciXGsdTLx2fTptrc+LhAmS8rQ634PLF15ofZml+A+iZLmr
-         GT525/xjspJwAHhsVlI4MGTzskCBhWWXRrdqXhtt4bXoB1pyFE2mMr9kW/tdAeQ2IRlb
-         KDRQ==
-X-Gm-Message-State: AOJu0YyHZWJLSkbO8T+yeHWBi2A8sQD7qWK6CFa9lUhw6KWYre/BKVQE
-	TqPv9eR8YxBlDOv/Nf8EJC2YR5UiB6/SNWboXUnP9jIHEC9oEetjrvOJe38eHBJwWqitjaOy+/9
-	z4hrU2M1EopLP4UCK7TzuaF+ergE=
-X-Google-Smtp-Source: AGHT+IGEpgqD1l6JMAP+QXS2zvpZzyjkImne0Nqu9czsZSEoc9F2kASuqUP9m2xvmTXEhEahiWGFqZPb83wxZZwi+HU=
-X-Received: by 2002:a05:6e02:1a2f:b0:39b:4dd4:4a0d with SMTP id
- e9e14a558f8ab-39f6d71c990mr44958355ab.5.1725405586832; Tue, 03 Sep 2024
- 16:19:46 -0700 (PDT)
+        bh=SKfLy6Dbqdayp91cRYaqkr2BH8bcjR0U3cVmwg+iIhM=;
+        b=CB4XHqG69Ub+R5P6h+n2BRl1OVpBrUuzCJatsprWoQPo5IMXXZM2HBD44krYH+yPCy
+         Dyj6YJKj9pcEeF4WNYcsd2TDJYzMptUMSuktDM8PoDjJ6Qt6yyA477InvBVhiv8M/f31
+         6Nr9Ml+1xNSo8Rynq3tn5tf4FVOraSWGamfR/s25MX5PQDde/aAJSLRL+vfrcZsKh+QU
+         Dqs+6dsD4mKOG/3IPt/zUiWZIkek5sVCO1oYLNzclFFfxb4DimnXk93AnM4I7v2IB5ba
+         1It3ObMqm/p7Yzj70ZDuygEQKFMt7nTB+5AHmJZ2GVTR1quFgV4xFZSpM1qZlejwwi9N
+         G2Sw==
+X-Gm-Message-State: AOJu0YzrOKWvwDHfD41KimsOb39+N66JJZTYOAQB3ASp+K5VFQNcYlVj
+	6DmObh+v0kLaBu371iXkfabsEESP6HdI3QuuQaJAZclrukzhL9IPY/8dgr2tW8YXlMcySabssRd
+	jMwOU0Q5i89cCVKrD7fYQW6jFW9t/YMER
+X-Google-Smtp-Source: AGHT+IEA9OJCX1mukGBPEe/TAnB6Gt+nyMfz+L/gjbIO6WnK0zOFtlWGoKHZjd5OZMzl9okzI0ts74JaR8aMiAHPlNQ=
+X-Received: by 2002:a17:907:7e9a:b0:a86:8524:2558 with SMTP id
+ a640c23a62f3a-a897f7895d4mr1696983166b.12.1725408509590; Tue, 03 Sep 2024
+ 17:08:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANrWfmRvtz=WOPpv54-22aEFsCPi_vwpFo_Q08vq31NjggOVsw@mail.gmail.com>
-In-Reply-To: <CANrWfmRvtz=WOPpv54-22aEFsCPi_vwpFo_Q08vq31NjggOVsw@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 3 Sep 2024 16:19:00 -0700
-Message-ID: <CABPp-BEwLYhfBN6esMdeTcby4=12zhFeSqrih-WPy8D+pW3sxQ@mail.gmail.com>
-Subject: Re: `git merge --no-overwrite-ignore` overwrites ignored files when
- merge (i.e. not fast-forward)
-To: Han Jiang <jhcarl0814@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
+From: Han Jiang <jhcarl0814@gmail.com>
+Date: Wed, 4 Sep 2024 12:08:19 +1200
+Message-ID: <CANrWfmR1nTDF-ts3n2PpH2C+uvBzDm7ZEXh0StuwPZRmm80T1A@mail.gmail.com>
+Subject: =?UTF-8?Q?=60git_remote_prune_=3Cremote=3E=E2=80=A6=E2=80=8B=60_=28equivalent_to_git?=
+	=?UTF-8?Q?_fetch_=2D=2Dprune_=3Cremote=3E_except_that_no_new_references_will_b?=
+	=?UTF-8?Q?e_fetched=29_ignores_=60fetch=2EpruneTags=60_=28and_=60git_fetch_=2D=2Ddry=2Dr?=
+	=?UTF-8?Q?un=60_prints_same_tag_twice=29?=
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 1, 2024, 03:49 Han Jiang <jhcarl0814@gmail.com> wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> (`git merge --no-overwrite-ignore` overwrites ignored files when merge
-> with conflict.)
->
-> (`git merge --no-overwrite-ignore` overwrites ignored files when merge
-> without conflict.)
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+cd '/'; cd '/'; rm --force --recursive -- './test_git'; mkdir "$_"; cd "$_"=
+;
+mkdir --parents -- './server' './client';
+git -C './server' init --bare './repo.git'
+git --git-dir=3D'./server/repo.git' --work-tree=3D'.' commit --allow-empty
+-m "$((++number))"
+git -C './server/repo.git' branch branch1; git -C './server/repo.git'
+branch branch2; git -C './server/repo.git' tag tag1; git -C
+'./server/repo.git' tag tag2
+
+git -C './client' init './repo'
+git -C './client/repo' remote add server 'file://'"$(realpath
+'./server/repo.git')"
+git -C './client/repo' remote --verbose
+git -C './client/repo' config list --local --show-scope --show-origin
+git -C './client/repo' branch --list --all --verbose --verbose
+git -C './client/repo' tag --list
+
+git -C './client/repo' fetch --all
+git -C './client/repo' branch --list --all --verbose --verbose
+git -C './client/repo' tag --list
+
+git -C './server/repo.git' branch --delete branch1; git -C
+'./server/repo.git' branch branch3; git -C './server/repo.git' tag
+--delete tag1; git -C './server/repo.git' tag tag3
+git -C './client/repo' remote prune --dry-run server
+git -C './client/repo' fetch --prune --dry-run server
+git -C './client/repo' config set --local 'fetch.pruneTags' 'true'
+git -C './client/repo' remote prune --dry-run server
+git -C './client/repo' fetch --prune --dry-run server
+git -C './client/repo' config unset --local 'fetch.pruneTags'
+git -C './client/repo' config set --local --append
+'remote.server.fetch' '+refs/tags/*:refs/tags/*'
+git -C './client/repo' remote prune --dry-run server
+git -C './client/repo' fetch --prune --dry-run server
+
+git -C './client/repo' remote prune server
+git -C './client/repo' branch --list --all --verbose --verbose
+git -C './client/repo' tag --list
+
+What did you expect to happen? (Expected behavior)
+
+https://git-scm.com/docs/git-remote says:
+`git remote prune <remote>=E2=80=A6` is equivalent to `git fetch --prune
+<remote>`, except that no new references will be fetched.
+so:
+`git remote prune <remote>=E2=80=A6` should prune tags when `fetch.pruneTag=
+s` is `true`.
+(`git remote prune <remote>=E2=80=A6` should prune tags when
+`remote.server.fetch` has `+refs/tags/*:refs/tags/*`.)
+
+`git fetch --dry-run` should print same tag once.
+
+What happened instead? (Actual behavior)
+
+Setting `fetch.pruneTags` to `true` does not make `git remote prune
+<remote>=E2=80=A6` prune tags.
+(`git remote prune <remote>=E2=80=A6` prunes tags when `remote.server.fetch=
+`
+has `+refs/tags/*:refs/tags/*`.)
+
+`git fetch --dry-run` prints same tag twice.
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-Yep, well-known issue that I've mentioned multiple times.  Somewhat
-related to the "precious" concept that has come up on the list a few
-times.  See e.g.
+[System Info]
+git version:
+git version 2.46.0.windows.1
+cpu: x86_64
+built from commit: 2e6a859ffc0471f60f79c1256f766042b0d5d17d
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.9.0
+OpenSSL: OpenSSL 3.2.2 4 Jun 2024
+zlib: 1.3.1
+uname: Windows 10.0 22631
+compiler info: gnuc: 14.1
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
+e
 
-  * the "merge backends" section of
-https://lore.kernel.org/git/pull.1627.git.1703643931314.gitgitgadget@gmail.com/
-  * C2-C7 of https://lore.kernel.org/git/CABPp-BEg6vxiUp
-  * affects cherry-pick too, with discussion of how merge is affected:
-https://lore.kernel.org/git/CABPp-BG=pm8gfRZNW8Rk1V77s40Do1FZy0mxH6epubHbzF8U5w@mail.gmail.com/
-  * merge and other shortcomings mentioned when fixing up default
-handling of ignored files:
-https://lore.kernel.org/git/b7fe354effff8da3de53bd9cc40a03b5fd455f67.1632760428.git.gitgitgadget@gmail.com/
-  * wider discussion of correctly removing or keeping files (also
-discussing merge), in a series fixing lots of bugs in the area:
-https://lore.kernel.org/git/pull.1036.v3.git.1632760428.gitgitgadget@gmail.com/
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
