@@ -1,116 +1,130 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F70F44376
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 17:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6158E1DFE1A
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 17:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725471059; cv=none; b=ebxRUv5g4BngdziMifWmwD5vGFwqvUmGzbWuW2JolSZ0qgr6xKzKT1d0wHZrW/S8yh8AqoFzXSEEo4X4fILl5JjH4ImfDfIiUOQ/J9fPCPFtUmPy1X6pCkmvdv/iZWX5mbf2Y0ebehso2vjiqRf49yox1hJvi6vE/cmCI7B8HpM=
+	t=1725472146; cv=none; b=R6rrXlAGQVyZzIRN9Wi8dsIt7VM9PEEl1PqCW6tLe4mdKPW0FjtFK/3M/k/9QxBiRrrzX2qvmCA69p7IMNKiSbFfkHklILFDGVz2HNjHHzbb4gjzIU8KI9NBPDrmAxTqD/IVzVQeG36L+ydccIUz0cjT7UhU7oGZeODOMlP+39g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725471059; c=relaxed/simple;
-	bh=Mf/gZMPhkVoOonJ1arO5KTrqmMQT+/HuQe7h4QBwilM=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=qVyUvHZ9GCf7Ufn3Nz0w3O5oUYc4FTAOpnpSz2nfrb+wjlVoMfXN+aWOTGLMG8GW1AHVYuNuqYbXJvVsAhtBUU652zCtf8GvEp3rW3wh2hYBLuLp4fmeMELsm2iOiSpu1ARA+gyJBVV5BF9Kccm8V9v7SCh61GTW6sfZZR5jgJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=we2K/p0I; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
+	s=arc-20240116; t=1725472146; c=relaxed/simple;
+	bh=DVfYwJulhlyg5Guju0PzIpwZKZnKP+xMOpWE4QwbSDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TNQDw+aCzGTrjSsoztfzFY1TmeNGcLvv7pr5j/Nf8d/18Auj+giM6LwIxEHfOVH6srKc444hhA6VrXtDdANzdISxMz+f27jBf4Dhw5c7O2Mancu3+60X4rTRoPx8kJoESinU/J7C0gyZE0y8O7YgCQvI41vghoBMvzLx4cieql4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bRtwp5DP; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="we2K/p0I"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6d73d0944acso89447687b3.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 10:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725471056; x=1726075856; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ddzVl6OyB0dYI8Mwia21cDdlGz8fCVYd4ruIV/8sxJw=;
-        b=we2K/p0IwNvq53EvW8WqBNE9wdDtBh49CXD5EurIVIUZqvCNbgAGOOxxqPyYflnTfT
-         ecSR5OrR/vWhEDn6c9TYcfl6KkWWq8irExEd9SbEXQCnANq/sQ2DMwUIR92NYYriCiHD
-         qghdE177pWMCqFVg5aoZK2HWUEpIstpBL6vZa9hcyWbBsziX8REkwSEg3qedZ+jceMoH
-         FBiWS0jeKd6oxg3CnNsKUY3+ovX/PHgWCcENXYf8xIJz2lv7LF4EIbXC1ecY9qSiL8U0
-         QnFhtoYnyUc04L1b5duvcrsRlbJxCC2TKMm5C5mS011sLoQP3ZxgJiBCK48QX3qWJHhr
-         tZbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725471056; x=1726075856;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ddzVl6OyB0dYI8Mwia21cDdlGz8fCVYd4ruIV/8sxJw=;
-        b=LcG8i9/gsDp4dARde1JBZ67GNGR0yT4W4AfH6CY8zilEitTBzcYgLDlrd9XKUR1JsB
-         QlaaPT9S0D/cSlFdU4ZYDEn694Vnmg3rS9YUI9LDFHOBsvDdNuHKnxPiXpN0ETp+eW15
-         RsJ05y5nvmVNYtNC1/caqXejnw664Wxgi6k9A1AxSZ2l0elw+i6heqnLFWBCh8zXmicy
-         7VKp/ZCjJNtOaB4JY+4GDl8qGM7c3a78JHgzJvRx7N5DgFESWH8tGul4RmzHRWR/ZbmI
-         aOSN3UILeWJbYBKjdQuRFQ/bYpTQho7Qe5AiPox6R1Sf63V48kHyddaR2Pp+KyAZMXpg
-         +VRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV3mkZXEcmNLViWVHWWCDOrIBy0B7OiXWnBX/w98bVfKld8bAw2L+3Y3GLPQq+/gu2QXW4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVpCN4qZWwCz4wTyzKlWXAfiL7i7aDvlETEWYMPk2oCQ6Mmrp2
-	zhU1uMZUdlHMcB9l9khrd5HTJrN1jy/HU4RGV2NwBWum4akbmHRM2vbIlPUE8MEmcOGleWCnhdB
-	L1QcuE6gmC4Upbg==
-X-Google-Smtp-Source: AGHT+IHIydXKIxMI85k20QsSF1mMhO/LLl2tPfri+5Vmh5ZmYk4YssU1U0EM5kD+XffywyNJcn3lCoBjO9c9D0c=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:690c:418c:b0:667:8a45:d0f9 with SMTP
- id 00721157ae682-6d40af0505bmr415497b3.0.1725471056553; Wed, 04 Sep 2024
- 10:30:56 -0700 (PDT)
-Date: Wed,  4 Sep 2024 17:30:53 +0000
-In-Reply-To: <ZrPpxE7OZtqsbD81@tapette.crustytoothpaste.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bRtwp5DP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1725472141;
+	bh=DVfYwJulhlyg5Guju0PzIpwZKZnKP+xMOpWE4QwbSDo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=bRtwp5DPd2fRBnWb+tSSTSlruyJnbTpvP4okp93AeIVZoIjwtoY25y88iwNWCjIBO
+	 dIuMPKPk8xtiYo+irETVfOPQN4n3uhXM0GwgDtxmK3gnRQ94H1tKSnQkut3rVjVzJn
+	 KUWZO4UsZ81s2ZgBxFnPYaNdOVYj1zS2fKn4zV4mzOvXNy9tTcqihYYYwK5hrPFT7/
+	 JdZaUDQG51UtPZzU5ha6byDgkTesp0e24d1ehMrbtxglLc5/xSzslNF4TN+DXMKRav
+	 iO/biX4zOv3jVwGGq/4zuvpBrAWNs8fC93TgloCTBlkRNoNCDbGR8eHVK5tvxkmu5I
+	 2SNoI0tHHC/9tjLyT6a8g/djdYZPcc+Tifk88rw0YAZYA0jcIs253xx/1XR8XWM5h1
+	 f5Cpl1RVmUYZ7nCvzu/LcEjUoOFabKhhPRVm6nV56uhc3ukL8s2EMkYiHvXBT6iY8r
+	 ryMX0TYQ219lHh3o1w7S6v1mAFvSjD91p2QPEOi8lnH3bUem03a
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E6956209AF;
+	Wed,  4 Sep 2024 17:49:01 +0000 (UTC)
+Date: Wed, 4 Sep 2024 17:49:00 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Calvin Wan <calvinwan@google.com>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com,
+	rsbecker@nexbridge.com
+Subject: Re: [RFC PATCH 6/6] contrib/cgit-rs: add a subset of configset
+ wrappers
+Message-ID: <ZtidjMThNwiI_QG8@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Calvin Wan <calvinwan@google.com>,
+	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com,
+	rsbecker@nexbridge.com
+References: <ZrPpxE7OZtqsbD81@tapette.crustytoothpaste.net>
+ <20240904173053.1220621-1-calvinwan@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
-Message-ID: <20240904173053.1220621-1-calvinwan@google.com>
-Subject: Re: [RFC PATCH 6/6] contrib/cgit-rs: add a subset of configset wrappers
-From: Calvin Wan <calvinwan@google.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Calvin Wan <calvinwan@google.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Y1x0fylUzZlTLg6z"
+Content-Disposition: inline
+In-Reply-To: <20240904173053.1220621-1-calvinwan@google.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> On 2024-08-07 at 18:21:31, Josh Steadmon wrote:
-> > diff --git a/contrib/cgit-rs/Cargo.toml b/contrib/cgit-rs/Cargo.toml
-> > index 7b55e6f3e1..5768fce9e5 100644
-> > --- a/contrib/cgit-rs/Cargo.toml
-> > +++ b/contrib/cgit-rs/Cargo.toml
-> > @@ -14,3 +14,4 @@ path = "src/lib.rs"
-> >  
-> >  [dependencies]
-> >  libc = "0.2.155"
-> > +home = "0.5.9"
-> 
-> Okay, here's where we get to my previous mention of supported platforms.
-> This depends on Rust 1.70, and Debian stable has only 1.63.  Trying
-> `cargo build --release` on that version returns this:
-> 
->   Downloaded home v0.5.9
->   Downloaded libc v0.2.155
->   Downloaded 2 crates (752.3 KB) in 0.17s
-> error: package `home v0.5.9` cannot be built because it requires rustc 1.70.0 or newer, while the currently active rustc version is 1.63.0
-> 
-> My recommended approach here is to support the version in Debian stable,
-> plus the version in Debian oldstable for a year after the new stable
-> comes out, which is what I do.  That gives people a year to upgrade if
-> they want to use our code.  We _don't_ want to follow the
-> latest-stable-Rust approach because it isn't appropriate that software
-> has a six-week lifespan of support and that isn't going to work for
-> software like Git that people often compile locally on older versions.
-> 
-> We also need to be conscious that while Rust upstream provides some
-> binaries for some platforms, many platforms rely on the distro packages
-> because Rust upstream doesn't ship binaries for their target.  Thus,
-> simply using rustup is not viable for many targets, which is another
-> reason that latest-stable-Rust won't fly.
-> 
-> Debian stable is the version that most projects who have defined
-> lifespans track, so it's also what we should track.  According to my
-> recommended approach, that would be 1.63.
 
-After getting rid of the `home` crate, the only other issue we ran into
-downgrading the version to 1.63 was with `std::ffi{c_char, c_int}`.
-Those were only made available in 1.64 and they are obviously quite
-necessary for us to be able to call C functions. Do you know of any
-alternatives we can use? I also don't think reinventing the wheel with
-our own implementation makes sense in this case, and even if Debian were
-to upgrade stable to a higher version today, we would still need to
-support oldstable for another year.
+--Y1x0fylUzZlTLg6z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-09-04 at 17:30:53, Calvin Wan wrote:
+> After getting rid of the `home` crate, the only other issue we ran into
+> downgrading the version to 1.63 was with `std::ffi{c_char, c_int}`.
+> Those were only made available in 1.64 and they are obviously quite
+> necessary for us to be able to call C functions. Do you know of any
+> alternatives we can use? I also don't think reinventing the wheel with
+> our own implementation makes sense in this case, and even if Debian were
+> to upgrade stable to a higher version today, we would still need to
+> support oldstable for another year.
+
+I think we can do this with libc, which you're importing at the moment.
+You can do something like this:
+
+src/types.rs:
+----
+pub use libc::{c_char, c_int};
+----
+
+and then do `use crate::types::{c_char, c_int}` wherever you want them.
+
+Then, when we upgrade to 1.64 or newer, we can simply replace the
+contents of `src/types.rs` with this:
+
+----
+pub use std::ffi::{c_char, c_int};
+----
+
+and that's the only thing we'll need to change.
+
+If we switch to using rustix instead, then it will look like this:
+
+----
+pub use rustix::ffi::c_char;
+
+pub type c_int =3D i32;
+----
+
+While the C standard requires that `int` only has 16 bits, Git doesn't
+target any platforms where `int` is anything but 32 bits and it won't
+work with any other configuration without serious changes.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Y1x0fylUzZlTLg6z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtidiwAKCRB8DEliiIei
+gY5FAP9cAPg66/LpxOmkU1HDlwbvmDTN+6tk1ijzdZerShz6bwD7By1qUXIA1VkY
+5OQBsQwEcTvc9PSrSVc160Wl6MK46gU=
+=89wP
+-----END PGP SIGNATURE-----
+
+--Y1x0fylUzZlTLg6z--
