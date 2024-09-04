@@ -1,180 +1,217 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9131F1E008B
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 14:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B3F1E871
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 14:32:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725459451; cv=none; b=UTfSnvgkVbD4lNb32KJ9ev5KVoQGnihBcqUowrxjVrdbVlHZTiJJc3sUgFU7AbDexCiMhmPceud3kAMK3er7Wou7Gy2y/tUZddsLw4NDrBThetDn371TFl/ksv7Futmy3TFPkcsd3yh4R6GFDNFAzEc2Fr2giMAVcUeyG8phVco=
+	t=1725460379; cv=none; b=PuYxEWhdprKmItjGKslwAkO5fyMnp4s1jYE2nFnm8SZvJetExoFnfdEMtBbyG26fWu79snE8laOY6fZr4GKninsfIZYOnpezY0OG3oqeZTlq18hdj0qODd+D6iNBTvICccyPZfLeONoHtR2dpBdmv5P6oeggLX7fs9Z0IUMN0iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725459451; c=relaxed/simple;
-	bh=umbxzN25NfOdHqjq5CI+5XCOtv8lv1uEHuEAgvaWwMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EzdxrWJmbfGBlexlJqaknExxhPFZpFmoc2XVPbfqqk8oKqwezlFw5HtSTSgVqyUh5H5cupcyDd+/j2h6xKZzVN/+g3IAT8EMr8KoPLuAMvFSirZErFfNXNhTtFdCV+pP+K8/cmmWCWMf4jeFNjRR0XMbbfj4zgs2G77m5Z+qmmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cNcFS5Nz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNztjtsn; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1725460379; c=relaxed/simple;
+	bh=CMpniGEqsI6G3kE7WyD+Zh07nZ0cXrq/SJa25FOi/h4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=UZQ3O9lulwKb/LLTXK5rQSmVLu/wCWDI/Zyw0NHMOG5AfzQerIDc2jts+jrBJI6PKs+fm796IFsFRPdm9JUes+dKSI/33pvH9o0UO2ima4YGsMcqE2fl3iJSizVFr7RoWyvAKKXq5Dih2o+ji2iQDibQQuw8hgHDQ1tHHCMVW+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hm+w2MrL; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cNcFS5Nz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNztjtsn"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B68761380230;
-	Wed,  4 Sep 2024 10:17:28 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 04 Sep 2024 10:17:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725459448; x=1725545848; bh=GPubbogDEu
-	PMFR4oz3KDmn0a5xYshlqV6IFNlNXYNRo=; b=cNcFS5NzvH44qfrdOjaaSOkzqo
-	0Fx9drI16aslWzoXe+jUweLCsyuepEtM+8PzS606rHjIPs2a5oP2NYYI/HQ8hGSJ
-	8FTmiwuoJ+RSvOjV2QCup8aka2NmwQANqQgetVg8wGsoXmXW/nt6YK7GQSHb2Lna
-	Jmk6OD5caYpZLHUsAxwpklvFoYvvtgpQAQ5ISijLVFRJHsEEyUX3/y4ER0mWyY3w
-	nlN1yPNZuPe/+rcW3qgFoyPT6y4ohW6kjK+JRalw+bY/g+MqLj5f8e02hq/gOWAk
-	HjwcraB5FqUBQ3Pyw16GJS6yn2RRlQEA54O4OpNCQ8D0kBTWKTssTOInzs1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725459448; x=1725545848; bh=GPubbogDEuPMFR4oz3KDmn0a5xYs
-	hlqV6IFNlNXYNRo=; b=TNztjtsnhpT8pbUWvSa36cG/GD5Z/BnA62oI3CKCOJdm
-	sCfI8uzHOOFxOuk5/qJOnEF6ITCzOSX6ZV38tCNjQHpfyW4Ib/GSn1S3q2UtTcsT
-	DG3nqMhS0QTnzEHPnpN6SYoK05StiPs1NcV2CS6eCiIH48PmEaA+p7Paxb+m3doV
-	2hD0uujCHEGyFgNeDMyqDdTLKMQRybN2/zz3VcgX8RPXqc1hvrwiFHF2D4Gkf27/
-	VHGSzgvTNHQl63Yyhik2Q6KVoQJnRsMODe1RaBGZQ13vusNDrrXMwhYffNf4rjEo
-	yvlEqMvlZXZIyyH7x5RC4jPT8qelo6/7PJAtk0QVJg==
-X-ME-Sender: <xms:-GvYZhs4WkzruJ4k_MWk-Qn30HpRt9e2uejFDtzH9r6B8ak0VXeU7A>
-    <xme:-GvYZqdBrPujVyXkQKx4gWpf943ULUN1wkmNt4dBcInjDntz_SejwRNTt38aEiAvj
-    zSLpokJ2fgbu1MzpA>
-X-ME-Received: <xmr:-GvYZkxWqDqO7OCYwrZBAqwy48Hq481UvvqhelB7j-lQcc7amJUvx4iw9I5HS2hImuySuQW3K5ngggDfOxS1NIwTSd4FsATKqjDQ3KfDyEWOMJ8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehjedgjeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhho
-    hhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepshhtvg
-    grughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
-    ugesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
-    dprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdp
-    rhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:-GvYZoNyKPILHj5T452R1PLwiWVM1Piczs214uTUxDnQSRqoJ6volA>
-    <xmx:-GvYZh84ItkqmNp_cvVklKCkKju3-Ar3pNNOzlI8ocWN2AO7OYH_AA>
-    <xmx:-GvYZoVbeFFDWD0jEZQurj1aUrt6Amjv_o6BlL8vUVOYMuCFLLhgYQ>
-    <xmx:-GvYZicHsvkHuNB0TwfeH1FuRIk4vwSlFbwgiTdEiND_nMuGwadd8g>
-    <xmx:-GvYZgY6m-378mKUjXRRYhm5YbdSfKLNARWOZls2YzYD4DFhDyPKnGOS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Sep 2024 10:17:26 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 82ff3cc3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Sep 2024 14:17:17 +0000 (UTC)
-Date: Wed, 4 Sep 2024 16:17:25 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v8 14/14] clar: add CMake support
-Message-ID: <8441d29daa868f74a55b7c1111edb336c5502ebc.1725459142.git.ps@pks.im>
-References: <cover.1722415748.git.ps@pks.im>
- <cover.1725459142.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm+w2MrL"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c26852aff1so3172868a12.3
+        for <git@vger.kernel.org>; Wed, 04 Sep 2024 07:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725460376; x=1726065176; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TS1i/tnzV086ml2nf0SXxOtXzSjeU3y507HJbn5DwCI=;
+        b=hm+w2MrL/ML72A2kuocLqq8IjOL4PTXMhsmiG/8kJ/eRKpbClkX2lFnXVcFiXUTlMQ
+         kSwaQ9ybFW0xiMIgQw0uc1z2LuuYha2mlum7emkZg0u4EmC1b6K3mpDDCqsq+SHizqLB
+         zc7AuZnKICO2LrOqvFWKb1uX+ai2IaW9SRucUtcP55mIXkapt4jdKCcRAe2CS+Kqohcs
+         LPqbR2Z3JK6jR9xvH+TDDiRe6nWLv9jKNSc8o3EhUxlevmqKnket8vzhkB54Q5nRQU3B
+         KYqBq4KJPKbMzyS203/LMiujMS/qnVblj5b2qi83XezYVXzE4HQmeoch4tPj4fJLr0je
+         6FyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725460376; x=1726065176;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TS1i/tnzV086ml2nf0SXxOtXzSjeU3y507HJbn5DwCI=;
+        b=QhArN/ovzuztAhGCwf9XCVqFleSMGZ674VM6QqXtk/wehyO8doFNGZZm7oWb8tLmwd
+         RtA0EnHkX9qa3ll5QG/VQFwx0Vt9LDkLtP6P+7qGOz5qZxS35PPCPoXyH8/0rc+lB4YI
+         mYXeO7HxJwtoNlzP7LB9flw5aCaOPcAg0eu9OndAWZPJXcIzZIzXRjSYv8Ra34HmILjy
+         GDCR/S6e4EmgVVfhrhyHPCOu0s4Df8k9RC4mtOnXpcrwCjk6+kyjtQvxa5/E7+2tIo2x
+         b7K6vH+8RCuixFAbb2WnxV+S2r13sQLObK9ka5KKRDRrWvgPzx04i8zgTPJzMEbnMzKR
+         vvgg==
+X-Forwarded-Encrypted: i=1; AJvYcCXcwvA4nVzdZn3kYa1N3EtwI80peP2e54KOHNhD+Bm7Yc6hoxY/GQjJzh3xU3hKq1NOE0A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnloykhWWfd6HS/D42vqIB5TfD2d62ODIE1c0H8z4/UCBKLgiZ
+	SuGUKqnq32WlNMwV6HKMxHJwANSwtS6jaEYvvWMzCQ7+cgobcSd6
+X-Google-Smtp-Source: AGHT+IHhCmM62JT9GQ7tIY+4byHDldKw5xlS4r34tlYQDFyyvAQU/BMVCN/6y0gzUcyBq3xzfwlN8g==
+X-Received: by 2002:a05:6402:3512:b0:5c2:6e51:9d11 with SMTP id 4fb4d7f45d1cf-5c26e519e9amr3160481a12.27.1725460375362;
+        Wed, 04 Sep 2024 07:32:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226ccff4bsm7735116a12.70.2024.09.04.07.32.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Sep 2024 07:32:55 -0700 (PDT)
+Message-ID: <d5b1c95b-cbdc-4711-849e-c2cfc67787ee@gmail.com>
+Date: Wed, 4 Sep 2024 15:32:53 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v8 00/14] Introduce clar testing framework
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Junio C Hamano <gitster@pobox.com>, Kyle Lippincott <spectral@google.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Josh Steadmon <steadmon@google.com>, rsbecker@nexbridge.com,
+ Edward Thomson <ethomson@edwardthomson.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1722415748.git.ps@pks.im> <cover.1725459142.git.ps@pks.im>
+Content-Language: en-US
 In-Reply-To: <cover.1725459142.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Patrick
 
-Now that we're using `clar` as powerful test framework, we have to
-adjust the Visual C build (read: the CMake definition) to be able to
-handle that, too.
+On 04/09/2024 15:16, Patrick Steinhardt wrote:
+> 
+> Changes compared to v7:
+> 
+>    - Properly wire up the "--immediate" flag.
+> 
+>    - Give a hint for the syntax to run only specific suites or tests for
+>      the "--run" and "--exclude" options.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- contrib/buildsystems/CMakeLists.txt | 53 +++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+As far as I'm concerned this version looks ready to be merged to next
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 832f46b316b..608fd3fe709 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1004,6 +1004,59 @@ foreach(unit_test ${unit_test_PROGRAMS})
- 	endif()
- endforeach()
- 
-+parse_makefile_for_scripts(unit_tests_SUITES "UNIT_TESTS_SUITES" "")
-+
-+set(clar_decls "")
-+set(clar_cbs "")
-+set(clar_cbs_count 0)
-+set(clar_suites "static struct clar_suite _clar_suites[] = {\n")
-+list(LENGTH unit_tests_SUITES clar_suites_count)
-+foreach(suite ${unit_tests_SUITES})
-+	file(STRINGS "${CMAKE_SOURCE_DIR}/t/unit-tests/${suite}.c" decls
-+		REGEX "^void test_${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*\\(void\\)$")
-+
-+	list(LENGTH decls decls_count)
-+	string(REGEX REPLACE "void (test_${suite}__([a-zA-Z_0-9]*))\\(void\\)" "    { \"\\2\", &\\1 },\n" cbs ${decls})
-+	string(JOIN "" cbs ${cbs})
-+	list(TRANSFORM decls PREPEND "extern ")
-+	string(JOIN ";\n" decls ${decls})
-+
-+	string(APPEND clar_decls "${decls};\n")
-+	string(APPEND clar_cbs
-+		"static const struct clar_func _clar_cb_${suite}[] = {\n"
-+		${cbs}
-+		"};\n")
-+	string(APPEND clar_suites
-+		"    {\n"
-+		"        \"${suite}\",\n"
-+		"        { NULL, NULL },\n"
-+		"        { NULL, NULL },\n"
-+		"        _clar_cb_${suite}, ${decls_count}, 1\n"
-+		"    },\n")
-+	math(EXPR clar_cbs_count "${clar_cbs_count}+${decls_count}")
-+endforeach()
-+string(APPEND clar_suites
-+	"};\n"
-+	"static const size_t _clar_suite_count = ${clar_suites_count};\n"
-+	"static const size_t _clar_callback_count = ${clar_cbs_count};\n")
-+file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" "${clar_decls}")
-+file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite" "${clar_decls}" "${clar_cbs}" "${clar_suites}")
-+
-+list(TRANSFORM unit_tests_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
-+list(TRANSFORM unit_tests_SUITES APPEND ".c")
-+add_library(unit-tests-lib ${unit_tests_SUITES} "${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c")
-+target_include_directories(unit-tests-lib PRIVATE "${CMAKE_SOURCE_DIR}/t/unit-tests")
-+add_executable(unit-tests "${CMAKE_SOURCE_DIR}/t/unit-tests/unit-test.c")
-+target_link_libraries(unit-tests unit-tests-lib common-main)
-+set_target_properties(unit-tests
-+	PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
-+if(MSVC)
-+	set_target_properties(unit-tests
-+		PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
-+	set_target_properties(unit-tests
-+		PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
-+endif()
-+
- #test-tool
- parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
- add_library(test-lib OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/test-lib.c)
--- 
-2.46.0.519.g2e7b89e038.dirty
+Thanks
 
+Phillip
+
+> Thanks!
+> 
+> Patrick
+> 
+> Johannes Schindelin (4):
+>    clar: avoid compile error with mingw-w64
+>    clar(win32): avoid compile error due to unused `fs_copy()`
+>    clar: stop including `shellapi.h` unnecessarily
+>    clar: add CMake support
+> 
+> Patrick Steinhardt (10):
+>    t: do not pass GIT_TEST_OPTS to unit tests with prove
+>    t: import the clar unit testing framework
+>    t/clar: fix compatibility with NonStop
+>    Makefile: fix sparse dependency on GENERATED_H
+>    Makefile: make hdr-check depend on generated headers
+>    Makefile: do not use sparse on third-party sources
+>    Makefile: wire up the clar unit testing framework
+>    t/unit-tests: implement test driver
+>    t/unit-tests: convert strvec tests to use clar
+>    t/unit-tests: convert ctype tests to use clar
+> 
+>   .gitignore                                 |   1 +
+>   Documentation/technical/unit-tests.txt     |   2 +
+>   Makefile                                   |  53 +-
+>   contrib/buildsystems/CMakeLists.txt        |  53 ++
+>   t/Makefile                                 |   4 +-
+>   t/run-test.sh                              |   2 +-
+>   t/unit-tests/.gitignore                    |   2 +
+>   t/unit-tests/clar-generate.awk             |  50 ++
+>   t/unit-tests/clar/.github/workflows/ci.yml |  23 +
+>   t/unit-tests/clar/COPYING                  |  15 +
+>   t/unit-tests/clar/README.md                | 329 ++++++++
+>   t/unit-tests/clar/clar.c                   | 842 +++++++++++++++++++++
+>   t/unit-tests/clar/clar.h                   | 173 +++++
+>   t/unit-tests/clar/clar/fixtures.h          |  50 ++
+>   t/unit-tests/clar/clar/fs.h                | 524 +++++++++++++
+>   t/unit-tests/clar/clar/print.h             | 211 ++++++
+>   t/unit-tests/clar/clar/sandbox.h           | 159 ++++
+>   t/unit-tests/clar/clar/summary.h           | 143 ++++
+>   t/unit-tests/clar/generate.py              | 266 +++++++
+>   t/unit-tests/clar/test/.gitignore          |   4 +
+>   t/unit-tests/clar/test/Makefile            |  39 +
+>   t/unit-tests/clar/test/clar_test.h         |  16 +
+>   t/unit-tests/clar/test/main.c              |  40 +
+>   t/unit-tests/clar/test/main.c.sample       |  27 +
+>   t/unit-tests/clar/test/resources/test/file |   1 +
+>   t/unit-tests/clar/test/sample.c            |  84 ++
+>   t/unit-tests/{t-ctype.c => ctype.c}        |  71 +-
+>   t/unit-tests/strvec.c                      | 241 ++++++
+>   t/unit-tests/t-strvec.c                    | 211 ------
+>   t/unit-tests/unit-test.c                   |  47 ++
+>   t/unit-tests/unit-test.h                   |  10 +
+>   31 files changed, 3459 insertions(+), 234 deletions(-)
+>   create mode 100644 t/unit-tests/clar-generate.awk
+>   create mode 100644 t/unit-tests/clar/.github/workflows/ci.yml
+>   create mode 100644 t/unit-tests/clar/COPYING
+>   create mode 100644 t/unit-tests/clar/README.md
+>   create mode 100644 t/unit-tests/clar/clar.c
+>   create mode 100644 t/unit-tests/clar/clar.h
+>   create mode 100644 t/unit-tests/clar/clar/fixtures.h
+>   create mode 100644 t/unit-tests/clar/clar/fs.h
+>   create mode 100644 t/unit-tests/clar/clar/print.h
+>   create mode 100644 t/unit-tests/clar/clar/sandbox.h
+>   create mode 100644 t/unit-tests/clar/clar/summary.h
+>   create mode 100755 t/unit-tests/clar/generate.py
+>   create mode 100644 t/unit-tests/clar/test/.gitignore
+>   create mode 100644 t/unit-tests/clar/test/Makefile
+>   create mode 100644 t/unit-tests/clar/test/clar_test.h
+>   create mode 100644 t/unit-tests/clar/test/main.c
+>   create mode 100644 t/unit-tests/clar/test/main.c.sample
+>   create mode 100644 t/unit-tests/clar/test/resources/test/file
+>   create mode 100644 t/unit-tests/clar/test/sample.c
+>   rename t/unit-tests/{t-ctype.c => ctype.c} (68%)
+>   create mode 100644 t/unit-tests/strvec.c
+>   delete mode 100644 t/unit-tests/t-strvec.c
+>   create mode 100644 t/unit-tests/unit-test.c
+>   create mode 100644 t/unit-tests/unit-test.h
+> 
+> Range-diff against v7:
+>   1:  b67f10ec0b0 =  1:  b67f10ec0b0 t: do not pass GIT_TEST_OPTS to unit tests with prove
+>   2:  55a9b46e65f =  2:  55a9b46e65f t: import the clar unit testing framework
+>   3:  f24401f0a87 =  3:  f24401f0a87 t/clar: fix compatibility with NonStop
+>   4:  658a601c541 =  4:  658a601c541 clar: avoid compile error with mingw-w64
+>   5:  0b8a6ac5fed =  5:  0b8a6ac5fed clar(win32): avoid compile error due to unused `fs_copy()`
+>   6:  c50e7a0ea68 =  6:  c50e7a0ea68 clar: stop including `shellapi.h` unnecessarily
+>   7:  b8f3f16dd27 =  7:  b8f3f16dd27 Makefile: fix sparse dependency on GENERATED_H
+>   8:  3d3fe443b9a =  8:  3d3fe443b9a Makefile: make hdr-check depend on generated headers
+>   9:  7d0f494850a =  9:  7d0f494850a Makefile: do not use sparse on third-party sources
+> 10:  9c74c5ae019 = 10:  9c74c5ae019 Makefile: wire up the clar unit testing framework
+> 11:  8bd5b3e2b29 ! 11:  81d932bfa33 t/unit-tests: implement test driver
+>      @@ t/unit-tests/unit-test.c
+>       +	struct string_list exclude_args = STRING_LIST_INIT_NODUP;
+>       +	int immediate = 0;
+>       +	struct option options[] = {
+>      -+		OPT_BOOL('i', "--immediate", &immediate,
+>      ++		OPT_BOOL('i', "immediate", &immediate,
+>       +			 N_("immediately exit upon the first failed test")),
+>      -+		OPT_STRING_LIST('r', "run", &run_args, N_("name"),
+>      -+				N_("run only test suite or individual test <name>")),
+>      -+		OPT_STRING_LIST('x', "exclude", &exclude_args, N_("name"),
+>      -+				N_("exclude test suite <name>")),
+>      ++		OPT_STRING_LIST('r', "run", &run_args, N_("suite[::test]"),
+>      ++				N_("run only test suite or individual test <suite[::test]>")),
+>      ++		OPT_STRING_LIST('x', "exclude", &exclude_args, N_("suite"),
+>      ++				N_("exclude test suite <suite>")),
+>       +		OPT_END(),
+>       +	};
+>       +	struct strvec args = STRVEC_INIT;
+>      @@ t/unit-tests/unit-test.c
+>       +
+>       +	strvec_push(&args, argv[0]);
+>       +	strvec_push(&args, "-t");
+>      ++	if (immediate)
+>      ++		strvec_push(&args, "-Q");
+>       +	for (size_t i = 0; i < run_args.nr; i++)
+>       +		strvec_pushf(&args, "-s%s", run_args.items[i].string);
+>       +	for (size_t i = 0; i < exclude_args.nr; i++)
+> 12:  3c3b9eacdfb = 12:  604303e31aa t/unit-tests: convert strvec tests to use clar
+> 13:  c8360db2f86 = 13:  ba05b9f1eef t/unit-tests: convert ctype tests to use clar
+> 14:  d51c146cd9d = 14:  8441d29daa8 clar: add CMake support
