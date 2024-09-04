@@ -1,135 +1,161 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A591DFE17
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 16:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404E1E0088
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 16:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725467408; cv=none; b=fKURSAlRiQDveKwkxyH3eTKbiEv9u+qv9Tyu26yyTT1GV2w+D+nZ8LWb2lt0SLih1vmmCoUxOPT/d88dVYJHnXudWhoKG4h3OVPkpdgwNusmFxlgsMrYvUT10QbXkvAzIyQXjEGlBedeIfVe2fB/bAWf4lE8vX4/u8ONhfssJ8M=
+	t=1725467761; cv=none; b=MVcUpvofyEYK8FIXJmtOzR6LLi9tKgsJ+jsDKCWL3gpNUB10tuTdgIEFyb5qXIWVeeu/eTzusLp8r8qlDmQx06nLCBpOFP0vJZcjZI9JxZCZQMLRes5khJkIMJ60cE+K6o2YwPNSlEtzt/Lh6wnzAC2vjvbrzQ1go0WFAhSlsBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725467408; c=relaxed/simple;
-	bh=/J9zSsfdH5YzpA1ErumH4gPjADxxb6qUUkvzazYJUfo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MGsHyIMTRXDnxJDL8OjMv7jCWbuKhSlal35+vxIP/DD3My9cb8v05M9o5lU2nNruC44+j5Ru5PSENv00ZiluimcTyigbcmR0A6AYWTZotVqwje3nJF+6Z775/QSFWmpCtQf7A1NDBueNk5hKWMcifZgCRT8FuCGpdhnGsMDk53Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJJ7zlDV; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725467761; c=relaxed/simple;
+	bh=GLEgMDviEcdo6rc4xD1pI8GNGkV4TnUIO/M5FebqLRI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ryqZwo/bNbOp179oi3vspsO1F9Q/MFFL4475301M1ttufJvUfalC7pv28nI+gl1th5Zy+4n40vFMTQU9eKNHyv3D2AMUrkioRojWXqlH/NP9FvKJw1U8QK7n/BAhA7O0ftHM3kaBfc80HsSScel6qeLI1ninqlpBEVYs1Zo5ZZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ufxL6OHV; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJJ7zlDV"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2d89dbb60bdso786300a91.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 09:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725467406; x=1726072206; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bdkDs30fSHOLi5EwugtPPNu9SaGefvg0dmEgOfGb8Ow=;
-        b=PJJ7zlDVizsfSq41Nj12SZxUPbJIQYd60UvIIRhgHnaURu+5N9ed7GJIqo6+hzRpq3
-         /Vj4woY1BJ7wkxIK56H4f6feln93Z7n/AHbAVTnwyCYeHI7gBDJMect0+0/7RybcM4zd
-         UVzyT3Ip9hGkWgASbaBYx3GcCeWaMDKHjX7sPu1iBPgQMvFv2GXsfkQddbDoOgYPtX3o
-         DM8J5JbjbvE7/z2YsRDafrMoG+xlTTsRItmomZwT6Pzmwui2FrKpyPkJcdFUDYhLKj56
-         /1iwsC6QZcB2KHfvjHdyO3SlV0r/RFPg0r93aOYvUm7Rl65e5eQNCH2qkLILfhKI1DrR
-         pn2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725467406; x=1726072206;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bdkDs30fSHOLi5EwugtPPNu9SaGefvg0dmEgOfGb8Ow=;
-        b=dFWSVSX6Bz6LlJW0RBsLp3euaqI+aqjX7cgXzdNccKeFt/yeAkky+jhX83lNiJfvs2
-         Y/V6bEEd1OPsl9Tyw94paiL4K8senFN0wmaF1EFNMm1nqcrBB61o86BjApgYinwrOYLT
-         8gOpd4yp5pShh/v1n6P/8PqAfmwpxf/mSe48DH2fGu7yzV7S71WIcPjeEemsrUCDPJAS
-         sMFuoj3pDWDBQmdy9y04j9niqB3FXHWrPY9bMYRPtP8d5CcVP+6z1GUdsYSJtILFhu0h
-         eBVDtSiXMei2LmfMYanxC1rxvErUoievdpoeg65lVxXw9ReCdi0uOSGBy6VpbyIh8n5T
-         d7MA==
-X-Forwarded-Encrypted: i=1; AJvYcCX/zmiLOnSYLMob2wpMSSyUGFnTioFBOU2D7tyNaKEwqfoVsHpOUG2q5Gy3eaZf1hWVc2s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzu2K0gQrFZ43IJUV1b8lJTTqCw9yDGHFI28d0vJcd7cZA/qZQo
-	7rY8Z6OzJC5jzNQv3aigz0tAiQbCLVlf9EjAm/KGZ8yPsDHoL6BF2ZbfTkjHUiwX8ZGV92e/+FX
-	PADyIvvej/oAGcBfP/nddc8M0QiE=
-X-Google-Smtp-Source: AGHT+IGXbXVG+/C3/QxH7wea3c9SCybnjAI/l8hPT2OvNonK6cY12L1+l6OdbQ99mKvdVM2IBz8Pep+Yik6HyfinfP4=
-X-Received: by 2002:a17:90a:be17:b0:2d8:7804:b3a with SMTP id
- 98e67ed59e1d1-2d878040ba9mr19214940a91.26.1725467405797; Wed, 04 Sep 2024
- 09:30:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ufxL6OHV"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A1AA36347;
+	Wed,  4 Sep 2024 12:35:59 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GLEgMDviEcdo6rc4xD1pI8GNGkV4TnUIO/M5Fe
+	bqLRI=; b=ufxL6OHVcMnP3NzXTFgDvezTDSLxr2ubSeoqAbGajNFNgtMxN/IMMv
+	54w3XgJzl7gh+43MTkRfsD6ay4QGmAOx4r+7BMwUrsmjKwINWTnSoX2gyibYnLAk
+	WfrDoQDa0C8TPbZ/VU98RegXB1nPD2ZdWlcpqhRwDH0CFt8x4THz0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31B2B36346;
+	Wed,  4 Sep 2024 12:35:59 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A4B336345;
+	Wed,  4 Sep 2024 12:35:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kevin Lyles via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Kevin Lyles
+ <klyles+github@epic.com>
+Subject: Re: [PATCH v4 2/2] builtin/cat-file: mark 'git cat-file'
+ sparse-index compatible
+In-Reply-To: <ac913257309960d86a9c11e825c76621c6ac405c.1725401207.git.gitgitgadget@gmail.com>
+	(Kevin Lyles via GitGitGadget's message of "Tue, 03 Sep 2024 22:06:47
+	+0000")
+References: <pull.1770.v3.git.git.1725386044.gitgitgadget@gmail.com>
+	<pull.1770.v4.git.git.1725401207.gitgitgadget@gmail.com>
+	<ac913257309960d86a9c11e825c76621c6ac405c.1725401207.git.gitgitgadget@gmail.com>
+Date: Wed, 04 Sep 2024 09:35:57 -0700
+Message-ID: <xmqqcyljbclu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAG=Um+1wTbXn_RN+LOCrpZpSNR_QF582PszxNyhz5anVHtBp+w@mail.gmail.com>
- <Zs8KzG0vzCEDvkvx@tanuki> <xmqq4j7438yc.fsf@gitster.g> <CAG=Um+2OQofcfo3vjvPJEAUht5cGg0LnPAx54SWUPETgkRACPQ@mail.gmail.com>
- <ZtacHCuql0pX3V2u@tanuki> <xmqq5xrcn2k1.fsf@gitster.g>
-In-Reply-To: <xmqq5xrcn2k1.fsf@gitster.g>
-From: Shubham Kanodia <shubhamsizzles@gmail.com>
-Date: Wed, 4 Sep 2024 21:59:29 +0530
-Message-ID: <CAG=Um+3QtRkNcSq68iOWW=HWJytDReaikAfjX6MrgOY5n56gFg@mail.gmail.com>
-Subject: Re: Improvement: `git-maintenance` to allow configuring of remotes to fetch
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C3C28120-6ADB-11EF-8946-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, Sep 3, 2024 at 9:37=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > The prefetch refspec would be rewritten by git-maintenance(1) such that
-> > the destination part (the right-hand side of the refspec) is prefixed
-> > with `refs/prefetch/`, same as the fetch refspec would be changed in
-> > this way.
-> >
-> > An alternative would be to _not_ rewrite the prefetch refspec at all an=
-d
-> > thus allow the user to prefetch into arbitrary hierarchies. But I'm a
-> > bit worried that this might cause users to misconfigure prefetches by
-> > accident, causing it to overwrite their usual set of refs.
->
-> I agree that it is the right place to configure this as attributes
-> to remotes.  It would make it handy if we could give a catch-all
-> configuration, though.  For example:
->
->  [remote "origin"]
->         prefetch =3D true
->         prefetchref =3D refs/heads/* refs/tags/*
->  [remote "*"]
->         prefetch =3D false
->
-> may toggle prefetch off for all remotes, except that the tags and
-> the local branches of the remote "origin" are prefetched.  Instead
-> of a multi-value configuration variable (like remote.*.fetch) where
-> we need to worry about clearing convention, we can use a regular
-> "last one wins" variable that is whitespace separated patterns, as
-> such a pattern can never have a whitespace in it.
->
-> As you too agree with the position to consider "prefetch" should be
-> invisible to the end-users, we should not allow users to specify the
-> full refspec at all, or if it is forced or not with "+" prefix.
-> Only accept a set of patterns to match, and keep it opaque where in
-> the local refs/* hierarchy they are stored.  It is an implementation
-> detail that the users should not have to know about and rely on.
->
-> Thanks.
+"Kevin Lyles via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Right so I have good direction to start working on this. I'm going to
-tackle this in a few parts since this is my first contribution =E2=80=94
+> From: Kevin Lyles <klyles+github@epic.com>
+>
+> This change affects how 'git cat-file' works with the index when
+> specifying an object with the ":<path>" syntax (which will give file
+> contents from the index).
 
-1. adding a boolean `prefetch` attribute to `remote` =E2=80=94 allows contr=
-ol
-over remotes that prefetch
-2. adding `prefetchref` =E2=80=94 allows control over refs per remote.
-3. Check if adding a ` [remote "*"]` catchall is a possibility
+The above is not as suitable as the first paragraph as the one that
+comes next, which describes the status quo and highlights what the
+problem is.  With the few paragraphs below, that talk about the
+interaction among ":<path>" syntax, get_oid_with_context(), and
+the sparse-index, I think we can just remove it.
 
-For the boolean `prefetch` value the =E2=80=94
-1. The default would be assumed to be `true`
-2. No changes in behavior to any variation of  `git fetch --prefetch`
-command itself.
-If no remote is supplied to `git fetch` then it means default remote,
-or if `--all` is used, it means all remotes and `--prefetch` for both
-always
-prefetches irrespective of the config value.
+> 'git cat-file' expands a sparse index to a full index any time contents
+> are requested from the index by specifying an object with the ":<path>"
+> syntax. This is true even when the requested file is part of the sparse
+> index, and results in much slower 'git cat-file' operations when working
+> within the sparse index.
+>
+> Mark 'git cat-file' as not needing a full index, so that you only pay
+> the cost of expanding the sparse index to a full index when you request
+> a file outside of the sparse index.
+>
+> Add tests to ensure both that:
+> - 'git cat-file' returns the correct file contents whether or not the
+>   file is in the sparse index
+> - 'git cat-file' expands to the full index any time you request
+>   something outside of the sparse index
+>
+> Signed-off-by: Kevin Lyles <klyles+github@epic.com>
+> ---
 
-If I understand the codebase well, the changes would primarily affect
-`remote.c` and `gc.c`.
+Nicely explained.
 
-Also much thanks for the feedback both of you've given thus far.
+> @@ -1047,6 +1047,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>  	if (batch.buffer_output < 0)
+>  		batch.buffer_output = batch.all_objects;
+>  
+> +	prepare_repo_settings(the_repository);
+> +	the_repository->settings.command_requires_full_index = 0;
+> +
+
+OK.  This command does not start parsing the command line arguments
+before this point, and this is really a good place to toggle the bit
+off.
+
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 4cbe9b1465d..eb32da2a7f2 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -2358,4 +2358,40 @@ test_expect_success 'advice.sparseIndexExpanded' '
+>  	grep "The sparse index is expanding to a full index" err
+>  '
+>  
+> +test_expect_success 'cat-file -p' '
+> +	init_repos &&
+> +	echo "new content" >>full-checkout/deep/a &&
+> +	echo "new content" >>sparse-checkout/deep/a &&
+> +	echo "new content" >>sparse-index/deep/a &&
+> +	run_on_all git add deep/a &&
+> +
+> +	test_all_match git cat-file -p :deep/a &&
+> +	ensure_not_expanded cat-file -p :deep/a &&
+> +	test_all_match git cat-file -p :folder1/a &&
+> +	ensure_expanded cat-file -p :folder1/a
+> +'
+
+OK.  These are about the object names given from the command line.
+
+> +test_expect_success 'cat-file --batch' '
+> +	init_repos &&
+> +	echo "new content" >>full-checkout/deep/a &&
+> +	echo "new content" >>sparse-checkout/deep/a &&
+> +	echo "new content" >>sparse-index/deep/a &&
+> +	run_on_all git add deep/a &&
+> +
+> +	echo ":deep/a" >in &&
+> +	test_all_match git cat-file --batch <in &&
+> +	ensure_not_expanded cat-file --batch <in &&
+> +
+> +	echo ":folder1/a" >in &&
+> +	test_all_match git cat-file --batch <in &&
+> +	ensure_expanded cat-file --batch <in &&
+> +
+> +	cat >in <<-\EOF &&
+> +	:deep/a
+> +	:folder1/a
+> +	EOF
+> +	test_all_match git cat-file --batch <in &&
+> +	ensure_expanded cat-file --batch <in
+> +'
+
+And these are about the object names fed via the --batch mechanism.
+
+Looking good.
+
+Will queue.  Thanks.
