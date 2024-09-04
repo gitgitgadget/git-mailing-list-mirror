@@ -1,89 +1,104 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4551E6DC1
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 19:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FA11E7656
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 19:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725478120; cv=none; b=deuzsPWvoq9zYVGPsFtUezihd5S0fQCI4RQzoehmKFTc4+CqJehiLRoPMZqHKXMNQXm220rYex88G5/CksIwAUNNBpZ8JjK4XFviUPsWFTdxkJZtdOnJnT3n38fbNNu7KMP07bwy61ejBPpwYCxusil39GuKgbkeBcHE3ApcUjY=
+	t=1725479927; cv=none; b=a/bvD3N/DdqJdrqR2M7WLDUn/MejhwMhlZPj6E4c3zQZ81t1J7kb6y6hnwDP20JngHyL5L6FW9yb05P+kUnVWJ/GQ2FnjJG5voC5f0fxfy1bFoQed7/r9hMFWtFXAAQDtk9CQTIJtDdaMKhoRLiMLmw4m7q1EICGVHcg3oNxSgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725478120; c=relaxed/simple;
-	bh=Y5PISd3768koAGO2zPiMs1AnAN2lcqxdDLV6w3mEpGU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RQNLgj5xr+ykFuZizNzPv7txHrD8iyBVcyBi7DM8XXcRyOvQxcEpOVYk9f/2aS9m7v/31BraVsVHqv2vvvbFsBZQk/1fjxClcjmjubcXq+fW46EO3Wd9SPLpMMGZ/4rhG7LQ6vw/m+5tFZg9a3El4BSeWCAzcrybnsy2t/oeqWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=CCk4w5gO; arc=none smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725479927; c=relaxed/simple;
+	bh=KZThkKRcRMmSN/q1BehgCyLPBYLEh2r7POICYByqh7g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UrIGlnPECOuEau+6clEaMrOsqZx8BksZXtw40hSflAAOzHB1P+foGHMoPv4KbtM//0a8UorSEZ5KIojaJ9l9wII/Z6ouhAgNr681ST5SEctzKOZGKKFxjJgItSlH2OiW4WWcCj7ssTmEA+ZFk2YdtBCqOjp/RMJfLqMybO/T9pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PWDNve0z; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="CCk4w5gO"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-4fcf4ae95dbso5058e0c.0
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 12:28:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWDNve0z"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3df03d1f1ddso910977b6e.0
+        for <git@vger.kernel.org>; Wed, 04 Sep 2024 12:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725478117; x=1726082917; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y5PISd3768koAGO2zPiMs1AnAN2lcqxdDLV6w3mEpGU=;
-        b=CCk4w5gOGzuYZQhJukFQVwK5XIEipXvQ32KxLVjicQSpjxK6/x+Ul1P1cb/nY2EKS0
-         k6JaWcx7tnVjk7QvHVXbuy4PSla+u4WYFWhpbGN75kSnWbTDCat335MpPRaIxPmWbl/S
-         86LDpJ6tjQjcwQls7nJ1YOHJxkZ7urQ609efKhmE+5LZ9AFyJd2MgQBp7Y6lZjpYzbbr
-         2TNLiHkgwc8B25qke5YWwgoexvKWHzOleQPehYIeqIqizfZIRLPUC9lryQ88sf0L+6ey
-         dloFzchqsRa0tUZl+ncrgRHaxIQ5xfZ5wn5QW0W3QE9MhruHMF1sMAVkUWHJOJzzP/NS
-         0Kaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725478117; x=1726082917;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1725479925; x=1726084725; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y5PISd3768koAGO2zPiMs1AnAN2lcqxdDLV6w3mEpGU=;
-        b=vkZ05sWZa6y0DuWzspmaH6YmtOcmd7q1hr33G9kCmf+2AwLRbWujnR6SQCK33FyBAE
-         0jpnxztEDz0mCQMwEnoo4QC4OvX8vs7eqxhL6nm3GFBoTA8TbgmX5T674CN10JPhnZt/
-         g2P0THVCsXr88IKRzi28srANGSk78bdlxOxjbxjyejCbFGx5eioI7lqHSafHdgKmYP3m
-         rtw7qc1D8ssxiy/pgCgaaY0JKCEECpgLHmKMh93hhqrI7EVcDenSxNplBEeGnmJ/aF6S
-         VQ5vXg56YNDilZxCNYgnOzDMZLVqwza9waTYtZJ7WRECKt8K+opA9HRjuwC79iyoQO5D
-         IK7w==
-X-Gm-Message-State: AOJu0YwGiOg2oGBU5kynK0qQTzs0tiRhgL1Ky21YqQnlEw0AAhdWkNwE
-	hko7aD28vYCJ3wVKMnLZq+61gV4jY2ul2ViyBi6ZcmjPAsml9xliglQZXNUmed08ajvSDX8M+5V
-	H8rs=
-X-Google-Smtp-Source: AGHT+IGKrr6EzD0rSMAcBNr+X7UkFvo5/7wc+BRCCToksrpqSjM380YBRbQ2GYH+XF4c3RU0dp5okw==
-X-Received: by 2002:a05:6122:3187:b0:500:fb0e:afec with SMTP id 71dfb90a1353d-500fb0eb044mr2966852e0c.12.1725478117610;
-        Wed, 04 Sep 2024 12:28:37 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a98ef24f46sm11251885a.10.2024.09.04.12.28.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2024 12:28:37 -0700 (PDT)
-Date: Wed, 4 Sep 2024 15:28:35 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] pack-objects: brown-paper-bag fixes for multi-pack
- reuse
-Message-ID: <Zti04yZXGiCGJBKo@nand.local>
-References: <cover.1724793201.git.me@ttaylorr.com>
- <xmqqv7zb8cys.fsf@gitster.g>
+        bh=KZThkKRcRMmSN/q1BehgCyLPBYLEh2r7POICYByqh7g=;
+        b=PWDNve0zZGtsiENErNS8yNWdHQeVqdRdPd7tWgT2+CBVziBiKP7/hVn8nX34KwT/ni
+         xeONmj7wDQ8c+P7apdx0WBO6AHgkucwwaAhCYHKybjBGEjnWq7dG2S54Qu5vEZETyv8w
+         nopnfAQs5EoYyH29XVAkSlZUrZOAIH87VuQo6nZdCaOfzhHVHZVWpVQ9fQMC3pufjpPM
+         94PBmjAkbaKVybN4MvazgKJ2XDpyQ9qRZsk1mFCWbj8Ztm7+3LQ9w1Eq8fu91pp+Ec7y
+         wVDe2Bapp4ML6eyJ4X9B/NlaVuz6nFqbH6LtVL/jMXL5EsEMiZ9chVmp7g2Ean8E9EUa
+         0umQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725479925; x=1726084725;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KZThkKRcRMmSN/q1BehgCyLPBYLEh2r7POICYByqh7g=;
+        b=MXUcwI7rofIj7hmHNx0/vKZnshgAECEAVGZW1OkX+Lt2ZCmpTNsQ7dU17fvG17DdoS
+         8YRSvBhXnmq4u8WdJ2t4ai7CjV0//uPM2dwruiuyU0bvo5AL15HpuO6WNoOpIaIjjT6X
+         GGOSyipAvgkiwcgcrFDzvcmF7NehV98dGk34JZ+hCehyFQepzZ8pvRRXhwZ98AWL9v2B
+         AAXDC8N1vlWWU5gHVImP066ADDhKxQplA+2uQOA5Bx/Uq5US0YFin+0wosTs/sRHFYau
+         VI436FUxk0eXxiOaAfoK6LVH2vKSk+VQpGR93vdEdLJ+lwz6XvtDW1y1SogGB5QxMe85
+         jZ9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUnFVi8IDGus8hJglXgoMLRbFSrt/+xDDrjRneZN9xn3drKnTvdxqVPK3GXdgvF2IDhJb8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyp1Y8izp7U16v8obRX1FRd9HOJ6nYZpBcrJ8NAThG+Q9BmWc1g
+	7QSMalMrYZliVqEiEvtaSxcHmBFUN4AB4jJi3+wXU629x5KD2Mdjn4dHvEZJKJya+3RsHbB+3l3
+	zrR6lgVwl22zCSaCK4mTrSttg/WXOLQ==
+X-Google-Smtp-Source: AGHT+IEwSBjnrBw7TNF54NhONRhAVRa6EY6wnCB2kJJ2V57Fje3I6OsrZCVlwHcCNG27BHd4MAiJfmtWwQUTe6/6Zqg=
+X-Received: by 2002:a05:6808:11cd:b0:3d9:e22a:8f9e with SMTP id
+ 5614622812f47-3df05e3bebbmr21134086b6e.39.1725479925211; Wed, 04 Sep 2024
+ 12:58:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv7zb8cys.fsf@gitster.g>
+References: <20240904090614.GZ15670@t480> <0e0fb1c3-d4f7-413b-9985-d71cb1c300df@kdbg.org>
+ <20240904180826.GB15670@t480>
+In-Reply-To: <20240904180826.GB15670@t480>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Wed, 4 Sep 2024 12:58:34 -0700
+Message-ID: <CA+P7+xo9DnTitgVjHzpW1ODwRdFruDf+g+isg5pSHT8f27ASvg@mail.gmail.com>
+Subject: Re: git log alias with --all and --exclude
+To: Rene Kita <mail@rkta.de>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 04, 2024 at 11:56:27AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Sep 4, 2024 at 11:15=E2=80=AFAM Rene Kita <mail@rkta.de> wrote:
 >
-> > This series fixes a couple of issues (some cosmetic, others less so) in
-> > multi-pack reuse noticed when rolling this out over a few real-world,
-> > internal repositories on GitHub's servers.
+> On Wed, Sep 04, 2024 at 06:49:12PM +0200, Johannes Sixt wrote:
+> > Am 04.09.24 um 11:06 schrieb Rene Kita:
+> > > I have an alias
+> > > 'gr =3D log --oneline --abbrev-commit --all --graph --decorate --colo=
+r'
+> > > and I would like to be able to sometimes exclude a branch, so call it
+> > > with:
+> > > $ git gr --exclude=3Dpattern
+> > >
+> > > This does not work, though. Also does not work without the alias and
+> > > typing the complete command by hand. Apparently the --exclude must be
+> > > put before the --all to take effect.
+> >
+> > That is very much by design, so that you can express "branches except
+> > the wip and preview branches and remotes except those from the remote
+> > archive" with
+> >
+> > --exclude=3Dwip/* --exclude=3Dpreview* --branches --exclude=3Darchive/*=
+ --remotes
+> >
+> > These collective branch options --branches, --remotes, and --all clear
+> > the exclude patterns after having them applied. Therefore, in this exam=
+ple,
+> > the first two --exclude do not affect --remotes.
 >
-> I cannot claim I got all the detail that went into steps 2 & 3
-> right, but I was irritated enough that the topic was left in the
-> "Needs review" state, so I gave a look at the tail end of the
-> series, and they were pleasant read.
+> OK, certainly not the answer I hoped for, but something I still
+> expected. Thanks for the explanation.
+>
 
-Thanks. They were anything *but* a pleasant debugging session, but I'm
-glad that the end result was palatable ;-).
-
-Thanks,
-Taylor
+You could implement this as a shell alias so that your options get
+included before the --all. I'm not sure how trivial that would be to
+do, but thats how I would go about implementing this alias.
