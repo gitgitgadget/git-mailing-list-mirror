@@ -1,75 +1,75 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8BBFBF0
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 02:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF550433A9
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 02:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725415864; cv=none; b=hX0AcfzLa5P3l0nUhJpHt9xncsiFbyWW+fqY+WejCM0sILkG93tNLPH51M5dq0arZs7fCMJ7dP5E3j/7N6/l2V956SDnB6WBraGszU9mw2JXGTKaX9yc/zjwGUUCTf+eSSkS65zw7H34SxGDVfiPdXPV1Zyy3tqGJXcY7NSwQ9E=
+	t=1725415987; cv=none; b=knOHZmqkBzuQQILsCIdX4tx55gSBwIon2EgaewMUsPnhHE2LPzr3vo1whPfbAzo+V9lop2nFaA7w3LfWcWNJJsi3hvDfA8JzR+H9J6wmWt6q3nVwJY4BfscJYURtskxMYqcEz5d/xeXU/dLQOIEJ8EwIRZT3b8VIDjoePIPfPRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725415864; c=relaxed/simple;
-	bh=/0jDcGYxnQSiDcovfEShDcUrqg1ZU59mgqFzwmgFln8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=We1vF7uTkyoaFEe3yaYs2MbhquCnglBGAyoTpVD12H39TIaGNUYoVWaM4PuMQR7zG/53Dc22XPUFVAVYbYvU+IeOVRRE7MDcHyRGkKcYNdxhOC8pEmWap6Wtz7NfSlac3nZ8Bfv5DyNGQ9M3AIgVs6W5wtueN6fekNWtmYedHwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=Cft9WKME; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GZxCHTsP; arc=none smtp.client-ip=103.168.172.152
+	s=arc-20240116; t=1725415987; c=relaxed/simple;
+	bh=ESGll5xh+U+sTCSdkgxDrZC1rTHeLpgve/4jG8LsEcc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=sLrSkDzJJ2bFEqhTF9T43aw8SNT/AqEGWJGwjBul9FwgyOSbJKT9Gu+WV2LW1ArCNGKIw0mxVRAAjGMwsWGQZhs3zGJmnJX6dE3pDxxxP5TySkf/nVlCQEb7YrHAquTI0XGCy/Txp2QO9Ur3kjNXqYaOHuE89aw0vy2l5veF4qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=V/te9syB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfG+zLQu; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="Cft9WKME";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GZxCHTsP"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C96181140253;
-	Tue,  3 Sep 2024 22:11:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="V/te9syB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfG+zLQu"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E6F701140192;
+	Tue,  3 Sep 2024 22:13:04 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Sep 2024 22:11:00 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 03 Sep 2024 22:13:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1725415860;
-	 x=1725502260; bh=/0jDcGYxnQSiDcovfEShDcUrqg1ZU59mgqFzwmgFln8=; b=
-	Cft9WKMEuRuR0utH6P42d4T3M4Sw9oaElSDIN/h7rdMcnT8WFNIALXPCYVhkFBRf
-	icLBF0GWWkotRNaWW06YPs5O9Sz50pRHgH0KOhXHazFYF5F2cQv/807BLjBQFGuq
-	0HE7MtetDXP74Oq0i+uXW3TDyQnsJGeekko2O7DL7ExfzcEhU6UfACf2+kXmoJs0
-	+FTnqyCw9w9XFmTTaJao6pxVKXeAqWblmWklViVA4cyIWLjTU7PxbcyyDGO/u3vC
-	bnwZ7vlrGeKAX9qaWSnEyZlWl2Gw1QoMkM+CZLO2HF1nmxVSHUzwjI8tg4JZQRe5
-	s292dhrPYZiod0XleCurLA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1725415984;
+	 x=1725502384; bh=obbzn9WJUGRlVMKaDdv5pXKJQ8NwGqXq+16haTERYdM=; b=
+	V/te9syBLX3MY3MkejFhZA2A766w5oMSazALNagyo03LehrnKz3QLIISKlNS95Zh
+	gsMsa1VVNxecttEYPaXXaGDJOceJ41HIOHR+VZd8cBp9xUmT2RyZAZhXdkuBi9YO
+	R7bJ4s2kUYa6M0yag2Ya24zGTdpp4vbctMxi9+HesYn2RfmaQewHKVk9aRTqiU2H
+	2dLi5PHD3bSnI++i/ER47iG14L2LmEWxIPXb3vdHJJaPu6peUDTygVq2TZMF85M0
+	ERWwj+dK2UXIuKDzw0vybFxCErQQXQYWGbBsmYWfUw0Cb9ABQvQb3oOX4XFr40iC
+	2s46fUPnG/yLLBX/N0ljgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725415860; x=
-	1725502260; bh=/0jDcGYxnQSiDcovfEShDcUrqg1ZU59mgqFzwmgFln8=; b=G
-	ZxCHTsPRnTDA/Iq2B6d7qKZ57vYA1wYQFhxJptUGgoChmpdm4kbkhi452BJOxkKa
-	RbiXNX3igVvmEYNUl4VWAJcn+7zn3pnzgVqL1SIKmmzjYLR9AyAmSuaRnc070h2m
-	/riB/uNhCGZWjm//wHgmGOx24z1XOZ+mbvgaDSiKWO/Zqe0JtLdPd3uFrKLJQIsq
-	YpEA5zveVB/mrvPV/C8wuqDp53oifq2duiVhrvIp9oVS3eJgsEoPON17arCs8LCU
-	iCFMaihD5y8fjiGjnWV//iY+aa97oxW8Kka3+RRMxlGhLr5M9pZGpONpTm0jg7Rk
-	3BN5gX+7W1V7Fomeoq8aA==
-X-ME-Sender: <xms:tMHXZoypw3dQapks3Z6BkTY2QY2_e8yb8RABzW2nTpvIo2VGbHe5GA>
-    <xme:tMHXZsQUqcVZ0Jqvr_RWXsLeV7gdlxIi1Z8tEj8pfzcZyPhGJ7z1mqxXslyb0Ro1-
-    ux0cbR2zBJYSXxuLw>
-X-ME-Received: <xmr:tMHXZqVHtiWpo6k3esSQslT4FgRnoUL_RPpsGOTMCi1VyQ-F9cKDTsiN9dMx>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725415984; x=
+	1725502384; bh=obbzn9WJUGRlVMKaDdv5pXKJQ8NwGqXq+16haTERYdM=; b=h
+	fG+zLQuXJ0t0iURTLxBE06i7zqJwyeMtyQgswYiUJPcQIbWqLieGTc7fRZxZbNyH
+	1uvbXZnIShMONVjBEnT5wQniCoBgxoMiRjXQQ/W6gqa8uLlvwhXWGZomU5UQ9wFQ
+	aCDw0o0SGiRgJEq2aionRrYxdKuJppktmEiqOZZtHBFLGzKiUivaIdnStHguo+d6
+	pcBfWgvGlh2FIiUsOnqNgrxwZaN0s6TIH9wYz/QqbIM8kAOJkAkxxG1f+iuu5D5Q
+	l7BQ4LYlTuTUfylFPAXdrDV69Y6PaGeQ3Y2COXmLPLItjPn7pJs0T6LIUxB9/Qy9
+	NEwwg6Z0D/L5ig5PNa7ZA==
+X-ME-Sender: <xms:MMLXZodISy7Mej4G6w21wHjcUnO9eAQaeJmcsCEmCuHpWSqV_VzFkw>
+    <xme:MMLXZqNHoY-le6B3WbFfGaldZJN12-wejRqdA9U2kypXmoF0zDUORB1tWZE0ZBFmw
+    9C7CWCXbb5p9ZgPag>
+X-ME-Received: <xmr:MMLXZphKrGn-F_w_mcp5yIpC1iCb5LOYU2RVDWD02rJCaNbGXIttnMFDW-qx>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehiedgheegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepggfgtgffkffhvfevuffofhgjsehtqhertdertdej
+    htshculddquddttddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdej
     necuhfhrohhmpedflfgrmhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurd
-    hioheqnecuggftrfgrthhtvghrnhepfeefgfduveegfeduveevveekieffhfetffeukeff
-    fffhgeelueekieffhedtveffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hioheqnecuggftrfgrthhtvghrnhepffeukedtiefgjefhhefhgeelieeguddvveeujeej
+    hfegtddviefhjeetudekjeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthht
     ohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
     gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggr
     lhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrse
     hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tMHXZmgr-jl7g_6y5a1TdAUGtkX_-B_D-5zvYHzaz01bsGE2t-Tr9A>
-    <xmx:tMHXZqCvp-Kbr_hCQxzrSd_MH7QGRbUfGZnRk79Y62-dleUn6wsroQ>
-    <xmx:tMHXZnIjllGb1105BkN7xKd3LVCY9x3sWG-YJjXB9rW2GbqI9FyrCA>
-    <xmx:tMHXZhAVe5zDR7Drwl0uTadPUbf9zMbTKonxQ5fDgvQwq2KDN8TZBg>
-    <xmx:tMHXZh5AfpR2Src6og3_rENGvu7Z883XR3r9g30xiiVSIsvCQ3yNvznH>
+X-ME-Proxy: <xmx:MMLXZt--Y6LcZ8-fj8Wet5AWj0crYP-qDJwnF5aTj0nY1mVyO8SUuA>
+    <xmx:MMLXZktjzFW1GvjmgFAcpDHoS3UFELMhjesrzmorl0G37d4Mf4m2SQ>
+    <xmx:MMLXZkFFRj3JVETlEoh-PEoW80TYDF_nTL9P-K5_42CL-t7v20qsug>
+    <xmx:MMLXZjN0reF0GTO7Cd8_djRHEeS-ej0HOPHXzGGsAgZRKRrRAPYY_g>
+    <xmx:MMLXZuUpjKKtnoWDJn4wKqN0WIaofGRlwbJ8NrPJM_yAu4w6DpY06L8P>
 Feedback-ID: i93f149ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Sep 2024 22:10:56 -0400 (EDT)
+ 3 Sep 2024 22:12:58 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,35 +78,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 04 Sep 2024 12:10:53 +1000
-Message-Id: <D3X4VGA5L7JS.KX0H76M2YL2O@jamesliu.io>
-From: "James Liu" <james@jamesliu.io>
-To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
+Date: Wed, 04 Sep 2024 12:12:54 +1000
+Message-Id: <D3X4X0B5P0WG.1WHNSQNIRDHYW@jamesliu.io>
 Cc: "Calvin Wan" <calvinwan@google.com>, "Justin Tobler"
  <jltobler@gmail.com>, "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v2 20/21] environment: stop storing
- "core.warnAmbiguousRefs" globally
+Subject: Re: [PATCH v2 00/21] environment: guard reliance on
+ `the_repository`
+From: "James Liu" <james@jamesliu.io>
+To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
 X-Mailer: aerc 0.18.0
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1725008897.git.ps@pks.im>
- <fc6fcebf7f737617c635b338e3c0dce10e77881c.1725008898.git.ps@pks.im>
-In-Reply-To: <fc6fcebf7f737617c635b338e3c0dce10e77881c.1725008898.git.ps@pks.im>
+In-Reply-To: <cover.1725008897.git.ps@pks.im>
 
-On Fri Aug 30, 2024 at 7:09 PM AEST, Patrick Steinhardt wrote:
-> Same as the preceding commits, storing the "core.warnAmbiguousRefs"
-> value globally is misdesigned as this setting may be set per repository.
+On Fri Aug 30, 2024 at 7:08 PM AEST, Patrick Steinhardt wrote:
+> Hi,
 >
-> Move the logic into the repo-settings subsystem. The usual pattern here
-> is that users are expected to call `prepare_repo_settings()` before they
-> access the settings themselves. This seems somewhat fragile though, as
-> it is easy to miss and leads to somewhat ugly code patterns at the call
-> sites.
+> this is the second version of my patch series which guards functions and
+> variables in the environment subsystem that rely on `the_repository`
+> with the `USE_THE_REPOSITORY_VARIABLE` define.
 >
-> Instead, introduce a new function that encapsulates this logic for us.
-> This also allows us to change how exactly the lazy initialization works
-> in the future, e.g. by only partially initializing values as requested
-> by the caller.
+> Changes compared to v1:
+>
+>   - Clean up now-unnecessary and add newly-necessary includes.
+>
+>   - Stop reordering includes in "setup.c".
+>
+>   - Fix missing `USE_THE_REPOSITORY_VARIABLE` defines in Win32 code.
+>
+> Thanks!
+>
+> Patrick
 
-Cool! `prepare_repo_settings()` is safe (and seems also reasonably cheap)
-to execute multiple times.
+Thanks Patrick, this is a nice series of cleanups! I've left a few
+comments.
 
+Apologies that I haven't been able to review these changes until now --
+I've had to take some time off in the past week.
+
+Cheers,
+James
