@@ -1,95 +1,115 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45031465A0
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 07:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E405A16EC0E
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 07:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725435794; cv=none; b=W/7RpB8HmxqII3MEPxiOFnzCJUOmVKAMcWQVCawLybdyNWi9P4BR4RlkDEkUAaD05fDFGEj55LQ89PsDI0Wnu6MtuV8+9bsiuVS4M14CiAYJZs+9ySdHhEKlbHbWPLJ1ZfuhKzbLAhFRXsLSuDcFYsN4jFqq+UWcg2cj/dkp76o=
+	t=1725436358; cv=none; b=itc1+yRn35t714rZE51lXWIxy7cBdsdlCwgmd8xRnNIp99NCxbhtKIsFWcweIcFWXEA7xYvlwe1cXK2BH+BvTE85xkwJqAAlry2Mjf89fzFQbg/pVG/F3YEmP0RIMDCDT4pNPyEedsb1nlX6QR4FWVK6Pe+xTMwSFvXLR9DrYpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725435794; c=relaxed/simple;
-	bh=eKhs+sovH6ps6oj/aB7H6xi9aOzG7tnYUZj4wKbrrbk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QMcQHz40S33pzQ3Hp5VCO20AWBWDdHBdtk8nn2po+BQ5pHfRGPyYstMIFnqvDqKJfMalG32cDaU0UMPsJ8ED1azz/cF434xHadul1Gzshi/uNPyPFydyr75iSZaVET0jnISjFVx32FMIiA/7hgRfb1/ww3PKvbCVvIDu5CvM0Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4BE/C7f; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725436358; c=relaxed/simple;
+	bh=S2JHiI8fhYAoDjP2m96m011CQmPA2Lr7cRR42uOzOIo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=pBG1r99KNp5J9HlrV7OOp3n0Nyc8cv4vw04+lgWg4qIULqeIlxHbtLQYih0seWswYwe501KLlNax3iHqyBqVs6M0XZV1KMEIrZmTGA66RGgRRCi5GLHjOh/dA3kKZyAvvPeD3wYe/7pPSg+14MZeSSvVxhBFf1WBtNsCA9TZWrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=eT+SPo78 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4BE/C7f"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2f029e9c9cfso78000341fa.2
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 00:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725435791; x=1726040591; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eKhs+sovH6ps6oj/aB7H6xi9aOzG7tnYUZj4wKbrrbk=;
-        b=H4BE/C7f5MzNXFQyjE9WBhD+G7bcQUqT3FGz3mW3Tm4kS4jWL/FSsw0eA3U+r3jG75
-         ljVFR0q5MJIHG+1zvlug52+wzPHr2dGCeJdgkQ6YjauGt2SnnW2WssS8FP3J0jAU/cpY
-         FO1oDXA5kKh+fPR5sWhfIQ1vLzT9qQ3FeNRFfPxeiss+jP+y5XmRHUBOwqHo5Lw22fga
-         t48WzJ5dXdWQhERhNoIJxGsrHYiCaLeYz51AXn3RYH7/r5Ry3UJ43D5wRl9/bF7TSugB
-         k0LKvJr1cGOc63jmQRp2nr75YztofxoEQ0lPm27h8H2r/Pkde+DhKa1yVMKV+zefLxM6
-         Gwpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725435791; x=1726040591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eKhs+sovH6ps6oj/aB7H6xi9aOzG7tnYUZj4wKbrrbk=;
-        b=D9h9Pd8rPdfHuzTQeTo4ruVVRl9Kjl3zqiXiq9xqEdd++il8rrB3qEM4HRt19wTbeX
-         47XbxXTVzgY80GZ1uck6m+qmJ792DLxND7Nw9lkrqh3CNM/a8XQWhEw6h2HuJ421HvQr
-         xcN7d+PN0LoLzsAK9jwiQjNJw2ze9VHwaFKdjbHSsM3hjctE4XYjnCBAkpWiVeZ/tuPu
-         GrYm9AxMd9ioHTOLRKMIpXJWvfjhHf9vo/gKm7I6QL9v+7nVHuzUS1/7H3a3ursWC0Ws
-         z0zQj2BvutvEbOAYtkeSJwTlLPxVZG4YBc7EJn34T4V6nyH/Z7tFanblhXwnZ1Hu9VN5
-         EDbw==
-X-Gm-Message-State: AOJu0YznBU+Chc8l9W3N4WatzHNUGwNVSF/wXXmM5HMrh2bF1Y4QkmMH
-	HvOKVeo1r68+0BSqWhyYzdx6K0NmxWS0JBj3V1oys+1fTGxtKaFfP77eOWEr+HlW9AAmPjVK4EQ
-	m6+ESSeiJoAWVBC+uuBIdO+3IQXo=
-X-Google-Smtp-Source: AGHT+IHjJlLBstAv1tUGNJw1k1c1tLC3Cqv2CR5zb29BD4fcqa3ao3ffPVkppx5II+sFBRW+WH3gIHlmJmgN8bbIWRU=
-X-Received: by 2002:a2e:a993:0:b0:2f3:eca4:7c32 with SMTP id
- 38308e7fff4ca-2f61089355emr186522531fa.38.1725435790595; Wed, 04 Sep 2024
- 00:43:10 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="eT+SPo78"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=LpKN2RT9N1JB2TsR+pcbEvOPrmFca+jMsE2DRyHJRBM=; b=e
+	T+SPo783V2HFu3/wmBviqGZeeVWQ18zHciXN+ZL5BkRO+dyiN1PK/9eVm7hMHRAW
+	2krKHpAiBkzpbVBVx359n4n5xjCyKcqZIGIosN2TEKQVJNtpKE6fawcwHTDv/CnE
+	QpKhxW/gSt5HgG08DUaVSpdfDW6k/gmYW3O9sq8JiU=
+Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
+ ajax-webmail-wmsvr-40-116 (Coremail) ; Wed, 4 Sep 2024 15:49:28 +0800 (CST)
+Date: Wed, 4 Sep 2024 15:49:28 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Brandon Williams" <bmwill@google.com>, 
+	"Jonathan Tan" <jonathantanmy@google.com>, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: [PATCH 3/4] builtin/clone.c: recognize fetch.serverOption
+ configuration
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <ZtbgafDQwbU9tBoq@pks.im>
+References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
+ <7c3ebda513d872a2ab2aa0cff5887757de4cde0a.1725279236.git.gitgitgadget@gmail.com>
+ <ZtbgafDQwbU9tBoq@pks.im>
+X-NTES-SC: AL_Qu2ZB/iYuUkt7iCQZ+kXn0oVhe85UMW2ufsg3YReP500pSTf/jo/cVZeF3/T8OyTJR+2mTGpWxxh+uBdT4pXWL7lU3d/uJWQ1ob0MS7c+EmM
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240824170223.36080-1-shyamthakkar001@gmail.com> <20240901212649.4910-1-shyamthakkar001@gmail.com>
-In-Reply-To: <20240901212649.4910-1-shyamthakkar001@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 4 Sep 2024 09:42:58 +0200
-Message-ID: <CAP8UFD0NMCUeFpQmLzXZmTUQQjQh5Dk79QxxMH_GN62w8ZC6YQ@mail.gmail.com>
-Subject: Re: [PATCH v4] t: port helper/test-oid-array.c to unit-tests/t-oid-array.c
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3_wUIEdhm9fFBAA--.53305W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRR9QbWXAorf2gQACsi
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Sun, Sep 1, 2024 at 11:27=E2=80=AFPM Ghanshyam Thakkar
-<shyamthakkar001@gmail.com> wrote:
->
-> helper/test-oid-array.c along with t0064-oid-array.sh test the
-> oid-array.h API, which provides storage and processing
-> efficiency over large lists of object identifiers.
->
-> Migrate them to the unit testing framework for better runtime
-> performance and efficiency. As we don't initialize a repository
-> in these tests, the hash algo that functions like oid_array_lookup()
-> use is not initialized, therefore call repo_set_hash_algo() to
-> initialize it. And init_hash_algo():lib-oid.c can aid in this
-> process, so make it public.
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> ---
-
-It would have been nice to briefly summarize here the changes compared
-to v3. On the other hand they are small enough and this version
-addresses all the suggestions that were made previously and looks good
-to me, so I think it is good to go.
-
-Thanks!
+QXQgMjAyNC0wOS0wMyAxODowOTo0NSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
+d3JvdGU6Cj5PbiBNb24sIFNlcCAwMiwgMjAyNCBhdCAxMjoxMzo1NVBNICswMDAwLCBYaW5nIFhp
+biB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+PiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9n
+aXQtY2xvbmUudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0Cj4+IGluZGV4IDhlOTI1
+ZGI3ZTljLi4xMDU2NDVlZDY4NSAxMDA2NDQKPj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtY2xv
+bmUudHh0Cj4+ICsrKyBiL0RvY3VtZW50YXRpb24vZ2l0LWNsb25lLnR4dAo+PiBAQCAtMTQ5LDYg
+KzE0OSw5IEBAIG9iamVjdHMgZnJvbSB0aGUgc291cmNlIHJlcG9zaXRvcnkgaW50byBhIHBhY2sg
+aW4gdGhlIGNsb25lZCByZXBvc2l0b3J5Lgo+PiAgCXVua25vd24gb25lcywgaXMgc2VydmVyLXNw
+ZWNpZmljLgo+PiAgCVdoZW4gbXVsdGlwbGUgKystLXNlcnZlci1vcHRpb249KytfXzxvcHRpb24+
+X18gYXJlIGdpdmVuLCB0aGV5IGFyZSBhbGwKPj4gIAlzZW50IHRvIHRoZSBvdGhlciBzaWRlIGlu
+IHRoZSBvcmRlciBsaXN0ZWQgb24gdGhlIGNvbW1hbmQgbGluZS4KPj4gKwlXaGVuIG5vICsrLS1z
+ZXJ2ZXItb3B0aW9uPSsrX188b3B0aW9uPl9fIGlzIGdpdmVuIGZyb20gdGhlIGNvbW1hbmQKPj4g
+KwlsaW5lLCB0aGUgdmFsdWVzIG9mIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgYGZldGNoLnNlcnZl
+ck9wdGlvbmAKPj4gKwlhcmUgdXNlZCBpbnN0ZWFkLgo+PiAgCj4+ICBgLW5gOjoKPj4gIGAtLW5v
+LWNoZWNrb3V0YDo6Cj4KPkknbSBub3QgYSAxMDAlIHN1cmUsIGJ1dCBJIGRvbid0IHRoaW5rIHRo
+YXQgYGZldGNoLipgIGNvbmZpZ3MgdHlwaWNhbGx5Cj5pbXBhY3QgZ2l0LWNsb25lKDEpLiBTbyB0
+aGlzIGhlcmUgaXMgYSB0YWQgc3VycHJpc2luZyB0byBtZS4KPgo+SXQgbWFrZXMgbWUgd29uZGVy
+IHdoZXRoZXIgaXQgaXMgYWN0dWFsbHkgc2Vuc2libGUgdG8gaW1wbGVtZW50IHRoaXMgYXMKPnBh
+cnQgb2YgdGhlIGBmZXRjaGAgbmFtZXNwYWNlIGluIHRoZSBmaXJzdCBwbGFjZS4gSSdtIG5vdCB5
+ZXQgcXVpdGUgc3VyZQo+d2hlcmUgdGhpcyB3aG9sZSBzZXJpZXMgc2xvdHMgaW4sIHRoYXQgaXMg
+d2h5IG9uZSB3b3VsZCB3YW50IHRvIHNldCB1cAo+ZGVmYXVsdCBzZXJ2ZXIgb3B0aW9ucyBpbiB0
+aGUgZmlyc3QgcGxhY2UuIFNvIHdoYXQgSSdtIHdvbmRlcmluZyByaWdodAo+bm93IGlzIHdoZXRo
+ZXIgdGhlIHNlcnZlciBvcHRpb25zIGFyZSBzb21ldGhpbmcgdGhhdCB5b3Ugd2FudCB0byBhcHBs
+eQo+Z2xvYmFsbHkgZm9yIGFsbCByZW1vdGVzLCBvciB3aGV0aGVyIHlvdSdkIHJhdGhlciB3YW50
+IHRvIHNldCB0aGVtIHVwCj5wZXIgcmVtb3RlLgoKU29ycnkgZm9yIG5vdCBleHBsYWluaW5nIG91
+ciB1c2UgY2FzZSBjbGVhcmx5LiBXZSBoYXZlIHNldmVyYWwgaW50ZXJuYWwKcmVwb3NpdG9yaWVz
+IGNvbmZpZ3VyZWQgd2l0aCBudW1lcm91cyBDSSB0YXNrcywgZWFjaCByZXF1aXJpbmcgY29kZQpw
+cmVwYXJhdGlvbiAoc29tZXRpbWVzIHZpYSBjbG9uZSwgc29tZXRpbWVzIHZpYSBmZXRjaCkuIFRo
+ZXNlIENJIHRhc2tzCmFyZSB1c3VzYWxseSB0cmlnZ2VyZWQgYnkgcG9zdC1yZWNlaXZlIGhvb2ss
+IHNvIHRoZSBjb25jdXJyZW50IHRhc2tzIGFyZQphY3R1YWxseSBmZXRjaGluZyB0aGUgc2FtZSBj
+b3B5IG9mIGNvZGUuCgpPbiBnaXQgc2VydmVyLCB3ZSB3YW50IHRvIGRlcGxveSBhIHNwZWNpYWwg
+cGFjay1vYmplY3RzLWhvb2sgdG8gbWl0aWdhdGUKdGhlIHBlcmZvcm1hbmNlIGltcGFjdHMgY2F1
+c2VkIGJ5IHRoZXNlIENJIHRhc2tzIChzbyB0aGUgcGFja2ZpbGUKcHJvZHVjZWQgYnkgZ2l0LXBh
+Y2stb2JqZWN0cyBjYW4gYmUgcmV1c2VkKS4gIFNpbmNlIG5vdCBhbGwgY2xvbmUvZmV0Y2gKb3Bl
+cmF0aW9ucyBjYW4gYmVuZWZpdCBmcm9tIHRoaXMgY2FjaGluZyBtZWNoYW5pc20gKGUuZy4gcHVs
+bHMgZnJvbQp1c2VycycgZGV2IGVudmlyb25tZW50KSwgd2UgbmVlZCB0aGUgY2xpZW50IHRvIHBh
+c3MgYSBzcGVjaWFsIGlkZW50aWZpZXIKdG8gaW5mb3JtIHRoZSBzZXJ2ZXIgd2hldGhlciBjYWNo
+aW5nIHN1cHBvcnQgc2hvdWxkIGJlIGVuYWJsZWQgZm9yIHRoYXQKY2xvbmUvZmV0Y2guIENsZWFy
+bHksIHVzaW5nIHNlcnZlciBvcHRpb25zIGlzIGEgZ29vZCBjaG9pY2UuCgpUbyBhY2hpZXZlIG91
+ciBkZXNpZ24sIHdlIG5lZWQgdG8gYWRkIHR3byBwYXRjaCBzZXJpZXMgdG8gZ2l0OgoKMS4gU3Vw
+cG9ydCBpbmplY3Rpbmcgc2VydmVyIG9wdGlvbnMgdG8gaWRlbnRpZnkgZW52aXJvbm1lbnRzIHZp
+YQogICBjb25maWd1cmF0aW9uLCBiZWNhdXNlIGFkZGluZyB0aGUgLS1zZXJ2ZXItb3B0aW9uIHBh
+cmFtZXRlciB3b3VsZAogICByZXF1aXJlIHRvbyBtYW55IHNjcmlwdCBtb2RpZmljYXRpb25zLCBt
+YWtpbmcgaXQgZGlmZmljdWx0IHRvIGRlcGxveS4KICAgVGhpcyBpcyB3aGF0IHRoaXMgcGF0Y2gg
+c2VyaWVzIGRvZXMuCjIuIEdpdCBzZXJ2ZXIgc2hvdWxkIHBhc3MgdGhlIHJlY2VpdmVkIHNlcnZl
+ciBvcHRpb25zIGFzIGVudmlyb25tZW50CiAgIHZhcmlhYmxlcyAoc2ltaWxhciB0byBwdXNoIG9w
+dGlvbnMpIHRvIHRoZSBwYWNrLW9iamVjdHMtaG9vay4KCj5JbiB0aGUgbGF0dGVyIGNhc2UgSSBj
+b3VsZCBzZWUgdGhhdCBpdCBtYXkgbWFrZSBzZW5zZSB0byBpbnN0ZWFkIG1ha2UKPnRoaXMgYHJl
+bW90ZS48bmFtZT4uc2VydmVyT3B0aW9uYC4gVGhpcyB3b3VsZCBhbHNvIHJlbW92ZSB0aGUgdW5j
+bGVhbgoKSSBuYW1lZCB0aGUgbmV3IGNvbmZpZ3VyYXRpb24gYGZldGNoLnNlcnZlck9wdGlvbmAg
+bWFpbmx5IHRvIGZvbGxvdyB0aGUKYHB1c2gucHVzaE9wdGlvbmAgcGF0dGVybi4gIFNpbmNlIHdo
+aWNoIHNlcnZlciBvcHRpb25zIHRvIHN1cHBvcnQgaXMKYWN0dWFsbHkgc2VydmVyLXNwZWNpZmlj
+LCB1c2luZyBgcmVtb3RlLjxuYW1lPi5zZXJ2ZXJPcHRpb25gIGlzIGEgZ29vZAppZGVhIGZvciBn
+aXQtZmV0Y2guIEhvd2V2ZXIsIGhvdyBzaG91bGQgd2UgZGVzaWduIHRoZSBjb25maWd1cmF0aW9u
+IGZvcgpnaXQtbHMtcmVtb3RlIG9yIGdpdC1jbG9uZSwgaWYgd2Ugd2FubmEgcHJvdmlkZSBhbGwg
+b2YgdGhlbSB3aXRoIGEKZGVmYXVsdCBsaXN0IG9mIHNlcnZlciBvcHRpb25zIHRvIHNlbmQ/Cgo+
+ZGVzaWduIHRoYXQgYSBmZXRjaC1yZWxhdGVkIGNvbmZpZyBub3cgaW1wYWN0cyBjbG9uZXMsIGV2
+ZW4gdGhvdWdoIGl0Cj5ub3cgd29ya3MgZGlmZmVyZW50bHkgdGhhbiBvdXIgcHVzaCBvcHRpb25z
+Lgo+Cj5JIGd1ZXNzIHRoaXMgZGVwZW5kcyBvbiB0aGUgYWN0dWFsIHVzZWNhc2UuCj4KClhpbmcg
+WGluCg==
