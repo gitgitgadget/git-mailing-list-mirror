@@ -1,135 +1,147 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE2414A62A
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 07:13:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66D7146580
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 07:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725434023; cv=none; b=LWJ8rA5NGcq7oL+c3GD7G2ybR4cYjwMWxBaojmwtiMG+Qzd55MOC+kMOObWLv0ILLl1txGFoTnwbR5hvmN/C6NzjRqcwLIJ8ci5d4ee67TF3tpA0Xa+PIHMNaso3Kv/g353EPpAC/lKy8RM2lnvAufR7xHuSYlxP8GBvDX9HUzk=
+	t=1725434064; cv=none; b=M1mcMcGPPWQHY8mrRv7XjsrEBFT/Sby91Yc3l5+V4ENIL9sBVhAh2Lwptbtbp8rG/wMKt2bK3gU5IRrck+H/yMR4UWTY6jgM7eOpzDV2XBYtdtmLOVt0SemLciu849lHmCnpu69xaN3i1HcUOwHN91RMyKNTmfAHVWWcShmg9tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725434023; c=relaxed/simple;
-	bh=T6rk+U6S2DujtKBoK+oHVjUvHXGH//te1pyHkWm9ybI=;
+	s=arc-20240116; t=1725434064; c=relaxed/simple;
+	bh=WrLBUPmuBeh+riESqMwNpNX2i91KhGWZX/iGac1zmmk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=thB1U0KE2aB2JyyWcjeBBB1PZuxhz+jiQiw4fC1gbgDkQh8cLAqyi7+s789svjAMkVZBU/Yd78MNW1zhjl6bHBBHOlphwZ/fOzju95EiZ6GoCCp5hKrQ+plTR2PHv6pesKD6IvnU3h2a0025Z8u306bBUCB1g9bOxjznWozi7Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=B1gvNDjf; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=X+rLvm/F; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=B1gvNDjf; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=X+rLvm/F; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=IleaMGm/pxVM7FL3D4XLASBVibuP0PhJIJ6E95ppai2HBorKM1ljSeLSXdJEXYCL7CVlrr2HiaBHyjQa3dGdhnJ3cXCV+V4TjLpsS56yc8bu8tkQ4ny7nhRxYAXW735paia08NFJJ0tHj0luE99fr70hMI1zpsOhHQCRrF8Zkj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JGHWUhXf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ge9IRs67; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="B1gvNDjf";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="X+rLvm/F";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="B1gvNDjf";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="X+rLvm/F"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 044DC1F79F;
-	Wed,  4 Sep 2024 07:13:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725434020; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YAG3II4JZQ1wlQUFU8SyOVRzbIXDoefVPbnhxC0h6qw=;
-	b=B1gvNDjfuZo5FlzLFOELPypPuZkWo+D9TWI/eHoOXNdTW+L8BckhTY86NAkvx+uz4xAE7M
-	GiLydq284iwwAEN7l7ZvjrsTR0QZR7E6ljsDaTR+H7ONDlclunNiW62pEA5B/puA7aOxZJ
-	eF/Kkwx28wPYnUmCiA3uL3wjObiRQrY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725434020;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YAG3II4JZQ1wlQUFU8SyOVRzbIXDoefVPbnhxC0h6qw=;
-	b=X+rLvm/FaD1Ub0PkuuLahzHfl0gg0FBDV5gMfO3PrjBOJwLhDJLWAsWtd7C8YC3x3ul/Ot
-	VFiB1yQdXKpTz4Bg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725434020; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YAG3II4JZQ1wlQUFU8SyOVRzbIXDoefVPbnhxC0h6qw=;
-	b=B1gvNDjfuZo5FlzLFOELPypPuZkWo+D9TWI/eHoOXNdTW+L8BckhTY86NAkvx+uz4xAE7M
-	GiLydq284iwwAEN7l7ZvjrsTR0QZR7E6ljsDaTR+H7ONDlclunNiW62pEA5B/puA7aOxZJ
-	eF/Kkwx28wPYnUmCiA3uL3wjObiRQrY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725434020;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YAG3II4JZQ1wlQUFU8SyOVRzbIXDoefVPbnhxC0h6qw=;
-	b=X+rLvm/FaD1Ub0PkuuLahzHfl0gg0FBDV5gMfO3PrjBOJwLhDJLWAsWtd7C8YC3x3ul/Ot
-	VFiB1yQdXKpTz4Bg==
-Date: Wed, 4 Sep 2024 09:13:38 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: sideshowbarker <mike@w3.org>, git@vger.kernel.org
-Subject: Re: Problem: git Notes not discoverable (+proposed solutions)
-Message-ID: <20240904071338.GW26466@kitsune.suse.cz>
-References: <Zp89ntYaeFUumaTO@w3.org>
- <xmqq7cbsh16d.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JGHWUhXf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ge9IRs67"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E638913802AA;
+	Wed,  4 Sep 2024 03:14:21 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 04 Sep 2024 03:14:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725434061; x=1725520461; bh=7QYjx5Gqoa
+	67jJwSnGpGoNEze+SwHYiHJ3zxDfAFpl4=; b=JGHWUhXfNW53YF8JPm294x2hf4
+	05mi2gZwvGir8Thtukx59R/aFKWMc9xKLmjNjYrufWXI5il+I9HGG1V7esNVvnbY
+	ybSw319MvP3+G2ybc+qLrCF8mVHn2YLG8xP3rkWvm+4fw2xDUWGaCakCTh6LrWXv
+	mCF5Ls0gehMr6peEtTbuWxbnypk33dxZprzu93f+rEpUuprSgLOiMKUh0ZGUOjPf
+	X8nCiOqKz/a8RuUjtkd503q6XJ6CKGBQY+xLA2cZgB2xi/88He5GKEV6XmJiChmS
+	hFe3vXoXIFGNh7WDX/maImqwAscYgATFQWJoFuqItNXiJbtTPDbCtMRKYN3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725434061; x=1725520461; bh=7QYjx5Gqoa67jJwSnGpGoNEze+Sw
+	HYiHJ3zxDfAFpl4=; b=ge9IRs676dfGR8ZcrHFv+n9kMqqliyBy+RwNBgHGu/o5
+	OQI3zj4qR+hJAg6YF7p4zIPPTNMvduWw4gqgVNvFg3xGzGQJcqxBEpvnna6WZ7UB
+	T1g2iWUU+5ndtwZSRI2w1Kg0HWEAmqeCXk+BhwrsZuA8eVYyR5oPe2/ktyNdCBWE
+	4fplLYo8x2kB2HUxNbLKm3JFZ4V6pQ+Wr+XxupEZGQ40IL6OqeDj8vAcRXOLyv1y
+	C2Xgq1v800YDEAHlhEajQeyERMoeLcQVs0SDXkFLU60pQ+XwlGdyTC7tywEOEqLb
+	uuzO4C43R6PCoQNcZYS+Un8MJ1QylRs/hL37wLm42A==
+X-ME-Sender: <xms:zQjYZrA_XVoIyE5GNaWS46Oc-ltucQV32fAzCDXL39vUjsliJz3Hzw>
+    <xme:zQjYZhhaIt-NDqoFOR3QzlQHwg3Ww9NxigvNfwoDsV_pQRkru6tj3MzOBE8UhUcUw
+    A_idhGph1B2o5uNQQ>
+X-ME-Received: <xmr:zQjYZmlEErSWoNbcGUGVABNXn4xZ6a0OEBX_zlb9YNyrkFv4zzXPApOwAo02xpcGEIne_Afj6rCRAAxhu1touA7kbB8B5kPqBFGXksy2suD4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehiedgudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhm
+X-ME-Proxy: <xmx:zQjYZtzi7Hg_putTGlD4cQXTAoZBVAN8772IYzJ6H9xP59IIXLMsCg>
+    <xmx:zQjYZgQEwncUs2LWKpTnERnxL65R0_4vSBzUBBAU6GEuCq5YKIFQqg>
+    <xmx:zQjYZgbqzfmqtbt3ZbkOvX1bX2zdgTZYq7DGLIg-IBOgkrIUDG_ZhA>
+    <xmx:zQjYZhSaE8FxIF5H9DwBgk6DP_mEAAAZ-VV4pHxoX76n_nVndVYbuQ>
+    <xmx:zQjYZlKdYVf5a9u2Zi5PLARJ94z6hDealpXXmivXU6I5ZDIJkhH4hbA1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Sep 2024 03:14:20 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 44a05d2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Sep 2024 07:14:10 +0000 (UTC)
+Date: Wed, 4 Sep 2024 09:14:18 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: James Liu <james@jamesliu.io>
+Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 08/21] config: make dependency on repo in
+ `read_early_config()` explicit
+Message-ID: <ZtgIyjGnpwX3VvYP@pks.im>
+References: <cover.1724923648.git.ps@pks.im>
+ <cover.1725008897.git.ps@pks.im>
+ <b8aa5dcc0b67e3957dc65f38b7dc02a97cc096a7.1725008898.git.ps@pks.im>
+ <D3X4D0DUL3TS.1FAOC0KJ08D9L@jamesliu.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq7cbsh16d.fsf@gitster.g>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.995];
-	MIME_GOOD(-0.10)[text/plain];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_ZERO(0.00)[0];
-	ARC_NA(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3]
-X-Spam-Score: -4.30
-X-Spam-Flag: NO
+In-Reply-To: <D3X4D0DUL3TS.1FAOC0KJ08D9L@jamesliu.io>
 
-On Tue, Sep 03, 2024 at 02:34:02PM -0700, Junio C Hamano wrote:
-> sideshowbarker <mike@w3.org> writes:
+On Wed, Sep 04, 2024 at 11:46:47AM +1000, James Liu wrote:
+> On Fri Aug 30, 2024 at 7:09 PM AEST, Patrick Steinhardt wrote:
+> > diff --git a/config.c b/config.c
+> > index a8357ea9544..043e1c8a078 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -6,8 +6,6 @@
+> >   *
+> >   */
+> >  
+> > -#define USE_THE_REPOSITORY_VARIABLE
+> > -
+> >  #include "git-compat-util.h"
+> >  #include "abspath.h"
+> >  #include "advice.h"
+> > @@ -2204,7 +2202,7 @@ static void configset_iter(struct config_set *set, config_fn_t fn, void *data)
+> >  	}
+> >  }
+> >  
+> > -void read_early_config(config_fn_t cb, void *data)
+> > +void read_early_config(struct repository *repo, config_fn_t cb, void *data)
+> >  {
+> >  	struct config_options opts = {0};
+> >  	struct strbuf commondir = STRBUF_INIT;
+> > @@ -2212,9 +2210,9 @@ void read_early_config(config_fn_t cb, void *data)
+> >  
+> >  	opts.respect_includes = 1;
+> >  
+> > -	if (have_git_dir()) {
+> > -		opts.commondir = repo_get_common_dir(the_repository);
+> > -		opts.git_dir = repo_get_git_dir(the_repository);
+> > +	if (repo && repo->gitdir) {
+> > +		opts.commondir = repo_get_common_dir(repo);
+> > +		opts.git_dir = repo_get_git_dir(repo);
+> >  	/*
+> >  	 * When setup_git_directory() was not yet asked to discover the
+> >  	 * GIT_DIR, we ask discover_git_directory() to figure out whether there
 > 
-> > ## Problem description
-> >
-> > When a project has added git Notes for its commits, git by default doesn’t
-> > automatically fetch the Notes; so, the Notes aren’t automatically discoverable
-> > to contributors who are using “git log” to read the project commit logs — and
-> > especially not discoverable to new contributors, or “casual” users of the logs.
-> >
-> > A user will see the Notes only if they _already_ know what git Notes are, and
-> > know that the project uses Notes, and the user knows how to get them.
-> >
-> > But the reality is: most users do not even know what git Notes are, and don’t
-> > know how to get them if they exist. So most people end up never seeing them.
+> It doesn't really matter either way since we perform the same checks, but should we do
 > 
-> And even if they did, they wouldn't know how to use them, so not
-> much is lost here.
+>         if (repo && repo_get_git_dir(repo))
 > 
-> Quite honestly, a project that uses notes in such a way that it is
-> essential to understand/utilize the history should reexamine its use
-> of notes and try to see if they can make its commits more useful
-> without relying on notes, I would think.
+> instead of accessing the field directly?
 
-The notes could be also used to annotate existing upstream history
-without altering it.
+We in fact can't. `read_early_config()` is typically invoked with the
+global `the_repository`. That variable is always set, but its `git_dir`
+may not be populated depending on when exactly we call this function and
+whether or not we are inside a repository. With `repo_get_git_dir()`
+we'd now die in scenarios where it's unset, which we do not want.
 
-However, the problems with notes worflows make it impractical.
-
-Thanks
-
-Michal
+Patrick
