@@ -1,52 +1,51 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC83913AD32
-	for <git@vger.kernel.org>; Wed,  4 Sep 2024 22:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05512146D7F
+	for <git@vger.kernel.org>; Wed,  4 Sep 2024 22:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725488862; cv=none; b=Vpe4K+Ryi/NN1I3LNoHl1YRLv8GZ+C89xRPlBuGUyZaRIuIxZZ6g4uXnZoL3hCcxnKXf/J12BKV54cxHeJBcw7hrFpdOCQe9Wc6xGr8fkcXss74dCyvI6az1NhuKdINJt992GQuD46+lLt/mkeAL+Wpx0/H5E2DlsfekS3KYbgY=
+	t=1725489381; cv=none; b=p6Xpc/th2t3i+NdogI/ifKsBiWLK7FCoTJeHWVlA1xTShCrxmlVF+2Kt32oIyEqMfJ+k34DnfbbPEU7rsEBS4d/VSp005cOenfT7tuiq13XjkR3wbxtwMeyzNNaHibAC61w4uYw3dPgsu4AyBH8/6GnWbPSuyfi1RU+CvTRm3XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725488862; c=relaxed/simple;
-	bh=HpEMee89BgHChM1os9QhBZdOemxHRnwM2Cabar4qCDI=;
+	s=arc-20240116; t=1725489381; c=relaxed/simple;
+	bh=UX0yZfdoWpySVJY7J/jg+YcI0HqLxFo5wA1HrVGRS40=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rd5zgfWj3+r1LtYbFn/pHuNrKMIoFIOVk/HtaS3cUw9wn+F1jIaN/Kupdppw+77X3YYtUzzcacVgyIAU4lSiyAyY17EEIZK0s6HMdmIq27l6hVptv0Djnd5VTyqIMtJ5v2R+PzaJZPZ/G8JANLo86L92O0Cq3lMZXZoqHBDZxgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sINXwy+g; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=c4DywQm+Sbt44/MwawUeN1gMZhI5uiKWijdZugy9e8n4RhAdzpaNBmWjjDZbwME1hVCSulGZeMU/8uF5d8sDONifx+yAjPBLPxuBKTh1sthv6zIlRTnNrGY1LHR1aHMrVX+qc2s+4IxV2EO1Vqx/Sc9gPsCenjddLLYTGJIAnyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sp7bjW9D; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sINXwy+g"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sp7bjW9D"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D1CFB1A4D9;
-	Wed,  4 Sep 2024 18:27:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5BD01A71A;
+	Wed,  4 Sep 2024 18:36:18 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HpEMee89BgHChM1os9QhBZdOemxHRnwM2Cabar
-	4qCDI=; b=sINXwy+gy9ehBq17Bv97lFGq/q9n2ylXyVRJAVV9l0p+h3jPlEM0k3
-	+Sm6h0Zrxg6EZBeAW47dLORyRXP7an5lS/pLagnb6oSkNjUzcLrMZczNHPnsCi4s
-	2klF86zlT399EI3rlJz2mBecyVA3qKTzS1InA/+OxqA4+Yn6APoyk=
+	:content-type; s=sasl; bh=UX0yZfdoWpySVJY7J/jg+YcI0HqLxFo5wA1HrV
+	GRS40=; b=Sp7bjW9DcMar8LNJcLFiz0as1Xg7fCV44456cPpP8ImUT9j0ve9uZc
+	/GEoP3ssngUq9x78QfMtz08dEcbP00Cwpdl4lMPM7eKF4dCAOYJtdk1YzYoDFQ5v
+	pDAJTrSKVV7Xwcek42RfD2vheI/ndgYucZZjsu9utUWlw6wnWi6LA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C99E11A4D8;
-	Wed,  4 Sep 2024 18:27:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE20F1A719;
+	Wed,  4 Sep 2024 18:36:18 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D3D31A4D7;
-	Wed,  4 Sep 2024 18:27:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 505951A718;
+	Wed,  4 Sep 2024 18:36:18 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 16/22] builtin/repack: fix leaking line buffer when
- packing promisors
-In-Reply-To: <19eb9073482144d0983de1ff9529fe050b3fc6a0.1724656120.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 26 Aug 2024 09:22:24 +0200")
+Subject: Re: [PATCH 18/22] builtin/grep: fix leaking object context
+In-Reply-To: <0722cb38ea9d6b158a07da6f31ad0fe83424cb2e.1724656120.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 26 Aug 2024 09:22:29 +0200")
 References: <cover.1724656120.git.ps@pks.im>
-	<19eb9073482144d0983de1ff9529fe050b3fc6a0.1724656120.git.ps@pks.im>
-Date: Wed, 04 Sep 2024 15:27:37 -0700
-Message-ID: <xmqqikvb6ome.fsf@gitster.g>
+	<0722cb38ea9d6b158a07da6f31ad0fe83424cb2e.1724656120.git.ps@pks.im>
+Date: Wed, 04 Sep 2024 15:36:17 -0700
+Message-ID: <xmqqed5z6o7y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,37 +55,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E4B57992-6B0C-11EF-85DE-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 1A1B38FA-6B0E-11EF-B30E-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> In `repack_promisor_objects()` we read output from git-pack-objects(1)
-> line by line, using `strbuf_getline_lf()`. We never free the line
-> buffer, causing a memory leak. Plug it.
->
-> This leak is being hit in t5616, but plugging it alone is not
-> sufficient to make the whole test suite leak free.
+> Even when `get_oid_with_context()` fails it may have allocated some data
+> in tthe object context. But we do not release it in git-grep(1) when the
+
+"tthe" -> "the".
+
+> call fails, leading to a memory leak. Plug it.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/repack.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  builtin/grep.c                 | 1 +
+>  t/t6132-pathspec-exclude.sh    | 1 +
+>  t/t6135-pathspec-with-attrs.sh | 2 ++
+>  3 files changed, 4 insertions(+)
 >
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 8bb875532b4..a382754feee 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -425,9 +425,11 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
->  
->  		free(promisor_name);
->  	}
-> +
->  	fclose(out);
->  	if (finish_command(&cmd))
->  		die(_("could not finish pack-objects to repack promisor objects"));
-> +	strbuf_release(&line);
->  }
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index dfc3c3e8bd2..dda4582d646 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -1133,6 +1133,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  					 &oid, &oc)) {
+>  			if (seen_dashdash)
+>  				die(_("unable to resolve revision: %s"), arg);
+> +			object_context_release(&oc);
+>  			break;
+>  		}
 
-Obviously correct.
+OK.  This is the "oh, this is not a revision argument" codepath.  It
+is perfectly normal for get_oid_with_context() to fail here, and we
+should make sure we clear the context variable.
 
 Thanks.
