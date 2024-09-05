@@ -1,130 +1,119 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603D419D895
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 15:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2404919DF75
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 16:05:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725550881; cv=none; b=r2pkvDhj3ECd0czn461gzp1xIi4v4ctUTidGqejK8GAErSAf3Lwjx4WlDZFsP0+l4CZkDT8qAoA9EzFR7lNR/FYnl4foDN5yaRdVsrRi+1DBmTgXm5GL0KvGT3ec3zJj/so+T8EMyKxwObYYVK3HRtxelYd4Y+eThKb7Y/hhQ2I=
+	t=1725552340; cv=none; b=Uk5Cp4SO3KmIiiGaskho9bUtNsk5W1paAiIJyAOpaIG13dYp2Eko68lNb7lM2EpROtsmarixZmLY2ESzKhLG7SAFgChur7/UGfianu0WYuVyvog9xCgwQv/nVgapg7KeP8+6bYdVhd/xsrBwKOsgfsqCwUB52F4yU5s/hGyjc7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725550881; c=relaxed/simple;
-	bh=e5zZsMzVK0B2oS9o+Xgk75sa4VzMfWPqiUsO5jXwTyo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jsDQNS1sIcbkWyaHaq62Ejs1Cj5Hq5oayXwfh4FbRLArNme9DFbM72dnugXDwA42Y7RCcjDFedENud2oOYqIO6UWCET3O5+SVreGiT0Wyy+qYLf670vMxNdKIAErQLoLwayT85xiXdH0wmyo3zDigoK3OaCwQtLluV8WcWPGgpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TBJp2lZt; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725552340; c=relaxed/simple;
+	bh=WgeIbGpuZI0zG57USYmsJdg5vt5g6i+OjQ7i0GNeWhU=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=YzbyA6iD2eqQs3tH24hD1TR8HlOYoDPBKT0l5LjvC1CGzsKGQZBgnyaJWXTcpNv4P/fc06pqKL9hNO9ytHoJAhz/u617GgK2qXn8KvbvKxNHG1lxZFgi1kp2UxoZgbwqug4QaPzHW8BziIkZxrWEZoIEGMSRIR7aOL69IHlPciQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=xAt7jlpu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GVOHueFP; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TBJp2lZt"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EE2A2BDDD;
-	Thu,  5 Sep 2024 11:41:18 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=e5zZsMzVK0B2oS9o+Xgk75sa4VzMfWPqiUsO5j
-	XwTyo=; b=TBJp2lZtliZkqCM8Llvw7YX9OnEnUUHpwnpabyBvO3ydnxm3NWb8/v
-	6YonH1Pvldd2VMQBacNsY054uYs+pwpwjwXIDotf0+PlvM7CsMx4U8XFn9H7l5Pq
-	+uI2Pl33JSP87SNFCqstcEQVKga3aMteYPLpTK0scOJzvpQ+lZDxI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 36C872BDDC;
-	Thu,  5 Sep 2024 11:41:18 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99F3F2BDDB;
-	Thu,  5 Sep 2024 11:41:17 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-In-Reply-To: <20240905103736.GC2556395@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 5 Sep 2024 06:37:36 -0400")
-References: <cover.1725206584.git.me@ttaylorr.com>
-	<ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
-	<Ztdn25zfi8WHO+GS@nand.local>
-	<20240905103736.GC2556395@coredump.intra.peff.net>
-Date: Thu, 05 Sep 2024 08:41:16 -0700
-Message-ID: <xmqq34me5crn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="xAt7jlpu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GVOHueFP"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3039F114025D
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 12:05:36 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 05 Sep 2024 12:05:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1725552336; x=1725638736; bh=mf
+	rzJ+hD0CvT7FGbdC9G4xavSgOQMe0iPBoRYr+JXHQ=; b=xAt7jlpuWTDcn9/1Ic
+	S/dhp6UqIM1yNXSIXNeFCyIOuJgWRUveUuPMzZSsbHTpgLwCAtNfsYpNJNKzysaK
+	iY+KWMiccxKNYUKsj/fH/emnp2QjPLE8kjHvUx1Fooe1BjtGdOAlClFHuwjmelMM
+	CHOLXxj08hTxUDvWqMn2GGJ9bQqQUlnGoD/Lijewb21PGIgUFYqtfJ1b/4SMcWM1
+	Tadkhre8n6lgFGSD3ftGnX7LyjAyfYrIKQmeOCobSsLe8aI7hBT82caBcBY54HQ+
+	t8edpT5S+/hUihNnQUWig5Ls5OVzCzooP/BBqXRWvRSiUm4X5m+uE91NWOygQIrT
+	IMZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725552336; x=1725638736; bh=mfrzJ+hD0CvT7FGbdC9G4xavSgOQ
+	Me0iPBoRYr+JXHQ=; b=GVOHueFP17UZP4L73ViKLr4vynYevq0W1z0jZg71KKEt
+	yioNGdT8+d4+W5NSacA2T19X3z5ESZ4gPD8mRq2vlDly9GL3MlbHiFfWCIdP19Wy
+	fdxoCvs0d7fk/G4sysp0+mIwl1yOYQPw0TnhhTWIdNA6eit8J4GPGC/8+raqprdo
+	wZfPex2Rp8J4XYdpyBkkFeux/u35sSJFoabuFZAQzDIFgNd1uej/bmO0fNA79w9u
+	Ut/z3vONS5VwcIjrOortjvRQl2CQNtT+T11xqaQx+hVMk0SJ55PDo6/9Qy8qx7ym
+	suphpFmrly5ppCnvvi/+RWPxtdhKKPIuOVIZICVYQA==
+X-ME-Sender: <xms:z9bZZrihH2YSq2WbPf1XFnjXJprEWwpCLI_bRxo6LkZOfJVPk53YNQ>
+    <xme:z9bZZoBHWdTjx8OwuZnWF8k1zldN0TKSaC5SRBhYYnjrx5yW_onArnusiv3gEu9Cf
+    D12R2ngvXthe0Ky>
+X-ME-Received: <xmr:z9bZZrHJoIH6nAQoASl1i4BU-xq1bInjvK6djFEUETDrsX8C7JJBmC80gQ_fFtRfkSg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgleejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhtgfggg
+    fukfffvffosehtqhhmtdhhtdejnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhn
+    uceosghrohhokhgvsegrlhgthhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpe
+    eukeelfedtgfeludevgedvudfhhfffgeduhfduueekvddtfffhffehieefheefudenucff
+    ohhmrghinhepghhithdqshgtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegsrhhoohhkvgesrghltghhvghmihhsthhsrdhiohdp
+    nhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:z9bZZoRSuljJTCc0A4TnoYEYw56mwG73o9cR1BBlb96SCMAkVx7aTQ>
+    <xmx:z9bZZox-a_On0usA516fglVw-PbskMt4uA96gQ09jsfCdlXRCC5stw>
+    <xmx:z9bZZu5FbcqmCxntnIVH6E-TcVqq4hh6HNDt9Tiz82FiVvqZVu3Bzg>
+    <xmx:z9bZZtwrYKuLydGOveumGTKhXTHJD5QnpRI6MouLbx2TvwdNopCEdw>
+    <xmx:0NbZZlqqry1ukpQuRv1SIm-uKtrmItCyDP_HUlpf24_DtoYrd-gg1d7Z>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 5 Sep 2024 12:05:35 -0400 (EDT)
+From: Brooke Kuhlmann <brooke@alchemists.io>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4A8B7F60-6B9D-11EF-9B44-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Should Git Tag trailer formatting work?
+Message-Id: <E46F3EFF-66D1-4B29-BCF3-6FFAB2504411@alchemists.io>
+Date: Thu, 5 Sep 2024 10:05:24 -0600
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51)
 
-Jeff King <peff@peff.net> writes:
+Hello. =F0=9F=91=8B
 
-> Probably the solution is:
->
->   - renaming packfiles into place should use finalize_object_file() to
->     avoid collisions.  That happens for tmp-objdir migration already,
->     but we should do it more directly in index-pack (and maybe even
->     pack-objects). And possibly we should implement an actual
->     byte-for-byte comparison if we think we saw a collision, rather than
->     just assuming that the write was effectively a noopi (see the FIXME
->     in that function). That becomes more important if the checksum gets
->     more likely to collide accidentally (we essentially ignore the
->     possibility that sha1 would ever do so).
+With the recent release of Git 2.46.0, the ability to add trailers to =
+tags was added which is great! However, when attempting to list and =
+format trailer information, I don't see the trailer information display =
+using the following Bash code:
 
-Yes.  I somehow mistakenly thought that Taylor analized the code
-path when brian raised the "we rename over, overwriting existing
-files" and I included fixing it as one of the steps necessary to
-safely switch the tail sum to weaker and faster hash, but after
-reading the thread again, it seems that I was hallucinating X-<.
-This needs to be corrected.
+```=20
+git tag --list \
+        --color \
+        =
+--format=3D"%(color:yellow)%(refname:short)%(color:reset)|%(taggerdate:sho=
+rt)|%(color:blue)%(color:bold)%(taggername)%(color:reset)|%(subject)|%(tra=
+ilers:key=3DInsertions)" \
+        | column -s"|" -t
+```
 
->   - possibly object_creation_mode should have a more strict setting that
->     refuses to fall back to renames. Or alternatively, we should do our
->     own check for existence when falling back to a rename() in
->     finalize_object_file().
+Notice that I'm using the same syntax (`%(trailers:key=3DInsertions)`) =
+as used in the git for-each-ref =
+(https://git-scm.com/docs/git-for-each-ref#Documentation/git-for-each-ref.=
+txt-rawsize) documentation. If it helps, I also create my Git tag using =
+`git tag` and formatting my message as follows:
 
-True, too.
+```=20
+Version 0.0.0
 
->   - at some moment we will have moved pack-XYZ.pack into place, but not
->     yet the matching idx. So we'll have the old idx and the new pack. An
->     object lookup at that moment could cause us to find the object using
->     the old idx, but then get the data out of the new pack file,
->     replacing real data with the attacker's data. It's a pretty small
->     window, but probably possible with enough simultaneous reading
->     processes. Not something you'd probably want to spend $40k
->     generating a collision for, but if we used a weak enough checksum,
->     then attempts become cheap.
+An example.
 
-This reminds me why we changed the hash we use to name packfiles; we
-used to use "hash of sorted object names contained in the pack", but
-that would mean a (forced) repack of a sole pack of a fully packed
-repository can create a packfile with contents and object layout
-different from the original but with the same name, creating this
-exact race to yourself without involving any evil attacker.  We of
-course use the hash of the actual pack data stream these days, and
-that would avoid this problem. 
+Insertions: 10
+```
 
-It is funny to compare this with the reason why we switched how we
-name individual objects in a very early part in the history.  We
-used to name an object after the hash value of _compressed_ object
-header plus payload, but that obviously means different compression
-level (or improvement of the compressor implementation) would give
-different names to the same contents, and that is why we swapped the
-order to use the hash value of the object header plus payload before
-compression.  Of course, that _requires_ us to avoid overwriting an
-existing file to foil collision attack.  That brings us back to the
-topic here ;-).
+Shouldn't the formatting of my git tags pick up the "Insertions" trailer =
+key and print it? Is this a bug or am I doing something wrong?
 
-> So I think we really do need to address this to prefer local data. At
-> which point it should be safe to use a much weaker checksum. But IMHO it
-> is still worth having a "fast" SHA1. Even if the future is SHA256 repos
-> or xxHash pack trailers, older clients will still use SHA1.
-
-Yup. 100% agreed.
-
-Thanks.
+Thanks!=
