@@ -1,85 +1,85 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA119995A
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 10:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C37199E8C
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 10:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530979; cv=none; b=TzXn2rmmGiEPykyyzzt9Wg/DkqC46Gi2lLAM5XfbD3g2IZ5st2aaOGFAs73LgZ7sYMWJZ8/XD3nEqFof4pg4b2DAPpBXMTXX1i7Yk06R9+dI4Q00tJ2y2sFigI38zfiGsdOa3dzzXQ+tpzbERW39hlbSMd/hK3tNpRmvV+okh/4=
+	t=1725530981; cv=none; b=Z2n2OTY+Vhgg6v87NkFrlY50D0GEVE1B/UQkvADO3kJkIseIIrv0YKExTxTksfJsTMzmP2wGdcEBRiCXViGXkC0lWySom8NzpYdWBUuQVDplhzxFfjTRQtvB29jMBt6amUnP0DUm8udb26eLNSRWhj9ydl9QZ+Jy1iy9jzWtfVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530979; c=relaxed/simple;
-	bh=OxOPufwWt4I+Xy6TVpcs4o6LK7uvwjctX6/R0lgP/Os=;
+	s=arc-20240116; t=1725530981; c=relaxed/simple;
+	bh=7r09tD4qMGzpy8PCSDkBIgsA6FB6B9+FSmPT2/vxRtA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Awj/6KTcCDSX19vPTGgB5Fx0Fj53tfkmTu+DkvifRR6+BTVQnPWbhzqyaU1a+wKyy1z5zOiDIh9ySE32dGlPQT1m6KTvyJYl+jC6q2rKWPICUinqwZvctX62YTb42heE6mfX8Yk3UKGTdHNVkwvjd8MoqPCHPLlAyL9XN2G/Aio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lKigbZ9B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FoZLBqxQ; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=W9i/IHWpGusYF/fH6wv9gTUNzD+CkvBchYygHF7uoie9bj4bANIUUc4AELbxE5QNvBkuwqjhdFrG8oZOk+g5KuNBDbME/DNjVqK5wF7htaXhsJ98EIUve0SYHBqpzCrvojlqwrkvbqDEBc16itLrhPJUgoIbLpxaYpMvG7DwpCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yymfqb33; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UFDGGAZu; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lKigbZ9B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FoZLBqxQ"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A2F21140142;
-	Thu,  5 Sep 2024 06:09:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yymfqb33";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UFDGGAZu"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B57CE11400DB;
+	Thu,  5 Sep 2024 06:09:39 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 05 Sep 2024 06:09:37 -0400
+  by phl-compute-07.internal (MEProxy); Thu, 05 Sep 2024 06:09:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725530977; x=1725617377; bh=5b+CqJcTg4
-	wpeAtbX8NmdmGooZQyZNQpuh8d6eXETFY=; b=lKigbZ9BuxRf052bPzfOxGOwWH
-	Pec5UyhRdlRhsZhDKx2S4bqyb7GOnjYK6hEwBK/GbDEalSAu/YXWsnuSO3qbJsU4
-	rDIEa/13dprN0ZBYwsjHidcfxPu4rzFADhQ3s6DkIJOk/DFThL5krhmF3HkrK3o+
-	3h0PXSXRYF8aLqcfQN30ZElpKsJha0GN5FXIhIs8SGK9MP/8jyDrnYeqrxUvcSz0
-	g4CBQaf15KlkKE+QyNE3PizNiJOOJDd6dhnR84jRKJdNhfXGEZUyBEuagFr9aGqd
-	aeI4VtqkwWI0FNvgslnhsaJD/qU8zw2NGrZ8cyVEkCschyI2Kv/4QHTQ+FWw==
+	:subject:to:to; s=fm1; t=1725530979; x=1725617379; bh=qmmRH7YJtK
+	bQzbOt3DlvUpBeo6T0bXWs3IieHCAb4dA=; b=Yymfqb33xNRMpfLl6bLFODq9se
+	jJN/8WCA4Pl1cKLy+KJSJTNA8FZTBUKgCKjKb2dZeYNeLx20ax+sq50kkX3lVSCM
+	R02atni64mBPXjWVCvAgvXcCkeFXGHkuh7Sqkj0M2XHKnG1y6NCUGFmmmYMc/kJo
+	HOOZmgEQEuvP+/P4mxlMSz/fKks8jidkp17DMS7q3hbwUTry395cZGRhUCON6T+B
+	Xt4isRvq/mmZOq3iJicX1HpnGnieszJA3rME3DNjH+dy/JcRxMcH6FXKxFfLMuWv
+	j/Eemc9Yi9prOWupbvR/4t1ATYgz0pdn18Ce5po2/HCtQlIquwBxHyRRplBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725530977; x=1725617377; bh=5b+CqJcTg4wpeAtbX8NmdmGooZQy
-	ZNQpuh8d6eXETFY=; b=FoZLBqxQvRcgssC67QwTPU40RZaXJzJyXbqDuVdAORYN
-	OoVUIgVyUxKtcjRc9hisR9lnxjI9NBbw1UoJ43s63XbrJZQ7Mu+2vj6qTMYdBu2J
-	XLzVGTPLY46KZjZSJBNpQ0pFQcNiDksQr33UeyX7gw/6C4t2z8MXqofsX4PgrZzl
-	A3o9wTqOcZzYt8/Cm+E9/WOUsAtEGIjhlHhgaWSYwPvir55P5uRkLROEd8z+2wX8
-	jlVAqnFix8SAI15XPmV683n4KicjVp/nOHhM2uDkFT5aZSIH68CwMzhnXPgw44al
-	S+Od25kyZ1QY3nPwyZEeP4uCYezgcGrc1HmvYjKqUQ==
-X-ME-Sender: <xms:YIPZZvPlDZxzB_dFO8QlamG-jTxa6AMAse-7ooaABheTTHxoMtJfOA>
-    <xme:YIPZZp9WfewEsAaXLDegs0bxqWfumA3XLqojFDdNYnGZq_7PNq8EAYRoHiOCeT2pN
-    80i-TagdxSd4P0dUQ>
-X-ME-Received: <xmr:YIPZZuQTJQFwXKE7VuOQsrwim3BFXT9p7q-LNtc70gSC_c9SBFAUXuRQPzE3R_WS7biGlozD-_myecyGSdAIEXhflep941CpoI65atkmuhQuBZc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgvdegucetufdoteggodetrfdotf
+	fm1; t=1725530979; x=1725617379; bh=qmmRH7YJtKbQzbOt3DlvUpBeo6T0
+	bXWs3IieHCAb4dA=; b=UFDGGAZuLwmkTQvCHzSJR8zGXepNFeNp3pmBV2ADgP9b
+	1Gn+9xcCDInUhbXm8+JmhwsX1rZNrl9Rmpz1pUeAPM59aoDTK8ezeic9oLmtGa4T
+	ao7X4MZjmyXshYROrCwiOjRDgHf7W76MR99v9zJdP1mC4rRSn/uOBdH3fdL/sVgj
+	iv9gsfjHkYXsfUMOdAvq4Iq3ExCy1HC6dRQ+C/wNZsx35X2OEYbvgRPwzb+lPaQX
+	HKUbcBm3HQvE6LQtUsfSdswxeMXRjNhGa6sFmttDy7X5sJ/U04gxZ19D2QjnUdtC
+	H+WpV+hrCzYWHAfzhme6whH/qkq/K+ECAU7z4VENVw==
+X-ME-Sender: <xms:Y4PZZiwGFwJ3m36AR-4PSN0F2VNIZxe6EEBlhgyuNN_kJHsQK5XELQ>
+    <xme:Y4PZZuRE37MvR6pnac_IqRCb9XcY-0PNK2zrMMYfWvwqe1CBthxHHj0b8WS9b90vW
+    CBir0J6vyIpNkRvGA>
+X-ME-Received: <xmr:Y4PZZkWFhV9d6IQhTeqUnGjAusJbJKrntyoKuzAU1lCw76X68MNSSNjy2WMYVFiVeTA8SNca08qI8T99LHIDwXd3NegOB9Pl4J_LMRlieghRrt0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepnhgv
-    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegt
-    rghlvhhinhifrghnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:YYPZZju8ux8P9yKxF7BV2rJfTtNlr0jfjctHN-nrFvc8Zce9GRLAGw>
-    <xmx:YYPZZnfrsxpi-3bdfkBanaE4PPFF6gqe7QAuTjCisZ1msLHv-7977g>
-    <xmx:YYPZZv3HwsjYQ8EkWy1tXV2CY2HkTQxBR1P7joSMeOhriQ0gv8_u4Q>
-    <xmx:YYPZZj8GdrBmmxK6_s9nMSra5_Hq2nCQaA9mUPW0lz4A0Md5jkVqUQ>
-    <xmx:YYPZZvSt3LiOzjH7Rqmk9AZuwzbq_3QzPrxVCcGSN602YCozvlhwSdcm>
+    mhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprh
+    gtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopeht
+    ohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Y4PZZogoFZjXWDEFd2DcLok6pUR6rTf73e6XT40_wOPTB3O3Wox0Og>
+    <xmx:Y4PZZkA2EE0Z_Le6v8k7g--6eM_lUz5UtLzGBw3w5R1ZQlcEjg89OA>
+    <xmx:Y4PZZpI1i2R-BfvGSlEnkwz1Vokw8XkgZAoxjYNGAmWBPsMIinVf1g>
+    <xmx:Y4PZZrCMnFJ7wGHQcZYkdg3fGEo9_SAwF0oiZRg5SdQzGWDnsHzLfQ>
+    <xmx:Y4PZZm1OQq1DOYjroaqEVXelz4YXj_4uPpdgoyC2XxdyPDTY5uS8RFet>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Sep 2024 06:09:35 -0400 (EDT)
+ 5 Sep 2024 06:09:38 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c2aea191 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Sep 2024 10:09:24 +0000 (UTC)
-Date: Thu, 5 Sep 2024 12:09:34 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id ca18b1db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Sep 2024 10:09:27 +0000 (UTC)
+Date: Thu, 5 Sep 2024 12:09:36 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Josh Steadmon <steadmon@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Toon claes <toon@iotcl.com>
-Subject: [PATCH v2 19/22] builtin/fmt-merge-msg: fix leaking buffers
-Message-ID: <84b68affa0d8420ee907a6bb1af15c7f37b13485.1725530720.git.ps@pks.im>
+Subject: [PATCH v2 20/22] match-trees: fix leaking prefixes in `shift_tree()`
+Message-ID: <bbb8ab2022968c4f195d21d307da754f561aaa98.1725530720.git.ps@pks.im>
 References: <cover.1724656120.git.ps@pks.im>
  <cover.1725530720.git.ps@pks.im>
 Precedence: bulk
@@ -92,39 +92,64 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725530720.git.ps@pks.im>
 
-Fix leaking input and output buffers in git-fmt-merge-msg(1).
+In `shift_tree()` we allocate two empty strings that we end up
+passing to `match_trees()`. If that function finds a better match it
+will update these pointers to point to a newly allocated strings,
+freeing the old strings. We never free the final results though, neither
+the ones we have allocated ourselves, nor the one that `match_trees()`
+might've returned to us.
+
+Fix the resulting memory leaks by creating a common exit path where we
+free them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fmt-merge-msg.c  | 2 ++
- t/t6200-fmt-merge-msg.sh | 1 +
- 2 files changed, 3 insertions(+)
+ match-trees.c            | 10 +++++++---
+ t/t6409-merge-subtree.sh |  1 +
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 957786d1b3a..0b162f8fab1 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -67,6 +67,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 		return ret;
- 	write_in_full(STDOUT_FILENO, output.buf, output.len);
+diff --git a/match-trees.c b/match-trees.c
+index f17c74d483f..147b03abf18 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -294,18 +294,22 @@ void shift_tree(struct repository *r,
+ 		unsigned short mode;
  
-+	strbuf_release(&input);
-+	strbuf_release(&output);
- 	free(inpath);
- 	return 0;
+ 		if (!*del_prefix)
+-			return;
++			goto out;
+ 
+ 		if (get_tree_entry(r, hash2, del_prefix, shifted, &mode))
+ 			die("cannot find path %s in tree %s",
+ 			    del_prefix, oid_to_hex(hash2));
+-		return;
++		goto out;
+ 	}
+ 
+ 	if (!*add_prefix)
+-		return;
++		goto out;
+ 
+ 	splice_tree(hash1, add_prefix, hash2, shifted);
++
++out:
++	free(add_prefix);
++	free(del_prefix);
  }
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index 5a221f8ef1f..ac57b0e4ae3 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -8,6 +8,7 @@ test_description='fmt-merge-msg test'
+ 
+ /*
+diff --git a/t/t6409-merge-subtree.sh b/t/t6409-merge-subtree.sh
+index e9ba6f1690d..528615b981f 100755
+--- a/t/t6409-merge-subtree.sh
++++ b/t/t6409-merge-subtree.sh
+@@ -5,6 +5,7 @@ test_description='subtree merge strategy'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
  
+ test_expect_success setup '
 -- 
 2.46.0.519.g2e7b89e038.dirty
 
