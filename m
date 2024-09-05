@@ -1,133 +1,91 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A5D165F0E
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 21:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFD8188583
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 21:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725570746; cv=none; b=i8O/uMlGa7s1VPJenVc5APH5bBjIiMeU9yuY8Y+4FVProQla8La6iiFYpVV5QMUbK3Tt3qIsjzJ786HYTRO0bcQhr00fP3ZSt8mgVFL8rQ1SHqH2CapvxCMnvVB9Lhr8zORWfzhLtOgP3+YdtVg8+0t/IZw89kQOWrhUPdz30vM=
+	t=1725571009; cv=none; b=Kl4WsSGOnAIdQTFrPfcEdbPv6nKhCgI7FpifcWOui+q0W8YP9RMYkhiULr0cWsQ1wcnfoByb+O/T5KqH+AW4WaQC05p3a6Q1MYtyLewsRGBx4HhPaCliUlVGI0hCfKQkDhXIUNgibtyqGFMmdfrRhHX40sOtzDpAFICTpTCpKOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725570746; c=relaxed/simple;
-	bh=YyDiI7Ivrl+IPxMlqP00TTg5Ud3CcM84LNpEcvFzntI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q0kEtqG9V2SYEtLl+Aq7vcJZxnOmmLfIrpXwk3pcihJxwVQwadeDWSQeMRHGSxfytZ8QLfpv1OWXMclo3RzXzqBzEUedZAzimV/wkPxK9WSH4hOavF5ag+PWTTcWOVi0wlrMtWdBkbLCL6ulA23iyjH2gisgqZW+pBJYjkswNYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=VOBP1Y+m; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1725571009; c=relaxed/simple;
+	bh=amADqu+wueRW/L2achd1J1pMZcgKP9QelT7Ql0uwKPs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LU+nD1nmt8Zf0rxc97XSKohuiXVAlrEgmbC/1lnKWFwrXASUcLS6liY0xyHihj4XAScVV0Aw3+R7MQU/JRbnqT7aCjlJCp3l7t6goaG9m6lbN8LHH01qMPehfXdFxf/azFiWQ7exzaE6wjJN/rfW2na14B36rOv1H4pnkkKCzwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ht2S7OX7; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VOBP1Y+m"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1725570734;
-	bh=YyDiI7Ivrl+IPxMlqP00TTg5Ud3CcM84LNpEcvFzntI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=VOBP1Y+m4PRZoW5N5MP4xsIkWuTv29aAyRQVYJcdr/Esk/PRm1ps7T+ZKmJ52NktW
-	 QEsWoN9NoD84Esv4GSN7QHlyX24HTe0dR5j9U1K4a/KoF6OcmuWZmB6sssAUWQAaIo
-	 k53qnu+hjmJqu9073LlvyGtxl1TtMTG9YmC9n+0dq6wkXNiGubj+6V/7jki42sZzCP
-	 Dfn6m/+MfXid8u2p+4Gg5I25TYzJEz9X/OZeqY0eraiB0Ax14H2BmmTsNZ1wnDwZ+X
-	 sLy1V6FKBFM6F0SQs0Aq1hAHmBzADa27iLUNv/oF2a8x8Df12LXl2FLcq5rNuSLfAp
-	 YO6j9PNQRJxKGGppYJ6IYWmvUf7ZmUNRJbYxQ/hyAmZAnPm9DpEgFU522OhVx1Moyx
-	 Hjhmvu8BNaDyYzaNvcmrji6MHKLzrsX/TCjJugKm/qSWvaHLGDECNFrlrEeczOpOE3
-	 AVzIhqlJG6WI+HbR4RDZssp9RWPD1uoBRyioVmJ8aqvrIAStoUD
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ht2S7OX7"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EEB92FBDD;
+	Thu,  5 Sep 2024 17:16:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=amADqu+wueRW/L2achd1J1pMZcgKP9QelT7Ql0
+	uwKPs=; b=Ht2S7OX7si2UY7OPzLK9xoI3eOZp7ZEWPZvTtpAS7LCplcYhk0UC+Q
+	PoUsvw/tCziSPt0jVjsvq1Lyk9WxkHDVSrMvq2i9dpQpjgo+s9+QpaggQZzeM6xh
+	aqffSNhj+IMTU+MFJOhmj+61k9NblltIfx2NNctVwO7OlZBpy5LDk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 151B72FBDC;
+	Thu,  5 Sep 2024 17:16:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A358024455;
-	Thu,  5 Sep 2024 21:12:14 +0000 (UTC)
-Date: Thu, 5 Sep 2024 21:12:13 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: russell thamm <russell.thamm@hotmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git untracks my files
-Message-ID: <Ztoere5E8_AV9hvM@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	russell thamm <russell.thamm@hotmail.com>, git@vger.kernel.org
-References: <SI6PR01MB6833E05D68861E02407F7641FE9D2@SI6PR01MB6833.apcprd01.prod.exchangelabs.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7627D2FBDB;
+	Thu,  5 Sep 2024 17:16:46 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] sparse-checkout: use fdopen_lock_file() instead of
+ xfdopen()
+In-Reply-To: <ZtmN6sZCvDy1BGfn@pks.im> (Patrick Steinhardt's message of "Thu,
+	5 Sep 2024 12:54:42 +0200")
+References: <20240905082749.GA88220@coredump.intra.peff.net>
+	<ZtmN6sZCvDy1BGfn@pks.im>
+Date: Thu, 05 Sep 2024 14:16:45 -0700
+Message-ID: <xmqqr09xztqa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zOQlbaj7uD/kkYxb"
-Content-Disposition: inline
-In-Reply-To: <SI6PR01MB6833E05D68861E02407F7641FE9D2@SI6PR01MB6833.apcprd01.prod.exchangelabs.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 28467C50-6BCC-11EF-9E2E-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---zOQlbaj7uD/kkYxb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> +	if (commit_lock_file(&lk))
+>> +		die_errno(_("unable to write %s"), get_locked_file_path(&lk));
+>>  
+>>  	clear_pattern_list(pl);
+>
+> I think the error handling is broken. `commit_lock_file()` calls
+> `rename_tempfile()`, which deletes the temporary file even in the error
+> case. The consequence is that `lk->tempfile` will be set to the `NULL`
+> pointer. When we call `get_locked_file_path()` we then dereference it
+> unconditionally and would thus segfault.
 
-On 2024-09-05 at 04:51:56, russell thamm wrote:
-> Under Ubuntu 20.04, when my program modifies one of its log files, git ma=
-rks
-> it as untracked. Other files that my program modifies are correctly marked
-> as modified.
->=20
-> This does not happen under Windows 11 and it didn't use to happen under
-> Ubuntu.
->=20
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
->=20
-> Pulled the project, built and ran my program which modified log files.
->=20
-> What did you expect to happen? (Expected behavior)
->=20
-> I expected the log files to be marked as modified.
->=20
-> What happened instead? (Actual behavior)
->=20
-> The log files were marked as untracked.
->=20
-> What's different between what you expected and what actually happened?
->=20
-> I do not expect git to untrack my files.
->=20
-> Anything else you want to add:
->=20
-> Only happens on Ubuntu 24.04, and not on Windows 11.
+Hmph.  Would this be sufficient as a band-aid, then?
 
-I'm not sure that there's enough information for us to go on here.  Are
-you sure the file name is exactly the same, including in case and, if
-relevant, how it uses Unicode composition in the file system?  Note that
-Ubuntu, as with most Unix systems, is case sensitive, and Windows is not
-by default.
+ builtin/sparse-checkout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Can you provide us with an example shell script that can reproduce the
-problem, or a repository that we can clone and build relatively easily
-that demonstrates the problem?  If we had such a reproduction example,
-it would be easy for us to see what the difference in behaviour is
-across systems and fix it if it's a bug (or explain what's going on if
-it's not).
-
-One final note: typically log files don't belong in a repository, since
-they're artifacts from building or running the program, which tend to
-cause needless diff noise and merge conflicts.  Thus, usually we'd
-recommend that this output not even be stored in a repository at all, so
-the files should be untracked and ignored.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---zOQlbaj7uD/kkYxb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZtoerAAKCRB8DEliiIei
-gTzIAP4kgttoA6K2ReON5807pvM7TxHVg17LUtT2r1sEE+rVMQEA0d2BKx9FLusd
-W47i3vzag3a91Wv3/uGzJtMmgbvrFws=
-=zSIe
------END PGP SIGNATURE-----
-
---zOQlbaj7uD/kkYxb--
+diff --git c/builtin/sparse-checkout.c w/builtin/sparse-checkout.c
+index f1bd31b2f7..60363fd056 100644
+--- c/builtin/sparse-checkout.c
++++ w/builtin/sparse-checkout.c
+@@ -356,7 +356,7 @@ static int write_patterns_and_update(struct pattern_list *pl)
+ 		write_patterns_to_file(fp, pl);
+ 
+ 	if (commit_lock_file(&lk))
+-		die_errno(_("unable to write %s"), get_locked_file_path(&lk));
++		die_errno(_("unable to write %s"), sparse_filename);
+ 
+ 	clear_pattern_list(pl);
+ 
