@@ -1,171 +1,150 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9396E196D90
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 11:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CB3619B3C4
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 12:13:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725534323; cv=none; b=UVmEqfuRo8q8TlJvOAphaJypGqsROM1w1c7jL7Z6jWLQrdv9SX58n9t76E8ja9dhzuIp15H7rO53by8VESQA31fjDWqlk3QH0zbLoAMg1AyPq46vB0PyZujuTP/u+oF64IDeavo7Lfq4hkSiMHZ+FLBOQIMUHSZ8a3DpM2p7hBU=
+	t=1725538407; cv=none; b=kRhM4a46lLLnF4Mk2oDGkhgSy+5HFOyNE3m5W/b4E/rAXwH9rxFNwu33vJTNQsus2Ii29/ZMHW0e4tFEkv9HiquKwIZ38n8FTyIZUR8gpAZAE5XU8Uzq8sYUozb+Uk9r/xn1HTqxeGCIWis+KhKcT0+RfkepO5NaQEmeGNJ4/6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725534323; c=relaxed/simple;
-	bh=l1H8O9dbVMBraJUumrTtWWMIFz/4xG4upTOSbbM5RXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DLthGoVuvHpoTkmhEH/fOe+udZDLsNnbieaWsRHXibIYQOfCdkQ/KF/kZfP4NFd3UhiS+F6hfhTA+LSool9yp61IEgYs15klKubaQ7bv995X97o81CYVXYuPJa7Ibd8g3IdO2cdmnBXLMjjL9HbznQziiqDEUCgCfVnW+fqzEKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ejzn2MNT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LekVznhf; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1725538407; c=relaxed/simple;
+	bh=pl9bJWs4+ld3iisYMI21x0isbQ91kFO1hHPOgOSp7Ec=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=qJNErZKCdg91+PdJ+sI1e5Zjx0mYs7e5xjnuw84RY6w7aM+jIptSQaxpjaNFkiOYsjeLYeHMUWYpTbRl9Qk3vq4k8F27RaK7bX/C2dOWxGlQH4biqujSAnxouYvblajJ6u55TooeDVSHswg1UilYox1NYiHUQt1FXRjHfV+X3nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=UbOLWihs reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ejzn2MNT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LekVznhf"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BDB26138034A;
-	Thu,  5 Sep 2024 07:05:20 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 05 Sep 2024 07:05:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725534320; x=1725620720; bh=r7DzJw81X+
-	MDoiWZwmNucOhRXckAuFyYMEgypNvJISc=; b=ejzn2MNT/x9OyrKIr62/WJwYE2
-	tAIOxZg9pTBamkWqPqQs7OkdCB0frDLi49kl7sQq7YnSIZ3V7EbHcIg1rOByU6PS
-	BiH3pJAYUfKEA4rZscm7yyzfVDnQ5GIMNC1trMAFDM3T4v3lko+etlpTIWKi/mVF
-	40UgDoJqOL6HkNJoYRRh4q3bEEhVrSyAzsrWArJA3iP67T2uE1GPqQ01dWeCeoxS
-	SjGW4loOmSt8kNpwrD9h+XR0+gloPstZDO4zrOj9POgKM6zyAi9jf/177Vt8R9vb
-	qXhRZWazMLsc9LERI1Qn4UKQp/bqDxV5P33+hpfUZIMCL9MM3eClablGbaQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725534320; x=1725620720; bh=r7DzJw81X+MDoiWZwmNucOhRXckA
-	uFyYMEgypNvJISc=; b=LekVznhfG72o5gS3ZpIwGe/uk76cp9FBHre9ZvwA/AAo
-	phWVDRZ5k5ErJt+MLMq9FKUMwqGJY38QQpJBi1Epmc3fc34H+4NPPRlCgfY3bm+9
-	mI8dj8g33aBrGSPFN+4ryq7o9t1WfMB9YbOIb+u+LWydpf+lf3AH+fJNIWp+UeLN
-	z+wX2NbCxAFC22nd/e7qaQp2wwgcBWs1soB0+aqT6UZCw6z7O3+Icbb4RGynBRO2
-	7sdqctRlOT79q9XiYdsxtlTyaVsQYTOcTw07VpG9uwsJqibia3QuE9zjxxmasWgb
-	f9xXka3+PO9h3MIF67oQmsy1OH5CeXG+/D9fMuBvIA==
-X-ME-Sender: <xms:cJDZZlIog3zuciNLUUsi-oVfWnbVqoYyPj1gCfFV2sLsdKSuwBoaBA>
-    <xme:cJDZZhLzn2mlWK0zs2d_oL4gO-14RnVgr03IUxOdnSDF2zK8wydnKMdIwyUY3hcsT
-    wgQb9M4rrZsN4Cy1Q>
-X-ME-Received: <xmr:cJDZZtsCdVV_3aWYJZHfQuQaJ7WO5qiGFHdNQpcubvFh19WtaAVc8cPIOYQVB3icyTsozCC5MWgm8DYJoFZ9rP-cxdYmocLMkqFbQc_LRSpJFpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsghmfihilhhlsehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgihinhhggihinh
-    drgiigsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepsghuphhtpgigihhnghig
-    ihhnseduieefrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:cJDZZmZlKlTcVzlzG0SMGLP3W7TGBikBa_X1MSMV1aA5DkQwHMWH5A>
-    <xmx:cJDZZsaUchd5QVbB_NT9G8_LwDL_k2HaFyO1zKTGhXoHyn7QT0_NaQ>
-    <xmx:cJDZZqDY4UiloAmH9aYBb4ZP1XPz66CvK2X16YsRxj7k2ay3QYL-1A>
-    <xmx:cJDZZqaN5tYHUP72tF6HzNcs6BS7o3OJZ9qMxwU9U4VCg5Yb75dUaw>
-    <xmx:cJDZZhNGM1Rh8N9I1HCC_h1du8qYYSoeUuLq1yhIMneKMlPiLcrso5FX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Sep 2024 07:05:19 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fa34e0de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Sep 2024 11:05:06 +0000 (UTC)
-Date: Thu, 5 Sep 2024 13:05:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Xing Xin <bupt_xingxin@163.com>
-Cc: Xing Xin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Brandon Williams <bmwill@google.com>,
-	Jonathan Tan <jonathantanmy@google.com>,
-	Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: Re: [PATCH 3/4] builtin/clone.c: recognize fetch.serverOption
- configuration
-Message-ID: <ZtmQZQHnwYLNvT0F@pks.im>
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="UbOLWihs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=lbnnvVtuk92loZrkoFgyAB4uEA8sjqORWfm8SNscvLw=; b=U
+	bOLWihs5H9fnQJzR0ztyfAhhDifHQL8+MrJan4EhbAYzO4iNlQDbm55yqQcGW15G
+	NWK9IE55s5gIX+h1rN98HCUOzpS0PCdmU4yP5fnzVTWwdYqXBc6SZkBQT9KkAuBy
+	dpY3e4TAfBLB3CI1LkzMeGApzpJRy6OHl1mfnFooEg=
+Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
+ ajax-webmail-wmsvr-40-108 (Coremail) ; Thu, 5 Sep 2024 20:12:58 +0800 (CST)
+Date: Thu, 5 Sep 2024 20:12:58 +0800 (CST)
+From: "Xing Xin" <bupt_xingxin@163.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Brandon Williams" <bmwill@google.com>, 
+	"Jonathan Tan" <jonathantanmy@google.com>, 
+	"Xing Xin" <xingxin.xx@bytedance.com>
+Subject: Re:Re: Re: [PATCH 3/4] builtin/clone.c: recognize
+ fetch.serverOption configuration
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <ZtmQZQHnwYLNvT0F@pks.im>
 References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
  <7c3ebda513d872a2ab2aa0cff5887757de4cde0a.1725279236.git.gitgitgadget@gmail.com>
  <ZtbgafDQwbU9tBoq@pks.im>
  <366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
+ <ZtmQZQHnwYLNvT0F@pks.im>
+X-NTES-SC: AL_Qu2ZB/mYt0ss7iCeYOkXn0oVhe85UMW2ufsg3YReP500uiTf6AAFWmRkNErz0d23Nh6LqwOmXhFS4+NBX5NdcajMm9URdoqWDhrSD5rsISlV
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
+Message-ID: <3ce04aef.b004.191c21a2159.Coremail.bupt_xingxin@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3_+hKoNlmZTVOAA--.34702W
+X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLwNRbWVOGIMMSgAIsu
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Wed, Sep 04, 2024 at 03:49:28PM +0800, Xing Xin wrote:
-> At 2024-09-03 18:09:45, "Patrick Steinhardt" <ps@pks.im> wrote:
-> >On Mon, Sep 02, 2024 at 12:13:55PM +0000, Xing Xin via GitGitGadget wrote:
-> >> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> >> index 8e925db7e9c..105645ed685 100644
-> >> --- a/Documentation/git-clone.txt
-> >> +++ b/Documentation/git-clone.txt
-> >> @@ -149,6 +149,9 @@ objects from the source repository into a pack in the cloned repository.
-> >>  	unknown ones, is server-specific.
-> >>  	When multiple ++--server-option=++__<option>__ are given, they are all
-> >>  	sent to the other side in the order listed on the command line.
-> >> +	When no ++--server-option=++__<option>__ is given from the command
-> >> +	line, the values of configuration variable `fetch.serverOption`
-> >> +	are used instead.
-> >>  
-> >>  `-n`::
-> >>  `--no-checkout`::
-> >
-> >I'm not a 100% sure, but I don't think that `fetch.*` configs typically
-> >impact git-clone(1). So this here is a tad surprising to me.
-> >
-> >It makes me wonder whether it is actually sensible to implement this as
-> >part of the `fetch` namespace in the first place. I'm not yet quite sure
-> >where this whole series slots in, that is why one would want to set up
-> >default server options in the first place. So what I'm wondering right
-> >now is whether the server options are something that you want to apply
-> >globally for all remotes, or whether you'd rather want to set them up
-> >per remote.
-> 
-> Sorry for not explaining our use case clearly. We have several internal
-> repositories configured with numerous CI tasks, each requiring code
-> preparation (sometimes via clone, sometimes via fetch). These CI tasks
-> are ususally triggered by post-receive hook, so the concurrent tasks are
-> actually fetching the same copy of code.
-> 
-> On git server, we want to deploy a special pack-objects-hook to mitigate
-> the performance impacts caused by these CI tasks (so the packfile
-> produced by git-pack-objects can be reused).  Since not all clone/fetch
-> operations can benefit from this caching mechanism (e.g. pulls from
-> users' dev environment), we need the client to pass a special identifier
-> to inform the server whether caching support should be enabled for that
-> clone/fetch. Clearly, using server options is a good choice.
-> 
-> To achieve our design, we need to add two patch series to git:
-> 
-> 1. Support injecting server options to identify environments via
->    configuration, because adding the --server-option parameter would
->    require too many script modifications, making it difficult to deploy.
->    This is what this patch series does.
-> 2. Git server should pass the received server options as environment
->    variables (similar to push options) to the pack-objects-hook.
-
-When you talk about client, do you mean that the actual users will have
-to configure this? That sounds somewhat unmaintainable on your side from
-the surface. I guess I ain't got enough knowledge around the environment
-you operate in though, so I probably shouldn't judge.
-
-> >In the latter case I could see that it may make sense to instead make
-> >this `remote.<name>.serverOption`. This would also remove the unclean
-> 
-> I named the new configuration `fetch.serverOption` mainly to follow the
-> `push.pushOption` pattern.  Since which server options to support is
-> actually server-specific, using `remote.<name>.serverOption` is a good
-> idea for git-fetch. However, how should we design the configuration for
-> git-ls-remote or git-clone, if we wanna provide all of them with a
-> default list of server options to send?
-
-As mentioned in another reply, I think that putting this into the remote
-configuration "remote.*.serverOption" might be a better solution, as it
-also brings you the ability to set this per remote by default.
-
-Patrick
+QXQgMjAyNC0wOS0wNSAxOTowNToxNSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
+d3JvdGU6Cj5PbiBXZWQsIFNlcCAwNCwgMjAyNCBhdCAwMzo0OToyOFBNICswODAwLCBYaW5nIFhp
+biB3cm90ZToKPj4gQXQgMjAyNC0wOS0wMyAxODowOTo0NSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIg
+PHBzQHBrcy5pbT4gd3JvdGU6Cj4+ID5PbiBNb24sIFNlcCAwMiwgMjAyNCBhdCAxMjoxMzo1NVBN
+ICswMDAwLCBYaW5nIFhpbiB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+PiA+PiBkaWZmIC0tZ2l0
+IGEvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUu
+dHh0Cj4+ID4+IGluZGV4IDhlOTI1ZGI3ZTljLi4xMDU2NDVlZDY4NSAxMDA2NDQKPj4gPj4gLS0t
+IGEvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0Cj4+ID4+ICsrKyBiL0RvY3VtZW50YXRpb24v
+Z2l0LWNsb25lLnR4dAo+PiA+PiBAQCAtMTQ5LDYgKzE0OSw5IEBAIG9iamVjdHMgZnJvbSB0aGUg
+c291cmNlIHJlcG9zaXRvcnkgaW50byBhIHBhY2sgaW4gdGhlIGNsb25lZCByZXBvc2l0b3J5Lgo+
+PiA+PiAgCXVua25vd24gb25lcywgaXMgc2VydmVyLXNwZWNpZmljLgo+PiA+PiAgCVdoZW4gbXVs
+dGlwbGUgKystLXNlcnZlci1vcHRpb249KytfXzxvcHRpb24+X18gYXJlIGdpdmVuLCB0aGV5IGFy
+ZSBhbGwKPj4gPj4gIAlzZW50IHRvIHRoZSBvdGhlciBzaWRlIGluIHRoZSBvcmRlciBsaXN0ZWQg
+b24gdGhlIGNvbW1hbmQgbGluZS4KPj4gPj4gKwlXaGVuIG5vICsrLS1zZXJ2ZXItb3B0aW9uPSsr
+X188b3B0aW9uPl9fIGlzIGdpdmVuIGZyb20gdGhlIGNvbW1hbmQKPj4gPj4gKwlsaW5lLCB0aGUg
+dmFsdWVzIG9mIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgYGZldGNoLnNlcnZlck9wdGlvbmAKPj4g
+Pj4gKwlhcmUgdXNlZCBpbnN0ZWFkLgo+PiA+PiAgCj4+ID4+ICBgLW5gOjoKPj4gPj4gIGAtLW5v
+LWNoZWNrb3V0YDo6Cj4+ID4KPj4gPkknbSBub3QgYSAxMDAlIHN1cmUsIGJ1dCBJIGRvbid0IHRo
+aW5rIHRoYXQgYGZldGNoLipgIGNvbmZpZ3MgdHlwaWNhbGx5Cj4+ID5pbXBhY3QgZ2l0LWNsb25l
+KDEpLiBTbyB0aGlzIGhlcmUgaXMgYSB0YWQgc3VycHJpc2luZyB0byBtZS4KPj4gPgo+PiA+SXQg
+bWFrZXMgbWUgd29uZGVyIHdoZXRoZXIgaXQgaXMgYWN0dWFsbHkgc2Vuc2libGUgdG8gaW1wbGVt
+ZW50IHRoaXMgYXMKPj4gPnBhcnQgb2YgdGhlIGBmZXRjaGAgbmFtZXNwYWNlIGluIHRoZSBmaXJz
+dCBwbGFjZS4gSSdtIG5vdCB5ZXQgcXVpdGUgc3VyZQo+PiA+d2hlcmUgdGhpcyB3aG9sZSBzZXJp
+ZXMgc2xvdHMgaW4sIHRoYXQgaXMgd2h5IG9uZSB3b3VsZCB3YW50IHRvIHNldCB1cAo+PiA+ZGVm
+YXVsdCBzZXJ2ZXIgb3B0aW9ucyBpbiB0aGUgZmlyc3QgcGxhY2UuIFNvIHdoYXQgSSdtIHdvbmRl
+cmluZyByaWdodAo+PiA+bm93IGlzIHdoZXRoZXIgdGhlIHNlcnZlciBvcHRpb25zIGFyZSBzb21l
+dGhpbmcgdGhhdCB5b3Ugd2FudCB0byBhcHBseQo+PiA+Z2xvYmFsbHkgZm9yIGFsbCByZW1vdGVz
+LCBvciB3aGV0aGVyIHlvdSdkIHJhdGhlciB3YW50IHRvIHNldCB0aGVtIHVwCj4+ID5wZXIgcmVt
+b3RlLgo+PiAKPj4gU29ycnkgZm9yIG5vdCBleHBsYWluaW5nIG91ciB1c2UgY2FzZSBjbGVhcmx5
+LiBXZSBoYXZlIHNldmVyYWwgaW50ZXJuYWwKPj4gcmVwb3NpdG9yaWVzIGNvbmZpZ3VyZWQgd2l0
+aCBudW1lcm91cyBDSSB0YXNrcywgZWFjaCByZXF1aXJpbmcgY29kZQo+PiBwcmVwYXJhdGlvbiAo
+c29tZXRpbWVzIHZpYSBjbG9uZSwgc29tZXRpbWVzIHZpYSBmZXRjaCkuIFRoZXNlIENJIHRhc2tz
+Cj4+IGFyZSB1c3VzYWxseSB0cmlnZ2VyZWQgYnkgcG9zdC1yZWNlaXZlIGhvb2ssIHNvIHRoZSBj
+b25jdXJyZW50IHRhc2tzIGFyZQo+PiBhY3R1YWxseSBmZXRjaGluZyB0aGUgc2FtZSBjb3B5IG9m
+IGNvZGUuCj4+IAo+PiBPbiBnaXQgc2VydmVyLCB3ZSB3YW50IHRvIGRlcGxveSBhIHNwZWNpYWwg
+cGFjay1vYmplY3RzLWhvb2sgdG8gbWl0aWdhdGUKPj4gdGhlIHBlcmZvcm1hbmNlIGltcGFjdHMg
+Y2F1c2VkIGJ5IHRoZXNlIENJIHRhc2tzIChzbyB0aGUgcGFja2ZpbGUKPj4gcHJvZHVjZWQgYnkg
+Z2l0LXBhY2stb2JqZWN0cyBjYW4gYmUgcmV1c2VkKS4gIFNpbmNlIG5vdCBhbGwgY2xvbmUvZmV0
+Y2gKPj4gb3BlcmF0aW9ucyBjYW4gYmVuZWZpdCBmcm9tIHRoaXMgY2FjaGluZyBtZWNoYW5pc20g
+KGUuZy4gcHVsbHMgZnJvbQo+PiB1c2VycycgZGV2IGVudmlyb25tZW50KSwgd2UgbmVlZCB0aGUg
+Y2xpZW50IHRvIHBhc3MgYSBzcGVjaWFsIGlkZW50aWZpZXIKPj4gdG8gaW5mb3JtIHRoZSBzZXJ2
+ZXIgd2hldGhlciBjYWNoaW5nIHN1cHBvcnQgc2hvdWxkIGJlIGVuYWJsZWQgZm9yIHRoYXQKPj4g
+Y2xvbmUvZmV0Y2guIENsZWFybHksIHVzaW5nIHNlcnZlciBvcHRpb25zIGlzIGEgZ29vZCBjaG9p
+Y2UuCj4+IAo+PiBUbyBhY2hpZXZlIG91ciBkZXNpZ24sIHdlIG5lZWQgdG8gYWRkIHR3byBwYXRj
+aCBzZXJpZXMgdG8gZ2l0Ogo+PiAKPj4gMS4gU3VwcG9ydCBpbmplY3Rpbmcgc2VydmVyIG9wdGlv
+bnMgdG8gaWRlbnRpZnkgZW52aXJvbm1lbnRzIHZpYQo+PiAgICBjb25maWd1cmF0aW9uLCBiZWNh
+dXNlIGFkZGluZyB0aGUgLS1zZXJ2ZXItb3B0aW9uIHBhcmFtZXRlciB3b3VsZAo+PiAgICByZXF1
+aXJlIHRvbyBtYW55IHNjcmlwdCBtb2RpZmljYXRpb25zLCBtYWtpbmcgaXQgZGlmZmljdWx0IHRv
+IGRlcGxveS4KPj4gICAgVGhpcyBpcyB3aGF0IHRoaXMgcGF0Y2ggc2VyaWVzIGRvZXMuCj4+IDIu
+IEdpdCBzZXJ2ZXIgc2hvdWxkIHBhc3MgdGhlIHJlY2VpdmVkIHNlcnZlciBvcHRpb25zIGFzIGVu
+dmlyb25tZW50Cj4+ICAgIHZhcmlhYmxlcyAoc2ltaWxhciB0byBwdXNoIG9wdGlvbnMpIHRvIHRo
+ZSBwYWNrLW9iamVjdHMtaG9vay4KPgo+V2hlbiB5b3UgdGFsayBhYm91dCBjbGllbnQsIGRvIHlv
+dSBtZWFuIHRoYXQgdGhlIGFjdHVhbCB1c2VycyB3aWxsIGhhdmUKPnRvIGNvbmZpZ3VyZSB0aGlz
+PyBUaGF0IHNvdW5kcyBzb21ld2hhdCB1bm1haW50YWluYWJsZSBvbiB5b3VyIHNpZGUgZnJvbQo+
+dGhlIHN1cmZhY2UuIEkgZ3Vlc3MgSSBhaW4ndCBnb3QgZW5vdWdoIGtub3dsZWRnZSBhcm91bmQg
+dGhlIGVudmlyb25tZW50Cj55b3Ugb3BlcmF0ZSBpbiB0aG91Z2gsIHNvIEkgcHJvYmFibHkgc2hv
+dWxkbid0IGp1ZGdlLgoKWWVzLCB0aGF0IGlzIGluZGVlZCBvdXIgZGVzaWduIGdvYWwuIFdlIHdh
+bnQgc3BlY2lhbGx5IGNvbmZpZ3VyZWQgZ2l0CmNsaWVudHMgdG8gYmVuZWZpdCBmcm9tIGNhY2hp
+bmcgYWNjZWxlcmF0aW9uIHdoZW4gY2xvbmluZyBjb2RlLCB3aGlsZQpjbGllbnRzIHdpdGhvdXQg
+c3BlY2lhbCBjb25maWd1cmF0aW9ucyBmb2xsb3cgdGhlIHJlZ3VsYXIgbG9naWMuIFRoaXMgaXMK
+YmVjYXVzZSBjb2RlIGZldGNoaW5nIGluIENJIGVudmlyb25tZW50cyBpcyBvZnRlbiBob21vZ2Vu
+ZW91cywgbWFraW5nIGl0CndvcnRod2hpbGUgdG8gaW1wbGVtZW50IGNhY2hpbmcgbG9naWMgdG8g
+c3BlZWQgdXAgdGhlIHByb2Nlc3MgYW5kIHJlZHVjZQpzZXJ2ZXIgbG9hZC4gSW4gY29udHJhc3Qs
+IGNvZGUgZmV0Y2hpbmcgZnJvbSB1c2VycyBpcyB1c3VhbGx5IGRpdmVyc2UsCm1ha2luZyBjYWNo
+aW5nIGxlc3MgdmFsdWFibGUuCgpCeSBsaW5raW5nIHBhY2stb2JqZWN0cy1ob29rIHdpdGggc2Vy
+dmVyIG9wdGlvbnMsIHdlIGJlbGlldmUgd2UgY2FuCmVmZmVjdGl2ZWx5IGRpZmZlcmVudGlhdGUg
+YmV0d2VlbiB2YXJpb3VzIGNsb25lIGJlaGF2aW9ycy4gSW4gZmFjdCwgSQp0aGluayBhIHNpbWls
+YXIgZGVzaWduIGNhbiBhbHNvIGJlIGV4dGVuZGVkIHRvIEdpdEh1YiBBY3Rpb25zIG9yIEdpdExh
+YgpDSSB0byBzYXZlIENQVSBvbiBnaXQgc2VydmVycywgYWx0aG91Z2ggSSdtIG5vdCBzdXJlIHdo
+ZXRoZXIgYSBzaW1pbGFyCm1lY2hhbmlzbSBpcyBhbHJlYWR5IGF2YWlsYWJsZS4KCkNJIGVudmly
+b25tZW50cyBhcmUgdXN1YWxseSBwcm92aWRlZCBieSB0aGUgaW5mcmFzdHJ1Y3R1cmUgdGVhbSwg
+bWFraW5nIHRoaXMKc29sdXRpb24gZWFzaWVyIHRvIG1haW50YWluLCBhbmQgd2UgZG8gbm90IGV4
+cGVjdCBhbnkgY2hhbmdlcyBvbiByZWFsIHVzZXJzLgoKPj4gPkluIHRoZSBsYXR0ZXIgY2FzZSBJ
+IGNvdWxkIHNlZSB0aGF0IGl0IG1heSBtYWtlIHNlbnNlIHRvIGluc3RlYWQgbWFrZQo+PiA+dGhp
+cyBgcmVtb3RlLjxuYW1lPi5zZXJ2ZXJPcHRpb25gLiBUaGlzIHdvdWxkIGFsc28gcmVtb3ZlIHRo
+ZSB1bmNsZWFuCj4+IAo+PiBJIG5hbWVkIHRoZSBuZXcgY29uZmlndXJhdGlvbiBgZmV0Y2guc2Vy
+dmVyT3B0aW9uYCBtYWlubHkgdG8gZm9sbG93IHRoZQo+PiBgcHVzaC5wdXNoT3B0aW9uYCBwYXR0
+ZXJuLiAgU2luY2Ugd2hpY2ggc2VydmVyIG9wdGlvbnMgdG8gc3VwcG9ydCBpcwo+PiBhY3R1YWxs
+eSBzZXJ2ZXItc3BlY2lmaWMsIHVzaW5nIGByZW1vdGUuPG5hbWU+LnNlcnZlck9wdGlvbmAgaXMg
+YSBnb29kCj4+IGlkZWEgZm9yIGdpdC1mZXRjaC4gSG93ZXZlciwgaG93IHNob3VsZCB3ZSBkZXNp
+Z24gdGhlIGNvbmZpZ3VyYXRpb24gZm9yCj4+IGdpdC1scy1yZW1vdGUgb3IgZ2l0LWNsb25lLCBp
+ZiB3ZSB3YW5uYSBwcm92aWRlIGFsbCBvZiB0aGVtIHdpdGggYQo+PiBkZWZhdWx0IGxpc3Qgb2Yg
+c2VydmVyIG9wdGlvbnMgdG8gc2VuZD8KPgo+QXMgbWVudGlvbmVkIGluIGFub3RoZXIgcmVwbHks
+IEkgdGhpbmsgdGhhdCBwdXR0aW5nIHRoaXMgaW50byB0aGUgcmVtb3RlCj5jb25maWd1cmF0aW9u
+ICJyZW1vdGUuKi5zZXJ2ZXJPcHRpb24iIG1pZ2h0IGJlIGEgYmV0dGVyIHNvbHV0aW9uLCBhcyBp
+dAo+YWxzbyBicmluZ3MgeW91IHRoZSBhYmlsaXR5IHRvIHNldCB0aGlzIHBlciByZW1vdGUgYnkg
+ZGVmYXVsdC4KCkkgYWdyZWUgdGhhdCB1c2luZyAicmVtb3RlLiouc2VydmVyT3B0aW9uIiBpcyBi
+ZXR0ZXIuIEluIGZhY3QsIEkgYWxzbwp0aGluayAicHVzaC5wdXNoT3B0aW9uIiB3b3VsZCBiZSBi
+ZXR0ZXIgYXMgInJlbW90ZS4qLnB1c2hPcHRpb24iLiBXaGF0IEknbQpjb250ZW1wbGF0aW5nIGlz
+IHdoZXRoZXIgd2UgbmVlZCB0byBhZGQgYSBjb25maWd1cmF0aW9uIGZvciBhIGRlZmF1bHQKbGlz
+dCBvZiBzZXJ2ZXIgb3B0aW9ucywgc28gdGhhdCB3aGVuICJyZW1vdGUub3JpZ2luLnNlcnZlck9w
+dGlvbiIgaXMgbm90CnByZXNlbnQsIHdlIGNhbiBmYWxsIGJhY2sgdG8gdXNlIHRoYXQgYXMgZGVm
+YXVsdC4KCgpYaW5nIFhpbgoK
