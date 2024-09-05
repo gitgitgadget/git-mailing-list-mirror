@@ -1,53 +1,53 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E921990A7
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 10:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3C199246
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 10:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725530963; cv=none; b=soyBUAUFJn8bb3T/M9YAH5gt7WqVxb7DLYLhdGpyskO8gxg7vKI0Bnoki3WG/DXWQweUDvA8onaZhrWjLdmvsoHGcwBIDH7ga0qpeCs+8kcXf61lum5pkERhiq0yUF9imMs6ieEwmM6VUqrFHvX1DqfCgz751GNXdGPr3m4lNUE=
+	t=1725530965; cv=none; b=EWsYdYVgILR/X70AYpMya8kF43ScUtLnK7X4UYdOkJdJGhofrAdZlYB606IAHfywEPCo5kwhQZhn/vLbXQrPJ6OTFVRix0ardijKx6RmXdeWqiU8TxOjm6Ri1EJGDIgM+gsKPQnrLrvFbZj17YO+Kkmur4yy1lStnSFnwT59Nfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725530963; c=relaxed/simple;
-	bh=FylzJ6t7N4oPQTYzCUApyYbHyDs6GgLd9fem4CdZN4Q=;
+	s=arc-20240116; t=1725530965; c=relaxed/simple;
+	bh=eraQUAUR48ZkU20xsJ++2AoC1B+6Eus536H6aVawGB0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fwTSzmjjdQBUoPL4IYzGesnULJGXGHj9GWQO5xHi4wYsVzU99WlVDHyLptxWxBI/qPsAm6AaOpyhpFLbB0vzky9pMOMESiae7K8P6zRSOYgnQxTSv6+38ev30A2RS3sHARNJ6oor6G9cPl/740oz+EDM7WTtzXvEeM+4weLOiLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I2i932pK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q+LOqQHg; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=MmPinsyUsHc5cK5G1Vqn5s8u8/06m41sEGfuTh6rqmRIQbC7rdhSqh6cFPYR142ai9zHCPuupElB63pIyXKNBlHvwsIp7FYs+L9kRZs8SD+4Gllq714YOCC6tW2JaJHQZEWHdntoat7+lnojk1j26GpuN2GrRo/JG2mtv9O3Jf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KT4AhIL1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z1kypia7; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I2i932pK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q+LOqQHg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KT4AhIL1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z1kypia7"
 Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 34CDF11400DB;
-	Thu,  5 Sep 2024 06:09:21 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CD81A11400DB;
+	Thu,  5 Sep 2024 06:09:23 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 05 Sep 2024 06:09:21 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 05 Sep 2024 06:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725530961; x=1725617361; bh=NTxjXGNx1/
-	57StEdxRaEzgkrVxehsxakc1i8DSCcFSE=; b=I2i932pKcPci3X7OrFRqKy9mp7
-	kttpSeQEdh3mjp1ozkDxqTIgjDfaLs1oBtBdGf5VD20NtTAcB6Z2Hl4z/8zKqDE2
-	faELN8xbiL6YVwZ3qLPS3q/EuCJTFV/BvNgE5Z6fOpkpg0CWdZw4mA6PjgGoop3X
-	vH3pmcbq7u24f21OXDlXXvvV9dnRbBjxM6JuitDT1+KZ9mSmudnO1gKC8A8PJ5Yz
-	1nmKAjTBVB4IN2yNhotdkk5BTjwun8MzEl1+YjVC1SCzDO/AyIxE34ZIarYSsz4c
-	y0VAh7igJopkd+9vjPF5I2mqKtEZsf0ShzwU1fkVasMcxA/P8veqcZkPU7Hg==
+	:subject:to:to; s=fm1; t=1725530963; x=1725617363; bh=XFShJbJ5du
+	UoNmgFcv7Z3cbPKeHX+PtCL0kcsHu+ujE=; b=KT4AhIL1tkzSJoBrxF6tBjymZW
+	dbP+j05VMPJmQQ1iUCc1BVOgQGyqYGuJMmZmZcRs1dyuO1aPazV8RbOyMP3zJQJt
+	JMwJSNTQfOaUJcJb2syaCB+0rPdEXk46Kb0q+DR3Mw7Z4sqET3FV+jHtfzvgKOAW
+	Sz2yydxl0FF2tF2qfJW8bYmYQ5zjQxVWF0rTjLXv16poggjGmOcpfh61pUxkMVOL
+	EKSeT/RcNGP0IztiVgnqyICU5mLH6XlE2HCgz2ppSbCovyZ8ULYaOx+H00aPitGt
+	8uDrt97F1V3FC28gg5kHb4HvFeH/a331S2NUO3R1+oNLn0tyOBmqi70VHJ/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725530961; x=1725617361; bh=NTxjXGNx1/57StEdxRaEzgkrVxeh
-	sxakc1i8DSCcFSE=; b=Q+LOqQHg759lMXNbIfaHmtbE1JlmINQXJXaoSxKIjn6t
-	iQjFhW4b7yfuMFSD1goKQ4xiK2hoyXVUgOkYTyXnN+lCTUK3NB4OXJVodNz0aj5v
-	GU21+RTgoEaKzcNBUM4P54sP28EX/LHqXgyFPx8L20JEoFID0bvTJldoQCIMe6P6
-	F38MMfSGWafi5GkACY2SSVjE0AngJq6kW4TGYm9RrN9uc8VpZhkzSRnKRhqafPnS
-	9EbMmyPR2i6EbCcW4xZy+a2K3mMv2Qn15+joWK7SaIw9EHQ48Wl0p/xWDcgA7XCw
-	+2LEbmx/YbXDg7r2Js/rtjlfX8aEev+g1pcrCHWmSg==
-X-ME-Sender: <xms:UYPZZnXmsJvDL8SIb9Frw7lCr_pWdTrzB1ITe69fC-f5C_OTIqpMmA>
-    <xme:UYPZZvlZMWvvMWOYadEWPptekop69JhJbCfK0268yVcq85ypTmDpGi_ADOr3jTDEU
-    kwNCwP2c2Ccb802zA>
-X-ME-Received: <xmr:UYPZZjZdxdF6E26Z40UwEmZW-ra4ovZ1zarsAA89-PTPu-6OfukDVZYmNw6hxqY2ADiSo9bHoxut-dt9nSVvb77WqYgBa9MOhiU7CP0YDzcBgQ4>
+	fm1; t=1725530963; x=1725617363; bh=XFShJbJ5duUoNmgFcv7Z3cbPKeHX
+	+PtCL0kcsHu+ujE=; b=Z1kypia7NK1AYGRVz7MKzUDmBNgs+fi9P7HX7MM5gDEe
+	9IlNKjdrAjSIl6CRoBN1krtfe90vkRW9n7bgyoCSnmiEiPF3L/N1ejD+dEyAfJXh
+	+e3nMcUHpFwhpiHkE37pjNc6aiK3VAkgyZrr84RlTn42776eKslclv3DOrDd3wO1
+	1f2ChXHgDVB4klMV4Umf+G03ltPSyjHZpYg3WQzeTqQIHRey8pXsudESatAAqt5g
+	9Ywb0SEU0tAvGbG75C6ccvh4G749apQqM4MZ9rXZy/Jy5k5aIUtaxSK/idtX4X/6
+	avg9tXmdsXKXV53NICEN3wdWJDO0OpjOirJ6cDiyQg==
+X-ME-Sender: <xms:U4PZZpZmogkKJadX6OU6fkUvEK_P1s3mm2U_hSpZAJR0U4ImqGsP1Q>
+    <xme:U4PZZgaOjvCe7ewJW6d6RYDdn4RUQJPiIMLn4oWBhPQFfmacRAV7V3wJVwl_a4wq3
+    ddnUjcOmCyyoKio2w>
+X-ME-Received: <xmr:U4PZZr80NJkhOpXW-OLCRQwYUAL9Vn4nZihZbCXCN3KsdzhGagovQxKbXTUf2CpSI4t6n7sTMtAVEUT9TdN-gc2KpSetrJqqqyMODf8D4qVX5ZU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgvdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,31 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgvdegucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprh
-    gtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglh
-    gvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:UYPZZiWgcqm0UY1VKXlc_w8x6MANDvJROs3nBr5NAqyxHsSWD2PzUQ>
-    <xmx:UYPZZhkyDxYzQWT2ZbvogR6g1ktZVpxT9LyzWD90sVV5QZAGG_HdAw>
-    <xmx:UYPZZvdmbWlKm4YiVw_DGnDKGTH7lSK1RtUWHsV8zT4t6PG7EKyZVA>
-    <xmx:UYPZZrFSaL5kfscqhkJ_HOH6Ne6i-3bH-zNxanaGR3GwnbUcJR9e8w>
-    <xmx:UYPZZvbSKOIQcJKPs9aiAbxVrYC25tdQGGfAB8gG4d2SRicbwh0C_QCO>
+    mhhtphhouhhtpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepnhgvfihrvghn
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+    dprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:U4PZZnp7lak9nGeLbtzRbYVqOBVRNy68xCrZ8___UX77GaudlJLY-w>
+    <xmx:U4PZZkrzUF6WeuSudXVKJdZn6zK1uxO21hynHq72ahJrffcq1IpOTg>
+    <xmx:U4PZZtSuKth3uJ6ZmAZ7mpZiFaxgRH-VrvkCtsb2zPt3BSc3EAtlEw>
+    <xmx:U4PZZsp5TNmyT8J8VwjPzJny3D9s-uLm2neY7i2cKW1eaw0yePOsEQ>
+    <xmx:U4PZZledbh5sVkjUZknwmU0_1cIQDmtdJyWdoSgxQy_OuGBk9pGCIM3Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Sep 2024 06:09:19 -0400 (EDT)
+ 5 Sep 2024 06:09:22 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c5f610f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Sep 2024 10:09:08 +0000 (UTC)
-Date: Thu, 5 Sep 2024 12:09:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d57d9d9b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Sep 2024 10:09:10 +0000 (UTC)
+Date: Thu, 5 Sep 2024 12:09:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Josh Steadmon <steadmon@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Toon claes <toon@iotcl.com>
-Subject: [PATCH v2 14/22] shallow: fix leaking members of `struct
- shallow_info`
-Message-ID: <d3996c92d801dcd0bae463e04d4197b4d619482e.1725530720.git.ps@pks.im>
+Subject: [PATCH v2 15/22] negotiator/skipping: fix leaking commit entries
+Message-ID: <66ed1151449aad1d39d0d6fc10844e7938ea9209.1725530720.git.ps@pks.im>
 References: <cover.1724656120.git.ps@pks.im>
  <cover.1725530720.git.ps@pks.im>
 Precedence: bulk
@@ -93,47 +92,46 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725530720.git.ps@pks.im>
 
-We do not free several struct members in `clear_shallow_info()`. Fix
-this to plug the resulting leaks.
+When releasing the skipping negotiator we free its priority queue, but
+not the contained entries. Fix this to plug a memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- shallow.c               | 9 +++++++++
- t/t5538-push-shallow.sh | 1 +
- 2 files changed, 10 insertions(+)
+ negotiator/skipping.c                | 7 +++++--
+ t/t5552-skipping-fetch-negotiator.sh | 2 ++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/shallow.c b/shallow.c
-index 7e0ee96ead9..dcebc263d70 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -489,6 +489,15 @@ void prepare_shallow_info(struct shallow_info *info, struct oid_array *sa)
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index f65d47858b4..b738fe4faef 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -247,8 +247,11 @@ static int ack(struct fetch_negotiator *n, struct commit *c)
  
- void clear_shallow_info(struct shallow_info *info)
+ static void release(struct fetch_negotiator *n)
  {
-+	if (info->used_shallow) {
-+		for (size_t i = 0; i < info->shallow->nr; i++)
-+			free(info->used_shallow[i]);
-+		free(info->used_shallow);
-+	}
-+
-+	free(info->need_reachability_test);
-+	free(info->reachable);
-+	free(info->shallow_ref);
- 	free(info->ours);
- 	free(info->theirs);
+-	clear_prio_queue(&((struct data *)n->data)->rev_list);
+-	FREE_AND_NULL(n->data);
++	struct data *data = n->data;
++	for (int i = 0; i < data->rev_list.nr; i++)
++		free(data->rev_list.array[i].data);
++	clear_prio_queue(&data->rev_list);
++	FREE_AND_NULL(data);
  }
-diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
-index e91fcc173e8..6adc3a20a45 100755
---- a/t/t5538-push-shallow.sh
-+++ b/t/t5538-push-shallow.sh
-@@ -5,6 +5,7 @@ test_description='push from/to a shallow clone'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
+ void skipping_negotiator_init(struct fetch_negotiator *negotiator)
+diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
+index b55a9f65e6b..4f2e5ae8dfa 100755
+--- a/t/t5552-skipping-fetch-negotiator.sh
++++ b/t/t5552-skipping-fetch-negotiator.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test skipping fetch negotiator'
++
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- commit() {
+ test_expect_success 'fetch.negotiationalgorithm config' '
 -- 
 2.46.0.519.g2e7b89e038.dirty
 
