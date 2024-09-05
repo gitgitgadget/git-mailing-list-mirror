@@ -1,120 +1,308 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5792188A1F
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 08:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D615E194C92
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 08:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725525847; cv=none; b=BwvDv/+8DwlQneOJlpepNqMDsU73ejAZYz+BPCHnO129OBGEHjUkU/0OTUnnqY9UeqlacHWuld8LDOZFITV3w7CiObPP0ynxMK6Amta6kJK2PypKoRMzwermZYprZ9MXwn7dwR7a7bMYt2MAMoIg2WUAjCI7AeXVNyJQj6j1pvw=
+	t=1725526313; cv=none; b=DMtYxAAfQ3oa85jAIq0RSTuMUo80VMhz3qUcDpx5Auq+VBV+z9lA+/+YupxhNmbWcKCtxkrgwq8zcn31CzAbYXtsZnq4iYT2VHJdQRWVQWlh1vqa3P189N7X2R90MtEvMdDHEX2hfZm0L/moGnG68oT9G3V3SzvyiVfKjns2LCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725525847; c=relaxed/simple;
-	bh=iMo125JqDHb0Sxx4F5rvr7u/xuqE6NRVF0bV2VqKvjE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ed3uQMed2ozp0tgVrFWaLksmaM4/QirKJCohy/5XtJjya36yy2M5QwgrG0ihJYvWo6C8sIkACp5tHzdUeoJmbGngJirw6zBesnzwJzeB0ETW/q0sQw3K9aPCmrYXX5hbFFr+02XdTyHgy5eVIjJd84Cvc+NVg+ZbG5Td5+KPU5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJwmrrGu; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJwmrrGu"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-277ce4bd723so290922fac.1
-        for <git@vger.kernel.org>; Thu, 05 Sep 2024 01:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725525845; x=1726130645; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iMo125JqDHb0Sxx4F5rvr7u/xuqE6NRVF0bV2VqKvjE=;
-        b=KJwmrrGuCUtXbzPVLkJLz0AIsvw0iUGL4QgZzMcod/I3JxnM/JLzYaqLsW67goRhqg
-         p7ugr+MJ5D+lREa8fKS5/CydXf2Bv4rM0i6RZWJhqCiLAccwj9tT9UJLCXT3I04oVGgq
-         IDka4oriOTHdFzqqrLPwiQjjxRo2Syleb1/4p7i7Pkyri6FXF5APi/LFBB4/PdVcY2tD
-         lqftb6p2gNtD4V0oeVmi/1NN0203WDbM6Qr2hpKcB+MWh04aUl+sGGVCQJh2fD2Uqgrn
-         uwzHvA+PJg3pBikF28gZYtXSVF1WqLKMjRBsz6lmtAYwVpduSa7KEnTIwN9jIOj2TDI2
-         obUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725525845; x=1726130645;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iMo125JqDHb0Sxx4F5rvr7u/xuqE6NRVF0bV2VqKvjE=;
-        b=FDyfSpPrZ8JnhE8H+heYCAsxLO6EutP8/2JMY8NlsiZU/oByExnCmpK8TXoHEJuNVt
-         zUceZbN2PD5x7g7CUFvfRxAT/M9vjGihE+qYgqBY3QGE8opKBFDyGO1Ks3/kCPhYzbOG
-         SmziZFI6QPlP6R0X6jwmDjP2sUUjNoRJFc30S17fEfJ5costRUbhf4W2U3CBdgl8EX5g
-         9R0+0I7AHPWSnWvMmcvy9nEBBLtEeiCKpSfGp6E4XUVLuPUaM7SDxqxM7Rou3nxgTpW9
-         YXj7Tnw2g9GMsqEXcppTztIKl9+K5TzpOy1VXqJc2+xo1/8SH+ZmXXrdcZZ78BULFCug
-         fQ7g==
-X-Gm-Message-State: AOJu0YwOy7xvlwCay1Uo3HvAShb3iMnApVyzZM3mNkE+yw6RbTk3nILm
-	rf8TeE+AMtIx4aVfbFbhHMdOfBNDpSdVS9ZVjHlMnoWvQsmGadnNChxhJbYPCVDZptjp1nbWE9z
-	Qwna8zmymRvE3XR+wcjJvmyQDuBeuIK0I
-X-Google-Smtp-Source: AGHT+IGlHTamji2ki/T6RG3LFeSWW/d0iyfzxn517egdtQjfgv5Uu56XTUB8SCH4+E1jNMdOHWk6e0/jDKkrOaT/tqk=
-X-Received: by 2002:a05:6870:611f:b0:278:2340:a944 with SMTP id
- 586e51a60fabf-27b4a11ef12mr2050466fac.15.1725525844757; Thu, 05 Sep 2024
- 01:44:04 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Sep 2024 04:44:03 -0400
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZtgfIPOZO1p4_ExF@pks.im>
-References: <cover.1725280479.git.ps@pks.im> <9a63abfe3b812a32d69c7393004bea4f88971559.1725280479.git.ps@pks.im>
- <CAOLa=ZRGvU4LvX9kjvF3dJCTvKR6CC1CwPTp515c3Wt5M8a5vA@mail.gmail.com> <ZtgfIPOZO1p4_ExF@pks.im>
+	s=arc-20240116; t=1725526313; c=relaxed/simple;
+	bh=g6JWnAmqEi5IspBlA9QKi8piq+IpFB2d96ejJqwae8k=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Em5OBdR4PewsWbUPApJTpq8a2Jjk7a8mELaA7fZrq6GxTXO41AmBFksUlzK/OKrdpZUCTonpmDqY4N0Yjg/YHOSUvbAriZpqDJDXEWYpw0p8uN5tL0QiF+Z+unhAgckT/aICLASGUwRx5vlH9trKLFDAxGt1rw7N+SX0iJ5GYm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 5765 invoked by uid 109); 5 Sep 2024 08:51:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Sep 2024 08:51:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7069 invoked by uid 111); 5 Sep 2024 08:51:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Sep 2024 04:51:51 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Sep 2024 04:51:49 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Subject: [PATCH] drop trailing newline from warning/error/die messages
+Message-ID: <20240905085149.GA2340826@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 5 Sep 2024 04:44:03 -0400
-Message-ID: <CAOLa=ZRQW0sUXEVSs8weK-jke7a2rUmG=Bw5q4yZvtFP4wvQKw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] refs/files: use heuristic to decide whether to repack
- with `--auto`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000072b4b06215b4b1c"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
---000000000000072b4b06215b4b1c
-Content-Type: text/plain; charset="UTF-8"
+Our error reporting routines append a trailing newline, and the strings
+we pass to them should not include them (otherwise we get an extra blank
+line after the message).
 
-Patrick Steinhardt <ps@pks.im> writes:
+These cases were all found by looking at the results of:
 
-> On Tue, Sep 03, 2024 at 02:00:16AM -0700, karthik nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > The `--auto` flag for git-pack-refs(1) allows the ref backend to decide
->> > whether or not a repack is in order. This switch has been introduced
->> > mostly with the "reftable" backend in mind, which already knows to
->> > auto-compact its tables during normal operations. When the flag is set,
->> > then it will use the same auto-compaction mechanism and thus end up
->> > doing nothing in most cases.
->> >
->> > The "files" backend does not have any such heuristic yet and instead
->>
->> Nit: s/instead/will instead/
->>
->> > packs any loose references unconditionally. So we rewrite the complete
->> > "packed-refs" file even if there's only a single loose reference to be
->> > packed.
->
-> Revisiting this: isn't the current version of this sentence correct?
-> Replacing it with "will instead" certainly makes it incorrect without
-> also changing "packs" to "pack".
->
-> Patrick
+  git grep -P '[^_](error|error_errno|warning|die|die_errno)\(.*\\n"[,)]' '*.c'
 
-You're right, I did missread.
+Note that we _do_ sometimes include a newline in the middle of such
+messages, to create multiline output (hence our grep matching "," or ")"
+after we see the newline, so we know we're at the end of the string).
 
---000000000000072b4b06215b4b1c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d5e79c67e8aeecce_0.1
+It's possible that one or more of these cases could intentionally be
+including a blank line at the end, but having looked at them all
+manually, I think these are all just mistakes.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iWmIwOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNzdHQy93S1NXb1AvRGVzK3pEc091d3F5dGU2Q3kwZwo2cHlDTmd3aWtG
-bjNXYUhWZDBCdkw1T3hRNzlEMTFYMG5PT096Y1dCQ2NCbVh1ZkRUZ0svQzJGdG5NLzN4eFRzCmsz
-LzEwemlKUGdsQlJVbkd4M2tENUhUR1cvMWJEckZtS3Y4dUZnSGMrMmNldVhsV05FNEpjVS80SHBY
-aC9mVlcKRXgvODM3enZ6OXlhVUE5UkRjWWFRaUk1aHRnTGRSYXZCQ05nbTBhSFZORytqOXJHOHc1
-VXkzdlpoVlNPRzFBQQpsT3BmN3I2QkU4Rm9QZUZTYUpxM2pIVElKNjhEdDlqYUNuRmpOMmUxZ0RC
-dFBPQU5yM0tHeGlqZWcwcjRRSTY2CmtxQ2lyTk1ZV3psajZ1WEQyamEzejFzbXdvTi9JYUpUd3ky
-LytsamdCRS9oV1I0MCtWeVdnZ2srczJkZE4wNmoKUk15VThTSmVaYU9DcHh5WUxiYVB2RG5lT2xB
-d2FtSGZCZzd1RVFvb0NCLzhYTEJzVGFpY2N5ald6dlIzelc1Lwp5a1RGT29kODFvc1ZZeFdxTGRi
-aGo3QVdKaWVzWEk2dW5WZ0crbEtTeVZrQWFxYXJxWFpiNnVacjhKaWxWTm1KClpKZ1dzMzEvUkUz
-clNTZ3dNUUplNUM1TkZmOWZlMVp3QUV3czI4dz0KPVYrZFoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000072b4b06215b4b1c--
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I just happened to notice one of these, so I grepped for more.
+
+ builtin/bisect.c            |  4 ++--
+ builtin/fetch.c             |  4 ++--
+ builtin/stash.c             |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ fetch-pack.c                |  2 +-
+ loose.c                     |  4 ++--
+ negotiator/skipping.c       |  2 +-
+ send-pack.c                 |  2 +-
+ serve.c                     |  2 +-
+ t/helper/test-path-utils.c  |  6 +++---
+ t/helper/test-progress.c    | 10 +++++-----
+ t/helper/test-reach.c       |  4 ++--
+ 12 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 453a6cccd7..c8aa92b19d 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -583,7 +583,7 @@ static int prepare_revs(struct bisect_terms *terms, struct rev_info *revs)
+ 	refs_for_each_glob_ref_in(get_main_ref_store(the_repository),
+ 				  add_bisect_ref, good, "refs/bisect/", &cb);
+ 	if (prepare_revision_walk(revs))
+-		res = error(_("revision walk setup failed\n"));
++		res = error(_("revision walk setup failed"));
+ 
+ 	free(good);
+ 	free(bad);
+@@ -1108,7 +1108,7 @@ static enum bisect_error bisect_skip(struct bisect_terms *terms, int argc,
+ 			setup_revisions(2, argv + i - 1, &revs, NULL);
+ 
+ 			if (prepare_revision_walk(&revs))
+-				die(_("revision walk setup failed\n"));
++				die(_("revision walk setup failed"));
+ 			while ((commit = get_revision(&revs)) != NULL)
+ 				strvec_push(&argv_state,
+ 						oid_to_hex(&commit->object.oid));
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b2b5aee5bf..55f97134aa 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1161,7 +1161,7 @@ static int store_updated_refs(struct display_state *display_state,
+ 		opt.exclude_hidden_refs_section = "fetch";
+ 		rm = ref_map;
+ 		if (check_connected(iterate_ref_map, &rm, &opt)) {
+-			rc = error(_("%s did not send all necessary objects\n"),
++			rc = error(_("%s did not send all necessary objects"),
+ 				   display_state->url);
+ 			goto abort;
+ 		}
+@@ -1458,7 +1458,7 @@ static void set_option(struct transport *transport, const char *name, const char
+ 		die(_("option \"%s\" value \"%s\" is not valid for %s"),
+ 		    name, value, transport->url);
+ 	if (r > 0)
+-		warning(_("option \"%s\" is ignored for %s\n"),
++		warning(_("option \"%s\" is ignored for %s"),
+ 			name, transport->url);
+ }
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index fcfd97972a..be842258d0 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -484,7 +484,7 @@ static void unstage_changes_unless_new(struct object_id *orig_tree)
+ 					 "         to make room.\n"),
+ 				       ce->name, new_path.buf);
+ 				if (rename(ce->name, new_path.buf))
+-					die("Failed to move %s to %s\n",
++					die("Failed to move %s to %s",
+ 					    ce->name, new_path.buf);
+ 				strbuf_release(&new_path);
+ 			}
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 85fb23dee8..a46ffd49b3 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -917,7 +917,7 @@ static void generate_submodule_summary(struct summary_cb *info,
+ 		} else {
+ 			/* for a submodule removal (mode:0000000), don't warn */
+ 			if (p->mod_dst)
+-				warning(_("unexpected mode %o\n"), p->mod_dst);
++				warning(_("unexpected mode %o"), p->mod_dst);
+ 		}
+ 	}
+ 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 58b4581ad8..983c560785 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1614,7 +1614,7 @@ static void receive_packfile_uris(struct packet_reader *reader,
+ 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
+ 		if (reader->pktlen < the_hash_algo->hexsz ||
+ 		    reader->line[the_hash_algo->hexsz] != ' ')
+-			die("expected '<hash> <uri>', got: %s\n", reader->line);
++			die("expected '<hash> <uri>', got: %s", reader->line);
+ 
+ 		string_list_append(uris, reader->line);
+ 	}
+diff --git a/loose.c b/loose.c
+index a8bf772172..6d6a41b7e5 100644
+--- a/loose.c
++++ b/loose.c
+@@ -162,7 +162,7 @@ int repo_write_loose_object_map(struct repository *repo)
+ errout:
+ 	rollback_lock_file(&lock);
+ 	strbuf_release(&buf);
+-	error_errno(_("failed to write loose object index %s\n"), path.buf);
++	error_errno(_("failed to write loose object index %s"), path.buf);
+ 	strbuf_release(&path);
+ 	return -1;
+ }
+@@ -197,7 +197,7 @@ static int write_one_object(struct repository *repo, const struct object_id *oid
+ 	strbuf_release(&path);
+ 	return 0;
+ errout:
+-	error_errno(_("failed to write loose object index %s\n"), path.buf);
++	error_errno(_("failed to write loose object index %s"), path.buf);
+ 	close(fd);
+ 	rollback_lock_file(&lock);
+ 	strbuf_release(&buf);
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index f65d47858b..6e61b3c5f1 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -239,7 +239,7 @@ static int ack(struct fetch_negotiator *n, struct commit *c)
+ {
+ 	int known_to_be_common = !!(c->object.flags & COMMON);
+ 	if (!(c->object.flags & SEEN))
+-		die("received ack for commit %s not sent as 'have'\n",
++		die("received ack for commit %s not sent as 'have'",
+ 		    oid_to_hex(&c->object.oid));
+ 	mark_common(n->data, c);
+ 	return known_to_be_common;
+diff --git a/send-pack.c b/send-pack.c
+index 9666b2c995..5d0c23772a 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -626,7 +626,7 @@ int send_pack(struct send_pack_args *args,
+ 				strbuf_release(&req_buf);
+ 				strbuf_release(&cap_buf);
+ 				reject_atomic_push(remote_refs, args->send_mirror);
+-				error("atomic push failed for ref %s. status: %d\n",
++				error("atomic push failed for ref %s. status: %d",
+ 				      ref->name, ref->status);
+ 				return args->porcelain ? 0 : -1;
+ 			}
+diff --git a/serve.c b/serve.c
+index 884cd84ca8..d674764a25 100644
+--- a/serve.c
++++ b/serve.c
+@@ -323,7 +323,7 @@ static int process_request(void)
+ 		die("no command requested");
+ 
+ 	if (client_hash_algo != hash_algo_by_ptr(the_repository->hash_algo))
+-		die("mismatched object format: server %s; client %s\n",
++		die("mismatched object format: server %s; client %s",
+ 		    the_repository->hash_algo->name,
+ 		    hash_algos[client_hash_algo].name);
+ 
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index bf0e23ed50..fd6e6cc4a5 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -38,7 +38,7 @@ static void normalize_argv_string(const char **var, const char *input)
+ 		*var = input;
+ 
+ 	if (*var && (**var == '<' || **var == '('))
+-		die("Bad value: %s\n", input);
++		die("Bad value: %s", input);
+ }
+ 
+ struct test_data {
+@@ -78,12 +78,12 @@ static int test_function(struct test_data *data, char *(*func)(char *input),
+ 		if (!strcmp(to, data[i].to))
+ 			continue;
+ 		if (!data[i].alternative)
+-			error("FAIL: %s(%s) => '%s' != '%s'\n",
++			error("FAIL: %s(%s) => '%s' != '%s'",
+ 				funcname, data[i].from, to, data[i].to);
+ 		else if (!strcmp(to, data[i].alternative))
+ 			continue;
+ 		else
+-			error("FAIL: %s(%s) => '%s' != '%s', '%s'\n",
++			error("FAIL: %s(%s) => '%s' != '%s', '%s'",
+ 				funcname, data[i].from, to, data[i].to,
+ 				data[i].alternative);
+ 		failed = 1;
+diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
+index 66acb6a06c..44be2645e9 100644
+--- a/t/helper/test-progress.c
++++ b/t/helper/test-progress.c
+@@ -62,32 +62,32 @@ int cmd__progress(int argc, const char **argv)
+ 			else if (*end == ' ')
+ 				title = string_list_insert(&titles, end + 1)->string;
+ 			else
+-				die("invalid input: '%s'\n", line.buf);
++				die("invalid input: '%s'", line.buf);
+ 
+ 			progress = start_progress(title, total);
+ 		} else if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
+ 			uint64_t item_count = strtoull(end, &end, 10);
+ 			if (*end != '\0')
+-				die("invalid input: '%s'\n", line.buf);
++				die("invalid input: '%s'", line.buf);
+ 			display_progress(progress, item_count);
+ 		} else if (skip_prefix(line.buf, "throughput ",
+ 				       (const char **) &end)) {
+ 			uint64_t byte_count, test_ms;
+ 
+ 			byte_count = strtoull(end, &end, 10);
+ 			if (*end != ' ')
+-				die("invalid input: '%s'\n", line.buf);
++				die("invalid input: '%s'", line.buf);
+ 			test_ms = strtoull(end + 1, &end, 10);
+ 			if (*end != '\0')
+-				die("invalid input: '%s'\n", line.buf);
++				die("invalid input: '%s'", line.buf);
+ 			progress_test_ns = test_ms * 1000 * 1000;
+ 			display_throughput(progress, byte_count);
+ 		} else if (!strcmp(line.buf, "update")) {
+ 			progress_test_force_update();
+ 		} else if (!strcmp(line.buf, "stop")) {
+ 			stop_progress(&progress);
+ 		} else {
+-			die("invalid input: '%s'\n", line.buf);
++			die("invalid input: '%s'", line.buf);
+ 		}
+ 	}
+ 	strbuf_release(&line);
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index 7314f6c0d8..995e382863 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -67,13 +67,13 @@ int cmd__reach(int ac, const char **av)
+ 		peeled = deref_tag_noverify(the_repository, orig);
+ 
+ 		if (!peeled)
+-			die("failed to load commit for input %s resulting in oid %s\n",
++			die("failed to load commit for input %s resulting in oid %s",
+ 			    buf.buf, oid_to_hex(&oid));
+ 
+ 		c = object_as_type(peeled, OBJ_COMMIT, 0);
+ 
+ 		if (!c)
+-			die("failed to load commit for input %s resulting in oid %s\n",
++			die("failed to load commit for input %s resulting in oid %s",
+ 			    buf.buf, oid_to_hex(&oid));
+ 
+ 		switch (buf.buf[0]) {
+-- 
+2.46.0.802.g13da1a47c4
