@@ -1,74 +1,59 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAE45381B
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AB11494B0
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725558674; cv=none; b=hoD+lUG33xdVMUdt2kp4+MEDGSrlOqClXPBd8C6rMEuD0VRZraVqrNxEyjmnRcb3fyCpd+UtZGNfX1HmpbapoxZFKSa740tHlzblyQ+V9lNdkOp218ozlwGaGvO83E0LlgsV0ghM+2hhqgUCqdlvWDQMnkv48jmX27K5nh1mFwY=
+	t=1725558878; cv=none; b=Q5DVku1nfPMVPY7Cfw7VZ+7Nzmld4qLY597rfVsvDqTl/kJpywzlS9VeSUyrQy8+vaV3VJfvxCjLmIqp7Lu6ZrBk1SgFOP7YIg2hC5JWa0qBn90SZeKr0oftQXDXtWr9JYHAVQ82hW6J/rk7S9qy0XGhZ6cdmAMzrNFJ9M1e+L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725558674; c=relaxed/simple;
-	bh=wQXeTfLXb8fQZJ6aNIqCRVtozL5tiNUDf8NNEEdavsg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GUAqlO/2Sts4EpwsDk0ncWzuFDmP+SXsQo2r7PPOCTpLTkQ1tmYTNxRBnqVwU6z7YE1luDwGEwhBKTerWDGgtS/ZBh30nYMgG8xtDSe+sRhUlI5iASftMLI+fi468ruXUW1SfSPru/K3EPWlXUU0pq61VYiGGoiRlfTAi4UCm0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pjw+1hLo; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725558878; c=relaxed/simple;
+	bh=Wnk5j50v4l50A9TWfQokdpQlK0BZ+jEWWtnG7dNLPA8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=moUbqKX8zmwDUBttnPS1HfpePdLfB0gMWwjX6ikVznrcmqX7qLPAIUBETv1XmWUXxdTwHnmaI6yHWHAOzNuwFpryydpDVHpRGhEANb1ta2csnkqdcL8jw98nQcobThuB48ER8OHc8RoLmcTKadlis7CHppO8h+qhyLQcjQkTEDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uj2mVuo+; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pjw+1hLo"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e05f25fb96eso1208283276.1
-        for <git@vger.kernel.org>; Thu, 05 Sep 2024 10:51:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725558672; x=1726163472; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=din/Qtm5sP0cMfcE4GRA42ABDpy5UXvm99F1YJfJdpY=;
-        b=pjw+1hLogukjFKu1RPrDFSBFIwD065dEyz/pviM3GS15BsIh7+upYHPi4LvmWxrIIu
-         IVGi0+qW02wdh+81aJfjZBEZHpsmD5FjQ0xTZH7HQSqKNfWIlJzk4Lg/3cwxCnyvNaXV
-         FBCoXEFr4fshNlSuoyvNc8AupuA1ga8IU0s/e7yRpFrZpZTkkQZ2OgpGW4G/o4Lcq3WY
-         NwiNqJkRlQaVP6XhNT3TWnWy/dhh4Y8UaW8Zd7RlLfuaubNcPoXvs9kc55N8Xvz8Yx64
-         GUSw+MvANPMnIOSzJ1kafdndRhXL3x61qbymbPJtiTGWe/pT1HdQ+NzGcCifK4YVHHoX
-         XcPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725558672; x=1726163472;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=din/Qtm5sP0cMfcE4GRA42ABDpy5UXvm99F1YJfJdpY=;
-        b=iLpPU9nW+a9xAb2TFOnSQGQ3Kc6CuPbC5P5iDftVAPuZJ7QUTBuB+BcqV7HMSXSbBc
-         EnxrLSBTAWNVWbZFhEsLUrNBl6teizZkTsK97Xc3TBMWNhO+kHhvgVKvYPsuBN/8Vy3Q
-         0AGZNoHlTWWJTYKRHWtMD6z+0LZWSA9AIZi2rh+19/Kjx2PfzIyvWhX+iORhCXejGbz5
-         xLoDxN98CllGK+/jaTex2fVX9KNVhrtVuWSHbq6BtPSo1aj7H+oKXJcxBJBuBoulmz99
-         Jy71bOqKHKIO9+1jT4Z9vAtBE0RldLmEYDBPI4Pyl51OOibVfxecSEjiYntarpP3B2gT
-         prLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU9I3ipeUZPSOWnwmShPrQWpQZanCvBAH7eQqvrOB0Da0VnYc+nQn80InWAW1PyKexf4no=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYeiNEdNFQ6oeWfgNw3lFzT9ugW/SBNd8FXwTBBQ539Yz+Dj/B
-	GLkjO5s8QQ5MF1IFI9RJ/Qfv3uTzh/XC3fuFgMv8CrHFAobH78NmSj+8B2pYaAc=
-X-Google-Smtp-Source: AGHT+IG3hqJEht2MgQ4awUBqBOBG0Kkzi407mC+3k9mj5kDuxh/7/lEjt3RC/803WSdDajUB2eWDvw==
-X-Received: by 2002:a05:6902:1895:b0:e0b:bfb6:ee86 with SMTP id 3f1490d57ef6-e1d348a2a3emr33594276.26.1725558672140;
-        Thu, 05 Sep 2024 10:51:12 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1ce191f839sm1760884276.31.2024.09.05.10.51.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 10:51:11 -0700 (PDT)
-Date: Thu, 5 Sep 2024 13:51:10 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-Message-ID: <ZtnvjlW3DotdK/lB@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
- <Ztdn25zfi8WHO+GS@nand.local>
- <20240905103736.GC2556395@coredump.intra.peff.net>
- <xmqq34me5crn.fsf@gitster.g>
- <ZtnbFXL7W5DvW8UN@nand.local>
- <xmqq34me3uyz.fsf@gitster.g>
- <ZtnkovOqrJNxUtez@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uj2mVuo+"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 886D326B81;
+	Thu,  5 Sep 2024 13:54:35 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Wnk5j50v4l50
+	A9TWfQokdpQlK0BZ+jEWWtnG7dNLPA8=; b=uj2mVuo+ZWDVxfaPsQ0Mfh5Wd1AQ
+	RdB3vg07KgEyagnjfMvgUqxm9AsOBxSW2MAfdn/wfzJklBwxNfUc1o44dCItJD2z
+	aqhM0uXAvfoM/i34KWo4oRkZcrhH7WmXL44g8aURJIrZ8xisnnacSk8x33hz9jk7
+	+W9tYr+M4B0u8VU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F30526B80;
+	Thu,  5 Sep 2024 13:54:35 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E186A26B7F;
+	Thu,  5 Sep 2024 13:54:34 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "Patrick Steinhardt [ ]" <ps@pks.im>,  Derrick
+ Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] remote: prefetch config
+In-Reply-To: <CAG=Um+0P8SgWo2sN3St8+PpBneQfDBoqnpnC6uMmYu2YOOaWmQ@mail.gmail.com>
+	(Shubham Kanodia's message of "Thu, 5 Sep 2024 22:49:15 +0530")
+References: <pull.1779.git.1725472799637.gitgitgadget@gmail.com>
+	<pull.1779.v2.git.1725504725976.gitgitgadget@gmail.com>
+	<xmqqcyli3x1w.fsf@gitster.g>
+	<CAG=Um+0WinvE4CQPTwKdxMxj4xBJ9Z1SBWVrGzTMKM3CbMni0w@mail.gmail.com>
+	<xmqqy1462gc2.fsf@gitster.g>
+	<CAG=Um+0P8SgWo2sN3St8+PpBneQfDBoqnpnC6uMmYu2YOOaWmQ@mail.gmail.com>
+Date: Thu, 05 Sep 2024 10:54:33 -0700
+Message-ID: <xmqq1q1y2dgm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,104 +61,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZtnkovOqrJNxUtez@nand.local>
+X-Pobox-Relay-ID:
+ E94DA45E-6BAF-11EF-9F5C-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 05, 2024 at 01:04:34PM -0400, Taylor Blau wrote:
-> On Thu, Sep 05, 2024 at 09:51:00AM -0700, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >
-> > > If so, I agree, but would note that this series does not yet switch
-> > > index-pack to use the non-collision detecting SHA-1 implementation when
-> > > available, so that would not be a prerequisite for merging this series.
-> >
-> > Hmph, I am confused.  It needs to be corrected in order to address
-> > collisions of the tail sum Peff raised, as no longer checked the
-> > tail sum with SHA1DC but with "fast" SHA-1.
+Shubham Kanodia <shubham.kanodia10@gmail.com> writes:
+
+> On Thu, Sep 5, 2024 at 10:22=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+>>
+>> Shubham Kanodia <shubham.kanodia10@gmail.com> writes:
+>>
+>> >>
+>> >>         int prefetch; /* is prefetch enabled? */
+>> >>
+>> > ...
+>> > Updating my patch =E2=80=94 please let me know if there's anything e=
+lse I can
+>> > improve here.
+>>
+>> Renaming the .prefetch member to .prefetch_enabled would eliminate
+>> the need to add any comment on the member in the header file.
 >
-> Peff's mail supposes that we have already modified index-pack to use the
-> non-collision detecting SHA-1 implementation. But this series does not
-> do that, so I don't think we have an issue to address here.
->
-> In a hypothetical future series where we do modify index-pack to use the
-> _FAST SHA-1 implementation, then we would need to address the issue that
-> Peff raised first as a prerequisite.
+> Do you mean for the struct member here or also the config?
 
-I verified that this was the case by applying only the following to my
-series:
+I do not think I mentioned anything about the name of the
+configuration variable, but if I did that was a mistake.
 
---- 8< ---
-diff --git a/sha1/openssl.h b/sha1/openssl.h
-index 1038af47da..f0d5c59c43 100644
---- a/sha1/openssl.h
-+++ b/sha1/openssl.h
-@@ -32,6 +32,8 @@ static inline void openssl_SHA1_Final(unsigned char *digest,
- {
- 	EVP_DigestFinal_ex(ctx->ectx, digest, NULL);
- 	EVP_MD_CTX_free(ctx->ectx);
-+	memset(digest, 0, 19);
-+	digest[19] &= 0x3;
- }
+End-user facing configuration variables are often named after a
+feature that it enables or disables, so it can use the name without
+"enable".  An int variable on the other hand can mean many other
+things, ranging from "how many times have we prefetched from here"
+to "does this remote allow prefetching?", so a more explicit name
+would often help.
 
- static inline void openssl_SHA1_Clone(struct openssl_SHA1_CTX *dst,
---- >8 ---
+Thanks.
 
-and then creating a victim.git repository (which in my case was born
-from git.git) and then repacking to produce the following state:
-
-    $ ls -la victim.git/objects/pack
-    total 262704
-    drwxr-xr-x 2 ttaylorr ttaylorr      4096 Sep  5 13:45 .
-    drwxr-xr-x 4 ttaylorr ttaylorr      4096 Sep  5 13:46 ..
-    -r--r--r-- 1 ttaylorr ttaylorr   3306804 Sep  5 13:45 pack-0000000000000000000000000000000000000003.bitmap
-    -r--r--r-- 1 ttaylorr ttaylorr  15588224 Sep  5 13:44 pack-0000000000000000000000000000000000000003.idx
-    -r--r--r-- 1 ttaylorr ttaylorr 247865480 Sep  5 13:44 pack-0000000000000000000000000000000000000003.pack
-    -r--r--r-- 1 ttaylorr ttaylorr   2226788 Sep  5 13:44 pack-0000000000000000000000000000000000000003.rev
-
-Then I set up an "evil" repository like in Peff's recipe and started
-repeatedly pushing. fsck is slow here, so the loop is just "while true",
-but it doesn't matter that we're not fscking the victim repository since
-I'll show in a second that it's not corrupted to begin with.
-
-Running this loop:
-
-  $ while true
-    do
-      ls -l ../victim.git/objects/pack/
-      git.compile commit --allow-empty -m foo
-      git.compile push ../victim.git HEAD:foo
-    done
-  $ ls -l ../victim.git/objects/pack/
-
-, fails very quickly and produces the following:
-
-    [main 727346d] foo
-    Enumerating objects: 12, done.
-    Counting objects: 100% (12/12), done.
-    Delta compression using up to 20 threads
-    Compressing objects: 100% (11/11), done.
-    Writing objects: 100% (12/12), 779 bytes | 779.00 KiB/s, done.
-    Total 12 (delta 10), reused 0 (delta 0), pack-reused 0 (from 0)
-    remote: fatal: final sha1 did not match
-    error: remote unpack failed: unpack-objects abnormal exit
-    To ../victim.git
-     ! [remote rejected] HEAD -> foo (unpacker error)
-    error: failed to push some refs to '../victim.git'
-
-The victim repository rightly rejects the push, since even though the
-evil repository generated a pack with a colliding checksum value, the
-victim repository validated it using the collision-detecting /
-non-broken SHA-1 implementation and rejected the pack appropriately.
-
-Of course, if index-pack were updated to use the non-collision detecting
-implementation of SHA-1 when compiled using one of the _FAST knobs,
-*and* we did blindly updated index-pack to use the _fast variants
-without doing anything else in Peff's mail, then we would have
-corruption.
-
-But I think the point of Peff's mail is to illustrate that this is only
-a problem in a world where index-pack uses the _fast SHA-1
-implementation, but does not have any additional protections in place.
-
-Thanks,
-Taylor
