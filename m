@@ -1,111 +1,131 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA09156C73
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 20:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82011176AC7
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 20:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725567710; cv=none; b=Y1F0wHwOGcr3UEkEUHYd435z935oQcI4/ZcRz8hEnafGigekmgR1xvpcFH7OazJjlslNvM7Cu/C9G4kDLduq4FpLlcBwVRNFlq+R+LtRuUZKy216fbiRB5h5DQc13TOW6gNcf0KLwFNWRNlDfVXNevvUiVxQd1O7bDuZwJQv7Nc=
+	t=1725567980; cv=none; b=ejcnGVFm5fjDLoacRvBRWrPA98p3oS3JpApssWQ91FMnJkoap/afNJBfg4DqW8xn8YRRaVAwXLY5d25GBiiaF2q9e5uOo+GSTlPvNI4GJwBgyp1u/tvvrjrHWoiXn3a5YKVFPjRBEJiL+XzZs3Q5BDKyM0yDiksdsgIiPMo98Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725567710; c=relaxed/simple;
-	bh=Ru6OFaOq+fyFUmxJknLuKcj9Wg08tO6dZAIquVXJ/wc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fm0iAwVho3PRsdwd2F61sRvQJrd+4BfABR+PyuA1RJPjHffzs1VOwVaVHre+a7d4gTY67WE+WHVN5ZwEL/uG2G8/uZH0dtzCL45ArkHVDrZkMj9z50SKNrh+I1eBsHmItfcAZ4bgxa5jAw+uWEr6jDTSnHbihKZjBPwyqr6+Zhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vK+7oRg4; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725567980; c=relaxed/simple;
+	bh=p/BhcKdaQU6TDSDaZdo5f8+3bV7tbA4qbnfn2k54Sm4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QgsKhrkiV8FDYmojm2lhK17u5xd91jUEsASBUP3d+ZHcJeXWamsPtNV9aTxEmy3CdOdGI+5nu2paABM67JPmzPRT1Ob1u5CxfIV9E4thihjZyvFjGgUI9I5HpUtqXRkiz482BIPmqrCBzA+NbKmjboGB4gPJrFsWu7xYp00erQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=h1vlMGls; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vK+7oRg4"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e1a9dc3f0a3so1442505276.0
-        for <git@vger.kernel.org>; Thu, 05 Sep 2024 13:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725567708; x=1726172508; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ymn0QnKg8xvkb11qf9MZcTj1UcxsH2tklb/OHkxWW8=;
-        b=vK+7oRg4bBqtErQ/goGBgXIyFi9cy0RAXhxiU2PZHKwFH7en6B/cO8OnbU8S2YOaZE
-         3GBUd5i7NCk4qnyhaj8pcCOcg5Y6SIvLRcBL+n3izvWrKK29sfrRgHfBtis40t4UaNez
-         u3R5Ix+nf2UL+jeapXt0vPaYxD0wQ3qKjEm/bj4n36H+9F1oV8ZwIwRqeZ2tuCO+oMvm
-         jlQeh0e/rVp+uLq+Lmr1WxszeZwlNLE6FBoXUYY8Ha7HhgjgFiL7xS5WjkXqGovZTyZd
-         O0gVuJqguSlQizVA28WJc6Ar545QoQkzq/UyenNdMywygzgRqKHNONuExwEbDx4f0gi8
-         ihJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725567708; x=1726172508;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ymn0QnKg8xvkb11qf9MZcTj1UcxsH2tklb/OHkxWW8=;
-        b=UXdnt7iN5XUyXd5Zyf6e0L/yDHdmDpsjltwec/iK1q2MYe2j86riIwxmuNF2fGdSvz
-         dE2jha0N1UV9MySrfFpLN34I36jxVwxJjlwDovfM+XQvBMUS5WGo8KZERW/uekITmezu
-         z5eBO093XIDs6RibbhQO//4Hkr/6jnu4fCloXQvPecHYuwMHWmDFTOjYmP0eJvQ4JHfX
-         RX7lhGhWCajJEjfhqvf5TtzE41gm8ytUQEjffZGjulZT6mUSRw8O5b2LpEZ3LQZL22Zq
-         AFdtbEn+aG+F14GqW43IvxriNGI3H7pByrNmShlqaunaMP0MyOgpnGX9HpCGqhob5bfB
-         RU0w==
-X-Forwarded-Encrypted: i=1; AJvYcCWdFYut1omf6kI5Qgdw2lkBBiWGcXYKDzxJdqD6SpQwd7GZ3m+rarAsh+fpyEUT3P6MCjM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWNEwZTcNPcEfLON1xBJgfMsAIL0Avtyw5iroMHKZ3PPRMYjeW
-	i0aDfU2Swd7XoYn1doCe3nykCW1emYaXEjHwGRfigY1HSrrWBvWbf7wRfZE4i+o=
-X-Google-Smtp-Source: AGHT+IHtTkKfobQLjdp8Za05X8AU6wGuxTSkWtTfgjhSG/CPrLCj2rA9tAI1kz3tyZCmU/nCQ3AOwQ==
-X-Received: by 2002:a05:6902:13cc:b0:e1a:5870:6380 with SMTP id 3f1490d57ef6-e1d348ba428mr537741276.17.1725567707814;
-        Thu, 05 Sep 2024 13:21:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1d12cd3d73sm820563276.33.2024.09.05.13.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 13:21:47 -0700 (PDT)
-Date: Thu, 5 Sep 2024 16:21:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-Message-ID: <ZtoS0LYEZqfwvmtw@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
- <Ztdn25zfi8WHO+GS@nand.local>
- <20240905103736.GC2556395@coredump.intra.peff.net>
- <xmqq34me5crn.fsf@gitster.g>
- <ZtnbFXL7W5DvW8UN@nand.local>
- <xmqq34me3uyz.fsf@gitster.g>
- <ZtnkovOqrJNxUtez@nand.local>
- <ZtnvjlW3DotdK/lB@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h1vlMGls"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FB2228939;
+	Thu,  5 Sep 2024 16:26:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=p/BhcKdaQU6TDSDaZdo5f8+3bV7tbA4qbnfn2k
+	54Sm4=; b=h1vlMGlsbpygsfSVg3nw4B+sPNnlSCXhUZrOr4QpnFZ0WDb/OcSqzk
+	v+c6W0pUUfGO4Tye1qOENFIW5gZhmOhRvGzz9Ye3yC68jcmS/UftuFFxQtCKBuHc
+	UPuxFhGRaBBNMv6bQMLqEo7u2izisT48i1c8birtZh0OVNPB/1KkU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4522428938;
+	Thu,  5 Sep 2024 16:26:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A0CEA28937;
+	Thu,  5 Sep 2024 16:26:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes.Schindelin@gmx.de,  ps@pks.im,
+  james@jamesliu.io,  Jeff King <peff@peff.net>,  Gabor Gombas
+ <gombasgg@gmail.com>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] advice: recommend GIT_ADVICE=0 for tools
+In-Reply-To: <pull.1781.git.1725559154387.gitgitgadget@gmail.com> (Derrick
+	Stolee via GitGitGadget's message of "Thu, 05 Sep 2024 17:59:14
+	+0000")
+References: <pull.1781.git.1725559154387.gitgitgadget@gmail.com>
+Date: Thu, 05 Sep 2024 13:26:15 -0700
+Message-ID: <xmqq4j6t26fs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZtnvjlW3DotdK/lB@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1A5C7D44-6BC5-11EF-BCB5-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Sep 05, 2024 at 01:51:10PM -0400, Taylor Blau wrote:
-> , fails very quickly and produces the following:
->
->     [main 727346d] foo
->     Enumerating objects: 12, done.
->     Counting objects: 100% (12/12), done.
->     Delta compression using up to 20 threads
->     Compressing objects: 100% (11/11), done.
->     Writing objects: 100% (12/12), 779 bytes | 779.00 KiB/s, done.
->     Total 12 (delta 10), reused 0 (delta 0), pack-reused 0 (from 0)
->     remote: fatal: final sha1 did not match
->     error: remote unpack failed: unpack-objects abnormal exit
->     To ../victim.git
->      ! [remote rejected] HEAD -> foo (unpacker error)
->     error: failed to push some refs to '../victim.git'
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I didn't set transfer.unpackLimit to zero here, which is why this says
-"(unpacker error)". But if I did remember, it would instead say:
+>  advice.*::
+>  	These variables control various optional help messages designed to
+> -	aid new users.  When left unconfigured, Git will give the message
+> -	alongside instructions on how to squelch it.  You can tell Git
+> -	that you do not need the help message by setting these to `false`:
+> +	aid new users. These are output to `stderr` by default as they are
+> +	intended to help human readers. Tools that execute Git as a subprocess
+> +	can disable these messages by setting `GIT_ACVICE=0` in the environment.
+> ++
+> +When left unconfigured, Git will give the message alongside instructions on how
+> +to squelch it.  You can tell Git that you do not need the help message by
+> +setting these to `false`:
 
-    remote: fatal: pack is corrupted (SHA1 mismatch)
-    error: remote unpack failed: index-pack abnormal exit
-    To ../victim.git
-     ! [remote rejected] HEAD -> foo2 (unpacker error)
-    error: failed to push some refs to '../victim.git'
+This somehow makes it sounds like it is an "aside, by the way" that
+these trigger by default and that you can selectively disable it by
+setting these variables, but shouldn't the stress be the other way
+around?  Shouldn't the mention of GIT_ADVICE be a side note, leaving
+primary text target human users?
 
-So we're safe here whether or not you use the unpackLimit setting.
+Perhaps like this?
 
-Thanks,
-Taylor
+Thanks.
+
+ Documentation/config/advice.txt |  8 +++++++-
+ Documentation/git.txt           | 11 +++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git c/Documentation/config/advice.txt w/Documentation/config/advice.txt
+index 0ba8989820..d749aee7f4 100644
+--- c/Documentation/config/advice.txt
++++ w/Documentation/config/advice.txt
+@@ -2,7 +2,13 @@ advice.*::
+ 	These variables control various optional help messages designed to
+ 	aid new users.  When left unconfigured, Git will give the message
+ 	alongside instructions on how to squelch it.  You can tell Git
+-	that you do not need the help message by setting these to `false`:
++	that you have understood the issue and no longer need a specific
++	help message by setting the corresponding variable to `false`.
+++
++As they are intended to help human users, these messages are output
++to the standard error.  When tools that run Git as a subprocesses
++find them disruptive, they can set `GIT_ADVICE=0` in the environment
++to squelch all advice messages.
+ +
+ --
+ 	addEmbeddedRepo::
+diff --git c/Documentation/git.txt w/Documentation/git.txt
+index 4489e2297a..d15a869762 100644
+--- c/Documentation/git.txt
++++ w/Documentation/git.txt
+@@ -1027,6 +1027,17 @@ standard output.
+ 	adequate and support for it is likely to be removed in the
+ 	foreseeable future (along with the variable).
+ 
++`GIT_ADVICE`::
++	If set to `0`, then disable all advice messages. These messages are
++	intended to provide hints to human users that may help them get out of
++	problematic situations or take advantage of new features. Users can
++	disable individual messages using the `advice.*` config keys. These
++	messages may be disruptive to tools that execute Git processes, so this
++	variable is available to disable the messages. (The `--no-advice`
++	global option is also available, but old Git versions may fail when
++	this option is not understood. The environment variable will be ignored
++	by Git versions that do not understand it.)
++
+ Discussion[[Discussion]]
+ ------------------------
+ 
