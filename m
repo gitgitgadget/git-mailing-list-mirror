@@ -1,153 +1,127 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129811759F
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 02:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CE02107
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 02:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725501727; cv=none; b=aK+E4gKf2A/mPdXEdc34EgNcJWplps9Miwka4aAHvJPLxYtmLN1qY7wfEuU5wk9TSukyss5NYejEAHQ16BwvHbzRFK/QWk40I9uVr+W/qEgeLnREqoR2z83ZDhCKCJyaSguz8bHWLM2rxQeu/Wk3MGzbWMDUNGYfACw4isRawcI=
+	t=1725502128; cv=none; b=nx4JTe0PI6JR+Hm1w+vyK8pl6ZoNhtBX6LDZpVvnO5UOAbnvTKAm2MgQoK5E45Y0IF4xRh/30j1jTCfPLHgM/IIYMaupqVH57JEybf8BPK/dvhv9AxpAP9nPtWNvFRgj+pk1G2a5ZRE4CPnq0x3slPC4IpVcX/YwCsRH0wLa8m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725501727; c=relaxed/simple;
-	bh=+1yBStIS5Xgo70ils45tm9KheVsy5DQygtPZRm++HpU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sy9jlNZY1Cski+p4rcFGNrCEOjULPFDbdGumST1TcWwxjBpBKc6SPgcdNiuXmfN27ZndCs/rA4mHrecdJ2cWhsMnqFrgsLGJS+kFQbi/BVoqOf1CCwl9IpP+yXXvl1NKr5gNQfGRDd5wjcHgLWRWg8yg6rp085YOzNYZkqRP8+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFn+Kb6h; arc=none smtp.client-ip=209.85.166.48
+	s=arc-20240116; t=1725502128; c=relaxed/simple;
+	bh=evRILUxeVDw8Zk51hkvmyQDvm3DEi3T1RYUwoyqPb3w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pdNsSfm90WwtuN1EUdAky7cuLUAPHSg3v8aM5EHKEI1YTo3Vq9cpPHzF1FGnqNJF77nYbT1Jxb2FJFcjBQbOOBnJI7DQM5kmwLBCi+ldpoj2ffDnveaBap1PKgxdnuXBu5oTyJkxOt3Moh9TzUXQEVG0l3GN9oQbwawC4FI429g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hcr++HD3; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFn+Kb6h"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-82a22127e97so11333039f.0
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 19:02:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hcr++HD3"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-20696938f86so2668885ad.3
+        for <git@vger.kernel.org>; Wed, 04 Sep 2024 19:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725501725; x=1726106525; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a/nqNcIv6t4SO5W4zA2jrF2EJqE98nvEJGdaL7YOXp0=;
-        b=CFn+Kb6hCKm4i1irekCLV3/Rf1h2A8Qr5f3HyIR9K01SXfAPmjTEfX72Y3dM0Fq1M3
-         V3TC4IpiYP1TptggHtqvPtPxjcatcD9K1znDEOKL+4BSe8+I6PipON97sUtPMrh4Aj5V
-         eElCYOrfwaM0I2SsLZhSOAX/XWGWo/U1GYKeu6lN7GAqVyBmX9ZEcEDsS8G0KUXynIsq
-         GzU3UJfsPwhbYb6x86zKFSXPkpMff/d7/oKtyKx5YaGE5hQ2KeZxVyqt/6hsL5QR6/0z
-         vtZp0SRzDKlkv53za6iHVjFjdv9wZ8aoiZd43A9dHdSAUQLqsc9IKAWV7uY/2Xs1N402
-         lOwA==
+        d=gmail.com; s=20230601; t=1725502126; x=1726106926; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PIe18wRDbkxGw+7m+QLNJvCl57RbHj+KAtp5tyxv8Pg=;
+        b=Hcr++HD3YusCet2zoQheCeDRSGywubmKITtDUBN5Vjvv4IidN7vfsuXXNQvc+XeKHY
+         Lv1X9TO84yfDOy9JIzXfamA9SIeBpwbkV4iFOOdvTkNxfZVJGpa4/Tkd+7SqIWsEx3LL
+         CMeJgkvcxJT8K4Pje6Wp02qs3/wU9ZeeiN3PsAfVzMWC9wJgKmG9yszHdb0TE+2lBcAK
+         lTF46mqbfAM9i+zyw8xcOuT99o0wRJQiag7xCz/bCxUGQJJ32CagVN8GjOX+4ClRVZDf
+         WyQS+00+f20Ms00oYo/n1VG+HcyatqYYvd8G5qfnAhkQWvabhXeP9gIA6gxAXsB/2Li5
+         lKpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725501725; x=1726106525;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a/nqNcIv6t4SO5W4zA2jrF2EJqE98nvEJGdaL7YOXp0=;
-        b=EMcKwRztJjJG+e16MCzvR2YZ1j1pBXZ3xTxqyqVg6tmrNcUrJSYXm9nHbDgbPM0WH8
-         l1IjX3inoSgCODPS0KhqFT7fDwbCjVuBV3GdyjumtGvLGJ3I/xAg7W+aQ5uQ2hVN9iuD
-         2NfanC2FSHqeA9fw5uSYxuAxTntJvnqHDUQZle9Y+R5n2BdxTfTPf/UIraZhbUmjYPiD
-         RrqmvzXtWLJyI39488d1NAIoivMASveaelsJTsthpWfO5ktpeb+qR7teHFvrmRrtiOSO
-         iaPX+BGP2qKSj5p5DPkXkd/3ew/ve+oMDnkmJWh8K+8t2/AWHFmTMXDxTkRNhA6dIEuP
-         2K4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVatiFl91b8U/TXeR+k79onf274GiOcyFgKIfoSxWxulWKdY0HJW5kiGPgBkzJpOhZ4WEY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzT3632wMbbd2wkhz96VN4xhumJzs/Oi2tzMVbiWJMDQK28B1Yo
-	oCfjHEjTeI9xXew8gCY6trAdKH4MjU2YsMpuzeOMvvt+I6uO7TBBWl+IP2cZ7hwQTMOPu0U6tWz
-	5n5Z/e37ZOVq4IOsSY5qgnG1q3SYz9w==
-X-Google-Smtp-Source: AGHT+IFzjlSFySPvQ6a7Ieh8pKb73TnQFJlau9L9dEkTxkbsqihLP+BmOkWxBbw1Ar9iAlC8a5iT0vj2UrQKKZtzmCA=
-X-Received: by 2002:a05:6602:2c91:b0:81f:b38c:3537 with SMTP id
- ca18e2360f4ac-82a648b21ddmr1051177439f.10.1725501724976; Wed, 04 Sep 2024
- 19:02:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725502126; x=1726106926;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PIe18wRDbkxGw+7m+QLNJvCl57RbHj+KAtp5tyxv8Pg=;
+        b=wdLVyAH2Hsk5lt8DQygDQyHLL0gQTBLBuGxTt8MLzuXz1biQ+u5JPCvqjwSnXUWKH/
+         Pa00J0q/k7ywE29tSewM1ahzB67zi8E02Cl7CYPB6Xs720fJ5iC4xqFRRWcgZw0VvYpr
+         QxexsLujL9E1jA0jPx3XYfzNakeMnMP9fIsFgCI6AGNQA7f+qmbK4ruGcStUWSdsyXlT
+         hMVZPbtxesDzekHp7eJ0EvXsmq6H5kc7yvvjuQh24/fj5Vd1egrH9dhkNNuV8Cmq02BN
+         CH7fA1svLwA9azlEiXNW5Nr1CP0UiZTM5yXseFWqCcS9Rx4BqqBeUIATAozHcG8jNynU
+         34FA==
+X-Forwarded-Encrypted: i=1; AJvYcCVKBxNUz1lLzFNUxrpEX29BuBORf0OULZ04X/8f0jYMnTj/LdKmXmhQJtSy6Ft7xdmGiZQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiOJOlFkCh60qJJooTD6I6ixYsf5/52urFOSKFwlce9HdL7YNR
+	5yZNlgFPyJg/r2JkHgN9uyrkFfxBByTtywIbOYuoChKd0LjLNf5Z
+X-Google-Smtp-Source: AGHT+IFuBrfpazOd/6Tznk/GTJctLEKjEwppMMYhGCtdvxNC7uYdvGR/3vZ9HKxM2+gUuVnddX0OdQ==
+X-Received: by 2002:a17:902:ecca:b0:205:7b1f:cf66 with SMTP id d9443c01a7336-2057b1fd228mr103870465ad.35.1725502125825;
+        Wed, 04 Sep 2024 19:08:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d? ([2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206ae95dd98sm19429055ad.107.2024.09.04.19.08.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Sep 2024 19:08:45 -0700 (PDT)
+Message-ID: <52f6da10-e39a-4a2d-bd9a-5739a49235c2@gmail.com>
+Date: Wed, 4 Sep 2024 22:08:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1724656120.git.ps@pks.im> <da1c23a9ccf8c797ebcbe6ce5a8243c1d051fad6.1724656120.git.ps@pks.im>
- <xmqq5xrb6naw.fsf@gitster.g>
-In-Reply-To: <xmqq5xrb6naw.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 4 Sep 2024 19:01:52 -0700
-Message-ID: <CABPp-BHAnAfyqfRiMg7Xr0DyAqP0CGgT_XOA=tp42+T-knCReg@mail.gmail.com>
-Subject: Re: [PATCH 21/22] merge-ort: fix two leaks when handling directory
- rename modifications
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] remote: prefetch config
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, "Patrick Steinhardt [ ]" <ps@pks.im>,
+ Shubham Kanodia <shubham.kanodia10@gmail.com>
+References: <pull.1779.git.1725472799637.gitgitgadget@gmail.com>
+ <e8232cdc-7a5d-485e-84f7-2c05e17f9907@gmail.com> <xmqqfrqf87gb.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqfrqf87gb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 4, 2024 at 3:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > There are two leaks in `apply_directory_rename_modifications()`:
-> >
-> >   - We do not release the `dirs_to_insert` string list.
-> >
-> >   - We do not release some `conflict_info` we put into the
-> >     `opt->priv->paths` string map.
-> >
-> > The former is trivial to fix. The latter is a bit less straight forward=
-:
-> > the `util` pointer of the string map may sometimes point to data that
-> > has been allocated via `CALLOC()`, while at other times it may point to
-> > data that has been allocated via a `mem_pool`.
+On 9/4/24 4:55 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 
-Oops.
+>>> +		# Run maintenance prefetch task
+>>> +		GIT_TRACE2_EVENT="$(pwd)/prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
+>>> +
+>>> +		# Check that remote1 was not fetched (prefetch=false)
+>>> +		test_subcommand ! git fetch remote1 --prefetch --prune --no-tags \
+>>> +			--no-write-fetch-head --recurse-submodules=no --quiet \
+>>> +			<prefetch.txt &&
+>>
+>> I'm happy to see this use of test_subcommand to validate the behavior
+>> of this patch!
+> 
+> I found it a bit disturbing that the pattern is overly specific.
+> 
+> The only thing we are interested in is that we are not fetching from
+> remote1, so it _should_ suffice if we could write
+> 
+> 	test_subcommand ! git fetch remote1 <prefetch.txt &&
+> 
+> to avoid being tied to how the current version of Git happens to
+> pass these command line option flags and the order it does so.
+> 
+> Looking at the implementation of test_subcommand, it seems that we
+> cannot quite do that (it assumes that the pattern it assembles out
+> of the parameters are to match the full argument list used in
+> invocation, enclosing them in a single [] pair and without giving
+> the caller an easy way to sneak wildcards like ".*" in), which is
+> sad.
+I agree the ergonomics of the test_subcommand helper is a bit poor
+(and not this patch author's fault). The trickiest part is the
+negative case, as in this highlighted one. It's hard to read from
+this if the subcommand wasn't found because the argument list is
+too specific and doesn't match the exact arguments.
 
-> > It very much seems like an oversight that we didn't also allocate the
-> > conflict info in this code path via the memory pool, though.
+It helps that the same options are given for the other, positive
+tests. But maybe that could be a hint as to how to make this test
+a bit cleaner: make a variable describing the "uninteresting"
+arguments. Something like...
 
-Yep.
+	args="--prefetch --prune --no-tags \
+  	      --no-write-fetch-head --recurse-submodules=no --quiet" &&
 
-> > So let's fix that, which will also plug the memory leak for us.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
->
-> May be nice if we can hear from the original author and the area
-> expert.
->
-> >  merge-ort.c                         | 4 +++-
-> >  t/t6423-merge-rename-directories.sh | 1 +
-> >  2 files changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index 3752c7e595d..0ed3cd06b1a 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -2710,7 +2710,7 @@ static void apply_directory_rename_modifications(=
-struct merge_options *opt,
-> >               struct conflict_info *dir_ci;
-> >               char *cur_dir =3D dirs_to_insert.items[i].string;
-> >
-> > -             CALLOC_ARRAY(dir_ci, 1);
-> > +             dir_ci =3D mem_pool_calloc(&opt->priv->pool, 1, sizeof(*d=
-ir_ci));
-> >
-> >               dir_ci->merged.directory_name =3D parent_name;
-> >               len =3D strlen(parent_name);
-> > @@ -2838,6 +2838,8 @@ static void apply_directory_rename_modifications(=
-struct merge_options *opt,
-> >        * Finally, record the new location.
-> >        */
-> >       pair->two->path =3D new_path;
-> > +
-> > +     string_list_clear(&dirs_to_insert, 0);
-> >  }
-> >
-> >  /*** Function Grouping: functions related to regular rename detection =
-***/
-> > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename=
--directories.sh
-> > index 88d1cf2cde9..4aaaf38be68 100755
-> > --- a/t/t6423-merge-rename-directories.sh
-> > +++ b/t/t6423-merge-rename-directories.sh
-> > @@ -25,6 +25,7 @@ test_description=3D"recursive merge with directory re=
-names"
-> >  #                     underscore notation is to differentiate differen=
-t
-> >  #                     files that might be renamed into each other's pa=
-ths.)
-> >
-> > +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> >  . ./test-lib.sh
-> >  . "$TEST_DIRECTORY"/lib-merge.sh
+	test_subcommand ! git fetch remote1 $args <prefetch.txt &&
+	test_subcommand git fetch remote2 $args <prefetch.txt &&
+	test_subcommand git fetch remote3 $args <prefetch.txt &&
 
-Looks good to me; thanks for fixing up my bugs.
+Thanks,
+-Stolee
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
