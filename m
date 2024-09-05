@@ -1,193 +1,146 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01olkn2053.outbound.protection.outlook.com [40.92.53.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2D520E6
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 04:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725511109; cv=none; b=TXz3orYgT/xaGa5nvBFTKgWydOtnFVcJ6tu7Ymx+Cm8EEuxR3dxTOs9jtf/3qbAGBQ5NRlrP1GGG13n2uBdhuSSiYivh6r2WUeiCM46k6QP3eelSiFmWCCN+Bi/tdxZ6Dq9vJlOOnCXzA6TFt6VpQmJopnUM1ISzGNo3zyLPdHU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725511109; c=relaxed/simple;
-	bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FcH42OBUsZlzXdkuA0D0uUUvwfWMhm+BodHfaEkjK1QMwvnvLexOu3DVyB4FYoIMpgP27VNBz67nenGh973CpVc/iCYD/NuRp+Tc0NbsvmpTIWRzyNMN6+xq17DXzBJrr6RUhvHBfnmPrc6WL6K/BYIdQQlUpGvRGaiqGcvTOF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XOkxocVP; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B085152166
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 04:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.53.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725511939; cv=fail; b=APMVjTPHqmZGrOjdrUjwZihw9zUUTQ1MoHKB3MiC9AUtgl3e4opwugmECGEmM/d+/E1gBNuR0izEC039ex4Z9hFrYgPfUSAamt/esGcPZV/bUOi4SiRtq3P+bGDhEwsVMsML/ngYCFv0slcmmud5+XR3zYM3EZh+6lvMZHIWCL0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725511939; c=relaxed/simple;
+	bh=/XWsYJUMXVUKCxIAu6F3u1zd/7qwnh6H2UZ6U69ZO/A=;
+	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=Crr/XJSwwBboKF2SjlnEZbwHYZJpdvQfY3lVKb42HNDg7prXBvbfRbPKy9N7SYe+sE7Lq+J29aGEQVBKD3cv5WKzv5/7nqLRvp3090XwtIXZ0X8VZZb3FC5sYshSsIkWtxfFcBWu+3U8rgxZaxIlg55ItVupVYX1qRE+XOEi3Zg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=deLuZqeS; arc=fail smtp.client-ip=40.92.53.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOkxocVP"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a869f6ce2b9so55466066b.2
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 21:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725511105; x=1726115905; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
-        b=XOkxocVPlFJ0EUIXk0jIqnmfBF+e4ePbaBLNUQjmNohzRArJI6jtA+5/Lf1AJ1hP9O
-         1O8w2nOnilQGXMhsdugUAXCJrMRAceS28ZP/FWp4Ml17n6fPD3Yz4nllTW0BqsbviJgV
-         wqBlWyGDZEuLJdnwNwG8WSxLDoOuPde57CewLkMLyyqAEFbmkU5LB5GG3GiS5p71padE
-         dHZ1VgpYfH4qPrv4vfppWMrcelNnf8RDr2FR0CjScNvyVqXmkCTaQyv0/yD6lBvVXjX8
-         SR5ahYhe/v4dBbhbXj92R9eYCtkU78jB6Zj9ARG76XTZRp8NoPd0bpvyFhAzDKVlLtqM
-         Urjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725511105; x=1726115905;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
-        b=d3exNoA3m6nV5TNCabjzobOLGfVfl62+2v0MRSzj62vY0SvxXfNOENi36Ues5C5aoN
-         R+3nIHwD21RicERP7y1weO6IPqlRu6fHtuZB1GzJB6PVVG84HqhcaKOIVCl9d1bj3QhT
-         TIJ8OJDsekuHRozCwUkhi5ReuH0yGGwUK1NBKNpEmT9q4veDaxEfEbwyE3p8zGtt0R3m
-         nUhx1eQAhJIgKTP5gFfTlKRHOif5lwGZDKSw+WSI3/jrPETBCw6uH+tv7qUa+WABkfxo
-         yeY5wqzwBWHUEgci9gDz3ailVxLZP61nhjdN9BN/di5GYbDKyhQGu9za4mGfu+IRfy6B
-         vn7Q==
-X-Gm-Message-State: AOJu0Yym1APtG/uRd6J/hOEdVgtophRPjEahWnyN5r+ey3+Qz/NMMY+P
-	CnGVgpVgKXN5YpAuaP3D9jOs5yoDUL3bSoWB4FickqyCuVhPejvihX1UWylLluXtBz/u0YX6bSf
-	nOf1QuaJOSGbqeOODlDsSGEXAJ69WBMhC
-X-Google-Smtp-Source: AGHT+IGehFRWu4bRAksks1qEzC5dQ8LJasUzwIGZ879R7qyiO3GfdL4n3+MuAR4nor4uRcvCUAF2E7cNgyshq3fcao4=
-X-Received: by 2002:a17:907:7e88:b0:a86:af28:fc2b with SMTP id
- a640c23a62f3a-a8a32fa103emr559232866b.54.1725511105326; Wed, 04 Sep 2024
- 21:38:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="deLuZqeS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bkIm22GUys/4l88nsArH3MpgKZfyuS9Njy77oyC3G0Cw+IdqcuLfd1GnpqZiSEHiVM+4b1TdUndJc7sZwD3qLID9Fmb5gQcg7SMDVo9n8IvOmxZXu2+fxdqgUdetYhQjF+Lc/PpDbUyQdq7nWkw+MpKwNdHLTj+8Yp7qRa9j2kAjh4BlXX7SshsqNa118SND3myXhUddSOxoz27Wds6xmHvnxDCq3ggtauXgKubPZ3XaexldGgimeQmn8wjPegs/uROF/OnaxOVCkJvTLvC4auoVNJ4MAp4EZ1Dv7ZQwve97YRovwWp4A3YzqyAZkTFKjzdkR5SmAC3UxROBpKquoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=P08PWwfNpIgJeI66iGsh//QqfGD/Msup2E4zTMF/sq8=;
+ b=BBHTtttvE3rSg1vpwrHoTF5ylHOV6xXH42vFcR3JCJj8v5i8BH3tUZ1AU5UFaEslI9LIWNpm6csQhQ1BqnxjegVvdZ/vR1y/emnNDzxoWGZbKuSnis9ifRGqUWCBjcUXllOylpTz5yAbHLtuv5+jSkmWyI/OS8EKUvlTiCDpSJMU76FxAV9OOPmAEHf2AvrO4FcMIS4SK+WfBjZbhaZ/QUWJq4kQ3o192MUkHh9imWrju6YHMnhIFFyzMXHDrYMWhM0zf0y46KTeDhNc0lYT83z245TXH8v7MjVWgmX93kGk4/G7xLgIEKHOJdtR+H0yPjSAdXFjVAyYSCvRaPZW6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=P08PWwfNpIgJeI66iGsh//QqfGD/Msup2E4zTMF/sq8=;
+ b=deLuZqeSv6Izm2ckt9mbW2fhv/cZWvoDH8xQF5t4z47jGcoJiZotUTQa5PIsiI8zFn8MrISHcJoso412XZlv1npD4Aeyc8Zy3yMD7PM4kIMGh5Fs9KOYp9g/vEJK4RGGJhtvE0fxDCBJJt4Y6ahr2lnn5NlNy279v3CHVGVESa3II4IDz7tMfNO47gsYKx9rYds1NXVXAYfvY8I0WB1ohbI/xcy8GSa2jNoR4jZHHbdS353S6uIc5jRqLd4kc3BWlZPIVBDioo6J4SmKU3GHwpJLXuxcwQclUPKWbLPSc5+MdS7qi3Zg/D5Zt5MAQIyB5UQgoz+S1TFNkdzMJXh3wg==
+Received: from SI6PR01MB6833.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:21c::10) by TYSPR01MB5615.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:42a::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.28; Thu, 5 Sep
+ 2024 04:52:14 +0000
+Received: from SI6PR01MB6833.apcprd01.prod.exchangelabs.com
+ ([fe80::7bd8:f933:56f3:ef3f]) by SI6PR01MB6833.apcprd01.prod.exchangelabs.com
+ ([fe80::7bd8:f933:56f3:ef3f%4]) with mapi id 15.20.7918.024; Thu, 5 Sep 2024
+ 04:52:14 +0000
+Message-ID:
+ <SI6PR01MB6833E05D68861E02407F7641FE9D2@SI6PR01MB6833.apcprd01.prod.exchangelabs.com>
+Date: Thu, 5 Sep 2024 14:21:56 +0930
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: russell thamm <russell.thamm@hotmail.com>
+Subject: git untracks my files
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TMN: [kXaOqV9onVI1BNbCHlcvy7iFWnhjFhGwDshSZMV7MmoTgkneX6tA+F7aNIUjNJiV]
+X-ClientProxiedBy: MEWP282CA0140.AUSP282.PROD.OUTLOOK.COM
+ (2603:10c6:220:1d5::18) To SI6PR01MB6833.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:21c::10)
+X-Microsoft-Original-Message-ID:
+ <a43fa057-c89e-44b6-9c75-9938b24ab324@hotmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Han Jiang <jhcarl0814@gmail.com>
-Date: Thu, 5 Sep 2024 16:38:15 +1200
-Message-ID: <CANrWfmSxmGFKG4e8yumhgyRWmDikZA39JQVLvK8Q8CqMCpPUvw@mail.gmail.com>
-Subject: =?UTF-8?Q?=60git_fetch_=3Cremote=3E_=3Crefspec=3E=E2=80=A6=60_=3Crefspec_=28without_?=
-	=?UTF-8?Q?dst=29=3Es_are_mapped_by_other_=3Crefspec_=28with_dst=29=3E_resulting_in?=
-	=?UTF-8?Q?_extra_remote_tracking_branches?=
-To: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SI6PR01MB6833:EE_|TYSPR01MB5615:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2db2d7ff-4786-40b3-014f-08dccd668281
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|15080799006|6090799003|5072599009|8060799006|19110799003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	OeGcWw643Kl2Lt69AQCsKWavDBHnYCJppyEeBllx4PrYjjuTrnMGSYKodCrV23hDZkeIgZ531F/kWAR5McKnBkQobv3Rtt7V1N8crjtL2fP7a6gD+yhGg8BhqIyOUsCwLyAYjBauxzqV3jr9Vjcsh1cJTeH+7/zO+uAc/f3KoTIOc7JVoGa/1btycvObJ4LvTd8IDhjy6g61jos0So1OXTDRfEkgzwX2MQn73D8Yh0SWtMWEW/tegKqJjJlVjZc3q0VXsuKPn66ERws06LrtYDgIrPTd7Xod/XqvXZvXlji/zwg6od7bp0W8+e1m0IhXe1N8CG2vX7M4DS43o0urafbb0bJHblt+dMFVn2a7nwkRze/FnwKxUFV/dQUGbA57cJkUDuhZ1J6yiIot06SGNps2/qZhwynfPoZ3G5MYkxWcxMETQGsZbFrYs4fjN/hkgsKzpOK9Vi5HC81TTQ4dctDk2wj3De7v8C6b3NPraPeMHbGRZ3zL7iCHCzt+UOVCJJ3ueYtblJZkZdXgTt63B4Id69a5J/3r7RVw0JXumj8ZEat2j9552XM7oscSkoxiPcKQPqDUeUiyb7pKIF13ZzUV+eKIBQVu268QonJW+0BbVw9XtFty5xHcR9gcbGELclmju5tRRMgn0WMWsQyP0x+EZsKkDGRBUC/S1+MVu7Hn1cujSMvVuipW2TT9Lt6GF7fWY2s8x3gOZkE9qZvi5+y1n3NIEdNb2OxMNLLho2I=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Vmkzbnhqa1pyUnpyUGNpTmhiK1FLelpyS3hLSThlcStRcVNJMUFNa3dBODF3?=
+ =?utf-8?B?ZEYvcnVZdEZXTnhlREJFdmtqdlRhSC9GZko2TU5lUjNxTTZDbWJpNWxsWDV2?=
+ =?utf-8?B?Tld1bkZmVEh2d09tbUNKNkFxZ3VJUzFmZmxTMU1JZ3UwSlVLV0wyRk53cy9o?=
+ =?utf-8?B?NFJvMTZsVERGSWhFd0pMNWt6UmRIZ1ZrdHNCUVZxU3hSK1ltUDFnbVZVNW9O?=
+ =?utf-8?B?TzNuUG9sN2o2TGdURHpnMktnQTh0MFNKQ0tDTHlBeFBjOW1LRTNLcWppYnpz?=
+ =?utf-8?B?V1BOZ3RDaUt1VlNEdW0wZEZTMzcyMmpCTTk3WXhtd3BSZCt6S000OU1Cd3pJ?=
+ =?utf-8?B?VlZOL256b2luYXdiWEdURkQ5aVlHb0hVdy81MHhWcG05TUJJV05Hdm1zdk00?=
+ =?utf-8?B?OGQ0dHJyNVdoejZ6T3lCNDlzV21QQlZiVzRlWVQ5RlFFTU9JYTlWSHJuUXFy?=
+ =?utf-8?B?WkFPM0Z3bTl4MituRWRqWGN5UFZzZkQyUHYrN1JIQmVLTmJ3dVVvbGR6USs2?=
+ =?utf-8?B?Qm42a2JacVFVSVFEUVpMUS9sTldwSVU5QXpRRXNoOUx2TDNwVWlnc0Irb0ZH?=
+ =?utf-8?B?ejBGTGdTNml3QkNFMnlVdFRwTjJidHp0aHpCaFdwSE5qWEpmQWU3SkQzTVha?=
+ =?utf-8?B?ODVzOUVpN1RaRzhEMDNiU2RRTHd0Q3ViM0JqaHR1aVVaUzdlcWM5eEZ2cWg4?=
+ =?utf-8?B?TTk5ajh2cWI5WjFCd056cGtWMFdZdVQ1MEdqQlB1ZU1kNFR4QVJhWVpJYzBs?=
+ =?utf-8?B?RjhUTkIxdEsxSTZJK1phR21RckRZdjlnLzBCc2JZYVpqSExmeFNNenpVWjdY?=
+ =?utf-8?B?MVBCaDdZTDkxTHF0K2I0aC9MUEYwSDljV0ZEazRTOWNmcUVmQzBYUGpmdEE1?=
+ =?utf-8?B?U29TS3FsZEpJWGlxYnBjQXVwWFh4eXZKMEFubXJEZlRZRFk1cGxwVVRuK2JP?=
+ =?utf-8?B?Z2xCYkk4aDN5RWJrOFJvbFBkSW5CV0NxVllSSnNoZk5kUUhkVE1vYWsxY1Y1?=
+ =?utf-8?B?Z3hQRHRkRVFiZk5hWjZWc0JkZGRZcy81MDJtanpaS1lteENsYWpPaXJ0T2pT?=
+ =?utf-8?B?ZVdUN1ZOSDlrTlNjVzdlalRSRmtIQUF4SlA4RC9pT1VmMHZ1cWVkUmNMZ3o5?=
+ =?utf-8?B?Y1FydWZyeE1KV3VkUmwzdjhVZGxrc3FuSlNodklMZlB5a0pSeng3Nml1bzlL?=
+ =?utf-8?B?UDI2S1hBWkVPS3BtMlRBUzJLZytFbWRmWDFHa0Zsd2RoQ1M0NmhjeWJodkYy?=
+ =?utf-8?B?U0daVkEvUTVVOHNXVHRpWm5ob1hlYkxhV1lOb0kxMTRiVW5HRndUeDVoNnh4?=
+ =?utf-8?B?MmNNREFLemJRY2xCTEx3VGZDYlNVK1U4bE0zQkJyR09FTXZnUzFFSVJVVTlu?=
+ =?utf-8?B?OUptdHhLWTdxbHpBOFYza0VxVXV1eCtJTjBrQklpclpINmkrQ3hIZVpxTSs1?=
+ =?utf-8?B?aWtnWXBVMk4rYTg5TW5jNzRSODYxcnN1eDNCZzdhcWJSMlQ2Z2pZVnJicEp5?=
+ =?utf-8?B?T09aSlNURHUvTEhhMnorOUF6UEVyR2xSS3R2Y2crYkN4U0hmZk54RDlibkxM?=
+ =?utf-8?B?eDRkcFFRYmNNN2NPbmdFRUhyQmsyclhER0wxcXh1TXNFWFdMYmZwWXdsQk1P?=
+ =?utf-8?B?S2h4UytYZm5GWUxrTGhhOTN5V21nbVlaNWE0cm9BOVVhNmtNeWppeTZNVHJF?=
+ =?utf-8?B?LzFqOXFWL0F0SUM4ZjM3MWRyL3VZaHhaVnRRTU9tTkRhMHVHK3ArWWRwdVhI?=
+ =?utf-8?Q?yKWuT9/CxBmkS6BSCF9S5jgvzNOltLXEXYtHIze?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-b4c57.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2db2d7ff-4786-40b3-014f-08dccd668281
+X-MS-Exchange-CrossTenant-AuthSource: SI6PR01MB6833.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2024 04:52:14.4402
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR01MB5615
+
+Under Ubuntu 20.04, when my program modifies one of its log files, git 
+marks it as untracked. Other files that my program modifies are 
+correctly marked as modified.
+
+This does not happen under Windows 11 and it didn't use to happen under 
+Ubuntu.
 
 Thank you for filling out a Git bug report!
 Please answer the following questions to help us understand your issue.
 
 What did you do before the bug happened? (Steps to reproduce your issue)
 
-cd '/'; cd '/'; rm --force --recursive -- './test_git2'; mkdir "$_"; cd "$_";
-mkdir --parents -- './server' './client';
-
-git -C './server' init --bare './repo.git'
-
-git -C './client' init './repo'
-git -C './client/repo' remote add server 'file://'"$(realpath
-'./server/repo.git')"
-git -C './client/repo' config set --local 'remote.server.fetch'
-'+refs/heads/*:refs/remotes/server/*2'
-git -C './client/repo' remote --verbose
-git -C './client/repo' config list --local --show-scope --show-origin
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server 'branch1'
-git -C './client/repo' log --all
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server
-'+refs/heads/branch*:refs/remotes/server/branch*3'
-'+refs/heads/branch*:refs/remotes/server/branch*4'
-git -C './client/repo' log --all
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server
-'+refs/heads/branch*:refs/remotes/server/branch*3'
-'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'
-git -C './client/repo' log --all
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server
---refmap='+refs/heads/*:refs/remotes/server/*5'
---refmap='+refs/heads/*:refs/remotes/server/*6' 'branch1'
-git -C './client/repo' log --all
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server
---refmap='+refs/heads/*:refs/remotes/server/*5'
---refmap='+refs/heads/*:refs/remotes/server/*6'
-'+refs/heads/branch*:refs/remotes/server/branch*7'
-git -C './client/repo' log --all
-
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"; git -C './server/repo.git' branch --force branch1;
-git -C './server/repo.git' branch --force branch2
-git -C './client/repo' fetch server
---refmap='+refs/heads/*:refs/remotes/server/*5'
---refmap='+refs/heads/*:refs/remotes/server/*6'
-'+refs/heads/branch*:refs/remotes/server/branch*7'
-'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'
-git -C './client/repo' log --all
+Pulled the project, built and ran my program which modified log files.
 
 What did you expect to happen? (Expected behavior)
 
-`git fetch server '+refs/heads/branch*:refs/remotes/server/branch*3'
-'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'` results
-in:
-server/branch13
-server/branch23
-server/branch14
-server/branch24
-server/branch12
-
-`git fetch server --refmap='+refs/heads/*:refs/remotes/server/*5'
---refmap='+refs/heads/*:refs/remotes/server/*6'
-'+refs/heads/branch*:refs/remotes/server/branch*7'
-'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'` results
-in:
-server/branch17
-server/branch27
-server/branch18
-server/branch28
-server/branch15
-server/branch16
-or:
-server/branch17
-server/branch27
-server/branch18
-server/branch28
-server/branch12
-server/branch15
-server/branch16
+I expected the log files to be marked as modified.
 
 What happened instead? (Actual behavior)
 
-`git fetch server '+refs/heads/branch*:refs/remotes/server/branch*3'
-'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'` results
-in:
-server/branch13
-server/branch23
-server/branch14
-server/branch24
-server/branch12
-server/branch22
-
-`git fetch server --refmap='+refs/heads/*:refs/remotes/server/*5'
---refmap='+refs/heads/*:refs/remotes/server/*6'
-'+refs/heads/branch*:refs/remotes/server/branch*7'
-'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'` results
-in:
-server/branch17
-server/branch27
-server/branch18
-server/branch28
-server/branch15
-server/branch25
-server/branch16
-server/branch26
+The log files were marked as untracked.
 
 What's different between what you expected and what actually happened?
 
+I do not expect git to untrack my files.
+
 Anything else you want to add:
+
+Only happens on Ubuntu 24.04, and not on Windows 11.
 
 Please review the rest of the bug report below.
 You can delete any lines you don't wish to share.
@@ -195,21 +148,18 @@ You can delete any lines you don't wish to share.
 
 [System Info]
 git version:
-git version 2.46.0.windows.1
+git version 2.43.0
 cpu: x86_64
-built from commit: 2e6a859ffc0471f60f79c1256f766042b0d5d17d
-sizeof-long: 4
+no commit associated with this build
+sizeof-long: 8
 sizeof-size_t: 8
-shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.9.0
-OpenSSL: OpenSSL 3.2.2 4 Jun 2024
-zlib: 1.3.1
-uname: Windows 10.0 22631
-compiler info: gnuc: 14.1
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+shell-path: /bin/sh
+uname: Linux 6.8.0-41-generic #41-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  2 
+20:41:06 UTC 2024 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /bin/bash
 
 
 [Enabled Hooks]
-not run from a git repository - no hooks to show
+
