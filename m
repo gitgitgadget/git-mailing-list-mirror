@@ -1,102 +1,100 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815791A0737
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:04:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECFD1A2C3A
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725555878; cv=none; b=Bl8XGZ32GacyO0/avgdB4Mo+eXsRlVEW/ZIi035qbQ+miLnJC6AIaSAYwNzlE3VTs652R6Wxagd/LdSfKJy8O4VqrTKQTYWK1lf23Uy62OLo12zB0i2rWkGlbRDDiHJUn/f1860OpxfB2WxheKIVl/tuL5ZLSWgoyK+CfYUcX2o=
+	t=1725556794; cv=none; b=O2aFL/phT6rCPGPjlAkUxwnfgADQy14glycFA97Y1XdGUjgMkdj+qOkBjrp/G0TqwU9YmeqQyJPpHwChiq5iaOkWE9R6lC/pHdboNo74sDfdlh84C+drMSDAQ++7SVfGmUrh7UvzVOSLb0/eZl8pZoREFjV51rMNClyzZ5FVFvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725555878; c=relaxed/simple;
-	bh=adojKdrgpbBwbxf8GtYdltbV7eqjdCAuKEBZ8Pz/Fg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NC4J3bIhryntJDXONypf22VEKy9wn72MoOZhzH9aVvr3sNHuSHoXyRb48RRQCQrmNwUGpXXZXpZ8bfKMbj0QVKMlbf95S+ptX04DVPBxVFfPB4qF3iUuBfz3z3QQRxyWoRaC4BQaoUX4j++Gwhy72VEeY9gO3Gsa0vMjv3thP6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=UowNE/Kv; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725556794; c=relaxed/simple;
+	bh=ys317bPTSXJJksDFDXfffaTtta4MTPEv7KKEropOKus=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WB2Io/BTUJw73zY5HWrA4Dq5+Jjxr7eGHDBbUY4BzgDeHS6eNepX53zC24g5ghGzCRyFw08bDXEICLPduEuXlW/A5dPbHJSkLhtzWM0rRHlvqiilFG7gD3jPO4UNRiSj3/GRxbP0uu2lALFSQOPHxWddyrRY6dd6AVsS8b86n9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mzzhy9kx; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UowNE/Kv"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e164caa76e4so1177577276.1
-        for <git@vger.kernel.org>; Thu, 05 Sep 2024 10:04:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzzhy9kx"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2d8815ef6d2so794585a91.0
+        for <git@vger.kernel.org>; Thu, 05 Sep 2024 10:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725555876; x=1726160676; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9o4rb4geFB2stinCcQpDOUtBTkTETjrrHODyknqfh9g=;
-        b=UowNE/Kv74QV/HF6um6iUkvruMxL8NzlI549xtf3H+BS2Ffhgh9/IQi9OWCTpcsNeH
-         uuyDotJ/pUOhOxxNFTt6+HPOO1+E/9N98wopRB9bzFOvcW/GVX1pGdoOwhVThQ7uXh2M
-         DRk+zMy3BQtlV7eJz1O++DnXzI0Rvh+ZX9pUjtjevd30IhPnuBtGPgOiZ7KmPZLgX3bS
-         81tbyhJQrrS772x4zxSRs0/QdpbU9BlC2ATvkIN0Snzi3o86HzCWgi8T7T4lyV97SnIQ
-         QAj8i4UhJtcBimfQpUZzHD+Ui2lW/shgrEV6mKrFsAhgvKdyNbqdpHHUTrIwucRCtsng
-         16lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725555876; x=1726160676;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1725556793; x=1726161593; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9o4rb4geFB2stinCcQpDOUtBTkTETjrrHODyknqfh9g=;
-        b=FcQFLLBt4Uprh3GpVs+PFaJ9aKBdYr7huXfk13cnZUKpv8IuI0Ts3DScpSSmzjuEc3
-         gBgwJmLfGeUBimFrzmRRf9D81y94jnViArJJ+duWO/8ZbKhzvuYNvBUa156W583DSh2F
-         kqe6q8lMCqKnT5EouH/Fz1hg4Wl2eXXC/mFDg7AGEqNtDiwIoF2LRnoGtAl7byMULAlZ
-         T1IglyyJYQ2AYa14Hjx8SOtKEAPeQ+k32XtOjj93xLaarh79JMLXp9s6C6Y7BIzr9X1Q
-         daB0h4bqMBVmTG4c/Q5on247hVia/0XjCEznZbH3LYvPY61i32cXR+yhUQSFBo/ENfzV
-         jr2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV+SOEiLbbfX+m/BkULfcWns5709h1DG664p66JlmxbaRfEgW4TQj8Jhtvb4l2nzqtiPW8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwKZ0Vy/s3VQYk48grocFAaHL812QYU8/YUkEv1Oh2Ws5XC5CM
-	ud5AAzv6E8YZaNNStrWlAIHWGHSAjYdRFDwdZoDSLx0bwiVOmazOWYngzMrFxdbMoIW6tuqR6+M
-	+Kzo=
-X-Google-Smtp-Source: AGHT+IESzMiIvl0x1YTi37BB2LniTXAPEtEVUwaHPV3wyZp2ZR4yLSbgCV+wMzgyCDNupe7pwZDwxg==
-X-Received: by 2002:a05:6902:114b:b0:e0b:1191:3cb3 with SMTP id 3f1490d57ef6-e1a7a1aebffmr21004781276.38.1725555876161;
-        Thu, 05 Sep 2024 10:04:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1d04181167sm1105725276.10.2024.09.05.10.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 10:04:35 -0700 (PDT)
-Date: Thu, 5 Sep 2024 13:04:34 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-Message-ID: <ZtnkovOqrJNxUtez@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <ZtXG2cEbxr8pNg7j@tapette.crustytoothpaste.net>
- <Ztdn25zfi8WHO+GS@nand.local>
- <20240905103736.GC2556395@coredump.intra.peff.net>
- <xmqq34me5crn.fsf@gitster.g>
- <ZtnbFXL7W5DvW8UN@nand.local>
- <xmqq34me3uyz.fsf@gitster.g>
+        bh=P1JemV8vdjvud/wCCMG2mbi6Dk0gnjC8ZLIDTVL3rHY=;
+        b=mzzhy9kxMKadLiermZhugfI1xV6xvJyKH/X0kD+ml/8iPBfwmpkzhQouibh3bJwuhh
+         46f/Ys859uspz5sylbICPD43sbrYjQyjDFpdswVxPJpVhyojJewCbJEIiZtde7b0mzSh
+         +EHDirTB2HcnJ+D1OtPVnSPqRaC8DBMGpJ2Te791cLOWaDYAHcds++8b2XOVbhMUEJlN
+         +FhPabyKWGyE4AQ5dy5iHArbyIgQU25Mjp5laQ6CIcH2UAPnmuAxMIf5Xz/PsVJIk0T3
+         yWl6sCxpmgwjWZVSau92hFXQ0aF6+3h7M7Mj/MsAeE9qu+fJf91jPIqTGxO1MIZC/vx+
+         sI5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725556793; x=1726161593;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P1JemV8vdjvud/wCCMG2mbi6Dk0gnjC8ZLIDTVL3rHY=;
+        b=U5BqcD3hLBvq4wA97D/CoHcJ1+pourGGkJgNM0LSGA9S0JGKZ2LyBJLk64LUC2p4GQ
+         pT2AhW8h+uP8iyTmdlzg0zbQ4falSznJRFi+2Jr/sRu99uUT+bNTh3hFEDhH5FRJxUgZ
+         7gc8FUNYBD6/us+1KfTcFUzQa5MFMv60y26GotCicHk4D+nmpfCF0tmca3M1jwdHEJlb
+         Pvr2NxRVAs2jkbIY7W+np9i1b3mrMPENFP30FTID7D1j2yBv4d+Rq1drR30KRHM7Wk8z
+         Rfg5aKeGO4ChFQ7Ox9VDGRVvDfdumAgQnQ1UgxKg8PyuP3Ohsz74azmeCmxJDigls004
+         lVRg==
+X-Forwarded-Encrypted: i=1; AJvYcCX6iKm687eCScfzx+tqdO10lSWf+7wh49nxb9HAFphr5idTV+baCPEH/bXUmuNNEFc23kM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUSAYD72dBtWsVchCKyEG36pvIihPOBEUPKzdb6/qz9dNAYDvl
+	ZGLh+mjFl4aYjEevpnNYbXgh6m8YAirdBtvfQ6mXhnRTI+Hgu2Pjakq//PLNuH6XtIDvV3zG5sD
+	UtvfiIaHofukcDRC3Odb4NqkC8n8=
+X-Google-Smtp-Source: AGHT+IFf2BCdrrrijmg81yj0QEk6R0f96pt2+EXYh0t/wI8n3A9xhy9DPNjv3rv/6qXEWT5uIqAzeyFXGuS2mLj7apE=
+X-Received: by 2002:a17:90a:ea90:b0:2d8:7970:726 with SMTP id
+ 98e67ed59e1d1-2d879700fcbmr20917937a91.12.1725556792423; Thu, 05 Sep 2024
+ 10:19:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34me3uyz.fsf@gitster.g>
+References: <pull.1779.git.1725472799637.gitgitgadget@gmail.com>
+ <pull.1779.v2.git.1725504725976.gitgitgadget@gmail.com> <xmqqcyli3x1w.fsf@gitster.g>
+ <CAG=Um+0WinvE4CQPTwKdxMxj4xBJ9Z1SBWVrGzTMKM3CbMni0w@mail.gmail.com> <xmqqy1462gc2.fsf@gitster.g>
+In-Reply-To: <xmqqy1462gc2.fsf@gitster.g>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Thu, 5 Sep 2024 22:49:15 +0530
+Message-ID: <CAG=Um+0P8SgWo2sN3St8+PpBneQfDBoqnpnC6uMmYu2YOOaWmQ@mail.gmail.com>
+Subject: Re: [PATCH v2] remote: prefetch config
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Patrick Steinhardt [ ]" <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 05, 2024 at 09:51:00AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Thu, Sep 5, 2024 at 10:22=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> > If so, I agree, but would note that this series does not yet switch
-> > index-pack to use the non-collision detecting SHA-1 implementation when
-> > available, so that would not be a prerequisite for merging this series.
+> Shubham Kanodia <shubham.kanodia10@gmail.com> writes:
 >
-> Hmph, I am confused.  It needs to be corrected in order to address
-> collisions of the tail sum Peff raised, as no longer checked the
-> tail sum with SHA1DC but with "fast" SHA-1.
+> >>
+> >>         int prefetch; /* is prefetch enabled? */
+> >>
+> > ...
+> > Updating my patch =E2=80=94 please let me know if there's anything else=
+ I can
+> > improve here.
+>
+> Renaming the .prefetch member to .prefetch_enabled would eliminate
+> the need to add any comment on the member in the header file.
 
-Peff's mail supposes that we have already modified index-pack to use the
-non-collision detecting SHA-1 implementation. But this series does not
-do that, so I don't think we have an issue to address here.
+Do you mean for the struct member here or also the config? For the
+config, it'll probably be clearer
+to keep `prefetch` still as it aligns nicely with the boolean
+`--prefetch` command line flag.
 
-In a hypothetical future series where we do modify index-pack to use the
-_FAST SHA-1 implementation, then we would need to address the issue that
-Peff raised first as a prerequisite.
+I can name the struct member `prefetch_enabled` =E2=80=94 though I don't se=
+e
+other boolean remote properties (`prune`, `prune_tags`) add suffixes
+to indicate
+they are booleans.
 
-Thanks,
-Taylor
+> Thanks.
