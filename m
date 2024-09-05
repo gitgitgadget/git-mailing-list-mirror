@@ -1,119 +1,237 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00D3192D96
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC6D1A42CC
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 17:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725556878; cv=none; b=hOXj7geiTth0rY/RnkQnNEnvs493fLQh95SYvlkz8aYv8Wrk80pOJ7Q7SItT6V0/oY133lVdzq8mOXbpx4UHJwH4CqEW6ytmKnVKBkewtZUdW4CPH1LUeEWu0icCf0o6rQJfbqANzkdH/TdRBfGHZdD3Re55jQ4sVB4XGixS0mw=
+	t=1725557710; cv=none; b=TYTmkg0OzLshLR1pRoFXbrstHYgcnBz7kfIX8Utgx9dUkKWHHlo5sy7Ku3Uzn7oChHBeE3BXT8Ey9wiK0hjGDut8+fLILi/IdSFu6ekrPJMt17AweGjMKLppelhm4mtZsiE9ngqHmG0fbPsFIfJsxTYlrn8ELY8aHZ4oRHllC8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725556878; c=relaxed/simple;
-	bh=n/Olp2tZY9ayuQepNEibQsgHF3eBvWklSeSQSGZhsl0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=btwSd7wSrA7FNoefcVf8B3NHiPZkevq9mHaOtk/VFlZcGTWg9rxNx8MnltHJrnzpxyfanvFSZDzKjqUhvN+ckQKfHVHW6bf4i9PvcRZpVY5qd39Mg5g0ovZk8a89dqHldD4fMIFfTn/UUJ7PcbL2EtEvPxd4RNqwPIo6zElObmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TuRWeU7E; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725557710; c=relaxed/simple;
+	bh=J2p94uug/oQ0VDvXe5LZDMWHrRJJm4xNjpAQe/b96n8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pLVm4TDkwMgzFUxIpcgaSbwTH4n99EDKkQDb2neyGBjjI+RsAOpTXJvRjnhauPe6b69SNNK5ehfAJ0Rope8txqouBg6oA4pLV3CGpF9isLEoOiYeDnm0TDvLa9oCfgC28/pzOB1HS6UaacT0Ch5g7ros4EeYJKfiGNntkJsPbt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YlPyzr1j; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TuRWeU7E"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 540E426561;
-	Thu,  5 Sep 2024 13:21:10 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=n/Olp2tZY9ayuQepNEibQsgHF3eBvWklSeSQSG
-	Zhsl0=; b=TuRWeU7EXlPngDDL7Ymf5pJ5i7klulcdxT+qAj8O8eFCoLljZE1i/X
-	WeeUXsedHTr+FXrZJU6IAumgLu+P4jadPJJrJTSgoSZvbh36PF1CFVKcdIz38ehX
-	mrimmjGkHvpRfSXGJzZlNOjgUOMQXt31kz/9AYD1z2toEXtMcSSMY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 34D2A26560;
-	Thu,  5 Sep 2024 13:21:10 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 591442655D;
-	Thu,  5 Sep 2024 13:21:09 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 0/3] Add repository parameter to builtins
-In-Reply-To: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com> (John Cai
-	via GitGitGadget's message of "Thu, 05 Sep 2024 16:57:44 +0000")
-References: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
-Date: Thu, 05 Sep 2024 10:21:04 -0700
-Message-ID: <xmqqjzfq2f0f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YlPyzr1j"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5dfaff47600so578537eaf.0
+        for <git@vger.kernel.org>; Thu, 05 Sep 2024 10:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725557707; x=1726162507; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MK3D2tVnTf383ggKOXQT3gAZ7kk4lIC2BnsWfAKrH5U=;
+        b=YlPyzr1jwBB1+fTa0IWTi1Eri/uAniTZ6dFlC61HYw/PE0Vd3ayBI1Fssj0gOtAW2h
+         fhT5TINpJANa7QlU4uQjf6J+H+4odHq7W1ZTjUWMYOGAQnuBpE761XKWgCUriZpJQmbp
+         MUfr2wurcAV7ykdwiHEI9w3gNZLaWt3vBzW+C6v2ET1xINJvbcrJA4btN3OY1MqMmVV+
+         Q8Z7UqKVhb+tOZsn9ehDgpQ8NawKIubDe6TxsvmS4sl2KPyvaeGrCgXnd0VkW1O1mPP9
+         N5gFS3J5fiUhJ/vOXzgk9CzK+tFjqIieLMQ6F8EHOUtP+lB7JciocDeNjZ4RRdz2JqEG
+         Uvpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725557707; x=1726162507;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MK3D2tVnTf383ggKOXQT3gAZ7kk4lIC2BnsWfAKrH5U=;
+        b=dbKaVrEfFpATu8ZUn9WVxxDdKPBH1BiPy82lpi1YCCfc8dg9WSnkvZPD37+sbi+Yb4
+         Ork8+6U810tVeqja+SYYyXZr7MK/EjBcECHZxn1DT/Hs3rLvG+TlRHrMcoNYWDO7ZFkK
+         b1gDI4OD/lOxU3FkxomXEyfkrMdZPHRnn6i7NwE4V8Om0MaJ90e2lEH3b+TcNaDexcMB
+         HTeKKeNTiZRuA5xPhx20GZdw5oYJi9BxJXRtniZKRXL/WorkpE1I1ViTb26li/whaiqr
+         C+BPeJWpLSTE/n66BHsTO7zQ9CHFe2DGtrfP8YCVZeeCIiBSviCR2FOxeAwfkRF9JktZ
+         OvOg==
+X-Gm-Message-State: AOJu0YxIYZil+63+1liTUq59nsdgMhdLFe5AZZySnLisVXOLGQKgW/uh
+	xNBqQ7bOWgMrnYDiJ9YP+8KzUeykiOyPxkf++jSUdyyYXFL1n4y26VVKeg==
+X-Google-Smtp-Source: AGHT+IGTqXUx26JlD8wnG6BmSAXcpQckhnfaS6L+ua4V9/UZLAS5JUoUWlmb/VKCPBgggTvPozV3Vw==
+X-Received: by 2002:a05:6870:e0c9:b0:277:d279:364c with SMTP id 586e51a60fabf-27b4c9abac7mr3035849fac.20.1725557707164;
+        Thu, 05 Sep 2024 10:35:07 -0700 (PDT)
+Received: from localhost.localdomain (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2782c797ec7sm1194116fac.21.2024.09.05.10.35.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2024 10:35:06 -0700 (PDT)
+From: Brian Lyles <brianmlyles@gmail.com>
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>
+Subject: [PATCH] interpret-trailers: handle message without trailing newline
+Date: Thu,  5 Sep 2024 12:34:40 -0500
+Message-ID: <20240905173445.1677704-1-brianmlyles@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3DE5EF62-6BAB-11EF-B677-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+When git-interpret-trailers is used to add a trailer to a message that
+does not end in a trailing newline, the new trailer is added on the line
+immediately following the message instead of as a trailer block
+separated from the message by a newline character.
 
-> As part of the effort to remove global state of the_repository, add a
-> repository parameter to builtins so that a repository variable can be passed
-> down. The patches are ordered as follows:
->
->  1. Changes the signature of builtins and passes the_repository down in
->     git.c to be called by all builtins.
->  2. Remove USE_THE_REPOSITORY_VARIABLE from builtin.h, and instead add it to
->     each individual builtin. This paves the way for a migration process
->     whereby each builtin can be migrated away from using the_repository.
->  3. As an example, migrate builtin/add.c to get rid of the_repository by
->     instead passing the repository argument down into helper functions.
+For example, if a message's text was "The subject" with no trailing
+newline at all, `git interpret-trailers --trailer my-trailer=true` will
+result in the following malformed commit message:
 
-As most of the commands require a repository (as they should---those
-that work without a repository ought to be outliners, things that
-are needed to bootstrap like "git init" and "git clone", or those
-that allow us to interact with a remote repository without having
-any repository on our side to be affected, like "git archive" or
-"git ls-remote"), I think this probably makes sense as a good first
-step.
+    The subject
+    my-trailer: true
 
-And there are commands that are primarily for working with Git, but
-optionally can work outside a repository.  They need to do special
-things in any case by calling setup_git_directory_gently() with
-nongit to figure out if they are in the repository, e.g.
+While it is generally expected that a commit message should end with a
+newline character, git-interpret-trailers should not be returning an
+invalid message in this case.
 
-	prefix = setup_git_directory_gently(&nongit);
+Detect when a message exists but does not end with a newline character,
+and add an extra newline before appending the new trailer.
 
-	if (!nongit) {
-		prepare_repo_settings(the_repository);
-		the_repository->settings.command_requires_full_index = 0;
-	} else {
-		... do whatever it can outside a repository ...
-	}
+Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+---
+ builtin/interpret-trailers.c  | 12 ++++++-----
+ t/t7513-interpret-trailers.sh | 40 +++++++++++++++++++++++++++++++++++
+ trailer.c                     | 18 ++++++++++++++++
+ trailer.h                     |  5 +++++
+ 4 files changed, 70 insertions(+), 5 deletions(-)
 
-(note: this was taken from "git diff" with a bit of tweak, but
-others in the same category should look very similar), so I would
-imagine that we may want to update setup_git_directory_gently() to
-be more like:
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 1d969494cf..9d8f94341d 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -153,13 +153,15 @@ static void interpret_trailers(const struct process_trailer_options *opts,
 
-	const char *setup_git_directory_gently(struct repository **repo);
+ 	info = parse_trailers(opts, sb.buf, &head);
 
-and the above snippet would become:
+-	/* Print the lines before the trailers */
+-	if (!opts->only_trailers)
++	if (!opts->only_trailers) {
++		/* Print the lines before the trailers */
+ 		fwrite(sb.buf, 1, trailer_block_start(info), outfile);
 
-	prefix = setup_git_directory_gently(&repo);
+-	if (!opts->only_trailers && !blank_line_before_trailer_block(info))
+-		fprintf(outfile, "\n");
+-
++		if (message_without_trailing_newline_before_trailer_block(info))
++			fprintf(outfile, "\n\n");
++		else if (!blank_line_before_trailer_block(info))
++			fprintf(outfile, "\n");
++	}
 
-	if (repo) {
-		prepare_repo_settings(repo);
-		repo->settings.command_requires_full_index = 0;
-	} else {
-		...
-	}
+ 	if (!opts->only_input) {
+ 		LIST_HEAD(config_head);
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 3d3e13ccf8..d5303c3f74 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -175,6 +175,46 @@ test_expect_success 'with only a title in the message' '
+ 	test_cmp expected actual
+ '
 
-IOW, "nongit" Boolean flag we use to say "are we working without a
-repository?" becomes "the dispatcher in git.c usually gives us the
-repository in repo, but we asked them not to do the repository setup
-and we will call setup_git_directory_gently() ourselves, allowing
-the call to overwrite the repo parameter given."
++test_expect_success 'with a bodiless message that lacks a trailing newline after the subject' '
++	cat >expected <<-\EOF &&
++		area: change
++
++		Reviewed-by: Peff
++		Acked-by: Johan
++	EOF
++	printf "area: change" | \
++	git interpret-trailers --trailer "Reviewed-by: Peff" \
++		--trailer "Acked-by: Johan" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'with a bodied message that lacks a trailing newline after the body' '
++	cat >expected <<-\EOF &&
++		area: change
++
++		details about the change.
++
++		Reviewed-by: Peff
++		Acked-by: Johan
++	EOF
++	printf "area: change\n\ndetails about the change." | \
++	git interpret-trailers --trailer "Reviewed-by: Peff" \
++		--trailer "Acked-by: Johan" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'with a message that lacks a trailing newline after the trailers' '
++	cat >expected <<-\EOF &&
++		area: change
++
++		Reviewed-by: Peff
++		Acked-by: Johan
++	EOF
++	printf "area: change\n\nReviewed-by: Peff" | \
++	git interpret-trailers --trailer "Acked-by: Johan" >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'with multiline title in the message' '
+ 	cat >expected <<-\EOF &&
+ 		place of
+diff --git a/trailer.c b/trailer.c
+index 72e5136c73..9c19632b6d 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -18,6 +18,12 @@ struct trailer_info {
+ 	 */
+ 	int blank_line_before_trailer;
 
-Thanks.
++	/*
++	 * True if the last character before the location pointed to be
++	 * trailer_block_start is a newline character.
++	 */
++	int message_without_trailing_newline_before_trailer;
++
+ 	/*
+ 	 * Offsets to the trailer block start and end positions in the input
+ 	 * string. If no trailer block is found, these are both set to the
+@@ -946,6 +952,11 @@ static int ends_with_blank_line(const char *buf, size_t len)
+ 	return is_blank_line(buf + ll);
+ }
+
++static int has_message_without_trailing_newline_char(const char *buf, size_t len)
++{
++	return len > 0 && buf[len - 1] != '\n';
++}
++
+ static void unfold_value(struct strbuf *val)
+ {
+ 	struct strbuf out = STRBUF_INIT;
+@@ -1017,6 +1028,8 @@ static struct trailer_info *trailer_info_get(const struct process_trailer_option
+
+ 	info->blank_line_before_trailer = ends_with_blank_line(str,
+ 							       trailer_block_start);
++	info->message_without_trailing_newline_before_trailer
++		= has_message_without_trailing_newline_char(str, trailer_block_start);
+ 	info->trailer_block_start = trailer_block_start;
+ 	info->trailer_block_end = end_of_log_message;
+ 	info->trailers = trailer_strings;
+@@ -1090,6 +1103,11 @@ int blank_line_before_trailer_block(struct trailer_info *info)
+ 	return info->blank_line_before_trailer;
+ }
+
++int message_without_trailing_newline_before_trailer_block(struct trailer_info *info)
++{
++	return info->message_without_trailing_newline_before_trailer;
++}
++
+ void trailer_info_release(struct trailer_info *info)
+ {
+ 	size_t i;
+diff --git a/trailer.h b/trailer.h
+index 6eb53df155..04148be432 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -125,6 +125,11 @@ size_t trailer_block_end(struct trailer_info *);
+  */
+ int blank_line_before_trailer_block(struct trailer_info *);
+
++/*
++ * Return 1 if the trailer block had a newline character
++ */
++int message_without_trailing_newline_before_trailer_block(struct trailer_info *);
++
+ /*
+  * Free trailer_info struct.
+  */
+--
+2.45.2
