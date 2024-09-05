@@ -1,150 +1,144 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CB3619B3C4
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 12:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B7519925B
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 13:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725538407; cv=none; b=kRhM4a46lLLnF4Mk2oDGkhgSy+5HFOyNE3m5W/b4E/rAXwH9rxFNwu33vJTNQsus2Ii29/ZMHW0e4tFEkv9HiquKwIZ38n8FTyIZUR8gpAZAE5XU8Uzq8sYUozb+Uk9r/xn1HTqxeGCIWis+KhKcT0+RfkepO5NaQEmeGNJ4/6w=
+	t=1725543889; cv=none; b=kq8L0eJlwO30BtZCbOPmzCxawJ9jDZ0cp1fg7grxXO8s4D4HIY4zvr4dKZQjBK3yYHMoErayFpjCftBG4Tf1Rc4vXrrmO52l0GQTebA3ds14W4YoD49I4W0OkgFVGHfyA9C3lJH+uUB33ZYhVl27PRLYnipy/bzzZNuxBb86E38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725538407; c=relaxed/simple;
-	bh=pl9bJWs4+ld3iisYMI21x0isbQ91kFO1hHPOgOSp7Ec=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=qJNErZKCdg91+PdJ+sI1e5Zjx0mYs7e5xjnuw84RY6w7aM+jIptSQaxpjaNFkiOYsjeLYeHMUWYpTbRl9Qk3vq4k8F27RaK7bX/C2dOWxGlQH4biqujSAnxouYvblajJ6u55TooeDVSHswg1UilYox1NYiHUQt1FXRjHfV+X3nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=UbOLWihs reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1725543889; c=relaxed/simple;
+	bh=49ykooHSVpwPZOJGtEorhtV+U8NiXKpta5nh9H24WVY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MIardh99pgYR9mshFpnBkxMXgoXIbQ37bh/ZvwZjoMx4rK209KxeUqPnxBt9f9jODT/gIOL8O9pKeyVpOkNEvvy+oATGqHZz0VE9FQuV+ZyeqLjYRO0Xjabgab/D532l4LX5l4QFKWSRM3aQUzIFEMmAopW2q/tOFcu2zU9+ec8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=epbPHWOH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kYTiuTlS; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="UbOLWihs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=lbnnvVtuk92loZrkoFgyAB4uEA8sjqORWfm8SNscvLw=; b=U
-	bOLWihs5H9fnQJzR0ztyfAhhDifHQL8+MrJan4EhbAYzO4iNlQDbm55yqQcGW15G
-	NWK9IE55s5gIX+h1rN98HCUOzpS0PCdmU4yP5fnzVTWwdYqXBc6SZkBQT9KkAuBy
-	dpY3e4TAfBLB3CI1LkzMeGApzpJRy6OHl1mfnFooEg=
-Received: from bupt_xingxin$163.com ( [124.160.72.194] ) by
- ajax-webmail-wmsvr-40-108 (Coremail) ; Thu, 5 Sep 2024 20:12:58 +0800 (CST)
-Date: Thu, 5 Sep 2024 20:12:58 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Brandon Williams" <bmwill@google.com>, 
-	"Jonathan Tan" <jonathantanmy@google.com>, 
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: Re: [PATCH 3/4] builtin/clone.c: recognize
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="epbPHWOH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kYTiuTlS"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9231511401ED;
+	Thu,  5 Sep 2024 09:44:46 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Sep 2024 09:44:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725543886; x=1725630286; bh=owTi1sygIP
+	2GZEal0WxuUd88nWDrCTGQFA9usY986ZQ=; b=epbPHWOH0LfsB/1Rg50qr7oQIS
+	c/kJKHMeb0bRD1mh/YLBSQQoXwEvCDsF/gMltTxpx6h8i6xUp56+Qq+kUfjJKr53
+	KgNTE1adHq/3JvOiSQu9SobUluhkuIQxku34XaoSlrshVrLnKow157JNx/CXIXxy
+	3YNMo9KnpR81lTp0Buz/mAryLWb+eo79E+q0mOiDkmluyyu4RMGZ1Id9KP/dvI+Y
+	b9czKVaQCFEHJbUI4Cm7PF3Ew6eoqPXzs4XZ8GMIjcnqKbrAqOFijiu1qB95d+oD
+	HomxWlmXZBZMeghGtEUGeyOxTEYTjH5IqDH4HdCDpoUQp5LT1+I3bXoSFkJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725543886; x=1725630286; bh=owTi1sygIP2GZEal0WxuUd88nWDr
+	CTGQFA9usY986ZQ=; b=kYTiuTlSkctyQ0c8zNkxIXvg7+9gOnOtsw8uVm9qIXpn
+	mf2kUiJOuIT4Si6OP5NAsLjLK4UfSSrElTh9Ao24U4so1pe4F7RM/l2oJ3POD65t
+	FcJzod6IvHywdK3JiHYdtM/aEsk8Dk/OpQ6WWwPfTZF0Y8DW4JVHK7bup1if/44F
+	RD6j15Yd2ny3DRd70k5J2HxL1L+wvPX1afOmTefx3g6TN9WTiG4iEetR0BG+44dW
+	6fUtb5QdUSRJFlJAl9SSPFBJbC++KwXZOSQ8fC7OgK3vhtYb1hA1X3lybthJH7ss
+	n7o9zjmbHxuKDydg5w97G2ls23m2s8VCQzag5GTZyw==
+X-ME-Sender: <xms:zrXZZkMIVrX_EYQLfKYgJTcSRy-GM_sduYtpc93KCSjXnTgAR2avmQ>
+    <xme:zrXZZq_Sx4D_pdUYGjumFUAa9hI_ySKJweLsJ5U6zNaAWteLSXSFivDaGwbndS7M_
+    KFogTCE4BZQmWrdEA>
+X-ME-Received: <xmr:zrXZZrRGEk9fsB2w_P_a4hs7JQsGmetdH7FHPcmKgcuMSuTmHknET4eO-nbarSz5ElXKKc3drTzUGvNqpwMB5JUKzmNYdzo0QqWHRdhEyUCQ3zw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudehledgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepgihinhhggihinhdrgiigsegshihtvggurghntggvrd
+    gtohhmpdhrtghpthhtohepsghuphhtpgigihhnghigihhnseduieefrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopegsmhifihhllhesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglh
+    gvrdgtohhm
+X-ME-Proxy: <xmx:zrXZZss-IaFR0ny_S32qFmHT9zzLX3rtN3V0tlVWbsjjUc-KYV-zKw>
+    <xmx:zrXZZsfi-aJbspwoz9a_e9jqt-OdB9snXeuzym7qNbnfQIFZMz3Q1g>
+    <xmx:zrXZZg31fgh3A_4mGWrAsbnBr5fktyV33fM19fX7KnByu3Qayjr5ZA>
+    <xmx:zrXZZg-W0U6IEyQta_S30-BorOmqwDkkiw93taYtaGbCy2865u60Ew>
+    <xmx:zrXZZkQEskCYysUs3i6fdpNnHhFJjujOQup5GB9T5vfaehaMWXx5Et7i>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Sep 2024 09:44:44 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8646e74b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Sep 2024 13:44:31 +0000 (UTC)
+Date: Thu, 5 Sep 2024 15:44:41 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Xing Xin <bupt_xingxin@163.com>
+Cc: Xing Xin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+	Brandon Williams <bmwill@google.com>,
+	Jonathan Tan <jonathantanmy@google.com>,
+	Xing Xin <xingxin.xx@bytedance.com>
+Subject: Re: Re: Re: [PATCH 3/4] builtin/clone.c: recognize
  fetch.serverOption configuration
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZtmQZQHnwYLNvT0F@pks.im>
+Message-ID: <Ztm1w_61vjEkiC4C@pks.im>
 References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
  <7c3ebda513d872a2ab2aa0cff5887757de4cde0a.1725279236.git.gitgitgadget@gmail.com>
  <ZtbgafDQwbU9tBoq@pks.im>
  <366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
  <ZtmQZQHnwYLNvT0F@pks.im>
-X-NTES-SC: AL_Qu2ZB/mYt0ss7iCeYOkXn0oVhe85UMW2ufsg3YReP500uiTf6AAFWmRkNErz0d23Nh6LqwOmXhFS4+NBX5NdcajMm9URdoqWDhrSD5rsISlV
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+ <3ce04aef.b004.191c21a2159.Coremail.bupt_xingxin@163.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <3ce04aef.b004.191c21a2159.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3_+hKoNlmZTVOAA--.34702W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiLwNRbWVOGIMMSgAIsu
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3ce04aef.b004.191c21a2159.Coremail.bupt_xingxin@163.com>
 
-QXQgMjAyNC0wOS0wNSAxOTowNToxNSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBXZWQsIFNlcCAwNCwgMjAyNCBhdCAwMzo0OToyOFBNICswODAwLCBYaW5nIFhp
-biB3cm90ZToKPj4gQXQgMjAyNC0wOS0wMyAxODowOTo0NSwgIlBhdHJpY2sgU3RlaW5oYXJkdCIg
-PHBzQHBrcy5pbT4gd3JvdGU6Cj4+ID5PbiBNb24sIFNlcCAwMiwgMjAyNCBhdCAxMjoxMzo1NVBN
-ICswMDAwLCBYaW5nIFhpbiB2aWEgR2l0R2l0R2FkZ2V0IHdyb3RlOgo+PiA+PiBkaWZmIC0tZ2l0
-IGEvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUu
-dHh0Cj4+ID4+IGluZGV4IDhlOTI1ZGI3ZTljLi4xMDU2NDVlZDY4NSAxMDA2NDQKPj4gPj4gLS0t
-IGEvRG9jdW1lbnRhdGlvbi9naXQtY2xvbmUudHh0Cj4+ID4+ICsrKyBiL0RvY3VtZW50YXRpb24v
-Z2l0LWNsb25lLnR4dAo+PiA+PiBAQCAtMTQ5LDYgKzE0OSw5IEBAIG9iamVjdHMgZnJvbSB0aGUg
-c291cmNlIHJlcG9zaXRvcnkgaW50byBhIHBhY2sgaW4gdGhlIGNsb25lZCByZXBvc2l0b3J5Lgo+
-PiA+PiAgCXVua25vd24gb25lcywgaXMgc2VydmVyLXNwZWNpZmljLgo+PiA+PiAgCVdoZW4gbXVs
-dGlwbGUgKystLXNlcnZlci1vcHRpb249KytfXzxvcHRpb24+X18gYXJlIGdpdmVuLCB0aGV5IGFy
-ZSBhbGwKPj4gPj4gIAlzZW50IHRvIHRoZSBvdGhlciBzaWRlIGluIHRoZSBvcmRlciBsaXN0ZWQg
-b24gdGhlIGNvbW1hbmQgbGluZS4KPj4gPj4gKwlXaGVuIG5vICsrLS1zZXJ2ZXItb3B0aW9uPSsr
-X188b3B0aW9uPl9fIGlzIGdpdmVuIGZyb20gdGhlIGNvbW1hbmQKPj4gPj4gKwlsaW5lLCB0aGUg
-dmFsdWVzIG9mIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgYGZldGNoLnNlcnZlck9wdGlvbmAKPj4g
-Pj4gKwlhcmUgdXNlZCBpbnN0ZWFkLgo+PiA+PiAgCj4+ID4+ICBgLW5gOjoKPj4gPj4gIGAtLW5v
-LWNoZWNrb3V0YDo6Cj4+ID4KPj4gPkknbSBub3QgYSAxMDAlIHN1cmUsIGJ1dCBJIGRvbid0IHRo
-aW5rIHRoYXQgYGZldGNoLipgIGNvbmZpZ3MgdHlwaWNhbGx5Cj4+ID5pbXBhY3QgZ2l0LWNsb25l
-KDEpLiBTbyB0aGlzIGhlcmUgaXMgYSB0YWQgc3VycHJpc2luZyB0byBtZS4KPj4gPgo+PiA+SXQg
-bWFrZXMgbWUgd29uZGVyIHdoZXRoZXIgaXQgaXMgYWN0dWFsbHkgc2Vuc2libGUgdG8gaW1wbGVt
-ZW50IHRoaXMgYXMKPj4gPnBhcnQgb2YgdGhlIGBmZXRjaGAgbmFtZXNwYWNlIGluIHRoZSBmaXJz
-dCBwbGFjZS4gSSdtIG5vdCB5ZXQgcXVpdGUgc3VyZQo+PiA+d2hlcmUgdGhpcyB3aG9sZSBzZXJp
-ZXMgc2xvdHMgaW4sIHRoYXQgaXMgd2h5IG9uZSB3b3VsZCB3YW50IHRvIHNldCB1cAo+PiA+ZGVm
-YXVsdCBzZXJ2ZXIgb3B0aW9ucyBpbiB0aGUgZmlyc3QgcGxhY2UuIFNvIHdoYXQgSSdtIHdvbmRl
-cmluZyByaWdodAo+PiA+bm93IGlzIHdoZXRoZXIgdGhlIHNlcnZlciBvcHRpb25zIGFyZSBzb21l
-dGhpbmcgdGhhdCB5b3Ugd2FudCB0byBhcHBseQo+PiA+Z2xvYmFsbHkgZm9yIGFsbCByZW1vdGVz
-LCBvciB3aGV0aGVyIHlvdSdkIHJhdGhlciB3YW50IHRvIHNldCB0aGVtIHVwCj4+ID5wZXIgcmVt
-b3RlLgo+PiAKPj4gU29ycnkgZm9yIG5vdCBleHBsYWluaW5nIG91ciB1c2UgY2FzZSBjbGVhcmx5
-LiBXZSBoYXZlIHNldmVyYWwgaW50ZXJuYWwKPj4gcmVwb3NpdG9yaWVzIGNvbmZpZ3VyZWQgd2l0
-aCBudW1lcm91cyBDSSB0YXNrcywgZWFjaCByZXF1aXJpbmcgY29kZQo+PiBwcmVwYXJhdGlvbiAo
-c29tZXRpbWVzIHZpYSBjbG9uZSwgc29tZXRpbWVzIHZpYSBmZXRjaCkuIFRoZXNlIENJIHRhc2tz
-Cj4+IGFyZSB1c3VzYWxseSB0cmlnZ2VyZWQgYnkgcG9zdC1yZWNlaXZlIGhvb2ssIHNvIHRoZSBj
-b25jdXJyZW50IHRhc2tzIGFyZQo+PiBhY3R1YWxseSBmZXRjaGluZyB0aGUgc2FtZSBjb3B5IG9m
-IGNvZGUuCj4+IAo+PiBPbiBnaXQgc2VydmVyLCB3ZSB3YW50IHRvIGRlcGxveSBhIHNwZWNpYWwg
-cGFjay1vYmplY3RzLWhvb2sgdG8gbWl0aWdhdGUKPj4gdGhlIHBlcmZvcm1hbmNlIGltcGFjdHMg
-Y2F1c2VkIGJ5IHRoZXNlIENJIHRhc2tzIChzbyB0aGUgcGFja2ZpbGUKPj4gcHJvZHVjZWQgYnkg
-Z2l0LXBhY2stb2JqZWN0cyBjYW4gYmUgcmV1c2VkKS4gIFNpbmNlIG5vdCBhbGwgY2xvbmUvZmV0
-Y2gKPj4gb3BlcmF0aW9ucyBjYW4gYmVuZWZpdCBmcm9tIHRoaXMgY2FjaGluZyBtZWNoYW5pc20g
-KGUuZy4gcHVsbHMgZnJvbQo+PiB1c2VycycgZGV2IGVudmlyb25tZW50KSwgd2UgbmVlZCB0aGUg
-Y2xpZW50IHRvIHBhc3MgYSBzcGVjaWFsIGlkZW50aWZpZXIKPj4gdG8gaW5mb3JtIHRoZSBzZXJ2
-ZXIgd2hldGhlciBjYWNoaW5nIHN1cHBvcnQgc2hvdWxkIGJlIGVuYWJsZWQgZm9yIHRoYXQKPj4g
-Y2xvbmUvZmV0Y2guIENsZWFybHksIHVzaW5nIHNlcnZlciBvcHRpb25zIGlzIGEgZ29vZCBjaG9p
-Y2UuCj4+IAo+PiBUbyBhY2hpZXZlIG91ciBkZXNpZ24sIHdlIG5lZWQgdG8gYWRkIHR3byBwYXRj
-aCBzZXJpZXMgdG8gZ2l0Ogo+PiAKPj4gMS4gU3VwcG9ydCBpbmplY3Rpbmcgc2VydmVyIG9wdGlv
-bnMgdG8gaWRlbnRpZnkgZW52aXJvbm1lbnRzIHZpYQo+PiAgICBjb25maWd1cmF0aW9uLCBiZWNh
-dXNlIGFkZGluZyB0aGUgLS1zZXJ2ZXItb3B0aW9uIHBhcmFtZXRlciB3b3VsZAo+PiAgICByZXF1
-aXJlIHRvbyBtYW55IHNjcmlwdCBtb2RpZmljYXRpb25zLCBtYWtpbmcgaXQgZGlmZmljdWx0IHRv
-IGRlcGxveS4KPj4gICAgVGhpcyBpcyB3aGF0IHRoaXMgcGF0Y2ggc2VyaWVzIGRvZXMuCj4+IDIu
-IEdpdCBzZXJ2ZXIgc2hvdWxkIHBhc3MgdGhlIHJlY2VpdmVkIHNlcnZlciBvcHRpb25zIGFzIGVu
-dmlyb25tZW50Cj4+ICAgIHZhcmlhYmxlcyAoc2ltaWxhciB0byBwdXNoIG9wdGlvbnMpIHRvIHRo
-ZSBwYWNrLW9iamVjdHMtaG9vay4KPgo+V2hlbiB5b3UgdGFsayBhYm91dCBjbGllbnQsIGRvIHlv
-dSBtZWFuIHRoYXQgdGhlIGFjdHVhbCB1c2VycyB3aWxsIGhhdmUKPnRvIGNvbmZpZ3VyZSB0aGlz
-PyBUaGF0IHNvdW5kcyBzb21ld2hhdCB1bm1haW50YWluYWJsZSBvbiB5b3VyIHNpZGUgZnJvbQo+
-dGhlIHN1cmZhY2UuIEkgZ3Vlc3MgSSBhaW4ndCBnb3QgZW5vdWdoIGtub3dsZWRnZSBhcm91bmQg
-dGhlIGVudmlyb25tZW50Cj55b3Ugb3BlcmF0ZSBpbiB0aG91Z2gsIHNvIEkgcHJvYmFibHkgc2hv
-dWxkbid0IGp1ZGdlLgoKWWVzLCB0aGF0IGlzIGluZGVlZCBvdXIgZGVzaWduIGdvYWwuIFdlIHdh
-bnQgc3BlY2lhbGx5IGNvbmZpZ3VyZWQgZ2l0CmNsaWVudHMgdG8gYmVuZWZpdCBmcm9tIGNhY2hp
-bmcgYWNjZWxlcmF0aW9uIHdoZW4gY2xvbmluZyBjb2RlLCB3aGlsZQpjbGllbnRzIHdpdGhvdXQg
-c3BlY2lhbCBjb25maWd1cmF0aW9ucyBmb2xsb3cgdGhlIHJlZ3VsYXIgbG9naWMuIFRoaXMgaXMK
-YmVjYXVzZSBjb2RlIGZldGNoaW5nIGluIENJIGVudmlyb25tZW50cyBpcyBvZnRlbiBob21vZ2Vu
-ZW91cywgbWFraW5nIGl0CndvcnRod2hpbGUgdG8gaW1wbGVtZW50IGNhY2hpbmcgbG9naWMgdG8g
-c3BlZWQgdXAgdGhlIHByb2Nlc3MgYW5kIHJlZHVjZQpzZXJ2ZXIgbG9hZC4gSW4gY29udHJhc3Qs
-IGNvZGUgZmV0Y2hpbmcgZnJvbSB1c2VycyBpcyB1c3VhbGx5IGRpdmVyc2UsCm1ha2luZyBjYWNo
-aW5nIGxlc3MgdmFsdWFibGUuCgpCeSBsaW5raW5nIHBhY2stb2JqZWN0cy1ob29rIHdpdGggc2Vy
-dmVyIG9wdGlvbnMsIHdlIGJlbGlldmUgd2UgY2FuCmVmZmVjdGl2ZWx5IGRpZmZlcmVudGlhdGUg
-YmV0d2VlbiB2YXJpb3VzIGNsb25lIGJlaGF2aW9ycy4gSW4gZmFjdCwgSQp0aGluayBhIHNpbWls
-YXIgZGVzaWduIGNhbiBhbHNvIGJlIGV4dGVuZGVkIHRvIEdpdEh1YiBBY3Rpb25zIG9yIEdpdExh
-YgpDSSB0byBzYXZlIENQVSBvbiBnaXQgc2VydmVycywgYWx0aG91Z2ggSSdtIG5vdCBzdXJlIHdo
-ZXRoZXIgYSBzaW1pbGFyCm1lY2hhbmlzbSBpcyBhbHJlYWR5IGF2YWlsYWJsZS4KCkNJIGVudmly
-b25tZW50cyBhcmUgdXN1YWxseSBwcm92aWRlZCBieSB0aGUgaW5mcmFzdHJ1Y3R1cmUgdGVhbSwg
-bWFraW5nIHRoaXMKc29sdXRpb24gZWFzaWVyIHRvIG1haW50YWluLCBhbmQgd2UgZG8gbm90IGV4
-cGVjdCBhbnkgY2hhbmdlcyBvbiByZWFsIHVzZXJzLgoKPj4gPkluIHRoZSBsYXR0ZXIgY2FzZSBJ
-IGNvdWxkIHNlZSB0aGF0IGl0IG1heSBtYWtlIHNlbnNlIHRvIGluc3RlYWQgbWFrZQo+PiA+dGhp
-cyBgcmVtb3RlLjxuYW1lPi5zZXJ2ZXJPcHRpb25gLiBUaGlzIHdvdWxkIGFsc28gcmVtb3ZlIHRo
-ZSB1bmNsZWFuCj4+IAo+PiBJIG5hbWVkIHRoZSBuZXcgY29uZmlndXJhdGlvbiBgZmV0Y2guc2Vy
-dmVyT3B0aW9uYCBtYWlubHkgdG8gZm9sbG93IHRoZQo+PiBgcHVzaC5wdXNoT3B0aW9uYCBwYXR0
-ZXJuLiAgU2luY2Ugd2hpY2ggc2VydmVyIG9wdGlvbnMgdG8gc3VwcG9ydCBpcwo+PiBhY3R1YWxs
-eSBzZXJ2ZXItc3BlY2lmaWMsIHVzaW5nIGByZW1vdGUuPG5hbWU+LnNlcnZlck9wdGlvbmAgaXMg
-YSBnb29kCj4+IGlkZWEgZm9yIGdpdC1mZXRjaC4gSG93ZXZlciwgaG93IHNob3VsZCB3ZSBkZXNp
-Z24gdGhlIGNvbmZpZ3VyYXRpb24gZm9yCj4+IGdpdC1scy1yZW1vdGUgb3IgZ2l0LWNsb25lLCBp
-ZiB3ZSB3YW5uYSBwcm92aWRlIGFsbCBvZiB0aGVtIHdpdGggYQo+PiBkZWZhdWx0IGxpc3Qgb2Yg
-c2VydmVyIG9wdGlvbnMgdG8gc2VuZD8KPgo+QXMgbWVudGlvbmVkIGluIGFub3RoZXIgcmVwbHks
-IEkgdGhpbmsgdGhhdCBwdXR0aW5nIHRoaXMgaW50byB0aGUgcmVtb3RlCj5jb25maWd1cmF0aW9u
-ICJyZW1vdGUuKi5zZXJ2ZXJPcHRpb24iIG1pZ2h0IGJlIGEgYmV0dGVyIHNvbHV0aW9uLCBhcyBp
-dAo+YWxzbyBicmluZ3MgeW91IHRoZSBhYmlsaXR5IHRvIHNldCB0aGlzIHBlciByZW1vdGUgYnkg
-ZGVmYXVsdC4KCkkgYWdyZWUgdGhhdCB1c2luZyAicmVtb3RlLiouc2VydmVyT3B0aW9uIiBpcyBi
-ZXR0ZXIuIEluIGZhY3QsIEkgYWxzbwp0aGluayAicHVzaC5wdXNoT3B0aW9uIiB3b3VsZCBiZSBi
-ZXR0ZXIgYXMgInJlbW90ZS4qLnB1c2hPcHRpb24iLiBXaGF0IEknbQpjb250ZW1wbGF0aW5nIGlz
-IHdoZXRoZXIgd2UgbmVlZCB0byBhZGQgYSBjb25maWd1cmF0aW9uIGZvciBhIGRlZmF1bHQKbGlz
-dCBvZiBzZXJ2ZXIgb3B0aW9ucywgc28gdGhhdCB3aGVuICJyZW1vdGUub3JpZ2luLnNlcnZlck9w
-dGlvbiIgaXMgbm90CnByZXNlbnQsIHdlIGNhbiBmYWxsIGJhY2sgdG8gdXNlIHRoYXQgYXMgZGVm
-YXVsdC4KCgpYaW5nIFhpbgoK
+On Thu, Sep 05, 2024 at 08:12:58PM +0800, Xing Xin wrote:
+> At 2024-09-05 19:05:15, "Patrick Steinhardt" <ps@pks.im> wrote:
+> >On Wed, Sep 04, 2024 at 03:49:28PM +0800, Xing Xin wrote:
+> >> At 2024-09-03 18:09:45, "Patrick Steinhardt" <ps@pks.im> wrote:
+> >> >In the latter case I could see that it may make sense to instead make
+> >> >this `remote.<name>.serverOption`. This would also remove the unclean
+> >> 
+> >> I named the new configuration `fetch.serverOption` mainly to follow the
+> >> `push.pushOption` pattern.  Since which server options to support is
+> >> actually server-specific, using `remote.<name>.serverOption` is a good
+> >> idea for git-fetch. However, how should we design the configuration for
+> >> git-ls-remote or git-clone, if we wanna provide all of them with a
+> >> default list of server options to send?
+> >
+> >As mentioned in another reply, I think that putting this into the remote
+> >configuration "remote.*.serverOption" might be a better solution, as it
+> >also brings you the ability to set this per remote by default.
+> 
+> I agree that using "remote.*.serverOption" is better. In fact, I also
+> think "push.pushOption" would be better as "remote.*.pushOption". What I'm
+> contemplating is whether we need to add a configuration for a default
+> list of server options, so that when "remote.origin.serverOption" is not
+> present, we can fall back to use that as default.
+
+Junio proposed in [1] to introduce `[remote "*"]` syntax to supply
+default values to all remotes. You could pick up that proposal and
+implement it as part of your patch series.
+
+I also have to agree that "push.pushOption" would be way more sensible
+if it was configured per remote. I think it would be sensible to also
+introduce "remote.*.pushOption" in the same way and have it override the
+default value of "push.pushOption" if present. So the precedence order
+would become (from high to low):
+
+  - remote.someRemote.pushOption
+  - remote."*".pushOption
+  - push.PushOption
+
+This should be backwards compatible, too.
+
+Patrick
+
+[1]: <xmqq5xrcn2k1.fsf@gitster.g>
