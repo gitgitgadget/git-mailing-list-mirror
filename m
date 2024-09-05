@@ -1,51 +1,51 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46FA2F44
-	for <git@vger.kernel.org>; Thu,  5 Sep 2024 04:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2D520E6
+	for <git@vger.kernel.org>; Thu,  5 Sep 2024 04:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725510364; cv=none; b=iKwrcz33ZrCku4H0mt2sDmkBQH6xxkEdU1eCMltzxJAPN9SO6qUv5g0ySCn3KQpznhRx0nZ2s86WyKWN7YZN/iPP36QWcI6Kc/4JMiV7SK6IcryZQOBsBaeSjkFZB09aavE8oCPZABgCHj3h+Oh9IHTst42Cd/o7WISDZ0P1Ph4=
+	t=1725511109; cv=none; b=TXz3orYgT/xaGa5nvBFTKgWydOtnFVcJ6tu7Ymx+Cm8EEuxR3dxTOs9jtf/3qbAGBQ5NRlrP1GGG13n2uBdhuSSiYivh6r2WUeiCM46k6QP3eelSiFmWCCN+Bi/tdxZ6Dq9vJlOOnCXzA6TFt6VpQmJopnUM1ISzGNo3zyLPdHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725510364; c=relaxed/simple;
-	bh=FBGRAzIYh938qBaZlap2KLyYp9EQCmp79RAG+7Jzgj4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lKCDT2lleTnYVodH7a5MzoMgETYeYrnnzJ02vnJMCOZBqaQwQhbQ7TbWBqdlfMGt5gm1jPNjJGFIarr0MNMVk99kd0yeMbDhq8AWGBxM465bKhNd2NGE+30fITadnVfkribO/43/xZVqyPT8sDmCwPS/uaTgfMgffMAlHmaK5u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hu/1u22Z; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1725511109; c=relaxed/simple;
+	bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FcH42OBUsZlzXdkuA0D0uUUvwfWMhm+BodHfaEkjK1QMwvnvLexOu3DVyB4FYoIMpgP27VNBz67nenGh973CpVc/iCYD/NuRp+Tc0NbsvmpTIWRzyNMN6+xq17DXzBJrr6RUhvHBfnmPrc6WL6K/BYIdQQlUpGvRGaiqGcvTOF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XOkxocVP; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hu/1u22Z"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a86e9db75b9so49974766b.1
-        for <git@vger.kernel.org>; Wed, 04 Sep 2024 21:26:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOkxocVP"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a869f6ce2b9so55466066b.2
+        for <git@vger.kernel.org>; Wed, 04 Sep 2024 21:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725510361; x=1726115161; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725511105; x=1726115905; darn=vger.kernel.org;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=FBGRAzIYh938qBaZlap2KLyYp9EQCmp79RAG+7Jzgj4=;
-        b=hu/1u22ZM+YYjFNQe7mEduwuu8lf5yAimDUpfhGtp9DowirooEMzAWYfO2vq9GKv5p
-         P/0T/7eGVgHhlOXitgvw1LlcCY+4cstpM/BvgqQ1ZsvGUZjqRSDcqXlCwGdhLYgGk/QL
-         ulg4ElDwdRel25gSV6+VfGc0cry5nHkwg45/+Ck+iAub7ja0FsMmbCeG5Mw+ChE3Bpbo
-         Qvu1m3z2QIIZ83xl+aGMi+/dzonTNFJG2tIaHpHPycnupWunEIhlLtbM5Q2ocx6g3xZm
-         tku7L7nnyDWLcqBqAe007YCF2HvV0Il1WSRaG/M+MMtgvtSkAwwI289cehnNHQzfJ6F6
-         xDnA==
+        bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
+        b=XOkxocVPlFJ0EUIXk0jIqnmfBF+e4ePbaBLNUQjmNohzRArJI6jtA+5/Lf1AJ1hP9O
+         1O8w2nOnilQGXMhsdugUAXCJrMRAceS28ZP/FWp4Ml17n6fPD3Yz4nllTW0BqsbviJgV
+         wqBlWyGDZEuLJdnwNwG8WSxLDoOuPde57CewLkMLyyqAEFbmkU5LB5GG3GiS5p71padE
+         dHZ1VgpYfH4qPrv4vfppWMrcelNnf8RDr2FR0CjScNvyVqXmkCTaQyv0/yD6lBvVXjX8
+         SR5ahYhe/v4dBbhbXj92R9eYCtkU78jB6Zj9ARG76XTZRp8NoPd0bpvyFhAzDKVlLtqM
+         Urjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725510361; x=1726115161;
+        d=1e100.net; s=20230601; t=1725511105; x=1726115905;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FBGRAzIYh938qBaZlap2KLyYp9EQCmp79RAG+7Jzgj4=;
-        b=Zako7I9bQ+aQ0lS2DjQKo4+FZj4FnVTM5BiXX5e7dycg+/wwkRSZr+TfKOtsM9JQT/
-         cVpyOpI0DlfcETO2wL/M87GR834wOs6ZE3uYcaqV6X4mMgQy69WE6MfmDu94K9gBkETl
-         qxaBmWvBAqwpuG8PvI/5y3v79+5Tb6V+iX1CZhbanqnDOsp8Yo9GSe1B6G+1pcmj37ZY
-         U6101NHnqW3R+VoD2SkTpwNmBlg2AW9qXYaWSf0YuUCf7+rYNDtJjMBLDGPR7uXE9Rgd
-         G5vQmZba2NNDUk7I2u7McqwsFQqzU2sT1HaT27NhxE6UGAOz/RrkQrUEVVtXEIvshZUj
-         s5BQ==
-X-Gm-Message-State: AOJu0Yx1QneCpZ3+WOPdXY8cIY5GUU4jS7/9jQeAuWYKkiKg2qtS8SSy
-	ocyNKnP3F855a030XwnW5QWi6610o8X7Rw+vy40+sFZbz+rKFSbz52OHlxvUJIpvRUSK/sgGa6j
-	mQMt+rMPq1gKrtkgq0tTLCOupeDdLey6a
-X-Google-Smtp-Source: AGHT+IHcrqVBoeOb7nac/XPihZkXpuUiFsoZ0y6zpaosddcODM3F7hPxK96AXLvU37CkUaLGCH/xwU0yk/fQAO9sGw8=
-X-Received: by 2002:a17:907:97c9:b0:a86:a30f:4b0d with SMTP id
- a640c23a62f3a-a8a1d327763mr687030666b.38.1725510360718; Wed, 04 Sep 2024
- 21:26:00 -0700 (PDT)
+        bh=ND8Wbshk7hjxECQr7VQl0mN6upMkUVW62fJE5l1jWBo=;
+        b=d3exNoA3m6nV5TNCabjzobOLGfVfl62+2v0MRSzj62vY0SvxXfNOENi36Ues5C5aoN
+         R+3nIHwD21RicERP7y1weO6IPqlRu6fHtuZB1GzJB6PVVG84HqhcaKOIVCl9d1bj3QhT
+         TIJ8OJDsekuHRozCwUkhi5ReuH0yGGwUK1NBKNpEmT9q4veDaxEfEbwyE3p8zGtt0R3m
+         nUhx1eQAhJIgKTP5gFfTlKRHOif5lwGZDKSw+WSI3/jrPETBCw6uH+tv7qUa+WABkfxo
+         yeY5wqzwBWHUEgci9gDz3ailVxLZP61nhjdN9BN/di5GYbDKyhQGu9za4mGfu+IRfy6B
+         vn7Q==
+X-Gm-Message-State: AOJu0Yym1APtG/uRd6J/hOEdVgtophRPjEahWnyN5r+ey3+Qz/NMMY+P
+	CnGVgpVgKXN5YpAuaP3D9jOs5yoDUL3bSoWB4FickqyCuVhPejvihX1UWylLluXtBz/u0YX6bSf
+	nOf1QuaJOSGbqeOODlDsSGEXAJ69WBMhC
+X-Google-Smtp-Source: AGHT+IGehFRWu4bRAksks1qEzC5dQ8LJasUzwIGZ879R7qyiO3GfdL4n3+MuAR4nor4uRcvCUAF2E7cNgyshq3fcao4=
+X-Received: by 2002:a17:907:7e88:b0:a86:af28:fc2b with SMTP id
+ a640c23a62f3a-a8a32fa103emr559232866b.54.1725511105326; Wed, 04 Sep 2024
+ 21:38:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,10 +53,11 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: Han Jiang <jhcarl0814@gmail.com>
-Date: Thu, 5 Sep 2024 16:25:50 +1200
-Message-ID: <CANrWfmSMbR+8oGsCzOygBA0sFSmMwUmCy=qQEsa16RWcztYaQA@mail.gmail.com>
-Subject: `git log FETCH_HEAD` only logs whatever happens to be the first among
- the fetched refs (instead of all the fetched refs)
+Date: Thu, 5 Sep 2024 16:38:15 +1200
+Message-ID: <CANrWfmSxmGFKG4e8yumhgyRWmDikZA39JQVLvK8Q8CqMCpPUvw@mail.gmail.com>
+Subject: =?UTF-8?Q?=60git_fetch_=3Cremote=3E_=3Crefspec=3E=E2=80=A6=60_=3Crefspec_=28without_?=
+	=?UTF-8?Q?dst=29=3Es_are_mapped_by_other_=3Crefspec_=28with_dst=29=3E_resulting_in?=
+	=?UTF-8?Q?_extra_remote_tracking_branches?=
 To: Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
@@ -69,45 +70,120 @@ cd '/'; cd '/'; rm --force --recursive -- './test_git2'; mkdir "$_"; cd "$_";
 mkdir --parents -- './server' './client';
 
 git -C './server' init --bare './repo.git'
-branch_default_path="$(git -C './server/repo.git' symbolic-ref HEAD)"
-branch_default_name="${branch_default_path#'refs/heads/'}"
-git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"
-git --git-dir='./server/repo.git' --work-tree='.' checkout -b branch1
 
 git -C './client' init './repo'
+git -C './client/repo' remote add server 'file://'"$(realpath
+'./server/repo.git')"
+git -C './client/repo' config set --local 'remote.server.fetch'
+'+refs/heads/*:refs/remotes/server/*2'
+git -C './client/repo' remote --verbose
+git -C './client/repo' config list --local --show-scope --show-origin
 
 git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"
-git -C './client/repo' fetch 'file://'"$(realpath
-'./server/repo.git')" "$branch_default_name" 'branch1'
-cat './client/repo/.git/FETCH_HEAD'
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server 'branch1'
 git -C './client/repo' log --all
-git -C './client/repo' log --all FETCH_HEAD
-awk 'BEGIN { ORS = "\0"; } { print $1; }'
-<'./client/repo/.git/FETCH_HEAD' | xargs --null git -C './client/repo'
-log --all
 
 git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
--m "$((++number))"
-git -C './client/repo' fetch 'file://'"$(realpath
-'./server/repo.git')" 'branch1' "$branch_default_name"
-cat './client/repo/.git/FETCH_HEAD'
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server
+'+refs/heads/branch*:refs/remotes/server/branch*3'
+'+refs/heads/branch*:refs/remotes/server/branch*4'
 git -C './client/repo' log --all
-git -C './client/repo' log --all FETCH_HEAD
-awk 'BEGIN { ORS = "\0"; } { print $1; }'
-<'./client/repo/.git/FETCH_HEAD' | xargs --null git -C './client/repo'
-log --all
+
+git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server
+'+refs/heads/branch*:refs/remotes/server/branch*3'
+'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'
+git -C './client/repo' log --all
+
+git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server
+--refmap='+refs/heads/*:refs/remotes/server/*5'
+--refmap='+refs/heads/*:refs/remotes/server/*6' 'branch1'
+git -C './client/repo' log --all
+
+git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server
+--refmap='+refs/heads/*:refs/remotes/server/*5'
+--refmap='+refs/heads/*:refs/remotes/server/*6'
+'+refs/heads/branch*:refs/remotes/server/branch*7'
+git -C './client/repo' log --all
+
+git --git-dir='./server/repo.git' --work-tree='.' commit --allow-empty
+-m "$((++number))"; git -C './server/repo.git' branch --force branch1;
+git -C './server/repo.git' branch --force branch2
+git -C './client/repo' fetch server
+--refmap='+refs/heads/*:refs/remotes/server/*5'
+--refmap='+refs/heads/*:refs/remotes/server/*6'
+'+refs/heads/branch*:refs/remotes/server/branch*7'
+'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'
+git -C './client/repo' log --all
 
 What did you expect to happen? (Expected behavior)
 
-`git -C './client/repo' log --all FETCH_HEAD` logs all commits.
+`git fetch server '+refs/heads/branch*:refs/remotes/server/branch*3'
+'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'` results
+in:
+server/branch13
+server/branch23
+server/branch14
+server/branch24
+server/branch12
+
+`git fetch server --refmap='+refs/heads/*:refs/remotes/server/*5'
+--refmap='+refs/heads/*:refs/remotes/server/*6'
+'+refs/heads/branch*:refs/remotes/server/branch*7'
+'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'` results
+in:
+server/branch17
+server/branch27
+server/branch18
+server/branch28
+server/branch15
+server/branch16
+or:
+server/branch17
+server/branch27
+server/branch18
+server/branch28
+server/branch12
+server/branch15
+server/branch16
 
 What happened instead? (Actual behavior)
 
-`git -C './client/repo' log --all FETCH_HEAD` logs $GIT_DEFAULT_BRANCH
-when $GIT_DEFAULT_BRANCH is listed first in `git fetch`, logs branch1
-when branch1 is listed first in `git fetch`.
+`git fetch server '+refs/heads/branch*:refs/remotes/server/branch*3'
+'+refs/heads/branch*:refs/remotes/server/branch*4' 'branch1'` results
+in:
+server/branch13
+server/branch23
+server/branch14
+server/branch24
+server/branch12
+server/branch22
+
+`git fetch server --refmap='+refs/heads/*:refs/remotes/server/*5'
+--refmap='+refs/heads/*:refs/remotes/server/*6'
+'+refs/heads/branch*:refs/remotes/server/branch*7'
+'+refs/heads/branch*:refs/remotes/server/branch*8' 'branch1'` results
+in:
+server/branch17
+server/branch27
+server/branch18
+server/branch28
+server/branch15
+server/branch25
+server/branch16
+server/branch26
 
 What's different between what you expected and what actually happened?
 
