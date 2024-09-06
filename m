@@ -1,97 +1,108 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03E1158D96
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 22:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364731581EA
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 22:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725662046; cv=none; b=M0HmW/wjfZ39e7coLDpXpJsLg8gWEN2sT9UesqFAV0VTYyL1A0lX29zxSiIb15LcIpS8mY39+ap6LP5fT/7vhW7r7833xheUx8Qwetha0wQjRlSafRyD6FEpKAOE+77PBwHlggMzD2FO7ilL3Mj1evL/au7SxpaP8gb9eNpOy1Q=
+	t=1725662372; cv=none; b=I5iAdtsK2ZothvBQdTOzc6heZ+BH9i5vC1kgPOpVBRQYbwJu5io2ExHGg6WNr1Xc4E8Mm3oka9rnnidV91vFm1vLOuHE+248XKP1b1BMyBdL+Cd1fYsqP5ihXu8KQMIElhkbIBeLklI64Sw+WevmFd/fK5VgGcrJufJL6LMNrlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725662046; c=relaxed/simple;
-	bh=ODohzIRzCkc6GRuHpO2Zk5ZXOW9BxsKa9d49pe+GnT4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JEy5xY/6mLCDC48JHxUZrzS4tRWbVAb45ZZEN36VxGqAWzr3VFwGipZlgRce4miO8G/S285FHFCeQhifXX8DkX1WQ1V69mPerV+RXZxFjY7w5JNzJCrkL5sRDPwTtF7W8kAZF3GCOnKxguGVw5vL3IeY49bR4C+mEj3RMBW5pno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 24795 invoked by uid 109); 6 Sep 2024 22:34:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Sep 2024 22:34:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24196 invoked by uid 111); 6 Sep 2024 22:34:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Sep 2024 18:34:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 6 Sep 2024 18:34:02 -0400
-From: Jeff King <peff@peff.net>
-To: Brooke Kuhlmann <brooke@alchemists.io>
-Cc: git@vger.kernel.org
-Subject: Re: Fix issue with formatting multiple trailer keys
-Message-ID: <20240906223402.GA1221600@coredump.intra.peff.net>
-References: <EF5AE27D-B7CE-4337-B928-6073837218CA@alchemists.io>
+	s=arc-20240116; t=1725662372; c=relaxed/simple;
+	bh=R3u4BPGN1dPH73LlDcaKwXOA0OerXJ/zA/cpXWauHA0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q3xaJfPMvf7qj8xhpNgWRuofs1AP2oc4djKnBgG9kLFsxMuhvogGMwskqFibb2zyKGV+HKx4++6pNJrlLrRYzwfRB01E4uh8eyrtNClYbSXc0S3VYxqsjy3DXmzFNH1kOII00eR5vzkO7KTKVZQf+AROkZiWCtKFX5wa8HN7tz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e1a8e2a9b7dso403489276.2
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 15:39:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725662369; x=1726267169;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VFpV/2vCq3yqcDnjw6mZlK8DuVHE4DFNLc8qViEwEFo=;
+        b=QFI+kwAUNdATvycz4BYtAFqUuRfwHUivFUN0MLJbKOVIujyBRDwbJVL++/G5ej+yNx
+         JZUEo1Hfz1x1qSNvfYJOKB7rmym8fPz27QtHPwCGqiPRrdNntBlUmZXCKkccr6TFO+fr
+         8uUIlkpJuYtyNs4mn0PAvir65Qjnu7BeqkE7imVYkcYeKhLAndewCu3RO/rg+YPOz8Om
+         hCTz0wrBQ5w+x8U3lIuaXXJzPowklYQPG0OwwxY12GhQdqwM2upjM/pDiZKk1q6h7b9D
+         5t3LjPqpv4ERYW54YVrDDKTG9DQQi9T4HqrFM85oPtZDrcrZE14ipfLCJ+hapC27Oao+
+         zMow==
+X-Gm-Message-State: AOJu0YyjKMH+OE5aihFj+aBTdCY9meL6gW0cVaZ8yvTDJfrWbI86CsIY
+	TqNxQhRNfvEcqTHtjRTlauGxNAvRUq3nwwcsW5CnqbDYUOmZpG9H4xDhtiquLltVP/GjhiRxvGO
+	s6nVzX/DPGk2v3Add4MgUsneQptI=
+X-Google-Smtp-Source: AGHT+IGaA1pC+zLlihszg/yYuCTBmS16wuLpAMqKF/VrCZz8k3Gfq4lyyu8sLIo+4AwAM6XP+FWVS5rmt3Ka2eDOCak=
+X-Received: by 2002:a05:690c:6609:b0:6b6:760b:ddb4 with SMTP id
+ 00721157ae682-6db4512e257mr24152787b3.6.1725662368875; Fri, 06 Sep 2024
+ 15:39:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <EF5AE27D-B7CE-4337-B928-6073837218CA@alchemists.io>
+References: <20240906221853.257984-1-calvinwan@google.com> <20240906222116.270196-2-calvinwan@google.com>
+In-Reply-To: <20240906222116.270196-2-calvinwan@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 6 Sep 2024 18:39:17 -0400
+Message-ID: <CAPig+cQbPCWS4LVF7cdw_DD6K8dsrLTCmmhqkmGZpz1CO93vRQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] libgit-sys: introduce Rust wrapper for libgit.a
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>, spectral@google.com, 
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com, 
+	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 06, 2024 at 01:55:46PM -0600, Brooke Kuhlmann wrote:
+On Fri, Sep 6, 2024 at 6:21=E2=80=AFPM Calvin Wan <calvinwan@google.com> wr=
+ote:
+> From: Josh Steadmon <steadmon@google.com>
 
-> ``` 
-> git tag --list \
->         --format="%(refname:short) %(taggerdate:short) %(taggername) %(subject) %(trailers:key=Files) %(trailers:key=Duration)"
-> ```
-> 
-> ...I get this output:
-> 
-> 0.0.0 2024-09-06 Brooke Kuhlmann Version 0.0.0 Files: 1
-> Duration: 1
->  Files: 1
-> Duration: 1
-> 
-> 0.0.1 2024-09-06 Brooke Kuhlmann Version 0.0.1 Files: 1
-> Duration: 1
->  Files: 1
-> Duration: 1
-> 
-> Notice, when logging trailer information for commits and tags, I get
-> unexpected new line characters showing up in the output. I expect to
-> see all information printed on the same line without any new lines
-> showing up.
-> 
-> Also, I want to point out that when listing tag trailers, I get the
-> "Duration" key showing up twice. I'm not sure if that's related or not
-> but seems like very weird behavior.
+This is curious...
 
-There are two things going on here:
+> Co-authored-by: Kyle Lippincott <spectral@google.com>
+> Co-authored-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Kyle Lippincott <spectral@google.com>
 
-  1. Some of the trailer options are stored in a global, rather than a
-     per-placeholder basis. This includes the list of keys to show. So
-     you basically end up with a filter list that includes _both_ keys,
-     and that list is used for both %(trailers) items.
+... since there is no mention of Josh here.
 
-     IMHO this is a bug, and I have a patch (which I'll send along with
-     the one I mentioned in the other thread) to fix it.
+> diff --git a/contrib/libgit-rs/libgit-sys/Cargo.toml b/contrib/libgit-rs/=
+libgit-sys/Cargo.toml
+> @@ -0,0 +1,12 @@
+> +[package]
+> +name =3D "libgit-sys"
+> [...]
+> +[dependencies]
+> +libz-sys =3D "1.1.19"
+> \ No newline at end of file
 
-     In the meantime you can work around it by specifying both keys in
-     a single invocation, like:
+Let's give this file a proper line terminator.
 
-       %(trailers:key=Files,key=Duration)
+> diff --git a/contrib/libgit-rs/libgit-sys/build.rs b/contrib/libgit-rs/li=
+bgit-sys/build.rs
+> @@ -0,0 +1,31 @@
+> +pub fn main() -> std::io::Result<()> {
+> +    let crate_root =3D PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").u=
+nwrap());
+> +    let git_root =3D crate_root.join("../../..");
+> +    let dst =3D PathBuf::from(env::var_os("OUT_DIR").unwrap());
+> +
+> +    let make_output =3D std::process::Command::new("make")
 
-     Obviously that doesn't work if you don't want them adjacent in the
-     final output.
+Providing a mechanism for people to override this hardcoded spelling
+of "make" could be another item for your NEEDSWORK list; in
+particular, I'm thinking about platforms on which GNU "make" is
+installed as "gmake".
 
-  2. By default, each trailer is terminated with a newline. But you can
-     specify your own separator, like so:
+> diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contri=
+b/libgit-rs/libgit-sys/public_symbol_export.c
+> @@ -0,0 +1,20 @@
+> +// Shim to publicly export Git symbols. These must be renamed so that th=
+e
+> +// original symbols can be hidden. Renaming these with a "libgit_" prefi=
+x also
+> +// avoid conflicts with other libraries such as libgit2.
 
-       %(trailers:key=Files,key=Duration,separator= )
-
-     See the documentation for the trailers placeholder in "git help
-     log". Depending on your trailers, "valueonly" might also be useful
-     for this kind of formatting.
-
--Peff
+s/avoid/avoids/
