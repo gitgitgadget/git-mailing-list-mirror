@@ -1,116 +1,137 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F67A5C613
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 22:56:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725663377; cv=none; b=QQzSkbyWLwwcRT25AGsJw7Jti7zsSqfKSfsjlL8aHLqakblcM+ScqVOhOYpCU9sJBr1mvHl8Wvft35e0yN3FA/woUHH+HcN7gZqhV/8B0r9Ue/nQ5Jf7HK0i0jfnDcuF/Kth9sIBqzui+x7qGGBuBsXCKn5jnnKZ2UNAISDI/KE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725663377; c=relaxed/simple;
-	bh=4JLSUFThIzJ82ICebacf+XjyhuQr8XWdcXgsX9QxBEw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=OfIg94M8RyaIaA7SqhwSqIKxPd/zoVnacrKXUd+fbUO+I6AIjmWhMLXXFkR401wk9K1r9zZ5OyotXbQZcJgraYy8hPnh93mrosH443TRYRU4I2/BFq08e/UD3u0HmYsvXe5DH8yRnqS8kLxS0oLsBZrYGKG/JzinnJGavxX0d7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=zrbo16q2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rX4wszdg; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451B31B85DC
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725663877; cv=pass; b=gkriMYG6eHOPrhh03HPXSvu5O6uIl9J0HKTRVlm1WpJ+NlDE3xPodO7M4tizwDLvgbrd5w3B96nHI3X94FfYAq49fCSuMsJBq9/a66Sje9WbIOGyT0WaOka7+usjFcOfA8YW8/VwtWEa1Y15jK70JK4ZvuyXCutZHbxHaSLiEMI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725663877; c=relaxed/simple;
+	bh=iKUoRicSz4p6SL7EYioWdlicj390IrttOzia53ybBfc=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=XzMuxECnaS80TLwS9K8fh8DJqHjR3HvxcG5ol3D0cxiZ5NZXdAzdMVukv17UuQyWcAy0fFrFmOjrOt7XItlZHF78bY85uKS2fmelUECLspUMZxuo3J6RJNJb7dZ/X2l+wwM0hsiDq6UAPYUS4g3MbOisY9Ak2ru0WiD0jW+MQkQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mpri.me; spf=pass smtp.mailfrom=mpri.me; dkim=pass (1024-bit key) header.d=mpri.me header.i=marco@mpri.me header.b=f9jnD+tf; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mpri.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mpri.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="zrbo16q2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rX4wszdg"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5210D13800EA;
-	Fri,  6 Sep 2024 18:56:13 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Sep 2024 18:56:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1725663373; x=1725749773; bh=4JLSUFThIzJ82ICebacf+XjyhuQr8XWd
-	cXgsX9QxBEw=; b=zrbo16q2aR6UnJ87jMX4Agj2mZKcma2XkQsdr51AjQWDnQXU
-	OmG3ccBdUsZGyJHHXB+Yh0k5Q6fCfJ1jp/nBgDVlmc/Zr+6Rd9bL64T+aJsRFoqI
-	dJyRZAew9mchxg/h+REbjwf2ZLiCv7LSTyE/Qfub7aRc+LQStFB6LXogfckZo9me
-	GPKSmbJGyYQHEmZJF78ATdqZ0T5BFEjQ4BjTVzR33yfLZK3mUy9Meo1g4U6mYcR3
-	JXLZjoYWTxLQaqkx9JRJqTpIeg253wHUX59+Qyp0AiJStKReYJSqnpjRHwhkf6eW
-	3qdvV6jGDoEXBXB+ZDAxP62a/J1kx0V2YsGVIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725663373; x=
-	1725749773; bh=4JLSUFThIzJ82ICebacf+XjyhuQr8XWdcXgsX9QxBEw=; b=r
-	X4wszdgH1lCd313jGQnd/RaGSIuKzDNEa/Z7hmBrhi0l+uyS+xrpQU9H/cP3rZGp
-	mRhsYYxP3Zl41sEKHFM8cLOR8kgnkL4r18glXAxKXVgJQNzwQQUJ8/a/K0VHI5zW
-	owJLTOWdlsYS51mVsojbmcvwugSwBeZMiJDWEEW5rHaJn9yNS/HRHsYPlq4E1YLr
-	OBAxMR65YwloO9c2nfPraie0ewr6DtrUuPhuuOzqdQPnMSH6/CmuGl5lib9NnCuQ
-	Vhv3h/Pj7ZZgfvamU0QTXSZI3M1y2fAsCUG4bxQek4w419d2t5hHUEaWVViub0X4
-	VUAv0HyVOcnHEzE+qKpKg==
-X-ME-Sender: <xms:jYjbZqwlmUWjty_AQANtFi9sPGJoAvuYfXlfvxOnAdVhdcGoSU6CiQ>
-    <xme:jYjbZmSuk2RfC4w2DQZHWiCNsB7kc8vudwFYQvJLBWkfWwFWd8y-Deo94BnGtcjOr
-    vMt1yKlO2Kvj-Wz>
-X-ME-Received: <xmr:jYjbZsVwH_WSKdKvNFkM6oiEbUYyRFr1H_JFPHXZNj26ireXihvoxHLtHTBqjEBYhw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeivddgudeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhf
-    gjffevgffkfhfvofesthhqmhdthhdtjeenucfhrhhomhepuehrohhokhgvucfmuhhhlhhm
-    rghnnhcuoegsrhhoohhkvgesrghltghhvghmihhsthhsrdhioheqnecuggftrfgrthhtvg
-    hrnhepleevieffgeevgfeileduveeuudekhffgteegvdefhfehhfevffdvffdugfehtedv
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghroh
-    hokhgvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:jYjbZghuM65hSXRbu9vul7jBHOKnx_p_bhUIvlbjmmDtXmsLGJ2yKg>
-    <xmx:jYjbZsDNZPxfz1_xO4qzBEblguI8Hja01UsHpbX3faLnuk9RC1UuyA>
-    <xmx:jYjbZhK3rLW63ccHDF6dvhbrk7JJUNU9RtWSurk580nBgf1nI9mg0g>
-    <xmx:jYjbZjCwOVr328pBJ3WQGieMXjRtsyS7wrV1MmNzbVkNtJhjuG0Flg>
-    <xmx:jYjbZvPSU95-2Or6pVVxeIGYIVh5-UYNO_zB947KxaxJn3KsyxoYjury>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Sep 2024 18:56:12 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=mpri.me header.i=marco@mpri.me header.b="f9jnD+tf"
+ARC-Seal: i=1; a=rsa-sha256; t=1725663872; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=XSGuQwibYxbFWhQ8lTFXhwUn9s1ZxpnRKd9EIcQBJ0zm4FqGZSSokg6wzV/wb19l/mfLt3uPe4UE+hYlqMfom6BOn5zH/NOiBU77K4mJud1bq5RlolOnwG2Hm3JEjl/pt3a5x8nHQxJTZ7UAB728B2zkETeCgkg2DC5G0Rpg9YM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1725663872; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=sWuADf7J4XackKB0UguLfkbUYRTN8eA7HA4hKuLSPc0=; 
+	b=gzrQgNEiH6sI1dyPWZje5u0y5WtM3GJUT8ES0Dy2RR5S7l2srLqil/ZGmYzfquaMi1Tj7fOxdOP44wMwwJNlorcdosp4vAIelDskrauO3KK9JP0B5EU7e8IzFZm46mIGNMH/fFQsiOSPiq7NmJzO6z6Pd4DCiOiE8i94o3ovaU0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=mpri.me;
+	spf=pass  smtp.mailfrom=marco@mpri.me;
+	dmarc=pass header.from=<marco@mpri.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1725663872;
+	s=zoho; d=mpri.me; i=marco@mpri.me;
+	h=From:From:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Subject:Message-Id:Message-Id:Date:Date:To:To:Reply-To:Cc;
+	bh=sWuADf7J4XackKB0UguLfkbUYRTN8eA7HA4hKuLSPc0=;
+	b=f9jnD+tfcbsqGBCNuJpObTL9j7vw0lZ353nhFHlPFHYH4i0WfZ+Z5MUnu7hTXJ2x
+	YelfNo/BgGeXi7977q4fAc4+KyK+PRCQ8zC5f8QKyezVn2dqKHOKY6ppflQCiJrdk1W
+	0j3B513fOD7IVZOZonjHydNTzhtxW/g+7FoJ1KX0=
+Received: by mx.zohomail.com with SMTPS id 1725663870782971.3220020448241;
+	Fri, 6 Sep 2024 16:04:30 -0700 (PDT)
+From: "Marco P." <marco@mpri.me>
 Content-Type: text/plain;
 	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: Should Git Tag trailer formatting work?
-From: Brooke Kuhlmann <brooke@alchemists.io>
-In-Reply-To: <20240906215054.GA1149961@coredump.intra.peff.net>
-Date: Fri, 6 Sep 2024 16:56:00 -0600
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3A01E3C6-0AB5-4C0D-AA76-E5EE6A5AFA55@alchemists.io>
-References: <E46F3EFF-66D1-4B29-BCF3-6FFAB2504411@alchemists.io>
- <20240906040434.GB4168449@coredump.intra.peff.net>
- <249C7637-0032-4D53-A8A0-83935764334E@alchemists.io>
- <20240906215054.GA1149961@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3776.700.51)
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
+Subject: Behavior change for git diff --cached --exit-code in git 2.46.0
+Message-Id: <646EB2F8-53B3-4B24-90E0-09A71DD4445F@mpri.me>
+Date: Fri, 6 Sep 2024 16:04:19 -0700
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.600.62)
+X-ZohoMailClient: External
 
-Thanks! Yeah, that'd be great. Will look forward to checking out the =
-changes.
+I noticed a change of behavior when upgrading from 2.45.2 to 2.46.0.
+You can decide whether this is a regression or an improvement.
+I thought I=E2=80=99d say something just in case. Don=E2=80=99t shoot =
+the messenger!
 
-> On Sep 6, 2024, at 3:50=E2=80=AFPM, Jeff King <peff@peff.net> wrote:
->=20
-> On Fri, Sep 06, 2024 at 09:22:33AM -0600, Brooke Kuhlmann wrote:
->=20
->> Yeah, I can render trailer information when using your examples but
->> *only* if I disable signing my tags. Here's what my global Git
->> configuration looks like:
->=20
-> Ah, OK, that makes sense. We have to parse the trailers from the end,
-> and the parser is not prepared to handle tags' inline signatures (in
-> commits, the signatures are embedded in headers, so the trailer parser
-> doesn't have to worry about them).
->=20
-> I have a rough patch, but it requires making an extra copy of the tag
-> buffer, since the trailer API needs a NUL-terminated string. I'll see =
-if
-> I can clean that up to let us parse it in place, and should send
-> something out in a day or so.
->=20
-> -Peff
+
+
+Overview:
+The --summary option to `git diff --cached` seems to override the =
+--exit-code option in 2.46.0 such that this is no longer true:
+
+>  --exit-code
+>    Make the program exit with codes similar to diff(1). That is, it =
+exits with 1 if there were differences and 0 means no differences.
+
+You can reproduce yourself by staging something, then trying the 4 =
+combinations of:
+ - With and without --summary
+ -  2.45.2 and 2.46.0
+
+You will see that with 2.46.0 + --summary flag =3D>  exit code is always =
+0.
+This is different from 2.45.3 where --exit-code influences sets the exit =
+code regardless of --summary
+
+
+More context:
+
+I have a scheduled script that daily updates submodules.
+The logic is:
+
+```bash
+git submodule update --init --remote --checkout
+git add path/to/submodule
+if git diff --cached --exit-code --summary;
+then
+  # Nothing to commit
+else
+  # Create commit and push=20
+fi
+```
+
+This has been working for a while, most recently with git 2.45.2.
+After updating to 2.46.0, it stopped working.
+It would _always_ think there=E2=80=99s "nothing to commit", even when =
+the submodule did have new commits.
+
+After investigating, I discovered that the --summary option seems to =
+override the --exit-code option.
+i.e. if --summary is present, then the exit code is always 0, and not 1 =
+if there are staged changed (as I=E2=80=99d expect from --exit-code =
+manual entry)
+
+This is not limited to submodules, the behavior is the same for regular =
+staged files, e.g.:
+
+```
+# Stage a file:
+$ git add debug.md
+
+# Diff with 2.45.2 prints summary and exits with 1:
+$ git diff --cached --exit-code --summary ; echo $?
+ create mode 100644 debug.md
+1
+
+# Diff with 2.46.0 prints summary and exits with 0:
+$ git-2.46.0 diff --cached --exit-code --summary ; echo $?
+ create mode 100644 debug.md
+0
+```
+
+I fixed my script by dropping the --summary option.
+But maybe this behavior change was unintended and not covered by tests, =
+in which case you may want to treat this as a bug report.
+
+Taking this chance to thank you for reading and for maintaining git. I =
+don=E2=80=99t know what I=E2=80=99d do without it!
+
+Cheers,
+M=E2=80=99
+
+
 
