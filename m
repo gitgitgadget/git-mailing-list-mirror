@@ -1,95 +1,89 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA231A2C39
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 15:23:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79801D2F49
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 15:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725636227; cv=none; b=Uast0FFU04bsgOjYW6w+QD7zW38Vw4+AwUPQ4/wjaB50ESJ0nVCsGj4o9tf7AubnU+YNgUxXie0GOHXX3MO7qx5fnJv+xDQNDcYrZS10eDio0EGpdrzpuzKg47SAtv2/WHy3uMhzGmeCQWlP0l9GM09Zw9Nr+ew6iNSV0YjyYL8=
+	t=1725636607; cv=none; b=MWd07Itzvq/tZwrWtdIdc/aPDT3+gXUdzX+sCHA0mrOM2xohaO/z9h8t5Tqj4Ul3FLU7kKUoRJ2r1bAaXRhT2rrApn5k6k2pIO+SUe4APFzDP+xmLQ4lZwJZRW8gItuoBkNLDGX4unHKh4CAXX4zU8EEUqmI/90JYyZ937stIO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725636227; c=relaxed/simple;
-	bh=Ka37MAAZdveBvV03qOFAttRg4bycrwsoZyf30wO97Fo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YxyEC7NWVY/0o59QU0cmkRiw6tBR6vOUxpc9f4CKvKxIz8kxdO50gHjPe1pt4WMs8XQJOrU24S97pp/ScGj7FDYfsZe+tEWg29xTByyBNg+1D2oAnvCsMhImkZa6eAYS0ZZXjmbv+T8la1/ZmGCknLXH9rgsbjOPI4fuSveiT5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hq+m8kTy; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725636607; c=relaxed/simple;
+	bh=RTK/fnUJIX+XdcQhg1p/3YnYR0Gn79/PBozHZ7IZXJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TBi8Up3Pt1yXYdfvvLfYAb58BK6YQFfAioHO25pkUbHGSyd7n3KQ3BlUXtaQAbY02LhzVXvj1+t3eX1hkpOEDSaWAgFzr6ddhUt+jBe7xEEuEL9on0iIEXyIZyCYm8kyu9GtrdkwchDlskoqT66cCxpGETAewK0parmXRDbw+fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkVTtYtZ; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hq+m8kTy"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C6FD35A47;
-	Fri,  6 Sep 2024 11:23:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ka37MAAZdveBvV03qOFAttRg4bycrwsoZyf30w
-	O97Fo=; b=hq+m8kTypP/mWFUACuIFmpStpbkRanY12DwTljytSYpNY76fohUXwz
-	JsDZOIOt8ee2TMEa7CIwuPb9JYSor3K5pL9qvmY5wCm27xlBDqseWUecCmy+osHF
-	XA5DknsBHQhb3+a0CQNzau01DBoywjLE1sy6xBJDILl/eXu0Jb0W8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 93C9A35A46;
-	Fri,  6 Sep 2024 11:23:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C5CD35A42;
-	Fri,  6 Sep 2024 11:23:43 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Brian Lyles <brianmlyles@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] interpret-trailers: handle message without trailing
- newline
-In-Reply-To: <fab48d5b-4808-439e-9384-ca4861b95edc@gmail.com> (Phillip Wood's
-	message of "Fri, 6 Sep 2024 10:07:02 +0100")
-References: <20240905173445.1677704-1-brianmlyles@gmail.com>
-	<20240906041326.1684570-1-brianmlyles@gmail.com>
-	<fab48d5b-4808-439e-9384-ca4861b95edc@gmail.com>
-Date: Fri, 06 Sep 2024 08:23:42 -0700
-Message-ID: <xmqqmskkyfep.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkVTtYtZ"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2053616fa36so22623645ad.0
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 08:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725636605; x=1726241405; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D7zLR/bmAXmNv8kz96wkbK4ZkMrtqSVK6khcmXtJCSU=;
+        b=nkVTtYtZsIBi644uSvLmO1FyDp1DvsyT5R6N3h3LJM8TxJZdUEV4W7n0ety2kT7RbL
+         v1+NYyH/eeZyPpmawWvwzjFTTa1nxqUj6EWHzQ5lQBZB5Djuo+hSPEoeDizVFnT5jryl
+         Jkd83Z6vs1DoMdMvFkGdmvqXi6ZdB8C1D/RPmQEqe/ukSiCVdAnCYxEe8cOgxnKjvjOS
+         9+bGJo8AbRqmo7hjh45KxRYmHaycjfjF8MgA21O3J0u+UVQsJGBJJtyaC7MWjagJsIBg
+         DjHdQKPIbsvJrh5SGoxza/YwS+NUyfkZfpSBpAKt7dFgLYXNrIQBrYtjerBbiWPqfcW6
+         xmtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725636605; x=1726241405;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D7zLR/bmAXmNv8kz96wkbK4ZkMrtqSVK6khcmXtJCSU=;
+        b=evqdIoIfwdwftmgSyrSA3GV9Yg0z5KuwAtrSGun37Zz9NcYVCBc7QG+EaqVm3uu4fx
+         sOm7dvf566owB8Z9yOaQt+75dVKAbgbRWmd41wZpjU78IWr2wgG919Y7WtXSZJQzaHVF
+         sNORvBBw2PxsIdVsdNXGl3N02YNeIBokT5BIFJRPukW8wNtv0n+winB1ew0kuo/I1fWJ
+         ymxsx/V14RLAOqITTKQT0qOMZCSdk0cbyxgnwtlRxuIjZJ/cSPQ+7U50B9j4jtxe/OLS
+         fjgyDRQJxz85q4jhdI66epU1kEv4PH4RDDBaZoz2wPTM6AyOqujMYqXNtJU0TracNhQU
+         g9Ig==
+X-Gm-Message-State: AOJu0YwdK62E0L6RxdZhGWkGx0tySICpJTyZYccWBzhaMR+fQkjV7eMB
+	xGSYW95eH2XHdxR4MgxvCU78Q74BinWN/jGzgtwI64mkkm9aiXm0D9jzQg==
+X-Google-Smtp-Source: AGHT+IFucHmZ6x4qqRNYtmMgofqurNPHfNa3oUl3TqC49/oTN62GDt2luPuKWGs5pYFo2V7CIX+/Ag==
+X-Received: by 2002:a17:902:fc8f:b0:206:8c4a:7b73 with SMTP id d9443c01a7336-2068c4ae8b3mr148965135ad.50.1725636604845;
+        Fri, 06 Sep 2024 08:30:04 -0700 (PDT)
+Received: from thunderbird.smith.home (ip70-162-122-51.ph.ph.cox.net. [70.162.122.51])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206ae950e5csm44475965ad.97.2024.09.06.08.30.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Sep 2024 08:30:04 -0700 (PDT)
+From: "Stephen P. Smith" <ishchis2@gmail.com>
+X-Google-Original-From: "Stephen P. Smith" <ischis2@cox.net>
+Received: from thunderbird.. (localhost [127.0.0.1])
+	by thunderbird.smith.home (Postfix) with ESMTP id DF25F196011C;
+	Fri,  6 Sep 2024 08:30:03 -0700 (MST)
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	ishchis2@gmail.com
+Subject: [PATCH 0/1] Add entry to mailmap file
+Date: Fri,  6 Sep 2024 08:30:01 -0700
+Message-ID: <20240906153003.110200-1-ischis2@cox.net>
+X-Mailer: git-send-email 2.46.0.267.gbb9c16bd4f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 00F9C04C-6C64-11EF-8799-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: "Stephen P. Smith" <ishchis2@gmail.com>
 
-> Thanks for the comprehensive commit message. If the problem only affects
-> "git interpret-trailers" I wonder if it would be simpler to do
->
-> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-> index 1d969494cf..e6f22459f1 100644
-> --- a/builtin/interpret-trailers.c
-> +++ b/builtin/interpret-trailers.c
-> @@ -132,6 +132,7 @@ static void read_input_file(struct strbuf *sb, const char *file)
->                  if (strbuf_read(sb, fileno(stdin), 0) < 0)
->                          die_errno(_("could not read from stdin"));
->          }
-> +        strbuf_complete_line(sb);
->  }
+Cox Communication quit supporting email in May. The accounts were
+moved to yahoo and I was never able to figure out a way to send an
+email that the yahoo web interface didn't modifiy in some way or I
+would have sent this patch from the old address.
 
-It is much simpler, and if we are to require a message that the user
-uses interpret-trailers on not to end in an incomplete line (which I
-do not have any objection to), it is absolutely the right approach.
+I have since closed the account for cox.net.
 
-With a devil's advocate hat on, though, if the trailer operation is
-to find the trailer on the incomplete line at the end, and insert a
-trailer _before_ that one, would it be more faithful to the command
-given by the end-user, if we inserted the new trailer without
-touching the existing trailer line (including its lack of
-terminating EOL)?  Which would mean that we'd need to remember the
-fact that we added a LF here, and then before writing the result out
-make the buffer to end with an incomplete line.  Which I personally
-think is crazy, compared to the approach to declare that a message
-that you subject to interpret-trailers command MUST BE a proper
-text, not ending with an incomplete line.
+Stephen P. Smith (1):
+  .mailmap document current address.
 
-So, yeah, I like that idea.
+ .mailmap | 1 +
+ 1 file changed, 1 insertion(+)
+
+-- 
+2.46.0.267.gbb9c16bd4f
 
