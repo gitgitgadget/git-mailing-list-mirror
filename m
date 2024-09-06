@@ -1,55 +1,55 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965A81B85D9
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 22:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F4615ADB1
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 22:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725661289; cv=none; b=KieHiaiRDNhZ/c6TlYGmGYs3GgxpkNcbVnpIxOJa7NQWTUtXal84IJzEiBDsKLlYKHX7CF6edjnTc0a80F932g3JMdNCat6UDBTjLtTSHtfCKCx4tmYlEdswM+AJhZZjlnr7PvFIh+x679iSQBf/yyeoQNDXrBTjkxliskCKxA0=
+	t=1725661290; cv=none; b=IfNGlnGozjKY7zi1Ci+zQIOe4/OZdkPQc57+ZwVw+hJxlSqiLa5Q4LUvCv/E2kdIAY4fmHPulVFOKZjcVpty/hf2ikztLPlGhXRgxF94eoTjCfq2Cq47PefYIKzgDKB+Fk47kEfFg2FNOeD6wMcef/ek4FQ12LFVGFpEldPtPCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725661289; c=relaxed/simple;
-	bh=N88vkX129rqZ+DWkQlIs/o/NSbG07lAItLOzzw16+5A=;
+	s=arc-20240116; t=1725661290; c=relaxed/simple;
+	bh=IXmU79gdG/icTWTSWtZq6xpmqqsEzvlYOuCdyVQRf08=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qTLDjz7TVtdvMOEgD/n9TuzhPOTR7DekRsQsH2VJOIxoRnMq1+pyyYlLC+weuvD/8VHCIcy6+6eA5ZoJuf1tl5MoaB7LQBIl7n0WjiPigRZ36F8NwiSk0fI1q+PCqxD+PjjTXTO4l/0x3jBLzCqD21YN6pgsItM3QdufYXMdQ7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sODR6Hsk; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=MTSIPic4RNJ4o0zoyMGVjkmHoTkL/MoFrSEzu/6xlxOZEXgl9tNlETHpoLhBH5Wta1khY/cOxUccwuF58HXAIeLAJ1IkkjAJIYXPEahmVpOKFltqsnH8od5l7swaxSZWY84RSSl5HjhtcGviAYNJk2pA9SMIOcBxrUHYiDnT0Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hvKMYq6/; arc=none smtp.client-ip=209.85.214.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sODR6Hsk"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6d5fccc3548so58637827b3.1
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 15:21:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hvKMYq6/"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2053f49d0c9so41591065ad.1
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 15:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725661286; x=1726266086; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1725661289; x=1726266089; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tk1afKTSB6oTJ5sAfEAwQadSx+VjBdujEI5TGPbVZlM=;
-        b=sODR6HskevPrw0j5pAXFGN9GaiZebedNu9Om6p0xAg3UO1esaOytLOZe895BAusTRc
-         FGdupfLA9ydHd0xjYHLPvVyrDGaTYHByisTSJIgXFElYTN2WQl+cbR7chUoLoyiY/vVd
-         ZvEgVdKTp9YdUQBdRoGDzdyuCFV3hNSvqT/uxbwEmlU/ubiG8OjBybST0o9aTWYBexda
-         K63s1+mquXQHhm2THgqOhIuGVXE3SmvLoUzYLiwxr8I0l5IxXZQ5X1VoLCWUmEA1y5TE
-         Apj/WzRQ4gC1CienGD4pd3Ybg2zvtRWovCNFjPHtkoJxsuh4eWpFsYlKrJXWnQp6HJMf
-         5Zew==
+        bh=UixZiE6IiF+TJjsM/CfMJgptyLdm7/OvGi1tWJyuDLc=;
+        b=hvKMYq6/KzAWeJxztUsT9HkT9moGP961YPUModBSZiN+UAEJb4IyB+9ktPofga9u+O
+         XYBeF53AYSa3jYJwB3uMr7YvtVJN1sJCc4l+CzaH5nYBvIh1vGeg0b+4zZvVC1hUdy7C
+         uo2iVra+qWsEvEkEdOB43Zjir7V+7ItuDjSsaUZ5O4y0UHiv02DWXrj5u2aPXio7Mamx
+         QWbSsx2tkWIfRGl5gj58EgWxiKWtUCKTVuJqI7hklcfwUGj60d1J/p07bBpycyhofyCn
+         KC3Hrm1UNOF23+rNEOYufRfCM1/dCyCYEgtVdfj0GkwiAO5/LS3HRP0Dvm2zBqA9BSsZ
+         8E6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725661286; x=1726266086;
+        d=1e100.net; s=20230601; t=1725661289; x=1726266089;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tk1afKTSB6oTJ5sAfEAwQadSx+VjBdujEI5TGPbVZlM=;
-        b=pH4DU4G55mqmM55V+7psXXKR6beAYpKmUj6BYWZV0KYQOMo689hJQ+gpEeoR/10bP9
-         7gTMSXK4paqnvLYQfYzx2eZrR0ZBc+ZYErbaOufOqfZPnMGX9J6wWolJqhGF+7WgUUK5
-         mDt4gxONE4ORclI+lxlkVF8uP5ByNSavkmAIQxicCN9VTdpqbKFnItyfEoBSf3Ov11uZ
-         XH/fTZ/LJGH/9ioogPJ1qzLvlqaV4Fg3R2wfTECFyYDtcidbJqczfOGNYV//pLbdMUQd
-         J5MGyg9athd/wZx5GrMFGs6b1AJ86wjC8V2uiLxZ7AOVhuQtM9gxkRjuWozvwlUuwXDA
-         nfgw==
-X-Gm-Message-State: AOJu0YxcoctU00rlduKf2vQCRzyu9cl4BPTx8cZy1duFzK+6+172b3i+
-	ZdxagFF/eglgbA900rWUyN25eTC538nfJ1DdFJwd8PMFRG3MA6gaSE/XgFEy+2v0pSuDtBmJFq8
-	R6z04KEergw52B1poT728Vpzhsx1ikwDmn0O/0w9GQS0Mr0kvWlCqST7nOy9cJhqGw1cPktYMQ7
-	68+SWY87l4ebpL0sQfFMLhuYZTYsUu5+31L9l99WrY96W/
-X-Google-Smtp-Source: AGHT+IH0kT3bSJbOkspSxfdqAO5xEBMbwXZCTOkXktl07RCr8IY0/visDqTGC+X6OMWZrOnqGcYS560voMxA0+g=
+        bh=UixZiE6IiF+TJjsM/CfMJgptyLdm7/OvGi1tWJyuDLc=;
+        b=UWXSScJWzfRULtQtt0TtWR0EFzrUHuvbzlMKM81oNTkll7817hdd8uT5y5qLE5LhVk
+         ywD/Ut8nZorDab/0nSbrTCsneI/+vz55ad8TwR6qUPNBCoS5s0VkZxGbD/Kti78VttEc
+         nUHw/iFRF/uLxK9bYGaku4jBW5FnxAhADOqn/uLlmFzQbwhKRvlNg5CTOa3ONRCGJM2Y
+         k1pKme43ru22egTvdyJ1uBASlsfuGqxkPxA8G5rspILmj2tVqwrGXJ1uiXZDTq7c7qQ7
+         Lw/AQ91ZwyJpM4OAqaLwQJd4gDuQ6fH2k37UlPTFASJLqFmYoKC3GDkAd6qhnGtrAKug
+         xxfQ==
+X-Gm-Message-State: AOJu0YzcErn2bdrN1GATCqd8O5qbG011IHdgKt7drd8nun8AP7FSLZko
+	1/3pP3WsdKlz4PsjnUj66SLCdQxhXo/vnSOK3kYUf+wqpvNv0LiK5yy3KjJbnaweSIbhquVZmgD
+	wmrB5k22MzKC6r/DKQ8e6slBaPewtYN8BkIZL6G5Hu4ABVWE+AeJsT8l/vKRrbtN8vJXto0LA+y
+	PVg0gbR4sQJtMnyIaQhsG3Vq6fDZtBimVStyptovU/kKfo
+X-Google-Smtp-Source: AGHT+IEKrLCpVw6QqaE2tCzKYQldTu0Kt2VdBFu98IGjQyUVgYmugpO2DIEgRsl3ShYbZHw2u8hVeqdPehp6vFs=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:690c:460c:b0:6d3:e7e6:8460 with SMTP
- id 00721157ae682-6db4426b0ecmr744197b3.1.1725661285980; Fri, 06 Sep 2024
- 15:21:25 -0700 (PDT)
-Date: Fri,  6 Sep 2024 22:21:13 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:902:d503:b0:201:cdcd:4227 with SMTP
+ id d9443c01a7336-206eebdb9f9mr3744475ad.6.1725661287536; Fri, 06 Sep 2024
+ 15:21:27 -0700 (PDT)
+Date: Fri,  6 Sep 2024 22:21:14 +0000
 In-Reply-To: <20240906221853.257984-1-calvinwan@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,171 +59,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20240906221853.257984-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
-Message-ID: <20240906222116.270196-3-calvinwan@google.com>
-Subject: [PATCH v3 3/6] libgit-sys: add repo initialization and config access
+Message-ID: <20240906222116.270196-4-calvinwan@google.com>
+Subject: [PATCH v3 4/6] config: add git_configset_alloc() and git_configset_clear_and_free()
 From: Calvin Wan <calvinwan@google.com>
 To: git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>, steadmon@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com, 
-	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
+Cc: Josh Steadmon <steadmon@google.com>, spectral@google.com, emilyshaffer@google.com, 
+	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, 
+	sandals@crustytoothpaste.net, Jason@zx2c4.com, dsimic@manjaro.org, 
+	Calvin Wan <calvinwan@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Wrap a few repo setup and config access functions in libgit-sys. These
-were selected as proof-of-concept items to show that we can access local
-config from Rust.
+From: Josh Steadmon <steadmon@google.com>
 
-Co-authored-by: Josh Steadmon <steadmon@google.com>
+Add git_configset_alloc() and git_configset_clear_and_free() functions
+so that callers can manage config_set structs on the heap. This also
+allows non-C external consumers to treat config_sets as opaque structs.
+
+Co-authored-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
-Change-Id: I6dd886af8c63e1f0f3251064cd8903aecdf768bb
+Change-Id: I21684c87691d978e3303e04324428aa3567dbd70
 ---
- .../libgit-sys/public_symbol_export.c         | 26 +++++++++
- .../libgit-sys/public_symbol_export.h         |  8 +++
- contrib/libgit-rs/libgit-sys/src/lib.rs       | 57 ++++++++++++++++++-
- 3 files changed, 89 insertions(+), 2 deletions(-)
+ config.c | 11 +++++++++++
+ config.h | 10 ++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-index 39c27d9c1a..65d1620d28 100644
---- a/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-+++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-@@ -2,11 +2,37 @@
- // original symbols can be hidden. Renaming these with a "libgit_" prefix also
- // avoid conflicts with other libraries such as libgit2.
- 
-+#include "git-compat-util.h"
- #include "contrib/libgit-rs/libgit-sys/public_symbol_export.h"
-+#include "common-init.h"
-+#include "config.h"
-+#include "setup.h"
- #include "version.h"
- 
-+extern struct repository *the_repository;
-+
- #pragma GCC visibility push(default)
- 
-+const char *libgit_setup_git_directory(void)
-+{
-+	return setup_git_directory();
-+}
-+
-+int libgit_config_get_int(const char *key, int *dest)
-+{
-+	return repo_config_get_int(the_repository, key, dest);
-+}
-+
-+void libgit_init_git(const char **argv)
-+{
-+	init_git(argv);
-+}
-+
-+int libgit_parse_maybe_bool(const char *val)
-+{
-+	return git_parse_maybe_bool(val);
-+}
-+
- const char *libgit_user_agent(void)
- {
- 	return git_user_agent();
-diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.h b/contrib/libgit-rs/libgit-sys/public_symbol_export.h
-index a3372f93fa..64332f30de 100644
---- a/contrib/libgit-rs/libgit-sys/public_symbol_export.h
-+++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.h
-@@ -1,6 +1,14 @@
- #ifndef PUBLIC_SYMBOL_EXPORT_H
- #define PUBLIC_SYMBOL_EXPORT_H
- 
-+const char *libgit_setup_git_directory(void);
-+
-+int libgit_config_get_int(const char *key, int *dest);
-+
-+void libgit_init_git(const char **argv);
-+
-+int libgit_parse_maybe_bool(const char *val);
-+
- const char *libgit_user_agent(void);
- 
- const char *libgit_user_agent_sanitized(void);
-diff --git a/contrib/libgit-rs/libgit-sys/src/lib.rs b/contrib/libgit-rs/libgit-sys/src/lib.rs
-index 346b26083d..9b2e85dff8 100644
---- a/contrib/libgit-rs/libgit-sys/src/lib.rs
-+++ b/contrib/libgit-rs/libgit-sys/src/lib.rs
-@@ -1,8 +1,19 @@
--use std::ffi::c_char;
-+use std::ffi::{c_char, c_int};
- 
- extern crate libz_sys;
- 
- extern "C" {
-+    pub fn libgit_setup_git_directory() -> *const c_char;
-+
-+    // From config.c
-+    pub fn libgit_config_get_int(key: *const c_char, dest: *mut c_int) -> c_int;
-+
-+    // From common-init.c
-+    pub fn libgit_init_git(argv: *const *const c_char);
-+
-+    // From parse.c
-+    pub fn libgit_parse_maybe_bool(val: *const c_char) -> c_int;
-+
-     // From version.c
-     pub fn libgit_user_agent() -> *const c_char;
-     pub fn libgit_user_agent_sanitized() -> *const c_char;
-@@ -10,7 +21,7 @@ extern "C" {
- 
- #[cfg(test)]
- mod tests {
--    use std::ffi::CStr;
-+    use std::ffi::{CStr, CString};
- 
-     use super::*;
- 
-@@ -39,4 +50,46 @@ mod tests {
-             agent
-         );
-     }
-+
-+    #[test]
-+    fn parse_bools_from_strings() {
-+        let arg = CString::new("true").unwrap();
-+        assert_eq!(unsafe { libgit_parse_maybe_bool(arg.as_ptr()) }, 1);
-+
-+        let arg = CString::new("yes").unwrap();
-+        assert_eq!(unsafe { libgit_parse_maybe_bool(arg.as_ptr()) }, 1);
-+
-+        let arg = CString::new("false").unwrap();
-+        assert_eq!(unsafe { libgit_parse_maybe_bool(arg.as_ptr()) }, 0);
-+
-+        let arg = CString::new("no").unwrap();
-+        assert_eq!(unsafe { libgit_parse_maybe_bool(arg.as_ptr()) }, 0);
-+
-+        let arg = CString::new("maybe").unwrap();
-+        assert_eq!(unsafe { libgit_parse_maybe_bool(arg.as_ptr()) }, -1);
-+    }
-+
-+    #[test]
-+    fn access_configs() {
-+        /*
-+         * Since we can't easily set a config for the local repo, test
-+         * for the existence of a key rather than a specific value 
-+         */
-+        let fake_argv = [std::ptr::null::<c_char>()];
-+        unsafe {
-+            libgit_init_git(fake_argv.as_ptr());
-+            libgit_setup_git_directory();
-+        }
-+        let mut dest: c_int = 0;
-+        let key = CString::new("core.repositoryformatversion").unwrap();
-+        unsafe { 
-+            let val = libgit_config_get_int(key.as_ptr(), &mut dest as *mut i32);
-+            assert_eq!(val, 0)
-+        };
-+        let missing_key = CString::new("foo.bar").unwrap();
-+        unsafe { 
-+            let val = libgit_config_get_int(missing_key.as_ptr(), &mut dest as *mut i32);
-+            assert_eq!(val, 1)
-+        };
-+    }
+diff --git a/config.c b/config.c
+index 6421894614..444db8de79 100644
+--- a/config.c
++++ b/config.c
+@@ -2324,6 +2324,11 @@ static int config_set_element_cmp(const void *cmp_data UNUSED,
+ 	return strcmp(e1->key, e2->key);
  }
+ 
++struct config_set *git_configset_alloc(void)
++{
++	return xmalloc(sizeof(struct config_set));
++}
++
+ void git_configset_init(struct config_set *set)
+ {
+ 	hashmap_init(&set->config_hash, config_set_element_cmp, NULL, 0);
+@@ -2353,6 +2358,12 @@ void git_configset_clear(struct config_set *set)
+ 	set->list.items = NULL;
+ }
+ 
++void git_configset_clear_and_free(struct config_set *set)
++{
++	git_configset_clear(set);
++	free(set);
++}
++
+ static int config_set_callback(const char *key, const char *value,
+ 			       const struct config_context *ctx,
+ 			       void *cb)
+diff --git a/config.h b/config.h
+index 54b47dec9e..074c85a788 100644
+--- a/config.h
++++ b/config.h
+@@ -472,6 +472,11 @@ struct config_set {
+ 	struct configset_list list;
+ };
+ 
++/**
++ * Alloc a config_set
++ */
++struct config_set *git_configset_alloc(void);
++
+ /**
+  * Initializes the config_set `cs`.
+  */
+@@ -520,6 +525,11 @@ int git_configset_get_string_multi(struct config_set *cs, const char *key,
+  */
+ void git_configset_clear(struct config_set *cs);
+ 
++/**
++ * Clears and frees a heap-allocated `config_set` structure.
++ */
++void git_configset_clear_and_free(struct config_set *cs);
++
+ /*
+  * These functions return 1 if not found, and 0 if found, leaving the found
+  * value in the 'dest' pointer.
 -- 
 2.46.0.469.g59c65b2a67-goog
 
