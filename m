@@ -1,82 +1,68 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB80015B125
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B892C15697A
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:42:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725665077; cv=none; b=PifDER25f1wKgIlzPibTTXbtqDjN+lg+FARPSTzPgilZovCN5Hpmo9S8dsafAin8m7KseJ/WNGxv6hJAIMyEAvgyATsYdlkCRfFjNrAAyhRQLfcY/JQBORnLyKRwHm7DOqzZacak16Z585p0Ud0rE0NHLdZ/jrtOa2SdWIZhEB0=
+	t=1725666138; cv=none; b=E7pbr8EATt2bTigoBo8MYDXKO3EgJOZGePFJxoXjGfppiLxuj21jiy54R3S4IQme6R59rJxQKtaxeuEnFS4vRwOhexnhUO2+IpBjuoPy/kYmsh7+PdNWuzWeXOOxEPpFnDcASZOEHaQTgS2BDz9OOjqQnkOiClr4DyWhUe2tDes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725665077; c=relaxed/simple;
-	bh=Uyu7FsT6u5zPC7c7a+Mq7TIlgO1xCa7+F4oPxsn+Nw8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B2ZOT6rUcq9RvjXoXl4Snj/SJBWYbNvBQ1nnFqGSnDu2D0eSkdEPwE9mUPhu7Rl3SbIt/G+uERjheCHsBBzNkpxB2EQtSoZbEC1woNkdXgLc3xOdhuD56mvYisohldtJf443u+Z66DsIQvaIzFUa6KV/M2U0CDV7kROyDuUEw9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e1a8984d3adso183301276.0
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 16:24:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725665074; x=1726269874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uyu7FsT6u5zPC7c7a+Mq7TIlgO1xCa7+F4oPxsn+Nw8=;
-        b=a37sdXzKjcrw+awKn+IRxTzkFziFDxIp1gcYmSV+N81o68pIRm7FQDaXt49HGz1wyO
-         SzMeGuyARUbJt6bM5XZd4n7tXeDxJNolsQ8VRReienKNz/tuR+XyIS5jTrpvR1vBY0Zu
-         wbTOmLsi0Piw8z725mD80djWxPxJO/yKzK4J5PFc4g6hWJO9mjkIZHPwA6PTgXVp9R6u
-         AzHLB6N5NonkQtl18+f+9Pre19PGNcjkE135P7i+e1GTkIb9wZgK3VmrOtzVeL7PnOaU
-         n0kUG9bnbMgjg2ACWtiSi276s4wkUKCUgCrIY/2gbiEeWKoUSt+gP9y8vx3ZMsCv+A20
-         l0OA==
-X-Gm-Message-State: AOJu0YzvY1u11jNEgcHWPpnWQatA4lktqd7FZL5x0r9sUNYTyQiwQsPL
-	IGRIUaqYmCUSkn4ngP0gtMl30o+XE4JLoMuEFRtfsNjKL44QLHD8t/+59niy++uQN0QP2iXoR7z
-	9ujYzJ/lutpiVU0q/sPcng/98mc0=
-X-Google-Smtp-Source: AGHT+IEskLsLkX65U1WKrN3gaOEhv+GwHj1pqMIKsE3HdgbgwEc3gHt5rl0qLkTGyxrSzRcE/TuKOVP0JAY7dWz9PqA=
-X-Received: by 2002:a05:6902:2488:b0:e1a:65d3:fcc5 with SMTP id
- 3f1490d57ef6-e1d34a4673dmr2168657276.11.1725665073848; Fri, 06 Sep 2024
- 16:24:33 -0700 (PDT)
+	s=arc-20240116; t=1725666138; c=relaxed/simple;
+	bh=I+Y5ZiyX8feh8+vWsXbosIKgXf6O9CYuF1uFN7Ou/AE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sn3EshN7M2KHHd93ZTRHe0XSwyJmULiP0mI0sG6DOmbxb0jpndhyU+o9IAz1fU7lRl1G10XozqdW7ADR5AdMux6rNo2yqGVz2Mes97hXtU9bWTt7c+yV7VFRHb4X2mRy+XUWsa3F9sF6ELC9h0p8YlHIf8UjAJOJ3LxG8VFtgVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from p3976092-ipxg00k01tokaisakaetozai.aichi.ocn.ne.jp ([221.188.33.92] helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1smi0A-002lLy-2y;
+	Fri, 06 Sep 2024 23:04:32 +0000
+Received: from glandium by goemon.lan with local (Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1smi03-003H57-2I;
+	Sat, 07 Sep 2024 08:04:19 +0900
+Date: Sat, 7 Sep 2024 08:04:19 +0900
+From: Mike Hommey <mh@glandium.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+	Josh Steadmon <steadmon@google.com>, spectral@google.com,
+	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com,
+	gitster@pobox.com, sandals@crustytoothpaste.net, Jason@zx2c4.com,
+	dsimic@manjaro.org
+Subject: Re: [PATCH v3 2/6] libgit-sys: introduce Rust wrapper for libgit.a
+Message-ID: <20240906230419.r4hej7qsmx7yasl7@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <20240906221853.257984-1-calvinwan@google.com>
+ <20240906222116.270196-2-calvinwan@google.com>
+ <CAPig+cQbPCWS4LVF7cdw_DD6K8dsrLTCmmhqkmGZpz1CO93vRQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240906221853.257984-1-calvinwan@google.com> <20240906222116.270196-4-calvinwan@google.com>
-In-Reply-To: <20240906222116.270196-4-calvinwan@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 6 Sep 2024 19:24:22 -0400
-Message-ID: <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] config: add git_configset_alloc() and git_configset_clear_and_free()
-To: Calvin Wan <calvinwan@google.com>
-Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com, 
-	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQbPCWS4LVF7cdw_DD6K8dsrLTCmmhqkmGZpz1CO93vRQ@mail.gmail.com>
 
-On Fri, Sep 6, 2024 at 6:21=E2=80=AFPM Calvin Wan <calvinwan@google.com> wr=
-ote:
-> From: Josh Steadmon <steadmon@google.com>
->
-> Add git_configset_alloc() and git_configset_clear_and_free() functions
-> so that callers can manage config_set structs on the heap. This also
-> allows non-C external consumers to treat config_sets as opaque structs.
->
-> Co-authored-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
+On Fri, Sep 06, 2024 at 06:39:17PM -0400, Eric Sunshine wrote:
+> > diff --git a/contrib/libgit-rs/libgit-sys/build.rs b/contrib/libgit-rs/libgit-sys/build.rs
+> > @@ -0,0 +1,31 @@
+> > +pub fn main() -> std::io::Result<()> {
+> > +    let crate_root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
+> > +    let git_root = crate_root.join("../../..");
+> > +    let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+> > +
+> > +    let make_output = std::process::Command::new("make")
+> 
+> Providing a mechanism for people to override this hardcoded spelling
+> of "make" could be another item for your NEEDSWORK list; in
+> particular, I'm thinking about platforms on which GNU "make" is
+> installed as "gmake".
 
-Almost all these patches suffer from some sort of missing Josh
-trailer, so I'll stop mentioning it now.
+And/or, use the `make_cmd` crate.
 
-> diff --git a/config.h b/config.h
-> @@ -472,6 +472,11 @@ struct config_set {
-> +/**
-> + * Alloc a config_set
-> + */
-> +struct config_set *git_configset_alloc(void);
-
-Should this documentation string mention that git_configset_alloc()
-does _not_ initialize the configset? Alternatively, should this
-function also initialize it as a convenience (and mention so in the
-documentation)?
+Mike
