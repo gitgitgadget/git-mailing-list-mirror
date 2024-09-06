@@ -1,270 +1,139 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBA11C7B8E
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 09:07:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A521158DC1
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 09:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725613629; cv=none; b=q1wghJpCj+EYAkkvD3JquherUcIgJCkgU8j6XtTyAwisJrF8Jyt/5BYIwrdSM81G3hBlQuzWIMMUMJJzrV93wAB8v+1AUYv9CxwvDS642S33kNDG+nxWB89V7e6Q8wiqT7crCnaeuXgpP0JwhRPLMQpMbYUEc2pZ/fKlsY0ONiI=
+	t=1725614291; cv=none; b=QQUxBHpBXIseW1J9PT08xm6omYY6ID++QHstkb+xOY6OxnEFkz97FO1QOQRtdKdfnbUxmyFq6sDUI+aNh3tpJHkiPoMM7EhO/wMvNtMOW92bGCxcQTFaAlyVQMrE45JMrrr5Ibmze34nHoAnj3DPW2ED9yghiR6EsuAQm1g0M1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725613629; c=relaxed/simple;
-	bh=R6CnV+MzKF27qjMgEIhBoB2EoqPpFlIlTF6Ewh4Atuk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=L9P+2i49zNmy3R6p8XExIxuO079SlU+kqqTTYn65iXzWC20vfwTJC3tMJTX84y6nld8XHM02uUe2Aim2vx60kbE8DYcRFe+JXUQS94zcSd0mg+FBpbkM4ye+UZKHWSu0I0y7vd/4d4zTxlO+dwh8rJ9eQhUYUW1jrJE2tNt2zpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kegbS8a+; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725614291; c=relaxed/simple;
+	bh=K8UJOB7muaiR8lLrzapH5y7Pn6H6mWjEOR+MaqHeJJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CuRlXX2ShF4pEXLnSKrrOloY2e2BxV8IsOltnKMtDzlHtFGhpIbfLgs1Pko2qRc71pFy+mvBpy4rjAh7LgsjmcaYtbRoUyfkBsjacQ90V/QIFETY/DVXPNdQ+P/hEaPlLYF7Rsl/gpluqzBOT9mVXNAR2RACq+HBaTC4oqfMNZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HKwrCeId; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k+8bc0IG; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kegbS8a+"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a869f6ce2b9so230576466b.2
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 02:07:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725613626; x=1726218426; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oyuNmn+CRAKXE0tRvTcglQen5M2OqS6q5wTmXIxul7o=;
-        b=kegbS8a+Hgxsz6UcOVGZfIUNsK1mCt9I15UaUBm6ZzxhevARxPFzXIQlbihPZtKNnZ
-         xAIXZXy4WjeaSZ6ApkD+fRA56N5HcZRGz1zf9RemkOYK9zfBFQBKNtHClyqn54y4eiOM
-         c3P/t7CTmmbHmJNeLju59BuqBzjaa+vFtrgKnj9NXp2/hEMQLY1+ssrrd/RNWNY8WDcd
-         ZLN1VM8MzcqIOP0LldyGi3v5c1sAqMwcHTjku60hqUnntym7Lm+Zy7j0HhAEie58ZiRY
-         EyMTgimE4i4MVuvieUm6Lb8IxoPHpfeENP+BT9KrgnXI/Y9V66Bk2F1pNFJzmUcO6V9l
-         Hzdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725613626; x=1726218426;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oyuNmn+CRAKXE0tRvTcglQen5M2OqS6q5wTmXIxul7o=;
-        b=unV4+aV0GyimNQ+Xq09ri5zYpI0N7h2oFaeXqUmPdi27mD7ImvV6v0sTksFiZXUc7o
-         3VMH+DTGRTC1pmJSdfakAGIKSGOezqxX/0oB9km8bj9UJbptl9Jqnp2ZY7+qw1TfERdl
-         OcOn4fnwoPlDUAc+2a+Bv2V3WqfS3QuIQ+gAMDsXFOYZUbrp5LNFIAWhO+FK9KsSE8Nr
-         B7xTttjZ4sd5opBnQ846d9pC8aHZImaTKrcjcrLo5+5yzW9R1LXK/GRbrWhQbpHaT94V
-         +rbS8OlqsH4S6psba0uD8/eYw9pqlXHDN/2iFm/zbDDRU0UYwWljmfi3ngA+0moXLoRs
-         jFng==
-X-Forwarded-Encrypted: i=1; AJvYcCVuWRBTJZe+fo4YOEIxgd4zFqAS1sx8OHzHtyltfKjegdaJeejaRjML0L06Lm8+FXlQNOM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXkDWIhDiYWM9mME0wq9UwYMS9btL/u91D25qxqNYerpuEef6D
-	LOTCI/hY0EB/5YfB5/dV96B6UGmzGQ+qGQJGJOmIsqScHRsZk0Kt
-X-Google-Smtp-Source: AGHT+IFsipqkXr5Rl0a2wdHwjdaSULJ6ajIquhWXal7FkhyiMEtm3N1PKeTJMh5x79IEKcWMzUuU/w==
-X-Received: by 2002:a17:907:3a96:b0:a8b:154b:7649 with SMTP id a640c23a62f3a-a8b154b790dmr33856366b.15.1725613624766;
-        Fri, 06 Sep 2024 02:07:04 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a70ebd7c9sm190306766b.55.2024.09.06.02.07.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2024 02:07:04 -0700 (PDT)
-Message-ID: <fab48d5b-4808-439e-9384-ca4861b95edc@gmail.com>
-Date: Fri, 6 Sep 2024 10:07:02 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HKwrCeId";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k+8bc0IG"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 92C6E1140343;
+	Fri,  6 Sep 2024 05:18:08 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 06 Sep 2024 05:18:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725614288; x=1725700688; bh=SK0TCABLjb
+	kvzQ+z+nmVaETZhgNIvjD4eFYQqO0UqVo=; b=HKwrCeIdcye/JhKk15HJ4LIk5P
+	cIKwm6QSCr4SMmYG5M2vQ11Aa8CWREnj6nkMhlXMc0ep8RDHwnrulO07SCqmAGdO
+	85aJ9MVXWIDPDMXe7tsHfNhxWojkw2RP2FJvvkkN7Fp4EkSioN/wMeJCqKnBG4++
+	K2rTWkVwITgpJravAjkPReIg5bTwCFrrK2s+2cazgngxFWlTTn/Q/RqHKm4ZnnIf
+	80SA4iDzEvZtN4Gd3T5xrZaoVC60uXZFtXA/EIZ6ROWJq+pbQinhJq6PmlWAnYSQ
+	Rh7IlgrsKJALz8XMkyO9uJxiWV6jJFwF2ftVkBG28010xushr49TPbPt5ijQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725614288; x=1725700688; bh=SK0TCABLjbkvzQ+z+nmVaETZhgNI
+	vjD4eFYQqO0UqVo=; b=k+8bc0IGB76EITFJO8qqMAbn8E/Waa9Sq1QpxwGU/css
+	Cc0yAz6voLa+LWj3Cw9OQ/xvYw7ImqussR7pdACkdDTIpLxx2gzysB7wK0wvFpLN
+	Nwyc6LRMi3PM6GpFhor1E50MCcx6PM5AfHdCelHJ3qG6laZjObx6Ybr92aGo0DK9
+	EzOmouq3UawEpzPS/q2XajL1uwcKSdTyxWM2VZE6N4/ZMR6nU9SMYVCRxUkSy6ae
+	j0IJ1S9ZdNlV7ohq1wy/9koklUpQa3Rwdog3h98sKOL/53tveGFbDI+tZYZldiH0
+	qPY9KiMbZNcMSb14/m5iXUdcnx+6OItfMSzIhnZo8Q==
+X-ME-Sender: <xms:0MjaZilDBbSkJQdmW_be7SpucbFyWWaQeFULrOJjtl-SBri9Nuj67g>
+    <xme:0MjaZp2KViAEqqPwfVDVyblXbhIPwQLivTTreKVmnLOODzML-dQneVqqSxAzllhuI
+    GddHIku4MBaUgG4Tg>
+X-ME-Received: <xmr:0MjaZgprfmv9kx5tleDStvpDrfPxmn3yyX2ReZBZpJrpenKJ-4xh-EvckFpLLSwfl2mqdh4kr9AuaIeFrP5Koex4CaW1_vktod8MzKnPNGY_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeiuddgudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedvfedvkeevge
+    etjefhhedtgeelfedthfekueehhedtudehieeiieeiuddtueevgfenucffohhmrghinhep
+    phhkshdrihhmpdhrvggrugihrdhsjhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:0MjaZmn7GfeecMrxQ_cecKv95j75i_6UOHhv_Iv64mp_9-QciukF2Q>
+    <xmx:0MjaZg0mAJ2G7bLnjMJHfLJcPg9jPZk5Fl3cIo4KRj03mKdgRWbSjQ>
+    <xmx:0MjaZtt9ItZ9IX0Xv6WDuHCrpXI_VmC2YYY2nS6YIFyCrikcbedQGw>
+    <xmx:0MjaZsXpQ4ylsT0ubwOPFymCowVCEniO1FuO4DdhoMLEEp7y6AwbFg>
+    <xmx:0MjaZuAHU6R5dWixltv4fv4oFrWjCIezA5E3SWksCyFlbUxVW9Z-hYPC>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Sep 2024 05:18:07 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 66bf85c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Sep 2024 09:17:52 +0000 (UTC)
+Date: Fri, 6 Sep 2024 11:18:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2024, #01; Thu, 5)
+Message-ID: <ZtrIxtNJcE15BY-Z@pks.im>
+References: <xmqq5xr9zow7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] interpret-trailers: handle message without trailing
- newline
-To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
-References: <20240905173445.1677704-1-brianmlyles@gmail.com>
- <20240906041326.1684570-1-brianmlyles@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20240906041326.1684570-1-brianmlyles@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5xr9zow7.fsf@gitster.g>
 
-Hi Brian
+On Thu, Sep 05, 2024 at 04:01:12PM -0700, Junio C Hamano wrote:
+> * ps/leakfixes-part-6 (2024-09-05) 22 commits
+>  - builtin/repack: fix leaking keep-pack list
+>  - merge-ort: fix two leaks when handling directory rename modifications
+>  - match-trees: fix leaking prefixes in `shift_tree()`
+>  - builtin/fmt-merge-msg: fix leaking buffers
+>  - builtin/grep: fix leaking object context
+>  - builtin/pack-objects: plug leaking list of keep-packs
+>  - builtin/repack: fix leaking line buffer when packing promisors
+>  - negotiator/skipping: fix leaking commit entries
+>  - shallow: fix leaking members of `struct shallow_info`
+>  - shallow: free grafts when unregistering them
+>  - object: clear grafts when clearing parsed object pool
+>  - gpg-interface: fix misdesigned signing key interfaces
+>  - send-pack: fix leaking push cert nonce
+>  - remote: fix leak in reachability check of a remote-tracking ref
+>  - remote: fix leaking tracking refs
+>  - builtin/submodule--helper: fix leaking refs on push-check
+>  - submodule: fix leaking fetch task data
+>  - upload-pack: fix leaking child process data on reachability checks
+>  - builtin/push: fix leaking refspec query result
+>  - send-pack: fix leaking common object IDs
+>  - fetch-pack: fix memory leaks on fetch negotiation
+>  - t/test-lib: allow skipping leak checks for passing tests
+> 
+>  More leakfixes.
+> 
+>  Will merge to 'next'?
+>  source: <cover.1725530720.git.ps@pks.im>
 
-On 06/09/2024 05:08, Brian Lyles wrote:
-> When git-interpret-trailers is used to add a trailer to a message that
-> does not end in a trailing newline, the new trailer is added on the line
-> immediately following the message instead of as a trailer block
-> separated from the message by a blank line.
-> 
-> For example, if a message's text was exactly "The subject" with no
-> trailing newline present, `git interpret-trailers --trailer
-> my-trailer=true` will result in the following malformed commit message:
-> 
->      The subject
->      my-trailer: true
-> 
-> While it is generally expected that a commit message should end with a
-> newline character, git-interpret-trailers should not be returning an
-> invalid message in this case.
-> 
-> Detect when a message exists but does not end with a newline character,
-> and add an extra newline before appending the new trailer.
+There were multiple ACKs on the first version, and the second version
+only addressed some feedback for trivial things. So I think this one
+should be ready.
 
-Thanks for the comprehensive commit message. If the problem only affects
-"git interpret-trailers" I wonder if it would be simpler to do
+> * sj/ref-contents-check (2024-09-03) 4 commits
+>  - ref: add symlink ref content check for files backend
+>  - ref: add symref content check for files backend
+>  - ref: add regular ref content check for files backend
+>  - ref: initialize "fsck_ref_report" with zero
+> 
+>  "git fsck" learned to issue warnings on "curiously formatted" ref
+>  contents that have always been taken valid but something Git
+>  wouldn't have written itself (e.g., missing terminating end-of-line
+>  after the full object name).
+> 
+>  Ready?
+>  source: <Ztb-mgl50cwGVO8A@ArchLinux>
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 1d969494cf..e6f22459f1 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -132,6 +132,7 @@ static void read_input_file(struct strbuf *sb, const char *file)
-                  if (strbuf_read(sb, fileno(stdin), 0) < 0)
-                          die_errno(_("could not read from stdin"));
-          }
-+        strbuf_complete_line(sb);
-  }
-  
-  static void interpret_trailers(const struct process_trailer_options *opts,
+I'll do another review soonish, either today or on Monday.
 
-So that we feed the trailer machinery a message with a trailing new line.
-Thanks for adding some tests, I've left one small comment below.
-
-> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-> index 1d969494cf..9d8f94341d 100644
-> --- a/builtin/interpret-trailers.c
-> +++ b/builtin/interpret-trailers.c
-> @@ -153,13 +153,15 @@ static void interpret_trailers(const struct process_trailer_options *opts,
-> 
->   	info = parse_trailers(opts, sb.buf, &head);
-> 
-> -	/* Print the lines before the trailers */
-> -	if (!opts->only_trailers)
-> +	if (!opts->only_trailers) {
-> +		/* Print the lines before the trailers */
->   		fwrite(sb.buf, 1, trailer_block_start(info), outfile);
-> 
-> -	if (!opts->only_trailers && !blank_line_before_trailer_block(info))
-> -		fprintf(outfile, "\n");
-> -
-> +		if (message_without_trailing_newline_before_trailer_block(info))
-> +			fprintf(outfile, "\n\n");
-> +		else if (!blank_line_before_trailer_block(info))
-> +			fprintf(outfile, "\n");
-> +	}
-> 
->   	if (!opts->only_input) {
->   		LIST_HEAD(config_head);
-> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-> index 3d3e13ccf8..d5303c3f74 100755
-> --- a/t/t7513-interpret-trailers.sh
-> +++ b/t/t7513-interpret-trailers.sh
-> @@ -175,6 +175,46 @@ test_expect_success 'with only a title in the message' '
->   	test_cmp expected actual
->   '
-> 
-> +test_expect_success 'with a bodiless message that lacks a trailing newline after the subject' '
-> +	cat >expected <<-\EOF &&
-> +		area: change
-> +
-> +		Reviewed-by: Peff
-> +		Acked-by: Johan
-> +	EOF
-> +	printf "area: change" | \
-
-There is no need to add a backslash after the pipe here or in the other tests.
-
-Best Wishes
-
-Phillip
-
-> +	git interpret-trailers --trailer "Reviewed-by: Peff" \
-> +		--trailer "Acked-by: Johan" >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'with a bodied message that lacks a trailing newline after the body' '
-> +	cat >expected <<-\EOF &&
-> +		area: change
-> +
-> +		details about the change.
-> +
-> +		Reviewed-by: Peff
-> +		Acked-by: Johan
-> +	EOF
-> +	printf "area: change\n\ndetails about the change." | \
-> +	git interpret-trailers --trailer "Reviewed-by: Peff" \
-> +		--trailer "Acked-by: Johan" >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'with a message that lacks a trailing newline after the trailers' '
-> +	cat >expected <<-\EOF &&
-> +		area: change
-> +
-> +		Reviewed-by: Peff
-> +		Acked-by: Johan
-> +	EOF
-> +	printf "area: change\n\nReviewed-by: Peff" | \
-> +	git interpret-trailers --trailer "Acked-by: Johan" >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->   test_expect_success 'with multiline title in the message' '
->   	cat >expected <<-\EOF &&
->   		place of
-> diff --git a/trailer.c b/trailer.c
-> index 72e5136c73..178adae6ad 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -18,6 +18,12 @@ struct trailer_info {
->   	 */
->   	int blank_line_before_trailer;
-> 
-> +	/*
-> +	 * True if there is a message before the trailer block and it does not
-> +	 * end with a trailing newline character.
-> +	 */
-> +	int message_without_trailing_newline_before_trailer;
-> +
->   	/*
->   	 * Offsets to the trailer block start and end positions in the input
->   	 * string. If no trailer block is found, these are both set to the
-> @@ -946,6 +952,11 @@ static int ends_with_blank_line(const char *buf, size_t len)
->   	return is_blank_line(buf + ll);
->   }
-> 
-> +static int has_message_without_trailing_newline_char(const char *buf, size_t len)
-> +{
-> +	return len > 0 && buf[len - 1] != '\n';
-> +}
-> +
->   static void unfold_value(struct strbuf *val)
->   {
->   	struct strbuf out = STRBUF_INIT;
-> @@ -1017,6 +1028,8 @@ static struct trailer_info *trailer_info_get(const struct process_trailer_option
-> 
->   	info->blank_line_before_trailer = ends_with_blank_line(str,
->   							       trailer_block_start);
-> +	info->message_without_trailing_newline_before_trailer
-> +		= has_message_without_trailing_newline_char(str, trailer_block_start);
->   	info->trailer_block_start = trailer_block_start;
->   	info->trailer_block_end = end_of_log_message;
->   	info->trailers = trailer_strings;
-> @@ -1090,6 +1103,11 @@ int blank_line_before_trailer_block(struct trailer_info *info)
->   	return info->blank_line_before_trailer;
->   }
-> 
-> +int message_without_trailing_newline_before_trailer_block(struct trailer_info *info)
-> +{
-> +	return info->message_without_trailing_newline_before_trailer;
-> +}
-> +
->   void trailer_info_release(struct trailer_info *info)
->   {
->   	size_t i;
-> diff --git a/trailer.h b/trailer.h
-> index 6eb53df155..81449151c7 100644
-> --- a/trailer.h
-> +++ b/trailer.h
-> @@ -125,6 +125,12 @@ size_t trailer_block_end(struct trailer_info *);
->    */
->   int blank_line_before_trailer_block(struct trailer_info *);
-> 
-> +/*
-> + * Return true if there is a message before the trailer block and it does not
-> + * end with a trailing newline character.
-> + */
-> +int message_without_trailing_newline_before_trailer_block(struct trailer_info *);
-> +
->   /*
->    * Free trailer_info struct.
->    */
-> --
-> 2.45.2
-> 
+Patrick
