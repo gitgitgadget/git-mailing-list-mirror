@@ -1,51 +1,54 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35C81B85E0
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 20:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8CC14883B
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 21:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725655771; cv=none; b=jd3gg990/YFpMIYePWTVuDUcm3Y7W9L5/kFvpSWIuRJRdXUM8ZXVDQrDL/Pl1XLsBEZKhV1Fy6ezweNJoTLS7LjnNKQq831e9wSuKIi63AaZ7pmxXba77NLI1jJuLVOuSFRTze38NOL5aS+JOu0lXhfAlO6CpQ3HAhMfRbTHzM0=
+	t=1725659057; cv=none; b=UZ2fuLT/ywR+ncjjvDFjsbCPdjMyz0iqo+d0MLV7e+rrTBe/67u+kzutZqBHuR6mjuYRw46GKcJX6y/5bkUOlZq/w8zsqGIF3uM9FRzzBuzUv/Jwk8uFMIht7A10cIE7+O/0ahJSdxqNaiPHkGTJm5xkP+06aZMDIaJmxske+c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725655771; c=relaxed/simple;
-	bh=d6arOUsov+LqaKqd4QVgbSYIPZ8XHwCOxjUl6sj6ho4=;
+	s=arc-20240116; t=1725659057; c=relaxed/simple;
+	bh=1EHXQ9Z/B96ApGIGlJ6s+hCWKg7yBsnt55E3zqBMD/k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QtkJEUM5eBdlNX4gGo8JGM/+39Ty9/bClwZdeW6q8RQvuA+6R9JsOT4zBmUge+4i6vaKiD+D5n7am563/eTRDIuTU/z3nMaERU6Mgm320//BpsOb2u38ZjEN/eShBw8VMYhNuCGODcxUNF7NK0ng1roOTZcibcfzMuD92cenFI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NgdBekaR; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=FdbYSbEzKcrFt0zBDNQs2SvjbejFUe1Qtvt6hJfTn6xmvgjtVy0kOATQf/l6qcJjQvRJmt3fAIqaC4UfokY/YFxS4Ia3Gruro72qzmdTdvVAZ2DDMJ8TpHStoN1qVIv2g7MtsTPRJPcagKUhryL1HaItC/+1XwBoYE++K0bmXy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iteFf5ZH; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NgdBekaR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iteFf5ZH"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28DD61E84F;
-	Fri,  6 Sep 2024 16:49:23 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 26CF91F19D;
+	Fri,  6 Sep 2024 17:44:14 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=d6arOUsov+LqaKqd4QVgbSYIPZ8XHwCOxjUl6s
-	j6ho4=; b=NgdBekaRhu25gmNwGiPaP5sdJySRF7MFAA7NJdvSYt1iWyFxziWpwc
-	+sgBNSqh8O9Xszx1NYvBMbmgDu8PmNg5LW6GBU217cFrLqeqFlADibVJtz/R+e6b
-	vU6u35eV5P2SNS4SqN8J2l3+Qo176Vh4S4vXlGLE5LUkkQ8X9vb28=
+	:content-type; s=sasl; bh=1EHXQ9Z/B96ApGIGlJ6s+hCWKg7yBsnt55E3zq
+	BMD/k=; b=iteFf5ZHDgzxhwPPFgGj6qwxhx8Zi3xa8N2P/D1sdFm2E4d+/ID9MZ
+	pK4MeKwr1Qqcd1iVqCZFjV0ei4J1rJuTEwyy73eEQs/twsa10AIWTdzzRnKfF4IU
+	Z0JKxAPql6DYrIT5PiOvkemV4H9SAe5f59dhHMqagJdpdvWSW8vsI=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F8B31E84E;
-	Fri,  6 Sep 2024 16:49:23 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E35D1F19B;
+	Fri,  6 Sep 2024 17:44:14 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 83F131E84D;
-	Fri,  6 Sep 2024 16:49:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 810A11F19A;
+	Fri,  6 Sep 2024 17:44:13 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Alex Henrie <alexhenrie24@gmail.com>
-Cc: git@vger.kernel.org,  bert.wesarg@googlemail.com
-Subject: Re: [PATCH] apply: support --ours, --theirs, and --union for
- three-way merges
-In-Reply-To: <20240906044222.4881-1-alexhenrie24@gmail.com> (Alex Henrie's
-	message of "Thu, 5 Sep 2024 22:22:36 -0600")
-References: <20240906044222.4881-1-alexhenrie24@gmail.com>
-Date: Fri, 06 Sep 2024 13:49:21 -0700
-Message-ID: <xmqqwmjov772.fsf@gitster.g>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 3/9] finalize_object_file(): implement collision check
+In-Reply-To: <0feee5d1d4fc1e0aa1ca5d98f2f404ecdbb2f6b6.1725651952.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Fri, 6 Sep 2024 15:46:12 -0400")
+References: <cover.1725206584.git.me@ttaylorr.com>
+	<cover.1725651952.git.me@ttaylorr.com>
+	<0feee5d1d4fc1e0aa1ca5d98f2f404ecdbb2f6b6.1725651952.git.me@ttaylorr.com>
+Date: Fri, 06 Sep 2024 14:44:12 -0700
+Message-ID: <xmqqh6asv4nn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,118 +58,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7ED29318-6C91-11EF-A93E-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ 28683A84-6C99-11EF-B738-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> --ours, --theirs, and --union are already supported in `git merge-file`
-> for automatically resolving conflicts in favor of one version or the
-> other, instead of leaving conflict markers in the file. Support them in
-> `git apply -3` as well because the two commands do the same kind of
-> file-level merges.
+> Note that this may cause some extra computation when the files are in
+> fact identical, but this should happen rarely. For example, when writing
+> a loose object, we compute the object id first, then check manually for
+> an existing object (so that we can freshen its timestamp) before
+> actually trying to write and link the new data.
 
-An unrelated #leftoverbits tangent.  
+True.
 
-We probably should teach add "union" as a valid choice in
-.recursive_variant in merge-recursive.c:parse_merge_opt(), together
-with "ours" and "theirs" that are already supported.
-
-> In case in the future --ours, --theirs, and --union gain a meaning
-> outside of three-way-merges, they do not imply --3way but rather must be
-> specified alongside it.
-
-OK.  At least the code insists on having --3way specified, instead
-of silently ignoring --ours given without --3way, so it is good.
-
-> +static int apply_option_parse_favorite(const struct option *opt,
-> +				       const char *arg, int unset)
+> +static int check_collision(const char *filename_a, const char *filename_b)
 > +{
-> +	struct apply_state *state = opt->value;
+> +	char buf_a[4096], buf_b[4096];
+> +	int fd_a = -1, fd_b = -1;
+> +	int ret = 0;
 > +
-> +	BUG_ON_OPT_ARG(arg);
-> +	BUG_ON_OPT_NEG(unset);
+> +	fd_a = open(filename_a, O_RDONLY);
+> +	if (fd_a < 0) {
+> +		ret = error_errno(_("unable to open %s"), filename_a);
+> +		goto out;
+> +	}
 > +
-> +	if (!strcmp(opt->long_name, "ours"))
-> +		state->merge_opts.variant = XDL_MERGE_FAVOR_OURS;
-> +	else if (!strcmp(opt->long_name, "theirs"))
-> +		state->merge_opts.variant = XDL_MERGE_FAVOR_THEIRS;
-> +	else
-> +		state->merge_opts.variant = XDL_MERGE_FAVOR_UNION;
-> +	return 0;
-> +}
+> +	fd_b = open(filename_b, O_RDONLY);
+> +	if (fd_b < 0) {
+> +		ret = error_errno(_("unable to open %s"), filename_b);
+> +		goto out;
+> +	}
 
-If you MUST use a opt-callback, then do not assume anything that is
-not ours or theirs will always be union.  Help future developers by
-making your assumption more explicit, i.e.
+Two and two half comments on this function.
 
-	if (..."ours"...)
-		do ours thing;
-	else if (... "theirs" ...)
-		do theirs thing;
-	else if (... "union" ...)
-		do union thing;
-	else
-		BUG("unexpected option '--%s'", opt->long_name);
+ * We compare 4k at a time here, while copy.c copies 8k at a time,
+   and bulk-checkin.c uses 16k at a time.  Outside the scope of this
+   topic, we probably should pick one number and stick to it, unless
+   we have measured to pick perfect number for each case (and I know
+   I picked 8k for copy.c and 16k for bulk-checkin.c both out of
+   thin air).
 
-Having said that, I do not think you want or need a callback in this
-case to begin with.
+ * I would have expected at least we would fstat() them to declare
+   difference immediately after we find their sizes differ, for
+   example.  As we assume that calling into this function should be
+   rare, we prefer not to pay in complexity for performance here?
 
->  static int apply_option_parse_whitespace(const struct option *opt,
->  					 const char *arg, int unset)
->  {
-> @@ -5151,6 +5177,18 @@ int apply_parse_options(int argc, const char **argv,
->  			N_("also apply the patch (use with --stat/--summary/--check)")),
->  		OPT_BOOL('3', "3way", &state->threeway,
->  			 N_( "attempt three-way merge, fall back on normal patch if that fails")),
-> +		OPT_CALLBACK_F(0, "ours", state, NULL,
-> +			N_("for conflicts, use our version"),
-> +			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-> +			apply_option_parse_favorite),
-> +		OPT_CALLBACK_F(0, "theirs", state, NULL,
-> +			N_("for conflicts, use their version"),
-> +			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-> +			apply_option_parse_favorite),
-> +		OPT_CALLBACK_F(0, "union", state, NULL,
-> +			N_("for conflicts, use a union version"),
-> +			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-> +			apply_option_parse_favorite),
+ * We use read_in_full() and assume that a short-read return from
+   the function happens only at the end of file due to EOF, which is
+   another reason why we can do away without fstat() on these files.
 
-Instead of embedding the whole ll_merge_options in apply_state, just
-define a new integer member "merge_variant", and use OPT_SET_INT()
-on that field.  That way, you won't have to do the callback interface
-and worry about keeping the function's if/elseif cascade in sync
-with these options that call the same function.
+ * An error causes the caller to assume collision (because we assign
+   the return value of error() to ret), which should do the same
+   action as an actual collision to abort and keep the problematic
+   file for forensics.
 
-Then, instead of passing state->merge_opts, you can initialize
-ll_merge_options instance in three_way_merge() with whatever is
-needed from the apply_state (like the merge_variant mentioned
-above).
+>  /*
+>   * Move the just written object into its final resting place.
+>   */
+> @@ -1941,8 +1992,8 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+>  			errno = saved_errno;
+>  			return error_errno(_("unable to write file %s"), filename);
+>  		}
+> -		/* FIXME!!! Collision check here ? */
+> -		unlink_or_warn(tmpfile);
+> +		if (check_collision(tmpfile, filename))
+> +			return -1;
+>  	}
 
-> -	if (status) {
-> +	if (state->merge_opts.variant) {
-> +		/*
-> +		 * XDL_MERGE_FAVOR_(OURS|THEIRS|UNION) automatically resolves
-> +		 * conflicts, but the ll_merge function is not yet smart enough
-> +		 * to report whether or not there were conflicts, so just print
-> +		 * a generic message.
-> +		 */
-> +		fprintf(stderr, _("Applied patch to '%s'.\n"), patch->new_name);
-
-I do not think this extra message or the comment is warranted.  When
-you said "--ours" you told the machinery that you favor our version,
-so there is no place to be "smart enough to report".  Instead of
-normal 3-way merge, you told it there won't be any conflict.  There
-is nothing to report.
-
-The else clause of the original "if (status)" does report "applied
-patch cleanly" when apply_verbosity is set to report it.  As far as
-the command is concerned, if you told it to use "ours" and got a
-merge result, that was also applied cleanly.  So you can just drop
-this hunk and let the existing code take care of the rest (including
-honoring the verbosity settings).
-
-Other than that, looks fairly straight-forward.
-
-I didn't read the tests, though.
-
-Thanks.
+OK.
