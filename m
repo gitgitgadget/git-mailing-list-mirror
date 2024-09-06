@@ -1,66 +1,67 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07FE1D47AF
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6D1D47AF
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725651980; cv=none; b=WRbXa8b2EsywaSC/5IpAzOFIla9o1cQZjZ9M8RJeTAl0u/nP49rpL+YlxEbZ7bkN0j9XL/mxnpyJ0fZHVQr1gi7gU/veHihQ3EWdDWgh+L7eGnRWawHk+wyGeh5zFhqzz6/mO0R5IcAgSirDDV/z0Ae1t7lkwbM6pRLkjTR+6QI=
+	t=1725651983; cv=none; b=DRpicZZSE6UeAJ6llye/RDxFtHdlIisuEN/s967741c9qN8IsecrDuY6mPR2+0cGSlklLbpPlN/o98lbsgH7mzxdonnSA8VYKTBL9GuJnTmUFjCusgmERf5TqOCWccYILGRhZCoBcesZfT9sxutHaikRqCfuK1ZFXdQSketGtGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725651980; c=relaxed/simple;
-	bh=th15hE2tcz1Jtp9cEcesboste7+G76vXcUokxo4Rq04=;
+	s=arc-20240116; t=1725651983; c=relaxed/simple;
+	bh=gaSsO/Xwf6T9g24xg98hpQ3ycGxbruwxEh1Berp9T0A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XFVN5gsoMwrQhxxGLmKo5ixP74z/RwM/P4ULhXQipUdFmZpACZ8Xfh+/2ph1maZqqei2aQMml9Eh27JhwfniZvHxBldxMuGoG8fXE9gBCjyR5imKkz6BrZnWjQuFYSDlZLwg0YIbkGIxPNNC1cGTutPKHUgPa3Eli3dEZto9JGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ErpP+6qk; arc=none smtp.client-ip=209.85.219.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=h3zo5KtDLjwxbnBZqUeXhm2xBy35nuVJ+rXUsYmIklb5XqDstC6gOgNEecgHI7Zmg8j7GTymDJa5e37X2YkO7yLtbrAcLxrjLZhECmJL5f8tLwMCtRGhXlPbNFdcZCQrBYMnYUbttriFmTyuwdQUijR2Vtwxm4NFUeCFHcg3Fk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=whnfdboX; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ErpP+6qk"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e1a82d1ef62so2521952276.0
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="whnfdboX"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-68518bc1407so27250497b3.2
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651977; x=1726256777; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=n5z5LVBw54AQwPy7u5bUYLtuVvsoN7bq2zRUKcEST8M=;
-        b=ErpP+6qkYQIbEF1if9yZQaFguT0WDFRp6o6gHRJ0WUfSoH858d66X92WSLP67+PWKX
-         mKeIfStS5d9xrlCoozsq08cW8SoKVnJVyPtBaaOW6dC5XAVmTWwJTxcTn1kF+AZBBONS
-         mRUbaWM7v3IvtEQcl5z1lnHNsyN0uDjfyDHekIIrwCCzL88x+qjgMpRF5KrJ6kpQ6UUF
-         UysZvIHsnhl/AHg107arKFQrPlrGRznQeM1qToIjEJs00FkriM0PzRvy/uCmW7+km9JZ
-         Tl8kqjGL3mSQyEuj2UTHbZbcghrgjdlLlMja2iTayZrveUGpso19bN1xoPbDXSA8uTsb
-         PADQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651980; x=1726256780; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BzZuitm20Jcv335IO2WXHiy01XhKFs8S+X00N+4JxQk=;
+        b=whnfdboX9r3Uzq5J6/6MUuGfyQTui2P9ZTeZcwoQTzkgKUvJI75qhOlpKc70Xa6mia
+         6BAlLiscGC1wPm2me27uDed90q1ZnIwK4RbfvFkmhV6p2oc8Mp2Qv1P1+hkAJzDk5MpJ
+         SO+JMeFlqWQjgZJ0VqOTQxQEBAaMpC9NURCTi+DgXTnCLJFLl9+1j9ocTGYM28Ul4yaJ
+         PQgVUzFwgRytsILtSfm3dSrx3fbjP+kv/L2fsQxQrqdL26+VHlVSDKfZG39Iu9WU2UDC
+         ouGNzwIJW6OUTliFEY/+tJibD33OHRDG+Z5xYfHGL5eXQyJD7FnjbzmGo/xltbtLJXXz
+         yhgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725651977; x=1726256777;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n5z5LVBw54AQwPy7u5bUYLtuVvsoN7bq2zRUKcEST8M=;
-        b=tfGYN/3T61PgPFh5E2syeuf56vTyzlqYPqg30UPdHVQKA+rUbTY8IXBVw42PcKJPHw
-         Nw60dPhWRHW4C9zCgV/TSAUbjRgsRPcCyRlzZYxQGQRx1M0qMpeoTdMQxarYaylWuvNb
-         cW1QOUxhjDbiCtnjfd8sE32EEgAR9fZ5sAkfXUTLlJVk7TU3eBNvMLpM5Ti0SvSkqCEx
-         mGls1flADKyOTbhjdaK9PfXaDg6UGh3KPe+GQ63Fcd9TT+T2BTG7GdnwTE7A5UUxZHsO
-         aFWivavSAkJa0mpPPqm53HvEwNsBdp9ANYDLx3Wotd/g85v/VD5eWUkwPkOGd3qgfhLq
-         c4fA==
-X-Gm-Message-State: AOJu0YwhV4R3InxUOmlHIVlJF05isCyHjmCd5PSYxq7bLybCuDslWgmU
-	wFxvoN3jONqUIeYWFFPla88vIs4+X6vnD/y+lm132q0TnHvoF0TxcoKZIUJfJSYHxg/QnXggiUi
-	aDSo=
-X-Google-Smtp-Source: AGHT+IEj7iTZXVDShtZQpQnARjQCzt9FdU4m66GNm8zLq+IFKi4GvsZD1AGsZ/O1YdWrJk6EZL9IwQ==
-X-Received: by 2002:a05:6902:2e10:b0:e1d:1434:98a4 with SMTP id 3f1490d57ef6-e1d3486f977mr4166163276.9.1725651977406;
-        Fri, 06 Sep 2024 12:46:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725651980; x=1726256780;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BzZuitm20Jcv335IO2WXHiy01XhKFs8S+X00N+4JxQk=;
+        b=MxUww3cdLGT4H1lRJbyARUaHG/GK9LpL6T60sieB7VliQjuIVfELKOxCpm8x6DTjZ3
+         mnBeDZTWyFMr/s7YoE9msfzegwC2jY+whfgzUf62LDN60DCx2gpCKgSjDcdF4Nga6C85
+         HzLlV5rxe4K0sDJmOQxfL/0JHTUe3JVpWu/wuDEppi42nQZhGwL/JP+tddOGOhvV/93f
+         ROKuq1im1xNsASP9BOtuRAPSS+tixw8urE4EPttHr9j2ei8QLh7izyhlMl5X7zrBuQAT
+         lpNYiK+98a6etPG6PpqP4X732DjiS23b4deraRekn3KfbHwbpSl7xrePHbstUFfasMc/
+         F4Lw==
+X-Gm-Message-State: AOJu0Yw97jU1HnyIHS/QbcQJ7ayHhUyIgCwPqnOroytFpCJ6ayFRpwTf
+	2KAYhypZvxhQm6JX9OaNX11FFOHWuPxj64BYQQjIgIZwpsDFzZB0yiUKRcLI4dAQHqoB08Ch792
+	msCA=
+X-Google-Smtp-Source: AGHT+IE2P2wc7q/6/1U2GOTwMxI0xYiTi7TpnV0LE7lJyN60Yvj6oYIg2pTJeVN6M+MSsLe63325yw==
+X-Received: by 2002:a05:690c:67c6:b0:685:3ca1:b9d8 with SMTP id 00721157ae682-6db451544bcmr47329157b3.30.1725651980527;
+        Fri, 06 Sep 2024 12:46:20 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1d43fae12asm105518276.37.2024.09.06.12.46.16
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6db565e601asm1126437b3.143.2024.09.06.12.46.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 12:46:17 -0700 (PDT)
-Date: Fri, 6 Sep 2024 15:46:15 -0400
+        Fri, 06 Sep 2024 12:46:20 -0700 (PDT)
+Date: Fri, 6 Sep 2024 15:46:19 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/9] pack-objects: use finalize_object_file() to rename
- pack/idx/etc
-Message-ID: <620dde48a9dece56395a442b0f42a157d06adb29.1725651952.git.me@ttaylorr.com>
+Subject: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of Git
+ without OpenSSL
+Message-ID: <bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1725651952.git.me@ttaylorr.com>
 Precedence: bulk
@@ -71,93 +72,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1725651952.git.me@ttaylorr.com>
 
-In most places that write files to the object database (even packfiles
-via index-pack or fast-import), we use finalize_object_file(). This
-prefers link()/unlink() over rename(), because it means we will prefer
-data that is already in the repository to data that we are newly
-writing.
+For the interop tests exercising basic 'git daemon' functionality, we
+use version v1.0.0 as the old version of Git (which in this test we
+happen to designate with using VERSION_B).
 
-We should do the same thing in pack-objects. Even though we don't think
-of it as accepting outside data (and thus not being susceptible to
-collision attacks), in theory a determined attacker could present just
-the right set of objects to cause an incremental repack to generate
-a pack with their desired hash.
+But that version does not compile with modern versions of OpenSSL,
+complaining with error messages like:
 
-This has some test and real-world fallout, as seen in the adjustment to
-t5303 below. That test script assumes that we can "fix" corruption by
-repacking into a good state, including when the pack generated by that
-repack operation collides with a (corrupted) pack with the same hash.
-This violates our assumption from the previous adjustments to
-finalize_object_file() that if we're moving a new file over an existing
-one, that since their checksums match, so too must their contents.
+    epoch.c:21:16: error: field ‘numerator’ has incomplete type
+       21 |         BIGNUM numerator;
+          |                ^~~~~~~~~
+    epoch.c:22:16: error: field ‘denominator’ has incomplete type
+       22 |         BIGNUM denominator;
+          |                ^~~~~~~~~~~
+    epoch.c: In function ‘new_zero’:
 
-This makes "fixing" corruption like this a more explicit operation,
-since the test (and users, who may fix real-life corruption using a
-similar technique) must first move the broken contents out of the way.
+Of course, compiling with `NO_OPENSSL=1`, which we have had since
+dd53c7ab297 ([PATCH] Support for NO_OPENSSL, 2005-07-29) allows us to
+compile cleanly.
 
-Note also that we now call adjust_shared_perm() twice. We already call
-adjust_shared_perm() in stage_tmp_packfiles(), and now call it again in
-finalize_object_file(). This is somewhat wasteful, but cleaning up the
-existing calls to adjust_shared_perm() is tricky (because sometimes
-we're writing to a tmpfile, and sometimes we're writing directly into
-the final destination), so let's tolerate some minor waste until we can
-more carefully clean up the now-redundant calls.
+This hasn't been such a problem in practice because most builds can use
+NO_OPENSSL when compiling the older versions of Git used by the interop
+tests, because often even the current version of Git does not use
+OpenSSL (e.g., because we use the collision detecting implementation of
+SHA-1).
 
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
+But subsequent changes will make a build configuration that does use
+OpenSSL's SHA-1 implementation (at least for non-cryptographic uses)
+more common, thus breaking this interop build (since only one side will
+compile with NO_OPENSSL).
+
+Let's work around the issue by using a slightly more modern, but still
+quite old v1.6.6.3, which is used by the i0000-basic.sh test script as
+well.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-write.c                          | 7 ++++---
- t/t5303-pack-corruption-resilience.sh | 7 ++++++-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ t/interop/i5500-git-daemon.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/pack-write.c b/pack-write.c
-index d07f03d0ab0..e5beecd3a4f 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -8,6 +8,7 @@
- #include "csum-file.h"
- #include "remote.h"
- #include "chunk-format.h"
-+#include "object-file.h"
- #include "pack-mtimes.h"
- #include "pack-objects.h"
- #include "pack-revindex.h"
-@@ -527,9 +528,9 @@ static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
- 	size_t name_prefix_len = name_prefix->len;
+diff --git a/t/interop/i5500-git-daemon.sh b/t/interop/i5500-git-daemon.sh
+index 4d22e42f842..c5bf37e4739 100755
+--- a/t/interop/i5500-git-daemon.sh
++++ b/t/interop/i5500-git-daemon.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
  
- 	strbuf_addstr(name_prefix, ext);
--	if (rename(source, name_prefix->buf))
--		die_errno("unable to rename temporary file to '%s'",
--			  name_prefix->buf);
-+	if (finalize_object_file(source, name_prefix->buf))
-+		die("unable to rename temporary file to '%s'",
-+		    name_prefix->buf);
- 	strbuf_setlen(name_prefix, name_prefix_len);
- }
+ VERSION_A=.
+-VERSION_B=v1.0.0
++VERSION_B=v1.6.6.3
  
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index 61469ef4a68..e6a43ec9ae3 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -44,9 +44,14 @@ create_new_pack() {
- }
- 
- do_repack() {
-+    for f in $pack.*
-+    do
-+	    mv $f "$(echo $f | sed -e 's/pack-/pack-corrupt-/')" || return 1
-+    done &&
-     pack=$(printf "$blob_1\n$blob_2\n$blob_3\n" |
-           git pack-objects $@ .git/objects/pack/pack) &&
--    pack=".git/objects/pack/pack-${pack}"
-+    pack=".git/objects/pack/pack-${pack}" &&
-+    rm -f .git/objects/pack/pack-corrupt-*
- }
- 
- do_corrupt_object() {
+ : ${LIB_GIT_DAEMON_PORT:=5500}
+ LIB_GIT_DAEMON_COMMAND='git.a daemon'
 -- 
 2.46.0.430.gca674632b70
 
