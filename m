@@ -1,64 +1,64 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517111CC155
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 11:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D2A1CA6AA
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 11:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725623112; cv=none; b=dM0ZtD1DjaiVtD5bXDqOWH6ToIwllLfpmlAXxFKRpIb8Hidj6kdoaWm5bNghvl2D/3ghTASrRoPtHckGh/OrfXu8H/ROh6RNFEcG9sL4MPffEWQOJbyIGhYLfFWx9lstYYTWS7YmFp92UKj13NvxgFwiQcsssjCeFILfA0BkyYI=
+	t=1725623115; cv=none; b=c5YP6bTbubYbl+hP1Q8poXBye+s3yARYsluBz1sYjrY8eBfzFh9SZ8wdWWyVNF/Tj/tZTCb2UlyfhwXz0yZ45ApFj7t+tQbMAj1i0RDmCMpaYxamu+g23UkKoQjU8EsZxcdCXtBSzw4QURi6YTL2nzK24hSC+1SoUOgtUiHIuyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725623112; c=relaxed/simple;
-	bh=2U+WMvKHa+2d2IVhUXykqOVonsM0YnpV1uo35PWuBsE=;
+	s=arc-20240116; t=1725623115; c=relaxed/simple;
+	bh=tiMt8eQ9Wz/dZ4NqLnOpFeE7lFDBFWSkekVpry+AGsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fmd5TtX04Hc/gyoiyiSEdlKcqXeM7DZ91ulcJ/kwaTTGLvqnLoe572B44B4jj4CFCG3eNC1ES5E0BzJzuso/0kAXJLQ+BeSHhvHeL8zn7FKoL/9aolxEL27Jw3ZhPKCo/GGZ4oVFhbdKJAxKoOP+o+Bjmb+l8EbIJXXNUfMbe9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a071Ayg2; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version; b=ptkoD4eS8mgeikDgBRlDb5k0+tBHm6bnAS/lBqgUTFvf7EamsVtMUVfarGxzpvAC2e5+IpzBv474ti1VrwsEzTC3fEHGfhQmTWNbaBrr/1LICNSet9/1mVlOuVoKelYesC2ghbzPCk5BfQJeLUZ2uFKgB7pjROuPDHkUsdQPwLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8cnZ/9i; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a071Ayg2"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2068acc8b98so17570765ad.3
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 04:45:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8cnZ/9i"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20551e2f1f8so18873375ad.2
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 04:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725623110; x=1726227910; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725623113; x=1726227913; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rVcZRrxptk9c3lqA9Btm7t2TmO4L6+yRtFB0PVVE5vM=;
-        b=a071Ayg2ZL9sNXTL2sSCV0EMTjtfT2O/wR1MTHK5N8qG5E9fcrW0G1P6kIQJMEFHmN
-         LjxixPv7FjQr9AcSeTHsfqTUI2qUBJsDYYuCP4vtD/tRG6gMnU9LuRRkaD0+vsRoH3Nm
-         fYklwftiBteLLQb8iZvqrWktMP9t3CnwVHJrJL3QI8/d/rV7vQeHubFDmKEPeZIP2ikV
-         FHSdV1PMSipUw9Mtv9/xxcl8jh3Z12lYbCYmnPaRG4yFnUofpbKMXVNsEbyEP+s7NpOQ
-         uM9x++9qFgvgVMQaS7v6BWHfsS5JF+DK5C5Y14/tLBDuuzxodCyy55G44qICDhwKfw8x
-         KVmQ==
+        bh=0OO0eIpA11/USeXurWqLSkyt3PnVO+RdsJ8RPpz7mv8=;
+        b=K8cnZ/9iMIYWzaO74UzkimDxT8pdN3YKoxrALZi8hMPnnGjVgtFDLZW9V7cEpgTnXJ
+         5IJOeOnp9/uiF3VL7Ebzz1dw5tcXldesXCDVucsN/VkiYSoGiPEYYO29GgQZ7LcjPyOx
+         rCcqchg4et/WHsS0VTqq9bxRmdamYkGrWdwdslERNnG5+YwfAcDy8INTen5De6d4DWP/
+         hrGwOJJ8Gbdu6zZtoQctV2MncDfRK6mR4gvM/9kYVroCTClE+1b7wF8BcS8W9hkn37g3
+         +GkNj1CFnRY6oYgOnPgGkRsWEtEfjM/R7F50xFQ3xcAxvPFY5WQ1vY0YLydeB+yOGNQ7
+         rE0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725623110; x=1726227910;
+        d=1e100.net; s=20230601; t=1725623113; x=1726227913;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rVcZRrxptk9c3lqA9Btm7t2TmO4L6+yRtFB0PVVE5vM=;
-        b=OGzpBtjq/g0TLfV+QHW5NWOGGJMHFp61aiNVmjgP6sPq//1YL6ol/QYbXdYZhrDuIL
-         Rth/qenqR6/uWhfwEz7AH2lEOBCrnJNWenAA+SvNqbnzRc8Z2kpaDYeJvNI9gSHgkYwN
-         HoCuxsThHTjCb/ccttCI6drlnDgxz3MlpM1vuVhrp2kvYt/C6RkogPxqBpaL+FjF5F1c
-         RC7g41U3y2Up2xv5JVFGM4SyVeuz08eygkVFLG3riIaRFVBP7kkAN0wkmiXCN8bDbl5B
-         Zl6N89TUx859kLpxOUobSTsi7Jn19NTjb5+IuF1/Qy/SV4VqvenIROcaE28P6wFy31EA
-         xgAg==
-X-Gm-Message-State: AOJu0Yy/9MYfJ6Zm4UorGYTtMfMqTlt9bl254M+jJaEqVeB0aaPRBYqO
-	YXCQPdEVYGjWxMjvHaohIOy24TDlcZ6iAPlTr22jL1C+ITaYmPJJ7VwG6k//
-X-Google-Smtp-Source: AGHT+IETrl0y873NUtXjqnk8qIkJoaO4brfTfG4/23z0G/p8tYDYR9KjZKo5p6y0RsPD3T2xuXZrxw==
-X-Received: by 2002:a17:902:ecce:b0:205:6552:1099 with SMTP id d9443c01a7336-20565521122mr204147745ad.8.1725623110180;
-        Fri, 06 Sep 2024 04:45:10 -0700 (PDT)
+        bh=0OO0eIpA11/USeXurWqLSkyt3PnVO+RdsJ8RPpz7mv8=;
+        b=dhrED6GPEZX3o5NUfE6lubFTG3W0ZvB02b8cJKUZmSU1Ad8UYGmrxoq0pJekbtm5yM
+         B9XE+OxJ64+ZkxPvjy3Ig9RozwUUZ4d59GyNDXE4I7tg9gs7HFAlFy12zDUABWN1sQ0/
+         lHQZBWNApxDE3DadQ7GNfb3qMGwlIJMSF71voMQcBHidZ/bP9toP6o1yccxvLxsLoe7l
+         KTgmjTiSOTt+17gLOWotVBlUm93eygJ0MVk97mCGs95AbF+RXRJqs03l6KmDFhgs4Yjm
+         2HPQWfTwjm0F39FM2IVHBn+VAPEApnNOLY3FHuIX0QjZ4Ec86wXmaYKho091GH+EIxJf
+         ps8w==
+X-Gm-Message-State: AOJu0YyBgaAx7xY6ktojmQfmdT5Jc+eziAS9tLddzAEORjET5VQ7K5mj
+	abcjGvV2I/qcuJ/jVhCEPGRLWUsiR22/GbhZVd9Dq8txs+WsbwFNj1+ct7q3
+X-Google-Smtp-Source: AGHT+IHH3xu0C54h2xlwLvOlgxQjPi4A6xINkF8IsJsen15RaF7bmmJU4/LpT84WwOwQ3/04cf3Fkg==
+X-Received: by 2002:a17:902:ec83:b0:1fd:5fa0:e98f with SMTP id d9443c01a7336-206f05afd8fmr24373225ad.44.1725623112934;
+        Fri, 06 Sep 2024 04:45:12 -0700 (PDT)
 Received: from Ubuntu.. ([106.221.74.130])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-206ae91371bsm41903685ad.26.2024.09.06.04.45.07
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-206ae91371bsm41903685ad.26.2024.09.06.04.45.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 04:45:09 -0700 (PDT)
+        Fri, 06 Sep 2024 04:45:12 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 4/7] t-reftable-stack: use reftable_ref_record_equal() to compare ref records
-Date: Fri,  6 Sep 2024 16:59:13 +0530
-Message-ID: <20240906113746.8903-5-chandrapratap3519@gmail.com>
+Subject: [PATCH v5 5/7] t-reftable-stack: add test for non-default compaction factor
+Date: Fri,  6 Sep 2024 16:59:14 +0530
+Message-ID: <20240906113746.8903-6-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240906113746.8903-1-chandrapratap3519@gmail.com>
 References: <20240904150132.11567-1-chandrapratap3519@gmail.com>
@@ -71,45 +71,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the current stack tests, ref records are compared for equality
-by sometimes using the dedicated function for ref-record comparison,
-reftable_ref_record_equal(), and sometimes by explicity comparing
-contents of the ref records.
-
-The latter method is undesired because there can exist unequal ref
-records with the some of the contents being equal. Replace the latter
-instances of ref-record comparison with the former. This has the
-added benefit of preserving uniformity throughout the test file.
+In a recent codebase update (commit ae8e378430, merge branch
+'ps/reftable-write-options', 2024/05/13) the geometric factor used
+in auto-compaction of reftable tables was made configurable. Add
+a test to verify the functionality introduced by this update.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-stack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/unit-tests/t-reftable-stack.c | 41 +++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
 diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index 8047e25c48..4f2ef1a8cc 100644
+index 4f2ef1a8cc..4acf07ab0c 100644
 --- a/t/unit-tests/t-reftable-stack.c
 +++ b/t/unit-tests/t-reftable-stack.c
-@@ -174,7 +174,7 @@ static void t_reftable_stack_add_one(void)
+@@ -831,12 +831,12 @@ static void t_empty_add(void)
+ 	reftable_stack_destroy(st2);
+ }
  
- 	err = reftable_stack_read_ref(st, ref.refname, &dest);
- 	check(!err);
--	check_str("master", dest.value.symref);
-+	check(reftable_ref_record_equal(&ref, &dest, GIT_SHA1_RAWSZ));
- 	check_int(st->readers_len, >, 0);
+-static int fastlog2(uint64_t sz)
++static int fastlogN(uint64_t sz, uint64_t N)
+ {
+ 	int l = 0;
+ 	if (sz == 0)
+ 		return 0;
+-	for (; sz; sz /= 2)
++	for (; sz; sz /= N)
+ 		l++;
+ 	return l - 1;
+ }
+@@ -869,11 +869,43 @@ static void t_reftable_stack_auto_compaction(void)
  
- #ifndef GIT_WINDOWS_NATIVE
-@@ -285,7 +285,7 @@ static void t_reftable_stack_transaction_api(void)
- 	err = reftable_stack_read_ref(st, ref.refname, &dest);
- 	check(!err);
- 	check_int(REFTABLE_REF_SYMREF, ==, dest.value_type);
--	check_str("master", dest.value.symref);
-+	check(reftable_ref_record_equal(&ref, &dest, GIT_SHA1_RAWSZ));
+ 		err = reftable_stack_auto_compact(st);
+ 		check(!err);
+-		check(i < 3 || st->merged->readers_len < 2 * fastlog2(i));
++		check(i < 2 || st->merged->readers_len < 2 * fastlogN(i, 2));
+ 	}
  
- 	reftable_ref_record_release(&dest);
+ 	check_int(reftable_stack_compaction_stats(st)->entries_written, <,
+-	       (uint64_t)(N * fastlog2(N)));
++	       (uint64_t)(N * fastlogN(N, 2)));
++
++	reftable_stack_destroy(st);
++	clear_dir(dir);
++}
++
++static void t_reftable_stack_auto_compaction_factor(void)
++{
++	struct reftable_write_options opts = {
++		.auto_compaction_factor = 5,
++	};
++	struct reftable_stack *st = NULL;
++	char *dir = get_tmp_dir(__LINE__);
++	int err;
++	size_t N = 100;
++
++	err = reftable_new_stack(&st, dir, &opts);
++	check(!err);
++
++	for (size_t i = 0; i < N; i++) {
++		char name[20];
++		struct reftable_ref_record ref = {
++			.refname = name,
++			.update_index = reftable_stack_next_update_index(st),
++			.value_type = REFTABLE_REF_VAL1,
++		};
++		xsnprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
++
++		err = reftable_stack_add(st, &write_test_ref, &ref);
++		check(!err);
++
++		check(i < 5 || st->merged->readers_len < 5 * fastlogN(i, 5));
++	}
+ 
  	reftable_stack_destroy(st);
+ 	clear_dir(dir);
+@@ -1186,6 +1218,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 	TEST(t_reftable_stack_add_one(), "add a single ref record to stack");
+ 	TEST(t_reftable_stack_add_performs_auto_compaction(), "addition to stack triggers auto-compaction");
+ 	TEST(t_reftable_stack_auto_compaction(), "stack must form geometric sequence after compaction");
++	TEST(t_reftable_stack_auto_compaction_factor(), "auto-compaction with non-default geometric factor");
+ 	TEST(t_reftable_stack_auto_compaction_fails_gracefully(), "failure on auto-compaction");
+ 	TEST(t_reftable_stack_auto_compaction_with_locked_tables(), "auto compaction with locked tables");
+ 	TEST(t_reftable_stack_compaction_concurrent(), "compaction with concurrent stack");
 -- 
 2.45.GIT
 
