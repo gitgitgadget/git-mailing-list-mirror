@@ -1,65 +1,63 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7E53D0A9
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 04:14:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F08D288D1
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 04:42:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725596043; cv=none; b=BrQKIhOuQzwtkm2tiKTCMQBgVAJS/BY9fvV1YYj9wkJFgzN0iBOLSOqzSFxvJ+4zK2AM2ZJZvBO4NGPhehQJ5AslTrJWQu7Bgr00AuF4s+TyAlKAtJXFQyu/l4uI0efAzJdso2M33469R6SjJH9xsUPvX/rgyzHdAr48pR5pSCk=
+	t=1725597754; cv=none; b=i86JLxN997HCSR+beQx4RZXzZX6ZQAk2dSULIj4esA+Z9oKpepmm8gSGYUTG1ZzbjOef1ErP/DZS1s4VaYVY3qRQxpaISGHiHSWApycJpYiQ39IEuf5AnmHwC53rntuoD9+IhYRALI0sbSuitb+AFfJYsr4qN7tAx94d+hKocEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725596043; c=relaxed/simple;
-	bh=eG/lOJkSNDyHiE9SJS+cE5QsZzYh2vEuk/KtZ5f5uRk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRGSbqSFjToebJ9LIbfnGtJxq5HhaVS7Fx87BG2yHr8EgJhOV0tTv2OuNfuKurDUG/pykDxT9NP9kXfI8xKRJnEedcG8oZAHkJ0EyjSIUPXx5JaGL2vzS7HHuJ11ACMG4bfc6FRpCMf4PHloUxQCJK7n5JoZBtP3Rui0xJh6Xjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fCFBXmfg; arc=none smtp.client-ip=209.85.167.180
+	s=arc-20240116; t=1725597754; c=relaxed/simple;
+	bh=2QOCiTe4Z6IA4d39VtRek8CU3PsA84wWe9g7lMjMUqw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m7Px1hI0o8gG+VRht/dvYv6sBRWbt9DKhuXtoEuxz+gaqOUMQiN0+DBloPFfkWnETSli2HBEheJpB+NnDStqc2zESJOEDdw6n6IjWGsj6SHaNK6aNH9lR9hRArk0+XOYEcQtGOF3JQ7a9MfKGRHjQg2Sn1mbInV/HTGCprXUIFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZAsqeo2s; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fCFBXmfg"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3df09d398faso1052274b6e.1
-        for <git@vger.kernel.org>; Thu, 05 Sep 2024 21:14:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZAsqeo2s"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2d8fa2ca5b1so1173150a91.3
+        for <git@vger.kernel.org>; Thu, 05 Sep 2024 21:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725596040; x=1726200840; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T66eS1vMkCOza6r351eDeXdrLgXXcrXhwtBQvVmNkoA=;
-        b=fCFBXmfg13pPJVmmC124qWGDQ5AFOGnKN+cvdn8BGwATpYUADWOa5tDS1pJF/8ikp/
-         PZSaAfP+DdMBbTPAI4kj1Soz0pCjkr09p+tZF3m2Qj5+M8Vat57tlc40n56dhf+kWycZ
-         lQm5Zlp6Gq/J8tuDMk2ATBS54axyWYDfpy54Q/kBA9hA9xvp88BRiCpvCczTyIysgLA2
-         xaD9FRJJwYgikGkLC/gUjMrBquiLkb7AksMREPHyb6N32T75xmu0gLk1w31zV500CCe4
-         tpA4D3WUqp7zQNMw1QoGH3VLUrzSTkeefv6sbeB/KP4Zza26vxzg9uumYIvU1Jh2lvsh
-         oeag==
+        d=gmail.com; s=20230601; t=1725597752; x=1726202552; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wQ0fvIlh2+v3ZK9XWlOXRvawbB7wX3u40PodH7m1Sg8=;
+        b=ZAsqeo2seSrSX+sjmTsRI7NgC39qcLQ7yf5YnA3Qsgb4KfeddwSHuVPPA6UtOfrPwj
+         EOh+tGeL8cLztU98iPcHzj/5GoRDCBYrfSTtaxhKS9SAwBn3fmUHUJYp8O/WnTbV94ip
+         vYu6KcB1Qwe8RhRiW2PtPF/0enjBWE0sPiI85XyIj5zecwYbeUzwYEPJeED5Bnu0XCQe
+         fEEQrdpSafBELPMoP+3S+DFgiE5UYuCBEn5eP1UHj94avzyvg07dCM6AFN5qYA2g5eTt
+         jBPwQhRNtmfjGMcwcFaLzdU00q6Ip4XsFdmiZOcsg3PYc+ElTtuQ0Nhcy9kLM1HbctMK
+         40Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725596040; x=1726200840;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T66eS1vMkCOza6r351eDeXdrLgXXcrXhwtBQvVmNkoA=;
-        b=cWJGsK2Xe5Xy31fXvFPnFPRHXhultdWYe6GwU4bxwMqHss0pC01q9wOlI1Py7D2kiG
-         14Kl5rQwUdLzFdBUNY1PZvZ7xeDmHDGNjqmb1zXQQRXFXeafonaVKP8LFrMaXrEzAXnh
-         ZyxFMXrjmvR4LE3Qxbwv0f45bNFtzcOyz8U6g+nai+HA4GF5abCREOMyL20jnSdoyoKQ
-         fyRJIMBdToA+CQMgWR5hMy4kulqqNsAvif9rdkGWerrCh2ZrB+CwTNQHZ1++vyHu1XYx
-         y/Gp7USMLUEh/S8SJbDokz8pGT3ius53uJZPmjNCtYuAuHz5CYjUJ6hL4TD0waLBDQRY
-         kd3w==
-X-Gm-Message-State: AOJu0Yz10GdRFGqViHa+BdHwhmVvQ51STGvC27H+Lzc56CPamvYWdlVZ
-	ry3hpxCT5xi9Xm5RL/Kbc8uUe1rcXw/OCpmAjFmE3UzXs26wOucZcrRrNg==
-X-Google-Smtp-Source: AGHT+IFSq0cjo3OBKnzOSUhOW2M/UI5A9xSXiZWeHLa3w1TmeI0m+pNDZ1c2Y3QVOBMWotsc3UnIBw==
-X-Received: by 2002:a05:6808:228e:b0:3d6:331d:b52d with SMTP id 5614622812f47-3e029cd2cb5mr1675418b6e.4.1725596040410;
-        Thu, 05 Sep 2024 21:14:00 -0700 (PDT)
-Received: from localhost.localdomain (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3df11865a48sm3525783b6e.43.2024.09.05.21.13.59
+        d=1e100.net; s=20230601; t=1725597752; x=1726202552;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wQ0fvIlh2+v3ZK9XWlOXRvawbB7wX3u40PodH7m1Sg8=;
+        b=wNNHj97Ad32yFxD+atsVegJQ4PsZlNuXeRKqas6hsdaCpHH3XFrL4uixlnfkvu32P8
+         UmPoVF9T9areW7dGaqGjQ0btMzDyuQf4VB3VUeQFAUg/ufumYjKW3BajsXmpUFA+WwVv
+         rHt48qaj2ffrdKsSvlD3S1unvNoxoeNn6kYKZuLboOMMmNP+bVdbeuUSwImQe5e0PkEW
+         54brW6pPNgpJuMc421hnui+JXdZJhWX3Rvt1HjvVmIVvZY8qqgS5XGWIfpxSlnFXhcNz
+         4bKLSdk7bCUq2lDet5iEeTLspFTB/S3RSvEj1SceZq9X0bWGPcYy3a5tOQDyN67FEJXy
+         Alyw==
+X-Gm-Message-State: AOJu0YyyUEZvHLjDEFDYh66cHFwRMZL15dmAF9paukhIVk1gprs3D1Uy
+	5srnpX2MMM0x7ADkDdN8pTF+uX3o+TF5ZDxP7YMCY1MmdZhRJpJdwcj1SA==
+X-Google-Smtp-Source: AGHT+IF9hAr/yxd5ujZbUEibuvU8+HjIVqk2AKLEhqfsgZPmgW5mI4CWagxbvL8Ziy58aza1yJTCnA==
+X-Received: by 2002:a17:90b:1050:b0:2d8:8ab3:2889 with SMTP id 98e67ed59e1d1-2dad4ef0caamr1843148a91.11.1725597751370;
+        Thu, 05 Sep 2024 21:42:31 -0700 (PDT)
+Received: from panther.801labs.org ([136.41.66.108])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dadc04d7a4sm463289a91.29.2024.09.05.21.42.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 21:13:59 -0700 (PDT)
-From: Brian Lyles <brianmlyles@gmail.com>
-To: git@vger.kernel.org
-Cc: Brian Lyles <brianmlyles@gmail.com>
-Subject: [PATCH v2] interpret-trailers: handle message without trailing newline
-Date: Thu,  5 Sep 2024 23:08:41 -0500
-Message-ID: <20240906041326.1684570-1-brianmlyles@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240905173445.1677704-1-brianmlyles@gmail.com>
-References: <20240905173445.1677704-1-brianmlyles@gmail.com>
+        Thu, 05 Sep 2024 21:42:31 -0700 (PDT)
+From: Alex Henrie <alexhenrie24@gmail.com>
+To: git@vger.kernel.org,
+	gitster@pobox.com,
+	bert.wesarg@googlemail.com
+Cc: Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] apply: support --ours, --theirs, and --union for three-way merges
+Date: Thu,  5 Sep 2024 22:22:36 -0600
+Message-ID: <20240906044222.4881-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,222 +66,215 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git-interpret-trailers is used to add a trailer to a message that
-does not end in a trailing newline, the new trailer is added on the line
-immediately following the message instead of as a trailer block
-separated from the message by a blank line.
+--ours, --theirs, and --union are already supported in `git merge-file`
+for automatically resolving conflicts in favor of one version or the
+other, instead of leaving conflict markers in the file. Support them in
+`git apply -3` as well because the two commands do the same kind of
+file-level merges.
 
-For example, if a message's text was exactly "The subject" with no
-trailing newline present, `git interpret-trailers --trailer
-my-trailer=true` will result in the following malformed commit message:
+In case in the future --ours, --theirs, and --union gain a meaning
+outside of three-way-merges, they do not imply --3way but rather must be
+specified alongside it.
 
-    The subject
-    my-trailer: true
-
-While it is generally expected that a commit message should end with a
-newline character, git-interpret-trailers should not be returning an
-invalid message in this case.
-
-Detect when a message exists but does not end with a newline character,
-and add an extra newline before appending the new trailer.
-
-Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 ---
+ Documentation/git-apply.txt |  9 ++++++-
+ apply.c                     | 49 ++++++++++++++++++++++++++++++++++---
+ apply.h                     |  2 ++
+ t/t4108-apply-threeway.sh   | 40 ++++++++++++++++++++++++++++++
+ 4 files changed, 96 insertions(+), 4 deletions(-)
 
-Differences from v1:
-- Minor tweak to commit message wording
-- Updated stale documentation from initial prototype to accurately
-  reflect the actual state of the code.
-
-Range-diff vs v1:
-
-1:  7f67f06a08 ! 1:  af02465f86 interpret-trailers: handle message without trailing newline
-    @@ Commit message
-         When git-interpret-trailers is used to add a trailer to a message that
-         does not end in a trailing newline, the new trailer is added on the line
-         immediately following the message instead of as a trailer block
-    -    separated from the message by a newline character.
-    +    separated from the message by a blank line.
-
-    -    For example, if a message's text was "The subject" with no trailing
-    -    newline at all, `git interpret-trailers --trailer my-trailer=true` will
-    -    result in the following malformed commit message:
-    +    For example, if a message's text was exactly "The subject" with no
-    +    trailing newline present, `git interpret-trailers --trailer
-    +    my-trailer=true` will result in the following malformed commit message:
-
-             The subject
-             my-trailer: true
-    @@ trailer.c: struct trailer_info {
-         int blank_line_before_trailer;
-
-     +   /*
-    -+    * True if the last character before the location pointed to be
-    -+    * trailer_block_start is a newline character.
-    ++    * True if there is a message before the trailer block and it does not
-    ++    * end with a trailing newline character.
-     +    */
-     +   int message_without_trailing_newline_before_trailer;
-     +
-    @@ trailer.h: size_t trailer_block_end(struct trailer_info *);
-      int blank_line_before_trailer_block(struct trailer_info *);
-
-     +/*
-    -+ * Return 1 if the trailer block had a newline character
-    ++ * Return true if there is a message before the trailer block and it does not
-    ++ * end with a trailing newline character.
-     + */
-     +int message_without_trailing_newline_before_trailer_block(struct trailer_info *);
-     +
-
- builtin/interpret-trailers.c  | 12 ++++++-----
- t/t7513-interpret-trailers.sh | 40 +++++++++++++++++++++++++++++++++++
- trailer.c                     | 18 ++++++++++++++++
- trailer.h                     |  6 ++++++
- 4 files changed, 71 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 1d969494cf..9d8f94341d 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -153,13 +153,15 @@ static void interpret_trailers(const struct process_trailer_options *opts,
-
- 	info = parse_trailers(opts, sb.buf, &head);
-
--	/* Print the lines before the trailers */
--	if (!opts->only_trailers)
-+	if (!opts->only_trailers) {
-+		/* Print the lines before the trailers */
- 		fwrite(sb.buf, 1, trailer_block_start(info), outfile);
-
--	if (!opts->only_trailers && !blank_line_before_trailer_block(info))
--		fprintf(outfile, "\n");
--
-+		if (message_without_trailing_newline_before_trailer_block(info))
-+			fprintf(outfile, "\n\n");
-+		else if (!blank_line_before_trailer_block(info))
-+			fprintf(outfile, "\n");
-+	}
-
- 	if (!opts->only_input) {
- 		LIST_HEAD(config_head);
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 3d3e13ccf8..d5303c3f74 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -175,6 +175,46 @@ test_expect_success 'with only a title in the message' '
- 	test_cmp expected actual
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 9cce68a38b..dd4a61ef28 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -9,7 +9,8 @@ git-apply - Apply a patch to files and/or to the index
+ SYNOPSIS
+ --------
+ [verse]
+-'git apply' [--stat] [--numstat] [--summary] [--check] [--index | --intent-to-add] [--3way]
++'git apply' [--stat] [--numstat] [--summary] [--check]
++	  [--index | --intent-to-add] [--3way] [--ours | --theirs | --union]
+ 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+ 	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
+@@ -92,6 +93,12 @@ OPTIONS
+ 	When used with the `--cached` option, any conflicts are left at higher stages
+ 	in the cache.
+ 
++--ours::
++--theirs::
++--union::
++	Instead of leaving conflicts in the file, resolve conflicts favouring
++	our (or their or both) side of the lines. Requires --3way.
++
+ --build-fake-ancestor=<file>::
+ 	Newer 'git diff' output has embedded 'index information'
+ 	for each blob to help identify the original version that
+diff --git a/apply.c b/apply.c
+index 6e1060a952..e47ec6dc56 100644
+--- a/apply.c
++++ b/apply.c
+@@ -110,6 +110,7 @@ int init_apply_state(struct apply_state *state,
+ 	state->prefix = prefix;
+ 	state->repo = repo;
+ 	state->apply = 1;
++	state->merge_opts.conflict_style = -1;
+ 	state->line_termination = '\n';
+ 	state->p_value = 1;
+ 	state->p_context = UINT_MAX;
+@@ -3578,7 +3579,7 @@ static int three_way_merge(struct apply_state *state,
+ 			  &our_file, "ours",
+ 			  &their_file, "theirs",
+ 			  state->repo->index,
+-			  NULL);
++			  &state->merge_opts);
+ 	if (status == LL_MERGE_BINARY_CONFLICT)
+ 		warning("Cannot merge binary files: %s (%s vs. %s)",
+ 			path, "ours", "theirs");
+@@ -3704,7 +3705,15 @@ static int try_threeway(struct apply_state *state,
+ 		return status;
+ 	}
+ 
+-	if (status) {
++	if (state->merge_opts.variant) {
++		/*
++		 * XDL_MERGE_FAVOR_(OURS|THEIRS|UNION) automatically resolves
++		 * conflicts, but the ll_merge function is not yet smart enough
++		 * to report whether or not there were conflicts, so just print
++		 * a generic message.
++		 */
++		fprintf(stderr, _("Applied patch to '%s'.\n"), patch->new_name);
++	} else if (status) {
+ 		patch->conflicted_threeway = 1;
+ 		if (patch->is_new)
+ 			oidclr(&patch->threeway_stage[0], the_repository->hash_algo);
+@@ -4980,6 +4989,23 @@ static int apply_option_parse_space_change(const struct option *opt,
+ 	return 0;
+ }
+ 
++static int apply_option_parse_favorite(const struct option *opt,
++				       const char *arg, int unset)
++{
++	struct apply_state *state = opt->value;
++
++	BUG_ON_OPT_ARG(arg);
++	BUG_ON_OPT_NEG(unset);
++
++	if (!strcmp(opt->long_name, "ours"))
++		state->merge_opts.variant = XDL_MERGE_FAVOR_OURS;
++	else if (!strcmp(opt->long_name, "theirs"))
++		state->merge_opts.variant = XDL_MERGE_FAVOR_THEIRS;
++	else
++		state->merge_opts.variant = XDL_MERGE_FAVOR_UNION;
++	return 0;
++}
++
+ static int apply_option_parse_whitespace(const struct option *opt,
+ 					 const char *arg, int unset)
+ {
+@@ -5151,6 +5177,18 @@ int apply_parse_options(int argc, const char **argv,
+ 			N_("also apply the patch (use with --stat/--summary/--check)")),
+ 		OPT_BOOL('3', "3way", &state->threeway,
+ 			 N_( "attempt three-way merge, fall back on normal patch if that fails")),
++		OPT_CALLBACK_F(0, "ours", state, NULL,
++			N_("for conflicts, use our version"),
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			apply_option_parse_favorite),
++		OPT_CALLBACK_F(0, "theirs", state, NULL,
++			N_("for conflicts, use their version"),
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			apply_option_parse_favorite),
++		OPT_CALLBACK_F(0, "union", state, NULL,
++			N_("for conflicts, use a union version"),
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			apply_option_parse_favorite),
+ 		OPT_FILENAME(0, "build-fake-ancestor", &state->fake_ancestor,
+ 			N_("build a temporary index based on embedded index information")),
+ 		/* Think twice before adding "--nul" synonym to this */
+@@ -5190,5 +5228,10 @@ int apply_parse_options(int argc, const char **argv,
+ 		OPT_END()
+ 	};
+ 
+-	return parse_options(argc, argv, state->prefix, builtin_apply_options, apply_usage, 0);
++	argc = parse_options(argc, argv, state->prefix, builtin_apply_options, apply_usage, 0);
++
++	if (state->merge_opts.variant && !state->threeway)
++		die(_("--ours, --theirs, and --union require --3way"));
++
++	return argc;
+ }
+diff --git a/apply.h b/apply.h
+index cd25d24cc4..096f4472b4 100644
+--- a/apply.h
++++ b/apply.h
+@@ -3,6 +3,7 @@
+ 
+ #include "hash.h"
+ #include "lockfile.h"
++#include "merge-ll.h"
+ #include "string-list.h"
+ #include "strmap.h"
+ 
+@@ -59,6 +60,7 @@ struct apply_state {
+ 	struct repository *repo;
+ 	const char *index_file;
+ 	enum apply_verbosity apply_verbosity;
++	struct ll_merge_options merge_opts;
+ 	char *fake_ancestor;
+ 	const char *patch_input_file;
+ 	int line_termination;
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index 3211e1e65f..c6302163d8 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -82,6 +82,46 @@ test_expect_success 'apply with --3way with merge.conflictStyle = diff3' '
+ 	test_apply_with_3way
  '
-
-+test_expect_success 'with a bodiless message that lacks a trailing newline after the subject' '
-+	cat >expected <<-\EOF &&
-+		area: change
+ 
++test_apply_with_3way_favoritism () {
++	apply_arg=$1
++	merge_arg=$2
 +
-+		Reviewed-by: Peff
-+		Acked-by: Johan
-+	EOF
-+	printf "area: change" | \
-+	git interpret-trailers --trailer "Reviewed-by: Peff" \
-+		--trailer "Acked-by: Johan" >actual &&
-+	test_cmp expected actual
-+'
++	# Merging side should be similar to applying this patch
++	git diff ...side >P.diff &&
 +
-+test_expect_success 'with a bodied message that lacks a trailing newline after the body' '
-+	cat >expected <<-\EOF &&
-+		area: change
++	# The corresponding conflicted merge
++	git reset --hard &&
++	git checkout main^0 &&
++	git merge --no-commit $merge_arg side &&
++	git ls-files -s >expect.ls &&
++	print_sanitized_conflicted_diff >expect.diff &&
 +
-+		details about the change.
++	# should apply successfully
++	git reset --hard &&
++	git checkout main^0 &&
++	git apply --index --3way $apply_arg P.diff &&
++	git ls-files -s >actual.ls &&
++	print_sanitized_conflicted_diff >actual.diff &&
 +
-+		Reviewed-by: Peff
-+		Acked-by: Johan
-+	EOF
-+	printf "area: change\n\ndetails about the change." | \
-+	git interpret-trailers --trailer "Reviewed-by: Peff" \
-+		--trailer "Acked-by: Johan" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with a message that lacks a trailing newline after the trailers' '
-+	cat >expected <<-\EOF &&
-+		area: change
-+
-+		Reviewed-by: Peff
-+		Acked-by: Johan
-+	EOF
-+	printf "area: change\n\nReviewed-by: Peff" | \
-+	git interpret-trailers --trailer "Acked-by: Johan" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'with multiline title in the message' '
- 	cat >expected <<-\EOF &&
- 		place of
-diff --git a/trailer.c b/trailer.c
-index 72e5136c73..178adae6ad 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -18,6 +18,12 @@ struct trailer_info {
- 	 */
- 	int blank_line_before_trailer;
-
-+	/*
-+	 * True if there is a message before the trailer block and it does not
-+	 * end with a trailing newline character.
-+	 */
-+	int message_without_trailing_newline_before_trailer;
-+
- 	/*
- 	 * Offsets to the trailer block start and end positions in the input
- 	 * string. If no trailer block is found, these are both set to the
-@@ -946,6 +952,11 @@ static int ends_with_blank_line(const char *buf, size_t len)
- 	return is_blank_line(buf + ll);
- }
-
-+static int has_message_without_trailing_newline_char(const char *buf, size_t len)
-+{
-+	return len > 0 && buf[len - 1] != '\n';
++	# The result should resemble the corresponding merge
++	test_cmp expect.ls actual.ls &&
++	test_cmp expect.diff actual.diff
 +}
 +
- static void unfold_value(struct strbuf *val)
- {
- 	struct strbuf out = STRBUF_INIT;
-@@ -1017,6 +1028,8 @@ static struct trailer_info *trailer_info_get(const struct process_trailer_option
-
- 	info->blank_line_before_trailer = ends_with_blank_line(str,
- 							       trailer_block_start);
-+	info->message_without_trailing_newline_before_trailer
-+		= has_message_without_trailing_newline_char(str, trailer_block_start);
- 	info->trailer_block_start = trailer_block_start;
- 	info->trailer_block_end = end_of_log_message;
- 	info->trailers = trailer_strings;
-@@ -1090,6 +1103,11 @@ int blank_line_before_trailer_block(struct trailer_info *info)
- 	return info->blank_line_before_trailer;
- }
-
-+int message_without_trailing_newline_before_trailer_block(struct trailer_info *info)
-+{
-+	return info->message_without_trailing_newline_before_trailer;
-+}
++test_expect_success 'apply with --3way --ours' '
++	test_apply_with_3way_favoritism --ours -Xours
++'
 +
- void trailer_info_release(struct trailer_info *info)
- {
- 	size_t i;
-diff --git a/trailer.h b/trailer.h
-index 6eb53df155..81449151c7 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -125,6 +125,12 @@ size_t trailer_block_end(struct trailer_info *);
-  */
- int blank_line_before_trailer_block(struct trailer_info *);
-
-+/*
-+ * Return true if there is a message before the trailer block and it does not
-+ * end with a trailing newline character.
-+ */
-+int message_without_trailing_newline_before_trailer_block(struct trailer_info *);
++test_expect_success 'apply with --3way --theirs' '
++	test_apply_with_3way_favoritism --theirs -Xtheirs
++'
 +
- /*
-  * Free trailer_info struct.
-  */
---
-2.45.2
++test_expect_success 'apply with --3way --union' '
++	echo "* merge=union" >.gitattributes &&
++	test_apply_with_3way_favoritism --union &&
++	rm .gitattributes
++'
++
+ test_expect_success 'apply with --3way with rerere enabled' '
+ 	test_config rerere.enabled true &&
+ 
+-- 
+2.46.0
+
