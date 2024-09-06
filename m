@@ -1,67 +1,65 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6D1D47AF
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCBF1D7E50
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725651983; cv=none; b=DRpicZZSE6UeAJ6llye/RDxFtHdlIisuEN/s967741c9qN8IsecrDuY6mPR2+0cGSlklLbpPlN/o98lbsgH7mzxdonnSA8VYKTBL9GuJnTmUFjCusgmERf5TqOCWccYILGRhZCoBcesZfT9sxutHaikRqCfuK1ZFXdQSketGtGg=
+	t=1725651986; cv=none; b=X0ttkVN9OkRtFVkDmc7pCJ0Lrfgqp+ZaVXXXZUsLr7RDe7Xmo0LsemHe5h4NG/deGEI9szjzdM6BM7ZJ9AxGTyJXWFowj7uYdwxd0NJzGUcK4acBcRT8h/AhFpQkqTbCqJZ2wX7as5piSdvimhXhqExfsTjmB2dcY4zofsQ8lF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725651983; c=relaxed/simple;
-	bh=gaSsO/Xwf6T9g24xg98hpQ3ycGxbruwxEh1Berp9T0A=;
+	s=arc-20240116; t=1725651986; c=relaxed/simple;
+	bh=dtoSOlGFMHm0mz7xjUdjLIAgL4WkMFG9XSludvUfv8c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h3zo5KtDLjwxbnBZqUeXhm2xBy35nuVJ+rXUsYmIklb5XqDstC6gOgNEecgHI7Zmg8j7GTymDJa5e37X2YkO7yLtbrAcLxrjLZhECmJL5f8tLwMCtRGhXlPbNFdcZCQrBYMnYUbttriFmTyuwdQUijR2Vtwxm4NFUeCFHcg3Fk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=whnfdboX; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=E+AkCCwLV07S8/BNvYOZzhcwH+QcUozPT2cP8kOkVlCj3JTNIlm+xTi/B0eRmcMzGGZwSM9h6YZJkWqt9I1zKbOtx36CnR6E5MLuehI0J4qv9jROwbqhQdnYg8fOBoCtgk+IszacKl4LXc6kF8Pah/bKzAGrmko2RQhCFV4K6iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cK42F/K+; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="whnfdboX"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-68518bc1407so27250497b3.2
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cK42F/K+"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e04196b7603so2670999276.0
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651980; x=1726256780; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BzZuitm20Jcv335IO2WXHiy01XhKFs8S+X00N+4JxQk=;
-        b=whnfdboX9r3Uzq5J6/6MUuGfyQTui2P9ZTeZcwoQTzkgKUvJI75qhOlpKc70Xa6mia
-         6BAlLiscGC1wPm2me27uDed90q1ZnIwK4RbfvFkmhV6p2oc8Mp2Qv1P1+hkAJzDk5MpJ
-         SO+JMeFlqWQjgZJ0VqOTQxQEBAaMpC9NURCTi+DgXTnCLJFLl9+1j9ocTGYM28Ul4yaJ
-         PQgVUzFwgRytsILtSfm3dSrx3fbjP+kv/L2fsQxQrqdL26+VHlVSDKfZG39Iu9WU2UDC
-         ouGNzwIJW6OUTliFEY/+tJibD33OHRDG+Z5xYfHGL5eXQyJD7FnjbzmGo/xltbtLJXXz
-         yhgg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651983; x=1726256783; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=b7hfH8hHEPqjQiI0mja4fwzPLpEdUPZT7sveUu4qSCU=;
+        b=cK42F/K+uo1jI7rwde+vHCgwZLvioNcIaWg/1LE1Ro62Uz398n9/evb9zu5NFQYrwk
+         XPXsi46oECZM66FKCu0uH4BSx+XrU/K8P1AbJp1FIlP0o+7oaVzZ4fqPiU0a9gM8OFd0
+         NEqc60mb9fbHDHHxWQVsCVKoIqG+mLGE5EjtTQk0E6BWOqX8NJabah9sDY0TfWnIDv+U
+         oCVJkAJdhas0PCij2BZ/iXt6gDrKbHTyEZmsPD1ImkHZ+IZtalyaOupdJ5DrsA+XN7vd
+         qwrQMccCl1mtZIDoB7sQXYmZHD4Ka5Zc46cUx/9FrsRGPwSRbzJajg5oMv9v/iscIhv1
+         lnmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725651980; x=1726256780;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BzZuitm20Jcv335IO2WXHiy01XhKFs8S+X00N+4JxQk=;
-        b=MxUww3cdLGT4H1lRJbyARUaHG/GK9LpL6T60sieB7VliQjuIVfELKOxCpm8x6DTjZ3
-         mnBeDZTWyFMr/s7YoE9msfzegwC2jY+whfgzUf62LDN60DCx2gpCKgSjDcdF4Nga6C85
-         HzLlV5rxe4K0sDJmOQxfL/0JHTUe3JVpWu/wuDEppi42nQZhGwL/JP+tddOGOhvV/93f
-         ROKuq1im1xNsASP9BOtuRAPSS+tixw8urE4EPttHr9j2ei8QLh7izyhlMl5X7zrBuQAT
-         lpNYiK+98a6etPG6PpqP4X732DjiS23b4deraRekn3KfbHwbpSl7xrePHbstUFfasMc/
-         F4Lw==
-X-Gm-Message-State: AOJu0Yw97jU1HnyIHS/QbcQJ7ayHhUyIgCwPqnOroytFpCJ6ayFRpwTf
-	2KAYhypZvxhQm6JX9OaNX11FFOHWuPxj64BYQQjIgIZwpsDFzZB0yiUKRcLI4dAQHqoB08Ch792
-	msCA=
-X-Google-Smtp-Source: AGHT+IE2P2wc7q/6/1U2GOTwMxI0xYiTi7TpnV0LE7lJyN60Yvj6oYIg2pTJeVN6M+MSsLe63325yw==
-X-Received: by 2002:a05:690c:67c6:b0:685:3ca1:b9d8 with SMTP id 00721157ae682-6db451544bcmr47329157b3.30.1725651980527;
-        Fri, 06 Sep 2024 12:46:20 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725651983; x=1726256783;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b7hfH8hHEPqjQiI0mja4fwzPLpEdUPZT7sveUu4qSCU=;
+        b=vM0FnNIzJBUvkjpMqsMK046Vq27Mxzy+H+ro7n1Y5a/a99cp0cG/K/Nd36eqNCoJkV
+         BZ2NSJlDYPmBzE/MFD6MIH+ZMWpoyaOcJiFpdSggG1GgxH4SNdP2Onu5xWzK06z7cmFZ
+         QUPI4wUqIwFHhQJJAKQQaQnrMLUAxazLfsuThAcGTBV6Sep/ID9xIyLoND7UTg51f+gi
+         qZsX72qz08FNcw19YCJnWqFHq+UZCAOC0RxUcA6QLV1sb4tVb2GnweYce4D+3thMyIxo
+         gus+yDzgUHoKdGYZJQVNcSUQ4sTWFL0mETYVqf5/J/xz9a84qY3bbgK++EhxmEapjPPH
+         iSkA==
+X-Gm-Message-State: AOJu0YxNMM+RWFb5q7Czt3KnR9t9q2b//NK80oIOK76uUCgJ7QUm51iI
+	YTSDgOz83Ccwf6vMtjbVIJXDCTho7V29ovT/Q9zeIhY/dcaftrAKc0u2GkMlqGpJxjpVvbQwgJ1
+	eoiU=
+X-Google-Smtp-Source: AGHT+IH88zjvLc8omYy5jFujuz3luUhL7cghp1lczYuyiM6jUmn8uEn71AfSpRQ6vjxMwHvCwOZ8IA==
+X-Received: by 2002:a05:6902:cc1:b0:e13:83fd:cf19 with SMTP id 3f1490d57ef6-e1d34a1e816mr4854294276.49.1725651983497;
+        Fri, 06 Sep 2024 12:46:23 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6db565e601asm1126437b3.143.2024.09.06.12.46.20
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e1d43f741d9sm107185276.14.2024.09.06.12.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 12:46:20 -0700 (PDT)
-Date: Fri, 6 Sep 2024 15:46:19 -0400
+        Fri, 06 Sep 2024 12:46:23 -0700 (PDT)
+Date: Fri, 6 Sep 2024 15:46:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of Git
- without OpenSSL
-Message-ID: <bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
+Subject: [PATCH v3 6/9] sha1: do not redefine `platform_SHA_CTX` and friends
+Message-ID: <22863d9f6dff5fec033f1de0faa93b0ec09d8e24.1725651952.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1725651952.git.me@ttaylorr.com>
 Precedence: bulk
@@ -72,61 +70,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1725651952.git.me@ttaylorr.com>
 
-For the interop tests exercising basic 'git daemon' functionality, we
-use version v1.0.0 as the old version of Git (which in this test we
-happen to designate with using VERSION_B).
+Our in-tree SHA-1 wrappers all define platform_SHA_CTX and related
+macros to point at the opaque "context" type, init, update, and similar
+functions for each specific implementation.
 
-But that version does not compile with modern versions of OpenSSL,
-complaining with error messages like:
+In hash.h, we use these platform_ variables to set up the function
+pointers for, e.g., the_hash_algo->init_fn(), etc.
 
-    epoch.c:21:16: error: field ‘numerator’ has incomplete type
-       21 |         BIGNUM numerator;
-          |                ^~~~~~~~~
-    epoch.c:22:16: error: field ‘denominator’ has incomplete type
-       22 |         BIGNUM denominator;
-          |                ^~~~~~~~~~~
-    epoch.c: In function ‘new_zero’:
+But while these header files have a header-specific macro that prevents
+them declaring their structs / functions multiple times, they
+unconditionally define the platform variables, making it impossible to
+load multiple SHA-1 implementations at once.
 
-Of course, compiling with `NO_OPENSSL=1`, which we have had since
-dd53c7ab297 ([PATCH] Support for NO_OPENSSL, 2005-07-29) allows us to
-compile cleanly.
-
-This hasn't been such a problem in practice because most builds can use
-NO_OPENSSL when compiling the older versions of Git used by the interop
-tests, because often even the current version of Git does not use
-OpenSSL (e.g., because we use the collision detecting implementation of
-SHA-1).
-
-But subsequent changes will make a build configuration that does use
-OpenSSL's SHA-1 implementation (at least for non-cryptographic uses)
-more common, thus breaking this interop build (since only one side will
-compile with NO_OPENSSL).
-
-Let's work around the issue by using a slightly more modern, but still
-quite old v1.6.6.3, which is used by the i0000-basic.sh test script as
-well.
+As a prerequisite for loading a separate SHA-1 implementation for
+non-cryptographic uses, only define the platform_ variables if they have
+not already been defined.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/interop/i5500-git-daemon.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block-sha1/sha1.h | 2 ++
+ sha1/openssl.h    | 2 ++
+ sha1dc_git.h      | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/t/interop/i5500-git-daemon.sh b/t/interop/i5500-git-daemon.sh
-index 4d22e42f842..c5bf37e4739 100755
---- a/t/interop/i5500-git-daemon.sh
-+++ b/t/interop/i5500-git-daemon.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
+diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
+index 9fb0441b988..47bb9166368 100644
+--- a/block-sha1/sha1.h
++++ b/block-sha1/sha1.h
+@@ -16,7 +16,9 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx);
+ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
+ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
  
- VERSION_A=.
--VERSION_B=v1.0.0
-+VERSION_B=v1.6.6.3
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX	blk_SHA_CTX
+ #define platform_SHA1_Init	blk_SHA1_Init
+ #define platform_SHA1_Update	blk_SHA1_Update
+ #define platform_SHA1_Final	blk_SHA1_Final
++#endif
+diff --git a/sha1/openssl.h b/sha1/openssl.h
+index 006c1f4ba54..1038af47daf 100644
+--- a/sha1/openssl.h
++++ b/sha1/openssl.h
+@@ -40,10 +40,12 @@ static inline void openssl_SHA1_Clone(struct openssl_SHA1_CTX *dst,
+ 	EVP_MD_CTX_copy_ex(dst->ectx, src->ectx);
+ }
  
- : ${LIB_GIT_DAEMON_PORT:=5500}
- LIB_GIT_DAEMON_COMMAND='git.a daemon'
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX openssl_SHA1_CTX
+ #define platform_SHA1_Init openssl_SHA1_Init
+ #define platform_SHA1_Clone openssl_SHA1_Clone
+ #define platform_SHA1_Update openssl_SHA1_Update
+ #define platform_SHA1_Final openssl_SHA1_Final
++#endif
+ 
+ #endif /* SHA1_OPENSSL_H */
+diff --git a/sha1dc_git.h b/sha1dc_git.h
+index 60e3ce84395..f6f880cabea 100644
+--- a/sha1dc_git.h
++++ b/sha1dc_git.h
+@@ -18,7 +18,10 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+ void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
+ 
+ #define platform_SHA_IS_SHA1DC /* used by "test-tool sha1-is-sha1dc" */
++
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX SHA1_CTX
+ #define platform_SHA1_Init git_SHA1DCInit
+ #define platform_SHA1_Update git_SHA1DCUpdate
+ #define platform_SHA1_Final git_SHA1DCFinal
++#endif
 -- 
 2.46.0.430.gca674632b70
 
