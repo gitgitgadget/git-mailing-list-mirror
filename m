@@ -1,51 +1,52 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ECC156880
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 16:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974D81CCB45
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 16:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725639044; cv=none; b=FO/+wIgBBC26uWkVP16uyH7yzVpm3cvhnW1KvWlAITPZY/Zu0N7CPuFubx7SNDwJmF//YnYhltaaKZ+kmpIMiMp+5RIOOC+W96a9zr9DWo9SoM5C0bnwteaL7mg4/VBS3yCMEryN1ufrlrNLFlJFpClcrG5JYYa+ND+wb6+q424=
+	t=1725639693; cv=none; b=UaNLrtLbr3UY8xyv7x/1JCwUBOgM5FuS5a6lL4wdZoB24DySPLMogPii8h8w37ApYWqkVqfNomE2vr0bEbIzU+PRMuQTnEzXPTCyDCtgh7hUhaGSdMKZywx+e15pXS+TWUUeAC0dqPvF9351IPZb7exiiEc95zWsLXp4bUmk2mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725639044; c=relaxed/simple;
-	bh=NPUDJb9lA/xh0q6TydBiTZ9P8qzBFOqIXcV6AQpxXIE=;
+	s=arc-20240116; t=1725639693; c=relaxed/simple;
+	bh=I1AuL6j/HEeXkpUK/R8+gaPOWKvyKsaSGuHyU3pqgIs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nR6yUOpWxmpPyTx2T1CyNahBSfjPYIQMdfMAPLp44M6nPbBI1xXz5tZ8W92bxvxeFvtXM5WYpYUpQZVTlAdkDZskjwV4cTBYwEbzJQ6zpi5+gkBcMvRpYp134QRFju3rbEhAMBI5Fio7LYTvf7aYhagTiQBKXr/sPk1LJfCUOrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jOx+qqaX; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=Kn8byJY8mQXsKalUNeciK0yg3P9g3S7AapZOByQMcPLha7jzSPR14JD5GNxniN0U9Q9cwYEuzwzaAkV+nO00jRnrS3GHI1tWoJWbIoIM63Cnq/1fxLLhlu3wLUxs5TgDQ/G1F8Mis2lUU/X+2j9Y20GdOU7nE7zaDqhVqpIUqOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HvquK+xT; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jOx+qqaX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HvquK+xT"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63E9C36478;
-	Fri,  6 Sep 2024 12:10:41 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 83FCA366BF;
+	Fri,  6 Sep 2024 12:21:30 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=NPUDJb9lA/xh0q6TydBiTZ9P8qzBFOqIXcV6AQ
-	pxXIE=; b=jOx+qqaX5ii0nKOXEEiqUkM7/gJdRlugRjJaQ6HpIOO/SAlSrgm8N2
-	JXf2OgZMbYf8Tnz+e8R63Yvd4p+EfHl6KsuIrAGXfq8BP6xyqwktMQJEefM9ZFNi
-	pmjwTtRDdF5w4pvi/geFL1vEs1hGE37gRU5XcrWAU9mTzptivdQTY=
+	:content-type; s=sasl; bh=I1AuL6j/HEeXkpUK/R8+gaPOWKvyKsaSGuHyU3
+	pqgIs=; b=HvquK+xTwb9WlimI1b/Kf/GPvjbxnY5iAoDtpxK2nz4s7d/Sxd74qZ
+	AzLUSz1br0AEP0kwTnH4ggaytNtHtwmJUuxb0mRrE2obKYCXahAbFuzfBWrZHn9v
+	GuUFXoCwvE7fZdYR2FOBmo64L+MO7IcpA65mz1NRwUGWRfFHtt1fI=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B10236477;
-	Fri,  6 Sep 2024 12:10:41 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C2B5366BE;
+	Fri,  6 Sep 2024 12:21:30 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7ED436476;
-	Fri,  6 Sep 2024 12:10:40 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7611366BD;
+	Fri,  6 Sep 2024 12:21:28 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Stephen Smith <ishchis2@gmail.com>
+To: Brian Lyles <brianmlyles@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Add entry to mailmap file
-In-Reply-To: <5909617.DvuYhMxLoT@thunderbird> (Stephen Smith's message of
-	"Fri, 06 Sep 2024 08:49:53 -0700")
-References: <20240906153003.110200-1-ischis2@cox.net>
-	<5909617.DvuYhMxLoT@thunderbird>
-Date: Fri, 06 Sep 2024 09:10:39 -0700
-Message-ID: <xmqq34mcyd8g.fsf@gitster.g>
+Subject: Re: [PATCH v3] interpret-trailers: handle message without trailing
+ newline
+In-Reply-To: <20240906145743.2059405-1-brianmlyles@gmail.com> (Brian Lyles's
+	message of "Fri, 6 Sep 2024 09:50:08 -0500")
+References: <20240905173445.1677704-1-brianmlyles@gmail.com>
+	<20240906145743.2059405-1-brianmlyles@gmail.com>
+Date: Fri, 06 Sep 2024 09:21:27 -0700
+Message-ID: <xmqqy144wy60.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,56 +56,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8FDCBCA0-6C6A-11EF-A54D-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 121902E0-6C6C-11EF-8747-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Stephen Smith <ishchis2@gmail.com> writes:
+Brian Lyles <brianmlyles@gmail.com> writes:
 
->> From: "Stephen P. Smith" <ishchis2@gmail.com>
->> 
+> When git-interpret-trailers is used to add a trailer to a message that
+> does not end in a trailing newline, the new trailer is added on the line
+> immediately following the message instead of as a trailer block
+> separated from the message by a blank line.
 >
-> I don't know why git send-email added this extra From line to the body of the 
-> email.  This line is not part of the file that format-patch created.
+> For example, if a message's text was exactly "The subject" with no
+> trailing newline present, `git interpret-trailers --trailer
+> my-trailer=true` will result in the following malformed commit message:
+>
+>     The subject
+>     my-trailer: true
+>
+> While it is generally expected that a commit message should end with a
+> newline character, git-interpret-trailers should not be returning an
+> invalid message in this case.
 
-Most likely that the author name recorded in the commit object is
-with "P.", but the name your MUA knows you as is without.
+I am not sure if the above example resulted in "an invalid message",
+though ;-)  As far as Git is concerned, a commit log can contain any
+sequence of bytes.
 
-In such a case, the command adds what we call "in-body header" to
-override the headers MUA uses (in this case, "From:" that the
-recipient takes the authorship identity from).
+But of course, various tools to manipulate the messages (e.g.
+"commit --amend" and your editor that gets invoked by it,
+"interpret-trailers") may not be prepared to see any arbitrary
+bytes.  I would have written
 
-As the name with "P." is what you signed-off your commit on the
-"Signed-off-by:" trailer line, it is absolutely the right thing to
-do to override the name MUA knows you as with the in-body header so
-that the author name matches exactly the name used for signing it
-off.  IOW, what you sent is perfectly fine.
+    While a commit message can contain arbitrary byte sequence, the
+    fact that the user invoked the interpret-trailers command on it
+    means that the contents is expected to be a proper text, which
+    should not end in an incomplete line.  Instead of detecting and
+    erroring out upon seeing such a log message, complete the last
+    line if it lacks the terminating LF.
 
-For future reference, another header commonly overridden with an
-in-body header is the "Subject:".  In a general discussion that is
-not a review thread of any specific patch, somebody may come up with
-a patch to improve the situtation.  In such a case, your message may
-look like:
+or something like that, if I were working on this change.
 
-    From: A Project Participant <par@tici.pa.nt>
-    Subject: Re: why does git do this?
-    To: git@vger.kernel.org
-    Cc: ...other particpants...
+> Use `strbuf_complete_line` to ensure that the message ends with a
+> newline character when reading the input.
+>
+> Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
+> ---
+>
+> The range-diff from v2 is not included since the patch is so different
+> that range-diff is not able to provide anything meaningful.
 
-    Hmph, it does sound like a documentation bug.  How about
-    clarifying it this way?
+Very sensible.
 
-    ---- >8 ----
-    Subject: doc: document the condition under which gostak distims the doshes
+Will queue.  Thanks.
 
-    The document does not exactly say when gostak distims the
-    doshes.  Make sure it is clear by updating foo and bar
-    documents.
-
-    Signed-off-by: A Project Particpant <par@tici.pa.nt>
-    ---
-
-The "scissors" mark (horizontal line drawn with "-" with scissors ">8")
-tells the recipient to ignore everything in the body before that line,
-and then we have in-body Subject: header to override the "why does
-git do this?" e-mail subject on the discussion thread with the title
-of the commit.
-
+> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+> index 3d3e13ccf8..d78cae3e04 100755
+> --- a/t/t7513-interpret-trailers.sh
+> +++ b/t/t7513-interpret-trailers.sh
+> @@ -175,6 +175,46 @@ test_expect_success 'with only a title in the message' '
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success 'with a bodiless message that lacks a trailing newline after the subject' '
+> +	cat >expected <<-\EOF &&
+> +		area: change
+> +
+> +		Reviewed-by: Peff
+> +		Acked-by: Johan
+> +	EOF
+> +	printf "area: change" |
+> +	git interpret-trailers --trailer "Reviewed-by: Peff" \
+> +		--trailer "Acked-by: Johan" >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'with a bodied message that lacks a trailing newline after the body' '
+> +	cat >expected <<-\EOF &&
+> +		area: change
+> +
+> +		details about the change.
+> +
+> +		Reviewed-by: Peff
+> +		Acked-by: Johan
+> +	EOF
+> +	printf "area: change\n\ndetails about the change." |
+> +	git interpret-trailers --trailer "Reviewed-by: Peff" \
+> +		--trailer "Acked-by: Johan" >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'with a message that lacks a trailing newline after the trailers' '
+> +	cat >expected <<-\EOF &&
+> +		area: change
+> +
+> +		Reviewed-by: Peff
+> +		Acked-by: Johan
+> +	EOF
+> +	printf "area: change\n\nReviewed-by: Peff" |
+> +	git interpret-trailers --trailer "Acked-by: Johan" >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'with multiline title in the message' '
+>  	cat >expected <<-\EOF &&
+>  		place of
+> --
+> 2.45.2
