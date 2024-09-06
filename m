@@ -1,93 +1,137 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD421D5885
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5CD1D5CDD
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725651972; cv=none; b=oo4G+mvg6M/LN/OO3ShEYQqgmFnRBWXP68+qgBoFUnMBckyPEfJrjwejxioah25vasXj2nJtV3txIw00xBUN+rjNuZvfntB96+c+8vo9LvuHNXsVh76vyhXHSjQ3LxUVEQjw3hVzb1yEShWKqf9cDmR8OmZJg3BhaQ1JB/aLWj4=
+	t=1725651973; cv=none; b=VHZL+6kDVgfLgY9PX9x8ArXBYLJlViWAs08a1llUTXDaExRrx52gm1dIP6N08YwmzPzekm8DX0i8o+q4Zw9Mte+BW9QPKCB0+zG24DkNDqvr7PFKIrRB7UG3tlHZFnpKTiT1F+U91y6PcllsKYjYAfuG0+BggcJAHso6AKyYLFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725651972; c=relaxed/simple;
-	bh=g9PZ/mjAOyne8pDLHz6Kzwz+luTE0sj0WXTeaXn5Wp4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gREF1xJQX6gQpyzlt0/02/w+aMLAy/P+m1LIUTnXkolt+h5LjaXwtA0AdsdUFyKiyIAKkuaIvfjkv1+xfZ9At3B3h9fdpFQZGqF+H6aHNcNp7cuAYs973IceBGnyfNsDrl0IGeHNp9zuTSIYX3TTaioAsdmze3VPsWdXxL0C+V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltvQP6q0; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725651973; c=relaxed/simple;
+	bh=0PCuwznYuuMmJwyBB8SBMMCsV0vgqVxxIK0Z1qKxcJQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BuuAMvh8ck60qVFbLgux7Cgy2agyuY9IkZzMEHUDdExSHZKMf0c7jUPuR8rzw4CAmRLrPI3pdSm3Q1QwB6KiF747XTSMPE4NARiTtQdiLU/7RH/BBNO00ss2/X7hKWDu53PikqLAaz8L+XE8x8Wb1tcDjzTjO9Ak1KIP98mZmh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=R7WGgxSI; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltvQP6q0"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2da55ea8163so1863279a91.1
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="R7WGgxSI"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6b8d96aa4c3so21271177b3.1
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725651971; x=1726256771; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2iAbahpKK49XSKYvFKQo4bESfZ95gT7DdpFKQlnV6iQ=;
-        b=ltvQP6q0pRUVf+Eq7/k//JT+oDdBfhrVAfim5ptDAHXlx0Oq/ZecsuNdm17nIs2WuX
-         snBpVt+5u318z4O5Gk3na39m+RTOFu+/HUKErdUvVcKmDVIlYPkMagCFKFJqDW8pdjLm
-         2XLPEMV2rKvEJZWjO+phtSHXJEBKvOSe7Dg8YqfN31W0e1FiHyoPuyFPt9Sd1frVHInz
-         PXbt/ZJfRWbEP9eSb4ZODeUBV0b8OlzbhXgALRRGY8/FztmnG7pJAhg3c7G01k5ygFDn
-         kew5+5TZKwHLI/YbNaPv/14jNifb1xojsS5o8e0h7DmVd4kRr39xUua8RUWwpNn1asoo
-         gPKg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651971; x=1726256771; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3M/vSL32y+A00DK3aNCbx/JcjT4YoZydZ4tyP6jjVlk=;
+        b=R7WGgxSIX9i1Vnt/ibffKhKuTDcPWrJtIoC0W0BDHM878K8MyG5KcoSRBM7b3mm4HP
+         bPuq0AmGN6z96U4t6WDcLAmXrcmFMrUw7CXXEG8k5tFD2PxNr/J22BW1pj9Uh3lfVuJ1
+         dUFY4yxQIgAzl+qrjrd9kLDitEed/XVKd9Tdw7GmlGrJJSPOhsiwOBHZcYnE14D4EbHn
+         RLXLXWADkgDTBNW8zhXQy8g08lOD8r1lQYPhbAj9ToJ80LuveQT3Y39OPAmCFfhZMx1O
+         KyqqDCw9nOljp31y4kozH0R3BH6zz5L1rx++k38F9zeX07zQnG+lun4SyjQlpPWPafv9
+         4NVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1725651971; x=1726256771;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2iAbahpKK49XSKYvFKQo4bESfZ95gT7DdpFKQlnV6iQ=;
-        b=nljc5WimIHs58pAlqpI1CNEsII4Uu8HqznaHt1G5GGNyuMTWdqbmsFGVPe0pimBtUK
-         v5TtY2KrqakcQEqP/HsDFKYuyLN6jN37+y2oWMfsgoMl92S0Z6QHGpbz2p2Hvr8QJoBk
-         LoSs7LoE0h4mGFerQnSEyKl7u+uabQG0mleJVfzR7wIBPPk1TY0WBCJUW0xfjJwCL88f
-         7cljOKT66oNWrQY0DdCesiTeVgYxVUl52sAsDFs+Z3nZs0MP4fta69jb4vHkLx5PMmYo
-         talz29EEepZQWSZlK8smVL3xnMZg48NUo7rI3uTh7ZfGq1vYTVcnVSFB13FWoVixca0J
-         xTCg==
-X-Forwarded-Encrypted: i=1; AJvYcCXpeU3hSV7BXdVLg07ttK2VELzvvAVlNJPqzJmJQMqcH559wRHX8UqfY6nBk7kRcVXNI7o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyW6invR+56Yv9X+8dePVEARlpEKIl6YoYuCDGxEPx+RQpTFppF
-	wHilmanH8Tkiz5ObfXgHlF+c2KFX3lizlrudlHxZm6FX8eBSm8+Z
-X-Google-Smtp-Source: AGHT+IErIji+7picuouW9ECHRyq7mdLODFKgvYfzZQKa+LRnKgbte2Yk1PrB38IeRyNguwjyJZzPYw==
-X-Received: by 2002:a17:90b:384e:b0:2cf:cbc7:91f8 with SMTP id 98e67ed59e1d1-2dad50fc904mr4245029a91.19.1725651970451;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3M/vSL32y+A00DK3aNCbx/JcjT4YoZydZ4tyP6jjVlk=;
+        b=RzFglZURPLI/JGxka9BiBwKUrgbF1rKVO+UpJX6uQEZfBVtNtVCzAnMnjVRipW8tr4
+         oul/8ejSyQp3GuUK/573/bGaJFd6mmrghaWCXZiZKlpGqfdW9uuukT/B2ruY8TGC8q/h
+         nJtnuNmzs2p16TaAN81XCsoo644dHkj6xoxCrmzxV7X9se3YnrleDnnyLeYZSVBnaX5T
+         91hrZI4y/cknXTL8ZePDaGuXdJ2eWyEyNUboE7U49tufomexSlzN2/yc5Y3Tg+vMQzj8
+         i4pYAPO5v9a1GsToIUP5dZr72zooRdKMHxC2zxcl/zcbm7MsIIQ/Gz0rQe0t8snRe3BW
+         WaRQ==
+X-Gm-Message-State: AOJu0YynyVajEJpLhMBqYlN0YW4u7qAF4sUicCtOGPPhWLfUApy3rtVN
+	S708/5N8mD2yUajvKOFZGKDNOSuVQRtQ4v2+0mqTOK97e9iB/irFN6+GKre0EHMTKDA+qzEsBB2
+	J0s8=
+X-Google-Smtp-Source: AGHT+IF1HbIRXxAVgb92612GcMQ6URQ9NQ0YgYdEruWxwb3N0Foy6h1djiVGknrLNeKmeOwZ3KGVzQ==
+X-Received: by 2002:a05:690c:f01:b0:6b3:a6ff:76a7 with SMTP id 00721157ae682-6db44a612ebmr51390707b3.0.1725651971050;
+        Fri, 06 Sep 2024 12:46:11 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6db56337dbcsm1145247b3.44.2024.09.06.12.46.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 06 Sep 2024 12:46:10 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d? ([2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dadc08d397sm2003004a91.45.2024.09.06.12.46.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2024 12:46:10 -0700 (PDT)
-Message-ID: <eaeb9ef8-d033-48ca-838c-25d1522e7afe@gmail.com>
-Date: Fri, 6 Sep 2024 15:46:08 -0400
+Date: Fri, 6 Sep 2024 15:46:09 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 2/9] finalize_object_file(): refactor unlink_or_warn()
+ placement
+Message-ID: <e1c2c39711fe57da3592eb35175497f690a505a3.1725651952.git.me@ttaylorr.com>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <cover.1725651952.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scalar: add --no-tags option
-To: Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.1780.git.1725545614416.gitgitgadget@gmail.com>
- <58ca5257-2e56-830c-c85f-79e4c9e80858@gmx.de> <xmqqwmjoyfwh.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqwmjoyfwh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1725651952.git.me@ttaylorr.com>
 
-On 9/6/24 11:13 AM, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> None of these suggestions, in isolation or in conjunction, seem big enough
->> to me to warrant a new iteration; I just offer them here in case you want
->> to iterate on the patch. If you want to keep the patch as-is, I am totally
->> on board with that.
-> 
-> Everything other than "prefer repeated use of -C instead of a single
-> subshell in there" (which I think worsens readability, even though
-> it may save one process), I agree with your suggestions.
-Thanks, both, for your review comments. v2 is on the way with these
-suggestions.
+As soon as we've tried to link() a temporary object into place, we then
+unlink() the tempfile immediately, whether we were successful or not.
 
--Stolee
+For the success case, this is because we no longer need the old file
+(it's now linked into place).
 
+For the error case, there are two outcomes. Either we got EEXIST, in
+which case we consider the collision to be a noop. Or we got a system
+error, in which we case we are just cleaning up after ourselves.
+
+Using a single line for all of these cases has some problems:
+
+  - in the error case, our unlink() may clobber errno, which we use in
+    the error message
+
+  - for the collision case, there's a FIXME that indicates we should do
+    a collision check. In preparation for implementing that, we'll need
+    to actually hold on to the file.
+
+Split these three cases into their own calls to unlink_or_warn(). This
+is more verbose, but lets us do the right thing in each case.
+
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ object-file.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/object-file.c b/object-file.c
+index 683e6b2a0bd..54a82a5f7a0 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1911,6 +1911,8 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 		goto try_rename;
+ 	else if (link(tmpfile, filename))
+ 		ret = errno;
++	else
++		unlink_or_warn(tmpfile);
+ 
+ 	/*
+ 	 * Coda hack - coda doesn't like cross-directory links,
+@@ -1932,12 +1934,15 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 		else
+ 			ret = errno;
+ 	}
+-	unlink_or_warn(tmpfile);
+ 	if (ret) {
+ 		if (ret != EEXIST) {
++			int saved_errno = errno;
++			unlink_or_warn(tmpfile);
++			errno = saved_errno;
+ 			return error_errno(_("unable to write file %s"), filename);
+ 		}
+ 		/* FIXME!!! Collision check here ? */
++		unlink_or_warn(tmpfile);
+ 	}
+ 
+ out:
+-- 
+2.46.0.430.gca674632b70
 
