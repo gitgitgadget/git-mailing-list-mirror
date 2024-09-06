@@ -1,80 +1,64 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9273F322A
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 16:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC5510A18
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 17:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725640686; cv=none; b=N9UbWgFA/RD3BcqoGO42NFwzpK1L67kUU9P5JW6wOvDFXvsqMdFPZ2cnXfvEYMR6BG3OFzdrZ9yRSPq+2DXup5wZUSxtkynOSpzD22EhTOAtaEWugmz428mIhu2lo8jtU9juw6KF7EPPPTVVCrdlrzgrAMJQR9kNyP2PeXAcaSE=
+	t=1725644631; cv=none; b=VxUGfaoMKwfd0aKoZ3SsT26V5GMpk9HI0fna9UqgQ2W7cuPVWVun5xwihyZlTldjlYzAhq/PhBO1L0qDTACo/tVyg676h56v32TBxLU9GqQ0RdayM/Jzqv47DlnGxY6iNxcleXlWOu6C1gADct0HMjr5Rb5ACmKUzR9keWLgNeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725640686; c=relaxed/simple;
-	bh=BrSD3Bc8IbRGfpeAz5wy5iG7c0bSM63zyH80u1PKshY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tz1VUn4kEnqK/lgZv6J5FYG+1wCf1S1BTz2GMKlm5UJHkMPFOUTtFkRhkC2NE7foorXwMMRYc0ZUVGii2A6hRFv1ycswRXMclU7v0BN6IvfXHQKqtborIORh6HUlKbd+sJbHx2QDtqZTI4dwGDUdKZHp5os687ZZP6Z93UZZE38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SarnCoih; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SarnCoih"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F68836A76;
-	Fri,  6 Sep 2024 12:38:03 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=BrSD3Bc8IbRGfpeAz5wy5iG7c0bSM63zyH80u1
-	PKshY=; b=SarnCoihUgq0/Ajv8Lc98HBwKtEO51GkKmKgpyAwxc+PgcTWWES768
-	CB9H+q9Uav1GIsZSsI1jJAwlxJ+3eVmERyblStsKN+oWMxfTZFFhPZGFahc4QcW6
-	rNJsMD0onjmZsWqCQJ+Q8aJDhbXz5xoE5Xl1+Kf5IfjUBTH0QP1sQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 66CB236A75;
-	Fri,  6 Sep 2024 12:38:03 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.94.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A81BB36A74;
-	Fri,  6 Sep 2024 12:38:02 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [GSoC][PATCH v5 0/7] t: port reftable/stack_test.c to the unit
- testing framework
-In-Reply-To: <20240906113746.8903-1-chandrapratap3519@gmail.com> (Chandra
-	Pratap's message of "Fri, 6 Sep 2024 16:59:09 +0530")
-References: <20240904150132.11567-1-chandrapratap3519@gmail.com>
-	<20240906113746.8903-1-chandrapratap3519@gmail.com>
-Date: Fri, 06 Sep 2024 09:38:01 -0700
-Message-ID: <xmqqo750wxee.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1725644631; c=relaxed/simple;
+	bh=/x/wzZr9u/1NsAh66//kMU3LpVp6k8ENo8YenTdvx3M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kkN7TBY/bYEQbPHz8uWYYv+77GboCu0qAi549Xov4QIpHaUZ0IBC4XjkWYdbp5buHg6wsHJKTrRmC7JcrwVO3kR+QiIS4s1uTekprQs5r72lnKVwEsq5u5u0N3HKMxkNxWGw9nVEoosAjGOAirgpL4WGf7ZnHBWpZcJ4Ax2NDEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4X0k9Y6tBXzRnlK;
+	Fri,  6 Sep 2024 19:43:44 +0200 (CEST)
+Message-ID: <a8ed352a-bcb8-4e62-945a-ac5d6ff78841@kdbg.org>
+Date: Fri, 6 Sep 2024 19:43:44 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6288941E-6C6E-11EF-AAF4-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] git gui: add directly calling merge tool from
+ gitconfig
+Content-Language: en-US
+To: "tobias.boesch@miele.com" <tobias.boesch@miele.com>
+Cc: ToBoMi via GitGitGadget <gitgitgadget@gmail.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+References: <pull.1773.git.1724066944786.gitgitgadget@gmail.com>
+ <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
+ <61b9b041-97cf-47ac-84ef-1467aba873e3@kdbg.org>
+ <AS2PR08MB828842126285586C19028FB5E19E2@AS2PR08MB8288.eurprd08.prod.outlook.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <AS2PR08MB828842126285586C19028FB5E19E2@AS2PR08MB8288.eurprd08.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+Am 06.09.24 um 08:32 schrieb tobias.boesch@miele.com:
+>> Von: Johannes Sixt <j6t@kdbg.org>
+>> While testing I configured meld incorrectly once and got no feedback
+>> whatsoever, but I would not attribute this to this patch.
+>>
+> 
+> That's odd. I tested this again by setting merge.tool to "meld" and
+> configured mergetool.cmd to "some wrong path". When starting the
+> mergetool I got a popup saying that meld was not found in path.
+But if the configuration is
 
-> Changes in v5:
-> - Edit the commit messages in patches 3 and 4 to reflect the changes
->   and the motivation behind those changes better.
-> - Add newlines after variable declarations in patch 6.
-> - Introduce patch 7 which removes leftover cruft from the previous
->   reftable testing scheme.
+   cmd = "meld far too many arguments provided"
 
-Hmph, the end-result looks good to me, but the structure of the
-series is a bit curious.  I didn't expect there will be a separate
-step for removal.  Shouldn't these "leftover cruft" be removed *in*
-the same step that they become cruft (which I am assuming is when
-reftable/stack_test.c and all references to it gets removed in an
-early part of the series)?
+and 'meld' *is* in the path, then there is no feedback because meld can
+be started successfully, but reports an error only on stdout or stderr,
+which is ignored by Git GUI. And the exit code seems to be ignored, too.
 
-Other than that, looking good.
+But this can be treated in a follow-up patch if necessary.
 
-Thanks.
+-- Hannes
+
