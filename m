@@ -1,64 +1,64 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEFD1CBEBD
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 11:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517111CC155
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 11:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725623110; cv=none; b=W33r46+tfP+BbtaJ9kDeukKMmm7TjaACjvSQZPwAKm7RWlOqKOXbUgtIV4whQ4FI7anu7o02dHj653UdQf2jVZ66CnISYIGoTSOXxvMXM9xPUNzcGVmMLlBh1XxAVcRoSR6y2OyV2QwNzad5lazX1LMjYpC4zFlRpmr80uK8E+g=
+	t=1725623112; cv=none; b=dM0ZtD1DjaiVtD5bXDqOWH6ToIwllLfpmlAXxFKRpIb8Hidj6kdoaWm5bNghvl2D/3ghTASrRoPtHckGh/OrfXu8H/ROh6RNFEcG9sL4MPffEWQOJbyIGhYLfFWx9lstYYTWS7YmFp92UKj13NvxgFwiQcsssjCeFILfA0BkyYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725623110; c=relaxed/simple;
-	bh=TsMvFL4U9+5UyIyYVCImm0fS2IZ67sFAT/aKluJvfQM=;
+	s=arc-20240116; t=1725623112; c=relaxed/simple;
+	bh=2U+WMvKHa+2d2IVhUXykqOVonsM0YnpV1uo35PWuBsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=age97q5Z3MnTqs6/zh3G3ARlr152AN5DoxbtYTEkZRWf7OqIUVGjpaQdHgDsFU0ETvFvGig//vqy0qzwrUvj3ywM6P+6wFWUxR/xrAmgbEh95ll9D3WNSA4Xdgha5eh1IGeDIO5Thsnqmjar5hrmlxea4t9692BpANwfiggFrxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RgNan2uj; arc=none smtp.client-ip=209.85.214.180
+	 MIME-Version; b=Fmd5TtX04Hc/gyoiyiSEdlKcqXeM7DZ91ulcJ/kwaTTGLvqnLoe572B44B4jj4CFCG3eNC1ES5E0BzJzuso/0kAXJLQ+BeSHhvHeL8zn7FKoL/9aolxEL27Jw3ZhPKCo/GGZ4oVFhbdKJAxKoOP+o+Bjmb+l8EbIJXXNUfMbe9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a071Ayg2; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RgNan2uj"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20570b42f24so24832405ad.1
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 04:45:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a071Ayg2"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2068acc8b98so17570765ad.3
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 04:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725623108; x=1726227908; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725623110; x=1726227910; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7/+APfLOUfy3c0+yTvKXFD8HfIE0XAttjpIAsE8KVp0=;
-        b=RgNan2ujOgXxfm+kJxg5+s9st068OpfPUeeYeTqy8UvstgIeJ351Aa4sJ05CTJVrf9
-         LFcahNQCa0LTvg4XaCukenjtDoyCjMP2PZOlICkfDJRqEl0gsXD6IL64wXWeIBZOYhbR
-         d6XqHXaullMD/MUsgu1dP/VNXdcE+ibWW5NvZoAGkJ+y6XoxNECHlU4eURlDAPTgUW8k
-         rSJrlirmF2EvKt1TaFwIwIhjHx0dw+gZA6C9TZnIxaYvCJbWulZnMH2t60nK9SiCKTCR
-         d250fXCvfrVFViNQz2jS33UgNzcKb/2bv/FcOyrn/ZN40vdGiLLm9hf5QnU78yZWlhZs
-         VQ5g==
+        bh=rVcZRrxptk9c3lqA9Btm7t2TmO4L6+yRtFB0PVVE5vM=;
+        b=a071Ayg2ZL9sNXTL2sSCV0EMTjtfT2O/wR1MTHK5N8qG5E9fcrW0G1P6kIQJMEFHmN
+         LjxixPv7FjQr9AcSeTHsfqTUI2qUBJsDYYuCP4vtD/tRG6gMnU9LuRRkaD0+vsRoH3Nm
+         fYklwftiBteLLQb8iZvqrWktMP9t3CnwVHJrJL3QI8/d/rV7vQeHubFDmKEPeZIP2ikV
+         FHSdV1PMSipUw9Mtv9/xxcl8jh3Z12lYbCYmnPaRG4yFnUofpbKMXVNsEbyEP+s7NpOQ
+         uM9x++9qFgvgVMQaS7v6BWHfsS5JF+DK5C5Y14/tLBDuuzxodCyy55G44qICDhwKfw8x
+         KVmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725623108; x=1726227908;
+        d=1e100.net; s=20230601; t=1725623110; x=1726227910;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7/+APfLOUfy3c0+yTvKXFD8HfIE0XAttjpIAsE8KVp0=;
-        b=UTImvrh56062w4p3OM5BHRgtGG1YP0gbpaINtovOxszmVjHMj7fOSRRiXNfuXAI37b
-         OkRx0eML2cHfkP3PYxwsOHWuUn4hzZhsihKtGPA2r2Oohj2oKXrMWwEIrOXdx7qGJB9r
-         2wEsKhRjYsNb+/F19CE8wbT68wBbcwacc/RbZm+YU/RxH7Gwk9jZm+h5fjM2IVqCzq9M
-         +8vhO6HRdvAQL8Y4ANtIEkLgIZ19Avb7CfAGgn9PdOfU1Bs3bw7Qi87Bd0DwtdjzF2Tm
-         /sOJDv0SeLXc72jPhaIQ9BwhMrG0bDo4afdnXyDdZ7dDhADcxat/m6uAeLY0UwRdvbza
-         N3jA==
-X-Gm-Message-State: AOJu0Yx5wqhEiq23xvnt/ZyLGtCpXyr7JlcJe+T0avnWUc4x0UJUXCyk
-	jwvrDhxLEOIU/UAQER9CkZSqTWahskfcxiurq3xDYhNWsyK9drF4Xrfs7NWu
-X-Google-Smtp-Source: AGHT+IE/s0IpyqJm7zDQ/EJ55RJnr3azj7INqHJmb38eijt+Ljr7UDN9zZoQRJirg9D8ViuxH/Vx/g==
-X-Received: by 2002:a17:902:ea07:b0:202:49e:6a35 with SMTP id d9443c01a7336-206f04f9c6bmr23306455ad.19.1725623107055;
-        Fri, 06 Sep 2024 04:45:07 -0700 (PDT)
+        bh=rVcZRrxptk9c3lqA9Btm7t2TmO4L6+yRtFB0PVVE5vM=;
+        b=OGzpBtjq/g0TLfV+QHW5NWOGGJMHFp61aiNVmjgP6sPq//1YL6ol/QYbXdYZhrDuIL
+         Rth/qenqR6/uWhfwEz7AH2lEOBCrnJNWenAA+SvNqbnzRc8Z2kpaDYeJvNI9gSHgkYwN
+         HoCuxsThHTjCb/ccttCI6drlnDgxz3MlpM1vuVhrp2kvYt/C6RkogPxqBpaL+FjF5F1c
+         RC7g41U3y2Up2xv5JVFGM4SyVeuz08eygkVFLG3riIaRFVBP7kkAN0wkmiXCN8bDbl5B
+         Zl6N89TUx859kLpxOUobSTsi7Jn19NTjb5+IuF1/Qy/SV4VqvenIROcaE28P6wFy31EA
+         xgAg==
+X-Gm-Message-State: AOJu0Yy/9MYfJ6Zm4UorGYTtMfMqTlt9bl254M+jJaEqVeB0aaPRBYqO
+	YXCQPdEVYGjWxMjvHaohIOy24TDlcZ6iAPlTr22jL1C+ITaYmPJJ7VwG6k//
+X-Google-Smtp-Source: AGHT+IETrl0y873NUtXjqnk8qIkJoaO4brfTfG4/23z0G/p8tYDYR9KjZKo5p6y0RsPD3T2xuXZrxw==
+X-Received: by 2002:a17:902:ecce:b0:205:6552:1099 with SMTP id d9443c01a7336-20565521122mr204147745ad.8.1725623110180;
+        Fri, 06 Sep 2024 04:45:10 -0700 (PDT)
 Received: from Ubuntu.. ([106.221.74.130])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-206ae91371bsm41903685ad.26.2024.09.06.04.45.04
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-206ae91371bsm41903685ad.26.2024.09.06.04.45.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 04:45:06 -0700 (PDT)
+        Fri, 06 Sep 2024 04:45:09 -0700 (PDT)
 From: Chandra Pratap <chandrapratap3519@gmail.com>
 To: git@vger.kernel.org
 Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 3/7] t-reftable-stack: use Git's tempfile API instead of mkstemp()
-Date: Fri,  6 Sep 2024 16:59:12 +0530
-Message-ID: <20240906113746.8903-4-chandrapratap3519@gmail.com>
+Subject: [PATCH v5 4/7] t-reftable-stack: use reftable_ref_record_equal() to compare ref records
+Date: Fri,  6 Sep 2024 16:59:13 +0530
+Message-ID: <20240906113746.8903-5-chandrapratap3519@gmail.com>
 X-Mailer: git-send-email 2.45.GIT
 In-Reply-To: <20240906113746.8903-1-chandrapratap3519@gmail.com>
 References: <20240904150132.11567-1-chandrapratap3519@gmail.com>
@@ -71,45 +71,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Git's tempfile API defined by $GIT_DIR/tempfile.{c,h} provides
-a unified interface for tempfile operations. Since reftable/stack.c
-uses this API for all its tempfile needs instead of raw functions
-like mkstemp(), make the ported stack test strictly use Git's
-tempfile API as well.
+In the current stack tests, ref records are compared for equality
+by sometimes using the dedicated function for ref-record comparison,
+reftable_ref_record_equal(), and sometimes by explicity comparing
+contents of the ref records.
 
-A bigger benefit is the fact that we know to clean up the tempfile
-in case the test fails because it gets registered and pruned via a
-signal handler.
+The latter method is undesired because there can exist unequal ref
+records with the some of the contents being equal. Replace the latter
+instances of ref-record comparison with the former. This has the
+added benefit of preserving uniformity throughout the test file.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/t-reftable-stack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/unit-tests/t-reftable-stack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index c74660a1e2..8047e25c48 100644
+index 8047e25c48..4f2ef1a8cc 100644
 --- a/t/unit-tests/t-reftable-stack.c
 +++ b/t/unit-tests/t-reftable-stack.c
-@@ -76,7 +76,8 @@ static char *get_tmp_dir(int linenumber)
- static void t_read_file(void)
- {
- 	char *fn = get_tmp_template(__LINE__);
--	int fd = mkstemp(fn);
-+	struct tempfile *tmp = mks_tempfile(fn);
-+	int fd = get_tempfile_fd(tmp);
- 	char out[1024] = "line1\n\nline2\nline3";
- 	int n, err;
- 	char **names = NULL;
-@@ -95,6 +96,7 @@ static void t_read_file(void)
- 		check_str(want[i], names[i]);
- 	free_names(names);
- 	(void) remove(fn);
-+	delete_tempfile(&tmp);
- }
+@@ -174,7 +174,7 @@ static void t_reftable_stack_add_one(void)
  
- static int write_test_ref(struct reftable_writer *wr, void *arg)
+ 	err = reftable_stack_read_ref(st, ref.refname, &dest);
+ 	check(!err);
+-	check_str("master", dest.value.symref);
++	check(reftable_ref_record_equal(&ref, &dest, GIT_SHA1_RAWSZ));
+ 	check_int(st->readers_len, >, 0);
+ 
+ #ifndef GIT_WINDOWS_NATIVE
+@@ -285,7 +285,7 @@ static void t_reftable_stack_transaction_api(void)
+ 	err = reftable_stack_read_ref(st, ref.refname, &dest);
+ 	check(!err);
+ 	check_int(REFTABLE_REF_SYMREF, ==, dest.value_type);
+-	check_str("master", dest.value.symref);
++	check(reftable_ref_record_equal(&ref, &dest, GIT_SHA1_RAWSZ));
+ 
+ 	reftable_ref_record_release(&dest);
+ 	reftable_stack_destroy(st);
 -- 
 2.45.GIT
 
