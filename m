@@ -1,114 +1,158 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32D36EB7C
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDBE1D3634
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725652160; cv=none; b=I71CjcsP2jHOE695R88mHN6kMMSk48kItK1tA0SGD3jkw2cBzr01X1r/qIQPcXQlT4CZEeSaVcKCTso2Ag4fUO/qMJTq/qviAnasQ40CB4valJdO4sgjZVyJuTImxBWL1+rJ3rYxM0MpJW+OEWuLSxpQvWwNL5AZ8rDWDYcRsgQ=
+	t=1725652563; cv=none; b=d9dk8NvkwKUkv2susGdcJD9MLYwATg+7FdsUA/lq4+MTDjaFXzV9jIFHPTa4IF/D8+ZxTrOTt75eBginINIetu0hku4/vHnzrtcjkQLzK9lVqXQByPLvwd9ZNJ8GKhGiuSeOMcHYDg1nbdqx/CiS4NmsE2A5V3odMg7HvdhLShA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725652160; c=relaxed/simple;
-	bh=x6ydcUs0Yx6PmizTtttAgkJ1TBbCq0r4nIcrim756v8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z4Ef/hp5WMNukLUVC2aXst6YNwF60db/2e2MZjE9mG4NwDk/sIomO06GBfu3qiySmLE45v3nscGSsQkmeENnbpxGXEavBrQRN2XITcwsQr8xp1gT8lMCzDatHuq6TkBduwWW6r+p3ZBJ+IyAVZvamM3rw29k9dWXCZWXo+89diM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8jpaXSn; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725652563; c=relaxed/simple;
+	bh=ss2gqZsylG3hH5KMJT3uofedJ6KI4zjDw3ZPDQ1/Sxk=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=dbtuXPGM5e3UzI565k6jPA5KAstZ6fvHNWoobF7HqTT6KIVsqKzNbjKOZrRwsqjJ5gUa26nBa5De3PzAbuWowHI/e1mluHzSfbn3vYl0efbjTWeyQW6BdwCjpLGqtC5SWeN8c6WMTJDri8a4AfY6L0TeLUS0JcIu5Z3hvt6qpfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=26YoRnSG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7Q2vyrP; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8jpaXSn"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-717911ef035so1854210b3a.3
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:49:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725652158; x=1726256958; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Erm89NK7+uIf4n6h1TwfeDD2j3OIE45DH60VvZpSSWM=;
-        b=O8jpaXSnFGxOvidrVWsM8II/AfwJVp/XJhbDbfCvLHUdy14oZ7caWIxsUo0re4FoFj
-         4kpC3Yd7RyKQQ7xISK5Vxd4utjo4YEtzAk9Hc4Vti/seVadfq2HPxP6x0/0evbFssAnZ
-         lB4igpb+0Fg/CAV0+VlezLgWwb5uJfZ41kEDPy0Dy++1lADVfgXp/L/zjpe5gVFDEL2I
-         /EPVj2cbjFsJfPZDrIeZv2WOZA26PR+e2oxCsKBHcfr1VcadnXcwAg/cL4EGRxQ5uura
-         qJ1Hsi2ntEKGU7vzILAOjN8tHYq+nujW2fnB+P2ZGLmpg1Xx7m8BkBKcF6kXP6e1vGhG
-         ZtnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725652158; x=1726256958;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Erm89NK7+uIf4n6h1TwfeDD2j3OIE45DH60VvZpSSWM=;
-        b=HzroqzL1bFZG9+P7f0unkasjxXDNutM/IRUiiO8j1tRLSvu0WPklEA6g2NgLdaZu8S
-         9sTPNm4HKpO1gIm8/t+quTkBaoN0f3a0DeGwGAYruyZdLhWFCtYXsP7FYWdunoR52SyD
-         68KBLs5TPBmSvYFRYJqCtkfPI4T/6obBtZop5UOGFp92zF0zV/4EkW2/6qwJ4teT+6Cs
-         wB1uttwWGWtFyJZccgq/rrmNqSdkeR+Lkiz/7vP1jR7H0BPzMInBSawaCM2k8ri0JMCh
-         z94pJtGMbJjtthoccWC+aJhfCwLjErOnyimDeEa5k8YgwFQTXVXelwhCYifWBFL8iD/r
-         j9EA==
-X-Gm-Message-State: AOJu0YzduqIVc6fo7MhtIqExR0/ARNW1vFV/1HuCEl0Er29yutKbIVnb
-	MUznNtr4c7zxnBLWNgdbJ12QIDU2Pe0BKvjgA92id8pcHlKoq+e+
-X-Google-Smtp-Source: AGHT+IEZIsDP8CspY8TAc8F3v1/hdpX/7JcmeIrwn7BIsd87C3oT3WNDd2unooHRBilVFhau3xelPA==
-X-Received: by 2002:a05:6a00:928a:b0:717:9897:1405 with SMTP id d2e1a72fcca58-718d5ee05c1mr4545999b3a.17.1725652158073;
-        Fri, 06 Sep 2024 12:49:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d? ([2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71798990249sm2175468b3a.85.2024.09.06.12.49.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2024 12:49:17 -0700 (PDT)
-Message-ID: <da98da07-b2f4-4608-9038-7ce4b8e2d74b@gmail.com>
-Date: Fri, 6 Sep 2024 15:49:15 -0400
+	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="26YoRnSG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7Q2vyrP"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DE3D41140194
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 15:55:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 06 Sep 2024 15:55:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1725652558; x=1725738958; bh=0t
+	iN61hnIDWR+W9oC8FfvApQnmOv9iI1pG/kQd1aGio=; b=26YoRnSGM5RVXPxhIj
+	Gihinq5SqNk6XRoT7H7MWnMNaoSfNsn15ApCnybSTQupzwB0yCj+GkBcPbkpn87y
+	PC8HJUIvK3ZvKuIaZB0ryfe+gTcfBrLUd0zQy9gMTuMcwEkvUCFc/T9bkrdAsCUB
+	x606Sl4iIyNbAEl091TRgij5Chm3gqlbI4t588jF+uCqnm+9XLeQa35qtEMBa1Ab
+	8yFw3OUpT62CuPCV7JBlA/E0xpTUOoarMtkG+SshezWh7YPCKIf6Kg7h2+y+iDqE
+	jYk1IBQyVWvqO52m+nFj/PUNbjloEeLlV911ds9VIrRNsRaQhh2/dMWN3veuFuW3
+	31SA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725652558; x=1725738958; bh=0tiN61hnIDWR+W9oC8FfvApQnmOv
+	9iI1pG/kQd1aGio=; b=Z7Q2vyrPfhYsBg8Q0PTfKOlM7fjGpHkCIusSYM6uX1dn
+	zvvY46I8CtoKCVj5Up1dGWFcJxY2IItBWlOUnZQ2DdZUvFLls17DHHUiuzHLfXdB
+	RSNWGvi+Wz7NSkT/QxScqSWP1ycvLrQqHoO6YZzsCEWVvU35+UwbQBczIQtWAY3H
+	aMWa+FGBqDG6fjEit1p8Ev60AZACmmE5zDa5Q8PP4rKAMewtGED2ynNeu7JAH3ki
+	HMDA4kS+SplsJfp5CMTLRY9pG+YJLbKG9d9S0QleA7DXKKQ2qqFyz+kc77nuNCkh
+	k9tfvMeAydzQrNSLM6HPW+s9PTbXNcNEK4ZEqpdJGg==
+X-ME-Sender: <xms:Tl7bZtwIVTEUCy3uE6DkSJg3R2Vu_YmR0EFTwl9-VJ0XEM-mDql5Kg>
+    <xme:Tl7bZtSJ8KFjsnwp1AXXAtUupfZ_W7rEjoNo-tGoun3dz9LqCwhGiWq2tfKoGKy-o
+    HR_oV2t1awkqBF5>
+X-ME-Received: <xmr:Tl7bZnV_D-5elWZnBfDkeurQTIekmbhXqFXYWBmHZ4K8FAIAmb5hwgY__JZonV2ZYvA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeiuddgudeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfgtgf
+    gguffkfffvofesthhqmhdthhdtjeenucfhrhhomhepuehrohhokhgvucfmuhhhlhhmrghn
+    nhcuoegsrhhoohhkvgesrghltghhvghmihhsthhsrdhioheqnecuggftrfgrthhtvghrnh
+    epgeeiteehgffhheehjeevkeduieehvdejgfffueekgfejhfehffeigeegiefgtdeinecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrohhokh
+    gvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopedupdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Tl7bZvjO24N-v0NizK8UcTz1koEnpIkq6d-qUjtIZnQBN8UEiIad6g>
+    <xmx:Tl7bZvCzbblzeGW4VkEpKXJqrVKwgkMpHQopt5Gy1WGy0KVBSc5oeA>
+    <xmx:Tl7bZoLZhQVEKO7irXkoD05ZoRdCAnjHvY6YqwMr76azb-bKGBfZrA>
+    <xmx:Tl7bZuD53U1HvB1kGRACsb-wGJa2BiUkG08d8sa395mUyLG_m-Pkvg>
+    <xmx:Tl7bZk7BEJKYWlHaqa_i0kk6fgiYKnyLx9Nwti2N96CzM3E87HwGRgSN>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 6 Sep 2024 15:55:58 -0400 (EDT)
+From: Brooke Kuhlmann <brooke@alchemists.io>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] advice: recommend GIT_ADVICE=0 for tools
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, ps@pks.im,
- james@jamesliu.io, Jeff King <peff@peff.net>,
- Gabor Gombas <gombasgg@gmail.com>
-References: <pull.1781.git.1725559154387.gitgitgadget@gmail.com>
- <xmqq4j6t26fs.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq4j6t26fs.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Fix issue with formatting multiple trailer keys
+Message-Id: <EF5AE27D-B7CE-4337-B928-6073837218CA@alchemists.io>
+Date: Fri, 6 Sep 2024 13:55:46 -0600
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51)
 
-On 9/5/24 4:26 PM, Junio C Hamano wrote:
+Hello. =F0=9F=91=8B
 
-> This somehow makes it sounds like it is an "aside, by the way" that
-> these trigger by default and that you can selectively disable it by
-> setting these variables, but shouldn't the stress be the other way
-> around?  Shouldn't the mention of GIT_ADVICE be a side note, leaving
-> primary text target human users?
-> 
-> Perhaps like this?
-> 
-> Thanks.
-> 
->   Documentation/config/advice.txt |  8 +++++++-
->   Documentation/git.txt           | 11 +++++++++++
->   2 files changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git c/Documentation/config/advice.txt w/Documentation/config/advice.txt
-> index 0ba8989820..d749aee7f4 100644
-> --- c/Documentation/config/advice.txt
-> +++ w/Documentation/config/advice.txt
-> @@ -2,7 +2,13 @@ advice.*::
->   	These variables control various optional help messages designed to
->   	aid new users.  When left unconfigured, Git will give the message
->   	alongside instructions on how to squelch it.  You can tell Git
-> -	that you do not need the help message by setting these to `false`:
-> +	that you have understood the issue and no longer need a specific
-> +	help message by setting the corresponding variable to `false`.
-> ++
-> +As they are intended to help human users, these messages are output
-> +to the standard error.  When tools that run Git as a subprocesses
-> +find them disruptive, they can set `GIT_ADVICE=0` in the environment
-> +to squelch all advice messages.
-I like this a lot better. Your careful edit is substantial enough
-that I will give you co-authored-by in v2.
+I'm seeing strange issues with log/listing trailer information for =
+commits and tags and I think I'm experiencing a bug where when I attempt =
+to list commits and tags with specific trailer keys, I get new lines =
+showing up in my output.
 
-Thanks,
--Stolee
+Here's my steps to recreate using a simple Bash script:
 
+```=20
+mkdir demo
+cd demo
+git init
+
+touch one.txt
+git add .
+git commit --message "Added one" --trailer Milestone=3Dpatch --trailer =
+Issue=3D111
+git tag 0.0.0 --message "Version 0.0.0" --no-sign --trailer Files:1 =
+--trailer Duration:1
+
+touch two.txt
+git add .
+git commit --message "Added two" --trailer Milestone=3Dpatch --trailer =
+Issue=3D222
+git tag 0.0.1 --message "Version 0.0.1" --no-sign --trailer Files:1 =
+--trailer Duration:1
+```
+
+Notice that I'm using trailers for my commits *and* tags. Here's what my =
+git log looks like:
+
+```=20
+git log --pretty=3Dformat:"%h %an% %s %d %cr. %(trailers:key=3DMilestone) =
+%(trailers:key=3DIssue)"
+```
+
+The above produces this output:
+
+08a07b717bef Brooke KuhlmannAdded two  (HEAD -> main, tag: 0.0.1) 5 =
+minutes ago. Milestone: patch
+ Issue: 222
+
+01c4c182c85e Brooke KuhlmannAdded one  (tag: 0.0.0) 5 minutes ago. =
+Milestone: patch
+ Issue: 111
+
+...and if I list my tags using this command:
+
+```=20
+git tag --list \
+        --format=3D"%(refname:short) %(taggerdate:short) %(taggername) =
+%(subject) %(trailers:key=3DFiles) %(trailers:key=3DDuration)"
+```
+
+...I get this output:
+
+0.0.0 2024-09-06 Brooke Kuhlmann Version 0.0.0 Files: 1
+Duration: 1
+ Files: 1
+Duration: 1
+
+0.0.1 2024-09-06 Brooke Kuhlmann Version 0.0.1 Files: 1
+Duration: 1
+ Files: 1
+Duration: 1
+
+Notice, when logging trailer information for commits and tags, I get =
+unexpected new line characters showing up in the output. I expect to see =
+all information printed on the same line without any new lines showing =
+up.
+
+Also, I want to point out that when listing tag trailers, I get the =
+"Duration" key showing up twice. I'm not sure if that's related or not =
+but seems like very weird behavior.=
