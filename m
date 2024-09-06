@@ -1,191 +1,105 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6E21D554
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3371D5CFD
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 19:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725651995; cv=none; b=GKdpgKrBfG5XxRHZPDrX2sWvxveExiE/iE9NWBU+V5S6gUl9zPjZa+JddVHPhO6hd/G9EYb/QA3BE53lHacmTev3186Ug717kFWmlD56ancpz/5wDU/y/vR5nzj7MNl5Hs9W0B0MFuGPXV127rPv9GhcPJa35IpyYA+tV1agM+c=
+	t=1725652025; cv=none; b=Um6ARFa99o3l7MWzpycQuYWMcdbm+66MBjBbJmgqvmv52YAD/99nLyTUpTnDrFY91pN8t0fZweoCrnU/0a/iVJj8jqgiceAy89IVMKYkNTCuBYrjZUUpm1aZ2fM78wbEtN1EwPo98zjuE+0xHCQzbhOpus5A+c2FDAt9ObqNDXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725651995; c=relaxed/simple;
-	bh=52xnQ0mERdPyf52nWx8znCGGXcH1VWXywgo0DOYbK68=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Js1Lx82dt530Yj2FrPTkZfM3dTnrQWwlKzGVaY8xveepfEYG1xsaYMKgCILAGzwlxG1SXAaCzkYwfBdcwqhvsb3fliLtjEBai2kyt2YocCs/M8x10DdU77mpmXH/rXEP03VMrkR2fFVJF3/QZPsraMgv2z7D9gq0TA8I7SjgZY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QsKHeTGk; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1725652025; c=relaxed/simple;
+	bh=IAQn9ei/zVVHSvS1pFLkL3WYn15RHe7ni4i3RGIW7d8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dlbQbnmseQx4U+1LusMNmeEd409HQqqoagi6BXolcnS85c/XgibhY4vhir+k579m1//aT0GWIbEr93gflkcozWJHSDqmDNMd1+KJRzHZ5rVJEuMVnd3sl5b0OWiHMHy+7tlTfqNqtPSzTYdsMQ+Oc8h1ZN5/CJjTMlYSVD39BGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WX3zn2Tr; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QsKHeTGk"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e116d2f5f7fso2848908276.1
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:46:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX3zn2Tr"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2d89229ac81so1877740a91.0
+        for <git@vger.kernel.org>; Fri, 06 Sep 2024 12:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1725651993; x=1726256793; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1t1A0Fv5jfIbdu5SYL/DVcAH9CI/7kXlCBnYJscFfnY=;
-        b=QsKHeTGkHseksV0noiQqeq6lKcka/eJuRbsKd7j5ezTxG4yGO4K+wfxald2nlpJR2n
-         h0Yp1AcrNL1C2yrcFGgC19dVB0sM9hMlVkbQHjSOva5KqyQZRvE2A9c+Losw34UxDQ61
-         RdpT52/pn7wdW8oE5da9IX5V2gFDh/0X7YCzXNdKAXH4TDqrtai9bAGCRnLD/kClZ5Ws
-         7fBL/g987HJV6KhryJxmHQl3WeZoFXR5s9X9MuwLVTxJe9FdJ16VMBZa3+bWjmyCeRoh
-         TrejG7qxTfPmGQ0AVLVxgrCaOMPa3H4eJPaX85WbH74+zMn37sihSgUAl+3mzr7Ogkt0
-         Q5sw==
+        d=gmail.com; s=20230601; t=1725652024; x=1726256824; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9sqMyXOTkyOWJsMEj09nitgToOVOhsNKT9RDuiXqQaA=;
+        b=WX3zn2TrjH2Kl01acTCDeO6RZvBu0NVGwkupt17CbMY029cG0D5GQLZDK4VDWLn0W2
+         T6u9XZ46CQJr35iJ3vM7nx+u8H66au3vf2F3ry4ZWf6ZWBoyG1MW7/5/g/JNzAFJnnk1
+         vYu52ReK8z56c48tvP+zz+HQL1WW7ET90mDx7+7HZL3U6ApxiEyMKuwYf21cbktoxSXC
+         tkBeaqRUglM5s/xFOm/jIOk55rBzR7Z6X4EY/CSzTStSkV98wpluI3La1RQuzRkO8YOh
+         vC23NJBDSUuuLtspa8Ds3sxrUXCitM+kTMhXAHBDFa7+KjJ3r4nDorqD/ct3BtdVAfnJ
+         zYvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725651993; x=1726256793;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1t1A0Fv5jfIbdu5SYL/DVcAH9CI/7kXlCBnYJscFfnY=;
-        b=h5MWTcLQk5SN1kp4732fcLwf6533i/Q5rXO9VstpZBqWr4ack2tIxzgyMWTJVwcQBs
-         4gpT4tnLqBtLsx6XKhKYrak7WI3Lt9VgsG/QqeLUaYM1JYaSj3ERgDTONQRM+eb9eKtK
-         YJLn+TK2vNpeTfjjleaHTOHtrHqaupDlKi0ldoaxzmTFFDKlZZDPYfmjTLWnM8fZMpjl
-         UOZFTZRN2h4zBywc7F0+fmw2lip5EvYEHeeH+nHmUwmFsiKKa2tIxS8om2UZAx3QJqjo
-         wIQxS0yQ25/Rr1/mCI09J8Q1+AKivj29VKEYMpCUx1XpamLTUqjf0xm9Di/PQ6bVyAf5
-         +LYA==
-X-Gm-Message-State: AOJu0YyQpV6bmwgVx1p2PAu+BnkZyMu/YIXzhpqzd+jFWqL8QWYW+vjk
-	XpjC8UN6XiitEuZB6oQ29OEXhIMYpZA0A55i17dljtmr8eNvrqqad81PUAvI6iWHOAwdDG8n7yP
-	s2jE=
-X-Google-Smtp-Source: AGHT+IH1HxdMko5kRgIbHRnLJ4XxDLy09W2exZKnOAeufhVxb4iOi0TRAWkuOkhcgL+mcp6mFmrfhw==
-X-Received: by 2002:a05:690c:760a:b0:6b7:f467:e0f5 with SMTP id 00721157ae682-6db442bb283mr29950557b3.9.1725651992796;
-        Fri, 06 Sep 2024 12:46:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6db5631a093sm1154197b3.22.2024.09.06.12.46.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 12:46:32 -0700 (PDT)
-Date: Fri, 6 Sep 2024 15:46:31 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 9/9] csum-file.c: use fast SHA-1 implementation when
- available
-Message-ID: <4018261366fe2de2def2ec6093ccfb51ef768a7b.1725651952.git.me@ttaylorr.com>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1725651952.git.me@ttaylorr.com>
+        d=1e100.net; s=20230601; t=1725652024; x=1726256824;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9sqMyXOTkyOWJsMEj09nitgToOVOhsNKT9RDuiXqQaA=;
+        b=hdUmCwmKBZOnG1exkSD1I6975F/j5pyxpYbhJtaDlrvqK0cU5YFgEcO6/iYrq2BqrT
+         5D9pCzdheHQqaKBEO3xGob6sCViqKqzpmDHjLKAIoUR6v9HU3Wje/X9FRpmpebw79zCC
+         knEVKt2LhuyHXAAXH5njlP+gGh15HS25nkIu68dBpFdMzdGvPqXBGkAEcDcrKobNNz2E
+         haWqGdAXnSgWvp+rvAHiQW9acbKmZwb/stUOZXJrGW86tei0n9NiVYTtOYJRe8A84lj+
+         5VJbDx/tqnR8NZC4ujUyvbXDmDq58KXg+VIoLwEmZW6xUFGrpOVv00z+n5hG51710dz+
+         5YEA==
+X-Gm-Message-State: AOJu0Yy33WdF227Kd52Wp9EcA3c5Cwn3V32M5YnFonbTj/sVH/3AdKJj
+	aieYwNXqgxx5Jnxr9J1FWOTHcCkb8TWHNWh+0PUpIEdF7Rb+/oOBSTThig==
+X-Google-Smtp-Source: AGHT+IEVKtQ47Z5bbN5yfMmLBF3qm4tARNC59Ag4MqxDGehMIO+U7A+gOWyrXDu4AVKJs55WgsXsVQ==
+X-Received: by 2002:a17:90a:d143:b0:2d8:905e:d25b with SMTP id 98e67ed59e1d1-2dad4ef223emr4372606a91.9.1725652023625;
+        Fri, 06 Sep 2024 12:47:03 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d? ([2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dadc0a7c9dsm2005973a91.49.2024.09.06.12.47.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 12:47:03 -0700 (PDT)
+Message-ID: <a60b6cda-6f55-4133-9b26-5475e20cc839@gmail.com>
+Date: Fri, 6 Sep 2024 15:47:01 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1725651952.git.me@ttaylorr.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] advice: recommend GIT_ADVICE=0 for tools
+To: Eric Sunshine <sunshine@sunshineco.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+ ps@pks.im, james@jamesliu.io, Jeff King <peff@peff.net>,
+ Gabor Gombas <gombasgg@gmail.com>
+References: <pull.1781.git.1725559154387.gitgitgadget@gmail.com>
+ <CAPig+cSGry+QMpkkiJb8A94w1M+J_5beEKaT-xrGeL34xME4hA@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAPig+cSGry+QMpkkiJb8A94w1M+J_5beEKaT-xrGeL34xME4hA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Update hashwrite() and friends to use the fast_-variants of hashing
-functions, calling for e.g., "the_hash_algo->fast_update_fn()" instead
-of "the_hash_algo->update_fn()".
+On 9/5/24 2:02 PM, Eric Sunshine wrote:
+> On Thu, Sep 5, 2024 at 1:59 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> The GIT_ADVICE environment variable was added implicitly in b79deeb5544
+>> (advice: add --no-advice global option, 2024-05-03) but was not
+>> documented. Add documentation to show that it is an option for tools
+>> that want to disable these messages. Make note that while the
+>> --no-advice option exists, older Git versions will fail to parse that
+>> option. The environment variable presents a way to change the behavior
+>> of Git versions that understand it without disrupting older versions.
+>>
+>> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+>> ---
+>> diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+>> @@ -1,8 +1,12 @@
+>>   advice.*::
+>>          These variables control various optional help messages designed to
+>> -       aid new users.  When left unconfigured, Git will give the message
+>> -       alongside instructions on how to squelch it.  You can tell Git
+>> -       that you do not need the help message by setting these to `false`:
+>> +       aid new users. These are output to `stderr` by default as they are
+>> +       intended to help human readers. Tools that execute Git as a subprocess
+>> +       can disable these messages by setting `GIT_ACVICE=0` in the environment.
+> 
+> s/GIT_ACVICE/GIT_ADVICE/
 
-These callers only use the_hash_algo to produce a checksum, which we
-depend on for data integrity, but not for cryptographic purposes, so
-these callers are safe to use the fast (and potentially non-collision
-detecting) SHA-1 implementation.
+Thank you for catching my typo!
+-Stolee
 
-To time this, I took a freshly packed copy of linux.git, and ran the
-following with and without the OPENSSL_SHA1_FAST=1 build-knob. Both
-versions were compiled with -O3:
-
-    $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
-    $ valgrind --tool=callgrind ~/src/git/git-pack-objects \
-        --revs --stdout --all-progress --use-bitmap-index <in >/dev/null
-
-Without OPENSSL_SHA1_FAST=1 (that is, using the collision-detecting
-SHA-1 implementation for both cryptographic and non-cryptographic
-purposes), we spend a significant amount of our instruction count in
-hashwrite():
-
-    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-    159,998,868,413 (79.42%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
-
-, and the resulting "clone" takes 19.219 seconds of wall clock time,
-18.94 seconds of user time and 0.28 seconds of system time.
-
-Compiling with OPENSSL_SHA1_FAST=1, we spend ~60% fewer instructions in
-hashwrite():
-
-    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-     59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
-
-, and generate the resulting "clone" much faster, in only 11.597 seconds
-of wall time, 11.37 seconds of user time, and 0.23 seconds of system
-time, for a ~40% speed-up.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- csum-file.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/csum-file.c b/csum-file.c
-index bf82ad8f9f5..cb8c39ecf3a 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -50,7 +50,7 @@ void hashflush(struct hashfile *f)
- 
- 	if (offset) {
- 		if (!f->skip_hash)
--			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
-+			the_hash_algo->fast_update_fn(&f->ctx, f->buffer, offset);
- 		flush(f, f->buffer, offset);
- 		f->offset = 0;
- 	}
-@@ -73,7 +73,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 	if (f->skip_hash)
- 		hashclr(f->buffer, the_repository->hash_algo);
- 	else
--		the_hash_algo->final_fn(f->buffer, &f->ctx);
-+		the_hash_algo->fast_final_fn(f->buffer, &f->ctx);
- 
- 	if (result)
- 		hashcpy(result, f->buffer, the_repository->hash_algo);
-@@ -128,7 +128,7 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- 			 * f->offset is necessarily zero.
- 			 */
- 			if (!f->skip_hash)
--				the_hash_algo->update_fn(&f->ctx, buf, nr);
-+				the_hash_algo->fast_update_fn(&f->ctx, buf, nr);
- 			flush(f, buf, nr);
- 		} else {
- 			/*
-@@ -174,7 +174,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	f->name = name;
- 	f->do_crc = 0;
- 	f->skip_hash = 0;
--	the_hash_algo->init_fn(&f->ctx);
-+	the_hash_algo->fast_init_fn(&f->ctx);
- 
- 	f->buffer_len = buffer_len;
- 	f->buffer = xmalloc(buffer_len);
-@@ -208,7 +208,7 @@ void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpo
- {
- 	hashflush(f);
- 	checkpoint->offset = f->total;
--	the_hash_algo->clone_fn(&checkpoint->ctx, &f->ctx);
-+	the_hash_algo->fast_clone_fn(&checkpoint->ctx, &f->ctx);
- }
- 
- int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
-@@ -219,7 +219,7 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
- 	    lseek(f->fd, offset, SEEK_SET) != offset)
- 		return -1;
- 	f->total = offset;
--	the_hash_algo->clone_fn(&f->ctx, &checkpoint->ctx);
-+	the_hash_algo->fast_clone_fn(&f->ctx, &checkpoint->ctx);
- 	f->offset = 0; /* hashflush() was called in checkpoint */
- 	return 0;
- }
-@@ -245,9 +245,9 @@ int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
- 	if (total_len < the_hash_algo->rawsz)
- 		return 0; /* say "too short"? */
- 
--	the_hash_algo->init_fn(&ctx);
--	the_hash_algo->update_fn(&ctx, data, data_len);
--	the_hash_algo->final_fn(got, &ctx);
-+	the_hash_algo->fast_init_fn(&ctx);
-+	the_hash_algo->fast_update_fn(&ctx, data, data_len);
-+	the_hash_algo->fast_final_fn(got, &ctx);
- 
- 	return hasheq(got, data + data_len, the_repository->hash_algo);
- }
--- 
-2.46.0.430.gca674632b70
