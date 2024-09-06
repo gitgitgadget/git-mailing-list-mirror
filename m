@@ -1,95 +1,110 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52EC374F1
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 15:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ECC156880
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 16:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725637796; cv=none; b=s1TwoZirkNzpFPdoksrL14qz6BJFwIRcdM5WkAoaa808+Z3sIJlQ1RZ/X5SP2RVbClJipjWP82GKbOnYXQZh7yma6PmXftV8vL0BwOaKPpoUUqQtGo95UsDo5SDF/hz/Kvzl5dwqn/VdWYJpDUIio5H7vzjxSOY0cZGzJ+Bn0Sk=
+	t=1725639044; cv=none; b=FO/+wIgBBC26uWkVP16uyH7yzVpm3cvhnW1KvWlAITPZY/Zu0N7CPuFubx7SNDwJmF//YnYhltaaKZ+kmpIMiMp+5RIOOC+W96a9zr9DWo9SoM5C0bnwteaL7mg4/VBS3yCMEryN1ufrlrNLFlJFpClcrG5JYYa+ND+wb6+q424=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725637796; c=relaxed/simple;
-	bh=+139RIV4Z6k9hPtY137pohymFPPNOteDXnVQlIU4RFI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SE2XyxBL6XadLpK+ptzIGdX6l25OAx2JeGZ2oUzPnCTwXEJBQfwVooVf3ECThEKgVORyRQfBlCcBmdM2FD7fxkayWyHhAuzRjNlq5jC1kFWj44htLXgUOwoTiq9AcudMVhypYPWO+yFre6w+pM4hElawFVpdXCYbKnwo6FM/k+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5VQ9ZGR; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725639044; c=relaxed/simple;
+	bh=NPUDJb9lA/xh0q6TydBiTZ9P8qzBFOqIXcV6AQpxXIE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nR6yUOpWxmpPyTx2T1CyNahBSfjPYIQMdfMAPLp44M6nPbBI1xXz5tZ8W92bxvxeFvtXM5WYpYUpQZVTlAdkDZskjwV4cTBYwEbzJQ6zpi5+gkBcMvRpYp134QRFju3rbEhAMBI5Fio7LYTvf7aYhagTiQBKXr/sPk1LJfCUOrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jOx+qqaX; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5VQ9ZGR"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2068acc8a4fso22923455ad.1
-        for <git@vger.kernel.org>; Fri, 06 Sep 2024 08:49:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725637795; x=1726242595; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uel/b73RvmyUiuHBpFcOFNhMBlLOscitE4YNSYCdONE=;
-        b=F5VQ9ZGR4N2Zwz3xPRA4DsMa1+ONCXWEmEZsnZUeIMlbn9riVqFaRY3lBh6NX5bROV
-         /aRLputMJiCqCuiKGEegm5LkpNLeJ78lw99HLxSXyEFrEsazvAgJcR1pCbrg4hlbteiQ
-         Ss2VZSmBxB9ugqEVlREL7NWhUNRNWFHZEodJBsAXQZBnnNIDX3HI/Mt/3V0gjISx5y8f
-         sSyGC27i56OG9tv0gl3qkDsW0eTkrZL76dxYRk3xC9IPlR1CN42sKIi29w40p8Ne9Reu
-         qiW9a5RbAvUNk74/YHFMOboFBizUigDIzu3YRojQXFQk0mFtoIbnT2DIYmirjUUXWhmX
-         qIKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725637795; x=1726242595;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uel/b73RvmyUiuHBpFcOFNhMBlLOscitE4YNSYCdONE=;
-        b=GnmWpbTf1Bu5SiWvFRNflcYjNTK4P0yjdDEvkU3m8HuP+TBKGI9JsT8o47Bjv9T6Zf
-         Gsi8n7HVzLDGULTjmfpkyghD0/Jz5p9Jc28k+6Sz8q1NpuTZE7wvGD4ps6FqAVS5tBSu
-         Kd88CszJTYkzm/IUrzQ4QqEt33K6c43dKiybRQhLvU1vxP0RDdRy6043zpDq3S8Vwfc+
-         73XbJXJGuGJln1a23wh76+pMvAZ3K5HNEqc+LaTroTY3cwK7mVKe/98jdx3h8wj0SciP
-         jyzde20/4GZq2kcpzsnYnzxLFNpfLFqxcActb2P07uLPUCaK4FT1KpCHsS8HlDjI1cSN
-         CW1Q==
-X-Gm-Message-State: AOJu0YyyJaTxiVKVM7uiss0JOmEGPeC3kzF3mJJr2sZLSUGKnznWcJr9
-	soIXE4ITLusQ3fhIMCNauhmqp+iQ+PmRIvDVswt1MqTSZO4Beuk9B4Kl3Q==
-X-Google-Smtp-Source: AGHT+IE96K1gsxe1U5dHRo/RunrbYRqQRBbI1ZVu9sCpgUJpihah87pHogG7KnlxkEN+g3JKgnpm5g==
-X-Received: by 2002:a17:902:ec8a:b0:205:5f36:ffb6 with SMTP id d9443c01a7336-20706fa0c57mr3074115ad.38.1725637794855;
-        Fri, 06 Sep 2024 08:49:54 -0700 (PDT)
-Received: from thunderbird.smith.home (ip70-162-122-51.ph.ph.cox.net. [70.162.122.51])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206b924710dsm41234535ad.108.2024.09.06.08.49.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 08:49:54 -0700 (PDT)
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-	by thunderbird.smith.home (Postfix) with ESMTPS id DDD96196011C;
-	Fri,  6 Sep 2024 08:49:53 -0700 (MST)
-From: Stephen Smith <ishchis2@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Stephen Smith <ishchis2@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jOx+qqaX"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63E9C36478;
+	Fri,  6 Sep 2024 12:10:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=NPUDJb9lA/xh0q6TydBiTZ9P8qzBFOqIXcV6AQ
+	pxXIE=; b=jOx+qqaX5ii0nKOXEEiqUkM7/gJdRlugRjJaQ6HpIOO/SAlSrgm8N2
+	JXf2OgZMbYf8Tnz+e8R63Yvd4p+EfHl6KsuIrAGXfq8BP6xyqwktMQJEefM9ZFNi
+	pmjwTtRDdF5w4pvi/geFL1vEs1hGE37gRU5XcrWAU9mTzptivdQTY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B10236477;
+	Fri,  6 Sep 2024 12:10:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.94.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7ED436476;
+	Fri,  6 Sep 2024 12:10:40 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Stephen Smith <ishchis2@gmail.com>
+Cc: git@vger.kernel.org
 Subject: Re: [PATCH 0/1] Add entry to mailmap file
-Date: Fri, 06 Sep 2024 08:49:53 -0700
-Message-ID: <5909617.DvuYhMxLoT@thunderbird>
-In-Reply-To: <20240906153003.110200-1-ischis2@cox.net>
+In-Reply-To: <5909617.DvuYhMxLoT@thunderbird> (Stephen Smith's message of
+	"Fri, 06 Sep 2024 08:49:53 -0700")
 References: <20240906153003.110200-1-ischis2@cox.net>
+	<5909617.DvuYhMxLoT@thunderbird>
+Date: Fri, 06 Sep 2024 09:10:39 -0700
+Message-ID: <xmqq34mcyd8g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 8FDCBCA0-6C6A-11EF-A54D-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-> From: "Stephen P. Smith" <ishchis2@gmail.com>
-> 
+Stephen Smith <ishchis2@gmail.com> writes:
 
-I don't know why git send-email added this extra From line to the body of the 
-email.  This line is not part of the file that format-patch created.
+>> From: "Stephen P. Smith" <ishchis2@gmail.com>
+>> 
+>
+> I don't know why git send-email added this extra From line to the body of the 
+> email.  This line is not part of the file that format-patch created.
 
-> Cox Communication quit supporting email in May. The accounts were
-> moved to yahoo and I was never able to figure out a way to send an
-> email that the yahoo web interface didn't modifiy in some way or I
-> would have sent this patch from the old address.
-> 
-> I have since closed the account for cox.net.
-> 
-> Stephen P. Smith (1):
->   .mailmap document current address.
-> 
->  .mailmap | 1 +
->  1 file changed, 1 insertion(+)
+Most likely that the author name recorded in the commit object is
+with "P.", but the name your MUA knows you as is without.
 
+In such a case, the command adds what we call "in-body header" to
+override the headers MUA uses (in this case, "From:" that the
+recipient takes the authorship identity from).
 
+As the name with "P." is what you signed-off your commit on the
+"Signed-off-by:" trailer line, it is absolutely the right thing to
+do to override the name MUA knows you as with the in-body header so
+that the author name matches exactly the name used for signing it
+off.  IOW, what you sent is perfectly fine.
 
+For future reference, another header commonly overridden with an
+in-body header is the "Subject:".  In a general discussion that is
+not a review thread of any specific patch, somebody may come up with
+a patch to improve the situtation.  In such a case, your message may
+look like:
+
+    From: A Project Participant <par@tici.pa.nt>
+    Subject: Re: why does git do this?
+    To: git@vger.kernel.org
+    Cc: ...other particpants...
+
+    Hmph, it does sound like a documentation bug.  How about
+    clarifying it this way?
+
+    ---- >8 ----
+    Subject: doc: document the condition under which gostak distims the doshes
+
+    The document does not exactly say when gostak distims the
+    doshes.  Make sure it is clear by updating foo and bar
+    documents.
+
+    Signed-off-by: A Project Particpant <par@tici.pa.nt>
+    ---
+
+The "scissors" mark (horizontal line drawn with "-" with scissors ">8")
+tells the recipient to ignore everything in the body before that line,
+and then we have in-body Subject: header to override the "why does
+git do this?" e-mail subject on the discussion thread with the title
+of the commit.
 
