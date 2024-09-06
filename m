@@ -1,137 +1,159 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451B31B85DC
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725663877; cv=pass; b=gkriMYG6eHOPrhh03HPXSvu5O6uIl9J0HKTRVlm1WpJ+NlDE3xPodO7M4tizwDLvgbrd5w3B96nHI3X94FfYAq49fCSuMsJBq9/a66Sje9WbIOGyT0WaOka7+usjFcOfA8YW8/VwtWEa1Y15jK70JK4ZvuyXCutZHbxHaSLiEMI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725663877; c=relaxed/simple;
-	bh=iKUoRicSz4p6SL7EYioWdlicj390IrttOzia53ybBfc=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=XzMuxECnaS80TLwS9K8fh8DJqHjR3HvxcG5ol3D0cxiZ5NZXdAzdMVukv17UuQyWcAy0fFrFmOjrOt7XItlZHF78bY85uKS2fmelUECLspUMZxuo3J6RJNJb7dZ/X2l+wwM0hsiDq6UAPYUS4g3MbOisY9Ak2ru0WiD0jW+MQkQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mpri.me; spf=pass smtp.mailfrom=mpri.me; dkim=pass (1024-bit key) header.d=mpri.me header.i=marco@mpri.me header.b=f9jnD+tf; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mpri.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mpri.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A213E1B85DC
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725664163; cv=none; b=S9LmJpPPU7Do/lUlda3wwU9QUlTe+uUgHyNUFm3MFlrO6YuHRtIIGfMROzPa8awriVuSqJmGjS9xs+HxSQZAVQOaSkeeaHzTqNrU2wjPJrZgSwNK/wKUOnoNgMatk/VUu09m/QYULyNuPjLO/DNbUEulPqTjjjXXlowHAYQ78Vo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725664163; c=relaxed/simple;
+	bh=iBywSuDSlh151ASiIYl5i5UjOaPh07bBaZem5Fz2UHc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=d5r/xogaAo1Jjm5z1JmUQ4tRsjn/dkTmE0i7nOIFbhQeOsO34OppxdvtBPoPqvZJsmfJJ/AZbmv9fcjz2T1rWZjs3OgI4pc36pb8QF3ldATlPtWUcc5pzXXt7IqYVYV2a5x385YU3et1x7+l/4aNdXXnylVuMz34haKHjOMQ07A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=Eb4oC5vp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ThYttmLx; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mpri.me header.i=marco@mpri.me header.b="f9jnD+tf"
-ARC-Seal: i=1; a=rsa-sha256; t=1725663872; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=XSGuQwibYxbFWhQ8lTFXhwUn9s1ZxpnRKd9EIcQBJ0zm4FqGZSSokg6wzV/wb19l/mfLt3uPe4UE+hYlqMfom6BOn5zH/NOiBU77K4mJud1bq5RlolOnwG2Hm3JEjl/pt3a5x8nHQxJTZ7UAB728B2zkETeCgkg2DC5G0Rpg9YM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1725663872; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=sWuADf7J4XackKB0UguLfkbUYRTN8eA7HA4hKuLSPc0=; 
-	b=gzrQgNEiH6sI1dyPWZje5u0y5WtM3GJUT8ES0Dy2RR5S7l2srLqil/ZGmYzfquaMi1Tj7fOxdOP44wMwwJNlorcdosp4vAIelDskrauO3KK9JP0B5EU7e8IzFZm46mIGNMH/fFQsiOSPiq7NmJzO6z6Pd4DCiOiE8i94o3ovaU0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=mpri.me;
-	spf=pass  smtp.mailfrom=marco@mpri.me;
-	dmarc=pass header.from=<marco@mpri.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1725663872;
-	s=zoho; d=mpri.me; i=marco@mpri.me;
-	h=From:From:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Subject:Message-Id:Message-Id:Date:Date:To:To:Reply-To:Cc;
-	bh=sWuADf7J4XackKB0UguLfkbUYRTN8eA7HA4hKuLSPc0=;
-	b=f9jnD+tfcbsqGBCNuJpObTL9j7vw0lZ353nhFHlPFHYH4i0WfZ+Z5MUnu7hTXJ2x
-	YelfNo/BgGeXi7977q4fAc4+KyK+PRCQ8zC5f8QKyezVn2dqKHOKY6ppflQCiJrdk1W
-	0j3B513fOD7IVZOZonjHydNTzhtxW/g+7FoJ1KX0=
-Received: by mx.zohomail.com with SMTPS id 1725663870782971.3220020448241;
-	Fri, 6 Sep 2024 16:04:30 -0700 (PDT)
-From: "Marco P." <marco@mpri.me>
+	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="Eb4oC5vp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ThYttmLx"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A192F11401D0;
+	Fri,  6 Sep 2024 19:09:20 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Fri, 06 Sep 2024 19:09:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1725664160; x=1725750560; bh=+/TuIO3AnL8a918nAJ0maKbSuoYAh5b0
+	w0Y51kuULJA=; b=Eb4oC5vp+vwsWxaofJiNsB+wr/2ZkCBFH1c9A+b988dPNist
+	QJyobrIGaQFy2+3i5bhgQ6m0+gsM69pOvC/1UmxACpr2I0hZ/e57sK5oT46nBtyR
+	Cwqtw202N7DyPiFukdSz1zF4OCkVsKmMv3rz7ovKM62r/VP9Cv6XIc01hharp+3K
+	w/Err/x9+oupA811lqwGcf6CwAhUPQDYEqdy5QpDtMveO/+4xWLNChxeCckV9Vd3
+	cQgCNeY2/cayAsiahWwjmago2+jf+x0RQSYKoc/gv63TLKTEqQunM79jaQo6WM2F
+	lBkvLpBNe+djTIVORAwJG0Gq/ivnpr0mYR71xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725664160; x=
+	1725750560; bh=+/TuIO3AnL8a918nAJ0maKbSuoYAh5b0w0Y51kuULJA=; b=T
+	hYttmLxp/NinZr71aFHISqQp48bmtSICN2Yb0W8fAgldMDU4PuUQ79CCA9k8LA0t
+	UMpDig4GZt6FbHrN6Hv9OnK8lT7CnQxFYRYVe9Qk66P8KqQytGOzow8+2+yOm5qa
+	mEWdXB9KLDwAkVETRH0Khtc6kKrBwYd8IyGZfB4k/k+PcLoWWg4GyoW6heM6HbDv
+	c5QwUaXqmqP+PL2YRfURL76vl84GZ9n3RnORZ6obMB8C5vy9Ii9BTxYxIe62+lbe
+	zU6soaDNeMuRu/lJq/jbuIfj0i44m/uH1RW4lYTBuzrnWspgWVjAh0HCP0ucuSew
+	wdAKLVlVu3UKSVYo70Osg==
+X-ME-Sender: <xms:oIvbZpyOUGuxXdnHmJUS3LRzPQ_d3_Q8MQsRS8sE4Do4wjcWz16yrA>
+    <xme:oIvbZpT8Mhla8D4OG1vW5VaoI3QFq0RNjzgB7ul8N67fYtGHhW5yh3GxTHXnPl3Fs
+    nIYOagVX8PnREm_>
+X-ME-Received: <xmr:oIvbZjXbcrHsN94UbfzGrKvvPLcu0Iwdt4KubSbsbAd4Er06Y7pDxEHIeqfrBo0Caw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeivddgudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhf
+    gjffevgffkfhfvofesthhqmhdthhdtjeenucfhrhhomhepuehrohhokhgvucfmuhhhlhhm
+    rghnnhcuoegsrhhoohhkvgesrghltghhvghmihhsthhsrdhioheqnecuggftrfgrthhtvg
+    hrnhepleevieffgeevgfeileduveeuudekhffgteegvdefhfehhfevffdvffdugfehtedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghroh
+    hokhgvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:oIvbZrhfmA4MUX50s-P6fBxxsyl6PzJaRunZabDhQfKGJSCI-AYqmQ>
+    <xmx:oIvbZrDVwyYaEjvPoiIuok6It-hH7WpDZ6UCHz6-WHYjXeoH1ZGu4g>
+    <xmx:oIvbZkK4hJL1u1JZ1wMJnoKKFau27yIIV2remEB25z2r67YREYHACQ>
+    <xmx:oIvbZqBRgysH3ISHId-23XV6rAf_MeyqqV-prBpafuSlUVJFmRVDhA>
+    <xmx:oIvbZuPoMZCpDyEbAVf2GeQeB3R1k5155hwOCHD0z0Y1_g2X8e35MPs8>
+Feedback-ID: i78e840cc:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Sep 2024 19:09:19 -0400 (EDT)
 Content-Type: text/plain;
 	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Behavior change for git diff --cached --exit-code in git 2.46.0
-Message-Id: <646EB2F8-53B3-4B24-90E0-09A71DD4445F@mpri.me>
-Date: Fri, 6 Sep 2024 16:04:19 -0700
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.600.62)
-X-ZohoMailClient: External
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: Re: Fix issue with formatting multiple trailer keys
+From: Brooke Kuhlmann <brooke@alchemists.io>
+In-Reply-To: <20240906223402.GA1221600@coredump.intra.peff.net>
+Date: Fri, 6 Sep 2024 17:09:08 -0600
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5A3FD50B-46F1-4000-8AAD-895A4CB4F33F@alchemists.io>
+References: <EF5AE27D-B7CE-4337-B928-6073837218CA@alchemists.io>
+ <20240906223402.GA1221600@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3776.700.51)
 
-I noticed a change of behavior when upgrading from 2.45.2 to 2.46.0.
-You can decide whether this is a regression or an improvement.
-I thought I=E2=80=99d say something just in case. Don=E2=80=99t shoot =
-the messenger!
+Use of a custom separator is a nifty trick. Thanks. A little unintuitive =
+but works. Definitely would be neat if you patch this to work without =
+the custom separator, though.
 
+Thanks for the help. Will look forward to picking up the next patched =
+version of Git.
 
-
-Overview:
-The --summary option to `git diff --cached` seems to override the =
---exit-code option in 2.46.0 such that this is no longer true:
-
->  --exit-code
->    Make the program exit with codes similar to diff(1). That is, it =
-exits with 1 if there were differences and 0 means no differences.
-
-You can reproduce yourself by staging something, then trying the 4 =
-combinations of:
- - With and without --summary
- -  2.45.2 and 2.46.0
-
-You will see that with 2.46.0 + --summary flag =3D>  exit code is always =
-0.
-This is different from 2.45.3 where --exit-code influences sets the exit =
-code regardless of --summary
-
-
-More context:
-
-I have a scheduled script that daily updates submodules.
-The logic is:
-
-```bash
-git submodule update --init --remote --checkout
-git add path/to/submodule
-if git diff --cached --exit-code --summary;
-then
-  # Nothing to commit
-else
-  # Create commit and push=20
-fi
-```
-
-This has been working for a while, most recently with git 2.45.2.
-After updating to 2.46.0, it stopped working.
-It would _always_ think there=E2=80=99s "nothing to commit", even when =
-the submodule did have new commits.
-
-After investigating, I discovered that the --summary option seems to =
-override the --exit-code option.
-i.e. if --summary is present, then the exit code is always 0, and not 1 =
-if there are staged changed (as I=E2=80=99d expect from --exit-code =
-manual entry)
-
-This is not limited to submodules, the behavior is the same for regular =
-staged files, e.g.:
-
-```
-# Stage a file:
-$ git add debug.md
-
-# Diff with 2.45.2 prints summary and exits with 1:
-$ git diff --cached --exit-code --summary ; echo $?
- create mode 100644 debug.md
-1
-
-# Diff with 2.46.0 prints summary and exits with 0:
-$ git-2.46.0 diff --cached --exit-code --summary ; echo $?
- create mode 100644 debug.md
-0
-```
-
-I fixed my script by dropping the --summary option.
-But maybe this behavior change was unintended and not covered by tests, =
-in which case you may want to treat this as a bug report.
-
-Taking this chance to thank you for reading and for maintaining git. I =
-don=E2=80=99t know what I=E2=80=99d do without it!
-
-Cheers,
-M=E2=80=99
-
+> On Sep 6, 2024, at 4:34=E2=80=AFPM, Jeff King <peff@peff.net> wrote:
+>=20
+> On Fri, Sep 06, 2024 at 01:55:46PM -0600, Brooke Kuhlmann wrote:
+>=20
+>> ```=20
+>> git tag --list \
+>>        --format=3D"%(refname:short) %(taggerdate:short) %(taggername) =
+%(subject) %(trailers:key=3DFiles) %(trailers:key=3DDuration)"
+>> ```
+>>=20
+>> ...I get this output:
+>>=20
+>> 0.0.0 2024-09-06 Brooke Kuhlmann Version 0.0.0 Files: 1
+>> Duration: 1
+>> Files: 1
+>> Duration: 1
+>>=20
+>> 0.0.1 2024-09-06 Brooke Kuhlmann Version 0.0.1 Files: 1
+>> Duration: 1
+>> Files: 1
+>> Duration: 1
+>>=20
+>> Notice, when logging trailer information for commits and tags, I get
+>> unexpected new line characters showing up in the output. I expect to
+>> see all information printed on the same line without any new lines
+>> showing up.
+>>=20
+>> Also, I want to point out that when listing tag trailers, I get the
+>> "Duration" key showing up twice. I'm not sure if that's related or =
+not
+>> but seems like very weird behavior.
+>=20
+> There are two things going on here:
+>=20
+>  1. Some of the trailer options are stored in a global, rather than a
+>     per-placeholder basis. This includes the list of keys to show. So
+>     you basically end up with a filter list that includes _both_ keys,
+>     and that list is used for both %(trailers) items.
+>=20
+>     IMHO this is a bug, and I have a patch (which I'll send along with
+>     the one I mentioned in the other thread) to fix it.
+>=20
+>     In the meantime you can work around it by specifying both keys in
+>     a single invocation, like:
+>=20
+>       %(trailers:key=3DFiles,key=3DDuration)
+>=20
+>     Obviously that doesn't work if you don't want them adjacent in the
+>     final output.
+>=20
+>  2. By default, each trailer is terminated with a newline. But you can
+>     specify your own separator, like so:
+>=20
+>       %(trailers:key=3DFiles,key=3DDuration,separator=3D )
+>=20
+>     See the documentation for the trailers placeholder in "git help
+>     log". Depending on your trailers, "valueonly" might also be useful
+>     for this kind of formatting.
+>=20
+> -Peff
 
 
