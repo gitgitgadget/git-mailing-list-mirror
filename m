@@ -1,53 +1,53 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28D881745
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 10:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25951CB139
+	for <git@vger.kernel.org>; Fri,  6 Sep 2024 10:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725619614; cv=none; b=PJ9cOyuBb5VxbvwlYABj5X5Kli2ByPcg23w+XrRckXmMk75J5DIvPSxXdLrME3iyBbFaniULgkPzXbl3R1hXaiaKkDC1HsVSwv+y9CxMXcq0IyvbKuDk8cJii5AsRKUA8/SF864P6hAeH11NkWY8Hoa+HaHCBrwFftcC4mjQvRo=
+	t=1725619617; cv=none; b=i/NXUnHbJ8NVj5VqbyhXnrIPbyv6Iyz4XCb4hceD+UWTdqkNdA8LfLjf2RdWR7YqIIJe6P2QVXaNLXKiwn61O/65rInLr1SH4mlQD/1u+k6iHUEXNHFvwAG8RDS8pH+v5DtNRZoWpQH/lwXI/FXKYBbOitpIX9/SB6xwdN55GRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725619614; c=relaxed/simple;
-	bh=3FgJO89iHBwrA420Fd8o6XQhIywNQZBIVFVlSO0r+Bc=;
+	s=arc-20240116; t=1725619617; c=relaxed/simple;
+	bh=kQ5+LNl7HZZqr2R9N8fo/yU8TEH/By1ZzdrrNZuB/MU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HMMJgr+ipifzEC2ROVPk6g8dJocotyHDMskK2y8dXw/DmG144Nm7lW69DRR9eDBQntoQ+tDmsseuM78q2RBQseryzZLM6jyl/k9dtWmrwaHxo/aDED4HOjxOCTow+1PmbuRKd2HiQrAR1Hbb1of3PTO6DN5uwN3nnIY9xAxVybU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9FGV5Xa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nl3qElIW; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=nktZdMIxdhtRtJX5spw8UPH2puxyGvOSDFS0tOmxHIA9POhq7Eu2tuvcs+B6qhNRve4/hRJTRsH7tC7nTZ170OMLoQ8di0LicJrbTxq3pNEnoHMsW/dlHwX8dR3uWZMxkoLhokivxhnDzF61dJZKJiJKTudHycBoJ+uODRyBBMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MitADR7A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mhkJQA11; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9FGV5Xa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nl3qElIW"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B26F0114032E;
-	Fri,  6 Sep 2024 06:46:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MitADR7A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mhkJQA11"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id D09E113801D0;
+	Fri,  6 Sep 2024 06:46:54 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Sep 2024 06:46:51 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 06 Sep 2024 06:46:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725619611; x=1725706011; bh=SIcRaLgK7d
-	m5qibFpy7j+hhe/NVjFq+677j30okXuu8=; b=L9FGV5Xah2tkYdlNPIEj13tRfd
-	fDiagCvAiHYm36Knu1m+cz7hlwpOGPZxd2McccqOvs/QNr4lvSUbRoVP9jqmM3rQ
-	aExROWhVbwIClcoNZqp08K0GrIZ66Dqw/O1lP9/ZNF2l63T92ue+NKTA/WsKO51m
-	KOA1gWSr0WhTBJP6sK7CDKMspmlEbLGcmRUD3SKLMVcVY7XkEJeI+Ssc1ieQsSNf
-	Rl/RC6Jgt+g4iGvrQaMyfrNf3d/oKkhDVcyZ8bSGIur5PImLPxMkVKQ68tycxLgD
-	vfFMQpEmDHaB4/9nv5WvLAF45v6gEXdT/zDmHuBbqBMuPLD/MamHqVZEL7+g==
+	:subject:to:to; s=fm1; t=1725619614; x=1725706014; bh=eacSA0hm65
+	cnc4RsVho2GBI9qUyY1tqBWq3aqGFX1oE=; b=MitADR7AcHP5dl2Gmq2w9e5Q48
+	AQDpdaGZxR/q29O6cyY3pyV6UW/IrFZMQmeWi5rprbFMrgpvTHhm2S9Iq/8u74SI
+	pNPN3khQbGxIBZem6nvQD2+P9GoJcC9J8shtjG79f+Z1siQeFgC36+v/5gFUPlaK
+	7vAeOXaq9hQe125uvnVNdNhADMHSxVb29ihOaV2PFbo9ys9VQfS+seTkCCmG7E6s
+	CAOiRZdRVW7dnfRRJ0I8DBVSHi+PpJNNZggOj6tjSCvoPelLr5Rcw0JHol9Bw7Px
+	kN5GTWFzUrNnZu1tft2/OtnM3svjLtCyc2xT+ZWIpZFUL8H1PanIEdUNYhLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725619611; x=1725706011; bh=SIcRaLgK7dm5qibFpy7j+hhe/NVj
-	Fq+677j30okXuu8=; b=nl3qElIWrNP/vcsPRfqtHTapx3umWG70hpi33QcqAcG4
-	2JLLi2n323F6hmetXRGVsPZyf5TnIw/ADXdUn2ZV9gvj32bPP1UIRGcgTpKiTbuG
-	YxAnHlCTYydf3WpYfBnsod2woQobRQ9KTcBOhpnQ4irl0gqUkFgXjHSkcjXossR6
-	0FU3xJ/uKZM89M92GkUq3g0/UG2GH4BNqx2BBFc5rjyFFbs+cVnFUcrLeGIvvtN3
-	9tZeGquaIyYcYeuKy61d1eNhFSga5V9UZvC3uEpPOfxJYCUnEEsTa3cbj4LD0mS5
-	78TEGg52MuaROd3LQbcag3djyyyGKQOlNDahw0HDbQ==
-X-ME-Sender: <xms:m93aZvobYbVEcY1T3SJ_uony1RSASzGz8HlEFJgwIGN0TStOggKVuA>
-    <xme:m93aZpqh6VeVSMPS1Uf2nNVUSpHM1_n8_UshUnI4z_7ncBOdemMoAQz3Quvu8VuA9
-    OP522yuSxLGC4BMlA>
-X-ME-Received: <xmr:m93aZsOCAtMBO_6zr8WzEglRx7TbpiTKq8vKG3RO8U84FEQxxB5E2_iIz5IVSkUr6l_sMQgZnxO7Z4x5Z_rWWNUMwWU80_uDGQkcQIDNrUMq>
+	fm1; t=1725619614; x=1725706014; bh=eacSA0hm65cnc4RsVho2GBI9qUyY
+	1tqBWq3aqGFX1oE=; b=mhkJQA117EKMJNf/CkpqQJHkwpXy8frL/WYdm1k3BKNR
+	5SA8e7CpCF/j1lsy00s/v2Md9tehmW/qK6QrGbkUmZDf+mUQqYazgiFqdb1cnPPq
+	qWYebt+YJBym4tIcn1HiOUGFHwGWAz/iS0EYLZ0/yo/gl2Wv1CRMP6LIlPJz6eFC
+	V58JhTAdO37qR+EqaKopLavhhv6fndzyO4jGG8i26BkXw1BtydQRJGlpPpCrb7rq
+	qRBtn1dQeeQm23HdlWBcBHqQHrcQaOgTJfhgZmWwDDcLTa5ZrJ/p1Jsh44juL0Sd
+	Ubz7oYk9K6x6p+msVUDfe7tIBxFBgzFyjDC+nu1ZyA==
+X-ME-Sender: <xms:nt3aZnXadoPwDjiczDhyASg1QTTI8RC3hgwGMrvvLqDT5LHl5EIukQ>
+    <xme:nt3aZvk9suOfdJRuk_e_cZvBNXpBWh_rGbFbhRoGhBSPfdDwbyk_s8i-b7bgKmAmo
+    pCseOia33FaNtNp_A>
+X-ME-Received: <xmr:nt3aZjZxfh3HqbE49uHh4dmTpRhnQuS8nLWRn0cr4XurCDhmKngVyJ8_zlfSLj6IfryIURSXvfnaYiJacP6EaY8jXfZK--zU-CaJpwKZNtWt>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeiuddgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -55,33 +55,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeiuddgfeefucetufdoteggod
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhg
-    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhntggrihekie
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:m93aZi5LNARXWtZFtS6fVlTa-aDwG-cE6EBNxubWeZk8smi0z9c85g>
-    <xmx:m93aZu4aezRnOxDrY__Kd-IHCeJvNj7ypcfNSYMC6-SYsqo7yZuWrQ>
-    <xmx:m93aZqjn6qpHmFMtEzn7INMOsTv7piVM1FCsRLrVmMkNpi5xsa9urQ>
-    <xmx:m93aZg4ko4ODAPLcyM6liMKIeSzO5FSc5ph3Flgiw_ENOARCAMuxBQ>
-    <xmx:m93aZp3mY4hWkWf6bO5_TfKYeM756dvxu7WOwhqEw7XSPCyvZrYgHZk4>
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:nt3aZiUkOJ83JJhL5hNqYfKX9vxnRYyatTS5lE24-tKlMAG9bvzJig>
+    <xmx:nt3aZhlmwN_zMWoC-sPmN5OuZcsGryYs0SreiO1iCjO3LosUPvgH1w>
+    <xmx:nt3aZveKmG7c0eo3R5PuCtP5i_N5ey94LiGeM8GD-9OOeOKgdq80BQ>
+    <xmx:nt3aZrGmHuSQDcShcTMVmhynmcv2JidcmjennXEL7T4Odd5NPc9afQ>
+    <xmx:nt3aZni4VGTjpld5VrtoGlRl2dOiuhUPC2AX8UyEZV4fwbfDYQJH0F-G>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Sep 2024 06:46:50 -0400 (EDT)
+ 6 Sep 2024 06:46:53 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fc914607 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Sep 2024 10:46:37 +0000 (UTC)
-Date: Fri, 6 Sep 2024 12:46:49 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id b36cc478 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Sep 2024 10:46:40 +0000 (UTC)
+Date: Fri, 6 Sep 2024 12:46:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 2/3] builtin: remove USE_THE_REPOSITORY_VARIABLE from
- builtin.h
-Message-ID: <ZtrdmW3R2GvUbOkN@pks.im>
+To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 3/3] add: pass in repo variable instead of global
+ the_repository
+Message-ID: <ZtrdnFjFeWG7asio@pks.im>
 References: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
- <17acc1e054c26b67659df17db828b106c005ffea.1725555468.git.gitgitgadget@gmail.com>
- <xmqqcyli2dnx.fsf@gitster.g>
+ <bc9090469340fe2bead812918d149287dcda5609.1725555468.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,26 +87,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqcyli2dnx.fsf@gitster.g>
+In-Reply-To: <bc9090469340fe2bead812918d149287dcda5609.1725555468.git.gitgitgadget@gmail.com>
 
-On Thu, Sep 05, 2024 at 10:50:10AM -0700, Junio C Hamano wrote:
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > From: John Cai <johncai86@gmail.com>
-> >
-> > Instead of including USE_THE_REPOSITORY_VARIABLE by default on every
-> > builtin, remove it from builtin.h and add it where necessary to
-> > individual builtins/*. The next step will be to migrate each builtin
-> > from having to use the_repository.
-> >
-> > Signed-off-by: John Cai <johncai86@gmail.com>
-> > ---
-> 
-> We at least need the following fix-up in order to play nice with
-> others, specifically Patrick's ps/environ-wo-the-repository, when
-> the topic is merged to 'seen'.
+On Thu, Sep 05, 2024 at 04:57:47PM +0000, John Cai via GitGitGadget wrote:
+> Fr> diff --git a/builtin/add.c b/builtin/add.c
+> index dac832df3e7..a68fd7c8313 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
 
-I was wondering whether there were interactions with this topic. Thanks
-for checking.
+One thing I'm missing in this patch is it getting rid of
+`USE_THE_REPOSITORY_VARIABLE`. Without that change it is impossible to
+see whether we are now free of `the_repository` in this file.
+
+> @@ -36,24 +36,27 @@ static int pathspec_file_nul;
+>  static int include_sparse;
+>  static const char *pathspec_from_file;
+>  
+> -static int chmod_pathspec(struct pathspec *pathspec, char flip, int show_only)
+> +static int chmod_pathspec(struct pathspec *pathspec,
+> +			  char flip,
+> +			  int show_only,
+> +			  struct repository *repo)
+>  {
+
+Nit: We typically tend to pass the repository as first argument. Also
+applies to all the other functions.
+
+> diff --git a/commit.h b/commit.h
+> index 0e5fce543c2..92fef717be1 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -2,6 +2,7 @@
+>  #define COMMIT_H
+>  
+>  #include "object.h"
+> +#include "repository.h"
+>  
+>  struct signature_check;
+>  struct strbuf;
+
+There is no need for the include here, let's instead add a forward
+declaration.
 
 Patrick
