@@ -1,54 +1,54 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B183158A30
-	for <git@vger.kernel.org>; Fri,  6 Sep 2024 23:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06C936B
+	for <git@vger.kernel.org>; Sat,  7 Sep 2024 00:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725667061; cv=none; b=tWRq5e1gw+kcTVyn9uyf+1WFZzXlAk7KTR0TgmS0f5N6Gk9+6GcZaMwLzz7uP4ayCZZhumVMi07v61Qu67GoC8LybD+Woe7E6uh7Thm3MvTpPBEy3dSyOyQqBOM6dzD3DY5wnFygvIk4xksMMTQX0Wg6Y7i7VOzu/Cc/eDHmbhE=
+	t=1725667768; cv=none; b=j2Posb44cjKlMsAB1hJL2YCLaJ2VNouB0mAPzjpqaOAP6BYQweTm02i/Sd7l7n/eqhlXj9ScLEhx8I4OxfPZ/E3yzQj9PSEQhtiVwEJZ12RaA2cB8nyjH4cVEQaCIoPn2OKlzD8QH0U3Z2z/Z+eysr+SSJ4a2aEsZ79VSOkh0NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725667061; c=relaxed/simple;
-	bh=wYZrza4c46koN8cdyKWd4LeDdXXnZgEIo9jHBVPy4Jc=;
+	s=arc-20240116; t=1725667768; c=relaxed/simple;
+	bh=Cera1sGCZFn7AyAaQ4AG5H2mETQ2Vwg+WUNXV3BpDec=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=id/ocDI+mSFy9hgU0BarH30UXrltb8eAFWGRGuMfFUfkkFM3arRuREON+G/rFLNbTfK/pBI4ukFyQWCFzlHagj5HKRIhHugGbL3ECC/XDjUzKv2MeWR400tbOufuVWNMConzxcThkadkpy1BRlsjQ6wnPBmqQseaO8KMdVVCy/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XgRGgwuv; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=YvzqYEVj2cGb1p4ED37/drB1vTD4qjluMSHHjJ8VvIxC67BixFSsrrzZMUj0NsdIRfQN2yClTZXdSNoChugutqdC4rrUhm4iYU95bKtvRB1sniCeWuAJ1qCGz5zjn9VAfjUQNm+SD/YTrDuRGvase6YWpeGru5KD6jt1C6gj0KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DEYA8PEW; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XgRGgwuv"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DEYA8PEW"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 153BF3BDC4;
-	Fri,  6 Sep 2024 19:57:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D364F3BF9F;
+	Fri,  6 Sep 2024 20:09:25 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=wYZrza4c46koN8cdyKWd4LeDdXXnZgEIo9jHBV
-	Py4Jc=; b=XgRGgwuvShjX410ktN5WN3HlD4rZo3G2cdfmyYS67IJI+uMqGUQLGk
-	V4UQn8100QCtOv30livs6kFcs/mT41xQDubYrMcaBcWAt+NeaqNK6bI1eVuN6WQT
-	NsU+UaOpT1XwgGYTYlw9qseji8Ft6zRvMh5FrjMJEu80itEDg2h6U=
+	:content-type; s=sasl; bh=Cera1sGCZFn7AyAaQ4AG5H2mETQ2Vwg+WUNXV3
+	BpDec=; b=DEYA8PEWpSNmLKld0rydcSmwUM35ZzHDOvGau08kKbsmk09kNyPdTZ
+	Bh7+S4gZB4UpP62PE4tQrzTaIH5qGUxx9resicWYBtf7SYpBGG8BWE0z82sE0TUR
+	+TL9lRvT14k6ZaRF16lutOPkxAsCHrq6TQWkbBCSuhNx8ldD4mg58=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFACD3BDC3;
-	Fri,  6 Sep 2024 19:57:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C9F7E3BF9E;
+	Fri,  6 Sep 2024 20:09:25 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.94.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 628693BDC2;
-	Fri,  6 Sep 2024 19:57:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F8683BF9D;
+	Fri,  6 Sep 2024 20:09:25 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [GSoC][PATCH v5 0/7] t: port reftable/stack_test.c to the unit
- testing framework
-In-Reply-To: <xmqqo750wxee.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	06 Sep 2024 09:38:01 -0700")
-References: <20240904150132.11567-1-chandrapratap3519@gmail.com>
-	<20240906113746.8903-1-chandrapratap3519@gmail.com>
-	<xmqqo750wxee.fsf@gitster.g>
-Date: Fri, 06 Sep 2024 16:57:37 -0700
-Message-ID: <xmqq4j6suyha.fsf@gitster.g>
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org,  steadmon@google.com,  spectral@google.com,
+  emilyshaffer@google.com,  emrass@google.com,  rsbecker@nexbridge.com,
+  mh@glandium.org,  sandals@crustytoothpaste.net,  Jason@zx2c4.com,
+  dsimic@manjaro.org
+Subject: Re: [PATCH v3 5/6] libgit: add higher-level libgit crate
+In-Reply-To: <20240906222116.270196-5-calvinwan@google.com> (Calvin Wan's
+	message of "Fri, 6 Sep 2024 22:21:15 +0000")
+References: <20240906221853.257984-1-calvinwan@google.com>
+	<20240906222116.270196-5-calvinwan@google.com>
+Date: Fri, 06 Sep 2024 17:09:24 -0700
+Message-ID: <xmqqv7z8tjd7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,85 +58,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CBAF3AD2-6CAB-11EF-B66B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 710073A6-6CAD-11EF-919F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> Chandra Pratap <chandrapratap3519@gmail.com> writes:
->
->> Changes in v5:
->> - Edit the commit messages in patches 3 and 4 to reflect the changes
->>   and the motivation behind those changes better.
->> - Add newlines after variable declarations in patch 6.
->> - Introduce patch 7 which removes leftover cruft from the previous
->>   reftable testing scheme.
->
-> Hmph, the end-result looks good to me, but the structure of the
-> series is a bit curious.  I didn't expect there will be a separate
-> step for removal.  Shouldn't these "leftover cruft" be removed *in*
-> the same step that they become cruft (which I am assuming is when
-> reftable/stack_test.c and all references to it gets removed in an
-> early part of the series)?
->
-> Other than that, looking good.
->
-> Thanks.
+> diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> index 65d1620d28..07d6bfdd84 100644
+> --- a/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> +++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> @@ -33,6 +33,36 @@ int libgit_parse_maybe_bool(const char *val)
+>  	return git_parse_maybe_bool(val);
+>  }
+>  
+> +struct libgit_config_set *libgit_configset_alloc(void)
+> +{
+> +	return git_configset_alloc();
+> +}
 
-There is another issue.
+git_configset_alloc() returns "struct config_set *" while this thing
+returns an incompatible pointer.  
 
-It is unique to this among the reftable/*_test topics, simply
-because this one happens to be the last and needs to clean up a bit
-more.
+Sent out an outdated version or something?  This wouldn't have
+passed even a compile test, I suspect.
 
-Apparently, GNU "ar" can be invoked without any .o object files and
-happily creates an empty archive, but on BSD may not be that may be
-the case.  macOS CI jobs seem to be hard failing due to this.
 
-You'd need to squeeze in the following, in addition to [7/7], to
-earlier patch(es).
 
-Thanks.
-
- Makefile | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git c/Makefile w/Makefile
-index 64ccb1433f..bdea061971 100644
---- c/Makefile
-+++ w/Makefile
-@@ -912,7 +912,6 @@ TEST_SHELL_PATH = $(SHELL_PATH)
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- REFTABLE_LIB = reftable/libreftable.a
--REFTABLE_TEST_LIB = reftable/libreftable_test.a
- 
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
-@@ -2866,9 +2865,6 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
- $(REFTABLE_LIB): $(REFTABLE_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
--$(REFTABLE_TEST_LIB): $(REFTABLE_TEST_OBJS)
--	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
--
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
- Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
-@@ -3248,7 +3244,7 @@ perf: all
- 
- t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS)) $(UNIT_TEST_DIR)/test-lib.o
- 
--t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
-+t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
- check-sha1:: t/helper/test-tool$X
-@@ -3709,7 +3705,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) git.res
- 	$(RM) $(OBJECTS)
- 	$(RM) headless-git.o
--	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
-+	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
+$ make contrib/libgit-rs/libgit-sys/public_symbol_export.o
+    CC contrib/libgit-rs/libgit-sys/public_symbol_export.o
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_alloc':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:38:16: error: returning 'struct config_set *' from a function with incompatible return type 'struct libgit_config_set *' [-Werror=incompatible-pointer-types]
+   38 |         return git_configset_alloc();
+      |                ^~~~~~~~~~~~~~~~~~~~~
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_clear_and_free':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:43:38: error: passing argument 1 of 'git_configset_clear_and_free' from incompatible pointer type [-Werror=incompatible-pointer-types]
+   43 |         git_configset_clear_and_free(cs);
+      |                                      ^~
+      |                                      |
+      |                                      struct libgit_config_set *
+In file included from contrib/libgit-rs/libgit-sys/public_symbol_export.c:8:
+./config.h:543:54: note: expected 'struct config_set *' but argument is of type 'struct libgit_config_set *'
+  543 | void git_configset_clear_and_free(struct config_set *cs);
+      |                                   ~~~~~~~~~~~~~~~~~~~^~
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_init':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:48:28: error: passing argument 1 of 'git_configset_init' from incompatible pointer type [-Werror=incompatible-pointer-types]
+   48 |         git_configset_init(cs);
+      |                            ^~
+      |                            |
+      |                            struct libgit_config_set *
+./config.h:495:44: note: expected 'struct config_set *' but argument is of type 'struct libgit_config_set *'
+  495 | void git_configset_init(struct config_set *cs);
+      |                         ~~~~~~~~~~~~~~~~~~~^~
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_add_file':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:53:39: error: passing argument 1 of 'git_configset_add_file' from incompatible pointer type [-Werror=incompatible-pointer-types]
+   53 |         return git_configset_add_file(cs, filename);
+      |                                       ^~
+      |                                       |
+      |                                       struct libgit_config_set *
+./config.h:504:47: note: expected 'struct config_set *' but argument is of type 'struct libgit_config_set *'
+  504 | int git_configset_add_file(struct config_set *cs, const char *filename);
+      |                            ~~~~~~~~~~~~~~~~~~~^~
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_get_int':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:58:38: error: passing argument 1 of 'git_configset_get_int' from incompatible pointer type [-Werror=incompatible-pointer-types]
+   58 |         return git_configset_get_int(cs, key, dest);
+      |                                      ^~
+      |                                      |
+      |                                      struct libgit_config_set *
+./config.h:568:46: note: expected 'struct config_set *' but argument is of type 'struct libgit_config_set *'
+  568 | int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
+      |                           ~~~~~~~~~~~~~~~~~~~^~
+contrib/libgit-rs/libgit-sys/public_symbol_export.c: In function 'libgit_configset_get_string':
+contrib/libgit-rs/libgit-sys/public_symbol_export.c:63:41: error: passing argument 1 of 'git_configset_get_string' from incompatible pointer type [-Werror=incompatible-pointer-types]
+   63 |         return git_configset_get_string(cs, key, dest);
+      |                                         ^~
+      |                                         |
+      |                                         struct libgit_config_set *
+./config.h:567:49: note: expected 'struct config_set *' but argument is of type 'struct libgit_config_set *'
+  567 | int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
+      |                              ~~~~~~~~~~~~~~~~~~~^~
+cc1: all warnings being treated as errors
+gmake: *** [Makefile:2802: contrib/libgit-rs/libgit-sys/public_symbol_export.o] Error 1
