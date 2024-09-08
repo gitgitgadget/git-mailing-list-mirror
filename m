@@ -1,191 +1,92 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F1B1366
-	for <git@vger.kernel.org>; Sun,  8 Sep 2024 12:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA32E191
+	for <git@vger.kernel.org>; Sun,  8 Sep 2024 21:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725798097; cv=none; b=MSpLNcGb2XToZJRodHoMs1ZlN/3HCXw1D22zVs4ofMWS3i8O2Eze2RUOEwl7cNwdv5DwYEzwnqjDph7R0va306QkbRn+MDZTBSb90YSBrmZpl2OcctHXb15NpnwUWM/l3Lbp9laZUdyHrqKbfGTK1wRUqRJCAmCbCPtQaxkbQpk=
+	t=1725830190; cv=none; b=RFJsQTRynIKYDSl8CCBxTgLYZr6tQofMqBdWz9kof5rhgZAGZN5YMDzZZLBVcZX+5se7t7xa+l5ZNpPn29QD1YWq/q4s2wpnRxKEqho1mNA0AxN+4Vt7y5QQkQo8Qk3az+Fu1qFLC4pfVwvE9UjIXQoGT2HaaO+266mKuDBHUqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725798097; c=relaxed/simple;
-	bh=NJ1h81uyJC48GDpbN8lkLxykIoAHQO5bm5YczQTqfRM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ECPHZvI/32tbF7F3k3v4yA77iERWYeMrjUY4tj8/As16mw96I2LXZ0NcXWUN9qdi8Zzo3NKqZMVXueSHRyb8PqJq6P1KAVMpM5+A+NLLJWL10aWJPSUfBnoCsF6QEuRhConfxT+79YqZsFVnz4oxTfANtDP55KKZy48hFIHsfTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4X1pwj4lz0zRnlK;
-	Sun,  8 Sep 2024 14:21:24 +0200 (CEST)
-Message-ID: <9c7475c8-a666-4033-a4b1-79819ba7717f@kdbg.org>
-Date: Sun, 8 Sep 2024 14:21:24 +0200
+	s=arc-20240116; t=1725830190; c=relaxed/simple;
+	bh=Py1pFIoiNyYP/i/UhDRCR0crlokEueu6gFBd8qbZJrU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oZ7C+Z+EmiOFnMGdbr1PjcVZctc62mVwB1l4M4YMKYg6LFXoQu1M6kGSP1N6O5Nmk0NIdcTkRU/j7OJCCYsftNtY7Rnat2I8bzZuEiJSdvEDVuRg8dfAtiPNBvWapux0n+LgsEZ/sobhLMYxBa1kowg9ihKi/zVKCXwW6zjbSb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=f5mt12Ne; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f5mt12Ne"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A717631F83;
+	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Py1pFIoiNyYP/i/UhDRCR0crlokEueu6gFBd8q
+	bZJrU=; b=f5mt12Nee2juPuayRGYERK/cJ6yEV1U4pC7c7M4gDzrIiLftE4ujZm
+	tj8DqZZR4U9aaFUGTHdYTKLJEjcNdSMMPhr5OqjQ35K6339+N49Qaga1AOPnVJr4
+	YAp73bIDkid88YJBKVJjoBTVBxB/6DJ3GOW0vgnNoZfm79s913QGU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F11E31F82;
+	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1252B31F81;
+	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org,  blanet <bupt_xingxin@163.com>,  Xing Xin
+ <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH 2/2] remerge-diff: clean up temporary objdir at a
+ central place
+In-Reply-To: <CABPp-BGmeg3x-F2ZjLzqcDYzSMOfz8Q3BDKUtB=vMO90yJRb3A@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 15 Aug 2024 23:19:37 -0700")
+References: <xmqqv8099vms.fsf@gitster.g> <xmqqr0ax9vlk.fsf@gitster.g>
+	<xmqqbk1y8gm1.fsf@gitster.g>
+	<CABPp-BGmeg3x-F2ZjLzqcDYzSMOfz8Q3BDKUtB=vMO90yJRb3A@mail.gmail.com>
+Date: Sun, 08 Sep 2024 14:16:20 -0700
+Message-ID: <xmqqed5tx2vv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] git gui: add directly calling merge tool from
- gitconfig
-To: ToBoMi <tobias.boesch@miele.com>
-Cc: git@vger.kernel.org, ToBoMi via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
- <pull.1773.v3.git.1725607643479.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1773.v3.git.1725607643479.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 98F79D28-6E27-11EF-AEDA-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Am 06.09.24 um 09:27 schrieb ToBoMi via GitGitGadget:
-> From: Tobias Boesch <tobias.boesch@miele.com>
-> 
-> git gui can open a merge tool when conflicts are detected (Right click
-> in the diff of the file with conflicts).
-> The merge tools that are allowed to use are hard coded into git gui.
-> 
-> If one wants to add a new merge tool it has to be added to git gui
-> through a source code change.
-> This is not convenient in comparison to how it works in git (without gui).
-> 
-> git itself has configuration options for a merge tools path and command
-> in the git config.
-> New merge tools can be set up there without a source code change.
-> 
-> Those options are used only by pure git in contrast to git gui. git calls
-> the configured merge tools directly from the config while git Gui doesn't.
-> 
-> With this change git gui can call merge tools configured in the gitconfig
-> directly without a change in git gui source code.
-> It needs a configured merge.tool and a configured mergetool.cmd config
-> entry.
+Elijah Newren <newren@gmail.com> writes:
 
-The configuration is "mergetool.$tool.cmd"!
+>> I forgot to add that I am not happy with this "centralized tear
+>> down" step, even though I am reasonably happy with the "lazy set-up"
+>> step.  I wonder why the remerge-diff related members have to exist
+>> in the rev_info structure in the first place, instead of being in
+>> the diffopt structure?  Moving them to diffopt may make the end
+>> result much more pleasant to read.
+>
+> I'm not sure they need to exist in the rev_info structure.  I was
+> probably thinking that e.g. log --remerge-diff would "need to do lots
+> of diffs" but I only needed the temporary store setup once, and once
+> in my mind matched better with rev_info.  I wasn't aware of
+> diff_options.no_free or anything surrounding it.  If we can do the
+> temporary store setup in diffopt and only do it once for all N diffs
+> in a `git log --remerge-diff` run, then we could move this stuff from
+> rev_info to diffopt.
 
-Personally, I would avoid the words "gitconfig" and "config" (here and
-in the rest of the commit message), neither of which are English.
-"Configuration" would be OK, IMO.
+After staring at the data structure around this area for a while, I
+think these two patches are OK, especially within the current
+structure.  rev_info structure has a set of bits that are marked as
+"Diff flags" (some of which are not about diff at all, though; for
+example, verbose_header and no_commit_id belong more to the "Format
+info" group), and those related to merges do belong there, as they
+need more than "here are two tree-like things I want to compare".
 
-> 
-> gitconfig example:
-> [merge]
-> 	tool = vscode
-> [mergetool "vscode"]
-> 	path = the/path/to/Code.exe
-> 	cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
-> 
-> Without the mergetool.cmd configuration and an unsupported merge.tool
-> entry, git gui behaves mainly as before this change and informs the user
-> about an unsupported merge tool. In addtition it also shows a hint to add
-> a config entry to use the tool as an unsupported tool with degraded
-> support.
-> 
-> If a wrong mergetool.cmd is configured by accident, it gets handled
-> by git gui already. In this case git gui informs the user that the merge
-> tool couldn't be opened. This behavior is preserved by this change and
-> should not change.
-> 
-> "Beyond Compare 3" and "Visual Studio Code" were tested as manually
-> configured merge tools.
-> 
-> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
-> ---
+So, I'll mark these two patches for 'next' now.
 
->  git-gui/lib/mergetool.tcl | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
-> index e688b016ef6..ccbc1a46554 100644
-> --- a/git-gui/lib/mergetool.tcl
-> +++ b/git-gui/lib/mergetool.tcl
-> @@ -272,8 +272,24 @@ proc merge_resolve_tool2 {} {
->  		}
->  	}
->  	default {
-> -		error_popup [mc "Unsupported merge tool '%s'" $tool]
-> -		return
-> +		set tool_cmd [get_config mergetool.$tool.cmd]
-> +		if {$tool_cmd ne {}} {
-> +			if {([string first {[} $tool_cmd] != -1) || ([string first {]} $tool_cmd] != -1)} {
-> +				error_popup [mc "Unable to process square brackets in mergetool.cmd configuration option.\
-> +								Please remove the square brackets."]
-> +				return
-
-Condition and error text are OK. But see below.
-
-> +			} else {
-> +				foreach command_part $tool_cmd {
-> +					lappend cmdline [subst -nobackslashes -nocommands $command_part]
-> +				}
-
-Good.
-
-I have seen a few examples in the Tcl manual with lappend in the loop
-body, and it seems to be customary to set the list variable to an empty
-value before the loop, i.e.
-
-				set cmdline {}
-
-> +			}
-> +		} else {
-> +			error_popup [mc "Unsupported merge tool '%s'.\n
-> +							Currently unsupported tools can be added and used as unsupported tools with degraded support\
-> +							by adding the command of the tool to the \"mergetool.cmd\" option in the config.
-> +							See the configuration documentation for more details." $tool]
-
-This error message needs a bit more work (some of this also applies to
-the message above):
-
-- A tool is only unsupported as long as there is no usable
-configuration. Once mergetool.$tool.cmd is set to something we can
-handle, calling the tool "unsupported" isn't appropriate, I would think.
-How about
-
-Unsupported merge tool '%s'.
-
-To use this tool, configure "mergetool.%s.cmd" as shown in the
-git-config manual page.
-
-- The configuration variable that we use is not mergetool.cmd, but
-mergetool.$tool.cmd.
-
-- Continuation lines must not be indented. Indented text appears
-indented in the error message.
-
-- Watch out whether an explicit \n is given, whether the line-break is
-escaped or not; all of this has meaning.
-
-- Looking at other multi-line error messages in git-gui.sh, the
-convention is
-
-	mc["First paragraph goes here.
-
-Second paragraph. All of it is on one line in the source code.
-
-Third paragraph. No \n appears anywhere."]
-
-> +			return
-> +		}
->  	}
->  	}
-
-As a matter of personal taste, I prefer to structure code with error
-exits like so (but it is totally acceptable if you disagree):
-
-   if {check for error 1} {
-       error msg1
-       return
-   }
-   if {check for error 2} {
-       error msg2
-       return
-   }
-   regular case
-   goes here
-   without indentation
-
-Note that there are no else-branches. This reduces the indentation levels.
-
--- Hannes
+Thanks.
 
