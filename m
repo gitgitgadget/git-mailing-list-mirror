@@ -1,54 +1,57 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA32E191
-	for <git@vger.kernel.org>; Sun,  8 Sep 2024 21:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29104145FE5
+	for <git@vger.kernel.org>; Sun,  8 Sep 2024 21:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725830190; cv=none; b=RFJsQTRynIKYDSl8CCBxTgLYZr6tQofMqBdWz9kof5rhgZAGZN5YMDzZZLBVcZX+5se7t7xa+l5ZNpPn29QD1YWq/q4s2wpnRxKEqho1mNA0AxN+4Vt7y5QQkQo8Qk3az+Fu1qFLC4pfVwvE9UjIXQoGT2HaaO+266mKuDBHUqU=
+	t=1725831171; cv=none; b=fIyrEKxs7JzYZxs1pTLGw81BidEhIIRf3DjnEUzVwrGnE6NZplsELZfX0Nh93S3rdeQ3OiUiKKfGHu4bV6m0yNzaCX9JE5g1fCPtxiaBIvXCLOVo/Iyi5k9Q5pKzk3G9UGuGub65dy5ZFS9yhzk5OkU6rn+yyvpdVDhQsa2wE2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725830190; c=relaxed/simple;
-	bh=Py1pFIoiNyYP/i/UhDRCR0crlokEueu6gFBd8qbZJrU=;
+	s=arc-20240116; t=1725831171; c=relaxed/simple;
+	bh=Fb2iFfhNfNwyzXv5Sr4a14JJJAprZ0iwmPRZjI9xfXU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oZ7C+Z+EmiOFnMGdbr1PjcVZctc62mVwB1l4M4YMKYg6LFXoQu1M6kGSP1N6O5Nmk0NIdcTkRU/j7OJCCYsftNtY7Rnat2I8bzZuEiJSdvEDVuRg8dfAtiPNBvWapux0n+LgsEZ/sobhLMYxBa1kowg9ihKi/zVKCXwW6zjbSb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=f5mt12Ne; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=X3Tn+LLG/Ba1sMtrtxJD+dhzBxbdTrL3tSx9s6aPnBSeE7/e081pumwLIDZwWXaPwJSgPmv8oSr2d6tw7ADpPpKTK4Nz6n0v7GZJ+GBm9o3qfRdDkgrbXit/mIlH27ROKFWTAVFI2DAYMKlZ3uAcEn0LHq4RhRSqoxIReKRKuhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ibByV3IG; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f5mt12Ne"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ibByV3IG"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A717631F83;
-	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F22932299;
+	Sun,  8 Sep 2024 17:32:48 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Py1pFIoiNyYP/i/UhDRCR0crlokEueu6gFBd8q
-	bZJrU=; b=f5mt12Nee2juPuayRGYERK/cJ6yEV1U4pC7c7M4gDzrIiLftE4ujZm
-	tj8DqZZR4U9aaFUGTHdYTKLJEjcNdSMMPhr5OqjQ35K6339+N49Qaga1AOPnVJr4
-	YAp73bIDkid88YJBKVJjoBTVBxB/6DJ3GOW0vgnNoZfm79s913QGU=
+	:content-type; s=sasl; bh=Fb2iFfhNfNwyzXv5Sr4a14JJJAprZ0iwmPRZjI
+	9xfXU=; b=ibByV3IGU4JGIuTB9pqQMffbVQQIbGOfYuZ43vBHKNn3GQf9/j2woj
+	YFi/h6i0onrhLTF6zZ8v3dzzTt2NTXRSl+lHochQE1UfptIs3rtr6J/X54MGBkDX
+	uuXy41LcvHU7A8Dx31ZbaOfXKpERkzh3m9jPmhUiWvMSgrHw7uwNQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F11E31F82;
-	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 14DBC32298;
+	Sun,  8 Sep 2024 17:32:48 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1252B31F81;
-	Sun,  8 Sep 2024 17:16:22 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 80FF232297;
+	Sun,  8 Sep 2024 17:32:47 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org,  blanet <bupt_xingxin@163.com>,  Xing Xin
- <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH 2/2] remerge-diff: clean up temporary objdir at a
- central place
-In-Reply-To: <CABPp-BGmeg3x-F2ZjLzqcDYzSMOfz8Q3BDKUtB=vMO90yJRb3A@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 15 Aug 2024 23:19:37 -0700")
-References: <xmqqv8099vms.fsf@gitster.g> <xmqqr0ax9vlk.fsf@gitster.g>
-	<xmqqbk1y8gm1.fsf@gitster.g>
-	<CABPp-BGmeg3x-F2ZjLzqcDYzSMOfz8Q3BDKUtB=vMO90yJRb3A@mail.gmail.com>
-Date: Sun, 08 Sep 2024 14:16:20 -0700
-Message-ID: <xmqqed5tx2vv.fsf@gitster.g>
+To: Mike Hommey <mh@glandium.org>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  Calvin Wan
+ <calvinwan@google.com>,  git@vger.kernel.org,  Josh Steadmon
+ <steadmon@google.com>,  spectral@google.com,  emilyshaffer@google.com,
+  emrass@google.com,  rsbecker@nexbridge.com,
+  sandals@crustytoothpaste.net,  Jason@zx2c4.com,  dsimic@manjaro.org
+Subject: Re: [PATCH v3 2/6] libgit-sys: introduce Rust wrapper for libgit.a
+In-Reply-To: <20240906230419.r4hej7qsmx7yasl7@glandium.org> (Mike Hommey's
+	message of "Sat, 7 Sep 2024 08:04:19 +0900")
+References: <20240906221853.257984-1-calvinwan@google.com>
+	<20240906222116.270196-2-calvinwan@google.com>
+	<CAPig+cQbPCWS4LVF7cdw_DD6K8dsrLTCmmhqkmGZpz1CO93vRQ@mail.gmail.com>
+	<20240906230419.r4hej7qsmx7yasl7@glandium.org>
+Date: Sun, 08 Sep 2024 14:32:46 -0700
+Message-ID: <xmqqa5ghx24h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,35 +61,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 98F79D28-6E27-11EF-AEDA-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ E458A404-6E29-11EF-B05F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Elijah Newren <newren@gmail.com> writes:
+Mike Hommey <mh@glandium.org> writes:
 
->> I forgot to add that I am not happy with this "centralized tear
->> down" step, even though I am reasonably happy with the "lazy set-up"
->> step.  I wonder why the remerge-diff related members have to exist
->> in the rev_info structure in the first place, instead of being in
->> the diffopt structure?  Moving them to diffopt may make the end
->> result much more pleasant to read.
+> On Fri, Sep 06, 2024 at 06:39:17PM -0400, Eric Sunshine wrote:
+>> > diff --git a/contrib/libgit-rs/libgit-sys/build.rs b/contrib/libgit-rs/libgit-sys/build.rs
+>> > @@ -0,0 +1,31 @@
+>> > +pub fn main() -> std::io::Result<()> {
+>> > +    let crate_root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
+>> > +    let git_root = crate_root.join("../../..");
+>> > +    let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+>> > +
+>> > +    let make_output = std::process::Command::new("make")
+>> 
+>> Providing a mechanism for people to override this hardcoded spelling
+>> of "make" could be another item for your NEEDSWORK list; in
+>> particular, I'm thinking about platforms on which GNU "make" is
+>> installed as "gmake".
 >
-> I'm not sure they need to exist in the rev_info structure.  I was
-> probably thinking that e.g. log --remerge-diff would "need to do lots
-> of diffs" but I only needed the temporary store setup once, and once
-> in my mind matched better with rev_info.  I wasn't aware of
-> diff_options.no_free or anything surrounding it.  If we can do the
-> temporary store setup in diffopt and only do it once for all N diffs
-> in a `git log --remerge-diff` run, then we could move this stuff from
-> rev_info to diffopt.
+> And/or, use the `make_cmd` crate.
 
-After staring at the data structure around this area for a while, I
-think these two patches are OK, especially within the current
-structure.  rev_info structure has a set of bits that are marked as
-"Diff flags" (some of which are not about diff at all, though; for
-example, verbose_header and no_commit_id belong more to the "Format
-info" group), and those related to merges do belong there, as they
-need more than "here are two tree-like things I want to compare".
-
-So, I'll mark these two patches for 'next' now.
-
-Thanks.
-
+Thanks for helping.
