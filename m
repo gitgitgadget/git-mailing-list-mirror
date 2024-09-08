@@ -1,36 +1,41 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC29BA31
-	for <git@vger.kernel.org>; Sun,  8 Sep 2024 05:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A291B85DC
+	for <git@vger.kernel.org>; Sun,  8 Sep 2024 07:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725773614; cv=none; b=QeRBmR3r7/mbD9LtOSR9db/bUoGgZMOMerGGv1A2e6Ttw/XIoqq53VKnGDnNqLY9jZMR6J0x+H27O2imOICz+ppp6jHMxVXFbjSuBDn6gOylLoZqqgquCSs6P5+AiEdhxpicu1Iz0q2zHK5qVIa1o1F+2O90QtntBO2B9z9M8a8=
+	t=1725779064; cv=none; b=Siet2o994dsbR+atmVNAg6Wr2hFCgEtXQn5Z9aY40/Sl2FOo9OET1DOhvqQh/CQnSl9e8bi2TKOVtJke0UqIBwp80vVtNTz64RIUgJnKeuQChkdejl6xymvk0jCC0pgS5C+3O5iBJy+Xxdcv/A5lKussxOpOPrLVblScuHY17fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725773614; c=relaxed/simple;
-	bh=I2yc7qayAcncQHAHroQ/93WJ8KJjz+mNSpe40jeb0Sg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FvFx5orTpYX8bUxC1Ad+Y9xATwjoFV78Bcht4Zin8WPak5UNTdxrqZTqCgDj4fSZUHlLWP4zVHt1vmqIR1Ry8divFUN1J+IgY3xq5KDCRoHn6E9AwYXif6k1V4WqpmtQo4rT5jKPfcHLtby7P5a/aFrddyIsskpwKBkaMs0sdF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=FVP6LwjU; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+	s=arc-20240116; t=1725779064; c=relaxed/simple;
+	bh=v9TW35FVdkjRny7OmKzSITaMrvylmpEOMx9iGAghXyY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=bY8W7dKFUSCRdyyaYRnbQCyxHKpYrUciwkhoXgv+DMhLSZ7gwmBR3+vmHWjBfEw8q02kAYFuYc01L4Bj1A1ox8iHOMfOtydwZ6IARZ+9kTM8mriCEgqEVou6DU32lLcjGeIrbF67mWsHZdXW3oyzA0qDWNlO3+kFvR3VQdqLvoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=DQbr4uJ2; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="FVP6LwjU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202408171023; t=1725773607;
-	bh=nsCEh0RfQ2ueUaQR4yd8+jscHzDPdyb9s/gfcxVqJc4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FVP6LwjUp6CW4HQF9daf99FkVqw9TpDUlcmkC8mkj8Eyg+WZ/V81Bb9yU9UPSIm4G
-	 qgCZz3kuL9jHTIH1ofii6ZOvroJQ8eGTT8zEhi560dPuHRcQ7RALRhb8+0iMQOsrcI
-	 lzYBgJRf9nTPSyT7hU4hq9meIL1apMfb6Y/RFXCX5e0CfjfQD/uBduiLbhkRK+ywrn
-	 dJf45iusEohwhrYJkoxSgmpbTnXbRqQutF2+Exp+jzQB1/6MUo4nDdlmMMOF+qqYWc
-	 V2MbCjG8SLdmgx7Hw1J0svZFqjKiBuydL3rBA+Iv6+0/MiaW5G/o1TvtunCoT2j/gI
-	 IF67ZMSF9Ge0A==
-Received: from [192.168.42.22] (42-96-142-46.pool.kielnet.net [46.142.96.42])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 3563A3C0306;
-	Sun,  8 Sep 2024 07:33:27 +0200 (CEST)
-Message-ID: <a2bdec84-541a-490b-9456-e99adf400b1c@haller-berlin.de>
-Date: Sun, 8 Sep 2024 07:33:26 +0200
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="DQbr4uJ2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1725779051; x=1726383851; i=l.s.r@web.de;
+	bh=8voZgm94fNw13NL8VwNWDzg+EdbSJVR2rNz1aIAx9n8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=DQbr4uJ2bnhcvrRUN7TTEss6E0JdbSfSADrWcLcGXsPyZ3SaBCFmRc9eFjKk22H6
+	 EzSXZozcc7tyeTXelVvvPgOD1kutudbOVwlRMFs2zegjZljVHL6MciX0k8bR7KW+q
+	 gELXwmbP7OGu3QV+ssC//cI0DDwcyS8Z5IEbdYNpdwzPzDvLfBRw68DxSi0TUmByQ
+	 gjNrnmKPhU6CVCIbJ0YbC6J+YxuBpkhwpXB0CFa0k0pQVbX6+R0tT3zZLhWb/2qtj
+	 ylvUP/SAfiAA7zsngviqJDjRndfLSG8Z4r5PBauq4/AlFQC83Q36WJ6upeLUtkINq
+	 UMbi9a1E4szh3VWhQA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.152.211]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mf3qY-1s85r71ZL0-00jF63; Sun, 08
+ Sep 2024 09:04:11 +0200
+Message-ID: <b21d74b6-aa51-474a-a8be-40dc1de94bc3@web.de>
+Date: Sun, 8 Sep 2024 09:04:10 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,50 +43,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Thoughts on the "branch <b> is not fully merged" error of
- "git-branch -d"
-Content-Language: de-DE, en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <bf6308ce-3914-4b85-a04b-4a9716bac538@haller-berlin.de>
- <xmqqy143wgao.fsf@gitster.g>
- <d97a69bc-85f0-46e3-8c99-0e5556ffdc9a@haller-berlin.de>
- <xmqqmskjw7wr.fsf@gitster.g>
-From: Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <xmqqmskjw7wr.fsf@gitster.g>
+Subject: Re: bug report - `git diff --quiet --cached` returns 0 when a rename
+ is staged
+To: Jorge Luis Martinez Gomez <jol@jol.dev>, git@vger.kernel.org
+References: <0241cbcc-11b3-483a-8a63-d523291b92ff@app.fastmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <0241cbcc-11b3-483a-8a63-d523291b92ff@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:HB7AuyAGLdQU49U86WMNp/MCkJh1zUJQWHl7nj04Iz8rziY7Odp
+ 8iPvqmXuRpzWTKzjVo36VuciBLHWIutWrHmzx+QLNGbG7K/MsMgVJwiHeidpFDKES845cWs
+ 8wFiNOpQHyEDt4jG5CsjZtJqc6DSv7gQnl1DGdAWZp01UMktpm2saLDvguLxSEXC0nnKseh
+ 3K9F0IlLoHU5iLOdJ777w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:XE23Ff6MotA=;LVCY9b5NIdeJwBQHo0haxSLwR/j
+ y0R3JFlErlm3RT8Lhl26AfBP3Kq1dBIAzzzed2rcym/OKwwYzhyaLpu+G8Wepd3yy6iUPvFjZ
+ /IoZXBXh5eyNwci9liALzdJIXLIDwvpvwWcNnY8CPlh2gVbwDcPgK7Nr0Ne0AuVjeIKwwq7ok
+ 9TiCUVEKJpR8df1V8BpbRhWFfQ5fK2xs+U6febdVHmRzba+tsyRP9H6vM+suARC216t0x9MlZ
+ X6pZrUkgz8M1Z9SRTTrbDKoIvUOJa4KPPQFZjGyeLAD2y8JrTbflP97pmYeUWLl7i3xzU72o3
+ mVS1hcIIf3v2a4S9icKX/ThW3igXWINtsa6EYFSomSuuSkp5WUU8j9SFB2zvAJV+xYSSCYiJK
+ IG9B9xE+zr18SbzLBZK6fbIbtHM08+HKj8cs75n6AEAcg1KzzCVX7L5ajM8mfsYavknbPtvqf
+ byzNRCuC36UyNkAVSGy+mCPq9qr5H//Aat3bJzO5ev2Y9vaV+NygOHPQxSZ4KNQ9dQRunOQmd
+ 2KtCXy0RgHT7PsO6DgnsJWALGfR9xzKTJenGZW8djtzmx5BcXM42wD18LlrlU3Fd0qowmiOBm
+ 286Gla8IwXCPIhbKi3zzRW9dD6RJT+f4uw7VXNNS17/h18wGm3jaCn8jPcL75CGzKJm5376gv
+ TK9lcn++wi0l7iKdAo/kw2r3Q2FBwItFbzaJzh5qKDNUOfWQlg8dOemDEkh13NzOA0Ryzolpw
+ PjaFVmkLsaHitfVj/eqYhrypnZHET/H6Qi09Q5mSyqkGAL0JXkEb5gk1m36lUkRHVCS+sPX/I
+ Dmm6ZTY1RaorJUXPOHCUhexA==
 
-On 07.09.24 22:00, Junio C Hamano wrote:
-> Stefan Haller <lists@haller-berlin.de> writes:
-> 
->>> Having said all that, I do not mind if somebody wanted to further
->>> extend builtin/branch.c:branch_merged() so that users can explicitly
->>> configure a set of reference branches.  "The 'master' and 'maint'
->>> are the integration branches that are used in this repository.
->>> Unless the history of a local branch is fully merged to one of
->>> these, 'git branch -d' of such a local branch will stop." may be a
->>> reasonable thing to do.
->>
->> This makes sense to me (if you include the upstreams of master and maint
->> in that logic, because the local ones might not be up to date).
-> 
-> I get the idea behind that statement, but I do not think it is
-> necessary to make Git second guess the end user is warranted in this
-> case.
-> 
-> If refs/heads/master builds on top of refs/remotes/origin/master,
-> and if the user is worried about the former being not up to date
-> relative to the latter, then the user can say "'branch -d' is safe
-> if the commit is merged in refs/remotes/origin/master", instead of
-> telling the command to check with 'refs/heads/master'.
+Am 07.09.24 um 01:12 schrieb Jorge Luis Martinez Gomez:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+>   $ mkdir /tmp/git-diff-test; cd /tmp/git-diff-test
+>   $ git init
+>   Initialized empty Git repository in /tmp/git-diff-test/.git/
+>   $ touch foo
+>   $ git add foo
+>   $ git commit -m "foo"
+>   [main (root-commit) f60d7bc] foo
+>    1 file changed, 0 insertions(+), 0 deletions(-)
+>    create mode 100644 foo
+>   $ mv foo bar
+>   $ git status -s
+>    D foo
+>   ?? bar
+>   $ git add foo bar
+>   $ git status -s
+>   R  foo -> bar
+>   $ git diff --quiet --cached; echo $?
+>   0
+>   $ git diff --quiet --cached --no-renames; echo $?
+>   1
+>
+> What did you expect to happen? (Expected behavior)
+>
+>   Versions prior to commit d7b97b7185521e3b9364b3abc6553df2480da173
+>   returned 1 for `git diff --quiet --cached`.
 
-Ah sure, if that configuration takes full refs, then yes, let the user
-configure exactly what they want. I thought it would take just bare
-branch names. (That's what we do in lazygit, we find this more
-convenient. It does take some heuristics to see which of these actually
-exist, and whether to use the upstream or local one, but it makes it
-easier for users. I'm not proposing to go this way with git.)
+Thanks a lot for the reproduction recipe and for bisecting it!
 
--Stefan
+> What happened instead? (Actual behavior)
+>
+>   It returned 0.
+>
+> What's different between what you expected and what actually happened?
+>
+>   The status code.
+>
+> Anything else you want to add:
+>
+>   This bug report originates from a PR I filed with Magit here:
+>
+>   https://github.com/magit/magit/pull/5221
+>
+>   I thought this difference between using `--no-renames` and not made
+>   sense, so I thought the problem lied with Magit. However, like tarsius=
+ in
+>   that thread points out, this is a change that happened recently with g=
+it
+>   and it's not in the release notes. After finding the commit that
+>   introduces the change, I see the message mentions "The new options are
+>   off by default, keeping the old behavior." It really doesn't seem
+>   intentional, so here's a bug report.
+
+Indeed, that's a bug.  Affects copies as well.  And could be triggered by
+e.g. --ignore-space-change or --ignore-matching-lines before, like the
+submodule diff regression reported earlier.
+
+Ren=C3=A9
+
