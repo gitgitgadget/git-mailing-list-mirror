@@ -1,153 +1,98 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A034E745E4
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602044963A
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725894974; cv=none; b=s/URW2Jl2E8iHswhNZOs0H3NrxHz1YaUKARfmLwmFOVPemo1N45fK1b7c5040OAAghbod2yiGYPMIFtUcZMJMeu8bKJDgv9UkrtXGnEvmYCq/1M5NOjzsnUtc6zfkH76pwXYAgRXQONTCqSnN3IZlVnicrX/2KplahQXbDFHY+0=
+	t=1725896700; cv=none; b=oNvXSBH/lGRDmIzJ10K3PJ14LUs4qiijKC5o+CMczFXEsjyu7WKJ0d2oyWbPo+bMezZ8PFliE565CVEK09CKRg2Bs7Nb9fRgN3TgWkBkjQmE+GS0NYdhUPEPuJBHo2Q+Xi0fznhhYPTqzoo1aXLystZDTA0LSVmMV7sCksb3eB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725894974; c=relaxed/simple;
-	bh=4pNPjhXzcwOUy+xCPJdOrKLXO81Q4VMEg/QL6UEsUdY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fSjFaQkWXWF7UMCQ65kc9nL1PtokKCZppUQ9QSbSArFHUy8vy6PG4h/TjbTKlfdSHddZG5QE2syfXbhCkMETDJFtNrWw6fGEFvl4fRezE2e7rIR9MQVAzopkqjAMCfffLXskR6S4b2KOr90vZIcag7Pz9ccsa9NamcZ/XoEqu1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C22SVyl6; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1725896700; c=relaxed/simple;
+	bh=z5NC1s+n3985BxwKIwq7L1lC3ZO08yWKCg/cflxbZl4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KdVnl70HXrcmgyNHMaF565cfPfPp2GOu7mrzx7wLvIe6A5X+uWJhd+n73Su9pUDTvJJrh8pWehP9NbuQqf+jh4/Oqh4Ij8c3fsVJq7FbRmbz2PRObIT1W3t4Fc7G+0wVvVhQURR3ySZ/mbQPInjNOw36Y3dWIdkCKmq6gcTkz8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gYKKSZzb; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C22SVyl6"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f7657f9f62so13245901fa.3
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 08:16:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725894971; x=1726499771; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rvEFVG0HwcvLaPf3HofOHWRUEuDoUhRtxv+7dOv+n8s=;
-        b=C22SVyl67Z6wqdS61e8zq5L3RgaQYTB1fUGlFnouwnPbTLSoOoJPKo5lxxz3C08pur
-         KNcDIZvswa+xTfQFfIojJmHG3gWTOJunqMRGSZ+OK5hGcxrFph43b90K67YER8KXEdvT
-         VrVob7bTSf0DVcJom6ofzpIehmVCUG1ImB2bLJeOl+hi4czc3bBURf3ugFBvvUf6FHqS
-         1327i/XC0JkmW1t3HfV5t4rbjX5pac8Or1jsnTpJDd9eVa9PWHaqUaioPQGpXK5RKfhA
-         GYiUpf/h/rHAZQefJCTC2zPR108PgEBWwj23dbn9quT8cpG89WWp3+oioxL8QUR043s4
-         hSrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725894971; x=1726499771;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rvEFVG0HwcvLaPf3HofOHWRUEuDoUhRtxv+7dOv+n8s=;
-        b=UZ/q85CZQDIjl3oNXsMFSEtE44f4wShcsh4adee3CQ4UlMR0XILep9oErb58b9yzrl
-         A4jPo4PvYTtmzSVRhZsgvw4mHo2mSTJCQFwEkf89BzLV/pUlgA/vyi3l5NOLXXo7rHpf
-         2rzgFdPEbBlXGCf0JUiiqb0q1fX3U1cTkAI7tYkgIP8dOd4ar1B22kfrFezvgHqmKcnl
-         oH119VesjiSoRG5LqPldRWvZjDpRsTQdtJIRESnUZB4tXs6zsXyQm7x4NV9EBRZA/nQT
-         9Pvmc1Rg2CROgauKGfdcQH2I+h/sOF93RWHLn6vo64h1Gcd0mOXLhxbUfw0JIMj6GTwN
-         GjTA==
-X-Forwarded-Encrypted: i=1; AJvYcCUI5eiGCfoQHh+cYB4nLRKXXAqp3aKQNBtGctfzU5fkx+IRdltyBjNZxzN5arj0/0jKULw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0OIBXQICAckodb2Vac7JCiO3aQQAE5hewKW7M816+nk74rXbo
-	fq3ltdhTK1Dap08bxJ5XNOI1S+YRLOhVnfOPOaZuoHut5KatrjOoT6ksxg==
-X-Google-Smtp-Source: AGHT+IEnyLLey2ocA4oE/ifWCgvgniBK2LkY/0ja9FufO28pNxR14zG2YBLKggEJkj6wwXZWpm0lbg==
-X-Received: by 2002:a2e:5159:0:b0:2f6:d5e2:7889 with SMTP id 38308e7fff4ca-2f75232593dmr53832321fa.19.1725894969718;
-        Mon, 09 Sep 2024 08:16:09 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c0b2a8csm7853191fa.140.2024.09.09.08.16.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Sep 2024 08:16:09 -0700 (PDT)
-Message-ID: <b4ce7873-3dfa-443c-847c-64200fd065cc@gmail.com>
-Date: Mon, 9 Sep 2024 16:16:06 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gYKKSZzb"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F9DB273B4;
+	Mon,  9 Sep 2024 11:44:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=z5NC1s+n3985BxwKIwq7L1lC3ZO08yWKCg/cfl
+	xbZl4=; b=gYKKSZzbkpn4PCLXP4/ZgrWgg0qs/5TErBz+Kv2iWJAKYMV1Rm91QI
+	ksf8vVYTZA6VnhRTxCP0jW7IW7cxXKvqW06Ib1cV5H1O6uY5liDB+m1BJGCIXaKp
+	5URAImC9kzhKQV4qwt7VuAt4nTtWfcm7GY5xVr0uMcXBzoMTPBQp4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 26582273B1;
+	Mon,  9 Sep 2024 11:44:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68911273B0;
+	Mon,  9 Sep 2024 11:44:56 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Xing Xin" <bupt_xingxin@163.com>
+Cc: "Patrick Steinhardt" <ps@pks.im>,  "Xing Xin via GitGitGadget"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Brandon Williams"
+ <bmwill@google.com>,  "Jonathan Tan" <jonathantanmy@google.com>,  "Xing
+ Xin" <xingxin.xx@bytedance.com>
+Subject: Re: [PATCH 3/4] builtin/clone.c: recognize fetch.serverOption
+ configuration
+In-Reply-To: <3a7b1ced.364e.191d4b07a1a.Coremail.bupt_xingxin@163.com> (Xing
+	Xin's message of "Mon, 9 Sep 2024 10:50:21 +0800 (CST)")
+References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
+	<7c3ebda513d872a2ab2aa0cff5887757de4cde0a.1725279236.git.gitgitgadget@gmail.com>
+	<ZtbgafDQwbU9tBoq@pks.im>
+	<366dd64e.7b53.191bc028796.Coremail.bupt_xingxin@163.com>
+	<ZtmQZQHnwYLNvT0F@pks.im>
+	<3ce04aef.b004.191c21a2159.Coremail.bupt_xingxin@163.com>
+	<Ztm1w_61vjEkiC4C@pks.im>
+	<3a7b1ced.364e.191d4b07a1a.Coremail.bupt_xingxin@163.com>
+Date: Mon, 09 Sep 2024 08:44:55 -0700
+Message-ID: <xmqq7cbkvnk8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] diff: report copies and renames as changes in
- run_diff_cmd()
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-Cc: Jorge Luis Martinez Gomez <jol@jol.dev>,
- David Hull <david.hull@friendbuy.com>
-References: <130d4803-2818-4611-9258-951a18dd5717@web.de>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <130d4803-2818-4611-9258-951a18dd5717@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 769CF994-6EC2-11EF-8AA3-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Hi René
+"Xing Xin" <bupt_xingxin@163.com> writes:
 
-On 08/09/2024 08:05, René Scharfe wrote:
-> The diff machinery has two ways to detect changes to set the exit code:
-> Just comparing hashes and comparing blob contents.  The latter is needed
-> if certain changes have to be ignored, e.g. with --ignore-space-change
-> or --ignore-matching-lines.  It's enabled by the diff_options flag
-> diff_from_contents.
-> 
-> The slower mode has never considered copies and renames to be changes,
-> which is inconsistent with the quicker one.  Fix it.  Even if we ignore
-> the file contents (because it's empty or contains only ignored lines),
-> there's still the meta data change of adding or changing a filename, so
-> we need to report it in the exit code.
-> 
-> d7b97b7185 (diff: let external diffs report that changes are
-> uninteresting, 2024-06-09) set diff_from_contents if external diff
-> programs are allowed.  This is the default e.g. for git diff, and so
-> that change exposed the inconsistency much more widely.
+> Given the addition of a remote.*.<subkey> configuration in Git's global
+> settings, such as:
+>
+>     git config --global remote."*".demoConfigKey demoConfigValue
+>
+> The current versions of Git may produce errors with certain commands.
+> For example, running `git fetch --all` will result in:
+>
+>     $ git fetch --all
+>     Fetching *
+>     fatal: '*' does not appear to be a git repository
+>     fatal: Could not read from remote repository.
 
-Thanks for fixing this - both patches looks good to me.
+Ah, good point.  Anything that wants to enumerate the subkeys under
+remote. hierarchy MUST be aware of the new convention.
 
-Best Wishes
+So such a code must of course need to be updated to treat "*" as a
+virtual thing and exclude from enumeration (I suspect "git remote"
+has the same property), and delivered to the end-users at the same
+time.
 
-Phillip
-
-> Reported-by: Jorge Luis Martinez Gomez <jol@jol.dev>
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->   diff.c                 |  3 +++
->   t/t4017-diff-retval.sh | 16 ++++++++++++++++
->   2 files changed, 19 insertions(+)
-> 
-> diff --git a/diff.c b/diff.c
-> index 4035a9374d..1d2057d4cb 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4587,6 +4587,9 @@ static void run_diff_cmd(const struct external_diff *pgm,
->   		builtin_diff(name, other ? other : name,
->   			     one, two, xfrm_msg, must_show_header,
->   			     o, complete_rewrite);
-> +		if (p->status == DIFF_STATUS_COPIED ||
-> +		    p->status == DIFF_STATUS_RENAMED)
-> +			o->found_changes = 1;
->   	} else {
->   		fprintf(o->file, "* Unmerged path %s\n", name);
->   		o->found_changes = 1;
-> diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
-> index f439f469bd..9a4f578614 100755
-> --- a/t/t4017-diff-retval.sh
-> +++ b/t/t4017-diff-retval.sh
-> @@ -143,4 +143,20 @@ test_expect_success 'option errors are not confused by --exit-code' '
->   	grep '^usage:' err
->   '
-> 
-> +for option in --exit-code --quiet
-> +do
-> +	test_expect_success "git diff $option returns 1 for copied file" "
-> +		git reset --hard &&
-> +		cp a copy &&
-> +		git add copy &&
-> +		test_expect_code 1 git diff $option --cached --find-copies-harder
-> +	"
-> +
-> +	test_expect_success "git diff $option returns 1 for renamed file" "
-> +		git reset --hard &&
-> +		git mv a renamed &&
-> +		test_expect_code 1 git diff $option --cached
-> +	"
-> +done
-> +
->   test_done
-> --
-> 2.46.0
-> 
+An alternative is to use remote.<key> as a fallback default for
+remote.<name>.<key>, which has been done successfully for other
+hierarchies like http.<url>.<key> would override http.<key> for any
+defined <key>s.  So if we have remote.<name>.skipFetchAll per
+remote, we could use remote.skipFetchAll as its fallback default
+value.
