@@ -1,185 +1,682 @@
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BDD4C81
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 01:27:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07C2125DE
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 02:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725845225; cv=none; b=UUQyy+XU/IsiAX2DprOSq05d6jytK5L1vAcSZzm5Ah9XDL2vAn1QYTGV0pn6IpY+3eZUWcvzGEULjOohXB3PCwW25iyGmyvqc7vP1Gpp8x4TZ58OvbYaL6+tIWCeF/WclI0kTboELuDQXZUaUsNe5S//oE17yQIPgOnO/GaUvyY=
+	t=1725849503; cv=none; b=uKqu5s5fcGeNAxFp0cNWhpl22QbDVNqGgcr8si4Yp82iITJWehDOIP/c3zsRRmZxZowjTa83U0LzN35APybo7WufYbByLMIlDIvNCZ5gIWbrKlC01zNPEmU+34Vtz6bk1XY2ySi7XiUctEBeqN2IDzITSXEfG6PvUNCGBCRfr98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725845225; c=relaxed/simple;
-	bh=pMAXzec6cjp/mEHPvu+V+PT0QQ4WCvLARlGHS4/vk5g=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=iv1QyX2zUHfFL+XWTNW8zyG4yY6BCJx4xJlbkf0/D7WrIeoP884OBqAyIE1ljX6HipozWBD8jFv32wAv0TAywHa5idAdPqQ2sB/4WQjfZkg/05bU9h19UepIP4fGcog+LO0AMOXzSdo8Ef2M6nSAQNrSOW675dvLHI62U++JG4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=U+m7xGlP; arc=none smtp.client-ip=84.93.230.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1725849503; c=relaxed/simple;
+	bh=9IBr2ziqEtV3/lSa11iYrCwn5yR+ltC1ZJvCCuiEfy8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VZDayIuSVkiCTVUa4kKelNMxZEll7TDQy4yBFX8ewNukZyOA5zZ0eLpVs1LBq5amNimSJhCAwAU7TF0a5EvY40OnNmqjOAvjuaeyHTsVMB6r8jBKQClDgwnBjzq0i5RbCfj3v5mBqHFDQxRNOSJ/ah8/k5xtnogdnYPVNvX5DBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IUJ6YAZ7; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="U+m7xGlP"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id nT89sTeVcvENUnT8As3622; Mon, 09 Sep 2024 02:23:51 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1725845031; bh=8FLE/QzQGT2VuFjeJjGeKtcjGKUth8xi7J1tQeSa/mc=;
-	h=Date:To:Cc:From:Subject;
-	b=U+m7xGlPNqWcE419jx5kezPm72JFNS0WpO7IkaduUP+snvkHYCTFrRv+MDcgQ1DNG
-	 NrRwrstHnUxCH4W9q6D3dVDvQCnDIRcC+fuwRK6safnuqYDTyLL0XvIVPEOfVfJWq9
-	 mAjM1ULLCM6If1AMhqMWEN9byJDhnOFGDt+NN4aij6QknMR95F5+8gKVOI9j7eaB37
-	 lxUCfWtbnAn1u3qVVqdIA8a74satXozJ4xzHnddGyJjHJSaqDRqa1+6wVkIBJAdrhZ
-	 TkSvCF4TktSBwWnPfHqaT7hr/GoessZrcf4nNl/l2BYjdNughliwbhPSDeTGVNOTfc
-	 OaBAgBYn6lgnA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=T9svTOKQ c=1 sm=1 tr=0 ts=66de4e27
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=A1X0JdhQAAAA:8 a=EBOSESyhAAAA:8 a=R_XcQylrSi0jIeP7C5EA:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <e3339b4d-dab1-4247-b70e-d3224bab1b6b@ramsayjones.plus.com>
-Date: Mon, 9 Sep 2024 02:23:48 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IUJ6YAZ7"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C472135AE1;
+	Sun,  8 Sep 2024 22:38:19 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=9
+	IBr2ziqEtV3/lSa11iYrCwn5yR+ltC1ZJvCCuiEfy8=; b=IUJ6YAZ7qM/CI+fea
+	ENcj8H9hI4oO7P0VghCCVaP44Xko0nHjT426jaWbPjnu7l9PvJjsJ/06HCAb0vEd
+	6xG3BpLA71t5zUXoKAKrzLs+jasIWh8SyJQ8l5ezZyEq47/I8wlFg9r7yEyiSbb9
+	WmIIOBGb25fBZC7KkbtSvvMnhE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BBF6635ADF;
+	Sun,  8 Sep 2024 22:38:19 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2337735ADE;
+	Sun,  8 Sep 2024 22:38:19 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Sep 2024, #02; Sun, 8)
+X-master-at: 4c42d5ff284067fa32837421408bebfef996bf81
+X-next-at: a52a31f161238e49828c2297ec5c26a7f3b8c689
+Date: Sun, 08 Sep 2024 19:38:17 -0700
+Message-ID: <xmqqed5tv9eu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
- Adam Dinwoodie <git@dinwoodie.org>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] config.mak.uname: add HAVE_DEV_TTY to cygwin config section
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMhItYliCSTdlt5XvHpm0m+wZRgK1+1S4jaN4/22h4n5h8XgCE6KLdAU/bMwoW9TW6ZqMlyMWpcH0EFpfWJUpmGofnXg9lgqciP6ieXBR9tnT+YQZsEn
- CmQk0IeZv3nN76oM0z6L4FPLYV7XGnsd6OmtyQDSXR5wNj7d2ckTf5M2WUpzt44F4lbOpvc276D4oerp7yQI7Exjg+nuUenjUjw=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 92D65D80-6E54-11EF-924F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
+
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
+
+With maint, master, next, seen, todo:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* jc/maybe-unused (2024-08-29) 2 commits
+  (merged to 'next' on 2024-08-30 at e5961a9dc9)
+ + CodingGuidelines: also mention MAYBE_UNUSED
+ + Merge branch 'jk/unused-parameters' into jc/maybe-unused
+ (this branch uses jk/unused-parameters.)
+
+ Developer doc updates.
+ source: <xmqq4j73w5up.fsf_-_@gitster.g>
 
 
-If neither HAVE_DEV_TTY nor GIT_WINDOWS_NATIVE is set, while compiling
-the 'compat/terminal.c' code, then the fallback code calls the system
-getpass() function. Unfortunately, this ignores the 'echo' parameter of
-the git_terminal_prompt() function, since it has no way to implement that
-functionality. This results in a less than optimal user experience on
-cygwin, which does not define either of those build flags.
+* jc/unused-on-windows (2024-08-30) 1 commit
+  (merged to 'next' on 2024-08-30 at a2a2aa6e59)
+ + refs/files-backend: work around -Wunused-parameter
 
-However, cygwin does have a functional '/dev/tty', so that it can build
-with HAVE_DEV_TTY and benefit from the improved user experience.
+ Fix more fallouts from -Werror=unused-parameter.
+ source: <xmqqjzfxrekm.fsf@gitster.g>
 
-The improved git_terminal_prompt() function that comes with HAVE_DEV_TTY
-is used in the git_prompt() function, which in turn is used by the
-'git credential', 'git bisect' and 'git help' commands. In addition to
-git_terminal_prompt(), read_key_without_echo() is likewise improved and
-used by the 'git add -p' command.
 
-While using the 'git credential fill' command, for example:
+* jk/maybe-unused-cleanup (2024-08-29) 2 commits
+  (merged to 'next' on 2024-08-30 at 0ff6ea5748)
+ + grep: prefer UNUSED to MAYBE_UNUSED for pcre allocators
+ + gc: drop MAYBE_UNUSED annotation from used parameter
 
-  $ printf "%s\n" protocol=https host=example.com path=git | ./git credential fill
-  Username for 'https://example.com': user
-  Password for 'https://user@example.com':
-  protocol=https
-  host=example.com
-  username=user
-  password=pass
-  $
+ Code clean-up.
+ source: <20240829200807.GA430283@coredump.intra.peff.net>
 
-The 'user' name is now echoed while typing (the password isn't), where this
-wasn't the case before.
 
-When using the auto-correct feature:
+* jk/send-email-mailmap (2024-08-27) 3 commits
+  (merged to 'next' on 2024-08-30 at a5cf30460a)
+ + send-email: add mailmap support via sendemail.mailmap and --mailmap
+ + check-mailmap: add options for additional mailmap sources
+ + check-mailmap: accept "user@host" contacts
 
-  $ ./git -c help.autocorrect=prompt fred
-  WARNING: You called a Git command named 'fred', which does not exist.
-  Run 'grep' instead [y/N]? n
-  $ ./git -c help.autocorrect=prompt fred
-  WARNING: You called a Git command named 'fred', which does not exist.
-  Run 'grep' instead [y/N]? y
-  fatal: no pattern given
-  $
+ "git send-email" learned "--mailmap" option to allow rewriting the
+ recipient addresses.
+ source: <20240827-jk-send-email-mailmap-support-v3-0-bec5ba9be391@gmail.com>
 
-The user can actually see what they are typing at the prompt. Similar
-comments apply to 'git bisect':
 
-  $ ./git bisect bad master~1
-  You need to start by "git bisect start"
+* jk/unused-parameters (2024-08-28) 7 commits
+  (merged to 'next' on 2024-08-30 at 2c5169ff52)
+ + CodingGuidelines: mention -Wunused-parameter and UNUSED
+ + config.mak.dev: enable -Wunused-parameter by default
+ + compat: mark unused parameters in win32/mingw functions
+ + compat: disable -Wunused-parameter in win32/headless.c
+ + compat: disable -Wunused-parameter in 3rd-party code
+ + t-reftable-readwrite: mark unused parameter in callback function
+ + gc: mark unused config parameter in virtual functions
+ (this branch is used by jc/maybe-unused.)
 
-  Do you want me to do it for you [Y/n]? y
-  status: waiting for both good and bad commits
-  status: waiting for good commit(s), bad commit known
-  $ ./git bisect reset
-  Already on 'master-tmp'
-  $
+ Make our codebase compilable with the -Werror=unused-parameter
+ option.
+ source: <20240828035722.GA3998881@coredump.intra.peff.net>
+ source: <CAPig+cQLr+vAzkt8UJNVCeE8osGEcEfFunG36oqxa0k8JamJzQ@mail.gmail.com>
 
-  $ ./git bisect start
-  status: waiting for both good and bad commits
-  $ ./git bisect bad master~1
-  status: waiting for good commit(s), bad commit known
-  $ ./git bisect next
-  warning: bisecting only with a bad commit
-  Are you sure [Y/n]? n
-  $ ./git bisect reset
-  Already on 'master-tmp'
-  $
+--------------------------------------------------
+[New Topics]
 
-The read_key_without_echo() function leads to a much improved 'git add -p'
-command, when the 'interactive.singleKey' configuration is set:
+* ds/doc-wholesale-disabling-advice-messages (2024-09-06) 1 commit
+  (merged to 'next' on 2024-09-07 at a52a31f161)
+ + advice: recommend GIT_ADVICE=0 for tools
 
-  $ cd ..
-  $ mkdir test-git
-  $ cd test-git
-  $ git init -q
-  $ echo foo >file
-  $ git add file
-  $ echo bar >file
-  $ ../git/git -c interactive.singleKey=true add -p
-  diff --git a/file b/file
-  index 257cc56..5716ca5 100644
-  --- a/file
-  +++ b/file
-  @@ -1 +1 @@
-  -foo
-  +bar
-  (1/1) Stage this hunk [y,n,q,a,d,e,p,?]? y
+ The environment GIT_ADVICE has been intentionally kept undocumented
+ to discourage its use by interactive users.  Add documentation to
+ help tool writers.
 
-  $
+ Will merge to 'master'.
+ source: <pull.1781.v2.git.1725654155162.gitgitgadget@gmail.com>
 
-Note that, not only is the user input echoed, but that it is immediately
-accepted (without having to type <return>) and the program exits with the
-hunk staged (in this case) or not.
 
-In order to reap these benefits, set the HAVE_DEV_TTY build flag in the
-cygwin configuration section of config.mak.uname.
+* jk/sparse-fdleak-fix (2024-09-06) 3 commits
+  (merged to 'next' on 2024-09-07 at 2551aeee9e)
+ + sparse-checkout: use fdopen_lock_file() instead of xfdopen()
+ + sparse-checkout: check commit_lock_file when writing patterns
+ + sparse-checkout: consolidate cleanup when writing patterns
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+ A file descriptor left open is now properly closed when "git
+ sparse-checkout" updates the sparse patterns.
 
-Hi Junio,
+ Will merge to 'master'.
+ source: <20240906034557.GA3693911@coredump.intra.peff.net>
 
-After more testing, I removed the RFC from this patch and actually wrote
-a commit message. (I wasn't sure if I should mark this with v2 as well?).
 
-I was a bit surprised that this went unnoticed for so long, but I don't
-use 'git credential' (shh-agent is all I need), 'git add -p' (vim works
-for me!) or used the help.autocorrect=prompt. I have used 'git bisect'
-many, many times (of course), but I don't recall ever seeing either of
-those prompts! This goes for Linux as well as cygwin. :)
+* bl/trailers-and-incomplete-last-line-fix (2024-09-06) 1 commit
+ - interpret-trailers: handle message without trailing newline
 
-ATB,
-Ramsay Jones
+ The interpret-trailers command failed to recognise the end of the
+ message when the commit log ends in an incomplete line.
 
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
+ Will merge to 'next'?
+ source: <20240906145743.2059405-1-brianmlyles@gmail.com>
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 904bcf3598..d5112168a4 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -248,6 +248,7 @@ ifeq ($(uname_O),Cygwin)
-         else
- 		NO_REGEX = UnfortunatelyYes
-         endif
-+	HAVE_DEV_TTY = YesPlease
- 	HAVE_ALLOCA_H = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
--- 
-2.46.0
+
+* sp/mailmap (2024-09-06) 1 commit
+  (merged to 'next' on 2024-09-07 at aa952cf271)
+ + .mailmap document current address.
+
+ Update to a mailmap entry.
+
+ Will merge to 'master'.
+ source: <20240906153003.110200-2-ischis2@cox.net>
+
+
+* jc/doc-skip-fetch-all-and-prefetch (2024-09-07) 1 commit
+ - doc: remote.*.skip{DefaultUpdate,FetchAll} stops prefetch
+
+ Doc updates.
+
+ Will merge to 'next'.
+ source: <xmqq8qw3xvob.fsf_-_@gitster.g>
+
+
+* rs/diff-exit-code-fix (2024-09-08) 2 commits
+ - diff: report dirty submodules as changes in builtin_diff()
+ - diff: report copies and renames as changes in run_diff_cmd()
+
+ In a few corner cases "git diff --exit-code" failed to report
+ "changes" (e.g., renamed without any content change), which has
+ been corrected.
+
+ Will merge to 'next'.
+ source: <0864c86a-5562-4780-92c5-59d6c1a35aad@web.de>
+
+--------------------------------------------------
+[Cooking]
+
+* jk/free-commit-buffer-of-skipped-commits (2024-08-30) 1 commit
+  (merged to 'next' on 2024-09-03 at a8fb72a4d5)
+ + revision: free commit buffers for skipped commits
+
+ The code forgot to discard unnecessary in-core commit buffer data
+ for commits that "git log --skip=<number>" traversed but omitted
+ from the output, which has been corrected.
+
+ Will merge to 'master'.
+ source: <20240830205331.GA1038751@coredump.intra.peff.net>
+
+
+* ah/mergetols-vscode (2024-09-01) 1 commit
+  (merged to 'next' on 2024-09-04 at 425c5c83e2)
+ + mergetools: vscode: new tool
+
+ "git mergetool" learned to use VSCode as a merge backend.
+
+ Will merge to 'master'.
+ source: <20240902025918.99657-1-alexhenrie24@gmail.com>
+
+
+* rj/compat-terminal-unused-fix (2024-09-01) 1 commit
+  (merged to 'next' on 2024-09-04 at 4ad97be799)
+ + compat/terminal: mark parameter of git_terminal_prompt() UNUSED
+
+ Build fix.
+
+ Will merge to 'master'.
+ source: <ce1c1d66-e0eb-4143-b334-1a83c0492415@ramsayjones.plus.com>
+
+
+* ps/declare-pack-redundamt-dead (2024-09-03) 1 commit
+  (merged to 'next' on 2024-09-04 at 6a97b07329)
+ + Documentation/BreakingChanges: announce removal of git-pack-redundant(1)
+
+ "git pack-redundant" has been marked for removal in Git 3.0.
+
+ Will merge to 'master'.
+ source: <a6be9f5e9eb1f426b1a17b89e3db1bc7532758b5.1725264748.git.ps@pks.im>
+
+
+* pw/rebase-autostash-fix (2024-09-03) 1 commit
+ - rebase: apply and cleanup autostash when rebase fails to start
+
+ "git rebase --autostash" failed to resurrect the autostashed
+ changes when the command gets aborted after giving back control
+ asking for hlep in conflict resolution.
+
+ Will merge to 'next'?
+ source: <pull.1772.v2.git.1725289979450.gitgitgadget@gmail.com>
+
+
+* cp/unit-test-reftable-stack (2024-09-08) 6 commits
+ - t-reftable-stack: add test for stack iterators
+ - t-reftable-stack: add test for non-default compaction factor
+ - t-reftable-stack: use reftable_ref_record_equal() to compare ref records
+ - t-reftable-stack: use Git's tempfile API instead of mkstemp()
+ - t: harmonize t-reftable-stack.c with coding guidelines
+ - t: move reftable/stack_test.c to the unit testing framework
+
+ Another reftable test migrated to the unit-test framework.
+
+ Will merge to 'next'.
+ source: <20240908041632.4948-1-chandrapratap3519@gmail.com>
+
+
+* kl/cat-file-on-sparse-index (2024-09-04) 2 commits
+  (merged to 'next' on 2024-09-06 at a3c78e9398)
+ + builtin/cat-file: mark 'git cat-file' sparse-index compatible
+ + t1092: allow run_on_* functions to use standard input
+
+ "git cat-file" works well with the sparse-index, and gets marked as
+ such.
+
+ Will merge to 'master'.
+ source: <pull.1770.v4.git.git.1725401207.gitgitgadget@gmail.com>
+
+
+* ps/index-pack-outside-repo-fix (2024-09-04) 1 commit
+  (merged to 'next' on 2024-09-05 at d7ff867595)
+ + builtin/index-pack: fix segfaults when running outside of a repo
+
+ "git verify-pack" and "git index-pack" started dying outside a
+ repository, which has been corrected.
+
+ Will merge to 'master'.
+ source: <9a4267b8854312351f82286b6025d0a3d0e66743.1725429169.git.ps@pks.im>
+
+
+* ps/pack-refs-auto-heuristics (2024-09-04) 3 commits
+  (merged to 'next' on 2024-09-06 at 068ed2f7ae)
+ + refs/files: use heuristic to decide whether to repack with `--auto`
+ + t0601: merge tests for auto-packing of refs
+ + wrapper: introduce `log2u()`
+
+ "git pack-refs --auto" for the files backend was too aggressive,
+ which has been a bit tamed.
+
+ Will merge to 'master'.
+ source: <cover.1725439407.git.ps@pks.im>
+
+
+* ds/scalar-no-tags (2024-09-06) 1 commit
+  (merged to 'next' on 2024-09-07 at fc06d19cfb)
+ + scalar: add --no-tags option to 'scalar clone'
+
+ The "scalar clone" command learned the "--no-tags" option.
+
+ Will merge to 'master'.
+ source: <pull.1780.v2.git.1725654102035.gitgitgadget@gmail.com>
+
+
+* jc/pass-repo-to-builtins (2024-09-05) 4 commits
+ - fixup! builtin: remove USE_THE_REPOSITORY_VARIABLE from builtin.h
+ - add: pass in repo variable instead of global the_repository
+ - builtin: remove USE_THE_REPOSITORY_VARIABLE from builtin.h
+ - builtin: add a repository parameter for builtin functions
+
+ The convention to calling into built-in command implementation has
+ been updated to pass the repository, if known, together with the
+ prefix value.
+
+ Needs review.
+ source: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
+
+
+* jk/messages-with-excess-lf-fix (2024-09-05) 1 commit
+  (merged to 'next' on 2024-09-06 at edb0958483)
+ + drop trailing newline from warning/error/die messages
+
+ One-line messages to "die" and other helper functions will get LF
+ added by these helper functions, but many existing messages had an
+ unnecessary LF at the end, which have been corrected.
+
+ Will merge to 'master'.
+ source: <20240905085149.GA2340826@coredump.intra.peff.net>
+
+
+* tb/weak-sha1-for-tail-sum (2024-09-06) 9 commits
+ - csum-file.c: use fast SHA-1 implementation when available
+ - Makefile: allow specifying a SHA-1 for non-cryptographic uses
+ - hash.h: scaffolding for _fast hashing variants
+ - sha1: do not redefine `platform_SHA_CTX` and friends
+ - i5500-git-daemon.sh: use compile-able version of Git without OpenSSL
+ - pack-objects: use finalize_object_file() to rename pack/idx/etc
+ - finalize_object_file(): implement collision check
+ - finalize_object_file(): refactor unlink_or_warn() placement
+ - finalize_object_file(): check for name collision before renaming
+
+ The checksum at the tail of files are now computed without
+ collision detection protection.
+
+ Will merge to 'next'?
+ source: <cover.1725651952.git.me@ttaylorr.com>
+
+
+* tb/multi-pack-reuse-fix (2024-08-27) 5 commits
+  (merged to 'next' on 2024-09-06 at 552494ec2f)
+ + builtin/pack-objects.c: do not open-code `MAX_PACK_OBJECT_HEADER`
+ + pack-bitmap.c: avoid repeated `pack_pos_to_offset()` during reuse
+ + builtin/pack-objects.c: translate bit positions during pack-reuse
+ + pack-bitmap: tag bitmapped packs with their corresponding MIDX
+ + t/t5332-multi-pack-reuse.sh: verify pack generation with --strict
+
+ A data corruption bug when multi-pack-index is used and the same
+ objects are stored in multiple packfiles has been corrected.
+
+ Will merge to 'master'.
+ cf. <20240905091043.GB2556395@coredump.intra.peff.net>
+ source: <cover.1724793201.git.me@ttaylorr.com>
+
+
+* es/chainlint-message-updates (2024-08-29) 2 commits
+ - chainlint: reduce annotation noise-factor
+ - chainlint: make error messages self-explanatory
+
+ The error messages from the test script checker have been improved.
+
+ Expecting a reroll.
+ cf. <CAPig+cQ+6am7-BSnWZz5=C0Q1Vyng0T4goB+ZE9TKJMrpi_Jpg@mail.gmail.com>
+ source: <20240829091625.41297-1-ericsunshine@charter.net>
+
+
+* ps/environ-wo-the-repository (2024-08-30) 21 commits
+ - environment: stop storing "core.notesRef" globally
+ - environment: stop storing "core.warnAmbiguousRefs" globally
+ - environment: stop storing "core.preferSymlinkRefs" globally
+ - environment: stop storing "core.logAllRefUpdates" globally
+ - refs: stop modifying global `log_all_ref_updates` variable
+ - branch: stop modifying `log_all_ref_updates` variable
+ - repo-settings: track defaults close to `struct repo_settings`
+ - repo-settings: split out declarations into a standalone header
+ - environment: guard state depending on a repository
+ - environment: reorder header to split out `the_repository`-free section
+ - environment: move `set_git_dir()` and related into setup layer
+ - environment: make `get_git_namespace()` self-contained
+ - environment: move `odb_mkstemp()` into object layer
+ - config: make dependency on repo in `read_early_config()` explicit
+ - config: document `read_early_config()` and `read_very_early_config()`
+ - environment: make `get_git_work_tree()` accept a repository
+ - environment: make `get_graft_file()` accept a repository
+ - environment: make `get_index_file()` accept a repository
+ - environment: make `get_object_directory()` accept a repository
+ - environment: make `get_git_common_dir()` accept a repository
+ - environment: make `get_git_dir()` accept a repository
+
+ Code clean-up.
+
+ Needs review.
+ source: <cover.1725008897.git.ps@pks.im>
+
+
+* gt/unit-test-oid-array (2024-09-01) 1 commit
+  (merged to 'next' on 2024-09-05 at 92d0881bb0)
+ + t: port helper/test-oid-array.c to unit-tests/t-oid-array.c
+
+ Another unit-test.
+
+ Will merge to 'master'.
+ source: <20240901212649.4910-1-shyamthakkar001@gmail.com>
+
+
+* gt/unit-test-oidset (2024-08-25) 1 commit
+ - unit-tests: add tests for oidset.h
+
+ Another unit-test.
+
+ Expecting a reroll.
+ source: <20240824172028.39419-1-shyamthakkar001@gmail.com>
+
+
+* ps/leakfixes-part-6 (2024-09-05) 22 commits
+ - builtin/repack: fix leaking keep-pack list
+ - merge-ort: fix two leaks when handling directory rename modifications
+ - match-trees: fix leaking prefixes in `shift_tree()`
+ - builtin/fmt-merge-msg: fix leaking buffers
+ - builtin/grep: fix leaking object context
+ - builtin/pack-objects: plug leaking list of keep-packs
+ - builtin/repack: fix leaking line buffer when packing promisors
+ - negotiator/skipping: fix leaking commit entries
+ - shallow: fix leaking members of `struct shallow_info`
+ - shallow: free grafts when unregistering them
+ - object: clear grafts when clearing parsed object pool
+ - gpg-interface: fix misdesigned signing key interfaces
+ - send-pack: fix leaking push cert nonce
+ - remote: fix leak in reachability check of a remote-tracking ref
+ - remote: fix leaking tracking refs
+ - builtin/submodule--helper: fix leaking refs on push-check
+ - submodule: fix leaking fetch task data
+ - upload-pack: fix leaking child process data on reachability checks
+ - builtin/push: fix leaking refspec query result
+ - send-pack: fix leaking common object IDs
+ - fetch-pack: fix memory leaks on fetch negotiation
+ - t/test-lib: allow skipping leak checks for passing tests
+
+ More leakfixes.
+
+ Will merge to 'next'?
+ source: <cover.1725530720.git.ps@pks.im>
+
+
+* sj/ref-contents-check (2024-09-03) 4 commits
+ - ref: add symlink ref content check for files backend
+ - ref: add symref content check for files backend
+ - ref: add regular ref content check for files backend
+ - ref: initialize "fsck_ref_report" with zero
+
+ "git fsck" learned to issue warnings on "curiously formatted" ref
+ contents that have always been taken valid but something Git
+ wouldn't have written itself (e.g., missing terminating end-of-line
+ after the full object name).
+
+ Ready?
+ source: <Ztb-mgl50cwGVO8A@ArchLinux>
+
+
+* jc/mailinfo-header-cleanup (2024-08-20) 1 commit
+  (merged to 'next' on 2024-09-05 at 9a30adb035)
+ + mailinfo: we parse fixed headers
+
+ Code clean-up.
+
+ Will merge to 'master'.
+ cf. <Zsb1rGQbglHMiBHI@tanuki>
+ source: <xmqq1q2i6gw7.fsf@gitster.g>
+
+
+* tb/incremental-midx-part-2 (2024-08-28) 16 commits
+ - fixup! midx: implement writing incremental MIDX bitmaps
+ - midx: implement writing incremental MIDX bitmaps
+ - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+ - pack-bitmap.c: keep track of each layer's type bitmaps
+ - ewah: implement `struct ewah_or_iterator`
+ - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+ - pack-bitmap.c: compute disk-usage with incremental MIDXs
+ - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+ - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+ - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+ - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+ - pack-bitmap.c: open and store incremental bitmap layers
+ - pack-revindex: prepare for incremental MIDX bitmaps
+ - Documentation: describe incremental MIDX bitmaps
+ - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+ - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+
+ Incremental updates of multi-pack index files.
+
+ Needs review.
+ source: <cover.1723760847.git.me@ttaylorr.com>
+
+
+* ps/clar-unit-test (2024-09-04) 14 commits
+  (merged to 'next' on 2024-09-05 at 87fb0a399a)
+ + clar: add CMake support
+ + t/unit-tests: convert ctype tests to use clar
+ + t/unit-tests: convert strvec tests to use clar
+ + t/unit-tests: implement test driver
+ + Makefile: wire up the clar unit testing framework
+ + Makefile: do not use sparse on third-party sources
+ + Makefile: make hdr-check depend on generated headers
+ + Makefile: fix sparse dependency on GENERATED_H
+ + clar: stop including `shellapi.h` unnecessarily
+ + clar(win32): avoid compile error due to unused `fs_copy()`
+ + clar: avoid compile error with mingw-w64
+ + t/clar: fix compatibility with NonStop
+ + t: import the clar unit testing framework
+ + t: do not pass GIT_TEST_OPTS to unit tests with prove
+
+ Import clar unit tests framework libgit2 folks invented for our
+ use.
+
+ Will merge to 'master'.
+ cf. <d5b1c95b-cbdc-4711-849e-c2cfc67787ee@gmail.com>
+ source: <cover.1725459142.git.ps@pks.im>
+
+
+* js/libgit-rust (2024-09-06) 6 commits
+ . Makefile: add option to build and test libgit-rs and libgit-rs-sys
+ . libgit: add higher-level libgit crate
+ . config: add git_configset_alloc() and git_configset_clear_and_free()
+ . libgit-sys: add repo initialization and config access
+ . libgit-sys: introduce Rust wrapper for libgit.a
+ . common-main: split init and exit code into new files
+
+ An rust binding to libgit.a functions has been introduced.
+
+ Expecting a reroll.
+ cf. <xmqqv7z8tjd7.fsf@gitster.g>
+ source: <20240906221853.257984-1-calvinwan@google.com>
+
+
+* jc/range-diff-lazy-setup (2024-08-09) 2 commits
+ - remerge-diff: clean up temporary objdir at a central place
+ - remerge-diff: lazily prepare temporary objdir on demand
+
+ Code clean-up.
+
+ Will merge to 'next'.
+ source: <xmqqr0ax9vlk.fsf@gitster.g>
+
+
+* jc/too-many-arguments (2024-08-06) 4 commits
+ - miscellaneous: avoid "too many arguments"
+ - notes: avoid "too many arguments"
+ - cat-file: avoid "too many arguments"
+ - refs: avoid "too many arguments"
+
+ Error message clarification.
+
+ On hold.
+ source: <20240806003539.3292562-1-gitster@pobox.com>
+
+
+* ja/doc-synopsis-markup (2024-09-05) 3 commits
+ - doc: apply synopsis simplification on git-clone and git-init
+ - doc: update the guidelines to reflect the current formatting rules
+ - doc: introduce a synopsis typesetting
+
+ The way AsciiDoc is used for SYNOPSIS part of the manual pages has
+ been revamped.  The sources, at least for the simple cases, got
+ vastly pleasant to work with.
+
+ Waiting for comments.
+ source: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+
+
+* ew/cat-file-optim (2024-08-25) 10 commits
+ - cat-file: use writev(2) if available
+ - cat-file: batch_write: use size_t for length
+ - cat-file: batch-command uses content_limit
+ - object_info: content_limit only applies to blobs
+ - packfile: packed_object_info avoids packed_to_object_type
+ - cat-file: use delta_base_cache entries directly
+ - packfile: inline cache_or_unpack_entry
+ - packfile: fix off-by-one in content_limit comparison
+ - packfile: allow content-limit for cat-file
+ - packfile: move sizep computation
+
+ "git cat-file --batch" has been optimized.
+
+ Waiting for review responses.
+ source: <20240823224630.1180772-1-e@80x24.org>
+
+--------------------------------------------------
+[Will discard]
+
+* cc/promisor-remote-capability (2024-07-31) 4 commits
+ - promisor-remote: check advertised name or URL
+ - Add 'promisor-remote' capability to protocol v2
+ - strbuf: refactor strbuf_trim_trailing_ch()
+ - version: refactor strbuf_sanitize()
+
+ The v2 protocol learned to allow the server to advertise possible
+ promisor remotes, and the client to respond with what promissor
+ remotes it uses, so that the server side can omit objects that the
+ client can lazily obtain from these other promissor remotes.
+
+ Will discard.
+ Has been expecting a reroll for too long.
+ cf. <ZrDYIFolRlERFdUT@tanuki>
+ source: <20240731134014.2299361-1-christian.couder@gmail.com>
+
+
+* tc/fetch-bundle-uri (2024-07-24) 3 commits
+ - fetch: use bundle URIs when having creationToken heuristic
+ - transport: introduce transport_has_remote_bundle_uri()
+ - clone: remove double bundle list clear code
+
+ Allow "git fetch" take advantage of bundleURI feature.
+
+ Will discard.
+ Has been expecting a reroll for too long.
+ source: <ZqObobw8FsDMkllm@tanuki>
+
+--------------------------------------------------
+[Discarded]
+
+* pp/add-parse-range-unit-test (2024-08-28) 2 commits
+ . SQUASH???
+ . apply: add unit tests for parse_range
+
+ A unit test for code that parses the hunk offset and length from a
+ patch fragment header as been added.
+
+ Has been expecting a reroll for too long.
+ cf. <b7eca313-9ea8-4132-ba1d-ed9236e07095@gmail.com>
+ source: <pull.1677.v2.git.git.1716710073910.gitgitgadget@gmail.com>
+
+
+* sk/enable-prefetch-per-remote (2024-09-05) 1 commit
+ . remote: prefetch config
+
+ The prefetch task of "git maintenance" learned to honor the
+ "remote.<name>.prefetch" configuration variable, which can be used
+ to selectively disable prefetching from selected remote
+ repositories.
+
+ Retracted.
+ cf. <CAG=Um+0X3Umt-2TQ-BGeefqdGxfVoy2Ug0tGKLycrX=_pj=oJw@mail.gmail.com>
+ source: <pull.1779.v4.git.1725565398681.gitgitgadget@gmail.com>
