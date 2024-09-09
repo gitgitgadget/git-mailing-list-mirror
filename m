@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4038210EC
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 23:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D03210EC
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 23:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725923817; cv=none; b=iQdRTcMOZO5Ng5G9s4n+CGqnYGCayDpVKdyIkBw2maTzIi0KoxJnNTUqxA596/rK4rMfuvx7bppU3OqkM1vVUWGF/r6MfxL8C+toFdyQfFwTNI000/NNYa9Gto+RsfM5fcx5fBcmRmc/JlQsYfrLt6UdIYDgw1XDyEu9vwz3Cu8=
+	t=1725923911; cv=none; b=HO8SqpglVxqUD2js9coQqFp0qRRubmjG243EIrSpMVudUOvC9ZHoHILfRMJK25Kh9ZSwqc8VTI1KjoImhbQM5ijACKSqF3f/EixzrMuKFoIGRpgDk262JgwbKYs54pXUCk1Sbx1/Da9gZvWJRCEHPUEw02fA8hEWRwxhNBCqN9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725923817; c=relaxed/simple;
-	bh=8Ht51ueZy27CHoEBJztzQvbnsMmiMWFJZ32NYilwoNA=;
+	s=arc-20240116; t=1725923911; c=relaxed/simple;
+	bh=5W84GesuWOqpWj86ZaTxUz+YMEE2OElo2bKmBakVjFY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IHGJj5mTzxksKOm4RWoy2kxa0dpOVZRRq2rP/cRbcxmN75hT4VElLADq3YcG1EDz96RjCbKM5Q/cJF+bGlHwIEeFxvLCrVlStceGfR7aGmdxAsP3tK0WmOyXALLtEGxk9j2ntkcotxdxEaCqjtnciYZarmTlXuOcXfLyDKz4Pm8=
+	 Content-Type:Content-Disposition:In-Reply-To; b=BnjswJ1EPpoYcq6bwwgMgePk0vQwXLW6z7QDlH+Ss2zu4BERDNWviIBfYfTNI9dGaKXT0x3XNJKODz5IzI2Q1vM8D3igpO8Q2Pj15yqkTQLGu0tvOQqJPQo6YRgVDtagWfew8euAjA/7iSzjz7ZvvBL3XVuF6k09+4AXUhhe3bU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 32229 invoked by uid 109); 9 Sep 2024 23:16:55 -0000
+Received: (qmail 32243 invoked by uid 109); 9 Sep 2024 23:18:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Sep 2024 23:16:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Sep 2024 23:18:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24955 invoked by uid 111); 9 Sep 2024 23:16:54 -0000
+Received: (qmail 24969 invoked by uid 111); 9 Sep 2024 23:18:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Sep 2024 19:16:54 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Sep 2024 19:18:28 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 9 Sep 2024 19:16:53 -0400
+Date: Mon, 9 Sep 2024 19:18:28 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Brooke Kuhlmann <brooke@alchemists.io>
-Subject: [PATCH 5/9] ref-filter: store ref_trailer_buf data per-atom
-Message-ID: <20240909231653.GE921834@coredump.intra.peff.net>
+Subject: [PATCH 6/9] ref-filter: fix leak of %(trailers) "argbuf"
+Message-ID: <20240909231828.GF921834@coredump.intra.peff.net>
 References: <20240909230758.GA921697@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,140 +39,89 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240909230758.GA921697@coredump.intra.peff.net>
 
-The trailer API takes options via a trailer_opts struct. Some of those
-options point to data structures which require extra storage. Those
-structures aren't actually embedded in the options struct, but rather we
-pass pointers, and the caller is responsible for managing them. This is
-a little convoluted, but makes sense since some of them are not even
-concrete (e.g., you can pass a filter function and a void data pointer,
-but the trailer code doesn't even know what's in the pointer).
+When we parse a placeholder like "%(trailers:key=foo)", our atom parsing
+function is passed just the argument string "key=foo". We duplicate this
+into its own string, but never free it, causing a leak.
 
-When for-each-ref, etc, parse the %(trailers) placeholder, they stuff
-the extra data into a ref_trailer_buf struct. But we only hold a single
-static global instance of this struct. So if a format string has
-multiple %(trailer) placeholders, they'll stomp on each other: the "key"
-list will end up with entries for all of them, and the separator buffers
-will use the values from whichever was parsed last.
+We do the duplication for two reasons:
 
-Instead, we should have a ref_trailer_buf for each instance of the
-placeholder, and store it alongside the trailer_opts in the used_atom
-structure.
+  1. There's a mismatch with the pretty.c trailer-formatting code that
+     we rely on. It expects to see a closing paren, like "key=foo)". So
+     we duplicate the argument string with that extra character to pass
+     along.
 
-And that's what this patch does. Note that we also have to add code to
-clean them up in ref_array_clear(). The original code did not bother
-cleaning them up, but it wasn't technically a "leak" since they were
-still reachable from the static global instance.
+     This is probably something we could fix in the long run, but it's
+     somewhat non-trivial if we want to avoid regressing error cases for
+     things like "git log --format='%(trailer:oops'". So let's accept
+     it as a necessity for now.
 
-Reported-by: Brooke Kuhlmann <brooke@alchemists.io>
+  2. The argument parser expects to store the list of "key" entries
+     ("foo" in this case) in a string-list. It also stores the length of
+     the string in the string-list "util" field. The original caller in
+     pretty.c uses this with a "nodup" string list to avoid making extra
+     copies, which creates a subtle dependency on the lifetime of the
+     original format string.
+
+     We do the same here, which creates that same dependency. So we
+     can't simply free it as soon as the parsing is done.
+
+There are two possible solutions here. The first is to hold on to the
+duplicated "argbuf" string in the used_atom struct, so that it lives as
+long as the string_list which references it.
+
+But I think a less-subtle solution, and what this patch does, is to
+switch to a duplicating string_list. That makes it self-contained, and
+lets us free argbuf immediately. It may involve a few extra allocations,
+but this parsing is something that happens once per program, not once
+per output ref.
+
+This clears up one case that LSan finds in t6300, but there are more.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- ref-filter.c            | 36 ++++++++++++++++++++++++++++++------
- t/t6300-for-each-ref.sh | 19 +++++++++++++++++++
- 2 files changed, 49 insertions(+), 6 deletions(-)
+ ref-filter.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 4d0df546da..ebddc041c7 100644
+index ebddc041c7..54c5079dde 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -75,11 +75,11 @@ struct refname_atom {
- 	int lstrip, rstrip;
- };
+@@ -567,7 +567,8 @@ static int trailers_atom_parser(struct ref_format *format UNUSED,
+ 	atom->u.contents.trailer_opts.no_divider = 1;
  
--static struct ref_trailer_buf {
-+struct ref_trailer_buf {
- 	struct string_list filter_list;
- 	struct strbuf sepbuf;
- 	struct strbuf kvsepbuf;
--} ref_trailer_buf = {STRING_LIST_INIT_NODUP, STRBUF_INIT, STRBUF_INIT};
-+};
- 
- static struct expand_data {
- 	struct object_id oid;
-@@ -201,6 +201,7 @@ static struct used_atom {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH, C_LINES,
- 			       C_SIG, C_SUB, C_SUB_SANITIZE, C_TRAILERS } option;
- 			struct process_trailer_options trailer_opts;
-+			struct ref_trailer_buf *trailer_buf;
- 			unsigned int nlines;
- 		} contents;
- 		struct {
-@@ -568,12 +569,24 @@ static int trailers_atom_parser(struct ref_format *format UNUSED,
  	if (arg) {
- 		const char *argbuf = xstrfmt("%s)", arg);
+-		const char *argbuf = xstrfmt("%s)", arg);
++		char *argbuf = xstrfmt("%s)", arg);
++		const char *arg = argbuf;
  		char *invalid_arg = NULL;
-+		struct ref_trailer_buf *tb;
-+
-+		/*
-+		 * Do not inline these directly into the used_atom struct!
-+		 * When we parse them in format_set_trailers_options(),
-+		 * we will make pointer references directly to them,
-+		 * which will not survive a realloc() of the used_atom list.
-+		 * They must be allocated in a separate, stable struct.
-+		 */
-+		atom->u.contents.trailer_buf = tb = xmalloc(sizeof(*tb));
-+		string_list_init_nodup(&tb->filter_list);
-+		strbuf_init(&tb->sepbuf, 0);
-+		strbuf_init(&tb->kvsepbuf, 0);
+ 		struct ref_trailer_buf *tb;
+ 
+@@ -579,21 +580,23 @@ static int trailers_atom_parser(struct ref_format *format UNUSED,
+ 		 * They must be allocated in a separate, stable struct.
+ 		 */
+ 		atom->u.contents.trailer_buf = tb = xmalloc(sizeof(*tb));
+-		string_list_init_nodup(&tb->filter_list);
++		string_list_init_dup(&tb->filter_list);
+ 		strbuf_init(&tb->sepbuf, 0);
+ 		strbuf_init(&tb->kvsepbuf, 0);
  
  		if (format_set_trailers_options(&atom->u.contents.trailer_opts,
--		    &ref_trailer_buf.filter_list,
--		    &ref_trailer_buf.sepbuf,
--		    &ref_trailer_buf.kvsepbuf,
--		    &argbuf, &invalid_arg)) {
-+						&tb->filter_list,
-+						&tb->sepbuf, &tb->kvsepbuf,
-+						&argbuf, &invalid_arg)) {
+ 						&tb->filter_list,
+ 						&tb->sepbuf, &tb->kvsepbuf,
+-						&argbuf, &invalid_arg)) {
++						&arg, &invalid_arg)) {
  			if (!invalid_arg)
  				strbuf_addf(err, _("expected %%(trailers:key=<value>)"));
  			else
-@@ -2988,6 +3001,17 @@ void ref_array_clear(struct ref_array *array)
- 		struct used_atom *atom = &used_atom[i];
- 		if (atom->atom_type == ATOM_HEAD)
- 			free(atom->u.head);
-+		else if (atom->atom_type == ATOM_TRAILERS ||
-+			 (atom->atom_type == ATOM_CONTENTS &&
-+			  atom->u.contents.option == C_TRAILERS)) {
-+			struct ref_trailer_buf *tb = atom->u.contents.trailer_buf;
-+			if (tb) {
-+				string_list_clear(&tb->filter_list, 0);
-+				strbuf_release(&tb->sepbuf);
-+				strbuf_release(&tb->kvsepbuf);
-+				free(tb);
-+			}
-+		}
- 		free((char *)atom->name);
+ 				strbuf_addf(err, _("unknown %%(trailers) argument: %s"), invalid_arg);
+ 			free(invalid_arg);
++			free(argbuf);
+ 			return -1;
+ 		}
++		free(argbuf);
  	}
- 	FREE_AND_NULL(used_atom);
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index b830b542c4..e8db612f95 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -1560,6 +1560,25 @@ test_trailer_option '%(trailers:separator,key_value_separator) changes both sepa
- 	Reviewed-by,A U Thor <author@example.com>,Signed-off-by,A U Thor <author@example.com>
- 	EOF
- 
-+test_expect_success 'multiple %(trailers) use their own options' '
-+	git tag -F - tag-with-trailers <<-\EOF &&
-+	body
-+
-+	one: foo
-+	one: bar
-+	two: baz
-+	two: qux
-+	EOF
-+	t1="%(trailers:key=one,key_value_separator=W,separator=X)" &&
-+	t2="%(trailers:key=two,key_value_separator=Y,separator=Z)" &&
-+	git for-each-ref --format="$t1%0a$t2" refs/tags/tag-with-trailers >actual &&
-+	cat >expect <<-\EOF &&
-+	oneWfooXoneWbar
-+	twoYbazZtwoYqux
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_failing_trailer_option () {
- 	title=$1 option=$2
- 	cat >expect
+ 	atom->u.contents.option = C_TRAILERS;
+ 	return 0;
 -- 
 2.46.0.867.gf99b2b8e0f
 
