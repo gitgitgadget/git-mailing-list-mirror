@@ -1,133 +1,181 @@
-Received: from ams.karleo.net (ams.karleo.net [178.62.251.133])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A04D8DA
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.62.251.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C29763F8
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725897096; cv=none; b=Ik0s8UUfxLN9ZYtt5QxxPAT1+d7YSPhy7m4mCDCyvvB/9nUxVq/57u0phq22ItZAnher2enPHTauKoSvPsrfydqfcyfci4EOnnKHVwTPvto73gXgMmykLEcerCGLl6GSWEvqSbjLpEVo0JJ50mQP43i3QxtxKY0uz1b9/6p/ueY=
+	t=1725897195; cv=none; b=rIB8wl/850NCh7O0b4gMUAj6+T5bLc0trilkx+AvYelKjgLdzyxjxGUebRFhGHUNzSRdFZMAc+Hzi2IU3PswKwiEF82ssmUAQyuoN2/h8sCezAP6MZ/oCxPaD0JcioBEIkUa4ykcM/w0kreN5BfFXYi+XA4WmHmgJXPTQYXTcNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725897096; c=relaxed/simple;
-	bh=rJL5yBiO0oB+9wRqDDijMZu6qxX9zjvCaKErnoU70lU=;
-	h=From:Content-Type:Mime-Version:Subject:Date:References:To:
-	 In-Reply-To:Message-Id; b=NWDg13EoFsrZJA4xcP/mTbZvNlgHAWyOFcaXDBNsN9EllNuBJNzatCTd2Jzb9J/ioirG3+bcTFKXeKtgxaYfHudRG+7pKZRFb2jpfCuno349kJ/b8WXhsEJhjPlHrVArFqtMltkf0edr6hGEqUL/Q4g/FhZ5vpT/4PlUqLn5kyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=timm.sh; spf=pass smtp.mailfrom=timm.sh; dkim=pass (2048-bit key) header.d=timm.sh header.i=@timm.sh header.b=TEljgizi; arc=none smtp.client-ip=178.62.251.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=timm.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=timm.sh
+	s=arc-20240116; t=1725897195; c=relaxed/simple;
+	bh=6/mkdUCNJ+jxpjYzxn/ItU3CFLxRGYlu6MKTZ3HPX8E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tZJohB7rBAH+MpA7RHpLJg4WgOnRl99ugTEowJBYgrCHSe0vw0kvdjONb3Kjo5yHQE+Ge4LJFCtYjryh6GHCDn5ni8N2i/IvK39dJthEMVxHc+xpVREmWkTf2t6myaisNH3q0xN4aNSbSBKM5ZlVamUxkkrotFAb9Gxh7NN1CE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MLD3tWOv; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=timm.sh header.i=@timm.sh header.b="TEljgizi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=timm.sh; s=2020k1;
-	t=1725897092; bh=rJL5yBiO0oB+9wRqDDijMZu6qxX9zjvCaKErnoU70lU=;
-	h=From:Subject:Date:References:To:In-Reply-To:From;
-	b=TEljgiziG1cZvbbeu1Bx2hZT3ylTXVeivz3iWULH8USa0HYANIFf5f2GlxLoXkv3k
-	 MqZFdB9ut/VdW6KJhFv9Oa6FG60PAK3Q9/Z/Fm8hqM+g3DkVUzpRVbpCMuwJ/+e5Rd
-	 Rb3ZlUTR0rg4PiKmRmYUGNTE4YDq88/XSqRZO/qFhPb7OIwCdQM3TiN8gIPBCzYwg8
-	 ZXew0jwEOWxOxHEHi8cVYIHhLjVZLdd4s8J5oY41oPlPERjXlh0A77/+AHUvnqnxVD
-	 kzsqni68JVVjZso3uAJf8EY+gfePp0/luxfzaalNDcSk3luPJSNeErhD3nK3OvyLNW
-	 f731UVpOIlbZw==
-Received: from smtpclient.apple (unknown [IPv6:2a02:8108:121c:d0e0:ada1:7a23:5bc2:824])
-	by ams.karleo.net (Postfix) with ESMTPSA id A04FD404A4
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:51:32 +0000 (UTC)
-From: Okke Timm <okke@timm.sh>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MLD3tWOv"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F30A27577;
+	Mon,  9 Sep 2024 11:53:13 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6/mkdUCNJ+jx
+	pjYzxn/ItU3CFLxRGYlu6MKTZ3HPX8E=; b=MLD3tWOvIEVkUMpetdCaaWnQbMl/
+	s75Cuc6e1yL0gFuLwGoIIUoWc6Px5NHMHZYvzh5UpTgI4fbdzOY3dX7sB77rnlUv
+	9Tn03EzyYCOFgsgs5HVNYlWkRJSTtWo7desPQiW/5bU1TwgNu5+XelfzvsOGqcF3
+	gQdiUGmeAAI0Lno=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3585B27574;
+	Mon,  9 Sep 2024 11:53:13 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7DC4627573;
+	Mon,  9 Sep 2024 11:53:12 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Shubham Kanodia <shubham.kanodia10@gmail.com>,  git@vger.kernel.org,
+  Derrick Stolee <stolee@gmail.com>
+Subject: Re: Re*: What's cooking draft as of 2024-09-06 late night
+In-Reply-To: <125aab1b-d017-45c1-b93c-ee43fef9bd71@gmail.com> (Phillip Wood's
+	message of "Mon, 9 Sep 2024 10:13:07 +0100")
+References: <xmqq7cboyq9s.fsf@gitster.g>
+	<899eb2c2-bb18-4666-98d8-9255dedfac53@gmail.com>
+	<xmqq8qw3xvob.fsf_-_@gitster.g>
+	<CAG=Um+0X3Umt-2TQ-BGeefqdGxfVoy2Ug0tGKLycrX=_pj=oJw@mail.gmail.com>
+	<125aab1b-d017-45c1-b93c-ee43fef9bd71@gmail.com>
+Date: Mon, 09 Sep 2024 08:53:11 -0700
+Message-ID: <xmqqseu8u8m0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: [bug?] git diff --cached in a non-git directory
-Date: Mon, 9 Sep 2024 17:51:22 +0200
-References: <2886189B-4BB5-4230-B7AF-94F97A13D72F@timm.sh>
- <05b501db02ce$3bd49e30$b37dda90$@nexbridge.com>
-To: git@vger.kernel.org
-In-Reply-To: <05b501db02ce$3bd49e30$b37dda90$@nexbridge.com>
-Message-Id: <A95B257B-2414-43C7-B041-AC22B03D9143@timm.sh>
-X-Mailer: Apple Mail (2.3776.700.51)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 9E4D97CC-6EC3-11EF-BAD5-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Am 09.09.2024 um 17:37 schrieb <rsbecker@nexbridge.com> =
-<rsbecker@nexbridge.com>:
->=20
-> On September 9, 2024 10:26 AM, Okke Timm wrote:
->> What did you do before the bug happened? (Steps to reproduce your =
-issue) I
->> changed into a non-git directory.
->> Then I called git with 'git diff --cached', which produced this =
-error:
->>=20
->> error: unknown option `cached'
->> usage: git diff --no-index [<options>] <path> <path> [...]
->>=20
->> What did you expect to happen? (Expected behavior) A helfpul error =
-message.
->>=20
->> What happened instead? (Actual behavior) An unhelpful error message =
-saying
-> that
->> cached is an unknown option.
->>=20
->> What's different between what you expected and what actually =
-happened?
->> Me being confused why git suddenly forgot that `git diff --cached` is =
-an
-> allowed
->> option.
->>=20
->> Anything else you want to add:
->> Please fix and thank you for this great tool!
->>=20
->> Please review the rest of the bug report below.
->> You can delete any lines you don't wish to share.
->>=20
->>=20
->> [System Info]
->> git version:
->> git version 2.46.0
->> cpu: arm64
->> no commit associated with this build
->> sizeof-long: 8
->> sizeof-size_t: 8
->> shell-path: /bin/sh
->> feature: fsmonitor--daemon
->> libcurl: 8.4.0
->> zlib: 1.2.12
->> uname: Darwin 23.6.0 Darwin Kernel Version 23.6.0: Mon Jul 29 =
-21:14:21 PDT
->> 2024; root:xnu-10063.141.2~1/RELEASE_ARM64_T8103 arm64 compiler info:
->> clang: 15.0.0 (clang-1500.3.9.4) libc info: no libc information =
-available
-> $SHELL
->> (typically, interactive shell): /opt/homebrew/bin/bash
->>=20
->>=20
->> [Enabled Hooks]
->> not run from a git repository - no hooks to show
->=20
-> Because you are not in a git repository clone, the --cached option has =
-no
-> meaning. It refers to the staging area only, so when not in a clone, =
-git
-> does not consider --cached as supported because there is no connection
-> between an external directory and an internal. If you want to perform =
-a diff
-> from cached vs. external, run the git diff from inside the clone =
-referencing
-> the internal and external file after =E2=80=94.
+>> The only place `skipFetchAll` is currently documented is in this large
+>> master list of configs that are easy to miss =E2=80=94
+>> https://git-scm.com/docs/git-config.
+>
+> We could perhaps expand the documentation of `git fetch --all` to
+> mention skipFetchAll
 
+Like this (interdiff at the end)?
 
-i criticized the error message in my bug report. If it would tell me =
-that this is
-not a git repository, I=E2=80=99d be happy. But telling me that =
-`=E2=80=94cached` is not an
-allowed option for `git diff` is very unhelpful and confusing.
+--- >8 ---
+Subject: [PATCH v2] doc: remote.*.skip{DefaultUpdate,FetchAll} stops pref=
+etch
 
-The reason why I reported this is that git gets run in tools these days =
-and not
-all check for the presence of a git repository correctly all the time. =
-Also
-sometimes permission issue hide the `.git` directory for some reason =
-(reported
-for Windows and VSCode).=
+Back when 7cc91a2f (Add the configuration option skipFetchAll,
+2009-11-09) added for the sole purpose of adding skipFetchAll as a
+synonym to skipDefaultUpdate, there was no explanation about the
+reason why it was needed., but these two configuration variables
+mean exactly the same thing.
+
+Also, when we taught the "prefetch" task to "git maintenance" later,
+we did make it pay attention to the setting, but we forgot to
+document it.
+
+Document these variables as synonyms that collectively implements
+the last-one-wins semantics, and also clarify that the prefetch task
+is also controlled by this variable.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config/remote.txt   | 13 +++++++------
+ Documentation/fetch-options.txt   |  5 +++--
+ Documentation/git-maintenance.txt |  3 +++
+ 3 files changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/config/remote.txt b/Documentation/config/remot=
+e.txt
+index 8efc53e836..36e771556c 100644
+--- a/Documentation/config/remote.txt
++++ b/Documentation/config/remote.txt
+@@ -42,14 +42,15 @@ remote.<name>.mirror::
+ 	as if the `--mirror` option was given on the command line.
+=20
+ remote.<name>.skipDefaultUpdate::
+-	If true, this remote will be skipped by default when updating
+-	using linkgit:git-fetch[1] or the `update` subcommand of
+-	linkgit:git-remote[1].
++	A deprecated synonym to `remote.<name>.skipFetchAll` (if
++	both are set in the configuration files with different
++	values, the value of the last occurrence will be used).
+=20
+ remote.<name>.skipFetchAll::
+-	If true, this remote will be skipped by default when updating
+-	using linkgit:git-fetch[1] or the `update` subcommand of
+-	linkgit:git-remote[1].
++	If true, this remote will be skipped when updating
++	using linkgit:git-fetch[1], the `update` subcommand of
++	linkgit:git-remote[1], and ignored by the prefetch task
++	of `git maitenance`.
+=20
+ remote.<name>.receivepack::
+ 	The default program to execute on the remote side when pushing.  See
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-option=
+s.txt
+index e22b217fba..80838fe37e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -1,6 +1,7 @@
+ --[no-]all::
+-	Fetch all remotes. This overrides the configuration variable
+-	`fetch.all`.
++	Fetch all remotes, except for the ones that has the
++	`remote.<name>.skipFetchAll` configuration variable set.
++	This overrides the configuration variable fetch.all`.
+=20
+ -a::
+ --append::
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-mainte=
+nance.txt
+index 51d0f7e94b..9d96819133 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -107,6 +107,9 @@ with the prefetch task, the objects necessary to comp=
+lete a later real fetch
+ would already be obtained, making the real fetch faster.  In the ideal c=
+ase,
+ it will just become an update to a bunch of remote-tracking branches wit=
+hout
+ any object transfer.
+++
++The `remote.<name>.skipFetchAll` configuration can be used to
++exclude a particular remote from getting prefetched.
+=20
+ gc::
+ 	Clean up unnecessary files and optimize the local repository. "GC"
+
+Interdiff:
+  diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-opti=
+ons.txt
+  index e22b217fba..80838fe37e 100644
+  --- a/Documentation/fetch-options.txt
+  +++ b/Documentation/fetch-options.txt
+  @@ -1,6 +1,7 @@
+   --[no-]all::
+  -	Fetch all remotes. This overrides the configuration variable
+  -	`fetch.all`.
+  +	Fetch all remotes, except for the ones that has the
+  +	`remote.<name>.skipFetchAll` configuration variable set.
+  +	This overrides the configuration variable fetch.all`.
+  =20
+   -a::
+   --append::
+--=20
+2.46.0-694-g7ca3d1f4f8
+
