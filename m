@@ -1,91 +1,259 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2FC16DEB4
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 18:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702B817AE19
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 18:22:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725905867; cv=none; b=pi7Pr6I0EBaDbyXoZKQQw98OIFizXltvoYdGrvE+E3V68CI0RlQrOTwGUjXK9ggGksksXSLb5ywvwnhPRJRhK3nnNuF8CC/559ok6wWm/IFr2zxFruFGZxGF8XM7o94yuwDIsjYRGyA1k1M4tR/HXt0qAPQcttz01FeVNANpGZU=
+	t=1725906138; cv=none; b=gn8hfZlxWZQb7pHxJ6Hzumi1D1/DqyPVmx9pBRSAZgXNVaYKrQh22JZKNQN6dUYiCR48RotinmX/iJVy1kiFj05vW0EeuY9mmy3QOjU9PrVza499/Ft7JAmJrI/E9zXSPDjFP8Clqn2813sc8gdv9DbiXsMdWSn+nMtJbdv0O2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725905867; c=relaxed/simple;
-	bh=zLlv1wNCdHBz62mi8GtvB2UTjzrmM8zAgPPZwzlIMRk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CRaJLVUVZb/Z0UB/6Vp6sQAaSGxxMI3Q8HRYuQopg9O35yetc8pq1PXsVvaRQNhyM+IZvia4PytDNqdhjdOPjmF6gOdnaY9OPgZR0gxj0ASjs7teA47i2ewszkllsS1IepdlTcqCwCBi4zFdCKuXdfo7evJUJd+sd5QQhMTDMWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sxr4/+Mj; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725906138; c=relaxed/simple;
+	bh=WB22HGxQ4NKiv+t9s8YW8T5rQMh6SNVGesl5XEnOZBA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tRV6ejw0OZv8ZzKEDCgoobkXi8TzP/f40Nb2kCTEKsGxPKe9ygRjajjVQYvA+1DSiRocwvOIK/3PzI2EX0xw/9ic/uyTlu+tvHKyyWTDvMEcP8lZhihmLVG/EWEEjfUzSd5qMhXanZE3TZxt4aSlFA2M1sisNK2xb0Wunb4RTMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gf5vghwD; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sxr4/+Mj"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B643295FC;
-	Mon,  9 Sep 2024 14:17:45 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zLlv1wNCdHBz62mi8GtvB2UTjzrmM8zAgPPZwz
-	lIMRk=; b=Sxr4/+Mj8P5+0mWKWv8GXzYlr5On7pWeQVi6gzyMIztahMpotoEPt/
-	gwhPcQ8m4ZwfJ034FXgFtr2AnIeNRRZlfKNwZQue4y3e01dzD5zRJJmZSt2OJBmq
-	p5mUjamslqYyWLtJvvl5vlsT808Wb4f4n90Z21WGCDSb50suXhwzk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4285D295FB;
-	Mon,  9 Sep 2024 14:17:45 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99735295FA;
-	Mon,  9 Sep 2024 14:17:44 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Kyle Lippincott
- <spectral@google.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Josh
- Steadmon <steadmon@google.com>,  rsbecker@nexbridge.com,  Edward Thomson
- <ethomson@edwardthomson.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v8 10/14] Makefile: wire up the clar unit testing framework
-In-Reply-To: <9c74c5ae01989659c0347d2742f820d2161d274b.1725459142.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 4 Sep 2024 16:17:12 +0200")
-References: <cover.1722415748.git.ps@pks.im> <cover.1725459142.git.ps@pks.im>
-	<9c74c5ae01989659c0347d2742f820d2161d274b.1725459142.git.ps@pks.im>
-Date: Mon, 09 Sep 2024 11:17:43 -0700
-Message-ID: <xmqqfrq8r8s8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gf5vghwD"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2d88edf1340so2990509a91.1
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 11:22:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725906137; x=1726510937; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=91bMx1ewYTW9IeWSFH3UCJChyiE8XhgSe5gVvRrFe5w=;
+        b=gf5vghwDCTq6dSnnLw87sgwUigE/vxTxOkQA7eMCLTR/hSRDIJHYa+up19/DOw+jfg
+         16PmJAoLgl3i46XvSwx4WUulmheIFUki/kAkjohRz1QFJWmCGaPsHOAYHXpM1lDX5SQ8
+         zBXQMfF5NSjpKZJ4AmJ6V2GZ8iEkGrZAbII6b3IjDl7hwSsL+bKUJ2lftcs6Cdq7VE7u
+         VQ/QjA6asuKCazkXlqIBxIXa84bRM4bE+gEJep7MStfpgEP8RUYl1vHEmlm6X1IWDIm4
+         x9iiC1EGGXabszFvtkFKT0ndq7fDLrFTc3DBkfsCLmQ4QJDcwcOH/DjblYw2EH9Ob8Jg
+         8HYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725906137; x=1726510937;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=91bMx1ewYTW9IeWSFH3UCJChyiE8XhgSe5gVvRrFe5w=;
+        b=Wov9KZb+BUgGsYHVRgZm6coD4iFyYGUbFRF/dWkYJp7s2wbAxspaRQdgQMlFQTiFz0
+         zG3NEgb2f+6RJsDsAC0RdMF1s5oy2vSbAO1x8tyOjYQeJ47UMtm5phSEx+1IMDBt/03v
+         oB0J+cBZcZUFVhfAZaDXsLpSdN3LSNQN+w+B5sok32Jv2HzehIpfS99kpXfLWtYjlCAm
+         6blcg/eVeXk2rQClAe/Xal/u9X6wVEVJwp5kEh9URqfdNM786BO/7mD+PgKc9a84t8kU
+         MNb3TEqxWClQBmdQp5VqPZK0Tzu7VHRfoJV+gZnCMy4PClof4mUPvsdbUumx2VQUdoL0
+         a+ug==
+X-Forwarded-Encrypted: i=1; AJvYcCWpf8NP2ZwTbw/rSupoHnRA5mUs9hxvNM2jFu13mb8Mf/nLq2/t3CEZ3qBwsxQwAdKJWJs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXZbGJQnY5/XYBbW4cru1yjc7yBbn6rHSwmgteZLdgLZOOJUJN
+	YrEL5OWShB/xanMGKIcz0OLnhYdioNzqpEsHbXHjQTckxfnqh5v8Gu/iYgCIBKThCzlGqAoDTLG
+	WZKT86tnUlw/JzAecrnjPpmk1AWg=
+X-Google-Smtp-Source: AGHT+IHI9DaIi3vKDPRbrnyFJ15fxbws6IrAtINjjieBKhKPuKDol4lhQbZtmoiqTlw53MpLiP+mriEnNCGZy7C3Qg4=
+X-Received: by 2002:a17:90b:3007:b0:2d8:f0b4:9acb with SMTP id
+ 98e67ed59e1d1-2dad513545emr10631409a91.34.1725906136466; Mon, 09 Sep 2024
+ 11:22:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CF49571C-6ED7-11EF-A83C-9B0F950A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1782.git.1725875232922.gitgitgadget@gmail.com> <xmqqzfogsrqo.fsf@gitster.g>
+In-Reply-To: <xmqqzfogsrqo.fsf@gitster.g>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Mon, 9 Sep 2024 23:51:39 +0530
+Message-ID: <CAG=Um+0GvFzdAZrCgoS52xh9DF2pntQ+7i+vqYMFQf-MWr3H5A@mail.gmail.com>
+Subject: Re: [PATCH] remote: introduce config to set prefetch refs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Patrick Steinhardt [ ]" <ps@pks.im>, "Derrick Stolee [ ]" <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> +UNIT_TESTS_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
-> +UNIT_TESTS_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TESTS_SUITES))
-> +UNIT_TESTS_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
-> +UNIT_TESTS_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+On Mon, Sep 9, 2024 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Shubham Kanodia via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > +static void apply_prefetch_refspec(struct remote *remote, struct refsp=
+ec *rs)
+> > +{
+> > +     if (remote->prefetch_refs.nr > 0) {
+> > +             int i;
+> > +             for (i =3D 0; i < remote->prefetch_refs.nr; i++) {
+> > +                     const char *src =3D remote->prefetch_refs.items[i=
+].string;
+> > +                     struct strbuf dst =3D STRBUF_INIT;
+> > +
+> > +                     strbuf_addf(&dst, "refs/prefetch/%s/", remote->na=
+me);
+> > +                     if (starts_with(src, "refs/heads/")) {
+> > +                             strbuf_addstr(&dst, src + 11);
+> > +                     } else if (starts_with(src, "refs/")) {
+> > +                             strbuf_addstr(&dst, src + 5);
+> > +                     } else {
+> > +                             strbuf_addstr(&dst, src);
+> > +                     }
+> > +
+> > +                     refspec_appendf(rs, "%s:%s", src, dst.buf);
+> > +                     strbuf_release(&dst);
+> > +             }
+> > +     }
+> > +}
+> >  static void filter_prefetch_refspec(struct refspec *rs)
+> >  {
+> >       int i;
+> > @@ -502,8 +526,11 @@ static struct ref *get_ref_map(struct remote *remo=
+te,
+> >       int existing_refs_populated =3D 0;
+> >
+> >       filter_prefetch_refspec(rs);
+> > -     if (remote)
+> > +     if (remote) {
+> >               filter_prefetch_refspec(&remote->fetch);
+> > +             if (prefetch)
+> > +                     apply_prefetch_refspec(remote, rs);
+> > +     }
+>
+> Hmph, a separate helper function with a separate loop was something
+> I did not expect to see.  Looking at the filter_prefetch_refspec(),
+> it already limits what it prefetched to what we usually fetch from
+> the remote, and filteres out the tag namespace.  I was hoping that
+> this will _extend_ that existing mechanism, as if by default we
+> have prefetch refspec "!refs/tags/*", which can be replaced by the
+> configuration to say "!refs/tags/* !refs/changes/*", or positive
+> ones like "refs/heads/*".  The filtering semantics should be
+>
+>  * a refspec whose src matches negated pattern (like !refs/tags/*)
+>    is rejected.
+>
+>  * if the prefetch_refs has *only* positive patterns, then a refspec
+>    whose src does not match *any* of the pattern is rejected.
+>
+>  * a refspec that is not rejected is prefetched.
+>
+> But the above still allows what filter_prefetch_refspec() does by
+> default, without any way to narrow it down, and then adds its own
+> entries.
+>
+> This is a half-tangent, but while studying for this topic, I noticed
+> that filter_prefetch_refspec() triggers O(n) loop every time a fetch
+> refspec is skipped.
+>
+> It all comes from 2e03115d (fetch: add --prefetch option,
+> 2021-04-16) but rewriting the loop to use two pointers into the
+> array seemed trivial and the result seemed a bit more readable.
+>
+> Your "further limit the prefetched refs with configuration" feature
+> would probably replace this part of the updated code:
+>
+> +               /* skip ones that do not store, or store in refs/tags */
+> +               if (!rs->items[scan].dst ||
+> +                   (rs->items[scan].src &&
+> +                    starts_with(rs->items[scan].src,
+> +                                ref_namespace[NAMESPACE_TAGS].ref))) {
+>
+> That is, instead of "skip ones that do not store, or store in refs/tags",
+> filtering using the configured value (probably implemented as a helper
+> function) would be used as the condition of the if statement.
+>
+> Thoughts?
+>
+>  builtin/fetch.c | 46 ++++++++++++++++++++++++----------------------
+>  1 file changed, 24 insertions(+), 22 deletions(-)
+>
+> diff --git c/builtin/fetch.c w/builtin/fetch.c
+> index 693f02b958..219302ed67 100644
+> --- c/builtin/fetch.c
+> +++ w/builtin/fetch.c
+> @@ -436,37 +436,38 @@ static void find_non_local_tags(const struct ref *r=
+efs,
+>
+>  static void filter_prefetch_refspec(struct refspec *rs)
+>  {
+> -       int i;
+> +       int scan, store;
+>
+>         if (!prefetch)
+>                 return;
+>
+> -       for (i =3D 0; i < rs->nr; i++) {
+> +       /*
+> +        * scan refspec items with 'scan', and decide to either
+> +        * mangle and store it in 'store', or omit it from the result.
+> +        */
+> +       for (scan =3D store =3D 0; scan < rs->nr; scan++, store++) {
+>                 struct strbuf new_dst =3D STRBUF_INIT;
+>                 char *old_dst;
+>                 const char *sub =3D NULL;
+>
+> -               if (rs->items[i].negative)
+> -                       continue;
+> -               if (!rs->items[i].dst ||
+> -                   (rs->items[i].src &&
+> -                    starts_with(rs->items[i].src,
+> -                                ref_namespace[NAMESPACE_TAGS].ref))) {
+> -                       int j;
+> -
+> -                       free(rs->items[i].src);
+> -                       free(rs->items[i].dst);
+> -
+> -                       for (j =3D i + 1; j < rs->nr; j++) {
+> -                               rs->items[j - 1] =3D rs->items[j];
+> -                               rs->raw[j - 1] =3D rs->raw[j];
+> -                       }
+> -                       rs->nr--;
+> -                       i--;
+> +               /* negative ones are kept as-is */
+> +               if (rs->items[scan].negative) {
+> +                       if (store !=3D scan)
+> +                               rs->items[store] =3D rs->items[scan];
+>                         continue;
+>                 }
+>
+> -               old_dst =3D rs->items[i].dst;
+> +               /* skip ones that do not store, or store in refs/tags */
+> +               if (!rs->items[scan].dst ||
+> +                   (rs->items[scan].src &&
+> +                    starts_with(rs->items[scan].src,
+> +                                ref_namespace[NAMESPACE_TAGS].ref))) {
+> +                       refspec_item_clear(&rs->items[scan]);
+> +                       store--; /* compensate for loop's auto increment =
+*/
+> +                       continue;
+> +               }
 > +
->  UNIT_TEST_PROGRAMS += t-ctype
->  UNIT_TEST_PROGRAMS += t-example-decorate
->  UNIT_TEST_PROGRAMS += t-hash
-> @@ -2714,6 +2721,7 @@ OBJECTS += $(XDIFF_OBJS)
->  OBJECTS += $(FUZZ_OBJS)
->  OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
->  OBJECTS += $(UNIT_TEST_OBJS)
-> +OBJECTS += $(UNIT_TESTS_OBJS)
+> +               old_dst =3D rs->items[scan].dst;
+>                 strbuf_addstr(&new_dst, ref_namespace[NAMESPACE_PREFETCH]=
+.ref);
+>
+>                 /*
+> @@ -478,11 +479,12 @@ static void filter_prefetch_refspec(struct refspec =
+*rs)
+>                         sub =3D old_dst;
+>                 strbuf_addstr(&new_dst, sub);
+>
+> -               rs->items[i].dst =3D strbuf_detach(&new_dst, NULL);
+> -               rs->items[i].force =3D 1;
+> +               rs->items[store].dst =3D strbuf_detach(&new_dst, NULL);
+> +               rs->items[store].force =3D 1;
+>
+>                 free(old_dst);
+>         }
+> +       rs->nr =3D store;
+>  }
+>
+>  static struct ref *get_ref_map(struct remote *remote,
 
-What is the longer term direction we envision?  Do we aim to retire
-the UNIT_TEST_* and end up with only the clar based tests?
+How should we handle the related `remote.<remote-name>.fetch` config?
+In an earlier discussion, it was discussed that =E2=80=94
+`.prefetchref` should override `.fetch` completely (instead of
+patching it) which makes sense to me.
+At the moment my reading is that `filter_prefetch_refspec` still
+filters / modifies `remote->fetch`.
 
-At least until that happens, can we have "UNIT_TESTS" -> "CLAR_TEST"
-or something that makes it less confusing?  Every time I see merge
-conflicts around this area in the Makefile, I get puzzled and wonder
-which one is which.
+```
+if (remote) {
+        filter_prefetch_refspec(&remote->fetch);
+}
+```
 
-Thanks.
-
-
+So we'll need to clear refspecs and re-populate perhaps?
