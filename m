@@ -1,53 +1,53 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D81B3B2B
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 11:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0521AF4F0
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 11:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725881498; cv=none; b=CoNjztOtsVzJAbbnq4i3QIwSAE0RUGnpXnFy3KRSzpXCRR3PYb3DXq5f5NP8h13rzMdRumstM8VK2CALbCe4SZxJMHGvYNIXtwTsrkwj8GeImFfjUrIftJwRbhLuUrxwCQ0zKpCpxJRd4/w65rY9hteV34XioGyAabDPOwTq6vs=
+	t=1725881500; cv=none; b=UresFMiDcSAys4nFNY9AeAdAh6aK0mAnB9fmKbrjfBNd5Jrf4Bhl//1UErSZJfA8sVdwxQyTcihLj2gDZW4S0V121nKJlcniQm0eJjEbMQr8R32fmkn6XFqc0Q9uRURgcwef9NCIOn6fhKdNrjJ2zfrayXZ31bTIJjxQgLXWhns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725881498; c=relaxed/simple;
-	bh=O3fkYiOPfuuDQhKtOxqNDut+i6MK+7mRh3Twxq5pWew=;
+	s=arc-20240116; t=1725881500; c=relaxed/simple;
+	bh=BaTY/OTN72ADIQwHJACLHlcM4oEniZSOBlm6vxWg1dY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fiLffQVPZ5bEwvRAqPtQBAB3I4su+2oxFQYyobDngFpxTaM7NAd38jxot8iRFyij9Yrq0yC2ABaWszXVdtYB0NTwYsAKs9R8lBhoCMOHcaIUDHUSpnt/MKLrUxvsRXgEDNKYiZ81U1UvVTkLpkN+XCgogde35lDPrmX7roFYyF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bySUbohZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BURFyzE1; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=iH3Eow4VtPbdPchpljS+dVU4OmXFhLyqyMswd/7sEqk6DJo0LRWFW0ulvQc8azIAMQIpEhZtdh+tUf3YzL/cjq5E/0G8B+vt2+0JcemNHZfdd+RsrZomzMtzmqK2Dgp5iGoB/7l7rYXqSF0uY4avoUKh7x/QCHuRPtCo3OeM+KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=skKsnqTE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FoMjXECK; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bySUbohZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BURFyzE1"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 737DF11400B9;
-	Mon,  9 Sep 2024 07:31:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="skKsnqTE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FoMjXECK"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7676B138016B;
+	Mon,  9 Sep 2024 07:31:37 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Sep 2024 07:31:35 -0400
+  by phl-compute-07.internal (MEProxy); Mon, 09 Sep 2024 07:31:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725881495; x=1725967895; bh=rVUtv7HmHS
-	v96N0JP6rAe3C8XMoLvBQ3vihaW04QYUY=; b=bySUbohZI6LTVMc38lYb71naw/
-	59KE1B75Os5oS9GVjypPQwLFEsijPorwyXfa6swSfaKiplWlBzae1GwtGwxyRvrq
-	ZefDJcoXyDMpCV/Gsrr2z2qAG33rUji4rUBci2pH5q6W+l03jtfRSBwvdqv/Xujp
-	5keomqNR36bU2JGgmcsJO6fe+D93c5a76AL4hApv+6a+rbTieXQF5P2etlhx2hfo
-	jCape1m23Oap+ju+5SqLd39JtH11uOZ1Kr9KgZFy8jlUHBymry8i9cVKD82qu7Rz
-	hStmFY/lHyL8/ODqCt9qGbOtY56m+7CpQwIC/onhHLpHbjFx7WH+M2OzK3FA==
+	:subject:to:to; s=fm1; t=1725881497; x=1725967897; bh=qmXvOgnQAj
+	IwVrM3rF/ee0ommHR2mZthHSmbNvKH46c=; b=skKsnqTEYT8zbocsq7TZF7wTZH
+	XD5CuHI7y6w5BNlzBZik8kiWPuPooj/wzzfgL0Cj7INsoRZFKzgAJ7irXam/r/jO
+	bbrqU2eSnJGYHlNF5E73UQmcouLwi+Rrdj1ZrSq5aGh8tmZRYofpthPaAymzrtkF
+	1gEAOIjOSMBKPil6d50bmfyPJjuxW/P4ZYIwDVA087WLUsxC8wXyI5jIVi8EsCPD
+	2JwfOXFJDYJyMaPy4Vp8AVJuihTVuVNTflGTi/8uZyRlJuAmgioUc2wLwlRK1ZRO
+	XTjyxjNSwKfnzLBzi3ZBlWgziRcKoXz1CSJu1tqBshU79pkpSOIsMLxSPY5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725881495; x=1725967895; bh=rVUtv7HmHSv96N0JP6rAe3C8XMoL
-	vBQ3vihaW04QYUY=; b=BURFyzE1/BT35GnZTuxfiKCtxHlgr42sJJCYsN0b/ZMP
-	bOq1EoHg3P1D5mcv2WLU80mNg/ucaeHRdxyfSEP2zTjf20WOzcHo6MsPUpu/8pRW
-	VgNYsklIV9yu7JaaX3Q6EuSVt4H3c5fYRnEB9uoTWnkULGjrA1HxX5qB8VmazY2b
-	yiR0UBmRgTpheyufahqFMcNfPDTepu6ggCnWjSyIls/Nzm4pvl2XeOjzD1r/vOFC
-	6/eTMhD3xgeTVYgHyuYrxAaQJwIp4oFj89tqqnbWaaI9xap6ksxwKg7SD6bhD3DC
-	0xjgaTKmv/0MEMbwATOM8aE9kF5wV+PKLmuDp9RvBw==
-X-ME-Sender: <xms:l9zeZnqPx1LvDaN1KkommOAC0BVDU_Blpyp6106XAmacW8OOiTfaWg>
-    <xme:l9zeZhrPTeI1tseZB7y_fEbvlg0uzjjQn_EaUZr-RC713My3MSt3PChIGp_950-5A
-    cSs-ZKZJXlW04cWQg>
-X-ME-Received: <xmr:l9zeZkPiirK5qj1VSLY3FNz2AGYuHUOtiiXiilvTnl7kDU4xzVDKZe7aOLkT3fZZD1cOMgP4a2nBr0Xp6SZRxEU9RxuaypH2eGhKix93Xyo>
+	fm1; t=1725881497; x=1725967897; bh=qmXvOgnQAjIwVrM3rF/ee0ommHR2
+	mZthHSmbNvKH46c=; b=FoMjXECKM99+1fXbtFNcDD+yGZ8EWszN4Oo6lLhDFocD
+	AtRU+ZcY2hwE4O7RhAlt8EVsRC3TEXTxa0ULHPnVOaAAqo80c/tIkyi7Zzgk+hib
+	YbSqIBgms6ALg0/ECO9aIsVr4dBN2M9skALHJnncDsW540SZwifY63JCy+TwACPN
+	hh9wuPugWV+VRv8vYpmnnbXAigRks7594hy+/kkj7gKs1WBeMSSSvED0wW6k3D4h
+	uxRsnKACsNf5ZA3SBunjIMNWTCKjGLPNFZvXRuTtw3BY9NyfsFgVjy9/3/0WzGGR
+	bp5Oqeu2PGBjiexOIqsrt92hJGi1uEBjSPQ8W4jeRw==
+X-ME-Sender: <xms:mdzeZrFuRWaTVJsVQrwYX2aL7A5c0KbDYk4123lbEff5UalUeutt3w>
+    <xme:mdzeZoVDJb4XMBDCeX76I9cWidzjYT3ylI9UxM2EzClWjP8sFScggxXf0xN_2IpuE
+    _PJI4YQS3_SmQk72w>
+X-ME-Received: <xmr:mdzeZtKVg_yv3eli6rvSFRM_67f85Y2HUB4w1NauwU_wdyUGXnm3Zo8al4dxTkuqml51PgmUo-PU91R78XUFJVMdnhWUkw79q9Q6FT22Bgw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeijedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
@@ -58,23 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeijedgvdeiucetufdoteggod
     gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
     homh
-X-ME-Proxy: <xmx:l9zeZq70EcHsvEAwzGNyXHM62TOphUO5-4jyiVZ8Uqw_U80Y1LMZqQ>
-    <xmx:l9zeZm5GJQdwIij2TQkqMNkphwZCMSmF_ibp1BDoNfbDHtyO3rtyBw>
-    <xmx:l9zeZihtdFpXDO8yo8ln3k-tz-sFlG41xEY0TAvmbgWGeFkVMua78A>
-    <xmx:l9zeZo77IeGNt8-e4KUKqeZCZ98I1_NMoMy3-Jhb9ElvbCIcGDDYBA>
-    <xmx:l9zeZmFzPU_EosmV6boc4duytDMwdp2na7LPeZkN1SE9SlIWX-ZGngqz>
+X-ME-Proxy: <xmx:mdzeZpHiHDsE9-PMzUR_eCu5vidTeVXOM2mbYBG8USz9cK2rMFo9VA>
+    <xmx:mdzeZhWCyvbo7P2Hj9Hbi4FfETUdjo1a1RK002BDs96X0injM-LM8g>
+    <xmx:mdzeZkPdWqeYTBcn2gCQ7boRER2Msr7aua_XutJc8Qyg7dBQlmC9Jg>
+    <xmx:mdzeZg3522p4WZcVop1OMugoKRIO_aGbeOXXLSzef9Hg_bQw0KI5rQ>
+    <xmx:mdzeZujcuSuw_XcNC4AK5QH-IuTeXeG3ADg1pJ9jx9GiXshrL_HtS56i>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Sep 2024 07:31:34 -0400 (EDT)
+ 9 Sep 2024 07:31:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 51b5fc24 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Sep 2024 11:31:31 +0000 (UTC)
-Date: Mon, 9 Sep 2024 13:31:32 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 484de5ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Sep 2024 11:31:34 +0000 (UTC)
+Date: Mon, 9 Sep 2024 13:31:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 1/6] refs: properly apply exclude patterns to namespaced refs
-Message-ID: <8d347bc5599e2a679d50fed073e0f09ffdad85c4.1725881266.git.ps@pks.im>
+Subject: [PATCH 2/6] builtin/receive-pack: fix exclude patterns when
+ announcing refs
+Message-ID: <0317a5a7edeab29b7cad31d11140bd99f459144f.1725881266.git.ps@pks.im>
 References: <cover.1725881266.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,164 +87,96 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1725881266.git.ps@pks.im>
 
-Reference namespaces allow commands like git-upload-pack(1) to serve
-different sets of references to the client depending on which namespace
-is enabled, which is for example useful in fork networks. Namespaced
-refs are stored with a `refs/namespaces/$namespace` prefix, but all the
-user will ultimately see is a stripped version where that prefix is
-removed.
+In `write_head_info()` we announce references to the remote client. We
+need to honor "transfer.hideRefs" here so that we do not announce any
+references that the client shouldn't be able to learn about. This is
+done via two separate mechanisms:
 
-The way that this interacts with "transfer.hideRefs" is not immediately
-obvious: the hidden refs can either apply to the stripped references, or
-to the non-stripped ones that still have the namespace prefix. In fact,
-the "transfer.hideRefs" machinery does the former and applies to the
-stripped reference by default, but rules can have "^" prefixed to switch
-this behaviour to iinstead match against the rull reference name.
+  - We hand over exclude patterns to the reference backend. We can only
+    honor "plain" exclude patterns here that do not have prefixes with
+    special meaning such as "^" or "!". Filtering down the references is
+    handled by `hidden_refs_to_excludes()`.
 
-Namespaces are exclusively handled at the generic "refs" layer, the
-respective backends have no clue that such a thing even exists. This
-also has the consequence that they cannot handle hiding references as
-soon as reference namespaces come into play because they neither know
-whether a namespace is active, nor do they know how to strip references
-if they are active.
+  - In `show_ref_cb()` we perform a second check against hidden refs.
+    For one this is done such that we can handle those special prefixes.
+    And second, handling exclude patterns in ref backends is optional,
+    so we also have to handle "normal" patterns.
 
-Handling such exclude patterns in `refs_for_each_namespaced_ref()` and
-`refs_for_each_fullref_in_prefixes()` is broken though, as both support
-that the user passes both namespaces and exclude patterns. In the case
-where both are set we will exclude references with unstripped names,
-even though we really wanted to exclude references based on their
-stripped names.
+The special-meaning "^" prefix alters whether a hidden ref applies to
+the namespace-stripped reference name or the full name. So while we
+would usually call `refs_for_each_namespaced_ref()` to only get those
+references in the current namespace, we can't because we'd get the
+already-rewritten reference names. Instead, we are forced to use
+`refs_for_each_fullref_in()` and then manually strip away the namespace
+prefix such that we have access to both names.
 
-This only surfaces when:
+But this also means that we do not get namespace handling for exclude
+patterns, which `refs_for_each_namespaced_ref()` brings for free. This
+results in a bug because we potentially end up hiding away references
+based on their namespaced name and not on the stripped name as we really
+should be doing.
 
-  - A repository uses reference namespaces.
-
-  - "transfer.hideRefs" is active.
-
-  - The namespaced references are packed into the "packed-refs" file.
-
-None of our tests exercise this scenario, and thus we haven't ever hit
-it. While t5509 exercises both (1) and (2), it does not happen to hit
-(3). It is trivial to demonstrate the bug though by explicitly packing
-refs in the tests, and then we indeed surface the breakage.
-
-Fix this bug by prefixing exclude patterns with the namespace in the
-generic layer.
+Fix this by manually rewriting the exclude patterns to their namespaced
+variants.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                           | 35 ++++++++++++++++++++++++++++----
- refs.h                           |  9 ++++++++
- t/t5509-fetch-push-namespaces.sh |  1 +
- 3 files changed, 41 insertions(+), 4 deletions(-)
+ builtin/receive-pack.c           | 18 ++++++++++++++++--
+ t/t5509-fetch-push-namespaces.sh |  8 ++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index ceb72d4bd74..b3a367ea12c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1517,6 +1517,19 @@ const char **hidden_refs_to_excludes(const struct strvec *hide_refs)
- 	return hide_refs->v;
- }
- 
-+const char **get_namespaced_exclude_patterns(const char **exclude_patterns,
-+					     const char *namespace,
-+					     struct strvec *out)
-+{
-+	if (!namespace || !*namespace || !exclude_patterns || !*exclude_patterns)
-+		return exclude_patterns;
-+
-+	for (size_t i = 0; exclude_patterns[i]; i++)
-+		strvec_pushf(out, "%s%s", namespace, exclude_patterns[i]);
-+
-+	return out->v;
-+}
-+
- const char *find_descendant_ref(const char *dirname,
- 				const struct string_list *extras,
- 				const struct string_list *skip)
-@@ -1634,11 +1647,19 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
- 				 const char **exclude_patterns,
- 				 each_ref_fn fn, void *cb_data)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 3f35140e489..478c62ca836 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -339,12 +339,26 @@ static void show_one_alternate_ref(const struct object_id *oid,
+ static void write_head_info(void)
  {
--	struct strbuf buf = STRBUF_INIT;
-+	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
-+	struct strbuf prefix = STRBUF_INIT;
- 	int ret;
--	strbuf_addf(&buf, "%srefs/", get_git_namespace());
--	ret = do_for_each_ref(refs, buf.buf, exclude_patterns, fn, 0, 0, cb_data);
--	strbuf_release(&buf);
+ 	static struct oidset seen = OIDSET_INIT;
++	struct strvec excludes_vector = STRVEC_INIT;
++	const char **exclude_patterns;
 +
-+	exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
-+							   get_git_namespace(),
-+							   &namespaced_exclude_patterns);
-+
-+	strbuf_addf(&prefix, "%srefs/", get_git_namespace());
-+	ret = do_for_each_ref(refs, prefix.buf, exclude_patterns, fn, 0, 0, cb_data);
-+
-+	strvec_clear(&namespaced_exclude_patterns);
-+	strbuf_release(&prefix);
- 	return ret;
- }
++	/*
++	 * We need access to the reference names both with and without their
++	 * namespace and thus cannot use `refs_for_each_namespaced_ref()`. We
++	 * thus have to adapt exclude patterns to carry the namespace prefix
++	 * ourselves.
++	 */
++	exclude_patterns = get_namespaced_exclude_patterns(
++		hidden_refs_to_excludes(&hidden_refs),
++		get_git_namespace(), &excludes_vector);
  
-@@ -1719,6 +1740,7 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
- 				      const char **exclude_patterns,
- 				      each_ref_fn fn, void *cb_data)
- {
-+	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
- 	struct string_list prefixes = STRING_LIST_INIT_DUP;
- 	struct string_list_item *prefix;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -1730,6 +1752,10 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
- 		strbuf_addstr(&buf, namespace);
- 	namespace_len = buf.len;
- 
-+	exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
-+							   namespace,
-+							   &namespaced_exclude_patterns);
+ 	refs_for_each_fullref_in(get_main_ref_store(the_repository), "",
+-				 hidden_refs_to_excludes(&hidden_refs),
+-				 show_ref_cb, &seen);
++				 exclude_patterns, show_ref_cb, &seen);
+ 	for_each_alternate_ref(show_one_alternate_ref, &seen);
 +
- 	for_each_string_list_item(prefix, &prefixes) {
- 		strbuf_addstr(&buf, prefix->string);
- 		ret = refs_for_each_fullref_in(ref_store, buf.buf,
-@@ -1739,6 +1765,7 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
- 		strbuf_setlen(&buf, namespace_len);
- 	}
- 
-+	strvec_clear(&namespaced_exclude_patterns);
- 	string_list_clear(&prefixes, 0);
- 	strbuf_release(&buf);
- 	return ret;
-diff --git a/refs.h b/refs.h
-index f8b919a1388..3f774e96d18 100644
---- a/refs.h
-+++ b/refs.h
-@@ -859,6 +859,15 @@ int ref_is_hidden(const char *, const char *, const struct strvec *);
-  */
- const char **hidden_refs_to_excludes(const struct strvec *hide_refs);
- 
-+/*
-+ * Prefix all exclude patterns with the namespace, if any. This is required
-+ * because exclude patterns apply to the stripped reference name, not the full
-+ * reference name with the namespace.
-+ */
-+const char **get_namespaced_exclude_patterns(const char **exclude_patterns,
-+					     const char *namespace,
-+					     struct strvec *out);
+ 	oidset_clear(&seen);
++	strvec_clear(&excludes_vector);
 +
- /* Is this a per-worktree ref living in the refs/ namespace? */
- int is_per_worktree_ref(const char *refname);
+ 	if (!sent_capabilities)
+ 		show_ref("capabilities^{}", null_oid());
  
 diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index 05090feaf92..98e8352b6cc 100755
+index 98e8352b6cc..f029ae0d286 100755
 --- a/t/t5509-fetch-push-namespaces.sh
 +++ b/t/t5509-fetch-push-namespaces.sh
-@@ -96,6 +96,7 @@ test_expect_success 'hide namespaced refs with transfer.hideRefs' '
+@@ -124,6 +124,14 @@ test_expect_success 'try to update a ref that is not hidden' '
+ 	git -C original push pushee-namespaced main
  '
  
- test_expect_success 'check that transfer.hideRefs does not match unstripped refs' '
++test_expect_success 'git-receive-pack(1) with transfer.hideRefs does not match unstripped refs during advertisement' '
++	git -C pushee update-ref refs/namespaces/namespace/refs/heads/foo/1 refs/namespaces/namespace/refs/heads/main &&
 +	git -C pushee pack-refs --all &&
- 	GIT_NAMESPACE=namespace \
- 		git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
- 		ls-remote "ext::git %s ." >actual &&
++	test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/foo &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C original push pushee-namespaced main &&
++	test_grep refs/heads/foo/1 trace
++'
++
+ test_expect_success 'try to update a hidden full ref' '
+ 	test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/main" &&
+ 	test_must_fail git -C original push pushee-namespaced main
 -- 
 2.46.0.519.g2e7b89e038.dirty
 
