@@ -1,62 +1,62 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02BF1BBBCB
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 13:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCC51BC067
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 13:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725890218; cv=none; b=QHSciZ9T2/Q/6Elej1paTQDYzjgm6gklIu0QA2Z95c3u+XEb+V+eyogd1XPg/vMimzvDNGEQPKHrzV+i7TlJejRz5J8hQhARBRsGDWF2sqjBCmzLXygH24LIs1svpxODXB40aD0x+LRyNyr1j28pcFyXPDJhn4NOvSEZkDAnzkU=
+	t=1725890219; cv=none; b=GNJ6jbaxobUKJVMu0jJZ5/A84PX6NfjfMaoq6M6icM5HAS7JwIuKFASi8G1icfzc2S/Q7oLOvIkFA6XmOQXD1xxKJhgahBF2554ckYs2vltr3P87lH+86PN93VMm64yenyQVIGXFnWSlLaAWQGH8WQzmXbP1GY9IQOyOdbnrJGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725890218; c=relaxed/simple;
-	bh=ZTdGffGQw/6yzjEDsa+fFvN7dJNRjvQoaeBIrQ5Uxag=;
+	s=arc-20240116; t=1725890219; c=relaxed/simple;
+	bh=LIbYpyg40h8KI84Y7XQIUYsrf6lVnrVw6MeLaiv5Dcs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UDHDmHueAcM9ACyuOyTaQvJtk5g1Acy0QtohEFlMIssD8J6iBFmzz5gY9/nn1buHC4Fem3slUJH1nn1gtYPiywDPSEFUvfIZOxCKEuxqGmuNOYKPa1EvEknyooR/OYsrNE7tT0ggwUGX8RZMwAE2C5al68irIiKi4XWY5dMe0TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZGAYs/0; arc=none smtp.client-ip=209.85.167.47
+	 MIME-Version:To:Cc; b=O0qf64epkdsGBZsRFesFIamN3UTy2n92gTw+WzqDHf1H1Nf64FBhkFfIdA/mRfS2vMaABK9lO/P4VVXWPIQXh/wopDa3b5Veen7BiFpd4NnUlmrCOuatotcztHu9sXqaI4mIpBmdGxN2QEEdQu6SmuJdb3rvhcT0ef0WLk15SKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DDIT/kIm; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZGAYs/0"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5356aa9a0afso7702594e87.2
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 06:56:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DDIT/kIm"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a8d24f98215so260304766b.1
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 06:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725890214; x=1726495014; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725890216; x=1726495016; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WzsVBni1hzwxIPcF8nKjotNk3XdDVEZ5QFNKwj56i64=;
-        b=YZGAYs/0C4uiDcgU0+Sr/UD3kG2jQIRWU/otZ8L4hLvLmb3TG9RPGY3oBZ8OwVtgd2
-         ItPruIetU6rFp+eM8bhr0ch4c5jLZBsn+YVcAN+AXaa2MZoFie0TaOLTX+vBX4Y8RA+O
-         kxTEA7mwlIO1xShUOw2I2NvuLkNaI1nZBKExqnQU2C/3bseroL/hlk106JvFN0ODeld5
-         f5/bAiqOa5JGlwRISX43M1ceNQpjaDakGWsKG59LE60z/lvMKhSKdP7+bhgyN8igG/PZ
-         DjBkxsLci57EJyp4eHkctPfpc46dJ/0CXsjTLTHLrUzpVK6Y+mvGqfxoFQFoSV7sQxiw
-         rT0Q==
+        bh=165VGxlrc3YaB/DNDnlGL8IbdWEFSagy6qmMWTpQjNo=;
+        b=DDIT/kImChm3eH1s4BlSsPT9E6bS5D4zScCz1t9uBpqgUNmdasQl25l5xiTyZA6HTA
+         oj5lQfHzvgCkrXcv0sqJlpdTyvWxOOO0W0A9Jo/SRmwXZupVi+BzPX7bjGu1CFLtrjvt
+         QabKlkFUgL2tsrUWk/DTvcPWZrAbu7t8UAasPGh/VcwMbgzjz/3TBz8MfFX3rVOp035h
+         lGo6RWR6fY4hhYzlbsn5MViPgE16KvJy62kHJrIIqIfcKi30kj2tFJy50TzqQOuukSTS
+         mivUnilx9srI8LSAU+NiEiLBdMJSkl4RYomiZnKOQb8QHvRfCt/qRHjFzG4c7NPlKmRS
+         0xgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725890214; x=1726495014;
+        d=1e100.net; s=20230601; t=1725890216; x=1726495016;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WzsVBni1hzwxIPcF8nKjotNk3XdDVEZ5QFNKwj56i64=;
-        b=nXvNtTZ4cybNd/XHhEFJO4d0CMYz7Fuw7pv7Mabm+8dUSi6u0S/fHaLpKTwN3/0yjc
-         bGyYlJJszQBgAjjc/jciYvl+Y1CRp3+vlHQR17G7EZQYB19CylUpf2Z6n9s+C6vSRCWK
-         HB+jWreTs/rmDcRa8oyjLGANpiLniycnGsRlZYzzUVCVP4S74mOxTb5P+qwf4MYlKL/z
-         MkQYevXvk748UGqmZ9C7TtzdsZHL0SsoH7/Gp/RLfpodv5EJ6JuGQPVi5vkFY0Kk3tYV
-         6jpKTesmOcmBcDKe1v68sVJrmYM9lWfA+wNNZ6qdkUtoOmhTYh3ax2k1tv2x64iiEqlm
-         HF+g==
-X-Gm-Message-State: AOJu0YwUSU4h4hj9H8ZUN8QuHqBuxnpKj+c2TERywZA8FP8hMaCQ9oxS
-	bFA3Xn5O0QrtsQJ+b6zqQfbQyC4oEwstIWlfCiFEwRSNdTUO7ldgpvMWXg==
-X-Google-Smtp-Source: AGHT+IEjALTE/VTRr907ECzSYVB1/IEDUsqErdpcn0qZnML2zRVuJFTMYEDyAXX6C+XqZOj780HzYg==
-X-Received: by 2002:a05:6512:3d89:b0:536:2356:5dce with SMTP id 2adb3069b0e04-53658818beemr10680681e87.58.1725890213789;
-        Mon, 09 Sep 2024 06:56:53 -0700 (PDT)
+        bh=165VGxlrc3YaB/DNDnlGL8IbdWEFSagy6qmMWTpQjNo=;
+        b=g3GZn53HVD6rZEBy7h3IaMmxfIq7jNeUG6x7ZoYlB8JSSP/YnIPajeRWutsH9wdZ2O
+         4FP9J6gbq5H1X5Xu8f9vWD/vOPo7bGiF3tlOfwUbCutWr42uj/PTBXf9NBTRCmaYEt1W
+         dHoWdKhmKeQe2l8j4JDmcV413+xg9KD6G/9+3Kzi/dLeNUvPJ5fa10JaqLJ0dXwWgOuI
+         6rnbl5cyye2zyARR+yQB4Va3FpPiMJQA0c9O/cnXCM40/ecFGHeiOQePfnL5qJ4GjE9n
+         lkJLnjX0JCHRQCPo0jLzatB3l4dOQnGG1bRwF5A+IUF4QNquOA3vYEgArRpZSlar/M9T
+         afbQ==
+X-Gm-Message-State: AOJu0Yw8xHbIHk+jJzilpfuR8jybYFk0xTFgiFUC0aD6wnHfuXsE1SJZ
+	z20vvrB/vor0/7QvnVmrQuWkf4r+vUkopOsXIJ1HDAHh2jRCst7gZtrTJg==
+X-Google-Smtp-Source: AGHT+IFhObGdqiDnjOF2mK9yhS42Pts07tRjnyo2kNnfaSoI/Ereux9GidCcoVs4ULkUgEFeTlFpZw==
+X-Received: by 2002:a17:907:6d0b:b0:a8d:25d3:65e4 with SMTP id a640c23a62f3a-a8d25d3ef49mr529034266b.36.1725890215745;
+        Mon, 09 Sep 2024 06:56:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d2582d490sm351696466b.14.2024.09.09.06.56.53
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25a4428fsm345264666b.97.2024.09.09.06.56.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 06:56:53 -0700 (PDT)
-Message-Id: <eb0aa5f4e94647c12c595964ca1fe1c2020f0642.1725890211.git.gitgitgadget@gmail.com>
+        Mon, 09 Sep 2024 06:56:54 -0700 (PDT)
+Message-Id: <5bcbcce66650e0a4addabcc86fe834a6c9b1761c.1725890211.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
 References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 09 Sep 2024 13:56:48 +0000
-Subject: [PATCH 2/4] git-repack: update usage to match docs
+Date: Mon, 09 Sep 2024 13:56:50 +0000
+Subject: [PATCH 4/4] p5314: add a size test for name-hash collisions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,58 +79,186 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-This also adds the '--full-name-hash' option introduced in the previous
-change and adds newlines to the synopsis.
+Add a new test-tool helper, name-hash, to output the value of the
+name-hash algorithms for the input list of strings, one per line.
+
+Create a performance test that uses test_size to demonstrate how
+collisions occur for these hash algorithms. This test helps inform
+someone as to the behavior of the name-hash algorithms for their repo
+based on the paths at HEAD.
+
+My copy of the Git repository shows modest statistics around the
+collisions of the default name-hash algorithm:
+
+Test                                              this tree
+-----------------------------------------------------------------
+5314.1: paths at head                                        4.5K
+5314.2: number of distinct name-hashes                       4.1K
+5314.3: number of distinct full-name-hashes                  4.5K
+5314.4: maximum multiplicity of name-hashes                    13
+5314.5: maximum multiplicity of fullname-hashes                 1
+
+Here, the maximum collision multiplicity is 13, but around 10% of paths
+have a collision with another path.
+
+In a more interesting example, the microsoft/fluentui [1] repo had these
+statistics at time of committing:
+
+Test                                              this tree
+-----------------------------------------------------------------
+5314.1: paths at head                                       19.6K
+5314.2: number of distinct name-hashes                       8.2K
+5314.3: number of distinct full-name-hashes                 19.6K
+5314.4: maximum multiplicity of name-hashes                   279
+5314.5: maximum multiplicity of fullname-hashes                 1
+
+[1] https://github.com/microsoft/fluentui
+
+That demonstrates that of the nearly twenty thousand path names, they
+are assigned around eight thousand distinct values. 279 paths are
+assigned to a single value, leading the packing algorithm to sort
+objects from those paths together, by size.
+
+In this repository, no collisions occur for the full-name-hash
+algorithm.
+
+In a more extreme example, an internal monorepo had a much worse
+collision rate:
+
+Test                                              this tree
+-----------------------------------------------------------------
+5314.1: paths at head                                      221.6K
+5314.2: number of distinct name-hashes                      72.0K
+5314.3: number of distinct full-name-hashes                221.6K
+5314.4: maximum multiplicity of name-hashes                 14.4K
+5314.5: maximum multiplicity of fullname-hashes                 2
+
+Even in this repository with many more paths at HEAD, the collision rate
+was low and the maximum number of paths being grouped into a single
+bucket by the full-path-name algorithm was two.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-repack.txt | 4 +++-
- builtin/repack.c             | 4 +++-
- t/t0450/txt-help-mismatches  | 1 -
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ Makefile                  |  1 +
+ t/helper/test-name-hash.c | 23 ++++++++++++++++++++++
+ t/helper/test-tool.c      |  1 +
+ t/helper/test-tool.h      |  1 +
+ t/perf/p5314-name-hash.sh | 41 +++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 67 insertions(+)
+ create mode 100644 t/helper/test-name-hash.c
+ create mode 100755 t/perf/p5314-name-hash.sh
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index c902512a9e8..457a793fa89 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -9,7 +9,9 @@ git-repack - Pack unpacked objects in a repository
- SYNOPSIS
- --------
- [verse]
--'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
-+'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
-+	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
-+	[--write-midx] [--full-name-hash]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 87d0cd4d2f2..4fa2c25246d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -38,7 +38,9 @@ static int run_update_server_info = 1;
- static char *packdir, *packtmp_name, *packtmp;
- 
- static const char *const git_repack_usage[] = {
--	N_("git repack [<options>]"),
-+	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
-+	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
-+	   "[--write-midx] [--full-name-hash]"),
- 	NULL
- };
- 
-diff --git a/t/t0450/txt-help-mismatches b/t/t0450/txt-help-mismatches
-index 28003f18c92..c4a15fd0cb8 100644
---- a/t/t0450/txt-help-mismatches
-+++ b/t/t0450/txt-help-mismatches
-@@ -45,7 +45,6 @@ rebase
- remote
- remote-ext
- remote-fd
--repack
- reset
- restore
- rev-parse
+diff --git a/Makefile b/Makefile
+index 91f65d7dc57..a5ce284cf4a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -812,6 +812,7 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-match-trees.o
+ TEST_BUILTINS_OBJS += test-mergesort.o
+ TEST_BUILTINS_OBJS += test-mktemp.o
++TEST_BUILTINS_OBJS += test-name-hash.o
+ TEST_BUILTINS_OBJS += test-oid-array.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-pack-mtimes.o
+diff --git a/t/helper/test-name-hash.c b/t/helper/test-name-hash.c
+new file mode 100644
+index 00000000000..15fb8f853c1
+--- /dev/null
++++ b/t/helper/test-name-hash.c
+@@ -0,0 +1,23 @@
++/*
++ * test-name-hash.c: Read a list of paths over stdin and report on their
++ * name-hash and full name-hash.
++ */
++
++#include "test-tool.h"
++#include "git-compat-util.h"
++#include "pack-objects.h"
++#include "strbuf.h"
++
++int cmd__name_hash(int argc UNUSED, const char **argv UNUSED)
++{
++	struct strbuf line = STRBUF_INIT;
++
++	while (!strbuf_getline(&line, stdin)) {
++		uint32_t name_hash = pack_name_hash(line.buf);
++		uint32_t full_hash = pack_full_name_hash(line.buf);
++
++		printf("%10"PRIu32"\t%10"PRIu32"\t%s\n", name_hash, full_hash, line.buf);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index f8a67df7de9..4a603921002 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -43,6 +43,7 @@ static struct test_cmd cmds[] = {
+ 	{ "match-trees", cmd__match_trees },
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
++	{ "name-hash", cmd__name_hash },
+ 	{ "oid-array", cmd__oid_array },
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "pack-mtimes", cmd__pack_mtimes },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index e74bc0ffd41..56a83bf3aac 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -37,6 +37,7 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
+ int cmd__match_trees(int argc, const char **argv);
+ int cmd__mergesort(int argc, const char **argv);
+ int cmd__mktemp(int argc, const char **argv);
++int cmd__name_hash(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__pack_mtimes(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
+new file mode 100755
+index 00000000000..9fe26612fac
+--- /dev/null
++++ b/t/perf/p5314-name-hash.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
++
++GIT_TEST_PASSING_SANITIZE_LEAK=0
++export GIT_TEST_PASSING_SANITIZE_LEAK
++
++test_perf_large_repo
++
++test_size 'paths at head' '
++	git ls-tree -r --name-only HEAD >path-list &&
++	wc -l <path-list
++'
++
++test_size 'number of distinct name-hashes' '
++	cat path-list | test-tool name-hash >name-hashes &&
++	cat name-hashes | awk "{ print \$1; }" | sort -n | uniq -c >name-hash-count &&
++	wc -l <name-hash-count
++'
++
++test_size 'number of distinct full-name-hashes' '
++	cat name-hashes | awk "{ print \$2; }" | sort -n | uniq -c >full-name-hash-count &&
++	wc -l <full-name-hash-count
++'
++
++test_size 'maximum multiplicity of name-hashes' '
++	cat name-hash-count | \
++		sort -nr | \
++		head -n 1 | \
++		awk "{ print \$1; }"
++'
++
++test_size 'maximum multiplicity of fullname-hashes' '
++	cat full-name-hash-count | \
++		sort -nr | \
++		head -n 1 | \
++		awk "{ print \$1; }"
++'
++
++test_done
 -- 
 gitgitgadget
-
