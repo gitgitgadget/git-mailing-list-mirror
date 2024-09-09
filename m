@@ -1,52 +1,56 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF82224F6
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 18:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2FC16DEB4
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 18:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725905192; cv=none; b=QTnxURIJEzK2EjWfjrioegIRKfBpPx6FYeITCyfIkwssMJJ/tahC12DgSoCBwgadFkudQTK7Cd7GWnuy6nCVfCkTwxWDqxve6m+hSCq6i99JrJACtdOceI7ChDKbb6YLVdzexQDWMV86cZbTJrcL+/VeZanvHjJJfQagSiKVovg=
+	t=1725905867; cv=none; b=pi7Pr6I0EBaDbyXoZKQQw98OIFizXltvoYdGrvE+E3V68CI0RlQrOTwGUjXK9ggGksksXSLb5ywvwnhPRJRhK3nnNuF8CC/559ok6wWm/IFr2zxFruFGZxGF8XM7o94yuwDIsjYRGyA1k1M4tR/HXt0qAPQcttz01FeVNANpGZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725905192; c=relaxed/simple;
-	bh=HHplnm1ilSW136k8Kz4OlitIxBNi7ng8hT0ZSx6hQJY=;
+	s=arc-20240116; t=1725905867; c=relaxed/simple;
+	bh=zLlv1wNCdHBz62mi8GtvB2UTjzrmM8zAgPPZwzlIMRk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GfMr7JpWSkTohNih3yM21XCM9ibcIgQvFiM+wbr4VSolH8pPeBd+aI1LnN++cJT6+xSkm837EjlMbY4oOME8W55e329UnzWuiCZ7Mov9ECXf+EI3uRTBzbfFXyQuvU0T/xDxhkrYltvNDNY8ugTSPLaUDlRe+WF7kKYBrCNnMZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dFLEJJyr; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=CRaJLVUVZb/Z0UB/6Vp6sQAaSGxxMI3Q8HRYuQopg9O35yetc8pq1PXsVvaRQNhyM+IZvia4PytDNqdhjdOPjmF6gOdnaY9OPgZR0gxj0ASjs7teA47i2ewszkllsS1IepdlTcqCwCBi4zFdCKuXdfo7evJUJd+sd5QQhMTDMWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sxr4/+Mj; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dFLEJJyr"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 69A4120CD4;
-	Mon,  9 Sep 2024 14:06:29 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sxr4/+Mj"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B643295FC;
+	Mon,  9 Sep 2024 14:17:45 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HHplnm1ilSW136k8Kz4OlitIxBNi7ng8hT0ZSx
-	6hQJY=; b=dFLEJJyrs2DHY1Nzore80BRp8n//ZjNPlB/oH53GzSZO8q8L5qzRo0
-	i2w6ki7vP5Mn/zpqkeAzuv9Z/PF7phu2EVwyAHTkMAqP6wMXL1X7nn6WQ3cBGh8F
-	n6jtAesXalA+ZcVW6B264uo+NeISGe8++s6Y8lMbUQbHqAuOWh1Ls=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 606D220CD3;
-	Mon,  9 Sep 2024 14:06:29 -0400 (EDT)
+	:content-type; s=sasl; bh=zLlv1wNCdHBz62mi8GtvB2UTjzrmM8zAgPPZwz
+	lIMRk=; b=Sxr4/+Mj8P5+0mWKWv8GXzYlr5On7pWeQVi6gzyMIztahMpotoEPt/
+	gwhPcQ8m4ZwfJ034FXgFtr2AnIeNRRZlfKNwZQue4y3e01dzD5zRJJmZSt2OJBmq
+	p5mUjamslqYyWLtJvvl5vlsT808Wb4f4n90Z21WGCDSb50suXhwzk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4285D295FB;
+	Mon,  9 Sep 2024 14:17:45 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C56BB20CD0;
-	Mon,  9 Sep 2024 14:06:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99735295FA;
+	Mon,  9 Sep 2024 14:17:44 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
-In-Reply-To: <pull.1785.git.1725890210.gitgitgadget@gmail.com> (Derrick Stolee
-	via GitGitGadget's message of "Mon, 09 Sep 2024 13:56:46 +0000")
-References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
-Date: Mon, 09 Sep 2024 11:06:27 -0700
-Message-ID: <xmqqjzfkr9b0.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  Kyle Lippincott
+ <spectral@google.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Josh
+ Steadmon <steadmon@google.com>,  rsbecker@nexbridge.com,  Edward Thomson
+ <ethomson@edwardthomson.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v8 10/14] Makefile: wire up the clar unit testing framework
+In-Reply-To: <9c74c5ae01989659c0347d2742f820d2161d274b.1725459142.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 4 Sep 2024 16:17:12 +0200")
+References: <cover.1722415748.git.ps@pks.im> <cover.1725459142.git.ps@pks.im>
+	<9c74c5ae01989659c0347d2742f820d2161d274b.1725459142.git.ps@pks.im>
+Date: Mon, 09 Sep 2024 11:17:43 -0700
+Message-ID: <xmqqfrq8r8s8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,39 +60,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 3C77D0B8-6ED6-11EF-B68B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ CF49571C-6ED7-11EF-A83C-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> One way to find some improvement in these repositories is to increase the
-> window size, which was an initial indicator that the delta compression could
-> be improved, but was not a clear indicator. After some digging (and
-> prototyping some analysis tools) the main discovery was that the current
-> name-hash algorithm only considers the last 16 characters in the path name
-> and has some naturally-occurring collisions within that scope.
+> +UNIT_TESTS_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
+> +UNIT_TESTS_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TESTS_SUITES))
+> +UNIT_TESTS_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+> +UNIT_TESTS_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+> +
+>  UNIT_TEST_PROGRAMS += t-ctype
+>  UNIT_TEST_PROGRAMS += t-example-decorate
+>  UNIT_TEST_PROGRAMS += t-hash
+> @@ -2714,6 +2721,7 @@ OBJECTS += $(XDIFF_OBJS)
+>  OBJECTS += $(FUZZ_OBJS)
+>  OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
+>  OBJECTS += $(UNIT_TEST_OBJS)
+> +OBJECTS += $(UNIT_TESTS_OBJS)
 
-Yes, as I explained in the other message, this "collision" is an
-integral part of the design to allow us gather candidates together
-that may yield good deltas among them.  In addition, header files
-whose names end with ".h" tend to share a bit comment at the
-beginning of them in many projects, and the proximity (not
-"collision") of the hash value is used to make them delta candidates
-with each other.
+What is the longer term direction we envision?  Do we aim to retire
+the UNIT_TEST_* and end up with only the clar based tests?
 
-I do agree that considering files at the same path from different
-(but close-by) revisions as the prime candidates is very important,
-but if you spread the "collissions" very thin by using "uniform
-distribution", I am afraid that you'd end up discarding anything but
-the blobs at the same path, which may go too far.  Having name hash
-value that are close by no longer has any meaning in such a system.
+At least until that happens, can we have "UNIT_TESTS" -> "CLAR_TEST"
+or something that makes it less confusing?  Every time I see merge
+conflicts around this area in the Makefile, I get puzzled and wonder
+which one is which.
 
-I hope you can find a solution that strikes a good balance at the
-end of the series (I saw only the first step), but I suspect an easy
-way to avoid the downsides you observed is to use both.  Compare
-with a handful of blobs taken from nearby commits (the original
-object order is roughly in traversal order, and you can take
-advantage of that fact) from exactly the same path (using your
-"uniform distribution") before comparing with the blobs with close
-value (of the current function) like the current implementation
-does, may go a long way.
+Thanks.
+
 
