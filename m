@@ -1,97 +1,61 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E564E18CBE6
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 23:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFC718CC0D
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 23:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725922830; cv=none; b=sEpIk4FkPV2c0N33kqXNGYCFMfA54aQoDEC08wTtp01Rn+nexZ8MADAA6eM4QlSZSWuYXTOvZrBbTcY9kftKazVNOT/n6G35ywYHgJ3fHXrzfuNczAU9fqIetDyIH2y1AcfRQ+raE50ZbGqsujGRvgI7K05b2s2f+hF7p8LCeJo=
+	t=1725923015; cv=none; b=KgqGGsljD6HzTthJDjcjHL5x8+FSegcoj6OO1ULxgHiW+uPgUQgy2BJQ1NIxOGGnZgOuiuZXOt7Lm9MNJwWDI4DWLUYsDjL+i258aIJc4Zs6MPuImDfKBlOZ7dOpvcGs81hjaX1WHew6PeTidSwezgqBCNSVvBlrOFGgN1UvXwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725922830; c=relaxed/simple;
-	bh=6Lp+08hPZN+t/j0j8emQeHJmCTm55+RP66qBTny4pJo=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LuT91HEEm16jk08DBQ5f9F8e/D1R8CWeGsTLFtJ+LVm1xINXriCnJtYCA2AIKHGozGWs8+LGPMyk98arRZdryPsStoi0ZsoMHXBI2Biz7JlzdLMNf9GZdtWJdcd/eAsxqi8zOhvgLP/XG3qu++1ppPEs1puqHWcDemi7c5SIfZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pIowIUCz; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pIowIUCz"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 578A22D302;
-	Mon,  9 Sep 2024 19:00:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=6
-	Lp+08hPZN+t/j0j8emQeHJmCTm55+RP66qBTny4pJo=; b=pIowIUCzhlsXoa8oa
-	fwKuG9BMWUElKKsTz9xd4V/8H330nxxooGUuqvrWeFw8/ue4Zfsx3PJsP8CqKZ5d
-	fKkmKdGLUqCR9Si3r1f9+SV2bFHEIUzLJ0pxoTc0m/pdQVUHus8Iu9LgNv9hdNdS
-	B6jBsjnXHETgZfH7tKjlxwpYew=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4ED8D2D301;
-	Mon,  9 Sep 2024 19:00:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C2EA2D300;
-	Mon,  9 Sep 2024 19:00:21 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] ci: remove 'Upload failed tests' directories' step from
- linux32 jobs
-Date: Mon, 09 Sep 2024 16:00:20 -0700
-Message-ID: <xmqqy140o2kb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1725923015; c=relaxed/simple;
+	bh=K7T4nCFBeLmeTl+dyPb0kQhp9n3uQvRSOHRHzffg7pc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uHiiXZNlRE+gwD74nYTmTiE9mg2hOojt/IreuCXbTpcu4imtFBgEzab5JpsUfFI9QOjWjR7S+VnNuE0X+6yQdkXwRPRvY2G1/HmWLqTWiXwBjOnrUgCyrdqUco/NY9ZokFQCVi3W+fqKx4E12RyIkdUrTxa2I1sMDNBPoWzDQcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 32163 invoked by uid 109); 9 Sep 2024 23:03:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Sep 2024 23:03:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24794 invoked by uid 111); 9 Sep 2024 23:03:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Sep 2024 19:03:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 9 Sep 2024 19:03:31 -0400
+From: Jeff King <peff@peff.net>
+To: Brooke Kuhlmann <brooke@alchemists.io>
+Cc: git@vger.kernel.org
+Subject: Re: Fix issue with formatting multiple trailer keys
+Message-ID: <20240909230331.GA921644@coredump.intra.peff.net>
+References: <EF5AE27D-B7CE-4337-B928-6073837218CA@alchemists.io>
+ <20240906223402.GA1221600@coredump.intra.peff.net>
+ <5A3FD50B-46F1-4000-8AAD-895A4CB4F33F@alchemists.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4A737D4C-6EFF-11EF-A047-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5A3FD50B-46F1-4000-8AAD-895A4CB4F33F@alchemists.io>
 
-Linux32 jobs seem to be getting:
+On Fri, Sep 06, 2024 at 05:09:08PM -0600, Brooke Kuhlmann wrote:
 
-    Error: This request has been automatically failed because it uses a
-    deprecated version of `actions/upload-artifact: v1`. Learn more:
-    https://github.blog/changelog/2024-02-13-deprecation-notice-v1-and-v2-of-the-artifact-actions/
+> Use of a custom separator is a nifty trick. Thanks. A little
+> unintuitive but works. Definitely would be neat if you patch this to
+> work without the custom separator, though.
 
-before doing anything useful.  For now, disable the step.
+The separator will always be required (even if you use multiple
+%(trailer) blocks), because it overrides the default of terminating with
+a newline. And we can't switch that default without breaking
+compatibility for existing users.
 
-Ever since actions/upload-artifact@v1 got disabled, mentioning the
-offending version of it seems to stop anything from happening.  At
-least this should run the same build and test.
+So I think after my series you'll have:
 
-See
+  %(trailers:key=Files,separator=) %(trailers:key=Duration,separator=)
 
-    https://github.com/git/git/actions/runs/10780030750/job/29894867249
+or similar.
 
-for example.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- .github/workflows/main.yml | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 1ee0433acc..97f9b06310 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -365,12 +365,6 @@ jobs:
-       with:
-         name: failed-tests-${{matrix.vector.jobname}}
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
--    - name: Upload failed tests' directories
--      if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname == 'linux32'
--      uses: actions/upload-artifact@v1 # cannot be upgraded because Node.js Actions aren't supported in this container
--      with:
--        name: failed-tests-${{matrix.vector.jobname}}
--        path: ${{env.FAILED_TEST_ARTIFACTS}}
-   static-analysis:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
--- 
-2.46.0-701-g65fb39cb77
-
+-Peff
