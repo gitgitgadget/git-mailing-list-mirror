@@ -1,21 +1,32 @@
 Received: from ams.karleo.net (ams.karleo.net [178.62.251.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71BC4C6D
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 14:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992F1B81D8
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 14:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.62.251.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725892394; cv=none; b=gAMF7sSpZ8zOvyY9d+04y5uyO+w2H0WGKgWtq0hm042SLpJdnfaxmjpCPVJwkS/VC40Ec7V45NNmYMh4USbReegTVlDMxDnUBWLP1887OOnJl4JMlkkvQGhuaADs5RyF91u1IKhLmsAuB9GLmWIEPx60rNV6mUcOPvXJcizr6R8=
+	t=1725893321; cv=none; b=YT1B8bYU3vS/N6+QHCrkjNqDwgr2Ch/11SOvU/FF2LT/k6lCSOz3kcrN0Sq0de/d/M7y4BcBhw6t4vbGpLlY15Fn76zrWMMJzPmJ+Ei/5TVRbracfMSG2WAhUW6kgQr/zjBuBiEsi3dWJECEq4b4q0NZ3biTyCcSN/Ve1yRtFWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725892394; c=relaxed/simple;
+	s=arc-20240116; t=1725893321; c=relaxed/simple;
 	bh=B3vTHCfpLC+uA0FYwc55QiZ+xXjmguNlY0tvYmHkd+s=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=sozxujqUMPZK9fg+de2ASjj4FID643fII4ZDUGZbOSQ2ekD4kZ8OWvePuZXOPIqIknKjWrjmKrz5oibHJTenWThrT/Ak2CdxKXMh57xW719lyCT2X1uedBUlz8sUjBaecB1SDKGPrJ541fsN5BupUtygWntYZll4wXCSCYmwIwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=timm.sh; spf=pass smtp.mailfrom=timm.sh; arc=none smtp.client-ip=178.62.251.133
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=NBsBg1Hh8IKU1r2fFaBeZ74+wjDWD2Hwp7RR1+vaqfjhvBsGLs6PcjaCOXYIRKZcxlhdtRnqwSuWeVr6z6g5KpUEUGcVxXMS8QSPeV6VtB+CP2XcjA0n9sfsiAa0n09hBZfJ1lpPare0hR6Mu/tOE+VbHPf+Y3ggW7ntMygIZaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=timm.sh; spf=pass smtp.mailfrom=timm.sh; dkim=pass (2048-bit key) header.d=timm.sh header.i=@timm.sh header.b=bd5Ss0zb; arc=none smtp.client-ip=178.62.251.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=timm.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=timm.sh
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=timm.sh header.i=@timm.sh header.b="bd5Ss0zb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=timm.sh; s=2020k1;
+	t=1725893317; bh=B3vTHCfpLC+uA0FYwc55QiZ+xXjmguNlY0tvYmHkd+s=;
+	h=From:Subject:Date:To:From;
+	b=bd5Ss0zbQWZ5iHYGhYe8U+3Le9YDuXyB7Kd3rUGaJklopc22Wo3eZCsjhFs7cSQkg
+	 6Dtils01X50afpzeAtdRHg5jLttpfNz27zxp4vqgYjc5HaU+qfutvBMTX998ApQblW
+	 dxbAictYixtyTrlZjUT+RYcNBXxj1YLIa13S5A7qVMCkKyNhvYAvF+CEAFCfIN76Hf
+	 dfFxSRtZTAzUNeC4zxRsybdbomqZ3e6cq60j7ZzwFG8UkLgR8MdL4NW3dP6vwMgDrt
+	 xpeixGAfT8ZyKjnHid6/NkftklKLWVz/PdGfQosxjbzhroMU1KmJQw1dpO9xWieyNG
+	 yaaZh5AZfz5Aw==
 Received: from smtpclient.apple (unknown [IPv6:2a02:8108:121c:d0e0:ada1:7a23:5bc2:824])
-	by ams.karleo.net (Postfix) with ESMTPSA id 288D6403D4
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 14:26:36 +0000 (UTC)
+	by ams.karleo.net (Postfix) with ESMTPSA id 3E7E04015F
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 14:48:37 +0000 (UTC)
 From: Okke Timm <okke@timm.sh>
 Content-Type: text/plain;
 	charset=us-ascii
@@ -27,8 +38,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
 Subject: [bug?] git diff --cached in a non-git directory
-Message-Id: <2886189B-4BB5-4230-B7AF-94F97A13D72F@timm.sh>
-Date: Mon, 9 Sep 2024 16:26:20 +0200
+Message-Id: <92DCB50E-A2F6-4334-A0C5-A9CB2D29AC18@timm.sh>
+Date: Mon, 9 Sep 2024 16:48:26 +0200
 To: git@vger.kernel.org
 X-Mailer: Apple Mail (2.3776.700.51)
 
