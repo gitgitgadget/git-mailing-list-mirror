@@ -1,53 +1,53 @@
 Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8742417C8B
-	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9308120B04
+	for <git@vger.kernel.org>; Mon,  9 Sep 2024 15:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725894256; cv=none; b=otA8podDgcvpyInYUysKbM+P1SrQZyIM1MVFOWAwSnsSvsTSMnjjDPOUvlcKJLuLcA2l89smENv7Mz07FrFFt2z8xARG4wj4GNtNtoEt7hgQ6zRZHkJDG1WD9O4MWq1SErOU8333T8NdvUhKoV9RJpEH8eIXZYR2bXihnueF9Ok=
+	t=1725894262; cv=none; b=WX9PN0OS701eQWqGj9+WvWnhbUaDDUQwQifanjUHIhMkMyV/BIna5sPSD9fmzm7YLMfhsbrPjme+FsPziCTkxkaShBu/GaydrOb3G7uwLuMqi1gsSKM2ZI6GGRv7MRcSvFgXQX/akY8KPIBCyd+ISLIHEhIpTZ+cNLDkQYgKlZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725894256; c=relaxed/simple;
-	bh=iE7uIalGhETTnWiNqZeXiNaIU+4GOuDMpKQ2gswZ3ag=;
+	s=arc-20240116; t=1725894262; c=relaxed/simple;
+	bh=/vPhQJG6YfVsRecylZNwOyuD7Pgxc12HjILpSovbGYk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h9DpRTSRPv3pjOEaK687I16EFxokVcEv8vfSZiKkeUxkUW84gXC+iII15MldZmwW+F1nUYiALmBe8B05dEUbCWHOmt64hPiQPh7Wq9uPRvulS2iDSDM753V7uUT+be+I5nW9MZ7i2g9TNyA8PxGZKYk9mQGWtWy6VtDNmIyJxdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=avn1hJPB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JFphVrcn; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=lB0d+OpOq+vyslA3kq0HVVmMZoVAQu9usMx0OCRREBqkZblt3w6nJhSTfOMJMb6nuELo7fSHCA6cqyTezYOePBtzvUyZo/dGNjrtSLuWAvkp1dMZ2dv6nbExQ4XL4encaSJFVDSqoKQeEgNBVszImYpBvvKe/sj7NHWkHdk+beM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cqAtrQva; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i5ftWk64; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="avn1hJPB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JFphVrcn"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7745E1380238;
-	Mon,  9 Sep 2024 11:04:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cqAtrQva";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i5ftWk64"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id B8709138024E;
+	Mon,  9 Sep 2024 11:04:19 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 09 Sep 2024 11:04:13 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 09 Sep 2024 11:04:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725894253; x=1725980653; bh=CF22VDkaqR
-	uU5Q+Tyxtim5giAlfifXUUc9VeCHKkRbU=; b=avn1hJPBxQLQsemKSf6URhxI+G
-	Ql5ASSdX+J3ljxrR51RNlKWOwji/315hMBhDOuzML7zHEswTE8mx/8/9nuBTiBx6
-	9sa7ImgozAY+2lfsPd50HH5NJvlYF8SPhG2koxNAGtPtkZmkcrHAt1xUNiaJ738V
-	pw4OKdZZvmtxSaBxp8OolRkXElx8tKlS21RVTJrwPSMFiZfbg1CKM1LVJMjNFGHA
-	d/C7eBMn2CJWFj9ueGeo/9lcI+5mDfTecf/XoGIHIrca/GxKhSKhyGVZ15Z8+Dxn
-	lo2b1bfMan/TjXuhNkUK2JRtMWqwhPSsDLcB2LuLIjlU/MKtDfmC6kVc7rDg==
+	:subject:to:to; s=fm1; t=1725894259; x=1725980659; bh=jJa6edKC+S
+	QpuTPgylN+MtqYT1Jiqkw/c7KQmydlpAk=; b=cqAtrQvav7NKRElMkFhzMZMJeW
+	OzygO7jAEiUDonFVox59qCAE1imMUDf7plQxG9zIT9cpevF5uO6RzvLLyDKsGsyY
+	Oi1RwO/Oxo4ofQ4Ew3NtfBx2Kqtt7RMb8ribYoXcKtUEveFE6afq21NfXR07GXL+
+	2+L5yLIBrlvZG7txr5vsx+Rn68K7ykbVWX3qgXFw3yGVfYNQTC43sxpGxpo6jS31
+	D86GCwwy3280nE/rKvpb6JVDMOjosr7T3HSPBjleifoykceOR1VMa9YNXzUoExsN
+	Nd93y1wCmtOkRzyMVnPAysZOi14nr8o8P87dW8jz2Zh1U2tMMjTN44mDhdmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725894253; x=1725980653; bh=CF22VDkaqRuU5Q+Tyxtim5giAlfi
-	fXUUc9VeCHKkRbU=; b=JFphVrcn3zvPXUb4/l8Rx4fJarCtfHXy0o9cuRAxdy4S
-	T+uKoCm63kOkQSMdB598duZSARHxJsHlfCXc/wkCXwoCnju7DxXft+ISxfgl8ZXd
-	+dkxFd0tU/xtp8dqMRsgiLlIE43Ap/tsjdmgZUKk4hlh0zl3ZpAsOy4X/NWKWhdn
-	TiT1NT+534mMGXSqCb0znsoSAkveirtGybaMySjef31I8iOaBeGBwYW8YljtUOLQ
-	Jg/DtjhY0KU1VI17CxjOxZkU/etJxooYLXtbZkWVFADEiymvNmOixSIENgk03low
-	XxnomzFs1CvMTYxr08+g8dpZU44eqi+/gFLFDezOuA==
-X-ME-Sender: <xms:bQ7fZg6LpbyVLZcpdoIQtZC_0veXnP3CBktbGo6gctHHBysF3nqTfw>
-    <xme:bQ7fZh7lSKoNpyaQF2qw-zW-tD5J7gLxjkBICdVC2IEEDPcxI1YthQQ5nZGRqTmAA
-    S2gBRtY8Q1A9Vkirg>
-X-ME-Received: <xmr:bQ7fZvfZ6jE2VFmhnlPLFC0wQv2gGE7gH_v-LFHwq_iGbwq4Bu-ic5Ps-lofrSj6pg96eUnK_f0fnJs0MSrVRL1UGglMQ_9tgTGOY1TDVRE>
+	fm1; t=1725894259; x=1725980659; bh=jJa6edKC+SQpuTPgylN+MtqYT1Ji
+	qkw/c7KQmydlpAk=; b=i5ftWk64paz4cM04b5BTYDqEj4YcuB0108GEdzwOLK/n
+	9k7KTUFOJuzmgYTO/j8De3s407Jz1Z9aYsQyiiE+L1925DSWmIiPr9I0Gbk7Luzt
+	6BchicAeRY3rERNrrnDdlkfZ3PfUSwOaIg9THvoy/eodNZ1Ft5gGr7DW5AMzRVt+
+	xHCO2/hvmm/PO/0lwiBbTAk0J5/eOWv65LJw/iEz4hFNLlQfsUIfzTHo8ac7eU1M
+	oA6TdUCa8U/pfWmT9REmX1R+KIVLj6HEc5Hrv68IN1ymZSh+oqa0mijxV2z85rAn
+	5+1S3I4pPclxx5Zfrn99bmUs/ZQAj2KhvFC0wtZaig==
+X-ME-Sender: <xms:cw7fZvys8ggOAhWxAhQUxikmsYmwSLPolyuUpTlyCB0_crhdBfGSCw>
+    <xme:cw7fZnQrBB8ZyTWc36KZX5pbTwFG2_IHdI4BkqUHbvBJvhqTto6Fl_uEmKlL_iOq3
+    PX_8Pwx56KjzJGhSw>
+X-ME-Received: <xmr:cw7fZpUQIZKvERqR7pkwrd5Lki-Gq45jXXGiA3kJYfSNqV5ALbzj349ji2iwQ4xA9A-4cBzl2WrO74n6ggadiKeEEWu7Twsoj-GpSl0QnB4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeijedgieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,30 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeijedgieekucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhh
+    vghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
     gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:bQ7fZlIkaqeMvR3pfQCFs3i_KbpTgk1CXqG_Kv5Zth0Q_QuMdfKVVw>
-    <xmx:bQ7fZkLnrni1sPGsWQXJlPH26FSbrS-iS0vyiSgfxNL77uMRpirO3Q>
-    <xmx:bQ7fZmxf_HOwExBkBpkabPg_7N5SXz6wVjYOBw_Nr4yG8MLhv37Ytw>
-    <xmx:bQ7fZoI6XTK84C8VyV9_MVxHusTaFqMWT6MS0XYPLbx0tpApUaBq-Q>
-    <xmx:bQ7fZpHXFu1xcv7rP43SEKDQvnlwcGYdH1SnphiI6mXg3ibB7tfnbsBX>
+X-ME-Proxy: <xmx:cw7fZphZObHbKASLlp1j6xoehtSnNJjQ2XZLTmSQAh5d26ompXZjww>
+    <xmx:cw7fZhB6TaBsjek2qGJNy6jpLSWLjl8gkYIciTQNmgBb9lSeJtkFLw>
+    <xmx:cw7fZiL1TcScX8Mq8Uzpxya-Zg5d6e7NI8cb7BVPVFQjZHl2lK6p-Q>
+    <xmx:cw7fZgB9Y4n2XSQ1skSMV-hhJwpxnWoKHmNRBFdeBekn5vDJqCTinA>
+    <xmx:cw7fZs-rZ-al9dto_36-73RBL3YyVw4vMRUy64cUQmUqQf17iH4WVyZM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Sep 2024 11:04:12 -0400 (EDT)
+ 9 Sep 2024 11:04:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4302f9e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 9 Sep 2024 15:04:09 +0000 (UTC)
-Date: Mon, 9 Sep 2024 17:04:11 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id de2ce643 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 9 Sep 2024 15:04:15 +0000 (UTC)
+Date: Mon, 9 Sep 2024 17:04:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/4] ref: add symref content check for files backend
-Message-ID: <Zt8Oa4-N_8QMqUNJ@pks.im>
+Subject: Re: [PATCH v3 4/4] ref: add symlink ref content check for files
+ backend
+Message-ID: <Zt8OcPTzYg3raQlN@pks.im>
 References: <Ztb-mgl50cwGVO8A@ArchLinux>
- <Ztb_JuMjaoAbIZXq@ArchLinux>
+ <Ztb_Lzxgla2FHICH@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,167 +89,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ztb_JuMjaoAbIZXq@ArchLinux>
+In-Reply-To: <Ztb_Lzxgla2FHICH@ArchLinux>
 
-On Tue, Sep 03, 2024 at 08:20:54PM +0800, shejialuo wrote:
-> We have already introduced the checks for regular refs. There is no need
-> to check the consistency of the target which the symref points to.
-> Instead, we just need to check the content of teh symref itself.
+On Tue, Sep 03, 2024 at 08:21:03PM +0800, shejialuo wrote:
+> We have already introduced "files_fsck_symref_target". We should reuse
+> this function to handle the symrefs which use legacy symbolic links. We
+> should not check the trailing garbage for symbolic refs. Add a new
+> parameter "symbolic_link" to disable some checks which should only be
+> executed for textual symrefs.
+> 
+> We firstly use the "strbuf_add_real_path" to resolve the symlink and
+> get the absolute path "referent_path" which the symlink ref points
+> to. Then we can get the absolute path "abs_gitdir" of the "gitdir".
+> By combining "referent_path" and "abs_gitdir", we can extract the
+> "referent". Thus, we can reuse "files_fsck_symref_target" function to
+> seamlessly check the symlink refs.
+> 
+> Because we are going to drop support for "core.prefersymlinkrefs", add a
+> new fsck message "symlinkRef" to let the user be aware of this
+> information.
 
-s/teh/the
+I don't we fully decided to drop support for symrefs via symbolic links
+yet, so this is a tad too strong of a statement. I'd rather say that we
+consider deprecating it in the future, but first need to asses whether
+they may still be used.
 
-> In order to check the content of the symref, create a function
-> "files_fsck_symref_target". It will first check whether the "referent"
-> is under the "refs/" directory and then we will check the symref
-> contents.
-> 
-> A regular file is accepted as a textual symref if it begins with
-> "ref:", followed by zero or more whitespaces, followed by the full
-> refname, followed only by whitespace characters. We always write
-> a single SP after "ref:" and a single LF after the refname, but
-> third-party reimplementations of Git may have taken advantage of the
-> looser syntax. Put it more specific, we accept the following contents
-> of the symref:
-> 
-> 1. "ref: refs/heads/master   "
-> 2. "ref: refs/heads/master   \n  \n"
-> 3. "ref: refs/heads/master\n\n"
-> 
-> But we do not allow any other trailing garbage. The followings are bad
-> symref contents which will be reported as fsck error by "git-fsck(1)".
-> 
-> 1. "ref: refs/heads/master garbage\n"
-> 2. "ref: refs/heads/master \n\n\n garbage  "
-> 
-> In order to provide above checks, we will first check whether the symref
-> content misses the newline by peeking the last byte of the "referent" to
-> see whether it is '\n'.
+Also, didn't we say that we'd want to remove support for _writing_
+symbolic links, but not for reading them? Not a 100% sure though.
 
-I'd still argue that we should do the same retroactive tightening as we
-introduce for normal references, also with an INFO level at first.
-Otherwise we're being inconsistent across the ref types.
-
-> And we will remember the untrimmed length of the "referent" and call
-> "strbuf_rtrim()" on "referent". Then, we will call "check_refname_format"
-> to chceck whether the trimmed referent format is valid. If not, we will
-> report to the user that the symref points to referent which has invalid
-> format. If it is valid, we will compare the untrimmed length and trimmed
-> length, if they are not the same, we need to warn the user there is some
-> trailing garbage in the symref content.
-> 
-> At last, we need to check whether the referent is the directory. We
-> cannot distinguish whether the "refs/heads/a" is a directory or not by
-> using "check_refname_format". We have already checked bad file type when
-> iterating the "refs/" directory but we ignore the directory. Thus, we
-> need to explicitly add check here.
-> 
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  Documentation/fsck-msgids.txt |   4 ++
->  fsck.h                        |   1 +
->  refs/files-backend.c          |  81 +++++++++++++++++++++++
->  t/t0602-reffiles-fsck.sh      | 117 ++++++++++++++++++++++++++++++++++
->  4 files changed, 203 insertions(+)
-> 
-> diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-> index 06d045ac48..beb6c4e49e 100644
-> --- a/Documentation/fsck-msgids.txt
-> +++ b/Documentation/fsck-msgids.txt
-> @@ -28,6 +28,10 @@
->  `badRefName`::
->  	(ERROR) A ref has an invalid format.
+> @@ -1961,13 +1965,12 @@ static int create_ref_symlink(struct ref_lock *lock, const char *target)
 >  
-> +`badSymrefTarget`::
-> +	(ERROR) The symref target points outside the ref directory or
-> +	the name of the symref target is invalid.
-
-These are two separate error cases, and we even have different code
-paths raising them. Shouldn't we thus also have two different diagnostic
-codes for this?
-
->  `badTagName`::
->  	(INFO) A tag has an invalid format.
+>  	if (ret)
+>  		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
+> -#endif
+>  	return ret;
+>  }
+> +#endif
 >  
-> diff --git a/fsck.h b/fsck.h
-> index b85072df57..5ea874916d 100644
-> --- a/fsck.h
-> +++ b/fsck.h
-> @@ -34,6 +34,7 @@ enum fsck_msg_type {
->  	FUNC(BAD_REF_CONTENT, ERROR) \
->  	FUNC(BAD_REF_FILETYPE, ERROR) \
->  	FUNC(BAD_REF_NAME, ERROR) \
-> +	FUNC(BAD_SYMREF_TARGET, ERROR) \
->  	FUNC(BAD_TIMEZONE, ERROR) \
->  	FUNC(BAD_TREE, ERROR) \
->  	FUNC(BAD_TREE_SHA1, ERROR) \
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 0187b85c5f..fef32e607f 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3434,11 +3434,80 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
->  				  const char *refs_check_dir,
->  				  struct dir_iterator *iter);
+> -static int create_symref_lock(struct files_ref_store *refs,
+> -			      struct ref_lock *lock, const char *refname,
+> -			      const char *target, struct strbuf *err)
+> +static int create_symref_lock(struct ref_lock *lock, const char *target,
+> +			      struct strbuf *err)
+>  {
+>  	if (!fdopen_lock_file(&lock->lk, "w")) {
+>  		strbuf_addf(err, "unable to fdopen %s: %s",
+> @@ -2583,8 +2586,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>  	}
 >  
-> +/*
-> + * Check the symref "referent" and "referent_path". For textual symref,
-> + * "referent" would be the content after "refs:".
-> + */
-> +static int files_fsck_symref_target(struct fsck_options *o,
-> +				    struct fsck_ref_report *report,
-> +				    struct strbuf *referent,
-> +				    struct strbuf *referent_path)
-> +{
-> +	size_t len = referent->len - 1;
-> +	const char *p = NULL;
-> +	struct stat st;
-> +	int ret = 0;
-> +
-> +	if (!skip_prefix(referent->buf, "refs/", &p)) {
-> +
+>  	if (update->new_target && !(update->flags & REF_LOG_ONLY)) {
+> -		if (create_symref_lock(refs, lock, update->refname,
+> -				       update->new_target, err)) {
+> +		if (create_symref_lock(lock, update->new_target, err)) {
+>  			ret = TRANSACTION_GENERIC_ERROR;
+>  			goto out;
+>  		}
 
-There's a superfluous newline here.
+Why does the writing side need to change?
 
-Also, you never use the value of `p`, so you can instead use
-`starts_with()`.
+> @@ -3509,9 +3516,11 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+>  {
+>  	struct strbuf referent_path = STRBUF_INIT;
+>  	struct strbuf ref_content = STRBUF_INIT;
+> +	struct strbuf abs_gitdir = STRBUF_INIT;
+>  	struct strbuf referent = STRBUF_INIT;
+>  	struct strbuf refname = STRBUF_INIT;
+>  	struct fsck_ref_report report = {0};
+> +	unsigned int symbolic_link = 0;
 
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_BAD_SYMREF_TARGET,
-> +				      "points to ref outside the refs directory");
-> +		goto out;
-> +	}
-> +
-> +	if (referent->buf[referent->len - 1] != '\n') {
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_REF_MISSING_NEWLINE,
-> +				      "missing newline");
-> +		len++;
-> +	}
-> +
-> +	strbuf_rtrim(referent);
-> +	if (check_refname_format(referent->buf, 0)) {
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_BAD_SYMREF_TARGET,
-> +				      "points to refname with invalid format");
-> +		goto out;
-> +	}
-> +
-> +	if (len != referent->len) {
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_TRAILING_REF_CONTENT,
-> +				      "trailing garbage in ref");
-> +	}
-> +
-> +	/*
-> +	 * Missing target should not be treated as any error worthy event and
-> +	 * not even warn. It is a common case that a symbolic ref points to a
-> +	 * ref that does not exist yet. If the target ref does not exist, just
-> +	 * skip the check for the file type.
-> +	 */
-> +	if (lstat(referent_path->buf, &st))
-> +		goto out;
+This variable isn't used, as both code paths that end up using it could
+just statically set it to `1` or `0`.
 
-We may also want to verify that `errno == ENOENT` here.
+>  	const char *trailing = NULL;
+>  	unsigned int type = 0;
+>  	int failure_errno = 0;
+> @@ -3521,8 +3530,37 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+>  	strbuf_addf(&refname, "%s/%s", refs_check_dir, iter->relative_path);
+>  	report.path = refname.buf;
+>  
+> -	if (S_ISLNK(iter->st.st_mode))
+> +	if (S_ISLNK(iter->st.st_mode)) {
+> +		const char* relative_referent_path;
+> +
+> +		symbolic_link = 1;
+> +		ret = fsck_report_ref(o, &report,
+> +				      FSCK_MSG_SYMLINK_REF,
+> +				      "use deprecated symbolic link for symref");
+> +
+> +		strbuf_add_absolute_path(&abs_gitdir, ref_store->gitdir);
+> +		strbuf_normalize_path(&abs_gitdir);
+> +		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
+> +			strbuf_addch(&abs_gitdir, '/');
+> +
+> +		strbuf_add_real_path(&referent_path, iter->path.buf);
+> +
+> +		if (!skip_prefix(referent_path.buf,
+> +				 abs_gitdir.buf,
+> +				 &relative_referent_path)) {
+> +			ret = fsck_report_ref(o, &report,
+> +					      FSCK_MSG_BAD_SYMREF_TARGET,
+> +					      "point to target outside gitdir");
+> +			goto cleanup;
+> +		}
+> +
+> +		strbuf_addstr(&referent, relative_referent_path);
+> +		ret = files_fsck_symref_target(o, &report,
+> +					       &referent, &referent_path,
+> +					       symbolic_link);
+> +
+>  		goto cleanup;
+> +	}
+>  
+>  	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+>  		ret = error_errno(_("%s/%s: unable to read the ref"),
 
 Patrick
