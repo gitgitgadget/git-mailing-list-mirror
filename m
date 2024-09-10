@@ -1,63 +1,62 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D5D18CC1D
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AA318DF8A
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725935366; cv=none; b=IMAoDq9pICyfHJadzPnjnSA+4B9RUgNfHbYysZTJa975gTVkpgwzzUpxxE/WqRpFwPuqrodvBqlTw8/m54IOFZu0g6JlRI93KeeVAneUhPNHtIlGhcgW3gDytodbC22jVnS+xnS63MlpHFHiH9ZGIZobBm5Eohb46yhWBGNgPeU=
+	t=1725935367; cv=none; b=WoNMn16LZqtW6R/G0JW5wqwOiiDu8F/hS13eDWDlZ3lCy0Dd6dw6l6djkWIZb1EUvExNe5yql1Gwxr6CE0UMmsZwi6akPzBcQ7o5q378JbngLOZb4jVfYFDkYgPvdiiQ5qqxe/5/8GOFSleQMaAuaEbNn4v2mJin7BG1fEDSQ7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725935366; c=relaxed/simple;
-	bh=OZnbhNCEYjp5OWn9TAKT7RyVIJ5N4TUrfQmrSS8Xe1k=;
+	s=arc-20240116; t=1725935367; c=relaxed/simple;
+	bh=ifQ83hbRE5yqDTpJrNdcF14o3YllgMV5MBsIYbFKVxA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JoWrxp5pKRMfPZg+1JPYQa7Noawa93pazQDtbgcakmNcXpwl1Mn16OTU4mtzw3pHq4Pwk9ukay5RSw+pA65wWC3XMeTHT77Eh4NoWsI1a/mUscusKOCMmenfW2QZCVOoi6m6Aj7A7e/71iERfYvWmo/70LX8kYmFCLxdGJU+/gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m5sTQ1Xa; arc=none smtp.client-ip=209.85.218.49
+	 MIME-Version:To:Cc; b=rzvjMT7v+sf9yXTKSkZmkFs74FNSZZPKnRWuww0UWjNmYuv0+otBtvBNjoDSrglEeUjlvA89IW8dIKGA2FndbP7vyoWFCx7w1kD6/B3mbzRNyEEr6lqYkOAaYvaEoUKLG0Tam92o7grm5J1N149RqwWCDTWKMmUAM2h/6EUPbOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GHCZ/WrT; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m5sTQ1Xa"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a8d13b83511so361277666b.2
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHCZ/WrT"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8d446adf6eso264418066b.2
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725935363; x=1726540163; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725935364; x=1726540164; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6MhPFwdntLbOgzsZ2XNlug6y7NZQg41ztPKUhv4oIYM=;
-        b=m5sTQ1Xa7QvUJ9uKqEnM+iK0niVt8JD3hlgqPVQRMmX5EbeuLimq4NPDLnOfUMDB2K
-         fHwzmL2m6QYIsV/XuvDy/ppkhRhiJmfhULm18lhJYdhFWpfnFPw5joSxZRKopgSlST4f
-         L0PX8BeOJaXJzOe6gZC/rmRljeWOVMCiSEoaamrsOwHJIzHZGgedraiqJOukX1UmYzNH
-         Sb+y31emz9jncSZ6G0coTl6m2IHGDgvAtvahmuSaNW09+0mfhp5nIHju8lZJMxoE89Qs
-         3wncy7sM+bbyOqzKJyhae8jNBeV1c8kESfZBdYZ0zB7C5M0gEzQVhtsX//RQJ3h/jEbM
-         CdQg==
+        bh=K4Mnie54Dh3iZv+PphkgpjdEIdhOk5JVZexOv4i+0ow=;
+        b=GHCZ/WrTqaWVLqDUQ9rX6+ofOQvEYPrSSXPqUjPxlvOEX6FYTA65/gfInGiox5Gnvb
+         o8y71oXJgxDgyBcyR/uxsI9uq0z2cL+EzhWXQK5Yfg+ZwstI61MRAVBqOwcpxxpaR9r2
+         bEtcgUguPZLBKxDSwle9mIswfb7//LdhEM06eVcCjFL7j7ZRilKqDKoihN3nxdIGYm2z
+         nE5kJftb1q0uUwCiTea7WPETEupGnePZLLXIDTrGGOoLA+5cad9Qb1RitMAXjhqe/eeB
+         G5kvRoRnKqjaA+9+z6hnmk69jH80jPrYxf+ps9uC8TfnhRYF624Tp7/Hcokn39Os0orw
+         wqnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725935363; x=1726540163;
+        d=1e100.net; s=20230601; t=1725935364; x=1726540164;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6MhPFwdntLbOgzsZ2XNlug6y7NZQg41ztPKUhv4oIYM=;
-        b=qJKpG1lI+xNMQzE7KQt68k2T4Vybx9bHDjm3X9yZ2HpicfG52F+sIlRF5g0Mpq+Akx
-         KmcXr3yAL6AugdegXxlixns3quWBzGeXI37PV7mE7KP2nvnsJ9yfKo0Wcf3KxiST0ud0
-         iIn1UIG12VU89MMI4gZ/zZWTUHuZjt9kp4kWFGOlmVedvKNEEHSBsIA60eRLKB4+ue9N
-         fjWOp1395fBUjM3hqQ7BSSbbpT117hqrJmt8yz0NdKvnJ/zYjkbWiYRQVTLkF894ImHF
-         56s3uKAfE/s0hDM9MrShEhjgvDu5FqpUJ0rpdER6hMIsyJf9NYsFyD1yoIIy8ACnSWAp
-         W17Q==
-X-Gm-Message-State: AOJu0YxgRsNe+mmbi6JnD0nyRna4CUmYMl3sRZZ5afH6SG2URVNpAVAx
-	/5EU2RwEYbIhvlmJwjKvOhjNG/szgjK9i3f+UkHkQspa3JSeIAfsI8yA0A==
-X-Google-Smtp-Source: AGHT+IHp4v/GmvHcQTFBZ+nQalOaPB6p+g72tGs2ZqViMQ+KhFQGYpkLeSXcmQS1wIufHb1yQTQtTQ==
-X-Received: by 2002:a17:907:3201:b0:a8a:3f78:7b7b with SMTP id a640c23a62f3a-a8a885f4353mr1100370766b.14.1725935362869;
-        Mon, 09 Sep 2024 19:29:22 -0700 (PDT)
+        bh=K4Mnie54Dh3iZv+PphkgpjdEIdhOk5JVZexOv4i+0ow=;
+        b=EZFPjTsJQE885jEcaHLgDsbwx2tGhW+IQgaAzeHL6dRc6kv7xHoZxOu36z6MkCnSZ5
+         JhOHRCLn7V0t6KXyGMVW9CD2EQ5W8lO2sHP76BlITQdbnn3s7yMsxn9kblVZFkHu6fYO
+         WEvj2rbgz+VK+GzSIN8DtBT3tbbdO39SsIcsAzGmT0qSZOOMZ2mqhg3YyZj6cIW+BPp7
+         DdkyxeSt0ju6AvD5dgFrU9MoaBwAtD1mncVZo5WhZ2PkvTMKkNsj+4tzPrkllvxM8cBp
+         5kk8rDH5ZPoisFJiCmCfUByre5jIn6TVfITX9bTZwyU0uDIZbgaeGUUTlAO9YE2i3cD7
+         RBcA==
+X-Gm-Message-State: AOJu0Yxt7Gql2xh9R6PW5t4Y4echaT9o+/pO4ZDyzjEJT41xLdxt5ixg
+	l4JfHS+zgfAWw4wvZ3LVd3d5Tzj2cERePLjdx77aRt+zwUTL7VPqnj+PCw==
+X-Google-Smtp-Source: AGHT+IHjJ9hmJmrn8q+ft3O83udhA3wLHXFpQw57OcsPf9qsoX+OuxcpT2hQmpCttWA6U7m93d+Lsg==
+X-Received: by 2002:a17:907:d2df:b0:a86:43c0:4270 with SMTP id a640c23a62f3a-a8d245135a8mr613095666b.13.1725935363588;
+        Mon, 09 Sep 2024 19:29:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25a073b1sm412742066b.82.2024.09.09.19.29.22
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25926eddsm415283766b.49.2024.09.09.19.29.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 19:29:22 -0700 (PDT)
-Message-Id: <8df39a432fa682212d53d31389d437e86b4513f6.1725935335.git.gitgitgadget@gmail.com>
+        Mon, 09 Sep 2024 19:29:23 -0700 (PDT)
+Message-Id: <5dcb20a1c5c1e6f5dd676c54fa6b001af9abe072.1725935335.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 References: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Sep 2024 02:28:53 +0000
-Subject: [PATCH 28/30] test-name-hash: add helper to compute name-hash
- functions
+Date: Tue, 10 Sep 2024 02:28:54 +0000
+Subject: [PATCH 29/30] p5314: add a size test for name-hash collisions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,102 +79,96 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Using this tool, we can count how many distinct name-hash values exist
-within a list of paths. Examples include
+This test helps inform someone as to the behavior of the name-hash
+algorithms for their repo based on the paths at HEAD.
 
- git ls-tree -r --name-only HEAD | \
-	     test-tool name-hash | \
-  	      awk "{print \$1;}" | \
-  		 sort -ns | uniq | wc -l
+For example, the microsoft/fluentui repo had these statistics at time of
+committing:
 
-which outputs the number of distinct name-hash values that appear at
-HEAD. Or, the following which presents the resulting name-hash values of
-maximum multiplicity:
+Test                                              this tree
+-----------------------------------------------------------------
+5314.1: paths at head                                       19.6K
+5314.2: number of distinct name-hashes                       8.2K
+5314.3: number of distinct full-name-hashes                 19.6K
+5314.4: maximum multiplicity of name-hashes                   279
+5314.5: maximum multiplicity of fullname-hashes                 1
 
- git ls-tree -r --name-only HEAD | \
-	     test-tool name-hash | \
-	      awk "{print \$1;}" | \
-	       sort -n | uniq -c | sort -nr | head -n 25
+That demonstrates that of the nearly twenty thousand path names, they
+are assigned around eight thousand distinct values. 279 paths are
+assigned to a single value, leading the packing algorithm to sort
+objects from those paths together, by size.
 
-For an internal monorepo with around a quarter million paths at HEAD,
-the highest multiplicity for the standard name-hash function was 14,424
-while the full name-hash algorithm had only seven hash values with any
-collision, with a maximum multiplicity of two.
+In this repository, no collisions occur for the full-name-hash
+algorithm.
+
+In a more extreme example, an internal monorepo had a much worse
+collision rate:
+
+Test                                              this tree
+-----------------------------------------------------------------
+5314.1: paths at head                                      221.6K
+5314.2: number of distinct name-hashes                      72.0K
+5314.3: number of distinct full-name-hashes                221.6K
+5314.4: maximum multiplicity of name-hashes                 14.4K
+5314.5: maximum multiplicity of fullname-hashes                 2
+
+Even in this repository with many more paths at HEAD, the collision rate
+was low and the maximum number of paths being grouped into a single
+bucket by the full-path-name algorithm was two.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Makefile                  |  1 +
- t/helper/test-name-hash.c | 23 +++++++++++++++++++++++
- t/helper/test-tool.c      |  1 +
- t/helper/test-tool.h      |  1 +
- 4 files changed, 26 insertions(+)
- create mode 100644 t/helper/test-name-hash.c
+ t/perf/p5314-name-hash.sh | 41 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100755 t/perf/p5314-name-hash.sh
 
-diff --git a/Makefile b/Makefile
-index 154de6e01d0..462aff65a50 100644
---- a/Makefile
-+++ b/Makefile
-@@ -808,6 +808,7 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
- TEST_BUILTINS_OBJS += test-match-trees.o
- TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
-+TEST_BUILTINS_OBJS += test-name-hash.o
- TEST_BUILTINS_OBJS += test-oid-array.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-pack-mtimes.o
-diff --git a/t/helper/test-name-hash.c b/t/helper/test-name-hash.c
-new file mode 100644
-index 00000000000..c82ccd7cefd
+diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
+new file mode 100755
+index 00000000000..9fe26612fac
 --- /dev/null
-+++ b/t/helper/test-name-hash.c
-@@ -0,0 +1,23 @@
-+/*
-+ * test-name-hash.c: Read a list of paths over stdin and report on their
-+ * name-hash and full name-hash.
-+ */
++++ b/t/perf/p5314-name-hash.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
 +
-+#include "test-tool.h"
-+#include "git-compat-util.h"
-+#include "pack-objects.h"
-+#include "strbuf.h"
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
 +
-+int cmd__name_hash(int argc, const char **argv)
-+{
-+	struct strbuf line = STRBUF_INIT;
++GIT_TEST_PASSING_SANITIZE_LEAK=0
++export GIT_TEST_PASSING_SANITIZE_LEAK
 +
-+	while (!strbuf_getline(&line, stdin)) {
-+		uint32_t name_hash = pack_name_hash(line.buf);
-+		uint32_t full_hash = pack_full_name_hash(line.buf);
++test_perf_large_repo
 +
-+		printf("%10"PRIu32"\t%10"PRIu32"\t%s\n", name_hash, full_hash, line.buf);
-+	}
++test_size 'paths at head' '
++	git ls-tree -r --name-only HEAD >path-list &&
++	wc -l <path-list
++'
 +
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f8a67df7de9..4a603921002 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -43,6 +43,7 @@ static struct test_cmd cmds[] = {
- 	{ "match-trees", cmd__match_trees },
- 	{ "mergesort", cmd__mergesort },
- 	{ "mktemp", cmd__mktemp },
-+	{ "name-hash", cmd__name_hash },
- 	{ "oid-array", cmd__oid_array },
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "pack-mtimes", cmd__pack_mtimes },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index e74bc0ffd41..56a83bf3aac 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -37,6 +37,7 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
- int cmd__match_trees(int argc, const char **argv);
- int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
-+int cmd__name_hash(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__pack_mtimes(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
++test_size 'number of distinct name-hashes' '
++	cat path-list | test-tool name-hash >name-hashes &&
++	cat name-hashes | awk "{ print \$1; }" | sort -n | uniq -c >name-hash-count &&
++	wc -l <name-hash-count
++'
++
++test_size 'number of distinct full-name-hashes' '
++	cat name-hashes | awk "{ print \$2; }" | sort -n | uniq -c >full-name-hash-count &&
++	wc -l <full-name-hash-count
++'
++
++test_size 'maximum multiplicity of name-hashes' '
++	cat name-hash-count | \
++		sort -nr | \
++		head -n 1 | \
++		awk "{ print \$1; }"
++'
++
++test_size 'maximum multiplicity of fullname-hashes' '
++	cat full-name-hash-count | \
++		sort -nr | \
++		head -n 1 | \
++		awk "{ print \$1; }"
++'
++
++test_done
 -- 
 gitgitgadget
 
