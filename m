@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DCE136358
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144D175D2F
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725950015; cv=none; b=i4z/hFLMGOnk8fHLxU4cpUExreC8npwtZIFsHS2VaRG7Qfel0dAvPr5aDDSljxa8UNiO/lHyQclqABbIyWzzxsv1lm0zMbLw6p6EpDPhuQ74kumFFnKZ0KCeEbPYSJUM9Fa3En411m+aPBawd+i3LCwkvLBvMdWYSMX7xaYZkCg=
+	t=1725950239; cv=none; b=HHQMQshMBjGI1TcDMIteWrzy9sLJo1QuteSB9cOhxfaCbZGZ8io19YlpwclFGppTrKqkTvmj0Z1FihxAJbUic5vNz/0+I/zfoHCUaKb7WUWWWdt8wgBryQOWZ9b/BiWs0pe3kbcxbfYoJUiH5xCzjxBGDzI6nbKlIXjnKdOnNkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725950015; c=relaxed/simple;
-	bh=Ae9M6a9BDYkCcDJESvQAwOsez6mMOM5Mr30/w6kAKqE=;
+	s=arc-20240116; t=1725950239; c=relaxed/simple;
+	bh=YACzkEkH6/LQ68j+hXKQxxryFqVNLoRryxyMA28xuk4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F6CdrKBg968MZJg1Zn2mP5Wjo1VXq2mwUNlcM9pFSRbVyQir2YCMu2JecuL4YA2dZUYcTaENclfAhjU39ddiPA+tlyXWk8K+fZjUVR0IVL2nDcJFpk1zD2IGluc29binobgpcMks4bojfEEqaCCLf9NZgX0UtWYaFiIqwVS3B6g=
+	 Content-Type:Content-Disposition:In-Reply-To; b=U1342fR7NYq7IMFli5I4sJ31V3/RninorbtOckdbpOL8BvFfAQHKm5uvzz6cugrQuwc2DVosPSLUCA7SSYsYu75uGGZbEVetsViNxX0/ziFEZfTnmY1JPKfiYuxZlqEBYLrrYt4Ohb+RkhMEi+oV3rcQRBNNKbnItXmMuIDTDwE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 3260 invoked by uid 109); 10 Sep 2024 06:33:33 -0000
+Received: (qmail 3360 invoked by uid 109); 10 Sep 2024 06:37:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Sep 2024 06:33:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Sep 2024 06:37:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29077 invoked by uid 111); 10 Sep 2024 06:33:32 -0000
+Received: (qmail 29112 invoked by uid 111); 10 Sep 2024 06:37:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Sep 2024 02:33:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Sep 2024 02:37:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 10 Sep 2024 02:33:32 -0400
+Date: Tue, 10 Sep 2024 02:37:15 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Brooke Kuhlmann <brooke@alchemists.io>
-Subject: Re: [PATCH 6/9] ref-filter: fix leak of %(trailers) "argbuf"
-Message-ID: <20240910063332.GC1459778@coredump.intra.peff.net>
+Subject: Re: [PATCH 9/9] ref-filter: add ref_format_clear() function
+Message-ID: <20240910063715.GD1459778@coredump.intra.peff.net>
 References: <20240909230758.GA921697@coredump.intra.peff.net>
- <20240909231828.GF921834@coredump.intra.peff.net>
- <Zt_ifxQq-6wNaQ3J@pks.im>
+ <20240909232118.GI921834@coredump.intra.peff.net>
+ <Zt_ijEqdsylYYkNn@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,31 +39,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zt_ifxQq-6wNaQ3J@pks.im>
+In-Reply-To: <Zt_ijEqdsylYYkNn@pks.im>
 
-On Tue, Sep 10, 2024 at 08:09:03AM +0200, Patrick Steinhardt wrote:
+On Tue, Sep 10, 2024 at 08:09:16AM +0200, Patrick Steinhardt wrote:
 
-> > But I think a less-subtle solution, and what this patch does, is to
-> > switch to a duplicating string_list. That makes it self-contained, and
-> > lets us free argbuf immediately. It may involve a few extra allocations,
-> > but this parsing is something that happens once per program, not once
-> > per output ref.
+> On Mon, Sep 09, 2024 at 07:21:18PM -0400, Jeff King wrote:
+> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> > index e8db612f95..b3163629c5 100755
+> > --- a/t/t6300-for-each-ref.sh
+> > +++ b/t/t6300-for-each-ref.sh
+> > @@ -5,6 +5,7 @@
+> >  
+> >  test_description='for-each-ref test'
+> >  
+> > +TEST_PASSES_SANITIZE_LEAK=true
+> >  . ./test-lib.sh
+> >  GNUPGHOME_NOT_USED=$GNUPGHOME
+> >  . "$TEST_DIRECTORY"/lib-gpg.sh
 > 
-> Sensible. I found that in many cases, the `nodup` variants of string
-> lists bring more pain than real benefit.
+> Nice! There's also t6302, which has been failing due to all the memory
+> leaks in our atom handling, as well. After your series there's a single
+> memory leak left to make it pass. So we may want to add below patch on
+> top as a low-hanging fruit.
 
-I have found that, too. :) I've argued in the past for getting rid of it
-(and especially not propagating its world-view to other data structures
-like strmap, and so on). But Elijah presented some pretty compelling
-numbers that it does help for some of the large merge-ort strmaps.
+I was afraid to go looking for other almost-there scripts, knowing what
+a rabbit hole it can turn into (which I know you are also familiar
+with).
 
-So I've softened my argument to asking people to use it judiciously. ;)
+> -- >8 --
+> diff --git a/ref-filter.c b/ref-filter.c
+> index ce1bcfad857..b06e18a569a 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
 
-> > This clears up one case that LSan finds in t6300, but there are more.
-> 
-> Yeah, there are a bunch of memory leaks around atom parsing in general
-> exposed by t6300. Thanks for plugging some of them!
-
-Well, you're really going to like the rest of the series, then!
+This looks plausibly correct to me, but I'm not at all familiar with the
+conditional placeholders. I think it would make more sense for you to
+wrap it up with a commit message.
 
 -Peff
