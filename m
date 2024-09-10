@@ -1,62 +1,62 @@
 Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253E517F4F7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B0818132A
 	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725935358; cv=none; b=PEjoqEZBnZ+B2EGSRyFqzD0lyg55ip19yBY6LXZV1yo4Ew60C4d7JxQ+Qgwquh98sf+fOYxT9WeKCSZiEu/U3WJUGr2NUZC1uqsLFKcmLaUJnH6frHKyXPNHGq7smz22AwZZq8pGjuIKpIPIXVewT+hk9gKALpEipiAYP4YC1h0=
+	t=1725935359; cv=none; b=hZnWqSBW5PJPrDaN8pnFHQ/qbb5QuvmNc8JzOyREE9hB0IulKpyezu65I3CoD7BfPbF8yIPd0V63UnM9OCwbO8CbeWbwWeD2d56j1nsj0HeGVjm1y2KJ4VmaT7AeD43sUgoiR74LkZS1PIzPkDOLtOPwnjHoiUqNJp4MyRVltBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725935358; c=relaxed/simple;
-	bh=rKvKw3coFFkk+x6m6KQn3G/JMWJJ3SgCHNrLO/laWcQ=;
+	s=arc-20240116; t=1725935359; c=relaxed/simple;
+	bh=VvZ16Ozx0DyoLT8whGnDIq5AaFJThd9mhJCzrRsC+nE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=T0E1haJgWQroq+gNAOKkxellPHZqoynQqblnrmrVcqDs7+YusMuYOCOH4gDY/dzQLU2IxWbTEpUq9tjJ0zq3yVXkqASgTqy3hTA0lOUHue2imTgRYdt6Gs327cNVdSIXi12o4yT71I6eoOdbbop5ctTXvOH3UGjxR+ijT64n/r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GTxra8DM; arc=none smtp.client-ip=209.85.218.49
+	 MIME-Version:To:Cc; b=nePHrNLNjpZ7Gt57eqPFrCCQCkt4gkO9YGXlNaeb29gBHAcryNphR80hp7hEkTXVnP8LGE2ksmOZMfqxxfaZs8QP8HXIKkI6FZDW5TVP/Q8EwSWAHBZalqeWkO8TmsiT8PO8V9afJ7son/fDXK3UEyIbAhcnL3USXhtmr9foIXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U73UYKao; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTxra8DM"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a8d64b27c45so175555166b.3
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U73UYKao"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a8d2daa2262so253320466b.1
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725935355; x=1726540155; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725935356; x=1726540156; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E3DGRIZ4uknVZo5b3VkXakDV8jAIl0BZPL96PynTuv0=;
-        b=GTxra8DMj+4y+L9prZfOv71ZpCT9PuVXvZASgmpimBN+2ljbGN9XaSCkeS62zHXzli
-         FwkApgR6/4tJAKm0S2Kcfh/vGEt5wrKuPhW80YQiCPNTJLt7jucFJ64z/kgvSZwUmlag
-         l5/QRgggLR9FQW7JXPgNG4mY78QZ+PHVB9Lvc55osm3noBUv48DFh3vNSZWuMcj8kvWW
-         34TmwExqPajowTGZLn389FG+R0shhuK5zNSiYZdrEM13F8C3yyNJarhYPd8MScLD+xHO
-         MUXuftO7oZ8lVWNLhAMgk5n4Psb4XcDA/wAUQN0FbfWwBeWu41tKHyxJPD3pvxvUHM7v
-         uw+Q==
+        bh=5SrrzhqQHt1RgqpPZdritqFwaRXue5QjWL7rwmunmcI=;
+        b=U73UYKao04nCErVjLvETqG8uNDko78+gOsEM35GV4caBM1v1TDllkOJZv3ZabVW1h+
+         K+9uj1fTAXAWZzUyaurTJJWIy9Ssf6w6Vet+yky4hetV7YkNPGNtJmGnPyJmmDgZYJse
+         0ZeJdgRHwgksnqDUwtZ89XkyYvLXvPKcVSkhlPPwPGqgNtFj6Y3xAy7FeLcFB61j7MZS
+         saMTWtt8Qh6TFia3r2BqwoyCfNL6NzwWJOvjmGQaOy+aSZnLajBdx9JopoNQHW37yIOQ
+         UAAHpkmmo2/cMAQDQD76s6p+jhUksU4WuYN5Xs1brv6d0/D/Q8wbRuE7YWANLXpN8dcf
+         Lu0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725935355; x=1726540155;
+        d=1e100.net; s=20230601; t=1725935356; x=1726540156;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E3DGRIZ4uknVZo5b3VkXakDV8jAIl0BZPL96PynTuv0=;
-        b=M2e1PVQiT1g7DbFWm0rFR7r97UvxmsfqMw1mUoxGniJG4KAfZAnJ1svLpfQav7XAV5
-         9dodPrH7Ia0P3HM1cp7A8/8fLyhLvDIdS+VOVOusWJeNJ12bp9uwaHS3BfKT9YoEU7Hp
-         u+3viIHR6eCRNVCNCksVRO6WoROguxL+AjbMDMw/VNgLn3LMSZTrtyG2MYzBg7Ar8A5z
-         CDXRJrTnsNSIRokERIUiFFjB5EaNsYoEF+AoLKATd3YbVsGlIAIvMyQzlaFeqpXO76B/
-         5NjYBIcXRCY2bUPaUeSTBbUpy57xj9yyM7V+4qmHXSZAuBpinYD8HqYdI/Uxgyq84HFI
-         KsrQ==
-X-Gm-Message-State: AOJu0YzBRXqI5MKJf62+2i1HEhWS2UhVeuXfNn4FADOVEM/RwsdcAc/B
-	5+aTBbUNovaYaj9wl0M+iiwCTzJ93T8CidAaAUMi23ltKHsMx2mCOVf4iA==
-X-Google-Smtp-Source: AGHT+IEZ8NjXTGiK2DvC8B76hyuHSk3I2kWPcWoCkji/xn05eZh61iPeqstTJQDsrSWtth3BJu6BRA==
-X-Received: by 2002:a17:907:934d:b0:a8a:6db5:7e42 with SMTP id a640c23a62f3a-a8a885c0057mr1135869166b.9.1725935355030;
+        bh=5SrrzhqQHt1RgqpPZdritqFwaRXue5QjWL7rwmunmcI=;
+        b=P0tTLo2zBQNHeRP0tM6fZ17SGCYxRrYfM0Lg3M6gitQOK0wp5spMEw4LoMiGAN7DS2
+         rIFL0rRgHbgH3HgBS61gYiSJyxKL9XFv2vUKkN0F12D/IMBgIV38VHBPmjnmN7epqwwu
+         YuTT0B68rhQjUZeFNEanTYZ9LaeXox+jx8lZTFK0pxTIi4Uf93HrzDNDoPVlioY52ipp
+         5mwG4gD1CG102b375LFV7njolJygr1rStaXf5ybnl8eVaDLkbh/zjBAvRfGERzt+tS8s
+         ALpM5B4NE9Z6rR+PNcMY3PJ3GwejWThndvyhfw5SITry8ErH3bUcc/jj66L0WrEkZ+l5
+         C4Nw==
+X-Gm-Message-State: AOJu0Yx55RhpckUXcKfWuXPSwQFVfTns3yElk5oxMZqvxjKDlbU7Xs3H
+	teHaNOmV4URV4drwPlkdsM4aZxNrrmYBndbYpnIcbsouTy+R3gQzXmS4ag==
+X-Google-Smtp-Source: AGHT+IHOCWKipwYFAZsginAZHWI8rKphguiL5aHAMis6qHQ+ZYHxM44MfWRRO1XkRJa9ocaHGTXMSg==
+X-Received: by 2002:a17:906:dc8e:b0:a89:f1b9:d391 with SMTP id a640c23a62f3a-a8a885f2d85mr993129366b.14.1725935355654;
         Mon, 09 Sep 2024 19:29:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25833955sm415520266b.32.2024.09.09.19.29.14
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25d40064sm416508366b.190.2024.09.09.19.29.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 19:29:14 -0700 (PDT)
-Message-Id: <9e95914d393ff83054ee419b58b9db4d3560a36c.1725935335.git.gitgitgadget@gmail.com>
+        Mon, 09 Sep 2024 19:29:15 -0700 (PDT)
+Message-Id: <98a854c4b542309269f56ba0ae8b9a7c1504e409.1725935335.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 References: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Sep 2024 02:28:42 +0000
-Subject: [PATCH 17/30] survey: add report of "largest" paths
+Date: Tue, 10 Sep 2024 02:28:43 +0000
+Subject: [PATCH 18/30] revision: create mark_trees_uninteresting_dense()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,239 +79,65 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Since we are already walking our reachable objects using the path-walk API,
-let's now collect lists of the paths that contribute most to different
-metrics. Specifically, we care about
+The sparse tree walk algorithm was created in d5d2e93577e (revision:
+implement sparse algorithm, 2019-01-16) and involves using the
+mark_trees_uninteresting_sparse() method. This method takes a repository
+and an oidset of tree IDs, some of which have the UNINTERESTING flag and
+some of which do not.
 
- * Number of versions.
- * Total size on disk.
- * Total inflated size (no delta or zlib compression).
+Create a method that has an equivalent set of preconditions but uses a
+"dense" walk (recursively visits all reachable trees, as long as they
+have not previously been marked UNINTERESTING). This is an important
+difference from mark_tree_uninteresting(), which short-circuits if the
+given tree has the UNINTERESTING flag.
 
-This information can be critical to discovering which parts of the
-repository are causing the most growth, especially on-disk size. Different
-packing strategies might help compress data more efficiently, but the toal
-inflated size is a representation of the raw size of all snapshots of those
-paths. Even when stored efficiently on disk, that size represents how much
-information must be processed to complete a command such as 'git blame'.
-
-Since the on-disk size is likely to be fragile, stop testing the exact
-output of 'git survey' and check that the correct set of headers is
-output.
+A use of this method will be added in a later change, with a condition
+set whether the sparse or dense approach should be used.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/survey.c      | 90 +++++++++++++++++++++++++++++++++++++------
- t/t8100-git-survey.sh | 12 +++++-
- 2 files changed, 90 insertions(+), 12 deletions(-)
+ revision.c | 15 +++++++++++++++
+ revision.h |  1 +
+ 2 files changed, 16 insertions(+)
 
-diff --git a/builtin/survey.c b/builtin/survey.c
-index ad467e9a88c..90b041967c8 100644
---- a/builtin/survey.c
-+++ b/builtin/survey.c
-@@ -80,7 +80,6 @@ struct survey_report_object_size_summary {
- typedef int (*survey_top_size_cmp)(struct survey_report_object_size_summary *s1,
- 				   struct survey_report_object_size_summary *s2);
- 
--MAYBE_UNUSED
- static int cmp_by_nr(struct survey_report_object_size_summary *s1,
- 		     struct survey_report_object_size_summary *s2)
- {
-@@ -91,7 +90,6 @@ static int cmp_by_nr(struct survey_report_object_size_summary *s1,
- 	return 0;
+diff --git a/revision.c b/revision.c
+index ac94f8d4292..21c8b6d1bc0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -219,6 +219,21 @@ static void add_children_by_path(struct repository *r,
+ 	free_tree_buffer(tree);
  }
  
--MAYBE_UNUSED
- static int cmp_by_disk_size(struct survey_report_object_size_summary *s1,
- 			    struct survey_report_object_size_summary *s2)
- {
-@@ -102,7 +100,6 @@ static int cmp_by_disk_size(struct survey_report_object_size_summary *s1,
- 	return 0;
- }
- 
--MAYBE_UNUSED
- static int cmp_by_inflated_size(struct survey_report_object_size_summary *s1,
- 				struct survey_report_object_size_summary *s2)
- {
-@@ -126,7 +123,6 @@ struct survey_report_top_sizes {
- 	size_t alloc;
- };
- 
--MAYBE_UNUSED
- static void init_top_sizes(struct survey_report_top_sizes *top,
- 			   size_t limit, const char *name,
- 			   survey_top_size_cmp cmp)
-@@ -146,7 +142,6 @@ static void clear_top_sizes(struct survey_report_top_sizes *top)
- 	free(top->data);
- }
- 
--MAYBE_UNUSED
- static void maybe_insert_into_top_size(struct survey_report_top_sizes *top,
- 				       struct survey_report_object_size_summary *summary)
- {
-@@ -182,6 +177,10 @@ struct survey_report {
- 	struct survey_report_object_summary reachable_objects;
- 
- 	struct survey_report_object_size_summary *by_type;
-+
-+	struct survey_report_top_sizes *top_paths_by_count;
-+	struct survey_report_top_sizes *top_paths_by_disk;
-+	struct survey_report_top_sizes *top_paths_by_inflate;
- };
- 
- #define REPORT_TYPE_COMMIT 0
-@@ -423,6 +422,13 @@ static void survey_report_object_sizes(const char *title,
- 	clear_table(&table);
- }
- 
-+static void survey_report_plaintext_sorted_size(
-+		struct survey_report_top_sizes *top)
++void mark_trees_uninteresting_dense(struct repository *r,
++				    struct oidset *trees)
 +{
-+	survey_report_object_sizes(top->name,  _("Path"),
-+				   top->data, top->nr);
-+}
++	struct object_id *oid;
++	struct oidset_iter iter;
 +
- static void survey_report_plaintext(struct survey_context *ctx)
- {
- 	printf("GIT SURVEY for \"%s\"\n", ctx->repo->worktree);
-@@ -433,6 +439,21 @@ static void survey_report_plaintext(struct survey_context *ctx)
- 				   _("Object Type"),
- 				   ctx->report.by_type,
- 				   REPORT_TYPE_COUNT);
++	oidset_iter_init(trees, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		struct tree *tree = lookup_tree(r, oid);
 +
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_count[REPORT_TYPE_TREE]);
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_count[REPORT_TYPE_BLOB]);
-+
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_disk[REPORT_TYPE_TREE]);
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_disk[REPORT_TYPE_BLOB]);
-+
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_inflate[REPORT_TYPE_TREE]);
-+	survey_report_plaintext_sorted_size(
-+		&ctx->report.top_paths_by_inflate[REPORT_TYPE_BLOB]);
- }
- 
- static void survey_report_json(struct survey_context *ctx)
-@@ -673,7 +694,8 @@ static void increment_totals(struct survey_context *ctx,
- 
- static void increment_object_totals(struct survey_context *ctx,
- 				    struct oid_array *oids,
--				    enum object_type type)
-+				    enum object_type type,
-+				    const char *path)
- {
- 	struct survey_report_object_size_summary *total;
- 	struct survey_report_object_size_summary summary = { 0 };
-@@ -701,6 +723,27 @@ static void increment_object_totals(struct survey_context *ctx,
- 	total->disk_size += summary.disk_size;
- 	total->inflated_size += summary.inflated_size;
- 	total->num_missing += summary.num_missing;
-+
-+	if (type == OBJ_TREE || type == OBJ_BLOB) {
-+		int index = type == OBJ_TREE ?
-+			    REPORT_TYPE_TREE : REPORT_TYPE_BLOB;
-+		struct survey_report_top_sizes *top;
-+
-+		/*
-+		 * Temporarily store (const char *) here, but it will
-+		 * be duped if inserted and will not be freed.
-+		 */
-+		summary.label = (char *)path;
-+
-+		top = ctx->report.top_paths_by_count;
-+		maybe_insert_into_top_size(&top[index], &summary);
-+
-+		top = ctx->report.top_paths_by_disk;
-+		maybe_insert_into_top_size(&top[index], &summary);
-+
-+		top = ctx->report.top_paths_by_inflate;
-+		maybe_insert_into_top_size(&top[index], &summary);
++		if (tree->object.flags & UNINTERESTING)
++			mark_tree_contents_uninteresting(r, tree);
 +	}
- }
- 
- static int survey_objects_path_walk_fn(const char *path,
-@@ -712,7 +755,7 @@ static int survey_objects_path_walk_fn(const char *path,
- 
- 	increment_object_counts(&ctx->report.reachable_objects,
- 				type, oids->nr);
--	increment_object_totals(ctx, oids, type);
-+	increment_object_totals(ctx, oids, type, path);
- 
- 	ctx->progress_nr += oids->nr;
- 	display_progress(ctx->progress, ctx->progress_nr);
-@@ -757,6 +800,34 @@ static int iterate_tag_chain(struct survey_context *ctx,
- 	return -1;
- }
- 
-+static void initialize_report(struct survey_context *ctx)
-+{
-+	const int top_limit = 100;
-+
-+	CALLOC_ARRAY(ctx->report.by_type, REPORT_TYPE_COUNT);
-+	ctx->report.by_type[REPORT_TYPE_COMMIT].label = xstrdup(_("Commits"));
-+	ctx->report.by_type[REPORT_TYPE_TREE].label = xstrdup(_("Trees"));
-+	ctx->report.by_type[REPORT_TYPE_BLOB].label = xstrdup(_("Blobs"));
-+
-+	CALLOC_ARRAY(ctx->report.top_paths_by_count, REPORT_TYPE_COUNT);
-+	init_top_sizes(&ctx->report.top_paths_by_count[REPORT_TYPE_TREE],
-+		       top_limit, _("TOP DIRECTORIES BY COUNT"), cmp_by_nr);
-+	init_top_sizes(&ctx->report.top_paths_by_count[REPORT_TYPE_BLOB],
-+		       top_limit, _("TOP FILES BY COUNT"), cmp_by_nr);
-+
-+	CALLOC_ARRAY(ctx->report.top_paths_by_disk, REPORT_TYPE_COUNT);
-+	init_top_sizes(&ctx->report.top_paths_by_disk[REPORT_TYPE_TREE],
-+		       top_limit, _("TOP DIRECTORIES BY DISK SIZE"), cmp_by_disk_size);
-+	init_top_sizes(&ctx->report.top_paths_by_disk[REPORT_TYPE_BLOB],
-+		       top_limit, _("TOP FILES BY DISK SIZE"), cmp_by_disk_size);
-+
-+	CALLOC_ARRAY(ctx->report.top_paths_by_inflate, REPORT_TYPE_COUNT);
-+	init_top_sizes(&ctx->report.top_paths_by_inflate[REPORT_TYPE_TREE],
-+		       top_limit, _("TOP DIRECTORIES BY INFLATED SIZE"), cmp_by_inflated_size);
-+	init_top_sizes(&ctx->report.top_paths_by_inflate[REPORT_TYPE_BLOB],
-+		       top_limit, _("TOP FILES BY INFLATED SIZE"), cmp_by_inflated_size);
 +}
 +
- static void survey_phase_objects(struct survey_context *ctx)
+ void mark_trees_uninteresting_sparse(struct repository *r,
+ 				     struct oidset *trees)
  {
- 	struct rev_info revs = REV_INFO_INIT;
-@@ -774,10 +845,7 @@ static void survey_phase_objects(struct survey_context *ctx)
- 	info.blobs = 1;
- 	info.tags = 1;
+diff --git a/revision.h b/revision.h
+index 0e470d1df19..6c3df8e42bf 100644
+--- a/revision.h
++++ b/revision.h
+@@ -487,6 +487,7 @@ void put_revision_mark(const struct rev_info *revs,
  
--	CALLOC_ARRAY(ctx->report.by_type, REPORT_TYPE_COUNT);
--	ctx->report.by_type[REPORT_TYPE_COMMIT].label = xstrdup(_("Commits"));
--	ctx->report.by_type[REPORT_TYPE_TREE].label = xstrdup(_("Trees"));
--	ctx->report.by_type[REPORT_TYPE_BLOB].label = xstrdup(_("Blobs"));
-+	initialize_report(ctx);
+ void mark_parents_uninteresting(struct rev_info *revs, struct commit *commit);
+ void mark_tree_uninteresting(struct repository *r, struct tree *tree);
++void mark_trees_uninteresting_dense(struct repository *r, struct oidset *trees);
+ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees);
  
- 	repo_init_revisions(ctx->repo, &revs, "");
- 
-diff --git a/t/t8100-git-survey.sh b/t/t8100-git-survey.sh
-index f8af9601214..c2dab0033f9 100755
---- a/t/t8100-git-survey.sh
-+++ b/t/t8100-git-survey.sh
-@@ -60,7 +60,17 @@ test_expect_success 'git survey (default)' '
- 	      Blobs |    10 |       191 |           101
- 	EOF
- 
--	test_cmp expect out
-+	lines=$(wc -l <expect) &&
-+	head -n $lines out >out-trimmed &&
-+	test_cmp expect out-trimmed &&
-+
-+	for type in "DIRECTORIES" "FILES"
-+	do
-+		for metric in "COUNT" "DISK SIZE" "INFLATED SIZE"
-+		do
-+			grep "TOP $type BY $metric" out || return 1
-+		done || return 1
-+	done
- '
- 
- test_done
+ void show_object_with_name(FILE *, struct object *, const char *);
 -- 
 gitgitgadget
 
