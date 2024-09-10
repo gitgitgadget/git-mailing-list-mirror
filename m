@@ -1,62 +1,62 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC37A558BA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0121413B2B8
 	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725935342; cv=none; b=DtkK3AHfVdZKRmuiXrOzGQaztI8byhC9YSxnRwU659ZYsx1vtkYwqcnPS04B4chP9Or6zKoN1MxDCnJ0YfYOZSBNqiaALSXpsU8V5brQwQEqTxkNUwxd0nlWiwz+Z05yPViHRmd1hfZPTkWKmxdk+lieyso4cvLuwZqnrczRSqc=
+	t=1725935342; cv=none; b=Sh6sKX7guOlzKWYFziEp+2za/fBtilhwVo6hsMxBx7A8XD33zcbpbHl9IAl2qwIM4Fl8m/AsI0TW5R+w7u4wYLtEZHZFeSGiVPrBtnCTn5l2XCS0rDsm1B0iXlcjISrrFvSQXCr41nNFuDyyoUR8oJuNfbdvDCf192S4liT7xXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1725935342; c=relaxed/simple;
-	bh=6bAXoeDab+vsodc2K4BXkLNy/Uln74I4PM95nrVpQpc=;
+	bh=8WpLaP8S48Qhtbv7IPfx6RoVF5NWIcMenRRJiD3/HEg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WzCr9LUMfVhVP4DO4NHULaz2fGHLomNC73XtzO9hCuMTtovoKVEpy4d5y7cSyd2Ni6d3AUDQaENypYxBiLjMPNC/7uQ+ePnjI66apzugcECPMyX2LEy2+LBwBcOAX7yoZFoL5ZQgK3lyGxFOSSJaHceGE9ASwFActOolS+/bB70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J+i3SVMl; arc=none smtp.client-ip=209.85.218.48
+	 MIME-Version:To:Cc; b=shzRL33Ld+x4OqPHWcZF6X6I/Qj/uD2vRpwxpBawBc0V3Snzeg/fsi7VeYwEUs0TYSWSed4oIkQ0wVleygYeom2vFJ4CxJZfBQfwDnPmptLv1Wcm+gldzqBeSlLd8Pfwg4dESELnnPgmKS90ZUiTbIoQ/L+WDQzjPzKosEnYNps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Unn7b7TC; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J+i3SVMl"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a80eab3945eso472231566b.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Unn7b7TC"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c3ca32971cso357467a12.0
         for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1725935338; x=1726540138; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8WWOMy4WIUWhxeKz0gGI2lTYbTiCTB1FXD5uAnefrxM=;
-        b=J+i3SVMl9NPzZwco46r0+XTSytu56VN4bOhnZ2J3GDe7PTWbhpzjjatgi+tNUE68iE
-         HCg3HM/kGdAStryEZNZONBoMJvGmPH8BQAqLfTtwT7Iitq7b2lBk76Bj1pRVQJDRpw9c
-         p/fXyz8hArUSZdzysbNlMQUAU91ShUN1CHIKtNcJeAiNGisxSYDlU4gVjCXH88SCzrsa
-         kajQwMWa7AT0uzfyt7PSyOUSdHrOKeNRroXQNEZuQv16NanoAq9rfs7WyFIyCeh8DdIx
-         kNc0hpPRyHm8twqFfM0Z3q0olglSmyr2EpP01ytKqax2iimB0dNuHOWZsc02s3Cl53dL
-         x4VA==
+        bh=AGMH37EycR8jxMJo3/rBXnAayoJ7MMo1d9WtbnU5SrE=;
+        b=Unn7b7TCFPJgQS6o1O67q4dvxlL3hxajN2JIqQxHx3spbZtFSaTjqhp1aFeojfEXv1
+         tZRjyzLDVcIceTx+GKzsdTnmi7U+z1SwHC2uh4lqfuwjCdN5vxHLwjh22CDFRLjogYfK
+         3oFamUT3wv5Jn2kSMREYbBht5CUaDv992uHgVwpPnlk/1IV0EC+7b+IwCltbe5DIDwdW
+         tWIgoxUhwSmWZ1UHWakyGxhLGMB3YVZ7nPeSylmnif8f6nlcMeGweNMXR1emYKhmgAM8
+         m+cz1kxwaH1O/QQekoHcz54SHhPuHeAsR/7mLpjZbVu+AYmz/OJ+ruda9ScsKpabrJR9
+         Q0tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1725935338; x=1726540138;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8WWOMy4WIUWhxeKz0gGI2lTYbTiCTB1FXD5uAnefrxM=;
-        b=Ev2Iqf6ci4AGDc5ZuDEreOh9mOO//3GZHBE2KdVJ95xx/fF77EqAgHk9RNg5H5yoPb
-         KCtAPLzkQJ/QFFo1BuHFXlCe4tOiNuZAhuCj0Q0Bm9mnKlafouyOv9ixBsJzu31y1kPV
-         fEQXxzybZn1YsoNmb1+LjmvpwXaS6HG/kFFWiNZgs/h1e5RUyPtCg/OjWB4UomVmg471
-         FQeMjs/eyr7VxSucq+MZsvIK6TCVu4yAGjGAe7vqP79t75MRRkSIiDlVYtod3e7F6k0h
-         SFPc1bBvzRunpMQ7HP+Ikm37MKUeS61QJ5uanX/K0uUN07zqbW10zsZkBS5ni9qHigX5
-         bzfA==
-X-Gm-Message-State: AOJu0YyVYc73KOpAixYogvggh+HtOMyF4NH4UPw7ojaIiKFQ0L7aZhQO
-	4qEKm9Q7yZRTbTOtjeLIfuTKms1RRh0gW++98pNqzBexeo3vNhdiW3q8Xg==
-X-Google-Smtp-Source: AGHT+IEYUH3tlJ9ahlXl/x93XoK8gBLBLcr+O8Y0PehmXwnURxXMjt+BuFvhcKUDennPHMVI2Wd6BQ==
-X-Received: by 2002:a17:907:3687:b0:a86:b923:4a04 with SMTP id a640c23a62f3a-a8a887fcdbemr1007695366b.50.1725935337745;
-        Mon, 09 Sep 2024 19:28:57 -0700 (PDT)
+        bh=AGMH37EycR8jxMJo3/rBXnAayoJ7MMo1d9WtbnU5SrE=;
+        b=YckPGoqUayn1sp3nUsFI3NwmJLLt94IkMLROitvPNmgx3ZbUDppfPNL1zXS/qAuEC0
+         BOS6JMyysWLk/6k/S4TqYT9z4ANJ8v1phUjNn9SJRcyKibUQGIcilVCbTjpcMgQ2gro5
+         EZQdDIdxYyI37tuM1qeaajMuilTr8RQHiv9CkgGjfEF6mm58YBxLRwxxRpXVzwcZ4i2U
+         UOOsg1PaH6hO3jumsbG9Wd3IhJDu5QhN/jW3Qs12wOf1HpFlTci2bHGt510YUGe7gkcJ
+         Byg0DhNcIzTXzArZ8XxYe02FDRbpH72De7ChiuK84iLt4GKLL80cBCpPFCq3DKaRwZxy
+         dE8A==
+X-Gm-Message-State: AOJu0YytZYal5bZsVJnnyzPNk4gwGyPx6uAxSZn3gG2A+qLpbmj2pUh9
+	BtWROOyAd8GQD9zItYT/VJ+dggT2hWna7lUwbpOwuse77bgVTasPwRjoZw==
+X-Google-Smtp-Source: AGHT+IHr4c5/R4ZFE1bp2dUNwI2l6A9nv6kDdtXjSf8xhAqLqa9kE0xu/XXRZw51dPbeWoqDIpJRDw==
+X-Received: by 2002:a17:907:6d24:b0:a8d:11c2:2b4 with SMTP id a640c23a62f3a-a8d11c206b0mr934964666b.56.1725935338398;
+        Mon, 09 Sep 2024 19:28:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25c61258sm413909166b.116.2024.09.09.19.28.57
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25835cc9sm411772866b.26.2024.09.09.19.28.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 19:28:57 -0700 (PDT)
-Message-Id: <a53bd0d37606c890d2fd2b715ce0bc92ff787b66.1725935335.git.gitgitgadget@gmail.com>
+        Mon, 09 Sep 2024 19:28:58 -0700 (PDT)
+Message-Id: <41c49bba131ed014cc4f7ab579313527dd4c9d29.1725935335.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 References: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Sep 2024 02:28:26 +0000
-Subject: [PATCH 01/30] path-walk: introduce an object walk by path
+Date: Tue, 10 Sep 2024 02:28:27 +0000
+Subject: [PATCH 02/30] backfill: add builtin boilerplate
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,334 +75,156 @@ Cc: gitster@pobox.com,
     johncai86@gmail.com,
     newren@gmail.com,
     Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+    Derrick Stolee <derrickstolee@github.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+From: Derrick Stolee <derrickstolee@github.com>
 
-In anticipation of a few planned applications, introduce the most basic form
-of a path-walk API. It currently assumes that there are no UNINTERESTING
-objects, and does not include any complicated filters. It calls a function
-pointer on groups of tree and blob objects as grouped by path. This only
-includes objects the first time they are discovered, so an object that
-appears at multiple paths will not be included in two batches.
+In anticipation of implementing 'git backfill', populate the necessary files
+with the boilerplate of a new builtin.
 
-There are many future adaptations that could be made, but they are left for
-future updates when consumers are ready to take advantage of those features.
+RFC TODO: When preparing this for a full implementation, make sure it is
+based on the newest standards introduced by [1].
 
-RFC TODO: It would be helpful to create a test-tool that allows printing of
-each batch for strong testing.
+[1] https://lore.kernel.org/git/xmqqjzfq2f0f.fsf@gitster.g/T/#m606036ea2e75a6d6819d6b5c90e729643b0ff7f7
+    [PATCH 1/3] builtin: add a repository parameter for builtin functions
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Makefile    |   1 +
- path-walk.c | 235 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- path-walk.h |  43 ++++++++++
- 3 files changed, 279 insertions(+)
- create mode 100644 path-walk.c
- create mode 100644 path-walk.h
+ .gitignore                     |  1 +
+ Documentation/git-backfill.txt | 23 +++++++++++++++++++++++
+ Makefile                       |  1 +
+ builtin.h                      |  1 +
+ builtin/backfill.c             | 29 +++++++++++++++++++++++++++++
+ command-list.txt               |  1 +
+ git.c                          |  1 +
+ 7 files changed, 57 insertions(+)
+ create mode 100644 Documentation/git-backfill.txt
+ create mode 100644 builtin/backfill.c
 
+diff --git a/.gitignore b/.gitignore
+index 8caf3700c23..8f5cb938ecb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -19,6 +19,7 @@
+ /git-apply
+ /git-archimport
+ /git-archive
++/git-backfill
+ /git-bisect
+ /git-blame
+ /git-branch
+diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
+new file mode 100644
+index 00000000000..640144187d3
+--- /dev/null
++++ b/Documentation/git-backfill.txt
+@@ -0,0 +1,23 @@
++git-backfill(1)
++===============
++
++NAME
++----
++git-backfill - Download missing objects in a partial clone
++
++
++SYNOPSIS
++--------
++[verse]
++'git backfill' [<options>]
++
++DESCRIPTION
++-----------
++
++SEE ALSO
++--------
++linkgit:git-clone[1].
++
++GIT
++---
++Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index deb175a0408..e83f6de9a2c 100644
+index e83f6de9a2c..4305474d96e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1090,6 +1090,7 @@ LIB_OBJS += parse-options.o
- LIB_OBJS += patch-delta.o
- LIB_OBJS += patch-ids.o
- LIB_OBJS += path.o
-+LIB_OBJS += path-walk.o
- LIB_OBJS += pathspec.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += preload-index.o
-diff --git a/path-walk.c b/path-walk.c
+@@ -1198,6 +1198,7 @@ BUILTIN_OBJS += builtin/am.o
+ BUILTIN_OBJS += builtin/annotate.o
+ BUILTIN_OBJS += builtin/apply.o
+ BUILTIN_OBJS += builtin/archive.o
++BUILTIN_OBJS += builtin/backfill.o
+ BUILTIN_OBJS += builtin/bisect.o
+ BUILTIN_OBJS += builtin/blame.o
+ BUILTIN_OBJS += builtin/branch.o
+diff --git a/builtin.h b/builtin.h
+index 14fa0171607..73dd0ccbe8c 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -127,6 +127,7 @@ int cmd_am(int argc, const char **argv, const char *prefix);
+ int cmd_annotate(int argc, const char **argv, const char *prefix);
+ int cmd_apply(int argc, const char **argv, const char *prefix);
+ int cmd_archive(int argc, const char **argv, const char *prefix);
++int cmd_backfill(int argc, const char **argv, const char *prefix);
+ int cmd_bisect(int argc, const char **argv, const char *prefix);
+ int cmd_blame(int argc, const char **argv, const char *prefix);
+ int cmd_branch(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/backfill.c b/builtin/backfill.c
 new file mode 100644
-index 00000000000..2edfa0572e4
+index 00000000000..77b05a2f838
 --- /dev/null
-+++ b/path-walk.c
-@@ -0,0 +1,235 @@
-+/*
-+ * path-walk.c: implementation for path-based walks of the object graph.
-+ */
-+#include "git-compat-util.h"
-+#include "path-walk.h"
-+#include "blob.h"
-+#include "commit.h"
-+#include "dir.h"
-+#include "hashmap.h"
-+#include "hex.h"
++++ b/builtin/backfill.c
+@@ -0,0 +1,29 @@
++#include "builtin.h"
++#include "config.h"
++#include "parse-options.h"
++#include "repository.h"
 +#include "object.h"
-+#include "oid-array.h"
-+#include "revision.h"
-+#include "string-list.h"
-+#include "strmap.h"
-+#include "trace2.h"
-+#include "tree.h"
-+#include "tree-walk.h"
 +
-+struct type_and_oid_list
-+{
-+	enum object_type type;
-+	struct oid_array oids;
++static const char * const builtin_backfill_usage[] = {
++	N_("git backfill [<options>]"),
++	NULL
 +};
 +
-+#define TYPE_AND_OID_LIST_INIT { \
-+	.type = OBJ_NONE, 	 \
-+	.oids = OID_ARRAY_INIT	 \
-+}
-+
-+struct path_walk_context {
-+	/**
-+	 * Repeats of data in 'struct path_walk_info' for
-+	 * access with fewer characters.
-+	 */
-+	struct repository *repo;
-+	struct rev_info *revs;
-+	struct path_walk_info *info;
-+
-+	/**
-+	 * Map a path to a 'struct type_and_oid_list'
-+	 * containing the objects discovered at that
-+	 * path.
-+	 */
-+	struct strmap paths_to_lists;
-+
-+	/**
-+	 * Store the current list of paths in a stack, to
-+	 * facilitate depth-first-search without recursion.
-+	 */
-+	struct string_list path_stack;
-+};
-+
-+static int add_children(struct path_walk_context *ctx,
-+			const char *base_path,
-+			struct object_id *oid)
++int cmd_backfill(int argc, const char **argv, const char *prefix)
 +{
-+	struct tree_desc desc;
-+	struct name_entry entry;
-+	struct strbuf path = STRBUF_INIT;
-+	size_t base_len;
-+	struct tree *tree = lookup_tree(ctx->repo, oid);
-+
-+	if (!tree) {
-+		error(_("failed to walk children of tree %s: not found"),
-+		      oid_to_hex(oid));
-+		return -1;
-+	}
-+
-+	strbuf_addstr(&path, base_path);
-+	base_len = path.len;
-+
-+	parse_tree(tree);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
-+	while (tree_entry(&desc, &entry)) {
-+		struct type_and_oid_list *list;
-+		struct object *o;
-+		/* Not actually true, but we will ignore submodules later. */
-+		enum object_type type = S_ISDIR(entry.mode) ? OBJ_TREE : OBJ_BLOB;
-+
-+		/* Skip submodules. */
-+		if (S_ISGITLINK(entry.mode))
-+			continue;
-+
-+		if (type == OBJ_TREE) {
-+			struct tree *child = lookup_tree(ctx->repo, &entry.oid);
-+			o = child ? &child->object : NULL;
-+		} else if (type == OBJ_BLOB) {
-+			struct blob *child = lookup_blob(ctx->repo, &entry.oid);
-+			o = child ? &child->object : NULL;
-+		} else {
-+			/* Wrong type? */
-+			continue;
-+		}
-+
-+		if (!o) /* report error?*/
-+			continue;
-+
-+		/* Skip this object if already seen. */
-+		if (o->flags & SEEN)
-+			continue;
-+		o->flags |= SEEN;
-+
-+		strbuf_setlen(&path, base_len);
-+		strbuf_add(&path, entry.path, entry.pathlen);
-+
-+		/*
-+		 * Trees will end with "/" for concatenation and distinction
-+		 * from blobs at the same path.
-+		 */
-+		if (type == OBJ_TREE)
-+			strbuf_addch(&path, '/');
-+
-+		if (!(list = strmap_get(&ctx->paths_to_lists, path.buf))) {
-+			CALLOC_ARRAY(list, 1);
-+			list->type = type;
-+			strmap_put(&ctx->paths_to_lists, path.buf, list);
-+			string_list_append(&ctx->path_stack, path.buf);
-+		}
-+		oid_array_append(&list->oids, &entry.oid);
-+	}
-+
-+	free_tree_buffer(tree);
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+/*
-+ * For each path in paths_to_explore, walk the trees another level
-+ * and add any found blobs to the batch (but only if they don't
-+ * exist and haven't been added yet).
-+ */
-+static int walk_path(struct path_walk_context *ctx,
-+		     const char *path)
-+{
-+	struct type_and_oid_list *list;
-+	int ret = 0;
-+
-+	list = strmap_get(&ctx->paths_to_lists, path);
-+
-+	/* Evaluate function pointer on this data. */
-+	ret = ctx->info->path_fn(path, &list->oids, list->type,
-+				 ctx->info->path_fn_data);
-+
-+	/* Expand data for children. */
-+	if (list->type == OBJ_TREE) {
-+		for (size_t i = 0; i < list->oids.nr; i++) {
-+			ret |= add_children(ctx,
-+					    path,
-+					    &list->oids.oid[i]);
-+		}
-+	}
-+
-+	oid_array_clear(&list->oids);
-+	strmap_remove(&ctx->paths_to_lists, path, 1);
-+	return ret;
-+}
-+
-+static void clear_strmap(struct strmap *map)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+
-+	hashmap_for_each_entry(&map->map, &iter, e, ent) {
-+		struct type_and_oid_list *list = e->value;
-+		oid_array_clear(&list->oids);
-+	}
-+	strmap_clear(map, 1);
-+	strmap_init(map);
-+}
-+
-+/**
-+ * Given the configuration of 'info', walk the commits based on 'info->revs' and
-+ * call 'info->path_fn' on each discovered path.
-+ *
-+ * Returns nonzero on an error.
-+ */
-+int walk_objects_by_path(struct path_walk_info *info)
-+{
-+	const char *root_path = "";
-+	int ret = 0;
-+	size_t commits_nr = 0, paths_nr = 0;
-+	struct commit *c;
-+	struct type_and_oid_list *root_tree_list;
-+	struct path_walk_context ctx = {
-+		.repo = info->revs->repo,
-+		.revs = info->revs,
-+		.info = info,
-+		.path_stack = STRING_LIST_INIT_DUP,
-+		.paths_to_lists = STRMAP_INIT
++	struct option options[] = {
++		OPT_END(),
 +	};
 +
-+	trace2_region_enter("path-walk", "commit-walk", info->revs->repo);
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_backfill_usage, options);
 +
-+	/* Insert a single list for the root tree into the paths. */
-+	CALLOC_ARRAY(root_tree_list, 1);
-+	root_tree_list->type = OBJ_TREE;
-+	strmap_put(&ctx.paths_to_lists, root_path, root_tree_list);
++	argc = parse_options(argc, argv, prefix, options, builtin_backfill_usage,
++			     0);
 +
-+	if (prepare_revision_walk(info->revs))
-+		die(_("failed to setup revision walk"));
++	git_config(git_default_config, NULL);
 +
-+	while ((c = get_revision(info->revs))) {
-+		struct object_id *oid = get_commit_tree_oid(c);
-+		struct tree *t = lookup_tree(info->revs->repo, oid);
-+		commits_nr++;
++	die(_("not implemented"));
 +
-+		if (t)
-+			oid_array_append(&root_tree_list->oids, oid);
-+		else
-+			warning("could not find tree %s", oid_to_hex(oid));
-+	}
-+
-+	trace2_data_intmax("path-walk", ctx.repo, "commits", commits_nr);
-+	trace2_region_leave("path-walk", "commit-walk", info->revs->repo);
-+
-+	string_list_append(&ctx.path_stack, root_path);
-+
-+	trace2_region_enter("path-walk", "path-walk", info->revs->repo);
-+	while (!ret && ctx.path_stack.nr) {
-+		char *path = ctx.path_stack.items[ctx.path_stack.nr - 1].string;
-+		ctx.path_stack.nr--;
-+		paths_nr++;
-+
-+		ret = walk_path(&ctx, path);
-+
-+		free(path);
-+	}
-+	trace2_data_intmax("path-walk", ctx.repo, "paths", paths_nr);
-+	trace2_region_leave("path-walk", "path-walk", info->revs->repo);
-+
-+	clear_strmap(&ctx.paths_to_lists);
-+	string_list_clear(&ctx.path_stack, 0);
-+	return ret;
++	return 0;
 +}
-diff --git a/path-walk.h b/path-walk.h
-new file mode 100644
-index 00000000000..c9e94a98bc8
---- /dev/null
-+++ b/path-walk.h
-@@ -0,0 +1,43 @@
-+/*
-+ * path-walk.h : Methods and structures for walking the object graph in batches
-+ * by the paths that can reach those objects.
-+ */
-+#include "object.h" /* Required for 'enum object_type'. */
-+
-+struct rev_info;
-+struct oid_array;
-+
-+/**
-+ * The type of a function pointer for the method that is called on a list of
-+ * objects reachable at a given path.
-+ */
-+typedef int (*path_fn)(const char *path,
-+		       struct oid_array *oids,
-+		       enum object_type type,
-+		       void *data);
-+
-+struct path_walk_info {
-+	/**
-+	 * revs provides the definitions for the commit walk, including
-+	 * which commits are UNINTERESTING or not.
-+	 */
-+	struct rev_info *revs;
-+
-+	/**
-+	 * The caller wishes to execute custom logic on objects reachable at a
-+	 * given path. Every reachable object will be visited exactly once, and
-+	 * the first path to see an object wins. This may not be a stable choice.
-+	 */
-+	path_fn path_fn;
-+	void *path_fn_data;
-+};
-+
-+#define PATH_WALK_INFO_INIT { 0 }
-+
-+/**
-+ * Given the configuration of 'info', walk the commits based on 'info->revs' and
-+ * call 'info->path_fn' on each discovered path.
-+ *
-+ * Returns nonzero on an error.
-+ */
-+int walk_objects_by_path(struct path_walk_info *info);
+diff --git a/command-list.txt b/command-list.txt
+index e0bb87b3b5c..c537114b468 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -60,6 +60,7 @@ git-annotate                            ancillaryinterrogators
+ git-apply                               plumbingmanipulators            complete
+ git-archimport                          foreignscminterface
+ git-archive                             mainporcelain
++git-backfill                            mainporcelain           history
+ git-bisect                              mainporcelain           info
+ git-blame                               ancillaryinterrogators          complete
+ git-branch                              mainporcelain           history
+diff --git a/git.c b/git.c
+index 9a618a2740f..4f2215e9c8b 100644
+--- a/git.c
++++ b/git.c
+@@ -509,6 +509,7 @@ static struct cmd_struct commands[] = {
+ 	{ "annotate", cmd_annotate, RUN_SETUP },
+ 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+ 	{ "archive", cmd_archive, RUN_SETUP_GENTLY },
++	{ "backfill", cmd_backfill, RUN_SETUP },
+ 	{ "bisect", cmd_bisect, RUN_SETUP },
+ 	{ "blame", cmd_blame, RUN_SETUP },
+ 	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
 -- 
 gitgitgadget
 
