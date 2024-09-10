@@ -1,120 +1,103 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8360A189BA4
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 19:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6351741E8
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 20:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725996819; cv=none; b=Vz73S7kHItLI4HQqgX9FUsH6Y0hSRcvUAi/z1KIoGd7gVKKLJu57RXvw85AbfZ7Gzx3Gfk8/EklVqqhCHWDAoiCcRuMPfml4UWJkjRrfwwUASvo4Fc7KDWc9WRYdfDPcd6uIUQUmKNL1QqOr5C5dRsOszv531ucT1tCRAQRIfFg=
+	t=1726000588; cv=none; b=mjRtXyx3FINYSw6VgD7D7QIozFgBjfpFWKS/VOg3PCS8sIJglx9O5840NnAjpfB3QqfzhwBHkgZXWsWgC+1pioWOScYZFbMmRKqNuhr4KcQIRk6TIFyTNt728xol/XE+UXDvzQSOCRFakQ3OJDNpTv0Bqn+KFINE6B2XHTIBN8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725996819; c=relaxed/simple;
-	bh=6XNfRc1BufkWwHC3pOSbKRevv8O2WtlLM/BZgGNJnJM=;
-	h=MIME-Version:From:To:Cc:In-Reply-To:Subject:Message-ID:Date:
-	 Content-Type; b=OWawwVjGS3K/9iFXcGjQE8uv3ctzsTX2rlIrtofLcUNHYX1yjRRUBYVsTSEj/O+Vt1qp/VbRhKf0a8gPDx1C3GVOS1xbRxftXsHqR+Mt7oYaAlnmKv5cnz0CPgIpuh4rNG587UPjAisTvoA5mk0JQNh/KAkf0oUpLPM0lwttmBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=imt7jxVJ; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726000588; c=relaxed/simple;
+	bh=YGBjYFojN1n2aLf8BL2XOZ00f8kUUUdbB39nyKZ/0xw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LKq5llgrgFbrslrxuiTJMgCr0iD9BlFjcK4SEtePfwa4yYipQknR/RRfWmg301VJn+l12KKxC+SoQjMdnn7jQVwfUFL4uM0A4Jn79cWE3GtXxA3+Rt33AF7wBAwYm4YEVJqPZV27O6xglCAnYCqxk5ISOSs8aeBF6Fbs2KVJWNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uXDZLRVY; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="imt7jxVJ"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-82cec47242eso7061839f.0
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 12:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725996817; x=1726601617; darn=vger.kernel.org;
-        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=72azyyYyTw7dnjQyfZAj4jFYyp0+ot7nyuTheo4nmqA=;
-        b=imt7jxVJfEGNClldH+tYtx0JPpO9DjriSiNaHnaidVSfToPVv0t/mrPpnbK9+lsN6c
-         C4cVfHWF14XUULdhep4edEm/JG4sdxZjttdam225RtPa0/hCeLlWa622a+U+7GshhkC1
-         NiwY8ldekGMbl875H1iurbkLr8aTXs08OrSaIkPQ+mlGiSbK7QebLG9sWa2wdENH8WFZ
-         tx8VeTo/cH6FzVw5hnUQn40ANbcQVzzrxYu7+Tqy9e/XsYZnDjOfulNx/GlAnQ7Xtq6K
-         GLCYE9GlzcgiGkPjrLCh+rb9aNyKHopRi5KYP9JN9FgzvFP0KdPmNxE2KGcY83eBb5Ic
-         4uAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725996817; x=1726601617;
-        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
-         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=72azyyYyTw7dnjQyfZAj4jFYyp0+ot7nyuTheo4nmqA=;
-        b=LeTBAp4naEbroPv4CKOUZNQpTa9Ans0o+TySZouHl3d5zWYNIRt6GdXaF3B6Yb8aFb
-         JFuK1X5/oo5DPp743QIpFHSC0PNymmEn51qHr06CjoEsvW8bx1boKVt84nTbPiINkiTE
-         Rzzj32gdJ2VbURElseOqeHsVMjAzkCODZlZdObFVJRKYKoFTeMH85DrbvFBl9nlS8Jme
-         5P6IAgdHvi5ehaQ5Rystxp8osN2eynR01xvakGiNOxxWPx0HnyLO7WGgQMi2idQF1225
-         p3Gq07U5Kkj8Egrf6baBNTAG//ETSwyPhgAGprS/V1W15CYI3/6aEFVdjApbkB2QfNGZ
-         WpqQ==
-X-Gm-Message-State: AOJu0YytYgFnliw/2b8UIDoIZyAHsPb6bPnttKnNMsU9xvBUMSKiR3OJ
-	r7DYerWtBGocsG2zoUHoHDLLFfnhqG0p9LHzWcjkYZOI160llooY
-X-Google-Smtp-Source: AGHT+IGf/ObreWgLdsFMklxh1uCm/ulAswrzy4zZmgDDY/GN57XCM4U1zBigSVmfW0P6NExUJbm0dg==
-X-Received: by 2002:a92:c24f:0:b0:39f:6f6c:90ba with SMTP id e9e14a558f8ab-3a06b12e054mr38705185ab.6.1725996817355;
-        Tue, 10 Sep 2024 12:33:37 -0700 (PDT)
-Received: from zivnix (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a058fd5c6bsm21673275ab.21.2024.09.10.12.33.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2024 12:33:36 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uXDZLRVY"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 599C23BF93;
+	Tue, 10 Sep 2024 16:36:24 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=YGBjYFojN1n2aLf8BL2XOZ00f8kUUUdbB39nyK
+	Z/0xw=; b=uXDZLRVYCzaQS2Fugub/qoBOSwf4Hbt02yUgLxDAKNPDyIyceOJLBA
+	dzdmWMrNcqfrXisq118YQUf7U1hHxxu5ji5BjrI35/9/K4ThEFVML9SFMODWws58
+	B/BamDDfBt86kgP2v0Zb/HeliYwvYO7ZYVMwfdB2vprSHdWMIQ3fs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5014B3BF92;
+	Tue, 10 Sep 2024 16:36:24 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB2D03BF91;
+	Tue, 10 Sep 2024 16:36:23 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
+  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com
+Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
+In-Reply-To: <xmqq4j6nlcfy.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	10 Sep 2024 09:07:29 -0700")
+References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+	<xmqqjzfkr9b0.fsf@gitster.g>
+	<0e6dde0f-63e2-4db3-9225-9a8ca5e78eb3@gmail.com>
+	<xmqq4j6nlcfy.fsf@gitster.g>
+Date: Tue, 10 Sep 2024 13:36:22 -0700
+Message-ID: <xmqqikv3dz5l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Brian Lyles" <brianmlyles@gmail.com>
-To: "Derrick Stolee" <stolee@gmail.com>
-Cc: <git@vger.kernel.org>
-In-Reply-To: <3ace452b-f68f-46b9-b8a9-a175299deef7@gmail.com>
-Subject: Re: [BUG REPORT] sparseIndexExpanded hint always shows on sparse worktree
-	 move
-Message-ID: <17f3f8f5b8a02458.e3447cfa6f132bd0.af4b8bafcdefe090@zivnix>
-Date: Tue, 10 Sep 2024 19:33:36 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 584130DA-6FB4-11EF-951E-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Hi Derrick,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for taking a look, and apologies for the delayed response.
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+>> The thing that surprised me is just how effective this is for the
+>> creation of large pack-files that include many versions of most
+>> files. The cross-path deltas have less of an effect here, and the
+>> benefits of avoiding name-hash collisions can be overwhelming in
+>> many cases.
+>
+> Yes, "make sure we notice a file F moving from directory A to B" is
+> inherently optimized for short span of history, i.e. a smallish push
+> rather than a whole history clone, where the definition of
+> "smallish" is that even if you create optimal delta chains, the
+> length of these delta chains will not exceed the "--depth" option.
+>
+> If the history you are pushing modified A/F twice, renamed it to B/F
+> (with or without modification at the same time), then modified B/F
+> twice more, you'd want to pack the 5-commit segment and having to
+> artificially cut the delta chain that can contain all of these 5
+> blobs into two at the renaming commit is a huge loss.
 
-On 15/08/2024 10:25, Derrick Stolee wrote:
-> The key issue with this reproducer is the following: the sparse index
-> config is set in the worktree config. When you are running this move
-> command from the main-worktree, it is not configured to work with a
-> sparse index. Thus, when reading the index, Git thinks the sparse
-> index is disabled and must inflate the index into a full one before
-> continuing.
->=20
-> For full information, this happens in the callstack
->=20
->    move_worktree()
->    validate_no_submodules()
->    read_index_from()
->    do_read_index()
->    ensure_correct_sparsity()
->    ensure_full_index()
->=20
-> If you add "git -C main-worktree sparse-checkout set A --sparse-index"
-> before you create the other-worktree (or move it) then the message
-> does not appear.
->=20
-> This is a quirk of the worktree config that may be worth updating to
-> respect the sparse index of the target worktree, but may also be worth
-> leaving as-is because we are running this from a different worktree.
+Which actually leads me to suspect that we probably do not even have
+to expose the --full-name-hash option to the end users in "git repack".
 
-It seems to me that we really should be respecting the sparsity of the
-worktree being moved rather than the worktree from which we happened to
-run the command, at least in this case. The purpose of reading the index
-(in this call stack) is to ensure that there are no submodules in the
-worktree being moved, so the index of (and therefore, the sparse-index
-config of) the worktree from which the command is running seems
-irrelevant.
+If we are doing incremental that would fit within the depth setting,
+it is likely that we would be better off without the full-name-hash
+optimization, and if we are doing "repack -a" for the whole
+repository, especially with "-f", it would make sense to do the
+full-name-hash optimization.
 
-I poked at this a little bit, and the main challenge seems to be that
-`is_sparse_index_allowed()` uses some cached
-`core_apply_sparse_checkout` and `core_sparse_checkout_cone` values that
-are populated with the config from the worktree in which the command is
-being run, rather than accepting those values directly or via some
-worktree object. It looks like this would need some fairly significant
-refactoring to address since there are multiple functions in that call
-chain that would need to be updated to allow passing something more
-worktree-specific through, and those functions (most notably
-`read_index_from()` are called from several places.
+If we can tell how large a chunk of history we are packing before we
+actually start calling builtin/pack-objects.c:add_object_entry(), we
+probably should be able to even select between with and without
+full-name-hash automatically, but I do not think we know the object
+count before we finish calling add_object_entry(), so unless we are
+willing to compute and keep both while reading and pick between the
+two after we finish reading the list of objects, or something, it
+will require a major surgery to do so, I am afraid.
 
---=20
-Thank you,
-Brian Lyles
