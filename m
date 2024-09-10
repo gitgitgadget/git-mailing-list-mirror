@@ -1,99 +1,120 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152BA1A2567
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 19:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8360A189BA4
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 19:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725996391; cv=none; b=C4VC01eKH7TX+k3AsCkMm+J3NtXhjTXSh3WNQlfUajkAX4SKs4C/mffdXPlbJPNufPaEIlnzIfbG5TZtp2nRLaoeHTcm1Rdyr9hNnz9yrZ8FD65cqczflKpqaM0P6VZUhqGEo6/hIazFCGnnBhjbUfV3UlzpEJa8SJzNgcby954=
+	t=1725996819; cv=none; b=Vz73S7kHItLI4HQqgX9FUsH6Y0hSRcvUAi/z1KIoGd7gVKKLJu57RXvw85AbfZ7Gzx3Gfk8/EklVqqhCHWDAoiCcRuMPfml4UWJkjRrfwwUASvo4Fc7KDWc9WRYdfDPcd6uIUQUmKNL1QqOr5C5dRsOszv531ucT1tCRAQRIfFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725996391; c=relaxed/simple;
-	bh=AUBnNbnVHlL8Z8WqUWo1qHmvxd3L2oHcjREomoZrMmY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n9Jmp/LQvPZ2Km7LNwv3ArLHttLBYyznb52AHsrXTxGSY8M5TnMDCJAueJOP0JCh5HYLfCIs+nKnri/J7LoiIedcYD7cViw0qTDDpyjbXtgbFN2N1oTL3yPtYgi+TJlfyE6TGY0KiCcwc2RrU5hjVlCxtGq+RekXYybpuQLOduc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XLlTUlOD; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1725996819; c=relaxed/simple;
+	bh=6XNfRc1BufkWwHC3pOSbKRevv8O2WtlLM/BZgGNJnJM=;
+	h=MIME-Version:From:To:Cc:In-Reply-To:Subject:Message-ID:Date:
+	 Content-Type; b=OWawwVjGS3K/9iFXcGjQE8uv3ctzsTX2rlIrtofLcUNHYX1yjRRUBYVsTSEj/O+Vt1qp/VbRhKf0a8gPDx1C3GVOS1xbRxftXsHqR+Mt7oYaAlnmKv5cnz0CPgIpuh4rNG587UPjAisTvoA5mk0JQNh/KAkf0oUpLPM0lwttmBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=imt7jxVJ; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XLlTUlOD"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c2460e885dso30928a12.0
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 12:26:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="imt7jxVJ"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-82cec47242eso7061839f.0
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 12:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1725996388; x=1726601188; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AUBnNbnVHlL8Z8WqUWo1qHmvxd3L2oHcjREomoZrMmY=;
-        b=XLlTUlODZtqOFeEu8awwgbuo3KMS43ostjEwdDSqxXAoiMF4F/ZX6uRKRCG9/QQCsk
-         3KIxhIZxXzu9mcJzhARq+hw6Kb3pEt+8ypCWyzjT+BrKynln3nelb2H02fYJKGyS20w3
-         /gozmTgfALHbzAiue0L9GoNSSpz6pqRnzrw5Acrr5pQxdu/Y2tUNA0E+Bstv/10sjGPo
-         5EuyEWE+J3vPy6KW93q2+VNH1eQL9mr46yLzl7Kme2M/juRUcduGdclvuYpnsvYO+iRO
-         oq8+WIG5hToEUhvAf0yUVCxVPRM8JZyryNK0/3E70IaPaB/E1dlyTdAwYw/qOWc5oFHs
-         869Q==
+        d=gmail.com; s=20230601; t=1725996817; x=1726601617; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=72azyyYyTw7dnjQyfZAj4jFYyp0+ot7nyuTheo4nmqA=;
+        b=imt7jxVJfEGNClldH+tYtx0JPpO9DjriSiNaHnaidVSfToPVv0t/mrPpnbK9+lsN6c
+         C4cVfHWF14XUULdhep4edEm/JG4sdxZjttdam225RtPa0/hCeLlWa622a+U+7GshhkC1
+         NiwY8ldekGMbl875H1iurbkLr8aTXs08OrSaIkPQ+mlGiSbK7QebLG9sWa2wdENH8WFZ
+         tx8VeTo/cH6FzVw5hnUQn40ANbcQVzzrxYu7+Tqy9e/XsYZnDjOfulNx/GlAnQ7Xtq6K
+         GLCYE9GlzcgiGkPjrLCh+rb9aNyKHopRi5KYP9JN9FgzvFP0KdPmNxE2KGcY83eBb5Ic
+         4uAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725996388; x=1726601188;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AUBnNbnVHlL8Z8WqUWo1qHmvxd3L2oHcjREomoZrMmY=;
-        b=me/Ugpit3R0wzm23t1Et25AKlGoeX8WNx+wbl5mp0xWLLNTPK0cv+nhEj7u+8pc7l2
-         zgY+1t9ZdWnZ83NOB4t13wjYwJaKvKLZ7UyHc+2qZQvucv+s+/Pcfp8yYxA3SUzFImJF
-         nKTU+z8MUVJ4bJA5j3yiJCmlPJcaeGYyZ2KCJmLwuICq76XRvIeHoMmiF5p4SVGvxaea
-         8rMWAaYUjgmVaWXC7tLhnuS/3qu+Rl0nGUVpe1uDRMt6R9YOSHErv51RV22R5D1b5oS4
-         QuHRGOSHlEU89SubDKdFt8MHNvjQRfBzZrLSRsaIk/ZYMHEwQpl++PkN4Y0km4XFiXqG
-         CaPA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhcefj/A7eoMc/Yb4fo8g08hobakjfztFVJSpRQcWtkU5iniYIQRq3KyhM2UySbF63Npg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7Qt+wLR2oYkyKeCUzUc6mkYi+EUI3y1dodq2mclvO/HkYYW3Z
-	oZbpSbTC1rN+mGhCIdrG+3DmF54pfXDaQC6OFOVD6FLYkRljjdXxrcTjLe5A2rhfjBW/dP8ZTR2
-	+CEeL+lt4KqSGR57hrpHut5Ct5PzJ9+pqzgm0
-X-Google-Smtp-Source: AGHT+IFx1uQRWlu6HO+b5kFP1JV4UddZ/61Hh972YovmjsDdUoyCtX0NJ/DuSmpbpu43iANf+c60L+gdzF2wAb+3oFI=
-X-Received: by 2002:a05:6402:5194:b0:5c2:62c8:30a with SMTP id
- 4fb4d7f45d1cf-5c40c872e58mr74913a12.1.1725996387766; Tue, 10 Sep 2024
- 12:26:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725996817; x=1726601617;
+        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=72azyyYyTw7dnjQyfZAj4jFYyp0+ot7nyuTheo4nmqA=;
+        b=LeTBAp4naEbroPv4CKOUZNQpTa9Ans0o+TySZouHl3d5zWYNIRt6GdXaF3B6Yb8aFb
+         JFuK1X5/oo5DPp743QIpFHSC0PNymmEn51qHr06CjoEsvW8bx1boKVt84nTbPiINkiTE
+         Rzzj32gdJ2VbURElseOqeHsVMjAzkCODZlZdObFVJRKYKoFTeMH85DrbvFBl9nlS8Jme
+         5P6IAgdHvi5ehaQ5Rystxp8osN2eynR01xvakGiNOxxWPx0HnyLO7WGgQMi2idQF1225
+         p3Gq07U5Kkj8Egrf6baBNTAG//ETSwyPhgAGprS/V1W15CYI3/6aEFVdjApbkB2QfNGZ
+         WpqQ==
+X-Gm-Message-State: AOJu0YytYgFnliw/2b8UIDoIZyAHsPb6bPnttKnNMsU9xvBUMSKiR3OJ
+	r7DYerWtBGocsG2zoUHoHDLLFfnhqG0p9LHzWcjkYZOI160llooY
+X-Google-Smtp-Source: AGHT+IGf/ObreWgLdsFMklxh1uCm/ulAswrzy4zZmgDDY/GN57XCM4U1zBigSVmfW0P6NExUJbm0dg==
+X-Received: by 2002:a92:c24f:0:b0:39f:6f6c:90ba with SMTP id e9e14a558f8ab-3a06b12e054mr38705185ab.6.1725996817355;
+        Tue, 10 Sep 2024 12:33:37 -0700 (PDT)
+Received: from zivnix (syn-024-241-228-214.res.spectrum.com. [24.241.228.214])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a058fd5c6bsm21673275ab.21.2024.09.10.12.33.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Sep 2024 12:33:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240906221853.257984-1-calvinwan@google.com> <20240906222116.270196-4-calvinwan@google.com>
- <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
- <Zt_qM8ZGN4fnqUoY@pks.im> <c8d65466-a9c3-4556-84c1-3daf0c7cea14@gmail.com>
-In-Reply-To: <c8d65466-a9c3-4556-84c1-3daf0c7cea14@gmail.com>
-From: Calvin Wan <calvinwan@google.com>
-Date: Tue, 10 Sep 2024 12:26:16 -0700
-Message-ID: <CAFySSZDj2wOmzGMvnCFgVLXQK97Q01R4QJRPbMbaTwZ4h3h8kg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] config: add git_configset_alloc() and git_configset_clear_and_free()
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org, 
-	Josh Steadmon <steadmon@google.com>, spectral@google.com, emilyshaffer@google.com, 
-	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, 
-	sandals@crustytoothpaste.net, Jason@zx2c4.com, dsimic@manjaro.org
-Content-Type: text/plain; charset="UTF-8"
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: "Derrick Stolee" <stolee@gmail.com>
+Cc: <git@vger.kernel.org>
+In-Reply-To: <3ace452b-f68f-46b9-b8a9-a175299deef7@gmail.com>
+Subject: Re: [BUG REPORT] sparseIndexExpanded hint always shows on sparse worktree
+	 move
+Message-ID: <17f3f8f5b8a02458.e3447cfa6f132bd0.af4b8bafcdefe090@zivnix>
+Date: Tue, 10 Sep 2024 19:33:36 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 10, 2024 at 1:50=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 10/09/2024 07:41, Patrick Steinhardt wrote:
-> > Is there ever a case where one wants to
-> > allocate the configset, but not use it?
->
-> That was my thought too - I suggested providing git_configset_new() that
-> would allocate and initialize a config set in my response to the last
-> round [1]. It is good to see that the struct in now namespaced in the
-> next patch but separating out allocation and initialization makes the
-> api harder to use than it needs to be. I'd also like to see
-> git_configset_clear_and_free() become git_configset_free().
->
-> Best Wishes
->
-> Phillip
->
-> [1]
-> https://lore.kernel.org/git/47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.co=
-m
+Hi Derrick,
 
-Agreed, it doesn't make sense to have both alloc() and init() when
-they can be combined and same with renaming
-git_configset_clear_and_free() to git_configset_free().
+Thanks for taking a look, and apologies for the delayed response.
+
+On 15/08/2024 10:25, Derrick Stolee wrote:
+> The key issue with this reproducer is the following: the sparse index
+> config is set in the worktree config. When you are running this move
+> command from the main-worktree, it is not configured to work with a
+> sparse index. Thus, when reading the index, Git thinks the sparse
+> index is disabled and must inflate the index into a full one before
+> continuing.
+>=20
+> For full information, this happens in the callstack
+>=20
+>    move_worktree()
+>    validate_no_submodules()
+>    read_index_from()
+>    do_read_index()
+>    ensure_correct_sparsity()
+>    ensure_full_index()
+>=20
+> If you add "git -C main-worktree sparse-checkout set A --sparse-index"
+> before you create the other-worktree (or move it) then the message
+> does not appear.
+>=20
+> This is a quirk of the worktree config that may be worth updating to
+> respect the sparse index of the target worktree, but may also be worth
+> leaving as-is because we are running this from a different worktree.
+
+It seems to me that we really should be respecting the sparsity of the
+worktree being moved rather than the worktree from which we happened to
+run the command, at least in this case. The purpose of reading the index
+(in this call stack) is to ensure that there are no submodules in the
+worktree being moved, so the index of (and therefore, the sparse-index
+config of) the worktree from which the command is running seems
+irrelevant.
+
+I poked at this a little bit, and the main challenge seems to be that
+`is_sparse_index_allowed()` uses some cached
+`core_apply_sparse_checkout` and `core_sparse_checkout_cone` values that
+are populated with the config from the worktree in which the command is
+being run, rather than accepting those values directly or via some
+worktree object. It looks like this would need some fairly significant
+refactoring to address since there are multiple functions in that call
+chain that would need to be updated to allow passing something more
+worktree-specific through, and those functions (most notably
+`read_index_from()` are called from several places.
+
+--=20
+Thank you,
+Brian Lyles
