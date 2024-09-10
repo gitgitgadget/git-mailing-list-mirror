@@ -1,142 +1,86 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFF929A5
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:37:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86193BB32
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 03:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725935854; cv=none; b=ZOSyYlB6LMyHNYXdDX1ZzfgGI/nLLXvbrMTWyChWxpTJgareEDXp9JUcLIpkDS8Jj5B+nZ0hGv/oQyR0DSlz+XMwPnfUixcmzitqRREJsHh4ArdzE2oPvR+TLnI/jOQ4p+hGgSq//LplWGw9SnIPSowRXQ2k26HZd+qwjFoeBGQ=
+	t=1725940177; cv=none; b=nMMDrdpf/y+f7jg05VD5eeXxDe39vlVnDMJWpDq10ZE9uce0pXYP9XhUhnLEZPmlEHL4Ht+toBgzlKrWoYiaTycctxyAKkMBx1T4xJXTRnjQTe5yXnIZlmKdbsk6lf92HO9xkjdkOC1JAscE9yoUUgmCPYkPPsZB7B2AtNP6H8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725935854; c=relaxed/simple;
-	bh=6oE62cSVmG4TAQWEZX/8ew8LSZo5AcbKex0mO2rVFK4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VFPxGA65t0ggeD6TiE6n2fHRpOReQiIGJ3y10qb2JmPWZ4MxRAQQ5HfkmEi2hcqC2aFygiecVGu1rRbjICmN/IzbfB5aCuE5G0pdAxOs8tomLlRZjZn7lCBGhnggr88JjFNxjsAp/qylfs7GSMDD239qVLYPxeSn7E1nDdHObBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4qUjD7r; arc=none smtp.client-ip=209.85.210.53
+	s=arc-20240116; t=1725940177; c=relaxed/simple;
+	bh=Rf7nGfzQ76zMtdLXJpRUWuIIsQODHTSZYKiVBAmbPFI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pCCLnisibE82b799yugJSiVcLp/mkAp+QfmaLEuOh4gMTawlGfZx57wskjlYMsLCp071+h/hw+2iuHgEGeFqEVENzhu73AQ6r9N0cdBOVRbFwsswN02c/lEjV09++e9Rsyyz2hBeLrcOr7VpnEON7D/Z0OdarXpSCfTgKtSuoOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Any7jDv4; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4qUjD7r"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-710f388621fso532455a34.1
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:37:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Any7jDv4"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-205909af9b5so39474955ad.3
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 20:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725935852; x=1726540652; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XFd1xf46N/KxWunZeGMqnlAsJplFG31WtVaivYsOp10=;
-        b=H4qUjD7rma+ymZ7ur7Swza3/AulGLYk7p0/7WmYHfWjijFEHaCmEhww2F7c3myfltj
-         S91rog6N9/bQk4JBT1Fs87Y7h9CCGGgRSZc3QYygh99GdjYM4x/CF8E4/tZz9tOYpB51
-         7Vx2HA3JBPq8psvsr5eo4Z447DMBBE+aGXs4U0/GaLzk6VT4dNXZt3DddagNdcsXk0R2
-         jixqeHkDBFMp6+33H6Z3X2x+n0U64FqXl1yb459OpZY9lnSvCc3yFcBLMqnh7pm/Ww+q
-         +iAYjevbp5KTYJax+tBk2N9Rj8ELnrNSPcYgJyxFeH29sbH4Dqj4x+wRtpEV9RYevipm
-         Cftw==
+        d=gmail.com; s=20230601; t=1725940175; x=1726544975; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T/z0giFhBUmqotZK7xVDYmhFeFM2w01EFj1etyluhMo=;
+        b=Any7jDv4cji+qm4P6fvdcgQaG4sBFitLFR29VItM1AW6gLGssMghHjqH3gDdx4koga
+         jL25Q+6FQ9lzLVhagNowAzE1UVtqNM2GIH9YPZoeecfJcxnfCM7X8yvs8Qpx/6j+fbB1
+         n3c7sjzTyLGYPDJl9nB3kQ+RWsrZY/JRChmQGdp7ds/MLthH5eROmfZ/TBVaK+mfbEjr
+         M8mUjtEFv14HtLLiPKRVIrT/chJkmE/IPwB18psUr+hrCiSoQ9F09gS++/MZGY6NeRKa
+         PZcD54wc1p+inMlfYskBwWphA7v/Asf+AvklJSJOH7jpA0iEIRoZvrq6/wWWvFpGrRAB
+         qdow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725935852; x=1726540652;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XFd1xf46N/KxWunZeGMqnlAsJplFG31WtVaivYsOp10=;
-        b=JD5cugL2sA/MFG3OGt3lzmi3CJP34uSRph7kfA32MN8Hhm1MKhzCVdUV5vqznpMX1x
-         8E1e5A/6DktROtWThBFk3yLezcHMN6vq7y1rvCNcXIJEEq+mlqi7E25cJyEGQWddEySL
-         UKIxuRiT9qEVgk9gyzbFdP/QSDe+bU6V2C0BtyXgJGvABiE7eV/hq/1QHtJIj4ZBqukh
-         aqg1pELD4CftMB0ORf1ccnG6ITNr6hJTQXoi3YsgP+ofG+7ReWmnYBNXMbNciF30MgmL
-         tfJjPEFFOVL3Ys3/AzqTLC+Ehl801a7Wj3X73XTbPuRhtTinWKJJfco7YvZAWaaqyT6K
-         zxKQ==
-X-Gm-Message-State: AOJu0YwJch8XcXpgAOEr6wsjVU+on2dpOW/IH8qwbpd5MIHEV0nX1T2v
-	Asb8d7RKfTz2nGI/I8dSFPPrqn6WlfeDFAiZcCD5JFoL0dnOtJKB
-X-Google-Smtp-Source: AGHT+IGBn3Asw5q5EOXeqBsaRe2ybyJGCkpycnyI0QNVWUmLELeaPYBoJtBY2wYsIlUOY/7IUvpCCw==
-X-Received: by 2002:a05:6830:3108:b0:703:5ccb:85f3 with SMTP id 46e09a7af769-710cc26dbfamr12069631a34.22.1725935851968;
-        Mon, 09 Sep 2024 19:37:31 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d? ([2600:1700:60ba:9810:a1f3:c77b:6e39:8f9d])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-710d9db361bsm1698161a34.51.2024.09.09.19.37.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Sep 2024 19:37:31 -0700 (PDT)
-Message-ID: <0e6dde0f-63e2-4db3-9225-9a8ca5e78eb3@gmail.com>
-Date: Mon, 9 Sep 2024 22:37:30 -0400
+        d=1e100.net; s=20230601; t=1725940175; x=1726544975;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T/z0giFhBUmqotZK7xVDYmhFeFM2w01EFj1etyluhMo=;
+        b=tSBlhZ9Hs0LSghjYrwr4XkyTKNFk4lpiTxPTrFIAZV5Fd2oYnl8UoVyiBvRnVN287v
+         9rSdjy5cH6xX+TIK+PtTyHQOKKDWJYXClMSdGoKQzrzHUGXN1NDiOM25QZRi8btAubhH
+         hBmxC+tcMQPAkr2HkaETEF0Ktv6KZ6+uQO1FQwG7uO6A+icOauGK2ECsKe6PoZOtxiF8
+         SCnhmYcBp2CJRcCaipm1dkuEsDM08swtd83Pp85wrgGnHqC2vd0JpAH8ZVpW3kgsU0hv
+         +OPqO4vTyL5BYIW7R6Y7AvJM77HgxKhto/dxEBJuM92wFBGfQ2Dyrac2Vw0DsEU29bbh
+         hhNg==
+X-Gm-Message-State: AOJu0YwtkKfcESIaGRU6sXuom8Grl2uFKMbfQmFMRXaH0Z+5Cmz4ytTw
+	rtp0aVYksCP4e5M0g+PekhnXGHnUp5y401IwAKnWeJOcBeLg9iu7wzUk5g==
+X-Google-Smtp-Source: AGHT+IFlJkLIqiXek3xVaPv+rXZxxALzELQOJsP5P0U3kKMOb+VMp2sY7x1jE2MuT1Bs6COeUxxz4Q==
+X-Received: by 2002:a17:902:e841:b0:203:a051:a29b with SMTP id d9443c01a7336-206f04aa335mr217188065ad.7.1725940174887;
+        Mon, 09 Sep 2024 20:49:34 -0700 (PDT)
+Received: from thunderbird.smith.home (ip70-162-122-51.ph.ph.cox.net. [70.162.122.51])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d8256da131sm4782438a12.70.2024.09.09.20.49.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Sep 2024 20:49:34 -0700 (PDT)
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+	by thunderbird.smith.home (Postfix) with ESMTPS id D3423196016E;
+	Mon,  9 Sep 2024 20:49:33 -0700 (MST)
+From: Stephen Smith <ishchis2@gmail.com>
+To: git@vger.kernel.org, Stephen Smith <ishchis2@gmail.com>
+Subject: SyntaxWarning for   '\S'
+Date: Mon, 09 Sep 2024 20:49:33 -0700
+Message-ID: <2214912.irdbgypaU6@thunderbird>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
- ps@pks.im, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
-References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
- <xmqqjzfkr9b0.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqjzfkr9b0.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-On 9/9/24 2:06 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> One way to find some improvement in these repositories is to increase the
->> window size, which was an initial indicator that the delta compression could
->> be improved, but was not a clear indicator. After some digging (and
->> prototyping some analysis tools) the main discovery was that the current
->> name-hash algorithm only considers the last 16 characters in the path name
->> and has some naturally-occurring collisions within that scope.
-> 
-> Yes, as I explained in the other message, this "collision" is an
-> integral part of the design to allow us gather candidates together
-> that may yield good deltas among them.  In addition, header files
-> whose names end with ".h" tend to share a bit comment at the
-> beginning of them in many projects, and the proximity (not
-> "collision") of the hash value is used to make them delta candidates
-> with each other.
-> 
-> I do agree that considering files at the same path from different
-> (but close-by) revisions as the prime candidates is very important,
-> but if you spread the "collissions" very thin by using "uniform
-> distribution", I am afraid that you'd end up discarding anything but
-> the blobs at the same path, which may go too far.  Having name hash
-> value that are close by no longer has any meaning in such a system.
+When compiling Git from source on my Ubuntu machine I've lately been getting
+some warnings when the docs are built.
+ 
+An example of is:
 
-You are right that some "nearby" paths are lost in this change, and
-this can be measured by trying to use this option in the pack-objects
-process underneath a small 'git push'.
+ASCIIDOC git-sh-i18n--envsubst.html
+<unknown>:1: SyntaxWarning: invalid escape sequence '\S'
+<unknown>:1: SyntaxWarning: invalid escape sequence '\S'
 
-The thing that surprised me is just how effective this is for the
-creation of large pack-files that include many versions of most
-files. The cross-path deltas have less of an effect here, and the
-benefits of avoiding name-hash collisions can be overwhelming in
-many cases.
+This syntax warning shows up for nearly every man page or html file.
 
-> I hope you can find a solution that strikes a good balance at the
-> end of the series (I saw only the first step), but I suspect an easy
-> way to avoid the downsides you observed is to use both.  Compare
-> with a handful of blobs taken from nearby commits (the original
-> object order is roughly in traversal order, and you can take
-> advantage of that fact) from exactly the same path (using your
-> "uniform distribution") before comparing with the blobs with close
-> value (of the current function) like the current implementation
-> does, may go a long way.
+Is there are current documented solution?   If there isn't a documented
+solution, where do I start looking and I will craft a patch and submit it.
 
-Funny you should say that, since the RFC I finally submitted [1]
-actually does just that. The --path-walk option changes the object
-walk to consider batches of objects based on their path, computes
-deltas among that batch, and then does the normal name-hash pass
-later. This seems to really strike the balance that you are
-looking for and solves the issues where small pushes need to stay
-small. It also fixes some problematic cases even when pushing a
-single commit.
+Thanks
 
-[1] https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
 
-However, the --path-walk option requires significant implementation
-of a "path walk API" and my RFC doesn't even do threading right.
-The --path-walk version (probably) doesn't work with delta islands
-or other features the same way as the drop-in change to the name-
-hash heuristic can. For that reason, I think there is likely some
-long-term value to the --full-name-hash option even though the
---path-walk option will be better in many cases.
 
-Thanks,
--Stolee
 
