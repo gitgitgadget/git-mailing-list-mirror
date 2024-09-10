@@ -1,53 +1,53 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1221741FA
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A159617624F
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725948557; cv=none; b=o73tDcN/JAsxzdCcKH0xeBMp/iFY66n07gOfHMmIPx+7kNsv+HC8VgzERP70+kUEiDSF4zWmzFe7V5JUiTK6XooOgvgqwZvSVefugnoYJQJI0J5ag4r3OWfYUDhPUU3DDeJLwtJVIaHkz3sBtUxm3t4zKV0+z4mAcqi14coYvA4=
+	t=1725948562; cv=none; b=gndpgWpOp3oFa9f/sAASAP9E66ZEP/XxTcAzFPvJw+H/7nfEiaFWKC732UGuRUPvqRGFSRs21FLrgjBqi93pdP8NbZje+W6hIW/+bjGXO+KoajZGjE2EvSydclybp1eiAZS/MK9i4m4A0uSteJqZLPCUR4yfA7BW7Cy0SC2rWpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725948557; c=relaxed/simple;
-	bh=e/xNlugWxaYHXzl8BVFwQEKa/W3IqF8mD0+yGeXEQZ0=;
+	s=arc-20240116; t=1725948562; c=relaxed/simple;
+	bh=4EL1NcwpZrdiIId9rOMmNEn6sZ8Zye/becPK9Pvuhrk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aCysbPSIdADhG2sILwkn7tBOIIwGo/M/3MINkfkIjcYQ34BHEzYnwBjUIPNAgI3Kx+4jNGuZbeDZbw8Iv3/v/RhVRmp+4IrQfoknzNnIWCe0d0TvMlNfB0A2g8jGRewsvunKNHButJ6QlSEnVTy/7g2jGbCKVcS3oaPa1m0HqOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SWgrenIH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=REtPin1h; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=hQY2OYvL5Ux6Qis/zTxbln2S4ifV5OVNDbBWeWoTdWuNDZ9R8dWSxOpJt40bf6iegCQdNAkyuiXlFJunI8JCW6oQ/mQkTN1sK/FIwRJQP7FSs0J8RlQupyW0VD9/SIZusLwpUKeVMLEtQJdGHc5G70SwBYEI2NFH5MNll3JFNCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GePwzP5i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jptl4g1e; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SWgrenIH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="REtPin1h"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5C6B513802B8;
-	Tue, 10 Sep 2024 02:09:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GePwzP5i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jptl4g1e"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id AC53C13802C2;
+	Tue, 10 Sep 2024 02:09:19 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 10 Sep 2024 02:09:14 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 10 Sep 2024 02:09:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1725948554; x=1726034954; bh=e/xNlugWxa
-	YHXzl8BVFwQEKa/W3IqF8mD0+yGeXEQZ0=; b=SWgrenIH013VgdqW8TmWSeI7ij
-	KaCkiUblKWYK0wTdSAmgl4PQrdNvkP/JfKXtafz8JFT7KSdelNK/mcaKmoexjUGx
-	nU081zWCcptx+xldFEHIjXjIAZCxTVZPkO4JQHwSlfmqJ8Lqt9icPmkNLK0Kx94n
-	eYeJQ5DlktWrRFNOD7p8F4d+MZmFHtwN/DQV35EtwX6KCjP1x73iCKJ3ytk9t2yG
-	EVuvsFjY1mevcu1hMScJ7m9lfIHqEpIsCZYFWqSkSHivE+L4DHZd9CF3QYmBbHJ2
-	t1rm3MkcUU98+jmliHO/PBhh5bN4ot0TH8YzQ9BjCsEMKTs2jKlN9pXag/ag==
+	:subject:to:to; s=fm1; t=1725948559; x=1726034959; bh=puu4yU1ZIE
+	iknkAUZPqkLQDiDsHg8PsoncmZjemv3bk=; b=GePwzP5i6VaigkbRa7ZhSuwQfC
+	qqTLsqIFKEkaKnl6D1sjGt6IUdMw9gMA7dwbxEN2aSgxat74wqEog8ZABERiZ2Zk
+	ekO/QTZ4uBn9emF1Lldw6knskTZWjCXeTxtCSTiom3pA1BuN9AqYoItkD+bsPAj3
+	ZKvKKRQ2O0ZfERAviLS1DRqRg+NhMgMek9Kf4wK8gZI59P4xhgxiPlvSaVLIOlII
+	+mmOTNDGNveErh9j2n5rRa0+tpRd5FoPIc3guLdiqgiX8igC0vpAQ+y+sS77amQf
+	sXm8GfYIvlzt1Z6o9fe+RNvrw7i9YwB055FlbE/DsRumhoULguUQ0jCe2NjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1725948554; x=1726034954; bh=e/xNlugWxaYHXzl8BVFwQEKa/W3I
-	qF8mD0+yGeXEQZ0=; b=REtPin1hnDgpJ5KOZDNFoxgMisQbTtdN36JQ+JiM+rca
-	aud+CObaBEfUyC6a4Q5DMulyC/oZm21f/iv2JuuUNfmKvze+fsR/vMQY+lk5AOmb
-	Tq7n0Ehg3LaoCdM3hLMEJ6mLdCL4lUtweVi/SyKxcGeEzd3anu5QzaEElOW0KP1/
-	SEkFrbNKGIm+yBdCeBOQoVHna4VR6jYVEsw8lq1GRLuSQiQ+LgnTaObO+7LBT5jp
-	Ul8Wa2YAsw4rZOVSDbe5wsGPK2KYb7W/wRPC7MC64aykKGBR6X8JrYZV6sLB46jH
-	m+hhMR/SSXWCn6SV/9968lSWcA+m8xGBVQFV4G6KRQ==
-X-ME-Sender: <xms:iuLfZvPYlUaaS3i-q88dPKaavqSHXpgMXMMRpK_TV1t78bPmvHrLTw>
-    <xme:iuLfZp_NsbDTxgobSVN3NYp7ICBtG2_VIVN6Qo_FcBwq-oD80qSE0zZ9CwRm_tYPX
-    04lKpjbgTlW9ilBvA>
-X-ME-Received: <xmr:iuLfZuS-ZWLdszlDXm8KlQgPxSefQCBisKK6tldsfCzruRmsSjnxBtx1aHDKcnszfeESTOWFykQaBb17xtONimLEBFM4dNvYyyk7Kfp2AofJyh4>
+	fm1; t=1725948559; x=1726034959; bh=puu4yU1ZIEiknkAUZPqkLQDiDsHg
+	8PsoncmZjemv3bk=; b=jptl4g1eH6/7Qq72MrCLLKwL7KdTPL7eUgUJIoE494jl
+	qCxqXNsW7FYxa72uEJicfiywNXv3IP/2YIk8LQr5ZEtngK+WE+iMiFUcO6tcWJzt
+	4902QhjiXmsakzdVO/kb6w5yziDQPSVjhcHFWj4J4OgUitfTS6mBVrdOcLYeyRyt
+	9TXGboYRdnTiyLi3nQV1ugL6IgxHvirUsjH0lWuUEaL8LDe5pU+WKFS5Hl1TDENU
+	gs2nGi526uh00TD1GZN65h7Q/zz/sVCfPxtALv5e3wERL/tGNRs8ZynTci2yBH3b
+	4FAiXHPKBkUjipDiFYDeqwcxDKtZB8GJa6C7n9BAnw==
+X-ME-Sender: <xms:j-LfZl75DM75aRz5I7RUZxx2RldLQ85yOJE6WBJBekQYbntE1arNXA>
+    <xme:j-LfZi69LhLEOtKVJZw0o1RaPZUOIlywJN0C0Hsf4_YD-18d02F_GYXxeguZf6_jc
+    Rq5lU9gFB53w-jdUQ>
+X-ME-Received: <xmr:j-LfZsc4pv235FQbLBAnJIugpgfq_tskcxU9uVfLPnGyR6IYbmnSr8RW536MonZ3WKyTB55vwaVzcWhhG4a2fw-7h3ECc8E8aEx7oqhEIHhBYGI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeikedgkedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,29 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeikedgkedtucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegsrhhoohhkvgesrghltghhvghmihhsthhsrdhiohdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:iuLfZjuL5kX1J1kPdTVpci8p_y_7UtJzUNTYUtXpDtUnstOTKv7bjw>
-    <xmx:iuLfZncO6KTXlFKtgOhMLj9pykTLRKBy8IbiAo4xc_tYz4V8YBEmWA>
-    <xmx:iuLfZv2uZ7w7jqcUHe8_n2-99fCRAvHLlIyX9VGps8DtJ5g4gWo0Ng>
-    <xmx:iuLfZj9hNolfcYCHwRotePFJq1pf9k5dy1gzvOqmW2NyAqWVRn31eg>
-    <xmx:iuLfZj4XRgKqwC4QsJ69Ka1WDq7IfR9OYCmjyOGX_Oh7kM8nDKloUgWA>
+    mhhtphhouhhtpdhrtghpthhtohepsghrohhokhgvsegrlhgthhgvmhhishhtshdrihhopd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:j-LfZuJiIIXbwadyaxsmUJ7hnswEh9LxY7_7R12y6MjEgHLBXfho9A>
+    <xmx:j-LfZpLqPCg20QAvCIlJFYUFUGhYNbOwnJ1LJS5L8o0ZsSJE4xW1vw>
+    <xmx:j-LfZnyoLTimaKq32V4Bbbm76CizT94g2Ro8dFdCGaNgtY3anWT4bw>
+    <xmx:j-LfZlK2vT2zgBFNNvQJ3DGCAa_gEyzWo0TQB0EhJ0Dv3UYsFSxpmw>
+    <xmx:j-LfZp0hHN15Vup7IvioE8V1vZEAjwniIbTqmxxcUlb0wScC66ix_8ps>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Sep 2024 02:09:13 -0400 (EDT)
+ 10 Sep 2024 02:09:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8972cbfd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Sep 2024 06:09:09 +0000 (UTC)
-Date: Tue, 10 Sep 2024 08:09:08 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 750832a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Sep 2024 06:09:14 +0000 (UTC)
+Date: Tue, 10 Sep 2024 08:09:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Brooke Kuhlmann <brooke@alchemists.io>
-Subject: Re: [PATCH 8/9] ref-filter: fix leak when formatting
- %(push:remoteref)
-Message-ID: <Zt_ihDoECjCKczfN@pks.im>
+Subject: Re: [PATCH 9/9] ref-filter: add ref_format_clear() function
+Message-ID: <Zt_ijEqdsylYYkNn@pks.im>
 References: <20240909230758.GA921697@coredump.intra.peff.net>
- <20240909231951.GH921834@coredump.intra.peff.net>
+ <20240909232118.GI921834@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,20 +86,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240909231951.GH921834@coredump.intra.peff.net>
+In-Reply-To: <20240909232118.GI921834@coredump.intra.peff.net>
 
-On Mon, Sep 09, 2024 at 07:19:51PM -0400, Jeff King wrote:
-> When we expand the %(upstream) or %(push) placeholders, we rely on
-> remote.c's remote_ref_for_branch() to fill in the ":refname" argument.
-> But that function has confusing memory ownership semantics: it may or
-> may not return an allocated string, depending on whether we are in
-> "upstream" mode or "push" mode. The caller in ref-filter.c always
-> duplicates the result, meaning that we leak the original in the case of
-> %(push:refname).
+On Mon, Sep 09, 2024 at 07:21:18PM -0400, Jeff King wrote:
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index e8db612f95..b3163629c5 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -5,6 +5,7 @@
+>  
+>  test_description='for-each-ref test'
+>  
+> +TEST_PASSES_SANITIZE_LEAK=true
+>  . ./test-lib.sh
+>  GNUPGHOME_NOT_USED=$GNUPGHOME
+>  . "$TEST_DIRECTORY"/lib-gpg.sh
 
-Ah, I remember this issue, I think I also have it pending somewhere.
-Anyway, I'm happy if I can drop one more patch.
-
-The change looks sensible to me.
+Nice! There's also t6302, which has been failing due to all the memory
+leaks in our atom handling, as well. After your series there's a single
+memory leak left to make it pass. So we may want to add below patch on
+top as a low-hanging fruit.
 
 Patrick
+
+-- >8 --
+
+diff --git a/ref-filter.c b/ref-filter.c
+index ce1bcfad857..b06e18a569a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1001,6 +1001,7 @@ struct ref_formatting_stack {
+ 	struct ref_formatting_stack *prev;
+ 	struct strbuf output;
+ 	void (*at_end)(struct ref_formatting_stack **stack);
++	void (*at_end_data_free)(void *data);
+ 	void *at_end_data;
+ };
+ 
+@@ -1169,6 +1170,8 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
+ 	if (prev)
+ 		strbuf_addbuf(&prev->output, &current->output);
+ 	strbuf_release(&current->output);
++	if (current->at_end_data_free)
++		current->at_end_data_free(current->at_end_data);
+ 	free(current);
+ 	*stack = prev;
+ }
+@@ -1228,15 +1231,13 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
+ 	}
+ 
+ 	*stack = cur;
+-	free(if_then_else);
+ }
+ 
+ static int if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state,
+ 			   struct strbuf *err UNUSED)
+ {
+ 	struct ref_formatting_stack *new_stack;
+-	struct if_then_else *if_then_else = xcalloc(1,
+-						    sizeof(struct if_then_else));
++	struct if_then_else *if_then_else = xcalloc(1, sizeof(*if_then_else));
+ 
+ 	if_then_else->str = atomv->atom->u.if_then_else.str;
+ 	if_then_else->cmp_status = atomv->atom->u.if_then_else.cmp_status;
+@@ -1245,6 +1246,7 @@ static int if_atom_handler(struct atom_value *atomv, struct ref_formatting_state
+ 	new_stack = state->stack;
+ 	new_stack->at_end = if_then_else_handler;
+ 	new_stack->at_end_data = if_then_else;
++	new_stack->at_end_data_free = free;
+ 	return 0;
+ }
+ 
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index 163c378cfd1..7f44d3c3f22 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='test for-each-refs usage of ref-filter APIs'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ 
