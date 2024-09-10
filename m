@@ -1,113 +1,191 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2051136344
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 08:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649AE14A4C3
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 08:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725956843; cv=none; b=TxyYkMbzAPPkjtpL5sOZSQCYWX2ezqgrI8eqPCmLUx+4mMwE6RKcGiwCFELrTLSdwFkLHFNzDVunbdabIHX0WlK8jyDJEa8ZHmxGaZgIIX7LS080pnvOuS2vmSP9hPDqtbITIL8kWT62P4pQvmZwbMh05WRIN1M/8vUjCn9pEMI=
+	t=1725957738; cv=none; b=tRRvxARqCiF+UrSvCQGnylC4h0k/Y1DuaL/OT7vxW4ZWo/DtmXyx+4hD+bkf1IZurX0FlJEu2Y4btbxrP7phRs9kJqaonZ5/POp91qifrWdIT0AMMemf656s12ExgmJu7YlCEsyHFJpsE4EqjRTsIdwh0l/OWHduIPSx7ZD1ZK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725956843; c=relaxed/simple;
-	bh=6fRO+DhJXs/1sqtbI40zD2DxZBKwJfKGDTokg2aOpCg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCTM4dzJNSAksZWgnKCN8NpBnF6RYWpZPki8a8vZcJbtE6FwCmb0ILYT+D3x/Ngiy8pkDJLJHFODxt2pxi+0uSfdtbeDMaPipLrP5q6ARX+MUkLU4vjQbYOl11o7vTMAvngy3R7N7LmjSOd73DwnDz0DobjTtLqbJKCe0ie3Ud8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dVDbNXIO; arc=none smtp.client-ip=209.85.215.169
+	s=arc-20240116; t=1725957738; c=relaxed/simple;
+	bh=RL/s1mWJwebmHWSOmYANcCrnvLOCqt6K+Y+a2d962dU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=LAfkHbZmLEPGM5ANtOy9ZNti+AoFgm+7YfH+teNdI9B+yiFEo0LAe4pSxJz49ou3j88V5b8HgqXJpWoHU7XLXOlQpBi9vgkkmS36pvEBLjxFQdTJryex6bH+VlBcSnFDxtPqzro1gnT8jswK6S95DRH2UR28NJWCoYaHETKcQLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SzlMYZpX; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dVDbNXIO"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7cf5e179b68so4140879a12.1
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 01:27:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SzlMYZpX"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42cb2191107so18569225e9.1
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 01:42:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725956841; x=1726561641; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1rqGHByFmsZ9RDh+3TNjUpZzOxcRJFiElTPq0hbuYdY=;
-        b=dVDbNXIO7KMS4VC5qRL/TJLV86x0AGtMEaUkHtpQSrHompgPHwNhP1ICm8tk77JEtW
-         HaETKt//0M7YgB4HjkWHEF0hLe1jHNrZtp2ShtB9uY/SEI3x6I0wUiA9dDukg3JFns2e
-         uy4OR3gd6IIva19uOMNXhoEqZY8G8n5VteAo7I9o++3JZrf26xxcKpd9bXSl2DeNIP+T
-         6ih9ACyBk1YDjFscyV8RZtonAxaDDGjRFA0EZZPz99Nto5sn9rjTrUeiC7DvUKBOZkks
-         K+/ecWMRMdoSrBFiDATWpga1MrIpkTZM9k0oIgeKjAuFqgXkJjxgG4HlXgyXBxHFPl5F
-         OcyQ==
+        d=gmail.com; s=20230601; t=1725957735; x=1726562535; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vjMuvZTeWKgjLsJqLdzzIBd+rbkJt4uzoK50LGMF3P4=;
+        b=SzlMYZpXFBq7qb7tRrHfWgaD0wuuThNDjgBMnslGuK5BJhmW1teZcfSPXlu9weJdDJ
+         gcEXdkH8+CemDg3hO1XkNXSTjlApB/4Hs7IDA3Ev3zR5DL73XSYhLhz9EC5luw9IGlBU
+         sswAjqQanSnUxMTb6J2KnJdC0Xz4bSUczvw5F/qQTEplujZpEPwO3KSFdMsEBsdo2sD+
+         qZbBF7tIQja5OCGsTVbpNnNQQLQkRgux0QxlmTthK/v2tdVhyBdyq6E0XdidFAKCl0xL
+         Bk8RALKFZhKL4PfOzzdYhDD+dUMgwXHxR+4/UnJF2zFsGSjbPNQmynVPeJ5O5d/7Y7Cb
+         AxYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725956841; x=1726561641;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1rqGHByFmsZ9RDh+3TNjUpZzOxcRJFiElTPq0hbuYdY=;
-        b=Eq5aXEE1cQDNgsXRApGclSVKOaHYCINyjpcCc22PF3UpsVd+X585zrAKpBSpkspnWm
-         GhygbedBqDkVcNG63dMool924w40fJRWmvTDfb9t8zTUGBlU8VlRcUyPLzHKP5f9yjUt
-         852iSaP5QKllkFrpbQnpfoXSRUUGUZUohxgEJr5nWunAZohieuGo/q9XD/4UE/Kk64qz
-         hhajFjJxrnrPCbsbKGwzS+a6Z9AI3zoOnJ2E+HmhUTrCXAmTxKGl5rv5G3TUtiejmAc9
-         qG5T8ArpsQrBUqTYalLBX/EWIC6a7LDV0oeQ/utAeGNANNyLh57BjXOy7AZOK7ycBV/D
-         NWcg==
-X-Gm-Message-State: AOJu0Yw82F4ocfYZ5xBSRg6jgEqSkN1loHBeBXEKqj/pGGNzoZ2yj10t
-	8Mv34HKG5nqvMNKz5nllw7cay3SwZn3et/Ji1ZmieUouIwlUFltK
-X-Google-Smtp-Source: AGHT+IHtzqTxkuM2A6CFxSdFI+LKKkLfBhUIJgCVdmDX3bagHASLVa8z0oNSd3e95Nt7f6oMVY1UIA==
-X-Received: by 2002:a05:6a20:43a0:b0:1c0:f114:100c with SMTP id adf61e73a8af0-1cf500944d8mr3641696637.17.1725956840861;
-        Tue, 10 Sep 2024 01:27:20 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71908feaf7bsm897137b3a.86.2024.09.10.01.27.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2024 01:27:20 -0700 (PDT)
-Date: Tue, 10 Sep 2024 16:28:25 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/4] ref: add symlink ref content check for files
- backend
-Message-ID: <ZuADKU3Lzpee4KJQ@ArchLinux>
-References: <Ztb-mgl50cwGVO8A@ArchLinux>
- <Ztb_Lzxgla2FHICH@ArchLinux>
- <Zt8OcPTzYg3raQlN@pks.im>
+        d=1e100.net; s=20230601; t=1725957735; x=1726562535;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vjMuvZTeWKgjLsJqLdzzIBd+rbkJt4uzoK50LGMF3P4=;
+        b=tTb5gPMtSbUf0MRJ9NMSWbFWHlgHvHOU4rQtidNfObkRWZO41c0wDIK6MzGtStjOtn
+         BRng55+zQK3VALpO3VKpOV5xK6SKvxXJJtURedDqVhNZ/SDbpIrxwtCOlPg1kZZHkYPY
+         ld66nOTlLJ++uGe6p68fRmsIVK58focTvSQQJnkPhfL6gsKdu0IiUYQrYABW1dGlgdz5
+         wCA25/HgsKWc4/7rQlNnw56dOfXbqCPC19VQGlevXv072VQ3bW4V/kHajEs2JtzHK0IR
+         Ww+8ZAMP1fP3zz/aT/nJdYs6go56t3SfpqLK3ClUoBgNvwOi7PhV/qJnaILlP/Gxv36o
+         sr5g==
+X-Forwarded-Encrypted: i=1; AJvYcCVGM6y0SsabO04+yGweWEi0S43CUWaGKCxX3/15tkSLTxu5ItUSC7H6m6ayacjnYkZ9wVQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5JNuEXkcjG03Dxy2G4quwFlmeevwOLVVE3ufHief3LRGIkwNx
+	tn22AGrbwZNUj4FC48ex7PGDrC4ApYTcdqiwd1M9TTV6BP5NxbmWcN4VPQ==
+X-Google-Smtp-Source: AGHT+IF1NaH0nCAWsCKdh+YUlRAGpayspsVtwgc157T3iXHFvWg0AcUwuALP0HMMivsGqK1geuUoig==
+X-Received: by 2002:a05:600c:5104:b0:426:66e9:b844 with SMTP id 5b1f17b1804b1-42cad746459mr72090865e9.8.1725957733794;
+        Tue, 10 Sep 2024 01:42:13 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42caeb8b7fcsm104051415e9.47.2024.09.10.01.42.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Sep 2024 01:42:13 -0700 (PDT)
+Message-ID: <490bd831-836a-4d7e-9695-8cb50c83317d@gmail.com>
+Date: Tue, 10 Sep 2024 09:42:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zt8OcPTzYg3raQlN@pks.im>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Re*: What's cooking draft as of 2024-09-06 late night
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shubham Kanodia <shubham.kanodia10@gmail.com>, git@vger.kernel.org,
+ Derrick Stolee <stolee@gmail.com>
+References: <xmqq7cboyq9s.fsf@gitster.g>
+ <899eb2c2-bb18-4666-98d8-9255dedfac53@gmail.com>
+ <xmqq8qw3xvob.fsf_-_@gitster.g>
+ <CAG=Um+0X3Umt-2TQ-BGeefqdGxfVoy2Ug0tGKLycrX=_pj=oJw@mail.gmail.com>
+ <125aab1b-d017-45c1-b93c-ee43fef9bd71@gmail.com> <xmqqseu8u8m0.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqseu8u8m0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 09, 2024 at 05:04:17PM +0200, Patrick Steinhardt wrote:
-> > Because we are going to drop support for "core.prefersymlinkrefs", add a
-> > new fsck message "symlinkRef" to let the user be aware of this
-> > information.
+On 09/09/2024 16:53, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> I don't we fully decided to drop support for symrefs via symbolic links
-> yet, so this is a tad too strong of a statement. I'd rather say that we
-> consider deprecating it in the future, but first need to asses whether
-> they may still be used.
+>>> The only place `skipFetchAll` is currently documented is in this large
+>>> master list of configs that are easy to miss —
+>>> https://git-scm.com/docs/git-config.
+>>
+>> We could perhaps expand the documentation of `git fetch --all` to
+>> mention skipFetchAll
 > 
+> Like this (interdiff at the end)?
 
-Yes, that will be much better.
+That looks good to me
 
-> Also, didn't we say that we'd want to remove support for _writing_
-> symbolic links, but not for reading them? Not a 100% sure though.
+Best Wishes
+
+Phillip
+
+> --- >8 ---
+> Subject: [PATCH v2] doc: remote.*.skip{DefaultUpdate,FetchAll} stops prefetch
 > 
-
-I have re-read the Junio's patch about the breaking change. We will drop
-the support for writing. But for reading we may or may not. I will
-improve this in the next version.
-
-> >  	if (update->new_target && !(update->flags & REF_LOG_ONLY)) {
-> > -		if (create_symref_lock(refs, lock, update->refname,
-> > -				       update->new_target, err)) {
-> > +		if (create_symref_lock(lock, update->new_target, err)) {
-> >  			ret = TRANSACTION_GENERIC_ERROR;
-> >  			goto out;
-> >  		}
+> Back when 7cc91a2f (Add the configuration option skipFetchAll,
+> 2009-11-09) added for the sole purpose of adding skipFetchAll as a
+> synonym to skipDefaultUpdate, there was no explanation about the
+> reason why it was needed., but these two configuration variables
+> mean exactly the same thing.
 > 
-> Why does the writing side need to change?
+> Also, when we taught the "prefetch" task to "git maintenance" later,
+> we did make it pay attention to the setting, but we forgot to
+> document it.
 > 
-
-I squash two patches provided by Junio to sync with the "master" branch
-to make sure the build could be passed. This is because Peff has
-introduced the "UNUSED" check when building.
-
-So we could just ignore this part.
-
-Thanks,
-Jialuo
+> Document these variables as synonyms that collectively implements
+> the last-one-wins semantics, and also clarify that the prefetch task
+> is also controlled by this variable.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   Documentation/config/remote.txt   | 13 +++++++------
+>   Documentation/fetch-options.txt   |  5 +++--
+>   Documentation/git-maintenance.txt |  3 +++
+>   3 files changed, 13 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
+> index 8efc53e836..36e771556c 100644
+> --- a/Documentation/config/remote.txt
+> +++ b/Documentation/config/remote.txt
+> @@ -42,14 +42,15 @@ remote.<name>.mirror::
+>   	as if the `--mirror` option was given on the command line.
+>   
+>   remote.<name>.skipDefaultUpdate::
+> -	If true, this remote will be skipped by default when updating
+> -	using linkgit:git-fetch[1] or the `update` subcommand of
+> -	linkgit:git-remote[1].
+> +	A deprecated synonym to `remote.<name>.skipFetchAll` (if
+> +	both are set in the configuration files with different
+> +	values, the value of the last occurrence will be used).
+>   
+>   remote.<name>.skipFetchAll::
+> -	If true, this remote will be skipped by default when updating
+> -	using linkgit:git-fetch[1] or the `update` subcommand of
+> -	linkgit:git-remote[1].
+> +	If true, this remote will be skipped when updating
+> +	using linkgit:git-fetch[1], the `update` subcommand of
+> +	linkgit:git-remote[1], and ignored by the prefetch task
+> +	of `git maitenance`.
+>   
+>   remote.<name>.receivepack::
+>   	The default program to execute on the remote side when pushing.  See
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index e22b217fba..80838fe37e 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -1,6 +1,7 @@
+>   --[no-]all::
+> -	Fetch all remotes. This overrides the configuration variable
+> -	`fetch.all`.
+> +	Fetch all remotes, except for the ones that has the
+> +	`remote.<name>.skipFetchAll` configuration variable set.
+> +	This overrides the configuration variable fetch.all`.
+>   
+>   -a::
+>   --append::
+> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+> index 51d0f7e94b..9d96819133 100644
+> --- a/Documentation/git-maintenance.txt
+> +++ b/Documentation/git-maintenance.txt
+> @@ -107,6 +107,9 @@ with the prefetch task, the objects necessary to complete a later real fetch
+>   would already be obtained, making the real fetch faster.  In the ideal case,
+>   it will just become an update to a bunch of remote-tracking branches without
+>   any object transfer.
+> ++
+> +The `remote.<name>.skipFetchAll` configuration can be used to
+> +exclude a particular remote from getting prefetched.
+>   
+>   gc::
+>   	Clean up unnecessary files and optimize the local repository. "GC"
+> 
+> Interdiff:
+>    diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+>    index e22b217fba..80838fe37e 100644
+>    --- a/Documentation/fetch-options.txt
+>    +++ b/Documentation/fetch-options.txt
+>    @@ -1,6 +1,7 @@
+>     --[no-]all::
+>    -	Fetch all remotes. This overrides the configuration variable
+>    -	`fetch.all`.
+>    +	Fetch all remotes, except for the ones that has the
+>    +	`remote.<name>.skipFetchAll` configuration variable set.
+>    +	This overrides the configuration variable fetch.all`.
+>     
+>     -a::
+>     --append::
