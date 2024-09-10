@@ -1,62 +1,62 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2405D18595E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DBF185B76
 	for <git@vger.kernel.org>; Tue, 10 Sep 2024 02:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725935362; cv=none; b=hJRgOaA8rovujLpEEA8yy8Hh3GAoldZ2R9g0dD15QBUT8cR8LdcgD+v/mfvscD6kxnoqRRFtcZ9HntOqWc2xKNiSg6NggewAfCnXjf5ViO/25gJroZexijSbSaXmAhWyz2iNy4O+tAr4gB5gE/k1o0jS8odF2SGqNwRMc6kXrq8=
+	t=1725935363; cv=none; b=LrM5HtPYt8d1/hYS3XGZrQ7K0pbky6p4Hlug/+P75X7VKwSL4suAHyypE6yMBv2bqddVingTJ2aTG5ALfafeL32UHyENtXp47sKliwWmto+Ew0DkuFs9YHGiq/JUdX2VqbLCrtFqV1EMwMrTEDrhksc4V20P8myFvbyizRDSc/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725935362; c=relaxed/simple;
-	bh=gId5JgM7izLt873jtAaSsdX7yjFb2X805k/gda2kMKk=;
+	s=arc-20240116; t=1725935363; c=relaxed/simple;
+	bh=KTtSSbyiJNA+n3owSfOQQhVgd5hIiKsUwGgXTh1PrnE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PxNuf623+xAaabKba4sMiY5CJn/QrgfKrQt0lNHEpVe9VOwy9sQ+TJrNw8kdjp1B1EGX3gBFkV75v8oYCR7UVbprwlY/I1TFag6v0mLqBUdMCwVighbBERqxBO6TeAceJpR7TKZ6W7KlCudrq5K9CoA0Y3Cr28WF09TlFbPwBB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Eav9bwZM; arc=none smtp.client-ip=209.85.167.54
+	 MIME-Version:To:Cc; b=NhabeFOf4IfCrIkzpG8tslHRRwx7zr4A1Velyr0XOxxgBsuUh7rPpi8xPWioOA+Zo3SiWpfunDQLiWyxEf/Y1PZgWxERWdto1GFYASO7Z5GfVzBgmeJb7Y2whyatj7q3FjjsFCn6Bku3vbULANMwJSd2CEL2EPV5EivALVM0CAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iU95lzWi; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Eav9bwZM"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-535dc4ec181so4578669e87.3
-        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iU95lzWi"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5c255e3c327so5320473a12.1
+        for <git@vger.kernel.org>; Mon, 09 Sep 2024 19:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1725935359; x=1726540159; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WeWlcwU9yAFb56Ubkr+pvO6A5aBn24BR3efejK8Q6RQ=;
-        b=Eav9bwZM6F6Y89HHbMJNtF+x+CnJThakBNQqMb3435nL9ut+5GzDZoTeTWRMyEpp+P
-         1qW3l2mZqF1eurKt1xw3o3c4MInbZfgZendLNG2VO3gBgITpsC8FAI3EzhAo2tHZeeR0
-         Ee2Cl9miwAxgZ56IGzzp4ZxT+g5S3ghVKpfxoKcpe449PPqJNQ0a/2t8lOf66JiNBxUW
-         AW6pRlIQUCpz6TaDWiVV5UwdzhyhYC2tXueKGcTn+QWlvdAg7HobiRWWQiJl/yQxOakv
-         KPr1Ju4EhgLxh3BhhXIaO3f8Bqn//WYIr7RtqrsiOm19RalLvXNcMVqibrf+3kVGseXM
-         Stow==
+        bh=tvBsYsvLR+bmYCeHxwTsXNEdbM76cKEWCFQQ2DVgrN0=;
+        b=iU95lzWiCRoP0Llq+tKUPlSDz7+FCsj1WNx064FA8OQQ+v4lJ8Xh6dHs038I1ny3QR
+         PU42Yx+LLC19FI2TVzibU+EPTrzW8APPuACiSodYRWAIPH9F4kWL5WE1gYPUk+8bFd6z
+         kOSRE7JU6ts3whF4VnHNmwTWymQQgd2MXPEontmzEVzYaza6WdJq0vWYbhhOxzQvLQFe
+         15DLvMo7j5HkXUnBIqsBFOFho4+/jwNfMaokzQxQ/9LJg3dbtqjYa9vcI8/g5Zu7/wPx
+         rl2BB2K+U703WOupopxPYF0FRgZJUD6oi/EIhynh8ppr6sPWb0r8M7MN8elEJLolS0Hi
+         +GSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1725935359; x=1726540159;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WeWlcwU9yAFb56Ubkr+pvO6A5aBn24BR3efejK8Q6RQ=;
-        b=aDWQFfGgSDzMxY9X/j+13vOJ2ZzA9DjsDHzu01XgJiFu6MyfVrVnoVU8VsJehTWriv
-         lyocMHIZdTEm7zBmARFcipBvhT9A5TQOc570XMSBAH8No2UGZjp6SpDbPuAROmqw72L/
-         n/vofDLmk8XeU7g3RDyH/sWUC9kpjObNo6zqhinRSnziPQNINQsS5FiKD6tGq66VJUro
-         bmwj8W1j0rBOUv364diihVk6VV1soahBiv+GmZUmqnfGiYRTNa7FWkX00b/ne2odj7y3
-         UtBrfTM1YaQEfhZnV6BJ2fG38YGkVLEHDvgeBgR1g2ENjwhGi+j2tQApEaGYpibQfwDm
-         Lcdg==
-X-Gm-Message-State: AOJu0YxKAcxxlICPNpQrinjVTxa6Dbw7xRCgLCG/OMX0ShZtz/slTG8S
-	E4MyAaGkSsyouR4m2UK2C3DBI7WrxrS5z2JKC7xqEePfC5EwZOI89HSoiw==
-X-Google-Smtp-Source: AGHT+IFy0ZGMqpHvNLFzvifbE1PUolJy3/xw0Zb3hy+jxGyOL9Q7JSTrmGCiVO3Ae9HHVA7wcCAbEw==
-X-Received: by 2002:a05:6512:124b:b0:535:6892:3be3 with SMTP id 2adb3069b0e04-536587fc4c8mr7577395e87.41.1725935358798;
-        Mon, 09 Sep 2024 19:29:18 -0700 (PDT)
+        bh=tvBsYsvLR+bmYCeHxwTsXNEdbM76cKEWCFQQ2DVgrN0=;
+        b=ETx9ntoLG2DSFNCVT1rlvnhroX2V4JXi9yqJxEVWG+67qkyhCeQm4Es5oDWaSNIDA9
+         lL1DSczmd7S7IL+xdPvAaDnU4KpVOX/2XhyPO8JmLYRwcuTOlLhHvm6a0TtW3NgCFpoy
+         hzHokCe6fQcQAYQoVE5hMMeb/avWQwHfeD31Ocfe3br7P6ZIaB1UXAipgcHmuKr/BndH
+         ZZTP0/+C4jnUfiqYZrRlI1O4YIZ9hnG+c5ZIoBeM/yvGfw1uL6F6btgbs5f499gC7gwk
+         tWza8UrzE4Kuo3iZCT/HuBh54jarmvmTPcgwkSEOeR53ve0a/9ZG5PBfp7j4KcJOh5jy
+         A+9A==
+X-Gm-Message-State: AOJu0Yx5GkhIfm8n9u07oV2z9E1mks5IrqYg7tXKSFA7AlLAi4FArAce
+	dsXY5d5XBN9FtMEEAyZhezAlqrj/Rg7DH9EUjF2u0RbqkjdP8JVSEZU+pQ==
+X-Google-Smtp-Source: AGHT+IFmEHVLdzIQhuIgOo1zYgpmsagzamLfiVaWHoKTeqQIGtIQXX9KWYU6saIK0s48HodSCYAWXQ==
+X-Received: by 2002:a05:6402:50c6:b0:5c2:1043:b3e1 with SMTP id 4fb4d7f45d1cf-5c3dc7993e8mr7745844a12.18.1725935359449;
+        Mon, 09 Sep 2024 19:29:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25835adfsm414164166b.44.2024.09.09.19.29.18
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3ebd8cc28sm3677498a12.83.2024.09.09.19.29.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 19:29:18 -0700 (PDT)
-Message-Id: <b52ee338d1524a938e679fdeedc04818b75fd4d5.1725935335.git.gitgitgadget@gmail.com>
+        Mon, 09 Sep 2024 19:29:19 -0700 (PDT)
+Message-Id: <54bd80701fb9b55910d6d8453f235872fe549fdd.1725935335.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 References: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Sep 2024 02:28:47 +0000
-Subject: [PATCH 22/30] pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+Date: Tue, 10 Sep 2024 02:28:48 +0000
+Subject: [PATCH 23/30] p5313: add size comparison test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,53 +79,99 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-There are many tests that validate whether 'git pack-objects' works as
-expected. Instead of duplicating these tests, add a new test environment
-variable, GIT_TEST_PACK_PATH_WALK, that implies --path-walk by default
-when specified.
+To test the benefits of the new --path-walk option in 'git
+pack-objects', create a performance test that times the process but also
+compares the size of the output.
 
-This was useful in testing the implementation of the --path-walk
-implementation, especially in conjunction with test such as:
+Against the microsoft/fluentui repo [1] against a particular commit [2],
+this has reproducible results of a similar scale:
 
- - t5322-pack-objects-sparse.sh : This demonstrates the effectiveness of
-   the --sparse option and how it combines with --path-walk.
+Test                                            this tree
+---------------------------------------------------------------
+5313.2: thin pack                               0.39(0.48+0.03)
+5313.3: thin pack size                                     1.2M
+5313.4: thin pack with --path-walk              0.09(0.07+0.01)
+5313.5: thin pack size with --path-walk                   20.8K
+5313.6: big recent pack                         2.13(8.29+0.26)
+5313.7: big recent pack size                              17.7M
+5313.8: big recent pack with --path-walk        3.18(4.21+0.22)
+5313.9: big recent pack size with --path-walk             15.0M
 
-RFC TODO: list other helpful test cases, as well as the ones where the
-behavior breaks if this is enabled...
+[1] https://github.com/microsoft/reactui
+[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
+
+RFC TODO: Note that the path-walk version is slower for the big case,
+but the delta calculation is single-threaded with the current
+implementation! It's still faster for the small case that mimics a
+typical push.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/pack-objects.c | 1 +
- t/README               | 4 ++++
- 2 files changed, 5 insertions(+)
+ t/perf/p5313-pack-objects.sh | 55 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100755 t/perf/p5313-pack-objects.sh
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b1d684c3417..b9fe1b1fbd5 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4534,6 +4534,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 
- 	disable_replace_refs();
- 
-+	path_walk = git_env_bool("GIT_TEST_PACK_PATH_WALK", 0);
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
- 	if (the_repository->gitdir) {
- 		prepare_repo_settings(the_repository);
-diff --git a/t/README b/t/README
-index 44c02d81298..a5d7d0239e0 100644
---- a/t/README
-+++ b/t/README
-@@ -433,6 +433,10 @@ GIT_TEST_PACK_SPARSE=<boolean> if disabled will default the pack-objects
- builtin to use the non-sparse object walk. This can still be overridden by
- the --sparse command-line argument.
- 
-+GIT_TEST_PACK_PATH_WALK=<boolean> if enabled will default the pack-objects
-+builtin to use the path-walk API for the object walk. This can still be
-+overridden by the --no-path-walk command-line argument.
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+new file mode 100755
+index 00000000000..fdcdf188f95
+--- /dev/null
++++ b/t/perf/p5313-pack-objects.sh
+@@ -0,0 +1,55 @@
++#!/bin/sh
 +
- GIT_TEST_PRELOAD_INDEX=<boolean> exercises the preload-index code path
- by overriding the minimum number of cache entries required per thread.
- 
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
++
++GIT_TEST_PASSING_SANITIZE_LEAK=0
++export GIT_TEST_PASSING_SANITIZE_LEAK
++
++test_perf_large_repo
++
++test_expect_success 'create rev input' '
++	cat >in-thin <<-EOF &&
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1)
++	EOF
++	
++	cat >in-big-recent <<-EOF
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1000)
++	EOF
++'
++
++test_perf 'thin pack' '
++	git pack-objects --thin --stdout --revs --sparse  <in-thin >out
++'
++
++test_size 'thin pack size' '
++	wc -c <out
++'
++
++test_perf 'thin pack with --path-walk' '
++	git pack-objects --thin --stdout --revs --sparse --path-walk <in-thin >out
++'
++
++test_size 'thin pack size with --path-walk' '
++	wc -c <out
++'
++
++test_perf 'big recent pack' '
++	git pack-objects --stdout --revs <in-big-recent >out
++'
++
++test_size 'big recent pack size' '
++	wc -c <out
++'
++
++test_perf 'big recent pack with --path-walk' '
++	git pack-objects --stdout --revs --path-walk <in-big-recent >out
++'
++
++test_size 'big recent pack size with --path-walk' '
++	wc -c <out
++'
++
++test_done
 -- 
 gitgitgadget
 
