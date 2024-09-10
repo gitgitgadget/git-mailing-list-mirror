@@ -1,59 +1,59 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BD01F951
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 21:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE6A1F951
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 21:09:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726002314; cv=none; b=fY2+G7gdK4x/1Muxj7iDD+4vcEHctE8e8w6+YNThoIKkeNlTxvs1JzgwYrPhFNdm0580ew+zR4kMyykCeQrJVgyiImLmx3UFHuTuPmfsrkiIsayreoCaChC1YJ3K+AuSPOtlt6MBJ3+WaqsV7q1verTgp4/WfX10tdBnBbQObk0=
+	t=1726002568; cv=none; b=knwVdFjJiRvANFhpFFhLJPJwfobuxl6BjJlcDK10X8R47D4AdqdwS+g1aAX4AEm1BY1RSjKXZ12sZnIqRcyJBnp1+A0AZZecg9gPg17dllCJo3LtR05FSG3P5KIL47gtJwOI6WFPrFuIGOPqsmwGuAdBLxo+GdylohYLVxbzWPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726002314; c=relaxed/simple;
-	bh=E6UIr8LzlScXOFSy4CvqFYuzOzDwHcVqhT8BtJujyTE=;
+	s=arc-20240116; t=1726002568; c=relaxed/simple;
+	bh=mNudotoFhYSol3YBaCj3uKLpJqjimrYHLEB8dc5IMI8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sWbVhcnj+3l9uBv7VOZ5UwPYawRDxMe2fyUV2azvMIFfdnji2xsz2q7eprGX8NT/GRIjzQaOojt/sKhm0vvq18ut3zup1fh0L6bsWRqdOaLd7fRXnqzdyiZCAXLren+BrFiw0FSkUrpgYA6dRNTj6Vg/70qwTCU5A9ApemKXGGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLqhp5d7; arc=none smtp.client-ip=209.85.210.42
+	 In-Reply-To:Content-Type; b=f061KWybk4RGfQ4a9q+K3VbVi6IhI8KdPILETQe2DxflX6w+pRDKqbW05Sk+FIRAzIu62ssRrOZxx19L4ZuEGwqbcEul9Ir+sE4s/DLkrOZltb+FjYd/OWT313fUyh5hPOLSL4EE6KkKGFzapu5JGuH6JZPQREoK0ux/dYX6w9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LMS7i6yj; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLqhp5d7"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-710e910dd7dso1533444a34.2
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 14:05:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMS7i6yj"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3e0465e6bd5so1279894b6e.2
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 14:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726002311; x=1726607111; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726002566; x=1726607366; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1tQ9eI7PzDlWQjltAETLZWBhGJ1TxPw95QJun95KFhs=;
-        b=ZLqhp5d7tcqNtN+7DbNC8+RbgRHOGPTppm4nGjVTLaQFz97Gx89SV6LfqnTs3eFbKN
-         Ks6AiIkq/XYrdjKzBSCYYEF2q5PuaaT12xxr2irwbOgtpNI9TU1enIviqFhqFQaOexnY
-         5hQVmTCAPICp4w5RezP54eiWSqVY61rBhuatcbdVUcvD7QdsvyTzON8F8al2XqcUFJGN
-         IkjZQOJb5iJvFvUMXRyZw4TsHKYgRry7DKlXqwBMZoPLafaUDkpj0oEfKs589B/q0Zx4
-         u0DH4E+mQMWJgi7022GIV6dNAfNcfCdQknaf+RG5UQYxov3/NA8qvVNYOxD4uHtavy06
-         fvPw==
+        bh=9MJ4H889rH5TPmIttt6WZm7R2F/psu3EX3MVLJN+iis=;
+        b=LMS7i6yjf5jI92exdohnE+w9VNy3SBqS18B8F7m9A4T2pX9VLWYcWkb4t8JJWk6F7i
+         XCb4PVyAxwQw5ARpDaow/o/eDoBzVrU/EzA8Mz6BAkAnsa2A9DteNM+2O8KVDdZTzHDU
+         4OGE5/BBQPIow8OpDzaPU0hRIRmDzlM3pnxWDudD1H5dloITh6ULH39CtpJ/e7GCSGn2
+         xBam2PlKhaDjI3r7aKSPtDqnxhI8dQ/sMoAYke8fQkBa39ehdcSF27K0U7LXUlaQ872k
+         cEaO+6uABQZ5KL1uQsRCiR4A7+UyyZ+4Re4K9TA0kg+NqSeb4zuhYPw+8NnoeegQJNQ0
+         /UDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726002311; x=1726607111;
+        d=1e100.net; s=20230601; t=1726002566; x=1726607366;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1tQ9eI7PzDlWQjltAETLZWBhGJ1TxPw95QJun95KFhs=;
-        b=JfN/qPZDIgSwZS7cGxX+UXBpLDd6ZOyR0JyeJPfWsnlIpooQ+zswfyjTzRXrOHliJE
-         Wxow8makBbhu8wrEB7TMn01aQGBdC8IaWPcD7lAV4vUQjgL1KLt/QpIppCZ8a+MJBLGg
-         axc6MCFTVirhYTu5EiXGflXE/Lb/QMgG/mYhyGxXp2BNJKSxYzpqYdOzPUf2ilFMOqFX
-         GCPnEpCzbNiGIUjrXARzL+gNAdY7g4pACb/bMVEJHUCbi6/oKDbBSB/jJCzpgwPazXwT
-         av/yIfNhBx01B9Kck/QgNsl8mNQ3Zt0Jya31rfMSAMFRRQ8G1w4yrCk94SNSzJGuod6C
-         hnjA==
-X-Forwarded-Encrypted: i=1; AJvYcCXPK7rL04n+F3wy/yql4Yn7JQUFoxkdoSZboc9IuH/U0lp2RMa6grAimeVXEY7dtZLTXE8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfwRbjH5Yqkk3xJzsHWxjEC4SEyhtDXAvDy4OHSO0baiaprqKH
-	llsmn8Yf8zG4SrTRQa7g1JVHUsZTT518gbzMoozWAY8T4SNOz83Z
-X-Google-Smtp-Source: AGHT+IF2+KEBjzSaQrNfq14X7S48BIyYqu5o+VypmZCj3wKEuWm2W8e2p71LFp6D5VGY/bmSVxIrRA==
-X-Received: by 2002:a05:6830:6683:b0:710:e92e:53ad with SMTP id 46e09a7af769-710e92e55bdmr6787925a34.26.1726002311318;
-        Tue, 10 Sep 2024 14:05:11 -0700 (PDT)
+        bh=9MJ4H889rH5TPmIttt6WZm7R2F/psu3EX3MVLJN+iis=;
+        b=JZzMYTYL4q4mj7HrTTD0m5C+2d1cXwPeWP4oXfPaOYNoEriaus8l5vGnsQxjTQeunp
+         WncCYOu59q0fW4m2Yttc5xENbWw45X6dUfCv4uZquNvOgi/C/6zsbRGQAQc3Syiw4D0y
+         PROBIdeIt+AVXQxsEA2SK5P07j8OEcr76L5flIUk5aWgfNZL/33PZfOeKz2pfWdTeZOQ
+         b6Qjj4Xv10DBSbBp8/3LDLDT7Ud7JBH/JKrgGTPf53zEwsb/alxMbFVF+0IpSILo4bcG
+         dPYWzlYA+KcoSgt1AlIJ6cw1eKB8mvzOeTJdQGxc2rni/J+BdfHwCox0RR6Bwil2G8Xr
+         el7A==
+X-Forwarded-Encrypted: i=1; AJvYcCUd/U623syFuSgxiGbSmIB4y9MIKRse28maeCI77YuP5jQrRR9XBCXBjFMAduJqOhOPOtY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgMnRWY7UEaH+6DmJ/Z4Jb6KzuMM3D0uWObDVflMBOPNwAGTVp
+	nrVGSH3J62RvP2gR8pfGSg6UwANxCKAJP/zEPbwEZkJ+6+BOFz6g3pS7Cg==
+X-Google-Smtp-Source: AGHT+IE1yA8H0VI/2/ZYuqTwA3eE8GpgGud2wmNkffxpdzin8t7piMT75Qo9F6fJYLJ/O8GgYn6ncw==
+X-Received: by 2002:a05:6808:2dca:b0:3e0:3d6c:116d with SMTP id 5614622812f47-3e03d6cb37amr13972891b6e.26.1726002565798;
+        Tue, 10 Sep 2024 14:09:25 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:947:8408:9218:50e0? ([2600:1700:60ba:9810:947:8408:9218:50e0])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5e1c0f4595dsm1743146eaf.23.2024.09.10.14.05.10
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3e039c052d5sm1751087b6e.46.2024.09.10.14.09.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Sep 2024 14:05:10 -0700 (PDT)
-Message-ID: <81139d84-b428-4019-bbd1-cda3206d2d68@gmail.com>
-Date: Tue, 10 Sep 2024 17:05:09 -0400
+        Tue, 10 Sep 2024 14:09:23 -0700 (PDT)
+Message-ID: <1fe607db-04eb-4a6b-a523-9e18397f2d16@gmail.com>
+Date: Tue, 10 Sep 2024 17:09:22 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,123 +62,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
- johncai86@gmail.com, newren@gmail.com
+ me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
 References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
  <xmqqjzfkr9b0.fsf@gitster.g> <0e6dde0f-63e2-4db3-9225-9a8ca5e78eb3@gmail.com>
- <ZuBeHh7uCfhq2XBB@nand.local>
+ <xmqq4j6nlcfy.fsf@gitster.g> <xmqqikv3dz5l.fsf@gitster.g>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <ZuBeHh7uCfhq2XBB@nand.local>
+In-Reply-To: <xmqqikv3dz5l.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/10/24 10:56 AM, Taylor Blau wrote:
-> On Mon, Sep 09, 2024 at 10:37:30PM -0400, Derrick Stolee wrote:
->>> I do agree that considering files at the same path from different
->>> (but close-by) revisions as the prime candidates is very important,
->>> but if you spread the "collissions" very thin by using "uniform
->>> distribution", I am afraid that you'd end up discarding anything but
->>> the blobs at the same path, which may go too far.  Having name hash
->>> value that are close by no longer has any meaning in such a system.
+On 9/10/24 4:36 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Derrick Stolee <stolee@gmail.com> writes:
 >>
->> You are right that some "nearby" paths are lost in this change, and
->> this can be measured by trying to use this option in the pack-objects
->> process underneath a small 'git push'.
+>>> The thing that surprised me is just how effective this is for the
+>>> creation of large pack-files that include many versions of most
+>>> files. The cross-path deltas have less of an effect here, and the
+>>> benefits of avoiding name-hash collisions can be overwhelming in
+>>> many cases.
 >>
->> The thing that surprised me is just how effective this is for the
->> creation of large pack-files that include many versions of most
->> files. The cross-path deltas have less of an effect here, and the
->> benefits of avoiding name-hash collisions can be overwhelming in
->> many cases.
-> 
-> I think that Junio's suggestion is pretty interesting (though please
-> take my comments here with a grain of salt, since I haven't read the
-> other series yet, and am not sure how much of this is redundant).
-> 
-> Imagine computing both the full and existing name-hash values for each
-> blob/tree in the pack. Then objects would be sorted in the delta
-> selection window by similar full-name hash and similar regular name hash
-> values.
-> 
-> I'm not sure which value you'd actually record in the pack, though.
-> Ideally there is a hash function which captures some information about
-> the full path as well as the final path component, so we could use a
-> single value here, though I suspect the implementation would be more
-> complicated than what is presented here.
-
-Is the name hash stored in the pack itself? I know that it is stored
-in the 'struct object_entry' data in the packing data. While we could
-add another uint32_t into that struct to store both hash values, this
-would increase the memory requirements of repacking by four bytes per
-object. The struct seemed to be very clear about trying as hard as
-possible to avoid doing that.
-
-But maybe an alternative could be replacing that 32-bit number with
-an index into an array of paths that have their hash values stored
-there.
-
-This would still involve two passes, but might still be possible. I'll
-think on this.
-
->>> I hope you can find a solution that strikes a good balance at the
->>> end of the series (I saw only the first step), but I suspect an easy
->>> way to avoid the downsides you observed is to use both.  Compare
->>> with a handful of blobs taken from nearby commits (the original
->>> object order is roughly in traversal order, and you can take
->>> advantage of that fact) from exactly the same path (using your
->>> "uniform distribution") before comparing with the blobs with close
->>> value (of the current function) like the current implementation
->>> does, may go a long way.
+>> Yes, "make sure we notice a file F moving from directory A to B" is
+>> inherently optimized for short span of history, i.e. a smallish push
+>> rather than a whole history clone, where the definition of
+>> "smallish" is that even if you create optimal delta chains, the
+>> length of these delta chains will not exceed the "--depth" option.
 >>
->> Funny you should say that, since the RFC I finally submitted [1]
->> actually does just that. The --path-walk option changes the object
->> walk to consider batches of objects based on their path, computes
->> deltas among that batch, and then does the normal name-hash pass
->> later. This seems to really strike the balance that you are
->> looking for and solves the issues where small pushes need to stay
->> small. It also fixes some problematic cases even when pushing a
->> single commit.
+>> If the history you are pushing modified A/F twice, renamed it to B/F
+>> (with or without modification at the same time), then modified B/F
+>> twice more, you'd want to pack the 5-commit segment and having to
+>> artificially cut the delta chain that can contain all of these 5
+>> blobs into two at the renaming commit is a huge loss.
 > 
-> Interesting.
+> Which actually leads me to suspect that we probably do not even have
+> to expose the --full-name-hash option to the end users in "git repack".
 > 
->> [1] https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
-> 
->> However, the --path-walk option requires significant implementation
->> of a "path walk API" and my RFC doesn't even do threading right.
->> The --path-walk version (probably) doesn't work with delta islands
->> or other features the same way as the drop-in change to the name-
->> hash heuristic can. For that reason, I think there is likely some
->> long-term value to the --full-name-hash option even though the
->> --path-walk option will be better in many cases.
-> 
-> I suspect that this is going to be a significant sticking point. Not
-> supporting multi-threading is work-able for GitHub (since we set
-> pack.threads=1 today), but lacking support for delta-islands makes this
-> a non-starter to run at GitHub.
-> 
-> Do you imagine that the --path-walk option could be made to work with
-> delta islands? I'm not all that worried about who does that work, but
-> more interested at this point in whether or not it's even possible to
-> implement.
-This is part of the reason why I think the --full-name-hash option is
-an interesting consideration. It doesn't have any obvious reason why
-it couldn't work with features like delta islands, so it may provide
-some quick wins in "large enough" repositories, or at least "large in
-the right way".
+> If we are doing incremental that would fit within the depth setting,
+> it is likely that we would be better off without the full-name-hash
+> optimization, and if we are doing "repack -a" for the whole
+> repository, especially with "-f", it would make sense to do the
+> full-name-hash optimization.
 
-I unfortunately don't know enough about how the delta islands feature
-works to be confident in the possibility of integrating it with the
---path-walk option. At minimum, it would require two object walks:
-the first would mark the objects and the second would do the delta
-compression with those markings in mind.
+Depending on how much we learn from others testing the --full-name-hash
+option, I could see the potential that -a could imply --full-name-hash.
+I hesitate to introduce that in the first release with this option,
+though.
 
-But if there is a way to combine both approaches with a two-pass
-delta compression technique, then this may be all avoided. I'll give
-it a try.
+> If we can tell how large a chunk of history we are packing before we
+> actually start calling builtin/pack-objects.c:add_object_entry(), we
+> probably should be able to even select between with and without
+> full-name-hash automatically, but I do not think we know the object
+> count before we finish calling add_object_entry(), so unless we are
+> willing to compute and keep both while reading and pick between the
+> two after we finish reading the list of objects, or something, it
+> will require a major surgery to do so, I am afraid.
+
+It's also possible that we could check the list of paths at HEAD to
+see how many collisions the default name-hash gives. In cases like
+the Git repository, there are very few collisions and thus we don't
+need to use --full-name-hash. Restricting to just HEAD (or the
+default ref) is not a complete analysis, but might be a good
+heuristic.
 
 Thanks,
 -Stolee
+
