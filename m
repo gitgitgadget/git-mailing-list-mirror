@@ -1,103 +1,194 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6351741E8
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 20:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FF91741E8
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 20:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726000588; cv=none; b=mjRtXyx3FINYSw6VgD7D7QIozFgBjfpFWKS/VOg3PCS8sIJglx9O5840NnAjpfB3QqfzhwBHkgZXWsWgC+1pioWOScYZFbMmRKqNuhr4KcQIRk6TIFyTNt728xol/XE+UXDvzQSOCRFakQ3OJDNpTv0Bqn+KFINE6B2XHTIBN8Q=
+	t=1726000634; cv=none; b=Z2zF7MbIeR6u22kOq9b5maCQin3Gvs3WH7iZN4eP/66T1i+Twi3dP2naVQlTJqcoV+bi5iYOJy7pXUWBsMhrfetccSO0bkKqQs1WyaiHSceJi5FBzeqQHZ7MI5gssJH3C5e71AWxQd2Dp0VTcTOhq6epVr/NWPzUuXrX0NtBS/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726000588; c=relaxed/simple;
-	bh=YGBjYFojN1n2aLf8BL2XOZ00f8kUUUdbB39nyKZ/0xw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LKq5llgrgFbrslrxuiTJMgCr0iD9BlFjcK4SEtePfwa4yYipQknR/RRfWmg301VJn+l12KKxC+SoQjMdnn7jQVwfUFL4uM0A4Jn79cWE3GtXxA3+Rt33AF7wBAwYm4YEVJqPZV27O6xglCAnYCqxk5ISOSs8aeBF6Fbs2KVJWNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uXDZLRVY; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726000634; c=relaxed/simple;
+	bh=QZBCqw2G82OdN2aDRIhGTS893iPwEWAjoCSNC2nDoS0=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=adHE7zf/lUJ9g1F8m2KY3XDpaiOFMg7XqgNolKx6IuSf2Nqrakm24LdDY/ozFBUT20q0m+X5dJTUc7rIVEyOwKzZaibWkCj0mY23NA6aG1vJ+vIGUxHuXiFj29StxWtV4wjR1maUDGypyZ/tDMe0zEu7tQNO6mBuNKuoIhbV/KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=pXR0Gql4; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uXDZLRVY"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 599C23BF93;
-	Tue, 10 Sep 2024 16:36:24 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YGBjYFojN1n2aLf8BL2XOZ00f8kUUUdbB39nyK
-	Z/0xw=; b=uXDZLRVYCzaQS2Fugub/qoBOSwf4Hbt02yUgLxDAKNPDyIyceOJLBA
-	dzdmWMrNcqfrXisq118YQUf7U1hHxxu5ji5BjrI35/9/K4ThEFVML9SFMODWws58
-	B/BamDDfBt86kgP2v0Zb/HeliYwvYO7ZYVMwfdB2vprSHdWMIQ3fs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5014B3BF92;
-	Tue, 10 Sep 2024 16:36:24 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB2D03BF91;
-	Tue, 10 Sep 2024 16:36:23 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com
-Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
-In-Reply-To: <xmqq4j6nlcfy.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	10 Sep 2024 09:07:29 -0700")
-References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
-	<xmqqjzfkr9b0.fsf@gitster.g>
-	<0e6dde0f-63e2-4db3-9225-9a8ca5e78eb3@gmail.com>
-	<xmqq4j6nlcfy.fsf@gitster.g>
-Date: Tue, 10 Sep 2024 13:36:22 -0700
-Message-ID: <xmqqikv3dz5l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="pXR0Gql4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=R1YrB40qO3JlgrgVOKo9miaDmh2216DNGKIvrWEzizs=;
+ b=pXR0Gql4Pu5pKSYfaHDET3P26yP0Do0YQ6urHhQ+ZS4xfC8VxIBJwu4khlJnzoujxwQNDwblTmnT
+   H0p3jfsvYlXvZ8LOztbATG33ymNnDdii3RUdvefMk6iKPZ/NSsP+eZMY+e7ED+SRl13Bbso9zcIu
+   vL4m3TBIzjCmt9enz6ihHYZotmiuIrN45MH6uiOHCNIYQ/donEInWqNMAx0MmNewYCZvN1YAmV4s
+   fGqvQim08YLk7HQZIu7PM3tYbCXavzgGvsQkZhWXeZ1dxECqwp1zP9wRvMQizGlCzGjAieBJRtwP
+   MQIW/Tlx+LHn5vHDXapaGGw47ug434UjHTO0RA==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
+ 2024))
+ with ESMTPS id <0SJM002Z96DDPM80@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Tue, 10 Sep 2024 20:32:01 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: johannes.schindelin@gmx.de,	Bence Ferdinandy <bence@ferdinandy.com>,
+ cc@mail.ferdinandy.com,
+	/tmp/FUboFpyPuH/0001-fetch-set-head-with-set-head-option.patch@mail.ferdinandy.com
+Subject: [RFC PATCH 1/2] fetch: set-head with --set-head option
+Date: Tue, 10 Sep 2024 22:24:58 +0200
+Message-id: <20240910203129.2251090-2-bence@ferdinandy.com>
+In-reply-to: <20240910203129.2251090-1-bence@ferdinandy.com>
+References: <20240910203129.2251090-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 584130DA-6FB4-11EF-951E-9B0F950A682E-77302942!pb-smtp2.pobox.com
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAGJ6/mkol+Ap++/pEyqGNeGu9zVxxvhfnzcW8vd2ea3WUcu9RlcMLRcPbzoE7zE
+ zntPrxyZWTntUgHFoc+mQ3JKx8oyEPMPhSnW5KSC2AfRIy2WJkm+sQ67FnqGy0oE
+ 2LYCkOf9TKtyfApdpPqDOtFvFXjdN72vTiSUz5wZX4u+D2HWBW8ELEJP9z5V42Eh
+ zHtFFMVQR65DpuElhwrWbxhV4mAF65McAI+zSk3I3WEJXkmciSokBMl9wzfCNjTg
+ LkBdqUPBhZg4DMb8cpSurlQx4YYxjPL8xqUUwN1xp2MNUSru7Z/bFjKRqnvvlVND
+ F1IzBqoVWKHIf6+SCdsSdhJ8FFD4jUcy58wWAo+cCn7MwQLuVsWgJMyy65V3ESsA
+ UB2Ag25wfeuwiBAI7IZpLCeCPFvpOh1DpgiUp0xTWTcTgZmKb6X0mLD654/F2jjX
+ KthOjEYETa1lhhZtRj+u1kCj5CNwHLaAI7b3YI+l4GXiAEwCKGLST+0=
 
-Junio C Hamano <gitster@pobox.com> writes:
+When cloning a repository refs/remotes/origin/HEAD is set automatically.
+In contrast, when using init, remote add and fetch to set a remote, one
+needs to call remote set-head --auto to achieve the same result.
 
-> Derrick Stolee <stolee@gmail.com> writes:
->
->> The thing that surprised me is just how effective this is for the
->> creation of large pack-files that include many versions of most
->> files. The cross-path deltas have less of an effect here, and the
->> benefits of avoiding name-hash collisions can be overwhelming in
->> many cases.
->
-> Yes, "make sure we notice a file F moving from directory A to B" is
-> inherently optimized for short span of history, i.e. a smallish push
-> rather than a whole history clone, where the definition of
-> "smallish" is that even if you create optimal delta chains, the
-> length of these delta chains will not exceed the "--depth" option.
->
-> If the history you are pushing modified A/F twice, renamed it to B/F
-> (with or without modification at the same time), then modified B/F
-> twice more, you'd want to pack the 5-commit segment and having to
-> artificially cut the delta chain that can contain all of these 5
-> blobs into two at the renaming commit is a huge loss.
+Add a --set-head option to git fetch to automatically set heads on
+remotes.
 
-Which actually leads me to suspect that we probably do not even have
-to expose the --full-name-hash option to the end users in "git repack".
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
+ builtin/fetch.c  | 29 ++++++++++++++++++++++++-----
+ builtin/remote.c |  5 +++++
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
-If we are doing incremental that would fit within the depth setting,
-it is likely that we would be better off without the full-name-hash
-optimization, and if we are doing "repack -a" for the whole
-repository, especially with "-f", it would make sense to do the
-full-name-hash optimization.
-
-If we can tell how large a chunk of history we are packing before we
-actually start calling builtin/pack-objects.c:add_object_entry(), we
-probably should be able to even select between with and without
-full-name-hash automatically, but I do not think we know the object
-count before we finish calling add_object_entry(), so unless we are
-willing to compute and keep both while reading and pick between the
-two after we finish reading the list of objects, or something, it
-will require a major surgery to do so, I am afraid.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b2b5aee5bf..6392314c6a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1961,8 +1961,19 @@ static int fetch_finished(int result, struct strbuf *out,
+ 	return 0;
+ }
+ 
+-static int fetch_multiple(struct string_list *list, int max_children,
+-			  const struct fetch_config *config)
++static int run_set_head(const char *name)
++{
++	struct child_process cmd = CHILD_PROCESS_INIT;
++	strvec_push(&cmd.args, "remote");
++	strvec_push(&cmd.args, "set-head");
++	strvec_push(&cmd.args, "--auto");
++	strvec_push(&cmd.args, name);
++	cmd.git_cmd = 1;
++	return run_command(&cmd);
++}
++
++static int fetch_multiple(struct string_list *list, int max_children, int set_head,
++			const struct fetch_config *config)
+ {
+ 	int i, result = 0;
+ 	struct strvec argv = STRVEC_INIT;
+@@ -2014,6 +2025,8 @@ static int fetch_multiple(struct string_list *list, int max_children,
+ 				error(_("could not fetch %s"), name);
+ 				result = 1;
+ 			}
++			if (set_head && run_set_head(name))
++				result = 1;
+ 		}
+ 
+ 	strvec_clear(&argv);
+@@ -2062,7 +2075,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ }
+ 
+ static int fetch_one(struct remote *remote, int argc, const char **argv,
+-		     int prune_tags_ok, int use_stdin_refspecs,
++		     int prune_tags_ok, int set_head, int use_stdin_refspecs,
+ 		     const struct fetch_config *config)
+ {
+ 	struct refspec rs = REFSPEC_INIT_FETCH;
+@@ -2135,9 +2148,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+ 	refspec_clear(&rs);
+ 	transport_disconnect(gtransport);
+ 	gtransport = NULL;
++	if (set_head && run_set_head(remote -> name))
++		exit_code = 1;
+ 	return exit_code;
+ }
+ 
++
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	struct fetch_config config = {
+@@ -2154,6 +2170,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	struct string_list list = STRING_LIST_INIT_DUP;
+ 	struct remote *remote = NULL;
+ 	int all = -1, multiple = 0;
++	int set_head = 0;
+ 	int result = 0;
+ 	int prune_tags_ok = 1;
+ 	int enable_auto_gc = 1;
+@@ -2171,6 +2188,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSITY(&verbosity),
+ 		OPT_BOOL(0, "all", &all,
+ 			 N_("fetch from all remotes")),
++		OPT_BOOL(0, "set-head", &set_head,
++			 N_("auto set remote HEAD")),
+ 		OPT_BOOL(0, "set-upstream", &set_upstream,
+ 			 N_("set upstream for git pull/fetch")),
+ 		OPT_BOOL('a', "append", &append,
+@@ -2436,7 +2455,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			trace2_region_leave("fetch", "setup-partial", the_repository);
+ 		}
+ 		trace2_region_enter("fetch", "fetch-one", the_repository);
+-		result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
++		result = fetch_one(remote, argc, argv, prune_tags_ok, set_head, stdin_refspecs,
+ 				   &config);
+ 		trace2_region_leave("fetch", "fetch-one", the_repository);
+ 	} else {
+@@ -2459,7 +2478,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 		/* TODO should this also die if we have a previous partial-clone? */
+ 		trace2_region_enter("fetch", "fetch-multiple", the_repository);
+-		result = fetch_multiple(&list, max_children, &config);
++		result = fetch_multiple(&list, max_children, set_head, &config);
+ 		trace2_region_leave("fetch", "fetch-multiple", the_repository);
+ 	}
+ 
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 0acc547d69..35c54dd103 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1536,9 +1536,12 @@ static int get_remote_default(const char *key, const char *value UNUSED,
+ static int update(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, prune = -1;
++	int set_head = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL('p', "prune", &prune,
+ 			 N_("prune remotes after fetching")),
++		OPT_BOOL(0, "set-head", &set_head,
++			 N_("auto set remote HEAD")),
+ 		OPT_END()
+ 	};
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -1552,6 +1555,8 @@ static int update(int argc, const char **argv, const char *prefix)
+ 
+ 	if (prune != -1)
+ 		strvec_push(&cmd.args, prune ? "--prune" : "--no-prune");
++	if (set_head)
++		strvec_push(&cmd.args, "--set-head");
+ 	if (verbose)
+ 		strvec_push(&cmd.args, "-v");
+ 	strvec_push(&cmd.args, "--multiple");
+-- 
+2.46.0
 
