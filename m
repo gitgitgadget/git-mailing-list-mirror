@@ -1,54 +1,54 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A241A76C9
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 16:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971211684A4
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 16:32:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725985905; cv=none; b=qJBgLpxu1BwG8OiAnDXWHtK1T5McvMgD0u1+2ye5LXZJFW/AJWKc+KsdZX//oQ9ktiXkvVwK77jBisLB+a4Zej8L9NUcEliZIbOzxUUdnLhrIOBq61Py6z/zCcL6PRlmsY0VWT/VuEjs3FtvTq/LObt1OR40qjIY3ZGHOkNh2Uo=
+	t=1725985938; cv=none; b=usaVfaUYzNK/pxDSZIGRx64ZLWJgsLys+JQaXo9EzSZq5/UpgTvDNXNAYFfAJJI4+SstJ/zpngVuc1UByXOaAPt6HO4ROPyfKIMlf1R4/Ei2oU+4k/mHvVGUHnnJe08c0JUxooHSxRdE+BVPkLFC1Umphioo9cykVbuK37lrdAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725985905; c=relaxed/simple;
-	bh=YQQEvCL/rzgU+28biSjtsxmC3SGBlzwXNXUW+6ObVrA=;
+	s=arc-20240116; t=1725985938; c=relaxed/simple;
+	bh=h2bcHr6tWE9u+TyfXkmSNDBKTOA1c58+DMl6TnUUt7c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ulfMNithaOcSHdue3sjzRlCE4yPfuXo3uFllSgCxHt+657x2br/O+adcowGH68maNXx38ykKHgYQbbWe2q7qi64mIwDpMVW1HvvfZnR0+MpeaJY7gVjZ2TR9iY95SviXeDdx3D2JX4tQlhXM3bAVtDTClWSV0KpaQopSGPUkVaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QFcclWJL; arc=none smtp.client-ip=209.85.208.49
+	 To:Cc:Content-Type; b=Xjkh5TPze+7y2bpFscL1PkT5rOO5JOyg1iVM8lJa/RrltEEwRwViNJDTh8ptpXuRiRIAkPC4mpzjLouN+jA4smVKNmuegZ1OF4y7dPgOWQxjbdhUJggxJADCcrY8RMg2KmRmtL18ywgV1L65/RZLchaTFO+4ei0d7NkuIUUlmtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvarqC8+; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QFcclWJL"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c3ca32974fso6528656a12.3
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 09:31:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvarqC8+"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5365cf5de24so4408621e87.1
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 09:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725985902; x=1726590702; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725985935; x=1726590735; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H5BHsaXOTTVTUtyyWCgIQFWoCFxr0AP1lxWWYUnbt38=;
-        b=QFcclWJLUfnM1R3gWH2glyaWlmQKf0jsFcc+N6rEft4S286qKvEgRiwrVXOngDTq6l
-         +eLrJq0/a07KkUUgUy+7PwwPlCkql8RBWBP+hYGVroKIcv8F2BZgH9lmc89FBnB655Ev
-         vvPNXE7bOPwQMZFjtyEYeQCunhkjN1bYDxyvyYvTmJHclOVM9PEsqujVzlVQvj71s1Qe
-         BLvp9Y63aep4+1EGg4axTsWbS/MRbs0MDoBxceqSETSNZosQorRVvwe07LVC3pC6WTqg
-         yFdW0+g6opjHUlketuaqMUymXVrttzC5MdLV/RjqKO+iRBLUHVtUSiaEfSy4Me0qdyBb
-         n3hw==
+        bh=+Zn2Q3nSS5czs09yo/R7TVyR/AHBP8HWlWaBFJ22qmY=;
+        b=IvarqC8+Yy5UbyCjkqgAkZWuc4Cy71WlLFiTbXRHpWNrq3Gyg1LT+eqyxGpU+Z3XPN
+         mK3DxVE8wslHi9YGEzWho9gg95rFTcxK7RtHzVlGRBnQqu+wfoNwL03F/IIsyK4RdxQm
+         MqvpnHp6428metfcHYsM78MrxVlo0h5ZpWkex9SHGVR6sMEEoTA606lUeemZc0rdKiqv
+         yC4ZP1ZBe4U0oZdXxPikiEtCo9oQ4r3YAOfySCJxT7mv1Nqq2JsxYiG1ujhf3Zwf4Rng
+         FDGVn4l7U1zGuEA4K1WfQ9Sf4wGzzdze79XMZ/vXIULm4OQdFdzp5dvN6JjemFV8X6Je
+         YqvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725985902; x=1726590702;
+        d=1e100.net; s=20230601; t=1725985935; x=1726590735;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H5BHsaXOTTVTUtyyWCgIQFWoCFxr0AP1lxWWYUnbt38=;
-        b=NqgpHiDbK9rlZEP4zzJlH/uOmYZ4UHFzCiC4yAk6D1OHT3DaryE1Ch+BZ465ShXjor
-         oCz1XQ1pZZ+G8iobdBRp5yfmtEVkKWOrJvyUWOoEGAJmNqPt1iWTeaiVaSsF2DsfLYLV
-         zIBRv9wBPZc0g0Ex36om8sEe+6g45ZSjhftEol4/RC54GBPnlYKoJKpwJ7xbaxKluItJ
-         zdeH0MH+IY2qR5r92zg1dXfU0gZTjSthAQmTn189xSitxDpJOoLiMr/P+I5AwJNDSprb
-         qW6Cjje+1hPwd9qB/KNAoc/C7PJG0Lhvzq1ORHCDLY66rhYV3oU+jGy/jCbsxyggD2Cn
-         LiVQ==
-X-Gm-Message-State: AOJu0Yyi4RWdnrMB7RA41FyTXmYlg6K7YzQgiWcfdIV8z8ooJA2a/jFi
-	pQ54PXq0o/SIDlf6yRM0RaFqyQsUWp/pfsaiBt+p6loxwalCZMksKZTxaDLTRVcp8Pjj98Rtzs/
-	eg9CSj5tGckap8t17Dn+I3F5p40GRCQ==
-X-Google-Smtp-Source: AGHT+IGvRd2d/a0xLUzKVJKOxE/AanWjf05BAAqbPkIzBVzJjnmhcKXlSY9t+dJQhOloJsSsYhvkHdM979eU9R1Bfp0=
-X-Received: by 2002:a05:6402:5203:b0:5c2:6311:8478 with SMTP id
- 4fb4d7f45d1cf-5c3dc7bb4e1mr10553354a12.25.1725985901723; Tue, 10 Sep 2024
- 09:31:41 -0700 (PDT)
+        bh=+Zn2Q3nSS5czs09yo/R7TVyR/AHBP8HWlWaBFJ22qmY=;
+        b=vwKR+cphASMUXAq1c38e/a3/mukpYjL1qQK4dFyuxsBcTF2gHRo7G0vVTP1ZeZAG4t
+         p/ju/S1i5QQJzpLBkuzVZ/a7E7u7O9i60ks7/P5ybfcPaPJxkONd4bJ4pu2+JLsa+IMV
+         uY8GO0+80LDXBJ6LKUe6DtUB+VskYzNB88Eh8AqlEjqKgsG3W1zSqJ/E1o61xEej+6xW
+         358I5gBAsZ1joqsYY3kx7CgzAsB0FXxpsmiL3CJ2s+/xMFO9hUjzqddpNVfSq9n+kiCj
+         Jmq6j1TqtCTgBICn1O58FO9JnwyxxTf44QG0fE6WvUC13CwGIq6EYXE0i12j5+9QW7VC
+         gvrg==
+X-Gm-Message-State: AOJu0YyEBnSYJlQ9OJsSSI478KqeJmcEX4xnXv5aVpidZg65BMUgIVH/
+	SSWLLiorlSqEsUpNAwmmHEZp1I1Hz58Dbgj4kVHr3y5ZRZJEpkpxN1J+EjiY7S1V1KPikyqwcSD
+	CQGGd9zNiYyIjc0BSPBD3r30jr4s=
+X-Google-Smtp-Source: AGHT+IEnNbIOmQRVVgbe0yS3m0R9m8r6z8X9LGgGDDyrp9JZc3O0Fc5TRjsxwOkWXqHY1i040YNSpDFi382aQ3xIC9w=
+X-Received: by 2002:a05:6512:694:b0:536:545c:bbfa with SMTP id
+ 2adb3069b0e04-536587ac1e7mr7892720e87.20.1725985934174; Tue, 10 Sep 2024
+ 09:32:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,99 +56,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240731134014.2299361-1-christian.couder@gmail.com>
- <20240731134014.2299361-4-christian.couder@gmail.com> <ZrDYIFolRlERFdUT@tanuki>
-In-Reply-To: <ZrDYIFolRlERFdUT@tanuki>
+ <20240731134014.2299361-4-christian.couder@gmail.com> <ZqpjV/A9ZVPDiGgA@nand.local>
+ <CAP8UFD2OR=5QvyFT6EGQkekFBtjRWoMShQ=_eT=ypH=FswUaRA@mail.gmail.com>
+In-Reply-To: <CAP8UFD2OR=5QvyFT6EGQkekFBtjRWoMShQ=_eT=ypH=FswUaRA@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 10 Sep 2024 18:31:29 +0200
-Message-ID: <CAP8UFD34FP2CCaeeYU5maUiNB5m5pD3_neyEYFtf8GQ4xCZmvA@mail.gmail.com>
+Date: Tue, 10 Sep 2024 18:32:02 +0200
+Message-ID: <CAP8UFD1DQ6jGcnc_t=GQPmnfx2s63NLxyvSJ6V+vVQBU9m_MCA@mail.gmail.com>
 Subject: Re: [PATCH 3/4] Add 'promisor-remote' capability to protocol v2
-To: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
+	Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 5, 2024 at 8:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
+On Tue, Aug 20, 2024 at 1:32=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> On Wed, Jul 31, 2024 at 03:40:13PM +0200, Christian Couder wrote:
+> On Wed, Jul 31, 2024 at 6:16=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wro=
+te:
+> >
+> > On Wed, Jul 31, 2024 at 03:40:13PM +0200, Christian Couder wrote:
+> > > diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprot=
+ocol-v2.txt
+> > > index 414bc625d5..4d8d3839c4 100644
+> > > --- a/Documentation/gitprotocol-v2.txt
+> > > +++ b/Documentation/gitprotocol-v2.txt
+> > > @@ -781,6 +781,43 @@ retrieving the header from a bundle at the indic=
+ated URI, and thus
+> > >  save themselves and the server(s) the request(s) needed to inspect t=
+he
+> > >  headers of that bundle or bundles.
+> > >
+> > > +promisor-remote=3D<pr-infos>
+> > > +~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > > +
+> > > +The server may advertise some promisor remotes it is using, if it's =
+OK
+> > > +for the server that a client uses them too. In this case <pr-infos>
+> > > +should be of the form:
+> > > +
+> > > +     pr-infos =3D pr-info | pr-infos ";" pr-info
 
-> > +The server may advertise some promisor remotes it is using, if it's OK
-> > +for the server that a client uses them too. In this case <pr-infos>
-> > +should be of the form:
-> > +
-> > +     pr-infos =3D pr-info | pr-infos ";" pr-info
-> > +
-> > +     pr-info =3D "name=3D" pr-name | "name=3D" pr-name "," "url=3D" pr=
--url
-> > +
-> > +where `pr-name` is the name of a promisor remote, and `pr-url` the
-> > +urlencoded URL of that promisor remote.
-> > +
-> > +In this case a client wanting to use one or more promisor remotes the
-> > +server advertised should reply with "promisor-remote=3D<pr-names>" whe=
-re
-> > +<pr-names> should be of the form:
-> > +
-> > +     pr-names =3D pr-name | pr-names ";" pr-name
-> > +
-> > +where `pr-name` is the name of a promisor remote the server
-> > +advertised.
-> > +
-> > +If the server prefers a client not to use any promisor remote the
-> > +server uses, or if the server doesn't use any promisor remote, it
-> > +should only advertise "promisor-remote" without any value or "=3D" sig=
-n
-> > +after it.
-> > +
-> > +In this case, or if the client doesn't want to use any promisor remote
-> > +the server advertised, the client should reply only "promisor-remote"
-> > +without any value or "=3D" sign after it.
+[...]
+
+> > I wonder if it would instead be useful to have <pr-infos> first write
+> > out how many <pr-info>s it contains, and then write out each <pr-info>
+> > separated by a NUL byte, so that none of the files in the <pr-info>
+> > itself are restricted in what characters they can use.
 >
-> Why does the client have to advertise anything if they don't want to use
-> any of the promisor remotes?
+> I am not sure how NUL bytes would interfere with the pkt-line.[c,h] code =
+though.
 
-I have tried to explain it in a reply to Taylor, but as you, Junio and
-others seem to prefer the capability not to be advertised at all when
-not used, I have changed this in version 2.
+As Junio said pkt-line.[ch] is about <length> and <bytes> and it is
+used to transfer the pack data stream that can have arbitrary bytes,
+so there is no problem with NUL bytes. Sorry for not checking.
 
-> > +The "promisor.advertise" and "promisor.acceptFromServer" configuration
-> > +options can be used on the server and client side respectively to
-> > +control what they advertise or accept respectively. See the
-> > +documentation of these configuration options for more information.
->
-> One thing I'm not totally clear on is the consequence of this
-> capability. What is the expected consequence if the client accepts one
-> of the promisor remotes? What is the consequence if the client accepts
-> none?
+However I still think that capabilities have been using a simple text
+format for now which works well, and that it's better to respect that
+format and not introduce complexity in it if it's not necessary.
 
-I have tried to improve the documentation significatively, especially
-according to Junio's suggestion, in version 2.
+For example t5555-http-smart-common.sh has:
 
-> In the former case I'd expect that the server is free to omit objects,
-> but that isn't made explicit anywhere, I think.
+cat >expect <<-EOF &&
+    version 2
+    agent=3DFAKE
+    ls-refs=3Dunborn
+    fetch=3Dshallow wait-for-done
+    server-option
+    object-format=3D$(test_oid algo)
+    0000
+    EOF
 
-Junio also suggested making it explicit so I have done that in version 2.
+to check the capabilities sent by `git upload-pack --advertise-refs`.
 
-> Also, is there any
-> mechanism that tells the client exactly which objects have been omitted?
+t5701 also uses similar instructions to check protocol v2 server commands.
 
-I don't think it's necessary. Agreeing on which promisor remote (name
-and URL) to use should be enough security wise. When using bundle-uri,
-for example, the server is not telling the client exactly which
-objects are in the bundle.
+So I think it's nice for tests and debugging if we keep using a simple
+text format.
 
-> In the latter case I assume that the result will be a full clone, that
-> is the server fetched any objects it didn't have from the promisor?
+Also writing the number of <pr-info>s and then each <pr-info>
+separated by a NUL byte might not save a lot of bytes compared to
+urlencoded content if necessary, as I don't think many special
+characters will need to be urlencoded most of the time.
 
-Yeah, the server should fetch any objects it doesn't have from the
-promisor, so it can send everything to the client.
-
-> Or does the server side continue to only honor whatever the client has
-> provided as object filters, but signals to the client that it shall
-> please contact somebody else when backfilling those promised objects?
-
-No. Options to enable things like this could be built on top later if
-needed though.
+So in the version 2 of this patch series, I haven't changed this.
 
 Thanks for the review.
