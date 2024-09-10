@@ -1,84 +1,204 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBA2837D
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 15:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214D199FCC
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 16:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725982938; cv=none; b=Jh36KBeKqLsxwpVKx4gspk4DQTWyfPZh4EnrsRreVqlOl2onmuKFeKtH2yc2h6rl/KbghPLLa8jNT4ZV9FngAi6chW/PCgdfuKy21b6d8Gf+nSZJWLYdqkUC4bfR0Hr3ksrfxa+JAgS0+ADAMsNTHvoH0WYfNPCCg2MHh7R8ldU=
+	t=1725984438; cv=none; b=ioNkzRrzs7DQSnmam5tpSdT6eEqGL14QaH/siNZmukIBjuO+lc06vscDD+h+xEpBBYWjLvKt1ACWDCLUun6Sf1eIsE4bzNjjXyTs1hR7GtTUyVVIfm00bLPMCcgJk4ByZpd14sOfuBQ+OirzlYH/W9WNt9CaLgTRG3EGdd9vrjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725982938; c=relaxed/simple;
-	bh=h2bYx5/QObe1oOUdDZEI3n1kW3zmUSfgLMUTP+o9+a8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NOuMNSP4p9gWx8rcsf0I84wQn3jbPl12YmXc9mXcNfSbkJQmJhs+GHD66pqNX+w04JGlKGL1TO/QhHcFcVj80rXeRdYN7YlHHynyDIwuxJGx7tRd7I15NsOi/3hUehy9R80z293HUWu7Izly9gpuWybnD4piKnn3SxvBablGwj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=l1spa52f; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1725984438; c=relaxed/simple;
+	bh=uKVOPUkTj09Hpj480amZthcsh9AHrnViNyd3AyJfn9M=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=syQUwyJ4JKEIrzKXhqEW2TtTVTrkPXkP9ECkEXPa9ak1GGiXL0lBlkG4kcqngOFTjzxIscplO9iWhcg0UNVBrf4HMeSq9vtJ7pVg63NIFIGyCeCRIoSSbRnq5A61GDnYswZuB6ZCIyfTAizq4s153giYbBMFqAMcuYN6T+Pb8ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddhpLV3V; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l1spa52f"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B1F03876B;
-	Tue, 10 Sep 2024 11:42:14 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=h2bYx5/QObe1oOUdDZEI3n1kW3zmUSfgLMUTP+
-	o9+a8=; b=l1spa52fMr3346D2NYYooj8dwaoZwVOpIY8fmCO4jhEIjv/HKOr8xm
-	HlihAuTQwogABO1qw5ntQK0Ek48xS2Hw9Y6bEddXSWQKKiPSgC1DxhG3VYqt13sn
-	6kJf8KMzsbbMf1up5OY3rUKoPc8HI/z1P4mseogPFqsGnAicjpN/s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7130E3876A;
-	Tue, 10 Sep 2024 11:42:14 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DAB3738766;
-	Tue, 10 Sep 2024 11:42:13 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
- <ericsunshine@charter.net>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] chainlint: reduce annotation noise-factor
-In-Reply-To: <CAPig+cQZhrG+0BJkDbmKY11jxSspod2Xp8tSQq-DGOO9qMbR_w@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 10 Sep 2024 04:14:38 -0400")
-References: <20240829091625.41297-1-ericsunshine@charter.net>
-	<20240910041013.68948-1-ericsunshine@charter.net>
-	<20240910041013.68948-4-ericsunshine@charter.net>
-	<Zt_5zMiu4QRka5x3@pks.im>
-	<CAPig+cQZhrG+0BJkDbmKY11jxSspod2Xp8tSQq-DGOO9qMbR_w@mail.gmail.com>
-Date: Tue, 10 Sep 2024 08:42:12 -0700
-Message-ID: <xmqqjzfjms6j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddhpLV3V"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5e1b35030aeso2790121eaf.3
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 09:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725984436; x=1726589236; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ytZQZsKvYkNsUOYW2/dTiOudJI9+ZJEF9wfLLEpM7+Q=;
+        b=ddhpLV3VQBdYQNdi6ghghlwA/XYDbJNHDpg5DuKMo5pBnuYuJrbRJGLrG4SfEJ6DDI
+         K8ak1dxex4BEz1LaBsFCEaDRWgqMFcHtiQjR5Z/QYlzGmBcbuRSs3hTM2qjBBYMMHZ9R
+         B4TZMDMfV/PlgQ5A7s0jlEkSsFVHfwVjG9uoedJZD8j8MXifZ89wib19xHgBjgKlqe2+
+         F33h30TL+n2rD4RRc3FZYigukPCKYbtJtUdJd6lR8JhShs9/2DDESjPyelyzg//BEefW
+         s+tt3G8Vp1oathRJv2U5yV0w3sap1dCxChFoZYG+wP/UBBjB+xfykVob7tlV3EW9icoY
+         G+ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725984436; x=1726589236;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ytZQZsKvYkNsUOYW2/dTiOudJI9+ZJEF9wfLLEpM7+Q=;
+        b=d0K+yZJrFzd9Yl2JfQ87r1GicLtY6BA+yRWu6IvGN763wwHQvr19H1x0u9YlbqH7vb
+         U4Dbk1ktU+Kqrl+YSo8CpgLcpTrs+kTEp5rCNywJC9dLRyucZYia+ZNZbuulSGiQnjZu
+         jRWnwAlQMTXXoUEH47ncL1QrI7anMbsadom48uzisQFwpzCZk0JfWSPhh+OqjY3tRI7i
+         BHxni3HeVFbabF5NrPa8dGdH5qUlipO9jl3zT6tiWOTh8Dh20Pk+IcytvSbk70urzh+0
+         3jdX7NqXNyYOgy5tm5rB0APhDUj3Yc1rll9WiDuDArWhxxpIkJxwvwslK6Uy9nLkTg+m
+         JWGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXzLxeUWBmflL1bV7h8AbvWgpnSa8odMbXkPat+1C6RW8aM1LdEMpQNAa7maWfAS3g4O8I=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5RhJrLVPOSbGp+tbs2GDdMBTPxm/jRpWAAxa8Wql6WXTVAI2U
+	Z4VuuAvB3Wp+N9bB2EvrIQ2TKDR+68WfmKebG3GGjvkfR4e4yfUuvlmR9mhkQQng14x7yztUOqp
+	vtOXZYn9ltEJr0vKiZ1AXlu2byMc=
+X-Google-Smtp-Source: AGHT+IFr+wASK13AjBvljjbOKTZhQE/m3Oou9HzsNnSqmGTSfMiPr4qNgxkFoqvZvUkFUWTmw3/Y2xfWOXY9q3gUj7E=
+X-Received: by 2002:a05:6820:4b0e:b0:5d5:9ffb:b9de with SMTP id
+ 006d021491bc7-5e1a9ce849bmr15420668eaf.4.1725984436092; Tue, 10 Sep 2024
+ 09:07:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Sep 2024 09:07:15 -0700
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <Ztb_HqLg-WvwA2I0@ArchLinux>
+References: <Ztb-mgl50cwGVO8A@ArchLinux> <Ztb_HqLg-WvwA2I0@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4025E19A-6F8B-11EF-A2C0-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Date: Tue, 10 Sep 2024 09:07:15 -0700
+Message-ID: <CAOLa=ZT8N7TRSVNhqGrjskMTTFgO16Q4VKMVM1LPHtEorkT6cg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] ref: add regular ref content check for files backend
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="00000000000033aacf0621c611c6"
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+--00000000000033aacf0621c611c6
+Content-Type: text/plain; charset="UTF-8"
 
->> One thing I don't like about this is that we now have different output
->> depending on whether or not you happen to pipe output to e.g. less(1),
->> which I do quite frequently. So I'd propose to just drop the markers
->> unconditionally.
+shejialuo <shejialuo@gmail.com> writes:
+
+> We implicitly rely on "git-fsck(1)" to check the consistency of regular
+> refs. However, when parsing the regular refs for files backend by using
+
+Nit: s/for/in the/
+
+> "files-backend.c::parse_loose_ref_contents", we allow the ref content to
+> end with no newline or to contain some garbages.
+
+The 'no newline' reads a bit odd, perhaps, "we allow the ref's content
+to end with garbage or without a newline."
+
+
+> Even though we never create such loose refs ourselves, we have accepted
+> such loose refs. So, it is entirely possible that some third-party tools
+> may rely on such loose refs being valid. We should not report an error
+> fsck message at current. But let's notice such a "curiously formatted"
+
+s/such a/such/ since the next line uses 'refs' in plural form.
+
+> loose refs being valid and tell the user our findings, so we can access
+
+s/access/assess
+
+> the possible extent of damage when we tighten the parsing rules in the
+> future.
 >
-> My knee-jerk reaction is that the "?!" decoration is still handy for
-> drawing the eye when scanning non-colored output visually (not using a
-> search feature), so I'm hesitant to drop it. However, on reflection,
-> I'm not sure I feel very strongly about it. What do others think?
 
-Unlike ERR, LINT is distinct enough, even when mixed with snippets
-taken from the test scripts that are full of words that hints
-errors, checking, etc., so I'd expect that new readers who have
-never seen the "?!" eye-magnets would not find the output too hard
-to read.  For those of us whose eyes are so used to, we might miss
-them for a while, but I do not see much upside in keeping it.
+We could also rewrite the last sentence to make it a little more clearer
+as "We should notify the users about such 'curiously formatted' loose
+refs so that adequate care is taken before we decide to tighter the rules
+in the future."
 
-Thanks.
+> And it's not suitable to either report a warn fsck message to the user.
+> This is because if the caller set the "strict" field in "fsck_options",
+> fsck warns will be automatically upgraded to errors. We should not allow
+> user to specify the "--strict" flag to upgrade the fsck warnings to
+> errors at current. It might cause compatibility issue which may break
+> the legacy repository. So we add the following two fsck infos to
+
+I think Patrick touched base here and I agree with his comments.
+
+> represent the situation where the ref content ends without newline or has
+> garbages:
+>
+> 1. "refMissingNewline(INFO)": A ref does not end with newline. This kind
+>    of ref may be considered ERROR in the future.
+> 2. "trailingRefContent(INFO)": A ref has trailing contents. This kind of
+
+s/contents/content
+
+>    ref may be considered ERROR in the future.
+>
+> It may seem that we could not give the user any warnings by creating
+
+s/could/would
+
+> fsck infos. However, in "fsck.c::fsck_vreport", we will convert
+
+I think we can also rephrase this first sentence a little better,
+perhaps:
+
+    It might appear that we can't provide the user with any warnings by
+    using FSCK_INFO.
+
+> "FSCK_INFO" to "FSCK_WARN" and we can still warn the user about these
+> situations when using "git-refs verify" without introducing
+> compatibility issue.
+
+s/issue/issues
+
+> In current "git-fsck(1)", it will report an error when the ref content
+> is bad, so we should following this to report an error to the user when
+> "parse_loose_ref_contents" fails. And we add a new fsck error message
+> called "badRefContent(ERROR)" to represent that a ref has a bad content.
+
+I would rephrase this a bit, as:
+
+    The "git-fsck(1)" command reports an error when the ref content is
+    invalid. Following this, add a similar check to "git refs verify". A
+    a new fsck error message called "badRefContent(ERROR)" to represent
+    that a ref has a invalid content.
+
+[snip]
+
+> +static int files_fsck_refs_content(struct ref_store *ref_store,
+> +				   struct fsck_options *o,
+> +				   const char *refs_check_dir,
+> +				   struct dir_iterator *iter)
+> +{
+> +	struct strbuf ref_content = STRBUF_INIT;
+> +	struct strbuf referent = STRBUF_INIT;
+> +	struct strbuf refname = STRBUF_INIT;
+> +	struct fsck_ref_report report = {0};
+> +	const char *trailing = NULL;
+> +	unsigned int type = 0;
+> +	int failure_errno = 0;
+> +	struct object_id oid;
+> +	int ret = 0;
+> +
+> +	strbuf_addf(&refname, "%s/%s", refs_check_dir, iter->relative_path);
+> +	report.path = refname.buf;
+> +
+> +	if (S_ISLNK(iter->st.st_mode))
+> +		goto cleanup;
+
+Since we iterate over all refs, we don't need to check the target for a
+symbolic link. So we skip all symbolic links. Makes sense. Would be nice
+to have a comment here.
+
+[snip]
+
+--00000000000033aacf0621c611c6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 69d68aab5eec6c0e_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1iZ2JxOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK25xQy85QUNINmVFUS9VTnZXeGZkZURsa2tLdEFYbwpSYzRFYSs0cnZa
+Y09iMjV6bVJwalYraG93UTlMa3ViYmVsQ0VCeXdyYTROd0xEdENUZVA3SWdEYndIYk13YXlaCkpK
+NGtPOTRXVFNTTjJSTVVpMUdsY2syYXJtaTZVNHVmUUh1bXlHNFBHVWpjeVhWUXBSdFlEZmpNNk9P
+RnRlZUYKRG5uWm1HT3lTaGZrN2FoeVdoMFdpN3RzT0FVa1R1SWxkOVV5WU5vb2R6ZGl3ZGJRZGpT
+VUdrQWM5T1ltZnJMOQo4YlFSYldaSlpxMGgrKytzQzBWdXIzS1lqQmZZdzhpMFlQamJFWDI3OGlz
+RHVGR3A1THdOVTF4QTAwNUxuZldFCk1iSUpDSTJBQmNaZzBxZHlhN2VJM2R1RVYyOFliLzF2NHNj
+Q2xCdHZoNjRCSEcrY2dNTld2VlpKWlBlM0Z4QjYKVHdrbUMrNXJwV1B6ZTFyRGt6aHdrVHVtWWVz
+bE5CUDlpb1lJZTE3SGRXazd1eERuejFTNldqVnZOVnovSEZSUgpEZU9nUFVjWFdaVkw3WVdPSW9k
+UVRBOFhYUDZkYWdjR291bFgvaXN3U1R3ZktpTnZSRFpWeGovR0tIa2hKMFRQCnRiczJibGJ1a1g5
+Tzc0RVA4Zk1OWXVFRzdFcklGVzhRVzhlU1RaOD0KPWtTS3IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000033aacf0621c611c6--
