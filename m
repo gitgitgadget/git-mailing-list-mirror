@@ -1,83 +1,214 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9696F1AE87C
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 22:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456391A4B99
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 22:19:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726006689; cv=none; b=aGODckwpTjJww3BmS9KWmY0ZcjalnvXChtk0NAm/a0KlvJ3zm5j7nflN9i38l+2TQmSxie2BfnhWWoeHp+arww45jGCW9wooclVyxlhI/ldMWcgJ4OXo0AZZ6t75zkgsTjok/SHDTmOIckwDpp9Nk7oPVNOygC51O9c8R1VxzF4=
+	t=1726006792; cv=none; b=uZ950YHS7IcKOWm9Y604k2OsDREpyqWvEpbKxfOs8zO4rQzfovTx7PDFH4oi+rMpYytqTfx174ViXIPFD3hAIl674H5JdWTBPgbpocJQBFyMbS+fTr71eeKtCwYbnwquIy1A4AlmYmYas/iu/9s57S6JW7EHM9AewDb1prtpv9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726006689; c=relaxed/simple;
-	bh=Xux/6y4fiMX7+D/O3ezGHmiIlRD6I0MhLsEUfLXJ9NQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vAOS58fGGhuK2ywkEinrz89Vl+H1WZ42LAal6fWrWpj6CoqnkXqdcLsnAbmCY76nSUx4Rul6t4rpohxr9WYOF4MF1XV5PxUL55+qp3Ag6XNfLId8mAnoBrwuzQjs8WFTvDV6S7/wT/+9JNlHZdl1r6Q4dG47CagFbIS79cJVoB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1726006792; c=relaxed/simple;
+	bh=R7BJw2XcxCC9j4A85S4kJF5VuBMXC9/1M8fKvsCAhAQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AQYKCK9xNg5/k4MqbUJX/t8Bd+RxfFB5QCUAdRDg26wjKAxjFfIqz6Rj4uImmBe8hzDNeH8bzmz9IdCqu8evaJxD8q60StdQR5pAe6Czyq/VSGor4xuwsaoXVg7JAGU5nOYJB1oGypWM3tUYKLIfLHK+UntJ6RVs2k2St5nufpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kS3du2Bs; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6c352e97ea4so3481946d6.3
-        for <git@vger.kernel.org>; Tue, 10 Sep 2024 15:18:06 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kS3du2Bs"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5e1ba0adcb0so629465eaf.0
+        for <git@vger.kernel.org>; Tue, 10 Sep 2024 15:19:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726006790; x=1726611590; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MVodsncM3dUds14+R7jgKy9c91Gft0quxnxu9OwqxG4=;
+        b=kS3du2Bsb71Hyp1tGyHMGxthCNryTihKUohXypKnNcpVd2RQxWaMtFN7bxq3viE9Vo
+         R9rYPXu/ZjHW5RKXWeOO18Vj/oBTGD6xcJ9yckR5hXO7UgvyP3kbVyld2Bmo94/j6Gki
+         JJMuJvP3ABco/RqOp5KldSJLGyKNfLCT82AEPrMnMqj+shiSGYAn+0A4CQxvMMm7RFNp
+         Bua9UgNuw9cDbavOka7eVbXTYOa0Jszz9B32jSJQcIh71KRg3t5Hd2DBjKrUMZSRg6Bu
+         wmQtlXS5gdvvBCePm9u4piN+J/6qQR1aRVE9RDgFiD08TtjcEzCWewP3u7bxXpewiCuZ
+         aNQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726006685; x=1726611485;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qPdXjx5Ui8OC3osqSP72V4RBlD8LuWtgFy7UbBPPYRs=;
-        b=Wl4cX4OhGzbYa6DC4rxXv5PF3hK9TmoQouPa1A6xuERrgqHM5q9N4c2TMu4z3APbta
-         3sAsNtBRktW9QPA+6rOt4nTGjyz+bC7C/9KykaRG1WyEunKoTH0uxCOF7vg/IxTH63JI
-         dqJyAUNv6UExlO4/jUbUvbxrBKHgW3/zH0HMrBnoQIWn15h9+PIsPK2AW7rBBcTsaAlU
-         TzgDeRpkjZ/To9vXMSFS+OhQ21YeQ64ebCs4DGGwMHIWJaHK7uZwFoRAxCahKodAGClH
-         QauIoFzZdsbCjuIzVB/Cva5Mpqbc/lfRzexSTqMv407cCSquu814JhbuOl+i91nedtht
-         uIdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXPFRRxBxg5J+E3nj/LpIzvHvUi6eax3XIwjAIeY8J5SnoA9ArrsMMRvOLqYRpfbyxMSvo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyMzcuiASZNUyK5RJg1fnPuwpWZjEyU7kLT2uHYDXMomSgNnaQ
-	4fQZuMi7GwKkdXuQ/WQx7/HIezsqssEvxUTpsStWwr4gvcQXfsoGU43pegbVfr6eh7CbK3E4J43
-	ikH74zsxe2qvdG6QlMcRUzdMBc/s=
-X-Google-Smtp-Source: AGHT+IHo72j9ohLzhE9gB0oZyf+RcdX8Uquj7Z2iQ480zq5UUEODyQQVPNDWnRkPitJ5VpTZ72nBPMQ+KOrgzZHdt1I=
-X-Received: by 2002:a05:6214:20a1:b0:6c3:8fad:ffc9 with SMTP id
- 6a1803df08f44-6c528512220mr97713336d6.5.1726006685240; Tue, 10 Sep 2024
- 15:18:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726006790; x=1726611590;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MVodsncM3dUds14+R7jgKy9c91Gft0quxnxu9OwqxG4=;
+        b=FsoWLdgd4nAelj1tlskNBaTQyBYfow0bTjhlETzg+25AvC8NlaVkIZu3pW8jb1DFON
+         hp85WuMLIQ9bkDOoLPc43P4r19/WxcHX4Jg0vfDlynPpKEw+c8G/s58DPT0mQfH5eEUi
+         tSWU2XgzE6i8/uBTYTD74XsUkNppqA/XiAS6X9OPlKxmnFmLjTfGjq6VK3q3kNqz6YJc
+         X+tui7sty6G0/kPPeH5LFevSoIV2RBGVSEZpfWvm4WCQ3MiKEozreRcGpS1A1sY7fDMe
+         PP6ifUrUcEnr15m6pFRJNqimo9FIT4H+MBmsrq6PA4pZu4WjY9cHopxQzRVKeF30XMMI
+         Gjdw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvhMgu2vQ8mltAwSZdg83s/5kNb6ILG2p3pW7fhfqVk7mjMiSuFnjvrC5KLWIwXyhLAfA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvCChXlR7Z6XduUBtJbVOWAhdjKwkCXTq07Jq6ZM3ujEyKi8cO
+	kiLbDG/nAPmlyxjV42BkgLqgD0XAnTZy68WTj/LI2fStSzt7h9eCOJrP+6XCqMsKFF6dmF7kNYI
+	B01D6b8yqyK+2Qo7EyA4uQtFZwHs=
+X-Google-Smtp-Source: AGHT+IGYuInVfS1f2nLpBBFe8OLGl1u/ZRgi8sTiRCa9XPUgiW60HtwnATLHDlSxr6QHins9DTgVEXSaftJ3/N4rzVA=
+X-Received: by 2002:a05:6830:6b07:b0:710:f693:51c9 with SMTP id
+ 46e09a7af769-710fe75fe93mr1234246a34.20.1726006790135; Tue, 10 Sep 2024
+ 15:19:50 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Sep 2024 15:19:49 -0700
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <Ztb_JuMjaoAbIZXq@ArchLinux>
+References: <Ztb-mgl50cwGVO8A@ArchLinux> <Ztb_JuMjaoAbIZXq@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240829091625.41297-1-ericsunshine@charter.net>
- <20240910041013.68948-1-ericsunshine@charter.net> <20240910041013.68948-4-ericsunshine@charter.net>
- <Zt_5zMiu4QRka5x3@pks.im> <CAPig+cQZhrG+0BJkDbmKY11jxSspod2Xp8tSQq-DGOO9qMbR_w@mail.gmail.com>
- <xmqqjzfjms6j.fsf@gitster.g>
-In-Reply-To: <xmqqjzfjms6j.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 10 Sep 2024 18:17:52 -0400
-Message-ID: <CAPig+cRuAVc=zzhbXFx0LkO6Q93fMEVyMiJxJ41eVAp48iCX8w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] chainlint: reduce annotation noise-factor
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	Jeff King <peff@peff.net>
+Date: Tue, 10 Sep 2024 15:19:49 -0700
+Message-ID: <CAOLa=ZS2TsRAeAHJ6B9h82-H2tSG-vZMRBSpspQ3hOW5GBdciw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] ref: add symref content check for files backend
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000009b4a840621cb4509"
+
+--0000000000009b4a840621cb4509
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 10, 2024 at 11:42=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Tue, Sep 10, 2024 at 3:48=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> >> One thing I don't like about this is that we now have different output
-> >> depending on whether or not you happen to pipe output to e.g. less(1),
-> >> which I do quite frequently. So I'd propose to just drop the markers
-> >> unconditionally.
-> >
-> > My knee-jerk reaction is that the "?!" decoration is still handy for
-> > drawing the eye when scanning non-colored output visually (not using a
-> > search feature), so I'm hesitant to drop it. However, on reflection,
-> > I'm not sure I feel very strongly about it. What do others think?
+shejialuo <shejialuo@gmail.com> writes:
+
+[snip]
+
+> And we will remember the untrimmed length of the "referent" and call
+> "strbuf_rtrim()" on "referent". Then, we will call "check_refname_format"
+> to chceck whether the trimmed referent format is valid. If not, we will
+
+s/chceck/check
+
+> report to the user that the symref points to referent which has invalid
+> format. If it is valid, we will compare the untrimmed length and trimmed
+> length, if they are not the same, we need to warn the user there is some
+> trailing garbage in the symref content.
 >
-> Unlike ERR, LINT is distinct enough, even when mixed with snippets
-> taken from the test scripts that are full of words that hints
-> errors, checking, etc., so I'd expect that new readers who have
-> never seen the "?!" eye-magnets would not find the output too hard
-> to read.  For those of us whose eyes are so used to, we might miss
-> them for a while, but I do not see much upside in keeping it.
+> At last, we need to check whether the referent is the directory. We
 
-Okay, thanks for weighing in. I'll reroll and make [3/3] drop the "?!"
-decoration unconditionally.
+s/is the/is a/
+
+> cannot distinguish whether the "refs/heads/a" is a directory or not by
+
+It would be a little clearer if we say
+
+   We cannot distinguish whether a given reference like 'refs/heads/a'
+   is a file or a directory.
+
+> using "check_refname_format". We have already checked bad file type when
+> iterating the "refs/" directory but we ignore the directory. Thus, we
+> need to explicitly add check here.
+>
+
+[snip]
+
+> +/*
+> + * Check the symref "referent" and "referent_path". For textual symref,
+> + * "referent" would be the content after "refs:".
+> + */
+> +static int files_fsck_symref_target(struct fsck_options *o,
+> +				    struct fsck_ref_report *report,
+> +				    struct strbuf *referent,
+> +				    struct strbuf *referent_path)
+> +{
+> +	size_t len = referent->len - 1;
+> +	const char *p = NULL;
+> +	struct stat st;
+> +	int ret = 0;
+> +
+> +	if (!skip_prefix(referent->buf, "refs/", &p)) {
+> +
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_BAD_SYMREF_TARGET,
+> +				      "points to ref outside the refs directory");
+> +		goto out;
+> +	}
+> +
+> +	if (referent->buf[referent->len - 1] != '\n') {
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_REF_MISSING_NEWLINE,
+> +				      "missing newline");
+> +		len++;
+> +	}
+> +
+> +	strbuf_rtrim(referent);
+> +	if (check_refname_format(referent->buf, 0)) {
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_BAD_SYMREF_TARGET,
+> +				      "points to refname with invalid format");
+> +		goto out;
+> +	}
+> +
+> +	if (len != referent->len) {
+
+Would this work with a symref containing:
+
+    ref: refs/heads/feature\ngarbage\n
+
+Since we check last character and rtrim, wouldn't this bypass our
+checks? Isn't it better to find the first `\n` and check if the index <
+referent->len?
+
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_TRAILING_REF_CONTENT,
+> +				      "trailing garbage in ref");
+> +	}
+> +
+> +	/*
+> +	 * Missing target should not be treated as any error worthy event and
+> +	 * not even warn. It is a common case that a symbolic ref points to a
+> +	 * ref that does not exist yet. If the target ref does not exist, just
+> +	 * skip the check for the file type.
+> +	 */
+
+I think the common terminology for this is 'dangling symref'. Perhaps we
+could shorten this to simply say:
+
+    Dangling symrefs are common and so we don't report them.
+
+> +	if (lstat(referent_path->buf, &st))
+> +		goto out;
+> +
+> +	/*
+> +	 * We cannot distinguish whether "refs/heads/a" is directory or nots by
+
+s/is/is a/
+s/nots/not/
+
+> +	 * using "check_refname_format(referent->buf, 0)". Instead, we need to
+> +	 * check the file type of the target.
+> +	 */
+> +	if (S_ISDIR(st.st_mode)) {
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_BAD_SYMREF_TARGET,
+> +				      "points to the directory");
+> +		goto out;
+> +	}
+> +
+> +out:
+> +	return ret;
+> +}
+> +
+
+[snip]
+
+--0000000000009b4a840621cb4509
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: eb8561dd566ea949_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1iZ3hnRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHhXREFDa0l0cXhTbXorYU1ZTU5pVENhdUxJdmMrNQpzaHRZZk9GT09I
+S2NYdGJKOFROZm5PMUdVZlhCYU1XOVQyTE85TWpOZ1N3ZzFWQXh1Wm9MTDFMMzRjWG52MFhmCmtz
+SFNEQW82YlZGQVNhYzNhSk8vZ2xOTmlWblh6K0RGWjN2MDhkV0FBbFBEV2pDZXNVR1M0ZVAwVEtk
+QW5sL00KTnQrdGVwckpmd0w4YmJJMjdFSkI4bWpLRjJxdVpRcHZJWlh2dGVjckVUdkhmcGVPMnR0
+c0JyRXhMWmtSMjBzbgppOGl2Y05TZm0zZzBnTjNSQlBaNW9iUXVqdjJhUzEyK25KenB5T1JVcHZv
+TEt2MHI2ZFV5L1pOU1FGeWMwTDJtClFvNmNzaitwb3Y5a2tZOTdWdnVCS3QxanNZeWljWDBITE9j
+TGxoeEU1cFJBRTBxYXNvUk11R2Q1UUU0TEdpSHQKNlQrTVRlMTdMQlJRRmwrZlBtRFJQcXEvSlNj
+SnJOazRsOUFqYjdpK2kxdlpWQk9RZFZjRGgwaVlqL2NxeXYwbwpUUExENUpZQWJzWjNWQk9XVlRm
+c1dQT1VwNzBjVWxxNExLNC9IUS8wSTVFTHZUMDZ4TU5CT1NiQzhkSWFnakIyCnhkSXA1VWRIK3Iy
+WU01b1RVYkpPV2M0VDBwdHNZQVQ5NUJ3dTB4bz0KPUltU1UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009b4a840621cb4509--
