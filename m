@@ -1,135 +1,153 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569C2149C61
-	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D543117A583
+	for <git@vger.kernel.org>; Tue, 10 Sep 2024 06:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725950526; cv=none; b=J+q6UWRg+Ap/8FRH+zkYAK7mpwUuV1rR9snGSqQJVz88KzB+uGJvE1vHwrTwWYCnhSDgQc5KjgjQ5fGQOxTnGlz3KWQeLka7wYQhNXHPVxtdYn5YTNDkzcKDAqxwsDJuFaw7ws4Sak7whcK8sO7PCVoBLE+JkGiwXKKt/2HiEjI=
+	t=1725950529; cv=none; b=DfiludGvYPZcZns5TfK+8CmQN43x2Bz72hs65tmv9W2BNMOso9z+x04LXKPFaMcQDysk/yXaM5J3sTheP8H3rMUss6QBswlQWMwx9K9q7IDDZROvEs6eEEQW+KO5AmpYLSnoDTo1WzwB40NRjmMZWpQPeFNCsd/SHnTSj38VXeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725950526; c=relaxed/simple;
-	bh=ihPVzJ3WiDRjv11uG38U+A6eb+kNei+bTh8e4AW9Ksw=;
+	s=arc-20240116; t=1725950529; c=relaxed/simple;
+	bh=ZCxNfKA0Fb+Nd+kKkT9WGrQLz3JHP3ATcfXUkr1zXHw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GVqOM3lnYSvSjZ3BiR93sR/iYcWKfvnKEirH7H2JtH3xyYdOMYY1/bEx7sVYX+PIxu/8Utb55kQr2A57wnF6MCGULndLd6cxF7hXtmF8xMuksKPa9uwMqAxKaQJb3KAPzg//PHnL87Ozkqe18qgYnkk78n6VbUFeesB1gqUEKTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TUlp1jNR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=flkirGEA; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=nf3LqKRKRjGSsLaEuThX9MUmy3H0b4i+bTsCcODcEvyiUCVEXi4oAu+OxqASfoYZEtXx5NzO+emWeqsuDQTHxxNbrzb07SLb+vZfMytuj/XMcPciFFjnCBQinwsw7BPmkg1u4zD5BkiOy6LFk2F1gV1vxf4d+POsL54eFY5kefA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LpCS8Dw+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kFwkDiPx; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TUlp1jNR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="flkirGEA"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 767BD1140120;
-	Tue, 10 Sep 2024 02:42:03 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LpCS8Dw+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kFwkDiPx"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id E54A213802CB;
+	Tue, 10 Sep 2024 02:42:06 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 10 Sep 2024 02:42:03 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 10 Sep 2024 02:42:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1725950523;
-	 x=1726036923; bh=J0XachkKJHLp2/Hfhd6413YYh0hJzzZ6DAynBowRcQU=; b=
-	TUlp1jNRWAnDTIGz9qWqTn1JeoSAmksn+IAJnZpdGSiFJhoW9P4fz4MNGL6Thmo3
-	2Dlb22df9IfsM7L2qB1QtGkovnPA6vT/DLXcAKVQjvd5mR5Kz5WcGsWKvmoVbuUN
-	H1x3sDNcftMt9EHIiiGHtsmoXbq5t7f3gJrsSzZQfE+u0JI7Po0srkz4PewEnHbi
-	kU9O2lPjw+W+mOtXHGT5gLf/Dsw6MSoI8NRTsnKynkJmUIeAuCgCtr8VmemAAmxm
-	8zoKIY4mWRTpp1xKxbqk8zO8YnUKLpBDwfXBE6PhZ1AGV304RUv5EL7J/DuiiMvg
-	f4RT16vkUNpq3sP8JUz/pA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1725950526; x=1726036926; bh=YfkkD5P/bV
+	pMx0TdvJs0Dd5N/owppOwxEPi4LOlZDR4=; b=LpCS8Dw+qw+/YsjtnUY6DIqIA1
+	pZA2k3xrHRc8gpAxiBlZcR2oYskcro51qGlKUTP3f1oW3Pf5oQK6gPm38DPHcz8n
+	TH2OU4g396qWuuecsfJCfm9tDK9jQ7v7auL000lv/b+uO33J+8u/ntWEt3MIvBvo
+	2BZ9Dy7I+fQH885ItdmDfGgfEtD66Ma2C0rm06u3trrQia8AzNgTSZu6FvUYZW8t
+	KFjn31ooU/1Pa5QePnAQnO9ahk8QIj4NRKjFi7TNfaIilvgK2fd2PfgxTcSASX4D
+	eIVIB257GhUywUr1myTcgK7vjgHg2H6cv0t317AvOww1BobnMq8CQZvsWl7w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1725950523; x=
-	1726036923; bh=J0XachkKJHLp2/Hfhd6413YYh0hJzzZ6DAynBowRcQU=; b=f
-	lkirGEALsYSPSf8p9x+NK3mUTzNIBCj+FqlsUtHlIvCmLthhgym6cCqj6kIp+zNG
-	UwUOR4bk4XwMe03sX6eYfDAjkT3OGyISuqA1Sess0maaVzWgpKu4nuBSKswsdQFN
-	atQTSkcOWom2d//whTdGEQK0TCc+6emHn1vngj6+DrL2n2myrWggn4JUczvQTzNt
-	gvLC+fcpI0+mdJk086BVoYJhhaL2vH46OyXcxVYGajY3inUvWOlXEbc9IUpacVdr
-	5CwejGZxIdIjnt4B2LMw7boAVxk4q+m0tsYn/zcY8L45i487X3/UOiWAenu4VN3S
-	LKgdlnMUDNKprs9iKMBVw==
-X-ME-Sender: <xms:OurfZksEf-_f-xWp04MrlhB6uJ9tqgW1-4AvOeXzDdUXYXkHamk1dA>
-    <xme:OurfZhdSCl4hlnWqRlJZgtHibHq5lKJPMbnoWE6O4BPypvuAeCwNfgL7JF4Ad8qcV
-    wwhN7dH70IjOS0mDA>
-X-ME-Received: <xmr:OurfZvz1uebkFboVYaTXpaZycInzn1AlJx4u4Aj0l_sCKtxtHY0dYF5ziec-rkxG4Ihqt8goi8rRi-BYDAbYbbVLI1kfb7s8MpeefCAThzvQdt8>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1725950526; x=1726036926; bh=YfkkD5P/bVpMx0TdvJs0Dd5N/owp
+	pOwxEPi4LOlZDR4=; b=kFwkDiPx9CxT76cCsScUlIza7nAjbs4KZY60l4VcTev8
+	KkLd8ERAQk+RVyfA/ZEapD7sTD73USALrjOWoo1ISIJsBUOG0JrnydbQXpjKkspj
+	Fwc0RI/d08XTRYMREtvYE1TAZ3tMRMT6HlB3R/lf0uceDwlYtNbYqcrGLsMzt38c
+	7miC4lex1oN/Ve8nHLHXxveLOvtztefus1fhfTmSTDLsFiQfeFMAhn/qWrH1WpLZ
+	rU4ERW5eo/snh8TwYU2sUK3hZZ/VeoWl+M7t2Y5r+JdFVnJee6p8YBPrwNp8PCjt
+	zvVxD8SbqX+ny2eeWKCKLEVyIRw4ExFubQfJqwgoTQ==
+X-ME-Sender: <xms:PurfZqUoB6JbUMRSRmfVGUdK0Refo3cm8KIdf8vE31SNgl6SjPKVxQ>
+    <xme:PurfZmmookGFVXP4dwEYSwgGLjHnPL59EBEpXyvXjGtS-RXtaDFlsuttPL3gMCg5X
+    92QCWZiz4uYrJEyGg>
+X-ME-Received: <xmr:PurfZuZivFtHGG-tbM647cZxa4PvX7cAzaKHSjKlEMlV2UPOV-gtW3IQskUZqDV9xGT8duNlP9trfOSHoI0PSTH19B2LNMSXnpd4XFmcRmblr1g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeikedgkeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedufedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepmhhhsehglhgrnhguihhumhdrohhrghdprhgtph
-    htthhopegvmhhrrghsshesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhunhhshhhi
-    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
-    rghsthgvrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvg
-    drtghomhdprhgtphhtthhopegushhimhhitgesmhgrnhhjrghrohdrohhrghdprhgtphht
-    thhopehjrghsohhnseiigidvtgegrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnse
-    hgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:OurfZnOQYeGs9IcNKUnokMORCRIGgtWjcSieJdabOlz1e2bkqJi41A>
-    <xmx:OurfZk-Xmb5gtWvcTGifHXrxcVLIdEqp6fksuxDRA-NqbGxyadOq3Q>
-    <xmx:OurfZvUCEaVYHzXLv215CY5eOEA1mwx1iL7Zr0dXS-TXShCPjTD1Nw>
-    <xmx:OurfZtfxXzMxQFl16yJu7RdMuw3LP8izBxq4KkhnAsgOYnlCOgIJ8Q>
-    <xmx:O-rfZufyeIIRucupGia4NSSeoiLF7H--o_j9VhV0U1YSvJF65FlcVbjc>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjrghsohhnseiigidvtgegrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmhhesghhl
+    rghnughiuhhmrdhorhhgpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrd
+    gtohhmpdhrtghpthhtohepughsihhmihgtsehmrghnjhgrrhhordhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvmhhrrghsshesgh
+    hoohhglhgvrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohht
+    hhhprghsthgvrdhnvghtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgugh
+    gvrdgtohhm
+X-ME-Proxy: <xmx:PurfZhUs_DSsLuNr7BCsxQ7gA6eA3m5XnF5nYrAIg5aJ_F_Xjf65Cw>
+    <xmx:PurfZklnmTQ5N9dOVqtZUZGWuKWyDuYSvBQryVy5kmWaGnr8RUM2yA>
+    <xmx:PurfZmcsTz4du_WuWHg7VwYPOJXXQxMcnz4fUR4TjnOrYAb9xwcmhA>
+    <xmx:PurfZmEDLF0QQh1d1TRTZSZCjGkOcAxiENrz7qmbG0zZoPlgB6iqmQ>
+    <xmx:PurfZv-d044k73p7VNG_0DX3x7rpbG_6Zw0BLzxpD7d2T6zrW7e7zU9F>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Sep 2024 02:42:00 -0400 (EDT)
+ 10 Sep 2024 02:42:04 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5ec87800 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Sep 2024 06:41:54 +0000 (UTC)
-Date: Tue, 10 Sep 2024 08:41:55 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id ffa35735 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Sep 2024 06:42:00 +0000 (UTC)
+Date: Tue, 10 Sep 2024 08:42:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
-	Josh Steadmon <steadmon@google.com>, spectral@google.com,
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org, steadmon@google.com, spectral@google.com,
 	emilyshaffer@google.com, emrass@google.com, rsbecker@nexbridge.com,
 	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net,
 	Jason@zx2c4.com, dsimic@manjaro.org
-Subject: Re: [PATCH v3 4/6] config: add git_configset_alloc() and
- git_configset_clear_and_free()
-Message-ID: <Zt_qM8ZGN4fnqUoY@pks.im>
+Subject: Re: [PATCH v3 3/6] libgit-sys: add repo initialization and config
+ access
+Message-ID: <Zt_qOrrWubdU_yvx@pks.im>
 References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-4-calvinwan@google.com>
- <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
+ <20240906222116.270196-3-calvinwan@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
+In-Reply-To: <20240906222116.270196-3-calvinwan@google.com>
 
-On Fri, Sep 06, 2024 at 07:24:22PM -0400, Eric Sunshine wrote:
-> On Fri, Sep 6, 2024 at 6:21 PM Calvin Wan <calvinwan@google.com> wrote:
-> > From: Josh Steadmon <steadmon@google.com>
-> >
-> > Add git_configset_alloc() and git_configset_clear_and_free() functions
-> > so that callers can manage config_set structs on the heap. This also
-> > allows non-C external consumers to treat config_sets as opaque structs.
-> >
-> > Co-authored-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> 
-> Almost all these patches suffer from some sort of missing Josh
-> trailer, so I'll stop mentioning it now.
-> 
-> > diff --git a/config.h b/config.h
-> > @@ -472,6 +472,11 @@ struct config_set {
-> > +/**
-> > + * Alloc a config_set
-> > + */
-> > +struct config_set *git_configset_alloc(void);
-> 
-> Should this documentation string mention that git_configset_alloc()
-> does _not_ initialize the configset? Alternatively, should this
-> function also initialize it as a convenience (and mention so in the
-> documentation)?
+On Fri, Sep 06, 2024 at 10:21:13PM +0000, Calvin Wan wrote:
+> diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> index 39c27d9c1a..65d1620d28 100644
+> --- a/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> +++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+> @@ -2,11 +2,37 @@
+>  // original symbols can be hidden. Renaming these with a "libgit_" prefix also
+>  // avoid conflicts with other libraries such as libgit2.
+>  
+> +#include "git-compat-util.h"
+>  #include "contrib/libgit-rs/libgit-sys/public_symbol_export.h"
+> +#include "common-init.h"
+> +#include "config.h"
+> +#include "setup.h"
+>  #include "version.h"
+>  
+> +extern struct repository *the_repository;
+> +
+>  #pragma GCC visibility push(default)
+>  
+> +const char *libgit_setup_git_directory(void)
+> +{
+> +	return setup_git_directory();
+> +}
+> +
+> +int libgit_config_get_int(const char *key, int *dest)
+> +{
+> +	return repo_config_get_int(the_repository, key, dest);
+> +}
+> +
+> +void libgit_init_git(const char **argv)
+> +{
+> +	init_git(argv);
+> +}
+> +
+> +int libgit_parse_maybe_bool(const char *val)
+> +{
+> +	return git_parse_maybe_bool(val);
+> +}
+> +
 
-I'd think so. I don't quite see the point in splitting this up into two
-separate function calls. Is there ever a case where one wants to
-allocate the configset, but not use it?
+I don't quite get why we expose functionality that is inherently not
+libified. Exposing the current state to library users certainly does not
+feel right to me, doubly so because `the_repository` is deprecated and
+will eventually go away. So we already know that we'll have to break the
+API here once that has happened. I'd rather want to see that introducing
+the library makes us double down on providing properly encapsulated
+interfaces from hereon.
+
+Also, we already have ways to initialize a repository and read their
+config without relying on `the_repository`. So shouldn't we expose that
+instead?
 
 Patrick
