@@ -1,135 +1,98 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9331AC451
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 17:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B42E2AE69
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 18:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726074972; cv=none; b=t4ZZOFVfKe3RW1KY2lCryGwPyQpupTNABTMRZuiWbImCwt/043hDNFzb5joj2eKg2ZvKwK4zZJAOCLhk5rskR8obq0O/T+8ZK0zlgaXMSJYkL6zzHZqmm2A0tVVVOMfdD9tYvTL2NWedA1Dyk1yh5oaD11cG5PAo9P9yIt+lUOw=
+	t=1726078552; cv=none; b=hkoY3r9bCCepYCNFtHc0woaOdAZ3i/e92nG0KMvpEm6dtLjPa34HpYny8GSeXr3HuWToqhKkuir8baQP1l8bXS8wJDn7Kwaj5f55n4EF2m2Ku00jwMqLsdWyQ8byVtZCec0zg0ax/M9iEa8YFvl+mGIvy/J0hd/4qOtPvgW1EH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726074972; c=relaxed/simple;
-	bh=x8yEVGAgNeUj9bwtB8Yn49gHfEigXCHGtZk7LsI0Kzw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ajcxT/2qCV6Eo9h3UazhwnH4cgUjQgHzHBsr9ElX2z4FoTTOAiZur3fy44khSEfNCo4ugcCb/9L7w51ljFrZ4/UsqWg0+065vFZzTBD6S16At1i7qxcivA4u0UNTvahTbPHwfRue4Su7UvtQk+0ues27ZT/FG3wa0c83DthbzWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hg0z1Wzt; arc=none smtp.client-ip=209.85.160.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726078552; c=relaxed/simple;
+	bh=8f2TXloK4XDk4boF3LcFzKxYqN41VA7rfvsorselarE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FvVoxEwU1aU6xVGNH7oVTvdOVtOxm7nC1D86YrpUW4bP+vjKqPrwAPmmzJbGBLgUIM3TQ0ZbBTndBWTWX/v1sp4jpdxrLdM8zX57lvuU98r/fAj5QhI1GH4bqQaBhby/Np5TySP1oFXf9H2c/IzxYwI/bGyfQRNd1B+u4emkAJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Evr+4/gw; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hg0z1Wzt"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-277dd761926so5974fac.2
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:16:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726074970; x=1726679770; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uGKN1TK2Wq2aah7Gf+aakrhAv4Ja3bCURgMWgY/uxeo=;
-        b=hg0z1WztEAkmsfONEs4hX5aeQ7RXfoggdKsySLEkaQx7WekvMspBtx3yxy9jqBuRXS
-         ebmd3cEl1wM3hkc8pFMJSDojPvT3t7G0O3OKHoGAHdwRXDzozLDxUzShJwvOhDSDj/4E
-         YAEzMrFoOl6RsW3pDUor+lzvFv2ILf1CoByRoo19/fqRxHf4/MtWQ7a38Q1N514Yg9WL
-         fmHvrrbqe41glzWxgy99bzcIO4tK6WOHA+K6xHvLA0qo+FZmVBm+o9wDenkoLlZqHkux
-         NDTTf8QZhV5nIMD0yhhi7TVbhnfgQXCX5E3ShpmXDWtIuQ7lhql77InNjh3Y3eNbvcUQ
-         tDng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726074970; x=1726679770;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uGKN1TK2Wq2aah7Gf+aakrhAv4Ja3bCURgMWgY/uxeo=;
-        b=s/wOTn7Qec/dPymMksQryrOxlSu614L/Y3yX9uDSUXP9/GGN3HPKil4JfCfNpqdOdQ
-         G4P5RSB8TUAOqaLZf6n+nUrOYkkOt1s+hD28TFyL+g9f4rOS+ybfS8A6xWJ3LGOCtOPQ
-         L2nqnzuUTwgw+57oT/qAhFhDzoAqSsgR0jLqcD8ZLCW4DKHpey8BVvHIUKrWx5fFxYsq
-         mfny86Z8nyFacKshIG2l9NltTxW2/1prm1X93KIhBEyEnfAIq9nUJaJb4E4bAXqd6HQI
-         wYRUJphAWPbchq0LCYxQ0Ly7Lsga5zGYjTYrNqbaw05AZaSgAJ/JkCEtlagPOND+JmAW
-         BL0g==
-X-Gm-Message-State: AOJu0YyYjmvOdl4kT/TOtuylRL5C9loscvyEol2VVTUiBTL11RGwHez5
-	7F4uD8XP2U4OL8BOhxjqkReN6TyhPtYaak9PSaHC5JXuO/f3hbhm
-X-Google-Smtp-Source: AGHT+IGkjLgRFD3F5oNwGQi1sc9/oF8yJ7D05FcFYWrv1h35Nma2VZdZQR9UcUlNCbDFsUBT01t5ng==
-X-Received: by 2002:a05:6870:20d:b0:270:130f:cee8 with SMTP id 586e51a60fabf-27b82dcafdamr18146368fac.6.1726074970202;
-        Wed, 11 Sep 2024 10:16:10 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-710d9d6fb1bsm2452524a34.48.2024.09.11.10.16.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 10:16:09 -0700 (PDT)
-Date: Wed, 11 Sep 2024 12:14:55 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 16/21] branch: stop modifying `log_all_ref_updates`
- variable
-Message-ID: <6hoykgw3gm5hchmtfaci6gwwha6iouidtqvupx55vsjfoedquo@nfgaumnmu4po>
-References: <cover.1724923648.git.ps@pks.im>
- <cover.1725008897.git.ps@pks.im>
- <fc30365e1f13d47eb89339603f6a4744525b3967.1725008898.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Evr+4/gw"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 32A061C07D;
+	Wed, 11 Sep 2024 14:15:49 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8f2TXloK4XDk4boF3LcFzKxYqN41VA7rfvsors
+	elarE=; b=Evr+4/gwzV7taVSCPOM13w2c4J7WG828Hdyg2ww0jnJs3Jyl5U6Cw8
+	1rZIcn6EIayPRZotxw+k0vXKSfvZNhdYTapxaqjfjrPJINMR99lXfQkatHTVA+mc
+	0N8Bsg7TB8AYxSDOZ01gUo+sNIkA1hlabZOARS7SuCJk0SJ3NvgL0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B3DD1C07C;
+	Wed, 11 Sep 2024 14:15:49 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8B3601C07A;
+	Wed, 11 Sep 2024 14:15:48 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  John Cai
+ <johncai86@gmail.com>
+Subject: Re: [PATCH v2 2/3] builtin: remove USE_THE_REPOSITORY_VARIABLE from
+ builtin.h
+In-Reply-To: <434c8babbb140b7e66321deec0cd8e8a0d706475.1726001963.git.gitgitgadget@gmail.com>
+	(John Cai via GitGitGadget's message of "Tue, 10 Sep 2024 20:59:19
+	+0000")
+References: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
+	<pull.1778.v2.git.git.1726001960.gitgitgadget@gmail.com>
+	<434c8babbb140b7e66321deec0cd8e8a0d706475.1726001963.git.gitgitgadget@gmail.com>
+Date: Wed, 11 Sep 2024 11:15:47 -0700
+Message-ID: <xmqqikv26oq4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fc30365e1f13d47eb89339603f6a4744525b3967.1725008898.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DEEF7B90-7069-11EF-8509-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 24/08/30 11:09AM, Patrick Steinhardt wrote:
-> In "branch.c" we modify the global `log_all_ref_updates` variable to
-> force creation of a reflog entry. Modifying global state like this is
-> discouraged, as it may have all kinds of consequences in other places of
-> our codebase.
-> 
-> Stop modifying the variable and pass the `REF_FORCE_CREATE_REFLOG` flag,
-> which has the same effect.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  branch.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/branch.c b/branch.c
-> index c887ea21514..08fa4094d2b 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -601,6 +601,7 @@ void create_branch(struct repository *r,
->  	int forcing = 0;
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
-> +	int flags = 0;
->  	char *msg;
->  
->  	if (track == BRANCH_TRACK_OVERRIDE)
-> @@ -619,7 +620,7 @@ void create_branch(struct repository *r,
->  		goto cleanup;
->  
->  	if (reflog)
-> -		log_all_ref_updates = LOG_REFS_NORMAL;
-> +		flags |= REF_FORCE_CREATE_REFLOG;
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'm trying to understand how setting the `REF_FORCE_CREATE_REFLOG` flag
-is ultimately equivalent to setting `log_all_ref_updates =
-LOG_REFS_NORMAL`.
+> From: John Cai <johncai86@gmail.com>
+>
+> Instead of including USE_THE_REPOSITORY_VARIABLE by default on every
+> builtin, remove it from builtin.h and add it to all the builtins that
+> reference the_repository.
+>
+> Also, remove the include statement for repository.h since it gets
+> brought in through builtin.h.
 
-From my understanding, when `log_all_ref_updates` is set to
-`LOG_REFS_NORMAL`, this is the equivalent to
-`core.logAllRefUpdates=true`. This means if a missing reflog file is
-created for a subset of references[1]. The `REF_FORCE_CREATE_REFLOG`
-flag seems more analogous to `always` value for `core.logAllRefUpdates`
-and would create reflogs for all references. Is this not the case? Or
-does it not really matter?
+Can we have _all_ builtin/*.c files that include "builtin.h" to gain
+"#define USE_THE_REPOSITORY_VARIABLE" in this step to make it more
+mechanical?  That way we do not have to go through this large patch
+manually to review it.
 
-[1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-corelogAllRefUpdates
+Then another patch can immediately remove the "#define" (and doing
+nothing else) from some of the files in builtin/*.c with its commit
+message saying "These do not need implicit or explicit accesses to
+the_repository as-is", which would make it trivially reviewable,
+because such a claim in its commit message can trivially be verified
+by simply compiling these files.
 
->  
->  	if (forcing)
->  		msg = xstrfmt("branch: Reset to %s", start_name);
-> @@ -630,7 +631,7 @@ void create_branch(struct repository *r,
->  	if (!transaction ||
->  		ref_transaction_update(transaction, ref.buf,
->  					&oid, forcing ? NULL : null_oid(),
-> -					NULL, NULL, 0, msg, &err) ||
-> +					NULL, NULL, flags, msg, &err) ||
->  		ref_transaction_commit(transaction, &err))
->  		die("%s", err.buf);
->  	ref_transaction_free(transaction);
-> -- 
-> 2.46.0.421.g159f2d50e7.dirty
-> 
+After that, manual work to remove implicit or explicit accesses to
+the_repository, which would remove the "#define" that becomes
+unnecessary, one-patch-per-file can build on top.  Each of them
+would be reviewable again.
+
+> The next step will be to migrate each builtin
+> from having to use the_repository.
+
+I am not sure what this "to migrate" refers to.  Is it referring
+exactly the same thing as what I called "manual work" above?
+
+Thanks.
