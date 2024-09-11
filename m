@@ -1,62 +1,65 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9B62F30
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:31:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485A9184530
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726050684; cv=none; b=uIzj9UHGGksPF3LWBweHYzmREINbrj3s2tz9O9DKEFua+Dd7JticuHKdvbauSQm08uVD6skzJrD0fBDAHUmlZZBX0uyIiPuQD5A9JjjndpwRXeT2hOY4yuG0nJNXP5Ok9DOXXNeVt9f0iBllwf30vSDWZ6UO1BiJU1He/QiIjdk=
+	t=1726050686; cv=none; b=V0Lk0IiC1JDt7KXWFlfhrUYM0W/LO3A5eJ9zj81cwpElK3dp/4ef/17rdIONwlAY1/10K4qW6YZ3VgPB5Q79Z/7oGxxUYD86SzLMIRN6p1+pMwnjr2NZ1gEcatO/xMp4Zu8Po33WalSzfzVxZhisGQm9qYg1WVSS4xL6f/qRPFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726050684; c=relaxed/simple;
-	bh=ARBqxlQhaai5FgL9qw/W3EGksCJC1AEfbA+8oYjCSx0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DhJgisw/Fu5oKNK9syDZ/oyEPi0moPfUkqhOB++6QZF0N1OmVs+gpOW00nZe5SU4BTDn2/27KleZK+m3TGxDXjdMwZVKmlZh31Wy3/0LrUgZVEFNzxsnrREKbZdl+vIJHmN+kwmsyo4U5mjgIvAw4AMIiE6XE30S3XmxkYeg8kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lymYtr7e; arc=none smtp.client-ip=209.85.208.171
+	s=arc-20240116; t=1726050686; c=relaxed/simple;
+	bh=Ekp8LomQXDCqDMS3BG+MY46KEUv/iAvBgpRRQ8rqKvY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PWwZWRvySIm8aODUgP2d+0lF4QO1rGfjCo2QwuGuSyLxsL6Z1uHqkd8Xqac0ITcL9c7lAgcd9JieIHymdDds3AGRhDNJu5cs68bEODS5mn/XymLKNZ6N9/6M90N6OU/Cy5eWrbxq6MvO8k1jPAVpisMAvYDsgPHP0QSS7BdI5CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OV0XVXF7; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lymYtr7e"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2f029e9c9cfso12776441fa.2
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 03:31:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OV0XVXF7"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso22715061fa.0
+        for <git@vger.kernel.org>; Wed, 11 Sep 2024 03:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726050680; x=1726655480; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5A/Pr8uG6ljHivxT7ESJCWNKCIC5H/QwRSUaummtBJ4=;
-        b=lymYtr7e+y4oLxMXH+IiZPxm+3RGs6ZIiSiud8MBnFDXs+u0GovHr7VxiJsoaKEAlM
-         +m5v+UJikHxq8JvvZuZren9vtCqn9avxIANeQaREGqMpQMFPG92HmZsYSrQKC0mXp0mJ
-         Z10OgcGDxbSwsdZqSLk4vZab2EdhXoFT824py+0n2Cytwq1M0DrEhgCXbumGLR5FBRoT
-         yrHbt6fThEH1FQNOOwU5qZLrWf/lIBBY+Vqqm1pJYqR2RPN3GZ6M5W9+feLy5WXBPpj9
-         HelwMojHW3WWSyLZPQQmepeaGWUVigj5zbI/pd5KT8dErTp8N4fLiSsGUFEypWmVLGFM
-         V9Yw==
+        d=gmail.com; s=20230601; t=1726050683; x=1726655483; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WM9TQVT3TZDQVQtvbnXzD2RT9g2CidwjvvPlHATKXaw=;
+        b=OV0XVXF7f0M4TMIG6Lg/rbTt5Vg19KXhrVaCCXUrvTEoG59gb6BjB5Gj9t7J1gNl8s
+         vxdbag4ENWrKuT1gtJ16AKZZ2290x/hCMudLivwpIkQM+YPWmMtCbp8sCHvrNVRGq//M
+         wUqfFoz/DH2wSRvqHLz2gKKKaCaPs8dY3CTq72uYcUKVkkMbNDBgx92J0s2gCxdD1ChI
+         L0n05qibi14O+GqH5EIP4nbgXRy8YlnlAPhhSvCFUwuArWaLMjwM/kJB4bSvyuf6pN2p
+         eZ0uwzNdM8yrLhoyHsWjn2x0UEYmvbQ9V5ZS0LGKL8Wwf66goCaVupiWdjC82+Ec5Dd7
+         8P4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726050680; x=1726655480;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5A/Pr8uG6ljHivxT7ESJCWNKCIC5H/QwRSUaummtBJ4=;
-        b=bbjXWXc3Did15NciDwta+SKbJBHCGwijGUa+PpBtvmlWnhM86UpxDuGc5h38wJly3Z
-         iGpjUXi1DtgDUslNX8UMfovRuTjTQ2J0l7p0A6AZ0m/StSzpi1uODtQvypVgv8b0Kze6
-         t7CWknYbN1h/LWfKKHdOgQoVaJE7mPyXlgYvPIm7Qhs65CbNrbARADcAp5duoHjOXFiU
-         zJSGEsrORQHxs89KH4I579uQJfpFeSURSrl6oOcJfvzLyZDLhK6l2mdgEny+/sThZb74
-         YKQFGw2Vck+rMEAi0A8q5PTcDctEKfut+qd11Y85xubggO/JQKukpx70b4fWc1Ajzaft
-         UAjw==
-X-Gm-Message-State: AOJu0Yzd/0KrCHYCP3ZQwclrgmPI7bNVMsq8x3gbxTuGU/18/mZlIJVT
-	N1Nok+hVMpLhVbal1yUshgJ+FSbivShBL0f8cjbh9eB/irzCHY1Zo+b7ug==
-X-Google-Smtp-Source: AGHT+IEe7F54oQcR92pn46axgcMg4FEM5ULJPh3zGc/Wa9ArQtjvKLA4bNwUI131ys+CZrPKLHKgew==
-X-Received: by 2002:a2e:f01:0:b0:2f0:27da:6864 with SMTP id 38308e7fff4ca-2f75a986ff2mr100153461fa.17.1726050679335;
-        Wed, 11 Sep 2024 03:31:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726050683; x=1726655483;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WM9TQVT3TZDQVQtvbnXzD2RT9g2CidwjvvPlHATKXaw=;
+        b=UTgfupvs6bdMVjButRMF2NuqKH0NC/zVVU+SFAEFglfElcVSmyNcs6Y0Jv1z+GWyON
+         0LGUIGcXW1M+EMmpEAfwryMIBt6ne7NnqqOpvdkgnP5ZK/hE7zNzaO2Y0hWGOTiKaML9
+         XJsnb3eAx4R4cs1bkhowPHdM1ZTLA++a6tv1FImXWxFb48Wj1qE+xYscZj/g2de0Vi4f
+         fCxU0EpFRIaD61hhL/mxEhHRo7dPGDsM9yXOuyjTwdwgFmamG242r0FogvJ6Ubr6iSti
+         9BeX5b3V3rAkjt/iMwRy33FDJ9Hj//4rxuSJFLjrNosdRpJy/bgdfpt/ZO2OIt4iPZU3
+         XhRg==
+X-Gm-Message-State: AOJu0Yx/A6H5KBTQfaM0wJtR0gXE3qzIUOTfdh0RpyFC7OCUvzGKVlZN
+	6txSx7LpaBpYkaf2ALpk4g3Nqy+Hsjo8Jh3n8Pn+34/DnuSqSX41lFbpyw==
+X-Google-Smtp-Source: AGHT+IHCik/1e3o9ONP8/N5AERbbm1Ub7e/QsaucJ2IBhkNFTDXfA9WTcPqH0OWd96eLOgo/2Xn7bg==
+X-Received: by 2002:a2e:a98a:0:b0:2ef:1d8d:2201 with SMTP id 38308e7fff4ca-2f77b7781b0mr17281911fa.23.1726050682124;
+        Wed, 11 Sep 2024 03:31:22 -0700 (PDT)
 Received: from localhost.localdomain (78-67-21-133-no600.tbcn.telia.com. [78.67.21.133])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c07c81bsm14853871fa.76.2024.09.11.03.31.18
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c07c81bsm14853871fa.76.2024.09.11.03.31.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 03:31:18 -0700 (PDT)
+        Wed, 11 Sep 2024 03:31:21 -0700 (PDT)
 From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: [PATCH 0/2] add missing LIBCURL prereq to a few tests
-Date: Wed, 11 Sep 2024 12:30:58 +0200
-Message-ID: <cover.1726049108.git.martin.agren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] t1517: add missing LIBCURL prereq
+Date: Wed, 11 Sep 2024 12:30:59 +0200
+Message-ID: <55d45be1d6775a630b9f61487b6b60efab9c7769.1726049108.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.46.0.733.g1eb83ef1a1
+In-Reply-To: <cover.1726049108.git.martin.agren@gmail.com>
+References: <cover.1726049108.git.martin.agren@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,22 +69,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi,
+After building Git with NO_LIBCURL, there is no `git remote-http`, so
+it's not meaningful to test that it can run outside of a repository.
+Indeed, that test will fail. Add the LIBCURL prereq to it.
 
-I recently had reason to build Git without libcurl. That surfaced two
-test scripts that use `git http-fetch` or similar without giving the
-LIBCURL prerequisite.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ This is from b25ec8b8d5 (t1517: more coverage for commands that work
+ without repository, 2024-05-31), which first appeared in 2.46.0.
 
-Martin
-
-Martin Ågren (2):
-  t1517: add missing LIBCURL prereq
-  t0211: add missing LIBCURL prereq
-
- t/t0211-trace2-perf.sh  | 6 ++++--
  t/t1517-outside-repo.sh | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+index 990a036582..342defbb61 100755
+--- a/t/t1517-outside-repo.sh
++++ b/t/t1517-outside-repo.sh
+@@ -98,7 +98,7 @@ test_expect_success 'stripspace outside repository' '
+ 	nongit git stripspace -s </dev/null
+ '
+ 
+-test_expect_success 'remote-http outside repository' '
++test_expect_success LIBCURL 'remote-http outside repository' '
+ 	test_must_fail git remote-http 2>actual &&
+ 	test_grep "^error: remote-curl" actual &&
+ 	(
 -- 
 2.46.0.733.g1eb83ef1a1
 
