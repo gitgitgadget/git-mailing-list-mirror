@@ -1,132 +1,127 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD2191F8C
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 09:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6353017DFE8
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726047188; cv=none; b=tqui1HSCWfNPaCGThtypNXgRx1UfxuGkbztLqfRZKpxAdEcuqw1czRqWbZmE3KVjPYvhQreToVL8fmeI7j6z7PMixj8jOcO5yFCh7ReOTKAz1hBK2/t6M6i6ZYhGbgt1STp1cn2YmIDgZoem+XhyEPHrCkCPTT3EdzRz7mfWrVA=
+	t=1726050626; cv=none; b=L6Ps1aqbFtTN9s4VZUvqFB8ECapGcEDqielImqwKeoNax0XPoi2Fj20L+Jlo0zABKOgJm5vIehe8jQpbSqEB0eVyfvorvSeVICzU5kCPKZoqVEcH+FnvXOHytXFh6g2uMNW5qxP9yGgqiQ7YOpSeQrRqa4DeOLbLa2HJG9o1uF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726047188; c=relaxed/simple;
-	bh=oFFaxjPfwjHuechSJafDJZkMMfor+foJeq9reLbFiro=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lJFoZKdjF12ZTNuva53NYANhwSLI3e0UsUaVpkWO7TQp2Tqi3T3YAQ/nrGT8NoDi6mogPX/ojZQAFzNOLDr+szFxN9ieySIxxcV5OoX3pGZ5nnTVCAgtgH+oVNN9dqJmj2Oy+c4Zgp8/rKRzBR7KPPvsycDiEalF/eewbs+DhQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T4sFtGc0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HaZQIgUW; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1726050626; c=relaxed/simple;
+	bh=5y6RaYlYIpSV9AILHXngH68s8xb70M26Cjz7ayJEFYI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IZgcnQGAknbc7BsZtetWEEermxIStc47IFEeVRgg47M0lZnVZdQcMSnxUg10ePzcL6aY7BgGNh3zcC4MNe5xsE51y9LHyAl5JQGVYWVssSE555LJ3kXUmOz7RZ24VU0oYzVsbVdtj6WoV31s7F7g+uCnLSXYW1SV9DX07yXs8BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jPu9jJKz; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T4sFtGc0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HaZQIgUW"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A297711402B5;
-	Wed, 11 Sep 2024 05:33:04 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 11 Sep 2024 05:33:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726047184; x=1726133584; bh=C8pOoz1PfD
-	c9pzgz2h7SXnFtHD6UoSGQGl3YfF5FUPo=; b=T4sFtGc0dMxdI48eLGK5FqcTt2
-	bSqBX2xKKSZZGLW7qh9hoILx4jmYLRA0LMU5cL6SZ158xT8BBgVtD/tjPFdUtGco
-	HB1gMr7IZrj1Ej5cB3niBoeKCvDzqJpO7atXKnPkqXpckopsO37TC9h7Pq7gRfhf
-	GsVkyUfatYiWl1TFqlZNe2UmaPIXsbtoSEwrswV4xjLK3o8RsxkTi3BM04/oBHml
-	l2J+1iirSPdDL7tniqbRy/gF3nn2Pc2VQs62j7YIML9fZl3yE6QvtdWaYfHABNU0
-	YoJ0tZB3LR9oEtURlXr7fH1C0cbuinifAErf5y+Ku+8D9Egbouijc87UctfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726047184; x=1726133584; bh=C8pOoz1PfDc9pzgz2h7SXnFtHD6U
-	oSGQGl3YfF5FUPo=; b=HaZQIgUWMBA73Svo5EgtoiCjhwaFlOcdVo7b+/s5MkCt
-	pULQM+gWMDZkp5xNhWWepqJ8WV2zI1yWdSAFZcvV6LeV1WfGKHC8mHIWXWKYCNSr
-	vwALRKtwfWs0M//BUrwtC8kd/WHh03LJX/Z3oCX5lFiokqfaSv4UySmDvpA1gXWm
-	xwO+K57EKo8gptR1lTBdTQZ9Tun51t/LYNqODWGjvicpQ7qInD2vzTXHsgPqvxdD
-	ZpZXoRBiEI4kRzLqawfKqz5C/1Sc9IHZe1R3tvLYuy1YXKy4bgG0h3L5LwYBnUZo
-	1SYgT8HrEn8a0MCRkHiJhMK/ig5dj+X2xyiUm2qdIQ==
-X-ME-Sender: <xms:z2PhZjjoGU-2u8aFyinApfyV3ItcsRzCuN6yLLcomjQICB2duPIzyw>
-    <xme:z2PhZgBMQODM908kQ44y5CJ-P3DVUlG_VluXk_O7tToYgpVut6x1CoWs7IXpqs37-
-    g_Cv-ZJ43BEuqwq4w>
-X-ME-Received: <xmr:z2PhZjG0CEdDvfBiBgH7xRxqASAs_Rnd1NYmSBdPcCpYV4j9t1JRltjYzGeNuRScQwJWAS4kZPrjU3qu1unZag1WJFbsjSP3-V2EeGDenEJetY0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejuddgudeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
-    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthh
-    hrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehsfhgtohhnshgvrhhvrghntgihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepohhrghgrnh
-    hiiigvrhhssehouhhtrhgvrggthhihrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdr
-    fihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:z2PhZgQrqPANUZ5bL3AOvXbRsPAAVGPQGFCAfeMZucnfr-xk8ShGkA>
-    <xmx:z2PhZgytM-oH7utKHTYyyElUEcsexpgXxQyZR_jn-ryhyuTIRxkPXw>
-    <xmx:z2PhZm4ScJUZ_o923uKoYRFvphndYrX5dAs1V78PNrCMGd40q8Lz-w>
-    <xmx:z2PhZlw-TCXMAW-dXerxWGROvuF56VBxK95UTfks3yXbUC1m5jQjOQ>
-    <xmx:0GPhZvkKgVhMHJkEnOfPDcPkwz_u3hN2rW7I5tu55ivuvGkF09dk-zWO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Sep 2024 05:33:02 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6194ea90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Sep 2024 09:32:53 +0000 (UTC)
-Date: Wed, 11 Sep 2024 11:32:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Git at SFC <git@sfconservancy.org>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Tilda Udufo - Outreachy Organizer <organizers@outreachy.org>
-Subject: Re: [ANNOUNCE] Outreachy mentor sign-up deadline is Wednesday
- September 11th at 4pm UTC
-Message-ID: <ZuFju0xlybZ_6Ps5@pks.im>
-References: <CAP8UFD10B4ROEjvP7MPygALuUFgyBQqZVhAjgSUris3cdiowsQ@mail.gmail.com>
- <Zt6pbMP3Rpjy-pC_@pks.im>
- <Zt6rC7TtUvxWGXN-@pks.im>
- <ecf84ea5-2f4a-4a80-b7d4-0198f2fd6ee8@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jPu9jJKz"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-374c4c6cb29so5866250f8f.3
+        for <git@vger.kernel.org>; Wed, 11 Sep 2024 03:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726050624; x=1726655424; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=npit9VkWX4+trt/TwAafCM/JbnG+70OskAq9gmkz2zw=;
+        b=jPu9jJKz+BU7DDUS12uovFt1ti50havgfAdKD3t7XRiSP7npmmu2z8y1Xwqi+htI5P
+         S1LGzLTR5aQoLpTZNcJqR7Uen4JMnUfyxWt/OZzamVogcGnin4ev+d9KPeLxMkidO9UH
+         sMbUr4xb2+nb1XYPRbNTpyBf5zynnYVBEQAR1N5RZZak7nZaoRCCLb2egF9SZFfx5Rv+
+         KRFjSQfwzXNFg3U44tDags945xr09WPgu2aiNJI/tGvufRp2X5rIADKbHYYVTjdCX4GS
+         +ljobFxB6ozjIyhNj47rSSfSlikkzXI6RUdOdD6spmdFDX8t8cbOParzaJPSN4eydJgp
+         /DDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726050624; x=1726655424;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=npit9VkWX4+trt/TwAafCM/JbnG+70OskAq9gmkz2zw=;
+        b=s01PNcOkLyLtsPhT07yEr3TFAwT0zcIQ9jkUWb3ljOLfoThqFDkFyuBpMcD0z8YuB+
+         LJkZ4IfBgHwt50n+YNu7lwbMCYH1aZv2Shdl4rOrxZEz1jXTzJcaMuPSWj2ucEjnyJHd
+         dhIXWs97ocybKcP8RJWwtvFD5E1q4FRoSBuoCZ9oJ5dQ3MIwUQRV/e2F1/tJLgbQEi3y
+         DFgAGzBPxbfyWJiFjPt1yYbNvx4HWtiylPRsOFHYFPpKJ+CuyZw+W/wDNzT/97IxAHVo
+         MuFeTRJYFC1OVlaLaiN0RiH+Vwjv1+6fsG1pIhqKZb3Xn3h6ANG68u2TrXhufcVLV01f
+         i2AQ==
+X-Gm-Message-State: AOJu0YxYpxvv0K2oEtEGX+dAKy36+05FaYTLD83+zqlSVLhRdW7C2Wib
+	7ymuoEcoILIizMzqmgikPDPFC5J9zRdbWUvWjk4slyHmWZxOSissTjlvNTfXtVHO6Mh9jEdnmO7
+	vkJs7Fs1o50eUr/hahqtmiueM3cgRwOv1
+X-Google-Smtp-Source: AGHT+IEvuGSvuAYLRZVYVobw0n5i0+c4JH9alR5PgBQaJ4CSsPPWZjY7jm7+CM3MvGi0LkBBBgHPZ7lx7E5mFx66Vh4=
+X-Received: by 2002:a5d:4387:0:b0:374:c160:269e with SMTP id
+ ffacd0b85a97d-378922a6d58mr11735294f8f.22.1726050622882; Wed, 11 Sep 2024
+ 03:30:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ecf84ea5-2f4a-4a80-b7d4-0198f2fd6ee8@gmail.com>
+References: <CANrWfmTz6x0qmTDaTOF_USR+fDcVdwfpUJDhjozb_VzBAnUJsA@mail.gmail.com>
+ <20240911064836.GB1538586@coredump.intra.peff.net>
+In-Reply-To: <20240911064836.GB1538586@coredump.intra.peff.net>
+From: Han Jiang <jhcarl0814@gmail.com>
+Date: Wed, 11 Sep 2024 22:30:12 +1200
+Message-ID: <CANrWfmQt_krw6pR1W+nXWheUg_wbcJmoC1K8sStu-Ou36=vD4g@mail.gmail.com>
+Subject: Re: `git diff --break-rewrites` does not work (otherwise it should
+ break rewrite into delete and create, for `--find-renames` to work)
+To: Jeff King <peff@peff.net>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 10, 2024 at 07:31:44PM +0100, phillip.wood123@gmail.com wrote:
-> On 09/09/2024 09:00, Patrick Steinhardt wrote:
-> > On Mon, Sep 09, 2024 at 09:53:20AM +0200, Patrick Steinhardt wrote:
-> > > Thanks for organizing this! With the clar unit testing framework having
-> > > landed I think it would be a nice project for Outreachy to convert (a
-> > > subset of) our unit tests to that new framework.
-> > > 
-> > > There is still a bunch of work that I'm in the process of upstreaming
-> > > [1][2][3][4] as well as a refactoring of the macros to make them
-> > > typesafe that I'm currently preparing. But none of these changes should
-> > > impact how the clar is used, so I would say that it is fine to queue up
-> > > such a project.
-> > > 
-> > > Patrick
-> > > 
-> > > [1]: https://github.com/clar-test/clar/pull/99 (MinGW and HPE support, merged)
-> > > [2]: https://github.com/clar-test/clar/pull/100 (CI support for Windows)
-> > > [3]: https://github.com/clar-test/clar/pull/101 (out-of-memory handling)
-> > > [4]: https://github.com/clar-test/clar/pull/102 (selftests)
-> > 
-> > I forgot to say: I'd be happy to mentor or co-mentor such a project.
-> I'd be happy to co-mentor a project like that
-> 
-> Best Wishes
-> 
-> Phillip
+Thank you for the explanation!
+The bug report comes from an attempt to write examples to demonstrate
+what those command line options do and how they interact, so currently
+there is no real-world case where the limit needs to be loosen.
+It would be good to make the limit configurable if many people want
+it. For me I just hope the documentation and the actual behavior can
+be consistent.
 
-Thanks. I've created the project and invited you as a co-mentor.
-
-Patrick
+On Wed, Sep 11, 2024 at 6:48=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Sep 10, 2024 at 11:07:19PM +1200, Han Jiang wrote:
+>
+> > Thank you for filling out a Git bug report!
+> > Please answer the following questions to help us understand your issue.
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
+> >
+> > cd '/'; cd '/'; rm --force --recursive -- './test_git2'; mkdir "$_"; cd=
+ "$_";
+> > mkdir --parents -- './repo';
+> > git init './repo'
+> > echo -e 'a\nb\nc\nd\ne\nf\ng\nh\ni\nj' >'./repo/file1'
+> > echo -e '0\n1\n2\n3\n4\n5\n6\n7\n8\n9' >'./repo/file2'
+> > git -C './repo' add './file1' './file2'
+> > mv './repo/file2' './repo/file3'
+> > mv './repo/file1' './repo/file2'
+> > git -C './repo' add --intent-to-add './file3'
+> > git -C './repo' diff --break-rewrites=3D'50%/50%' --find-renames=3D'50%=
+'
+> >
+> > What did you expect to happen? (Expected behavior)
+> >
+> > `git diff` outputs: file1 rename to file2, file2 rename to file3
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > `git diff` outputs: file1 remove all content, file2 complete rewrite,
+> > file3 add all content
+>
+> It's because your toy example is too small. Try:
+>
+>   seq 400 >repo/file2
+>
+> instead of the 0-9 input, which will then do what you expect.
+>
+> There is a hard-coded MINIMUM_BREAK_SIZE limit which requires that one
+> of the files must be at least 400 bytes, presumably to avoid awkward
+> corner cases in the heuristics for very small files. That comes from
+> eeaa460314 ([PATCH] diff: Update -B heuristics., 2005-06-03), so quite
+> long ago. But I'm not sure if any science went into determining it.
+>
+> Do you have a real (non-toy) case where it should be triggering but
+> isn't? I wonder if we should consider making that hard-coded limit
+> configurable somehow.
+>
+> -Peff
