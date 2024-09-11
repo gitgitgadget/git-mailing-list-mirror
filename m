@@ -1,177 +1,152 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4554E1AC88A
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 15:18:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6609B2C1A2
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 15:28:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726067927; cv=none; b=LYaRGB+quZlrtJmmkf5ru0ZFkVU5rAtjk8656GQOH0mpS22bYrM7Y3vLzDqCg6Sxl7yHq+s6VyfYIhNnehyvXx2DCU43K/VcznuT9c2REQ3v3g9bGiEiekKpdjoJ/a54aXhxY5l5BBqKwnzPChIrBZyq2lS7nmed3dlmQwwnHNA=
+	t=1726068528; cv=none; b=DOJ5cUFfcwERWP10f9BwqRmYpDvCe/CCrSvobuZLprlMK4PX9sshO6Mup/wnlMP6aWN+8dcawRTV9gwYnp4OJdZH5n5bT9VEl5BaB173QdxDTaEhNlC+GFYbzojJd5buuSFmJB/ZJLXFzvMZvb99oQY7CC459TBVxN9gyxJhkuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726067927; c=relaxed/simple;
-	bh=5l7+6IXecgG9a39NXmei0JZpyMe9KreCYAEWnFLSE6c=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=inkbJvwl1WiSaYN7G2HkuQuG3QaRob3FXQgpbbmtrTNnMKJUj9gE2GwVSetI3KrXEtbtvWMJrvdoN7UhhtUIEgG0pmfN8Ai7kj19Tv/cV2gSlspgtTzd4F9B4FfWEQT2SK3n3cYkSwfEl8nrh2fsoxo6l5PDPD3jpLG6AHXwZ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IfLFbpe3; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726068528; c=relaxed/simple;
+	bh=gXVyFk4p7rIWMwkRcp22HJrL38eMNtXxQT11dHgQNoo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mv7fU0bvqK/m6ThMLupWZhtPZE91epEPfmZk+sT6W/o67ggryOtif+Lzw8eEAMqXnth21Fwtq1CbAWrU4y0IMmvn3l/IZu+rPufLFuQ2M73uXbZpk/IhgBkbaeQUEhE8QGzQt6ed86bfgnFrLwSIF6N3rsY95sbRe+cDNMkxuGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZLRKAK9x; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IfLFbpe3"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f75428b9f8so22919111fa.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 08:18:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726067923; x=1726672723; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wwLU6yfkT1MAzSPpvvvUTy0XWobCnJbo32cIIv0rM6g=;
-        b=IfLFbpe3wCSCUfu5XeY0yv8Kqm/lseDZd8XNiw9nurVYQljk3qX/AX9+z6a8I1p/bc
-         /XrjwSKsMFPBejG+5L55UqTJJhmsmFk4mrpLbu9MyUEoiEiJ8Lts6beoLydmbx6zUN6/
-         bk9jsqMcM3F8e65UxU/q3YHSzRTnd8zEOTw0WabPyqfEAs758P8xO5oCwRIiN/wc5hzw
-         /TbXckxByKz54JT3ESoWIeEggAKddnCNbUAJc+UIlOVJcCK9qc7zBFMKTPbqNbaS7TKb
-         IP/YBwr/6JJH1DSB5CcKOrG6KVYL44OKo8rl8iK+cZOgWQInbzAFbYNb7F08kMeRt+Ms
-         5woA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726067923; x=1726672723;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wwLU6yfkT1MAzSPpvvvUTy0XWobCnJbo32cIIv0rM6g=;
-        b=w0YaEkjruIBp7NLOgkWM/GDxh53OueAGjkL740ct3/fcUhyIKrTg8k4xT9b3pU3rbR
-         tgK/ubKQ1x5PeiFFtyYlBNdHK+F4eYG3m8rO4gkI0JyHioDRIWOTGQV7kBsVV28i5PUs
-         /GDPHrb8ZKLG2BxA48pCG43D+s4tweSLNNsusSu0BVXagV0W3gewsIg7mfbykIHhYpHg
-         ejUOKIJNXrp/i5xYFoSpISYSWoGU1yaf4FlzamjjmhjvzBlEYLM3HMvVHSWyNPc1ku+s
-         0q4M7OhQC1MGWi72DnVLXGGCuCk+6k7UYPXNufy+KXWFXE3P+0TLDGvOLuhGF/2URTu6
-         3mpg==
-X-Gm-Message-State: AOJu0Yz99m3EmFNT73fz2psSmOzs1ATIGtif3i1nJUmUA7RPq1/YHN0E
-	nj4kbk/ea3VyBWsxYfdK5ie39HTZU8ifH+fKQG805tnu563AYsjh6bmQww==
-X-Google-Smtp-Source: AGHT+IEeJdY0XV4sVcOM5aTv4oMhyotS0SR7ycOG93z1qnaEYzn0o7kt6bfYTbXh6sEgk41b3aPfEA==
-X-Received: by 2002:a05:6512:2244:b0:530:ab68:25c5 with SMTP id 2adb3069b0e04-536587a689fmr18862005e87.2.1726067922080;
-        Wed, 11 Sep 2024 08:18:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d258317d6sm623379166b.29.2024.09.11.08.18.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 08:18:41 -0700 (PDT)
-Message-Id: <dba31245607f85c48947da60fe0955a6ed3e2c43.1726067917.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
-References: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Sep 2024 15:18:37 +0000
-Subject: [PATCH 4/4] remote: check branch names
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZLRKAK9x"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A69C20554;
+	Wed, 11 Sep 2024 11:28:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=gXVyFk4p7rIWMwkRcp22HJrL38eMNtXxQT11dH
+	gQNoo=; b=ZLRKAK9xMQVcCJ6fDbC17OsioU00uXiK5wFBEJC9t+7tncGrNEH7DO
+	sXgtnMCgxbJa1C4K8WvItrTKPmYxGkkxoPFDfEjrBPN8SSHldo4TbNxI3doGtBSI
+	zNXpYwoeAXvf4hpR8qCIUQpl2vWvJVV5j+ubdPMuk3dX86D9NXPoo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3142A20553;
+	Wed, 11 Sep 2024 11:28:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 993E020552;
+	Wed, 11 Sep 2024 11:28:38 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of
+ Git without OpenSSL
+In-Reply-To: <20240911061009.GA1538383@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 11 Sep 2024 02:10:09 -0400")
+References: <cover.1725206584.git.me@ttaylorr.com>
+	<cover.1725651952.git.me@ttaylorr.com>
+	<bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
+	<20240911061009.GA1538383@coredump.intra.peff.net>
+Date: Wed, 11 Sep 2024 08:28:37 -0700
+Message-ID: <xmqqr09qb462.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Han Jiang <jhcarl0814@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 849F9AA6-7052-11EF-81AA-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Jeff King <peff@peff.net> writes:
 
-Make sure the names passed to "git remote add -t <branch>" and "git
-remote set-branches <branch>" are syntactically valid so that we do not
-create invalid refspecs. This check needs to be performed before
-creating the remote or modifying the existing configuration so a new
-function is added rather than modifying add_branch()
+> How about this instead?
+>
+> -- >8 --
+> Subject: [PATCH] t/interop: allow per-version make options
+> ...
+>      imap-send.c to barf, because it declares a fallback typdef for SSL.
 
-Tests are added for both commands that to ensure (i) we report all the
-invalid branch names passed on the command line, (ii) the branch names
-are validated before modifying the configuration and (iii) wildcards
-are accepted.
+"typedef".
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/remote.c  | 19 +++++++++++++++++++
- t/t5505-remote.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+> diff --git a/t/interop/i5500-git-daemon.sh b/t/interop/i5500-git-daemon.sh
+> index 4d22e42f84..88712d1b5d 100755
+> --- a/t/interop/i5500-git-daemon.sh
+> +++ b/t/interop/i5500-git-daemon.sh
+> @@ -2,6 +2,7 @@
+>  
+>  VERSION_A=.
+>  VERSION_B=v1.0.0
+> +MAKE_OPTS_B="NO_OPENSSL=TooOld"
+>  
+>  : ${LIB_GIT_DAEMON_PORT:=5500}
+>  LIB_GIT_DAEMON_COMMAND='git.a daemon'
+> diff --git a/t/interop/interop-lib.sh b/t/interop/interop-lib.sh
+> index 62f4481b6e..1b5864d2a7 100644
+> --- a/t/interop/interop-lib.sh
+> +++ b/t/interop/interop-lib.sh
+> @@ -45,7 +45,7 @@ build_version () {
+>  
+>  	(
+>  		cd "$dir" &&
+> -		make $GIT_INTEROP_MAKE_OPTS >&2 &&
+> +		make $2 $GIT_INTEROP_MAKE_OPTS >&2 &&
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 318701496ed..fd84bfbfe7a 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -132,6 +132,19 @@ static void add_branch(const char *key, const char *branchname,
- 	git_config_set_multivar(key, tmp->buf, "^$", 0);
- }
- 
-+static int check_branch_names(const char **branches)
-+{
-+	int ret = 0;
-+
-+	for (const char **b = branches; *b; b++) {
-+		if (check_refname_format(*b, REFNAME_ALLOW_ONELEVEL |
-+						REFNAME_REFSPEC_PATTERN))
-+			ret = error(_("invalid branch name '%s'"), *b);
-+	}
-+
-+	return ret;
-+}
-+
- static const char mirror_advice[] =
- N_("--mirror is dangerous and deprecated; please\n"
-    "\t use --mirror=fetch or --mirror=push instead");
-@@ -203,6 +216,9 @@ static int add(int argc, const char **argv, const char *prefix)
- 	if (!valid_remote_name(name))
- 		die(_("'%s' is not a valid remote name"), name);
- 
-+	if (check_branch_names(track.v))
-+		exit(128);
-+
- 	strbuf_addf(&buf, "remote.%s.url", name);
- 	git_config_set(buf.buf, url);
- 
-@@ -1601,6 +1617,9 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 		exit(2);
- 	}
- 
-+	if (check_branch_names(branches))
-+		exit(128);
-+
- 	if (!add_mode && remove_all_fetch_refspecs(key.buf)) {
- 		error(_("could not remove existing fetch refspec"));
- 		strbuf_release(&key);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index cfbd6139e00..709cbe65924 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -1195,6 +1195,34 @@ test_expect_success 'remote set-branches with --mirror' '
- 	test_cmp expect.replace actual.replace
- '
- 
-+test_expect_success 'remote set-branches rejects invalid branch name' '
-+	git remote add test https://git.example.com/repo &&
-+	test_when_finished "git config --unset-all remote.test.fetch; \
-+			    git config --unset remote.test.url" &&
-+	test_must_fail git remote set-branches test "topic/*" in..valid \
-+				feature "b a d" 2>err &&
-+	cat >expect <<-EOF &&
-+	error: invalid branch name ${SQ}in..valid${SQ}
-+	error: invalid branch name ${SQ}b a d${SQ}
-+	EOF
-+	test_cmp expect err &&
-+	git config --get-all remote.test.fetch >actual &&
-+	echo "+refs/heads/*:refs/remotes/test/*" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'remote add -t rejects invalid branch name' '
-+	test_must_fail git remote add test -t .bad -t "topic/*" -t in:valid \
-+				 https://git.example.com/repo 2>err &&
-+	cat >expect <<-EOF &&
-+	error: invalid branch name ${SQ}.bad${SQ}
-+	error: invalid branch name ${SQ}in:valid${SQ}
-+	EOF
-+	test_cmp expect err &&
-+	test_expect_code 1 git config --get-regexp ^remote\\.test\\. >actual &&
-+	test_must_be_empty actual
-+'
-+
- test_expect_success 'new remote' '
- 	git remote add someremote foo &&
- 	echo foo >expect &&
--- 
-gitgitgadget
+The build options should be simple enough and this should do for now
+(and when it becomes needed, it is easy to add an eval around it).
+
+The use of $GIT_INTEROP_MAKE_OPTS here looks a bit curious.  It
+overrides what the inidividual script gave in MAKE_OPTS_{A,B} and
+what is globally given in GIT_INTEROP_MAKE_OPTS_{A,B}.
+
+With this design, the following is not what we should write:
+
+    # by default we use the frotz feature
+    GIT_INTEROP_MAKE_OPTS=USE_FROTZ=YesPlease
+    # but version A is too old for it
+    MAKE_OPTS_A=USE_FROTZ=NoThanks
+    # we do not need any cutomization for version B
+    MAKE_OPTS_B=
+
+Rather we would want to say:
+
+    # the default should say nothing conflicting with A or B
+    GIT_INTEROP_MAKE_OPTS=
+    # version A is too old to use the frotz feature
+    MAKE_OPTS_A=USE_FROTZ=NoThanks
+    # version B is OK
+    MAKE_OPTS_B=USE_FROTZ=YesPlease
+
+As long as it is understood that GIT_INTEROP_MAKE_OPTS and *_{A,B}
+are *not* meant to be used in a way for one to give default and the
+other to override the defautl, but they are to give orthogonal
+settings, this is fine.
+
+>  		touch .built
+>  	) || return 1
+>  
+> @@ -76,9 +76,11 @@ generate_wrappers () {
+>  
+>  VERSION_A=${GIT_TEST_VERSION_A:-$VERSION_A}
+>  VERSION_B=${GIT_TEST_VERSION_B:-$VERSION_B}
+> +MAKE_OPTS_A=${GIT_INTEROP_MAKE_OPTS_A:-$MAKE_OPTS_A}
+> +MAKE_OPTS_B=${GIT_INTEROP_MAKE_OPTS_B:-$MAKE_OPTS_B}
+
+Among the variables we see around here, GIT_INEROP_MAKE_OPTS
+is the only one that is recorded in the GIT-BUILD-OPTIONS file,
+which is included in t/interop/interop-lib.sh file.  Shouldn't
+we record GIT_INEROP_MAKE_OPTS_{A,B} as well?
+
+> -if ! DIR_A=$(build_version "$VERSION_A") ||
+> -   ! DIR_B=$(build_version "$VERSION_B")
+> +if ! DIR_A=$(build_version "$VERSION_A" "$MAKE_OPTS_A") ||
+> +   ! DIR_B=$(build_version "$VERSION_B" "$MAKE_OPTS_B")
+>  then
+>  	echo >&2 "fatal: unable to build git versions"
+>  	exit 1
+
+Thanks.
