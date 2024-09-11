@@ -1,123 +1,118 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B571428E4
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 21:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B436154425
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 21:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726089174; cv=none; b=iCZya3IO5cR+I97oolnYkBj14+RS1Fnkvcx7BW7KkbQGLn5Y37R9C0tZRIJHGo5Wqww3aMRz7BL/dg2hEipnI5dp4G5akOn9olCTa24uqrcY59hZFex/NGJe2cOGTpcns7bW601//4QpGa0qWAp89iKL0mHhSfeZyBvFTegl/04=
+	t=1726089844; cv=none; b=FzGBrvie4sN3zwFVWhwriHDKHvXq8ndmRDNdcj2kM7DTpuSbo8+F7qCK9uBmCdJiWbtEvGZSq5lXu4wCg6XzzV92XEQ3HCiT0juch8C7/3/wZqPyNbTGAy3UmWach37jDodXp+nmjtBwp5i8pjm8xjQoFpubl6Yccr/6VB9mMbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726089174; c=relaxed/simple;
-	bh=DMkeGRnkf42DTiHrZFxPvEnyMXIs5wjd2wAqhsMhoZQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iuV4EP8RSY9c+3Brbe/OOgXbaNcGBCzMvpzM6RFyEYjfLVChgYEBTyKylAcvn3E8GA2ii9zcYkYiGQ1f8cmDasgi9tDHA6xsz1atylCmKs113ZcduX4ARczKQVau65xPrinyu32SL4mrDSsVG5RBgvWJOz364lGaZwshMNJhZ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0b6BNc7; arc=none smtp.client-ip=209.85.167.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0b6BNc7"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3e06b72f3e7so448643b6e.0
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 14:12:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726089172; x=1726693972; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gcq6UfKwA2A+FX1BQ6wqGFaHDFHdj9VG0FlOspsng/Q=;
-        b=B0b6BNc7TWT6+AFRcTtmnSAGfQxOKtMIvCnB9MVjRVzMCfVNpCHxR2NTv/Eqe2/2Wq
-         4YKhGEesxGyLOpfGFF6Ukmvz8X+2cVolGSaXelfUWJQP+tYtwdPKHKqcO2zAFD5ljr7s
-         h/ggs5kZr86kKKAEjqQegyj1twwpxD9TFd1RwAac+iWIr9/LB2cffHHGOx8xNVFz86M3
-         vql0RKjH3kRsSUMI9lFAsGeIM/QMR1Zq8HurDlUiWqewMig1PE63UYh8tAG2pyqKKKCv
-         Nn7v0D5p7F25cALfk5gNqDjqA20WQC0zZczFlptnX0tOuriyeQXvlpBTc7gNhLJBi5y8
-         3EuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726089172; x=1726693972;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gcq6UfKwA2A+FX1BQ6wqGFaHDFHdj9VG0FlOspsng/Q=;
-        b=Y05ov4aIrkPqfynl8mLhWVriXutn8OOP/gMqs2UH/GqOxJWS7sQlCFOfPxWa1K+OOA
-         U/H9RiC9ZHS/STnubUXhuOSgA5N1UImOUDBNA6r/T4F1Pg7EywwwYWifpg9oaUGo42b4
-         I1U76kf6V5Si0qGapyik0wF96hXmr2UCWmyD1/JfSriRc1FvIDjSJbNjZFmEHYJoXhX1
-         J3F9PXQUN8NfjXwGooevhKnikkt7+MAKS+5oORGaXIqIqx3M1gASo3e9PNe70gHVIb3M
-         ImG6LMpH8lDFedppda1QSrc/EEqylMD+9+jNOu2eBJGGXv/McRxFFllQykjtavxVh2FF
-         jKcg==
-X-Forwarded-Encrypted: i=1; AJvYcCXobcCrCmunS3hEARLsJcO+A5Oc2hMXbnpfXWDZZHOLi9pT+I0uXDLSL5US4u5yrkBW+4Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCA82CRIARrDdGqmC9vZ62o+NhKTyw+4FL1KnsZmpPIWIKIysK
-	a3m5dTRE7EoajE0bWlkRyJ91nK92Cyy0Jyetz1WkqPrpHztu+M5cMYWjgNNSSl7iJW+H1cs2Bgm
-	LjvfxGcM8cgbEENGNaRUmQOAn7bA=
-X-Google-Smtp-Source: AGHT+IEKGjf6h8wErS1MdJ8Kjs/b5Hk03RYTdlkx3WbIgpSpEpZbZoURBEQrZYRwhZ6wXYc9ETyu6k9GGRJ9fhrko78=
-X-Received: by 2002:a05:6808:d48:b0:3dd:c07:8962 with SMTP id
- 5614622812f47-3e071a1f508mr308955b6e.6.1726089172160; Wed, 11 Sep 2024
- 14:12:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Sep 2024 14:12:51 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <a1969c5b0734cacd0316c34ef3d3b1939f521cd4.1725008898.git.ps@pks.im>
-References: <cover.1724923648.git.ps@pks.im> <cover.1725008897.git.ps@pks.im> <a1969c5b0734cacd0316c34ef3d3b1939f521cd4.1725008898.git.ps@pks.im>
+	s=arc-20240116; t=1726089844; c=relaxed/simple;
+	bh=41kbrJ+MC+kGJ89ZLdjV2K6VkjviZx71v+N6zg8Vjs0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=itE0CbZC/Xp1BNV7NrssIGP74AFnZch+lC3v/5QmR1Dz4e0RmPVX/6nTX6Q1Gmf2ITQfE9uhicpX9swsoUO6cCenJlXuwY4gMPsEcMrvhwIcHKPygbqq6hz54Fvk4zKig8Arju1y1x4pyqbeEoTL79uwE4iWt6WGGLB2hjdixv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 14665 invoked by uid 109); 11 Sep 2024 21:24:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Sep 2024 21:24:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13110 invoked by uid 111); 11 Sep 2024 21:24:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2024 17:24:00 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 11 Sep 2024 17:23:59 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of
+ Git without OpenSSL
+Message-ID: <20240911212359.GA1659@coredump.intra.peff.net>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <cover.1725651952.git.me@ttaylorr.com>
+ <bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
+ <20240911061009.GA1538383@coredump.intra.peff.net>
+ <xmqqr09qb462.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Sep 2024 14:12:51 -0700
-Message-ID: <CAOLa=ZQxVtFrZqFJ+Q+0ifj5h+x-7-ZE6viD9OUyNr2CvE7s-A@mail.gmail.com>
-Subject: Re: [PATCH v2 01/21] environment: make `get_git_dir()` accept a repository
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000f533540621de73ee"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr09qb462.fsf@gitster.g>
 
---000000000000f533540621de73ee
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Sep 11, 2024 at 08:28:37AM -0700, Junio C Hamano wrote:
 
-Patrick Steinhardt <ps@pks.im> writes:
+> > -		make $GIT_INTEROP_MAKE_OPTS >&2 &&
+> > +		make $2 $GIT_INTEROP_MAKE_OPTS >&2 &&
+> 
+> The build options should be simple enough and this should do for now
+> (and when it becomes needed, it is easy to add an eval around it).
+> 
+> The use of $GIT_INTEROP_MAKE_OPTS here looks a bit curious.  It
+> overrides what the inidividual script gave in MAKE_OPTS_{A,B} and
+> what is globally given in GIT_INTEROP_MAKE_OPTS_{A,B}.
+> 
+> With this design, the following is not what we should write:
+> 
+>     # by default we use the frotz feature
+>     GIT_INTEROP_MAKE_OPTS=USE_FROTZ=YesPlease
+>     # but version A is too old for it
+>     MAKE_OPTS_A=USE_FROTZ=NoThanks
+>     # we do not need any cutomization for version B
+>     MAKE_OPTS_B=
+> 
+> Rather we would want to say:
+> 
+>     # the default should say nothing conflicting with A or B
+>     GIT_INTEROP_MAKE_OPTS=
+>     # version A is too old to use the frotz feature
+>     MAKE_OPTS_A=USE_FROTZ=NoThanks
+>     # version B is OK
+>     MAKE_OPTS_B=USE_FROTZ=YesPlease
+> 
+> As long as it is understood that GIT_INTEROP_MAKE_OPTS and *_{A,B}
+> are *not* meant to be used in a way for one to give default and the
+> other to override the defautl, but they are to give orthogonal
+> settings, this is fine.
 
-[snip]
+Yes, there are really three levels: what your platform needs for every
+version, what the script asks about for its specific version, and what
+you override for that specific version. So arguably the "best" order is:
 
-> diff --git a/repository.c b/repository.c
-> index 9825a308993..6f43f2e8344 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -91,6 +91,13 @@ static void expand_base_dir(char **out, const char *in,
->  		*out = xstrfmt("%s/%s", base_dir, def_in);
->  }
->
-> +const char *repo_get_git_dir(struct repository *repo)
-> +{
-> +	if (!repo->gitdir)
-> +		BUG("git environment hasn't been setup");
+  MAKE_OPTS_A < GIT_INTEROP_MAKE_OPTS < GIT_INTEROP_MAKE_OPTS_A
 
-Shouldn't this message be more generic now? Since this function can be
-used with any repository?
+which always puts your preferences in front of the script's defaults,
+but still lets you do a per-script override. But it didn't seem worth
+the complexity to implement that. I mostly left GIT_INTEROP_MAKE_OPTS_A
+as an escape hatch if you are testing an alternate version from what's
+in the script, and I doubt anybody will need it at all (in all these
+years I have only used it to set NO_OPENSSL for this exact case, and
+judging by the lack of other people mentioning this issue I suspect
+hardly anybody else has ever even run these tests).
 
-> +	return repo->gitdir;
-> +}
-> +
->  static void repo_set_commondir(struct repository *repo,
->  			       const char *commondir)
->  {
+> > @@ -76,9 +76,11 @@ generate_wrappers () {
+> >  
+> >  VERSION_A=${GIT_TEST_VERSION_A:-$VERSION_A}
+> >  VERSION_B=${GIT_TEST_VERSION_B:-$VERSION_B}
+> > +MAKE_OPTS_A=${GIT_INTEROP_MAKE_OPTS_A:-$MAKE_OPTS_A}
+> > +MAKE_OPTS_B=${GIT_INTEROP_MAKE_OPTS_B:-$MAKE_OPTS_B}
+> 
+> Among the variables we see around here, GIT_INEROP_MAKE_OPTS
+> is the only one that is recorded in the GIT-BUILD-OPTIONS file,
+> which is included in t/interop/interop-lib.sh file.  Shouldn't
+> we record GIT_INEROP_MAKE_OPTS_{A,B} as well?
 
-[snip]
+No, I don't think that would make sense. Everything in
+GIT-BUILD-OPTIONS, including GIT_INTEROP_MAKE_OPTS, is going to apply to
+_all_ scripts. These _A and _B variants will vary based on individual
+scripts. It's possible you might try to run the whole suite between two
+specific versions, but then you'd set up GIT_INTEROP_MAKE_OPTS_{A,B} in
+the environment (as you already have to do for VERSION_{A,B}).
 
-Rest of the patch looks good. Thanks
-
---000000000000f533540621de73ee
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 73245e25273e6139_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1iaUI4OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN3dlREFDSkZjaXVBbkNScE5BdlRGN2Jqd050NEtMOQphUkpiOWluVzNC
-MUJhV2JlNzJ2L0t5VGx5VTlubDdoZ0ZRMGNJYWVaL2ZUSE9McGFMRlVBNjFPV1RYMWVpN2JMCjZi
-S2RaRTJ1RjlXc28yUW9PTlN1Uk5sODRwcUxjdXBmK2dmTnIwSzlZdjRCMGdiMTY2bXYwWGR6U2Y1
-dXFZdDQKcU5QWkF6N0JpQVdEQmVVZmRxMFEwY3NRRmhXT0JUWDBPWHhRL0VRdnNvMG93TTM2ZzNS
-azFvN1pXV205NmxBQQp1ZzFlK25KbVhRVEpWNC8wOXYzMlEzc0ZnRzBMcFFmcTNsTDNRRWNYRFBy
-NHNGemZ4NUFZVi92ZnN3TUhaOUNGCkx5Z1FwaG1ta2lQRkptZEN5TjFKV2lrQVdyTER5SjVzY1Ri
-VU1rSWhHcjhBTE0yZlhIUzdWa2VNMHJHQlBDTHEKaTArNW5kaUJqdjl4QTZYblE5MUM1UDUyKzdr
-b3FJMVpvbkZkdTJYWSt3UU9pY3p3ZzhtZUxDY3EvQ1dtelpVVQo3dlRZMG96b1FrSTRxZzUva2xr
-eERYVE9tZkd6NkNmdGJNOHdWQlpVRVpxVG5iUHhEUHJVUngvUmhiTVZtbm9qCm5rNm1mbWZLVEZ3
-WG0xb1haTDQrc05icFFwQVFNakN3SkNKN011bz0KPUp3eksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f533540621de73ee--
+-Peff
